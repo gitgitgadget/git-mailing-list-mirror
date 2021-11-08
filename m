@@ -2,256 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A240C433EF
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 23:11:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9186C433F5
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 23:16:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E58AE610F8
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 23:11:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE702610F8
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 23:16:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240479AbhKHXO2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 18:14:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46556 "EHLO
+        id S240873AbhKHXTB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 18:19:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234561AbhKHXO1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 18:14:27 -0500
+        with ESMTP id S234561AbhKHXS7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 18:18:59 -0500
 Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4510C061570
-        for <git@vger.kernel.org>; Mon,  8 Nov 2021 15:11:42 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id o14so17381440plg.5
-        for <git@vger.kernel.org>; Mon, 08 Nov 2021 15:11:42 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82436C061570
+        for <git@vger.kernel.org>; Mon,  8 Nov 2021 15:16:13 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id v20so17384043plo.7
+        for <git@vger.kernel.org>; Mon, 08 Nov 2021 15:16:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=lujAQz5KoRsJa0NWpGgWSB0rZMtqcVfaaD6Ll9C1paA=;
-        b=V0+xFLUJQ328CXoHlmKCp2XetJz6mPZC7hBK+3ZQPD/ZQvP1i60YHjj6gj7xB7riCO
-         c2dE48MclfbZBzWgpM9a0f/sGzb09VNtd/cbD96/BMs8u1R1Kp/7bG2mrFe+jl+jXOpE
-         AqhNh2omY3HueEz1t3rLCoC7Sv7DmDexahfI9s+iJk2r6ebgSa9axzJNyN8MSuwpRbqK
-         P9JMCiSiTEhXaYVUhoyOrhI4bpYVE90VF+shmH3y2wsMCFKBpPV6qsMB2JCEcy3UPzAv
-         QVEtZ04dQZ/iR0PhbaIU/XswPzsP/MnQaNieRVOXjDOL4cRYci0ljJrbP5X1MEXH2i5O
-         AJ5Q==
+        bh=UUQWvslmF7aiWja155yKSwmOL41kZ7pmG0zPDXnD7ww=;
+        b=hgp391LWvjY901uuYrSfqyRq3nZDsSXNrTMdrUu2NXjpLYQ8b02e0d1+AGr7FkfX5M
+         +nN4dfSscGTeQglvQj/DfQPCM1hI9bNqJ5qYdsVvJFtzNH9GfodSk8ZrEBego/07fDd2
+         rzOxmZheEmDZPOdD1Uq/fQNx+LWYrDVTYAWWYFl8EsDOewmSIvs2EXYSJ3dbRaTuMyIX
+         y5j8tqszf8yOMrEZXmp59R6BB/fdALVC+HcmaWb/9YApPerwrCau6jQSmUThST1/qGH9
+         Y1VjuBy6N60oYx6aSUEsNOFaeea6uBE1gkP2KeGd9hhzDOyWVPPZJHtq9A2hXMVLMEic
+         6/uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=lujAQz5KoRsJa0NWpGgWSB0rZMtqcVfaaD6Ll9C1paA=;
-        b=graBEEMU1T58WpXp9EkO9IcmgjsM/qQdja26CH928pkNGjaC99hlSE6KTV2bDO4j8s
-         Qc0do3T3JgoyLmAdTA90He5s8ngFw7V1stC1bQUFxT/2pMnQwVw7r3hIC0V5pcr7xRWD
-         5Zd11YV6+1RfMcYyzaez/WKdvSnZH+n/lFwrMhhEDbRFy3daaihvRN3UAB2mbM3ZH9O+
-         YA8c4TG4B24+5tVVd+zc50IpplQzeFklraXn/cioDs5paOrbrR6zKjfx6ySJ71qoEq2Z
-         hpxYIkc5lmbgIbQT75uc7imEbffuLKk7nF29R8jbV19Zr60rcPLbqRIeRond4xca3bBB
-         JJmA==
-X-Gm-Message-State: AOAM530RfM+AlLHHK+t6DdC3mVzmpn9q14Lc8dQxdrShgn2s5Mj7yNDh
-        H/8mnEwMav4/s99iO6zPrX8wSg==
-X-Google-Smtp-Source: ABdhPJxD+dsonMgxkLDJUSbkPKn8drXE0/Wg2ooYMEhDoLjgIdiSJmYlB1ZwLYGUhctIZNKpvl/qTQ==
-X-Received: by 2002:a17:90a:191a:: with SMTP id 26mr2167787pjg.79.1636413101855;
-        Mon, 08 Nov 2021 15:11:41 -0800 (PST)
+        bh=UUQWvslmF7aiWja155yKSwmOL41kZ7pmG0zPDXnD7ww=;
+        b=1W5NX0GHLieSiBoOScQzHf/+Gc1ocAU7jo4BmLiyPwq3QY8Q9aijiVB1y68HgrsB0l
+         mr6OhyuU6OyMUAK/M7XC8n3rcDBtSPrOy+eF5D7A/7dq8E1qDqcCEaYar5JlNMeYr/5u
+         WfITv6YNc163OOJknhE+66Za9n0AnJpLn1/hunZdyPDcTpaqGDVrj7UwvWmNYp1RQNA/
+         1C0n1vgbVmJQsCaE41zf0aiMPF0JeHKhTXm1jE+SajamgMfAZ0QjIX8DaPNzW1gxm5YM
+         Eb5GWY1froAGEldM88pKSK1Oql869kPBUSSIC3gtYB6dAcZlqNLtrysKM3ExVOCbuzzK
+         K+aQ==
+X-Gm-Message-State: AOAM531Gp/DfgqqQL8Z8wUYpniAKec7DI6r0oBvCCYic4KSX2jV+ruua
+        Lb7A1ZjPUQraz4j7ttszu8ekeb99pz5tMQ==
+X-Google-Smtp-Source: ABdhPJydgAHpGjMOvECtrO4QxiMcWjaH5HBtjaNdmubhK0Eti0JRYxPrztjYs/mmYSgXGleHi/B4ow==
+X-Received: by 2002:a17:90b:4b86:: with SMTP id lr6mr2128007pjb.98.1636413372710;
+        Mon, 08 Nov 2021 15:16:12 -0800 (PST)
 Received: from google.com ([2620:15c:2ce:200:f405:d461:2b86:9d34])
-        by smtp.gmail.com with ESMTPSA id 142sm13378685pgh.22.2021.11.08.15.11.40
+        by smtp.gmail.com with ESMTPSA id l1sm13464493pgt.39.2021.11.08.15.16.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Nov 2021 15:11:40 -0800 (PST)
-Date:   Mon, 8 Nov 2021 15:11:36 -0800
+        Mon, 08 Nov 2021 15:16:11 -0800 (PST)
+Date:   Mon, 8 Nov 2021 15:16:07 -0800
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Albert Cui <albertcui@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v5 0/4] cache parent project's gitdir in submodules
-Message-ID: <YYmuqEQUaB1a8Gs1@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v5 2/4] introduce submodule.superprojectGitDir record
+Message-ID: <YYmvt+wFQ97QLaO8@google.com>
 References: <20211104234942.3473650-1-emilyshaffer@google.com>
- <920c3133-b6ee-b82c-0876-f06713e9337b@gmail.com>
+ <20211104234942.3473650-3-emilyshaffer@google.com>
+ <xmqqo86zxcqp.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <920c3133-b6ee-b82c-0876-f06713e9337b@gmail.com>
+In-Reply-To: <xmqqo86zxcqp.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 07, 2021 at 08:24:43PM -0500, Derrick Stolee wrote:
+On Fri, Nov 05, 2021 at 12:50:22AM -0700, Junio C Hamano wrote:
 > 
-> On 11/4/2021 7:49 PM, Emily Shaffer wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
 > 
-> > The only real change here is a slight semantics change to map from
-> > <submodule gitdir> to <superproject common git dir>. In every case
-> > *except* for when the superproject has a worktree, this changes nothing.
-> > For the case when the superproject has a worktree, this means that now
-> > submodules will refer to the general superproject common dir (e.g. no
-> > worktree-specific refs or configs or whatnot).
-> > 
-> > I *think* that because a submodule should exist in the context of the
-> > common dir, not the worktree gitdir, that is ok. However, it does mean
-> > it would be difficult to do something like sharing a config specific to
-> > the worktree (the initial goal of this series).
-> > 
-> > $ROOT/.git
-> > $ROOT/.git/config.superproject <- shared by $ROOT/.git/modules/sub
-> > $ROOT/.git/modules/sub <- points to $ROOT/.git
-> > $ROOT/.git/worktrees/wt
-> > $ROOT/.git/worktrees/wt/config.superproject <- contains a certain config-based pre-commit hook
-> > 
-> > If the submodule only knows about the common dir, that is tough, because
-> > the submodule would basically have to guess which worktree it's in from
-> > its own path. There would be no way for '$WT/sub' to inherit
-> > '$ROOT/.git/worktrees/wt/config.superproject'.
-> > 
-> > That said... right now, we don't support submodules in worktrees very
-> > well at all. A submodule in a worktree will get a brand new gitdir in
-> > $ROOT/.git/worktrees/modules/ (and that brand new gitdir would point to
-> > the super's common dir). So I think we can punt on this entire question
-> > until we teach submodules and worktrees to play more gracefully together
-> > (it's on my long list...),
+> > By using a relative path instead of an absolute path, we can move the
+> > superproject directory around on the filesystem without breaking the
+> > submodule's cache. And by using the path from gitdir to gitdir, we can
+> > move the submodule within the superproject's tree structure without
+> > breaking the submodule's cache, too.
 > 
-> (I omit a portion that will be discussed later.)
+> All of the above explains what the design choice is, and what
+> benefit the chosen design brings us.  But this last one ...
 > 
-> > Or, to summarize the long ramble above: "this is still kind of weird
-> > with worktrees, but let's fix it later when we fix worktrees more
-> > thoroughly".
+> > Finally, by pointing at "get_git_common_dir()" instead of
+> > "get_git_dir()", we ensure the link will refer to the parent repo,
+> > not to a specific worktree.
 > 
-> I'm concerned about punting here, because making a messy situation worse
-> is unlikely to have a clean way out. Could we set up a design that works
-> with superproject worktrees?
+> ... only says that we choose to point at the common one, not a
+> specific worktree (i.e. what behaviour was chosen by the design),
+> but it is left unclear what benefit it is trying to bring us.
 > 
-> You mentioned that submodules cannot have worktrees. At least, you said
-> that 'absorbgitdirs' does not allow them. Could those subprojects still
-> exist and be registered as submodules without using that command?
+> Thinking aloud, imagine that there are two worktrees for the
+> superproject.  For simplicity, let's further imagine that these
+> worktrees have a clean check-out of the same commit, hence, these
+> two worktrees have the same commit from the same submodule checked
+> out at the same location relative to the project root.
 > 
-> What I'm trying to hint at is that if the submodules can't have
-> worktrees, then maybe we could make their 'config.worktree' files be
-> relative to the superproject worktrees. Then, these submodules could
-> point to the commondir in their base config and _also_ to the worktree
-> gitdir in their config.worktree.
+> The subdirectory in each of these two superproject worktrees that
+> checks out the submodule has .git file (as we "absorb" the gitdir in
+> the modern submodule layout) pointing at somewhere.  It probably is
+> OK if they point at the same place, but it might be more natural if
+> these two submodule checkouts are two worktrees for a single
+> submodule repository (this part I am not very clear, and that is why
+> I labeled the discussion "thinking aloud").
 > 
-> The issue that is immediately obvious here is that my definition is
-> circular: we need to know the superproject worktree in order to discover
-> the config.worktree which contains the information about the superproject
-> worktree.
+> It seems to me that both design choices would have equally valid
+> arguments for them.  If both of these submodule worktrees point at
+> the "common" dir of the superproject, because the "common" one is
+> part of the primary worktree, which is harder to lose than secondary
+> worktrees, of the superproject, it is presumably harder to go stale
+> when "worktree rm" is done at superproject, which may be a plus.
+> But then from the "cached" pointer, each of these submodule
+> worktrees cannot tell which worktree of the superproject they are
+> checked out as a part of.  Of course we can go to the root level of
+> the submodule worktree and do the usual repository discovery to
+> learn where the root level of the superproject worktree it belongs
+> to, but it somehow feels that it defeats half the point of having
+> this "cache" information.
 > 
-> > and at that time we can probably introduce a
-> > pointer from $ROOT/.git/modules/sub/worktrees/wt/ to
-> > $ROOT/.git/worktrees/wt/....
+> If we instead point at the git-dir, from there, it is just one level
+> of indirection to find out where the common dir of the superproject
+> is.
 > 
-> Your idea here appears to assume that if the superproject has worktrees,
-> then the submodule is divided into worktrees in an exact correspondence.
-> This would allow the submodule's config.worktree to point to the
-> superproject's worktree (or possibly it could be inferred from the
-> submodule's worktree relative to the submodule's commondir).
+> > If the new config is present, we can do some optional value-added
+> > behavior, like letting "git status" print additional info about the
+> > submodule's status in relation to its superproject, or like letting the
+> > superproject and submodule share an additional config file separate from
+> > either one's local config.
 > 
-> This seems like an interesting way forward, but requires changing how
-> 'git absorbgitdirs' works, along with changes to 'git worktree' or other
-> submodule commands when the submodule first appears during a 'git checkout'
-> in a worktree. I imagine there are a lot of "gotchas" here. It is worth
-> spending some time imagining how to create this setup and/or enforce it
-> as submodules are added in the lifecycle of a repository, if only to
-> validate the config design presented by this series.
+> And one value-add that I would think of off the top of my head is to
+> show "we have commit X checked out, which is 4 commits on top of
+> what the superproject's index records for this submodule" when "git
+> status" is run in the submodule's worktree.  I do not know that is
+> an operation to specifically optimize for, but by choosing to
+> "cache" the common dir, not the one specific to the worktree of the
+> superporject our submodule checkout is a part of, the chosen design
+> seems to make it harder to implement?
 
-Yeah, I think we may be overthinking it, especially with the concerns
-about common dir vs. gitdir. More specifically - I think we accidentally
-did the right thing in the previous iteration by using the gitdir :)
-
-I think we can probably put it pretty simply:
-submodule.superprojectGitDir should point from the most local gitdir of
-the submodule to the most local gitdir of the superproject.
-
-Luckily there are not so many permutations to worry about here.
-
-Super doesn't have worktrees, sub doesn't have worktrees:
-.git/
-  modules/
-    sub/
-      config <- contains a pointer to ".git/"
-  config
-
-Super doesn't have worktrees, sub does have worktrees (and as you
-suggest above, right now this would have to be created carefully and
-manually, but later we probably want this to Just Work):
-.git/
-  modules/
-    sub/
-      config
-      config.worktree <- contains a pointer to ".git/"
-      worktrees/
-        sub-wt/
-	config <- contains a pointer to ".git/"
-  config
-
-Super has worktrees, sub doesn't have worktrees:
-Actually, I think in the future this might not be possible, if we want
-to make `git worktree add --recurse-submodules` work gracefully (and I
-do want that). But in the interim, in practice it looks like this:
-.git/
-  modules/
-    sub/
-      config <- contains a pointer to ".git/"
-  worktrees/
-    super-wt/
-      modules/
-        sub/
-	  config <- contains a pointer to ".git/worktrees/super-wt"
-      config
-  config
-This case is pretty weird anyway, because in order for a submodule to be
-present in multiple worktrees of the superproject, the submodule itself
-needs to either have multiple worktrees or multiple repos. But on the
-flip side, today it's impossible for a single submodule gitdir to need
-to know about more superproject worktrees than the one it was
-initted/whatever into.
-
-Both super and sub have worktrees:
-And this won't exist until we have graceful support of `git worktree add
---recurse-submodules` or with some manual effort, now.
-.git/
-  modules/
-    sub/
-      worktrees/
-        sub-wt/
-	  config <- contains a pointer to ".git/worktrees/super-wt/"
-      config
-      config.worktree <- contains a pointer to ".git/"
-  worktrees/
-    super-wt/
-      config
-  config
-  config.worktree
-
-I think this will give us access to both the worktree gitdir *and* the
-common gitdir:
-
-  ~/git/.git/worktrees/git-second [GIT_DIR!]$ git rev-parse --git-common-dir
-  /usr/local/google/home/emilyshaffer/git/.git
-
-So that means from any submodule, we can determine:
- - submodule's gitdir (from the .git link in the submodule wt)
- - submodule's common dir (from existing commands)
- - gitdir of superproject which submodule inhabits (from the config in
-   the submodule's gitdir, or the submodule's config.worktree)
- - common dir of superproject (from existing commands + prior config)
-
-The upshot to me, then, means that we should be 1) making sure to get
-the path to the gitdir, not the common dir, of the superproject; and 2)
-using helpers to write to the worktree config, not to the local config,
-of the submodule. In other words, we want to avoid the following:
-
-.git/
-  modules/
-    sub/
-      worktrees/
-        wt/
-	  config
-      config <- "submodule.superprojectGitDir = ../../../.." as written by the worktree
-
-Will take a look at the rest of the comments too, but this sounds like a
-reasonable approach to me.
+Yeah, that is compelling. Sorry not to reply in depth, but I am
+convinced.
 
  - Emily
-
-> 
-> Thanks,
-> -Stolee
