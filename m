@@ -2,43 +2,43 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D92A8C433F5
-	for <git@archiver.kernel.org>; Sun,  7 Nov 2021 23:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D66B2C433F5
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 00:12:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ABE9161390
-	for <git@archiver.kernel.org>; Sun,  7 Nov 2021 23:48:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ABAE261378
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 00:12:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234291AbhKGXu4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Nov 2021 18:50:56 -0500
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:36686 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231370AbhKGXuz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Nov 2021 18:50:55 -0500
-Received: by mail-ed1-f53.google.com with SMTP id o8so55366739edc.3
-        for <git@vger.kernel.org>; Sun, 07 Nov 2021 15:48:12 -0800 (PST)
+        id S232665AbhKHAPJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Nov 2021 19:15:09 -0500
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:46065 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231475AbhKHAPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Nov 2021 19:15:09 -0500
+Received: by mail-ed1-f44.google.com with SMTP id f4so55324559edx.12
+        for <git@vger.kernel.org>; Sun, 07 Nov 2021 16:12:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=yM7H/+KPRewseW05p8f8fHRQ92+Q4ZXTUXOSeYiAaiY=;
-        b=FdJwVVHxLMP+pZG2llsRKSb4kbOyUWK7kkDP809KnoNHn+qMkxfh4mvUufkY8qya63
-         RuzbzLqJsIV8Ok1Og7yvRgp8PbHB5IXlvYDTsd91BquxvGljEfW87zzWlhTl08D0ksS+
-         aHA8qeA7eq49WQAGcZZmkiu5MEKcWJbYn25XHgUprAU8PPp4qtAjQwSW6rYmw4kbQ/8I
-         XfTwUSs2djxwTNg1hIpYm21KV3gtqK0GHtOJvsCF/mG9Psj/nxpBjKT6gHEsFo2JR8XN
-         yvJuMmM5s7RZGvYmQfbpfvLt4p+xQFR3cFzD9qPOlyFyXXqRIvHN+IUfpIexJ4yCK6nX
-         JtFQ==
-X-Gm-Message-State: AOAM532uwsXL0b5+4yvEFito4FoKWaaUDrXaiWFe9roxjzHsdgMzNw/L
-        CvX0Jc4oeyLVPXf1r1oS690b8pkYFeOb15kNsw4=
-X-Google-Smtp-Source: ABdhPJxk04doJ8Q9+oup6ZvVmqHhmQaEszAmiBczuvzoDMLixNh9Xfu0qX7DUIpJMurYVRaZ5UXeHep3TAbQbm3uZsI=
-X-Received: by 2002:a05:6402:206c:: with SMTP id bd12mr1475783edb.283.1636328891243;
- Sun, 07 Nov 2021 15:48:11 -0800 (PST)
+        bh=ndY9rO7Afsl0CaWYYm4US0/sqmZW/cX3gJxqm0KZnjA=;
+        b=w51OPFZgT0UZHYUBdaR9r9AApavmm34N44C9jGxv4PxX4bSqFMPHdXxtQBKcjv0tVL
+         oh1kTVQwukPVMvvAR6oFfQ6GioGAmVtu8eBJzSZRn5LXUtRAyh09UPKG8vJPD8StT5va
+         N9DwbFCJWVXejJLbrG9FA/kJ0jKLtbEIRcTjiK8w57aKXwOnu0Bv3SYXkSY7QHHTZ8Dc
+         nI50qrkW8bOjPWukRV36kyBZLURlw6bE40aESL5gP7/AEzemMuYStzNDxqqhUA1Q558+
+         8nXDTA8RB/qmETUJEb489rp/hIP7mdXFoTb+caMJiMonRx+aHOe8l/O4IslCrxF3jsdV
+         248w==
+X-Gm-Message-State: AOAM532bapiqApM1hzDlsWPnJAsGhTx5D+d9pK2leJRKgyfXVLGRfpiS
+        feWpvYXuz4uq0Mxtuvbj02yeS1Z0Ea7OwnIuINM=
+X-Google-Smtp-Source: ABdhPJxRRiJ/e1uchPA3FOG+95JCnAgY49QhIqmCJ78AGa4Qgdsp69M/o1w9wO1WfoDP//PsjgP96BMgJqbl6sJ+z6M=
+X-Received: by 2002:a05:6402:206c:: with SMTP id bd12mr1647573edb.283.1636330344972;
+ Sun, 07 Nov 2021 16:12:24 -0800 (PST)
 MIME-Version: 1.0
-References: <20211107225525.431138-1-sandals@crustytoothpaste.net> <20211107225525.431138-3-sandals@crustytoothpaste.net>
-In-Reply-To: <20211107225525.431138-3-sandals@crustytoothpaste.net>
+References: <20211107225525.431138-1-sandals@crustytoothpaste.net> <20211107225525.431138-4-sandals@crustytoothpaste.net>
+In-Reply-To: <20211107225525.431138-4-sandals@crustytoothpaste.net>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 7 Nov 2021 18:48:00 -0500
-Message-ID: <CAPig+cRkbjt=bJngcbzVPRGqY=14Zs57V0i=RR_5=m+k8fu+hg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] gitfaq: give advice on using eol attribute in gitattributes
+Date:   Sun, 7 Nov 2021 19:12:14 -0500
+Message-ID: <CAPig+cRtOpaPd_HCQAW=33-vxhP4Knijo3g0dUA9HVb4_=JH4w@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] gitfaq: add entry about syncing working trees
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -52,55 +52,87 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Nov 7, 2021 at 5:55 PM brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
-> In the FAQ, we tell people how to use the text attribute, but we fail to
-> explain what to do with the eol attribute.  As we ourselves have
-> noticed, most shell implementations do not care for carriage returns,
-> and as such, people will practically always want them to use LF endings.
-> Similar things can be said for batch files on Windows, except with CRLF
-> endings.
->
-> Since these are common things to have in a repository, let's help users
-> make a good decision by recommending that they use the gitattributes
-> file to correctly check out the endings.
+> Users very commonly want to sync their working tree with uncommitted
+> changes across machines, often to carry across in-progress work or
+> stashes.  Despite this not being a recommended approach, users want to
+> do it and are not dissuaded by suggestions not to, so let's recommend a
+> sensible technique.
 > [...]
 > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
 > diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-> @@ -469,14 +470,25 @@ references, URLs, and hashes stored in the repository.
-> +With text files, Git will generally ensure that LF endings are used in the
-> +repository, and will honor `core.autocrlf` and `core.eol` to decide what options
-> +to use when checking files out.  You can also override this by specifying a
-> +particular line ending such as `eol=lf` or `eol=crlf` if those files must always
-> +have that ending in the working tree (e.g., for functionality reasons).
+> @@ -185,6 +185,49 @@ Then, you can adjust your push URL to use `git@example_author` or
+> +[[sync-working-tree]]
+> +How do I sync a working tree across systems?::
+> +       First, decide whether you want to do this at all.  Git usually works better
+> +       when you push or pull your work using the typical `git push` and `git fetch`
+> +       commands and isn't designed to share a working tree across systems.  This is
+> +       potentially risky and in some cases can cause repository corruption or data
+> +       loss.
+
+The phrase "usually works better" makes this statement feel weak, thus
+it may not convey the potential severity of the issue. I wonder if
+rewording it something like this would make the statement more
+forceful:
+
+    Git works best when you `git push` and `git pull` your work
+    between machines; it is not designed to share a working tree
+    across systems. [...]
+
+> +Usually, doing so will cause `git status` to need to re-read every file in the
+> +working tree.  Additionally, Git's security model does not permit sharing a
+> +working tree across untrusted users, so it is only safe to sync a working tree
+> +if it will only be used by a single user across all machines.
 > ++
-> +For example, the following might be appropriate in some projects:
->  +
->  ----
->  # By default, guess.
->  *      text=auto
->  # Mark all C files as text.
->  *.c    text
-> +# Ensure all shell files end up with LF endings and all batch files end up
-> +# with CRLF endings in the working tree and both end up with LF in the repo.
-> +*.sh text eol=lf
-> +*.bat text eol=crlf
->  # Mark all JPEG files as binary.
->  *.jpg  binary
->  ----
+> +It is important not to use a cloud syncing service to sync any portion of a Git
+> +repository, since this can cause corruption, such as missing objects, changed
+> +or added files, broken refs, and a wide variety of other corruption.  These
+> +services tend to sync file by file and don't understand the structure of a Git
+> +repository.  This is especially bad if they sync the repository in the middle of
+> +it being updated, since that is very likely to cause incomplete or partial
+> +updates and therefore data loss.
 
-I like the concrete explanation in the commit message of why `.sh` and
-`.bat` files need to be configured specially, and was expecting that
-quite useful information to be repeated here in the body. That does
-seem exactly like what someone would come to the FAQ searching for,
-and even though the above content hints at it, the hint may be just
-vague enough to be overlooked. Consequently, I'm wondering if it ought
-to be spelled out more explicitly here. In particular, if we give
-examples of actual error messages people might encounter when
-attempting to run a CRLF shell script or an LF batch file, that would
-really give a FAQ searcher/reader something to latch onto when trying
-to solve a problem. This could be done as a lead-in paragraph
-immediately before the "For example, the following...".
+Taking into consideration that people who are experiencing such
+corruption will likely include the name of the syncing service in
+their search query, would it make sense to mention some well-known
+services here in order to make it more likely that people will
+actually find this entry? Something like this, perhaps:
 
-Also, following v1 review, I think you had intended[1]: s/end up with/have/
+    It is important not to use a cloud syncing service (such as DropBox,
+    FooBar, CowMoo, BuzzingBee, etc.) to sync any portion of a Git
+    repository...
 
-[1]: https://lore.kernel.org/git/YW9wgbN%2Fb8NkVp4z@camp.crustytoothpaste.net/
+> +Therefore, it's better to push your work to either the other system or a central
+> +server using the normal push and pull mechanism.  However, this doesn't always
+> +preserve important data, like stashes, so some people prefer to share a working
+> +tree across systems.
+> ++
+> +If you do this, the recommended approach is to use `rsync -a --delete-after`
+> +(ideally with an encrypted connection such as with `ssh`) on the root of
+> +repository.  You should ensure several things when you do this:
+> ++
+> +* There are no additional worktrees enabled for your repository.
+
+I don't fully understand this restriction. Can you explain it (at
+least here in the email discussion)?
+
+> +* You are not using a separate Git directory outside of your repository root.
+
+Same question about this restriction.
+
+> +* You are comfortable with the destination directory being an exact copy of the
+> +       source directory, _deleting any data that is already there_.
+> +* The repository is in a quiescent state for the duration of the transfer (that
+> +       is, no operations of any sort are taking place on it, including background
+> +       operations like `git gc` and operations invoked by your editor).
+> ++
+> +Be aware that even with these recommendations, syncing in this way has some risk
+> +since it bypasses Git's normal integrity checking for repositories, so having
+> +backups is advised.  You may also with to do a `git fsck` to verify the
+> +integrity of your data on the destination system after syncing.
+
+s/with/wish/
+
+In fact, as with "usually" above, "wish" may be too weak. Perhaps say
+instead that it is "recommended" that you use `git fsck` to verify the
+integrity.
