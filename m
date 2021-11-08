@@ -2,104 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75B88C433F5
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 07:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C04E1C433F5
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 10:33:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52A8B6113D
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 07:10:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A638B6120D
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 10:33:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237751AbhKHHNG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 02:13:06 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63496 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237311AbhKHHNF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 02:13:05 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 821FE164188;
-        Mon,  8 Nov 2021 02:10:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7aJoqx2ZGVirt13ZkNBC9toJ5A257vs0E4/ZOL
-        n4Q+c=; b=SIOPjuPthzLokjMmpbFfMz83xk7Hs3k13LjaZdXTpXCYrEm2cm+XBb
-        rgsNBPKSHEASPc0C36YIMYgICnS16ed0Qa+zGNS56ptsvAOgLb5eg7pkhViS2Vnv
-        J5lcoOCWFuU5JAInHF/Iy4pb0iX67EHyMrLD4eipwsHzcwKFiciIc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7ADB9164187;
-        Mon,  8 Nov 2021 02:10:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D86E1164186;
-        Mon,  8 Nov 2021 02:10:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Birk Tjelmeland <git@birktj.no>, git@vger.kernel.org
-Subject: Re: [PATCH] stash: show error message when lockfile is present
-References: <20211107213012.6978-1-git@birktj.no>
-        <YYiXw41upJfPS7l0@nand.local>
-Date:   Sun, 07 Nov 2021 23:10:17 -0800
-In-Reply-To: <YYiXw41upJfPS7l0@nand.local> (Taylor Blau's message of "Sun, 7
-        Nov 2021 22:21:39 -0500")
-Message-ID: <xmqqlf1zunqe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S238177AbhKHKgX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 05:36:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43458 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236895AbhKHKgV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 05:36:21 -0500
+Received: from mail-ua1-x934.google.com (mail-ua1-x934.google.com [IPv6:2607:f8b0:4864:20::934])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB304C061570
+        for <git@vger.kernel.org>; Mon,  8 Nov 2021 02:33:37 -0800 (PST)
+Received: by mail-ua1-x934.google.com with SMTP id i6so30437226uae.6
+        for <git@vger.kernel.org>; Mon, 08 Nov 2021 02:33:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=vqiV+Vg/sZulljf5IBfiqQM3NvLsrHr1QbKtlzalxPw=;
+        b=ABOxXPYlVmRv4vD07MIsBfUD1A8N1NP2yWfe1dqb7cHptVZQMeRjrv9eNuXJBesAGE
+         FMWd5e94QswzBJfV8J5Be0XL2xxLJO/EY5YUmTOQDH8ujUGG6p4GJ1ru6wFiyKk9Rx6j
+         +nJW4i/VwMAG4n9TJZuJYYQ4ORAKPaA9C0ZT8a85/fir6KFl15dT6zl61KRjVzYiJ6+N
+         eik3a3kfujdxAvKWADZ+qJvcVEG2fYvLj655ywdsqKRU5lVw942fr7aRbZPcJYpP7GTJ
+         4i3aePDUxWGkEUifUozQ9TPPX/Q23u+g32U+ahhSW/QtUo3GHFxZc+ff0h+X6O7t47GA
+         cMLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=vqiV+Vg/sZulljf5IBfiqQM3NvLsrHr1QbKtlzalxPw=;
+        b=McHF1SuCzvQ86/6gN0ldztkGc7mwhC12arKuAvibtFtHNEL83O8Z71aRY68hmd6mwD
+         ILrIxxLwm4Ocrv/XP0rCzszoIh7mbwL9cb6Oj2+STeX3jS/vm+dOE1NX8fgj/AhpW2Uz
+         0OuUKF/wXYsdqazR/9sk9tl61AChmkA6gShW9ILe6AEK+/TyK7fYouRLRnt13YGAzwe7
+         K4iNpZLIplmtGfSWn81n0sBp5org6cLyvU273rh8GHxHGP7xbf39bA7//U4T+dcCc4wC
+         kSIFcLevN0fshbOKOCBLIPAxYCKXvGUt5wscJ7SSZPf3fn/2chT8m76B8yJFSs9T4Bh4
+         tE0w==
+X-Gm-Message-State: AOAM530bFevReSE2x1jbfKjRCQ/kSt9njBsf/uHD76JtrNmrU7qorFLk
+        j3j//gPUxojqNj1iW5/A+SCtQDWglfgxjZL4aSvLuzkn/h9RUw==
+X-Google-Smtp-Source: ABdhPJxdgPYHjjQGO03/lN6tHkBgJaa8sAoDI8U1dhOKR8jWV5TYAt8PX09lxldP6246mXK/OfvWpln8WAg2rXmlV84=
+X-Received: by 2002:ab0:5928:: with SMTP id n37mr92370063uad.15.1636367616896;
+ Mon, 08 Nov 2021 02:33:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EE342C16-4062-11EC-80E6-98D80D944F46-77302942!pb-smtp21.pobox.com
+References: <xmqq8ry44vve.fsf@gitster.g>
+In-Reply-To: <xmqq8ry44vve.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 8 Nov 2021 11:33:25 +0100
+Message-ID: <CAFQ2z_P8QGvSs5zwyOcBsbBiq+-rXSJpXzgOwwi_eg1ZB6cSSA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2021, #02; Wed, 3)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Thu, Nov 4, 2021 at 1:17 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Here are the topics that have been cooking in my tree.  Commits
+> prefixed with '+' are in 'next' (being in 'next' is a sign that a
+> topic is stable enough to be used and are candidate to be in a
+> future release).
+..
+> * hn/reftable (2021-10-08) 19 commits
+>  - Add "test-tool dump-reftable" command.
+>..
 
-> I wonder if there are callers of repo_refresh_and_write_index() that
-> don't want any errors reported. Not having thought about it too hard
-> (much less looked through any of these callers), I would expect that
-> having the choice to either error() or die() is something worth keeping.
-> But I do not know if there are callers which want neither.
-> ...
->>  add-interactive.c | 4 ++--
->>  add-patch.c       | 4 ++--
->>  builtin/am.c      | 2 +-
->>  builtin/merge.c   | 4 ++--
->>  builtin/stash.c   | 6 +++---
->>  cache.h           | 4 ++--
->>  read-cache.c      | 3 ++-
->>  7 files changed, 14 insertions(+), 13 deletions(-)
+As this topic has no interaction with any other code in Git, leaving
+it cooking in 'seen' for longer doesn't provide any extra test
+assurances.
 
-I think most of the changes in this patch, other than the ones to
-builtin/stash.c, are unwanted, and I suspect what you wondered above
-may be the same thing.  Take for example this hunk:
+Is there something stopping this topic from graduating to next, and if so w=
+hat?
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index a0ccc8654d..977fcc4e40 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -501,7 +501,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 	const struct object_id *bases[1];
- 
- 	read_cache_preload(NULL);
--	if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
-+	if (refresh_and_write_cache(REFRESH_QUIET, 0, LOCK_REPORT_ON_ERROR, 0))
- 		return -1;
- 
- 	if (write_cache_as_tree(&c_tree, 0, NULL))
-
-Telling the function to be quiet and at the same time be noisy on
-only one particular kind of error sounds somewhat strange.  I do not
-think of any reason why we should believe that failing to lock will
-be the only special kind of failure to be of interest to the users.
-
-I would think the "fix" should look more like this:
-
- 	read_cache_preload(NULL);
-	if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
-- 		return -1;
-+ 		return error(_("failed to refresh the index"));
-
-That is, tell the function that the caller will do the error
-reporting (i.e. "QUIET") and do so.
-
-Thanks.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
