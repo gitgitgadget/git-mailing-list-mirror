@@ -2,105 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2F28C433F5
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 19:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4078FC433F5
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 19:18:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D263F610E9
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 19:18:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1EED6610E9
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 19:18:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236878AbhKHTVL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 14:21:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50676 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236872AbhKHTVK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 14:21:10 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0342BC061570
-        for <git@vger.kernel.org>; Mon,  8 Nov 2021 11:18:26 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id x15so35607127edv.1
-        for <git@vger.kernel.org>; Mon, 08 Nov 2021 11:18:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=yNKZeROnnLEKroX51UgWBlrUCU2/GDeTACfXUUVoZ4s=;
-        b=eMZXDViQ9N/HfrBkPojVKqnS4V5Mtun/QeXg41wtaBDP1kVFW2IxX97uXSSg6ik7HJ
-         YI47O7nP+ra5CDIFCnkUfyPtRTdLt7jQjvubV92rspCuB4vQxRUlQ+fEEZnPf1YPgmVv
-         ZTYzhST7bc7LT6VgWEJvgrUm/127fKmlJxOZgxyDbgSYej40NrcM5Q7rJg8l8bULyZFU
-         uZ4spbovm8IqUEBJq8IcEeQ70OxKDnr8LSfvaXKiuQuxF/O3q2jl1bS3v0lhbGJ6e/NB
-         trpWerxZSNWa3Bp8ZDrcF7+uj0HrcfNcsJunpNypZORzzGq3k/sV5yTQ0DW4rZo/4CS3
-         cC6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=yNKZeROnnLEKroX51UgWBlrUCU2/GDeTACfXUUVoZ4s=;
-        b=sErBkQRlX+uS2BorLvIGvJibStwngv4+Pol0EwscxKbw9bW6XYSsUPXzIR0kPGg/Sd
-         bACYMEtx5icE0bNi1VzIXJ3fQ9k8lc6V/Fif1vMuP6xJ0usgcx2LPDS7lxZvRiD1VVjQ
-         Dm7HtC8/TGuKe88U0m/BCAh6MbXPg+FrYbcth9e0O1t+OE+TQ1v+Xw1CespdXmeLhhI6
-         sbLhflqtEj/Kr+fy8nMVw3gu4/Dx7+J/ZBTnJ8ntRKLMxiOq0oIR5k+hLX4HyWMoomgi
-         hNi/aOmIs8ZSWWzs4SEzy8wP0PejTyVKSq1Y6UmaDcAVjYIQ4WiK9QkxpvmvM6sODNFd
-         gTIQ==
-X-Gm-Message-State: AOAM530H7K99k5jRRXhaPme8cF2F6VlO+oyYOddiRIjpPG5AXd1xa2Jd
-        7b8pvqq1fjpLxtkXIrLxWOs4zatcz50=
-X-Google-Smtp-Source: ABdhPJymnD5RpX0V4TJvAvmijWI3suzopoepLKoLJe5n3+4AyPhis2kzBMMbEk62mCxEZZ1skP412g==
-X-Received: by 2002:a17:907:d22:: with SMTP id gn34mr1900015ejc.195.1636399104444;
-        Mon, 08 Nov 2021 11:18:24 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id n16sm9787394edv.79.2021.11.08.11.18.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Nov 2021 11:18:23 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mkA9v-001Dum-Bx;
-        Mon, 08 Nov 2021 20:18:23 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Maksym Sobolyev <sobomax@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Maksym Sobolyev <sobomax@sippysoft.com>
-Subject: Re: ms/customizable-ident-expansion
-Date:   Mon, 08 Nov 2021 20:14:23 +0100
-References: <xmqqr1c3e57a.fsf@gitster.g>
- <211101.86fssf3bn3.gmgdl@evledraar.gmail.com> <xmqqr1bzbp69.fsf@gitster.g>
- <CABFYoQA82u8Um6L439_bU4a+WpkdXOcbU8foPjqnVw+4MnNU0A@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <CABFYoQA82u8Um6L439_bU4a+WpkdXOcbU8foPjqnVw+4MnNU0A@mail.gmail.com>
-Message-ID: <211108.864k8mfocg.gmgdl@evledraar.gmail.com>
+        id S236881AbhKHTV1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 14:21:27 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55053 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236872AbhKHTV0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 14:21:26 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C208216B745;
+        Mon,  8 Nov 2021 14:18:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=qzOle2lrl4Sl
+        0+4UqaSeLgsOQ29jCJvad4MSnl9WGBQ=; b=jh7CjR45FMKBJwODWq4UBDHIdu1L
+        6T4lAlfWKHbwCcYhj3Ga5DdljDGd4CqNusapzAPdA8UiMc+6wItDDer7OJGcmF2n
+        lGzI2Bgw+bFjUwRm0GNkRLBLw78XHFrUlJwAT9RxF38Qd7uEYkBdkpxNj8Q5eu8Z
+        k+kviIgozEy5bCg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BA69E16B744;
+        Mon,  8 Nov 2021 14:18:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1ADDA16B742;
+        Mon,  8 Nov 2021 14:18:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 01/10] command-list.txt: sort with "LC_ALL=C sort"
+References: <cover-v2-00.10-00000000000-20211022T193027Z-avarab@gmail.com>
+        <cover-v3-00.10-00000000000-20211105T135058Z-avarab@gmail.com>
+        <patch-v3-01.10-c385e84c04c-20211105T135058Z-avarab@gmail.com>
+        <xmqqbl2yw7b6.fsf@gitster.g>
+        <211106.867ddlhp9j.gmgdl@evledraar.gmail.com>
+Date:   Mon, 08 Nov 2021 11:18:37 -0800
+In-Reply-To: <211106.867ddlhp9j.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sat, 06 Nov 2021 05:26:04 +0100")
+Message-ID: <xmqq35o6v4ky.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: AD916A64-40C8-11EC-BD21-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On Sun, Nov 07 2021, Maksym Sobolyev wrote:
-
-> Junio, well it works and passes Occam Razor test. I even added a
-> reasonable number of test cases. As I tried to explain at least once,
-> having it per-directory might be advantageous, if the project pulls
-> sources from all different places where you might "mute" ID
-> replacement for certain parts of the tree or use a different one. Most
-> of that would have to be thrown away if the feature is to be reworked
-> to your liking.
-
-Yes, isn't there also a practical use for this in the source trees of
-the various *BSDs who import each other's sources (but I don't know if
-it's useful for that).
-
-> Totay I logged into one of our products and got this message:
+> On Fri, Nov 05 2021, Junio C Hamano wrote:
 >
-> + sudo chroot /voicelog/src su -l sobomax
-> This fortune brought to you by:
-> $FreeBSD: 3325fdce090fbf738dcb1f8535d16217789cbe4e $
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>>
+>>> In a subsequent commit I'll change generate-cmdlist.sh to use C sort
+>>> order, and without this change we'd be led to believe that that chang=
+e
+>>> caused a meaningful change in the output,
+>>
+>> What I found misleading in this sentence (which hasn't changed after
+>> I pointed it out in the previous iterations) is that[...]
 >
-> I did not know such a fortune ever existed, it has probably been
-> developed around a long-long time ago before git or even linux
-> existed. Just as many other more useful features around the same idea.
+> I tried to clarify what you raised in the previous iteration with the
+> new paragraph after the one you're quoting. I.e.:
+>
+>     Note that this refers to the sort order of the lines in
+>     command-list.txt, a subsequent commit will also change how we treat
+>     the sort order of the "category" fields, but that's unrelated to th=
+is
+>     change.
 
-This on the other hand looks both neat and a bit scary, so something
-that previously left "$FreeBSD$" alone started expanding it? Hrm, I
-guess since you need to set "ident" it's no big deal.
+Yeah, but my question was not about the order of category tokens on
+each line.  My question was the order of these lines in the file.
 
-But I wonder if we'll see any downstream breakage for people who opt-in
-to this, who have code they didn't know about that expects an RCS/CVS
-version, and suddenly gets a SHA-1-sized hex string instead :)
+The new pargraph is answering a question that wasn't asked.
+
+>> Is this talking about the order of entries in command-list.h file?
+>>
+>> Also, if the script sorts the input, whether it is in C locale or
+>> other locale, it would not matter how the input originally is
+>> sorted, as the input does not have duplicated entries to make sort
+>> stability matter, no?
+>
+> This change is just to make this consistent for human editors. I think
+> we re-sort this wherever we display this in git, whether that's via
+> help.c or the completion powered by git.c.
+
+So
+
+>> order, and without this change we'd be led to believe that that change
+>> caused a meaningful change in the output,
+
+is something irrelevant to explain what this change is, no?
