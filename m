@@ -2,103 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F8C7C433EF
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 20:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19458C433F5
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 20:37:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E6D1619EE
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 20:36:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA968619EA
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 20:37:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235180AbhKHUjE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 15:39:04 -0500
-Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:37317 "EHLO
-        wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229832AbhKHUjA (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 8 Nov 2021 15:39:00 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id 764693201DEC;
-        Mon,  8 Nov 2021 15:36:14 -0500 (EST)
-Received: from imap44 ([10.202.2.94])
-  by compute3.internal (MEProxy); Mon, 08 Nov 2021 15:36:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=birktj.no; h=
-        mime-version:message-id:in-reply-to:references:date:from:to:cc
-        :subject:content-type:content-transfer-encoding; s=fm2; bh=BXXOP
-        HdKPZDC1yaDXokf3gQSNfIpcMvM2KbhZu+V77w=; b=eWZB26vuaA4kvqQ1yVX7U
-        AFBhGaIkiQDcQeBvjlIrmIxTsgJjWTXssBzt9Hrpd+KVe6A36p33Z56aud8iczvO
-        tWszegi+svT/whPuAPta5jGdJa7ZTfXBXMp0k/zS2vWr3Ia4XxOfWVJOkES9I4JZ
-        UIlnF/onFhGNjiysmAA6p/lmYJ8jHQi3tK9tYOZpnGJtzFBl2fkGYPsNJ9nz1pK9
-        DtyiVmrzKQdqKa1rSvQybsSQj6Kdk62OFm94nAkCoojvcm82yYGtgslLinEdLqex
-        T2107Jo/F5WkWeTGLNedVBxA+AsyFMGiI+fjNUw5LjsOxe+YFJhriJPZmHv0VYM2
-        w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=BXXOPHdKPZDC1yaDXokf3gQSNfIpcMvM2KbhZu+V7
-        7w=; b=AgcNgaIr0Mk5D2w1gRAsG6yS316NwY+J63N9iKTwEukv9H7zNAzZOp65n
-        YQw0Y+gcrywLm08+HKvXNdR0rHpnjWFKcb19UvXO1Tv1BSHJdFpGNll07JVTPt3J
-        lL/eBAL3ZpT0yqG1LNJ1gKYnoNIU9iz/5Rx+OxDk3UPOs53YDUW0DP7DSQB/2Jh6
-        gOmaqPjWfXdabOfBsnMRT2g5P2HMqIhGeHXw0IJuDent2b9UQqVlzVsvBCY5AASr
-        eNkBNT+lmldvrzUXJdsw/fw4SkWjjWe8eDXfb7AiMMGCgXrECTeX2zrrySUdyI0h
-        VC1cEFcOWvzpVsazKmysaLPX5X7bQ==
-X-ME-Sender: <xms:PYqJYe025OCXcTLxImKWN5f9aP_xSYOGInTebiJqpxh09mZPulT2yw>
-    <xme:PYqJYRFt9jqTsEdhko-S-aAgcZuXtjn9ilaljTL_pTZL1YSTXCj3u7tkWBAlOOEiL
-    XrcyyxJsOEuFNuDcYc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddruddvgddufeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtgfesth
-    hqredtreerjeenucfhrhhomhepfdeuihhrkhcuvfhjvghlmhgvlhgrnhgufdcuoehgihht
-    segsihhrkhhtjhdrnhhoqeenucggtffrrghtthgvrhhnpedvveehffekiefgffdvfedtte
-    fffedvffelfeekgffhieefffetuefgleeiffelffenucevlhhushhtvghrufhiiigvpedt
-    necurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsegsihhrkhhtjhdrnhho
-X-ME-Proxy: <xmx:PYqJYW4O9sGr6GRTgoFmhoiFl2KvlObMjbbwLmLfSbT5nyz8QCfFDg>
-    <xmx:PYqJYf1kBp2GhSbw7xrOS2B9L_f3I6lIlKtex9zHCNUSXo-jQCWokA>
-    <xmx:PYqJYRES9FUfmEj4m3Wpm0BfyC__91giD00j1dSY4Dt-gvRINq41qg>
-    <xmx:PoqJYfMydA1j6oN26APTfC954JXxQwtCjk_-do9MwfqFE5l1kOEXyg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 6FE0AFA0AA6; Mon,  8 Nov 2021 15:36:13 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-1369-gd055fb5e7c-fm-20211018.002-gd055fb5e
-Mime-Version: 1.0
-Message-Id: <0777e271-d5cc-45b2-97b2-7597cf75ad86@www.fastmail.com>
-In-Reply-To: <xmqqsfw6tnu7.fsf@gitster.g>
-References: <20211107213012.6978-1-git@birktj.no>
- <YYiXw41upJfPS7l0@nand.local> <xmqqlf1zunqe.fsf@gitster.g>
- <211108.868rxyfote.gmgdl@evledraar.gmail.com> <xmqqsfw6tnu7.fsf@gitster.g>
-Date:   Mon, 08 Nov 2021 21:35:01 +0100
-From:   "Birk Tjelmeland" <git@birktj.no>
-To:     "Junio C Hamano" <gitster@pobox.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Cc:     "Taylor Blau" <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH] stash: show error message when lockfile is present
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S236934AbhKHUjw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 15:39:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40288 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236312AbhKHUjv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 15:39:51 -0500
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E193C061570
+        for <git@vger.kernel.org>; Mon,  8 Nov 2021 12:37:06 -0800 (PST)
+Received: by mail-io1-xd30.google.com with SMTP id k21so3147396ioh.4
+        for <git@vger.kernel.org>; Mon, 08 Nov 2021 12:37:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=SElPSt0w3aQSgguK2eiV3NzeLba65rs5YK0iqjV6JSA=;
+        b=yv/fUQemP7PYzmUKYpAa3/9mQ1acn1/y2T7HDZpwDWuAjw5L9qKLTGiNSI+z5cPwCv
+         Vks/6HrmVp47HkvIGa/z/FequG0T1mvmg8y6/+nkh3Vl68t8JMk75bJtNeauUNUETAgX
+         N1lwuqc1iO5rEU58TohxJWIWqatveQG79eivTE9WOHhPvDxBUZtXuMIjD9210givFA63
+         MDDcqNCa0t8dhxNwrzwS+5OEjgQaInlDlGOlYWouIk/rwlKk7aC3qVsWY7lGGKJ3xjTo
+         mJXq70iEMcIcjo7L8E/BEu7EgJ+iYL0i9JbVA7m3MEUADS4JISKdr60bgOyyF+TB/oae
+         CP/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=SElPSt0w3aQSgguK2eiV3NzeLba65rs5YK0iqjV6JSA=;
+        b=pgRputhdQlfva0LjX1P6jzzi8VaCfdZpP1cHTpwiEJ80GkJUWc/yH1GYfIELi/S15Y
+         DxTNK6eKAXjQ2EUHhjt8PrBtTDoSTQ2hi7lAl6+3PRlXhXAbQVCwXvXxzYFBijcI1xWS
+         a6is800XS5qCTB13HbY3fBf0CLTF8Rp8wKCCfVHM2hmb12K9FGr8BnusblewnVIZAf9k
+         ifGkcLZyBhQzieqwxlREfbLaeBNFkAZ4bqc4gtHY1kB518p0YjXQdn2huM+CQOD12OTs
+         H+551wFkm3rH1948ppn+/trlQxcQkRfK8tTfUjGKMgjjXklXQWLYFLoHm8FFDHwfQA4F
+         NJDQ==
+X-Gm-Message-State: AOAM532k48zS+oaNxk2Hxgeqj7lsZ1zOQ0xqXX1663Yv2y/MHbdOtAbY
+        phNWaYKaCBdlvsFr7RJrm08IQQ==
+X-Google-Smtp-Source: ABdhPJzKY3n1C5zr+4cO0nDkbTblEiQCIO1wXhIoxErP74kvn4490r9ZNw4VXV6S7RuQcJ6wifPYew==
+X-Received: by 2002:a05:6638:268c:: with SMTP id o12mr1430648jat.93.1636403825653;
+        Mon, 08 Nov 2021 12:37:05 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id l4sm10815442ilv.46.2021.11.08.12.37.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Nov 2021 12:37:05 -0800 (PST)
+Date:   Mon, 8 Nov 2021 15:37:04 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        J Smith <dark.panda@gmail.com>
+Subject: Re: [PATCH 2/8] git.c & grep.c: assert that "prefix" is NULL or
+ non-zero string
+Message-ID: <YYmKcOHInPWtKrWh@nand.local>
+References: <cover-0.8-00000000000-20211106T210711Z-avarab@gmail.com>
+ <patch-2.8-244715e3497-20211106T210711Z-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-2.8-244715e3497-20211106T210711Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I would think the "fix" should look more like this:
+On Sat, Nov 06, 2021 at 10:10:48PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> @@ -431,6 +430,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+>  			int nongit_ok;
+>  			prefix = setup_git_directory_gently(&nongit_ok);
+>  		}
+> +		assert(!prefix || (prefix && *prefix));
+
+Small nit, but the check to `prefix` (in `prefix && *prefix`) is
+redundant with the left-hand side of the or.
+
+>  		precompose_argv_prefix(argc, argv, NULL);
+>  		if (use_pager == -1 && p->option & (RUN_SETUP | RUN_SETUP_GENTLY) &&
+>  		    !(p->option & DELAY_PAGER_CONFIG))
+> diff --git a/grep.c b/grep.c
+> index f6e113e9f0f..88ebc504630 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -145,7 +145,7 @@ void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix
 >
->  	read_cache_preload(NULL);
-> 	if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
-> - 		return -1;
-> + 		return error(_("failed to refresh the index"));
+>  	opt->repo = repo;
+>  	opt->prefix = prefix;
+> -	opt->prefix_length = (prefix && *prefix) ? strlen(prefix) : 0;
+> +	opt->prefix_length = prefix ? strlen(prefix) : 0;
 
-This is how the other callsites of refresh_and_write_cache (the ones
-outside of stash.c) solve this problem, however I agree with =C3=86var t=
-hat
-this error is not as useful as the one given by
-LOCK_REPORT_ON_ERROR (which is why I wrote the patch this way
-to begin with, although I do see that it is not exactly the most elegant
-solution to the problem)
+Looking around, ls-tree's initialization includes a conditional of the
+form:
 
-> If the change were to (1) extend the flag word to make it more uniform,
-> so that it does not special case ONLY the lock-related errors
+    if (prefix && *prefix)
+      chomp_prefix = strlen(prefix);
 
-Would adding a REFRESH_REPORT_ERRORS flag which could then be
-used with repo_refresh_and_write_index be a more acceptable solution?=20
-Then various functions in read-cache.c could check for this flag and
-output errors but not progress when it is present.
+So that could be cleaned up too. But honestly, the pre-image of this
+patch (and the spot in ls-tree) doesn't make a lot of sense to me to
+begin with.
 
-Regards,
-Birk
+Even if prefix were the empty string, calling strlen() on it will just
+give us zero. So there is no difference between assigning `str && *str ?
+strlen(str) : 0` and `str ? strlen(str) : 0`.
+
+So I am confused why this needs hardening with an assertion when it
+seems like the checks before calling strlen() were overly restrictive to
+begin with. In other words: why not only include this hunk (either in
+this patch, or squashed into another patch later on)?
+
+Thanks,
+Taylor
