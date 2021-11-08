@@ -2,110 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D134C433F5
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 02:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F4BBC433F5
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 03:21:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5491761351
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 02:09:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B11A61350
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 03:21:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236181AbhKHCMj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Nov 2021 21:12:39 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51018 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232513AbhKHCMi (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 7 Nov 2021 21:12:38 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 828496048F;
-        Mon,  8 Nov 2021 02:09:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1636337394;
-        bh=ZJQIeaWNJ0Zf5D45a00SkzC8q6mvmjqw4fHYMCCziMQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Qq2Wb8xEXOWHEB3VQMfH9IyD6a48Fpkyr7u3l6vDRnzlwEX4nVrwzgAFMteKqIdhG
-         SmdMJUXTc1AYiWMEH6Rm4J4MMUq1IIFVW5Z/kIUQarDTu2JZYJOuYb4wKskxfBVnYz
-         1J1GjLDrsTQ7dZS7kzOerT7PKoMtNBMMPorUkc43JAgafPx4tjfzYPUqOClVPlBdkV
-         FQOSju1NKcn7f5lnRHATDLnrb6T+XIAi+nWNi76+bJKp2PinzLhqPDYb/JesWP+/Yd
-         P4/uj6O9Q6HarN0hJMzZloB9Z3iXaGTh8pl9vPas+8AozPyfixtkjmiCUQ5rXn3byd
-         SprSC8aMUHM2Vuw3UhG6egUEH8JnC0qXNXWYSyG0iNwwONP54Asj+jG4s9wI2qaKlS
-         PFyqMLbnzBZEx0nm8MTVm1EIT30HyYWo5aGbpKqC0EPZFpPPMXl6LoGLZmCnBJavbz
-         MxNkUFQCYl3OG6xcr7+t/92IPNdSNIAB/SbG3DlAxNERhIECWiI
-Date:   Mon, 8 Nov 2021 02:09:50 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 2/3] gitfaq: give advice on using eol attribute in
- gitattributes
-Message-ID: <YYiG7rTkElKbucl0@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <20211107225525.431138-1-sandals@crustytoothpaste.net>
- <20211107225525.431138-3-sandals@crustytoothpaste.net>
- <CAPig+cRkbjt=bJngcbzVPRGqY=14Zs57V0i=RR_5=m+k8fu+hg@mail.gmail.com>
+        id S237227AbhKHDYa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Nov 2021 22:24:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60262 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234035AbhKHDY3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Nov 2021 22:24:29 -0500
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 394D9C061570
+        for <git@vger.kernel.org>; Sun,  7 Nov 2021 19:21:46 -0800 (PST)
+Received: by mail-il1-x133.google.com with SMTP id l8so15526623ilv.3
+        for <git@vger.kernel.org>; Sun, 07 Nov 2021 19:21:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+nBMRub79VEPXBx7p2Z418u4zlhzBYGtA4ck881nEiw=;
+        b=Y47Y4Pp8Mpgv0QWAMEzjag/tDnx1BpPn+vQTR+gla4FR+mxdsmt1X0ENDhToyTf6vT
+         zpXkdWBtD4G+yi8zPWYRKGQZ8QMezCjIdg4zL6D4/X09K/dUECsD85SnpQt9nzjXlr6j
+         Kn3c4XbmgmI4t5TKM8geDKOcIb1VS4XPpSwglpZopss1cTVyhvi5SlaZ/PiJcG0Xo7mQ
+         d28ynFT53UsOI82J+Q6kjJAoQ3Texi35qbIa2i+f6icQagaAeGHwn8xmXFLX14M/HWBK
+         3KhULIUTdDcdwM0MPZgf2YWTGNJR6NVaT1yM4Zge1Ia0XBQ23+ltEtQmBSSS0I1wGb5P
+         GA9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+nBMRub79VEPXBx7p2Z418u4zlhzBYGtA4ck881nEiw=;
+        b=3jgkr5oN0nYW9CoJhh5PhSLArfxjke8ZGo3cscwG3qgCqf6yF11t6hyQWRoQcQwVT/
+         picq7kltO9U7DDXqQV4V2p98sfdIzzll1AgzE27vMg7Cs1WxwSe/w2p9cR+qG6gIZKnK
+         S9sbj8cfWaXsHvC/VfZcCL0E7z4B+fuEIEDh/g9izVm6u/1IvsdKCPhm5Dyxc1eUliPx
+         n/QNhownw9u045zBiJE0tOIHwOaq6HEWBvRaT1PD+BkwO+SYycHRJY5owP9KkqpT85fi
+         R6CskEFplGsLH6HH9V4Gj3BL0Z0EagYyFCIwimnu8xjZtgvPqAZV7EtiuDvTXooDk/7a
+         PObw==
+X-Gm-Message-State: AOAM530JrJEyQmPJ+Q/Q2rG4q4m71FfjSpvdWxOxkLg2uzRQ0jV2mjs/
+        OYnOIRGeTAZEl2H+S3aYsKXgT+EYx61aIO+q
+X-Google-Smtp-Source: ABdhPJxxbyaFm1h8ArqVu44yOPd03h0REJGXH3UzfkpXTdvJfxONyVuj+eJORGKQeL5cd7dvpwGbbg==
+X-Received: by 2002:a05:6e02:1b08:: with SMTP id i8mr42479551ilv.130.1636341705436;
+        Sun, 07 Nov 2021 19:21:45 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id p14sm7368366ilo.39.2021.11.07.19.21.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Nov 2021 19:21:44 -0800 (PST)
+Date:   Sun, 7 Nov 2021 22:21:39 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Birk Tjelmeland <git@birktj.no>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] stash: show error message when lockfile is present
+Message-ID: <YYiXw41upJfPS7l0@nand.local>
+References: <20211107213012.6978-1-git@birktj.no>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hxmTCxR40i3X41Om"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPig+cRkbjt=bJngcbzVPRGqY=14Zs57V0i=RR_5=m+k8fu+hg@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <20211107213012.6978-1-git@birktj.no>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Nov 07, 2021 at 10:30:12PM +0100, Birk Tjelmeland wrote:
+> Multiple git-stash commands silently fail when index.lock is present,
+> including git stash push and git stash apply. This is somewhat confusing
+> and a better behaviour would probably be to exit with a meaningful error
+> message like most other git commands do.
 
---hxmTCxR40i3X41Om
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+We do terminate with non-zero exit code when trying to, for e.g., 'git
+stash push' when $GIT_DIR/index.lock already exists. That is reflected
+in your patch by not adding any new paths which we return, which makes
+sense.
 
-On 2021-11-07 at 23:48:00, Eric Sunshine wrote:
-> I like the concrete explanation in the commit message of why `.sh` and
-> `.bat` files need to be configured specially, and was expecting that
-> quite useful information to be repeated here in the body. That does
-> seem exactly like what someone would come to the FAQ searching for,
-> and even though the above content hints at it, the hint may be just
-> vague enough to be overlooked. Consequently, I'm wondering if it ought
-> to be spelled out more explicitly here. In particular, if we give
-> examples of actual error messages people might encounter when
-> attempting to run a CRLF shell script or an LF batch file, that would
-> really give a FAQ searcher/reader something to latch onto when trying
-> to solve a problem. This could be done as a lead-in paragraph
-> immediately before the "For example, the following...".
+> This patch updates repo_refresh_and_write_index to accept another
+> parameter lock_flags and updates some callsites of this function to call
+> it with LOCK_REPORT_ON_ERROR resulting a suitable error message when the
+> relevant git-stash commands used on a repo with an index.lock file.
+>
+> This patch only adds the described error message to git-stash commands,
+> however the diff highlights other uses of repo_refresh_and_write_index
+> which could also benefit from the changes. On the other hand these
+> callsites already have some limited error messages.
 
-I think that we could definitely add some text here to explain why one
-would want to use this, providing an example.
+I wonder if there are callers of repo_refresh_and_write_index() that
+don't want any errors reported. Not having thought about it too hard
+(much less looked through any of these callers), I would expect that
+having the choice to either error() or die() is something worth keeping.
+But I do not know if there are callers which want neither.
 
-> Also, following v1 review, I think you had intended[1]: s/end up with/hav=
-e/
+> Signed-off-by: Birk Tjelmeland <git@birktj.no>
+> ---
+>  add-interactive.c | 4 ++--
+>  add-patch.c       | 4 ++--
+>  builtin/am.c      | 2 +-
+>  builtin/merge.c   | 4 ++--
+>  builtin/stash.c   | 6 +++---
+>  cache.h           | 4 ++--
+>  read-cache.c      | 3 ++-
+>  7 files changed, 14 insertions(+), 13 deletions(-)
 
-I will fix that in v3.  Thanks for the reminder.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+It looks like the sum-total of this patch are a few things:
 
---hxmTCxR40i3X41Om
-Content-Type: application/pgp-signature; name="signature.asc"
+  - repo_refresh_and_write_index() gets a new lock_flags parameter which
+    is passed down to repo_hold_locked_index()
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+  - refresh_and_write_cache() which is a thin wrapper around
+    repo_refresh_and_write_index() also learned the new parameter
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYYiG7gAKCRB8DEliiIei
-gbyUAP9dy7dM82UI3UI35jhEHOenajGcqMk5fye+qKIUWPCxLwD9HPzgp+KsmID6
-S1kZcIlYi2V/4yoMERakVJzAEZwTow8=
-=7fL2
------END PGP SIGNATURE-----
+  - do_apply_stash(), do_create_stash(), do_push_stash() all pass
+    LOCK_REPORT_ON_ERROR via the new lock_flags parameter
 
---hxmTCxR40i3X41Om--
+That all makes sense to me. It results in us printing a helpful error
+message when we couldn't acquire an exclusive lock on
+$GIT_DIR/index.lock where before we would have silently failed and
+exited non-zero (which is not exactly a *silent* failure, but it is
+close).
+
+This patch does not include any tests, which I think that you should add
+in another revision before we consider queuing this.
+
+Thanks,
+Taylor
