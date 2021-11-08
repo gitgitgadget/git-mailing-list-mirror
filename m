@@ -2,114 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08E4EC433EF
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 04:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75B88C433F5
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 07:10:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAE78610E9
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 04:15:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 52A8B6113D
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 07:10:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236545AbhKHESm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Nov 2021 23:18:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43838 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237393AbhKHESl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Nov 2021 23:18:41 -0500
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7E97C061570
-        for <git@vger.kernel.org>; Sun,  7 Nov 2021 20:15:57 -0800 (PST)
-Received: by mail-io1-xd36.google.com with SMTP id k21so121595ioh.4
-        for <git@vger.kernel.org>; Sun, 07 Nov 2021 20:15:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=PQLdh+L40gsqXj1iqNOqLgaCug7D9JZn3iqzi01WfpI=;
-        b=x+6IE689LZqaelYSKCXQr+dc24+Fns+uf/U2LFGzK8W6xhC+pGDl7lqXjkHsVTtFXB
-         mckMv661YNNTL2B/IYXdFV2XzTTDJDbrwOT1sLRvx26kmAltn4DeFDUdGLEJb8IunruP
-         df901SLR/XcYFcgegEdO/bHHigulQZDeAYHiXckbY+bhbRjiSo6NVZIIvbjogts2kQvd
-         CLtRAEoIbuC2upHSGO/wzJfj2TvMzvLkaFVyskDx2dyE7lc7+OTa34YJbcz/dPSsABHL
-         JJ3RJd4Y9l9phm3WBatoU2MhTWZqQ0atJmSC1oV+bPBXtUePxoWuXjNLpWOCSrv1GGPi
-         t7mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=PQLdh+L40gsqXj1iqNOqLgaCug7D9JZn3iqzi01WfpI=;
-        b=CMi0Bdr8AC4/FOpUFsJXz83bebYXMSdnyKQQ/Iyoiv/bLgZGng+6LB+IGlx4mhSY/7
-         sf2AdiyRk8mtjHY78ZbC/yg6pfFFPmMqVCnIMjmvHGj6LlrHn21xGlbNvKr0A7dM/PPh
-         7c+fPX3MS0xIP4jwq90Td/pY/vAXcGoHaTPMvxvdo1PQYKffLqZobrb2BPSaWxvnir28
-         D8uRRMHQzDgFKlrcxor1OAPsNqNvuJNrOqeoElERSa6v+GXGZPWChl3BMT53qkuyBueG
-         WB8LAdsME7uUj8FguGxrjDsqM1tLY7bkvc5cWDnxOrCqunQvhReDfZ04IDejty+pDNJN
-         KIPA==
-X-Gm-Message-State: AOAM531wjVOPpU+MgKovouKmew8M1BGjEDiPjurY21SAr4ZDSFeSTKM9
-        L8TCdtR9YsDFwnZ/UzSfbx5IoA==
-X-Google-Smtp-Source: ABdhPJxk+SDzak9Sfjog0DP10CrYjmrKLu2bj9dqeZ+LJPKPSC976veAg4ceSlwCOYcKFEYeYV41qQ==
-X-Received: by 2002:a05:6638:2512:: with SMTP id v18mr9810886jat.22.1636344956785;
-        Sun, 07 Nov 2021 20:15:56 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f11sm9048655ilu.82.2021.11.07.20.15.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Nov 2021 20:15:56 -0800 (PST)
-Date:   Sun, 7 Nov 2021 23:15:55 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Birk Tjelmeland <git@birktj.no>
-Cc:     git@vger.kernel.org
+        id S237751AbhKHHNG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 02:13:06 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63496 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237311AbhKHHNF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 02:13:05 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 821FE164188;
+        Mon,  8 Nov 2021 02:10:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7aJoqx2ZGVirt13ZkNBC9toJ5A257vs0E4/ZOL
+        n4Q+c=; b=SIOPjuPthzLokjMmpbFfMz83xk7Hs3k13LjaZdXTpXCYrEm2cm+XBb
+        rgsNBPKSHEASPc0C36YIMYgICnS16ed0Qa+zGNS56ptsvAOgLb5eg7pkhViS2Vnv
+        J5lcoOCWFuU5JAInHF/Iy4pb0iX67EHyMrLD4eipwsHzcwKFiciIc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7ADB9164187;
+        Mon,  8 Nov 2021 02:10:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D86E1164186;
+        Mon,  8 Nov 2021 02:10:18 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Birk Tjelmeland <git@birktj.no>, git@vger.kernel.org
 Subject: Re: [PATCH] stash: show error message when lockfile is present
-Message-ID: <YYike53eJEjSX3er@nand.local>
 References: <20211107213012.6978-1-git@birktj.no>
- <YYiXw41upJfPS7l0@nand.local>
+        <YYiXw41upJfPS7l0@nand.local>
+Date:   Sun, 07 Nov 2021 23:10:17 -0800
+In-Reply-To: <YYiXw41upJfPS7l0@nand.local> (Taylor Blau's message of "Sun, 7
+        Nov 2021 22:21:39 -0500")
+Message-ID: <xmqqlf1zunqe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YYiXw41upJfPS7l0@nand.local>
+Content-Type: text/plain
+X-Pobox-Relay-ID: EE342C16-4062-11EC-80E6-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I forgot to mention in my earlier email, but in this hunk:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index a0ccc8654d..977fcc4e40 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -501,7 +501,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
->         const struct object_id *bases[1];
->
->         read_cache_preload(NULL);
-> -       if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
-> +       if (refresh_and_write_cache(REFRESH_QUIET, 0, LOCK_REPORT_ON_ERROR, 0))
->                 return -1;
->
->         if (write_cache_as_tree(&c_tree, 0, NULL))
+> I wonder if there are callers of repo_refresh_and_write_index() that
+> don't want any errors reported. Not having thought about it too hard
+> (much less looked through any of these callers), I would expect that
+> having the choice to either error() or die() is something worth keeping.
+> But I do not know if there are callers which want neither.
+> ...
+>>  add-interactive.c | 4 ++--
+>>  add-patch.c       | 4 ++--
+>>  builtin/am.c      | 2 +-
+>>  builtin/merge.c   | 4 ++--
+>>  builtin/stash.c   | 6 +++---
+>>  cache.h           | 4 ++--
+>>  read-cache.c      | 3 ++-
+>>  7 files changed, 14 insertions(+), 13 deletions(-)
 
-Not the fault of your patch, but this hunk is unlike the others in that
-it only checks the return value of refresh_and_write_cache() is
-non-zero, not non-negative.
+I think most of the changes in this patch, other than the ones to
+builtin/stash.c, are unwanted, and I suspect what you wondered above
+may be the same thing.  Take for example this hunk:
 
-Looking through refresh_and_write_cache(), we can return a non-zero
-value in any one of three cases:
+diff --git a/builtin/stash.c b/builtin/stash.c
+index a0ccc8654d..977fcc4e40 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -501,7 +501,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+ 	const struct object_id *bases[1];
+ 
+ 	read_cache_preload(NULL);
+-	if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
++	if (refresh_and_write_cache(REFRESH_QUIET, 0, LOCK_REPORT_ON_ERROR, 0))
+ 		return -1;
+ 
+ 	if (write_cache_as_tree(&c_tree, 0, NULL))
 
-  - We could not acquire the index.lock file with
-    repo_hold_locked_index(), or
+Telling the function to be quiet and at the same time be noisy on
+only one particular kind of error sounds somewhat strange.  I do not
+think of any reason why we should believe that failing to lock will
+be the only special kind of failure to be of interest to the users.
 
-  - We failed to write the index (indicated by write_locked_index()
-    failing), or
+I would think the "fix" should look more like this:
 
-  - refresh_index() returned a non-*zero* value, which happens when it
-    sets its `has_errors` variable to 1.
+ 	read_cache_preload(NULL);
+	if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
+- 		return -1;
++ 		return error(_("failed to refresh the index"));
 
-So because even non-zero positive return values from this function
-indicate an error, this is OK. In other words, the current
-implementation of refresh_and_write_cache() (and the functions that it
-calls) make it so that it doesn't matter if you check whether the return
-value is negative, or non-zero.
+That is, tell the function that the caller will do the error
+reporting (i.e. "QUIET") and do so.
 
-But at least for consistency with the other callers (not to mention
-saving future readers in this area the same thought process I just wrote
-down here) it may be worth changing this to:
-
-    if (refresh_and_write_cache(...) < 0)
-      return -1;
-
-Thanks,
-Taylor
+Thanks.
