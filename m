@@ -2,116 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19458C433F5
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 20:37:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 507EBC433F5
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 20:42:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA968619EA
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 20:37:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CCE3608FE
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 20:42:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236934AbhKHUjw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 15:39:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40288 "EHLO
+        id S237854AbhKHUo5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 15:44:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236312AbhKHUjv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 15:39:51 -0500
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E193C061570
-        for <git@vger.kernel.org>; Mon,  8 Nov 2021 12:37:06 -0800 (PST)
-Received: by mail-io1-xd30.google.com with SMTP id k21so3147396ioh.4
-        for <git@vger.kernel.org>; Mon, 08 Nov 2021 12:37:06 -0800 (PST)
+        with ESMTP id S229832AbhKHUoz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 15:44:55 -0500
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AA26C061570
+        for <git@vger.kernel.org>; Mon,  8 Nov 2021 12:42:10 -0800 (PST)
+Received: by mail-io1-xd2e.google.com with SMTP id e144so20492029iof.3
+        for <git@vger.kernel.org>; Mon, 08 Nov 2021 12:42:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=SElPSt0w3aQSgguK2eiV3NzeLba65rs5YK0iqjV6JSA=;
-        b=yv/fUQemP7PYzmUKYpAa3/9mQ1acn1/y2T7HDZpwDWuAjw5L9qKLTGiNSI+z5cPwCv
-         Vks/6HrmVp47HkvIGa/z/FequG0T1mvmg8y6/+nkh3Vl68t8JMk75bJtNeauUNUETAgX
-         N1lwuqc1iO5rEU58TohxJWIWqatveQG79eivTE9WOHhPvDxBUZtXuMIjD9210givFA63
-         MDDcqNCa0t8dhxNwrzwS+5OEjgQaInlDlGOlYWouIk/rwlKk7aC3qVsWY7lGGKJ3xjTo
-         mJXq70iEMcIcjo7L8E/BEu7EgJ+iYL0i9JbVA7m3MEUADS4JISKdr60bgOyyF+TB/oae
-         CP/w==
+        bh=KcWgeIxRrdQC1uT0ybzinF4BJnyZ2iBtE3neqLhmH44=;
+        b=JnIF59u+sjikEPeRnb5tVdMPlXErOrwkx+IS9cs1Nbk/gG9gsZo1Y8xSyeOVoi061G
+         p9PlsUrVftoGj69RFFWhh6W6/Mx72IIJgFBK19g2Sc5Fejc2lsdvH/Cqq5WZFkrqS5Gv
+         bKBUO5dFyo7QLKodMlz76n6LKGiMUiDFkLz3tdKSW7s7puZ/ymDhSn4OZBAsBtTT0TSE
+         wWtgB3W5MmPmAgvlyW0eDBRbO6bBhr/Vj9fAyFhzpdOgI7KdZPsPplGIHiIlWL4HIZXR
+         RWwZdpkfo3puz0qQMF+XfdL7dx/5LrQkMu1FZyz1HYvA5XNNJqxenf6kclMCRtGwmmjj
+         TuFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=SElPSt0w3aQSgguK2eiV3NzeLba65rs5YK0iqjV6JSA=;
-        b=pgRputhdQlfva0LjX1P6jzzi8VaCfdZpP1cHTpwiEJ80GkJUWc/yH1GYfIELi/S15Y
-         DxTNK6eKAXjQ2EUHhjt8PrBtTDoSTQ2hi7lAl6+3PRlXhXAbQVCwXvXxzYFBijcI1xWS
-         a6is800XS5qCTB13HbY3fBf0CLTF8Rp8wKCCfVHM2hmb12K9FGr8BnusblewnVIZAf9k
-         ifGkcLZyBhQzieqwxlREfbLaeBNFkAZ4bqc4gtHY1kB518p0YjXQdn2huM+CQOD12OTs
-         H+551wFkm3rH1948ppn+/trlQxcQkRfK8tTfUjGKMgjjXklXQWLYFLoHm8FFDHwfQA4F
-         NJDQ==
-X-Gm-Message-State: AOAM532k48zS+oaNxk2Hxgeqj7lsZ1zOQ0xqXX1663Yv2y/MHbdOtAbY
-        phNWaYKaCBdlvsFr7RJrm08IQQ==
-X-Google-Smtp-Source: ABdhPJzKY3n1C5zr+4cO0nDkbTblEiQCIO1wXhIoxErP74kvn4490r9ZNw4VXV6S7RuQcJ6wifPYew==
-X-Received: by 2002:a05:6638:268c:: with SMTP id o12mr1430648jat.93.1636403825653;
-        Mon, 08 Nov 2021 12:37:05 -0800 (PST)
+        bh=KcWgeIxRrdQC1uT0ybzinF4BJnyZ2iBtE3neqLhmH44=;
+        b=GhEx5jzXILa7ccDbhEYZJK9dgoTrfV3E7CI51sIjUVeRqt+LohSm1E4Jp+MFxQWEwp
+         U/hKjkegzYcn0EsQGYMSj2O8aLwc/+97+kOYsFEhFTF/4m342st9y6dJo2Wv+SljwDB1
+         Qkh5zQouozwRVlEO0xM75iRA7E7KPazWmZ7ZDqMwHFHQ3D2emY00AceBfZeC8V3PSohn
+         j80ExqxHtywgrBlzsoidNyMvFeM/67NdupGINhc540B9/YlHXznMVYIurhOI6pGoH+tA
+         +Pv5iaujcj2dNH8+aY8+yjQSzZeNGlvOPJOSKGn7l94QajMJq3keOOZi9MU6HdL9PE8R
+         qxAQ==
+X-Gm-Message-State: AOAM532NILD9a0X69u1QSaDRaWMtUSaDn385ifRGju5vA9qWxtgycbDG
+        lYfgaWymCVo9xnrZKCjlad6ZkWu30nBQfB2K
+X-Google-Smtp-Source: ABdhPJx1OpxITCcEC7nE9Q64NAtGKEMhtpuL4VcgvuhPzICcZ4u1yaKNP0CUYm6MbWv8e0mCj8KAXg==
+X-Received: by 2002:a05:6638:410a:: with SMTP id ay10mr1490737jab.120.1636404130044;
+        Mon, 08 Nov 2021 12:42:10 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l4sm10815442ilv.46.2021.11.08.12.37.05
+        by smtp.gmail.com with ESMTPSA id a9sm3590543ilp.60.2021.11.08.12.42.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Nov 2021 12:37:05 -0800 (PST)
-Date:   Mon, 8 Nov 2021 15:37:04 -0500
+        Mon, 08 Nov 2021 12:42:09 -0800 (PST)
+Date:   Mon, 8 Nov 2021 15:42:09 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         J Smith <dark.panda@gmail.com>
-Subject: Re: [PATCH 2/8] git.c & grep.c: assert that "prefix" is NULL or
- non-zero string
-Message-ID: <YYmKcOHInPWtKrWh@nand.local>
+Subject: Re: [PATCH 3/8] grep: remove unused "prefix_length" member
+Message-ID: <YYmLoTGTKO3VbSXu@nand.local>
 References: <cover-0.8-00000000000-20211106T210711Z-avarab@gmail.com>
- <patch-2.8-244715e3497-20211106T210711Z-avarab@gmail.com>
+ <patch-3.8-3338cc95b81-20211106T210711Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-2.8-244715e3497-20211106T210711Z-avarab@gmail.com>
+In-Reply-To: <patch-3.8-3338cc95b81-20211106T210711Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 06, 2021 at 10:10:48PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> @@ -431,6 +430,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
->  			int nongit_ok;
->  			prefix = setup_git_directory_gently(&nongit_ok);
->  		}
-> +		assert(!prefix || (prefix && *prefix));
+On Sat, Nov 06, 2021 at 10:10:49PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> Remove the "prefix_length" member, which we compute with a strlen() on
+> the "prefix" argument to grep_init(), but whose strlen() hasn't been
+> used since 493b7a08d80 (grep: accept relative paths outside current
+> working directory, 2009-09-05).
 
-Small nit, but the check to `prefix` (in `prefix && *prefix`) is
-redundant with the left-hand side of the or.
+OK, so now we *are* relying on the assumption that prefix is either NULL
+or a non-empty string.
 
->  		precompose_argv_prefix(argc, argv, NULL);
->  		if (use_pager == -1 && p->option & (RUN_SETUP | RUN_SETUP_GENTLY) &&
->  		    !(p->option & DELAY_PAGER_CONFIG))
-> diff --git a/grep.c b/grep.c
-> index f6e113e9f0f..88ebc504630 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -145,7 +145,7 @@ void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix
+I assume that the last patch was along the lines of "let's clean up this
+redundant check before calling strlen()" and "prepare to not call
+strlen() at all and just check the string itself for NULL". To be
+honest, I imagine that it would have been much easier to review if these
+two had been squashed into one, since I was a little surprised to see
+the line I had just been commenting on in the previous patch removed.
+
+Perhaps I should have looked a little further in the series before
+commenting there, but I think it would have been even easier for
+reviewers to see these two patches together.
+
+> When this code was added in 0d042fecf2f (git-grep: show pathnames
+> relative to the current directory, 2006-08-11) we used the length, but
+> since 493b7a08d80 we haven't used it for anything except a boolean
+> check that we could have done on the "prefix" member itself.
 >
->  	opt->repo = repo;
->  	opt->prefix = prefix;
-> -	opt->prefix_length = (prefix && *prefix) ? strlen(prefix) : 0;
-> +	opt->prefix_length = prefix ? strlen(prefix) : 0;
+> Before a preceding commit we also used to guard the strlen() with
+> "prefix && *prefix", but as that commit notes the RHS of that && chain
+> was also redundant.
 
-Looking around, ls-tree's initialization includes a conditional of the
-form:
-
-    if (prefix && *prefix)
-      chomp_prefix = strlen(prefix);
-
-So that could be cleaned up too. But honestly, the pre-image of this
-patch (and the spot in ls-tree) doesn't make a lot of sense to me to
-begin with.
-
-Even if prefix were the empty string, calling strlen() on it will just
-give us zero. So there is no difference between assigning `str && *str ?
-strlen(str) : 0` and `str ? strlen(str) : 0`.
-
-So I am confused why this needs hardening with an assertion when it
-seems like the checks before calling strlen() were overly restrictive to
-begin with. In other words: why not only include this hunk (either in
-this patch, or squashed into another patch later on)?
+Everything in this patch looks fine to me, assuming that prefix is
+indeed always NULL or non-empty (which I haven't verified myself).
 
 Thanks,
 Taylor
