@@ -2,85 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 579B9C433EF
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 20:15:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFCC9C433F5
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 20:15:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35E27610FF
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 20:15:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C7924610FF
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 20:15:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238543AbhKHURt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 15:17:49 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52752 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238564AbhKHURs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 15:17:48 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 03577FEDDF;
-        Mon,  8 Nov 2021 15:15:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5xtn+hcv5/268nhslfidpQSTnQIV+2xvXr7F5Z
-        fkl2s=; b=Cfn9TU8WmfHHa8LalyOIsX4VrvN5/+SiYpx04VGtPTy3rV/+bK+Nj6
-        pasxKf1PYP+mApjFZzw2BA0jBTp/Xo0pKh5kgX6ex9AFchceLZQjgHlO29Gs1k71
-        ZKRR91wXZtzBgi9K/htPZ464G/HKnV7FKeNLcS6xNxvY9tFkGkIDU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ECD39FEDDD;
-        Mon,  8 Nov 2021 15:15:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0CF26FEDDC;
-        Mon,  8 Nov 2021 15:15:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2021, #02; Wed, 3)
-References: <xmqq8ry44vve.fsf@gitster.g>
-        <CAFQ2z_P8QGvSs5zwyOcBsbBiq+-rXSJpXzgOwwi_eg1ZB6cSSA@mail.gmail.com>
-Date:   Mon, 08 Nov 2021 12:15:00 -0800
-In-Reply-To: <CAFQ2z_P8QGvSs5zwyOcBsbBiq+-rXSJpXzgOwwi_eg1ZB6cSSA@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Mon, 8 Nov 2021 11:33:25 +0100")
-Message-ID: <xmqqfss6tnej.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S238612AbhKHUSf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 15:18:35 -0500
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:39531 "EHLO
+        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S238770AbhKHUSZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 15:18:25 -0500
+Received: from localhost (SCRUBBING-BUBBLES.MIT.EDU [18.9.64.11])
+        (authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 1A8KFRWF003795;
+        Mon, 8 Nov 2021 15:15:28 -0500
+Date:   Mon, 8 Nov 2021 15:15:27 -0500 (EST)
+From:   Anders Kaseorg <andersk@mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Andreas Heiduk <andreas.heiduk@mathema.de>
+Subject: [PATCH v3 1/2] fetch: Protect branches checked out in all
+ worktrees
+Message-ID: <alpine.DEB.2.21.999.2111081514460.100671@scrubbing-bubbles.mit.edu>
+User-Agent: Alpine 2.21.999 (DEB 260 2018-02-26)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8DF61AD0-40D0-11EC-8CEF-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/mixed; boundary="152177472-591641175-1636402527=:100671"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On Thu, Nov 4, 2021 at 1:17 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Here are the topics that have been cooking in my tree.  Commits
->> prefixed with '+' are in 'next' (being in 'next' is a sign that a
->> topic is stable enough to be used and are candidate to be in a
->> future release).
-> ..
->> * hn/reftable (2021-10-08) 19 commits
->>  - Add "test-tool dump-reftable" command.
->>..
->
-> As this topic has no interaction with any other code in Git, leaving
-> it cooking in 'seen' for longer doesn't provide any extra test
-> assurances.
+--152177472-591641175-1636402527=:100671
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Yeah, as long as it does not break how well the existing file-based
-ref backend works, it would be OK, because even if we later find a
-big bug in the reftable code, nobody would get hurt by the code we
-currently have in 'seen'.
+Refuse to fetch into the currently checked out branch of any working
+tree, not just the current one.
 
-> Is there something stopping this topic from graduating to next, and if so what?
+Fixes this previously reported bug:
 
-Post release rebuilding of 'next', I would say, at this late point
-in the cycle.  If those who are tired of waiting can start reviewing
-each other's topics and work on improving them in the meantime, it
-would help us to use our time better during the next cycle, I would
-guess.
+https://public-inbox.org/git/cb957174-5e9a-5603-ea9e-ac9b58a2eaad@mathema.d=
+e
 
-Thanks.
+As a side effect of using find_shared_symref, we=E2=80=99ll also refuse the
+fetch when we=E2=80=99re on a detached HEAD because we=E2=80=99re rebasing =
+or bisecting
+on the branch in question. This seems like a sensible change.
+
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+---
+ builtin/fetch.c       | 27 +++++++++++++--------------
+ t/t5516-fetch-push.sh | 11 +++++++++++
+ 2 files changed, 24 insertions(+), 14 deletions(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f7abbc31ff..61c8fc9983 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -28,6 +28,7 @@
+ #include "promisor-remote.h"
+ #include "commit-graph.h"
+ #include "shallow.h"
++#include "worktree.h"
+=20
+ #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
+=20
+@@ -854,7 +855,7 @@ static int update_local_ref(struct ref *ref,
+ =09=09=09    int summary_width)
+ {
+ =09struct commit *current =3D NULL, *updated;
+-=09struct branch *current_branch =3D branch_get(NULL);
++=09const struct worktree *wt;
+ =09const char *pretty_ref =3D prettify_refname(ref->name);
+ =09int fast_forward =3D 0;
+=20
+@@ -868,16 +869,17 @@ static int update_local_ref(struct ref *ref,
+ =09=09return 0;
+ =09}
+=20
+-=09if (current_branch &&
+-=09    !strcmp(ref->name, current_branch->name) &&
+-=09    !(update_head_ok || is_bare_repository()) &&
++=09if (!update_head_ok &&
++=09    (wt =3D find_shared_symref("HEAD", ref->name)) &&
+ =09    !is_null_oid(&ref->old_oid)) {
+ =09=09/*
+ =09=09 * If this is the head, and it's not okay to update
+ =09=09 * the head, and the old value of the head isn't empty...
+ =09=09 */
+ =09=09format_display(display, '!', _("[rejected]"),
+-=09=09=09       _("can't fetch in current branch"),
++=09=09=09       wt->is_current ?
++=09=09=09       _("can't fetch in current branch") :
++=09=09=09       _("branch checked out in worktree"),
+ =09=09=09       remote, pretty_ref, summary_width);
+ =09=09return 1;
+ =09}
+@@ -1387,16 +1389,13 @@ static int prune_refs(struct refspec *rs, struct re=
+f *ref_map,
+=20
+ static void check_not_current_branch(struct ref *ref_map)
+ {
+-=09struct branch *current_branch =3D branch_get(NULL);
+-
+-=09if (is_bare_repository() || !current_branch)
+-=09=09return;
+-
++=09const struct worktree *wt;
+ =09for (; ref_map; ref_map =3D ref_map->next)
+-=09=09if (ref_map->peer_ref && !strcmp(current_branch->refname,
+-=09=09=09=09=09ref_map->peer_ref->name))
+-=09=09=09die(_("Refusing to fetch into current branch %s "
+-=09=09=09    "of non-bare repository"), current_branch->refname);
++=09=09if (ref_map->peer_ref &&
++=09=09    (wt =3D find_shared_symref("HEAD", ref_map->peer_ref->name)))
++=09=09=09die(_("Refusing to fetch into branch '%s' "
++=09=09=09      "checked out at '%s'"),
++=09=09=09    ref_map->peer_ref->name, wt->path);
+ }
+=20
+ static int truncate_fetch_head(void)
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 8212ca56dc..4ef4ecbe71 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1771,4 +1771,15 @@ test_expect_success 'denyCurrentBranch and worktrees=
+' '
+ =09git -C cloned push origin HEAD:new-wt &&
+ =09test_must_fail git -C cloned push --delete origin new-wt
+ '
++
++test_expect_success 'refuse fetch to current branch of worktree' '
++=09test_commit -C cloned second &&
++=09test_must_fail git fetch cloned HEAD:new-wt &&
++=09git clone --bare . bare.git &&
++=09git -C bare.git worktree add bare-wt &&
++=09test_must_fail git -C bare.git fetch ../cloned HEAD:bare-wt &&
++=09git fetch -u cloned HEAD:new-wt &&
++=09git -C bare.git fetch -u ../cloned HEAD:bare-wt
++'
++
+ test_done
+--=20
+2.33.1
+
+
+--152177472-591641175-1636402527=:100671--
