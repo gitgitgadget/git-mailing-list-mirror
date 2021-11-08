@@ -2,156 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EA04C433EF
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 01:24:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB214C433F5
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 01:53:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2372761355
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 01:24:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0169610C8
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 01:53:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235534AbhKHB1c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Nov 2021 20:27:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34902 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229966AbhKHB1b (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Nov 2021 20:27:31 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 158B2C061570
-        for <git@vger.kernel.org>; Sun,  7 Nov 2021 17:24:48 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id o15-20020a9d410f000000b0055c942cc7a0so463184ote.8
-        for <git@vger.kernel.org>; Sun, 07 Nov 2021 17:24:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=hLdqKMW9AI9xJbpmrL04E6UycOgHk3+kPbivxgqhpeI=;
-        b=fWb558+F64OxMLc/gyDNuvPiFTgv2ILnPxz83hjBEXibmfnJgN9SaHan4BipiwSGg+
-         4PWcD7xmGttReRVHV/zJ2nOcIQ2ye496yR88TyLj2a3puCNvEZq6zZEJiyFeL2IqaeHR
-         K4t8b5klG2zNmPMA/V1lMMfZHoUstYhpCq4A43eQg86VmPU/YJ3KxOG0DEFBvl7BzH+K
-         IYwUvOFoInj/zfgwrqxqT2TgCWChO4lGK6uz0SLQc9MDGa1qC1AdexQEc2AiJY1g2LpK
-         kslSCThGB/i/s/fqD+KZwCoOUcFk+gtvy0ns1cXKX75qEOfndqa8DkN+nOPH4tHfMeDC
-         9pJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=hLdqKMW9AI9xJbpmrL04E6UycOgHk3+kPbivxgqhpeI=;
-        b=YBXs9Vt8cx4qQFOt8SimWgSrAou2Ua3MACbUktO7WVeGqjVWvK9eOU7K2tB1k4OvvD
-         0gyqhqhKxIIsSzmeqFe26gaz6oKMBseVoHpDczG3zVIRIgYJHZooLXmUOzizCZBcAnNp
-         Kox35VgxGwL+KuYuIjRToFXbD33uEXMI7Lc1wO2SRnLKgTtX8apxAaJf3PMKA5GVLxcg
-         UNMHPMcJPMc2xvZzevcd18PV7ADbibo6Qjddpl8adCdmMGeaWPqAJ/cWVtPd7FWMBGF5
-         PINgKU2gprHosVWNx9doZhmLyu0H0M+mVITUL1ON5EQDM6WJPAypV+E8tErUB5CTSX1k
-         YKxA==
-X-Gm-Message-State: AOAM531TZUbRC2bPyuicxcZ+Tw2NMmWGGcRZ6Gyrbh+H6zV0YkAyL3s3
-        LPzXKPOvuglEp+dhITdWkQs=
-X-Google-Smtp-Source: ABdhPJzOsTga8fTMW3xJzVLn4rPWDQP5g84UNYZ4RWwijJ5UGCv0XzdwMGp5EyL2/g0qlzHfpdYYhA==
-X-Received: by 2002:a9d:7655:: with SMTP id o21mr59160945otl.126.1636334687076;
-        Sun, 07 Nov 2021 17:24:47 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:d408:2f91:3d1a:771e? ([2600:1700:e72:80a0:d408:2f91:3d1a:771e])
-        by smtp.gmail.com with ESMTPSA id j99sm4292312otj.19.2021.11.07.17.24.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 Nov 2021 17:24:46 -0800 (PST)
-Message-ID: <920c3133-b6ee-b82c-0876-f06713e9337b@gmail.com>
-Date:   Sun, 7 Nov 2021 20:24:43 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH v5 0/4] cache parent project's gitdir in submodules
-Content-Language: en-US
-To:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Cc:     Albert Cui <albertcui@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
+        id S232440AbhKHB4T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Nov 2021 20:56:19 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50992 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229715AbhKHB4S (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 7 Nov 2021 20:56:18 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5679B6043F;
+        Mon,  8 Nov 2021 01:53:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1636336414;
+        bh=t3E9Qqmt0iAJm06HbxAeFoIetMuYxiulBD6Q72C69tI=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=PKYsuRaRU6eKSh4b5E3vSJSfNr6A/+MJhrPU8VQWaJS+H0wESlBFwCZF3WtCXmmV4
+         BnRk4rMWeCCzC3F/otao/od9fcdqLQ/BHTvkIIOHUDQL6dxryxp2xSGLs8serm00HH
+         mIboTvABBHDC5evJuntVitR7+3LGG+6R4/ZzrrVmuruvkF2M9oT0PgFYouexz1kYJz
+         b2ncsHpTXpthQNhB2Wj8fbUdMqXBIGEZbbn0r6GX1PgapSj3pPFX8yxzVh93rPwKj8
+         NAx+io5TotY/ozAalAte1OrDvIQvXOLf+QdNImz/Nt+JqFF/SlH2+k1Lk8ZrGBwG0n
+         j2atev7wKdTubMrkS5eo+mskSFnjYsnqL4qKoPR+xu4/xoNyICQ6wCGJ9kKY2NMqZm
+         3+EM7aFSf32MtLJ6EYxJZpINt8/09Y1uxDXyBG9Ie6Vo+4ag3c8OKmjGomTHf1sF95
+         SLztKbRklEb0eOOz6IYweLcG526IuyCWe5I+YdE4VST3KUPuOAj
+Date:   Mon, 8 Nov 2021 01:53:30 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-References: <20211104234942.3473650-1-emilyshaffer@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20211104234942.3473650-1-emilyshaffer@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 1/3] gitfaq: add documentation on proxies
+Message-ID: <YYiDGhkaaQq7gpLK@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <20211107225525.431138-1-sandals@crustytoothpaste.net>
+ <20211107225525.431138-2-sandals@crustytoothpaste.net>
+ <CAPig+cT5bU3K9aUk=Y6YAOJjAmDvOWitYD_jtgHap_BYs2mPgA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Dg7wF29G9AKEEhg3"
+Content-Disposition: inline
+In-Reply-To: <CAPig+cT5bU3K9aUk=Y6YAOJjAmDvOWitYD_jtgHap_BYs2mPgA@mail.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/4/2021 7:49 PM, Emily Shaffer wrote:
 
-> The only real change here is a slight semantics change to map from
-> <submodule gitdir> to <superproject common git dir>. In every case
-> *except* for when the superproject has a worktree, this changes nothing.
-> For the case when the superproject has a worktree, this means that now
-> submodules will refer to the general superproject common dir (e.g. no
-> worktree-specific refs or configs or whatnot).
-> 
-> I *think* that because a submodule should exist in the context of the
-> common dir, not the worktree gitdir, that is ok. However, it does mean
-> it would be difficult to do something like sharing a config specific to
-> the worktree (the initial goal of this series).
-> 
-> $ROOT/.git
-> $ROOT/.git/config.superproject <- shared by $ROOT/.git/modules/sub
-> $ROOT/.git/modules/sub <- points to $ROOT/.git
-> $ROOT/.git/worktrees/wt
-> $ROOT/.git/worktrees/wt/config.superproject <- contains a certain config-based pre-commit hook
-> 
-> If the submodule only knows about the common dir, that is tough, because
-> the submodule would basically have to guess which worktree it's in from
-> its own path. There would be no way for '$WT/sub' to inherit
-> '$ROOT/.git/worktrees/wt/config.superproject'.
-> 
-> That said... right now, we don't support submodules in worktrees very
-> well at all. A submodule in a worktree will get a brand new gitdir in
-> $ROOT/.git/worktrees/modules/ (and that brand new gitdir would point to
-> the super's common dir). So I think we can punt on this entire question
-> until we teach submodules and worktrees to play more gracefully together
-> (it's on my long list...),
+--Dg7wF29G9AKEEhg3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-(I omit a portion that will be discussed later.)
+On 2021-11-07 at 23:27:24, Eric Sunshine wrote:
+> I've seen this come up on the mailing list a couple times recently,
+> though I haven't really followed along and don't use Git through an
+> SSH proxy, thus I did have to go do some reading to understand what
+> this is talking about. Perhaps people searching out this FAQ entry
+> will already have sufficient context to understand what this is
+> saying, so maybe no additional context is needed here. However, I was
+> wondering if it might make sense for this to give a bit of reason
+> explaining _why_ these tools need to be configured to not exit
+> immediately upon EOF. As it stands now, this solution is a black box;
+> it will work but people won't understand why. Perhaps that doesn't
+> matter since most people consulting a FAQ like this probably just want
+> to get the thing working and don't care about the underlying details.
+> Then again, if the underlying reason is made more readily apparent,
+> maybe this knowledge can become more widespread.
 
-> Or, to summarize the long ramble above: "this is still kind of weird
-> with worktrees, but let's fix it later when we fix worktrees more
-> thoroughly".
+I'll try to see if I can stuff in a sentence there about why that's
+necessary.  I think I understand it sufficiently well to summarize it.
 
-I'm concerned about punting here, because making a messy situation worse
-is unlikely to have a clean way out. Could we set up a design that works
-with superproject worktrees?
+> "modify, tamper with, change" sounds like it came from the Department
+> of Redundancy Department. I like the sound of "tamper with" since the
+> image it conveys feels quite suitable here. Perhaps this could be
+> simplified to:
+>=20
+>    The proxy cannot tamper with or buffer the...
 
-You mentioned that submodules cannot have worktrees. At least, you said
-that 'absorbgitdirs' does not allow them. Could those subprojects still
-exist and be registered as submodules without using that command?
+I realize this sounds redundant, but I'm trying to avoid the situation
+where people say, "I'm not _tampering_ with it, since I'm authorized to
+do this by the company.  I'm just modifying it to remove this
+inappropriate content/malware/data leak."  My goal here is to make it
+crystal clear that if you do this, you'll break things, and provide
+ammunition for people to go to their IT departments and say, "Look, your
+proxy prevents me from doing my job.  The Git developers say so.  Fix
+it."
 
-What I'm trying to hint at is that if the submodules can't have
-worktrees, then maybe we could make their 'config.worktree' files be
-relative to the superproject worktrees. Then, these submodules could
-point to the commondir in their base config and _also_ to the worktree
-gitdir in their config.worktree.
+I can drop one of "change" and "modify", though, since I think they're
+synonyms.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-The issue that is immediately obvious here is that my definition is
-circular: we need to know the superproject worktree in order to discover
-the config.worktree which contains the information about the superproject
-worktree.
+--Dg7wF29G9AKEEhg3
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> and at that time we can probably introduce a
-> pointer from $ROOT/.git/modules/sub/worktrees/wt/ to
-> $ROOT/.git/worktrees/wt/....
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-Your idea here appears to assume that if the superproject has worktrees,
-then the submodule is divided into worktrees in an exact correspondence.
-This would allow the submodule's config.worktree to point to the
-superproject's worktree (or possibly it could be inferred from the
-submodule's worktree relative to the submodule's commondir).
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYYiDGQAKCRB8DEliiIei
+gZYpAQDJ4QRMWWXNgaJLpTxhNWRuAYhGLGn246u8w3zcyzXqZgD/VrROEtO2YDvs
+ic4kpKppH2RDjQmpJnLObNR6aMlUnAs=
+=33P6
+-----END PGP SIGNATURE-----
 
-This seems like an interesting way forward, but requires changing how
-'git absorbgitdirs' works, along with changes to 'git worktree' or other
-submodule commands when the submodule first appears during a 'git checkout'
-in a worktree. I imagine there are a lot of "gotchas" here. It is worth
-spending some time imagining how to create this setup and/or enforce it
-as submodules are added in the lifecycle of a repository, if only to
-validate the config design presented by this series.
-
-Thanks,
--Stolee
+--Dg7wF29G9AKEEhg3--
