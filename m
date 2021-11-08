@@ -2,187 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2C35C433EF
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 23:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FCB9C433F5
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 23:31:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D837761177
-	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 23:28:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12B906117A
+	for <git@archiver.kernel.org>; Mon,  8 Nov 2021 23:31:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240849AbhKHXbN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 18:31:13 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59226 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240673AbhKHXbK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 18:31:10 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D9F5216A340;
-        Mon,  8 Nov 2021 18:28:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=rhcPl1F6BWus
-        tDtwEn+CDS9WMu6/SRvh4bDHFjYkU+g=; b=L9DTsQMCSoVMDRynSKi9g494UIwp
-        HjKuzjpc8xH+nVH/kDHj0lemZOx85Jp1V57GIPC+OJ0338f8jg2kyo36ityZHhf4
-        YP3oIfhr4g109S8UkLQ86bVTQ6sU5VJNq1czZI3SUGfyy8pfPnRNLEeWkrOBaihc
-        M6m4haRTlM/K10w=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D363716A33F;
-        Mon,  8 Nov 2021 18:28:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 245F516A33D;
-        Mon,  8 Nov 2021 18:28:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Anders Kaseorg <andersk@mit.edu>
+        id S235527AbhKHXef (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 18:34:35 -0500
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:43461 "EHLO
+        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S231268AbhKHXee (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 18:34:34 -0500
+Received: from [192.168.9.206] (198-27-191-186.fiber.dynamic.sonic.net [198.27.191.186])
+        (authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 1A8NVZlV009164
+        (version=TLSv1/SSLv3 cipher=AES128-GCM-SHA256 bits=128 verify=NOT);
+        Mon, 8 Nov 2021 18:31:36 -0500
+Message-ID: <8709db5c-8ac0-b327-09ba-087e392c297b@mit.edu>
+Date:   Mon, 8 Nov 2021 15:31:35 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: [PATCH v3 1/2] fetch: Protect branches checked out in all
+ worktrees
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         Andreas Heiduk <andreas.heiduk@mathema.de>
-Subject: Re: [PATCH v3 2/2] receive-pack: Protect current branch for bare
- repository worktree
-References: <alpine.DEB.2.21.999.2111081515380.100671@scrubbing-bubbles.mit.edu>
-Date:   Mon, 08 Nov 2021 15:28:21 -0800
-In-Reply-To: <alpine.DEB.2.21.999.2111081515380.100671@scrubbing-bubbles.mit.edu>
-        (Anders Kaseorg's message of "Mon, 8 Nov 2021 15:16:12 -0500 (EST)")
-Message-ID: <xmqqzgqe448a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 90BFED16-40EB-11EC-BDD9-98D80D944F46-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <alpine.DEB.2.21.999.2111081514460.100671@scrubbing-bubbles.mit.edu>
+ <xmqqa6ie5k3u.fsf@gitster.g>
+From:   Anders Kaseorg <andersk@mit.edu>
+In-Reply-To: <xmqqa6ie5k3u.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Anders Kaseorg <andersk@mit.edu> writes:
+On 11/8/21 15:00, Junio C Hamano wrote:
+> I would sleep better if we were one bit more careful, perhaps like
+> so:
+> 
+> +	if (!update_head_ok &&
+> +	    (wt = find_shared_symref(...)) &&
+> +	    !wt->is_bare &&
+> 	    !is_null_oid(...)) {
+> 
+> to make sure we do not rely on that particular aspect of how
+> find_shared_symref() works.  The function asks "please find a
+> worktree, if any, whose HEAD points at this ref", and it feels
+> unnatural for the answer to the question is affected by the
+> bare-ness of the worktree.
 
-> A bare repository won=E2=80=99t have a working tree at .., but it may s=
-till have
+Not unreasonable to be explicit at the call site.  Will update.
 
-My reading hiccupped after "at"; perhaps enclose the double-dot
-inside a pair of double quotes would make it easier to follow.
+I note that branch.c already relies on this aspect of find_shared_symref().
 
-> separate working trees created with git worktree. We should protect the
-> current branch of such working trees from being updated or deleted,
-> according to receive.denyCurrentBranch.
+And, now that I’m reading branch.c again, I see that it also has a 
+worktree-awareness bug in its safety check, deserving of a third patch 
+in this series.
 
-Good point.  I was wondering about that exact thing while reading
-the fetch side.
+$ git init
+$ git commit --allow-empty -am foo
+$ git worktree add wt
+$ git branch -M wt main
+   # correctly disallowed
+fatal: Cannot force update the current branch.
 
-> @@ -1456,11 +1456,11 @@ static const char *update_worktree(unsigned cha=
-r *sha1, const struct worktree *w
->  		work_tree =3D worktree->path;
->  	else if (git_work_tree_cfg)
->  		work_tree =3D git_work_tree_cfg;
+$ git branch -M wt  # incorrectly allowed
+$ git worktree list
 
-Not a fault of this patch at all, but I am not sure if this existing
-bit of code is correct.  Everything else in this function works by
-assuming that the worktree that comes from the caller was checked
-with find_shared_symref("HEAD", name) to ensure that, if not NULL,
-it has the branch checked out and updating to the new commit given
-as the other parameter makes sense.
+/tmp/test     6de7a5d [wt]
 
-But this "fall back to configured worktree" is taken when the gave
-us NULL worktree or worktree without the .path member (i.e. no
-checkout), and it must have come from a NULL return from the call to
-find_shared_symref().  IOW, the function said "no worktree
-associated with the repository checks out that branch being
-updated."  I doubt it is a bug to update the working tree of the
-repository with the commit pushed to some branch that is *not* HEAD,
-only because core.worktree was set to point at an explicit location.
+/tmp/test/wt  6de7a5d [wt]
 
-> -	else
-> -		work_tree =3D "..";
-> -
-> -	if (is_bare_repository())
-> +	else if (is_bare_repository())
->  		return "denyCurrentBranch =3D updateInstead needs a worktree";
-> +	else
-> +		work_tree =3D "..";
-> +
->  	if (worktree)
->  		git_dir =3D get_worktree_git_dir(worktree);
->  	if (!git_dir)
-> @@ -1486,7 +1486,7 @@ static const char *update(struct command *cmd, st=
-ruct shallow_info *si)
->  	struct object_id *old_oid =3D &cmd->old_oid;
->  	struct object_id *new_oid =3D &cmd->new_oid;
->  	int do_update_worktree =3D 0;
-> -	const struct worktree *worktree =3D is_bare_repository() ? NULL : fin=
-d_shared_symref("HEAD", name);
-> +	const struct worktree *worktree =3D find_shared_symref("HEAD", name);
 
-OK.  This change does make sense.  The worktree we happen to be in
-might be bare, but there can be other worktrees that have the branch
-in question checked out, so find_shared_symref() must be called
-regardless.
+> OK, the former is about this worktree, and the latter is about
+> worktree somewhere else.  It may clarify if we phrased the latter a
+> bit differently, e.g. "checked out in another worktree".
 
-The callsite of the other function this patch modifies is in this
-update() function much later, and I think it should be updated to
-use the variable "worktree" instead of calling find_shared_symref()
-again with the same parameters.
+Alright.  (Of course, as noted in previous discussion, this error path 
+is currently reachable.)
 
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index 4ef4ecbe71..52a4686afe 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -1763,20 +1763,25 @@ test_expect_success 'updateInstead with push-to=
--checkout hook' '
-> =20
->  test_expect_success 'denyCurrentBranch and worktrees' '
->  	git worktree add new-wt &&
-> +	git clone --bare . bare.git &&
-> +	git -C bare.git worktree add bare-wt &&
+> I cannot shake the feeling that this single test step is testing way
+> too many things and burden future developers who break one of the
+> steps to understand which step was broken, but these three are good
+> things to test.
 
-We create a bare.git bare repository with a bare-wt worktree that
-has a working tree.  bare-wt branch must be protected now.
+I can split the bare repository part into a separate test_expect_success 
+step?  This duplicates some commands but maybe helps readability overall.
 
->  	git clone . cloned &&
->  	test_commit -C cloned first &&
->  	test_config receive.denyCurrentBranch refuse &&
->  	test_must_fail git -C cloned push origin HEAD:new-wt &&
-> +	test_config -C bare.git receive.denyCurrentBranch refuse &&
-> +	test_must_fail git -C cloned push ../bare.git HEAD:bare-wt &&
-
-And pushing to that branch is refused (which is the default without
-the receive.denyCurrentBranch configuration, too).  Good.
-
->  	test_config receive.denyCurrentBranch updateInstead &&
->  	git -C cloned push origin HEAD:new-wt &&
-> -	test_must_fail git -C cloned push --delete origin new-wt
-> +	test_must_fail git -C cloned push --delete origin new-wt &&
-
-> +	test_config -C bare.git receive.denyCurrentBranch updateInstead &&
-> +	git -C cloned push ../bare.git HEAD:bare-wt &&
-
-And when set to update, it would update the working tree as expected.
-
-We are not checking if we correctly update the working tree; we are
-only seeing "git push" succeeds.  Which might want to be tightened
-up.
-
-> +	test_must_fail git -C cloned push --delete ../bare.git bare-wt
-
-And even with updateInstead, we do not let the branch to be deleted.
-
->  '
-> =20
->  test_expect_success 'refuse fetch to current branch of worktree' '
->  	test_commit -C cloned second &&
->  	test_must_fail git fetch cloned HEAD:new-wt &&
-> -	git clone --bare . bare.git &&
-> -	git -C bare.git worktree add bare-wt &&
-
-It is a bit sad that these two tests are so inter-dependent.
-Depending on an earlier failure of other tests, this may fail in an
-unexpected way.
-
->  	test_must_fail git -C bare.git fetch ../cloned HEAD:bare-wt &&
->  	git fetch -u cloned HEAD:new-wt &&
->  	git -C bare.git fetch -u ../cloned HEAD:bare-wt
-
-I think the core of the patch looks well thought out.  If the tests
-are cleaned up a bit more, it would be perfect.
-
-Thanks.
+Anders
