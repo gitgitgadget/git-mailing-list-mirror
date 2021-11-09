@@ -2,145 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1114C433F5
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 18:53:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B5FFC433F5
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 19:03:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0233610FF
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 18:53:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09BB661181
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 19:03:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241876AbhKIS4l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Nov 2021 13:56:41 -0500
-Received: from avasout-ptp-004.plus.net ([84.93.230.250]:42069 "EHLO
-        avasout-ptp-004.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242281AbhKIS4k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Nov 2021 13:56:40 -0500
-Received: from [10.0.2.15] ([147.147.167.109])
-        by smtp with ESMTPA
-        id kWFXmIU3m4GJ1kWFYmyaCN; Tue, 09 Nov 2021 18:53:52 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1636484032; bh=+XQHOrxbRQM1b5LjM8j9F05kwA7bRIM1VSAnN+Zxxww=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=LuDp1c/8HnBzISbxDZ0e4mouNtuJBFDAy7QrPELvxSlzyo55/d4ZG9ia8pmBvmyNF
-         +Tq33qkrh+9KXu+Y1qP7H7UNNY2gy677A0WlxUe4zW7h06IlicHsaDiaTyjRiBW4XH
-         8AHXfiVWHnsQ1ZpkdHQO+j99po8Jmtk53KHmMy9ggBnBZ2L+ZtsjBewl2sCAzDEDGj
-         14oMbudc7cCmkar+pusyjwG/ggJGwKLv54Mk8X9l/OdmbQ4jko0kq1FMNjEeSj1RCY
-         At63LPr4V1UfzAtsb1sS9tJrZ/duvac4EV9LufS4xhXmpd+fbSf6/FLNbXRWv8svzZ
-         pXLkcWUynj87Q==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=fsi/2H0f c=1 sm=1 tr=0 ts=618ac3c0
- a=QdS5mZX/VJYKMdXaSBaSIA==:117 a=QdS5mZX/VJYKMdXaSBaSIA==:17
- a=IkcTkHD0fZMA:10 a=bjnRR2OyqKr6h4M0H9gA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2 7/7] t/helper/simple-ipc: convert test-simple-ipc to
- use start_bg_command
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Carlo Arenas <carenas@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
- <pull.1040.v2.git.1632152178.gitgitgadget@gmail.com>
- <6b7a058284b93fab52458b12a6aede5e8aed6652.1632152179.git.gitgitgadget@gmail.com>
- <20211104194619.GA12886@dinwoodie.org>
- <nycvar.QRO.7.76.6.2111090051530.54@tvgsbejvaqbjf.bet>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <dca03da9-5684-10c7-2315-2d10affd4f0a@ramsayjones.plus.com>
-Date:   Tue, 9 Nov 2021 18:53:39 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S242946AbhKITGg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Nov 2021 14:06:36 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61143 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230445AbhKITGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Nov 2021 14:06:36 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C471C15466D;
+        Tue,  9 Nov 2021 14:03:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vQpU/WiUKZEf1vdxk22u0pErjLR1BTx6EbIx0I
+        ziEE8=; b=GnbqjMLOD3FzmZWJGx8xJA2238o0h73RzQn7HoUz7+xkLGX+F5BQHc
+        i7kMVNl4CYZmqBUnwggtmpV1RVPCHSz+3B7lemdNaNG6rtGiLF/BSzAiAt9nydDQ
+        6suFiLY3LdDPeKYYlg+M9bK5JwBLMnmu5CAsbSZntxbaxve1eeXN4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BDE2615466C;
+        Tue,  9 Nov 2021 14:03:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A891615466B;
+        Tue,  9 Nov 2021 14:03:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: Description of github.com/git/git, was Re: [PATCH]
+ builtin-commit: re-read file index before launching editor
+References: <pull.1127.git.git.1636423586620.gitgitgadget@gmail.com>
+        <nycvar.QRO.7.76.6.2111091732040.54@tvgsbejvaqbjf.bet>
+Date:   Tue, 09 Nov 2021 11:03:45 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2111091732040.54@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 9 Nov 2021 17:41:39 +0100 (CET)")
+Message-ID: <xmqq5yt12lta.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2111090051530.54@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfMM39Qg0j8spLaElfdB7qK0E4IX9FAQCYXpld56+o80AbmOpBrwMvo4nqO31XMio2Xui8+bgHufiR0AgVvIaO2M/tvyP9EvDNHEFvAwU7b2+BN9R2xfa
- MHuxLdRJB/8HtVWrO8UfQ6hP5Ugik4f7lsSrm+4KCu25GiwSlfIBBfuZnHSdSq6JSm8rCwTgSI4w/qJlv5NkiHKXFHimsJm5uIg=
+Content-Type: text/plain
+X-Pobox-Relay-ID: C40E74CC-418F-11EC-AA99-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+> I would be in favor of changing this description. How about:
+>
+> 	Git Source Code Mirror - Pull Requests can be submitted via GitGitGadget
 
-On 08/11/2021 23:59, Johannes Schindelin wrote:
-[snip]
-> I had a look at this and could reproduce... partially. I only managed to
-> make it fail every once in a while.
-> 
-> Digging deeper, it turns out that the `lstat()` call in
-> `ipc_get_active_state()` does not receive an `st_mode` indicating a
-> socket, but rather a file (in my tests, it was usually 0100644, but
-> sometimes even 0100755).
-> 
-> The reason is, of course, that Cygwin _emulates_ Unix sockets. What is in
-> the file system is just a special file, it is marked with the `system` bit
-> (which only exists on Windows), and its contents start with the tell-tale
-> `!<socket>`.
-> 
-> And as you might have guessed, there is a race going on between Cygwin
-> writing that file _and_ flipping that `system` bit, and Git trying to
-> access the Unix socket and encountering an unexpected file.
-> 
-> Now, why this only happens in your 32-bit setup, I have no idea.
-> 
-> In my tests, the following patch works around the issue. Could I ask you
-> to test it in your environment?
+Presense of GGG does not change the fact that the repository is
+publish only.  But "all pull requests are ignored" is not correct
+anymore.
 
-Just FYI, I just tried the patch below (on 64-bit cygwin) and this test
-now works fine for me. (well, run 5 times by hand - not with --stress).
+    Git Source Code Mirror - This is a publish-only repository but
+    pull requests can be turned into patches to the mailing list via
+    GitGitGadget. Please follow Documentation/SubmittingPatches
+    procedure for any of your improvements.
 
-This is on windows 10 21H1 and cygwin:
-
-  $ uname -a
-  CYGWIN_NT-10.0 satellite 3.3.2(0.341/5/3) 2021-11-08 16:55 x86_64 Cygwin
-  $ 
-
-[Yes, I updated last night!]
-
-ATB,
-Ramsay Jones
-
-> -- snip --
-> diff --git a/compat/simple-ipc/ipc-unix-socket.c
-> b/compat/simple-ipc/ipc-unix-socket.c
-> index 4e28857a0a..1c591b2adf 100644
-> --- a/compat/simple-ipc/ipc-unix-socket.c
-> +++ b/compat/simple-ipc/ipc-unix-socket.c
-> @@ -36,6 +36,23 @@ enum ipc_active_state ipc_get_active_state(const char
-> *path)
->  	}
-> 
->  	/* also complain if a plain file is in the way */
-> +#ifdef __CYGWIN__
-> +	{
-> +		static const int delay[] = { 1, 10, 20, 40, -1 };
-> +		int i;
-> +
-> +		for (i = 0; S_ISREG(st.st_mode) && delay[i] > 0; i++) {
-> +			/*
-> +			 * Cygwin might still be in the process of marking the
-> +			 * underlying file as a system file.
-> +			 */
-> +			sleep_millisec(delay[i]);
-> +			if (lstat(path, &st) == -1)
-> +				return IPC_STATE__INVALID_PATH;
-> +		}
-> +	}
-> +#endif
-> +
->  	if ((st.st_mode & S_IFMT) != S_IFSOCK)
->  		return IPC_STATE__INVALID_PATH;
-> 
-> -- snap --
-> 
-> FWIW it looks as if the loop might be a bit of an overkill, as I could not
-> get the code to need more than a single one-millisecond sleep, but it's
-> probably safer to just keep the delay loop in place as-is.
-> 
-> Ciao,
-> Dscho
-> 
+I didn't double-check but I presume SubmittingPatches these days
+talk about GGG?
