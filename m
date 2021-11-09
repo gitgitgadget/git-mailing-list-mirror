@@ -2,70 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 908D8C433EF
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDFEEC433EF
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:29:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F5ED6117A
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:12:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C564460E97
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:29:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234786AbhKICO5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 21:14:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59808 "EHLO
+        id S234984AbhKICc2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 21:32:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230190AbhKICO4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 21:14:56 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E9B5C061570
-        for <git@vger.kernel.org>; Mon,  8 Nov 2021 18:12:11 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id f8so70513440edy.4
-        for <git@vger.kernel.org>; Mon, 08 Nov 2021 18:12:11 -0800 (PST)
+        with ESMTP id S229999AbhKICc0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 21:32:26 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61740C061570
+        for <git@vger.kernel.org>; Mon,  8 Nov 2021 18:29:41 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id x15so39322682edv.1
+        for <git@vger.kernel.org>; Mon, 08 Nov 2021 18:29:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=0Txfl3w3fyNWqxoQo0kheinkVsf2R4E3f1Pod9NIB+Q=;
-        b=ct4/oYTjFuHKHYW01FNeI4o2oYc6qxzWXBDRqMZjjNTJFqzjBuudbH/NLvlft4SLFa
-         tbqP1FNnws+2fAFFsnHtJRaDws0j0dVHSRf2pCeCmcAL2D9mCVW0rC7moH3/dbpmK6a8
-         DJmsBiS0quIRLifY5PiO/MOfzIOOQGW/1qDDSGuH/Vj/5KX0d4PCGCIV6H0DPpT+Lm09
-         Z1aF1lDZIjwu5Ab4om3PSJplDiJySvetPPGTq5kb069Nn6RQN6yYxar8VNuPjKtRDY/S
-         zqjgrlFgAT5nCvUsOQWEiKaFo9P8AwC+Uk3vkJ1IclFkTNbty0qg2ngxM+TMqWoe+hvW
-         d5Wg==
+        bh=9Ox1kL3WvJjICXk9jozkP9DxLvAiw6CYT/AE2RN3Pks=;
+        b=gkw6CZ0I5Gei4e21ne56+ru2b8RSsmXHX7fVkCgvCFj74IZJewUZwssVAu1RBckd3b
+         KLxiXWqK8HWO/xu2PbPGDFgDuAgWAn9wsVi0wjkNVRUAGsdOn1WGNcIr890cNeg6WWMk
+         RSd06qrVhKyJCZo9CcHzaS7ZZPPspFtwkuAciAzKKqi10ku010JWPaQD87DBGHOIFa8H
+         IUuas+27Z0YRFH4IjmBKCrCGqf52nYxBa6BCWtybmB21krlN+0P6ttG/AbvdrrpvePTY
+         RbQoXIl0Qkwv8J8umooyD5YyX0C+gzZLlQmRG8Nmc5nSKH2buQfSLbMhNTJ31mJKOQeT
+         nlHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=0Txfl3w3fyNWqxoQo0kheinkVsf2R4E3f1Pod9NIB+Q=;
-        b=hHZnhQlcwdhLcmrsPIvBTL6fJNYsbhYCWvdLWGSNWE4Uk1x67TvaphDzjrq/iONQwj
-         3jo79jliuxP0nQdl1VL7EMmdIVe58MyhHPEHRpCnBgcTJUj/U2mDsj6PtSmLK8zUMHga
-         7xDBQ9EXHHhPuNiMtsuhFDuL5R+feMAyChHKsOE+am+q2NOQUXr2DYjLUc9SMo0mj+wf
-         mov8LoIkipC3dye2dCYj7e26k01Odk01mHDwYyCT4s9AkXDL/SkmhlSLQDNF/jOIzEyp
-         5QJBrlZp/ximj1tGp63+hNlpY/Lu3bj8I747kOIvFlhIo8hB5hFikpm3Xz8eU3R85vI/
-         2Gyw==
-X-Gm-Message-State: AOAM532Tnu73ha7jIREhRhyWGCNFSoR4lZY0v8ggb8YgBPq/h6MYmZpr
-        3SMhsLuGAV7kJ6ADxRCN/JI=
-X-Google-Smtp-Source: ABdhPJwvcB3PCveHPNDc0UV68tI7tL3E3UTQE3G50/l0tJ5gy/jeMtZ8OalDCwWBwwlVJqBb6rjzoQ==
-X-Received: by 2002:a05:6402:2690:: with SMTP id w16mr5081227edd.220.1636423929657;
-        Mon, 08 Nov 2021 18:12:09 -0800 (PST)
+        bh=9Ox1kL3WvJjICXk9jozkP9DxLvAiw6CYT/AE2RN3Pks=;
+        b=5Kxul3yLTjX7VN1NTRMCwb7JTx5axD2YLYCdOZHN0YvrDempAVgVFn3BEailV6eHHJ
+         kiWadC/h/AWn4sTqqK8i40lolUo/Ykq41BESnAnkEWw48Zq/M2DzQkHbWZVOOdRYrKp1
+         l74toJTcAJYLgkbEbae3R4V/OG4D6GQbHfJUROGUGtUtuDhV5JanexexVR0avNKWBSA4
+         90l6wmpCyM7gmoh/KbL3EP7o7HJFFMG31Kulw1ed/YAA4rnfuQKzDDY9x1pVQl++qPGx
+         RK4MBU131QCwrmIFaCrJClO78+20Ac1512AxcWTG57SEc5qFvQiGOiSUxtY9hzlsbXUf
+         uOfA==
+X-Gm-Message-State: AOAM531WOvKy/7vBi9UHu7F8fZkcnzL+g/mNYjGH9HFAxswTj7iW7G6F
+        MWtpxF/m2/GMdMvHIcyirOY=
+X-Google-Smtp-Source: ABdhPJwosXeStwS+aM9Jq582G+V+w9NSxm1BtjXVioYeQGQ7pkt1fCfnD/UACiCrkhLWpKh1I48k3g==
+X-Received: by 2002:a05:6402:1d48:: with SMTP id dz8mr5312323edb.86.1636424979897;
+        Mon, 08 Nov 2021 18:29:39 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id cs15sm8962265ejc.31.2021.11.08.18.12.09
+        by smtp.gmail.com with ESMTPSA id ne33sm8905223ejc.6.2021.11.08.18.29.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Nov 2021 18:12:09 -0800 (PST)
+        Mon, 08 Nov 2021 18:29:39 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mkGcK-001JSD-Rb;
-        Tue, 09 Nov 2021 03:12:08 +0100
+        id 1mkGtH-001Jni-3V;
+        Tue, 09 Nov 2021 03:29:39 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        J Smith <dark.panda@gmail.com>
-Subject: Re: [PATCH 4/8] grep.c: move "prefix" out of "struct grep_opt"
-Date:   Tue, 09 Nov 2021 03:10:31 +0100
-References: <cover-0.8-00000000000-20211106T210711Z-avarab@gmail.com>
- <patch-4.8-78298657d69-20211106T210711Z-avarab@gmail.com>
- <YYmO9xlgFGhQlFZg@nand.local>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+Subject: Re: [Summit topic] Server-side merge/rebase: needs and wants?
+Date:   Tue, 09 Nov 2021 03:15:50 +0100
+References: <nycvar.QRO.7.76.6.2110211129130.56@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.2110211147490.56@tvgsbejvaqbjf.bet>
+ <YYlqpuzv+bmZaFzz@nand.local>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <YYmO9xlgFGhQlFZg@nand.local>
-Message-ID: <211109.865yt2dqmf.gmgdl@evledraar.gmail.com>
+In-reply-to: <YYlqpuzv+bmZaFzz@nand.local>
+Message-ID: <211109.861r3qdpt8.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -76,52 +76,125 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Nov 08 2021, Taylor Blau wrote:
 
-> On Sat, Nov 06, 2021 at 10:10:50PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> The "struct grep_opt" is a mixture of things that would be needed by
->> all callers of the grep.c API, and quite a few things that only the
->> builtin/grep.c needs.
+> I was discussing this with Elijah today in IRC. I thought that I sent
+> the following message to the list, but somehow dropped it from the CC
+> list, and only sent it to Elijah and Johannes.
+>
+> Here it is in its entirety, this time copying the list.
+>
+> n Thu, Oct 21, 2021 at 01:56:06PM +0200, Johannes Schindelin wrote:
+>>  5.  The challenge is not necessarily the technical challenges, but the =
+UX for
+>>      server tools that live =E2=80=9Cabove=E2=80=9D the git executable.
 >>
->> Since we got rid of "prefix_length" in the previous commit, let's move
->> the "prefix" variable over to "builtin/grep.c" where it's used. To do
->> this let's create a "struct grep_cmd_opt", which we'll have a pointer
->> to in a new "caller_priv" member in "struct grep_opt" (the existing
->> "priv" is used by the top-level "grep.c" itself).
+>>      1. What kind of output is needed? Machine-readable error messages?
+>>
+>>      2. What Git objects must be created: a tree? A commit?
+>>
+>>      3. How to handle, report, and store conflicts? Index is not typical=
+ly
+>>         available on the server.
 >
-> I'm definitely in favor of removing specialized, caller-specific bits
-> from an internal API. But I'm not sure why grep.c needs to keep track o
-> this new "caller_priv" field at all.
+> I looked a little bit more into what GitHub would need in order to make
+> the switch. For background, we currently perform merges and rebases
+> using libgit2 as the backend, for the obvious reason which is that in a
+> pre-ORT world we could not write an intermediate result without having
+> an index around.
 >
-> Among the uses of `prefix` in builtin/grep.c, I see grep_source_name,
-> and the call to run_pager(). Would it be more straightforward to pass
-> down prefix from cmd_grep down to its use in grep_source_name?
+> (As a fun aside, we used to expand our bare copy of a repository into a
+> temporary working directory, perform the merge there, and then delete
+> the directory. We definitely don't do that anymore ;)).
 >
-> There are quite a few intermediary functions that we go through to get
-> from cmd_grep() down to grep_source_name(). For instance, we could reach
-> it through:
+> It looks like our current libgit2 usage more-or-less returns an
+> (object_id, list<file>) tuple, where:
 >
->     cmd_grep -> grep_tree -> grep_submodule -> grep_cache -> grep_oid ->
->     grep_source_name
+>   - a non-NULL object_id is the result of a successful (i.e.,
+>     conflict-free) merge; specifically the oid of the resulting root
+>     tree
 >
-> But passing prefix from cmd_grep down to grep_source_name without
-> relying on the internals of grep.c seems like a good direction to me. I
-> could even buy that (ab)using a static variable in builtin/grep.c to
-> keep track of a constant prefix value would save you some plumbing
-> (though I'd rather see the usage spelled out more explicitly).
+>   - a NULL object_id and a non-empty list of files indicates that the
+>     merge could not be completed without manual conflict resolution, and
+>     the list of files indicates where the conflicts were
 >
-> All of that is to say that I share your motivation for this patch and
-> think that the direction is good, but I would have preferred to do it
-> without the caller_priv variable (unless there is something that I am
-> missing here).
+> When we try to process a conflicted merge, we display the list of files
+> where conflicts were present in the web UI. We do have a UI to resolve
+> conflicts, but we populate the contents of that UI by telling libgit2 to
+> perform the same merge on *just that file*, and writing out the file
+> with its conflict markers as the result (and sending that result out to
+> a web editor).
+>
+> So I think an ORT-powered server-side merge would have to be able to:
+>
+>   - write out the contents of a merge (with a tree, not a commit), and
+>     indicate whether or not that merge was successful with an exit code
+>
+>   - write out the list of files that had conflicts upon failure
+>
+> Given my limited knowledge of the ORT implementation, it seems like
+> writing out the conflicts themselves would be pretty easy. But GitHub
+> probably wouldn't use it, or at least not immediately, since we rely
+> heavily on being able to recreate the conflicts file-by-file as they are
+> needed.
+>
+> Anyway, I happened to be looking into all of this during the summit, but
+> never wrote any of it down. So I figured that this might be helpful in
+> case folks are interested in pursuing this further. If so, let me know
+> if there are any other questions about what GitHub might want on the
+> backend, and I'll try to answer as best I can.
 
-Yes, that would make much more sense. I just had tunnel vision while
-writing this, evidently. Yeah, just either passing it or using a static
-variable in grep.c would make more sense.
+That's very informative, thanks.
 
-Arguably we could even have it be read only (const char *const) and have
-a global "the_prefix" or something, but it's probably not widely used
-enough for that to make sense.
+Not that "ort" won't me much better at this, but FWIW git-merge-tree
+sort of gets most of the way-ish to what you're describing already in
+terms of a command interface.
 
+I.e. I'm not the first or last to have (not for anything serious)
+implement a dry-run bare-repo merge with something like:
 
+    git merge-tree origin/master git-for-windows/main origin/seen >diff
+    # Better regex needed, but basically this
+    grep "^\+<<<<<<< \.our$" diff && conflict=3Dt
 
+So with some parsing of that command output you can get a diff with one
+side or the other applied.
 
+From there it's a matter of applying the patch, and from there you'd get
+blobs/trees. which is painful from just having a diff & no index, so
+it's a common use-case of libgit2 for just such basic usage.
+
+But to the extent that we were talking about plumbing interfaces
+wouldn't basically a git-merge-tree on steroids (or extension thereof)
+do, i.e.:
+
+ * Ask it to merge X heads, returns whether it worked or not
+ * ... and can return a diff with conflict markers like this
+ * ... for just some <pathspec>
+ * ... maybe with the conflict already "resolved" one way or the other?
+ * ... optionally, after some markers write one/both sides, spew out the
+   relevant tree/blob OIDs
+ * ... which again, could be limited by the <pathspec> above.
+
+I'm thinking of something that basically works like git for-each-ref --form=
+at=3D"". So:
+
+    git merge-tree --format=3D"..." <heads> -- <pathspec>
+
+Where that <format> can be custom \0-delimited (or whatever) sections of
+payload that could have whatever combination of the above you'd need. I
+think git-for-each-ref is probably the best example we've got of a
+plumbing interface in this category, i.e. being able to extract
+arbitrary payloads via format specifiers & "path" (well, ref)
+limitation.
+
+Elijah probably has much better ideas already, I'm just spitballing.=20
+
+But if something like that worked it would be mostly a matter of
+stealing code from for-each-ref and the like, and then the <handwaiving>
+mapping that to ORT callbacks somehow.
+
+And then it could even learn a --batch mode, which with those formats
+could allow calling it without paying the price for command
+re-invocation, something like the update-ref/proposed cat-file interface
+discussed in another thread at [1].
+
+1. https://lore.kernel.org/git/211106.86k0hmgc8q.gmgdl@evledraar.gmail.com/
