@@ -2,141 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93CEBC433EF
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 00:22:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC14FC433F5
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 00:25:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A96E6109D
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 00:22:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C9E2A61107
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 00:25:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237898AbhKIAZn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 19:25:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34112 "EHLO
+        id S231793AbhKIA2Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 19:28:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231793AbhKIAZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 19:25:42 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04041C061570
-        for <git@vger.kernel.org>; Mon,  8 Nov 2021 16:22:58 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id 3-20020a620403000000b0044dbf310032so11711248pfe.0
-        for <git@vger.kernel.org>; Mon, 08 Nov 2021 16:22:57 -0800 (PST)
+        with ESMTP id S231252AbhKIA2Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 19:28:24 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41B20C061570
+        for <git@vger.kernel.org>; Mon,  8 Nov 2021 16:25:39 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id z19-20020aa79593000000b0049472f5e52dso7972107pfj.13
+        for <git@vger.kernel.org>; Mon, 08 Nov 2021 16:25:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=rOTURaP5PaQeOSsIpcmd46Y91R+MNLyAPR1yU2Z6iBo=;
-        b=sND67PsF9L5RqerA58v1bnL0+omM94fi+xxhrIl6ZGmOoCuBeU8x017IAt8YEGYRwj
-         IFgk0SugtevNbLfyos//qztbh+XrFEQR4WSr4c1A+k9fXl2L/OEM6qPyQUIXurcbA2LI
-         hF/bjpOR/BDUoBgt+v60Vz2JC4mp7QIMXacy1/kpdy4gDGYK6Suxap4dDYjSQVFDOKPn
-         ECSE0Vub7G64IqgWxGdsc5n1ARjKo8rzG+Z+tNH47ot8JLKBMbFOYNutut4hmYHrgv8D
-         kimfLZMG7G5cXhFQa8u6X6DMtZiqU0BaAQbauvm7CLvGWVQo6CqBOGj6N1zT7xgL4g2i
-         jV4A==
+         :cc;
+        bh=jeOzQG7gxR7iSjdJ4Rxr8LEAr5KMGsexFfBG6e2bbeo=;
+        b=mvHj094G/05mYS6mC5vTlbnqvRR+5XUUGLTO39Ah2hQGL2weF+RtVVgU/utWbfMH+V
+         TNCUDJDQbu4AlCr/3z71cjHm3t960qPgAymBO47DynuSb8tQx5OaOFsxNMO+U261v2Wh
+         WYHMbtS5IlIY9A2D/+TzA7JHa5TpK4JpO9PkAs70Hr9lEuxJaj2R4EKXPf3S3+SLgf3D
+         MDdvIhj3u+J2B2/Nw2Aop2capGF+yTMqA6fcPly5VHBAOZ/NMOysB3BFgBnPL0yvemWn
+         WcnZHB/Ju+jeWJihikD525ZW0w1M7b11uGv9MoXalTkQ0OnqVhrvDrerRyM2wCFbYd3n
+         O8zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=rOTURaP5PaQeOSsIpcmd46Y91R+MNLyAPR1yU2Z6iBo=;
-        b=PE0VOZ304TZxWF9GGl0NwK6f0Tb0cgTclo4FEcaPiy540G4kSox/MDynULhAv2HrhE
-         RIV0pvVRGynKuzel9zKcI7olLPoKE/mfYU+SgOLCfWxng60gemODx1zN0mv9sZdXrWfm
-         PWeF4CCNgFTIqPQ8RZz8iMZZIIzeRuhWo+Q+wuCK73hq6rOUnMk6+ruKVnzSpexiiVo/
-         sNb2wZEKykSQ07WcroY2VVK+ECrH99HxuWTmnsIAwHWEqlgt2534pln9pMoaT5kxiaLU
-         WPsM5GNXZgJpMILIvuLenfv0q2qSekO2O3mezOkiiOjr8xGydLzUxiiXFeYMR98rBYNw
-         0Agg==
-X-Gm-Message-State: AOAM533+VB8OZ4kIRNhKjsL6RSISIo/PmVBDLLqfebopnqH4ZfZrcybp
-        xYDz9n3/D/l6MYRGBeOacawT5weqhHqGSrEMQg51
-X-Google-Smtp-Source: ABdhPJyP6yfQzHT15kUv62+yNQ20O/BzBHVJR0ZgrI6Xn0HA42IiBnelkQqvWTNaIzhx/vzeB+KLQxeDT94hy02Ie/0A
+         :references:subject:from:to:cc;
+        bh=jeOzQG7gxR7iSjdJ4Rxr8LEAr5KMGsexFfBG6e2bbeo=;
+        b=J+iPm58Hymvl/2Hb9haSqNGChkklPZrrZWQkcuOXUnaTdm0NDUqnaFWunkehDd88yk
+         bqjZIPo0e1xSXQXNF3Qte8oJTWVKPtZ8e7qzEDOMDF0oPywrTt7fpL++cslZDKgYwMBM
+         H5hsaUtX8y6vvs7vE4IfARi11KwJBxHibB5DaVsgKhQjh15v+qT+SVPSvr7MZ26yT0RY
+         rshzw06QgH91RHiSIAsYbQhtuSc+juCxEye+JcznPbX8tQd9oM+WcGzjOAzZNsaef0MY
+         NZZM6X7sXkDEFYVEqV3/yFXjiVFZoC7XK82NZqNjDnXKbAqwPELBIZAEno8pmGdMJ+gA
+         e49g==
+X-Gm-Message-State: AOAM533kCEJ5A/mSnhPDTrYV+g2PqTKqrx2kLH+9AR5anOzNg1M3kaSr
+        eUg9/TXEug+iq6v8ZAAnTwUJVFMN9lToyHDj6kYZ
+X-Google-Smtp-Source: ABdhPJzdskcxTVa2EMf4xpanWJTuGvZgAkG3CjXhRg0QbftCTYRAXPZNWUfAl9TkqsH2uc9caWOwIPQkCOqj1dQKBnAC
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:acc:b0:44b:ff29:621b with
- SMTP id c12-20020a056a000acc00b0044bff29621bmr3226024pfl.32.1636417377493;
- Mon, 08 Nov 2021 16:22:57 -0800 (PST)
-Date:   Mon,  8 Nov 2021 16:22:55 -0800
-In-Reply-To: <YYWTCcAljHQRTJQ/@google.com>
-Message-Id: <20211109002255.1110653-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:ca81:: with SMTP id
+ y1mr2483791pjt.231.1636417538814; Mon, 08 Nov 2021 16:25:38 -0800 (PST)
+Date:   Mon,  8 Nov 2021 16:25:36 -0800
+In-Reply-To: <211106.8635o9hogz.gmgdl@evledraar.gmail.com>
+Message-Id: <20211109002536.1111372-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <YYWTCcAljHQRTJQ/@google.com>
+References: <211106.8635o9hogz.gmgdl@evledraar.gmail.com>
 X-Mailer: git-send-email 2.34.0.rc0.344.g81b53c2807-goog
 Subject: Re: [WIP v2 2/2] config: include file if remote URL matches a glob
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     emilyshaffer@google.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, peff@peff.net,
-        gitster@pobox.com, avarab@gmail.com
+To:     avarab@gmail.com
+Cc:     emilyshaffer@google.com, jonathantanmy@google.com,
+        git@vger.kernel.org, peff@peff.net, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> To expand a little more on this:
+> > What's the easiest way to "try it and see", to add tooling and find out
+> > whether the config files would be reopened during the second parse?
+> > Because I suspect that we won't actually reopen those files, due to the
+> > config cache.
+> 
+> strace -f?
 
-[snip]
+Thanks - this might work.
 
-> The nice thing about 'hasRemoteUrl' in this case is that we don't need
-> to know the location of the user's big-oss-project/ checkout on disk. We
-> can set that config globally and they can checkout big-oss-project as
-> many times and as many places as they wish. It wouldn't be possible to
-> ship configs via a package manager or other automated script without it.
+> > So couldn't we do something like....
+> >
+> > pass #1:
+> >  if (include)
+> >    if (not hasRemoteUrl)
+> >      open up path & parse
+> >  put config into in-memory cache normally
+> > pass #2: (and this pass would need to be added to repo_config() probably)
+> >  if (include)
+> >    if (hasRemoteUrl)
+> >      open up path & parse
+> >      insert in-order into in-memory cache
+> >  don't touch existing configs otherwise
+> >
+> > I think it's in practice similar to the approach you're using (getting
+> > around the weird ordering with a cache in memory), but we could reuse
+> > the existing config cache rather than creating a new and different one.
+> 
+> I don't know enough to say if this two-step approach is better (although
+> I'm slightly biased in that direction, since it seems simpler), but this
+> just seems like premature optimization.
+> 
+> I.e. let's just read the files twice, they'll be in the OS's FS cache,
+> which is unlikely to be a bottleneck for the amount of files involved.
 
-Ah, thanks for the elaboration!
+OK - let me try this.
 
-> > NEEDSWORK: The way this works is that if we see such an include, we
-> > shunt all subsequent configs into a stash (while looking for URLs), the=
-n
-> > process the stash. In particular, this means that more memory is needed=
-,
-> > and the nature of error reporting changes (currently, if a callback
-> > returns nonzero for a variable, processing halts immediately, but with
-> > this patch, all the config might be read from disk before the callback
-> > even sees the variable). I'll need to expand on this and write a
-> > documentation section.
->=20
-> Hm. I'm not so sure about making another structure for storing config
-> into memory, because we already do that during the regular config parse
-> (to make things like git_config_get_string() fast). Can we not re-walk
-> the in-memory config at the end of the normal parse, rather than reading
-> from disk twice?
->=20
-> I think git_config()/repo_config() callback even does that for you for fr=
-ee...?
+> That being said we do have exactly this cache already. See [1] and
+> 3c8687a73ee (add `config_set` API for caching config-like files,
+> 2014-07-28).
+> 
+> But I think that was added due to *very* frequent re-parsing of the
+> entire config every time someone needed a config variable, not due to
+> the I/O overhead (but I may be wrong).
+> 
+> So if we've got 100 config variables we need and 10 config files then
+> 10*100 is probably starting to hurt, but if for whatever reason we
+> needed 2*10 here that's probably no big deal, and in any case would only
+> happen if this new include mechanism was in play.
+> 
+> 1. https://lore.kernel.org/git/1404631162-18556-1-git-send-email-tanayabh@gmail.com/ 
 
-The main thing is that we wouldn't know if an entry would have been
-overridden by a value from an includeif.hasremoteurl or not.
+This might not work for the reasons I described in my reply to Emily
+[1]. I'll try the read-twice version first.
 
-> What's the easiest way to "try it and see", to add tooling and find out
-> whether the config files would be reopened during the second parse?
-> Because I suspect that we won't actually reopen those files, due to the
-> config cache.
-
-As =C3=86var says, strace should work. The hard part is implementing the
-recursive config parse, but it looks like the way to go, so I'll try it
-and see how it goes.
-
-[1] https://lore.kernel.org/git/211106.8635o9hogz.gmgdl@evledraar.gmail.com=
-/
-
-> So couldn't we do something like....
->=20
-> pass #1:
->  if (include)
->    if (not hasRemoteUrl)
->      open up path & parse
->  put config into in-memory cache normally
-> pass #2: (and this pass would need to be added to repo_config() probably)
->  if (include)
->    if (hasRemoteUrl)
->      open up path & parse
->      insert in-order into in-memory cache
->  don't touch existing configs otherwise
->
-> I think it's in practice similar to the approach you're using (getting
-> around the weird ordering with a cache in memory), but we could reuse
-> the existing config cache rather than creating a new and different one.
-
-What do you mean by "insert in-order"? If you mean figuring out which
-variables would be overridden (and for multi-valued variables, what
-order to put all the values in), I think that's the hard part.
-
-Another thing is that at the point where we read the config
-(config_with_options()), we have a callback, so we would need to make
-sure that we're writing to the in-memory cache in the first place (as
-opposed to passing a callback that does something else). That might be
-doable by changing the API, but in ay case, I'll try the recursive
-config parse first.
+[1] https://lore.kernel.org/git/20211109002255.1110653-1-jonathantanmy@google.com/
