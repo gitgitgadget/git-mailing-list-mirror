@@ -2,114 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02B64C433F5
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 23:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68227C433F5
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 23:10:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA1BB610F8
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 23:10:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46F1161105
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 23:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241204AbhKIXNO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Nov 2021 18:13:14 -0500
-Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:52961 "EHLO
+        id S242977AbhKIXNU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Nov 2021 18:13:20 -0500
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:52979 "EHLO
         outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S232159AbhKIXNN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Nov 2021 18:13:13 -0500
+        with ESMTP id S242425AbhKIXNS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Nov 2021 18:13:18 -0500
 Received: from localhost (198-27-191-186.fiber.dynamic.sonic.net [198.27.191.186])
         (authenticated bits=0)
         (User authenticated as andersk@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 1A9NAHpd014870
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 1A9NAKLX014889
         (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 9 Nov 2021 18:10:18 -0500
+        Tue, 9 Nov 2021 18:10:22 -0500
 From:   Anders Kaseorg <andersk@mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>, git@vger.kernel.org,
         Andreas Heiduk <andreas.heiduk@mathema.de>,
         Anders Kaseorg <andersk@mit.edu>
-Subject: [PATCH v5 3/4] receive-pack: Protect current branch for bare repository worktree
-Date:   Tue,  9 Nov 2021 15:09:40 -0800
-Message-Id: <20211109230941.2518143-3-andersk@mit.edu>
+Subject: [PATCH v5 4/4] branch: Protect branches checked out in all worktrees
+Date:   Tue,  9 Nov 2021 15:09:41 -0800
+Message-Id: <20211109230941.2518143-4-andersk@mit.edu>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211109230941.2518143-1-andersk@mit.edu>
 References: <2f983e36-532f-ac87-9ade-fba4c6b9d276@mit.edu>
  <20211109230941.2518143-1-andersk@mit.edu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A bare repository won’t have a working tree at "..", but it may still
-have separate working trees created with git worktree. We should protect
-the current branch of such working trees from being updated or deleted,
-according to receive.denyCurrentBranch.
+Refuse to force-move a branch over the currently checked out branch of
+any working tree, not just the current one.
 
 Signed-off-by: Anders Kaseorg <andersk@mit.edu>
 ---
- builtin/receive-pack.c |  6 +++---
- t/t5516-fetch-push.sh  | 14 ++++++++++++++
- 2 files changed, 17 insertions(+), 3 deletions(-)
+ branch.c          | 10 ++++++----
+ t/t3200-branch.sh |  7 +++++++
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 542431e692..04a2ec6abc 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1455,7 +1455,7 @@ static const char *update_worktree(unsigned char *sha1, const struct worktree *w
- 	if (!worktree || !worktree->path)
- 		BUG("worktree->path must be non-NULL");
+diff --git a/branch.c b/branch.c
+index 07a46430b3..581f0c02c2 100644
+--- a/branch.c
++++ b/branch.c
+@@ -199,7 +199,7 @@ int validate_branchname(const char *name, struct strbuf *ref)
+  */
+ int validate_new_branchname(const char *name, struct strbuf *ref, int force)
+ {
+-	const char *head;
++	const struct worktree *wt;
  
--	if (is_bare_repository())
-+	if (worktree->is_bare)
- 		return "denyCurrentBranch = updateInstead needs a worktree";
- 	git_dir = get_worktree_git_dir(worktree);
+ 	if (!validate_branchname(name, ref))
+ 		return 0;
+@@ -208,9 +208,11 @@ int validate_new_branchname(const char *name, struct strbuf *ref, int force)
+ 		die(_("A branch named '%s' already exists."),
+ 		    ref->buf + strlen("refs/heads/"));
  
-@@ -1479,7 +1479,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 	struct object_id *old_oid = &cmd->old_oid;
- 	struct object_id *new_oid = &cmd->new_oid;
- 	int do_update_worktree = 0;
--	const struct worktree *worktree = is_bare_repository() ? NULL : find_shared_symref("HEAD", name);
-+	const struct worktree *worktree = find_shared_symref("HEAD", name);
+-	head = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
+-	if (!is_bare_repository() && head && !strcmp(head, ref->buf))
+-		die(_("Cannot force update the current branch."));
++	wt = find_shared_symref("HEAD", ref->buf);
++	if (wt && !wt->is_bare)
++		die(_("Cannot force update the branch '%s'"
++		      "checked out at '%s'."),
++		    ref->buf + strlen("refs/heads/"), wt->path);
  
- 	/* only refs/... are allowed */
- 	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
-@@ -1491,7 +1491,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 	free(namespaced_name);
- 	namespaced_name = strbuf_detach(&namespaced_name_buf, NULL);
- 
--	if (worktree) {
-+	if (worktree && !worktree->is_bare) {
- 		switch (deny_current_branch) {
- 		case DENY_IGNORE:
- 			break;
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index f07e32126f..4847793a1c 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1769,9 +1769,23 @@ test_expect_success 'denyCurrentBranch and worktrees' '
- 	test_must_fail git -C cloned push origin HEAD:new-wt &&
- 	test_config receive.denyCurrentBranch updateInstead &&
- 	git -C cloned push origin HEAD:new-wt &&
-+	test_path_exists new-wt/first.t &&
- 	test_must_fail git -C cloned push --delete origin new-wt
+ 	return 1;
+ }
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index e575ffb4ff..4c868bf971 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -168,6 +168,13 @@ test_expect_success 'git branch -M foo bar should fail when bar is checked out'
+ 	test_must_fail git branch -M bar foo
  '
  
-+test_expect_success 'denyCurrentBranch and bare repository worktrees' '
-+	test_when_finished "rm -fr bare.git" &&
-+	git clone --bare . bare.git &&
-+	git -C bare.git worktree add wt &&
-+	test_commit grape &&
-+	test_config -C bare.git receive.denyCurrentBranch refuse &&
-+	test_must_fail git push bare.git HEAD:wt &&
-+	test_config -C bare.git receive.denyCurrentBranch updateInstead &&
-+	git push bare.git HEAD:wt &&
-+	test_path_exists bare.git/wt/grape.t &&
-+	test_must_fail git push --delete bare.git wt
++test_expect_success 'git branch -M foo bar should fail when bar is checked out in worktree' '
++	git branch -f bar &&
++	test_when_finished "git worktree remove wt && git branch -D wt" &&
++	git worktree add wt &&
++	test_must_fail git branch -M bar wt
 +'
 +
- test_expect_success 'refuse fetch to current branch of worktree' '
- 	test_when_finished "git worktree remove --force wt && git branch -D wt" &&
- 	git worktree add wt &&
+ test_expect_success 'git branch -M baz bam should succeed when baz is checked out' '
+ 	git checkout -b baz &&
+ 	git branch bam &&
 -- 
 2.33.1
 
