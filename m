@@ -2,71 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D516AC433F5
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:00:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1DCBC433F5
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:04:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2076610F8
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:00:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E7A861175
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:04:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240717AbhKICD3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 21:03:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56692 "EHLO
+        id S235860AbhKICHX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 21:07:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239565AbhKICDY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 21:03:24 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67DB9C061570
-        for <git@vger.kernel.org>; Mon,  8 Nov 2021 18:00:39 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id m14so69667748edd.0
-        for <git@vger.kernel.org>; Mon, 08 Nov 2021 18:00:39 -0800 (PST)
+        with ESMTP id S231229AbhKICHX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 21:07:23 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CB1CC061570
+        for <git@vger.kernel.org>; Mon,  8 Nov 2021 18:04:38 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id x15so39120057edv.1
+        for <git@vger.kernel.org>; Mon, 08 Nov 2021 18:04:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=wcNWjXK705uegavO3BOwz52W0qeymqjb/pT2yjGVzMQ=;
-        b=FuuakudoTwCOjvQZXtXdznJ4PwR7i5gyB3SIaUUoqDgRj4rcq/uRMLRlrAG37vbMeO
-         kYxIhJvdpRjTRTiSV/3ePZ6lv2Skc5IauO0unxM4QKY5Cy5NwrTbyWw3miN1TdIxKgdq
-         +I5qFgkCAR/DA/u2ipAqbWfnoNqdWgE9E4AA5QVDAGnEbzP3KDUrjybMgKZ1xhcQUc9n
-         OP2N4UGfFGyZjIdlN5L/YrOjknbkD4J+nBu+EchoxSKzl7k9KiQBLTO19nyBHCOOqMkB
-         0zT7fKpeqWWeaBrG8ykKharkFVI8aGTH5T5FBYBKQ0GSE+zNLGcTrnM9ViaV5fyUCiT8
-         plQQ==
+        bh=W+nbdPHKETs+5MtMjwtEYfeeJgj0x8NUCJQPbHt0lLg=;
+        b=QAyHtg9PeVMNh/JP8vFNE/+aZETKvTNIop+WDyEeKXtKl5AEaQJqr6LZrqlHGGAsGO
+         YXh+ARY9Xa5/SzgLx904gFdVekj8yJz2vgYp98YVL0ijtYZSIFty1smNpjI3FId3NlKn
+         HpxAC8oZ28rr5yJSGJ067bCK4XsTXZtzlr3zOQCk6Xxpe75lEGqfKhoo5AEkLoDBq0Xj
+         tqje7Sag0G7NW1w7h724UxqxhdmI2salkxgCKcPRWzqr6DoW1WHp8QqboLYqmHrgsc4P
+         +tibqIf8Of5cL0VQPXKn2Y0n41gZj/f4y0kKo8Ewo4Q3oO2KIv2YWBwkxlCXbmQIryRd
+         ac8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=wcNWjXK705uegavO3BOwz52W0qeymqjb/pT2yjGVzMQ=;
-        b=JmZWPz8273fRP7S6bIL0bZdzrZNIMkv9XL78midn5gCdqhglKpIKBX5eEsgVguJD6V
-         kwTF2A2KeSd5t4FjBHAf3FVE8LNKH3TIND6/GKqFCecGRgN9kAo2m3iKM+Q54wJw7ycg
-         Y2vTTe1zX0o5zt3VCbbHp5HQoRxF6b4rYt6ojeDxPOvPNpfwoUybqblJ5bO1x+dZOVl7
-         spDwqRZVxnVcyAxXFiydGPtuFak9jbqn5BtHbD4ulLdsf/wO9DXyE8xHW8JpFulv8cN7
-         NRzvDxc77YyyGtRkHuJkWG4li29RetsjPnS9GPmkUFAoXKfiG150SRmjL+B6QN67ouvI
-         RtLQ==
-X-Gm-Message-State: AOAM533kGWK8Se++nWBxzQO6GdUVCeUAiXk94gnyJqFIeQDAF1ka7syt
-        vP2o6e0192HZnAspuGosSq4=
-X-Google-Smtp-Source: ABdhPJxqh6ionA9drjOExeH6ofM+sh5IVhvCIS97RYEKxBmMqtbndNPiblKG+pfeFhMmmFCmes0gvA==
-X-Received: by 2002:a05:6402:5242:: with SMTP id t2mr5128667edd.27.1636423237855;
-        Mon, 08 Nov 2021 18:00:37 -0800 (PST)
+        bh=W+nbdPHKETs+5MtMjwtEYfeeJgj0x8NUCJQPbHt0lLg=;
+        b=u8gvcJXalxzClVrV4D/T+4q8gEYFLCNOG8rznhbp89wRR3WyRdLHUcONOCKGBzYKVK
+         D3gbpA16vSzeb1M2L4pRi1wCbEP/wz834jkZLR0ZgeVWo0aOjk7yBcBVMq7PQj9anohn
+         PqPIqCDYFcIaSDS8aRXAa7Gruv6TKM+00HGDk0F+fXd6fuM+rDVAyHL/hw8AumDNl2kf
+         kNvKFICbKMy+MPHheLSQv1eT8N3M6y0vDQQ5XfSl8CR3tRBbW/DTXBmuBAERg6svDZRc
+         0L0SYtnWZT709CNT4B+UgviNbqGvizwcCvwO4T/7TNHNvSutD1eXULKo/DKVsATxjDZx
+         q78A==
+X-Gm-Message-State: AOAM5334z4CBpqPjS3IWQ88IyWVlLuldk/qLJaB6ZLx6N1k8Wqk+tT1r
+        SGhV8M/CX7gSPoHyRZKEUMU=
+X-Google-Smtp-Source: ABdhPJz1zWZO5f4qblqLynCXJT20d1BIoueF6h3Wlu53HaNvygIF69F65i2Hjhi9jUIMp1Yh34T5ug==
+X-Received: by 2002:a17:906:2b12:: with SMTP id a18mr4884867ejg.254.1636423476487;
+        Mon, 08 Nov 2021 18:04:36 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ec38sm10246697edb.40.2021.11.08.18.00.37
+        by smtp.gmail.com with ESMTPSA id w25sm1959250edv.57.2021.11.08.18.04.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Nov 2021 18:00:37 -0800 (PST)
+        Mon, 08 Nov 2021 18:04:35 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mkGRA-001JDy-Vb;
-        Tue, 09 Nov 2021 03:00:36 +0100
+        id 1mkGV1-001JIw-2z;
+        Tue, 09 Nov 2021 03:04:35 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ivan Frade via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Ivan Frade <ifrade@google.com>
-Subject: Re: [PATCH v4 2/2] http-fetch: redact url on die() message
-Date:   Tue, 09 Nov 2021 02:54:42 +0100
-References: <pull.1052.v3.git.1634684260142.gitgitgadget@gmail.com>
- <pull.1052.v4.git.1635288599.gitgitgadget@gmail.com>
- <c7f0977cabd4ba7311b8045bc57e9e30198651fd.1635288599.git.gitgitgadget@gmail.com>
- <211028.86sfwlw10o.gmgdl@evledraar.gmail.com> <xmqqpmrnfmiv.fsf@gitster.g>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        J Smith <dark.panda@gmail.com>
+Subject: Re: [PATCH 7/8] grep: simplify config parsing, change grep.<rx
+ config> interaction
+Date:   Tue, 09 Nov 2021 03:01:12 +0100
+References: <cover-0.8-00000000000-20211106T210711Z-avarab@gmail.com>
+ <patch-7.8-677a8f8520f-20211106T210711Z-avarab@gmail.com>
+ <YYms4czKVnQFWYQ+@nand.local>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <xmqqpmrnfmiv.fsf@gitster.g>
-Message-ID: <211109.86ilx2dr5n.gmgdl@evledraar.gmail.com>
+In-reply-to: <YYms4czKVnQFWYQ+@nand.local>
+Message-ID: <211109.86ee7qdqz0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -75,46 +75,73 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Oct 29 2021, Junio C Hamano wrote:
+On Mon, Nov 08 2021, Taylor Blau wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->>> +			if (!git_env_bool("GIT_TRACE_REDACT", 1) || !nurl) {
->>> +				die("Unable to get pack file %s\n%s", preq->url,
->>> +				    curl_errorstr);
+> On Sat, Nov 06, 2021 at 10:10:53PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> I.e. a user would correctly expect this to keep working:
 >>
->> small nit: arrange if's from "if (cheap || expensive)", i.e. no need for
->> getenv() if !nurl, but maybe compilers are smart enough for that...
+>>     # ERE grep
+>>     git -c grep.extendedRegexp=3Dtrue grep <pattern>
+>>
+>> And likewise for "grep.patternType=3Ddefault" to take precedence over
+>> the disfavored "grep.extendedRegexp" option, i.e. the usual "last set
+>> wins" semantics.
+>>
+>>     # BRE grep
+>>     git -c grep.extendedRegexp=3Dtrue -c grep.patternType=3Dbasic grep <=
+pattern>
+>>
+>> But probably not for this to ignore the new "grep.patternType" option
+>> entirely, say if /etc/gitconfig was still setting
+>> "grep.extendedRegexp", but "~/.gitconfig" used the new
+>> "grep.patternType" (and wanted to use the "default" value):
+>>
+>>     # Was ERE, now BRE
+>>     git -c grep.extendedRegexp=3Dtrue grep.patternType=3Ddefault grep <p=
+attern>
 >
-> They typically do not see what happens inside git_env_bool() while
-> compling this compilation unit, and cannot tell if the programmer
-> wanted to call it first for its side effects, hence they cannot
-> swap them safely.
+> OK, so this is the case that we'd be "breaking". And I think that the
+> new behavior you're outlining here (where a higher-precedence
+> grep.patternType=3Ddefault overrides a lower-precedence
+> grep.extendedRegexp=3Dtrue, resulting in using BRE over ERE) makes more
+> sense.
+>
+> At least, it makes more sense if your expectation of "default" is "the
+> default matching behavior", not "fallthrough to grep.extendedRegexp".
+>
+> In any case, I am sensitive to breaking existing user workflows, but
+> this seems so obscure to me that I have a hard time expecting that
+> m(any?) users will even notice this at all.
+>
+> The situation I'm most concerned about is having grep.extendedRegexp set
+> in, say, /etc/gitconfig and grep.patternType=3Ddefault set at a
+> higher-precedence level.
 
-*nod*, but since that function is just:
-=20=20=20=20
-    int git_env_bool(const char *k, int def)
-    {
-            const char *v =3D getenv(k);
-            return v ? git_config_bool(k, v) : def;
-    }
+*nod*, but the only user who'd end up with that is someone who's trying
+to override grep.extendedRegexp but failing to do it, so this would
+help.
 
-I was hedging and pondering if some compilers were smart enough these
-days to optimize things like that.
+Or someone who'd read the docs, understood that we promised that would
+do nothing, and inserted that just to test us, but that seems unlikely
+:)
 
-I.e. in this case getenv() is a simple C library function, the env
-variable is constant, and we do a boolean test of it before calling
-git_config_bool().
+Or, I suppose someone who's entirely confused, and will continue being
+even more confused now that behavior changes on a git upgrade from ERE
+to BRE.
 
-So a sufficiently smart compiler could turn that into:
+I'm hoping the last two paragraphs describe no-one & that this is safe
+to do.
 
-     /* global, probably something iterated over env already */
-    static int __have_seen_GIT_TRACE_REDACT =3D 0;
-    ...
+>> ---
+>>  Documentation/config/grep.txt |  3 +-
+>>  Documentation/git-grep.txt    |  3 +-
+>
+> Not the fault of your patch, but these two are annoyingly (and subtly)
+> different from one another. Could we clean this up and put everything in
+> Documentation/config/grep.txt (and then include that in the
+> CONFIGURATION section of Documentation/git-grep.txt)?
 
-    if ((!__have_seen_GIT_TRACE_REDACT || !nurl) ||
-        (__have_seen_GIT_TRACE_REDACT && git_env_bool_without_v_bool_check(=
-...)))
-
-But probably not, since it wolud need quite a bit of C library
-cooperation/hooks...
+I've got a large series to do that for all of these, but opted to skip
+that particular digression here (even for just grep.txt it's a bit
+distracting).
