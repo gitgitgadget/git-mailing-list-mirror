@@ -2,36 +2,37 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 160E5C433F5
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 03:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7434BC433EF
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 03:01:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F16C56120A
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 03:01:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D05B6120A
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 03:01:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242283AbhKIDEM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 22:04:12 -0500
-Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:42745 "EHLO
+        id S242271AbhKIDEX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 22:04:23 -0500
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:42844 "EHLO
         outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S242265AbhKIDD7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 22:03:59 -0500
+        with ESMTP id S242270AbhKIDEX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 22:04:23 -0500
 Received: from localhost (198-27-191-186.fiber.dynamic.sonic.net [198.27.191.186])
         (authenticated bits=0)
         (User authenticated as andersk@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 1A930tXD005286
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 1A931Q5B005553
         (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 8 Nov 2021 22:00:57 -0500
+        Mon, 8 Nov 2021 22:01:28 -0500
 From:   Anders Kaseorg <andersk@mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         Andreas Heiduk <andreas.heiduk@mathema.de>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Anders Kaseorg <andersk@mit.edu>
-Subject: [PATCH v4 1/4] fetch: Protect branches checked out in all worktrees
-Date:   Mon,  8 Nov 2021 19:00:25 -0800
-Message-Id: <20211109030028.2196416-1-andersk@mit.edu>
+Subject: [PATCH v4 2/4] receive-pack: Clean dead code from update_worktree()
+Date:   Mon,  8 Nov 2021 19:00:26 -0800
+Message-Id: <20211109030028.2196416-2-andersk@mit.edu>
 X-Mailer: git-send-email 2.33.1
-In-Reply-To: <a25d105a-875b-fa6a-771a-37936779f067@mit.edu>
+In-Reply-To: <20211109030028.2196416-1-andersk@mit.edu>
 References: <a25d105a-875b-fa6a-771a-37936779f067@mit.edu>
+ <20211109030028.2196416-1-andersk@mit.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,117 +40,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refuse to fetch into the currently checked out branch of any working
-tree, not just the current one.
-
-Fixes this previously reported bug:
-
-https://public-inbox.org/git/cb957174-5e9a-5603-ea9e-ac9b58a2eaad@mathema.de
-
-As a side effect of using find_shared_symref, we’ll also refuse the
-fetch when we’re on a detached HEAD because we’re rebasing or bisecting
-on the branch in question. This seems like a sensible change.
+update_worktree() can only be called with a non-NULL worktree parameter,
+because that’s the only case where we set do_update_worktree = 1.
+worktree->path is always initialized to non-NULL.
 
 Signed-off-by: Anders Kaseorg <andersk@mit.edu>
 ---
- builtin/fetch.c       | 28 ++++++++++++++--------------
- t/t5516-fetch-push.sh | 18 ++++++++++++++++++
- 2 files changed, 32 insertions(+), 14 deletions(-)
+ builtin/receive-pack.c | 20 +++++---------------
+ 1 file changed, 5 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index f7abbc31ff..0ef2170ef9 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -28,6 +28,7 @@
- #include "promisor-remote.h"
- #include "commit-graph.h"
- #include "shallow.h"
-+#include "worktree.h"
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 49b846d960..cf575280fc 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1449,29 +1449,19 @@ static const char *push_to_checkout(unsigned char *hash,
  
- #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
- 
-@@ -854,7 +855,7 @@ static int update_local_ref(struct ref *ref,
- 			    int summary_width)
+ static const char *update_worktree(unsigned char *sha1, const struct worktree *worktree)
  {
- 	struct commit *current = NULL, *updated;
--	struct branch *current_branch = branch_get(NULL);
-+	const struct worktree *wt;
- 	const char *pretty_ref = prettify_refname(ref->name);
- 	int fast_forward = 0;
+-	const char *retval, *work_tree, *git_dir = NULL;
++	const char *retval, *git_dir;
+ 	struct strvec env = STRVEC_INIT;
  
-@@ -868,16 +869,18 @@ static int update_local_ref(struct ref *ref,
- 		return 0;
+-	if (worktree && worktree->path)
+-		work_tree = worktree->path;
+-	else if (git_work_tree_cfg)
+-		work_tree = git_work_tree_cfg;
+-	else
+-		work_tree = "..";
+-
+ 	if (is_bare_repository())
+ 		return "denyCurrentBranch = updateInstead needs a worktree";
+-	if (worktree)
+-		git_dir = get_worktree_git_dir(worktree);
+-	if (!git_dir)
+-		git_dir = get_git_dir();
++	git_dir = get_worktree_git_dir(worktree);
+ 
+ 	strvec_pushf(&env, "GIT_DIR=%s", absolute_path(git_dir));
+ 
+ 	if (!hook_exists(push_to_checkout_hook))
+-		retval = push_to_deploy(sha1, &env, work_tree);
++		retval = push_to_deploy(sha1, &env, worktree->path);
+ 	else
+-		retval = push_to_checkout(sha1, &env, work_tree);
++		retval = push_to_checkout(sha1, &env, worktree->path);
+ 
+ 	strvec_clear(&env);
+ 	return retval;
+@@ -1579,7 +1569,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
  	}
  
--	if (current_branch &&
--	    !strcmp(ref->name, current_branch->name) &&
--	    !(update_head_ok || is_bare_repository()) &&
-+	if (!update_head_ok &&
-+	    (wt = find_shared_symref("HEAD", ref->name)) &&
-+	    !wt->is_bare &&
- 	    !is_null_oid(&ref->old_oid)) {
- 		/*
- 		 * If this is the head, and it's not okay to update
- 		 * the head, and the old value of the head isn't empty...
- 		 */
- 		format_display(display, '!', _("[rejected]"),
--			       _("can't fetch in current branch"),
-+			       wt->is_current ?
-+			       _("can't fetch in current branch") :
-+			       _("checked out in another worktree"),
- 			       remote, pretty_ref, summary_width);
- 		return 1;
+ 	if (do_update_worktree) {
+-		ret = update_worktree(new_oid->hash, find_shared_symref("HEAD", name));
++		ret = update_worktree(new_oid->hash, worktree);
+ 		if (ret)
+ 			return ret;
  	}
-@@ -1387,16 +1390,13 @@ static int prune_refs(struct refspec *rs, struct ref *ref_map,
- 
- static void check_not_current_branch(struct ref *ref_map)
- {
--	struct branch *current_branch = branch_get(NULL);
--
--	if (is_bare_repository() || !current_branch)
--		return;
--
-+	const struct worktree *wt;
- 	for (; ref_map; ref_map = ref_map->next)
--		if (ref_map->peer_ref && !strcmp(current_branch->refname,
--					ref_map->peer_ref->name))
--			die(_("Refusing to fetch into current branch %s "
--			    "of non-bare repository"), current_branch->refname);
-+		if (ref_map->peer_ref &&
-+		    (wt = find_shared_symref("HEAD", ref_map->peer_ref->name)))
-+			die(_("Refusing to fetch into branch '%s' "
-+			      "checked out at '%s'"),
-+			    ref_map->peer_ref->name, wt->path);
- }
- 
- static int truncate_fetch_head(void)
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 8212ca56dc..2c2d6fa6e7 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1771,4 +1771,22 @@ test_expect_success 'denyCurrentBranch and worktrees' '
- 	git -C cloned push origin HEAD:new-wt &&
- 	test_must_fail git -C cloned push --delete origin new-wt
- '
-+
-+test_expect_success 'refuse fetch to current branch of worktree' '
-+	test_when_finished "git worktree remove --force wt" &&
-+	git worktree add wt &&
-+	test_commit apple &&
-+	test_must_fail git fetch . HEAD:wt &&
-+	git fetch -u . HEAD:wt
-+'
-+
-+test_expect_success 'refuse fetch to current branch of bare repository worktree' '
-+	test_when_finished "rm -fr bare.git" &&
-+	git clone --bare . bare.git &&
-+	git -C bare.git worktree add wt &&
-+	test_commit banana &&
-+	test_must_fail git -C bare.git fetch .. HEAD:wt &&
-+	git -C bare.git fetch -u .. HEAD:wt
-+'
-+
- test_done
 -- 
 2.33.1
 
