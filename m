@@ -2,146 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1DCBC433F5
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64765C433EF
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:06:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E7A861175
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:04:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4353561175
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235860AbhKICHX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 21:07:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57588 "EHLO
+        id S237421AbhKICJP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 21:09:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231229AbhKICHX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 21:07:23 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CB1CC061570
-        for <git@vger.kernel.org>; Mon,  8 Nov 2021 18:04:38 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id x15so39120057edv.1
-        for <git@vger.kernel.org>; Mon, 08 Nov 2021 18:04:37 -0800 (PST)
+        with ESMTP id S231229AbhKICJO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 21:09:14 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F163C061570
+        for <git@vger.kernel.org>; Mon,  8 Nov 2021 18:06:29 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id d5so30238689wrc.1
+        for <git@vger.kernel.org>; Mon, 08 Nov 2021 18:06:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=W+nbdPHKETs+5MtMjwtEYfeeJgj0x8NUCJQPbHt0lLg=;
-        b=QAyHtg9PeVMNh/JP8vFNE/+aZETKvTNIop+WDyEeKXtKl5AEaQJqr6LZrqlHGGAsGO
-         YXh+ARY9Xa5/SzgLx904gFdVekj8yJz2vgYp98YVL0ijtYZSIFty1smNpjI3FId3NlKn
-         HpxAC8oZ28rr5yJSGJ067bCK4XsTXZtzlr3zOQCk6Xxpe75lEGqfKhoo5AEkLoDBq0Xj
-         tqje7Sag0G7NW1w7h724UxqxhdmI2salkxgCKcPRWzqr6DoW1WHp8QqboLYqmHrgsc4P
-         +tibqIf8Of5cL0VQPXKn2Y0n41gZj/f4y0kKo8Ewo4Q3oO2KIv2YWBwkxlCXbmQIryRd
-         ac8w==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=xdjj+qmXXr/T0ysERiC+N3LNh1Szj9dfU9JPj1qpYts=;
+        b=NIjuZePlAWBbt50IEeI7jly/DhVjLn5V2fIlXttqYuVXZGlrQXGnXpR0kn4bIeHKFa
+         CoXq532P9eu5w/6H1orLQAvRT628Z2QcKyysjtsGH58hWiFrVbsrOZJa/P3Eg7HMJsMY
+         SHq8wKLCr0rKwZLNus7M3Yt7kRgHMrqM/CpVEHsH8GmJQDqxDTG1AKlatYipMHp6ip7S
+         5JGDHBoRgIRLEdIJmnq4fws3oWUibDoz9i1UfdGe3brxMGvlsaOvn9rMLcikMNX+QLSr
+         srhNbPL7BIiODFNuB3/JCQSVhCum/P7juVFAxRRUfAg3vxVrfTkFcpWAqeCBXMIjhMui
+         CoEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=W+nbdPHKETs+5MtMjwtEYfeeJgj0x8NUCJQPbHt0lLg=;
-        b=u8gvcJXalxzClVrV4D/T+4q8gEYFLCNOG8rznhbp89wRR3WyRdLHUcONOCKGBzYKVK
-         D3gbpA16vSzeb1M2L4pRi1wCbEP/wz834jkZLR0ZgeVWo0aOjk7yBcBVMq7PQj9anohn
-         PqPIqCDYFcIaSDS8aRXAa7Gruv6TKM+00HGDk0F+fXd6fuM+rDVAyHL/hw8AumDNl2kf
-         kNvKFICbKMy+MPHheLSQv1eT8N3M6y0vDQQ5XfSl8CR3tRBbW/DTXBmuBAERg6svDZRc
-         0L0SYtnWZT709CNT4B+UgviNbqGvizwcCvwO4T/7TNHNvSutD1eXULKo/DKVsATxjDZx
-         q78A==
-X-Gm-Message-State: AOAM5334z4CBpqPjS3IWQ88IyWVlLuldk/qLJaB6ZLx6N1k8Wqk+tT1r
-        SGhV8M/CX7gSPoHyRZKEUMU=
-X-Google-Smtp-Source: ABdhPJz1zWZO5f4qblqLynCXJT20d1BIoueF6h3Wlu53HaNvygIF69F65i2Hjhi9jUIMp1Yh34T5ug==
-X-Received: by 2002:a17:906:2b12:: with SMTP id a18mr4884867ejg.254.1636423476487;
-        Mon, 08 Nov 2021 18:04:36 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id w25sm1959250edv.57.2021.11.08.18.04.35
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=xdjj+qmXXr/T0ysERiC+N3LNh1Szj9dfU9JPj1qpYts=;
+        b=mY77osITLxSX8q/HQ0HYuxBjAt+Kc9DiGFBixPfdOOYkIqRDB2pdp8Vk1daTxZvUBE
+         PBGPIZMDu70lZMGkRbQkfCu32UaxBDJ8n/Vq4552uJHBRfp54dxVelbRWHd54nI02YLq
+         sczOsGMQ2qmDDFVbj1D0/uFXle93thmOSOExKRDITRkbtUgq2hQcy8bZzFWLAuZPX7OY
+         ZSbG6RDJ6W/qWpYjXo/h9oaIOQTdy/Fv+tCrde6z5S0MvLp8MpWMicMBveBZRKGCq4mr
+         tha1CO0xnKpHilT1KTztAfX6ajD+atak9dEVQ7YgNmF83MWg+33IjGz7v2IybveYwo+n
+         TkCg==
+X-Gm-Message-State: AOAM530KS1i3BppT5tnRSI0/kz4xbZ0NqJVzEckTLO+uvoHO+Ekb3OKP
+        4LXHLi+x2U4KCPP7d0+trEpVIdhrHCg=
+X-Google-Smtp-Source: ABdhPJzehnc/uLePAr9eUF299wPYZ2FmcQ00U3j/7xnRJTk2TTLrul9aOKrXrLZP/4FJM9kwOmTGEw==
+X-Received: by 2002:a5d:6e8c:: with SMTP id k12mr4630007wrz.401.1636423587630;
+        Mon, 08 Nov 2021 18:06:27 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o5sm4164564wrx.83.2021.11.08.18.06.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Nov 2021 18:04:35 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mkGV1-001JIw-2z;
-        Tue, 09 Nov 2021 03:04:35 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        J Smith <dark.panda@gmail.com>
-Subject: Re: [PATCH 7/8] grep: simplify config parsing, change grep.<rx
- config> interaction
-Date:   Tue, 09 Nov 2021 03:01:12 +0100
-References: <cover-0.8-00000000000-20211106T210711Z-avarab@gmail.com>
- <patch-7.8-677a8f8520f-20211106T210711Z-avarab@gmail.com>
- <YYms4czKVnQFWYQ+@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <YYms4czKVnQFWYQ+@nand.local>
-Message-ID: <211109.86ee7qdqz0.gmgdl@evledraar.gmail.com>
+        Mon, 08 Nov 2021 18:06:27 -0800 (PST)
+Message-Id: <pull.1127.git.git.1636423586620.gitgitgadget@gmail.com>
+From:   "Samuel Yvon via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 09 Nov 2021 02:06:26 +0000
+Subject: [PATCH] builtin-commit: re-read file index before launching editor
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Samuel Yvon <samuelyvon9@gmail.com>,
+        Samuel Yvon <samuelyvon9@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Samuel Yvon <samuelyvon9@gmail.com>
 
-On Mon, Nov 08 2021, Taylor Blau wrote:
+Changes made within a pre-commit hook are not reflected within
+the editor (for instance, with `git commit --verbose`) because
+the index is re-read after the editor has been used.
 
-> On Sat, Nov 06, 2021 at 10:10:53PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> I.e. a user would correctly expect this to keep working:
->>
->>     # ERE grep
->>     git -c grep.extendedRegexp=3Dtrue grep <pattern>
->>
->> And likewise for "grep.patternType=3Ddefault" to take precedence over
->> the disfavored "grep.extendedRegexp" option, i.e. the usual "last set
->> wins" semantics.
->>
->>     # BRE grep
->>     git -c grep.extendedRegexp=3Dtrue -c grep.patternType=3Dbasic grep <=
-pattern>
->>
->> But probably not for this to ignore the new "grep.patternType" option
->> entirely, say if /etc/gitconfig was still setting
->> "grep.extendedRegexp", but "~/.gitconfig" used the new
->> "grep.patternType" (and wanted to use the "default" value):
->>
->>     # Was ERE, now BRE
->>     git -c grep.extendedRegexp=3Dtrue grep.patternType=3Ddefault grep <p=
-attern>
->
-> OK, so this is the case that we'd be "breaking". And I think that the
-> new behavior you're outlining here (where a higher-precedence
-> grep.patternType=3Ddefault overrides a lower-precedence
-> grep.extendedRegexp=3Dtrue, resulting in using BRE over ERE) makes more
-> sense.
->
-> At least, it makes more sense if your expectation of "default" is "the
-> default matching behavior", not "fallthrough to grep.extendedRegexp".
->
-> In any case, I am sensitive to breaking existing user workflows, but
-> this seems so obscure to me that I have a hard time expecting that
-> m(any?) users will even notice this at all.
->
-> The situation I'm most concerned about is having grep.extendedRegexp set
-> in, say, /etc/gitconfig and grep.patternType=3Ddefault set at a
-> higher-precedence level.
+This has the consequence of not displaying the actual changes made
+by the pre-commit hook, but committing them anyways.
 
-*nod*, but the only user who'd end up with that is someone who's trying
-to override grep.extendedRegexp but failing to do it, so this would
-help.
+While it is often argued that the hook's purpose is not to automatically
+write content to the repository, it is acknowledged that using the
+pre-commit to apply mechanical fixes on top of the existing changes
+is a supported use case, along with verifying the content.
 
-Or someone who'd read the docs, understood that we promised that would
-do nothing, and inserted that just to test us, but that seems unlikely
-:)
+I think not seeing these mechanical fixes before commiting is incorrect.
+A developer might expect the commit to look a certain way but if the
+pre-commit goes wrong the invalid changes will go unnoticed until
+committed.
 
-Or, I suppose someone who's entirely confused, and will continue being
-even more confused now that behavior changes on a git upgrade from ERE
-to BRE.
+Signed-off-by: Samuel Yvon <samuelyvon9@gmail.com>
+---
+    builtin-commit: Re-read file index before launching editor
+    
+    Changes made within a pre-commit hook are not reflected within the
+    editor (for instance, with git commit --verbose) because the index is
+    re-read after the editor has been used.
+    
+    This has the consequence of not displaying the actual changes made by
+    the pre-commit hook, but committing them anyways.
+    
+    While it is often argued that the hook's purpose is not to automatically
+    write content to the repository, it is acknowledged that using the
+    pre-commit to apply mechanical fixes on top of the existing changes is a
+    supported use case, along with verifying the content.
+    
+    I think not seeing these mechanical fixes before commiting is incorrect.
+    A developer might expect the commit to look a certain way but if the
+    pre-commit goes wrong the invalid changes will go unnoticed until
+    committed.
+    
+    I had a small exchange in the Google Group before submitting this Pr.
+    Here is a link for cross-referencing:
+    https://groups.google.com/g/git-mentoring/c/FsP83I9mN6c
+    
+    As a side note, I do not know who manages the Github Repo but the
+    following description threw me off a little bit:
+    
+    Git Source Code Mirror - This is a publish-only repository and all pull requests are ignored. 
+    
+    
+    since after looking deeper it seems the PRs are not ignored.
+    
+    Signed-off-by: Samuel Yvon samuelyvon9@gmail.com
 
-I'm hoping the last two paragraphs describe no-one & that this is safe
-to do.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1127%2FSamuelYvon%2Fmaint-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1127/SamuelYvon/maint-v1
+Pull-Request: https://github.com/git/git/pull/1127
 
->> ---
->>  Documentation/config/grep.txt |  3 +-
->>  Documentation/git-grep.txt    |  3 +-
->
-> Not the fault of your patch, but these two are annoyingly (and subtly)
-> different from one another. Could we clean this up and put everything in
-> Documentation/config/grep.txt (and then include that in the
-> CONFIGURATION section of Documentation/git-grep.txt)?
+ builtin/commit.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-I've got a large series to do that for all of these, but opted to skip
-that particular digression here (even for just grep.txt it's a bit
-distracting).
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 7c9b1e7be3a..e75b11d1c60 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -728,8 +728,17 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	/* This checks and barfs if author is badly specified */
+ 	determine_author_info(author_ident);
+ 
+-	if (!no_verify && run_commit_hook(use_editor, index_file, "pre-commit", NULL))
+-		return 0;
++	if (!no_verify && find_hook("pre-commit")) {
++		if(run_commit_hook(use_editor, index_file, "pre-commit", NULL))
++			return 0;
++
++		/*
++		 * Re-read the index as pre-commit hook could have updated it,
++		 * and write it out as a tree.
++		 */
++		discard_cache();
++		read_cache_from(index_file);
++	}
+ 
+ 	if (squash_message) {
+ 		/*
+@@ -1051,14 +1060,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		return 0;
+ 	}
+ 
+-	if (!no_verify && find_hook("pre-commit")) {
+-		/*
+-		 * Re-read the index as pre-commit hook could have updated it,
+-		 * and write it out as a tree.  We must do this before we invoke
+-		 * the editor and after we invoke run_status above.
+-		 */
+-		discard_cache();
+-	}
+ 	read_cache_from(index_file);
+ 
+ 	if (update_main_cache_tree(0)) {
+
+base-commit: 5fbd2fc5997dfa4d4593a862fe729b1e7a89bcf8
+-- 
+gitgitgadget
