@@ -2,146 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C54FCC433F5
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 00:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 743E3C433FE
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 00:10:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A01696109F
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 00:03:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A6AA610F7
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 00:10:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240862AbhKIAFv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 19:05:51 -0500
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:44998 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229697AbhKIAFv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 19:05:51 -0500
-Received: by mail-ed1-f50.google.com with SMTP id j21so69171394edt.11
-        for <git@vger.kernel.org>; Mon, 08 Nov 2021 16:03:05 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=lUGReOXl/dUJbRx2MdYnKC83NVBj3zY/j0Pd8Mivo4o=;
-        b=V3b8qR6HlsBQ9d5J5MSqbzPyV7zECzC8p3X1v5IFFQs1SpyrQB/U2mCnlMePVi1uqW
-         PUHowUKscM5esVO+vA4OnWOIrHbIinBG9803q3wf9LYHOx6jzHCIN2w3fvDYQy1C4b4w
-         LEB3T4r5mZd0P6brHILiwzTYz4Dn7WaXKqVxcpr0XjUbWvZvqAgMMeiQHxAQt3FTJOgq
-         crTcs1qxYe3hteVoJ9eBkgpGSwKNuqB6vYv2oycLUKaT2Xf5/VQLl/fR1KqsASK/AC8R
-         4HO5LETb+Ir3mu/QS1+n/tHmjq6z3fTrNLJnfMUZRPgEgbGlEkFe9PGxnJf2g1+kLclq
-         DmHg==
-X-Gm-Message-State: AOAM530hj9enzwgDGNq5BTWPLfKBAR5B6AdQzz9pCxWKYgo+tOBud4s3
-        ma9UHwNgfWq9oPqFGYnsY4T6jtS/emSfCC0FQcc=
-X-Google-Smtp-Source: ABdhPJyiQcKbXy/jl7NViCeVkeLuwFZg7eezeJIl8W78up9GwXaNRZ9gy3LbWFzHB2GS2opEfJh08844A12Lo45U5js=
-X-Received: by 2002:a17:907:7f18:: with SMTP id qf24mr3952472ejc.568.1636416185116;
- Mon, 08 Nov 2021 16:03:05 -0800 (PST)
-MIME-Version: 1.0
-References: <20211107225525.431138-1-sandals@crustytoothpaste.net>
- <20211107225525.431138-4-sandals@crustytoothpaste.net> <CAPig+cRtOpaPd_HCQAW=33-vxhP4Knijo3g0dUA9HVb4_=JH4w@mail.gmail.com>
- <YYmmBMkwy6bpVpzI@camp.crustytoothpaste.net>
-In-Reply-To: <YYmmBMkwy6bpVpzI@camp.crustytoothpaste.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 8 Nov 2021 19:02:54 -0500
-Message-ID: <CAPig+cTN+ktteGYv6dm_Qr=FejiwRMGwRW9p--7s46H7sxa3JQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] gitfaq: add entry about syncing working trees
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
+        id S241034AbhKIAM4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 19:12:56 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50966 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229618AbhKIAMz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 19:12:55 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F2EAF0492;
+        Mon,  8 Nov 2021 19:10:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=IiRXHIGvStTklDXj5ad7aCkgLaVcwfWqJ+2d8n
+        kpPZo=; b=Z7R6UUMlz1U5I4zXG2fWPIEdXf4zpwT16QxhnJWcuY6plJp5TM0TbW
+        yRiZA2QgHPpbvODSec8aZwTgLveEQs/KY/jG2HZZdPGd6r8R0hUDBTiFyIs0sMOk
+        ZB3LSJPT2Zbx9pk4c9Kj+2ufEp/7+QGO0OLskf80i6iDBuFGd4WaQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 14544F0490;
+        Mon,  8 Nov 2021 19:10:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 54CBDF048F;
+        Mon,  8 Nov 2021 19:10:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v2 3/3] gitfaq: add entry about syncing working trees
+References: <20211107225525.431138-1-sandals@crustytoothpaste.net>
+        <20211107225525.431138-4-sandals@crustytoothpaste.net>
+        <CAPig+cRtOpaPd_HCQAW=33-vxhP4Knijo3g0dUA9HVb4_=JH4w@mail.gmail.com>
+        <xmqqmtmes3ix.fsf@gitster.g>
+Date:   Mon, 08 Nov 2021 16:10:05 -0800
+In-Reply-To: <xmqqmtmes3ix.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        08 Nov 2021 14:09:42 -0800")
+Message-ID: <xmqqtugm42aq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 657C89B0-40F1-11EC-8BA7-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 8, 2021 at 5:34 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On 2021-11-08 at 00:12:14, Eric Sunshine wrote:
-> > Taking into consideration that people who are experiencing such
-> > corruption will likely include the name of the syncing service in
-> > their search query, would it make sense to mention some well-known
-> > services here in order to make it more likely that people will
-> > actually find this entry? Something like this, perhaps:
-> >
-> >     It is important not to use a cloud syncing service (such as DropBox,
-> >     FooBar, CowMoo, BuzzingBee, etc.) to sync any portion of a Git
-> >     repository...
->
-> There are a lot of these services.  My preference is to not name
-> specific ones here, just like we don't name specific ones when we state
-> that you shouldn't use an antivirus or firewall other than the Windows
-> default, mostly because I'm not interested in angering corporate
-> lawyers.  My advice on this topic is always general: XYZ is a cloud
-> syncing service, and you should not use any cloud syncing services for Git.
+Junio C Hamano <gitster@pobox.com> writes:
 
-My "would it make sense" question arose from taking into consideration
-how people are likely to use a search engine for a particular problem:
+> Doesn't rsync work the same per-file fashion, and the only reason
+> why it is a better fit is because it is not continuous, not
+> attempting to "sync" while the repository is in use, until the user
+> explicitly says "OK, I am ready to go home, so let's stop working
+> here and send everything over to home with rsync"?
 
-    BuzzingBee syncing corrupted git repository
+OK, so not "per-file" but "continuous" is the root problem, and
+"cloud" would be a good word because all the popular ones share that
+"continuous" trait.
 
-Without naming specific services or tools, it seems much less likely
-that people will find this FAQ entry, thus will end up posting to
-StackOverflow (or wherever) anyhow -- despite your intention and
-effort behind the FAQ in the first place. I'm thinking about
-discoverability -- which is the same reason I suggested in my review
-of the other patch that it might be a good idea to add actual error
-messages a person might encounter with a CRLF shell script or an LF
-batch file.
+This part of the proposed patch text may need rethinking a bit.
 
-> Additionally, the popular options differ by region.  For example, there
-> are some services which are probably popular in China which are not
-> popular elsewhere, and I don't think it's a good idea to try to guess
-> which ones happen to be most popular around the world.
+> +or added files, broken refs, and a wide variety of other corruption.  These
+> +services tend to sync file by file and don't understand the structure of a Git
+> +repository.  This is especially bad if they sync the repository in the middle of
 
-The other way to look at it is that listing many popular services
-(wherever they happen to be) makes it more likely that search engines
-will lead them to this FAQ entry and alleviate the need to post a
-question somewhere.
+That is, "file by file" is not a problem per-se, "don't understand
+the structure" is a huge problem, and "continuous" may contribute to
+the problem further.
 
-Anyhow, it was just a thought. I think I've said all I have to say on
-this subject. As I mentioned in response to the cover letter, all of
-my comments were of the bikeshedding variety, and I didn't see any
-show-stoppers in the series as posted.
+I wonder if you let the "cloud" services to continuously sync your
+repository, then go quiescent for a while and then start touching
+the destination, it would be sufficient, though.  The refs with
+funny "2" suffixes and the like are the symptom of two sides
+simultanously mucking with the same file (e.g ".git/refs/main") and
+the "cloud sync" could not decide what the right final outcome is,
+right?
 
-> > > +* There are no additional worktrees enabled for your repository.
-> >
-> > I don't fully understand this restriction. Can you explain it (at
-> > least here in the email discussion)?
->
-> If you sync the main repository and working tree, but not the worktrees
-> themselves, then you end up with incorrect data in the .git directory,
-> which contains information about the worktree.
+I also wonder if we add a way to transfer reflog entries, that imply
+the object reachability, say "git push --with-reflog", over the
+wire, it would be sufficient to do everything with Git.
 
-I still don't follow. What incorrect data will be in the .git
-directory? Do you mean the absolute path pointing from the .git
-directory to the worktree?
+Before you go home, you'd do
 
-> More importantly, it can
-> contain absolute path information, which would be undesirable even if
-> you did sync the worktrees, say, if you used two different usernames
-> (and hence two different home directories) on the two systems.
+    git stash save --untracked && git stash apply
+    git push --mirror --with-reflog --with-stash
 
-Okay, I figured that that was probably one of your concerns, but it
-was difficult to tell from the raw "no additional worktrees". On the
-other hand, I can easily see people syncing between machines in which
-they have the same username and same directory structure, so this
-bullet point seems overly restrictive.
+to save away modified and untracked files to a stash entry [*], and push
+all the refs with their reflog entries (including refs/stash which
+normally gets refused because it has only two levels).
 
-> > > +* You are not using a separate Git directory outside of your repository root.
-> >
-> > Same question about this restriction.
->
-> Again, if you sync the root of the working tree but don't sync the
-> separate Git directory, you won't have copied the index or any of the
-> other data.
+    Side note. If there were a variant of "git stash save" that only
+    saves away without modifying the working tree and the index, I'd
+    use that single command instead of "save and immediately restore
+    by applying" kludge.
 
-Okay, again, this is indeed what I thought you might have in mind, but
-it was difficult to be sure. And, again, this seems overly restrictive
-since there may be plenty of scenarios in which this works well.
-
-I suppose both of these points would feel more reasonable if they
-didn't sound like hard requirements, perhaps by explaining that the
-simple case of no worktrees and no separate repository has the least
-restrictions and is easiest to get up and running; more complex cases
-can work too with the caveat that worktree and separate repository
-directories ought to be synced too, and that pathnames need to be
-identical on all machines.
+Then at the destination, you'd figure out what the current branch
+was (the stash message should record tha name of the branch), check
+that branch out, and running "git stash pop" will give you pretty
+much the same environment.
