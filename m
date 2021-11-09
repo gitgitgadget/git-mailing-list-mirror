@@ -2,119 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC14FC433F5
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 00:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 944F2C433FE
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 00:44:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9E2A61107
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 00:25:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F08561165
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 00:44:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231793AbhKIA2Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 19:28:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34738 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231252AbhKIA2Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 19:28:24 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41B20C061570
-        for <git@vger.kernel.org>; Mon,  8 Nov 2021 16:25:39 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id z19-20020aa79593000000b0049472f5e52dso7972107pfj.13
-        for <git@vger.kernel.org>; Mon, 08 Nov 2021 16:25:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=jeOzQG7gxR7iSjdJ4Rxr8LEAr5KMGsexFfBG6e2bbeo=;
-        b=mvHj094G/05mYS6mC5vTlbnqvRR+5XUUGLTO39Ah2hQGL2weF+RtVVgU/utWbfMH+V
-         TNCUDJDQbu4AlCr/3z71cjHm3t960qPgAymBO47DynuSb8tQx5OaOFsxNMO+U261v2Wh
-         WYHMbtS5IlIY9A2D/+TzA7JHa5TpK4JpO9PkAs70Hr9lEuxJaj2R4EKXPf3S3+SLgf3D
-         MDdvIhj3u+J2B2/Nw2Aop2capGF+yTMqA6fcPly5VHBAOZ/NMOysB3BFgBnPL0yvemWn
-         WcnZHB/Ju+jeWJihikD525ZW0w1M7b11uGv9MoXalTkQ0OnqVhrvDrerRyM2wCFbYd3n
-         O8zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=jeOzQG7gxR7iSjdJ4Rxr8LEAr5KMGsexFfBG6e2bbeo=;
-        b=J+iPm58Hymvl/2Hb9haSqNGChkklPZrrZWQkcuOXUnaTdm0NDUqnaFWunkehDd88yk
-         bqjZIPo0e1xSXQXNF3Qte8oJTWVKPtZ8e7qzEDOMDF0oPywrTt7fpL++cslZDKgYwMBM
-         H5hsaUtX8y6vvs7vE4IfARi11KwJBxHibB5DaVsgKhQjh15v+qT+SVPSvr7MZ26yT0RY
-         rshzw06QgH91RHiSIAsYbQhtuSc+juCxEye+JcznPbX8tQd9oM+WcGzjOAzZNsaef0MY
-         NZZM6X7sXkDEFYVEqV3/yFXjiVFZoC7XK82NZqNjDnXKbAqwPELBIZAEno8pmGdMJ+gA
-         e49g==
-X-Gm-Message-State: AOAM533kCEJ5A/mSnhPDTrYV+g2PqTKqrx2kLH+9AR5anOzNg1M3kaSr
-        eUg9/TXEug+iq6v8ZAAnTwUJVFMN9lToyHDj6kYZ
-X-Google-Smtp-Source: ABdhPJzdskcxTVa2EMf4xpanWJTuGvZgAkG3CjXhRg0QbftCTYRAXPZNWUfAl9TkqsH2uc9caWOwIPQkCOqj1dQKBnAC
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:ca81:: with SMTP id
- y1mr2483791pjt.231.1636417538814; Mon, 08 Nov 2021 16:25:38 -0800 (PST)
-Date:   Mon,  8 Nov 2021 16:25:36 -0800
-In-Reply-To: <211106.8635o9hogz.gmgdl@evledraar.gmail.com>
-Message-Id: <20211109002536.1111372-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <211106.8635o9hogz.gmgdl@evledraar.gmail.com>
-X-Mailer: git-send-email 2.34.0.rc0.344.g81b53c2807-goog
-Subject: Re: [WIP v2 2/2] config: include file if remote URL matches a glob
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     avarab@gmail.com
-Cc:     emilyshaffer@google.com, jonathantanmy@google.com,
-        git@vger.kernel.org, peff@peff.net, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        id S234013AbhKIArZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 19:47:25 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57307 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235395AbhKIArZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 19:47:25 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 878A3F0808;
+        Mon,  8 Nov 2021 19:44:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oO2womNyBLTLEyKnCUzT78DNxCHpO9SptCtAEJ
+        zVt60=; b=Cu3Jyao1R028+rsdc2eHlvkATux/xuajsxgX8Rc8vL/p6KUtIdPmF/
+        JJzxusUMVTQYiTC5trVUHiEkm5g5mH/XzCCvdRJ5LHGcNst2bzsB53E6KK+vuanx
+        OttNCFGNf81Mrx2oZhvuGHHIoUJr6RIOtEngjMSIkKsTBntJDyvzo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DAD2F0807;
+        Mon,  8 Nov 2021 19:44:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E7C1AF0806;
+        Mon,  8 Nov 2021 19:44:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Anders Kaseorg <andersk@mit.edu>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Andreas Heiduk <andreas.heiduk@mathema.de>
+Subject: Re: [PATCH v3 2/2] receive-pack: Protect current branch for bare
+ repository worktree
+References: <alpine.DEB.2.21.999.2111081515380.100671@scrubbing-bubbles.mit.edu>
+        <xmqqzgqe448a.fsf@gitster.g>
+Date:   Mon, 08 Nov 2021 16:44:37 -0800
+In-Reply-To: <xmqqzgqe448a.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        08 Nov 2021 15:28:21 -0800")
+Message-ID: <xmqqpmra40p6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3823DCCA-40F6-11EC-A8A1-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > What's the easiest way to "try it and see", to add tooling and find out
-> > whether the config files would be reopened during the second parse?
-> > Because I suspect that we won't actually reopen those files, due to the
-> > config cache.
-> 
-> strace -f?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks - this might work.
+>> @@ -1456,11 +1456,11 @@ static const char *update_worktree(unsigned char *sha1, const struct worktree *w
+>>  		work_tree = worktree->path;
+>>  	else if (git_work_tree_cfg)
+>>  		work_tree = git_work_tree_cfg;
+>
+> Not a fault of this patch at all, but I am not sure if this existing
+> bit of code is correct.  Everything else in this function works by
+> assuming that the worktree that comes from the caller was checked
+> with find_shared_symref("HEAD", name) to ensure that, if not NULL,
+> it has the branch checked out and updating to the new commit given
+> as the other parameter makes sense.
+>
+> But this "fall back to configured worktree" is taken when the gave
+> us NULL worktree or worktree without the .path member (i.e. no
+> checkout), and it must have come from a NULL return from the call to
+> find_shared_symref().  IOW, the function said "no worktree
+> associated with the repository checks out that branch being
+> updated."  I doubt it is a bug to update the working tree of the
+> repository with the commit pushed to some branch that is *not* HEAD,
+> only because core.worktree was set to point at an explicit location.
 
-> > So couldn't we do something like....
-> >
-> > pass #1:
-> >  if (include)
-> >    if (not hasRemoteUrl)
-> >      open up path & parse
-> >  put config into in-memory cache normally
-> > pass #2: (and this pass would need to be added to repo_config() probably)
-> >  if (include)
-> >    if (hasRemoteUrl)
-> >      open up path & parse
-> >      insert in-order into in-memory cache
-> >  don't touch existing configs otherwise
-> >
-> > I think it's in practice similar to the approach you're using (getting
-> > around the weird ordering with a cache in memory), but we could reuse
-> > the existing config cache rather than creating a new and different one.
-> 
-> I don't know enough to say if this two-step approach is better (although
-> I'm slightly biased in that direction, since it seems simpler), but this
-> just seems like premature optimization.
-> 
-> I.e. let's just read the files twice, they'll be in the OS's FS cache,
-> which is unlikely to be a bottleneck for the amount of files involved.
+Not "I doubt", but I suspect it is a bug.  Sorry.
 
-OK - let me try this.
+But in practice, especially with the new code structure, we'd never
+flip do_update_worktree on unless find_shared_symref() says that the
+ref we are updating in the function is what is checked out, which
+means worktree is always non-NULL when we call update_worktree().
 
-> That being said we do have exactly this cache already. See [1] and
-> 3c8687a73ee (add `config_set` API for caching config-like files,
-> 2014-07-28).
-> 
-> But I think that was added due to *very* frequent re-parsing of the
-> entire config every time someone needed a config variable, not due to
-> the I/O overhead (but I may be wrong).
-> 
-> So if we've got 100 config variables we need and 10 config files then
-> 10*100 is probably starting to hurt, but if for whatever reason we
-> needed 2*10 here that's probably no big deal, and in any case would only
-> happen if this new include mechanism was in play.
-> 
-> 1. https://lore.kernel.org/git/1404631162-18556-1-git-send-email-tanayabh@gmail.com/ 
+So, unless there is some situation where worktree->path is NULL for
+a worktree with a checkout, the "else if" above is a dead code, I
+think.
 
-This might not work for the reasons I described in my reply to Emily
-[1]. I'll try the read-twice version first.
+Similarly, I suspect that is_bare_repository() call the patch moved
+into the if/else if/ chain is even reachable with the updated
+caller.  find_shared_symref() is always called, and unless it gives
+a non-NULL worktree, do_update_worktree never becomes true.
 
-[1] https://lore.kernel.org/git/20211109002255.1110653-1-jonathantanmy@google.com/
+Anyway, enough bug finding in the existing code.  I think the
+update-instead was Dscho's invention and when the codepath was
+updated to be worktree ready, Dscho helped Hariom to do so, so
+I'll CC Dscho to see if he has input.
+
+Thanks.
