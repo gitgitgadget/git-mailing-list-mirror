@@ -2,199 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68A56C433EF
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 160E5C433F5
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 03:01:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E0AF619A6
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:38:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F16C56120A
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 03:01:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239981AbhKICkx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 21:40:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37600 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238491AbhKICkw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 21:40:52 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BDA7C061570
-        for <git@vger.kernel.org>; Mon,  8 Nov 2021 18:38:07 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id j21so70380240edt.11
-        for <git@vger.kernel.org>; Mon, 08 Nov 2021 18:38:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=oUmtwMKczwUbcDNZu0rFvFrViznkTx7yivIAJZtGQE0=;
-        b=SY1rzpXSI37/FnHVh2fgBDXmurlt5m8OfX4BaFn+UciCW+5Qz0/V26yzdi+JAGULq+
-         p5LLy1mnoFW25rD0m1J3KJrLqlNCqVZ940PNfPQ2zonYpJXp1ytCEbZ1hteqr6siZu/5
-         ZxWGuIeDOixpfH7a58207xyKMUC05Rw7XTsP3M1Gs+JjeHGGGW4uG+W5cJVhz8r4ahZy
-         aiBK0Ws+VN0iFQ+1Hxllf63XSAS/GX8vVdiPtISlrYXYWDoWcpbdXYAjMqe8Q6YYa35C
-         NznouFzdkz6mrMHxjWriMqjJRrKyzgHsFBhDlQBpwEq/vgvVdRtRCcF1xH3AU9iP96lG
-         MTCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=oUmtwMKczwUbcDNZu0rFvFrViznkTx7yivIAJZtGQE0=;
-        b=pu8tkLELEeB0x4Y/B/EOYbrjC6J0cePjH1p+y0fF8lZFvCJ+jFQ+z7mWfnMP4cdkeM
-         6ntvH8mXSh7SRYgW/bZTxMFFRH6xMBVPkVSeK7YZ4ReLwIgQzRcuYiVlqlCpBVlkQKtE
-         Vqn5M7mn3M+T4T7JuM15wsDMbpf3ZIRa00vF3rKzy9MrAjZHAXLeOixxBIIEkGcLmru7
-         Ef7ooYxK4PgEhMQJybvEZeZxfJmtoJCwysd1DhJCa+yCZhDpsrBa3pU64DM9WDve9y1G
-         xQP3b82tgByiSSpsl9URuXhloCD1WTlKwHVjQYX0vaLN4AEA2MD956SgLh7uYsvY0IsC
-         ld5g==
-X-Gm-Message-State: AOAM531p+VZ6H5hBv/udQKx23OWS0zFrSkHpzsXdW1HefB363cQp0uxY
-        brZlYFy5wEiiJ/TrV2U7Wz8eVwvp8SY=
-X-Google-Smtp-Source: ABdhPJx7vCN/NTHIPsR25jN/pJtqNFtuGmYr+eIyNo6ko+GStpVehDiS+n7uhrTZpw8fUCiz7fDslA==
-X-Received: by 2002:a50:f18c:: with SMTP id x12mr5121371edl.357.1636425485585;
-        Mon, 08 Nov 2021 18:38:05 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id b11sm10741390ede.52.2021.11.08.18.38.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Nov 2021 18:38:05 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mkH1Q-001JyW-Mn;
-        Tue, 09 Nov 2021 03:38:04 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Samuel Yvon via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Samuel Yvon <samuelyvon9@gmail.com>
-Subject: Re: [PATCH] builtin-commit: re-read file index before launching editor
-Date:   Tue, 09 Nov 2021 03:32:34 +0100
-References: <pull.1127.git.git.1636423586620.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
-In-reply-to: <pull.1127.git.git.1636423586620.gitgitgadget@gmail.com>
-Message-ID: <211109.86wnlicaur.gmgdl@evledraar.gmail.com>
+        id S242283AbhKIDEM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 22:04:12 -0500
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:42745 "EHLO
+        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S242265AbhKIDD7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 22:03:59 -0500
+Received: from localhost (198-27-191-186.fiber.dynamic.sonic.net [198.27.191.186])
+        (authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 1A930tXD005286
+        (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 8 Nov 2021 22:00:57 -0500
+From:   Anders Kaseorg <andersk@mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Andreas Heiduk <andreas.heiduk@mathema.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Anders Kaseorg <andersk@mit.edu>
+Subject: [PATCH v4 1/4] fetch: Protect branches checked out in all worktrees
+Date:   Mon,  8 Nov 2021 19:00:25 -0800
+Message-Id: <20211109030028.2196416-1-andersk@mit.edu>
+X-Mailer: git-send-email 2.33.1
+In-Reply-To: <a25d105a-875b-fa6a-771a-37936779f067@mit.edu>
+References: <a25d105a-875b-fa6a-771a-37936779f067@mit.edu>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Refuse to fetch into the currently checked out branch of any working
+tree, not just the current one.
 
-On Tue, Nov 09 2021, Samuel Yvon via GitGitGadget wrote:
+Fixes this previously reported bug:
 
-> From: Samuel Yvon <samuelyvon9@gmail.com>
->
-> Changes made within a pre-commit hook are not reflected within
-> the editor (for instance, with `git commit --verbose`) because
-> the index is re-read after the editor has been used.
->
-> This has the consequence of not displaying the actual changes made
-> by the pre-commit hook, but committing them anyways.
->
-> While it is often argued that the hook's purpose is not to automatically
-> write content to the repository, it is acknowledged that using the
-> pre-commit to apply mechanical fixes on top of the existing changes
-> is a supported use case, along with verifying the content.
->
-> I think not seeing these mechanical fixes before commiting is incorrect.
-> A developer might expect the commit to look a certain way but if the
-> pre-commit goes wrong the invalid changes will go unnoticed until
-> committed.
->
-> Signed-off-by: Samuel Yvon <samuelyvon9@gmail.com>
-> ---
->     builtin-commit: Re-read file index before launching editor
->     
->     Changes made within a pre-commit hook are not reflected within the
->     editor (for instance, with git commit --verbose) because the index is
->     re-read after the editor has been used.
->     
->     This has the consequence of not displaying the actual changes made by
->     the pre-commit hook, but committing them anyways.
->     
->     While it is often argued that the hook's purpose is not to automatically
->     write content to the repository, it is acknowledged that using the
->     pre-commit to apply mechanical fixes on top of the existing changes is a
->     supported use case, along with verifying the content.
->     
->     I think not seeing these mechanical fixes before commiting is incorrect.
->     A developer might expect the commit to look a certain way but if the
->     pre-commit goes wrong the invalid changes will go unnoticed until
->     committed.
->     
->     I had a small exchange in the Google Group before submitting this Pr.
->     Here is a link for cross-referencing:
->     https://groups.google.com/g/git-mentoring/c/FsP83I9mN6c
->     
->     As a side note, I do not know who manages the Github Repo but the
->     following description threw me off a little bit:
->     
->     Git Source Code Mirror - This is a publish-only repository and all pull requests are ignored. 
->     
->     
->     since after looking deeper it seems the PRs are not ignored.
->     
->     Signed-off-by: Samuel Yvon samuelyvon9@gmail.com
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1127%2FSamuelYvon%2Fmaint-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1127/SamuelYvon/maint-v1
-> Pull-Request: https://github.com/git/git/pull/1127
->
->  builtin/commit.c | 21 +++++++++++----------
->  1 file changed, 11 insertions(+), 10 deletions(-)
->
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 7c9b1e7be3a..e75b11d1c60 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -728,8 +728,17 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  	/* This checks and barfs if author is badly specified */
->  	determine_author_info(author_ident);
->  
-> -	if (!no_verify && run_commit_hook(use_editor, index_file, "pre-commit", NULL))
-> -		return 0;
-> +	if (!no_verify && find_hook("pre-commit")) {
-> +		if(run_commit_hook(use_editor, index_file, "pre-commit", NULL))
-> +			return 0;
-> +
-> +		/*
-> +		 * Re-read the index as pre-commit hook could have updated it,
-> +		 * and write it out as a tree.
-> +		 */
-> +		discard_cache();
-> +		read_cache_from(index_file);
-> +	}
->  
->  	if (squash_message) {
->  		/*
-> @@ -1051,14 +1060,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  		return 0;
->  	}
->  
-> -	if (!no_verify && find_hook("pre-commit")) {
-> -		/*
-> -		 * Re-read the index as pre-commit hook could have updated it,
-> -		 * and write it out as a tree.  We must do this before we invoke
-> -		 * the editor and after we invoke run_status above.
-> -		 */
-> -		discard_cache();
-> -	}
->  	read_cache_from(index_file);
->  
->  	if (update_main_cache_tree(0)) {
->
-> base-commit: 5fbd2fc5997dfa4d4593a862fe729b1e7a89bcf8
+https://public-inbox.org/git/cb957174-5e9a-5603-ea9e-ac9b58a2eaad@mathema.de
 
-This hook logic is actively being changed these days, we're currently at
-batch 2/3 of 3/3 (or was it 4/4? I forget) to rewrite all these hook
-interfaces.
+As a side effect of using find_shared_symref, we’ll also refuse the
+fetch when we’re on a detached HEAD because we’re rebasing or bisecting
+on the branch in question. This seems like a sensible change.
 
-I haven't looked carefully at this, but I've got a patch that touches
-this exact logic here that'll be in-flight before too long:
-https://lore.kernel.org/git/patch-v5-36.36-fe056098534-20210902T125111Z-avarab@gmail.com/
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+---
+ builtin/fetch.c       | 28 ++++++++++++++--------------
+ t/t5516-fetch-push.sh | 18 ++++++++++++++++++
+ 2 files changed, 32 insertions(+), 14 deletions(-)
 
-Anyway, what you have here seems orthagonal, and it looks like these two
-could be combined, but on top of my linked patch we wouldn't be racy
-with the new behavior either.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f7abbc31ff..0ef2170ef9 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -28,6 +28,7 @@
+ #include "promisor-remote.h"
+ #include "commit-graph.h"
+ #include "shallow.h"
++#include "worktree.h"
+ 
+ #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
+ 
+@@ -854,7 +855,7 @@ static int update_local_ref(struct ref *ref,
+ 			    int summary_width)
+ {
+ 	struct commit *current = NULL, *updated;
+-	struct branch *current_branch = branch_get(NULL);
++	const struct worktree *wt;
+ 	const char *pretty_ref = prettify_refname(ref->name);
+ 	int fast_forward = 0;
+ 
+@@ -868,16 +869,18 @@ static int update_local_ref(struct ref *ref,
+ 		return 0;
+ 	}
+ 
+-	if (current_branch &&
+-	    !strcmp(ref->name, current_branch->name) &&
+-	    !(update_head_ok || is_bare_repository()) &&
++	if (!update_head_ok &&
++	    (wt = find_shared_symref("HEAD", ref->name)) &&
++	    !wt->is_bare &&
+ 	    !is_null_oid(&ref->old_oid)) {
+ 		/*
+ 		 * If this is the head, and it's not okay to update
+ 		 * the head, and the old value of the head isn't empty...
+ 		 */
+ 		format_display(display, '!', _("[rejected]"),
+-			       _("can't fetch in current branch"),
++			       wt->is_current ?
++			       _("can't fetch in current branch") :
++			       _("checked out in another worktree"),
+ 			       remote, pretty_ref, summary_width);
+ 		return 1;
+ 	}
+@@ -1387,16 +1390,13 @@ static int prune_refs(struct refspec *rs, struct ref *ref_map,
+ 
+ static void check_not_current_branch(struct ref *ref_map)
+ {
+-	struct branch *current_branch = branch_get(NULL);
+-
+-	if (is_bare_repository() || !current_branch)
+-		return;
+-
++	const struct worktree *wt;
+ 	for (; ref_map; ref_map = ref_map->next)
+-		if (ref_map->peer_ref && !strcmp(current_branch->refname,
+-					ref_map->peer_ref->name))
+-			die(_("Refusing to fetch into current branch %s "
+-			    "of non-bare repository"), current_branch->refname);
++		if (ref_map->peer_ref &&
++		    (wt = find_shared_symref("HEAD", ref_map->peer_ref->name)))
++			die(_("Refusing to fetch into branch '%s' "
++			      "checked out at '%s'"),
++			    ref_map->peer_ref->name, wt->path);
+ }
+ 
+ static int truncate_fetch_head(void)
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 8212ca56dc..2c2d6fa6e7 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1771,4 +1771,22 @@ test_expect_success 'denyCurrentBranch and worktrees' '
+ 	git -C cloned push origin HEAD:new-wt &&
+ 	test_must_fail git -C cloned push --delete origin new-wt
+ '
++
++test_expect_success 'refuse fetch to current branch of worktree' '
++	test_when_finished "git worktree remove --force wt" &&
++	git worktree add wt &&
++	test_commit apple &&
++	test_must_fail git fetch . HEAD:wt &&
++	git fetch -u . HEAD:wt
++'
++
++test_expect_success 'refuse fetch to current branch of bare repository worktree' '
++	test_when_finished "rm -fr bare.git" &&
++	git clone --bare . bare.git &&
++	git -C bare.git worktree add wt &&
++	test_commit banana &&
++	test_must_fail git -C bare.git fetch .. HEAD:wt &&
++	git -C bare.git fetch -u .. HEAD:wt
++'
++
+ test_done
+-- 
+2.33.1
 
-But (and I've got to run) check out the commit message of that patch, perhaps it links to useful past discussions/commits.
-
-I.e. a thing not covered in your commit message is a discussion of if
-the current behavior was explicitly desired by anyone, or if we just
-ended up with it by accident.
-
-The code you're moving around has a comment which seems to suggest that
-what you want *is* the desired behavior, i.e. we re-read it before
-invoking the editor, so we should have the updated diff, but just don't?
-
-Or maybe I'm misunderstanding it.
