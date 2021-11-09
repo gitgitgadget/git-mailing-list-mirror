@@ -2,98 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68227C433F5
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 23:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57B48C433F5
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 23:10:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46F1161105
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 23:10:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C7E761105
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 23:10:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242977AbhKIXNU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Nov 2021 18:13:20 -0500
-Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:52979 "EHLO
+        id S243060AbhKIXNW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Nov 2021 18:13:22 -0500
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:52985 "EHLO
         outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S242425AbhKIXNS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Nov 2021 18:13:18 -0500
+        with ESMTP id S242659AbhKIXNU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Nov 2021 18:13:20 -0500
 Received: from localhost (198-27-191-186.fiber.dynamic.sonic.net [198.27.191.186])
         (authenticated bits=0)
         (User authenticated as andersk@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 1A9NAKLX014889
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 1A9NADPW014856
         (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 9 Nov 2021 18:10:22 -0500
+        Tue, 9 Nov 2021 18:10:15 -0500
 From:   Anders Kaseorg <andersk@mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>, git@vger.kernel.org,
         Andreas Heiduk <andreas.heiduk@mathema.de>,
         Anders Kaseorg <andersk@mit.edu>
-Subject: [PATCH v5 4/4] branch: Protect branches checked out in all worktrees
-Date:   Tue,  9 Nov 2021 15:09:41 -0800
-Message-Id: <20211109230941.2518143-4-andersk@mit.edu>
+Subject: [PATCH v5 2/4] receive-pack: Clean dead code from update_worktree()
+Date:   Tue,  9 Nov 2021 15:09:39 -0800
+Message-Id: <20211109230941.2518143-2-andersk@mit.edu>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211109230941.2518143-1-andersk@mit.edu>
 References: <2f983e36-532f-ac87-9ade-fba4c6b9d276@mit.edu>
  <20211109230941.2518143-1-andersk@mit.edu>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refuse to force-move a branch over the currently checked out branch of
-any working tree, not just the current one.
+update_worktree() can only be called with a non-NULL worktree parameter,
+because that’s the only case where we set do_update_worktree = 1.
+worktree->path is always initialized to non-NULL.
 
 Signed-off-by: Anders Kaseorg <andersk@mit.edu>
 ---
- branch.c          | 10 ++++++----
- t/t3200-branch.sh |  7 +++++++
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ builtin/receive-pack.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 07a46430b3..581f0c02c2 100644
---- a/branch.c
-+++ b/branch.c
-@@ -199,7 +199,7 @@ int validate_branchname(const char *name, struct strbuf *ref)
-  */
- int validate_new_branchname(const char *name, struct strbuf *ref, int force)
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 49b846d960..542431e692 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1449,29 +1449,22 @@ static const char *push_to_checkout(unsigned char *hash,
+ 
+ static const char *update_worktree(unsigned char *sha1, const struct worktree *worktree)
  {
--	const char *head;
-+	const struct worktree *wt;
+-	const char *retval, *work_tree, *git_dir = NULL;
++	const char *retval, *git_dir;
+ 	struct strvec env = STRVEC_INIT;
  
- 	if (!validate_branchname(name, ref))
- 		return 0;
-@@ -208,9 +208,11 @@ int validate_new_branchname(const char *name, struct strbuf *ref, int force)
- 		die(_("A branch named '%s' already exists."),
- 		    ref->buf + strlen("refs/heads/"));
+-	if (worktree && worktree->path)
+-		work_tree = worktree->path;
+-	else if (git_work_tree_cfg)
+-		work_tree = git_work_tree_cfg;
+-	else
+-		work_tree = "..";
++	if (!worktree || !worktree->path)
++		BUG("worktree->path must be non-NULL");
  
--	head = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
--	if (!is_bare_repository() && head && !strcmp(head, ref->buf))
--		die(_("Cannot force update the current branch."));
-+	wt = find_shared_symref("HEAD", ref->buf);
-+	if (wt && !wt->is_bare)
-+		die(_("Cannot force update the branch '%s'"
-+		      "checked out at '%s'."),
-+		    ref->buf + strlen("refs/heads/"), wt->path);
+ 	if (is_bare_repository())
+ 		return "denyCurrentBranch = updateInstead needs a worktree";
+-	if (worktree)
+-		git_dir = get_worktree_git_dir(worktree);
+-	if (!git_dir)
+-		git_dir = get_git_dir();
++	git_dir = get_worktree_git_dir(worktree);
  
- 	return 1;
- }
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index e575ffb4ff..4c868bf971 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -168,6 +168,13 @@ test_expect_success 'git branch -M foo bar should fail when bar is checked out'
- 	test_must_fail git branch -M bar foo
- '
+ 	strvec_pushf(&env, "GIT_DIR=%s", absolute_path(git_dir));
  
-+test_expect_success 'git branch -M foo bar should fail when bar is checked out in worktree' '
-+	git branch -f bar &&
-+	test_when_finished "git worktree remove wt && git branch -D wt" &&
-+	git worktree add wt &&
-+	test_must_fail git branch -M bar wt
-+'
-+
- test_expect_success 'git branch -M baz bam should succeed when baz is checked out' '
- 	git checkout -b baz &&
- 	git branch bam &&
+ 	if (!hook_exists(push_to_checkout_hook))
+-		retval = push_to_deploy(sha1, &env, work_tree);
++		retval = push_to_deploy(sha1, &env, worktree->path);
+ 	else
+-		retval = push_to_checkout(sha1, &env, work_tree);
++		retval = push_to_checkout(sha1, &env, worktree->path);
+ 
+ 	strvec_clear(&env);
+ 	return retval;
+@@ -1579,7 +1572,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 	}
+ 
+ 	if (do_update_worktree) {
+-		ret = update_worktree(new_oid->hash, find_shared_symref("HEAD", name));
++		ret = update_worktree(new_oid->hash, worktree);
+ 		if (ret)
+ 			return ret;
+ 	}
 -- 
 2.33.1
 
