@@ -2,170 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64765C433EF
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E59C433EF
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:10:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4353561175
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:06:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF25B61152
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 02:10:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237421AbhKICJP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Nov 2021 21:09:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58126 "EHLO
+        id S230248AbhKICNI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Nov 2021 21:13:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231229AbhKICJO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Nov 2021 21:09:14 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F163C061570
-        for <git@vger.kernel.org>; Mon,  8 Nov 2021 18:06:29 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id d5so30238689wrc.1
-        for <git@vger.kernel.org>; Mon, 08 Nov 2021 18:06:29 -0800 (PST)
+        with ESMTP id S234673AbhKICNH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Nov 2021 21:13:07 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8234BC061570
+        for <git@vger.kernel.org>; Mon,  8 Nov 2021 18:10:22 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id j21so70158226edt.11
+        for <git@vger.kernel.org>; Mon, 08 Nov 2021 18:10:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=xdjj+qmXXr/T0ysERiC+N3LNh1Szj9dfU9JPj1qpYts=;
-        b=NIjuZePlAWBbt50IEeI7jly/DhVjLn5V2fIlXttqYuVXZGlrQXGnXpR0kn4bIeHKFa
-         CoXq532P9eu5w/6H1orLQAvRT628Z2QcKyysjtsGH58hWiFrVbsrOZJa/P3Eg7HMJsMY
-         SHq8wKLCr0rKwZLNus7M3Yt7kRgHMrqM/CpVEHsH8GmJQDqxDTG1AKlatYipMHp6ip7S
-         5JGDHBoRgIRLEdIJmnq4fws3oWUibDoz9i1UfdGe3brxMGvlsaOvn9rMLcikMNX+QLSr
-         srhNbPL7BIiODFNuB3/JCQSVhCum/P7juVFAxRRUfAg3vxVrfTkFcpWAqeCBXMIjhMui
-         CoEg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=hkrCvcHNn5OoOMStmZPvm1FhH1Hl/qDrXJOhqTNecAg=;
+        b=bNgPTR9vCBLz1nHCaQUoU1pkFj3Ar3LuAoVLzWRZCyimmho2LOX0yFPacs7vNSU9vO
+         zuM7CO+WWRsgF62G80edU3IFFeruJ8qUgICykbkkldmote1t7gMG/oY6yci002Xqod1P
+         esov68QlKeqPTRRhuO34RCUEaSiiCYcg1zak+Dtc/qYfSG4KA7IlfU9CUEkmaeCwtI7E
+         djc2ERReBJ+9Xp7HprbCcR8AcTikmvptoINC/wpTJYnuDwZS6e6AQi2KREblEmQKIXH2
+         giiotFmeheWeR2/enhWbthc5qXcyrkq3RaHOqo0qHKybuBul9bEIymqWaYpZWx3tY6LU
+         SC7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=xdjj+qmXXr/T0ysERiC+N3LNh1Szj9dfU9JPj1qpYts=;
-        b=mY77osITLxSX8q/HQ0HYuxBjAt+Kc9DiGFBixPfdOOYkIqRDB2pdp8Vk1daTxZvUBE
-         PBGPIZMDu70lZMGkRbQkfCu32UaxBDJ8n/Vq4552uJHBRfp54dxVelbRWHd54nI02YLq
-         sczOsGMQ2qmDDFVbj1D0/uFXle93thmOSOExKRDITRkbtUgq2hQcy8bZzFWLAuZPX7OY
-         ZSbG6RDJ6W/qWpYjXo/h9oaIOQTdy/Fv+tCrde6z5S0MvLp8MpWMicMBveBZRKGCq4mr
-         tha1CO0xnKpHilT1KTztAfX6ajD+atak9dEVQ7YgNmF83MWg+33IjGz7v2IybveYwo+n
-         TkCg==
-X-Gm-Message-State: AOAM530KS1i3BppT5tnRSI0/kz4xbZ0NqJVzEckTLO+uvoHO+Ekb3OKP
-        4LXHLi+x2U4KCPP7d0+trEpVIdhrHCg=
-X-Google-Smtp-Source: ABdhPJzehnc/uLePAr9eUF299wPYZ2FmcQ00U3j/7xnRJTk2TTLrul9aOKrXrLZP/4FJM9kwOmTGEw==
-X-Received: by 2002:a5d:6e8c:: with SMTP id k12mr4630007wrz.401.1636423587630;
-        Mon, 08 Nov 2021 18:06:27 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o5sm4164564wrx.83.2021.11.08.18.06.27
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=hkrCvcHNn5OoOMStmZPvm1FhH1Hl/qDrXJOhqTNecAg=;
+        b=Usb3WdIPu1/meWPlG+TPitCDLGyleNgfrLumR9AFzCByGerJt/VWzMbJbousueheAS
+         v7Jo92JZV4f7sdL+JSsWIjnt/iQRD0pRc8KcYh4vdLjjH17M83Uom5utvRoBDXZiiBBG
+         V8HNiadINA/7iNbfIyxorjAQz2g5iPr5mnXsjxY38kjedCWpt75W1bUbncQYFKCi3btj
+         spe/b8vwALtEW12a+XgxaNGpy0JH0ZO46nWUYzCRIbj98vFOBgT4rUxk3bbK0Wqx7JsH
+         mRUB5GIjJCfrHZ3ex3ByJr9zrsQrQRaIzo065zD3u+mvQf3HqGWqiRzEOcNNxJ36ceOk
+         ABlg==
+X-Gm-Message-State: AOAM531/Uv4a+4+Gvqo/uAf2IYvaaGEYwcGNCNNvN0+8fOhLavNsDrd7
+        nLp5TLa+QW33qCf3k3JZ3EQ=
+X-Google-Smtp-Source: ABdhPJxCIGN9zSYltg3ntAHcU0ozd6Bf1d8s4ItacW52E9m97JCKYhCovD7q6jvOGHa2htGcVtMxFw==
+X-Received: by 2002:a05:6402:206c:: with SMTP id bd12mr5044407edb.283.1636423820994;
+        Mon, 08 Nov 2021 18:10:20 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id sc27sm8786046ejc.125.2021.11.08.18.10.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Nov 2021 18:06:27 -0800 (PST)
-Message-Id: <pull.1127.git.git.1636423586620.gitgitgadget@gmail.com>
-From:   "Samuel Yvon via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 09 Nov 2021 02:06:26 +0000
-Subject: [PATCH] builtin-commit: re-read file index before launching editor
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 08 Nov 2021 18:10:20 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mkGaa-001JPs-30;
+        Tue, 09 Nov 2021 03:10:20 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        J Smith <dark.panda@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/8] grep API: call grep_config() after grep_init()
+Date:   Tue, 09 Nov 2021 03:06:22 +0100
+References: <cover-0.8-00000000000-20211106T210711Z-avarab@gmail.com>
+ <patch-6.8-933ac853bca-20211106T210711Z-avarab@gmail.com>
+ <YYmbTOR+uk7prM8A@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.6
+In-reply-to: <YYmbTOR+uk7prM8A@nand.local>
+Message-ID: <211109.86a6iedqpf.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Samuel Yvon <samuelyvon9@gmail.com>,
-        Samuel Yvon <samuelyvon9@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Samuel Yvon <samuelyvon9@gmail.com>
 
-Changes made within a pre-commit hook are not reflected within
-the editor (for instance, with `git commit --verbose`) because
-the index is re-read after the editor has been used.
+On Mon, Nov 08 2021, Taylor Blau wrote:
 
-This has the consequence of not displaying the actual changes made
-by the pre-commit hook, but committing them anyways.
+> On Sat, Nov 06, 2021 at 10:10:52PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> The grep_init() function used the odd pattern of initializing the
+>> passed-in "struct grep_opt" with a statically defined "grep_defaults"
+>> struct, which would be modified in-place when we invoked
+>> grep_config().
+>>
+>> So we effectively (b) initialized config, (a) then defaults, (c)
+>> followed by user options. Usually those are ordered as "a", "b" and
+>> "c" instead.
+>
+> Do we risk changing any user-visible behavior here? Based on my reading
+> of grep.c before and after this patch, I think the answer is "no", but I
+> wasn't sure if you had done a similar analysis.
+>
+> In any case, I think the "bring your own structure" instead of getting
+> one copied around is much easier to reason about. Even if we weren't
+> accidentally stomping on ownership of the struct before, not having to
+> reason about it is a nice benefit.
 
-While it is often argued that the hook's purpose is not to automatically
-write content to the repository, it is acknowledged that using the
-pre-commit to apply mechanical fixes on top of the existing changes
-is a supported use case, along with verifying the content.
+I don't think we're changing any behavior except the one noted in this
+series.
 
-I think not seeing these mechanical fixes before commiting is incorrect.
-A developer might expect the commit to look a certain way but if the
-pre-commit goes wrong the invalid changes will go unnoticed until
-committed.
+We only set a few config variables, so I thought that was fairly easy to
+trace...
 
-Signed-off-by: Samuel Yvon <samuelyvon9@gmail.com>
----
-    builtin-commit: Re-read file index before launching editor
-    
-    Changes made within a pre-commit hook are not reflected within the
-    editor (for instance, with git commit --verbose) because the index is
-    re-read after the editor has been used.
-    
-    This has the consequence of not displaying the actual changes made by
-    the pre-commit hook, but committing them anyways.
-    
-    While it is often argued that the hook's purpose is not to automatically
-    write content to the repository, it is acknowledged that using the
-    pre-commit to apply mechanical fixes on top of the existing changes is a
-    supported use case, along with verifying the content.
-    
-    I think not seeing these mechanical fixes before commiting is incorrect.
-    A developer might expect the commit to look a certain way but if the
-    pre-commit goes wrong the invalid changes will go unnoticed until
-    committed.
-    
-    I had a small exchange in the Google Group before submitting this Pr.
-    Here is a link for cross-referencing:
-    https://groups.google.com/g/git-mentoring/c/FsP83I9mN6c
-    
-    As a side note, I do not know who manages the Github Repo but the
-    following description threw me off a little bit:
-    
-    Git Source Code Mirror - This is a publish-only repository and all pull requests are ignored. 
-    
-    
-    since after looking deeper it seems the PRs are not ignored.
-    
-    Signed-off-by: Samuel Yvon samuelyvon9@gmail.com
+> [...]
+>> diff --git a/builtin/grep.c b/builtin/grep.c
+>> index 960c7aac123..7f95f44e948 100644
+>> --- a/builtin/grep.c
+>> +++ b/builtin/grep.c
+>> @@ -288,7 +288,7 @@ static int wait_all(void)
+>>  static int grep_cmd_config(const char *var, const char *value, void *cb)
+>>  {
+>>  	int st =3D grep_config(var, value, cb);
+>> -	if (git_color_default_config(var, value, cb) < 0)
+>> +	if (git_color_default_config(var, value, NULL) < 0)
+>
+> This doesn't appear strictly related to the rest of your changes, but
+> only serves to prevent the caller-provided data from being sent down to
+> git_color_default_config().
+>
+> It didn't matter before because (a) the caller doesn't specify any data
+> to begin with, and git_color_default_config() (or the functions that it
+> calls) don't do anything with the extra pointer. Now cmd_grep() is going
+> to start passing around a pointer to a struct grep_opt.
+>
+> But git_color_default_config() still doesn't do anything with the
+> pointer it receives, and passing that pointer around is standard
+> practice among config.c code. So I don't think that this hunk is
+> strictly necessary, and it's somewhat different than the pattern
+> established within config.c.
+>
+> I wouldn't be sad to see this hunk dropped (and in fact have a slight
+> preference leaning this way), but I don't mind keeping it around,
+> either.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1127%2FSamuelYvon%2Fmaint-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1127/SamuelYvon/maint-v1
-Pull-Request: https://github.com/git/git/pull/1127
+Will either split it up or drop it.
 
- builtin/commit.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+> [...]
+>> -/*
+>> - * Initialize one instance of grep_opt and copy the
+>> - * default values from the template we read the configuration
+>> - * information in an earlier call to git_config(grep_config).
+>> - */
+>>  void grep_init(struct grep_opt *opt, struct repository *repo)
+>>  {
+>> -	*opt =3D grep_defaults;
+>> +	struct grep_opt blank =3D GREP_OPT_INIT;
+>> +	memcpy(opt, &blank, sizeof(*opt));
+>
+> I'm nit-picking, but creating a throwaway struct for the convenience of
+> using designated initialization (at the cost of having to memcpy an
+> entire struct around) seems like overkill.
+>
+> Especially since we're just going to write into the other fields of the
+> the target struct anyway, I'd probably rather have seen everything
+> written out explicitly without the throwaway or memcpy.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 7c9b1e7be3a..e75b11d1c60 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -728,8 +728,17 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	/* This checks and barfs if author is badly specified */
- 	determine_author_info(author_ident);
- 
--	if (!no_verify && run_commit_hook(use_editor, index_file, "pre-commit", NULL))
--		return 0;
-+	if (!no_verify && find_hook("pre-commit")) {
-+		if(run_commit_hook(use_editor, index_file, "pre-commit", NULL))
-+			return 0;
-+
-+		/*
-+		 * Re-read the index as pre-commit hook could have updated it,
-+		 * and write it out as a tree.
-+		 */
-+		discard_cache();
-+		read_cache_from(index_file);
-+	}
- 
- 	if (squash_message) {
- 		/*
-@@ -1051,14 +1060,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		return 0;
- 	}
- 
--	if (!no_verify && find_hook("pre-commit")) {
--		/*
--		 * Re-read the index as pre-commit hook could have updated it,
--		 * and write it out as a tree.  We must do this before we invoke
--		 * the editor and after we invoke run_status above.
--		 */
--		discard_cache();
--	}
- 	read_cache_from(index_file);
- 
- 	if (update_main_cache_tree(0)) {
+It's a widely used pattern in the codebase at this point, see
+5726a6b4012 (*.c *_init(): define in terms of corresponding *_INIT
+macro, 2021-07-01) (mine, but I stole it from Jeff King).
 
-base-commit: 5fbd2fc5997dfa4d4593a862fe729b1e7a89bcf8
--- 
-gitgitgadget
+As his linked-to compiler test shows the memcpy() is optimized away, so
+modern compilers will treat these idioms the same way.
+
+There was a suggestions somewhere that we should prorably move to that
+"*<x> =3D <y>" or whatever it was briefer C99 (I think) syntax across the
+board, it would be less verbose. But I haven't tested if it's as widely
+supported, so I've just been sticking with that blank/memcpy() pattern
+for "do init in terms of macro".
