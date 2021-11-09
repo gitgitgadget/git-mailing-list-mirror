@@ -2,107 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71AF8C433EF
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 15:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BB2CC433EF
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 15:59:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 566C361101
-	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 15:37:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BD1961205
+	for <git@archiver.kernel.org>; Tue,  9 Nov 2021 15:59:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237658AbhKIPkb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Nov 2021 10:40:31 -0500
-Received: from mout.gmx.net ([212.227.15.18]:38533 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237909AbhKIPka (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Nov 2021 10:40:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1636472231;
-        bh=Rs6OEjt6a3Yoih6WNAKNXj28gYjNuM6gDSrQb3asR+E=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=N3UWClDnpt/2X00Ws78NTtlBypZ0pz+aCv0DfpwCkEtWyTMHS0yevjvNQQ6AxkexS
-         amsIOQpG259WcDBzlgnT7BGlLUif75g7l5DUFdeMc4dRe71q+/H/UaLNe4pvQBkybC
-         cloFo4h/qvFu6sxhjRl6O4jeKvL/xc1bRlrC9x78=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.22.201.164] ([89.1.212.10]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MEm2D-1mvDki2AH5-00GLKr; Tue, 09
- Nov 2021 16:37:11 +0100
-Date:   Tue, 9 Nov 2021 16:37:08 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Anders Kaseorg <andersk@mit.edu>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Andreas Heiduk <andreas.heiduk@mathema.de>
-Subject: Re: [PATCH v3 2/2] receive-pack: Protect current branch for bare
- repository worktree
-In-Reply-To: <xmqqzgqe448a.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2111091635531.54@tvgsbejvaqbjf.bet>
-References: <alpine.DEB.2.21.999.2111081515380.100671@scrubbing-bubbles.mit.edu> <xmqqzgqe448a.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S238368AbhKIQBq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Nov 2021 11:01:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49172 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236475AbhKIQBq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Nov 2021 11:01:46 -0500
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F16F2C061764
+        for <git@vger.kernel.org>; Tue,  9 Nov 2021 07:58:59 -0800 (PST)
+Received: by mail-ot1-x32c.google.com with SMTP id z2-20020a9d71c2000000b0055c6a7d08b8so19337997otj.5
+        for <git@vger.kernel.org>; Tue, 09 Nov 2021 07:58:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ChhHIsxfF5zBPD1OYESwvDSLOzuj2fI7B32nWlSOu9Y=;
+        b=aYzc+W1PeweUzvtqDkRjiQTChQtUiO9XjMjVh847+48SOC2NgOIYFMNs8bMMacq7zo
+         7cBMQ8tx2Jf7crTcjyseXhGSahZ4hGczqtFkKrsBbtZSxoKDwuED2BV2P5vTyv7Uq7rT
+         UoKWXdBZXHcBkGSwKZkZadGjrAvoOAa2j0mVixUn5r17uSqYbIeBUaSRCPmP06/oxrnt
+         er05YpurIPuQZ5BmgMgDE5vIL/qbeLguyM4TVdwFwa6izgt0lYHsNewx9s4VqJeAOvSB
+         I4QSV6nbyDSuyZNQs0ci+XWXxyxYS6VY9jnC5RDQcO1FT2UYyPP+uFYvFXcMtRavW+oM
+         RQ7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ChhHIsxfF5zBPD1OYESwvDSLOzuj2fI7B32nWlSOu9Y=;
+        b=wYxPmF8H2ts6MF/BvXPQP9vD5oCWVylJwD8cI3PQFt7rmpboS9a+1QpEnCWbj7AoD6
+         tJ0XYrMV4xaFi5sPGfW1FFpvRFym2ECEBHpsWButU2dHEy10oSJNuWheb6Wt9Zy6v29X
+         7lNGn+ia6HwEOaL8uViRsOblwZ64mDGd1/9m1MZV12oiEGJSwq63EJ8/Qn7sTJW41zz+
+         a1+hg9vhc8UAINxYU8Y/gVboWJiijjYauqe1+z17fdYQcafREvruSeZ4/NnKz1A33idR
+         E0C/1e5LhwAL7lVc4o3gzgYzSejNYtbCSQNsZniWH8mJkbgpqXeBXavvQarUjH3gtiR4
+         52Lg==
+X-Gm-Message-State: AOAM531Xn2QoReBjc9z7dIx8YlyRM7ok0iBmmbCGn+ZBS9JF8BpBJVbS
+        luVbnN221Yy6rMsNibN2THM=
+X-Google-Smtp-Source: ABdhPJxCfQOoQhDvGTVKPu+zLk9b98YX3Qn3QzCH/xEuUwUf1sPg8bqH83N3/JhI11xzL6TjELsSYQ==
+X-Received: by 2002:a9d:7289:: with SMTP id t9mr6548962otj.1.1636473539302;
+        Tue, 09 Nov 2021 07:58:59 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:7df4:7637:c299:db4f? ([2600:1700:e72:80a0:7df4:7637:c299:db4f])
+        by smtp.gmail.com with ESMTPSA id n22sm804750oop.29.2021.11.09.07.58.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Nov 2021 07:58:58 -0800 (PST)
+Message-ID: <82efc900-8518-3bb3-2524-8997475f1a45@gmail.com>
+Date:   Tue, 9 Nov 2021 10:58:57 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wbveqBD/MFEZwpB3MDjQzj6QQ9X0F1T6Bexo7LPC3VV7ClvG8ei
- P8thU912vWPgEdjsIKC0BZRdk8GpFGjvRdAgatVlEHuWx2HerkUgzEZpOiXIxc/1zIS9Im8
- lCVM0MaNht41dsBWu2NkelOUzurvMM1NCLpNvcywi8FpspmP47EZfNnq6GQu+XgTRKjRgZJ
- 6y9vuL4/ghZHsYREqHFBg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:a5vuDh/KU1w=:iRaM/DYlV5IsDyV00j2fWy
- qAwknpctlrJ6CXyRggKF+cK47EfHTHe8cbMaV4ZWn8wjwhZZOW1TzVOY5ojeLujRAmyw2nY+1
- EUDhws+P4y+Q1wimJ9a7BOuHwLwuCA15axalsCUQZ5VOCzFTyExfupCsIaJextKb/LEhf/wpg
- x4S5XZQO5nSiPvuLN+uMGCdfWloR+kZ+c9BrM/tNTgKuF07xFP0wVzMNIJxeCvmvZaq4+sI2J
- v3mlA8ykg9Coera5xDjL01GP2YKI6Eui3WBgBd7ynsZcH1dIr8HnNn+UPtudwazzDtGkAMG89
- znA1p380sH8tL+l6lOICJdSr51+LwuSY69qD+jy0I39WWpqUF2VNBdnDaWKsRLDboWyF8o34s
- lQVxysjGbYsInFzx47vkLFKJf4mf8vp6eS16XsaVAUb33yAr92uEgYgg8XABcUCHGeXBMM5+J
- nmpGTJsWop16eVv7f3uwF2p0XLozxbhhwBSxyPeYZvoHMaoEtU3HIkC/vJpoo46ujkKgaFUor
- UWi6CM5EnODjofefrYIuua5Q73SiKYEPoldQWaipmcR2soTVwB9TU5YIydMgC17m61a/WNfh9
- bt/VbVm122+x8BZRftMKibxhyGWi7CkKh1thDaRWbm1Z7gMbBEa0R8pdlmMQ4xizCeGMQgJv5
- bWxDohJHWYsXWJv9aPNOd+r5K9a/iP4D78gW4+9iwdVgegEbXfUiqBzIp8B6uWO8szAKt3AXt
- krXONxfbMHNPMpFSyc9zET0bi3qpXtOIJPHLMS+ylXHK2blynmjd7upbFKX6oF+lfotsd8hle
- uAJKbiIInB7F79i5O0DE9jXJ0/WbObHhbZaJEgbuTHNrZE37pS3asjUZaO6aqj3RbUYrlSoXF
- MCf0As51v/SX63WP+MJiGRa1Z2oTi+1hS98slPaEcHqPjqWYYFy8LXK0SMzfIw9psG7mEdxRg
- GH3Y0Ed8CCnvl+MzgMb0aKe5NBXOFa2cVptH0hhyK/C4Op9UVruOrDRpeCFFmdAp2bRWQXXcx
- BRqrjztwR4oR5Ike/4+dWCXwy/8svuyIAs3HRFDHkEkUBJ5oiVU3WOwxnfzCz6wAoJG6DePiw
- CcgcM9GS2X9HzE=
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH v5 0/4] cache parent project's gitdir in submodules
+Content-Language: en-US
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Albert Cui <albertcui@google.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <20211104234942.3473650-1-emilyshaffer@google.com>
+ <920c3133-b6ee-b82c-0876-f06713e9337b@gmail.com>
+ <YYmuqEQUaB1a8Gs1@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <YYmuqEQUaB1a8Gs1@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 11/8/2021 6:11 PM, Emily Shaffer wrote:
 
-On Mon, 8 Nov 2021, Junio C Hamano wrote:
+> Yeah, I think we may be overthinking it, especially with the concerns
+> about common dir vs. gitdir. More specifically - I think we accidentally
+> did the right thing in the previous iteration by using the gitdir :)
+> 
+> I think we can probably put it pretty simply:
+> submodule.superprojectGitDir should point from the most local gitdir of
+> the submodule to the most local gitdir of the superproject.
+> 
+> Luckily there are not so many permutations to worry about here.
+> 
+> Super doesn't have worktrees, sub doesn't have worktrees:
 
-> Anders Kaseorg <andersk@mit.edu> writes:
->
-> > diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> > index 4ef4ecbe71..52a4686afe 100755
-> > --- a/t/t5516-fetch-push.sh
-> > +++ b/t/t5516-fetch-push.sh
-> > @@ -1763,20 +1763,25 @@ test_expect_success 'updateInstead with push-t=
-o-checkout hook' '
-> >
-> >  test_expect_success 'denyCurrentBranch and worktrees' '
-> >  	git worktree add new-wt &&
-> > +	git clone --bare . bare.git &&
-> > +	git -C bare.git worktree add bare-wt &&
->
-> We create a bare.git bare repository with a bare-wt worktree that
-> has a working tree.  bare-wt branch must be protected now.
->
-> [...]
->
-> >  '
-> >
-> >  test_expect_success 'refuse fetch to current branch of worktree' '
-> >  	test_commit -C cloned second &&
-> >  	test_must_fail git fetch cloned HEAD:new-wt &&
-> > -	git clone --bare . bare.git &&
-> > -	git -C bare.git worktree add bare-wt &&
->
-> It is a bit sad that these two tests are so inter-dependent.
-> Depending on an earlier failure of other tests, this may fail in an
-> unexpected way.
+> Super doesn't have worktrees, sub does have worktrees (and as you
+> suggest above, right now this would have to be created carefully and
+> manually, but later we probably want this to Just Work):
 
-Indeed. Maybe we should keep the latter as-is, and add this to the former?
+> Super has worktrees, sub doesn't have worktrees:
+> Actually, I think in the future this might not be possible, if we want
+> to make `git worktree add --recurse-submodules` work gracefully (and I
+> do want that). But in the interim, in practice it looks like this:
 
-	test_when_finished "rm -rf bare.git bare-wt" &&
+> Both super and sub have worktrees:
+> And this won't exist until we have graceful support of `git worktree add
+> --recurse-submodules` or with some manual effort, now.
 
-Ciao,
-Dscho
+> I think this will give us access to both the worktree gitdir *and* the
+> common gitdir:
+> 
+>   ~/git/.git/worktrees/git-second [GIT_DIR!]$ git rev-parse --git-common-dir
+>   /usr/local/google/home/emilyshaffer/git/.git
+> 
+> So that means from any submodule, we can determine:
+>  - submodule's gitdir (from the .git link in the submodule wt)
+>  - submodule's common dir (from existing commands)
+>  - gitdir of superproject which submodule inhabits (from the config in
+>    the submodule's gitdir, or the submodule's config.worktree)
+>  - common dir of superproject (from existing commands + prior config)
+> 
+> The upshot to me, then, means that we should be 1) making sure to get
+> the path to the gitdir, not the common dir, of the superproject; and 2)
+> using helpers to write to the worktree config, not to the local config,
+> of the submodule. In other words, we want to avoid the following:
+> 
+> .git/
+>   modules/
+>     sub/
+>       worktrees/
+>         wt/
+> 	  config
+>       config <- "submodule.superprojectGitDir = ../../../.." as written by the worktree
+> 
+> Will take a look at the rest of the comments too, but this sounds like a
+> reasonable approach to me.
+
+I agree, that this seems reasonable. Spelling it out carefully like this,
+along with your list of possibilities, clarifies where the data is located
+and how we can construct any information we need from that.
+
+You point out that there are cases that can be a bit tricky to get into
+with current features, but this config approach won't make that any worse
+right now.
+
+Thanks,
+-Stolee
