@@ -2,97 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05E44C433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 04:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8F58C433EF
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 05:41:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D365461175
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 04:11:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A06CC61159
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 05:41:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230347AbhKJEOI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Nov 2021 23:14:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43744 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230273AbhKJEOH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Nov 2021 23:14:07 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6527FC061764
-        for <git@vger.kernel.org>; Tue,  9 Nov 2021 20:11:20 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id b15so5104720edd.7
-        for <git@vger.kernel.org>; Tue, 09 Nov 2021 20:11:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=ph6VE8PpzDXtb8X0OthF/7VDGBWCs4pCcorJMoAR/Lg=;
-        b=e64tFZ/6TQqTKPPVjSuoxIh0cVqIJEIxvLMcSIIVgVlMZKB4tLNub9OjcHT5MFInX9
-         xyGKzbi3qh96mNw4oPdUHQqrqMTTfx4sBkAZyF++XgyiUL027I1ZZt5eaHxIkpIJ7uID
-         7FcawoK/5UPfJAZDs/ZkLrurINA36+wAj+MdwQ9FBn2qg4bI4Vmu/n7+H8A8HI1qnmEk
-         +rszWrF9ZahjtRRpWDuQmLuGvNVY4B6wwVpSINjXWR5wEWNCpccNH0rzYEGVri69RDNH
-         BaMevoGlh6fA/rWkkgfRFPeQqyDZgVFFDz37ZVGpYd+aJ/FloB4JNWI0WHv8w3esaZYt
-         P3SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=ph6VE8PpzDXtb8X0OthF/7VDGBWCs4pCcorJMoAR/Lg=;
-        b=QxVrz8XJi59qeExdceh0UUXry/c419origWxKgPYL9QEpgPY8jyJLnBdpJGUA83rfc
-         CrhKnkvjf29vqN8JQaPS5ofm+gVf6R8sccbEy1vB3WTVe8E89gkdmrH2fintehmRo/o2
-         wqajIBWCZdUtQIwB5y36kToatZIOxEfOhLw3Jj8l9vK+4v3POYAxz/LhZ/FVoXapXzj7
-         GU6gw3RHgTT1AMJI124MCJLykJti46brB5IVCxfig2osf7boctmn4RQSNH0E69EUNZJz
-         fqJhyuP6JR9Jn8LLnUB1O0ByPatwNXjR3LNd2ZjGtO9lqUegtr2LQHtZPKOUptChUNEp
-         o+Gg==
-X-Gm-Message-State: AOAM532m5PgTp/E632KQn5drCS6pJ6Ix8VAmvOhGEmzqaXdRMeK9bBF1
-        /do8vstXgtNdFL6MWCNRUNOp1LbF3CPjSA==
-X-Google-Smtp-Source: ABdhPJxow5u11nucN5edD16J/HgM3IrgMK+4UQE2JLM73jtMFnnsqJjID1cRjU5kK/Ea3bzkxl2d6Q==
-X-Received: by 2002:a05:6402:3552:: with SMTP id f18mr17749914edd.129.1636517478926;
-        Tue, 09 Nov 2021 20:11:18 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id cw20sm10416555ejc.32.2021.11.09.20.11.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Nov 2021 20:11:18 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mkexB-000o9L-Mf;
-        Wed, 10 Nov 2021 05:11:17 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Anders Kaseorg <andersk@mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Andreas Heiduk <andreas.heiduk@mathema.de>
-Subject: Re: [PATCH v5 4/4] branch: Protect branches checked out in all
- worktrees
-Date:   Wed, 10 Nov 2021 05:03:24 +0100
-References: <2f983e36-532f-ac87-9ade-fba4c6b9d276@mit.edu>
- <20211109230941.2518143-1-andersk@mit.edu>
- <20211109230941.2518143-4-andersk@mit.edu>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <20211109230941.2518143-4-andersk@mit.edu>
-Message-ID: <211110.86pmr8ira2.gmgdl@evledraar.gmail.com>
+        id S229733AbhKJFn7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 00:43:59 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56380 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229485AbhKJFn7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 00:43:59 -0500
+Received: (qmail 26537 invoked by uid 109); 10 Nov 2021 05:41:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Nov 2021 05:41:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9887 invoked by uid 111); 10 Nov 2021 05:41:13 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Nov 2021 00:41:13 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 10 Nov 2021 00:41:10 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Fabian Stelzer <fs@gigacodes.de>, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.34.0-rc2
+Message-ID: <YYtbdkLsCSFFE5io@coredump.intra.peff.net>
+References: <xmqq4k8kzuz2.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4k8kzuz2.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Nov 09, 2021 at 04:59:29PM -0800, Junio C Hamano wrote:
 
-On Tue, Nov 09 2021, Anders Kaseorg wrote:
+>  * Use ssh public crypto for object and push-cert signing.
 
-> [...]
->  	if (!validate_branchname(name, ref))
->  		return 0;
-> @@ -208,9 +208,11 @@ int validate_new_branchname(const char *name, struct strbuf *ref, int force)
->  		die(_("A branch named '%s' already exists."),
->  		    ref->buf + strlen("refs/heads/"));
->  
-> -	head = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
-> -	if (!is_bare_repository() && head && !strcmp(head, ref->buf))
-> -		die(_("Cannot force update the current branch."));
-> +	wt = find_shared_symref("HEAD", ref->buf);
-> +	if (wt && !wt->is_bare)
-> +		die(_("Cannot force update the branch '%s'"
+I'm seeing some test breakage from the release candidates here. On my
+Debian unstable system, everything passed a few days ago. But after
+upgrading openssh-client from 1:8.4p1-5 to 1:8.7p1-1 (which hit unstable
+on Saturday), all of the GPGSSH bits seem to break:
 
-die() etc. messages should start with lower-case. See CodingGuidelines.
+  Test Summary Report
+  -------------------
+  t5534-push-signed.sh                             (Wstat: 256 Tests: 13 Failed: 2)
+    Failed tests:  8, 12
+    Non-zero exit status: 1
+  t6200-fmt-merge-msg.sh                           (Wstat: 256 Tests: 31 Failed: 2)
+    Failed tests:  7-8
+    Non-zero exit status: 1
+  t7031-verify-tag-signed-ssh.sh                   (Wstat: 256 Tests: 8 Failed: 5)
+    Failed tests:  2, 4-7
+    Non-zero exit status: 1
+  t7528-signed-commit-ssh.sh                       (Wstat: 256 Tests: 23 Failed: 10)
+    Failed tests:  2-5, 7, 9, 12-13, 17, 19
+    Non-zero exit status: 1
 
-Here you're changing an existing die() message, but since it's something
-translators will need to re-do let's fix it while we're at it.
+This doesn't have anything to do with -rc2 in particular. The breakage
+bisects to f265f2d630 (ssh signing: tests for logs, tags & push certs,
+2021-09-10), and is triggered by the system openssh upgrade.
+
+It's hard to tell what's going on, as we seem to just be getting bad
+results from ssh-keygen. Here's the first failing test in t7031 (with
+GIT_TRACE and -x):
+
+  [...]
+  + git verify-tag initial
+  trace: built-in: git verify-tag initial
+  trace: run_command: ssh-keygen -Y find-principals -f '/home/peff/compile/git/t/trash directory.t7031-verify-tag-signed-ssh/gpghome/ssh.all_valid.allowedSignersFile' -s /tmp/.git_vtag_tmpSxXLIv
+  trace: run_command: ssh-keygen -Y check-novalidate -n git -s /tmp/.git_vtag_tmpSxXLIv
+  + exit 1
+  error: last command exited with $?=1
+  not ok 2 - verify and show ssh signatures
+
+Likewise, this segfault (!) from t7528 is scary:
+
+  [...]
+  + git verify-commit initial
+  trace: built-in: git verify-commit initial
+  trace: run_command: ssh-keygen -Y find-principals -f '/home/peff/compile/git/t/trash directory.t7528-signed-commit-ssh/gpghome/ssh.all_valid.allowedSignersFile' -s /tmp/.git_vtag_tmpCOAwhp
+  error: ssh-keygen died of signal 11
+  trace: run_command: ssh-keygen -Y check-novalidate -n git -s /tmp/.git_vtag_tmpCOAwhp
+  Good "git" signature with ED25519 key SHA256:E+1Xptv1zGa2fWFjSL36Tl2m2NVxcyJVzhfQTnU+yWc
+  + exit 1
+  error: last command exited with $?=1
+  not ok 2 - verify and show signatures
+
+So it may not be a bug we need to fix in Git. But shipping v2.34 with
+lots of test failures may cause some headaches. Maybe we need to tighten
+up the GPGSSH prereq checks to block broken versions?
+
+-Peff
