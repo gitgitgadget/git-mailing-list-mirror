@@ -2,101 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFC4DC433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 06:00:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6397DC433EF
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 06:35:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A43EF6113E
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 06:00:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E2756117A
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 06:35:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229903AbhKJGDf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 01:03:35 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56392 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229717AbhKJGDf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 01:03:35 -0500
-Received: (qmail 26565 invoked by uid 109); 10 Nov 2021 06:00:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Nov 2021 06:00:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10016 invoked by uid 111); 10 Nov 2021 06:00:49 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Nov 2021 01:00:49 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 10 Nov 2021 01:00:47 -0500
-From:   Jeff King <peff@peff.net>
+        id S229903AbhKJGij (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 01:38:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46996 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229731AbhKJGii (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 01:38:38 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59934C061764
+        for <git@vger.kernel.org>; Tue,  9 Nov 2021 22:35:51 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id v127so1138189wme.5
+        for <git@vger.kernel.org>; Tue, 09 Nov 2021 22:35:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=QiRhaQWGyMCKoU5ZabsXRbJhlfXytz1jbncQyH7i5pg=;
+        b=bAjDGDTNIsqqleOAr0i2kBtEg4DVaZS/2mVSz0asnpgb6dYo4TbCCS6NBVPlfxhDK6
+         4Sbs+HExXXd/nDpN4uHeeocshZD6KDOUNQubPWUZFjeXKxIu1WA2VOIm2gJwAbLumd7B
+         4OSJ4urdSi67Z3FtOAFIxsIBhwp8T9U/Ps0Kutw6K+B4AzUxsm3ZogYOG0fRpHIgPTB/
+         OpKWitBhTe1bSay+7AxAKuhWbqSxjwgkbOLnIFkTv7sWd+SHw1g/uIvk7cfnG4yzD0oN
+         ZuhCDgPbEdEsIXET8bqLkOjtl8fLA7RsnuKsmfoDjylpspKFALE5ORF8Irgmcb0wvvS+
+         v1oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=QiRhaQWGyMCKoU5ZabsXRbJhlfXytz1jbncQyH7i5pg=;
+        b=157gxSl7cJA6x6bRSZcv2/pHgFBxPvhxyKimOLgPl5ys2/XcQQo45Lg8ut8/hB94Mj
+         au7mEVV17T+/wCsGgzYnFHnWi95BkWXAjU93kwDjsUiWfdf7wp+UGlyIPMePNqohsW9x
+         V0PGMg9F4fNgm+uAsI45E+vXNyiGgcQsovR58XKuLHbSFTBD9w/CEj/CeZROr4BOeEa/
+         l77Gg91oBagtjk1ofnKnFzHNsPxxiTNsrXLVxoz8wSPpbC5YWpOU/XC4CjjTHnBn1WeN
+         CBiuOh8dMlCO0YKuVmmCiCuvzQ2MF3Qy+/r5fst5edyuKiNx4HJz24uL8fRDmnQfoxI2
+         rA+g==
+X-Gm-Message-State: AOAM533Q15GxxXUQT8z8caLnwvYL21z8Nta4MnBnWgq6BtwHWG52ZdSg
+        bkAwM0OjJ0w4LXw8UL/zk27qEqpvUNY=
+X-Google-Smtp-Source: ABdhPJw+Qc63nm+eJOlJoGKwKd8a0ijSXHnnFTFcf62kfWpgg0WU4ghCQmAbtz4WmqJs7yIdWW2A4Q==
+X-Received: by 2002:a05:600c:4fca:: with SMTP id o10mr13558908wmq.175.1636526149833;
+        Tue, 09 Nov 2021 22:35:49 -0800 (PST)
+Received: from gmail.com (193-81-59-46.adsl.highway.telekom.at. [193.81.59.46])
+        by smtp.gmail.com with ESMTPSA id p12sm26152307wrr.10.2021.11.09.22.35.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Nov 2021 22:35:49 -0800 (PST)
+Date:   Wed, 10 Nov 2021 07:35:47 +0100
+From:   Johannes Altmanninger <aclopte@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Fabian Stelzer <fs@gigacodes.de>, git@vger.kernel.org,
-        git-packagers@googlegroups.com
+Cc:     git@vger.kernel.org, git-packagers@googlegroups.com
 Subject: Re: [ANNOUNCE] Git v2.34.0-rc2
-Message-ID: <YYtgD8VT/0vuIHRX@coredump.intra.peff.net>
+Message-ID: <20211110063547.xcpjjzoobha3eeff@gmail.com>
 References: <xmqq4k8kzuz2.fsf@gitster.g>
- <YYtbdkLsCSFFE5io@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YYtbdkLsCSFFE5io@coredump.intra.peff.net>
+In-Reply-To: <xmqq4k8kzuz2.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 10, 2021 at 12:41:11AM -0500, Jeff King wrote:
+On Tue, Nov 09, 2021 at 04:59:29PM -0800, Junio C Hamano wrote:
+> A release candidate Git v2.34.0-rc2 is now available for testing
+> 
+> Fixes since v2.33
+> -----------------
+> 
+>  * Doc update plus improved error reporting.
 
-> So it may not be a bug we need to fix in Git. But shipping v2.34 with
-> lots of test failures may cause some headaches. Maybe we need to tighten
-> up the GPGSSH prereq checks to block broken versions?
+This should be something like
 
-This is what I came up with, but I'm not sure it there's a better way to
-find the broken version. I don't think there's a way to get a version
-number out of ssh-keygen (and anyway, checking the behavior of the
-command is a more robust test). My fears are:
+ * Warn when iconv(3) fails to reencode log messages.
 
-  - this does cause several segfaults per test run on affected
-    platforms, which will pollute the kernel log, etc.
+> 
+>  * Recent "diff -m" changes broke "gitk", which has been corrected.
+> 
+>  * Regression fix.
 
-  - we're not really testing the desired behavior, just looking for a
-    known-problem. The segfault may get fixed but we'd still have other
-    bugs.
+I assume that generic merge messages like "Regression fix." or "Doc update."
+are meant to be dropped or replaced, maybe
 
-So it would be nice to have a more exact test, but without understanding
-the openssh bug, I think this is the best we can do in the meantime.
+  * Fix a v2.33.0 regression where "git send-email" would use wrong values for
+    sendemail.* options that are defined in multiple configuration files.
 
--- >8 --
-Subject: [PATCH] t/lib-gpg: avoid broken versions of ssh-keygen
+>  * One CI task based on Fedora image noticed a not-quite-kosher
+>    consturct recently, which has been corrected.
 
-The "-Y find-principals" option of ssh-keygen seems to be broken in
-Debian's openssh-client 1:8.7p1-1, whereas it works fine in 1:8.4p1-5.
-This causes several failures for GPGSSH tests. We fulfill the
-prerequisite because generating the keys works fine, but actually
-verifying a signature causes results ranging from bogus results to
-ssh-keygen segfaulting.
+I guess consturct -> construct
 
-We can find the broken version during the prereq check by feeding it
-empty input. This should result in it complaining to stderr, but in the
-broken version it triggers the segfault, causing the GPGSSH tests to be
-skipped.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/lib-gpg.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index 1d8e5b5b7e..a3f285f515 100644
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -104,6 +104,12 @@ test_lazy_prereq GPGSSH '
- 	test $? != 127 || exit 1
- 	echo $ssh_version | grep -q "find-principals:missing signature file"
- 	test $? = 0 || exit 1;
-+
-+	# some broken versions of ssh-keygen segfault on find-principals;
-+	# avoid testing with them.
-+	ssh-keygen -Y find-principals -f /dev/null -s /dev/null
-+	test $? = 139 && exit 1
-+
- 	mkdir -p "${GNUPGHOME}" &&
- 	chmod 0700 "${GNUPGHOME}" &&
- 	(setfacl -k "${GNUPGHOME}" 2>/dev/null || true) &&
--- 
-2.34.0.rc1.634.g85d556ea55
-
+>    (merge 4b540cf913 vd/pthread-setspecific-g11-fix later to maint).
