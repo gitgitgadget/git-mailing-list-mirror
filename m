@@ -2,101 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED1C0C433EF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 08:37:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1320C433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 09:16:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE879611C0
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 08:37:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F5BD61027
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 09:16:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230053AbhKJIjs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 03:39:48 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56442 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229653AbhKJIjr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 03:39:47 -0500
-Received: (qmail 27300 invoked by uid 109); 10 Nov 2021 08:37:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Nov 2021 08:37:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11110 invoked by uid 111); 10 Nov 2021 08:37:02 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Nov 2021 03:37:02 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 10 Nov 2021 03:36:59 -0500
-From:   Jeff King <peff@peff.net>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Neeraj Singh <neerajsi@microsoft.com>, git@vger.kernel.org
-Subject: Re: [PATCH] refs: sync loose refs to disk before committing them
-Message-ID: <YYuEq42toR6mycem@coredump.intra.peff.net>
-References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im>
- <YYTYJpyrxtyR8yYZ@coredump.intra.peff.net>
- <YYTaiIlEKxHRVdCy@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2111051010070.56@tvgsbejvaqbjf.bet>
- <YYT6tDyfBbwot2br@coredump.intra.peff.net>
- <YYpauqpBDVzOo+Px@ncase>
+        id S230257AbhKJJSw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 04:18:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54656 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229781AbhKJJSw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 04:18:52 -0500
+Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB38FC061764
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 01:16:04 -0800 (PST)
+Received: by mail-ua1-x931.google.com with SMTP id b17so3501756uas.0
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 01:16:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hXJilEd6NeUHyktNfqm/srz3BwdVlJP5j/8LVFcm7Xk=;
+        b=kWW1zf9ZKPgnLafEtscHgtV569+G1wyDrR25hwVy9RYtdfmiNMlf/LfBdgqUr5Awwa
+         /a60PygkVca8QmEhlm4hoaZkAFqj00F4kd4yGx/RKqsc9SuinsN9XxyE+2x8uSQB9mop
+         vPDiFyrb4bdVwqTQo3Uw8PMnefmidBKSYov7NtEojCkgqA+V5YVruHpHCCE64mHIACcV
+         xSu2DQpwrDVb8SkLSbY7BJc5JGijlsDBA/GiFfsuKKFcUDI4+xsF8PigWrrg37PfG91l
+         FG5zHbYWd41haT2YaTGKEq6+XhVupVo4p4BkrqXrFgoQhjl/S+g1tkgwlGxjezy7sNgC
+         mcmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hXJilEd6NeUHyktNfqm/srz3BwdVlJP5j/8LVFcm7Xk=;
+        b=k0G52VZe718GP7F4zcGdEHJDGf+BDOTIoDoTA/jSsk+p/AJfGb3NoY4F6Mu3Nvkjoc
+         wCeWtavCymFrxnFWZJUqrq4o4451/YLs8ijGQGoul1dnNlEsx+G5TanF0Ye6dPwY5Zcb
+         XBLwVWtv9RFHTz8VKJTkfroKK42Jsq2IT82CWkXDtQbfNwKLN/TKTUhmGvjWAOaEoUEs
+         HEX5qbXD0TvcsmnuyyH0WuTCjpXHWax9GzhtAU1Qik0DXkXPdJVdhSaNYOBPrE/Z9CwQ
+         yRQ0FEJz1+X/WU6FV3GV5EOQWUGUmilVPGeN+V2GwJbvmTEw8H4EUHq5VCTdux09U3Ue
+         l+Jg==
+X-Gm-Message-State: AOAM531Jnyf+ZfsTk7351zDqGe5jbaFNO1dHLXlq+wx0XyztBir2ApuH
+        nBGJPTZ2W/tl0hWnv4c6xB+2rWleEtUf7WHBB8E=
+X-Google-Smtp-Source: ABdhPJzoNztxHqaonQueQilHTaHdEzVT+zIJWebIdaiLmU9eQLNAnGZBev8vLCZPvByYt9vKeT3u8rSayCjuJl/+FcI=
+X-Received: by 2002:ab0:5928:: with SMTP id n37mr20042918uad.15.1636535763895;
+ Wed, 10 Nov 2021 01:16:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YYpauqpBDVzOo+Px@ncase>
+References: <xmqq4k8kzuz2.fsf@gitster.g> <YYtbdkLsCSFFE5io@coredump.intra.peff.net>
+ <YYtgD8VT/0vuIHRX@coredump.intra.peff.net> <CAPUEspg+NDJFAVcFs2hhcSTORb0Q-Gjcv0M+5tzqXJuBTvbT+Q@mail.gmail.com>
+ <YYuBQ2mUCeEmYoLR@coredump.intra.peff.net>
+In-Reply-To: <YYuBQ2mUCeEmYoLR@coredump.intra.peff.net>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Wed, 10 Nov 2021 01:15:52 -0800
+Message-ID: <CAPUEspjzs0ZvDGUwp=XYxdHb_t+1yx0C1epaNhhiAn6SsPeidQ@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.34.0-rc2
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Fabian Stelzer <fs@gigacodes.de>, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 09, 2021 at 12:25:46PM +0100, Patrick Steinhardt wrote:
+On Wed, Nov 10, 2021 at 12:22 AM Jeff King <peff@peff.net> wrote:
+>
+> On Wed, Nov 10, 2021 at 12:11:12AM -0800, Carlo Arenas wrote:
+>
+> > On Tue, Nov 9, 2021 at 10:02 PM Jeff King <peff@peff.net> wrote:
+> >
+> > >   - we're not really testing the desired behavior, just looking for a
+> > >     known-problem. The segfault may get fixed but we'd still have other
+> > >     bugs.
+> >
+> > This openssh bug was fixed in 8.8 per the release notes; indeed the
+> > fix[1] (which was misapplied but fixed next commit) looks familiar and
+> > it is just a straight up crasher, hence unlikely to cause other
+> > issues.
+>
+> Ah, thanks for digging. I agree that this is a small isolated bug, so
+> the prereq check I showed would be a good test for it.
+>
+> IMHO it's worth doing. It looks like 8.7 is the only affected openssh
+> version, but it is likely to cause confusion right when we release.
 
-> So I've finally found the time to have another look at massaging this
-> into the ref_transaction mechanism. If we do want to batch the fsync(3P)
-> calls, then we basically have two different alternatives:
-> 
->     1. We first lock all loose refs by creating the respective lock
->        files and writing the updated ref into that file. We keep the
->        file descriptor open such that we can then flush them all in one
->        go.
-> 
->     2. Same as before, we lock all refs and write the updated pointers
->        into the lockfiles, but this time we close each lockfile after
->        having written to it. Later, we reopen them all to fsync(3P) them
->        to disk.
-> 
-> I'm afraid both alternatives aren't any good: the first alternative
-> risks running out of file descriptors if you queue up lots of refs. And
-> the second alternative is going to be slow, especially so on Windows if
-> I'm not mistaken.
+It was discussed[1] before, and I think the plan was to at least
+mention the brokenness with 8.7 in the release notes, but guess I
+dropped the ball by not raising it earlier.
 
-I agree the first is a dead end. I had imagined something like the
-second, but I agree that we'd have to measure the cost of re-opening.
-It's too bad there is not a syscall to sync a particular set of paths
-(or even better, a directory tree recursively).
+Carlo
 
-There is another option, though: the batch-fsync code for objects does a
-"cheap" fsync while we have the descriptor open, and then later triggers
-a to-disk sync on a separate file. My understanding is that this works
-because modern filesystems will make sure the data write is in the
-journal on the cheap sync, and then the separate-file sync makes sure
-the journal goes to disk.
-
-We could do something like that here. In fact, if you don't care about
-durability and just filesystem corruption, then you only care about the
-first sync (because the bad case is when the rename gets journaled but
-the data write doesn't).
-
-In fact, even if you did choose to re-open and fsync each one, that's
-still sequential. We'd need some way to tell the kernel to sync them all
-at once. The batch-fsync trickery above is one such way (I haven't
-tried, but I wonder if making a bunch of fsync calls in parallel would
-work similarly).
-
-> So with both not being feasible, we'll likely have to come up with a
-> more complex scheme if we want to batch-sync files. One idea would be to
-> fsync(3P) all lockfiles every $n refs, but it adds complexity in a place
-> where I'd really like to have things as simple as possible. It also
-> raises the question what $n would have to be.
-
-I do think syncing every $n would not be too hard to implement. It could
-all be hidden behind a state machine API that collects lock files and
-flushes when it sees fit. You'd just call a magic "batch_fsync_and_close"
-instead of "fsync() and close()", though you would have to remember to
-do a final flush call to tell it there are no more coming.
-
--Peff
+[1] https://lore.kernel.org/git/CAPUEspgnRFNRoFuEvP1hpY3iKukk3OnF4zk85wkdkmiVuPuRTw@mail.gmail.com/
