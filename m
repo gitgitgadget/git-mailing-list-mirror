@@ -2,83 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0762FC433EF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 09:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E872C433EF
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 09:35:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D9CA761221
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 09:30:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04D6361221
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 09:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230117AbhKJJdF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 04:33:05 -0500
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:60647 "EHLO
-        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230037AbhKJJdE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 04:33:04 -0500
-Received: (Authenticated sender: robin@jarry.cc)
-        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 39B0C6000B;
-        Wed, 10 Nov 2021 09:30:12 +0000 (UTC)
-From:   Robin Jarry <robin@jarry.cc>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org,
-        Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-        Jan Smets <jan.smets@nokia.com>,
-        Stephen Morton <stephen.morton@nokia.com>,
-        Jeff King <peff@peff.net>, Robin Jarry <robin@jarry.cc>
-Subject: [PATCH v3] receive-pack: ignore SIGPIPE while reporting status to client
-Date:   Wed, 10 Nov 2021 10:29:42 +0100
-Message-Id: <20211110092942.1648429-1-robin@jarry.cc>
-X-Mailer: git-send-email 2.34.0.rc2.2.gbcf7eca935e4
-In-Reply-To: <20211106220358.144886-1-robin@jarry.cc>
-References: <20211106220358.144886-1-robin@jarry.cc>
+        id S230452AbhKJJiW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 04:38:22 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56482 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230117AbhKJJiV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 04:38:21 -0500
+Received: (qmail 27378 invoked by uid 109); 10 Nov 2021 09:35:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Nov 2021 09:35:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11608 invoked by uid 111); 10 Nov 2021 09:35:34 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Nov 2021 04:35:34 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 10 Nov 2021 04:35:31 -0500
+From:   Jeff King <peff@peff.net>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Fabian Stelzer <fs@gigacodes.de>, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.34.0-rc2
+Message-ID: <YYuSYz+XFWmBkIiz@coredump.intra.peff.net>
+References: <xmqq4k8kzuz2.fsf@gitster.g>
+ <YYtbdkLsCSFFE5io@coredump.intra.peff.net>
+ <YYtgD8VT/0vuIHRX@coredump.intra.peff.net>
+ <CAPUEspg+NDJFAVcFs2hhcSTORb0Q-Gjcv0M+5tzqXJuBTvbT+Q@mail.gmail.com>
+ <YYuBQ2mUCeEmYoLR@coredump.intra.peff.net>
+ <CAPUEspjzs0ZvDGUwp=XYxdHb_t+1yx0C1epaNhhiAn6SsPeidQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPUEspjzs0ZvDGUwp=XYxdHb_t+1yx0C1epaNhhiAn6SsPeidQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before running the post-receive hook, status info is reported back to
-the client. If a remote client exits before or during the status report,
-receive-pack is killed by SIGPIPE and post-receive is never executed.
+On Wed, Nov 10, 2021 at 01:15:52AM -0800, Carlo Arenas wrote:
 
-The post-receive hook is often used to send email notifications (see
-contrib/hooks/post-receive-email), update bug trackers, start automatic
-builds, etc. Not executing it after an interrupted yet "successful" push
-can lead to inconsistencies.
+> On Wed, Nov 10, 2021 at 12:22 AM Jeff King <peff@peff.net> wrote:
+> >
+> > On Wed, Nov 10, 2021 at 12:11:12AM -0800, Carlo Arenas wrote:
+> >
+> > > On Tue, Nov 9, 2021 at 10:02 PM Jeff King <peff@peff.net> wrote:
+> > >
+> > > >   - we're not really testing the desired behavior, just looking for a
+> > > >     known-problem. The segfault may get fixed but we'd still have other
+> > > >     bugs.
+> > >
+> > > This openssh bug was fixed in 8.8 per the release notes; indeed the
+> > > fix[1] (which was misapplied but fixed next commit) looks familiar and
+> > > it is just a straight up crasher, hence unlikely to cause other
+> > > issues.
+> >
+> > Ah, thanks for digging. I agree that this is a small isolated bug, so
+> > the prereq check I showed would be a good test for it.
+> >
+> > IMHO it's worth doing. It looks like 8.7 is the only affected openssh
+> > version, but it is likely to cause confusion right when we release.
+> 
+> It was discussed[1] before, and I think the plan was to at least
+> mention the brokenness with 8.7 in the release notes, but guess I
+> dropped the ball by not raising it earlier.
 
-Ignore SIGPIPE before reporting status to the client to increase the
-chances of post-receive running if pre-receive was successful. This does
-not guarantee 100% consistency but it should resist early disconnection
-by the client.
+Ah, thanks. I looked in the archive, but assumed any mention would have
+been more recent (not realizing that Debian's packaging was simply
+lagging the upstream releases by quite a bit).
 
-Signed-off-by: Robin Jarry <robin@jarry.cc>
----
-Changes since v2:
-
-* Updated commit log with more pertinent info.
-* Only ignore SIGPIPE while reporting status, *after* removing the lock
-  file.
-
- builtin/receive-pack.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 49b846d96052..2f4a38adfe2c 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2566,10 +2566,12 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 				 &push_options);
- 		if (pack_lockfile)
- 			unlink_or_warn(pack_lockfile);
-+		sigchain_push(SIGPIPE, SIG_IGN);
- 		if (report_status_v2)
- 			report_v2(commands, unpack_status);
- 		else if (report_status)
- 			report(commands, unpack_status);
-+		sigchain_pop(SIGPIPE);
- 		run_receive_hook(commands, "post-receive", 1,
- 				 &push_options);
- 		run_update_post_hook(commands);
--- 
-2.34.0.rc2.2.gbcf7eca935e4
-
+-Peff
