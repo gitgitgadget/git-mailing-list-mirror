@@ -2,118 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F9C5C433EF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 20:02:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60178C433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 20:06:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1267E6117A
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 20:02:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C74361213
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 20:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231472AbhKJUEw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 15:04:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33480 "EHLO
+        id S231858AbhKJUJH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 15:09:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230345AbhKJUEv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 15:04:51 -0500
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93BAEC061764
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 12:02:03 -0800 (PST)
-Received: by mail-oi1-x22e.google.com with SMTP id q25so1786269oiw.0
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 12:02:03 -0800 (PST)
+        with ESMTP id S231160AbhKJUJG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 15:09:06 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9A81C061764
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 12:06:18 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id z21so15118751edb.5
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 12:06:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=h0TBvQpC/fRVBJMB3E9jk03Eyv67GsYfTEpOFhbOh90=;
-        b=mk5npYfiLwMX54OqJstoIHAA5dT6MipQ4WceqMnHOxz1XIotbSSx6j/VT9/+ElfxXM
-         hxtrZzdEW86GwNAAdGsz7Ska9nl817uu4sPJYdjxuguSctgd7HMytDcfupw8PY3Ba7lH
-         j9tOPvLjn1xCX/hChr497vff3o0qfXtw7tGLfl3bXCKjlgIOmOcsT+yGwlhiX8D547zn
-         6YbJY+9ky6YHwdDYjjVVxQG5gjd78Hs2wOwi0xASLsBYbvFxsxod8rObU40pwFO0aJQe
-         96roSAiTKQDEe8wSJl8Z4vtiB351wAb8s+K4R7bQLcDYpVgbPLZi7KuUT58fR1ehMVoO
-         htFg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=eWt4ZEeqeCuUjUvt0oRU+nv6y2X9ES53xPkp3tuEVKU=;
+        b=on+kk6q5KYi0sO6/oQ6Tz2hnRt8gXnK8HaEC+nlEGNT4qdiQeJitIWTkef43wWIrkL
+         agd/W02i/dW2QsIKZH33atxPPGPhv64xGZ83bxohxfyx8U7xbDxbzHHWQ11RQXxfrFMW
+         KNCdLGKVoAHXMHhl41IlNleXMtba3orGXEfs6XKqnZvHJAWsz1gzmGwEKwqwTD8cVIcg
+         S4WUutdVz97L2awXU/xeFf/fjeNHO0wOJ5FIl5R8P3CMND7poyzUoW0rdF33cF9f60dh
+         QFD17COR7Lg+gfzbfeJ/nA1BDNCu/P3MNWHma+cl8bC/NjJU7jjBmWm2BO5sWbdaZisJ
+         yplw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=h0TBvQpC/fRVBJMB3E9jk03Eyv67GsYfTEpOFhbOh90=;
-        b=ZNbYiJIiJF3thh8TKu3UMzAzFeqR5LIY/5GZc1skywX7xAXmUZ/Xuq8af/x+UemgaZ
-         0v4dQN2WBsotYuC/1E6H8WWmbeZkp35erLTft1rbFNkef+3jOoFCBbwyGh/Oumg7HLib
-         B7T5plRR79q69efWszFJuEul9+yDTJmWtfYk+0ieM/VXrZCJQI5Zw6Ni8QIvnb4SVxr8
-         M3DWDK8S9WmOIgaAt7/edV5ObVU5Jd4PnNyqdiZdUMrvzuYexgNZhPK7MjdNrQfksEb1
-         9pratcfoucroZIfooH5YEvNTCGO171Gjm3NSBylLbkT15HC1wvVJAYoOOmI2tyh/TZA+
-         VHsA==
-X-Gm-Message-State: AOAM531IsKiiqb0pdGZkL2R295tIy5bL8cEtKf1cVYDMmNPYaVU55/Hd
-        nLXuwU7WcCavfI/bOaiUp/s=
-X-Google-Smtp-Source: ABdhPJxD2fnV+AoLqUzTKJMriTXNxjd+EUu/imc5UdNpkI8SgiP9RUSI8wrmH3LgsgdIFYOD0o40Ng==
-X-Received: by 2002:a05:6808:180c:: with SMTP id bh12mr1557978oib.152.1636574522803;
-        Wed, 10 Nov 2021 12:02:02 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:64b8:5437:e398:f201? ([2600:1700:e72:80a0:64b8:5437:e398:f201])
-        by smtp.gmail.com with ESMTPSA id f16sm173157ots.71.2021.11.10.12.02.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Nov 2021 12:02:02 -0800 (PST)
-Message-ID: <d4564a73-792c-4ad5-03da-e64d1571d092@gmail.com>
-Date:   Wed, 10 Nov 2021 15:01:58 -0500
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=eWt4ZEeqeCuUjUvt0oRU+nv6y2X9ES53xPkp3tuEVKU=;
+        b=DjURTBfg5s81ZPgS7wunEZtIXhafVNrZG0S3QL8TFk700AktVfTodKxoAUY9J+38CG
+         6tIdBnM9eOkQebA/fD1AZbJwN5TECzfjer6z+Ds7cVrGtLP1dWlZbmn4Oq22A92i4xa4
+         wkHiN+ToZyUsne6N4pBAazoglw5SVkNjHNXaf1AIHs+VUnRJ9LWWkC/nerS9Xiz3L7jH
+         PyYdFk6Pw7Ls/OFNoLSw8FFdwOxjQcwYeCBKcgKVsmDvrMhRA6UTEz11aY+Foukn6WFz
+         yX6OWKJUTuxWKxh9e8UL5l8H5gotilFEgN5p6i48YJnePlJPdAFCfSZ/abiaDiniQer0
+         UXSA==
+X-Gm-Message-State: AOAM533jyVzgAXHfossYonJfcSVXBv9rh70dHejxQq12wsuE2ZJeoqaw
+        WAz7tfAMtaAG6CVz9Zd4YG8zl3+JWXMsz+ym/NsQ0Z9m
+X-Google-Smtp-Source: ABdhPJzz8KDDYlBuW+ecTyBnLTakTz22JHIqRQL/vwTEvT+DZuKuRjo4SuRoMlbM4tm10FHIbEG0Hr/58oVoMyq8CE8=
+X-Received: by 2002:a17:906:2f10:: with SMTP id v16mr2269624eji.434.1636574776761;
+ Wed, 10 Nov 2021 12:06:16 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH] maintenance: disable cron on macOS
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, lenaic@lhuard.fr,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.1075.git.1636569360002.gitgitgadget@gmail.com>
- <xmqqh7cjyeqb.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqh7cjyeqb.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <pull.929.v2.git.git.1607677728.gitgitgadget@gmail.com>
+ <pull.929.v3.git.git.1609272328.gitgitgadget@gmail.com> <7214fa73fdd13418744903f6c769fdb77c9512ce.1609272328.git.gitgitgadget@gmail.com>
+ <CAPNYHkm5Qp8HQGU5_6DXc7xpCrdGgEin0WYAxbRNOkKW0j2ERQ@mail.gmail.com>
+In-Reply-To: <CAPNYHkm5Qp8HQGU5_6DXc7xpCrdGgEin0WYAxbRNOkKW0j2ERQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 10 Nov 2021 12:06:05 -0800
+Message-ID: <CABPp-BFqZj4qYXbPGLyX=4RM4OdLNL=VbYyhbLakU-RrvU+wfw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/9] diffcore-rename: simplify limit check
+To:     =?UTF-8?B?QmHFn2FyIFXEn3Vy?= <basarugur@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/10/2021 2:47 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->>     This one is really tricky because we can't notice anything is wrong
->>     without running git maintenance start or git maintenance stop
->>     interactively on macOS. The tests pass just fine because the UI alert
->>     gets automatically ignored during the test suite.
->>     
->>     This is a bit of a half-fix: it avoids the UI alert, but has a corner
->>     case of not un-doing the cron schedule if a user manages to select it
->>     (under suitable permissions such that it succeeds). For the purpose of
->>     the timing of the release, I think this is an appropriate hedge.
-> 
-> Reverting the "git maintainance run --scheduler=<scheduler>" topic
-> altogether to give us time to stop and think may be another obvious
-> option, but it probably is OK to tell macOS users that they may have
-> cron but Git won't work with their cron with this patch.
-> 
-> In any case, let's leave it (slightly) broken for macOS folks by
-> applying this quickfix.
+On Tue, Nov 9, 2021 at 1:15 PM Ba=C5=9Far U=C4=9Fur <basarugur@gmail.com> w=
+rote:
+>
+> Hi all,
+>
+> First post on Git mailing list, to provide a comment on a patch. Hope
+> this works.
+>
+> In cases where the `rename_limit` is already greater than 65535, the
+> `st_mult(rename_limit, rename_limit)` multiplication overflows and
+> process halts.
 
-I agree that we don't need to revert the topic.
+Out of curiosity, what system are you on?  And how many renames do you
+actually have?
 
-> I was puzzled by the lack of a call to validate_scheduler() at the
-> very beginning of resolve_scheduler(), by the way.  Or even earlier
-> during the verification of the command line options.  I wonder if
-> on macOS, --scheduler=nosuch and --scheduler=cron should behave the
-> same way, both saying "unrecognized", instead of saying that only to
-> the former and "not available" to the latter.
+We used to clamp to 32767, but one specific repository needed values
+larger than that, in the range of ~50000.  However, due to a number of
+rename detection related optimizations added since then, the git of
+today can handle that same particular repository and support full
+rename detection with a rename limit under 1000 for merge/cherry-pick
+(sorry, forgot the exact numbers), and probably less than 10000 for
+diff (just guestimating; I don't want to go and check).
 
-It's a bit strange, but the crux is that selecting --scheduler=X
-makes the 'X' scheduler pass through the 'enable' path, while the
-rest of the "available" schedulers goes through the 'disable' path.
+Anyway, all that aside, I don't see any such overflow for rename_limit
+being 2**16; we can push it much farther:
 
-This UI prompt occurs because we are trying to 'disable' cron
-before enabling launchctl.
+    size_t a =3D 4294967295;   /*  2**32 -1  */
+    size_t b =3D a;
+    size_t c =3D st_mult(a, b);
+    printf("%"PRIuMAX" =3D %"PRIuMAX" * %"PRIuMAX"\n", c, a, b);
 
-I think the biggest issue is how macOS uses non-standard ways of
-requesting user permissions, because if 'crontab' simply exited
-with a non-zero status, there would be no work to do here. Because
-of that, I think we will always need to tiptoe around cron on macOS.
+Output:
 
-Thanks,
--Stolee
+    18446744065119617025 =3D 4294967295 * 4294967295
+
+Adding one to the value of a results in:
+
+    fatal: size_t overflow: 4294967296 * 4294967296
+
+> But I don't think an 'overflow error' is very helpful
+> for the users in understanding what is wrong with their configuration;
+> i.e. `diff.renameLimit` documentation says nothing about a 'maximum
+> allowed value'. I would either clamp it to a reasonable range, or
+> inform the users about the limits, or maybe both.
+
+That sounds reasonable, but I'm not sure it's worth the effort in
+practice.  2**32 - 1 is so impractically large for a rename_limit that
+I don't see why anyone would need a value even remotely close to that
+level (and I wouldn't at all be surprised if other things in git
+scaling broke before we even got to that point).
+
+Perhaps you're dealing with a 32-bit system?  Even then, the
+repository that hit this was about 6.5GB packed .git history; and you
+might need to be a lot larger than that given the optimization since
+then in order to hit this.  Can 32-bit systems even handle that size
+of repository without dying in several other ways?
