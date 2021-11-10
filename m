@@ -2,136 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FCC6C433EF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60BA2C433EF
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:44:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10D9C61106
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:40:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 378F8611ED
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:44:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232186AbhKJOnN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 09:43:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44824 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232263AbhKJOnM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 09:43:12 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9AE4C061767
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 06:40:24 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id z21so11464782edb.5
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 06:40:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=u/tPgF8Yef3Kj349DN6QmUHzvrefm0xhH2WpL/J0tXc=;
-        b=jWVwFQ03azTIsIiHAZAMrahxie6XWb3GGuIFii+fwLpuqT9gYklWKLoxI4r3DTSuF+
-         djXCtgqk13zf5qaK0Hlrqqh15ekv7KXrbKjnbT0NkB4Q/Y9MKylRg0w8oRfXjf1mydN8
-         6e7ZGcm7QLGNPRv1Ox78M9aafndEEHjVF/HI/oVa5cYUtHENVU18876GmwZnw5xe9zjW
-         /lrpT8g4ybyS3AsI/IrU6exWpGSh/SFVgdUzhdlTdI9acQJiMEKtWuXkf7bJGn18CR0X
-         vBqM1n8mn77sfQtK3puT0hKrbe4fH7HbOLu+TTJdrnjodkgembMKCqflGzJrwjZMsebA
-         eVfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=u/tPgF8Yef3Kj349DN6QmUHzvrefm0xhH2WpL/J0tXc=;
-        b=1y/tbhjiiD7HA2R8PJx0At7pu71CVbuAT1jI3NLbn8wTCWnAmrdwFymmUlMj2VLQJJ
-         CqSUaxXue6I2ytAfLibZk+vpMk//i2g6ubgybKLzr6O8+tIOkAbtlYFMV2DkhSHjo/0S
-         y1lRDVhxX5uw2nXQiA65zO45X0CZYpi/HaRc69sdfhfM1m4TRdWN6nJPHQ/j99ZtRBMz
-         HB6vaH15lnGr5/hMXTvDqIjmCveDc2jZ0luZbb8OtH+Wcwd4tp8MTH4JxInGJnWsMAVO
-         5V7xRqHhzOM4mybLwKberJpG9I/avwRAq0Px/IFJGfkZt+4zFvUzkAA2ePhX+lgc8hID
-         X9qA==
-X-Gm-Message-State: AOAM530vy0btR04fl4ynKsAg/gPvspux+IJb9KBgmlqr/JV4zDrrN277
-        sxmh3og9Pwnm47elOBzKAnI=
-X-Google-Smtp-Source: ABdhPJyqi+o79PS4oKI3LDrofa6JfXvN0DuzZ1/njoZTMmqBE02IcHGIn/Mz0scXk82NjjySoYIbNQ==
-X-Received: by 2002:a17:906:15d0:: with SMTP id l16mr108979ejd.462.1636555222764;
-        Wed, 10 Nov 2021 06:40:22 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id hd15sm11926454ejc.69.2021.11.10.06.40.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Nov 2021 06:40:22 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mkolx-001105-Sb;
-        Wed, 10 Nov 2021 15:40:21 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        id S232279AbhKJOrp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 09:47:45 -0500
+Received: from mout.gmx.net ([212.227.15.18]:36301 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231551AbhKJOrp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 09:47:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1636555479;
+        bh=YgLa83kYk4ZlVqr58PHMutPAufPRProtfmuAlM/Hrt8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ip2fwpiMcXyZ8p9shsHAQ3HPL2kZf2t0gxt3yI8kqkpDEbR9VutMSB7MrFipS/8gI
+         J+r8HEkCjxOpsD4Wux0H7S22N/KFIQw9m468ch+M8omPuhOUsQrdSaGp2ZsbEGtlpU
+         wM7NfZo8TldGBO9SKNKemFIJZ5gt+ywFT+F7LKQA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.27.166.205] ([89.1.212.10]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2wL0-1mjiNW2vwi-003OCf; Wed, 10
+ Nov 2021 15:44:38 +0100
+Date:   Wed, 10 Nov 2021 15:44:36 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Eric Wong <e@80x24.org>,
         "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH v2 1/3] wrapper: handle EINTR in `git_fsync()`
-Date:   Wed, 10 Nov 2021 15:39:31 +0100
-References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im>
- <cover.1636544377.git.ps@pks.im>
- <0c8e98295e91b656a89e1db53bfe02e7c7fc8432.1636544377.git.ps@pks.im>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <0c8e98295e91b656a89e1db53bfe02e7c7fc8432.1636544377.git.ps@pks.im>
-Message-ID: <211110.864k8khy5m.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH v2 0/3] refs: sync loose refs to disk before committing
+ them
+In-Reply-To: <cover.1636544377.git.ps@pks.im>
+Message-ID: <nycvar.QRO.7.76.6.2111101534370.21127@tvgsbejvaqbjf.bet>
+References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im> <cover.1636544377.git.ps@pks.im>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HiYRfnO4uRpEOGBarO+51uUFgqfv3yYUQWuT4zd88+j8fB1WlVu
+ RfaQp3MdSCwjigMBhixX9Xdh9hmD1raKudEB15wcD54c7KhkT78F96csGCaaJDELpiu2Sfr
+ 45Rpx9xkv+Hq7/cm/pt0Dr5+ET17IiwCm5AUqv1XsM48BBZW/5H/QXFXwRo/ziXmzgHzCEp
+ OpXgQ10gtoj5xHvq8zlcw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+4XBOGlHSTY=:mFDRUuhCcX/NAbK9EIf6aS
+ m5gVF+xND0A1qFvoCQ3dFTi4TFAvanmcSDkStPJMgu6WzDrAp9x+NPY4n1VVGHhFBcZr9CPu5
+ lItEadqVlmo/Z75cvFF5RulECbST35cYFIbvO8YLk04+MaPQvipy2MyOlSfzt5GxNV8nTkks4
+ LOQZ5DUoyd/x24UiqdGlVZ6FzCdcVDohdmDhv4TC/8CPsoS2ibNghOOMcwp63X8J5YqNR1J3j
+ nf0+/ZY4CUAdmFDslZEty5QPrfg4E8RtoXUaQ87xRW04+Gwo2qkXM3haAEAyrAz2AL4Cn9ZwX
+ hmXhVmtVLfp8dpUJHRAYSZ6kGqdS+Lt0n0F0iuZfYcNJxk3n1Z7075sUDdOUmnpWYQ/ezfs9D
+ gaBrlhtjaEpiqINzDNuznO+vvyXztqi5SjvIP3u5wpL1+FnGp64QiMx39dwbyPkXaYZGdbq+N
+ 76H2UJynb12VW64SDA+Ged11BsVbLJtY3vhDfRTy1Lf52sEgh8aDi66gJHJ8x4KAZsqK434OH
+ yzTDUzXB6qG2mTGkfq8hdtebYQlnP7knSX/vsa7F5HiXOEGyqDtkFBnRR5qfKevxMWC1dzka6
+ DgLE9nWfRURHhgQ/7Nr8vdsHUHfHG/eXJwF6zlQRqR+iOLZ9rOaKkJeWyE9IJAt8miA4by08z
+ ViePJcShhwivSIR3X2aCQKC+A+LZljJlALbX0rSkfKrWvHpVHh7fkQ0h8lXFZIf80JeMP7TJt
+ CYdGyzvgqaoItHv7xiHumcS89ikWdrzlOQqjb4wv5RuTW4C04iSW/G/uQbvHIvmvOHo72Bjir
+ tBzMnc4fldrRBAbXPKYkVzvME9i4pvGoqkyoD8zakHSc4l1+pwhzQB2sD5i5+++pscO4lNh9n
+ kymgYPcgT7pOV1PMC+W35sqyTGY4St3ka+Ksl2HjldFeHLrL82tBZUPUAXWPrrIaexiO0c8yK
+ XdcGD8gSEH9krys61ozesTYrHRn9rpe0OzYwf84Jgut8EFRCceHoq8c2LYquXs0zveygLDooy
+ iEAxaLXRO03B9wW0z7KGgiJUDXK8Eb2EVLGjZwROwll7BE2pVA2Y/y6SGYm8ZY9dIR/ojdF5s
+ n2YvuIarML01ek=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Patrick,
 
-On Wed, Nov 10 2021, Patrick Steinhardt wrote:
+On Wed, 10 Nov 2021, Patrick Steinhardt wrote:
 
-> [[PGP Signed Part:Undecided]]
-> While we already have a wrapper around `git_fsync()`, this wrapper
-> doesn't handle looping around `EINTR`. Convert it to do so such that
-> callers don't have to remember doing this everywhere.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  wrapper.c      | 9 ++++++++-
->  write-or-die.c | 6 ++----
->  2 files changed, 10 insertions(+), 5 deletions(-)
->
-> diff --git a/wrapper.c b/wrapper.c
-> index ece3d2ca10..e20df4f3a6 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -546,7 +546,7 @@ int xmkstemp_mode(char *filename_template, int mode)
->  	return fd;
->  }
->  
-> -int git_fsync(int fd, enum fsync_action action)
-> +static int git_fsync_once(int fd, enum fsync_action action)
->  {
->  	switch (action) {
->  	case FSYNC_WRITEOUT_ONLY:
-> @@ -591,7 +591,14 @@ int git_fsync(int fd, enum fsync_action action)
->  	default:
->  		BUG("unexpected git_fsync(%d) call", action);
->  	}
-> +}
->  
-> +int git_fsync(int fd, enum fsync_action action)
-> +{
-> +	while (git_fsync_once(fd, action) < 0)
-> +		if (errno != EINTR)
-> +			return -1;
-> +	return 0;
->  }
->  
->  static int warn_if_unremovable(const char *op, const char *file, int rc)
-> diff --git a/write-or-die.c b/write-or-die.c
-> index cc8291d979..e61220aa2d 100644
-> --- a/write-or-die.c
-> +++ b/write-or-die.c
-> @@ -57,10 +57,8 @@ void fprintf_or_die(FILE *f, const char *fmt, ...)
->  
->  void fsync_or_die(int fd, const char *msg)
->  {
-> -	while (git_fsync(fd, FSYNC_HARDWARE_FLUSH) < 0) {
-> -		if (errno != EINTR)
-> -			die_errno("fsync error on '%s'", msg);
-> -	}
-> +	if (git_fsync(fd, FSYNC_HARDWARE_FLUSH) < 0)
-> +		die_errno("fsync error on '%s'", msg);
+> This series is implements the same batching as Neeraj's series [1]. It
+> introduces a new config switch "core.fsyncRefFiles" with the same three
+> toggles "on", "off" and "batch". Given that it reuses funcitonality
+> provided by the batched object flushing this series is based on "next".
 
-Nit: While at it maybe change it to: "fsync() error syncing file '%s'"
+Excellent, I am glad that my idea was helpful.
 
-Maybe having a xgit_fsync() convenience wrapper would make subsequent
-steps easier?
+I read through the patches and found them easy to follow. Even 3/3, which
+was a bit complex because of the need to support both transacted ref
+updates as well as atomic renames/copies, is clear and well-written.
+
+FWIW you could base your patches directly on `ns/batched-fsync`, I would
+think.
+
+Thank you,
+Dscho
