@@ -2,100 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB30BC433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 18:28:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEEA9C433EF
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 18:36:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8235A60F55
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 18:28:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A31D160FC3
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 18:36:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231312AbhKJSar (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 13:30:47 -0500
-Received: from mout02.posteo.de ([185.67.36.66]:39847 "EHLO mout02.posteo.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229969AbhKJSaq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 13:30:46 -0500
-Received: from submission (posteo.de [89.146.220.130]) 
-        by mout02.posteo.de (Postfix) with ESMTPS id 58B76240103
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 19:27:57 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-        t=1636568877; bh=A+Pqg0/i/9zMehX8WvCDvxqyzwMqzQEQZj2Hxnq320Q=;
-        h=Date:From:To:Cc:Subject:From;
-        b=hj4QB7+VMB+XTVQ6Qt0eFNAMFPm+jd2nfjvJkY0eKT54V89sn2rnAxoqsFMIZhrmL
-         GgPhWoXSuOrdB9i20HNrFf6u7tX9842t6CQwbP63i2ycpMkO/cN+9hSe0hGxx74p3m
-         MM1CQ4QZ4PPryLkUlVJNsgTTt5IWWSLJzKwOT/ccOGqMyo48lKj6UHZkQrulXE6qEc
-         omP5hygof1Oye9TqeWyyUI41S/yfSpB4BmJAgGoPsrOJHdepiqvAyZfrOw8cigh1Uj
-         9bwmwO1j8Wt21CLFoBIWB2R2NR+CK5ZZ5WQKxAZ42nhx/9ku6moa3XLH/I+3E1ZOW1
-         OMUt5GalS0Yxw==
-Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 4HqCyN4j5vz6tmH;
-        Wed, 10 Nov 2021 19:27:56 +0100 (CET)
+        id S229969AbhKJSis convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 10 Nov 2021 13:38:48 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:18529 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230344AbhKJSir (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 13:38:47 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1AAIZtW7011748
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 10 Nov 2021 13:35:55 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Glen Choo'" <chooglen@google.com>, <git@vger.kernel.org>
+References: <kl6lv912uvjv.fsf@chooglen-macbookpro.roam.corp.google.com> <kl6lh7cjvpm3.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6lh7cjvpm3.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: RE: [RFC] Branches with --recurse-submodules
+Date:   Wed, 10 Nov 2021 13:35:49 -0500
+Organization: Nexbridge Inc.
+Message-ID: <000101d7d661$cbfa4fb0$63eeef10$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: quoted-printable
-Date:   Wed, 10 Nov 2021 18:27:56 +0000
-From:   andre_pohlmann@posteo.de
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: bug or a general misunderstanding
-In-Reply-To: <nycvar.QRO.7.76.6.2111101545000.21127@tvgsbejvaqbjf.bet>
-References: <0bb0056a59cda294d416762d7f8a9c47@posteo.de>
- <nycvar.QRO.7.76.6.2111101545000.21127@tvgsbejvaqbjf.bet>
-Message-ID: <3dd24fb6153cf8d67b74c6cea1a4a734@posteo.de>
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQDlN6LuBtE+8KJlFzsXRydDgnoDhAJi8ei9rc86YiA=
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Johannes,
+On November 10, 2021 1:21 PM, Glen Choo wrote:
+> I found some points that I should have given more attention to in the RFC. I'd
+> appreciate any and all feedback :)
+> 
+> Glen Choo <chooglen@google.com> writes:
+> 
+> > In a superproject-submodule relationship there is some ambiguity in
+> > what ‘checkout the branch `topic`’ should mean (does the submodule use
+> > its topic branch, or the version recorded in the superproject’s gitlink?).
+> > Our approach is to preserve existing semantics where reasonable - the
+> > ref name refers to the superproject’s ref, just as it does without
+> > --recurse-submodules.
+> 
+> Because a gitlink only contains a commit id, the submodule branch will use a
+> plain commit id as the branch point. This gives the correct ref, but it gives no
+> hints as to what the submodule branch should track.
+> 
+> The current thought process is to set up tracking using the ref name and the
+> submodule's config. Thus, a more complete description of
+> 
+>   git branch --recurse-submodules topic origin/main
+> 
+> is something like:
+> 
+> * for each repository, create the 'topic' branch where each 'topic'
+>   branch points to the version recorded in the superproject's
+>   'origin/main'
+> * for each repository, setup tracking for the 'topic' branch using the
+>   repository's own 'origin/main' as the branch point
+> 
+> Note that there is no guarantee that a submodule's 'origin/main' points to
+> the same commit as the superproject's 'origin/main', or if the submodule's
+> 'origin/main' even exists.
+> 
+> If tracking information cannot be setup, we will still create the branch; we will
+> only warn users when they run a command that requires tracking
+> information e.g. fetch or push.
+> 
+> > === Switching _from_ a branch `topic`, i.e. `git {switch,checkout}`
+> >
+> > Check `topic` if each submodule’s worktree is clean (except for
+> > gitlinks), and has one of the following checked out:
+> >
+> > * `topic`
+> > * the commit id in the superproject gitlink
+> >
+> > This allows the user to switch with a dirty worktree (with respect to
+> > the superproject). We consider this acceptable because the submodule
+> > commits are tracked by the submodule branch. This is helpful when a
+> > user needs to switch branches before they are ready to commit to the
+> > superproject.
+> 
+> Note that this is how git switch with submodules already works - users can
+> switch away from a dirty superproject worktree as long as the submodule
+> worktrees are not dirty. However, without branches, this is perilous because
+> a user could unintentionally switch away from their submodule WIP and have
+> no easy way of recovering their work.
+> 
+> The proposed UX solves this by making the WIP tracked by a branch by
+> default. If a user switches _away_ from their WIP 'topic' branch...
+> 
+> > === Switching _to_ a branch `topic`, i.e. `git {switch,checkout}
+> > topic`
+> >
+> > Switch to `topic` in the superproject. Then in each submodule, switch to:
+> >
+> > * `topic`, if it exists
+> > * Otherwise, the commit id in the superproject gitlink (and warn the
+> >   user that HEAD is detached)
+> >
+> > If the submodule `topic` points to a different commit from the
+> > superproject gitlink, this will leave the superproject with a dirty
+> > worktree with respect to the gitlinks. This allows a user to recover
+> > work if they had previously switched _away from_ "topic".
+> 
+> they can still recover their WIP state by switching _back_ to their WIP 'topic'
+> branch.
 
-Thanks for your ideas.
+While not mandatory, we use a practice as follows:
+1. Clone the superproject
+2. Update the submodules - checks out the commit referenced by the superproject and fetches all parent commits.
+3. Fetch the main branch of each submodule.
+4. If working on the submodule, use a branch, not a commit - typically off main.
+5. The branches in the submodule "keep alive" any commits not referenced by the superproject.
 
-I have checked out the respective new branch and switched between the=20
-original and the new, multiple times.
-Otherwise I would not have noticed the lack of commits.
+We see HEAD moving in the submodule based on what is referenced in the superproject, but work is not lost because of a disconnected head.
 
-I have also set up a virtual machine, free of any IDE or GIT. There I=20
-only installed Git for Windows and repeated the process via cmd. The=20
-result is the same, there are missing commits in the history compared to=20
-the original branch.
+What I could see as a possible improvement is to add the branch ref to the submodule ref file - not replacing the commit but adding to it. I do worry that there are unintended (unforeseen) side-effects that will result from this, however, including potential merge conflicts. Two people working on the same commit but different branches may mess the ref file, so not really a good idea.
 
-Best regards
-Andr=C3=A9 Pohlmann
+So far, we have not lost any commits this way and it has worked for a very long time.
 
-Am 10.11.2021 15:46 schrieb Johannes Schindelin:
-> Hi Andr=C3=A9,
->=20
-> On Wed, 10 Nov 2021, andre_pohlmann@posteo.de wrote:
->=20
->> The following situation: I wanted to create a branch from a commit.=20
->> From there
->> on the work should be continued.
->=20
-> I suspect that the command you used was `git branch <name> <commit>`?=20
-> That
-> _creates_ the branch, but does not switch to it. You need to call `git
-> switch <name>` to switch the worktree to it. If you want to do all in=20
-> one
-> go, use `git switch -c <name> <commit>`.
->=20
-> Ciao,
-> Johannes
->=20
->>=20
->> The possible bug:
->> The newly created branch is missing commits in the history. Not only=20
->> are they
->> not displayed, the code changes are not present.
->> It doesn't matter if the branch is created by Visual Studio or GIT for
->> Windows.
->> Only in a branch created by GitHub Desktop the commits are present, as=
-=20
->> I would
->> expect.
->>=20
->> Is this a bug or do I not understand how GIT works?
->>=20
->> Best regards and thank you for the effort
->> Andr=C3=A9 Pohlmann
->>=20
->>=20
+Just my musings.
+-Randall
+
