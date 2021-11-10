@@ -2,81 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D592C433EF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 17:20:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53B33C433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 18:21:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 58FD561186
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 17:20:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25C566113E
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 18:21:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230491AbhKJRXT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 12:23:19 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50618 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229602AbhKJRXS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 12:23:18 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A556AFF52C;
-        Wed, 10 Nov 2021 12:20:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UAHsWhe9NrVcTpjwMVxLBxeeVKkaVudoagOAPn
-        HtonY=; b=rLigv6JAelrqzAYddAQG+R+OcQiF/NtFAhdsMw0NcIpG4yRPhS4cFm
-        JhNrMFbyJiyhjEv5dqTxSPq985mQipoIh0YKgCqGAd65juB2kxH21Ao54ACWERIP
-        UXxaK6QrnM97sHp6lKS1/baLBaw15vzr35XX3TZQslCF0Uunrjm/0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9D47EFF52B;
-        Wed, 10 Nov 2021 12:20:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1342DFF52A;
-        Wed, 10 Nov 2021 12:20:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: jc/fix-pull-ff-only-when-already-up-to-date, was Re: What's
- cooking in git.git (Nov 2021, #03; Tue, 9)
-References: <xmqqy25wygek.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2111101402240.21127@tvgsbejvaqbjf.bet>
-Date:   Wed, 10 Nov 2021 09:20:28 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2111101402240.21127@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Wed, 10 Nov 2021 14:04:38 +0100
-        (CET)")
-Message-ID: <xmqqpmr8x6zn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8100D948-424A-11EC-A5A2-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+        id S230340AbhKJSYA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 13:24:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38490 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229759AbhKJSX7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 13:23:59 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1FBBC061764
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 10:21:11 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id x25-20020aa79199000000b0044caf0d1ba8so2459696pfa.1
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 10:21:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :content-transfer-encoding;
+        bh=1GrcciWH+bOcHe9GqSz7t4TZ0BMU47k0UVf1e4u58HU=;
+        b=TaQunplxoor+1I8NMyjRKJqDxpHu/JGwKTFiSYkoD4/uPSSGq03hnL4voNJ74s1xnF
+         BvQ0TUftBqbI5BAkaUxesCoj59Y088VNvWkoRrf+ywo2qc2lvZryQ4fDsuKb8QsvQCxr
+         OxVw+/Sgghq96sjYjJBdXUYdQzc8dAB1jUfKrn77Bwlzfdj1PvrSUZO7jRoq91w/JDL/
+         ouVOJfTC/imft4SXPmqtTxTOfsgrg2yXnJD8owjny8/+v5rvvi4kCptdsfegiTp/IoCG
+         khsA3S/Y0zS/WtVfhCopM36CrsZwE71l+8Pm3NKBcbLt/TJKqdeCjU5E4ZE8OZs8CtcK
+         RGkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:content-transfer-encoding;
+        bh=1GrcciWH+bOcHe9GqSz7t4TZ0BMU47k0UVf1e4u58HU=;
+        b=imDOYfgwS4w1EW71QTCMv7Q2SIvf4ZXG9vZMASjQV4rnHjwJUAw0IOa0m8dSDTXYm6
+         uqhRgP7/mrlhgwdUUEIXI969EbncGKjNF4JWW6Z9cUNWxTr8vSuI3YJmabWep6/sRm6o
+         F1JnDSg3C9sjeJA9jM9bNZaJrZkb9Wc8xhP4ScgjU5tMhjsc7zNOQoTsurK8rbt4qAxY
+         jG8CXKJDqRa24uVItGixCn2xysNrjJB1oM/9pfxtVR0vB0d2a0/QXUaTIn3l75kQD6E0
+         JatRM403r3fc+yz/ezLwHOpOoy8t7aBRHkizMOzvBQtK1Ovy7FW4cjlNuUhM7btSRbgT
+         3Usg==
+X-Gm-Message-State: AOAM533Ut4jgCGNOF4pK7oCnIFOhgcHDEV3AaE8uFrr8kK2VeAwMd0Vp
+        9I1E6NdadKoIw7NnybS29dzRxyQxjjotWVXn9DfnSLxBJPBWs8T7n/ls0/sC5WZNJ4SVLYniMib
+        bAPPtTiSg0zdzGjY3b8bTwjXOQQjdSY39ZwKOIzCiA6D6NYsQ3hrOaaB+jcFSQtQ=
+X-Google-Smtp-Source: ABdhPJylcL7mxdnUf/voxeXwbDeP9bHlgUQcVRfCzazkZRjZHjv1TvLiwLy1MSJqWZzL2q0aB5S7vfV1C+GVrw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a62:e406:0:b0:49f:dc1c:f3e1 with SMTP id
+ r6-20020a62e406000000b0049fdc1cf3e1mr1168753pfh.21.1636568470698; Wed, 10 Nov
+ 2021 10:21:10 -0800 (PST)
+Date:   Wed, 10 Nov 2021 10:21:08 -0800
+In-Reply-To: <kl6lv912uvjv.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-Id: <kl6lh7cjvpm3.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <kl6lv912uvjv.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [RFC] Branches with --recurse-submodules
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Tue, 9 Nov 2021, Junio C Hamano wrote:
+I found some points that I should have given more attention to in the
+RFC. I'd appreciate any and all feedback :)
+
+Glen Choo <chooglen@google.com> writes:
+
+> In a superproject-submodule relationship there is some ambiguity in what
+> =E2=80=98checkout the branch `topic`=E2=80=99 should mean (does the submo=
+dule use its
+> topic branch, or the version recorded in the superproject=E2=80=99s gitli=
+nk?).
+> Our approach is to preserve existing semantics where reasonable - the
+> ref name refers to the superproject=E2=80=99s ref, just as it does withou=
+t
+> --recurse-submodules.
+
+Because a gitlink only contains a commit id, the submodule branch will
+use a plain commit id as the branch point. This gives the correct ref,
+but it gives no hints as to what the submodule branch should track.
+
+The current thought process is to set up tracking using the ref name and
+the submodule's config. Thus, a more complete description of
+
+  git branch --recurse-submodules topic origin/main
+
+is something like:
+
+* for each repository, create the 'topic' branch where each 'topic'
+  branch points to the version recorded in the superproject's
+  'origin/main'
+* for each repository, setup tracking for the 'topic' branch using the
+  repository's own 'origin/main' as the branch point
+
+Note that there is no guarantee that a submodule's 'origin/main' points
+to the same commit as the superproject's 'origin/main', or if the
+submodule's 'origin/main' even exists.=20
+
+If tracking information cannot be setup, we will still create the
+branch; we will only warn users when they run a command that requires
+tracking information e.g. fetch or push.
+
+> =3D=3D=3D Switching _from_ a branch `topic`, i.e. `git {switch,checkout}`
 >
->> * jc/fix-pull-ff-only-when-already-up-to-date (2021-10-29) 1 commit
->>   (merged to 'next' on 2021-10-29 at ad4753e668)
->>  + pull: --ff-only should make it a noop when already-up-to-date
->>
->>  "git pull --ff-only" and "git pull --rebase --ff-only" should make
->>  it a no-op to attempt pulling from a remote that is behind us, but
->>  instead the command errored out by saying it was impossible to
->>  fast-forward, which may technically be true, but not a useful thing
->>  to diagnose as an error.  This has been corrected.
->>
->>  Will cook in 'next'.
+> Check `topic` if each submodule=E2=80=99s worktree is clean (except for
+> gitlinks), and has one of the following checked out:
 >
-> I would like to register a vote for advancing this into v2.34.0,
-> still.
+> * `topic`
+> * the commit id in the superproject gitlink
+>
+> This allows the user to switch with a dirty worktree (with respect to
+> the superproject). We consider this acceptable because the submodule
+> commits are tracked by the submodule branch. This is helpful when a user
+> needs to switch branches before they are ready to commit to the
+> superproject.
 
-I didn't recall I did it as a regression fix, but as a fix for
-relatively old change that is already in released version(s) in the
-field.  If the breakage is new between 2.33.0 and 'master', I think
-it is a good idea to merge it down.
+Note that this is how git switch with submodules already works - users
+can switch away from a dirty superproject worktree as long as the
+submodule worktrees are not dirty. However, without branches, this is
+perilous because a user could unintentionally switch away from their
+submodule WIP and have no easy way of recovering their work.
 
-Thanks.
+The proposed UX solves this by making the WIP tracked by a branch by
+default. If a user switches _away_ from their WIP 'topic' branch...
 
+> =3D=3D=3D Switching _to_ a branch `topic`, i.e. `git {switch,checkout} to=
+pic`
+>
+> Switch to `topic` in the superproject. Then in each submodule, switch to:
+>
+> * `topic`, if it exists
+> * Otherwise, the commit id in the superproject gitlink (and warn the
+>   user that HEAD is detached)
+>
+> If the submodule `topic` points to a different commit from the
+> superproject gitlink, this will leave the superproject with a dirty
+> worktree with respect to the gitlinks. This allows a user to recover
+> work if they had previously switched _away from_ "topic".
+
+they can still recover their WIP state by switching _back_ to their WIP
+'topic' branch.
