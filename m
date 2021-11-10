@@ -2,203 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CA70C433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 15:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 193DDC433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 16:20:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0967C6112F
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 15:56:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E23D561246
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 16:20:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232110AbhKJP7Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 10:59:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34130 "EHLO
+        id S229602AbhKJQXC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 11:23:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231795AbhKJP7Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 10:59:24 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59ADDC061764
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 07:56:36 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id v11so12392571edc.9
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 07:56:36 -0800 (PST)
+        with ESMTP id S229473AbhKJQXB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 11:23:01 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD988C061764
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 08:20:13 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id x15so12898703edv.1
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 08:20:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:user-agent:message-id:mime-version;
-        bh=C30YAN3bicWkFFGHHNqrz5Vd+eTxlp2d7T+xKhezoDQ=;
-        b=aayRgnzUnWDnuJzRHw/CyU7DIegQn3J/6vMk4bBokyjS4hoJ/Ws/e3I2BPXrwQWqKJ
-         abolGiDieUoUK/DmO/KnION88LRFc6pu0CpwE05vmtYlSCjVC6+PJAnDKmPgPz1QAmgf
-         edUkm0pDhCiPXlsw8G6sTSVT90aBR9Jr5Fnd9elpPMXQA6mlP9auBeimeLammzSiCj4T
-         zqcW6iFsOY9siTgGJCmF4Lq2SjbWS/sKzWc3t+4+aqTgkLGynI196IlESlCaOpvjb6WB
-         HB7MpKi/AnzrC5TZuFhtW9PhnAwpmwgGxMEPY4FdEsTf2lWCc+MCJkZar9eb0fNrn8Mc
-         dgJA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=ExY0I+mqW9altdlVDv0BcOKdo0MtI6I+7BYGGlOwvgE=;
+        b=eWZsXFIFNW0SMIxwMbxeTSddYPkdZGJ4EYpc+UHTHK0pkBQvbYICc/a5W8ZMtJMNbK
+         xX+hve7bqzZIbZOGk6xIQm4QFZQd/DdeIB10EzhMy9WqivEd2WlLughFmOadGcfl+VUk
+         yO4W6BJSXzIN9Z94Vz1dVZY8r5iU4dYVF926CDfCCSegxs1AqClX3klIcGhYMxqkKF/Z
+         FWx+puWcGc7iKciWBoexsiVhvQa6+lgbO+hBpeu9OTEbjUHHhP8aSOWSiY7z2IxHhbtj
+         rHbkbAdsGLAKoszyqT1iRZ33G1nW9xJX8/OZrIt86bhZuCOpiy5NBRdIYX8SXf+OUWDl
+         gTig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:user-agent:message-id
-         :mime-version;
-        bh=C30YAN3bicWkFFGHHNqrz5Vd+eTxlp2d7T+xKhezoDQ=;
-        b=zbshChkVwua9Ird5RWddXq54vov5YKja95s+B2EhwKuNPM9wwKpbFXheXMLtSI9Rwd
-         mdGnzKwdTo9oPgreK+8cwDSLM6kuv3o9zI+X4H26OMrnjeLf3/UgIKv2ebcO8+PvVjoR
-         XOBpKDp3atJwEoPPLvSbuzc1BYq0osCmRKBGNRF7MrSTrF9HYNyuW166XnxtFKtViJ6q
-         fX+BtquYPMMpaxpyt9LPQqVJisZ264SzPdjjyX683e4U6q9ALhChRPpG0cAAeBnCX/2n
-         3mcdggrpE+oSi0+G6hybE3PTWMe9olsmwYNYaVWWuaEMKH6Vz1mlnf9FZwzPp+zaYjLA
-         QCNg==
-X-Gm-Message-State: AOAM532eQ+6wsoDe3vUd0BTGjthdYUH7R2p0ZwK3OFOcIXIvzfGwUJ/V
-        p+z9c3tcmCtJacLy6c9J8VaY3Pbiw5pYjw==
-X-Google-Smtp-Source: ABdhPJxEDPBIND9RhjnamXHAnoOm0xd1EuxK7IQuherHuMiCM8t2PDJ58Hlexg0sMi/yncuSsNDRAw==
-X-Received: by 2002:a17:907:a414:: with SMTP id sg20mr148591ejc.183.1636559794033;
-        Wed, 10 Nov 2021 07:56:34 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=ExY0I+mqW9altdlVDv0BcOKdo0MtI6I+7BYGGlOwvgE=;
+        b=UUfRkBg7BBYBmd+zAPiKr2n6N6RNkRt2vXvEGii0IFZK++cevOGpIarffltOqPQLqT
+         D/X8trL1v72Eg20DCtKzneHQsRi6qxSqIGKhSO6lacEsp1Dgj5Meaqm4YLk1NjsytFVe
+         f3/Bes6vJ/4HX3A88h6KarhmUzt0LMu/diArmuFE1TAQLH4h72QZ9c+ewzkDlIIEi61I
+         34Ip19cpQexnXPegRl72PCnqda27GTDDsPzGccXlKiTfaQ0+s66kEM5WII3Ph3bHHs+U
+         MctpOc7V2pYXxtl5MuLIfGgV3GzpMmSFRez8DcJp9m1BTSFGMaJ8sQIcaL2K4U285/Ty
+         /MiQ==
+X-Gm-Message-State: AOAM5327r6pDV+ON+/NmLP5zfpjjCzEiUJrUHE1ggLHP1cNVVsU97k2a
+        YDdxnRygiSI9Zh+it7ieoFo=
+X-Google-Smtp-Source: ABdhPJxoWgXFerNHqbKB5LwXrlY8TovcZ56lpgRSVcsi5fFwgaYUmpm5xtmb/uciYBRuVrNDGuYa9w==
+X-Received: by 2002:a17:906:c302:: with SMTP id s2mr296129ejz.499.1636561212136;
+        Wed, 10 Nov 2021 08:20:12 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id hd15sm75155ejc.69.2021.11.10.07.56.33
+        by smtp.gmail.com with ESMTPSA id ch13sm121214edb.97.2021.11.10.08.20.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Nov 2021 07:56:33 -0800 (PST)
+        Wed, 10 Nov 2021 08:20:11 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mkpxg-0016HX-TO;
-        Wed, 10 Nov 2021 16:56:32 +0100
+        id 1mkqKY-0017uQ-Qu;
+        Wed, 10 Nov 2021 17:20:10 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Eric Wong <e@80x24.org>, Christoph Hellwig <hch@lst.de>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: RFC: A configuration design for future-proofing fsync() configuration
-Date:   Wed, 10 Nov 2021 16:09:33 +0100
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        phillip.wood@dunelm.org.uk, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Paul Smith <paul@mad-scientist.net>,
+        Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Subject: Re: [PATCH v2 3/3] Makefile: replace most hardcoded object lists
+ with $(wildcard)
+Date:   Wed, 10 Nov 2021 16:58:59 +0100
+References: <patch-1.1-bbacbed5c95-20211030T223011Z-avarab@gmail.com>
+        <cover-v2-0.3-00000000000-20211101T191231Z-avarab@gmail.com>
+        <patch-v2-3.3-cd62d8f92d1-20211101T191231Z-avarab@gmail.com>
+        <24482f96-7d87-1570-a171-95ec182f6091@gmail.com>
+        <211106.86tugpfikn.gmgdl@evledraar.gmail.com>
+        <40dbf962-2ccd-b4d6-7110-31317eb35e34@gmail.com>
+        <xmqqtugl102l.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2111101332130.21127@tvgsbejvaqbjf.bet>
+        <211110.86h7cki0uo.gmgdl@evledraar.gmail.com>
+        <nycvar.QRO.7.76.6.2111101547120.21127@tvgsbejvaqbjf.bet>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-Message-ID: <211110.86r1bogg27.gmgdl@evledraar.gmail.com>
+In-reply-to: <nycvar.QRO.7.76.6.2111101547120.21127@tvgsbejvaqbjf.bet>
+Message-ID: <211110.86mtmcgeyt.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As a follow-up to various fsync topics in-flight I've been encouraging
-those involved to come up with some way to configure fsync() in a way
-that'll make holistic sense in the end-state.
 
-Continuing a discussion from [1] currently we have:
+On Wed, Nov 10 2021, Johannes Schindelin wrote:
 
-    ; Defaults to 'false'
-    core.fsyncObjectFiles = [true|false]
+> Hi =C3=86var,
+>
+> On Wed, 10 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> If we're not OK with $(wildcard) as a pattern that would mean changing
+>> all of these to hardcoded (in some cases quite big) lists somewhere:
+>>
+>>     [...]
+>
+> No, it would only mean changing these instances if we have a concrete
+> need. I fail to see a concrete need.
+>
+> That does not mean that we should make the situation even worse by
+> converting currently hard-coded lists to wildcards. There is, once again,
+> no concrete need for that, and there is the good reason Junio brought up
+> against such a churn: it is too sloppy.
 
-In master..next this has been extended to this by Neeraj:
+I don't it's sloppy. It's just a different approach. It's also an
+approach we use now. Add a new build in and your addition in t/*.sh and
+Documentation/*.txt will be picked up & built. We just won't pick up the
+*.h or builtin/*.c implicitly.
 
-   core.fsyncObjectFiles = [true|false|batch]
+So whether we need to do this now is one thing, but saying it's a big
+change in workflow seems to be rather exaggerated.
 
-Which, as an aside I hadn't considered before and I think we need to
-change before it lands on "master", we really don't want config users
-want to enable that makes older versions hard die. It's annoying to want
-to configure a new thing and not being able to put it in .gitconfig
-because older versions die on it:
+>> [...] I think we should remove that LIB_H thing entirely.
+>
+> I think we should take a break from refactoring code where it is unclear
+> what purpose the refactoring serves.
 
-    $ git -c core.fsyncObjectFiles=batch status; echo $?
-    fatal: bad boolean config value 'batch' for 'core.fsyncobjectfiles'
-    128
+I'm not advocating ripping LIB_H out right now, and have not submitted
+any patches to do so.
 
-Then there's Eric Wong's proposed[2]:
+I'm asking you a follow-up question about your claim that LIB_H is
+needed for building from a tarball. I don't think it is, but perhaps I'm
+missing something.
 
-    core.fsync = <bool>
+It would be useful to get an answer to that for the list records, so
+that while it's fresh in your mind we can get an answer one way or the
+other.
 
-And now Patrick Steinhardt has a proposal to extend Neeraj's with[3]:
+I agree there's no a strong reason to change it now, but being able to
+do so in the future might be useful.
 
-    ; Like core.fsyncObjectFiles, but apparently for .git/refs, not
-    ; .git/objects (but see my confusion on that topic in [1])
-    core.fsyncRefFiles = [<bool>|batch]
+At that point someone will probably dig up this thread. Whether "do we
+need LIB_H for what Johannes suggested?" is a dead end or not I'll leave
+to you.
 
-I think this sort of config schema would make everyone above happy
+>> > And to be honest, even `LIB_H` and `FIND_SOURCE_FILE` would quite
+>> > potentially better be hard-coded (with a CI check to ensure that
+>> > they're up to date).
+>>
+>> That would be a bug, just because I don't build on Windows doesn't mean
+>> that I wouldn't like "make TAGS coccicheck" to find compat/win32/ at
+>> all.
+>
+> Talking about `coccicheck` in the context of the discussion whether we
+> should make sweeping changes in our Makefiles, all while we're supposedly
+> in the -rc phase, strikes me as a distant tangent of a distant tangent.
 
-It would:
+For the past few releases I think I've probably submitted more
+last-minute rc fixes than most. In my case it's mostly a matter of
+starting some builds and waiting for them to complete:
+https://xkcd.com/303/
 
- A) Be easy to extend for any future fsync behavior we'd reasonably
-    implement
- 
- B) Not make older git versions die. It's fine if they warn(), but not die.
+So yeah, I think we should focus around release time, but saying that
+any other ongoing discussion is a needless distraction seems like a
+bridge too far.
 
- C) Has some pretty contrived key names, but I'm trying to maintain the
-    constraint that you can set both fsck.X=Y and
-    e.g. fetch.fsck.X=Y. I.e. we should be able to configure things
-    globally *and* per-command, like color.*, fsck.* etc.
+That being said the reason I'm submitting these sorts of fixes now is
+directly related to making rc testing easier.
 
-Proposal:
+I test on some obnoxiously slow VMs or otherwise limited computers on
+the GCC farm. When something breaks between releases having each step of
+a bisect take 30m or 60m makes a big difference.
 
-  ; Turns on/off all fsync, whatever the method is. I.e. allows you to
-  ; never make any fsync() calls whatsoever (which we have another
-  ; in-flight topic for).
+So having a Makefile that doesn't over-build stuff is important to
+release testing.
 
-  ; The "false" was controversial, and we could just leave it
-  ; unimplemented
-  core.fsync = <bool>
-
-  ; Optional, by default we'd use the most pedantic (I'd call our
-  ; current "loose", whether we want to forward-support it is another
-  ; matter.
-  ;
-  ; Whatever names we pick an option like this should ignore (or at most
-  ; warn about) values it doesn't know about, not hard die on it.
-  ;
-  ; Here "bach" is what Neeraj and Patrick are pursuing, a hypothetical
-  ; POSIX would be a pedantic way of exhaustively fsyncing everything.
-  ; 
-  ; We'd leave door open to e.g. setting it to "linux:ext4" or whatever,
-  ; to do only the work needed on some specific popular FS
-  core.fsyncMethod = loose | POSIX | batch | linux:ext4 | NTFS | ...
-
-  ; Turn on or off entire categories of files we'd like to sync. This
-  ; way Neeraj's and Patrick's approach would be to set
-  ; core.fsyncMethod=batch, and then core.fsyncGroup=files &
-  ; core.fsyncGroup=refs.
-
-  ; If we learn about a new core.fsyncGroup = xyz in the future a <bool>
-  ; in "core.fsyncGroupDefault" will prevail. I.e. if true it's
-  ; included, if false not.
-  ;
-  ; Whether "false" or "true" is the default depends on
-  ; core.fsyncMethod. For POSIX it would be true, for "loose" it's
-  ; false.
-  core.fsyncGroup = files
-  core.fsyncGroup = refs
-  core.fsyncGroup = objects
-
-I'm not sure I like calling it "group". Maybe "class", "category"? Doing
-it with this structure is extensible to the two-level keys, as noted
-above.
-
-  ; Our existing config knob. When "false" synonymous with:
-  ;
-  ;     core.fsync = true
-  ;     core.fsyncMethod = loose
-  ;     core.fsyncGroup = pack
-  ;
-  ; When "true" synonymous with the same as the above, plus:
-  ;     core.fsyncGroup = loose
-  ;
-  : Or something like that. I.e. we'll fsync *.pack, *.bitmap etc, and ;
-  ; probably some other stuff, but not loose objects etc.
-  ;
-  ; Whatever we fsync now exactly this schema should be generic enough
-  ; to support it.
-  core.fsyncObjectFiles = <bool>
-
-  ; A namespace for core.fsyncMethod = <X>. Specific methods will
-  ; own this namespace and can configure whatever they want.
-  fsyncMethod.<x>.<a> = <b>
-
-E.g. we might have:
-
-  fsyncMethod.POSIX.content = true
-  fsyncMethod.POSIX.metadata = false
-
-If we know we'd like to (depending on other config) to fsync things
-exhaustively or not, but do different things depending on file content
-or metadata. I.e. maybe your FS's fsync() on a file fd always implies a
-sync of the metadata, and maybe not.
-
-  ; Change whatever fsync configuration you want per-command, similar to
-  ; fsck.* and fetch.fsck.*
-  transfer.fsyncGroup=*
-  fetch.fsyncGroup=*
-  ...
-
-1. https://lore.kernel.org/git/211110.86v910gi9a.gmgdl@evledraar.gmail.com/
-2. https://lore.kernel.org/git/20211028002102.19384-1-e@80x24.org/
-3. https://lore.kernel.org/git/cover.1636544377.git.ps@pks.im/
+But getting that across has been frustrating at times. I've pretty much
+stopped testing on AIX because my few-lines of patches to the Makefile
+to make that drastically easier were categorically rejected. The
+response to some other things like over-building <xyz> has been
+somewhere between "I don't see why you care, my computer is fast enough"
+and "why don't you port ccache to <90s era *nix OS that barely compiles
+Hello World without issues".
