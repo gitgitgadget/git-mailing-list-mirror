@@ -2,97 +2,277 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F091FC433EF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 09:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0F3AC433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 10:35:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D37FD6101C
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 09:39:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 92CD361168
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 10:35:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230515AbhKJJmh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 04:42:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60092 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230466AbhKJJmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 04:42:36 -0500
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AD77C061766
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 01:39:49 -0800 (PST)
-Received: by mail-qt1-x833.google.com with SMTP id t11so1564414qtw.3
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 01:39:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lnbtR69PuXwiRxEdPh+RWuUIxiB8+vSJt9/Lk7pjSME=;
-        b=iINKmb4k0ADAkTXYzE9T/bFlEzlmU4MMc+eZZQQv963JSiptGT4bi82YiUYOWkxGAo
-         uNv5NLW0ZH+obW0565OLtTqgedAOOWSbTonU+DQaBO9jDUwgIQbo89nTWvcMtR6WSJua
-         hVdOWVjGgA+RqFNO4QUB1ZW7OKrsJEAxdqcYT94jCRJ8KagPRhGKmW79G7/nRa2KwqXw
-         BtX1OaboRfUnn3COxrR5A2kvczq1qkZsCygxHsmioLXmk0pcaHUTljdTAT8mmaH3ep7J
-         /GXLb7Wef9hzmkFnRdtz9FtNPBKAPhdJJFeETuUd8j+DTL1XsSfkho6GPSA3MvSBHc79
-         WBdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lnbtR69PuXwiRxEdPh+RWuUIxiB8+vSJt9/Lk7pjSME=;
-        b=mPEMV2Fy9fliqBUUQ1zK61US9zu0/uIqBD43FNiaXe1L19UO/rvFyzaxqDG5HIsDIm
-         k4JEV0wKaaaJyC5Ee0QuDe7qz3gmJoRQoYwFc92sLYPDdJin9DvNoftnGuWxYLv8lhJh
-         j5Z2nfjgdkfrzhQPR6YjYgzsnwQVZxjMQwV9aDkOVMRWS0AgteSlmLgDM11pcDD7SA76
-         4syNAOYQs/jiI9xPXITZIfCQIDq/4tIFoy85iv7Rk5HFutf5jI3pFaj2stLp+ZeJbvsC
-         CL5nuqR4iDMUlg9VcdOUItUASCCMqxDr0DQ9mblk7SZBMyjr3UbZsGnmCiWYakDtTibe
-         HqVg==
-X-Gm-Message-State: AOAM532q/yGceGd1AmZAPQ43M+hRvrX6JKVq/Bi7j1pnFjS9Wo06YZal
-        2aSCGCGb18Z492w0SfvMq4GRMA3l0/k=
-X-Google-Smtp-Source: ABdhPJwkm4V/f4c2rDqc/isW8fbxHrTtLhHWsvF2Pe3VCBdY77+DY92UMksTC7OhQmUBdFNCm5VPOA==
-X-Received: by 2002:a05:622a:ca:: with SMTP id p10mr5981118qtw.89.1636537187904;
-        Wed, 10 Nov 2021 01:39:47 -0800 (PST)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id j8sm4373209qko.85.2021.11.10.01.39.47
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Nov 2021 01:39:47 -0800 (PST)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, gitster@pobox.com, fs@gigacodes.de,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] RelNotes: mention known crasher when ssh signing with OpenSSH 8.7
-Date:   Wed, 10 Nov 2021 01:39:12 -0800
-Message-Id: <20211110093912.4382-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.34.0.rc1.349.g8f33748433
-In-Reply-To: <YYtgD8VT/0vuIHRX@coredump.intra.peff.net>
-References: <YYtgD8VT/0vuIHRX@coredump.intra.peff.net>
+        id S231241AbhKJKie (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 05:38:34 -0500
+Received: from host.78.145.23.62.rev.coltfrance.com ([62.23.145.78]:54708 "EHLO
+        smtpservice.6wind.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S231239AbhKJKid (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 05:38:33 -0500
+Received: from localhost (dio.dev.6wind.com [10.17.1.86])
+        by smtpservice.6wind.com (Postfix) with ESMTP id 918B66001B;
+        Wed, 10 Nov 2021 11:35:44 +0100 (CET)
+From:   Robin Jarry <robin.jarry@6wind.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+        Jan Smets <jan.smets@nokia.com>,
+        Stephen Morton <stephen.morton@nokia.com>,
+        Jeff King <peff@peff.net>, Robin Jarry <robin.jarry@6wind.com>
+Subject: [RFC PATCH] receive-pack: interrupt pre-receive when client disconnects
+Date:   Wed, 10 Nov 2021 11:35:25 +0100
+Message-Id: <20211110103525.171066-1-robin.jarry@6wind.com>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <xmqqzgqd11dp.fsf@gitster.g>
+References: <xmqqzgqd11dp.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As discussed[1] earlier, make sure there are no surprises when ssh-keygen
-crashes on some users of OpenSSH 8.7 that are trying ssh signing.
+When hitting ctrl-c on the client while a remote pre-receive hook is
+running, receive-pack is not killed by SIGPIPE because the signal is
+ignored. This is a side effect of commit ec7dbd145bd8 ("receive-pack:
+allow hooks to ignore its standard input stream").
 
-[1] https://lore.kernel.org/git/xmqqsfycs21q.fsf@gitster.g/
+The pre-receive hook itself is not interrupted and does not receive any
+error since its stdout is a pipe which is read in an async thread and
+output back to the client socket in a side band channel.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+After the pre-receive has exited the SIGPIPE default handler is restored
+and if the hook did not report any error, objects are migrated from
+temporary to permanent storage.
+
+This can be confusing for most people and may even be considered a bug.
+When receive-pack cannot forward pre-receive output to the client, do
+not ignore the error and kill the hook process so that the push does not
+complete.
+
+Signed-off-by: Robin Jarry <robin.jarry@6wind.com>
 ---
- Documentation/RelNotes/2.34.0.txt | 3 +++
- 1 file changed, 3 insertions(+)
+Note that if pre-receive does not produce any output, any disconnection
+of the client will not cause the hook to be killed. This is not ideal
+but as far as I can see, there is no way to check if the client is alive
+without writing in the side band channel. Maybe by sending keepalive
+packets before cleaning up. I am not comfortable enough with git
+internals to be sure.
 
-diff --git a/Documentation/RelNotes/2.34.0.txt b/Documentation/RelNotes/2.34.0.txt
-index effab2ea4b..54dcc7240d 100644
---- a/Documentation/RelNotes/2.34.0.txt
-+++ b/Documentation/RelNotes/2.34.0.txt
-@@ -8,6 +8,9 @@ Backward compatibility notes
+ builtin/receive-pack.c | 55 ++++++++++++++++++++++++++++++++++++------
+ sideband.c             | 31 +++++++++++++++++++++---
+ sideband.h             |  4 +++
+ 3 files changed, 79 insertions(+), 11 deletions(-)
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 2f4a38adfe2c..5668b8273486 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -469,6 +469,7 @@ static int copy_to_sideband(int in, int out, void *arg)
+ {
+ 	char data[128];
+ 	int keepalive_active = 0;
++	struct child_process *proc = arg;
  
-  * The "--preserve-merges" option of "git rebase" has been removed.
+ 	if (keepalive_in_sec <= 0)
+ 		use_keepalive = KEEPALIVE_NEVER;
+@@ -494,7 +495,11 @@ static int copy_to_sideband(int in, int out, void *arg)
+ 			} else if (ret == 0) {
+ 				/* no data; send a keepalive packet */
+ 				static const char buf[] = "0005\1";
+-				write_or_die(1, buf, sizeof(buf) - 1);
++				if (proc && proc->pid > 0) {
++					if (write_in_full(1, buf, sizeof(buf) - 1) < 0)
++						goto error;
++				} else
++					write_or_die(1, buf, sizeof(buf) - 1);
+ 				continue;
+ 			} /* else there is actual data to read */
+ 		}
+@@ -512,8 +517,21 @@ static int copy_to_sideband(int in, int out, void *arg)
+ 				 * with it.
+ 				 */
+ 				keepalive_active = 1;
+-				send_sideband(1, 2, data, p - data, use_sideband);
+-				send_sideband(1, 2, p + 1, sz - (p - data + 1), use_sideband);
++				if (proc && proc->pid > 0) {
++					if (send_sideband2(1, 2, data, p - data,
++							   use_sideband) < 0)
++						goto error;
++					if (send_sideband2(1, 2, p + 1,
++							   sz - (p - data + 1),
++							   use_sideband) < 0)
++						goto error;
++				} else {
++					send_sideband(1, 2, data, p - data,
++						      use_sideband);
++					send_sideband(1, 2, p + 1,
++						      sz - (p - data + 1),
++						      use_sideband);
++				}
+ 				continue;
+ 			}
+ 		}
+@@ -522,10 +540,24 @@ static int copy_to_sideband(int in, int out, void *arg)
+ 		 * Either we're not looking for a NUL signal, or we didn't see
+ 		 * it yet; just pass along the data.
+ 		 */
+-		send_sideband(1, 2, data, sz, use_sideband);
++		if (proc && proc->pid > 0) {
++			if (send_sideband2(1, 2, data, sz, use_sideband) < 0)
++				goto error;
++		} else
++			send_sideband(1, 2, data, sz, use_sideband);
+ 	}
+ 	close(in);
+ 	return 0;
++error:
++	close(in);
++	if (proc && proc->pid > 0) {
++		/*
++		 * SIGPIPE would be more relevant but we want to make sure that
++		 * the hook does not ignore the signal.
++		 */
++		kill(proc->pid, SIGKILL);
++	}
++	return -1;
+ }
  
-+ * The upcoming ssh signing feature is broken if used together with
-+   OpenSSH 8.7, avoid using it if you cannot update to OpenSSH 8.8
-+   (or stay at 8.6)
+ static void hmac_hash(unsigned char *out,
+@@ -807,7 +839,8 @@ struct receive_hook_feed_state {
+ };
  
- UI, Workflows & Features
+ typedef int (*feed_fn)(void *, const char **, size_t *);
+-static int run_and_feed_hook(const char *hook_name, feed_fn feed,
++static int run_and_feed_hook(const char *hook_name,
++			     int isolate_sigpipe, feed_fn feed,
+ 			     struct receive_hook_feed_state *feed_state)
+ {
+ 	struct child_process proc = CHILD_PROCESS_INIT;
+@@ -843,6 +876,10 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
+ 	if (use_sideband) {
+ 		memset(&muxer, 0, sizeof(muxer));
+ 		muxer.proc = copy_to_sideband;
++		if (isolate_sigpipe)
++			muxer.data = NULL;
++		else
++			muxer.data = &proc;
+ 		muxer.in = -1;
+ 		code = start_async(&muxer);
+ 		if (code)
+@@ -923,6 +960,7 @@ static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
+ static int run_receive_hook(struct command *commands,
+ 			    const char *hook_name,
+ 			    int skip_broken,
++			    int isolate_sigpipe,
+ 			    const struct string_list *push_options)
+ {
+ 	struct receive_hook_feed_state state;
+@@ -936,7 +974,8 @@ static int run_receive_hook(struct command *commands,
+ 		return 0;
+ 	state.cmd = commands;
+ 	state.push_options = push_options;
+-	status = run_and_feed_hook(hook_name, feed_receive_hook, &state);
++	status = run_and_feed_hook(hook_name, isolate_sigpipe,
++				   feed_receive_hook, &state);
+ 	strbuf_release(&state.buf);
+ 	return status;
+ }
+@@ -1970,7 +2009,7 @@ static void execute_commands(struct command *commands,
+ 		}
+ 	}
  
+-	if (run_receive_hook(commands, "pre-receive", 0, push_options)) {
++	if (run_receive_hook(commands, "pre-receive", 0, 0, push_options)) {
+ 		for (cmd = commands; cmd; cmd = cmd->next) {
+ 			if (!cmd->error_string)
+ 				cmd->error_string = "pre-receive hook declined";
+@@ -2572,7 +2611,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		else if (report_status)
+ 			report(commands, unpack_status);
+ 		sigchain_pop(SIGPIPE);
+-		run_receive_hook(commands, "post-receive", 1,
++		run_receive_hook(commands, "post-receive", 1, 1,
+ 				 &push_options);
+ 		run_update_post_hook(commands);
+ 		string_list_clear(&push_options, 0);
+diff --git a/sideband.c b/sideband.c
+index 85bddfdcd4f5..27f8d653eb24 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -247,11 +247,25 @@ int demultiplex_sideband(const char *me, int status,
+ 	return 1;
+ }
+ 
++static int send_sideband_priv(int fd, int band, const char *data, ssize_t sz,
++			      int packet_max, int ignore_errors);
++
+ /*
+  * fd is connected to the remote side; send the sideband data
+  * over multiplexed packet stream.
+  */
+ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_max)
++{
++	(void)send_sideband_priv(fd, band, data, sz, packet_max, 1);
++}
++
++int send_sideband2(int fd, int band, const char *data, ssize_t sz, int packet_max)
++{
++	return send_sideband_priv(fd, band, data, sz, packet_max, 0);
++}
++
++static int send_sideband_priv(int fd, int band, const char *data, ssize_t sz,
++			      int packet_max, int ignore_errors)
+ {
+ 	const char *p = data;
+ 
+@@ -265,13 +279,24 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
+ 		if (0 <= band) {
+ 			xsnprintf(hdr, sizeof(hdr), "%04x", n + 5);
+ 			hdr[4] = band;
+-			write_or_die(fd, hdr, 5);
++			if (ignore_errors)
++				write_or_die(fd, hdr, 5);
++			else if (write_in_full(fd, hdr, 5) < 0)
++				return -1;
+ 		} else {
+ 			xsnprintf(hdr, sizeof(hdr), "%04x", n + 4);
+-			write_or_die(fd, hdr, 4);
++			if (ignore_errors)
++				write_or_die(fd, hdr, 4);
++			else if (write_in_full(fd, hdr, 4) < 0)
++				return -1;
+ 		}
+-		write_or_die(fd, p, n);
++		if (ignore_errors)
++			write_or_die(fd, p, n);
++		else if (write_in_full(fd, p, n) < 0)
++			return -1;
+ 		p += n;
+ 		sz -= n;
+ 	}
++
++	return 0;
+ }
+diff --git a/sideband.h b/sideband.h
+index 5a25331be55d..cb92777418e1 100644
+--- a/sideband.h
++++ b/sideband.h
+@@ -29,5 +29,9 @@ int demultiplex_sideband(const char *me, int status,
+ 			 enum sideband_type *sideband_type);
+ 
+ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_max);
++/*
++ * Do not die on write errors, return -1 instead.
++ */
++int send_sideband2(int fd, int band, const char *data, ssize_t sz, int packet_max);
+ 
+ #endif
 -- 
-2.34.0.rc1.349.g8f33748433
+2.30.2
 
