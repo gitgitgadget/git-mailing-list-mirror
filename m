@@ -2,271 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68AC3C433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 15:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CA70C433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 15:56:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4CD7661205
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 15:09:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0967C6112F
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 15:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232408AbhKJPL4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 10:11:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51662 "EHLO
+        id S232110AbhKJP7Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 10:59:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232405AbhKJPL4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 10:11:56 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 382F9C061764
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 07:09:08 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id f8so11899084edy.4
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 07:09:08 -0800 (PST)
+        with ESMTP id S231795AbhKJP7Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 10:59:24 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59ADDC061764
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 07:56:36 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id v11so12392571edc.9
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 07:56:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=xSRshixzi1AzTrTavLqw1Vb1x7hdEYXt0BZDFyWj7o4=;
-        b=oZOvYttCMiN80lmoKnnXH2DBejZiYc8wtrAUAwJWjaqBJ5/zefuKZ1gKamZ5iuThu5
-         OENM+xi3RhVTsaZm39jpMxEPK1nXm5NTeTqYMH3tgr1tBoYvxA6yUozcNlQvh72KERTB
-         fecn95LI3LuAVIBDLToEjHHdp0UjBzC5wtSgAs030sNeUugZbGl1gGMIEldEgjXPSolP
-         mL3r35PB7FtwLVxzAulw5MXTLpUZa5Dfagza7iV7DKYHPIBePKAiX0ksM18FUPbE/T24
-         COGD6lTAYwx7dOtPgCbyugYxxx/lAyIHjB2fC3gqgAbt3V4iQ0P3uZcjg7uSIcGROw4R
-         JkgA==
+        h=from:to:cc:subject:date:user-agent:message-id:mime-version;
+        bh=C30YAN3bicWkFFGHHNqrz5Vd+eTxlp2d7T+xKhezoDQ=;
+        b=aayRgnzUnWDnuJzRHw/CyU7DIegQn3J/6vMk4bBokyjS4hoJ/Ws/e3I2BPXrwQWqKJ
+         abolGiDieUoUK/DmO/KnION88LRFc6pu0CpwE05vmtYlSCjVC6+PJAnDKmPgPz1QAmgf
+         edUkm0pDhCiPXlsw8G6sTSVT90aBR9Jr5Fnd9elpPMXQA6mlP9auBeimeLammzSiCj4T
+         zqcW6iFsOY9siTgGJCmF4Lq2SjbWS/sKzWc3t+4+aqTgkLGynI196IlESlCaOpvjb6WB
+         HB7MpKi/AnzrC5TZuFhtW9PhnAwpmwgGxMEPY4FdEsTf2lWCc+MCJkZar9eb0fNrn8Mc
+         dgJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=xSRshixzi1AzTrTavLqw1Vb1x7hdEYXt0BZDFyWj7o4=;
-        b=Qa991JVOJtY9kQtLVCAOOgDJKdeqUiloLEivFW2nKjIHJ8RYuyV95uhom7CGoCtPH3
-         gDvgcKabtuPpd8gOaNhf4cPp6uNT3UG/S7fSHSln33YB9xhMrP3P+T60uRjSzTlyQSBY
-         Ry5R96Ti49hAq1Ly61hVuoNmtiECSW76IqclV1PZLO7ZAiovKlsS37hIRiCvZRyaAJer
-         5UCB7O55UhKaLC+2jLjeQu6Js+r/ZH9ZFNbSVf/SXpIGQrfwH84tLK/PDjsItM02TPVA
-         wYDyay5XiKcJ+URKa4+BoJumM6u7d3d7c6k3HNSn7Axj0sQtI6befhcp7tHFAeB7cCFP
-         t9NQ==
-X-Gm-Message-State: AOAM531tRbI59bruWAizab73uKxXds8kKSBNAz7A+psDXHGfLK7yGccR
-        3eaQ4sDcKc2X/67zjxH7eLMNA2RtvMTpsw==
-X-Google-Smtp-Source: ABdhPJwsqbCoufSclADQ/1otuOJ4o9nj3tEgOkhgz8W6P7ELLIWkB2sFfSalzbAqeSuSLiYrqzZ0tQ==
-X-Received: by 2002:a05:6402:128a:: with SMTP id w10mr346522edv.272.1636556946651;
-        Wed, 10 Nov 2021 07:09:06 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:user-agent:message-id
+         :mime-version;
+        bh=C30YAN3bicWkFFGHHNqrz5Vd+eTxlp2d7T+xKhezoDQ=;
+        b=zbshChkVwua9Ird5RWddXq54vov5YKja95s+B2EhwKuNPM9wwKpbFXheXMLtSI9Rwd
+         mdGnzKwdTo9oPgreK+8cwDSLM6kuv3o9zI+X4H26OMrnjeLf3/UgIKv2ebcO8+PvVjoR
+         XOBpKDp3atJwEoPPLvSbuzc1BYq0osCmRKBGNRF7MrSTrF9HYNyuW166XnxtFKtViJ6q
+         fX+BtquYPMMpaxpyt9LPQqVJisZ264SzPdjjyX683e4U6q9ALhChRPpG0cAAeBnCX/2n
+         3mcdggrpE+oSi0+G6hybE3PTWMe9olsmwYNYaVWWuaEMKH6Vz1mlnf9FZwzPp+zaYjLA
+         QCNg==
+X-Gm-Message-State: AOAM532eQ+6wsoDe3vUd0BTGjthdYUH7R2p0ZwK3OFOcIXIvzfGwUJ/V
+        p+z9c3tcmCtJacLy6c9J8VaY3Pbiw5pYjw==
+X-Google-Smtp-Source: ABdhPJxEDPBIND9RhjnamXHAnoOm0xd1EuxK7IQuherHuMiCM8t2PDJ58Hlexg0sMi/yncuSsNDRAw==
+X-Received: by 2002:a17:907:a414:: with SMTP id sg20mr148591ejc.183.1636559794033;
+        Wed, 10 Nov 2021 07:56:34 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id g21sm16005edw.86.2021.11.10.07.09.05
+        by smtp.gmail.com with ESMTPSA id hd15sm75155ejc.69.2021.11.10.07.56.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Nov 2021 07:09:06 -0800 (PST)
+        Wed, 10 Nov 2021 07:56:33 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mkpDl-0012yj-5z;
-        Wed, 10 Nov 2021 16:09:05 +0100
+        id 1mkpxg-0016HX-TO;
+        Wed, 10 Nov 2021 16:56:32 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+To:     git@vger.kernel.org
+Cc:     Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+        Junio C Hamano <gitster@pobox.com>,
         "Neeraj K. Singh" <neerajsi@microsoft.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH v2 3/3] refs: add configuration to enable flushing of refs
-Date:   Wed, 10 Nov 2021 15:49:02 +0100
-References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im>
- <cover.1636544377.git.ps@pks.im>
- <d9aa96913b1730f1d0c238d7d52e27c20bc55390.1636544377.git.ps@pks.im>
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Eric Wong <e@80x24.org>, Christoph Hellwig <hch@lst.de>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: RFC: A configuration design for future-proofing fsync() configuration
+Date:   Wed, 10 Nov 2021 16:09:33 +0100
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <d9aa96913b1730f1d0c238d7d52e27c20bc55390.1636544377.git.ps@pks.im>
-Message-ID: <211110.86v910gi9a.gmgdl@evledraar.gmail.com>
+Message-ID: <211110.86r1bogg27.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+As a follow-up to various fsync topics in-flight I've been encouraging
+those involved to come up with some way to configure fsync() in a way
+that'll make holistic sense in the end-state.
 
-On Wed, Nov 10 2021, Patrick Steinhardt wrote:
+Continuing a discussion from [1] currently we have:
 
-> [...]
-> Fix this by introducing a new configuration "core.fsyncRefFiles". This
-> config matches behaviour of "core.fsyncObjectFiles" in that it provides
-> three different modes:
->
->     - "off" disables calling fsync on ref files. This is the default
->       behaviour previous to this change and remains the default after
->       this change.
->
->     - "on" enables calling fsync on ref files, where each reference is
->       flushed to disk before it is being committed. This is the safest
->       setting, but may incur significant performance overhead.
->
->     - "batch" will flush the page cache of each file as it is written to
->       ensure its data is persisted. After all refs have been written,
->       the directories which host refs are flushed.
->
-> With this change in place and when "core.fsyncRefFiles" is set to either
-> "on" or "batch", this kind of corruption shouldn't happen anymore.
->
-> [1]: https://www.kernel.org/doc/Documentation/filesystems/ext4.txt
+    ; Defaults to 'false'
+    core.fsyncObjectFiles = [true|false]
 
-With the understanding that my grokking of this approach is still
-somewhere between "uh, that works?" and "wow, voodoo FS magic!". ....
+In master..next this has been extended to this by Neeraj:
 
-I haven't looked at these changes in much daiter, or Neeraj's recent
-related changes but...
+   core.fsyncObjectFiles = [true|false|batch]
 
-> +core.fsyncRefFiles::
-> +	A value indicating the level of effort Git will expend in trying to make
-> +	refs added to the repo durable in the event of an unclean system
-> +	shutdown. This setting currently only controls loose refs in the object
-> +	store, so updates to packed refs may not be equally durable. Takes the
-> +	same parameters as `core.fsyncObjectFiles`.
-> +
+Which, as an aside I hadn't considered before and I think we need to
+change before it lands on "master", we really don't want config users
+want to enable that makes older versions hard die. It's annoying to want
+to configure a new thing and not being able to put it in .gitconfig
+because older versions die on it:
 
-...my understanding of it is basically a way of going back to what Linus
-pointed out way back in aafe9fbaf4f (Add config option to enable
-'fsync()' of object files, 2008-06-18).
+    $ git -c core.fsyncObjectFiles=batch status; echo $?
+    fatal: bad boolean config value 'batch' for 'core.fsyncobjectfiles'
+    128
 
-I.e. we've got files x and y. POSIX sayeth we'd need to fsync them all
-and the directory entry, but on some FS's it would be sufficient to
-fsync() just y if they're created in that order. It'll imply an fsync of
-both x and y, is that accurate?
+Then there's Eric Wong's proposed[2]:
 
-If not you can probably discard the rest, but forging on:
+    core.fsync = <bool>
 
-Why do we then need to fsync() a "z" file in get_object_directory()
-(i.e. .git/objects) then? That's a new "z", wasn't flushing "y" enough?
+And now Patrick Steinhardt has a proposal to extend Neeraj's with[3]:
 
-Or if you've written .git/objects/x and .git/refs/y I can imagine
-wanting to create and sync a .git/z if the FS's semantics are to then
-flush all remaining updates from that tree up, but here it's
-.git/objects, not .git. That also seems to contract this above:
+    ; Like core.fsyncObjectFiles, but apparently for .git/refs, not
+    ; .git/objects (but see my confusion on that topic in [1])
+    core.fsyncRefFiles = [<bool>|batch]
 
->       ensure its data is persisted. After all refs have been written,
->       the directories which host refs are flushed.
+I think this sort of config schema would make everyone above happy
 
-I.e. that would be .git/refs (let's ignore .git/HEAD and the like for
-now), not .git/objects or .git?
+It would:
 
-And again, forging on but more generally [continued below]...
+ A) Be easy to extend for any future fsync behavior we'd reasonably
+    implement
+ 
+ B) Not make older git versions die. It's fine if they warn(), but not die.
 
-> +	if (!strcmp(var, "core.fsyncreffiles")) {
+ C) Has some pretty contrived key names, but I'm trying to maintain the
+    constraint that you can set both fsck.X=Y and
+    e.g. fetch.fsck.X=Y. I.e. we should be able to configure things
+    globally *and* per-command, like color.*, fsck.* etc.
 
-UX side: now we've got a core.fsyncRefFiles and
-core.fsyncWhateverItWasCalled in Neeraj series. Let's make sure those
-work together like say "fsck.*" and "fetch.fsck.*" do, i.e. you'd be
-able to configure this once for objects and refs, or in two variables,
-one for objects, one for refs...
+Proposal:
 
+  ; Turns on/off all fsync, whatever the method is. I.e. allows you to
+  ; never make any fsync() calls whatsoever (which we have another
+  ; in-flight topic for).
 
-> +static int sync_loose_ref(int fd)
-> +{
-> +	switch (fsync_ref_files) {
-> +	case FSYNC_REF_FILES_OFF:
-> +		return 0;
-> +	case FSYNC_REF_FILES_ON:
-> +		return git_fsync(fd, FSYNC_HARDWARE_FLUSH);
-> +	case FSYNC_REF_FILES_BATCH:
-> +		return git_fsync(fd, FSYNC_WRITEOUT_ONLY);
-> +	default:
-> +		BUG("invalid fsync mode %d", fsync_ref_files);
-> +	}
-> +}
-> +
-> +#define SYNC_LOOSE_REF_GITDIR    (1 << 0)
-> +#define SYNC_LOOSE_REF_COMMONDIR (1 << 1)
+  ; The "false" was controversial, and we could just leave it
+  ; unimplemented
+  core.fsync = <bool>
 
-nit: make this an enum and ...
+  ; Optional, by default we'd use the most pedantic (I'd call our
+  ; current "loose", whether we want to forward-support it is another
+  ; matter.
+  ;
+  ; Whatever names we pick an option like this should ignore (or at most
+  ; warn about) values it doesn't know about, not hard die on it.
+  ;
+  ; Here "bach" is what Neeraj and Patrick are pursuing, a hypothetical
+  ; POSIX would be a pedantic way of exhaustively fsyncing everything.
+  ; 
+  ; We'd leave door open to e.g. setting it to "linux:ext4" or whatever,
+  ; to do only the work needed on some specific popular FS
+  core.fsyncMethod = loose | POSIX | batch | linux:ext4 | NTFS | ...
 
-> +static int sync_loose_refs_flags(const char *refname)
-> +{
-> +	switch (ref_type(refname)) {
-> +	case REF_TYPE_PER_WORKTREE:
-> +	case REF_TYPE_PSEUDOREF:
-> +		return SYNC_LOOSE_REF_GITDIR;
-> +	case REF_TYPE_MAIN_PSEUDOREF:
-> +	case REF_TYPE_OTHER_PSEUDOREF:
-> +	case REF_TYPE_NORMAL:
-> +		return SYNC_LOOSE_REF_COMMONDIR;
-> +	default:
-> +		BUG("unknown ref type %d of ref %s",
-> +		    ref_type(refname), refname);
+  ; Turn on or off entire categories of files we'd like to sync. This
+  ; way Neeraj's and Patrick's approach would be to set
+  ; core.fsyncMethod=batch, and then core.fsyncGroup=files &
+  ; core.fsyncGroup=refs.
 
-... you won't need this default case...
+  ; If we learn about a new core.fsyncGroup = xyz in the future a <bool>
+  ; in "core.fsyncGroupDefault" will prevail. I.e. if true it's
+  ; included, if false not.
+  ;
+  ; Whether "false" or "true" is the default depends on
+  ; core.fsyncMethod. For POSIX it would be true, for "loose" it's
+  ; false.
+  core.fsyncGroup = files
+  core.fsyncGroup = refs
+  core.fsyncGroup = objects
 
-> [...]
->  /*
->   * Emit a better error message than lockfile.c's
->   * unable_to_lock_message() would in case there is a D/F conflict with
-> @@ -1502,6 +1553,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
->  	oidcpy(&lock->old_oid, &orig_oid);
->  
->  	if (write_ref_to_lockfile(lock, &orig_oid, &err) ||
-> +	    sync_loose_refs(refs, sync_loose_refs_flags(newrefname), &err) ||
->  	    commit_ref_update(refs, lock, &orig_oid, logmsg, &err)) {
->  		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
->  		strbuf_release(&err);
-> @@ -1522,6 +1574,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
->  	flag = log_all_ref_updates;
->  	log_all_ref_updates = LOG_REFS_NONE;
->  	if (write_ref_to_lockfile(lock, &orig_oid, &err) ||
-> +	    sync_loose_refs(refs, sync_loose_refs_flags(newrefname), &err) ||
->  	    commit_ref_update(refs, lock, &orig_oid, NULL, &err)) {
->  		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
->  		strbuf_release(&err);
-> @@ -1781,6 +1834,7 @@ static int write_ref_to_lockfile(struct ref_lock *lock,
->  	fd = get_lock_file_fd(&lock->lk);
->  	if (write_in_full(fd, oid_to_hex(oid), the_hash_algo->hexsz) < 0 ||
->  	    write_in_full(fd, &term, 1) < 0 ||
-> +	    sync_loose_ref(fd) < 0 ||
->  	    close_ref_gently(lock) < 0) {
->  		strbuf_addf(err,
->  			    "couldn't write '%s'", get_lock_file_path(&lock->lk));
-> @@ -2665,7 +2719,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
->  		files_downcast(ref_store, REF_STORE_WRITE,
->  			       "ref_transaction_prepare");
->  	size_t i;
-> -	int ret = 0;
-> +	int ret = 0, sync_flags = 0;
->  	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
->  	char *head_ref = NULL;
->  	int head_type;
-> @@ -2777,8 +2831,14 @@ static int files_transaction_prepare(struct ref_store *ref_store,
->  					&update->new_oid, NULL,
->  					NULL);
->  		}
-> +
-> +		sync_flags |= sync_loose_refs_flags(update->refname);
->  	}
->  
-> +	ret = sync_loose_refs(refs, sync_flags, err);
-> +	if (ret)
-> +		goto cleanup;
-> +
->  	if (packed_transaction) {
->  		if (packed_refs_lock(refs->packed_ref_store, 0, err)) {
->  			ret = TRANSACTION_GENERIC_ERROR;
+I'm not sure I like calling it "group". Maybe "class", "category"? Doing
+it with this structure is extensible to the two-level keys, as noted
+above.
 
-...[continued from above]: Again, per my potentially wrong understanding
-of syncing a "x" and "y" via an fsync of a subsequent "z" that's
-adjacent on the FS to those two.
+  ; Our existing config knob. When "false" synonymous with:
+  ;
+  ;     core.fsync = true
+  ;     core.fsyncMethod = loose
+  ;     core.fsyncGroup = pack
+  ;
+  ; When "true" synonymous with the same as the above, plus:
+  ;     core.fsyncGroup = loose
+  ;
+  : Or something like that. I.e. we'll fsync *.pack, *.bitmap etc, and ;
+  ; probably some other stuff, but not loose objects etc.
+  ;
+  ; Whatever we fsync now exactly this schema should be generic enough
+  ; to support it.
+  core.fsyncObjectFiles = <bool>
 
-Isn't this setting us up for a really bad interaction between this
-series and Neeraj's work? Well "bad" as in "bad for performance".
+  ; A namespace for core.fsyncMethod = <X>. Specific methods will
+  ; own this namespace and can configure whatever they want.
+  fsyncMethod.<x>.<a> = <b>
 
-I.e. you'll turn on "use the batch thing for objects and refs" and we'll
-do two fsyncs, one for the object update, and one for refs. The common
-case is that we'll have both in play.
+E.g. we might have:
 
-So shouldn't this go to a higher level for both so we only create a "z"
-.git/sync-it-now-please.txt or whatever once we do all pending updates
-on the .git/ directory?
+  fsyncMethod.POSIX.content = true
+  fsyncMethod.POSIX.metadata = false
 
-I can also imagine that we'd want that at an even higher level, e.g. for
-"git pull" surely we'd want it not for refs or objects, but in
-builtin/pull.c somewhere because we'll be updating the .git/index after
-we do both refs and objects, and you'd want to fsync at the very end,
-no?
+If we know we'd like to (depending on other config) to fsync things
+exhaustively or not, but do different things depending on file content
+or metadata. I.e. maybe your FS's fsync() on a file fd always implies a
+sync of the metadata, and maybe not.
 
-None of the above should mean we can't pursue a more narrow approach for
-now. I'm just:
+  ; Change whatever fsync configuration you want per-command, similar to
+  ; fsck.* and fetch.fsck.*
+  transfer.fsyncGroup=*
+  fetch.fsyncGroup=*
+  ...
 
- 1) Seeing if I understand what we're trying to do here, maybe not.
-
- 2) Encouraging you two to think about a holistic way to configure some
-    logical conclusion to this topic at large, so we won't end up with
-    core.fsyncConfigFiles, core.fsyncObjectFiles, core.fsyncIndexFile,
-    core.fsyncRefFiles, core.fsyncTheCrapRebaseWritesOutFiles etc. :)
-
-I'll send another more generic follow-up E-Mail for #2.
+1. https://lore.kernel.org/git/211110.86v910gi9a.gmgdl@evledraar.gmail.com/
+2. https://lore.kernel.org/git/20211028002102.19384-1-e@80x24.org/
+3. https://lore.kernel.org/git/cover.1636544377.git.ps@pks.im/
