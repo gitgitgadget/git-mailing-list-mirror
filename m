@@ -2,81 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 193DDC433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 16:20:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6706C433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 16:42:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E23D561246
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 16:20:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 975AD61205
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 16:42:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229602AbhKJQXC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 11:23:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39332 "EHLO
+        id S229785AbhKJQpf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 11:45:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbhKJQXB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 11:23:01 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD988C061764
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 08:20:13 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id x15so12898703edv.1
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 08:20:13 -0800 (PST)
+        with ESMTP id S229582AbhKJQpe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 11:45:34 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9C92C061764
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 08:42:46 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id o8so12942040edc.3
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 08:42:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=ExY0I+mqW9altdlVDv0BcOKdo0MtI6I+7BYGGlOwvgE=;
-        b=eWZsXFIFNW0SMIxwMbxeTSddYPkdZGJ4EYpc+UHTHK0pkBQvbYICc/a5W8ZMtJMNbK
-         xX+hve7bqzZIbZOGk6xIQm4QFZQd/DdeIB10EzhMy9WqivEd2WlLughFmOadGcfl+VUk
-         yO4W6BJSXzIN9Z94Vz1dVZY8r5iU4dYVF926CDfCCSegxs1AqClX3klIcGhYMxqkKF/Z
-         FWx+puWcGc7iKciWBoexsiVhvQa6+lgbO+hBpeu9OTEbjUHHhP8aSOWSiY7z2IxHhbtj
-         rHbkbAdsGLAKoszyqT1iRZ33G1nW9xJX8/OZrIt86bhZuCOpiy5NBRdIYX8SXf+OUWDl
-         gTig==
+        bh=4ynjAnq5i0bBXhcKQAeRqN+SC1VteiFhHvm7v6USo68=;
+        b=MuQElfapwjAhBN1hl0nZjuvczQ0fMAXBBYK0/7I0Vnx/Tu8ny+KJWh2PVeCssTUmIm
+         d58D1ESWGYzhyh+XPI9JGBFb7VL5j7HtSYzwjMBjqfaPwY+HL+VC47X9tp0ple7UHWJa
+         EYNO0PvVhcJKMirA5YfUJHI8i3oFSPSNuv6Tzf/MxyBWWLlAMtLyfApby5pHYRYIFhuA
+         bOVxHLwTZF3+oBywrnw9JarYinCxwfl7uCV5CnIioJGFaIAN/11n/chOcVyQAaCaMEQ1
+         9cVlsUI7H+U5wgGiERpskFtsd/FhwLHbbPTEosfB1FdJRugkJHpq0H+bvi/zvjXmNNaL
+         y26A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=ExY0I+mqW9altdlVDv0BcOKdo0MtI6I+7BYGGlOwvgE=;
-        b=UUfRkBg7BBYBmd+zAPiKr2n6N6RNkRt2vXvEGii0IFZK++cevOGpIarffltOqPQLqT
-         D/X8trL1v72Eg20DCtKzneHQsRi6qxSqIGKhSO6lacEsp1Dgj5Meaqm4YLk1NjsytFVe
-         f3/Bes6vJ/4HX3A88h6KarhmUzt0LMu/diArmuFE1TAQLH4h72QZ9c+ewzkDlIIEi61I
-         34Ip19cpQexnXPegRl72PCnqda27GTDDsPzGccXlKiTfaQ0+s66kEM5WII3Ph3bHHs+U
-         MctpOc7V2pYXxtl5MuLIfGgV3GzpMmSFRez8DcJp9m1BTSFGMaJ8sQIcaL2K4U285/Ty
-         /MiQ==
-X-Gm-Message-State: AOAM5327r6pDV+ON+/NmLP5zfpjjCzEiUJrUHE1ggLHP1cNVVsU97k2a
-        YDdxnRygiSI9Zh+it7ieoFo=
-X-Google-Smtp-Source: ABdhPJxoWgXFerNHqbKB5LwXrlY8TovcZ56lpgRSVcsi5fFwgaYUmpm5xtmb/uciYBRuVrNDGuYa9w==
-X-Received: by 2002:a17:906:c302:: with SMTP id s2mr296129ejz.499.1636561212136;
-        Wed, 10 Nov 2021 08:20:12 -0800 (PST)
+        bh=4ynjAnq5i0bBXhcKQAeRqN+SC1VteiFhHvm7v6USo68=;
+        b=6DBP7bc4ouQxh85jWlH/VFi/CVy+eIXAt9QqK+kitMI72QSG8gYh7IVLMs33WpBzMm
+         14CwYrbFiFbJzi2/CSPpCM/h8pRWOwip2FjeEfeBC2fD9VuCwYrb1DgwQXrZrCe6BBkY
+         0tRvustDo27SO3NnUx60uQHuacelfiU5E90jzLIQPsjd5QXFS1Ezdrf5nHreq3MLb1tc
+         9ks/JQW2Nd9Xq7hP9YRLfWfbnqyPKitGyqbIprmtKg6fuCBHLMYnd5sgNvEJTsP3DaMH
+         BoDxHfONcfMlRrQgz0db1I9M4cpNeDNYICCgfTjOXvnm0bSQKDk+8ArqJ9sESfSsvLB7
+         3LBA==
+X-Gm-Message-State: AOAM5325uCbP+z0Dfm1wI4m9Nxcw54mONjXfWmOKhSZU4ynk3rw3NcXd
+        MLkGxtoLuL5aOaZq8OpwWXsL5IC9fSJIyA==
+X-Google-Smtp-Source: ABdhPJyyYgmAEjLU0ce07rp45r7uCIjVvrSDiN/ABpDeJt719vQQtQHYVfyG8UnfFB/RZs4ZHNWCkA==
+X-Received: by 2002:a17:906:314e:: with SMTP id e14mr540648eje.165.1636562565103;
+        Wed, 10 Nov 2021 08:42:45 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ch13sm121214edb.97.2021.11.10.08.20.11
+        by smtp.gmail.com with ESMTPSA id hq33sm137678ejc.119.2021.11.10.08.42.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Nov 2021 08:20:11 -0800 (PST)
+        Wed, 10 Nov 2021 08:42:44 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mkqKY-0017uQ-Qu;
-        Wed, 10 Nov 2021 17:20:10 +0100
+        id 1mkqgN-0019Sa-QX;
+        Wed, 10 Nov 2021 17:42:43 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Paul Smith <paul@mad-scientist.net>,
-        Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Subject: Re: [PATCH v2 3/3] Makefile: replace most hardcoded object lists
- with $(wildcard)
-Date:   Wed, 10 Nov 2021 16:58:59 +0100
-References: <patch-1.1-bbacbed5c95-20211030T223011Z-avarab@gmail.com>
-        <cover-v2-0.3-00000000000-20211101T191231Z-avarab@gmail.com>
-        <patch-v2-3.3-cd62d8f92d1-20211101T191231Z-avarab@gmail.com>
-        <24482f96-7d87-1570-a171-95ec182f6091@gmail.com>
-        <211106.86tugpfikn.gmgdl@evledraar.gmail.com>
-        <40dbf962-2ccd-b4d6-7110-31317eb35e34@gmail.com>
-        <xmqqtugl102l.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2111101332130.21127@tvgsbejvaqbjf.bet>
-        <211110.86h7cki0uo.gmgdl@evledraar.gmail.com>
-        <nycvar.QRO.7.76.6.2111101547120.21127@tvgsbejvaqbjf.bet>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] maintenance tests: fix systemd v2.34.0-rc* test
+ regression
+Date:   Wed, 10 Nov 2021 17:22:09 +0100
+References: <patch-1.1-90172a8ddcc-20211102T142351Z-avarab@gmail.com>
+ <patch-v2-1.1-44f0cafa16e-20211110T035103Z-avarab@gmail.com>
+ <nycvar.QRO.7.76.6.2111101422030.21127@tvgsbejvaqbjf.bet>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <nycvar.QRO.7.76.6.2111101547120.21127@tvgsbejvaqbjf.bet>
-Message-ID: <211110.86mtmcgeyt.gmgdl@evledraar.gmail.com>
+In-reply-to: <nycvar.QRO.7.76.6.2111101422030.21127@tvgsbejvaqbjf.bet>
+Message-ID: <211110.86ilx0gdx8.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -91,85 +82,188 @@ On Wed, Nov 10 2021, Johannes Schindelin wrote:
 >
 > On Wed, 10 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >
->> If we're not OK with $(wildcard) as a pattern that would mean changing
->> all of these to hardcoded (in some cases quite big) lists somewhere:
+>> Fix tests added in b681b191f92 (maintenance: add support for systemd
+>> timers on Linux, 2021-09-04) to run successfully on systems where
+>> systemd-analyze is installed, but on which there's a discrepancy
+>> between a FILE argument of "/lib/systemd/system/basic.target" and
+>> "systemd/user/git-maintenance@.service" succeeding.
+>
+> Could you try to rephrase `there's a discrepancy between a FILE argument
+> of "/lib/systemd/system/basic.target" and
+> "systemd/user/git-maintenance@.service" succeeding` more clearly?
+
+Sure. Briefly to test if X works our prereq should test if X can work,
+not if Y can work. Will try to update it.
+
+> Also, commit messages in git.git should not assume that every reader has a
+> profound knowledge of `systemd`. The commit message needs to do a better
+> job at explaining what is broken in the first place.
+
+If I need to explain that in any detail I don't think this can go
+forward.
+
+I don't really understand systemd well enough and don't have time to do
+so before the release.
+
+This change seems to work well enough, and fixes the issue. What's
+*really* going on with systemd here, is there a better way to do this? I
+have no idea.
+
+> The CI runs pass, after all, so it is unclear that there is anything
+> broken that would need fixing to begin with.
+
+Huh? It's unclear that we've got a portability-related breakage in
+git.git because CI passes?
+
+The CI environment is a fairly monolithic environment that tests some
+very common setups. It's useful as a basic testing canary, but it's
+pretty much useless for finding out if we've got any sort of portability
+issues beyond a basic test/compile on linux/OSXWindows.
+
+E.g. we routinely break builds and/or tests on the BSDs because of some
+Linux/Windows/OSX-specific assumptions in our code. CI will catch some
+of those, but not a large category of other issues.
+
+So aside from this fix I don't think the GitHub CI can tell us much if
+anything in this regard.
+
+> [...]
+>> We also need to pipe this output to FD's 5 & 6, to avoid mixing up the
+>> trace output with our own output under "-x".
+>
+> We do not need to pipe to file descriptors 5 and 6. Other file descriptors
+> would do, either. We need to redirect away from 1 and 2, is what this
+> sentence should say.
+
+Any other wouldn't do, because this is running in the context of
+test-lib.sh, which squat on some of the others from 3..9.
+
+Yeah, I should mention that, but you can't just pick any of 3..9 here.
+
+> And the hint about `-x` suggests that even that is not true that we need
+> to redirect 1, either, just 2. And we would only need to redirect 2 with
+> shells that do not understand `BASH_XTRACEFD`. It would be best not to
+> mention `-x` at all.
+
+I'd like both stdout & stderr here, and
+=20=20=20=20
+    $ sh -c 'set -x; echo hi' >/dev/null=20
+    + echo hi
+    $ sh -c 'set -x; echo hi' 2>/dev/null
+    hi
+
+I don't think we have a way in the tests to easily hoist the "turn off
+tracing" bit that test-lib.sh itself uses in similar cases, maybe I'm
+wrong and there's some easier way to do this.
+
+>> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+>> index 74aa6384755..5fe2ea03c1d 100755
+>> --- a/t/t7900-maintenance.sh
+>> +++ b/t/t7900-maintenance.sh
+>> @@ -20,15 +20,16 @@ test_xmllint () {
+>>  	fi
+>>  }
 >>
->>     [...]
+>> -test_lazy_prereq SYSTEMD_ANALYZE '
+>> -	systemd-analyze verify /lib/systemd/system/basic.target
+>> -'
+>> -
+>>  test_systemd_analyze_verify () {
+>> -	if test_have_prereq SYSTEMD_ANALYZE
+>> -	then
+>> -		systemd-analyze verify "$@"
+>> -	fi
+>> +	# Ignoring any errors from systemd-analyze is intentional
+>> +	systemd-analyze verify "$@" >systemd.out 2>systemd.err;
 >
-> No, it would only mean changing these instances if we have a concrete
-> need. I fail to see a concrete need.
+> The semicolon is superfluous.
+
+We use it in other places as shorthand for "I mean to not have && here".
+
+> It is a bit sad that we're now doing unnecessary work when
+> `systemd-analyze` does not even exist.
+
+It's a chicken & egg problem. How do you figure out if you're able to
+run the command & get the output you expect without doing that?
+
+Moving that to a test_have_prereq would just mean running it
+twice. Unless there's some better approach here I've missed.
+
+>> +
+>> +	cat systemd.out >&5 &&
+>> +	sed -n \
+>> +		-e '/^Failed to load/d' \
 >
-> That does not mean that we should make the situation even worse by
-> converting currently hard-coded lists to wildcards. There is, once again,
-> no concrete need for that, and there is the good reason Junio brought up
-> against such a churn: it is too sloppy.
+> Lines starting with the prefix `Failed to load` are now deleted. Okay.
+> Nothing in the commit explains why we can safely ignore those messages,
+> though.
 
-I don't it's sloppy. It's just a different approach. It's also an
-approach we use now. Add a new build in and your addition in t/*.sh and
-Documentation/*.txt will be picked up & built. We just won't pick up the
-*.h or builtin/*.c implicitly.
+Quoting from it:
+=20=20=20=20
+    To do that ignore whatever exit code we get from "systemd-analyze
+    verify", and filter its stderr output to extract the sorts of lines it
+    emits on note syntax warnings and errors. We need to filter out
+    "Failed to load", which would be emitted e.g. on the
+    gcc135.fsffrance.org test box[1].
 
-So whether we need to do this now is one thing, but saying it's a big
-change in workflow seems to be rather exaggerated.
+Isn't that covered by that mention of "Failed to load"? Can you suggest
+a rewording you'd be happy with?
 
->> [...] I think we should remove that LIB_H thing entirely.
+>> +		-e '/git-maintenance@i*\.service:/x' \
 >
-> I think we should take a break from refactoring code where it is unclear
-> what purpose the refactoring serves.
+> Lines containing `git-maintenance@.service:` (or the same pattern with an
+> arbitrary number of `i`s after the `@` character???) are exchanged with
+> hold space.
+>
+> That does not look right.
 
-I'm not advocating ripping LIB_H out right now, and have not submitted
-any patches to do so.
+It'll emit @.service or @i.service. I have no idea why, yeah the regex
+is overly generous, but it doesn't hurt anything in this case (see
+below)>
 
-I'm asking you a follow-up question about your claim that LIB_H is
-needed for building from a tarball. I don't think it is, but perhaps I'm
-missing something.
+> Since this is a `sed -n` call, we would need an explicit `p` command to
+> print anything. Therefore, the current code is a pretty expensive
+> equivalent to calling `true >&6`: it succeeds, and it does not print
+> anything.
 
-It would be useful to get an answer to that for the list records, so
-that while it's fresh in your mind we can get an answer one way or the
-other.
+Yes, like the buggy "if the prereq succeeds" code it replaced.
 
-I agree there's no a strong reason to change it now, but being able to
-do so in the future might be useful.
-
-At that point someone will probably dig up this thread. Whether "do we
-need LIB_H for what Johannes suggested?" is a dead end or not I'll leave
-to you.
-
->> > And to be honest, even `LIB_H` and `FIND_SOURCE_FILE` would quite
->> > potentially better be hard-coded (with a CI check to ensure that
->> > they're up to date).
+>> +		<systemd.err >&6 &&
+>> +	rm systemd.out systemd.err
+>>  }
 >>
->> That would be a bug, just because I don't build on Windows doesn't mean
->> that I wouldn't like "make TAGS coccicheck" to find compat/win32/ at
->> all.
+>>  test_expect_success 'help text' '
+>> @@ -697,7 +698,11 @@ test_expect_success 'start and stop Linux/systemd m=
+aintenance' '
+>>  	# start registers the repo
+>>  	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+>>
+>> -	test_systemd_analyze_verify "systemd/user/git-maintenance@.service" &&
+>> +	# If we have a systemd-analyze on the system we can verify the
+>> +	# generated file.
+>> +	test_systemd_analyze_verify "systemd/user/git-maintenance@.service" 5>=
+out 6>err &&
+>> +	test_must_be_empty out &&
+>> +	test_must_be_empty err &&
 >
-> Talking about `coccicheck` in the context of the discussion whether we
-> should make sweeping changes in our Makefiles, all while we're supposedly
-> in the -rc phase, strikes me as a distant tangent of a distant tangent.
+> Since the function name has the suffix `_verify`, the verification part
+> should be _inside_ that function, not outside.
+>
+> This patch is not clear enough to tell whether it actually fixes a
+> regression worth fast-tracking into v2.34.0 or not.
 
-For the past few releases I think I've probably submitted more
-last-minute rc fixes than most. In my case it's mostly a matter of
-starting some builds and waiting for them to complete:
-https://xkcd.com/303/
+Because I really don't know. Is it broken on literally one machine in
+the world that I happened to have tested on, or more generally on the
+sorts of OS version/whatever that has that systemd? No idea.
 
-So yeah, I think we should focus around release time, but saying that
-any other ongoing discussion is a needless distraction seems like a
-bridge too far.
+But the worst we'll do here is not run a test on some obscure setup.
 
-That being said the reason I'm submitting these sorts of fixes now is
-directly related to making rc testing easier.
+Since the value of having the test is there if we just run it on some
+setups that's fine. We should lean towards over-suppressing it to not
+have "make test" in v2.34.0 fail on some platforms.
 
-I test on some obnoxiously slow VMs or otherwise limited computers on
-the GCC farm. When something breaks between releases having each step of
-a bisect take 30m or 60m makes a big difference.
-
-So having a Makefile that doesn't over-build stuff is important to
-release testing.
-
-But getting that across has been frustrating at times. I've pretty much
-stopped testing on AIX because my few-lines of patches to the Makefile
-to make that drastically easier were categorically rejected. The
-response to some other things like over-building <xyz> has been
-somewhere between "I don't see why you care, my computer is fast enough"
-and "why don't you port ccache to <90s era *nix OS that barely compiles
-Hello World without issues".
+I.e. as the commit message and the commits it links to explain we're
+really just asserting that when we change the systemd-specific code that
+we're not introducing syntax errors or whatever. So as long as this test
+runs for whoever is changing that (and they'd notice if it didn't) we're
+OK.
