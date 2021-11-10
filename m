@@ -2,163 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8789C433FE
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B135C433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 15:00:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AF61F60EDF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:47:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA38361205
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 15:00:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231731AbhKJOuW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 09:50:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46600 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231593AbhKJOuV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 09:50:21 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9376C061764
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 06:47:33 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id ee33so11511452edb.8
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 06:47:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=iCOFskeEpIu6Yc21XpP8EzQKvyubD1jsRR+OW12uMhA=;
-        b=EqPvdgfj20sHRxJrjql70D0I8z/EforYUl8pbWuhUXSpXj2B7ZOqw3g40Vzhdn5z/Y
-         9sXySI692I+e199vcMnerOKiJbE9ETh5pFwCvPpLKpx0ZWXuOkUrnnoGnBxZ3izOPiWS
-         lMUTKPVPFWMUWF1SyxLKWzki/YXS7sIXm37RzFPtt/QKbyCn3du2oIZNqHKlY6cOAc+B
-         hsAbsQjVNHOxscYdf4zsRt6P6jJxZjPE4QdGV5mNo/F1ke2x55KVTGrD30ioo2bkn2De
-         vruEsaLT75OISABpPHp4ldBgUmEgX7/rtyK1UPvLWv05ognMYES2b+zlsNafDLxCy9xI
-         rE1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=iCOFskeEpIu6Yc21XpP8EzQKvyubD1jsRR+OW12uMhA=;
-        b=yIE/f/JAvUDlH1slGJIb3STtAYiECuZvmbE5ft//ziiPgmmnxfJlx9WNHGLjLk1L7o
-         eYQt76iEX/hKUQQCDmMf+CSMKsIGWdvemQFImimt/nxwsW2GwV85sPbnmyQHhk3YDFtq
-         WVRNSskG/ND9nWMaSFp6gCq2KvW5gdco0NBn5m0ahFjp5oZJcZOQj20YhjGjIJHPhE44
-         auwU8vmscRZfDmIJvpiAKVo4HKro/0TPQNmBavDm087nEMDv8CzFLb1mxspqXHBJ3DmB
-         ztyWiz4WxXy4WHuSEof98x337mdGCyMZZlezdZTjQ2EScGURw4iVjdf5lZtZ16S7oXTp
-         gSrQ==
-X-Gm-Message-State: AOAM532TqfprRl/TmXk0yTmTkyAvzeBXRayhd+lCU3+fXycvFfXp7wJe
-        6ZTfbal1G8Al49+spHVU5LQ=
-X-Google-Smtp-Source: ABdhPJx3LSOd8c/JqmFDIIbkmRpLE9mPJsQ51kmliO9PBOcsZRiNK/Zunh6afdU0Q5+g6W1CXNUCwQ==
-X-Received: by 2002:a17:906:5641:: with SMTP id v1mr108567ejr.357.1636555652398;
-        Wed, 10 Nov 2021 06:47:32 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id dt4sm11657683ejb.27.2021.11.10.06.47.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Nov 2021 06:47:32 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mkost-0011US-G1;
-        Wed, 10 Nov 2021 15:47:31 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH v2 2/3] wrapper: provide function to sync directories
-Date:   Wed, 10 Nov 2021 15:40:24 +0100
-References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im>
- <cover.1636544377.git.ps@pks.im>
- <3ac9d4d7abd224a4c0991f1036f2d95eedb9ceac.1636544377.git.ps@pks.im>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <3ac9d4d7abd224a4c0991f1036f2d95eedb9ceac.1636544377.git.ps@pks.im>
-Message-ID: <211110.86zgqcgj98.gmgdl@evledraar.gmail.com>
+        id S232323AbhKJPCr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 10:02:47 -0500
+Received: from mout.gmx.net ([212.227.17.21]:49047 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231731AbhKJPCq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 10:02:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1636556390;
+        bh=URnjfdsuluoestkIb2ZN8rpnj0LGn7+6Xa2tL/iHV8o=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=aZffVlUXTq2EmR5uhxngyCVvtIGgS7ha85MzpeXea9nwHAfYNgJiaKRSK4k5vdaYS
+         zephiT+sndlC1v1z8MiTQB8HeO08BpLUkuPAiuUtNn4vIlRPxurgWnMT7fL9o+iReR
+         tKeMStdbj3xsfAAnLTfP5WqbddU73Up2f989/Nns=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.27.166.205] ([89.1.212.10]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKKYx-1n0Pij0fi3-00Lmnk; Wed, 10
+ Nov 2021 15:59:50 +0100
+Date:   Wed, 10 Nov 2021 15:59:47 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        phillip.wood@dunelm.org.uk, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Paul Smith <paul@mad-scientist.net>,
+        Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Subject: Re: [PATCH v2 3/3] Makefile: replace most hardcoded object lists
+ with $(wildcard)
+In-Reply-To: <211110.86h7cki0uo.gmgdl@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2111101547120.21127@tvgsbejvaqbjf.bet>
+References: <patch-1.1-bbacbed5c95-20211030T223011Z-avarab@gmail.com> <cover-v2-0.3-00000000000-20211101T191231Z-avarab@gmail.com> <patch-v2-3.3-cd62d8f92d1-20211101T191231Z-avarab@gmail.com> <24482f96-7d87-1570-a171-95ec182f6091@gmail.com>
+ <211106.86tugpfikn.gmgdl@evledraar.gmail.com> <40dbf962-2ccd-b4d6-7110-31317eb35e34@gmail.com> <xmqqtugl102l.fsf@gitster.g> <nycvar.QRO.7.76.6.2111101332130.21127@tvgsbejvaqbjf.bet> <211110.86h7cki0uo.gmgdl@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; BOUNDARY="8323328-578956016-1636555831=:21127"
+Content-ID: <nycvar.QRO.7.76.6.2111101550410.21127@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:Q2RIEpjCVUBNBCOqftNZxnmsxbhKW9UFmmylWnIt8XDs/u9qNTM
+ GXjNRHyuMBtVAIqG6Px72fPNmBb/DlGKt9/o3apAAXCmgDan1le64Hsc1sijPlk8LK7R41q
+ KqWZgPvb1OZcH01gngYKeTQgPVevaJbVMqukOh3ZwH/rx9TufaNryFpLbPuFRZeGzPKF7zY
+ t71Iln5QsvN5r2w9tSjyA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Ib99SUrrSeg=:6jCA+n7G/TzeweOQb8FdFg
+ 8t1WJtbx0kj4acSvMQVZ75xwEvaW8KWNon8gJxtzR+uiNx0wBs62/FyDT51d2dEtK8OsA1wI9
+ PnJK3ng0yQKbufqTcwhfD7V5qxkNXf+l7aIrf430mEiV50cjxXSDcnN9FAIMkxFD8NdXGmeHn
+ VoHerOVYQC6iQASh9i/YkpdGkfmtgR0b4iaIizTpnREw18ETPHjLSNiLmnopkiVUnVcqJRh0M
+ AQzpileyVD5lVG1Hc/7n9bwzSPGosx1FVtrcRPgECe+MEmRWVS5nQ1Xt7VG/hFFPW6/3DrBS6
+ TWS8t5fEWD5WjPjDRVWOhHqrLvCZEfeZfnJ1tA54nTw9qZMlu5wFtoMvtBO5uX1kh9OAF7t6J
+ 700wrQ+YEHG2JxvfYOXQhDyz+ydnlz76nbr2fcugUNbLFkXlt3s6T6CSq1umoJxlJ3H/Jr9Uf
+ izSCiMO6DcZDf4Ho+vWbTc3Os3UvloYzXBZRdpA/043DLAP1BfBkCeBFwUFADB8VZhyrMzN0Q
+ 0puMK2JVLwFxIbUKHevTXa2NmhqdxUFTITyMFYb4uGDk2Ksjv+r/V2cGXbECiLg1OBVJqIFpr
+ 45dMbaYrAmDg4ujNOFK4VEOznVsgjp8u1ZD8whxZg3RYQ4/+RQuAvpW4HDP6kGqYS9y9JnIpu
+ Tk3q4ZjmWvoPwG9Y9Zl4YFBkUD9C3bm5hFRJyT4mDgsmqzWGqy438eDgyzxUSenjVw5fDbW6f
+ 0fOamcVq/ZXZhGEQD4J+lrZ8yE3KojBzRz+sgEOqXTAHZlJ2ajNhgd1luQHJEAHcmsAEoPLP9
+ J2GkKs0xUFWt8IbE3wvk9Pj7wQ8U0lioQWhHACQZxb832uDb6G6ldVVKXYL1Jm79lmRvgTBUr
+ mVzR330CMhkLDORROPJekYXw2RmzryavI11PK58fjkZCSE1NSednxQNCMkIoSkqz67/zLqMF5
+ tVGsTFd2ZBW7OaZNDxcOlVSeZIdsvhs2HLeYHAVZAidFFXsVmJ87l0Wks+y0oiSD0spQYcZ3K
+ CPvD7ohAt6aTW1Anav7OEwFoBC/E4MrY7dBK1sfmH2Lx1sK8HTkLCohMNLLcLCD4wByM5sa65
+ dMxGLGwb9X+TNk=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, Nov 10 2021, Patrick Steinhardt wrote:
+--8323328-578956016-1636555831=:21127
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: <nycvar.QRO.7.76.6.2111101550411.21127@tvgsbejvaqbjf.bet>
 
-> [[PGP Signed Part:Undecided]]
-> In ec983eb5d2 (core.fsyncobjectfiles: batched disk flushes, 2021-10-04),
-> we have introduced batched syncing of object files. This mode works by
-> only requesting a writeback of the page cache backing the file on
-> written files, followed by a single hardware-flush via a temporary file
-> created in the directory we want to flush. Given modern journaling file
-> systems, this pattern is expected to be durable.
+Hi =C3=86var,
+
+On Wed, 10 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> If we're not OK with $(wildcard) as a pattern that would mean changing
+> all of these to hardcoded (in some cases quite big) lists somewhere:
 >
-> While it's possible to reuse the `git_fsync()` helper to synchronize the
-> page cache only, there is no helper which would allow for doing a
-> hardware flush of a directory by creating a temporary file. Other
-> callers which want to follow the same pattern would thus have to repeat
-> this logic.
+>     [...]
+
+No, it would only mean changing these instances if we have a concrete
+need. I fail to see a concrete need.
+
+That does not mean that we should make the situation even worse by
+converting currently hard-coded lists to wildcards. There is, once again,
+no concrete need for that, and there is the good reason Junio brought up
+against such a churn: it is too sloppy.
+
+> [...] I think we should remove that LIB_H thing entirely.
+
+I think we should take a break from refactoring code where it is unclear
+what purpose the refactoring serves.
+
+> > And to be honest, even `LIB_H` and `FIND_SOURCE_FILE` would quite
+> > potentially better be hard-coded (with a CI check to ensure that
+> > they're up to date).
 >
-> Extract a new helper `git_fsync_dir()` from the object files code which
-> neatly encapsulates this logic such that it can be reused.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  bulk-checkin.c    | 13 +++----------
->  git-compat-util.h |  7 +++++++
->  wrapper.c         | 21 +++++++++++++++++++++
->  3 files changed, 31 insertions(+), 10 deletions(-)
->
-> diff --git a/bulk-checkin.c b/bulk-checkin.c
-> index 4deee1af46..e6ebdd1db5 100644
-> --- a/bulk-checkin.c
-> +++ b/bulk-checkin.c
-> @@ -98,16 +98,9 @@ static void do_batch_fsync(void)
->  	 * hardware.
->  	 */
->  
-> -	if (needs_batch_fsync) {
-> -		struct strbuf temp_path = STRBUF_INIT;
-> -		struct tempfile *temp;
-> -
-> -		strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX", get_object_directory());
-> -		temp = xmks_tempfile(temp_path.buf);
-> -		fsync_or_die(get_tempfile_fd(temp), get_tempfile_path(temp));
-> -		delete_tempfile(&temp);
-> -		strbuf_release(&temp_path);
-> -	}
-> +	if (needs_batch_fsync &&
-> +	    git_fsync_dir(get_object_directory()) < 0)
-> +		die_errno("fsyncing object directory");
+> That would be a bug, just because I don't build on Windows doesn't mean
+> that I wouldn't like "make TAGS coccicheck" to find compat/win32/ at
+> all.
 
-Nit: Similar to 1/3, but this message is new: We say "fsyncing object
-directory", but it would be better to pass in some "verbose" flag to
-git_fsync_dir() so we can say e.g.:
+Talking about `coccicheck` in the context of the discussion whether we
+should make sweeping changes in our Makefiles, all while we're supposedly
+in the -rc phase, strikes me as a distant tangent of a distant tangent.
 
-    error_errno(_("couldn't create core.fsyncRefFiles=batch tempfile '%s' in '%s'"), ...)
-    error_errno(_("couldn't fsync() core.fsyncRefFiles=batch tempfile '%s' in '%s'"), ...)
+Ciao,
+Johannes
 
-I.e. being able to say specifically why we failed, permission error or
-the tempfile? fsync() didn't work etc?
-
-Looking at the underlying APIs maybe they already have a mode to "die"
-or "warn" appropriately? Or...
-
-> +int git_fsync_dir(const char *path)
-> +{
-> +	struct strbuf temp_path = STRBUF_INIT;
-> +	struct tempfile *temp;
-> +
-> +	strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX", path);
-> +
-> +	temp = mks_tempfile(temp_path.buf);
-> +	if (!temp)
-> +		return -1;
-> +
-> +	if (git_fsync(get_tempfile_fd(temp), FSYNC_HARDWARE_FLUSH) < 0)
-> +		return -1;
-
-...if they do maybe we should use their non-fatal mode, because
-with/without that these "return -1" need to be "goto cleanup" so we can
-attempt to clean up after ourselves here.
-
-I think this whole thing would be better if we generalized tmp-objdir.h
-a bit, so it could create and manage an arbitrary file in an arbitrary
-directory, and that API should really be generalized to a user of
-tempfile.c.
-
-I.e. we'd then create this file, sync it optionally, whine if it does't
-work, and be guaranteed to try to clean anything that goes wrong up
-atexit().
+--8323328-578956016-1636555831=:21127--
