@@ -2,65 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7DD1C433FE
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 11:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A665BC433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 11:41:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D278261152
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 11:41:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82EC161152
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 11:41:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231338AbhKJLoL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 06:44:11 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:35795 "EHLO
+        id S231455AbhKJLoP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 06:44:15 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:34915 "EHLO
         out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230440AbhKJLoK (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 10 Nov 2021 06:44:10 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id E8E5C5C014F;
-        Wed, 10 Nov 2021 06:41:22 -0500 (EST)
+        by vger.kernel.org with ESMTP id S231441AbhKJLoO (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 10 Nov 2021 06:44:14 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id 946B05C01F6;
+        Wed, 10 Nov 2021 06:41:26 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 10 Nov 2021 06:41:22 -0500
+  by compute5.internal (MEProxy); Wed, 10 Nov 2021 06:41:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=6WTQzSMvK+xPUV3rDpoZhrJ1O3M
-        7bH99gMwKIaED3NY=; b=CWmRUoHFDOsrlrr8NhLYuKm57ovAIao/1iABGhYjhTF
-        y5v4sZPl4/RmmmK0moyV8wwqxojtG4l3C61+T+JlR2zzyczHPCsTBLZb+cT3SC3g
-        ml9IeLpDNmL7tWt0rtTP5AlzIh1+7xAU7ClbnNYym/VNegUrOVOm1Z7Lv9Ho69Rw
-        jwklk7YWu+RKLs6FqDdvFEZkruqygL/czZbtEckARCmQns7MsqNhRn9ET+mthb/U
-        wW9VKO7lsGEVHkwg01CGuILthYezLmCKBU/d0z3OWqdwcyIgCIUndxFXcoyENUcz
-        2VMdpRjxvs8xlwb8is1l4BWWeshUXv+xEa+f510i/bg==
+        :content-type:in-reply-to; s=fm2; bh=vLnUgeSoTGuUePgu5o/SjOJAMTm
+        SUgNbIeT6STEMCOw=; b=GYUKsxe4ca4iTQZHfay0sz0UXHLDjI6AFjE6j2hC6TB
+        aaDZ0busr6jUr1Jzecb/Wav+OxI6jmMT1aK7lVSeBLcxWw2H+VHaMYlOGOkakCX/
+        mkNV5yVNSBOkPcsmgf6M04hcOT+uFJMBuGygrTS2VZO3TDqHJOmKp6+vUeoYiK38
+        AHyjo1Hv0EKc0wsb1hdYVcjgl6oUKxJICMEb3/wY7clH4K+pE4evvgEBuJ3xO89c
+        aC9lPQKDa3zSwz/+xH+DUcgTsyYm4zJ575+4fZ8TTDiSQ3FgruYinfIGn+6bAtBT
+        +HmrpJiMd/JcaFCNdsk/WgZCslsFk+wLa+Zd1OHoQ6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=6WTQzS
-        MvK+xPUV3rDpoZhrJ1O3M7bH99gMwKIaED3NY=; b=UB4HJ+ehXwdTkr89MxW9oV
-        lmxfA4ElLDHhBhQXQqdZXowUYyDVNW89/ztIfT09aruuYi8tSmA6CqQYrLpHxY+A
-        BlOgZ53A9tSypnzIHQp4qn2t4gNHxm0Ar3d3IwSojojXB9woGaV72VmU4A9CO/He
-        QpHU0Q5K0/1GRhraRAwJCycLh1s7+vNTOcYYQ+zamWbhQrjXsf3O27W2R1ZY2PQg
-        4RUh0zuU9FrnsxbCmTWL1lAWvAVfLGefIdn1qwM15SbzaweyRN+hY4QoHKrKHAZ5
-        AloA7w4VchA3nrx1Kwufxm5zbpyw1zlXnaCgsatUqdVIKY1ovTCSF4ftxVHL/wcw
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=vLnUge
+        SoTGuUePgu5o/SjOJAMTmSUgNbIeT6STEMCOw=; b=JngnjlMHMy5QGrISK5VWAK
+        7WSnZKkJ5E8mczpr65SOnFI2PJOmvsWDutkhvWtdn6lzJNbayUA887aYjv34hB7d
+        fR9KtYWPQriadnNAkuSrueAG65gRS9QFPjayYxjZA2296PB6UFVjVk3hSp+mtKJm
+        tlQC3xvGmhiK0393lNTix1w3cUGpEgdZYy8WXHnE6IAhLZLt5Q73MoZcNLJOe1Ud
+        Dup8CKzUsWhsFN0N9gVKOSWwvPngll5BB2asGJmFrwGits3rcVkILgLnG2chY60U
+        ShNHW6dpVs4bH4WV6/09NzmT2rsHL3IBklCIoImwkZzhJLtXfikTy5p+REOq0Jcg
         ==
-X-ME-Sender: <xms:4q-LYVFuaawJymV-PI8BL6Ps1OYotEm3m4lpLWh0l2QD3PsQC3fMXw>
-    <xme:4q-LYaXaolo6FZIkXd-oR2Cr-aMMfwT-WUE8MlVw9iyJIbWExGlHGLc9O_SsLXrtn
-    Eq3t6xhpGMZbBg9UA>
-X-ME-Received: <xmr:4q-LYXKuQ4VSjhB48EFgAGXxO3FDEuySPu-VeW30Pg5sHxrU__yWUL-pTIF7aLGLqeGe5vW_thL85MoSup8m6FHjaPw-kCe4Ky9l4sox6MtKAEd9R1d_Qg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudejgdeftdcutefuodetggdotefrodftvf
+X-ME-Sender: <xms:5q-LYSvQGz5JW4e2zRLtpGFbzsA6JnWk-5J9SyltSnOFlT2cANB6RQ>
+    <xme:5q-LYXdgeOi-YBiSxlkr2GOnI0xOZgTSRVuf6vANgwWLm0tA4Ax6Bso-lfRR-JzRi
+    3V9zsCgnsHDDSa-gw>
+X-ME-Received: <xmr:5q-LYdxUADk_ZoDXIWQMZcQ4ANi3POMuHdV6oy0I8cX0Ck93aOrI2Env_cLAkOClx4YiEf95g_cPcpUFTeqU2IjcRo1CZgKI0pSS5A-xucR0Iko_ojDzMw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudejgddvlecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimh
-X-ME-Proxy: <xmx:4q-LYbEeh34rUC550-7EGWXFGoCiQc7todw1R3QGHi3d76u2U1zfLA>
-    <xmx:4q-LYbXbikrvJLKR5LxOGuMN3l1pUVQIXdrRfTW1JGhc_k0zy-3ZyQ>
-    <xmx:4q-LYWPGRoAypcTl_uTkhhjYdkaOx4JHGZq2HEKf4tFbmqS8BbHHHw>
-    <xmx:4q-LYRchHGlLbJOoUkpCC5I59KsY9YR87sU9ECwliiDAJiLQWQrDUA>
+    epiedvjeefheeiteekgeejveefffdtvedvudfgvdeuheeffeejfeetudeutdefgfegnecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:5q-LYdM1FdmhFWQpg5a-5-h0_w61ygEXwInBW3rkf7syVY7F5Q4_UA>
+    <xmx:5q-LYS9BK1HNZIVPjQHEufOC6HCtPaPzbjAj8j48rV42jNwJ3TVfrg>
+    <xmx:5q-LYVWXNcbKtQK3Xlo-mMg382Im0C2iOVGknTOT2fZ8Yja9QZEIAA>
+    <xmx:5q-LYZkuirALibvJsqf9Wjj8e7Eur82Wll2qoS_haM58nqzlFeVwLA>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Nov 2021 06:41:21 -0500 (EST)
+ 10 Nov 2021 06:41:25 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 723f5b5f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 10 Nov 2021 13:26:32 +0000 (UTC)
-Date:   Wed, 10 Nov 2021 12:40:59 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id c351727d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 10 Nov 2021 13:26:36 +0000 (UTC)
+Date:   Wed, 10 Nov 2021 12:41:03 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
@@ -68,13 +68,13 @@ Cc:     Jeff King <peff@peff.net>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
         "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: [PATCH v2 2/3] wrapper: provide function to sync directories
-Message-ID: <3ac9d4d7abd224a4c0991f1036f2d95eedb9ceac.1636544377.git.ps@pks.im>
+Subject: [PATCH v2 3/3] refs: add configuration to enable flushing of refs
+Message-ID: <d9aa96913b1730f1d0c238d7d52e27c20bc55390.1636544377.git.ps@pks.im>
 References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im>
  <cover.1636544377.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="lvPV2hy4tZECEMyd"
+        protocol="application/pgp-signature"; boundary="hPa9ID0fcD8QfilT"
 Content-Disposition: inline
 In-Reply-To: <cover.1636544377.git.ps@pks.im>
 Precedence: bulk
@@ -82,140 +82,281 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---lvPV2hy4tZECEMyd
+--hPa9ID0fcD8QfilT
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In ec983eb5d2 (core.fsyncobjectfiles: batched disk flushes, 2021-10-04),
-we have introduced batched syncing of object files. This mode works by
-only requesting a writeback of the page cache backing the file on
-written files, followed by a single hardware-flush via a temporary file
-created in the directory we want to flush. Given modern journaling file
-systems, this pattern is expected to be durable.
+When writing loose refs, we first create a lockfile, write the new ref
+into that lockfile, close it and then rename the lockfile into place
+such that the actual update is atomic for that single ref. While this
+works as intended under normal circumstences, at GitLab we infrequently
+encounter corrupt loose refs in repositories after a machine encountered
+a hard reset. The corruption is always of the same type: the ref has
+been committed into place, but it is completely empty.
 
-While it's possible to reuse the `git_fsync()` helper to synchronize the
-page cache only, there is no helper which would allow for doing a
-hardware flush of a directory by creating a temporary file. Other
-callers which want to follow the same pattern would thus have to repeat
-this logic.
+The root cause of this is likely that we don't sync contents of the
+lockfile to disk before renaming it into place. As a result, it's not
+guaranteed that the contents are properly persisted and one may observe
+weird in-between states on hard resets. Quoting ext4 documentation [1]:
 
-Extract a new helper `git_fsync_dir()` from the object files code which
-neatly encapsulates this logic such that it can be reused.
+    Many broken applications don't use fsync() when replacing existing
+    files via patterns such as fd =3D
+    open("foo.new")/write(fd,..)/close(fd)/ rename("foo.new", "foo"), or
+    worse yet, fd =3D open("foo", O_TRUNC)/write(fd,..)/close(fd). If
+    auto_da_alloc is enabled, ext4 will detect the replace-via-rename
+    and replace-via-truncate patterns and force that any delayed
+    allocation blocks are allocated such that at the next journal
+    commit, in the default data=3Dordered mode, the data blocks of the new
+    file are forced to disk before the rename() operation is committed.
+    This provides roughly the same level of guarantees as ext3, and
+    avoids the "zero-length" problem that can happen when a system
+    crashes before the delayed allocation blocks are forced to disk.
+
+This explicitly points out that one must call fsync(3P) before doing the
+rename(3P) call, or otherwise data may not be correctly persisted to
+disk.
+
+Fix this by introducing a new configuration "core.fsyncRefFiles". This
+config matches behaviour of "core.fsyncObjectFiles" in that it provides
+three different modes:
+
+    - "off" disables calling fsync on ref files. This is the default
+      behaviour previous to this change and remains the default after
+      this change.
+
+    - "on" enables calling fsync on ref files, where each reference is
+      flushed to disk before it is being committed. This is the safest
+      setting, but may incur significant performance overhead.
+
+    - "batch" will flush the page cache of each file as it is written to
+      ensure its data is persisted. After all refs have been written,
+      the directories which host refs are flushed.
+
+With this change in place and when "core.fsyncRefFiles" is set to either
+"on" or "batch", this kind of corruption shouldn't happen anymore.
+
+[1]: https://www.kernel.org/doc/Documentation/filesystems/ext4.txt
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bulk-checkin.c    | 13 +++----------
- git-compat-util.h |  7 +++++++
- wrapper.c         | 21 +++++++++++++++++++++
- 3 files changed, 31 insertions(+), 10 deletions(-)
+ Documentation/config/core.txt |  7 ++++
+ cache.h                       |  7 ++++
+ config.c                      | 10 ++++++
+ environment.c                 |  1 +
+ refs/files-backend.c          | 62 ++++++++++++++++++++++++++++++++++-
+ 5 files changed, 86 insertions(+), 1 deletion(-)
 
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 4deee1af46..e6ebdd1db5 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -98,16 +98,9 @@ static void do_batch_fsync(void)
- 	 * hardware.
- 	 */
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index 200b4d9f06..e2fd0d8c90 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -572,6 +572,13 @@ core.fsyncObjectFiles::
+   stored on HFS+ or APFS filesystems and on Windows for repos stored on NT=
+FS or
+   ReFS.
 =20
--	if (needs_batch_fsync) {
--		struct strbuf temp_path =3D STRBUF_INIT;
--		struct tempfile *temp;
--
--		strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX", get_object_directory());
--		temp =3D xmks_tempfile(temp_path.buf);
--		fsync_or_die(get_tempfile_fd(temp), get_tempfile_path(temp));
--		delete_tempfile(&temp);
--		strbuf_release(&temp_path);
--	}
-+	if (needs_batch_fsync &&
-+	    git_fsync_dir(get_object_directory()) < 0)
-+		die_errno("fsyncing object directory");
-=20
- 	if (bulk_fsync_objdir)
- 		tmp_objdir_migrate(bulk_fsync_objdir);
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 97f97178e7..f890bd07fd 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1221,6 +1221,13 @@ enum fsync_action {
-=20
- int git_fsync(int fd, enum fsync_action action);
-=20
-+/*
-+ * Issue a full hardware flush against a temporary file in the given direc=
-tory
-+ * to ensure that all files inside that directory are durable before any r=
-enames
-+ * occur.
-+ */
-+int git_fsync_dir(const char *path);
++core.fsyncRefFiles::
++	A value indicating the level of effort Git will expend in trying to make
++	refs added to the repo durable in the event of an unclean system
++	shutdown. This setting currently only controls loose refs in the object
++	store, so updates to packed refs may not be equally durable. Takes the
++	same parameters as `core.fsyncObjectFiles`.
 +
- /*
-  * Preserves errno, prints a message, but gives no warning for ENOENT.
-  * Returns 0 on success, which includes trying to unlink an object that do=
-es
-diff --git a/wrapper.c b/wrapper.c
-index e20df4f3a6..6c6cc8b74f 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -3,6 +3,7 @@
-  */
- #include "cache.h"
- #include "config.h"
-+#include "tempfile.h"
+ core.preloadIndex::
+ 	Enable parallel index preload for operations like 'git diff'
+ +
+diff --git a/cache.h b/cache.h
+index 6d6e6770ec..14c8fab6b4 100644
+--- a/cache.h
++++ b/cache.h
+@@ -991,7 +991,14 @@ enum fsync_object_files_mode {
+     FSYNC_OBJECT_FILES_BATCH
+ };
 =20
- static int memory_limit_check(size_t size, int gentle)
- {
-@@ -601,6 +602,26 @@ int git_fsync(int fd, enum fsync_action action)
- 	return 0;
- }
++enum fsync_ref_files_mode {
++    FSYNC_REF_FILES_OFF,
++    FSYNC_REF_FILES_ON,
++    FSYNC_REF_FILES_BATCH
++};
++
+ extern enum fsync_object_files_mode fsync_object_files;
++extern enum fsync_ref_files_mode fsync_ref_files;
+ extern int core_preload_index;
+ extern int precomposed_unicode;
+ extern int protect_hfs;
+diff --git a/config.c b/config.c
+index 5eb36ecd77..4cbad5a29d 100644
+--- a/config.c
++++ b/config.c
+@@ -1500,6 +1500,16 @@ static int git_default_core_config(const char *var, =
+const char *value, void *cb)
+ 		return 0;
+ 	}
 =20
-+int git_fsync_dir(const char *path)
++	if (!strcmp(var, "core.fsyncreffiles")) {
++		if (value && !strcmp(value, "batch"))
++			fsync_ref_files =3D FSYNC_REF_FILES_BATCH;
++		else if (git_config_bool(var, value))
++			fsync_ref_files =3D FSYNC_REF_FILES_ON;
++		else
++			fsync_ref_files =3D FSYNC_REF_FILES_OFF;
++		return 0;
++	}
++
+ 	if (!strcmp(var, "core.preloadindex")) {
+ 		core_preload_index =3D git_config_bool(var, value);
+ 		return 0;
+diff --git a/environment.c b/environment.c
+index aeafe80235..1514ac9384 100644
+--- a/environment.c
++++ b/environment.c
+@@ -43,6 +43,7 @@ const char *git_hooks_path;
+ int zlib_compression_level =3D Z_BEST_SPEED;
+ int pack_compression_level =3D Z_DEFAULT_COMPRESSION;
+ enum fsync_object_files_mode fsync_object_files;
++enum fsync_ref_files_mode fsync_ref_files;
+ size_t packed_git_window_size =3D DEFAULT_PACKED_GIT_WINDOW_SIZE;
+ size_t packed_git_limit =3D DEFAULT_PACKED_GIT_LIMIT;
+ size_t delta_base_cache_limit =3D 96 * 1024 * 1024;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 4b14f30d48..31d7456266 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1360,6 +1360,57 @@ static int commit_ref_update(struct files_ref_store =
+*refs,
+ 			     const struct object_id *oid, const char *logmsg,
+ 			     struct strbuf *err);
+=20
++static int sync_loose_ref(int fd)
 +{
-+	struct strbuf temp_path =3D STRBUF_INIT;
-+	struct tempfile *temp;
++	switch (fsync_ref_files) {
++	case FSYNC_REF_FILES_OFF:
++		return 0;
++	case FSYNC_REF_FILES_ON:
++		return git_fsync(fd, FSYNC_HARDWARE_FLUSH);
++	case FSYNC_REF_FILES_BATCH:
++		return git_fsync(fd, FSYNC_WRITEOUT_ONLY);
++	default:
++		BUG("invalid fsync mode %d", fsync_ref_files);
++	}
++}
 +
-+	strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX", path);
++#define SYNC_LOOSE_REF_GITDIR    (1 << 0)
++#define SYNC_LOOSE_REF_COMMONDIR (1 << 1)
 +
-+	temp =3D mks_tempfile(temp_path.buf);
-+	if (!temp)
++static int sync_loose_refs_flags(const char *refname)
++{
++	switch (ref_type(refname)) {
++	case REF_TYPE_PER_WORKTREE:
++	case REF_TYPE_PSEUDOREF:
++		return SYNC_LOOSE_REF_GITDIR;
++	case REF_TYPE_MAIN_PSEUDOREF:
++	case REF_TYPE_OTHER_PSEUDOREF:
++	case REF_TYPE_NORMAL:
++		return SYNC_LOOSE_REF_COMMONDIR;
++	default:
++		BUG("unknown ref type %d of ref %s",
++		    ref_type(refname), refname);
++	}
++}
++
++static int sync_loose_refs(struct files_ref_store *refs,
++			   int flags,
++			   struct strbuf *err)
++{
++	if (fsync_ref_files !=3D FSYNC_REF_FILES_BATCH)
++		return 0;
++
++	if ((flags & SYNC_LOOSE_REF_GITDIR) &&
++	    git_fsync_dir(refs->base.gitdir) < 0)
 +		return -1;
 +
-+	if (git_fsync(get_tempfile_fd(temp), FSYNC_HARDWARE_FLUSH) < 0)
++	if ((flags & SYNC_LOOSE_REF_COMMONDIR) &&
++	    git_fsync_dir(refs->gitcommondir) < 0)
 +		return -1;
-+
-+	delete_tempfile(&temp);
-+	strbuf_release(&temp_path);
 +
 +	return 0;
 +}
 +
- static int warn_if_unremovable(const char *op, const char *file, int rc)
- {
- 	int err;
+ /*
+  * Emit a better error message than lockfile.c's
+  * unable_to_lock_message() would in case there is a D/F conflict with
+@@ -1502,6 +1553,7 @@ static int files_copy_or_rename_ref(struct ref_store =
+*ref_store,
+ 	oidcpy(&lock->old_oid, &orig_oid);
+=20
+ 	if (write_ref_to_lockfile(lock, &orig_oid, &err) ||
++	    sync_loose_refs(refs, sync_loose_refs_flags(newrefname), &err) ||
+ 	    commit_ref_update(refs, lock, &orig_oid, logmsg, &err)) {
+ 		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
+ 		strbuf_release(&err);
+@@ -1522,6 +1574,7 @@ static int files_copy_or_rename_ref(struct ref_store =
+*ref_store,
+ 	flag =3D log_all_ref_updates;
+ 	log_all_ref_updates =3D LOG_REFS_NONE;
+ 	if (write_ref_to_lockfile(lock, &orig_oid, &err) ||
++	    sync_loose_refs(refs, sync_loose_refs_flags(newrefname), &err) ||
+ 	    commit_ref_update(refs, lock, &orig_oid, NULL, &err)) {
+ 		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
+ 		strbuf_release(&err);
+@@ -1781,6 +1834,7 @@ static int write_ref_to_lockfile(struct ref_lock *loc=
+k,
+ 	fd =3D get_lock_file_fd(&lock->lk);
+ 	if (write_in_full(fd, oid_to_hex(oid), the_hash_algo->hexsz) < 0 ||
+ 	    write_in_full(fd, &term, 1) < 0 ||
++	    sync_loose_ref(fd) < 0 ||
+ 	    close_ref_gently(lock) < 0) {
+ 		strbuf_addf(err,
+ 			    "couldn't write '%s'", get_lock_file_path(&lock->lk));
+@@ -2665,7 +2719,7 @@ static int files_transaction_prepare(struct ref_store=
+ *ref_store,
+ 		files_downcast(ref_store, REF_STORE_WRITE,
+ 			       "ref_transaction_prepare");
+ 	size_t i;
+-	int ret =3D 0;
++	int ret =3D 0, sync_flags =3D 0;
+ 	struct string_list affected_refnames =3D STRING_LIST_INIT_NODUP;
+ 	char *head_ref =3D NULL;
+ 	int head_type;
+@@ -2777,8 +2831,14 @@ static int files_transaction_prepare(struct ref_stor=
+e *ref_store,
+ 					&update->new_oid, NULL,
+ 					NULL);
+ 		}
++
++		sync_flags |=3D sync_loose_refs_flags(update->refname);
+ 	}
+=20
++	ret =3D sync_loose_refs(refs, sync_flags, err);
++	if (ret)
++		goto cleanup;
++
+ 	if (packed_transaction) {
+ 		if (packed_refs_lock(refs->packed_ref_store, 0, err)) {
+ 			ret =3D TRANSACTION_GENERIC_ERROR;
 --=20
 2.33.1
 
 
---lvPV2hy4tZECEMyd
+--hPa9ID0fcD8QfilT
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmGLr8oACgkQVbJhu7ck
-PpQX+A//d+A3wvOgdLDsUFb3IB74PUZy3aWFd2ZANC1ZbwUED1mxMJXEFGHvGLGi
-FoBv0IWqNBMctwJLycSMrgSE/GEEl7QCFlX9yWrMeCMUSiIteE/MaC2QHZ+hTaih
-N089DtdmPWCC+A6bjYaifb5VUPNGj3fUrt9abfb5l+/mW96m7Q+d7fz8zDUXhMze
-65iruA7eGNgo7BjSGxjTZEWrabQEHqMtx98iWwn/ECy2C13dUAc9R2DNGXWdWfgp
-/Oezm6pcG0DJeZZVmWVR/vRt55C9Z97d+rpZpYUp8cGaeay/UtKYgmLEs7+QJ+GL
-78kzAOOINmQNzXPm7aALI+mE29PzGkJ7Gl1EmOKuNggePkdXfATiPia1g0hoqZm5
-pGsE7SR1DI+tVLsIH3KzGeu++Fb9uT9E5L2+JYiBTLHXPC4fYHf7E3/TRF9/6dlD
-eoFWtPqeAAHY3mmxTWPFIr+FuRvqvF5SN7qUA2635scTbhgBfryyqkaQkstbP+Zp
-OABWKGiDw7g4Usn4WVrUKcfP9bEEuslq5g7quS+WSRjXp21V5iweeOSvufu10Jz8
-+b0h2rrG1FaqhRev0M7cvQFf7NRBMv7TSxKRJ4qDTa+X98AJz8Rb+unfU5WAsh4P
-k8eSw4HjW5NfZTLRvp99WmRVKyUUwufiXjpRNY2cspGc/3DAJjU=
-=tWD3
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmGLr84ACgkQVbJhu7ck
+PpRaoQ/+K9hhRZh0FGBsC/SDwlFWyjllXsSHsOXnHACLzQkym6rcTrDnnIefMI7e
+NFS92Kty+uTP8WM++2i+kr4SMfmUugvc+19r288XY1s1arxjYMIAVveZ3JT98mxZ
+WI1Bo65+gQVHk2yiTedDtMGMOT2epAQiina2t+CIVprCM0fD/zdo2rQVOddbN72y
+DwIMInEU0TERZNXNVyPd58hwg0HCXXPrpym0ZxR2eJdhdz14a0uteyHRKmxeySIf
+TlVk+o+6cPRoZbQoG/mOeLYgGFftyoBsKVbgO0LJDd7JPIYX0ooC7BosmOyUGUk+
+qhlKf7OhaCf+XJUl4TQNuu6Kkv6CUaYFmKa0RcI1UHSt9N//t1I06Swwd/4Z6xvo
+k74ZcEMwM0KXBViB3uudXFAXM8K1++jweLvhLeclqrLTpzrSHg91sbapjXotbnfW
+arcsLSFJWXu59LET2rhUYSMW/cD7Xy+ysZ74Ur5WeGtSZhQheYZYMUdclM61iLhM
+cAdfS6BJ7Mj6VMV2jmm+WxZrD6pce8WInQlUVDEdRZ1deYjtVGwNMn/38DIo2EUf
+yt1G+a1QbLJHSDvzSrph32dY3dz11iOAWi5n8cPBZR/QT6sF42UqVeGGXZxWgWlL
+yz6cWFhfKFnLsGOCS2lzbyDqHbfP2SeheHWJ89/I1c/87HcFmHg=
+=rFbU
 -----END PGP SIGNATURE-----
 
---lvPV2hy4tZECEMyd--
+--hPa9ID0fcD8QfilT--
