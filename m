@@ -2,112 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3380DC433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 06:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 410A0C433EF
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 08:11:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 05AC96117A
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 06:41:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1DEC261052
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 08:11:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230175AbhKJGoV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 01:44:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48238 "EHLO
+        id S230006AbhKJIOM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 03:14:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230037AbhKJGoU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 01:44:20 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DD92C061764
-        for <git@vger.kernel.org>; Tue,  9 Nov 2021 22:41:33 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id o4-20020a1c7504000000b0032cab7473caso2913920wmc.1
-        for <git@vger.kernel.org>; Tue, 09 Nov 2021 22:41:33 -0800 (PST)
+        with ESMTP id S230022AbhKJIOL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 03:14:11 -0500
+Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F9E7C061764
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 00:11:24 -0800 (PST)
+Received: by mail-ua1-x92d.google.com with SMTP id b3so3152554uam.1
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 00:11:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=4Sys+KTMixKS9ssomEfp+R6IfRM5QWgVs/e9nYdI6aw=;
-        b=TfXroR05mPOQCLSnPv1T2bVJb4XAJzboq6rwvZwkGOdqtm8lcQQLyiT27ykIa+e5zW
-         gXBsAN8MYvDB/rwlnerK4Xgw1pSNqFImoYNEkNQEA43IsyFy/9fzPY3Kh1gXL5aLq44K
-         kIbtWck7h4D0yxHkwGppLL3p9h83miHYhwFCU3q7yXZt+jeSU7FyRnrK3YQOYnns5dnU
-         nNmvCpJ1zxsb6ytm99TUbZY8IUIUYSUgSkIIm4/DqwpHoYq/wjOwi4wsoBY70mR7psYo
-         NmIZjmT6+ZWARsVp/TYOQfIf11ATR/VwtMeBpfyyHIl0H/Ytuo126gGrghoaw7gw6hqk
-         08pg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VPZF4nLJyUfKzEXvVzrPQ/oM1CpI8Q0VUUq9GSPUiMg=;
+        b=BIvgFFq83FEkf05ss8Z0Kk/zQd1PF/8sjqY/d2BN/0FwHHqrP9G26+Yoc04zOl1Vic
+         spuDLi+2j0Pf1QGowieIYwCkKMz4g3EAgR4AEvFhk0EZ96r0l8p7aI6mX3ybrUFsDdlk
+         b5fIy6bCOMZQRf6mb5O7C2st3MFxsKdg223arjMgUPXMah3dHFoblRS33EDwCTjijISI
+         yI7vEiJfMgE00up9FUlmGRvvkC2elamLRNVa4KH/M6T3+DCBWDA8kaABeqBxMLtKVqBi
+         jErIfWUYSi+m7F9yldknITMAQdPPT+hMp78vcUfyAZAbpt87BUFnXbM+7BTV2AOriTZ6
+         Iqvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=4Sys+KTMixKS9ssomEfp+R6IfRM5QWgVs/e9nYdI6aw=;
-        b=M4MInXaRxF0AXTLoaSnRTbvRIW94gCiW3kQAMEuLA36jq1GMfcqe2LX8yJfx6D6v5T
-         XcRBhxk+7G+K2VDB9/R+2fk7xZ6thWSJB08n/Muu7xusMe3SMHQAqCjuQacLNtqBKCOd
-         X3KAsU2Tr4RSg+23izKsWD3IRM7BGLYrRvYbdab6nuSbIxD52Fas4gcLa+Z7q2lLSVhF
-         voz0UHDyDLi80Uit1HorMUNIr3SiSympOrqpoHANc8i+mfKTpwu2Di77t7yFSX6G8nAH
-         6+RRiY8n8YNbDZe9z8ZlwkTL3GSJFv+DPKqwiySNchV+OeXVTVuIINj0Cgf16ECnEW4W
-         1vlg==
-X-Gm-Message-State: AOAM530MRwPF7zsfBCf6w4tfOHh+R9JZbfDCUcIK/llMMJuENopDu+YG
-        NjLMLR7BMoPuAyRtoSpEmvsSX+lvisA=
-X-Google-Smtp-Source: ABdhPJy0w6qwFz3nY8ujgGGRTOgJvZXex4+jn55eHPvfjH4ri788XmwlHtiqrXu/LIgCqNypH6QQ3A==
-X-Received: by 2002:a05:600c:6d2:: with SMTP id b18mr14553254wmn.98.1636526491480;
-        Tue, 09 Nov 2021 22:41:31 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 126sm4497790wmz.28.2021.11.09.22.41.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Nov 2021 22:41:31 -0800 (PST)
-Message-Id: <pull.1073.git.1636526490570.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 Nov 2021 06:41:30 +0000
-Subject: [PATCH] RelNotes: fix a couple of typos for the upcoming release
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VPZF4nLJyUfKzEXvVzrPQ/oM1CpI8Q0VUUq9GSPUiMg=;
+        b=VDyufNDyyHHlgcpIzcq34+tXo4nNwpsE0PWWgLaj2Q5ydeHUDQDbT8M9NSrTyvMbKu
+         u9go65d/JVvV7iTrTi+MByrFWQK+t0PAaq8xWlTWAjOiRJ4aEm1ONCgFcUV4XZR+5e+Q
+         2XK3nkvsD2/KRpzde7rKDeJu3lsobnoKc4epGbkYqxjNdSOS1FhsJ0HCi36OPpNEK/I4
+         YPR5IRR5DmG3d1PPCv+cxNCs4PGewTiwi/jGUY3XLvmG2HF+TK6zuNUvRZ2V6GYxKoBb
+         Af+9GenCWTdEy5a9+jlZ3n9+2REqbBWKqfEX+p4OQinHDpP5Q4vaymyI0OTzV5DRvqCw
+         y4lA==
+X-Gm-Message-State: AOAM532UWv6i22V7qHe/mAEkPSzihibG6oYlrFnLc2erbMh3eqI3BzIh
+        ZNNZqz5xwIs3rBtgFsXZAFNKTtjtTB4S9gNQjUk=
+X-Google-Smtp-Source: ABdhPJz9UMk4l0Q4+72F8AHFXJiYTPojvBkfKXTEGaiHdj6xz+A3JCcX6etnu5RxKrARkXXhQ84ROOckxB8a5VgQAGw=
+X-Received: by 2002:a05:6102:3f50:: with SMTP id l16mr22808071vsv.57.1636531883475;
+ Wed, 10 Nov 2021 00:11:23 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <xmqq4k8kzuz2.fsf@gitster.g> <YYtbdkLsCSFFE5io@coredump.intra.peff.net>
+ <YYtgD8VT/0vuIHRX@coredump.intra.peff.net>
+In-Reply-To: <YYtgD8VT/0vuIHRX@coredump.intra.peff.net>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Wed, 10 Nov 2021 00:11:12 -0800
+Message-ID: <CAPUEspg+NDJFAVcFs2hhcSTORb0Q-Gjcv0M+5tzqXJuBTvbT+Q@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.34.0-rc2
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Fabian Stelzer <fs@gigacodes.de>, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, Nov 9, 2021 at 10:02 PM Jeff King <peff@peff.net> wrote:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    RelNotes: fix a couple of typos for the upcoming release
-    
-    I noticed one of them while reviewing the Git for Windows rebase, and
-    decided to give VS Code with cSpell a whirl.
-    
-    Note: cSpell pointed out more words it deems not to be English, such as
-    docfix and leakfix and segfaulted. I was on the fence, but figured that
-    those are "Git speak", so I left them alone.
+>   - we're not really testing the desired behavior, just looking for a
+>     known-problem. The segfault may get fixed but we'd still have other
+>     bugs.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1073%2Fdscho%2Ffix-relnotes-typos-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1073/dscho/fix-relnotes-typos-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1073
+This openssh bug was fixed in 8.8 per the release notes; indeed the
+fix[1] (which was misapplied but fixed next commit) looks familiar and
+it is just a straight up crasher, hence unlikely to cause other
+issues.
 
- Documentation/RelNotes/2.34.0.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Agree with you though that with both git and openssh getting changes
+released for this feature there is a probability that there might be
+misbehaving combinations that are not appropriately tested, but your
+patch is a good step in the right direction.
 
-diff --git a/Documentation/RelNotes/2.34.0.txt b/Documentation/RelNotes/2.34.0.txt
-index effab2ea4b2..e9de4d457b5 100644
---- a/Documentation/RelNotes/2.34.0.txt
-+++ b/Documentation/RelNotes/2.34.0.txt
-@@ -182,7 +182,7 @@ Performance, Internal Implementation, Development Support etc.
-  * Prevent "make sparse" from running for the source files that
-    haven't been modified.
- 
-- * The codepath to write a new version of .midx multi-pack index files
-+ * The code path to write a new version of .midx multi-pack index files
-    has learned to release the mmaped memory holding the current
-    version of .midx before removing them from the disk, as some
-    platforms do not allow removal of a file that still has mapping.
-@@ -405,7 +405,7 @@ Fixes since v2.33
-    (merge 47bfdfb3fd ar/fix-git-pull-no-verify later to maint).
- 
-  * One CI task based on Fedora image noticed a not-quite-kosher
--   consturct recently, which has been corrected.
-+   construct recently, which has been corrected.
-    (merge 4b540cf913 vd/pthread-setspecific-g11-fix later to maint).
- 
-  * Other code cleanup, docfix, build fix, etc.
+Carlo
 
-base-commit: 6c220937e2b26d85920bf2d38ff2464a0d57fd6b
--- 
-gitgitgadget
+[1] https://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/ssh-keygen.c.diff?r1=1.435&r2=1.436&f=h
