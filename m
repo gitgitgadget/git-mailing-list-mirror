@@ -2,98 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8F58C433EF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 05:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFC4DC433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 06:00:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A06CC61159
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 05:41:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A43EF6113E
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 06:00:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229733AbhKJFn7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 00:43:59 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56380 "EHLO cloud.peff.net"
+        id S229903AbhKJGDf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 01:03:35 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56392 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229485AbhKJFn7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 00:43:59 -0500
-Received: (qmail 26537 invoked by uid 109); 10 Nov 2021 05:41:12 -0000
+        id S229717AbhKJGDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 01:03:35 -0500
+Received: (qmail 26565 invoked by uid 109); 10 Nov 2021 06:00:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Nov 2021 05:41:12 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Nov 2021 06:00:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9887 invoked by uid 111); 10 Nov 2021 05:41:13 -0000
+Received: (qmail 10016 invoked by uid 111); 10 Nov 2021 06:00:49 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Nov 2021 00:41:13 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Nov 2021 01:00:49 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 10 Nov 2021 00:41:10 -0500
+Date:   Wed, 10 Nov 2021 01:00:47 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Fabian Stelzer <fs@gigacodes.de>, git@vger.kernel.org,
         git-packagers@googlegroups.com
 Subject: Re: [ANNOUNCE] Git v2.34.0-rc2
-Message-ID: <YYtbdkLsCSFFE5io@coredump.intra.peff.net>
+Message-ID: <YYtgD8VT/0vuIHRX@coredump.intra.peff.net>
 References: <xmqq4k8kzuz2.fsf@gitster.g>
+ <YYtbdkLsCSFFE5io@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq4k8kzuz2.fsf@gitster.g>
+In-Reply-To: <YYtbdkLsCSFFE5io@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 09, 2021 at 04:59:29PM -0800, Junio C Hamano wrote:
+On Wed, Nov 10, 2021 at 12:41:11AM -0500, Jeff King wrote:
 
->  * Use ssh public crypto for object and push-cert signing.
+> So it may not be a bug we need to fix in Git. But shipping v2.34 with
+> lots of test failures may cause some headaches. Maybe we need to tighten
+> up the GPGSSH prereq checks to block broken versions?
 
-I'm seeing some test breakage from the release candidates here. On my
-Debian unstable system, everything passed a few days ago. But after
-upgrading openssh-client from 1:8.4p1-5 to 1:8.7p1-1 (which hit unstable
-on Saturday), all of the GPGSSH bits seem to break:
+This is what I came up with, but I'm not sure it there's a better way to
+find the broken version. I don't think there's a way to get a version
+number out of ssh-keygen (and anyway, checking the behavior of the
+command is a more robust test). My fears are:
 
-  Test Summary Report
-  -------------------
-  t5534-push-signed.sh                             (Wstat: 256 Tests: 13 Failed: 2)
-    Failed tests:  8, 12
-    Non-zero exit status: 1
-  t6200-fmt-merge-msg.sh                           (Wstat: 256 Tests: 31 Failed: 2)
-    Failed tests:  7-8
-    Non-zero exit status: 1
-  t7031-verify-tag-signed-ssh.sh                   (Wstat: 256 Tests: 8 Failed: 5)
-    Failed tests:  2, 4-7
-    Non-zero exit status: 1
-  t7528-signed-commit-ssh.sh                       (Wstat: 256 Tests: 23 Failed: 10)
-    Failed tests:  2-5, 7, 9, 12-13, 17, 19
-    Non-zero exit status: 1
+  - this does cause several segfaults per test run on affected
+    platforms, which will pollute the kernel log, etc.
 
-This doesn't have anything to do with -rc2 in particular. The breakage
-bisects to f265f2d630 (ssh signing: tests for logs, tags & push certs,
-2021-09-10), and is triggered by the system openssh upgrade.
+  - we're not really testing the desired behavior, just looking for a
+    known-problem. The segfault may get fixed but we'd still have other
+    bugs.
 
-It's hard to tell what's going on, as we seem to just be getting bad
-results from ssh-keygen. Here's the first failing test in t7031 (with
-GIT_TRACE and -x):
+So it would be nice to have a more exact test, but without understanding
+the openssh bug, I think this is the best we can do in the meantime.
 
-  [...]
-  + git verify-tag initial
-  trace: built-in: git verify-tag initial
-  trace: run_command: ssh-keygen -Y find-principals -f '/home/peff/compile/git/t/trash directory.t7031-verify-tag-signed-ssh/gpghome/ssh.all_valid.allowedSignersFile' -s /tmp/.git_vtag_tmpSxXLIv
-  trace: run_command: ssh-keygen -Y check-novalidate -n git -s /tmp/.git_vtag_tmpSxXLIv
-  + exit 1
-  error: last command exited with $?=1
-  not ok 2 - verify and show ssh signatures
+-- >8 --
+Subject: [PATCH] t/lib-gpg: avoid broken versions of ssh-keygen
 
-Likewise, this segfault (!) from t7528 is scary:
+The "-Y find-principals" option of ssh-keygen seems to be broken in
+Debian's openssh-client 1:8.7p1-1, whereas it works fine in 1:8.4p1-5.
+This causes several failures for GPGSSH tests. We fulfill the
+prerequisite because generating the keys works fine, but actually
+verifying a signature causes results ranging from bogus results to
+ssh-keygen segfaulting.
 
-  [...]
-  + git verify-commit initial
-  trace: built-in: git verify-commit initial
-  trace: run_command: ssh-keygen -Y find-principals -f '/home/peff/compile/git/t/trash directory.t7528-signed-commit-ssh/gpghome/ssh.all_valid.allowedSignersFile' -s /tmp/.git_vtag_tmpCOAwhp
-  error: ssh-keygen died of signal 11
-  trace: run_command: ssh-keygen -Y check-novalidate -n git -s /tmp/.git_vtag_tmpCOAwhp
-  Good "git" signature with ED25519 key SHA256:E+1Xptv1zGa2fWFjSL36Tl2m2NVxcyJVzhfQTnU+yWc
-  + exit 1
-  error: last command exited with $?=1
-  not ok 2 - verify and show signatures
+We can find the broken version during the prereq check by feeding it
+empty input. This should result in it complaining to stderr, but in the
+broken version it triggers the segfault, causing the GPGSSH tests to be
+skipped.
 
-So it may not be a bug we need to fix in Git. But shipping v2.34 with
-lots of test failures may cause some headaches. Maybe we need to tighten
-up the GPGSSH prereq checks to block broken versions?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/lib-gpg.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
--Peff
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index 1d8e5b5b7e..a3f285f515 100644
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -104,6 +104,12 @@ test_lazy_prereq GPGSSH '
+ 	test $? != 127 || exit 1
+ 	echo $ssh_version | grep -q "find-principals:missing signature file"
+ 	test $? = 0 || exit 1;
++
++	# some broken versions of ssh-keygen segfault on find-principals;
++	# avoid testing with them.
++	ssh-keygen -Y find-principals -f /dev/null -s /dev/null
++	test $? = 139 && exit 1
++
+ 	mkdir -p "${GNUPGHOME}" &&
+ 	chmod 0700 "${GNUPGHOME}" &&
+ 	(setfacl -k "${GNUPGHOME}" 2>/dev/null || true) &&
+-- 
+2.34.0.rc1.634.g85d556ea55
+
