@@ -2,105 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40F1AC433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:46:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8789C433FE
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:47:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 25BC0611ED
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:46:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF61F60EDF
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:47:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232235AbhKJOtB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 09:49:01 -0500
-Received: from mout.gmx.net ([212.227.15.19]:35205 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231731AbhKJOtB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 09:49:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1636555571;
-        bh=3oiSFPjgIWRfkAYziQ7SXlOmqi54w9cAQySoSFEpSJU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=B9AGaejKMTd71jPBIcb3xlw0+bgPR/mqzHzI1agiPPx36TCWvhuYkbjjFE4EiOtgr
-         JVMQAUEPlMVMo3e7+4eyKbV+DFoz4kWzy4bc3iWHYWH9CAI7v7I5TvtsvCreiocYsV
-         qi71YZc3ptQ0FXrgxVDGg6vFDD8omkTVphZeq8cA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.166.205] ([89.1.212.10]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MSbxD-1n8hOk1CTx-00Sw76; Wed, 10
- Nov 2021 15:46:11 +0100
-Date:   Wed, 10 Nov 2021 15:46:10 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     andre_pohlmann@posteo.de
-cc:     git@vger.kernel.org
-Subject: Re: bug or a general misunderstanding
-In-Reply-To: <0bb0056a59cda294d416762d7f8a9c47@posteo.de>
-Message-ID: <nycvar.QRO.7.76.6.2111101545000.21127@tvgsbejvaqbjf.bet>
-References: <0bb0056a59cda294d416762d7f8a9c47@posteo.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S231731AbhKJOuW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 09:50:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46600 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231593AbhKJOuV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 09:50:21 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9376C061764
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 06:47:33 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id ee33so11511452edb.8
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 06:47:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=iCOFskeEpIu6Yc21XpP8EzQKvyubD1jsRR+OW12uMhA=;
+        b=EqPvdgfj20sHRxJrjql70D0I8z/EforYUl8pbWuhUXSpXj2B7ZOqw3g40Vzhdn5z/Y
+         9sXySI692I+e199vcMnerOKiJbE9ETh5pFwCvPpLKpx0ZWXuOkUrnnoGnBxZ3izOPiWS
+         lMUTKPVPFWMUWF1SyxLKWzki/YXS7sIXm37RzFPtt/QKbyCn3du2oIZNqHKlY6cOAc+B
+         hsAbsQjVNHOxscYdf4zsRt6P6jJxZjPE4QdGV5mNo/F1ke2x55KVTGrD30ioo2bkn2De
+         vruEsaLT75OISABpPHp4ldBgUmEgX7/rtyK1UPvLWv05ognMYES2b+zlsNafDLxCy9xI
+         rE1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=iCOFskeEpIu6Yc21XpP8EzQKvyubD1jsRR+OW12uMhA=;
+        b=yIE/f/JAvUDlH1slGJIb3STtAYiECuZvmbE5ft//ziiPgmmnxfJlx9WNHGLjLk1L7o
+         eYQt76iEX/hKUQQCDmMf+CSMKsIGWdvemQFImimt/nxwsW2GwV85sPbnmyQHhk3YDFtq
+         WVRNSskG/ND9nWMaSFp6gCq2KvW5gdco0NBn5m0ahFjp5oZJcZOQj20YhjGjIJHPhE44
+         auwU8vmscRZfDmIJvpiAKVo4HKro/0TPQNmBavDm087nEMDv8CzFLb1mxspqXHBJ3DmB
+         ztyWiz4WxXy4WHuSEof98x337mdGCyMZZlezdZTjQ2EScGURw4iVjdf5lZtZ16S7oXTp
+         gSrQ==
+X-Gm-Message-State: AOAM532TqfprRl/TmXk0yTmTkyAvzeBXRayhd+lCU3+fXycvFfXp7wJe
+        6ZTfbal1G8Al49+spHVU5LQ=
+X-Google-Smtp-Source: ABdhPJx3LSOd8c/JqmFDIIbkmRpLE9mPJsQ51kmliO9PBOcsZRiNK/Zunh6afdU0Q5+g6W1CXNUCwQ==
+X-Received: by 2002:a17:906:5641:: with SMTP id v1mr108567ejr.357.1636555652398;
+        Wed, 10 Nov 2021 06:47:32 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id dt4sm11657683ejb.27.2021.11.10.06.47.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Nov 2021 06:47:32 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mkost-0011US-G1;
+        Wed, 10 Nov 2021 15:47:31 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: Re: [PATCH v2 2/3] wrapper: provide function to sync directories
+Date:   Wed, 10 Nov 2021 15:40:24 +0100
+References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im>
+ <cover.1636544377.git.ps@pks.im>
+ <3ac9d4d7abd224a4c0991f1036f2d95eedb9ceac.1636544377.git.ps@pks.im>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <3ac9d4d7abd224a4c0991f1036f2d95eedb9ceac.1636544377.git.ps@pks.im>
+Message-ID: <211110.86zgqcgj98.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1697005132-1636555571=:21127"
-X-Provags-ID: V03:K1:cG+Jj2L2rKFzw24xSj/4CJm4Y6ur56e6j3uxvFf/8npdeFDgr3r
- 7AlGIiKFHPqRJDiLjpdwxGBIOlZDMMCxEhxFKC0aiLGPeyE23cG7b93JWzWcQWpGOmkT+Mw
- ukiehxATtxn2kJ9ESEUQiuQrbi6KlwaksnBYK75BAQ1K/xsdO62n7LwtXk6k6lrT3H46v6V
- KexuZvGeT5n7G7lXp1m9w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:djikPFElGAU=:Dyn+JuPIxXh3PmFdKie4SA
- gmTLviu1F+njPPiHRr8dxBvwfgO6bhUAaOi426L5ksHqJmWVrx4mOgrIxfOoKLM4awjiXHH3v
- XdNnUzKNKQCdK/Y678nJ//CRMh9TJQfyhABHSwsIWq8xHw8xNPOkre/17RDIogPjF1zPqJQZM
- Iug5Iikl7bq+/Id/sPCG4kmKR1rp3N4WSrMWMiG6d47M8sUpeEqc1IM2aRyXEjGbLHU78kR7c
- rPQSaR8ze0vq4Szg7t0WZdfPRh25gVS71GKy1Bjk7/pRESv6+RTuYWv87IV99WAhHjJgw6l7a
- 3EiC9CP9WGQnsX0ewuTtENaWVt18/TPS9nUKyK9iRtY99JSaRH7zN3dO+Ed7kHs2BW6nzkuo3
- Sng9CidcgpJWhK9ehuwxg4n9C/FPfthxpsUp1xLFCJV1A4XDpgvbLp97xLKM7WnLcyyxQioui
- GLmGtIuf10t48uHmM+hG9hCwj5zvDnAyREn+24yyEmM2jCawjQvalLypn6dOZr3FRLg68vnBN
- +P8Q+2uvbfj4HN6w7Otgj2m44A9fvJWPUnjlAdMKx+vN7h98vovRjr9nu2AlWFx6qRkvrASfR
- a72LwfiPNJ46A3CIgtifQPA9oyrNA9DCFjuSGqtxz97RJqBF3kan3sqZ2mcC7Hifdb0ukzMqi
- hDpOyCuB5nFUFbrNjGacW8sI8lXBt5h+qt+RDTx62JH9aDK2ei3mQpSCwSz8RpWCdwlyZiSav
- LXdL6x0WAYWXuxciVIKwEftSH6aiSk5dWGL7g+FEpZDWLAjOVS9PKqiPqo7RcJv6LHPS9Lwtb
- XMNqyVmOQ0iHMjqzwaEsjnYYYqg6RradWOgeNHjHP5Ye2HVXzu9hTbTvO0S4dDTxpT7gOkyKL
- pVxD/H4WEywT2IwZDE6Pl3UoB3CRQxFGkLdRD8d6FH7YnmDKloEUYGWpuOa3tIY17nw2kOpJN
- Pbvz5fgcpMIOkUmHtlQhoet6vuCFpy3ikpU1iHoFa75QqGK8YoMhjlpCLep/SGTr2bRit7kS2
- heRB4xIc2JhP/oC7bOmZVBc/5W2ejTDwvroCrWqxINATFSpTSyGXNohBbcHQDhPkbVamT5zPS
- /ju3fnvXEdyVmQ=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1697005132-1636555571=:21127
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, Nov 10 2021, Patrick Steinhardt wrote:
 
-Hi Andr=C3=A9,
-
-On Wed, 10 Nov 2021, andre_pohlmann@posteo.de wrote:
-
-> The following situation: I wanted to create a branch from a commit. From=
- there
-> on the work should be continued.
-
-I suspect that the command you used was `git branch <name> <commit>`? That
-_creates_ the branch, but does not switch to it. You need to call `git
-switch <name>` to switch the worktree to it. If you want to do all in one
-go, use `git switch -c <name> <commit>`.
-
-Ciao,
-Johannes
-
+> [[PGP Signed Part:Undecided]]
+> In ec983eb5d2 (core.fsyncobjectfiles: batched disk flushes, 2021-10-04),
+> we have introduced batched syncing of object files. This mode works by
+> only requesting a writeback of the page cache backing the file on
+> written files, followed by a single hardware-flush via a temporary file
+> created in the directory we want to flush. Given modern journaling file
+> systems, this pattern is expected to be durable.
 >
-> The possible bug:
-> The newly created branch is missing commits in the history. Not only are=
- they
-> not displayed, the code changes are not present.
-> It doesn't matter if the branch is created by Visual Studio or GIT for
-> Windows.
-> Only in a branch created by GitHub Desktop the commits are present, as I=
- would
-> expect.
+> While it's possible to reuse the `git_fsync()` helper to synchronize the
+> page cache only, there is no helper which would allow for doing a
+> hardware flush of a directory by creating a temporary file. Other
+> callers which want to follow the same pattern would thus have to repeat
+> this logic.
 >
-> Is this a bug or do I not understand how GIT works?
+> Extract a new helper `git_fsync_dir()` from the object files code which
+> neatly encapsulates this logic such that it can be reused.
 >
-> Best regards and thank you for the effort
-> Andr=C3=A9 Pohlmann
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  bulk-checkin.c    | 13 +++----------
+>  git-compat-util.h |  7 +++++++
+>  wrapper.c         | 21 +++++++++++++++++++++
+>  3 files changed, 31 insertions(+), 10 deletions(-)
 >
->
+> diff --git a/bulk-checkin.c b/bulk-checkin.c
+> index 4deee1af46..e6ebdd1db5 100644
+> --- a/bulk-checkin.c
+> +++ b/bulk-checkin.c
+> @@ -98,16 +98,9 @@ static void do_batch_fsync(void)
+>  	 * hardware.
+>  	 */
+>  
+> -	if (needs_batch_fsync) {
+> -		struct strbuf temp_path = STRBUF_INIT;
+> -		struct tempfile *temp;
+> -
+> -		strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX", get_object_directory());
+> -		temp = xmks_tempfile(temp_path.buf);
+> -		fsync_or_die(get_tempfile_fd(temp), get_tempfile_path(temp));
+> -		delete_tempfile(&temp);
+> -		strbuf_release(&temp_path);
+> -	}
+> +	if (needs_batch_fsync &&
+> +	    git_fsync_dir(get_object_directory()) < 0)
+> +		die_errno("fsyncing object directory");
 
---8323328-1697005132-1636555571=:21127--
+Nit: Similar to 1/3, but this message is new: We say "fsyncing object
+directory", but it would be better to pass in some "verbose" flag to
+git_fsync_dir() so we can say e.g.:
+
+    error_errno(_("couldn't create core.fsyncRefFiles=batch tempfile '%s' in '%s'"), ...)
+    error_errno(_("couldn't fsync() core.fsyncRefFiles=batch tempfile '%s' in '%s'"), ...)
+
+I.e. being able to say specifically why we failed, permission error or
+the tempfile? fsync() didn't work etc?
+
+Looking at the underlying APIs maybe they already have a mode to "die"
+or "warn" appropriately? Or...
+
+> +int git_fsync_dir(const char *path)
+> +{
+> +	struct strbuf temp_path = STRBUF_INIT;
+> +	struct tempfile *temp;
+> +
+> +	strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX", path);
+> +
+> +	temp = mks_tempfile(temp_path.buf);
+> +	if (!temp)
+> +		return -1;
+> +
+> +	if (git_fsync(get_tempfile_fd(temp), FSYNC_HARDWARE_FLUSH) < 0)
+> +		return -1;
+
+...if they do maybe we should use their non-fatal mode, because
+with/without that these "return -1" need to be "goto cleanup" so we can
+attempt to clean up after ourselves here.
+
+I think this whole thing would be better if we generalized tmp-objdir.h
+a bit, so it could create and manage an arbitrary file in an arbitrary
+directory, and that API should really be generalized to a user of
+tempfile.c.
+
+I.e. we'd then create this file, sync it optionally, whine if it does't
+work, and be guaranteed to try to clean anything that goes wrong up
+atexit().
