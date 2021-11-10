@@ -2,88 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60BA2C433EF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40F1AC433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:46:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 378F8611ED
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:44:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25BC0611ED
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:46:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232279AbhKJOrp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 09:47:45 -0500
-Received: from mout.gmx.net ([212.227.15.18]:36301 "EHLO mout.gmx.net"
+        id S232235AbhKJOtB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 09:49:01 -0500
+Received: from mout.gmx.net ([212.227.15.19]:35205 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231551AbhKJOrp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 09:47:45 -0500
+        id S231731AbhKJOtB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 09:49:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1636555479;
-        bh=YgLa83kYk4ZlVqr58PHMutPAufPRProtfmuAlM/Hrt8=;
+        s=badeba3b8450; t=1636555571;
+        bh=3oiSFPjgIWRfkAYziQ7SXlOmqi54w9cAQySoSFEpSJU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ip2fwpiMcXyZ8p9shsHAQ3HPL2kZf2t0gxt3yI8kqkpDEbR9VutMSB7MrFipS/8gI
-         J+r8HEkCjxOpsD4Wux0H7S22N/KFIQw9m468ch+M8omPuhOUsQrdSaGp2ZsbEGtlpU
-         wM7NfZo8TldGBO9SKNKemFIJZ5gt+ywFT+F7LKQA=
+        b=B9AGaejKMTd71jPBIcb3xlw0+bgPR/mqzHzI1agiPPx36TCWvhuYkbjjFE4EiOtgr
+         JVMQAUEPlMVMo3e7+4eyKbV+DFoz4kWzy4bc3iWHYWH9CAI7v7I5TvtsvCreiocYsV
+         qi71YZc3ptQ0FXrgxVDGg6vFDD8omkTVphZeq8cA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.27.166.205] ([89.1.212.10]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2wL0-1mjiNW2vwi-003OCf; Wed, 10
- Nov 2021 15:44:38 +0100
-Date:   Wed, 10 Nov 2021 15:44:36 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MSbxD-1n8hOk1CTx-00Sw76; Wed, 10
+ Nov 2021 15:46:11 +0100
+Date:   Wed, 10 Nov 2021 15:46:10 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Patrick Steinhardt <ps@pks.im>
-cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Eric Wong <e@80x24.org>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH v2 0/3] refs: sync loose refs to disk before committing
- them
-In-Reply-To: <cover.1636544377.git.ps@pks.im>
-Message-ID: <nycvar.QRO.7.76.6.2111101534370.21127@tvgsbejvaqbjf.bet>
-References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im> <cover.1636544377.git.ps@pks.im>
+To:     andre_pohlmann@posteo.de
+cc:     git@vger.kernel.org
+Subject: Re: bug or a general misunderstanding
+In-Reply-To: <0bb0056a59cda294d416762d7f8a9c47@posteo.de>
+Message-ID: <nycvar.QRO.7.76.6.2111101545000.21127@tvgsbejvaqbjf.bet>
+References: <0bb0056a59cda294d416762d7f8a9c47@posteo.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HiYRfnO4uRpEOGBarO+51uUFgqfv3yYUQWuT4zd88+j8fB1WlVu
- RfaQp3MdSCwjigMBhixX9Xdh9hmD1raKudEB15wcD54c7KhkT78F96csGCaaJDELpiu2Sfr
- 45Rpx9xkv+Hq7/cm/pt0Dr5+ET17IiwCm5AUqv1XsM48BBZW/5H/QXFXwRo/ziXmzgHzCEp
- OpXgQ10gtoj5xHvq8zlcw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:+4XBOGlHSTY=:mFDRUuhCcX/NAbK9EIf6aS
- m5gVF+xND0A1qFvoCQ3dFTi4TFAvanmcSDkStPJMgu6WzDrAp9x+NPY4n1VVGHhFBcZr9CPu5
- lItEadqVlmo/Z75cvFF5RulECbST35cYFIbvO8YLk04+MaPQvipy2MyOlSfzt5GxNV8nTkks4
- LOQZ5DUoyd/x24UiqdGlVZ6FzCdcVDohdmDhv4TC/8CPsoS2ibNghOOMcwp63X8J5YqNR1J3j
- nf0+/ZY4CUAdmFDslZEty5QPrfg4E8RtoXUaQ87xRW04+Gwo2qkXM3haAEAyrAz2AL4Cn9ZwX
- hmXhVmtVLfp8dpUJHRAYSZ6kGqdS+Lt0n0F0iuZfYcNJxk3n1Z7075sUDdOUmnpWYQ/ezfs9D
- gaBrlhtjaEpiqINzDNuznO+vvyXztqi5SjvIP3u5wpL1+FnGp64QiMx39dwbyPkXaYZGdbq+N
- 76H2UJynb12VW64SDA+Ged11BsVbLJtY3vhDfRTy1Lf52sEgh8aDi66gJHJ8x4KAZsqK434OH
- yzTDUzXB6qG2mTGkfq8hdtebYQlnP7knSX/vsa7F5HiXOEGyqDtkFBnRR5qfKevxMWC1dzka6
- DgLE9nWfRURHhgQ/7Nr8vdsHUHfHG/eXJwF6zlQRqR+iOLZ9rOaKkJeWyE9IJAt8miA4by08z
- ViePJcShhwivSIR3X2aCQKC+A+LZljJlALbX0rSkfKrWvHpVHh7fkQ0h8lXFZIf80JeMP7TJt
- CYdGyzvgqaoItHv7xiHumcS89ikWdrzlOQqjb4wv5RuTW4C04iSW/G/uQbvHIvmvOHo72Bjir
- tBzMnc4fldrRBAbXPKYkVzvME9i4pvGoqkyoD8zakHSc4l1+pwhzQB2sD5i5+++pscO4lNh9n
- kymgYPcgT7pOV1PMC+W35sqyTGY4St3ka+Ksl2HjldFeHLrL82tBZUPUAXWPrrIaexiO0c8yK
- XdcGD8gSEH9krys61ozesTYrHRn9rpe0OzYwf84Jgut8EFRCceHoq8c2LYquXs0zveygLDooy
- iEAxaLXRO03B9wW0z7KGgiJUDXK8Eb2EVLGjZwROwll7BE2pVA2Y/y6SGYm8ZY9dIR/ojdF5s
- n2YvuIarML01ek=
+Content-Type: multipart/mixed; boundary="8323328-1697005132-1636555571=:21127"
+X-Provags-ID: V03:K1:cG+Jj2L2rKFzw24xSj/4CJm4Y6ur56e6j3uxvFf/8npdeFDgr3r
+ 7AlGIiKFHPqRJDiLjpdwxGBIOlZDMMCxEhxFKC0aiLGPeyE23cG7b93JWzWcQWpGOmkT+Mw
+ ukiehxATtxn2kJ9ESEUQiuQrbi6KlwaksnBYK75BAQ1K/xsdO62n7LwtXk6k6lrT3H46v6V
+ KexuZvGeT5n7G7lXp1m9w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:djikPFElGAU=:Dyn+JuPIxXh3PmFdKie4SA
+ gmTLviu1F+njPPiHRr8dxBvwfgO6bhUAaOi426L5ksHqJmWVrx4mOgrIxfOoKLM4awjiXHH3v
+ XdNnUzKNKQCdK/Y678nJ//CRMh9TJQfyhABHSwsIWq8xHw8xNPOkre/17RDIogPjF1zPqJQZM
+ Iug5Iikl7bq+/Id/sPCG4kmKR1rp3N4WSrMWMiG6d47M8sUpeEqc1IM2aRyXEjGbLHU78kR7c
+ rPQSaR8ze0vq4Szg7t0WZdfPRh25gVS71GKy1Bjk7/pRESv6+RTuYWv87IV99WAhHjJgw6l7a
+ 3EiC9CP9WGQnsX0ewuTtENaWVt18/TPS9nUKyK9iRtY99JSaRH7zN3dO+Ed7kHs2BW6nzkuo3
+ Sng9CidcgpJWhK9ehuwxg4n9C/FPfthxpsUp1xLFCJV1A4XDpgvbLp97xLKM7WnLcyyxQioui
+ GLmGtIuf10t48uHmM+hG9hCwj5zvDnAyREn+24yyEmM2jCawjQvalLypn6dOZr3FRLg68vnBN
+ +P8Q+2uvbfj4HN6w7Otgj2m44A9fvJWPUnjlAdMKx+vN7h98vovRjr9nu2AlWFx6qRkvrASfR
+ a72LwfiPNJ46A3CIgtifQPA9oyrNA9DCFjuSGqtxz97RJqBF3kan3sqZ2mcC7Hifdb0ukzMqi
+ hDpOyCuB5nFUFbrNjGacW8sI8lXBt5h+qt+RDTx62JH9aDK2ei3mQpSCwSz8RpWCdwlyZiSav
+ LXdL6x0WAYWXuxciVIKwEftSH6aiSk5dWGL7g+FEpZDWLAjOVS9PKqiPqo7RcJv6LHPS9Lwtb
+ XMNqyVmOQ0iHMjqzwaEsjnYYYqg6RradWOgeNHjHP5Ye2HVXzu9hTbTvO0S4dDTxpT7gOkyKL
+ pVxD/H4WEywT2IwZDE6Pl3UoB3CRQxFGkLdRD8d6FH7YnmDKloEUYGWpuOa3tIY17nw2kOpJN
+ Pbvz5fgcpMIOkUmHtlQhoet6vuCFpy3ikpU1iHoFa75QqGK8YoMhjlpCLep/SGTr2bRit7kS2
+ heRB4xIc2JhP/oC7bOmZVBc/5W2ejTDwvroCrWqxINATFSpTSyGXNohBbcHQDhPkbVamT5zPS
+ /ju3fnvXEdyVmQ=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Patrick,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, 10 Nov 2021, Patrick Steinhardt wrote:
+--8323328-1697005132-1636555571=:21127
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> This series is implements the same batching as Neeraj's series [1]. It
-> introduces a new config switch "core.fsyncRefFiles" with the same three
-> toggles "on", "off" and "batch". Given that it reuses funcitonality
-> provided by the batched object flushing this series is based on "next".
+Hi Andr=C3=A9,
 
-Excellent, I am glad that my idea was helpful.
+On Wed, 10 Nov 2021, andre_pohlmann@posteo.de wrote:
 
-I read through the patches and found them easy to follow. Even 3/3, which
-was a bit complex because of the need to support both transacted ref
-updates as well as atomic renames/copies, is clear and well-written.
+> The following situation: I wanted to create a branch from a commit. From=
+ there
+> on the work should be continued.
 
-FWIW you could base your patches directly on `ns/batched-fsync`, I would
-think.
+I suspect that the command you used was `git branch <name> <commit>`? That
+_creates_ the branch, but does not switch to it. You need to call `git
+switch <name>` to switch the worktree to it. If you want to do all in one
+go, use `git switch -c <name> <commit>`.
 
-Thank you,
-Dscho
+Ciao,
+Johannes
+
+>
+> The possible bug:
+> The newly created branch is missing commits in the history. Not only are=
+ they
+> not displayed, the code changes are not present.
+> It doesn't matter if the branch is created by Visual Studio or GIT for
+> Windows.
+> Only in a branch created by GitHub Desktop the commits are present, as I=
+ would
+> expect.
+>
+> Is this a bug or do I not understand how GIT works?
+>
+> Best regards and thank you for the effort
+> Andr=C3=A9 Pohlmann
+>
+>
+
+--8323328-1697005132-1636555571=:21127--
