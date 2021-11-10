@@ -2,180 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92F9FC433EF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 03:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD02FC433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 03:57:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 71F8A610CF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 03:52:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6320611AD
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 03:57:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230268AbhKJDzC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Nov 2021 22:55:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39538 "EHLO
+        id S230167AbhKJD7y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Nov 2021 22:59:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230256AbhKJDzB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Nov 2021 22:55:01 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB5D8C061764
-        for <git@vger.kernel.org>; Tue,  9 Nov 2021 19:52:14 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id u18so1523280wrg.5
-        for <git@vger.kernel.org>; Tue, 09 Nov 2021 19:52:14 -0800 (PST)
+        with ESMTP id S229963AbhKJD7x (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Nov 2021 22:59:53 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD1ECC061764
+        for <git@vger.kernel.org>; Tue,  9 Nov 2021 19:57:06 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id m14so5265001edd.0
+        for <git@vger.kernel.org>; Tue, 09 Nov 2021 19:57:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QJvK8x53WK5s0YILHoDYX4AoVucefiHxXBFPQSTn6VI=;
-        b=A/n0ni+givAlICISC+3C+xnOJ/GmggIeLpjP7DnVwblbtPQldYX4gaybEN7RjIYPhS
-         uc2jSXJN5mFyBRfaU6HH+0fYYsXhTKNJ85iQQvLygYRRH85fBTRz9Y3zHsaQFbxx15Lf
-         Ty9MJNBPBz0xkFIUkeHhwBwGV6ITh3O6hAoXvZ17p5UG88NV/pO8GB3Qs4SMtxF8YbdD
-         huM/VBLYjtef8B6lGhK7aPOxcT3k6FIX6v8n1fUWaveo2yLyEPkLkyL8yOKf0DRwwzZT
-         XMxeCn+/TsGI+xKu6eCeXUYUl+4P7qf9t6yr59FnV+MkESA3h7AYq0Emla3hJPfZPVyV
-         4HDw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=gGP16ABYh8JHJA8jxyojAw9CYOx8ZnyAgI3nbjzH/vY=;
+        b=SRtgx4X1xRjEU8dKT61jzKwzgdBtNLBpPzMJazBRHW6PnZxA5+cehpPkgxF+bykoS/
+         g1T9t7pRp3JnIG6/PH3FoGiBGdcs4CpQFDOa2Bc0QbSO/sAp41TG003CvxzlWF+o1BXF
+         JgZ+3QlTH4WrmyHaxUpP1cvxPFMKh5z0QHzdgbVT/sAbBtFhIQVvXAF+ajRkJkU1IcEh
+         KmeSHC/feGmn2OfiaDRbNIw/I8hWlyDwCnOLvfGU9r05I+xstbY3o+mEjSmnEHDix78E
+         lp21UQyDvAtCrVZ19eh+R5L1/X5YsYWriVQ5SPPcG9JMaqb+uZuqnE+9Mvt6j4x3p0lg
+         6wGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QJvK8x53WK5s0YILHoDYX4AoVucefiHxXBFPQSTn6VI=;
-        b=C2ji7AvtUc7jKA23MIsA8nTCPdUKkOI+ZaD/W8wsfb+Qq+QRxeAMAsW1xlUk0c4Pam
-         IjvSIePk57VVigbEyRYb+Dju2XRlvTiZqTqisEp9etjvik6dyQO2HPEwtTbfz+n2++Ux
-         PRvC3twscLEC9uVG/o4EHQlP+B0YCYP1mGQ/5XPQOHUCYkrSpRS5Z37VQL2VSYfkgeTj
-         YBSQ/sBFE+nir7w4RPmREgsM4Tn5XkjjLtn9W8MhfAU/UEONTYQKYut5sG2I7t2wKCci
-         JTGGIClgQ7Xx/u9DVDljYNxW8HEHEemLBpK7B6aOzsf+ajZu4Qmb1iXr699S6mRFvJAu
-         DspQ==
-X-Gm-Message-State: AOAM531o2goDy8gGhLq2Yc8sTJq2WonF2hkKulfO0zgYIm/OWEPx57zl
-        zBwtBUPkL5CNX8Znm1pqC1K9K3wVgrUX9A==
-X-Google-Smtp-Source: ABdhPJz8q0cDLPSRVJ/ojStOhNS/uBz2TbBk812+ZG8rD8eEWENvup/g1XK6323u9xAWNhzMsrjWog==
-X-Received: by 2002:adf:e482:: with SMTP id i2mr15674194wrm.284.1636516332787;
-        Tue, 09 Nov 2021 19:52:12 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 4sm29513104wrz.90.2021.11.09.19.52.12
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=gGP16ABYh8JHJA8jxyojAw9CYOx8ZnyAgI3nbjzH/vY=;
+        b=sOzERTd9szS68vpqwfEO2iA0YkIwjuMJraxh+MuuDEdzST2c9gIhWJtd71YeeY79CG
+         a/8z057DqF4Pc5iJRApTQUzGQ5gfs51lP1uBiuax8KfRUHTPSPw2S32m7/LveXDHr/pE
+         ZAZc72/MZ1jnmwXtOgYkRVFwUTY2sovTnblepAz7Gts9HCkwnOyZfxWH3tTZlhkAhPff
+         ve+uRZhB7SwFgMoXWfthGSOUvOsKfAzRg/ZqKkXTsRslz3NnfhkJjsHgrvoY0KL9jpPk
+         RfIma1Hb0o0MEcOTAxzQtvKUyiRLdBw1H7sksYwrMeiZX4sXXIjUaN7CV+gINXEQn8IP
+         NFEQ==
+X-Gm-Message-State: AOAM531aliYK+sZ3v0V7rypls25gFRyVaQFF2HLirCLTqS8L2UBsa4Le
+        1/GGuacoqP12HvRnAp7MjD3KnEml/ITmsQ==
+X-Google-Smtp-Source: ABdhPJy6TLxmBQPk0aeNUwTfixlt30pX8mlcwlRsefVXAahcEP4Tq7HzI8cRS68POwRkwvLF0BQKfg==
+X-Received: by 2002:a17:907:3d9e:: with SMTP id he30mr16383299ejc.177.1636516625223;
+        Tue, 09 Nov 2021 19:57:05 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id m9sm10365258eje.102.2021.11.09.19.57.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Nov 2021 19:52:12 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
+        Tue, 09 Nov 2021 19:57:04 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mkejQ-000nAK-7s;
+        Wed, 10 Nov 2021 04:57:04 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Anders Kaseorg <andersk@mit.edu>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2] maintenance tests: fix systemd v2.34.0-rc* test regression
-Date:   Wed, 10 Nov 2021 04:52:10 +0100
-Message-Id: <patch-v2-1.1-44f0cafa16e-20211110T035103Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.0.rc2.791.gdbfcf909579
-In-Reply-To: <patch-1.1-90172a8ddcc-20211102T142351Z-avarab@gmail.com>
-References: <patch-1.1-90172a8ddcc-20211102T142351Z-avarab@gmail.com>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Andreas Heiduk <andreas.heiduk@mathema.de>
+Subject: Re: [PATCH v5 1/4] fetch: Protect branches checked out in all
+ worktrees
+Date:   Wed, 10 Nov 2021 04:56:03 +0100
+References: <2f983e36-532f-ac87-9ade-fba4c6b9d276@mit.edu>
+ <20211109230941.2518143-1-andersk@mit.edu>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211109230941.2518143-1-andersk@mit.edu>
+Message-ID: <211110.8635o4k6i7.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix tests added in b681b191f92 (maintenance: add support for systemd
-timers on Linux, 2021-09-04) to run successfully on systems where
-systemd-analyze is installed, but on which there's a discrepancy
-between a FILE argument of "/lib/systemd/system/basic.target" and
-"systemd/user/git-maintenance@.service" succeeding.
 
-There was an attempt to work around previous breakage in these tests
-in 670e5973992 (maintenance: fix test t7900-maintenance.sh,
-2021-09-27), as noted in my [1] that commit is wrong about its
-assumption that we can use "/lib/systemd/system/basic.target" as a
-canary.argument.
+On Tue, Nov 09 2021, Anders Kaseorg wrote:
 
-To fix this let's adjust this test to test what it really should be
-testing: If we've got systemd-analyze reporting anything useful, we
-should use it to check the syntax of our just-generated
-"systemd/user/git-maintenance@.service" file.
+> Refuse to fetch into the currently checked out branch of any working
+> tree, not just the current one.
+>
+> Fixes this previously reported bug:
+>
+> https://public-inbox.org/git/cb957174-5e9a-5603-ea9e-ac9b58a2eaad@mathema=
+.de
+>
+> As a side effect of using find_shared_symref, we=E2=80=99ll also refuse t=
+he
+> fetch when we=E2=80=99re on a detached HEAD because we=E2=80=99re rebasin=
+g or bisecting
+> on the branch in question. This seems like a sensible change.
 
-Even on systems where this previously succeeded we weren't effectively
-doing that, because "systemd-analyze" will pass various syntax errors
-by and exit with a status code of 0, e.g. if the "[Unit]" section is
-replaced with a nonsensical "[HlaghUnfUnf]" section.
+Missing tests though, would be nice to have a test that saw what
+happened when the branch is in that "git bisect start" or rebasing
+state.
 
-To do that ignore whatever exit code we get from "systemd-analyze
-verify", and filter its stderr output to extract the sorts of lines it
-emits on note syntax warnings and errors. We need to filter out
-"Failed to load", which would be emitted e.g. on the
-gcc135.fsffrance.org test box[1].
-
-We also need to pipe this output to FD's 5 & 6, to avoid mixing up the
-trace output with our own output under "-x".
-
-1. https://lore.kernel.org/git/211026.8635oo11jk.gmgdl@evledraar.gmail.com/
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-This test is still broken in rc2, this patch fixes it. The only update
-is a commit message grammar fix pointed out by Eric Sunshine, thanks!
-
-Range-diff against v1:
-1:  90172a8ddcc ! 1:  44f0cafa16e maintenance tests: fix systemd v2.34.0-rc* test regression
-    @@ Commit message
-         maintenance tests: fix systemd v2.34.0-rc* test regression
-     
-         Fix tests added in b681b191f92 (maintenance: add support for systemd
-    -    timers on Linux, 2021-09-04) to run successfully no systems where
-    +    timers on Linux, 2021-09-04) to run successfully on systems where
-         systemd-analyze is installed, but on which there's a discrepancy
-         between a FILE argument of "/lib/systemd/system/basic.target" and
-         "systemd/user/git-maintenance@.service" succeeding.
-    @@ Commit message
-     
-         To do that ignore whatever exit code we get from "systemd-analyze
-         verify", and filter its stderr output to extract the sorts of lines it
-    -    emits no note syntax warnings and errors. We need to filter out
-    +    emits on note syntax warnings and errors. We need to filter out
-         "Failed to load", which would be emitted e.g. on the
-         gcc135.fsffrance.org test box[1].
-     
-
- t/t7900-maintenance.sh | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
-
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 74aa6384755..5fe2ea03c1d 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -20,15 +20,16 @@ test_xmllint () {
- 	fi
- }
- 
--test_lazy_prereq SYSTEMD_ANALYZE '
--	systemd-analyze verify /lib/systemd/system/basic.target
--'
--
- test_systemd_analyze_verify () {
--	if test_have_prereq SYSTEMD_ANALYZE
--	then
--		systemd-analyze verify "$@"
--	fi
-+	# Ignoring any errors from systemd-analyze is intentional
-+	systemd-analyze verify "$@" >systemd.out 2>systemd.err;
-+
-+	cat systemd.out >&5 &&
-+	sed -n \
-+		-e '/^Failed to load/d' \
-+		-e '/git-maintenance@i*\.service:/x' \
-+		<systemd.err >&6 &&
-+	rm systemd.out systemd.err
- }
- 
- test_expect_success 'help text' '
-@@ -697,7 +698,11 @@ test_expect_success 'start and stop Linux/systemd maintenance' '
- 	# start registers the repo
- 	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
- 
--	test_systemd_analyze_verify "systemd/user/git-maintenance@.service" &&
-+	# If we have a systemd-analyze on the system we can verify the
-+	# generated file.
-+	test_systemd_analyze_verify "systemd/user/git-maintenance@.service" 5>out 6>err &&
-+	test_must_be_empty out &&
-+	test_must_be_empty err &&
- 
- 	printf -- "--user enable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
- 	test_cmp expect args &&
--- 
-2.34.0.rc2.791.gdbfcf909579
-
+Also what those commands to if the branch is updated, e.g. with
+git-update-ref.
