@@ -2,110 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2B00C433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 00:16:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BBE0C433EF
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 00:18:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA74661107
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 00:16:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04353611F2
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 00:18:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230392AbhKJAS5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Nov 2021 19:18:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48814 "EHLO
+        id S230338AbhKJAVG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Nov 2021 19:21:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230232AbhKJAS5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Nov 2021 19:18:57 -0500
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22D1BC061764
-        for <git@vger.kernel.org>; Tue,  9 Nov 2021 16:16:10 -0800 (PST)
-Received: by mail-il1-x12a.google.com with SMTP id w15so615060ill.2
-        for <git@vger.kernel.org>; Tue, 09 Nov 2021 16:16:10 -0800 (PST)
+        with ESMTP id S230101AbhKJAVF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Nov 2021 19:21:05 -0500
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A48BC061764
+        for <git@vger.kernel.org>; Tue,  9 Nov 2021 16:18:19 -0800 (PST)
+Received: by mail-il1-x135.google.com with SMTP id s14so574329ilv.10
+        for <git@vger.kernel.org>; Tue, 09 Nov 2021 16:18:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=PaENmZ9pDBUQP3NPVHPI2C7y/W64v2mZoVagjLS5Hfc=;
-        b=kWO8d96ON2v7eJ/+LWBRe5SXmzv7kTsYu0nK4J55kxLcxKpKmv631YBjk2SFgYKh6L
-         qk41l5VFVUzZUFOOqllZ7K7BJVX6AoGwHluSpgxLiMpv268UFj4kin/cT0VqLLyhp1tV
-         GS+D2fdg5be5pcg5pMPPhZ1VA3Txqo0znVCsmUqeOIDZ9JdCP8DTbPzrZd6EBAvyzVBE
-         +SlC6MWPT0KUZDoe3pcoCmsIrDKdwqzrSUjTD4BvFRTMnkb3HaJV1mhT0IUkEp5AMeiR
-         +gVD152fL/omvj5qZyk9F2tyUS+9QEp+vl6sR6zbh9eP3lPyYADy2UD2VtcHo+21lZ1N
-         1EtQ==
+        bh=+AKUz6txRJZVwLyh2HRXBFJP0U6BaVc0z88p2rx0h3M=;
+        b=Eo5r24p1IaRn9pPvoILIJvAsitZGescDwmXrmuYwIct+O034XLyn5luiMk7GXbULG5
+         AEGcctKkKPYkr7XVWaUmP+wXRM7R31/5CxPjGIP9GsKkK1rdINp4LGvG+c8GiuDAkFMP
+         nBLYdXcoKIm7VcXlkBbcMgOtuuCNyJo+F78C+HDLuNx/H5R/X6gisKQNNs6Mdr8odMh/
+         OfxR10bwlN6EUR/VHVPe9ghEddKsSPQhFhd92YpsWnCxHY6SVdW6mhWIbGpyH3Dy3mmv
+         nTHLoZ1kOa9joR+Rqlyl1JcOD4ArJbvRsn7oCZYMEpbIPcPLkMKpsKgGa7c0YG9f+icU
+         rq6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=PaENmZ9pDBUQP3NPVHPI2C7y/W64v2mZoVagjLS5Hfc=;
-        b=EEnGM9KweNzMzDTIHqm0Ejk/Rh/mu3Q6e8Dp42czfOJLN4ARKJf9UkkRnjzvpYKw7T
-         sly3mfrQpfOyGpH9wgQGKhnDL494h5fIQv3Y+kb//DbbIasD6yOL+AqvukMfzf7KD1ME
-         +tcGd6zbObe6694mxf9WvbRzAJd48JRCpASO+tMWQY5D/bgYglwtjXD59EFJU33Df1ln
-         y3llX5WhEpAkS4zb0EbKsuFu+VeFgRCkojH3p+eYwXJikUWGlo7n0K1Wd7cHvEYXDXqF
-         nn1FjlTYTkAfuBeFjg5yS/35K9WL3G/8fZDTs3slmIqa3zpkaNHaWqare8Ba2MmR3Msb
-         J2gg==
-X-Gm-Message-State: AOAM531ARJzlWIdchfGG1/ik2uYqkAc62uwk6fzrBQb7yUv6unESV40/
-        p+hADBPOf2DP3mgdQQZf+7RCNZl4zlneit6O
-X-Google-Smtp-Source: ABdhPJwwS5SZMjtxh1UOxjjlL4lN1HZPYbsYZBe/eVuD8O2vZ87S9u3Z1zyJXyt9z6YC5Daq1iuIvA==
-X-Received: by 2002:a05:6e02:1989:: with SMTP id g9mr8532549ilf.61.1636503369084;
-        Tue, 09 Nov 2021 16:16:09 -0800 (PST)
+        bh=+AKUz6txRJZVwLyh2HRXBFJP0U6BaVc0z88p2rx0h3M=;
+        b=r5Yc4ioxGweN8ONWqlLs0bl5Brtjg+F0sktBBddVadaRHlp7bEwO6lUbI0xb5rkd0U
+         EYfWDPEuLTcHLIfHmvkOMxcLSKGy5ZbkvkmOroakyjK51QgGp4DR3GeERHla3DidV17g
+         kC4NtqrqE2WKa8+iwB42vQqqtVrUSUM9V4iuh/te9avnNzdKTxEVkA7r5egzniHR8tSp
+         XNxhDfLUMLrLbUycSaELdbki53cRHimIsLsx12cJVwmbagfhJJAy0R+r81OlcjpyE7Ow
+         GemWPgupHfKCaZy3TjhDsAJ9rnpR82GdlpzURk2CyaFETGd6uPPPaYXG1eZRFn3Pig1R
+         SUJg==
+X-Gm-Message-State: AOAM533V7iJs+31LDPSGrJsJcAAyf7AcqMwXE4X9ITEMMoLy/4euDBrC
+        xNOQA4oJAZAnYVRXuJR8qLR3Ng==
+X-Google-Smtp-Source: ABdhPJzMzgd/KezNTy7cmhPOAMPyg84aSgk3P94IvR121u1RyL5kUecJ4fTMxGGY2XNgumlxijJAmg==
+X-Received: by 2002:a92:cda2:: with SMTP id g2mr8101661ild.2.1636503498691;
+        Tue, 09 Nov 2021 16:18:18 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f5sm11014031ioo.34.2021.11.09.16.16.07
+        by smtp.gmail.com with ESMTPSA id i4sm12961948ilm.9.2021.11.09.16.18.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Nov 2021 16:16:08 -0800 (PST)
-Date:   Tue, 9 Nov 2021 19:16:07 -0500
+        Tue, 09 Nov 2021 16:18:18 -0800 (PST)
+Date:   Tue, 9 Nov 2021 19:18:17 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
         Junio C Hamano <gitster@pobox.com>,
-        J Smith <dark.panda@gmail.com>
-Subject: Re: [PATCH 7/8] grep: simplify config parsing, change grep.<rx
- config> interaction
-Message-ID: <YYsPRxe0hgJYlisq@nand.local>
+        J Smith <dark.panda@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/8] grep API: call grep_config() after grep_init()
+Message-ID: <YYsPySOHR8h+CYbl@nand.local>
 References: <cover-0.8-00000000000-20211106T210711Z-avarab@gmail.com>
- <patch-7.8-677a8f8520f-20211106T210711Z-avarab@gmail.com>
- <YYms4czKVnQFWYQ+@nand.local>
- <211109.86ee7qdqz0.gmgdl@evledraar.gmail.com>
+ <patch-6.8-933ac853bca-20211106T210711Z-avarab@gmail.com>
+ <YYmbTOR+uk7prM8A@nand.local>
+ <211109.86a6iedqpf.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <211109.86ee7qdqz0.gmgdl@evledraar.gmail.com>
+In-Reply-To: <211109.86a6iedqpf.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 09, 2021 at 03:01:12AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> Or someone who'd read the docs, understood that we promised that would
-> do nothing, and inserted that just to test us, but that seems unlikely
-> :)
->
-> Or, I suppose someone who's entirely confused, and will continue being
-> even more confused now that behavior changes on a git upgrade from ERE
-> to BRE.
->
-> I'm hoping the last two paragraphs describe no-one & that this is safe
-> to do.
-
-Yeah, I agree that it seems very unlikely that anybody would actually be
-affected here, so I'm comfortable with the change.
-
-> >> ---
-> >>  Documentation/config/grep.txt |  3 +-
-> >>  Documentation/git-grep.txt    |  3 +-
+On Tue, Nov 09, 2021 at 03:06:22AM +0100, Ævar Arnfjörð Bjarmason wrote:
+> >> -/*
+> >> - * Initialize one instance of grep_opt and copy the
+> >> - * default values from the template we read the configuration
+> >> - * information in an earlier call to git_config(grep_config).
+> >> - */
+> >>  void grep_init(struct grep_opt *opt, struct repository *repo)
+> >>  {
+> >> -	*opt = grep_defaults;
+> >> +	struct grep_opt blank = GREP_OPT_INIT;
+> >> +	memcpy(opt, &blank, sizeof(*opt));
 > >
-> > Not the fault of your patch, but these two are annoyingly (and subtly)
-> > different from one another. Could we clean this up and put everything in
-> > Documentation/config/grep.txt (and then include that in the
-> > CONFIGURATION section of Documentation/git-grep.txt)?
+> > I'm nit-picking, but creating a throwaway struct for the convenience of
+> > using designated initialization (at the cost of having to memcpy an
+> > entire struct around) seems like overkill.
+> >
+> > Especially since we're just going to write into the other fields of the
+> > the target struct anyway, I'd probably rather have seen everything
+> > written out explicitly without the throwaway or memcpy.
 >
-> I've got a large series to do that for all of these, but opted to skip
-> that particular digression here (even for just grep.txt it's a bit
-> distracting).
+> It's a widely used pattern in the codebase at this point, see
+> 5726a6b4012 (*.c *_init(): define in terms of corresponding *_INIT
+> macro, 2021-07-01) (mine, but I stole it from Jeff King).
+>
+> As his linked-to compiler test shows the memcpy() is optimized away, so
+> modern compilers will treat these idioms the same way.
+>
+> There was a suggestions somewhere that we should prorably move to that
+> "*<x> = <y>" or whatever it was briefer C99 (I think) syntax across the
+> board, it would be less verbose. But I haven't tested if it's as widely
+> supported, so I've just been sticking with that blank/memcpy() pattern
+> for "do init in terms of macro".
 
-I think that you could include a preparatory clean-up in this series to
-make the Documentation/config/grep.txt included by
-Documentation/git-grep.txt without being too distracting. But if punting
-on it now works better for you, I don't think either makes a reviewer's
-job substantially different.
+I do at least prefer memcpy() over *<x> = <y> when x and y are
+structures. But I wasn't aware that this was common in our codebase.
+Anyway, my suggestion was only along the lines of "you're already
+writing individual fields below, so why not just do that throughout
+instead of memcpy()-ing some of them via a macro which expands to a
+designated initializer?"
+
+But this is a cosmetic point, so whatever you feel fits in most with the
+surrounding style (so long as the pattern we're propagating isn't
+terrible, which is the case here) then I'm OK with it.
 
 Thanks,
 Taylor
