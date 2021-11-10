@@ -2,277 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0F3AC433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 10:35:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AAB5C433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 11:05:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 92CD361168
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 10:35:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19CBB61241
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 11:05:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231241AbhKJKie (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 05:38:34 -0500
-Received: from host.78.145.23.62.rev.coltfrance.com ([62.23.145.78]:54708 "EHLO
-        smtpservice.6wind.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S231239AbhKJKid (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 05:38:33 -0500
-Received: from localhost (dio.dev.6wind.com [10.17.1.86])
-        by smtpservice.6wind.com (Postfix) with ESMTP id 918B66001B;
-        Wed, 10 Nov 2021 11:35:44 +0100 (CET)
-From:   Robin Jarry <robin.jarry@6wind.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org,
-        Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-        Jan Smets <jan.smets@nokia.com>,
-        Stephen Morton <stephen.morton@nokia.com>,
-        Jeff King <peff@peff.net>, Robin Jarry <robin.jarry@6wind.com>
-Subject: [RFC PATCH] receive-pack: interrupt pre-receive when client disconnects
-Date:   Wed, 10 Nov 2021 11:35:25 +0100
-Message-Id: <20211110103525.171066-1-robin.jarry@6wind.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <xmqqzgqd11dp.fsf@gitster.g>
-References: <xmqqzgqd11dp.fsf@gitster.g>
+        id S231611AbhKJLI2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 06:08:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51520 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231338AbhKJLIQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 06:08:16 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894F7C061764
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 03:05:28 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id r8so3283845wra.7
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 03:05:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=EtekMmlmH7w277sDBSKbW/X6LJzPTAyyz8Y6tKjhh7I=;
+        b=qdisvtagpncokj/oOthOLuUvlExsThOjKngCpaHbpZIKVl78TWNssCe2uf79OT6qSz
+         h+OvyoYNxfr7lloNw6xvW31/xatClbaXRFEQ9f5JO122y36H8ZkGB7VoMlKNWYq6Nlad
+         QsNculPbgWI5p8Qdo6oznZYcAVkUlZuSNISzEPrNysZGLGyy+Pa1pWGJmXCfUDIllkOa
+         LBbd375q06r6QrfV5T6EIJxPIv20JgpLFw/sCof60Oxcf6iTr/72HanAI1wvhGe+k/Cw
+         czaUGp4Tp/5vAUhLPIRo7reRpd16aT9WYWDkET/biEk5qMb70eIA8mmG8FyyKhrUEO5d
+         Rfiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=EtekMmlmH7w277sDBSKbW/X6LJzPTAyyz8Y6tKjhh7I=;
+        b=jNBZpetQGnt/hcolf1tGCfNECaVRdmPg1xn3uEKL/4lHZOm9qN1xv+Mrax2rSnSFOc
+         zDK2T2k4z6BThT99T5HSr9DkbZogudVhXRRRzvubyjqscLPnrDzPxPaQFLWlBGp55ijN
+         6My6Q9W8OFuJubWJQR/q8R+I0es/mVuD7/5WXn5qtMB3080+LGeOYbQhAOvES4F5to6F
+         xVu70FR9cA47tZXEmymngdT1j7C6sLjl2vqSaiIedHdjhY2IE/vexB2OyOBPZEb6knTA
+         eUWqQ0VgKg7mNOLMW3nyNjbMGUu27H3QiAdLc6T+dNiQh5vNFiaLnYdIsBFV75t1yAK1
+         i7Rg==
+X-Gm-Message-State: AOAM532LF0oHQ8JYgSIhEpXlF6eLDkoVxvB/HsaXkP+nTiJROhB8CO6G
+        mn55o4Zn8QfVPTWrwYz3CL+p9isAaWmivg==
+X-Google-Smtp-Source: ABdhPJxT3cgeVkME+zXA6EvXsI0fF095uaO6X0xNKU9ujkuXzZ72MMkAaPQ9mflPWIPQwpdb5Bx6QQ==
+X-Received: by 2002:a5d:47a8:: with SMTP id 8mr18303168wrb.80.1636542327156;
+        Wed, 10 Nov 2021 03:05:27 -0800 (PST)
+Received: from [192.168.1.201] ([31.185.185.186])
+        by smtp.googlemail.com with ESMTPSA id l26sm5418102wms.15.2021.11.10.03.05.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Nov 2021 03:05:26 -0800 (PST)
+Message-ID: <33c63811-b048-8227-6148-16d5bd908564@gmail.com>
+Date:   Wed, 10 Nov 2021 11:05:25 +0000
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 01/15] diff --color-moved: add perf tests
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+References: <pull.981.v2.git.1626777393.gitgitgadget@gmail.com>
+ <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>
+ <8fc8914a37b3c343cd92bb0255088f7b000ff7f7.1635336262.git.gitgitgadget@gmail.com>
+ <xmqqsfwkq1h4.fsf@gitster.g> <b6f57fc3-75d9-d7d5-7153-28dde066a101@gmail.com>
+ <211029.86zgqs3wpx.gmgdl@evledraar.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <211029.86zgqs3wpx.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When hitting ctrl-c on the client while a remote pre-receive hook is
-running, receive-pack is not killed by SIGPIPE because the signal is
-ignored. This is a side effect of commit ec7dbd145bd8 ("receive-pack:
-allow hooks to ignore its standard input stream").
+Hi Ævar
 
-The pre-receive hook itself is not interrupted and does not receive any
-error since its stdout is a pipe which is read in an async thread and
-output back to the client socket in a side band channel.
+On 29/10/2021 12:06, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, Oct 29 2021, Phillip Wood wrote:
+> 
+>> Hi Junio
+>>
+>> On 28/10/2021 22:32, Junio C Hamano wrote:
+>>> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>>
+>>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>>>
+>>>> Add some tests so we can monitor changes to the performance of the
+>>>> move detection code. The tests record the performance of a single
+>>>> large diff and a sequence of smaller diffs.
+>>> "A single large diff" meaning...?
+>>
+>> The diff of two commits that are far apart in the history so have lots
+>> of changes between them
+>>
+>>>> +if ! git rev-parse --verify v2.29.0^{commit} >/dev/null
+>>>> +then
+>>>> +	skip_all='skipping because tag v2.29.0 was not found'
+>>>> +	test_done
+>>>> +fi
+>>> Hmph.  So this is designed only to be run in a clone of git.git with
+>>> that tag (and a bit of history, at least to v2.28.0 and 1000 commits)?
+>>> I am asking primarily because this seems to be the first instance of
+>>> a test that hardcodes the dependency on our history, instead of
+>>> allowing the tester to use their favourite history by using the
+>>> GIT_PERF_LARGE_REPO and GIT_PERF_REPO environment variables.
+>>
+>> p3404-rebase-interactive does the same thing. The aim is to have a
+>> repeatable test rather than just using whatever commit HEAD happens to
+>> be pointing at when the test is run as the starting point, if you have
+>> any ideas for doing that another way I'm happy to change it.
+> 
+> I don't know if it's worth it here, but the following would work:
+> 
+>   1. List all tags in the repository, sorted in reverse order, so e.g.:
+> 
+>      git tag -l 'v*.0' --sort=version:refname
+> 
+>      (The glob can be configurable as an env variable, or we could fall
+>      back)
+> 
+>   2. Go down that list and find the first pair that matches some limit, I
+>      think say the first "major" release with 500 commits would qualify
+> 
+>   3. Make it a GIT_PERF_LARGE_REPO test
+> 
+> We've got some perf tests that do similar things. I think you'd find
+> that with something like this you should able to hand the perf test a
+> path to git.git, or linux.git, and probably any "major" repository" as
+> long as it follows a common "we tag our releases at some interval"
+> pattern.
+> 
+> Or perhaps more simply:
+> 
+>   1. Note the number of commits in the history, per "git rev-list HEAD |
+>      wc -l" 2.
+> 
+>   2. Then round that down to the nearest 10^x, so for a 250k commit
+>     repository round down to 100k and diff say the 90k..100kth commits,
+>     for git.git which has 60k that would be 10k, and the diff is commits
+>     9k..10k..
+> 
+> It means you'll get a "bump" eventually when say git.git crosses 100k
+> commits, but it will prorably be stable for any measurement anyone cares
+> to do, and means that you can get "realistic" measurements for diffing a
+> big chuck on of history from anything from a tiny repository with >=10
+> commits, to something truly gargantuan where you'd end up diffing say
+> 900k..1m.
 
-After the pre-receive has exited the SIGPIPE default handler is restored
-and if the hook did not report any error, objects are migrated from
-temporary to permanent storage.
+Thanks for the suggestions, I was quite tempted by the second idea, but 
+in the end I couldn't face rerunning the pref tests and updating all the 
+commit messages again. I've added a couple of environment variables to 
+allow the revs in the diff commands to be customized.
 
-This can be confusing for most people and may even be considered a bug.
-When receive-pack cannot forward pre-receive output to the client, do
-not ignore the error and kill the hook process so that the push does not
-complete.
+Best Wishes
 
-Signed-off-by: Robin Jarry <robin.jarry@6wind.com>
----
-Note that if pre-receive does not produce any output, any disconnection
-of the client will not cause the hook to be killed. This is not ideal
-but as far as I can see, there is no way to check if the client is alive
-without writing in the side band channel. Maybe by sending keepalive
-packets before cleaning up. I am not comfortable enough with git
-internals to be sure.
+Phillip
 
- builtin/receive-pack.c | 55 ++++++++++++++++++++++++++++++++++++------
- sideband.c             | 31 +++++++++++++++++++++---
- sideband.h             |  4 +++
- 3 files changed, 79 insertions(+), 11 deletions(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 2f4a38adfe2c..5668b8273486 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -469,6 +469,7 @@ static int copy_to_sideband(int in, int out, void *arg)
- {
- 	char data[128];
- 	int keepalive_active = 0;
-+	struct child_process *proc = arg;
- 
- 	if (keepalive_in_sec <= 0)
- 		use_keepalive = KEEPALIVE_NEVER;
-@@ -494,7 +495,11 @@ static int copy_to_sideband(int in, int out, void *arg)
- 			} else if (ret == 0) {
- 				/* no data; send a keepalive packet */
- 				static const char buf[] = "0005\1";
--				write_or_die(1, buf, sizeof(buf) - 1);
-+				if (proc && proc->pid > 0) {
-+					if (write_in_full(1, buf, sizeof(buf) - 1) < 0)
-+						goto error;
-+				} else
-+					write_or_die(1, buf, sizeof(buf) - 1);
- 				continue;
- 			} /* else there is actual data to read */
- 		}
-@@ -512,8 +517,21 @@ static int copy_to_sideband(int in, int out, void *arg)
- 				 * with it.
- 				 */
- 				keepalive_active = 1;
--				send_sideband(1, 2, data, p - data, use_sideband);
--				send_sideband(1, 2, p + 1, sz - (p - data + 1), use_sideband);
-+				if (proc && proc->pid > 0) {
-+					if (send_sideband2(1, 2, data, p - data,
-+							   use_sideband) < 0)
-+						goto error;
-+					if (send_sideband2(1, 2, p + 1,
-+							   sz - (p - data + 1),
-+							   use_sideband) < 0)
-+						goto error;
-+				} else {
-+					send_sideband(1, 2, data, p - data,
-+						      use_sideband);
-+					send_sideband(1, 2, p + 1,
-+						      sz - (p - data + 1),
-+						      use_sideband);
-+				}
- 				continue;
- 			}
- 		}
-@@ -522,10 +540,24 @@ static int copy_to_sideband(int in, int out, void *arg)
- 		 * Either we're not looking for a NUL signal, or we didn't see
- 		 * it yet; just pass along the data.
- 		 */
--		send_sideband(1, 2, data, sz, use_sideband);
-+		if (proc && proc->pid > 0) {
-+			if (send_sideband2(1, 2, data, sz, use_sideband) < 0)
-+				goto error;
-+		} else
-+			send_sideband(1, 2, data, sz, use_sideband);
- 	}
- 	close(in);
- 	return 0;
-+error:
-+	close(in);
-+	if (proc && proc->pid > 0) {
-+		/*
-+		 * SIGPIPE would be more relevant but we want to make sure that
-+		 * the hook does not ignore the signal.
-+		 */
-+		kill(proc->pid, SIGKILL);
-+	}
-+	return -1;
- }
- 
- static void hmac_hash(unsigned char *out,
-@@ -807,7 +839,8 @@ struct receive_hook_feed_state {
- };
- 
- typedef int (*feed_fn)(void *, const char **, size_t *);
--static int run_and_feed_hook(const char *hook_name, feed_fn feed,
-+static int run_and_feed_hook(const char *hook_name,
-+			     int isolate_sigpipe, feed_fn feed,
- 			     struct receive_hook_feed_state *feed_state)
- {
- 	struct child_process proc = CHILD_PROCESS_INIT;
-@@ -843,6 +876,10 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
- 	if (use_sideband) {
- 		memset(&muxer, 0, sizeof(muxer));
- 		muxer.proc = copy_to_sideband;
-+		if (isolate_sigpipe)
-+			muxer.data = NULL;
-+		else
-+			muxer.data = &proc;
- 		muxer.in = -1;
- 		code = start_async(&muxer);
- 		if (code)
-@@ -923,6 +960,7 @@ static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
- static int run_receive_hook(struct command *commands,
- 			    const char *hook_name,
- 			    int skip_broken,
-+			    int isolate_sigpipe,
- 			    const struct string_list *push_options)
- {
- 	struct receive_hook_feed_state state;
-@@ -936,7 +974,8 @@ static int run_receive_hook(struct command *commands,
- 		return 0;
- 	state.cmd = commands;
- 	state.push_options = push_options;
--	status = run_and_feed_hook(hook_name, feed_receive_hook, &state);
-+	status = run_and_feed_hook(hook_name, isolate_sigpipe,
-+				   feed_receive_hook, &state);
- 	strbuf_release(&state.buf);
- 	return status;
- }
-@@ -1970,7 +2009,7 @@ static void execute_commands(struct command *commands,
- 		}
- 	}
- 
--	if (run_receive_hook(commands, "pre-receive", 0, push_options)) {
-+	if (run_receive_hook(commands, "pre-receive", 0, 0, push_options)) {
- 		for (cmd = commands; cmd; cmd = cmd->next) {
- 			if (!cmd->error_string)
- 				cmd->error_string = "pre-receive hook declined";
-@@ -2572,7 +2611,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		else if (report_status)
- 			report(commands, unpack_status);
- 		sigchain_pop(SIGPIPE);
--		run_receive_hook(commands, "post-receive", 1,
-+		run_receive_hook(commands, "post-receive", 1, 1,
- 				 &push_options);
- 		run_update_post_hook(commands);
- 		string_list_clear(&push_options, 0);
-diff --git a/sideband.c b/sideband.c
-index 85bddfdcd4f5..27f8d653eb24 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -247,11 +247,25 @@ int demultiplex_sideband(const char *me, int status,
- 	return 1;
- }
- 
-+static int send_sideband_priv(int fd, int band, const char *data, ssize_t sz,
-+			      int packet_max, int ignore_errors);
-+
- /*
-  * fd is connected to the remote side; send the sideband data
-  * over multiplexed packet stream.
-  */
- void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_max)
-+{
-+	(void)send_sideband_priv(fd, band, data, sz, packet_max, 1);
-+}
-+
-+int send_sideband2(int fd, int band, const char *data, ssize_t sz, int packet_max)
-+{
-+	return send_sideband_priv(fd, band, data, sz, packet_max, 0);
-+}
-+
-+static int send_sideband_priv(int fd, int band, const char *data, ssize_t sz,
-+			      int packet_max, int ignore_errors)
- {
- 	const char *p = data;
- 
-@@ -265,13 +279,24 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
- 		if (0 <= band) {
- 			xsnprintf(hdr, sizeof(hdr), "%04x", n + 5);
- 			hdr[4] = band;
--			write_or_die(fd, hdr, 5);
-+			if (ignore_errors)
-+				write_or_die(fd, hdr, 5);
-+			else if (write_in_full(fd, hdr, 5) < 0)
-+				return -1;
- 		} else {
- 			xsnprintf(hdr, sizeof(hdr), "%04x", n + 4);
--			write_or_die(fd, hdr, 4);
-+			if (ignore_errors)
-+				write_or_die(fd, hdr, 4);
-+			else if (write_in_full(fd, hdr, 4) < 0)
-+				return -1;
- 		}
--		write_or_die(fd, p, n);
-+		if (ignore_errors)
-+			write_or_die(fd, p, n);
-+		else if (write_in_full(fd, p, n) < 0)
-+			return -1;
- 		p += n;
- 		sz -= n;
- 	}
-+
-+	return 0;
- }
-diff --git a/sideband.h b/sideband.h
-index 5a25331be55d..cb92777418e1 100644
---- a/sideband.h
-+++ b/sideband.h
-@@ -29,5 +29,9 @@ int demultiplex_sideband(const char *me, int status,
- 			 enum sideband_type *sideband_type);
- 
- void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_max);
-+/*
-+ * Do not die on write errors, return -1 instead.
-+ */
-+int send_sideband2(int fd, int band, const char *data, ssize_t sz, int packet_max);
- 
- #endif
--- 
-2.30.2
 
