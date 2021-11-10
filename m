@@ -2,119 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E736C433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 23:46:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40177C433EF
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 23:51:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 648F561159
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 23:46:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1691461215
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 23:51:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234253AbhKJXtX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 18:49:23 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62122 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234005AbhKJXtV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 18:49:21 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A90AD15C728;
-        Wed, 10 Nov 2021 18:46:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SXlnaFFmOBOcdSL/wIEcdf6IPZ1hrQowUfPGDP
-        8XeDg=; b=Dpd0yzhqRS9iIoUI/ynBCg38k21DcL2csdbUUdL5l9+7ORToMJrSWw
-        5Iu0Opf8HbUIY3uycunUcIjTdG0KswCKTlacHt2tsTwc6r69LI+vpaM9nxTChm6q
-        BIUPoeWKlGJVHwI78BtNEbSXy0H0rS5JowgRjxyQzqtyVRMEAd1AY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A181815C727;
-        Wed, 10 Nov 2021 18:46:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BA50315C725;
-        Wed, 10 Nov 2021 18:46:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Anders Kaseorg <andersk@mit.edu>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Andreas Heiduk <andreas.heiduk@mathema.de>
-Subject: Re: [PATCH v5 1/4] fetch: Protect branches checked out in all
- worktrees
-References: <2f983e36-532f-ac87-9ade-fba4c6b9d276@mit.edu>
-        <20211109230941.2518143-1-andersk@mit.edu>
-        <nycvar.QRO.7.76.6.2111101315330.21127@tvgsbejvaqbjf.bet>
-Date:   Wed, 10 Nov 2021 15:46:28 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2111101315330.21127@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Wed, 10 Nov 2021 13:18:55 +0100
-        (CET)")
-Message-ID: <xmqq8rxvwp4b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234261AbhKJXyV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 18:54:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57854 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234172AbhKJXyU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 18:54:20 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33931C061766
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 15:51:32 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id c71-20020a1c9a4a000000b0032cdcc8cbafso3155621wme.3
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 15:51:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=+5DFOemYkcczo+Eqz4btwop4LNVvCVBridc6aaGMpGQ=;
+        b=WmLphNFdW5ssqQBT029+8VWYPqr95i3n8v2fMG4Fqx8QXg4xApdAQtSf370J7opvGu
+         UYIOXeCR6G6OUZRTvLOcAbi305imfLQ/XxHo9s0FPKIQdRtPIcN36T58RTY+GaeNW1z3
+         lo3XNHxfO7in+ukxPGUzBp/ZQn7r6SJVHuGGRV+wvbFkiNgr8pdirb/swJKvUn06wQe2
+         cWRWNZGxy0B7RVK4szmuC+fgI7y2GTy+ZqFmoRyfj9aulXsHyyihxc7ijNNrL1gOPTeN
+         bUaF2bDhJqE1Jlz+cOR0frfWSmmZZX+vZnejPF94tRgcQeI7XQXLu+MHjtLBY+Qzb9r2
+         bU8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=+5DFOemYkcczo+Eqz4btwop4LNVvCVBridc6aaGMpGQ=;
+        b=dg8Ca9E0x3xuN671KLV4bwC31ycbffACn72k00mH5psc1pq7CJuAQ6r/knlQ1dJczS
+         A+v731YuiTnht55Y9pPm7BpYv3ZRJw5Fc39hcElW/61sdctOjqPNnnqv+fXR5EcXFs/1
+         oVr1F+qY9Ee1+2mWVz5XVxBBTYYRayN3HQdVQtpvJuqOHjeMiglUM6YXgIv03dBUXFSI
+         MaYSFyXHZG1SBKbKbFDv3d3FzQi0Bk9fFo7ZpwrVknqJYBkgQciIhqScfFgX4z2LMIDw
+         ibjWhlnm6smLjLhamTk6ZGxsad/hMm99yq+iVhzn2yBltKVcs9QDW7j1/Hx4P8m0rYSE
+         bf2g==
+X-Gm-Message-State: AOAM533nSfDwaF6KKVBjg24ncSeIsZS6fSeMG4A+b7XRk/8wHc6BUJfW
+        7EWA3nNnfY7gRTVq0/M6E9gxx0yd9lE=
+X-Google-Smtp-Source: ABdhPJyw5YaU0LNyE5Vw78KBK80+jWcqSkdiLU0gLYRfGs4InjBCvXrNf31d3GV94VICnYSGF3o7Vg==
+X-Received: by 2002:a7b:c770:: with SMTP id x16mr21582804wmk.66.1636588290684;
+        Wed, 10 Nov 2021 15:51:30 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f15sm1198737wrt.26.2021.11.10.15.51.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Nov 2021 15:51:30 -0800 (PST)
+Message-Id: <pull.1052.v7.git.1636588289.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1052.v6.git.1635532975.gitgitgadget@gmail.com>
+References: <pull.1052.v6.git.1635532975.gitgitgadget@gmail.com>
+From:   "Ivan Frade via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 10 Nov 2021 23:51:27 +0000
+Subject: [PATCH v7 0/2] fetch-pack: redact packfile urls in traces
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6D400984-4280-11EC-949D-98D80D944F46-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Ivan Frade <ifrade@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Changes since v6:
 
-> ... (apart from the slightly iffy assumption that `buf->ref`
-> starts with `refs/heads/` and therefore `buf->ref + strlen("refs/heads/")`
-> would not overrun, but I _think_ the current code enforces that prefix
-> somewhere along the lines)
+ * Use specific hash sizes instead of hexsz
+ * Remove unnecessary env vars in tests
+ * Added comment on bit toggle
 
-I think that is in 4/4, where the existing code does this:
+Changes since v5:
 
-> diff --git a/branch.c b/branch.c
-> index 7a88a4861e..1aaf694b39 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -199,18 +199,20 @@ int validate_branchname(const char *name, struct strbuf *ref)
->   */
->  int validate_new_branchname(const char *name, struct strbuf *ref, int force)
->  {
-> -	const char *head;
-> +	const struct worktree *wt;
->  
->  	if (!validate_branchname(name, ref))
->  		return 0;
+ * Use hexsz instead of hardcoded hash sizes
 
-This takes a bare branch name in "name" (or a shorthand like @{-1}),
-expand that into a full refname into "ref".  Before passing the ref
-into check_refname_format(), "refs/heads/" is unconditionally added
-at the beginning.  So we know ref begins with "refs/heads/" after
-this point.
+Changes since v4:
 
->  	if (!force)
->  		die(_("A branch named '%s' already exists."),
->  		    ref->buf + strlen("refs/heads/"));
+ * Use "uri" instead of "url"
+ * Look specifically for a line with packfile-uri format (instead of for a
+   URL in general)
+ * Limit the redacting to the packfile-uri section in do_fetch_pack_v2
+ * Use "%.*s" instead of duplicating parts of the string to print
 
-And we already assume ref->buf has "refs/heads/" as its prefix.  It
-may be nice to use skip_prefix(), but it probably is not worth it.
+Changes since v3:
 
-> +	wt = find_shared_symref("HEAD", ref->buf);
-> +	if (wt && !wt->is_bare)
-> +		die(_("Cannot force update the branch '%s'"
-> +		      "checked out at '%s'."),
-> +		    ref->buf + strlen("refs/heads/"), wt->path);
+ * Enable redacting URLs for all sections
+ * Redact only URL path (it was until the end of line)
+ * Redact URL in die() with more friendly message
+ * Update doc to mention that packfile URIs are also redacted.
 
-And this new use just reuses what we assume to be valid.
+Changes since v2:
 
-So, correctness-wise, I do not think there is much to tweak further
-on top of this round.  I've always queued this round more or less
-as-is.
+ * Redact only the path of the URL
+ * Test are now strict, validating the exact line expected in the log
 
-In preparation for the next development cycle, however, it might
-make sense to add a preparatory clean-up step to downcase the first
-word of "die()" messages in the files that are involved in this
-series (not necessarily the ones that are touched by the patches,
-but all of them) and then apply these four patches (with matching
-adjustments, like "Cannot force update" -> "cannot force update") on
-top.  In another review message, I also noticed some inefficient
-code that is due to insufficient support from the worktree.c API,
-but that is not about correctness and can be left out of the series
-to get these fixes early in the next cycle.
+Changes since v1:
 
-Thanks.
+ * Removed non-POSIX flags in tests
+ * More accurate regex for the non-encrypted packfile line
+ * Dropped documentation change
+ * Dropped redacting the die message in http-fetch
+
+Ivan Frade (2):
+  fetch-pack: redact packfile urls in traces
+  http-fetch: redact url on die() message
+
+ Documentation/git.txt  |  5 +++--
+ fetch-pack.c           |  5 +++++
+ http-fetch.c           | 14 ++++++++++--
+ pkt-line.c             | 40 ++++++++++++++++++++++++++++++++-
+ pkt-line.h             |  1 +
+ t/t5702-protocol-v2.sh | 51 ++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 111 insertions(+), 5 deletions(-)
 
 
+base-commit: 88d915a634b449147855041d44875322de2b286d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1052%2Fifradeo%2Fredact-packfile-uri-v7
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1052/ifradeo/redact-packfile-uri-v7
+Pull-Request: https://github.com/gitgitgadget/git/pull/1052
+
+Range-diff vs v6:
+
+ 1:  a6098f98946 ! 1:  bbfdc346ede fetch-pack: redact packfile urls in traces
+     @@ fetch-pack.c: static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+      +				reader.options |= PACKET_READ_REDACT_URI_PATH;
+       			if (process_section_header(&reader, "packfile-uris", 1))
+       				receive_packfile_uris(&reader, &packfile_uris);
+     ++			/* We don't expect more URIs. Reset to avoid expensive URI check. */
+      +			reader.options &= ~PACKET_READ_REDACT_URI_PATH;
+      +
+       			process_section_header(&reader, "packfile", 0);
+     @@ pkt-line.c: int packet_length(const char lenbuf_hex[4])
+      +	buffer += 1;
+      +
+      +	len = strspn(buffer, "0123456789abcdefABCDEF");
+     -+	if (len != (int)the_hash_algo->hexsz || buffer[len] != ' ')
+     ++	/* size of SHA1 and SHA256 hash */
+     ++	if (!(len == 40 || len == 64) || buffer[len] != ' ')
+      +		return NULL; /* required "<hash>SP" not seen */
+      +
+      +	path = strstr(buffer + len + 1, URI_MARK);
+     @@ t/t5702-protocol-v2.sh: test_expect_success 'packfile-uri with transfer.fsckobje
+      +		"uploadpack.blobpackfileuri" \
+      +		"$(cat objh) $(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" &&
+      +
+     -+	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
+     ++	GIT_TRACE_PACKET="$(pwd)/log" \
+      +	git -c protocol.version=2 \
+      +		-c fetch.uriprotocols=http,https \
+      +		clone "$HTTPD_URL/smart/http_parent" http_child &&
+     @@ t/t5702-protocol-v2.sh: test_expect_success 'packfile-uri with transfer.fsckobje
+      +		"uploadpack.blobpackfileuri" \
+      +		"$(cat objh) $(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" &&
+      +
+     -+	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
+     ++	GIT_TRACE_PACKET="$(pwd)/log" \
+      +	GIT_TRACE_REDACT=0 \
+      +	git -c protocol.version=2 \
+      +		-c fetch.uriprotocols=http,https \
+ 2:  38859ae7b7d = 2:  3b210735bc8 http-fetch: redact url on die() message
+
+-- 
+gitgitgadget
