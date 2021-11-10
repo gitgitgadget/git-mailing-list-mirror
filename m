@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B98A6C433EF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 01:44:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E389C433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 01:44:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C54961205
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 01:44:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 682E261207
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 01:44:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229713AbhKJBqs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Nov 2021 20:46:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39740 "EHLO
+        id S229697AbhKJBqt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Nov 2021 20:46:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229638AbhKJBqp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Nov 2021 20:46:45 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7600BC061764
-        for <git@vger.kernel.org>; Tue,  9 Nov 2021 17:43:57 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id z21so3970965edb.5
-        for <git@vger.kernel.org>; Tue, 09 Nov 2021 17:43:57 -0800 (PST)
+        with ESMTP id S229470AbhKJBqq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Nov 2021 20:46:46 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEBBAC061767
+        for <git@vger.kernel.org>; Tue,  9 Nov 2021 17:43:58 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id z21so3971137edb.5
+        for <git@vger.kernel.org>; Tue, 09 Nov 2021 17:43:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=m6vNSCYVowYau1Q2FwT6dMSni5gY/1BZW4/8FvrsVvI=;
-        b=XZlc9y/CdyUcmQr+KRHQQx85zo9bVG2nX56iflP/U9olonlGTui1Mzfdb4tCKeDjN+
-         AUBMKjWkJhDcpRQacosvXQibhMWUFc18RpmC/oXYfvAeck4hquIBb9oYuvWaPXhn33SU
-         i98Q84LxyqgSFWXL2rn65L+SctjUyhxCHg2kGkBc07qab4YeQ1jdD+k6fa3zJSpct4uK
-         LNTENP9v/jAvW9DCMuLxLC9/0/wHWlu6CzZ3KPuMn+5gnXmKos9oJtBR5RTiEbWR7Ov6
-         0SJQkApUugv1ShTVeJtTtjlrhPBlqotJx6+9dsDyg0necdre6gBJ/v9wuysPDgMv3vIV
-         Sj+Q==
+        bh=dKJDejMguoKuLBK9KEjikGOmBRA+WOPweKJVsbkw2A8=;
+        b=XCgmKHQrp2yOP/GZxFYI0Yo0VGym8eIwuieiqs/BfsKKBcN8PoA63jcSVCjt48/lCH
+         V6G+NiugWq0dj8k0fYMrw49gKkP/thkWWNKcRxhsKOVf3IItFOQPZXCFMHHuj5wUmf9F
+         NvPBYCK64jqpg6AWVuRwoxhDYTcdAfHtIYgZJ1QAk5lXOv61B8gV43zhBQ0Jc1fyIqeo
+         KiB4hbJ1KV/oWcd0hcWIR2rrzLutmJTDAgKpKH+bYDMv6kHL63+T2b9qbI/R1xSXxUIv
+         FuwQkaP9FEfSKV7fKxMZURFDkzkGwfQ/CoCfUvNzPsD3ZgpYobxGZuImNEXN369rXj90
+         xNDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=m6vNSCYVowYau1Q2FwT6dMSni5gY/1BZW4/8FvrsVvI=;
-        b=xo+ZFgUlN/PsiFGWT/D46fAvl9aLHPyRP2kLfp6sIHr3wA0bQyQvAWUzL3ib9c45uQ
-         aN2Ov33qg2zaMrIuFOeiyNF8KzHW2HVY2lPl8meOFNIIfk468Xfn2iI+AXKaXVpQb/+A
-         uADXQhewxc2ua6+rPXT80zYrwS//+h60mtuo0rJACD0+rzQxFN+SjpMwv+4ojN64uC78
-         sXyj4ayOWCIqx+O97Pqf+sxBFQo72CgXY0bbmIMnL5GQxuM+P3uz/O1hoF0RvCp1oUdB
-         U6YCmS15LQ3DRuusbW3ubEIHDQpAatcqh2xzRPRCE+8Q/uKrnvTEStSE78ItDH2pTIQw
-         vMIw==
-X-Gm-Message-State: AOAM532HVNXgUoCEsPogcY2kPFSmuUq688pVknavbl7RFUt11hBF15ZD
-        SjXvzU2nO7ZaLhw3OfiHaOaWA7AartNtXg==
-X-Google-Smtp-Source: ABdhPJxOgkS6t5bM8Q97XJN7IWYtI7cx9nmcCZyLfLL6vTTR2oPB/3Ff461f237pGYoiRNz0sv5lkg==
-X-Received: by 2002:a50:d88a:: with SMTP id p10mr16890978edj.274.1636508635742;
-        Tue, 09 Nov 2021 17:43:55 -0800 (PST)
+        bh=dKJDejMguoKuLBK9KEjikGOmBRA+WOPweKJVsbkw2A8=;
+        b=5eBMejPYoNEJ0pgZTo/RAGLK824aMenpd/rieVFme+dquNhMnwI/v5OXZhn9tzhe93
+         6HpXUNmvepOd6MyQjUtehEEvkdW9IASg7y4YmmwOJTYV1RwbKsME9yjDsuyi/1hGgA/W
+         7DrQnpQwChGsx+iDKjbI0nqOxZh4PAx3nOPjpyxdLXqoJJST72AK2jzsUfiUI5edqsmW
+         53KzImAJrgx9Mx2VzyJgbYEg/yoyJEXrybvuOoDDSPJTKuTgzvPlEGkCqU8+bd5ZdEAy
+         woypbYVzbJ8X1ivu34DhU+DWqQLYtoLDmracKeSJ9s3SmgkuakXfMATblGlx38L+7JwR
+         I66g==
+X-Gm-Message-State: AOAM530tYbP6PFAcTIJput11H8r89SPo58MK7ar2Vv4jxzkgfUP/e5Cp
+        hrMp6n0SY79lUDVVkjyVHiHPVsrvfJRDGg==
+X-Google-Smtp-Source: ABdhPJw7zton/ya+JYlGzbLvJQYqMCwKFukA8CdHSG9jgctNxsBkayRtE82g6nE//kks7zw7bV+UoQ==
+X-Received: by 2002:a05:6402:144f:: with SMTP id d15mr16549595edx.43.1636508637336;
+        Tue, 09 Nov 2021 17:43:57 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id qf8sm9369252ejc.8.2021.11.09.17.43.55
+        by smtp.gmail.com with ESMTPSA id qf8sm9369252ejc.8.2021.11.09.17.43.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Nov 2021 17:43:55 -0800 (PST)
+        Tue, 09 Nov 2021 17:43:57 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, J Smith <dark.panda@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 2/8] built-ins: trust the "prefix" from run_builtin()
-Date:   Wed, 10 Nov 2021 02:43:44 +0100
-Message-Id: <patch-v2-2.8-63cf2fe266d-20211110T013632Z-avarab@gmail.com>
+Subject: [PATCH v2 4/8] grep docs: de-duplicate configuration sections
+Date:   Wed, 10 Nov 2021 02:43:46 +0100
+Message-Id: <patch-v2-4.8-efe95397d72-20211110T013632Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.rc2.791.gdbfcf909579
 In-Reply-To: <cover-v2-0.8-00000000000-20211110T013632Z-avarab@gmail.com>
 References: <cover-0.8-00000000000-20211106T210711Z-avarab@gmail.com> <cover-v2-0.8-00000000000-20211110T013632Z-avarab@gmail.com>
@@ -70,227 +70,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change code in "builtin/grep.c" and "builtin/ls-tree.c" to trust the
-"prefix" passed from "run_builtin()". The "prefix" we get from setup.c
-is either going to be NULL or a string of length >0, never "".
+Include the "config/grep.txt" file in "git-grep.txt", instead of
+repeating an almost identical description of the "grep" configuration
+variables in two places. In a subsequent commit we'll amend this
+documentation, and can now do so in one place instead of two.
 
-So we can drop the "prefix && *prefix" checks added for
-"builtin/grep.c" in 0d042fecf2f (git-grep: show pathnames relative to
-the current directory, 2006-08-11), and for "builtin/ls-tree.c" in
-a69dd585fca (ls-tree: chomp leading directories when run from a
-subdirectory, 2005-12-23).
+Let's also add a short blurb at the top indicating that this is
+included documentation, so users won't think that they need to read
+the two versions and compare them.
 
-As seen in code in revision.c that was added in cd676a51367 (diff
---relative: output paths as relative to the current subdirectory,
-2008-02-12) we already have existing code that does away with this
-assertion.
+That wording is copy/pasted from the change I made in b6a8d09f6d8 (gc
+docs: include the "gc.*" section from "config" in "gc", 2019-04-07),
+eventually we'll want to include this via template, and indeed this
+change is extracted from a WIP series that fixes all these
+"CONFIGURATION" includes which does that. But doing that would require
+build system changes, so let's punt on it for now.
 
-This makes it easier to reason about a subsequent change to the
-"prefix_length" code in grep.c in a subsequent commit, and since we're
-going to the trouble of doing that let's leave behind an assert() to
-promise this to any future callers.
+There is no loss of information here that isn't shown in the addition
+to "grep.txt". This change was made by copying the contents of
+"git-grep.txt"'s version over the "grep.txt" version. Aside from the
+change "grep.txt" being made here the two were identical.
 
-For "builtin/grep.c" it would be painful to pass the "prefix" down the
-callchain of:
+This documentation started being copy/pasted around in
+b22520a37c8 (grep: allow -E and -n to be turned on by default via
+configuration, 2011-03-30). After that in e.g. 6453f7b3486 (grep: add
+grep.fullName config variable, 2014-03-17) they started drifting
+apart, with only grep.fullName being described in the command
+documentation.
 
-    cmd_grep -> grep_tree -> grep_submodule -> grep_cache -> grep_oid ->
-    grep_source_name
-
-So for the code that needs it in grep_source_name() let's add a
-"grep_prefix" variable similar to the existing "ls_tree_prefix".
-
-While at it let's move the code in cmd_ls_tree() around so that we
-assign to the "ls_tree_prefix" right after declaring the variables,
-and stop assigning to "prefix". We only subsequently used that
-variable later in the function after clobbering it. Let's just use our
-own "grep_prefix" instead.
-
-Let's also add an assert() in git.c, so that we'll make this promise
-about the "prefix" to any current and future callers, as well as to
-any readers of the code.
-
-Code history:
-
- * The strlen() in "grep.c" hasn't been used since 493b7a08d80 (grep:
-   accept relative paths outside current working directory, 2009-09-05).
-
-   When that code was added in 0d042fecf2f (git-grep: show pathnames
-   relative to the current directory, 2006-08-11) we used the length.
-
-   But since 493b7a08d80 we haven't used it for anything except a
-   boolean check that we could have done on the "prefix" member
-   itself.
+In 434e6e753fe (config.txt: move grep.* to a separate file,
+2018-10-27) we gained the include, but didn't do this next step, let's
+do it now.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/grep.c    | 13 ++++++++-----
- builtin/ls-tree.c |  9 ++++-----
- git.c             |  4 ++--
- grep.c            |  4 +---
- grep.h            |  4 +---
- revision.c        |  2 +-
- 6 files changed, 17 insertions(+), 19 deletions(-)
+ Documentation/config/grep.txt |  7 +++++--
+ Documentation/git-grep.txt    | 30 +++---------------------------
+ 2 files changed, 8 insertions(+), 29 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 9e34a820ad4..d85cbabea67 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -26,6 +26,8 @@
- #include "object-store.h"
- #include "packfile.h"
+diff --git a/Documentation/config/grep.txt b/Documentation/config/grep.txt
+index 44abe45a7ca..ae51f2d91c8 100644
+--- a/Documentation/config/grep.txt
++++ b/Documentation/config/grep.txt
+@@ -16,8 +16,11 @@ grep.extendedRegexp::
+ 	other than 'default'.
  
-+static const char *grep_prefix;
+ grep.threads::
+-	Number of grep worker threads to use.
+-	See `grep.threads` in linkgit:git-grep[1] for more information.
++	Number of grep worker threads to use. If unset (or set to 0), Git will
++	use as many threads as the number of logical cores available.
 +
- static char const * const grep_usage[] = {
- 	N_("git grep [<options>] [-e] <pattern> [<rev>...] [[--] <path>...]"),
- 	NULL
-@@ -315,11 +317,11 @@ static void grep_source_name(struct grep_opt *opt, const char *filename,
- 	strbuf_reset(out);
++grep.fullName::
++	If set to true, enable `--full-name` option by default.
  
- 	if (opt->null_following_name) {
--		if (opt->relative && opt->prefix_length) {
-+		if (opt->relative && grep_prefix) {
- 			struct strbuf rel_buf = STRBUF_INIT;
- 			const char *rel_name =
- 				relative_path(filename + tree_name_len,
--					      opt->prefix, &rel_buf);
-+					      grep_prefix, &rel_buf);
+ grep.fallbackToNoIndex::
+ 	If set to true, fall back to git grep --no-index if git grep
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 3d393fbac1b..29d5ce04f5a 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -334,34 +334,10 @@ performance in this case, it might be desirable to use `--threads=1`.
+ CONFIGURATION
+ -------------
  
- 			if (tree_name_len)
- 				strbuf_add(out, filename, tree_name_len);
-@@ -332,8 +334,8 @@ static void grep_source_name(struct grep_opt *opt, const char *filename,
- 		return;
- 	}
- 
--	if (opt->relative && opt->prefix_length)
--		quote_path(filename + tree_name_len, opt->prefix, out, 0);
-+	if (opt->relative && grep_prefix)
-+		quote_path(filename + tree_name_len, grep_prefix, out, 0);
- 	else
- 		quote_c_style(filename + tree_name_len, out, NULL, 0);
- 
-@@ -962,9 +964,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			   PARSE_OPT_NOCOMPLETE),
- 		OPT_END()
- 	};
-+	grep_prefix = prefix;
- 
- 	git_config(grep_cmd_config, NULL);
--	grep_init(&opt, the_repository, prefix);
-+	grep_init(&opt, the_repository);
- 
- 	/*
- 	 * If there is no -- then the paths must exist in the working
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 3a442631c71..84bed6d5612 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -147,16 +147,15 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 		OPT__ABBREV(&abbrev),
- 		OPT_END()
- 	};
+-grep.lineNumber::
+-	If set to true, enable `-n` option by default.
 -
--	git_config(git_default_config, NULL);
- 	ls_tree_prefix = prefix;
--	if (prefix && *prefix)
-+	if (prefix)
- 		chomp_prefix = strlen(prefix);
+-grep.column::
+-	If set to true, enable the `--column` option by default.
+-
+-grep.patternType::
+-	Set the default matching behavior. Using a value of 'basic', 'extended',
+-	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
+-	`--fixed-strings`, or `--perl-regexp` option accordingly, while the
+-	value 'default' will return to the default matching behavior.
+-
+-grep.extendedRegexp::
+-	If set to true, enable `--extended-regexp` option by default. This
+-	option is ignored when the `grep.patternType` option is set to a value
+-	other than 'default'.
+-
+-grep.threads::
+-	Number of grep worker threads to use. If unset (or set to 0), Git will
+-	use as many threads as the number of logical cores available.
+-
+-grep.fullName::
+-	If set to true, enable `--full-name` option by default.
+-
+-grep.fallbackToNoIndex::
+-	If set to true, fall back to git grep --no-index if git grep
+-	is executed outside of a git repository.  Defaults to false.
++The below documentation is the same as what's found in
++linkgit:git-config[1]:
  
-+	git_config(git_default_config, NULL);
- 	argc = parse_options(argc, argv, prefix, ls_tree_options,
- 			     ls_tree_usage, 0);
- 	if (full_tree) {
--		ls_tree_prefix = prefix = NULL;
-+		ls_tree_prefix = NULL;
- 		chomp_prefix = 0;
- 	}
- 	/* -d -r should imply -t, but -d by itself should not have to. */
-@@ -178,7 +177,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 	parse_pathspec(&pathspec, PATHSPEC_ALL_MAGIC &
- 				  ~(PATHSPEC_FROMTOP | PATHSPEC_LITERAL),
- 		       PATHSPEC_PREFER_CWD,
--		       prefix, argv + 1);
-+		       ls_tree_prefix, argv + 1);
- 	for (i = 0; i < pathspec.nr; i++)
- 		pathspec.items[i].nowildcard_len = pathspec.items[i].len;
- 	pathspec.has_wildcard = 0;
-diff --git a/git.c b/git.c
-index 5ff21be21f3..611bf2f63eb 100644
---- a/git.c
-+++ b/git.c
-@@ -420,9 +420,8 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
- {
- 	int status, help;
- 	struct stat st;
--	const char *prefix;
-+	const char *prefix = NULL;
++include::config/grep.txt[]
  
--	prefix = NULL;
- 	help = argc == 2 && !strcmp(argv[1], "-h");
- 	if (!help) {
- 		if (p->option & RUN_SETUP)
-@@ -431,6 +430,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
- 			int nongit_ok;
- 			prefix = setup_git_directory_gently(&nongit_ok);
- 		}
-+		assert(!prefix || *prefix);
- 		precompose_argv_prefix(argc, argv, NULL);
- 		if (use_pager == -1 && p->option & (RUN_SETUP | RUN_SETUP_GENTLY) &&
- 		    !(p->option & DELAY_PAGER_CONFIG))
-diff --git a/grep.c b/grep.c
-index f6e113e9f0f..c9065254aeb 100644
---- a/grep.c
-+++ b/grep.c
-@@ -139,13 +139,11 @@ int grep_config(const char *var, const char *value, void *cb)
-  * default values from the template we read the configuration
-  * information in an earlier call to git_config(grep_config).
-  */
--void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix)
-+void grep_init(struct grep_opt *opt, struct repository *repo)
- {
- 	*opt = grep_defaults;
- 
- 	opt->repo = repo;
--	opt->prefix = prefix;
--	opt->prefix_length = (prefix && *prefix) ? strlen(prefix) : 0;
- 	opt->pattern_tail = &opt->pattern_list;
- 	opt->header_tail = &opt->header_list;
- }
-diff --git a/grep.h b/grep.h
-index 95cccb670f9..62deadb885f 100644
---- a/grep.h
-+++ b/grep.h
-@@ -134,8 +134,6 @@ struct grep_opt {
- 	 */
- 	struct repository *repo;
- 
--	const char *prefix;
--	int prefix_length;
- 	int linenum;
- 	int columnnum;
- 	int invert;
-@@ -180,7 +178,7 @@ struct grep_opt {
- };
- 
- int grep_config(const char *var, const char *value, void *);
--void grep_init(struct grep_opt *, struct repository *repo, const char *prefix);
-+void grep_init(struct grep_opt *, struct repository *repo);
- void grep_commit_pattern_type(enum grep_pattern_type, struct grep_opt *opt);
- 
- void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen, const char *origin, int no, enum grep_pat_token t);
-diff --git a/revision.c b/revision.c
-index ab7c1358042..9f9b0d2429e 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1833,7 +1833,7 @@ void repo_init_revisions(struct repository *r,
- 	revs->commit_format = CMIT_FMT_DEFAULT;
- 	revs->expand_tabs_in_log_default = 8;
- 
--	grep_init(&revs->grep_filter, revs->repo, prefix);
-+	grep_init(&revs->grep_filter, revs->repo);
- 	revs->grep_filter.status_only = 1;
- 
- 	repo_diff_setup(revs->repo, &revs->diffopt);
+ GIT
+ ---
 -- 
 2.34.0.rc1.741.gab7bfd97031
 
