@@ -2,144 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F76BC433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 11:09:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F914C433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 11:41:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A2FB610D2
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 11:09:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E01061107
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 11:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231250AbhKJLMB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 06:12:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52450 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231158AbhKJLMA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 06:12:00 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57D65C061764
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 03:09:13 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id u18so3327850wrg.5
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 03:09:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=4XVoFtzirZoXGsJOFTYsLEYN0+aEsdzDfL5wQastoMw=;
-        b=gAkIIM2upbsQbGdxd56Vw749CYdicV27Mwm/pAFyQGCefyLqy85cArgEojoVS6Ob2O
-         zCn9f7RrhpzWegE5o6nbbt+L7ggVJyR70Iy1UDoFdhDAoFxMCwvMrKGCyK3mqe57+62W
-         dujSxXDPn+OnMN0VGPmvsDR6HPOwAQ4LNjoUmqsu91lvQCc5kq0mELRug1Kk3Dj9xAfJ
-         6rjBTzGcoVk6ZqdGOEItCaaKij8PfpH6t9+9nvRiAiMvFG+I1AAaOa6MekuLjczPhw9l
-         f3QukB5TaWvkxfItwMqLaIp9Fc51Rl7eHK83C9lh6rZvazY4d1LcCmvTkEC8HvWI5tnE
-         UeTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=4XVoFtzirZoXGsJOFTYsLEYN0+aEsdzDfL5wQastoMw=;
-        b=QKc1Y1aqHRSAzIgGwcy1V2Tt5DuXiq4xzoxCPrUEeXufFkPNFn/r33MRUdgoEmmt5G
-         xShNhqK2RHE+F8SKSQuAa9Nyb1yQ8ZiwxUyTc3sSdhh5xTFa7u6oXtT03GpSKqKqbwJp
-         3BgPr9J5t2/JEa9x+LoOl47Bc/5GE0useE6Z2qMfP4ACqhs80Lbc85QxoqZjzZHm38ia
-         7I6CpPFoA7mwIqxFp3VGYnVrigOcV8YT6KgX2wue9T+1ZNdGnBAH/drsz1QtaTs79I1i
-         lfn2pJI/24lRnhhwfXHuak+rcUXOuCxDBXlRlO+iFT5c3KHoWU/dq2q1KCIDJx+Da0AR
-         1e6w==
-X-Gm-Message-State: AOAM532AZcehmYwcg2dDZtTDRhGiROzvNLYOI/qnYPiUmRexpRZAflVA
-        cjzNZLSuntrd70HA5sHG5A04KxowmY8=
-X-Google-Smtp-Source: ABdhPJwQOWsmMtZjuryb9VEzLBW+Br+wiDycP5pMBg+rpOTqLHgigimLekIiAyZjnEN6gQKYHehDBA==
-X-Received: by 2002:a5d:4e0f:: with SMTP id p15mr18916149wrt.48.1636542551732;
-        Wed, 10 Nov 2021 03:09:11 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b10sm23759807wrt.36.2021.11.10.03.09.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Nov 2021 03:09:11 -0800 (PST)
-Message-Id: <pull.1074.git.1636542550889.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 Nov 2021 11:09:10 +0000
-Subject: [PATCH] simple-ipc: work around issues with Cygwin's Unix socket
- emulation
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S231210AbhKJLoD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 06:44:03 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:47779 "EHLO
+        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230440AbhKJLoC (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 10 Nov 2021 06:44:02 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id EB31A5C01C8;
+        Wed, 10 Nov 2021 06:41:14 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Wed, 10 Nov 2021 06:41:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm2; bh=02aP22DWNh7nYKgzTGLnIO1jACs
+        QmDB2yP+cwIlMwUY=; b=WRZpbHCZ5TupEIhUvhywmr18kQ/qh+jc2Etrjj1Rorh
+        svARoaC4uJJDNcoW7gi41grtM1tj7JmvJ1Oxp59NX2UsAXZcPh/aZTBm66NJBtoC
+        rLrJuDLsldaTSN2MUcm1iULLCr9DaSExZxFvhAa4n26nYSAMmnbhU2VyrR61e8Wb
+        jMK5+18ZgQmxxUFzQ06p/mpR6MxvT4U/ASJzuJw19TGlOjoqsF39IgPM3IWyvU/Q
+        Ss7mv/7McN/s2bLcaCKUVR4hZKbePpupDu1tp3jmVxOWBBEV4mlbVzw9XhT+aYns
+        yLmWzUqT0+uPIG0pRyZEu7TW5RnkUl6obzPt9w5XKPw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=02aP22
+        DWNh7nYKgzTGLnIO1jACsQmDB2yP+cwIlMwUY=; b=g4YLwBtSGcRQ4hx72oWBY6
+        ihAr19U1N6qZsnQouB3zqcOmZ2Q/irQ/vgvBbjC2KDYzqeeQksErqzZ8ijeXeY5v
+        wpaK/B9j7lnlxo0Dv0MC8BdV3j/dDEbG+2deuPVJ9KU84B1vGhgk8OMDgJg/jtNP
+        oKKxvNzbh7AbPPNvI4QYPORlxCaBUKiVFQ2UdZRPCEfsPCOb7Wa9LEwhFO89ZuRZ
+        bOrhhbq930FG6hpgiQe7J6Pk5G/1l46/eYS4skYEeJT4+l5qdPwblLKEA+i0U5H2
+        VLn3EL0W0dBtiW1gnbtcDrksXI7vWK74UKKZNSNTkOStRq4CVayYGKQBcrGtgN7Q
+        ==
+X-ME-Sender: <xms:2q-LYWHnR9qj171LDazyOAZsKqyOUxetbiF-roPJyx_Yh4Jug4OPnQ>
+    <xme:2q-LYXXG4D3BkJAvYo1rUgcDkJ62D_MbSKWyZBe9rAazssGe7NbUDylYofNPTKLRe
+    A7xUugvSXoilx_VZA>
+X-ME-Received: <xmr:2q-LYQL2PazjVO4CEvbzKMNj99HbP0xUhJ4BV0JY4mxma3UG32tjhmzvNJ8U8meCqpn-SU8vLs2ZDyZGQ1-1TUw-xCj3Bwde_3MB3ybXENC-Az4cW4wYFg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudejgdeftdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimh
+X-ME-Proxy: <xmx:2q-LYQH3IswnAyIIhzbkluGtyk2ei2tB33NaXnYNkVQpidPoyhvSkQ>
+    <xmx:2q-LYcXV_SMQlL6LrxHuRr7YFmeIFEKpSTSV5rVtCiMS0UDkHgYDug>
+    <xmx:2q-LYTOfpclXV8LpHO97S332eOehFNgEPGzQlmOiPMR0Y1H4B-0A3Q>
+    <xmx:2q-LYWeIMbXCihCNfnvQewa1LSrhpT_tsPXz5sf5mZmXHYC3KxFRXA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Nov 2021 06:41:13 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 312ca0e6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 10 Nov 2021 13:26:23 +0000 (UTC)
+Date:   Wed, 10 Nov 2021 12:40:50 +0100
+From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Cc:     Adam Dinwoodie <adam@dinwoodie.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: [PATCH v2 0/3] refs: sync loose refs to disk before committing them
+Message-ID: <cover.1636544377.git.ps@pks.im>
+References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="WNsS3vcAKoioeC+Q"
+Content-Disposition: inline
+In-Reply-To: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Cygwin emulates Unix sockets by writing files with custom contents and
-then marking them as system files.
+--WNsS3vcAKoioeC+Q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The tricky problem is that while the file is written and its `system`
-bit is set, it is still identified as a file. This caused test failures
-when Git is too fast looking for the Unix sockets and then complains
-that there is a plain file in the way.
+Hi,
 
-Let's work around this by adding a delayed retry loop, specifically for
-Cygwin.
+[This is a resend, I initially used the wrong mailing list address.]
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    simple-ipc: work around issues with Cygwin's Unix socket emulation
-    
-    Adam Dinwoodie reported problems running the simple-ipc tests on Cygwin
-    [https://lore.kernel.org/git/20211104194619.GA12886@dinwoodie.org]. This
-    patch works around the underlying problem, which is rooted in Cygwin's
-    implementation details.
-    
-    With this patch, I could not reproduce the problem, even with sh
-    t0052-simple-ipc.sh --stress-limit=30.
-    
-    As per Junio's encouragement
-    [https://lore.kernel.org/git/xmqqee7ozyx4.fsf@gitster.g], I am
-    submitting this still in the -rc phase, hoping that it will make it into
-    v2.34.0 final.
+this is the second version of this patch series to implement syncing of
+loose refs to avoid a class of ref corruption.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1074%2Fdscho%2Fcygwin-vs-simple-ipc-workaround-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1074/dscho/cygwin-vs-simple-ipc-workaround-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1074
+This series is implements the same batching as Neeraj's series [1]. It
+introduces a new config switch "core.fsyncRefFiles" with the same three
+toggles "on", "off" and "batch". Given that it reuses funcitonality
+provided by the batched object flushing this series is based on "next".
 
- compat/simple-ipc/ipc-unix-socket.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+Please note that I didn't yet add any performance numbers or tests.
+Performance tests didn't show any conclusive results on my machine given
+that I couldn't observe any noticeable impact at all, and I didn't write
+tests yet given that I first wanted to get some feedback on this series.
+If we agree that this is the correct way to go forward I'll of course
+put in some more time to add them.
 
-diff --git a/compat/simple-ipc/ipc-unix-socket.c b/compat/simple-ipc/ipc-unix-socket.c
-index 4e28857a0a1..28a79289d4f 100644
---- a/compat/simple-ipc/ipc-unix-socket.c
-+++ b/compat/simple-ipc/ipc-unix-socket.c
-@@ -35,6 +35,28 @@ enum ipc_active_state ipc_get_active_state(const char *path)
- 		}
- 	}
- 
-+#ifdef __CYGWIN__
-+	/*
-+	 * Cygwin emulates Unix sockets by writing special-crafted files whose
-+	 * `system` bit is set.
-+	 *
-+	 * If we are too fast, Cygwin might still be in the process of marking
-+	 * the underlying file as a system file. Until then, we will not see a
-+	 * Unix socket here, but a plain file instead. Just in case that this
-+	 * is happening, wait a little and try again.
-+	 */
-+	{
-+		static const int delay[] = { 1, 10, 20, 40, -1 };
-+		int i;
-+
-+		for (i = 0; S_ISREG(st.st_mode) && delay[i] > 0; i++) {
-+			sleep_millisec(delay[i]);
-+			if (lstat(path, &st) == -1)
-+				return IPC_STATE__INVALID_PATH;
-+		}
-+	}
-+#endif
-+
- 	/* also complain if a plain file is in the way */
- 	if ((st.st_mode & S_IFMT) != S_IFSOCK)
- 		return IPC_STATE__INVALID_PATH;
+Patrick
 
-base-commit: 6c220937e2b26d85920bf2d38ff2464a0d57fd6b
--- 
-gitgitgadget
+[1]: <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
+
+Patrick Steinhardt (3):
+  wrapper: handle EINTR in `git_fsync()`
+  wrapper: provide function to sync directories
+  refs: add configuration to enable flushing of refs
+
+ Documentation/config/core.txt |  7 ++++
+ bulk-checkin.c                | 13 ++------
+ cache.h                       |  7 ++++
+ config.c                      | 10 ++++++
+ environment.c                 |  1 +
+ git-compat-util.h             |  7 ++++
+ refs/files-backend.c          | 62 ++++++++++++++++++++++++++++++++++-
+ wrapper.c                     | 30 ++++++++++++++++-
+ write-or-die.c                |  6 ++--
+ 9 files changed, 127 insertions(+), 16 deletions(-)
+
+--=20
+2.33.1
+
+
+--WNsS3vcAKoioeC+Q
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmGLr8EACgkQVbJhu7ck
+PpQzrQ//RomUpTSZXvJcIweorwwcKbd2T9YsGX/PpYBKvdsnjNkuxgnkSxKNq2B3
+0kcqwneEyllwoORxs5G2oA7Cq7CWe2Kbk1OC1ZXBOg5EAdeRcGxTv9xqsh3qRxt9
+i5mtb47E5dSew++a017MQNS9jsh9soR25SPDbzj6/U4f7mqvpCA5RcTw2nxe9vS4
+Y8OkabPzpxMwjYyD/UepYQr6usbcIQQpVe57mMVz5T71juCjK4K2elHrGY6DAKBA
+Qjdk3JCK7Ia6KWqcVg8XeKRocifyDLWsvXyh3fcD7zjec9QyZelboUU1D3+2DOqb
+eWNy8D0EARTYwZXs/ZPfcTPkEi4wLze2bKMn3MAPnK7V7zj/zO/1m5gSWAvFEFy0
+oFUWv9dEttxFKFKvviAeWKdmA9MBEHP/pyE742NY1LPs8sgAvb/n0EsJVEQI3/Iv
+CWSBy0tyVXutKpg0yCfyoh1xQYHP1MvfhaWm3k0ip9X8WKIDX/QZqU8Z+MSN0rT+
+P0oXm18bq0Mq2o3F+0gTPxV77ITEbvBJO+WyIQTgtThJB+rVniKa+QArBe9ynG2c
+m77uC6LKmnPCGYG7RbhGeXsWfMYyli9Q+2bDNUk5GqtpToKuaQ/yqwz3Y45hAc09
+xX7ib5iEh+YhHsbXCrpown7jgB6aFVom5bdtUUf4Kd/DNFx6qgM=
+=dscC
+-----END PGP SIGNATURE-----
+
+--WNsS3vcAKoioeC+Q--
