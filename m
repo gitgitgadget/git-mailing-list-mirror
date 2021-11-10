@@ -2,177 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31E62C433EF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:32:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 630B2C433EF
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:33:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 173BA61107
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:32:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E7F56112F
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 14:33:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232217AbhKJOfU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 09:35:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42912 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231731AbhKJOfS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 09:35:18 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89476C061764
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 06:32:30 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id f4so11250235edx.12
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 06:32:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=6MX9I2sHvSHk4dHVJnDz+Ywjwhi5PacO6IL24PYnbSM=;
-        b=fJ+iPNr271NSWyZwC6xkVg0/dPzUpNV112inb57FG5U7+Hg0fQxMQDYK2DUHZWA6e3
-         /tbvy+j+dpiamDKi5kR+o9iyVlSnlWzRfPn8OF075qugeIRajg1ETNDuueXsweKgxtDM
-         1YtSClztKXIyYqp40qJwSPcHfkeFvY2/vSBVlOYN4Pmq3xxkxVZhIOuz+L0ZPcEn9FXT
-         wddphx+BB2LFTbluyhnznTEs7wU/p+x54O2ZN3voTE8A2/kwjG6hfpWGAhkMJCLh3Yzj
-         swJu4yo1kAJlUrqAmb53wfmOaTFKruWDsCTIXeFH6b2svrACBWwdcBL+v0uhEXglqUa+
-         Z3EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=6MX9I2sHvSHk4dHVJnDz+Ywjwhi5PacO6IL24PYnbSM=;
-        b=PHBGLPxW+HMA668i49qg3xmkxhweyTrEuBhAytSsnc6uac1amLIfFh22IAqk8Xki0S
-         5A0eV+hzEQERitOb1MYvkOi5i2fnaSNwDJjtH/iBdkAogYxZH4qh4ChKhpzq8sNyOvKn
-         aetC4ukzhn0X1sHoWydg7ym+DRGX2BaMq3LyrKh8bgzQ8DZ/g76yvAi1YoeR5EY7esuz
-         q6sDbY3SEiUAkgQdKqdAzCKoDgAy4K697Xnhzl9g0Zpf6BK+1kJ2aUJAZIYo/5k4XO6Y
-         xMRtwnYQnrXYtKKw9e9vhICsIkiRVuiRWje2IJv8cqv7RrPL+RuHBjEsYifNknkh8VXk
-         V6YQ==
-X-Gm-Message-State: AOAM531Cjr1a+r5RBTKm3XPuBDQ7o8l3ATdqQsSs0d8o12r5UQsGvrQl
-        dmv5qYh8ADsRIm+r61426Ck=
-X-Google-Smtp-Source: ABdhPJxlIQskhcHgL9+N6yX1pQDR21HUFf4sXpWKcaodabRUPU4KaNBwk2aNlZwXed4XiR8QEknjew==
-X-Received: by 2002:a17:907:3ea7:: with SMTP id hs39mr89651ejc.164.1636554748746;
-        Wed, 10 Nov 2021 06:32:28 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id go10sm9515100ejc.115.2021.11.10.06.32.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Nov 2021 06:32:28 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mkoeJ-0010QK-Ps;
-        Wed, 10 Nov 2021 15:32:27 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: js/scalar, was Re: What's cooking in git.git (Nov 2021, #03;
- Tue, 9)
-Date:   Wed, 10 Nov 2021 14:42:22 +0100
-References: <xmqqy25wygek.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2111101343570.21127@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <nycvar.QRO.7.76.6.2111101343570.21127@tvgsbejvaqbjf.bet>
-Message-ID: <211110.86czn8hyis.gmgdl@evledraar.gmail.com>
+        id S232186AbhKJOgl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 09:36:41 -0500
+Received: from mout.gmx.net ([212.227.15.15]:39563 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231703AbhKJOgl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 09:36:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1636554815;
+        bh=dvMSxqKU7lBxZiAmLNF9Z0/lvR3jBEI48QS+YtqjFyk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=jFtAJSdxukeTcURDKlXvnbEnL1zUKd6p4yaFaEFlzLzGKHQtIW9IEKEipQODoR8iK
+         p2Ul44mJEUCLUJkBB4Q5pNW3CGKeJ7bFv/PJJ00yjd9W6lgVJWG2W/Ivy4WcaJaXVC
+         6a8oPFqiWywUVbOUAVBr4/o2bFWLrGPhrjHBefAw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.27.166.205] ([89.1.212.10]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MS3ir-1n89Mj45lL-00TTWD; Wed, 10
+ Nov 2021 15:33:35 +0100
+Date:   Wed, 10 Nov 2021 15:33:32 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Patrick Steinhardt <ps@pks.im>
+cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Eric Wong <e@80x24.org>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: Re: [PATCH v2 1/3] wrapper: handle EINTR in `git_fsync()`
+In-Reply-To: <0c8e98295e91b656a89e1db53bfe02e7c7fc8432.1636544377.git.ps@pks.im>
+Message-ID: <nycvar.QRO.7.76.6.2111101530490.21127@tvgsbejvaqbjf.bet>
+References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im> <cover.1636544377.git.ps@pks.im> <0c8e98295e91b656a89e1db53bfe02e7c7fc8432.1636544377.git.ps@pks.im>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:4J5iSIpJzQ3zKCNsqnaXn07vTZkWcOWxOKQ2N8XuTmC+k3tGIA8
+ 0/mtrft6hZl/1GquzPpoAizWFEfo8eS+UyJapXZJhyF7H8SZGZO8rOuERO1hv6BeeZkUzLM
+ 3j/DQydBYM92h/tL20yB1iF0QTdcsluMRUFq2bL+z8ywUHHCfRQZlN96cD2vx7HR5C0KS2C
+ yAu7FwKPuvG42tbIcroRA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:iBLR5imn3zw=:vNTtJuzrzSKRREdskSwN39
+ tQ4d5t5rMN4PzMy1ik3KZdeaKYjQNko7icRmQWPXMN3pcF7q8Z+ehjO0lmDLi+grheczXLTtY
+ 0XG5U2kRXuzjPkOWrUCU2/ksu3LKr+irKmVal4B/HXH5e0/wBLg1TmfppLoJFH3q2pVhca8Pj
+ GSOSLJ2HFvMasvlYBEhwQdjcySC4orttWEMkERCcbtUOr9UzkZYg4R7q9jHfN6NvOtb5RGjQt
+ OqaeClmC72Ic6HkUUX4sv2HvOTxzr9YFrZ6EDudNzJ74ivD/UYm6HVPDWL6FH77k4ZcA9OR3m
+ PD6sHJlUXfBgQymS93fZ3FqarvYJzc9kruTZjRQot9nRtMLTbxWk4HbNhtVn7vAzfbvaqqTE7
+ NBoBJ70W3Qj9/+SMvP2sz+DT9kYb6BHDsRtw9624STYbn53OL/VJnqj71SaVrVFupihKU8NV8
+ C+Ebh8bZd/ncULDyqmXqTIDXUfRK/m9Xc08xp8S7etbl6Ax9Ptky76DwtfVg8KaJVY890+p8L
+ HvSCblioH8ytfHAS7uUMwII0nSsPle+iPpw3Y44bQwyIXfsogF6v9kHAgEUTq7K3/4cvLL0yK
+ bt7cDP+Jc47RmNr7gCgEJRGNmUkOm3riY3TxVMsOphj8614xp4eRN2bk4e5cDGMihAl3yDD2e
+ zbXI5PAGn16Q0n3W8jgWroGrm6feD/WB9q6b55OlxJvLq5YaRxeMfuu9Zhf2nDugsnCspY+4q
+ 1ILAQwyaqmSKI61oGrX9FLDUEPDpOv2yze1aNYcqy+tMcEatiwNh6RcpXtfmXfwNapCB8zJct
+ Z5MwnxiqsPbT1//n7ecesvgCYdG+q00jQaEn0xfBF10kTQUfs8HGd3DURN9r9kLQQNxT4X4RS
+ Nkj09qJ0p3ga7IG1Oq26a4el7hh+KpKuGXarsldVHr7PZhO9LxWokwegIbQ0FOEVEiUFN+ytD
+ d0NL8scldJ1xJFRk/tpO2MjrelI+ATvDEQwDxPHOXwMNUENV/xU3KRZw4tquJ/iZKMAp+Pr6i
+ HXWYZYS6MlLuRN8biRqbB0LZyEY28piHiW/DjHDkE2tnUJIwFWPNksq36dSDwkpAMCv2kKPc9
+ XMIlZUB+xvZRRo=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Patrick,
 
-On Wed, Nov 10 2021, Johannes Schindelin wrote:
+just one observation, below.
 
-> Hi Junio,
+On Wed, 10 Nov 2021, Patrick Steinhardt wrote:
+
+> diff --git a/wrapper.c b/wrapper.c
+> index ece3d2ca10..e20df4f3a6 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -546,7 +546,7 @@ int xmkstemp_mode(char *filename_template, int mode)
+>  	return fd;
+>  }
 >
-> On Tue, 9 Nov 2021, Junio C Hamano wrote:
+> -int git_fsync(int fd, enum fsync_action action)
+> +static int git_fsync_once(int fd, enum fsync_action action)
+>  {
+>  	switch (action) {
+>  	case FSYNC_WRITEOUT_ONLY:
+> @@ -591,7 +591,14 @@ int git_fsync(int fd, enum fsync_action action)
+>  	default:
+>  		BUG("unexpected git_fsync(%d) call", action);
+>  	}
+> +}
 >
->> * js/scalar (2021-10-27) 15 commits
->>  - scalar: accept -C and -c options before the subcommand
->>  - scalar: implement the `version` command
->>  - scalar: implement the `delete` command
->>  - scalar: teach 'reconfigure' to optionally handle all registered enlistments
->>  - scalar: allow reconfiguring an existing enlistment
->>  - scalar: implement the `run` command
->>  - scalar: teach 'clone' to support the --single-branch option
->>  - scalar: implement the `clone` subcommand
->>  - scalar: implement 'scalar list'
->>  - scalar: let 'unregister' handle a deleted enlistment directory gracefully
->>  - scalar: 'unregister' stops background maintenance
->>  - scalar: 'register' sets recommended config and starts maintenance
->>  - scalar: create test infrastructure
->>  - scalar: start documenting the command
->>  - scalar: create a rudimentary executable
->>
->>  Add pieces from "scalar" to contrib/.
->>
->>  What's the status of this thing?
->
-> It is on hold, for two reasons: we're in the -rc phase now, and I think we
-> all need to focus on it.
->
-> Ciao,
-> Dscho
->
-> P.S.: The second reason is that I was uncertain as to your decision
-> regarding Stolee's thread about the optimal final location for Scalar.
-> Since it seems that we can actually go forward with `contrib/scalar/` even
-> if you eventually decide you prefer another place, I plan on submitting a
-> new iteration with adjustments for v2.34.0, after that release.
+> +int git_fsync(int fd, enum fsync_action action)
+> +{
+> +	while (git_fsync_once(fd, action) < 0)
+> +		if (errno !=3D EINTR)
+> +			return -1;
+> +	return 0;
+>  }
 
-Whatever anyone thinks about Stolee's thread/proposal
-(https://lore.kernel.org/git/b67bbef4-e4c3-b6a7-1c7f-7d405902ef8b@gmail.com/)
-it's clear that the proposals outlined there describe an entirely
-theoretical end-state for scalar that don't line up with the state of
-these patches.
+My immediate reaction was: why not fold `git_fsync_once()` into
+`git_fsync()`?
 
-That's not just my opinion, here's Stolee agreeing with that:
-https://lore.kernel.org/git/9eb8fd45-c8a5-0320-6d38-56389bef193d@gmail.com/
+And then I had a look at the function (which is sadly not in the diff
+context of this email, one of the occasions when I would prefer a proper
+UI for reviewing), and I agree that indenting the code even one level
+would make it harder to read.
 
-Re: the "status of this thing" I think it's the same it's been for the
-last two months:
+All this is to say: I agree with the approach you took here.
 
-I've been pointing out things that are objectively broken, and the
-response has been pretty much everything except inline commentary on
-proposed fixups I've suggested to fix those observed bugs.
-
-The latest being this patch ready to apply on top of js/scalar with no
-response for almost 2 weeks now:
-https://lore.kernel.org/git/patch-1.1-86fb8d56307-20211028T185016Z-avarab@gmail.com
-
-I'll be the first to admit that *parts* of that are definitely an
-opinionated change-on-top.
-
-I also think anyone who'd look at it would agree that it raises issues
-that I think could most generously be described as a disconnect between
-your commit messages & patches.
-
-Up to and including them making suggestions of running certain commands
-either can't work, or don't work as described.
-
-I'll let this be my last word on this whole scalar series saga. I'll
-hedge that & say that if you'd like to meaningfully respond to the
-fixups I've been suggesting I'm happy to re-engage with you.
-
-"Meaningfully" as in inline commentary on the patch I'm suggesting
-explaining why certain things are not OK, don't provide an example of
-specific things that don't work/work before/after etc.
-
-That being said no E-Mail like this would be complete without a plainly
-worded last few paragraphs, so here goes:
-
-I find it hard to square your comments in other areas about inclusivity
-& assuming good faith from other contributors with my experience in
-trying to help in moving this scalar thing along.
-
-My honest intentions in this area are just to help what I see as a
-useful feature in need of some fixes along.
-
-I've really not been obstinately insisting that you take all my
-suggestions. I'd have been fine with most of the points I've raised just
-being addressed with something to the effect of "we know <X> is broken,
-but that's OK due to <Y>" in relevant commit messages.
-
-But getting even something terse like that in reply has taken a lot of
-time & energy on my part.
-
-No hard feelings on my side, although admittedly some baffled
-frustration. I do respect you and the work you do, I suspect that on
-your side (at least on this topic) that's now closer to "routing the
-E-Mails to /dev/null", at least it seems that way from my side.
-
-If you'd like to talk about it (even privately, or over other media) I'd
-be happy to. Right now it feel like I've done something to end up your
-your shitlist, and I honestly don't know what that could be.
+Ciao,
+Dscho
