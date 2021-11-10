@@ -2,117 +2,271 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B135C433F5
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 15:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68AC3C433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 15:09:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA38361205
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 15:00:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4CD7661205
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 15:09:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232323AbhKJPCr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 10:02:47 -0500
-Received: from mout.gmx.net ([212.227.17.21]:49047 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231731AbhKJPCq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 10:02:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1636556390;
-        bh=URnjfdsuluoestkIb2ZN8rpnj0LGn7+6Xa2tL/iHV8o=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=aZffVlUXTq2EmR5uhxngyCVvtIGgS7ha85MzpeXea9nwHAfYNgJiaKRSK4k5vdaYS
-         zephiT+sndlC1v1z8MiTQB8HeO08BpLUkuPAiuUtNn4vIlRPxurgWnMT7fL9o+iReR
-         tKeMStdbj3xsfAAnLTfP5WqbddU73Up2f989/Nns=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.166.205] ([89.1.212.10]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKKYx-1n0Pij0fi3-00Lmnk; Wed, 10
- Nov 2021 15:59:50 +0100
-Date:   Wed, 10 Nov 2021 15:59:47 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Paul Smith <paul@mad-scientist.net>,
-        Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Subject: Re: [PATCH v2 3/3] Makefile: replace most hardcoded object lists
- with $(wildcard)
-In-Reply-To: <211110.86h7cki0uo.gmgdl@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111101547120.21127@tvgsbejvaqbjf.bet>
-References: <patch-1.1-bbacbed5c95-20211030T223011Z-avarab@gmail.com> <cover-v2-0.3-00000000000-20211101T191231Z-avarab@gmail.com> <patch-v2-3.3-cd62d8f92d1-20211101T191231Z-avarab@gmail.com> <24482f96-7d87-1570-a171-95ec182f6091@gmail.com>
- <211106.86tugpfikn.gmgdl@evledraar.gmail.com> <40dbf962-2ccd-b4d6-7110-31317eb35e34@gmail.com> <xmqqtugl102l.fsf@gitster.g> <nycvar.QRO.7.76.6.2111101332130.21127@tvgsbejvaqbjf.bet> <211110.86h7cki0uo.gmgdl@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S232408AbhKJPL4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 10:11:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51662 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232405AbhKJPL4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 10:11:56 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 382F9C061764
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 07:09:08 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id f8so11899084edy.4
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 07:09:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=xSRshixzi1AzTrTavLqw1Vb1x7hdEYXt0BZDFyWj7o4=;
+        b=oZOvYttCMiN80lmoKnnXH2DBejZiYc8wtrAUAwJWjaqBJ5/zefuKZ1gKamZ5iuThu5
+         OENM+xi3RhVTsaZm39jpMxEPK1nXm5NTeTqYMH3tgr1tBoYvxA6yUozcNlQvh72KERTB
+         fecn95LI3LuAVIBDLToEjHHdp0UjBzC5wtSgAs030sNeUugZbGl1gGMIEldEgjXPSolP
+         mL3r35PB7FtwLVxzAulw5MXTLpUZa5Dfagza7iV7DKYHPIBePKAiX0ksM18FUPbE/T24
+         COGD6lTAYwx7dOtPgCbyugYxxx/lAyIHjB2fC3gqgAbt3V4iQ0P3uZcjg7uSIcGROw4R
+         JkgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=xSRshixzi1AzTrTavLqw1Vb1x7hdEYXt0BZDFyWj7o4=;
+        b=Qa991JVOJtY9kQtLVCAOOgDJKdeqUiloLEivFW2nKjIHJ8RYuyV95uhom7CGoCtPH3
+         gDvgcKabtuPpd8gOaNhf4cPp6uNT3UG/S7fSHSln33YB9xhMrP3P+T60uRjSzTlyQSBY
+         Ry5R96Ti49hAq1Ly61hVuoNmtiECSW76IqclV1PZLO7ZAiovKlsS37hIRiCvZRyaAJer
+         5UCB7O55UhKaLC+2jLjeQu6Js+r/ZH9ZFNbSVf/SXpIGQrfwH84tLK/PDjsItM02TPVA
+         wYDyay5XiKcJ+URKa4+BoJumM6u7d3d7c6k3HNSn7Axj0sQtI6befhcp7tHFAeB7cCFP
+         t9NQ==
+X-Gm-Message-State: AOAM531tRbI59bruWAizab73uKxXds8kKSBNAz7A+psDXHGfLK7yGccR
+        3eaQ4sDcKc2X/67zjxH7eLMNA2RtvMTpsw==
+X-Google-Smtp-Source: ABdhPJwsqbCoufSclADQ/1otuOJ4o9nj3tEgOkhgz8W6P7ELLIWkB2sFfSalzbAqeSuSLiYrqzZ0tQ==
+X-Received: by 2002:a05:6402:128a:: with SMTP id w10mr346522edv.272.1636556946651;
+        Wed, 10 Nov 2021 07:09:06 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id g21sm16005edw.86.2021.11.10.07.09.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Nov 2021 07:09:06 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mkpDl-0012yj-5z;
+        Wed, 10 Nov 2021 16:09:05 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH v2 3/3] refs: add configuration to enable flushing of refs
+Date:   Wed, 10 Nov 2021 15:49:02 +0100
+References: <dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im>
+ <cover.1636544377.git.ps@pks.im>
+ <d9aa96913b1730f1d0c238d7d52e27c20bc55390.1636544377.git.ps@pks.im>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <d9aa96913b1730f1d0c238d7d52e27c20bc55390.1636544377.git.ps@pks.im>
+Message-ID: <211110.86v910gi9a.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-578956016-1636555831=:21127"
-Content-ID: <nycvar.QRO.7.76.6.2111101550410.21127@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:Q2RIEpjCVUBNBCOqftNZxnmsxbhKW9UFmmylWnIt8XDs/u9qNTM
- GXjNRHyuMBtVAIqG6Px72fPNmBb/DlGKt9/o3apAAXCmgDan1le64Hsc1sijPlk8LK7R41q
- KqWZgPvb1OZcH01gngYKeTQgPVevaJbVMqukOh3ZwH/rx9TufaNryFpLbPuFRZeGzPKF7zY
- t71Iln5QsvN5r2w9tSjyA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ib99SUrrSeg=:6jCA+n7G/TzeweOQb8FdFg
- 8t1WJtbx0kj4acSvMQVZ75xwEvaW8KWNon8gJxtzR+uiNx0wBs62/FyDT51d2dEtK8OsA1wI9
- PnJK3ng0yQKbufqTcwhfD7V5qxkNXf+l7aIrf430mEiV50cjxXSDcnN9FAIMkxFD8NdXGmeHn
- VoHerOVYQC6iQASh9i/YkpdGkfmtgR0b4iaIizTpnREw18ETPHjLSNiLmnopkiVUnVcqJRh0M
- AQzpileyVD5lVG1Hc/7n9bwzSPGosx1FVtrcRPgECe+MEmRWVS5nQ1Xt7VG/hFFPW6/3DrBS6
- TWS8t5fEWD5WjPjDRVWOhHqrLvCZEfeZfnJ1tA54nTw9qZMlu5wFtoMvtBO5uX1kh9OAF7t6J
- 700wrQ+YEHG2JxvfYOXQhDyz+ydnlz76nbr2fcugUNbLFkXlt3s6T6CSq1umoJxlJ3H/Jr9Uf
- izSCiMO6DcZDf4Ho+vWbTc3Os3UvloYzXBZRdpA/043DLAP1BfBkCeBFwUFADB8VZhyrMzN0Q
- 0puMK2JVLwFxIbUKHevTXa2NmhqdxUFTITyMFYb4uGDk2Ksjv+r/V2cGXbECiLg1OBVJqIFpr
- 45dMbaYrAmDg4ujNOFK4VEOznVsgjp8u1ZD8whxZg3RYQ4/+RQuAvpW4HDP6kGqYS9y9JnIpu
- Tk3q4ZjmWvoPwG9Y9Zl4YFBkUD9C3bm5hFRJyT4mDgsmqzWGqy438eDgyzxUSenjVw5fDbW6f
- 0fOamcVq/ZXZhGEQD4J+lrZ8yE3KojBzRz+sgEOqXTAHZlJ2ajNhgd1luQHJEAHcmsAEoPLP9
- J2GkKs0xUFWt8IbE3wvk9Pj7wQ8U0lioQWhHACQZxb832uDb6G6ldVVKXYL1Jm79lmRvgTBUr
- mVzR330CMhkLDORROPJekYXw2RmzryavI11PK58fjkZCSE1NSednxQNCMkIoSkqz67/zLqMF5
- tVGsTFd2ZBW7OaZNDxcOlVSeZIdsvhs2HLeYHAVZAidFFXsVmJ87l0Wks+y0oiSD0spQYcZ3K
- CPvD7ohAt6aTW1Anav7OEwFoBC/E4MrY7dBK1sfmH2Lx1sK8HTkLCohMNLLcLCD4wByM5sa65
- dMxGLGwb9X+TNk=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-578956016-1636555831=:21127
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Content-ID: <nycvar.QRO.7.76.6.2111101550411.21127@tvgsbejvaqbjf.bet>
+On Wed, Nov 10 2021, Patrick Steinhardt wrote:
 
-Hi =C3=86var,
-
-On Wed, 10 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> If we're not OK with $(wildcard) as a pattern that would mean changing
-> all of these to hardcoded (in some cases quite big) lists somewhere:
+> [...]
+> Fix this by introducing a new configuration "core.fsyncRefFiles". This
+> config matches behaviour of "core.fsyncObjectFiles" in that it provides
+> three different modes:
 >
->     [...]
-
-No, it would only mean changing these instances if we have a concrete
-need. I fail to see a concrete need.
-
-That does not mean that we should make the situation even worse by
-converting currently hard-coded lists to wildcards. There is, once again,
-no concrete need for that, and there is the good reason Junio brought up
-against such a churn: it is too sloppy.
-
-> [...] I think we should remove that LIB_H thing entirely.
-
-I think we should take a break from refactoring code where it is unclear
-what purpose the refactoring serves.
-
-> > And to be honest, even `LIB_H` and `FIND_SOURCE_FILE` would quite
-> > potentially better be hard-coded (with a CI check to ensure that
-> > they're up to date).
+>     - "off" disables calling fsync on ref files. This is the default
+>       behaviour previous to this change and remains the default after
+>       this change.
 >
-> That would be a bug, just because I don't build on Windows doesn't mean
-> that I wouldn't like "make TAGS coccicheck" to find compat/win32/ at
-> all.
+>     - "on" enables calling fsync on ref files, where each reference is
+>       flushed to disk before it is being committed. This is the safest
+>       setting, but may incur significant performance overhead.
+>
+>     - "batch" will flush the page cache of each file as it is written to
+>       ensure its data is persisted. After all refs have been written,
+>       the directories which host refs are flushed.
+>
+> With this change in place and when "core.fsyncRefFiles" is set to either
+> "on" or "batch", this kind of corruption shouldn't happen anymore.
+>
+> [1]: https://www.kernel.org/doc/Documentation/filesystems/ext4.txt
 
-Talking about `coccicheck` in the context of the discussion whether we
-should make sweeping changes in our Makefiles, all while we're supposedly
-in the -rc phase, strikes me as a distant tangent of a distant tangent.
+With the understanding that my grokking of this approach is still
+somewhere between "uh, that works?" and "wow, voodoo FS magic!". ....
 
-Ciao,
-Johannes
+I haven't looked at these changes in much daiter, or Neeraj's recent
+related changes but...
 
---8323328-578956016-1636555831=:21127--
+> +core.fsyncRefFiles::
+> +	A value indicating the level of effort Git will expend in trying to make
+> +	refs added to the repo durable in the event of an unclean system
+> +	shutdown. This setting currently only controls loose refs in the object
+> +	store, so updates to packed refs may not be equally durable. Takes the
+> +	same parameters as `core.fsyncObjectFiles`.
+> +
+
+...my understanding of it is basically a way of going back to what Linus
+pointed out way back in aafe9fbaf4f (Add config option to enable
+'fsync()' of object files, 2008-06-18).
+
+I.e. we've got files x and y. POSIX sayeth we'd need to fsync them all
+and the directory entry, but on some FS's it would be sufficient to
+fsync() just y if they're created in that order. It'll imply an fsync of
+both x and y, is that accurate?
+
+If not you can probably discard the rest, but forging on:
+
+Why do we then need to fsync() a "z" file in get_object_directory()
+(i.e. .git/objects) then? That's a new "z", wasn't flushing "y" enough?
+
+Or if you've written .git/objects/x and .git/refs/y I can imagine
+wanting to create and sync a .git/z if the FS's semantics are to then
+flush all remaining updates from that tree up, but here it's
+.git/objects, not .git. That also seems to contract this above:
+
+>       ensure its data is persisted. After all refs have been written,
+>       the directories which host refs are flushed.
+
+I.e. that would be .git/refs (let's ignore .git/HEAD and the like for
+now), not .git/objects or .git?
+
+And again, forging on but more generally [continued below]...
+
+> +	if (!strcmp(var, "core.fsyncreffiles")) {
+
+UX side: now we've got a core.fsyncRefFiles and
+core.fsyncWhateverItWasCalled in Neeraj series. Let's make sure those
+work together like say "fsck.*" and "fetch.fsck.*" do, i.e. you'd be
+able to configure this once for objects and refs, or in two variables,
+one for objects, one for refs...
+
+
+> +static int sync_loose_ref(int fd)
+> +{
+> +	switch (fsync_ref_files) {
+> +	case FSYNC_REF_FILES_OFF:
+> +		return 0;
+> +	case FSYNC_REF_FILES_ON:
+> +		return git_fsync(fd, FSYNC_HARDWARE_FLUSH);
+> +	case FSYNC_REF_FILES_BATCH:
+> +		return git_fsync(fd, FSYNC_WRITEOUT_ONLY);
+> +	default:
+> +		BUG("invalid fsync mode %d", fsync_ref_files);
+> +	}
+> +}
+> +
+> +#define SYNC_LOOSE_REF_GITDIR    (1 << 0)
+> +#define SYNC_LOOSE_REF_COMMONDIR (1 << 1)
+
+nit: make this an enum and ...
+
+> +static int sync_loose_refs_flags(const char *refname)
+> +{
+> +	switch (ref_type(refname)) {
+> +	case REF_TYPE_PER_WORKTREE:
+> +	case REF_TYPE_PSEUDOREF:
+> +		return SYNC_LOOSE_REF_GITDIR;
+> +	case REF_TYPE_MAIN_PSEUDOREF:
+> +	case REF_TYPE_OTHER_PSEUDOREF:
+> +	case REF_TYPE_NORMAL:
+> +		return SYNC_LOOSE_REF_COMMONDIR;
+> +	default:
+> +		BUG("unknown ref type %d of ref %s",
+> +		    ref_type(refname), refname);
+
+... you won't need this default case...
+
+> [...]
+>  /*
+>   * Emit a better error message than lockfile.c's
+>   * unable_to_lock_message() would in case there is a D/F conflict with
+> @@ -1502,6 +1553,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
+>  	oidcpy(&lock->old_oid, &orig_oid);
+>  
+>  	if (write_ref_to_lockfile(lock, &orig_oid, &err) ||
+> +	    sync_loose_refs(refs, sync_loose_refs_flags(newrefname), &err) ||
+>  	    commit_ref_update(refs, lock, &orig_oid, logmsg, &err)) {
+>  		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
+>  		strbuf_release(&err);
+> @@ -1522,6 +1574,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
+>  	flag = log_all_ref_updates;
+>  	log_all_ref_updates = LOG_REFS_NONE;
+>  	if (write_ref_to_lockfile(lock, &orig_oid, &err) ||
+> +	    sync_loose_refs(refs, sync_loose_refs_flags(newrefname), &err) ||
+>  	    commit_ref_update(refs, lock, &orig_oid, NULL, &err)) {
+>  		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
+>  		strbuf_release(&err);
+> @@ -1781,6 +1834,7 @@ static int write_ref_to_lockfile(struct ref_lock *lock,
+>  	fd = get_lock_file_fd(&lock->lk);
+>  	if (write_in_full(fd, oid_to_hex(oid), the_hash_algo->hexsz) < 0 ||
+>  	    write_in_full(fd, &term, 1) < 0 ||
+> +	    sync_loose_ref(fd) < 0 ||
+>  	    close_ref_gently(lock) < 0) {
+>  		strbuf_addf(err,
+>  			    "couldn't write '%s'", get_lock_file_path(&lock->lk));
+> @@ -2665,7 +2719,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+>  		files_downcast(ref_store, REF_STORE_WRITE,
+>  			       "ref_transaction_prepare");
+>  	size_t i;
+> -	int ret = 0;
+> +	int ret = 0, sync_flags = 0;
+>  	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
+>  	char *head_ref = NULL;
+>  	int head_type;
+> @@ -2777,8 +2831,14 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+>  					&update->new_oid, NULL,
+>  					NULL);
+>  		}
+> +
+> +		sync_flags |= sync_loose_refs_flags(update->refname);
+>  	}
+>  
+> +	ret = sync_loose_refs(refs, sync_flags, err);
+> +	if (ret)
+> +		goto cleanup;
+> +
+>  	if (packed_transaction) {
+>  		if (packed_refs_lock(refs->packed_ref_store, 0, err)) {
+>  			ret = TRANSACTION_GENERIC_ERROR;
+
+...[continued from above]: Again, per my potentially wrong understanding
+of syncing a "x" and "y" via an fsync of a subsequent "z" that's
+adjacent on the FS to those two.
+
+Isn't this setting us up for a really bad interaction between this
+series and Neeraj's work? Well "bad" as in "bad for performance".
+
+I.e. you'll turn on "use the batch thing for objects and refs" and we'll
+do two fsyncs, one for the object update, and one for refs. The common
+case is that we'll have both in play.
+
+So shouldn't this go to a higher level for both so we only create a "z"
+.git/sync-it-now-please.txt or whatever once we do all pending updates
+on the .git/ directory?
+
+I can also imagine that we'd want that at an even higher level, e.g. for
+"git pull" surely we'd want it not for refs or objects, but in
+builtin/pull.c somewhere because we'll be updating the .git/index after
+we do both refs and objects, and you'd want to fsync at the very end,
+no?
+
+None of the above should mean we can't pursue a more narrow approach for
+now. I'm just:
+
+ 1) Seeing if I understand what we're trying to do here, maybe not.
+
+ 2) Encouraging you two to think about a holistic way to configure some
+    logical conclusion to this topic at large, so we won't end up with
+    core.fsyncConfigFiles, core.fsyncObjectFiles, core.fsyncIndexFile,
+    core.fsyncRefFiles, core.fsyncTheCrapRebaseWritesOutFiles etc. :)
+
+I'll send another more generic follow-up E-Mail for #2.
