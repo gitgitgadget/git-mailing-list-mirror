@@ -2,176 +2,388 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F013C433EF
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 23:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE9A6C433F5
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 23:33:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 326B8611F2
-	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 23:11:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C3DFB61038
+	for <git@archiver.kernel.org>; Wed, 10 Nov 2021 23:33:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233979AbhKJXO1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 18:14:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48918 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbhKJXOY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 18:14:24 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D407C061766
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 15:11:36 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id m14so17084511edd.0
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 15:11:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=g1p8FQynOPxKcY4PcDEqGjUF9pA+BwKCjY7tpUQg1Ts=;
-        b=EFLduOLxkynQIv1oEhYunVpQxL6l2yYJnxhhq9b6/adH/5QnJXCFD/XHUk/t0rwDyB
-         2w4LBgFNIj7snTs2epz8M10eqQ1ZcMgwD8/A/9yJKWCN/ZucK91qKaccfcnId4SYgsgt
-         Ozth6Z4bEwNqSAh+/s+sD+UTJfdY87WW4Eb8VBk2N2y0s9iN75ysx0UPjlCg4fucu0ML
-         gS1k/VKTqC9REUf6qKgd4kOJyqgOOpwmUTfRRGPN+ZRiz1l81tWqamOkVOayyWcRBxR+
-         Soip//FG3SABzkK+T6fK0svv5ECd43ni+zEYIKSN12Y35Ly0x9gvccTN7lDDmtylUwVQ
-         eFew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=g1p8FQynOPxKcY4PcDEqGjUF9pA+BwKCjY7tpUQg1Ts=;
-        b=sNt1xMU6NodzjAj9yafY4j6YAXUeKwusLWML/BCyBzRB0a0JVFfLmD7KTrUKHPua5j
-         aSVSN3ApMYb/PNMBIsj0sVBzLVueQcNr+6rNMoBQ+SNkmXsmRTD4B85PulcP6YjHtJsT
-         NLnKD5cBM9c9eF2ATv9AI1o3/IKiAnGGwieqzn7iE41Piec0Q6yqi7KU0es77UMezZcp
-         T+extzj3f47YQYynyuY8S05Z6QPm6r4cROPC2uC+//uo057lQgKcxqPumo/ZoM1VCj6V
-         l7BZvaU5s4ZOIcBKplXNUbDVgR2kAu58+GcB0FwkdYZSnGe8P+/8xFL1vlOAQtbR+Qc9
-         cHig==
-X-Gm-Message-State: AOAM531jIQfgPHaDVwUL8sLsYIhmeUyI8D+QcYfffZQcPUwaOg9F0Jp5
-        ic8Jd4oukETOOoKTnHPcry8ey99MQIs=
-X-Google-Smtp-Source: ABdhPJwgucLSC8zgFgLlCClUaY0TdjCJda7EXSj9zlc98nOhIT58oGpmMR6pioEUdB2OzeSO1eA4bw==
-X-Received: by 2002:a17:907:7094:: with SMTP id yj20mr3560625ejb.265.1636585895124;
-        Wed, 10 Nov 2021 15:11:35 -0800 (PST)
-Received: from szeder.dev (94-21-146-29.pool.digikabel.hu. [94.21.146.29])
-        by smtp.gmail.com with ESMTPSA id i13sm632225edc.62.2021.11.10.15.11.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Nov 2021 15:11:34 -0800 (PST)
-Date:   Thu, 11 Nov 2021 00:11:32 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com
-Subject: Re: [PATCH 4/4] midx: report checksum mismatches during 'verify'
-Message-ID: <20211110231132.GB5811@szeder.dev>
-References: <cover.1624473543.git.me@ttaylorr.com>
- <94e9de44e3b52513c5ab48aecd74f809dc34cbe3.1624473543.git.me@ttaylorr.com>
+        id S234160AbhKJXg0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 18:36:26 -0500
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:56246 "EHLO
+        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S233948AbhKJXgZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 18:36:25 -0500
+Received: from localhost (TARDIS-ON-THE-DOME.MIT.EDU [18.9.64.28])
+        (authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 1AANXMuP004630;
+        Wed, 10 Nov 2021 18:33:22 -0500
+Date:   Wed, 10 Nov 2021 18:33:22 -0500 (EST)
+From:   Anders Kaseorg <andersk@mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Andreas Heiduk <andreas.heiduk@mathema.de>
+Subject: Re: [PATCH v5 1/4] fetch: Protect branches checked out in all
+ worktrees
+In-Reply-To: <xmqqr1bnwtln.fsf@gitster.g>
+Message-ID: <alpine.DEB.2.21.999.2111101828580.104475@tardis-on-the-dome.mit.edu>
+References: <2f983e36-532f-ac87-9ade-fba4c6b9d276@mit.edu> <20211109230941.2518143-1-andersk@mit.edu> <xmqqr1bnwtln.fsf@gitster.g>
+User-Agent: Alpine 2.21.999 (DEB 260 2018-02-26)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <94e9de44e3b52513c5ab48aecd74f809dc34cbe3.1624473543.git.me@ttaylorr.com>
+Content-Type: multipart/mixed; boundary="152181824-2065831297-1636587202=:104475"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 23, 2021 at 02:39:15PM -0400, Taylor Blau wrote:
-> 'git multi-pack-index verify' inspects the data in an existing MIDX for
-> correctness by checking that the recorded object offsets are correct,
-> and so on.
-> 
-> But it does not check that the file's trailing checksum matches the data
-> that it records. So, if an on-disk corruption happened to occur in the
-> final few bytes (and all other data was recorded correctly), we would:
-> 
->   - get a clean result from 'git multi-pack-index verify', but
->   - be unable to reuse the existing MIDX when writing a new one (since
->     we now check for checksum mismatches before reusing a MIDX)
-> 
-> Teach the 'verify' sub-command to recognize corruption in the checksum
-> by calling midx_checksum_valid().
-> 
-> Suggested-by: Derrick Stolee <dstolee@microsoft.com>
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  midx.c                      | 3 +++
->  t/t5319-multi-pack-index.sh | 5 +++++
->  2 files changed, 8 insertions(+)
-> 
-> diff --git a/midx.c b/midx.c
-> index a12cbbf928..9a35b0255d 100644
-> --- a/midx.c
-> +++ b/midx.c
-> @@ -1228,6 +1228,9 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
->  		return result;
->  	}
->  
-> +	if (!midx_checksum_valid(m))
-> +		midx_report(_("incorrect checksum"));
-> +
->  	if (flags & MIDX_PROGRESS)
->  		progress = start_delayed_progress(_("Looking for referenced packfiles"),
->  					  m->num_packs);
-> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-> index d582f370c4..7609f1ea64 100755
-> --- a/t/t5319-multi-pack-index.sh
-> +++ b/t/t5319-multi-pack-index.sh
-> @@ -418,6 +418,11 @@ test_expect_success 'corrupt MIDX is not reused' '
->  	git multi-pack-index verify
->  '
->  
-> +test_expect_success 'verify incorrect checksum' '
-> +	pos=$(($(wc -c <$objdir/pack/multi-pack-index) - 1)) &&
-> +	corrupt_midx_and_verify $pos "\377" $objdir "incorrect checksum"
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This test is flaky and can fail with:
+--152181824-2065831297-1636587202=:104475
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-  ...
-  + printf \377
-  + dd of=.git/objects/pack/multi-pack-index bs=1 seek=3839 conv=notrunc
-  1+0 records in
-  1+0 records out
-  1 byte copied, 5.0656e-05 s, 19.7 kB/s
-  + test_must_fail git multi-pack-index verify --object-dir=.git/objects
-  test_must_fail: command succeeded: git multi-pack-index verify --object-dir=.git/objects
-  error: last command exited with $?=1
-  + mv midx-backup .git/objects/pack/multi-pack-index
-  not ok 44 - verify incorrect checksum
+On Wed, 10 Nov 2021, Junio C Hamano wrote:
+> The find_shared_symref() function is handy (and more correct than
+> dereferencing HEAD in the current worktree alone, of course), but
+> its memory ownership model may need to be rethought.
 
-So the test corrupts the checksum trailer in the 'multi-pack-index'
-file by overwriting its last byte with 0xff, but if that byte were
-already 0xff, then the file would be left as is, and 'git
-multi-pack-index verify' wouldn't find anything amiss.
+I wasn=E2=80=99t sure if we wanted to expand the scope of this series, but =
+I do=20
+agree.  How about moving worktrees from the static variable to a parameter=
+=20
+of find_shared_symref()?  Would you like me to rebase the series onto this=
+=20
+patch?
 
-Since SHA1 is essentially random, there's a 1:256 chance of that
-happening, assuming that the file's content is random.  That't not
-really the case, however, because both the test repository's objects
-and the resulting packfiles are deterministic, and, consequently, the
-content of the MIDX is somewhat deterministic.  Only "somewhat",
-though, because several of those objects appear in multiple packfiles,
-and the MIDX selects a copy in the most recently modified packfile, so
-filesystem mtime resolution and second boundaries become significant,
-and cause some variance in the contents of the OOFF chunk.
+Anders
 
-Recently a laptop crossed my way that is somehow exceptionally good at
-generating MIDX files ending with 0xff:
+-- >8 --
+Subject: [PATCH] worktree: simplify find_shared_symref() memory ownership m=
+odel
 
-  # ad-hoc checksum statistics:
-  $ git diff
-  diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-  index f1ee2ce56d..605713b518 100755
-  --- a/t/t5319-multi-pack-index.sh
-  +++ b/t/t5319-multi-pack-index.sh
-  @@ -482,9 +482,13 @@ test_expect_success 'corrupt MIDX is not reused' '
-   '
-   
-   test_expect_success 'verify incorrect checksum' '
-  +	skip=$(($(wc -c <$objdir/pack/multi-pack-index) - 20)) &&
-  +	printf "checksum: " >&5 &&
-  +	od -x -w20 -j$skip --endian=big -An "$objdir/pack/multi-pack-index" >&5 &&
-   	pos=$(($(wc -c <$objdir/pack/multi-pack-index) - 1)) &&
-   	corrupt_midx_and_verify $pos "\377" $objdir "incorrect checksum"
-   '
-  +test_done
-   
-   test_expect_success 'repack progress off for redirected stderr' '
-   	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir repack 2>err &&
-  $ for i in {1..500} ; do ./t5319-multi-pack-index.sh |sed -n -e 's/^checksum:  //p' ; done |sort |uniq -c
-       31 1a70 3b1c 8ed3 56a6 5101 2a38 057e 698d 6faf fbaa
-      340 5fc0 552f 0ac0 c876 f229 d9e3 ef13 a314 5847 89ff
-      129 ce7d 3710 fd21 ef7b 8316 2b99 4e6c e5d5 5e7c 7b08
+Storing the worktrees list in a static variable meant that
+find_shared_symref() had to rebuild the list on each call (which is
+inefficient when the call site is in a loop), and also that each call
+invalidated the pointer returned by the previous call (which is
+confusing).
 
-That's almost 70% failure rate, though I haven't been able to trigger
-this failure on any of the other machines that I have access to.
+Instead, make it the caller=E2=80=99s responsibility to pass in the worktre=
+es
+list and manage its lifetime.
 
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+---
+ branch.c               | 14 ++++++----
+ builtin/branch.c       |  7 ++++-
+ builtin/notes.c        |  6 +++-
+ builtin/receive-pack.c | 63 +++++++++++++++++++++++++++---------------
+ worktree.c             |  8 ++----
+ worktree.h             |  5 ++--
+ 6 files changed, 65 insertions(+), 38 deletions(-)
+
+diff --git a/branch.c b/branch.c
+index 07a46430b3..302cc5a04d 100644
+--- a/branch.c
++++ b/branch.c
+@@ -357,14 +357,16 @@ void remove_branch_state(struct repository *r, int ve=
+rbose)
+=20
+ void die_if_checked_out(const char *branch, int ignore_current_worktree)
+ {
++=09struct worktree **worktrees =3D get_worktrees();
+ =09const struct worktree *wt;
+=20
+-=09wt =3D find_shared_symref("HEAD", branch);
+-=09if (!wt || (ignore_current_worktree && wt->is_current))
+-=09=09return;
+-=09skip_prefix(branch, "refs/heads/", &branch);
+-=09die(_("'%s' is already checked out at '%s'"),
+-=09    branch, wt->path);
++=09wt =3D find_shared_symref(worktrees, "HEAD", branch);
++=09if (wt && (!ignore_current_worktree || !wt->is_current)) {
++=09=09skip_prefix(branch, "refs/heads/", &branch);
++=09=09die(_("'%s' is already checked out at '%s'"), branch, wt->path);
++=09}
++
++=09free_worktrees(worktrees);
+ }
+=20
+ int replace_each_worktree_head_symref(const char *oldref, const char *newr=
+ef,
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 7a1d1eeb07..d8f2164cd7 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -193,6 +193,7 @@ static void delete_branch_config(const char *branchname=
+)
+ static int delete_branches(int argc, const char **argv, int force, int kin=
+ds,
+ =09=09=09   int quiet)
+ {
++=09struct worktree **worktrees;
+ =09struct commit *head_rev =3D NULL;
+ =09struct object_id oid;
+ =09char *name =3D NULL;
+@@ -229,6 +230,9 @@ static int delete_branches(int argc, const char **argv,=
+ int force, int kinds,
+ =09=09if (!head_rev)
+ =09=09=09die(_("Couldn't look up commit object for HEAD"));
+ =09}
++
++=09worktrees =3D get_worktrees();
++
+ =09for (i =3D 0; i < argc; i++, strbuf_reset(&bname)) {
+ =09=09char *target =3D NULL;
+ =09=09int flags =3D 0;
+@@ -239,7 +243,7 @@ static int delete_branches(int argc, const char **argv,=
+ int force, int kinds,
+=20
+ =09=09if (kinds =3D=3D FILTER_REFS_BRANCHES) {
+ =09=09=09const struct worktree *wt =3D
+-=09=09=09=09find_shared_symref("HEAD", name);
++=09=09=09=09find_shared_symref(worktrees, "HEAD", name);
+ =09=09=09if (wt) {
+ =09=09=09=09error(_("Cannot delete branch '%s' "
+ =09=09=09=09=09"checked out at '%s'"),
+@@ -300,6 +304,7 @@ static int delete_branches(int argc, const char **argv,=
+ int force, int kinds,
+=20
+ =09free(name);
+ =09strbuf_release(&bname);
++=09free_worktrees(worktrees);
+=20
+ =09return ret;
+ }
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 71c59583a1..7f60408dbb 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -861,15 +861,19 @@ static int merge(int argc, const char **argv, const c=
+har *prefix)
+ =09=09update_ref(msg.buf, default_notes_ref(), &result_oid, NULL, 0,
+ =09=09=09   UPDATE_REFS_DIE_ON_ERR);
+ =09else { /* Merge has unresolved conflicts */
++=09=09struct worktree **worktrees;
+ =09=09const struct worktree *wt;
+ =09=09/* Update .git/NOTES_MERGE_PARTIAL with partial merge result */
+ =09=09update_ref(msg.buf, "NOTES_MERGE_PARTIAL", &result_oid, NULL,
+ =09=09=09   0, UPDATE_REFS_DIE_ON_ERR);
+ =09=09/* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
+-=09=09wt =3D find_shared_symref("NOTES_MERGE_REF", default_notes_ref());
++=09=09worktrees =3D get_worktrees();
++=09=09wt =3D find_shared_symref(worktrees, "NOTES_MERGE_REF",
++=09=09=09=09=09default_notes_ref());
+ =09=09if (wt)
+ =09=09=09die(_("a notes merge into %s is already in-progress at %s"),
+ =09=09=09    default_notes_ref(), wt->path);
++=09=09free_worktrees(worktrees);
+ =09=09if (create_symref("NOTES_MERGE_REF", default_notes_ref(), NULL))
+ =09=09=09die(_("failed to store link to current notes ref (%s)"),
+ =09=09=09    default_notes_ref());
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 49b846d960..017c365298 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1486,12 +1486,17 @@ static const char *update(struct command *cmd, stru=
+ct shallow_info *si)
+ =09struct object_id *old_oid =3D &cmd->old_oid;
+ =09struct object_id *new_oid =3D &cmd->new_oid;
+ =09int do_update_worktree =3D 0;
+-=09const struct worktree *worktree =3D is_bare_repository() ? NULL : find_=
+shared_symref("HEAD", name);
++=09struct worktree **worktrees =3D get_worktrees();
++=09const struct worktree *worktree =3D
++=09=09is_bare_repository() ?
++=09=09=09NULL :
++=09=09=09find_shared_symref(worktrees, "HEAD", name);
+=20
+ =09/* only refs/... are allowed */
+ =09if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
+ =09=09rp_error("refusing to create funny ref '%s' remotely", name);
+-=09=09return "funny refname";
++=09=09ret =3D "funny refname";
++=09=09goto out;
+ =09}
+=20
+ =09strbuf_addf(&namespaced_name_buf, "%s%s", get_git_namespace(), name);
+@@ -1510,7 +1515,8 @@ static const char *update(struct command *cmd, struct=
+ shallow_info *si)
+ =09=09=09rp_error("refusing to update checked out branch: %s", name);
+ =09=09=09if (deny_current_branch =3D=3D DENY_UNCONFIGURED)
+ =09=09=09=09refuse_unconfigured_deny();
+-=09=09=09return "branch is currently checked out";
++=09=09=09ret =3D "branch is currently checked out";
++=09=09=09goto out;
+ =09=09case DENY_UPDATE_INSTEAD:
+ =09=09=09/* pass -- let other checks intervene first */
+ =09=09=09do_update_worktree =3D 1;
+@@ -1521,13 +1527,15 @@ static const char *update(struct command *cmd, stru=
+ct shallow_info *si)
+ =09if (!is_null_oid(new_oid) && !has_object_file(new_oid)) {
+ =09=09error("unpack should have generated %s, "
+ =09=09      "but I can't find it!", oid_to_hex(new_oid));
+-=09=09return "bad pack";
++=09=09ret =3D "bad pack";
++=09=09goto out;
+ =09}
+=20
+ =09if (!is_null_oid(old_oid) && is_null_oid(new_oid)) {
+ =09=09if (deny_deletes && starts_with(name, "refs/heads/")) {
+ =09=09=09rp_error("denying ref deletion for %s", name);
+-=09=09=09return "deletion prohibited";
++=09=09=09ret =3D "deletion prohibited";
++=09=09=09goto out;
+ =09=09}
+=20
+ =09=09if (worktree || (head_name && !strcmp(namespaced_name, head_name))) =
+{
+@@ -1543,9 +1551,11 @@ static const char *update(struct command *cmd, struc=
+t shallow_info *si)
+ =09=09=09=09if (deny_delete_current =3D=3D DENY_UNCONFIGURED)
+ =09=09=09=09=09refuse_unconfigured_deny_delete_current();
+ =09=09=09=09rp_error("refusing to delete the current branch: %s", name);
+-=09=09=09=09return "deletion of the current branch prohibited";
++=09=09=09=09ret =3D "deletion of the current branch prohibited";
++=09=09=09=09goto out;
+ =09=09=09default:
+-=09=09=09=09return "Invalid denyDeleteCurrent setting";
++=09=09=09=09ret =3D "Invalid denyDeleteCurrent setting";
++=09=09=09=09goto out;
+ =09=09=09}
+ =09=09}
+ =09}
+@@ -1563,25 +1573,30 @@ static const char *update(struct command *cmd, stru=
+ct shallow_info *si)
+ =09=09    old_object->type !=3D OBJ_COMMIT ||
+ =09=09    new_object->type !=3D OBJ_COMMIT) {
+ =09=09=09error("bad sha1 objects for %s", name);
+-=09=09=09return "bad ref";
++=09=09=09ret =3D "bad ref";
++=09=09=09goto out;
+ =09=09}
+ =09=09old_commit =3D (struct commit *)old_object;
+ =09=09new_commit =3D (struct commit *)new_object;
+ =09=09if (!in_merge_bases(old_commit, new_commit)) {
+ =09=09=09rp_error("denying non-fast-forward %s"
+ =09=09=09=09 " (you should pull first)", name);
+-=09=09=09return "non-fast-forward";
++=09=09=09ret =3D "non-fast-forward";
++=09=09=09goto out;
+ =09=09}
+ =09}
+ =09if (run_update_hook(cmd)) {
+ =09=09rp_error("hook declined to update %s", name);
+-=09=09return "hook declined";
++=09=09ret =3D "hook declined";
++=09=09goto out;
+ =09}
+=20
+ =09if (do_update_worktree) {
+-=09=09ret =3D update_worktree(new_oid->hash, find_shared_symref("HEAD", na=
+me));
++=09=09ret =3D update_worktree(new_oid->hash,
++=09=09=09=09      find_shared_symref(worktrees, "HEAD",
++=09=09=09=09=09=09=09 name));
+ =09=09if (ret)
+-=09=09=09return ret;
++=09=09=09goto out;
+ =09}
+=20
+ =09if (is_null_oid(new_oid)) {
+@@ -1600,17 +1615,19 @@ static const char *update(struct command *cmd, stru=
+ct shallow_info *si)
+ =09=09=09=09=09   old_oid,
+ =09=09=09=09=09   0, "push", &err)) {
+ =09=09=09rp_error("%s", err.buf);
+-=09=09=09strbuf_release(&err);
+-=09=09=09return "failed to delete";
++=09=09=09ret =3D "failed to delete";
++=09=09} else {
++=09=09=09ret =3D NULL; /* good */
+ =09=09}
+ =09=09strbuf_release(&err);
+-=09=09return NULL; /* good */
+ =09}
+ =09else {
+ =09=09struct strbuf err =3D STRBUF_INIT;
+ =09=09if (shallow_update && si->shallow_ref[cmd->index] &&
+-=09=09    update_shallow_ref(cmd, si))
+-=09=09=09return "shallow error";
++=09=09    update_shallow_ref(cmd, si)) {
++=09=09=09ret =3D "shallow error";
++=09=09=09goto out;
++=09=09}
+=20
+ =09=09if (ref_transaction_update(transaction,
+ =09=09=09=09=09   namespaced_name,
+@@ -1618,14 +1635,16 @@ static const char *update(struct command *cmd, stru=
+ct shallow_info *si)
+ =09=09=09=09=09   0, "push",
+ =09=09=09=09=09   &err)) {
+ =09=09=09rp_error("%s", err.buf);
+-=09=09=09strbuf_release(&err);
+-
+-=09=09=09return "failed to update ref";
++=09=09=09ret =3D "failed to update ref";
++=09=09} else {
++=09=09=09ret =3D NULL; /* good */
+ =09=09}
+ =09=09strbuf_release(&err);
+-
+-=09=09return NULL; /* good */
+ =09}
++
++out:
++=09free_worktrees(worktrees);
++=09return ret;
+ }
+=20
+ static void run_update_post_hook(struct command *commands)
+diff --git a/worktree.c b/worktree.c
+index 092a4f92ad..cf13d63845 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -402,17 +402,13 @@ int is_worktree_being_bisected(const struct worktree =
+*wt,
+  * bisect). New commands that do similar things should update this
+  * function as well.
+  */
+-const struct worktree *find_shared_symref(const char *symref,
++const struct worktree *find_shared_symref(struct worktree **worktrees,
++=09=09=09=09=09  const char *symref,
+ =09=09=09=09=09  const char *target)
+ {
+ =09const struct worktree *existing =3D NULL;
+-=09static struct worktree **worktrees;
+ =09int i =3D 0;
+=20
+-=09if (worktrees)
+-=09=09free_worktrees(worktrees);
+-=09worktrees =3D get_worktrees();
+-
+ =09for (i =3D 0; worktrees[i]; i++) {
+ =09=09struct worktree *wt =3D worktrees[i];
+ =09=09const char *symref_target;
+diff --git a/worktree.h b/worktree.h
+index 8b7c408132..9e06fcbdf3 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -143,9 +143,10 @@ void free_worktrees(struct worktree **);
+ /*
+  * Check if a per-worktree symref points to a ref in the main worktree
+  * or any linked worktree, and return the worktree that holds the ref,
+- * or NULL otherwise. The result may be destroyed by the next call.
++ * or NULL otherwise.
+  */
+-const struct worktree *find_shared_symref(const char *symref,
++const struct worktree *find_shared_symref(struct worktree **worktrees,
++=09=09=09=09=09  const char *symref,
+ =09=09=09=09=09  const char *target);
+=20
+ /*
+--=20
+2.33.1
+
+--152181824-2065831297-1636587202=:104475--
