@@ -2,149 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67CF9C433F5
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 14:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4D9CC433FE
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 15:18:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44FB661212
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 14:45:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE218610C8
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 15:18:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233672AbhKKOs3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Nov 2021 09:48:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60106 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233170AbhKKOs2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Nov 2021 09:48:28 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 456C3C061766
-        for <git@vger.kernel.org>; Thu, 11 Nov 2021 06:45:39 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id z21so25091923edb.5
-        for <git@vger.kernel.org>; Thu, 11 Nov 2021 06:45:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=DBB2En2BOVV8HUA0ynsBhVtMzcG+Qdao0aALGwXGpAM=;
-        b=kf1nNwIEe/yuFR6kIQycd3jPG305HdxfuTsuPcedd5k+2E+6q7REZ9bEmdxkVHGKZf
-         N1bAq8pNGisc19/j7siLhUkZZuQqGXgn1jYSezgW/YpAvuNHe5NI32zsxvnzL4ihtzWD
-         vA/08X6NukNKeX8Favr/TgO5yzvV88WvOSXUWLT4hCQY5ncRNhgDcgKpapLXXpVG7wZ9
-         fbYvUeQ8CYcRqpQiSa5wSIUMHn4XLqpZOMW72/XdrNMo1ohLamcCm3HI93hz48K5uNFq
-         ilAY7V9U+/hYv+u0rlOggtBeV0BYDTwUrj1EszsOEg4BlhVu8KfaYg+u5CZxoeowS0L0
-         ExdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=DBB2En2BOVV8HUA0ynsBhVtMzcG+Qdao0aALGwXGpAM=;
-        b=NgHthalNOlBj2sRJP8q1F7wLPE9nXRF1/XVWPQwzejLIdTirlJFQ0Bc8Rq1ZIs8gdm
-         xi7HQzZ82ABfnv3R5ZGWzTo3wWizBYRLOlBYLZaaJ4AqcGr+l+qXYXVMMcsPbtyO+rcz
-         miV0NGu186m/91pOwX7aI62SdTGiGnrJSQtuHIbw9J0cQYfRhRdtpSoL84CcMFLOTri/
-         pjXOP3qJcwL9c/P2/227qyKt7TZtoFDhJdm2n/9s7mAHS0xhVRTjt+d0U7psBtPxdPHC
-         VGNnMfhOO9SNqk0BcDZuBZjMx6FcsSkOx5Ke5+cqF/o5d8xuzd0ns8I2BXGBi3eyfrX2
-         sKhg==
-X-Gm-Message-State: AOAM530YCYof1qH+amKWLJFohzJ12BJESlDVcZ2Ite/Zh4l012AHNJvQ
-        QkaA1VDLqvqO+At+UeKzRMw=
-X-Google-Smtp-Source: ABdhPJz6ER4pGTH7ivSTyz6w2DZ+XCZbrpzxA/gL5IeBK0LoWGwEQUv+nIJWgHasuIAtY5EKpT+DGg==
-X-Received: by 2002:aa7:ca0a:: with SMTP id y10mr10770694eds.148.1636641937647;
-        Thu, 11 Nov 2021 06:45:37 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id gb2sm1495372ejc.52.2021.11.11.06.45.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Nov 2021 06:45:36 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mlBKZ-0008VR-TG;
-        Thu, 11 Nov 2021 15:45:35 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 0/7] Gets rid of "if reflog exists, append to it
- regardless of config settings"
-Date:   Thu, 11 Nov 2021 15:38:56 +0100
-References: <pull.1067.v2.git.git.1630947142.gitgitgadget@gmail.com>
- <pull.1067.v3.git.git.1631021808.gitgitgadget@gmail.com>
- <CAFQ2z_PAs3fG1h31KWVXJ=02t1i9UvWPuD4tCK-ZWfewkPQJEw@mail.gmail.com>
- <xmqqk0iqrp4q.fsf@gitster.g> <xmqqfsterotr.fsf@gitster.g>
- <xmqqbl40razw.fsf@gitster.g>
- <CAFQ2z_NASfhdHdZrY3gK29LRK_8Guj0LZ=GgCr84k7XX2L+Dow@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <CAFQ2z_NASfhdHdZrY3gK29LRK_8Guj0LZ=GgCr84k7XX2L+Dow@mail.gmail.com>
-Message-ID: <211111.86k0hevjhs.gmgdl@evledraar.gmail.com>
+        id S233994AbhKKPU5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Nov 2021 10:20:57 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57482 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233460AbhKKPU4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Nov 2021 10:20:56 -0500
+Received: (qmail 612 invoked by uid 109); 11 Nov 2021 15:18:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Nov 2021 15:18:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30457 invoked by uid 111); 11 Nov 2021 15:18:06 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Nov 2021 10:18:06 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 11 Nov 2021 10:18:05 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Han Xin <chiyutianyi@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 1/2] object-file: fix SEGV on free() regression in
+ v2.34.0-rc2
+Message-ID: <YY00LfI8vHKMaxAs@coredump.intra.peff.net>
+References: <20211111030532.75910-1-hanxin.hx@alibaba-inc.com>
+ <cover-0.2-00000000000-20211111T051800Z-avarab@gmail.com>
+ <patch-1.2-811242178e4-20211111T051800Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-1.2-811242178e4-20211111T051800Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Nov 11, 2021 at 06:18:55AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-On Thu, Nov 11 2021, Han-Wen Nienhuys wrote:
+> diff --git a/object-file.c b/object-file.c
+> index 02b79702748..ac476653a06 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -2528,6 +2528,8 @@ int read_loose_object(const char *path,
+>  	char hdr[MAX_HEADER_LEN];
+>  	unsigned long *size = oi->sizep;
+>  
+> +	*contents = NULL;
+> +
+>  	map = map_loose_object_1(the_repository, path, NULL, &mapsize);
+>  	if (!map) {
+>  		error_errno(_("unable to mmap %s"), path);
 
-> On Thu, Oct 7, 2021 at 7:38 PM Junio C Hamano <gitster@pobox.com> wrote:
->> > Not really.  I think the comment on the RFC still stands, and I do
->> > not recall seeing a response to the point.
->> >
->> >     One potential harm this change will bring to us is what happens to
->> >     people who disable core.logAllRefUpdates manually after using the
->> >     repository for a while.  Their @{4} will point at the same commit no
->> >     matter how many operations are done on the current branch after they
->> >     do so.  I wouldn't mind if "git reflog disable" command is given to
->> >     the users prominently and core.logAllRefUpdates becomes a mere
->> >     implementation detail nobody has to care about---in such a world, we
->> >     could set the configuration and drop the existing reflog records at
->> >     the same time and nobody will be hurt.
->
-> A git 'reflog disable' command would address your concerns, but it is
-> a destructive operation, so the cure might be worse than the solution.
->
->> IIRC, the only reason why reftable implementation may want to change
->> the behaviour we have to avoid getting blamed for breaking is
->> because it cannot implement "a reflog exists, and we need to record
->> further ref movements by appending to it, no matter what the
->> configuration says" when the existing reflog is empty, because its
->> data structure lacks support for expressing "exists but empty".
->>
->> I think the behaviour change described in the title of this message
->> can be limited in the scope to hurt users a lot less, and can still
->> satisfy the goal of helping reftable not getting blamed for
->> breakage, perhaps by making the behaviour for an empty but existing
->> reflog unspecified or implementation defined per backend.
->
-> If we accept implementation-dependent features, we could just leave
-> the whole feature as is. I had expected more breakage, but there is
-> only one test case in t1400 that needs addressing. If the test
-> coverage reflects the popularity of the feature, it should be fine to
-> leave this divergence in, and mark the test with REFFILES.
->
-> The commits prior to the RFC should be OK for committing. In
-> particular, there is a bugfix for the show-branch command. Should I
-> resend those separately?
+OK, I agree this fixes the segfault, and is the minimal fix.
 
-I've got some follow-up patches to what's sitting in "next" already that
-hoist some reffiles-specific stuff into builtin/reflog.c, I haven't
-tested but I expect that the behavior change is silent now in the
-reftable backend, i.e. it doesn't implement progress/verbose the same
-way, presumably.
+I do find the fact that fsck_loose() looks at "contents" after
+read_loose_object() returns an error to be a bit questionable. It's a
+recipe for confusion about what has happened, and who is supposed to
+free what.  Your v2 addresses the leak, but by just shifting more burden
+to the caller. There's only one caller, so it's not too bad, but for a
+public function, read_loose_object() has a lot of sharp edges.
 
-Between that and 5ac15ad2509 (reflog tests: add --updateref tests,
-2021-10-16) & 52106430dc8 (refs/files: remove "name exist?" check in
-lock_ref_oid_basic(), 2021-10-16) I wouldn't put too much faith in those
-reflog tests.
+Plus I think it fails to work as intended for streaming blobs (we do not
+fill in "contents" at all in that case, so we can never say "hash-path
+mismatch").
 
-None of that should be a blocker for your series landing, just say'n. I
-don't trust those tests.
+I understand you're trying to catch the case of "we actually opened the
+file and computed the sha1 of its contents" from cases where we didn't
+get that far. But since you initialize real_oid, it seems like it would
+be better to see if anything was written to that.
 
-IMO the only meaningful way to be confident in testing these sorts of
-things with reftable is more of the chaos monkey approach of the
-GIT_TEST_* modes, i.e. we now have a WIP mode to do that for reftable
-that has known breakages.
+I.e., something like:
 
-We could similarly instrument the test suite to do "git reflog expire"
-for each ref at the end of tests, a bunch of things would break, but we
-could log the complete -V run and see if what breaks is different under
-the two backends.
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index d87c28a1cc..8f156ed9cd 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -617,18 +617,20 @@ static int fsck_loose(const struct object_id *oid, const char *path, void *data)
+ 	oi.typep = &type;
+ 
+ 	if (read_loose_object(path, oid, &real_oid, &contents, &oi) < 0) {
+-		if (contents && !oideq(&real_oid, oid))
++		if (!is_null_oid(&real_oid) && !oideq(&real_oid, oid))
+ 			err = error(_("%s: hash-path mismatch, found at: %s"),
+ 				    oid_to_hex(&real_oid), path);
+ 		else
+ 			err = error(_("%s: object corrupt or missing: %s"),
+ 				    oid_to_hex(oid), path);
++		errors_found |= ERROR_OBJECT;
++		return 0; /* keep checking other objects */
+ 	}
+-	if (type != OBJ_NONE && type < 0)
++	if (type != OBJ_NONE && type < 0) {
+ 		err = error(_("%s: object is of unknown type '%s': %s"),
+ 			    oid_to_hex(&real_oid), cb_data->obj_type.buf,
+ 			    path);
+-	if (err < 0) {
++		free(contents);
+ 		errors_found |= ERROR_OBJECT;
+ 		return 0; /* keep checking other objects */
+ 	}
 
-I've got some WIP patches to add a similar chaos mode using "git gc
---auto", and it turned up some interesting stuff. It's what I used
-initially to test what's now landed in ae35e16cd43 (reflog expire: don't
-lock reflogs using previously seen OID, 2021-08-23).
+(the "err" variable is now superfluous, but I left it in to keep the
+diff smaller). And then it would be safe to just set "contents" in
+read_loose_object() when we need it:
+
+diff --git a/object-file.c b/object-file.c
+index ac476653a0..5e8ff94fd4 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2528,8 +2528,6 @@ int read_loose_object(const char *path,
+ 	char hdr[MAX_HEADER_LEN];
+ 	unsigned long *size = oi->sizep;
+ 
+-	*contents = NULL;
+-
+ 	map = map_loose_object_1(the_repository, path, NULL, &mapsize);
+ 	if (!map) {
+ 		error_errno(_("unable to mmap %s"), path);
+@@ -2549,6 +2547,7 @@ int read_loose_object(const char *path,
+ 	}
+ 
+ 	if (*oi->typep == OBJ_BLOB && *size > big_file_threshold) {
++		*contents = NULL;
+ 		if (check_stream_oid(&stream, hdr, *size, path, expected_oid) < 0)
+ 			goto out;
+ 	} else {
+
+That doesn't fix the hash-path mismatch problem for streaming, but it
+sets us up to do so, if check_stream_oid() returned the real_oid it
+computed.
+
+All of this is much too large for an -rc fix, so we should take your
+patch as-is. These are just thoughts I had while trying to figure out
+if there were other problems caused by that same commit.
+
+-Peff
