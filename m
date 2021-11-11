@@ -2,137 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1AC7C433F5
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 20:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8812C433EF
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 20:24:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B81E361002
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 20:23:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9AFE61002
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 20:24:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232126AbhKKU0A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Nov 2021 15:26:00 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57662 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231754AbhKKUZ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Nov 2021 15:25:59 -0500
-Received: (qmail 1421 invoked by uid 109); 11 Nov 2021 20:23:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Nov 2021 20:23:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1591 invoked by uid 111); 11 Nov 2021 20:23:10 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Nov 2021 15:23:10 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 11 Nov 2021 15:23:08 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.34.0-rc2
-Message-ID: <YY17rBFIdDl+H47I@coredump.intra.peff.net>
-References: <xmqq4k8kzuz2.fsf@gitster.g>
- <YY0HbQJEWbOwuuFj@coredump.intra.peff.net>
- <xmqqwnlemwcy.fsf@gitster.g>
+        id S233025AbhKKU1i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Nov 2021 15:27:38 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57136 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231754AbhKKU1h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Nov 2021 15:27:37 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4CD97F22F2;
+        Thu, 11 Nov 2021 15:24:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cJYdQFoxPb+8c43Ihy4aLxR+lUIfLmlDOPiT2U
+        qNXqU=; b=cJt7gmo3Pu2PKnufnNoCX/dVfnbVC2yph7xdXOHnIgeBZIlKZ3iWN4
+        mXfM+sel23wEjIhVO2kD+jJ9jacK15gAVPfv4zPTp0yYUa1jim3xS9StPCzXlD2T
+        aPT8o1nUbx4W3aWhzZlTQTYBcs7D6G7vtsIk/CAabjzg/iakIPyYM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 41EDCF22F1;
+        Thu, 11 Nov 2021 15:24:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A1AFFF22F0;
+        Thu, 11 Nov 2021 15:24:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v1 2/3] config: introduce repo_config_set* functions
+References: <20211111171643.13805-1-chooglen@google.com>
+        <20211111171643.13805-3-chooglen@google.com>
+Date:   Thu, 11 Nov 2021 12:24:45 -0800
+In-Reply-To: <20211111171643.13805-3-chooglen@google.com> (Glen Choo's message
+        of "Thu, 11 Nov 2021 09:16:42 -0800")
+Message-ID: <xmqq7ddel9te.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqwnlemwcy.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 69A75284-432D-11EC-8EA9-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 11, 2021 at 09:32:29AM -0800, Junio C Hamano wrote:
+Glen Choo <chooglen@google.com> writes:
 
-> > Now in this case, we're sending too much output, which is OK for the
-> > purposes of the connectivity check. It will just walk day-1 and its
-> > tree unnecessarily, which is a performance loss but not incorrect.
-> 
-> The primary use of the traversal in check_connected() is when we
-> have new refs we haven't seen, and they go to the positive end of
-> the traversal, which will end in the refs we do have (there may be
-> tons).  The idea is that when one or more of the new refs are truly
-> "new" in the sense that one or more the objects necessary to connect
-> them to our refs do not exist, not even in the "not reachable but
-> not yet pruned" state, this traversal will hit a missing object and
-> will error out.  So, it is alarming that "day-1" is shown without
-> painted uninteresting via any of the negative [day-4..day-9]
-> commits.  Which means, if we are checking if we need to initiate a
-> real fetch to connect day-1 and day-10 to our DAG, when we think we
-> have [day-4..day-9] and everything behind them, we stopped traversal
-> before seeing all the "objects necessary to connect them to our
-> refs".  If day-2 were missing in our repository, we would have
-> noticed if we did traversal from sorted tips, but the unsorted
-> traversal happily misses it.
+> We have git_config_set() that sets a config value for the_repository's
+> config file, and repo_config_get* that reads config values from a struct
+> repository. Thus, it seems reasonable to have to have
+> repo_git_config_set() that can set values for a config file of a struct
+> repository.
+>
+> Implement repo_config_set() and repo_config_set_gently(), which
+> take struct repository. However, unlike other instances where struct
+> repository is added to a repo_* function, this patch does not change the
+> implementations of git_config_set() or git_config_set_gently(); those
+> functions use the_repository much deeper in their call chain through
+> git_pathdup(). Mark this inconsistency as NEEDSWORK.
 
-Yes, but if day-2 were missing in our repository, then we are already
-corrupt. And in most cases we would not notice adding a new ref that is
-also corrupt (e.g., imagine adding _just_ day-10 which is a descendent
-of day-2, but we stop traversal at day-9 when we see that we already
-have it reachable).
+Being able to only affect "config" in the_repository->gitdir is less
+flexible than being able to affect "config" in repo->gitdir for any
+repository is good.  Do we need a similar thing for repo->commondir
+as well?
 
-So I don't think it is actually changing the check_connected() outcome.
-I couldn't come up with a case where we should be checking a commit and
-don't. Only the other way around.
+> +/*
+> + * Sets a config value in a repository.
+> + */
+> +int repo_config_set_gently(struct repository *r, const char *key,
+> +			   const char *value)
+> +{
+> +	int ret;
+> +	char *path;
+> +
+> +	path = repo_git_path(r, "config");
+> +	ret = git_config_set_in_file_gently(path, key, value);
+> +	free(path);
+> +	return ret;
+> +}
+> +
+> +void repo_config_set(struct repository *r, const char *key, const char *value)
+> +{
+> +	char *path;
+> +
+> +	path = repo_git_path(r, "config");
+> +	git_config_set_in_file(path, key, value);
+> +	free(path);
+> +}
 
-> Not that noticing that day-2 is missing from our repository does not
-> help much in *this* particular case, though.  It is likely that a
-> common negotiation would say "I have [day-4..day-9], and want day-1
-> and day-10", that is reponded with "OK, I know enough, here is
-> day-10 and its tree/blob that would be missing from a healthy clone
-> with everything behind day-9", and it won't include day-2 (nor
-> day-1).  So in this particular example, it would not matter if the
-> new unsorted traversal is subtly broken (I think the extent of the
-> damage is similar to making the SLOP problem deliberately worse),
-> but I am not sure if there are other failure modes that would yield
-> outright incorrect result.
+Many questions:
 
-Yes, I think that framing is right: it is making SLOP much worse. We
-could similarly have had bogus timestamps in those commits which would
-cause the same outcome. So in that sense it is nothing new. On the other
-hand, I wonder how often it will cause extra traversal work (keeping in
-mind that this commit traversal is just the first stage; after we find
-the commits, then we talk all of their trees, which is the more
-expensive part).
+ - What do these do for an existing key?  Add another value?
+   Replace existing one?  If the latter, what do we plan to do with
+   multi-valued keys?
 
-For the case of adding new commits directly on top of another branch, I
-think there would be no change. But any time you have to walk down to a
-common fork point (e.g., imagine I made a new branch forked from an old
-bit of history), we may fail to find that. I haven't quite constructed
-an example, but I have a feeling we could end up walking over
-arbitrarily long segments of history.
+ - Don't we need an interface to remove, rename, etc.?
 
-> We probably should revert this step as it can affect correctness in
-> a big way, but I wonder if the other steps in the same series, or
-> other topic that came later, rely on it.
+ - If we call repo_config_set(repo, "key", "value") and then call
+   repo_git_config_string(repo, "key", &value) on the same
+   repository, do we read the value back or do we give a stale
+   value?
 
-I looked them over, and I think this is pretty independent (with the
-exception of the refactoring of the no_walk/unsorted flags, but
-obviously that had to come first).
+ - A change like this should make existing config_set() that only
+   works on the_repository into a thin wrapper, e.g.
 
-> At the very least, I think this may be prudent during -rc period,
-> but on the other hand, I do not know offhand what would later
-> pursuade us to reinstate it and convince us that it is a safe thing
-> to do.
-> [...]
-> diff --git c/connected.c w/connected.c
-> index cf68e37a97..35bd4a2638 100644
-> --- c/connected.c
-> +++ w/connected.c
-> @@ -107,7 +107,6 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
->  	if (opt->progress)
->  		strvec_pushf(&rev_list.args, "--progress=%s",
->  			     _("Checking connectivity"));
-> -	strvec_push(&rev_list.args, "--unsorted-input");
->  
->  	rev_list.git_cmd = 1;
->  	rev_list.env = opt->env;
+	void git_config_set(const char *keyu, const char **value)
+	{
+		repo_config_set(the_repository, key, value);
+	}
 
-This seems like a pretty safe and minimal backing-out for the -rc
-period. We would still ship with "--unsorted-input" as an option (and
-mentioned in the docs), though. If we're worried that it might be a dead
-end and we don't want to support it, we could revert f45022dc2f
-(connected: do not sort input revisions, 2021-08-09) entirely. That
-carries a little more risk of accidentally breaking something during the
-revert, but from my reading of the patch it should be pretty safe.
+   But that is not happening here.  What prevents us from doing so?
 
-I'd be curious to hear Patrick's thoughts on the whole thing.
-
--Peff
+Thanks.
