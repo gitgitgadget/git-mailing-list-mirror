@@ -2,146 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4D9CC433FE
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 15:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16203C433EF
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 16:19:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE218610C8
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 15:18:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDBAD6124C
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 16:19:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233994AbhKKPU5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Nov 2021 10:20:57 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57482 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233460AbhKKPU4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Nov 2021 10:20:56 -0500
-Received: (qmail 612 invoked by uid 109); 11 Nov 2021 15:18:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Nov 2021 15:18:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30457 invoked by uid 111); 11 Nov 2021 15:18:06 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Nov 2021 10:18:06 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 11 Nov 2021 10:18:05 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Han Xin <chiyutianyi@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 1/2] object-file: fix SEGV on free() regression in
- v2.34.0-rc2
-Message-ID: <YY00LfI8vHKMaxAs@coredump.intra.peff.net>
-References: <20211111030532.75910-1-hanxin.hx@alibaba-inc.com>
- <cover-0.2-00000000000-20211111T051800Z-avarab@gmail.com>
- <patch-1.2-811242178e4-20211111T051800Z-avarab@gmail.com>
+        id S233890AbhKKQWo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Nov 2021 11:22:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53858 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232033AbhKKQWm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Nov 2021 11:22:42 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8853FC061766
+        for <git@vger.kernel.org>; Thu, 11 Nov 2021 08:19:53 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id f4so26195734edx.12
+        for <git@vger.kernel.org>; Thu, 11 Nov 2021 08:19:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Q+06t2ijJP5QiJXU9LrRlkpRUy9ML7nM/tb9pTU7K2k=;
+        b=hUmVm0GwPksmDjvjCJsRS/tqPnrump1PCPMsUHHlTXtsI5fCHxU6xUI41mLW5qDgmC
+         4Hg5uy+GqUPEx9R8LFCEOE5bCeFio+qMFhEsoBD1cM1Kn65kbFbqDeGCg/QrfBwoUigL
+         ykf2cgo+DELQ30qeJB9nEFgBH1nfwhmxqSlcCNY1psmQJtuP2duWhH4bhGFYsmmIFbNV
+         OiF7c2+q+VA4BzoSa146JTbxweNEkvJ1wPwk6Mie+QXwPc9r2J0y9mqyXfkQ3PCflr7X
+         b6rpsH9rTHtWgEtYfIRSf4X2zELZP1gSDQq46lBPb02hgPy9TXMXpYtncI3ysn6zsV81
+         EZWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Q+06t2ijJP5QiJXU9LrRlkpRUy9ML7nM/tb9pTU7K2k=;
+        b=x7BHjlFmUyeO4wEMaKKV4bCSuMSuVEaRz3HTp3p3vv3scOME6CAzGyla5xPDBNqD4O
+         4GRGV+pQ/dHnAD4KXN/ZUzjA5UK+sEYJAq99h1tVO3FcrOWmVaF1XBVSalS9OsTurFpB
+         +ZMLijrudKaozIJbvYbC7Zvx8ebHVk5omKXFXlksHqvtp4lN9p65vGM3RHNYGWpoefSK
+         6vB6NSh/gI4h6Ij+6APVoiIGFKVfuQ6SR//d+fmj4P1YjoQRtIXo2SlXfqyvsdZY1Vnb
+         lQAFpg9UtvDbfqURGdxukLPDmKGulReJCdQcv6GBGMcgtZ5/kHgdZlkfNQtNuHbkztYR
+         DzxQ==
+X-Gm-Message-State: AOAM532825IQXrWcbBNvz6cIR6zGcRWJ0ccgStb80gDycBJz+lThTnSB
+        f2njouaoKo1DeuCWMo3nTv1GEXZgMRa3KfHx2o1F7vDb
+X-Google-Smtp-Source: ABdhPJyg3/HN/ff0giKWSNmgeQinw2dDYjOwwHM+0aFvLitVccX6MC/zNHEGDTD4qGEWXHaqd3APpiz46/F96Um/bdY=
+X-Received: by 2002:a05:6402:361:: with SMTP id s1mr3303802edw.56.1636647591880;
+ Thu, 11 Nov 2021 08:19:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-1.2-811242178e4-20211111T051800Z-avarab@gmail.com>
+References: <pull.929.v2.git.git.1607677728.gitgitgadget@gmail.com>
+ <pull.929.v3.git.git.1609272328.gitgitgadget@gmail.com> <7214fa73fdd13418744903f6c769fdb77c9512ce.1609272328.git.gitgitgadget@gmail.com>
+ <CAPNYHkm5Qp8HQGU5_6DXc7xpCrdGgEin0WYAxbRNOkKW0j2ERQ@mail.gmail.com>
+ <CABPp-BFqZj4qYXbPGLyX=4RM4OdLNL=VbYyhbLakU-RrvU+wfw@mail.gmail.com> <CAPNYHkn5aHW1e_G5BKcaHWnrTSR+=VKOnKPdDPLJ5bH9DedKTA@mail.gmail.com>
+In-Reply-To: <CAPNYHkn5aHW1e_G5BKcaHWnrTSR+=VKOnKPdDPLJ5bH9DedKTA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 11 Nov 2021 08:19:40 -0800
+Message-ID: <CABPp-BEGH7reoVXx4TkJKkv7fr=BVOPCTuMBFbEGGDp5nS3bVg@mail.gmail.com>
+Subject: Re: [PATCH v3 3/9] diffcore-rename: simplify limit check
+To:     =?UTF-8?B?QmHFn2FyIFXEn3Vy?= <basarugur@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 11, 2021 at 06:18:55AM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Thu, Nov 11, 2021 at 1:03 AM Ba=C5=9Far U=C4=9Fur <basarugur@gmail.com> =
+wrote:
+>
+> On Wed, Nov 10, 2021 at 9:06 PM Elijah Newren <newren@gmail.com> wrote:
+> >
+> > On Tue, Nov 9, 2021 at 1:15 PM Ba=C5=9Far U=C4=9Fur <basarugur@gmail.co=
+m> wrote:
+> > >
+> > > Hi all,
+> > >
+> > > First post on Git mailing list, to provide a comment on a patch. Hope
+> > > this works.
+> > >
+> > > In cases where the `rename_limit` is already greater than 65535, the
+> > > `st_mult(rename_limit, rename_limit)` multiplication overflows and
+> > > process halts.
+> >
+> > Out of curiosity, what system are you on?  And how many renames do you
+> > actually have?
+>
+> I am on a 64-bit Windows 10; but following up on your question, it
+> became obvious that these limits have something to do with 'which git
+> executable' I was dealing with. This problem surfaced when I was
+> working on Visual Studio 2019, and was trying to rename not more than
+> 10 files. My config had 999999 as the renameLimit, and VS2019 showed
+> the 'fatal error' in its git output. However, git bash was all fine
+> with listing the renamed files. And the difference between these
+> scenarios turned out to be, yes, different git executables. VS2019 has
+> its own copy of git which is 32-bit, and it hits this 999999 * 999999
+> overflow; whereas *my* copy of git used in bash is 64-bit which does
+> not have that overflow problem.
 
-> diff --git a/object-file.c b/object-file.c
-> index 02b79702748..ac476653a06 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -2528,6 +2528,8 @@ int read_loose_object(const char *path,
->  	char hdr[MAX_HEADER_LEN];
->  	unsigned long *size = oi->sizep;
->  
-> +	*contents = NULL;
-> +
->  	map = map_loose_object_1(the_repository, path, NULL, &mapsize);
->  	if (!map) {
->  		error_errno(_("unable to mmap %s"), path);
+Ah, thanks for the extra info.
 
-OK, I agree this fixes the segfault, and is the minimal fix.
+> >
+> > We used to clamp to 32767, but one specific repository needed values
+> > larger than that, in the range of ~50000.  However, due to a number of
+> > rename detection related optimizations added since then, the git of
+> > today can handle that same particular repository and support full
+> > rename detection with a rename limit under 1000 for merge/cherry-pick
+> > (sorry, forgot the exact numbers), and probably less than 10000 for
+> > diff (just guestimating; I don't want to go and check).
+> >
+> > Anyway, all that aside, I don't see any such overflow for rename_limit
+> > being 2**16; we can push it much farther:
+> >
+> >     size_t a =3D 4294967295;   /*  2**32 -1  */
+> >     size_t b =3D a;
+> >     size_t c =3D st_mult(a, b);
+> >     printf("%"PRIuMAX" =3D %"PRIuMAX" * %"PRIuMAX"\n", c, a, b);
+> >
+> > Output:
+> >
+> >     18446744065119617025 =3D 4294967295 * 4294967295
+> >
+> > Adding one to the value of a results in:
+> >
+> >     fatal: size_t overflow: 4294967296 * 4294967296
+> >
+> > > But I don't think an 'overflow error' is very helpful
+> > > for the users in understanding what is wrong with their configuration=
+;
+> > > i.e. `diff.renameLimit` documentation says nothing about a 'maximum
+> > > allowed value'. I would either clamp it to a reasonable range, or
+> > > inform the users about the limits, or maybe both.
+> >
+> > That sounds reasonable, but I'm not sure it's worth the effort in
+> > practice.  2**32 - 1 is so impractically large for a rename_limit that
+> > I don't see why anyone would need a value even remotely close to that
+> > level (and I wouldn't at all be surprised if other things in git
+> > scaling broke before we even got to that point).
+> >
+> > Perhaps you're dealing with a 32-bit system?  Even then, the
+> > repository that hit this was about 6.5GB packed .git history; and you
+> > might need to be a lot larger than that given the optimization since
+> > then in order to hit this.  Can 32-bit systems even handle that size
+> > of repository without dying in several other ways?
+>
+> Good point, but the system aside, 2**16 - 1 =3D 65535 would remain to be
+> the limit for the 32-bit git executables, wherever they are used.
+> Therefore, maybe there is a point to curb it, or mention this
+> somewhere, as I have said before.
 
-I do find the fact that fsck_loose() looks at "contents" after
-read_loose_object() returns an error to be a bit questionable. It's a
-recipe for confusion about what has happened, and who is supposed to
-free what.  Your v2 addresses the leak, but by just shifting more burden
-to the caller. There's only one caller, so it's not too bad, but for a
-public function, read_loose_object() has a lot of sharp edges.
-
-Plus I think it fails to work as intended for streaming blobs (we do not
-fill in "contents" at all in that case, so we can never say "hash-path
-mismatch").
-
-I understand you're trying to catch the case of "we actually opened the
-file and computed the sha1 of its contents" from cases where we didn't
-get that far. But since you initialize real_oid, it seems like it would
-be better to see if anything was written to that.
-
-I.e., something like:
-
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index d87c28a1cc..8f156ed9cd 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -617,18 +617,20 @@ static int fsck_loose(const struct object_id *oid, const char *path, void *data)
- 	oi.typep = &type;
- 
- 	if (read_loose_object(path, oid, &real_oid, &contents, &oi) < 0) {
--		if (contents && !oideq(&real_oid, oid))
-+		if (!is_null_oid(&real_oid) && !oideq(&real_oid, oid))
- 			err = error(_("%s: hash-path mismatch, found at: %s"),
- 				    oid_to_hex(&real_oid), path);
- 		else
- 			err = error(_("%s: object corrupt or missing: %s"),
- 				    oid_to_hex(oid), path);
-+		errors_found |= ERROR_OBJECT;
-+		return 0; /* keep checking other objects */
- 	}
--	if (type != OBJ_NONE && type < 0)
-+	if (type != OBJ_NONE && type < 0) {
- 		err = error(_("%s: object is of unknown type '%s': %s"),
- 			    oid_to_hex(&real_oid), cb_data->obj_type.buf,
- 			    path);
--	if (err < 0) {
-+		free(contents);
- 		errors_found |= ERROR_OBJECT;
- 		return 0; /* keep checking other objects */
- 	}
-
-(the "err" variable is now superfluous, but I left it in to keep the
-diff smaller). And then it would be safe to just set "contents" in
-read_loose_object() when we need it:
-
-diff --git a/object-file.c b/object-file.c
-index ac476653a0..5e8ff94fd4 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2528,8 +2528,6 @@ int read_loose_object(const char *path,
- 	char hdr[MAX_HEADER_LEN];
- 	unsigned long *size = oi->sizep;
- 
--	*contents = NULL;
--
- 	map = map_loose_object_1(the_repository, path, NULL, &mapsize);
- 	if (!map) {
- 		error_errno(_("unable to mmap %s"), path);
-@@ -2549,6 +2547,7 @@ int read_loose_object(const char *path,
- 	}
- 
- 	if (*oi->typep == OBJ_BLOB && *size > big_file_threshold) {
-+		*contents = NULL;
- 		if (check_stream_oid(&stream, hdr, *size, path, expected_oid) < 0)
- 			goto out;
- 	} else {
-
-That doesn't fix the hash-path mismatch problem for streaming, but it
-sets us up to do so, if check_stream_oid() returned the real_oid it
-computed.
-
-All of this is much too large for an -rc fix, so we should take your
-patch as-is. These are just thoughts I had while trying to figure out
-if there were other problems caused by that same commit.
-
--Peff
+Fair enough.  If someone wants to contribute a patch to either provide
+a nicer error message if the value is set too high, or to clamp it
+with a warning, and in either case to make sure the too-large check is
+specific to 32-bit systems (or uses appropriately different limits on
+32-bit and 64-bit systems), then that would be a welcome contribution.
