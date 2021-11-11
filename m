@@ -2,186 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 544D4C433EF
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 22:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EDBAC433F5
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 22:34:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B17761215
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 22:19:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45BFD61247
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 22:34:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233510AbhKKWWQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Nov 2021 17:22:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50222 "EHLO
+        id S234146AbhKKWhV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Nov 2021 17:37:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229869AbhKKWWP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Nov 2021 17:22:15 -0500
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF94DC061766
-        for <git@vger.kernel.org>; Thu, 11 Nov 2021 14:19:25 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id g18so6762063pfk.5
-        for <git@vger.kernel.org>; Thu, 11 Nov 2021 14:19:25 -0800 (PST)
+        with ESMTP id S234150AbhKKWhR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Nov 2021 17:37:17 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1697C061767
+        for <git@vger.kernel.org>; Thu, 11 Nov 2021 14:34:27 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id mn13-20020a17090b188d00b001a64f277c1eso3669135pjb.2
+        for <git@vger.kernel.org>; Thu, 11 Nov 2021 14:34:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=JHPKibHVu8qnydDEtvBjjVxcBmU9kd92OhOWsF45Vq0=;
-        b=saXl/B5Vh0+37tTK4aVzK5kCWPJIb6WqfP4awevGiZmDManYem4QmcJaI0ZaSUOsgU
-         46X9JqpHy9laIskc1wBuTYzt08/90BnOXwW8XHGfiyNuXKHtbH1FuJWqvr2pbtR9x0Q1
-         iLBmu0R29ebXWara3v7IwX+EtAiXrRQ3c5XanhJ3hKBE32Uw27WJk7NeWZp6dcDeXEiI
-         V79gK5d5BRsL+iFCUqWce0UhBbJRUaOW3aTwer72bXnCfJ3iAaA/b63OzFCKEvTzqDmt
-         8zLjlrqYrswaB3ejjPJEPUUIaaN6I8CFonyS1uHbKQw4kJk6R32JHkr5AVY2eX7Or+qM
-         hr/A==
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=f3Ee4uJKtNTmYI6jrYHdJhK8rJLXTgYRTcXtrtJE1Xc=;
+        b=hXRQdfvTPLef5MPAlB66BL0oY5Gihwa5tQkYeRtmwrCJV/UcvLz0ueABh9CES4BiNw
+         TJBow3wqqCWOPSS4w+5KCWPxpqohg5LLvZoL08UlkZ/8wFvGJSievHpwbtp8D7uOY2dj
+         /inKq3P5ziXguqVbu8wD2x5/QYH9H+FV7WgS2aoV/F03dJqdh4Te4fQvDgtiqFwDWztB
+         FeQR+JL8d/igxiuSnYHe4ZiwBISvJYya8gkeMiQ1IgVjKX2rA37t7/DPpbqVCXT9cAZZ
+         sJ9wQAeLoEUWu2gO11fxtG7SUFOxJhWx1BGzD4J43TVvBZEkg8qCQYEQrcTbEeyPQjPm
+         Bc2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=JHPKibHVu8qnydDEtvBjjVxcBmU9kd92OhOWsF45Vq0=;
-        b=bBamRuuaeEbW8s3fnH6qilD3mPq8R9iR79XXVrVUb34UFyKzeKQlCT55KmMFx3JaxS
-         65MbVzfANJbXVh2E9emhrTkEMr1AYNp+dBFBVlAIdvZmstimVrO4R+UJxQ1rJLiMW1gF
-         aNcLo8O3bcLyDRi/lGH/mfxj4P9zuGpHcxaQAycLD/w+kKicqAf/S9IdLee5BQQBYBcl
-         oi0MFQpiaN81QqlAwb5XU8kdFmvBpn5cjOQDBltF8ZdQMN1QUX3iBwdaDhTpAocI3Uf7
-         VoBBWE17Ea8ynK0+G8W5L0rPs2Ru0ZcvMJHJ/VfeSq/SOGVNZHQvP8b0vUawZ1HLYuEI
-         ihlw==
-X-Gm-Message-State: AOAM533oGhnrGxFjw0kDOwpZncM9lsKb99pzyi76AsulUqDY9lQQ2ARt
-        kTb1SDveGNY1pdfN03hRLCiJrOsbI4PoBUSV
-X-Google-Smtp-Source: ABdhPJyVTQRrIMeXuoi3UJhQShxRqyWAm4o33Cyb5NjvaEDhehQQrFjNRfZ50qNQOvi7VhVBLW3BNQ==
-X-Received: by 2002:a65:5889:: with SMTP id d9mr6861102pgu.456.1636669165036;
-        Thu, 11 Nov 2021 14:19:25 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:ab2f:d045:9fa5:64f1])
-        by smtp.gmail.com with ESMTPSA id b28sm2957844pgn.67.2021.11.11.14.19.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Nov 2021 14:19:24 -0800 (PST)
-Date:   Thu, 11 Nov 2021 14:19:20 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2021, #03; Tue, 9)
-Message-ID: <YY2W6ESIxSz9lakK@google.com>
-References: <xmqqy25wygek.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqy25wygek.fsf@gitster.g>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=f3Ee4uJKtNTmYI6jrYHdJhK8rJLXTgYRTcXtrtJE1Xc=;
+        b=cf/SMEh0MKt3xwM2dkOgq05OBlxdtDPla+jnDZU2XaLptHmGlNmb3WFDHp61Jr9/XR
+         SfgEBD4BdeR0Tx710qp70x8bqtEJ1WUoNJLxqtgyacUTTbus14pI81MOB+k18rC12vbG
+         kesQlOzaqR5Jq75c5KkxwWcTKHIcS3o/oy3HSrQwEwfGkm+4EtlqScs1ZE9xSLr3AEJL
+         Ku9Ly8tOqsBFFkzULljxK/eIf/Ih4xMqo2Osn5GkrAmFKfwUllz6VDhgE3Owq9lqWSFI
+         MIAkEkLMCeTJcWd3Q83jnxfikNJe8UNzIzxnD7n28l3/ZJhrmA8y1g0gaPJyxGITx3r3
+         eqgw==
+X-Gm-Message-State: AOAM530Ebvv00EEKDhSGiyXIyi3aKN1RczSOp/JKraknPnl1SdZkmGjD
+        Y4DVkWx354PhwjUjmwb2S+zDlLvw7luzh7kc4SMSALh8ANmnFDAXc96bt5EuR53/xlor9Ok+N5K
+        ewSbTgNAw0+v16xx1mpQ0C1aT7YtKkPNTEWqO2Ph++Sqk2fpPhpQ7zIWyoD2wn90=
+X-Google-Smtp-Source: ABdhPJza6v7AbCCDRsFQengMvi1tK7zEdrZEvMOd8zlzEbyqZGssZ3vIVuVnlrlNrJoiNf2G1E2WhqjfoEzfDw==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:2812:884f:9c76:ae35])
+ (user=steadmon job=sendgmr) by 2002:a17:902:7fcd:b0:142:8ab3:ec0e with SMTP
+ id t13-20020a1709027fcd00b001428ab3ec0emr2910031plb.4.1636670067213; Thu, 11
+ Nov 2021 14:34:27 -0800 (PST)
+Date:   Thu, 11 Nov 2021 14:34:25 -0800
+Message-Id: <ebc4d9a6960f0350772c14981ef211876f29d0fa.1636669891.git.steadmon@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.34.0.rc1.387.gb447b232ab-goog
+Subject: [PATCH] trace2: increment event format version
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Cc:     git@jeffhostetler.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Once more, updates to submodule-UX-overhaul related work.
+In 64bc752 (trace2: add trace2_child_ready() to report on background
+children, 2021-09-20), we added a new "child_ready" event. In
+Documentation/technical/api-trace2.txt, we promise that adding a new
+event type will result in incrementing the trace2 event format version
+number, but this was not done. Correct this in code & docs.
 
-On Tue, Nov 09, 2021 at 04:59:31PM -0800, Junio C Hamano wrote:
-> --------------------------------------------------
-> [Stalled]
-> 
-> * ar/submodule-update (2021-10-13) 9 commits
->  . submodule--helper: rename helper functions
->  . submodule--helper: remove unused helpers
->  . submodule: move core cmd_update() logic to C
->  . submodule--helper: run update using child process struct
->  . submodule--helper: allow setting superprefix for init_submodule()
->  . submodule--helper: refactor get_submodule_displaypath()
->  . submodule--helper: rename helpers for update-clone
->  . submodule--helper: get remote names from any repository
->  . submodule--helper: split up ensure_core_worktree()
-> 
->  Rewrite of "git submodule update" in C.
-> 
->  Kicked out of 'seen' to make room for es/superproject-aware-submodules
->  which is among the topics this topic stomps on.
-
-There is some discussion on es/superproject-aware-submodules, and
-whether it is still needed. I think it is, but I'll say more downthread,
-instead of next to this topic.
-
-> --------------------------------------------------
-> [Cooking]
-> 
-> * gc/remote-with-fewer-static-global-variables (2021-10-28) 6 commits
->  - remote: add struct repository parameter to external functions
->  - remote: die if branch is not found in repository
->  - remote: remove the_repository->remote_state from static methods
->  - remote: use remote_state parameter internally
->  - remote: move static variables into per-repository struct
->  - t5516: add test case for pushing remote refspecs
-> 
->  Code clean-up to eventually allow information on remotes defined
->  for an arbitrary repository to be read.
-> 
->  Will merge to 'next'?
-
-What's still blocking this from being merged? Anything? Release
-schedule?
-
-> * js/branch-track-inherit (2021-10-18) 1 commit
->  - branch: add flags and config to inherit tracking
-> 
->  "git -c branch.autosetupmerge=inherit branch new old" makes "new"
->  to have the same upstream as the "old" branch, instead of marking
->  "old" itself as its upstream.
-> 
->  Under discussion.
->  cf. <87a6j6tbsv.fsf@gmgdl.gmail.com>
-
-Got confirmation this week that Josh is actively working on the next reroll.
-
-> * ab/config-based-hooks-2 (2021-11-01) 18 commits
->  - run-command: remove old run_hook_{le,ve}() hook API
->  - receive-pack: convert push-to-checkout hook to hook.h
->  - read-cache: convert post-index-change to use hook.h
->  - commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
->  - git-p4: use 'git hook' to run hooks
->  - send-email: use 'git hook run' for 'sendemail-validate'
->  - git hook run: add an --ignore-missing flag
->  - hooks: convert worktree 'post-checkout' hook to hook library
->  - hooks: convert non-worktree 'post-checkout' hook to hook library
->  - merge: convert post-merge to use hook.h
->  - am: convert applypatch-msg to use hook.h
->  - rebase: convert pre-rebase to use hook.h
->  - hook API: add a run_hooks_l() wrapper
->  - am: convert {pre,post}-applypatch to use hook.h
->  - gc: use hook library for pre-auto-gc hook
->  - hook API: add a run_hooks() wrapper
->  - hook: add 'run' subcommand
->  - Merge branch 'ab/config-based-hooks-1' into ab/config-based-hooks-2
-> 
->  More "config-based hooks".
-
-I think I owe another review, but as always with these topics, I wrote a
-lot of the code so I'm not sure how much I can really help. Other eyes
-appreciated.
-
-> * es/superproject-aware-submodules (2021-11-04) 4 commits
->  - submodule: record superproject gitdir during 'update'
->  - submodule: record superproject gitdir during absorbgitdirs
->  - introduce submodule.superprojectGitDir record
->  - t7400-submodule-basic: modernize inspect() helper
-> 
->  A configuration variable in a submodule points at the location of
->  the superproject it is bound to (RFC).
-
-To summarize the discussion from here: Ævar suggested this topic might
-not be necessary anymore, and that we should rely on in-process
-discovery of the superproject's gitdir. However, after some more
-thought, I think it's valuable to strive for a definitive way to tell
-"yes, I am a submodule" - and I'd like for this topic to be it. I'm
-planning a reroll (and an explanation in the cover letter), and to drop
-language referring to that as a "cache" (because it isn't a cheap
-version of an operation the submodule would be doing otherwise). I will
-also add another patch to demonstrate how we can use that new
-information as a point of truth, instead of a performance shim.
-
+Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
+ Documentation/technical/api-trace2.txt | 4 ++--
+ trace2/tr2_tgt_event.c                 | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Jonathan Tan: WIP v2 Conditional config includes remotes based on remote URL
-https://lore.kernel.org/git/cover.1635527389.git.jonathantanmy%40google.com
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index ef7fe02a8f..bb13ca3db8 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -128,7 +128,7 @@ yields
+ 
+ ------------
+ $ cat ~/log.event
+-{"event":"version","sid":"sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.620713Z","file":"common-main.c","line":38,"evt":"2","exe":"2.20.1.155.g426c96fcdb"}
++{"event":"version","sid":"sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.620713Z","file":"common-main.c","line":38,"evt":"3","exe":"2.20.1.155.g426c96fcdb"}
+ {"event":"start","sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.621027Z","file":"common-main.c","line":39,"t_abs":0.001173,"argv":["git","version"]}
+ {"event":"cmd_name","sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.621122Z","file":"git.c","line":432,"name":"version","hierarchy":"version"}
+ {"event":"exit","sid":"20190408T191610.507018Z-H9b68c35f-P000059a8","thread":"main","time":"2019-01-16T17:28:42.621236Z","file":"git.c","line":662,"t_abs":0.001227,"code":0}
+@@ -391,7 +391,7 @@ only present on the "start" and "atexit" events.
+ {
+ 	"event":"version",
+ 	...
+-	"evt":"2",		       # EVENT format version
++	"evt":"3",		       # EVENT format version
+ 	"exe":"2.20.1.155.g426c96fcdb" # git version
+ }
+ ------------
+diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+index 70cfc2f77c..3a0014417c 100644
+--- a/trace2/tr2_tgt_event.c
++++ b/trace2/tr2_tgt_event.c
+@@ -20,7 +20,7 @@ static struct tr2_dst tr2dst_event = { TR2_SYSENV_EVENT, 0, 0, 0, 0 };
+  * a new field to an existing event, do not require an increment to the EVENT
+  * format version.
+  */
+-#define TR2_EVENT_VERSION "2"
++#define TR2_EVENT_VERSION "3"
+ 
+ /*
+  * Region nesting limit for messages written to the event target.
 
-Additional discussion ongoing, Jonathan is working on another reroll,
-with a substantially different implementation but same user-facing
-feature. I think this discussion can benefit from reviews with an open
-mind - this is another effort to solve "how can a team ship configs for
-anybody developing their project, in the least painful (to the user) way
-possible?" In other words, this is a spiritual successor to the
-"remote-suggested hooks" topic, in that we are still trying to solve the
-same problem.
+base-commit: e9e5ba39a78c8f5057262d49e261b42a8660d5b9
+-- 
+2.34.0.rc1.387.gb447b232ab-goog
 
- - Emily
