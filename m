@@ -2,83 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91441C433EF
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 20:33:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DA30C433EF
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 22:00:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75D4C6112F
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 20:33:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6AAA261452
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 22:00:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233588AbhKKUf6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Nov 2021 15:35:58 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54193 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233372AbhKKUf5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Nov 2021 15:35:57 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 59F08F235A;
-        Thu, 11 Nov 2021 15:33:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MhmUIYIZoMqeg/u422LKcjWP/zdu0YgU/UOp50
-        e1Keo=; b=vnM0/kl2u55kIqFMwFdr3VQZ4nX0i8x4U3SgRk2VadrbNvfmt5A9bB
-        +ejsE+WmJKHZMkPcvrm98Py3QrNTZm3GT46RBC7i7RUbmQ0laga6br4W1mXl87x/
-        ABz9OOKAyf8VTxMpTXK6OFznRJhYB/yeF+fGv0qVOzOi5KeaGT1zs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 39CB1F2358;
-        Thu, 11 Nov 2021 15:33:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 047F3F2355;
-        Thu, 11 Nov 2021 15:33:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.34.0-rc2
-References: <xmqq4k8kzuz2.fsf@gitster.g>
-        <YY0HbQJEWbOwuuFj@coredump.intra.peff.net>
-        <xmqqwnlemwcy.fsf@gitster.g>
-        <YY17rBFIdDl+H47I@coredump.intra.peff.net>
-Date:   Thu, 11 Nov 2021 12:33:03 -0800
-In-Reply-To: <YY17rBFIdDl+H47I@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 11 Nov 2021 15:23:08 -0500")
-Message-ID: <xmqqy25ujuv4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 92B4CBC4-432E-11EC-B080-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+        id S232701AbhKKWDo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Nov 2021 17:03:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45996 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229520AbhKKWDm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Nov 2021 17:03:42 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7318CC061766
+        for <git@vger.kernel.org>; Thu, 11 Nov 2021 14:00:53 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id mn13-20020a17090b188d00b001a64f277c1eso3631144pjb.2
+        for <git@vger.kernel.org>; Thu, 11 Nov 2021 14:00:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=bH83OBNKI6vI0cJQWRZdknf31r7RHponkAZ5rAGbaPs=;
+        b=LDpYru3gAMN+44VjknSEQY1qd18gYePOlyscS5z1QhG77F1f0RnK+cZaYt89XQXp2Y
+         lkEluZtHLKJZuV/ha+2rJj5qN/9wZwxbmc/pCfsF0SUywp3fnj91Mqr8nAHeKx+w9Smf
+         oN/mWDIzNClb4SiY2ZrXIIRKf7vvAd9bZoVqKY1SCn5HdO7uzgUi3oQAOxROsUvuOfu3
+         NNsazGl6lHHUGFlq6ncjtIrtQChZL98F2S1woFkdJ3sx7x23LqXCGMbv88LcssKcqk3R
+         qxrwqcvzSQgGR2T8AVqOwi37eaUmUIPbhgPq7NQQycBIT1LyQuGBLdhxgTGAgDANBSFp
+         Xclg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=bH83OBNKI6vI0cJQWRZdknf31r7RHponkAZ5rAGbaPs=;
+        b=ptE1toIDxT8OGGH42TucgZin+VOHgWeHwe6YIglfgretebvaxLak273zCRwfBdKyCK
+         Jnx3F54R2kLHKykBNdqtIBxsbGoDD4f2tT/S5Gldg7Qu+H7O5rHdxOzzClJPgqQX9Bqw
+         2EmbJptm9dY2KS2q9gqGMYH8pv8hpBGw4JxiuEnWGQ5E1FAbSim4BIM6ruRYbkEG+xH8
+         TRQqUD+lnldx8BcpTmsbXVOWU3Swcgh4whPcZ5f9g46B8peMMdC0c49Wqig4mIsMaVEM
+         ay8TCzVM5eEDdhiz5DPpkqfhLxP7ZyQn2463JIQL75/VH4TtNovc65C9QEJmLImZaeYf
+         BGfQ==
+X-Gm-Message-State: AOAM532PhQYHsN1W0mcO93RmROFC14GaYNgCrjYBMU9wvnvRqpRXua2n
+        wWAE8Kw/i43W2wdH7b5DwnWVTwxbLrrdobmbtKQFrHQ/e3lZx9ObmQureU+onx4q9WopAzNFoNh
+        JVOWh/Ru/014WOCC0N1OaACNN9LUJqRiBpWlD+9zJ7pk2Q2hWc9PPktTnbcisQGnTfA==
+X-Google-Smtp-Source: ABdhPJw4+nfr+glZr/nadqMScCU5K0vDQROnbFomsuvxur0IeKYgqcupisnYWZT7yavGZP/wH0EcpwUEbrJcgwc=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a62:1887:0:b0:44c:872e:27ed with SMTP id
+ 129-20020a621887000000b0044c872e27edmr9654878pfy.71.1636668052811; Thu, 11
+ Nov 2021 14:00:52 -0800 (PST)
+Date:   Thu, 11 Nov 2021 22:00:48 +0000
+In-Reply-To: <20211027193501.556540-1-calvinwan@google.com>
+Message-Id: <20211111220048.1702896-1-calvinwan@google.com>
+Mime-Version: 1.0
+References: <20211027193501.556540-1-calvinwan@google.com>
+X-Mailer: git-send-email 2.33.0.664.g0785eb7698
+Subject: [PATCH v2] protocol-v2.txt: align delim-pkt spec with usage
+From:   Calvin Wan <calvinwan@google.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Calvin Wan <calvinwan@google.com>,
+        Ivan Frade <ifrade@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+The current protocol EBNF allows command-request to end with the
+capability list, if no command specific arguments follow, but the
+protocol requires that after the capability list, there must be a
+delim-pkt regardless of the number of command specific arguments.  Fixed
+the EBNF to match. Both JGit and libgit2's implementation has the
+delim-pkt as mandatory. JGit's code is not publicly linkable, but
+libgit2 is linked below[1]. As for currently implemented commands on v2
+(ls-ref and fetch), the delim packet is already being passed through
 
-> On Thu, Nov 11, 2021 at 09:32:29AM -0800, Junio C Hamano wrote:
->
->> ...  So in this particular example, it would not matter if the
->> new unsorted traversal is subtly broken (I think the extent of the
->> damage is similar to making the SLOP problem deliberately worse),
->> but I am not sure if there are other failure modes that would yield
->> outright incorrect result.
->
-> Yes, I think that framing is right: it is making SLOP much worse. We
-> could similarly have had bogus timestamps in those commits which would
-> cause the same outcome. So in that sense it is nothing new. On the other
-> hand, I wonder how often it will cause extra traversal work (keeping in
-> mind that this commit traversal is just the first stage; after we find
-> the commits, then we talk all of their trees, which is the more
-> expensive part).
->
-> For the case of adding new commits directly on top of another branch, I
-> think there would be no change. But any time you have to walk down to a
-> common fork point (e.g., imagine I made a new branch forked from an old
-> bit of history), we may fail to find that. I haven't quite constructed
-> an example, but I have a feeling we could end up walking over
-> arbitrarily long segments of history.
-> ...
-> I'd be curious to hear Patrick's thoughts on the whole thing.
+[1]: https://github.com/libgit2/libgit2/blob/main/src/transports/git.c
 
-Yes.  I'm tempted to wait for him to chime in.
+Reported-by: Ivan Frade <ifrade@google.com>
+Signed-off-by: Calvin Wan <calvinwan@google.com>
+---
+ Documentation/technical/protocol-v2.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+index 21e8258ccf..8a877d27e2 100644
+--- a/Documentation/technical/protocol-v2.txt
++++ b/Documentation/technical/protocol-v2.txt
+@@ -125,11 +125,11 @@ command can be requested at a time.
+     empty-request = flush-pkt
+     command-request = command
+ 		      capability-list
+-		      [command-args]
++		      delim-pkt
++		      command-args
+ 		      flush-pkt
+     command = PKT-LINE("command=" key LF)
+-    command-args = delim-pkt
+-		   *command-specific-arg
++    command-args = *command-specific-arg
+ 
+     command-specific-args are packet line framed arguments defined by
+     each individual command.
+
+base-commit: e9e5ba39a78c8f5057262d49e261b42a8660d5b9
+-- 
+2.33.0.664.g0785eb7698
+
