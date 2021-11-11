@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44C27C433F5
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 03:03:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BCC3C433F5
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 03:05:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DE7E611C0
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 03:03:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC36861250
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 03:05:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230185AbhKKDF4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Nov 2021 22:05:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44352 "EHLO
+        id S230356AbhKKDI3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Nov 2021 22:08:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229931AbhKKDF4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Nov 2021 22:05:56 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B962CC061766
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 19:03:07 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id y5so4388921pfb.4
-        for <git@vger.kernel.org>; Wed, 10 Nov 2021 19:03:07 -0800 (PST)
+        with ESMTP id S229931AbhKKDI0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Nov 2021 22:08:26 -0500
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67756C061766
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 19:05:38 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id q17so4585624plr.11
+        for <git@vger.kernel.org>; Wed, 10 Nov 2021 19:05:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
         bh=b2IgsUkvfE6ssAjSvMlSqKWzvSVos0X+jc6bgERBi9E=;
-        b=mXO3ferN7aRvhL4wmUMUKz7M+5ZGA0+7bOUiEv2KDsPt2uwovqNXKqEeRjZnAfuZCD
-         H3mGGJZ1FvzwVupqDNUbL2fU3K9RyWHP8B8QzN7xHKk16rMZYNoYe1Al/WftwHfm5u0i
-         hJ/8uxez+lZMp+xfR1/80+vGsEJhLMJ3gNGNe5LLyrxZ4MLuwrbGPyxZzkxZoHYXOjVS
-         VwEqoI10rHIwvPx7kBh4tOZavLopN8XVBzIBNU0iJCjoFnXMpk2E0vDt/nAp4jwPAYOO
-         H850+pKr8S6Uzw54d5KyKIRPmIIEUFdxcCpZwNEF5FUUf7MpqgvePvYycvqNiDLXOXHf
-         J2mw==
+        b=B1XdIeOcUi9aov5OoReYNUgWbVxumX5EffLAheCTqLouD+W4esPUBkZZRukIKtbuYo
+         Exovi9rHealfzNsZP8Nsfh/EgXG62Y1ncHMGMgIi+ahImkJCvovqEib0/jRV4p7ntjvD
+         vvAuNi0O1COmzGhlfzINR9bK0PicFHpSw9Po1+RxzqddGXVd4SWN5Eriv6zHIkYKuCBt
+         FZUfZN4jofLNiCUF/aF2K9kX3lSG5g87zlUIcn01Zf7Dra3BwpAFrHNI8YkT6YxLxFW9
+         lbXALfaZWrNQbMX24ZPq6JQ1MjzxSI2IhrQ/wbIW/+4f0XKgpKWERf22eYQYEWEcHuTU
+         fHIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
         bh=b2IgsUkvfE6ssAjSvMlSqKWzvSVos0X+jc6bgERBi9E=;
-        b=CrtjBo79duL7BtR/TIoMtqyfLaCXQyHVU1+K21IoLwV5peKi9BNBXOE9D7PvxpHnOH
-         +MK7YGfqVnQLcRVhN0p0rxnJEDGVdjXAdvDB3Mk7jkKTrGIjUBQdfrx33FRDlP0ktAXu
-         MVX6RI/gGJwpqcE3+SRAWWVAA9j+YcYBnE/udcKK8GNOlpIyGSK25EIHl8IzeC3eDzkR
-         PczL2Rx8eYKYxldMj6Lhk7XX/FB27ZJSkqioESldDmgfwPbVIZm+jpWgUI00J6NmHjsb
-         hvn+J9btUcV63aGN/65vIAwn6C31dD1AyzpPd1WFEnFz2GyFmZEWia/ze6F8t4lXS0uH
-         5ldQ==
-X-Gm-Message-State: AOAM531VD5C5rteUIee3UOUepjd8jCrojSe/37lvXiGhVk+IFWMXXKxo
-        tZ69pYa4KJv0JJRUDf1tVFM=
-X-Google-Smtp-Source: ABdhPJxY3GJXNkWTL01Hz5+r/5EqDQmpoHpzOnsZnHa516eiXTV5vJwrxIP488VFJLdUz9CToTo+Gw==
-X-Received: by 2002:a62:5b47:0:b0:480:69a9:29cd with SMTP id p68-20020a625b47000000b0048069a929cdmr3676837pfb.40.1636599787194;
-        Wed, 10 Nov 2021 19:03:07 -0800 (PST)
+        b=6LjYUgxHNYzc6p4hvki0a5RpdTDTLbAHrxZbJWd+FzSerKp9KKE/BVij9j7cPd6Yfu
+         dA+Z7OYCNmvJuan+hGwQiIFanKawp3D5gTSuiqKT/4ggfQ9FnXGLAkuS3VGv2JZCjS8N
+         tQqAA+0CuZ3TDu7S1b9C4++ebHNXWVYR8gBDqyYSR6ZT65OR9D12yIkBsG7ivMSnHoSr
+         /KF0eddabeC7i5E2i6QHq3o33RLitXptop9xDvCVlsB4ysD+uIOzx0JrxEuDOFg+dDe7
+         gRjmtx7qtoj2RqCvRqycybW3JZCovchhLdlsGu+YCZ3Td9oxi6pTZ8TrWpRFimGFRNPP
+         CDNQ==
+X-Gm-Message-State: AOAM533uvswryqsqXK4P5yobTToXXQBakpxSpGr9sNbGBeWg7ShdMh6Z
+        FP5/OOKQnRvm5R6AYl0tgqM=
+X-Google-Smtp-Source: ABdhPJwHB1BazGGmOIJos2thR9qW58fpYvZNgixjcR6EfuYrFoDFdch0NnChojhD1znfCSwRO3pEWg==
+X-Received: by 2002:a17:90b:1e4e:: with SMTP id pi14mr4478349pjb.161.1636599937902;
+        Wed, 10 Nov 2021 19:05:37 -0800 (PST)
 Received: from localhost.localdomain ([205.204.117.99])
-        by smtp.gmail.com with ESMTPSA id x18sm959801pfh.210.2021.11.10.19.03.04
+        by smtp.gmail.com with ESMTPSA id d11sm716237pgh.87.2021.11.10.19.05.35
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Nov 2021 19:03:06 -0800 (PST)
+        Wed, 10 Nov 2021 19:05:37 -0800 (PST)
 From:   Han Xin <chiyutianyi@gmail.com>
 X-Google-Original-From: Han Xin <hanxin.hx@alibaba-inc.com>
 To:     avarab@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
         me@ttaylorr.com, peff@peff.net, rybak.a.v@gmail.com
-Subject: Re: [PATCH v2] receive-pack: not receive pack file with large object
-Date:   Thu, 11 Nov 2021 11:03:02 +0800
-Message-Id: <20211111030302.75694-1-hanxin.hx@alibaba-inc.com>
+Subject: Re: [PATCH v10 17/17] fsck: report invalid object type-path combinations
+Date:   Thu, 11 Nov 2021 11:05:32 +0800
+Message-Id: <20211111030532.75910-1-hanxin.hx@alibaba-inc.com>
 X-Mailer: git-send-email 2.33.1.44.g9344627884.agit.6.5.4
 In-Reply-To: <patch-v10-17.17-838df0a979b-20211001T091051Z-avarab@gmail.com>
 References: <patch-v10-17.17-838df0a979b-20211001T091051Z-avarab@gmail.com>
