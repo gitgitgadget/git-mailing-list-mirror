@@ -2,89 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C0CAC433EF
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 18:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 841E4C433F5
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 18:03:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B20B6124D
-	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 18:01:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59A8961268
+	for <git@archiver.kernel.org>; Thu, 11 Nov 2021 18:03:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234044AbhKKSEe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Nov 2021 13:04:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48858 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbhKKSEb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Nov 2021 13:04:31 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB69DC061766
-        for <git@vger.kernel.org>; Thu, 11 Nov 2021 10:01:41 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id m14so27694651edd.0
-        for <git@vger.kernel.org>; Thu, 11 Nov 2021 10:01:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qTi6T2y5R6yXgZruofLU1OTviWPZ3ZqBtcO14awmM/Y=;
-        b=ZPcposPFVvHpc3yYPJgpuZoVM8UI6yaL6svGgKM9TpH7PNBKGvFZOa/591peVy+2ck
-         nu4TowC3Tfu+52bBUZDlPHiVexz0bAMCZMYAsww5uunYlpsBnwIdfjz6lkHhGgXnCV4K
-         sDMTARQFw1DklJ1dphVwgzVIDYNQuXW0WULG9Oke3fattpWfzOF2lEpVeS0tUauiasDs
-         zcllNtnUBCEuOVLnYjGh3/hLCQQSfC7NGtfe7/uh0ms0pSbnlaGChuWKBEVs/crR2vYQ
-         SD4xedgQPSpUyFUSK4IEQF9qEbLHQlCUbbYkVP3WRhH9wNPp65oWVyWSmpsM++ieFcJJ
-         HMRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qTi6T2y5R6yXgZruofLU1OTviWPZ3ZqBtcO14awmM/Y=;
-        b=hMaL8vxX+DxmJyC1ghZe7P6zg8TNfsmvrjdM9ec54tE5eddI4tFoc6J05qIspYMG/v
-         dABIytV5DE1ZiYjvGN7lmHSon2PvOb8aK1QZNp34Xc3nOgiGHy7eEwDX/JgZ80/Ty6Ou
-         /aS50l9RnPHo1xRpKPRjcnAu/MdImpEev5LErW6V9wLuWBbz1ndRMs/0TtnXEvkXrV/Q
-         vXwAA9F1MaB9eo9AMWUcZ+/g84h+DX2Ji62S8jEU+1fSPWLNV993jKijerv3e0KCe8Ym
-         3cZyqYMCHaHqww7Ua9VZtMk/jVXs23xNoQ6k8zLp3hhfjsG602CZhC2ZGgd2EL6pTzao
-         8jRw==
-X-Gm-Message-State: AOAM533VB7mhKf/9GojpbLNCaLQVOlmdzsFWLd6lj5Q+zpWKAzW0dx5W
-        00hFG6AYanCcMIXKcE7I4MH8H9jLvQay5qqxt8ssf4bl
-X-Google-Smtp-Source: ABdhPJyyQygg63hvIwrTnTH8mtcs8YFBWlmLjxeNoGFdcl/kJ7psd2Cx/2Z9WO8twqs+zzviDaKVE8aQRfj2qJsa4xU=
-X-Received: by 2002:a17:906:2f10:: with SMTP id v16mr11660035eji.434.1636653700318;
- Thu, 11 Nov 2021 10:01:40 -0800 (PST)
+        id S233632AbhKKSGE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Nov 2021 13:06:04 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58900 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229710AbhKKSGD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Nov 2021 13:06:03 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 20980163907;
+        Thu, 11 Nov 2021 13:03:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=1svwbh3AqlqE
+        n83Lz6TSaiCPEwsBdzOLRKuzdpcfdNw=; b=VQoxy4kv4Yp6AterDQUCOnhVmGV2
+        bh1sDeKK63zgmgJ0I1WcyAT+eatKwdiwXg/ghHmRTaiTPP4mmIRqba/520UFCXvM
+        uERmDUU311RLrUL69l2gHX7s+Sy5g4ukiAOzqcDWLaipDXHscDla/ZL7ijHP33p5
+        LDHA2D+XxPKSBXM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 18353163906;
+        Thu, 11 Nov 2021 13:03:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 75961163903;
+        Thu, 11 Nov 2021 13:03:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Eric Wong <e@80x24.org>, Christoph Hellwig <hch@lst.de>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: RFC: A configuration design for future-proofing fsync()
+ configuration
+References: <211110.86r1bogg27.gmgdl@evledraar.gmail.com>
+Date:   Thu, 11 Nov 2021 10:03:10 -0800
+In-Reply-To: <211110.86r1bogg27.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 10 Nov 2021 16:09:33 +0100")
+Message-ID: <xmqqh7cimuxt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1073.git.1636526490570.gitgitgadget@gmail.com> <xmqqo86qmvnr.fsf@gitster.g>
-In-Reply-To: <xmqqo86qmvnr.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 11 Nov 2021 10:01:28 -0800
-Message-ID: <CABPp-BETy2=J1jNsS_pPpby7Z1P0Yfp92eekMLRicaA=YCL8tQ@mail.gmail.com>
-Subject: Re: [PATCH] RelNotes: fix a couple of typos for the upcoming release
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A2219FE8-4319-11EC-BBAE-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 11, 2021 at 9:51 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >     RelNotes: fix a couple of typos for the upcoming release
->
-> Thanks.  Relative to -rc2, here is what I have today, taking these
-> typofixes, and a few topics for regression fixes.
->
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> + * "git pull --ff-only" and "git pull --rebase --ff-only" should make
-> +   it a no-op to attempt pulling from a remote that is behind us, but
-> +   instead the command errored out by saying it was impossible to
-> +   fast-forward, which may technically be true, but not a useful thing
-> +   to diagnose as an error.  This has been corrected.
-> +   (merge 361cb52383 jc/fix-pull-ff-only-when-already-up-to-date later to maint).
+> Continuing a discussion from [1] currently we have:
+>
+>     ; Defaults to 'false'
+>     core.fsyncObjectFiles =3D [true|false]
+>
+> In master..next this has been extended to this by Neeraj:
+>
+>    core.fsyncObjectFiles =3D [true|false|batch]
+>
+> Which, as an aside I hadn't considered before and I think we need to
+> change before it lands on "master", we really don't want config users
+> want to enable that makes older versions hard die. It's annoying to wan=
+t
+> to configure a new thing and not being able to put it in .gitconfig
+> because older versions die on it:
+>
+>     $ git -c core.fsyncObjectFiles=3Dbatch status; echo $?
+>     fatal: bad boolean config value 'batch' for 'core.fsyncobjectfiles'
+>     128
 
-Is this worth calling out in the release notes?  I thought the
-discussion elsewhere on this list pointed out that this bug did not
-exist in v2.33 or before after all, but rather that it was a
-regression that was new to the v2.34 development cycle.
+But then it is also annoying to find out that the shiny new toy you
+thought you configured silently is not kicking in.  I actually think
+Neeraj's "if you are in a mixed environment, you need to be aware of
+which copies of Git you use are prepared to use it" would be better
+for end users.
+
+For us Git developers, it would be less convenient, though.
