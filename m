@@ -2,133 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC34AC433F5
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 21:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B17E7C433EF
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 21:49:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AEAF760EFD
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 21:34:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A87D61073
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 21:49:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235755AbhKLVhR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Nov 2021 16:37:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53268 "EHLO
+        id S235812AbhKLVwA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Nov 2021 16:52:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235714AbhKLVhQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Nov 2021 16:37:16 -0500
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B5C4C0613F5
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 13:34:25 -0800 (PST)
-Received: by mail-yb1-xb33.google.com with SMTP id y68so21899035ybe.1
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 13:34:25 -0800 (PST)
+        with ESMTP id S235767AbhKLVv7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Nov 2021 16:51:59 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49D61C061766
+        for <git@vger.kernel.org>; Fri, 12 Nov 2021 13:49:08 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id u1so17837841wru.13
+        for <git@vger.kernel.org>; Fri, 12 Nov 2021 13:49:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=e/gWl0zGQK5SsLnXepTGowN7Hujqh19FZghbduaEhLo=;
-        b=LbUU03ic7KwawsUHniQzptqLiVSoaFwRMWvSmD0wNGjykPtQHuc/dnEEqlpwUY6u1V
-         hUIn03oWeUNbq+4xpfJD3owpMNx61l5LO+6qx5VBFeV/p5KtAq4qr1RHhaJsnTn2OLGi
-         582Oqzn/P4TH4JRc+dNNfuOUpLZxBlhQovXxI=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=xbHVa/MhvYy1JHal39Ydph1ktO0y2K5JNGESoKix88o=;
+        b=FSYc/8WJOSdTWrRash3OM1aCtA73oczk8cu2yhUixfGaHMkunvft8KNmum1TABz7EX
+         lyKOY+Jnc4ylRh2rJVJ6v2ziEPq3ZuGxNXaauOXUtmxWt+slZhbHvlKXKxRx213gkz5N
+         T6vn23jKEdrE4YZtiu74CUfJsc7Pm7QXrIuTISSdygEpAZ9SA+d8rYzMAQlTknUh3nMS
+         26Qf5LYBUmlh/OeO569/lmVsBkZSjpwYMQKETH9XPJpba4qXFPDjU93ganNj+05pUtkB
+         /3Y7bbDhA46SO3pOz4PycsK9fZPNCgoV/cECkIRHJYsfPCw2sKfpVWFTvrdFs1gyBEHQ
+         5iAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=e/gWl0zGQK5SsLnXepTGowN7Hujqh19FZghbduaEhLo=;
-        b=zIBV4vF+XprwPPiorbdNNjgsrNTipdY5sQzgIxf3iumXQ5UKb8fhL2QwA/hSmPoKo7
-         8KBiucsfpYZ+uj8t/n6YaVlx2yJyUWTqcwnLNQa9gF5waztYh/fvZFtNYuN3NVmxBbOq
-         NHkFkMSQA39Z6eKWfktSf3Yayua8CvboBkZONN+yUbT0zXveSEgJIFQxGSUU3oydUaWd
-         racjyQqcrtRuKIBMfObTQfKKx5tqw0tIGHJbSTvQa1Nf+fj+2wyJP5IJ4Zpl6Zlj3+U5
-         sZOZWLtWmskchhRcASS7x47MV5xhkxdb01LQmXMiYFudQKpetiT1J5zEp+ih5CcPmw0N
-         iMmQ==
-X-Gm-Message-State: AOAM533BdRpxwY8rFLvoSMdIpAQCWeyQirN87bX2or4dTSnHe36WTFEU
-        P6sCvN9OMZpLNERPaoGQtY0WiQQs3/65iKlCFHk38w==
-X-Google-Smtp-Source: ABdhPJy0mONOPpiUunLw5DEfyiXIwZ8V0VQNQ7bEv/ZDsNgWgE/Yx4ZJQbKAcejdgTcVNSXOjMUohcWkynhqlKUwwpA=
-X-Received: by 2002:a25:ae12:: with SMTP id a18mr19453927ybj.412.1636752864418;
- Fri, 12 Nov 2021 13:34:24 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=xbHVa/MhvYy1JHal39Ydph1ktO0y2K5JNGESoKix88o=;
+        b=aGyBuMk97z5vfy6oZjAbSUii05mFZ4Z7ADJVTXdM66kJsCk2LUOOmigIBuB5Oq8NCH
+         F8Qu3x8OjaZYAM6v9sukf8468mP1m6wUl3hhFC5zQyH2Q2xXUV4b69+DeiOMci6QlWAb
+         d69kXgDVvULD547Ef35uxP6mzSXFhHmkGSW761qWL4LN0eMqy0VByLbZJhscn/mLyqFa
+         SvyG1s7nReGWjwZ2mVdQ7XbEoRHXdRVBEeY7mrMG81Ql1marHxyLk+PIW50WMURZoncY
+         AEcsyA9kQWEiMxnDY48MMGZyKGebRUKr71Iktlk3cJAOM10VbB0dIHUJZ55S1PoLTSCo
+         sPPA==
+X-Gm-Message-State: AOAM530/FJW9McMdfUpknFs+5jk3df21DjHciAI70Jsqd7Pa5ESz+5Tc
+        g89M1McWFGS+h7KpoiRoqz/ixb8n/5spSQ==
+X-Google-Smtp-Source: ABdhPJx6/o76WlGHmO0YIfrbWPTHf8pZeECx+X6WjbWhD9693ltA4Lvi5yTaPeec2V3uZsHAzN61aA==
+X-Received: by 2002:a05:6000:1010:: with SMTP id a16mr22122358wrx.155.1636753746552;
+        Fri, 12 Nov 2021 13:49:06 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id h27sm14117189wmc.43.2021.11.12.13.49.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Nov 2021 13:49:05 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 01/18] Makefile: don't invoke msgfmt with --statistics
+Date:   Fri, 12 Nov 2021 22:48:45 +0100
+Message-Id: <patch-v2-01.18-75ebf7b04e5-20211112T214150Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.34.0.rc2.795.g926201d1cc8
+In-Reply-To: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com>
+References: <cover-00.16-00000000000-20211106T205717Z-avarab@gmail.com> <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
- <pull.1040.v2.git.1632152178.gitgitgadget@gmail.com> <6b7a058284b93fab52458b12a6aede5e8aed6652.1632152179.git.gitgitgadget@gmail.com>
- <20211104194619.GA12886@dinwoodie.org> <nycvar.QRO.7.76.6.2111090051530.54@tvgsbejvaqbjf.bet>
- <dca03da9-5684-10c7-2315-2d10affd4f0a@ramsayjones.plus.com>
- <nycvar.QRO.7.76.6.2111092358240.54@tvgsbejvaqbjf.bet> <xmqqee7ozyx4.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2111101324020.21127@tvgsbejvaqbjf.bet> <CA+kUOanh1m=dkE-gDikg53zOPXx_7v65ggqxPspuZWDbdOrR=g@mail.gmail.com>
- <xmqqtughtlb9.fsf@gitster.g>
-In-Reply-To: <xmqqtughtlb9.fsf@gitster.g>
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-Date:   Fri, 12 Nov 2021 21:33:53 +0000
-Message-ID: <CA+kUOa=FBpzy4zNMXY1UZybc+13mwLnXrZRVN5HP+NF3h4PYow@mail.gmail.com>
-Subject: Re: [PATCH v2 7/7] t/helper/simple-ipc: convert test-simple-ipc to
- use start_bg_command
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Carlo Arenas <carenas@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 12 Nov 2021 at 16:01, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Adam Dinwoodie <adam@dinwoodie.org> writes:
-> > But yes, the (lack of) speed of running the Git test suite on Cygwin
-> > is one of the reasons I run the tests on high-spec Azure VMs rather
-> > than my own systems. Unfortunately the Cygwin compatibility layer plus
-> > the overheads of NTFS mean things are unlikely to get significantly
-> > quicker any time soon, and between WSL and Git for Windows, I expect
-> > interest in improving Cygwin's performance is going to continue to
-> > wane.
->
-> Out of curiosity, are the use cases and user base of Cygwin waning,
-> or are there still viable cases where Cygwin is a more preferred
-> solution over WSL (the question is not limited to use of Git)?
+Remove the --statistics flag that I added in 5e9637c6297 (i18n: add
+infrastructure for translating Git with gettext, 2011-11-18). Our
+Makefile output is good about reducing verbosity by default, except in
+this case:
 
-No formal research here, just impressions as someone who has used
-Cygwin for a long time and who hangs out on the Cygwin mailing list:
-for a lot of use cases, WSL is at least as good, if not better, than
-Cygwin. There are a few areas where Cygwin is still a better solution,
-though:
+    $ rm -rf po/build/locale/e*; time make -j $(nproc) all
+        SUBDIR templates
+        MKDIR -p po/build/locale/el/LC_MESSAGES
+        MSGFMT po/build/locale/el/LC_MESSAGES/git.mo
+        MKDIR -p po/build/locale/es/LC_MESSAGES
+        MSGFMT po/build/locale/es/LC_MESSAGES/git.mo
+    1038 translated messages, 3325 untranslated messages.
+    5230 translated messages.
 
-- WSL requires essentially installing an entire operating system. Disk
-space is relatively cheap, so that's not nearly the obstacle it used
-to be, but it is an obstacle. This is more relevant for people who
-want to distribute packaged installers to Windows users: most
-non-technical users won't want to get WSL working, but if you've
-written code for *nix and don't want to port it manually to Windows,
-it's relatively straightforward to compile it using Cygwin and bundle
-the cygwin1.dll file with the installer. That'll mostly get your code
-working with a user experience that doesn't differ too much from a
-fully native Windows application. (This is essentially what Git for
-Windows is doing, albeit with an increasingly distant Cygwin fork.)
+I didn't have any good reason for using --statistics at the time other
+than ad-hoc eyeballing of the output. We don't need to spew out
+exactly how many messages we've got translated every time. Now we'll
+instead emit:
 
-- There are some functions that Cygwin offers that WSL doesn't. The
-key one for me is the ability to access Windows network file shares,
-which WSL doesn't support (or at least didn't last time I checked). I
-expect some of these gaps will disappear as WSL gets more features,
-but I expect some of them are fairly fundamental restrictions: Cygwin
-applications can have code specifically to handle the fact that
-there's a Windows OS there, so they can -- with care -- interact with
-the Windows OS directly to (say) use Windows file access APIs or the
-Windows clipboard. WSL applications generally don't have that ability;
-if I install something from apt on my Debian WSL installation, it'll
-pull exactly the same binary as if I'd installed it on a normal Debian
-system. I guess in theory people could write code to detect that
-they're running in WSL and handle that specially, in the same way that
-it's normally possible to detect and handle when you're running in a
-VM versus running on bare metal. I expect that'll be much less common,
-though, just as Git has code for handling Cygwin specially but doesn't
-have code for handling Linux-within-WSL specially, even though both
-could be used to access a Git repository stored in the same Windows
-NTFS directory.
+    $ rm -rf po/build/locale/e*; time make -j $(nproc) all
+        SUBDIR templates
+        MKDIR -p po/build/locale/el/LC_MESSAGES
+        MSGFMT po/build/locale/el/LC_MESSAGES/git.mo
+        MKDIR -p po/build/locale/es/LC_MESSAGES
+        MSGFMT po/build/locale/es/LC_MESSAGES/git.mo
 
-I expect some folk who historically have used Cygwin will shift over
-to WSL, some will stick with Cygwin, and a small number (as I do) will
-use both in parallel for slightly different jobs.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-tl;dr IMO both is true: WSL is better than Cygwin for some use cases
-so the user base is waning, but Cygwin is still a very viable
-preference over WSL for other use cases.
+diff --git a/Makefile b/Makefile
+index d56c0e4aadc..11da97de233 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1870,7 +1870,7 @@ ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
+ endif
+ 
+ ifndef NO_MSGFMT_EXTENDED_OPTIONS
+-	MSGFMT += --check --statistics
++	MSGFMT += --check
+ endif
+ 
+ ifdef HAVE_CLOCK_GETTIME
+-- 
+2.34.0.rc2.795.g926201d1cc8
+
