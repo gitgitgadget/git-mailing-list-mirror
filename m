@@ -2,63 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2132C433F5
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 09:41:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9559FC433EF
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 09:42:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8942460F45
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 09:41:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7225560EFD
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 09:42:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234847AbhKLJoe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Nov 2021 04:44:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59914 "EHLO
+        id S234862AbhKLJow (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Nov 2021 04:44:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234820AbhKLJod (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Nov 2021 04:44:33 -0500
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1519AC061766
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 01:41:43 -0800 (PST)
-Received: by mail-pg1-x533.google.com with SMTP id n23so7558364pgh.8
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 01:41:43 -0800 (PST)
+        with ESMTP id S234855AbhKLJov (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Nov 2021 04:44:51 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FB99C061766
+        for <git@vger.kernel.org>; Fri, 12 Nov 2021 01:42:01 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id gb13-20020a17090b060d00b001a674e2c4a8so7139176pjb.4
+        for <git@vger.kernel.org>; Fri, 12 Nov 2021 01:42:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SPo0A9rJ9MTJa7mcEfUOC97IwRSWLjT58O9mYCTL/Jw=;
-        b=clYyulwO0sZ+bOqJk5vhZqvgkNTEeleXSstUfQIowdeQUijSctPUuMxaK4pELCwSX1
-         5/LnkOe6el4O8xfTfyXwC+BVXbKoouXoCEGwU4yX9Jgfbbf7YaE+tyuuOHS3krwL68sU
-         9j8EVk+T9X2xpxpUGITQABKXYiWpZu88hSRuIDoTtuRkpm+JRNUNHpHFAweAFyXJqe4h
-         Kovu3wjQo+dWQGxKlIR6+1rTTgoOYa6zIT2o2PYyhPQArOun48uaa24KyMvsgfIDuLHE
-         CW4+HpApqggJoWcYzLPGWM+BQOsSTX1jfIoWi9gwXb3CStHGNOFGcaOvn0bCUfBEc27l
-         H8jA==
+        bh=HIGGY4gMqk8UtNQzWhaZzUHKIEXuvW8JN2xdt8ujWtg=;
+        b=PqImHcybrXM9uRLuSvWRYqYB/oLBbrQrcIbrqoRQG47uv3gkX7+a6fxXUxSpo4o3nW
+         EaBayLbWVpxUFOQth2R6Z0V7NhculFD+fqjFDUyl9l/L8wmJ44McxRN/NhVPRCoGLskt
+         3P4j4r6QZI/tAXNKsPHmdvydI63wp2vF8XCLaU82lVqKPx6osQIibNkPVglr8ljUta3Q
+         KJxqcMLMQ7HFDa24KhT4JOAYPVwSVftXMLI+acTkI6IMZypTr/oZbnk5OgPYp0Rexjmk
+         Xu53FBWGu0CciPDINljyQ+iuvZJhi0P5xSjucQCyrerMI70N36TtrFka+fWtYtTLpQrg
+         bPZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SPo0A9rJ9MTJa7mcEfUOC97IwRSWLjT58O9mYCTL/Jw=;
-        b=Cu9tDxyVWwwASLnRCoA7gQ7C5qcD3zLs7SGgTQhUqA8O4ISgy3B7xz/gCDSMekYJQ2
-         OX4v5B7232jbDIwKv9aTsqF2fNWSMVetprCdo9zZVgetI7L5yejgK0NUMFiB1Eb3Paka
-         sJhmyKfvoI6XyAw6oqrEUzPYIrrl/WlS39zfCNBc+fAPM5EM3G2/uQLGb3ON+Uc71ne/
-         +pqM9UbmJOsjzbJpPLY1/inf3jmFaURr7QZ2hczuRAO869mSB627zrm9I74SCZuDnSOK
-         SefSq4JViuXNDv8vtKBluxEL869Y00GebtZ7/OdBhSy7rJzRmSCGMXG36GYbft6fTta1
-         yC3g==
-X-Gm-Message-State: AOAM533/uCzO11yknDB3n1fKFyP+AILM4pdYEQb3/UR+9Suj22W4878Q
-        nSywhBXPchGNZHv/e/T/dS+TymMBPWQJ5gza
-X-Google-Smtp-Source: ABdhPJzfSC2IWPCRppU9cA4DrrTfEbUMx8wX6K8YFJWzpv2QXvGqBktuUhHWEFzdmJMCPdumGLuRRg==
-X-Received: by 2002:a63:9a12:: with SMTP id o18mr9183650pge.419.1636710102584;
-        Fri, 12 Nov 2021 01:41:42 -0800 (PST)
+        bh=HIGGY4gMqk8UtNQzWhaZzUHKIEXuvW8JN2xdt8ujWtg=;
+        b=hKshss6IjiKlSvrqE1MxMp/OtQl9x9XaJAAh/UuU6Js5o/WhYHGHUTWwyUR7IELYpQ
+         ZPw8FHGHZM/gUFOhR69FaqDk2D90eD6l25jT2JH0nunFS+9bbaA8W/SF39XkrFAwo6/i
+         rSX/o3S/cx1c2HSnVHXEUmY13Tn+h1xODgGmf36/JNVnFCGdFHb3sLEd/F/9Q6vVwaZu
+         0j2ey3a2j958y/OAhF4qJNYPMRd9tlQCV5Af9jZbnepPd8jnxJ66v2ms3qnYgJ4oDIf+
+         o/TjrUYHTTyIUp66jgVSIlHy460/5yxpWoSXr1YTYb7k8VBTCNe8oRuO40/0qWtpWYMI
+         sbjw==
+X-Gm-Message-State: AOAM531tDuLkw+Jn76NlgHsaO5HtahAHjRzmVrJc5tVgTGrvdvzcy7oa
+        Sesa10pC38/T92Xs/+wGbvg=
+X-Google-Smtp-Source: ABdhPJxGPV8akuMU+kKP/N3ztL60KqD6DNbNIZsjtMhvSVKoPJTmXXDyfQTBb67YhGi9Fu5UmNkRBQ==
+X-Received: by 2002:a17:90b:1c02:: with SMTP id oc2mr16350857pjb.65.1636710120790;
+        Fri, 12 Nov 2021 01:42:00 -0800 (PST)
 Received: from localhost.localdomain ([205.204.117.100])
-        by smtp.gmail.com with ESMTPSA id q18sm6310103pfj.46.2021.11.12.01.41.40
+        by smtp.gmail.com with ESMTPSA id q18sm6310103pfj.46.2021.11.12.01.41.58
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Nov 2021 01:41:42 -0800 (PST)
+        Fri, 12 Nov 2021 01:42:00 -0800 (PST)
 From:   Han Xin <chiyutianyi@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>,
         Philip Oakley <philipoakley@iee.email>
 Cc:     Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: [PATCH v2 1/6] object-file: refactor write_loose_object() to support inputstream
-Date:   Fri, 12 Nov 2021 17:40:05 +0800
-Message-Id: <20211112094010.73468-1-chiyutianyi@gmail.com>
+Subject: [PATCH v2 2/6] object-file.c: add dry_run mode for write_loose_object()
+Date:   Fri, 12 Nov 2021 17:40:06 +0800
+Message-Id: <20211112094010.73468-2-chiyutianyi@gmail.com>
 X-Mailer: git-send-email 2.33.1.44.g9344627884.agit.6.5.4
 In-Reply-To: <20211009082058.41138-1-chiyutianyi@gmail.com>
 References: <20211009082058.41138-1-chiyutianyi@gmail.com>
@@ -70,154 +70,102 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han Xin <hanxin.hx@alibaba-inc.com>
 
-Refactor write_loose_object() to support inputstream, in the same way
-that zlib reading is chunked.
-
-Using "in_stream" instead of "void *buf", we needn't to allocate enough
-memory in advance, and only part of the contents will be read when
-called "in_stream.read()".
+We will use "write_loose_object()" later to handle large blob object,
+which needs to work in dry_run mode.
 
 Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
 ---
- object-file.c  | 50 ++++++++++++++++++++++++++++++++++++++++++++++----
- object-store.h |  5 +++++
- 2 files changed, 51 insertions(+), 4 deletions(-)
+ object-file.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index 02b7970274..1ad2cb579c 100644
+index 1ad2cb579c..b0838c847e 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1860,8 +1860,26 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
- 	return fd;
- }
+@@ -1880,9 +1880,10 @@ static const char *read_input_stream_from_buffer(void *data, unsigned long *len)
  
-+struct input_data_from_buffer {
-+	const char *buf;
-+	unsigned long len;
-+};
-+
-+static const char *read_input_stream_from_buffer(void *data, unsigned long *len)
-+{
-+	struct input_data_from_buffer *input = (struct input_data_from_buffer *)data;
-+
-+	if (input->len == 0) {
-+		*len = 0;
-+		return NULL;
-+	}
-+	*len = input->len;
-+	input->len = 0;
-+	return input->buf;
-+}
-+
  static int write_loose_object(const struct object_id *oid, char *hdr,
--			      int hdrlen, const void *buf, unsigned long len,
-+			      int hdrlen, struct input_stream *in_stream,
+ 			      int hdrlen, struct input_stream *in_stream,
++			      int dry_run,
  			      time_t mtime, unsigned flags)
  {
- 	int fd, ret;
-@@ -1871,6 +1889,8 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
- 	struct object_id parano_oid;
- 	static struct strbuf tmp_file = STRBUF_INIT;
- 	static struct strbuf filename = STRBUF_INIT;
-+	const char *buf;
-+	unsigned long len;
+-	int fd, ret;
++	int fd, ret = 0;
+ 	unsigned char compressed[4096];
+ 	git_zstream stream;
+ 	git_hash_ctx c;
+@@ -1894,14 +1895,16 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
  
  	loose_object_path(the_repository, &filename, oid);
  
-@@ -1898,6 +1918,7 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
- 	the_hash_algo->update_fn(&c, hdr, hdrlen);
+-	fd = create_tmpfile(&tmp_file, filename.buf);
+-	if (fd < 0) {
+-		if (flags & HASH_SILENT)
+-			return -1;
+-		else if (errno == EACCES)
+-			return error(_("insufficient permission for adding an object to repository database %s"), get_object_directory());
+-		else
+-			return error_errno(_("unable to create temporary file"));
++	if (!dry_run) {
++		fd = create_tmpfile(&tmp_file, filename.buf);
++		if (fd < 0) {
++			if (flags & HASH_SILENT)
++				return -1;
++			else if (errno == EACCES)
++				return error(_("insufficient permission for adding an object to repository database %s"), get_object_directory());
++			else
++				return error_errno(_("unable to create temporary file"));
++		}
+ 	}
  
- 	/* Then the data itself.. */
-+	buf = in_stream->read(in_stream->data, &len);
- 	stream.next_in = (void *)buf;
- 	stream.avail_in = len;
- 	do {
-@@ -1960,6 +1981,13 @@ int write_object_file_flags(const void *buf, unsigned long len,
- {
- 	char hdr[MAX_HEADER_LEN];
- 	int hdrlen = sizeof(hdr);
-+	struct input_stream in_stream = {
-+		.read = read_input_stream_from_buffer,
-+		.data = (void *)&(struct input_data_from_buffer) {
-+			.buf = buf,
-+			.len = len,
-+		},
-+	};
+ 	/* Set it up */
+@@ -1925,7 +1928,7 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 		unsigned char *in0 = stream.next_in;
+ 		ret = git_deflate(&stream, Z_FINISH);
+ 		the_hash_algo->update_fn(&c, in0, stream.next_in - in0);
+-		if (write_buffer(fd, compressed, stream.next_out - compressed) < 0)
++		if (!dry_run && write_buffer(fd, compressed, stream.next_out - compressed) < 0)
+ 			die(_("unable to write loose object file"));
+ 		stream.next_out = compressed;
+ 		stream.avail_out = sizeof(compressed);
+@@ -1943,6 +1946,9 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 		die(_("confused by unstable object source data for %s"),
+ 		    oid_to_hex(oid));
  
- 	/* Normally if we have it in the pack then we do not bother writing
- 	 * it out into .git/objects/??/?{38} file.
-@@ -1968,7 +1996,7 @@ int write_object_file_flags(const void *buf, unsigned long len,
++	if (dry_run)
++		return 0;
++
+ 	close_loose_object(fd);
+ 
+ 	if (mtime) {
+@@ -1996,7 +2002,7 @@ int write_object_file_flags(const void *buf, unsigned long len,
  				  &hdrlen);
  	if (freshen_packed_object(oid) || freshen_loose_object(oid))
  		return 0;
--	return write_loose_object(oid, hdr, hdrlen, buf, len, 0, flags);
-+	return write_loose_object(oid, hdr, hdrlen, &in_stream, 0, flags);
+-	return write_loose_object(oid, hdr, hdrlen, &in_stream, 0, flags);
++	return write_loose_object(oid, hdr, hdrlen, &in_stream, 0, 0, flags);
  }
  
  int hash_object_file_literally(const void *buf, unsigned long len,
-@@ -1977,6 +2005,13 @@ int hash_object_file_literally(const void *buf, unsigned long len,
- {
- 	char *header;
- 	int hdrlen, status = 0;
-+	struct input_stream in_stream = {
-+		.read = read_input_stream_from_buffer,
-+		.data = (void *)&(struct input_data_from_buffer) {
-+			.buf = buf,
-+			.len = len,
-+		},
-+	};
- 
- 	/* type string, SP, %lu of the length plus NUL must fit this */
- 	hdrlen = strlen(type) + MAX_HEADER_LEN;
-@@ -1988,7 +2023,7 @@ int hash_object_file_literally(const void *buf, unsigned long len,
+@@ -2023,7 +2029,7 @@ int hash_object_file_literally(const void *buf, unsigned long len,
  		goto cleanup;
  	if (freshen_packed_object(oid) || freshen_loose_object(oid))
  		goto cleanup;
--	status = write_loose_object(oid, header, hdrlen, buf, len, 0, 0);
-+	status = write_loose_object(oid, header, hdrlen, &in_stream, 0, 0);
+-	status = write_loose_object(oid, header, hdrlen, &in_stream, 0, 0);
++	status = write_loose_object(oid, header, hdrlen, &in_stream, 0, 0, 0);
  
  cleanup:
  	free(header);
-@@ -2003,14 +2038,21 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
- 	char hdr[MAX_HEADER_LEN];
- 	int hdrlen;
- 	int ret;
-+	struct input_data_from_buffer data;
-+	struct input_stream in_stream = {
-+		.read = read_input_stream_from_buffer,
-+		.data = &data,
-+	};
- 
- 	if (has_loose_object(oid))
- 		return 0;
- 	buf = read_object(the_repository, oid, &type, &len);
- 	if (!buf)
- 		return error(_("cannot read object for %s"), oid_to_hex(oid));
-+	data.buf = buf;
-+	data.len = len;
+@@ -2052,7 +2058,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
+ 	data.buf = buf;
+ 	data.len = len;
  	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), (uintmax_t)len) + 1;
--	ret = write_loose_object(oid, hdr, hdrlen, buf, len, mtime, 0);
-+	ret = write_loose_object(oid, hdr, hdrlen, &in_stream, mtime, 0);
+-	ret = write_loose_object(oid, hdr, hdrlen, &in_stream, mtime, 0);
++	ret = write_loose_object(oid, hdr, hdrlen, &in_stream, 0, mtime, 0);
  	free(buf);
  
  	return ret;
-diff --git a/object-store.h b/object-store.h
-index 952efb6a4b..f1b67e9100 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -34,6 +34,11 @@ struct object_directory {
- 	char *path;
- };
- 
-+struct input_stream {
-+	const char *(*read)(void* data, unsigned long *len);
-+	void *data;
-+};
-+
- KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
- 	struct object_directory *, 1, fspathhash, fspatheq)
- 
 -- 
 2.33.1.44.g9344627884.agit.6.5.4
 
