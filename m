@@ -2,80 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49620C433F5
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 06:17:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 087F9C433EF
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 06:47:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26CE060F93
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 06:17:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CBA526054E
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 06:47:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232404AbhKLGUp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Nov 2021 01:20:45 -0500
-Received: from mout.web.de ([212.227.15.4]:33717 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232277AbhKLGUo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Nov 2021 01:20:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1636697868;
-        bh=fnFuIwF1u6Xg9tEJGLrlJQH7nJ2ir1N//hRQnRBNrps=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=KETFb2SmnWNmR8ACvLRdRknULw+RyxyJHjyMxtxnCq7e8NYO80qh0kZGugQ8Sy57U
-         R83wj8gB4YIIvHerFBTXyalUR2yaSlCw1l8sDZ7o3q7/L7dcqAnJj4eAg1mBl3D0g4
-         +AGXiz4t/7hiDxBn/xqoC3UgNgBc9Wc0UGD9eoFs=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.20.171]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MpTxo-1mMJPc0i8S-00phPh; Fri, 12
- Nov 2021 07:17:48 +0100
-Message-ID: <6da5e984-1dcf-4c55-976c-49ffb8d128bf@web.de>
-Date:   Fri, 12 Nov 2021 07:17:47 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.0
+        id S231179AbhKLGuJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Nov 2021 01:50:09 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55134 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230259AbhKLGuH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Nov 2021 01:50:07 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4DD7716830E;
+        Fri, 12 Nov 2021 01:47:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=rz8V4vH1Wigf
+        n5GavJlGydOcq33BksQvto6qpCART2s=; b=QGGVleXoXK+qDVFaH5Kl+6Gfdvd2
+        WOudJJUs3eV+Ml8LnZs9kQBvo9PJWtH6m+rzvInDLUe2XltAssN8UnzZ/+6MZmjk
+        GcyQcPWSYjOhnyjpLYGHztLd30okjniT3p8iuT9MGjnuhrq3EYTQfIzRM8lisP7V
+        BpSdaJeTq/EITuQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4683516830D;
+        Fri, 12 Nov 2021 01:47:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AD48416830C;
+        Fri, 12 Nov 2021 01:47:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Aleen via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Aleen <aleen42@vip.qq.com>
 Subject: Re: [PATCH 0/2] am: support --always option to am empty commits
-Content-Language: en-US
-To:     Aleen via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Aleen <aleen42@vip.qq.com>
 References: <pull.1076.git.1636693095.gitgitgadget@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <pull.1076.git.1636693095.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        <6da5e984-1dcf-4c55-976c-49ffb8d128bf@web.de>
+Date:   Thu, 11 Nov 2021 22:47:13 -0800
+In-Reply-To: <6da5e984-1dcf-4c55-976c-49ffb8d128bf@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Fri, 12 Nov 2021 07:17:47 +0100")
+Message-ID: <xmqqy25tj2fi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 5ED21478-4384-11EC-BAA0-98D80D944F46-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:upQlnc3+GdHsgUzK+1hVxyJaQ0E/PlqFGYBTOvpsr97Ms2q1ZIF
- C83Y81mS5VFajLcYtSTVJnPpSVDRnYTLmJkrrNLM97qDtiXy1KaeqIkCPA/adMlo9lgwuTA
- rMTasjH6ruBVBttSy+Kf2hfd11v6d6AUbGBQYO9DpmH0mBFZRGjqQqwAB5k57fP8HE8kYz9
- ddw6lJ8Cn4O2Kq0+YbkIA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1/7tbadkXog=:XMTjQV/aMWbYAj6uaJ3I2V
- p37p95EpWeQdMZMG6c0gq6IqQwk+fOWsptfOHI7FhUCCi5jqdAZZEG6iY9i3EZnaY6n4d3bY2
- IxM+bY3ZEqFYb9gzAOZ2TE3NceJ25YPWg6c6cFqQAw00OlVuh34OsyAtZzcsLcM+/m61jbiGp
- pkNEWLPCHt6APQphCFzVQa9A4bzrQIYPREqUuBRPyOm5p+X4nKfPSV5TtYTUsmgbgyIGJzvGc
- xTq0hhBCu3VPXDk22ExjWrXm5NKdhuLRfvT1TQte8lp+rcIcm7S6ku1oEN1cQRda/lzgy0c8I
- SrOacCGqV+vYcGrwPpESer/A3Pvg9TbwMcbSi/59+GAvChyOhdBOIn1S817Fz/HMF4xjBoNk/
- SmmiYjWnkX+5pJWrtiehwF/lUCk8lPcen3J1sv5U+iYAPwJTIzP52fe1UudaI/tyUpOVR/sGb
- M0UUbBT1i5MQETpmjs1rQG36qV0Pgob91W2xUWV+QoK3CLSN2A4DLeRme6XMSN0b5Avo2Y/sH
- HaozvTDKQHfY9Pxg+FaOG004/3hP1IkIKe9H5t0rJfNyf4a06yX3AIoQPhqzVNVndiw03hM2u
- 5lGdVXGQh/xSCZ7qaFyTV4JolGqsxahiBsTDQCLcHWWSR6/yMIV/GQlradW1+DBnTeY5o41UU
- gj+p2SvB5x2WHsrOdcnBN4QYgoTHZvemXGv65GZy+u+Bs1tfUNVk6DT9AtAtnR7k8cWjffQ/W
- ZwCn3paZCfEDmUloXwOMaBROkZsOKTTnwVFPoBvgwKGjoTJj2x1dO0aGXofzFIMU8tEh0Ib1K
- fXGvyOqs8xbNY+cp0PCbs9+TSPz0gjIlXDd14o9zlhRTU3RN6AnI5XCg1EnmUpk2EaGMav+dp
- +l+LVo/7e2G1ylpaSBaNoQ6644ZqeWKN12TIqo5DABAs/tNuq3gzgyaqRSdi8PGU2TyuJsYIK
- dhun26XjtPFtCC2/0Z+9iEaqpWOgS60CFuc/scVsHzA4z1Ry+xVU0U7qtEowv2YxYXOcMuXIe
- expOyPFJ+3bg5IXRPGVWC3VfmQXU6HOdQSavB/O7DU6GzkHpBLFftnDhMf2vLuv65g==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 12.11.21 um 05:58 schrieb Aleen via GitGitGadget:
-> Since that git has supported the --always option for the git-format-patc=
-h
-> command to create a patch with empty commit message, git-am should suppo=
-rt
-> applying and committing with empty patches.
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-The symmetry is compelling, but "always" is quite generic.  I can see
-e.g. someone expecting "git am --always" to imply --keep-non-patch.
+> Am 12.11.21 um 05:58 schrieb Aleen via GitGitGadget:
+>> Since that git has supported the --always option for the git-format-pa=
+tch
+>> command to create a patch with empty commit message, git-am should sup=
+port
+>> applying and committing with empty patches.
+>
+> The symmetry is compelling, but "always" is quite generic.  I can see
+> e.g. someone expecting "git am --always" to imply --keep-non-patch.
 
-git commit and cherry-pick have --allow-empty, which is (a bit) more
-specific.  That seems to me a better option name to copy for a commit-
-creating command like git am.
+What symmetry?
 
-Ren=C3=A9
+> git commit and cherry-pick have --allow-empty, which is (a bit) more
+> specific.  That seems to me a better option name to copy for a commit-
+> creating command like git am.
+
+That one I can believe, even though I do not necessarily think it is
+a good idea to add such an option.
