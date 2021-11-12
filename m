@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54FEFC43217
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 21:49:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B78DC433EF
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 21:49:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F30160F36
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 21:49:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 471DD60FBF
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 21:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235962AbhKLVw1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Nov 2021 16:52:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56800 "EHLO
+        id S235961AbhKLVw0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Nov 2021 16:52:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235960AbhKLVwO (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235952AbhKLVwO (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 12 Nov 2021 16:52:14 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C288C061203
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 13:49:22 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id i8-20020a7bc948000000b0030db7b70b6bso10950307wml.1
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 13:49:22 -0800 (PST)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A350AC061228
+        for <git@vger.kernel.org>; Fri, 12 Nov 2021 13:49:18 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id s13so17927153wrb.3
+        for <git@vger.kernel.org>; Fri, 12 Nov 2021 13:49:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1OWx/7MXzps6T+zd+fvgE814+eutIhqIUB2lfB+MtN4=;
-        b=Ss57UoO/ox3b1lb871WBlak7vuvSJuhk+28HktYW3FG0HWYvDsBhrefF6vHBOIXfmx
-         wSCMFNFzAQaYonDHcmmJeWuhdqtj3lNETEY5zCo+mI+uc1bWqVXTDrcabRG+nTOk5myb
-         1gakXMdgoztwHjQyb9p3mJd14s+Bx7noR1D60mtZ9atbYA7UD1Ka+a4KUZq5SmmVu2qE
-         z02TuDbmatB3/ANIe/dTg9SUD9eGUQubzoIww6MqzuL9ZnMnY20YDi2bu6dTIyLx3b6o
-         iQGNTEC8eGPlaQbNkagSOEOak0nyDGFdhibukFa3AL1wHmrR2t5rl1k7nsBN0V4a9d+K
-         y9Uw==
+        bh=hmI0SEV8DeLiSGYzeXUFBvjBY/5DdNrk3RC1rvGPekA=;
+        b=aM/aGLc8qpdY2GuJIFRIw5WlYtjRPGSGdNzm6QnDKvSJh1SC3LAIFWbJegHWxyKO99
+         iEosM7/XneFGUYaZQy+u2mZs8MveCfM1kcZQR8jM9YM/LSByDhelV7KFS+pFrF3WuGiY
+         w8h/PGSUAndp/rvXFH48qwau7kw7/uBb1xjPKJjgzBauF81oltGha7c/Ten7NyjvtSWO
+         /Hri3eLuSZ6v1VAUFz9ABCn7qaU+nbEyuK8C5DCH9sXEpeRrW85YAn2E1BxH1nCPO8Sq
+         wASTSUeuo0QHh+6LRv8pmPZjUDKiJhn9gkB/GApXKcPCiZxsUBK0eq//tf5L62Kd+/f7
+         bAMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1OWx/7MXzps6T+zd+fvgE814+eutIhqIUB2lfB+MtN4=;
-        b=T5u1388ankHTYqjCnfhYEPqpdLIG5yB4yp6w0evwHw+mXeL023Cf9eLVotA+n88a3i
-         sKqojmPaDrQ3pdS1Y7xFRTXLUnw2AusEUIfLAk+1jwjv+XuQX4DCAqW+rz49ptfaJOsR
-         0R4YQoyQy+LEH5W9ZL9dcHklkRZ+FIYxHEwJPR0VbjRWqnY2SUTyt66CQe3ObXm3qGzZ
-         BA9l54ZZmQYRgkalCDZYwl5js5xC/oNdT5l8WWiN82Yh8Mk+mDwPA26fyZf2x0OcPMhG
-         qdgaDC1rlW7DIEXNyn/IH8dXNsZ0P1X9DobwCxrBYeQ4llzJYCG/IV6egVGojldzQEld
-         1QyQ==
-X-Gm-Message-State: AOAM530u0ds83dQBg5H2wO9sTmqm6hMHCNuSFNkPiCVkqbJCv719zOiH
-        Hsc9+8WJCh0LqeLn2WKVdTzXeGPX6IU0Bw==
-X-Google-Smtp-Source: ABdhPJydAaE99/YOsKDJZf0kK4oXDDpZBoJMPxecQlgg5kNd18pxTr/aTquAglXjfRGvK2n+O9ewww==
-X-Received: by 2002:a1c:7e41:: with SMTP id z62mr8636688wmc.62.1636753760653;
-        Fri, 12 Nov 2021 13:49:20 -0800 (PST)
+        bh=hmI0SEV8DeLiSGYzeXUFBvjBY/5DdNrk3RC1rvGPekA=;
+        b=b4bvZtvGCu3WjxqZKt5jFa6SBkAlNXDmPjBNSAsvOoY6Ka3kv8yxSOHo8nTBpRx5ju
+         KAyFlFne/ZHmD46mJh00dAno/ocJeT3sS0QX+/3b3H7cs4WiNntI2KJYMH+76RFv+4GO
+         /y7jcBZFFa+10Rbcd8yR2fDQ0456Artk9yhVCMNNQED7mgV0E/JpqzUjTvRWV6iBboXC
+         3eFTuvB0BM+Dg2YpA6EQfL7n2sLg7TsABdQ1QGtpeSHUZ3XbFZhkq+NXm02BYPJOhjPI
+         +By8KnqU/bJDG2A30O3qZTYWvx3WDfbk3W5SqGGloQzK+GxTs9vIWIjQQ+KAeIATJrzW
+         rBFQ==
+X-Gm-Message-State: AOAM5303pROAF1hQ3KMwqYF3Y8zy2DdlufdkpELx3XrKFWThsKXx5jwE
+        2Eu7ChesFQaEt8mj4oFiInC3yePrSIM2xA==
+X-Google-Smtp-Source: ABdhPJxtLXV5aK1ndpGVIYnuIv23b6sngP8vs+UaoVtIBT92/ZQXFfobj0+tSaQwquOlEydkwv8WTA==
+X-Received: by 2002:a5d:508d:: with SMTP id a13mr22213303wrt.41.1636753756994;
+        Fri, 12 Nov 2021 13:49:16 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h27sm14117189wmc.43.2021.11.12.13.49.19
+        by smtp.gmail.com with ESMTPSA id h27sm14117189wmc.43.2021.11.12.13.49.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Nov 2021 13:49:20 -0800 (PST)
+        Fri, 12 Nov 2021 13:49:16 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 15/18] Makefile: add a "TRACK_template" for GIT-*{FLAGS,DEFINES,...}
-Date:   Fri, 12 Nov 2021 22:48:59 +0100
-Message-Id: <patch-v2-15.18-5654d7f7f29-20211112T214150Z-avarab@gmail.com>
+Subject: [PATCH v2 11/18] Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
+Date:   Fri, 12 Nov 2021 22:48:55 +0100
+Message-Id: <patch-v2-11.18-bfa15059d60-20211112T214150Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.rc2.795.g926201d1cc8
 In-Reply-To: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com>
 References: <cover-00.16-00000000000-20211106T205717Z-avarab@gmail.com> <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com>
@@ -72,214 +72,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the mostly copy/pasted code in the "Makefile" and
-"Documentation/Makefile" which FORCE-generates a file based on a
-variable in play in the Makefile to use a template.
+Change the hardcoding of @@GIT_VERSION@@ in generated *.perl scripts
+to instead shell out to "git version". This means that we can stop
+re-building during development every time the HEAD changes.
 
-This will make it easier later on to move these to rules that aren't
-FORCE-run using optional gmake 4.2+ features, but for now just getting
-rid of the repetition is worth it.
-
-The message for the new generated rule will say whether or not we're
-generating the file for the first time, as opposed to the old messages
-saying "new" whether we had flag modifications, or were building for
-the first time.
-
-Example output before:
-
-    $ make clean
-    [...]
-    $ make
-    GIT_VERSION = 2.34.0-rc1-dev
-        * new build flags
-        CC grep.o
-    $ make CFLAGS=-I$RANDOM grep.o
-        * new build flags
-        CC grep.o
-
-After:
-
-    $ make clean
-    [...]
-    $ make grep.o
-    GIT_VERSION = 2.34.0-rc1-dev
-        GIT-CFLAGS PARAMETERS (new)
-        CC grep.o
-    $ make CFLAGS=-I$RANDOM grep.o
-        GIT-CFLAGS PARAMETERS (changed)
-        CC grep.o
-
-Note: It's important that "@FLAGS" here be defined as '$$($(2))', and
-not the eagerly expanded '$($(2))'. The latter will break if
-e.g. curl-config isn't installed, since we'll end up recursively
-expanding that part of the variable even if NO_CURL isn't defined,
-which happens e.g. for the "check-docs" target in CI.
-
-We're also introducing a $(wspfx) variable here to control the
-whitespace prefixing. It matches the $(QUIET...) variables, who'll be
-using these variables in a subsequent commit. Note that it's important
-that we call the shell quote escaping macros inline (or equivalent),
-because if we'd like variables to be overridable we need to support e.g.:
-
-    $ make CFLAGS=-I$RANDOM grep.o wspfx='$(space)->'
-     -> GIT-CFLAGS PARAMETERS (changed)
-        CC grep.o
-
-If we simply quoted and used $(wspfx) then the user would need to
-provide us with a quoted version, so there's still some use-cases for
-these $(*_sq) variables. It could also be done inline, but that's a
-lot more verbose.
+These codepaths are not "hot", so shelling out to get the version
+shouldn't matter to users, in the one case where it potentially would
+in send-email (the loop for each E-Mail we send) we now cache the
+value, so we'll only retrieve it once.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/Makefile |  8 +------
- Makefile               | 51 ++++++------------------------------------
- shared.mak             | 22 ++++++++++++++++++
- 3 files changed, 30 insertions(+), 51 deletions(-)
+ Makefile            | 2 +-
+ git-cvsserver.perl  | 6 +++---
+ git-send-email.perl | 7 ++-----
+ git-svn.perl        | 2 +-
+ 4 files changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index ba27456c86a..4a939cc2c25 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -343,13 +343,7 @@ mergetools-list.made: ../git-mergetool--lib.sh $(wildcard ../mergetools/*)
- 	date >$@
- 
- TRACK_ASCIIDOCFLAGS = $(subst ','\'',$(ASCIIDOC_COMMON):$(ASCIIDOC_HTML):$(ASCIIDOC_DOCBOOK))
--
--GIT-ASCIIDOCFLAGS: FORCE
--	@FLAGS='$(TRACK_ASCIIDOCFLAGS)'; \
--	    if test x"$$FLAGS" != x"`cat GIT-ASCIIDOCFLAGS 2>/dev/null`" ; then \
--		echo >&2 "    * new asciidoc flags"; \
--		echo "$$FLAGS" >GIT-ASCIIDOCFLAGS; \
--            fi
-+$(eval $(call TRACK_template,GIT-ASCIIDOCFLAGS,TRACK_ASCIIDOCFLAGS))
- 
- clean:
- 	$(RM) -rf .build/
 diff --git a/Makefile b/Makefile
-index b458c24d95e..c8a0a1586ca 100644
+index c698c5b058a..8205614c6ec 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2087,10 +2087,7 @@ endif
- GIT_USER_AGENT_SQ = $(subst ','\'',$(GIT_USER_AGENT))
- GIT_USER_AGENT_CQ = "$(subst ",\",$(subst \,\\,$(GIT_USER_AGENT)))"
- GIT_USER_AGENT_CQ_SQ = $(subst ','\'',$(GIT_USER_AGENT_CQ))
--GIT-USER-AGENT: FORCE
--	@if test x'$(GIT_USER_AGENT_SQ)' != x"`cat GIT-USER-AGENT 2>/dev/null`"; then \
--		echo '$(GIT_USER_AGENT_SQ)' >GIT-USER-AGENT; \
--	fi
-+$(eval $(call TRACK_template,GIT-USER-AGENT,GIT_USER_AGENT_SQ))
+@@ -2333,7 +2333,7 @@ PERL_HEADER_TEMPLATE = perl/header_templates/runtime_prefix.template.pl
+ perl_localedir_SQ =
+ endif
  
- ifdef DEFAULT_HELP_FORMAT
- BASIC_CFLAGS += -DDEFAULT_HELP_FORMAT='"$(DEFAULT_HELP_FORMAT)"'
-@@ -2238,12 +2235,7 @@ SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):\
- 	$(localedir_SQ):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
- 	$(gitwebdir_SQ):$(PERL_PATH_SQ):$(PAGER_ENV):\
- 	$(perllibdir_SQ)
--GIT-SCRIPT-DEFINES: FORCE
--	@FLAGS='$(SCRIPT_DEFINES)'; \
--	    if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
--		echo >&2 "    * new script parameters"; \
--		echo "$$FLAGS" >$@; \
--            fi
-+$(eval $(call TRACK_template,GIT-SCRIPT-DEFINES,SCRIPT_DEFINES))
+-$(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
++$(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER
+ 	$(QUIET_GEN) \
+ 	sed -e '1{' \
+ 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 64319bed43f..76f0e8bbbef 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -26,8 +26,6 @@
+ use File::Basename;
+ use Getopt::Long qw(:config require_order no_ignore_case);
  
- define cmd_munge_script
- sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-@@ -2355,13 +2347,7 @@ git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
- 	chmod +x $@+ && \
- 	mv $@+ $@
- endif # NO_PERL
+-my $VERSION = '@@GIT_VERSION@@';
 -
--GIT-PERL-DEFINES: FORCE
--	@FLAGS='$(PERL_DEFINES)'; \
--	    if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
--		echo >&2 "    * new perl-specific parameters"; \
--		echo "$$FLAGS" >$@; \
--	    fi
-+$(eval $(call TRACK_template,GIT-PERL-DEFINES,PERL_DEFINES))
+ my $log = GITCVS::log->new();
+ my $cfg;
  
- # As with NO_PERL=Y we'll still make GIT-PYTHON-DEFINES if "NO_PYTHON"
- # is defined, for creating the "unimplemented.sh" scripts.
-@@ -2390,12 +2376,7 @@ $(SCRIPT_PYTHON_GEN): % : %.py GIT-PYTHON-DEFINES
- 	mv $@+ $@
- endif # NO_PYTHON
+@@ -126,7 +124,9 @@
+     or die $usage;
  
--GIT-PYTHON-DEFINES: FORCE
--	@FLAGS='$(PYTHON_DEFINES)'; \
--	    if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
--		echo >&2 "    * new python-specific parameters"; \
--		echo "$$FLAGS" >$@; \
--	    fi
-+$(eval $(call TRACK_template,GIT-PYTHON-DEFINES,PYTHON_DEFINES))
+ if ($state->{version}) {
+-    print "git-cvsserver version $VERSION\n";
++    my $version = qx[git version];
++    $version =~ s/^(git)\b/$1-cvsserver/;
++    print $version;
+     exit;
+ }
+ if ($state->{help}) {
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 5262d88ee32..041cd2fb96d 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1468,6 +1468,7 @@ sub file_name_is_absolute {
+ #
+ # If an error occurs sending the email, this just dies.
  
- CONFIGURE_RECIPE = sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
- 			configure.ac >configure.ac+ && \
-@@ -2751,31 +2732,13 @@ cscope: cscope.out
- ### Detect prefix changes
- TRACK_PREFIX = $(bindir_SQ):$(gitexecdir_SQ):$(template_dir_SQ):$(prefix_SQ):\
- 		$(localedir_SQ)
++my $gitversion;
+ sub send_message {
+ 	my @recipients = unique_email_list(@to);
+ 	@cc = (grep { my $cc = extract_valid_address_or_die($_);
+@@ -1478,11 +1479,6 @@ sub send_message {
+ 	@recipients = unique_email_list(@recipients,@cc,@initial_bcc);
+ 	@recipients = (map { extract_valid_address_or_die($_) } @recipients);
+ 	my $date = format_2822_time($time++);
+-	my $gitversion = '@@GIT_VERSION@@';
+-	if ($gitversion =~ m/..GIT_VERSION../) {
+-	    $gitversion = Git::version();
+-	}
 -
--GIT-PREFIX: FORCE
--	@FLAGS='$(TRACK_PREFIX)'; \
--	if test x"$$FLAGS" != x"`cat GIT-PREFIX 2>/dev/null`" ; then \
--		echo >&2 "    * new prefix flags"; \
--		echo "$$FLAGS" >GIT-PREFIX; \
--	fi
-+$(eval $(call TRACK_template,GIT-PREFIX,TRACK_PREFIX))
+ 	my $cc = join(",\n\t", unique_email_list(@cc));
+ 	my $ccline = "";
+ 	if ($cc ne '') {
+@@ -1497,6 +1493,7 @@ sub send_message {
+ Message-Id: $message_id
+ ";
+ 	if ($use_xmailer) {
++		$gitversion ||= Git::version();
+ 		$header .= "X-Mailer: git-send-email $gitversion\n";
+ 	}
+ 	if ($in_reply_to) {
+diff --git a/git-svn.perl b/git-svn.perl
+index be987e316f9..727431412be 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -9,7 +9,6 @@
+ 		$_revision $_repository
+ 		$_q $_authors $_authors_prog %users/;
+ $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
+-$VERSION = '@@GIT_VERSION@@';
  
- TRACK_CFLAGS = $(CC):$(subst ','\'',$(ALL_CFLAGS)):$(USE_GETTEXT_SCHEME)
--
--GIT-CFLAGS: FORCE
--	@FLAGS='$(TRACK_CFLAGS)'; \
--	    if test x"$$FLAGS" != x"`cat GIT-CFLAGS 2>/dev/null`" ; then \
--		echo >&2 "    * new build flags"; \
--		echo "$$FLAGS" >GIT-CFLAGS; \
--            fi
-+$(eval $(call TRACK_template,GIT-CFLAGS,TRACK_CFLAGS))
+ use Carp qw/croak/;
+ use File::Basename qw/dirname basename/;
+@@ -47,6 +46,7 @@
+ 	command_close_bidi_pipe
+ 	get_record
+ );
++$VERSION = Git::version();
  
- TRACK_LDFLAGS = $(subst ','\'',$(ALL_LDFLAGS))
--
--GIT-LDFLAGS: FORCE
--	@FLAGS='$(TRACK_LDFLAGS)'; \
--	    if test x"$$FLAGS" != x"`cat GIT-LDFLAGS 2>/dev/null`" ; then \
--		echo >&2 "    * new link flags"; \
--		echo "$$FLAGS" >GIT-LDFLAGS; \
--            fi
-+$(eval $(call TRACK_template,GIT-LDFLAGS,TRACK_LDFLAGS))
- 
- # We need to apply sq twice, once to protect from the shell
- # that runs GIT-BUILD-OPTIONS, and then again to protect it
-diff --git a/shared.mak b/shared.mak
-index ef03c2bc094..3b4163e652a 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -29,3 +29,25 @@ shelldquote = '"$(call shdq,$(call shq,$(1)))"'
- comma = ,
- empty =
- space = $(empty) $(empty)
-+
-+## wspfx: the whitespace prefix padding for $(QUIET...) and similarly
-+## aligned output.
-+wspfx = $(space)$(space)$(space)
-+wspfx_sq = $(call shellquote,$(wspfx))
-+
-+### Templates
-+
-+## Template for making a GIT-SOMETHING, which changes if a
-+## TRACK_SOMETHING variable changes.
-+define TRACK_template
-+.PHONY: FORCE
-+$(1): FORCE
-+	@FLAGS='$$($(2))'; \
-+	if ! test -f $(1) ; then \
-+		echo $(wspfx_sq) "$(1) PARAMETERS (new)" $@; \
-+		echo "$$$$FLAGS" >$(1); \
-+	elif test x"$$$$FLAGS" != x"`cat $(1) 2>/dev/null`" ; then \
-+		echo $(wspfx_sq) "$(1) PARAMETERS (changed)" $@; \
-+		echo "$$$$FLAGS" >$(1); \
-+	fi
-+endef
+ BEGIN {
+ 	Memoize::memoize 'Git::config';
 -- 
 2.34.0.rc2.795.g926201d1cc8
 
