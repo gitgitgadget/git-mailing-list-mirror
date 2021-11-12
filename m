@@ -2,77 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 087F9C433EF
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 06:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CA36C433EF
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 06:54:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CBA526054E
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 06:47:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E3E060F6E
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 06:54:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231179AbhKLGuJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Nov 2021 01:50:09 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55134 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230259AbhKLGuH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Nov 2021 01:50:07 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4DD7716830E;
-        Fri, 12 Nov 2021 01:47:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=rz8V4vH1Wigf
-        n5GavJlGydOcq33BksQvto6qpCART2s=; b=QGGVleXoXK+qDVFaH5Kl+6Gfdvd2
-        WOudJJUs3eV+Ml8LnZs9kQBvo9PJWtH6m+rzvInDLUe2XltAssN8UnzZ/+6MZmjk
-        GcyQcPWSYjOhnyjpLYGHztLd30okjniT3p8iuT9MGjnuhrq3EYTQfIzRM8lisP7V
-        BpSdaJeTq/EITuQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4683516830D;
-        Fri, 12 Nov 2021 01:47:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AD48416830C;
-        Fri, 12 Nov 2021 01:47:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Aleen via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Aleen <aleen42@vip.qq.com>
-Subject: Re: [PATCH 0/2] am: support --always option to am empty commits
+        id S232624AbhKLG4y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Nov 2021 01:56:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50684 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230510AbhKLG4x (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Nov 2021 01:56:53 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0B21C061766
+        for <git@vger.kernel.org>; Thu, 11 Nov 2021 22:54:02 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id u18so13816820wrg.5
+        for <git@vger.kernel.org>; Thu, 11 Nov 2021 22:54:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=R8bU8NUYINOJrXYGc4xYLSd5LRBYRM7iu224OveQv5E=;
+        b=jDQV1Fy9JUkbgXNQOfPz7So4f8YokGtTGtGbRSZCuER0Me5p7WssiJWTgeSvhmhzJ+
+         aeoMnYl+hbWAYelRRRrCGGDNNt2b4QkBvGUkTw1hkfo14cmMdpj+LarRRtxyW8zK5nog
+         jdc6Aj+e3IRQn1vab83nodxwu8XUQ9OdebZuFYesHnkAsIayVrKEzi9PDelpXrmAT+98
+         X41TWbctzMXVDpuf0zT1l1t8dETBBBK8OR9y1yfBgjR4fk+m75YgkSuT2OUB08RJiWv+
+         6vNyYnaNXSenugOsW7qU8e7sqyfDv1A2RR2bY8jP6wJcXp9tUN/zojLFGB3HvNVQzIiI
+         W5mA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=R8bU8NUYINOJrXYGc4xYLSd5LRBYRM7iu224OveQv5E=;
+        b=ogZ5t78fgIqkh78SAfBBPDEiO8G6e2TZU8dcdoLS71Fn3oK93ge52ALW49tDPk844V
+         Bee1Pj5KJ5O4ltrsEEsTlU6xBZnATdiuiNXwi8pk333GLPHC8eLd+pn1OlxTk9pMJqU5
+         JTfJHH00QpGPcH45HiUydYw4TrBRuN2b1ApnaI22bOeTiNsGEJXLoBE4oAYJbwGIWTVW
+         BsLsoDiRwcf5HEmldhKMUefiXVZINUZzfpE74n5ritXTSO9FnYB25+5TqFoe0Za7ZJkN
+         amFmQT5pZkD+Zsskda3wHwNyODR+u0mZx+5q/i3iQ/YNv8Fxq15MipZRnBVdCQi75Tzw
+         z4LQ==
+X-Gm-Message-State: AOAM531/tAQa0CEhJuSb+2JpzxDjSr+z8uhbBeLC1s9qLaSj7SLe34br
+        +bfdgC244RochRaUfo1o53uANmc/TKY=
+X-Google-Smtp-Source: ABdhPJyvj7gWCMQRsJM1DJsLjmo/xKpN0ZVktXAvYK/E1wRJcbUnxDgQF2w6htNCor+wkjpUZfBTLA==
+X-Received: by 2002:adf:df89:: with SMTP id z9mr15787324wrl.336.1636700041139;
+        Thu, 11 Nov 2021 22:54:01 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g13sm4715329wmk.37.2021.11.11.22.54.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Nov 2021 22:54:00 -0800 (PST)
+Message-Id: <pull.1076.v2.git.1636700040.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1076.git.1636693095.gitgitgadget@gmail.com>
 References: <pull.1076.git.1636693095.gitgitgadget@gmail.com>
-        <6da5e984-1dcf-4c55-976c-49ffb8d128bf@web.de>
-Date:   Thu, 11 Nov 2021 22:47:13 -0800
-In-Reply-To: <6da5e984-1dcf-4c55-976c-49ffb8d128bf@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Fri, 12 Nov 2021 07:17:47 +0100")
-Message-ID: <xmqqy25tj2fi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+From:   "Aleen via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 12 Nov 2021 06:53:56 +0000
+Subject: [PATCH v2 0/4] am: support --allow-empty option to am empty commits
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5ED21478-4384-11EC-BAA0-98D80D944F46-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Aleen <aleen42@vip.qq.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Since that git has supported the --always option for the git-format-patch
+command to create a patch with empty commit message, git-am should support
+applying and committing with empty patches.
 
-> Am 12.11.21 um 05:58 schrieb Aleen via GitGitGadget:
->> Since that git has supported the --always option for the git-format-pa=
-tch
->> command to create a patch with empty commit message, git-am should sup=
-port
->> applying and committing with empty patches.
->
-> The symmetry is compelling, but "always" is quite generic.  I can see
-> e.g. someone expecting "git am --always" to imply --keep-non-patch.
+Changes since v1:
 
-What symmetry?
+ * test: am: add the case when not passing the --always option
+ * chore: am: rename the --always option to --allow-empty
 
-> git commit and cherry-pick have --allow-empty, which is (a bit) more
-> specific.  That seems to me a better option name to copy for a commit-
-> creating command like git am.
+Aleen (4):
+  doc: git-format-patch: specify the option --always
+  am: support --always option to am empty commits
+  test: am: add the case when not passing the --always option
+  chore: am: rename the --always option to --allow-empty
 
-That one I can believe, even though I do not necessarily think it is
-a good idea to add such an option.
+ Documentation/git-am.txt           |  5 +++++
+ Documentation/git-format-patch.txt |  5 +++++
+ builtin/am.c                       | 18 +++++++++++++--
+ t/t4150-am.sh                      | 35 ++++++++++++++++++++++++++++++
+ 4 files changed, 61 insertions(+), 2 deletions(-)
+
+
+base-commit: b550198c73edd4cc058832dcf74b41aeec2adba2
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1076%2Faleen42%2Fnext-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1076/aleen42/next-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1076
+
+Range-diff vs v1:
+
+ 1:  71e6989375c = 1:  71e6989375c doc: git-format-patch: specify the option --always
+ 2:  59b1417da37 = 2:  59b1417da37 am: support --always option to am empty commits
+ -:  ----------- > 3:  da024ced668 test: am: add the case when not passing the --always option
+ -:  ----------- > 4:  45e9720f40b chore: am: rename the --always option to --allow-empty
+
+-- 
+gitgitgadget
