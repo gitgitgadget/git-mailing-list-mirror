@@ -2,104 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CA36C433EF
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 06:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B500C433F5
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 06:54:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E3E060F6E
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 06:54:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31B0F60F6E
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 06:54:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232624AbhKLG4y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Nov 2021 01:56:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50684 "EHLO
+        id S232841AbhKLG47 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Nov 2021 01:56:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230510AbhKLG4x (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232346AbhKLG4x (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 12 Nov 2021 01:56:53 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0B21C061766
-        for <git@vger.kernel.org>; Thu, 11 Nov 2021 22:54:02 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id u18so13816820wrg.5
-        for <git@vger.kernel.org>; Thu, 11 Nov 2021 22:54:02 -0800 (PST)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DD62C061767
+        for <git@vger.kernel.org>; Thu, 11 Nov 2021 22:54:03 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id y196so6898729wmc.3
+        for <git@vger.kernel.org>; Thu, 11 Nov 2021 22:54:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=R8bU8NUYINOJrXYGc4xYLSd5LRBYRM7iu224OveQv5E=;
-        b=jDQV1Fy9JUkbgXNQOfPz7So4f8YokGtTGtGbRSZCuER0Me5p7WssiJWTgeSvhmhzJ+
-         aeoMnYl+hbWAYelRRRrCGGDNNt2b4QkBvGUkTw1hkfo14cmMdpj+LarRRtxyW8zK5nog
-         jdc6Aj+e3IRQn1vab83nodxwu8XUQ9OdebZuFYesHnkAsIayVrKEzi9PDelpXrmAT+98
-         X41TWbctzMXVDpuf0zT1l1t8dETBBBK8OR9y1yfBgjR4fk+m75YgkSuT2OUB08RJiWv+
-         6vNyYnaNXSenugOsW7qU8e7sqyfDv1A2RR2bY8jP6wJcXp9tUN/zojLFGB3HvNVQzIiI
-         W5mA==
+        bh=cfbT9ufNRXyCEL7/2xLe33IdbpOB+2TX+jIohA/9SKA=;
+        b=lq3/qGSeMGgE3psQIwEPpaeGGv4hK7RDdxpUburJ/kiEXJ4pgAeckN306CaeQ52ciM
+         xkne0G8GVD19V0Npl1tf9YWGvBrTvtoz6rjuMKhPOnT+b1jbbUzArwrhhkU1QUfk8tZd
+         j4yl+SxTUdFHvoeenX/vSrrGRRMpVf+HrlYnyC+Wf/b6YbFiFf9BgWZPo+YoZiTEbzpL
+         yh1doxdgZrafX0RX9QVeOQpaxp5S/nx/AjTr4JW5DDCQsNDmKvDK3SU1Rkg9GBFo84Sv
+         eVMgXVEQEfsTnnt/nDckbG5ncOKdmFc3lnAtPJirRhvrWmuaJS1N8jhUjgNA3QJRtRVx
+         quJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=R8bU8NUYINOJrXYGc4xYLSd5LRBYRM7iu224OveQv5E=;
-        b=ogZ5t78fgIqkh78SAfBBPDEiO8G6e2TZU8dcdoLS71Fn3oK93ge52ALW49tDPk844V
-         Bee1Pj5KJ5O4ltrsEEsTlU6xBZnATdiuiNXwi8pk333GLPHC8eLd+pn1OlxTk9pMJqU5
-         JTfJHH00QpGPcH45HiUydYw4TrBRuN2b1ApnaI22bOeTiNsGEJXLoBE4oAYJbwGIWTVW
-         BsLsoDiRwcf5HEmldhKMUefiXVZINUZzfpE74n5ritXTSO9FnYB25+5TqFoe0Za7ZJkN
-         amFmQT5pZkD+Zsskda3wHwNyODR+u0mZx+5q/i3iQ/YNv8Fxq15MipZRnBVdCQi75Tzw
-         z4LQ==
-X-Gm-Message-State: AOAM531/tAQa0CEhJuSb+2JpzxDjSr+z8uhbBeLC1s9qLaSj7SLe34br
-        +bfdgC244RochRaUfo1o53uANmc/TKY=
-X-Google-Smtp-Source: ABdhPJyvj7gWCMQRsJM1DJsLjmo/xKpN0ZVktXAvYK/E1wRJcbUnxDgQF2w6htNCor+wkjpUZfBTLA==
-X-Received: by 2002:adf:df89:: with SMTP id z9mr15787324wrl.336.1636700041139;
+        bh=cfbT9ufNRXyCEL7/2xLe33IdbpOB+2TX+jIohA/9SKA=;
+        b=W+5xauHKSBmgI4NTjhRNphn68+MfO8voMAV1ZMxeaQmP0knE2ie7nHxQC998djZnaE
+         huvOKaAOZ/NpR63Q4JVVOHodLG1T+QsIdx5d56nX6Wy0rhqAUQ+WQpcqT06M616bDulO
+         4Zjsdhm7qgs71ddxSl+BE49BEK90KbGmJeea2RnM/2jUeUlJYPT03GUJ2S7TbyM7uLsb
+         djdYkuO8V5HRm2oqkVPYhOfIvt5Y2ExkyyqyAAzRpUMglVP9WMgzOKW1ZgE3/K8vSNpS
+         NWRgIpGFBUE2jA1ZxsBoQDUJqq1yRiFIJdIRbQ05gNob7YIa9ghp3SmVvaGcDvvu37fo
+         MzWA==
+X-Gm-Message-State: AOAM531WLPgGfzV8x65ADYal5sdeLaRD//SOksHY8CDctPGfW8thYZ5c
+        K8MOMFCPD25oZyRHJUFjoBFZ+KuEBXo=
+X-Google-Smtp-Source: ABdhPJx9wNnSABblg7kVRrdxRTj87G2D5kJ1CjZ+gvaG2u5+PxJE99R3fmDYcYM9peAX2jf9eUrH4A==
+X-Received: by 2002:a05:600c:2f17:: with SMTP id r23mr32626880wmn.93.1636700041813;
         Thu, 11 Nov 2021 22:54:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g13sm4715329wmk.37.2021.11.11.22.54.00
+        by smtp.gmail.com with ESMTPSA id be3sm707344wmb.1.2021.11.11.22.54.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Nov 2021 22:54:00 -0800 (PST)
-Message-Id: <pull.1076.v2.git.1636700040.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1076.git.1636693095.gitgitgadget@gmail.com>
+        Thu, 11 Nov 2021 22:54:01 -0800 (PST)
+Message-Id: <71e6989375c9b8dd00151481e0bb19c991e673f3.1636700040.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1076.v2.git.1636700040.gitgitgadget@gmail.com>
 References: <pull.1076.git.1636693095.gitgitgadget@gmail.com>
+        <pull.1076.v2.git.1636700040.gitgitgadget@gmail.com>
 From:   "Aleen via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 Nov 2021 06:53:56 +0000
-Subject: [PATCH v2 0/4] am: support --allow-empty option to am empty commits
+Date:   Fri, 12 Nov 2021 06:53:57 +0000
+Subject: [PATCH v2 1/4] doc: git-format-patch: specify the option --always
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Aleen <aleen42@vip.qq.com>
+        Aleen <aleen42@vip.qq.com>, Aleen <aleen42@vip.qq.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since that git has supported the --always option for the git-format-patch
-command to create a patch with empty commit message, git-am should support
-applying and committing with empty patches.
+From: Aleen <aleen42@vip.qq.com>
 
-Changes since v1:
+Signed-off-by: Aleen <aleen42@vip.qq.com>
+---
+ Documentation/git-format-patch.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
 
- * test: am: add the case when not passing the --always option
- * chore: am: rename the --always option to --allow-empty
-
-Aleen (4):
-  doc: git-format-patch: specify the option --always
-  am: support --always option to am empty commits
-  test: am: add the case when not passing the --always option
-  chore: am: rename the --always option to --allow-empty
-
- Documentation/git-am.txt           |  5 +++++
- Documentation/git-format-patch.txt |  5 +++++
- builtin/am.c                       | 18 +++++++++++++--
- t/t4150-am.sh                      | 35 ++++++++++++++++++++++++++++++
- 4 files changed, 61 insertions(+), 2 deletions(-)
-
-
-base-commit: b550198c73edd4cc058832dcf74b41aeec2adba2
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1076%2Faleen42%2Fnext-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1076/aleen42/next-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1076
-
-Range-diff vs v1:
-
- 1:  71e6989375c = 1:  71e6989375c doc: git-format-patch: specify the option --always
- 2:  59b1417da37 = 2:  59b1417da37 am: support --always option to am empty commits
- -:  ----------- > 3:  da024ced668 test: am: add the case when not passing the --always option
- -:  ----------- > 4:  45e9720f40b chore: am: rename the --always option to --allow-empty
-
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 113eabc107c..a9f2bf94182 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -30,6 +30,7 @@ SYNOPSIS
+ 		   [--range-diff=<previous> [--creation-factor=<percent>]]
+ 		   [--filename-max-length=<n>]
+ 		   [--progress]
++		   [--always]
+ 		   [<common diff options>]
+ 		   [ <since> | <revision range> ]
+ 
+@@ -388,6 +389,10 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
+ --progress::
+ 	Show progress reports on stderr as patches are generated.
+ 
++--always::
++	Patch commits with detailed commit messages,
++	even if they emit no changes. (see linkgit:git-diff-tree[1])
++
+ CONFIGURATION
+ -------------
+ You can specify extra mail header lines to be added to each message,
 -- 
 gitgitgadget
+
