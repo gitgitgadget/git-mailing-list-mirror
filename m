@@ -2,67 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BE8BC433EF
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 04:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB02AC433FE
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 05:00:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 61EFB60E9B
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 04:43:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADB5A60FE3
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 05:00:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230403AbhKLEqq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Nov 2021 23:46:46 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61702 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbhKLEqp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Nov 2021 23:46:45 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4D3511679CA;
-        Thu, 11 Nov 2021 23:43:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=vB3PcdE59Z5KrkHfZHVd6zzAmSeMjNWN0JHKD3rHWxY=; b=pa/3
-        rUuOIfDNRnyyfgjPunptEITO07dpFaky5KixoQdftxtqGkV3IH5skyoKRd/g074Y
-        D3yIUme0n8w/cprw0CIg5Gue+ihkAd25s+/Lwgf7f+WRHcGSrOMDNTOcX37hBdGL
-        +VhQZpu9pMvOI1mC/90amHXuZFcGf16IrVDFk0s=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 460931679C9;
-        Thu, 11 Nov 2021 23:43:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A8D201679C8;
-        Thu, 11 Nov 2021 23:43:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Ivan Frade via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Ivan Frade <ifrade@google.com>
-Subject: Re: [PATCH v7 0/2] fetch-pack: redact packfile urls in traces
-References: <pull.1052.v6.git.1635532975.gitgitgadget@gmail.com>
-        <pull.1052.v7.git.1636588289.gitgitgadget@gmail.com>
-Date:   Thu, 11 Nov 2021 20:43:51 -0800
-Message-ID: <xmqq35o2j854.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229750AbhKLFBS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Nov 2021 00:01:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53622 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229632AbhKLFBQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Nov 2021 00:01:16 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8713DC061767
+        for <git@vger.kernel.org>; Thu, 11 Nov 2021 20:58:18 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id c71-20020a1c9a4a000000b0032cdcc8cbafso5894210wme.3
+        for <git@vger.kernel.org>; Thu, 11 Nov 2021 20:58:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cfbT9ufNRXyCEL7/2xLe33IdbpOB+2TX+jIohA/9SKA=;
+        b=n1SJ3n/qpdXBH/P+LcWTuvw2Z/gdK6ghhC/Xe263o1ep1nScOmldZfasXEl/CsMwTF
+         sy1KqAltBsKXPQm3hPSKC8UY15cHG3pjqKuT/NepJGtIpRsM+a0QDylYrTvvLUX1Rz18
+         RmWKCfagokrHbxpUZ7Ng38GVG8uNV7/rrW92vmEpPmKWfLdg0Not/1XtTKlsV4yL49VV
+         R8mvCwqqQ2QaIYPkOuYeuxNk1W3HvoJeGBYaTrv1VR2VNvVScDUSVGn7FQ9CHeVKwjQM
+         9EgWFSlswozMZ0MB0oAfS4lobIFlddoClhP8+RDT8qE6R4CEly6065sfMMmne1M038H3
+         TzzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=cfbT9ufNRXyCEL7/2xLe33IdbpOB+2TX+jIohA/9SKA=;
+        b=2yO8NQbS2PjRbWfhI1zJs6FAY+/PliD0F4MGNU1K/68u44poMfwZN/XStyDtT6erXi
+         L9XYB8hyFo1r+uqKEbq2hgw+8Flk7kzS4ERA8fatHQ0ltb5Rt+g9v1pzo5GPYd3Nu25c
+         JzT53kh+1EnKvhl9tPqGM3imIA5kjMxjbhNGppoRsnxLHhwi867PYS4iSP4Iq/x5VSM2
+         xxBxB71ECHSL5XwPmezOg43UcwOkOL5s/E7jMQle+i/Wt3vWUsxwxmfdTBuHkW1YDRzg
+         cdbyortP+oGjBJdt2Qkasw/FqYUAvEBLUoLUbHIoZhNKZ73ZrsIQIap0DD2umgttVocr
+         LdnA==
+X-Gm-Message-State: AOAM531uGPEgVeQgoOpXlaSnw3hSMd9HfG9ln6KbtAut45q8hH6gOORx
+        l+71UeUbSQC+Rvwgq0sBwMgqXcFPgtA=
+X-Google-Smtp-Source: ABdhPJyCquLlQzVqfWhFF8P2V3WvQgz5WtaylVjuoRkdPiJO7RlOIlTD8eupViTUBJpOPJbw7Doz/w==
+X-Received: by 2002:a05:600c:500d:: with SMTP id n13mr748155wmr.174.1636693097045;
+        Thu, 11 Nov 2021 20:58:17 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r17sm5257805wmq.11.2021.11.11.20.58.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Nov 2021 20:58:16 -0800 (PST)
+Message-Id: <71e6989375c9b8dd00151481e0bb19c991e673f3.1636693095.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1076.git.1636693095.gitgitgadget@gmail.com>
+References: <pull.1076.git.1636693095.gitgitgadget@gmail.com>
+From:   "Aleen via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 12 Nov 2021 04:58:14 +0000
+Subject: [PATCH 1/2] doc: git-format-patch: specify the option --always
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 22E006C0-4373-11EC-9D10-98D80D944F46-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     Aleen <aleen42@vip.qq.com>, Aleen <aleen42@vip.qq.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ivan Frade via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Aleen <aleen42@vip.qq.com>
 
-> Changes since v6:
->
->  * Use specific hash sizes instead of hexsz
->  * Remove unnecessary env vars in tests
->  * Added comment on bit toggle
-> Ivan Frade (2):
->   fetch-pack: redact packfile urls in traces
->   http-fetch: redact url on die() message
+Signed-off-by: Aleen <aleen42@vip.qq.com>
+---
+ Documentation/git-format-patch.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Thanks, will queue.
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 113eabc107c..a9f2bf94182 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -30,6 +30,7 @@ SYNOPSIS
+ 		   [--range-diff=<previous> [--creation-factor=<percent>]]
+ 		   [--filename-max-length=<n>]
+ 		   [--progress]
++		   [--always]
+ 		   [<common diff options>]
+ 		   [ <since> | <revision range> ]
+ 
+@@ -388,6 +389,10 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
+ --progress::
+ 	Show progress reports on stderr as patches are generated.
+ 
++--always::
++	Patch commits with detailed commit messages,
++	even if they emit no changes. (see linkgit:git-diff-tree[1])
++
+ CONFIGURATION
+ -------------
+ You can specify extra mail header lines to be added to each message,
+-- 
+gitgitgadget
+
