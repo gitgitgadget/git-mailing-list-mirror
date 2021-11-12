@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 728BEC43219
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 21:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E5BEC433F5
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 21:49:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 47F3C60F36
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 21:49:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 851CE60FBF
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 21:49:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236013AbhKLVwZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Nov 2021 16:52:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56776 "EHLO
+        id S235994AbhKLVwV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Nov 2021 16:52:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235956AbhKLVwO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Nov 2021 16:52:14 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 842D7C0613F5
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 13:49:21 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id i12so8053783wmq.4
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 13:49:21 -0800 (PST)
+        with ESMTP id S235923AbhKLVwN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Nov 2021 16:52:13 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC5A1C061766
+        for <git@vger.kernel.org>; Fri, 12 Nov 2021 13:49:17 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id i8-20020a7bc948000000b0030db7b70b6bso10950204wml.1
+        for <git@vger.kernel.org>; Fri, 12 Nov 2021 13:49:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cZslkb8kdITQnO5ys7yGVykw0i6d+Kxe+ErUw/5Is6U=;
-        b=i9MhYDiEgXEzJ5xfRCde+NCkwT1Dj9wNKu0nyLMMM9Qk+4hDsq2NPsCpZtOVubLQ2L
-         dNBdQYvC8avOmwyU1BOWz9TMzwbbUobs33XOAMuNVnT8jpDawDZj5XFKOkJxNQ8rPluh
-         gqbZ/pczntznznDcwKCq9yLKCXAptp+vk6OkJtN0LGw0HEIhlaL/1jcsj/RkOPQGPv2k
-         bwrNj4/Lsj9xCFI6XbXijz/+ypVK9iPVr7JJfaDjziDv+u1gZqlglmdR0nm0EZy+vShy
-         w7nymlmZC5j78mI40kiUQ6RQ05yZpJcSIET3Mt/vbM5wRMH8JqgvOpuT1qpGhR0KtAkE
-         4ruA==
+        bh=2X0xu4jDEXxnsJ6J/Ye4YxTXRWiqQV1ptZzzE7hVqZE=;
+        b=Qy/k0yiljZBbAbl4auTUITvwda/qDA3ljCPzcbtV8mu+brhG6ymu7ekAmCIzMlG0co
+         11nxIV7oPoV0/CYXfMfV3KYwhE9gKe+tjVAmfT6l6tNLFCPbbHjk/XNEoVNv20Fcntcg
+         +uksSZ8oy4YZtL+KB+GPriIb5o1fijuP6o62U59bQQcPjJG2VQYNJtWfGPqVuZTQJadk
+         oyeMpxTrylaGbABaCiQvRSNuIk7umgQnb18cfJoF3wawCVNny3irfMOxNwFqUt12pjWi
+         evMDdFs8vC2SA3ksgsaYEEkxWwhBlaHkOH3r12zYbcHqpSysyLHbu0hKiUMvHnumCZvv
+         o69w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cZslkb8kdITQnO5ys7yGVykw0i6d+Kxe+ErUw/5Is6U=;
-        b=tTjecfe7JOOU/kQdm0jyT6YjfiVZ/gA5Paqsu0vLfG9mFMRRf5FMD1pi9mhZZL88wz
-         /y/2ETnyokpt/1erBjRoOfjMA5QJfiB46U2q/MsfhJ+hVqU4WudhhGnlKTd9NLewb2ml
-         9QmFyKwnhkB2CzIHvh6OqQMvImBJxcFRhPYth3iVkvxEoD8Xl+WwFTSiPqW4ZSRI0K7x
-         q8aQXHQmpvgXucH4D6j3lHQlUymxD6DCsNzRr+YbrTq5+uxVkoeOPwTnq5ESYSXVlvv/
-         ulVBKn1SxirHwrIKI7l+Sm8L+cZTixpbhrSPRjLW8io+JIIF+nRuRspVmKnq+rohricM
-         LGdA==
-X-Gm-Message-State: AOAM5303foWZQ5OETDE0VUxn2OdC1rp/5kSH9pi72B/88T9/p5G7Ps1n
-        j4jXdkFUG5NS/Ph9im38SV3lModryh6yqA==
-X-Google-Smtp-Source: ABdhPJxYMZ4FNk6YpL212YJjhj5yGBIwv1lfJCDiMdnguOWcnJNsufRiStRs+0LS9irqkOMlUy6iDA==
-X-Received: by 2002:a05:600c:4e91:: with SMTP id f17mr20901000wmq.195.1636753759745;
-        Fri, 12 Nov 2021 13:49:19 -0800 (PST)
+        bh=2X0xu4jDEXxnsJ6J/Ye4YxTXRWiqQV1ptZzzE7hVqZE=;
+        b=efVk17uYqxIEmd37DCyVlg9UO4UIhGmn2YNHVBE5jRoMhnfXtGJwnzLFE6R/XJ+upJ
+         gJZRZykJ6AsxOW/Yu9qBsza9zpxm8i3D7fqbOEsvt3GeWHl/QpX8tnI4jYQoGkToijNB
+         I6i3d1gsjvIg4Vfj8rYzhSAsj4RKCsUt6JIJWQkARdpXIgsmEhfcTNXiGjg4tttU/slM
+         JRN8BZwf0f0mVFgm/VC95H8LPzY6eipwE/Cktgw/U2LhcwUkwp2RREGIq//D020YZkx4
+         3lQHjwdxkd75UA0Gp3irz8D7kX+933+kl4Z1sy5mezWtbhOndZA9FLrWBpYMnGSzIeqj
+         0lbQ==
+X-Gm-Message-State: AOAM530RQMDKEQZhiCqtHrkfOhCbM9vJ5ltCETviVC4fun9y+mLDhYaR
+        R0WHVAa8RM6y7C09G+IANLbyREDlUKhE7Q==
+X-Google-Smtp-Source: ABdhPJxGpPieoki+9MND35O91aNa0Czowa9OUuNir+cCLy0qJ56F6jkRi736942V4p+dHUSHAl/VDQ==
+X-Received: by 2002:a05:600c:ac2:: with SMTP id c2mr37639473wmr.118.1636753755966;
+        Fri, 12 Nov 2021 13:49:15 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h27sm14117189wmc.43.2021.11.12.13.49.18
+        by smtp.gmail.com with ESMTPSA id h27sm14117189wmc.43.2021.11.12.13.49.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Nov 2021 13:49:19 -0800 (PST)
+        Fri, 12 Nov 2021 13:49:15 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 14/18] Makefile: re-add and use the "shellquote" macros
-Date:   Fri, 12 Nov 2021 22:48:58 +0100
-Message-Id: <patch-v2-14.18-64296e6e8e5-20211112T214150Z-avarab@gmail.com>
+Subject: [PATCH v2 10/18] Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
+Date:   Fri, 12 Nov 2021 22:48:54 +0100
+Message-Id: <patch-v2-10.18-41f65a12205-20211112T214150Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.rc2.795.g926201d1cc8
 In-Reply-To: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com>
 References: <cover-00.16-00000000000-20211106T205717Z-avarab@gmail.com> <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com>
@@ -72,254 +72,126 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Re-add and use, and expand on "shellquote" macros added in
-4769948afe7 (Deal with $(bindir) and friends with whitespaces.,
-2005-10-10).
+Create a new "GIT-PYTHON-DEFINES" file, and untangle the dependency
+issues of the Python by copying over the patterns established for
+building the adjacent Perl code in preceding commits.
 
-We avoided using them due to the "$(call)" feature of GNU make being
-relatively new at the time, but it isn't anymore. We hard depend on
-GNU make versions that have it.
+As with Perl, there's no real reason to depend on GIT-BUILD-OPTIONS or
+GIT-CFLAGS when building the Python code, nor did we need
+GIT-PREFIX. Let's instead add those variables we care about to a
+"GIT-PYTHON-DEFINES" and depend on that.
 
-The use of "$(call)" was removed in 39c015c556f (Fixes for ancient
-versions of GNU make, 2006-02-18) and 7ffe7098dca (Fix installation of
-templates on ancient systems., 2006-07-29) due to those
-incompatibilities with older GNU make versions, and we've used the
-more verbose *_SQ pattern ever since.
+This changes code originally added in ca3bcabf118 (auto-detect changed
+prefix and/or changed build flags, 2006-06-15), and adjusted in
+96a4647fca5 (Makefile: detect when PYTHON_PATH changes, 2012-12-18).
 
-The "$(call)" feature was introduced in GNU make version 3.78,
-released on the 22nd of September, 1999. That release also introduced
-"$(error)" and "$(warning)", which we've been making use of since
-f2fabbf76e4 (Teach Makefile to check header dependencies, 2010-01-26).
-
-This extends upon the macros added in 4769948afe7: We now have macros
-for quoting a ' inside '', and a ' with no surrounding '' as before.
-
-Additionally provide and use a "shelldquote" macro along with
-"shellquote" for the common case of wanting to quote a C string we
-pass to the compiler with a -D flag.
-
-This doesn't get rid of all of our shell quoting. We've still got some
-in the main Makefile, let's leave most of it to avoid in-flight
-conflicts. I've fully converted "templates/Makefile" and "t/Makefile"
-though.
+The relevant code for the "Perl" targets was then added in
+07981dce81e (Makefile: rebuild perl scripts when perl paths change,
+2013-11-18), and has been adjusted in preceding commits.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile           | 15 +++++----------
- shared.mak         | 14 ++++++++++++++
- t/Makefile         | 34 +++++++++++++++-------------------
- templates/Makefile | 14 +++++---------
- 4 files changed, 39 insertions(+), 38 deletions(-)
+ .gitignore |  2 +-
+ Makefile   | 49 +++++++++++++++++++++++++------------------------
+ 2 files changed, 26 insertions(+), 25 deletions(-)
 
+diff --git a/.gitignore b/.gitignore
+index 054249b20a8..845e5d0c355 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -8,7 +8,7 @@
+ /GIT-PREFIX
+ /GIT-PERL-DEFINES
+ /GIT-PERL-HEADER
+-/GIT-PYTHON-VARS
++/GIT-PYTHON-DEFINES
+ /GIT-SCRIPT-DEFINES
+ /GIT-USER-AGENT
+ /GIT-VERSION-FILE
 diff --git a/Makefile b/Makefile
-index 7130e32a251..b458c24d95e 100644
+index 361abff2402..c698c5b058a 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1996,11 +1996,7 @@ ifneq ("$(PROFILE)","")
- endif
- endif
+@@ -2378,18 +2378,15 @@ GIT-PERL-DEFINES: FORCE
+ 		echo "$$FLAGS" >$@; \
+ 	    fi
  
--# Shell quote (do not use $(call) to accommodate ancient setups);
+-# This makes sure we depend on the NO_PYTHON setting itself.
+-$(SCRIPT_PYTHON_GEN): GIT-BUILD-OPTIONS
++# As with NO_PERL=Y we'll still make GIT-PYTHON-DEFINES if "NO_PYTHON"
++# is defined, for creating the "unimplemented.sh" scripts.
++PYTHON_DEFINES =
++$(SCRIPT_PYTHON_GEN): GIT-PYTHON-DEFINES
++
++ifdef NO_PYTHON
++PYTHON_DEFINES += $(SHELL_PATH_SQ)
++PYTHON_DEFINES += $(NO_PYTHON)
+ 
+-ifndef NO_PYTHON
+-$(SCRIPT_PYTHON_GEN): GIT-CFLAGS GIT-PREFIX GIT-PYTHON-VARS
+-$(SCRIPT_PYTHON_GEN): % : %.py
+-	$(QUIET_GEN) \
+-	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
+-	    $< >$@+ && \
+-	chmod +x $@+ && \
+-	mv $@+ $@
+-else # NO_PYTHON
+ $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
+ 	$(QUIET_GEN) \
+ 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+@@ -2397,8 +2394,24 @@ $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
+ 	    unimplemented.sh >$@+ && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
++else # NO_PYTHON
++PYTHON_DEFINES += $(PYTHON_PATH_SQ)
++
++$(SCRIPT_PYTHON_GEN): % : %.py GIT-PYTHON-DEFINES
++	$(QUIET_GEN) \
++	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
++	    $< >$@+ && \
++	chmod +x $@+ && \
++	mv $@+ $@
+ endif # NO_PYTHON
+ 
++GIT-PYTHON-DEFINES: FORCE
++	@FLAGS='$(PYTHON_DEFINES)'; \
++	    if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
++		echo >&2 "    * new python-specific parameters"; \
++		echo "$$FLAGS" >$@; \
++	    fi
++
+ CONFIGURE_RECIPE = sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 			configure.ac >configure.ac+ && \
+ 		   autoconf -o configure configure.ac+ && \
+@@ -2848,18 +2861,6 @@ else
+ endif
+ 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
+ 
+-### Detect Python interpreter path changes
+-ifndef NO_PYTHON
+-TRACK_PYTHON = $(subst ','\'',-DPYTHON_PATH='$(PYTHON_PATH_SQ)')
 -
--ETC_GITCONFIG_SQ = $(subst ','\'',$(ETC_GITCONFIG))
--ETC_GITATTRIBUTES_SQ = $(subst ','\'',$(ETC_GITATTRIBUTES))
+-GIT-PYTHON-VARS: FORCE
+-	@VARS='$(TRACK_PYTHON)'; \
+-	    if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
+-		echo >&2 "    * new Python interpreter location"; \
+-		echo "$$VARS" >$@; \
+-            fi
+-endif
 -
-+# Shell quote, should be changed to use $(call shellquote,...)
- DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
- NO_GETTEXT_SQ = $(subst ','\'',$(NO_GETTEXT))
- bindir_SQ = $(subst ','\'',$(bindir))
-@@ -2535,11 +2531,11 @@ builtin/init-db.sp builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
+ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
  
- config.sp config.s config.o: GIT-PREFIX
- config.sp config.s config.o: EXTRA_CPPFLAGS = \
--	-DETC_GITCONFIG='"$(ETC_GITCONFIG_SQ)"'
-+	-DETC_GITCONFIG=$(call shelldquote,$(ETC_GITCONFIG))
- 
- attr.sp attr.s attr.o: GIT-PREFIX
- attr.sp attr.s attr.o: EXTRA_CPPFLAGS = \
--	-DETC_GITATTRIBUTES='"$(ETC_GITATTRIBUTES_SQ)"'
-+	-DETC_GITATTRIBUTES=$(call shelldquote,$(ETC_GITATTRIBUTES))
- 
- gettext.sp gettext.s gettext.o: GIT-PREFIX
- gettext.sp gettext.s gettext.o: EXTRA_CPPFLAGS = \
-@@ -2700,14 +2696,13 @@ perl/build/lib/%.pm: perl/%.pm GIT-PERL-DEFINES
- 	$(QUIET_GEN)mkdir -p $(dir $@) && \
- 	sed -e 's|@@LOCALEDIR@@|$(perl_localedir_SQ)|g' \
- 	    -e 's|@@NO_GETTEXT@@|$(NO_GETTEXT_SQ)|g' \
--	    -e 's|@@NO_PERL_CPAN_FALLBACKS@@|$(NO_PERL_CPAN_FALLBACKS_SQ)|g' \
-+	    -e 's|@@NO_PERL_CPAN_FALLBACKS@@|$(call shq,$(NO_PERL_CPAN_FALLBACKS))|g' \
- 	< $< > $@
- 
- all:: $(LIB_PERL_GEN)
- ifndef NO_PERL_CPAN_FALLBACKS
- all:: $(LIB_CPAN_GEN)
+ all:: $(TEST_PROGRAMS) $(test_bindir_programs)
+@@ -3256,7 +3257,7 @@ ifndef NO_TCLTK
  endif
--NO_PERL_CPAN_FALLBACKS_SQ = $(subst ','\'',$(NO_PERL_CPAN_FALLBACKS))
- endif
- 
- # install-man depends on Git.3pm even with NO_PERL=Y
-@@ -3021,7 +3016,7 @@ else
- 	$(INSTALL) $(vcpkg_dbg_bin)/*.pdb '$(DESTDIR_SQ)$(bindir_SQ)'
- endif
- endif
--	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
-+	$(MAKE) -C templates DESTDIR=$(call shellquote,$(DESTDIR)) install
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
- 	$(INSTALL) -m 644 mergetools/* '$(DESTDIR_SQ)$(mergetools_instdir_SQ)'
- ifndef NO_GETTEXT
-diff --git a/shared.mak b/shared.mak
-index 2d597ef7603..ef03c2bc094 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -8,6 +8,20 @@
- #    info make --index-search=.DELETE_ON_ERROR
- .DELETE_ON_ERROR:
- 
-+### Quoting helpers
-+
-+## Quote a ' inside a '': FOO='$(call shq,$(BAR))'
-+shq = $(subst ','\'',$(1))
-+
-+## Quote a ' and provide a '': FOO=$(call shq,$(BAR))
-+shellquote = '$(call shq,$(1))'
-+
-+## Quote a " inside a ""
-+shdq = $(subst ",\",$(1))
-+
-+## Quote ' for the shell, and embedded " for C: -DFOO=$(call shelldquote,$(BAR))
-+shelldquote = '"$(call shdq,$(call shq,$(1)))"'
-+
- ### Global variables
- 
- ## comma, empty, space: handy variables as these tokens are either
-diff --git a/t/Makefile b/t/Makefile
-index 882d26eee30..4168b5c6ce6 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -1,3 +1,6 @@
-+# Import tree-wide shared Makefile behavior and libraries
-+include ../shared.mak
-+
- # Run tests
- #
- # Copyright (c) 2005 Junio C Hamano
-@@ -24,13 +27,6 @@ TEST_RESULTS_DIRECTORY = test-results
- CHAINLINTTMP = chainlinttmp
- endif
- 
--# Shell quote;
--SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
--TEST_SHELL_PATH_SQ = $(subst ','\'',$(TEST_SHELL_PATH))
--PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
--TEST_RESULTS_DIRECTORY_SQ = $(subst ','\'',$(TEST_RESULTS_DIRECTORY))
--CHAINLINTTMP_SQ = $(subst ','\'',$(CHAINLINTTMP))
--
- T = $(sort $(wildcard t[0-9][0-9][0-9][0-9]-*.sh))
- TGITWEB = $(sort $(wildcard t95[0-9][0-9]-*.sh))
- THELPERS = $(sort $(filter-out $(T),$(wildcard *.sh)))
-@@ -44,38 +40,38 @@ test: pre-clean check-chainlint $(TEST_LINT)
- 	$(MAKE) aggregate-results-and-cleanup
- 
- failed:
--	@failed=$$(cd '$(TEST_RESULTS_DIRECTORY_SQ)' && \
-+	@failed=$$(cd $(call shellquote,$(TEST_RESULTS_DIRECTORY)) && \
- 		grep -l '^failed [1-9]' *.counts | \
- 		sed -n 's/\.counts$$/.sh/p') && \
- 	test -z "$$failed" || $(MAKE) $$failed
- 
- prove: pre-clean check-chainlint $(TEST_LINT)
--	@echo "*** prove ***"; $(PROVE) --exec '$(TEST_SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
-+	@echo "*** prove ***"; $(PROVE) --exec $(call shellquote,$(SHELL_PATH)) $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
- 	$(MAKE) clean-except-prove-cache
- 
- $(T):
--	@echo "*** $@ ***"; '$(TEST_SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
-+	@echo "*** $@ ***"; $(call shellquote,$(SHELL_PATH)) $@ $(GIT_TEST_OPTS)
- 
- pre-clean:
--	$(RM) -r '$(TEST_RESULTS_DIRECTORY_SQ)'
-+	$(RM) -r $(call shellquote,$(TEST_RESULTS_DIRECTORY))
- 
- clean-except-prove-cache: clean-chainlint
--	$(RM) -r 'trash directory'.* '$(TEST_RESULTS_DIRECTORY_SQ)'
-+	$(RM) -r 'trash directory'.* $(call shellquote,$(TEST_RESULTS_DIRECTORY))
- 	$(RM) -r valgrind/bin
- 
- clean: clean-except-prove-cache
- 	$(RM) .prove
- 
- clean-chainlint:
--	$(RM) -r '$(CHAINLINTTMP_SQ)'
-+	$(RM) -r $(call shellquote,$(CHAINLINTTMP))
- 
- check-chainlint:
--	@mkdir -p '$(CHAINLINTTMP_SQ)' && \
-+	@mkdir -p $(call shellquote,$(CHAINLINTTMP)) && \
- 	err=0 && \
- 	for i in $(CHAINLINTTESTS); do \
- 		$(CHAINLINT) <chainlint/$$i.test | \
--		sed -e '/^# LINT: /d' >'$(CHAINLINTTMP_SQ)'/$$i.actual && \
--		diff -u chainlint/$$i.expect '$(CHAINLINTTMP_SQ)'/$$i.actual || err=1; \
-+		sed -e '/^# LINT: /d' >$(call shellquote,$(CHAINLINTTMP))/$$i.actual && \
-+		diff -u chainlint/$$i.expect $(call shellquote,$(CHAINLINTTMP))/$$i.actual || err=1; \
- 	done && exit $$err
- 
- test-lint: test-lint-duplicates test-lint-executable test-lint-shell-syntax \
-@@ -92,7 +88,7 @@ test-lint-executable:
- 		echo >&2 "non-executable tests:" $$bad; exit 1; }
- 
- test-lint-shell-syntax:
--	@'$(PERL_PATH_SQ)' check-non-portable-shell.pl $(T) $(THELPERS) $(TPERF)
-+	@$(call shellquote,$(PERL_PATH)) check-non-portable-shell.pl $(T) $(THELPERS) $(TPERF)
- 
- test-lint-filenames:
- 	@# We do *not* pass a glob to ls-files but use grep instead, to catch
-@@ -107,9 +103,9 @@ aggregate-results-and-cleanup: $(T)
- 	$(MAKE) clean
- 
- aggregate-results:
--	for f in '$(TEST_RESULTS_DIRECTORY_SQ)'/t*-*.counts; do \
-+	for f in $(call shellquote,$(TEST_RESULTS_DIRECTORY))/t*-*.counts; do \
- 		echo "$$f"; \
--	done | '$(SHELL_PATH_SQ)' ./aggregate-results.sh
-+	done | $(call shellquote,$(SHELL_PATH)) ./aggregate-results.sh
- 
- gitweb-test:
- 	$(MAKE) $(TGITWEB)
-diff --git a/templates/Makefile b/templates/Makefile
-index d22a71a3999..c9251a96622 100644
---- a/templates/Makefile
-+++ b/templates/Makefile
-@@ -1,3 +1,6 @@
-+# Import tree-wide shared Makefile behavior and libraries
-+include ../shared.mak
-+
- # make and install sample templates
- 
- ifndef V
-@@ -18,13 +21,6 @@ ifndef PERL_PATH
- 	PERL_PATH = perl
- endif
- 
--SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
--PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
--
--# Shell quote (do not use $(call) to accommodate ancient setups);
--DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
--template_instdir_SQ = $(subst ','\'',$(template_instdir))
--
- all: boilerplates.made custom
- 
- # Put templates that can be copied straight from the source
-@@ -61,6 +57,6 @@ clean:
- 	$(RM) -r blt boilerplates.made
- 
- install: all
--	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(template_instdir_SQ)'
-+	$(INSTALL) -d -m755 $(call shellquote,$(DESTDIR)$(template_instdir))
- 	(cd blt && $(TAR) cf - .) | \
--	(cd '$(DESTDIR_SQ)$(template_instdir_SQ)' && umask 022 && $(TAR) xof -)
-+	(cd $(call shellquote,$(DESTDIR)$(template_instdir)) && umask 022 && $(TAR) xof -)
+ 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-BUILD-OPTIONS
+ 	$(RM) GIT-USER-AGENT GIT-PREFIX
+-	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-VARS
++	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-DEFINES
+ ifdef MSVC
+ 	$(RM) $(patsubst %.o,%.o.pdb,$(OBJECTS))
+ 	$(RM) $(patsubst %.exe,%.pdb,$(OTHER_PROGRAMS))
 -- 
 2.34.0.rc2.795.g926201d1cc8
 
