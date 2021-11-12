@@ -2,194 +2,272 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13EAEC433F5
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 22:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41729C433F5
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 22:23:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F2298603E5
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 22:21:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 267CC60698
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 22:23:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235987AbhKLWYC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Nov 2021 17:24:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35648 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235466AbhKLWXx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Nov 2021 17:23:53 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 971F3C061208
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 14:21:01 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id p3-20020a05600c1d8300b003334fab53afso8098859wms.3
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 14:21:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WYeo7VMpXVCFrCRUGT5Ld5l/NVbmmiDuRIx8rCT1+ag=;
-        b=Mb9PEqiGhnHnVhg514q9Wh2iyyejIehtOO8ohBUwDlSteb2UNzLygiH/zRZQxDklJG
-         KARFJGMEzcAjRdO0qTTxH3FnpHuz3RkZpK5aA0H0ua2dwcNQhy82ofmc9Er2YiDNCe/s
-         JSY7OpGqjQFJRC7vojwzkoopGv45KPF5Aqk65MGSc26L3UtFJ4wjroQUtTJHQ4cNbndY
-         VwRSZhVd/zSD4sz0iIjXxvajygQVTQ4y2tHBHLiODMOE4OVoMoAErL+tsYJuFpQx5HWi
-         MBTD0RXtn/9rQse8pd/qyQY0K3y6BMUCAooy0XCUJiQKD9ca2KpCszWT2Cp4BdxpCpFy
-         4opQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WYeo7VMpXVCFrCRUGT5Ld5l/NVbmmiDuRIx8rCT1+ag=;
-        b=3NLO3tEjkEfg84BPCLmkwUMGVoWkx3MAmdKeeXJE69EYImmSk9duBt5hrHttQ3ayDM
-         GPnfqF2Kv9sj+wFKXVjUPkdQiLqcsDgcI6yPmaOW4UWyU6m/I/lQSRKobejoJvhLFHh9
-         2Eicfso1vbUnEIICm9EhO8uPm404EH/AqPvLK8TUIBEL2Cnu4973ABWqB1cge5pIor9+
-         uYin+lHOv/nmHtWBC93vCjFQgpRBAB+r/cMu5sRbqkVM9uZWXR+OLpeIJpbUXyXyyiK7
-         SMf0cxV0hRD7bTtdLn0AT7k4rDoxOh28eoRW6ZkeBzS9mRdIcqYDODQzg/zoR+GWIDcm
-         DLMA==
-X-Gm-Message-State: AOAM530i5TLHzxIaq3XjoeifT82HtkfH8BHD5vhwh1pzRtBvcTJPtAz0
-        T/rf47WTS2glu1duJoZwbmpQ6yggroWRVw==
-X-Google-Smtp-Source: ABdhPJzgwMSY+xKiQZ3Xfpj5Wf6NOVIJvi47Lii4+Ks8Tbc1sfaZS6H7K9xEAE+SvhHLukAAqq/tdg==
-X-Received: by 2002:a7b:c94e:: with SMTP id i14mr20176950wml.85.1636755659964;
-        Fri, 12 Nov 2021 14:20:59 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f7sm7896985wri.74.2021.11.12.14.20.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Nov 2021 14:20:59 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        John Cai <johncai86@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 10/10] cat-file: improve --(textconv|filters) disambiguation
-Date:   Fri, 12 Nov 2021 23:20:08 +0100
-Message-Id: <patch-v2-10.10-177f16ba856-20211112T221506Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.0.rc2.795.g926201d1cc8
-In-Reply-To: <cover-v2-00.10-00000000000-20211112T221506Z-avarab@gmail.com>
-References: <cover-00.10-00000000000-20211106T214259Z-avarab@gmail.com> <cover-v2-00.10-00000000000-20211112T221506Z-avarab@gmail.com>
+        id S235980AbhKLWZz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Nov 2021 17:25:55 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56136 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229634AbhKLWZy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Nov 2021 17:25:54 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A9EE6FB636;
+        Fri, 12 Nov 2021 17:23:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=SnvK3NJhLLckxK7xhtlPMMlOCaL8XKDJQcZe5oagBz0=; b=mwJ3
+        MDSWUucMMnyUQdP2yZ8l79wqj7KLtLTxpCQ3kDTyEq7ggfWD8AG6EBl3TrtakQGy
+        FcZ2etxTC3cSlj+eR8VIpQlwbNZOriJ2PM4DJcrbwITsTDEF4RkwrHiwPZJE4jLm
+        gCZao4ULV89e0BYWLsg/o9xM9x4vY8TomyjQ8x4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A1CF2FB635;
+        Fri, 12 Nov 2021 17:23:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EE332FB634;
+        Fri, 12 Nov 2021 17:23:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Aleen via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Aleen <aleen42@vip.qq.com>
+Subject: Re: [PATCH v2 2/4] am: support --always option to am empty commits
+References: <pull.1076.git.1636693095.gitgitgadget@gmail.com>
+        <pull.1076.v2.git.1636700040.gitgitgadget@gmail.com>
+        <59b1417da3754add11e72692ec11c09e486269e4.1636700040.git.gitgitgadget@gmail.com>
+Date:   Fri, 12 Nov 2021 14:23:00 -0800
+Message-ID: <xmqq4k8hovy3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 193436B6-4407-11EC-9B89-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve the errors emitted when an invalid <object> and/or <path> is
-provided with either the --path option, or as an argument. We now use
-the same logic in get_oid_with_context_1() that "git show" et al use.
+"Aleen via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-To replace the "cat-file" use-case we need to introduce a new
-"GET_OID_REQUIRE_PATH" flag, otherwise it would exit early as soon as
-a valid "HEAD" was resolved, but in the "cat-file" case being changed
-we always need a valid revision and path.
+> From: Aleen <aleen42@vip.qq.com>
+> Subject: Re: [PATCH v2 2/4] am: support --always option to am empty commits
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/cat-file.c           | 15 +++++----------
- cache.h                      |  1 +
- object-name.c                |  6 +++++-
- t/t8007-cat-file-textconv.sh |  6 +++---
- 4 files changed, 14 insertions(+), 14 deletions(-)
+As the inventor of "format-patch" and "am", I probably should wish
+that "to am" were by now a valid verb, but no, it is not.
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 1d7f79184f0..b76f2a00046 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -73,14 +73,16 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 	struct object_info oi = OBJECT_INFO_INIT;
- 	struct strbuf sb = STRBUF_INIT;
- 	unsigned flags = OBJECT_INFO_LOOKUP_REPLACE;
-+	unsigned get_oid_flags = GET_OID_RECORD_PATH | GET_OID_ONLY_TO_DIE;
- 	const char *path = force_path;
-+	if (!path && (opt == 'w' || opt == 'c'))
-+		get_oid_flags |= GET_OID_REQUIRE_PATH;
- 
- 	if (unknown_type)
- 		flags |= OBJECT_INFO_ALLOW_UNKNOWN_TYPE;
- 
--	if (get_oid_with_context(the_repository, obj_name,
--				 GET_OID_RECORD_PATH,
--				 &oid, &obj_context))
-+	if (get_oid_with_context(the_repository, obj_name, get_oid_flags, &oid,
-+				 &obj_context))
- 		die("Not a valid object name %s", obj_name);
- 
- 	if (!path)
-@@ -112,9 +114,6 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		return !has_object_file(&oid);
- 
- 	case 'w':
--		if (!path)
--			die("git cat-file --filters %s: <object> must be "
--			    "<sha1:path>", obj_name);
- 
- 		if (filter_object(path, obj_context.mode,
- 				  &oid, &buf, &size))
-@@ -122,10 +121,6 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		break;
- 
- 	case 'c':
--		if (!path)
--			die("git cat-file --textconv %s: <object> must be <sha1:path>",
--			    obj_name);
--
- 		if (textconv_object(the_repository, path, obj_context.mode,
- 				    &oid, 1, &buf, &size))
- 			break;
-diff --git a/cache.h b/cache.h
-index eba12487b99..788127a9869 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1366,6 +1366,7 @@ struct object_context {
- #define GET_OID_FOLLOW_SYMLINKS 0100
- #define GET_OID_RECORD_PATH     0200
- #define GET_OID_ONLY_TO_DIE    04000
-+#define GET_OID_REQUIRE_PATH  010000
- 
- #define GET_OID_DISAMBIGUATORS \
- 	(GET_OID_COMMIT | GET_OID_COMMITTISH | \
-diff --git a/object-name.c b/object-name.c
-index d44a8f3a7ca..e94ced3f170 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -1799,8 +1799,12 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 	oc->mode = S_IFINVALID;
- 	strbuf_init(&oc->symlink_path, 0);
- 	ret = get_oid_1(repo, name, namelen, oid, flags);
--	if (!ret)
-+	if (!ret) {
-+		if (flags & GET_OID_REQUIRE_PATH)
-+			die(_("<object>:<path> required, only <object> '%s' given"), name);
- 		return ret;
-+	}
-+
- 	/*
- 	 * tree:path --> object name of path in tree
- 	 * :path -> object name of absolute path in index
-diff --git a/t/t8007-cat-file-textconv.sh b/t/t8007-cat-file-textconv.sh
-index 45471cefe73..0b79750cf1e 100755
---- a/t/t8007-cat-file-textconv.sh
-+++ b/t/t8007-cat-file-textconv.sh
-@@ -27,19 +27,19 @@ test_expect_success 'usage' '
- 	test_cmp expect actual &&
- 
- 	cat >expect <<-\EOF &&
--	fatal: Not a valid object name HEAD2:two.bin
-+	fatal: invalid object name '\''HEAD2'\''.
- 	EOF
- 	test_must_fail git cat-file --textconv HEAD2:two.bin 2>actual &&
- 	test_cmp expect actual &&
- 
- 	cat >expect <<-\EOF &&
--	fatal: git cat-file --textconv HEAD: <object> must be <sha1:path>
-+	fatal: <object>:<path> required, only <object> '\''HEAD'\'' given
- 	EOF
- 	test_must_fail git cat-file --textconv HEAD 2>actual &&
- 	test_cmp expect actual &&
- 
- 	cat >expect <<-\EOF &&
--	fatal: Not a valid object name HEAD:two.bin
-+	fatal: path '\''two.bin'\'' does not exist in '\''HEAD'\''
- 	EOF
- 	test_must_fail git cat-file --textconv HEAD:two.bin 2>actual &&
- 	test_cmp expect actual
--- 
-2.34.0.rc2.795.g926201d1cc8
+More importantly, when an empty patch comes, there can be many
+different ways for the "am" command to handle it.  "to am empty
+commits" does not say how the patch chooses to so and does not make
+a very useful title for this commit.
 
+Right now, we error out, simply because it is an easy mistake to
+save a non-patch e-mail to the mailbox when intending to save a
+series of patches belonging to a topic, and the user is expected to
+say "git am --skip" to skip over it when it happens.  The above
+"Subject:" can be read to mean that the new option instead allows
+such an empty message to be skipped without stopping and forcing the
+user to say "am --skip", which may be a useful thing to do.  Or it
+may mean that the new option creates an empty commit, using the
+contents of the e-mail as the commit log message.  Does this patch
+offer both behaviour?  If so, "to am", even though it does not
+convey a bit of information, might be an acceptable compromise.  If
+the patch implements only one of the behaviours, then we should say
+so.  Either one of these two:
+
+    am: --always option skips empty patches
+    am: --always option records empty patches as empty commits
+
+Also, I thought that the previous round saw a conclusion that --always
+is a bad name for the option.  If we are making the second round,
+let's not start with a bad name and the "fix the mistake" of
+starting with a bad name in a later step.  Just start with the final
+name from the beginning.
+
+> +--always::
+> +	Apply patches of commits with detailed commit messages,
+> +	even if they emit no changes. (see linkgit:git-format-patch[1])
+
+Almost the same comment as 1/4 applies to the above description.
+
+    --empty-patch=(skip|asis|die)::
+	The command usually errors out when seeing an input e-mail
+	message that lacks a patch.  When this option is set to
+	'skip', skip such an e-mail message without erroring out.
+	When this option is set to 'asis', create an empty commit,
+	recording the contents of the e-mail message as its log.
+	'die' is the default.
+
+
+perhaps?  Assuming that 'skip' would make a useful addition to the
+mix in the future.
+
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 8677ea2348a..d11efc16f92 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -124,6 +124,8 @@ struct am_state {
+>  	int ignore_date;
+>  	int allow_rerere_autoupdate;
+>  	const char *sign_commit;
+> +	int always;
+
+OK, so here is where the parse_options() records the command line
+option.
+
+> +	int empty_commit;
+
+I do not think this addtion of empty_commit member to this structure
+is welcome or necessary.
+
+>  	int rebasing;
+>  };
+
+> @@ -1249,8 +1251,12 @@ static int parse_mail(struct am_state *state, const char *mail)
+>  	}
+
+>  	if (is_empty_or_missing_file(am_path(state, "patch"))) {
+> -		printf_ln(_("Patch is empty."));
+> -		die_user_resolve(state);
+> +		if (state->always) {
+> +			state->empty_commit = 1;
+> +		} else {
+> +			printf_ln(_("Patch is empty."));
+> +			die_user_resolve(state);
+> +		}
+>  	}
+
+I am only thinking aloud, but I suspect that the whole "if 'patch'
+is empty, do something special" code logically belongs to the
+caller.  Perhaps we should remove this block altogether and let the
+code continue the rest of this function.  And return 0, as this is
+not like mail-system-internal-data that we want to pretend did not
+even exist, and have the caller check if "patch" file is empty and
+act accordingly.
+
+> @@ -1792,6 +1798,9 @@ static void am_run(struct am_state *state, int resume)
+>  		if (state->interactive && do_interactive(state))
+>  			goto next;
+>  
+> +		if (state->empty_commit)
+> +			goto commit;
+> +
+
+This is probably a wrong place to jump from.  You are bypassing
+applypatch-msg-hook that may be serving as a gate to catch typos
+if you are going to create a commit.
+
+So, perhaps check if "patch" is empty here, using the code you'd
+lift from parse_mail(), and if it is empty then:
+
+  - if --empty-commit is set to die (or left default), do the
+    printf_ln(_("Patch is empty.")) followed by a call to
+    die_user_resolve(state), just like before.
+
+  - if it is set to skip, jump to "next", just like when
+    parse_mail() returned 1.
+
+  - otherwise (i.e. you are told to create an empty commit),
+    remember the fact that current e-mail has no patch, but continue
+    to the next step to run the hook.
+
+>  		if (run_applypatch_msg_hook(state))
+>  			exit(1);
+
+And after passing the hook, if your earlier check says that there is
+no patch and you are to create an empty commit, jump to "commit"
+label from here.
+
+> diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+> index 2aaaa0d7ded..5b3617857a8 100755
+> --- a/t/t4150-am.sh
+> +++ b/t/t4150-am.sh
+> @@ -196,6 +196,12 @@ test_expect_success setup '
+>  
+>  	git format-patch -M --stdout lorem^ >rename-add.patch &&
+>  
+> +	git checkout -b empty-commit &&
+> +	git commit -m "empty commit" --allow-empty &&
+> +
+> +	git format-patch --stdout empty-commit^ >empty.patch &&
+> +	git format-patch --always --stdout empty-commit^ >empty-commit.patch &&
+> +
+>  	# reset time
+>  	sane_unset test_tick &&
+>  	test_tick
+> @@ -1152,4 +1158,23 @@ test_expect_success 'apply binary blob in partial clone' '
+>  	git -C client am ../patch
+>  '
+>  
+> +test_expect_success 'am a real empty patch with the --always option' '
+> +	rm -fr .git/rebase-apply &&
+
+What is this one about?  If this is trying to clean up the cruft the
+previous step made, it may be better to do the clean-up in the
+previous step using test_when_finished.
+
+> +	git reset --hard &&
+> +	test_must_fail git am --always empty.patch 2>actual &&
+> +	echo Patch format detection failed. >expected &&
+> +	test_cmp expected actual
+> +'
+
+It is curious that the error message the patch touched said "Patch
+is empty." but the test checks for a different message.  Are we
+testing the right failure mode?
+
+> +test_expect_success 'am a patch with empty commits' '
+> +	grep "empty commit" empty-commit.patch &&
+
+What is this testing?  If it is checking the sanity of test data we
+created earlier, shouldn't we do so where we generated the data
+(i.e. the "setup" block that we earlier saw)?
+
+> +	rm -fr .git/rebase-apply &&
+> +	git reset --hard &&
+
+These are trying to clean up the cruft the previous step (added by
+this patch) may have left.  Perhaps these should be done inside
+test_when_finished of the previous step?
+
+> +	git checkout empty-commit^ &&
+> +	git am --always empty-commit.patch &&
+> +	test_path_is_missing .git/rebase-apply &&
+
+We should trust "git am"'s exit status here, I would think, rather
+than be so intimate with the internal implementation detail like the
+name of the temporary directory the command uses.
+
+> +	git cat-file commit HEAD >actual &&
+> +	test_i18ngrep "empty commit" actual
+
+test_i18ngrep -> grep
+
+The input (i.e. the commit that resulted in this empty patch) said.
+"empty commit", and we are making sure that string appears, but we
+are not making sure that is the only string appears in the log
+message.  Is it because we will later enhance the command to
+automatically extend the single-liner "empty patch" log message into
+a lot more detailed one?  I doubt it ;-)
+
+More importantly, the above checks if (part of) the log message is
+recorded, but does not check if the resulting commit is what is
+expected, i.e. an empty one.
+
+Perhaps checking with "grep" is way too loose a test.  Shouldn't we
+do something like
+
+	git show -1 --format='%B' >actual
+
+and compare it with expected "the log is recorded as-is, and there
+is no change between HEAD^ and HEAD"?
+
+> +'
+> +
+>  test_done
+
+Thanks.
