@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48374C433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA26FC433FE
 	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 22:20:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2B535603E5
+	by mail.kernel.org (Postfix) with ESMTP id A692660ED4
 	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 22:20:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234372AbhKLWXt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Nov 2021 17:23:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35594 "EHLO
+        id S234123AbhKLWXu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Nov 2021 17:23:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232001AbhKLWXp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Nov 2021 17:23:45 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF6EAC061767
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 14:20:53 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id i5so18031633wrb.2
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 14:20:53 -0800 (PST)
+        with ESMTP id S234085AbhKLWXr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Nov 2021 17:23:47 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ABABC061767
+        for <git@vger.kernel.org>; Fri, 12 Nov 2021 14:20:56 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id z200so8957351wmc.1
+        for <git@vger.kernel.org>; Fri, 12 Nov 2021 14:20:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aWR95Ex6SPl3lkN4N5PQiIkcULkOF2UqU8ynGQkaUCU=;
-        b=K2E64zq+PqTq8wVofO5UcMZYvByXv71H3Dnv1S5/0Gx4My2o9eSCyi08eU94guSRLA
-         WCbRMsY1KcorGRrI8qdbBc4esyakdAL6rMLH/64UPTqXtL+sp6sUUBnnc+5ye80RmASQ
-         CkRjrulODfy8L2BzA2z5DjyUgJ2Hyd9rYzoOCwTpR0fHFWfs8B53hEquzfkUD3Nd6yQx
-         yd0opw+HPqZW0XkbAYXFwuA9WIuNLXaX/1foxn2PHAvbQmA60XAS2rHUvoK/C9iyqP3o
-         OfevoaUhvnTrYamATfjNY3LwBK/zSsNnupfH1uU8p7Q+mec6TEbzh3UJG5xIetTau7Rd
-         YAgg==
+        bh=eHcgkmmvHOezsCWyrvLz5vZQClyvX60Hdtcd0IFSWq8=;
+        b=iaDk+2WoH2uspOnlNGaLrm0MgxYm1Yb7tyuWtwgiplZcekayXozroIUKWZ5QC/ZfoB
+         3Sb1EIblxGzfcRxCkF30EsjkLTcaV/kfaSRH4wSgGY6lf4i3dCE6bsrRabahST9BUTFp
+         JOCLJG6GRfbiYaBkBiS6YZlNl7/ZF0E7JX1oep9y8YWd4vX6VGisJ3GjxamRaqjP5DOY
+         Dx3LEBuVhL1asZDEZqWBiHMxpR2ljlfcr8PLIPZPFSX6xiv+VCpQ4uEm6xG23WTa1LgF
+         mCw9CqrYFVGax/qXSPpfPVxAYVEgR9QeLPj+a9YLkBdBLZety/+01evSn51dpmffnu8C
+         WXsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aWR95Ex6SPl3lkN4N5PQiIkcULkOF2UqU8ynGQkaUCU=;
-        b=s+/cb6R3dMkV/N3GuamCILk2+ELIbo+E9RwzjTfw3j4Kub3++Y88aLwtXSvkiDTdtV
-         GYSAIMnH46GcFqaSRczcJITuifHGadsKogWG1NUROuldV/N5w4LhUIaBVVmIr+g+z79s
-         0ucI1Qi5CY0oDLBGlvZFfU2ZQgA2fWIZ3MQEZvgbhAoQ4HV26IXlF9jXRMyDVHomwBYs
-         ym0SocQHWsrtk0YtrSgiGf1USjoZBGRJbIU9D/J0N6371CxmRGPEA2LHl6olf1CX1blu
-         dqfMGTgMvEofTQHqZTpIANYdesZo1hng9SQg/XRv6YDB0PhzziKzv4YNlJNmSm0TfjkG
-         Ta8Q==
-X-Gm-Message-State: AOAM533U88weNVfL0avJ1vB+krRBKCiFO13SxP/+Eh76K4oWyW0S7PrC
-        jst39oh+F6IsvjyZsNNdSBQbrgaijLuCeQ==
-X-Google-Smtp-Source: ABdhPJyk9h4x4ynye7ArRfiDv4E0eCXJXuQl4VAfnezW3OIP5Mkb4Mq9iOBkPK3jbhW6jBzQ2/sP0w==
-X-Received: by 2002:a5d:5144:: with SMTP id u4mr21569065wrt.91.1636755652251;
-        Fri, 12 Nov 2021 14:20:52 -0800 (PST)
+        bh=eHcgkmmvHOezsCWyrvLz5vZQClyvX60Hdtcd0IFSWq8=;
+        b=k5t2VqShma8/oz2NqrrDWYQyC8qgwmpbLIVTS+3EGn9And9+ACI9F4cdsFXQyrRled
+         LDIvgCnf5/AN21XIKIEPs7q5hyrgBr3w5e9JgflIRZWcNjRD7Wn8eBZpM92oVVbUpggK
+         mfqxJMMxFB75m4H6PKRGXna2EFASynFFqZ+6CXFZ6933u0xX6DKSvIicS+q9yAuc2aaa
+         m/il7KFHQLCGiMZGqfLZR1F+Z9phacTJufv/b6s5GV34+NBFuApdNV5W8yDUlLbw8JrM
+         rJQDcpndeiPPnml0KDxFLHAnJsuFDLd9pTsxqxZAiSMoSL6a9ECSzMcW1jjrumc6/+oU
+         FA/w==
+X-Gm-Message-State: AOAM533Pp1Ocv12oUU12dIBBDVsz9dIPv93Q/pSjgPAiIGmCpkKiF6Mh
+        EWueXn82bW+Il3mF/Fa9jWiAG8eFmExTVQ==
+X-Google-Smtp-Source: ABdhPJzCDmck43vKzX/+wpRzWCVe6W9xWhdNzJpktn4vhDWMc2ZYIwFaAk7BC52QSNJMfyf5BMAC/g==
+X-Received: by 2002:a05:600c:1e26:: with SMTP id ay38mr21165569wmb.14.1636755654687;
+        Fri, 12 Nov 2021 14:20:54 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f7sm7896985wri.74.2021.11.12.14.20.51
+        by smtp.gmail.com with ESMTPSA id f7sm7896985wri.74.2021.11.12.14.20.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Nov 2021 14:20:51 -0800 (PST)
+        Fri, 12 Nov 2021 14:20:54 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Sergey Organov <sorganov@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 01/10] cat-file tests: test bad usage
-Date:   Fri, 12 Nov 2021 23:19:59 +0100
-Message-Id: <patch-v2-01.10-3a0d2923cfa-20211112T221506Z-avarab@gmail.com>
+Subject: [PATCH v2 04/10] cat-file docs: fix SYNOPSIS and "-h" output
+Date:   Fri, 12 Nov 2021 23:20:02 +0100
+Message-Id: <patch-v2-04.10-b9c935b95b7-20211112T221506Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.rc2.795.g926201d1cc8
 In-Reply-To: <cover-v2-00.10-00000000000-20211112T221506Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20211106T214259Z-avarab@gmail.com> <cover-v2-00.10-00000000000-20211112T221506Z-avarab@gmail.com>
@@ -71,130 +71,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stress test the usage emitted when options are combined in ways that
-isn't supported. Let's test various option combinations, some of these
-we buggily allow right now.
+There were various inaccuracies in the previous SYNOPSIS output,
+e.g. "--path" is not something that can optionally go with any options
+except --textconv or --filters, as the output implied.
 
-E.g. this reveals a bug in 321459439e1 (cat-file: support
---textconv/--filters in batch mode, 2016-09-09) that we'll fix in a
-subsequent commit. We're supposed to be emitting a relevant message
-when --batch-all-objects is combined with --textconv or --filters, but
-we don't.
+The opening line of the DESCRIPTION section is also "In its first
+form[...]", which refers to "git cat-file <type> <object>", but the
+SYNOPSIS section wasn't showing that as the first form!
 
-The cases of needing to assign to opt=2 in the "opt" loop are because
-on those we do the right thing already, in subsequent commits the
-"test_expect_failure" cases will be fixed, and the for-loops unified.
+That part of the documentation made sense in
+d83a42f34a6 (Documentation: minor grammatical fixes in
+git-cat-file.txt, 2009-03-22) when it was introduced, but since then
+various options that were added have made that intro make no sense in
+the context it was in. Now the two will match again.
+
+The usage output here is not properly aligned on "master" currently,
+but will be with my in-flight 4631cfc20bd (parse-options: properly
+align continued usage output, 2021-09-21), so let's indent things
+correctly in the C code in anticipation of that.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1006-cat-file.sh | 94 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 94 insertions(+)
+ Documentation/git-cat-file.txt | 10 ++++++++--
+ builtin/cat-file.c             | 10 ++++++++--
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 658628375c8..411efc2771e 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -4,6 +4,100 @@ test_description='git cat-file'
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index 27b27e2b300..73ebbc70ee2 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -9,8 +9,14 @@ git-cat-file - Provide content or type and size information for repository objec
+ SYNOPSIS
+ --------
+ [verse]
+-'git cat-file' (-t [--allow-unknown-type]| -s [--allow-unknown-type]| -e | -p | <type> | --textconv | --filters ) [--path=<path>] <object>
+-'git cat-file' (--batch[=<format>] | --batch-check[=<format>]) [ --textconv | --filters ] [--follow-symlinks]
++'git cat-file' <type> <object>
++'git cat-file' (-e | -p) <object>
++'git cat-file' ( -t | -s ) [--allow-unknown-type] <object>
++'git cat-file' (--batch | --batch-check) [--batch-all-objects]
++	     [--buffer] [--follow-symlinks] [--unordered]
++	     [--textconv | --filters]
++'git cat-file' (--textconv | --filters )
++	     [<rev>:<path|tree-ish> | --path=<path|tree-ish> <rev>]
  
- . ./test-lib.sh
- 
-+test_cmdmode_usage () {
-+	test_expect_code 129 "$@" 2>err &&
-+	grep "^error:.*is incompatible with" err
-+}
-+
-+for switches in \
-+    '-e -p' \
-+    '-p -t' \
-+    '-t -s' \
-+    '-s --textconv' \
-+    '--textconv --filters'
-+do
-+	test_expect_success "usage: cmdmode $switches" '
-+		test_cmdmode_usage git cat-file $switches
-+	'
-+done
-+
-+test_incompatible_usage () {
-+	test_expect_code 129 "$@" 2>err &&
-+	grep -E "^error:.**needs" err
-+}
-+
-+for opt in --batch --batch-check
-+do
-+	test_expect_success "usage: incompatible options: --path with $opt" '
-+		test_incompatible_usage git cat-file --path=foo $opt
-+	'
-+done
-+
-+short_modes="-e -p -t -s"
-+cw_modes="--textconv --filters"
-+
-+for opt in $cw_modes
-+do
-+	test_expect_success "usage: $opt requires another option" '
-+		test_expect_code 129 git cat-file $opt
-+	'
-+
-+	test_expect_failure "usage: incompatible options: --batch-all-objects with $opt" '
-+		test_incompatible_usage git cat-file --batch-all-objects $opt
-+	'
-+done
-+
-+for opt in $short_modes
-+do
-+	test_expect_success "usage: $opt requires another option" '
-+		test_expect_code 129 git cat-file $opt
-+	'
-+
-+	for opt2 in --batch \
-+		--batch-check \
-+		--follow-symlinks
-+	do
-+		test_expect_failure "usage: incompatible options: $opt and $opt2" '
-+			test_incompatible_usage git cat-file $opt $opt2
-+		'
-+	done
-+
-+	opt2="--path=foo HEAD:some-path.txt"
-+	test_expect_success "usage: incompatible options: $opt and $opt2" '
-+		test_incompatible_usage git cat-file $opt $opt2
-+	'
-+done
-+
-+for opt in $short_modes $cw_modes
-+do
-+	args="one two three"
-+	test_expect_success "usage: too many arguments: $opt $args" '
-+		test_expect_code 129 git cat-file $opt $args
-+	'
-+
-+	for opt2 in --buffer --follow-symlinks
-+	do
-+		test_expect_success "usage: incompatible arguments: $opt with batch option $opt2" '
-+			test_expect_code 129 git cat-file $opt $opt2
-+		'
-+	done
-+done
-+
-+for opt in --buffer \
-+	--follow-symlinks \
-+	--batch-all-objects
-+do
-+	status=success
-+	if test $opt = "--buffer"
-+	then
-+		status=failure
-+	fi
-+	test_expect_$status "usage: bad option combination: $opt without batch mode" '
-+		test_expect_code 129 git cat-file $opt &&
-+		test_expect_code 129 git cat-file $opt commit HEAD
-+	'
-+done
-+
- echo_without_newline () {
-     printf '%s' "$*"
+ DESCRIPTION
+ -----------
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 86fc03242b8..1df7f797cb6 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -619,8 +619,14 @@ static int batch_objects(struct batch_options *opt)
  }
+ 
+ static const char * const cat_file_usage[] = {
+-	N_("git cat-file (-t [--allow-unknown-type] | -s [--allow-unknown-type] | -e | -p | <type> | --textconv | --filters) [--path=<path>] <object>"),
+-	N_("git cat-file (--batch[=<format>] | --batch-check[=<format>]) [--follow-symlinks] [--textconv | --filters]"),
++	N_("git cat-file <type> <object>"),
++	N_("git cat-file (-e | -p) <object>"),
++	N_("git cat-file ( -t | -s ) [--allow-unknown-type] <object>"),
++	N_("git cat-file (--batch | --batch-check) [--batch-all-objects]\n"
++	   "             [--buffer] [--follow-symlinks] [--unordered]\n"
++	   "             [--textconv | --filters]"),
++	N_("git cat-file (--textconv | --filters )\n"
++	   "             [<rev>:<path|tree-ish> | --path=<path|tree-ish> <rev>]"),
+ 	NULL
+ };
+ 
 -- 
 2.34.0.rc2.795.g926201d1cc8
 
