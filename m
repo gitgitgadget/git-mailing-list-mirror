@@ -2,123 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1410C433EF
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 14:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B044CC433EF
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 15:05:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B8F9660F0F
-	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 14:27:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9070F60EE2
+	for <git@archiver.kernel.org>; Fri, 12 Nov 2021 15:05:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235201AbhKLOaO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Nov 2021 09:30:14 -0500
-Received: from gateway30.websitewelcome.com ([192.185.179.30]:30494 "EHLO
-        gateway30.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S235211AbhKLOaN (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 12 Nov 2021 09:30:13 -0500
-X-Greylist: delayed 1283 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Nov 2021 09:30:13 EST
-Received: from cm13.websitewelcome.com (cm13.websitewelcome.com [100.42.49.6])
-        by gateway30.websitewelcome.com (Postfix) with ESMTP id 4CA9C2ADEE
-        for <git@vger.kernel.org>; Fri, 12 Nov 2021 08:05:58 -0600 (CST)
-Received: from box5922.bluehost.com ([162.241.30.80])
-        by cmsmtp with SMTP
-        id lXBmmbY2kG0jLlXBmmWELQ; Fri, 12 Nov 2021 08:05:58 -0600
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:MIME-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
-        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=jsqBFApZBo/oekxu6MbzfaOfLhWrulqDP2pQ1ijIF/U=; b=sdF76MAUI8sECoMY8H7Uw/+CEP
-        HKVgDjOosyjDmnfbenfV+4T2n7bK4imP0aSWPi2I68tcsXK8VbPRF3MVcf5mdPDGTN55wnUzf41Dy
-        VnQkbuHA23H2hNcf7SMRFlS4j;
-Received: from pool-96-233-64-159.bstnma.fios.verizon.net ([96.233.64.159]:44028 helo=pdslaptop.home.arpa)
-        by box5922.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1mlXBl-003DpR-WB; Fri, 12 Nov 2021 07:05:58 -0700
-Message-ID: <fd7946fac4e1e43b8fd9dbeb8cab22d83d7094a8.camel@mad-scientist.net>
-Subject: Re: bug report
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Theodore Li <teddy.litheodore@gmail.com>
-Cc:     git@vger.kernel.org
-Date:   Fri, 12 Nov 2021 09:05:56 -0500
-In-Reply-To: <CAHPjYFyH+GuBG8QNzD36JhoJWyNnEXfqpn4PUJV0ANF2ertYZg@mail.gmail.com>
-References: <CAHPjYFyzPpUmfoCbvaVg25ZbhkHU8QtxHBmAh2gdT++Xr38HcQ@mail.gmail.com>
-         <xmqq8rxuj8s8.fsf@gitster.g>
-         <CAHPjYFyH+GuBG8QNzD36JhoJWyNnEXfqpn4PUJV0ANF2ertYZg@mail.gmail.com>
-Organization: Please remain calm--I may be mad but I am a professional!
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5-0ubuntu1 
+        id S233793AbhKLPIt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Nov 2021 10:08:49 -0500
+Received: from mout.gmx.net ([212.227.17.20]:43341 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229843AbhKLPIs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Nov 2021 10:08:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1636729557;
+        bh=a26TB+7wVs+jUi9InDL2TnZuoZCorPLRQhb1z245Fpk=;
+        h=X-UI-Sender-Class:Date:To:From:Subject;
+        b=I02EeAxR1xLzs67LQ7dx7nbrfYZlBwo+xrTijvlMy2PAyEKPYAfKm+9yAeaOdSTp7
+         LaRIbw2d4utE4jvsa+vmm30ktIq7kODM4bZ5uzj58rLqhMPkyl+7AO7Kj19Kr6847u
+         pW87mE1tBHmpI1BZn980eObtWwjwX6tdw6pFtwB8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.14.2] ([109.64.190.68]) by mail.gmx.net (mrgmx105
+ [212.227.17.174]) with ESMTPSA (Nemesis) id 1MA7KU-1mrdk62lUw-00BemQ for
+ <git@vger.kernel.org>; Fri, 12 Nov 2021 16:05:56 +0100
+Message-ID: <04cbce68-bcbd-dbb2-5d9d-df7dd464fa03@gmx.com>
+Date:   Fri, 12 Nov 2021 17:05:55 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5922.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 96.233.64.159
-X-Source-L: No
-X-Exim-ID: 1mlXBl-003DpR-WB
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: pool-96-233-64-159.bstnma.fios.verizon.net (pdslaptop.home.arpa) [96.233.64.159]:44028
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTkyMi5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+To:     git@vger.kernel.org
+Content-Language: en-US
+From:   Eyal Rozenberg <eyalroz1@gmx.com>
+Subject: Feature request: Ability to edit existing tag's message
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:OgkwKX/LK94WLMnm5esooQHKa0xtlEf6YfUc5BuerfEbXC5aaid
+ gnfm5CzVxDpq3CG/6Wgmg/SOTtmD0lkoVl+SjcTOWy3iznj08VktR28S7mxUuSgJr3cOLTn
+ thJNn28Zo+c26oGCMdOgdztuLZpH0n30Q5lBDTiW/mxsqD2UDJ+TBn1TmpLs0WAohkbPiJ4
+ m2ySyS0FLKBhexDG/f6GQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:QjkGfRf/a2w=:XxEt5YcflleRL4yNMNS9Ru
+ vhUIbo83dQ6CDTCFyCl40f6+1f8N7ncvpJ0lwNoj3widxjt+2Eluoyhici1ffQLFvLaLY05X6
+ kH06B7/SmxwfS/VDfTMvKor2pjuQJnkvWVmmg6SzBqhCLTQfQ8LrUlz1e7SPQbgbRrcnmOmVP
+ ULP3LnFrFan6MytvMFHaifiYv78+peKMcm0oqwucYfhThtaTdlYGjJLmHeGVLnc68aLGPXDfR
+ yVcB7HlHw4kUseimH7XRLEHc2x/TRZ5WyAMB8V5pXhcqRGydF2H1IAGPnu8hCmC74Vqt6oDaZ
+ Dh1Q+QYOf0vxxwzFUCG3dWyZVlqF/dJlThu247fL66QtZQzE1LadzuryLjOZMpA6uQFm+rZLy
+ DK8zdAf2F868GbAPPAcvYA80RzYsY2TOSKj4yMcAXdqoJXx09v8Wj/00BK873aRBdWO6gcqcF
+ LnCySUbmR/FlC38DvHd3R7vnp2Amjiw27zXqH6bZxKaNASSgwkcuVf2pd6P4WSqtxpZhk2ZsO
+ 5dOtLOEq6unJ7IX8+lX/naRB5M9md0B4lHvrP/fGonLfd5RqOldp6IxlnV2lobnCV30/FXx/p
+ mtA19+hrigiA+yTggDdQFwkTXz7VlOVNL9PLANqXXFHc5L2GllAE7cKYZ9FMIXzH/WrvoALIR
+ YFJFdLDpofI3d8rDlJ7ePfJ1R4ZP7JpEZLAo05Df4SxSouluFSWMuQeFqdc9Fm4nrxHCWLXlN
+ zS8f4psuT+rXV0CMEzhm8jbzqx1D2vldVp5nfePsX0u0QaST0C31o34rtqRYxXgu/BR3DL/Kg
+ Gy3JNFWRO4gkFn8XVZW6cDmnUo1Lz0hIQJYjUoyHAtiIsPGEymrJd5/sG21vAmHO1QSrm7Py5
+ D2osZR9zlYqrr+1WD2wfkazNq0bnsaWhcWbZbTXhy2B5uiyHEQC/hJj59yPBRHJK2mEbg6N/e
+ SzvxkHwvZEZUHMtEuG3ZBgaPTFF3CMSsouSUpUavVP4TPyGuVGcxY6DWxwERWiSrvgp8lxEp3
+ sanVwl6diLTOQgE+haJCZPd6i2W1ZlDPr6pz7wNFrAa5EF7+DGjy89+7dk0m4s0vLrcQeIPxB
+ s2eGGYsF0tYXqs=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2021-11-12 at 01:59 -0500, Theodore Li wrote:
-> Yes, though other patterns like !/*/ don't need the quotes. I thought
-> it worked the same way without the quotes in earlier versions, but
-> after testing with version 2.32.0, it seems like the behavior is the
-> same. Guess I remembered wrong.
+At the moment, one has to go through some hoops to edit a tag's message;
+see discussions here:
 
-It's important to realize that in a POSIX-style shell (as you'll find
-on GNU/Linux or MacOS, or in the Git for Windows shell), wildcard
-expansion is performed _by the shell_ before the program is even
-invoked.  It's not performed by the program itself (in this case, Git).
+https://stackoverflow.com/q/7813194/1593077
 
-In a POSIX-style shell it works like this (by default): first the shell
-will try to expand the wildcards in your command line by matching them
-for files.  If any match, the wildcard expression is replaced on the
-command line.  If no files match, then the wildcard expression is
-passed to the command without change.
+It would be nice if:
 
-So if you run:
+    git tag --edit my_tag_name
 
-  git sparse-checkout /*
+would bring up the editor with the existing text of my_tag_name's
+message, for amendment. And, perhaps,
 
-then the shell will check if any files match the wildcard /*: since
-clearly you will get matches for this expression, they will be expanded
-and the shell will actually run:
+    git tag --edit my_tag_name -m "new message"
 
-  git sparse-checkout /bin /boot /cdrom /dev /...
+would overwrite the existing message. I've suggested `--edit` since the
+switch already exists, but if you like a different bikeshed then it
+could be --amend like git commit --amend.
 
-Note, Git does not receive any indication that there ever was a
-wildcard expression here!
 
-On the other hand if you run:
+Just my 2 cents and have a nice day,
+Eyal Rozenberg
 
-  git sparse-checkout /blah/*/blah
 
-(assuming you don't have any files on your system that match this
-wildcard) then it won't match and the shell will run:
-
-  git sparse-checkout /blah/*/blah
-
-Now Git can examine this wildcard and do an appropriate thing with it.
-
-In short, if you want to be _sure_ that a wildcard expression is passed
-to the command and not expanded by the shell, you must always quote it:
-
-  git sparse-checkout "/*"
-
-If you don't quote it then it may or may not do what you intended,
-depending on whether the wildcard happens to match any files.
-
+PS - I'm not on this mailing list, so if you want to reply, please use
+my actual address.
