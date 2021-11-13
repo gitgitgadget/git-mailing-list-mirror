@@ -2,94 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26257C4332F
-	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 08:06:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC333C43217
+	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 08:06:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E23C161179
+	by mail.kernel.org (Postfix) with ESMTP id CBEB461168
 	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 08:06:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235733AbhKMIHe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Nov 2021 03:07:34 -0500
-Received: from relay7-d.mail.gandi.net ([217.70.183.200]:36841 "EHLO
-        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230095AbhKMIHc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Nov 2021 03:07:32 -0500
+        id S235726AbhKMIFx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Nov 2021 03:05:53 -0500
+Received: from mslow1.mail.gandi.net ([217.70.178.240]:56173 "EHLO
+        mslow1.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230095AbhKMIFw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Nov 2021 03:05:52 -0500
+Received: from relay6-d.mail.gandi.net (unknown [217.70.183.198])
+        by mslow1.mail.gandi.net (Postfix) with ESMTP id DDFC2CAFF5
+        for <git@vger.kernel.org>; Sat, 13 Nov 2021 07:55:45 +0000 (UTC)
 Received: (Authenticated sender: me@yadavpratyush.com)
-        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id 5675620003;
-        Sat, 13 Nov 2021 08:04:37 +0000 (UTC)
-Date:   Sat, 13 Nov 2021 13:34:35 +0530
+        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 9FBC3C0005;
+        Sat, 13 Nov 2021 07:55:23 +0000 (UTC)
+Date:   Sat, 13 Nov 2021 13:25:20 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
 To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
 Cc:     git@vger.kernel.org, angavrilov@gmail.com
-Subject: Re: [RFC PATCH 4/4] track oid_size to allow for checks that are hash
- agnostic
-Message-ID: <20211113080435.54vs6ihljtkwcpe4@yadavpratyush.com>
+Subject: Re: [RFC PATCH 3/4] expand regexp matching an oid to be hash agnostic
+Message-ID: <20211113075520.vzy23i6b5kinaeob@yadavpratyush.com>
 References: <20211011121757.627-1-carenas@gmail.com>
- <20211011121757.627-5-carenas@gmail.com>
+ <20211011121757.627-4-carenas@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20211011121757.627-5-carenas@gmail.com>
+In-Reply-To: <20211011121757.627-4-carenas@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 11/10/21 05:17AM, Carlo Marcelo Arenas Belón wrote:
-> This allows commit to work.
-
-Please explain _why_ it allows commit to work.
-
+> Before this change, listing or blame will fail as it couldn't find the
+> OID in an SHA-256 repository.
 > 
 > Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 > ---
->  git-gui.sh     | 5 +++--
->  lib/commit.tcl | 3 ++-
->  2 files changed, 5 insertions(+), 3 deletions(-)
+>  lib/blame.tcl                | 8 ++++----
+>  lib/choose_repository.tcl    | 2 +-
+>  lib/remote_branch_delete.tcl | 2 +-
+>  3 files changed, 6 insertions(+), 6 deletions(-)
 > 
-> diff --git a/git-gui.sh b/git-gui.sh
-> index c0dc8ce..1646124 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -1821,10 +1821,11 @@ proc short_path {path} {
+> diff --git a/lib/blame.tcl b/lib/blame.tcl
+> index e6d4302..ee7db9d 100644
+> --- a/lib/blame.tcl
+> +++ b/lib/blame.tcl
+> @@ -436,7 +436,7 @@ method _load {jump} {
+>  			$i conf -state normal
+>  			$i delete 0.0 end
+>  			foreach g [$i tag names] {
+> -				if {[regexp {^g[0-9a-f]{40}$} $g]} {
+> +				if {[regexp {^g[0-9a-f]{40}(?:[0-9a-f]{24})?$} $g]} {
+>  					$i tag delete $g
+>  				}
+>  			}
+> @@ -513,7 +513,7 @@ method _history_menu {} {
+>  		set c [lindex $e 0]
+>  		set f [lindex $e 1]
 >  
->  set next_icon_id 0
->  if { [get_config extensions.objectformat] eq "sha256" } {
-> -	set null_oid [string repeat 0 64]
-> +	set oid_size 64
->  } else {
-> -	set null_oid [string repeat 0 40]
-> +	set oid_size 40
->  }
-> +set null_oid [string repeat 0 $oid_size]
+> -		if {[regexp {^[0-9a-f]{40}$} $c]} {
+> +		if {[regexp {^[0-9a-f]{40}(?:[0-9a-f]{24})?$} $c]} {
+>  			set t [string range $c 0 8]...
+>  		} elseif {$c eq {}} {
+>  			set t {Working Directory}
+> @@ -635,7 +635,7 @@ method _read_blame {fd cur_w cur_d} {
 >  
->  proc merge_state {path new_state {head_info {}} {index_info {}}} {
->  	global file_states next_icon_id null_oid
-> diff --git a/lib/commit.tcl b/lib/commit.tcl
-> index 11379f8..1306e8d 100644
-> --- a/lib/commit.tcl
-> +++ b/lib/commit.tcl
-> @@ -337,6 +337,7 @@ proc commit_committree {fd_wt curHEAD msg_p} {
->  	global file_states selected_paths rescan_active
->  	global repo_config
->  	global env
-> +	global oid_size
->  
->  	gets $fd_wt tree_id
->  	if {[catch {close $fd_wt} err]} {
-> @@ -356,7 +357,7 @@ proc commit_committree {fd_wt curHEAD msg_p} {
->  		close $fd_ot
->  
->  		if {[string equal -length 5 {tree } $old_tree]
-> -			&& [string length $old_tree] == 45} {
-> +			&& [string length $old_tree] == 5 + oid_size} {
-                                           ^ missing '$'
+>  	$cur_w conf -state normal
+>  	while {[gets $fd line] >= 0} {
+> -		if {[regexp {^([a-z0-9]{40}) (\d+) (\d+) (\d+)$} $line line \
+> +		if {[regexp {^([a-z0-9]{40}(?:[0-9a-f]{24})?) (\d+) (\d+) (\d+)$} $line line \
 
-I think you forgot to test this one ;-)
+Since we already have oid_size, why not use that to generate the regular 
+expression? That would make it much easier to add another hash of a 
+different length, and make the regex easier to understand.
 
->  			set old_tree [string range $old_tree 5 end]
->  		} else {
->  			error [mc "Commit %s appears to be corrupt" $PARENT]
+You can replace this with:
+
+	regexp "^(\[a-z0-9\]{$oid_size}) (\\d+) (\\d+) (\\d+)$"
+
+And since backslashes for escaping special string characters like '[', 
+which can make the regex harder to read, you can use
+
+	set exp [subst -nocommands -nobackslashes \
+		{^([a-z0-9]{$oid_size}) (\d+) (\d+) (\d+)$}]
+
+>  			cmit original_line final_line line_count]} {
+>  			set r_commit     $cmit
+>  			set r_orig_line  $original_line
+> @@ -648,7 +648,7 @@ method _read_blame {fd cur_w cur_d} {
+>  			set oln  $r_orig_line
+>  			set cmit $r_commit
+>  
+> -			if {[regexp {^0{40}$} $cmit]} {
+> +			if {[regexp {^0{40}(?:0{24})?$} $cmit]} {
+>  				set commit_abbr work
+>  				set commit_type curr_commit
+>  			} elseif {$cmit eq $commit} {
+> diff --git a/lib/choose_repository.tcl b/lib/choose_repository.tcl
+> index af1fee7..e864f38 100644
+> --- a/lib/choose_repository.tcl
+> +++ b/lib/choose_repository.tcl
+> @@ -904,7 +904,7 @@ method _do_clone_full_end {ok} {
+>  		if {[file exists [gitdir FETCH_HEAD]]} {
+>  			set fd [open [gitdir FETCH_HEAD] r]
+>  			while {[gets $fd line] >= 0} {
+> -				if {[regexp "^(.{40})\t\t" $line line HEAD]} {
+> +				if {[regexp "^([0-9a-fA-F]{40}(?:[0-9a-fA-F]{24})?)\t\t" $line line HEAD]} {
+>  					break
+>  				}
+>  			}
+> diff --git a/lib/remote_branch_delete.tcl b/lib/remote_branch_delete.tcl
+> index 5ba9fca..57bae9c 100644
+> --- a/lib/remote_branch_delete.tcl
+> +++ b/lib/remote_branch_delete.tcl
+> @@ -330,7 +330,7 @@ method _read {cache fd} {
+>  
+>  	while {[gets $fd line] >= 0} {
+>  		if {[string match {*^{}} $line]} continue
+> -		if {[regexp {^([0-9a-f]{40})	(.*)$} $line _junk obj ref]} {
+> +		if {[regexp {^([0-9a-fA-F]{40}(?:[0-9a-fA-F]{24})?)	(.*)$} $line _junk obj ref]} {
+>  			if {[regsub ^refs/heads/ $ref {} abr]} {
+>  				lappend head_list $abr
+>  				lappend head_cache($cache) $abr
 > -- 
 > 2.33.0.1081.g099423f5b7
 > 
