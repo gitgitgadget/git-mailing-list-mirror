@@ -2,178 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C87CCC433F5
-	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 07:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26257C4332F
+	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 08:06:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 998C560E08
-	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 07:11:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E23C161179
+	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 08:06:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230482AbhKMHOp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Nov 2021 02:14:45 -0500
-Received: from bsmtp3.bon.at ([213.33.87.17]:2889 "EHLO bsmtp3.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229487AbhKMHOp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Nov 2021 02:14:45 -0500
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4Hrmpw0BS1z5tlB;
-        Sat, 13 Nov 2021 08:11:51 +0100 (CET)
-Subject: Re: Possible merge bug
-To:     Michael Schiff <schiff.michael@gmail.com>
-Cc:     Saksham Mittal <saksham.mittal000@gmail.com>, git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-References: <CAJcz5TVsv20+FmHR67_UhL_7rhEGvfPHeP3RMiRtnSGAEKiwBg@mail.gmail.com>
- <5aa1fb67-6bd8-6de3-8271-369722b6ebef@gmail.com>
- <da873a08-c73a-cc30-6b7d-dd5cd3bacb22@gmail.com>
- <CAJcz5TXy37s=Ez-SwKHGS6ps_+oGSsyjXSVCC0=qnoPx2BE1QA@mail.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <5079b568-d86d-97a9-2561-25cafc6a490f@kdbg.org>
-Date:   Sat, 13 Nov 2021 08:11:51 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S235733AbhKMIHe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Nov 2021 03:07:34 -0500
+Received: from relay7-d.mail.gandi.net ([217.70.183.200]:36841 "EHLO
+        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230095AbhKMIHc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Nov 2021 03:07:32 -0500
+Received: (Authenticated sender: me@yadavpratyush.com)
+        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id 5675620003;
+        Sat, 13 Nov 2021 08:04:37 +0000 (UTC)
+Date:   Sat, 13 Nov 2021 13:34:35 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, angavrilov@gmail.com
+Subject: Re: [RFC PATCH 4/4] track oid_size to allow for checks that are hash
+ agnostic
+Message-ID: <20211113080435.54vs6ihljtkwcpe4@yadavpratyush.com>
+References: <20211011121757.627-1-carenas@gmail.com>
+ <20211011121757.627-5-carenas@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAJcz5TXy37s=Ez-SwKHGS6ps_+oGSsyjXSVCC0=qnoPx2BE1QA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211011121757.627-5-carenas@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.11.21 um 04:49 schrieb Michael Schiff:
-> This script includes an extra new-line, turing the final change into a
-> 2 line diff, which is caught correctly.  Modified to:
-> --- 8< ---
-> git --version --build-options
+On 11/10/21 05:17AM, Carlo Marcelo Arenas Belón wrote:
+> This allows commit to work.
+
+Please explain _why_ it allows commit to work.
+
 > 
-> rm -rf sample
-> mkdir sample
-> cd sample
-> git init
-> echo -e "a\nb\nc" > test
-> git add .
-> git commit -m "abc"
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+>  git-gui.sh     | 5 +++--
+>  lib/commit.tcl | 3 ++-
+>  2 files changed, 5 insertions(+), 3 deletions(-)
 > 
-> git branch b1
-> git switch b1
+> diff --git a/git-gui.sh b/git-gui.sh
+> index c0dc8ce..1646124 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -1821,10 +1821,11 @@ proc short_path {path} {
+>  
+>  set next_icon_id 0
+>  if { [get_config extensions.objectformat] eq "sha256" } {
+> -	set null_oid [string repeat 0 64]
+> +	set oid_size 64
+>  } else {
+> -	set null_oid [string repeat 0 40]
+> +	set oid_size 40
+>  }
+> +set null_oid [string repeat 0 $oid_size]
+>  
+>  proc merge_state {path new_state {head_info {}} {index_info {}}} {
+>  	global file_states next_icon_id null_oid
+> diff --git a/lib/commit.tcl b/lib/commit.tcl
+> index 11379f8..1306e8d 100644
+> --- a/lib/commit.tcl
+> +++ b/lib/commit.tcl
+> @@ -337,6 +337,7 @@ proc commit_committree {fd_wt curHEAD msg_p} {
+>  	global file_states selected_paths rescan_active
+>  	global repo_config
+>  	global env
+> +	global oid_size
+>  
+>  	gets $fd_wt tree_id
+>  	if {[catch {close $fd_wt} err]} {
+> @@ -356,7 +357,7 @@ proc commit_committree {fd_wt curHEAD msg_p} {
+>  		close $fd_ot
+>  
+>  		if {[string equal -length 5 {tree } $old_tree]
+> -			&& [string length $old_tree] == 45} {
+> +			&& [string length $old_tree] == 5 + oid_size} {
+                                           ^ missing '$'
+
+I think you forgot to test this one ;-)
+
+>  			set old_tree [string range $old_tree 5 end]
+>  		} else {
+>  			error [mc "Commit %s appears to be corrupt" $PARENT]
+> -- 
+> 2.33.0.1081.g099423f5b7
 > 
-> echo -e "b\na\nc" > test
-> git add .
-> git commit -m "bac"
-> 
-> git switch master
-> git branch b2
-> git switch b2
-> 
-> echo -e "b\nc\na" > test
-> git add .
-> git commit -m "bca"
-> 
-> git switch master
-> echo "----- Merging b1 -----"
-> git merge b1
-> cat test
-> echo "----- Merging b2 -----"
-> git merge b2
-> echo "----- Content of test -----"
-> cat test
-> --- 8< ---
-> 
-> The only meaningful difference being the removal of the trailing \n
-> from the first echo.  Running it produces the output:
-> 
-> git version 2.34.0.rc0.377.g6d82a21a3b
-> cpu: x86_64
-> built from commit: 6d82a21a3b699caf378cb0f89b6b0e803fc58480
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> hint: Using 'master' as the name for the initial branch. This default
-> branch name
-> hint: is subject to change. To configure the initial branch name to use in all
-> hint: of your new repositories, which will suppress this warning, call:
-> hint:
-> hint: git config --global init.defaultBranch <name>
-> hint:
-> hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
-> hint: 'development'. The just-created branch can be renamed via this command:
-> hint:
-> hint: git branch -m <name>
-> Initialized empty Git repository in /Users/michaelschiff/Desktop/sample/.git/
-> [master (root-commit) 8d6bc12] abc
->  1 file changed, 3 insertions(+)
->  create mode 100644 test
-> Switched to branch 'b1'
-> [b1 b5328d8] bac
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> Switched to branch 'master'
-> Switched to branch 'b2'
-> [b2 98603f6] bca
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> Switched to branch 'master'
-> ----- Merging b1 -----
-> Updating 8d6bc12..b5328d8
-> Fast-forward
->  test | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> b
-> a
-> c
-> ----- Merging b2 -----
-> Auto-merging test
-> Merge made by the 'ort' strategy.
->  test | 1 +
->  1 file changed, 1 insertion(+)
-> ----- Content of test -----
-> b
-> a
-> c
-> a
 
-There is no bug.
-
-Before the merge, the diff on our side is
-
-@@ -1,3 +1,3 @@
--a
- b
-+a
- c
-
-and the diff on their side is
-
-@@ -1,3 +1,3 @@
--a
- b
- c
-+a
-
-Notice how both sides remove the first line, '-a'. The diff algorithm
-treats this identical change on both sides not as a conflict, but simply
-as "both sides did the same thing, so let's take it". This leaves two
-changes: our side added 'a' in the middle and their side added 'a' at
-the end. Both changes are separated by a common context, 'c', which does
-not produce a conflict as desired. Hence, no conflict in total.
-
-There is one thing to notice, though. Our side turns 'abc' into 'bac',
-i.e., swaps the first two lines. There is no unique "true" patch text
-that represents a change that swaps two regions of code. It could be
-
-@@ -1,3 +1,3 @@
--a
- b
-+a
- c
-
-or
-
-@@ -1,3 +1,3 @@
-+b
- a
--b
- c
-
-Git's diff algrithm (and henceforth merge algorithm) happens to pick the
-first one in this case. Had it picked the second option, there would
-have been a conflict, I think ('-a' vs. '+b').
-
--- Hannes
+-- 
+Regards,
+Pratyush Yadav
