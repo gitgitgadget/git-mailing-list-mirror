@@ -2,139 +2,218 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26B21C433EF
-	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 17:00:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3E28C433EF
+	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 19:12:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 096CC6112F
-	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 17:00:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A035E60462
+	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 19:12:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235762AbhKMRDe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Nov 2021 12:03:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52780 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231912AbhKMRDd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Nov 2021 12:03:33 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA00BC061766
-        for <git@vger.kernel.org>; Sat, 13 Nov 2021 09:00:40 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id y84-20020a1c7d57000000b00330cb84834fso12336360wmc.2
-        for <git@vger.kernel.org>; Sat, 13 Nov 2021 09:00:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=S/Dq4YDnYmy1SHO+dodyfacojCXSs811xOZigQWR/Hg=;
-        b=Y1fB2ke8U6QvnzcpDl6lHOGH6ALMcEj8IAshpdUPSdEYjTOjDC0tTBXPAH85doy1VC
-         UAah/GknN4yMB574urwjjyUSIUHTphpx0ELb7FMECaITt7P/0QaPacihRyS2Y/iMwGti
-         5tVmEqXZdyJE8WyBVb9wyuxHM5DiUjYcFSjFxCU+al1rDeSnAKSzr8MpXmQv30qms2E1
-         lUVkNAEK7RRzl7vdSm1bvxRvJqxy/l4fYq7/UL8TW3uVRtSW3/aVeLlG2np/Ufnz0e9f
-         DcIIK3DI/HBUQcMmn4WYbz3I7HRUbMOwH/wkoQlohWodmAQW8uPS+xgxsxB+XccxApYc
-         OESA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=S/Dq4YDnYmy1SHO+dodyfacojCXSs811xOZigQWR/Hg=;
-        b=3tNG1D7tt2iAeBSLV/upP7t4bBLA/CHpVtni0SjT/UPjsublgzAF/Dmu2wITedPgVq
-         DKH48+kTYr2we7q2X2yHHFYfaqBqOHdHS95qU2EC6sZzqN4dnVZPDnl60GCDtueFSKrA
-         cA+Aflcnz+t0mkMTDd/+cRrVzbEXRG0i5ttLwP5L9dRZPb0Q9r3qXLK4/GVtXAh0cgSM
-         xUhncA0iRnkZD8rnpFoKbmZwNZYgHb/LGiRrKISyI14S02D2IU5fDj6ETVnWze10rYYn
-         Ll1ZUaPKSB/Vc+d2btotuugSDYgll2R7J61xKYhxeZOWfupNQ7rPfXxdtBUSx14NmSWl
-         axIQ==
-X-Gm-Message-State: AOAM531Plkf4z990xzcJzPwOQW2KkBnigEUsqEjhlnVI5qg2JQH6tMW9
-        FwulfkNc7NMPuKyOMcj6rUPoWbn4UyI=
-X-Google-Smtp-Source: ABdhPJzpfZrO5rTMOuqRPL4UrUYTvRZ2aO6yN9ZV3DTv7vX1JNmniNGngBgxg9aLvipTt+oxQDkGRA==
-X-Received: by 2002:a7b:c756:: with SMTP id w22mr27793950wmk.34.1636822838596;
-        Sat, 13 Nov 2021 09:00:38 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u23sm9682062wru.21.2021.11.13.09.00.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Nov 2021 09:00:38 -0800 (PST)
-Message-Id: <pull.1138.git.git.1636822837587.gitgitgadget@gmail.com>
-From:   "hakre via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 13 Nov 2021 17:00:37 +0000
-Subject: [PATCH] ci(check-whitespace): update stale file top comments
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S235918AbhKMTO0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Nov 2021 14:14:26 -0500
+Received: from avasout-peh-001.plus.net ([212.159.14.17]:56663 "EHLO
+        avasout-peh-001.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233692AbhKMTOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Nov 2021 14:14:25 -0500
+Received: from [10.0.2.15] ([147.147.167.109])
+        by smtp with ESMTPA
+        id lyQxmQuWWBpY6lyQymaCTZ; Sat, 13 Nov 2021 19:11:31 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1636830691; bh=eYXLgnyJyFp5/SHyvzEHBoTcvth1nYVQa1Sdm23J+P0=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=TeMVppMzBcJLEGb8an0l67PkxHaXxSWBJCMOFd8XMrVyt9rsAeMemH2rdvmpN6BwI
+         ElkL0Ixy8fEHWtq4vzwqzIFwoLQDB8iCgBXchARzoePym9QmHf/4hFofSUT2EuUHEZ
+         yw68yj4O1rGayXU87XlLdAfBbP8a4t2ve2l3viqTBKlAX2pbPf6FQX8W4bo6mTrKVP
+         qVtxe5DjgcNmSM65Pnau2mf9hVS/gGvoUvaGGBAa+3FqF41HF14vLOqUQTVnwwxn0Q
+         gqJwhFQR8W9MsCnnhSyaYNHN2e/MPFcUFUMlc9k5LJej+bdvpsLYqXyKKZ/I298WCi
+         dSS7x2564hzIg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=bsQvuGWi c=1 sm=1 tr=0 ts=61900de3
+ a=QdS5mZX/VJYKMdXaSBaSIA==:117 a=QdS5mZX/VJYKMdXaSBaSIA==:17
+ a=IkcTkHD0fZMA:10 a=A1X0JdhQAAAA:8 a=PfiV3Cz3MVd0BCe0S3gA:9 a=QEXdDO2ut3YA:10
+ a=Df3jFdWbhGDLdZNm0fyq:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2 7/7] t/helper/simple-ipc: convert test-simple-ipc to
+ use start_bg_command
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Adam Dinwoodie <adam@dinwoodie.org>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Carlo Arenas <carenas@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1040.git.1631738177.gitgitgadget@gmail.com>
+ <pull.1040.v2.git.1632152178.gitgitgadget@gmail.com>
+ <6b7a058284b93fab52458b12a6aede5e8aed6652.1632152179.git.gitgitgadget@gmail.com>
+ <20211104194619.GA12886@dinwoodie.org>
+ <nycvar.QRO.7.76.6.2111090051530.54@tvgsbejvaqbjf.bet>
+ <dca03da9-5684-10c7-2315-2d10affd4f0a@ramsayjones.plus.com>
+ <nycvar.QRO.7.76.6.2111092358240.54@tvgsbejvaqbjf.bet>
+ <xmqqee7ozyx4.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2111101324020.21127@tvgsbejvaqbjf.bet>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <02b6cfa8-bd0a-275d-fce0-a3a9f316ded3@ramsayjones.plus.com>
+Date:   Sat, 13 Nov 2021 19:11:27 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        hakre <hanskrentel@yahoo.de>, hakre <hanskrentel@yahoo.de>
+In-Reply-To: <nycvar.QRO.7.76.6.2111101324020.21127@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfJDDOoibqRnAsqOQgS54EYsZA27wS+tE2j+XwM8GH2iWgod5bXuj3ipCTtpeG5UrdwkvRmyia+otKScTrMkXgygRAAAYIOhKIt1znSQDIkoZ9NyQMEGD
+ CZLCkRaJDbtRxTYcvt9ECV0kH59cfQqwD42fgjDFiAfLcvVWr3RtQSdEJbhgW4bpkVtBA7CvBB17M3lCQ/IkuRup8NoxHYssgYY=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: hakre <hanskrentel@yahoo.de>
 
-Part of these two recent commits
 
-1. a066a90db6 (ci(check-whitespace): restrict to the intended commits,
-   2021-07-15)
-2. cc00362125 (ci(check-whitespace): stop requiring a read/write token,
-   2021-07-15)
+On 10/11/2021 12:27, Johannes Schindelin wrote:
+[snip]
+>> I cannot give the change any better test than they can, and it is
+>> their platform to improve, or break by accident while trying to do
+>> so.
+> 
+> Right. I tested this as well as I could, via the `--stress` option, and am
+> fairly confident that it is correct. Since the patch touches only
+> `simply-ipc` code, the only test that could possibly affected is t0052,
+> and it passes with `--stress` over here (when it failed without the
+> patch).
+> 
+> Ciao,
+> Dscho
+> 
+> P.S.: in case you wondered, no, I did not run the entire test suite. With
+> the performance characteristics of the POSIX emulation provided by the
+> Cygwin runtime, this would simply take too long. It's not the first time I
+> wish our test suite was more efficient, across _all_ supported platforms.
 
-are well written messages that reflect the changes (compare: [1]).
 
-Unfortunately those commits left the description in top file comments
-unchanged which are still showing the previous picture.
+[I seem to have lost Adam's reply about this now being Hunky-Dory, but ...]
 
-To better display the current workflow upfront, those comments now
-reflect that:
+I ran the test-suite on -rc2 on thursday night (note _not_ rc2 + this patch)
+and it deadlocked on me; I didn't notice for 4 hours, so (in the early hours)
+I simply Ctl+C-ed it and went to bed. I haven't had the test-suite deadlock
+for many many years - I've been spoilt! ;-)
 
-1. full (not shallow) clone to steadily check the intended commits
-2. communicated result is the exit status (not a comment in the PR)
+I tried -rc2 again last night; this time it finished, but I gained another
+test failure: t0301-credential-cache.sh. I have _never_ had this test fail
+before, so that was unexpected. :(
 
-[1]: https://git-scm.com/docs/SubmittingPatches#describe-changes
-CC: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: hakre <hanskrentel@yahoo.de>
----
-    ci(check-whitespace): update stale file top comments
-    
-    Part of these two recent commits
-    
-     1. a066a90db6 (ci(check-whitespace): restrict to the intended commits,
-        2021-07-15)
-     2. cc00362125 (ci(check-whitespace): stop requiring a read/write token,
-        2021-07-15)
-    
-    are well written messages that reflect the changes (compare: 1
-    [https://git-scm.com/docs/SubmittingPatches#describe-changes]).
-    
-    Unfortunately those commits left the description in top file comments
-    unchanged which are still showing the previous picture.
-    
-    To better display the current workflow upfront, those comments now
-    reflect that:
-    
-     1. full (not shallow) clone to steadily check the intended commits
-     2. communicated result is the exit status (not a comment in the PR)
-    
-    Signed-off-by: hakre hanskrentel@yahoo.de
+[Yes, t0052-simple-ipc.sh failed as expected, since this patch was not
+applied].
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1138%2Fhakre%2Fpatch-1-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1138/hakre/patch-1-v1
-Pull-Request: https://github.com/git/git/pull/1138
+Also, I was half expecting a small speed-up due to the new pipe code in
+v3.3.2 of the cygwin dll, but it actually took an hour longer than normal. :(
 
- .github/workflows/check-whitespace.yml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The only change to my setup, between -rc1 and -rc2, was the cygwin update
+to v3.3.2, so this may point to some more fallout from the new pipe code
+(maybe?).
 
-diff --git a/.github/workflows/check-whitespace.yml b/.github/workflows/check-whitespace.yml
-index 8c4358d805c..2dce03bc479 100644
---- a/.github/workflows/check-whitespace.yml
-+++ b/.github/workflows/check-whitespace.yml
-@@ -1,8 +1,8 @@
- name: check-whitespace
- 
--# Get the repo with the commits(+1) in the series.
-+# Get the repo with all commits to steady catch the series.
- # Process `git log --check` output to extract just the check errors.
--# Add a comment to the pull request with the check errors.
-+# Give status 2 on check errors.
- 
- on:
-   pull_request:
+Anyway, I haven't even looked at the new failure (see below), which we will
+probably not have time to fix before release, so I am just now building
+current master (v2.34.0-rc2-16-g5a73c6bdc7) to give that a try. (So, I won't
+have anything to report until tomorrow).
 
-base-commit: 5fbd2fc5997dfa4d4593a862fe729b1e7a89bcf8
--- 
-gitgitgadget
+Just FYI:
+
+  $ ./t0301-credential-cache.sh
+  ...
+  not ok 13 - socket defaults to ~/.cache/git/credential/socket
+  #
+  #               test_when_finished "
+  #                       git credential-cache exit &&
+  #                       rmdir -p .cache/git/credential/
+  #               " &&
+  #               test_path_is_missing "$HOME/.git-credential-cache" &&
+  #               test_path_is_socket "$HOME/.cache/git/credential/socket"
+  #
+  ...
+  not ok 26 - use custom XDG_CACHE_HOME if set and default sockets are not created
+  #
+  #               test_when_finished "git credential-cache exit" &&
+  #               test_path_is_socket "$XDG_CACHE_HOME/git/credential/socket" &&
+  #               test_path_is_missing "$HOME/.git-credential-cache/socket" &&
+  #               test_path_is_missing "$HOME/.cache/git/credential/socket"
+  #
+  not ok 27 - credential-cache --socket option overrides default location
+  #
+  #               test_when_finished "
+  #                       git credential-cache exit --socket \"\$HOME/dir/socket\" &&
+  #                       rmdir \"\$HOME/dir\"
+  #               " &&
+  #               check approve "cache --socket \"\$HOME/dir/socket\"" <<-\EOF &&
+  #               protocol=https
+  #               host=example.com
+  #               username=store-user
+  #               password=store-pass
+  #               EOF
+  #               test_path_is_socket "$HOME/dir/socket"
+  #
+  not ok 28 - use custom XDG_CACHE_HOME even if xdg socket exists
+  #
+  #               test_when_finished "
+  #                       git credential-cache exit &&
+  #                       sane_unset XDG_CACHE_HOME
+  #               " &&
+  #               check approve cache <<-\EOF &&
+  #               protocol=https
+  #               host=example.com
+  #               username=store-user
+  #               password=store-pass
+  #               EOF
+  #               test_path_is_socket "$HOME/.cache/git/credential/socket" &&
+  #               XDG_CACHE_HOME="$HOME/xdg" &&
+  #               export XDG_CACHE_HOME &&
+  #               check approve cache <<-\EOF &&
+  #               protocol=https
+  #               host=example.com
+  #               username=store-user
+  #               password=store-pass
+  #               EOF
+  #               test_path_is_socket "$XDG_CACHE_HOME/git/credential/socket"
+  #
+  not ok 29 - use user socket if user directory exists
+  #
+  #               test_when_finished "
+  #                       git credential-cache exit &&
+  #                       rmdir \"\$HOME/.git-credential-cache/\"
+  #               " &&
+  #               mkdir -p "$HOME/.git-credential-cache/" &&
+  #               chmod 700 "$HOME/.git-credential-cache/" &&
+  #               check approve cache <<-\EOF &&
+  #               protocol=https
+  #               host=example.com
+  #               username=store-user
+  #               password=store-pass
+  #               EOF
+  #               test_path_is_socket "$HOME/.git-credential-cache/socket"
+  #
+  not ok 30 - use user socket if user directory is a symlink to a directory
+  #
+  #               test_when_finished "
+  #                       git credential-cache exit &&
+  #                       rmdir \"\$HOME/dir/\" &&
+  #                       rm \"\$HOME/.git-credential-cache\"
+  #               " &&
+  #               mkdir -p -m 700 "$HOME/dir/" &&
+  #               ln -s "$HOME/dir" "$HOME/.git-credential-cache" &&
+  #               check approve cache <<-\EOF &&
+  #               protocol=https
+  #               host=example.com
+  #               username=store-user
+  #               password=store-pass
+  #               EOF
+  #               test_path_is_socket "$HOME/.git-credential-cache/socket"
+  #
+  ok 31 - helper (cache --timeout=1) times out
+  # failed 6 among 31 test(s)
+  1..31
+  $
+  
+ATB,
+Ramsay Jones
