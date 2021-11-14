@@ -2,114 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76619C433EF
-	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 20:38:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D87ECC433F5
+	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 00:30:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F7E460C49
-	for <git@archiver.kernel.org>; Sat, 13 Nov 2021 20:38:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A858C61026
+	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 00:30:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233692AbhKMUlC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Nov 2021 15:41:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43506 "EHLO
+        id S233544AbhKNAdq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Nov 2021 19:33:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232203AbhKMUlB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Nov 2021 15:41:01 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6924FC061766
-        for <git@vger.kernel.org>; Sat, 13 Nov 2021 12:38:08 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id n33-20020a05600c502100b0032fb900951eso7313537wmr.4
-        for <git@vger.kernel.org>; Sat, 13 Nov 2021 12:38:08 -0800 (PST)
+        with ESMTP id S229988AbhKNAdp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Nov 2021 19:33:45 -0500
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E13AC061766
+        for <git@vger.kernel.org>; Sat, 13 Nov 2021 16:30:52 -0800 (PST)
+Received: by mail-qt1-x829.google.com with SMTP id q14so12062678qtx.10
+        for <git@vger.kernel.org>; Sat, 13 Nov 2021 16:30:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=gWOwGe93U9cpzbtpfLHB2ohkK0wiUnDVeC7k6mMq6xw=;
-        b=jyXX/B2ARViyMqTDbF9I3ixOWxWbqzQqWqHmx0RJ1bfb42NDiMQ2gWth8PgbxdGIYj
-         SbE4Bxliha0sXUbfB7qaE4+phI2jQYV3fqvGlXzgGPB8Q1i2YIGBrboXDzDCiSMBzrSh
-         p56WH4dahead1redZZiuBvSA97Hdu6iMt8WAEHYSrdlX6iKmderRJVZDJtv02Gl6xlNt
-         dRxOFm5o5qAk16ejuUy8Spaj04M28fmeKYGkQzp1T9eWABBxAuW5v2DcnYWqTJs2x3uE
-         aOlO9rTeubZs7ydRol1mhTYhEG9dRZ2M4g3JRPPfIM+BVk8nZw6b3BTFXL2R5+nftoFh
-         NSGw==
+        d=likai.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e0s1QYi01m+5Uq3INePpuMXCoSZJihp0H1e3IpLN0ss=;
+        b=QFMO9ekzmf23HNdHW0IU9d6U9bc/eNPg5xCK8X6FIiYF8ZiHpMIn/iO/NgOI9cxKq4
+         vGiVcQW4M8lh5gqn25bnRJexVdxgZgmcrMMoSwgsnGA22C5VPeDGoPV6iyp2OVunA1Pi
+         9WkIBPmHdf03YNnEQ0/ipmhE8F6EjTwsanse8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=gWOwGe93U9cpzbtpfLHB2ohkK0wiUnDVeC7k6mMq6xw=;
-        b=XP+3+aJw6/xaVzGIMgVtFjDbhCCy+1PsRdVh8cw6DwvKK+AUycT46L4zmuAxZrf7FW
-         +ZLQTru7YzgMn0rTPH9auCzUszHrlV956KCeSMZvM9/R24x+I6pdipL+hSv+8mSDRnrX
-         bAMaswt1UCll8bOZYw4aH5a8VsKxRfLWYkXkuAJpnmOfdLk2TK5KT5xbBcDE61zu92IA
-         MiMU8h+DNSL2rXSL8M0WyhkUYrn+70/JZ+69zCPkreCbDM3vvUvU5Quv+yXelOtLWITz
-         QPq9r7rjGtE2Gxf+MUfCvgMjGvbcFuivQWx+uOEK2cBk1TdNmWSU1jtTJLeE3z4FRPTk
-         2HBg==
-X-Gm-Message-State: AOAM5310Y6ST4ZIg4SM9XflnGiTq7tL8/JrrB7DANebg6ITo+gNyJH6B
-        zPoWMoPZoKAOBw2dFy2ORtMjM8nKb54=
-X-Google-Smtp-Source: ABdhPJxNl7rEaGFjtHtY/3uXgsnOeJx6thc/5kZsb5/TYOek6+N/6KA+TqGFY5y1tyXPGPM7kf2A0g==
-X-Received: by 2002:a05:600c:2189:: with SMTP id e9mr45639828wme.35.1636835886423;
-        Sat, 13 Nov 2021 12:38:06 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c11sm13072149wmq.27.2021.11.13.12.38.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Nov 2021 12:38:06 -0800 (PST)
-Message-Id: <pull.1077.git.1636835885198.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 13 Nov 2021 20:38:05 +0000
-Subject: [PATCH] SubmittingPatches: fix Asciidoc syntax in "GitHub CI" section
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e0s1QYi01m+5Uq3INePpuMXCoSZJihp0H1e3IpLN0ss=;
+        b=JVrtGJEUqz1fDMLBwKb32rJ43GlJSe225pzxNa0Vj9FjOhI1/W/vDaDH+ne/vgDtmn
+         PpatR2WJCrlD0aZDNbPuSOO0U0eBp6tNcpqUW4KKmxa+nNWY0xUyvE3uJtnnw8jYPX7P
+         MUMtHtItUPVXE4S+lDF73ftnvVfUAma95Qrfa0OV2cmQLdjgzMhUX3v+pXfPp2rJFPUI
+         B0tQdOJSjcxRWzM/cgJGCEI7SDZ+ZwGfYlTD/FhOx071NkuhtMduSX0je36st950bg9i
+         b8QfnCuXtxw6sSVFOIJ1xEHi9uKX5q2Lc//N3l2xZpgskojvzllq4nMqS3uu7AIGvH4b
+         N7bQ==
+X-Gm-Message-State: AOAM531ynH8MwkBMWt5pcFIwVJyG13RCwJE1Y9dn1Nz6AJcKgZmhLO6w
+        rt+9BDZi+YXGupJqHKp2tiPDWu9cd6ZBTQ==
+X-Google-Smtp-Source: ABdhPJxOnbtSFaIJY5WWtWZzVNKWtCK7JfAjSsHw6Fk1jF4SannL/iJ3mhHpdQiPDjnx5XPeRlIIsg==
+X-Received: by 2002:a05:622a:20d:: with SMTP id b13mr28337678qtx.368.1636849850840;
+        Sat, 13 Nov 2021 16:30:50 -0800 (PST)
+Received: from localhost.localdomain ([2001:470:1f07:e5c:1115:4332:fcff:7e98])
+        by smtp.gmail.com with ESMTPSA id u11sm4850347qko.119.2021.11.13.16.30.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 13 Nov 2021 16:30:50 -0800 (PST)
+From:   Likai Liu <liulk@likai.org>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Likai Liu <liulk@likai.org>
+Subject: [PATCH] git-gui--askpass implements SSH_ASKPASS_PROMPT
+Date:   Sat, 13 Nov 2021 20:30:26 -0400
+Message-Id: <20211114003026.4894-1-liulk@likai.org>
+X-Mailer: git-send-email 2.30.1 (Apple Git-130)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+SSH_ASKPASS_PROMPT is a new behavior introduced in OpenSSH 8.2 for
+prompting U2F touch.
 
-A superfluous ']' was added to the title of the GitHub CI section in
-f003a91f5c (SubmittingPatches: replace discussion of Travis with GitHub
-Actions, 2021-07-22). Remove it.
+  - When unset/empty, this is used to input passphrase as before.
+  - When set to "confirm", allows the user to OK or Cancel.
+  - When set to "none", only shows a message.
 
-While at it, format the URL for a GitHub user's workflow runs of Git
-between backticks, since if not Asciidoc formats only the first part,
-"https://github.com/<Your", as a link, which is not very useful.
-
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+Signed-off-by: Likai Liu <liulk@likai.org>
 ---
-    SubmittingPatches: fix Asciidoc syntax in "GitHub CI" section
+ git-gui/git-gui--askpass | 70 +++++++++++++++++++++++++++++-----------
+ 1 file changed, 52 insertions(+), 18 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1077%2Fphil-blain%2Fsubmitting-patches-asciidoc-fix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1077/phil-blain/submitting-patches-asciidoc-fix-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1077
-
- Documentation/SubmittingPatches | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index e409022d938..11e03056f2e 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -448,7 +448,7 @@ their trees themselves.
-   entitled "What's cooking in git.git" and "What's in git.git" giving
-   the status of various proposed changes.
+diff --git a/git-gui/git-gui--askpass b/git-gui/git-gui--askpass
+index 71a536d232..7d4bda8f31 100755
+--- a/git-gui/git-gui--askpass
++++ b/git-gui/git-gui--askpass
+@@ -4,6 +4,21 @@ exec wish "$0" -- "$@"
  
--== GitHub CI[[GHCI]]]
-+== GitHub CI[[GHCI]]
+ # This is a trivial implementation of an SSH_ASKPASS handler.
+ # Git-gui uses this script if none are already configured.
++#
++# When SSH_ASKPASS_PROMPT is unset or empty, we show a message
++# promot, a text input, an option to show the input, and the OK and
++# Cancel buttons.  If the prompt explicitly asks for (yes/no) as the
++# answer, the input will be checked to be either "yes" or "no".
++#
++# When SSH_ASKPASS_PROMPT=confirm, we only show the message and the OK
++# and Cancel buttons without the text input.
++#
++# When SSH_ASKPASS_PROMPT=none, we only show the message.  This is
++# typically to prompt for U2F touch, which cannot be dismissed.  We
++# will get SIGTERM once touched.  The exit status is inconsequential.
++#
++# See: https://www.openssh.com/txt/release-8.2
++# See also: notify_start() and notify_complete() in readpass.c
  
- With an account at GitHub, you can use GitHub CI to test your changes
- on Linux, Mac and Windows. See
-@@ -463,7 +463,7 @@ Follow these steps for the initial setup:
+ package require Tk
  
- After the initial setup, CI will run whenever you push new changes
- to your fork of Git on GitHub.  You can monitor the test state of all your
--branches here: https://github.com/<Your GitHub handle>/git/actions/workflows/main.yml
-+branches here: `https://github.com/<Your GitHub handle>/git/actions/workflows/main.yml`
+@@ -11,10 +26,22 @@ set answer {}
+ set yesno  0
+ set rc     255
  
- If a branch did not pass all test cases then it is marked with a red
- cross. In that case you can click on the failing job and navigate to
-
-base-commit: 5a73c6bdc717127c2da99f57bc630c4efd8aed02
++if {[info exists ::env(SSH_ASKPASS_PROMPT)]} {
++	set mode $::env(SSH_ASKPASS_PROMPT)
++} else {
++	set mode {}
++}
++switch $mode {
++	confirm {}
++	none {}
++	default {set mode {}}
++}
+ if {$argc < 1} {
+ 	set prompt "Enter your OpenSSH passphrase:"
+ } else {
+ 	set prompt [join $argv " "]
++}
++if {$mode eq {}} {
+ 	if {[regexp -nocase {\(yes\/no\)\?\s*$} $prompt]} {
+ 		set yesno 1
+ 	}
+@@ -23,9 +50,6 @@ if {$argc < 1} {
+ message .m -text $prompt -justify center -aspect 4000
+ pack .m -side top -fill x -padx 20 -pady 20 -expand 1
+ 
+-entry .e -textvariable answer -width 50
+-pack .e -side top -fill x -padx 10 -pady 10
+-
+ proc on_show_input_changed {args} {
+ 	global show_input
+ 	if {$show_input} {
+@@ -34,27 +58,37 @@ proc on_show_input_changed {args} {
+ 		.e configure -show "*"
+ 	}
+ }
+-trace add variable show_input write "on_show_input_changed"
+ 
+-set show_input 0
++if {$mode eq {}} {
++	entry .e -textvariable answer -width 50
++	pack .e -side top -fill x -padx 10 -pady 10
+ 
+-if {!$yesno} {
+-	checkbutton .cb_show -text "Show input" -variable show_input
+-	pack .cb_show -side top -anchor nw
++	trace add variable show_input write "on_show_input_changed"
++
++	set show_input $yesno
++
++	if {!$yesno} {
++		checkbutton .cb_show -text "Show input" -variable show_input
++		pack .cb_show -side top -anchor nw
++	}
+ }
+ 
+-frame .b
+-button .b.ok     -text OK     -command finish
+-button .b.cancel -text Cancel -command cancel
++if {$mode ne {none}} {
++	frame .b
++	button .b.ok     -text OK     -command finish
++	button .b.cancel -text Cancel -command cancel
+ 
+-pack .b.ok -side left -expand 1
+-pack .b.cancel -side right -expand 1
+-pack .b -side bottom -fill x -padx 10 -pady 10
++	pack .b.ok -side left -expand 1
++	pack .b.cancel -side right -expand 1
++	pack .b -side bottom -fill x -padx 10 -pady 10
+ 
+-bind . <Visibility> {focus -force .e}
+-bind . <Key-Return> [list .b.ok invoke]
+-bind . <Key-Escape> [list .b.cancel invoke]
+-bind . <Destroy>    {set rc $rc}
++	if {$mode eq {}} {
++		bind . <Visibility> {focus -force .e}
++	}
++	bind . <Key-Return> [list .b.ok invoke]
++	bind . <Key-Escape> [list .b.cancel invoke]
++}
++bind . <Destroy> {set rc $rc}
+ 
+ proc cancel {} {
+ 	set ::rc 255
 -- 
-gitgitgadget
+2.30.1 (Apple Git-130)
+
