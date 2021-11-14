@@ -2,234 +2,350 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27629C433F5
-	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 17:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58702C433EF
+	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 17:42:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F013660FE7
-	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 17:17:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C0AA61027
+	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 17:42:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235272AbhKNRU1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Nov 2021 12:20:27 -0500
-Received: from out03.mta.xmission.com ([166.70.13.233]:33582 "EHLO
-        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229725AbhKNRUS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Nov 2021 12:20:18 -0500
-Received: from in01.mta.xmission.com ([166.70.13.51]:45458)
-        by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1mmJ85-007fOg-O3; Sun, 14 Nov 2021 10:17:21 -0700
-Received: from ip68-227-160-95.om.om.cox.net ([68.227.160.95]:44736 helo=email.froward.int.ebiederm.org.xmission.com)
-        by in01.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1mmJ84-008yaG-Ei; Sun, 14 Nov 2021 10:17:21 -0700
-From:   ebiederm@xmission.com (Eric W. Biederman)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git List Mailing <git@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Oleg Nesterov <oleg@redhat.com>,
-        Al Viro <viro@zeniv.linux.org.uk>,
-        Kees Cook <keescook@chromium.org>,
-        Linux API <linux-api@vger.kernel.org>
-References: <878ry512iv.fsf@disp2133>
-        <CAHk-=wivLcb3ELGSf=fM0u=PxP5m1=jRrVXDOr0+QJZRZggaHg@mail.gmail.com>
-        <871r3uy2vw.fsf@disp2133>
-        <CAHk-=wh8v4OC=9rjFs-QH0evVrGQu+wCVL5gE8Y-uTvqh42XNA@mail.gmail.com>
-        <xmqqbl2nmemx.fsf@gitster.g>
-Date:   Sun, 14 Nov 2021 11:16:32 -0600
-In-Reply-To: <xmqqbl2nmemx.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
-        13 Nov 2021 22:32:06 -0800")
-Message-ID: <87pmr2k68f.fsf@email.froward.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S235272AbhKNRlX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Nov 2021 12:41:23 -0500
+Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:46831 "EHLO
+        wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229725AbhKNRlW (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 14 Nov 2021 12:41:22 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id 32C3E32009DB;
+        Sun, 14 Nov 2021 12:38:26 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Sun, 14 Nov 2021 12:38:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=from
+        :to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm3; bh=zEsuyLnllRGic7k0TSvV00eKHN
+        eR0g5GXhwIriYmORM=; b=Q03iqMEJE5GKFO49dy24FXR5c6DQD8o+IT2fZBiUcK
+        phBn/mw2zFG1WlUDM5fhGyPJ1F4nKQrLjsSaYvFErcooxfpuuiSU45NuMbR3ex0A
+        F3/6YtCDQ0Ltxyi3D/rWJtutsiVpUAq5wKonWb2ZpSGK9KFiHzeBPSGRs3CFPR3W
+        WbAqeokPTwLFKr7de2vAwe9bPWCS++V4fdOcQ9BkDXPlTy0ETb10hgMvTNmk9yzH
+        c4l68wN0Ecb7P3Vx2lThEsTntS9dZQ04NrWX2J3/RE7dTUrvMxiLsGRbE5avrhpm
+        jM+9Rf4130tGiDpnRsFGlpmnSjii9jd1wwiFKe2V78Lg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=zEsuyLnllRGic7k0T
+        SvV00eKHNeR0g5GXhwIriYmORM=; b=RWYsYi0r5uoZ+0tiCj0s+/VgRGz9sWcqq
+        GVeHGbbY/OMI7zLbgFEvZjZqJMS6wFHZu7I9j6krnWGb1y4Xgz1hbYW//Y46GjtA
+        WFNSm8MAtquxhMWBhhjVocRBG88Qq/BbZTf1eYKNMTpR3K5M5p+hD/w1IYkzWRTZ
+        OuTzZn4OjqTx/l3KKRwa54lhYvVWljE28TxnfEolHCN/jIaLDEJRsA2AyKQb7SN9
+        D3eJLlf6BbJQFohjqLEYbhBb+5P59CxoQFtopFgT450DQRTOUEiJB+63umhxEHMK
+        yUW9SQm0GByPyD+e5HHeTC/+JcqYBgX1rL6ZTzUEo4Dv+jeGzGYmA==
+X-ME-Sender: <xms:kUmRYS952p6PyT3d7z4LyaFH59Js8unnBeEZ5eoiW0pnD4q2ZcqNPg>
+    <xme:kUmRYSvvL63zmMrsUzdb9fLytmGnayJVaudFuUvjfmTVdePnXJujZCBRSWG5YhKN_
+    Mqg7_A0a0Drm7hmoQ>
+X-ME-Received: <xmr:kUmRYYDPTYt9U8GRnYDjxtTgEDEJsdIjldTvId6UJbsOd2EHidcwrfQSUKcLPToOdvBB>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrvdejgddutddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
+    dttdenucfhrhhomhephfgvrhhnrghnughoucftrghmohhsuceoghhrvggvnhhfohhosehu
+    ledvrdgvuheqnecuggftrfgrthhtvghrnhepgfeifeduheegudehfeevfffhffelieefte
+    effeehgeeileekuefhgeegueethfeinecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdp
+    phgrshhtvggsihhnrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepghhrvggvnhhfohhosehuledvrdgvuh
+X-ME-Proxy: <xmx:kUmRYafFcccYn--u1EPIij-vq_TiuWgGdSCrRmsQxAYKcuJpmMEIoQ>
+    <xmx:kUmRYXP2PGfar7QoUpI-q0tqiVByqoLWvgHawekfIMu_eeJpjACqYA>
+    <xmx:kUmRYUndSicgpSh64kxI0moMvMOf0pIUUbkFILhWxXnn2GVp1sLMGw>
+    <xmx:kUmRYS32fVvDW_FdOvWyAgwzaMqftnRX08fKpF9CaD7vIBuq9RfPxQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 14 Nov 2021 12:38:23 -0500 (EST)
+From:   Fernando Ramos <greenfoo@u92.eu>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, davvid@gmail.com, sunshine@sunshineco.com,
+        seth@eseth.com, levraiphilippeblain@gmail.com,
+        rogi@skylittlesystem.org
+Subject: [PATCH v2 0/2] vimdiff: new layout option + docs
+Date:   Sun, 14 Nov 2021 18:38:18 +0100
+Message-Id: <20211114173820.687467-1-greenfoo@u92.eu>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-SPF: eid=1mmJ84-008yaG-Ei;;;mid=<87pmr2k68f.fsf@email.froward.int.ebiederm.org>;;;hst=in01.mta.xmission.com;;;ip=68.227.160.95;;;frm=ebiederm@xmission.com;;;spf=neutral
-X-XM-AID: U2FsdGVkX1+gE1TiU4PxLTZNvixOtm/bc/InDopdMBY=
-X-SA-Exim-Connect-IP: 68.227.160.95
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-Subject: Re: [GIT PULL] per signal_struct coredumps
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+A few weeks ago I presented this RFC [1] where I introduced a new variant of the
+vimdiff merge tool ("vimdiff4") that creates three tabs (instead of just one)
+that look like this:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
->
->> The basic issue is how to sanely keep track of a cover letter when you
->> have a branch that you haven't sent out yet, but will ask somebody to
->> pull. It may still be seeing more testing and development before that
->> pull happens, though.
->>
->> This very much smells of what the "branch description" is all about, but
->>
->>  (a) I suspect "git branch --edit-description" is not very well known
->
-> True.
->
->
->>  (b) it works well with "git request-pull", but not so much some other
->> things (like copying it into a signed tag)
->
-> I think that is just a matter of programming ;-)
->
->>  (c) it makes an unholy mess of your config file if you actually use
->> it for extensive explanations (branch descriptions _work_ for
->> multi-line messages, but it really was designed as a one-liner thing).
->
-> Not, really.
->
-> The "-m" option similar to "commit/tag" is deliberately omitted and
-> use of editor is forced, to encourage better than one-liner
-> information.  cf. b7200e83 (branch: teach --edit-description option,
-> 2011-09-20).
->
-> The unholy mess is true if you are in the habit of editing .git/config
-> in your editor, but that is to be expected if you are storing multi
-> paragraph description as a value of a configuration variable.
->
->>  (d) it doesn't work across repositories (ie multiple developers or
->> even just a single developer on multiple machines).
->
-> This is the biggest issue.
->
->> IOW, the "branch description" is _kind_ of the right thing, but not really.
->
-> Having said all that, quite honestly, as the inventor of the
-> "--edit-description", I did it as sort of a joke, and not a serious
-> "feature".
->
->> An empty commit would do it as well, but an empty commit very easily
->> gets lost (git rebase etc). The fake merge does have similar issues.
->
-> These days, I think rebase distinguishes between "an empty commit
-> that is deliberately empty from the beginning" and "a commit that
-> was not empty, but because we are applying on a new base, it has
-> become unnecessary and empty", and we can tell the command to drop
-> the latter while keeping the former.  So if I were to design a
-> recommended workflow (and add any missing workflow elements), it
-> would be:
->
->  - You develop your N-patch series on a branch;
->
->  - You conclude with an empty commit that records your cover letter
->    material.
->
->  - "git commit" may want to learn a new option that automatically
->    prepares summary of the last N patches in the commit log
->    editor, and the option should imply the "--allow-empty" option.
->    That would help when editing such an empty commit that will
->    become the cover letter.
->
->  - You repeatedly "rebase -i", "cherry-pick", etc. to whip your
->    branch into shape.
->
->  - You can push and fetch such a branch among your machines and your
->    group.
->
->  - "git format-patch" may want to recognize that the topmost commit
->    is an empty commit, and use that as the seed material for the
->    cover letter.
->
->  - If your project's pull request requires a signed tag with cover
->    letter material, "git tag -s" may want to learn a new option to
->    be fed such a branch with N-patch plus the topmost empty commit,
->    and tag the last real commit in the topic (i.e. the parent of the
->    topmost empty commit) with material taken from the topmost empty
->    commit.
-
-I think an empty commit at the top of a development branch sounds
-like a nice place to store the cover letter for a set of changes.
-That is a related problem but that is not the problem that inspired
-the no-op merge commits.
+    ------------------------------------------
+    | <TAB #1> |  TAB #2  |  TAB #3  |       |
+    ------------------------------------------
+    |             |           |              |
+    |   LOCAL     |   BASE    |   REMOTE     |
+    |             |           |              |   <---- Same information
+    ------------------------------------------         presented by the
+    |                                        |         "standard" vimdiff
+    |                MERGED                  |         merge tool
+    |                                        |
+    ------------------------------------------
+    
+    ------------------------------------------
+    |  TAB #1  | <TAB #2> |  TAB #3  |       |
+    ------------------------------------------
+    |                   |                    |
+    |                   |                    |
+    |                   |                    |
+    |     BASE          |    LOCAL           |   <---- Only differences
+    |                   |                    |         between BASE and
+    |                   |                    |         LOCAL are shown
+    |                   |                    |
+    ------------------------------------------
+    
+    ------------------------------------------
+    |  TAB #1  |  TAB #2  | <TAB #3> |       |
+    ------------------------------------------
+    |                   |                    |
+    |                   |                    |
+    |                   |                    |
+    |     BASE          |    REMOTE          |   <---- Only differences
+    |                   |                    |         between BASE and
+    |                   |                    |         REMOTE are shown
+    |                   |                    |
+    ------------------------------------------
 
 
+The motivation behind this was that, for non-trivial merges, the three way diff
+presented in the first tab tends to be very confusing and in these cases
+indivial diffs between BASE and LOCAL and between BASE and REMOTE are very
+useful.
 
-I have not seen addressed the workflow that actually inspired this
-odd thing I am doing.  So let me see if I can describe the problem
-that inspired the merge commit more clearly.
+I have been using a "custom" merge tool for months to achieve this same result
+by adding these lines to my .gitconfig file:
 
-Before the merge window for v5.17 I expect to be working on
-a topic I will loosely call "do_exit_coredumps_and_signals".
+  [mergetool "supermerge"]
+        cmd = vim -f -d -c \"4wincmd w | wincmd J | tabnew | edit $LOCAL | vertical diffsplit $BASE | tabnew | edit $REMOTE | vertical diffsplit $BASE | 2tabprevious\" \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"$MERGED\"
+        trustExitCode = true
 
-There are going to be several changesets (something like):
-"Move coredumps rendezvous into get_signal"
-"Use the same exit code in all implementations of die"
-"Use signal short circuit delivery for coredumps"
-"Use signal short circuit delivery whenever possible"
-"Replace do_exit with a different helper for use by die"
+...and, because I found this "trick" very useful, I thought it would be a good
+idea to add it as a git built-in merge tool (called "vimdiff4" because  1, 2 and
+3 had already been taken) for everyone to use... and that's exactly what the RFC
+I published did.
 
-Each of those will consist of 5-10 patches and need to be individually
-reviewed and depend upon each other.  In the roughly 2 months of
-development time before v5.17 I can expect to get several of those
-changesets.  Each changeset will depend upon the work of the changeset
-before.
+Now... as you can see in the RFC thread [1], David and Juno suggested that
+maybe, instead of creating *yet another vimdiff variant*, we should take this
+opportunity to:
 
-As each changeset is reviewed and finalized I expect I will put it on
-the topic branch with a merge commit containing the description letter.
-That merge commit will contain a "Link:" tag to the posting on the
-mailing list so that people can find the full description.
+  * Come up with a more general way of defining arbitrary vim layouts.
+  
+  * Re-implement "vimdiff1", "vimdiff2" and "vimdiff3" using this new mechanism
+    (after all, the only difference among them is that they present different
+    layouts to the user)
 
-When put into the topic branch after review the commits are frozen
-and ready to be sent to Linus for merging, when the next merge window
-opens.
+  * Add documentation to all of this.
 
+And the result of that work is what I'm presenting today :)
 
+Some things I would like to mention:
 
+  1. There are three commits in this patch series:
 
-When the development window closes and the merge window opens I will run
-"git shortlog" see what is there and write up a description for the
-entire topic branch.  Ideally I will put that into a signed tag etc
-before I send it to Linus.
+     - The first one implements the logic to generate new arbitrary layouts and
+       also re-defines "vimdiff1", "vimdiff2" and "vimdiff3" on top of it.
 
-In the case that triggered this conversation I happened to only have a
-single changeset with a single merge commit in the topic branch which
-looks very odd, but that is mot definitely not the case I want to
-optimize for.
+     - The second one adds documentation. It is probably a good idea to start
+       reviewing this commit before the first one!
 
+     - The last commit *is not meant to be merged now*. It removes "vimdiff1",
+       "vimdiff2" and "vimdiff3", which is something that should only be done
+       after one or two releases with a deprecation notice and only if everyone
+       agrees to do so :)
 
-The changes I am making are digging through some old grotty areas of the
-kernel.  It isn't uncommon for me to be fixing issues that predate git.
-So it takes some sleuthing and description so that other people can see
-what is going on in each of those changes.  So I want to preserve the
-description of what and what is going on with those changesets as
-much as possible.
+  2. "mergetools/vimdiff" is now a ~800 lines bash script, but most of it is
+     documentation (which is embedded in the tool itself for easier maintenance)
+     and unit tests.
+     I have only tested it with bash, but I've tried not to use any command not
+     already being used somewhere else, so I expect it to work in the same
+     places it was working before (however, let me know if there are some shell
+     compatibility requirements and I'll try to check them).
 
-A big rollup into a single description for Linus of the entire topic
-branch is necessary, but will generally not contain all of the detail of
-the cover letters for the patch sets.
+  3. Regarding unit tests, "mergetool/vimdiff" contains instructions on how to
+     run them (just call the script without arguments after making changes, to
+     make sure you didn't break anything).
+     Right now it prints "OK" on all test cases (obviously) [2]
 
-I need something like a merge commit rather than an empty commit so
-that both the start and the end of the series of changes is shown.
+  3. The "git {diff,merge}tool --tool-help" command now also prints the
+     documentation for each tool (instead of just its name, as before).
+     You can see an example of the output here ([3] and [4])
 
-Notes probably don't work because I want the description of what is
-going to persist and be available to "git log".  So that the next poor
-sucker who touches the code can have a change of figuring out what
-I was thinking.
+Finally, let me say that, while I like what this patch series achieves, I would
+also *completely* understand if you decide not to merge it due to being a
+complex solution to a simple problem that can be solved (as I had been doing up
+until today) by just adding three line to one's .gitconfig.
 
-If I have just one fake-merge I would not mind if request-pull or
-something incorporated it, but with several I am most definitely going
-to need to edit the message so it is at the 10,000 foot view of the
-entire topic branch, and not at the nitty gritty view of a single patch
-set.
+  [mergetool "supermerge"]
+        cmd = vim -f -d -c ...(custom complex sequence of vim commands)...
+        trustExitCode = true
 
+Let me know what you think.
 
-There was only a single changeset in the branch that caused this because
-I am making what is remotely possibly a breaking change and I need to
-get it into a released code base to verify that I am not breaking
-anyone.  If I don't need to revert that change then there are very
-substantial cleanups I can make in the kernel.   So all of the
-additional changesets have to wait until v5.16 is released before I can
-ask Linus to pull them.
+Thanks.
 
-Which meant during this one development cycle I was not able to build
-one changeset on top of another changeset because one of the changes is
-something of a risk.  That is a degenerate case of my normal expected
-work-flow.
+References:
+
+  [1] https://lore.kernel.org/git/20211019212020.25385-1-greenfoo@u92.eu/#r
+  [2] https://pastebin.com/kuQ5pETG
+  [3] https://pastebin.com/yvLWxeiM
+  [4] https://pastebin.com/qNc7qymp
 
 
-Eric
+New in v2:
+
+  * Remove deprecation of vimdiff{1,2,3} (they will remain for backwards
+    compatibility, but built on top of the new generic layout mechanism)
+
+  * Remove unnecessary "IFS="
+
+  * Replace DEBUG --> GIT_MERGETOOL_VIMDIFF_DEBUG
+
+  * Stop using "local" (turns out it was not necessary)
+
+  * Stop using bash arrays (use arrays of variables instead)
+
+  * Stop using bash substring expansion (use a new "substring" function
+    instead).
+
+  * Refactor some of the internal loops to make the code faster. This was needed
+    because the two previous changes (specially the one where I stop using
+    "substring expansion") slowed down the script to a point where I had to wait
+    for a few *seconds* before the "layout" string was resolved (recursion +
+    bash forks are a recipe for sluggishness). Fortunately we are back to the
+    low hundreds of milliseconds range.
+
+  * Change markers:
+    - File to save: * --> @
+    - New tab     : ; --> +
+    - Vert split  : | --> ,
+    - Horz split  : - --> /
+
+  * Rewrite examples to use as many parenthesis as possible (typically zero)
+    and better explain operators priority.
+
+  * Other fixes to remove problems reported by "shellcheck --shell=sh" (which
+    checks syntax agains the POSIX shell spec)
+
+  * Rename "index_..." vars to make more obvious what they do.
+
+  * Use "$" inside arithmetic expressions $((...))
+    NOTE: "shellcheck" issues a warning stating that "$" is not needed inside
+    arithmetic expressions.
+
+  * Use "test -n" instead of "! test -z"
+
+  * Use "=" instead of "==" in "test"
+
+  * Use "= 0" instead of "-eq 0"
+
+  * Do not use "eval" nor "--" when copying a file to MERGED
+
+  * Do not use "-o" with grep
+
+  * Use <<-\EOF instead of <<\ENDOFMESSAGE and remove extra indent in "here
+    docs".
+
+  * Also, let me put here some answers to questions made in the replies to
+    version v1 of this patch set:
+
+    > What do backticks do in here?
+    >
+    >     some_var=(
+    >         `# Name`       "Rick Deckard"
+    >         `# Age`        "Unknown"
+    >         `# Occupation` "Blade runner"
+    >     )
+
+    The backticks execute the code inside, which is a comment (everything after
+    a "#" is considered a comment by the shell), thus it does nothing.
+
+    The `# ...` trick can be used to insert inline comments in bash. Another
+    example:
+
+        $ ls -l `# long format` -h `# human readable` *.txt
+
+    In any case, as you can see in this new revision, because I'm no longer
+    using bash arrays, this trick to comment each test case is not needed
+    anymore.
+
+    > Why is "eval" needed here:
+    >
+    >     eval "$merge_tool_path" \
+    >              -f "$FINAL_CMD" "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
+
+    Variable "$FINAL_CMD" contains a string that looks like this:
+
+        $ echo $FINAL_CMD
+        -c "vim cmd 1 | vim cmd 2 | ..." -c "tabfirst"
+
+    We need to call "vim" exactly like that, but if we do this...
+
+         $ vim $FINAL_CMD
+
+    ...then "vim" will be excev'ed with the following arguments:
+
+        1. -c
+        2. "vim
+        3. cmd
+        4. 1
+        ...
+
+    ...instead of the desired scenario:
+
+       1. -c
+       2. cmd 1 | cmd 2 | ...
+       3. -c
+       4. tabfirst
+
+     Using "eval" fixes this. A shorter example shows how this works:
+
+         $ A="1 \"2 3\""
+
+         $ ls $A
+         ls: cannot access '1': No such file or directory
+         ls: cannot access '"2': No such file or directory
+         ls: cannot access '3"': No such file or directory
+
+         $ eval ls $A
+         ls: cannot access '1': No such file or directory
+         ls: cannot access '2 3': No such file or directory
+
+  * Finally, I think I have addressed all comments to v1 *except for two
+    things*:
+
+        1. Moving the documentation to "Documentation/" instead of having it
+           embedded inside the "mergetools/vimdiff" script.
+
+        2. Move unit tests to the "test suit"
+
+    For (1) I would like more details. Is the idea not to print any
+    documentation when running "git mergetool --tool-help" and have all the
+    details included in "git help mergetool" instead?
+    Right now "git help mergetool" does not mention any tool specific details
+    and, instead, redirects the user to "git mergetool --tool-help" (that's why
+    I originally placed the new documentation there).
+    In any case, all the doc has been placed on its own commit, so once we
+    decide how to proceed its just a matter of reverting it.
+
+    For (2) I still need to investigate how this is done and prepare a "v3" if
+    needed :)
+
+
+Fernando Ramos (2):
+  vimdiff: new implementation with layout support
+  vimdiff: add tool documentation
+
+ git-mergetool--lib.sh |  14 +
+ mergetools/vimdiff    | 820 ++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 809 insertions(+), 25 deletions(-)
+
+
+base-commit: 5a73c6bdc717127c2da99f57bc630c4efd8aed02
+-- 
+2.33.1
+
