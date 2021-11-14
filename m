@@ -2,108 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59991C433EF
-	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 19:07:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E723CC433EF
+	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 19:34:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F13B6112E
-	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 19:07:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA63360F42
+	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 19:34:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236127AbhKNTKf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Nov 2021 14:10:35 -0500
-Received: from ring.crustytoothpaste.net ([172.105.110.227]:42750 "EHLO
-        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231128AbhKNTKW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Nov 2021 14:10:22 -0500
-X-Greylist: delayed 596 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Nov 2021 14:10:22 EST
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 0DB9C5D403;
-        Sun, 14 Nov 2021 18:57:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1636916247;
-        bh=qFh9MM5chIWXlLoouU5amlXIowu9MAscbJkza4R8nQU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Od+IeSOI2vdQNuJ+VI+p3kLd+OCAYVEG4WzWDeAGcBujBciTzMlsSS8faLitX2ZNV
-         6X4MkZkJI66/cCtfq12JWmdMUdkIPCRgOeyYxdRmkFabcjXhaNH97WmZRrRI+BO8mU
-         wXjXj2Kr2obfJ+nv5zk9dOCaOa9ml1+W37T7DBhPADtQY/Fno6jufOhGjsGpDeuO5O
-         xEvkOTEllHylaqCvkrtMnPeSuKHPBzOoSBWccdvVRZKQrDYuAlSdtl3Vv55z3AkKlf
-         qhxQIBzT06vcmaEh66NuQoxW4hLQIOJX3er6JpdVjh04i3foqv8hEIt6wb06OIExn0
-         S+yBMusyr/Wi4moS2+OqbH+laI8WI91IgMRY++cki8AtLmUZshdtWJ5ezR/Sdf5LWt
-         LuAyttHu5I6sGweRbO3xzClQGLpkXpE5/0AFGz+8toAlcUI+e7QEgtv9PdH3KTvWjb
-         FfdqUmL1PPf7JZMvGAD1CLumJ7pXId2SQuDnT8QPvjAY2rmUIsM
-Date:   Sun, 14 Nov 2021 18:57:25 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Is 'for (int i = [...]' bad for C STD compliance reasons?
-Message-ID: <YZFa3YDe1/a6uZod@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20211113122833.174330-1-gotlouemail@gmail.com>
- <20211113130508.zziheannky6dcilj@gmail.com>
- <2b2386b9-045d-a0b8-6dbc-8a9d0c446bea@gmail.com>
- <xmqq7ddbme7q.fsf@gitster.g>
- <211114.868rxqu7hr.gmgdl@evledraar.gmail.com>
- <xmqqilwulims.fsf@gitster.g>
- <211114.86zgq6si94.gmgdl@evledraar.gmail.com>
+        id S236153AbhKNTgx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Nov 2021 14:36:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57012 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233136AbhKNTgm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Nov 2021 14:36:42 -0500
+Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C5DDC061746
+        for <git@vger.kernel.org>; Sun, 14 Nov 2021 11:33:43 -0800 (PST)
+Received: by mail-ua1-x933.google.com with SMTP id az37so30311157uab.13
+        for <git@vger.kernel.org>; Sun, 14 Nov 2021 11:33:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=511qZtGGZCfs5FKQYqDLhYai8vrFrUepcP6RKX/PRso=;
+        b=CsMTmbJqE5F7+R3I23W1btBBZZ0nlzAQGpUtciHmhmG54di2E5oISUdCKEYxVEMDuL
+         PK2jk5tMf50gCcxStrTqU7f+VeGllbUx2Uu+Va7aTlJa8D+6G2PJcnEnGmtKSK4o0n2r
+         kQWyDqUCxx+3exxMrfHjSCSfJN6I8pdHk67P0rxZy64FT52Ii3WnUfy6o6R+viwNtIjg
+         ihspX/VzpjHwn2g8TqEW2Vxo7WqYkCP0OdKxtXkN9QavTAPxeL4zmlPzJj89gAoqapyP
+         BnhnfN5ElUzoHpJXWTc5nH8I6q/n4JCHfIiEmrcExi6oebkC6g7EuGz75XR7g0rAA9NI
+         o9eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=511qZtGGZCfs5FKQYqDLhYai8vrFrUepcP6RKX/PRso=;
+        b=vegCGuwHYplY4Uq3JZyq2Hw+wNRINmQI+VlA9HwMHf2iKtqwOmOLBuUtjHSiYUTD7l
+         P46lCWzvYmHjbrdWGrG7tKVykACOktx+UQa9Up8q80SLbQpzhSUfwDGltAjZj41fzFdP
+         TsevCURrUfaomWa6GO3EcY2zDbegPuNrCWbe0eVtPYwKozrgmQv3w2sxOg4kYjkzRPrI
+         XJuHbcHWqvvUufSpHs6sEGMlM7PbhCRhFbo+zaXZsBLDSO9m4hiSXxkFK/pAHG3L7ygr
+         nk+qPTFx/tc2QrJJXag8pdnu2IoXjbVUZgmYp+zWSpngDA3gnd3PxIxE3q3N6kQCfeTz
+         qPVQ==
+X-Gm-Message-State: AOAM533v0AfcpS8LoSaIq4yE/BoQOvvocpaX0XCxKJjjbxc9X+HohOeY
+        3QTLZ9zg0t9dUi9ehQXuuzHcLVeAwPuL8eGPzik=
+X-Google-Smtp-Source: ABdhPJxEdib51rjvdhQu75p9dBsEOqAtmNPG+wMDkBvtevwCVyuPVuyAj6OSSppeN4ZuoiJwpadtC82bzAOFkQLfpqc=
+X-Received: by 2002:ab0:66cd:: with SMTP id d13mr50088309uaq.140.1636918422432;
+ Sun, 14 Nov 2021 11:33:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="XuXDoLDWz82yHmpu"
-Content-Disposition: inline
-In-Reply-To: <211114.86zgq6si94.gmgdl@evledraar.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+References: <20211113122833.174330-1-gotlouemail@gmail.com>
+ <20211113130508.zziheannky6dcilj@gmail.com> <2b2386b9-045d-a0b8-6dbc-8a9d0c446bea@gmail.com>
+ <xmqq7ddbme7q.fsf@gitster.g> <211114.868rxqu7hr.gmgdl@evledraar.gmail.com>
+ <xmqqilwulims.fsf@gitster.g> <211114.86zgq6si94.gmgdl@evledraar.gmail.com> <YZFa3YDe1/a6uZod@camp.crustytoothpaste.net>
+In-Reply-To: <YZFa3YDe1/a6uZod@camp.crustytoothpaste.net>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Sun, 14 Nov 2021 11:33:31 -0800
+Message-ID: <CAPUEspgLU2oeh3dG0TeF6OJR9o8Q3HAXRBJSxE6-aUa_u1upxw@mail.gmail.com>
+Subject: Re: Is 'for (int i = [...]' bad for C STD compliance reasons?
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Nov 14, 2021 at 11:08 AM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> MSVC recently learned C11, but I haven't fooled around with our CI
+> enough recently to see if I can get it to use C11.  I'll try to play
+> around some more.
 
---XuXDoLDWz82yHmpu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The last 2 releases support C17, but I think that is only using the
+universal crt which is not what git for windows link with and might
+not be available by default (10 or later feature) in all windows
+versions they target as well.
 
-On 2021-11-14 at 18:25:31, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> The issue on CentOS 6 isn't one of incompatibility with C99, but that
-> the version of GCC refuses to compile C99 code without -std=3Dc99 or
-> -std=3Dgnu99. See [1] downthread of one of your links.
->=20
-> But yes, it would be the first C99 feature where we have a known
-> compiler that needs an opt-in -std=3D* option to support the C99 feature,
-> I think.
+Carlo
 
-Yeah, as I've mentioned in the past, the impediment to C99 features is
-MSVC.  All Unix compilers support it because it's obligatory for POSIX
-1003.1-2001, and they have for some time, even if it's not the default
-behavior.
-
-MSVC recently learned C11, but I haven't fooled around with our CI
-enough recently to see if I can get it to use C11.  I'll try to play
-around some more.
-
-I should also point out that CentOS 6 is now EOL and not receiving
-security updates, and as such it shouldn't be a consideration in what we
-do and don't support.  I think providing 10 years of support for an OS
-in our project is already exceedingly generous, and most other projects
-don't do so.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---XuXDoLDWz82yHmpu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYZFcFQAKCRB8DEliiIei
-gQJiAP9Mme007RrSOr8DyQjqtGeggChDu5NuygpoU7ghsvjJnAEA3xcrOL50SWqh
-tJwUD4D/1+uKk6vUhTwgyTuz3nfwFwk=
-=Oboh
------END PGP SIGNATURE-----
-
---XuXDoLDWz82yHmpu--
+PS. no Windows expert at all, and I am sure more authoritative answers
+will come along, just wanted to let you know to probably avoid wasting
+your time with the CI
