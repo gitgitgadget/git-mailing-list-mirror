@@ -2,209 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 232FEC433EF
-	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 12:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20F4FC433F5
+	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 14:39:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0588D610A8
-	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 12:30:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9FBE60ED7
+	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 14:39:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235186AbhKNMc5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Nov 2021 07:32:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49816 "EHLO
+        id S229959AbhKNOmL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Nov 2021 09:42:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233868AbhKNMc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Nov 2021 07:32:56 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91020C061746
-        for <git@vger.kernel.org>; Sun, 14 Nov 2021 04:29:56 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id gf14-20020a17090ac7ce00b001a7a2a0b5c3so10691001pjb.5
-        for <git@vger.kernel.org>; Sun, 14 Nov 2021 04:29:56 -0800 (PST)
+        with ESMTP id S229563AbhKNOmJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Nov 2021 09:42:09 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCA53C061746
+        for <git@vger.kernel.org>; Sun, 14 Nov 2021 06:39:14 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id x15so59785830edv.1
+        for <git@vger.kernel.org>; Sun, 14 Nov 2021 06:39:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=zGBEHymChBI3FMIb0tp2xTuDk8i+5o3lVXNO09E0Yko=;
-        b=N/VcWOi5W1SBSBjrPr2CxRCa6D5xQYbSr/MEra0F55S9cNyJ2vjqgYRkG6TGFhoWnQ
-         w05u2B0u44kxtX8UTS6AaEI3BrvGWX5BUSM8MSgXExoPlEKhYcm4UWxVi2L9K5xX53CR
-         MaqjSTHZEowu0/GD5GjRjZO6eC5GEL5lQUvS2B/SfVFdMEppMPOp0gqRjnJNNO1XJkYn
-         +HYKV+cAlFhZoPucg+xMF7kcbDPunPsEvsKT7XuHmUPZ0lWBRpjbn/3r01owtQaJBJ6S
-         q0XRB1uOoWK4O6g7lJwgCTBHkKnVuXl/uYF1AnNo2yhX35Ffi0fXhwPzwJcvdkOqbpgA
-         dlmQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=Cl4TqK+xaYp4IzBN7UXyhFefwGiYMeUVXoF7L1jwP+E=;
+        b=G1ovTlonXTfIUA1jYMTjsmkFfWEPsmBST6NM2Le8qy0oY/V+aidpQBOelKgVW5yDaj
+         77EI4TWfa8Vri8rrlP4C8ZoA66TSJz0lUUUotimkGAoARmtAtKGIAAIkDU1QAK9/AzjD
+         ugg31/IO7yZAsgTHVh3cPpZetGvUTp7IAIdnMOAf19Sf9/1k+jO5ynT9cY7O34ME7gI/
+         QouudESfI1tQzToggEkcHlJjOzwvoi/gauPIZ4iuUAO77/0ioV7glJCHXwgtQWpRNNCl
+         QIJxuSAl9A66U9PBY9vdYRfCKaTqeNQa05aA40swiLVzEA1PzNd9EDyj9LLy1RyYkYvU
+         eMGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=zGBEHymChBI3FMIb0tp2xTuDk8i+5o3lVXNO09E0Yko=;
-        b=YP5bHD4rs3O0N383zvd/aUCohxPHKjI4Wb/E1IT8DAL8bCCnC7dY5ajuQxW+oAY8tl
-         61Kyc+G0MeKnrgrjx4iXEofq+Q3awCa2OBAkXOyqXx0hPJbOlqKAttVo/fH/rvKXx6zq
-         +klLSvaSQUfmxY8O5mnJ+nQaI5HVrEYOy90EOib27Hffnn/7OWbShSayO5CNAOGu3fQx
-         DcTk858by/KWBX9VodRkglnWqzpwvPdXI5TBgmxhUWyIjUU3y5Pb77EHfsUyChRFNKeQ
-         dGEMibvOd5pi4Cl6DN1OWp62OHS2rtj8eI//YMfHc9H5ArH1fQcvWR5YfYjLKQf+EZi2
-         6EGg==
-X-Gm-Message-State: AOAM5313Avr1YNiygaCaKZXT73j/2GidsfHEFklrHxru37bGziV0Jvvj
-        Tnxc4DmGAyXrIctEeQClkwg=
-X-Google-Smtp-Source: ABdhPJxNHuFcAZ75xjiA5OIeHTzWBquAQjOlKcCML7vxmvGxFlWQpshCVhSSQCSVgMQZCu8p2/jlsA==
-X-Received: by 2002:a17:90a:c297:: with SMTP id f23mr54826501pjt.138.1636892996047;
-        Sun, 14 Nov 2021 04:29:56 -0800 (PST)
-Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id y18sm9485843pgh.18.2021.11.14.04.29.54
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 14 Nov 2021 04:29:55 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Git l10n discussion group <git-l10n@googlegroups.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <daniel@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
-        Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [GIT PULL] l10n updates for 2.34.0 round 3
-Date:   Sun, 14 Nov 2021 20:29:52 +0800
-Message-Id: <20211114122952.11564-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=Cl4TqK+xaYp4IzBN7UXyhFefwGiYMeUVXoF7L1jwP+E=;
+        b=1GhOxyyfr3eGHzUrPnIKDUHHRkTMbjfLI8+ETuZovJABHWxqZdl9OfM5KZj/kt8+kq
+         fWcWtiTAURDyg1dJdvQgIXVlIbEMRXatfhDoR16VY0GmLATmJZvur9q6gT7gYqr7nh8F
+         z17NeDmWCm4eYi+0V/OiFWsu5fppK/BiLm5+mAWGyXnccXXL9h4JH8fBeLcdkeRUCO8b
+         ks6SCLFeIRD9lmSK2D9aKToWQHWBinzIEE6WsRJ7ntOb/UtT4a7PuKkW10zxOPxuvNfL
+         oDHhbmPWJmZA/8Of+Xf4lu+ureCGN8C6kPerrUwtX70H4fcarS6w/zfJg8Sq4FcQft+0
+         sPcA==
+X-Gm-Message-State: AOAM533xvKS5cwmw03aA9d4k9piFkaWZPwsp8JK+ShQdl0stAOnQfBLI
+        T9Z9+88ah2RpnPQl8gmhgldIUZwAKwc=
+X-Google-Smtp-Source: ABdhPJx/wyYG75gHfdLMETpyV/qeanoiSz3VmC0cI27zln6I3DC5zBLTGOGnRLQbERYtTw2lP0Zavw==
+X-Received: by 2002:a17:907:724f:: with SMTP id ds15mr38606345ejc.204.1636900753136;
+        Sun, 14 Nov 2021 06:39:13 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id p3sm5107704ejy.94.2021.11.14.06.39.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 14 Nov 2021 06:39:12 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mmGf2-000neQ-6m;
+        Sun, 14 Nov 2021 15:39:12 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Saksham Mittal <gotlouemail@gmail.com>,
+        Johannes Altmanninger <aclopte@gmail.com>, git@vger.kernel.org
+Subject: Is 'for (int i = [...]' bad for C STD compliance reasons? (was:
+ [PATCH] MyFirstContribution.txt: fix undeclared variable i in sample code)
+Date:   Sun, 14 Nov 2021 15:28:35 +0100
+References: <20211113122833.174330-1-gotlouemail@gmail.com>
+ <20211113130508.zziheannky6dcilj@gmail.com>
+ <2b2386b9-045d-a0b8-6dbc-8a9d0c446bea@gmail.com>
+ <xmqq7ddbme7q.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <xmqq7ddbme7q.fsf@gitster.g>
+Message-ID: <211114.868rxqu7hr.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-Please pull the following l10n updates for Git 2.34.0.
+On Sat, Nov 13 2021, Junio C Hamano wrote:
 
-The following changes since commit 6c220937e2b26d85920bf2d38ff2464a0d57fd6b:
+> Saksham Mittal <gotlouemail@gmail.com> writes:
+>
+>>> It is declared, there is an "int i;" a few lines up.
+>>
+>> Oh, man, I never even saw that! The patch is completely unnecessary
+>> then. Sorry for that!
+>
+> No need to say sorry; you'd want to be a bit more careful next time,
+> that's all.
+>
+> Also, our code does not introduce a new variable in the first part
+> of "for (;;)" loop control, so even if the original lacked decl for
+> "i", the posted patch is not how we write our code for this project.
 
-  Git 2.34-rc2 (2021-11-09 13:19:51 -0800)
+Just curious: Out of preference, or for compatibility with older C
+standards?
 
-are available in the Git repository at:
+I'd think with the things we depend on in C99 it's probable that we
+could start using this if standards conformance is the only obstacle.
 
-  git@github.com:git-l10n/git-po.git tags/l10n-2.34.0-rnd3
+But I haven't tested, so maybe I'm wrong, I'm just assuming that with
+the C99 features we do have a hard dependency on surely anyone
+implementing those would have implemented this too.
 
-for you to fetch changes up to 5a0724ad3ec51d8f75cf139c4d82dbcf55766b9d:
+There's also a stylistic reason to avoid this pattern, i.e. some would
+argue that it's better to declare variables up-front, since it tends to
+encourage one to keep function definitions smaller (various in-tree
+evidence to the contrary, but whatever).
 
-  l10n: it: fix typos found by git-po-helper (2021-11-14 19:40:41 +0800)
+I'd generally agree with that viewpoint & desire, but there's also cases
+where being able to declare things in-line helps readability, e.g. when
+your function needs two for-loops for some reason, they're set a bit
+apart. Then the reader doesn't need to scan for whether an "i" is used
+in-between the two.
 
-----------------------------------------------------------------
-l10n-2.34.0-rnd3
+I was thinking of the below code in bundle.c, I suppose some might find
+the post-image less readable, but I remember starting to hunt around for
+other out-of-loop uses of "i", which the post-image makes clear could be
+avoided as far as variable scoping goes:
 
-----------------------------------------------------------------
-Alexander Shopov (3):
-      l10n: bg.po: Updated Bulgarian translation (5230t)
-      l10n: bg.po: Updated Bulgarian translation (5210t)
-      l10n: bg.po: Updated Bulgarian translation (5211t)
-
-Arusekk (2):
-      l10n: pl: Update translation
-      l10n: pl: 2.34.0 round 2
-
-Bagas Sanjaya (3):
-      l10n: po-id for 2.34 (round 1)
-      l10n: po-id for 2.34 (round 2)
-      l10n: po-id for 2.34 (round 3)
-
-Christopher Diaz Riveros (1):
-      l10n: es: 2.34.0 round 2
-
-Daniel Santos (3):
-      l10n: pt_PT: update translation table
-      l10n: pt_PT: change email
-      l10n: pt_PT: cleaning duplicate translations (#2)
-
-Emir Sarı (3):
-      l10n: tr: v2.34.0 round 1
-      l10n: tr: v2.34.0 round 2
-      l10n: tr: v2.34.0 round 3
-
-Fangyi Zhou (3):
-      l10n: zh-CN: v2.34.0 round 1
-      l10n: zh_CN: 2.34.0 Round 2
-      l10n: zh_CN: v2.34.0 round 3
-
-Jean-Noël Avila (3):
-      l10n: fr v2.34.0 rnd1
-      l10n: fr: v2.34.0 round 2
-      l10n: fr: v2.34.0 rnd 3
-
-Jiang Xin (23):
-      Merge branch 'new-mail' of github.com:git-l10n-pt-PT/git-po
-      Merge branch 'master' of github.com:nafmo/git-l10n-sv
-      Merge branch 'master' of github.com:git/git
-      l10n: git.pot: v2.34.0 round 1 (134 new, 154 removed)
-      Merge branch 'fr_2.34.0_rnd1' of github.com:jnavila/git
-      Merge branch 'fz/po-zh_CN' of github.com:fangyi-zhou/git-po
-      Merge branch 'master' of github.com:git/git
-      l10n: git.pot: v2.34.0 round 2 (3 new, 3 removed)
-      Merge branch 'fz/po-zh_CN' of github.com:fangyi-zhou/git-po
-      Merge branch 'master' of github.com:nafmo/git-l10n-sv
-      Merge branch 'po-id' of github.com:bagasme/git-po
-      Merge branch 'l10n/zh_TW/211104' of github.com:l10n-tw/git-po
-      Merge branch 'pt-PT' of github.com:git-l10n-pt-PT/git-po
-      Merge branch 'master' of github.com:git/git
-      l10n: git.pot: v2.34.0 round 3 (1 new)
-      Merge branch 'master' of github.com:alshopov/git-po
-      Merge branch 'tr-2-34-r3' of github.com:bitigchi/git-po
-      Merge branch 'fr_v2.34.0_rnd3' of github.com:jnavila/git
-      Merge branch 'l10n/zh_TW/211111' of github.com:l10n-tw/git-po
-      Merge branch 'master' of github.com:ruester/git-po-de
-      Merge branch 'po-id' of github.com:bagasme/git-po
-      l10n: ko: fix typos found by git-po-helper
-      l10n: it: fix typos found by git-po-helper
-
-Jordi Mas (3):
-      l10n: Update Catalan translation
-      l10n: Update Catalan translation
-      l10n: Update Catalan translation
-
-Matthias Rüster (1):
-      l10n: de.po: Update German translation for Git v2.34.0
-
-Peter Krefting (3):
-      l10n: sv.po: Fix git-po-helper breakage
-      l10n: sv.po: Update Swedish translation (5210t0f0u)
-      l10n: sv.po: Update Swedish translation (5211t0f0)
-
-Trần Ngọc Quân (2):
-      l10n: vi(5210t): Translation for v2.34.0 rd2
-      l10n: vi(5211t): Translation for v2.34.0 rd3
-
-Yi-Jyun Pan (2):
-      l10n: zh_TW.po: v2.34.0 round 2 (0 untranslated)
-      l10n: zh_TW.po: v2.34.0 round 3 (0 untranslated)
-
- po/TEAMS    |     2 +-
- po/bg.po    |  8696 +++++++++++++++++++++---------------------
- po/ca.po    | 12013 ++++++++++++++++++++++++++++++----------------------------
- po/de.po    |  8395 ++++++++++++++++++++--------------------
- po/es.po    |  9583 ++++++++++++++++++++++++----------------------
- po/fr.po    |  8373 ++++++++++++++++++++--------------------
- po/git.pot  |  8103 +++++++++++++++++++--------------------
- po/id.po    | 10280 ++++++++++++++++++++++++-------------------------
- po/it.po    |     6 +-
- po/ko.po    |    10 +-
- po/pl.po    | 11613 +++++++++++++++++++++++++++++++-------------------------
- po/pt_PT.po |  3725 ++++++++----------
- po/sv.po    |  9006 ++++++++++++++++++++++---------------------
- po/tr.po    |  8372 ++++++++++++++++++++--------------------
- po/vi.po    |  9049 ++++++++++++++++++++++---------------------
- po/zh_CN.po |  8853 ++++++++++++++++++++++---------------------
- po/zh_TW.po |  9068 +++++++++++++++++++++++---------------------
- 17 files changed, 63829 insertions(+), 61318 deletions(-)
-
-
---
-Jiang Xin
+diff --git a/bundle.c b/bundle.c
+index a0bb687b0f4..94edc186187 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -194,14 +194,14 @@ int verify_bundle(struct repository *r,
+ 	struct rev_info revs;
+ 	const char *argv[] = {NULL, "--all", NULL};
+ 	struct commit *commit;
+-	int i, ret = 0, req_nr;
++	int ret = 0, req_nr;
+ 	const char *message = _("Repository lacks these prerequisite commits:");
+ 
+ 	if (!r || !r->objects || !r->objects->odb)
+ 		return error(_("need a repository to verify a bundle"));
+ 
+ 	repo_init_revisions(r, &revs, NULL);
+-	for (i = 0; i < p->nr; i++) {
++	for (int i = 0; i < p->nr; i++) {
+ 		struct string_list_item *e = p->items + i;
+ 		const char *name = e->string;
+ 		struct object_id *oid = e->util;
+@@ -223,12 +223,11 @@ int verify_bundle(struct repository *r,
+ 	if (prepare_revision_walk(&revs))
+ 		die(_("revision walk setup failed"));
+ 
+-	i = req_nr;
+-	while (i && (commit = get_revision(&revs)))
++	for (int i = req_nr; i && (commit = get_revision(&revs));)
+ 		if (commit->object.flags & PREREQ_MARK)
+ 			i--;
+ 
+-	for (i = 0; i < p->nr; i++) {
++	for (int i = 0; i < p->nr; i++) {
+ 		struct string_list_item *e = p->items + i;
+ 		const char *name = e->string;
+ 		const struct object_id *oid = e->util;
+@@ -242,7 +241,7 @@ int verify_bundle(struct repository *r,
+ 	}
+ 
+ 	/* Clean up objects used, as they will be reused. */
+-	for (i = 0; i < p->nr; i++) {
++	for (int i = 0; i < p->nr; i++) {
+ 		struct string_list_item *e = p->items + i;
+ 		struct object_id *oid = e->util;
+ 		commit = lookup_commit_reference_gently(r, oid, 1);
