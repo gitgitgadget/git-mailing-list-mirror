@@ -2,163 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20F4FC433F5
-	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 14:39:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E33C433F5
+	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 15:07:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9FBE60ED7
-	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 14:39:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B68EE61075
+	for <git@archiver.kernel.org>; Sun, 14 Nov 2021 15:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229959AbhKNOmL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Nov 2021 09:42:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49586 "EHLO
+        id S230490AbhKNPKd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Nov 2021 10:10:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbhKNOmJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Nov 2021 09:42:09 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCA53C061746
-        for <git@vger.kernel.org>; Sun, 14 Nov 2021 06:39:14 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id x15so59785830edv.1
-        for <git@vger.kernel.org>; Sun, 14 Nov 2021 06:39:14 -0800 (PST)
+        with ESMTP id S229725AbhKNPKc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Nov 2021 10:10:32 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4104C061746
+        for <git@vger.kernel.org>; Sun, 14 Nov 2021 07:07:37 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id n29so25281894wra.11
+        for <git@vger.kernel.org>; Sun, 14 Nov 2021 07:07:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=Cl4TqK+xaYp4IzBN7UXyhFefwGiYMeUVXoF7L1jwP+E=;
-        b=G1ovTlonXTfIUA1jYMTjsmkFfWEPsmBST6NM2Le8qy0oY/V+aidpQBOelKgVW5yDaj
-         77EI4TWfa8Vri8rrlP4C8ZoA66TSJz0lUUUotimkGAoARmtAtKGIAAIkDU1QAK9/AzjD
-         ugg31/IO7yZAsgTHVh3cPpZetGvUTp7IAIdnMOAf19Sf9/1k+jO5ynT9cY7O34ME7gI/
-         QouudESfI1tQzToggEkcHlJjOzwvoi/gauPIZ4iuUAO77/0ioV7glJCHXwgtQWpRNNCl
-         QIJxuSAl9A66U9PBY9vdYRfCKaTqeNQa05aA40swiLVzEA1PzNd9EDyj9LLy1RyYkYvU
-         eMGQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=hLwb4DeycfxX84lk2u0GPNdJJWlkFZvFNh689/hvFEQ=;
+        b=ihoiLJRaqAn+z34zqRUa6jL9+dTc7aaPgWTMm7BoQLFhn4WmtC7mgIJSPVjexNMMTo
+         fKwMX+F9gix8G4CRUDtgsr61LnSZ7/2OeBgkMGLzuvoURRS8SJTIXFXGdDl9u6J+MZ4h
+         jXV+YC3YjWtVKPoVmeySX10yxHBa8BwiK5H0/Eeve8AHj/GC2Ocbg8m0SQ4wv0VNLPR2
+         Y3/dJefROOQtVv7ppqwNS78Se9MGwpTq646XFKyKH4q07mp/ID+v6lLWhNTJc/xR+iUl
+         N4URh/KnjKl/ZI7TB32owKGI49aRuTGQ1oa47DKhqEJi7kAHdxlOM/nF7/RacUSfUCxM
+         n1tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=Cl4TqK+xaYp4IzBN7UXyhFefwGiYMeUVXoF7L1jwP+E=;
-        b=1GhOxyyfr3eGHzUrPnIKDUHHRkTMbjfLI8+ETuZovJABHWxqZdl9OfM5KZj/kt8+kq
-         fWcWtiTAURDyg1dJdvQgIXVlIbEMRXatfhDoR16VY0GmLATmJZvur9q6gT7gYqr7nh8F
-         z17NeDmWCm4eYi+0V/OiFWsu5fppK/BiLm5+mAWGyXnccXXL9h4JH8fBeLcdkeRUCO8b
-         ks6SCLFeIRD9lmSK2D9aKToWQHWBinzIEE6WsRJ7ntOb/UtT4a7PuKkW10zxOPxuvNfL
-         oDHhbmPWJmZA/8Of+Xf4lu+ureCGN8C6kPerrUwtX70H4fcarS6w/zfJg8Sq4FcQft+0
-         sPcA==
-X-Gm-Message-State: AOAM533xvKS5cwmw03aA9d4k9piFkaWZPwsp8JK+ShQdl0stAOnQfBLI
-        T9Z9+88ah2RpnPQl8gmhgldIUZwAKwc=
-X-Google-Smtp-Source: ABdhPJx/wyYG75gHfdLMETpyV/qeanoiSz3VmC0cI27zln6I3DC5zBLTGOGnRLQbERYtTw2lP0Zavw==
-X-Received: by 2002:a17:907:724f:: with SMTP id ds15mr38606345ejc.204.1636900753136;
-        Sun, 14 Nov 2021 06:39:13 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p3sm5107704ejy.94.2021.11.14.06.39.12
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=hLwb4DeycfxX84lk2u0GPNdJJWlkFZvFNh689/hvFEQ=;
+        b=jqOIxdm9Nl+2OzO99tIACJMr1fpVgflm5SblUm0TuI4kvvwqYt6mBimrpbBy0EgbGC
+         0yJ/Ydr9m3iB2SWjdjA2g1jcpwzAU8gws9h8q0VLLl+1QRMKUFQrQTEMCeweiFrcA4o5
+         ROat22xXxZZ4ru9fWSW9Ovn9Iwm12J9oQ7h/Pi4TWxapQvgJmTlB4gcNcIEaquV4i5Ld
+         gIcaHIWX9JR0vNkEeJzMR9SsDIHVwKf8o4yD9qcTucdsWPFCtc3zC+zLw+S911hZUglT
+         y88cohFOAqYzfJ6b8vQArJigPIdpsILRdhbu0flaSdN9J4xSECpNhJkXzJKnVZT4PYct
+         lY4g==
+X-Gm-Message-State: AOAM531AfgGCkcRDqgQwRlS0S0lKLqbnj37VODW7oDJfBj6C3TnmEPyr
+        IlhDo0xaJp643DW15UuKFTPVoMEQR/U=
+X-Google-Smtp-Source: ABdhPJxVYSRLk/K5dg24SzCnD4uXotUc/xlNW8LbdrlJj8K8KoknpqBdniFLOCbdx/0Rwec3sBTVZQ==
+X-Received: by 2002:adf:dc0a:: with SMTP id t10mr39055551wri.8.1636902456098;
+        Sun, 14 Nov 2021 07:07:36 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n1sm12609942wmq.6.2021.11.14.07.07.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Nov 2021 06:39:12 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mmGf2-000neQ-6m;
-        Sun, 14 Nov 2021 15:39:12 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Saksham Mittal <gotlouemail@gmail.com>,
-        Johannes Altmanninger <aclopte@gmail.com>, git@vger.kernel.org
-Subject: Is 'for (int i = [...]' bad for C STD compliance reasons? (was:
- [PATCH] MyFirstContribution.txt: fix undeclared variable i in sample code)
-Date:   Sun, 14 Nov 2021 15:28:35 +0100
-References: <20211113122833.174330-1-gotlouemail@gmail.com>
- <20211113130508.zziheannky6dcilj@gmail.com>
- <2b2386b9-045d-a0b8-6dbc-8a9d0c446bea@gmail.com>
- <xmqq7ddbme7q.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <xmqq7ddbme7q.fsf@gitster.g>
-Message-ID: <211114.868rxqu7hr.gmgdl@evledraar.gmail.com>
+        Sun, 14 Nov 2021 07:07:35 -0800 (PST)
+Message-Id: <pull.1139.git.git.1636902454370.gitgitgadget@gmail.com>
+From:   "Thomas Koutcher via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 14 Nov 2021 15:07:34 +0000
+Subject: [PATCH] subtree: ignore merge.ff setting
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Thomas Koutcher <thomas.koutcher@online.fr>,
+        Thomas Koutcher <thomas.koutcher@online.fr>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Thomas Koutcher <thomas.koutcher@online.fr>
 
-On Sat, Nov 13 2021, Junio C Hamano wrote:
+When `merge.ff` is set to `only` in .gitconfig, `git subtree pull` will
+fail with error `fatal: Not possible to fast-forward, aborting.`. This
+fix ignores the `merge.ff` setting when using `git merge` within subtree.
 
-> Saksham Mittal <gotlouemail@gmail.com> writes:
->
->>> It is declared, there is an "int i;" a few lines up.
->>
->> Oh, man, I never even saw that! The patch is completely unnecessary
->> then. Sorry for that!
->
-> No need to say sorry; you'd want to be a bit more careful next time,
-> that's all.
->
-> Also, our code does not introduce a new variable in the first part
-> of "for (;;)" loop control, so even if the original lacked decl for
-> "i", the posted patch is not how we write our code for this project.
+Signed-off-by: Thomas Koutcher <thomas.koutcher@online.fr>
+---
+    subtree: ignore merge.ff setting
+    
+    When merge.ff is set to only in .gitconfig, git subtree pull will fail
+    with error fatal: Not possible to fast-forward, aborting.. This fix
+    ignores the merge.ff setting when using git merge within subtree.
+    
+    Signed-off-by: Thomas Koutcher thomas.koutcher@online.fr
 
-Just curious: Out of preference, or for compatibility with older C
-standards?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1139%2Fkoutcher%2Fsubtree-merge-ff-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1139/koutcher/subtree-merge-ff-fix-v1
+Pull-Request: https://github.com/git/git/pull/1139
 
-I'd think with the things we depend on in C99 it's probable that we
-could start using this if standards conformance is the only obstacle.
+ contrib/subtree/git-subtree.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-But I haven't tested, so maybe I'm wrong, I'm just assuming that with
-the C99 features we do have a hard dependency on surely anyone
-implementing those would have implemented this too.
-
-There's also a stylistic reason to avoid this pattern, i.e. some would
-argue that it's better to declare variables up-front, since it tends to
-encourage one to keep function definitions smaller (various in-tree
-evidence to the contrary, but whatever).
-
-I'd generally agree with that viewpoint & desire, but there's also cases
-where being able to declare things in-line helps readability, e.g. when
-your function needs two for-loops for some reason, they're set a bit
-apart. Then the reader doesn't need to scan for whether an "i" is used
-in-between the two.
-
-I was thinking of the below code in bundle.c, I suppose some might find
-the post-image less readable, but I remember starting to hunt around for
-other out-of-loop uses of "i", which the post-image makes clear could be
-avoided as far as variable scoping goes:
-
-diff --git a/bundle.c b/bundle.c
-index a0bb687b0f4..94edc186187 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -194,14 +194,14 @@ int verify_bundle(struct repository *r,
- 	struct rev_info revs;
- 	const char *argv[] = {NULL, "--all", NULL};
- 	struct commit *commit;
--	int i, ret = 0, req_nr;
-+	int ret = 0, req_nr;
- 	const char *message = _("Repository lacks these prerequisite commits:");
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 7f767b5c38f..de918d9fb05 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -976,10 +976,10 @@ cmd_merge () {
  
- 	if (!r || !r->objects || !r->objects->odb)
- 		return error(_("need a repository to verify a bundle"));
+ 	if test -n "$arg_addmerge_message"
+ 	then
+-		git merge -Xsubtree="$arg_prefix" \
++		git -c merge.ff= merge -Xsubtree="$arg_prefix" \
+ 			--message="$arg_addmerge_message" "$rev"
+ 	else
+-		git merge -Xsubtree="$arg_prefix" $rev
++		git -c merge.ff= merge -Xsubtree="$arg_prefix" $rev
+ 	fi
+ }
  
- 	repo_init_revisions(r, &revs, NULL);
--	for (i = 0; i < p->nr; i++) {
-+	for (int i = 0; i < p->nr; i++) {
- 		struct string_list_item *e = p->items + i;
- 		const char *name = e->string;
- 		struct object_id *oid = e->util;
-@@ -223,12 +223,11 @@ int verify_bundle(struct repository *r,
- 	if (prepare_revision_walk(&revs))
- 		die(_("revision walk setup failed"));
- 
--	i = req_nr;
--	while (i && (commit = get_revision(&revs)))
-+	for (int i = req_nr; i && (commit = get_revision(&revs));)
- 		if (commit->object.flags & PREREQ_MARK)
- 			i--;
- 
--	for (i = 0; i < p->nr; i++) {
-+	for (int i = 0; i < p->nr; i++) {
- 		struct string_list_item *e = p->items + i;
- 		const char *name = e->string;
- 		const struct object_id *oid = e->util;
-@@ -242,7 +241,7 @@ int verify_bundle(struct repository *r,
- 	}
- 
- 	/* Clean up objects used, as they will be reused. */
--	for (i = 0; i < p->nr; i++) {
-+	for (int i = 0; i < p->nr; i++) {
- 		struct string_list_item *e = p->items + i;
- 		struct object_id *oid = e->util;
- 		commit = lookup_commit_reference_gently(r, oid, 1);
+
+base-commit: 5fbd2fc5997dfa4d4593a862fe729b1e7a89bcf8
+-- 
+gitgitgadget
