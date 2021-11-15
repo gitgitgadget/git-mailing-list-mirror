@@ -2,237 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48191C433F5
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 713D3C433EF
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:36:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3743561A40
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:32:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D34061B53
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:36:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346881AbhKOXfU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Nov 2021 18:35:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59368 "EHLO
+        id S234022AbhKOXht (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Nov 2021 18:37:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352949AbhKOXSa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Nov 2021 18:18:30 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D3C6C03E036
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:18:42 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id d27so33594137wrb.6
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:18:42 -0800 (PST)
+        with ESMTP id S1347558AbhKOXfs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Nov 2021 18:35:48 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84699C06120A
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:30:57 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id z5so18684071edd.3
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:30:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Sqgk+sdbf4iPtslXol8PI/PtfQxIvAnUs//LDk601wA=;
-        b=h6kGX79w4O4DRUPFEZStkxNFXblyGydlTh0B3UwcefORvAFltVrk6yItL+90weq+he
-         Xhb8ZG/0jG8s89FpPIEUpqKWvXMVrnYsx5nbT55JrCY2cWa8it/LmTuDY2uq0Pn6ea82
-         8FEMl28vA95goFLOcye3SrQ3661j/Z//Xa70bkkuIWtRgxHcyxvoPM6VGDLHHNKgqF91
-         P86S+Th2pCMbunQk16vZxUtPKdB3421mFrVoDh8xmaYZ1IlwjEZG7nXjO8WwU02/0yDn
-         AFQvkPfq/H6gjZMNr0HqeZR+M3/k/sn4fXCizCAU7nnudmj4w3dr0wmbnyvTEbVjyjTU
-         lW8Q==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=WXXQTEpf8Xj01N5wLpH1e6cihV0wN6won8mrFs0hIuY=;
+        b=PwIwiZUWwSDhxS26MSe8JQEJ6VeonntlWQZ7MhFoiiZr1fhVubKON6dGAQXX1VHPai
+         uQj/pqE/ldYhDTvkRzm/7xMwz3AHacUuldFi5pnp2k5rfr6sX1MNjCgq0uhrWssrggzZ
+         m9JADvLw3k/MMGCEcCyNlxQve6dgvfEPOMwogCuVr/Hs5AePaJuLwFvmjH7qh9pPVRex
+         x7jHC3FsRE5lkSnB4jLS+tRts90mScXGeZWQvDMaZ3I2roLaO331N6DbyWJXXJkb0PJb
+         1B4oUUgxPnKUfY6uAAraQijIG4yNsOoVrFF+aDpKtlhQ1trr4BSAb1Sw0GhXfNy2GEEv
+         xIfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Sqgk+sdbf4iPtslXol8PI/PtfQxIvAnUs//LDk601wA=;
-        b=v/zM5rLX6f46IJIjlT3B83QSNcfl9E7vUlb6toUYyluiOi7h0aYRKkqQVsAvIFBWeB
-         LVj7Uj/1in+fIt7dCnBZh+4Q/oWKEO52L3VP0H6SXlzqKJTFBr2/uJUmxBBX0WvPoNyQ
-         boFc8cDSyykwqps8fqa7iOy5tr1qf5QjuSAH700hmDKzv+pX6FsV9Y+fMwlIk20O7Dil
-         bIseR/MekfRMUaiDenHOF+5JeEtrFdqNBKnrUZ7NpuM/gFPyjfdTxequ+66aQHoc+r0X
-         XA+GqxRO4fAIis2gVqx7P/ISf+64LT5rSzCSS8jaUhN3myGeOO3DM9kLLkmxisFeHa5v
-         hnnw==
-X-Gm-Message-State: AOAM531P6tYNY5CjhGUejiQAKgzr7BEA0s0n/RD65v8dmEVQWJKwhNMP
-        gM4ATy4pzYo84vJ/O047fOa9Pv5uf5KdaA==
-X-Google-Smtp-Source: ABdhPJyZpgC2s6HxlxzLGnJLCeAUMOkgDaIHPMQA/TPaHYKWnes8eUR49nTb3EEzq4XUgJFkPXZ3zw==
-X-Received: by 2002:adf:f787:: with SMTP id q7mr3102690wrp.1.1637014720571;
-        Mon, 15 Nov 2021 14:18:40 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n184sm526812wme.2.2021.11.15.14.18.39
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=WXXQTEpf8Xj01N5wLpH1e6cihV0wN6won8mrFs0hIuY=;
+        b=IUx0VU6ZifBcaZ/WkAB4poqHMkVr9szPzUOaW960/9QQripE0qP2SwQZi6GN6Wmtj1
+         CCJFVTLjzq459Z0S2+k2npQqFF8wCdsMl7WK7JYqjNLQ8Ey8VY5XmomgeiU5uGA/cKsZ
+         LJKWgpr/iEMeewdsci17xiZ6MmbCXL7Z+hjOthmbgWkVkExMWMvrGzbqMyq9vzPlHamU
+         VRBXCYXxL91LewGMvb0h966HQQBu/wFWOXoIx8ecNqj2RVAzpfgLvg8pSXb6PfZhOqox
+         mrGvT6ypeZ2L/JuMG5G4lrd78F4YF8vOGy7T7jmIKm5CKF428EC+llRq19KahR2WssyW
+         5Q3Q==
+X-Gm-Message-State: AOAM530w9akztpUQ7NL7SCsClb16mes3Sb2aQDcPJr4HlmA3hc1Yrfst
+        7OMWtvv2eotmvH4w3Fukay8=
+X-Google-Smtp-Source: ABdhPJz8SR831/zYfZIN7rcOdrbC4a0EME7Uyz3kuD8x71CXwPyd0l4QvlJ1Y5cw32ALjdo3PtdrgA==
+X-Received: by 2002:a17:906:6a0a:: with SMTP id qw10mr3020741ejc.547.1637015456037;
+        Mon, 15 Nov 2021 14:30:56 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id bo20sm8396283edb.31.2021.11.15.14.30.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 14:18:40 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Elijah Newren <newren@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC PATCH 09/21] parse-options.[ch] API: use bug() to improve error output
-Date:   Mon, 15 Nov 2021 23:18:19 +0100
-Message-Id: <RFC-patch-09.21-9c6af87c6c9-20211115T220831Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.0.rc2.809.g11e21d44b24
-In-Reply-To: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
-References: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
+        Mon, 15 Nov 2021 14:30:55 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mmkV4-001GY4-VA;
+        Mon, 15 Nov 2021 23:30:54 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 8/8] hook-list.h: add a generated list of hooks, like
+ config-list.h
+Date:   Mon, 15 Nov 2021 23:26:36 +0100
+References: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com>
+ <patch-8.8-80aae4d5c13-20210923T095326Z-avarab@gmail.com>
+ <20211115220455.xse7mhbwabrheej4@glandium.org>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211115220455.xse7mhbwabrheej4@glandium.org>
+Message-ID: <211115.86k0h9qcf5.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we run into bugs in parse-options.c usage it's good to be able to
-note all the issues we ran into before dying, which is why we have the
-optbug() function.
 
-Let's instead use the bug() helper function that's newly added to
-usage.c to do the same thing, which cuts down on the verbosity of
-parse_options_check().
+On Tue, Nov 16 2021, Mike Hommey wrote:
 
-In addition change the use of BUG() in that function to bug(), we'll
-be dying soon enough, but always want exhaustive error reporting from
-the function.
+> On Thu, Sep 23, 2021 at 12:30:03PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> -builtin/help.sp builtin/help.s builtin/help.o: config-list.h GIT-PREFIX
+>> +hook.sp hook.s hook.o: hook-list.h
+>> +
+>> +builtin/help.sp builtin/help.s builtin/help.o: config-list.h hook-list.=
+h GIT-PREFIX
+>
+> hook-list.h is only included from buitin/bugreport.c, so
+> builtin/bugreport.o should be the one with the hook-list.h dependency,
+> shouldn't it?
 
-Let's also use bug() instead of BUG() in preprocess_options() and
-parse_options_start_1() (which is called shortly after
-preprocess_options()). Since the BUG_if_bug() is called at the end of
-parse_options_start_1() we won't miss it, and even if we did the
-invocation in common-main.c would trigger.
+Well spotted, yes. This is a mistake. I think from some earlier WIP
+version of the series.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- parse-options.c | 54 ++++++++++++++++++++++++-------------------------
- 1 file changed, 26 insertions(+), 28 deletions(-)
+In practice we don't really miss dependencies due to these sorts of
+mistakes since we use the .depends files, i.e. GCC & Clang figure this
+out for us:
 
-diff --git a/parse-options.c b/parse-options.c
-index 8bc0a21f1d7..54cbd382cb5 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -14,15 +14,15 @@ enum opt_parsed {
- 	OPT_UNSET = 1<<1,
- };
- 
--static int optbug(const struct option *opt, const char *reason)
-+static void optbug(const struct option *opt, const char *reason)
- {
--	if (opt->long_name) {
--		if (opt->short_name)
--			return error("BUG: switch '%c' (--%s) %s",
--				     opt->short_name, opt->long_name, reason);
--		return error("BUG: option '%s' %s", opt->long_name, reason);
--	}
--	return error("BUG: switch '%c' %s", opt->short_name, reason);
-+	if (opt->long_name && opt->short_name)
-+		bug("switch '%c' (--%s) %s", opt->short_name,
-+		    opt->long_name, reason);
-+	else if (opt->long_name)
-+		bug("option '%s' %s", opt->long_name, reason);
-+	else
-+		bug("switch '%c' %s", opt->short_name, reason);
- }
- 
- static const char *optname(const struct option *opt, enum opt_parsed flags)
-@@ -440,28 +440,27 @@ static void check_typos(const char *arg, const struct option *options)
- 
- static void parse_options_check(const struct option *opts)
- {
--	int err = 0;
- 	char short_opts[128];
- 
- 	memset(short_opts, '\0', sizeof(short_opts));
- 	for (; opts->type != OPTION_END; opts++) {
- 		if ((opts->flags & PARSE_OPT_LASTARG_DEFAULT) &&
- 		    (opts->flags & PARSE_OPT_OPTARG))
--			err |= optbug(opts, "uses incompatible flags "
--					"LASTARG_DEFAULT and OPTARG");
-+			optbug(opts, "uses incompatible flags "
-+			       "LASTARG_DEFAULT and OPTARG");
- 		if (opts->short_name) {
- 			if (0x7F <= opts->short_name)
--				err |= optbug(opts, "invalid short name");
-+				optbug(opts, "invalid short name");
- 			else if (short_opts[opts->short_name]++)
--				err |= optbug(opts, "short name already used");
-+				optbug(opts, "short name already used");
- 		}
- 		if (opts->flags & PARSE_OPT_NODASH &&
- 		    ((opts->flags & PARSE_OPT_OPTARG) ||
- 		     !(opts->flags & PARSE_OPT_NOARG) ||
- 		     !(opts->flags & PARSE_OPT_NONEG) ||
- 		     opts->long_name))
--			err |= optbug(opts, "uses feature "
--					"not supported for dashless options");
-+			optbug(opts, "uses feature "
-+			       "not supported for dashless options");
- 		switch (opts->type) {
- 		case OPTION_COUNTUP:
- 		case OPTION_BIT:
-@@ -470,22 +469,22 @@ static void parse_options_check(const struct option *opts)
- 		case OPTION_NUMBER:
- 			if ((opts->flags & PARSE_OPT_OPTARG) ||
- 			    !(opts->flags & PARSE_OPT_NOARG))
--				err |= optbug(opts, "should not accept an argument");
-+				optbug(opts, "should not accept an argument");
- 			break;
- 		case OPTION_CALLBACK:
- 			if (!opts->callback && !opts->ll_callback)
--				BUG("OPTION_CALLBACK needs one callback");
-+				bug("OPTION_CALLBACK needs one callback");
- 			if (opts->callback && opts->ll_callback)
--				BUG("OPTION_CALLBACK can't have two callbacks");
-+				bug("OPTION_CALLBACK can't have two callbacks");
- 			break;
- 		case OPTION_LOWLEVEL_CALLBACK:
- 			if (!opts->ll_callback)
--				BUG("OPTION_LOWLEVEL_CALLBACK needs a callback");
-+				bug("OPTION_LOWLEVEL_CALLBACK needs a callback");
- 			if (opts->callback)
--				BUG("OPTION_LOWLEVEL_CALLBACK needs no high level callback");
-+				bug("OPTION_LOWLEVEL_CALLBACK needs no high level callback");
- 			break;
- 		case OPTION_ALIAS:
--			BUG("OPT_ALIAS() should not remain at this point. "
-+			bug("OPT_ALIAS() should not remain at this point. "
- 			    "Are you using parse_options_step() directly?\n"
- 			    "That case is not supported yet.");
- 		default:
-@@ -493,10 +492,8 @@ static void parse_options_check(const struct option *opts)
- 		}
- 		if (opts->argh &&
- 		    strcspn(opts->argh, " _") != strlen(opts->argh))
--			err |= optbug(opts, "multi-word argh should use dash to separate words");
-+			optbug(opts, "multi-word argh should use dash to separate words");
- 	}
--	if (err)
--		exit(128);
- }
- 
- static void parse_options_start_1(struct parse_opt_ctx_t *ctx,
-@@ -518,11 +515,12 @@ static void parse_options_start_1(struct parse_opt_ctx_t *ctx,
- 	if ((flags & PARSE_OPT_KEEP_UNKNOWN) &&
- 	    (flags & PARSE_OPT_STOP_AT_NON_OPTION) &&
- 	    !(flags & PARSE_OPT_ONE_SHOT))
--		BUG("STOP_AT_NON_OPTION and KEEP_UNKNOWN don't go together");
-+		bug("STOP_AT_NON_OPTION and KEEP_UNKNOWN don't go together");
- 	if ((flags & PARSE_OPT_ONE_SHOT) &&
- 	    (flags & PARSE_OPT_KEEP_ARGV0))
--		BUG("Can't keep argv0 if you don't have it");
-+		bug("Can't keep argv0 if you don't have it");
- 	parse_options_check(options);
-+	BUG_if_bug();
- }
- 
- void parse_options_start(struct parse_opt_ctx_t *ctx,
-@@ -673,7 +671,7 @@ static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
- 		source = newopt[i].value;
- 
- 		if (!long_name)
--			BUG("An alias must have long option name");
-+			bug("An alias must have long option name");
- 		strbuf_addf(&help, _("alias of --%s"), source);
- 
- 		for (j = 0; j < nr; j++) {
-@@ -694,7 +692,7 @@ static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
- 		}
- 
- 		if (j == nr)
--			BUG("could not find source option '%s' of alias '%s'",
-+			bug("could not find source option '%s' of alias '%s'",
- 			    source, newopt[i].long_name);
- 		ctx->alias_groups[alias * 3 + 0] = newopt[i].long_name;
- 		ctx->alias_groups[alias * 3 + 1] = options[j].long_name;
--- 
-2.34.0.rc2.809.g11e21d44b24
+    $ grep hook-list .depend/* */.depend/*
+    builtin/.depend/bugreport.o.d: compat/compiler.h git-compat-util.h hook=
+.h hook-list.h
+    builtin/.depend/bugreport.o.d:hook-list.h:
 
+But we do over-depend a bit, if you touch hook-list.h and make
+builtin/help.o we'll re-generate it due to this line.
+
+If you or anyone else is more generally interested in the Makefile I'd
+really like to get some reviews over at:
+https://lore.kernel.org/git/cover-v2-00.18-00000000000-20211112T214150Z-ava=
+rab@gmail.com/
+
+I've got some follow-up work that solve these dependencies more
+generally, e.g. in this case we should really not need to slavishly
+maintain these fallback dependency lists by hand, or have automated ways
+of validating their correctness.
