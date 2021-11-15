@@ -2,165 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06298C4332F
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC8D4C433F5
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:22:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE1A3611F0
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:20:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BECC561AA7
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:22:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346126AbhKOXWq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Nov 2021 18:22:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60268 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241558AbhKOXUf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Nov 2021 18:20:35 -0500
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF5A9C048C8C
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:22:54 -0800 (PST)
-Received: by mail-pl1-x630.google.com with SMTP id k4so15618293plx.8
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:22:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=7+TjG08MWZ8MI06WvNCyUQfLhRfI1YXTeBt5aCJmkfc=;
-        b=dXLwo6jbeetgHmzJh+nYbM4020mm9ofKFiVuKGKu5cZUuTE28F0r+ZYR8tHarTP78j
-         HVMXbbAHSCI03HaJ5ubimWIxeKR+P2bmOr/Jd5SXF8/QvnbjHaPcRCmcfDTYdpnnqJj+
-         eiolf8lkXzgSiaoN8Oc10eGmS/PQMYgG/e+y98jTr+CkRRzkAMVvlTHeTngQPWa1o0D6
-         ghdvdS9x0RTbC04WkLkZtfMH3FWmHc3Az6qzOl2KIJYTEADLmcbNzYRRS6bfjw1SN975
-         WMEdqi2np2jN2aaPuqIi4uQwbv3+C4tw3pjg8hgTUxAi/69NriLgahYGmkU8xUq2DQwG
-         kTxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=7+TjG08MWZ8MI06WvNCyUQfLhRfI1YXTeBt5aCJmkfc=;
-        b=bStiF8x39vgJuyoa3doSsG3Dwi+gUXMr7ecxLEOFhqjchuEYjioz8kajjdB0lTLCBj
-         9L4Rw4/wwCs7UoKPyA09R+DE6kbIcUHOrJUQYHJJvBx6o+83Hp0wxTaa1JoMh/ySbHnF
-         5HmoHGxExKLiMOszBqqI2voIEbAIh3OmwXT9CMHssEzMz6+ShAzWicmlANHSIyDPkvoD
-         YtGNMisiMmjJKk0eiWye+mDMWWj2A3wTBiTpbuKRg32d7ZaKY4F/MMW0RAZEFvUOZaeM
-         nY1oMAXYrmLK/K48GZ9X+6UZr7/hQfb0/SMg3C5OuDWXs5s269ioHWT1eeNT7NCM8euR
-         9OBQ==
-X-Gm-Message-State: AOAM532D8cHfxM12hZ0y7sdH4zvZd/6BLDmENj+Ah1DmeheOoZf5K6Ks
-        sgSzMgeYMFIE1dmHZdbogYza48ZsMVhu3g==
-X-Google-Smtp-Source: ABdhPJyO+LmS+ZjQ7Qb+lV0LLBZAX6n7eCTxkkEAHrbrcKqZR/eKD5c31K54SFoEjlmvfz+daR8jKA==
-X-Received: by 2002:a17:90a:5d8e:: with SMTP id t14mr67785795pji.95.1637014974095;
-        Mon, 15 Nov 2021 14:22:54 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:9bb:b2ac:3919:1528])
-        by smtp.gmail.com with ESMTPSA id i10sm295463pjd.3.2021.11.15.14.22.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 14:22:53 -0800 (PST)
-Date:   Mon, 15 Nov 2021 14:22:48 -0800
-From:   Josh Steadmon <steadmon@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, emilyshaffer@google.com
-Subject: Re: [PATCH v3] branch: add flags and config to inherit tracking
-Message-ID: <YZLduLeRlXKfPjtw@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, emilyshaffer@google.com
-References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
- <b9356d9837479914bcf9a265f52afe170be7e2e2.1634445482.git.steadmon@google.com>
- <87a6j6tbsv.fsf@gmgdl.gmail.com>
+        id S244935AbhKOXZC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Nov 2021 18:25:02 -0500
+Received: from mout.web.de ([212.227.17.11]:56095 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232556AbhKOXWl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Nov 2021 18:22:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1637018379;
+        bh=UIV2P/K/2qSd4BxEpctghOQVYhXensZ9qFV1BkN7hoo=;
+        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
+        b=nG6mhqH6ErDYnzHRW6Zrhq5whaG2WYsB2wQEVQHmRMU9/2jJcZbLVdY7JAt9KGr/V
+         leJ6O4v0GHz3HTXVt3Fih6q/xYe3W9WIV8xQxAz2Wh2MPav1fUVSsrmCltkiQELs2o
+         luVdySvZIugHlnBUHlcRqxXCkij2kGBH1VK4ThYk=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.20.171]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mmyr7-1mN1AK0IQJ-00jiZ3; Tue, 16
+ Nov 2021 00:19:39 +0100
+Message-ID: <5eabbe1c-4c0f-559a-da21-423afec89e7e@web.de>
+Date:   Tue, 16 Nov 2021 00:19:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a6j6tbsv.fsf@gmgdl.gmail.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.0
+Content-Language: en-US
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] mergesort: avoid left shift overflow
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:LdxVE5KgXypqeOjCv4Mo91+BDe7pVKE5kePnhs1o8TKJqVGao2s
+ Sf2b3voQbgbnC7uFSDrQWhGqPVnDgGAedn6O7dW6SN4OCMwaWwf9azkxgLdwleYetCW8m6g
+ 5tas78SBJafSCIY79Q57wQcADyz+gWJHh0nsh+w5MOg5u4yDU2LFJJe8DWiVU0xizmKRui/
+ BIDKEN5KkyBjIBAdln5sQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UoRiqJ89yKs=:TKTFM99N8Wd2hAJv8b1/gJ
+ Su7hV+m00XR6ar9CCWqqoDwGYpeJQYds/SYeyfwWOL2RpbBbazutIWWJPPhppOnhhrK/0P18A
+ ERgSTqZFeqNJWdHq/7aOMOEJKdlKSVPc3DAMcEegvLs+RUUP5nyr0HB+utdN5ix0pcPcgvaU6
+ Pn+u1sfNu+xoQOYB8uPJhIKGiFlQorB9XkNLSNRWe2bvQqdX5QVMwDR37ZWusHwLGhWsNtkTa
+ etA0GMo8f1KM73DGMTldwNfqqBzZlgWyfe4D+XwrPu828ns0OoGZXfzRjWZy87IPqVKnFzqkz
+ o1I0WnyNBJ99tVNtMuIuQkghVTnAbEFYzlNPwpdwkpfuBsb9ATPA7A6uK2QvjijmArwv88iy0
+ por9QZWzWKHFEcSUUx64K5+30JuM4lQEpKSoHFrPyZHTGV/PScdk7tFIB/25SWVq5PU5eLH7F
+ 17Jy6smIik40jDm0rcjXc25Us60uJZ2rWp8zulad4Ig8XWl9eWHD1XL+kcSOm2RDd/58QANnd
+ 3eoZTV7M2ul4w8ZrshDVkSYayZ7ekEkCFq3+Mlk89ZL/42o+sNUkshkdqjJPI8oCsNs4YwQMB
+ 35dUKq5+jXJQYhhLJAtsJVmdCgKafHc+bOw6uSAmWMmvmcHEZ7Ic4TI96Odc4Vaxy/SES5O0P
+ Aoz/mkBNEha2NFdqoRbrPxBdH41OYpv+JWxLlNXry0DfRc5pyxH9UGeCVjK6BaXij13tbj2i3
+ rwyZNuNebj97mAUcBDd2TkRgvJ4gowdg41gDPf5EpjUUXOwKvQxr2beOPGPMepF9sdC6nqPB2
+ hJqgl3KG3dL4/aEYjTnKR+f/az4yJuWZy/x4ZibkJy9BZjjBxUzmHenl1Zwd3uu2nTLT6yPa2
+ 2b49QIiq7qYZyhX8lhSvI55ll+zR7fOCi7WXnTAKGhn/MnPxoPrjcMUWRqDFmbBvIPVMfPqg+
+ icu8+nzWwwhAhlfBvXSYsLoL/htP+Ps3Zw1BuB56+cPvtfyYk5Auq17xJf7m0p3xx4UTjPcIP
+ dGG8tywv5ejAlAMyTbEConEErAdDLJnAVgWpyuvlAU9yWAAiwQ48Sw0WIe2LCocXog==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021.10.18 20:31, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Sat, Oct 16 2021, Josh Steadmon wrote:
-> 
-> > It can be helpful when creating a new branch to use the existing
-> > tracking configuration from the branch point. However, there is
-> > currently not a method to automatically do so.
-> 
-> There's no method to get *only* that config, but this use-case is why
-> the "-c" option (copy branch) was added.
-> 
-> I haven't looked at this in any detail, but the seeming lack of mention
-> of it in the commit message & docs makes me wonder if you missed that
-> that option could do what you wanted (but granted, it does a lot more,
-> which maybe you don't want).
+Use size_t to match n when building the bitmask for checking whether a
+rank is occupied, instead of the default signed int.
 
-Indeed, I did miss that option. Thank you for the pointer. I am
-conflicted about whether or not we want to copy all the branch
-configuration. Most of the options do seem useful to copy, but the
-existing config values available for `branch.autoSetupMerge` are
-strictly about setting up `branch.<name>.remote`, `branch.<name>.merge`,
-and `branch.<name>.rebase`. Adding a new value here that additionally
-pulls in all the rest of the config may be confusing. Alternatively we
-could add an entirely new option, but then its interaction with
-`branch.autoSetupMerge` would be confusing as well.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Ugh, sorry. :(
 
-> But in terms of implementation can't this share more code with the copy
-> mode? I.e. I'd think that this would just be a limited mode of that,
-> where we pass some whitelist of specific config to copy over, instead
-> the current "all the config" with "copy".
+ mergesort.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I will look into the copy machinery and see what can be reused in V4.
-
-> And should these options be made to work together somehow? I.e. if you
-> want to copy branch A to B, but copy tracking info from C?
-
-I am skeptical of the benefit here, but I'm certainly willing to hear
-arguments in favor.
-
-The motivation for this series is for Git users (who are not necessarily
-Git experts) to have a simple config they can tune to make reduce
-friction for the use case of having large repositories with many
-submodules (see Emily's discussion [1]). The idea is that we have many
-people with a workflow where they'd have `submodule.recurse=true` and
-`branch.autoSetupMerge=inherit`. When they checkout a new branch in the
-superproject, branches would also be checked out in the submodules, and
-appropriate tracking information would also be inherited so that they
-can later `git push` without having to manually configure tracking for
-every submodule.
-
-This would be a very common operation for these users, and should
-therefore require as little friction as possible. While I can see use
-cases for your "copy A to B but copy tracking from C", it seems to me
-that this would be a much less common situation, and is probably going
-to be needed by Git experts who are capable of setting this manually
-without relying on configs to make it the default behavior.
-
-
-[1]: https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
-
-> > [...]
-> >  -t::
-> > ---track::
-> > +--track [inherit|direct]::
-> >  	When creating a new branch, set up `branch.<name>.remote` and
-> > -	`branch.<name>.merge` configuration entries to mark the
-> > -	start-point branch as "upstream" from the new branch. This
-> > +	`branch.<name>.merge` configuration entries to set "upstream" tracking
-> > +	configuration for the new branch. This
-> 
-> Setting up ".remote" is what --tracke does, but doesn't it make sense
-> for such an option to copy over any other config related to that area,
-> e.g. also .pushRemote, as a user may have edited it since the creation
-> of the copied-from branch?
-
-Yes, .pushRemote and .mergeOptions both seem like they'd be useful to
-copy here.
-
-> Maybe, maybe not. But this & the above comparison with copy makes me
-> wonder if we'd be better off with some mode similar to the matching
-> regexes "git config", i.e. you could do a "copy" but only on a list of
-> matching variables.
-> 
-> Then the --track mode could just be implemented in terms of that, no?
-
-Using config matching to only copy portions of the branch config seems
-overkill to me. IMO it would be better to get agreement for which of the
-branch.<name>.* variables to copy, and then use that consistently for
-all possible settings of `branch.autoSetupMerge` and
-`branch.autoSetupRebase`. If that allows us to reuse the existing copy
-machinery, then so much the better.
+diff --git a/mergesort.c b/mergesort.c
+index 6216835566..bd9c6ef8ee 100644
+=2D-- a/mergesort.c
++++ b/mergesort.c
+@@ -63,7 +63,7 @@ void *llist_mergesort(void *list,
+ 		void *next =3D get_next_fn(list);
+ 		if (next)
+ 			set_next_fn(list, NULL);
+-		for (i =3D 0; n & (1 << i); i++)
++		for (i =3D 0; n & ((size_t)1 << i); i++)
+ 			list =3D llist_merge(ranks[i], list, get_next_fn,
+ 					   set_next_fn, compare_fn);
+ 		n++;
+=2D-
+2.33.1
