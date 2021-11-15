@@ -2,83 +2,294 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EFE1C433EF
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 22:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0043BC4332F
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 22:52:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3FDBB61351
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 22:13:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDD0963222
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 22:52:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348745AbhKOWQS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Nov 2021 17:16:18 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63372 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352916AbhKOWNr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Nov 2021 17:13:47 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8334A1589DC;
-        Mon, 15 Nov 2021 17:10:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BhjGqQFTuSn6S4cqUm5aWiXNSDp261uCczyEP0
-        zCg7k=; b=X+SxtyVdqCRTHmlIlR7DCnwkwB/jaI8puksb6b9ZlrRh7uYO+bgkWr
-        vjs71pgxUbN/tM1g25LcTeiISc7ymXHQkAwUxX55o5MrDMdXd83hjm+4qyX5NUVO
-        ERQpVRPbds7gPr/1x/n5/hcZyV7Z1otmLkEc4jimgoVyEzuJKfk5I=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7B6081589DB;
-        Mon, 15 Nov 2021 17:10:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C4CF61589DA;
-        Mon, 15 Nov 2021 17:10:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] test-lib: show missing prereq summary
-References: <20211115160750.1208940-1-fs@gigacodes.de>
-        <20211115160750.1208940-2-fs@gigacodes.de>
-        <211115.865ysts45o.gmgdl@evledraar.gmail.com>
-        <xmqq8rxpfgqh.fsf@gitster.g> <20211115195609.g6vq6qfjhyootcqt@fs>
-Date:   Mon, 15 Nov 2021 14:10:43 -0800
-In-Reply-To: <20211115195609.g6vq6qfjhyootcqt@fs> (Fabian Stelzer's message of
-        "Mon, 15 Nov 2021 20:56:09 +0100")
-Message-ID: <xmqqk0h9cboc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1347638AbhKOWzA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Nov 2021 17:55:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51866 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1351354AbhKOWoI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Nov 2021 17:44:08 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B1CEC110F17
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 13:54:50 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id w1so12125610edc.6
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 13:54:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=wJghsRK92xseK3IwUNGM2aukfSmOr+It95ZsBlzoZ2w=;
+        b=Vn4pRJ5ChnMLhLaUSCqKgUx7Psfs+8D6aH+/i7lqq4VyXKYQiwOmwNxVDS82f4RCGF
+         YTOiRA8yG8e6IivGGW/nJNjdNn/PAQ6dcamjL82LH+ox0IGcsg8sBMqGLHnl5o8/tlY+
+         cvP/7uqJlQBLMEs2kjzHFU+nmXFkd/ebXWTIxd+WV6zJRzvaJjseMaNTFMdAGakFiILs
+         Cm7I81swt1pqQcgeCVYxxZhRypJ2hAuaNK9KltYuNuHEEN6zHvjqurEEHhI/Rzp9mIjv
+         NtSn1RZ1dxyS9lZh2rRqEr91k8wCgGWYt0AYtZX5gyLT9dXaGdfzgeBMzMgJFoR4Cx6k
+         Udpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=wJghsRK92xseK3IwUNGM2aukfSmOr+It95ZsBlzoZ2w=;
+        b=1sAWgIf8dxxlb3IDPCFPcZ+zqTsURVMQKcBwvLWc6LEYiiIqa+2zs3plDxw4zHMG3o
+         2KBzniYpavZSZGEovtpJUzGkEVMp9Jdya30mrc8tsn5R7gNlKxHcTfsnOF8MsOnJIk2X
+         sbvUmYrXkD+U9e/goyVZd7l4rllUIk9dYmXsCs2H+4MHcinvAn5J3lp+R6Qv5AblklfF
+         7eTdaus3DuVcyya62gjhFWTeEbHXGDM7Jnge8ktReMJainWZBGaL99g0ItaKXqmaW6Rw
+         FDKMJZbnLsKeT/UxS53ITwUQvqHrft9qLYtUOGjmWclxK5PBNfZeelubxR8JJiWlHbJD
+         9rIg==
+X-Gm-Message-State: AOAM530DPogStGwrTEf5aVEvjPDBaC/wRIWtpACL1lQPdvkmqrzBY17t
+        bkdwJ8lCVVY7K1qtNT3sgxo=
+X-Google-Smtp-Source: ABdhPJyCXYz2Mx4+Y9Br9jD1pPP5Mjxf6G8+OtPQHXiKJVL9/4v/UiKbRjETeESkdUk/FyoBMCbNdg==
+X-Received: by 2002:a05:6402:51c6:: with SMTP id r6mr2859594edd.365.1637013288919;
+        Mon, 15 Nov 2021 13:54:48 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id e12sm7139979ejs.86.2021.11.15.13.54.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Nov 2021 13:54:48 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mmjw7-001Ffr-Ki;
+        Mon, 15 Nov 2021 22:54:47 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH 0/3] support `--oid-only` in `ls-tree`
+Date:   Mon, 15 Nov 2021 22:50:18 +0100
+References: <20211115115153.48307-1-dyroneteng@gmail.com>
+ <211115.86mtm5saz7.gmgdl@evledraar.gmail.com>
+ <YZKwduZgH4BEpFzd@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <YZKwduZgH4BEpFzd@coredump.intra.peff.net>
+Message-ID: <211115.86o86lqe3c.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E10DFB80-4660-11EC-85FC-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fabian Stelzer <fs@gigacodes.de> writes:
 
->>I am not sure '\n' is a good idea from portability perspective.  I
->>thought I wrote '\012' in the illustration in my review?
+On Mon, Nov 15 2021, Jeff King wrote:
+
+> On Mon, Nov 15, 2021 at 04:13:24PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >
-> Yes, i was wondering why you did that. When i played around with your
-> variant i used \n since it's what i commonly use and find more readable.
-> And i'm by far no expert on partability. What platforms would have an
-> issue with \n ?
+>> But I'd much rather see this be done with adding strbuf_expand() to
+>> ls-tree. I.e. its docs say that it can emit:
+>
+> I had a similar thought, but that's a much bigger task. I think it would
+> be reasonable to add --oid-only to match the existing --name-only, etc.
+> If we later add a custom --format option, then it can easily be folded
+> in and explained as "this is an alias for --format=3D%(objectname)", just
+> like --name-only would become "this is an alias for --format=3D%(path)".
 
-I think I misremembered.  b3b753b1 (Fit to Plan 9's ANSI/POSIX
-compatibility layer, 2020-09-10) does talk about a system whose
-"tr" does not fully emulate POSIX and wants an octal, but that
-is not a platform we target for to begin with.
+A quick patch to do it below, seems to work, passes all tests, but I
+don't know how much I'd trust it. It's also quite an add use of
+strbuf_expa(). We print to stdout directly since
+write_name_quoted_relative() really wants to write to stdout, and not
+give you a buffer. But I guess it makes sense in a way.
 
-$ git grep '^[      ]*tr .*\\012['\''"]'
-$ git grep '^[      ]*tr .*\\n['\''"]'
+The hardcoded %7s for %(objectsize) is a bit nasty, but I don't know if
+we've got anything existing that handles format specifiers with
+strbuf_expand() that we could steal.
 
-show the same number of hits, even back in v2.0.0.  You have to go
-back to v1.6.0 (which I consider is the oldest and still usable
-release of significance) to see the source tree without any hit for
-the latter.  The first introduction of tr "\n" (which I consider is
-a mistake---if we write octal, we do not have to worry about anybody
-not supporting it) seems to be dea4562b (rerere forget path: forget
-recorded resolution, 2009-12-25) made by me X-<.
+I really wouldn't trust this code much, I found it when writing it that
+our tests for ls-tree are really lacking, e.g. we may not have a single
+test for "-l" anywhere (or maybe I didn't look enough, I was just
+running t/*ls*tree* while hacking it.
 
+I do thin that we should consider just going with --format in either
+case if we agree that this is a good direction. I.e. could just support
+3-4 hardcoded formats now and die if anything else is specified.
+
+Then we'd be future-proof with the same interface expanding later, and
+wouldn't need to support options that we're only carrying because we
+didn't implement the more generic format support.
+
+(Assume my Signed-off-by, if there's any interest...)
+
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 3a442631c71..e89daad4229 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -31,6 +31,20 @@ static const  char * const ls_tree_usage[] =3D {
+ 	NULL
+ };
+=20
++static const char *ls_tree_format_d =3D "%(objectmode) %(objecttype) %(obj=
+ectname)	%(path)";
++static const char *ls_tree_format_l =3D "%(objectmode) %(objecttype) %(obj=
+ectname) %(objectsize)	%(path)";
++static const char *ls_tree_format_n =3D "%(path)";
++
++struct expand_ls_tree_data {
++	const char *format;
++	unsigned mode;
++	const char *type;
++	const struct object_id *oid;
++	int abbrev;
++	const char *pathname;
++	const char *basebuf;
++};
++
+ static int show_recursive(const char *base, int baselen, const char *pathn=
+ame)
+ {
+ 	int i;
+@@ -61,9 +75,69 @@ static int show_recursive(const char *base, int baselen,=
+ const char *pathname)
+ 	return 0;
+ }
+=20
++static size_t expand_show_tree(struct strbuf *sb,
++			       const char *start,
++			       void *context)
++{
++	struct expand_ls_tree_data *data =3D context;
++	const char *end;
++	const char *p;
++	size_t len;
++	const char *type =3D blob_type;
++
++	if (sb->len) {
++		fputs(sb->buf, stdout);
++		strbuf_reset(sb);
++	}
++
++	if (*start !=3D '(')
++		die(_("bad format as of '%s'"), start);
++	end =3D strchr(start + 1, ')');
++	if (!end)
++		die(_("ls-tree format element '%s' does not end in ')'"),
++		    start);
++	len =3D end - start + 1;
++
++	if (skip_prefix(start, "(objectmode)", &p)) {
++		printf("%06o", data->mode);
++	} else if (skip_prefix(start, "(objecttype)", &p)) {
++		fputs(data->type, stdout);
++	} else if (skip_prefix(start, "(objectsize)", &p)) {
++		char size_text[24];
++		const struct object_id *oid =3D data->oid;
++
++		if (!strcmp(type, blob_type)) {
++			unsigned long size;
++			if (oid_object_info(the_repository, oid, &size) =3D=3D OBJ_BAD)
++				xsnprintf(size_text, sizeof(size_text),
++					  "BAD");
++			else
++				xsnprintf(size_text, sizeof(size_text),
++					  "%"PRIuMAX, (uintmax_t)size);
++		} else {
++			xsnprintf(size_text, sizeof(size_text), "-");
++		}
++		printf("%7s", size_text);
++	} else if (skip_prefix(start, "(objectname)", &p)) {
++		fputs(find_unique_abbrev(data->oid, data->abbrev), stdout);
++	} else if (skip_prefix(start, "(path)", &p)) {
++		write_name_quoted_relative(data->basebuf,
++					   chomp_prefix ? ls_tree_prefix : NULL,
++					   stdout, line_termination);
++
++	} else {
++		unsigned int errlen =3D (unsigned long)len;
++		die(_("bad ls-tree format specifiec %%%.*s"), errlen, start);=09
++	}
++
++	return len;
++}
++
+ static int show_tree(const struct object_id *oid, struct strbuf *base,
+ 		const char *pathname, unsigned mode, void *context)
+ {
++	struct expand_ls_tree_data *data =3D context;
++	struct strbuf sb =3D STRBUF_INIT;
+ 	int retval =3D 0;
+ 	int baselen;
+ 	const char *type =3D blob_type;
+@@ -90,31 +164,18 @@ static int show_tree(const struct object_id *oid, stru=
+ct strbuf *base,
+ 	else if (ls_options & LS_TREE_ONLY)
+ 		return 0;
+=20
+-	if (!(ls_options & LS_NAME_ONLY)) {
+-		if (ls_options & LS_SHOW_SIZE) {
+-			char size_text[24];
+-			if (!strcmp(type, blob_type)) {
+-				unsigned long size;
+-				if (oid_object_info(the_repository, oid, &size) =3D=3D OBJ_BAD)
+-					xsnprintf(size_text, sizeof(size_text),
+-						  "BAD");
+-				else
+-					xsnprintf(size_text, sizeof(size_text),
+-						  "%"PRIuMAX, (uintmax_t)size);
+-			} else
+-				xsnprintf(size_text, sizeof(size_text), "-");
+-			printf("%06o %s %s %7s\t", mode, type,
+-			       find_unique_abbrev(oid, abbrev),
+-			       size_text);
+-		} else
+-			printf("%06o %s %s\t", mode, type,
+-			       find_unique_abbrev(oid, abbrev));
+-	}
+ 	baselen =3D base->len;
+ 	strbuf_addstr(base, pathname);
+-	write_name_quoted_relative(base->buf,
+-				   chomp_prefix ? ls_tree_prefix : NULL,
+-				   stdout, line_termination);
++
++	strbuf_reset(&sb);
++	data->mode =3D mode;
++	data->type =3D type;
++	data->oid =3D oid;
++	data->abbrev =3D abbrev;
++	data->pathname =3D pathname;
++	data->basebuf =3D base->buf;
++	strbuf_expand(&sb, data->format, expand_show_tree, data);
++
+ 	strbuf_setlen(base, baselen);
+ 	return retval;
+ }
+@@ -147,6 +208,9 @@ int cmd_ls_tree(int argc, const char **argv, const char=
+ *prefix)
+ 		OPT__ABBREV(&abbrev),
+ 		OPT_END()
+ 	};
++	struct expand_ls_tree_data ls_tree_cb_data =3D {
++		.format =3D ls_tree_format_d,
++	};
+=20
+ 	git_config(git_default_config, NULL);
+ 	ls_tree_prefix =3D prefix;
+@@ -161,8 +225,14 @@ int cmd_ls_tree(int argc, const char **argv, const cha=
+r *prefix)
+ 	}
+ 	/* -d -r should imply -t, but -d by itself should not have to. */
+ 	if ( (LS_TREE_ONLY|LS_RECURSIVE) =3D=3D
+-	    ((LS_TREE_ONLY|LS_RECURSIVE) & ls_options))
++	    ((LS_TREE_ONLY|LS_RECURSIVE) & ls_options)) {
+ 		ls_options |=3D LS_SHOW_TREES;
++	}
++	if (ls_options & LS_NAME_ONLY)
++		ls_tree_cb_data.format =3D ls_tree_format_n;
++
++	if (ls_options & LS_SHOW_SIZE)
++		ls_tree_cb_data.format =3D ls_tree_format_l;
+=20
+ 	if (argc < 1)
+ 		usage_with_options(ls_tree_usage, ls_tree_options);
+@@ -185,6 +255,7 @@ int cmd_ls_tree(int argc, const char **argv, const char=
+ *prefix)
+ 	tree =3D parse_tree_indirect(&oid);
+ 	if (!tree)
+ 		die("not a tree object");
++
+ 	return !!read_tree(the_repository, tree,
+-			   &pathspec, show_tree, NULL);
++			   &pathspec, show_tree, &ls_tree_cb_data);
+ }
