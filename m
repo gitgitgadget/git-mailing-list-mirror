@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C76EDC433F5
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09A33C433EF
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:17:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AFE6E61A7C
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:17:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1A3C61A7C
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:17:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347224AbhKOXUg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Nov 2021 18:20:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59370 "EHLO
+        id S1348004AbhKOXUl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Nov 2021 18:20:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352934AbhKOXS3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Nov 2021 18:18:29 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BCFCC03E033
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:18:40 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id b12so33613269wrh.4
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:18:40 -0800 (PST)
+        with ESMTP id S1352945AbhKOXSa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Nov 2021 18:18:30 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75D7DC03E035
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:18:41 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id b12so33613345wrh.4
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:18:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qdrqTb0ETKj9YnFe1m2xENmlQC6kUaSA12nGV6D6R18=;
-        b=VoFk2TRbBdhwIhHJJ1hBITh0I9JWgHpBSJk1j6UyoflSgVCq/Kn4TAU6TlBtrPKyOD
-         atvI7Nsh9tSzYP8ap8tiAYi48d+1xA/K+LNLqSxgvBsssuUAxwdwusO03UQU9lo+tkz+
-         MlMv0uVL8gYM3o7yi+9ubQ2ea7eiNSNnPEle57X+St+7K1qiRobE3vllkroEd4FLgGCV
-         YalOmSxNSboz6NE8jZyveB/tmrrnIigxE1qaUXqb06dpyDNuy7UYSiDPI/SFcWpkAyjq
-         7JnTXBSIX3T0KPYKVBj2Olx5SLLtyYzheI7ARyNy1JHGL+GdG01xRAxmKz26yW1Uktrh
-         WrZA==
+        bh=6Uein13J33hNHfMCTFZGOPOqcobL+adoxDZbgj7HJRY=;
+        b=cjDPd71eEuGkRE4yPjLUHhY/JX7yFPzmSSVJYbaU/sEWD7+uzPL05T1lCe+AB5u0fu
+         ySM/ZI9gUd00ym8FDDcAmoJCjLz6RbcZja1fishXLZNrblfi3ixsJKwJLw8jqwC6W7ED
+         cC+LsMDdA4AbvSwdCeowyxdvIg3msHa9WGJMzIAITaWvE/tlShS3azzA1ghP0FWYC2UZ
+         RbbA9hgtOiZJYjn6CPZXjXaluscKApSBxnvXNmgiVKb9k4YkfyCYAOIO6rzQRLr34AEa
+         lV1vivWN9t0VInWXU89mcZ7J7MJjqIV8uiLmuZhUBA0ig+i2gE5ropPsZVoWIkg69fJv
+         /gfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qdrqTb0ETKj9YnFe1m2xENmlQC6kUaSA12nGV6D6R18=;
-        b=lM1rO18zfy9jPO3EKCjPGN5IXbEarZb9xiR+CZ8RgSRyzSb6UIyOunHsrmuEGdd325
-         WhrIRMw3i1gMxhcexG1lHsNTyjcana4ZmfpWWxkrK6iGEU3Mvl4Xj5XRDrcBty99E5S6
-         GGbOH+zE26XQqlfyuDMrn4FEvH8kLAFgWOnFfywokNHWeGU8kjKmwPOrgX+Z9Vs07oz6
-         3AGGE+9wsC9vGyoscbLRkTukcxbCA7qvpJf3irQiHKhr0PFtXYIGxN1P7zX97qdoOv+U
-         x9j1/E7UaNkaW84kLRU2LId1xFCB9MRaxpMAbmV//YvyVO4bTAV2OjLEQKfdyMLQm7GK
-         lhvg==
-X-Gm-Message-State: AOAM532v4W+x/QJa64/lXcf34yZmXDozF8N0VAeDMrLr9sFhYOd5f11V
-        c8sHGX+Odp60ebc0cLLinA3vNRi5qUYL0g==
-X-Google-Smtp-Source: ABdhPJypgP2wBFljVcHyv7VctqUzxj0z/VfLuZGaGQ7mTjZv/tKq28sFdcuP6pce1Uln/Df/ZRzTRQ==
-X-Received: by 2002:a05:6000:186e:: with SMTP id d14mr3090714wri.376.1637014718446;
-        Mon, 15 Nov 2021 14:18:38 -0800 (PST)
+        bh=6Uein13J33hNHfMCTFZGOPOqcobL+adoxDZbgj7HJRY=;
+        b=zczdX7hWnYA/qdkNbDVwxxtP4yVe0KbnY8rMsh+qQWQgADIAtwDPAWL+UsVKkOmdRm
+         ROyGe5KCNSxYpWsgcoJAl2W17XmXbPMNVSJodEY9Bf84+37eTN/6Whi0C0Y+zm1TeCG1
+         tCerOKMPpQeMhPHI8G3gjWn3UEb+zJExUK1YFbiFxeOgvD0CucuodLYr5foO/PnjT87R
+         yi5UCOmYY9qD1VC8pYVdyMfhaTfexy8plsYkw5ayfymLimFMGox2Vb9CXUxZwJjaJ3bY
+         0MytHXvO6VIkwop7XOsGyNNh5fWUDVzM5A8tkbEtWA4AogBXVaQznLbp8wQUqY2yKTCP
+         TGLQ==
+X-Gm-Message-State: AOAM532cGwFMvVVKhigUYDOJk16UeYsR9pWGPQpKP+XNOFThKIQ1RQpF
+        BuzRGYl7Y8lf3N7BCO/zscBLbWDELL5Uug==
+X-Google-Smtp-Source: ABdhPJzZGiDm2ipUgBOW3RaP+RwoqA14v1IqR/lcLT9BbXfr4EDwq5yZ2NmWQR6OeQzsmHro5wCz9Q==
+X-Received: by 2002:adf:f0c5:: with SMTP id x5mr3068749wro.320.1637014719808;
+        Mon, 15 Nov 2021 14:18:39 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n184sm526812wme.2.2021.11.15.14.18.37
+        by smtp.gmail.com with ESMTPSA id n184sm526812wme.2.2021.11.15.14.18.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 14:18:37 -0800 (PST)
+        Mon, 15 Nov 2021 14:18:39 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH 06/21] config API: don't use vreportf(), make it static in usage.c
-Date:   Mon, 15 Nov 2021 23:18:16 +0100
-Message-Id: <RFC-patch-06.21-40fe7cf81a8-20211115T220831Z-avarab@gmail.com>
+Subject: [RFC PATCH 08/21] usage.c: add a non-fatal bug() function to go with BUG()
+Date:   Mon, 15 Nov 2021 23:18:18 +0100
+Message-Id: <RFC-patch-08.21-6a384edf6ce-20211115T220831Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.rc2.809.g11e21d44b24
 In-Reply-To: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
 References: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
@@ -73,190 +73,300 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In preceding commits the rest of the vreportf() users outside of
-usage.c have been migrated to die_message(), leaving only the
-git_die_config() function added in 5a80e97c827 (config: add
-`git_die_config()` to the config-set API, 2014-08-07).
+Add a bug() function to use in cases where we'd like to indicate a
+runtime BUG(), but would like to deref the BUG() call because we're
+possibly accumulating more bug() callers to exhaustively indicate what
+went wrong. This will be used in place of optbug() in parse-options.c
 
-Let's have its callers call error() themselves if they want to emit a
-message, which is exactly what git_die_config() was doing for them
-before emitting its own die() message.
+Any caller to bug() must follow up such calls with BUG_if_bug(), and
+as the tests and documentation here show we'll catch missing
+BUG_if_bug() invocations in our exit() wrapper.
 
-This means that we can make the vreportf() in usage.c "static", and
-only expose functions such as usage(), die(), warning() etc.
+I'd previously proposed this as part of another series[1], in that
+use-case we ended thinking a BUG() would be better (and eventually
+96e41f58fe1 (fsck: report invalid object type-path combinations,
+2021-10-01) ended up with neither). Here I'll be converting existing
+in-tree users to this, so hopefully this won't be controversial.
+
+I'm not bothering to support the "else" branch of
+"HAVE_VARIADIC_MACROS". Since 765dc168882 (git-compat-util: always
+enable variadic macros, 2021-01-28) we've had a hard dependency on
+them, and manually undefining the macro will nowadays result in a hard
+compilation error. We should follow up with [2] instead and remove the
+"else" codepath.
+
+1. https://lore.kernel.org/git/YGRXomWwRYPdXZi3@coredump.intra.peff.net/
+2. https://lore.kernel.org/git/cover-0.2-00000000000-20210412T105422Z-avarab@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/fast-import.c |  7 ++++---
- builtin/notes.c       |  6 ++++--
- config.c              | 22 +++++++++-------------
- config.h              | 10 ++++++----
- git-compat-util.h     |  1 -
- imap-send.c           |  3 ++-
- usage.c               |  2 +-
- 7 files changed, 26 insertions(+), 25 deletions(-)
+ .../technical/api-error-handling.txt          | 13 ++++-
+ Documentation/technical/api-trace2.txt        |  4 +-
+ git-compat-util.h                             | 12 +++++
+ t/helper/test-trace2.c                        | 27 ++++++++--
+ t/t0210-trace2-normal.sh                      | 52 +++++++++++++++++++
+ trace2.c                                      |  6 +++
+ usage.c                                       | 32 ++++++++++--
+ 7 files changed, 133 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 2b2e28bad79..4e2432bb491 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -3456,9 +3456,10 @@ static void git_pack_config(void)
- 	}
- 	if (!git_config_get_int("pack.indexversion", &indexversion_value)) {
- 		pack_idx_opts.version = indexversion_value;
--		if (pack_idx_opts.version > 2)
--			git_die_config("pack.indexversion",
--					"bad pack.indexversion=%"PRIu32, pack_idx_opts.version);
-+		if (pack_idx_opts.version > 2) {
-+			error("bad pack.indexversion=%"PRIu32, pack_idx_opts.version);
-+			git_die_config("pack.indexversion");
-+		}
- 	}
- 	if (!git_config_get_ulong("pack.packsizelimit", &packsizelimit_value))
- 		max_packsize = packsizelimit_value;
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 2812d1eac40..60c5dab4122 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -763,8 +763,10 @@ static int git_config_get_notes_strategy(const char *key,
+diff --git a/Documentation/technical/api-error-handling.txt b/Documentation/technical/api-error-handling.txt
+index 8be4f4d0d6a..818489bc3d4 100644
+--- a/Documentation/technical/api-error-handling.txt
++++ b/Documentation/technical/api-error-handling.txt
+@@ -1,7 +1,7 @@
+ Error reporting in git
+ ======================
  
- 	if (git_config_get_string(key, &value))
- 		return 1;
--	if (parse_notes_merge_strategy(value, strategy))
--		git_die_config(key, _("unknown notes merge strategy %s"), value);
-+	if (parse_notes_merge_strategy(value, strategy)) {
-+		error(_("unknown notes merge strategy %s"), value);
-+		git_die_config(key);
-+	}
+-`BUG`, `die`, `usage`, `error`, and `warning` report errors of
++`BUG`, `bug`, `die`, `usage`, `error`, and `warning` report errors of
+ various kinds.
  
- 	free(value);
- 	return 0;
-diff --git a/config.c b/config.c
-index c5873f3a706..30f7971e0cc 100644
---- a/config.c
-+++ b/config.c
-@@ -2323,7 +2323,7 @@ int repo_config_get_string(struct repository *repo,
- 	git_config_check_init(repo);
- 	ret = git_configset_get_string(repo->config, key, dest);
- 	if (ret < 0)
--		git_die_config(key, NULL);
-+		git_die_config(key);
- 	return ret;
- }
+ - `BUG` is for failed internal assertions that should never happen,
+@@ -18,6 +18,17 @@ various kinds.
+   to the user and returns -1 for convenience in signaling the error
+   to the caller.
  
-@@ -2334,7 +2334,7 @@ int repo_config_get_string_tmp(struct repository *repo,
- 	git_config_check_init(repo);
- 	ret = git_configset_get_string_tmp(repo->config, key, dest);
- 	if (ret < 0)
--		git_die_config(key, NULL);
-+		git_die_config(key);
- 	return ret;
- }
++- `bug` (lower-case, not `BUG`) is supposed to be used like `BUG` but
++  returns -1 like error. The user should then call `BUG_if_bug()` to die.
+++
++This is for the convenience of APIs who'd like to potentially report
++more than one bug before calling `BUG_if_bug()`, which will invoke
++`BUG()` if there were any preceding calls to `bug()`.
+++
++We call `BUG_if_bug()` ourselves in on `exit()` (via a wrapper, not
++`atexit()`), which guarantees that we'll catch cases where we forgot
++to invoke `BUG_if_bug()` following a call or calls to `bug()`.
++
+ - `warning` is for reporting situations that probably should not
+   occur but which the user (and Git) can continue to work around
+   without running into too many problems.  Like `error`, it
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index bb13ca3db8b..68e221b95ab 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -465,8 +465,8 @@ completed.)
+ ------------
  
-@@ -2380,7 +2380,7 @@ int repo_config_get_pathname(struct repository *repo,
- 	git_config_check_init(repo);
- 	ret = git_configset_get_pathname(repo->config, key, dest);
- 	if (ret < 0)
--		git_die_config(key, NULL);
-+		git_die_config(key);
- 	return ret;
- }
- 
-@@ -2452,8 +2452,10 @@ int git_config_get_expiry(const char *key, const char **output)
- 		return ret;
- 	if (strcmp(*output, "now")) {
- 		timestamp_t now = approxidate("now");
--		if (approxidate(*output) >= now)
--			git_die_config(key, _("Invalid %s: '%s'"), key, *output);
-+		if (approxidate(*output) >= now) {
-+			error(_("Invalid %s: '%s'"), key, *output);
-+			git_die_config(key);
-+		}
- 	}
- 	return ret;
- }
-@@ -2550,18 +2552,12 @@ void git_die_config_linenr(const char *key, const char *filename, int linenr)
- 		    key, filename, linenr);
- }
- 
--NORETURN __attribute__((format(printf, 2, 3)))
--void git_die_config(const char *key, const char *err, ...)
-+NORETURN
-+void git_die_config(const char *key)
+ `"error"`::
+-	This event is emitted when one of the `BUG()`, `error()`, `die()`,
+-	`warning()`, or `usage()` functions are called.
++	This event is emitted when one of the `BUG()`, `bug()`, `error()`,
++	`die()`, `warning()`, or `usage()` functions are called.
+ +
+ ------------
  {
- 	const struct string_list *values;
- 	struct key_value_info *kv_info;
- 
--	if (err) {
--		va_list params;
--		va_start(params, err);
--		vreportf("error: ", err, params);
--		va_end(params);
--	}
- 	values = git_config_get_value_multi(key);
- 	kv_info = values->items[values->nr - 1].util;
- 	git_die_config_linenr(key, kv_info->filename, kv_info->linenr);
-diff --git a/config.h b/config.h
-index f119de01309..fae585d2005 100644
---- a/config.h
-+++ b/config.h
-@@ -626,11 +626,13 @@ struct key_value_info {
- };
- 
- /**
-- * First prints the error message specified by the caller in `err` and then
-- * dies printing the line number and the file name of the highest priority
-- * value for the configuration variable `key`.
-+ * Dies printing the line number and the file name of the highest
-+ * priority value for the configuration variable `key`.
-+ *
-+ * Consider calling error() first with a more specific formatted
-+ * message of your own.
-  */
--NORETURN void git_die_config(const char *key, const char *err, ...) __attribute__((format(printf, 2, 3)));
-+NORETURN void git_die_config(const char *key);
- 
- /**
-  * Helper function which formats the die error message according to the
 diff --git a/git-compat-util.h b/git-compat-util.h
-index d56f416af8a..2f44aa86a8b 100644
+index 2f44aa86a8b..9b02a3e05ba 100644
 --- a/git-compat-util.h
 +++ b/git-compat-util.h
-@@ -466,7 +466,6 @@ static inline int git_has_dir_sep(const char *path)
- struct strbuf;
+@@ -1198,9 +1198,21 @@ static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
+ /* usage.c: only to be used for testing BUG() implementation (see test-tool) */
+ extern int BUG_exit_code;
  
- /* General helper functions */
--void vreportf(const char *prefix, const char *err, va_list params);
- NORETURN void usage(const char *err);
- NORETURN void usagef(const char *err, ...) __attribute__((format (printf, 1, 2)));
- NORETURN void die(const char *err, ...) __attribute__((format (printf, 1, 2)));
-diff --git a/imap-send.c b/imap-send.c
-index e6090a0346a..0fdfe5159eb 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1350,7 +1350,8 @@ static int git_imap_config(const char *var, const char *val, void *cb)
- 		server.port = git_config_int(var, val);
- 	else if (!strcmp("imap.host", var)) {
- 		if (!val) {
--			git_die_config("imap.host", "Missing value for 'imap.host'");
-+			error("Missing value for 'imap.host'");
-+			git_die_config("imap.host");
- 		} else {
- 			if (starts_with(val, "imap:"))
- 				val += 5;
++/* usage.c: if bug() is called we must have a BUG() invocation afterwards */
++extern int bug_called_must_BUG;
++
+ __attribute__((format (printf, 3, 4))) NORETURN
+ void BUG_fl(const char *file, int line, const char *fmt, ...);
+ #define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
++__attribute__((format (printf, 3, 4)))
++int bug_fl(const char *file, int line, const char *fmt, ...);
++#define bug(...) bug_fl(__FILE__, __LINE__, __VA_ARGS__)
++#define BUG_if_bug() do { \
++	if (bug_called_must_BUG) { \
++		bug_called_must_BUG = 0; \
++		BUG_fl(__FILE__, __LINE__, "see bug() output above"); \
++	} \
++} while (0)
+ 
+ /*
+  * Preserves errno, prints a message, but gives no warning for ENOENT.
+diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
+index f93633f895a..84bc26fc20c 100644
+--- a/t/helper/test-trace2.c
++++ b/t/helper/test-trace2.c
+@@ -198,14 +198,29 @@ static int ut_006data(int argc, const char **argv)
+ 	return 0;
+ }
+ 
+-static int ut_007bug(int argc, const char **argv)
++/*
++ * Ensure that BUG() and bug() print to trace2.
++ */
++static int ut_007BUG(int argc, const char **argv)
+ {
+-	/*
+-	 * Exercise BUG() to ensure that the message is printed to trace2.
+-	 */
+ 	BUG("the bug message");
+ }
+ 
++static int ut_008bug(int argc, const char **argv)
++{
++	bug("a bug message");
++	bug("another bug message");
++	BUG_if_bug();
++	return 0;
++}
++
++static int ut_009bug_BUG(int argc, const char **argv)
++{
++	bug("a bug message");
++	bug("another bug message");
++	return 0;
++}
++
+ /*
+  * Usage:
+  *     test-tool trace2 <ut_name_1> <ut_usage_1>
+@@ -222,7 +237,9 @@ static struct unit_test ut_table[] = {
+ 	{ ut_004child,    "004child",  "[<child_command_line>]" },
+ 	{ ut_005exec,     "005exec",   "<git_command_args>" },
+ 	{ ut_006data,     "006data",   "[<category> <key> <value>]+" },
+-	{ ut_007bug,      "007bug",    "" },
++	{ ut_007BUG,      "007bug",    "" },
++	{ ut_008bug,      "008bug",    "" },
++	{ ut_009bug_BUG,  "009bug_BUG","" },
+ };
+ /* clang-format on */
+ 
+diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
+index 37c359bd5a2..7c0e0017ad3 100755
+--- a/t/t0210-trace2-normal.sh
++++ b/t/t0210-trace2-normal.sh
+@@ -168,6 +168,58 @@ test_expect_success 'BUG messages are written to trace2' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'bug messages with BUG_if_bug() are written to trace2' '
++	test_when_finished "rm trace.normal actual expect" &&
++	test_expect_code 99 env GIT_TRACE2="$(pwd)/trace.normal" \
++		test-tool trace2 008bug 2>err &&
++	cat >expect <<-\EOF &&
++	a bug message
++	another bug message
++	see bug() output above
++	EOF
++	sed "s/^.*: //" <err >actual &&
++	test_cmp expect actual &&
++
++	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	cat >expect <<-EOF &&
++		version $V
++		start _EXE_ trace2 008bug
++		cmd_name trace2 (trace2)
++		error a bug message
++		error another bug message
++		error see bug() output above
++		exit elapsed:_TIME_ code:99
++		atexit elapsed:_TIME_ code:99
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'bug messages without BUG_if_bug() are written to trace2' '
++	test_when_finished "rm trace.normal actual expect" &&
++	test_expect_code 99 env GIT_TRACE2="$(pwd)/trace.normal" \
++		test-tool trace2 009bug_BUG 2>err &&
++	cat >expect <<-\EOF &&
++	a bug message
++	another bug message
++	had bug() output above, in addition missed BUG_if_bug() call
++	EOF
++	sed "s/^.*: //" <err >actual &&
++	test_cmp expect actual &&
++
++	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	cat >expect <<-EOF &&
++		version $V
++		start _EXE_ trace2 009bug_BUG
++		cmd_name trace2 (trace2)
++		error a bug message
++		error another bug message
++		error had bug() output above, in addition missed BUG_if_bug() call
++		exit elapsed:_TIME_ code:99
++		atexit elapsed:_TIME_ code:99
++	EOF
++	test_cmp expect actual
++'
++
+ sane_unset GIT_TRACE2_BRIEF
+ 
+ # Now test without environment variables and get all Trace2 settings
+diff --git a/trace2.c b/trace2.c
+index 179caa72cfe..970e541a0d1 100644
+--- a/trace2.c
++++ b/trace2.c
+@@ -211,6 +211,12 @@ int trace2_cmd_exit_fl(const char *file, int line, int code)
+ 
+ 	code &= 0xff;
+ 
++	if (bug_called_must_BUG) {
++		/* BUG_vfl() calls exit(), which calls us again */
++		bug_called_must_BUG = 0;
++		BUG("had bug() output above, in addition missed BUG_if_bug() call");
++	}
++
+ 	if (!trace2_enabled)
+ 		return code;
+ 
 diff --git a/usage.c b/usage.c
-index a39d7aa330b..43231c8eac0 100644
+index 43231c8eac0..b411dfb5641 100644
 --- a/usage.c
 +++ b/usage.c
-@@ -6,7 +6,7 @@
- #include "git-compat-util.h"
- #include "cache.h"
+@@ -290,18 +290,24 @@ void warning(const char *warn, ...)
+ /* Only set this, ever, from t/helper/, when verifying that bugs are caught. */
+ int BUG_exit_code;
  
--void vreportf(const char *prefix, const char *err, va_list params)
-+static void vreportf(const char *prefix, const char *err, va_list params)
+-static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_list params)
++static void BUG_vfl_common(const char *file, int line, const char *fmt,
++			   va_list params)
  {
- 	char msg[4096];
- 	char *p, *pend = msg + sizeof(msg);
+ 	char prefix[256];
+-	va_list params_copy;
+-	static int in_bug;
+-
+-	va_copy(params_copy, params);
+ 
+ 	/* truncation via snprintf is OK here */
+ 	snprintf(prefix, sizeof(prefix), "BUG: %s:%d: ", file, line);
+ 
+ 	vreportf(prefix, fmt, params);
++}
++
++static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_list params)
++{
++	va_list params_copy;
++	static int in_bug;
++
++	va_copy(params_copy, params);
++	BUG_vfl_common(file, line, fmt, params);
+ 
+ 	if (in_bug)
+ 		abort();
+@@ -322,6 +328,22 @@ NORETURN void BUG_fl(const char *file, int line, const char *fmt, ...)
+ 	va_end(ap);
+ }
+ 
++int bug_called_must_BUG;
++int bug_fl(const char *file, int line, const char *fmt, ...)
++{
++	va_list ap, cp;
++
++	bug_called_must_BUG = 1;
++
++	va_copy(cp, ap);
++	va_start(ap, fmt);
++	BUG_vfl_common(file, line, fmt, ap);
++	va_end(ap);
++	trace2_cmd_error_va(fmt, cp);
++
++	return -1;
++}
++
+ #ifdef SUPPRESS_ANNOTATED_LEAKS
+ void unleak_memory(const void *ptr, size_t len)
+ {
 -- 
 2.34.0.rc2.809.g11e21d44b24
 
