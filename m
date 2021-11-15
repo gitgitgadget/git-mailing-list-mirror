@@ -2,142 +2,562 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACEF7C433F5
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 16:52:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0E90C43217
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 17:27:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 96C6B60174
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 16:52:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 941076328B
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 17:27:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232164AbhKOQzu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Nov 2021 11:55:50 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59140 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232229AbhKOQzq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Nov 2021 11:55:46 -0500
-Received: (qmail 13544 invoked by uid 109); 15 Nov 2021 16:52:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 15 Nov 2021 16:52:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12618 invoked by uid 111); 15 Nov 2021 16:52:46 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 15 Nov 2021 11:52:46 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 15 Nov 2021 11:52:45 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.34.0-rc2
-Message-ID: <YZKQXYdemZCNS/Bz@coredump.intra.peff.net>
-References: <xmqq4k8kzuz2.fsf@gitster.g>
- <YY0HbQJEWbOwuuFj@coredump.intra.peff.net>
- <xmqqwnlemwcy.fsf@gitster.g>
- <YY17rBFIdDl+H47I@coredump.intra.peff.net>
+        id S237946AbhKORay (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Nov 2021 12:30:54 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53659 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238052AbhKOR2u (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Nov 2021 12:28:50 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D2CA015AB90;
+        Mon, 15 Nov 2021 12:25:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=NlJxPWr7GMlcpYYM1d+fCd4Rh
+        btVHzGtUH09YStbKwQ=; b=LCaaCkDAVXZlkK1tDHObnA1/17eVZYrMLB6RRBS3a
+        aByI/Fq5w4r5Uif4FHQkDCU6C4bS8npOE+RDF4XF1iR5iA2+oN4WBLXOj4a6DpiI
+        HHTJeG/0/mGmCiPYbyoW6sjBv4BUdlU5zmH/0xeVSEF7fUObMU0G/XaR50S7vX+3
+        2k=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CB5EB15AB8E;
+        Mon, 15 Nov 2021 12:25:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3671D15AB8D;
+        Mon, 15 Nov 2021 12:25:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git v2.34.0
+Date:   Mon, 15 Nov 2021 09:25:49 -0800
+Message-ID: <xmqq8rxpgwki.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YY17rBFIdDl+H47I@coredump.intra.peff.net>
+X-Pobox-Relay-ID: 147B73DA-4639-11EC-8058-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 11, 2021 at 03:23:09PM -0500, Jeff King wrote:
+The latest feature release Git v2.34.0 is now available at the
+usual places.  It is comprised of 834 non-merge commits since
+v2.33.0, contributed by 109 people, 29 of which are new faces [*].
 
-> Yes, I think that framing is right: it is making SLOP much worse. We
-> could similarly have had bogus timestamps in those commits which would
-> cause the same outcome. So in that sense it is nothing new. On the other
-> hand, I wonder how often it will cause extra traversal work (keeping in
-> mind that this commit traversal is just the first stage; after we find
-> the commits, then we talk all of their trees, which is the more
-> expensive part).
-> 
-> For the case of adding new commits directly on top of another branch, I
-> think there would be no change. But any time you have to walk down to a
-> common fork point (e.g., imagine I made a new branch forked from an old
-> bit of history), we may fail to find that. I haven't quite constructed
-> an example, but I have a feeling we could end up walking over
-> arbitrarily long segments of history.
+The tarballs are found at:
 
-I was playing around with this a bit more, and there is one subtlety in
-the "day-10" snippet I showed that I hadn't noted before. It's important
-the day-1 does not have any parents. If we used day-2 instead, then
-limit_list() would insert its parent (day-1, in this case) into the
-queue, without an UNINTERESTING flag (because it's the parent of
-something interesting).  And thus when we call still_interesting(), we
-would never decrement the slop counter, because we know we are still
-walking back to something potentially interesting.
+    https://www.kernel.org/pub/software/scm/git/
 
-This "works" because we put the new commit at the end of the list via
-commit_list_insert_by_date(). That can be fooled, of course, because
-it's assuming the list is already in sorted order (which it isn't). So
-there could be an "old" commit at the front, and we place the parent in
-front of that, even though it's UNINTERESTING descendants are further
-back in the list.
+The following public repositories all have a copy of the 'v2.34.0'
+tag and the 'master' branch that the tag points at:
 
-So I do think we could walk an arbitrary string of history in this way,
-all the way down to the root, or to something else pointed to by a ref
-tip. Here's the example I came up with:
+  url =3D https://git.kernel.org/pub/scm/git/git
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://github.com/gitster/git
 
--- >8 --
-git init -q repo
-cd repo
+New contributors whose contributions weren't in v2.33.0 are as follows.
+Welcome to the Git development community!
 
-commit_at() {
-	echo $1 >$1
-	git add .
-	base=1234567890
-	unit=86400
-	timestamp="@$((base + $1 * unit)) +0000"
-	GIT_COMMITTER_DATE=$timestamp \
-	GIT_AUTHOR_DATE=$timestamp \
-	git commit -qm "commit at day $1"
-}
+  Alan Blotz, Azeem Bande-Ali, Dr. Matthias St. Pierre, Eli
+  Schwartz, git.mexon@spamgourmet.com, Glen Choo, Hamza Mahfooz,
+  Joel Klinghed, Johannes Altmanninger, Jonas Kittner, Kenneth
+  Arnold, Kim Altintop, Kyle Zhao, Mahi Kolla, Marvin H=C3=A4user,
+  Mickey Endito, Rob Browning, Robert Estelle, Robert Leftwich,
+  Robin Dupret, Tal Kelrich, Tassilo Horn, Thomas De Zeeuw,
+  USAMI Kenta, Victor Gambier, Victoria Dye, Wesley Schwengle,
+  Xingman Chen, and Zoker.
 
-# imagine a bunch of base history
-for i in $(seq 100); do
-	commit_at $i
-done
-git tag base
+Returning contributors who helped this release are as follows.
+Thanks for your continued support.
 
-# And then we have some older branches hanging around.
-for i in $(seq 1 10); do
-	git checkout -b branch-$i base~$((60+$i))
-done
+  Adam Dinwoodie, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason, Alban Gruin,
+  Alexander Shopov, Alex Henrie, Alex Riesen, Andrzej Hunt,
+  Arusekk, Atharva Raykar, Bagas Sanjaya, Ben Boeckel, brian
+  m. carlson, Carlo Arenas, Carlo Marcelo Arenas Bel=C3=B3n, Christian
+  Couder, Christopher Diaz Riveros, Daniel Santos, David Aguilar,
+  David Turner, Derrick Stolee, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Dan=
+h, Elijah
+  Newren, Emily Shaffer, Emir Sar=C4=B1, Eric Sunshine, Eric Wong,
+  Fabian Stelzer, Fangyi Zhou, Felipe Contreras, Greg Hurrell,
+  Han-Wen Nienhuys, Han Xin, Hariom Verma, Jacob Keller, Jacob
+  Vosmaer, Jean-No=C3=ABl Avila, Jeff Hostetler, Jeff King, Jiang Xin,
+  Johannes Schindelin, Johannes Sixt, Jonathan Nieder, Jonathan
+  Tan, Jordi Mas, Josh Steadmon, Junio C Hamano, Kaartic Sivaraam,
+  L=C3=A9na=C3=AFc Huard, Martin =C3=85gren, Matheus Tavares, Matheus Tav=
+ares
+  Bernardino, Matthias A=C3=9Fhauer, Matthias R=C3=BCster, Mike Hommey,
+  Miriam Rubio, Orgad Shaneh, Patrick Steinhardt, Peter Krefting,
+  Philip Oakley, Philippe Blain, Phillip Szelat, Phillip Wood,
+  Pranit Bauva, Ralf Thielow, Ramsay Jones, Randall S. Becker,
+  Ren=C3=A9 Scharfe, Sergey Organov, Shourya Shukla, SZEDER G=C3=A1bor,
+  Takashi Iwai, Tanushree Tumane, Taylor Blau, Teng Long, Todd
+  Zullinger, Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n, Ulrich Windl, Yi-Jyun P=
+an,
+  ZheNing Hu, and =E4=BE=9D=E4=BA=91.
 
-# But also a newer one; it's important that this refname
-# sort after the other ones, because that's what confuses
-# the sorting.
-git branch new-branch
+[*] We are counting not just the authorship contribution but issue
+    reporting, mentoring, helping and reviewing that are recorded in
+    the commit trailers.
 
-# and then somebody pushes/fetches a branch based on an old part of history,
-# newer than our old branches, but older than our new one.
-#
-# We won't actually create the branch here, because we're simulating the state
-# before the ref is created, when we do the connectivity check.
-old_commit=$(git rev-parse base~50)
-new_commit=$(echo foo | git commit-tree -p $old_commit HEAD^{tree})
+----------------------------------------------------------------
 
-# and now here's the connectivity check we would do
-git rev-list $new_commit --not --all >expect
-git rev-list --unsorted-input $new_commit --not --all >actual
-diff -u expect actual
--- >8 --
+Git 2.34 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-That will report all of base~60..base~50 in the output, when it should
-just report the single new commit.
+Updates since Git 2.33
+----------------------
 
-I don't think any of this changes the plan for the 2.34 release (in
-fact, it makes me more confident that reverting this change was the
-right thing to do). I'm just recording my notes here for revisiting the
-topic later.
+Backward compatibility notes
 
-My suspicion is that there's no easy way to make this work. We're
-violating the assumption in still_interesting() that it can easily find
-the lowest-date commit. We could drop that assumption for the unsorted
-case, but then I think we'd be forced to walk all the way to the root
-commits, which is even worse than sorting the tips.
+ * The "--preserve-merges" option of "git rebase" has been removed.
 
-I suspect a better solution would be to make use of generation numbers
-from the commit graph if we have them. The --topo-order stuff already
-does this, and I kind of wonder if we could piggy-back on that.
 
--Peff
+UI, Workflows & Features
+
+ * Pathname expansion (like "~username/") learned a way to specify a
+   location relative to Git installation (e.g. its $sharedir which is
+   $(prefix)/share), with "%(prefix)".
+
+ * The `ort` strategy is used instead of `recursive` as the default
+   merge strategy.
+
+ * The userdiff pattern for "java" language has been updated.
+
+ * "git rebase" by default skips changes that are equivalent to
+   commits that are already in the history the branch is rebased onto;
+   give messages when this happens to let the users be aware of
+   skipped commits, and also teach them how to tell "rebase" to keep
+   duplicated changes.
+
+ * The advice message that "git cherry-pick" gives when it asks
+   conflicted replay of a commit to be resolved by the end user has
+   been updated.
+
+ * After "git clone --recurse-submodules", all submodules are cloned
+   but they are not by default recursed into by other commands.  With
+   submodule.stickyRecursiveClone configuration set, submodule.recurse
+   configuration is set to true in a repository created by "clone"
+   with "--recurse-submodules" option.
+
+ * The logic for auto-correction of misspelt subcommands learned to go
+   interactive when the help.autocorrect configuration variable is set
+   to 'prompt'.
+
+ * "git maintenance" scheduler learned to use systemd timers as a
+   possible backend.
+
+ * "git diff --submodule=3Ddiff" showed failure from run_command() when
+   trying to run diff inside a submodule, when the user manually
+   removes the submodule directory.
+
+ * "git bundle unbundle" learned to show progress display.
+
+ * In cone mode, the sparse-index code path learned to remove ignored
+   files (like build artifacts) outside the sparse cone, allowing the
+   entire directory outside the sparse cone to be removed, which is
+   especially useful when the sparse patterns change.
+
+ * Taking advantage of the CGI interface, http-backend has been
+   updated to enable protocol v2 automatically when the other side
+   asks for it.
+
+ * The credential-cache helper has been adjusted to Windows.
+
+ * The error in "git help no-such-git-command" is handled better.
+
+ * The unicode character width table (used for output alignment) has
+   been updated.
+
+ * The ref iteration code used to optionally allow dangling refs to be
+   shown, which has been tightened up.
+
+ * "git add", "git mv", and "git rm" have been adjusted to avoid
+   updating paths outside of the sparse-checkout definition unless
+   the user specifies a "--sparse" option.
+
+ * "git repack" has been taught to generate multi-pack reachability
+   bitmaps.
+
+ * "git fsck" has been taught to report mismatch between expected and
+   actual types of an object better.
+
+ * In addition to GnuPG, ssh public crypto can be used for object and
+   push-cert signing.  Note that this feature cannot be used with
+   ssh-keygen from OpenSSH 8.7, whose support for it is broken.  Avoid
+   using it unless you update to OpenSSH 8.8.
+
+ * "git log --grep=3Dstring --author=3Dname" learns to highlight hits jus=
+t
+   like "git grep string" does.
+
+
+
+Performance, Internal Implementation, Development Support etc.
+
+ * "git bisect" spawned "git show-branch" only to pretty-print the
+   title of the commit after checking out the next version to be
+   tested; this has been rewritten in C.
+
+ * "git add" can work better with the sparse index.
+
+ * Support for ancient versions of cURL library (pre 7.19.4) has been
+   dropped.
+
+ * A handful of tests that assumed implementation details of files
+   backend for refs have been cleaned up.
+
+ * trace2 logs learned to show parent process name to see in what
+   context Git was invoked.
+
+ * Loading of ref tips to prepare for common ancestry negotiation in
+   "git fetch-pack" has been optimized by taking advantage of the
+   commit graph when available.
+
+ * Remind developers that the userdiff patterns should be kept simple
+   and permissive, assuming that the contents they apply are always
+   syntactically correct.
+
+ * The current implementation of GIT_TEST_FAIL_PREREQS is broken in
+   that checking for the lack of a prerequisite would not work.  Avoid
+   the use of "if ! test_have_prereq X" in a test script.
+
+ * The revision traversal API has been optimized by taking advantage
+   of the commit-graph, when available, to determine if a commit is
+   reachable from any of the existing refs.
+
+ * "git fetch --quiet" optimization to avoid useless computation of
+   info that will never be displayed.
+
+ * Callers from older advice_config[] based API has been updated to
+   use the newer advice_if_enabled() and advice_enabled() API.
+
+ * Teach "test_pause" and "debug" helpers to allow using the HOME and
+   TERM environment variables the user usually uses.
+
+ * "make INSTALL_STRIP=3D-s install" allows the installation step to use
+   "install -s" to strip the binaries as they get installed.
+
+ * Code that handles large number of refs in the "git fetch" code
+   path has been optimized.
+
+ * The reachability bitmap file used to be generated only for a single
+   pack, but now we've learned to generate bitmaps for history that
+   span across multiple packfiles.
+
+ * The code to make "git grep" recurse into submodules has been
+   updated to migrate away from the "add submodule's object store as
+   an alternate object store" mechanism (which is suboptimal).
+
+ * The tracing of process ancestry information has been enhanced.
+
+ * Reduce number of write(2) system calls while sending the
+   ref advertisement.
+
+ * Update the build procedure to use the "-pedantic" build when
+   DEVELOPER makefile macro is in effect.
+
+ * Large part of "git submodule add" gets rewritten in C.
+
+ * The run-command API has been updated so that the callers can easily
+   ask the file descriptors open for packfiles to be closed immediately
+   before spawning commands that may trigger auto-gc.
+
+ * An oddball OPTION_ARGUMENT feature has been removed from the
+   parse-options API.
+
+ * The mergesort implementation used to sort linked list has been
+   optimized.
+
+ * Remove external declaration of functions that no longer exist.
+
+ * "git multi-pack-index write --bitmap" learns to propagate the
+   hashcache from original bitmap to resulting bitmap.
+
+ * CI learns to run the leak sanitizer builds.
+
+ * "git grep --recurse-submodules" takes trees and blobs from the
+   submodule repository, but the textconv settings when processing a
+   blob from the submodule is not taken from the submodule repository.
+   A test is added to demonstrate the issue, without fixing it.
+
+ * Teach "git help -c" into helping the command line completion of
+   configuration variables.
+
+ * When "git cmd -h" shows more than one line of usage text (e.g.
+   the cmd subcommand may take sub-sub-command), parse-options API
+   learned to align these lines, even across i18n/l10n.
+
+ * Prevent "make sparse" from running for the source files that
+   haven't been modified.
+
+ * The code path to write a new version of .midx multi-pack index files
+   has learned to release the mmaped memory holding the current
+   version of .midx before removing them from the disk, as some
+   platforms do not allow removal of a file that still has mapping.
+
+ * A new feature has been added to abort early in the test framework.
+
+
+Fixes since v2.33
+-----------------
+
+ * Input validation of "git pack-objects --stdin-packs" has been
+   corrected.
+
+ * Bugfix for common ancestor negotiation recently introduced in "git
+   push" code path.
+
+ * "git pull" had various corner cases that were not well thought out
+   around its --rebase backend, e.g. "git pull --ff-only" did not stop
+   but went ahead and rebased when the history on other side is not a
+   descendant of our history.  The series tries to fix them up.
+
+ * "git apply" miscounted the bytes and failed to read to the end of
+   binary hunks.
+
+ * "git range-diff" code clean-up.
+
+ * "git commit --fixup" now works with "--edit" again, after it was
+   broken in v2.32.
+
+ * Use upload-artifacts v1 (instead of v2) for 32-bit linux, as the
+   new version has a blocker bug for that architecture.
+
+ * Checking out all the paths from HEAD during the last conflicted
+   step in "git rebase" and continuing would cause the step to be
+   skipped (which is expected), but leaves MERGE_MSG file behind in
+   $GIT_DIR and confuses the next "git commit", which has been
+   corrected.
+
+ * Various bugs in "git rebase -r" have been fixed.
+
+ * mmap() imitation used to call xmalloc() that dies upon malloc()
+   failure, which has been corrected to just return an error to the
+   caller to be handled.
+
+ * "git diff --relative" segfaulted and/or produced incorrect result
+   when there are unmerged paths.
+
+ * The delayed checkout code path in "git checkout" etc. were chatty
+   even when --quiet and/or --no-progress options were given.
+
+ * "git branch -D <branch>" used to refuse to remove a broken branch
+   ref that points at a missing commit, which has been corrected.
+
+ * Build update for Apple clang.
+
+ * The parser for the "--nl" option of "git column" has been
+   corrected.
+
+ * "git upload-pack" which runs on the other side of "git fetch"
+   forgot to take the ref namespaces into account when handling
+   want-ref requests.
+
+ * The sparse-index support can corrupt the index structure by storing
+   a stale and/or uninitialized data, which has been corrected.
+
+ * Buggy tests could damage repositories outside the throw-away test
+   area we created.  We now by default export GIT_CEILING_DIRECTORIES
+   to limit the damage from such a stray test.
+
+ * Even when running "git send-email" without its own threaded
+   discussion support, a threading related header in one message is
+   carried over to the subsequent message to result in an unwanted
+   threading, which has been corrected.
+
+ * The output from "git fast-export", when its anonymization feature
+   is in use, showed an annotated tag incorrectly.
+
+ * Recent "diff -m" changes broke "gitk", which has been corrected.
+
+ * The "git apply -3" code path learned not to bother the lower level
+   merge machinery when the three-way merge can be trivially resolved
+   without the content level merge.  This fixes a regression caused by
+   recent "-3way first and fall back to direct application" change.
+
+ * The code that optionally creates the *.rev reverse index file has
+   been optimized to avoid needless computation when it is not writing
+   the file out.
+
+ * "git range-diff -I... <range> <range>" segfaulted, which has been
+   corrected.
+
+ * The order in which various files that make up a single (conceptual)
+   packfile has been reevaluated and straightened up.  This matters in
+   correctness, as an incomplete set of files must not be shown to a
+   running Git.
+
+ * The "mode" word is useless in a call to open(2) that does not
+   create a new file.  Such a call in the files backend of the ref
+   subsystem has been cleaned up.
+
+ * "git update-ref --stdin" failed to flush its output as needed,
+   which potentially led the conversation to a deadlock.
+
+ * When "git am --abort" fails to abort correctly, it still exited
+   with exit status of 0, which has been corrected.
+
+ * Correct nr and alloc members of strvec struct to be of type size_t.
+
+ * "git stash", where the tentative change involves changing a
+   directory to a file (or vice versa), was confused, which has been
+   corrected.
+
+ * "git clone" from a repository whose HEAD is unborn into a bare
+   repository didn't follow the branch name the other side used, which
+   is corrected.
+
+ * "git cvsserver" had a long-standing bug in its authentication code,
+   which has finally been corrected (it is unclear and is a separate
+   question if anybody is seriously using it, though).
+
+ * "git difftool --dir-diff" mishandled symbolic links.
+
+ * Sensitive data in the HTTP trace were supposed to be redacted, but
+   we failed to do so in HTTP/2 requests.
+
+ * "make clean" has been updated to remove leftover .depend/
+   directories, even when it is not told to use them to compute header
+   dependencies.
+
+ * Protocol v0 clients can get stuck parsing a malformed feature line.
+
+ * A few kinds of changes "git status" can show were not documented.
+   (merge d2a534c515 ja/doc-status-types-and-copies later to maint).
+
+ * The mergesort implementation used to sort linked list has been
+   optimized.
+   (merge c90cfc225b rs/mergesort later to maint).
+
+ * An editor session launched during a Git operation (e.g. during 'git
+   commit') can leave the terminal in a funny state.  The code path
+   has updated to save the terminal state before, and restore it
+   after, it spawns an editor.
+   (merge 3d411afabc cm/save-restore-terminal later to maint).
+
+ * "git cat-file --batch" with the "--batch-all-objects" option is
+   supposed to iterate over all the objects found in a repository, but
+   it used to translate these object names using the replace mechanism,
+   which defeats the point of enumerating all objects in the repository.
+   This has been corrected.
+   (merge bf972896d7 jk/cat-file-batch-all-wo-replace later to maint).
+
+ * Recent sparse-index work broke safety against attempts to add paths
+   with trailing slashes to the index, which has been corrected.
+   (merge c8ad9d04c6 rs/make-verify-path-really-verify-again later to mai=
+nt).
+
+ * The "--color-lines" and "--color-by-age" options of "git blame"
+   have been missing, which are now documented.
+   (merge 8c32856133 bs/doc-blame-color-lines later to maint).
+
+ * The PATH used in CI job may be too wide and let incompatible dlls
+   to be grabbed, which can cause the build&test to fail.  Tighten it.
+   (merge 7491ef6198 js/windows-ci-path-fix later to maint).
+
+ * Avoid performance measurements from getting ruined by gc and other
+   housekeeping pauses interfering in the middle.
+   (merge be79131a53 rs/disable-gc-during-perf-tests later to maint).
+
+ * Stop "git add --dry-run" from creating new blob and tree objects.
+   (merge e578d0311d rs/add-dry-run-without-objects later to maint).
+
+ * "git commit" gave duplicated error message when the object store
+   was unwritable, which has been corrected.
+   (merge 4ef91a2d79 ab/fix-commit-error-message-upon-unwritable-object-s=
+tore later to maint).
+
+ * Recent sparse-index addition, namely any use of index_name_pos(),
+   can expand sparse index entries and breaks any code that walks
+   cache-tree or existing index entries.  One such instance of such a
+   breakage has been corrected.
+
+ * The xxdiff difftool backend can exit with status 128, which the
+   difftool-helper that launches the backend takes as a significant
+   failure, when it is not significant at all.  Work it around.
+   (merge 571f4348dd da/mergetools-special-case-xxdiff-exit-128 later to =
+maint).
+
+ * Improve test framework around unwritable directories.
+   (merge 5d22e18965 ab/test-cleanly-recreate-trash-directory later to ma=
+int).
+
+ * "git push" client talking to an HTTP server did not diagnose the
+   lack of the final status report from the other side correctly,
+   which has been corrected.
+   (merge c5c3486f38 jk/http-push-status-fix later to maint).
+
+ * Update "git archive" documentation and give explicit mention on the
+   compression level for both zip and tar.gz format.
+   (merge c4b208c309 bs/archive-doc-compression-level later to maint).
+
+ * Drop "git sparse-checkout" from the list of common commands.
+   (merge 6a9a50a8af sg/sparse-index-not-that-common-a-command later to m=
+aint).
+
+ * "git branch -c/-m new old" was not described to copy config, which
+   has been corrected.
+   (merge 8252ec300e jc/branch-copy-doc later to maint).
+
+ * Squelch over-eager warning message added during this cycle.
+
+ * Fix long-standing shell syntax error in the completion script.
+   (merge 46b0585286 re/completion-fix-test-equality later to maint).
+
+ * Teach "git commit-graph" command not to allow using replace objects
+   at all, as we do not use the commit-graph at runtime when we see
+   object replacement.
+   (merge 095d112f8c ab/ignore-replace-while-working-on-commit-graph late=
+r to maint).
+
+ * "git pull --no-verify" did not affect the underlying "git merge".
+   (merge 47bfdfb3fd ar/fix-git-pull-no-verify later to maint).
+
+ * One CI task based on Fedora image noticed a not-quite-kosher
+   construct recently, which has been corrected.
+
+ * "git pull --ff-only" and "git pull --rebase --ff-only" should make
+   it a no-op to attempt pulling from a remote that is behind us, but
+   instead the command errored out by saying it was impossible to
+   fast-forward, which may technically be true, but not a useful thing
+   to diagnose as an error.  This has been corrected.
+   (merge 361cb52383 jc/fix-pull-ff-only-when-already-up-to-date later to=
+ maint).
+
+ * The way Cygwin emulates a unix-domain socket, on top of which the
+   simple-ipc mechanism is implemented, can race with the program on
+   the other side that wants to use the socket, and briefly make it
+   appear as a regular file before lstat(2) starts reporting it as a
+   socket.  We now have a workaround on the side that connects to a
+   unix domain socket.
+
+ * Other code cleanup, docfix, build fix, etc.
+   (merge f188160be9 ab/bundle-remove-verbose-option later to maint).
+   (merge 8c6b4332b4 rs/close-pack-leakfix later to maint).
+   (merge 51b04c05b7 bs/difftool-msg-tweak later to maint).
+   (merge dd20e4a6db ab/make-compdb-fix later to maint).
+   (merge 6ffb990dc4 os/status-docfix later to maint).
+   (merge 100c2da2d3 rs/p3400-lose-tac later to maint).
+   (merge 76f3b69896 tb/aggregate-ignore-leading-whitespaces later to mai=
+nt).
+   (merge 6e4fd8bfcd tz/doc-link-to-bundle-format-fix later to maint).
+   (merge f6c013dfa1 jc/doc-commit-header-continuation-line later to main=
+t).
+   (merge ec9a37d69b ab/pkt-line-cleanup later to maint).
+   (merge 8650c6298c ab/fix-make-lint-docs later to maint).
+   (merge 1c720357ce ab/test-lib-diff-cleanup later to maint).
+   (merge 6b615dbece ks/submodule-add-message-fix later to maint).
+   (merge 203eb8381a jc/doc-format-patch-clarify-auto-base later to maint=
+).
+   (merge 559664c792 ab/test-lib later to maint).
