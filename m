@@ -2,86 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2973DC433FE
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 20:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9ABAC433EF
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 20:33:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 12E1C63240
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 20:32:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C7916323F
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 20:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351506AbhKOUfF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Nov 2021 15:35:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37224 "EHLO
+        id S1347485AbhKOUfZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Nov 2021 15:35:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345289AbhKOT2A (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Nov 2021 14:28:00 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB37CC09E03F
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 10:48:23 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id hg9-20020a17090b300900b001a6aa0b7d8cso348257pjb.2
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 10:48:23 -0800 (PST)
+        with ESMTP id S1347589AbhKOTkg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Nov 2021 14:40:36 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB85AC061570
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 11:37:38 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id z10so50291735edc.11
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 11:37:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=cpVOlm9T3Y0Xf45E+4Vqw4ZrBTrBncSqzQcgViBK2qo=;
-        b=RBN2q5/8jqRvjPRE4lEa/K69LA7oh+j/oZKaIAGF4PKN0HPjZdD4ZW6kzC0Orzbjrk
-         hrvS6O2GUujCuqMDzeTwQpB8Ophr1mZdIGK6pmN6qjze3UMh9bf5oQWvhTSwjOaCh3Jr
-         9D4l1prBAzVP721JMW7MFALccf2ZhBU2PuFPF+J1ML7fGfJZVG7Pekt5phBjl5r6S5pz
-         ud0M8tBRsdevcBb6REz68IDP0MtrjxZgcVH2dRr5HCyq6kSM/GI5aWKrYW8lu7g7h4p1
-         ll6SLCC+cjP/qljpyVecWmpZt26ZQ91WXxXwwbrF3v7NFnDDQ7tVgSogMEeviYdhd+Yq
-         1jpg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=tQrOWzVVYYGoHU/GfCX7zOhmty6BQBbjZZndx7WBFXI=;
+        b=VKt6lyqtya4Ux0vyYRNHWcUpPXDkkc7F2HzFVaxOHJDSMYtU7XBwIq2KGDu4MmwcMl
+         eXl/mB4n+RsZ2/rYvrfGVnR2zpPp6SqWDMWf+8b05UkPC18B/9zs0On8L0x+qAEiv4vQ
+         dmtf3PVGv4KMzux4FeLENdXHBmee2n7ONgSDCBrROtmuexpRXfFOPUWs2+v8vNXiHVmR
+         7JxdMHDshbfLGlq7bA3V4Z3qhtVTrF7ylozIZ7DknIF+R+7M2Z69FWOR/vXHBAkLyEac
+         U/mkAPYAlKC9Ony4zfPzRXLjL5xUcGbWqWnG+EiIwonbeo/6kbMI6bTAMy2HzzMXMva6
+         2uoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=cpVOlm9T3Y0Xf45E+4Vqw4ZrBTrBncSqzQcgViBK2qo=;
-        b=5Z7sIJblTJZD6umoPCv9LLfBkP+4lS2bzmfR3oMPodMQnATW12/vjAavo/HVPyGbwI
-         /zBfXK26+m0AZaSYazGHrG8F4bx2wHhhI8t2haHtiLvMriS1J/GeGfhKI8+ho7vW4vIa
-         g+2/tHO9nuZJ60UCPMnxOyoCQ8V7scTz7jTaSbVc1e429kHB/1lOgAVVLALQx/plRp2U
-         /UH+ly4aU79skLNrbm5km6bdsltLNQ9jIq6jK5fEjbmE+iNFWy0ecH9JAdCN2lfhr1gx
-         SkWEcZEj8bgyIToDyMFw+//Q8B5SHGWH6GLO/u0NhB9Nm8jIlkWUgJrn4fq/1Z6sCjE2
-         DJYg==
-X-Gm-Message-State: AOAM531u6WLbjH3p3cjQtrGp8l6JF4ug6s/UFvl5o/kvc8HZZnaiIuiw
-        a9NVv0qHlJho3usAEeGKZkRzDaZ2pSLVncCJAtj3
-X-Google-Smtp-Source: ABdhPJy4o2p1J9uR2kZcnIfK6J3239PJtyg6e/nioSNP0vIyqPrkqtGtXi2/k0TQMN3misPSJair/ba4zD0QAYkM2Dk0
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a65:408c:: with SMTP id
- t12mr722338pgp.262.1637002103272; Mon, 15 Nov 2021 10:48:23 -0800 (PST)
-Date:   Mon, 15 Nov 2021 10:48:21 -0800
-In-Reply-To: <20211028183101.41013-5-chooglen@google.com>
-Message-Id: <20211115184821.1079331-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20211028183101.41013-5-chooglen@google.com>
-X-Mailer: git-send-email 2.34.0.rc1.387.gb447b232ab-goog
-Subject: Re: [PATCH v4 4/6] remote: remove the_repository->remote_state from
- static methods
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     chooglen@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=tQrOWzVVYYGoHU/GfCX7zOhmty6BQBbjZZndx7WBFXI=;
+        b=XTAz/Cn8lHxudXOxs4ZiHZxVzR/awFbiL1PObS2GJZ8XEDQGlc4OUYgPPfy/iBhS8j
+         EYM3WKI4RJpUNtz2512Fz6lLTf3r5OmaGPwgR0OPZdLdn4cgDIHMbEJBYhSYFyGNheRM
+         4Pr8BCbfBL4bJZVuSCCV3zZlf8oa3wdK3XTCLPfHlcAZyWOjrhFhaAav/+4f9Xt7wMSq
+         FtxfpWG2l78rcTrcAL+Hl9Wr7jORUEXtCnNKdaFg1Bk8sEXL0FcDg08g1WCGV94hNtfQ
+         B9m0zDtsoyyLLHl//8Sv3N/fCveroBSBDVkNF12p+xj3cKmRY55PUnfTi0Vkc2/EdxID
+         V9gQ==
+X-Gm-Message-State: AOAM5315Ifn1g/fEW9tVxXbjwgD4xSuzByDzCsdsFoZZPTPbr/GK9T/H
+        kkkMmGPWPnUWzcBJ503sNgHtlzHvMyo=
+X-Google-Smtp-Source: ABdhPJx/h5bpZ/4sfTX2iQ2GJMros95UUFD6Rlk4cpFqWI+lYseSWCJofmx046EQEOnJxOlpcvDHew==
+X-Received: by 2002:a05:6402:1e90:: with SMTP id f16mr1668777edf.91.1637005057424;
+        Mon, 15 Nov 2021 11:37:37 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id cw20sm6931450ejc.32.2021.11.15.11.37.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Nov 2021 11:37:37 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mmhnM-001CU2-8Q;
+        Mon, 15 Nov 2021 20:37:36 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: ab/only-single-progress-at-once (was: What's cooking in git.git
+ (Nov 2021, #04; Sun, 14))
+Date:   Mon, 15 Nov 2021 20:35:25 +0100
+References: <xmqqv90tfhh2.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <xmqqv90tfhh2.fsf@gitster.g>
+Message-ID: <211115.86wnl9qkfz.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Replace all remaining references of the_repository->remote_state in
-> static functions with a struct remote_state parameter.
-> 
-> To do so, move read_config() calls to non-static functions and create a
-> family of static functions, "remotes_*", that behave like "repo_*", but
-> accept struct remote_state instead of struct repository. In the case
-> where a static function calls a non-static function, replace the
-> non-static function with its "remotes_*" equivalent.
 
-In patches 2-4, the same lines have been changed a few times, so much so
-that I found it easier to review if I squashed 2-4 together. I'm not
-sure what the opinions of other reviewers are, but I think it's better
-if patches 2-4 were combined into one patch.
+On Mon, Nov 15 2021, Junio C Hamano wrote:
 
-The only confusing part is the moving of read_config(), but that is
-described in this commit message - it's moved to the outer (non-static)
-functions so that the inner functions do not need to have a pointer to
-the repo, only to remote_state.
+> * ab/only-single-progress-at-once (2021-11-03) 8 commits
+>  - progress.c: add & assert a "global_progress" variable
+>  - various *.c: use isatty(0|2), not isatty(STDIN_FILENO|STDERR_FILENO)
+>  - pack-bitmap-write.c: don't return without stop_progress()
+>  - progress.c: add temporary variable from progress struct
+>  - progress.c tests: test some invalid usage
+>  - progress.c tests: make start/stop commands on stdin
+>  - progress.c test helper: add missing braces
+>  - leak tests: fix a memory leaks in "test-progress" helper
+>
+>  Further tweaks on progress API.
 
-So, patches 2-4 look good. I think they should be combined, but I'm OK
-if they're left separate too.
+It would be great to get this one marked for "next". I think all
+outstanding feedback was addressed ([1] for the last CL), and for a
+topic that's adding we haven't had any reports of the BUG() assertion it
+adds firing (and I've done some very thorough testing to make sure it
+won't, per the 8/8 commit message[2]).
+
+1. https://lore.kernel.org/git/cover-v6-0.8-00000000000-20211102T122507Z-avarab@gmail.com/
+2. https://lore.kernel.org/git/patch-v6-8.8-bff919994b5-20211102T122507Z-avarab@gmail.com/
