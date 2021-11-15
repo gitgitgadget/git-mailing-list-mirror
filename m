@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08789C43217
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 03:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7824BC4321E
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 03:24:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E132A61B66
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 03:24:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 591CB61B96
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 03:24:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344719AbhKPD1w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Nov 2021 22:27:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58042 "EHLO
+        id S1344644AbhKPD1x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Nov 2021 22:27:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244496AbhKPD00 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Nov 2021 22:26:26 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64594C126D04
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 15:51:11 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id k37-20020a05600c1ca500b00330cb84834fso531249wms.2
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 15:51:11 -0800 (PST)
+        with ESMTP id S245306AbhKPD01 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Nov 2021 22:26:27 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CDB6C126D05
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 15:51:12 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id y196so15349223wmc.3
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 15:51:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Wx/NRBAYoIBhOKGldB61QZt0lf65wQv8k/Ky8embUfk=;
-        b=Pj4O+6n8gLYHIlA93DRRbsozvYEN81vS9wst1So30k4LO29Hs7qHqHxfaVhTcCcIxH
-         wToR+BeAD/qtC5AfF8dQg/frjNPGEGHtX8BnwJSttQoKNxpM5rXAA/Y0eYyPUytGbqXH
-         OHow9qS0nsx/SlaDQQPIBEbWTOSfREqp9Y6B3iEmp0AYlPOXevrtkdorhSmyjqgAe6vP
-         +s/96+9PQan95x6hrrxQAP9PMzj1ZRjoNLSE7a6PZx8+PBV8OYtl6s9VGHLUEayX02+t
-         jWRI+Rr+bOWBg8FBeCzwut5ZgdUZVRdqRekzPPvaRo1ii1NIckgARgKFDLcln85wFrqu
-         3eAQ==
+        bh=nbUJeiKDuUGJbRc6leBVx5PGjyXkuy6mjccjLuAcYco=;
+        b=bEVPyozRl0vNacTN4xEA2firNnjQDEEObL5SBJRuDg/b8H+l3UI9A7zyCmV3BiLh2U
+         2hbLHWeGNf8QqQ+B18/5B93kUMwSJdMqYVTFyBX6F/YvruyDu7Qm0Nq9tT8DU0acHHGu
+         ptY9sLvstznHath8bpCWDnFLHXQ/iBUli6WY+D0+M1jJJ1ykteHdJjvD6wtwP/IoVap8
+         AmWqi74Edtzh1hVok9lRN+IsM+5MoCGPVqXjhMo2UrMukXIOkd3cRr02ZNSaFucBLf03
+         79PM5cvqWGSd6uAVrzUg/pW7Hqxe/Z4Nla1Us2BQlVrQqA0ujWGmTFT9RDTKPCcHqGlJ
+         Gd7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Wx/NRBAYoIBhOKGldB61QZt0lf65wQv8k/Ky8embUfk=;
-        b=rJmOVO+ddM8y8pMI9j/WB56NIH8RTUrUqlCI7jfsAE8/5O8NoBazKm2wxQjqahv03A
-         xcPKmNGYeih9J/5HglK31SnEVkVhAiv+9WVZn9qpF0iO+ZgSurFBjph0rTp7hXY8mMh1
-         j0JbhNxYlcbPcGSgEeE7JipAleNcgPurek/XREApgmGiequSe+3ppSxwLqQEtbbMtrG6
-         q76M9ri74WVLwt0dHpBVkSnzwUyMMfGXuOlAoLV1GQrXT6pou3Q2GxwH2UKwmRYxmnzI
-         KT38s+9V1nGPqvQdZU77eBw0X5TMuHIxb3p46dm9FOZ/JyM5b5yptN43XwAoyyK6HUGu
-         0zGg==
-X-Gm-Message-State: AOAM530uR6auIexbG3wG3TaXiRtqMKvTLXPx0q/IEofSq/l0vZGcEnVA
-        9VTs4cC/WQ+LUcWYLluLCRy7LHsSw9E=
-X-Google-Smtp-Source: ABdhPJyrLGwtb99NYnn55YnxBSnva5YMVe3LREkIUt94a1fMLX1v4T2tP+INNE32/OjOBIhvaB6NJQ==
-X-Received: by 2002:a05:600c:3b1b:: with SMTP id m27mr2704261wms.125.1637020269932;
-        Mon, 15 Nov 2021 15:51:09 -0800 (PST)
+        bh=nbUJeiKDuUGJbRc6leBVx5PGjyXkuy6mjccjLuAcYco=;
+        b=anrGe6kGPDUh9w8mnReQqkdrXyqjr7xv2B/2bL/kiml/+aGsS6K0ibolunJ0wZUt22
+         V4g10oKybEZlAXZi2GHbW6nfYpBiH5x/e5vLL8jNgAkudHws8+IEtAFbJwmuBOfLMO+b
+         LJZL9pZuQAATTfnwTgkA5qGordqbyk5+pvcVyqcoXcqp7BeFOrEC+ZrCzoXuUBe4k2d+
+         dVHQoh47hTYUAt5hLwXfOYLewy96LTDozGLdeQc4I8ip1XrCQ7yWG4J3E6+X3/gTkbLL
+         2SjwVWkCK+1qcgfpubc9nS2wUQRysbYXoBWly89Yv6E+1123lS9/wsVtTXDtmYPSgQ3O
+         EMbA==
+X-Gm-Message-State: AOAM530ku24bq61AC8dpvY+Kulopwsztwm9RF+aA2iiaxdDqYMM2Z+8T
+        7u+D/ZTIbWdTdMsN5aPo8kVxvauc8zQ=
+X-Google-Smtp-Source: ABdhPJxAkGQ7D8qncQtKpACo2ORATw1NVudkIhqZwGRAVNtzLY+eQAhRdhewDTuRDoEnSjlhsxIuTA==
+X-Received: by 2002:a1c:9842:: with SMTP id a63mr64298625wme.102.1637020270583;
+        Mon, 15 Nov 2021 15:51:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b197sm658436wmb.24.2021.11.15.15.51.09
+        by smtp.gmail.com with ESMTPSA id f81sm725368wmf.22.2021.11.15.15.51.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 15:51:09 -0800 (PST)
-Message-Id: <cfc6a347d08ce465f260990010267e4e71d469eb.1637020263.git.gitgitgadget@gmail.com>
+        Mon, 15 Nov 2021 15:51:10 -0800 (PST)
+Message-Id: <270c24827d0a5b246ec0db31de30c1f8c25cd0c3.1637020263.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1076.v9.git.git.1637020263.gitgitgadget@gmail.com>
 References: <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
         <pull.1076.v9.git.git.1637020263.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Nov 2021 23:51:01 +0000
-Subject: [PATCH v9 7/9] unpack-objects: use the bulk-checkin infrastructure
+Date:   Mon, 15 Nov 2021 23:51:02 +0000
+Subject: [PATCH v9 8/9] core.fsyncobjectfiles: tests for batch mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,42 +79,202 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-The unpack-objects functionality is used by fetch, push, and fast-import
-to turn the transfered data into object database entries when there are
-fewer objects than the 'unpacklimit' setting.
+Add test cases to exercise batch mode for:
+ * 'git add'
+ * 'git stash'
+ * 'git update-index'
+ * 'git unpack-objects'
 
-By enabling bulk-checkin when unpacking objects, we can take advantage
-of batched fsyncs.
+These tests ensure that the added data winds up in the object database.
+
+In this change we introduce a new test helper lib-unique-files.sh. The
+goal of this library is to create a tree of files that have different
+oids from any other files that may have been created in the current test
+repo. This helps us avoid missing validation of an object being added due
+to it already being in the repo.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- builtin/unpack-objects.c | 3 +++
- 1 file changed, 3 insertions(+)
+ t/lib-unique-files.sh  | 36 ++++++++++++++++++++++++++++++++++++
+ t/t3700-add.sh         | 20 ++++++++++++++++++++
+ t/t3903-stash.sh       | 14 ++++++++++++++
+ t/t5300-pack-object.sh | 30 +++++++++++++++++++-----------
+ 4 files changed, 89 insertions(+), 11 deletions(-)
+ create mode 100644 t/lib-unique-files.sh
 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 4a9466295ba..51eb4f7b531 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -1,5 +1,6 @@
- #include "builtin.h"
- #include "cache.h"
-+#include "bulk-checkin.h"
- #include "config.h"
- #include "object-store.h"
- #include "object.h"
-@@ -503,10 +504,12 @@ static void unpack_all(void)
- 	if (!quiet)
- 		progress = start_progress(_("Unpacking objects"), nr_objects);
- 	CALLOC_ARRAY(obj_list, nr_objects);
-+	plug_bulk_checkin();
- 	for (i = 0; i < nr_objects; i++) {
- 		unpack_one(i);
- 		display_progress(progress, i + 1);
- 	}
-+	unplug_bulk_checkin();
- 	stop_progress(&progress);
+diff --git a/t/lib-unique-files.sh b/t/lib-unique-files.sh
+new file mode 100644
+index 00000000000..a7de4ca8512
+--- /dev/null
++++ b/t/lib-unique-files.sh
+@@ -0,0 +1,36 @@
++# Helper to create files with unique contents
++
++
++# Create multiple files with unique contents. Takes the number of
++# directories, the number of files in each directory, and the base
++# directory.
++#
++# test_create_unique_files 2 3 my_dir -- Creates 2 directories with 3 files
++#					 each in my_dir, all with unique
++#					 contents.
++
++test_create_unique_files() {
++	test "$#" -ne 3 && BUG "3 param"
++
++	local dirs=$1
++	local files=$2
++	local basedir=$3
++	local counter=0
++	test_tick
++	local basedata=$test_tick
++
++
++	rm -rf $basedir
++
++	for i in $(test_seq $dirs)
++	do
++		local dir=$basedir/dir$i
++
++		mkdir -p "$dir"
++		for j in $(test_seq $files)
++		do
++			counter=$((counter + 1))
++			echo "$basedata.$counter"  >"$dir/file$j.txt"
++		done
++	done
++}
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index 283a66955d6..aaecefda159 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -8,6 +8,8 @@ test_description='Test of git add, including the -- option.'
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
  
- 	if (delta_list)
++. $TEST_DIRECTORY/lib-unique-files.sh
++
+ # Test the file mode "$1" of the file "$2" in the index.
+ test_mode_in_index () {
+ 	case "$(git ls-files -s "$2")" in
+@@ -34,6 +36,24 @@ test_expect_success \
+     'Test that "git add -- -q" works' \
+     'touch -- -q && git add -- -q'
+ 
++test_expect_success 'git add: core.fsyncobjectfiles=batch' "
++	test_create_unique_files 2 4 fsync-files &&
++	git -c core.fsyncobjectfiles=batch add -- ./fsync-files/ &&
++	rm -f fsynced_files &&
++	git ls-files --stage fsync-files/ > fsynced_files &&
++	test_line_count = 8 fsynced_files &&
++	awk -- '{print \$2}' fsynced_files | xargs -n1 git cat-file -e
++"
++
++test_expect_success 'git update-index: core.fsyncobjectfiles=batch' "
++	test_create_unique_files 2 4 fsync-files2 &&
++	find fsync-files2 ! -type d -print | xargs git -c core.fsyncobjectfiles=batch update-index --add -- &&
++	rm -f fsynced_files2 &&
++	git ls-files --stage fsync-files2/ > fsynced_files2 &&
++	test_line_count = 8 fsynced_files2 &&
++	awk -- '{print \$2}' fsynced_files2 | xargs -n1 git cat-file -e
++"
++
+ test_expect_success \
+ 	'git add: Test that executable bit is not used if core.filemode=0' \
+ 	'git config core.filemode 0 &&
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index f0a82be9de7..6324b52c874 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -9,6 +9,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
++. $TEST_DIRECTORY/lib-unique-files.sh
+ 
+ diff_cmp () {
+ 	for i in "$1" "$2"
+@@ -1293,6 +1294,19 @@ test_expect_success 'stash handles skip-worktree entries nicely' '
+ 	git rev-parse --verify refs/stash:A.t
+ '
+ 
++test_expect_success 'stash with core.fsyncobjectfiles=batch' "
++	test_create_unique_files 2 4 fsync-files &&
++	git -c core.fsyncobjectfiles=batch stash push -u -- ./fsync-files/ &&
++	rm -f fsynced_files &&
++
++	# The files were untracked, so use the third parent,
++	# which contains the untracked files
++	git ls-tree -r stash^3 -- ./fsync-files/ > fsynced_files &&
++	test_line_count = 8 fsynced_files &&
++	awk -- '{print \$3}' fsynced_files | xargs -n1 git cat-file -e
++"
++
++
+ test_expect_success 'stash -c stash.useBuiltin=false warning ' '
+ 	expected="stash.useBuiltin support has been removed" &&
+ 
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index e13a8842075..38663dc1393 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -162,23 +162,23 @@ test_expect_success 'pack-objects with bogus arguments' '
+ 
+ check_unpack () {
+ 	test_when_finished "rm -rf git2" &&
+-	git init --bare git2 &&
+-	git -C git2 unpack-objects -n <"$1".pack &&
+-	git -C git2 unpack-objects <"$1".pack &&
+-	(cd .git && find objects -type f -print) |
+-	while read path
+-	do
+-		cmp git2/$path .git/$path || {
+-			echo $path differs.
+-			return 1
+-		}
+-	done
++	git $2 init --bare git2 &&
++	(
++		git $2 -C git2 unpack-objects -n <"$1".pack &&
++		git $2 -C git2 unpack-objects <"$1".pack &&
++		git $2 -C git2 cat-file --batch-check="%(objectname)"
++	) <obj-list >current &&
++	cmp obj-list current
+ }
+ 
+ test_expect_success 'unpack without delta' '
+ 	check_unpack test-1-${packname_1}
+ '
+ 
++test_expect_success 'unpack without delta (core.fsyncobjectfiles=batch)' '
++	check_unpack test-1-${packname_1} "-c core.fsyncobjectfiles=batch"
++'
++
+ test_expect_success 'pack with REF_DELTA' '
+ 	packname_2=$(git pack-objects --progress test-2 <obj-list 2>stderr) &&
+ 	check_deltas stderr -gt 0
+@@ -188,6 +188,10 @@ test_expect_success 'unpack with REF_DELTA' '
+ 	check_unpack test-2-${packname_2}
+ '
+ 
++test_expect_success 'unpack with REF_DELTA (core.fsyncobjectfiles=batch)' '
++       check_unpack test-2-${packname_2} "-c core.fsyncobjectfiles=batch"
++'
++
+ test_expect_success 'pack with OFS_DELTA' '
+ 	packname_3=$(git pack-objects --progress --delta-base-offset test-3 \
+ 			<obj-list 2>stderr) &&
+@@ -198,6 +202,10 @@ test_expect_success 'unpack with OFS_DELTA' '
+ 	check_unpack test-3-${packname_3}
+ '
+ 
++test_expect_success 'unpack with OFS_DELTA (core.fsyncobjectfiles=batch)' '
++       check_unpack test-3-${packname_3} "-c core.fsyncobjectfiles=batch"
++'
++
+ test_expect_success 'compare delta flavors' '
+ 	perl -e '\''
+ 		defined($_ = -s $_) or die for @ARGV;
 -- 
 gitgitgadget
 
