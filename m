@@ -2,99 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAB2FC433EF
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 01:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72595C433F5
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 01:24:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA21E60F22
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 01:23:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4415B60F36
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 01:24:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230283AbhKOB0S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Nov 2021 20:26:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48340 "EHLO
+        id S230395AbhKOB1U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Nov 2021 20:27:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230185AbhKOB0S (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Nov 2021 20:26:18 -0500
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA915C061746
-        for <git@vger.kernel.org>; Sun, 14 Nov 2021 17:23:20 -0800 (PST)
-Received: by mail-qk1-x732.google.com with SMTP id a11so8461190qkh.13
-        for <git@vger.kernel.org>; Sun, 14 Nov 2021 17:23:20 -0800 (PST)
+        with ESMTP id S229627AbhKOB1T (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Nov 2021 20:27:19 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D983C061746
+        for <git@vger.kernel.org>; Sun, 14 Nov 2021 17:24:24 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id e3so28011292edu.4
+        for <git@vger.kernel.org>; Sun, 14 Nov 2021 17:24:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qYGmqszzg70Fg0a7kNe42nBjym/wCe/ZdxNOY8jNX3g=;
-        b=XLCsU759PrSQawuFsBctpdsLJdlN11mFRIUm5vZxBvE0/BjQ0Pn0pRNp+ZmPkKjl0h
-         6EeXiRLQleEcxJ/L2f2O8K4CWM7Sp1yxzVNOHuZmctvd2rfhX0N4GquDrbLiKyZjbaFA
-         FbUj9ttH7B5lsZbT268/dYm6oLju5URKIgvsCBRpGqS5T3Qhu4jx1xoMwEj98uyzznKd
-         n6AmO2wCsdJ248rrCRAASGmp7S7A5GFoWN18zoeaoY0Ecz/gLWdP2yO1Injgkm2G1wkh
-         YrHMQKKd2GcxLqbQZi0DB7YmxBPCzZuzb1nNCCcdyeFJ47jvK85DF4uFSKObDowusMF4
-         GIgw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=L95HGmuOlwEcpUCdkBgyEyBgAQz+MsYoYEkwyL/hYYo=;
+        b=OYlUzuWTmojsvY/bm+XwJG0QMs+9ufCEa2WR2uFqvV/xSfNceWJOl7nNk3X39XpYgU
+         fnhHLBLlK/s/Ouh3W1dC6Bnel0YAlKMN5z1fxt+vixf/kod/jveR1R3NZJjsmCZGnSns
+         XRhQ930IwhlXBrok0txdot697HU3F+FdSV003bIvkkInVQx2iHvmt5l4WZutAzOW7KRK
+         FXv8ZZfpBmzj5V1rkTQi79y0+iIwOl/eQ3+BpgxSnphvJCrtgWip7ZoSF79xYw3u3OyI
+         SLLdn85cN3bcB3frp7KZAJJl9SV7EGqu3WDr4I8hoqweMwHH8ftxj5P1EKuWXDLtgAay
+         /juA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qYGmqszzg70Fg0a7kNe42nBjym/wCe/ZdxNOY8jNX3g=;
-        b=2XT1NfDEKQPkAuc1OgcrOECCiKIYq/1kLLSvEcNhgqUeNL7LrPCKuiNRmb1TUn2H9i
-         P9Lb+XZwbS4Ogjo/VZmQCdwF7adPQ71HfBgRKDzkIdIrpGO5ytu++U0QGMn7rJ4EuMZz
-         ehLFV81OGhYXmf2rtVga3Rj9DBJpCFwULXDUY77/eRDuNCrB46vMx5m3vhyPpGQmDeZS
-         7uu28V/sJTHrAMqluyij6+Fbf5cj8jOnhaYeg1fUwmR053SWbJYO0mPnBeooY4oZkB/O
-         ehQ5XucGhi9CIRcZZuHwxaNHF1ErVE6I4uwQZFzOsDofRdV53G8xXEBnPfdYVgjavuJ2
-         316g==
-X-Gm-Message-State: AOAM532yHhmb8KOS19KZaBDReU+LZRD8tSIs+Q0BPENiMpRl037YbDC+
-        wW96rhX0ljZYg/PvtVn2KBmmarRSYH59HiDFYfw=
-X-Google-Smtp-Source: ABdhPJx6kvDwOG37NW0IqUMIeZIjj9KgAf7M20+y7MBdHwEggedpbQrF3RLBwoxSH8nG5uuPDw6YZjAEnNefBD3sl7I=
-X-Received: by 2002:a05:620a:710:: with SMTP id 16mr26933172qkc.379.1636939399003;
- Sun, 14 Nov 2021 17:23:19 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=L95HGmuOlwEcpUCdkBgyEyBgAQz+MsYoYEkwyL/hYYo=;
+        b=fMKvvAJbwlIEOkPxJWNC4BsEu9DAAcAkPlkDpxqg/V1Y72U97rRllWGsdsNCpF0Poq
+         /LHqCEnN3thUbFmPbq1EP9HZlZUvXwNDvV8EEDNmGV3EVLOTwpkpgpbGAyKJ42FX5WxD
+         8S2Ou9spq9WW8pysEe2Mkav/Uya+hVtZVVvfi0IMvfx2EMLTv2pCYH9+it73DkPRWGF1
+         17i6WwMzngNxVaazRQFMJq2Trl4FVqsHtdwWQtGUM3efM2rpQy0oUW5P7C1yJstciR4V
+         RAfeRztC3uvN6owAkQiImxRiTHODolCs9nEPP7btZzUGFDChcOG+A21HH31IzeW5Nusr
+         ldeg==
+X-Gm-Message-State: AOAM533ALFweSqYAfTJ6OawBK7vAe/w4bJXzf4wvy2nItc3Nply2bS5t
+        6bCeQBPpn00zsxkRJ9r6NDW7EOT0YLw=
+X-Google-Smtp-Source: ABdhPJxPg75zs9BDBljU4XYeqYLQi+Nwoy2CdplDWMCbtORe+ZqXlEENqZw7lWXgvlJn2vx+2kupmA==
+X-Received: by 2002:a17:906:b84f:: with SMTP id ga15mr42448324ejb.4.1636939462890;
+        Sun, 14 Nov 2021 17:24:22 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id l26sm1378428eda.20.2021.11.14.17.24.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 14 Nov 2021 17:24:22 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mmQjO-000zrs-2S;
+        Mon, 15 Nov 2021 02:24:22 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] git-compat-util: add a test balloon for C99 support
+Date:   Mon, 15 Nov 2021 02:14:42 +0100
+References: <20211114212437.1466695-1-sandals@crustytoothpaste.net>
+ <20211114212437.1466695-2-sandals@crustytoothpaste.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211114212437.1466695-2-sandals@crustytoothpaste.net>
+Message-ID: <211115.86v90urz21.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20211114122952.11564-1-worldhello.net@gmail.com>
-In-Reply-To: <20211114122952.11564-1-worldhello.net@gmail.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 15 Nov 2021 09:23:07 +0800
-Message-ID: <CANYiYbGEf1OaPwUaHhhUswq3JUm918qpEFV5_AYKu_bPCMe6wA@mail.gmail.com>
-Subject: Re: [GIT PULL] l10n updates for 2.34.0 round 3
-To:     Junio C Hamano <gitster@pobox.com>,
-        Git l10n discussion group <git-l10n@googlegroups.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <daniel@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 14, 2021 at 8:29 PM Jiang Xin <worldhello.net@gmail.com> wrote:
->
-> Hi Junio,
->
-> Please pull the following l10n updates for Git 2.34.0.
->
-> The following changes since commit 6c220937e2b26d85920bf2d38ff2464a0d57fd6b:
->
->   Git 2.34-rc2 (2021-11-09 13:19:51 -0800)
->
-> are available in the Git repository at:
->
->   git@github.com:git-l10n/git-po.git tags/l10n-2.34.0-rnd3
 
-Hi Junio,
+On Sun, Nov 14 2021, brian m. carlson wrote:
 
-Please pull tag "l10n-2.34.0-rnd3.1" with additional l10n commit:
+> The C99 standard was released in January 1999, now 22 years ago.  It
+> provides a variety of useful features, including variadic arguments for
+> macros, declarations after statements, variable length arrays, and a
+> wide variety of other useful features, many of which we already use.
+>
+> We'd like to take advantage of these features, but we want to be
+> cautious.  As far as we know, all major compilers now support C99 or a
+> later C standard, such as C11 or C17.  POSIX has required C99 support as
+> a requirement for the 2001 revision, so we can safely assume any POSIX
+> system which we are interested in supporting has C99.
 
- * cae3877e72 (l10n: pl: 2.34.0 round 3, 2021-11-14)
+I like this direction.
 
---
-Jiang Xin
+> Sparse is also updated with a reference to the gnu99 standard, without
+> which it defaults to C89.
+
+Do we really need it in SPARSE_FLAGS though...
+
+> @@ -1204,7 +1204,7 @@ endif
+>  # Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
+>  # tweaked by config.* below as well as the command-line, both of
+>  # which'll override these defaults.
+> -CFLAGS = -g -O2 -Wall
+> +CFLAGS = -g -O2 -Wall -std=gnu99
+>  LDFLAGS =
+>  CC_LD_DYNPATH = -Wl,-rpath,
+>  BASIC_CFLAGS = -I.
+> @@ -1215,7 +1215,7 @@ ARFLAGS = rcs
+>  PTHREAD_CFLAGS =
+
+Since $(CFLAGS) ends up in:
+
+    ALL_CFLAGS = $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS)
+
+...
+
+>  # For the 'sparse' target
+> -SPARSE_FLAGS ?=
+> +SPARSE_FLAGS ?= -std=gnu99
+>  SP_EXTRA_FLAGS = -Wno-universal-initializer
+
+... and this will be used for this rule:
+
+$(SP_OBJ): %.sp: %.c %.o
+        $(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
+                -Wsparse-error \
+                $(SPARSE_FLAGS) $(SP_EXTRA_FLAGS) $< [...]
+
+I.e. unless it needs to be later on the command-line the $(ALL_CFLAGS)
+should put it there already.
+
+Also (and this pre-dates this patch) it's unfortunate that CFLAGS is a
+mixed bag of compiler tweaking and "mandatory" flags. I think the below
+would be a better approach, particurly since our own config.mak.uname
+will override CFLAGS in some cases, and probably everyone who works on
+git to any degree has a local config.mak which sets it to something
+already.
+
+But why gnu99 and not c99?
+
+diff --git a/Makefile b/Makefile
+index 12be39ac497..7470d627165 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1204,10 +1204,14 @@ endif
+ # Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
+ # tweaked by config.* below as well as the command-line, both of
+ # which'll override these defaults.
++#
++# The MANDATORY_CFLAGS can be similarly overridden, but really
++# shouldn't.
+ CFLAGS = -g -O2 -Wall
+ LDFLAGS =
+ CC_LD_DYNPATH = -Wl,-rpath,
+-BASIC_CFLAGS = -I.
++BASIC_CFLAGS =
++MANDATORY_CFLAGS = -I. -std=gnu99
+ BASIC_LDFLAGS =
+ 
+ # library flags
+@@ -1249,7 +1253,7 @@ ALL_COMMANDS_TO_INSTALL += git-upload-archive$(X)
+ ALL_COMMANDS_TO_INSTALL += git-upload-pack$(X)
+ endif
+ 
+-ALL_CFLAGS = $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS)
++ALL_CFLAGS = $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS) $(MANDATORY_CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
+ 
+ comma := ,
