@@ -2,94 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 806E5C433EF
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 16:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACEF7C433F5
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 16:52:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B6B063215
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 16:26:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 96C6B60174
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 16:52:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231562AbhKOQ3P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Nov 2021 11:29:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54602 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230118AbhKOQ27 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Nov 2021 11:28:59 -0500
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E7E2C061570
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 08:25:59 -0800 (PST)
-Received: by mail-ot1-x334.google.com with SMTP id x43-20020a056830246b00b00570d09d34ebso14865556otr.2
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 08:25:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=lGciaamOZVNnZ9BXCUzXkeJGaO3h3NNk1Ldb73nFBbo=;
-        b=HcdhPfKTa+shM9s9vEcLUpyqkD38NW9OpRRmP7vpEh0A8cJTrFmsEfO0jroRvmmBR6
-         ftEYJEKTM1JsTdIO7LfozoUihMAkvU0h+Z+rqChx0XnlgMsrQ930F043Jcr8J+eKlXWJ
-         T3vfQd2vjVtBwIPOYxn5whs+mJFbIUggpb7MgGV9MJpGjw82gSe/X9/rJsA8Gg1UJcff
-         1a8AowYmabl6WkGy0EeN14xq7BpFG/1BKhIc6FPx5wYVsvQaJSQk2XjV0LERY1hDuTer
-         3oC7p5B/7OoSuOt7GhgAqXeA3Z5mIoguUgUFHAkqmTKTypVW7XX2YnKF0gI8/6vAjnp6
-         wUAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=lGciaamOZVNnZ9BXCUzXkeJGaO3h3NNk1Ldb73nFBbo=;
-        b=0OONei8KbZ4MiMC4k11wENFIkKulyrb5zh11Ei5GVno0czaK3h81OgGsvSnZiT74s6
-         xy5ydMGTzcdSVYU1K9oyYu2cVX6ugAd7IjkaqhUiFtcN9Rnoob97NKCxcfWR328naLfO
-         jmTKp7EeeYMR/GHoVoGkFz97Q4S6zn4ShtJg3rJjDt9Fy4pZTwHF4jecjoB95yaNLp3l
-         0k4f5z5CFASNAATje2V82/3KvefD9uXeVIl40ZxJ159tIFKVcko3mBYXKpK6yMTjux9J
-         IfleioVHF8rwOHKs4p/hfwFV0qncFiEJ/FZcuPSPvmngmn9Qbtol6btkvqWt6tytP9Pf
-         kXHA==
-X-Gm-Message-State: AOAM532lDpCkbrWpgN1PieY+b3vxxG8/oPXuxWm9efarxIfBxVLA4CYI
-        r8GuLmy5lxq2AOU47aFwQzLwszY9fEM=
-X-Google-Smtp-Source: ABdhPJz+tsKIZy15pzDUk2UNY/GM+dHgZjyZjCLJZG4pBUy0qU+PCGqS0EwGfxjANB2mwYRyttF4tg==
-X-Received: by 2002:a05:6830:4392:: with SMTP id s18mr242486otv.168.1636993558442;
-        Mon, 15 Nov 2021 08:25:58 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:a026:e8ce:df21:8431? ([2600:1700:e72:80a0:a026:e8ce:df21:8431])
-        by smtp.gmail.com with ESMTPSA id w5sm1342559otk.70.2021.11.15.08.25.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Nov 2021 08:25:58 -0800 (PST)
-Message-ID: <4ad06bc6-4f11-d6ef-ec95-ab0e9db9c2c7@gmail.com>
-Date:   Mon, 15 Nov 2021 11:25:56 -0500
+        id S232164AbhKOQzu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Nov 2021 11:55:50 -0500
+Received: from cloud.peff.net ([104.130.231.41]:59140 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232229AbhKOQzq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Nov 2021 11:55:46 -0500
+Received: (qmail 13544 invoked by uid 109); 15 Nov 2021 16:52:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 15 Nov 2021 16:52:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12618 invoked by uid 111); 15 Nov 2021 16:52:46 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 15 Nov 2021 11:52:46 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 15 Nov 2021 11:52:45 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.34.0-rc2
+Message-ID: <YZKQXYdemZCNS/Bz@coredump.intra.peff.net>
+References: <xmqq4k8kzuz2.fsf@gitster.g>
+ <YY0HbQJEWbOwuuFj@coredump.intra.peff.net>
+ <xmqqwnlemwcy.fsf@gitster.g>
+ <YY17rBFIdDl+H47I@coredump.intra.peff.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH] midx: fix a formatting issue in "multi-pack-index.txt"
-Content-Language: en-US
-To:     Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com
-References: <20211115063318.14426-1-dyroneteng@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20211115063318.14426-1-dyroneteng@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YY17rBFIdDl+H47I@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/15/2021 1:33 AM, Teng Long wrote:
-> Signed-off-by: Teng Long <dyroneteng@gmail.com>
+On Thu, Nov 11, 2021 at 03:23:09PM -0500, Jeff King wrote:
 
-Hi Teng,
+> Yes, I think that framing is right: it is making SLOP much worse. We
+> could similarly have had bogus timestamps in those commits which would
+> cause the same outcome. So in that sense it is nothing new. On the other
+> hand, I wonder how often it will cause extra traversal work (keeping in
+> mind that this commit traversal is just the first stage; after we find
+> the commits, then we talk all of their trees, which is the more
+> expensive part).
+> 
+> For the case of adding new commits directly on top of another branch, I
+> think there would be no change. But any time you have to walk down to a
+> common fork point (e.g., imagine I made a new branch forked from an old
+> bit of history), we may fail to find that. I haven't quite constructed
+> an example, but I have a feeling we could end up walking over
+> arbitrarily long segments of history.
 
-Could you spend some time in your commit message explaining what
-is wrong about the characters used for bullet points here?
+I was playing around with this a bit more, and there is one subtlety in
+the "day-10" snippet I showed that I hadn't noted before. It's important
+the day-1 does not have any parents. If we used day-2 instead, then
+limit_list() would insert its parent (day-1, in this case) into the
+queue, without an UNINTERESTING flag (because it's the parent of
+something interesting).  And thus when we call still_interesting(), we
+would never decrement the slop counter, because we know we are still
+walking back to something potentially interesting.
 
-> -  - A value j referring to the jth packfile.
-> -  - An offset within the jth packfile for the object.
-> +  * A value j referring to the jth packfile.
-> +  * An offset within the jth packfile for the object.
->  - If large offsets are required, we use another list of large
->    offsets similar to version 2 pack-indexes.
+This "works" because we put the new commit at the end of the list via
+commit_list_insert_by_date(). That can be fooled, of course, because
+it's assuming the list is already in sorted order (which it isn't). So
+there could be an "old" commit at the front, and we place the parent in
+front of that, even though it's UNINTERESTING descendants are further
+back in the list.
 
-Is it that the indentation isn't enough to show a sublist? I see
-that the HTML rendering on git-scm.com [1] does fail to show this
-sublist, and I could believe that this change would fix it (but I
-am not sure).
+So I do think we could walk an arbitrary string of history in this way,
+all the way down to the root, or to something else pointed to by a ref
+tip. Here's the example I came up with:
 
-[1] https://www.git-scm.com/docs/multi-pack-index
+-- >8 --
+git init -q repo
+cd repo
 
-Thanks,
--Stolee
+commit_at() {
+	echo $1 >$1
+	git add .
+	base=1234567890
+	unit=86400
+	timestamp="@$((base + $1 * unit)) +0000"
+	GIT_COMMITTER_DATE=$timestamp \
+	GIT_AUTHOR_DATE=$timestamp \
+	git commit -qm "commit at day $1"
+}
+
+# imagine a bunch of base history
+for i in $(seq 100); do
+	commit_at $i
+done
+git tag base
+
+# And then we have some older branches hanging around.
+for i in $(seq 1 10); do
+	git checkout -b branch-$i base~$((60+$i))
+done
+
+# But also a newer one; it's important that this refname
+# sort after the other ones, because that's what confuses
+# the sorting.
+git branch new-branch
+
+# and then somebody pushes/fetches a branch based on an old part of history,
+# newer than our old branches, but older than our new one.
+#
+# We won't actually create the branch here, because we're simulating the state
+# before the ref is created, when we do the connectivity check.
+old_commit=$(git rev-parse base~50)
+new_commit=$(echo foo | git commit-tree -p $old_commit HEAD^{tree})
+
+# and now here's the connectivity check we would do
+git rev-list $new_commit --not --all >expect
+git rev-list --unsorted-input $new_commit --not --all >actual
+diff -u expect actual
+-- >8 --
+
+That will report all of base~60..base~50 in the output, when it should
+just report the single new commit.
+
+I don't think any of this changes the plan for the 2.34 release (in
+fact, it makes me more confident that reverting this change was the
+right thing to do). I'm just recording my notes here for revisiting the
+topic later.
+
+My suspicion is that there's no easy way to make this work. We're
+violating the assumption in still_interesting() that it can easily find
+the lowest-date commit. We could drop that assumption for the unsorted
+case, but then I think we'd be forced to walk all the way to the root
+commits, which is even worse than sorting the tips.
+
+I suspect a better solution would be to make use of generation numbers
+from the commit graph if we have them. The --topo-order stuff already
+does this, and I kind of wonder if we could piggy-back on that.
+
+-Peff
