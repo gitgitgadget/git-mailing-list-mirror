@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D9C7C433FE
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 102C7C433F5
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:29:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EC25D61A40
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:28:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED7AB61A40
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:29:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352640AbhKOXbo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Nov 2021 18:31:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60252 "EHLO
+        id S242540AbhKOXb6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Nov 2021 18:31:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352973AbhKOXSc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Nov 2021 18:18:32 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 680A6C03E03C
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:18:46 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id g191-20020a1c9dc8000000b0032fbf912885so892741wme.4
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:18:46 -0800 (PST)
+        with ESMTP id S1352955AbhKOXSb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Nov 2021 18:18:31 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D13ACC03E03A
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:18:44 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id a9so7356595wrr.8
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:18:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WBTHFeF2xuht99TkFxVGmjMkaaVfBTSRSLeznh60UMg=;
-        b=C+Lwq5dqnJZ8cYDVNUG9RLGAr76BQjPPdz1fkbUxiC4dbSf9CnIIbPK7mN3wkltirV
-         X/T/4QA7zMs7jhvpkqjU2err2rnUWhYFZ2flQWrAmXyBuh2pZZWOjk+rlAcCr7a2jXJ3
-         /6po/ViyURwbnLq2gIT7w5vsN3C8zO91Py5RlNxOPSn/q9nesNNV7KgxQohTUjVA4mn3
-         hTXEgnHfJivVeqMZOkpL3IShhIyUQ7pW7QQlpBcfEcAzmk1RuH4eNEWInkUNG4SoPvcL
-         UfHGEqwSMtH4kbT9mbzcSizz7ugJ5DF7bQwbpCnKML1VsD8uqvo41hkFAOl1QP64RdLW
-         KrPw==
+        bh=RNIOtYWTsUz/Z16g+2GLrWWmfj1tdHXmtkxpe5o2LuM=;
+        b=RJLyHMCJq7wKrMc8dQex+CaxYqgibT83pXJ5KLiedht+GyEmq8IuAx6Y5BwaRGMKF3
+         Mzk+LJ8OQ7gc/5sUsteoIVLPpBYUeFZrt8kQUgA5pFdz5+EB6wlWXRT7USiN8M9XQ+iP
+         HsdRwk9b1IJZxOhwvlguWkWuD3s5VgLRaV0HT4inWdbMkzfklQJbTipM618TPlnDRobU
+         NA9DDpJ+aFgcIA2C/4kPpnaUadg5YgIS+rArQV6XQP3WzJ94dUjOv3QhvaUQAl29zENA
+         HNAXrImi+q32w3CK5XLXyYLwDHNtCMWJT1VpthEi1gsbRpBRNKPB66TbF6XYpemgnEbZ
+         C3IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WBTHFeF2xuht99TkFxVGmjMkaaVfBTSRSLeznh60UMg=;
-        b=xXLSVtH7i7dmP00LABqohrkeITE5S9fjaPsHRvDNWlV7WO2DxRWVa5/5fSvxjbmNO8
-         bo1NEVi8X9NXy7uZOR05IRLQ1knegN8OUd9jlj5+VlMXKcIkzDxYj/QdYX9qkMUrvsHt
-         n6iAiTLp0euefePM7U/SIsVidHx0TIAUuuGViWeLrhjeoJwNWwLDk0qxd1LwOIq7ZjLT
-         NTeTVACTSe1sB6+zJwPpyfNy3BAwMLVz5nLct9V036Rg/9O2dO1lVQfDqGNEVBfFkqre
-         +7cEfJ5gQYfK+F0K+6JfRMnvZCRfotAEF2KfyjtfhFWZtoQQPOvOYRsb3gYGONFLS+9Z
-         8w9w==
-X-Gm-Message-State: AOAM532f9vEZU2OEvLZttYVRIwHfxUl2K6Fm/nrURxVVUiEI0/VlDpYk
-        fST349Onet68U/x5plA8JTmwEC+52VepOQ==
-X-Google-Smtp-Source: ABdhPJx7UqSCi1sL3vK64Pyn6BltVgRrOSx5bmN3ux1TZWPkEGVMbKuDbwUTtyR8jgAYBSKQk25FAg==
-X-Received: by 2002:a05:600c:3584:: with SMTP id p4mr62490831wmq.109.1637014724847;
-        Mon, 15 Nov 2021 14:18:44 -0800 (PST)
+        bh=RNIOtYWTsUz/Z16g+2GLrWWmfj1tdHXmtkxpe5o2LuM=;
+        b=U0St8uWNOgymWjpxztxBBeQbqZ1e7qP2j4TZdr78huESbSPuGjm0F2Ml/Ccou49RTV
+         3HNpX93V0PMR1vGNacadw1P4trlRJTzdIroD2u/ZxKEuS8/9yTHD8dfun6+a3AKGVmMh
+         lWDqX2Onwn2EthLQmPeq1iOXzk88/fNmhxaVVqaxcYTtC17AOZRNZ88YtccTDRjtByox
+         nVph6BKHUl9qpuqtiZXyU/LrDsZjcvhTqehMbNXRyv+skhuLap2v4uJq+QTK8pmzJbbo
+         P+UilBEAGcZ1gT+JK1bN/35tSE20wong0qgcuPdYzbDa8jexJ+pA/qjCNAg2gpxf0owY
+         4zoQ==
+X-Gm-Message-State: AOAM530pwiqmYQx9C9siFzcp7sHerhO/4gE2wjkgrdfsdrLivYb4i+e6
+        LP93/ZqwDUMFcS/a1ETFAqXP8qtwM+xZ5w==
+X-Google-Smtp-Source: ABdhPJxdBah0BS52RzKNYzLQOeK5SI29w0XGeE0HoDJAzSlQcr6AOi+Sykgsmcmm1TenKKeTJzDwSA==
+X-Received: by 2002:a5d:694a:: with SMTP id r10mr3075512wrw.170.1637014723299;
+        Mon, 15 Nov 2021 14:18:43 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n184sm526812wme.2.2021.11.15.14.18.44
+        by smtp.gmail.com with ESMTPSA id n184sm526812wme.2.2021.11.15.14.18.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 14:18:44 -0800 (PST)
+        Mon, 15 Nov 2021 14:18:42 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH 15/21] usage.[ch] API users: use report_fn, not hardcoded prototype
-Date:   Mon, 15 Nov 2021 23:18:25 +0100
-Message-Id: <RFC-patch-15.21-d5b84097bf3-20211115T220831Z-avarab@gmail.com>
+Subject: [RFC PATCH 13/21] strbuf.h: use BUG(...) not die("BUG: ...")
+Date:   Mon, 15 Nov 2021 23:18:23 +0100
+Message-Id: <RFC-patch-13.21-5dedcee3fb0-20211115T220831Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.rc2.809.g11e21d44b24
 In-Reply-To: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
 References: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
@@ -73,46 +73,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change a couple of users of "report_fn" that hardcoded a definition of
-it to use the definition of report_fn instead.
+In 7141efab248 (strbuf: clarify assertion in strbuf_setlen(),
+2011-04-27) this 'die("BUG: "' invocation was added with the rationale
+that strbuf.c had existing users doing the same, but those users were
+later changed to use BUG() in 033abf97fcb (Replace all die("BUG: ...")
+calls by BUG() ones, 2018-05-02). Let's do the same here.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- apply.h       | 4 ++--
- run-command.c | 3 +--
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ strbuf.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/apply.h b/apply.h
-index da3d95fa509..8dca3703d3b 100644
---- a/apply.h
-+++ b/apply.h
-@@ -106,8 +106,8 @@ struct apply_state {
- 	 * set_error_routine() or set_warn_routine() to install muting
- 	 * routines when in verbosity_silent mode.
- 	 */
--	void (*saved_error_routine)(const char *err, va_list params);
--	void (*saved_warn_routine)(const char *warn, va_list params);
-+	report_fn saved_error_routine;
-+	report_fn saved_warn_routine;
- 
- 	/* These control whitespace errors */
- 	enum apply_ws_error_action ws_error_action;
-diff --git a/run-command.c b/run-command.c
-index a790fe9799d..4792d170be7 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -362,10 +362,9 @@ static void NORETURN child_die_fn(const char *err, va_list params)
- /* this runs in the parent process */
- static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
+diff --git a/strbuf.h b/strbuf.h
+index 96512f85b31..76965a17d44 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -160,7 +160,7 @@ void strbuf_grow(struct strbuf *sb, size_t amount);
+ static inline void strbuf_setlen(struct strbuf *sb, size_t len)
  {
--	static void (*old_errfn)(const char *err, va_list params);
-+	report_fn old_errfn = get_error_routine();
- 	report_fn die_message_routine = get_die_message_routine();
- 
--	old_errfn = get_error_routine();
- 	set_error_routine(die_message_routine);
- 	errno = cerr->syserr;
- 
+ 	if (len > (sb->alloc ? sb->alloc - 1 : 0))
+-		die("BUG: strbuf_setlen() beyond buffer");
++		BUG("strbuf_setlen() beyond buffer");
+ 	sb->len = len;
+ 	if (sb->buf != strbuf_slopbuf)
+ 		sb->buf[len] = '\0';
 -- 
 2.34.0.rc2.809.g11e21d44b24
 
