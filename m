@@ -2,61 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7824BC4321E
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 03:24:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77465C433EF
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 03:25:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 591CB61B96
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 03:24:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47B6361B96
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 03:25:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344644AbhKPD1x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Nov 2021 22:27:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57320 "EHLO
+        id S1345632AbhKPD1y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Nov 2021 22:27:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245306AbhKPD01 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Nov 2021 22:26:27 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CDB6C126D05
+        with ESMTP id S244575AbhKPD0a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Nov 2021 22:26:30 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEBF8C126D06
         for <git@vger.kernel.org>; Mon, 15 Nov 2021 15:51:12 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id y196so15349223wmc.3
+Received: by mail-wm1-x333.google.com with SMTP id c71-20020a1c9a4a000000b0032cdcc8cbafso1014322wme.3
         for <git@vger.kernel.org>; Mon, 15 Nov 2021 15:51:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=nbUJeiKDuUGJbRc6leBVx5PGjyXkuy6mjccjLuAcYco=;
-        b=bEVPyozRl0vNacTN4xEA2firNnjQDEEObL5SBJRuDg/b8H+l3UI9A7zyCmV3BiLh2U
-         2hbLHWeGNf8QqQ+B18/5B93kUMwSJdMqYVTFyBX6F/YvruyDu7Qm0Nq9tT8DU0acHHGu
-         ptY9sLvstznHath8bpCWDnFLHXQ/iBUli6WY+D0+M1jJJ1ykteHdJjvD6wtwP/IoVap8
-         AmWqi74Edtzh1hVok9lRN+IsM+5MoCGPVqXjhMo2UrMukXIOkd3cRr02ZNSaFucBLf03
-         79PM5cvqWGSd6uAVrzUg/pW7Hqxe/Z4Nla1Us2BQlVrQqA0ujWGmTFT9RDTKPCcHqGlJ
-         Gd7Q==
+        bh=THp3oyYMQZ0IyvYbWDVtqI55HStotyepThNgwaAMuqY=;
+        b=MtLJsnXXKYy/qq10u0szPk0uGaytJ+Ode/YLawZLT1PBzigIJgPno4T6pWhhw2huUt
+         OEzO6faMoU1feDadnLhysHr5a2onxFsDckkMuPtE1hHRJXqRQ4MBB3QRDtlsshx69MRj
+         xorF5hQxUBdWXwvyhJO6KdMAhIo8tH2ie8C5FaRF/F7Sr57EinAr3/rWkxEHjc5ongSm
+         cSTapGdlhcaCqZU5MSOMNVE2qg6BdBtZkzQ7KzLbF3kMI9VGFlJm20CiLCtNWQ6modc6
+         CDDkXWXOfRKTXZa/Tienq5EPRWBOt+nh4h7C2I5jPD/ixahurYGDJh2q5n73BMa2Bu1k
+         T5Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=nbUJeiKDuUGJbRc6leBVx5PGjyXkuy6mjccjLuAcYco=;
-        b=anrGe6kGPDUh9w8mnReQqkdrXyqjr7xv2B/2bL/kiml/+aGsS6K0ibolunJ0wZUt22
-         V4g10oKybEZlAXZi2GHbW6nfYpBiH5x/e5vLL8jNgAkudHws8+IEtAFbJwmuBOfLMO+b
-         LJZL9pZuQAATTfnwTgkA5qGordqbyk5+pvcVyqcoXcqp7BeFOrEC+ZrCzoXuUBe4k2d+
-         dVHQoh47hTYUAt5hLwXfOYLewy96LTDozGLdeQc4I8ip1XrCQ7yWG4J3E6+X3/gTkbLL
-         2SjwVWkCK+1qcgfpubc9nS2wUQRysbYXoBWly89Yv6E+1123lS9/wsVtTXDtmYPSgQ3O
-         EMbA==
-X-Gm-Message-State: AOAM530ku24bq61AC8dpvY+Kulopwsztwm9RF+aA2iiaxdDqYMM2Z+8T
-        7u+D/ZTIbWdTdMsN5aPo8kVxvauc8zQ=
-X-Google-Smtp-Source: ABdhPJxAkGQ7D8qncQtKpACo2ORATw1NVudkIhqZwGRAVNtzLY+eQAhRdhewDTuRDoEnSjlhsxIuTA==
-X-Received: by 2002:a1c:9842:: with SMTP id a63mr64298625wme.102.1637020270583;
-        Mon, 15 Nov 2021 15:51:10 -0800 (PST)
+        bh=THp3oyYMQZ0IyvYbWDVtqI55HStotyepThNgwaAMuqY=;
+        b=n6Wh4z9KyHpRqe4oAWguLvKTGY47qSZfTV0zevLtyDync5s6M+n5N7XeHV6bkBOT4t
+         WB+AWDOO63K/rstscA/3ihdGdENtvJBm9i8xua9Yi4+h0vAXjTWVmgVC7S+A9XTKibJS
+         SOtQNmEDRCGB73vW9sihrfgej7/Q+xBt8e+o9kgZ0sPiEtfCiICG6zeMJHGWAZ6V8W/P
+         DC3J4Gea0jKjsAumNmfrhC/ylJuCGlTKtpxMNdln20UJ8fezd64H0nMxOD07p1IE/Lfb
+         X2gG78pPTcYFrjW2Qe+7ZMmosBc3E7pv7FV5VxnY+31Z4kREN2kpmCpUQNXKERcxZkaL
+         /WtQ==
+X-Gm-Message-State: AOAM532jzXTFtCDlXGJxpwmITDSAmVZFEVo8wah/3u0+ESXBkdDcZNqX
+        DfIZDTIqR01VmpNIRRH1QGh0/CO5ftU=
+X-Google-Smtp-Source: ABdhPJxigg6kPI6WiSKanLnLLVhp1TPfdSg80Hm2ugNbSMYJdeZgHJIcxhqQvv2pZoAy69dXVARgfw==
+X-Received: by 2002:a1c:43c2:: with SMTP id q185mr63379317wma.30.1637020271247;
+        Mon, 15 Nov 2021 15:51:11 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f81sm725368wmf.22.2021.11.15.15.51.10
+        by smtp.gmail.com with ESMTPSA id j8sm15268697wrh.16.2021.11.15.15.51.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 15 Nov 2021 15:51:10 -0800 (PST)
-Message-Id: <270c24827d0a5b246ec0db31de30c1f8c25cd0c3.1637020263.git.gitgitgadget@gmail.com>
+Message-Id: <12d99641f4c3738efbc5c70ef4f8d70eccb6fc8b.1637020263.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1076.v9.git.git.1637020263.gitgitgadget@gmail.com>
 References: <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
         <pull.1076.v9.git.git.1637020263.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Nov 2021 23:51:02 +0000
-Subject: [PATCH v9 8/9] core.fsyncobjectfiles: tests for batch mode
+Date:   Mon, 15 Nov 2021 23:51:03 +0000
+Subject: [PATCH v9 9/9] core.fsyncobjectfiles: performance tests for add and
+ stash
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,202 +80,117 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-Add test cases to exercise batch mode for:
- * 'git add'
- * 'git stash'
- * 'git update-index'
- * 'git unpack-objects'
-
-These tests ensure that the added data winds up in the object database.
-
-In this change we introduce a new test helper lib-unique-files.sh. The
-goal of this library is to create a tree of files that have different
-oids from any other files that may have been created in the current test
-repo. This helps us avoid missing validation of an object being added due
-to it already being in the repo.
+Add a basic performance test for "git add" and "git stash" of a lot of
+new objects with various fsync settings.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- t/lib-unique-files.sh  | 36 ++++++++++++++++++++++++++++++++++++
- t/t3700-add.sh         | 20 ++++++++++++++++++++
- t/t3903-stash.sh       | 14 ++++++++++++++
- t/t5300-pack-object.sh | 30 +++++++++++++++++++-----------
- 4 files changed, 89 insertions(+), 11 deletions(-)
- create mode 100644 t/lib-unique-files.sh
+ t/perf/p3700-add.sh   | 43 ++++++++++++++++++++++++++++++++++++++++
+ t/perf/p3900-stash.sh | 46 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 89 insertions(+)
+ create mode 100755 t/perf/p3700-add.sh
+ create mode 100755 t/perf/p3900-stash.sh
 
-diff --git a/t/lib-unique-files.sh b/t/lib-unique-files.sh
-new file mode 100644
-index 00000000000..a7de4ca8512
+diff --git a/t/perf/p3700-add.sh b/t/perf/p3700-add.sh
+new file mode 100755
+index 00000000000..e93c08a2e70
 --- /dev/null
-+++ b/t/lib-unique-files.sh
-@@ -0,0 +1,36 @@
-+# Helper to create files with unique contents
-+
-+
-+# Create multiple files with unique contents. Takes the number of
-+# directories, the number of files in each directory, and the base
-+# directory.
++++ b/t/perf/p3700-add.sh
+@@ -0,0 +1,43 @@
++#!/bin/sh
 +#
-+# test_create_unique_files 2 3 my_dir -- Creates 2 directories with 3 files
-+#					 each in my_dir, all with unique
-+#					 contents.
++# This test measures the performance of adding new files to the object database
++# and index. The test was originally added to measure the effect of the
++# core.fsyncObjectFiles=batch mode, which is why we are testing different values
++# of that setting explicitly and creating a lot of unique objects.
 +
-+test_create_unique_files() {
-+	test "$#" -ne 3 && BUG "3 param"
++test_description="Tests performance of add"
 +
-+	local dirs=$1
-+	local files=$2
-+	local basedir=$3
-+	local counter=0
-+	test_tick
-+	local basedata=$test_tick
++. ./perf-lib.sh
 +
-+
-+	rm -rf $basedir
-+
-+	for i in $(test_seq $dirs)
-+	do
-+		local dir=$basedir/dir$i
-+
-+		mkdir -p "$dir"
-+		for j in $(test_seq $files)
-+		do
-+			counter=$((counter + 1))
-+			echo "$basedata.$counter"  >"$dir/file$j.txt"
-+		done
-+	done
-+}
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index 283a66955d6..aaecefda159 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -8,6 +8,8 @@ test_description='Test of git add, including the -- option.'
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
 +. $TEST_DIRECTORY/lib-unique-files.sh
 +
- # Test the file mode "$1" of the file "$2" in the index.
- test_mode_in_index () {
- 	case "$(git ls-files -s "$2")" in
-@@ -34,6 +36,24 @@ test_expect_success \
-     'Test that "git add -- -q" works' \
-     'touch -- -q && git add -- -q'
- 
-+test_expect_success 'git add: core.fsyncobjectfiles=batch' "
-+	test_create_unique_files 2 4 fsync-files &&
-+	git -c core.fsyncobjectfiles=batch add -- ./fsync-files/ &&
-+	rm -f fsynced_files &&
-+	git ls-files --stage fsync-files/ > fsynced_files &&
-+	test_line_count = 8 fsynced_files &&
-+	awk -- '{print \$2}' fsynced_files | xargs -n1 git cat-file -e
-+"
++test_perf_default_repo
++test_checkout_worktree
 +
-+test_expect_success 'git update-index: core.fsyncobjectfiles=batch' "
-+	test_create_unique_files 2 4 fsync-files2 &&
-+	find fsync-files2 ! -type d -print | xargs git -c core.fsyncobjectfiles=batch update-index --add -- &&
-+	rm -f fsynced_files2 &&
-+	git ls-files --stage fsync-files2/ > fsynced_files2 &&
-+	test_line_count = 8 fsynced_files2 &&
-+	awk -- '{print \$2}' fsynced_files2 | xargs -n1 git cat-file -e
-+"
++dir_count=10
++files_per_dir=50
++total_files=$((dir_count * files_per_dir))
 +
- test_expect_success \
- 	'git add: Test that executable bit is not used if core.filemode=0' \
- 	'git config core.filemode 0 &&
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index f0a82be9de7..6324b52c874 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -9,6 +9,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
++# We need to create the files each time we run the perf test, but
++# we do not want to measure the cost of creating the files, so run
++# the tet once.
++if test "${GIT_PERF_REPEAT_COUNT-1}" -ne 1
++then
++	echo "warning: Setting GIT_PERF_REPEAT_COUNT=1" >&2
++	GIT_PERF_REPEAT_COUNT=1
++fi
++
++for m in false true batch
++do
++	test_expect_success "create the files for core.fsyncObjectFiles=$m" '
++		git reset --hard &&
++		# create files across directories
++		test_create_unique_files $dir_count $files_per_dir files
++	'
++
++	test_perf "add $total_files files (core.fsyncObjectFiles=$m)" "
++		git -c core.fsyncobjectfiles=$m add files
++	"
++done
++
++test_done
+diff --git a/t/perf/p3900-stash.sh b/t/perf/p3900-stash.sh
+new file mode 100755
+index 00000000000..c9fcd0c03eb
+--- /dev/null
++++ b/t/perf/p3900-stash.sh
+@@ -0,0 +1,46 @@
++#!/bin/sh
++#
++# This test measures the performance of adding new files to the object database
++# and index. The test was originally added to measure the effect of the
++# core.fsyncObjectFiles=batch mode, which is why we are testing different values
++# of that setting explicitly and creating a lot of unique objects.
++
++test_description="Tests performance of stash"
++
++. ./perf-lib.sh
++
 +. $TEST_DIRECTORY/lib-unique-files.sh
- 
- diff_cmp () {
- 	for i in "$1" "$2"
-@@ -1293,6 +1294,19 @@ test_expect_success 'stash handles skip-worktree entries nicely' '
- 	git rev-parse --verify refs/stash:A.t
- '
- 
-+test_expect_success 'stash with core.fsyncobjectfiles=batch' "
-+	test_create_unique_files 2 4 fsync-files &&
-+	git -c core.fsyncobjectfiles=batch stash push -u -- ./fsync-files/ &&
-+	rm -f fsynced_files &&
 +
-+	# The files were untracked, so use the third parent,
-+	# which contains the untracked files
-+	git ls-tree -r stash^3 -- ./fsync-files/ > fsynced_files &&
-+	test_line_count = 8 fsynced_files &&
-+	awk -- '{print \$3}' fsynced_files | xargs -n1 git cat-file -e
-+"
++test_perf_default_repo
++test_checkout_worktree
 +
++dir_count=10
++files_per_dir=50
++total_files=$((dir_count * files_per_dir))
 +
- test_expect_success 'stash -c stash.useBuiltin=false warning ' '
- 	expected="stash.useBuiltin support has been removed" &&
- 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index e13a8842075..38663dc1393 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -162,23 +162,23 @@ test_expect_success 'pack-objects with bogus arguments' '
- 
- check_unpack () {
- 	test_when_finished "rm -rf git2" &&
--	git init --bare git2 &&
--	git -C git2 unpack-objects -n <"$1".pack &&
--	git -C git2 unpack-objects <"$1".pack &&
--	(cd .git && find objects -type f -print) |
--	while read path
--	do
--		cmp git2/$path .git/$path || {
--			echo $path differs.
--			return 1
--		}
--	done
-+	git $2 init --bare git2 &&
-+	(
-+		git $2 -C git2 unpack-objects -n <"$1".pack &&
-+		git $2 -C git2 unpack-objects <"$1".pack &&
-+		git $2 -C git2 cat-file --batch-check="%(objectname)"
-+	) <obj-list >current &&
-+	cmp obj-list current
- }
- 
- test_expect_success 'unpack without delta' '
- 	check_unpack test-1-${packname_1}
- '
- 
-+test_expect_success 'unpack without delta (core.fsyncobjectfiles=batch)' '
-+	check_unpack test-1-${packname_1} "-c core.fsyncobjectfiles=batch"
-+'
++# We need to create the files each time we run the perf test, but
++# we do not want to measure the cost of creating the files, so run
++# the tet once.
++if test "${GIT_PERF_REPEAT_COUNT-1}" -ne 1
++then
++	echo "warning: Setting GIT_PERF_REPEAT_COUNT=1" >&2
++	GIT_PERF_REPEAT_COUNT=1
++fi
 +
- test_expect_success 'pack with REF_DELTA' '
- 	packname_2=$(git pack-objects --progress test-2 <obj-list 2>stderr) &&
- 	check_deltas stderr -gt 0
-@@ -188,6 +188,10 @@ test_expect_success 'unpack with REF_DELTA' '
- 	check_unpack test-2-${packname_2}
- '
- 
-+test_expect_success 'unpack with REF_DELTA (core.fsyncobjectfiles=batch)' '
-+       check_unpack test-2-${packname_2} "-c core.fsyncobjectfiles=batch"
-+'
++for m in false true batch
++do
++	test_expect_success "create the files for core.fsyncObjectFiles=$m" '
++		git reset --hard &&
++		# create files across directories
++		test_create_unique_files $dir_count $files_per_dir files
++	'
 +
- test_expect_success 'pack with OFS_DELTA' '
- 	packname_3=$(git pack-objects --progress --delta-base-offset test-3 \
- 			<obj-list 2>stderr) &&
-@@ -198,6 +202,10 @@ test_expect_success 'unpack with OFS_DELTA' '
- 	check_unpack test-3-${packname_3}
- '
- 
-+test_expect_success 'unpack with OFS_DELTA (core.fsyncobjectfiles=batch)' '
-+       check_unpack test-3-${packname_3} "-c core.fsyncobjectfiles=batch"
-+'
++	# We only stash files in the 'files' subdirectory since
++	# the perf test infrastructure creates files in the
++	# current working directory that need to be preserved
++	test_perf "stash 500 files (core.fsyncObjectFiles=$m)" "
++		git -c core.fsyncobjectfiles=$m stash push -u -- files
++	"
++done
 +
- test_expect_success 'compare delta flavors' '
- 	perl -e '\''
- 		defined($_ = -s $_) or die for @ARGV;
++test_done
 -- 
 gitgitgadget
-
