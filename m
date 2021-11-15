@@ -2,250 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E79DC433F5
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:18:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06298C4332F
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:20:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 85EBB610A8
-	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:18:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE1A3611F0
+	for <git@archiver.kernel.org>; Mon, 15 Nov 2021 23:20:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352132AbhKOXVb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Nov 2021 18:21:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59392 "EHLO
+        id S1346126AbhKOXWq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Nov 2021 18:22:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353014AbhKOXSe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Nov 2021 18:18:34 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85DA4C09CE5D
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:18:50 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id r9-20020a7bc089000000b00332f4abf43fso691896wmh.0
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:18:50 -0800 (PST)
+        with ESMTP id S241558AbhKOXUf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Nov 2021 18:20:35 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF5A9C048C8C
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:22:54 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id k4so15618293plx.8
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 14:22:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NWiiAfRIxfPGyAUWKGZ4CInLa154RcsVWQhGIHvMFhA=;
-        b=JuStXWmwFJKBTvfFgzii9tBsvQdND1/tz3emyP/8Bbl7POekOwszSA8EDjtn/9pEns
-         Xl5Z6bHGWCDbipz6QH0JfT/5QmRbWJiDIi52hneDHQ+4mYpbcTmyq9cA/ffP9o9y0j8Z
-         ypsji0J1p59/FRbG9xtlAm4AV+ZP6zAIw9zNFYFdCcBS5gs/beExY67Aqmik+hFlyAzq
-         0MduuAtb5rvH9hvmZp1sJzdLbf/mZ030UvPcrfx9bnVIQQ7UyWy8ut+NgrWU9m2jVd3T
-         IWDgoJrcMxVcrp0sPp8sfZzyF9wTVyi85lOF5HjkMPI0h+jyGhXqMiGZk672jpaLYVSL
-         KZ/w==
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=7+TjG08MWZ8MI06WvNCyUQfLhRfI1YXTeBt5aCJmkfc=;
+        b=dXLwo6jbeetgHmzJh+nYbM4020mm9ofKFiVuKGKu5cZUuTE28F0r+ZYR8tHarTP78j
+         HVMXbbAHSCI03HaJ5ubimWIxeKR+P2bmOr/Jd5SXF8/QvnbjHaPcRCmcfDTYdpnnqJj+
+         eiolf8lkXzgSiaoN8Oc10eGmS/PQMYgG/e+y98jTr+CkRRzkAMVvlTHeTngQPWa1o0D6
+         ghdvdS9x0RTbC04WkLkZtfMH3FWmHc3Az6qzOl2KIJYTEADLmcbNzYRRS6bfjw1SN975
+         WMEdqi2np2jN2aaPuqIi4uQwbv3+C4tw3pjg8hgTUxAi/69NriLgahYGmkU8xUq2DQwG
+         kTxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NWiiAfRIxfPGyAUWKGZ4CInLa154RcsVWQhGIHvMFhA=;
-        b=d0szuNXl1jWTRABJaiKnTwz4K4+8AF5OwpKejtzJoQLpI29VJpk++e1m7jOQRB07d8
-         glhHxHAZoth0WOmwgM8gQLuIOFo0KLTrWPF937hAJsZ5BoKMpoFO8rT+3BlUS/AkweT2
-         bwegk9p3DbfvaKFVMlXJGBZl2MwdN+OJ/AcoT+8VcVLSDHzkG9FXfAqQUQjFXWNEHJz4
-         bwwG3hoHQiOOepeaEY46YMNnkEFqz2wn0bSgB4sdhEYVWWGdA8+7hV0BzqCgyQbRnA00
-         P1wVaI9wHiAPwY7UAz6LysgHCYWjLpFAQ5OpJGJAF54cgrNudf/c6k1Q8OjYc1CFAuS+
-         gRiQ==
-X-Gm-Message-State: AOAM532GvAQsL0lHxQFmyuQdV4dMwM/O+ZuDUJ5SM2Tz+AjHbxaDCVeh
-        BH2fceS6gIdlWXqus5T/+8frXi8Cvv/nAA==
-X-Google-Smtp-Source: ABdhPJyDIBjm8gpBqg1qMVw5IJCU4DY1/Y6c/VukNOUIpedLqhhM2+2AFQDLuK/nUXJMXGgWNrH4/w==
-X-Received: by 2002:a7b:c770:: with SMTP id x16mr65926258wmk.66.1637014728818;
-        Mon, 15 Nov 2021 14:18:48 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n184sm526812wme.2.2021.11.15.14.18.47
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=7+TjG08MWZ8MI06WvNCyUQfLhRfI1YXTeBt5aCJmkfc=;
+        b=bStiF8x39vgJuyoa3doSsG3Dwi+gUXMr7ecxLEOFhqjchuEYjioz8kajjdB0lTLCBj
+         9L4Rw4/wwCs7UoKPyA09R+DE6kbIcUHOrJUQYHJJvBx6o+83Hp0wxTaa1JoMh/ySbHnF
+         5HmoHGxExKLiMOszBqqI2voIEbAIh3OmwXT9CMHssEzMz6+ShAzWicmlANHSIyDPkvoD
+         YtGNMisiMmjJKk0eiWye+mDMWWj2A3wTBiTpbuKRg32d7ZaKY4F/MMW0RAZEFvUOZaeM
+         nY1oMAXYrmLK/K48GZ9X+6UZr7/hQfb0/SMg3C5OuDWXs5s269ioHWT1eeNT7NCM8euR
+         9OBQ==
+X-Gm-Message-State: AOAM532D8cHfxM12hZ0y7sdH4zvZd/6BLDmENj+Ah1DmeheOoZf5K6Ks
+        sgSzMgeYMFIE1dmHZdbogYza48ZsMVhu3g==
+X-Google-Smtp-Source: ABdhPJyO+LmS+ZjQ7Qb+lV0LLBZAX6n7eCTxkkEAHrbrcKqZR/eKD5c31K54SFoEjlmvfz+daR8jKA==
+X-Received: by 2002:a17:90a:5d8e:: with SMTP id t14mr67785795pji.95.1637014974095;
+        Mon, 15 Nov 2021 14:22:54 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:9bb:b2ac:3919:1528])
+        by smtp.gmail.com with ESMTPSA id i10sm295463pjd.3.2021.11.15.14.22.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 14:18:48 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Elijah Newren <newren@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC PATCH 20/21] usage API: make the "{usage,fatal,error,warning,BUG}: " translatable
-Date:   Mon, 15 Nov 2021 23:18:30 +0100
-Message-Id: <RFC-patch-20.21-69426ddb992-20211115T220831Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.0.rc2.809.g11e21d44b24
-In-Reply-To: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
-References: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
+        Mon, 15 Nov 2021 14:22:53 -0800 (PST)
+Date:   Mon, 15 Nov 2021 14:22:48 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, emilyshaffer@google.com
+Subject: Re: [PATCH v3] branch: add flags and config to inherit tracking
+Message-ID: <YZLduLeRlXKfPjtw@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, emilyshaffer@google.com
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+ <b9356d9837479914bcf9a265f52afe170be7e2e2.1634445482.git.steadmon@google.com>
+ <87a6j6tbsv.fsf@gmgdl.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <87a6j6tbsv.fsf@gmgdl.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In preceding commits the vreportf() function was made static, so we
-know it's only being called with a limited set of fixed prefixes. Pass
-an enum indicating the kind of usage message we're emitting instead,
-which means that we can fold the BUG_vfl_common() functionality
-directly into it.
+On 2021.10.18 20:31, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Sat, Oct 16 2021, Josh Steadmon wrote:
+> 
+> > It can be helpful when creating a new branch to use the existing
+> > tracking configuration from the branch point. However, there is
+> > currently not a method to automatically do so.
+> 
+> There's no method to get *only* that config, but this use-case is why
+> the "-c" option (copy branch) was added.
+> 
+> I haven't looked at this in any detail, but the seeming lack of mention
+> of it in the commit message & docs makes me wonder if you missed that
+> that option could do what you wanted (but granted, it does a lot more,
+> which maybe you don't want).
 
-Since we've now got one place were we're emitting these usage messages
-we can make them translatable.
+Indeed, I did miss that option. Thank you for the pointer. I am
+conflicted about whether or not we want to copy all the branch
+configuration. Most of the options do seem useful to copy, but the
+existing config values available for `branch.autoSetupMerge` are
+strictly about setting up `branch.<name>.remote`, `branch.<name>.merge`,
+and `branch.<name>.rebase`. Adding a new value here that additionally
+pulls in all the rest of the config may be confusing. Alternatively we
+could add an entirely new option, but then its interaction with
+`branch.autoSetupMerge` would be confusing as well.
 
-We need to be careful with this function to not malloc() anything, as
-a failure in say a use of strbuf_vaddf() would call xmalloc(), which
-would in turn call die(), but here we're using static strings, either
-from libintl or not.
+> But in terms of implementation can't this share more code with the copy
+> mode? I.e. I'd think that this would just be a limited mode of that,
+> where we pass some whitelist of specific config to copy over, instead
+> the current "all the config" with "copy".
 
-I was on the fence about making the "BUG: " message translatable, but
-let's do it for consistency. Someone who doesn't speak a word of
-English may not know what "BUG" means, but if it's translated they
-might have an easier time knowing that they have to report a bug
-upstream. Since we'll always emit the line number it's unlikely that
-we're going to be confused by such a report.
+I will look into the copy machinery and see what can be reused in V4.
 
-As we've moved the BUG_vfl_common() code into vsnprintf() we can do
-away with one of the two checks for buffer sizes added in
-116d1fa6c69 (vreportf(): avoid relying on stdio buffering, 2019-10-30)
-and ac4896f007a (fmt_with_err: add a comment that truncation is OK,
-2018-05-18).
+> And should these options be made to work together somehow? I.e. if you
+> want to copy branch A to B, but copy tracking info from C?
 
-I.e. we're being overly paranoid if we define the fixed-size "prefix"
-and "msg" buffers, are OK with the former being truncated, and then
-effectively check if our 256-byte buffer is larger than our 4096-byte
-buffer. I wondered about adding a:
+I am skeptical of the benefit here, but I'm certainly willing to hear
+arguments in favor.
 
-    assert(sizeof(prefix) < sizeof(msg)); /* overly paranoid much? */
+The motivation for this series is for Git users (who are not necessarily
+Git experts) to have a simple config they can tune to make reduce
+friction for the use case of having large repositories with many
+submodules (see Emily's discussion [1]). The idea is that we have many
+people with a workflow where they'd have `submodule.recurse=true` and
+`branch.autoSetupMerge=inherit`. When they checkout a new branch in the
+superproject, branches would also be checked out in the submodules, and
+appropriate tracking information would also be inherited so that they
+can later `git push` without having to manually configure tracking for
+every submodule.
 
-But I think that would be overdoing it. Anyone modifying this function
-will keep these two buffer sizes in mind, so let's just remove one of
-the checks instead.
+This would be a very common operation for these users, and should
+therefore require as little friction as possible. While I can see use
+cases for your "copy A to B but copy tracking from C", it seems to me
+that this would be a much less common situation, and is probably going
+to be needed by Git experts who are capable of setting this manually
+without relying on configs to make it the default behavior.
 
-Signed-off-by: Ã†var ArnfjÃ¶rÃ° Bjarmason <avarab@gmail.com>
----
- usage.c | 68 ++++++++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 45 insertions(+), 23 deletions(-)
 
-diff --git a/usage.c b/usage.c
-index e6f609fe49a..62313862977 100644
---- a/usage.c
-+++ b/usage.c
-@@ -6,16 +6,49 @@
- #include "git-compat-util.h"
- #include "cache.h"
- 
--static void vreportf(const char *prefix, const char *err, va_list params)
-+enum usage_kind {
-+	USAGE_USAGE,
-+	USAGE_DIE,
-+	USAGE_ERROR,
-+	USAGE_WARNING,
-+	USAGE_BUG,
-+};
-+
-+static void vreportf(enum usage_kind kind,
-+		     const char *file, int line,
-+		     const char *err, va_list params)
- {
-+	const char *prefix_i18n;
-+	char prefix[256];
- 	char msg[4096];
- 	char *p, *pend = msg + sizeof(msg);
--	size_t prefix_len = strlen(prefix);
--
--	if (sizeof(msg) <= prefix_len) {
--		fprintf(stderr, "BUG!!! too long a prefix '%s'\n", prefix);
--		abort();
-+	size_t prefix_len;
-+
-+	switch (kind) {
-+	case USAGE_USAGE:
-+		prefix_i18n =_("usage: ");
-+		break;
-+	case USAGE_DIE:
-+		prefix_i18n =_("fatal: ");
-+		break;
-+	case USAGE_ERROR:
-+		prefix_i18n =_("error: ");
-+		break;
-+	case USAGE_WARNING:
-+		prefix_i18n =_("warning: ");
-+		break;
-+	case USAGE_BUG:
-+		prefix_i18n =_("BUG: ");
-+		break;
- 	}
-+
-+	/* truncation via snprintf is OK here */
-+	if (kind == USAGE_BUG)
-+		snprintf(prefix, sizeof(prefix), "%s%s:%d: ", prefix_i18n, file, line);
-+	else
-+		snprintf(prefix, sizeof(prefix), "%s", prefix_i18n);
-+
-+	prefix_len = strlen(prefix);
- 	memcpy(msg, prefix, prefix_len);
- 	p = msg + prefix_len;
- 	if (vsnprintf(p, pend - p, err, params) < 0)
-@@ -33,7 +66,7 @@ static void vreportf(const char *prefix, const char *err, va_list params)
- 
- static NORETURN void usage_builtin(const char *file, int line, const char *err, va_list params)
- {
--	vreportf("usage: ", err, params);
-+	vreportf(USAGE_USAGE, file, line, err, params);
- 
- 	/*
- 	 * When we detect a usage error *before* the command dispatch in
-@@ -58,7 +91,7 @@ static NORETURN void usage_builtin(const char *file, int line, const char *err,
- static void die_message_builtin(const char *file, int line, const char *err, va_list params)
- {
- 	trace2_cmd_error_va_fl(file, line, err, params);
--	vreportf("fatal: ", err, params);
-+	vreportf(USAGE_DIE, file, line, err, params);
- }
- 
- /*
-@@ -78,14 +111,14 @@ static void error_builtin(const char *file, int line, const char *err, va_list p
- {
- 	trace2_cmd_error_va_fl(file, line, err, params);
- 
--	vreportf("error: ", err, params);
-+	vreportf(USAGE_ERROR, file, line, err, params);
- }
- 
- static void warning_builtin(const char *file, int line, const char *warn, va_list params)
- {
- 	trace2_cmd_error_va_fl(file, line, warn, params);
- 
--	vreportf("warning: ", warn, params);
-+	vreportf(USAGE_WARNING, file, line, warn, params);
- }
- 
- static int die_is_recursing_builtin(void)
-@@ -283,24 +316,13 @@ void warning_errno_fl(const char *file, int line, const char *fmt, ...)
- /* Only set this, ever, from t/helper/, when verifying that bugs are caught. */
- int BUG_exit_code;
- 
--static void BUG_vfl_common(const char *file, int line, const char *fmt,
--			   va_list params)
--{
--	char prefix[256];
--
--	/* truncation via snprintf is OK here */
--	snprintf(prefix, sizeof(prefix), "BUG: %s:%d: ", file, line);
--
--	vreportf(prefix, fmt, params);
--}
--
- static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_list params)
- {
- 	va_list params_copy;
- 	static int in_bug;
- 
- 	va_copy(params_copy, params);
--	BUG_vfl_common(file, line, fmt, params);
-+	vreportf(USAGE_BUG, file, line, fmt, params);
- 
- 	if (in_bug)
- 		abort();
-@@ -330,7 +352,7 @@ int bug_fl(const char *file, int line, const char *fmt, ...)
- 
- 	va_copy(cp, ap);
- 	va_start(ap, fmt);
--	BUG_vfl_common(file, line, fmt, ap);
-+	vreportf(USAGE_BUG, file, line, fmt, ap);
- 	va_end(ap);
- 	trace2_cmd_error_va_fl(file, line, fmt, cp);
- 
--- 
-2.34.0.rc2.809.g11e21d44b24
+[1]: https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
 
+> > [...]
+> >  -t::
+> > ---track::
+> > +--track [inherit|direct]::
+> >  	When creating a new branch, set up `branch.<name>.remote` and
+> > -	`branch.<name>.merge` configuration entries to mark the
+> > -	start-point branch as "upstream" from the new branch. This
+> > +	`branch.<name>.merge` configuration entries to set "upstream" tracking
+> > +	configuration for the new branch. This
+> 
+> Setting up ".remote" is what --tracke does, but doesn't it make sense
+> for such an option to copy over any other config related to that area,
+> e.g. also .pushRemote, as a user may have edited it since the creation
+> of the copied-from branch?
+
+Yes, .pushRemote and .mergeOptions both seem like they'd be useful to
+copy here.
+
+> Maybe, maybe not. But this & the above comparison with copy makes me
+> wonder if we'd be better off with some mode similar to the matching
+> regexes "git config", i.e. you could do a "copy" but only on a list of
+> matching variables.
+> 
+> Then the --track mode could just be implemented in terms of that, no?
+
+Using config matching to only copy portions of the branch config seems
+overkill to me. IMO it would be better to get agreement for which of the
+branch.<name>.* variables to copy, and then use that consistently for
+all possible settings of `branch.autoSetupMerge` and
+`branch.autoSetupRebase`. If that allows us to reuse the existing copy
+machinery, then so much the better.
