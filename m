@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36349C433EF
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DA2FC433F5
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:02:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C6CB61B31
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:02:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30F7261040
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:02:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235990AbhKPMFc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 07:05:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33666 "EHLO
+        id S236014AbhKPMFf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 07:05:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235803AbhKPMEd (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235811AbhKPMEd (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 16 Nov 2021 07:04:33 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B756EC06120E
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:36 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id t30so36990963wra.10
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:36 -0800 (PST)
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B738C061210
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:38 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id p3-20020a05600c1d8300b003334fab53afso1731832wms.3
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ePI42E3chv16CDtxIk0yqPsj1sLvkQUxbMhc14jiLu0=;
-        b=e36QKSSxZ3ZX9FD5axqa4YeGhtWOtl5nNkXQ9PEuXFAzy/Ssv66bMoNjjhx9jSKC7g
-         f+UG98eCv7t6Spb3WIj9mlozN0gC6ZfTaIIEZBDvmCybb7VwL+8Q6XPtlhp7l/YrIZop
-         lyLDVIykn2GNWhbtV99FtS+OsOvxxJdhTwxJpGWl/llCEzcIPoTgYKlhG/WRdCk+Bssr
-         GcKp1aGhSfrDu7GS72IIVxhEhgkh7TVRX4DjiTTQBOSwvQgx51tEeZ5z2c6kOtU7wfTU
-         ms2PKDc5k+8F7eFEqKSJW27rnUcg9Pqv1LFWenDVGqpsR9h5TbhHu1+MhQHJs0Yuu+Tk
-         2T+g==
+        bh=vxul1YYNwYQX3tFj/SVCdT0l2SN3rSACHXGzLgadBwE=;
+        b=FEAkI6Z+O2w5pB8oLpJou9J/iFlmyW+v4htuGC9VAvEMmyC9w7jZ7L/bMFhrcgBgKy
+         khBAnCZC4GIZDjrIp4y4Kw1COrpAfbvh5TUcbnK3UOHl+hAbBujaTRSCrzRPlQ9FZwpX
+         sZuXz1tPab536KaN+7GEl3pri4Ca+F6DtGjw8KwNhixiedaQJTkboEBWZhY/StEe+tCR
+         a7A4FTQKipphMa5IHOAyqw8r5UBWSgtbswMZy6fLgeHBwHhZxoBre00M93ZfU5j0LmJZ
+         A7uITRS0995fGOISCfF06pQsNqTWjLWvFBe8LbPA3L3mRaxdYY0JJHLsIGCmYMeZ9FXE
+         OBaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ePI42E3chv16CDtxIk0yqPsj1sLvkQUxbMhc14jiLu0=;
-        b=xo6j1usV5HCYVegVC4MdGEFUVGlEUd+yBHuf6bewrYquK/dEOwqf2ALdpasA7HHsYI
-         HdaFyHoKCT42++sRk/3sD+E5XAIoJHGiF0fRjH5Z+Yqu5uZKkPZQylIl44vKz39nvlwf
-         d5+pigaqCVPzx3YnBDp0KtZwDthuqFrXBaEda/ikXxSY7bti+E0yhN2S0fSxNVQNqwNC
-         yvSxXvsrrdSipx22KnzvezY15gAY4nO/XntRqXUXLjR1D3p1FNIIysU9P3KkIara+mou
-         XmRaVgzny+pfqrrLEjl603mFTXhCdZcGtboR7NXYJZEmjimptvJa8p0VoF6wyQNqIVzL
-         yCrw==
-X-Gm-Message-State: AOAM533UM+sEQDR9pJ8uttvooAxupCk1h7k2zQ/P5No0i20YbDrwZzF2
-        j9KDeEFESaxd2GWExoglC8iCmKDziUuRJw==
-X-Google-Smtp-Source: ABdhPJzmgXO7z2v7KTTwaKIcMZoECjnCYVZK9bhiakHACClfViF9txeXsKamRplwLwiM4XPeD0KbZA==
-X-Received: by 2002:a5d:518d:: with SMTP id k13mr8614876wrv.120.1637064034873;
-        Tue, 16 Nov 2021 04:00:34 -0800 (PST)
+        bh=vxul1YYNwYQX3tFj/SVCdT0l2SN3rSACHXGzLgadBwE=;
+        b=XHVC5AaGcxpiQJhG3IKlabZZDcNp9uySP/FGittVOdirKmUZ95Fui5PpqqD2i7/2yz
+         PPGuSbbzZMbx8iOJs7EpsX4nsZOqdp0p4rHYsSrOqGIMOykORE8CsuiwSUXCarzQDyo8
+         JAFb5DpbDXLDTKyknyON6AFcX1C8PPnnhYifwHmAbhqEwXy5x+UAO/JOKomgq7oHz4ze
+         L1OeFSsTSRiCHTAQdQS/0VBgH7k9htNSve0C1rigqwQz/ZvgFL8RpRRmHDni5Y5xEOEH
+         aFR//0xWhMJY/J5WZjx+R2tKdts54+fGIT9v7jYxU9NoHzocABtU+0w3wmg5rmTjrjU+
+         1SPw==
+X-Gm-Message-State: AOAM5303Lqwmj3Hz6IvkVMM0+47vblPRt4CpGCKotlcmUpyyOmDYQfs3
+        R5RkaWO4b9312uY3fKSZBar9wFdBOhc76w==
+X-Google-Smtp-Source: ABdhPJyzWv7yscW9v6LKma+Fi0FZaM49yoJpVD6zCvsM3bTQUE26Zuw8wZidlgKyEjUmz3bydBkayQ==
+X-Received: by 2002:a05:600c:4e4a:: with SMTP id e10mr6861285wmq.176.1637064036720;
+        Tue, 16 Nov 2021 04:00:36 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k37sm2427922wms.21.2021.11.16.04.00.34
+        by smtp.gmail.com with ESMTPSA id k37sm2427922wms.21.2021.11.16.04.00.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Nov 2021 04:00:34 -0800 (PST)
+        Tue, 16 Nov 2021 04:00:36 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,12 +60,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Mike Hommey <mh@glandium.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 00/23] Makefile: dependency fixes, make noop runtime ~1.4x faster
-Date:   Tue, 16 Nov 2021 13:00:00 +0100
-Message-Id: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
+Subject: [PATCH v3 02/23] Makefile: don't set up "perl/build" rules under NO_PERL=Y
+Date:   Tue, 16 Nov 2021 13:00:02 +0100
+Message-Id: <patch-v3-02.23-b7c36c9fea0-20211116T114334Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.795.g1e9501ab396
-In-Reply-To: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com>
-References: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com>
+In-Reply-To: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
+References: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com> <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,105 +73,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As noted in v2[1] this series fixes various dependency issues in the
-Makfile.
+Do not define LIB_{PERL,CPAN}{,_GEN} if NO_PERL is defined. This
+changes no functionality, but makes it clear which of these rules are
+needed under NO_PERL=Y. See 20d2a30f8ff (Makefile: replace
+perl/Makefile.PL with simple make rules, 2017-12-10) for the initial
+implementation.
 
-New in v3 is a fix for the dependency issue Mike Hommey reported[2]
-with hook-list.h, and 3x new and big optimizations that I'd planned to
-submit later on-top, but I figured would be better to consider as part
-of these general dependency improvements.
+We do for better or worse rely on "install-doc" calling
+"install-man-perl" regardless of whether NO_PERL=Y is defined or not,
+i.e. we'll always end up with that manual page, even if we don't have
+any of the Perl code installed. Let's add a comment about that
+adjacent to the rules that build perl/build.
 
-With those new changes on top we run ~1.4x faster on no-op runs (under
-NO_TCLTK=Y, since that would otherwise eat most of our runtime either
-way):
-    
-    $ git hyperfine -L rev origin/next,HEAD~0 -s 'make -j8 all NO_TCLTK=Y' 'make NO_TCLTK=Y' --warmup 10 -r 10
-    Benchmark 1: make NO_TCLTK=Y' in 'origin/next
-      Time (mean ± σ):     187.4 ms ±   2.4 ms    [User: 146.5 ms, System: 57.1 ms]
-      Range (min … max):   184.7 ms … 192.8 ms    10 runs
-     
-    Benchmark 2: make NO_TCLTK=Y' in 'HEAD~0
-      Time (mean ± σ):     136.1 ms ±   0.9 ms    [User: 103.0 ms, System: 47.6 ms]
-      Range (min … max):   135.4 ms … 138.2 ms    10 runs
-     
-    Summary
-      'make NO_TCLTK=Y' in 'HEAD~0' ran
-        1.38 ± 0.02 times faster than 'make NO_TCLTK=Y' in 'origin/next'
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-Which, as noted before is working nicely towards making executing
-"make" in a loop faster, such as under "git rebase --exec".
-
-Those optimizations are a mixture of clever and "dumb but
-works". E.g. around 10% of the runtime was spent by the Makefile
-looking for git's sources in the RCS and SCCS source control
-management systems, before giving up and considering the relevant file
-on disk.
-
-1. https://lore.kernel.org/git/cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com
-2. https://lore.kernel.org/git/20211115230032.3or3qqlsdnxjtrol@glandium.org/
-
-Ævar Arnfjörð Bjarmason (23):
-  Makefile: don't invoke msgfmt with --statistics
-  Makefile: don't set up "perl/build" rules under NO_PERL=Y
-  Makefile: use "=" not ":=" for po/* and perl/*
-  Makefile: clean perl/build/ even with NO_PERL=Y
-  Makefile: remove "mv $@ $@+" dance redundant to .DELETE_ON_ERROR
-  Makefile: guard Perl-only variable assignments
-  Makefile: change "ifndef NO_PERL" to "ifdef NO_PERL"
-  Makefile: adjust Perl-related comments & whitespace
-  Makefile: correct "GIT-PERL-{DEFINES,HEADER}" dependency graph
-  Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
-  Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
-  Makefiles: add "shared.mak", move ".DELETE_ON_ERROR" to it
-  Makefile: move $(comma), $(empty) and $(space) to shared.mak
-  Makefile: re-add and use the "shellquote" macros
-  Makefile: add a "TRACK_template" for GIT-*{FLAGS,DEFINES,...}
-  Makefile: add "$(QUIET)" boilerplate to shared.mak
-  Makefile: use $(wspfx) for $(QUIET...) in shared.mak
-  Makefiles: add and use wildcard "mkdir -p" template
-  Makefile: correct the dependency graph of hook-list.h
-  Makefile: use $(file) I/O instead of "FORCE" when possible
-  Makefile: disable GNU make built-in wildcard rules
-  Makefile: define $(LIB_H) in terms of $(FIND_SOURCE_FILES)
-  Makefile: move ".SUFFIXES" rule to shared.mak
-
- .gitignore             |   2 +-
- Documentation/Makefile |  71 +---------
- Makefile               | 313 +++++++++++++++--------------------------
- config.mak.uname       |   1 -
- git-cvsserver.perl     |   6 +-
- git-send-email.perl    |   7 +-
- git-svn.perl           |   2 +-
- shared.mak             | 187 ++++++++++++++++++++++++
- t/Makefile             |  34 ++---
- templates/Makefile     |  19 +--
- 10 files changed, 337 insertions(+), 305 deletions(-)
- create mode 100644 shared.mak
-
-Range-diff against v2:
- 1:  75ebf7b04e5 =  1:  1621ca72c1d Makefile: don't invoke msgfmt with --statistics
- 2:  138f60ba37b =  2:  b7c36c9fea0 Makefile: don't set up "perl/build" rules under NO_PERL=Y
- 3:  472e1eb74bd =  3:  510499d18ba Makefile: use "=" not ":=" for po/* and perl/*
- 4:  a5ce2dce164 =  4:  37f3591bcca Makefile: clean perl/build/ even with NO_PERL=Y
- 5:  04dbc1d2809 =  5:  e38c90ad0b6 Makefile: remove "mv $@ $@+" dance redundant to .DELETE_ON_ERROR
- 6:  eea89794493 =  6:  98e14c7eba9 Makefile: guard Perl-only variable assignments
- 7:  e06732d4639 =  7:  047a42b01cf Makefile: change "ifndef NO_PERL" to "ifdef NO_PERL"
- 8:  a9502a23989 =  8:  0c0a3de390e Makefile: adjust Perl-related comments & whitespace
- 9:  c1336fc0a56 =  9:  1ece3160915 Makefile: correct "GIT-PERL-{DEFINES,HEADER}" dependency graph
-10:  41f65a12205 = 10:  e9b61cd0ba5 Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
-11:  bfa15059d60 = 11:  b020f8e3257 Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
-12:  656d02ab641 = 12:  19539ce7d2d Makefiles: add "shared.mak", move ".DELETE_ON_ERROR" to it
-13:  6e25ac71cbc = 13:  6c9291c2c9f Makefile: move $(comma), $(empty) and $(space) to shared.mak
-14:  64296e6e8e5 = 14:  e811a907b08 Makefile: re-add and use the "shellquote" macros
-15:  5654d7f7f29 = 15:  fac30fe8b56 Makefile: add a "TRACK_template" for GIT-*{FLAGS,DEFINES,...}
-16:  0a348b54491 = 16:  a3e3acea82d Makefile: add "$(QUIET)" boilerplate to shared.mak
-17:  34f692144d1 = 17:  22264f431c8 Makefile: use $(wspfx) for $(QUIET...) in shared.mak
-18:  5b3986bc4a8 = 18:  d61e2b44f68 Makefiles: add and use wildcard "mkdir -p" template
- -:  ----------- > 19:  234b4eb613c Makefile: correct the dependency graph of hook-list.h
- -:  ----------- > 20:  567ad5c3ebc Makefile: use $(file) I/O instead of "FORCE" when possible
- -:  ----------- > 21:  cb3ae5ce00b Makefile: disable GNU make built-in wildcard rules
- -:  ----------- > 22:  88cfc946b37 Makefile: define $(LIB_H) in terms of $(FIND_SOURCE_FILES)
- -:  ----------- > 23:  276e226f0a8 Makefile: move ".SUFFIXES" rule to shared.mak
+diff --git a/Makefile b/Makefile
+index 11da97de233..06405825a24 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2684,19 +2684,12 @@ endif
+ po/build/locale/%/LC_MESSAGES/git.mo: po/%.po
+ 	$(QUIET_MSGFMT)mkdir -p $(dir $@) && $(MSGFMT) -o $@ $<
+ 
++ifndef NO_PERL
+ LIB_PERL := $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/Git/*/*/*.pm)
+ LIB_PERL_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
+ LIB_CPAN := $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
+ LIB_CPAN_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_CPAN))
+ 
+-ifndef NO_PERL
+-all:: $(LIB_PERL_GEN)
+-ifndef NO_PERL_CPAN_FALLBACKS
+-all:: $(LIB_CPAN_GEN)
+-endif
+-NO_PERL_CPAN_FALLBACKS_SQ = $(subst ','\'',$(NO_PERL_CPAN_FALLBACKS))
+-endif
+-
+ perl/build/lib/%.pm: perl/%.pm GIT-PERL-DEFINES
+ 	$(QUIET_GEN)mkdir -p $(dir $@) && \
+ 	sed -e 's|@@LOCALEDIR@@|$(perl_localedir_SQ)|g' \
+@@ -2704,6 +2697,14 @@ perl/build/lib/%.pm: perl/%.pm GIT-PERL-DEFINES
+ 	    -e 's|@@NO_PERL_CPAN_FALLBACKS@@|$(NO_PERL_CPAN_FALLBACKS_SQ)|g' \
+ 	< $< > $@
+ 
++all:: $(LIB_PERL_GEN)
++ifndef NO_PERL_CPAN_FALLBACKS
++all:: $(LIB_CPAN_GEN)
++endif
++NO_PERL_CPAN_FALLBACKS_SQ = $(subst ','\'',$(NO_PERL_CPAN_FALLBACKS))
++endif
++
++# install-man depends on Git.3pm even with NO_PERL=Y
+ perl/build/man/man3/Git.3pm: perl/Git.pm
+ 	$(QUIET_GEN)mkdir -p $(dir $@) && \
+ 	pod2man $< $@
 -- 
 2.34.0.795.g1e9501ab396
 
