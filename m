@@ -2,65 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CC01C433FE
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 19:04:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62F2BC433F5
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 19:21:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 103C76321B
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 19:04:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 44683619E5
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 19:21:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239742AbhKPTHQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 14:07:16 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63552 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239717AbhKPTHO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 14:07:14 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2F16EC89E;
-        Tue, 16 Nov 2021 14:04:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=1zrxo3NGuL47
-        7POu9Nmgbookg/U+OmjBWo5iZ1bPz9Y=; b=uByGEeG32roPwGVaeU0SVc/EWS8c
-        WOUdEG5sNfmUKRyXI+8ySZM9oxgvMTNMUjDvzUoaNySNv4RA09AOx7+tOJcqu44L
-        mLFFyL686YCWT5EwdligTEMUnK5aSfieuCE6eYdK+5n5LtkQ6ZWA93fkAZBFRZpc
-        6Vb1FSGGUshvm3k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CA081EC89C;
-        Tue, 16 Nov 2021 14:04:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 325CDEC89A;
-        Tue, 16 Nov 2021 14:04:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t0006: date_mode can leak .strftime_fmt member
-References: <211104.86mtmki5ol.gmgdl@evledraar.gmail.com>
-        <patch-1.1-15f5bd3e4f4-20211116T183025Z-avarab@gmail.com>
-Date:   Tue, 16 Nov 2021 11:04:15 -0800
-In-Reply-To: <patch-1.1-15f5bd3e4f4-20211116T183025Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 16 Nov
- 2021 19:31:12 +0100")
-Message-ID: <xmqqlf1napn4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S239686AbhKPTYV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 14:24:21 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60374 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234139AbhKPTYU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 14:24:20 -0500
+Received: (qmail 20940 invoked by uid 109); 16 Nov 2021 19:21:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Nov 2021 19:21:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 928 invoked by uid 111); 16 Nov 2021 19:21:23 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Nov 2021 14:21:23 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 16 Nov 2021 14:21:22 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] wrapper: use a CSPRNG to generate random file names
+Message-ID: <YZQEsjidbBUgvhfu@coredump.intra.peff.net>
+References: <20211116033542.3247094-1-sandals@crustytoothpaste.net>
+ <20211116033542.3247094-3-sandals@crustytoothpaste.net>
+ <YZPQE+SKVXjexXMT@coredump.intra.peff.net>
+ <YZP4XDtF7O7Sxh17@nand.local>
+ <xmqqtugc9bdz.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FE8AFE24-470F-11EC-B2D6-62A2C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqtugc9bdz.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Tue, Nov 16, 2021 at 10:57:28AM -0800, Junio C Hamano wrote:
 
-> As there is no date_mode_release() API function, and given the
-> set of current callers it probably is not worth adding one, let's
-> release the .strftime_fmt member that is obtained from strdup()
-> before the caller of show_date() is done with it.
+> Taylor Blau <me@ttaylorr.com> writes:
+> 
+> >> I actually wonder if we should simply die() in such a case. That's not
+> >> very friendly from a libification stand-point, but we really can't
+> >> progress on much without being able to generate random bytes.
+> >
+> > Alternatively, we could fall back to the existing code paths. This is
+> > somewhat connected to my suggestion to Randall earlier in the thread.
+> > But I would rather see that fallback done at compile-time for platforms
+> > that don't give us an easy-to-use CSPRNG, and avoid masking legitimate
+> > errors caused from trying to use a CSPRNG that should exist.
+> 
+> Yeah, I do not think we are doing this because the current code is
+> completely broken and everybody needs to move to CSPRNG that makes
+> it absoletely safe---rather this is still just making it safer than
+> the current code, when system support is available.  So a fallback
+> to the current code would be a good (and easy) thing to have, I
+> would think.
 
-I do not know what the last line exactly wants to say.  Perhaps the
-original author meant "after", not "before"? ;-)
+One challenge for any fallback is that there are security implications.
+In particular:
+
+  - the fallback probably needs to be specific to the mktemp code; we
+    don't have any callers yet of csprng_bytes(), but anybody using it
+    for, say, actual cryptography would be very unhappy if it quietly
+    fell back to insecure bytes.
+
+    (I don't have any plans to use it and we don't do very much actual
+    crypto ourselves, but one place that _could_ use it is the
+    generation of the push-cert nonce seed).
+
+  - I'm not sure if we should fallback for runtime errors or not. E.g.,
+    if we try to open /dev/urandom and it isn't there, is it OK to fall
+    back to the older, less-secure tempfile method? That's convenient in
+    some sense; Git continues to work inside a chroot for which you
+    haven't set up /dev/urandom. But it may also be surprising, and
+    erring on the side of doing the less secure thing is probably a bad
+    idea.
+
+    So the mktemp code probably needs to be aware of the difference
+    between "we have no CSPRNG source" and "we were compiled with
+    support for a source, but it didn't work".
+
+-Peff
