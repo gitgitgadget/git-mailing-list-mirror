@@ -2,129 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46454C433EF
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 05:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3011C433F5
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 05:49:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DF5863219
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 05:45:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC47361B2A
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 05:49:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236154AbhKPFsI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 00:48:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60144 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236211AbhKPFrn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 00:47:43 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F802C0431A3
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 19:35:49 -0800 (PST)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S237584AbhKPFwg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 00:52:36 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60914 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237383AbhKPFwL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 00:52:11 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7DCE5F5548;
+        Tue, 16 Nov 2021 00:49:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=VR+swJI+TtPnhZbgJJtTM5PPY
+        dFA+AeOTQViBtDTYyA=; b=sDndrEfsJwnnlkerAn7lRR+PrePvkGASSKOWGcKIF
+        rgYz4tSrsL4uvzGphlfOb0KxvuJEvuYjYU1N3+Sp3n4B/phUlynrU/Zf/FGijj87
+        kkpXTKoYiOoKF/wFuJpng7GBH0/0VrulvhVr8yau1y5ie/POMvanom5DaSXslU7s
+        DY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 63FE9F5546;
+        Tue, 16 Nov 2021 00:49:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id C8CDE5B466
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 03:35:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1637033748;
-        bh=34AFOgQNSV+PkwQJTKFLhrvpqXv112kKqnjqPDpuHVs=;
-        h=From:To:Subject:Date:From:Reply-To:Subject:Date:To:CC:Resent-Date:
-         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=veI4hlUPTZdvY53LAshrrnj3UybipOZvrQM7aG0smQbElwGL9D3YWgCnRpYjM5I6B
-         Z2xSbjl4oSdfSDoaDZGVphuypv8u/m8cEayFLTRVHvMEU2pW5nj0epU1Bdnm3rtRs8
-         KzMAPTvfB2cXKpLOUp8ztT6CGnwgEgVJWgH69bZNzqZCODmivVDBKI9h81/+Oa1mKi
-         r36JdF6Xetd5unMg2mO3IM1CNjsuDqOunk4i2xVQdfwFqK/253cgMwaLcXAsW1lWE9
-         n8nDkUEruZFkaT7C1fYZU9LJxRJlSJMP6kOKkQ0F9Pk253j1JXZnURUT9WUFFvkTEs
-         bxV2Knv+fUv12ZXDtI1NtPnhHRy+vNiSwqlThlSH/p93JSL0f0hB3L8+c6cq/TM7L2
-         A6uIieM3thAGqvmAGnQSu3C0de7GS2QGGnaS/xvBC/Yi1URHb72OwRTLYDeWzFI6fs
-         xkNb18z2U5hC2c3x792VgWE9RlVK+0aOUWwk8HK5Y/QgqcRcfIW
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Subject: [PATCH 0/2] Generate temporary files using a CSPRNG
-Date:   Tue, 16 Nov 2021 03:35:40 +0000
-Message-Id: <20211116033542.3247094-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.33.1.1089.g2158813163f
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B995CF5545;
+        Tue, 16 Nov 2021 00:49:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Anders Kaseorg <andersk@mit.edu>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Andreas Heiduk <andreas.heiduk@mathema.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v6 5/8] fetch: protect branches checked out in all
+ worktrees
+References: <20211113033358.2179376-1-andersk@mit.edu>
+        <20211113033358.2179376-6-andersk@mit.edu>
+Date:   Mon, 15 Nov 2021 21:49:08 -0800
+Message-ID: <xmqq1r3gd50r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: EB48FD3A-46A0-11EC-881A-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, when we generate a temporary file name, we use the seconds,
-microseconds, and the PID to generate a unique value.  The resulting
-value, while changing frequently, is actually predictable and on some
-systems, it may be possible to cause a DoS by creating all potential
-temporary files when the temporary file is being created in TMPDIR.
+Anders Kaseorg <andersk@mit.edu> writes:
 
-The solution to this is to use the system CSPRNG to generate the
-temporary file name.  This is the approach taken by FreeBSD, NetBSD, and
-OpenBSD, and glibc also recently switched to this approach from an
-approach that resembled ours in many ways.
+> Refuse to fetch into the currently checked out branch of any working
+> tree, not just the current one.
+>
+> Fixes this previously reported bug:
+>
+> https://public-inbox.org/git/cb957174-5e9a-5603-ea9e-ac9b58a2eaad@mathe=
+ma.de
+>
+> As a side effect of using find_shared_symref, we=E2=80=99ll also refuse=
+ the
+> fetch when we=E2=80=99re on a detached HEAD because we=E2=80=99re rebas=
+ing or bisecting
+> on the branch in question. This seems like a sensible change.
 
-Even if this is not practically exploitable on many systems, it seems
-prudent to be at least as careful about temporary file generation as
-libc is.
+Indeed.
 
-This issue was mentioned on the security list and it was decided that
-this was not sensitive enough to warrant a coordinated disclosure, a
-sentiment with which I agree.  This is difficult to exploit on most
-systems, but I think it's still worth fixing.
+> Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+> ---
+>  builtin/fetch.c       | 75 +++++++++++++++++++++++--------------------
+>  t/t5516-fetch-push.sh | 18 +++++++++++
+>  2 files changed, 58 insertions(+), 35 deletions(-)
+>
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index e5971fa6e5..f373252490 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -28,6 +28,7 @@
+>  #include "promisor-remote.h"
+>  #include "commit-graph.h"
+>  #include "shallow.h"
+> +#include "worktree.h"
+> =20
+>  #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
+> =20
+> @@ -840,14 +841,13 @@ static void format_display(struct strbuf *display=
+, char code,
+> =20
+>  static int update_local_ref(struct ref *ref,
+>  			    struct ref_transaction *transaction,
+> -			    const char *remote,
+> -			    const struct ref *remote_ref,
+> -			    struct strbuf *display,
+> -			    int summary_width)
+> +			    const char *remote, const struct ref *remote_ref,
+> +			    struct strbuf *display, int summary_width,
+> +			    struct worktree **worktrees)
+>  {
+>  	struct commit *current =3D NULL, *updated;
+>  	enum object_type type;
+> -	struct branch *current_branch =3D branch_get(NULL);
+> +	const struct worktree *wt;
+>  	const char *pretty_ref =3D prettify_refname(ref->name);
+>  	int fast_forward =3D 0;
 
-This series introduces two commits.  The first implements a generic
-function which calls the system CSPRNG.  A reasonably exhaustive attempt
-is made to pick from the options with a preference for performance.  The
-second changes our temporary file code to use the CSPRNG.
+Having to pass the parameter down to here through the
 
-I have added a test helper that can emit bytes from the CSPRNG, as well
-as a self-test mode.  The former is not used, but I anticipated it could
-find utility in the testsuite, and it was useful for testing by hand, so
-I included it.
+    ->do_fetch()
+      ->backfill_tags() (or do_fetch() itself)
+        ->consume_refs()
+          ->store_updated_refs()
+            ->update_local_ref()
 
-The careful reader will notice that the sole additional test is added to
-t0000.  That's because temporary file generation is fundamental to how
-Git operates and if it fails, the entire testsuite is broken.  Thus, a
-simple test to verify that it's working seems prudent as part of t0000.
-I was also unable to find a better place to put it, but am open to
-suggestions if folks have ideas.
+callchain makes the "damage to the code" by the patch look larger
+than it actually is.  The real change is ...
 
-This passes our CI, including on Windows, and I have manually verified
-the correctness of the other four branches on Linux (the HAVE_ARC4RANDOM
-branch requiring a small patch which is not necessary on systems which
-have it in libc and which is therefore not included here).
+> @@ -862,16 +862,17 @@ static int update_local_ref(struct ref *ref,
+>  		return 0;
+>  	}
+> =20
+> -	if (current_branch &&
+> -	    !strcmp(ref->name, current_branch->name) &&
+> -	    !(update_head_ok || is_bare_repository()) &&
+> -	    !is_null_oid(&ref->old_oid)) {
+> +	if (!update_head_ok &&
+> +	    (wt =3D find_shared_symref(worktrees, "HEAD", ref->name)) &&
+> +	    !wt->is_bare && !is_null_oid(&ref->old_oid)) {
 
-I am of course interested in hearing from anyone who lacks one of the
-CSPRNG interfaces we have here.  Looking at the Go standard library,
-/dev/urandom should be available on at least AIX, Darwin (macOS),
-DragonflyBSD, FreeBSD, Linux, NetBSD, OpenBSD, and Solaris, and I
-believe it is available on most other Unix systems as well.
-RtlGenRandom is available on Windows back to XP, which we no longer
-support.  The bizarre header contortion on Windows comes from Mozilla,
-but is widely used in other codebases with no substantial changes.
+... this part, which looks very sensible.
 
-For those who are interested, I computed the probability of spurious
-failure for the self-test mode like so:
+>  		 * If this is the head, and it's not okay to update
+>  		 * the head, and the old value of the head isn't empty...
+>  		 */
+>  		format_display(display, '!', _("[rejected]"),
+> -			       _("can't fetch in current branch"),
+> +			       wt->is_current ?
+> +				       _("can't fetch in current branch") :
+> +				       _("checked out in another worktree"),
+>  			       remote, pretty_ref, summary_width);
+>  		return 1;
+>  	}
 
-  256 * (255/256)^65536
+> @@ -1643,7 +1647,7 @@ static int do_fetch(struct transport *transport,
+>  				  "you need to specify exactly one branch with the --set-upstream =
+option"));
+>  		}
+>  	}
+> - skip:
+> +skip:
+>  	free_refs(ref_map);
 
-This Ruby one-liner estimates the probability at approximately 10^-108:
+;-)
 
-  ruby -e 'a = 255 ** 65536; b = 256 ** 65536; puts b.to_s.length - a.to_s.length - 3'
+I count 30 hits of "^ [a-z0-9]*:" and 255 hits of "^[a-z0-9]*:" in
+our codebase.  It must be some developers used to subscribe to
+"don't place the label abut the left edge" school but no longer, or
+something like that.
 
-If I have made an error in the calculation, please do feel free to point
-it out.
+The code changes all look good to me.
 
-brian m. carlson (2):
-  wrapper: add a helper to generate numbers from a CSPRNG
-  wrapper: use a CSPRNG to generate random file names
+Thanks.
 
- Makefile                            | 25 ++++++++++
- compat/winansi.c                    |  6 +++
- config.mak.uname                    |  9 ++++
- contrib/buildsystems/CMakeLists.txt |  2 +-
- git-compat-util.h                   | 16 +++++++
- t/helper/test-csprng.c              | 63 +++++++++++++++++++++++++
- t/helper/test-tool.c                |  1 +
- t/helper/test-tool.h                |  1 +
- t/t0000-basic.sh                    |  4 ++
- wrapper.c                           | 71 ++++++++++++++++++++++++-----
- 10 files changed, 186 insertions(+), 12 deletions(-)
- create mode 100644 t/helper/test-csprng.c
-
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index 4db8edd9c8..36fb90f4b0 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -1770,4 +1770,22 @@ test_expect_success 'denyCurrentBranch and workt=
+rees' '
+>  	git -C cloned push origin HEAD:new-wt &&
+>  	test_must_fail git -C cloned push --delete origin new-wt
+>  '
+> +
+> +test_expect_success 'refuse fetch to current branch of worktree' '
+> +	test_when_finished "git worktree remove --force wt && git branch -D w=
+t" &&
+> +	git worktree add wt &&
+> +	test_commit apple &&
+> +	test_must_fail git fetch . HEAD:wt &&
+> +	git fetch -u . HEAD:wt
+> +'
+> +
+> +test_expect_success 'refuse fetch to current branch of bare repository=
+ worktree' '
+> +	test_when_finished "rm -fr bare.git" &&
+> +	git clone --bare . bare.git &&
+> +	git -C bare.git worktree add wt &&
+> +	test_commit banana &&
+> +	test_must_fail git -C bare.git fetch .. HEAD:wt &&
+> +	git -C bare.git fetch -u .. HEAD:wt
+> +'
+> +
+>  test_done
