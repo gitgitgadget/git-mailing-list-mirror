@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE9D5C433F5
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:05:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39396C433EF
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:06:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CEFB561B3D
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:05:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1DB3B61B31
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:06:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236136AbhKPMI0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 07:08:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33598 "EHLO
+        id S235766AbhKPMIw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 07:08:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235804AbhKPMFc (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235805AbhKPMFc (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 16 Nov 2021 07:05:32 -0500
 Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4918EC0432C0
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:54 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id k37-20020a05600c1ca500b00330cb84834fso1734345wms.2
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:54 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CABAC061234
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:55 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id 67-20020a1c1946000000b0030d4c90fa87so2182413wmz.2
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MXSJBOyIgVUcx7NMu2fpoysXYWnT+MKHU2pfBKfqnFk=;
-        b=oHfGli8r3wTuu6RpOOYeGZvmBY5QYKnmloOqcOLs/6t3e+eFg2ch5XD0lzjB2A9DYZ
-         mqQnp2zHBhTqC4wXRm4UJsBUi9+w/Q9jr5uSArV3EEyWHsm2we98sbfnrlysKu2Fji7p
-         Hs04ZSSBZ/zeD7nRDMKfmHph7QYrnto4xZnpY6bFnzrRwInpYvePwXFbJfhpZDGjtGqU
-         6/DNrdXZp2wElKflsY8AmStWVkUiDWEinroGMsZYeciQB075QAMfDrUr7wwBnF0Nf6ba
-         Id09hOKxXFmQ3GRU7mlji/SgSa0LIkNri2W+JfM23aThtXpe31N+RAcibl2R5D/+AUx5
-         FC6Q==
+        bh=z0u8mrPikfpozsZuwu5lKfiwFGSebR9jdTFIZIlU2as=;
+        b=ePQ+X6JL9y456U0ucmdsOiitY/dQDKqRCjPqUq1u5arbPvTBSAK+rq6udXNdbdHEoK
+         WT6B8HT6TmjbpPVCoYM0iWDEFfoXOGfKEzB/IGLZaUSPnr5HE4szWFSK6m8GZ+kPW2yD
+         yOgwL4MJQ9CQywUB+gDYAnk/wdXggtzEkUusThEZxUGC5LzWxjuNoWffu1/bceqrR1Sq
+         E2qO8NLF1LdDywKSw4f/wOprbAb1sBuTPp5mKCHrsQZn176Mt9X2Gaa8IULY7dNgt9bO
+         +CJ5hzEn2bgj8WY0UGN921n3ztHaN5mq+JEh2XMS8581Bx/tmkox/AvxJ7ywDtvSVuPZ
+         eQlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MXSJBOyIgVUcx7NMu2fpoysXYWnT+MKHU2pfBKfqnFk=;
-        b=f/+o6LG2uGGzFXNcFgXURMFsMf4ekB7yyYo8ev5UTDi8pA0JhNcrJ/BDSkJ4F2V5ZN
-         40AyPF6NJPvsPx3CGh1rAodGwqlAVO+BqYsBlbULPghOSKzomAcEVZvzoONzh0NV61k8
-         i6BYXaTIjGLTFIYkXoG0CDDNefFp3CHpmbCoT72HfvQRpdbrJ/4KxU9FH74wrnBQrWd2
-         cqCfgFHVOfb7jZSZamR2n1VOqSMqclsfp0WEg/9Cp32TYYMD3dTGc/LSQSOXnC7GLrH6
-         FfvbjYk9LvJoieYrLAp9usVgMyE1WOdB0h/YzUnalh6OCwwPis9IESGzfXvhG+4r6RpL
-         wlNQ==
-X-Gm-Message-State: AOAM533+45Ec3zzI0Uf1PajOX6lvVCwCdnpUs9Jff4wgJ/U0wLpv7uzt
-        +Nge+cxx0eyyHSy3sdmK1c+hfk/fHxmKLA==
-X-Google-Smtp-Source: ABdhPJxfJMiwEs/GZfkgza6TzLvFh51zjy0lLbaJbG/f/4yRnkLbBD8ZCgPz5Fzsx7JiqqIA5vYp0w==
-X-Received: by 2002:a7b:c38b:: with SMTP id s11mr71247103wmj.29.1637064052639;
-        Tue, 16 Nov 2021 04:00:52 -0800 (PST)
+        bh=z0u8mrPikfpozsZuwu5lKfiwFGSebR9jdTFIZIlU2as=;
+        b=fIIPkAvtVLEpnl6uZXhJa11jJOI2LL6gizG5KwWnDkWzTKEnHc+yWh5Km0i2iffg0J
+         op3WS8S8fnFfIYo4hGcL8QN9+evoHHaqqqh1+ZB7ohh5YWN5vOH2VlnK3S/Z+D/323+l
+         Y529SQEgqedVGwHMq8phKpF3AMI3K2q1CSBmIKG3Fbc4fXuMNmkMATK8T444+V+JmzNs
+         DVwkIuqydoVuQkyAwUSoROGjdvViSj0ZZwjS1gwuSe7iCv4Fq+qoVSczWNWPfxWJaEIN
+         sv8USaieRhMeN59rxmUQqcxJuNTyQdUJSXlr8zyQ9v8S020Qcc+tqU1F6il0hOhT7lyf
+         e3mA==
+X-Gm-Message-State: AOAM531IGfkx0KQx6mbO9rEEPMZi0HnFLhXwApL7CCvChz8rj+TvGCEQ
+        2Rcd2qiSssarF+xgWR09XS/eaSqbl5ipLQ==
+X-Google-Smtp-Source: ABdhPJygcWUvjmgIzrLu93yFvBNM1Kb7iDVzF/JlpR9KNc+MUCp9GgP3OCRdtt/lq21gM45xMrRUsA==
+X-Received: by 2002:a1c:a710:: with SMTP id q16mr70122880wme.138.1637064053615;
+        Tue, 16 Nov 2021 04:00:53 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k37sm2427922wms.21.2021.11.16.04.00.51
+        by smtp.gmail.com with ESMTPSA id k37sm2427922wms.21.2021.11.16.04.00.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 16 Nov 2021 04:00:52 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Mike Hommey <mh@glandium.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 21/23] Makefile: disable GNU make built-in wildcard rules
-Date:   Tue, 16 Nov 2021 13:00:21 +0100
-Message-Id: <patch-v3-21.23-cb3ae5ce00b-20211116T114334Z-avarab@gmail.com>
+Subject: [PATCH v3 22/23] Makefile: define $(LIB_H) in terms of $(FIND_SOURCE_FILES)
+Date:   Tue, 16 Nov 2021 13:00:22 +0100
+Message-Id: <patch-v3-22.23-88cfc946b37-20211116T114334Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.795.g1e9501ab396
 In-Reply-To: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
 References: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com> <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
@@ -73,57 +73,129 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Override built-in rules of GNU make that use a wildcard target. This
-speeds things up significantly as we don't need to stat() so many
-files just in case we'd be able to retrieve their contents from RCS or
-SCCS. See [1] for an old mailing list discussion about how to disable
-these.
+Combine the definitions of $(FIND_SOURCE_FILES) and $(LIB_H) to speed
+up the Makefile, as these are the two main expensive $(shell) commands
+that we execute unconditionally.
 
-This gives us a noticeable speedup on a no-op run:
+When see what was in $(FOUND_SOURCE_FILES) that wasn't in $(LIB_H) via
+the ad-hoc test of:
 
-    $ git hyperfine -L rev HEAD~1,HEAD~0 -s 'make -j8 all NO_TCLTK=Y' 'make NO_TCLTK=Y' --warmup 10 -M 10
+    $(error $(filter-out $(LIB_H),$(filter %.h,$(ALL_SOURCE_FILES))))
+    $(error $(filter-out $(ALL_SOURCE_FILES),$(filter %.h,$(LIB_H))))
+
+We'll get, respectively:
+
+    Makefile:850: *** t/helper/test-tool.h.  Stop.
+    Makefile:850: *** .  Stop.
+
+I.e. we only had a discrepancy when it came to
+t/helper/test-tool.h. In terms of correctness this was broken before,
+but now works:
+
+    $ make t/helper/test-tool.hco
+        HDR t/helper/test-tool.h
+
+This speeds things up a lot:
+
+    $ git -c hyperfine.hook.setup= hyperfine -L rev HEAD~1,HEAD~0 -s 'make -j8 all NO_TCLTK=Y' 'make NO_TCLTK=Y' --war
+    mup 10 -M 10
     Benchmark 1: make NO_TCLTK=Y' in 'HEAD~1
-      Time (mean ± σ):     182.2 ms ±   4.1 ms    [User: 146.8 ms, System: 49.5 ms]
-      Range (min … max):   179.6 ms … 193.4 ms    10 runs
+      Time (mean ± σ):      99.5 ms ±   0.5 ms    [User: 83.4 ms, System: 20.7 ms]
+      Range (min … max):    98.8 ms … 100.2 ms    10 runs
 
     Benchmark 2: make NO_TCLTK=Y' in 'HEAD~0
-      Time (mean ± σ):     167.9 ms ±   1.3 ms    [User: 127.8 ms, System: 55.6 ms]
-      Range (min … max):   166.1 ms … 170.4 ms    10 runs
+      Time (mean ± σ):      69.4 ms ±   0.5 ms    [User: 58.8 ms, System: 14.2 ms]
+      Range (min … max):    68.9 ms …  70.3 ms    10 runs
 
     Summary
       'make NO_TCLTK=Y' in 'HEAD~0' ran
-        1.09 ± 0.03 times faster than 'make NO_TCLTK=Y' in 'HEAD~1'
-
-Running the same except with 'strace -c -S calls make' as the
-benchmark command shows (under --show-output) that we went from ~7716
-syscalls to ~7519, mostly a reduction in [l]stat().
-
-1. https://lists.gnu.org/archive/html/help-make/2002-11/msg00063.html
+        1.43 ± 0.01 times faster than 'make NO_TCLTK=Y' in 'HEAD~1'
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- shared.mak | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ Makefile | 54 ++++++++++++++++++++++++++----------------------------
+ 1 file changed, 26 insertions(+), 28 deletions(-)
 
-diff --git a/shared.mak b/shared.mak
-index 4ee0bb7a13d..4862df1607a 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -1,3 +1,14 @@
-+### Remove GNU make implicit rules
-+
-+## This speeds things up since we don't need to look for and stat() a
-+## "foo.c,v" every time a rule referring to "foo.c" is in play. See
-+## "make -p -f/dev/null | grep ^%::'".
-+%:: %,v
-+%:: RCS/%,v
-+%:: RCS/%
-+%:: s.%
-+%:: SCCS/s.%
-+
- ### Flags affecting all rules
+diff --git a/Makefile b/Makefile
+index bae20eb1b40..1041efb6e5e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -821,12 +821,33 @@ GENERATED_H += hook-list.h
+ .PHONY: generated-hdrs
+ generated-hdrs: $(GENERATED_H)
  
- # A GNU make extension since gmake 3.72 (released in late 1994) to
+-LIB_H := $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
++## Exhaustive lists of our source files, either dynamically generated,
++## or hardcoded.
++SOURCES_CMD = ( \
++	git ls-files \
++		'*.[hcS]' \
++		'*.sh' \
++		':!*[tp][0-9][0-9][0-9][0-9]*' \
++		':!contrib' \
++		2>/dev/null || \
+ 	$(FIND) . \
+-	-name .git -prune -o \
+-	-name t -prune -o \
+-	-name Documentation -prune -o \
+-	-name '*.h' -print)))
++		\( -name .git -type d -prune \) \
++		-o \( -name '[tp][0-9][0-9][0-9][0-9]*' -prune \) \
++		-o \( -name contrib -type d -prune \) \
++		-o \( -name build -type d -prune \) \
++		-o \( -name 'trash*' -type d -prune \) \
++		-o \( -name '*.[hcS]' -type f -print \) \
++		-o \( -name '*.sh' -type f -print \) \
++		| sed -e 's|^\./||' \
++	)
++FOUND_SOURCE_FILES := $(shell $(SOURCES_CMD))
++
++FOUND_C_SOURCES = $(filter %.c,$(FOUND_SOURCE_FILES))
++FOUND_H_SOURCES = $(filter %.h,$(FOUND_SOURCE_FILES))
++
++COCCI_SOURCES = $(filter-out $(THIRD_PARTY_SOURCES),$(FOUND_C_SOURCES))
++
++LIB_H = $(FOUND_H_SOURCES)
+ 
+ LIB_OBJS += abspath.o
+ LIB_OBJS += add-interactive.o
+@@ -2661,26 +2682,6 @@ perl/build/man/man3/Git.3pm: perl/Git.pm
+ 	$(call mkdir_p_parent_template)
+ 	$(QUIET_GEN)pod2man $< $@
+ 
+-FIND_SOURCE_FILES = ( \
+-	git ls-files \
+-		'*.[hcS]' \
+-		'*.sh' \
+-		':!*[tp][0-9][0-9][0-9][0-9]*' \
+-		':!contrib' \
+-		2>/dev/null || \
+-	$(FIND) . \
+-		\( -name .git -type d -prune \) \
+-		-o \( -name '[tp][0-9][0-9][0-9][0-9]*' -prune \) \
+-		-o \( -name contrib -type d -prune \) \
+-		-o \( -name build -type d -prune \) \
+-		-o \( -name 'trash*' -type d -prune \) \
+-		-o \( -name '*.[hcS]' -type f -print \) \
+-		-o \( -name '*.sh' -type f -print \) \
+-		| sed -e 's|^\./||' \
+-	)
+-
+-FOUND_SOURCE_FILES = $(shell $(FIND_SOURCE_FILES))
+-
+ $(ETAGS_TARGET): $(FOUND_SOURCE_FILES)
+ 	$(QUIET_GEN)$(RM) $@+ && \
+ 	echo $(FOUND_SOURCE_FILES) | xargs etags -a -o $@+ && \
+@@ -2860,9 +2861,6 @@ check: $(GENERATED_H)
+ 		exit 1; \
+ 	fi
+ 
+-FOUND_C_SOURCES = $(filter %.c,$(FOUND_SOURCE_FILES))
+-COCCI_SOURCES = $(filter-out $(THIRD_PARTY_SOURCES),$(FOUND_C_SOURCES))
+-
+ %.cocci.patch: %.cocci $(COCCI_SOURCES)
+ 	$(QUIET_SPATCH) \
+ 	if test $(SPATCH_BATCH_SIZE) = 0; then \
 -- 
 2.34.0.795.g1e9501ab396
 
