@@ -2,140 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6331FC433EF
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 19:36:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40FA2C433EF
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 19:44:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4295563225
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 19:36:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 165E061A88
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 19:44:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240096AbhKPTjr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 14:39:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54728 "EHLO
+        id S240130AbhKPTrh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 14:47:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239900AbhKPTjo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 14:39:44 -0500
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8878CC061570
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 11:36:47 -0800 (PST)
-Received: by mail-il1-x12f.google.com with SMTP id i12so266236ila.12
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 11:36:47 -0800 (PST)
+        with ESMTP id S239895AbhKPTrh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 14:47:37 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4F70C061570
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 11:44:39 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id w29so39689442wra.12
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 11:44:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=s6ld0h+LyP9mWiNS9mrcv5a2uNjC3qlBUL39v76c0AE=;
-        b=yYMU4atlI51Amyl5SVjz91ir99Ap12ZYdbFyHZddZ0iM+hhsNVD4NUNeGEyBT238Wz
-         OGfmFFaadGUPYAlDgMXFxp9zlZb9Ai8N1AvhTgtUeAfEse1lUbcYRbwW+6HHS8lnpj7w
-         YXtGvAGglu7BWQYL50VGK7lCEKQFIbcupEIfTYaADJupmhgLz4vkK+AvkGWgLCCUfW/P
-         LWJyCN5CS+OGp6XMaV99hvnGt8H7Iz3kq+SCdnNSOR2s/sRD+6Wr06JxaAJTiSsu+258
-         J8B8+NZuzueYGC2ESJECx3QRUSpl4qYcIo86bRkRWv/2u0XdwO7HovRi2MaChyM8PSZ1
-         THBg==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=42BE+qdXBEWEDWh2Nala2YbODXku4QabUXveFxh8yL4=;
+        b=g69reRCZ6K1E7WzOWUi8BICQ1vgpIxpwwkopjKew2iCQGK18gAFC8fQFYdqyVF4bMz
+         IZOPdaVRog/3Lb5VPP/qWeL8OYC99SPC5XyEomg22nEEfZ05gz2Dp/Noem1oRUpYHYg7
+         86W+kj8IGRL+jLRTnwI89xyO4Dc9RGf7ZaWMHoVWHDYK83HHhWNEXs0bPJFk124nPIco
+         RGw2hL4dOQgmYvZZzJiABYIvUNVrxySlE6vZbalDJhDV/5QmCM3quMvI6F+dg0DY/vHq
+         xFOqLcKxYO1PGsmV+kmrEgampkVCU27RyjnvcvxBkOLuwOQVVaT4S84u1YVzuxXN0uFz
+         aFZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=s6ld0h+LyP9mWiNS9mrcv5a2uNjC3qlBUL39v76c0AE=;
-        b=OoTwLrUkdJE8BgEMN7yoIcA5DEy6/h/Q/E0nqu0X1iooJnaWx9xdt+Ddlg0sU1QeSH
-         5QrHql2HUUwp8+p7Qax4tojfkGjBtdjQDQJZAFw/Uem4V+OMnYMbqry9p0JCrIpDlbA7
-         XfpjaC5+JjU80eho5q8yga07jr09+TWO2HK/buVHNOAnsBifeYUtU5Qp2LNb3lJWuYj4
-         5gqwIxNuehstdaJseRsfEUamjSBcsefHyWsaytikROOMYO5evlYvxW0CDIfVrGHZq0yh
-         V9HVJW09hsmrd4FiMKhPPGBd5fkRLxeDekYzP7mRGgTWmmWIsCUlMWu7t7ND3XPIwwXZ
-         fYlg==
-X-Gm-Message-State: AOAM533NqJ7ApHijOFcT0/BbNeLtjnSTNHgzRki4v7PeZjLNMhMeSnZq
-        H7RHL1bqOFqnHGBsbASqSWbyzw==
-X-Google-Smtp-Source: ABdhPJwgM1rzaXmAvSprWoTpPBPPMr7EaEDDvpHv9qh7cv4jC37dGYWpL7mpN6i0qcrmx+eW6DwB6w==
-X-Received: by 2002:a05:6e02:12e5:: with SMTP id l5mr6419890iln.36.1637091406837;
-        Tue, 16 Nov 2021 11:36:46 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b7sm13338145ilj.0.2021.11.16.11.36.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Nov 2021 11:36:46 -0800 (PST)
-Date:   Tue, 16 Nov 2021 14:36:46 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Elijah Newren <newren@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH 00/21] C99: show meaningful <file>:<line> in trace2
- via macros
-Message-ID: <YZQITrlvO7eUZyDN@nand.local>
-References: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
- <YZP771pJl30ujluT@nand.local>
- <211116.86czmzq5w2.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=42BE+qdXBEWEDWh2Nala2YbODXku4QabUXveFxh8yL4=;
+        b=ZrU/rihmv7TwdbVbv1xmF0HZvXtHmnHI5BmDoxUnNWBos9WA/APSEuWrraLnFyPBN8
+         f6ov8XY29i4OdMzOaigqPdsVcxtb8EnEsUsnFfAoEFL1SXUDWf1IP3+h/J680kawrXLy
+         fjYj511KIv3cRHaCDG0tmr+nshoDwa8dV/y7+jY1X/KarSiO3n665c4xuW0SoFzvlEJC
+         qcVSbMXmcqGvCjoJjQ7tfPbSW43WYIbkJ3ld1F2ZBqFZ+c69q/bczdeHiKahdBtNbHgU
+         WX4vOpFZ5g0nQRwrfmv4NCnk+hryG/aaeQXoJABzJuHx+auRug1Jd0NbrUa9OjMmjHjW
+         0xxA==
+X-Gm-Message-State: AOAM530g5cxUfnJJU9He0dzw62Qy19SM1RANyjqbwdd+jkF6XsgJldRf
+        5YNHUm/1ldSE/9b3r/mstIw=
+X-Google-Smtp-Source: ABdhPJyudDoDMeK/eEkUObC9bAExWPd088y2Kj8sgsI21dvQiaKtuwqOUwSRda5p6hu3nS1HQpqWgQ==
+X-Received: by 2002:a5d:4b41:: with SMTP id w1mr12097692wrs.437.1637091878286;
+        Tue, 16 Nov 2021 11:44:38 -0800 (PST)
+Received: from [192.168.1.240] ([31.185.185.186])
+        by smtp.gmail.com with ESMTPSA id s8sm5707689wra.9.2021.11.16.11.44.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Nov 2021 11:44:37 -0800 (PST)
+Message-ID: <a1961817-27d4-5be5-3b6f-231b77d3b916@gmail.com>
+Date:   Tue, 16 Nov 2021 19:44:21 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <211116.86czmzq5w2.gmgdl@evledraar.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 1/1] git-compat-util: add a test balloon for C99
+ support
+Content-Language: en-GB-large
+To:     Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20211114212437.1466695-1-sandals@crustytoothpaste.net>
+ <20211116021241.1565740-1-sandals@crustytoothpaste.net>
+ <20211116021241.1565740-2-sandals@crustytoothpaste.net>
+ <YZOh370ZMMqSADUE@coredump.intra.peff.net>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <YZOh370ZMMqSADUE@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 16, 2021 at 07:58:01PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> On Tue, Nov 16 2021, Taylor Blau wrote:
-> >> At the end of this series we expose a config variable to have
-> >> usage/die/warning emit line numbers. I.e. going from:
-> >>
-> >>     $ git -c core.usageAddSource=false -c core.x=y config --get --bool core.x
-> >>     fatal: bad boolean config value 'y' for 'core.x'
-> >>
-> >> To:
-> >>
-> >>     $ git -c core.usageAddSource=false -c core.x=y config --get --bool core.x
-> >>     fatal: config.c:1241: bad boolean config value 'y' for 'core.x'
-> >
-> > Just picking on this output change in particular. I agree that this is
-> > easier for folks hacking on Git to trace down errors. But I'm not sure
-> > that I could say then same about users, who will likely treat this extra
-> > output as noise.
-> >
-> > Now we may find it helpful if they include it in a bug report, but I
-> > feel reasonably comfortable saying that the value there is pretty
-> > marginal. I don't find it all that problematic to grep for a specific
-> > error string, and usually find myself in the right place.
->
-> I wouldn't suggest exposing this to users, except perhaps as part of
-> some "how to submit a bugreport" instructions. It's thoroughly optional.
->
-> I thought it was easy enough to do with the preceding steps since all
-> the data is there, and would help my workflow a lot.
->
-> If you've got the file/line number like that you can make it clickable
-> in your terminal/compile mode, e.g. Emacs's M-x compile. Saves time over
-> having to grep manually select the string, grep for it etc.
->
-> Anyway, I can certainly live with peeling this patch off the end and
-> just stopping at the trace2 data for now, if you/others feel strongly
-> about it.
+On 16/11/2021 12:19, Jeff King wrote:
+> On Tue, Nov 16, 2021 at 02:12:41AM +0000, brian m. carlson wrote:
+> 
+>> The C99 standard was released in January 1999, now 22 years ago.  It
+>> provides a variety of useful features, including variadic arguments for
+>> macros, declarations after statements, variable length arrays, and a
+>> wide variety of other useful features, many of which we already use.
+> 
+> I like the idea of being able to assume C99. And I know this list is
+> just "here are some things we could do". But I'd like to express caution
+> over variable length arrays. We've already had problems with alloca()
+> causing stack exhaustion, and VLAs are basically the same thing. And the
+> worst part is there's no way to recover; you just get a segfault.
 
-I don't feel strongly, and I was just noting that it seemed like users
-would treat this extra information more often as noise than anything
-else.
+I agree with this, also C11 and later make variable length array support 
+an optional compiler feature which is another reason not to rely on them.
 
-When you talk about making it optional, do you mean through
-configuration / an environment variable, or by including / not including
-the patch? In other words, the latter seems much more like us making a
-decision on whether or not to include line numbers rather than
-presenting a new option to users, though I may be misunderstanding.
+Best Wishes
 
-> As noted in 02/21 we're hard depending on this particular C99 feature
-> already fon a few releases now, the only change on that front in this
-> series is to stop committing to maintaining the non-C99 codepaths.
+Phillip
 
-> We've already had hard dependencies on various bits of C99 for years now
-> without any trouble, and I wouldn't expect any problems on this front
-> either.
-
-Interesting; so this and others are likely part of MSVC's kind-of
-support for C99 features? In other words, that MSVC supports some
-features from C99 (and we are depending on a subset of those) but not
-all features so that it could reasonably be called a spec-compliant
-compiler for the C99 standard? If so, makes sense.
-
-Thanks,
-Taylor
+>> Let's add a test balloon to git-compat-util.h to see if anyone is using
+>> an older compiler.  We'll add a comment telling people how to enable
+>> this functionality on GCC and Clang, even though modern versions of both
+>> will automatically do the right thing, and ask people still experiencing
+>> a problem to report that to us on the list.
+>>
+>> Note that C89 compilers don't provide the __STDC_VERSION__ macro, so we
+>> use a well-known hack of using "- 0".  On compilers with this macro, it
+>> doesn't change the value, and on C89 compilers, the macro will be
+>> replaced with nothing, and our value will be 0.
+> 
+> This part makes sense to me. The macro check will complain if any
+> compiler isn't C99. But this hunk seems like it is going to cause
+> headaches:
+> 
+>> diff --git a/Makefile b/Makefile
+>> index 12be39ac49..893d533d22 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -1204,7 +1204,7 @@ endif
+>>   # Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
+>>   # tweaked by config.* below as well as the command-line, both of
+>>   # which'll override these defaults.
+>> -CFLAGS = -g -O2 -Wall
+>> +CFLAGS = -g -O2 -Wall -std=gnu99
+>>   LDFLAGS =
+>>   CC_LD_DYNPATH = -Wl,-rpath,
+>>   BASIC_CFLAGS = -I.
+> 
+> Do most compilers understand -std=gnu99? It seems like we're breaking
+> the out-of-the-box build for everything that isn't gcc or clang.
+> 
+> I understand that older versions of gcc (prior to 5.1.0, from my
+> digging) default to gnu89, and so they would be broken _without_ this.
+> So it is a tradeoff one way or the other. But somehow this seems
+> backwards to me. We should assume that modern compilers support C99 out
+> of the box, and put the burden on older ones to trigger C99 support in
+> whatever non-portable way they need.
+> 
+> I also checked clang, and it looks like it has defaulted to gnu11 since
+> clang-7 (I'm not sure about clang-6; its documentation wasn't clear).
+> 
+> -Peff
+> 
