@@ -2,201 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB90EC433F5
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:13:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBA67C433F5
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:13:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CFACA615E2
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:13:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD5A461B39
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:13:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235356AbhKPMQZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 07:16:25 -0500
-Received: from mout.gmx.net ([212.227.17.22]:52699 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234468AbhKPMQE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 07:16:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637064785;
-        bh=NaM70XaJvz1wvZQQNBn3NOR9LiH/gEi997/nEInY97s=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HQXnZixClHGo3TIJUYyBEROa+xoHAprSziOo0+EMir68FCOuP9rEJOdixex56tTk9
-         xWizkLGGseH1Gz46XlVMp16s/tycKeyxPgLe1s64CJjI1zAr3+3SrDbSWLgVltFG20
-         emVNTwoNsmBpBI/FsiO3glLdywnxnBjLju9Ri2uM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.166.205] ([89.1.213.220]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MsHru-1mWwv50WHi-00thOU; Tue, 16
- Nov 2021 13:13:05 +0100
-Date:   Tue, 16 Nov 2021 13:13:03 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] name-rev: prefer shorter names over following merges
-In-Reply-To: <pull.1119.git.git.1636762454792.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111161227090.21127@tvgsbejvaqbjf.bet>
-References: <pull.1119.git.git.1636762454792.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S235966AbhKPMQe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 07:16:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36346 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235938AbhKPMQV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 07:16:21 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB56DC028BBF
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:05:16 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id g14so86740100edz.2
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:05:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=B9xfjMdL519PUWhOsWO/YL05lAuBB5Ci96TLLqYILvA=;
+        b=R4sO8VHah/uMQlqLjwEzuDg9J4G1Yd4AgrAgDfYBlrnUzxER1FhB6x8uATasgpDjvt
+         1FAl28kKR2B4PBgLUp2iUg2gJ0YCHCZPooqnq8J38imJEJTEGouflHZ6URv14IrZdw23
+         6V8FmW0hDuPoea63SnyEe1bOe2zJDm/AZUtNEh8Cky1Wc6+SGqEs/RcJIQNnkNQTg0Zi
+         ge4+1yCX3ixRSy/D79y9mH9kayupiIE6LhSCihvFFibesLu8WOP9Z8wB/AhCEP77DrXD
+         VsJ+NBo81C8EVc3CccJP6yDvKZ6gqf4Nkz9TGydsEHCXYVLDW3DF9oC+Nvw5l2oBPXYh
+         BLjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=B9xfjMdL519PUWhOsWO/YL05lAuBB5Ci96TLLqYILvA=;
+        b=xxScxT6FKdGoSLF1EEhPZk6VGVwfJfngLM5y8jX2kMDEd58xwx5bx54PiY2+PR4ABi
+         bROFvcjIHdGa1ohD8gS0R9kzGOp7qNweeQ+mLVCaynO6xMSTKWjgoEQ8xBVRyJcaPwGs
+         aB41kmySM00YMmfbwl0nfujS8vTfLGNegMboQ5Z2Qicons+TdNXMQ8/CD511Lf2Yke8N
+         Dy3DxAazoWGc0R1UkpraLj48TgChXe4iOtpF+g1+cEtmf59lf+Jv7loPFSMQYppZkXYm
+         nhX4lhht3S+kwIa+Y60E+hSMsfVXYxlFmVAMl0Gc/Blb1d1UtJzzYV+Eh1lt6bj41oiy
+         9ZCw==
+X-Gm-Message-State: AOAM530HgKcOAV+Jfwp998KMDvDrPZkPXOS1vhN9C1TIHTm7NSraOXVc
+        aAlUPVweGbrzjDXmkeJHvrY=
+X-Google-Smtp-Source: ABdhPJwxMFsnVPGfm77NwDIilBb/8GiaijBHBOVxyHUZLh5Hiiqi0AKffI6IXrZ/abklb6OMsNUdMw==
+X-Received: by 2002:a17:907:6e0b:: with SMTP id sd11mr8970257ejc.134.1637064315227;
+        Tue, 16 Nov 2021 04:05:15 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id nb4sm8469525ejc.21.2021.11.16.04.05.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Nov 2021 04:05:14 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mmxD8-001OMA-0V;
+        Tue, 16 Nov 2021 13:05:14 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 8/8] hook-list.h: add a generated list of hooks, like
+ config-list.h
+Date:   Tue, 16 Nov 2021 13:01:00 +0100
+References: <cover-0.8-00000000000-20210923T095326Z-avarab@gmail.com>
+ <patch-8.8-80aae4d5c13-20210923T095326Z-avarab@gmail.com>
+ <20211115220455.xse7mhbwabrheej4@glandium.org>
+ <211115.86k0h9qcf5.gmgdl@evledraar.gmail.com>
+ <20211115224015.vzfevpvptysxzpaa@glandium.org>
+ <211115.86bl2lqbbt.gmgdl@evledraar.gmail.com>
+ <20211115230032.3or3qqlsdnxjtrol@glandium.org>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211115230032.3or3qqlsdnxjtrol@glandium.org>
+Message-ID: <211116.86y25opapy.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4uFU56+rWfnKaKpdUZTssnYVt//zNtZIPGN9Amz1ZMtD37fgijC
- zAe07Fz5e6ZChZj+3IUr8zZvWOi96dL8OCIlDLVW2c4qCoK7kSa/fzyF/5WaCouPbaZRUDj
- +RX5ui2ZDsjg3FTHTAyKL564UBn1jugKRyMmGNXJaMpIG/TednsFWCpw39DeXFVB3/ouomf
- xyf/hz6N9uJePDi17CkIw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:k6Ryz7lDNIQ=:Qihgwr1X0S4yEP8kZ+v6lm
- diaJq3wCD3V7QzcGPExnaVfKS19fcA2Kyd61nEWXW81Miqytvfx57+01R1YcrkflkBQnGf5HQ
- smkiHOxd8DkJ7Dl5afSZN/E8jjTGNowZM2+mzAO4Y6Ate66613uM0Xv7+GCXsSMolGIADJ5zj
- uAfU7LBYTjsP2XUS5gPuFtUYCNWAR+70JVyov0MD+kaRYW71BdWLjXoYVu442XVD6jK8IS0ow
- RYrnPiPjojHVQ7v4eUR/oGLqSP0A56Mlv+b5IyxMsvFy9GPaTwtBAIMgFGRDsvwe6U9NWWS42
- Fqtt7eTM4YwHhwMnddciwOXeFFAFFbvsAhQmo6Xj0WTbRb7p5+4/bDNrbR6mR1xZRSJe5SVzv
- s8EPXTshVvxfpTXUi2oA0FChbOnpAvKF898hllidtNz1LbtabNHwVts39+8tS1zhX1dYz8wpX
- Y/JZeXb3db0mKs9RUaW8V3qwKHPrmgYLxKdfRpBg04UkaehxTL+7cJZaVEBFPiqSkxyjxqY9T
- v/Z4V5N297SNpHBXiYOWP8M6V6CGh/daar2bFsVR1hoxo8GvsdaTADUoC9zCNvg1Ra063lxps
- m9+iJgZiTrZrkL80DBzsRzH7I3ZXwo269YH5RdjKrC0RO6Axtw1C3X8VLJB1+9qmlOoj+xRbU
- tHFksR5rrTbr86nCh4jHxbFbX8CxXBfM4MyoB2kxeRxRidAqVTl6xvL5lyVsfl8Ee6jVCVaPc
- 4WPYvTsJIbLCUmcRqEDP4Hn4/tSuWY0ZJU/qL4O1RLXRCRByP4UqptYeVo0/PQYg6EicKmNOk
- hq6Y5kPdAxf8ZhLwnBzsReISz0LXGo7xsstMgVsrRw8PeyyEkCuyQFIxkX1bkb3OyIlMRvqhr
- H27qKfo5afOEW59m67yVC2WsFuSHaJuAFX858hX6+Q+5+420PUFBR5GtwudKhqZBJ0EbS9TK7
- p62wMEgxIZzSqerxvA3cKQNx5Unl1ceYf9A498yoiN9Cn9bwcvg15wDBh9rZflS1IC6jjz/Jj
- IrOLHhLfdsz138BsuLmKEvejHkjVS4n7rWcglK7s/4tbe4vgZ9M66n0yFIH/pPlY9pbO2qzMU
- 630+9ttHqe0XDw=
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
 
-On Sat, 13 Nov 2021, Elijah Newren via GitGitGadget wrote:
+On Tue, Nov 16 2021, Mike Hommey wrote:
 
-> From: Elijah Newren <newren@gmail.com>
+> On Mon, Nov 15, 2021 at 11:49:31PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>=20
+>> On Tue, Nov 16 2021, Mike Hommey wrote:
+>>=20
+>> > On Mon, Nov 15, 2021 at 11:26:36PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0=
+ Bjarmason wrote:
+>> >>=20
+>> >> On Tue, Nov 16 2021, Mike Hommey wrote:
+>> >>=20
+>> >> > On Thu, Sep 23, 2021 at 12:30:03PM +0200, =C3=86var Arnfj=C3=B6r=C3=
+=B0 Bjarmason wrote:
+>> >> >> -builtin/help.sp builtin/help.s builtin/help.o: config-list.h GIT-=
+PREFIX
+>> >> >> +hook.sp hook.s hook.o: hook-list.h
+>> >> >> +
+>> >> >> +builtin/help.sp builtin/help.s builtin/help.o: config-list.h hook=
+-list.h GIT-PREFIX
+>> >> >
+>> >> > hook-list.h is only included from buitin/bugreport.c, so
+>> >> > builtin/bugreport.o should be the one with the hook-list.h dependen=
+cy,
+>> >> > shouldn't it?
+>> >>=20
+>> >> Well spotted, yes. This is a mistake. I think from some earlier WIP
+>> >> version of the series.
+>> >>=20
+>> >> In practice we don't really miss dependencies due to these sorts of
+>> >> mistakes since we use the .depends files, i.e. GCC & Clang figure this
+>> >> out for us:
+>> >>=20
+>> >>     $ grep hook-list .depend/* */.depend/*
+>> >>     builtin/.depend/bugreport.o.d: compat/compiler.h git-compat-util.=
+h hook.h hook-list.h
+>> >>     builtin/.depend/bugreport.o.d:hook-list.h:
+>> >
+>> > But aren't those .depends files are only created when compiling object
+>> > files, such that builtin/.depend/bugreport.o.d wouldn't exist until
+>> > bugreport.c is compiled, which would fail if hook-list.h wasn't created
+>> > before that?
+>>=20
+>> Fail how?
+>>=20
+>> I don't think it could fail, because the purpose of these dependency
+>> relationships is to avoid needless *re*builds. So if you're building for
+>> the first time it doesn't matter, your compiler will find the relevant
+>> things to include for you. It doesn't need what's in the Makefile to do
+>> that.
+>>=20
+>> See [1], what I said about LIB_H there applies more generally for the
+>> .depends files.
+>>=20
+>> It will only fail in the sense that it over-depends, i.e. if you do:
+>>=20
+>>     git clean -dxf; make builtin/help.o
 >
-> name-rev has a MERGE_TRAVERSAL_WEIGHT to say that traversing a second or
-> later parent of a merge should be 65535 times more expensive than a
-> first-parent traversal, as per ac076c29ae8d (name-rev: Fix non-shortest
-> description, 2007-08-27).  The point of this weight is to prefer names
-> like
+> Try
 >
->     v2.32.0~1471^2
+>     git clean -dxf; make builtin/bugreport.o
 >
-> over names like
+> It fails with:
 >
->     v2.32.0~43^2~15^2~11^2~20^2~31^2
+>       CC builtin/bugreport.o
+>   builtin/bugreport.c:7:10: fatal error: hook-list.h: =E3=81=9D=E3=81=AE=
+=E3=82=88=E3=81=86=E3=81=AA=E3=83=95=E3=82=A1=E3=82=A4=E3=83=AB=E3=82=84=E3=
+=83=87=E3=82=A3=E3=83=AC=E3=82=AF=E3=83=88=E3=83=AA=E3=81=AF=E3=81=82=E3=82=
+=8A=E3=81=BE=E3=81=9B=E3=82=93
+>       7 | #include "hook-list.h"
+>         |          ^~~~~~~~~~~~~
+>   compilation terminated.
+>   make: *** [Makefile:2500: builtin/bugreport.o] =E3=82=A8=E3=83=A9=E3=83=
+=BC 1
 >
-> which are two equally valid names in git.git for the same commit.  Note
-> that the first follows 1472 parent traversals compared to a mere 125 for
-> the second.  Weighting all traversals equally would clearly prefer the
-> second name since it has fewer parent traversals, but humans aren't
-> going to be traversing commits and they tend to have an easier time
-> digesting names with fewer segments.  The fact that the former only has
-> two segments (~1471, ^2) makes it much simpler than the latter which has
-> six segments (~43, ^2, ~15, etc.).  Since name-rev is meant to "find
-> symbolic names suitable for human digestion", we prefer fewer segments.
->
-> However, the particular rule implemented in name-rev would actually
-> prefer
->
->     v2.33.0-rc0~11^2~1
->
-> over
->
->     v2.33.0-rc0~20^2
->
-> because both have precisely one second parent traversal, and it gives
-> the tie breaker to shortest number of total parent traversals.  Fewer
-> segments is more important for human consumption than number of hops, so
-> we'd rather see the latter which has one fewer segment.
->
-> Include the generation in is_better_name() and use a new
-> effective_distance() calculation so that we prefer fewer segments in
-> the printed name over fewer total parent traversals performed to get the
-> answer.
+> The only reason I can see why it builds at all normally is that hook.o
+> is built soon enough that by the time builtin/bugreport.o is built
+> hook-list.h has already been generated.
 
-Thank you. As you most likely figured out, that magic weight was
-introduced by me, in ac076c29ae8 (name-rev: Fix non-shortest description,
-2007-08-27). And indeed the motivation was to keep the name as short as
-possible.
+Ah, you're obviously right. I don't know what I was thinking yesterday.
 
-Technically, your solution does not fix the problem fully, as we still do
-not determine the _shortest possible_ name. Having said that, I think your
-patch improves the situation dramatically, so: ACK!
+I submitted a re-roll of the greater dependency fix-up & optimization
+series I've got kicking around, which includes a fix for this
+issue. Thank you for the report:
+https://lore.kernel.org/git/cover-v3-00.23-00000000000-20211116T114334Z-ava=
+rab@gmail.com
 
-Thanks,
-Dscho
-
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->     name-rev: prefer shorter names over following merges
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-11=
-19%2Fnewren%2Fprefer-shorter-names-in-name-rev-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1119/=
-newren/prefer-shorter-names-in-name-rev-v1
-> Pull-Request: https://github.com/git/git/pull/1119
->
->  builtin/name-rev.c | 17 +++++++++++++----
->  1 file changed, 13 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> index b221d300147..27f60153a6c 100644
-> --- a/builtin/name-rev.c
-> +++ b/builtin/name-rev.c
-> @@ -44,11 +44,20 @@ static struct rev_name *get_commit_rev_name(const st=
-ruct commit *commit)
->  	return is_valid_rev_name(name) ? name : NULL;
->  }
->
-> +static int effective_distance(int distance, int generation)
-> +{
-> +	return distance + (generation > 0 ? MERGE_TRAVERSAL_WEIGHT : 0);
-> +}
-> +
->  static int is_better_name(struct rev_name *name,
->  			  timestamp_t taggerdate,
-> +			  int generation,
->  			  int distance,
->  			  int from_tag)
->  {
-> +	int name_distance =3D effective_distance(name->distance, name->generat=
-ion);
-> +	int new_distance =3D effective_distance(distance, generation);
-> +
->  	/*
->  	 * When comparing names based on tags, prefer names
->  	 * based on the older tag, even if it is farther away.
-> @@ -56,7 +65,7 @@ static int is_better_name(struct rev_name *name,
->  	if (from_tag && name->from_tag)
->  		return (name->taggerdate > taggerdate ||
->  			(name->taggerdate =3D=3D taggerdate &&
-> -			 name->distance > distance));
-> +			 name_distance > new_distance));
->
->  	/*
->  	 * We know that at least one of them is a non-tag at this point.
-> @@ -69,8 +78,8 @@ static int is_better_name(struct rev_name *name,
->  	 * We are now looking at two non-tags.  Tiebreak to favor
->  	 * shorter hops.
->  	 */
-> -	if (name->distance !=3D distance)
-> -		return name->distance > distance;
-> +	if (name_distance !=3D new_distance)
-> +		return name_distance > new_distance;
->
->  	/* ... or tiebreak to favor older date */
->  	if (name->taggerdate !=3D taggerdate)
-> @@ -88,7 +97,7 @@ static struct rev_name *create_or_update_name(struct c=
-ommit *commit,
->  	struct rev_name *name =3D commit_rev_name_at(&rev_names, commit);
->
->  	if (is_valid_rev_name(name)) {
-> -		if (!is_better_name(name, taggerdate, distance, from_tag))
-> +		if (!is_better_name(name, taggerdate, generation, distance, from_tag)=
-)
->  			return NULL;
->
->  		/*
->
-> base-commit: 9d530dc0024503ab4218fe6c4395b8a0aa245478
-> --
-> gitgitgadget
->
