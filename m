@@ -2,300 +2,321 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A27DC433EF
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 10:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36142C433EF
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 10:07:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E46061AD2
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 10:00:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1DD5A6187F
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 10:07:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233481AbhKPKDk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 05:03:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34158 "EHLO
+        id S233795AbhKPKKr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 05:10:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233673AbhKPKC6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 05:02:58 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A92E4C061746
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 02:00:00 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id t30so36331311wra.10
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 02:00:00 -0800 (PST)
+        with ESMTP id S233779AbhKPKKn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 05:10:43 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FD5EC061570
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 02:07:46 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id az33-20020a05600c602100b00333472fef04so1457607wmb.5
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 02:07:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=N25Gz8k6w/pUEol8YnuVA6diy5jvZZOdcOy1MiYARCc=;
-        b=lauzPS19aarcGHhHhfd/clpk4EDy/EyTBp9HooYORuD9HZ7is+pxa2TMwfPqsLX1tf
-         Q8I4sFkJxnY4cLK5a1ZUb1uckLO5QY1V741o+Az4kyuZM5nD3+9Dd9kTM4xcAMw9hCo9
-         InyHfqh+ZBwz2WeDtEF4ESEW3Eiak5QvssCjPNXTgFfLxiVLTHzajjVfiZe1+4VM6QYx
-         PLIIY433RdURw2Po84prXNWHRrHMK+PxUE2Vo1S0GNv4+NADbMspfyYswHfZHtpNeI5t
-         erUC5oRY3+fbFYdq4br/Y8LrPRk/evkPNoUGOYtZ9/kYj0qRyAd4483Agy+JWHKCaoVf
-         ZMkQ==
+        bh=Il28HCHPFQMxsp51E0ey5GyyvsqrVGq5Weu3J+S3/zk=;
+        b=eXKbY4UkshwVA9HSkQQ3fvWBG5sM6MA/OqpACLHf/PzjFxR5NkUH5AO+1wJ4TWvB5w
+         lUntMdA99E+hW34dfmdaF6aR/AHllZhxPXqugaZU0SQYO1Bm6qzSle4AP0SsxEsArFdB
+         jPFGTxzc8rhcNZ5FvqxjXo4rEJ/oF09fu/Ejoq9lkEC3HrXeLTdqWhZXBLwTVCdwhUmx
+         y3LNVwo2KY4oI3IVsIpuBp32Znl8y+0u5b0srbgYJIMt57GkDD49FOi09pQ9WLmr/QHH
+         wBxtlJbBMnu0NWhXvLtrdNgWSNUOhcuwIIjpaM9c9cEe6LCvlWhALZnlGeBqzKfBI5rp
+         gFFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=N25Gz8k6w/pUEol8YnuVA6diy5jvZZOdcOy1MiYARCc=;
-        b=q64tojANjstIV8/9DZu68FpkWxBA7vXDGdTEZp+D2542X3gIN4eB54CzY02QG+Gzms
-         76SvYYs9Ra8uSthbkPN8xdSB5wN8ZvZwX6FwKYOv10Bxh1sLIu7DiS+GXKfzmSFZiJGl
-         DG8b4Kyr73nGcNhj2uyINx80Nz0BfelTamlcs9A1cTW35mJLeKKzRKwJI7lBfEFR3yEw
-         ULKkB4jLbtV7hgO9Go6NHsPrpypHIimCQs29/s7H3fk6Ex3zHXBV2vd+pddzIapVHIEl
-         GV5fQfzzXgHBwUZoDErwCPce0iJ3Nd8dpKpuhKcU7b2Agja/GhkaOIA9j34g71Ru1DgB
-         B1lw==
-X-Gm-Message-State: AOAM532Tig3mg58jNyTYxldgjm2Llo0HjNSmpfmRiVVnengh83ouZigD
-        Q9acWPkp7op4Lb2wUS9jYWY=
-X-Google-Smtp-Source: ABdhPJzyQNpBm5HoMYmVpr9wEhFssU2Biid5benuJdZxhOnDPtA6PGVTpN90t747cknNTsW9wK026A==
-X-Received: by 2002:a5d:4b82:: with SMTP id b2mr7581961wrt.419.1637056799119;
-        Tue, 16 Nov 2021 01:59:59 -0800 (PST)
+        bh=Il28HCHPFQMxsp51E0ey5GyyvsqrVGq5Weu3J+S3/zk=;
+        b=JMedgUAbIQ/nnnEz4/C2UKfCSwXANGA0/+VXeimy73dFqe4e5w5162LP5xeXWdFQVB
+         Po0uv72wZ/5YEWWXhEp4/DBH1aWyIOrMk3QsHdJA7sWbTruxwdVq9xp4kVz8eDoB4IZE
+         qLD8Cy28THuyZKR/et92l8proHfHb32gLRRyCNMGjZHi2mTLjsexbmVDObt9nRGlVBBY
+         wAlvPcNFyCue9dBX+ZAqohmoxzNLO+27Pk/mxZzph3tyZh2420u235+Pyt5WDEhamz68
+         ebgz5bHaHPJlqk8ooEUaHiAYLDALnWZsjSEsX1qrzPEmecYtzRAqMMVck5Z7GxTinwT7
+         5lVA==
+X-Gm-Message-State: AOAM530ZyZ3AL0OQ3N2FXTwTYKAWpR4EL1b5ae6PCgaLc9Q2OI8O8eDO
+        uz8WpmhhncSXvNi5Lkj3GQFYstAwmI39Kw==
+X-Google-Smtp-Source: ABdhPJw5k8VZdHC1QtRaM7bR0rsfnupIUTYVsTD8tvkwAnk0jUMXWP4zg9tubuErFtNWV9rMt+T69w==
+X-Received: by 2002:a05:600c:22c7:: with SMTP id 7mr6372393wmg.58.1637057265166;
+        Tue, 16 Nov 2021 02:07:45 -0800 (PST)
 Received: from [192.168.1.240] ([31.185.185.186])
-        by smtp.gmail.com with ESMTPSA id j17sm2115695wmq.41.2021.11.16.01.59.58
+        by smtp.gmail.com with ESMTPSA id s8sm4302354wra.9.2021.11.16.02.07.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Nov 2021 01:59:58 -0800 (PST)
-Message-ID: <eec6add8-2935-3692-fa7e-c40cc765b675@gmail.com>
-Date:   Tue, 16 Nov 2021 09:59:45 +0000
+        Tue, 16 Nov 2021 02:07:44 -0800 (PST)
+Message-ID: <23de56a6-5b41-d8be-d59c-5a4e025ccd73@gmail.com>
+Date:   Tue, 16 Nov 2021 10:07:31 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.2.1
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] sequencer: do not export GIT_DIR and GIT_WORK_TREE for
- 'exec'
+Subject: Re: [PATCH v4 2/2] am: support --empty-commit option to handle empty
+ patches
 Content-Language: en-GB-large
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+To:     Aleen via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1134.git.git.1636738973089.gitgitgadget@gmail.com>
- <pull.1134.v2.git.git.1637041986945.gitgitgadget@gmail.com>
+Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?QWxlZW4g5b6Q5rKb?= =?UTF-8?B?5paH?= <pwxu@coremail.cn>,
+        Aleen <aleen42@vip.qq.com>, Junio C Hamano <gitster@pobox.com>
+References: <pull.1076.v3.git.1636972769.gitgitgadget@gmail.com>
+ <pull.1076.v4.git.1637039888.gitgitgadget@gmail.com>
+ <b7e30c9b7abecdc871ddc38122ca042e940cb190.1637039888.git.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.1134.v2.git.git.1637041986945.gitgitgadget@gmail.com>
+In-Reply-To: <b7e30c9b7abecdc871ddc38122ca042e940cb190.1637039888.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah
+Hi Aleen
 
-On 16/11/2021 05:53, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> Commands executed from `git rebase --exec` can give different behavior
-> from within that environment than they would outside of it, due to the
-> fact that sequencer.c exports both GIT_DIR and GIT_WORK_TREE.  For
-> example, if the relevant script calls something like
-> 
->    git -C ../otherdir log --format=%H --no-walk
-> 
-> the user may be surprised to find that the command above does not show a
-> commit hash from ../otherdir, because $GIT_DIR prevents automatic gitdir
-> detection and makes the -C option useless.
-> 
-> This is a regression in behavior from the original legacy
-> implemented-in-shell rebase.  It is perhaps rare for it to cause
-> problems in practice, especially since most small problems that were
-> caused by this area of bugs has been fixed-up in the past in a way that
-> masked the particular bug observed without fixing the real underlying
-> problem.
-> 
-> An explanation of how we arrived at the current situation is perhaps
-> merited.  The setting of GIT_DIR and GIT_WORK_TREE done by sequencer.c
-> arose from a sequence of historical accidents:
-> 
-> * When rebase was implemented as a shell command, it would call
->    git-sh-setup, which among other things would set GIT_DIR -- but not
->    export it.  This meant that when rebase --exec commands were run via
->        /bin/sh -c "$COMMAND"
->    they would not inherit the GIT_DIR setting.  The fact that GIT_DIR
->    was not set in the run $COMMAND is the behavior we'd like to restore.
-> 
-> * When the rebase--helper builtin was introduced to allow incrementally
->    replacing shell with C code, we had an implementation that was half
->    shell, half C.  In particular, commit 18633e1a22 ("rebase -i: use the
->    rebase--helper builtin", 2017-02-09) added calls to
->        exec git rebase--helper ...
->    which caused rebase--helper to inherit the GIT_DIR environment
->    variable from the shell.  git's setup would change the environment
->    variable from an absolute path to a relative one (".git"), but would
->    leave it set.  This meant that when rebase --exec commands were run
->    via
->        run_command_v_opt(...)
->    they would inherit the GIT_DIR setting.
-> 
-> * In commit 09d7b6c6fa ("sequencer: pass absolute GIT_DIR to exec
->    commands", 2017-10-31), it was noted that the GIT_DIR caused problems
->    with some commands; e.g.
->        git rebase --exec 'cd subdir && git describe' ...
->    would have GIT_DIR=.git which was invalid due to the change to the
->    subdirectory.  Instead of questioning why GIT_DIR was set, that commit
->    instead made sequencer change GIT_DIR to be an absolute path and
->    explicitly export it via
->        argv_array_pushf(&child_env, "GIT_DIR=%s", absolute_path(get_git_dir()));
->        run_command_v_opt_cd_env(..., child_env.argv)
-> 
-> * In commit ab5e67d751 ("sequencer: pass absolute GIT_WORK_TREE to exec
->    commands", 2018-07-14), it was noted that when GIT_DIR is set but
->    GIT_WORK_TREE is not, that we do not discover GIT_WORK_TREE but just
->    assume it is '.'.  That is incorrect if trying to run commands from a
->    subdirectory.  However, rather than question why GIT_DIR was set, that
->    commit instead also added GIT_WORK_TREE to the list of things to
->    export.
-> 
-> Each of the above problems would have been fixed automatically when
-> git-rebase became a full builtin, had it not been for the fact that
-> sequencer.c started exporting GIT_DIR and GIT_WORK_TREE in the interim.
-> Stop exporting them now.
+Thanks for working on this
 
-Thanks for fixing this. The commit message does a great job of 
-explaining the problem and how we got there. The patch looks fine to me 
-though I think all the exec tests live in t3404 (interactive and non 
-interactive) so it feels a bit strange to add a new test file just for 
-this. There are plenty of uses of --exec in other test files but I think 
-they are just using the exec command as part of the test rather than 
-testing the --exec functionality (with the exception of t3418 which 
-tests --reschedule-failed-exec)
+On 16/11/2021 05:18, Aleen via GitGitGadget wrote:
+> From: Aleen <aleen42@vip.qq.com>
+> 
+> Signed-off-by: Aleen <aleen42@vip.qq.com>
+> ---
+>   Documentation/git-am.txt |  9 +++++
+>   builtin/am.c             | 48 +++++++++++++++++++++++---
+>   t/t4150-am.sh            | 73 ++++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 125 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+> index 0a4a984dfde..d8d3bf202d7 100644
+> --- a/Documentation/git-am.txt
+> +++ b/Documentation/git-am.txt
+> @@ -16,6 +16,7 @@ SYNOPSIS
+>   	 [--exclude=<path>] [--include=<path>] [--reject] [-q | --quiet]
+>   	 [--[no-]scissors] [-S[<keyid>]] [--patch-format=<format>]
+>   	 [--quoted-cr=<action>]
+> +	 [--empty-commit=(die|skip|asis)]
+>   	 [(<mbox> | <Maildir>)...]
+>   'git am' (--continue | --skip | --abort | --quit | --show-current-patch[=(diff|raw)])
+>   
+> @@ -63,6 +64,14 @@ OPTIONS
+>   --quoted-cr=<action>::
+>   	This flag will be passed down to 'git mailinfo' (see linkgit:git-mailinfo[1]).
+>   
+> +--empty-commit=(die|skip|asis)::
+> +	The command usually errors out when seeing an input e-mail
+> +	message that lacks a patch. When this option is set to
+> +	'skip', skip such an e-mail message without outputting error.
+> +	When this option is set to 'asis', create an empty commit,
+> +	recording the contents of the e-mail message as its log.
+> +	'die' is specified by default.
+
+This feels sufficiently similar to the case of handling empty commits in 
+'git rebase' that it is worth trying to have a similar user interface. 
+Otherwise the two commands have two different option names doing more or 
+less the same thing. 'git rebase' has --empty=[drop,keep,ask] where drop 
+is the default. If am were to accept --empty=[drop,keep,die] it would 
+offer a similar user experience.
 
 Best Wishes
 
 Phillip
 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->      sequencer: fix environment that 'exec' commands run under
->      
->      Changes since v1:
->      
->       * Fix wording in multiple locations pointed out by Johannes
->         Altmanninger
->      
->      Note that Johaness Altmanninger also suggested some additional
->      GIT_DIR/GIT_WORK_TREE and --git-dir/--work-tree testcases, but since
->      those change the current working directory to the work tree so that
->      GIT_WORK_TREE ends up being '.' in every case, I think it's straying a
->      bit from the point of the test. If other feel strongly, I can add them
->      in.
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1134%2Fnewren%2Ffix-rebase-exec-environ-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1134/newren/fix-rebase-exec-environ-v2
-> Pull-Request: https://github.com/git/git/pull/1134
-> 
-> Range-diff vs v1:
-> 
->   1:  12713c83705 ! 1:  c647c45375a sequencer: fix environment that 'exec' commands run under
->       @@ Metadata
->        Author: Elijah Newren <newren@gmail.com>
->        
->         ## Commit message ##
->       -    sequencer: fix environment that 'exec' commands run under
->       +    sequencer: do not export GIT_DIR and GIT_WORK_TREE for 'exec'
->        
->            Commands executed from `git rebase --exec` can give different behavior
->            from within that environment than they would outside of it, due to the
->       @@ Commit message
->            masked the particular bug observed without fixing the real underlying
->            problem.
->        
->       -    How we arrived at the current situation is perhaps merited.  The setting
->       -    of GIT_DIR and GIT_WORK_TREE done by sequencer.c arose from a sequence
->       -    of historical accidents:
->       +    An explanation of how we arrived at the current situation is perhaps
->       +    merited.  The setting of GIT_DIR and GIT_WORK_TREE done by sequencer.c
->       +    arose from a sequence of historical accidents:
->        
->            * When rebase was implemented as a shell command, it would call
->              git-sh-setup, which among other things would set GIT_DIR -- but not
->       @@ Commit message
->              was not set in the run $COMMAND is the behavior we'd like to restore.
->        
->            * When the rebase--helper builtin was introduced to allow incrementally
->       -      replacing shell with C code, we were in an implementation that was
->       -      half shell, half C.  In particular, commit 18633e1a22 ("rebase -i: use
->       -      the rebase--helper builtin", 2017-02-09) added calls to
->       +      replacing shell with C code, we had an implementation that was half
->       +      shell, half C.  In particular, commit 18633e1a22 ("rebase -i: use the
->       +      rebase--helper builtin", 2017-02-09) added calls to
->                  exec git rebase--helper ...
->              which caused rebase--helper to inherit the GIT_DIR environment
->              variable from the shell.  git's setup would change the environment
->       @@ Commit message
->              export.
->        
->            Each of the above problems would have been fixed automatically when
->       -    git-rebase become a full builtin, had it not been for the fact that
->       +    git-rebase became a full builtin, had it not been for the fact that
->            sequencer.c started exporting GIT_DIR and GIT_WORK_TREE in the interim.
->            Stop exporting them now.
->        
-> 
-> 
->   sequencer.c               |  9 +--------
->   t/t3409-rebase-environ.sh | 23 +++++++++++++++++++++++
->   2 files changed, 24 insertions(+), 8 deletions(-)
->   create mode 100755 t/t3409-rebase-environ.sh
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index ea96837cde3..9afdbe3e3d1 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -3495,17 +3495,12 @@ static int error_failed_squash(struct repository *r,
+>   -m::
+>   --message-id::
+>   	Pass the `-m` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]),
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 8677ea2348a..e7755c1377e 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -87,6 +87,12 @@ enum show_patch_type {
+>   	SHOW_PATCH_DIFF = 1,
+>   };
 >   
->   static int do_exec(struct repository *r, const char *command_line)
->   {
-> -	struct strvec child_env = STRVEC_INIT;
->   	const char *child_argv[] = { NULL, NULL };
->   	int dirty, status;
->   
->   	fprintf(stderr, _("Executing: %s\n"), command_line);
->   	child_argv[0] = command_line;
-> -	strvec_pushf(&child_env, "GIT_DIR=%s", absolute_path(get_git_dir()));
-> -	strvec_pushf(&child_env, "GIT_WORK_TREE=%s",
-> -		     absolute_path(get_git_work_tree()));
-> -	status = run_command_v_opt_cd_env(child_argv, RUN_USING_SHELL, NULL,
-> -					  child_env.v);
-> +	status = run_command_v_opt(child_argv, RUN_USING_SHELL);
->   
->   	/* force re-reading of the cache */
->   	if (discard_index(r->index) < 0 || repo_read_index(r) < 0)
-> @@ -3535,8 +3530,6 @@ static int do_exec(struct repository *r, const char *command_line)
->   		status = 1;
->   	}
->   
-> -	strvec_clear(&child_env);
-> -
->   	return status;
+> +enum empty_commit_action {
+> +	DIE_EMPTY_COMMIT = 0,  /* output errors */
+> +	SKIP_EMPTY_COMMIT,     /* skip without outputting errors */
+> +	ASIS_EMPTY_COMMIT      /* keep recording as empty commits */
+> +};
+> +
+>   struct am_state {
+>   	/* state directory path */
+>   	char *dir;
+> @@ -118,6 +124,7 @@ struct am_state {
+>   	int message_id;
+>   	int scissors; /* enum scissors_type */
+>   	int quoted_cr; /* enum quoted_cr_action */
+> +	int empty_commit; /* enum empty_commit_action */
+>   	struct strvec git_apply_opts;
+>   	const char *resolvemsg;
+>   	int committer_date_is_author_date;
+> @@ -178,6 +185,23 @@ static int am_option_parse_quoted_cr(const struct option *opt,
+>   	return 0;
 >   }
 >   
-> diff --git a/t/t3409-rebase-environ.sh b/t/t3409-rebase-environ.sh
-> new file mode 100755
-> index 00000000000..83ffb39d9ff
-> --- /dev/null
-> +++ b/t/t3409-rebase-environ.sh
-> @@ -0,0 +1,23 @@
-> +#!/bin/sh
+> +static int am_option_parse_empty_commit(const struct option *opt,
+> +				     const char *arg, int unset)
+> +{
+> +	int *opt_value = opt->value;
 > +
-> +test_description='git rebase interactive environment'
+> +	if (unset || !strcmp(arg, "die"))
+> +		*opt_value = DIE_EMPTY_COMMIT;
+> +	else if (!strcmp(arg, "skip"))
+> +		*opt_value = SKIP_EMPTY_COMMIT;
+> +	else if (!strcmp(arg, "asis"))
+> +		*opt_value = ASIS_EMPTY_COMMIT;
+> +	else
+> +		return error(_("Invalid value for --empty-commit: %s"), arg);
 > +
-> +. ./test-lib.sh
+> +	return 0;
+> +}
 > +
-> +test_expect_success 'setup' '
-> +	test_commit one &&
-> +	test_commit two &&
-> +	test_commit three
+>   /**
+>    * Returns path relative to the am_state directory.
+>    */
+> @@ -1248,11 +1272,6 @@ static int parse_mail(struct am_state *state, const char *mail)
+>   		goto finish;
+>   	}
+>   
+> -	if (is_empty_or_missing_file(am_path(state, "patch"))) {
+> -		printf_ln(_("Patch is empty."));
+> -		die_user_resolve(state);
+> -	}
+> -
+>   	strbuf_addstr(&msg, "\n\n");
+>   	strbuf_addbuf(&msg, &mi.log_message);
+>   	strbuf_stripspace(&msg, 0);
+> @@ -1792,6 +1811,20 @@ static void am_run(struct am_state *state, int resume)
+>   		if (state->interactive && do_interactive(state))
+>   			goto next;
+>   
+> +		if (is_empty_or_missing_file(am_path(state, "patch"))) {
+> +			if (state->empty_commit == SKIP_EMPTY_COMMIT)
+> +				goto next;
+> +			else if (state->empty_commit == ASIS_EMPTY_COMMIT) {
+> +				if (run_applypatch_msg_hook(state))
+> +					exit(1);
+> +				else
+> +					goto commit;
+> +			} else if (state->empty_commit == DIE_EMPTY_COMMIT) {
+> +				printf_ln(_("Patch is empty."));
+> +				die_user_resolve(state);
+> +			}
+> +		}
+> +
+>   		if (run_applypatch_msg_hook(state))
+>   			exit(1);
+>   
+> @@ -1827,6 +1860,7 @@ static void am_run(struct am_state *state, int resume)
+>   			die_user_resolve(state);
+>   		}
+>   
+> +commit:
+>   		do_commit(state);
+>   
+>   next:
+> @@ -2357,6 +2391,10 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+>   		{ OPTION_STRING, 'S', "gpg-sign", &state.sign_commit, N_("key-id"),
+>   		  N_("GPG-sign commits"),
+>   		  PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+> +		{ OPTION_CALLBACK, 0, "empty-commit", &state.empty_commit,
+> +		  "(die|skip|asis)",
+> +		  N_("specify how to handle empty patches"),
+> +		  PARSE_OPT_OPTARG, am_option_parse_empty_commit },
+>   		OPT_HIDDEN_BOOL(0, "rebasing", &state.rebasing,
+>   			N_("(internal use for git-rebase)")),
+>   		OPT_END()
+> diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+> index 2aaaa0d7ded..e657180c201 100755
+> --- a/t/t4150-am.sh
+> +++ b/t/t4150-am.sh
+> @@ -196,6 +196,13 @@ test_expect_success setup '
+>   
+>   	git format-patch -M --stdout lorem^ >rename-add.patch &&
+>   
+> +	git checkout -b empty-commit &&
+> +	git commit -m "empty commit" --allow-empty &&
+> +
+> +	git format-patch --stdout empty-commit^ >empty.patch &&
+> +	git format-patch --stdout --cover-letter empty-commit^ >cover-letter.patch &&
+> +	git format-patch --always --stdout empty-commit^ >empty-commit.patch &&
+> +
+>   	# reset time
+>   	sane_unset test_tick &&
+>   	test_tick
+> @@ -1152,4 +1159,70 @@ test_expect_success 'apply binary blob in partial clone' '
+>   	git -C client am ../patch
+>   '
+>   
+> +test_expect_success 'still output error with --empty-commit when meeting empty files' '
+> +	test_must_fail git am --empty-commit=skip empty.patch 2>actual &&
+> +	echo Patch format detection failed. >expected &&
+> +	test_cmp expected actual
 > +'
 > +
-> +test_expect_success 'rebase --exec does not muck with GIT_DIR' '
-> +	git rebase --exec "printf %s \$GIT_DIR >environ" HEAD~1 &&
-> +	test_must_be_empty environ
+> +test_expect_success 'error when meeting e-mail message that lacks a patch by default' '
+> +	git checkout empty-commit^ &&
+> +	test_must_fail git am empty-commit.patch >err &&
+> +	test_path_is_dir .git/rebase-apply &&
+> +	test_i18ngrep "Patch is empty." err &&
+> +	rm -fr .git/rebase-apply &&
+> +
+> +	test_must_fail git am --empty-commit=die empty-commit.patch >err &&
+> +	test_path_is_dir .git/rebase-apply &&
+> +	test_i18ngrep "Patch is empty." err &&
+> +	rm -fr .git/rebase-apply &&
+> +
+> +	test_must_fail git am --empty-commit=die cover-letter.patch >err &&
+> +	test_path_is_dir .git/rebase-apply &&
+> +	test_i18ngrep "Patch is empty." err &&
+> +	rm -fr .git/rebase-apply
 > +'
 > +
-> +test_expect_success 'rebase --exec does not muck with GIT_WORK_TREE' '
-> +	git rebase --exec "printf %s \$GIT_WORK_TREE >environ" HEAD~1 &&
-> +	test_must_be_empty environ
+> +test_expect_success 'skip without error when meeting e-mail message that lacks a patch' '
+> +	git am --empty-commit=skip empty-commit.patch >err &&
+> +	test_path_is_missing .git/rebase-apply &&
+> +	git rev-parse empty-commit^ >expected &&
+> +	git rev-parse HEAD >actual &&
+> +	test_cmp expected actual &&
+> +
+> +	git am --empty-commit=skip cover-letter.patch >err &&
+> +	test_path_is_missing .git/rebase-apply &&
+> +	test_cmp_rev empty-commit^ HEAD
 > +'
 > +
-> +test_done
-> 
-> base-commit: 88d915a634b449147855041d44875322de2b286d
+> +test_expect_success 'record as an empty commit when meeting e-mail message that lacks a patch' '
+> +	git am --empty-commit=asis empty-commit.patch &&
+> +	test_path_is_missing .git/rebase-apply &&
+> +	{
+> +		git show empty-commit --format="%B" &&
+> +		echo "--" &&
+> +		git version | sed -e "s/^git version //" &&
+> +		echo
+> +	} >expected &&
+> +	git show HEAD --format="%B" >actual &&
+> +	test_cmp actual expected &&
+> +
+> +	git am --empty-commit=asis cover-letter.patch &&
+> +	test_path_is_missing .git/rebase-apply &&
+> +	{
+> +		echo "*** SUBJECT HERE ***" &&
+> +		echo &&
+> +		echo "*** BLURB HERE ***" &&
+> +		echo &&
+> +		echo "A U Thor (1):" &&
+> +		printf "  " &&
+> +		git show empty-commit --format="%B" &&
+> +		echo "--" &&
+> +		git version | sed -e "s/^git version //" &&
+> +		echo
+> +	} >expected &&
+> +	git show HEAD --format="%B" >actual &&
+> +	test_cmp actual expected
+> +'
+> +
+>   test_done
 > 
