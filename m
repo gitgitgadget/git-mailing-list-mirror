@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27E9DC433F5
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC58CC433F5
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:03:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 12B3A61B31
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:02:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8809611C3
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:03:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235847AbhKPMFx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 07:05:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33626 "EHLO
+        id S235877AbhKPMF4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 07:05:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235747AbhKPMEg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 07:04:36 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78158C061229
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:44 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id i5so37089287wrb.2
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:44 -0800 (PST)
+        with ESMTP id S235836AbhKPMEh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 07:04:37 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B207C06122B
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:46 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id az33-20020a05600c602100b00333472fef04so1719081wmb.5
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=jf4RXCd0z9lfXfN8DlxDnYnxN7b5y/MQKB5pAP3Qfy4=;
-        b=LaSw1UZZhFu5dlU2sv2veA3nw2q2hHALsSiJm8DCZk/Uu+uQpCBijDkPLtjDJdMnTU
-         qA73AQParcFBXaH+GjrvbwtWOIFAh0abY/FqUFAzOPQ6hA6rHiy5JjztOAodqbrzcwaF
-         Yn06b140VO0kDsVH58pd8nSBJAZerJa/+T12RLhJLe5py2pGePPJTudlLR3bRvT1A4Rf
-         7vXC9HJCMeQyErvJFFoLX/LA1TCsDJB12608+nknbB1Q1ayIfHgXmCTaCw15gONoJWPk
-         m0VUmAbZF0ylwbfgqeYST0ghjRfpH0nZf6uTO2nDJpnc7OVSS1LEX29utcSho/JzLNUV
-         qlsg==
+        bh=9c+Tnx5WN/x457Qc4NaLx0dTbaRDrTVc+KBx9HiTNnw=;
+        b=iXx34yRK7LcwROyJkc4EfsQtOpPjCtPG4Sy4lJ+HZqr5zNuO4zOHf265FuR/g9jZJm
+         s3klj5tv75iEXZ0vmCUy1msQ3jf4+F8fDne1eXTkvS8hc08l/hB0E/xKaNUE+8mLbPsy
+         5NbADOQbVlrtJCHUfjLoqAw9LRWoqtCwwuGIttqt+TCGHWRuAlCIRb15TrJG97bI0HaO
+         0oXCQ23M7WlsfxsXFIfmYSnitTtC8UpYd5iWVB/N1TF54AmgOdXc1z8LCYkiGeGD7HIn
+         J5WitxAqpdXL0gs/zCE9BE1iYrh63vrCqUXcVaWWzHyYJiF324Qbh42QdDfBc6EixVdA
+         kfGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=jf4RXCd0z9lfXfN8DlxDnYnxN7b5y/MQKB5pAP3Qfy4=;
-        b=qS6akNh2/Mh7rEVGdE6SRk/cb3BzZuvlNyioQuZav8K22hJBaWNieni2wHxSYJ9nsM
-         J05v0IFrWUaB9ZdSiqejhSt3FbI+3AnYuCtLwZi93P8brHba8dsE0cA8w8UTlz6NTva9
-         KaSVSOtf4QyHdLtI66DQd2VoSQKvWRq0cgCirwsBUc1yj7Vc7P9XFuGrKxji0cOkGcDw
-         cORwfTRA3xyWLumK1g83bbWosWu0AK68DIAEJt9vlSFjicnP+igrfL9/n1buuzqI3eUm
-         mQ+G2NirffqomMQJqsrlEwNGwM0S2Gu6EVl4JxdPdLTVDLwkK+cOB2OpwbOez8NgBCjR
-         JcVw==
-X-Gm-Message-State: AOAM5322BUw7BYk2Bcdla6zaB4OOR9GDA+hjPYoSD+q+tlJMQVnWBeUv
-        ecOGVqBMczjsfzxuW1Ym09joU7l+aBoNUg==
-X-Google-Smtp-Source: ABdhPJxR9aPe1pmz+KXgY7edVAgIOcNq/uCisDUecmTRq+zj74nMTNDincTMCISpuXPzkb2Unljfog==
-X-Received: by 2002:a5d:6508:: with SMTP id x8mr8717951wru.388.1637064042855;
-        Tue, 16 Nov 2021 04:00:42 -0800 (PST)
+        bh=9c+Tnx5WN/x457Qc4NaLx0dTbaRDrTVc+KBx9HiTNnw=;
+        b=Fhs5pk5+CsISpFFAqAr+/op58QdXhDTi1Bl2NzqAgW4sMPBTnP2RR7cFahzP+euJ4h
+         YOoC7MGIQaj01jnRf5M2I9+Ouqni6mDoIwtI5V69NV0jracshun4YDAWiKzyJ2u+DXDf
+         glCtYjDIKhN14N2hrMybrV1Z4j3C3dSHiNRR3VJV1hK/lFwi89Ej8nG66EixV4BJuI6Q
+         p7w9Gha2E5EhLL/53sNSB7DU+R2P7DtXPXT/V8ZmGGWOtoj5yyEGp6Uv8OyUPVsyrti3
+         u4zIx/Kj9RcPUPVYyc5JkUH3jVgabgsG9EzAj1fv00KAMDZif1W2apN3e9tp2y0nHlzz
+         ypoQ==
+X-Gm-Message-State: AOAM530IBNqJonJpna42uunVlmJk0RzoHfKoh3qMQ0PFUjMk32CYbVLD
+        1GiM9LFUHMQwUd+dM0d3kHzpSBhSrvbXDQ==
+X-Google-Smtp-Source: ABdhPJw2ZJfwxFG82FJZ+Ii2J69Xf/JdWpGUef1Z+Yfy7nldw9OQgmJYzVx5NIV+8J43kK5HcY7WGA==
+X-Received: by 2002:a05:600c:19d0:: with SMTP id u16mr7002164wmq.111.1637064044472;
+        Tue, 16 Nov 2021 04:00:44 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k37sm2427922wms.21.2021.11.16.04.00.41
+        by smtp.gmail.com with ESMTPSA id k37sm2427922wms.21.2021.11.16.04.00.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Nov 2021 04:00:42 -0800 (PST)
+        Tue, 16 Nov 2021 04:00:43 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Mike Hommey <mh@glandium.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 10/23] Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
-Date:   Tue, 16 Nov 2021 13:00:10 +0100
-Message-Id: <patch-v3-10.23-e9b61cd0ba5-20211116T114334Z-avarab@gmail.com>
+Subject: [PATCH v3 12/23] Makefiles: add "shared.mak", move ".DELETE_ON_ERROR" to it
+Date:   Tue, 16 Nov 2021 13:00:12 +0100
+Message-Id: <patch-v3-12.23-19539ce7d2d-20211116T114334Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.795.g1e9501ab396
 In-Reply-To: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
 References: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com> <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
@@ -73,126 +73,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a new "GIT-PYTHON-DEFINES" file, and untangle the dependency
-issues of the Python by copying over the patterns established for
-building the adjacent Perl code in preceding commits.
+We have various behavior that's shared across our Makefiles, or that
+really should be (e.g. via defined templates). Let's create a
+top-level "shared.mak" to house those sorts of things, and start by
+adding the ".DELETE_ON_ERROR" flag to it.
 
-As with Perl, there's no real reason to depend on GIT-BUILD-OPTIONS or
-GIT-CFLAGS when building the Python code, nor did we need
-GIT-PREFIX. Let's instead add those variables we care about to a
-"GIT-PYTHON-DEFINES" and depend on that.
+See my own 7b76d6bf221 (Makefile: add and use the ".DELETE_ON_ERROR"
+flag, 2021-06-29) and db10fc6c09f (doc: simplify Makefile using
+.DELETE_ON_ERROR, 2021-05-21) for the addition and use of the
+".DELETE_ON_ERROR" flag.
 
-This changes code originally added in ca3bcabf118 (auto-detect changed
-prefix and/or changed build flags, 2006-06-15), and adjusted in
-96a4647fca5 (Makefile: detect when PYTHON_PATH changes, 2012-12-18).
+This does have the potential downside that if e.g. templates/Makefile
+would like to include this "shared.mak" in the future the semantics of
+such a Makefile will change, but as noted in the above commits (and
+GNU make's own documentation) any such change would be for the better,
+so it's safe to do this.
 
-The relevant code for the "Perl" targets was then added in
-07981dce81e (Makefile: rebuild perl scripts when perl paths change,
-2013-11-18), and has been adjusted in preceding commits.
+This also doesn't introduce a bug by e.g. having this
+".DELETE_ON_ERROR" flag only apply to this new shared.mak, Makefiles
+have no such scoping semantics.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .gitignore |  2 +-
- Makefile   | 49 +++++++++++++++++++++++++------------------------
- 2 files changed, 26 insertions(+), 25 deletions(-)
+ Documentation/Makefile |  6 +++---
+ Makefile               | 13 +++----------
+ shared.mak             |  9 +++++++++
+ 3 files changed, 15 insertions(+), 13 deletions(-)
+ create mode 100644 shared.mak
 
-diff --git a/.gitignore b/.gitignore
-index 054249b20a8..845e5d0c355 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -8,7 +8,7 @@
- /GIT-PREFIX
- /GIT-PERL-DEFINES
- /GIT-PERL-HEADER
--/GIT-PYTHON-VARS
-+/GIT-PYTHON-DEFINES
- /GIT-SCRIPT-DEFINES
- /GIT-USER-AGENT
- /GIT-VERSION-FILE
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index ed656db2ae9..ba27456c86a 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -1,3 +1,6 @@
++# Import tree-wide shared Makefile behavior and libraries
++include ../shared.mak
++
+ # Guard against environment variables
+ MAN1_TXT =
+ MAN5_TXT =
+@@ -524,7 +527,4 @@ doc-l10n install-l10n::
+ 	$(MAKE) -C po $@
+ endif
+ 
+-# Delete the target file on error
+-.DELETE_ON_ERROR:
+-
+ .PHONY: FORCE
 diff --git a/Makefile b/Makefile
-index 361abff2402..c698c5b058a 100644
+index 8205614c6ec..5ae7d012cfb 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2378,18 +2378,15 @@ GIT-PERL-DEFINES: FORCE
- 		echo "$$FLAGS" >$@; \
- 	    fi
- 
--# This makes sure we depend on the NO_PYTHON setting itself.
--$(SCRIPT_PYTHON_GEN): GIT-BUILD-OPTIONS
-+# As with NO_PERL=Y we'll still make GIT-PYTHON-DEFINES if "NO_PYTHON"
-+# is defined, for creating the "unimplemented.sh" scripts.
-+PYTHON_DEFINES =
-+$(SCRIPT_PYTHON_GEN): GIT-PYTHON-DEFINES
+@@ -1,3 +1,6 @@
++# Import tree-wide shared Makefile behavior and libraries
++include shared.mak
 +
-+ifdef NO_PYTHON
-+PYTHON_DEFINES += $(SHELL_PATH_SQ)
-+PYTHON_DEFINES += $(NO_PYTHON)
+ # The default target of this Makefile is...
+ all::
  
--ifndef NO_PYTHON
--$(SCRIPT_PYTHON_GEN): GIT-CFLAGS GIT-PREFIX GIT-PYTHON-VARS
--$(SCRIPT_PYTHON_GEN): % : %.py
--	$(QUIET_GEN) \
--	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
--	    $< >$@+ && \
--	chmod +x $@+ && \
--	mv $@+ $@
--else # NO_PYTHON
- $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
- 	$(QUIET_GEN) \
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-@@ -2397,8 +2394,24 @@ $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
- 	    unimplemented.sh >$@+ && \
- 	chmod +x $@+ && \
- 	mv $@+ $@
-+else # NO_PYTHON
-+PYTHON_DEFINES += $(PYTHON_PATH_SQ)
-+
-+$(SCRIPT_PYTHON_GEN): % : %.py GIT-PYTHON-DEFINES
-+	$(QUIET_GEN) \
-+	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
-+	    $< >$@+ && \
-+	chmod +x $@+ && \
-+	mv $@+ $@
- endif # NO_PYTHON
+@@ -2158,16 +2161,6 @@ shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
+ strip: $(PROGRAMS) git$X
+ 	$(STRIP) $(STRIP_OPTS) $^
  
-+GIT-PYTHON-DEFINES: FORCE
-+	@FLAGS='$(PYTHON_DEFINES)'; \
-+	    if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
-+		echo >&2 "    * new python-specific parameters"; \
-+		echo "$$FLAGS" >$@; \
-+	    fi
-+
- CONFIGURE_RECIPE = sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
- 			configure.ac >configure.ac+ && \
- 		   autoconf -o configure configure.ac+ && \
-@@ -2848,18 +2861,6 @@ else
- endif
- 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
- 
--### Detect Python interpreter path changes
--ifndef NO_PYTHON
--TRACK_PYTHON = $(subst ','\'',-DPYTHON_PATH='$(PYTHON_PATH_SQ)')
+-### Flags affecting all rules
 -
--GIT-PYTHON-VARS: FORCE
--	@VARS='$(TRACK_PYTHON)'; \
--	    if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
--		echo >&2 "    * new Python interpreter location"; \
--		echo "$$VARS" >$@; \
--            fi
--endif
+-# A GNU make extension since gmake 3.72 (released in late 1994) to
+-# remove the target of rules if commands in those rules fail. The
+-# default is to only do that if make itself receives a signal. Affects
+-# all targets, see:
+-#
+-#    info make --index-search=.DELETE_ON_ERROR
+-.DELETE_ON_ERROR:
 -
- test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
+ ### Target-specific flags and dependencies
  
- all:: $(TEST_PROGRAMS) $(test_bindir_programs)
-@@ -3256,7 +3257,7 @@ ifndef NO_TCLTK
- endif
- 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-BUILD-OPTIONS
- 	$(RM) GIT-USER-AGENT GIT-PREFIX
--	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-VARS
-+	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-DEFINES
- ifdef MSVC
- 	$(RM) $(patsubst %.o,%.o.pdb,$(OBJECTS))
- 	$(RM) $(patsubst %.exe,%.pdb,$(OTHER_PROGRAMS))
+ # The generic compilation pattern rule and automatically
+diff --git a/shared.mak b/shared.mak
+new file mode 100644
+index 00000000000..0170bb397ae
+--- /dev/null
++++ b/shared.mak
+@@ -0,0 +1,9 @@
++### Flags affecting all rules
++
++# A GNU make extension since gmake 3.72 (released in late 1994) to
++# remove the target of rules if commands in those rules fail. The
++# default is to only do that if make itself receives a signal. Affects
++# all targets, see:
++#
++#    info make --index-search=.DELETE_ON_ERROR
++.DELETE_ON_ERROR:
 -- 
 2.34.0.795.g1e9501ab396
 
