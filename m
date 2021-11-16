@@ -2,101 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDD8FC433F5
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 19:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34E74C433EF
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 19:04:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6E1F61AF7
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 19:02:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 162D963214
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 19:04:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239701AbhKPTFV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 14:05:21 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62268 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239514AbhKPTFI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 14:05:08 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7F50AFA784;
-        Tue, 16 Nov 2021 14:02:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5FkYV1ThXdGg88p9pV127KHUz8ueusW95Nwzeb
-        4kdxI=; b=Ogpt2V9XxFFCA84tyJDJywUuLD4Vc0qLzDrrIQSK3lIjpMQCtn340n
-        yTTp16rZgb/W5BYq1M7vH/6YnosxpH3AdiaRarBR/XvlLCG2FA/ZjLPX364dXYbA
-        vkqgyVry23Q491GJw2VPKdvtKLOUeImVOTZrZewdnqJ8PGNp5Y+is=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 76108FA783;
-        Tue, 16 Nov 2021 14:02:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C04FCFA782;
-        Tue, 16 Nov 2021 14:02:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Add a test balloon for C99
-References: <20211114212437.1466695-1-sandals@crustytoothpaste.net>
-        <xmqqy25pj43a.fsf@gitster.g>
-        <YZLh/1xkxRGDn76u@camp.crustytoothpaste.net>
-Date:   Tue, 16 Nov 2021 11:02:08 -0800
-In-Reply-To: <YZLh/1xkxRGDn76u@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Mon, 15 Nov 2021 22:41:03 +0000")
-Message-ID: <xmqqpmqzapqn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S239739AbhKPTHP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 14:07:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47176 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239422AbhKPTHN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 14:07:13 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0758C061570
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 11:04:15 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id r11so28532227edd.9
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 11:04:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=z0ffgpBLVrLqBNsefYtWiaYZHnggU9r0y8CKLGtGGCU=;
+        b=Sir49Ktm/RXWyuCaQCA2SctgKoapz0RSufuyDyzlQqcOz5GCbueBi0PEJw6pZW8Iv5
+         GYd6kTD8GaO7d069cB/GE9LAsE2VGSKD4StkcM2QEWpqYGR7J6tFHdfh7adjbP/CU3VN
+         Zx4KjxrdmxEUt0olCX2VX6OuwPxfK2UWR31UutM/jgqX/c9tCg/S+LjpQ3bMi+IyFeis
+         /DxJiF0Gro4F7HS80Gd46b+8T7CDS2yz0ezWvK61sqh2eB1tL6y1OKPWAEkblgd50+8s
+         K0bxLlZdJEkWrh7RilVu2EAJIQ4RYuz3xE3Mov5ViXvfZVD3w0XGT7PvIsmsu/9xJglY
+         uvvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=z0ffgpBLVrLqBNsefYtWiaYZHnggU9r0y8CKLGtGGCU=;
+        b=V0trojy8UOlvMO/Iv5FWXipRQgzbfh+CA6CN5JyHCuk2HogajDNou5oKQlLourz62c
+         ZbU0oukf6g69jZa+zfFyR4cAdqrZb7WMS8/Ddnfe+bihoPRFDD4PDG7P42uDzXwLjUSW
+         9Y8M7817IjWopIBeNvQS5yhSCRAJdYebM2SdpsaFyoyK7rfhCJCtq9zL/zKtE1calrey
+         rIBDrjtUdk1ZA8yT7Ks8gC0gje7iAYoPA4OBIfVvCa2tXNl5MVxrUS/ga94MGCGlwikF
+         9kYLSPyG4waLW8jfs0fLyOEVOCJ8A7pYI8dJyFdnl0t3A4El7yM2qvXqXtzgx98q+H4O
+         lWEg==
+X-Gm-Message-State: AOAM532k8opy5Y7rLE0iYSHdufc2jivZxRmgufaDAnErhyrfkZff6fC7
+        FZOIiV3YvDy3J64BWIxWp+c=
+X-Google-Smtp-Source: ABdhPJw26WRwhi2jdntSIkFVH44hbJONpIgdfAtHpgsvvHNdoizORLNXQHiYYrwdPUQshemS97e3NA==
+X-Received: by 2002:a50:eb85:: with SMTP id y5mr13539905edr.173.1637089454390;
+        Tue, 16 Nov 2021 11:04:14 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id p3sm8829535ejy.94.2021.11.16.11.04.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Nov 2021 11:04:13 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mn3kb-001f6M-8k;
+        Tue, 16 Nov 2021 20:04:13 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH 00/21] C99: show meaningful <file>:<line> in trace2
+ via macros
+Date:   Tue, 16 Nov 2021 19:58:01 +0100
+References: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
+ <YZP771pJl30ujluT@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <YZP771pJl30ujluT@nand.local>
+Message-ID: <211116.86czmzq5w2.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B333458A-470F-11EC-AA46-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On 2021-11-15 at 07:00:25, Junio C Hamano wrote:
->> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->> 
->> > Even for users who would like to target an older version of Windows,
->> > such as the no longer supported Windows 7, GCC and Clang are available.
->> > The LLVM suite, including Clang, is available pre-compiled for download
->> > free of charge.  Using a different compiler is specifically proposed by
->> > Microsoft staff[1] as a solution for users who wish to build modern
->> > programs for MSVC versions which do not support modern C.
->> >
->> > As such, we can assume that Git can be safely compiled with C99 or C11
->> > support on all operating systems which receive security support, and
->> > even some which do not.  Our CI confirms that this series passes all
->> > tests.  Let's introduce a test balloon which checks for this support and
->> > fails with an error message if it is absent.
->> 
->> I do not have much against adopting nicer C99 language features in
->> principle, but I hope that we are not becoming too Linux centric
->> with "other than Linux, as long as Windows is OK in some form,
->> everything is peachy" mentality.
->
-> It's definitely not my goal to exclude Windows here.  I'm pretty sure
-> every major Unix platform will handle this fine, and an up to date
-> MSVC will also handle this fine.
->
-> Because compiling Git for Windows is a lot of work (not due to any
-> failing of that project or its members, just the fact that it requires a
-> lot of components to be assembled, including a full POSIX environment),
-> it's not very likely we're going to see a lot of people doing it, since
-> almost all Windows users are going to be using the regular releases.
-> It's also likely that they're going to be using some automated CI system
-> which will likely support a recent version of the compiler.
->
-> However, we have in the past heard screaming from people who want to
-> support old versions of Windows, so my point here is that there are
-> options if they can't use MSVC for any reason and those options are
-> easy, accessible, and free of charge.  I should point out that we
-> already require people on non-Linux Unix systems to install GNU make and
-> possibly also a shell (if theirs doesn't support the local keyword), so
-> installing suitable tooling to build Git isn't without precedent.
+On Tue, Nov 16 2021, Taylor Blau wrote:
 
-Windows does not need me to worry about them---they can fend for
-themselves.  I cannot tell if the original discussion behind the
-patch considered the current situation in non-mac BSD land (which I
-am not familiar with), or even less common platforms like NonStop.
+> On Mon, Nov 15, 2021 at 11:18:10PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> Since everyone's getting in on the C99 fun.
+>>
+>> Well, $subject and a bit more. This RFC series has bits and pieces
+>> from thing I've submitted before. I'd proposed to make variadic macros
+>> a hard dependency before in [1] because I wanted to get to the goal in
+>> $subject, perhaps the whole thing will be more convincing.
+>>
+>> This also includes the die_message() in a recent series of mine[2]
+>> that I abandoned.
+>>
+>> At the end of this series we expose a config variable to have
+>> usage/die/warning emit line numbers. I.e. going from:
+>>
+>>     $ git -c core.usageAddSource=3Dfalse -c core.x=3Dy config --get --bo=
+ol core.x
+>>     fatal: bad boolean config value 'y' for 'core.x'
+>>
+>> To:
+>>
+>>     $ git -c core.usageAddSource=3Dfalse -c core.x=3Dy config --get --bo=
+ol core.x
+>>     fatal: config.c:1241: bad boolean config value 'y' for 'core.x'
+>
+> Just picking on this output change in particular. I agree that this is
+> easier for folks hacking on Git to trace down errors. But I'm not sure
+> that I could say then same about users, who will likely treat this extra
+> output as noise.
+>
+> Now we may find it helpful if they include it in a bug report, but I
+> feel reasonably comfortable saying that the value there is pretty
+> marginal. I don't find it all that problematic to grep for a specific
+> error string, and usually find myself in the right place.
+
+I wouldn't suggest exposing this to users, except perhaps as part of
+some "how to submit a bugreport" instructions. It's thoroughly optional.
+
+I thought it was easy enough to do with the preceding steps since all
+the data is there, and would help my workflow a lot.
+
+If you've got the file/line number like that you can make it clickable
+in your terminal/compile mode, e.g. Emacs's M-x compile. Saves time over
+having to grep manually select the string, grep for it etc.
+
+Anyway, I can certainly live with peeling this patch off the end and
+just stopping at the trace2 data for now, if you/others feel strongly
+about it.
+
+>> I find that to make tracing down errors in the test suite, and 21/21
+>> has a GIT_TEST_* mode to turn it on there (which fails a lot now, but
+>> I'm hoping I'll eventually get passing).
+>>
+>> But most importantly we've now got meaningful file/line numbers in
+>> trace2 error events. I.e. from all of them being some line in usage.c:
+>>
+>>     $ GIT_TRACE2_EVENT=3D/dev/stdout ~/g/git/git -c core.usageAddSource=
+=3Dfalse -c core.x=3Dy config --get --bool core.x 2>&1 2>/dev/null|grep err=
+or | jq -r .
+>>     {
+>>       "event": "error",
+>>       "sid": "20211115T221343.534151Z-Hc2f5b994-P003f3980",
+>>       "thread": "main",
+>>       "time": "2021-11-15T22:13:43.537981Z",
+>>       "file": "usage.c",
+>>       "line": 65,
+>>       "msg": "bad boolean config value 'y' for 'core.x'",
+>>       "fmt": "bad boolean config value '%s' for '%s'"
+>>     }
+>>
+>> To:
+>>
+>>     $ GIT_TRACE2_EVENT=3D/dev/stdout ~/g/git/git -c core.usageAddSource=
+=3Dfalse -c core.x=3Dy config --get --bool core.x 2>&1 2>/dev/null|grep err=
+or | jq -r .
+>>     {
+>>       "event": "error",
+>>       "sid": "20211115T221357.083824Z-Hc2f5b994-P003f4a82",
+>>       "thread": "main",
+>>       "time": "2021-11-15T22:13:57.087596Z",
+>>       "file": "config.c",
+>>       "line": 1241,
+>>       "msg": "bad boolean config value 'y' for 'core.x'",
+>>       "fmt": "bad boolean config value '%s' for '%s'"
+>>     }
+>
+> Neat. This is a use-case that has all of the value without putting it in
+> front of users all of the time. I like it.
+>
+>> This is "RFC" mainly because there's a CI failure in 0061.2 with this,
+>> I still can't figure out what that's about (or if it's some fluke
+>> unrelated to this topic), but that has to be investigated.
+>
+> Hmm. Putting the CI failures aside for a second, wouldn't we want to
+> hold off on something like this until we have flown the C99 weather
+> balloon for a while? If we suddenly start introducing C99-isms into the
+> code while brian's patch is still young, then we can suddenly no longer
+> say, "oh, just drop this #if because there are no other C99-specific
+> uses here", and instead compilers that don't support the newer standard
+> are out of luck.
+>
+> That may have been already communicated elsewhere in this message and/or
+> throughout your patch series, so if I missed it, I apologize. Just
+> felt that it was worth stating the obvious before we go too far down the
+> wrong path.
+
+As noted in 02/21 we're hard depending on this particular C99 feature
+already fon a few releases now, the only change on that front in this
+series is to stop committing to maintaining the non-C99 codepaths.
+
+We've already had hard dependencies on various bits of C99 for years now
+without any trouble, and I wouldn't expect any problems on this front
+either.
+
+Brian's series and the current weatherbaloon from Junio are a bit
+different in trying out new things we either haven't done before, or
+have run into some trouble with in the past.
+
+No need at all to apologize, it's a lot of patches, and raising this
+sort of thing is what patch review is good for.
+
+Thanks a lot for looking this over.
