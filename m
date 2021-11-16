@@ -2,60 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3C9CC433EF
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 05:54:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C21EC433F5
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 05:54:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79C4D60EE4
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 05:54:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE61960FBF
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 05:54:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238001AbhKPF4y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 00:56:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34436 "EHLO
+        id S237565AbhKPF5D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 00:57:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238390AbhKPF4U (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238276AbhKPF4U (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 16 Nov 2021 00:56:20 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47B12C048F02
-        for <git@vger.kernel.org>; Mon, 15 Nov 2021 21:18:11 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id u1so35069445wru.13
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A66C048F03
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 21:18:12 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id b184-20020a1c1bc1000000b0033140bf8dd5so1392205wmb.5
         for <git@vger.kernel.org>; Mon, 15 Nov 2021 21:18:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ez3cLfyqnrmjCbY1o+SRE5150MsDM6GzaDsj/wvZk4o=;
-        b=NE1AlvapWHlgKDG6vpnX7XoarQUjjY17YoXL/G7tUAMqwPocVDYe3yTzNvAm8HYImD
-         vQbomKj9zJmGc+P87L3g2Q0KZAB2f4MnHZWt4F1FlUaJmzwzxH7Zw3brr8/BIALr0dc+
-         VUC4to/m7BaFFk3OwOq1aqP+kNgR9htRC85H0yRH71sIkvVSOIPo2/cyK8IWfdKbWvDv
-         4Cro8C2jIRzw5A6GZOt6KZrgTk2ve8QN1Zz10QeumCvCB+cNBtKAZBOXDnEficIsFzau
-         JyCP/WNVwQkvx5gU1L8yf356O1xSrvDQ3pXL/VrWjkvL+QBb8PLsFXcNubg8HWt+6gzo
-         jRtQ==
+        bh=rdZ+Hyhdeez5sYovoNl4c+4e/sjVspsttzqtSN0P6X8=;
+        b=MPsNDNCotOE57ynHuxm9ZPb/UpILl+DDA01KpudEOfkf5DMWgMItlQsKPLo4/UzQad
+         U9lfGKq626JjTJZpsd/WBn74oaK4+ow7kR0O0N8PkNqPpcFKaW69ZCSvg1nkKlAmJSNP
+         InV1d6/JO0mhUWHpZtBVd/hDZdxTv7XgwoYedoF/FuoOb1flDrzqY8Y2qrEm+zX+W/w2
+         bgIQ1e+cijL7vmma/j3ndHzgS04aUF/gxlV3iW4duzY8Pks34wEbx7MLSu/6OQ0NOQe4
+         ZJPeL7taT8e0Mqjsypia069B66kXVH4zNBD8FUCGarKY6+PGaGZFv9nXSy8MfsAiisUR
+         M0Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ez3cLfyqnrmjCbY1o+SRE5150MsDM6GzaDsj/wvZk4o=;
-        b=T8F1D/ayIv6Z+ENyMFBLsqhICK/N3j2wBFhJA/eivPFDjWTJxHzJHGfj/TjMVtadMK
-         usIclhuJdlX5FzwivKngkuT2/b96FLJTZUx8hqBDGLd7HOlcZW1mNM3W0EWolYfEKdAa
-         dBrsPz+tVCUyCjoACExkLaR6W8jHB5CSdDsHf5O9JKLU/P+f8GLDbM7kGFxqow5ATkM1
-         H6qP5mVqWcPmBF1Jiql1szgXqgy75jmDRXD2IGyUrb2tl9sjpEX9vKkCEygo6uhXD18h
-         57GgkcPaM5qm0zFvArDKw15bnMrxtf2EUU7vijXACWyxPHKE9flx+LNF/llI/KooMWmq
-         kjRA==
-X-Gm-Message-State: AOAM530ik0Jq2kguVjp7aMWtpsgz7BsB5RsF0vgmfH//g4iJKxS+EHvD
-        S2UQ18pQiMPsNWhINZSVHCJhwmCYaBc=
-X-Google-Smtp-Source: ABdhPJxi4yGZ9ojz9YExhG0XsyJsaDae3tL1g5fILZqYYNwLd9/zeIGIspSw9yAuhyEmGgpqC3Yqfw==
-X-Received: by 2002:adf:dcd0:: with SMTP id x16mr5882011wrm.229.1637039889731;
-        Mon, 15 Nov 2021 21:18:09 -0800 (PST)
+        bh=rdZ+Hyhdeez5sYovoNl4c+4e/sjVspsttzqtSN0P6X8=;
+        b=EPscUCYs256cI0NRbFlCzQs5HEznW+u1ePmHQxOHje3u4YGoFmgkT1UWg58y6MIcTK
+         Y8ODZZ/anAYTYXXL+RW4LLxWDA1tm9OVUHJcIbArW2HRoVi8sNHE+etTH1/bb6RWQVH6
+         ziuUUMREtRLK6Xw0YfXyQpQ9hys0BFsmazXOyM+8bP6Qyi3w9wxtLjAMcw9KqCmwo02l
+         xkiC2g77GqOFauGLFB49bqRhYg9siYAVvD+h6SWpIPcVIf8a7grVS5DEMTmi1fmKpRHg
+         vFRCi1oBG8StxHn/IzbVv4HJuy6XIlpoVPaRJ49sH3VFDhMswsoMTzGzrDpWhODLbLOx
+         r2+A==
+X-Gm-Message-State: AOAM5314c3ehIvieeEOmFYck9uVrxR1U/pu8FRxk7ZT4DuaEAG4RZU4d
+        uj5ijvsZV7OscPxBIbzFchWy1S18VBw=
+X-Google-Smtp-Source: ABdhPJwBJO84yeMGUgkPXf7GoJF9yBPRZfS26Tf+EpXsICxX3WUpUouFkwlr84/RI4SoFfSg8MMIiA==
+X-Received: by 2002:a05:600c:500d:: with SMTP id n13mr35138055wmr.174.1637039890471;
+        Mon, 15 Nov 2021 21:18:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b6sm1205686wmq.45.2021.11.15.21.18.09
+        by smtp.gmail.com with ESMTPSA id u23sm17221645wru.21.2021.11.15.21.18.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 21:18:09 -0800 (PST)
-Message-Id: <pull.1076.v4.git.1637039888.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1076.v3.git.1636972769.gitgitgadget@gmail.com>
+        Mon, 15 Nov 2021 21:18:10 -0800 (PST)
+Message-Id: <9f1b3dd6d0b2d3f22fe960b0c3aaa3d888d26c88.1637039888.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1076.v4.git.1637039888.gitgitgadget@gmail.com>
 References: <pull.1076.v3.git.1636972769.gitgitgadget@gmail.com>
+        <pull.1076.v4.git.1637039888.gitgitgadget@gmail.com>
 From:   "Aleen via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 Nov 2021 05:18:06 +0000
-Subject: [PATCH v4 0/2] am: support --empty-commit=(die|skip|asis) option to am empty commits
+Date:   Tue, 16 Nov 2021 05:18:07 +0000
+Subject: [PATCH v4 1/2] doc: git-format-patch: describe the option --always
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,112 +65,42 @@ To:     git@vger.kernel.org
 Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
         Aleen =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>,
         =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Aleen <aleen42@vip.qq.com>
+        Aleen <aleen42@vip.qq.com>, Aleen <aleen42@vip.qq.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since that git has supported the --always option for the git-format-patch
-command to create a patch with an empty commit message, git-am should
-support applying and committing with empty patches.
+From: Aleen <aleen42@vip.qq.com>
 
-----------------------------------------------------------------------------
+Signed-off-by: Aleen <aleen42@vip.qq.com>
+---
+ Documentation/git-format-patch.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Changes since v1:
-
- 1. add a case when not passing the --always option
- 2. rename the --always option to --allow-empty
-
-----------------------------------------------------------------------------
-
-Changes since v2:
-
- 1. rename the --allow-empty option to --empty-commit
- 2. introduce three different strategies (die|skip|asis) when trying to
-    record empty patches as empty commits.
-
-----------------------------------------------------------------------------
-
-Changes since v3:
-
- 1. generate the missed file for test cases
- 2. grep -f cannot be used under Mac OS
-
-----------------------------------------------------------------------------
-
-Aleen (2):
-  doc: git-format-patch: describe the option --always
-  am: support --empty-commit option to handle empty patches
-
- Documentation/git-am.txt           |  9 ++++
- Documentation/git-format-patch.txt |  6 ++-
- builtin/am.c                       | 48 ++++++++++++++++++--
- t/t4150-am.sh                      | 73 ++++++++++++++++++++++++++++++
- 4 files changed, 130 insertions(+), 6 deletions(-)
-
-
-base-commit: b550198c73edd4cc058832dcf74b41aeec2adba2
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1076%2Faleen42%2Fnext-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1076/aleen42/next-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/1076
-
-Range-diff vs v3:
-
- 1:  9f1b3dd6d0b = 1:  9f1b3dd6d0b doc: git-format-patch: describe the option --always
- 2:  ef33ce8c6f9 ! 2:  b7e30c9b7ab am: support --empty-commit option to handle empty patches
-     @@ t/t4150-am.sh: test_expect_success setup '
-      +	git commit -m "empty commit" --allow-empty &&
-      +
-      +	git format-patch --stdout empty-commit^ >empty.patch &&
-     ++	git format-patch --stdout --cover-letter empty-commit^ >cover-letter.patch &&
-      +	git format-patch --always --stdout empty-commit^ >empty-commit.patch &&
-      +
-       	# reset time
-     @@ t/t4150-am.sh: test_expect_success 'apply binary blob in partial clone' '
-      +
-      +	git am --empty-commit=skip cover-letter.patch >err &&
-      +	test_path_is_missing .git/rebase-apply &&
-     -+	git rev-parse empty-commit^ >expected &&
-     -+	git rev-parse HEAD >actual &&
-     -+	test_cmp expected actual
-     ++	test_cmp_rev empty-commit^ HEAD
-      +'
-      +
-      +test_expect_success 'record as an empty commit when meeting e-mail message that lacks a patch' '
-      +	git am --empty-commit=asis empty-commit.patch &&
-      +	test_path_is_missing .git/rebase-apply &&
-     -+	git show empty-commit --format="%B" >expected &&
-     ++	{
-     ++		git show empty-commit --format="%B" &&
-     ++		echo "--" &&
-     ++		git version | sed -e "s/^git version //" &&
-     ++		echo
-     ++	} >expected &&
-      +	git show HEAD --format="%B" >actual &&
-     -+	grep -f actual expected &&
-     ++	test_cmp actual expected &&
-      +
-      +	git am --empty-commit=asis cover-letter.patch &&
-      +	test_path_is_missing .git/rebase-apply &&
-     -+	git show empty-commit --format="%B" >expected &&
-     ++	{
-     ++		echo "*** SUBJECT HERE ***" &&
-     ++		echo &&
-     ++		echo "*** BLURB HERE ***" &&
-     ++		echo &&
-     ++		echo "A U Thor (1):" &&
-     ++		printf "  " &&
-     ++		git show empty-commit --format="%B" &&
-     ++		echo "--" &&
-     ++		git version | sed -e "s/^git version //" &&
-     ++		echo
-     ++	} >expected &&
-      +	git show HEAD --format="%B" >actual &&
-     -+	grep -f actual expected
-     ++	test_cmp actual expected
-      +'
-      +
-       test_done
-
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 113eabc107c..be797d7a28f 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -18,7 +18,7 @@ SYNOPSIS
+ 		   [-n | --numbered | -N | --no-numbered]
+ 		   [--start-number <n>] [--numbered-files]
+ 		   [--in-reply-to=<message id>] [--suffix=.<sfx>]
+-		   [--ignore-if-in-upstream]
++		   [--ignore-if-in-upstream] [--always]
+ 		   [--cover-from-description=<mode>]
+ 		   [--rfc] [--subject-prefix=<subject prefix>]
+ 		   [(--reroll-count|-v) <n>]
+@@ -192,6 +192,10 @@ will want to ensure that threading is disabled for `git send-email`.
+ 	patches being generated, and any patch that matches is
+ 	ignored.
+ 
++--always::
++	Include patches for commits that do not introduce any change,
++	which are omitted by default.
++
+ --cover-from-description=<mode>::
+ 	Controls which parts of the cover letter will be automatically
+ 	populated using the branch's description.
 -- 
 gitgitgadget
+
