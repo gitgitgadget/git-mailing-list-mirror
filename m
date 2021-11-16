@@ -2,88 +2,222 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D42E0C433F5
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 17:45:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CDCBC433F5
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 18:21:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B05D161465
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 17:45:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CBF363225
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 18:21:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238987AbhKPRsz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 12:48:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57302 "EHLO
+        id S239399AbhKPSYB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 13:24:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233987AbhKPRsy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 12:48:54 -0500
-Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8977CC061570
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 09:45:57 -0800 (PST)
-Received: by mail-qv1-xf49.google.com with SMTP id e14-20020a0562140d8e00b003bace92a1feso89490qve.5
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 09:45:57 -0800 (PST)
+        with ESMTP id S239396AbhKPSXz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 13:23:55 -0500
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6067AC061570
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 10:20:58 -0800 (PST)
+Received: by mail-pg1-x52a.google.com with SMTP id 200so18406060pga.1
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 10:20:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=bkjSgROit3fTBZwrghYItgbc6u9l1ruNnOYCJXmUsmI=;
-        b=n4FLto2APsVSt7ZXqBZd+292pgEb7fvSwsTFJbCnCKB6Gas7RdXgCeWW1AloUAX15o
-         414AVniDM/5i8uBhu+K/mniPY7n2ZGn3XQl1OuCcRMY/aTzesW9e5l3lN1lRmjgEDBMt
-         32QYFQsD9GjL2DCpIqvQizoQD4omYuGZ93B/AEtGXBCSuKZanJydLpIyNx9tOpOJZ7LA
-         I1sdiCKGowVneCzmtGckSnf8Oy2mrntFH4neyQz36P7mirRkqubLCg5GsgpkLL1UDpDI
-         OIj85IszQtst2JXXSPHY9WNa+newP7odEJdMd9vyYFxFa/F6JC3MROMyeGN5FmzgIN9U
-         d+1g==
+        bh=eE0NOQn7n1Nd7/FJkCNP6fSsDlU3DkVtr7pM4BCzI/Y=;
+        b=bBOmXzdY6WLU6Jz33Ue0MCAwFuS8WGNb3gIzWgyXuwiz+7sFMyLrPxu3jsqSJ5qG0/
+         fLepnG385dxka89MGKrqVgrTvZAo89CJjKZWrnLETwYCfdXwDycHOC1ngns6dlwZCODC
+         VhvSv8uK8YXljsykTbFk5RKrQ/EVBT9pXKseyR2vRCdzMjDYgTa0MneLWJFHFtMd0BE5
+         zwhlEZgOy0BS62T2gKX/1KuD1nYG9fJflXtD1vMYfaNLbousYo28vPIhxY+ZBIWvmnUl
+         wdy1HRRd5EEQEAMlfHoslEYY39KjNKc53C1jwgCjHe6w2F0EcLblxHIQrRNd3BVdbv2n
+         /uGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=bkjSgROit3fTBZwrghYItgbc6u9l1ruNnOYCJXmUsmI=;
-        b=rwyKAruSoB1fU+xLMlXoPGQzCOurGw/03FveQvJXFimANgjmXsC48ODpsYAdQZGtP9
-         /CrLacD3PGxZCtj8EWqJWkeZWqfAA79LjHVb3nLe6ZAe2cs2wGvEKtUn7D8KITy85N4K
-         0XN2sL82qo4sSyH6Ji++IyODekXMHEnlYmLk0fd/XWyO2QdXu//rEf9M8z0XXaXvA4B5
-         /rGIwXI3iMzM8VPbvdvXQ4yi8w5xN7dlOqhdeZ2Y8asde6a27VOKx2H8UvXs5gf8vzaj
-         Qrm4LH2l9QCAEk4s54GHEeXPZm7uU0APEbbJpv3fzqqlVA9Zgz4aJrATXQmGcv1yIfBP
-         zqJA==
-X-Gm-Message-State: AOAM530acmjPAtC9BKJOKlnQQkBtF14zTPKAIQUwOBkMO83ACJPhkkCT
-        ujJrccsdAX9ScezPH1lcOh+R2vzIp/YLMDdL+n8M
-X-Google-Smtp-Source: ABdhPJwRiqDW8CBzMLrAYgsx69zrJpe+6MJShu3k9VfabNOZxma8BFvgcB+5x1BSxVZL1z5DgbRjFhW/lqMg8jJHHx2C
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:ac8:5dc9:: with SMTP id
- e9mr9518723qtx.12.1637084756681; Tue, 16 Nov 2021 09:45:56 -0800 (PST)
-Date:   Tue, 16 Nov 2021 09:45:53 -0800
-In-Reply-To: <kl6lo86ltc9a.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-Id: <20211116174553.2300029-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <kl6lo86ltc9a.fsf@chooglen-macbookpro.roam.corp.google.com>
-X-Mailer: git-send-email 2.34.0.rc1.387.gb447b232ab-goog
-Subject: Re: [PATCH v4 5/6] remote: die if branch is not found in repository
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     chooglen@google.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, gitster@pobox.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eE0NOQn7n1Nd7/FJkCNP6fSsDlU3DkVtr7pM4BCzI/Y=;
+        b=sk1FblgLQY1rdwKm9le9CKTMCO6hTkFfA4w0oRePRJNo5E180xeJSd7AXydiwC0Wac
+         OkmB7Pb3Kfvluq04nW+eHhPEhRKtoPIv0paPKnrDruXYoP/2YYcL8B8K3w3lSzGEcHBU
+         U/ut0uWPlFG/MEw9c27wFZg3OZx1e/XpFBkY81LTZippgNkT+YFevSeTExHP4hzC3TDs
+         XsOjWFymPNT/0nIZbS+orivvbYtboCDRnUguKQWIG4QzSOImn/MkSHQJLsMs7XOFoy4M
+         uReZZgCGF40Fn1sKhohz8HCLB5Y2oLom+A6tjocPC8G/opmsfGn3NjdvGCAgodl65Dro
+         vgvg==
+X-Gm-Message-State: AOAM5304ZvMxT6b8UrGf8Cz3b2HMMulOBEBLtDoRPGFYuRRS1TYMJDCN
+        iwJlnKQcWd59T14j887dHFTGVHJP+oEq2QAXk84=
+X-Google-Smtp-Source: ABdhPJxloeL7IULSICGUBYqm2YolZNHUEhYS5dUqghthF5ta5OB0wY7fNvxYBPsvoJp6zFpe2t9I+P6hXBaKBNxtTiI=
+X-Received: by 2002:a63:924c:: with SMTP id s12mr696896pgn.416.1637086857777;
+ Tue, 16 Nov 2021 10:20:57 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.1078.v5.git.git.1633521772731.gitgitgadget@gmail.com>
+ <pull.1078.v6.git.git.1633523057369.gitgitgadget@gmail.com> <xmqqwnmopqqk.fsf@gitster.g>
+In-Reply-To: <xmqqwnmopqqk.fsf@gitster.g>
+From:   Mugdha Pattnaik <mugdhapattnaik@gmail.com>
+Date:   Tue, 16 Nov 2021 23:50:45 +0530
+Message-ID: <CAA4dvxgNJ8eyuc5B6_GnSLHMWjdbJN5k_rTCLjWndEyjv_vOnw@mail.gmail.com>
+Subject: Re: [PATCH v6] submodule: absorb git dir instead of dying on deinit
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Mugdha Pattnaik via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
-> > Couldn't we just iterate over the array (instead of making a hashmap)?
-> > If speed is important, I think we could just sort the array and do a
-> > binary search.
-> 
-> The primary reason I used a hashmap is to be consistent with struct
-> remote (which also uses a hashmap). One possible argument in your favor
-> is that remotes are often looked up by name often (and justify the
-> hashmap), whereas branches are not looked up by name as often (and don't
-> justify a hashmap).
-> 
-> I say _justify_, but I don't see significant drawbacks to using a
-> hashmap here. I suspect that there is an advantage to binary search that
-> you haven't made explicit yet? Could you share your thought process to
-> help inform the decision?
+Apologies for the late reply, I got caught up with other commitments.
 
-The main drawback is that branches are now stored in 2 ways - as the
-"branches" array in struct remote_state and as this new "branches_hash".
-I think we should avoid storing the same data twice unless we really
-need to, and I don't think there is a need here.
+> On Fri, Oct 8, 2021 at 1:11 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Mugdha Pattnaik via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: mugdha <mugdhapattnaik@gmail.com>
+>
+> This line is called "in-body header" that is used to override the
+> author name that is automatically obtained from the e-mail's "From:"
+> header (which is set to "Mugdha Pattnaik via GitGitGadget" by GGG,
+> which is obviously not your name, hence we use an in-body header to
+> override it).  It should match what you use to sign off your patches,
+> the one we see below.
+>
+> I'll hand-edit so that "git show" will say that the author is
+> "Mugdha Pattnaik", not "mugdha", while applying, but please make
+> sure your further submissions will not have this problem.
 
-As for hashmap vs array (say, if we were thinking of removing the array
-and putting in a hashmap instead), I would still prefer the array
-(sorted if needed) just for the simplicity, but I wouldn't feel as
-strongly about this since there is no duplication here.
+Okay, I will keep this in mind for future patches.
+
+
+> > Currently, running 'git submodule deinit' on repos where the
+> > submodule's '.git' is a directory, aborts with a message that is not
+> > exactly user friendly. Let's change this to instead warn the user
+> > to rerun the command with '--force'.
+>
+> OK.  That sounds like an improvement, albeit possibly an overly
+> cautious one, as a casual "deinit" user will get an error as before
+> without "--force", which may or may not be a good thing.  Requiring
+> "--force" means it is safer by default by not changing the on-disk
+> data.  But requiring "--force" also means we end up training users
+> to say "--force" when it shouldn't have to be.
+>
+> A plausible alternative is to always absorb but with a warning "we
+> absorbed it for you", without requiring "--force".  If we didn't
+> have "git submodule deinit" command now and were designing it from
+> scratch, would we design it to fail because the submodule's git
+> directory is not absorbed?  I doubt it, as I do not think of a good
+> reason to do so offhand.
+
+Okay, I understand now. I'll remove the condition that checks for "--force"
+and will go ahead with absorbing the gitdir after displaying the suggested
+warning message. Currently I suppress the warnings when the "--quiet"
+flag is set; I think I will continue to do that, even after implementing the
+above change. Do let me know if I should be doing otherwise.
+
+
+> Does "git submodule" currently reject a "deinit" request due to some
+> _other_ conditions or safety concerns and require the "--force"
+> option to continue?  Requiring the "--force" option to resolve ".git
+> is a directory, and the user wants to make it absorbed" means that
+> the user will be _forced_ to bypass these _other_ safety valves only
+> to save the submodule repository from destruction when running
+> "deinit", which may not be a good trade-off between the safety
+> requirements of these _other_ conditions, if exists, and the one we
+> are dealing with.
+
+This is definitely a situation we want to avoid. How about we try to run
+a check for uncommitted local modifications first? If these are present,
+then deinit can die with a warning. In case there are no uncommitted
+local modifications, deinit can go ahead and absorb the gitdir and do the
+rest.
+
+The existing submodule--helper.c file already has a check for this, but it
+seems to be doing it below the check for absorption. I can try to switch it
+around to see how that works.
+
+
+> > This internally calls 'absorb_git_dir_into_superproject()', which
+> > moves the git dir into the superproject and replaces it with
+> > a '.git' file. The rest of the deinit function can operate as it
+> > already does with new-style submodules.
+>
+> This is not wrong per-se, but such an implementation detail is
+> something best left for the patch.
+>
+> > We also edit a test case such that it matches the new behaviour of
+> > deinit.
+>
+> "match the new behaviour" in what way?
+>
+>     In one test, we used to require "git submodule deinit" to fail
+>     even with the "--force" option when the submodule's .git/
+>     directory is not absorbed.  Adjust it to expect the operation to
+>     pass.
+>
+> would be a description at the right level of detail, I think.
+
+Noted. I'll apply the above changes.
+
+
+> > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> > index ef2776a9e45..040b26f149d 100644
+> > --- a/builtin/submodule--helper.c
+> > +++ b/builtin/submodule--helper.c
+> > @@ -1539,16 +1539,24 @@ static void deinit_submodule(const char *path, const char *prefix,
+> >               struct strbuf sb_rm = STRBUF_INIT;
+> >               const char *format;
+> >
+> > -             /*
+> > -              * protect submodules containing a .git directory
+> > -              * NEEDSWORK: instead of dying, automatically call
+> > -              * absorbgitdirs and (possibly) warn.
+> > -              */
+> > -             if (is_directory(sub_git_dir))
+> > -                     die(_("Submodule work tree '%s' contains a .git "
+> > -                           "directory (use 'rm -rf' if you really want "
+> > -                           "to remove it including all of its history)"),
+> > -                         displaypath);
+> > +             if (is_directory(sub_git_dir)) {
+> > +                     if (!(flags & OPT_FORCE))
+> > +                             die(_("Submodule work tree '%s' contains a "
+> > +                                   ".git directory.\nUse --force if you want "
+> > +                                   "to move its contents to superproject's "
+> > +                                   "module directory and convert .git to a file "
+> > +                                   "and then proceed with deinit."),
+> > +                                 displaypath);
+> > +
+> > +                     if (!(flags & OPT_QUIET))
+> > +                             warning(_("Submodule work tree '%s' contains a .git "
+> > +                                       "directory. This will be replaced with a "
+> > +                                       ".git file by using absorbgitdirs."),
+> > +                                     displaypath);
+> > +
+> > +                     absorb_git_dir_into_superproject(displaypath, flags);
+>
+> Shouldn't the first argument to this call be "path" not
+> "displaypath"?  The paths in messages may want to have the path from
+> the top to the submodule location prefixed for human consumption,
+> but the called function only cares about the path to the submodule
+> from the current directory, no?
+
+Yes that makes sense, path is the better argument to pass.
+
+
+> The second parameter of this call seems totally bogus to me.  What
+> is the vocabulary of bits the called function takes?  Is that from
+> the same set the flags this function takes?  Does the called
+> function even understand OPT_QUIET, or does the bitpattern that
+> happens to correspond to OPT_QUIET have a totally different meaning
+> to the called function and we will trigger a behaviour that this
+> caller does not expect at all?
+
+I realised I was passing the wrong flags. On investigating further, the
+flags in submodule.c do have different semantics. I also noticed that it
+checks for recursive submodule absorption. I believe I should just be
+passing the recursive flag to the function that absorbs gitdir. This way,
+nested old-style gitdirs will also be handled.
+
+I intend to incorporate these changes by the end of the week.
+
+Thanks
+
+--
+Mugdha
