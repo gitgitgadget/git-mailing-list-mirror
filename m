@@ -2,141 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B7B8C433F5
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 08:29:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0C44C433EF
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 08:41:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CCC161104
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 08:29:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B037B61929
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 08:41:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232178AbhKPIce (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 03:32:34 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55736 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232119AbhKPIcQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 03:32:16 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5F7FC15C55A;
-        Tue, 16 Nov 2021 03:29:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=dGeS3cVCTENE4wFL9/QynyxpEZSx6uUMhNeptznD/80=; b=V3CI
-        3a7Z8a94Tdmag8c+XVtl5M9zwgXL4M0V0eoQ04OOvOSEoGWmZvdmHdQuMV03zEKb
-        OgQWYyodOYeB5UWYsx8MOmw1f5YMRoBElApihDN4wSC7K0ug2mP5PXHJn0uKevvQ
-        9onnkYPivMemQiL/dShxZzWB/XB/iOiY2C1SK/Q=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4A85D15C559;
-        Tue, 16 Nov 2021 03:29:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
+        id S232336AbhKPIo0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 03:44:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44348 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231863AbhKPIoZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 03:44:25 -0500
+Received: from mail-out.m-online.net (mail-out.m-online.net [IPv6:2001:a60:0:28:0:1:25:1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6673BC061570
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 00:41:28 -0800 (PST)
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 4Htffr42b3z1rk4w;
+        Tue, 16 Nov 2021 09:41:24 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 4Htffr3T8nz1qqkB;
+        Tue, 16 Nov 2021 09:41:24 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id zyUSK8HdN6y2; Tue, 16 Nov 2021 09:41:23 +0100 (CET)
+X-Auth-Info: 8c5DZUcfvgnCbUKdlAlN1q2g7hGWh4AVoPbmsg+lEkt/zyLnD5FJg1Fzqim7VSa9
+Received: from igel.home (ppp-46-244-181-163.dynamic.mnet-online.de [46.244.181.163])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9BA1715C557;
-        Tue, 16 Nov 2021 03:29:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <junio@pobox.com>
-To:     ebiederm@xmission.com (Eric W. Biederman)
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git List Mailing <git@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Oleg Nesterov <oleg@redhat.com>,
-        Al Viro <viro@zeniv.linux.org.uk>,
-        Kees Cook <keescook@chromium.org>,
-        Linux API <linux-api@vger.kernel.org>
-Subject: Re: [GIT PULL] per signal_struct coredumps
-References: <878ry512iv.fsf@disp2133>
-        <CAHk-=wivLcb3ELGSf=fM0u=PxP5m1=jRrVXDOr0+QJZRZggaHg@mail.gmail.com>
-        <871r3uy2vw.fsf@disp2133>
-        <CAHk-=wh8v4OC=9rjFs-QH0evVrGQu+wCVL5gE8Y-uTvqh42XNA@mail.gmail.com>
-        <xmqqbl2nmemx.fsf@gitster.g>
-        <87pmr2k68f.fsf@email.froward.int.ebiederm.org>
-Date:   Tue, 16 Nov 2021 00:29:11 -0800
-Message-ID: <xmqq8rxobj1k.fsf@gitster.g>
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Tue, 16 Nov 2021 09:41:23 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+        id BE81B2C1833; Tue, 16 Nov 2021 09:41:22 +0100 (CET)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Hamza Mahfooz <someguy@effective-light.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v13 3/3] grep/pcre2: fix an edge case concerning ascii
+ patterns and UTF-8 data
+References: <20211015161356.3372-1-someguy@effective-light.com>
+        <20211015161356.3372-3-someguy@effective-light.com>
+        <877dd9i1zj.fsf@igel.home>
+        <211115.86fsrxqbvp.gmgdl@evledraar.gmail.com>
+X-Yow:  Youth of today!  Join me in a mass rally for traditional mental
+ attitudes!
+Date:   Tue, 16 Nov 2021 09:41:22 +0100
+In-Reply-To: <211115.86fsrxqbvp.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 15 Nov 2021 23:41:27 +0100")
+Message-ID: <87o86kv6fh.fsf@igel.home>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 470BB1C4-46B7-11EC-BFA5-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Nov 15 2021, Ævar Arnfjörð Bjarmason wrote:
 
-> make that a "merge".  If it is "fake", I guess that any random point
-> in Linus's history would do, but I can understand that the maintainer
-> would complain about such a seemingly unnecessary (back) merge.
+> What PCREv2 version are you using?
 
-Having thought about it a bit more, I am not sure if these merges
-are truly "fake", or just a normal part of distributed development.
+10.31
 
-As a degenerated case, first I'd imagine you have a patch series
-that focuses on a single "theme".  You perfect the patches, you fork
-a topic branch from an appropriate "public" commit of your upstream
-(e.g. the last stable release from Linus), you add a signed tag at
-the tip of that topic branch, and you ask a (subsystem) maintainer
-to pull from you.  The subsystem maintainer's tree will have series
-of merges to collect work from other people working in the subsystem
-('x'), and the pull from you will create a merge whose first parent
-is one of these 'x' (i.e. the work by the maintainer so far), and
-the second parent of it is the tip of your work.  The merge commit M
-gives a detailed description of what happend on the side branch and
-its mergetag header carries the contents of the tag you created for
-the pull request.
+https://build.opensuse.org/package/show/openSUSE:Leap:15.3:Update/pcre2
 
-      \   \
-    ---x---x---M
-              / Subsystem maintainer pulls from you
-             /
-  ...---o---o (your work)
+Andreas.
 
-Your next topic, which is a chunk of the same larger theme, may
-depend on what you did in the commits in this initial series 'o'.
-
-
-      \   \       \   \
-    ---x---x---M---x---x---N
-              /           / Subsystem maintainer pulls from you again
-             /           /
-  ...---o---o---p---p---p (your second batch)
-
-
-Eventually, this will be pulled into Linus's tree when the subsystem
-maintainer is ready to send the whole thing.
-
-                              Y--- (Linus's tree)
-                             / Linus pulls from subsystem maintainer
-      \   \       \   \     /
-    ---x---x---M---x---x---N (Subsystem maintainer's tree)
-              /           /
-             /           /
-  ...---o---o---p---p---p (Your tree)
-
-The above picture only depicts two topics, one directly building on
-top of the other, from you, but that is simplified merely for
-illustration purposes.  The real history may have more topics, some
-are dependent on others, while some are independent.
-
-Now, if you have many related but more or less independent topic
-branches that will support a larger theme, it would be quite natural
-if you acted as your own "subsystem" maintainer, in other words, in
-the above picture:
-
- . you are in control of not just the bottom line, but in the middle
-   line of development;
-
- . you do not have 'x' that merges from other people;
-
- . but you do have M and N, and use these merges just like a
-   subsystem maintainer would use to describe the work done in the
-   side branches.
-
-and offer 'N' as the tip of a "larger" topic that has internal
-structure, not just a single strand of pearls, by adding a signed
-tag on 'N' and throwing a pull request at Linus (or whoever is
-immediately above your level).
-
-Is that what happened (as I said, I lack context)?  If so, I do not
-see much problem in the situation.  But this assumes that these so
-called "fake" merges are merging into right first parents.
-
-
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
