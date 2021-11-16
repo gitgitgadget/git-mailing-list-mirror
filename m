@@ -2,139 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB4C6C433FE
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 15:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18F69C433F5
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 15:38:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C1BD363214
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 15:38:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC26F63212
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 15:38:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238349AbhKPPlI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 10:41:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55776 "EHLO
+        id S238359AbhKPPlM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 10:41:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234207AbhKPPlE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 10:41:04 -0500
+        with ESMTP id S231696AbhKPPlD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 10:41:03 -0500
 Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EAF5C061746
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 07:38:06 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id p3-20020a05600c1d8300b003334fab53afso2336429wms.3
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 07:38:06 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C00FBC061570
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 07:38:05 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id z200so17378637wmc.1
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 07:38:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=ZTm/lMC1VdsYogwRtfWJz19TAr59chbjv/gs74DRcYI=;
-        b=WWRLoETu3CRLozbUm7QbZjtTCpbrenUW3x+dzGA2gtfhiwpuYkIriA2iHf2zU142Ei
-         CIPMQvr9SWHOaMYWQuovm8bJLgp4VhgAI1yGqs5y3T4LvKLacTYZ9mOZ0QzBycs8MBSG
-         RqsvCLlEseCx3/oYsjAqAQjCfcCEhXnAb+A8ajUEiuRqjcjKaZ73ntECHt2Q/pA4CX8c
-         DWWte0uG9LK8o86epHOnw9sg7tPf15XVTuUuA1jJnGA+RNBc0R2giA9PI0LVy0f5KSui
-         jV7vaTSBz1F551Zti/HSCy1TkCmIYtB03bC+h16EkhNBbHhiGVtj4SUknW+AZetkhh7+
-         tbqQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=EuAJ6tC/4qj4DN6sol8iPh8dX4qwSvy2da1So2QP6tw=;
+        b=E+U3sZ2EyqFR3zaAkt56IuY+/ON9pNOaDSutB9Crh6TJIZ/SDgcuJ7HchzoNl1Q3G/
+         ayeg8XmKgpCSlEb0HrpnFJjZuHdzqroq3mN6JYUiLs1TyTm7aJ3Cf+4N1TG+bB92eqH9
+         7ltDRjwwxr0Ag9dhPXesZ3XoDgb+hJgq8ddL6adBlqYrh4hSmwKjMU7GZB2Uh57c3wcn
+         w4elEooiOIUmsPdVkqnPuUrS3IXAJ0Rb52ptEokVd3DcvWrLkYIYmQhtCPu9WND7rS/5
+         ryAakYd9Vqeg8i2iaviEYmF3+yo76TdRV3PmmWXk9A6nZHnYKnNsGejhnYf83i0Xpez2
+         D8pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZTm/lMC1VdsYogwRtfWJz19TAr59chbjv/gs74DRcYI=;
-        b=MwHWGzBX5V+9Dk3qIXJHh8BU+DP6zR4ub4qEbesVRaXggntnAZUrhgaM5DodrtQO93
-         gWDjqo4wgSsttec915QOrgrUEfgDkfDx+iysnffUS7vUmolZ6NYEZ81ZAZHciOY4nilH
-         h1KqQMNJsjtZ6Z2jS7quqUrdf7v/ROj84Hjke4lX0gkSy5d4Bs3vOu3w53vxBchcZOxI
-         t/m90061llCm/8AdIhr7jvNG2SzNQ21LAKbXYKSlbWOMxFnR7VwS7IoPMBdSw1wpmXQx
-         qQg37DgANZs0sTkaD5NTmYN++fc8Ymggf9V7EPLFSonx+25uVxWFe1Cg8mTgo5H+gzT4
-         GoXA==
-X-Gm-Message-State: AOAM533czAyNyJM9/OKbRjPbYhG0b7pBZRp7z+fpJkfljFAUYYJ1YkvO
-        RYacVsKMaUVuZRcN/2OdU7iuvX2/O3s=
-X-Google-Smtp-Source: ABdhPJy+kdhRYAP+nxHe+3GP+WW0El61KeVbJGBThanDiRmFblRC2BIvmYV7O3hXAXgxoiwrW4c3YQ==
-X-Received: by 2002:a05:600c:1914:: with SMTP id j20mr70240642wmq.26.1637077084750;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=EuAJ6tC/4qj4DN6sol8iPh8dX4qwSvy2da1So2QP6tw=;
+        b=oLzZGO3z3C+sSOY+bh6VEygszH2Ewhhge6xrvqErj1Fs9o/qQh/FXpSAZir3QjrDlN
+         mjBGDkiiRKxPEAnAitO4IUi3WpVDgv9SqOGfQyHiturUoq8rfOqaz2qGqQMh48nJHn8A
+         5Q72HcPDavz6hjrtqliz4woiXBN0KTXeMz0FslmwO9pB34l0zyxScvghXoEZ7YKnznTc
+         dDqJ4NWulwlC+1i/hDRYPkG1pWu93456zSZ51+jPwGoSHhX+yA6oWtq+sL7EOCvG9IXb
+         74/GXunUi8TQd9VuwOjMo8INsa90Y5DKtKBznkIOaMUjyQ70ewBDX5MaSI792sfpT/jU
+         G44A==
+X-Gm-Message-State: AOAM530O3SD3y6ZdekR4vR/0xLnIGES1E/cql19a02ZKrK6dC2IQbvHW
+        uJpzMCGxBUVtOAqJ0TZuqFv9EVCZ3M0=
+X-Google-Smtp-Source: ABdhPJyuOSLcKqjKx6wVkCFXtBIj6JBmIyPGzfgNpkXya4hMTG6G4EXqK2W954chy0aHFpeWJ6Nc+w==
+X-Received: by 2002:a05:600c:3510:: with SMTP id h16mr69352183wmq.144.1637077084072;
         Tue, 16 Nov 2021 07:38:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u14sm17715160wrt.49.2021.11.16.07.38.04
+        by smtp.gmail.com with ESMTPSA id w15sm17698625wrk.77.2021.11.16.07.38.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Nov 2021 07:38:04 -0800 (PST)
-Message-Id: <451056e1a77893374ec07509f25d35c11eae59b7.1637077083.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1080.git.1637077083.gitgitgadget@gmail.com>
-References: <pull.1080.git.1637077083.gitgitgadget@gmail.com>
+        Tue, 16 Nov 2021 07:38:03 -0800 (PST)
+Message-Id: <pull.1080.git.1637077083.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 Nov 2021 15:38:01 +0000
-Subject: [PATCH 1/2] fetch/pull: use the sparse index
+Date:   Tue, 16 Nov 2021 15:38:00 +0000
+Subject: [PATCH 0/2] Sparse index: fetch, pull, ls-files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, newren@gmail.com, vdye@github.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+This is based on ld/sparse-index-blame (merged with 'master' due to an
+unrelated build issue).
 
-The 'git fetch' and 'git pull' commands parse the index in order to
-determine if submodules exist. Without command_requires_full_index=0,
-this will expand a sparse index, causing slow performance even when
-there is no new data to fetch.
+Here are two relatively-simple patches that further the sparse index
+integrations.
 
-The .gitmodules file will never be inside a sparse directory entry, and
-even if it was, the index_name_pos() method would expand the sparse
-index if needed as we search for the path by name. These commands do not
-iterate over the index, which is the typical thing we are careful about
-when integrating with the sparse index.
+Did you know that 'fetch' and 'pull' read the index? I didn't, or this would
+have been an integration much earlier in the cycle. They read the index to
+look for the .gitmodules file in case there are submodules that need to be
+fetched. Since looking for a file by name is already protected, we only need
+to disable 'command_requires_full_index' and we are done.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- builtin/fetch.c                          |  2 ++
- builtin/pull.c                           |  2 ++
- t/t1092-sparse-checkout-compatibility.sh | 10 ++++++++++
- 3 files changed, 14 insertions(+)
+The 'ls-files' builtin is useful when debugging the index, and some scripts
+use it, too. We are not changing the default behavior which expands a sparse
+index in order to show all of the cached blobs. Instead, we add a '--sparse'
+option that allows us to see the sparse directory entries upon request.
+Combined with --debug, we can see a lot of index details, such as:
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index f7abbc31ff1..1696b7791d4 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1993,6 +1993,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	git_config(git_fetch_config, NULL);
-+	prepare_repo_settings(the_repository);
-+	the_repository->settings.command_requires_full_index = 0;
- 
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_fetch_options, builtin_fetch_usage, 0);
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 127798ba84e..9f6174f4433 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -993,6 +993,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		set_reflog_message(argc, argv);
- 
- 	git_config(git_pull_config, NULL);
-+	prepare_repo_settings(the_repository);
-+	the_repository->settings.command_requires_full_index = 0;
- 
- 	argc = parse_options(argc, argv, prefix, pull_options, pull_usage, 0);
- 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index d75f64aad56..f8a8dde60af 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -932,6 +932,16 @@ test_expect_success 'sparse index is not expanded: blame' '
- 	ensure_not_expanded blame deep/deeper1/deepest/a
- '
- 
-+test_expect_success 'sparse index is not expanded: fetch/pull' '
-+	init_repos &&
-+
-+	git -C sparse-index remote add full "file://$(pwd)/full-checkout" &&
-+	ensure_not_expanded fetch full &&
-+	git -C full-checkout commit --allow-empty -m "for pull merge" &&
-+	git -C sparse-index commit --allow-empty -m "for pull merge" &&
-+	ensure_not_expanded pull full base
-+'
-+
- # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
- # in this scenario, but it shouldn't.
- test_expect_success 'reset mixed and checkout orphan' '
+$ git ls-files --debug --sparse
+LICENSE
+  ctime: 1634910503:287405820
+  mtime: 1634910503:287405820
+  dev: 16777220 ino: 119325319
+  uid: 501  gid: 20
+  size: 1098    flags: 200000
+README.md
+  ctime: 1634910503:288090279
+  mtime: 1634910503:288090279
+  dev: 16777220 ino: 119325320
+  uid: 501  gid: 20
+  size: 934 flags: 200000
+bin/index.js
+  ctime: 1634910767:828434033
+  mtime: 1634910767:828434033
+  dev: 16777220 ino: 119325520
+  uid: 501  gid: 20
+  size: 7292    flags: 200000
+examples/
+  ctime: 0:0
+  mtime: 0:0
+  dev: 0    ino: 0
+  uid: 0    gid: 0
+  size: 0   flags: 40004000
+package.json
+  ctime: 1634910503:288676330
+  mtime: 1634910503:288676330
+  dev: 16777220 ino: 119325321
+  uid: 501  gid: 20
+  size: 680 flags: 200000
+
+
+(In this example, the 'examples/' directory is sparse.)
+
+Thanks!
+
+Derrick Stolee (2):
+  fetch/pull: use the sparse index
+  ls-files: add --sparse option
+
+ Documentation/git-ls-files.txt           |  4 ++
+ builtin/fetch.c                          |  2 +
+ builtin/ls-files.c                       | 12 ++++-
+ builtin/pull.c                           |  2 +
+ t/t1092-sparse-checkout-compatibility.sh | 57 ++++++++++++++++++++++++
+ 5 files changed, 75 insertions(+), 2 deletions(-)
+
+
+base-commit: ce9c834d5de7026a5271e289ab4518e569464171
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1080%2Fderrickstolee%2Fsparse-index%2Ffetch-pull-ls-files-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1080/derrickstolee/sparse-index/fetch-pull-ls-files-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1080
 -- 
 gitgitgadget
-
