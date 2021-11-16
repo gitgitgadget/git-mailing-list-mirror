@@ -2,173 +2,205 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAB5FC433EF
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 15:15:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9069C433EF
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 15:31:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8AD1263214
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 15:15:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8783061507
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 15:31:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237826AbhKPPSJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 10:18:09 -0500
-Received: from out03.mta.xmission.com ([166.70.13.233]:58930 "EHLO
-        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231739AbhKPPSJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 10:18:09 -0500
-Received: from in01.mta.xmission.com ([166.70.13.51]:51344)
-        by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1mn0Aw-00BYWg-TH; Tue, 16 Nov 2021 08:15:10 -0700
-Received: from ip68-227-160-95.om.om.cox.net ([68.227.160.95]:37576 helo=email.froward.int.ebiederm.org.xmission.com)
-        by in01.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1mn0Av-00DBF6-NZ; Tue, 16 Nov 2021 08:15:10 -0700
-From:   ebiederm@xmission.com (Eric W. Biederman)
-To:     Junio C Hamano <junio@pobox.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git List Mailing <git@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Oleg Nesterov <oleg@redhat.com>,
-        Al Viro <viro@zeniv.linux.org.uk>,
-        Kees Cook <keescook@chromium.org>,
-        Linux API <linux-api@vger.kernel.org>
-References: <878ry512iv.fsf@disp2133>
-        <CAHk-=wivLcb3ELGSf=fM0u=PxP5m1=jRrVXDOr0+QJZRZggaHg@mail.gmail.com>
-        <871r3uy2vw.fsf@disp2133>
-        <CAHk-=wh8v4OC=9rjFs-QH0evVrGQu+wCVL5gE8Y-uTvqh42XNA@mail.gmail.com>
-        <xmqqbl2nmemx.fsf@gitster.g>
-        <87pmr2k68f.fsf@email.froward.int.ebiederm.org>
-        <xmqq8rxobj1k.fsf@gitster.g>
-Date:   Tue, 16 Nov 2021 09:14:32 -0600
-In-Reply-To: <xmqq8rxobj1k.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        16 Nov 2021 00:29:11 -0800")
-Message-ID: <87lf1ob09z.fsf@email.froward.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S238240AbhKPPe0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 10:34:26 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60086 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237560AbhKPPeZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 10:34:25 -0500
+Received: (qmail 20392 invoked by uid 109); 16 Nov 2021 15:31:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Nov 2021 15:31:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29997 invoked by uid 111); 16 Nov 2021 15:31:27 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Nov 2021 10:31:27 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 16 Nov 2021 10:31:26 -0500
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] wrapper: add a helper to generate numbers from a
+ CSPRNG
+Message-ID: <YZPOzqU0UQDVA57R@coredump.intra.peff.net>
+References: <20211116033542.3247094-1-sandals@crustytoothpaste.net>
+ <20211116033542.3247094-2-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-SPF: eid=1mn0Av-00DBF6-NZ;;;mid=<87lf1ob09z.fsf@email.froward.int.ebiederm.org>;;;hst=in01.mta.xmission.com;;;ip=68.227.160.95;;;frm=ebiederm@xmission.com;;;spf=neutral
-X-XM-AID: U2FsdGVkX18ihlHc2DLTLJ2wnwtlhHPHI9iBIj2iM+M=
-X-SA-Exim-Connect-IP: 68.227.160.95
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-Subject: Re: [GIT PULL] per signal_struct coredumps
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20211116033542.3247094-2-sandals@crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <junio@pobox.com> writes:
+On Tue, Nov 16, 2021 at 03:35:41AM +0000, brian m. carlson wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> make that a "merge".  If it is "fake", I guess that any random point
->> in Linus's history would do, but I can understand that the maintainer
->> would complain about such a seemingly unnecessary (back) merge.
->
-> Having thought about it a bit more, I am not sure if these merges
-> are truly "fake", or just a normal part of distributed development.
->
-> As a degenerated case, first I'd imagine you have a patch series
-> that focuses on a single "theme".  You perfect the patches, you fork
-> a topic branch from an appropriate "public" commit of your upstream
-> (e.g. the last stable release from Linus), you add a signed tag at
-> the tip of that topic branch, and you ask a (subsystem) maintainer
-> to pull from you.  The subsystem maintainer's tree will have series
-> of merges to collect work from other people working in the subsystem
-> ('x'), and the pull from you will create a merge whose first parent
-> is one of these 'x' (i.e. the work by the maintainer so far), and
-> the second parent of it is the tip of your work.  The merge commit M
-> gives a detailed description of what happend on the side branch and
-> its mergetag header carries the contents of the tag you created for
-> the pull request.
->
->       \   \
->     ---x---x---M
->               / Subsystem maintainer pulls from you
->              /
->   ...---o---o (your work)
->
-> Your next topic, which is a chunk of the same larger theme, may
-> depend on what you did in the commits in this initial series 'o'.
->
->
->       \   \       \   \
->     ---x---x---M---x---x---N
->               /           / Subsystem maintainer pulls from you again
->              /           /
->   ...---o---o---p---p---p (your second batch)
->
->
-> Eventually, this will be pulled into Linus's tree when the subsystem
-> maintainer is ready to send the whole thing.
->
->                               Y--- (Linus's tree)
->                              / Linus pulls from subsystem maintainer
->       \   \       \   \     /
->     ---x---x---M---x---x---N (Subsystem maintainer's tree)
->               /           /
->              /           /
->   ...---o---o---p---p---p (Your tree)
->
-> The above picture only depicts two topics, one directly building on
-> top of the other, from you, but that is simplified merely for
-> illustration purposes.  The real history may have more topics, some
-> are dependent on others, while some are independent.
->
-> Now, if you have many related but more or less independent topic
-> branches that will support a larger theme, it would be quite natural
-> if you acted as your own "subsystem" maintainer, in other words, in
-> the above picture:
->
->  . you are in control of not just the bottom line, but in the middle
->    line of development;
->
->  . you do not have 'x' that merges from other people;
->
->  . but you do have M and N, and use these merges just like a
->    subsystem maintainer would use to describe the work done in the
->    side branches.
->
-> and offer 'N' as the tip of a "larger" topic that has internal
-> structure, not just a single strand of pearls, by adding a signed
-> tag on 'N' and throwing a pull request at Linus (or whoever is
-> immediately above your level).
->
-> Is that what happened (as I said, I lack context)?  If so, I do not
-> see much problem in the situation.  But this assumes that these so
-> called "fake" merges are merging into right first parents.
+> The order of options is also important here.  On systems with
+> arc4random, which is most of the BSDs, we use that, since, except on
+> MirBSD, it uses ChaCha20, which is extremely fast, and sits entirely in
+> userspace, avoiding a system call.  We then prefer getrandom over
+> getentropy, because the former has been available longer on Linux, and
+> finally, if none of those are available, we use /dev/urandom, because
+> most Unix-like operating systems provide that API.  We prefer options
+> that don't involve device files when possible because those work in some
+> restricted environments where device files may not be available.
 
-Yes.  I write and post the patches with my developer hat on,
-and I merge them with my maintainer hat on, then ultimately I send
-them to Linus with the same maintainer hat on.
+I wonder if we'll need a low-quality fallback for older systems which
+don't even have /dev/urandom. Because it's going to be used in such a
+core part of the system (tempfiles), this basically becomes a hard
+requirement for using Git at all.
 
+I can't say I'm excited in general to be introducing a dependency like
+this, just because of the portability headaches. But it may be the least
+bad thing (especially if we can fall back to the existing behavior).
+One alternative would be to build on top of the system mkstemp(), which
+makes it libc's problem. I'm not sure if we'd run into problems there,
+though.
 
-The full email conversation is at:
-https://lore.kernel.org/all/878ry512iv.fsf@disp2133/T/#u
+> diff --git a/Makefile b/Makefile
+> index 12be39ac49..1d17021f59 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -234,6 +234,14 @@ all::
+>  # Define NO_TRUSTABLE_FILEMODE if your filesystem may claim to support
+>  # the executable mode bit, but doesn't really do so.
+>  #
+> +# Define HAVE_ARC4RANDOM if your system has arc4random and arc4random_buf.
+> +#
+> +# Define HAVE_GETRANDOM if your system has getrandom.
+> +#
+> +# Define HAVE_GETENTROPY if your system has getentropy.
+> +#
+> +# Define HAVE_RTLGENRANDOM if your system has RtlGenRandom (Windows only).
 
-Here is where Linus merged the change:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a602285ac11b019e9ce7c3907328e9f95f4967f0
+It seems like these will be mutually exclusive (and indeed, the #ifdef
+in the code ends up defining a particular precedence). Would we be
+better off exposing that to the user with a single CSPRNG_METHOD set to
+arc4random, getrandom, getentropy, etc?
 
-In this specific case it is a very degenerate case as there was only one
-set of changes.
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 3236a4918a..5030d3c70b 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -257,6 +257,9 @@ ifeq ($(uname_S),FreeBSD)
+>  	HAVE_PATHS_H = YesPlease
+>  	HAVE_BSD_SYSCTL = YesPlease
+>  	HAVE_BSD_KERN_PROC_SYSCTL = YesPlease
+> +	HAVE_ARC4RANDOM = YesPlease
+> +	HAVE_GETRANDOM = YesPlease
+> +	HAVE_GETENTROPY = YesPlease
 
+So here we claim to support a whole bunch of methods, but in practice,
+we only use arc4random, because these are all in an #elif chain:
 
-The one difference from my work flow and the one you described
-is that I haven't reach the point of signing my pull requests.
+> +int csprng_bytes(void *buf, size_t len)
+> +{
+> +#if defined(HAVE_ARC4RANDOM)
+> +	arc4random_buf(buf, len);
+> +	return 0;
+> +#elif defined(HAVE_GETRANDOM)
 
+though we still respect the others in other places, like including
+headers that we don't end up using:
 
-In general and especially this cycle I intend to have multiple
-changesets each with their own merge commit delineating them.  Short of
-being informed of a better way to work.
+> +#ifdef HAVE_GETRANDOM
+> +#include <sys/random.h>
+> +#endif
 
+If csprng_bytes() could fallback between methods based on runtime
+errors, it would make sense to me to allow support for multiple methods
+to be declared. But without that, it just seems to invite confusion (and
+I am not sure runtime fallbacks are really worth the trouble).
 
-I suspect the conversation is simply because the pull request was
-sufficiently degenerate that things just looked really weird.  But I am
-open to learning otherwise.
+> +int csprng_bytes(void *buf, size_t len)
+> +{
+> +#if defined(HAVE_ARC4RANDOM)
+> +	arc4random_buf(buf, len);
+> +	return 0;
 
-Eric
+OK, presumably this one can't return an error, which is nice.
 
+> +#elif defined(HAVE_GETRANDOM)
+> +
+> +	ssize_t res;
+> +	char *p = buf;
+> +	while (len) {
+> +		res = getrandom(p, len, 0);
+> +		if (res < 0)
+> +			return -1;
+> +		len -= res;
+> +		p += res;
+> +	}
+> +	return 0;
 
+Do we ever have to worry about a "0" return from getrandom()? I'd expect
+it to block rather than return 0, but what I'm wondering is if we could
+ever be in a situation where we fail to make progress and loop
+infinitely.
 
+The manpage says that reads up to 256 bytes will always return the full
+output and never be interrupted. So for the caller you add in patch 2,
+we wouldn't need this loop. However, since cspring_bytes() is generic,
+being defensive makes sense. But in that case, do we need to handle
+EINTR when it returns -1?
 
+> +#elif defined(HAVE_GETENTROPY)
+> +	int res;
+> +	char *p = buf;
+> +	while (len) {
+> +		/* getentropy has a maximum size of 256 bytes. */
+> +		size_t chunk = len < 256 ? len : 256;
+> +		res = getentropy(p, chunk);
+> +		if (res < 0)
+> +			return -1;
+> +		len -= chunk;
+> +		p += chunk;
+> +	}
+> +	return 0;
+
+Heh, I see that getentropy() punted on all of those questions above by
+just insisting you ask for 256 bytes at a time. Cute solution. ;)
+
+> +#elif defined(HAVE_RTLGENRANDOM)
+> +	if (!RtlGenRandom(buf, len))
+> +		return -1;
+> +	return 0;
+
+I have no comment on this one. :)
+
+> +#else
+> +	ssize_t res;
+> +	char *p = buf;
+> +	int fd, err;
+> +	fd = open("/dev/urandom", O_RDONLY);
+> +	if (fd < 0)
+> +		return -1;
+> +	while (len) {
+> +		res = xread(fd, p, len);
+> +		if (res < 0) {
+> +			err = errno;
+> +			close(fd);
+> +			errno = err;
+> +			return -1;
+> +		}
+> +		len -= res;
+> +		p += res;
+> +	}
+> +	close(fd);
+> +	return 0;
+> +#endif
+> +}
+
+This loop is basically read_in_full(), except that it doesn't treat a
+"0" return as an EOF. I'm not sure if that's intentional (because we
+want to keep trying on a 0 return, though I'd expect the read to block
+in such a case), or if it would be an improvement (because it would
+prevent us from infinite looping if /dev/urandom wanted to signal EOF).
+
+-Peff
