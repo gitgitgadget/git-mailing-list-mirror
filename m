@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F34B3C433EF
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:03:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E9FDC433F5
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:03:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D512761040
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:03:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61A8461B39
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:03:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236073AbhKPMGK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 07:06:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33738 "EHLO
+        id S235695AbhKPMGb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 07:06:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235751AbhKPMEg (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235706AbhKPMEg (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 16 Nov 2021 07:04:36 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52CE6C06122A
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:45 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id r8so36984856wra.7
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:45 -0800 (PST)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C033C061228
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:43 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id k37-20020a05600c1ca500b00330cb84834fso1733897wms.2
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GZey/9m9V78NBW8cceKwNGYYQTDQ7ngcgVlzXdWjcu8=;
-        b=b+vpS8zRPHsuySrm2DvFAIKDFlhFwELyaXnRt2hTgw2Pn+dyp6qr5tdZNr3IyvVLQE
-         ubLn2C0s6yNjJQJY7YuqzpbNTfO4AzM5NqkmQxL41sNsuik1G0QuS97In1IYQloCrc0W
-         o5CuvBHDCRk9p34kj8sed+KkqNt+46PoRlGfMShvhKXonNJHLfIGOLdEcoHi5glhOt4Y
-         TRJl8SGG90s5Mp5UAhXCPPCz0Jt/iDOnScbRgTaQzaqTisP3RoNVrNyUTNqhUo3HHPuN
-         VuHr7rXIWbp2HGotCW3/KaFCM1qGYH6FMFHapan5lvfMypYgLfAZLTeITV62Jd5ZxB9E
-         zX4Q==
+        bh=hInNR+nhuE/zSD4l17a7t44fs7UBSgKVKtmZ2RaI0cQ=;
+        b=QG9QoO2UbKV6sSung8ImfQvL8JmxFLrFjxKo8Uo7cAmQcCnBzyGb1swJfRte8SzPDT
+         489FvIhrSBOlxgM3eokDRx2dtOHYO9v8B0dxg+CivYzA4KzdjX41Dc6U2mrbr1Oyjom2
+         FphJyreLp42rr0WAMPnuUkcM6L/YKYFoA3Tw1eYokWCYfhFEBPtDwB7d0qjREFIPsafe
+         rpWGpJgzCUmIQGGDg7Ue6PXo1yUv7n+iI0T+aPDF3jG5ilUT6vD6jxb8ddXhJY/GU2a7
+         J+qqN/v8ibLZAWOVi7u2eyoNSxDXLpTgyj/9DoIHIHKTLcS5C+d2PdmGD/0hGnWPCd0f
+         mAnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GZey/9m9V78NBW8cceKwNGYYQTDQ7ngcgVlzXdWjcu8=;
-        b=7FAbW9SnqB9kxR9Z4Q4lXeLVgBpmyJFyb9r62AuTrasfclh5KkGVpcTpEF3/17PYz5
-         mCGXE4ii2dS3AzUmErQMFgOUh9HdL4O37IX25gC6AEsQJBDEPOsP5u9Hcx+D3nQC7GwK
-         NGz+3NV/H+i6vpaarRpS4Q+JQo/2B+sQ2laGfjZqsgUiK86KwxHa60w4WHqnlZde0BLP
-         5g0QigPpOoxiCaXWKRbp3jfanmPcvO6mV1F/ZYfJQnuFnwU/Iy/oE3lkSjwip4lPDvR7
-         yRbidw1i8hXoaPtHMm8Ugv4j1Ew0DQLdVLXIXpYKjSJI2IiVzWYQDRqAvbKvAGWwOS4O
-         9lBA==
-X-Gm-Message-State: AOAM532cokiFGoq8ZurwbnpBFn8ksh9CYyGCAeA7ikIuSPlvbL/vpVCy
-        0XcIwtBZ2vhvWtdgARWy4Ycm21OB7DAUfw==
-X-Google-Smtp-Source: ABdhPJx9m4xmQ0ZOkuFaJLg2fcFHTf83ZRu2sYQcT+AxxfkPeu74/+XyFh5GnHRNI06B/0XUI2uKmg==
-X-Received: by 2002:a05:6000:1568:: with SMTP id 8mr8722037wrz.76.1637064043627;
-        Tue, 16 Nov 2021 04:00:43 -0800 (PST)
+        bh=hInNR+nhuE/zSD4l17a7t44fs7UBSgKVKtmZ2RaI0cQ=;
+        b=79cmLfLh4+b4g0jfEh/cfvyF/c7he5v70ciqQ1w3cOH9WQ2qTzZUGCfajcxoL8PFZ0
+         eqJDnDU15a8C//658m7oU/oXrUqAp14SGf2Kegtyo2EHI4s07Sg1XLpbtfonQiV0XWq9
+         k9y/EY1Gw0ySb4u1tCU5Vu/Nm9i48AaULvz1zmLthLlShSu7dLDg9D9o1LJuIjFRFCiJ
+         Q9GAMTaVDHkAVzN5HZUZsZZbPCQ9nFOPwI864tifLIunGRiDiNUdI8s30x/8DVc3csnV
+         U+r27HFofluJndrQVMG71QUp2ENefQPHTgop+JT2QVVLXxlRT5rTgTZlRcGdjyhbN/P8
+         BwDw==
+X-Gm-Message-State: AOAM531EUJmRYrYhDCVUIsg/kKwG2tEvCnCPwiDGdtC8r5v//umuu/lM
+        73R580E+G5RfDRw+f9/lwGSQv6LGpXLJUQ==
+X-Google-Smtp-Source: ABdhPJwn7fmVssOBCNlQc3l4JyFl//mwEKZ89RpaAPEFap82cc50BJ4Vki4LfqUtgTWSMbgUlsJuTg==
+X-Received: by 2002:a7b:c841:: with SMTP id c1mr68958469wml.80.1637064041916;
+        Tue, 16 Nov 2021 04:00:41 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k37sm2427922wms.21.2021.11.16.04.00.42
+        by smtp.gmail.com with ESMTPSA id k37sm2427922wms.21.2021.11.16.04.00.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Nov 2021 04:00:43 -0800 (PST)
+        Tue, 16 Nov 2021 04:00:41 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Mike Hommey <mh@glandium.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 11/23] Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
-Date:   Tue, 16 Nov 2021 13:00:11 +0100
-Message-Id: <patch-v3-11.23-b020f8e3257-20211116T114334Z-avarab@gmail.com>
+Subject: [PATCH v3 09/23] Makefile: correct "GIT-PERL-{DEFINES,HEADER}" dependency graph
+Date:   Tue, 16 Nov 2021 13:00:09 +0100
+Message-Id: <patch-v3-09.23-1ece3160915-20211116T114334Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.795.g1e9501ab396
 In-Reply-To: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
 References: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com> <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
@@ -73,112 +73,134 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the hardcoding of @@GIT_VERSION@@ in generated *.perl scripts
-to instead shell out to "git version". This means that we can stop
-re-building during development every time the HEAD changes.
+Fix several small issues with the dependency graph of the generated
+"GIT-PERL-DEFINES" and "GIT-PERL-HEADER" files:
 
-These codepaths are not "hot", so shelling out to get the version
-shouldn't matter to users, in the one case where it potentially would
-in send-email (the loop for each E-Mail we send) we now cache the
-value, so we'll only retrieve it once.
+1. Don't have "GIT-PERL-HEADER" depend on the "Makefile". That was a
+   lazy way to over-declare the dependencies added in
+   f6a0ad4be71 (Makefile: generate Perl header from template file,
+   2018-04-10). Let's correct our dependency graph instead.
+
+2. Don't have $(SCRIPT_PERL_GEN) (such as "git-send-email") depend on
+   GIT-BUILD-OPTIONS. Let's instead use GIT-PERL-DEFINES.
+
+   The reason for depending on "GIT-BUILD-OPTIONS" was to trigger a
+   re-build if NO_PERL=Y was defined. We can instead add that variable
+   to "PERL_DEFINES", and have "GIT-PERL-DEFINES" created and updated
+   if "NO_PERL=Y" is defined.
+
+3. Due to #2 we'll need to have GIT-PERL-DEFINES be generated even
+   under NO_PERL, since that variable will be used by the
+   "unimplemented.sh" script.
+
+4. Don't depend on $(gitexecdir), $(perllibdir) and $(localedir),
+   instead depend on the $(*_relative_SQ) versions of those.
+
+   The latter is what we'll actually use, while it's unlikely to
+   matter in practice (we'd just skip re-building these under
+   RUNTIME_PREFIX if the relative path was the same) it makes the code
+   easier to read.
+
+   That's because this brings us to a 1=1 mapping of these variables
+   and what's subsequently used in the "GIT-PERL-DEFINES",
+   "GIT-PERL-HEADER" and "perl/build/lib/%.pm" rules below.
+
+5. We don't need the substitution of " " for ":" added in
+   07d90eadb50 (Makefile: add Perl runtime prefix support,
+   2018-04-10), let's drop it. This doesn't matter for the correctness
+   of these files, because unlike GIT-BUILD-OPTIONS nothing is
+   consuming them except the Makefile itself.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile            | 2 +-
- git-cvsserver.perl  | 6 +++---
- git-send-email.perl | 7 ++-----
- git-svn.perl        | 2 +-
- 4 files changed, 7 insertions(+), 10 deletions(-)
+ Makefile | 42 +++++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index c698c5b058a..8205614c6ec 100644
+index ab78f8dd42e..361abff2402 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2333,7 +2333,7 @@ PERL_HEADER_TEMPLATE = perl/header_templates/runtime_prefix.template.pl
- perl_localedir_SQ =
- endif
+@@ -2288,10 +2288,14 @@ git.res: git.rc GIT-VERSION-FILE GIT-PREFIX
+ 	    $(shell echo $(GIT_VERSION) 0 0 0 0 | tr '.a-zA-Z-' ' '))) \
+ 	  -DGIT_VERSION="\\\"$(GIT_VERSION)\\\"" -i $< -o $@
  
--$(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
-+$(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER
+-# This makes sure we depend on the NO_PERL setting itself.
+-$(SCRIPT_PERL_GEN): GIT-BUILD-OPTIONS
++# Under NO_PERL=Y we'll still make GIT-PERL-DEFINES. We need to depend
++# on NO_PERL=Y itself for creating "unimplemented.sh" scripts.
++PERL_DEFINES =
++$(SCRIPT_PERL_GEN): GIT-PERL-DEFINES
+ 
+ ifdef NO_PERL
++PERL_DEFINES += $(NO_PERL)
++
+ $(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
  	$(QUIET_GEN) \
- 	sed -e '1{' \
- 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 64319bed43f..76f0e8bbbef 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -26,8 +26,6 @@
- use File::Basename;
- use Getopt::Long qw(:config require_order no_ignore_case);
+ 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+@@ -2300,22 +2304,26 @@ $(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+ else # NO_PERL
+-# Used for substitution in Perl modules. Disabled when using RUNTIME_PREFIX
+-# since the locale directory is injected.
++# The localedir is only used in Perl modules if !NO_GETTEXT
++ifndef NO_GETTEXT
+ perl_localedir_SQ = $(localedir_SQ)
++endif
  
--my $VERSION = '@@GIT_VERSION@@';
+ PERL_HEADER_TEMPLATE = perl/header_templates/fixed_prefix.template.pl
+-PERL_DEFINES =
++
+ PERL_DEFINES += $(PERL_PATH_SQ)
+ PERL_DEFINES += $(PERLLIB_EXTRA_SQ)
+ PERL_DEFINES += $(perllibdir_SQ)
+ PERL_DEFINES += $(RUNTIME_PREFIX)
+ PERL_DEFINES += $(NO_PERL_CPAN_FALLBACKS)
+ PERL_DEFINES += $(NO_GETTEXT)
+-PERL_DEFINES += $(gitexecdir)
+-PERL_DEFINES += $(perllibdir)
+-PERL_DEFINES += $(localedir)
+-PERL_DEFINES := $(subst $(space),:,$(PERL_DEFINES))
++ifdef RUNTIME_PREFIX
++PERL_DEFINES += $(gitexecdir_relative_SQ)
++PERL_DEFINES += $(perllibdir_relative_SQ)
++PERL_DEFINES += $(localedir_relative_SQ)
++else
++PERL_DEFINES += $(perllocaledir_SQ)
++endif
+ 
+ ifdef RUNTIME_PREFIX
+ PERL_HEADER_TEMPLATE = perl/header_templates/runtime_prefix.template.pl
+@@ -2337,14 +2345,7 @@ $(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+ 
+-GIT-PERL-DEFINES: FORCE
+-	@FLAGS='$(PERL_DEFINES)'; \
+-	    if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
+-		echo >&2 "    * new perl-specific parameters"; \
+-		echo "$$FLAGS" >$@; \
+-	    fi
 -
- my $log = GITCVS::log->new();
- my $cfg;
+-GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
++GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES
+ 	$(QUIET_GEN) \
+ 	INSTLIBDIR='$(perllibdir_SQ)' && \
+ 	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
+@@ -2370,6 +2371,13 @@ git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
+ 	mv $@+ $@
+ endif # NO_PERL
  
-@@ -126,7 +124,9 @@
-     or die $usage;
++GIT-PERL-DEFINES: FORCE
++	@FLAGS='$(PERL_DEFINES)'; \
++	    if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
++		echo >&2 "    * new perl-specific parameters"; \
++		echo "$$FLAGS" >$@; \
++	    fi
++
+ # This makes sure we depend on the NO_PYTHON setting itself.
+ $(SCRIPT_PYTHON_GEN): GIT-BUILD-OPTIONS
  
- if ($state->{version}) {
--    print "git-cvsserver version $VERSION\n";
-+    my $version = qx[git version];
-+    $version =~ s/^(git)\b/$1-cvsserver/;
-+    print $version;
-     exit;
- }
- if ($state->{help}) {
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 5262d88ee32..041cd2fb96d 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1468,6 +1468,7 @@ sub file_name_is_absolute {
- #
- # If an error occurs sending the email, this just dies.
- 
-+my $gitversion;
- sub send_message {
- 	my @recipients = unique_email_list(@to);
- 	@cc = (grep { my $cc = extract_valid_address_or_die($_);
-@@ -1478,11 +1479,6 @@ sub send_message {
- 	@recipients = unique_email_list(@recipients,@cc,@initial_bcc);
- 	@recipients = (map { extract_valid_address_or_die($_) } @recipients);
- 	my $date = format_2822_time($time++);
--	my $gitversion = '@@GIT_VERSION@@';
--	if ($gitversion =~ m/..GIT_VERSION../) {
--	    $gitversion = Git::version();
--	}
--
- 	my $cc = join(",\n\t", unique_email_list(@cc));
- 	my $ccline = "";
- 	if ($cc ne '') {
-@@ -1497,6 +1493,7 @@ sub send_message {
- Message-Id: $message_id
- ";
- 	if ($use_xmailer) {
-+		$gitversion ||= Git::version();
- 		$header .= "X-Mailer: git-send-email $gitversion\n";
- 	}
- 	if ($in_reply_to) {
-diff --git a/git-svn.perl b/git-svn.perl
-index be987e316f9..727431412be 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -9,7 +9,6 @@
- 		$_revision $_repository
- 		$_q $_authors $_authors_prog %users/;
- $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
--$VERSION = '@@GIT_VERSION@@';
- 
- use Carp qw/croak/;
- use File::Basename qw/dirname basename/;
-@@ -47,6 +46,7 @@
- 	command_close_bidi_pipe
- 	get_record
- );
-+$VERSION = Git::version();
- 
- BEGIN {
- 	Memoize::memoize 'Git::config';
 -- 
 2.34.0.795.g1e9501ab396
 
