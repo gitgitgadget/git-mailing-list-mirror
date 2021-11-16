@@ -2,163 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33F61C433EF
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 07:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93EC5C433F5
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 07:24:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 01C0D61B71
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 07:13:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6859361BD3
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 07:24:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230201AbhKPHQJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 02:16:09 -0500
-Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:42128 "EHLO
-        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S230232AbhKPHOK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 02:14:10 -0500
-Received: from localhost (SCRUBBING-BUBBLES.MIT.EDU [18.9.64.11])
-        (authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 1AG7AvgW017069;
-        Tue, 16 Nov 2021 02:10:58 -0500
-Date:   Tue, 16 Nov 2021 02:10:57 -0500 (EST)
-From:   Anders Kaseorg <andersk@mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org,
+        id S230342AbhKPH1X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 02:27:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55026 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230244AbhKPH1C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 02:27:02 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37A44C061570
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 23:24:05 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id m20so37664728edc.5
+        for <git@vger.kernel.org>; Mon, 15 Nov 2021 23:24:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=7wwSfTSj9p6moJsDxYozMPGDAb6pCK4NEBJDH9NN/9E=;
+        b=BY5V3JYSZIAzYWmtm6anMIyCBGGqszEFUeqCzoQzA+aRSQiv/6xPG68Xwp8UTvkxwE
+         vKT9jfRgV+JfKyUhkqfnCg8qXEp/JcF7UTO/kM7mdCi+SwMfG1NypALZk71a1zr+btQH
+         l6Qld9G15dLazOihBbCQN+MG5Djh3876qPrFSAMvFP9tmrhd4JfLx8r/OtCG8WoPCvAi
+         6B1/mxvOWj54acpcou6+NF+opZ74e2dP8HAIA6ytQBD2bdbiyPGnCvehCfObcxC5+ZNo
+         8SKJG9+cTZub7tj87m44MQ2TfgpPFFMmCHSMIoLSaiA3GkQlXn9js1p9Nc58ZJ0Zx7gM
+         sCKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=7wwSfTSj9p6moJsDxYozMPGDAb6pCK4NEBJDH9NN/9E=;
+        b=yw3nyP4uxJdM9LsJS5HBZNEms/mgV5Qk3KBT2UwW5kJD2kGMG8DS3HImza8LhsR8Na
+         WHjGKmciTCtZ50PFNiD6Fw3kX7jDAJcPUxXIHrSG5gnvXs7hDb1wNJbnIKfUHoJKnH66
+         wIeVnmOdACRhnDYY1fV5vOlVC4d2p72m/MqH1ay6iqsnljos85fAkYTeJ0KfGNVwOoRN
+         mzB76iVOnfcagtyRcGSN4AiKq9YIoCebUuHS6ji5WcU+TTz7Uc7XQaZc8U+0A+Y3FdAt
+         ghoU8jiguq5hlgywKYT2j9fl63PiTPm0mQTPB7IP+chCpUmNybzvci9yeKh+qfDRMOh8
+         Yrvg==
+X-Gm-Message-State: AOAM530Gtewm190Gk1OOCk/UTqN73GAHPjNP1gXPU7aZZxKz1FTRBrpS
+        4CBVyzroLBYNjodT7k7OF9NO+xISsuW6nw==
+X-Google-Smtp-Source: ABdhPJyw4P5wbEugtYasXVWj20NonOpoAZ5eL98M7fjWlqWCWb4EEeeTMnsAO4uxOSYe5emTWP6DNw==
+X-Received: by 2002:a17:906:6a18:: with SMTP id qw24mr7253927ejc.118.1637047443542;
+        Mon, 15 Nov 2021 23:24:03 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id t20sm2567902edv.81.2021.11.15.23.24.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Nov 2021 23:24:03 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mmsp0-001I7s-Bh;
+        Tue, 16 Nov 2021 08:24:02 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Neeraj-Personal <nksingh85@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>,
-        Andreas Heiduk <andreas.heiduk@mathema.de>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v6 1/8] fetch: lowercase error messages
-In-Reply-To: <xmqqczn0d6er.fsf@gitster.g>
-Message-ID: <alpine.DEB.2.21.999.2111160206440.105644@scrubbing-bubbles.mit.edu>
-References: <20211113033358.2179376-1-andersk@mit.edu> <20211113033358.2179376-2-andersk@mit.edu> <xmqqczn0d6er.fsf@gitster.g>
-User-Agent: Alpine 2.21.999 (DEB 260 2018-02-26)
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Christoph Hellwig <hch@lst.de>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
+Subject: Re: [PATCH v9 2/9] tmp-objdir: disable ref updates when replacing
+ the primary odb
+Date:   Tue, 16 Nov 2021 08:23:21 +0100
+References: <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
+ <pull.1076.v9.git.git.1637020263.gitgitgadget@gmail.com>
+ <71817cccfb9573929723a34fe9fb0db72498d4b9.1637020263.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <71817cccfb9573929723a34fe9fb0db72498d4b9.1637020263.git.gitgitgadget@gmail.com>
+Message-ID: <211116.867dd8r2b1.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="152177472-673264739-1637046657=:105644"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---152177472-673264739-1637046657=:105644
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Mon, Nov 15 2021, Neeraj Singh via GitGitGadget wrote:
 
-On Tue, 16 Nov 2021, Junio C Hamano wrote:
-> > Documentation/CodingGuidelines says =E2=80=9Cdo not end error messages =
-with a
-> > full stop=E2=80=9D and =E2=80=9Cdo not capitalize the first word=E2=80=
-=9D.  Reviewers requested
-> > updating the existing messages to comply with these guidelines prior to
-> > the following patches.
->=20
-> Thanks.  Whether reviewers requested or you thought of it on your
-> own, separating such a preliminary clean-up into its own patch would
-> be a good idea, especially if the later patches need to update (some
-> of) them.
+>  	/*
+>  	 * This object store is ephemeral, so there is no need to fsync.
+>  	 */
+> -	int will_destroy;
+> +	unsigned int will_destroy : 1;
+>  
+>  	/*
+>  	 * Path to the alternative object store. If this is a relative path,
 
-It was your request; I just mentioned it in case other reviewers wonder=20
-why this belongs in this topic.
-
-https://public-inbox.org/git/xmqq8rxvwp4b.fsf@gitster.g/
-
-> The approach chosen (consistently) in this patch is to
->=20
->  (1) turn them into a (semi) single sentence, concatenated with ';'
->=20
->  (2) as a side effect of not being a free-standing sentence anymore,
->      the second and subsequent sentences in the original, that are
->      now just pieces in a single sentence separated with ';', do not
->      get capitalized, and
->=20
->  (3) the sentence as a whole lacks the full-stop, just like a single
->      sentence message.
->=20
-> I think we are fine with these rules, especially given that these
-> multi-sentence messages are not the main part of this topic touches
-> and are not the primary focus of this topic anyway. =20
-
-I guess I should add that there are a few messages I left alone:=20
-refuse_unconfigured_deny_msg and=20
-refuse_unconfigured_deny_delete_current_msg in builtin/receive-pack.c=20
-(patch 2/8).  Not sure if they count as =E2=80=9Cerror messages=E2=80=9D, b=
-ut these=20
-multi-paragraph messages are too long to comfortably apply this approach.
-
-Now I see that I missed a few others.  This could be squashed into the=20
-first three patches:
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index f373252490..f3c7c057d0 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1783,7 +1783,7 @@ static int fetch_failed_to_start(struct strbuf *out, =
-void *cb, void *task_cb)
- =09struct parallel_fetch_state *state =3D cb;
- =09const char *remote =3D task_cb;
-=20
--=09state->result =3D error(_("Could not fetch %s"), remote);
-+=09state->result =3D error(_("could not fetch %s"), remote);
-=20
- =09return 0;
- }
-@@ -1838,7 +1838,7 @@ static int fetch_multiple(struct string_list *list, i=
-nt max_children)
- =09=09=09if (verbosity >=3D 0)
- =09=09=09=09printf(_("Fetching %s\n"), name);
- =09=09=09if (run_command_v_opt(argv.v, RUN_GIT_CMD)) {
--=09=09=09=09error(_("Could not fetch %s"), name);
-+=09=09=09=09error(_("could not fetch %s"), name);
- =09=09=09=09result =3D 1;
- =09=09=09}
- =09=09=09strvec_pop(&argv);
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index d72058543e..70b4e23a26 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2495,9 +2495,9 @@ int cmd_receive_pack(int argc, const char **argv, con=
-st char *prefix)
- =09argc =3D parse_options(argc, argv, prefix, options, receive_pack_usage,=
- 0);
-=20
- =09if (argc > 1)
--=09=09usage_msg_opt(_("Too many arguments."), receive_pack_usage, options)=
-;
-+=09=09usage_msg_opt(_("too many arguments"), receive_pack_usage, options);
- =09if (argc =3D=3D 0)
--=09=09usage_msg_opt(_("You must specify a directory."), receive_pack_usage=
-, options);
-+=09=09usage_msg_opt(_("you must specify a directory"), receive_pack_usage,=
- options);
-=20
- =09service_dir =3D argv[0];
-=20
-diff --git a/branch.c b/branch.c
-index 3a7d205fa4..0bea1335ae 100644
---- a/branch.c
-+++ b/branch.c
-@@ -64,7 +64,7 @@ int install_branch_config(int flag, const char *local, co=
-nst char *origin, const
- =09if (skip_prefix(remote, "refs/heads/", &shortname)
- =09    && !strcmp(local, shortname)
- =09    && !origin) {
--=09=09warning(_("Not setting branch %s as its own upstream."),
-+=09=09warning(_("not setting branch %s as its own upstream"),
- =09=09=09local);
- =09=09return 0;
- =09}
-@@ -116,7 +116,7 @@ int install_branch_config(int flag, const char *local, =
-const char *origin, const
-=20
- out_err:
- =09strbuf_release(&key);
--=09error(_("Unable to write upstream branch configuration"));
-+=09error(_("unable to write upstream branch configuration"));
-=20
- =09advise(_(tracking_advice),
- =09       origin ? origin : "",
-
-Anders
---152177472-673264739-1637046657=:105644--
+Why add this as an int in the preceding commit and turn it "unsigned :
+1" here?
