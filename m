@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61FDCC433F5
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E900BC433FE
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:02:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 497FF61040
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:02:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD45661B31
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:02:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235581AbhKPMFl (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S236027AbhKPMFl (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 16 Nov 2021 07:05:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33598 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235814AbhKPMEd (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235815AbhKPMEd (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 16 Nov 2021 07:04:33 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 202CEC06121D
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D114BC06121E
         for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:39 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id g191-20020a1c9dc8000000b0032fbf912885so2183175wme.4
+Received: by mail-wr1-x429.google.com with SMTP id d5so37076226wrc.1
         for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:00:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=a+3T1NYWnCm3oc8E6iQ2ln3ogGtXMv1bYmNy/z1NChQ=;
-        b=TnNESP+xtt2NEKgmtzF5OiTmu2g/Qviv4J4nNE5s3cbya9DiExW6m3AMV88mlR+2OL
-         FSWmfG3PErSSLPVwTs6x1gD+fDb355ZQmM358A0sJyjNNIzLVjMz/EjxpyKS1gH15+lf
-         v7K/Xmy+rEUru2faWmt8gn+bcEQg3m7DEkb/DYTkXyNkxRKDp72HdVIYLKHtJKS3Qyiw
-         FsCO3PNo6YH+gN23pTvhjAQ9qnCTZj6DHuw9O898pVbSwDZAS8b3NpQMDLFycWfq+9Gd
-         U5Qwv4fBXy8u/D6KKCTTghsyYjO+2mfjZNuip0XtTh6hJTd9Z1blSrQSvXzafqfUS+S6
-         KFdA==
+        bh=vzWaOCkAyT1oTOILPGPWZBp90e8wv/Ne5RQ32RxgOAM=;
+        b=axaYZPpEQhW05nTanvasnipKYq727puFWQVfpnLwwZ/NMuezzCQrytJ+kiqjX0f900
+         fjIeLtn6lY/rwYMXJff/MKECcg8xG/wWauMsJf7ztHx1xQJ5xVgG8EUayU4Uiil936br
+         SM1HkWgW4zmdtqENGxqskp7x9AFs6Jd+uAEZ4jvyQvmO0mMZoNhCHl4vWpYKtkwP1QoM
+         2gxRk9K0V4V0+8tMToDZRIohvx/gDhWJzGqltDYRSjDZ1voqXBU2Us2kbyzlzcneLxxt
+         VhUURqhA8U3RojQFN1jO2C7R+4k6Mn/3Du91W0IksmsaCoOJikq7b/RVLKEQKvq1hGdr
+         ZWzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=a+3T1NYWnCm3oc8E6iQ2ln3ogGtXMv1bYmNy/z1NChQ=;
-        b=BUk87kK13MJSjW0l6lpYPVvgZtPQEjHGFuQi7nTOFhoY0qC1nIB9c8aYWcTwCQeWA+
-         c6C2JuIgWc5KygehiK/+bogU34UarKlwm8Vd+z1kIe9+wUa+2/HcRdgQtR8BXxfLgXoD
-         uDVPTyah5CO1RDBUsrmLmZ08mYPJSFhrlixpI5vM5Aus5+AnlNNHiTZ/fHtcnYDrTIl2
-         Ap3g5J4diK/dr9NBA2vZ2xDonecFaMtPnPxOCloAcMlcGG7iK1boQXnTO/m1x92Kzvnw
-         CCXqfyRIdP8yRqXG2I2d01HNQ31u00dpvVe29fyJmREJJvEtObzC5m2ZvrcXVrUPHGcx
-         klQA==
-X-Gm-Message-State: AOAM530QOxv7dk4OF99GJzzVEA2Xo+MJTeJ33tzWBXkL/srI3TiYA6l/
-        L8MEYP0MMR/nC17s6iciBzslji56x72yQQ==
-X-Google-Smtp-Source: ABdhPJwXMvXz4InA0iDVl7pobRpk7aMfacUCSoyI/IS1lUeL1dYaoEtJUZ6/ogXgjftVRb4J+5YVCA==
-X-Received: by 2002:a05:600c:4fca:: with SMTP id o10mr6997062wmq.175.1637064037483;
-        Tue, 16 Nov 2021 04:00:37 -0800 (PST)
+        bh=vzWaOCkAyT1oTOILPGPWZBp90e8wv/Ne5RQ32RxgOAM=;
+        b=cCi7NR/qERsYYMk0YgAok3F2Ux923at63UaiREppe6v5GhUhoQDw5g8UTdZNQ/TXPe
+         J32mIDtqK5EygQgPSyQP7E/NMCfHIxSnjOyWZvljrnVaZa4o9Rv3PZ6dcsgOxXlIOsW5
+         6FsW3ZEwB/ffYOw6LPj880uQRLZmoBGyw57tiWzgZpS5i8OWpOMePX2wsL0+jCpJpFxO
+         qzAo7qgyAla/pVizPJZruXSO0b/Ix/Im990/uEEkUO8F0CaEPygX5lysBkZyP7hJpgaK
+         bz/0Ryy0TAHgOCLeiAT+aLLPfCdWF+Hj5eIKxLGCBa3Mm3u3zPEDYbpfUb265UQCyLCF
+         tsPQ==
+X-Gm-Message-State: AOAM530xWbetQcHUoQFZpX6d+TiebbdJQBxcUy70jmbJDDz2Mpw1ORly
+        W8tC1121QAgEhVE+RplWCvNsZ5fo4l4hug==
+X-Google-Smtp-Source: ABdhPJyYi5fjuSS4TzinQdb7kxNXgFqlYrGAPyfUEEF6lMPdr21R8ivm9jd5F9+KEoL2or9IdZ5Ofg==
+X-Received: by 2002:a5d:59ab:: with SMTP id p11mr8432535wrr.340.1637064038236;
+        Tue, 16 Nov 2021 04:00:38 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k37sm2427922wms.21.2021.11.16.04.00.36
+        by smtp.gmail.com with ESMTPSA id k37sm2427922wms.21.2021.11.16.04.00.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Nov 2021 04:00:36 -0800 (PST)
+        Tue, 16 Nov 2021 04:00:37 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Mike Hommey <mh@glandium.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 03/23] Makefile: use "=" not ":=" for po/* and perl/*
-Date:   Tue, 16 Nov 2021 13:00:03 +0100
-Message-Id: <patch-v3-03.23-510499d18ba-20211116T114334Z-avarab@gmail.com>
+Subject: [PATCH v3 04/23] Makefile: clean perl/build/ even with NO_PERL=Y
+Date:   Tue, 16 Nov 2021 13:00:04 +0100
+Message-Id: <patch-v3-04.23-37f3591bcca-20211116T114334Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.795.g1e9501ab396
 In-Reply-To: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
 References: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com> <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
@@ -73,57 +73,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change these variable definitions from being simply-expanded to be
-recursively expanded instead. I.e. they'll be lazily expanded when
-used.
+Fix a regression in 499c29394ce (Makefile: allow building without
+perl, 2009-04-03) where we'd stop cleaning the perl/* directory
+because NO_PERL was defined, thus leaving behind litter if the flag at
+"clean" time didn't match that of build time.
 
-I added these in 5e9637c6297 (i18n: add infrastructure for translating
-Git with gettext, 2011-11-18) and 20d2a30f8ff (Makefile: replace
-perl/Makefile.PL with simple make rules, 2017-12-10), the reason for
-using ":=" over "=" was that I didn't know the difference in 2011 (I
-think I copied some POC code), and in 2017 I used the 2011 commit for
-reference.
+In 499c29394ce this was done to avoid relying on the perl/Makefile.PL,
+but since my 20d2a30f8ff (Makefile: replace perl/Makefile.PL with
+simple make rules, 2017-12-10) we can clean things in that directory
+unconditionally.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index 06405825a24..6b77702e102 100644
+index 6b77702e102..a71fba15e30 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2672,11 +2672,11 @@ po/git.pot: $(GENERATED_H) FORCE
- pot: po/git.pot
- 
- ifdef NO_GETTEXT
--POFILES :=
--MOFILES :=
-+POFILES =
-+MOFILES =
- else
--POFILES := $(wildcard po/*.po)
--MOFILES := $(patsubst po/%.po,po/build/locale/%/LC_MESSAGES/git.mo,$(POFILES))
-+POFILES = $(wildcard po/*.po)
-+MOFILES = $(patsubst po/%.po,po/build/locale/%/LC_MESSAGES/git.mo,$(POFILES))
- 
- all:: $(MOFILES)
- endif
-@@ -2685,10 +2685,10 @@ po/build/locale/%/LC_MESSAGES/git.mo: po/%.po
- 	$(QUIET_MSGFMT)mkdir -p $(dir $@) && $(MSGFMT) -o $@ $<
- 
+@@ -3234,6 +3234,7 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) $(HCC)
+ 	$(RM) -r bin-wrappers $(dep_dirs) $(compdb_dir) compile_commands.json
+ 	$(RM) -r po/build/
++	$(RM) -r perl/build/
+ 	$(RM) *.pyc *.pyo */*.pyc */*.pyo $(GENERATED_H) $(ETAGS_TARGET) tags cscope*
+ 	$(RM) -r .dist-tmp-dir .doc-tmp-dir
+ 	$(RM) $(GIT_TARNAME).tar.gz
+@@ -3242,7 +3243,6 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) Documentation/GIT-EXCLUDED-PROGRAMS
  ifndef NO_PERL
--LIB_PERL := $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/Git/*/*/*.pm)
--LIB_PERL_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
--LIB_CPAN := $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
--LIB_CPAN_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_CPAN))
-+LIB_PERL = $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/Git/*/*/*.pm)
-+LIB_PERL_GEN = $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
-+LIB_CPAN = $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
-+LIB_CPAN_GEN = $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_CPAN))
- 
- perl/build/lib/%.pm: perl/%.pm GIT-PERL-DEFINES
- 	$(QUIET_GEN)mkdir -p $(dir $@) && \
+ 	$(MAKE) -C gitweb clean
+-	$(RM) -r perl/build/
+ endif
+ 	$(MAKE) -C templates/ clean
+ 	$(MAKE) -C t/ clean
 -- 
 2.34.0.795.g1e9501ab396
 
