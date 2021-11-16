@@ -2,61 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29305C433FE
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 09:49:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9601C433F5
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 09:49:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0FCFE61B98
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 09:49:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACC2C63225
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 09:49:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233568AbhKPJwq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 04:52:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60124 "EHLO
+        id S233521AbhKPJwr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 04:52:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233493AbhKPJwj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 04:52:39 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B92C8C061746
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 01:49:42 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id b12so36383097wrh.4
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 01:49:42 -0800 (PST)
+        with ESMTP id S232326AbhKPJwk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 04:52:40 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A688CC061570
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 01:49:43 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id o29so16338515wms.2
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 01:49:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=196Fzi9pWJNNoy0fcJITLBwaY4nVQto3zq+DfxxjTpI=;
-        b=guZdoP0FWkVrfSvv/oNJAWez37MVtBPUIxgxH2Y/cReXcQqByg9JdmPesair+LgXDR
-         tPsdic+8pZNeFppQTrRPxXHQSgDrNW9Wrdtm62QDnRhrnT0anuxwFI/Z3IJvnkuO4B0b
-         2QvoqhzcjQvGgvM4KVzYaLR+2hvLKLiLZysODrmKsqse3hp20E6F4wlx5zcoBgtFx3B+
-         4YbwXNdnCp8GT7sfS/CbwnDmqbMMBYiPrmHR0c4xbsZ0nlpHep9/R2KBCfD4v1d/KYYY
-         L7vrJDdLeDPtafffbOBhTU9t0+BF+1wrqKXlPquBYFWSrqlg9KlpvcbGG7RZ7H8IXrTa
-         ZStA==
+        bh=8PooKE+ZmACiLnvvFNaC9GMC6c2B/Iz1nlWdS4LuFUY=;
+        b=I9Skn8z1zBoKy/ahgJb66TsVduCgG+pOE34rvoP066qkRLozj74D7qziexNVQ935tL
+         2VhgJDALYjeE320CInyNEcytOwWVbR4P1MW9cg/crEwTCY0O1i5GU+eok1e1OweSDF1W
+         QwOTzlZAi2SUub9nmz+LE8aXlJlAAU+CoAOtBlhFmpPn+0YGMYLY35l8XdubqXsyngxP
+         DgHPJeMGOXMX94QXmfSdBmuLtyh1aK/Lwl6sH5h4+BZv3DT0Kc8BY1yrigd7Deui/RSN
+         ZL+DNZyvtF3CD+ywJuI3ghbKF474PLk+YPMBBprUNVdIrX59tJvfiMvsf8l40VRtdyhb
+         8ecQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=196Fzi9pWJNNoy0fcJITLBwaY4nVQto3zq+DfxxjTpI=;
-        b=hMUJzmTgKX+cwWf1y9Tel/OMj981pVM4S9j3AQCN7dtNP4Dv6Qjd3cgwTZgH9IK/eT
-         d3k86bMqDqna7GxUz8tv0siYRly+hSw5l/KksxGsNsrFtPZXy8saDnkV3oLv1C0jhBaI
-         55v5ZcBOBeyMU+yJL0FA2eTCsK6fMP+XLpymtRv1ixiJWppWM/K/MW1m3H+HcwSqOoUZ
-         O7/ElIRVl5FXUYrtE9VL0TNu2Fc/XSC72XYMZOOPX3l0JkXW8t7mezaXqP9tYgX3CG1M
-         qMzxMJGtslHvMIQcvZKM7/9NmoiHP3Sc9Vb79h1MguGEhp2cQujq1vZwgyr9fG2ArEP6
-         nuaQ==
-X-Gm-Message-State: AOAM530s4LcuWnCYb3QqkGJVLkXyLLxUsSaEJidxZIFSUwQZuZxlhYRJ
-        n82rM6IgTSRKK6TUhTjYvfC2Vii5oYU=
-X-Google-Smtp-Source: ABdhPJwnT2WfhrLojxiOo2BAHZF6xvjur6pQWWkirgkLSltVkZIO3cVUOsHsflKhWFi2gMe+afkjYA==
-X-Received: by 2002:a5d:66cb:: with SMTP id k11mr7472190wrw.253.1637056181218;
-        Tue, 16 Nov 2021 01:49:41 -0800 (PST)
+        bh=8PooKE+ZmACiLnvvFNaC9GMC6c2B/Iz1nlWdS4LuFUY=;
+        b=Z2gKePGTS8HhZhMzo5LxtK3oj37NpUndVEpQpDDOiL251uCNfmG7bHJIEvCNDwQtcy
+         iw8MIQ+4Q5dSfIvMMDH/JkiuB6bM+2fpO6B2sVQowXR8z8irs0j3C6EEJwzOdVj8Qwg2
+         +bhjs22soIUWSEWm4JEW6KhemhHYdIM+InHz9A83+f5cTQSpPAhr1v1INDfLE10unFz9
+         RGX85CMTjsGplw0MBYbVMnbb3lIDmrxLLZK3d0G1Qq0WUnNwdY+k6Qn/rvIFSsvGQsJ7
+         X/VJupQApiA4dT9byIDuMMf/KtX3OW83oB1GawvaIKEmRi5rTm841eMK01T8FHUdPk/l
+         FwYQ==
+X-Gm-Message-State: AOAM530lIrJo7rYJ6CAQkFvKE5d5aTDZItM0aD/s0bySJH16kFYwFiXM
+        5U4GkkAFfRmot+Pt1McDqiuZfRnnr64=
+X-Google-Smtp-Source: ABdhPJzMebaM12G+91v/GRdCtK6MGDw+qoiByDBr0hssrCxi2a8AqaFCzBKPVRcPCpCXg0Bv8rqqIg==
+X-Received: by 2002:a05:600c:354f:: with SMTP id i15mr6168984wmq.59.1637056182040;
+        Tue, 16 Nov 2021 01:49:42 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z11sm16630321wrt.58.2021.11.16.01.49.40
+        by smtp.gmail.com with ESMTPSA id w17sm17584045wrp.79.2021.11.16.01.49.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Nov 2021 01:49:40 -0800 (PST)
-Message-Id: <48ee03cf52a619d22d7ee7b1958dd59872bf721f.1637056178.git.gitgitgadget@gmail.com>
+        Tue, 16 Nov 2021 01:49:41 -0800 (PST)
+Message-Id: <47c652716e88af7199c44a555780eafb643a1f9e.1637056178.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.981.v4.git.1637056178.gitgitgadget@gmail.com>
 References: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>
         <pull.981.v4.git.1637056178.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 Nov 2021 09:49:24 +0000
-Subject: [PATCH v4 01/15] diff --color-moved: add perf tests
+Date:   Tue, 16 Nov 2021 09:49:25 +0000
+Subject: [PATCH v4 02/15] diff --color-moved: clear all flags on blocks that
+ are too short
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,82 +75,48 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Add some tests so we can monitor changes to the performance of the
-move detection code. The tests record the performance --color-moved
-and --color-moved-ws=allow-indentation-change for a large diff and a
-sequence of smaller diffs. The range of commits used for the large
-diff can be customized by exporting TEST_REV_A and TEST_REV_B when
-running the test.
+If a block of potentially moved lines is not long enough then the
+DIFF_SYMBOL_MOVED_LINE flag is cleared on the matching lines so they
+are not marked as moved. To avoid problems when we start rewinding
+after an unsuccessful match in a couple of commits time make sure all
+the move related flags are cleared, not just DIFF_SYMBOL_MOVED_LINE.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- t/perf/p4002-diff-color-moved.sh | 57 ++++++++++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
- create mode 100755 t/perf/p4002-diff-color-moved.sh
+ diff.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/perf/p4002-diff-color-moved.sh b/t/perf/p4002-diff-color-moved.sh
-new file mode 100755
-index 00000000000..ab2af931c04
---- /dev/null
-+++ b/t/perf/p4002-diff-color-moved.sh
-@@ -0,0 +1,57 @@
-+#!/bin/sh
-+
-+test_description='Tests diff --color-moved performance'
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+
-+# The endpoints of the diff can be customized by setting TEST_REV_A
-+# and TEST_REV_B in the environment when running this test.
-+
-+rev="${TEST_REV_A:-v2.28.0}"
-+if ! rev_a="$(git rev-parse --quiet --verify "$rev")"
-+then
-+	skip_all="skipping because '$rev' was not found. \
-+		  Use TEST_REV_A and TEST_REV_B to set the revs to use"
-+	test_done
-+fi
-+rev="${TEST_REV_B:-v2.29.0}"
-+if ! rev_b="$(git rev-parse --quiet --verify "$rev")"
-+then
-+	skip_all="skipping because '$rev' was not found. \
-+		  Use TEST_REV_A and TEST_REV_B to set the revs to use"
-+	test_done
-+fi
-+
-+GIT_PAGER_IN_USE=1
-+test_export GIT_PAGER_IN_USE rev_a rev_b
-+
-+test_perf 'diff --no-color-moved --no-color-moved-ws large change' '
-+	git diff --no-color-moved --no-color-moved-ws $rev_a $rev_b
-+'
-+
-+test_perf 'diff --color-moved --no-color-moved-ws large change' '
-+	git diff --color-moved=zebra --no-color-moved-ws $rev_a $rev_b
-+'
-+
-+test_perf 'diff --color-moved-ws=allow-indentation-change large change' '
-+	git diff --color-moved=zebra --color-moved-ws=allow-indentation-change \
-+		$rev_a $rev_b
-+'
-+
-+test_perf 'log --no-color-moved --no-color-moved-ws' '
-+	git log --no-color-moved --no-color-moved-ws --no-merges --patch \
-+		-n1000 $rev_b
-+'
-+
-+test_perf 'log --color-moved --no-color-moved-ws' '
-+	git log --color-moved=zebra --no-color-moved-ws --no-merges --patch \
-+		-n1000 $rev_b
-+'
-+
-+test_perf 'log --color-moved-ws=allow-indentation-change' '
-+	git log --color-moved=zebra --color-moved-ws=allow-indentation-change \
-+		--no-merges --patch -n1000 $rev_b
-+'
-+
-+test_done
+diff --git a/diff.c b/diff.c
+index 52c791574b7..bd8e4ec9757 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1114,6 +1114,8 @@ static int shrink_potential_moved_blocks(struct moved_block *pmb,
+  * NEEDSWORK: This uses the same heuristic as blame_entry_score() in blame.c.
+  * Think of a way to unify them.
+  */
++#define DIFF_SYMBOL_MOVED_LINE_ZEBRA_MASK \
++  (DIFF_SYMBOL_MOVED_LINE | DIFF_SYMBOL_MOVED_LINE_ALT)
+ static int adjust_last_block(struct diff_options *o, int n, int block_length)
+ {
+ 	int i, alnum_count = 0;
+@@ -1130,7 +1132,7 @@ static int adjust_last_block(struct diff_options *o, int n, int block_length)
+ 		}
+ 	}
+ 	for (i = 1; i < block_length + 1; i++)
+-		o->emitted_symbols->buf[n - i].flags &= ~DIFF_SYMBOL_MOVED_LINE;
++		o->emitted_symbols->buf[n - i].flags &= ~DIFF_SYMBOL_MOVED_LINE_ZEBRA_MASK;
+ 	return 0;
+ }
+ 
+@@ -1237,8 +1239,6 @@ static void mark_color_as_moved(struct diff_options *o,
+ 	free(pmb);
+ }
+ 
+-#define DIFF_SYMBOL_MOVED_LINE_ZEBRA_MASK \
+-  (DIFF_SYMBOL_MOVED_LINE | DIFF_SYMBOL_MOVED_LINE_ALT)
+ static void dim_moved_lines(struct diff_options *o)
+ {
+ 	int n;
 -- 
 gitgitgadget
 
