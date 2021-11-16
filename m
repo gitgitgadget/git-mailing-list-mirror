@@ -2,183 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC181C433F5
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63215C433EF
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:50:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D60DE619E1
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:26:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4AACC61BF6
+	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 12:50:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236165AbhKPM33 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 07:29:29 -0500
-Received: from mout.gmx.net ([212.227.17.21]:41869 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236140AbhKPM31 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 07:29:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637065588;
-        bh=zACJR18VGnq6/CqOfZT6NmkJeQTBgPSl4+A4c2UtV0Q=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=e0XLLQDH8y765jPOWkUU+OIsU3MwrTp7PVLj95kYypUytFHOs5W82PGeRvzbuDFVr
-         EDa4Pu8rUlIy+RpJ0brw/uirh1Kmmh1ZpOVGkjH4U4sQ6NWKuJ4aOc/xC/UYvNxSDm
-         G6kdcJpwHFwUAew/yc8XUMRPvmz1KdkVOLLvmaOk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.166.205] ([89.1.213.220]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N6sn1-1mc9ud1NNP-018GTY; Tue, 16
- Nov 2021 13:26:28 +0100
-Date:   Tue, 16 Nov 2021 13:26:26 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     hakre via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, hakre <hanskrentel@yahoo.de>,
-        hakre <hanskrentel@yahoo.de>
-Subject: Re: [PATCH] ci(check-whitespace): update stale file top comments
-In-Reply-To: <pull.1138.git.git.1636822837587.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111161321380.21127@tvgsbejvaqbjf.bet>
-References: <pull.1138.git.git.1636822837587.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S236352AbhKPMxh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 07:53:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45296 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236307AbhKPMxc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 07:53:32 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F31C9C061570
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:50:34 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id y12so30829573eda.12
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 04:50:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=SNO8IFNjdv2g4p0YGMTVRK4yYwx8DhLf8teLY+jzJog=;
+        b=KuTfu5P0B8/ctUY5935mDUnv6j6IrtTNgpt3qR/90JVqIkvrnDrhoPBVheXeo685kk
+         Xxj9DvqydIpZAH5W28850IERmar0s55e/LD2HjPapVk87BKPQfdgZhqp/Qar8GQe90Va
+         4AsL9NxVKAkA2AMMWvNbuGsGBcw++5PBiKr755eFYmMgLhgfX1q++6cG+76SSeHakStG
+         MnfNPiSXeV6G+h7V/IVv95RH3Wi0O3f66EsTdWN6V4yULuUk3x2e9wfYnhF0dRD3tKWX
+         bGpAMqHeHF7hi8SDj8X7++YFYoUsb83kSKbaJCG43QZCkbjqLt/duSvRin9zx9BHIIBs
+         1ZFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=SNO8IFNjdv2g4p0YGMTVRK4yYwx8DhLf8teLY+jzJog=;
+        b=VFU2Zp8DLnIGoAkRPhFWB+cgBRUOjClhG6w3A1J4Ftj4lvGGVJpF7rGmDHEHezH+JU
+         c4ZhUWxamoi47Zj9+B7eV8XWJ2kmzsdiW1otoY+RaGMngYcb2Q0wRl9/dWQk6Vf83HtR
+         KluY8SMKd1NxyG+PDB59nl3PgebrpGVven0SRuDLppwZvutcRua6S7ZAACWbaAhBGCGI
+         y0qM7adMigvcHaRFfxeoR3JlwyyyJg+VQaG1f/FhuBy3IiT20JQbVxX7eGVj/0OacEFp
+         T/0BwujTZZ/M+Y5pcBoTT5/jJYCbOtc/4m4IejczJKSJbzCXGoyI5D9A1zN2Q7ie60nW
+         Nb0A==
+X-Gm-Message-State: AOAM530sspIGIPCpldb9DruBsb0Dab0bXmFzHmqlXOu7IxUxoWh2FpJj
+        4QK/rPtOUiFxvpUBQxBmMjI=
+X-Google-Smtp-Source: ABdhPJy/iH2S23z4U1lQHhJq6YbeJMr/xH9XANnESgeEhL+gTvGX1dCfti2imugvuQZDSwePvBZC7w==
+X-Received: by 2002:a05:6402:3590:: with SMTP id y16mr10031442edc.343.1637067032537;
+        Tue, 16 Nov 2021 04:50:32 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id e1sm8187419ejy.82.2021.11.16.04.50.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Nov 2021 04:50:31 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mmxux-001PTN-7k;
+        Tue, 16 Nov 2021 13:50:31 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, someguy@effective-light.com,
+        gitster@pobox.com, Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] grep: avoid setting UTF mode when not needed
+Date:   Tue, 16 Nov 2021 13:32:17 +0100
+References: <87bl2kv309.fsf@igel.home>
+ <20211116110035.22140-1-carenas@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211116110035.22140-1-carenas@gmail.com>
+Message-ID: <211116.86tugcp8mg.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2120474085-1637065588=:21127"
-X-Provags-ID: V03:K1:2iAl02gQFPyyOu2VpdHXm1OUqPW08rix1BKzcwghJTZsxr5Z5XJ
- TX7LFdVDfhI0RUpZa95VHWii4REyrL17er3L25As+KmUCAXdqU1+l0+NP/Cj2SuKNpK+HTw
- 7t51bTg2xQEz8hwomSHfGxi8gTM3tWCa/R4Nf+jNYfdPz8ezOW+yGY67cYh/vjSoEJcu683
- 1dgP1D8HbWmBnQNWuS2cg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vPEmKPC4cvQ=:DCrMkQdrRq2Hs7I7Vu6O9Q
- 8PfuUXa3ZDBMtKEKoiDQSIpwnydEgBDhgMJRKc+tc0s1CucvRh1MKY1u5Q/ggtwebWYy/4iAj
- 9RSZv8kev1DCs/ItQD01+E0FISWFKAe761BU8FLIuts6hC2G3VQYkPtdqrtemZW1ylAekQ6nY
- hWXmzfatb8zkR2whCXfppNzrvhRpCxUgc7JetQIjLVAxkz/h+K6yujboaAe20dCxVVOSs94Vw
- RkoIzXM1/0oRL6Bsxkpu3pFopma/2yShiTIpHWGDtxn65QToaPNID8xRt4B2TpzHLrFSOYQ2m
- a6LMT8Xj7+Cx4oVCQgR5DO7F3OrGuLkGCj/CGfFIp+rVzLLO7ams5h1brB4BWJIh/9eRgPIrf
- r3ZT2gEP85zMMSbv42OY9Z/QeIaumInyGyzfp9WPw/2SSacSdNTMEkLvY990X/E/weE3dNNEW
- yOfZ81qGLxymFc7bqenH/eeGcTEjyaxMKHncRWdx9a8C+uxjrNQT8OWeG7ao14zFIQ47vo0CU
- 7bFpW6Cx5Y/oQ/3FzvZwnIQTpN566thf05vQTIzB5/2mZTKWfJtHcdLXwrHTZfCH9fN6xP1V8
- A5adCwPGgnmJjtBKmZcI3SzOL3TZajWR0tK3Ls13sRFrp3aDsQYEcmnkgDkhS5I+Z+I6cXWnD
- htdtxIE9ri/qGQVEXDAuqWnk1CNpXfPR2KIxVwGn5tCP7KX6bb/GOCxhiKk0lX15qH7iG/O9t
- 0ng7YX1T1wCtRaOiL4dN9ojXXrIaReT6++NRBw6/eAw+vNoVkc+4TNi/uQNYfYH1cUGAclwpP
- nTNEH2uiAg8C1M9jHkiEvonLO4srj6HFSQqsiDGt/oZ5EIloGc43G33UlD3pStYhdKP8fj1UE
- tCiNXpHxMSfbFIsRRqd2rsijF//eiGz07m5UdOtLw/bnEWO+lQ3DVpZf5z9hneUb+qk6bru+C
- dF9OBcxZRVvNnqD54MUbErmIDVZyzIWJptbkDSNVuUrnki1ZVJ2k1FZqgPz9tNWEp0Uo3OvQW
- aeU+ZiWnRtOhKg3tJpHzMJLka9LnSy+o7pDEzq/1v9OHq44v8S5c9YGIKjnBNtCK/QiMecHUT
- 0xqcfnQDGvpaCI=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-2120474085-1637065588=:21127
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, Nov 16 2021, Carlo Marcelo Arenas Bel=C3=B3n wrote:
 
-Hi Hans,
-
-On Sat, 13 Nov 2021, hakre via GitGitGadget wrote:
-
-> From: hakre <hanskrentel@yahoo.de>
-
-As per https://git-scm.com/docs/SubmittingPatches#sign-off:
-
-	Please don=E2=80=99t hide your real name.
-
-I strongly suspect your real name to be Hans Krentel, not hakre.
-
-> Part of these two recent commits
+> Since ae39ba431a (grep/pcre2: fix an edge case concerning ascii patterns
+> and UTF-8 data, 2021-10-15), PCRE_UTF mode is enabled in cases where it
+> will fail because of UTF-8 validation, which is needed for versions of
+> PCRE2 older than 10.34.
 >
-> 1. a066a90db6 (ci(check-whitespace): restrict to the intended commits,
->    2021-07-15)
-> 2. cc00362125 (ci(check-whitespace): stop requiring a read/write token,
->    2021-07-15)
+> Revert the change on logic to avoid failures that were reported from the
+> test cases, but that should also reflect in normal use when JIT is enabled
+> and could result in crashes (or worse), as UTF-8 validation is skipped.
 >
-> are well written messages that reflect the changes (compare: [1]).
+> Keeping the tests, as they pass even without the fix as replicated locally
+> in Debian 10 and the CI.
 >
-> Unfortunately those commits left the description in top file comments
-> unchanged which are still showing the previous picture.
->
-> To better display the current workflow upfront, those comments now
-> reflect that:
->
-> 1. full (not shallow) clone to steadily check the intended commits
-> 2. communicated result is the exit status (not a comment in the PR)
->
-> [1]: https://git-scm.com/docs/SubmittingPatches#describe-changes
-> CC: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: hakre <hanskrentel@yahoo.de>
+> Reported-by: Andreas Schwab <schwab@linux-m68k.org>
+> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
 > ---
->     ci(check-whitespace): update stale file top comments
+>  grep.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
 >
->     Part of these two recent commits
->
->      1. a066a90db6 (ci(check-whitespace): restrict to the intended commi=
-ts,
->         2021-07-15)
->      2. cc00362125 (ci(check-whitespace): stop requiring a read/write to=
-ken,
->         2021-07-15)
->
->     are well written messages that reflect the changes (compare: 1
->     [https://git-scm.com/docs/SubmittingPatches#describe-changes]).
->
->     Unfortunately those commits left the description in top file comment=
-s
->     unchanged which are still showing the previous picture.
->
->     To better display the current workflow upfront, those comments now
->     reflect that:
->
->      1. full (not shallow) clone to steadily check the intended commits
->      2. communicated result is the exit status (not a comment in the PR)
->
->     Signed-off-by: hakre hanskrentel@yahoo.de
+> diff --git a/grep.c b/grep.c
+> index f6e113e9f0..fe847a0111 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -382,10 +382,8 @@ static void compile_pcre2_pattern(struct grep_pat *p=
+, const struct grep_opt *opt
+>  		}
+>  		options |=3D PCRE2_CASELESS;
+>  	}
+> -	if ((!opt->ignore_locale && !has_non_ascii(p->pattern)) ||
+> -	    (!opt->ignore_locale && is_utf8_locale() &&
+> -	     has_non_ascii(p->pattern) && !(!opt->ignore_case &&
+> -					    (p->fixed || p->is_fixed))))
+> +	if (!opt->ignore_locale && is_utf8_locale() && has_non_ascii(p->pattern=
+) &&
+> +	    !(!opt->ignore_case && (p->fixed || p->is_fixed)))
+>  		options |=3D (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
+>=20=20
+>  #ifdef GIT_PCRE2_VERSION_10_36_OR_HIGHER
 
-If you send a new iteration, please replace the first comment on your PR
-by a cover letter. You can also delete the comment's contents instead.
+Hrm.
 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-11=
-38%2Fhakre%2Fpatch-1-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1138/=
-hakre/patch-1-v1
-> Pull-Request: https://github.com/git/git/pull/1138
->
->  .github/workflows/check-whitespace.yml | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/.github/workflows/check-whitespace.yml b/.github/workflows/=
-check-whitespace.yml
-> index 8c4358d805c..2dce03bc479 100644
-> --- a/.github/workflows/check-whitespace.yml
-> +++ b/.github/workflows/check-whitespace.yml
-> @@ -1,8 +1,8 @@
->  name: check-whitespace
->
-> -# Get the repo with the commits(+1) in the series.
-> +# Get the repo with all commits to steady catch the series.
+A few things:
 
-I am not a native English speaker, but "to steady catch" strikes me as not
-quite English. I would suggest something like this instead:
+First, if we've got a post-PCREv2 version whatever fix let's guard that
+with an ifdef, see thep GIT_PCRE2_VERSION_*_HIGHER at the top of grep.h.
 
-	Get the repository with all commits to ensure that we can analyze
-	all of the commits contributed via the Pull Request.
+It really helps to have those, both to know to test on those older
+versions, and also so that we can at some point in the future bump the
+required version and drop these workarounds entirely (as we do with
+git-curl-compat.h).
 
->  # Process `git log --check` output to extract just the check errors.
-> -# Add a comment to the pull request with the check errors.
-> +# Give status 2 on check errors.
+Secondly, whatever do here let's first fix the test added in ae39ba431a,
+so we're not groping around in the dark even more.
 
-Is it really interesting that the exit code 2 is used? Or is it more
-interesting that the job will exit with failure if the check produces
-errors? I think it would sound better as:
+I didn't spot this at the time but the test that Hamza added in that
+based on my initial report[1] is broken & doesn't test anything
+meaningful. It needs to have this applied:
+=09
+	diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-asci=
+i.sh
+	index 22487d90fdc..1da6b07a579 100755
+	--- a/t/t7812-grep-icase-non-ascii.sh
+	+++ b/t/t7812-grep-icase-non-ascii.sh
+	@@ -60,7 +60,7 @@ test_expect_success GETTEXT_LOCALE,PCRE 'log --author wi=
+th an ascii pattern on U
+	        test_write_lines "forth" >file4 &&
+	        git add file4 &&
+	        git commit --author=3D"=C3=80 =C3=9A Thor <author@example.com>" -m=
+ s=C3=A9cond &&
+	-       git log -1 --color=3Dalways --perl-regexp --author=3D".*Thor" >log=
+ &&
+	+       git log -1 --color=3Dalways --perl-regexp --author=3D". . Thor" >l=
+og &&
+	        grep Author log >actual.raw &&
+	        test_decode_color <actual.raw >actual &&
+	        test_cmp expected actual
 
-	Exit with failure upon white-space issues.
+I.e. the whole point of using the color output to test this is to
+discover where PCRE2 is going to consider a character boundary to be,
+using .* means that it won't be tested at add, since .* will happily eat
+up whatever arbitrary data it finds with or without UTF-8 mode.
 
-Ciao,
-Johannes
+Other tests added in that & adjacent (if any?) commits may have the same
+issue, I haven't dug into it.
 
->
->  on:
->    pull_request:
->
-> base-commit: 5fbd2fc5997dfa4d4593a862fe729b1e7a89bcf8
-> --
-> gitgitgadget
->
+If we lead with that patch we'll get the test passing on master as
+before, but with your patch above it'll break. I.e. the "when not
+needed' in the $subject isn't true, it's just that the test is
+completely broken.
 
---8323328-2120474085-1637065588=:21127--
+In the context of this being a pretty urgent post-release fix (but I
+don't know if Junio would consider a point-release, so perhaphs it's
+not) I'd be OK with either of:
+
+ A. Let's back out this new log grep color thing entirely while we
+    reconsider this. The gitster/hm/paint-hits-in-log-grep topic
+    currently reverts cleanly.
+
+ B. Don't break the new log grep color thing, and also fix the 'grepping
+    binary' regression (which is much more important than having A)
+
+But let's not go for some in-between where we break the new feature to
+the point of it being worse than the state of not having it at all in
+v2.33.0.
+
+I.e. without the that log grep color feature we wouldn't screw up the
+display of non-ASCII characters in log output (yay), in v2.34.0 we
+don't, but also color the match (yay), but we broke grepping binary
+*files* (boo!).
+
+I think the approach I suggested in [2] is a much more viable way
+forward, i.e. let's stop fiddling with this giant nested if statement
+that's mainly meant for the grep-a-file-case, revert to the
+pre-log-grep-color state, and have the log-grep-color mode pass in a
+"yes, I'd like the UTF-8 mode, please".
+
+Having said that that's probably also broken, just in ways we're less
+likely to spot (or maybe some of the log encoding settings/reencoding
+saves us there?), we may need to have that ifdef'd to 10.34 and higher,
+or have some opt-in setting for this.
+
+1. https://lore.kernel.org/git/87v92bju64.fsf@evledraar.gmail.com/
+2. https://lore.kernel.org/git/87v92bju64.fsf@evledraar.gmail.com/
