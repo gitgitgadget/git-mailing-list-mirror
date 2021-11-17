@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85D69C433FE
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F1B2C433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:21:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6DE0E61BF9
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:21:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55F8161BF9
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:21:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236334AbhKQKYA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 05:24:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56450 "EHLO
+        id S236256AbhKQKYI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 05:24:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236255AbhKQKXg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 05:23:36 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A8AC061746
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:36 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id k37-20020a05600c1ca500b00330cb84834fso4315499wms.2
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:36 -0800 (PST)
+        with ESMTP id S236265AbhKQKXl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 05:23:41 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E19A8C061204
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:42 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id p3-20020a05600c1d8300b003334fab53afso4322602wms.3
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WTjT96qnyBSEcU3Fx1eEPGSBOZakTKcXTsEmD7bMox4=;
-        b=l8/AuIyc4PqrKw+oryJ6oqbcmqIz/O7oJangZPCrna4qQhcgDkLOT7rM2KvmmtFHt1
-         DowYVriYzYEwPnkjK/pBpEX/rAoHN8iwHdIJfAeULqTMvrkEPnn2QstWVLzLylaBy8cq
-         bnVsiKcLzOlugQCS8Pqn2M8D+Bf8mzGWX6h2r52uIFJcOWPa9XroqnCSgsfiIbE8BJOH
-         cGsEELuVo38D6rEiq8H0G/HP5R9Y78AZDzRGb+0bkwoDPEvp921MpxxgwTi1XKTXJx3H
-         M5SPoZKY7MJkLFRprUUwFGOuG5ttwSOAHMMiI3vMEamYyV5g56eAHBiZZb4JQnBAjDYA
-         UYnA==
+        bh=i17kNRFT2P/RSbdz+G5LrCD2E0MXRbAX9bdTm5/88QM=;
+        b=lEzRXIuALFPn6duhhoBat2gHcrUq76vSQ69LqjEQ2HBXSjdcm/e/l2pN2Lwmhe58wb
+         yCPb6dtIUWHTToZzrAHep9hW0hLGWz5/vA2/FHT6A/C+yFtGDVqwcKR/V8UUburfzFHM
+         GrSgUVA4PDES3jB2I21cyVc1c6F66bB4pJAvp9eAH12M0j95Ebw0a26AOwmH97AFSZap
+         m0UHNHu2sABaQb52NsWSgwv/fQEric3otF9UZ2uUTdjtEx7GM0kIH17x5cZecSJrXpAn
+         fUvtnSbcupaLzzci1sr8g1HFo7zAGMQMxizegVDaW4CmM+wpT+G5Xoz/u+31/YNn8JwX
+         yAbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WTjT96qnyBSEcU3Fx1eEPGSBOZakTKcXTsEmD7bMox4=;
-        b=HBxHArvsxe+TN6M/PaOzt5pr7UZDt3rALuCTpmnLj9223joP9OPbepWszt2n85ImG5
-         BMeMKG/0JWSUwK9dUCAJOl0+0pvYRrnJaaNg+dUXZH3j/ax0mevukdSZRvQQMYoPi+O4
-         VRjjCxVGZec9wvQ3dDcmtHMp7uB/wJplQRCru67/N2dBcHcGLXm3XYyL9IVbjN7bHAJE
-         YKh8eMmyzjTx8wzKpRwdEp0PNuE77LktMVPszW/5A0G9lGC9jrVRLFAtX3zRCTd9b3pN
-         lB7xTYK90oita/oj8L4JBdX70f6ONAvZOtFTfEZ6Aqay0qMfSx1BDIERDZ/2UAukE3Il
-         a3GQ==
-X-Gm-Message-State: AOAM533jxWrDxzXcemunNt71XL+VwvFYIZlD6fRXRsZpaQ8TyPdE8nkC
-        XcoMJL8ZxbR7J471Q6BdkKddnryKnZx5YA==
-X-Google-Smtp-Source: ABdhPJzkpLTy7fx5kHjDCZMbDP29A9RID4TaLc0/p/VCFUSA1Il3+/3CgD21khNn9J8o3WALduFD/g==
-X-Received: by 2002:a1c:5409:: with SMTP id i9mr16040291wmb.146.1637144434829;
-        Wed, 17 Nov 2021 02:20:34 -0800 (PST)
+        bh=i17kNRFT2P/RSbdz+G5LrCD2E0MXRbAX9bdTm5/88QM=;
+        b=e5hZ8LA4wP4/0bkTfVGxZWxSkqM44lN+g+ho3PrEi4gIqHYLCAha93vHNn2jheVxhX
+         +BpdFf/V7Abl6kYFG77GT8R9/UBKlb5SXjBugwjM2wgv8JLnN+v+yZRi9PUvVdsSX8ux
+         VwmHHYJ8Z3wLWHmxj3iEP8JY6hxTJDzO9zKGmAYjISaOR0mnlG32SN5LT2PYQ/zBl7k2
+         SjX9lSZi6HuPc1FJTdQJOJaKd86Qn5Z7D9beqU3J0fJhbcujtQYVRmcfZTviB7B8cjNh
+         YXChjxulQfm/qn0NCL3ZWBLigxFS8IEGIp6G26WDFPQBF9pxPXe2Zrp8n90/KI5O3gtZ
+         2Slw==
+X-Gm-Message-State: AOAM533K0KKWXbNYVha2pSDGe9vCVYEgYbHiovDTkgwOXxnju0Ir86eQ
+        aT5qjUdDTB7sJPL/mRy4dGEGvfcaL75maA==
+X-Google-Smtp-Source: ABdhPJx9gAkLhrOqgOL+IxdCvclAoedXM2gAB+TuJFNYGAkNZHP8yrykWtK8uKFn8po1tRwkvSiBGw==
+X-Received: by 2002:a05:600c:21c3:: with SMTP id x3mr16170493wmj.13.1637144440982;
+        Wed, 17 Nov 2021 02:20:40 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n32sm6456256wms.1.2021.11.17.02.20.34
+        by smtp.gmail.com with ESMTPSA id n32sm6456256wms.1.2021.11.17.02.20.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 02:20:34 -0800 (PST)
+        Wed, 17 Nov 2021 02:20:40 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 11/23] Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
-Date:   Wed, 17 Nov 2021 11:20:10 +0100
-Message-Id: <patch-v4-11.23-17b30e96057-20211117T101807Z-avarab@gmail.com>
+Subject: [PATCH v4 18/23] Makefiles: add and use wildcard "mkdir -p" template
+Date:   Wed, 17 Nov 2021 11:20:17 +0100
+Message-Id: <patch-v4-18.23-be5882b2c99-20211117T101807Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.796.g2c87ed6146a
 In-Reply-To: <cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com>
 References: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com> <cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com>
@@ -75,112 +75,186 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the hardcoding of @@GIT_VERSION@@ in generated *.perl scripts
-to instead shell out to "git version". This means that we can stop
-re-building during development every time the HEAD changes.
+Add a template to do the "mkdir -p" of $(@D) (the parent dir of $@)
+for us, and use it for the "make lint-docs" targets I added in
+8650c6298c1 (doc lint: make "lint-docs" non-.PHONY, 2021-10-15).
 
-These codepaths are not "hot", so shelling out to get the version
-shouldn't matter to users, in the one case where it potentially would
-in send-email (the loop for each E-Mail we send) we now cache the
-value, so we'll only retrieve it once.
+As seen in 4c64fb5aad9 (Documentation/Makefile: fix lint-docs mkdir
+dependency, 2021-10-26) maintaining these manual lists of parent
+directory dependencies is fragile, in addition to being obviously
+verbose.
+
+I used this pattern at the time because I couldn't find another method
+than "order-only" prerequisites to avoid doing a "mkdir -p $(@D)" for
+every file being created, which as noted in [1] would be significantly
+slower.
+
+But as it turns out we can use this neat trick of only doing a "mkdir
+-p" if the $(wildcard) macro tells us the path doesn't exist. A re-run
+of a performance test similar to thatnoted downthread of [1] in [2]
+shows that this is faster, in addition to being less verbose and more
+reliable (this uses my "git-hyperfine" thin wrapper for "hyperfine"[3]):
+
+    $ git hyperfine -L rev HEAD~0,HEAD~1 -b 'make -C Documentation lint-docs' -p 'rm -rf Documentation/.build' 'make -C Documentation lint-docs'
+    Benchmark 1: make -C Documentation lint-docs' in 'HEAD~0
+      Time (mean ± σ):      2.129 s ±  0.011 s    [User: 1.840 s, System: 0.321 s]
+      Range (min … max):    2.121 s …  2.158 s    10 runs
+
+    Benchmark 2: make -C Documentation lint-docs' in 'HEAD~1
+      Time (mean ± σ):      2.659 s ±  0.002 s    [User: 2.306 s, System: 0.397 s]
+      Range (min … max):    2.657 s …  2.662 s    10 runs
+
+    Summary
+      'make -C Documentation lint-docs' in 'HEAD~0' ran
+        1.25 ± 0.01 times faster than 'make -C Documentation lint-docs' in 'HEAD~1'
+
+So let's use that pattern both for the "lint-docs" target, and a few
+miscellaneous other targets.
+
+This method of creating parent directories is explicitly racy in that
+we don't know if we're going to say always create a "foo" followed by
+a "foo/bar" under parallelism, or skip the "foo" because we created
+"foo/bar" first. In this case it doesn't matter for anything except
+that we aren't guaranteed to get the same number of rules firing when
+running make in parallel.
+
+1. https://lore.kernel.org/git/211028.861r45y3pt.gmgdl@evledraar.gmail.com/
+2. https://lore.kernel.org/git/211028.86o879vvtp.gmgdl@evledraar.gmail.com/
+3. https://gitlab.com/avar/git-hyperfine/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile            | 2 +-
- git-cvsserver.perl  | 6 +++---
- git-send-email.perl | 7 ++-----
- git-svn.perl        | 2 +-
- 4 files changed, 7 insertions(+), 10 deletions(-)
+ Documentation/Makefile | 25 +++----------------------
+ Makefile               | 12 +++++++-----
+ shared.mak             |  7 +++++++
+ 3 files changed, 17 insertions(+), 27 deletions(-)
 
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 69a9af35397..d16b653394c 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -428,25 +428,11 @@ quick-install-html: require-htmlrepo
+ print-man1:
+ 	@for i in $(MAN1_TXT); do echo $$i; done
+ 
+-## Lint: Common
+-.build:
+-	$(QUIET)mkdir $@
+-.build/lint-docs: | .build
+-	$(QUIET)mkdir $@
+-
+ ## Lint: gitlink
+-.build/lint-docs/gitlink: | .build/lint-docs
+-	$(QUIET)mkdir $@
+-.build/lint-docs/gitlink/howto: | .build/lint-docs/gitlink
+-	$(QUIET)mkdir $@
+-.build/lint-docs/gitlink/config: | .build/lint-docs/gitlink
+-	$(QUIET)mkdir $@
+ LINT_DOCS_GITLINK = $(patsubst %.txt,.build/lint-docs/gitlink/%.ok,$(HOWTO_TXT) $(DOC_DEP_TXT))
+-$(LINT_DOCS_GITLINK): | .build/lint-docs/gitlink
+-$(LINT_DOCS_GITLINK): | .build/lint-docs/gitlink/howto
+-$(LINT_DOCS_GITLINK): | .build/lint-docs/gitlink/config
+ $(LINT_DOCS_GITLINK): lint-gitlink.perl
+ $(LINT_DOCS_GITLINK): .build/lint-docs/gitlink/%.ok: %.txt
++	$(call mkdir_p_parent_template)
+ 	$(QUIET_LINT_GITLINK)$(PERL_PATH) lint-gitlink.perl \
+ 		$< \
+ 		$(HOWTO_TXT) $(DOC_DEP_TXT) \
+@@ -457,23 +443,18 @@ $(LINT_DOCS_GITLINK): .build/lint-docs/gitlink/%.ok: %.txt
+ lint-docs-gitlink: $(LINT_DOCS_GITLINK)
+ 
+ ## Lint: man-end-blurb
+-.build/lint-docs/man-end-blurb: | .build/lint-docs
+-	$(QUIET)mkdir $@
+ LINT_DOCS_MAN_END_BLURB = $(patsubst %.txt,.build/lint-docs/man-end-blurb/%.ok,$(MAN_TXT))
+-$(LINT_DOCS_MAN_END_BLURB): | .build/lint-docs/man-end-blurb
+ $(LINT_DOCS_MAN_END_BLURB): lint-man-end-blurb.perl
+ $(LINT_DOCS_MAN_END_BLURB): .build/lint-docs/man-end-blurb/%.ok: %.txt
++	$(call mkdir_p_parent_template)
+ 	$(QUIET_LINT_MANEND)$(PERL_PATH) lint-man-end-blurb.perl $< >$@
+ .PHONY: lint-docs-man-end-blurb
+-lint-docs-man-end-blurb: $(LINT_DOCS_MAN_END_BLURB)
+ 
+ ## Lint: man-section-order
+-.build/lint-docs/man-section-order: | .build/lint-docs
+-	$(QUIET)mkdir $@
+ LINT_DOCS_MAN_SECTION_ORDER = $(patsubst %.txt,.build/lint-docs/man-section-order/%.ok,$(MAN_TXT))
+-$(LINT_DOCS_MAN_SECTION_ORDER): | .build/lint-docs/man-section-order
+ $(LINT_DOCS_MAN_SECTION_ORDER): lint-man-section-order.perl
+ $(LINT_DOCS_MAN_SECTION_ORDER): .build/lint-docs/man-section-order/%.ok: %.txt
++	$(call mkdir_p_parent_template)
+ 	$(QUIET_LINT_MANSEC)$(PERL_PATH) lint-man-section-order.perl $< >$@
+ .PHONY: lint-docs-man-section-order
+ lint-docs-man-section-order: $(LINT_DOCS_MAN_SECTION_ORDER)
 diff --git a/Makefile b/Makefile
-index c698c5b058a..8205614c6ec 100644
+index c437aea9e4a..0a3f292bf82 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2333,7 +2333,7 @@ PERL_HEADER_TEMPLATE = perl/header_templates/runtime_prefix.template.pl
- perl_localedir_SQ =
+@@ -2632,7 +2632,8 @@ all:: $(MOFILES)
  endif
  
--$(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
-+$(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER
- 	$(QUIET_GEN) \
- 	sed -e '1{' \
- 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 64319bed43f..76f0e8bbbef 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -26,8 +26,6 @@
- use File::Basename;
- use Getopt::Long qw(:config require_order no_ignore_case);
+ po/build/locale/%/LC_MESSAGES/git.mo: po/%.po
+-	$(QUIET_MSGFMT)mkdir -p $(dir $@) && $(MSGFMT) -o $@ $<
++	$(call mkdir_p_parent_template)
++	$(QUIET_MSGFMT)$(MSGFMT) -o $@ $<
  
--my $VERSION = '@@GIT_VERSION@@';
--
- my $log = GITCVS::log->new();
- my $cfg;
+ ifndef NO_PERL
+ LIB_PERL = $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/Git/*/*/*.pm)
+@@ -2641,7 +2642,8 @@ LIB_CPAN = $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
+ LIB_CPAN_GEN = $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_CPAN))
  
-@@ -126,7 +124,9 @@
-     or die $usage;
+ perl/build/lib/%.pm: perl/%.pm GIT-PERL-DEFINES
+-	$(QUIET_GEN)mkdir -p $(dir $@) && \
++	$(call mkdir_p_parent_template)
++	$(QUIET_GEN) \
+ 	sed -e 's|@@LOCALEDIR@@|$(perl_localedir_SQ)|g' \
+ 	    -e 's|@@NO_GETTEXT@@|$(NO_GETTEXT_SQ)|g' \
+ 	    -e 's|@@NO_PERL_CPAN_FALLBACKS@@|$(call shq,$(NO_PERL_CPAN_FALLBACKS))|g' \
+@@ -2655,8 +2657,8 @@ endif
  
- if ($state->{version}) {
--    print "git-cvsserver version $VERSION\n";
-+    my $version = qx[git version];
-+    $version =~ s/^(git)\b/$1-cvsserver/;
-+    print $version;
-     exit;
- }
- if ($state->{help}) {
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 5262d88ee32..041cd2fb96d 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1468,6 +1468,7 @@ sub file_name_is_absolute {
- #
- # If an error occurs sending the email, this just dies.
+ # install-man depends on Git.3pm even with NO_PERL=Y
+ perl/build/man/man3/Git.3pm: perl/Git.pm
+-	$(QUIET_GEN)mkdir -p $(dir $@) && \
+-	pod2man $< $@
++	$(call mkdir_p_parent_template)
++	$(QUIET_GEN)pod2man $< $@
  
-+my $gitversion;
- sub send_message {
- 	my @recipients = unique_email_list(@to);
- 	@cc = (grep { my $cc = extract_valid_address_or_die($_);
-@@ -1478,11 +1479,6 @@ sub send_message {
- 	@recipients = unique_email_list(@recipients,@cc,@initial_bcc);
- 	@recipients = (map { extract_valid_address_or_die($_) } @recipients);
- 	my $date = format_2822_time($time++);
--	my $gitversion = '@@GIT_VERSION@@';
--	if ($gitversion =~ m/..GIT_VERSION../) {
--	    $gitversion = Git::version();
--	}
--
- 	my $cc = join(",\n\t", unique_email_list(@cc));
- 	my $ccline = "";
- 	if ($cc ne '') {
-@@ -1497,6 +1493,7 @@ sub send_message {
- Message-Id: $message_id
- ";
- 	if ($use_xmailer) {
-+		$gitversion ||= Git::version();
- 		$header .= "X-Mailer: git-send-email $gitversion\n";
- 	}
- 	if ($in_reply_to) {
-diff --git a/git-svn.perl b/git-svn.perl
-index be987e316f9..727431412be 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -9,7 +9,6 @@
- 		$_revision $_repository
- 		$_q $_authors $_authors_prog %users/;
- $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
--$VERSION = '@@GIT_VERSION@@';
+ FIND_SOURCE_FILES = ( \
+ 	git ls-files \
+@@ -2780,7 +2782,7 @@ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(
+ all:: $(TEST_PROGRAMS) $(test_bindir_programs)
  
- use Carp qw/croak/;
- use File::Basename qw/dirname basename/;
-@@ -47,6 +46,7 @@
- 	command_close_bidi_pipe
- 	get_record
- );
-+$VERSION = Git::version();
+ bin-wrappers/%: wrap-for-bin.sh
+-	@mkdir -p bin-wrappers
++	$(call mkdir_p_parent_template)
+ 	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+ 	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
+ 	     -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%$(X),$(@F))$(patsubst git%,$(X),$(filter $(@F),$(BINDIR_PROGRAMS_NEED_X)))|' < $< > $@ && \
+diff --git a/shared.mak b/shared.mak
+index 36f00e88bb8..8d3023c2782 100644
+--- a/shared.mak
++++ b/shared.mak
+@@ -56,6 +56,8 @@ ifndef V
+ 	QUIET          = @
+ 	QUIET_GEN      = @echo $(wspfx_sq) GEN $@;
  
- BEGIN {
- 	Memoize::memoize 'Git::config';
++	QUIET_MKDIR_P_PARENT  = @echo $(wspfx_sq) MKDIR -p $(@D);
++
+ ## Used in "Makefile"
+ 	QUIET_CC       = @echo $(wspfx_sq) CC $@;
+ 	QUIET_AR       = @echo $(wspfx_sq) AR $@;
+@@ -88,6 +90,11 @@ ifndef V
+ endif
+ endif
+ 
++## Helpers
++define mkdir_p_parent_template
++$(if $(wildcard $(@D)),,$(QUIET_MKDIR_P_PARENT)$(shell mkdir -p $(@D)))
++endef
++
+ ### Templates
+ 
+ ## Template for making a GIT-SOMETHING, which changes if a
 -- 
 2.34.0.796.g2c87ed6146a
 
