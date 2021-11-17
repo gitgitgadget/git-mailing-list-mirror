@@ -2,113 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03071C433FE
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE58BC433EF
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:41:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DCC0D61546
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:40:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA38661284
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:41:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235391AbhKQJnK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 04:43:10 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61444 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235585AbhKQJmP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 04:42:15 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C98FF16C5FE;
-        Wed, 17 Nov 2021 04:39:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=8ybcGo4KnXEiggYuahSoU8u1Ujt5t+1B3O9qJEmmy84=; b=OQRU
-        kGwrWjFySjTSTwKVLTrI6GFUoGUJzXEwO9xs1N6xKdxvc/GQtgnEd3pVdFBQn3r/
-        v5COXnVz4f2V/4BG7nTj5qhj7M67TVt0lK1juAF07ZYwa8ANfesU3if+V95D7G2A
-        XqsO1U61aWS0i7oc6OpwFxDGbjQ8V/eew8563Eg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C20E716C5FD;
-        Wed, 17 Nov 2021 04:39:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2220416C5FC;
-        Wed, 17 Nov 2021 04:39:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ian Wienand <iwienand@redhat.com>
-Cc:     git@vger.kernel.org, Peter Kaestle <peter.kaestle@nokia.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH] submodule: separate out not-found and not-empty errors
-References: <YZQ5Zk0ItWvfr8sF@fedora19.localdomain>
-Date:   Wed, 17 Nov 2021 01:39:08 -0800
-Message-ID: <xmqqfsrv2kar.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S235400AbhKQJoK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 04:44:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46708 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235401AbhKQJnx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 04:43:53 -0500
+Received: from vuizook.err.no (vuizook.err.no [IPv6:2a02:20c8:2640::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C9A8C061220
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 01:40:04 -0800 (PST)
+Received: from [2400:4160:1877:2b00:29f9:f15d:e50b:8944] (helo=glandium.org)
+        by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <mh@glandium.org>)
+        id 1mnHQ3-006OmA-8Y; Wed, 17 Nov 2021 09:39:58 +0000
+Received: from glandium by goemon.lan with local (Exim 4.94.2)
+        (envelope-from <mh@glandium.org>)
+        id 1mnHPv-009v09-Pg; Wed, 17 Nov 2021 18:39:47 +0900
+Date:   Wed, 17 Nov 2021 18:39:47 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3 18/23] Makefiles: add and use wildcard "mkdir -p"
+ template
+Message-ID: <20211117093947.ifkrvddmiiu3hg2v@glandium.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+References: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com>
+ <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
+ <patch-v3-18.23-d61e2b44f68-20211116T114334Z-avarab@gmail.com>
+ <20211117025148.awdha4udu5kmzwbe@glandium.org>
+ <211117.86wnl76sal.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 375C992C-478A-11EC-8A55-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <211117.86wnl76sal.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ian Wienand <iwienand@redhat.com> writes:
+On Wed, Nov 17, 2021 at 10:26:27AM +0100, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Nov 17 2021, Mike Hommey wrote:
+> 
+> > On Tue, Nov 16, 2021 at 01:00:18PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> >> Add a template to do the "mkdir -p" of $(@D) (the parent dir of $@)
+> >> for us, and use it for the "make lint-docs" targets I added in
+> >> 8650c6298c1 (doc lint: make "lint-docs" non-.PHONY, 2021-10-15).
+> >> 
+> >> As seen in 4c64fb5aad9 (Documentation/Makefile: fix lint-docs mkdir
+> >> dependency, 2021-10-26) maintaining these manual lists of parent
+> >> directory dependencies is fragile, in addition to being obviously
+> >> verbose.
+> >> 
+> >> I used this pattern at the time because I couldn't find another method
+> >> than "order-only" prerequisites to avoid doing a "mkdir -p $(@D)" for
+> >> every file being created, which as noted in [1] would be significantly
+> >> slower.
+> >> 
+> >> But as it turns out we can use this neat trick of only doing a "mkdir
+> >> -p" if the $(wildcard) macro tells us the path doesn't exist. A re-run
+> >> of a performance test similar to thatnoted downthread of [1] in [2]
+> >> shows that this is faster, in addition to being less verbose and more
+> >> reliable (this uses my "git-hyperfine" thin wrapper for "hyperfine"[3]):
+> >> 
+> >>     $ git hyperfine -L rev HEAD~0,HEAD~1 -b 'make -C Documentation lint-docs' -p 'rm -rf Documentation/.build' 'make -C Documentation lint-docs'
+> >>     Benchmark 1: make -C Documentation lint-docs' in 'HEAD~0
+> >>       Time (mean ± σ):      2.129 s ±  0.011 s    [User: 1.840 s, System: 0.321 s]
+> >>       Range (min … max):    2.121 s …  2.158 s    10 runs
+> >> 
+> >>     Benchmark 2: make -C Documentation lint-docs' in 'HEAD~1
+> >>       Time (mean ± σ):      2.659 s ±  0.002 s    [User: 2.306 s, System: 0.397 s]
+> >>       Range (min … max):    2.657 s …  2.662 s    10 runs
+> >> 
+> >>     Summary
+> >>       'make -C Documentation lint-docs' in 'HEAD~0' ran
+> >>         1.25 ± 0.01 times faster than 'make -C Documentation lint-docs' in 'HEAD~1'
+> >> 
+> >> So let's use that pattern both for the "lint-docs" target, and a few
+> >> miscellaneous other targets.
+> >> 
+> >> This method of creating parent directories is explicitly racy in that
+> >> we don't know if we're going to say always create a "foo" followed by
+> >> a "foo/bar" under parallelism, or skip the "foo" because we created
+> >> "foo/bar" first. In this case it doesn't matter for anything except
+> >> that we aren't guaranteed to get the same number of rules firing when
+> >> running make in parallel.
+> >
+> > Something else that is racy is that $(wildcard) might be saying the
+> > directory doesn't exist while there's another make subprocess that has
+> > already started spawning `mkdir -p` for that directory.
+> > That doesn't make a huge difference, but you can probably still end up
+> > with multiple `mkdir -p` runs for the same directory.
+> >
+> > I think something like the following could work while avoiding those
+> > races:
+> >
+> > define create_parent_dir_RULE
+> > $(1): | $(dir $(1)).
+> > ALL_DIRS += $(dir $(1))
+> > endef
+> >
+> > define create_parent_dir_TARGET
+> > $(1)/.: $(dir $(1)).
+> > 	echo mkdir $$(@D)
 
->  			    !is_empty_dir(empty_submodule_path.buf)) {
->  				spf->result = 1;
-> -				strbuf_addf(err,
-> -					    _("Could not access submodule '%s'\n"),
-> -					    ce->name);
-> +				/* is_empty_dir also catches missing dirtectories, but report separately */
-> +				if (!is_directory(empty_submodule_path.buf)) {
+erf, s/echo //
 
-I was hoping that inspecting errno after is_empty_dir() returned
-might be sufficient (of course, we need to clear errno before
-calling is_empty_dir() if we go that route), but because this is an
-error codepath that we do not need to optimize, a call to
-is_directory() that incurs another system call would be fine.
+> > endef
+> >
+> > $(eval $(call create_parent_dir_RULE, first/path/file))
+> > $(eval $(call create_parent_dir_RULE, second/path/file))
+> > # ...
+> >
+> > $(foreach dir,$(sort $(ALL_DIRS)),$(eval $(call create_parent_dir_TARGET,$(dir:%/=%))))
+> 
+> I think the "race" just isn't a problem, and makes managing this much
+> simpler.
+> 
+> I.e. we already rely on "mkdir -p" not failing on an existing directory,
+> so the case where we redundantly try to create a directory that just got
+> created by a concurrent process is OK, and as the quoted benchmark shows
+> is much faster than a similar (but not quite the same as) a
+> dependency-based implementaiton.
+> 
+> I haven't implemented your solution, but it seems to be inherently more
+> complex.
+> 
+> I.e. with the one I've got you just stick the "mkdir if needed"
+> one-liner in each rule, with yours you'll need to accumulate things in
+> ALL_DIRS, and have some foreach somewhere or dependency relationship to
+> create those beforehand if they're nested, no?
 
-> +				  strbuf_addf(err,
-> +					      _("Submodule directory '%s' not found (incorrect --git-dir?)\n"),
-
-"not found" is something the code definitely knows (eh, not quite,
-but let's read on).  
-
-But let's not make an uninformed guess.  This code didn't even check
-if the user gave a --git-dir option.
-
-If the user is advanced enough to have given "--git-dir", "not found"
-should be sufficient to hint that the way the user specified the
-repository location incorrectly, and a wrong "--git-dir" might be
-one of the many things the user might suspect on their own.
-
-Another problem with the message is !is_directory() can mean "there
-is no filesystem entity at the path" (i.e. "submodule directory '%s'
-does not exist") and it can also mean "there is a filesystem entity
-at the path, but that is not a directory).  "not found" is not exactly
-a good message to give in the latter case.
-
-We are giving two messages here in this codepath.  For example, the
-original one would have said something like:
-
-	Could not access submodule 'foo'
-	Submodule directory 'foo' is not empty
-
-So I suspect that a more appropriate phrasing for the other one (the
-new one you added) would be something like
-
-	Could not access submodule 'foo'
-	Path to the submodule 'foo' is not a directory
-
-perhaps?
-
-Thanks.
-
-
-> +					      empty_submodule_path.buf);
-> +				} else {
-> +				  strbuf_addf(err,
-> +					      _("Submodule directory '%s' is not empty\n"),
-> +					      empty_submodule_path.buf);
-> +				}
->  			}
->  			strbuf_release(&empty_submodule_path);
->  		}
+For each rule, it would also be a oneliner to add above the rule. The rest
+would be a prelude and a an epilogue to stick somewhere in the Makefile.
