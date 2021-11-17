@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F0E4C433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 14:20:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF24FC433EF
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 14:20:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1429463212
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 14:20:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D8AEC61A79
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 14:20:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238387AbhKQOXA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 09:23:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54754 "EHLO
+        id S238444AbhKQOXC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 09:23:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238382AbhKQOWm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 09:22:42 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 891E3C061207
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 06:19:34 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id k37-20020a05600c1ca500b00330cb84834fso4935593wms.2
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 06:19:34 -0800 (PST)
+        with ESMTP id S238375AbhKQOWn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 09:22:43 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34353C06120C
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 06:19:35 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id i5so5055822wrb.2
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 06:19:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=urTN5i86EXuc5a/mSz2OtPkPDT42VYR77j7zOne496I=;
-        b=Akciwy8yIK6b0oNUc0Zol46Zl8/n5LsQh75GeSTHyzB1qYLFmgewIytB0T2VKvUIbr
-         kSLtgRh1gyKwcxd3kWASVglPuotsr+bv6urMkPkxlFLA5Hv8/HN1Bv+29+mRyBwHHu0i
-         lTM0MLBxOfUEHUYJ24KDIufxjiBR5TWAIWiEjq7m2iHP5Oj4XF0lOytvFzVwi2YOEhx4
-         0POro/j7443felxahLGV/oIyX6UbVb9zDjbHEV18cA/cXetGwc7IwhHdlqVfQ1SPf1r4
-         nZIO9X+NskvigKnCmru32zLmRnh0vFmFB9yu0rCpnvjorRAgEdpNiNrCAnP3Po2qawIi
-         Re2g==
+        bh=uhb/QROHr1fftnLBMPf7ahiE/BQ2/n7oC7jxd7xCuug=;
+        b=NoJGGxqFqYm8OnyRY7bmBADyfvMgOIdggSTS+DFryWWhnOiHo52Rz6gvkKnCtJuEGw
+         EsB3478GuStu7OS0k2qYsy0nNjU6TBNME6U4ZmP0j55ctfg7M/9cMn0MdWrjNL3v0ugd
+         rd48OjeKzjawssSTirWVN6fAyJdJs6tlZbI8tXSJvzRu5IDsyJ90zrxLtfqUA5eZpUU5
+         Zo+sP0XyqZOLQw3IBRpUwQcuR6nnWFG2omjPtEYv26RDaQ4CB99MVsKz2cGM3E2U1Rx5
+         cXxhD0lDp0fNG1XaoO418ezUt+nGOrFoJK8fS+0jG863dSu6opMsUsrvFmeolqq5V9AD
+         wJkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=urTN5i86EXuc5a/mSz2OtPkPDT42VYR77j7zOne496I=;
-        b=5M/bReuFWYzS2xWyQRvJvLhgBI/Zo8RmV4E60IGtqxYKIi0EnSTU0/XPY2pHmoOmK6
-         ubQgz3TCYuKeGnXVvmtM9b3VgHOyUL9wiBBPmjokFfnzfgWBBkqU/Zw6IbUvvjrlekwu
-         A0h/9xdmWF4i+zEv7rpT2rZB5Xy5+VzpjrvXAGQtQHGaAcb0ohjCwlEO2PTrpZepF0Tx
-         RLAG1wgYqXDptkaBDIW1fpJsdQXLqvT+dgsHR51JNzkbyqYtjlXT0k17iBklzHPMNXp6
-         y0OsEQxjWeSHWaktTQr2qzP5e7TCJnz7uOJjr+SFivQ6/uE/854o4eJs5ynjn4i1nB+E
-         b4yA==
-X-Gm-Message-State: AOAM533tVMmbAIjjxo8AqIU/NEznquwmi26l6SvKGBhITBdl+Kfjz5NO
-        881GtyOZCEWrbcwyHjPvu8ypXGONnLw=
-X-Google-Smtp-Source: ABdhPJyv50S7Qc9PV7AclhB5wRcVOqtUoW5msl15BpXnpN4MPoL7e4CtfCtOUGsVcj4P+PKlZbZUeA==
-X-Received: by 2002:a7b:c341:: with SMTP id l1mr54297wmj.60.1637158772952;
-        Wed, 17 Nov 2021 06:19:32 -0800 (PST)
+        bh=uhb/QROHr1fftnLBMPf7ahiE/BQ2/n7oC7jxd7xCuug=;
+        b=qntx/VD/L2MiK6cl9EdBUmnX+YdfRz8libDC83NFMshEs0hrS/dYZKsz1D9RhPBMXp
+         F+tJM2JQJMj9LZU5mwN3arGzCXhIpv6/ZrVG3C+X508gn/YMhm8KZJDKkSe9pvemARjz
+         UdAzhKWTE0C9VVLeuA62jiyzhcgMsaIU0ocs8k0LJi4KrbnQT2UI01hfCRiq2xT19p70
+         l+UbRyq1q0SDJ9Xa+/+PGSuVzl1KNIN0r7IyNGr3nfLhvXam9/FnddnWPIiJ4eqe7uf+
+         VdFov9N5xgiSVZJsRmil5s9UyVpwquujdmbAEQd+CgYa8ZCshcB22V7ZRBQUgtAsHk3F
+         eiLA==
+X-Gm-Message-State: AOAM532dpRd52FrWvpGciIky9MVjhZraM5OO0iKrSkk48mooPZPV98MH
+        gjOERjIlDD/5DrNtpU2pZtNYiV32BKM=
+X-Google-Smtp-Source: ABdhPJyUN/DeQ6tN3A0d3rkuiknLysmq09KqG7/sO3+1qzsmbvXOhXDbm6aJC8pp3GdLtmtGoLcgFA==
+X-Received: by 2002:a5d:4a44:: with SMTP id v4mr20608604wrs.246.1637158773590;
+        Wed, 17 Nov 2021 06:19:33 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t189sm5597988wma.8.2021.11.17.06.19.32
+        by smtp.gmail.com with ESMTPSA id g13sm9950wrd.57.2021.11.17.06.19.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 06:19:32 -0800 (PST)
-Message-Id: <9da1616849e6aa33e68ae68876217eef07e503bc.1637158762.git.gitgitgadget@gmail.com>
+        Wed, 17 Nov 2021 06:19:33 -0800 (PST)
+Message-Id: <dbaad4753c156487e91b766ebd3c9a39d68c1b12.1637158762.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com>
 References: <pull.1005.v6.git.1635323239.gitgitgadget@gmail.com>
         <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 17 Nov 2021 14:19:09 +0000
-Subject: [PATCH v7 04/17] scalar: create test infrastructure
+Date:   Wed, 17 Nov 2021 14:19:10 +0000
+Subject: [PATCH v7 05/17] cmake: optionally build `scalar`, too
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,182 +76,50 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-To test the Scalar command, create a test script in contrib/scalar/t
-that is executed as `make -C contrib/scalar test`. Since Scalar has no
-meaningful capabilities yet, the only test is rather simple. We will add
-more tests in subsequent commits that introduce corresponding, new
-functionality.
+The CMake configuration unfortunately does not let us encapsulate all
+(or at least the vast majority) of Scalar's build definition in the
+`contrib/scalar/` subdirectory.
 
-Note: This test script is intended to test `scalar` only lightly, even
-after all of the functionality is implemented.
-
-A more comprehensive functional (or: integration) test suite can be
-found at https://github.com/microsoft/scalar; It is used in the workflow
-https://github.com/microsoft/git/blob/HEAD/.github/workflows/scalar-functional-tests.yml
-in Microsoft's Git fork. This test suite performs end-to-end tests with
-a real remote repository, and is run as part of the regular CI and PR
-builds in that fork.
-
-Since those tests require some functionality supported only by
-Microsoft's Git fork ("GVFS protocol"), there is no intention to port
-that fuller test suite to `contrib/scalar/`.
+To alleviate that somewhat, we guard the inclusion of Scalar via the
+`INCLUDE_SCALAR` environment variable.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/Makefile          | 17 +++++--
- contrib/scalar/t/Makefile        | 78 ++++++++++++++++++++++++++++++++
- contrib/scalar/t/t9099-scalar.sh | 17 +++++++
- 3 files changed, 109 insertions(+), 3 deletions(-)
- create mode 100644 contrib/scalar/t/Makefile
- create mode 100755 contrib/scalar/t/t9099-scalar.sh
+ contrib/buildsystems/CMakeLists.txt | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/contrib/scalar/Makefile b/contrib/scalar/Makefile
-index f6f0036f0fa..231b1ee1796 100644
---- a/contrib/scalar/Makefile
-+++ b/contrib/scalar/Makefile
-@@ -3,6 +3,7 @@ QUIET_SUBDIR1  =
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index fd1399c440f..dd7496b0322 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -729,6 +729,13 @@ if(CURL_FOUND)
+ 	endif()
+ endif()
  
- ifneq ($(findstring s,$(MAKEFLAGS)),s)
- ifndef V
-+	QUIET_GEN      = @echo '   ' GEN $@;
- 	QUIET_SUBDIR0  = +@subdir=
- 	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
- 			 $(MAKE) $(PRINT_DIR) -C $$subdir
-@@ -20,7 +21,7 @@ include ../../config.mak.uname
- TARGETS = scalar$(X) scalar.o
- GITLIBS = ../../common-main.o ../../libgit.a ../../xdiff/lib.a
++if(DEFINED ENV{INCLUDE_SCALAR} AND NOT ENV{INCLUDE_SCALAR} STREQUAL "")
++	add_executable(scalar ${CMAKE_SOURCE_DIR}/contrib/scalar/scalar.c)
++	target_link_libraries(scalar common-main)
++	set_target_properties(scalar PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/contrib/scalar)
++	set_target_properties(scalar PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/contrib/scalar)
++endif()
++
+ parse_makefile_for_executables(git_builtin_extra "BUILT_INS")
  
--all: scalar$(X)
-+all: scalar$(X) ../../bin-wrappers/scalar
+ option(SKIP_DASHED_BUILT_INS "Skip hardlinking the dashed versions of the built-ins")
+@@ -953,6 +960,13 @@ string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
+ string(REPLACE "@@PROG@@" "git-cvsserver" content "${content}")
+ file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/git-cvsserver ${content})
  
- $(GITLIBS):
- 	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) $(subst ../../,,$@)
-@@ -29,6 +30,16 @@ $(TARGETS): $(GITLIBS) scalar.c
- 	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) $(patsubst %,contrib/scalar/%,$@)
- 
- clean:
--	$(RM) $(TARGETS)
-+	$(RM) $(TARGETS) ../../bin-wrappers/scalar
- 
--.PHONY: $(GITLIBS) all clean FORCE
-+../../bin-wrappers/scalar: ../../wrap-for-bin.sh Makefile
-+	@mkdir -p ../../bin-wrappers
-+	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-+	     -e 's|@@BUILD_DIR@@|$(shell cd ../.. && pwd)|' \
-+	     -e 's|@@PROG@@|contrib/scalar/scalar$(X)|' < $< > $@ && \
-+	chmod +x $@
++if(DEFINED ENV{INCLUDE_SCALAR} AND NOT ENV{INCLUDE_SCALAR} STREQUAL "")
++	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
++	string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
++	string(REPLACE "@@PROG@@" "contrib/scalar/scalar${EXE_EXTENSION}" content "${content}")
++	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/scalar ${content})
++endif()
 +
-+test: all
-+	$(MAKE) -C t
-+
-+.PHONY: $(GITLIBS) all clean test FORCE
-diff --git a/contrib/scalar/t/Makefile b/contrib/scalar/t/Makefile
-new file mode 100644
-index 00000000000..6170672bb37
---- /dev/null
-+++ b/contrib/scalar/t/Makefile
-@@ -0,0 +1,78 @@
-+# Run scalar tests
-+#
-+# Copyright (c) 2005,2021 Junio C Hamano, Johannes Schindelin
-+#
-+
-+-include ../../../config.mak.autogen
-+-include ../../../config.mak
-+
-+SHELL_PATH ?= $(SHELL)
-+PERL_PATH ?= /usr/bin/perl
-+RM ?= rm -f
-+PROVE ?= prove
-+DEFAULT_TEST_TARGET ?= test
-+TEST_LINT ?= test-lint
-+
-+ifdef TEST_OUTPUT_DIRECTORY
-+TEST_RESULTS_DIRECTORY = $(TEST_OUTPUT_DIRECTORY)/test-results
-+else
-+TEST_RESULTS_DIRECTORY = ../../../t/test-results
-+endif
-+
-+# Shell quote;
-+SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-+PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
-+TEST_RESULTS_DIRECTORY_SQ = $(subst ','\'',$(TEST_RESULTS_DIRECTORY))
-+
-+T = $(sort $(wildcard t[0-9][0-9][0-9][0-9]-*.sh))
-+
-+all: $(DEFAULT_TEST_TARGET)
-+
-+test: $(TEST_LINT)
-+	$(MAKE) aggregate-results-and-cleanup
-+
-+prove: $(TEST_LINT)
-+	@echo "*** prove ***"; GIT_CONFIG=.git/config $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
-+	$(MAKE) clean-except-prove-cache
-+
-+$(T):
-+	@echo "*** $@ ***"; GIT_CONFIG=.git/config '$(SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
-+
-+clean-except-prove-cache:
-+	$(RM) -r 'trash directory'.* '$(TEST_RESULTS_DIRECTORY_SQ)'
-+	$(RM) -r valgrind/bin
-+
-+clean: clean-except-prove-cache
-+	$(RM) .prove
-+
-+test-lint: test-lint-duplicates test-lint-executable test-lint-shell-syntax
-+
-+test-lint-duplicates:
-+	@dups=`echo $(T) | tr ' ' '\n' | sed 's/-.*//' | sort | uniq -d` && \
-+		test -z "$$dups" || { \
-+		echo >&2 "duplicate test numbers:" $$dups; exit 1; }
-+
-+test-lint-executable:
-+	@bad=`for i in $(T); do test -x "$$i" || echo $$i; done` && \
-+		test -z "$$bad" || { \
-+		echo >&2 "non-executable tests:" $$bad; exit 1; }
-+
-+test-lint-shell-syntax:
-+	@'$(PERL_PATH_SQ)' ../../../t/check-non-portable-shell.pl $(T)
-+
-+aggregate-results-and-cleanup: $(T)
-+	$(MAKE) aggregate-results
-+	$(MAKE) clean
-+
-+aggregate-results:
-+	for f in '$(TEST_RESULTS_DIRECTORY_SQ)'/t*-*.counts; do \
-+		echo "$$f"; \
-+	done | '$(SHELL_PATH_SQ)' ../../../t/aggregate-results.sh
-+
-+valgrind:
-+	$(MAKE) GIT_TEST_OPTS="$(GIT_TEST_OPTS) --valgrind"
-+
-+test-results:
-+	mkdir -p test-results
-+
-+.PHONY: $(T) aggregate-results clean valgrind
-diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
-new file mode 100755
-index 00000000000..16f2b72b126
---- /dev/null
-+++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -0,0 +1,17 @@
-+#!/bin/sh
-+
-+test_description='test the `scalar` command'
-+
-+TEST_DIRECTORY=$PWD/../../../t
-+export TEST_DIRECTORY
-+
-+# Make it work with --no-bin-wrappers
-+PATH=$PWD/..:$PATH
-+
-+. ../../../t/test-lib.sh
-+
-+test_expect_success 'scalar shows a usage' '
-+	test_expect_code 129 scalar -h
-+'
-+
-+test_done
+ #options for configuring test options
+ option(PERL_TESTS "Perform tests that use perl" ON)
+ option(PYTHON_TESTS "Perform tests that use python" ON)
 -- 
 gitgitgadget
 
