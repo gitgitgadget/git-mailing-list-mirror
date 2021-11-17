@@ -2,281 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA75BC433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 11:43:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C95BEC433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 12:02:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B0787613A2
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 11:43:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9241C61BC1
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 12:02:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236919AbhKQLqr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 06:46:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46958 "EHLO
+        id S237092AbhKQMFj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 07:05:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236915AbhKQLqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 06:46:44 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42606C061570
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 03:43:46 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id az33-20020a05600c602100b00333472fef04so4514403wmb.5
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 03:43:46 -0800 (PST)
+        with ESMTP id S229656AbhKQMFi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 07:05:38 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4677AC061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 04:02:40 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id b15so10000380edd.7
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 04:02:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=uxvEk8bsWNHYdCvBbz/8vZfbARJ8yJa5f/BX1xrBVRM=;
-        b=GQzo2ZS4BbqR+7hNBcVjmSHwhkNG/GCPu8VN9xiL0LeZK1kRdsLqilXpg1IvTLZyWy
-         oJWIAgxGrgz2yprD8Ms8Zd00OpQCNWCJmANwZp7AI0t6MQlVYaSb10/HAyTd7ZrFluKG
-         aMAQgRLvJzYGUrqUjPHnz1RgBBDYkND7Kn4Pt79jH96YcU/IdgM2FGNA5XDP2Lyc/MSN
-         F8h7y1ovp0cgbKeSokj5JRlU186SYOr2DxAlka2zhmZ6aI0K+LQBPE/G4XKiCpcF9M6c
-         bzsK0nNa5Vt75bFHuvsUmRMnD93uDkbmEgBaczM+qeFA03uJHgUsN4wpqutnVJJINwsm
-         i6Bg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=vITmmmQV0u1C/kY0ttJHvqCoRaB3jGfZLqtazTl1XR4=;
+        b=GYu1OO4BrnEnlc8/eHlTX+gjH8a/YNEpZ/65R/OvRiR+zmyO3A4FSIjm/hIpsnhn1A
+         psZwPa+FqoETkPqXIuZ83UnY+ss/fnNyVL46FKIEel6pfGaLmJ1z/9UdgS+oImQnEF4m
+         s/2OwiEF51SKoDyYvoBQ+0ahP8oY2nD75uNHMv4aYNtdO7kc16eUlIUB3apVM3+kRKQm
+         kpzc/TaOUrswZez0qT6jD/Rrz7GzUBwqHwaTyHcVaeOUSMpXXLgrhs1fjU3DhP8iyozq
+         8b5QUHBNBnszuKJMErAWE++yVkw9aN6FsenUbhgVE1woyWTu0Q9uYNFr3/UGFhxoDR4d
+         mL7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=uxvEk8bsWNHYdCvBbz/8vZfbARJ8yJa5f/BX1xrBVRM=;
-        b=ZBNdyTmdFctxUZywG7VBdbIm1aJHuuJ8J00YxVxMmQfeN0TMVvfMd06pU7RQQB2Bjr
-         OmGToP7h/dtNg0WHfQy/ujCzsvruFTkhubQLa1/YLB6SOzUku6jPCfCXDM+7IFvkHdtW
-         fg9R0H7l2Fe6PTSrKNSQgogNPQl4nM0Wec9Hkad6X053sY+6fpzaAztJe/VYSLNibz1m
-         vCZV8T9coQ/Lc1qWnDA5CuMq736Pv0M7kvNHYD4RXPviSrFHryiy8ecDeILwL9rTJULn
-         sf0uZe+T60hWvY9QoQtRDVubFIaUWYAscDENVjxoHScWw9WiTRL97cj3dIAN4v+EzgPr
-         JlSg==
-X-Gm-Message-State: AOAM5325ULCVoj1HkKaX39Tfz79uhI4r7i9SXq3cMeZAXqiQCSbOGksT
-        ztkMeEoMKi/3ESBmO8CslYxBMNIqXQlFsw==
-X-Google-Smtp-Source: ABdhPJzDtFtaf6x5ApLAF2+9ClR8152PTC2C2L4zACMj2h/+OlGfvhjGYPUwslKd460XRF48vmQ3xA==
-X-Received: by 2002:a05:600c:4e02:: with SMTP id b2mr73830652wmq.105.1637149424524;
-        Wed, 17 Nov 2021 03:43:44 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e18sm20398678wrs.48.2021.11.17.03.43.43
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=vITmmmQV0u1C/kY0ttJHvqCoRaB3jGfZLqtazTl1XR4=;
+        b=0jdD9W8yOWwe250n/OGv45Byt7pME38VsEQJWcVy0pjdPbuJeSQ4bxH/fgNEUmzbYD
+         grm+liYtrIw6A3afxKiNZLAJ4RRDE882WxrNrWgMe6gdODiGyiC4NIDtWaZ+Yh9r+kP2
+         VplgE0lq+yjymT1XuHzDkOHA5y2/VIsBCP407jbdaf9Oohe3qu43+94ZEdCs/iLFTnqb
+         l1UT0g/KBOa8+4s/b1YTSdYiktNRmlcqjz8/NM3uNGzOQAho+ShNbpRVGobKgEETi7G7
+         uZcCyS3r0M50V2F5YOtcwJeC7BRD+sKu5LUXr8jj+sWkUHJWFy4/u6hzBWc3ETk/nOIe
+         q3AQ==
+X-Gm-Message-State: AOAM530puRM8vwSUMxOLgmqufv5cYDdBu6DA+m0C8NZV51BWxMzTnOUW
+        /QmG0IFXF6n298MtuzpuBbdtss+BaV5Fcg==
+X-Google-Smtp-Source: ABdhPJxcPhBeoqeZkQMEmX2ZnC0fxUbUz/uY2nSiUyo2TgZuHdtLeO1sS9Kq7pO5h0CopmNB4gJptQ==
+X-Received: by 2002:a17:907:72d2:: with SMTP id du18mr20736180ejc.570.1637150558573;
+        Wed, 17 Nov 2021 04:02:38 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id hp3sm10075700ejc.61.2021.11.17.04.02.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 03:43:44 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Albert Cui <albertcui@google.com>,
+        Wed, 17 Nov 2021 04:02:37 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mnJe9-0008Gl-3g;
+        Wed, 17 Nov 2021 13:02:37 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC PATCH 2/2] submodule: add test mode for checking absence of "superProjectGitDir"
-Date:   Wed, 17 Nov 2021 12:43:40 +0100
-Message-Id: <RFC-patch-2.2-b49d4c8db7d-20211117T113134Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.0.796.g2c87ed6146a
-In-Reply-To: <RFC-cover-0.2-00000000000-20211117T113134Z-avarab@gmail.com>
-References: <20211117005701.371808-1-emilyshaffer@google.com> <RFC-cover-0.2-00000000000-20211117T113134Z-avarab@gmail.com>
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3 18/23] Makefiles: add and use wildcard "mkdir -p"
+ template
+Date:   Wed, 17 Nov 2021 12:52:11 +0100
+References: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com>
+ <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
+ <patch-v3-18.23-d61e2b44f68-20211116T114334Z-avarab@gmail.com>
+ <20211117025148.awdha4udu5kmzwbe@glandium.org>
+ <211117.86wnl76sal.gmgdl@evledraar.gmail.com>
+ <20211117093947.ifkrvddmiiu3hg2v@glandium.org>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211117093947.ifkrvddmiiu3hg2v@glandium.org>
+Message-ID: <211117.86k0h76lcy.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a GIT_TEST_SUBMODULE_CACHE_SUPERPROJECT_DIR=false test mode to
-assert what happens if "submodule.superProjectGitDir" is absent or
-missing, this checks if the "fallback" codepath in
-get_superproject_working_tree() is equivalent to the config lookup.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- ci/run-build-and-tests.sh          |  1 +
- git-submodule.sh                   |  2 +-
- submodule.c                        |  7 +++++++
- t/lib-submodule-superproject.sh    | 24 ++++++++++++++++++++++++
- t/t7406-submodule-update.sh        |  9 ++++-----
- t/t7412-submodule-absorbgitdirs.sh | 19 ++++++-------------
- 6 files changed, 43 insertions(+), 19 deletions(-)
- create mode 100644 t/lib-submodule-superproject.sh
+On Wed, Nov 17 2021, Mike Hommey wrote:
 
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index cc62616d806..5132a210057 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -33,6 +33,7 @@ linux-gcc)
- 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
- 	export GIT_TEST_WRITE_REV_INDEX=1
- 	export GIT_TEST_CHECKOUT_WORKERS=2
-+	export GIT_TEST_SUBMODULE_CACHE_SUPERPROJECT_DIR=false
- 	make test
- 	;;
- linux-clang)
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 7c247bee7f6..2b423ee05bc 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -453,7 +453,7 @@ cmd_update()
- 		# changed, unless it's a fresh clone. Write to worktree if
- 		# applicable, and point to superproject's worktree gitdir if
- 		# applicable.
--		if test -z "$just_cloned"
-+		if test -z "$just_cloned" && test "$GIT_TEST_SUBMODULE_CACHE_SUPERPROJECT_DIR" != "false"
- 		then
- 			sm_gitdir="$(git -C "$sm_path" rev-parse --absolute-git-dir)"
- 			relative_gitdir="$(git rev-parse --path-format=relative \
-diff --git a/submodule.c b/submodule.c
-index ad95cdda07d..f0411a320a8 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2143,6 +2143,9 @@ static void relocate_single_git_dir_into_superproject(const char *path)
- 	if (!git_configset_get_bool(&sub_cs, "extensions.worktreeConfig", &tmp))
- 		strbuf_addstr(&config_path, ".worktree");
- 
-+	if (!git_env_bool("GIT_TEST_SUBMODULE_CACHE_SUPERPROJECT_DIR", 1))
-+		goto fallback;
-+
- 	git_config_set_in_file(config_path.buf, "submodule.superprojectGitdir",
- 			       relative_path(absolute_path(get_git_dir()),
- 					     real_new_git_dir, &sb));
-@@ -2150,6 +2153,8 @@ static void relocate_single_git_dir_into_superproject(const char *path)
- 	git_configset_clear(&sub_cs);
- 	strbuf_release(&config_path);
- 	strbuf_release(&sb);
-+
-+fallback:
- 	free(old_git_dir);
- 	free(real_old_git_dir);
- 	free(real_new_git_dir);
-@@ -2332,6 +2337,8 @@ int get_superproject_working_tree(struct strbuf *buf)
- 	const char *wt_prefix = "worktree ";
- 	int rc = 0;
- 
-+	if (!git_env_bool("GIT_TEST_SUBMODULE_CACHE_SUPERPROJECT_DIR", 1))
-+		goto fallback;
- 
- 	/* Do we know we have a superproject? */
- 	if (git_config_get_string("submodule.superprojectgitdir", &super_gitdir))
-diff --git a/t/lib-submodule-superproject.sh b/t/lib-submodule-superproject.sh
-new file mode 100644
-index 00000000000..4d49dd3782e
---- /dev/null
-+++ b/t/lib-submodule-superproject.sh
-@@ -0,0 +1,24 @@
-+#!/bin/sh
-+
-+test_lazy_prereq SUBMODULE_CACHE_SUPERPROJECT_DIR '
-+	test_bool_env GIT_TEST_SUBMODULE_CACHE_SUPERPROJECT_DIR true
-+'
-+
-+test_cmp_submodule_superprojectgitdir () {
-+	if ! test_have_prereq SUBMODULE_CACHE_SUPERPROJECT_DIR
-+	then
-+		return 0
-+	fi
-+
-+	git -C "$1" config submodule.superprojectGitDir >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_file_not_empty_superprojectgitdir () {
-+	if ! test_have_prereq SUBMODULE_CACHE_SUPERPROJECT_DIR
-+	then
-+		return 0
-+	fi
-+
-+	test_file_not_empty "$(git -C $1 rev-parse --absolute-git-dir)/$2"
-+}
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 01e1acaf300..f362f8d0ef0 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -13,6 +13,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-submodule-superproject.sh
- 
- 
- compare_head()
-@@ -1068,8 +1069,7 @@ test_expect_success 'submodule update adds superproject gitdir to older repos' '
- 	 test-tool path-utils relative_path \
- 		"$(git rev-parse --absolute-git-dir)" \
- 		"$(git -C submodule rev-parse --absolute-git-dir)" >expect &&
--	 git -C submodule config submodule.superprojectGitdir >actual &&
--	 test_cmp expect actual
-+	 test_cmp_submodule_superprojectgitdir submodule
- 	)
- '
- 
-@@ -1081,10 +1081,9 @@ test_expect_success 'submodule update uses config.worktree if applicable' '
- 	 test-tool path-utils relative_path \
- 		"$(git rev-parse --absolute-git-dir)" \
- 		"$(git -C submodule rev-parse --absolute-git-dir)" >expect &&
--	 git -C submodule config submodule.superprojectGitdir >actual &&
--	 test_cmp expect actual &&
-+	 test_cmp_submodule_superprojectgitdir submodule &&
- 
--	 test_file_not_empty "$(git -C submodule rev-parse --absolute-git-dir)/config.worktree"
-+	 test_file_not_empty_superprojectgitdir submodule config.worktree
- 	)
- '
- 
-diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
-index 5753f902687..6faab7e56e9 100755
---- a/t/t7412-submodule-absorbgitdirs.sh
-+++ b/t/t7412-submodule-absorbgitdirs.sh
-@@ -7,6 +7,7 @@ directory into the superproject.
- '
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-submodule-superproject.sh
- 
- test_expect_success 'setup a real submodule' '
- 	git init sub1 &&
-@@ -38,9 +39,7 @@ test_expect_success 'absorb the git dir' '
- 
- 	test-tool path-utils relative_path "$superproject_gitdir" \
- 		"$submodule_gitdir" >expect &&
--	git -C sub1 config submodule.superprojectGitDir >actual &&
--
--	test_cmp expect actual
-+	test_cmp_submodule_superprojectgitdir sub1
- '
- 
- test_expect_success 'absorbing does not fail for deinitialized submodules' '
-@@ -78,9 +77,7 @@ test_expect_success 'absorb the git dir in a nested submodule' '
- 
- 	test-tool path-utils relative_path "$sub1_gitdir" "$sub1_nested_gitdir" \
- 		>expect &&
--	git -C sub1/nested config submodule.superprojectGitDir >actual &&
--
--	test_cmp expect actual
-+	test_cmp_submodule_superprojectgitdir sub1
- '
- 
- test_expect_success 're-setup nested submodule' '
-@@ -170,9 +167,7 @@ test_expect_success 'absorbgitdirs works when called from a superproject worktre
- 
- 	test-tool path-utils relative_path "$superproject_gitdir" \
- 		"$submodule_gitdir" >expect &&
--	git -C sub4 config submodule.superprojectGitDir >actual &&
--
--	test_cmp expect actual
-+	test_cmp_submodule_superprojectgitdir sub4
- 	)
- '
- 
-@@ -199,12 +194,10 @@ test_expect_success 'absorbgitdirs works with a submodule with worktree config'
- 
- 	test-tool path-utils relative_path "$superproject_gitdir" \
- 		"$submodule_gitdir" >expect &&
--	git -C sub5 config submodule.superprojectGitDir >actual &&
--
--	test_cmp expect actual &&
-+	test_cmp_submodule_superprojectgitdir sub5 &&
- 
- 	# make sure the config went into the submodule config.worktree
--	test_file_not_empty "$submodule_gitdir/config.worktree"
-+	test_file_not_empty_superprojectgitdir sub5 config.worktree
- 	)
- '
- 
--- 
-2.34.0.796.g2c87ed6146a
+> On Wed, Nov 17, 2021 at 10:26:27AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>=20
+>> On Wed, Nov 17 2021, Mike Hommey wrote:
+>>=20
+>> > On Tue, Nov 16, 2021 at 01:00:18PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0=
+ Bjarmason wrote:
+>> >> Add a template to do the "mkdir -p" of $(@D) (the parent dir of $@)
+>> >> for us, and use it for the "make lint-docs" targets I added in
+>> >> 8650c6298c1 (doc lint: make "lint-docs" non-.PHONY, 2021-10-15).
+>> >>=20
+>> >> As seen in 4c64fb5aad9 (Documentation/Makefile: fix lint-docs mkdir
+>> >> dependency, 2021-10-26) maintaining these manual lists of parent
+>> >> directory dependencies is fragile, in addition to being obviously
+>> >> verbose.
+>> >>=20
+>> >> I used this pattern at the time because I couldn't find another method
+>> >> than "order-only" prerequisites to avoid doing a "mkdir -p $(@D)" for
+>> >> every file being created, which as noted in [1] would be significantly
+>> >> slower.
+>> >>=20
+>> >> But as it turns out we can use this neat trick of only doing a "mkdir
+>> >> -p" if the $(wildcard) macro tells us the path doesn't exist. A re-run
+>> >> of a performance test similar to thatnoted downthread of [1] in [2]
+>> >> shows that this is faster, in addition to being less verbose and more
+>> >> reliable (this uses my "git-hyperfine" thin wrapper for "hyperfine"[3=
+]):
+>> >>=20
+>> >>     $ git hyperfine -L rev HEAD~0,HEAD~1 -b 'make -C Documentation li=
+nt-docs' -p 'rm -rf Documentation/.build' 'make -C Documentation lint-docs'
+>> >>     Benchmark 1: make -C Documentation lint-docs' in 'HEAD~0
+>> >>       Time (mean =C2=B1 =CF=83):      2.129 s =C2=B1  0.011 s    [Use=
+r: 1.840 s, System: 0.321 s]
+>> >>       Range (min =E2=80=A6 max):    2.121 s =E2=80=A6  2.158 s    10 =
+runs
+>> >>=20
+>> >>     Benchmark 2: make -C Documentation lint-docs' in 'HEAD~1
+>> >>       Time (mean =C2=B1 =CF=83):      2.659 s =C2=B1  0.002 s    [Use=
+r: 2.306 s, System: 0.397 s]
+>> >>       Range (min =E2=80=A6 max):    2.657 s =E2=80=A6  2.662 s    10 =
+runs
+>> >>=20
+>> >>     Summary
+>> >>       'make -C Documentation lint-docs' in 'HEAD~0' ran
+>> >>         1.25 =C2=B1 0.01 times faster than 'make -C Documentation lin=
+t-docs' in 'HEAD~1'
+>> >>=20
+>> >> So let's use that pattern both for the "lint-docs" target, and a few
+>> >> miscellaneous other targets.
+>> >>=20
+>> >> This method of creating parent directories is explicitly racy in that
+>> >> we don't know if we're going to say always create a "foo" followed by
+>> >> a "foo/bar" under parallelism, or skip the "foo" because we created
+>> >> "foo/bar" first. In this case it doesn't matter for anything except
+>> >> that we aren't guaranteed to get the same number of rules firing when
+>> >> running make in parallel.
+>> >
+>> > Something else that is racy is that $(wildcard) might be saying the
+>> > directory doesn't exist while there's another make subprocess that has
+>> > already started spawning `mkdir -p` for that directory.
+>> > That doesn't make a huge difference, but you can probably still end up
+>> > with multiple `mkdir -p` runs for the same directory.
+>> >
+>> > I think something like the following could work while avoiding those
+>> > races:
+>> >
+>> > define create_parent_dir_RULE
+>> > $(1): | $(dir $(1)).
+>> > ALL_DIRS +=3D $(dir $(1))
+>> > endef
+>> >
+>> > define create_parent_dir_TARGET
+>> > $(1)/.: $(dir $(1)).
+>> > 	echo mkdir $$(@D)
+>
+> erf, s/echo //
+>
+>> > endef
+>> >
+>> > $(eval $(call create_parent_dir_RULE, first/path/file))
+>> > $(eval $(call create_parent_dir_RULE, second/path/file))
+>> > # ...
+>> >
+>> > $(foreach dir,$(sort $(ALL_DIRS)),$(eval $(call create_parent_dir_TARG=
+ET,$(dir:%/=3D%))))
+>>=20
+>> I think the "race" just isn't a problem, and makes managing this much
+>> simpler.
+>>=20
+>> I.e. we already rely on "mkdir -p" not failing on an existing directory,
+>> so the case where we redundantly try to create a directory that just got
+>> created by a concurrent process is OK, and as the quoted benchmark shows
+>> is much faster than a similar (but not quite the same as) a
+>> dependency-based implementaiton.
+>>=20
+>> I haven't implemented your solution, but it seems to be inherently more
+>> complex.
+>>=20
+>> I.e. with the one I've got you just stick the "mkdir if needed"
+>> one-liner in each rule, with yours you'll need to accumulate things in
+>> ALL_DIRS, and have some foreach somewhere or dependency relationship to
+>> create those beforehand if they're nested, no?
+>
+> For each rule, it would also be a oneliner to add above the rule. The rest
+> would be a prelude and a an epilogue to stick somewhere in the Makefile.
 
+How would that epilogue know to handle cases where we're running "clean"
+or whatever thing doesn't want to create the full set of directories
+we've accumulated in ALL_DIRS while parsing the Makefile?
+
+Won't that require extensive use of the same sort of MAKECMDGOALS
+trickery I added for one target in 8cc804d0abf (doc build: speed up
+"make lint-docs", 2021-10-15)?
+
+I can imagine how we /could/ get that to work, but so far I just dont's
+see the point. The wildcard trick I'm proposing here seems to be the
+best of both worlds, it's both faster than anything else I've come up
+with or seen, and requires zero management outside the rule itself.
+
+Also, only the lint-docs rule I'm modifying here went to any trouble to
+avoid redundant "mkdir" calls at all, the rest are all doing a "mkdir
+parent-dir" every single time. So as far as any edge cases with these
+rules tripping over one another are concerned I think we're already
+handling that.
+
+Well, I suppose *theoretically* not, because I'm assuming that we only
+ever run the equivalent of "make all" or "make clean && make all" and
+not "make -jN clean all".
+
+But while it's possible to get a Makefile working that can clean and
+build things in parallel in practice nobody does that, and ours
+doesn't. If you try that it'll fail right away on some bad dependency
+(which we both just generated and rm -rf'd).
