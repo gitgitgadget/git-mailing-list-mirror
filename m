@@ -2,108 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD760C433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 01:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89D25C433EF
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 01:51:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A71E61B72
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 01:51:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 65A7961501
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 01:51:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231582AbhKQBx5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 20:53:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54016 "EHLO
+        id S232618AbhKQByp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 20:54:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230145AbhKQBx4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 20:53:56 -0500
-Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE342C061570
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 17:50:58 -0800 (PST)
-Received: by mail-ua1-x92e.google.com with SMTP id o1so2423699uap.4
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 17:50:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=H3cgRk8kUDEg5I7DkBWUJSme+G3mkPxt7krqAa4bGh0=;
-        b=U/r7OMwo35DXmaXIyuiFPwuNFxaAI+XNEwjSlxloFKsEc5lU7FtGYROmwmVhbIzzNy
-         xtuJCZPyZlL7lEhCHMMY6SHeOB9C+Z9XOPILnuP12+VH1FtHHfgsL+XWbP5KH7mr9JrA
-         IwSY0VasP/mrcvAj1SKj49lYHtyTYaE9kfcgi+xd4Z5NxnfiEbw2cShC25rpwtsxZ/mu
-         3RpbQr5ALkzNcBzwlUWRkXP3Ek0lDmJ+9feLeb1wSyS9pcl7cfT73QoGde4gZ4BdIe6c
-         RSFrdG5uiA1rpb+qUgtmAffyxrgwQIeL4MxGVjsu+gKK1E57Xm8bOlcE54XhlqIz7U5/
-         jBGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=H3cgRk8kUDEg5I7DkBWUJSme+G3mkPxt7krqAa4bGh0=;
-        b=Ou3gx9Qx76clbCs9AvZN/Zl3ckbslVdOu7+SFmCBEgVIT/JUkzhsz5iPNIOy7Nf8Xq
-         +hyXakQZMbla6ss2VtwNVhD82soPPjcSrrtJ6rViDJ3bB9UKY6YsqUIUuX0uP0noECMw
-         QmAmTVCobhlAgv96DsuLZn9UjyRUmn707MyOu3JAZM3Gh4OqNKTUbkJyxWKh0J0K+y3K
-         Bp1eCUFmIWn+wowXcSCpPMkIBScO/NvBRtT7g7fsYxw7oqi96kLV7ajTtp9fZ61XZV8+
-         jB2Yg5ribCIdbFHHtth0Jowd9QNamgwma44bn6csMBsUZH1oBLvSWUd/KWQM48Eryudv
-         T4oA==
-X-Gm-Message-State: AOAM531GpufBq1BfevoomxPGPrdhOOcRmLO5dRnUUZU/WIH2qW5k4SZQ
-        2YDuyoVb95c0w7TyZgIVUfQQ6XSKhXgkmoSqdDc=
-X-Google-Smtp-Source: ABdhPJwnU7xaYBUVsdaauHqoalqRpeRcZX4budZpL9aCikM1RQJyAJXxDqVTPOmmCzgEI8+XGFpj2i2eOY8axp9iQVU=
-X-Received: by 2002:a05:6102:512b:: with SMTP id bm43mr63336868vsb.14.1637113857978;
- Tue, 16 Nov 2021 17:50:57 -0800 (PST)
+        with ESMTP id S232149AbhKQByo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 20:54:44 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71743C061570
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 17:51:46 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id B5A9D5B482;
+        Wed, 17 Nov 2021 01:51:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1637113905;
+        bh=XqoN+md7XOIm6tO90aFeUhEhJ7Ld+oJBYPXBxoPnCXM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=zo+BVjkuxvNEWJ3z7yMSFvLdSYumTZ/7Fb90iiC1kAipJ/eNk05Vg2xoJw2wdReEU
+         YJFOWORE8Z6FCLoGI868usU2yLCHoGP41WgX2cjrqblByb+sxbJHtE2BewA7cBvbjz
+         Q7KiCFhteTwqQv2CeIRiyEFPFtodv4MQKfllkPlFo7KmP7Jnbyg899ajZ/Yz/JjDUw
+         EkVRwKaEmmAjG+PCgzS0z7bN4c0ycmOoLwzhezuD1QkfL/s2qVFVoUiNTfcpjIAx+9
+         A8pcqpTIMqgmJoijyKaYwnzup2T0ZXaUDKgjyTppQNtSS4iSoW/UDkiT/c3YuAdMHi
+         prpJCMMc+AQCSrXncRaRcN/+IBMEzjk0XfxLu8SfHmo/Pfk2+9FssIP695QXxuD5SH
+         +oZjr5FMou5Mzx7yUGqMWSiZ7LGe9QLqFWwaTXRUWmfTFaucSHdXrXbtTG4lND38oB
+         bqK7slGIuGG17vGntxWoPUD0/1nOkLfOD6p7LFHuB3Aw0l9kGcB
+Date:   Wed, 17 Nov 2021 01:51:43 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Add a test balloon for C99
+Message-ID: <YZRgL5YYm7JCQQQp@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20211114212437.1466695-1-sandals@crustytoothpaste.net>
+ <xmqqy25pj43a.fsf@gitster.g>
+ <YZLh/1xkxRGDn76u@camp.crustytoothpaste.net>
+ <xmqqpmqzapqn.fsf@gitster.g>
 MIME-Version: 1.0
-References: <20211116033542.3247094-1-sandals@crustytoothpaste.net>
- <20211116033542.3247094-2-sandals@crustytoothpaste.net> <YZPOzqU0UQDVA57R@coredump.intra.peff.net>
- <009d01d7db03$354ecae0$9fec60a0$@nexbridge.com> <YZQzqjWMzaWVkkfP@camp.crustytoothpaste.net>
- <00e001d7db40$985c61a0$c91524e0$@nexbridge.com> <YZRUzHVS32W4Flo/@camp.crustytoothpaste.net>
-In-Reply-To: <YZRUzHVS32W4Flo/@camp.crustytoothpaste.net>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Tue, 16 Nov 2021 17:50:44 -0800
-Message-ID: <CAPUEspiHnTkwbUJ5o+fT2u4Kn+fwNe-3FoqVtNsjTF+Pg6Tryg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] wrapper: add a helper to generate numbers from a CSPRNG
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        rsbecker@nexbridge.com, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="jJhnVZrRB5/nxjg4"
+Content-Disposition: inline
+In-Reply-To: <xmqqpmqzapqn.fsf@gitster.g>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 16, 2021 at 5:04 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2021-11-16 at 23:20:45, rsbecker@nexbridge.com wrote:
-> > We do link with libcurl and use OpenSSL as a DLL to handle TLS. The
-> > underlying random source for the nonstop-* configurations as of
-> > OpenSSL 3.0 are PNRG supplied by the vendor (HPE) on ia64 and the
-> > hardware rdrand* instructions on x86. I know that part of the OpenSSL
-> > code rather intimately.
->
-> Great, as long as you don't define NO_OPENSSL, I think I can make this
-> work with OpenSSL by calling RAND_bytes, which will use whatever OpenSSL
-> uses.
 
-not that RAND_bytes return high entropy bytes (like /dev/random) and
-is therefore limited and prone to draining, blocking and erroring when
-drained, so if we are going this route, will most likely need a second
-layer on top that doesn't block (like arc4random does), and at that
-point I would think we would rather use something battle tested than
-our own.
+--jJhnVZrRB5/nxjg4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-for the little amount of random data we need, it might be wiser to
-fallback to something POSIX like lrand48 which is most likely to be
-available, but of course your tests that consume lots of random data
-will need to change.
+On 2021-11-16 at 19:02:08, Junio C Hamano wrote:
+> Windows does not need me to worry about them---they can fend for
+> themselves.  I cannot tell if the original discussion behind the
+> patch considered the current situation in non-mac BSD land (which I
+> am not familiar with), or even less common platforms like NonStop.
 
-Carlo
+Oh, I did full well consider BSD land.  They are generally up on the
+latest standards, and I would even say that most proprietary Unix
+systems are also far enough along from what I know of them.  I do try
+specifically to support BSD systems and consider their needs to the best
+of my abilities.
 
-PS. Probably missing context as I don't know what was discussed
-previously, but indeed making this the libc problem by using mkstemp
-(plus some compatibility on top), like Peff mentioned seems like a
-more straightforward "fix"
+As for NonStop, I checked, and it already forces C99 mode because we use
+enough features, like inline, that C89 doesn't support and so it needs
+to do that already.
 
+I do appreciate you looking out for them, though.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
+--jJhnVZrRB5/nxjg4
+Content-Type: application/pgp-signature; name="signature.asc"
 
-  I'll work on that for a v2 to see if that will meet the needs for
-> your platform, and if not, I'll try something else.
->
-> That should also have the pleasant side effect of making this more
-> portable even for those people who do have less common platforms, since
-> OpenSSL will likely be an option there.
-> --
-> brian m. carlson (he/him or they/them)
-> Toronto, Ontario, CA
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYZRgLwAKCRB8DEliiIei
+gU2sAQCQVXZ5i6LGPgzwqAVpuzaUV3Dg5ZokmCnWgxVaxp5TVAD/VfyoPrebKULx
+gS5sWj1/P27HWDRaQ+Q6Aod/xmYHhAU=
+=TNR2
+-----END PGP SIGNATURE-----
+
+--jJhnVZrRB5/nxjg4--
