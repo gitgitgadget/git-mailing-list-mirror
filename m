@@ -2,116 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1BB7C433EF
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 14:38:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AF8AC433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 15:18:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C22CF61401
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 14:38:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F99D6187F
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 15:18:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237991AbhKQOld (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 09:41:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59106 "EHLO
+        id S236697AbhKQPVB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 10:21:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229768AbhKQOl0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 09:41:26 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A2B0C061570
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 06:38:28 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id t5so12433020edd.0
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 06:38:28 -0800 (PST)
+        with ESMTP id S236497AbhKQPUz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 10:20:55 -0500
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60275C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 07:17:56 -0800 (PST)
+Received: by mail-qk1-x729.google.com with SMTP id p4so2864204qkm.7
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 07:17:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=qDh0I62ae81COe+GAZecnQHmZjqzEm5MluyHrTthUes=;
-        b=McQIjNHMgmVhOaUG+MWrrN72wCHCZy+A/SkvhoWhKhf4bzbk7YOO07asJ6eye56rZ1
-         1raL/E1ijKwG84Lr6iAlW08S/ZWcvdLGDtNdqAe9xO5OWqLWrt9q1cUyZ5yMH+Qwt+pf
-         qCsJGFJxIm5+hUKq407bdZyO7UaQx4xNZHJBHjryCbYLiATws2HD2nK45OGloPpOs1xo
-         XwWYGzpoGjk4Xoxt1Upa9jNlTTWhlMVQDz0LEiThkQZ4IG756rt25n+4/81H8RzB8atS
-         EkFklRmOdxlNiag1GCoqEFgzIrS1ePP2izmHMyAyQfhOxsVzI7qumAn/JjF7cA/OiOcI
-         lB3g==
+        h=message-id:date:mime-version:user-agent:content-language:from
+         :subject:to:content-transfer-encoding;
+        bh=xR9/JVI7b0SSrqePrV6g3ymGRdohKFlLl46hM4uDEK4=;
+        b=ArBtr97jAaCihC5f4+1ACx6R4eV+laUJmPcggcOafrMp1lf2Qoa4XOwbXkaboaSBer
+         B22Kd0JvbCs2sgAgjQ88a7iUc0Feyx+7QWOBIL/OnYoChv8gSD4RAsu88rc8Pbr7DxQK
+         csCO10zjOtuFfHeC9xrfHSri3BsHv8H0f+n+FIruf5BH79ScYb9/czMdZLugofLh+19d
+         PKBSWCFEJdtVK3+bt8gdeiMy0G8sCkIK8+MwLTsZ8yPmL+OP5r3f60ZvsnHXYXaX1iLD
+         klTj0yNxcOBpfFY/hFSw8bFYc2I96m2NS8tLoSz8EVKTaiZ6FO5NFUjV+5pM5YyRuNMo
+         o9yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=qDh0I62ae81COe+GAZecnQHmZjqzEm5MluyHrTthUes=;
-        b=ZxdjV/xHt1y5SoWR+jkNJSaxu+hs/2ChnOAshzhpuxXCPTYC8oo3HW+xUOOe6ADATL
-         rrrd/PlYaVmjT9U0WdwhYc8KIyPIcoQ+JSq/TdOhoNYTOVkLMmVU8fWnp3WY6MF1v0XN
-         Tm/8ko4/rbA8TT2qHqmtamvUy7l7f0ZooQy0kLWFLjltDlA/ZtIHkP3xZBXRtqTzgPxI
-         OR+NUS9P9g0hZzfjsZvPXwPRNSXssKRe4gNmmPR+hP0dU6kiGlz1yeWyUPgDi1Hr9Mk0
-         P8pL9sQUYs2mNiayGswjAU2zsP1KPh6cIYeKuDRJOKAHXhDRvO3bTJ9/QTzQm08xUThB
-         WZsg==
-X-Gm-Message-State: AOAM532cAbfkafd1XwilWN8TeVJQLwsxvtAV4OFzs7N/+KS/rRToPeDQ
-        zgnN2scRfD+N7BIMFZn2d0M=
-X-Google-Smtp-Source: ABdhPJwK3SYfwX9e0OhDK5bIV0UlQ5i0GrACoAtcZjV7Y+MiRdQ1tLBlT82rLXx+T4Al2Oc5OLjZ2g==
-X-Received: by 2002:a17:906:9941:: with SMTP id zm1mr22498357ejb.466.1637159906452;
-        Wed, 17 Nov 2021 06:38:26 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id n1sm10953183edf.45.2021.11.17.06.38.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 06:38:26 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mnM4v-000BR5-3T;
-        Wed, 17 Nov 2021 15:38:25 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Hamza Mahfooz <someguy@effective-light.com>
-Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com,
-        Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] grep: avoid setting UTF mode when not needed
-Date:   Wed, 17 Nov 2021 15:31:19 +0100
-References: <87bl2kv309.fsf@igel.home>
- <20211116110035.22140-1-carenas@gmail.com>
- <211116.86tugcp8mg.gmgdl@evledraar.gmail.com>
- <R33O2R.WYXS4AQP7W05@effective-light.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <R33O2R.WYXS4AQP7W05@effective-light.com>
-Message-ID: <211117.867dd67spq.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:from:subject:to:content-transfer-encoding;
+        bh=xR9/JVI7b0SSrqePrV6g3ymGRdohKFlLl46hM4uDEK4=;
+        b=lz+K7KVKX9zPOve7ikqN1x/LDewu1RwlTza3ntLTzQj7Qwug8/PhFKwBu2xiD9KoiW
+         syqYkQoPUYZrju+NGmMSRUvYXKcteKbLfAZQSZy6hfh+VejUiVjLxgsPV5qIYTMHd2Uv
+         mwS/f6qChCdv9fixtA+O2vfO0ri5W9cLEwir3Ec4OB0axURRGJLNg4b0BIK9yZKVaASu
+         cpMjMAq053LsMNuNZY9KU+rzD+HrCXmo+aheFpHIQ5tTv5qqoKOLTafxZRfEnixH8oM2
+         fZOldH8mgUsu2CPYxbIJWyXaQuWR4LSB44bi/9sScwI4cpB/0RipgSY8A3WTYAEVJIyk
+         gvag==
+X-Gm-Message-State: AOAM533d5RSt4Tu1LF7cjaOsg8XSDQ+2pXxOm3WHVwbTueca4SuHyF3/
+        HojA8YA6BEBnVwH5KNrw8SMyjjvfaug=
+X-Google-Smtp-Source: ABdhPJyDi1nHu2rGbU1d+Uc/Jc38kJNaRbwQsZWcWUB8K4vaf7KV8mXB64ZMnBl7NlkT6/At7aPJIA==
+X-Received: by 2002:a37:ae83:: with SMTP id x125mr13738911qke.37.1637162275037;
+        Wed, 17 Nov 2021 07:17:55 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:d1ee:6c8f:319:f5? ([2600:1700:e72:80a0:d1ee:6c8f:319:f5])
+        by smtp.gmail.com with ESMTPSA id t35sm89759qtc.83.2021.11.17.07.17.54
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Nov 2021 07:17:54 -0800 (PST)
+Message-ID: <9393e572-0666-6485-df29-abad5e0d32a1@gmail.com>
+Date:   Wed, 17 Nov 2021 10:17:53 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.1
+Content-Language: en-US
+From:   Derrick Stolee <stolee@gmail.com>
+Subject: [Question] Unicode weirdness breaking tests on ZFS?
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I recently had to pave my Linux machine, so I updated it to Ubuntu
+21.10 and had the choice to start using the ZFS filesystem. I thought,
+"Why not?" but now I maybe see why.
 
-On Tue, Nov 16 2021, Hamza Mahfooz wrote:
+Running the Git test suite at the v2.34.0 tag on my machine results in
+these failures:
 
-> Does anyone know if Ren=C3=A9's patch causes older PCRE versions to break?
-> If it doesn't I think Ren=C3=A9's patch plus =C3=86var's fix is the way t=
-o go.
+t0050-filesystem.sh                   (Wstat: 0 Tests: 11 Failed: 0)
+  TODO passed:   9-10
+t0021-conversion.sh                   (Wstat: 256 Tests: 41 Failed: 1)
+  Failed test:  31
+  Non-zero exit status: 1
+t3910-mac-os-precompose.sh            (Wstat: 256 Tests: 25 Failed: 10)
+  Failed tests:  1, 4, 6, 8, 11-16
+  TODO passed:   23
+  Non-zero exit status: 1
 
-I haven't tested, but I think a very good thing to do/test (hint hint!)
-is to add a CI job where we build/test git in combination with various
-PCRE versions.
+These are all related to the UTF8_NFD_TO_NFC prereq.
 
-PCRE2 used to be in SVN, but nowadays it's in a git repository on
-github: https://github.com/PhilipHazel/pcre2
+Zooming in on t0050, these tests are marked as "test_expect_failure" due
+to an assignment of $test_unicode using the UTF8_NFD_TO_NFC prereq:
 
-It should be a small matter of copying the existing template to set up a
-"matrix" where we test various known older pcre versions, they're
-available as tags in the git repository.
 
-"--enable-jit" and "--disable-jit" should be part of that matrix too,
-and "--enable-utf" and "--disable-utf".
+$test_unicode 'rename (silent unicode normalization)' '
+	git mv "$aumlcdiar" "$auml" &&
+	git commit -m rename
+'
 
-See the "microsoft/vcpkg" and "regular:" parts of
-.github/workflows/main.git for relevant examples, i.e. this would
-e.g. clone pcre2.git into compat/pcre2-repo, check out a given version
-from the matrix. Then:
+$test_unicode 'merge (silent unicode normalization)' '
+	git reset --hard initial &&
+	git merge topic
+'
 
-    cd compat/pcre2-repo &&
-    ./autogen.sh &&
-    ./configure --prefix=3D"$PWD/inst" &&
-    make install
 
-Then at the top-level:
+The prereq creates two files using unicode characters that could
+collapse to equivalent meanings:
 
-    make USE_LIBPCRE=3DY CFLAGS=3D-O3 LIBPCREDIR=3D"$PWD/compat/pcre2-repo/=
-inst"
 
-Then run "make test", for saving some CPU & speeding up the runs it
-should be more than sufficient to only run those tests that match
-*{grep,log,pickaxe}*
-=20=20=20=20
+test_lazy_prereq UTF8_NFD_TO_NFC '
+	# check whether FS converts nfd unicode to nfc
+	auml=$(printf "\303\244")
+	aumlcdiar=$(printf "\141\314\210")
+	>"$auml" &&
+	test -f "$aumlcdiar"
+'
+
+
+What I see in that first test, the 'git mv' does change the
+index, but the filesystem thinks the files are the same. This
+may mean that our 'git add "$aumlcdiar"' from an earlier test
+is providing a non-equivalence in the index, and the 'git mv'
+changes the index without causing any issues in the filesystem.
+
+It reminds me as if we used 'git mv README readme' on a case-
+insensitive filesystem. Is this not a similar situation?
+
+What I'm trying to gather is that maybe this test is flawed?
+Or maybe something broke (or never worked?) in how we use
+'git add' to not get the canonical unicode from the filesystem?
+
+The other tests all have similar interactions with 'git add'.
+I'm hoping that these are just test bugs, and not actually a
+functionality issue in Git. Yes, it is confusing that we can
+change the unicode of a file in the index without the filesystem
+understanding the difference, but that is very similar to how
+case-insensitive filesystems work and I don't know what else we
+would do here.
+
+These filesystem/unicode things are out of my expertise, so
+hopefully someone else has a clearer idea of what is going on.
+I'm happy to be a test bed, or even attempt producing patches
+to fix the issue once we have that clarity.
+
+Thanks,
+-Stolee
