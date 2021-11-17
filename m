@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5615CC433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:20:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1CCAC433EF
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:20:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A86F61BF9
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:20:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A5AAC61BF9
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:20:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236264AbhKQKXj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 05:23:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56442 "EHLO
+        id S236298AbhKQKXm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 05:23:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236230AbhKQKXd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 05:23:33 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1067DC0613B9
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:32 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id u18so3599329wrg.5
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:31 -0800 (PST)
+        with ESMTP id S236240AbhKQKXe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 05:23:34 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC049C061202
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:33 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id c71-20020a1c9a4a000000b0032cdcc8cbafso1661473wme.3
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rjDThg6J3EWSLvU0djNifLAzukbACcFOzjf8hCqyRlY=;
-        b=i+L6wTInbt9mPiFEp0OHZwzjGAesXys3WGU8ZrxSWiSHMWyD7Y5o61wk0CG1vgWJ3P
-         RcBE4AN6vaKQarLKb4D6mRy8ZrT1JAshLuc+Ijd2s/ZowQTQBr7NCYGVqpTee36DDsu9
-         2+a5rWRlW4fhn1xPsF0fkUxGE8myzQAQCJNG6dBv9dlz3Ps9NSgmFpVEtNUZ9xgK/Ri3
-         ZrinkAgdi0AjLCs/Yj8m5EThZs1sHHf4ywQPeAUTABNRME0lCp+4EanMf8pVqTYweJKP
-         IB9ZFa9JD1cZAebJE9dZFOXzeU/5mLeu4gnY0ITG9egn1oU6hV2tNEGTzLd+8cdSIB1v
-         E38w==
+        bh=JKM5NSWEUZZ/ClhecGRt6FM08CAhCaAUBaNRamL1AMA=;
+        b=MR9t5HVWTzaG3P+ldmTgrtikbbO4adxGHotvv3VBfFIN5G5L+A9pnESzt+z8yVw2gW
+         vHevn9vSSj2MrNuyX/SC8KzzgzDfMbs7+9hlhTOoczhANwMMeP+8p4XKuZEX9Ln3ZoIC
+         Dk8Zc//On7bBuhHp+9oQ/OQk0FLIoVvNLnxZMYM+GOpiCj4P+R4n2YXjBFpNDY9REWvj
+         O9wbKGHM68DfiYBfTQFDk1EToPti8MFfwMeZTXwUflVfX3j242v/R9Rwqvg6JYITdUp4
+         BxAMZPFmwdsoogM/JFI0S6AzZ0sF+4XHiyCrNZ9wytaAXgxofwLwxtuVd8rbe58BYwMj
+         v8JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rjDThg6J3EWSLvU0djNifLAzukbACcFOzjf8hCqyRlY=;
-        b=f7342e/rB1Jl9zJCPVlDnLra8dsxEKlrecL5ybg47ohxJdR0ubWYxXkWfhtnC5oZZf
-         dPKCcGt/xKhxVBxLWZiux2yuzIHZgOj/KJ9RtGruVBNAurcxexr5L4GZb32cbLiIETPI
-         XAEkngzVoKKaJc17px09DRNutEMqSjH1eUcFA/3pLBbOhBvFmBebCNHbiHg+xMhX+bPj
-         HmBkykUhuI08bJOO34p4XInxMgF5prriEcGR0e1TAz8Af+2O9ZD19oJ8gauWQjuKflOm
-         bZ4NC2dg4ljNeagdCQQPGVidcEpCBNzAiKpIVg1O2pqCqt0m3Oa9FSoX60q1TRjd93xl
-         etfw==
-X-Gm-Message-State: AOAM531Zb2W8pUbIW572iaR+TonfkkcijUl7D2wI0tUp7XE+pR/6Ma+i
-        0IV9OjGjsXpRtObHPALddPXpub6Zr1UgvA==
-X-Google-Smtp-Source: ABdhPJwGHyW+9ymmxRLt/cx0alRi2Tr6BduOKPtH1dB0KBo8HFdpynymy7zqTZ3r10pe7bqpvPzCHQ==
-X-Received: by 2002:a5d:6707:: with SMTP id o7mr18219921wru.172.1637144430447;
-        Wed, 17 Nov 2021 02:20:30 -0800 (PST)
+        bh=JKM5NSWEUZZ/ClhecGRt6FM08CAhCaAUBaNRamL1AMA=;
+        b=U48QDEgm6XXfI6Gzn8ZS4CDsR+2FkPujwkzKQFI/wt1ue6HXUxIe5s/4a7wSBnszdO
+         pWX/NsQa0wMK9KQCHrORQD/NaXxG4iHkeWOLRG0vPQK5IL3HLCD53yomct1V7NcEGXa6
+         F7rCE95DkNaMNhJNNr7v+u/uUh3U9YTJWxpATsZeMt85jdkbFXu/bPv5OJNV+3RKn+lc
+         4Gx8htaVroD4JzOhRy2qkuKmX4oi3nPH94vFeQFDHsSLdJbXeab1ruos6TM2/xC3GlKl
+         yg5Q44SEL1s+GCCRVX7ZtSojvaVuM681KbdOU9HOZDOhBU3tY0TR4OiAWcMopVv6SEcH
+         y8mw==
+X-Gm-Message-State: AOAM532SLHI6UBOVqGkhG4JrjqgqV3GPvDbc+oLPmnVg13a9nOTMZ7RX
+        zGimXlCEDH82Dbpf9olOHeMduPw33f4tvA==
+X-Google-Smtp-Source: ABdhPJzAEKCi//RiNCgXd/kEPtC/ePG7/RaSzPM8T/9AEunvjBi1efcnOH1C5FpzrXBVDQBtf+/CTg==
+X-Received: by 2002:a1c:1d42:: with SMTP id d63mr76833546wmd.184.1637144432278;
+        Wed, 17 Nov 2021 02:20:32 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n32sm6456256wms.1.2021.11.17.02.20.29
+        by smtp.gmail.com with ESMTPSA id n32sm6456256wms.1.2021.11.17.02.20.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 02:20:29 -0800 (PST)
+        Wed, 17 Nov 2021 02:20:31 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 06/23] Makefile: guard Perl-only variable assignments
-Date:   Wed, 17 Nov 2021 11:20:05 +0100
-Message-Id: <patch-v4-06.23-b57f582ccd3-20211117T101807Z-avarab@gmail.com>
+Subject: [PATCH v4 08/23] Makefile: adjust Perl-related comments & whitespace
+Date:   Wed, 17 Nov 2021 11:20:07 +0100
+Message-Id: <patch-v4-08.23-1e25b532ca2-20211117T101807Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.796.g2c87ed6146a
 In-Reply-To: <cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com>
 References: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com> <cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com>
@@ -75,31 +75,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the "ifndef NO_PERL" a few lines earlier to encompass the
-"perl_localedir_SQ" variable. We'll only use it under !NO_PERL.
+Folllow-up my 4070c9e09fc (Makefile: don't re-define PERL_DEFINES,
+2021-05-05) and move the rest of the assignments to PERL_DEFINES to
+one place.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 284725099c9..0cb10f00ebb 100644
+index 288f4834db8..ab78f8dd42e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2291,11 +2291,11 @@ git.res: git.rc GIT-VERSION-FILE GIT-PREFIX
- # This makes sure we depend on the NO_PERL setting itself.
- $(SCRIPT_PERL_GEN): GIT-BUILD-OPTIONS
+@@ -2312,21 +2312,19 @@ PERL_DEFINES += $(perllibdir_SQ)
+ PERL_DEFINES += $(RUNTIME_PREFIX)
+ PERL_DEFINES += $(NO_PERL_CPAN_FALLBACKS)
+ PERL_DEFINES += $(NO_GETTEXT)
++PERL_DEFINES += $(gitexecdir)
++PERL_DEFINES += $(perllibdir)
++PERL_DEFINES += $(localedir)
++PERL_DEFINES := $(subst $(space),:,$(PERL_DEFINES))
  
-+ifndef NO_PERL
- # Used for substitution in Perl modules. Disabled when using RUNTIME_PREFIX
- # since the locale directory is injected.
- perl_localedir_SQ = $(localedir_SQ)
+-# Support Perl runtime prefix. In this mode, a different header is installed
+-# into Perl scripts.
+ ifdef RUNTIME_PREFIX
+-
+ PERL_HEADER_TEMPLATE = perl/header_templates/runtime_prefix.template.pl
  
--ifndef NO_PERL
- PERL_HEADER_TEMPLATE = perl/header_templates/fixed_prefix.template.pl
- PERL_DEFINES =
- PERL_DEFINES += $(PERL_PATH_SQ)
+-# Don't export a fixed $(localedir) path; it will be resolved by the Perl header
+-# at runtime.
++# The RUNTIME_PREFIX header defines $Git::I18N::TEXTDOMAINDIR, so
++# $(perl_localedir_SQ) won't be needed
+ perl_localedir_SQ =
+-
+ endif
+ 
+-PERL_DEFINES += $(gitexecdir) $(perllibdir) $(localedir)
+-
+ $(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
+ 	$(QUIET_GEN) \
+ 	sed -e '1{' \
+@@ -2339,7 +2337,6 @@ $(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+ 
+-PERL_DEFINES := $(subst $(space),:,$(PERL_DEFINES))
+ GIT-PERL-DEFINES: FORCE
+ 	@FLAGS='$(PERL_DEFINES)'; \
+ 	    if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
 -- 
 2.34.0.796.g2c87ed6146a
 
