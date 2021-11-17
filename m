@@ -2,119 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BB7EC433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:28:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE264C433EF
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:30:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5140F61B29
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:28:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A066C61B27
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:30:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239932AbhKQXbw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 18:31:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39050 "EHLO
+        id S241609AbhKQXd5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 18:33:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232744AbhKQXbt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 18:31:49 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C3B8C061570
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 15:28:50 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id x1-20020a17090a294100b001a6e7ba6b4eso2089984pjf.9
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 15:28:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=7wMDDgIRgYtCA2+crGCu6qdi+8z+Vk1IwU77Aps/Acg=;
-        b=ZvB2mqIcsKFgMhKd7lJwHv+ZVbLNkZKlc8rI7eExhytcm1ST40FeDSPjedEqtmJmOi
-         9zGAd56PMOB2GjyCAdpmsTn6eeIZjwlAGeNi5KHEuzDIVIq+Wl16gEjyNLQXsX7ZhqUG
-         7ojF4w/kATA4GX9RqZKM9m14tK4pxtFW4Ux0hfxEM2g3qUwAGJZhHS3vygTIKbxNYMQS
-         Tsw+1TApyBvIXH5jLrrF7DncbAKFD/2WWVZevFIOp6XyzUQoBxbbCL5iN9BFtGzLviGK
-         kxMkZg7KLFD06IiorDDzz621aDk3JzrpuytG8NSkMmteh4W7TriEsDoHwB8oIMTuyeU0
-         s8Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=7wMDDgIRgYtCA2+crGCu6qdi+8z+Vk1IwU77Aps/Acg=;
-        b=2bJ6CBCnTWVRReFP33N/ZCI4VLZ+1/5NtC4uT3Qso5tVSh/TlJtNuwx1QB8VoMetyR
-         K1h8XlrfDAoe2Sx8mKDL3uPMWKbvhjRwx2Vwm/nUw2Q92By8+xZqCnzrLo3hlS/tezmN
-         LJMMKp3/Q10vNHBiooI3p6l3kORQW6uoKdh0NbxaZ8UhCuPCMVS2rrn6JAheiRDrHcv0
-         acA6rpCZiTUBjzyr9U3tSq4n8F1hk8B4e9tOj7eAi0034T0wUuM4oJOoAC71Qfz8sNOH
-         XU0CuH0Oopu833yb/ZMmYewv6d6gtpaJu42IbxEHGn9wwP2f42rMR8YIqoUOTlw2kpXu
-         fUNA==
-X-Gm-Message-State: AOAM532F0/d38MfeweFqvi+IcN6Jp+k+o2uQMCrf8W1WbI2Av/lmLK2Y
-        3tba+t3DcWGwGBcC+mgdmWFouLDo7xfBJEnN4AiP
-X-Google-Smtp-Source: ABdhPJwHkayfXhGo64emK8E+H7q+ZSSJSHDB7npDhxMbkVfxlp6pmkq1w/TfDG7cMpjsoaIXIABcqr/KaA2bVHHUBoJA
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:c403:: with SMTP id
- i3mr4607690pjt.203.1637191729753; Wed, 17 Nov 2021 15:28:49 -0800 (PST)
-Date:   Wed, 17 Nov 2021 15:28:46 -0800
-In-Reply-To: <20211117005701.371808-1-emilyshaffer@google.com>
-Message-Id: <20211117232846.2596110-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20211117005701.371808-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.34.0.rc1.387.gb447b232ab-goog
-Subject: Re: [PATCH v6 0/5] teach submodules to know they're submodules
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     emilyshaffer@google.com
-Cc:     git@vger.kernel.org, albertcui@google.com,
-        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de,
-        avarab@gmail.com, gitster@pobox.com, matheus.bernardino@usp.br,
-        jrnieder@gmail.com, jacob.keller@gmail.com, raykar.ath@gmail.com,
-        stolee@gmail.com, jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S240122AbhKQXd4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 18:33:56 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 534C8C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 15:30:57 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 918905B463;
+        Wed, 17 Nov 2021 23:30:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1637191856;
+        bh=/DssRP5WHyMmbcKsiWvZE55RLpBGB2Pw+fX6C6XXe/0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=xs4ZZt0jxrg8lblThiDIqsk92DLHvPEj6V+vxILvk7sRlBdDSMOlDoecLTkr8C19R
+         3GicychrOwjsc0LWyrZ1W0JcJ5Dvkni5FjgBwADlIhMGyDx6dABgTO0ZBCKmgfIfhh
+         SRK6WzBYBJcp1uhgxjdAj0HGVSDBeOmaw4/j9/OkJ59Ih7RkCqYEauxQanZ0ZH8OV4
+         VzkP9dCWD92O7AYbVq2z8iuV0gt5gDZV1u8WNofLXeIS/Ecfr9adDzj3txcXsXj0rB
+         y4ne42Ad9kEb5yvaMw31ZUiNTwPBveoVDO/KmdBuzlL0o8SpKYGYq6aBbKzJIUuaz4
+         1LXH9uyrhWPuOIwjnBTKDLRjXAJtCGyS3zFiyhH3vEUeF762CYb51cvTlrRQiZ3FXk
+         d5Ey1G5OPUi8fA+GGVP7INovdXKdH58ERu5fiJDyP5sQJp+LKACXeb6PuNx/xtD9+m
+         YbDWs/oUDxWAk8QmqhLQrGZv8s5x3+UN8B8BGLPHIrY34xuNFJM
+Date:   Wed, 17 Nov 2021 23:30:54 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     rsbecker@nexbridge.com
+Cc:     'Jeff King' <peff@peff.net>, 'Carlo Arenas' <carenas@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/2] wrapper: add a helper to generate numbers from a
+ CSPRNG
+Message-ID: <YZWQroXwOKIi8Zs4@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        rsbecker@nexbridge.com, 'Jeff King' <peff@peff.net>,
+        'Carlo Arenas' <carenas@gmail.com>, git@vger.kernel.org
+References: <YZPOzqU0UQDVA57R@coredump.intra.peff.net>
+ <009d01d7db03$354ecae0$9fec60a0$@nexbridge.com>
+ <YZQzqjWMzaWVkkfP@camp.crustytoothpaste.net>
+ <00e001d7db40$985c61a0$c91524e0$@nexbridge.com>
+ <YZRUzHVS32W4Flo/@camp.crustytoothpaste.net>
+ <CAPUEspiHnTkwbUJ5o+fT2u4Kn+fwNe-3FoqVtNsjTF+Pg6Tryg@mail.gmail.com>
+ <YZRxOrv9JFt2oeSU@coredump.intra.peff.net>
+ <CAPUEsphh-enSYS66mi7_XaS0n1bmUvGXRcgVp6iqhg94xSHVog@mail.gmail.com>
+ <YZVfrhos+lZas7hk@coredump.intra.peff.net>
+ <01a501d7dbf0$7c538000$74fa8000$@nexbridge.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="AZ6IJHrpUcz/8tyE"
+Content-Disposition: inline
+In-Reply-To: <01a501d7dbf0$7c538000$74fa8000$@nexbridge.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
-> For the original cover letter, see
-> https://lore.kernel.org/git/20210611225428.1208973-1-emilyshaffer%40google.com.
 
-Also for reference, v4 and v5 (as a reply to v4) can be found here:
-https://lore.kernel.org/git/20211014203416.2802639-1-emilyshaffer@google.com/
+--AZ6IJHrpUcz/8tyE
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Since v5:
-> 
-> A couple things. Firstly, a semantics change *back* to the semantics of
-> v3 - we map from gitdir to gitdir, *not* from common dir to common dir,
-> so that theoretically a submodule with multiple worktrees in multiple
-> superproject worktrees will be able to figure out which worktree of the
-> superproject it's in. (Realistically, that's not really possible right
-> now, but I'd like to change that soon.)
+On 2021-11-17 at 20:19:49, rsbecker@nexbridge.com wrote:
+> I missed this one... lrand48 is also not generally available. I don=E2=80=
+=99t think it is even available on Windows.
+>=20
+> If we need a generalized solution, it probably needs to be abstracted in =
+git-compat-util.h and compat/rand.[ch], so that the platform maintainers ca=
+n plug in whatever decent platform randomization happens to be available, i=
+f any. We know that rand() is vulnerable, but it might be the only generall=
+y available fallback. Perhaps get the compat layer in place with a test sui=
+te that exercises the implementation before getting into the general git co=
+de base - maybe based on jitterentropy or sslrng. Agree on an interface, de=
+cide on a period of time to implement, send the word out that this needs to=
+ get done, and hope for the best. I have code that passes FIPS-140 for NonS=
+top ia64 (-ish although not jitterentropy) and x86, and I'm happy to contri=
+bute some of this.
 
-Makes sense. Also, thanks for the tests covering what happens when this
-is run from worktrees.
+I think in this case I'd like to try to stick with OpenSSL or other
+standard interfaces if that's going to meet folks' needs.  I can write
+an HMAC-DRBG, but getting entropy is the tricky part, and jitterentropy
+approaches are controversial because it's not clear how unpredictable
+they are.  I'm also specifically trying to avoid anything that's
+architecture specific like RDRAND, since that means we have to carry
+assembly code, and on some systems RDRAND is broken, which means that
+you have to test for that and then pass the output into another CSPRNG.
+I'm also not sure how maintainable such code is, since I don't think
+there are many people on the list who would be familiar enough with
+those algorithms to maintain it.  Plus there's always the rule, "Don't
+write your own crypto."
 
-> Secondly, a rewording of comments and commit messages to indicate that
-> this isn't a cache of some expensive operation, but rather intended to
-> be the source of truth for all submodules. I also added a fifth commit
-> rewriting `git rev-parse --show-superproject-working-tree` to
-> demonstrate what that means in practice - but from a practical
-> standpoint, I'm a little worried about that fifth patch. More details in
-> the patch 5 description.
+Using OpenSSL or system-provided interfaces is much, much easier, it
+means users can use Git in FIPS-certified environments, and it avoids us
+ending up with subtly broken code in the future.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-OK - this is not the "this variable being missing is OK" idea that I had
-[1], but we want to be able to depend on it to some extent. (And it is
-not a cache either - we are not planning to perform an operation to
-obtain the superproject gitdir if the cache is missing, but we are just
-going to assume that there is no superproject.)
+--AZ6IJHrpUcz/8tyE
+Content-Type: application/pgp-signature; name="signature.asc"
 
-To that end, the 5th patch is misleading - it is behaving exactly like a
-cache. I think it's better to drop it.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-What would make sense to me (and seems to be in the spirit of this patch
-set) is to describe this as something that Git commands can rely on to
-determine if the current repo is a submodule, for performance reasons.
-So maybe Git commands/parameters that directly reference the submodule
-concept like "--show-superproject-working-tree" will work hard to find
-the superproject (by searching the filesystem), but those that do not
-(e.g. "git status") can make assumptions.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYZWQrgAKCRB8DEliiIei
+gdldAP4uQmpwhCJlwbCYOGeHUq985ZK6+IXF+3VuWQhVK4AiIAEAiYOZ0NwdsZ7V
+phqS6R9gEE/LBkvVz90cH7lBJgfdgQk=
+=zp/l
+-----END PGP SIGNATURE-----
 
-Making this variable a source of truth wouldn't work, I think, because
-the source of truth is whether this repo appears in a .gitmodules file
-(and that hasn't changed).
-
-To this end, I'll comment on the changes I'd like to see on the
-individual patches too.
-
-[1] https://lore.kernel.org/git/20210727174650.2462099-1-jonathantanmy@google.com/
+--AZ6IJHrpUcz/8tyE--
