@@ -2,106 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E97FC433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 16:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02D2FC433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 16:48:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E35DA61BFB
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 16:46:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C976C60C4A
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 16:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239238AbhKQQt4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 11:49:56 -0500
-Received: from cloud.peff.net ([104.130.231.41]:32996 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238908AbhKQQtv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 11:49:51 -0500
-Received: (qmail 23920 invoked by uid 109); 17 Nov 2021 16:46:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Nov 2021 16:46:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15472 invoked by uid 111); 17 Nov 2021 16:46:51 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Nov 2021 11:46:51 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 17 Nov 2021 11:46:50 -0500
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 1/3] diff histogram: intern strings
-Message-ID: <YZUx+mzaUf/TgXrx@coredump.intra.peff.net>
-References: <pull.1079.git.1637148025.gitgitgadget@gmail.com>
- <38c771a74d2a348e6a752555f95b746de029b1d7.1637148025.git.gitgitgadget@gmail.com>
- <2b2bd380-540f-959b-b950-cfdc95cbff29@gmail.com>
+        id S239253AbhKQQvp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 11:51:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32860 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231639AbhKQQvp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 11:51:45 -0500
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF201C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 08:48:46 -0800 (PST)
+Received: by mail-qv1-xf31.google.com with SMTP id jo22so2429739qvb.13
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 08:48:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=e91CNcwuel24YmiDLmwFWwTiYVWK5Gvu2Jq0grkPth8=;
+        b=KgKK+MDlE8WJDbhM9yaCje/iJt9Svj8zXcLXcjFJdv4xN2i7DiKANeOpY2D4JPHvku
+         jbiiqnmP5t03SlCn+QtBeJj8L2q30WWpSEx+lwFEFbNBp8nVFYHgPhGW6Qz4naXyhFmW
+         hC68ASqS/gmStyDGY/wI8MUcEso0GbAuKVO8973UcrpXfhwTi5YXcPzwLE5QzIPULnGY
+         70RX7YGlv7hVHPJUCTPN84Q7O2hUw/h0CzPWRofwCs0DMtGS9SXpH7l4rBp3ICl+Tlxb
+         arA7UMX1zc9eOsK597G0JHNT1rEg9YCzCrVino8/mwViPBy+duNRhjbRKjYWNlxRRF8N
+         obrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=e91CNcwuel24YmiDLmwFWwTiYVWK5Gvu2Jq0grkPth8=;
+        b=a6c/1JAakLEstAMgs80IwcTnSGvBP7L6SM9ynJeok92PVobD8A+oYmzsY8BdRhJmCg
+         7x1cTqBidIRzWTWM1lgkqdF5WcuesZxp9jq219F3R38+bBFouW48tbpgDW42mMHdut01
+         bQP2x52xg2AvtSPe+7UpF2vgPrBXhAZhdqc4YSpja1wWDk1OucvIYtMedPdGR5SOdBxb
+         3Aqdl8x6wLqrJ8IR9xeH5Micfo3Lf8oI4uNa648Dee4zPlseo1bDprYB5QTWlgBX9TA7
+         cVMVm+dJGo6W5724rLFk1DWFNmW+ya+Sk6ISPJwBFOmR99DmqLM4Is7o/c9HMen9aImK
+         puQw==
+X-Gm-Message-State: AOAM530ucMuJI7zuBlovu50skXspXLhI5vly3C3TLxGjviktTruNByy1
+        lB2qVm9Y6ebRZpZy8HJXP0g=
+X-Google-Smtp-Source: ABdhPJxLY3akA4+Xl28peTFN262VGAz4C24N5iZOwargxKRJJCv5G20B+GVR0DPY3/28PfKLmnP9Tw==
+X-Received: by 2002:ad4:5eca:: with SMTP id jm10mr56864089qvb.54.1637167725938;
+        Wed, 17 Nov 2021 08:48:45 -0800 (PST)
+Received: from samxps.. (modemcable158.252-203-24.mc.videotron.ca. [24.203.252.158])
+        by smtp.gmail.com with ESMTPSA id h2sm141059qkn.136.2021.11.17.08.48.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Nov 2021 08:48:45 -0800 (PST)
+From:   Samuel Yvon <samuelyvon9@gmail.com>
+To:     gitster@pobox.com
+Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
+        gitgitgadget@gmail.com, me@ttaylorr.com, samuelyvon9@gmail.com
+Subject: Re: [PATCH v2] builtin-commit: re-read file index before run_status
+Date:   Wed, 17 Nov 2021 11:48:42 -0500
+Message-Id: <20211117164842.36381-1-samuelyvon9@gmail.com>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <xmqqpmr5nekx.fsf@gitster.g>
+References: <xmqqpmr5nekx.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2b2bd380-540f-959b-b950-cfdc95cbff29@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 17, 2021 at 10:55:02AM -0500, Derrick Stolee wrote:
+Apologies for the time I took to reply,
 
-> > diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
-> > index e694bfd9e31..6c1c88a69a1 100644
-> > --- a/xdiff/xhistogram.c
-> > +++ b/xdiff/xhistogram.c
-> > @@ -91,9 +91,8 @@ struct region {
-> >  static int cmp_recs(xpparam_t const *xpp,
-> >  	xrecord_t *r1, xrecord_t *r2)
-> >  {
-> > -	return r1->ha == r2->ha &&
-> > -		xdl_recmatch(r1->ptr, r1->size, r2->ptr, r2->size,
-> > -			    xpp->flags);
-> > +	return r1->ha == r2->ha;
-> > +
+Junio C Hamano <gitster@pobox.com> writes:
+> And moving the call would affect both the contents of the status
+> buffer (i.e. the list of paths got changed starts including what
+>         pre-commit did) and the "committable" bit by counting such a change
+> as a true change, avoiding the "no empty commit by default" check,
+> in a consistent way, hopefully.  I wonder if we have test to
+> demonstrate that, and if there isn't perhaps we would want to add
+> one.
+
+So, just to make sure I understand well, the concern is that an empty commit
+would trigger the commit routine, run the pre-commit hook, which may add files
+(thus making it an non-empty commit) and then push 100% automatic changes to a
+repo. I agree that this would be invalid behaviour and very odd, I will 
+make sure no empty commit is allowed.
+
+Junio C Hamano <gitster@pobox.com> writes:
+> Samuel Yvon <samuelyvon9@gmail.com> writes:
+> > However, calling run_status after the cache reset does not update
+> > the status line to state of the current index in the case a
+> > pre-commit hook is ran and changes files in the staging area.
 > 
-> nit: stray newline.
-> 
-> The only meaningful change here is that you are relying entirely on
-> the hash and not checking the content again. This means that hash
-> collisions on this 32-bit hash could start introducing different
-> results. Are we worried about that?
+> And if this change also affects the "committable" assignment in a
+> consistent way, it should probably want to be mentioned in this
+> paragraph, too.
 
-I had the same thought. But running "git log --histogram -p" on git.git
-does not seem to produce any differences between the two. So perhaps
-collisions are removed elsewhere. It would be nice to have a better
-understanding of this before proceeding with this change.
+What do you mean by "commitable assignment"? 
 
-Curiously, I got a much smaller improvement in my test, which did:
+> I am not convinced by the claim that there is no need for careful
+> transition plans (yet), but I personally agree with the end state
+> (with the above suggested tweaks, that is).
 
-  git log --no-merges -p --histogram :^po
+With the last message, I agree the safest option is probably to leave this
+configurable for now and off by default.
 
-My assumption being that "po/" diffs are big and uninteresting and so
-bloat the output. But that turned out to be interesting timing-wise.
-Excluding "po/" means that patch produces only a 0.6% improvement in
-speed. But _just_ running the diffs for po shows a 24% speedup!
+So here's the next steps that I intend to take to get this merged in:
 
-I guess this is just because those files are much larger than average
-(and changed in fewer commits), meaning that the time spent hashing and
-comparing lines will show up as a larger percentage of the total work.
+- Add a test for empty commit (if non-existent) and ensure the behaviour is the same
+- Add a config option (or maybe a switch?) for migration purposes, with the default
+  being the current behaviour.
 
-But I wondered...
 
-> The existence of these conditions gave me pause, so I went to look for where they
-> were inserted. They were made in 9f37c27 (xdiff/xprepare: skip classification,
-> 2011-07-12) with the justification that 
-> 
->     We don't need any of that in histogram diff, so we omit calls to these
->     functions. We also skip allocating memory to the hash table, rhash, as
->     it is no longer used.
-> 
->     This gives us a small boost in performance.
-> 
-> But you are actually _using_ these preparation steps, which means you are
-> re-adding the cost of hashing but overall improving because you use the
-> data correctly. Excellent.
-
-Are we making a tradeoff here based on the data patterns? That is, it
-seems like we are spending extra time upfront to do classification in
-order to get quicker comparisons later. Presumably the upfront work is
-O(n) in the length of the file. How many comparisons do we expect to
-save?  Is it also linear in the number of lines, or could it be
-super- or sub-linear depending on the actual diff?
-
--Peff
