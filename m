@@ -2,103 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85365C433EF
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 23:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79B87C433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 00:34:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 601A161B9F
-	for <git@archiver.kernel.org>; Tue, 16 Nov 2021 23:21:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5053F617E3
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 00:34:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231518AbhKPXYB convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 16 Nov 2021 18:24:01 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:31926 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbhKPXYA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 18:24:00 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1AGNKoa2073312
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 16 Nov 2021 18:20:50 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>
-Cc:     "'Jeff King'" <peff@peff.net>, <git@vger.kernel.org>
-References: <20211116033542.3247094-1-sandals@crustytoothpaste.net> <20211116033542.3247094-2-sandals@crustytoothpaste.net> <YZPOzqU0UQDVA57R@coredump.intra.peff.net> <009d01d7db03$354ecae0$9fec60a0$@nexbridge.com> <YZQzqjWMzaWVkkfP@camp.crustytoothpaste.net>
-In-Reply-To: <YZQzqjWMzaWVkkfP@camp.crustytoothpaste.net>
-Subject: RE: [PATCH 1/2] wrapper: add a helper to generate numbers from a CSPRNG
-Date:   Tue, 16 Nov 2021 18:20:45 -0500
-Organization: Nexbridge Inc.
-Message-ID: <00e001d7db40$985c61a0$c91524e0$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQHRZsJQSwQVxvA803MGEaqTSKtEHwGUCvbjAr89fOoBugavkgK/mpqhq81KDCA=
+        id S232167AbhKQAg7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 19:36:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36870 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229694AbhKQAg6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 19:36:58 -0500
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3382BC061570
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 16:34:01 -0800 (PST)
+Received: by mail-pf1-x449.google.com with SMTP id e7-20020aa798c7000000b004a254db7946so595275pfm.17
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 16:34:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=LGT4FouK+YjeTPd8EU0tPb9YA5fWQfrJ43J0BJ2xvU4=;
+        b=TfGrczJkn3+kEBwPwADYeTXRQx5BRCA4LjAAUqOJ6M3V0+y1PAGrFgNrQ1yb+Kvd7P
+         BFFoF0XfWpwzeueXvSaNs8p9HO1ElbDuZsIze7Pi336pkC0OsKG+MhEZj1fFz+6nIm4w
+         DyO67iNiqSQnuctPZrMnCK2BDQqPudnhuoNHJQoSs8+4qQAfmkr5q+2XFGGMIfp3BnZB
+         /rSONwnFEoZrweS0tXmm5EoWLjS+UqYiYLpc9abtJaV878XXEdRidGaR/baZ4fJ8IpkT
+         dasEuBLruME5AdvHn71/3kgmonhlv7srb7X1iSgYOeSO0Mss+PP0PhI1hbRI2ulIP3dg
+         FTmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=LGT4FouK+YjeTPd8EU0tPb9YA5fWQfrJ43J0BJ2xvU4=;
+        b=CCpxw8go5/GzqqU26T3lG435HuHMuGOJgLuvyI/Lw9tw/bYoo5FqSU3KEsUyg07tJL
+         cVmzhW0vkySVSgcWkXVzzv+zK1rNSaaBdWiF2c5D74VaDhMptqLxxDy9xxTrRaP1ALCB
+         ldXPCYOmKNvOcRfWR6FUKr1QTrQDIP/hTgKXvVrDPYO/81WjLKXDFvhUPo8brUvYgfim
+         jjH9IjoH2rjmz8BP6xnD3xNMo+7Sl5lWIrjtN6je3BuDqSxGxVokfbQs6tcgoGdNVNsg
+         gWHAKMIiBwSit3z5hUfVDABjHvNrN1Ead8e+U0HMak9PAkR8bPWsIj5MTL5G8FMTlsoC
+         T2yw==
+X-Gm-Message-State: AOAM533BlqnjjqLWknHqj5Lb8IcZczGt6GPy/Zv9VilIOKZfzOVcHcKr
+        VEivY016Uw82q24TDYnGwGRpi11ggQRYBw==
+X-Google-Smtp-Source: ABdhPJxV6bLAaH0dmjuhQBI+pSJhNb8uALi+POSXVGomZrtOQVDYVO/2a/BvMgSYwK0F8Z1YPrsEBcowqnn/FA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:f283:b0:141:f719:c434 with SMTP
+ id k3-20020a170902f28300b00141f719c434mr48959672plc.79.1637109240612; Tue, 16
+ Nov 2021 16:34:00 -0800 (PST)
+Date:   Tue, 16 Nov 2021 16:33:52 -0800
+In-Reply-To: <7ad7507f183332cb2b5fdf2eb76fbbc9dd7199ef.1637085915.git.steadmon@google.com>
+Message-Id: <kl6lczmzipsf.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+ <7ad7507f183332cb2b5fdf2eb76fbbc9dd7199ef.1637085915.git.steadmon@google.com>
+Subject: Re: [PATCH v4] branch: add flags and config to inherit tracking
+From:   Glen Choo <chooglen@google.com>
+To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, avarab@gmail.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On November 16, 2021 5:42 PM, brian m. carlson
-> On 2021-11-16 at 16:01:20, rsbecker@nexbridge.com wrote:
-> > On November 16, 2021 10:31 AM, Jeff King wrote:
-> > > On Tue, Nov 16, 2021 at 03:35:41AM +0000, brian m. carlson wrote:
-> > >
-> > > > The order of options is also important here.  On systems with
-> > > > arc4random, which is most of the BSDs, we use that, since, except
-> > > > on MirBSD, it uses ChaCha20, which is extremely fast, and sits
-> > > > entirely in userspace, avoiding a system call.  We then prefer
-> > > > getrandom over getentropy, because the former has been available
-> > > > longer on Linux, and finally, if none of those are available, we
-> > > > use /dev/urandom, because most Unix-like operating systems provide
-> > > > that API.  We prefer options that don't involve device files when
-> > > > possible because those work in some restricted environments where
-> device files may not be available.
-> > >
-> > > I wonder if we'll need a low-quality fallback for older systems
-> > > which don't even have /dev/urandom. Because it's going to be used in
-> > > such a core part of the system (tempfiles), this basically becomes a
-> > > hard requirement for using Git at all.
-> > >
-> > > I can't say I'm excited in general to be introducing a dependency
-> > > like this, just because of the portability headaches. But it may be
-> > > the least bad thing (especially if we can fall back to the existing behavior).
-> > > One alternative would be to build on top of the system mkstemp(),
-> > > which makes it libc's problem. I'm not sure if we'd run into problems
-> there, though.
-> >
-> > None of /dev/urandom, /dev/random, or mkstemp are available on some
-> > platforms, including NonStop. This is not a good dependency to add.
-> > One variant PRNGD is used in ia64 OpenSSL, while the CPU random
-> > generator in hardware is used on x86. I cannot get behind this at all.
-> > Libc is also not used in or available to our port. I am very worried
-> > about this direction.
-> 
-> I'm really not excited about a fallback here, and I specifically did not include
-> one for that reason.  I'm happy to add an appropriate dependency on an
-> OpenSSL or libgcrypt PRNG if you're linking against that already (e.g., for
-> libcurl) or support for libbsd's arc4random or getentropy if that will work on
-> your system.  For example, how are you dealing with TLS connections over
-> HTTPS?  That library will almost certainly provide the required primitives in a
-> straightforward and portable way.
-> 
-> I do fundamentally believe every operating system and language
-> environment need to provide a readily available CSPRNG in 2021, especially
-> because in the vast majority of cases, hash tables must be randomized to
-> avoid hash DoS attacks on untrusted input.  I'm planning to look into our hash
-> tables in the future to see if they are vulnerable to that kind of attack, and if
-> so, we'll need to have a CSPRNG for basic security reasons, and platforms
-> that can't provide one would be subject to a CVE.
-> 
-> If we really can't find a solution, I won't object to a patch on top that adds an
-> insecure fallback, but I don't want to put my name or sign-off on such a patch
-> because I think it's a mistake.  But I think we almost certainly can, though.
+Josh Steadmon <steadmon@google.com> writes:
 
-We do link with libcurl and use OpenSSL as a DLL to handle TLS. The underlying random source for the nonstop-* configurations as of OpenSSL 3.0 are PNRG supplied by the vendor (HPE) on ia64 and the hardware rdrand* instructions on x86. I know that part of the OpenSSL code rather intimately.
---
-Randall Becker
-Also from the GTA
+> I've addressed Glen's feedback from V3. However, this brings up a new
+> issue that was not obvious before: "branch.<name>.merge" can be
+> specified more than once. On the other hand, the existing tracking setup
+> code supports only a single merge entry.
 
+Yes, for istance, install_branch_config() uses git_config_set_gently(),
+which will override duplicate values.
+
+> For now I'm defaulting to use the first merge entry listed in the
+> branch struct, but I'm curious what people think the best solution
+> would be.
+
+I can think of at least two possibilities:
+
+The first would be to parse the information into our native data
+structures. This is pretty much what you've done in v4, but insteaed of
+defaulting to the first merge entry, we would iterate over all of the
+possible merge entries and...
+
+> @@ -139,7 +166,9 @@ static void setup_tracking(const char *new_ref, const=
+ char *orig_ref,
+> =20
+>  	memset(&tracking, 0, sizeof(tracking));
+>  	tracking.spec.dst =3D (char *)orig_ref;
+> -	if (for_each_remote(find_tracked_branch, &tracking))
+> +	if (track !=3D BRANCH_TRACK_INHERIT) {
+> +		for_each_remote(find_tracked_branch, &tracking);
+> +	} else if (inherit_tracking(&tracking, orig_ref))
+>  		return;
+> =20
+>  	if (!tracking.matches)
+
+we get rid of the assumption that we can use a single 'struct tracking'.
+when track=3DBRANCH_TRACK_INHERIT. Of course, this isn't as simple as
+calling install_branch_config() repeatedly, because that would override
+"branch.<name>.merge" over and over.
+
+> This may be another point in favor of =C3=86var's suggestion to
+> reuse the copy-branch-config machinery.
+
+This is the second option, which is pretty simple. Inheriting the branch
+tracking info is a matter of copying the config, which we already do
+when we copy branches in builtin/branch.c:
+
+	strbuf_addf(&oldsection, "branch.%s", interpreted_oldname);
+	strbuf_release(&oldref);
+	strbuf_addf(&newsection, "branch.%s", interpreted_newname);
+	strbuf_release(&newref);
+	if (!copy && git_config_rename_section(oldsection.buf, newsection.buf) < 0=
+)
+		die(_("Branch is renamed, but update of config-file failed"));
+
+Between these two options, I think the first is a better long-term
+solution because I think that parsing the config into our own data
+structures is generally less error-prone than operating directly on a
+file (e.g. using the data structures was what made this bug obvious to
+us in the first place, using repo->config will handle multiple config
+files correctly). I don't see '--track=3Dinherit' as being _that_
+conceptually similar to copying a branch; I see it as a different mode
+of tracking that just so happens to be implementable by copying some
+sections in the branch configuration.
+
+But as a practical matter, I don't see any obviously terrible short-term
+downsides to just copying the config. It's no less correct than our
+branch copying logic and I'm afaid of introducing unintended
+consequences by mucking around with install_branch_config().
