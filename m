@@ -2,109 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF98BC433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 18:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDF81C433EF
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 18:46:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B043E61B44
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 18:35:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AA41060E53
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 18:46:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232658AbhKQSie (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 13:38:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57688 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231389AbhKQSid (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 13:38:33 -0500
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33FE2C061570
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 10:35:35 -0800 (PST)
-Received: by mail-il1-x136.google.com with SMTP id m11so3777424ilh.5
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 10:35:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=iJWZ1vsXCJuw2GKQqhrzUFARTq11fgN6RD0HbnPpC8o=;
-        b=o3m75jgKvO7eFvEJ9OYScJ6UOLzwIKr3uJXTrVdzH0gMBVdpstc0STrtbhXuRxpQPc
-         UuJXAl4SRp/huYLq+uOPTxt8YyOCSmgH+AWqnD8JdxazPKG895Sxx8nyveq4f/8TfpOh
-         YqAaLr3ACD8qQBcHn1QhDaZd8nXNBmV0ginU8ijTIln7XxIItjcYTXY++FpoKMMzGtG4
-         W8X15CQODeyq41lLEuRwMUQol/mA7w0rTpDOFg5Lh8EZsrpsJe6rXLJ5fuRA9v9K8bZi
-         Zw8+zmTot4/iX3zIRftvYAqMvCub9zMv196n3f57FkhDzw8dhWNcW3Hh8zS94ITih3TX
-         vZ6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=iJWZ1vsXCJuw2GKQqhrzUFARTq11fgN6RD0HbnPpC8o=;
-        b=0fvZDZHamnsqSfkCRv9ge8fJEageL2+WkBC8dDuo5KmoyowER+Ejwt9pi1DexSl0rZ
-         rziEdzCQrgiSX5Rt/D/VTzORYkzyrPbu3iPbTs+HRJ2DgVThOfC7ilQCd1RE91FNHFBi
-         +eyB1y5vwXqmEOLi4njGrjhCyOyBe5f0Tm+2Yge216dn2uBopk9ckxKQUaEgtTSy77VU
-         ktRgTc74Da1bkTrT9U7pf5iD/gGz6oN525yCtjBsH1ixYisVgT4teLzdHcoDRTGwb0gy
-         pne0zXTHRmM3LZmb7IZQ0GbQ5EQRWb9F+7BbS4m+mlKMKfpNtvUT1IOLZjJE9EAnZzA0
-         0Twg==
-X-Gm-Message-State: AOAM533auUM3pPa1cS2SgS5OvzTz5bUqc5j9w6M5WmBoRkaIfMuB7oRT
-        +Vid/IVY7goRSLItZKt3LS8=
-X-Google-Smtp-Source: ABdhPJxsLBBZO/vlqDamYKvNdRCdp4OqNGhYupGps1okyImPo227Dtrk9YNCO715+VS6JYMqICzQWg==
-X-Received: by 2002:a92:dc0c:: with SMTP id t12mr12548771iln.198.1637174134547;
-        Wed, 17 Nov 2021 10:35:34 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:d1ee:6c8f:319:f5? ([2600:1700:e72:80a0:d1ee:6c8f:319:f5])
-        by smtp.gmail.com with ESMTPSA id h10sm406896ild.85.2021.11.17.10.35.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Nov 2021 10:35:34 -0800 (PST)
-Message-ID: <5d1b5ce6-d9ff-1b2a-2ff2-19813c957a24@gmail.com>
-Date:   Wed, 17 Nov 2021 13:35:32 -0500
+        id S240191AbhKQStg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 13:49:36 -0500
+Received: from mout.web.de ([212.227.15.14]:56097 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240176AbhKQStf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 13:49:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1637174780;
+        bh=/feeNcxENqhUQZEFr35P/3PN+xFAx+wI5E6FGAFw+T4=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=joJ3POSHUvK0Z4b8/UCtB3/m1PjqU/SEyX7aRyg9Sf1D2e8PR5vCp3JyL3+LtqkIv
+         PPKzcGLyLXMkzZhc3cg6IwuKsjNvdv7wEEbXxM9o26Bp1+E93+LHfQ7IpZCIfY+DN6
+         6LqBDrmIkSsIErVtzqECxkRsEh+1gL4G4X4CLKmw=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.20.171]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M1aIB-1mpsv90ArD-003F5Q; Wed, 17
+ Nov 2021 19:46:20 +0100
+Message-ID: <634c4237-325a-13e8-0a92-09d23bdfb111@web.de>
+Date:   Wed, 17 Nov 2021 19:46:19 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: [Question] Unicode weirdness breaking tests on ZFS?
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.1
+Subject: Re: [PATCH v13 3/3] grep/pcre2: fix an edge case concerning ascii
+ patterns and UTF-8 data
 Content-Language: en-US
-From:   Derrick Stolee <stolee@gmail.com>
-To:     Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <9393e572-0666-6485-df29-abad5e0d32a1@gmail.com>
- <20211117161226.xcat77ewhf5inaif@tb-raspi4>
- <20211117170613.kyoe6ov2m5wi2i56@tb-raspi4>
- <20211117173924.maporsti5cz2ixsu@tb-raspi4>
- <8a3d0d0e-cc82-b696-00f4-b71e6452e1bd@gmail.com>
-In-Reply-To: <8a3d0d0e-cc82-b696-00f4-b71e6452e1bd@gmail.com>
+To:     Carlo Arenas <carenas@gmail.com>,
+        Andreas Schwab <schwab@linux-m68k.org>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Hamza Mahfooz <someguy@effective-light.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <20211015161356.3372-1-someguy@effective-light.com>
+ <20211015161356.3372-3-someguy@effective-light.com>
+ <877dd9i1zj.fsf@igel.home> <211115.86fsrxqbvp.gmgdl@evledraar.gmail.com>
+ <87o86kv6fh.fsf@igel.home>
+ <CAPUEspi=r9EsG8KPvdiD-HM7Drq8ho1yjkN_c_T1e+ZeR4eejg@mail.gmail.com>
+ <87fsrwv46h.fsf@igel.home>
+ <CAPUEspg8ZUdn+KFz35yG1k9bbfVTe1b+7=+WdMknRS1zu8VcDQ@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CAPUEspg8ZUdn+KFz35yG1k9bbfVTe1b+7=+WdMknRS1zu8VcDQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:GkDVQERBEufuZ0lb4rfnslaX7dk1BurIzAUJIMsKAmlp2vzhxf3
+ 54j6LxOF4pVardE2U74PgYASTg6MVVYG3kGofs1oh1SNRhmX1duoNWwh5nwKWSb0Ro8nvVT
+ AbF8qdFgmQuTwjAU99bSPU7gYqzz0ozE5FAWUJ+3DlCvOqE4/cv7qVRe2L7IM8R6E986s9M
+ 06nHTBJzGDehmuj5ryNiA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XlAtho/Rxew=:QTIZwkLixfPhMcP6IljjOr
+ Rol2KCEDMvD2O08XQQBR4dz89HoQM1SByAemXzbnPMEHRu2FmPBh7JoT0fc+49HqrKQUPMPgF
+ kgCptnunbUuOs5w8zhuf4QDWnSkpJxUdbG1nMf4TuADKq/phNbegKYI/q2AdpqjArDJZmNfsg
+ HZbuRXGFRhRGVVLxepeN3dFURPNt3y2c9MRNUzURVXmIcmFgbC3nYl9cXhtkqFXslJak0GWA3
+ Vy1rgfejAxWPXhAF3SYMVTMdSwJWAlK022QwvKhEUAapa6KQcyZExTDQLrcMuUpWwbSFdfnQB
+ HilINdoHpU7dLeTlCxSpB5CrC1dkg4rvkSGyoF3jhxVTuMjw0cgmsIRrG1sEf1MRiDNljbWuW
+ Cr9TFkoT1oJfBzxaBM9MwH3VX1Otsz2FBrwbaQ6ktcKmvc2L40+W6rZ01dj60Ez1FwdvTNOvD
+ qSfiOJTg8k2BAMkQpFR4WjeeBP0MzGVXBgdZecfuRJ63sW7qhPcqrh12lVR/GW4V4yVCZnn6C
+ gOeA25LPX67xDqqwR/uTmGYfEIVbCFlkbeIs4kRRNAAFAtpl+PrPkSIknEM0lryzR4Q35WZ4D
+ DP9m7OdmPCL4geFHkiJSwmbpoCecqaOioxU/mOYaQsE0OFbhCVciiR+yYzU1k1Noie2DVWaKz
+ SprU5GD9WHwZVzfjkA0nC6N4CiiHgnASDf729LjcSdX2OxcTu0zMO/EQ6J1faMT3FO1NUbqI3
+ Q6YyJh78oPrB3fKPTz3PeTFMlBAQroLQlOFmrkvHMrXuRS6N0uBFKcKoyq2Ins50NTwKk4KK5
+ OJAPrv2NyAak9G4APzwvIBZU00g7hlOakrJEIUHgFCcFjjt+5E21zRKRsGUu4MfCsDs7LocDO
+ VrlnX5RvTyk7y+AGAwP08Su58NAFPkYij0TG5AOIrdju4GHatOBSajnoTenIoOvx7UrxTyL5H
+ kJTcoytiVt/cW2o3doB1URXJie4Eh1ZPxs+L5KVy3JnRfnXNts8FlJ5yOG2iuPTmfxHQBiOk1
+ 6zC+xoVbjQRzB0ye4KqY6PMqPCRLxjcV0Gn5h9TVvk710DQCwlTWLouZW95EOfgyRQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/17/2021 1:29 PM, Derrick Stolee wrote:
-> On 11/17/2021 12:39 PM, Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= wrote:
->> On Wed, Nov 17, 2021 at 06:06:13PM +0100, Torsten B??gershausen wrote:
->>> On Wed, Nov 17, 2021 at 05:12:26PM +0100, Torsten B??gershausen wrote:
->>>> I'll can have a look - just installing in a virtual machine.
->>>
->>> So, the virtual machine is up-and-running.
->>>
->>> I got 2 messages:
->>>
->>> ok 9 - rename (silent unicode normalization) # TODO known breakage vanished
->>> ok 10 - merge (silent unicode normalization) # TODO known breakage vanished
->>>
->>> Do you get the same ?
-> 
-> Halfway, I see this:
-> 
-> ok 9 - rename (silent unicode normalization) # TODO known breakage vanished
-> not ok 10 - merge (silent unicode normalization) # TODO known breakage
+Am 16.11.21 um 10:38 schrieb Carlo Arenas:
+> On Tue, Nov 16, 2021 at 1:30 AM Andreas Schwab <schwab@linux-m68k.org> w=
+rote:
+>>
+>> expecting success of 7812.13 'PCRE v2: grep ASCII from invalid UTF-8 da=
+ta':
+>>         git grep -h "var" invalid-0x80 >actual &&
+>>         test_cmp expected actual &&
+>>         git grep -h "(*NO_JIT)var" invalid-0x80 >actual &&
+>>         test_cmp expected actual
+>>
+>> ++ git grep -h var invalid-0x80
+>> ++ test_cmp expected actual
+>> ++ test 2 -ne 2
+>> ++ eval 'diff -u' '"$@"'
+>> +++ diff -u expected actual
+>> ++ git grep -h '(*NO_JIT)var' invalid-0x80
+>> fatal: pcre2_match failed with error code -22: UTF-8 error: isolated by=
+te with 0x80 bit set
+>
+> That is exactly what I was worried about, this is not failing one
+> test, but making `git grep` unusable in any repository that has any
+> binary files that might be reachable by it, and it is likely affecting
+> anyone using PCRE older than 10.34
 
-Making this even more confusing, my original output shows both of
-the TODOs vanishing, but I can't make that happen only running this
-test. However, with "prove -j8 t00*.sh" I can get them to both
-vanish:
+Let's have a look at the map.  Here are the differences between the
+versions regarding use of PCRE2_UTF:
 
-Test Summary Report
--------------------
-t0050-filesystem.sh           (Wstat: 0 Tests: 11 Failed: 0)
-  TODO passed:   9-10
-t0021-conversion.sh           (Wstat: 256 Tests: 41 Failed: 1)
-  Failed test:  31
-  Non-zero exit status: 1
-Files=53, Tests=2896, 15 wallclock secs ( 0.59 usr  0.07 sys + 26.96 cusr 13.95 csys = 41.57 CPU)
-Result: FAIL
+o: opt->ignore_locale
+h: has_non_ascii(p->pattern)
+i: is_utf8_locale()
+l: !opt->ignore_case && (p->fixed || p->is_fixed)
 
+o h i l master hamza rene2
+0 0 0 0      0     1     0
+0 0 0 1      0     1     0
+0 0 1 0      0     1     1
+0 0 1 1      0     1     0  <=3D=3D 7812.13, confirmed using fprint() debu=
+gging
+
+So http://public-inbox.org/git/0ea73e7a-6d43-e223-ab2e-24c684102856@web.de=
+/
+should not have this breakage, because it doesn't enable PCRE2_UTF for
+literal patterns.
+
+Ren=C3=A9
