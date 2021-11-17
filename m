@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13695C433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 460AFC433EF
 	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 11:20:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E916261B42
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 11:20:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A0D261B96
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 11:20:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236729AbhKQLX3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 06:23:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41654 "EHLO
+        id S236732AbhKQLXb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 06:23:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236707AbhKQLX1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 06:23:27 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 769DDC061746
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 03:20:29 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id k37-20020a05600c1ca500b00330cb84834fso4463919wms.2
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 03:20:29 -0800 (PST)
+        with ESMTP id S236709AbhKQLX2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 06:23:28 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E2EDC061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 03:20:30 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id u1so3894788wru.13
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 03:20:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=I0g3EPYabtyH7qPlMtmdPzqLjmO2A3erl+jKrOYxuH4=;
-        b=geJEa5mRBYrp+mxmJwt0WuPTAvziPOXqG1o+PQEvimElZ61P281FwAlOxnUbYOlSTF
-         c1DYjK1lUjAHR2AD50GRgqtV1wr84qPrIhqISV+oVhyD/iNedAe7Ujl+lmQGuyix6kmD
-         h5oyE3PMIC9fHat8BNaWRKcxAR9UprytYd6kEomVOk1K4r+Rg7saq5ilIrPiq2HGnTB4
-         C8vIgSm3LBhAENs6UZyajvIbeQ8DppuG7Ji4TvB2H91FVzqTsHOGzJ48jUuzZu0I5HAE
-         hYAKCjjPTDC7nYVSsh5AIKtt87zuo0ZdyNTXOyV8yTrQP1XW6gDwo8d5S+vj/372zoHK
-         IV4Q==
+        bh=oRSFnyhMNaCVd+A1yXll/itpTPChaAlDyuz0SZIrxzg=;
+        b=Z1hTuO54PDyBa4qsj7nRfZcB64Kxk1CSEOBR6pMdq1+6PRU/8QnxBcJBuzDl+g6b7b
+         1/k3dPkcf+S2AemihTj7kjsjI0YqidZxP1ASuIkf5OqXY1kENbvnTSqrqWTntb2n2Ve5
+         ahf/pjWnZmpU/sBBZuGM9dgrFJk21EZdu89/pqu4CVs8y+1u5D1eekPiZNeu+YR+nrc0
+         qorYt4fZSyLGr9xJTedvSyjzqueHFIH/TzrtFGJ/aDDfiQIL5BisFqZG7QBT0A4iIoBJ
+         DjGCi9WE6czoHAck9jWVmDYmO8LyDGlZqXZ+UWOVDiSJo00jLiRz+YH9tGAvOd4Xqeeh
+         3pUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=I0g3EPYabtyH7qPlMtmdPzqLjmO2A3erl+jKrOYxuH4=;
-        b=vWEZuPf+7Q2LieFIYlwv2Et/JNz9mOJY4WGp7QDVdR88NpR874yzaLAMLbZ1r9TxHM
-         BL64ep+B7AQvIdTi94Iuv73qtNP9Z5qHHcJ2blav5GSv+iLZU9ld0wJDGp7/HjRg0BnH
-         8bNz0T1sp/IWyjOnP2TbkTvRKQYgZDvv1UqTY/X/PkX7UB/xhZiaMAoga25IqUDvvTV2
-         NitNB2MYOQFw45udm8weIMXBXPMCUlxOpC/+PvzWFJiNTJ/IeXptY/a3c1zIQ1GRf7CH
-         dQKr763MVCt7m1hcaK6ipVFyQBL/+57YLlEa3xUUaKGz48iX9SWjT8P8YarRTjDtwvaK
-         UwOw==
-X-Gm-Message-State: AOAM530t4lNtl5ZC3blpOUFeq5IQLBoyp3Bo77TrxNtAJLYaVs3zFnrN
-        1ccdfAIdkotUHosVXgnbV5PZdXSjCdk=
-X-Google-Smtp-Source: ABdhPJzv0Kx/UL/r2hIjHniNSKokMlrxQnEIkpGExDAPi8TaUZxKNoXzciQNpRtqwWuHRbaYhWnqlQ==
-X-Received: by 2002:a05:600c:1f0e:: with SMTP id bd14mr13096419wmb.3.1637148027855;
-        Wed, 17 Nov 2021 03:20:27 -0800 (PST)
+        bh=oRSFnyhMNaCVd+A1yXll/itpTPChaAlDyuz0SZIrxzg=;
+        b=rBDOWarPKZVaQPV2z1HFaGP54yUTj/+vBUtlCzL1PgqID+sU7bRejIneQyMK9sXxAc
+         kxdefENxihd6+tEVbXy2aHwkwO0HnONLt7ss8RGyKJhgyhePX09rP94YHLdYcpRQ32eo
+         Tv0uT9pR9V58So5WlpelawiQvjExyotw11Ac37KVjCFB73UVEh3BJsb9VezgVxbX/wCf
+         pYEhdV9H4gGkX+5MCU6dn6wFdlsV59benYQYQaxyYwNCo2ejJ/4L525tJClI9jcgIGq5
+         Z7hHaGuOUJJ/BNO++AxqcWnzwYiqUy9eqQT6e32JzK7KQh9d1yrX3t+jKZy1j3LVOKJ1
+         0G0Q==
+X-Gm-Message-State: AOAM530Ju9u/J9G3NBxj8WG2AGYojKfUPCmK5Bl+K/rofk3TxRnnc8uH
+        5Jn3OpDp+W9qrZm8kVcVKf+3L9+aTCQ=
+X-Google-Smtp-Source: ABdhPJw6cGtjxoLjz6ZvosBjwi/b4xS4jfrLtCeibrw2nfrZnwuTrpaRKTA6lbdNiSOJjQPhDvIYXw==
+X-Received: by 2002:adf:e848:: with SMTP id d8mr19154914wrn.3.1637148028586;
+        Wed, 17 Nov 2021 03:20:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ay21sm5388733wmb.7.2021.11.17.03.20.27
+        by smtp.gmail.com with ESMTPSA id c6sm6756877wmq.46.2021.11.17.03.20.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 03:20:27 -0800 (PST)
-Message-Id: <38c771a74d2a348e6a752555f95b746de029b1d7.1637148025.git.gitgitgadget@gmail.com>
+        Wed, 17 Nov 2021 03:20:28 -0800 (PST)
+Message-Id: <eef46c71840d7f36b503a92b899c95632c023351.1637148025.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1079.git.1637148025.gitgitgadget@gmail.com>
 References: <pull.1079.git.1637148025.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 17 Nov 2021 11:20:23 +0000
-Subject: [PATCH 1/3] diff histogram: intern strings
+Date:   Wed, 17 Nov 2021 11:20:24 +0000
+Subject: [PATCH 2/3] xdiff: avoid unnecessary memory allocations
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,100 +69,46 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Histogram is the only diff algorithm not to call
-xdl_classify_record(). xdl_classify_record() ensures that the hash
-values of two strings that are not equal differ which means that it is
-not necessary to use xdl_recmatch() when comparing lines, all that is
-necessary is to compare the hash values. This gives a 7% reduction in
-the runtime of "git log --patch" when using the histogram diff
-algorithm.
+rindex and ha are only used by xdl_cleanup_records() which is not
+called by the histogram or patience algorithms. The perf test results
+show a small reduction in run time but that is probably within the
+noise.
 
 Test                                  HEAD^             HEAD
 -----------------------------------------------------------------------------
-4000.1: log -3000 (baseline)          0.18(0.14+0.04)   0.19(0.17+0.02) +5.6%
-4000.2: log --raw -3000 (tree-only)   0.99(0.77+0.21)   0.98(0.78+0.20) -1.0%
-4000.3: log -p -3000 (Myers)          4.84(4.31+0.51)   4.81(4.15+0.64) -0.6%
-4000.4: log -p -3000 --histogram      6.34(5.86+0.46)   5.87(5.19+0.66) -7.4%
-4000.5: log -p -3000 --patience       5.39(4.60+0.76)   5.35(4.60+0.73) -0.7%
+4000.1: log -3000 (baseline)          0.19(0.17+0.02)   0.19(0.12+0.07) +0.0%
+4000.2: log --raw -3000 (tree-only)   0.98(0.78+0.20)   0.98(0.81+0.16) +0.0%
+4000.3: log -p -3000 (Myers)          4.81(4.15+0.64)   4.81(4.23+0.56) +0.0%
+4000.4: log -p -3000 --histogram      5.87(5.19+0.66)   5.83(5.11+0.70) -0.7%
+4000.5: log -p -3000 --patience       5.35(4.60+0.73)   5.31(4.61+0.69) -0.7%
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- xdiff/xhistogram.c |  5 ++---
- xdiff/xprepare.c   | 24 ++++++++----------------
- 2 files changed, 10 insertions(+), 19 deletions(-)
+ xdiff/xprepare.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
-index e694bfd9e31..6c1c88a69a1 100644
---- a/xdiff/xhistogram.c
-+++ b/xdiff/xhistogram.c
-@@ -91,9 +91,8 @@ struct region {
- static int cmp_recs(xpparam_t const *xpp,
- 	xrecord_t *r1, xrecord_t *r2)
- {
--	return r1->ha == r2->ha &&
--		xdl_recmatch(r1->ptr, r1->size, r2->ptr, r2->size,
--			    xpp->flags);
-+	return r1->ha == r2->ha;
-+
- }
- 
- #define CMP_ENV(xpp, env, s1, l1, s2, l2) \
 diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index abeb8fb84e6..7fae0727a02 100644
+index 7fae0727a02..4527a4a07c4 100644
 --- a/xdiff/xprepare.c
 +++ b/xdiff/xprepare.c
-@@ -181,15 +181,11 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 	if (!(recs = (xrecord_t **) xdl_malloc(narec * sizeof(xrecord_t *))))
+@@ -213,10 +213,13 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
  		goto abort;
+ 	memset(rchg, 0, (nrec + 2) * sizeof(char));
  
--	if (XDF_DIFF_ALG(xpp->flags) == XDF_HISTOGRAM_DIFF)
--		hbits = hsize = 0;
--	else {
--		hbits = xdl_hashbits((unsigned int) narec);
--		hsize = 1 << hbits;
--		if (!(rhash = (xrecord_t **) xdl_malloc(hsize * sizeof(xrecord_t *))))
--			goto abort;
--		memset(rhash, 0, hsize * sizeof(xrecord_t *));
--	}
-+	hbits = xdl_hashbits((unsigned int) narec);
-+	hsize = 1 << hbits;
-+	if (!(rhash = (xrecord_t **) xdl_malloc(hsize * sizeof(xrecord_t *))))
-+		goto abort;
-+	memset(rhash, 0, hsize * sizeof(xrecord_t *));
+-	if (!(rindex = (long *) xdl_malloc((nrec + 1) * sizeof(long))))
+-		goto abort;
+-	if (!(ha = (unsigned long *) xdl_malloc((nrec + 1) * sizeof(unsigned long))))
+-		goto abort;
++	if ((XDF_DIFF_ALG(xpp->flags) != XDF_PATIENCE_DIFF) &&
++	    (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF)) {
++		if (!(rindex = xdl_malloc((nrec + 1) * sizeof(*rindex))))
++			goto abort;
++		if (!(ha = xdl_malloc((nrec + 1) * sizeof(*ha))))
++			goto abort;
++	}
  
- 	nrec = 0;
- 	if ((cur = blk = xdl_mmfile_first(mf, &bsize)) != NULL) {
-@@ -208,9 +204,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 			crec->size = (long) (cur - prev);
- 			crec->ha = hav;
- 			recs[nrec++] = crec;
--
--			if ((XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF) &&
--			    xdl_classify_record(pass, cf, rhash, hbits, crec) < 0)
-+			if (xdl_classify_record(pass, cf, rhash, hbits, crec) < 0)
- 				goto abort;
- 		}
- 	}
-@@ -279,8 +273,7 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 	enl1 = xdl_guess_lines(mf1, sample) + 1;
- 	enl2 = xdl_guess_lines(mf2, sample) + 1;
- 
--	if (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF &&
--	    xdl_init_classifier(&cf, enl1 + enl2 + 1, xpp->flags) < 0)
-+	if (xdl_init_classifier(&cf, enl1 + enl2 + 1, xpp->flags) < 0)
- 		return -1;
- 
- 	if (xdl_prepare_ctx(1, mf1, enl1, xpp, &cf, &xe->xdf1) < 0) {
-@@ -305,8 +298,7 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 		return -1;
- 	}
- 
--	if (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF)
--		xdl_free_classifier(&cf);
-+	xdl_free_classifier(&cf);
- 
- 	return 0;
- }
+ 	xdf->nrec = nrec;
+ 	xdf->recs = recs;
 -- 
 gitgitgadget
 
