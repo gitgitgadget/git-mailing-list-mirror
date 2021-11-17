@@ -2,200 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2F3CC433EF
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 16:52:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39D01C433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 17:06:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C770361BFB
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 16:52:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09FB1615A4
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 17:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232967AbhKQQzI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 11:55:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33704 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231793AbhKQQzF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 11:55:05 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B427C061570
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 08:52:06 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id t30so5908635wra.10
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 08:52:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=ojtWQvv3GfCOcF+OqqNwLHmJ/o3CzCCNFF6TTl2mdpw=;
-        b=L9MlwFaW4ux31iqH4ACldoQPPqxun/TJFFdqgtFSWh9FeOaNeHx5HWMC6vuHgdkj5u
-         hLTvy1tfXhCDE23+t9sKw6pidXLMX5S9SRTuhS7hHm0uzsdWrdjRKX/Vuyjso/QtEBXd
-         /rEuY3RJHY5UDmm/HnYnIKahZ1+6zZV7O0oxfqtzNEWHrgdD7bpaToQn2Tiawy4kKQte
-         uWNs6Fiws1TtSgp/IW8W++IkAx82j2k9i3qNS23rpiqb2F2fWRD8fNQm5UhLwX1A2awt
-         vwvddeV9++1YNTuc9r3ar5uxFHbl8cfeDHEXXHKUMCOeWgBpP1eJ2h6XJdBoJYiymhBa
-         hiOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=ojtWQvv3GfCOcF+OqqNwLHmJ/o3CzCCNFF6TTl2mdpw=;
-        b=5QVw6JXdFqk+bMzWgln65M84H6vkvp/5LRkVoJNkNM0WsvXoUUUhobAXQCYKS5oDFM
-         9f5teXMyo5skzFidRbMYXr/W/lXKnIz3jNgPyDwJCcNxK6xgbGyUZ8FdmgFyyAp+mxyW
-         FbjQ+1FBYZVtFwnh4j4zHu8NOqDYEch0Kzxn9RsJnYMeY+P3fECKGFpxBoRJsSAaOfWT
-         oH7kKfs9IpsVAC7/lQp8I1Cnv71wzZEtX2NCK6UJ9jQ8hOkdBt4HUhB8VPDQiSle1P8f
-         9SFO4t9w4pefSvlbS9KPIsboPTgFvzWULTt0WUiZ/J5GDEzuCyx6rAow2UxgNt+KvdzZ
-         bqCQ==
-X-Gm-Message-State: AOAM532d5S3xLIrKFUVBD/sFEiHNE+sgF0Imy4r9yvFJ3gasyPlT+ibt
-        wTNFMRXBXo02UHXeXvz7KPderDAFKl7g7Q==
-X-Google-Smtp-Source: ABdhPJx/YZhtoxNEY+zNT21lTDk2b63o+lv0XTvBMg1vGeETp2yajo+XupM3NI1+CePzxJu6ZjInAA==
-X-Received: by 2002:a05:6000:11c3:: with SMTP id i3mr22154323wrx.426.1637167925030;
-        Wed, 17 Nov 2021 08:52:05 -0800 (PST)
-Received: from [192.168.1.240] ([31.185.185.186])
-        by smtp.gmail.com with ESMTPSA id h18sm426426wre.46.2021.11.17.08.52.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Nov 2021 08:52:04 -0800 (PST)
-Message-ID: <88eaee89-4536-fba4-3aa0-c3693f58eae0@gmail.com>
-Date:   Wed, 17 Nov 2021 16:52:03 +0000
+        id S231177AbhKQRJQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 12:09:16 -0500
+Received: from mout.web.de ([212.227.17.11]:59069 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229585AbhKQRJO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 12:09:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1637168774;
+        bh=k53C2TRTv4e+4n53TJU57ZtTKX3gtxgWnFoNTpW200E=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=D8EzYC2gh3W221082nw0SIoi6rGGHXjLyuR8C+PWGQTQBY+ijW/PWCcEcdjTM/3b7
+         sMcBA0SUMB4WTOxJ4J4r7LPOsp1atttGdgvVGdUXp7zZQu7fAeo1Zlr3hILk7BRMUN
+         ff8YAxAt3ISXuxuAEB41Q7jb3SyzdmXiLE1t0er0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MGgNU-1msHwq0ucU-00EDpJ; Wed, 17
+ Nov 2021 18:06:14 +0100
+Date:   Wed, 17 Nov 2021 18:06:13 +0100
+From:   Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [Question] Unicode weirdness breaking tests on ZFS?
+Message-ID: <20211117170613.kyoe6ov2m5wi2i56@tb-raspi4>
+References: <9393e572-0666-6485-df29-abad5e0d32a1@gmail.com>
+ <20211117161226.xcat77ewhf5inaif@tb-raspi4>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/3] diff histogram: intern strings
-Content-Language: en-GB-large
-To:     Derrick Stolee <stolee@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1079.git.1637148025.gitgitgadget@gmail.com>
- <38c771a74d2a348e6a752555f95b746de029b1d7.1637148025.git.gitgitgadget@gmail.com>
- <2b2bd380-540f-959b-b950-cfdc95cbff29@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <2b2bd380-540f-959b-b950-cfdc95cbff29@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211117161226.xcat77ewhf5inaif@tb-raspi4>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:b6+6O1q1rpdDo2OPzAiDrgFZuEkj198mxBaoHMukDnFF6mqAYky
+ kaJdQ+LoJzTjKemQyNB7E+bPjxa1/iD56FIs4Ms15ANyf0HZRC8VbJRgadYivEJU+hmRNvL
+ XnDsVoqUt9t1Ow66AiTgTaxs0ACUdqCRjAN+iOpaFqKq4yTTTSTF0q/OAIFAKCOrpggZR5E
+ FD4iJQDd8pcY0vQ/I2q8g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3PSNbVBMUz4=:OZyylhbKXOJd6jRvL7Ld2/
+ rpWBsFiMyTAl1oVFTDn5MwZ+5u9Ez5BWZwkYrHZxVBgJyGJu+IBnPOMdU1wTU0KV/69CeMmQ0
+ 9vSUYKGOWgwSF9hgF7lpaj7UX60Dm54C++WfPs2sikJ2RFLTHk8FTUIYsgqEnJuMxTAzKXk9O
+ wd9DjxqxJjVOLdVZDDHetbgpEEqrcryvojBcEuQkx5Tv3FoZCrcie0heFxjnUHEphuXdppPJe
+ OaT5kniWN86CoVpBVoWPaZsxwVJXGlGLL8polY34U+sngbAzfVh0f4Rxb7qMllndFU91kLClO
+ 4ekQQwy+aiPeYbuHxtKcWQ8q+Ll2f9RVk7makW8BijK0oTLgU72m4EDkpDSU0JYOSbdH6WIH2
+ P9Zos20aMJqwu9f7htC2yuqcX9FOh2fhBvHv8182C6duA0Kp+Kp6Olnm7cquK2nd01fWnZl1O
+ JfFnHs9dZvsrIoqVXKy/dYDFmB0J0JzNJGfJMeUFtUDHVLqKCJIB1kBwqgw7kIsUJLohwjeev
+ P1knpnkVruclaJAaxZIuvAhqql/K1Rvef3V2r9lbaM0pPa7Wu5ECCHboo4GGS1DiZqb4QiUpt
+ eAGA1CIgIUkYz9XW14ZT3m0bfmHxD3Hlw93PlQx3jxVgaRcZ+59BjHGexzbAk+irXLN/a7t8G
+ Eq2Ed9jIqV1UufmDHpLYP6Gzt+MXQRkxBDlDYhr1OtKEcEue6vUh4Fdb16ZOUosBwYpKQwKo5
+ Groree4h+lbNqPz3Jb5m1XbZFbb7dVEDgL6RWEJI06Ccr8gCx7nsnXfW2Ryzh+fxzoM/+Nlvi
+ lfhMQReEuIwcao9ZfTC4/+2wtP+0/WZxX/v5tjPcAj65Lyq8lh5ZPHKcFf/rYWj1wPAJAHTyz
+ PdmzaxwrkTlwrkJwHAlajGTCaL15PHaTQrUb+KQ1laUXkcw6Jn/aem8HzsoIHfZL8MpNodQ09
+ sGTqOO+RKlcKL58NbsSPstDH0FeLgIeDLdhDWWSxiLCanb8YVlNGFqvfHnCrl87Y+sGaorxDE
+ Tp2J5en7Iqv0+wxkeEWilTPYSWF6r2mOqzJYcwNA34RftAx1cRZfjA92QCZYxNWHkw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee
+On Wed, Nov 17, 2021 at 05:12:26PM +0100, Torsten B??gershausen wrote:
+> On Wed, Nov 17, 2021 at 10:17:53AM -0500, Derrick Stolee wrote:
+> > I recently had to pave my Linux machine, so I updated it to Ubuntu
+> > 21.10 and had the choice to start using the ZFS filesystem. I thought,
+> > "Why not?" but now I maybe see why.
+> >
+> > Running the Git test suite at the v2.34.0 tag on my machine results in
+> > these failures:
+> >
+> > t0050-filesystem.sh                   (Wstat: 0 Tests: 11 Failed: 0)
+> >   TODO passed:   9-10
+> > t0021-conversion.sh                   (Wstat: 256 Tests: 41 Failed: 1)
+> >   Failed test:  31
+> >   Non-zero exit status: 1
+> > t3910-mac-os-precompose.sh            (Wstat: 256 Tests: 25 Failed: 10=
+)
+> >   Failed tests:  1, 4, 6, 8, 11-16
+> >   TODO passed:   23
+> >   Non-zero exit status: 1
+> >
+> > These are all related to the UTF8_NFD_TO_NFC prereq.
+> >
+> > Zooming in on t0050, these tests are marked as "test_expect_failure" d=
+ue
+> > to an assignment of $test_unicode using the UTF8_NFD_TO_NFC prereq:
+> >
+> >
+> > $test_unicode 'rename (silent unicode normalization)' '
+> > 	git mv "$aumlcdiar" "$auml" &&
+> > 	git commit -m rename
+> > '
+> >
+> > $test_unicode 'merge (silent unicode normalization)' '
+> > 	git reset --hard initial &&
+> > 	git merge topic
+> > '
+> >
+> >
+> > The prereq creates two files using unicode characters that could
+> > collapse to equivalent meanings:
+> >
+> >
+> > test_lazy_prereq UTF8_NFD_TO_NFC '
+> > 	# check whether FS converts nfd unicode to nfc
+> > 	auml=3D$(printf "\303\244")
+> > 	aumlcdiar=3D$(printf "\141\314\210")
+> > 	>"$auml" &&
+> > 	test -f "$aumlcdiar"
+> > '
+> >
+> >
+> > What I see in that first test, the 'git mv' does change the
+> > index, but the filesystem thinks the files are the same. This
+> > may mean that our 'git add "$aumlcdiar"' from an earlier test
+> > is providing a non-equivalence in the index, and the 'git mv'
+> > changes the index without causing any issues in the filesystem.
+> >
+> > It reminds me as if we used 'git mv README readme' on a case-
+> > insensitive filesystem. Is this not a similar situation?
+> >
+> > What I'm trying to gather is that maybe this test is flawed?
+> > Or maybe something broke (or never worked?) in how we use
+> > 'git add' to not get the canonical unicode from the filesystem?
+> >
+> > The other tests all have similar interactions with 'git add'.
+> > I'm hoping that these are just test bugs, and not actually a
+> > functionality issue in Git. Yes, it is confusing that we can
+> > change the unicode of a file in the index without the filesystem
+> > understanding the difference, but that is very similar to how
+> > case-insensitive filesystems work and I don't know what else we
+> > would do here.
+> >
+> > These filesystem/unicode things are out of my expertise, so
+> > hopefully someone else has a clearer idea of what is going on.
+> > I'm happy to be a test bed, or even attempt producing patches
+> > to fix the issue once we have that clarity.
+> >
+> > Thanks,
+> > -Stolee
+>
+> Interesting.
+> The tests have always been working on HFS+, then we got
+> APFS (and needed a small fix) and now ZFS.
+>
+> I'll can have a look - just installing in a virtual machine.
 
-On 17/11/2021 15:55, Derrick Stolee wrote:
-> 
-> 
-> On 11/17/2021 6:20 AM, Phillip Wood via GitGitGadget wrote:
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> Histogram is the only diff algorithm not to call
->> xdl_classify_record(). xdl_classify_record() ensures that the hash
->> values of two strings that are not equal differ which means that it is
->> not necessary to use xdl_recmatch() when comparing lines, all that is
->> necessary is to compare the hash values. This gives a 7% reduction in
->> the runtime of "git log --patch" when using the histogram diff
->> algorithm.
->>
->> Test                                  HEAD^             HEAD
->> -----------------------------------------------------------------------------
->> 4000.1: log -3000 (baseline)          0.18(0.14+0.04)   0.19(0.17+0.02) +5.6%
->> 4000.2: log --raw -3000 (tree-only)   0.99(0.77+0.21)   0.98(0.78+0.20) -1.0%
->> 4000.3: log -p -3000 (Myers)          4.84(4.31+0.51)   4.81(4.15+0.64) -0.6%
->> 4000.4: log -p -3000 --histogram      6.34(5.86+0.46)   5.87(5.19+0.66) -7.4%
->> 4000.5: log -p -3000 --patience       5.39(4.60+0.76)   5.35(4.60+0.73) -0.7%
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>   xdiff/xhistogram.c |  5 ++---
->>   xdiff/xprepare.c   | 24 ++++++++----------------
->>   2 files changed, 10 insertions(+), 19 deletions(-)
->>
->> diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
->> index e694bfd9e31..6c1c88a69a1 100644
->> --- a/xdiff/xhistogram.c
->> +++ b/xdiff/xhistogram.c
->> @@ -91,9 +91,8 @@ struct region {
->>   static int cmp_recs(xpparam_t const *xpp,
->>   	xrecord_t *r1, xrecord_t *r2)
->>   {
->> -	return r1->ha == r2->ha &&
->> -		xdl_recmatch(r1->ptr, r1->size, r2->ptr, r2->size,
->> -			    xpp->flags);
->> +	return r1->ha == r2->ha;
->> +
-> 
-> nit: stray newline.
-> 
-> The only meaningful change here is that you are relying entirely on
-> the hash and not checking the content again. This means that hash
-> collisions on this 32-bit hash could start introducing different
-> results. Are we worried about that?
+So, the virtual machine is up-and-running.
 
-xdiff-interface.c limits the size of the file that can be passed to just 
-below 1GB so we are safe. The other diff algorithms are already using 
-this optimization. (the hash is 64 bits on most platforms, the xdiff 
-code could really benefit from a unsigned long -> size_t cleanup)
+I got 2 messages:
 
-> I see that a similar hash-comparison is done in xpatience.c without
-> further checking the contents, but xdiffi.c compares the hashes and
-> then checks with xdl_recmatch(). So, we are still not reaching full
-> consistency across all diff algorithms with how we handle these
-> comparisons. I think it is good to have at least one that can be used
-> if/when we hit these hash collisions within a diff, but it can be hard
-> to communicate to a user why they need to change a diff algorithm for
-> such an internal reason.
+ok 9 - rename (silent unicode normalization) # TODO known breakage vanishe=
+d
+ok 10 - merge (silent unicode normalization) # TODO known breakage vanishe=
+d
 
-I think that code in xdiffi.c is only used by the diff slider code that 
-implements diff.indentHeuristic, the Myers diff implementation just 
-compares the hash values. Before this change the diff slider code needed 
-to do the full check to be correct when processing the output of the 
-histogram algorithm.
-
-> The following bits looked scary at first, but you are just removing the
-> special-casing of XDF_HISTOGRAM_DIFF from the preparation stage.
-> 
->> -	if (XDF_DIFF_ALG(xpp->flags) == XDF_HISTOGRAM_DIFF)
->> -		hbits = hsize = 0;
->> -	else {
->> -		hbits = xdl_hashbits((unsigned int) narec);
->> -		hsize = 1 << hbits;
->> -		if (!(rhash = (xrecord_t **) xdl_malloc(hsize * sizeof(xrecord_t *))))
->> -			goto abort;
->> -		memset(rhash, 0, hsize * sizeof(xrecord_t *));
->> -	}
->> +	hbits = xdl_hashbits((unsigned int) narec);
->> +	hsize = 1 << hbits;
->> +	if (!(rhash = (xrecord_t **) xdl_malloc(hsize * sizeof(xrecord_t *))))
->> +		goto abort;
->> +	memset(rhash, 0, hsize * sizeof(xrecord_t *));
-> 
->> -			if ((XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF) &&
->> -			    xdl_classify_record(pass, cf, rhash, hbits, crec) < 0)
->> +			if (xdl_classify_record(pass, cf, rhash, hbits, crec) < 0)
-> 
->> -	if (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF &&
->> -	    xdl_init_classifier(&cf, enl1 + enl2 + 1, xpp->flags) < 0)
->> +	if (xdl_init_classifier(&cf, enl1 + enl2 + 1, xpp->flags) < 0)
-> 
->> -	if (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF)
->> -		xdl_free_classifier(&cf);
->> +	xdl_free_classifier(&cf);
-> 
-> The existence of these conditions gave me pause, so I went to look for where they
-> were inserted. They were made in 9f37c27 (xdiff/xprepare: skip classification,
-> 2011-07-12) with the justification that
-> 
->      We don't need any of that in histogram diff, so we omit calls to these
->      functions. We also skip allocating memory to the hash table, rhash, as
->      it is no longer used.
-> 
->      This gives us a small boost in performance.
-> 
-> But you are actually _using_ these preparation steps, which means you are
-> re-adding the cost of hashing but overall improving because you use the
-> data correctly. Excellent.
-
-Thanks for looking at this
-
-Best Wishes
-
-Phillip
-
-> Thanks,
-> -Stolee
-> 
+Do you get the same ?
