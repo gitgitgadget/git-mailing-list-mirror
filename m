@@ -2,62 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E497CC433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 14:20:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEA58C433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 14:20:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9D8563214
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 14:20:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF52563214
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 14:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238618AbhKQOX3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 09:23:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54826 "EHLO
+        id S238643AbhKQOXd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 09:23:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238409AbhKQOW7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 09:22:59 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C514AC061220
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 06:19:36 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id y196so2373533wmc.3
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 06:19:36 -0800 (PST)
+        with ESMTP id S238445AbhKQOXC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 09:23:02 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1754C061A0E
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 06:19:43 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id i5so5056603wrb.2
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 06:19:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=JfgQPeGK48E/0q8Fkiq5e3N8uuCWy/bAHbpQUBIoNJs=;
-        b=m/He2wt0FrcfxCkdAA8OHPzXk5svjcOhi/Jl4+5//zEdzvlCzJZU0B8IIOWzVXbaKc
-         SNubjDTsTCkYFnep4IlpWxSm9X/GeueebZg7YAf6GF+BjgG7urK0MBastLZE/p9SOce7
-         /gns3lxcBtFK2Nj/Cp/2cuGOibyDPdLU4TV0c3e9PDUvCPRCHkygvJJZX2yE33vgxO5Z
-         HAacbTn21i9OfmossM+GIHv7dM8I53IbAywyrwGZmFAk96ZqK/uvoMtdeb4FvkbUcSLA
-         Mi/Wcw+IgR6O1p/kbLohzVpEijtiE5nly/yYdhKR5/x1sT8EAhctrcPHqszgNUtUTj99
-         vd4Q==
+        bh=9DF8xacLLxcfovMqJ/eqpmiu+Qris70HYXyQdV96HVg=;
+        b=TLtaWIyyQTwiRz2jP5VYqXPtU6rLM6qlAZwy47x/tfO6oVUaw7udnF5Mdgo0QxqIE8
+         AdoBwxnLLClw52dG/7nrTCchGej/+c6TxMMazDm8yapMMygSoMb+8nudCLIiG133xdjA
+         l+8ABhQ7a0Yu2CS40FZG/l5s034bpXB37W6pPJj2j5jiQKua6fDfMg9fSpRX21sg3Uij
+         ZGs8L370milMMSeLWGnhwEtyqo52Ff3czV93q9CkEPAsqfaP0N07JHrUlCdmAmvnfRe/
+         Plbu/EmdBjA+oY17c0Hh/GLNXF31X2+tfAms2Nca4JSvWKijKLIdU3LdzpM4PwKqpRjm
+         J8wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JfgQPeGK48E/0q8Fkiq5e3N8uuCWy/bAHbpQUBIoNJs=;
-        b=kc02e/yzaJPBXpcN2ilA1d+rG/Q8j9+uCUttfp0ROav7xNuFZU5Ccu92Lqs52SMDNQ
-         3AGrCsdgPu+c4KUiyqLcqkuX1JTSatLocsG1hwaaRwO1+xKr8F1RjxahLay8dD7ouXKk
-         XJqixRHuiHPLHckmSMpI/4qy0KfUEd45zXoebzuD80DsFebqUi5oqtU3euGcMuK/o+ji
-         w4XX6u1u4um7Pti1xO0UvYGxaeeaf16vIHbj7BTUqpiaxxQXCW4ch+mx4L71BhoAXYKl
-         yZyqHz4uA9xu0yhOn09gtL2+7PxKUfIWpQBGqk/4fLwwQ+Q/F4f2zGfKp1BcitGF0X9U
-         tXTg==
-X-Gm-Message-State: AOAM530f2TcrN5wvsiKWq5YXDVhqi3D2VvME+Jq7wuKUaaz1ecxm/Cjy
-        sj7o+cLpstkH7/qVeDnBZSSNax+cp28=
-X-Google-Smtp-Source: ABdhPJwk2qzaUMTHy22Wu0SEkuOfp0EjHyWYQe60waOYNgmdT3n605rBVc+emV+aa8nFSTEAqe+O1Q==
-X-Received: by 2002:a1c:1fd6:: with SMTP id f205mr40978wmf.98.1637158775116;
-        Wed, 17 Nov 2021 06:19:35 -0800 (PST)
+        bh=9DF8xacLLxcfovMqJ/eqpmiu+Qris70HYXyQdV96HVg=;
+        b=gjrceh2O8ySEkCIxJh8kqdoie6Cv0Z/oXsgE2beD8KckKDsq3Lmzm2jX46KD+l68Ry
+         6heVWIx5uB2fsbGL6mjX9z0/QngC9MLPgg9PgMj0G8PA9UiDOIpMkhw6CJlM33VTVlOL
+         OVtloQRhEiv8ZNX5UhCgTvrmPU72X8L6N2wOkdiEhWxq+/H8I4VGJncBEO8r7HCTfQVY
+         NGAx3VMXaVnb2AxPq1XM1zNZMI8nFLZ8yuLNJ5JzPYBGaGtNdz2K7HQ4Q0qfMI5+RoMo
+         frz0DOSGkCObDSPi5d1J/ugl+mvMlbKO20JxtmJuVUNHa7QnWUCQUojsMnn3a3HakA0y
+         qteg==
+X-Gm-Message-State: AOAM532qKRpEzDP/0Jx9LWdU6Wp827GVwONnpFuBTUu4btyGezO/3Bnc
+        51qhhLBBpIaovz4/Be+8umhzpJQew28=
+X-Google-Smtp-Source: ABdhPJyplnFcc7NkakP6rJ1K57M/KCAG2q7Unv2+3Ek7rjxydk9l6fZ5jIZz2kUuQ1rEN0u9NOLhuw==
+X-Received: by 2002:a05:6000:1043:: with SMTP id c3mr19844009wrx.64.1637158782063;
+        Wed, 17 Nov 2021 06:19:42 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t189sm5598062wma.8.2021.11.17.06.19.34
+        by smtp.gmail.com with ESMTPSA id s13sm5813729wmc.47.2021.11.17.06.19.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 06:19:34 -0800 (PST)
-Message-Id: <cca604ef3261cc295ed06d6f675368d98d0334d6.1637158762.git.gitgitgadget@gmail.com>
+        Wed, 17 Nov 2021 06:19:41 -0800 (PST)
+Message-Id: <d5218523a3824052ab9b2f336665bdd8882b1996.1637158762.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com>
 References: <pull.1005.v6.git.1635323239.gitgitgadget@gmail.com>
         <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 17 Nov 2021 14:19:12 +0000
-Subject: [PATCH v7 07/17] scalar: 'register' sets recommended config and
- starts maintenance
+From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 17 Nov 2021 14:19:21 +0000
+Subject: [PATCH v7 16/17] scalar: implement the `delete` command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,331 +69,170 @@ Cc:     Derrick Stolee <stolee@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Theodore Ts'o <tytso@mit.edu>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Matthew John Cheetham <mjcheetham@outlook.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Let's start implementing the `register` command. With this commit,
-recommended settings are configured upon `scalar register`, and Git's
-background maintenance is started.
+Delete an enlistment by first unregistering the repository and then
+deleting the enlistment directory (usually the directory containing the
+worktree `src/` directory).
 
-The recommended config settings may very well change in the future. For
-example, once the built-in FSMonitor is available, we will want to
-enable it upon `scalar register`. For that reason, we explicitly support
-running `scalar register` in an already-registered enlistment.
+On Windows, if the current directory is inside the enlistment's
+directory, change to the parent of the enlistment directory, to allow us
+to delete the enlistment (directories used by processes e.g. as current
+working directories cannot be deleted on Windows).
 
 Co-authored-by: Victoria Dye <vdye@github.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c   | 249 ++++++++++++++++++++++++++++++++++++++
- contrib/scalar/scalar.txt |  18 ++-
- 2 files changed, 266 insertions(+), 1 deletion(-)
+ contrib/scalar/scalar.c          | 63 ++++++++++++++++++++++++++++++++
+ contrib/scalar/scalar.txt        |  8 ++++
+ contrib/scalar/t/t9099-scalar.sh |  9 +++++
+ 3 files changed, 80 insertions(+)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 7cff29e0fcd..03d5f84c764 100644
+index 71ca573f3af..c53697ad6a0 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -5,11 +5,260 @@
- #include "cache.h"
- #include "gettext.h"
- #include "parse-options.h"
-+#include "config.h"
-+#include "run-command.h"
-+
-+/*
-+ * Remove the deepest subdirectory in the provided path string. Path must not
-+ * include a trailing path separator. Returns 1 if parent directory found,
-+ * otherwise 0.
-+ */
-+static int strbuf_parent_directory(struct strbuf *buf)
+@@ -8,6 +8,8 @@
+ #include "config.h"
+ #include "run-command.h"
+ #include "refs.h"
++#include "dir.h"
++#include "packfile.h"
+ 
+ /*
+  * Remove the deepest subdirectory in the provided path string. Path must not
+@@ -328,6 +330,33 @@ static char *remote_default_branch(const char *url)
+ 	return NULL;
+ }
+ 
++static int delete_enlistment(struct strbuf *enlistment)
 +{
-+	size_t len = buf->len;
-+	size_t offset = offset_1st_component(buf->buf);
-+	char *path_sep = find_last_dir_sep(buf->buf + offset);
-+	strbuf_setlen(buf, path_sep ? path_sep - buf->buf : offset);
-+
-+	return buf->len < len;
-+}
-+
-+static void setup_enlistment_directory(int argc, const char **argv,
-+				       const char * const *usagestr,
-+				       const struct option *options,
-+				       struct strbuf *enlistment_root)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	char *root;
-+	int enlistment_found = 0;
-+
-+	if (startup_info->have_repository)
-+		BUG("gitdir already set up?!?");
-+
-+	if (argc > 1)
-+		usage_with_options(usagestr, options);
-+
-+	/* find the worktree, determine its corresponding root */
-+	if (argc == 1)
-+		strbuf_add_absolute_path(&path, argv[0]);
-+	else if (strbuf_getcwd(&path) < 0)
-+		die(_("need a working directory"));
-+
-+	strbuf_trim_trailing_dir_sep(&path);
-+	do {
-+		const size_t len = path.len;
-+
-+		/* check if currently in enlistment root with src/ workdir */
-+		strbuf_addstr(&path, "/src");
-+		if (is_nonbare_repository_dir(&path)) {
-+			if (enlistment_root)
-+				strbuf_add(enlistment_root, path.buf, len);
-+
-+			enlistment_found = 1;
-+			break;
-+		}
-+
-+		/* reset to original path */
-+		strbuf_setlen(&path, len);
-+
-+		/* check if currently in workdir */
-+		if (is_nonbare_repository_dir(&path)) {
-+			if (enlistment_root) {
-+				/*
-+				 * If the worktree's directory's name is `src`, the enlistment is the
-+				 * parent directory, otherwise it is identical to the worktree.
-+				 */
-+				root = strip_path_suffix(path.buf, "src");
-+				strbuf_addstr(enlistment_root, root ? root : path.buf);
-+				free(root);
-+			}
-+
-+			enlistment_found = 1;
-+			break;
-+		}
-+	} while (strbuf_parent_directory(&path));
-+
-+	if (!enlistment_found)
-+		die(_("could not find enlistment root"));
-+
-+	if (chdir(path.buf) < 0)
-+		die_errno(_("could not switch to '%s'"), path.buf);
-+
-+	strbuf_release(&path);
-+	setup_git_directory();
-+}
-+
-+static int run_git(const char *arg, ...)
-+{
-+	struct strvec argv = STRVEC_INIT;
-+	va_list args;
-+	const char *p;
-+	int res;
-+
-+	va_start(args, arg);
-+	strvec_push(&argv, arg);
-+	while ((p = va_arg(args, const char *)))
-+		strvec_push(&argv, p);
-+	va_end(args);
-+
-+	res = run_command_v_opt(argv.v, RUN_GIT_CMD);
-+
-+	strvec_clear(&argv);
-+	return res;
-+}
-+
-+static int set_recommended_config(void)
-+{
-+	struct {
-+		const char *key;
-+		const char *value;
-+	} config[] = {
-+		{ "am.keepCR", "true" },
-+		{ "core.FSCache", "true" },
-+		{ "core.multiPackIndex", "true" },
-+		{ "core.preloadIndex", "true" },
-+#ifndef WIN32
-+		{ "core.untrackedCache", "true" },
-+#else
-+		/*
-+		 * Unfortunately, Scalar's Functional Tests demonstrated
-+		 * that the untracked cache feature is unreliable on Windows
-+		 * (which is a bummer because that platform would benefit the
-+		 * most from it). For some reason, freshly created files seem
-+		 * not to update the directory's `lastModified` time
-+		 * immediately, but the untracked cache would need to rely on
-+		 * that.
-+		 *
-+		 * Therefore, with a sad heart, we disable this very useful
-+		 * feature on Windows.
-+		 */
-+		{ "core.untrackedCache", "false" },
-+#endif
-+		{ "core.logAllRefUpdates", "true" },
-+		{ "credential.https://dev.azure.com.useHttpPath", "true" },
-+		{ "credential.validate", "false" }, /* GCM4W-only */
-+		{ "gc.auto", "0" },
-+		{ "gui.GCWarning", "false" },
-+		{ "index.threads", "true" },
-+		{ "index.version", "4" },
-+		{ "merge.stat", "false" },
-+		{ "merge.renames", "false" },
-+		{ "pack.useBitmaps", "false" },
-+		{ "pack.useSparse", "true" },
-+		{ "receive.autoGC", "false" },
-+		{ "reset.quiet", "true" },
-+		{ "feature.manyFiles", "false" },
-+		{ "feature.experimental", "false" },
-+		{ "fetch.unpackLimit", "1" },
-+		{ "fetch.writeCommitGraph", "false" },
 +#ifdef WIN32
-+		{ "http.sslBackend", "schannel" },
++	struct strbuf parent = STRBUF_INIT;
 +#endif
-+		{ "status.aheadBehind", "false" },
-+		{ "commitGraph.generationVersion", "1" },
-+		{ "core.autoCRLF", "false" },
-+		{ "core.safeCRLF", "false" },
-+		{ "fetch.showForcedUpdates", "false" },
-+		{ NULL, NULL },
-+	};
-+	int i;
-+	char *value;
 +
-+	for (i = 0; config[i].key; i++) {
-+		if (git_config_get_string(config[i].key, &value)) {
-+			trace2_data_string("scalar", the_repository, config[i].key, "created");
-+			if (git_config_set_gently(config[i].key,
-+						  config[i].value) < 0)
-+				return error(_("could not configure %s=%s"),
-+					     config[i].key, config[i].value);
-+		} else {
-+			trace2_data_string("scalar", the_repository, config[i].key, "exists");
-+			free(value);
-+		}
-+	}
++	if (unregister_dir())
++		die(_("failed to unregister repository"));
 +
++#ifdef WIN32
 +	/*
-+	 * The `log.excludeDecoration` setting is special because it allows
-+	 * for multiple values.
++	 * Change the current directory to one outside of the enlistment so
++	 * that we may delete everything underneath it.
 +	 */
-+	if (git_config_get_string("log.excludeDecoration", &value)) {
-+		trace2_data_string("scalar", the_repository,
-+				   "log.excludeDecoration", "created");
-+		if (git_config_set_multivar_gently("log.excludeDecoration",
-+						   "refs/prefetch/*",
-+						   CONFIG_REGEX_NONE, 0))
-+			return error(_("could not configure "
-+				       "log.excludeDecoration"));
-+	} else {
-+		trace2_data_string("scalar", the_repository,
-+				   "log.excludeDecoration", "exists");
-+		free(value);
-+	}
++	strbuf_addbuf(&parent, enlistment);
++	strbuf_parent_directory(&parent);
++	if (chdir(parent.buf) < 0)
++		die_errno(_("could not switch to '%s'"), parent.buf);
++	strbuf_release(&parent);
++#endif
++
++	if (remove_dir_recursively(enlistment, 0))
++		die(_("failed to delete enlistment directory"));
 +
 +	return 0;
 +}
 +
-+static int start_maintenance(void)
+ static int cmd_clone(int argc, const char **argv)
+ {
+ 	const char *branch = NULL;
+@@ -688,6 +717,39 @@ static int cmd_unregister(int argc, const char **argv)
+ 	return unregister_dir();
+ }
+ 
++static int cmd_delete(int argc, const char **argv)
 +{
-+	return run_git("maintenance", "start", NULL);
-+}
-+
-+static int add_enlistment(void)
-+{
-+	int res;
-+
-+	if (!the_repository->worktree)
-+		die(_("Scalar enlistments require a worktree"));
-+
-+	res = run_git("config", "--global", "--get", "--fixed-value",
-+		      "scalar.repo", the_repository->worktree, NULL);
-+
-+	/*
-+	 * If the setting is already there, then do nothing.
-+	 */
-+	if (!res)
-+		return 0;
-+
-+	return run_git("config", "--global", "--add",
-+		       "scalar.repo", the_repository->worktree, NULL);
-+}
-+
-+static int register_dir(void)
-+{
-+	int res = add_enlistment();
-+
-+	if (!res)
-+		res = set_recommended_config();
-+
-+	if (!res)
-+		res = start_maintenance();
-+
-+	return res;
-+}
-+
-+static int cmd_register(int argc, const char **argv)
-+{
++	char *cwd = xgetcwd();
 +	struct option options[] = {
 +		OPT_END(),
 +	};
 +	const char * const usage[] = {
-+		N_("scalar register [<enlistment>]"),
++		N_("scalar delete <enlistment>"),
 +		NULL
 +	};
++	struct strbuf enlistment = STRBUF_INIT;
++	int res = 0;
 +
 +	argc = parse_options(argc, argv, NULL, options,
 +			     usage, 0);
 +
-+	setup_enlistment_directory(argc, argv, usage, options, NULL);
++	if (argc != 1)
++		usage_with_options(usage, options);
 +
-+	return register_dir();
++	setup_enlistment_directory(argc, argv, usage, options, &enlistment);
++
++	if (dir_inside_of(cwd, enlistment.buf) >= 0)
++		res = error(_("refusing to delete current working directory"));
++	else {
++		close_object_store(the_repository->objects);
++		res = delete_enlistment(&enlistment);
++	}
++	strbuf_release(&enlistment);
++	free(cwd);
++
++	return res;
 +}
- 
++
  static struct {
  	const char *name;
  	int (*fn)(int, const char **);
- } builtins[] = {
-+	{ "register", cmd_register },
+@@ -698,6 +760,7 @@ static struct {
+ 	{ "unregister", cmd_unregister },
+ 	{ "run", cmd_run },
+ 	{ "reconfigure", cmd_reconfigure },
++	{ "delete", cmd_delete },
  	{ NULL, NULL},
  };
  
 diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-index 5f7131861a5..568987064b2 100644
+index 737cf563c1a..f416d637289 100644
 --- a/contrib/scalar/scalar.txt
 +++ b/contrib/scalar/scalar.txt
-@@ -8,7 +8,7 @@ scalar - an opinionated repository management tool
- SYNOPSIS
- --------
- [verse]
--scalar <command> [<options>]
-+scalar register [<enlistment>]
+@@ -14,6 +14,7 @@ scalar register [<enlistment>]
+ scalar unregister [<enlistment>]
+ scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]
+ scalar reconfigure [ --all | <enlistment> ]
++scalar delete <enlistment>
  
  DESCRIPTION
  -----------
-@@ -29,6 +29,22 @@ will be identical to the worktree.
- The `scalar` command implements various subcommands, and different options
- depending on the subcommand.
+@@ -128,6 +129,13 @@ reconfigure the enlistment.
+ With the `--all` option, all enlistments currently registered with Scalar
+ will be reconfigured. Use this option after each Scalar upgrade.
  
-+COMMANDS
-+--------
++Delete
++~~~~~~
 +
-+Register
-+~~~~~~~~
-+
-+register [<enlistment>]::
-+	Adds the enlistment's repository to the list of registered repositories
-+	and starts background maintenance. If `<enlistment>` is not provided,
-+	then the enlistment associated with the current working directory is
-+	registered.
-++
-+Note: when this subcommand is called in a worktree that is called `src/`, its
-+parent directory is considered to be the Scalar enlistment. If the worktree is
-+_not_ called `src/`, it itself will be considered to be the Scalar enlistment.
++delete <enlistment>::
++	This subcommand lets you delete an existing Scalar enlistment from your
++	local file system, unregistering the repository.
 +
  SEE ALSO
  --------
- linkgit:git-maintenance[1].
+ linkgit:git-clone[1], linkgit:git-maintenance[1].
+diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
+index 58af546fd84..2e1502ad45e 100755
+--- a/contrib/scalar/t/t9099-scalar.sh
++++ b/contrib/scalar/t/t9099-scalar.sh
+@@ -76,4 +76,13 @@ test_expect_success 'scalar reconfigure' '
+ 	test true = "$(git -C one/src config core.preloadIndex)"
+ '
+ 
++test_expect_success 'scalar delete without enlistment shows a usage' '
++	test_expect_code 129 scalar delete
++'
++
++test_expect_success 'scalar delete with enlistment' '
++	scalar delete cloned &&
++	test_path_is_missing cloned
++'
++
+ test_done
 -- 
 gitgitgadget
 
