@@ -2,138 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2B55C433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 01:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD760C433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 01:51:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C081E6128C
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 01:44:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A71E61B72
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 01:51:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232052AbhKQBrX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 20:47:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52558 "EHLO
+        id S231582AbhKQBx5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Nov 2021 20:53:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbhKQBrX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 20:47:23 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AA68C061570
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 17:44:25 -0800 (PST)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id BDB255B463;
-        Wed, 17 Nov 2021 01:44:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1637113464;
-        bh=qeCjAmML9qH+qPCIwCUz3dtQP/zLrNjaCjsQ8TczdY4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=OvYr4CS24+bN2zXMdMimxKYZoxrjuE4gNuCkWJp03RYpOc/Px3/sE3xcLeqcGfcNN
-         +TSsd9WmlFvSZGo9HploviLnCV48tvOHzPql6Yx+6wr5aTb1YGtDTg/p5dHWRYGoK3
-         VFDarPBOB9g2njQwR3OyaScpBP1mQ5xPLpHAnzOkzKMNnMoH6LxKFa380M3ijkHc3H
-         3Fq4E8fwVuJKdg1x6O0p/Tkg2xvn7HQqmbp1w+JwjOMoQheUSwjLAwLabOJEABs4Im
-         CaW9bghHy0x0Ndv7p4g9zIrujxox6hyAWrdl6UD1Q+NuBeaUKb++QhUTUnomEQVlOW
-         DKMn//WYgq0U9q7eGXQRTb4v4wQ5/fDZh/BgaPnzbZa+rf8uvjojuIoKIiOF92CQUN
-         Kn9piDbrL7TAD33/ikpHZ8qPIg81zIqMSsHSIvuXRwSirw8Oo2Ua9aWvJ9S+fMJumY
-         FFcoiZQ1ayllyeclPgcEC1BVumq1+BliLmdklyNBUhdPDzMVYGh
-Date:   Wed, 17 Nov 2021 01:44:23 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/1] git-compat-util: add a test balloon for C99
- support
-Message-ID: <YZRedzMSodOYjjPP@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <20211114212437.1466695-1-sandals@crustytoothpaste.net>
- <20211116021241.1565740-1-sandals@crustytoothpaste.net>
- <20211116021241.1565740-2-sandals@crustytoothpaste.net>
- <YZOh370ZMMqSADUE@coredump.intra.peff.net>
+        with ESMTP id S230145AbhKQBx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Nov 2021 20:53:56 -0500
+Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE342C061570
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 17:50:58 -0800 (PST)
+Received: by mail-ua1-x92e.google.com with SMTP id o1so2423699uap.4
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 17:50:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=H3cgRk8kUDEg5I7DkBWUJSme+G3mkPxt7krqAa4bGh0=;
+        b=U/r7OMwo35DXmaXIyuiFPwuNFxaAI+XNEwjSlxloFKsEc5lU7FtGYROmwmVhbIzzNy
+         xtuJCZPyZlL7lEhCHMMY6SHeOB9C+Z9XOPILnuP12+VH1FtHHfgsL+XWbP5KH7mr9JrA
+         IwSY0VasP/mrcvAj1SKj49lYHtyTYaE9kfcgi+xd4Z5NxnfiEbw2cShC25rpwtsxZ/mu
+         3RpbQr5ALkzNcBzwlUWRkXP3Ek0lDmJ+9feLeb1wSyS9pcl7cfT73QoGde4gZ4BdIe6c
+         RSFrdG5uiA1rpb+qUgtmAffyxrgwQIeL4MxGVjsu+gKK1E57Xm8bOlcE54XhlqIz7U5/
+         jBGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=H3cgRk8kUDEg5I7DkBWUJSme+G3mkPxt7krqAa4bGh0=;
+        b=Ou3gx9Qx76clbCs9AvZN/Zl3ckbslVdOu7+SFmCBEgVIT/JUkzhsz5iPNIOy7Nf8Xq
+         +hyXakQZMbla6ss2VtwNVhD82soPPjcSrrtJ6rViDJ3bB9UKY6YsqUIUuX0uP0noECMw
+         QmAmTVCobhlAgv96DsuLZn9UjyRUmn707MyOu3JAZM3Gh4OqNKTUbkJyxWKh0J0K+y3K
+         Bp1eCUFmIWn+wowXcSCpPMkIBScO/NvBRtT7g7fsYxw7oqi96kLV7ajTtp9fZ61XZV8+
+         jB2Yg5ribCIdbFHHtth0Jowd9QNamgwma44bn6csMBsUZH1oBLvSWUd/KWQM48Eryudv
+         T4oA==
+X-Gm-Message-State: AOAM531GpufBq1BfevoomxPGPrdhOOcRmLO5dRnUUZU/WIH2qW5k4SZQ
+        2YDuyoVb95c0w7TyZgIVUfQQ6XSKhXgkmoSqdDc=
+X-Google-Smtp-Source: ABdhPJwnU7xaYBUVsdaauHqoalqRpeRcZX4budZpL9aCikM1RQJyAJXxDqVTPOmmCzgEI8+XGFpj2i2eOY8axp9iQVU=
+X-Received: by 2002:a05:6102:512b:: with SMTP id bm43mr63336868vsb.14.1637113857978;
+ Tue, 16 Nov 2021 17:50:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="RgqSSh5Y3byCkais"
-Content-Disposition: inline
-In-Reply-To: <YZOh370ZMMqSADUE@coredump.intra.peff.net>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+References: <20211116033542.3247094-1-sandals@crustytoothpaste.net>
+ <20211116033542.3247094-2-sandals@crustytoothpaste.net> <YZPOzqU0UQDVA57R@coredump.intra.peff.net>
+ <009d01d7db03$354ecae0$9fec60a0$@nexbridge.com> <YZQzqjWMzaWVkkfP@camp.crustytoothpaste.net>
+ <00e001d7db40$985c61a0$c91524e0$@nexbridge.com> <YZRUzHVS32W4Flo/@camp.crustytoothpaste.net>
+In-Reply-To: <YZRUzHVS32W4Flo/@camp.crustytoothpaste.net>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Tue, 16 Nov 2021 17:50:44 -0800
+Message-ID: <CAPUEspiHnTkwbUJ5o+fT2u4Kn+fwNe-3FoqVtNsjTF+Pg6Tryg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] wrapper: add a helper to generate numbers from a CSPRNG
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        rsbecker@nexbridge.com, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Nov 16, 2021 at 5:04 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2021-11-16 at 23:20:45, rsbecker@nexbridge.com wrote:
+> > We do link with libcurl and use OpenSSL as a DLL to handle TLS. The
+> > underlying random source for the nonstop-* configurations as of
+> > OpenSSL 3.0 are PNRG supplied by the vendor (HPE) on ia64 and the
+> > hardware rdrand* instructions on x86. I know that part of the OpenSSL
+> > code rather intimately.
+>
+> Great, as long as you don't define NO_OPENSSL, I think I can make this
+> work with OpenSSL by calling RAND_bytes, which will use whatever OpenSSL
+> uses.
 
---RgqSSh5Y3byCkais
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+not that RAND_bytes return high entropy bytes (like /dev/random) and
+is therefore limited and prone to draining, blocking and erroring when
+drained, so if we are going this route, will most likely need a second
+layer on top that doesn't block (like arc4random does), and at that
+point I would think we would rather use something battle tested than
+our own.
 
-On 2021-11-16 at 12:19:43, Jeff King wrote:
-> On Tue, Nov 16, 2021 at 02:12:41AM +0000, brian m. carlson wrote:
->=20
-> > The C99 standard was released in January 1999, now 22 years ago.  It
-> > provides a variety of useful features, including variadic arguments for
-> > macros, declarations after statements, variable length arrays, and a
-> > wide variety of other useful features, many of which we already use.
->=20
-> I like the idea of being able to assume C99. And I know this list is
-> just "here are some things we could do". But I'd like to express caution
-> over variable length arrays. We've already had problems with alloca()
-> causing stack exhaustion, and VLAs are basically the same thing. And the
-> worst part is there's no way to recover; you just get a segfault.
+for the little amount of random data we need, it might be wiser to
+fallback to something POSIX like lrand48 which is most likely to be
+available, but of course your tests that consume lots of random data
+will need to change.
 
-Since it looks like I'll be doing a v3, I'll reroll without that.
+Carlo
 
-> > diff --git a/Makefile b/Makefile
-> > index 12be39ac49..893d533d22 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -1204,7 +1204,7 @@ endif
-> >  # Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
-> >  # tweaked by config.* below as well as the command-line, both of
-> >  # which'll override these defaults.
-> > -CFLAGS =3D -g -O2 -Wall
-> > +CFLAGS =3D -g -O2 -Wall -std=3Dgnu99
-> >  LDFLAGS =3D
-> >  CC_LD_DYNPATH =3D -Wl,-rpath,
-> >  BASIC_CFLAGS =3D -I.
->=20
-> Do most compilers understand -std=3Dgnu99? It seems like we're breaking
-> the out-of-the-box build for everything that isn't gcc or clang.
+PS. Probably missing context as I don't know what was discussed
+previously, but indeed making this the libc problem by using mkstemp
+(plus some compatibility on top), like Peff mentioned seems like a
+more straightforward "fix"
 
-I'm pretty sure -Wall is GCC- and clang-specific, as is -Wl,-rpath, so I
-think we've already crossed that bridge.  There are places in
-config.mak.uname where they're specifically overridden for that reason.
 
--std=3Dgnu99 (or -std=3Dc99) is absolutely required for sparse, though,
-since it defaults to C89 (at least in CI).
 
-> I understand that older versions of gcc (prior to 5.1.0, from my
-> digging) default to gnu89, and so they would be broken _without_ this.
-> So it is a tradeoff one way or the other. But somehow this seems
-> backwards to me. We should assume that modern compilers support C99 out
-> of the box, and put the burden on older ones to trigger C99 support in
-> whatever non-portable way they need.
-
-We'll have to adjust the CI job that builds with GCC 4.8, but I can do
-that.  I just am not eager to hear complaints from people that it
-doesn't work out of the box, especially since CentOS 7 is going to hit
-this case.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---RgqSSh5Y3byCkais
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYZRedgAKCRB8DEliiIei
-gbFlAQCncSNZ/GQDaMRbW8uAoYlgPP/3x9YeGozPnJAz8rHR7gD+NMxNdrZpCNkn
-LqQftL33OmkI8pcJXNaediHAKvwF0AY=
-=XTFX
------END PGP SIGNATURE-----
-
---RgqSSh5Y3byCkais--
+  I'll work on that for a v2 to see if that will meet the needs for
+> your platform, and if not, I'll try something else.
+>
+> That should also have the pleasant side effect of making this more
+> portable even for those people who do have less common platforms, since
+> OpenSSL will likely be an option there.
+> --
+> brian m. carlson (he/him or they/them)
+> Toronto, Ontario, CA
