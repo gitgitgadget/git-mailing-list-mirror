@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02BB8C433EF
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 556A2C433FE
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:20:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC10161BAA
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:20:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B13061BAA
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:20:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236266AbhKQKXg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 05:23:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56424 "EHLO
+        id S236251AbhKQKXi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 05:23:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236217AbhKQKXa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 05:23:30 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4765CC061764
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:31 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id p3-20020a05600c1d8300b003334fab53afso4322135wms.3
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:31 -0800 (PST)
+        with ESMTP id S236234AbhKQKXd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 05:23:33 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1704FC061200
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:33 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id o29so1689471wms.2
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JFYSW7wsZhC1JEB9FxIu9/K6+I4l2z3dzIA+Y/HjmDo=;
-        b=oy7+ZI0lrokYUaaHl1MEt45nn78KjKCy/JaNjO1TUNUCQh2x1OwgyyHkuZi3UVxdzF
-         KL08NyPCRJ0ADWW5LUqT4dm87KxFim2tLDaJKn/GqYevAQFD+hw0T7PDZ16MUTIckHTV
-         81kG/RGqM4f6nCmPA1DUoAElsk0l2/xwV5B6khQrJV9IK9xLjDXXXHhLEoCTy4HJmVNN
-         GJxvOGzh+CLQQIVzYw+eLnZmd6+jgxdQvyBJ2c9+ztYcWSns9uIXEehy6QZb0LGYDbYx
-         cTyxA5lODSva5kADTVM/Btg+vtCog6LGSWvgwmlW2NqFxvtWhCSlUoFg201xoNychXGA
-         uQRA==
+        bh=ioLkPq9nUvdEDMhLisH+SQLwIBW2WR9NSvP/bDOJrQI=;
+        b=bwtLm0pz6agGdYdCKqqTdXgTYZ1GIdgT4Y0U7gv+ajZa6yICvu3f4EKVwPnN7qF9aK
+         1K4XV0TgYmXQGvtcYjFzQMOpH00ll1P29PO4Q8Ns2pQl0yZx6I28R83FOY3VMZSQk5+P
+         GM2sypcve/amZdps9AlDxKBbn2V84fIXleHsfI7SF7Xvn5Gb7DCd5sxqTebHJBreTlSY
+         7zoaaZSjalILaWqR1qB1TWfZ1oa/CQOKnICl+ROt1itHfKsG9r2EVHT6X0xzFB0xt3tq
+         HKuvFULvdnDkr+QVuYhV4VZxed6LKaUMmX8Xfl8OsP/GEWHBWFbP35vF+tTfOOLxTGef
+         33tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JFYSW7wsZhC1JEB9FxIu9/K6+I4l2z3dzIA+Y/HjmDo=;
-        b=PLWGfAnPRVUtYszF8s3BPHk7I58mCGtTtkJOixQlFwBeN3INFeqW0uJup5Rz9jyhQb
-         B09yeaMBnBpV9UzT+O+Wb/x83N35IkvdlkCkBdeHhyqgK/h8bBNMBJR9s5aXFKBbjm9L
-         P4XzukEgeHYDa+qcgwCJemlIiMS67NkPF0IPLr1GPTPG/mL7iw8/IHqIWfTky9N8Rckd
-         UrWPvFhrKlMsLkykQAUQ9Ge/oeYANbpVzxKB4Eeuk1618l4okTy812+nV1blOK3T2VLx
-         LzfjSVyHfRgRtvXHnzIEE5sGeMZKQ1JBXCi5lK6u0FpFGrxek4QJnMlihDt/V+AwHvJf
-         bi/A==
-X-Gm-Message-State: AOAM532KoZsOR92Z8fFt1yVybpUYvS/OI0Jaur4sLnO3Sjh+KkMlA7w7
-        NbhC5Sk6BM3VgciI3+XgzRbhT1GWfgwCMw==
-X-Google-Smtp-Source: ABdhPJzS2jfqzxtACBDW0N+xFMfNY0JR7wMV0BvGk0p/4PA762bB03O5JQ8PrGkFSx4bDZmfC73OVw==
-X-Received: by 2002:a05:600c:35c8:: with SMTP id r8mr16704571wmq.8.1637144429614;
-        Wed, 17 Nov 2021 02:20:29 -0800 (PST)
+        bh=ioLkPq9nUvdEDMhLisH+SQLwIBW2WR9NSvP/bDOJrQI=;
+        b=vkWf1wWd7xI/NCGcqIK0RRaWs+yjl3jXzbT6IVmLtDtq7yGqD94qAcKBENretX+EKe
+         TYiP6pVgZsnnpXDzL4ex886gSHteiqMk3mwFV9YgJZjT214VGC9Na2wSYDOXn0CJWxeV
+         tnDn65o4tUVsVVzMCyk2ImPsuFmDFme2zbfF4CXA4ynsJoEeZ/NJJj2NysxLHLkP4xb6
+         fDYNS3wFQXIvwjEM5pvf3mbeBd1NZYE3g/UriEulA6illUMF9r7YXkWRTXvZHt197K+4
+         SBYx5m8X0GHJgNIXBrHZxhiXC805g74ySVjal5WT3DwAlwTITk83R/p69xBIBOowBvlr
+         zsSA==
+X-Gm-Message-State: AOAM530d05CXVOLBuNm7D3MwxZAU1fUf0vXYJUmyuhIWp/K6ovDqEpJg
+        vUsIhAnYFLIkQdXqkwc8E999Yo2LJH6+VQ==
+X-Google-Smtp-Source: ABdhPJwiaXe2MQ59L9P9GfHLmyqFIWPCb/5VEUvAFm7cdgp1g0x7OdCXZ/HJ4D8F8Uv9vj3ZUmsxXw==
+X-Received: by 2002:a05:600c:1d0e:: with SMTP id l14mr75321840wms.64.1637144431367;
+        Wed, 17 Nov 2021 02:20:31 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n32sm6456256wms.1.2021.11.17.02.20.28
+        by smtp.gmail.com with ESMTPSA id n32sm6456256wms.1.2021.11.17.02.20.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 02:20:28 -0800 (PST)
+        Wed, 17 Nov 2021 02:20:30 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 05/23] Makefile: remove "mv $@ $@+" dance redundant to .DELETE_ON_ERROR
-Date:   Wed, 17 Nov 2021 11:20:04 +0100
-Message-Id: <patch-v4-05.23-3c987590740-20211117T101807Z-avarab@gmail.com>
+Subject: [PATCH v4 07/23] Makefile: change "ifndef NO_PERL" to "ifdef NO_PERL"
+Date:   Wed, 17 Nov 2021 11:20:06 +0100
+Message-Id: <patch-v4-07.23-fcdee92f64c-20211117T101807Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.796.g2c87ed6146a
 In-Reply-To: <cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com>
 References: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com> <cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com>
@@ -75,38 +75,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 7b76d6bf221 (Makefile: add and use the ".DELETE_ON_ERROR" flag,
-2021-06-29) we don't need to guard the clobbering of $@ with this sort
-of "mv $@+ $@" pattern in these cases where we're merely generating a
-file that'll be used as a dependency for other files, as in this case
-for GIT-PERL-HEADER.
-
-We have had a hard dependency on .DELETE_ON_ERROR since
-7b76d6bf221 (Makefile: add and use the ".DELETE_ON_ERROR" flag,
-2021-06-29), so this is a pure cleanup as a follow-up to that
-commit. Support for the ".DELETE_ON_ERROR" target itself is much older
-than any GNU make version we support, it was added to GNU make in
-1994.
+Change the NO_PERL variable assignments so that they declare the much
+smaller fallback condition first.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ Makefile | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index a71fba15e30..284725099c9 100644
+index 0cb10f00ebb..288f4834db8 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2349,8 +2349,7 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
- 	    -e 's=@@PERLLIBDIR_REL@@=$(perllibdir_relative_SQ)=g' \
- 	    -e 's=@@GITEXECDIR_REL@@=$(gitexecdir_relative_SQ)=g' \
- 	    -e 's=@@LOCALEDIR_REL@@=$(localedir_relative_SQ)=g' \
--	    $< >$@+ && \
--	mv $@+ $@
-+	    $< >$@
+@@ -2291,7 +2291,15 @@ git.res: git.rc GIT-VERSION-FILE GIT-PREFIX
+ # This makes sure we depend on the NO_PERL setting itself.
+ $(SCRIPT_PERL_GEN): GIT-BUILD-OPTIONS
  
- .PHONY: perllibdir
- perllibdir:
+-ifndef NO_PERL
++ifdef NO_PERL
++$(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
++	$(QUIET_GEN) \
++	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
++	    -e 's|@@REASON@@|NO_PERL=$(NO_PERL)|g' \
++	    unimplemented.sh >$@+ && \
++	chmod +x $@+ && \
++	mv $@+ $@
++else # NO_PERL
+ # Used for substitution in Perl modules. Disabled when using RUNTIME_PREFIX
+ # since the locale directory is injected.
+ perl_localedir_SQ = $(localedir_SQ)
+@@ -2363,14 +2371,6 @@ git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
+ 	$(QUIET_GEN)$(cmd_munge_script) && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+-else # NO_PERL
+-$(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
+-	$(QUIET_GEN) \
+-	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+-	    -e 's|@@REASON@@|NO_PERL=$(NO_PERL)|g' \
+-	    unimplemented.sh >$@+ && \
+-	chmod +x $@+ && \
+-	mv $@+ $@
+ endif # NO_PERL
+ 
+ # This makes sure we depend on the NO_PYTHON setting itself.
 -- 
 2.34.0.796.g2c87ed6146a
 
