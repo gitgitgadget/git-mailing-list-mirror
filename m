@@ -2,77 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FAF4C433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 20:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57AFBC433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 21:01:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 886A361AEC
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 20:20:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A44761B31
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 21:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240649AbhKQUXT convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 17 Nov 2021 15:23:19 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:63271 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240670AbhKQUXM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 15:23:12 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1AHKJsRP028347
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 17 Nov 2021 15:19:55 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Jeff King'" <peff@peff.net>, "'Carlo Arenas'" <carenas@gmail.com>
-Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        <git@vger.kernel.org>
-References: <20211116033542.3247094-1-sandals@crustytoothpaste.net> <20211116033542.3247094-2-sandals@crustytoothpaste.net> <YZPOzqU0UQDVA57R@coredump.intra.peff.net> <009d01d7db03$354ecae0$9fec60a0$@nexbridge.com> <YZQzqjWMzaWVkkfP@camp.crustytoothpaste.net> <00e001d7db40$985c61a0$c91524e0$@nexbridge.com> <YZRUzHVS32W4Flo/@camp.crustytoothpaste.net> <CAPUEspiHnTkwbUJ5o+fT2u4Kn+fwNe-3FoqVtNsjTF+Pg6Tryg@mail.gmail.com> <YZRxOrv9JFt2oeSU@coredump.intra.peff.net> <CAPUEsphh-enSYS66mi7_XaS0n1bmUvGXRcgVp6iqhg94xSHVog@mail.gmail.com> <YZVfrhos+lZas7hk@coredump.intra.peff.net>
-In-Reply-To: <YZVfrhos+lZas7hk@coredump.intra.peff.net>
-Subject: RE: [PATCH 1/2] wrapper: add a helper to generate numbers from a CSPRNG
-Date:   Wed, 17 Nov 2021 15:19:49 -0500
-Organization: Nexbridge Inc.
-Message-ID: <01a501d7dbf0$7c538000$74fa8000$@nexbridge.com>
+        id S239747AbhKQVE1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 16:04:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34060 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232596AbhKQVE0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 16:04:26 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 522A0C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 13:01:27 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id g14so16912491edb.8
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 13:01:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=UZsApruv5eWMSEW0OXm8ykChnrionH2AfG+5OJfK1E4=;
+        b=jfAvk/x/ZI6Jb+RrBFLiUj4dCzB7KlK2a+PKV92iN/NCAa/WxbbwmrvxbGs6pdKP9R
+         cIzYuldudCNYHDD+fG74T+XBfjZ3C5kvGHtTQnpqeNt+H8jg3lZSAH2s64PYJ4cU8d0j
+         WY6t+b9bQcX48XduD9ia/G6TQqTDlZWSAja+6uKHNYUsw1cWVA+Kj4+TxMfg7nKbNQxA
+         AB84VCtjakFj/xtYThDs86dzhjZWSPrfCOIC/YzC5O3DlVG+RsGRVwfa8TmXWkUw0GEV
+         L0VnEJnx7SgcfJqqgjBYV5mLDZt9h6kbyp4rBxPfETnQR+T2kq4ughBSamsvW+ZaNBHw
+         v19g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=UZsApruv5eWMSEW0OXm8ykChnrionH2AfG+5OJfK1E4=;
+        b=mx1PLTzp61NDZRQKwKEbncqo7Ro1ZQhErLW3QEJ4Had1UI3UfVXZx3WE5NUZCLD/Dj
+         aQRwo0W/pDZhWMpwWgz9SOfPBrKvQX3+zzpq8l2aKC4OkfF0OnbexCzV0UQT/KKINwxX
+         OBOcRx+YHuUN7yYJbFTmWNDz4aJ+B8BMonXMcwyvG8CK6bBRol0prkBGVRAzOx1ek5nZ
+         SZaykn2SZuEqcoeevA55rtJR4IjH8vWGMChUVs+yNfAa0gbMxnUy+Uo9RDPWhoVkna5D
+         e/UBwYEug2fXoaqK/tad1jAipzhl+FSrutsXj5o/v1CfPDVB43QTO58AErN5Uw4ol70G
+         n0Ng==
+X-Gm-Message-State: AOAM531aPdndBjaOMRNsgn+kdU0tMIphEHZOYwQyYZK01eWjuNexHmIB
+        h3bDFQxbMb10eqHDU6N3PW4=
+X-Google-Smtp-Source: ABdhPJy/ITl0DuAZO8gudKVNJwpstfxw0xl+vNXvUWHrJbawJqvlzbNPYMRE1et8wElwpg3gQdwfdA==
+X-Received: by 2002:a17:906:dfe4:: with SMTP id lc4mr27319070ejc.125.1637182885681;
+        Wed, 17 Nov 2021 13:01:25 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id m16sm250440edd.61.2021.11.17.13.01.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Nov 2021 13:01:25 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mnS3Y-000FuP-MK;
+        Wed, 17 Nov 2021 22:01:24 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Carlo Arenas <carenas@gmail.com>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        Hamza Mahfooz <someguy@effective-light.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v13 3/3] grep/pcre2: fix an edge case concerning ascii
+ patterns and UTF-8 data
+Date:   Wed, 17 Nov 2021 21:59:45 +0100
+References: <20211015161356.3372-1-someguy@effective-light.com>
+ <20211015161356.3372-3-someguy@effective-light.com>
+ <877dd9i1zj.fsf@igel.home> <211115.86fsrxqbvp.gmgdl@evledraar.gmail.com>
+ <87o86kv6fh.fsf@igel.home>
+ <CAPUEspi=r9EsG8KPvdiD-HM7Drq8ho1yjkN_c_T1e+ZeR4eejg@mail.gmail.com>
+ <87fsrwv46h.fsf@igel.home>
+ <CAPUEspg8ZUdn+KFz35yG1k9bbfVTe1b+7=+WdMknRS1zu8VcDQ@mail.gmail.com>
+ <634c4237-325a-13e8-0a92-09d23bdfb111@web.de>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <634c4237-325a-13e8-0a92-09d23bdfb111@web.de>
+Message-ID: <211117.86y25m5wez.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQHRZsJQSwQVxvA803MGEaqTSKtEHwGUCvbjAr89fOoBugavkgK/mpqhAVhqoPgCDdPdaAHlLlxXAZjWxhgBxETygwKNRf8uq3T5czA=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On November 17, 2021 3:02 PM, Jeff King wrote:
-> On Tue, Nov 16, 2021 at 07:36:51PM -0800, Carlo Arenas wrote:
-> 
-> > > > for the little amount of random data we need, it might be wiser to
-> > > > fallback to something POSIX like lrand48 which is most likely to
-> > > > be available, but of course your tests that consume lots of random
-> > > > data will need to change.
-> > >
-> > > Unfortunately that won't help. You have to seed lrand48 with
-> > > something, which usually means pid and/or timestamp. Which are
-> > > predictable to an attacker, which was the start of the whole
-> > > conversation. You really need _some_ source of entropy, and only the OS
-> can provide that.
-> >
-> > again, showing my ignorance here; but that "something" doesn't need to
-> > be guessable externally; ex: git add could use as seed contents from
-> > the file that is adding, or even better mix it up with the other
-> > sources as a poor man's /dev/urandom
-> 
-> Those contents are still predictable. So you've made the attacker's job a little
-> harder (now they have to block tempfiles for, say, each tag you're going to
-> verify), but haven't changed the fundamental problem.
-> 
-> It definitely would help in _some_ threat models, but I think we should strive
-> for a solution that can be explained clearly as "nobody can DoS your
-> tempfiles" without complicated qualifications.
 
-I missed this one... lrand48 is also not generally available. I don’t think it is even available on Windows.
+On Wed, Nov 17 2021, Ren=C3=A9 Scharfe wrote:
 
-If we need a generalized solution, it probably needs to be abstracted in git-compat-util.h and compat/rand.[ch], so that the platform maintainers can plug in whatever decent platform randomization happens to be available, if any. We know that rand() is vulnerable, but it might be the only generally available fallback. Perhaps get the compat layer in place with a test suite that exercises the implementation before getting into the general git code base - maybe based on jitterentropy or sslrng. Agree on an interface, decide on a period of time to implement, send the word out that this needs to get done, and hope for the best. I have code that passes FIPS-140 for NonStop ia64 (-ish although not jitterentropy) and x86, and I'm happy to contribute some of this.
+> Am 16.11.21 um 10:38 schrieb Carlo Arenas:
+>> On Tue, Nov 16, 2021 at 1:30 AM Andreas Schwab <schwab@linux-m68k.org> w=
+rote:
+>>>
+>>> expecting success of 7812.13 'PCRE v2: grep ASCII from invalid UTF-8 da=
+ta':
+>>>         git grep -h "var" invalid-0x80 >actual &&
+>>>         test_cmp expected actual &&
+>>>         git grep -h "(*NO_JIT)var" invalid-0x80 >actual &&
+>>>         test_cmp expected actual
+>>>
+>>> ++ git grep -h var invalid-0x80
+>>> ++ test_cmp expected actual
+>>> ++ test 2 -ne 2
+>>> ++ eval 'diff -u' '"$@"'
+>>> +++ diff -u expected actual
+>>> ++ git grep -h '(*NO_JIT)var' invalid-0x80
+>>> fatal: pcre2_match failed with error code -22: UTF-8 error: isolated by=
+te with 0x80 bit set
+>>
+>> That is exactly what I was worried about, this is not failing one
+>> test, but making `git grep` unusable in any repository that has any
+>> binary files that might be reachable by it, and it is likely affecting
+>> anyone using PCRE older than 10.34
+>
+> Let's have a look at the map.  Here are the differences between the
+> versions regarding use of PCRE2_UTF:
+>
+> o: opt->ignore_locale
+> h: has_non_ascii(p->pattern)
+> i: is_utf8_locale()
+> l: !opt->ignore_case && (p->fixed || p->is_fixed)
+>
+> o h i l master hamza rene2
+> 0 0 0 0      0     1     0
+> 0 0 0 1      0     1     0
+> 0 0 1 0      0     1     1
+> 0 0 1 1      0     1     0  <=3D=3D 7812.13, confirmed using fprint() deb=
+ugging
+>
+> So http://public-inbox.org/git/0ea73e7a-6d43-e223-ab2e-24c684102856@web.d=
+e/
+> should not have this breakage, because it doesn't enable PCRE2_UTF for
+> literal patterns.
 
-Randall
+PCRE2_UTF will also matter for literal patterns. Try to peel apart the
+two bytes in "=C3=A9" and match them under -i with/without PCRE_UTF.
 
+I don't know what the right behavior should be here (haven't had time to
+dig), but it matters for matching.
