@@ -2,136 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCE50C433EF
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80879C433EF
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:35:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A1B3B61B50
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:31:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6466D61B3A
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:35:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241612AbhKQXeM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 18:34:12 -0500
-Received: from mout.gmx.net ([212.227.15.19]:40053 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240122AbhKQXeK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 18:34:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637191867;
-        bh=5TpIi1dkHBF4AWbFRQj5idGE8Q+Nh8GL4fR6gunMyQU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=CkuiLw+OZhR0yIbsF9zMWnF3EZva7jcUrK19+mdkfPfNv1OJZ3I4MR163SQ3OZpO8
-         3dleWVb4GLU60ugQkYSLVwdKMPitmPEieqwU6FAXchh2HArui7wHNxKhVE1A/iR8b4
-         8oMk0twAL/e4cxCsVwVjUrOx9pkG48bPAT0+yH24=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.166.205] ([89.1.213.220]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mdeb5-1mDsap3Tft-00Zhvg; Thu, 18
- Nov 2021 00:31:06 +0100
-Date:   Thu, 18 Nov 2021 00:31:04 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] mergesort: avoid left shift overflow
-In-Reply-To: <xmqqr1bf2l83.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2111180026580.11028@tvgsbejvaqbjf.bet>
-References: <5eabbe1c-4c0f-559a-da21-423afec89e7e@web.de> <nycvar.QRO.7.76.6.2111161505500.21127@tvgsbejvaqbjf.bet> <xmqqr1bf2l83.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S241627AbhKQXi0 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 17 Nov 2021 18:38:26 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:63828 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241632AbhKQXiP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 18:38:15 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1AHNZ0dp042233
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 17 Nov 2021 18:35:00 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>
+Cc:     "'Jeff King'" <peff@peff.net>,
+        "'Carlo Arenas'" <carenas@gmail.com>, <git@vger.kernel.org>
+References: <YZPOzqU0UQDVA57R@coredump.intra.peff.net> <009d01d7db03$354ecae0$9fec60a0$@nexbridge.com> <YZQzqjWMzaWVkkfP@camp.crustytoothpaste.net> <00e001d7db40$985c61a0$c91524e0$@nexbridge.com> <YZRUzHVS32W4Flo/@camp.crustytoothpaste.net> <CAPUEspiHnTkwbUJ5o+fT2u4Kn+fwNe-3FoqVtNsjTF+Pg6Tryg@mail.gmail.com> <YZRxOrv9JFt2oeSU@coredump.intra.peff.net> <CAPUEsphh-enSYS66mi7_XaS0n1bmUvGXRcgVp6iqhg94xSHVog@mail.gmail.com> <YZVfrhos+lZas7hk@coredump.intra.peff.net> <01a501d7dbf0$7c538000$74fa8000$@nexbridge.com> <YZWQroXwOKIi8Zs4@camp.crustytoothpaste.net>
+In-Reply-To: <YZWQroXwOKIi8Zs4@camp.crustytoothpaste.net>
+Subject: RE: [PATCH 1/2] wrapper: add a helper to generate numbers from a CSPRNG
+Date:   Wed, 17 Nov 2021 18:34:55 -0500
+Organization: Nexbridge Inc.
+Message-ID: <01de01d7dc0b$bd3ab050$37b010f0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:bxIO5T4OJ5U6R0UaRDGP+KIo7j3s8oKkZK9fVndVb7S6WokFVKJ
- jPT1hau9CYuSh+uwxS+4JiQwnZ2u/hP0PfR6s0pTY+SJjZ6hYV4ifimzsCXZnlrAzQv0xVm
- 9M+Z2jwSThlEcokW9SiGi6U01IJ9jpvJ2pwvrjowpcrOqBuBGqa1NTdrfGDo6RN3FhQe69J
- 3x2NeYqQKqz+BUtiyBZng==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xNqER82il40=:zFRzxOt54dbNzB3fBInS+L
- V71Rmd1m0YCT1xWoljreDFjjcWsB/bk0SmvM4Xx01CuggTArrIbxl27erFBUHlIcfMmg/SKRm
- ATRDCoQyItbUHmGo1cu8Q5CzZrqGJfKvElHZUTxiAz3y2ZG0AEXtVwIH8ACuNpIhKUvo8o+56
- YmeIHUvlbmY4VhT16MkC5fpQOyTuQevHgtzuIKY93qjQnBx3Q0nE+Y60qDiI0v1UwxLREYmKy
- +8uk2+Ow5QKb6WolHjQpVulNalIJeadYcLL2YqOyi3ZnhCjAp7TAo0uQSmdU82yZ+YYsaDXoL
- /Xth0Bim6ZjR3y3rrSuazxPPR65A81gcVZI9S5KjMEjAF7XLHnXn1YNnj02hJ1bm3tZV6TljD
- HDGIIjH0BkQ4yQxDERi8lBNkHAKErPFOcad6lOodWfSdWBideqPGgk0Tjxb/me7z+93BUtk7N
- hyNxe/Xq5hxgJGu/w61gxODYHTLOX1g3XOVCNaLG5TjV8MdQvwDeX3B7dkOdbGryWej96gEa8
- pPnf6QUr/9Be+DLBnIxWTQ5cg/sjpji3RM1xtRVtmlwFsQgR0D6Z/ZYylUPVZVpLhKsyQbYf1
- XCmFkEpORj64seYBteKe+UBOg6I9dKrgQ3o2yUskWbxjFd6rf+VPJOW3emmfHgSxx12etywaF
- T0WgQiIOJ38amSf4W/hD38DGDQi5E7KX0sqbW3Pn2vLjOBddJnkz/DCrsO3kro50bWrwJ2kz+
- K6ej54gw0d+NiJqUpMy+M2MrRbcYvoPll9yP769dOhqth+pDlfcdIqSFhuw+pFhJjE68DgHCf
- 07k8y27ez4hocbzN9yNgWqnLl5/aiSNEP8ZjMMlq/fUDuXt5KXVcFQoYAOa8wbIXE5K3Dq4TR
- gnNh4zf37T97XRhSFcap5gA4EP6E/Uhh47v/QmH7FYcPMan382V2IfzRVdN3QRQrJsK3PVYVn
- p2IHJE7orS4wRJ4ueZChuuc8zakNuc1621mnCidZ0q3A1L3FdKK34peSi9en8BQrYx1lh+sTY
- 2Rh7w3fXBv6FfqDNGFWJ9uBB8xfGIlVn3vtOkUK4hJSqtxqyerOjJzMSYKxHp9Jn6puMG21oB
- i0W2gxFqp8bEvY=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQK/PXzqamOO2O7k/yYB5n9fLRkz9gG6Bq+SAr+amqEBWGqg+AIN091oAeUuXFcBmNbGGAHERPKDAo1F/y4Bq1AFtQHs+5qZqZ9d1GA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Wed, 17 Nov 2021, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> >> diff --git a/mergesort.c b/mergesort.c
-> >> index 6216835566..bd9c6ef8ee 100644
-> >> --- a/mergesort.c
-> >> +++ b/mergesort.c
-> >> @@ -63,7 +63,7 @@ void *llist_mergesort(void *list,
-> >>  		void *next =3D get_next_fn(list);
-> >>  		if (next)
-> >>  			set_next_fn(list, NULL);
-> >> -		for (i =3D 0; n & (1 << i); i++)
-> >> +		for (i =3D 0; n & ((size_t)1 << i); i++)
+On November 17, 2021 6:31 PM, brian m. carlson wrote:
+> To: rsbecker@nexbridge.com
+> Cc: 'Jeff King' <peff@peff.net>; 'Carlo Arenas' <carenas@gmail.com>;
+> git@vger.kernel.org
+> Subject: Re: [PATCH 1/2] wrapper: add a helper to generate numbers from a
+> CSPRNG
+> 
+> On 2021-11-17 at 20:19:49, rsbecker@nexbridge.com wrote:
+> > I missed this one... lrand48 is also not generally available. I don’t think it is
+> even available on Windows.
 > >
-> > I was a bit concerned about the operator precedence (some of which I
-> > remember by heart, some not), but according to
-> > https://en.cppreference.com/w/c/language/operator_precedence the cast =
-has
-> > a higher precedence than the shift operator.
-> >
-> > I would have preferred an extra pair of parentheses around `(size_t)1`=
- so
-> > that I (and other readers) do not have to remember or look up the oper=
-ator
-> > precedence, but it _is_ correct.
->
-> Interesting.
->
-> I do not quite see the need for it myself, but if we wanted to, we
-> can smoke them out with this, I think.
->
-> 	$ cat >contrib/coccinelle/cast.cocci <<-\EOF
-> 	@@
-> 	type T;
-> 	expression V, C;
-> 	@@
-> 	-(T) V << C
-> 	+((T) V) << C
-> 	EOF
+> > If we need a generalized solution, it probably needs to be abstracted in git-
+> compat-util.h and compat/rand.[ch], so that the platform maintainers can
+> plug in whatever decent platform randomization happens to be available, if
+> any. We know that rand() is vulnerable, but it might be the only generally
+> available fallback. Perhaps get the compat layer in place with a test suite that
+> exercises the implementation before getting into the general git code base -
+> maybe based on jitterentropy or sslrng. Agree on an interface, decide on a
+> period of time to implement, send the word out that this needs to get done,
+> and hope for the best. I have code that passes FIPS-140 for NonStop ia64 (-
+> ish although not jitterentropy) and x86, and I'm happy to contribute some of
+> this.
+> 
+> I think in this case I'd like to try to stick with OpenSSL or other standard
+> interfaces if that's going to meet folks' needs.  I can write an HMAC-DRBG,
+> but getting entropy is the tricky part, and jitterentropy approaches are
+> controversial because it's not clear how unpredictable they are.  I'm also
+> specifically trying to avoid anything that's architecture specific like RDRAND,
+> since that means we have to carry assembly code, and on some systems
+> RDRAND is broken, which means that you have to test for that and then pass
+> the output into another CSPRNG.
+> I'm also not sure how maintainable such code is, since I don't think there are
+> many people on the list who would be familiar enough with those algorithms
+> to maintain it.  Plus there's always the rule, "Don't write your own crypto."
+> 
+> Using OpenSSL or system-provided interfaces is much, much easier, it means
+> users can use Git in FIPS-certified environments, and it avoids us ending up
+> with subtly broken code in the future.
 
-Cute.
+I agree wholeheartedly. git in FIPS-certified environments is one of my actual goals - well, in this case, I am a proxy for my customers'. Sticking with OpenSSL would be far preferable to me than basically reimplementing what OpenSSL does. Even OpenSSH uses OpenSSL.
 
-However, I am not a fan of fixing what ain't broken (the many refactorings
-in v2.34.0 did cause quite some fall-out work in git-for-windows/git and
-microsoft/git, after all, and at least _I_ do not yet see much benefit to
-show for that price we paid for those refactorings).
+Regards,
+Randall
 
-And the primary benefit of enclosing the left operand in parentheses is to
-make reviews easier, so I would prefer to leave existing (read:
-_already-reviewed_) code alone.
-
-Thanks,
-Dscho
-
-> 	$ make contrib/coccinelle/cast.cocci.patch
-> 	$ git apply --stat contrib/coccinelle/cast.cocci.patch
->          compat/mingw.c     |    2 +-
->          compat/mingw.c     |    2 +-
->          ewah/bitmap.c      |    2 +-
->          ewah/ewok_rlw.h    |    6 +++---
->          ewah/ewah_bitmap.c |    8 ++++----
->          ewah/ewok_rlw.h    |    6 +++---
->          ppc/sha1.c         |    2 +-
->          wrapper.c          |    2 +-
->          8 files changed, 15 insertions(+), 15 deletions(-)
->
->
->
