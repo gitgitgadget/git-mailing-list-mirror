@@ -2,142 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AF8AC433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 15:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 470DAC433EF
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 15:28:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F99D6187F
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 15:18:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17741613C8
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 15:28:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236697AbhKQPVB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 10:21:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40144 "EHLO
+        id S236626AbhKQPb1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 10:31:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236497AbhKQPUz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 10:20:55 -0500
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60275C061570
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 07:17:56 -0800 (PST)
-Received: by mail-qk1-x729.google.com with SMTP id p4so2864204qkm.7
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 07:17:56 -0800 (PST)
+        with ESMTP id S230314AbhKQPbX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 10:31:23 -0500
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54696C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 07:28:25 -0800 (PST)
+Received: by mail-qv1-xf2e.google.com with SMTP id a24so2282370qvb.5
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 07:28:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:content-language:from
-         :subject:to:content-transfer-encoding;
-        bh=xR9/JVI7b0SSrqePrV6g3ymGRdohKFlLl46hM4uDEK4=;
-        b=ArBtr97jAaCihC5f4+1ACx6R4eV+laUJmPcggcOafrMp1lf2Qoa4XOwbXkaboaSBer
-         B22Kd0JvbCs2sgAgjQ88a7iUc0Feyx+7QWOBIL/OnYoChv8gSD4RAsu88rc8Pbr7DxQK
-         csCO10zjOtuFfHeC9xrfHSri3BsHv8H0f+n+FIruf5BH79ScYb9/czMdZLugofLh+19d
-         PKBSWCFEJdtVK3+bt8gdeiMy0G8sCkIK8+MwLTsZ8yPmL+OP5r3f60ZvsnHXYXaX1iLD
-         klTj0yNxcOBpfFY/hFSw8bFYc2I96m2NS8tLoSz8EVKTaiZ6FO5NFUjV+5pM5YyRuNMo
-         o9yA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=IsZ+P3YWQZPSxTaVLbtGQiCpkx2EdnYl375/lROl9rg=;
+        b=hAz1SllgUDpFchVOWVQcyXHFwAMZVPZpR/hbMQ//ZoZBSQ7W/w4YrE1lPEf6AZ+88U
+         X3Ix6RfgVriVU/HqW05tDurPom86rlq1ku/O5oIgSuFmVAtitpxUMCvlEUr64C3YMGFH
+         tFJWbikpuistdyCnbNmsedoxgp7RU+dpinnZBAWOrJpKN/UJ+KBiKcPA/yvEE+e/89QS
+         YVbcRlHAUXMhtPylt+DMyqkp4vrfJIGMWD7M6WpvV+zA3LTXuhCbcEjOCJDbCHLk08nJ
+         dzkLSXZUoWl7FQAOl0kpz1/FsTXWJ7XH7Zq+3fZNhc5NjMb7dFL0tiguhCrzYqdb3NUp
+         /Ydg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:from:subject:to:content-transfer-encoding;
-        bh=xR9/JVI7b0SSrqePrV6g3ymGRdohKFlLl46hM4uDEK4=;
-        b=lz+K7KVKX9zPOve7ikqN1x/LDewu1RwlTza3ntLTzQj7Qwug8/PhFKwBu2xiD9KoiW
-         syqYkQoPUYZrju+NGmMSRUvYXKcteKbLfAZQSZy6hfh+VejUiVjLxgsPV5qIYTMHd2Uv
-         mwS/f6qChCdv9fixtA+O2vfO0ri5W9cLEwir3Ec4OB0axURRGJLNg4b0BIK9yZKVaASu
-         cpMjMAq053LsMNuNZY9KU+rzD+HrCXmo+aheFpHIQ5tTv5qqoKOLTafxZRfEnixH8oM2
-         fZOldH8mgUsu2CPYxbIJWyXaQuWR4LSB44bi/9sScwI4cpB/0RipgSY8A3WTYAEVJIyk
-         gvag==
-X-Gm-Message-State: AOAM533d5RSt4Tu1LF7cjaOsg8XSDQ+2pXxOm3WHVwbTueca4SuHyF3/
-        HojA8YA6BEBnVwH5KNrw8SMyjjvfaug=
-X-Google-Smtp-Source: ABdhPJyDi1nHu2rGbU1d+Uc/Jc38kJNaRbwQsZWcWUB8K4vaf7KV8mXB64ZMnBl7NlkT6/At7aPJIA==
-X-Received: by 2002:a37:ae83:: with SMTP id x125mr13738911qke.37.1637162275037;
-        Wed, 17 Nov 2021 07:17:55 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=IsZ+P3YWQZPSxTaVLbtGQiCpkx2EdnYl375/lROl9rg=;
+        b=WWG1BjWT2SaVkbycCJFxVqMBoWxyhaaT1ZOeN45eaR/hPuWc2KRKQ74U6Rwi1eCtzx
+         EQhhk/t8SMVhBQB3M5C+8+iZBJ2bNszdvqIqiZUhAt/ZlciswXc5L6K3w9ML6EhPHrn0
+         N+MANatQSCp7sF42UEJGwJY0Fczf5w8av5M4b44Yr9BYwOfUUO3qGDVfIpw0ZFrYAd9S
+         6x4D07ow0yfSefAScIvOfn0DPN/wZ0blTgzxU4U2eenCmBT7z6QLQyi1Qp0WheqmUHOZ
+         KxZ66GkdZA9FHU429Cq20SI2IIdA+cSGKeCJ8zgGbPo2/YaDVsgaAb/vzjj8576eodLg
+         Oh0g==
+X-Gm-Message-State: AOAM5314AGlgNjkva3369NgpH3nAgPdLiB0kmRUkQwphUDRvHAf0Sgep
+        ELlSuw9ndznZG7I01rHHYNw=
+X-Google-Smtp-Source: ABdhPJz4Nck26N/XpcOqdev8IKEVFMzMvktHCHNEhHhviEc5Ag3+CeFnqSc/P7OFl4+0SB3JewouFw==
+X-Received: by 2002:a05:6214:2523:: with SMTP id gg3mr56315901qvb.56.1637162904405;
+        Wed, 17 Nov 2021 07:28:24 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:d1ee:6c8f:319:f5? ([2600:1700:e72:80a0:d1ee:6c8f:319:f5])
-        by smtp.gmail.com with ESMTPSA id t35sm89759qtc.83.2021.11.17.07.17.54
-        for <git@vger.kernel.org>
+        by smtp.gmail.com with ESMTPSA id w10sm38977qkp.121.2021.11.17.07.28.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Nov 2021 07:17:54 -0800 (PST)
-Message-ID: <9393e572-0666-6485-df29-abad5e0d32a1@gmail.com>
-Date:   Wed, 17 Nov 2021 10:17:53 -0500
+        Wed, 17 Nov 2021 07:28:23 -0800 (PST)
+Message-ID: <08679a6f-51c1-0e48-9dcc-e7ac4c9a9c80@gmail.com>
+Date:   Wed, 17 Nov 2021 10:28:22 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.1
+Subject: Re: [PATCH 0/2] Sparse index: fetch, pull, ls-files
 Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, vdye@github.com,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.1080.git.1637077083.gitgitgadget@gmail.com>
+ <xmqqlf1n2krf.fsf@gitster.g>
 From:   Derrick Stolee <stolee@gmail.com>
-Subject: [Question] Unicode weirdness breaking tests on ZFS?
-To:     Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <xmqqlf1n2krf.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I recently had to pave my Linux machine, so I updated it to Ubuntu
-21.10 and had the choice to start using the ZFS filesystem. I thought,
-"Why not?" but now I maybe see why.
+On 11/17/2021 4:29 AM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> This is based on ld/sparse-index-blame (merged with 'master' due to an
+>> unrelated build issue).
+>>
+>> Here are two relatively-simple patches that further the sparse index
+>> integrations.
+>>
+>> Did you know that 'fetch' and 'pull' read the index? I didn't, or this would
+>> have been an integration much earlier in the cycle. They read the index to
+>> look for the .gitmodules file in case there are submodules that need to be
+>> fetched. Since looking for a file by name is already protected, we only need
+>> to disable 'command_requires_full_index' and we are done.
+> 
+> This reminds me of one thing.  Our strategy so far has been:
+> 
+>  - start with blindly calling ensure_full();
+> 
+>  - audit the code and adjust each code path that needs to walk to
+> 
+>    . keep walking the full index, but narrow the scope of
+>      ensure_full_index() if we can; or
+> 
+>    . stop assuming we need to walk the full index, but teach it to
+>      "skip" the tree-in-index that we are not interested in.
+> 
+>  - declare victory and drop the blind call to ensure_full().
 
-Running the Git test suite at the v2.34.0 tag on my machine results in
-these failures:
+This is a fair summary of the approach.
 
-t0050-filesystem.sh                   (Wstat: 0 Tests: 11 Failed: 0)
-  TODO passed:   9-10
-t0021-conversion.sh                   (Wstat: 256 Tests: 41 Failed: 1)
-  Failed test:  31
-  Non-zero exit status: 1
-t3910-mac-os-precompose.sh            (Wstat: 256 Tests: 25 Failed: 10)
-  Failed tests:  1, 4, 6, 8, 11-16
-  TODO passed:   23
-  Non-zero exit status: 1
+> But what makes sure, after all of the above happens, that no new
+> changes that assume it can walk the full index enters in the
+> codebase?
+> 
+> In other words, after "fetch" is declared "sparse clean" with patch
+> [1/2], what effort from us will it take to stay clean?
 
-These are all related to the UTF8_NFD_TO_NFC prereq.
+The tests in t1092 that use the "ensure_not_expanded" helper are
+intended to be regression tests that would start failing if the
+sparse index starts expanding in a new way. I think this is what
+you mean by staying "sparse clean".
 
-Zooming in on t0050, these tests are marked as "test_expect_failure" due
-to an assignment of $test_unicode using the UTF8_NFD_TO_NFC prereq:
+The rest of the tests are attempting to verify that the behavior
+is correct when the sparse index is enabled, and that is hopefully
+a more obvious situation when something goes wrong. We've tried to
+create a robust set of tests here, but I'm sure we will add new
+ones as more users start using it. (We will soon have a large set
+of real users of the sparse index, and that should be informative.)
 
+Do you see a test gap that would be prudent to address?
 
-$test_unicode 'rename (silent unicode normalization)' '
-	git mv "$aumlcdiar" "$auml" &&
-	git commit -m rename
-'
+One direction I could see is that as new features are contributed
+that change how the index is used, these features are not
+automatically tested with sparse-checkout and the sparse index.
+In this case, we will need to increase our awareness when reviewing
+such features to ensure that they could fit within the sparse index
+model (or are sufficiently protected by ensure_full_index() in their
+first version).
 
-$test_unicode 'merge (silent unicode normalization)' '
-	git reset --hard initial &&
-	git merge topic
-'
-
-
-The prereq creates two files using unicode characters that could
-collapse to equivalent meanings:
-
-
-test_lazy_prereq UTF8_NFD_TO_NFC '
-	# check whether FS converts nfd unicode to nfc
-	auml=$(printf "\303\244")
-	aumlcdiar=$(printf "\141\314\210")
-	>"$auml" &&
-	test -f "$aumlcdiar"
-'
-
-
-What I see in that first test, the 'git mv' does change the
-index, but the filesystem thinks the files are the same. This
-may mean that our 'git add "$aumlcdiar"' from an earlier test
-is providing a non-equivalence in the index, and the 'git mv'
-changes the index without causing any issues in the filesystem.
-
-It reminds me as if we used 'git mv README readme' on a case-
-insensitive filesystem. Is this not a similar situation?
-
-What I'm trying to gather is that maybe this test is flawed?
-Or maybe something broke (or never worked?) in how we use
-'git add' to not get the canonical unicode from the filesystem?
-
-The other tests all have similar interactions with 'git add'.
-I'm hoping that these are just test bugs, and not actually a
-functionality issue in Git. Yes, it is confusing that we can
-change the unicode of a file in the index without the filesystem
-understanding the difference, but that is very similar to how
-case-insensitive filesystems work and I don't know what else we
-would do here.
-
-These filesystem/unicode things are out of my expertise, so
-hopefully someone else has a clearer idea of what is going on.
-I'm happy to be a test bed, or even attempt producing patches
-to fix the issue once we have that clarity.
+I spent some time thinking about how we could add a
+GIT_TEST_SPARSE_INDEX mode to the test suite that would automatically
+test the sparse index in the existing tests. However, the feature is
+only enabled when in cone-mode sparse-checkout, so we would need to
+modify the test repos in a way that some sparse directory entries
+exist but also don't collide with the test expectations. I never
+found a way to get around that issue, which is why t1092 is such a
+big test script.
 
 Thanks,
 -Stolee
