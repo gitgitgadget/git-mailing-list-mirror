@@ -2,136 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 241BEC433EF
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F97FC433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:22:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 09A6461BFA
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:21:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1AB761BF8
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:21:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236259AbhKQKYV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 05:24:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56528 "EHLO
+        id S236227AbhKQKY5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 05:24:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236338AbhKQKYC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 05:24:02 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7F8FC06122C
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:46 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id z1-20020a05600c220100b00337f97d2464so3442973wml.1
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:46 -0800 (PST)
+        with ESMTP id S236210AbhKQKY5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 05:24:57 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0A39C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:21:58 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id r11so8678036edd.9
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:21:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xUmrL/XG2zpOGV/60h5A9iyGb3Qfq9Nntx7WFjZL6WE=;
-        b=TFpn8VFKaSrkb9IrIM+9ZA/SKL6VtTSLEQdBue/7SrwRQlNgrsLVq2IgTWyJvLMDVj
-         BqcqJ00QO/y3g0h7I6F0l9BSleH0S8zXEFBOqEidlGL/sRS4MScJoE1g71XIdugT/Fqv
-         8F4xg4o6mEcVkVcl9FfoQibug9nJz0D+IDxSnViFiPJU6+05TK9wePq4U2mp2LXB+yNB
-         Uz1VKFrqLTyGyYjieT5UMjjFZhydAvNeQJEDgraskUbqE3D9KroIgpNniVm6bqD+3t4B
-         I1fspYZA8t8j6ZCkNq3QlkZrMck4AYiaaZ0ThYdfvA7OjIA4y7iPPk3/ScYi2vWd0kCX
-         BhCg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=eYQswFbgGTMKmXH+andCQ5tNuM/XGFpivxk3uyWDRFY=;
+        b=g6FPsphPw8JrDabWLSaRXsk4ZDsALrxg6ROu8fsIxIRR4SLKKHfQmFBraXamPWgWsg
+         sU+dRX+GAiSd3gmErsO4V7rtnlhDNxc7+Y1pJFe9qox7js/x5MQM432aRQXWnoNhvSwm
+         Z+RfYR7E3Hun4DLCZRKAlhp8Mn0125h+wIONyxIYnxoK1doWpiCO0OR0JrC3qQZGd9nG
+         v4e53za1q90hmEM9HZajE8HnOOGSxQUR+VNo4bMdT1F9NEANNCxHy4qqyEZw681FnIGZ
+         ZeeiS+hZpTn1MeWusPLDoja3bW4fiIzsImRWR7UXujx64Bc5Ae/Er5Gwi/A0Cd5sDeso
+         ZUWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xUmrL/XG2zpOGV/60h5A9iyGb3Qfq9Nntx7WFjZL6WE=;
-        b=mqtUBiKcyY9DS9RtOCCtyIRfpSYpcRM/1/KElHl9ikodQzB4Mbm1hm6nNq58zL1Hk3
-         aVka7y59toKgU+Kwn1jlr145U8GmyIEY/VRGy4o1J84RNItvtsenmRyXXO7G4TPgiJdL
-         pTMwS6JraoCJZNA2Sn0pcfwMxyUhb8ZEteeW0GKGXTj5SXs72DvUwBcWC9S/NvpitKrI
-         N+9xlWqjFH0lm5GlOw9ou2nyU9pWx24CCmrBMR1CnS6myregJSJHQow2u2xqOtXr4U00
-         Vh2AuZN9nJfjMiWfMWCpmvEed40qp/2Y/1I8OEgyYYIwLCMb3HomCkbp4n0LSOHVenhx
-         wTmw==
-X-Gm-Message-State: AOAM531LRhpoJDlGDfZbntWXqm/KVMYXGfaDlX00lEz+30SI7lu8rIv2
-        3lAVk2/Qix+cAGkjdi+0V88r+/fCBbWTzQ==
-X-Google-Smtp-Source: ABdhPJy2U9LnQ/q+Df3tBZbDsAXfjHZYiwLDf3SVZR0bL0dexKdVRr5WnQdcpi+pcTWIYSL5Wg4RXA==
-X-Received: by 2002:a1c:a715:: with SMTP id q21mr79666787wme.23.1637144445316;
-        Wed, 17 Nov 2021 02:20:45 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n32sm6456256wms.1.2021.11.17.02.20.44
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=eYQswFbgGTMKmXH+andCQ5tNuM/XGFpivxk3uyWDRFY=;
+        b=dAyqvTLC9RDbdgRKS7dxRhcWFw1gspzmmaXprti0Mi+G4LyEUcvkYYE4J0jIXEp+B8
+         R43RVyoG24aZrdF+znAvpIG289+s6FOBtcY8QgW3yNIbrRs6z4/g29yJlyysGU5edRWu
+         FIYSQPYE84Y1hyV/b0635KtleQcJ+Blv0zaWKDVc2gL5rig6r12pSi8WrO6J6mgzfNiv
+         IFGEDlVGmDhYPdFbTY3YUPNw9gbQdaC77uwcOdtzSQEYoP2RTlRpEATf8h3pEQH8eRmh
+         7TvpO1BY/065zeZKtgb8xBgagSouAVU676pg3GKLgKnnY17yHInyTcT4DbVTvVCRY/1P
+         62AQ==
+X-Gm-Message-State: AOAM533q8maiuAqZoBqnXjV86J0KHeo0Dk1KJX4gSrMhCSBN1b7WU6YQ
+        fbXuT3sftJ7q6JgcD2H2geI=
+X-Google-Smtp-Source: ABdhPJzhknExQJnEaJ6hJYuHWMUNV04eAX7aXjBOTbQsIU09QUSFBivNcuZaFAwfVjEDF3p3cD2XKw==
+X-Received: by 2002:a05:6402:1914:: with SMTP id e20mr5039277edz.96.1637144517083;
+        Wed, 17 Nov 2021 02:21:57 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id e4sm10092595ejs.13.2021.11.17.02.21.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 02:20:44 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
-        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 23/23] Makefile: move ".SUFFIXES" rule to shared.mak
-Date:   Wed, 17 Nov 2021 11:20:22 +0100
-Message-Id: <patch-v4-23.23-48a3927d972-20211117T101807Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.0.796.g2c87ed6146a
-In-Reply-To: <cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com>
-References: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com> <cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com>
+        Wed, 17 Nov 2021 02:21:56 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mnI4i-000601-0L;
+        Wed, 17 Nov 2021 11:21:56 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Mike Hommey <mh@glandium.org>
+Cc:     Jeff King <peff@peff.net>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Makefile: fix parallel build race
+Date:   Wed, 17 Nov 2021 11:21:02 +0100
+References: <7d82342089a80b19e54ac8997d5765a33951499f.1637112066.git.congdanhqx@gmail.com>
+ <YZR0djZbRUicXcQm@coredump.intra.peff.net>
+ <20211117033938.r3wsv3znxva7smgy@glandium.org>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211117033938.r3wsv3znxva7smgy@glandium.org>
+Message-ID: <211117.86o86j6q0s.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This was added in 30248886ce8 (Makefile: disable default implicit
-rules, 2010-01-26), let's move it to the top of "shared.mak" so it'll
-apply to all our Makefiles.
 
-This doesn't benefit the main Makefile at all, since it already had
-the rule, but since we're including shared.mak in other Makefiles
-starts to benefit them. E.g. running the 'man" target is now ~1.3x
-faster:
+On Wed, Nov 17 2021, Mike Hommey wrote:
 
-    $ git -c hyperfine.hook.setup= hyperfine -L rev HEAD~1,HEAD~0 -s 'make -j8 -C Documentation man' 'make -C Documentation man' --warmup 10 -M 10
-    Benchmark 1: make -C Documentation man' in 'HEAD~1
-      Time (mean ± σ):      87.2 ms ±   1.0 ms    [User: 79.3 ms, System: 10.8 ms]
-      Range (min … max):    86.3 ms …  89.7 ms    10 runs
+> On Tue, Nov 16, 2021 at 10:18:14PM -0500, Jeff King wrote:
+>> On Wed, Nov 17, 2021 at 08:25:55AM +0700, =C4=90o=C3=A0n Tr=E1=BA=A7n C=
+=C3=B4ng Danh wrote:
+>>=20
+>> > * builtin/bugreport.c includes hook-list.h, hence generated files from
+>> > it must depend on hook-list.h
+>>=20
+>> Good catch. This is trivially reproducible with:
+>>=20
+>>   make clean
+>>   make builtin/bugreport.o
+>>=20
+>> The problem comes from cfe853e66b (hook-list.h: add a generated list of
+>> hooks, like config-list.h, 2021-09-26), as you might expect.
+>>=20
+>> > diff --git a/Makefile b/Makefile
+>> > index 241dc322c0..413503b488 100644
+>> > --- a/Makefile
+>> > +++ b/Makefile
+>> > @@ -2222,6 +2222,7 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLI=
+BS)
+>> >=20=20
+>> >  help.sp help.s help.o: command-list.h
+>> >  hook.sp hook.s hook.o: hook-list.h
+>> > +builtin/bugreport.sp builtin/bugreport.s builtin/bugreport.o: hook-li=
+st.h
+>>=20
+>> This fix looks correct. I grepped for other similar cases, but this is
+>> the only file that needs it.
+>>=20
+>> Curiously, the existing hook.c does not seem to include hook-list.h,
+>> even though you can see a dependency in the context above. Nor does
+>> help.c, which gained a similar dependency in cfe853e66b. Those seem
+>> superfluous, but maybe I'm missing something.
+>
+> Neither does builtin/help.c. This was discussed in the subthread
+> starting at https://lore.kernel.org/all/20211115220455.xse7mhbwabrheej4@g=
+landium.org/
+> and is covered by https://lore.kernel.org/all/patch-v3-19.23-234b4eb613c-=
+20211116T114334Z-avarab@gmail.com/
+> (to which I responded that the line for hook.o can be removed too)
 
-    Benchmark 2: make -C Documentation man' in 'HEAD~0
-      Time (mean ± σ):      64.5 ms ±   0.6 ms    [User: 54.5 ms, System: 13.0 ms]
-      Range (min … max):    63.8 ms …  65.7 ms    10 runs
+I've got an updated patch in my just-re-rolled Makefile dependency fixes
+series for this isuse, which also addresses the needless "hook.{sp,s,o}
+-> hook-list.h" dependency issue:
+https://lore.kernel.org/git/patch-v4-19.23-2710f8af6cd-20211117T101807Z-ava=
+rab@gmail.com/
 
-    Summary
-      'make -C Documentation man' in 'HEAD~0' ran
-        1.35 ± 0.02 times faster than 'make -C Documentation man' in 'HEAD~1'
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Makefile   | 2 --
- shared.mak | 5 +++++
- 2 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index eb1c944787b..035573c8997 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2459,8 +2459,6 @@ ASM_SRC := $(wildcard $(OBJECTS:o=S))
- ASM_OBJ := $(ASM_SRC:S=o)
- C_OBJ := $(filter-out $(ASM_OBJ),$(OBJECTS))
- 
--.SUFFIXES:
--
- $(C_OBJ): %.o: %.c GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
- 	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
- $(ASM_OBJ): %.o: %.S GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
-diff --git a/shared.mak b/shared.mak
-index 20109e6a90e..d8453bb471f 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -9,6 +9,11 @@
- %:: s.%
- %:: SCCS/s.%
- 
-+## Likewise delete default $(SUFFIXES). See:
-+##
-+##     info make --index-search=.DELETE_ON_ERROR
-+.SUFFIXES:
-+
- ### Flags affecting all rules
- 
- # A GNU make extension since gmake 3.72 (released in late 1994) to
--- 
-2.34.0.796.g2c87ed6146a
-
+Thanks again for looking all of this over & helping to make the Makefile
+better.
