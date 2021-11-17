@@ -2,116 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A863C433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 12:49:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 069D4C4332F
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 14:19:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2878760D42
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 12:49:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DFC7361A79
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 14:19:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237305AbhKQMwi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 07:52:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33504 "EHLO
+        id S238351AbhKQOW1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 09:22:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237308AbhKQMw1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 07:52:27 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07381C061766
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 04:49:29 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id x15so10723356edv.1
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 04:49:28 -0800 (PST)
+        with ESMTP id S234203AbhKQOWY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 09:22:24 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E50EC061764
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 06:19:26 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id t30so4993920wra.10
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 06:19:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=My45tbno8ftUo2osqnhK0hlXHYLXDILsDhnL/no+JS4=;
-        b=OTuejF0bOEe+QhQ5gbmkBd/3B2I5PdxpeRr5d/J+yBKDb3pgq4QQZoy/95ydYZk6pn
-         Xdfh8JmITKlv/x+Y83rGctIaa+zVpJjFy7pyuaWGrEqMRqh3I0EsQOdqvD9Gbaf8YNDr
-         DB1qSed/GZtKNBuWf0inptGerIDh51y4zqZSV7QRPmFK7umvzKUa1iDyw/vZqZR+Gnx2
-         gMCP6ixW/vASLU5UchYFhZ58vEH5erU3JosgHzOsrdU/iNWfrIvJ+MQ713UvR5gmJTob
-         vGHjUW6DfcYG4hJZS6uHFu5lVEdalPu34ttNofDCH3b2UFDdWEvV5/PY1rGDkilZQx7g
-         N53A==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=wIr3am6SCsIbgGZvNtNpnMILEzX+zX3D0DVgxD6BgPw=;
+        b=BJQS2kzyqs8UXv66u1WcoSBRVSe7EUfkr9uq8s43uVX7ZSL7Ss33cD7JaBdrP177YM
+         D8WUzN2bUDpTLMfK9H0xIdyq33UcExWcCCjyvrG694CTkVr06ZQj7rdP2oxzsvKVU4pB
+         Evs2lRNKv142gVALS3ZkGAoGxfb2Hs4tDXt0BFWHrCTFU2B8Py9lynZjngLp3P1OJC2z
+         ZyuBcmC1NHgHmAQDPS3qfax4pq5OHt4PdNsxiFZzPzvVsUuMSTfJ8LzDoUA9xYJl0LSq
+         uEZ6JWEVn+rRXQM1UkkHIRHrk35ybmb4hmSxx/q2SYa1W1M+qQEOxTBP8O0YUTSjMdtw
+         xbPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=My45tbno8ftUo2osqnhK0hlXHYLXDILsDhnL/no+JS4=;
-        b=IH4kePNX4Jd8TlVQGzaYaGXwEG1Wcd6O2e7HrjSce+93vh02IvTtjUBI7Q0TBaQdv8
-         9wSa16FFTDjiYDOB0dN1IU9ETmIzKbTzh2jHCuAm1LNs0caNaiHo3g+9Bpt3uhxksCA1
-         0roTNDGJ8CVefIysVE8BD/2bYenSLVv3rDMdKUS3tW8+1xpJHiORBlhsxlSGYNhnhhD+
-         DtF6gaA9r+3MAPQ90zWiwmmHopaAqeFg1ZJEI3LYaMyjnxwCtmMz/iQdLHgOhuZXNl0h
-         1ubyPE1NEaQ6qnU+BgDREdJvy4fLGJClIxd7YVG4DYr4dsDlRn0sGmpc8Z3p/YbIAtqn
-         Omnw==
-X-Gm-Message-State: AOAM531kOR0ys52UC6vWHguwNMaB7KfP2eXIjZeoK9RFno3OOFrg1qkt
-        O4m7/ImA/Es8IXCYQ/Y+cAglXFz4JwdkbA==
-X-Google-Smtp-Source: ABdhPJxvypB4TFD9CpBJQo9yy0yfajgrlSB+H1YJKd3Vonqci0IJAYoPMEQGHCFxUdlqkOT3IF/HKw==
-X-Received: by 2002:a17:906:8051:: with SMTP id x17mr21808266ejw.473.1637153367557;
-        Wed, 17 Nov 2021 04:49:27 -0800 (PST)
-Received: from gmgdl ([109.38.148.220])
-        by smtp.gmail.com with ESMTPSA id ar4sm832350ejc.52.2021.11.17.04.49.26
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=wIr3am6SCsIbgGZvNtNpnMILEzX+zX3D0DVgxD6BgPw=;
+        b=bJluZNbJ4JSFCHxzpBqL/1r8EvT4wejaq32tCu4qSTXGHkleHkO9mb1xeSX6aaKV6B
+         5rYlISLlIvhSApvoWH/f7kxGnzQx4QlD11B95q7EmmPZCJELSeDzdIB2Zxy9aAK0C1ps
+         bXImkai5EOLdm/wacGaa1sLu9tVNjTkt6a+wkGebZghsriDYj1NQlwzTY8xDrP+OkqSl
+         0kaQB9cJhUVsHEYBy8mSCyGqCLO1jzywRcFt/ZK7WyjtCOPt2ulOCB+ONi0rAKizYiSO
+         tfW0hPNGyeSBb9gUz+14wBGDN3kT1HX6hH5lPwRl0qFlQFZwpFfczJ3grBStL/yX6DWm
+         3Gqg==
+X-Gm-Message-State: AOAM533gLbMT514ex+4xO8UG16yXfy0MATOCT4LtOfTcW/lRqb8lVDCx
+        SCsRrI7XeV/kSYLw8xeSPFWQqZYEUuw=
+X-Google-Smtp-Source: ABdhPJzQljNH8oK4avo5+CEtkoOYM7lwrf/6EE5KqBM7m+o7dBtblerYxF07kKxoHFiV4wtcYOB8WA==
+X-Received: by 2002:adf:e484:: with SMTP id i4mr20393477wrm.49.1637158764465;
+        Wed, 17 Nov 2021 06:19:24 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j19sm28413wra.5.2021.11.17.06.19.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 04:49:26 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mnKNQ-00090K-L5;
-        Wed, 17 Nov 2021 13:49:24 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] revision: use C99 declaration of variable in for() loop
-Date:   Wed, 17 Nov 2021 13:39:33 +0100
-References: <20211113122833.174330-1-gotlouemail@gmail.com>
- <20211113130508.zziheannky6dcilj@gmail.com>
- <2b2386b9-045d-a0b8-6dbc-8a9d0c446bea@gmail.com>
- <xmqq7ddbme7q.fsf@gitster.g> <211114.868rxqu7hr.gmgdl@evledraar.gmail.com>
- <xmqqilwulims.fsf@gitster.g> <xmqqpmr2j5lq.fsf_-_@gitster.g>
- <61518213-9ce8-00d2-efd9-7f2091c574c4@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <61518213-9ce8-00d2-efd9-7f2091c574c4@gmail.com>
-Message-ID: <211117.86bl2j6j6z.gmgdl@evledraar.gmail.com>
+        Wed, 17 Nov 2021 06:19:24 -0800 (PST)
+Message-Id: <3aa095dc824ea7f659e6c11aa2c21be6cadbe985.1637158762.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com>
+References: <pull.1005.v6.git.1635323239.gitgitgadget@gmail.com>
+        <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 17 Nov 2021 14:19:06 +0000
+Subject: [PATCH v7 01/17] scalar: add a README with a roadmap
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Theodore Ts'o <tytso@mit.edu>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Wed, Nov 17 2021, Phillip Wood wrote:
+The Scalar command will be contributed incrementally, over a bunch of
+patch series. Let's document what Scalar is about, and then describe the
+patch series that are planned.
 
-> Hi Junio
->
-> On 15/11/2021 06:27, Junio C Hamano wrote:
->> There are certain C99 features that might be nice to use in our code
->> base, but we've hesitated to do so in order to avoid breaking
->> compatibility with older compilers. But we don't actually know if
->> people are even using pre-C99 compilers these days.
->> One way to figure that out is to introduce a very small use of a
->> feature, and see if anybody complains, and we've done so to probe
->> the portability for a few features like "trailing comma in enum
->> declaration", "designated initializer for struct", and "designated
->> initializer for array".  A few years ago, we tried to use a handy
->>      for (int i = 0; i < n; i++)
->> 	use(i);
->> to introduce a new variable valid only in the loop, but found that
->> some compilers we cared about didn't like it back then.  Two years
->> is a long-enough time, so let's try it agin.
->> If this patch can survive a few releases without complaint, then we
->> can feel more confident that variable declaration in for() loop is
->> supported by the compilers our user base use.  And if we do get
->> complaints, then we'll have gained some data and we can easily
->> revert this patch.
->
-> I like the idea of using a specific test balloon for the features that
-> we want to use but wont this one break the build for anyone doing
-> 'make DEVELOPER=1' because -Wdeclaration-after-statement will error
-> out. I think we could wrap the loop in gcc's warning pragmas to avoid
-> that.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ contrib/scalar/README.md | 71 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
+ create mode 100644 contrib/scalar/README.md
 
-Good point.
-
-Overall something that brings us to the end-state 765dc168882
-(git-compat-util: always enable variadic macros, 2021-01-28) brought us
-to is probably better, i.e. something you can work around by defining or
-undefining a macro via a Makefile parameter, instead of needing to patch
-git's sources.
-
+diff --git a/contrib/scalar/README.md b/contrib/scalar/README.md
+new file mode 100644
+index 00000000000..7898a683ba5
+--- /dev/null
++++ b/contrib/scalar/README.md
+@@ -0,0 +1,71 @@
++# Scalar - an opinionated repository management tool
++
++Scalar is an add-on to Git, helping Git scale to very large repositories and
++worktrees. Originally implemented in C# using .NET Core, based on the learnings
++from the VFS for Git project, most of the techniques developed by the Scalar
++project have been integrated into core Git already:
++
++* partial clone,
++* commit graphs,
++* multi-pack index,
++* sparse checkout (cone mode),
++* scheduled background maintenance,
++* etc
++
++This directory contains the remaining parts of Scalar that are not (yet) in
++core Git.
++
++## Roadmap
++
++The idea is to populate this directory via incremental patch series and
++eventually move to a top-level directory next to `gitk-git/` and to `git-gui/`. The
++current plan involves the following patch series:
++
++- `scalar-the-beginning`: The initial patch series which sets up
++  `contrib/scalar/` and populates it with a minimal `scalar` command that
++  demonstrates the fundamental ideas.
++
++- `scalar-c-and-C`: The `scalar` command learns about two options that can be
++  specified before the command, `-c <key>=<value>` and `-C <directory>`.
++
++- `scalar-diagnose`: The `scalar` command is taught the `diagnose` subcommand.
++
++- `scalar-and-builtin-fsmonitor`: The built-in FSMonitor is enabled in `scalar
++  init` and in `scalar clone`, for an enormous performance boost when working
++  in large worktrees. This patch series necessarily depends on Jeff Hostetler's
++  FSMonitor patch series to be integrated into Git.
++
++- `scalar-gentler-config-locking`: Scalar enlistments are registered in the
++  user's Git config. This usually does not represent any problem because it is
++  rare for a user to register an enlistment. However, in Scalar's functional
++  tests, Scalar enlistments are created galore, and in parallel, which can lead
++  to lock contention. This patch series works around that problem by re-trying
++  to lock the config file in a gentle fashion.
++
++- `scalar-extra-docs`: Add some extensive documentation that has been written
++  in the original Scalar project (all subject to discussion, of course).
++
++- `optionally-install-scalar`: Now that Scalar is feature (and documentation)
++  complete and is verified in CI builds, let's offer to install it.
++
++- `move-scalar-to-toplevel`: Now that Scalar is complete, let's move it next to
++  `gitk-git/` and to `git-gui/`, making it a top-level command.
++
++The following two patch series exist, but there is no plan to integrate them
++into Git's source tree:
++
++- `scalar-with-gvfs`: The primary purpose of this patch series is to support
++  existing Scalar users whose repositories are hosted in Azure Repos (which
++  does not support Git's partial clones, but supports its predecessor, the GVFS
++  protocol, which is used by Scalar to emulate the partial clone).
++
++  Since the GVFS protocol will never be supported by core Git, this patch
++  series will remain in Microsoft's fork of Git.
++
++- `run-scalar-functional-tests`: The Scalar project developed a quite
++  comprehensive set of integration tests (or, "Functional Tests"). They are the
++  sole remaining part of the original C#-based Scalar project, and this patch
++  adds a GitHub workflow that runs them all.
++
++  Since the tests partially depend on features that are only provided in the
++  `scalar-with-gvfs` patch series, this patch cannot be upstreamed.
+-- 
+gitgitgadget
 
