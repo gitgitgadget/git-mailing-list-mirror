@@ -2,110 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1085BC433EF
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:36:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03071C433FE
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:40:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9A9061A52
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:36:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DCC0D61546
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235206AbhKQJjt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 04:39:49 -0500
-Received: from mx0f-0020b901.pphosted.com ([67.231.155.103]:44223 "EHLO
-        mx0f-0020b901.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S235232AbhKQJjg (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 17 Nov 2021 04:39:36 -0500
-X-Greylist: delayed 338 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Nov 2021 04:39:36 EST
-Received: from pps.filterd (m0196084.ppops.net [127.0.0.1])
-        by mx0e-0020b901.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1AH9UNJ0018050
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 09:30:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jpl.nasa.gov; h=from : to : subject
- : date : message-id : content-type : content-id :
- content-transfer-encoding : mime-version; s=InSight1906;
- bh=Dx4OEK0WUKscpbRLBCLID4oqu7sl45ZnvwFFqfpOBys=;
- b=nDUfwZDBYI1OCBagy3qnqZS7Y7vrZN4+sV6GEPlglFlWDYaS4VpjkxhxC7lbHveycDdN
- uMeh6zJRQ1xeNdecVlBhpk8Ay8882fcBLhsQWzj049mbIEZcPd61DQOGbyruvULZpCYv
- OQvjgc7fkslqHqsYrovOy5+VoNIGoUTZI5krbCNkOu9k//AtAom4N+O4a9sZfw3WNo2Q
- ueB0MCdzhdFeje2epSfVrVZRtABFJZU1G0hgdeb/5tq9FIyG4iU/AjcVG9iNiWPZ4FeL
- rFgGmXUIDhezTRtzjfm48lAkjHGKu/xMpb/eu51oX7Q69XQaWfEQbXuKOXINUV0R+nOQ Ww== 
-Received: from mail.jpl.nasa.gov (smtp.jpl.nasa.gov [128.149.137.102])
-        by mx0e-0020b901.pphosted.com with ESMTP id 3ccqdq0ukr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 09:30:57 +0000
-Received: from ap-embx16-sp10.RES.AD.JPL (ap-embx16-sp10.jpl.nasa.gov [128.149.137.83])
-        by smtp.jpl.nasa.gov (Sentrion-MTA-4.5.4/Sentrion-MTA-4.5.4) with ESMTPS id 1AH9UtXr016957
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128 bits) verified FAIL)
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 09:30:55 GMT
-Received: from ap-embx16-sp20.RES.AD.JPL (2002:8095:8954::8095:8954) by
- ap-embx16-sp10.RES.AD.JPL (2002:8095:8953::8095:8953) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.2242.12; Wed, 17 Nov 2021 01:30:55 -0800
-Received: from ap-embx16-sp20.RES.AD.JPL ([fe80::75fd:e59f:c074:39dd]) by
- ap-embx16-sp20.RES.AD.JPL ([fe80::75fd:e59f:c074:39dd%17]) with mapi id
- 15.01.2242.012; Wed, 17 Nov 2021 01:30:55 -0800
-From:   "Wallace, Brooke T (US 349D-Affiliate)" 
-        <brooke.t.wallace@jpl.nasa.gov>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Config spec for git
-Thread-Topic: Config spec for git
-Thread-Index: AQHX25XS/wQPOjTZ6EOIcpW8MMhmRg==
-Date:   Wed, 17 Nov 2021 09:30:55 +0000
-Message-ID: <D5EE9939-F639-4E69-BD81-10B05EC43A8E@jpl.nasa.gov>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <E4436A21F1772348A9A88BCD0CE12947@ad.jpl>
-Content-Transfer-Encoding: quoted-printable
+        id S235391AbhKQJnK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 04:43:10 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61444 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235585AbhKQJmP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 04:42:15 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C98FF16C5FE;
+        Wed, 17 Nov 2021 04:39:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=8ybcGo4KnXEiggYuahSoU8u1Ujt5t+1B3O9qJEmmy84=; b=OQRU
+        kGwrWjFySjTSTwKVLTrI6GFUoGUJzXEwO9xs1N6xKdxvc/GQtgnEd3pVdFBQn3r/
+        v5COXnVz4f2V/4BG7nTj5qhj7M67TVt0lK1juAF07ZYwa8ANfesU3if+V95D7G2A
+        XqsO1U61aWS0i7oc6OpwFxDGbjQ8V/eew8563Eg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C20E716C5FD;
+        Wed, 17 Nov 2021 04:39:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2220416C5FC;
+        Wed, 17 Nov 2021 04:39:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ian Wienand <iwienand@redhat.com>
+Cc:     git@vger.kernel.org, Peter Kaestle <peter.kaestle@nokia.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] submodule: separate out not-found and not-empty errors
+References: <YZQ5Zk0ItWvfr8sF@fedora19.localdomain>
+Date:   Wed, 17 Nov 2021 01:39:08 -0800
+Message-ID: <xmqqfsrv2kar.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-X-Source-IP: ap-embx16-sp10.jpl.nasa.gov [128.149.137.83]
-X-Source-Sender: brooke.t.wallace@jpl.nasa.gov
-X-AUTH: Authorized
-X-Proofpoint-GUID: c8iYl6tYU_n4uEeuSYBOIazAczIfJlgh
-X-Proofpoint-ORIG-GUID: c8iYl6tYU_n4uEeuSYBOIazAczIfJlgh
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.425,18.0.790
- definitions=2021-11-17_03:2021-11-16,2021-11-17 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 mlxscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=884
- malwarescore=0 bulkscore=0 clxscore=1011 impostorscore=0 spamscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2110150000 definitions=main-2111170047
+Content-Type: text/plain
+X-Pobox-Relay-ID: 375C992C-478A-11EC-8A55-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Has any one considered adding a config spec feature to Git or does Git alre=
-adt have some way to support the same features?
+Ian Wienand <iwienand@redhat.com> writes:
 
-I've been using Git for a while now for small projects but taking on a new =
-larger project I've come to realize that Git does not have config specs and=
- so seems to be missing an important feature for managing large projects.
+>  			    !is_empty_dir(empty_submodule_path.buf)) {
+>  				spf->result = 1;
+> -				strbuf_addf(err,
+> -					    _("Could not access submodule '%s'\n"),
+> -					    ce->name);
+> +				/* is_empty_dir also catches missing dirtectories, but report separately */
+> +				if (!is_directory(empty_submodule_path.buf)) {
 
-We use configuration specs to select directories from a common code base (r=
-epo) and map them into different baselines to creat multiple product builds=
- with different feature sets. We used this feature in VCSs such as Clearcas=
-e and Perforce. Ultimately this allows us to manage the repo in one directo=
-ry structure and create product builds with a different one. For example th=
-e repo has multiple directories for different products/targets, but a basel=
-ine, the workspace, has only one target directory always with the same name=
- mapped to the same location. Obviously the corresponding directories in th=
-e repo have different names.
+I was hoping that inspecting errno after is_empty_dir() returned
+might be sufficient (of course, we need to clear errno before
+calling is_empty_dir() if we go that route), but because this is an
+error codepath that we do not need to optimize, a call to
+is_directory() that incurs another system call would be fine.
 
-Git supports the notion of submodules, but I see no way to map a submodule =
-directory to a different name, remove unwanted subdirs of a submodule, or m=
-ap a submodule over a subdirectory of the primary repo. Config specs also a=
-llow you to specify a specific branch or version that you want to map to yo=
-ur workspace independent of other directories, branches and versions.
+> +				  strbuf_addf(err,
+> +					      _("Submodule directory '%s' not found (incorrect --git-dir?)\n"),
 
-I suppose it may be possible to achieve the same result by treating the pri=
-mary repo as the configspec. But I feel like there are some features config=
- specs support that i do not have using submodules, but might need down the=
- road.
+"not found" is something the code definitely knows (eh, not quite,
+but let's read on).  
 
-I can see that omitting, obscuring, or overwriting parts of a repo would no=
-t play well with the commit id. So I imagine there could be some real compl=
-ications trying to add support for the notion of a flexible config spec.
+But let's not make an uninformed guess.  This code didn't even check
+if the user gave a --git-dir option.
 
-Appreciate any comments/feedback
--Brooke=
+If the user is advanced enough to have given "--git-dir", "not found"
+should be sufficient to hint that the way the user specified the
+repository location incorrectly, and a wrong "--git-dir" might be
+one of the many things the user might suspect on their own.
+
+Another problem with the message is !is_directory() can mean "there
+is no filesystem entity at the path" (i.e. "submodule directory '%s'
+does not exist") and it can also mean "there is a filesystem entity
+at the path, but that is not a directory).  "not found" is not exactly
+a good message to give in the latter case.
+
+We are giving two messages here in this codepath.  For example, the
+original one would have said something like:
+
+	Could not access submodule 'foo'
+	Submodule directory 'foo' is not empty
+
+So I suspect that a more appropriate phrasing for the other one (the
+new one you added) would be something like
+
+	Could not access submodule 'foo'
+	Path to the submodule 'foo' is not a directory
+
+perhaps?
+
+Thanks.
+
+
+> +					      empty_submodule_path.buf);
+> +				} else {
+> +				  strbuf_addf(err,
+> +					      _("Submodule directory '%s' is not empty\n"),
+> +					      empty_submodule_path.buf);
+> +				}
+>  			}
+>  			strbuf_release(&empty_submodule_path);
+>  		}
