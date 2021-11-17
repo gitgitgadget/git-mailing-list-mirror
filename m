@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46C82C4332F
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D62D8C43219
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:21:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F2F061BFA
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:21:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC22461BAA
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:21:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236285AbhKQKYB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 05:24:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56476 "EHLO
+        id S236217AbhKQKYC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 05:24:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236257AbhKQKXg (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236267AbhKQKXg (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 17 Nov 2021 05:23:36 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4510CC06121D
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:37 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id y196so1676575wmc.3
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:37 -0800 (PST)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 254E5C061225
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:38 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id i8-20020a7bc948000000b0030db7b70b6bso4328475wml.1
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:20:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=uIMnDR8U8vhdWM6hlpK4KCai6LoGDFCGRmov9GEwmjs=;
-        b=IDC3JgHpzhMyIsffGAhGsYqsj3Wi6sR9m3h89MaAhnO3j71zxIjaC32HhpfSNyrJCw
-         ZoFF4IvDdYFiMH5veVMf1pMYk89mEBqFKX/+Bj/jrxGju8zs5L+DaKjolRTBG/w/ZD3Y
-         nDizNGBloJorCUhgEKwKWHngPx4Gg/Wndhb90k9gNiXywCUQr03Miy25AGsLXY4mcstC
-         gFpOB48lhpZHdYL5Z0+aD/T6w0LKosJ7bJ3ftYuPqaEadPNTzMXkY/rPl6b/xKD+IUMR
-         TqMqHHBMApjY+DZ80d76qvm85KAdSvD9EIq8+pcc1e7TB3V2AZO+7VY3ULj9mBEZPsdo
-         VcqQ==
+        bh=jb8je/FoaWUCxv+AiTlIVfJkvF668xYYfN68CxBmxJw=;
+        b=allnHQjaHVhiYGnqxuba/mKeBGIQGCdXf0AxBdstFB+ValHq4EVhcsPqJpofos+0U7
+         mj0Rc+FBfCZzdGgjMW4qt+NfAZzMYakXy418r6JgqVIeA1xsI9AN+uHtBTPzpuZlk3jG
+         oGqgXPMyPtJioRL6crV1MPZUTZPk7kBHuJf5vOmXIr8e9u/A86z/cCF4zcdutXaNXooV
+         9o7nffWX5Tjt6zG/PKQ5tSiD5Up/xoyW/0G3/9JFhflAHP2nJCuCpVXxKTn0mG4+IU1g
+         3Bc9I/BvR3vOsck4JhedT6C1Q5zdVporesugnNpqjJrXNqNI49fABXRWGwHDkgdjgCio
+         TGJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=uIMnDR8U8vhdWM6hlpK4KCai6LoGDFCGRmov9GEwmjs=;
-        b=F8Z/fnmyiE484gnQp3cWFuFi5PsrDSAgssMYla1Qh1Scgcff/zekmzrw01SpAHLzAj
-         cbTetrYpBKQAHmc6+Y9QNp3K3QZzN/7IKzjdpFBz2OuoA1GDdyYt7CZqZ03epXDh7KLI
-         Pli1+ZxBo75q0HRTTCHxJfJ7ZgTrk1GKtk6XAdcimPZU1QihPjJ2S2R8QY120yod/ctH
-         MsG0W3VXM2gslc9BK6Gk1Qf7NQsheS7pP/bUEN86MUf4hpG+odhfdWLKPRqn1EsZ7zC+
-         SVGDyAEfXD8gITK9rItsvkqKG8qWk88QT9CY7e0P8n4gB+VIteu5mxxRGDN+VPCbS4BE
-         WMvQ==
-X-Gm-Message-State: AOAM533ZhE/Cx8iYvPzpst4y/7rXUQ5lgV3p+HhMGdADdxJrvkyaA3IC
-        /L1+hhle/jEAaXApxtlUdjMZzlBA5Z3fuQ==
-X-Google-Smtp-Source: ABdhPJyUjSDeiRe88yp/v/nnZBAcdEeJCwtjst+GUoBEp4OY5wHzNdRAtqB0YiNdGhh+wCuv/rDFCg==
-X-Received: by 2002:a05:600c:21c3:: with SMTP id x3mr16169938wmj.13.1637144435640;
-        Wed, 17 Nov 2021 02:20:35 -0800 (PST)
+        bh=jb8je/FoaWUCxv+AiTlIVfJkvF668xYYfN68CxBmxJw=;
+        b=oMruIGuURbXphoLtk3CllwEAZzt3cbnouHrTsY8bZDg60U9epFgQ4cZhVxnfjdFKiK
+         6G1m1H7FRZlFsV5xXhPWDkqw1ikP3lh+vRIxBbLWiE8SYVoUGvwENYjdr+q4JZq+H85T
+         XyzVPgb7hzsXzKFvzqKqGqnKseTIRUiiytyWNqchPRw/BTcQ8617JH8txYOVLj798bu8
+         RPSRebYpikYquNu7HrRqYLggJA7GCwjohR9gJgkYOEL9ShDiGQSJXXv+1LEN45jZ/kOI
+         53mBGwPx8uANURkAEBIelpFpJRoevR/t4dVAvnVs3qgrfWqlFKgFtqKdF7JlcR6KVY39
+         QGEw==
+X-Gm-Message-State: AOAM532rUGXB4xlo1F1kHQb8EvV9xrhadb760brJXjn6ucaxxnEZRJEO
+        5MUsJG3j2jnNRGFZ2EPiqR+yZCQsa1fmeA==
+X-Google-Smtp-Source: ABdhPJxQlHQLkLAZClsXibHdedOEIEmyKT2kM6/BsrrQkBsjRSjsI7RMwo6x+jsmr9Ye3t1UmCIjVw==
+X-Received: by 2002:a1c:4681:: with SMTP id t123mr77350263wma.83.1637144436511;
+        Wed, 17 Nov 2021 02:20:36 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n32sm6456256wms.1.2021.11.17.02.20.34
+        by smtp.gmail.com with ESMTPSA id n32sm6456256wms.1.2021.11.17.02.20.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 17 Nov 2021 02:20:35 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 12/23] Makefiles: add "shared.mak", move ".DELETE_ON_ERROR" to it
-Date:   Wed, 17 Nov 2021 11:20:11 +0100
-Message-Id: <patch-v4-12.23-30ddf7da2c8-20211117T101807Z-avarab@gmail.com>
+Subject: [PATCH v4 13/23] Makefile: move $(comma), $(empty) and $(space) to shared.mak
+Date:   Wed, 17 Nov 2021 11:20:12 +0100
+Message-Id: <patch-v4-13.23-f378a7dc35e-20211117T101807Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.796.g2c87ed6146a
 In-Reply-To: <cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com>
 References: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com> <cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com>
@@ -75,96 +75,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have various behavior that's shared across our Makefiles, or that
-really should be (e.g. via defined templates). Let's create a
-top-level "shared.mak" to house those sorts of things, and start by
-adding the ".DELETE_ON_ERROR" flag to it.
+Move these variables over to the shared.max, we'll make use of them in
+a subsequent commit. There was no reason for these to be "simply
+expanded variables", so let's use the normal lazy "=" assignment here.
 
-See my own 7b76d6bf221 (Makefile: add and use the ".DELETE_ON_ERROR"
-flag, 2021-06-29) and db10fc6c09f (doc: simplify Makefile using
-.DELETE_ON_ERROR, 2021-05-21) for the addition and use of the
-".DELETE_ON_ERROR" flag.
-
-This does have the potential downside that if e.g. templates/Makefile
-would like to include this "shared.mak" in the future the semantics of
-such a Makefile will change, but as noted in the above commits (and
-GNU make's own documentation) any such change would be for the better,
-so it's safe to do this.
-
-This also doesn't introduce a bug by e.g. having this
-".DELETE_ON_ERROR" flag only apply to this new shared.mak, Makefiles
-have no such scoping semantics.
+See 425ca6710b2 (Makefile: allow combining UBSan with other
+sanitizers, 2017-07-15) for the commit that introduced these.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/Makefile |  6 +++---
- Makefile               | 13 +++----------
- shared.mak             |  9 +++++++++
- 3 files changed, 15 insertions(+), 13 deletions(-)
- create mode 100644 shared.mak
+ Makefile   | 4 ----
+ shared.mak | 8 ++++++++
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index ed656db2ae9..ba27456c86a 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -1,3 +1,6 @@
-+# Import tree-wide shared Makefile behavior and libraries
-+include ../shared.mak
-+
- # Guard against environment variables
- MAN1_TXT =
- MAN5_TXT =
-@@ -524,7 +527,4 @@ doc-l10n install-l10n::
- 	$(MAKE) -C po $@
- endif
- 
--# Delete the target file on error
--.DELETE_ON_ERROR:
--
- .PHONY: FORCE
 diff --git a/Makefile b/Makefile
-index 8205614c6ec..5ae7d012cfb 100644
+index 5ae7d012cfb..7130e32a251 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1,3 +1,6 @@
-+# Import tree-wide shared Makefile behavior and libraries
-+include shared.mak
-+
- # The default target of this Makefile is...
- all::
+@@ -1252,10 +1252,6 @@ endif
+ ALL_CFLAGS = $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
  
-@@ -2158,16 +2161,6 @@ shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
- strip: $(PROGRAMS) git$X
- 	$(STRIP) $(STRIP_OPTS) $^
- 
--### Flags affecting all rules
+-comma := ,
+-empty :=
+-space := $(empty) $(empty)
 -
--# A GNU make extension since gmake 3.72 (released in late 1994) to
--# remove the target of rules if commands in those rules fail. The
--# default is to only do that if make itself receives a signal. Affects
--# all targets, see:
--#
--#    info make --index-search=.DELETE_ON_ERROR
--.DELETE_ON_ERROR:
--
- ### Target-specific flags and dependencies
- 
- # The generic compilation pattern rule and automatically
+ ifdef SANITIZE
+ SANITIZERS := $(foreach flag,$(subst $(comma),$(space),$(SANITIZE)),$(flag))
+ BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
 diff --git a/shared.mak b/shared.mak
-new file mode 100644
-index 00000000000..0170bb397ae
---- /dev/null
+index 0170bb397ae..2d597ef7603 100644
+--- a/shared.mak
 +++ b/shared.mak
-@@ -0,0 +1,9 @@
-+### Flags affecting all rules
+@@ -7,3 +7,11 @@
+ #
+ #    info make --index-search=.DELETE_ON_ERROR
+ .DELETE_ON_ERROR:
 +
-+# A GNU make extension since gmake 3.72 (released in late 1994) to
-+# remove the target of rules if commands in those rules fail. The
-+# default is to only do that if make itself receives a signal. Affects
-+# all targets, see:
-+#
-+#    info make --index-search=.DELETE_ON_ERROR
-+.DELETE_ON_ERROR:
++### Global variables
++
++## comma, empty, space: handy variables as these tokens are either
++## special or can be hard to spot among other Makefile syntax.
++comma = ,
++empty =
++space = $(empty) $(empty)
 -- 
 2.34.0.796.g2c87ed6146a
 
