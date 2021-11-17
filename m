@@ -2,124 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE264C433EF
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:30:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCE50C433EF
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:31:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A066C61B27
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:30:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1B3B61B50
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:31:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241609AbhKQXd5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 18:33:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39536 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240122AbhKQXd4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 18:33:56 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 534C8C061570
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 15:30:57 -0800 (PST)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 918905B463;
-        Wed, 17 Nov 2021 23:30:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1637191856;
-        bh=/DssRP5WHyMmbcKsiWvZE55RLpBGB2Pw+fX6C6XXe/0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=xs4ZZt0jxrg8lblThiDIqsk92DLHvPEj6V+vxILvk7sRlBdDSMOlDoecLTkr8C19R
-         3GicychrOwjsc0LWyrZ1W0JcJ5Dvkni5FjgBwADlIhMGyDx6dABgTO0ZBCKmgfIfhh
-         SRK6WzBYBJcp1uhgxjdAj0HGVSDBeOmaw4/j9/OkJ59Ih7RkCqYEauxQanZ0ZH8OV4
-         VzkP9dCWD92O7AYbVq2z8iuV0gt5gDZV1u8WNofLXeIS/Ecfr9adDzj3txcXsXj0rB
-         y4ne42Ad9kEb5yvaMw31ZUiNTwPBveoVDO/KmdBuzlL0o8SpKYGYq6aBbKzJIUuaz4
-         1LXH9uyrhWPuOIwjnBTKDLRjXAJtCGyS3zFiyhH3vEUeF762CYb51cvTlrRQiZ3FXk
-         d5Ey1G5OPUi8fA+GGVP7INovdXKdH58ERu5fiJDyP5sQJp+LKACXeb6PuNx/xtD9+m
-         YbDWs/oUDxWAk8QmqhLQrGZv8s5x3+UN8B8BGLPHIrY34xuNFJM
-Date:   Wed, 17 Nov 2021 23:30:54 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     rsbecker@nexbridge.com
-Cc:     'Jeff King' <peff@peff.net>, 'Carlo Arenas' <carenas@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/2] wrapper: add a helper to generate numbers from a
- CSPRNG
-Message-ID: <YZWQroXwOKIi8Zs4@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        rsbecker@nexbridge.com, 'Jeff King' <peff@peff.net>,
-        'Carlo Arenas' <carenas@gmail.com>, git@vger.kernel.org
-References: <YZPOzqU0UQDVA57R@coredump.intra.peff.net>
- <009d01d7db03$354ecae0$9fec60a0$@nexbridge.com>
- <YZQzqjWMzaWVkkfP@camp.crustytoothpaste.net>
- <00e001d7db40$985c61a0$c91524e0$@nexbridge.com>
- <YZRUzHVS32W4Flo/@camp.crustytoothpaste.net>
- <CAPUEspiHnTkwbUJ5o+fT2u4Kn+fwNe-3FoqVtNsjTF+Pg6Tryg@mail.gmail.com>
- <YZRxOrv9JFt2oeSU@coredump.intra.peff.net>
- <CAPUEsphh-enSYS66mi7_XaS0n1bmUvGXRcgVp6iqhg94xSHVog@mail.gmail.com>
- <YZVfrhos+lZas7hk@coredump.intra.peff.net>
- <01a501d7dbf0$7c538000$74fa8000$@nexbridge.com>
+        id S241612AbhKQXeM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 18:34:12 -0500
+Received: from mout.gmx.net ([212.227.15.19]:40053 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240122AbhKQXeK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 18:34:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637191867;
+        bh=5TpIi1dkHBF4AWbFRQj5idGE8Q+Nh8GL4fR6gunMyQU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=CkuiLw+OZhR0yIbsF9zMWnF3EZva7jcUrK19+mdkfPfNv1OJZ3I4MR163SQ3OZpO8
+         3dleWVb4GLU60ugQkYSLVwdKMPitmPEieqwU6FAXchh2HArui7wHNxKhVE1A/iR8b4
+         8oMk0twAL/e4cxCsVwVjUrOx9pkG48bPAT0+yH24=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.27.166.205] ([89.1.213.220]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mdeb5-1mDsap3Tft-00Zhvg; Thu, 18
+ Nov 2021 00:31:06 +0100
+Date:   Thu, 18 Nov 2021 00:31:04 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] mergesort: avoid left shift overflow
+In-Reply-To: <xmqqr1bf2l83.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2111180026580.11028@tvgsbejvaqbjf.bet>
+References: <5eabbe1c-4c0f-559a-da21-423afec89e7e@web.de> <nycvar.QRO.7.76.6.2111161505500.21127@tvgsbejvaqbjf.bet> <xmqqr1bf2l83.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="AZ6IJHrpUcz/8tyE"
-Content-Disposition: inline
-In-Reply-To: <01a501d7dbf0$7c538000$74fa8000$@nexbridge.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:bxIO5T4OJ5U6R0UaRDGP+KIo7j3s8oKkZK9fVndVb7S6WokFVKJ
+ jPT1hau9CYuSh+uwxS+4JiQwnZ2u/hP0PfR6s0pTY+SJjZ6hYV4ifimzsCXZnlrAzQv0xVm
+ 9M+Z2jwSThlEcokW9SiGi6U01IJ9jpvJ2pwvrjowpcrOqBuBGqa1NTdrfGDo6RN3FhQe69J
+ 3x2NeYqQKqz+BUtiyBZng==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xNqER82il40=:zFRzxOt54dbNzB3fBInS+L
+ V71Rmd1m0YCT1xWoljreDFjjcWsB/bk0SmvM4Xx01CuggTArrIbxl27erFBUHlIcfMmg/SKRm
+ ATRDCoQyItbUHmGo1cu8Q5CzZrqGJfKvElHZUTxiAz3y2ZG0AEXtVwIH8ACuNpIhKUvo8o+56
+ YmeIHUvlbmY4VhT16MkC5fpQOyTuQevHgtzuIKY93qjQnBx3Q0nE+Y60qDiI0v1UwxLREYmKy
+ +8uk2+Ow5QKb6WolHjQpVulNalIJeadYcLL2YqOyi3ZnhCjAp7TAo0uQSmdU82yZ+YYsaDXoL
+ /Xth0Bim6ZjR3y3rrSuazxPPR65A81gcVZI9S5KjMEjAF7XLHnXn1YNnj02hJ1bm3tZV6TljD
+ HDGIIjH0BkQ4yQxDERi8lBNkHAKErPFOcad6lOodWfSdWBideqPGgk0Tjxb/me7z+93BUtk7N
+ hyNxe/Xq5hxgJGu/w61gxODYHTLOX1g3XOVCNaLG5TjV8MdQvwDeX3B7dkOdbGryWej96gEa8
+ pPnf6QUr/9Be+DLBnIxWTQ5cg/sjpji3RM1xtRVtmlwFsQgR0D6Z/ZYylUPVZVpLhKsyQbYf1
+ XCmFkEpORj64seYBteKe+UBOg6I9dKrgQ3o2yUskWbxjFd6rf+VPJOW3emmfHgSxx12etywaF
+ T0WgQiIOJ38amSf4W/hD38DGDQi5E7KX0sqbW3Pn2vLjOBddJnkz/DCrsO3kro50bWrwJ2kz+
+ K6ej54gw0d+NiJqUpMy+M2MrRbcYvoPll9yP769dOhqth+pDlfcdIqSFhuw+pFhJjE68DgHCf
+ 07k8y27ez4hocbzN9yNgWqnLl5/aiSNEP8ZjMMlq/fUDuXt5KXVcFQoYAOa8wbIXE5K3Dq4TR
+ gnNh4zf37T97XRhSFcap5gA4EP6E/Uhh47v/QmH7FYcPMan382V2IfzRVdN3QRQrJsK3PVYVn
+ p2IHJE7orS4wRJ4ueZChuuc8zakNuc1621mnCidZ0q3A1L3FdKK34peSi9en8BQrYx1lh+sTY
+ 2Rh7w3fXBv6FfqDNGFWJ9uBB8xfGIlVn3vtOkUK4hJSqtxqyerOjJzMSYKxHp9Jn6puMG21oB
+ i0W2gxFqp8bEvY=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
---AZ6IJHrpUcz/8tyE
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, 17 Nov 2021, Junio C Hamano wrote:
 
-On 2021-11-17 at 20:19:49, rsbecker@nexbridge.com wrote:
-> I missed this one... lrand48 is also not generally available. I don=E2=80=
-=99t think it is even available on Windows.
->=20
-> If we need a generalized solution, it probably needs to be abstracted in =
-git-compat-util.h and compat/rand.[ch], so that the platform maintainers ca=
-n plug in whatever decent platform randomization happens to be available, i=
-f any. We know that rand() is vulnerable, but it might be the only generall=
-y available fallback. Perhaps get the compat layer in place with a test sui=
-te that exercises the implementation before getting into the general git co=
-de base - maybe based on jitterentropy or sslrng. Agree on an interface, de=
-cide on a period of time to implement, send the word out that this needs to=
- get done, and hope for the best. I have code that passes FIPS-140 for NonS=
-top ia64 (-ish although not jitterentropy) and x86, and I'm happy to contri=
-bute some of this.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> >> diff --git a/mergesort.c b/mergesort.c
+> >> index 6216835566..bd9c6ef8ee 100644
+> >> --- a/mergesort.c
+> >> +++ b/mergesort.c
+> >> @@ -63,7 +63,7 @@ void *llist_mergesort(void *list,
+> >>  		void *next =3D get_next_fn(list);
+> >>  		if (next)
+> >>  			set_next_fn(list, NULL);
+> >> -		for (i =3D 0; n & (1 << i); i++)
+> >> +		for (i =3D 0; n & ((size_t)1 << i); i++)
+> >
+> > I was a bit concerned about the operator precedence (some of which I
+> > remember by heart, some not), but according to
+> > https://en.cppreference.com/w/c/language/operator_precedence the cast =
+has
+> > a higher precedence than the shift operator.
+> >
+> > I would have preferred an extra pair of parentheses around `(size_t)1`=
+ so
+> > that I (and other readers) do not have to remember or look up the oper=
+ator
+> > precedence, but it _is_ correct.
+>
+> Interesting.
+>
+> I do not quite see the need for it myself, but if we wanted to, we
+> can smoke them out with this, I think.
+>
+> 	$ cat >contrib/coccinelle/cast.cocci <<-\EOF
+> 	@@
+> 	type T;
+> 	expression V, C;
+> 	@@
+> 	-(T) V << C
+> 	+((T) V) << C
+> 	EOF
 
-I think in this case I'd like to try to stick with OpenSSL or other
-standard interfaces if that's going to meet folks' needs.  I can write
-an HMAC-DRBG, but getting entropy is the tricky part, and jitterentropy
-approaches are controversial because it's not clear how unpredictable
-they are.  I'm also specifically trying to avoid anything that's
-architecture specific like RDRAND, since that means we have to carry
-assembly code, and on some systems RDRAND is broken, which means that
-you have to test for that and then pass the output into another CSPRNG.
-I'm also not sure how maintainable such code is, since I don't think
-there are many people on the list who would be familiar enough with
-those algorithms to maintain it.  Plus there's always the rule, "Don't
-write your own crypto."
+Cute.
 
-Using OpenSSL or system-provided interfaces is much, much easier, it
-means users can use Git in FIPS-certified environments, and it avoids us
-ending up with subtly broken code in the future.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+However, I am not a fan of fixing what ain't broken (the many refactorings
+in v2.34.0 did cause quite some fall-out work in git-for-windows/git and
+microsoft/git, after all, and at least _I_ do not yet see much benefit to
+show for that price we paid for those refactorings).
 
---AZ6IJHrpUcz/8tyE
-Content-Type: application/pgp-signature; name="signature.asc"
+And the primary benefit of enclosing the left operand in parentheses is to
+make reviews easier, so I would prefer to leave existing (read:
+_already-reviewed_) code alone.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+Thanks,
+Dscho
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYZWQrgAKCRB8DEliiIei
-gdldAP4uQmpwhCJlwbCYOGeHUq985ZK6+IXF+3VuWQhVK4AiIAEAiYOZ0NwdsZ7V
-phqS6R9gEE/LBkvVz90cH7lBJgfdgQk=
-=zp/l
------END PGP SIGNATURE-----
-
---AZ6IJHrpUcz/8tyE--
+> 	$ make contrib/coccinelle/cast.cocci.patch
+> 	$ git apply --stat contrib/coccinelle/cast.cocci.patch
+>          compat/mingw.c     |    2 +-
+>          compat/mingw.c     |    2 +-
+>          ewah/bitmap.c      |    2 +-
+>          ewah/ewok_rlw.h    |    6 +++---
+>          ewah/ewah_bitmap.c |    8 ++++----
+>          ewah/ewok_rlw.h    |    6 +++---
+>          ppc/sha1.c         |    2 +-
+>          wrapper.c          |    2 +-
+>          8 files changed, 15 insertions(+), 15 deletions(-)
+>
+>
+>
