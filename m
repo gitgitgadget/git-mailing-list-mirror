@@ -2,93 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65774C433EF
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 19:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1813CC433FE
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 19:56:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3778661BB6
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 19:15:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E535761057
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 19:56:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240425AbhKQTSo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 14:18:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38662 "EHLO
+        id S240626AbhKQT7h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 14:59:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240418AbhKQTSm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 14:18:42 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 788C0C061570
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 11:15:43 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id h15-20020a17090a648f00b001a96c2c97abso1458185pjj.9
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 11:15:43 -0800 (PST)
+        with ESMTP id S231530AbhKQT7g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 14:59:36 -0500
+Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com [IPv6:2607:f8b0:4864:20::929])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12120C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 11:56:38 -0800 (PST)
+Received: by mail-ua1-x929.google.com with SMTP id n6so8577839uak.1
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 11:56:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=QHOLgQ5nw2A73NLTm1Zc3YVEyDGNOyQkZlLoKx0jExo=;
-        b=bfSc2qa+gshECAp4UfOh9tgaeINl+xkT+Y3TRoRITUFalHPHf80qWpC3Wj/r7JhdHr
-         5VL3vJxrQgBuBrdo+juSJPKOlybZMeEcMrN8Qeb6Ie9r/Z99eBpYLlwVp8RgZPr6qUD9
-         V5Bh+zSFP3v37vQRyyIXdY2bRyTW6Lt4QeIvnIG4rP9DMr+kvLwsHQc/0zvzXtyclxwY
-         36rHJgQ3zLOwOLewXH6OqpueSAsdS11/MTrLLk3Sbk8asN9ipm9yQ7QEL+Bafve9UNrL
-         nAgnEEOAnBfcNM3FfcmuSmclaKYPVFSDPAsTP8xf9u/7zxewPpBNYvspQ6tT+z5wsc53
-         NyVg==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=aT+1gLIGaa895ocRipJWFcWC9s3dl+CF7YHUayKN4L0=;
+        b=DX9hGiF9Mru0nHuBugEP4t3ycnXUBiYSrugLIAUI3Pv7eoHbwr6XuG+uIH/vTjnUbE
+         GpRTB0Tl+Q8dfI5Zv1RcC7twcMshEUUD5leN9lDrxHts8Rktv/dYch8IG7Eu7U/JyTD/
+         QZy/oU3DpqX9wfcQFE1qQNob27+qIgMR9tCGMv4RqMx2pRxiBMge4NQWaJARePXwW+2D
+         fDxgOFONKdbelvJDdhM/i8tmO2nsU8wAwvZW+rD/9sj8G3B/pAg/10pLOxiBp06gc7xj
+         rtCiWK3pm4VLG2yTZ+C4HeRl5wQifO7NDJ7pBOM1Ssl1PnonAW6SuI9PX7gMwVArauxZ
+         F89g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=QHOLgQ5nw2A73NLTm1Zc3YVEyDGNOyQkZlLoKx0jExo=;
-        b=g620iKXuDpQh3qVymUKfqd4gCU9oOncXLRbw/DIgRm55WU3CGDiq3gel6gdB+diqYZ
-         WRusHMR6wVa4Ud53STL1L+qjtKfYfPP6Q3ShVabPNNO7nBCocl9nwJDUtmuYz79NLEdS
-         AZukW4yNWl/nJnqDEYWYuXuctbW27k6KLsqEl4EEqG4FH7rh/DbLBry/UOnUwaQOMGD6
-         pYo0+S7i1WHVtWsovSl3ypekd3kess+xxxgO+AG2D4QyiCuITaCO3gmzAW8OkbVbb+hh
-         eaYLIJzyApLz0bPE1pc3Y9blbcQr7B/kU1Ytlc3uwcAnr2bpZOUe1qQg/Hutu0lzF85S
-         IrEQ==
-X-Gm-Message-State: AOAM531clI/PSyGMpy1A/q/8CRKT8eevOXcO/u6IgsGDYt1sK1BUAgra
-        p1IJb4gLasiooUkdRh480jYnD5z3P1PoT1h5OyAMUBpXlgKHqBTXe6o1y39XSBNE62JRskMoEtI
-        vAkHBN/N6FadK1Pw30D46FvBB1QpS9dWznkK+rOPgIqUYUH0KuKE5/GOk5YtZU44=
-X-Google-Smtp-Source: ABdhPJx1KFJQpWmTDAUV6E64oWyWqFnfFwROXbTFGys7cz/joAHcMWrKIFOY+uzNWttRvmsLhX3bQc3UBSXOMQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:1242:b0:44c:2025:29e3 with SMTP
- id u2-20020a056a00124200b0044c202529e3mr9435633pfi.59.1637176542827; Wed, 17
- Nov 2021 11:15:42 -0800 (PST)
-Date:   Wed, 17 Nov 2021 11:15:41 -0800
-In-Reply-To: <kl6lzgq2ha9k.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-Id: <kl6lwnl6h9uq.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <kl6lzgq2ha9k.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: git-gui bugs due to dependency on system Wish on MacOS
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Pratyush Yadav <me@yadavpratyush.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=aT+1gLIGaa895ocRipJWFcWC9s3dl+CF7YHUayKN4L0=;
+        b=0RpSNr2lBOzkezipXV93mWYldNQiWVhzQ4oeozCptuLmPVot+shHSFDZe9HkTwrS/6
+         gb3hII9hk+pUxhr6F/qGPPsDuOtA97O3+K2pGMjPqnYiTlzFdAxwYV2huQ6/gvk2bdSK
+         BMA8dFGwco1K5cdrTGJz9uLsP1YLNl5Y9uZ8c00h9KLYHHilkw7rBu3AXG8BmT7OjLj4
+         MgF90Noyj574AI9SjmHw58DwkbGNhrZUlJfEmpxu7TgAFn7pkLYkiW9pKyk7X6KTpxx2
+         wXE3dkHPJVmsU2vSPXLL1/BrVezL6iG+O2tuVoE8l6VtY+tZqYcKuHEwgusIc5hfMMAJ
+         4WgA==
+X-Gm-Message-State: AOAM533NbcK8s+BCTj44DAwi7zrhBjlO2UtjZIQvx/P9BlHU56ocVngl
+        BI7K9wfCtdSQtWJKFruExxFf0MjSY29DLaK8kBMRorfoTD8=
+X-Google-Smtp-Source: ABdhPJxb1p0HHpIwC5HBjqhR2hHvwXxU9eiNEarPdPNJtEP4uxQ+s8K6LG0012v41BT1s3fDWEUHAsreIiVH5PBTcrI=
+X-Received: by 2002:a05:6102:512b:: with SMTP id bm43mr73156365vsb.14.1637178997125;
+ Wed, 17 Nov 2021 11:56:37 -0800 (PST)
+MIME-Version: 1.0
+References: <20211015161356.3372-1-someguy@effective-light.com>
+ <20211015161356.3372-3-someguy@effective-light.com> <877dd9i1zj.fsf@igel.home>
+ <211115.86fsrxqbvp.gmgdl@evledraar.gmail.com> <87o86kv6fh.fsf@igel.home>
+ <CAPUEspi=r9EsG8KPvdiD-HM7Drq8ho1yjkN_c_T1e+ZeR4eejg@mail.gmail.com>
+ <87fsrwv46h.fsf@igel.home> <CAPUEspg8ZUdn+KFz35yG1k9bbfVTe1b+7=+WdMknRS1zu8VcDQ@mail.gmail.com>
+ <634c4237-325a-13e8-0a92-09d23bdfb111@web.de>
+In-Reply-To: <634c4237-325a-13e8-0a92-09d23bdfb111@web.de>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Wed, 17 Nov 2021 11:56:25 -0800
+Message-ID: <CAPUEspg3Ox41H-dCKzqV5oS4UP5Pkdoq0wUaXtxfNWWRTO0k1w@mail.gmail.com>
+Subject: Re: [PATCH v13 3/3] grep/pcre2: fix an edge case concerning ascii
+ patterns and UTF-8 data
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Andreas Schwab <schwab@linux-m68k.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Hamza Mahfooz <someguy@effective-light.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It looks like the previous message's formatting got messed up somehow...
-the correct formatting is below:
+On Wed, Nov 17, 2021 at 10:46 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>
+> Am 16.11.21 um 10:38 schrieb Carlo Arenas:
+> > On Tue, Nov 16, 2021 at 1:30 AM Andreas Schwab <schwab@linux-m68k.org> =
+wrote:
+> >>
+> >> expecting success of 7812.13 'PCRE v2: grep ASCII from invalid UTF-8 d=
+ata':
+> >>         git grep -h "var" invalid-0x80 >actual &&
+> >>         test_cmp expected actual &&
+> >>         git grep -h "(*NO_JIT)var" invalid-0x80 >actual &&
+> >>         test_cmp expected actual
+> >>
+> >> ++ git grep -h var invalid-0x80
+> >> ++ test_cmp expected actual
+> >> ++ test 2 -ne 2
+> >> ++ eval 'diff -u' '"$@"'
+> >> +++ diff -u expected actual
+> >> ++ git grep -h '(*NO_JIT)var' invalid-0x80
+> >> fatal: pcre2_match failed with error code -22: UTF-8 error: isolated b=
+yte with 0x80 bit set
+> >
+> > That is exactly what I was worried about, this is not failing one
+> > test, but making `git grep` unusable in any repository that has any
+> > binary files that might be reachable by it, and it is likely affecting
+> > anyone using PCRE older than 10.34
+>
+> Let's have a look at the map.  Here are the differences between the
+> versions regarding use of PCRE2_UTF:
+>
+> o: opt->ignore_locale
+> h: has_non_ascii(p->pattern)
+> i: is_utf8_locale()
+> l: !opt->ignore_case && (p->fixed || p->is_fixed)
+>
+> o h i l master hamza rene2
+> 0 0 0 0      0     1     0
+> 0 0 0 1      0     1     0
+> 0 0 1 0      0     1     1
+> 0 0 1 1      0     1     0  <=3D=3D 7812.13, confirmed using fprint() deb=
+ugging
+>
+> So http://public-inbox.org/git/0ea73e7a-6d43-e223-ab2e-24c684102856@web.d=
+e/
+> should not have this breakage, because it doesn't enable PCRE2_UTF for
+> literal patterns.
 
-Hi! We've received reports that git-gui is showing black windows upon
-upgrading to MacOS Monterey. It seems to be the same issue as [1], but
-somehow it's only appeared for our users on Monterey and not Mojave.
+Correct, and indeed I had your expression instead of the ugly one in
+my draft for v2[1] but then I found the tests were even more broken
+than reported originally and got worried it might introduce yet
+another issue because of the brittleness of the rest of the code
+around it.  I am hoping it will be introduced in a follow up series
+though, and unless this code gets thrown away in the promised
+refactoring by =C3=86var which I haven't seen yet and once this is in
+maint.
 
-I dug a little deeper and I was able to fix the theming issues by using
-a different version of wish:
+IMHO and in line with the previous warnings you raised[2] during the
+development of this feature, it might be worth looking at it more
+deeply, but at least the proposed patch keeps the feature working in
+practice (the only case that won't work as expected will be when the
+expression includes "." with the intention of matching a UTF-8
+character and while using PCRE2 older than 10.34) and more importantly
+fixes the regression that it introduced.
 
-  $ brew install tcl-tk
-  $ PATH=/usr/local/opt/tcl-tk/bin:$PATH # This contains wish
-  $ cd /path/to/git/git-gui/
-  $ ./git-gui.sh
+Carlo
 
-Note that I had to call git-gui.sh because that's the only entrypoint
-that doesn't use the system Wish referenced in the Makefile:
-
-  TKFRAMEWORK = /Library/Frameworks/Tk.framework/Resources/Wish.app
-
-That said, Homebrew seems to have worked around this problem altogether
-by including their own Tcl/Tk dependency.
-
-* Github Issue https://github.com/Homebrew/homebrew-core/issues/39987
-* git-gui formula https://formulae.brew.sh/formula/git-gui
-
-Is this a fix that we should make in the git-gui project?
-
-[1] https://github.com/prati0100/git-gui/issues/48
+[1] https://lore.kernel.org/git/20211117102329.95456-1-carenas@gmail.com/
+[2] https://lore.kernel.org/git/fc7eb9fc-9521-5484-b05f-9c20086fd485@web.de=
+/
