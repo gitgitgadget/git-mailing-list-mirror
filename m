@@ -2,299 +2,404 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 718B8C433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46FDBC433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:35:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5577A61251
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:34:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 262B2619E5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234923AbhKQJhD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 04:37:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45412 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235049AbhKQJg7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 04:36:59 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6776C061570
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 01:34:00 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id u18so3349318wrg.5
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 01:34:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=hbR2BAFXxmmqevWL28y749P1hqntSsfEdeh3GdRA0N4=;
-        b=BaBhlusIuYJ8kLEhUG/rgNeuRIXACLMyAqzeLsbp+tUATs7ajdeBOySu0EZSSTaRh0
-         pCBrBboIVuYeGYavr2XpFMC2BhSUVofEIyQaw2kX3Q4+ukuiXYhRNknlUwX6Zc/5u+yD
-         Yccqz+o9CU3Dhl8JcIqbzq66TVRjcLq3TAiHFEck39+56Dj1pgIEctRACOcWM/zGnpOS
-         gCmvxdT6xxdVi+xSNIDhah+PzGimc5e6mKuJiU7OzG/eEEmzxtqGR0mN6MjF2gph7qgX
-         bj4qGfoRLdgfb55E9tb2ins/F2hehvipX5Aa7dWDQcN1y4ig+cvHpIXOJ42IirnQ1IXc
-         jGGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hbR2BAFXxmmqevWL28y749P1hqntSsfEdeh3GdRA0N4=;
-        b=Gd0UttYlkRTn9if14IeS0o8at9NoJBbU9J8G7KlvCs+kvDQAtqhfwZ9dkWpOj3KJ0O
-         N5Czaq6MibHuQ9L8H9tbvr4QzKjF17QzYhTT8MLqeiehCaewzSQifTMU8C0mMpFEUuFp
-         5QdD4EkTe7KhPIY447HYcEcIetTd8vV5MdJnunwseSFFr0XHS90791BiZOTqpHAv6zdG
-         Jt5eoE2yCxeozwg4tG4FirjjIINj14GtDx3Cm4ZjQyg3et2ZIDx9m6wIamAVzeZ/llm1
-         KKb4ieDvAH4Hv53iZdOO4n12k7Loim8Hv+J1fQOAdsLdmxjkrJ+Vzx0iZFZsKIvoand1
-         L8aQ==
-X-Gm-Message-State: AOAM530yUoi/tdB7cyFYsvqEzxkemHZoVHkGZcdWknYMgoQtsIHRiVFa
-        UfzEYcf3nZg1BUH9qumwfQSmUDmu5dc=
-X-Google-Smtp-Source: ABdhPJzfIUAiLHvvFbkpQld4iDtsD2NK5QLbus2oWM+/ClDvIWyIaP97BLXN5yl3Ga/I4f5hKy3Q9w==
-X-Received: by 2002:a05:6000:1544:: with SMTP id 4mr18521773wry.358.1637141639033;
-        Wed, 17 Nov 2021 01:33:59 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t127sm5225421wma.9.2021.11.17.01.33.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 01:33:58 -0800 (PST)
-Message-Id: <96d8573dc808bc32990842675ca32a0d1e8a8cef.1637141636.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1076.v5.git.1637141636.gitgitgadget@gmail.com>
-References: <pull.1076.v4.git.1637039888.gitgitgadget@gmail.com>
-        <pull.1076.v5.git.1637141636.gitgitgadget@gmail.com>
-From:   "Aleen via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 17 Nov 2021 09:33:56 +0000
-Subject: [PATCH v5 2/2] am: support --empty option to handle empty patches
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S235116AbhKQJiu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 04:38:50 -0500
+Received: from mail-db5eur01hn2234.outbound.protection.outlook.com ([52.100.6.234]:20915
+        "EHLO EUR01-DB5-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S231797AbhKQJir (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 04:38:47 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LSLxbAynILUUqoiK9q4l4/WuCB6XfkA4mDdn1WB5o/ykLtSlWl7APm1XMCVad9AGwN9V0KEpTnV3+9RZdbIC2fCcdsBsPUl/ybfI4tOwC+Wdri2WpQNqnCbp+XW0Jlhzx3Cbq4A9U4NNgP/Ey+SCLBg2U7ekBxlmcqWJwxJ01Q7prWY6pe9AtGHzuvgJTMZBvp/wZQkvsstI396ui7UOChXtnXxGpAfnzMNXRyCKcthxivGaTMdFsPV6kqO/TcsRLClj/a2mkfXbl9+qOSXJxqxBPTsnjjxLmQfwoJzmySBL0csOgsph/6qVP0QoqsygPIxTwtnPBD3Nr5V9s7xsqw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=IFWk7mStrYAR15pRt33iPZVLIawsSF5hY44xdMc4tQM=;
+ b=Fv+VCmfZ2+CSkORGCa/Vf4gu1X8c9219nYfKneqXRmMkFEWTvQ2ecrMKBh/nNiTEtY0rqPP1apPLMe29bq+Z6W8nJCpMwLnDCcorxX+Hf/xLq01VEgkeCNMcIoPgTMD5c7dNf9rMYzqZMlV8UV17DZTzyGB13o7QvckjjIyyZurwwgXxz6nR8dBbjbWmYRzM+LkwVpd/nsIkA1AZaRbIiPNVIC4gcjHlRN1CJdSr0fGB7AR/R4TqLaBmR0aDTusfCCSzwg3Kkz/EQ1NFI+Fej8I+3lWhcffiQxaZlguU2RJY2KqUlbi3wILNVK0aeWUZWVc+YMBeeqT8LnYBlQ7HWQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
+ dkim=pass header.d=gigacodes.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IFWk7mStrYAR15pRt33iPZVLIawsSF5hY44xdMc4tQM=;
+ b=ZQMFCJHtEt+yUAhFxqkDpFhj3K8XDWdNIOQzT3nm7KfKogsCie+/6R1EDK9JZL20KxF0Is4+yqBIStmUADK1Zmwt7xlsGZqRzVjgmIVLTGm+vx+OT1XuCSr2tf1Qu3w9iH3ArKnSGruH9vdbyo9aWbJxYMFspx/WV4PqD2pxr2Q=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=gigacodes.de;
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
+ by PR3PR10MB3820.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:49::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4690.15; Wed, 17 Nov
+ 2021 09:35:46 +0000
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::f9d5:61ab:5756:b391]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::f9d5:61ab:5756:b391%5]) with mapi id 15.20.4713.020; Wed, 17 Nov 2021
+ 09:35:46 +0000
+From:   Fabian Stelzer <fs@gigacodes.de>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Aleen =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>,
-        Aleen <aleen42@vip.qq.com>, Aleen <aleen42@vip.qq.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Fabian Stelzer <fs@gigacodes.de>
+Subject: [PATCH v3 1/7] ssh signing: use sigc struct to pass payload
+Date:   Wed, 17 Nov 2021 10:35:23 +0100
+Message-Id: <20211117093529.13953-2-fs@gigacodes.de>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20211117093529.13953-1-fs@gigacodes.de>
+References: <xmqqsfwmus5g.fsf@gitster.g>
+ <20211117093529.13953-1-fs@gigacodes.de>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: AS9PR0301CA0051.eurprd03.prod.outlook.com
+ (2603:10a6:20b:469::28) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:102:12e::15)
+MIME-Version: 1.0
+Received: from localhost (2003:ea:5820:600:c042:75a0:fd5e:1472) by AS9PR0301CA0051.eurprd03.prod.outlook.com (2603:10a6:20b:469::28) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.19 via Frontend Transport; Wed, 17 Nov 2021 09:35:46 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 9baf33ba-ddd0-4bf0-c4b8-08d9a9ada1f4
+X-MS-TrafficTypeDiagnostic: PR3PR10MB3820:
+X-Microsoft-Antispam-PRVS: <PR3PR10MB38202B9F814E933D3D887E75B69A9@PR3PR10MB3820.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:103;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Hcw4pUA4brOhG7txCXGnNkfkQZ7GhDT4AABEZbs90rTwOuniw+Z5smGEFBg2?=
+ =?us-ascii?Q?CVrxz5GwFMbeODSHfW5xoTuq6tMnAp1InAwse9TFsP5SiODZ1o0WNkqRzVz/?=
+ =?us-ascii?Q?EPGOtnh2zzz4dzHvRt+bxPWvI5AWNUAZR6qFJSKFZ4dTi2mdBI7SKKJAb0dU?=
+ =?us-ascii?Q?jcEkj8l9KLS53aVk4J2rNTUL5IpgYpBjAz71BOR7cdbrwqxYNwfopWR1UN1f?=
+ =?us-ascii?Q?y4aF81GDJiF1fdGyIu8EL0kG4A5lPiwy2eq2y5IDN4S8l/UB97FbBR1b8tq4?=
+ =?us-ascii?Q?Lk8SEwW+NB2n0mP1bFYZzm2UThDi947P6ltQ0Ybmt1xu6ABCxX7lorTTlCxC?=
+ =?us-ascii?Q?kJWe1oiMqhZhRdpBx7054XvZw+kqoOcz36lC3ZsjGT7ctBUMbUxNyfqKjhq4?=
+ =?us-ascii?Q?6wJaUmxpcQ9kBaL76pPxiMt3rYp9Z2GQ4UXoBrXJ8p7t+Hp5ZsjPFc0fk4pE?=
+ =?us-ascii?Q?Iu3ELck6Z/UPgIJS/os1PM0WeM8f5tb3NDo/2UGcm5ceBkX0YcBivrkAPj0O?=
+ =?us-ascii?Q?TZHKrpZ52p47rVBhDmLiVALwrJP8oXutKCywolZdevQHrFRpNBXwfNA+YKTv?=
+ =?us-ascii?Q?vafwMBRWXritDjjNMsAshAXIB9AnIYPmQE4HK8f6VHCTorJBaW0W+rgW3/xT?=
+ =?us-ascii?Q?uN3d+n8egMoUrwsdGGKsEm5BQdHIjje58ILFIKOZIbuZxboHHs7Bju2bYOlc?=
+ =?us-ascii?Q?SmlSC6J/t1kN65+Qj4JGDvtYKJKUsI1er+GLu+Q2CkcOyfNsnlztdf6MLd0H?=
+ =?us-ascii?Q?asWZ8a6MsSpbMgsYfqWVftYeQlRrcw56UBGmdrbj/faDyzdrS8+3kGqv68Fp?=
+ =?us-ascii?Q?B9DS91iFDXLWEV9YYIdmLw0JWLDzYo6yoSh+cbmBaXYzwQvOQxpHwFT0xAlo?=
+ =?us-ascii?Q?rFL0kCsOAHBzK5excDls7GIFDbIUnp8QxeXhfwGNW5VLX+xVmaNOiZBKWVOo?=
+ =?us-ascii?Q?ejKrw9yGcUTNk2rvHEXZURkzNmOAf/1EbSVL6+8xTx3fjYt3tt4tVaWMX6SV?=
+ =?us-ascii?Q?XqWkbVez1Wa2XStrPuuO/6zCl+51juTKr8jgNTraPuCdKDRaeMJUdLxTcuI6?=
+ =?us-ascii?Q?vKC2vykE03/crRVN+rZhuJpBNBkl9lOg/rVOx07nnYEAXlYAEww=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:OSPM;SFS:(4636009)(136003)(376002)(346002)(39840400004)(396003)(366004)(66556008)(316002)(8676002)(1076003)(66476007)(66946007)(38100700002)(8936002)(83380400001)(86362001)(5660300002)(36756003)(54906003)(186003)(2906002)(6486002)(2616005)(6666004)(107886003)(6496006)(6916009)(52116002)(4326008)(508600001)(23200700001);DIR:OUT;SFP:1501;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?XNDNigwFOC/MPvww8XKK43tE2zDluolrALednP79imdBsuwUCHFw4nY8MfnG?=
+ =?us-ascii?Q?AAZbxPCOzeymOZZVtAwso6ZzJjwj7w/28gxcyHojjc8xTTppXAfT/EiM+KaS?=
+ =?us-ascii?Q?87EiOXAUktyD3zetaa5OTE+uGQJGy9c95HJUPpZEdYS3mTq1UoDBuLet7mgo?=
+ =?us-ascii?Q?LofR7VStGL/cFycVtvzqPWm4qHmThN2rILI8GOJOljcKartffdBu9vzXFJYM?=
+ =?us-ascii?Q?vyS2DBSZMU50k2DKxBn/lUQOnmeN91yruP4hoFYGhe0rVwzpk3n1w+0fK/Rr?=
+ =?us-ascii?Q?4Zd6aL2rdCiFp/EVf2BrvhqUAKuuRyvGGYtCTI2h9qeNKHItyu58Gvk3pm5h?=
+ =?us-ascii?Q?DxySHTi5g8Je0bSKqkWdp/rRj3je1ckpIoE/XaA6qFmjQun6rMA8sLfDuasA?=
+ =?us-ascii?Q?SiUuAFWfiE5mb5vu6DKegx1sMutNHvGedTfzqHs0Tz4+nm2n6E9zMoJxGOfO?=
+ =?us-ascii?Q?ffPKsjiQXSi7OBwf9jskUZ4Tc3rM3gFpvveL8HikhQ5ebP1s/HDmSqO/8dea?=
+ =?us-ascii?Q?bx5VO85OJx6jG6O8XWDuE5wJjkuYYizNC9mUGA2rlGGwT42yz6jaQR8AwbMV?=
+ =?us-ascii?Q?JxF9LYkbVc7dlYvFMWLMpTNj759MuV9gEc7XEBMWcL/XVldBLLKIqscbEbsB?=
+ =?us-ascii?Q?ZqSmMAZHaWrmVj3e1Kp829Xuokh6GxyNn2J2B7g/ULG5uLX8wwCXbbq/5zlt?=
+ =?us-ascii?Q?ei6YYQIvYDgka1V4FHoYUz1o6BvlQ96WLFSUg04MEWuD70AEyzv89nU2Fz8y?=
+ =?us-ascii?Q?s33oIsUU4rpTej26Ln55RxWVMcRzUEbdMeJM7g5VN5qBuBj35X+IpwQKuxy5?=
+ =?us-ascii?Q?SZVd56KgYwZlzJjQnqKZFRWghWAnLmm3iICq+ociK+VwljuhMApC/tJErMdg?=
+ =?us-ascii?Q?3AuJSR4r76ErdY1I8Su5Bj2tDeaUesjpBxkHC5QmhU8Z9OtgqUe1fORk+DlI?=
+ =?us-ascii?Q?25cTqdXy5e5ku/hqOqAPezW+kQcps+xjtra7mXqmyHm5CzVTacZLYLDFG0hS?=
+ =?us-ascii?Q?b0m+dTtD5ShhseuVDD1poOAWWlh5OGRTELdWq95FkgE8ruiVFZFLnM3bMhMZ?=
+ =?us-ascii?Q?1GVx4L5PGjuUm9s/b30KSrlahLZ3g9u6gzSpnQ54w+HvOyxvdwGUJQsogjs7?=
+ =?us-ascii?Q?So1x13xq1WcJYvcX2/W5BXpGVvC9ZFWb6ieNfcqKncp28Wv3uWFCXfgYCimo?=
+ =?us-ascii?Q?v9gfF63WRmNFGybtjfBU721cFdAvciwNoumUNHqWP8Q6TSk2M2dp4KLoCisG?=
+ =?us-ascii?Q?IxoLulwrscsf97JmtxKkXHlnGD7wAWXkfVMQwcKgvHDXmeBX4fhHRxr0YphT?=
+ =?us-ascii?Q?I/os3Fll2E6rbLoGGhBeVRelFSCoa04BlvjwyTCooNHTNBk7dxALAXkryFjh?=
+ =?us-ascii?Q?JCiPEjm0CKB65P2Bg7ZcGZ1zcnt3dlclYyMTGq+T1dJJX4ZmWcdmRq1ED7uV?=
+ =?us-ascii?Q?XrMXaoybRnEMuiK5wcN52vtNu/FFmibqBZ/R3AEuak+AmSi0nQ8sT5w52bUr?=
+ =?us-ascii?Q?DALyFTXQy3t82ywg6oyCXgE4VqL2FLZ6vCUEAQOfSGaias8mxbjHIAKKqOGF?=
+ =?us-ascii?Q?ASCGiSksiANb8yT7A+SOBy+VEDZsntaGbPqs5bhw5q4DeoMKIkUAa0Edsk7T?=
+ =?us-ascii?Q?b9JWT4YA15Ltqvcgo2SBQ2emJvsG1wEjwW4RJ2jDq9TE5ORA6G+DFUnTpH75?=
+ =?us-ascii?Q?lmvxUyXYxb57UuRYXmakCVl3CgTE+g28V2PjrI19Un/m5JAhLp7N160RuyoU?=
+ =?us-ascii?Q?9tmeOp9O11yR9/tLS+X+bJ/QzeWJZrk=3D?=
+X-OriginatorOrg: gigacodes.de
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9baf33ba-ddd0-4bf0-c4b8-08d9a9ada1f4
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2021 09:35:46.2330
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +OAbHIAXtkCtv1dOukkmMY7rFXpHS+9msx6HFDPnyozp0QtjkStj3ud14HcJj3IK6H0u1jM+8ATjafLF1c+E4IXU0bxwXy918YQjlc7TV/s=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB3820
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Aleen <aleen42@vip.qq.com>
+To be able to extend the payload metadata with things like its creation
+timestamp or the creators ident we remove the payload parameters to
+check_signature() and use the already existing sigc->payload field
+instead, only adding the length field to the struct. This also allows
+us to get rid of the xmemdupz() calls in the verify functions. Since
+sigc is now used to input data as well as output the result move it to
+the front of the function list.
 
-Signed-off-by: Aleen <aleen42@vip.qq.com>
+ - Add payload_length to struct signature_check
+ - Populate sigc.payload/payload_len on all call sites
+ - Remove payload parameters to check_signature()
+ - Remove payload parameters to internal verify_* functions and use sigc
+   instead
+ - Remove xmemdupz() used for verbose output since payload is now already
+   populated.
+
+Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
 ---
- Documentation/git-am.txt |  9 +++++
- builtin/am.c             | 48 +++++++++++++++++++++++---
- t/t4150-am.sh            | 73 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 125 insertions(+), 5 deletions(-)
+ builtin/receive-pack.c |  6 ++++--
+ commit.c               |  5 +++--
+ fmt-merge-msg.c        |  4 ++--
+ gpg-interface.c        | 37 +++++++++++++++++--------------------
+ gpg-interface.h        |  6 +++---
+ log-tree.c             |  8 ++++----
+ tag.c                  |  4 ++--
+ 7 files changed, 35 insertions(+), 35 deletions(-)
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 0a4a984dfde..665bc89ca9f 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -16,6 +16,7 @@ SYNOPSIS
- 	 [--exclude=<path>] [--include=<path>] [--reject] [-q | --quiet]
- 	 [--[no-]scissors] [-S[<keyid>]] [--patch-format=<format>]
- 	 [--quoted-cr=<action>]
-+	 [--empty=(die|drop|keep)]
- 	 [(<mbox> | <Maildir>)...]
- 'git am' (--continue | --skip | --abort | --quit | --show-current-patch[=(diff|raw)])
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 49b846d960..61ab63c2ea 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -769,8 +769,10 @@ static void prepare_push_cert_sha1(struct child_process *proc)
+ 		memset(&sigcheck, '\0', sizeof(sigcheck));
  
-@@ -63,6 +64,14 @@ OPTIONS
- --quoted-cr=<action>::
- 	This flag will be passed down to 'git mailinfo' (see linkgit:git-mailinfo[1]).
+ 		bogs = parse_signed_buffer(push_cert.buf, push_cert.len);
+-		check_signature(push_cert.buf, bogs, push_cert.buf + bogs,
+-				push_cert.len - bogs, &sigcheck);
++		sigcheck.payload = xmemdupz(push_cert.buf, bogs);
++		sigcheck.payload_len = bogs;
++		check_signature(&sigcheck, push_cert.buf + bogs,
++				push_cert.len - bogs);
  
-+--empty-commit=(die|drop|keep)::
-+	The command usually errors out when seeing an input e-mail
-+	message that lacks a patch. When this option is set to
-+	'drop', skip such an e-mail message without outputting error.
-+	When this option is set to 'keep', create an empty commit,
-+	recording the contents of the e-mail message as its log.
-+	'die' is specified by default.
+ 		nonce_status = check_nonce(push_cert.buf, bogs);
+ 	}
+diff --git a/commit.c b/commit.c
+index 551de4903c..64e040a99b 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1212,8 +1212,9 @@ int check_commit_signature(const struct commit *commit, struct signature_check *
+ 
+ 	if (parse_signed_commit(commit, &payload, &signature, the_hash_algo) <= 0)
+ 		goto out;
+-	ret = check_signature(payload.buf, payload.len, signature.buf,
+-		signature.len, sigc);
 +
- -m::
- --message-id::
- 	Pass the `-m` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]),
-diff --git a/builtin/am.c b/builtin/am.c
-index 8677ea2348a..1a3ed87b445 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -87,6 +87,12 @@ enum show_patch_type {
- 	SHOW_PATCH_DIFF = 1,
++	sigc->payload = strbuf_detach(&payload, &sigc->payload_len);
++	ret = check_signature(sigc, signature.buf, signature.len);
+ 
+  out:
+ 	strbuf_release(&payload);
+diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+index 5216191488..deca1ea3a3 100644
+--- a/fmt-merge-msg.c
++++ b/fmt-merge-msg.c
+@@ -533,8 +533,8 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
+ 		else {
+ 			buf = payload.buf;
+ 			len = payload.len;
+-			if (check_signature(payload.buf, payload.len, sig.buf,
+-					    sig.len, &sigc) &&
++			sigc.payload = strbuf_detach(&payload, &sigc.payload_len);
++			if (check_signature(&sigc, sig.buf, sig.len) &&
+ 			    !sigc.output)
+ 				strbuf_addstr(&sig, "gpg verification failed.\n");
+ 			else
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 3e7255a2a9..75ab6faacb 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -19,8 +19,8 @@ struct gpg_format {
+ 	const char **verify_args;
+ 	const char **sigs;
+ 	int (*verify_signed_buffer)(struct signature_check *sigc,
+-				    struct gpg_format *fmt, const char *payload,
+-				    size_t payload_size, const char *signature,
++				    struct gpg_format *fmt,
++				    const char *signature,
+ 				    size_t signature_size);
+ 	int (*sign_buffer)(struct strbuf *buffer, struct strbuf *signature,
+ 			   const char *signing_key);
+@@ -53,12 +53,12 @@ static const char *ssh_sigs[] = {
  };
  
-+enum empty_action {
-+	DIE_EMPTY_COMMIT = 0,  /* output errors */
-+	DROP_EMPTY_COMMIT,     /* skip without outputting errors */
-+	KEEP_EMPTY_COMMIT      /* keep recording as empty commits */
-+};
-+
- struct am_state {
- 	/* state directory path */
- 	char *dir;
-@@ -118,6 +124,7 @@ struct am_state {
- 	int message_id;
- 	int scissors; /* enum scissors_type */
- 	int quoted_cr; /* enum quoted_cr_action */
-+	int empty_type; /* enum empty_action */
- 	struct strvec git_apply_opts;
- 	const char *resolvemsg;
- 	int committer_date_is_author_date;
-@@ -178,6 +185,23 @@ static int am_option_parse_quoted_cr(const struct option *opt,
- 	return 0;
+ static int verify_gpg_signed_buffer(struct signature_check *sigc,
+-				    struct gpg_format *fmt, const char *payload,
+-				    size_t payload_size, const char *signature,
++				    struct gpg_format *fmt,
++				    const char *signature,
+ 				    size_t signature_size);
+ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+-				    struct gpg_format *fmt, const char *payload,
+-				    size_t payload_size, const char *signature,
++				    struct gpg_format *fmt,
++				    const char *signature,
+ 				    size_t signature_size);
+ static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
+ 			   const char *signing_key);
+@@ -314,8 +314,8 @@ static void parse_gpg_output(struct signature_check *sigc)
  }
  
-+static int am_option_parse_empty_commit(const struct option *opt,
-+				     const char *arg, int unset)
-+{
-+	int *opt_value = opt->value;
-+
-+	if (unset || !strcmp(arg, "die"))
-+		*opt_value = DIE_EMPTY_COMMIT;
-+	else if (!strcmp(arg, "drop"))
-+		*opt_value = DROP_EMPTY_COMMIT;
-+	else if (!strcmp(arg, "keep"))
-+		*opt_value = KEEP_EMPTY_COMMIT;
-+	else
-+		return error(_("Invalid value for --empty: %s"), arg);
-+
-+	return 0;
-+}
-+
- /**
-  * Returns path relative to the am_state directory.
-  */
-@@ -1248,11 +1272,6 @@ static int parse_mail(struct am_state *state, const char *mail)
- 		goto finish;
+ static int verify_gpg_signed_buffer(struct signature_check *sigc,
+-				    struct gpg_format *fmt, const char *payload,
+-				    size_t payload_size, const char *signature,
++				    struct gpg_format *fmt,
++				    const char *signature,
+ 				    size_t signature_size)
+ {
+ 	struct child_process gpg = CHILD_PROCESS_INIT;
+@@ -343,14 +343,13 @@ static int verify_gpg_signed_buffer(struct signature_check *sigc,
+ 		     NULL);
+ 
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+-	ret = pipe_command(&gpg, payload, payload_size, &gpg_stdout, 0,
++	ret = pipe_command(&gpg, sigc->payload, sigc->payload_len, &gpg_stdout, 0,
+ 			   &gpg_stderr, 0);
+ 	sigchain_pop(SIGPIPE);
+ 
+ 	delete_tempfile(&temp);
+ 
+ 	ret |= !strstr(gpg_stdout.buf, "\n[GNUPG:] GOODSIG ");
+-	sigc->payload = xmemdupz(payload, payload_size);
+ 	sigc->output = strbuf_detach(&gpg_stderr, NULL);
+ 	sigc->gpg_status = strbuf_detach(&gpg_stdout, NULL);
+ 
+@@ -426,8 +425,8 @@ static void parse_ssh_output(struct signature_check *sigc)
+ }
+ 
+ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+-				    struct gpg_format *fmt, const char *payload,
+-				    size_t payload_size, const char *signature,
++				    struct gpg_format *fmt,
++				    const char *signature,
+ 				    size_t signature_size)
+ {
+ 	struct child_process ssh_keygen = CHILD_PROCESS_INIT;
+@@ -480,7 +479,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 			     "-n", "git",
+ 			     "-s", buffer_file->filename.buf,
+ 			     NULL);
+-		pipe_command(&ssh_keygen, payload, payload_size,
++		pipe_command(&ssh_keygen, sigc->payload, sigc->payload_len,
+ 				   &ssh_keygen_out, 0, &ssh_keygen_err, 0);
+ 
+ 		/*
+@@ -526,7 +525,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 			}
+ 
+ 			sigchain_push(SIGPIPE, SIG_IGN);
+-			ret = pipe_command(&ssh_keygen, payload, payload_size,
++			ret = pipe_command(&ssh_keygen, sigc->payload, sigc->payload_len,
+ 					   &ssh_keygen_out, 0, &ssh_keygen_err, 0);
+ 			sigchain_pop(SIGPIPE);
+ 
+@@ -540,7 +539,6 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 		}
  	}
  
--	if (is_empty_or_missing_file(am_path(state, "patch"))) {
--		printf_ln(_("Patch is empty."));
--		die_user_resolve(state);
--	}
--
- 	strbuf_addstr(&msg, "\n\n");
- 	strbuf_addbuf(&msg, &mi.log_message);
- 	strbuf_stripspace(&msg, 0);
-@@ -1792,6 +1811,20 @@ static void am_run(struct am_state *state, int resume)
- 		if (state->interactive && do_interactive(state))
- 			goto next;
+-	sigc->payload = xmemdupz(payload, payload_size);
+ 	strbuf_stripspace(&ssh_keygen_out, 0);
+ 	strbuf_stripspace(&ssh_keygen_err, 0);
+ 	/* Add stderr outputs to show the user actual ssh-keygen errors */
+@@ -562,8 +560,8 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 	return ret;
+ }
  
-+		if (is_empty_or_missing_file(am_path(state, "patch"))) {
-+			if (state->empty_type == DROP_EMPTY_COMMIT)
-+				goto next;
-+			else if (state->empty_type == KEEP_EMPTY_COMMIT) {
-+				if (run_applypatch_msg_hook(state))
-+					exit(1);
-+				else
-+					goto commit;
-+			} else if (state->empty_type == DIE_EMPTY_COMMIT) {
-+				printf_ln(_("Patch is empty."));
-+				die_user_resolve(state);
-+			}
-+		}
-+
- 		if (run_applypatch_msg_hook(state))
- 			exit(1);
+-int check_signature(const char *payload, size_t plen, const char *signature,
+-	size_t slen, struct signature_check *sigc)
++int check_signature(struct signature_check *sigc,
++		    const char *signature, size_t slen)
+ {
+ 	struct gpg_format *fmt;
+ 	int status;
+@@ -575,8 +573,7 @@ int check_signature(const char *payload, size_t plen, const char *signature,
+ 	if (!fmt)
+ 		die(_("bad/incompatible signature '%s'"), signature);
  
-@@ -1827,6 +1860,7 @@ static void am_run(struct am_state *state, int resume)
- 			die_user_resolve(state);
- 		}
+-	status = fmt->verify_signed_buffer(sigc, fmt, payload, plen, signature,
+-					   slen);
++	status = fmt->verify_signed_buffer(sigc, fmt, signature, slen);
  
-+commit:
- 		do_commit(state);
+ 	if (status && !sigc->output)
+ 		return !!status;
+@@ -593,7 +590,7 @@ void print_signature_buffer(const struct signature_check *sigc, unsigned flags)
+ 							    sigc->output;
  
- next:
-@@ -2357,6 +2391,10 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 		{ OPTION_STRING, 'S', "gpg-sign", &state.sign_commit, N_("key-id"),
- 		  N_("GPG-sign commits"),
- 		  PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
-+		{ OPTION_CALLBACK, 0, "empty", &state.empty_type,
-+		  "(die|drop|keep)",
-+		  N_("specify how to handle empty patches"),
-+		  PARSE_OPT_OPTARG, am_option_parse_empty_commit },
- 		OPT_HIDDEN_BOOL(0, "rebasing", &state.rebasing,
- 			N_("(internal use for git-rebase)")),
- 		OPT_END()
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 2aaaa0d7ded..3119556884d 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -196,6 +196,13 @@ test_expect_success setup '
+ 	if (flags & GPG_VERIFY_VERBOSE && sigc->payload)
+-		fputs(sigc->payload, stdout);
++		fwrite(sigc->payload, 1, sigc->payload_len, stdout);
  
- 	git format-patch -M --stdout lorem^ >rename-add.patch &&
+ 	if (output)
+ 		fputs(output, stderr);
+diff --git a/gpg-interface.h b/gpg-interface.h
+index beefacbb1e..5ee7d8b6b9 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -17,6 +17,7 @@ enum signature_trust_level {
  
-+	git checkout -b empty-commit &&
-+	git commit -m "empty commit" --allow-empty &&
-+
-+	git format-patch --stdout empty-commit^ >empty.patch &&
-+	git format-patch --stdout --cover-letter empty-commit^ >cover-letter.patch &&
-+	git format-patch --always --stdout empty-commit^ >empty-commit.patch &&
-+
- 	# reset time
- 	sane_unset test_tick &&
- 	test_tick
-@@ -1152,4 +1159,70 @@ test_expect_success 'apply binary blob in partial clone' '
- 	git -C client am ../patch
- '
+ struct signature_check {
+ 	char *payload;
++	size_t payload_len;
+ 	char *output;
+ 	char *gpg_status;
  
-+test_expect_success 'still output error with --empty when meeting empty files' '
-+	test_must_fail git am --empty=drop empty.patch 2>actual &&
-+	echo Patch format detection failed. >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'error when meeting e-mail message that lacks a patch by default' '
-+	git checkout empty-commit^ &&
-+	test_must_fail git am empty-commit.patch >err &&
-+	test_path_is_dir .git/rebase-apply &&
-+	test_i18ngrep "Patch is empty." err &&
-+	rm -fr .git/rebase-apply &&
-+
-+	test_must_fail git am --empty=die empty-commit.patch >err &&
-+	test_path_is_dir .git/rebase-apply &&
-+	test_i18ngrep "Patch is empty." err &&
-+	rm -fr .git/rebase-apply &&
-+
-+	test_must_fail git am --empty=die cover-letter.patch >err &&
-+	test_path_is_dir .git/rebase-apply &&
-+	test_i18ngrep "Patch is empty." err &&
-+	rm -fr .git/rebase-apply
-+'
-+
-+test_expect_success 'skip without error when meeting e-mail message that lacks a patch' '
-+	git am --empty=drop empty-commit.patch >err &&
-+	test_path_is_missing .git/rebase-apply &&
-+	git rev-parse empty-commit^ >expected &&
-+	git rev-parse HEAD >actual &&
-+	test_cmp expected actual &&
-+
-+	git am --empty=drop cover-letter.patch >err &&
-+	test_path_is_missing .git/rebase-apply &&
-+	test_cmp_rev empty-commit^ HEAD
-+'
-+
-+test_expect_success 'record as an empty commit when meeting e-mail message that lacks a patch' '
-+	git am --empty=keep empty-commit.patch &&
-+	test_path_is_missing .git/rebase-apply &&
-+	{
-+		git show empty-commit --format="%B" &&
-+		echo "--" &&
-+		git version | sed -e "s/^git version //" &&
-+		echo
-+	} >expected &&
-+	git show HEAD --format="%B" >actual &&
-+	test_cmp actual expected &&
-+
-+	git am --empty=keep cover-letter.patch &&
-+	test_path_is_missing .git/rebase-apply &&
-+	{
-+		echo "*** SUBJECT HERE ***" &&
-+		echo &&
-+		echo "*** BLURB HERE ***" &&
-+		echo &&
-+		echo "A U Thor (1):" &&
-+		printf "  " &&
-+		git show empty-commit --format="%B" &&
-+		echo "--" &&
-+		git version | sed -e "s/^git version //" &&
-+		echo
-+	} >expected &&
-+	git show HEAD --format="%B" >actual &&
-+	test_cmp actual expected
-+'
-+
- test_done
+@@ -70,9 +71,8 @@ const char *get_signing_key(void);
+  * Either a GPG KeyID or a SSH Key Fingerprint
+  */
+ const char *get_signing_key_id(void);
+-int check_signature(const char *payload, size_t plen,
+-		    const char *signature, size_t slen,
+-		    struct signature_check *sigc);
++int check_signature(struct signature_check *sigc,
++		    const char *signature, size_t slen);
+ void print_signature_buffer(const struct signature_check *sigc,
+ 			    unsigned flags);
+ 
+diff --git a/log-tree.c b/log-tree.c
+index 644893fd8c..a46cf60e1e 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -513,8 +513,8 @@ static void show_signature(struct rev_info *opt, struct commit *commit)
+ 	if (parse_signed_commit(commit, &payload, &signature, the_hash_algo) <= 0)
+ 		goto out;
+ 
+-	status = check_signature(payload.buf, payload.len, signature.buf,
+-				 signature.len, &sigc);
++	sigc.payload = strbuf_detach(&payload, &sigc.payload_len);
++	status = check_signature(&sigc, signature.buf, signature.len);
+ 	if (status && !sigc.output)
+ 		show_sig_lines(opt, status, "No signature\n");
+ 	else
+@@ -583,8 +583,8 @@ static int show_one_mergetag(struct commit *commit,
+ 	status = -1;
+ 	if (parse_signature(extra->value, extra->len, &payload, &signature)) {
+ 		/* could have a good signature */
+-		status = check_signature(payload.buf, payload.len,
+-					 signature.buf, signature.len, &sigc);
++		sigc.payload = strbuf_detach(&payload, &sigc.payload_len);
++		status = check_signature(&sigc, signature.buf, signature.len);
+ 		if (sigc.output)
+ 			strbuf_addstr(&verify_message, sigc.output);
+ 		else
+diff --git a/tag.c b/tag.c
+index 3e18a41841..62fb09f5a5 100644
+--- a/tag.c
++++ b/tag.c
+@@ -25,8 +25,8 @@ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
+ 		return error("no signature found");
+ 	}
+ 
+-	ret = check_signature(payload.buf, payload.len, signature.buf,
+-				signature.len, &sigc);
++	sigc.payload = strbuf_detach(&payload, &sigc.payload_len);
++	ret = check_signature(&sigc, signature.buf, signature.len);
+ 
+ 	if (!(flags & GPG_VERIFY_OMIT_STATUS))
+ 		print_signature_buffer(&sigc, flags);
 -- 
-gitgitgadget
+2.31.1
+
