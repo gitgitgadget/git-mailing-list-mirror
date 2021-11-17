@@ -2,85 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2127C433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 03:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 118D9C433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 05:55:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9ADE361A38
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 03:39:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E75FA61263
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 05:55:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231728AbhKQDmp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Nov 2021 22:42:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50112 "EHLO
+        id S233469AbhKQF6X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 00:58:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229725AbhKQDmp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Nov 2021 22:42:45 -0500
-Received: from vuizook.err.no (vuizook.err.no [IPv6:2a02:20c8:2640::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 462A6C061570
-        for <git@vger.kernel.org>; Tue, 16 Nov 2021 19:39:47 -0800 (PST)
-Received: from [2400:4160:1877:2b00:29f9:f15d:e50b:8944] (helo=glandium.org)
-        by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <mh@glandium.org>)
-        id 1mnBnT-005ap5-Bw; Wed, 17 Nov 2021 03:39:43 +0000
-Received: from glandium by goemon.lan with local (Exim 4.94.2)
-        (envelope-from <mh@glandium.org>)
-        id 1mnBnO-009hm5-SQ; Wed, 17 Nov 2021 12:39:38 +0900
-Date:   Wed, 17 Nov 2021 12:39:38 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] Makefile: fix parallel build race
-Message-ID: <20211117033938.r3wsv3znxva7smgy@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-References: <7d82342089a80b19e54ac8997d5765a33951499f.1637112066.git.congdanhqx@gmail.com>
- <YZR0djZbRUicXcQm@coredump.intra.peff.net>
+        with ESMTP id S232511AbhKQF6T (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 00:58:19 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F06DC061570
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 21:55:21 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id x7so1481041pjn.0
+        for <git@vger.kernel.org>; Tue, 16 Nov 2021 21:55:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yaxAHCMqHly5BiYc3xI2OkJrOnjz1syQLhC9tfPAS4Q=;
+        b=NoyFhhFKNXR2B6u2ODDBQJYuKOc10OcRHoIR7JL1RRFSkNl8rtEKgcLjcU/ZS4KJd4
+         1LoWYAdIApaiIOPKn1zGZG8OgsZOJ1K01rRvWftcRi+2ikOAXGiXDtHFUA1CXbrHpVWi
+         WRVMfa4PwIAmS63iN6+wDnf+4tNsj2XXMKzyoiSmTXYn3tQPuSsedInaeo8MPj1ONp7x
+         CSj1kVreR/xS8bWsJwcfvf3QsWBmOIAOiM3SkALq59rZlTgpJP59rBsJcnWZ0ea/ldcy
+         GrWx84P/ICfXIS83vdLxQ8jUsz/iGKAk5ML2VOIpjapTOdDeOFYFo8U32dR3ox1vS3Bx
+         jIiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yaxAHCMqHly5BiYc3xI2OkJrOnjz1syQLhC9tfPAS4Q=;
+        b=a5Mk2GNcfm5Jr1cuq5A9R/kxh79bPnji2sJoN68flnEch5w2rHLHOnY0JPt4nePw63
+         rLgJuS1YiDiXeDlauHcbEL6v2qDoUgtqckSSLkrGuP1bB01w85Tcy8lqXUpiOVEmoGkP
+         SBYSzcgp/9QTjFqwuNYHwjZr7QH/8w2/AhPezy64gZDEiCJ4ehs4dUw2JMCP5m/RbE3S
+         sNeEPwAYfaFbdsFMB+OwCkfAPNGAbc/FYAiXkOm6fR1zXAYHD4hAqSyJcEolntmlKY88
+         mlbRC09CM5naBZ81aQNpYhcrY/uUAEmvrAazBTQeV62J5r/x3o2KptuDdTFHxUZwxzx0
+         acEA==
+X-Gm-Message-State: AOAM530TRq9gQJUcGEonlxyz7AqrHai8tNR8kwT1hXWcSUwvjJ5ADZQr
+        tCsb71G+b6b6en3rT4POyva8VNTc7A+Xv/AvlPM=
+X-Google-Smtp-Source: ABdhPJwQK6SHAaYX509U3oQGcLFH8isWB3SDC0wEqdSuDM2yZH7Rs2b8HSH8MVCjyO0a3+tTWvEHQtchcDQcebVpiFo=
+X-Received: by 2002:a17:90a:974a:: with SMTP id i10mr6226169pjw.117.1637128521024;
+ Tue, 16 Nov 2021 21:55:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YZR0djZbRUicXcQm@coredump.intra.peff.net>
+References: <pull.1078.v5.git.git.1633521772731.gitgitgadget@gmail.com>
+ <pull.1078.v6.git.git.1633523057369.gitgitgadget@gmail.com>
+ <xmqqwnmopqqk.fsf@gitster.g> <CAA4dvxgNJ8eyuc5B6_GnSLHMWjdbJN5k_rTCLjWndEyjv_vOnw@mail.gmail.com>
+ <xmqqy25o9bie.fsf@gitster.g>
+In-Reply-To: <xmqqy25o9bie.fsf@gitster.g>
+From:   Mugdha Pattnaik <mugdhapattnaik@gmail.com>
+Date:   Wed, 17 Nov 2021 11:25:06 +0530
+Message-ID: <CAA4dvxixLKAQeLTUnLFvnwrAzQg2w0zqH7gCUqYLXjf=SAP-wA@mail.gmail.com>
+Subject: Re: [PATCH v6] submodule: absorb git dir instead of dying on deinit
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Mugdha Pattnaik via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 16, 2021 at 10:18:14PM -0500, Jeff King wrote:
-> On Wed, Nov 17, 2021 at 08:25:55AM +0700, Đoàn Trần Công Danh wrote:
-> 
-> > * builtin/bugreport.c includes hook-list.h, hence generated files from
-> > it must depend on hook-list.h
-> 
-> Good catch. This is trivially reproducible with:
-> 
->   make clean
->   make builtin/bugreport.o
-> 
-> The problem comes from cfe853e66b (hook-list.h: add a generated list of
-> hooks, like config-list.h, 2021-09-26), as you might expect.
-> 
-> > diff --git a/Makefile b/Makefile
-> > index 241dc322c0..413503b488 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -2222,6 +2222,7 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
-> >  
-> >  help.sp help.s help.o: command-list.h
-> >  hook.sp hook.s hook.o: hook-list.h
-> > +builtin/bugreport.sp builtin/bugreport.s builtin/bugreport.o: hook-list.h
-> 
-> This fix looks correct. I grepped for other similar cases, but this is
-> the only file that needs it.
-> 
-> Curiously, the existing hook.c does not seem to include hook-list.h,
-> even though you can see a dependency in the context above. Nor does
-> help.c, which gained a similar dependency in cfe853e66b. Those seem
-> superfluous, but maybe I'm missing something.
+On Wed, Nov 17, 2021 at 12:24 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Mugdha Pattnaik <mugdhapattnaik@gmail.com> writes:
+>
+> >> OK.  That sounds like an improvement, albeit possibly an overly
+> >> cautious one, as a casual "deinit" user will get an error as before
+> >> without "--force", which may or may not be a good thing.  Requiring
+> >> "--force" means it is safer by default by not changing the on-disk
+> >> data.  But requiring "--force" also means we end up training users
+> >> to say "--force" when it shouldn't have to be.
+> >> ...
+> >> Does "git submodule" currently reject a "deinit" request due to some
+> >> _other_ conditions or safety concerns and require the "--force"
+> >> option to continue?  Requiring the "--force" option to resolve ".git
+> >> is a directory, and the user wants to make it absorbed" means that
+> >> the user will be _forced_ to bypass these _other_ safety valves only
+> >> to save the submodule repository from destruction when running
+> >> "deinit", which may not be a good trade-off between the safety
+> >> requirements of these _other_ conditions, if exists, and the one we
+> >> are dealing with.
+> >
+> > This is definitely a situation we want to avoid. How about we try to run
+> > a check for uncommitted local modifications first?
+>
+> I am not sure if I follow.  If we stop (ab)using "--force" for the
+> situation (i.e. where today's "deinit" would die because .git needs
+> to be absorbed first), then the user would not have to say "--force"
+> which may override other safety valve.  You'd check if .git needs to
+> be absorbed, make it absorbed as needed while reporting the fact
+> that you did so, and then let the existing "deinit" code to take
+> over.  If there are other safety checks that needs "--force" to be
+> overridden, that is handled (presumably) correctly by the existing
+> code, no?  So other than "do we need absorbing, and if so do it for
+> the user" check, I do not think you'd need to add any new "we try to
+> run a check for ..." at all.
 
-Neither does builtin/help.c. This was discussed in the subthread
-starting at https://lore.kernel.org/all/20211115220455.xse7mhbwabrheej4@glandium.org/
-and is covered by https://lore.kernel.org/all/patch-v3-19.23-234b4eb613c-20211116T114334Z-avarab@gmail.com/
-(to which I responded that the line for hook.o can be removed too)
+Yes, I understand why "--force" should not be used. The reason why I
+suggested the check for local modifications is because I thought we
+should warn users that they have local modifications before we absorb
+the gitdir. But I see now that this is okay, considering deinit would
+die in such a situation anyway, and users would not lose their work.
+The only side-effect of running deinit despite users having local
+modifications, would be that the gitdir of the submodule has been
+absorbed and that should be okay.
 
-Mike
+-- 
+Mugdha
