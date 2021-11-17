@@ -2,120 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDF81C433EF
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 18:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DD6BC433EF
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 18:49:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA41060E53
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 18:46:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F1D463214
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 18:49:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240191AbhKQStg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 13:49:36 -0500
-Received: from mout.web.de ([212.227.15.14]:56097 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240176AbhKQStf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 13:49:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1637174780;
-        bh=/feeNcxENqhUQZEFr35P/3PN+xFAx+wI5E6FGAFw+T4=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=joJ3POSHUvK0Z4b8/UCtB3/m1PjqU/SEyX7aRyg9Sf1D2e8PR5vCp3JyL3+LtqkIv
-         PPKzcGLyLXMkzZhc3cg6IwuKsjNvdv7wEEbXxM9o26Bp1+E93+LHfQ7IpZCIfY+DN6
-         6LqBDrmIkSsIErVtzqECxkRsEh+1gL4G4X4CLKmw=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.20.171]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M1aIB-1mpsv90ArD-003F5Q; Wed, 17
- Nov 2021 19:46:20 +0100
-Message-ID: <634c4237-325a-13e8-0a92-09d23bdfb111@web.de>
-Date:   Wed, 17 Nov 2021 19:46:19 +0100
+        id S239151AbhKQSwd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 13:52:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60880 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233586AbhKQSwc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 13:52:32 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11767C061570;
+        Wed, 17 Nov 2021 10:49:33 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id b40so13177404lfv.10;
+        Wed, 17 Nov 2021 10:49:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=G5GJT4Hs/HI/FowLComfkTjFmzZeGxKNZxNsulf8xgM=;
+        b=jM76WaN0NLgJU5Oxm6XPMObZVCaqjwsRXyMp1tD3EHh59J1SkJDNgu3KRbYHeFt7Np
+         A8Mi1BMKnCEnGzr5ilwvJUORDK4xVagxa6zYtZUrXlIQCMp6Q0jmW68b8Q2Yr+xQn2fy
+         19ocUZ96CB58ISq0NDerpjdDzODDoKOGSUkiTGz3racqRI4YRVEn0UiJUrAJ1H3nPZUv
+         6X9M79MwTZNMkUAOEMUwUpk2l9WheQv9NzvE+K36HqmuqpdXn8VFd5U7ftTFA7fh+b7T
+         Ecr0K4qTzgQvVEnXsx4O1gv7xcdH67akhgmIrX6aUtTJ/COV5bMRYJQNFs5up15XpDv6
+         0loA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=G5GJT4Hs/HI/FowLComfkTjFmzZeGxKNZxNsulf8xgM=;
+        b=BW3ECw6+isP7cVBFpZl3W4yMlNtvhToZlGYfMcwtxldtbmsD9G7j53HBubhPs2voJ7
+         SJZyG1oujGZpkJVOJRfzEo6UZUNIf3DNg/M8OpPpavkbQF7/4I/WRFkxJ+5CD8Lreo1q
+         f2uPUNOZcE1PDd1WIVjXUpzpe9dX3yJeTWDtVpsQ+cLb/By6rbVibEKUv4NJFjV0SGxU
+         U1UQI0U3VP7rSinjKHj6IUImaVY576p/ag/G+pgZd9On4c/ATH4StsJDGkXjRA3OeKRg
+         wSb7wwAeRdT7cYfqaJQtIJcxqOCL6B/BagIPVB/4mFCLEzHH5RiJDBZ9hXymWsnF+HlU
+         ssmg==
+X-Gm-Message-State: AOAM530I0+i/r2ejWkWzuYAxUczRuaLr1AGF9XmDPgzvvyM6+w3xZVQ4
+        zQPWUBi3kr9FN3SrzlLgkfgGuW7LwjP6WpZ604A=
+X-Google-Smtp-Source: ABdhPJw6mymHjqz0grCP5N1aNDxuQtRnoKixwZE5HkzfHSrWxGkccqjl3ZZojggRe7PfuJwEXxaMkEq0cWVi+OI3hrY=
+X-Received: by 2002:ac2:4555:: with SMTP id j21mr18097636lfm.120.1637174971163;
+ Wed, 17 Nov 2021 10:49:31 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.1
-Subject: Re: [PATCH v13 3/3] grep/pcre2: fix an edge case concerning ascii
- patterns and UTF-8 data
-Content-Language: en-US
-To:     Carlo Arenas <carenas@gmail.com>,
-        Andreas Schwab <schwab@linux-m68k.org>
+References: <211110.86r1bogg27.gmgdl@evledraar.gmail.com> <20211111004724.GA839@neerajsi-x1.localdomain>
+ <20211112055421.GA27823@lst.de>
+In-Reply-To: <20211112055421.GA27823@lst.de>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Wed, 17 Nov 2021 10:49:20 -0800
+Message-ID: <CANQDOdedAoOvPHra0e8PuOO68xt+gOSbbV3tHzGxcyJy5nTm_A@mail.gmail.com>
+Subject: Re: RFC: A configuration design for future-proofing fsync() configuration
+To:     Christoph Hellwig <hch@lst.de>
 Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Hamza Mahfooz <someguy@effective-light.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <20211015161356.3372-1-someguy@effective-light.com>
- <20211015161356.3372-3-someguy@effective-light.com>
- <877dd9i1zj.fsf@igel.home> <211115.86fsrxqbvp.gmgdl@evledraar.gmail.com>
- <87o86kv6fh.fsf@igel.home>
- <CAPUEspi=r9EsG8KPvdiD-HM7Drq8ho1yjkN_c_T1e+ZeR4eejg@mail.gmail.com>
- <87fsrwv46h.fsf@igel.home>
- <CAPUEspg8ZUdn+KFz35yG1k9bbfVTe1b+7=+WdMknRS1zu8VcDQ@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CAPUEspg8ZUdn+KFz35yG1k9bbfVTe1b+7=+WdMknRS1zu8VcDQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:GkDVQERBEufuZ0lb4rfnslaX7dk1BurIzAUJIMsKAmlp2vzhxf3
- 54j6LxOF4pVardE2U74PgYASTg6MVVYG3kGofs1oh1SNRhmX1duoNWwh5nwKWSb0Ro8nvVT
- AbF8qdFgmQuTwjAU99bSPU7gYqzz0ozE5FAWUJ+3DlCvOqE4/cv7qVRe2L7IM8R6E986s9M
- 06nHTBJzGDehmuj5ryNiA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XlAtho/Rxew=:QTIZwkLixfPhMcP6IljjOr
- Rol2KCEDMvD2O08XQQBR4dz89HoQM1SByAemXzbnPMEHRu2FmPBh7JoT0fc+49HqrKQUPMPgF
- kgCptnunbUuOs5w8zhuf4QDWnSkpJxUdbG1nMf4TuADKq/phNbegKYI/q2AdpqjArDJZmNfsg
- HZbuRXGFRhRGVVLxepeN3dFURPNt3y2c9MRNUzURVXmIcmFgbC3nYl9cXhtkqFXslJak0GWA3
- Vy1rgfejAxWPXhAF3SYMVTMdSwJWAlK022QwvKhEUAapa6KQcyZExTDQLrcMuUpWwbSFdfnQB
- HilINdoHpU7dLeTlCxSpB5CrC1dkg4rvkSGyoF3jhxVTuMjw0cgmsIRrG1sEf1MRiDNljbWuW
- Cr9TFkoT1oJfBzxaBM9MwH3VX1Otsz2FBrwbaQ6ktcKmvc2L40+W6rZ01dj60Ez1FwdvTNOvD
- qSfiOJTg8k2BAMkQpFR4WjeeBP0MzGVXBgdZecfuRJ63sW7qhPcqrh12lVR/GW4V4yVCZnn6C
- gOeA25LPX67xDqqwR/uTmGYfEIVbCFlkbeIs4kRRNAAFAtpl+PrPkSIknEM0lryzR4Q35WZ4D
- DP9m7OdmPCL4geFHkiJSwmbpoCecqaOioxU/mOYaQsE0OFbhCVciiR+yYzU1k1Noie2DVWaKz
- SprU5GD9WHwZVzfjkA0nC6N4CiiHgnASDf729LjcSdX2OxcTu0zMO/EQ6J1faMT3FO1NUbqI3
- Q6YyJh78oPrB3fKPTz3PeTFMlBAQroLQlOFmrkvHMrXuRS6N0uBFKcKoyq2Ins50NTwKk4KK5
- OJAPrv2NyAak9G4APzwvIBZU00g7hlOakrJEIUHgFCcFjjt+5E21zRKRsGUu4MfCsDs7LocDO
- VrlnX5RvTyk7y+AGAwP08Su58NAFPkYij0TG5AOIrdju4GHatOBSajnoTenIoOvx7UrxTyL5H
- kJTcoytiVt/cW2o3doB1URXJie4Eh1ZPxs+L5KVy3JnRfnXNts8FlJ5yOG2iuPTmfxHQBiOk1
- 6zC+xoVbjQRzB0ye4KqY6PMqPCRLxjcV0Gn5h9TVvk710DQCwlTWLouZW95EOfgyRQ==
+        Git List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Eric Wong <e@80x24.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        linux-fsdevel@vger.kernel.org, Amir Goldstein <amir73il@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 16.11.21 um 10:38 schrieb Carlo Arenas:
-> On Tue, Nov 16, 2021 at 1:30 AM Andreas Schwab <schwab@linux-m68k.org> w=
-rote:
->>
->> expecting success of 7812.13 'PCRE v2: grep ASCII from invalid UTF-8 da=
-ta':
->>         git grep -h "var" invalid-0x80 >actual &&
->>         test_cmp expected actual &&
->>         git grep -h "(*NO_JIT)var" invalid-0x80 >actual &&
->>         test_cmp expected actual
->>
->> ++ git grep -h var invalid-0x80
->> ++ test_cmp expected actual
->> ++ test 2 -ne 2
->> ++ eval 'diff -u' '"$@"'
->> +++ diff -u expected actual
->> ++ git grep -h '(*NO_JIT)var' invalid-0x80
->> fatal: pcre2_match failed with error code -22: UTF-8 error: isolated by=
-te with 0x80 bit set
+On Thu, Nov 11, 2021 at 9:54 PM Christoph Hellwig <hch@lst.de> wrote:
 >
-> That is exactly what I was worried about, this is not failing one
-> test, but making `git grep` unusable in any repository that has any
-> binary files that might be reachable by it, and it is likely affecting
-> anyone using PCRE older than 10.34
+> On Wed, Nov 10, 2021 at 04:47:24PM -0800, Neeraj Singh wrote:
+> > It would be nice to loop in some Linux fs developers to find out what can be
+> > done on current implementations to get the durability without terrible
+> > performance. From reading the docs and mailing threads it looks like the
+> > sync_file_range + bulk fsync approach should actually work on the current XFS
+> > implementation.
+>
+> If you want more than just my advice linux-fsdevel@vger.kernel.org is
+> a good place to find a wide range of opinions.
+>
+> Anyway, I think syncfs is the biggest band for the buck as it will give
+> you very efficient syncing with very little overhead in git, but it does
+> have a huge noisy neighbor problem that might make it unattractive
+> for multi-tenant file systems or git hosting.
 
-Let's have a look at the map.  Here are the differences between the
-versions regarding use of PCRE2_UTF:
+To summarize where we are at for linux-fsdevel:
+We're working on making Git preserve data added to the repo even if
+the system crashes or loses power at some point soon after a Git
+command completes. The default behavior of git-for-windows is to set
+core.fsyncobjectfiles=true, which at least ensures durability for
+loose object files.
 
-o: opt->ignore_locale
-h: has_non_ascii(p->pattern)
-i: is_utf8_locale()
-l: !opt->ignore_case && (p->fixed || p->is_fixed)
+The current implementation of core.fsyncobjectfiles inserts an fsync
+between writing each new object to a temp name and renaming it to its
+final hash-based name. This approach is slow when adding hundreds of
+files to the repo [1]. The main cost on the hardware we tested is
+actually the CACHE_FLUSH request sent down to
+the storage hardware. There is also work in-flight by Patrick
+Steinhardt to sync ref files [2].
 
-o h i l master hamza rene2
-0 0 0 0      0     1     0
-0 0 0 1      0     1     0
-0 0 1 0      0     1     1
-0 0 1 1      0     1     0  <=3D=3D 7812.13, confirmed using fprint() debu=
-gging
+In a patch series at [3], I implemented a batch mode that issues
+pagecache writeback for each object file when it's being written and
+then before any of the files are renamed to their final destination we
+do an fsync to a dummy file on the same filesystem.  On linux, this is
+using the sync_file_range(fd,0,0,  SYNC_FILE_RANGE_WRITE_AND_WAIT) to
+do the pagecache writeback.  According to Amir's thread at [4] this
+flag combo should actually trigger the desired writeback. The
+expectation is that the fsync of the dummy file should trigger a log
+writeback and one or more CACHE_FLUSH commands to harden the block
+mapping metadata and directory entries such that the data would be
+retrievable after the fsync completes.
 
-So http://public-inbox.org/git/0ea73e7a-6d43-e223-ab2e-24c684102856@web.de=
-/
-should not have this breakage, because it doesn't enable PCRE2_UTF for
-literal patterns.
+The equivalent sequence is specified to work on the common Windows
+filesystems [5]. The question I have for the Linux community is
+whether the same sequence will work on any of the common extant Linux
+filesystems such that it can provide value to Git users on Linux. My
+understanding from Christoph Hellwig's comments is that on XFS at
+least the sync_file_range, fsync, and rename sequence would allow us
+to guarantee that the complete written contents of the file would be
+visible if the new name is visible.  I also expect that additional
+fsync to a dummy file after the renames would also ensure that the log
+is forced again, which should ensure that all of the renames are
+visible before a ref file could be written that points at one of the
+object names.
 
-Ren=C3=A9
+I wasn't able to find any clear semantics about the ext4 filesystem,
+and I gather from what I've read that the btrfs filesystem does not
+support the desired semantics.  Christoph mentioned that syncfs would
+efficiently provide a batched CACHE_FLUSH with the cost of picking up
+dirty cached data unrelated to Git.
+
+Are there any opinions on the Linux side about what APIs we should use
+to provide durability across multiple Git files while not completely
+tanking performance by adding one CACHE_FLUSH per file modified?  What
+are the semantics of the ext4 log (when it is enabled) with regards to
+creating a temp file, populating its contents and then renaming it?
+Are they similar enough to XFS's 'log force' such that our batch mode
+would work there?
+
+Thanks,
+Neeraj
+Windows Core Filesystem Dev
+
+[1] https://docs.google.com/spreadsheets/d/1uxMBkEXFFnQ1Y3lXKqcKpw6Mq44BzhpCAcPex14T-QQ/edit#gid=1898936117
+[2] https://lore.kernel.org/git/cover.1636544377.git.ps@pks.im/
+[3] https://lore.kernel.org/git/b9d3d87443266767f00e77c967bd77357fe50484.1633366667.git.gitgitgadget@gmail.com/
+[4] https://lore.kernel.org/linux-fsdevel/20190419072938.31320-1-amir73il@gmail.com/
+[5] See FLUSH_FLAGS_NO_SYNC -
+https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-ntflushbuffersfileex
