@@ -2,195 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34A98C433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 15:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E48DC4332F
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 15:45:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A97D613D3
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 15:41:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F3EAB613A9
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 15:45:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238585AbhKQPoC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 10:44:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45382 "EHLO
+        id S238748AbhKQPsz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 10:48:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238539AbhKQPnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 10:43:52 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52CE7C061767
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 07:40:54 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id v15-20020a9d604f000000b0056cdb373b82so5404783otj.7
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 07:40:54 -0800 (PST)
+        with ESMTP id S238765AbhKQPs0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 10:48:26 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B519C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 07:45:27 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id t5so13372959edd.0
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 07:45:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=w1P03EdcskMGccseszVYgWaMRGCIJDVhHLP9AzHeYBA=;
-        b=gUBVxzBmdXwPfWcteR/YN67gbHvuZpQeG7Wzo6Y3Mmc1rSvClB7/Cf+SG4vVTXsKOI
-         A/tLpvrMYPuUn6unAdR6816CHCVYGt6XrE9myOPQl9+VQBvDK+zg1w+P1fOp18KgezCO
-         aePsQKi24O/EDOYvtgKWvDcsyerM2nLxXKPV5Hq5bYT9AWduGPbUkJ46I00Lu3Q6V1Wt
-         Y7BvV4LMC/Q/jOcigvaKa0gEvvgxUxuWqVoD7P4xeHN1GhNWOZA5jWMFui/dq8Puqx1V
-         GCGlvU9KKUOUurM0wrx8f5AOYp/WInNJclxkV9Xd0I8rHDsM3ZzmNX4z115eV6F6A8bt
-         omqQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=+Z3OFLqSwrgGIXhGupQ352DiRvHq7RDOQ8+k/NA3MGg=;
+        b=N4UTK+ES0YLU32AOsq4BHa6oOZ63VEM8vFMXmnyMZjBBHnGSN/Po4wuyMhIHx0ymNa
+         7J06N27vBGmM+6mKhN4JdUk7RM/DOvqPqcFAs9YmsBhcpJQix3vcs19F8CMAqflW9sZy
+         XryraPWcWFzSbnx7xvUxVY81oYHLRpJyLelYd2SaKD/RkiVW4KvplGqMx3BAqEccgsl1
+         T47eug3/eAaBWFXtGEpXdnQ7rBPdmz1C9sy5Dq6obrIWb3Mp+/e6kWoxBjC173oypytr
+         dGDim9b5s3jd+Lopq527rpvBwGIbWU67WBPH6sNWiD055ZIAYtufZN5/SLC1GAkmkOeG
+         9aKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=w1P03EdcskMGccseszVYgWaMRGCIJDVhHLP9AzHeYBA=;
-        b=toWlXsIzncStdDJorJuhPab0xmbS/mNPDSIIzGrffu5eQAONb/C+FGFIFmDhWCKLPI
-         9y41rL7ZJeC1aPlQ110tkNc8wtpsZ6Net7xP2ZENx2kH8tQ/nf6AXeqqD1IWZLlP2tBs
-         FMtYqz+GMPTnxaMFZ6vsJIZvBdJFOOF2DiERaZUJVo1lpY5zrOAGn7GEq0D2EuIaOTtx
-         RL1styDCBVXaQd075DwUv6H6kqTMGrptuWKoToOGr3lCSGfdBcRXvWJndYkk2JQE6XVN
-         nG7CkObf0MpRACip/puG7pj0UpUqACz/wFE5R5bIQmVNzRxAo1woC8SZX5c19F005J0P
-         m/gQ==
-X-Gm-Message-State: AOAM530VoCLgWbgXvDQI/fohaxReO5ac6/An06VHqJeujjr+hVl0vvkI
-        sX6yrQSV+8e0Fdf/fI4OmdPC3Em2Q8Y=
-X-Google-Smtp-Source: ABdhPJwFOgsUzThHA8F4KyWdNtZMdOU50wfx7qWBRl7KTsRYfEdKQxY0/3FalR1owO533EHN9MqSNg==
-X-Received: by 2002:a05:6830:1690:: with SMTP id k16mr14470041otr.148.1637163653500;
-        Wed, 17 Nov 2021 07:40:53 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:d1ee:6c8f:319:f5? ([2600:1700:e72:80a0:d1ee:6c8f:319:f5])
-        by smtp.gmail.com with ESMTPSA id o6sm9101oou.41.2021.11.17.07.40.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Nov 2021 07:40:52 -0800 (PST)
-Message-ID: <f674b1fe-87d4-2598-874c-7c3984d0ee92@gmail.com>
-Date:   Wed, 17 Nov 2021 10:40:51 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=+Z3OFLqSwrgGIXhGupQ352DiRvHq7RDOQ8+k/NA3MGg=;
+        b=0gxzofglJAOqI3BEd3ZYmoxDQw89Q+wwycj2VYQLU7SJaiMxnztyRy6rbVw9g4QKwg
+         6go6Lwp3pR/LFyD72//YbuRjT0vnR3XnG952sio6rKOPho81N76fnrIMEhVY+Dyp9YPc
+         oMUD8Qy2eZDbEqDyMxlBL5XJ8vW4ZxkRDASZVRODyHSmaTXV/JtDVbYbPLkr9s3E2nc9
+         jL/my8+k6oEoJqbOXAlpjPOCcB1JCO41mjyty0E8cF+/xAjMqVQ+CzZWF6AIPe/at1So
+         8afwfauKnpALfa3jsFE9pzeCJ6U5fSpbTJrHLOboGE1AcO9CXnz+vwyooToCqbT8TSNK
+         5dbg==
+X-Gm-Message-State: AOAM532HZMXJ+UUcQW23qon7C4YJQboUOPANbRnsecz0CSjhpWVvzohs
+        FnmKorP+BHuSSfrHXIbpjuQGq5U1deVrOA==
+X-Google-Smtp-Source: ABdhPJxhF3mTXH47GJ6k7zxczPghDMozcX6F8vZH/0oHFnXu/bnz4ZgTA/LIlEOKmPzlM6i1yLLpFQ==
+X-Received: by 2002:a17:906:6899:: with SMTP id n25mr22927977ejr.253.1637163925837;
+        Wed, 17 Nov 2021 07:45:25 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id q14sm72932edj.42.2021.11.17.07.45.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Nov 2021 07:45:25 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mnN7k-000E4I-Ld;
+        Wed, 17 Nov 2021 16:45:24 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [Question] Unicode weirdness breaking tests on ZFS?
+Date:   Wed, 17 Nov 2021 16:41:47 +0100
+References: <9393e572-0666-6485-df29-abad5e0d32a1@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <9393e572-0666-6485-df29-abad5e0d32a1@gmail.com>
+Message-ID: <211117.8635nu7pm3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: [PATCH v7 01/17] scalar: add a README with a roadmap
-Content-Language: en-US
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Theodore Ts'o <tytso@mit.edu>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1005.v6.git.1635323239.gitgitgadget@gmail.com>
- <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com>
- <3aa095dc824ea7f659e6c11aa2c21be6cadbe985.1637158762.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <3aa095dc824ea7f659e6c11aa2c21be6cadbe985.1637158762.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/17/2021 9:19 AM, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> The Scalar command will be contributed incrementally, over a bunch of
-> patch series. Let's document what Scalar is about, and then describe the
-> patch series that are planned.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  contrib/scalar/README.md | 71 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 71 insertions(+)
->  create mode 100644 contrib/scalar/README.md
-> 
-> diff --git a/contrib/scalar/README.md b/contrib/scalar/README.md
-> new file mode 100644
-> index 00000000000..7898a683ba5
-> --- /dev/null
-> +++ b/contrib/scalar/README.md
-> @@ -0,0 +1,71 @@
-> +# Scalar - an opinionated repository management tool
-> +
-> +Scalar is an add-on to Git, helping Git scale to very large repositories and
-> +worktrees.
 
-I would rephrase this as "Scalar is an add-on to Git that helps users take
-advantage of advanced performance features in Git."
+On Wed, Nov 17 2021, Derrick Stolee wrote:
 
-Git scales just fine, only it helps to enable some features that are off
-by default.
+> I recently had to pave my Linux machine, so I updated it to Ubuntu
+> 21.10 and had the choice to start using the ZFS filesystem. I thought,
+> "Why not?" but now I maybe see why.
+>
+> Running the Git test suite at the v2.34.0 tag on my machine results in
+> these failures:
+>
+> t0050-filesystem.sh                   (Wstat: 0 Tests: 11 Failed: 0)
+>   TODO passed:   9-10
+> t0021-conversion.sh                   (Wstat: 256 Tests: 41 Failed: 1)
+>   Failed test:  31
+>   Non-zero exit status: 1
+> t3910-mac-os-precompose.sh            (Wstat: 256 Tests: 25 Failed: 10)
+>   Failed tests:  1, 4, 6, 8, 11-16
+>   TODO passed:   23
+>   Non-zero exit status: 1
+>
+> These are all related to the UTF8_NFD_TO_NFC prereq.
+>
+> Zooming in on t0050, these tests are marked as "test_expect_failure" due
+> to an assignment of $test_unicode using the UTF8_NFD_TO_NFC prereq:
+>
+>
+> $test_unicode 'rename (silent unicode normalization)' '
+> 	git mv "$aumlcdiar" "$auml" &&
+> 	git commit -m rename
+> '
+>
+> $test_unicode 'merge (silent unicode normalization)' '
+> 	git reset --hard initial &&
+> 	git merge topic
+> '
+>
+>
+> The prereq creates two files using unicode characters that could
+> collapse to equivalent meanings:
+>
+>
+> test_lazy_prereq UTF8_NFD_TO_NFC '
+> 	# check whether FS converts nfd unicode to nfc
+> 	auml=$(printf "\303\244")
+> 	aumlcdiar=$(printf "\141\314\210")
+> 	>"$auml" &&
+> 	test -f "$aumlcdiar"
+> '
+>
+>
+> What I see in that first test, the 'git mv' does change the
+> index, but the filesystem thinks the files are the same. This
+> may mean that our 'git add "$aumlcdiar"' from an earlier test
+> is providing a non-equivalence in the index, and the 'git mv'
+> changes the index without causing any issues in the filesystem.
+>
+> It reminds me as if we used 'git mv README readme' on a case-
+> insensitive filesystem. Is this not a similar situation?
+>
+> What I'm trying to gather is that maybe this test is flawed?
+> Or maybe something broke (or never worked?) in how we use
+> 'git add' to not get the canonical unicode from the filesystem?
+>
+> The other tests all have similar interactions with 'git add'.
+> I'm hoping that these are just test bugs, and not actually a
+> functionality issue in Git. Yes, it is confusing that we can
+> change the unicode of a file in the index without the filesystem
+> understanding the difference, but that is very similar to how
+> case-insensitive filesystems work and I don't know what else we
+> would do here.
+>
+> These filesystem/unicode things are out of my expertise, so
+> hopefully someone else has a clearer idea of what is going on.
+> I'm happy to be a test bed, or even attempt producing patches
+> to fix the issue once we have that clarity.
 
-> Originally implemented in C# using .NET Core, based on the learnings
-> +from the VFS for Git project, most of the techniques developed by the Scalar
-> +project have been integrated into core Git already:
-> +
-> +* partial clone,
-> +* commit graphs,
-> +* multi-pack index,
-> +* sparse checkout (cone mode),
-> +* scheduled background maintenance,
-> +* etc
-> +
-> +This directory contains the remaining parts of Scalar that are not (yet) in
-> +core Git.
-> +
-> +## Roadmap
-> +
-> +The idea is to populate this directory via incremental patch series and
-> +eventually move to a top-level directory next to `gitk-git/` and to `git-gui/`. The
-> +current plan involves the following patch series:
-> +
-> +- `scalar-the-beginning`: The initial patch series which sets up
-> +  `contrib/scalar/` and populates it with a minimal `scalar` command that
-> +  demonstrates the fundamental ideas.
-> +
-> +- `scalar-c-and-C`: The `scalar` command learns about two options that can be
-> +  specified before the command, `-c <key>=<value>` and `-C <directory>`.
-> +
-> +- `scalar-diagnose`: The `scalar` command is taught the `diagnose` subcommand.
-> +
-> +- `scalar-and-builtin-fsmonitor`: The built-in FSMonitor is enabled in `scalar
-> +  init` and in `scalar clone`, for an enormous performance boost when working
-> +  in large worktrees. This patch series necessarily depends on Jeff Hostetler's
-> +  FSMonitor patch series to be integrated into Git.
+I haven't used ZFS, but this points to non-POSIX behavior on the FS
+itself. It looks like tweaking the "normalization" property might change
+it, see: https://manpages.ubuntu.com/manpages/eoan/man8/zfs.8.html
 
-You say 'scalar init' but do you mean 'scalar register'?
+There's also "casesensitivity" and "utf8only".
 
-> +- `scalar-gentler-config-locking`: Scalar enlistments are registered in the
-> +  user's Git config. This usually does not represent any problem because it is
-> +  rare for a user to register an enlistment. However, in Scalar's functional
-> +  tests, Scalar enlistments are created galore, and in parallel, which can lead
-> +  to lock contention. This patch series works around that problem by re-trying
-> +  to lock the config file in a gentle fashion.
-> +
-> +- `scalar-extra-docs`: Add some extensive documentation that has been written
-> +  in the original Scalar project (all subject to discussion, of course).
-> +
-> +- `optionally-install-scalar`: Now that Scalar is feature (and documentation)
-> +  complete and is verified in CI builds, let's offer to install it.
-> +
-> +- `move-scalar-to-toplevel`: Now that Scalar is complete, let's move it next to
-> +  `gitk-git/` and to `git-gui/`, making it a top-level command.
+We probably don't want to invoke some ZFS command on every test to
+interrogate this, but if we can pass it down from GIT-BUILD-OPTIONS or
+similar then we could have a test prereq check this.
 
-This final one is where we can make the final call about where Scalar should
-exist in the tree and how optional it should be. This would also move the
-Scalar man pages into Documentation/, along with possibly the docs from
-'scalar-extra-docs', and the tests into t/. The benefit of leaving this until
-the end is that we can see the entirety of Scalar before making a final call.
+Or perhaps it's as simple as changing the "UTF8_NFD_TO_NFC" prereq from
+doing a "test -f" to e.g. "echo *" and seeing what it gets back. Perhaps
+ZFS says "yes" to "it exists?" but when doing a readdir() it will
+canonicalize?
 
-> +The following two patch series exist, but there is no plan to integrate them
-> +into Git's source tree:
-> +
-> +- `scalar-with-gvfs`: The primary purpose of this patch series is to support
-> +  existing Scalar users whose repositories are hosted in Azure Repos (which
-> +  does not support Git's partial clones, but supports its predecessor, the GVFS
-> +  protocol, which is used by Scalar to emulate the partial clone).
-> +
-> +  Since the GVFS protocol will never be supported by core Git, this patch
-> +  series will remain in Microsoft's fork of Git.
-> +
-> +- `run-scalar-functional-tests`: The Scalar project developed a quite
-> +  comprehensive set of integration tests (or, "Functional Tests"). They are the
-> +  sole remaining part of the original C#-based Scalar project, and this patch
-> +  adds a GitHub workflow that runs them all.
-> +
-> +  Since the tests partially depend on features that are only provided in the
-> +  `scalar-with-gvfs` patch series, this patch cannot be upstreamed.
-
-These topics (in some form or another) exist on microsoft/git and are available
-via GPL, so we don't intend to say "we are withholding these patches" but instead
-are saying "We don't think the Git community is interested in these patches."
-There are some interesting ideas there, but the implementation is too specific to
-Azure Repos to be of much help in general. These still exist mainly because the
-GVFS protocol is what Azure Repos has instead of partial clone. We are focused
-instead on improving partial clone.
-
-Thanks,
--Stolee
