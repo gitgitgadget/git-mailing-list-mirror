@@ -2,146 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE58BC433EF
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5FF7C433EF
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:01:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA38661284
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 09:41:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BAA6361B5E
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:01:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235400AbhKQJoK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 04:44:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46708 "EHLO
+        id S233094AbhKQKEg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 05:04:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235401AbhKQJnx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 04:43:53 -0500
-Received: from vuizook.err.no (vuizook.err.no [IPv6:2a02:20c8:2640::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C9A8C061220
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 01:40:04 -0800 (PST)
-Received: from [2400:4160:1877:2b00:29f9:f15d:e50b:8944] (helo=glandium.org)
-        by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <mh@glandium.org>)
-        id 1mnHQ3-006OmA-8Y; Wed, 17 Nov 2021 09:39:58 +0000
-Received: from glandium by goemon.lan with local (Exim 4.94.2)
-        (envelope-from <mh@glandium.org>)
-        id 1mnHPv-009v09-Pg; Wed, 17 Nov 2021 18:39:47 +0900
-Date:   Wed, 17 Nov 2021 18:39:47 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        with ESMTP id S236027AbhKQKE2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 05:04:28 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49C5AC061764
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:01:30 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id x15so8590211edv.1
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:01:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=hh8aCZaLKQ0ivHAXRaYwYIEO5Y41Fcj9qrHf6IngJW8=;
+        b=Ldf9b5FI44J9q2u6q7XqDohgOv0t8rGB37xLJFs/YNDqNxt3v/r/0IgEm+JKEK0hDk
+         jAOHaUmOSPi5Y45cGYkR8UgLcKjPDLw+zHvdzaTTOk6e3H7XBx9T7cdW5u4Y6qYGIKzG
+         fJrZCj9ooKN12eKsay2SuCaE2fRQHp+d1zL1tXl3bOhvDRd1HK9oHYaupvGdUaQtWvCj
+         YmJb3yAiKsZ7e/m7jjM65WxjUj+R6vhQHusx2v9Fw6uWC6qtUN/hTyIhWo6NseeoyraV
+         R+Ta0FPRKRkwLWDFbw565oJDKzilqKN49d85CabgwJsCdeMiFbkwqivNEw92tAhdu+ps
+         VTxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=hh8aCZaLKQ0ivHAXRaYwYIEO5Y41Fcj9qrHf6IngJW8=;
+        b=MvoZGyGpgmpDCQDrKRUfQdfdddP0D0bReNClCg9cnWEPMH+VdbQqAlWHoKphPesdap
+         Hh7N1w1FnTH0uWHmHDSjVeo3SBchV/7Qz7yrKWJu8F+h6wcAeKDfQVYRh0ckDG+/Ra93
+         X2XIKrzQzFgi+exiG6rHU0s7AotrHC1bW03k94SOoxAuAMRlgyVHYDK8hmXcDfiZEpUZ
+         hZtuatwpkbpNGbhWq609cpkxUTQAAActtJdEfZ8n/oejAc/WfrINXVwM/HbWvd/rhXqm
+         hLCmJAf3bNCTE6ia13e/Rp7syfajb3Tn29AktApI1bVrevKy5K3p7I+5aE1W+ZsFgtPB
+         gaWQ==
+X-Gm-Message-State: AOAM532SdUiE9H9fs+f8OMMNBjML4jBiYNy9BOFX79c4XfbAy0LdA5wF
+        ZkFgJTMXmyqIoJz1xNEwLaU=
+X-Google-Smtp-Source: ABdhPJwE8S4OZqZDNbHll1WZxyqLp7APY5rL60x4NVfyuLpuYUbxdeCdpNL2OVtydZlBQHFC3VnjJg==
+X-Received: by 2002:aa7:c406:: with SMTP id j6mr20269860edq.76.1637143288749;
+        Wed, 17 Nov 2021 02:01:28 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id f7sm10737354edl.33.2021.11.17.02.01.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Nov 2021 02:01:28 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mnHkt-0005Ur-FA;
+        Wed, 17 Nov 2021 11:01:27 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Mike Hommey <mh@glandium.org>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
         Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 18/23] Makefiles: add and use wildcard "mkdir -p"
- template
-Message-ID: <20211117093947.ifkrvddmiiu3hg2v@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+Subject: Re: [PATCH v3 21/23] Makefile: disable GNU make built-in wildcard
+ rules
+Date:   Wed, 17 Nov 2021 10:47:43 +0100
 References: <cover-v2-00.18-00000000000-20211112T214150Z-avarab@gmail.com>
  <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
- <patch-v3-18.23-d61e2b44f68-20211116T114334Z-avarab@gmail.com>
- <20211117025148.awdha4udu5kmzwbe@glandium.org>
- <211117.86wnl76sal.gmgdl@evledraar.gmail.com>
+ <patch-v3-21.23-cb3ae5ce00b-20211116T114334Z-avarab@gmail.com>
+ <20211117030030.nru2ntuxk63lhwqx@glandium.org>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211117030030.nru2ntuxk63lhwqx@glandium.org>
+Message-ID: <211117.86sfvv6qyw.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <211117.86wnl76sal.gmgdl@evledraar.gmail.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 17, 2021 at 10:26:27AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Wed, Nov 17 2021, Mike Hommey wrote:
-> 
-> > On Tue, Nov 16, 2021 at 01:00:18PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> >> Add a template to do the "mkdir -p" of $(@D) (the parent dir of $@)
-> >> for us, and use it for the "make lint-docs" targets I added in
-> >> 8650c6298c1 (doc lint: make "lint-docs" non-.PHONY, 2021-10-15).
-> >> 
-> >> As seen in 4c64fb5aad9 (Documentation/Makefile: fix lint-docs mkdir
-> >> dependency, 2021-10-26) maintaining these manual lists of parent
-> >> directory dependencies is fragile, in addition to being obviously
-> >> verbose.
-> >> 
-> >> I used this pattern at the time because I couldn't find another method
-> >> than "order-only" prerequisites to avoid doing a "mkdir -p $(@D)" for
-> >> every file being created, which as noted in [1] would be significantly
-> >> slower.
-> >> 
-> >> But as it turns out we can use this neat trick of only doing a "mkdir
-> >> -p" if the $(wildcard) macro tells us the path doesn't exist. A re-run
-> >> of a performance test similar to thatnoted downthread of [1] in [2]
-> >> shows that this is faster, in addition to being less verbose and more
-> >> reliable (this uses my "git-hyperfine" thin wrapper for "hyperfine"[3]):
-> >> 
-> >>     $ git hyperfine -L rev HEAD~0,HEAD~1 -b 'make -C Documentation lint-docs' -p 'rm -rf Documentation/.build' 'make -C Documentation lint-docs'
-> >>     Benchmark 1: make -C Documentation lint-docs' in 'HEAD~0
-> >>       Time (mean ± σ):      2.129 s ±  0.011 s    [User: 1.840 s, System: 0.321 s]
-> >>       Range (min … max):    2.121 s …  2.158 s    10 runs
-> >> 
-> >>     Benchmark 2: make -C Documentation lint-docs' in 'HEAD~1
-> >>       Time (mean ± σ):      2.659 s ±  0.002 s    [User: 2.306 s, System: 0.397 s]
-> >>       Range (min … max):    2.657 s …  2.662 s    10 runs
-> >> 
-> >>     Summary
-> >>       'make -C Documentation lint-docs' in 'HEAD~0' ran
-> >>         1.25 ± 0.01 times faster than 'make -C Documentation lint-docs' in 'HEAD~1'
-> >> 
-> >> So let's use that pattern both for the "lint-docs" target, and a few
-> >> miscellaneous other targets.
-> >> 
-> >> This method of creating parent directories is explicitly racy in that
-> >> we don't know if we're going to say always create a "foo" followed by
-> >> a "foo/bar" under parallelism, or skip the "foo" because we created
-> >> "foo/bar" first. In this case it doesn't matter for anything except
-> >> that we aren't guaranteed to get the same number of rules firing when
-> >> running make in parallel.
-> >
-> > Something else that is racy is that $(wildcard) might be saying the
-> > directory doesn't exist while there's another make subprocess that has
-> > already started spawning `mkdir -p` for that directory.
-> > That doesn't make a huge difference, but you can probably still end up
-> > with multiple `mkdir -p` runs for the same directory.
-> >
-> > I think something like the following could work while avoiding those
-> > races:
-> >
-> > define create_parent_dir_RULE
-> > $(1): | $(dir $(1)).
-> > ALL_DIRS += $(dir $(1))
-> > endef
-> >
-> > define create_parent_dir_TARGET
-> > $(1)/.: $(dir $(1)).
-> > 	echo mkdir $$(@D)
 
-erf, s/echo //
+On Wed, Nov 17 2021, Mike Hommey wrote:
 
-> > endef
-> >
-> > $(eval $(call create_parent_dir_RULE, first/path/file))
-> > $(eval $(call create_parent_dir_RULE, second/path/file))
-> > # ...
-> >
-> > $(foreach dir,$(sort $(ALL_DIRS)),$(eval $(call create_parent_dir_TARGET,$(dir:%/=%))))
-> 
-> I think the "race" just isn't a problem, and makes managing this much
-> simpler.
-> 
-> I.e. we already rely on "mkdir -p" not failing on an existing directory,
-> so the case where we redundantly try to create a directory that just got
-> created by a concurrent process is OK, and as the quoted benchmark shows
-> is much faster than a similar (but not quite the same as) a
-> dependency-based implementaiton.
-> 
-> I haven't implemented your solution, but it seems to be inherently more
-> complex.
-> 
-> I.e. with the one I've got you just stick the "mkdir if needed"
-> one-liner in each rule, with yours you'll need to accumulate things in
-> ALL_DIRS, and have some foreach somewhere or dependency relationship to
-> create those beforehand if they're nested, no?
+> On Tue, Nov 16, 2021 at 01:00:21PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> +### Remove GNU make implicit rules
+>> +
+>> +## This speeds things up since we don't need to look for and stat() a
+>> +## "foo.c,v" every time a rule referring to "foo.c" is in play. See
+>> +## "make -p -f/dev/null | grep ^%::'".
+>> +%:: %,v
+>> +%:: RCS/%,v
+>> +%:: RCS/%
+>> +%:: s.%
+>> +%:: SCCS/s.%
+>
+> `MAKEFLAGS +=3D -r` should have the same effect (and more)
 
-For each rule, it would also be a oneliner to add above the rule. The rest
-would be a prelude and a an epilogue to stick somewhere in the Makefile.
+Yeah, I did try that. It's a much bigger hammer though, and throws out
+all implicit rules, some of which we may use (I'm not sure). I've
+updated the commit message to note this.
+
+In terms of performance it doesn't seem to matter over the above more
+narrow change.
