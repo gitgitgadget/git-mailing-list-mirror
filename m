@@ -2,121 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00A94C433F5
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BB7EC433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:28:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D643A61269
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:18:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5140F61B29
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 23:28:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241526AbhKQXVU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 18:21:20 -0500
-Received: from ring.crustytoothpaste.net ([172.105.110.227]:43846 "EHLO
-        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236763AbhKQXVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 18:21:19 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 299445B463;
-        Wed, 17 Nov 2021 23:18:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1637191100;
-        bh=uMS0w7C7cZmn3Pg6Ael0WAMF772RZSCVWhawl5LClOc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=XH+v3vwUULrUYF8WBjHMLszbNe2E7r46/YT14oaRbT76JQGLfxvBSL4JByoB1oITn
-         ZBDUsA7PYsZ5YGMD2di+lID2FLwqhDb77TIx9pkypJSMq77b1Xp4biQM0Z9WIEF+GX
-         pflGyWNfz43VQKLH3D+osqX6LLWjyHPj8PI9k+v/oCcdvUNtstt0WHmB2QwtSBEzzA
-         SLzYcNwtpNqB5KrYbgauJfDJLQxkr+Ss0b2T6nqCGbzkoQ1urYGM+PTXwvw+z5v/4L
-         QFQXquMFHXcCiQ0isBpzvNhU3l53kMTnry17uH+uya3ci/Xx4maa+ewDx0p2IWEqov
-         z776ySHaobTqo5M5BrrB/cgQd10J5BMji3n5qpXoREReNkwXEINyBE74WazlE/sUAI
-         nyjCNzw6j5AvpuMkBBOyFAqF4LI/dTnteI51aBF5QKxOr9VC9yEM7P6MsNVD4exlXC
-         Sq7YfSavMsDtcapGi/EBmZsw/Zxwla9qrmb+LHcOiTs3va/ZKJp
-Date:   Wed, 17 Nov 2021 23:18:18 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Carlo Arenas <carenas@gmail.com>
-Subject: Re: [PATCH v2 1/1] git-compat-util: add a test balloon for C99
- support
-Message-ID: <YZWNumAlsek9Gi22@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Carlo Arenas <carenas@gmail.com>
-References: <20211114212437.1466695-1-sandals@crustytoothpaste.net>
- <20211116021241.1565740-1-sandals@crustytoothpaste.net>
- <20211116021241.1565740-2-sandals@crustytoothpaste.net>
- <YZOh370ZMMqSADUE@coredump.intra.peff.net>
- <211116.86pmr0p82k.gmgdl@evledraar.gmail.com>
- <YZPGKHYE/9km1rH5@coredump.intra.peff.net>
- <YZRurUdyB/cGL6Y3@camp.crustytoothpaste.net>
- <YZRwpekXlilhOEx4@coredump.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="8W9BxcRuWHh4bQxl"
-Content-Disposition: inline
-In-Reply-To: <YZRwpekXlilhOEx4@coredump.intra.peff.net>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+        id S239932AbhKQXbw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 18:31:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39050 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232744AbhKQXbt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 18:31:49 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C3B8C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 15:28:50 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id x1-20020a17090a294100b001a6e7ba6b4eso2089984pjf.9
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 15:28:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=7wMDDgIRgYtCA2+crGCu6qdi+8z+Vk1IwU77Aps/Acg=;
+        b=ZvB2mqIcsKFgMhKd7lJwHv+ZVbLNkZKlc8rI7eExhytcm1ST40FeDSPjedEqtmJmOi
+         9zGAd56PMOB2GjyCAdpmsTn6eeIZjwlAGeNi5KHEuzDIVIq+Wl16gEjyNLQXsX7ZhqUG
+         7ojF4w/kATA4GX9RqZKM9m14tK4pxtFW4Ux0hfxEM2g3qUwAGJZhHS3vygTIKbxNYMQS
+         Tsw+1TApyBvIXH5jLrrF7DncbAKFD/2WWVZevFIOp6XyzUQoBxbbCL5iN9BFtGzLviGK
+         kxMkZg7KLFD06IiorDDzz621aDk3JzrpuytG8NSkMmteh4W7TriEsDoHwB8oIMTuyeU0
+         s8Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=7wMDDgIRgYtCA2+crGCu6qdi+8z+Vk1IwU77Aps/Acg=;
+        b=2bJ6CBCnTWVRReFP33N/ZCI4VLZ+1/5NtC4uT3Qso5tVSh/TlJtNuwx1QB8VoMetyR
+         K1h8XlrfDAoe2Sx8mKDL3uPMWKbvhjRwx2Vwm/nUw2Q92By8+xZqCnzrLo3hlS/tezmN
+         LJMMKp3/Q10vNHBiooI3p6l3kORQW6uoKdh0NbxaZ8UhCuPCMVS2rrn6JAheiRDrHcv0
+         acA6rpCZiTUBjzyr9U3tSq4n8F1hk8B4e9tOj7eAi0034T0wUuM4oJOoAC71Qfz8sNOH
+         XU0CuH0Oopu833yb/ZMmYewv6d6gtpaJu42IbxEHGn9wwP2f42rMR8YIqoUOTlw2kpXu
+         fUNA==
+X-Gm-Message-State: AOAM532F0/d38MfeweFqvi+IcN6Jp+k+o2uQMCrf8W1WbI2Av/lmLK2Y
+        3tba+t3DcWGwGBcC+mgdmWFouLDo7xfBJEnN4AiP
+X-Google-Smtp-Source: ABdhPJwHkayfXhGo64emK8E+H7q+ZSSJSHDB7npDhxMbkVfxlp6pmkq1w/TfDG7cMpjsoaIXIABcqr/KaA2bVHHUBoJA
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:c403:: with SMTP id
+ i3mr4607690pjt.203.1637191729753; Wed, 17 Nov 2021 15:28:49 -0800 (PST)
+Date:   Wed, 17 Nov 2021 15:28:46 -0800
+In-Reply-To: <20211117005701.371808-1-emilyshaffer@google.com>
+Message-Id: <20211117232846.2596110-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20211117005701.371808-1-emilyshaffer@google.com>
+X-Mailer: git-send-email 2.34.0.rc1.387.gb447b232ab-goog
+Subject: Re: [PATCH v6 0/5] teach submodules to know they're submodules
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     emilyshaffer@google.com
+Cc:     git@vger.kernel.org, albertcui@google.com,
+        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de,
+        avarab@gmail.com, gitster@pobox.com, matheus.bernardino@usp.br,
+        jrnieder@gmail.com, jacob.keller@gmail.com, raykar.ath@gmail.com,
+        stolee@gmail.com, jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Emily Shaffer <emilyshaffer@google.com> writes:
+> For the original cover letter, see
+> https://lore.kernel.org/git/20210611225428.1208973-1-emilyshaffer%40google.com.
 
---8W9BxcRuWHh4bQxl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Also for reference, v4 and v5 (as a reply to v4) can be found here:
+https://lore.kernel.org/git/20211014203416.2802639-1-emilyshaffer@google.com/
 
-On 2021-11-17 at 03:01:57, Jeff King wrote:
-> Yes, but I'm not at all worried about breaking our CI. That's just a
-> patch away from fixing. I'm much more worried about confused users
-> building from source, because helping them is more difficult to scale.
+> Since v5:
+> 
+> A couple things. Firstly, a semantics change *back* to the semantics of
+> v3 - we map from gitdir to gitdir, *not* from common dir to common dir,
+> so that theoretically a submodule with multiple worktrees in multiple
+> superproject worktrees will be able to figure out which worktree of the
+> superproject it's in. (Realistically, that's not really possible right
+> now, but I'd like to change that soon.)
 
-That's one of the reasons I had proposed the current patch, because it
-pukes in a very noticeable way with directives on where to look to
-continue.  Just using C99 features means that Git breaks in a very
-subtle way where the user compiling may not be familiar with C and may
-not know how to fix it otherwise.  For example, my previous employer
-ships Git, but many of the folks who are doing the package updates are
-not C programmers.
+Makes sense. Also, thanks for the tests covering what happens when this
+is run from worktrees.
 
-> My thinking was that breaking older compilers was preferable to breaking
-> non-gnu ones, because at least old ones go away eventually. But your
-> other email makes me wonder if those non-GNU ones may already be
-> overriding CFLAGS.
+> Secondly, a rewording of comments and commit messages to indicate that
+> this isn't a cache of some expensive operation, but rather intended to
+> be the source of truth for all submodules. I also added a fifth commit
+> rewriting `git rev-parse --show-superproject-working-tree` to
+> demonstrate what that means in practice - but from a practical
+> standpoint, I'm a little worried about that fifth patch. More details in
+> the patch 5 description.
 
-Our only problem platform, as far as I can tell, is RHEL/CentOS 7.  That
-uses GCC 4.8, and even Ubuntu 18.04 ships with GCC 7.
+OK - this is not the "this variable being missing is OK" idea that I had
+[1], but we want to be able to depend on it to some extent. (And it is
+not a cache either - we are not planning to perform an operation to
+obtain the superproject gitdir if the cache is missing, but we are just
+going to assume that there is no superproject.)
 
-> Still, if we can come up with a solution that breaks neither (with some
-> light auto-detection or heuristics in the Makefile), that could be the
-> best of both worlds.
+To that end, the 5th patch is misleading - it is behaving exactly like a
+cache. I think it's better to drop it.
 
-I can move COMPILER_FEATURES out of config.mak.dev and into Makefile so
-that we can make use of it.  We'll need to depend on GCC 6 for this
-because we lack a way to distinguish 5.1 (which should work) from 5.0
-(which will not).
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+What would make sense to me (and seems to be in the spirit of this patch
+set) is to describe this as something that Git commands can rely on to
+determine if the current repo is a submodule, for performance reasons.
+So maybe Git commands/parameters that directly reference the submodule
+concept like "--show-superproject-working-tree" will work hard to find
+the superproject (by searching the filesystem), but those that do not
+(e.g. "git status") can make assumptions.
 
---8W9BxcRuWHh4bQxl
-Content-Type: application/pgp-signature; name="signature.asc"
+Making this variable a source of truth wouldn't work, I think, because
+the source of truth is whether this repo appears in a .gitmodules file
+(and that hasn't changed).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+To this end, I'll comment on the changes I'd like to see on the
+individual patches too.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYZWNuQAKCRB8DEliiIei
-gYlFAQC7DBBf/Dp93iauLLCEXR4e1ptePO7GsIW7A95mDpsyQgD/XLKUAkhA3Nlr
-jOHUzbiyoYlM7UzFOmxDHadvS1yIiAU=
-=LwqL
------END PGP SIGNATURE-----
-
---8W9BxcRuWHh4bQxl--
+[1] https://lore.kernel.org/git/20210727174650.2462099-1-jonathantanmy@google.com/
