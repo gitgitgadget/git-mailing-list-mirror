@@ -2,192 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FFF1C433EF
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:23:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6601C433F5
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 11:04:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2189C61423
-	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 10:23:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C228D61504
+	for <git@archiver.kernel.org>; Wed, 17 Nov 2021 11:04:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236250AbhKQK0o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 05:26:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57202 "EHLO
+        id S236629AbhKQLHR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 06:07:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236210AbhKQK0o (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 05:26:44 -0500
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19A20C061570
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:23:46 -0800 (PST)
-Received: by mail-qv1-xf33.google.com with SMTP id jo22so1636469qvb.13
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 02:23:46 -0800 (PST)
+        with ESMTP id S232696AbhKQLHR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 06:07:17 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DD51C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 03:04:18 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id n33-20020a05600c502100b0032fb900951eso4418508wmr.4
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 03:04:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rfJKlR/AqXwUeKYP5fsLgHWl1YUlcLvGXrsESGPDY1Q=;
-        b=AlPXNxxdqIqowW5p/gyhm8RLyhR0i3sgV1701FGwgKJK0LAJn7tj3gDS++VtDqCLJ1
-         r6t4TGrBA1Kqamkg4cVou4/dXqs5F5rGptpKiQkhXtHk1n4uEzlz2RzBdf4L8lCwFAMm
-         OmtfoRshoPNynfjZA1sfCH+k/oG9S96/D2jKez8OuHEgSILvOHoUH9BVLpMjrCjgl3VX
-         H7YNFEM4zaFNj92JAy/sg/0G706qysOnoTVUjtgO5s+mLUajJIZ9w0v4ZVBM3m9LfLFg
-         CSFaUnd/Q0tcLRGJxR0uj5lAY3vsZO1YFnIkk6QCr2u1vB4kJkXgvvZxVKKG5w0ndLRc
-         asYQ==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=IfQpmqUrXMIIR/BMeKlbAu1ZZfFhWZlmOWrm295FiVw=;
+        b=pLJjSZSgW6DsvDYq7dUabG1psA7XjY2CtddqjbuMSfF+gmr9ZMxrQ0XLJ7aytt4V5U
+         JmZiNZZwf4lNXY321zDFsjYXf9hYhuNOo1f435ZQ9bmEAxhapAoEk+BtKv8/9DBuGtT+
+         7TY5iuc8195AI4UfVPnShidhfUkiK2ukEo1c1v7Ex96/jJbSWvUPtaLtpVtY9pRSjo1S
+         FMV8xuC40nNbqa9uAas4PDLT4gdoHmh83ZklwuO/kqUlZHKXmNXSPQ0xDJUDwiJLOV3M
+         he2UYZSQ26xRdCznVizlkYjV90tyOCEas+rWAZHli1OiPkx7ccdFkWa1B+liv+pvVgO2
+         c92Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rfJKlR/AqXwUeKYP5fsLgHWl1YUlcLvGXrsESGPDY1Q=;
-        b=D9RdigS8dFE8tHDpRjMZjg+ScRcPIisvIFisrET2Yz0t12svjXuAPTmdNaYmrW0suF
-         +D4vVpwU6Fyvce/q1Ihkpp+Q0cgm7LKpjjVGgrEcKYT0n1ACSYIo+iGvDZNfW34rbWmj
-         47+dRYky3yM+1dS4u2T/BnDYtTDFJFP9s1VE2Kg7XZqsfCPROHMKm2R9Y9iSRT6XL7eY
-         67RhXBUctC18sVj9inoeFXvt6zHi5aIgx+ltp9rDMRQoMsQ4QjvV4bGRsoNuF9xr8PJP
-         6pUSUVlJqvdELCVnl+HWL3+1ej8jfK24hKOkMxtgiKGxFaN+XoZgbhEMrR8QkADk/R9Q
-         Cz2A==
-X-Gm-Message-State: AOAM5310VOxYEZfRBFQ/NKEADKFOliyKxOvsHyYTCBE9lFJjauxPZAAw
-        O4nHQ/eKRcpTDUyjb/Qhe2dfhX1L1vw=
-X-Google-Smtp-Source: ABdhPJw29vPI03uD11jOCd+PPosjqA0qZ62d0LysOAFJopmBAYbAl4m4GJFGQqltp5zLrL703q3sHQ==
-X-Received: by 2002:ad4:5cac:: with SMTP id q12mr53826387qvh.52.1637144625029;
-        Wed, 17 Nov 2021 02:23:45 -0800 (PST)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id f12sm6642565qtj.93.2021.11.17.02.23.44
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Nov 2021 02:23:44 -0800 (PST)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, someguy@effective-light.com, gitster@pobox.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Andreas Schwab <schwab@linux-m68k.org>
-Subject: [PATCH v2] grep: avoid setting UTF mode when dangerous with PCRE
-Date:   Wed, 17 Nov 2021 02:23:29 -0800
-Message-Id: <20211117102329.95456-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.34.0.352.g07dee3c5e1
-In-Reply-To: <20211116110035.22140-1-carenas@gmail.com>
-References: <20211116110035.22140-1-carenas@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=IfQpmqUrXMIIR/BMeKlbAu1ZZfFhWZlmOWrm295FiVw=;
+        b=0E0sivA8tWwYh7vcxvtj2FnMIITiWjxRW44sZxgBzg6jgGZmxDX0hk2CfhIa/NRbGC
+         fmu3WmJrouFS/05xarvp5Px2UId268R5hocPBpT2KyUdbS7w3JB+wIITGjsqRMZdPhJR
+         aqolWV3w9vTonXgnx+CNoPpge4L7jzcQ7gAK44t2KQJ0aFwJTWqWo3HhUZFTLcn8+T+2
+         cQfuU/vQgWWu554DtCf7bZV1RQq0Wcle0KpPIJPRFAc/j9iUuXQBJrQJ9uQzqO9zGTT0
+         9UrTPLDmGMaNMdf7sOM60DPYs4pdD9gQWNMMsfS1bmFYjkhQRhK0TTNpCfs3JAQbs86G
+         LF0Q==
+X-Gm-Message-State: AOAM532lZTm81dDB4QXwWLScUQeOvCcdZh8asXAY9Dql/eyyLZQJJuXa
+        GCeuL58C2iU6ssZORa/A28/CbdsNJwco7g==
+X-Google-Smtp-Source: ABdhPJwii9i1Qcm2ggh1txN5UEzVxjFbB8/zCQ+J4hTdfSoeDqodPPnQ5TBPyuAm4g2brxvZYuduUA==
+X-Received: by 2002:a1c:1d48:: with SMTP id d69mr16307387wmd.143.1637147056966;
+        Wed, 17 Nov 2021 03:04:16 -0800 (PST)
+Received: from [192.168.1.240] ([31.185.185.186])
+        by smtp.gmail.com with ESMTPSA id s13sm5279441wmc.47.2021.11.17.03.04.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Nov 2021 03:04:16 -0800 (PST)
+Message-ID: <61518213-9ce8-00d2-efd9-7f2091c574c4@gmail.com>
+Date:   Wed, 17 Nov 2021 11:03:58 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] revision: use C99 declaration of variable in for() loop
+Content-Language: en-GB-large
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20211113122833.174330-1-gotlouemail@gmail.com>
+ <20211113130508.zziheannky6dcilj@gmail.com>
+ <2b2386b9-045d-a0b8-6dbc-8a9d0c446bea@gmail.com> <xmqq7ddbme7q.fsf@gitster.g>
+ <211114.868rxqu7hr.gmgdl@evledraar.gmail.com> <xmqqilwulims.fsf@gitster.g>
+ <xmqqpmr2j5lq.fsf_-_@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqpmr2j5lq.fsf_-_@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since ae39ba431a (grep/pcre2: fix an edge case concerning ascii patterns
-and UTF-8 data, 2021-10-15), PCRE2_UTF mode is enabled for cases where it
-will trigger UTF-8 validation errors (as reported) or can result in
-undefined behaviour.
+Hi Junio
 
-Our use of PCRE2 only allows searching through non UTF-8 validated data
-safely through the use of the PCRE2_MATCH_INVALID_UTF flag, that is only
-available after 10.34, so restrict the change to newer versions of PCRE
-and revert to the old logic for older releases, which will still allow
-for matching not using UTF-8 for likely most usecases (as shown in the
-tests).
+On 15/11/2021 06:27, Junio C Hamano wrote:
+> There are certain C99 features that might be nice to use in our code
+> base, but we've hesitated to do so in order to avoid breaking
+> compatibility with older compilers. But we don't actually know if
+> people are even using pre-C99 compilers these days.
+> 
+> One way to figure that out is to introduce a very small use of a
+> feature, and see if anybody complains, and we've done so to probe
+> the portability for a few features like "trailing comma in enum
+> declaration", "designated initializer for struct", and "designated
+> initializer for array".  A few years ago, we tried to use a handy
+> 
+>      for (int i = 0; i < n; i++)
+> 	use(i);
+> 
+> to introduce a new variable valid only in the loop, but found that
+> some compilers we cared about didn't like it back then.  Two years
+> is a long-enough time, so let's try it agin.
+> 
+> If this patch can survive a few releases without complaint, then we
+> can feel more confident that variable declaration in for() loop is
+> supported by the compilers our user base use.  And if we do get
+> complaints, then we'll have gained some data and we can easily
+> revert this patch.
 
-Fix one test that was using an expression that wouldn't fail without the
-new code so it can be forced to fail if it is missing and restrict it to
-run only for newer PCRE releases; while at it do some minor refactoring
-to cleanup the fallout for when that test might be skipped or might
-succeed under the new conditions.
+I like the idea of using a specific test balloon for the features that 
+we want to use but wont this one break the build for anyone doing 'make 
+DEVELOPER=1' because -Wdeclaration-after-statement will error out. I 
+think we could wrap the loop in gcc's warning pragmas to avoid that.
 
-Keeping the overly complex and unnecessary logic for now, to reduce risk
-but with the hope that it will be cleaned up later.
+Best Wishes
 
-Helped-by: René Scharfe <l.s.r@web.de>
-Reported-by: Andreas Schwab <schwab@linux-m68k.org>
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
-v2:
-* restrict the code at compile time instead of reverting
-* "fix" test to document  the behaviour under both PCRE code versions
-* update commit message to better explain the issue
+Phillip
 
- grep.c                          |  7 ++++++-
- t/t7812-grep-icase-non-ascii.sh | 32 ++++++++++++++++++--------------
- 2 files changed, 24 insertions(+), 15 deletions(-)
-
-diff --git a/grep.c b/grep.c
-index f6e113e9f0..0126aa3db4 100644
---- a/grep.c
-+++ b/grep.c
-@@ -382,12 +382,17 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 		}
- 		options |= PCRE2_CASELESS;
- 	}
-+#ifdef GIT_PCRE2_VERSION_10_34_OR_HIGHER
- 	if ((!opt->ignore_locale && !has_non_ascii(p->pattern)) ||
- 	    (!opt->ignore_locale && is_utf8_locale() &&
- 	     has_non_ascii(p->pattern) && !(!opt->ignore_case &&
- 					    (p->fixed || p->is_fixed))))
- 		options |= (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
--
-+#else
-+	if (!opt->ignore_locale && is_utf8_locale() && has_non_ascii(p->pattern) &&
-+	    !(!opt->ignore_case && (p->fixed || p->is_fixed)))
-+		options |= PCRE2_UTF;
-+#endif
- #ifdef GIT_PCRE2_VERSION_10_36_OR_HIGHER
- 	/* Work around https://bugs.exim.org/show_bug.cgi?id=2642 fixed in 10.36 */
- 	if (PCRE2_MATCH_INVALID_UTF && options & (PCRE2_UTF | PCRE2_CASELESS))
-diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-ascii.sh
-index 22487d90fd..3bfe1ee728 100755
---- a/t/t7812-grep-icase-non-ascii.sh
-+++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -53,14 +53,27 @@ test_expect_success REGEX_LOCALE 'pickaxe -i on non-ascii' '
- 	test_cmp expected actual
- '
- 
--test_expect_success GETTEXT_LOCALE,PCRE 'log --author with an ascii pattern on UTF-8 data' '
--	cat >expected <<-\EOF &&
--	Author: <BOLD;RED>À Ú Thor<RESET> <author@example.com>
--	EOF
-+test_expect_success GETTEXT_LOCALE,PCRE 'setup ascii pattern on UTF-8 data' '
- 	test_write_lines "forth" >file4 &&
- 	git add file4 &&
- 	git commit --author="À Ú Thor <author@example.com>" -m sécond &&
--	git log -1 --color=always --perl-regexp --author=".*Thor" >log &&
-+	test_write_lines "fifth" >file5 &&
-+	git add file5 &&
-+	GIT_COMMITTER_NAME="Ç O Mîtter" &&
-+	GIT_COMMITTER_EMAIL="committer@example.com" &&
-+	git -c i18n.commitEncoding=latin1 commit -m thïrd
-+'
-+
-+test_lazy_prereq PCRE2_MATCH_INVALID_UTF '
-+	test-tool pcre2-config has-PCRE2_MATCH_INVALID_UTF
-+'
-+
-+test_expect_success GETTEXT_LOCALE,PCRE,PCRE2_MATCH_INVALID_UTF 'log --author with an ascii pattern on UTF-8 data' '
-+	cat >expected <<-\EOF &&
-+	Author: <BOLD;RED>A U Thor<RESET> <author@example.com>
-+	Author: <BOLD;RED>À Ú Thor<RESET> <author@example.com>
-+	EOF
-+	git log --color=always --perl-regexp --author=". . Thor" >log &&
- 	grep Author log >actual.raw &&
- 	test_decode_color <actual.raw >actual &&
- 	test_cmp expected actual
-@@ -70,11 +83,6 @@ test_expect_success GETTEXT_LOCALE,PCRE 'log --committer with an ascii pattern o
- 	cat >expected <<-\EOF &&
- 	Commit:     Ç<BOLD;RED> O Mîtter <committer@example.com><RESET>
- 	EOF
--	test_write_lines "fifth" >file5 &&
--	git add file5 &&
--	GIT_COMMITTER_NAME="Ç O Mîtter" &&
--	GIT_COMMITTER_EMAIL="committer@example.com" &&
--	git -c i18n.commitEncoding=latin1 commit -m thïrd &&
- 	git -c i18n.logOutputEncoding=latin1 log -1 --pretty=fuller --color=always --perl-regexp --committer=" O.*" >log &&
- 	grep Commit: log >actual.raw &&
- 	test_decode_color <actual.raw >actual &&
-@@ -141,10 +149,6 @@ test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: grep non-ASCII from invali
- 	test_cmp invalid-0xe5 actual
- '
- 
--test_lazy_prereq PCRE2_MATCH_INVALID_UTF '
--	test-tool pcre2-config has-PCRE2_MATCH_INVALID_UTF
--'
--
- test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: grep non-ASCII from invalid UTF-8 data with -i' '
- 	test_might_fail git grep -hi "Æ" invalid-0x80 >actual &&
- 	test_might_fail git grep -hi "(*NO_JIT)Æ" invalid-0x80 >actual
--- 
-2.34.0.352.g07dee3c5e1
-
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>   revision.c | 4 +---
+>   1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/revision.c b/revision.c
+> index 9dff845bed..44492f2c02 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -43,10 +43,8 @@ static inline int want_ancestry(const struct rev_info *revs);
+>   
+>   void show_object_with_name(FILE *out, struct object *obj, const char *name)
+>   {
+> -	const char *p;
+> -
+>   	fprintf(out, "%s ", oid_to_hex(&obj->oid));
+> -	for (p = name; *p && *p != '\n'; p++)
+> +	for (const char *p = name; *p && *p != '\n'; p++)
+>   		fputc(*p, out);
+>   	fputc('\n', out);
+>   }
+> 
