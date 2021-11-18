@@ -2,181 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5103DC433EF
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 00:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D3B9C433F5
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 00:18:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2BF3061B73
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 00:07:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F07F361B98
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 00:18:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241791AbhKRAKO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 19:10:14 -0500
-Received: from mout.gmx.net ([212.227.17.21]:32875 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233149AbhKRAKN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 19:10:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637194028;
-        bh=Nfw/uLSgE7pRyk4lbuL5df0bcv7Iu+qf5CNnFSGwZFk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FTGjvvFZlgge+sbkReQhWVqNtLVCMel7ixcOGaX/wv/ZiaK1MZyB3lt6Yl9eaVLZ3
-         mKuN1CyO7wCzDoVJJsEicGDkF1/hbBFBDcPA1btyuggcXf+el4i+445orYquhU9nUw
-         9U+3wOFZIzTlGW0X5M2vbobHPA5k+IiaH0Ah9SXI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.166.205] ([89.1.213.220]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MSt8Q-1nFeD420Z4-00UH5h; Thu, 18
- Nov 2021 01:07:08 +0100
-Date:   Thu, 18 Nov 2021 01:07:06 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     "Wallace, Brooke T (US 349D-Affiliate)" 
-        <brooke.t.wallace@jpl.nasa.gov>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Config spec for git
-In-Reply-To: <D5EE9939-F639-4E69-BD81-10B05EC43A8E@jpl.nasa.gov>
-Message-ID: <nycvar.QRO.7.76.6.2111180033130.11028@tvgsbejvaqbjf.bet>
-References: <D5EE9939-F639-4E69-BD81-10B05EC43A8E@jpl.nasa.gov>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S241876AbhKRAVS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 19:21:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50218 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232341AbhKRAVO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 19:21:14 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15570C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 16:18:15 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id b15so18774721edd.7
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 16:18:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=tXkvrwHFUE+b5x3YExziIsfsczZ5X/cN8yuwr5pdvSM=;
+        b=JR6+ytKUwDF3Sr3BtMQYm2N1ezud841IqSfWDzk1hKqbjQOtFdMJHtb5rLfCHoLETD
+         f7epUU6Xr7ONdKBezaDu4DLIxuood7LA7/ARWa58pwqWoEhwDw5JGjL/9T3qW/zZXnjl
+         +fYM98XlNR4+ffcwtMRlAZqI76y020Az7hYpOSbHabB4aXx4Pj+5wmXtjRzCw9gTD/jD
+         Jr/fH5nzYQiGH1atSSR7Vtyr7QGTyPi+SXZy9Yt5q5vSHkHS4tsgQazUetJTx62Fis15
+         N0wn83Ik35N5wNt5m10P8QfxxOYaOgzwlEfACdlrsrjQPkdVp/M4ONBsQpTp7mwlzOlP
+         3o9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=tXkvrwHFUE+b5x3YExziIsfsczZ5X/cN8yuwr5pdvSM=;
+        b=izI3rYV4kDot2AjUEckk4ryKSeBibvNINB+lo6r+xH143au6jhuOvpF6Ivvy0EVkat
+         G25WR2rdf2OuwBodp8KvtcxSAke953ETnAkSbGtyktlhMoZvheCzxFugoCSveikrC5IL
+         W9874XohPR+UVYcgYhFG6s0HBI8EcaUSsYCtnXHUuaYFizzXyMRyYkIUaI6r6Btpg+Ra
+         Vh+8m+ceguC7MB5y0ZnSeAfAPYfxop0xyB7Crj6qaOOogObPOXL6PNLxhiKVvCKQU+6Z
+         6l1lc95DNLzYsaz+D/4egOjUbDsYtAf6WNdlJfZf6Dr+P9ZeGrZ//lLxYvS6ulsJYlQ/
+         ksIA==
+X-Gm-Message-State: AOAM530NtohbQ7G9mecgVB3a2qzEsqazFRKfgiwqkXz4OhmWDFYaWWET
+        3rtbHg307uNvcoCcdTqVeuE=
+X-Google-Smtp-Source: ABdhPJz7jdi+mzi2as2akPuApxqO7o4EARBXlOKriG8rUM4ii1o5rU7e6dzSLbnK4tg0Y8nZB2UzjA==
+X-Received: by 2002:a05:6402:2789:: with SMTP id b9mr4456980ede.28.1637194693507;
+        Wed, 17 Nov 2021 16:18:13 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id qb28sm625551ejc.93.2021.11.17.16.18.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Nov 2021 16:18:12 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mnV80-000Gkr-5u;
+        Thu, 18 Nov 2021 01:18:12 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        Hamza Mahfooz <someguy@effective-light.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v13 3/3] grep/pcre2: fix an edge case concerning ascii
+ patterns and UTF-8 data
+Date:   Thu, 18 Nov 2021 01:00:26 +0100
+References: <20211015161356.3372-1-someguy@effective-light.com>
+ <20211015161356.3372-3-someguy@effective-light.com>
+ <877dd9i1zj.fsf@igel.home> <211115.86fsrxqbvp.gmgdl@evledraar.gmail.com>
+ <87o86kv6fh.fsf@igel.home>
+ <CAPUEspi=r9EsG8KPvdiD-HM7Drq8ho1yjkN_c_T1e+ZeR4eejg@mail.gmail.com>
+ <87fsrwv46h.fsf@igel.home>
+ <CAPUEspg8ZUdn+KFz35yG1k9bbfVTe1b+7=+WdMknRS1zu8VcDQ@mail.gmail.com>
+ <634c4237-325a-13e8-0a92-09d23bdfb111@web.de>
+ <211117.86y25m5wez.gmgdl@evledraar.gmail.com>
+ <CAPUEsph8NMJtK2r_fuT6UPsgmoPAeGVfTLOj8uz6NaOj4UZ1dg@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <CAPUEsph8NMJtK2r_fuT6UPsgmoPAeGVfTLOj8uz6NaOj4UZ1dg@mail.gmail.com>
+Message-ID: <211118.86pmqy5naz.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:P+fD+5B6fjEcLI9Oc9ZknsVvyPn++V5ptr7bPgYu1rbz+1VLFck
- zPuG9XbQsprlqOUY65IpGnGOyID+3Tb3Y8PHQAw21Ow3SiA1SVLiA+lKWnKOhTjYAeAra+k
- FDrUSiF+TtpVGKUKWG0mn77eOuUaHKZdKO2iJhFhxP0hOHkwRygvn4W3eyjMO4e11wmEawo
- +UWg7Ia01Inx9VVhNygYw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:41zPWTHJGug=:JbZKUbXnbLqIzxDD7ziBGl
- HFoDBiDD2qwdkhneSWcxixmvS/+s5skESbeugvbKksDJLPTlwYAzqy1xa1Tv1iIlj5XMYHQ4V
- PlgdHZDcqpTT3m+24g4R8UqPHrMTSpEU3S6wfKcgxNpOk4PX9+mPEOm0aMjeDZ8hSc1asgBaM
- 2SQ00LXlKwSHZRO8LnKPOfuCsqslNOPqmwc+OSA3+avdSPfZ/eZNSxqtIna9MrSF7bQM5/U+A
- 8oz0lKMS3sxVj7RizPpIYX511u8bO1MuguzN1akyT+soaSBI9FVFNh4Cq8netj810VRsPc9++
- Y6Yh51Jj2X9m+ohmEAtZe+/cM2j5MICMIVGF/pNuUBDLJ0Pwg4/HaXDEUoXHUXVZFcS0p6+Wt
- YbkcaZEKfRVtfzbi93ZTKpzLZvhJRjzdoka7Kny3koUrz8VfeeDKEQhwVxStGjOmTovYtA5AI
- jbaEqTk4sOLkkllYQqP337rKYAKEhIVQ03qmORn7snaw3Ef1Ol8OWA7Y6Al/A6aON9vbYl4st
- TJNI2YxeViUp8F7tGUe41Pmso44spMHXxxGrzcECGLPawJ7ZgjuVCgDVTneqBRA2A07P94CAF
- hvzM7L8zLlkgMvIN8YeiQ8Bsugzvlj6v5ZzxGOmNGWLB95wxszaTgD1obVSxOlUGmwErJT0qQ
- 8dzvt/2vnGxLH9aEWjeS2Lgo3lw5toxC5qlCPL+NxoOsM+2xn3bE83sKohMt52w7xu4GYTbMx
- L19GOgu+Q0El1VJ4Ou0fNCFgu7oKZN0Z2t4oWs8LoZbbdgADQ+gVLQehxUVmblXc9rgNlA1cT
- gd6ee/+DcaIv/3IEjuRA7t8XFvICubzDVLgAWiz0z/5FDgsXNFVmRwVX75FLrMW1m2A8o7Jxf
- XwCnXhv3XlHt7aurNCduW22brFO54BfYFO9aq2cxy6eHAa5u8wKwT5KTmojX4Qsi5lLeJ80ik
- bnSOhzvEcblnQBSYynS5Jqm7wD4dT0h8mx82N1yYlxnxvsPSZvQSQ/eVArb8u71Dw/HIAt83M
- t8/PcyvoQZX5iPrSrpVhagdwc7WnBxyI7borbaJ37yvhre5SDEypRL4FOv+zGXZIr+VfWh6e7
- +597+9Hq9QB5jg=
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Brooke,
 
-On Wed, 17 Nov 2021, Wallace, Brooke T (US 349D-Affiliate) wrote:
+On Wed, Nov 17 2021, Carlo Arenas wrote:
 
-> Has any one considered adding a config spec feature to Git or does Git
-> alreadt have some way to support the same features?
-
-Since config specs are clearly not (yet) a Git feature, it would make
-sense to begin the discussion with a description of the concept of config
-specs, as the majority of the readers on the Git mailing list will be
-unfamiliar with them.
-
-> I've been using Git for a while now for small projects but taking on a
-> new larger project I've come to realize that Git does not have config
-> specs and so seems to be missing an important feature for managing large
-> projects.
+> On Wed, Nov 17, 2021 at 1:01 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>>
+>> PCRE2_UTF will also matter for literal patterns. Try to peel apart the
+>> two bytes in "=C3=A9" and match them under -i with/without PCRE_UTF.
 >
-> We use configuration specs to select directories from a common code base
-> (repo) and map them into different baselines to creat multiple product
-> builds with different feature sets. We used this feature in VCSs such as
-> Clearcase and Perforce. Ultimately this allows us to manage the repo in
-> one directory structure and create product builds with a different one.
-> For example the repo has multiple directories for different
-> products/targets, but a baseline, the workspace, has only one target
-> directory always with the same name mapped to the same location.
-> Obviously the corresponding directories in the repo have different
-> names.
+> Is there a real use case for why someone would do that? and how is
+> that "literal" valid UTF to warrant setting PCRE2_UTF?
 
-So from what I gather after reading this, I suspect that you have a main
-branch with a full tree, and you want to have a way to check out only
-parts of the tree.
+We don't check the validity of the input pattern as correct UTF-8 before
+feeding it to PCRE. We don't even check if you're under a UTF-8 locale,
+a call to is_utf8_locale() is one of the conditions we'll try (but check
+how loose we are under NO_GETTEXT=3DY even then), but it's not a necessary
+one.
 
-This concept has been brought up before, in
-https://lore.kernel.org/git/pull.627.git.1588857462.gitgitgadget@gmail.com=
-/:
-proposing a way to define what parts of the tree should be checked out in
-a sparse checkout.
+So in practice we'll likely have users pasting say Big5, UTF-32, JIS
+encoding or whatever into "git grep" and then grepping arbitrary binary
+data.
 
-However, it looks as if your config specs also allow to map the
-directories in the Git revisions to different locations and maybe even
-names?
+I don't really have a specific use-case in mind. I'm just trying to
+counter the apparent recurring misconception that's popped up more than
+once in these recent threads that the UTF-8 *mode* is only something we
+need to worry about if the pattern contains non-ASCII.
 
-Such a concept has not come up on the Git mailing list.
+The implications of UTF-8 as a matching mode go much deeper than that in
+Perl's and PCRE's regex engines, e.g. in this case what's considered a
+character boundary.
 
-There _have_ been ideas floating around in Git for Windows, mainly to
-allow for checking out revisions that rely on file names that are illegal
-on Windows (such as file names containing backslashes, or reserved names
-such as `aux.c`).
+> I would expect that someone including random bytes in the expression
+> is really more interested in binary matching anyway and the use of -i
+> with it probably should be an error.
+>
+> Indeed I suspect the fact that pcre2_compile lets it through might be
+> a bug in PCRE2
+>
+> $ pcre2test
+> PCRE2 version 10.39 2021-10-29
+>   re> /\303/utf,caseless
+> data> \303
+>  0: \x{c3}
+> data> =C3=A9
+> No match
 
-Nothing came of those ideas, though, mainly because nobody snatched up the
-baton to work on a concrete patch to implement this.
+It's really not "random bytes".
 
-I should point out, though, that the concept of a sparse checkout is
-independent from the concept of mapping file/directory names in the Git
-revision to different ones in the Git worktree.
+We're not talking about someone doing a git grep where the argument is
+fed from a "cat" of /dev/urandom. Just plain old boring natural language
+encodings in common use can and will conflict with what's considered a
+character boundary in UTF-8,
 
-> Git supports the notion of submodules, but I see no way to map a
-> submodule directory to a different name, remove unwanted subdirs of a
-> submodule, or map a submodule over a subdirectory of the primary repo.
-> Config specs also allow you to specify a specific branch or version that
-> you want to map to your workspace independent of other directories,
-> branches and versions.
+Anyway, I haven't had time to re-page this topic at large into my
+wetware and really don't know what we should be doing exactly at this
+point to move forward, except my previous suggestion to either revert
+the recent changes, or at least to narrow them down so that we get the
+old behavior for everything except the revision.c "git log" caller.
 
-The idea of letting directories in the same Git worktree originate from
-_different_ revisions is very, very foreign to the fundamental Git concept
-of what constitutes a commit. A commit is very much a snapshot of the
-entire tree. And when you make a new commit, it is again very much a
-snapshot of the entire tree, based on a single parent commit.
+I think a really good next step aside from dealing with that immediate
+problem would be to harden some of our test data in a way similar to
+what we've got in t7816-grep-binary-pattern.sh, but for partial matches,
+mixtures of valid/invalid/partial character patterns and subjects etc.
 
-So I doubt that you will be able to come up with a workable design to let
-Git replicate this functionality.
+We might be able to lift some tests from existing test suites,
+perl.git's t/re/re_tests and pcre2.git's RunGrepTest (And testdata/
+directory) are probably good places to start looking.
 
-> I suppose it may be possible to achieve the same result by treating the
-> primary repo as the configspec. But I feel like there are some features
-> config specs support that i do not have using submodules, but might need
-> down the road.
+We don't need to test e.g. PCRE itself independently, but it is worth
+testing how whatever special-sauce we add on top (if and when to turn on
+its flags based on heuristics) impacts things.
 
-I agree that submodules are unlikely to give you what you want.
+We've also got the problem that whatever code we write will target
+multiple PCREv2 versions, which isn't something PCREv2 itself needs to
+deal with.
 
-> I can see that omitting, obscuring, or overwriting parts of a repo would
-> not play well with the commit id. So I imagine there could be some real
-> complications trying to add support for the notion of a flexible config
-> spec.
-
-Indeed.
-
-The only way I can see that you can _somehow_ combine parts of multiple
-revisions into one worktree is by transforming those parts into a single
-commit, quite possibly by scripting the transformation.
-
-For example, if you wanted to map, say, `Documentation/technical/` of the
-tag `v2.34.0` to `tech-specs/` and `compat/poll/` of the tag `v2.30.0` to
-`poll-emulation/` in a clone of https://github.com/git/git, you could use
-something like this to create a new branch:
-
-(
-	GIT_INDEX_FILE=3D.tmp-index &&
-	export GIT_INDEX_FILE &&
-	git read-tree --prefix=3Dtech-specs/ v2.34.0:Documentation/technical &&
-	git read-tree --prefix=3Dpoll-emulation/ v2.30.0:compat/poll &&
-	tree=3D$(git write-tree) &&
-	commit=3D$(git commit-tree $tree -p v2.34.0^0 -p v2.30.0) &&
-	git branch my-generated-branch $commit
-)
-
-This would give you a full Git branch that could be checked out and has
-the mapping.
-
-You would have to play similar tricks if you wanted to transport committed
-changes from that branch back to the originating commit histories.
-
-So yes, it is _somewhat_ possible to replicate what you can do with config
-specs, it is just unlikely to ever offer a good user experience.
-
-Ciao,
-Johannes
