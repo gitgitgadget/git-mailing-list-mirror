@@ -2,183 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7927AC433EF
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:15:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C8F7C433FE
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:19:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54D926135E
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:15:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 22C0C611CC
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:19:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243163AbhKRHSE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 02:18:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57912 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229594AbhKRHSB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 02:18:01 -0500
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 328B2C061570
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 23:15:02 -0800 (PST)
-Received: by mail-qt1-x834.google.com with SMTP id t11so5202054qtw.3
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 23:15:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6dwuS7bKikd69dGMhagfxRqVdQoo3I37wk6LNGhvwds=;
-        b=NgweYrT1ZCyzYrWRx7CRcfhNjKciD7bWR6G0JQRrsPptloiboQbuws0qQmbprjxTHO
-         kE8nB3FsviKbREsqr2Q4gh2sOfyGjatN9RBfBsieAwkT/YsvsFNC4JLRJ+KdT+Lg/l8N
-         SFqIOzF+Vnwt8asRXqgcwFIYK3/+nzOkwpk6G81uXAqqLC6MFwLlA+ag+3RYREUQWG2p
-         RhUJgIhEglv35Y6mVmOYhND9pG8z+xRw7qogYi4b89Kmb+jKOeLJ1VCfw4xAQV0iKtai
-         UBzz8ESDgBBWjK8uQa0figTmTBhgKLPgyfNINMbvSTXUYK/Qfhkrm2mFE72hpQi6ixOb
-         +e8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6dwuS7bKikd69dGMhagfxRqVdQoo3I37wk6LNGhvwds=;
-        b=eSX5d1BXjTA8OkVGC/8jL7OK7qL8gUm3+l+AlC1kxXCbItKsuvhIaAZuh4IqK6uZrP
-         RPEw44zzbjxgOCake3qlvZ20HVpC6sFAAqDEHtxUjXILlOeb869ITNccTBvfp4HAKPOZ
-         SRZw1u5jR3h2h6oCL5G/bdzqvea6syqB+DsGym04/07vr2ZjGxd2NKKHYdlvx1QWAsom
-         GEocZwOq0rLcs89B4SLyH7N/QBqrXFqb2mxl/p5c0nxIjjMm8aqjcLaYxpu7SqS6sead
-         5XZE1neukObXb1k+UGEpSSLudXE40jAk9PkKM0UDNkGGCEXDEfIedPIutoRnoGVl6JpU
-         E0dw==
-X-Gm-Message-State: AOAM532uDdoVNdU2+7BO97FmWu80HTOCjzU/O6u4criVkkwE6nq2XQdb
-        N2OMrFv7rT0Q40LupWol1uPfBed9pXkDcG42Tpc=
-X-Google-Smtp-Source: ABdhPJxO+dcHU4sl/joMHh2QP61bLi4ydeZZumVHoAjyQKn5eDgaLy2gYu/LXcuqr8dzdHeuWv+Awnpfy/qpCEuyp5E=
-X-Received: by 2002:ac8:18c:: with SMTP id x12mr22336410qtf.378.1637219701311;
- Wed, 17 Nov 2021 23:15:01 -0800 (PST)
+        id S243732AbhKRHWQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 02:22:16 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57266 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243385AbhKRHWM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 02:22:12 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7602B162120;
+        Thu, 18 Nov 2021 02:19:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=WDR5W+XIpBgJKG18B3YbL5eTdOln/WZqqyTzVvpMrSc=; b=hsC0
+        YtvAJMtPw8/mUPjB4YvdisIGWsDAKQWq3o1D+8BLNzBFpemn27kNEB1pR45/M45j
+        i/sM3HjZwhQ2cZQRonKPl+vxijuChHnUtmDkiroc/g7zqymrb641zDFQ5SSLI3uN
+        xC6rstDin9+anOYUcclqcy2oPlKwUyH7smFJXI0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6FCD416211F;
+        Thu, 18 Nov 2021 02:19:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D20AC16211E;
+        Thu, 18 Nov 2021 02:19:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] wrapper: add a helper to generate numbers from a
+ CSPRNG
+References: <20211116033542.3247094-1-sandals@crustytoothpaste.net>
+        <20211116033542.3247094-2-sandals@crustytoothpaste.net>
+        <xmqq1r3f5izn.fsf@gitster.g>
+        <YZWJy16Emrkr6qVL@camp.crustytoothpaste.net>
+Date:   Wed, 17 Nov 2021 23:19:08 -0800
+Message-ID: <xmqqv90qx76b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20211009082058.41138-1-chiyutianyi@gmail.com> <20211112094010.73468-6-chiyutianyi@gmail.com>
-In-Reply-To: <20211112094010.73468-6-chiyutianyi@gmail.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Thu, 18 Nov 2021 15:14:50 +0800
-Message-ID: <CANYiYbHMoH=pEhpx36ev-KWa7AXQtXpSiyjYObP1=XEx=Y8UNQ@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] unpack-objects: unpack large object in stream
-To:     Han Xin <chiyutianyi@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D2D244AA-483F-11EC-A4C8-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 12, 2021 at 5:42 PM Han Xin <chiyutianyi@gmail.com> wrote:
->
-> From: Han Xin <hanxin.hx@alibaba-inc.com>
->
-> When calling "unpack_non_delta_entry()", will allocate full memory for
-> the whole size of the unpacked object and write the buffer to loose file
-> on disk. This may lead to OOM for the git-unpack-objects process when
-> unpacking a very large object.
->
-> In function "unpack_delta_entry()", will also allocate full memory to
-> buffer the whole delta, but since there will be no delta for an object
-> larger than "core.bigFileThreshold", this issue is moderate.
->
-> To resolve the OOM issue in "git-unpack-objects", we can unpack large
-> object to file in stream, and use "core.bigFileThreshold" to avoid OOM
-> limits when called "get_data()".
->
-> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-> ---
->  builtin/unpack-objects.c          | 76 ++++++++++++++++++++++++-
->  t/t5590-receive-unpack-objects.sh | 92 +++++++++++++++++++++++++++++++
->  2 files changed, 167 insertions(+), 1 deletion(-)
->  create mode 100755 t/t5590-receive-unpack-objects.sh
->
-> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-> index 4a9466295b..6c757d823b 100644
-> --- a/builtin/unpack-objects.c
-> +++ b/builtin/unpack-objects.c
-> @@ -320,11 +320,85 @@ static void added_object(unsigned nr, enum object_type type,
->         }
->  }
->
-> +struct input_data_from_zstream {
-> +       git_zstream *zstream;
-> +       unsigned char buf[4096];
-> +       int status;
-> +};
-> +
-> +static const char *read_inflate_in_stream(void *data, unsigned long *readlen)
-> +{
-> +       struct input_data_from_zstream *input = data;
-> +       git_zstream *zstream = input->zstream;
-> +       void *in = fill(1);
-> +
-> +       if (!len || input->status == Z_STREAM_END) {
-> +               *readlen = 0;
-> +               return NULL;
-> +       }
-> +
-> +       zstream->next_out = input->buf;
-> +       zstream->avail_out = sizeof(input->buf);
-> +       zstream->next_in = in;
-> +       zstream->avail_in = len;
-> +
-> +       input->status = git_inflate(zstream, 0);
-> +       use(len - zstream->avail_in);
-> +       *readlen = sizeof(input->buf) - zstream->avail_out;
-> +
-> +       return (const char *)input->buf;
-> +}
-> +
-> +static void write_stream_blob(unsigned nr, unsigned long size)
-> +{
-> +       char hdr[32];
-> +       int hdrlen;
-> +       git_zstream zstream;
-> +       struct input_data_from_zstream data;
-> +       struct input_stream in_stream = {
-> +               .read = read_inflate_in_stream,
-> +               .data = &data,
-> +       };
-> +       struct object_id *oid = &obj_list[nr].oid;
-> +       int ret;
-> +
-> +       memset(&zstream, 0, sizeof(zstream));
-> +       memset(&data, 0, sizeof(data));
-> +       data.zstream = &zstream;
-> +       git_inflate_init(&zstream);
-> +
-> +       /* Generate the header */
-> +       hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX, type_name(OBJ_BLOB), (uintmax_t)size) + 1;
-> +
-> +       if ((ret = write_loose_object(oid, hdr, hdrlen, &in_stream, dry_run, 0, 0)))
-> +               die(_("failed to write object in stream %d"), ret);
-> +
-> +       if (zstream.total_out != size || data.status != Z_STREAM_END)
-> +               die(_("inflate returned %d"), data.status);
-> +       git_inflate_end(&zstream);
-> +
-> +       if (strict && !dry_run) {
-> +               struct blob *blob = lookup_blob(the_repository, oid);
-> +               if (blob)
-> +                       blob->object.flags |= FLAG_WRITTEN;
-> +               else
-> +                       die("invalid blob object from stream");
-> +       }
-> +       obj_list[nr].obj = NULL;
-> +}
-> +
->  static void unpack_non_delta_entry(enum object_type type, unsigned long size,
->                                    unsigned nr)
->  {
-> -       void *buf = get_data(size);
-> +       void *buf;
-> +
-> +       /* Write large blob in stream without allocating full buffer. */
-> +       if (type == OBJ_BLOB && size > big_file_threshold) {
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Default size of big_file_threshold is 512m.  Can we use
-"write_stream_blob" for all objects?  Can we get a more suitable
-threshold through some benchmark data?
+> On 2021-11-17 at 07:39:08, Junio C Hamano wrote:
+>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>> 
+>> > Finally, add a self-test option here to make sure that our buffer
+>> > handling is correct and we aren't truncating data.  We simply read 64
+>> > KiB and then make sure we've seen each byte.  The probability of this
+>> > test failing spuriously is less than 10^-100.
+>> 
+>> I saw that 10^-100 math in the other message, and have no problem
+>> with that, but I am not sure how such a test makes "sure that our
+>> buffer handling is correct and we aren't truncating data."  If you
+>> thought you are generate 64kiB of random bytes but a bug caused you
+>> to actually use 32kiB of random bytes with 32kiB of other garbage,
+>> wouldn't you still have enough entropy left that you would be likely
+>> to paint all 256 buckets?
+>
+> True, but our code processes smaller chunks at a time, which means that
+> theoretically we'd notice before then.  For example, getentropy(2) won't
+> process chunks larger than 256 bytes.
 
-> +               write_stream_blob(nr, size);
-> +               return;
-> +       }
+Sorry, you lost me.
 
---
-Jiang Xin
+> If we don't think there's value, I can just remove it.
+
+It is not that I do not think there is value.  I am not sure where
+this code is getting its value from.
+
+We grab 1k at a time and repeat that 64 times.  
+
+Presumably csprn_bytes() grabs bytes from underlying mechanism in
+smaller chunk, but would not return until it fills the buffer---ah,
+your "make sure our buffer handling is correct" is primarily about
+the check that we get full 1k bytes in the loop?  We ask 1k chunk 64
+times and we must get full 1k chunk every time?
+
+What I was wondering about was the other half of the check, ensuring
+all buckets[] are painted that gave us the cute 10^-100 math.
+
++	int buckets[256] = { 0 };
++	unsigned char buf[1024];
++	unsigned long count = 64 * 1024;
++	int i;
++
++	while (count) {
++		if (csprng_bytes(buf, sizeof(buf)) < 0) {
++			perror("failed to read");
++			return 3;
++		}
++		for (i = 0; i < sizeof(buf); i++)
++			buckets[buf[i]]++;
++		count -= sizeof(buf);
++	}
