@@ -2,106 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD5B8C433FE
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 10:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F165EC433F5
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 10:51:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B10060F51
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 10:35:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD0F66138F
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 10:51:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245581AbhKRKib (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 05:38:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46800 "EHLO
+        id S1343512AbhKRKyD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 05:54:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245334AbhKRKiG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 05:38:06 -0500
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D81B2C061764
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 02:35:06 -0800 (PST)
-Received: by mail-pg1-x534.google.com with SMTP id b4so4932614pgh.10
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 02:35:06 -0800 (PST)
+        with ESMTP id S1343537AbhKRKxj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 05:53:39 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D16ABC061764
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 02:50:39 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id az33-20020a05600c602100b00333472fef04so7229259wmb.5
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 02:50:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VOynQIdaBuKUA6E4eeBBiJCLpFY5vFyk1BTzzCreSsg=;
-        b=C6uzPAVKf2eEdYeRQPvubnTcF7AQmKzOAa8VKciy+HpMUAR8d2Bw6DM+aOEs29Cwcm
-         Y9YeULeh+U4O6rVB4KX7vsVgaqIgJG7ymWcJRLpL19ds/IfoCT/nXLwNw1be9YI2wMHv
-         2l6UBuxV1O+FvbvozZUe0Jhe0wnM76UDCkXmFtX1KklPoCvu6zKSp5lgqEcPaz5IZbG8
-         S+uhMcXkMNopIUAB/RJJRQNqsT1nl292fDZxEYr0DmvaU9DkKh4MEjUBl3gF6Z3CKATE
-         mzfYHYa0J3GxkjuibmgWWwyZlinzUjOxkOMUuHEq4KTuJdMOhnlq55ldVkw5A5emzly5
-         741A==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=rdZ+Hyhdeez5sYovoNl4c+4e/sjVspsttzqtSN0P6X8=;
+        b=ElIGrUtuL4Tz7r8+Es03/rNCIW0uEcA3HRUH1tH+euC+wq/VLeaaK+hpqSMFfYDJke
+         djRQHv2Lpl76/SCVrd+cqYbVXcGQEJokoef7OkO6BWpPfwwMTZ7m+GJo1ohzVHgPD1dx
+         O12ryTpfDSfB+qNCdzMmx9MwJxJ60E82BbfT91C5twrKn8sQF1G2I127FRug2icrB5JO
+         947KhAaJgDY6xXGS50d8vg9UGQPzUGH0DugGBOM25MOVHMkHW/4Th3RKFiB13g7O9e8a
+         ZssKqsQMACrnNKubQ/QP0+toV4CSKTJuVdVVEnnnQArz/RHfiWBz1aAnq3wMqrtwTcQt
+         3I7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VOynQIdaBuKUA6E4eeBBiJCLpFY5vFyk1BTzzCreSsg=;
-        b=GiLQRDXnjHZmRgR5+chSfPYImUqhM9GFFTy1lMDxYBj1A+eTGaZUOQcMXQCPjCSNcO
-         +qejfK1pt1qiYrm7wH9gK2929vj7LbvI9ppnXZq7ju0hPaxr2AxiLaZ8vs+b/qeAEUMt
-         mSnhFcQU8qxuo6XIh2x5mog3q4ZvBnnAknbAfAntez1UWpQGy3QO24ze7mZnnslPzPi5
-         Y/MNoW17hmHUcjLRcRiHFu/DevTmwgLoT3ii+4csBdFHe6F4tRVmZtFvIEmiUnlG2VWz
-         tAZgb1Hn7OPxyzRQWT4Bbw5wUpEXys4wSft6i+auWNNOxhzi+r0qfjZM6nGEUEkyltRb
-         mGaw==
-X-Gm-Message-State: AOAM532m5bmwzLKPdl6vQIRgCNuX7A3N8XAZxz8uChin5EgBQM2Tn5tx
-        EH22yswy2vfaxvihXpTEnLlaXNGo+do=
-X-Google-Smtp-Source: ABdhPJxhGiPXPPN6lkbNKPCukqZlhogaUqc0PIZv0Dz3cyvZ3q4xrKjRviMdkWd1z7wAalmGF76CqA==
-X-Received: by 2002:a05:6a00:1a8d:b0:49f:de63:d9c0 with SMTP id e13-20020a056a001a8d00b0049fde63d9c0mr54266450pfv.79.1637231706211;
-        Thu, 18 Nov 2021 02:35:06 -0800 (PST)
-Received: from ubuntu.mate (subs32-116-206-28-20.three.co.id. [116.206.28.20])
-        by smtp.gmail.com with ESMTPSA id k13sm2945707pfc.197.2021.11.18.02.35.04
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=rdZ+Hyhdeez5sYovoNl4c+4e/sjVspsttzqtSN0P6X8=;
+        b=BQ00uZgmC3g5G38lFBqy9vfD5YdZe7oGT2kwK5DXJV1p2veGq8Zbc6PmArU9yiQKYg
+         yan8HWeakrGUIt7mhAJxJl6bc3prFJ5wPPrlIEjFkwueMBggT+gQ/LA8nQMDV5JuJvci
+         VBl62RyHBNnI4cKysaH9n+ktpeEEulkCItnibhPiYVt8R/8A/LSgIWiCBbleh8ruSNI/
+         W707WomqoKC6btbLeMJ+TjaodbhLAtRI+SNdeABZWVvcJKNir0VTCKuMn5rGegfTQy6r
+         qfGfinE/6BctARZIirRnwkNfmMKA9+KcAl4l4SCmb6sBRoZHSrykj3I34tjaWb0pd6Xi
+         MThQ==
+X-Gm-Message-State: AOAM530ei2GdxN/aep2ZApeenvqU1PRVryqxcYyI9r8QQgBYJtRJjsKq
+        th3412SLMbu+FCT2qn4hvCUyOUXP7a4=
+X-Google-Smtp-Source: ABdhPJyTzUPN/gANMLfi85Ntw8iXYhKov6XBNCwyk0rrZ7pAvXAIqUIHAYIMt77vGfBGC2GoZKR11Q==
+X-Received: by 2002:a1c:9814:: with SMTP id a20mr8640603wme.18.1637232638168;
+        Thu, 18 Nov 2021 02:50:38 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m34sm9769845wms.25.2021.11.18.02.50.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Nov 2021 02:35:05 -0800 (PST)
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH v2] fetch-pack: parameterize message containing 'ready' keyword
-Date:   Thu, 18 Nov 2021 17:34:25 +0700
-Message-Id: <20211118103424.6464-1-bagasdotme@gmail.com>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
+        Thu, 18 Nov 2021 02:50:37 -0800 (PST)
+Message-Id: <9f1b3dd6d0b2d3f22fe960b0c3aaa3d888d26c88.1637232636.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1076.v6.git.1637232636.gitgitgadget@gmail.com>
+References: <pull.1076.v5.git.1637141636.gitgitgadget@gmail.com>
+        <pull.1076.v6.git.1637232636.gitgitgadget@gmail.com>
+From:   "Aleen via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 18 Nov 2021 10:50:34 +0000
+Subject: [PATCH v6 1/3] doc: git-format-patch: describe the option --always
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Aleen =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>,
+        Aleen <aleen42@vip.qq.com>, Aleen <aleen42@vip.qq.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The protocol keyword 'ready' isn't meant for translation. Pass it as
-parameter instead of spell it in die() message (and potentially confuse
-translators).
+From: Aleen <aleen42@vip.qq.com>
 
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Signed-off-by: Aleen <aleen42@vip.qq.com>
 ---
- Changes since v1 [1]:
-   - Parameterize message (suggested by Ævar)
+ Documentation/git-format-patch.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
- [1]:
-https://lore.kernel.org/git/20211114073143.84004-1-bagasdotme@gmail.com/T/#u
- fetch-pack.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index a9604f35a3..b8a20778bb 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1410,9 +1410,13 @@ static int process_ack(struct fetch_negotiator *negotiator,
- 	 * otherwise.
- 	 */
- 	if (*received_ready && reader->status != PACKET_READ_DELIM)
--		die(_("expected packfile to be sent after 'ready'"));
-+		/* TRANSLATORS: The parameter will be 'ready', a protocol
-+		 * keyword */
-+		die(_("expected packfile to be sent after '%s"), "ready");
- 	if (!*received_ready && reader->status != PACKET_READ_FLUSH)
--		die(_("expected no other sections to be sent after no 'ready'"));
-+		/* TRANSLATORS: The parameter will be 'ready', a protocol
-+		 * keyword */
-+		die(_("expected no other sections to be sent after no '%s"), "ready");
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 113eabc107c..be797d7a28f 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -18,7 +18,7 @@ SYNOPSIS
+ 		   [-n | --numbered | -N | --no-numbered]
+ 		   [--start-number <n>] [--numbered-files]
+ 		   [--in-reply-to=<message id>] [--suffix=.<sfx>]
+-		   [--ignore-if-in-upstream]
++		   [--ignore-if-in-upstream] [--always]
+ 		   [--cover-from-description=<mode>]
+ 		   [--rfc] [--subject-prefix=<subject prefix>]
+ 		   [(--reroll-count|-v) <n>]
+@@ -192,6 +192,10 @@ will want to ensure that threading is disabled for `git send-email`.
+ 	patches being generated, and any patch that matches is
+ 	ignored.
  
- 	return 0;
- }
-
-base-commit: cd3e606211bb1cf8bc57f7d76bab98cc17a150bc
++--always::
++	Include patches for commits that do not introduce any change,
++	which are omitted by default.
++
+ --cover-from-description=<mode>::
+ 	Controls which parts of the cover letter will be automatically
+ 	populated using the branch's description.
 -- 
-An old man doll... just what I always wanted! - Clara
+gitgitgadget
 
