@@ -2,204 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74002C433FE
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:29:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54C03C433EF
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:58:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D412617E3
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:29:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3315A61B1E
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:58:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243794AbhKRHcQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 02:32:16 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52216 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242809AbhKRHcL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 02:32:11 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C3806E2D36;
-        Thu, 18 Nov 2021 02:29:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=TpJUQh/GTHdy9m5csoaj6NiWP
-        M5HVro0X4RyHAMaUdY=; b=RJahTAtShHWI5CWb5HgOqBZfm2TgpAdeDQZDVQGop
-        fBFLcBcAlt1Xuwuymw7XrqSeOJnVL9Gvs8GpQJxljW2blfP3i47VHagqvkTGx36s
-        2myDU9BOaPjR3byZvVmJ+PoMHmKYW0vWDuJhR8pJqekzcPpDL3h3qwQxJgtS4w3v
-        jM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A844AE2D33;
-        Thu, 18 Nov 2021 02:29:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BBC45E2D19;
-        Thu, 18 Nov 2021 02:29:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, someguy@effective-light.com,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH v2] grep: avoid setting UTF mode when dangerous with PCRE
-References: <20211116110035.22140-1-carenas@gmail.com>
-        <20211117102329.95456-1-carenas@gmail.com>
-Date:   Wed, 17 Nov 2021 23:29:08 -0800
-Message-ID: <xmqqpmqxyla3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S244141AbhKRIBR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 03:01:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39490 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244066AbhKRIBN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 03:01:13 -0500
+Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D76EC061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 23:58:12 -0800 (PST)
+Received: by mail-ua1-x92d.google.com with SMTP id y5so11747162ual.7
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 23:58:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9R+5FhCmgM+4jBSdRkPs/VX3PQtN9Y+RLpwb4rJT00o=;
+        b=dEUjEa3Z/QEzS3lGG664e7ng8jXqM93o7GUUHdjxjD9F6aeKL39TMwEDHA2+NfJbZH
+         1759rtb75EkmBvuGm0zrsCYnb1+SKWSzUptLnwG/aVM1+1uH3J2UiOjLp+frOLMDUHr3
+         Q+1dEd2tRLlHmTYUX32lD0V6iqZ2iUz3Ou81c8b7Cv7TPnV28jKkt1S+fUz8btZL+gJY
+         ZrkaByj7PBl5sdXFjGVvbaH4N+8LupXpk80j4rbflDv2PGZEpQmDcyhqiTipBsImru5M
+         zPNd8OcxRyeRYTAat/ZTicgm4dwbt916DH7HHX+o6a+N28f24rm+Vw3JaCqxP9geLWWA
+         lX5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9R+5FhCmgM+4jBSdRkPs/VX3PQtN9Y+RLpwb4rJT00o=;
+        b=5H7LcgaUvMOxgH0MWMyJ4KfYwWV1cYjLoB2o9OY8kSr+qzVHKmpvbSLtWdHDUL1GIe
+         qbKaIqiqg4x2TVDOwSID/wPDA6kv2ZPA991erC0JqQlMkqvWCJDVuD6RFgWmw6aWCN0w
+         ya3BCGV2CefsYNTfhMPTv5n1JZgR9wR6455XrXP5284NEy/lsi1mfG6es6qjCIzmvSoY
+         222RlQQjFm/whXw0OdFOQjkUMWSaMpxO2wZ/ajXe6I9RrtfE9zVghVALwcStbXo9CKcV
+         DKMW3sT84VAvmwKPdcwburxC5LHOBPebiTAY1HArg7YvuhssHRe3S8lctvD4oEy9s4wN
+         NOlg==
+X-Gm-Message-State: AOAM531VjlkZRFz0ZNzfm+HR8Simz99tmNRIFs32d5QerusjkVoj3sdj
+        IWFeTC9/RH1gjFyf5daBLIiJcfXBEo7qof3SjGs=
+X-Google-Smtp-Source: ABdhPJxfhhJ0isfOtomwaCIlX0ykpU3iedl44mHRHPoMi8lL+S34YFYernK872rLdEMPdks7ajWKBv4PXpvqMt30yCo=
+X-Received: by 2002:ab0:3b12:: with SMTP id n18mr2728950uaw.2.1637222291509;
+ Wed, 17 Nov 2021 23:58:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3865CC64-4841-11EC-8B5F-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20211005063936.588874-1-mh@glandium.org> <CAPUEspgLwLxavP3bC9OEJQTphoemQ+jxv+9Nkcvbf51uaBEpww@mail.gmail.com>
+ <20211118030255.jscp2zda4p2ewact@glandium.org> <CAPUEspg-5+YdfTJ6zi9hdDqF=KV2LJFCtqmECSss9Kfpn6sGrQ@mail.gmail.com>
+ <20211118053415.4axljmr4s6kmqmms@glandium.org>
+In-Reply-To: <20211118053415.4axljmr4s6kmqmms@glandium.org>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Wed, 17 Nov 2021 23:58:00 -0800
+Message-ID: <CAPUEsphf0d90HGg64j=jZnt-Xuhs_bwmeOyoUnmzesp_k2c4JA@mail.gmail.com>
+Subject: Re: [PATCH] Use mingw.h declarations for gmtime_r/localtime_r on msys2
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
-
-> Since ae39ba431a (grep/pcre2: fix an edge case concerning ascii pattern=
-s
-> and UTF-8 data, 2021-10-15), PCRE2_UTF mode is enabled for cases where =
-it
-> will trigger UTF-8 validation errors (as reported) or can result in
-> undefined behaviour.
+On Wed, Nov 17, 2021 at 9:34 PM Mike Hommey <mh@glandium.org> wrote:
+> On Wed, Nov 17, 2021 at 08:51:06PM -0800, Carlo Arenas wrote:
+> > It is not in 2.34; only in the git for windows fork, but agree is
+> > needed if you are building master with a newish mingw
 >
-> Our use of PCRE2 only allows searching through non UTF-8 validated data
-> safely through the use of the PCRE2_MATCH_INVALID_UTF flag, that is onl=
-y
-> available after 10.34, so restrict the change to newer versions of PCRE
-> and revert to the old logic for older releases, which will still allow
-> for matching not using UTF-8 for likely most usecases (as shown in the
-> tests).
->
-> Fix one test that was using an expression that wouldn't fail without th=
-e
-> new code so it can be forced to fail if it is missing and restrict it t=
-o
-> run only for newer PCRE releases; while at it do some minor refactoring
-> to cleanup the fallout for when that test might be skipped or might
-> succeed under the new conditions.
->
-> Keeping the overly complex and unnecessary logic for now, to reduce ris=
-k
-> but with the hope that it will be cleaned up later.
->
-> Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> Reported-by: Andreas Schwab <schwab@linux-m68k.org>
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> ---
-> v2:
-> * restrict the code at compile time instead of reverting
-> * "fix" test to document  the behaviour under both PCRE code versions
-> * update commit message to better explain the issue
+> Err, I did mean 2.34.0.windows.1. My working workaround is to build with
+> -D_POSIX_THREAD_SAFE_FUNCTIONS=200112L.
 
-So, is this the final verrsion everybody is happy with, instead of
-just reverting the whole "paint hits in log --grep" topic, or did I
-miss more discussion in the original thread?
+that is strange, building main/2.34.0.windows.1 works for me both in a
+mingw64 shell and the git for windows sdk, and the PR[1] worked as
+well when applied to 2.34/master that uses a git for windows sdk for
+building it and that would had failed without it as you reported.
 
-With too many patches on the list, it is a bit hard to keep track of
-the more urgent regresison fixes X-<.
+what version `pacman -q | grep pthread` of the winpthreads library do
+you have?, anything else peculiar about your build environment that
+you could think of?
 
-Thanks.
+that define and the setting in git-compat-util.h should have
+equivalent effect in your mingw headers; what does the relevant
+(almost at the bottom, where the problematic functions are defined)
+part of /mingw64/x86_64-w64-mingw32/include/time.h say?
 
->  grep.c                          |  7 ++++++-
->  t/t7812-grep-icase-non-ascii.sh | 32 ++++++++++++++++++--------------
->  2 files changed, 24 insertions(+), 15 deletions(-)
->
-> diff --git a/grep.c b/grep.c
-> index f6e113e9f0..0126aa3db4 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -382,12 +382,17 @@ static void compile_pcre2_pattern(struct grep_pat=
- *p, const struct grep_opt *opt
->  		}
->  		options |=3D PCRE2_CASELESS;
->  	}
-> +#ifdef GIT_PCRE2_VERSION_10_34_OR_HIGHER
->  	if ((!opt->ignore_locale && !has_non_ascii(p->pattern)) ||
->  	    (!opt->ignore_locale && is_utf8_locale() &&
->  	     has_non_ascii(p->pattern) && !(!opt->ignore_case &&
->  					    (p->fixed || p->is_fixed))))
->  		options |=3D (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
-> -
-> +#else
-> +	if (!opt->ignore_locale && is_utf8_locale() && has_non_ascii(p->patte=
-rn) &&
-> +	    !(!opt->ignore_case && (p->fixed || p->is_fixed)))
-> +		options |=3D PCRE2_UTF;
-> +#endif
->  #ifdef GIT_PCRE2_VERSION_10_36_OR_HIGHER
->  	/* Work around https://bugs.exim.org/show_bug.cgi?id=3D2642 fixed in =
-10.36 */
->  	if (PCRE2_MATCH_INVALID_UTF && options & (PCRE2_UTF | PCRE2_CASELESS)=
-)
-> diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-a=
-scii.sh
-> index 22487d90fd..3bfe1ee728 100755
-> --- a/t/t7812-grep-icase-non-ascii.sh
-> +++ b/t/t7812-grep-icase-non-ascii.sh
-> @@ -53,14 +53,27 @@ test_expect_success REGEX_LOCALE 'pickaxe -i on non=
--ascii' '
->  	test_cmp expected actual
->  '
-> =20
-> -test_expect_success GETTEXT_LOCALE,PCRE 'log --author with an ascii pa=
-ttern on UTF-8 data' '
-> -	cat >expected <<-\EOF &&
-> -	Author: <BOLD;RED>=C3=80 =C3=9A Thor<RESET> <author@example.com>
-> -	EOF
-> +test_expect_success GETTEXT_LOCALE,PCRE 'setup ascii pattern on UTF-8 =
-data' '
->  	test_write_lines "forth" >file4 &&
->  	git add file4 &&
->  	git commit --author=3D"=C3=80 =C3=9A Thor <author@example.com>" -m s=C3=
-=A9cond &&
-> -	git log -1 --color=3Dalways --perl-regexp --author=3D".*Thor" >log &&
-> +	test_write_lines "fifth" >file5 &&
-> +	git add file5 &&
-> +	GIT_COMMITTER_NAME=3D"=C3=87 O M=C3=AEtter" &&
-> +	GIT_COMMITTER_EMAIL=3D"committer@example.com" &&
-> +	git -c i18n.commitEncoding=3Dlatin1 commit -m th=C3=AFrd
-> +'
-> +
-> +test_lazy_prereq PCRE2_MATCH_INVALID_UTF '
-> +	test-tool pcre2-config has-PCRE2_MATCH_INVALID_UTF
-> +'
-> +
-> +test_expect_success GETTEXT_LOCALE,PCRE,PCRE2_MATCH_INVALID_UTF 'log -=
--author with an ascii pattern on UTF-8 data' '
-> +	cat >expected <<-\EOF &&
-> +	Author: <BOLD;RED>A U Thor<RESET> <author@example.com>
-> +	Author: <BOLD;RED>=C3=80 =C3=9A Thor<RESET> <author@example.com>
-> +	EOF
-> +	git log --color=3Dalways --perl-regexp --author=3D". . Thor" >log &&
->  	grep Author log >actual.raw &&
->  	test_decode_color <actual.raw >actual &&
->  	test_cmp expected actual
-> @@ -70,11 +83,6 @@ test_expect_success GETTEXT_LOCALE,PCRE 'log --commi=
-tter with an ascii pattern o
->  	cat >expected <<-\EOF &&
->  	Commit:     =C3=87<BOLD;RED> O M=C3=AEtter <committer@example.com><RE=
-SET>
->  	EOF
-> -	test_write_lines "fifth" >file5 &&
-> -	git add file5 &&
-> -	GIT_COMMITTER_NAME=3D"=C3=87 O M=C3=AEtter" &&
-> -	GIT_COMMITTER_EMAIL=3D"committer@example.com" &&
-> -	git -c i18n.commitEncoding=3Dlatin1 commit -m th=C3=AFrd &&
->  	git -c i18n.logOutputEncoding=3Dlatin1 log -1 --pretty=3Dfuller --col=
-or=3Dalways --perl-regexp --committer=3D" O.*" >log &&
->  	grep Commit: log >actual.raw &&
->  	test_decode_color <actual.raw >actual &&
-> @@ -141,10 +149,6 @@ test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE =
-v2: grep non-ASCII from invali
->  	test_cmp invalid-0xe5 actual
->  '
-> =20
-> -test_lazy_prereq PCRE2_MATCH_INVALID_UTF '
-> -	test-tool pcre2-config has-PCRE2_MATCH_INVALID_UTF
-> -'
-> -
->  test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: grep non-ASCII f=
-rom invalid UTF-8 data with -i' '
->  	test_might_fail git grep -hi "=C3=86" invalid-0x80 >actual &&
->  	test_might_fail git grep -hi "(*NO_JIT)=C3=86" invalid-0x80 >actual
+Carlo
+
+[1] https://github.com/git/git/pull/1142
