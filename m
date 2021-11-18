@@ -2,94 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F16ACC433F5
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 06:45:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C8EBC433F5
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:10:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC1C461B2B
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 06:45:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5388C6128C
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:10:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243431AbhKRGsW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 01:48:22 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50490 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243206AbhKRGsV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 01:48:21 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C772E161E6A;
-        Thu, 18 Nov 2021 01:45:18 -0500 (EST)
+        id S243623AbhKRHNT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 02:13:19 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55738 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243609AbhKRHMN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 02:12:13 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 846FD174724;
+        Thu, 18 Nov 2021 02:09:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eiTd6V3xgcjDQdVv7/ONWus7yoZQWC7dIxZSrL
-        qKNpQ=; b=EklSIMRqdC8G2NSO6aPzMVkOdErX+59ySDkXMiKruZAocB5/8ehwGd
-        ti7mp+X+y/y9s3MKWHrAm+vPYaIESGoYhJJJy98fa32hDJjNUOVsajmE6zrEHDYz
-        zdH7FjnVhRZt2p1zIW9h4GjoRv0Ke8joplF9qJZA/5rWMIOKlKN68=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BF238161E69;
-        Thu, 18 Nov 2021 01:45:18 -0500 (EST)
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=fO9OyE5mE00XjuoNexzNj62orpk8em3J8NSC7M
+        ytZaU=; b=l4YnW18JrbM+2wdGWkskh7y9tC74Rx9P7ETT2fvsLpseL7kOPACYhf
+        GBUBu+WLMoZ6UHr3TZ86efUSpjuopWKab1m01GOCXGSpUby0dsErA2JViaiNGgCi
+        OkZ5oeD2hVJZUp6UvOw2lBVSgoo1SAPNBvDVszZ52Ce0zEfExSJvg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7D93A174723;
+        Thu, 18 Nov 2021 02:09:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2B42F161E68;
-        Thu, 18 Nov 2021 01:45:16 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DF0B4174722;
+        Thu, 18 Nov 2021 02:09:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Han Xin <chiyutianyi@gmail.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: Re: [PATCH v2 1/6] object-file: refactor write_loose_object() to
- support inputstream
-References: <20211009082058.41138-1-chiyutianyi@gmail.com>
-        <20211112094010.73468-1-chiyutianyi@gmail.com>
-        <CANYiYbHiTnhpzyWLakVZ6tfmG0pKO=qHdZsgaocX6eJ=PN_06g@mail.gmail.com>
-Date:   Wed, 17 Nov 2021 22:45:14 -0800
-In-Reply-To: <CANYiYbHiTnhpzyWLakVZ6tfmG0pKO=qHdZsgaocX6eJ=PN_06g@mail.gmail.com>
-        (Jiang Xin's message of "Thu, 18 Nov 2021 12:59:04 +0800")
-Message-ID: <xmqq7dd6ynb9.fsf@gitster.g>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] revision: use C99 declaration of variable in for() loop
+In-Reply-To: <61518213-9ce8-00d2-efd9-7f2091c574c4@gmail.com> (Phillip Wood's
+        message of "Wed, 17 Nov 2021 11:03:58 +0000")
+References: <20211113122833.174330-1-gotlouemail@gmail.com>
+        <20211113130508.zziheannky6dcilj@gmail.com>
+        <2b2386b9-045d-a0b8-6dbc-8a9d0c446bea@gmail.com>
+        <xmqq7ddbme7q.fsf@gitster.g>
+        <211114.868rxqu7hr.gmgdl@evledraar.gmail.com>
+        <xmqqilwulims.fsf@gitster.g> <xmqqpmr2j5lq.fsf_-_@gitster.g>
+        <61518213-9ce8-00d2-efd9-7f2091c574c4@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Date:   Wed, 17 Nov 2021 23:09:08 -0800
+Message-ID: <xmqq1r3eym7f.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 16A6CBD8-483B-11EC-99ED-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 6D395166-483E-11EC-A975-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On Fri, Nov 12, 2021 at 5:43 PM Han Xin <chiyutianyi@gmail.com> wrote:
->>
->> From: Han Xin <hanxin.hx@alibaba-inc.com>
->
-> It would be better to provide a cover letter describing changes in v2, such as:
->
-> * Make "write_loose_object()" a public method, so we can
->    reuse it in "unpack_non_delta_entry()".
->    (But I doubt we can use "write_object_file_flags()" public
->      function, without make this change.)
->
-> * Add an new interface "input_stream" as an argument for
->    "write_loose_object()", so that we can feed data to
->    "write_loose_object()" from buffer or from zlib stream.
->
->> Refactor write_loose_object() to support inputstream, in the same way
->> that zlib reading is chunked.
->
-> In the beginning of your commit log, you should describe the problem, such as:
->
-> We used to read the full content of a blob into buffer in
-> "unpack_non_delta_entry()" by calling:
->
->     void *buf = get_data(size);
->
-> This will consume lots of memory for a very big blob object.
+> I like the idea of using a specific test balloon for the features that
+> we want to use but wont this one break the build for anyone doing
+> 'make DEVELOPER=1' because -Wdeclaration-after-statement will error
+> out.
 
-I was not sure where "in_stream" came from---"use X insteads of Y",
-when X is what these patches invent and introduce, does not make a
-good explanation without explaining what X is, what problem X is
-attempting to solve and how.
+I think you are missing '?' at the end of the sentence, but the
+answer is "no, at least not for me".
 
-Thanks for helping to clarify the proposed log message.  
+    # pardon my "make" wrapper; it is to pass DEVELOPER=1 etc. to
+    # the underlying "make" command.
+    $ Meta/Make V=1 revision.o
+    cc -o revision.o -c -MF ./.depend/revision.o.d -MQ revision.o -MMD -MP  -Werror -Wall -pedantic -Wpedantic -Wdeclaration-after-statement -Wformat-security -Wold-style-definition -Woverflow -Wpointer-arith -Wstrict-prototypes -Wunused -Wvla -fno-common -Wextra -Wmissing-prototypes -Wno-empty-body -Wno-missing-field-initializers -Wno-sign-compare -Wno-unused-parameter  -g -O2 -Wall -I. -DHAVE_SYSINFO -DGIT_HOST_CPU="\"x86_64\"" -DUSE_LIBPCRE2 -DHAVE_ALLOCA_H  -DUSE_CURL_FOR_IMAP_SEND -DSUPPORTS_SIMPLE_IPC -DSHA1_DC -DSHA1DC_NO_STANDARD_INCLUDES -DSHA1DC_INIT_SAFE_HASH_DEFAULT=0 -DSHA1DC_CUSTOM_INCLUDE_SHA1_C="\"cache.h\"" -DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="\"git-compat-util.h\"" -DSHA256_BLK  -DHAVE_PATHS_H -DHAVE_DEV_TTY -DHAVE_CLOCK_GETTIME -DHAVE_CLOCK_MONOTONIC -DHAVE_SYNC_FILE_RANGE -DHAVE_GETDELIM '-DPROCFS_EXECUTABLE_PATH="/proc/self/exe"' -DFREAD_READS_DIRECTORIES -DNO_STRLCPY -DSHELL_PATH='"/bin/sh"' -DPAGER_ENV='"LESS=FRX LV=-c"'  revision.c
+    $ cc --version
+    cc (Debian 10.3.0-11) 10.3.0
+    Copyright (C) 2020 Free Software Foundation, Inc.
+    This is free software; see the source for copying conditions.  There is NO
+    warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+It would be quite sad if we had to allow decl-after-stmt, only to
+allow
+
+	stmt;
+	for (type var = init; ...; ...) {
+		...;
+	}
+
+because it should merely be a short-hand for
+
+	stmt;
+	{
+	    type var;
+	    for (var = init; ...; ...) {
+		...;
+	    }
+	}
+
+that does not need to allow decl-after-stmt.
+
+Different compilers may behave differently, so it might be an issue
+for somebody else, but I am hoping any reasonable compiler would
+behave sensibly.
+
+Thanks for raising a potential issue, as others can try it out in
+their environment and see if their compilers behave well.
+
+
+
