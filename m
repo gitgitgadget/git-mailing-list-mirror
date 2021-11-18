@@ -2,139 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C5DEC433EF
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 609E2C433EF
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:01:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9AF061361
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:00:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3920161361
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:01:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230499AbhKRWDQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 17:03:16 -0500
-Received: from smtp-8fad.mail.infomaniak.ch ([83.166.143.173]:44165 "EHLO
-        smtp-8fad.mail.infomaniak.ch" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230481AbhKRWDP (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 18 Nov 2021 17:03:15 -0500
-Received: from smtp-2-0000.mail.infomaniak.ch (unknown [10.5.36.107])
-        by smtp-2-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4HwD9W3ybYzMqLkq;
-        Thu, 18 Nov 2021 22:54:55 +0100 (CET)
-Received: from [10.10.10.4] (unknown [51.15.56.3])
-        by smtp-2-0000.mail.infomaniak.ch (Postfix) with ESMTPA id 4HwD9V5Zq6zlhP4p;
-        Thu, 18 Nov 2021 22:54:54 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=etguillot.fr;
-        s=20191114; t=1637272495;
-        bh=3pyqBuNpji4YbkPBg7EFCV6txOQw5WU5yydS73uB+lQ=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=mOvPq0Yo61uNuWm5PBkpFE0etboBmJ5RvRI7PolFespQXftVwTZ4ct8oMcFTGU/su
-         Uu3sgQxA4X++AnbiCnjXV6XfH9B495Q5l4yDvfkizoPuLmoiDkp+vPBEJd7hjQFtvf
-         jT41IdszjAq8MkiqBgIR1IfjRQ7JgLsDzTSwW/Pg=
-Message-ID: <5a5ac5a9-dda8-ece6-2f35-6362e5085ed6@etguillot.fr>
-Date:   Thu, 18 Nov 2021 22:54:54 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: Need help in understanding how to submit a patch
-Content-Language: en-US
-To:     Jiang Xin <worldhello.net@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Etienne Guillot <git@etguillot.fr>,
-        =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>,
-        Git List <git@vger.kernel.org>
-References: <127c9dbd-4861-beea-a85b-af7412ce141f@etguillot.fr>
- <6fa0b1dd-ac20-ff55-95ea-1c22347f9199@iee.email>
- <20211117175149.7slohfqqwsmn3ua6@yadavpratyush.com>
- <YZVB5hy4Xuim5K9B@nand.local>
- <CANYiYbFq-SAq2VLcFFX8P=Y8-JzjqW63mJqTuOCgO+q+Zzf=DQ@mail.gmail.com>
- <YZWvJdWcmhIl9DxR@nand.local>
- <CANYiYbGuR8WNvD_2Kw_M0XX9H027Z2m137S0zwrfL7oURSpTUw@mail.gmail.com>
-From:   Etienne Guillot <git@etguillot.fr>
-In-Reply-To: <CANYiYbGuR8WNvD_2Kw_M0XX9H027Z2m137S0zwrfL7oURSpTUw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        id S230477AbhKRWEp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 17:04:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35362 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229472AbhKRWEo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 17:04:44 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B22EC061574
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 14:01:44 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id m17-20020a170902db1100b001421cb34857so3620421plx.15
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 14:01:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to;
+        bh=kG5xgcqaG5/qIFzxF7jbdNmdPXLfRDPj78VS5N17muU=;
+        b=KT39uJYModJhzcuGpsfhjdYJDZ4PZsWlC8JHyOywrc+drtynQbnIuegJ5naCC5iDxq
+         esMWmgzt2DpKBR59TCcPOjK5PjFDNJWqndXwbr/0/yrPHgVkXn4AODTFosIKZo8ZFwmH
+         ZwlmnYqtImUY9ex0ZF+KkTMaUpLDPF7NQKBe/9y8NkLomhMoSYXIumD/NI0jWbtL0hDs
+         P0dhACKQgUvPKTv6PyIV5mAi3oJFVIPVjLTBc6sdNaCUt1TJ2ePGA536Tw1gIfBaMKtx
+         J9CwPsYLH3xfU+fSHUKzMEzbNzc1LSUvDO9lmYoqQmUYlRJHj/5YboSI5GRIEpDau7fV
+         bYEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
+        bh=kG5xgcqaG5/qIFzxF7jbdNmdPXLfRDPj78VS5N17muU=;
+        b=hoIu8rJQ1VUmtPxGJLnqF/F/hZtVi+y7sjFC2X4LorzXQ93rJbSSjw73VWXbEFGtES
+         bTAW3yC2LaZK4BeYVjf00zNChMBPIIqrVE8aoXjPc3sCEgw7wWLntgAhAhs+rGJ60C6Z
+         fOsXGRsdK2LGpN6D2/IGrRi6APNq512H9BE2f9hhrG+8iTaCZ8jqwHuDso3VpOJV+WcS
+         8uAnK43XhlF6+w2Qc/WnL/cOFZYssM/9xwh+iSsp2IP3xkR5n5r9otLI1NkG/AyK/pVy
+         DUAujwnV8mFjTwvShegMCxu7IqbNd2AZKLI6ZFgCfiOpA3DzIk5ifyfS0brd98i/izKO
+         VHMA==
+X-Gm-Message-State: AOAM533M80R7Jo/G06tNzU1oPJSVbRTVljChk1vPCKVr7ZYO5UW1NVP1
+        VZyi0XtjN+s5sJwlCFaIi0phYGox09IgMbfNwt12J1pjtWYADZGXHkT4cIzxfgMehl6XLcVtT7t
+        tRkqc9iqUNvC2I+zGvPKU595+/X1c+fVkuzBZU5usu7wo9maYK1gnCdpCYEGjPSY=
+X-Google-Smtp-Source: ABdhPJwzYYyy1fjVQsD5TzEEGgytW8FysfRW+ISWYOtPDpiqaQkzsvl00nQ3tTNe7RSggz9Q+vBnYVuRBJW6Sg==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:2795:1675:9bfe:fbf3])
+ (user=steadmon job=sendgmr) by 2002:a17:90a:fe87:: with SMTP id
+ co7mr14255430pjb.21.1637272903541; Thu, 18 Nov 2021 14:01:43 -0800 (PST)
+Date:   Thu, 18 Nov 2021 14:01:41 -0800
+Message-Id: <5a9e49e7f1540d762374382e1769edf112cf093f.1637272706.git.steadmon@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.34.0.rc2.393.gf8c9666880-goog
+Subject: [PATCH] trace2: disable tr2_dst before warning on write errors
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+If writing a trace2 message fails, we optionally warn the user of this
+fact. However, in 0ee10fd (usage: add trace2 entry upon warning(),
+2020-11-23), we added a trace entry to the warning() function. This
+means that we can enter an infinite loop of failing trace2 writes and
+warnings. Fix this by disabling the failing trace2 destination before
+issuing the warning.
 
+Additionally, trace2 sets a default SIGPIPE handler
+(tr2main_signal_handler) when it is initialized. This handler generates
+its own trace2 messages when a signal is received. If a trace2 write
+fails due to a broken pipe, this handler will run and then cause another
+failed write. Fix this by temporarily ignoring SIGPIPE while writing
+trace2 messages. This is safe because the write will still fail, and we
+will disable the failing destination.
 
-On 11/18/21 02:52, Jiang Xin wrote:
-> On Thu, Nov 18, 2021 at 9:40 AM Taylor Blau <me@ttaylorr.com> wrote:
->>
->> On Thu, Nov 18, 2021 at 09:37:57AM +0800, Jiang Xin wrote:
->>> On Thu, Nov 18, 2021 at 1:54 AM Taylor Blau <me@ttaylorr.com> wrote:
->>>>
->>>> Jiang,
->>>>
->>>> On Wed, Nov 17, 2021 at 11:21:49PM +0530, Pratyush Yadav wrote:
->>>>> Hi Etienne,
->>>>>
->>>>> On 17/11/21 03:47PM, Philip Oakley wrote:
->>>>>> On 16/11/2021 21:15, Etienne Guillot wrote:
->>>>>>> Hi,
->>>>>>>
->>>>>>> I found a typo mistake in the french translation of git-gui.
->>>>>>> I did read the instructions on this page
->>>>>>> https://git-scm.com/docs/SubmittingPatches
->>>>>>> but I still not sure where should I push the correction.
->>>>>>>
->>>>>>> Thanks for your help
->>>>>>>
->>>>>>> Etienne Guillot
->>>>>> Hi Etienne
->>>>>>
->>>>>> The Git Gui is managed by Pratyush Yadav (cc'd) and hosted at
->>>>>> https://github.com/prati0100/git-gui
->>>>>>
->>>>>> Not sure what the latest is on contributing translations (not covered in
->>>>>> the GitHub Readme..).
->>>>>
->>>>> I usually ask people to post patches on this mailing list and I review
->>>>> them here. But I make an exception for translation changes since they
->>>>> never get any reviews anyway.
->>>>>
->>>>> So I am fine with either a Pull Request on GitHub or a patch on the
->>>>> mailing list.
->>>>
->>>> Since Pratyush is the maintainer, does the po/TEAMS file in your tree
->>>> need updating?
->>>
->>> Git Gui is a standalone project with its own workflow. The file
->>> "po/TEAMS" is only used for Git project, so I am a little confused how
->>> to update this file?
->>
->> I misread Etienne's original message, I thought they were asking about
->> the French translation for Git, not git-gui.
->>
->>>> I'm not sure how up-to-date the file is in general, but the last commit
->>>> was made semi-recently back in August, so I assume that the entry for
->>>> the French translation is outdated.
->>>
->>> French l10n team is led by Jean-Noël Avila, and is very active.
->>>
->>>      git log --no-merges -- po/fr.po
->>>
->>> L10n for git-gui are maintained by different people though.  Because
->>> "git-gui" is merged into git using subtree merge strategy,  I cannot
->>> find commit logs of "git-gui/po/fr.po" using the same command, and
->>> have to find the original git-gui commit, and find commit logs from
->>> "po/fr.po" (which is quite different file from "po/fr.po" of Git).
->>>
->>>      git log 8a383db4b2 -- po/fr.po
->>
->> Yes, clearly no update is necessary here. Sorry for the confusion.
-> 
-> It's really easy to confuse. No problem.
-> 
-> BTW, what is the elegant way to find commit logs of a tree from a subtree merge?
-> 
-> I have to run git-log on "git-gui" to find the 2nd parent commit ID of
-> the subtree merge, and run git-log on it.
-> 
-> --
-> Jiang Xin
-> 
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ trace2/tr2_dst.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-Thank you everyone for your answers.
-I choose the easy way and opened a pull request on github.
+diff --git a/trace2/tr2_dst.c b/trace2/tr2_dst.c
+index bda283e7f4..8a21dd2972 100644
+--- a/trace2/tr2_dst.c
++++ b/trace2/tr2_dst.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "sigchain.h"
+ #include "trace2/tr2_dst.h"
+ #include "trace2/tr2_sid.h"
+ #include "trace2/tr2_sysenv.h"
+@@ -360,6 +361,7 @@ int tr2_dst_trace_want(struct tr2_dst *dst)
+ void tr2_dst_write_line(struct tr2_dst *dst, struct strbuf *buf_line)
+ {
+ 	int fd = tr2_dst_get_trace_fd(dst);
++	ssize_t bytes;
+ 
+ 	strbuf_complete_line(buf_line); /* ensure final NL on buffer */
+ 
+@@ -378,12 +380,15 @@ void tr2_dst_write_line(struct tr2_dst *dst, struct strbuf *buf_line)
+ 	 *
+ 	 * If we get an IO error, just close the trace dst.
+ 	 */
+-	if (write(fd, buf_line->buf, buf_line->len) >= 0)
++	sigchain_push(SIGPIPE, SIG_IGN);
++	bytes = write(fd, buf_line->buf, buf_line->len);
++	sigchain_pop(SIGPIPE);
++	if (bytes >= 0)
+ 		return;
+ 
++	tr2_dst_trace_disable(dst);
+ 	if (tr2_dst_want_warning())
+ 		warning("unable to write trace to '%s': %s",
+ 			tr2_sysenv_display_name(dst->sysenv_var),
+ 			strerror(errno));
+-	tr2_dst_trace_disable(dst);
+ }
 
-Etienne Guillot
+base-commit: cd3e606211bb1cf8bc57f7d76bab98cc17a150bc
+-- 
+2.34.0.rc2.393.gf8c9666880-goog
+
