@@ -2,148 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAF18C433F5
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 01:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 613AAC433EF
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 02:33:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 951F861B54
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 01:52:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 358A461ABF
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 02:33:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242380AbhKRBz0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 20:55:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43070 "EHLO
+        id S241744AbhKRCgR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 21:36:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233128AbhKRBzZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 20:55:25 -0500
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 789E0C061570
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 17:52:26 -0800 (PST)
-Received: by mail-qk1-x72c.google.com with SMTP id bk22so4692265qkb.6
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 17:52:26 -0800 (PST)
+        with ESMTP id S232147AbhKRCgQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 21:36:16 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5EE1C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 18:33:16 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id t5so20280934edd.0
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 18:33:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=RqwNr8Q5UZCWIcBh+IfI7y4DbM0AweDoySH1NOJfqgo=;
-        b=Xu3ZBoIsxIlyoPqjRUh0mMh5CBhB1hgNEZWncRu45grdYBSVaKD4nD0JnK6Q2l4PDU
-         z5hKmMPBg4dMwsH5c+EzSD4f8u9ZZaGj+JJFL9BmPMJRYi2VaRsY7Hw1dqAd88cJ5gBr
-         c3g+KG70q0IMO15HWE3vm4MePANReM4MxbR/Cnj8UrkbxtI5aeZkpPvrycrGYXq1h1Mn
-         59FWEcCOb4Dk8yLVQG9yYewPxYm1nnAwvjscd0EvN/CQfEX+158Me7ET19Uezrb9wMnt
-         rA00j6YoTV2lfE5pfnd37YOw82Albnl2Fx2pp4YvPC1ybjAMPbS/T1tMfh/NJgg0FjpV
-         wHwA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=zAzoO6ClvNxjzmUYrF+iw1ksnPJenzbAVgW+cji9Jgk=;
+        b=UppICyk1tKgyywtF+sg/BA4qWVAiznsF0axdAvqPXgunviSOHkmEfH4RjFMadOCph+
+         TT28VOOK64U3Ee4m9onl07e7g3qGXDZJaG1CuUBd7QSlFVf0DcedGueylcmzX9i73mFL
+         6M47df5cBTljQhYLJiGU97r4Cl/V6DjsUou7RScuc241gglzfOV8uENnLfCHnIQnia1A
+         A2ra28LttwWg92bi14yv5tIwtMtSZTkIPuTKQyt+uTS1AY1dPEfZOdfu9b5LEMngFiaj
+         Jr3N+ztynlvfwGjD+nlVHJwmPYNs3KpArl8mwSveyZpEHcx7fkKmXvuSpmOF4f5jvw+y
+         tLUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RqwNr8Q5UZCWIcBh+IfI7y4DbM0AweDoySH1NOJfqgo=;
-        b=MQsoI7i7b7kDM6klVsse83Q1ueYnhurEbdaReW+vd8lGf3oxYw0/H5j1nKecLOahTY
-         PppEmsAV5Bl4yGVzEauQ+DnXyBMD82Hbo7RRC5kBVw4mf6MVAc/h1qvXKzgAW1Boi+uH
-         HfouUC8GwJIxiuoiYL8h1FUapQVdmsXAIRtElTPsyKt6uNIB0pdQcowqudPEYafN1iLc
-         NqfTQVcZArQ1ndGjw2qkSds4UwAbBOz6mc8AHHG/UvnnZDh6YrqaX3gajDAtT9iZUlGw
-         MLc6UYK6ijNx4bTi0zuUC8gxxMme2gkKyz7wt0IPvx9oAGqqgtU9DpSlTAvsShzz0Xg4
-         n3/A==
-X-Gm-Message-State: AOAM533/NDxHYB53ijF7CoY3aRBY6bUKBxN80dK4f3lbooG33W+Vu8f4
-        3c08IOnYCnG0s33Et8KSFUuVnVLBdSiDAdOnQ2Hzd+dy+NDWdQ==
-X-Google-Smtp-Source: ABdhPJyO5blKmy53qUkyZ35u3mG6b5jsw/96rztH2Mq3g+aAXlgBsK5bdkDITpdMdIQvmxOO8FykABOclnHWDMvkSBc=
-X-Received: by 2002:a05:620a:bc1:: with SMTP id s1mr18128461qki.49.1637200345725;
- Wed, 17 Nov 2021 17:52:25 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=zAzoO6ClvNxjzmUYrF+iw1ksnPJenzbAVgW+cji9Jgk=;
+        b=nbi3vvb5NPK65alxzCEElX39hJkYozm/Fz6EE3fwSspOC9x0L2e8DryByzxJjw0baP
+         g7FJ8UPKGrDwIjq0nGf7wfUIlP1tPjexXuXF2ZpNV4reUy1gOzmNfi66oaWdW1jmrlo4
+         O21+MEy5+x6+RRlskr6zF16yzzcrXBMGLgknGAhcggOi1HGDnFfa9tpZaYvrYhd6u6gn
+         6Ucs7NOyvHqrEkFB3GFSLJP9S0TsVt6EbY8ID8Wqo5kLrgaeULHEfTR60Ho2PLrAXyqu
+         UBLyZfv/So3DV85hcLtL+zSofAIiiIn7OvNKcn/HYanWHja/pzgW9bTI5Yca1K3YxYel
+         umbA==
+X-Gm-Message-State: AOAM530fh11+VmMWChg+Gz0FIocnTrCAkLaztAMUDGhbcIZMPeH5O+zE
+        co0lT3FxgXhOY43Bh1zM+wrLH1rd906Kog==
+X-Google-Smtp-Source: ABdhPJxGxDlzKZ0FE8W8GIRKOl+3hO2uYYjGOFvBPvjRPhWhGulf/4a6OYmiMi1H5WfX5+FOhovecQ==
+X-Received: by 2002:a05:6402:7d8:: with SMTP id u24mr5587757edy.215.1637202795117;
+        Wed, 17 Nov 2021 18:33:15 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id go10sm661935ejc.115.2021.11.17.18.33.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Nov 2021 18:33:14 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mnXEf-000Jxa-SL;
+        Thu, 18 Nov 2021 03:33:13 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 1/1] git-compat-util: add a test balloon for C99 support
+Date:   Thu, 18 Nov 2021 03:26:58 +0100
+References: <20211114212437.1466695-1-sandals@crustytoothpaste.net>
+ <20211116021241.1565740-1-sandals@crustytoothpaste.net>
+ <20211116021241.1565740-2-sandals@crustytoothpaste.net>
+ <YZOh370ZMMqSADUE@coredump.intra.peff.net>
+ <211116.86pmr0p82k.gmgdl@evledraar.gmail.com>
+ <YZPGKHYE/9km1rH5@coredump.intra.peff.net>
+ <YZRurUdyB/cGL6Y3@camp.crustytoothpaste.net>
+ <YZRwpekXlilhOEx4@coredump.intra.peff.net>
+ <YZWNumAlsek9Gi22@camp.crustytoothpaste.net>
+ <CAPUEspg=ef9xSiYsVKHfo7zogExeMwL3gMnN_bq1QcKv0fnNng@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <CAPUEspg=ef9xSiYsVKHfo7zogExeMwL3gMnN_bq1QcKv0fnNng@mail.gmail.com>
+Message-ID: <211118.86lf1m5h1y.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <127c9dbd-4861-beea-a85b-af7412ce141f@etguillot.fr>
- <6fa0b1dd-ac20-ff55-95ea-1c22347f9199@iee.email> <20211117175149.7slohfqqwsmn3ua6@yadavpratyush.com>
- <YZVB5hy4Xuim5K9B@nand.local> <CANYiYbFq-SAq2VLcFFX8P=Y8-JzjqW63mJqTuOCgO+q+Zzf=DQ@mail.gmail.com>
- <YZWvJdWcmhIl9DxR@nand.local>
-In-Reply-To: <YZWvJdWcmhIl9DxR@nand.local>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Thu, 18 Nov 2021 09:52:14 +0800
-Message-ID: <CANYiYbGuR8WNvD_2Kw_M0XX9H027Z2m137S0zwrfL7oURSpTUw@mail.gmail.com>
-Subject: Re: Need help in understanding how to submit a patch
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Etienne Guillot <git@etguillot.fr>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 18, 2021 at 9:40 AM Taylor Blau <me@ttaylorr.com> wrote:
->
-> On Thu, Nov 18, 2021 at 09:37:57AM +0800, Jiang Xin wrote:
-> > On Thu, Nov 18, 2021 at 1:54 AM Taylor Blau <me@ttaylorr.com> wrote:
-> > >
-> > > Jiang,
-> > >
-> > > On Wed, Nov 17, 2021 at 11:21:49PM +0530, Pratyush Yadav wrote:
-> > > > Hi Etienne,
-> > > >
-> > > > On 17/11/21 03:47PM, Philip Oakley wrote:
-> > > > > On 16/11/2021 21:15, Etienne Guillot wrote:
-> > > > > > Hi,
-> > > > > >
-> > > > > > I found a typo mistake in the french translation of git-gui.
-> > > > > > I did read the instructions on this page
-> > > > > > https://git-scm.com/docs/SubmittingPatches
-> > > > > > but I still not sure where should I push the correction.
-> > > > > >
-> > > > > > Thanks for your help
-> > > > > >
-> > > > > > Etienne Guillot
-> > > > > Hi Etienne
-> > > > >
-> > > > > The Git Gui is managed by Pratyush Yadav (cc'd) and hosted at
-> > > > > https://github.com/prati0100/git-gui
-> > > > >
-> > > > > Not sure what the latest is on contributing translations (not cov=
-ered in
-> > > > > the GitHub Readme..).
-> > > >
-> > > > I usually ask people to post patches on this mailing list and I rev=
-iew
-> > > > them here. But I make an exception for translation changes since th=
-ey
-> > > > never get any reviews anyway.
-> > > >
-> > > > So I am fine with either a Pull Request on GitHub or a patch on the
-> > > > mailing list.
-> > >
-> > > Since Pratyush is the maintainer, does the po/TEAMS file in your tree
-> > > need updating?
-> >
-> > Git Gui is a standalone project with its own workflow. The file
-> > "po/TEAMS" is only used for Git project, so I am a little confused how
-> > to update this file?
->
-> I misread Etienne's original message, I thought they were asking about
-> the French translation for Git, not git-gui.
->
-> > > I'm not sure how up-to-date the file is in general, but the last comm=
-it
-> > > was made semi-recently back in August, so I assume that the entry for
-> > > the French translation is outdated.
-> >
-> > French l10n team is led by Jean-No=C3=ABl Avila, and is very active.
-> >
-> >     git log --no-merges -- po/fr.po
-> >
-> > L10n for git-gui are maintained by different people though.  Because
-> > "git-gui" is merged into git using subtree merge strategy,  I cannot
-> > find commit logs of "git-gui/po/fr.po" using the same command, and
-> > have to find the original git-gui commit, and find commit logs from
-> > "po/fr.po" (which is quite different file from "po/fr.po" of Git).
-> >
-> >     git log 8a383db4b2 -- po/fr.po
->
-> Yes, clearly no update is necessary here. Sorry for the confusion.
 
-It's really easy to confuse. No problem.
+On Wed, Nov 17 2021, Carlo Arenas wrote:
 
-BTW, what is the elegant way to find commit logs of a tree from a subtree m=
-erge?
+> On Wed, Nov 17, 2021 at 3:18 PM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+>>
+>> On 2021-11-17 at 03:01:57, Jeff King wrote:
+>> > My thinking was that breaking older compilers was preferable to breaking
+>> > non-gnu ones, because at least old ones go away eventually. But your
+>> > other email makes me wonder if those non-GNU ones may already be
+>> > overriding CFLAGS.
+>>
+>> Our only problem platform, as far as I can tell, is RHEL/CentOS 7.  That
+>> uses GCC 4.8, and even Ubuntu 18.04 ships with GCC 7.
+>
+> There are several odd BSD platforms that are still stuck in pre-GPLv3
+> gcc (AKA gcc 4.2.1) like OpenBSD Alpha, hppa, landisk (and maybe also
+> SPARC64 which is tier1) and that will need the same, there is indeed
+> also luna88k that uses an even older gcc but hopefully will be able to
+> work if it understands enough C99 and can be told to use it by this
+> flag.
+>
+>> > Still, if we can come up with a solution that breaks neither (with some
+>> > light auto-detection or heuristics in the Makefile), that could be the
+>> > best of both worlds.
+>>
+>> I can move COMPILER_FEATURES out of config.mak.dev and into Makefile so
+>> that we can make use of it.  We'll need to depend on GCC 6 for this
+>> because we lack a way to distinguish 5.1 (which should work) from 5.0
+>> (which will not).
+>
+> 5.0 works AFAIK, is anything older than 5 than does not as reported[1]
+> before, but it won't be still a good fit, since it only works for gcc
+> and clang AS-IS.
+>
+> Carlo
+>
+> [1] https://lore.kernel.org/git/CAPUEsphnCvK+RZ+h30ZarA1zo9yZ=ndEBrcAbKGf4W92j647vA@mail.gmail.com/
 
-I have to run git-log on "git-gui" to find the 2nd parent commit ID of
-the subtree merge, and run git-log on it.
+Rather than moving around COMPILER_FEATURES etc. we can just compile a C
+program as part of our Makefile auto-configuration. See the direction
+suggested in:
+https://lore.kernel.org/git/87bl6aypke.fsf@evledraar.gmail.com/
 
---
-Jiang Xin
+That example is ad-hoc, but the right way to do this is:
+
+ 1. Stick a C program somewhere, maybe git-autoconf/compiler.c 
+ 2. (Try to) Compile that unconditionally
+ 3. Emit its output to a generated file that we then "include", which
+    likewise if it fails indicate that in something the Makefile can
+    "include".
+
+Since we set up that file-based dependency relationship we'll only do
+that auto-detection on the first build.
+
+This is really much simpler than fiddling with the version parsing
+shellscript, i.e. we can just compile a program with -std=c99 or
+whatever and see if it works, and if it does we stick that flag in
+CFLAGS or equivalent.
