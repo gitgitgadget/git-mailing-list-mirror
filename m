@@ -2,86 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBFE2C433FE
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:49:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B302EC433F5
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 23:24:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A470361260
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:49:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86A866139F
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 23:24:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232568AbhKRWwu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 17:52:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46276 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231526AbhKRWwu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 17:52:50 -0500
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6393C061574
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 14:49:49 -0800 (PST)
-Received: by mail-io1-xd34.google.com with SMTP id 14so10238517ioe.2
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 14:49:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=C0JzIWN9QUiE43UN+7OrbTNTJ9ypQ7de0RobVn9WfLo=;
-        b=zv5KjLh7QkCB/i+yayRXyOZmGiERZPMjOo0Y/s2vTf4dT+5jxbbzvW11qIEg1Nemor
-         TY+bEAS7A66XSeU8YiyHP9YcMeYCMuyOLB0vRHtU4lRKHHfglhmbvJABxYdh/bw9uMGq
-         /nK3l8pQ6cFtPf+bAF6I1ThD1VU52rUH7cOEzL9dBq3nxY091miOFgWmL00SamZ3C1RX
-         ++2pasn3etOIPEtKNe2/sVvd0wL0cfgMHm9HZ/ggMVEPmp0Oope8NYRyS/0XiOPOieQA
-         5WyRmpbCnNU2lbAx4MKrhmTkN+NX5TQREj6qzkALPnF6T6uYK6knpdHEWjpxnAQRZ5UW
-         GqYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=C0JzIWN9QUiE43UN+7OrbTNTJ9ypQ7de0RobVn9WfLo=;
-        b=omtfip0mzfwWASYbdiQAKwo+x+f9RqNB9TyeYiEEXeBOFOTaUO0x1N/G1zizq0+bjn
-         HCA5cwreMW73DO/9gv3+bysYhq7igPH0okF+Po82isFiXgZKkRO8vo7mMpx/ivAyAZW0
-         n6UfzpxrF2u0meZ6zj4P3YznaFkYS4G9J6KKP0EunqdAf7ViDNwttEr+qqD9lleC7150
-         jEPXvqGeVacZlZh5f2Xf0+ep53/JOFXGwpZNv2R78Qnsd8p7qJnes7j3xvIUwG3FAS02
-         zVkn9dVXIlpBvlD2QQrE5mxpHD/p5TyGL8tcXkkB79+FyJxhqBTksRNG7bJ7OVTenSg2
-         +gsg==
-X-Gm-Message-State: AOAM530xCsbO3/DTeA2rOPOJgLXQYFHSEHpSgEQ4wFGRDVXrSyyP6sMq
-        IaB4tErVx/c8wBLSwECwmBxoxT+8m778ibhz
-X-Google-Smtp-Source: ABdhPJzXo9cmjk7o6lVMucubAZ9GOJdrCcPbTGYhIdIiXdngZAE5vf9WSLR/eBAsFgr2ASj6mTmyDQ==
-X-Received: by 2002:a05:6638:339b:: with SMTP id h27mr23350373jav.4.1637275789160;
-        Thu, 18 Nov 2021 14:49:49 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y3sm766369ilv.5.2021.11.18.14.49.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Nov 2021 14:49:48 -0800 (PST)
-Date:   Thu, 18 Nov 2021 17:49:48 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jan Kara <jack@suse.cz>
-Cc:     git@vger.kernel.org
-Subject: Re: Stochastic bisection support
-Message-ID: <YZbYjFpA1bpeebx+@nand.local>
-References: <20211118164940.8818-1-jack@suse.cz>
+        id S232882AbhKRX1A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 18:27:00 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59579 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231751AbhKRX1A (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 18:27:00 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4AF2D168884;
+        Thu, 18 Nov 2021 18:23:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=ItPC84LZ5JUBxdg9vVIQ+mTs4QJfCCZrbtsZnn
+        I5bK0=; b=ZjPtirPSBztj5Ul/USBLkl7eV8sv0Wry+Tt+q+ziZHkUmgbbKwwtoF
+        vpfpzcXA11ApyaA8JiFxLvOBuz0Fb7eBBcdpEjLAMIqGzNVZWp7MpHPmptsHpBJ3
+        PcRLcUhoe3j2rWApNckqDMzKydJMAW0Rb22kVFtafVZG1qxoEq/1A=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 436F9168883;
+        Thu, 18 Nov 2021 18:23:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A1665168880;
+        Thu, 18 Nov 2021 18:23:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: New-ish warning in refs.c with GCC (at least 11.2) under -O3
+In-Reply-To: <YZQhLh2BU5Hquhpo@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 16 Nov 2021 16:22:54 -0500")
+References: <211115.86a6i5s4bn.gmgdl@evledraar.gmail.com>
+        <YZLhrSoTzrC7wcQo@coredump.intra.peff.net>
+        <YZQUxkYI3TES3vDo@nand.local>
+        <YZQhLh2BU5Hquhpo@coredump.intra.peff.net>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Date:   Thu, 18 Nov 2021 15:23:55 -0800
+Message-ID: <xmqqwnl5ujxw.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20211118164940.8818-1-jack@suse.cz>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9A0AEDD4-48C6-11EC-85DF-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 18, 2021 at 05:49:13PM +0100, Jan Kara wrote:
+Jeff King <peff@peff.net> writes:
 
-> The first part of the series improves some tests so that they accept
-> other valid decisions for bisection points. This is needed because to
-> make it easier to share some logic between normal and stochastic
-> bisection, I needed to slightly change some bits for normal bisection
-> and then since commit weights will be computed in a somewhat different
-> order, also chosen bisection points are sometimes different.
+> +	/*
+> +	 * Should be a noop per the ALLOWED_FLAGS check above, but this
+> +	 * is necessary to work around a problem with some versions of
+> +	 * "gcc -O3 -Wnonnull", which otherwise thinks that you can have the
+> +	 * flag set with a NULL new_oid.
+> +	 */
+> +	flags &= ~REF_HAVE_OLD | REF_HAVE_NEW;
 
-I have only looked through a couple of the first half of your patches,
-but I'm not sure I understand why non-stochastic bisection needs to
-change at all in order to support stochastic bisection.
+Are you missing parentheses around ~(OLD|NEW)?
 
-In other words, if we're tweaking all of these tests to allow picking
-equivalent bisection points, why can't we simply leave them alone? It
-would be nice if normal bisection didn't change as a result of adding a
-new feature on top.
+>  	flags |= (new_oid ? REF_HAVE_NEW : 0) | (old_oid ? REF_HAVE_OLD : 0);
+>  
+>  	ref_transaction_add_update(transaction, refname, flags,
+>
+> I do find it interesting that gcc really _is_ convinced that those flags
+> can be set coming in, since clearing them makes the problem go away.
+> ...
+> Reading over the code, it all looks OK. And that size is...weirdly huge.
 
-Thanks,
-Taylor
+The original bug is really annoying and this looks even worse.
+Hopefully it won't come down from experimental to more stable tracks
+before they are corrected.
+
