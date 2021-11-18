@@ -2,83 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B302EC433F5
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 23:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F69EC433EF
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 23:27:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86A866139F
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 23:24:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31D6C61A7D
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 23:27:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232882AbhKRX1A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 18:27:00 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59579 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231751AbhKRX1A (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 18:27:00 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4AF2D168884;
-        Thu, 18 Nov 2021 18:23:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=ItPC84LZ5JUBxdg9vVIQ+mTs4QJfCCZrbtsZnn
-        I5bK0=; b=ZjPtirPSBztj5Ul/USBLkl7eV8sv0Wry+Tt+q+ziZHkUmgbbKwwtoF
-        vpfpzcXA11ApyaA8JiFxLvOBuz0Fb7eBBcdpEjLAMIqGzNVZWp7MpHPmptsHpBJ3
-        PcRLcUhoe3j2rWApNckqDMzKydJMAW0Rb22kVFtafVZG1qxoEq/1A=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 436F9168883;
-        Thu, 18 Nov 2021 18:23:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A1665168880;
-        Thu, 18 Nov 2021 18:23:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: New-ish warning in refs.c with GCC (at least 11.2) under -O3
-In-Reply-To: <YZQhLh2BU5Hquhpo@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 16 Nov 2021 16:22:54 -0500")
-References: <211115.86a6i5s4bn.gmgdl@evledraar.gmail.com>
-        <YZLhrSoTzrC7wcQo@coredump.intra.peff.net>
-        <YZQUxkYI3TES3vDo@nand.local>
-        <YZQhLh2BU5Hquhpo@coredump.intra.peff.net>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-Date:   Thu, 18 Nov 2021 15:23:55 -0800
-Message-ID: <xmqqwnl5ujxw.fsf@gitster.g>
+        id S233171AbhKRXae (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 18:30:34 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:25484 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230436AbhKRXad (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 18:30:33 -0500
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1mnqoV-000CJk-56; Thu, 18 Nov 2021 23:27:31 +0000
+Message-ID: <7fbd4cf4-5f66-a4cd-0c41-e5b12d14d761@iee.email>
+Date:   Thu, 18 Nov 2021 23:27:31 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9A0AEDD4-48C6-11EC-85DF-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.1
+Subject: Re: [PATCH] mergesort: avoid left shift overflow
+Content-Language: en-GB
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <5eabbe1c-4c0f-559a-da21-423afec89e7e@web.de>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <5eabbe1c-4c0f-559a-da21-423afec89e7e@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> +	/*
-> +	 * Should be a noop per the ALLOWED_FLAGS check above, but this
-> +	 * is necessary to work around a problem with some versions of
-> +	 * "gcc -O3 -Wnonnull", which otherwise thinks that you can have the
-> +	 * flag set with a NULL new_oid.
-> +	 */
-> +	flags &= ~REF_HAVE_OLD | REF_HAVE_NEW;
-
-Are you missing parentheses around ~(OLD|NEW)?
-
->  	flags |= (new_oid ? REF_HAVE_NEW : 0) | (old_oid ? REF_HAVE_OLD : 0);
->  
->  	ref_transaction_add_update(transaction, refname, flags,
+On 15/11/2021 23:19, René Scharfe wrote:
+> Use size_t to match n when building the bitmask for checking whether a
+> rank is occupied, instead of the default signed int.
 >
-> I do find it interesting that gcc really _is_ convinced that those flags
-> can be set coming in, since clearing them makes the problem go away.
-> ...
-> Reading over the code, it all looks OK. And that size is...weirdly huge.
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+> Ugh, sorry. :(
+>
+>  mergesort.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/mergesort.c b/mergesort.c
+> index 6216835566..bd9c6ef8ee 100644
+> --- a/mergesort.c
+> +++ b/mergesort.c
+> @@ -63,7 +63,7 @@ void *llist_mergesort(void *list,
+>  		void *next = get_next_fn(list);
+>  		if (next)
+>  			set_next_fn(list, NULL);
+> -		for (i = 0; n & (1 << i); i++)
+> +		for (i = 0; n & ((size_t)1 << i); i++)
+>  			list = llist_merge(ranks[i], list, get_next_fn,
+>  					   set_next_fn, compare_fn);
+>  		n++;
+> --
+> 2.33.1
+Looks good to me.
 
-The original bug is really annoying and this looks even worse.
-Hopefully it won't come down from experimental to more stable tracks
-before they are corrected.
+I already had this locally as part of an MSVC (Visual Studio) fix for
+the various C4334 warnings.
 
+The other cases are in object-file.c, diffcore-delta.c (2 occurrences) ,
+and repack.c.
+
+My patches are in https://github.com/PhilipOakley/git/tree/oneU_t
+
+Philip
