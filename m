@@ -2,192 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16C82C433EF
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 04:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91985C433F5
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 04:51:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAB7861AEC
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 04:06:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69FE661B39
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 04:51:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241988AbhKREJb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 23:09:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:48753 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S240638AbhKREJa (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 17 Nov 2021 23:09:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1637208390;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=S5FVZanSvq8wPv2/rct6KU+8H7+l/qnXwmgRDD+auBg=;
-        b=K76i2nm5GJDDO+fwjnf3vFUsH2eHEFtBZrBUmnh9IFNvLf495lvJy3HAIdBsF41M8ZcnJZ
-        9zzBjY9uyKc7XVapfkMkSiu7b64i6laStFLsoVbQAHGtgnK0DsidBVihKSQ8A7xGqEqdXb
-        6hyRq3Kt0VvvZ2G2pAganfycJgYohY4=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-594-HYbMO2RXOYGrEi8FU8kd9A-1; Wed, 17 Nov 2021 23:06:29 -0500
-X-MC-Unique: HYbMO2RXOYGrEi8FU8kd9A-1
-Received: by mail-pj1-f71.google.com with SMTP id n6-20020a17090a670600b001a9647fd1aaso4272075pjj.1
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 20:06:28 -0800 (PST)
+        id S243056AbhKREy1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 23:54:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54450 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242175AbhKREyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 23:54:21 -0500
+Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E5FDC061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 20:51:22 -0800 (PST)
+Received: by mail-ua1-x92d.google.com with SMTP id y5so10923855ual.7
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 20:51:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hpqz6T3hZXPS7tbF4RLxIusRscWdGkLe6UdLAszOra8=;
+        b=pLFV7udMu8rBhMzk6HAUa6EPwDjQYTqMpZCjlSLJrzvIluR1oh/euylLjZ5i+6IKpt
+         AHTU4re1N4Q8VCGxQJx5z23mIcjasaLcDEwIOTVfpd/lmt5DeQcL3O6JRqw2272uvUvo
+         c+3J25kKUS/0pkH2G247hbMu8ajWdbHe0P9A3+45WUieljh1NsB+tN6xIRqdLgfhgB8C
+         h+7rf6gkQkrVu6seQVgA6SB3URLa37zrcOht50BYabFNGLYQKWqvEM9lrhlyWxp4FsBp
+         2b4hSWO2Vl8runqClp7YR1xONQSF6ECJLFjaibcMlDjQkdT4n0aN8RDeMRv0txDHWgSM
+         8E4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=S5FVZanSvq8wPv2/rct6KU+8H7+l/qnXwmgRDD+auBg=;
-        b=IQuuvUINp760G26SeuDVLLMAcwlJGl5cY/rjddugRhf8Gf1RIgaPtZSkk3fvQX7UZn
-         RtbjmW/lCZaj2dpKVX/b7e//sYh872gfxlgTYzw4PWnaEhz+fAGbeQ4e4eDH95SB3A74
-         49uAaXA9WYJGHYKnPVt3DAlIFrA4YYsa5LcQS0kGtMG/gtKInNMPYp86cljOUioWKkOY
-         4g1n6PEpSXHZaYVC8jwdt6vazhKgNr2g+625+p9KDXYmRl9JhtU8ochcq9lLcPuRsE/f
-         5JatSwNHIcrfJnBVmNxUbWbTE45j/Yui5Mi/rSRZjH77JfdoXuop5i91YjOKCo3MQWex
-         +bZg==
-X-Gm-Message-State: AOAM530P0pTO93Q97b9GdkC21CDhmMjNnOjSoz0E7sIFpzOMb8IshdJq
-        r2uX9j+fOP5wgY8qlBAHIGQ9UWd+iCoXThE3NYICKVftM0Q25gbzjh0nUx5/lQiDsa2QqF8GDQf
-        8qm9IwYMgFdPT
-X-Received: by 2002:a17:902:c702:b0:144:ce0e:d47 with SMTP id p2-20020a170902c70200b00144ce0e0d47mr4528317plp.69.1637208388031;
-        Wed, 17 Nov 2021 20:06:28 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwl/5KTpUV74QTq+5FLXiXiLPYCGSbIE/m6s3cS23RBInj3ukXQZIoAkinCZdM+r74RO7xaXA==
-X-Received: by 2002:a17:902:c702:b0:144:ce0e:d47 with SMTP id p2-20020a170902c70200b00144ce0e0d47mr4528282plp.69.1637208387742;
-        Wed, 17 Nov 2021 20:06:27 -0800 (PST)
-Received: from fedora19.localdomain (2001-44b8-4132-5a00-03c7-087f-fa32-45c8.static.ipv6.internode.on.net. [2001:44b8:4132:5a00:3c7:87f:fa32:45c8])
-        by smtp.gmail.com with ESMTPSA id d2sm1106460pfu.203.2021.11.17.20.06.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 20:06:27 -0800 (PST)
-Date:   Thu, 18 Nov 2021 15:06:23 +1100
-From:   Ian Wienand <iwienand@redhat.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Peter Kaestle <peter.kaestle@nokia.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH] submodule: separate out not-found and not-empty errors
-Message-ID: <YZXRPylIwkN4L30R@fedora19.localdomain>
-References: <YZQ5Zk0ItWvfr8sF@fedora19.localdomain>
- <xmqqfsrv2kar.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hpqz6T3hZXPS7tbF4RLxIusRscWdGkLe6UdLAszOra8=;
+        b=BrwIaZF35AfVj4gInJYdEudziIQyHkYjgi1cOtYW2dut+2e+cHoU0WaJ2C0CTNNM7g
+         4yOMuB2UZbvCbR2sIWnn+SC8wDeEPotlhBb9jt9fRoVbpNy2e6iy4PICGBHSwDggP5D2
+         +fmWdvcmXvAhxc7sUrVV+9gwYFA+b74e6N0J8co1jLC1FNoQq932H18GFUvDdQb7OD8E
+         fdotDuLAh4T9Wok3oKXn6F1H454gm4Uz3neFQUCqpdrpHSLHLZEXl0GDtPRhy5iyEGod
+         BdbgbhQ2s44q4pMht7ZX9vcplXtChZa9ExNChi/NsXs3KObEFZ06kKXhJFoNy1wft1pd
+         j3Rw==
+X-Gm-Message-State: AOAM531HbVjUA1FZYEqeCcUJF7TkMLLQ4onbHZVrKKW/jLXEQfVZvNjY
+        YZCCXVpCtGx0hL0N5hl6E5GnFcUNN7/p11kI27HKjUPjhN8=
+X-Google-Smtp-Source: ABdhPJz+f0cefuA+n/uAXxeK0+BgW6UvlIYKQrSuUDAc1x5vCr8s6CDZZciuCrNdRAHxuDy4Xul3Lsv4iEnEgPqfZwI=
+X-Received: by 2002:a05:6102:512b:: with SMTP id bm43mr77656964vsb.14.1637211080671;
+ Wed, 17 Nov 2021 20:51:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqfsrv2kar.fsf@gitster.g>
+References: <20211005063936.588874-1-mh@glandium.org> <CAPUEspgLwLxavP3bC9OEJQTphoemQ+jxv+9Nkcvbf51uaBEpww@mail.gmail.com>
+ <20211118030255.jscp2zda4p2ewact@glandium.org>
+In-Reply-To: <20211118030255.jscp2zda4p2ewact@glandium.org>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Wed, 17 Nov 2021 20:51:06 -0800
+Message-ID: <CAPUEspg-5+YdfTJ6zi9hdDqF=KV2LJFCtqmECSss9Kfpn6sGrQ@mail.gmail.com>
+Subject: Re: [PATCH] Use mingw.h declarations for gmtime_r/localtime_r on msys2
+To:     Mike Hommey <mh@glandium.org>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the review!
+On Wed, Nov 17, 2021 at 7:03 PM Mike Hommey <mh@glandium.org> wrote:
+>
+> On Tue, Oct 05, 2021 at 12:12:12AM -0700, Carlo Arenas wrote:
+> > On Mon, Oct 4, 2021 at 11:57 PM Mike Hommey <mh@glandium.org> wrote:
+> > > A possible alternative fix would be to e.g. add `#define _POSIX_C_SOURCE
+> > > 200112L` to git-compat-util.h and add `ifndef __MINGW64_VERSION_MAJOR`
+> > > around the definitions of `gmtime_r` and `localtime_r` in
+> > > compat/mingw.c, since, after all, they are available there.
+> >
+> > something like that was merged to "main"[1] a few months ago, would
+> > that work for you?
+> >
+> > Carlo
+> >
+> > [1] https://github.com/git-for-windows/git/commit/9e52042d4a4ee2d91808dda71e7f2fdf74c83862
+>
+> Since this reached 2.34
 
-On Wed, Nov 17, 2021 at 01:39:08AM -0800, Junio C Hamano wrote:
-> Ian Wienand <iwienand@redhat.com> writes:
-> 
-> >  			    !is_empty_dir(empty_submodule_path.buf)) {
-> >  				spf->result = 1;
-> > -				strbuf_addf(err,
-> > -					    _("Could not access submodule '%s'\n"),
-> > -					    ce->name);
-> > +				/* is_empty_dir also catches missing dirtectories, but report separately */
-> > +				if (!is_directory(empty_submodule_path.buf)) {
-> 
-> I was hoping that inspecting errno after is_empty_dir() returned
-> might be sufficient (of course, we need to clear errno before
-> calling is_empty_dir() if we go that route), but because this is an
-> error codepath that we do not need to optimize, a call to
-> is_directory() that incurs another system call would be fine.
+It is not in 2.34; only in the git for windows fork, but agree is
+needed if you are building master with a newish mingw
 
-That was my thinking too, I do admit it's a bit of an obscure case to
-end up in, but the regular path doesn't need any more checking.
+guess I got the perfect excuse to get myself approved for gitgitgadget
+with this PR[1] then
 
-> > +				  strbuf_addf(err,
-> > +					      _("Submodule directory '%s' not found (incorrect --git-dir?)\n"),
-> 
-> "not found" is something the code definitely knows (eh, not quite,
-> but let's read on).  
-> 
-> But let's not make an uninformed guess.  This code didn't even check
-> if the user gave a --git-dir option.
-> 
-> If the user is advanced enough to have given "--git-dir", "not found"
-> should be sufficient to hint that the way the user specified the
-> repository location incorrectly, and a wrong "--git-dir" might be
-> one of the many things the user might suspect on their own.
+Carlo
 
-Ok, I can drop that bit, as you say it's a guess.
-
-> Another problem with the message is !is_directory() can mean "there
-> is no filesystem entity at the path" (i.e. "submodule directory '%s'
-> does not exist") and it can also mean "there is a filesystem entity
-> at the path, but that is not a directory).  "not found" is not exactly
-> a good message to give in the latter case.
-> 
-> We are giving two messages here in this codepath.  For example, the
-> original one would have said something like:
-> 
-> 	Could not access submodule 'foo'
-> 	Submodule directory 'foo' is not empty
-
-Actually in the original patch I dropped the "Could not access..."
-bit, but I agree it makes more sense with the more specific details
-added.  I've put that back and append the secondary message below.
-
-> So I suspect that a more appropriate phrasing for the other one (the
-> new one you added) would be something like
-> 
-> 	Could not access submodule 'foo'
-> 	Path to the submodule 'foo' is not a directory
-> 
-> perhaps?
-
-Done
-
--i
-
-From 6ea39c3e43eccf93e4567329cfb1b9c642154283 Mon Sep 17 00:00:00 2001
-From: Ian Wienand <iwienand@redhat.com>
-Date: Wed, 17 Nov 2021 09:39:40 +1100
-Subject: [PATCH] submodule: separate out not-found and not-empty errors
-
-After upgrading past 505a2765963 a long-working script to cache git
-repos started failing with
-
- Could not access submodule '...'
-
-for every updated submodule on each fetch [1].
-
-Ultimately this turned out to be using "--git-dir=" from outside the
-repo; i.e. we really wanted "-C" in this script (the man page does
-warn about this -- but it was working for a long time).
-
-Although obvious in hindsight, this was very difficult to diagnose
-from the error message.  It required me adding debugging to these
-functions to determine why it was falling into this path when
-everything looked right on disk.
-
-This proposes separate messages for the directory missing v. being
-present but having unexpected contents.  Both messages are modified to
-give the path that is being examined.
-
-[1] https://review.opendev.org/c/openstack/diskimage-builder/+/818053
-
-Signed-off-by: Ian Wienand <iwienand@redhat.com>
----
- submodule.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/submodule.c b/submodule.c
-index c689070524..352ee50f2e 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1524,6 +1524,16 @@ static int get_next_submodule(struct child_process *cp,
- 				strbuf_addf(err,
- 					    _("Could not access submodule '%s'\n"),
- 					    ce->name);
-+				/* is_empty_dir also catches missing directories, but report separately */
-+				if (!is_directory(empty_submodule_path.buf)) {
-+				  strbuf_addf(err,
-+					      _("Submodule path '%s' is not a directory\n"),
-+					      empty_submodule_path.buf);
-+				} else {
-+				  strbuf_addf(err,
-+					      _("Submodule directory '%s' is not empty\n"),
-+					      empty_submodule_path.buf);
-+				}
- 			}
- 			strbuf_release(&empty_submodule_path);
- 		}
--- 
-2.33.1
-
+[1] https://github.com/git/git/pull/1142
