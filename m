@@ -2,102 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 773CBC433EF
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 21:40:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C5DEC433EF
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:00:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4BE5461A81
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 21:40:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9AF061361
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:00:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231361AbhKRVnf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 16:43:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58926 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229777AbhKRVne (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 16:43:34 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2610C061574
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 13:40:33 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id u3so32841102lfl.2
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 13:40:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ivDPg8UV+ILWZkEA1kxzAq03hnSkQfykHYKUMMeKzik=;
-        b=mIZ8ywJ/o8RXYvBibGY+aPgmf4x4/aaX9p8miuNBzTjmtt/uNnFjV3h1eJJehm9AZp
-         ZVoWBYl/VRIYTfvvdZlD4jtnsd68BHMLOJUBx5UmGssi/fzkiiLSXQYhO+y7taq/+1kT
-         x6uNalToWHsrvMwi2JeOYlwQq9RrfGRbjonVSzG7AqDiKOG7nyajQUwDbHQEmMx9NG2c
-         e0agdcrgWkheOSkJwLySmByYrQxDyPSzGUGi7OxDnOR64AYekxG0E7Sg9Qe93e2J4wsv
-         8Lne9ZbFKPeTX6uDkHrPi1RY8b5+veo8BkRu7sgGtlyb7PiQ5cs8ZDG7sDcUmFvH7AYw
-         CPxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ivDPg8UV+ILWZkEA1kxzAq03hnSkQfykHYKUMMeKzik=;
-        b=4i9tMJWZcyQKkdeEh9UCjLhCgi9D6g68Uhx+3ShP5BmMRkmypdomjsRn8LnhcW4oEV
-         Nx6Epzs1Nuf77ESdxUL0Aj2Apnh8Brpsz1qQPdsjI3BgLtoEvMHDkZ4N6+NM6gtHI3sp
-         TVBgh+JSo97e0JmUWqE0FVH8OGlL2ezm/s684TUDzih/UEbP8yuWrLZPC4QWMcfLOfo6
-         4azeXKEgb7esDQ2Kk/KfKTdW3iPapTrLbRZQ3gfaZtvj/lsJ/GRuoXCy7Pcl6DV+qLVN
-         4mHB1+Cx1W/l9bbSPE0PAVFGCVJMdhtEL95ZrMESawYZoszdRt/eZBdcN2KUCg3tO0zC
-         9leg==
-X-Gm-Message-State: AOAM533sdZIIPdPj4mcvjYqxhCFkH+ZUBUnvhHxSYW16VQmqqSb4A62u
-        C6MWRdvq2QS/kU9ppYo3sVGqjkYS7ZafdLuj5qi88Jmifhw=
-X-Google-Smtp-Source: ABdhPJwsuxv/XbBbudy4e6bTDhiDVFFDgZKX0XGGqwwDsyDgJbXqf/BWUA5xH2YFm+VUg63tTyYBgkY9O33WPDIO8DU=
-X-Received: by 2002:ac2:5fee:: with SMTP id s14mr26186705lfg.537.1637271632033;
- Thu, 18 Nov 2021 13:40:32 -0800 (PST)
+        id S230499AbhKRWDQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 17:03:16 -0500
+Received: from smtp-8fad.mail.infomaniak.ch ([83.166.143.173]:44165 "EHLO
+        smtp-8fad.mail.infomaniak.ch" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230481AbhKRWDP (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 18 Nov 2021 17:03:15 -0500
+Received: from smtp-2-0000.mail.infomaniak.ch (unknown [10.5.36.107])
+        by smtp-2-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4HwD9W3ybYzMqLkq;
+        Thu, 18 Nov 2021 22:54:55 +0100 (CET)
+Received: from [10.10.10.4] (unknown [51.15.56.3])
+        by smtp-2-0000.mail.infomaniak.ch (Postfix) with ESMTPA id 4HwD9V5Zq6zlhP4p;
+        Thu, 18 Nov 2021 22:54:54 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=etguillot.fr;
+        s=20191114; t=1637272495;
+        bh=3pyqBuNpji4YbkPBg7EFCV6txOQw5WU5yydS73uB+lQ=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=mOvPq0Yo61uNuWm5PBkpFE0etboBmJ5RvRI7PolFespQXftVwTZ4ct8oMcFTGU/su
+         Uu3sgQxA4X++AnbiCnjXV6XfH9B495Q5l4yDvfkizoPuLmoiDkp+vPBEJd7hjQFtvf
+         jT41IdszjAq8MkiqBgIR1IfjRQ7JgLsDzTSwW/Pg=
+Message-ID: <5a5ac5a9-dda8-ece6-2f35-6362e5085ed6@etguillot.fr>
+Date:   Thu, 18 Nov 2021 22:54:54 +0100
 MIME-Version: 1.0
-References: <20211118154317.639118-1-alexhenrie24@gmail.com> <xmqqk0h5w3qy.fsf@gitster.g>
-In-Reply-To: <xmqqk0h5w3qy.fsf@gitster.g>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Thu, 18 Nov 2021 14:40:20 -0700
-Message-ID: <CAMMLpeSuL2k2semwS+K1jxTNZEV79GzCymFZo+1VcsyU6bYTrg@mail.gmail.com>
-Subject: Re: [PATCH] pull: don't say that merge is "the default strategy"
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>, sluongng@gmail.com,
-        matthias.baumgarten@aixigo.com,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.1
+Subject: Re: Need help in understanding how to submit a patch
+Content-Language: en-US
+To:     Jiang Xin <worldhello.net@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Cc:     Pratyush Yadav <me@yadavpratyush.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Etienne Guillot <git@etguillot.fr>,
+        =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>,
+        Git List <git@vger.kernel.org>
+References: <127c9dbd-4861-beea-a85b-af7412ce141f@etguillot.fr>
+ <6fa0b1dd-ac20-ff55-95ea-1c22347f9199@iee.email>
+ <20211117175149.7slohfqqwsmn3ua6@yadavpratyush.com>
+ <YZVB5hy4Xuim5K9B@nand.local>
+ <CANYiYbFq-SAq2VLcFFX8P=Y8-JzjqW63mJqTuOCgO+q+Zzf=DQ@mail.gmail.com>
+ <YZWvJdWcmhIl9DxR@nand.local>
+ <CANYiYbGuR8WNvD_2Kw_M0XX9H027Z2m137S0zwrfL7oURSpTUw@mail.gmail.com>
+From:   Etienne Guillot <git@etguillot.fr>
+In-Reply-To: <CANYiYbGuR8WNvD_2Kw_M0XX9H027Z2m137S0zwrfL7oURSpTUw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 18, 2021 at 2:30 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Alex Henrie <alexhenrie24@gmail.com> writes:
->
-> > Git no longer has a default strategy for reconciling divergent branches,
-> > because there's no way for Git to know which strategy is appropriate in
-> > any particular situation.
->
-> A very good observation, and the patch makes sense.
 
-Thanks, I'm glad you agree.
 
-> > The initially proposed version of commit
-> > 031e2f7ae195069d00d21cde906fce5b0318dbdd, "pull: abort by default when
-> > fast-forwarding is not possible", dropped this phrase from the message.
-> > It appears that leaving it in the message in the final version of the
-> > patch was accidental.
->
-> Hmph, the one before later iterations v$N, i.e.
->
-> https://lore.kernel.org/git/dca0455898a838b46546a29ee79f0a8b112fbff5.1626536508.git.gitgitgadget@gmail.com/
->
-> seems to keep "the default" label from the beginning.
+On 11/18/21 02:52, Jiang Xin wrote:
+> On Thu, Nov 18, 2021 at 9:40 AM Taylor Blau <me@ttaylorr.com> wrote:
+>>
+>> On Thu, Nov 18, 2021 at 09:37:57AM +0800, Jiang Xin wrote:
+>>> On Thu, Nov 18, 2021 at 1:54 AM Taylor Blau <me@ttaylorr.com> wrote:
+>>>>
+>>>> Jiang,
+>>>>
+>>>> On Wed, Nov 17, 2021 at 11:21:49PM +0530, Pratyush Yadav wrote:
+>>>>> Hi Etienne,
+>>>>>
+>>>>> On 17/11/21 03:47PM, Philip Oakley wrote:
+>>>>>> On 16/11/2021 21:15, Etienne Guillot wrote:
+>>>>>>> Hi,
+>>>>>>>
+>>>>>>> I found a typo mistake in the french translation of git-gui.
+>>>>>>> I did read the instructions on this page
+>>>>>>> https://git-scm.com/docs/SubmittingPatches
+>>>>>>> but I still not sure where should I push the correction.
+>>>>>>>
+>>>>>>> Thanks for your help
+>>>>>>>
+>>>>>>> Etienne Guillot
+>>>>>> Hi Etienne
+>>>>>>
+>>>>>> The Git Gui is managed by Pratyush Yadav (cc'd) and hosted at
+>>>>>> https://github.com/prati0100/git-gui
+>>>>>>
+>>>>>> Not sure what the latest is on contributing translations (not covered in
+>>>>>> the GitHub Readme..).
+>>>>>
+>>>>> I usually ask people to post patches on this mailing list and I review
+>>>>> them here. But I make an exception for translation changes since they
+>>>>> never get any reviews anyway.
+>>>>>
+>>>>> So I am fine with either a Pull Request on GitHub or a patch on the
+>>>>> mailing list.
+>>>>
+>>>> Since Pratyush is the maintainer, does the po/TEAMS file in your tree
+>>>> need updating?
+>>>
+>>> Git Gui is a standalone project with its own workflow. The file
+>>> "po/TEAMS" is only used for Git project, so I am a little confused how
+>>> to update this file?
+>>
+>> I misread Etienne's original message, I thought they were asking about
+>> the French translation for Git, not git-gui.
+>>
+>>>> I'm not sure how up-to-date the file is in general, but the last commit
+>>>> was made semi-recently back in August, so I assume that the entry for
+>>>> the French translation is outdated.
+>>>
+>>> French l10n team is led by Jean-Noël Avila, and is very active.
+>>>
+>>>      git log --no-merges -- po/fr.po
+>>>
+>>> L10n for git-gui are maintained by different people though.  Because
+>>> "git-gui" is merged into git using subtree merge strategy,  I cannot
+>>> find commit logs of "git-gui/po/fr.po" using the same command, and
+>>> have to find the original git-gui commit, and find commit logs from
+>>> "po/fr.po" (which is quite different file from "po/fr.po" of Git).
+>>>
+>>>      git log 8a383db4b2 -- po/fr.po
+>>
+>> Yes, clearly no update is necessary here. Sorry for the confusion.
+> 
+> It's really easy to confuse. No problem.
+> 
+> BTW, what is the elegant way to find commit logs of a tree from a subtree merge?
+> 
+> I have to run git-log on "git-gui" to find the 2nd parent commit ID of
+> the subtree merge, and run git-log on it.
+> 
+> --
+> Jiang Xin
+> 
 
-I was referring to the patch that I originally wrote, before Elijah
-made the changes that actually got the patch accepted:
-https://lore.kernel.org/git/20210627000855.530985-1-alexhenrie24@gmail.com/
+Thank you everyone for your answers.
+I choose the easy way and opened a pull request on github.
 
-> I am tempted to drop this latter last paragraph, which looks more
-> like a guess than anything else, and does not add much value to
-> future readers of the "git log".
-
-That's fine by me. I almost didn't include the second paragraph in the
-commit message to begin with.
-
--Alex
+Etienne Guillot
