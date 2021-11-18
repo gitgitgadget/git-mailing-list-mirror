@@ -2,99 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18031C4332F
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 10:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FD8FC433EF
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 10:18:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 050B56108B
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 10:06:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FB7761B73
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 10:18:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245456AbhKRKJT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 05:09:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39192 "EHLO
+        id S244743AbhKRKVk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 05:21:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245497AbhKRKHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 05:07:46 -0500
+        with ESMTP id S244918AbhKRKU7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 05:20:59 -0500
 Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56F33C061200
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 02:04:20 -0800 (PST)
-Received: by mail-ua1-x936.google.com with SMTP id w23so12409941uao.5
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 02:04:20 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0070AC061224
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 02:16:00 -0800 (PST)
+Received: by mail-ua1-x936.google.com with SMTP id r15so12502604uao.3
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 02:16:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ZvQZeSGEqAci6suI9TfTNYV+uMFPvW4xvnZHd44FY3s=;
-        b=Mn9+NBtcTS8uIdiplEHFwVnPS3OvMatGuB7CZ5jHCPSqn9vgorg+C7hVnpM/4qlcNn
-         swlWW5nJHWVl7hQeGmH8AiiMJDCQVyU+gJNLRXrQAAHgIvSR/4mAMbji298yYnFKcxL1
-         6p1WzYHEcFXAVbsET4lxoSctqFPyG1I4FuipOscMjkiU+a/w/ej1aHEFpyq44QwElwlR
-         aUIH9VSB7OZwJ6n5f5/hM/m1a2FArBC5qn+DPU74sWNb/5t6edztITgNJdCumjjB2fZ3
-         YDP6/tBW1x9//fp4ciu8pL5aTxxze6RIji5J+E/1dZ8Fbrai6rLna6sWWSLPXEl/ejNs
-         0CjQ==
+         :cc;
+        bh=w83kNrHT7NzVCN3FqN8B0dBbi0Yxa2YVD0JzahYHHYo=;
+        b=qRxZSPko8zZr+6/L5t9Kwr5YjMqzlrblkljrwVNNKJV4fe4T3cnkiwvQwFHikVT2ek
+         nDrm3e3mzvrvNzyjZh632sQuM1FtOi3SgGi1POu8MKdcBMvILIDg/nAm5TI8duu2MiwU
+         LNBfylcLZWvRJbp+6IwwP72XOdcqVOtTRA5Jjb8P1s5LMl/5f3rgWQqkwWsY/tGEj95y
+         qkg6qg0ABCKS3Lc5TdWeK7lDS7GUmlKaF/JczY5JVHNoy6jRvtAWOLYxHZyycBJbC8DP
+         wn1Vaw+gXR4qWTnr67DXVllnLj0PBNn2+P1qPd9O02WAxxfga3W/Q/U9Ujg3QfP6JB2M
+         ZQGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ZvQZeSGEqAci6suI9TfTNYV+uMFPvW4xvnZHd44FY3s=;
-        b=Dt6TZD4G6ayX9SJGTjSNRX22MVP2q7cL6epCL1/4MA6q1dK7Eu5sW8FI5EJoi6Zc+k
-         t3q7c27rIRq9HRu5kvWTpvtigWbRGHmvFNEh8lFU8C1mcibjpmvIKkq9PgpifZsvR1sW
-         Nsr9lTbrxvVW+0P66pLgmeFzJ2RSyMv7PmF5aINzTdamX8T5xzTxKmv5n82PNIYItyqp
-         9FaKRvsHQiTZUZXOpSw5QEFJp4iKo4+tDSpjGwqbRaPFnaaIxa1gLsR4K4uL4fkQ1Uvw
-         rlYD2nBjotSE4hVizO1K+6JtrjzdChxns2xp85VrptV8nS+GH2tE+he6zIwoJtz6Zn6Y
-         vkcQ==
-X-Gm-Message-State: AOAM530gwaKBEVRNZJ9cNp34kfhjKusdbB6/UsOHL9viYgHerkC0VCLW
-        HnITHmdGwlla7nU3FhrT6pqWY6owgeappWc4Jvw=
-X-Google-Smtp-Source: ABdhPJzIKMN/3Hjh2qegGIgU/oH3k2AoxnXs9Y8kKm28N/RYYL2LdGJn8Fjxh0ooA+g2PL9Gjfr3q9OVuZvPOnEHWlo=
-X-Received: by 2002:a05:6102:512b:: with SMTP id bm43mr80210992vsb.14.1637229859434;
- Thu, 18 Nov 2021 02:04:19 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=w83kNrHT7NzVCN3FqN8B0dBbi0Yxa2YVD0JzahYHHYo=;
+        b=rue9SIcJ5Kbi1H3nhgPfT+WA2XyPBqWatSWEWMKgst2Fg35YkDZGn5+36AB6DehNGi
+         eE0TPpNIV8ahMdo83DDRaaOE+qqZIC5dItaO+BsHOk0cjGso72f4C35R3pVav7dM5Man
+         C7GZu6YL2klmxPo/pB1ALwik3EoPrOjP/D1L7t9r+0eMwyyzMYjsxzrKGyO5/000ljFw
+         racI2wV8b9W85xWh9G2+LJ+y3avdE61lofiTFfDoJoTmMXcSXyiqZPn1hd9+KiW2a2VM
+         ym3VX/HxwTHFBMAp5GJt9l400qFw6NwRuTeZ8745OONNW20PvS9r9NyQutEO8mM3EVdb
+         b6xg==
+X-Gm-Message-State: AOAM5303ygtpFGb7n4zdj8x9CajcMTX/uk2CtgdWhmqmlVfhRiGtitmr
+        u2SdPviPWK7nWdy6D0P35KhxoecSe0Gbdm0TfOc=
+X-Google-Smtp-Source: ABdhPJwrNmaIKyTmi8wPv9MaQ1aYsH7MavmMCO1Xe4vowfJ0Dmxtw8SU6XxMLSSk4HYg5TLZI6hCoFlPPb90sP3sKuw=
+X-Received: by 2002:a05:6102:512b:: with SMTP id bm43mr80320447vsb.14.1637230560215;
+ Thu, 18 Nov 2021 02:16:00 -0800 (PST)
 MIME-Version: 1.0
-References: <20211118084143.279174-1-someguy@effective-light.com>
-In-Reply-To: <20211118084143.279174-1-someguy@effective-light.com>
+References: <20211116110035.22140-1-carenas@gmail.com> <20211117102329.95456-1-carenas@gmail.com>
+ <xmqqpmqxyla3.fsf@gitster.g>
+In-Reply-To: <xmqqpmqxyla3.fsf@gitster.g>
 From:   Carlo Arenas <carenas@gmail.com>
-Date:   Thu, 18 Nov 2021 02:04:08 -0800
-Message-ID: <CAPUEspi5-urxZxHCsAWjyLxPWDfaYCK7nqGBL8FejU=n=qcFrQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] grep/pcre2: limit the instances in which UTF mode is enabled
-To:     Hamza Mahfooz <someguy@effective-light.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+Date:   Thu, 18 Nov 2021 02:15:49 -0800
+Message-ID: <CAPUEsphbA0Qrnt-MdxyYT2OMrnXnbi0tN5_YNqLypCqDqZyeWg@mail.gmail.com>
+Subject: Re: [PATCH v2] grep: avoid setting UTF mode when dangerous with PCRE
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, someguy@effective-light.com,
         =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+        Andreas Schwab <schwab@linux-m68k.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 18, 2021 at 12:42 AM Hamza Mahfooz
-<someguy@effective-light.com> wrote:
+On Wed, Nov 17, 2021 at 11:29 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> UTF mode is enabled for cases that cause older versions of PCRE to break.
+> So, is this the final verrsion everybody is happy with, instead of
+> just reverting the whole "paint hits in log --grep" topic, or did I
+> miss more discussion in the original thread?
 
-Not really; what is broken is our implementation of how PCRE gets
-called and that ignores the fact that giving it invalid UTF-8 (which
-might be valid LATIN-1 text for example) and telling it to do a match
-using UTF, will fail (if we are lucky even with an error) or might
-even crash (and obviously don't match) if we also tell it to not do
-the validation, and which is something we do when JIT is enabled.
+This will likely need at least some ACKs.
 
-> This is primarily due to the fact that we can't make as many assumptions =
-on
-> the kind of data that is fed to "git grep." So, limit when UTF mode can b=
-e
-> enabled by introducing "is_log" to struct grep_opt, checking to see if it=
-'s
-> a non-zero value in compile_pcre2_pattern() and only mutating it in
-> cmd_log() so that we know "git log" was invoked if it's set to a non-zero
-> value.
-
-I haven't tested it, but I think that for this to work with the log,
-we also need to make sure that all log entries that might not be UTF-8
-get first iconv() which is why probably =C3=86evar mentioned[1]
-i18n.commitEncoding in his old email.
-
-Of course doing that translation only makes sense if the log output is
-meant to be UTF-8 which is why there is all that logic about being in
-an UTF-8 locale or not which probably needs to be adjusted as well.
+Apologies for the noise.
 
 Carlo
-
-[1] https://lore.kernel.org/git/87v92bju64.fsf@evledraar.gmail.com/
