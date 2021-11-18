@@ -2,104 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FAB7C433EF
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 09:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18031C4332F
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 10:06:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8181C61269
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 09:54:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 050B56108B
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 10:06:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245296AbhKRJ5p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 04:57:45 -0500
-Received: from MTA-15-4.privateemail.com ([198.54.127.111]:51242 "EHLO
-        MTA-15-4.privateemail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245294AbhKRJ4i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 04:56:38 -0500
-Received: from mta-15.privateemail.com (localhost [127.0.0.1])
-        by mta-15.privateemail.com (Postfix) with ESMTP id A034A18000AE;
-        Thu, 18 Nov 2021 04:53:36 -0500 (EST)
-Received: from hal-station.. (unknown [10.20.151.240])
-        by mta-15.privateemail.com (Postfix) with ESMTPA id A58241800195;
-        Thu, 18 Nov 2021 04:53:35 -0500 (EST)
-From:   Hamza Mahfooz <someguy@effective-light.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Hamza Mahfooz <someguy@effective-light.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 2/2] ci: add a job for PCRE2
-Date:   Thu, 18 Nov 2021 04:53:31 -0500
-Message-Id: <20211118095331.282468-1-someguy@effective-light.com>
-X-Mailer: git-send-email 2.34.0
-In-Reply-To: <20211118084143.279174-2-someguy@effective-light.com>
-References: <20211118084143.279174-2-someguy@effective-light.com>
+        id S245456AbhKRKJT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 05:09:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39192 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245497AbhKRKHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 05:07:46 -0500
+Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56F33C061200
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 02:04:20 -0800 (PST)
+Received: by mail-ua1-x936.google.com with SMTP id w23so12409941uao.5
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 02:04:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ZvQZeSGEqAci6suI9TfTNYV+uMFPvW4xvnZHd44FY3s=;
+        b=Mn9+NBtcTS8uIdiplEHFwVnPS3OvMatGuB7CZ5jHCPSqn9vgorg+C7hVnpM/4qlcNn
+         swlWW5nJHWVl7hQeGmH8AiiMJDCQVyU+gJNLRXrQAAHgIvSR/4mAMbji298yYnFKcxL1
+         6p1WzYHEcFXAVbsET4lxoSctqFPyG1I4FuipOscMjkiU+a/w/ej1aHEFpyq44QwElwlR
+         aUIH9VSB7OZwJ6n5f5/hM/m1a2FArBC5qn+DPU74sWNb/5t6edztITgNJdCumjjB2fZ3
+         YDP6/tBW1x9//fp4ciu8pL5aTxxze6RIji5J+E/1dZ8Fbrai6rLna6sWWSLPXEl/ejNs
+         0CjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ZvQZeSGEqAci6suI9TfTNYV+uMFPvW4xvnZHd44FY3s=;
+        b=Dt6TZD4G6ayX9SJGTjSNRX22MVP2q7cL6epCL1/4MA6q1dK7Eu5sW8FI5EJoi6Zc+k
+         t3q7c27rIRq9HRu5kvWTpvtigWbRGHmvFNEh8lFU8C1mcibjpmvIKkq9PgpifZsvR1sW
+         Nsr9lTbrxvVW+0P66pLgmeFzJ2RSyMv7PmF5aINzTdamX8T5xzTxKmv5n82PNIYItyqp
+         9FaKRvsHQiTZUZXOpSw5QEFJp4iKo4+tDSpjGwqbRaPFnaaIxa1gLsR4K4uL4fkQ1Uvw
+         rlYD2nBjotSE4hVizO1K+6JtrjzdChxns2xp85VrptV8nS+GH2tE+he6zIwoJtz6Zn6Y
+         vkcQ==
+X-Gm-Message-State: AOAM530gwaKBEVRNZJ9cNp34kfhjKusdbB6/UsOHL9viYgHerkC0VCLW
+        HnITHmdGwlla7nU3FhrT6pqWY6owgeappWc4Jvw=
+X-Google-Smtp-Source: ABdhPJzIKMN/3Hjh2qegGIgU/oH3k2AoxnXs9Y8kKm28N/RYYL2LdGJn8Fjxh0ooA+g2PL9Gjfr3q9OVuZvPOnEHWlo=
+X-Received: by 2002:a05:6102:512b:: with SMTP id bm43mr80210992vsb.14.1637229859434;
+ Thu, 18 Nov 2021 02:04:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+References: <20211118084143.279174-1-someguy@effective-light.com>
+In-Reply-To: <20211118084143.279174-1-someguy@effective-light.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Thu, 18 Nov 2021 02:04:08 -0800
+Message-ID: <CAPUEspi5-urxZxHCsAWjyLxPWDfaYCK7nqGBL8FejU=n=qcFrQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] grep/pcre2: limit the instances in which UTF mode is enabled
+To:     Hamza Mahfooz <someguy@effective-light.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since, git aspires to support many PCRE2 versions, it is only sensible to
-test changes to git against versions of PCRE2 that are deemed to be
-notable, to ensure those changes to git don't cause regressions when using
-the aforementioned PCRE2 versions. This is underscored by the fact that,
-commit ae39ba431a (grep/pcre2: fix an edge case concerning ascii patterns
-and UTF-8 data, 2021-10-15) was able to make it's way to master while
-causing an otherwise easy to catch regression when an older version of
-PCRE2 is used. So, to address this issue, add a job for PCRE2 to build all
-of the notable versions, compile all of them against git and only run the
-tests that can possibly be impacted by PCRE2.
+On Thu, Nov 18, 2021 at 12:42 AM Hamza Mahfooz
+<someguy@effective-light.com> wrote:
+>
+> UTF mode is enabled for cases that cause older versions of PCRE to break.
 
-Suggested-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
----
-v2: use 'ref' instead of doing a manual checkout and add jobname to
-    the env.
----
- .github/workflows/main.yml | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+Not really; what is broken is our implementation of how PCRE gets
+called and that ignores the fact that giving it invalid UTF-8 (which
+might be valid LATIN-1 text for example) and telling it to do a match
+using UTF, will fail (if we are lucky even with an error) or might
+even crash (and obviously don't match) if we also tell it to not do
+the validation, and which is something we do when JIT is enabled.
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 6ed6a9e807..6d8906139d 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -319,3 +319,31 @@ jobs:
-     - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
-     - run: ci/test-documentation.sh
-+  pcre2:
-+    needs: ci-config
-+    if: needs.ci-config.outputs.enabled == 'yes'
-+    strategy:
-+      fail-fast: false
-+      matrix:
-+        jit: ['--enable-jit', '--disable-jit']
-+        utf: ['--enable-utf', '--disable-utf']
-+        version: [31, 34, 36, 39]
-+    env:
-+      jobname: linux-gcc-default
-+    runs-on: ubuntu-latest
-+    steps:
-+    - uses: actions/checkout@v2
-+    - uses: actions/checkout@v2
-+      with:
-+        repository: 'PhilipHazel/pcre2'
-+        path: 'compat/pcre2-repo'
-+        ref: pcre2-10.${{matrix.version}}
-+    - run: ci/install-dependencies.sh
-+    - run: cd compat/pcre2-repo
-+    - run: ./autogen.sh
-+    - run: ./configure ${{matrix.jit}} ${{matrix.utf}} --prefix="$PWD/inst"
-+    - run: make
-+    - run: sudo make install
-+    - run: cd ../..
-+    - run: make USE_LIBPCRE=Y CFLAGS=-O3 LIBPCREDIR="$PWD/compat/pcre2-repo/inst"
-+    - run: cd t && make *{grep,log,pickaxe}*
--- 
-2.34.0
+> This is primarily due to the fact that we can't make as many assumptions =
+on
+> the kind of data that is fed to "git grep." So, limit when UTF mode can b=
+e
+> enabled by introducing "is_log" to struct grep_opt, checking to see if it=
+'s
+> a non-zero value in compile_pcre2_pattern() and only mutating it in
+> cmd_log() so that we know "git log" was invoked if it's set to a non-zero
+> value.
 
+I haven't tested it, but I think that for this to work with the log,
+we also need to make sure that all log entries that might not be UTF-8
+get first iconv() which is why probably =C3=86evar mentioned[1]
+i18n.commitEncoding in his old email.
+
+Of course doing that translation only makes sense if the log output is
+meant to be UTF-8 which is why there is all that logic about being in
+an UTF-8 locale or not which probably needs to be adjusted as well.
+
+Carlo
+
+[1] https://lore.kernel.org/git/87v92bju64.fsf@evledraar.gmail.com/
