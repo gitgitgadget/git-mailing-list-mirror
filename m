@@ -2,111 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3360FC433F5
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 03:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DB18C433F5
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 03:40:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10F00600CD
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 03:09:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 302FB61ABD
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 03:40:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242616AbhKRDMM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Nov 2021 22:12:12 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60509 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242443AbhKRDML (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Nov 2021 22:12:11 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8414CE1621;
-        Wed, 17 Nov 2021 22:09:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=tRtnWW8Sohb0sP8wh7YlFrZbWgcZ74w2kfeF6b0zxS8=; b=IqN6
-        17xJCP8YynlaeNIfZtXso9oyIOx9vwD/40UkSry0xtJly+yhi8Ye/vB4JUZVaXM/
-        OjYFsk3g/q8D4kuVQeTmRKPjSutlWjjklWcZGc1ghrm81o8xbLvdp+++zm708jVR
-        +8LNjQ9Aen8HYn4Ta1PIEFfoQGsCEgIj8axEDYQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7C027E1620;
-        Wed, 17 Nov 2021 22:09:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E2C91E161F;
-        Wed, 17 Nov 2021 22:09:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] ssh signing: support non ssh-* keytypes
-References: <20211117162727.650857-1-fs@gigacodes.de>
-Date:   Wed, 17 Nov 2021 19:09:08 -0800
-Message-ID: <xmqq4k8a2m97.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S242759AbhKRDnh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Nov 2021 22:43:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38914 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241533AbhKRDna (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Nov 2021 22:43:30 -0500
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6F18C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 19:40:30 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id p18so4016652plf.13
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 19:40:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JvMKxuJiIjFj3V/JoGEotFvIY6XREY4h/uxMfRGy8/o=;
+        b=C8P0JktS+ILO4OfRH+I7fmJn+KhB57rvj0+xpHBUZ7s1K215Q0M1APMjiegULFgqCr
+         dKjRnKfIHWJS6wcW7NnNchLapslzIcLDDMspTQhjbnW70jYec4kdt+LgTnnew0i5DwZd
+         8CR/qOG1N8nt13w/qPVbiHtmSfeaN7XXc5Nezv60HMgxAYkD3kinD6O7ygu2392oi3lL
+         Z4PRkkTWgvB1X1TDFpeBnR3nWhFkaGjFMUgD67iQFV+20/KmWq594IiKhae4BN/a8RqC
+         OacIk4h4g+m6ANH79x7UfCxmO2f5gM4i52kVfiwQLW8AMhnQTr069lvcKUsV0bBe0x/N
+         wf4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JvMKxuJiIjFj3V/JoGEotFvIY6XREY4h/uxMfRGy8/o=;
+        b=m6LqNEDOhZM0MD+CHKZ+sili1i035GS+grKH478RZV3CJgZgoFqs32CC6PadvEyEPG
+         CxcsWzXuyTtOjT9pKC3t8A4TMZr+T8PP3IP0aSPaHPONClt7XNZpT1xd04aiX+PrB/1w
+         xZbNqqn5lSSOZuDGIOrnjKpm8eaxYHqj+7BJwHs4OB/zHapf8MdJFHJRigVL0sqd5ufT
+         uhvktgODUWn3hRaSrULh+CpcfKkf4IJOjVWf8v3EgaerF6aW7qkj9PqRyNJCIOsJpv0/
+         VEQcZMk85HIJW+H+pHfCwffrdbDsXgzHeB+w1cMwuStstpEwNdk9+4XRiW83BAnEQeU1
+         4MxA==
+X-Gm-Message-State: AOAM533LvZAQCdnFPTBRFYNGaLZOOaAnAp5tIuoPL/++TNJinnQ63GSM
+        S8bFdxZLhGoizfbK3FZY6FU=
+X-Google-Smtp-Source: ABdhPJxQ6VOHx3kOfPjD8UjmaJL5PpTyUrrvosIWmzXQfPoludXJo8icOFOqkK+7PRdYVEpWJEel5A==
+X-Received: by 2002:a17:90b:4ad0:: with SMTP id mh16mr6344780pjb.176.1637206830194;
+        Wed, 17 Nov 2021 19:40:30 -0800 (PST)
+Received: from localhost.localdomain ([205.204.117.103])
+        by smtp.gmail.com with ESMTPSA id l1sm6707429pjh.28.2021.11.17.19.40.28
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 17 Nov 2021 19:40:29 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     me@ttaylorr.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com,
+        Teng Long <dyroneteng@gmail.com>
+Subject: Re: [PATCH] midx: fix a formatting issue in "multi-pack-index.txt"
+Date:   Thu, 18 Nov 2021 11:39:59 +0800
+Message-Id: <20211118033959.59881-1-dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.33.1.9.g5fbd2fc599.dirty
+In-Reply-To: <YZQngLFWlns9HyoW@nand.local>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E62A0EFC-481C-11EC-A26C-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fabian Stelzer <fs@gigacodes.de> writes:
 
-> +/* Determines wether key contains a literal ssh key or a path to a file */
-> +static int is_literal_ssh_key(const char *key) {
-> +	return (
-> +		starts_with(key, "ssh-") ||
-> +		starts_with(key, "ecdsa-") ||
-> +		starts_with(key, "sk-ssh-") ||
-> +		starts_with(key, "sk-ecdsa-")
-> +	);
-> +}
+On Mon, Tue, 16 Nov 2021 16:49:52 -0500, Taylor Blau wrote:
 
-A more forward looking thing you could do is to 
+> That's it. ASCIIDoc doesn't treat an indented dash character as the
+> beginning of a sub-list.
 
- (1) grandfather the convention "any string that begins with 'ssh-'
-     is taken as a ssh literal key".
+That's right.
 
- (2) refrain from spreading such an unstructured mess by picking a
-     reserved prefix, say "ssh-key::" and have all other kinds of
-     ssh keys use the convention.
+> It will treat an indented asterisk as beginning
+> a sub-list, but only if the rest of the list items begin with a "-".
 
-making the above function look more like
+There are some questions here.
+I think the indent is not needed for bulleted list in ASCIIDOC. If we
+want to write a nested bulleted list, we could just use asterisks
+without any dashes like:
 
-    static int is_literal_ssh_key(const char *string, const char **key)
-    {
-	if (skip_prefix(string, "ssh-key::", key)
-	    return 1;
-	if (starts_with(string, "ssh-")) {
-	    key = string;
-	    return 1;
-	}
-	return 0;
-    }
+"
+* Level 1 list item
+** Level 2 list item
+*** Level 3 list item
+** Level 2 list item
+* Level 1 list item
+** Level 2 list item
+* Level 1 list item
+"
 
-so that the caller can extract the literal key from the string that
-specifies either the literal key or path to the file.  This will
-futureproof us in two axis.  When SSH adds types of keys using new
-algo, we do not have to add it to is_literal_ssh_key() function.
-Also when another crypto suite other than GPG and SSH comes, we
-won't repeat the "bare 'ssh-' prefix is reserved by ssh, and
-different kind in the same suite may have to consume more reserved
-prefixes" mistake---it would make it more natural for us to pick
-"literal keys from any variant of that new FOO crypto suite are
-written with 'foo-key::' prefix" if we did so right now.  It would
-have been better if we didn't have to do the grandfathering, but I
-am assuming that the ship has already sailed?
+And the dashes are suggested only be used as the marker for the first
+level because the dash doesn’t work well or a best practice for nested
+lists, like (dash is as level 2):
 
-> @@ -719,7 +729,7 @@ static char *get_ssh_key_fingerprint(const char *signing_key)
->  	 * With SSH Signing this can contain a filename or a public key
->  	 * For textual representation we usually want a fingerprint
->  	 */
-> -	if (starts_with(signing_key, "ssh-")) {
-> +	if (is_literal_ssh_key(signing_key)) {
-> 		strvec_pushl(&ssh_keygen.args, "ssh-keygen", "-lf", "-", NULL);
-> 		ret = pipe_command(&ssh_keygen, signing_key,
-> 				   strlen(signing_key), &fingerprint_stdout, 0,
+"
+* Level 1 list item
+- Level 2 list item
+* Level 1 list item
+"
 
-This part needs a bit of adjustment if we go the
-"is_literal_ssh_key() is not just a boolean but is used to strip the
-prefix to signal the kind of key" route, but the necessary
-adjustment should be trivial.
+But, if you are writting a non-nested bulleted lists, use dashes works
+too, like:
+
+"
+- Level 1 list item
+- Level 1 list item
+- Level 1 list item
+"
+
+> It might just be worth converting this whole thing to use what ASCIIDoc
+> would probably consider to be a more standard format, i.e.:
+>
+>     * A list of packfile names.
+>     * A sorted list of object IDs.
+>     * A list of metadata for the ith object ID including:
+>     ** A value j referring to the jth packfile.
+>     ** An offset within the jth packfile for the object.
+>     * If large offsets are required, we use another list of large
+>       offsets similar to version 2 pack-indexes.
+
+I agree with you.
+
+The asterisks are recommanded to use I think, it displays intuitively
+when writting ASCIIDOC lists (marker length = nesting level).
+
+> Yeah, Teng's fix works just fine. So I'd be happy to see that picked up
+> (with or without much additional explanation).
+
+I found it because I'm learning about the implements about the
+multi-pack-index, reverse-index and multi-pack-bitmap, very nice
+feature.
+
+Patch v2 will add more descriptions (Derrick Stolee suggested) in
+commit message and will make the replacements from dashes to asterisks.
+
+Finally, thanks Derrick Stolee and Taylor Blau for the relies.
+
+References:
+[1] https://asciidoc-py.github.io/userguide.html#_bulleted_lists
