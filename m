@@ -2,50 +2,50 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 144A9C433FE
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 16:49:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B263C433F5
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 16:49:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ECA0961B39
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 16:49:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 390C261B29
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 16:49:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233805AbhKRQww (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 11:52:52 -0500
-Received: from smtp-out2.suse.de ([195.135.220.29]:57588 "EHLO
-        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233746AbhKRQwt (ORCPT <rfc822;git@vger.kernel.org>);
+        id S233811AbhKRQwx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 11:52:53 -0500
+Received: from smtp-out1.suse.de ([195.135.220.28]:52780 "EHLO
+        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233742AbhKRQwt (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 18 Nov 2021 11:52:49 -0500
 Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out2.suse.de (Postfix) with ESMTP id 524C41FD39
+        by smtp-out1.suse.de (Postfix) with ESMTP id 48262218B8
         for <git@vger.kernel.org>; Thu, 18 Nov 2021 16:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
         t=1637254188; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
          mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=Wlen4cf+aEJt/FgD27jOu/Drnv8TKfRrfQK+828Eh2c=;
-        b=0bhV8VS63IlO6C0MY4/QHc8qIfvyGVgWZyCY0XqQKbY0+ey0LyWbLy+RYqei/BjdwDRZNL
-        Pa8rabsLpm4rfogI3WRurqqCNI3aDqDzhEkH3CxwNPfnIeVzlXqILV5oh+0V9f9i5PMkeG
-        mj5LFRZCqiPLT+gkiVlik1R5cEWUTBg=
+        bh=ivlBUFy6KLRqxRf+OtPU/FcocZMZLDnmlNbcKj3V+UQ=;
+        b=Xc+A4o1YqkwTuMfIe8Y+D4d+1I7I/kmNTlTzj0teVAYRVzrRUDqVgsZSuU+T1pT/7X4QHh
+        vsGzym3B05xSxZYli5Gl/9LsAjnVyP3ueNBpa7+Z4NhcshmZG4u17BPAGda68LqpqYQDxH
+        m3aNa5v9tSKgKyrpQ02LlBD+pHWYgsM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
         s=susede2_ed25519; t=1637254188;
         h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
          mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=Wlen4cf+aEJt/FgD27jOu/Drnv8TKfRrfQK+828Eh2c=;
-        b=fBeexZmBfGF+z8/0luaBiU3TdC/OqseIIDy7Wn8nLucqHXjazWT4MUWgy/O6+66fAkirXW
-        te7FNYdnanwW+rDw==
+        bh=ivlBUFy6KLRqxRf+OtPU/FcocZMZLDnmlNbcKj3V+UQ=;
+        b=fJVRzrxfYxr/Vp3eupT6X1BVSBNe/gm+zH8rIyfLATkYcEewgDs8ERFckuPo2AFin5vxQw
+        IOrz3GH8BVUPa5DQ==
 Received: from quack2.suse.cz (unknown [10.100.200.198])
-        by relay2.suse.de (Postfix) with ESMTP id 2D6D2A3B8C;
+        by relay2.suse.de (Postfix) with ESMTP id 1E7EDA3B8A;
         Thu, 18 Nov 2021 16:49:48 +0000 (UTC)
 Received: by quack2.suse.cz (Postfix, from userid 1000)
-        id 795541F2C9F; Thu, 18 Nov 2021 17:49:47 +0100 (CET)
+        id 743E91E0679; Thu, 18 Nov 2021 17:49:47 +0100 (CET)
 From:   Jan Kara <jack@suse.cz>
 To:     git@vger.kernel.org
 Cc:     Jan Kara <jack@suse.cz>
-Subject: [PATCH 03/27] bisect: Fixup test bisect-porcelain/20
-Date:   Thu, 18 Nov 2021 17:49:16 +0100
-Message-Id: <20211118164940.8818-4-jack@suse.cz>
+Subject: [PATCH 01/27] bisect: Fixup test rev-list-bisect/02
+Date:   Thu, 18 Nov 2021 17:49:14 +0100
+Message-Id: <20211118164940.8818-2-jack@suse.cz>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20211118164940.8818-1-jack@suse.cz>
 References: <20211118164940.8818-1-jack@suse.cz>
@@ -55,35 +55,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Test 20 from t6030-bisect-porcelain.sh fails if the bisection algorithm
-picks HASH2 instead of HASH3 as the first step although these are
-equivalent. Fix the test to work in both cases.
+Test 2 from t6002-rev-list-bisect.sh expects 'c2' as the bisection point
+but b2 is an equivalent choice. Improve the test to accept both.
 
 Signed-off-by: Jan Kara <jack@suse.cz>
 ---
- t/t6030-bisect-porcelain.sh | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ t/t6002-rev-list-bisect.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index f8cfdd3c36d2..13f7deea4d81 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -240,8 +240,13 @@ test_expect_success 'bisect skip: cannot tell between 3 commits' '
- test_expect_success 'bisect skip: cannot tell between 2 commits' '
- 	test_when_finished git bisect reset &&
- 	git bisect start $HASH4 $HASH1 &&
--	git bisect skip &&
--	test_expect_code 2 git bisect good >my_bisect_log.txt &&
-+	if [ $(git rev-parse HEAD) == $HASH2 ]; then
-+		results=('good' 'skip')
-+	else
-+		results=('skip' 'good')
-+	fi &&
-+	git bisect ${results[0]} &&
-+	test_expect_code 2 git bisect ${results[1]} >my_bisect_log.txt &&
- 	grep "first bad commit could be any of" my_bisect_log.txt &&
- 	! grep $HASH1 my_bisect_log.txt &&
- 	! grep $HASH2 my_bisect_log.txt &&
+diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+index b95a0212adff..48db52447fd3 100755
+--- a/t/t6002-rev-list-bisect.sh
++++ b/t/t6002-rev-list-bisect.sh
+@@ -247,8 +247,9 @@ test_expect_success 'set up fake --bisect refs' '
+ test_expect_success 'rev-list --bisect can default to good/bad refs' '
+ 	# the only thing between c3 and c1 is c2
+ 	git rev-parse c2 >expect &&
+-	git rev-list --bisect >actual &&
+-	test_cmp expect actual
++	git rev-parse b2 >>expect &&
++	actual=$(git rev-list --bisect) &&
++	grep &>/dev/null $actual expect
+ '
+ 
+ test_expect_success 'rev-parse --bisect can default to good/bad refs' '
 -- 
 2.26.2
 
