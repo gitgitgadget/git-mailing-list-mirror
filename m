@@ -2,24 +2,24 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 694CDC433F5
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 08:44:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8B8FC433F5
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 08:44:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4593461AA9
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 08:44:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91AE9619BB
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 08:44:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244825AbhKRIrT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 03:47:19 -0500
-Received: from MTA-15-4.privateemail.com ([198.54.127.111]:54935 "EHLO
+        id S244827AbhKRIrY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 03:47:24 -0500
+Received: from MTA-15-4.privateemail.com ([198.54.127.111]:37624 "EHLO
         MTA-15-4.privateemail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244897AbhKRIpT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 03:45:19 -0500
+        with ESMTP id S244903AbhKRIpV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 03:45:21 -0500
 Received: from mta-15.privateemail.com (localhost [127.0.0.1])
-        by mta-15.privateemail.com (Postfix) with ESMTP id 23EE21800189;
-        Thu, 18 Nov 2021 03:42:13 -0500 (EST)
+        by mta-15.privateemail.com (Postfix) with ESMTP id BE0D018000BD;
+        Thu, 18 Nov 2021 03:42:16 -0500 (EST)
 Received: from hal-station.. (unknown [10.20.151.201])
-        by mta-15.privateemail.com (Postfix) with ESMTPA id 42F5818000BD;
-        Thu, 18 Nov 2021 03:42:11 -0500 (EST)
+        by mta-15.privateemail.com (Postfix) with ESMTPA id BC75F1800180;
+        Thu, 18 Nov 2021 03:42:15 -0500 (EST)
 From:   Hamza Mahfooz <someguy@effective-light.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -30,10 +30,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Hamza Mahfooz <someguy@effective-light.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/2] grep/pcre2: limit the instances in which UTF mode is enabled
-Date:   Thu, 18 Nov 2021 03:41:42 -0500
-Message-Id: <20211118084143.279174-1-someguy@effective-light.com>
+Subject: [PATCH 2/2] ci: add a job for PCRE2
+Date:   Thu, 18 Nov 2021 03:41:43 -0500
+Message-Id: <20211118084143.279174-2-someguy@effective-light.com>
 X-Mailer: git-send-email 2.34.0
+In-Reply-To: <20211118084143.279174-1-someguy@effective-light.com>
+References: <20211118084143.279174-1-someguy@effective-light.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -42,75 +44,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-UTF mode is enabled for cases that cause older versions of PCRE to break.
-This is primarily due to the fact that we can't make as many assumptions on
-the kind of data that is fed to "git grep." So, limit when UTF mode can be
-enabled by introducing "is_log" to struct grep_opt, checking to see if it's
-a non-zero value in compile_pcre2_pattern() and only mutating it in
-cmd_log() so that we know "git log" was invoked if it's set to a non-zero
-value.
+Since, git aspires to support many PCRE2 versions, it is only sensible to
+test changes to git against versions of PCRE2 that are deemed to be
+notable, to ensure those changes to git don't cause regressions when using
+the aforementioned PCRE2 versions. This is underscored by the fact that,
+commit ae39ba431a (grep/pcre2: fix an edge case concerning ascii patterns
+and UTF-8 data, 2021-10-15) was able to make it's way to master while
+causing an otherwise easy to catch regression when an older version of
+PCRE2 is used. So, to address this issue, add a job for PCRE2 to build all
+of the notable versions, compile all of them against git and only run the
+tests that can possibly be impacted by PCRE2.
 
-Fixes: ae39ba431a (grep/pcre2: fix an edge case concerning ascii patterns
-and UTF-8 data, 2021-10-15)
 Suggested-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
 ---
- builtin/log.c                   | 1 +
- grep.c                          | 2 +-
- grep.h                          | 1 +
- t/t7812-grep-icase-non-ascii.sh | 2 +-
- 4 files changed, 4 insertions(+), 2 deletions(-)
+ .github/workflows/main.yml | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index f75d87e8d7..040b0b533f 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -751,6 +751,7 @@ int cmd_log(int argc, const char **argv, const char *prefix)
- 	git_config(git_log_config, NULL);
- 
- 	repo_init_revisions(the_repository, &rev, prefix);
-+	rev.grep_filter.is_log = 1;
- 	rev.always_show_header = 1;
- 	memset(&opt, 0, sizeof(opt));
- 	opt.def = "HEAD";
-diff --git a/grep.c b/grep.c
-index f6e113e9f0..665d86f007 100644
---- a/grep.c
-+++ b/grep.c
-@@ -382,7 +382,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 		}
- 		options |= PCRE2_CASELESS;
- 	}
--	if ((!opt->ignore_locale && !has_non_ascii(p->pattern)) ||
-+	if ((opt->is_log && !opt->ignore_locale && !has_non_ascii(p->pattern)) ||
- 	    (!opt->ignore_locale && is_utf8_locale() &&
- 	     has_non_ascii(p->pattern) && !(!opt->ignore_case &&
- 					    (p->fixed || p->is_fixed))))
-diff --git a/grep.h b/grep.h
-index 3e8815c347..64634c6a3f 100644
---- a/grep.h
-+++ b/grep.h
-@@ -167,6 +167,7 @@ struct grep_opt {
- 	int extended_regexp_option;
- 	int pattern_type_option;
- 	int ignore_locale;
-+	int is_log;
- 	char colors[NR_GREP_COLORS][COLOR_MAXLEN];
- 	unsigned pre_context;
- 	unsigned post_context;
-diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-ascii.sh
-index 22487d90fd..1da6b07a57 100755
---- a/t/t7812-grep-icase-non-ascii.sh
-+++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -60,7 +60,7 @@ test_expect_success GETTEXT_LOCALE,PCRE 'log --author with an ascii pattern on U
- 	test_write_lines "forth" >file4 &&
- 	git add file4 &&
- 	git commit --author="À Ú Thor <author@example.com>" -m sécond &&
--	git log -1 --color=always --perl-regexp --author=".*Thor" >log &&
-+	git log -1 --color=always --perl-regexp --author=". . Thor" >log &&
- 	grep Author log >actual.raw &&
- 	test_decode_color <actual.raw >actual &&
- 	test_cmp expected actual
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 6ed6a9e807..ae96fc0251 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -319,3 +319,29 @@ jobs:
+     - uses: actions/checkout@v2
+     - run: ci/install-dependencies.sh
+     - run: ci/test-documentation.sh
++  pcre2:
++    needs: ci-config
++    if: needs.ci-config.outputs.enabled == 'yes'
++    strategy:
++      fail-fast: false
++      matrix:
++        jit: ['--enable-jit', '--disable-jit']
++        utf: ['--enable-utf', '--disable-utf']
++        version: [31, 34, 36, 39]
++    runs-on: ubuntu-latest
++    steps:
++    - uses: actions/checkout@v2
++    - uses: actions/checkout@v2
++      with:
++        repository: 'PhilipHazel/pcre2'
++        path: 'compat/pcre2-repo'
++    - run: ci/install-dependencies.sh
++    - run: cd compat/pcre2-repo
++    - run: git checkout pcre2-10.${{matrix.version}}
++    - run: ./autogen.sh
++    - run: ./configure ${{matrix.jit}} ${{matrix.utf}} --prefix="$PWD/inst"
++    - run: make
++    - run: sudo make install
++    - run: cd ../..
++    - run: make USE_LIBPCRE=Y CFLAGS=-O3 LIBPCREDIR="$PWD/compat/pcre2-repo/inst"
++    - run: cd t && make *{grep,log,pickaxe}*
 -- 
 2.34.0
 
