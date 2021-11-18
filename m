@@ -2,98 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B32DFC433F5
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1A9FC433F5
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:16:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C74D6142A
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:14:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C09976142A
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:16:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230405AbhKRWRa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 17:17:30 -0500
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:44733 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229777AbhKRWR3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 17:17:29 -0500
-Received: by mail-ed1-f54.google.com with SMTP id l25so17153218eda.11
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 14:14:28 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iop7l/Hi9SaMo797z0EaZCObriKlmtFanuGuvQu65MM=;
-        b=gLOV6f/m6eL2ZGJzU89g5F8vfeYm2ulF+p6xO5I+mmnADf7eJaMwOsj+rXJ8WktvzD
-         ai3aLar8LTn/0g6g9JasePBh8C/s7NFXntqzFSaTrskl9LC9ovNTX/ehm75PrC81NTu9
-         W5tnK36KzlqdGIQy4i8jv6IgFva+nCr2Z/lf2qeGkn3CnxP9ok+zqu1+612iVKpvzD2D
-         P19QMTLC2dygnTgh4exUBUjrxiagHEs+DP73Rw+Ctwy5llWRS2S9vtIhKnDE73tCkz0u
-         MbfByy8/z+S7zvZUp0EEQmYI/i/lH7rXXPmZ0puh6gXe71K37huSTauke12X5Ss0Bcsq
-         hPYg==
-X-Gm-Message-State: AOAM530tUFdZqBrG+gLZe7s5xqeYV40rFVN6uancuH95W7CBVmxutYC+
-        vMzNamJIocxBf/cWRtdy/wpzH1yrD94oROvd/yg=
-X-Google-Smtp-Source: ABdhPJwBugIumaZ2hxSCRMm+ljzxeej53q2gO8jHNHJnGq0nHKpY3m6y6NATnOXpd4iAlJu1hNiaa9BJxTyGp19zhfM=
-X-Received: by 2002:a50:d49d:: with SMTP id s29mr16723974edi.55.1637273667561;
- Thu, 18 Nov 2021 14:14:27 -0800 (PST)
+        id S230020AbhKRWTc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 17:19:32 -0500
+Received: from ring.crustytoothpaste.net ([172.105.110.227]:44150 "EHLO
+        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229634AbhKRWTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 17:19:31 -0500
+Received: from camp.crustytoothpaste.net (unknown [72.12.180.34])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 515965B462;
+        Thu, 18 Nov 2021 22:16:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1637273790;
+        bh=gGZMBdMObMpQSWG2nqkCjVohunoRAQrnl2Y4u5YbMsE=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=YJC9/oXoUgjp+tCeb/WlmqsjUiijMLEWWBy7aB3c+2cpH46AlwWLE01DhuBsAzdpY
+         8SFlh5kFfpn+DGLfAe2yChKea5tvL+AtZQc4KxVVn59qQmVSt2RrIxvrNZZpTSVjEv
+         ZzHyPHrUW3uUyv6fZMkS7AHrqoZHTOQQXtG3tcatFcTe+gIcLKYrZsoW4c8nLvMoO3
+         slHk2FwuxR3RjknrVaLUhfBMMGj0UFmDYBAX04G1gnnxYRJTRt9UInkWa8cFDyw734
+         lx+4yvYczVICUH82UWscLipeUv91XR49hgd8PgqQH/rQgFVS8fkAE9golWO3Yev2uI
+         m9DOY7NH8IXT3c5G/Oe7QdVwQ0nVKLyvRZfiAtMyGWTShIlEWgkjQgiq+ON1d4k867
+         spC1wOxkA4iTb2GF3jefvscVdGDxboTD2AquYDybTIrzRKRnXLeXfsPuV73hBpRUPF
+         VaJqYoJtgkOxN8HQvpHGhaau6vGmcaHzhdTl661MbO2URWfatI9
+Date:   Thu, 18 Nov 2021 22:16:27 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] wrapper: add a helper to generate numbers from a
+ CSPRNG
+Message-ID: <YZbQu3fwfRsdEeXR@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20211116033542.3247094-1-sandals@crustytoothpaste.net>
+ <20211116033542.3247094-2-sandals@crustytoothpaste.net>
+ <xmqq1r3f5izn.fsf@gitster.g>
+ <YZWJy16Emrkr6qVL@camp.crustytoothpaste.net>
+ <xmqqv90qx76b.fsf@gitster.g>
 MIME-Version: 1.0
-References: <20211117162727.650857-1-fs@gigacodes.de> <20211118171411.147568-1-fs@gigacodes.de>
-In-Reply-To: <20211118171411.147568-1-fs@gigacodes.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 18 Nov 2021 17:14:16 -0500
-Message-ID: <CAPig+cTVX5yYp-1eUjCgj6aox9vYpzm+JFvson37M0R_pnxRvg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] ssh signing: support non ssh-* keytypes
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Pqjfp+9ZOi8FxmXF"
+Content-Disposition: inline
+In-Reply-To: <xmqqv90qx76b.fsf@gitster.g>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 18, 2021 at 12:14 PM Fabian Stelzer <fs@gigacodes.de> wrote:
-> The user.signingKey config for ssh signing supports either a path to a
-> file containing the key or for the sake of convenience a literal string
-> with the ssh public key. To differentiate between those two cases we
-> check if the first few characters contain "ssh-" which is unlikely to be
-> the start of a path. ssh supports other key types which are not prefixed
-> with "ssh-" and will currently be treated as a file path and therefore
-> fail to load. To remedy this we move the prefix check into its own
-> function and introduce the prefix `key::` for literal ssh keys. This way
-> we don't need to add new key types when they become available. The
-> existing `ssh-` prefix is retained for compatibility with current user
-> configs but removed from the official documentation to discourage its
-> use.
 
-I think we usually avoid removing documentation for something which is
-still supported (even if deprecated) for the very real reason that
-people will still encounter the old form in the wild, whether in
-configuration files, in blogs, or elsewhere, and may be perplexed to
-discover that the form is not documented (thus not understand how or
-why it seems to be working). Instead, we can discourage its use by
-mentioning clearly that it is deprecated and that `key::` should be
-used instead.
+--Pqjfp+9ZOi8FxmXF
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
-> ---
-> diff --git a/Documentation/config/user.txt b/Documentation/config/user.txt
-> @@ -36,10 +36,10 @@ user.signingKey::
->         This option is passed unchanged to gpg's --local-user parameter,
->         so you may specify a key using any method that gpg supports.
-> -       If gpg.format is set to "ssh" this can contain the literal ssh public
-> -       key (e.g.: "ssh-rsa XXXXXX identifier") or a file which contains it and
-> -       corresponds to the private key used for signing. The private key
-> -       needs to be available via ssh-agent. Alternatively it can be set to
-> -       a file containing a private key directly. If not set git will call
-> -       gpg.ssh.defaultKeyCommand (e.g.: "ssh-add -L") and try to use the first
-> -       key available.
-> +       If gpg.format is set to `ssh` this can contain the path to either
-> +       your private ssh key or the public key when ssh-agent is used.
-> +       Alternatively it can contain a public key prefixed with `key::`
-> +       directly (e.g.: "key::ssh-rsa XXXXXX identifier"). The private key
-> +       needs to be available via ssh-agent. If not set git will call
-> +       gpg.ssh.defaultKeyCommand (e.g.: "ssh-add -L") and try to use the
-> +       first key available.
+On 2021-11-18 at 07:19:08, Junio C Hamano wrote:
+> Presumably csprn_bytes() grabs bytes from underlying mechanism in
+> smaller chunk, but would not return until it fills the buffer---ah,
+> your "make sure our buffer handling is correct" is primarily about
+> the check that we get full 1k bytes in the loop?  We ask 1k chunk 64
+> times and we must get full 1k chunk every time?
 
-Thus, perhaps this text could end with:
+Yes, that's what we'd expect to happen.
 
-    For backward compatibility, a raw key which begins with "ssh-",
-    such as "ssh-rsa XXXXXX identifier", is treated as "key::ssh-rsa
-    XXXXXX identifier", but this form is deprecated; use the `key::`
-    form instead.
+> What I was wondering about was the other half of the check, ensuring
+> all buckets[] are painted that gave us the cute 10^-100 math.
+
+Say the buffer handling is incorrect and we read only a few bytes
+instead of the full 1 KiB.  Then we'll end up filling only some of the
+buckets, and the check will fail much of the time, because we won't get
+sufficient number of random bytes to fill all the buckets.
+
+The check is that we got enough data that looks like random bytes over
+the course of our requests.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--Pqjfp+9ZOi8FxmXF
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYZbQuQAKCRB8DEliiIei
+gTW+AP0RN7uJCv5VaBOYE9x9h/LnB/3Y9irA0bFuRYt7eXsjFwEA3bWpRszKG74I
+sGv2w/4/9V3jk0adAyO6zwPZ1EuIDA4=
+=yfpn
+-----END PGP SIGNATURE-----
+
+--Pqjfp+9ZOi8FxmXF--
