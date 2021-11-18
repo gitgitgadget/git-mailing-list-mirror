@@ -2,100 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DC48C433F5
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBFE2C433FE
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:49:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 553DD61181
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:29:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A470361260
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 22:49:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232105AbhKRWcz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 17:32:55 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63012 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230133AbhKRWcy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 17:32:54 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0AFD6168028;
-        Thu, 18 Nov 2021 17:29:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FKhFrL44zoj9
-        q7TdvZVCsYSnuSodP2RryyKjkKLoNpM=; b=FYu/Q+z2JCVlUahmy1jVN2tgyDRO
-        T3x1r9HE1/oByrltwVW/OjOa8pG0VrK+MMwY+iHguzomgAh8zRzCPx8tV2kynLfM
-        5tmDlEzFJKoNYt9WWBmM4Js/vbQk8tWd9f45UJ8Zd3aYbQBdvsmOCuIlY+sk6luZ
-        Wfv+0zUUHFqhW8g=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E37CF168027;
-        Thu, 18 Nov 2021 17:29:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4C301168026;
-        Thu, 18 Nov 2021 17:29:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, chooglen@google.com, avarab@gmail.com
-Subject: Re: [PATCH v4] branch: add flags and config to inherit tracking
-References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
-        <7ad7507f183332cb2b5fdf2eb76fbbc9dd7199ef.1637085915.git.steadmon@google.com>
-Date:   Thu, 18 Nov 2021 14:29:50 -0800
-In-Reply-To: <7ad7507f183332cb2b5fdf2eb76fbbc9dd7199ef.1637085915.git.steadmon@google.com>
-        (Josh Steadmon's message of "Tue, 16 Nov 2021 10:25:31 -0800")
-Message-ID: <xmqqbl2hw10h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232568AbhKRWwu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 17:52:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46276 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231526AbhKRWwu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 17:52:50 -0500
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6393C061574
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 14:49:49 -0800 (PST)
+Received: by mail-io1-xd34.google.com with SMTP id 14so10238517ioe.2
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 14:49:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=C0JzIWN9QUiE43UN+7OrbTNTJ9ypQ7de0RobVn9WfLo=;
+        b=zv5KjLh7QkCB/i+yayRXyOZmGiERZPMjOo0Y/s2vTf4dT+5jxbbzvW11qIEg1Nemor
+         TY+bEAS7A66XSeU8YiyHP9YcMeYCMuyOLB0vRHtU4lRKHHfglhmbvJABxYdh/bw9uMGq
+         /nK3l8pQ6cFtPf+bAF6I1ThD1VU52rUH7cOEzL9dBq3nxY091miOFgWmL00SamZ3C1RX
+         ++2pasn3etOIPEtKNe2/sVvd0wL0cfgMHm9HZ/ggMVEPmp0Oope8NYRyS/0XiOPOieQA
+         5WyRmpbCnNU2lbAx4MKrhmTkN+NX5TQREj6qzkALPnF6T6uYK6knpdHEWjpxnAQRZ5UW
+         GqYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=C0JzIWN9QUiE43UN+7OrbTNTJ9ypQ7de0RobVn9WfLo=;
+        b=omtfip0mzfwWASYbdiQAKwo+x+f9RqNB9TyeYiEEXeBOFOTaUO0x1N/G1zizq0+bjn
+         HCA5cwreMW73DO/9gv3+bysYhq7igPH0okF+Po82isFiXgZKkRO8vo7mMpx/ivAyAZW0
+         n6UfzpxrF2u0meZ6zj4P3YznaFkYS4G9J6KKP0EunqdAf7ViDNwttEr+qqD9lleC7150
+         jEPXvqGeVacZlZh5f2Xf0+ep53/JOFXGwpZNv2R78Qnsd8p7qJnes7j3xvIUwG3FAS02
+         zVkn9dVXIlpBvlD2QQrE5mxpHD/p5TyGL8tcXkkB79+FyJxhqBTksRNG7bJ7OVTenSg2
+         +gsg==
+X-Gm-Message-State: AOAM530xCsbO3/DTeA2rOPOJgLXQYFHSEHpSgEQ4wFGRDVXrSyyP6sMq
+        IaB4tErVx/c8wBLSwECwmBxoxT+8m778ibhz
+X-Google-Smtp-Source: ABdhPJzXo9cmjk7o6lVMucubAZ9GOJdrCcPbTGYhIdIiXdngZAE5vf9WSLR/eBAsFgr2ASj6mTmyDQ==
+X-Received: by 2002:a05:6638:339b:: with SMTP id h27mr23350373jav.4.1637275789160;
+        Thu, 18 Nov 2021 14:49:49 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id y3sm766369ilv.5.2021.11.18.14.49.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Nov 2021 14:49:48 -0800 (PST)
+Date:   Thu, 18 Nov 2021 17:49:48 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jan Kara <jack@suse.cz>
+Cc:     git@vger.kernel.org
+Subject: Re: Stochastic bisection support
+Message-ID: <YZbYjFpA1bpeebx+@nand.local>
+References: <20211118164940.8818-1-jack@suse.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0BAA1404-48BF-11EC-8FFE-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20211118164940.8818-1-jack@suse.cz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+On Thu, Nov 18, 2021 at 05:49:13PM +0100, Jan Kara wrote:
 
-> I've addressed Glen's feedback from V3. However, this brings up a new
-> issue that was not obvious before: "branch.<name>.merge" can be
-> specified more than once. On the other hand, the existing tracking setu=
-p
-> code supports only a single merge entry. For now I'm defaulting to use
-> the first merge entry listed in the branch struct, but I'm curious what
-> people think the best solution would be. This may be another point in
-> favor of =C3=86var's suggestion to reuse the copy-branch-config machine=
-ry.
+> The first part of the series improves some tests so that they accept
+> other valid decisions for bisection points. This is needed because to
+> make it easier to share some logic between normal and stochastic
+> bisection, I needed to slightly change some bits for normal bisection
+> and then since commit weights will be computed in a somewhat different
+> order, also chosen bisection points are sometimes different.
 
-Or we can extend "existing tracking setup code" to support multiple
-merge sources.
+I have only looked through a couple of the first half of your patches,
+but I'm not sure I understand why non-stochastic bisection needs to
+change at all in order to support stochastic bisection.
 
-How does the "git pull" machinery react to them, by the way?  I
-think the original intention is to support pulling multiple branches
-from the (single) remote configured for the branch with a single
-invocation of "git pull", creating an octopus merge, but does it
-still work, or nobody uses such a crazy curiosity anymore and it was
-once broken and left in non-working state ever since?  What I am
-dreaming here is if we can safely ignore all but one of them, taking
-the usual "last-one-wins" rule, after some transition period.
+In other words, if we're tweaking all of these tests to allow picking
+equivalent bisection points, why can't we simply leave them alone? It
+would be nice if normal bisection didn't change as a result of adding a
+new feature on top.
 
-> +int parse_opt_tracking_mode(const struct option *opt, const char *arg,=
- int unset) {
-> +	if (unset)
-> +		*(enum branch_track *)opt->value =3D BRANCH_TRACK_NEVER;
-> +	else if (!arg || !strcmp(arg, "direct"))
-> +		*(enum branch_track *)opt->value =3D BRANCH_TRACK_EXPLICIT;
-> +	else if (!strcmp(arg, "inherit"))
-> +		*(enum branch_track *)opt->value =3D BRANCH_TRACK_INHERIT;
-> +	else
-> +		return error(_("option `--track' expects \"direct\" or \"inherit\"")=
-);
-
-According to recent discussion in another thread,
-
-	error(_("option '--%s` expects '%s' or '%s'"),
-		"track", "direct", "inherit");
-
-would be more translater friendly, as these three words are not
-subject to translation?  I am not sure if it is really worth it,
-though.
-
+Thanks,
+Taylor
