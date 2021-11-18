@@ -2,183 +2,254 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 881FCC433EF
-	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 15:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 862A8C433EF
+	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 16:13:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237577AbhKTPHa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Nov 2021 10:07:30 -0500
-Received: from mail-am6eur05hn2201.outbound.protection.outlook.com ([52.100.174.201]:55837
-        "EHLO EUR05-AM6-obe.outbound.protection.outlook.com"
+        id S231669AbhKTQQO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Nov 2021 11:16:14 -0500
+Received: from mail-sl2kor01hn2238.outbound.protection.outlook.com ([52.100.191.238]:15721
+        "EHLO KOR01-SL2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S237584AbhKTPH3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Nov 2021 10:07:29 -0500
+        id S229613AbhKTQQI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Nov 2021 11:16:08 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=N98k653dk3BeNNUyndP9yM0SKBfua2Aa484jhW6OqaKd7LHs6pN9HzXiF7HCxE8xmTgQZPjIMUAyprAhv3HLz1YJCA7IbofbDyFaZlyZpzzUasqjNP9DI5DxlZz2vgu/IHGY5tAxLw/poDpRWH93Ac8TWfQqykTGZA5rFn19M6oCl/j5PEU9to1F4akKijPn+s53pD52XreCR9i08uP65nNl8VErtddvF1EWi0K0o93FIqdHARhSV9O3i3c0+/HCrbDPY/OHo0Mg1GKTR9p7ZKjRkuaibwbjp1l9jbtYgxqmsW/+IDrT2zs4j7twgd9yJDm/kIV9+LVCvL1jRasDgA==
+ b=MGxgVNUDgKnvxDOps9shGvYEcn4zoU/m1o9O7j8S+Yxz1/mvcLl+eCq5x7mjreOy5EtnT1C4ZouUgE5lslKUcuX6lPYSnK53I0RoZeEIpv863sEbjCtGcxDPDqzvqgktlIx6Awbkehe4bViB8C/hjNaV3zPU19OaqevIzwBFhwJ7S9K/XlnQHjOI+XA1j19MyWZCzuYBqGO9avpoPm/4Gx+oVe1H2zfWyHBwv9zw7nWuuARGOXKfpGI7A7h1Vp6/eIldVgqaRUUu51Gpf5YnWushxKINDpqhNGTozPp8FMKN7bkGodt5HZcWN73fWwjQ71RNVOwSDNkA2Jtv+KQjDQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5LgFaoN6FCcupxPfPI5EUtDz4GucxIjm9Gepow4e8Hg=;
- b=SvXLmikiwPJppyzxbn4qZGveW0Ynii7bRuDsxpUwvhwu6Pi96OLEDJvRZYETmywbkpUDCeL5kUpY5nprY9v9NzynHeNkanX6EpttD8fSrgoTUN9pjLaHU6MzAM8ozxEkVGIONTv0VpdXWpTzVYWkl8zGT7cdUorMCMWBrdQKTg/QtAkCpJ9LbAqdmLt7PpPnqztuYC8sa2geggbnl4H3EClBopWQOD7hJIrQ+9EKXCRCSECzM1oRqR7eiKI8Mx9kXj+JzyVhF4IAiGdaOLBT/lLuH0soj+HAjk8FCry8eaYqyKAnIqLZ0T4A6zWBQw/pK+tN4H9uRZV6J7EmbN9fcw==
+ bh=gXkTD4Lvd7+BxFlpP2/8CWHXvwvdAl0OIGSg2c1+ytU=;
+ b=DMr4/nfM0PrPmIOm28LO4FDtx+iBCZWFrkaf9USryyzUB1E62mAQV24obZqo3McWViyFwT4BMc0gCjKUaYaCkxofD/EpFSSFscTBlSRoezMFzDeY8cnEhhqEZBjnrUn45oBZ6eL/VODWk7I9m52YmU3B+69lG8X4Me9UQReUuC9iYQrlCWTogZGtN/eQMXCmXaTj0x+bMowIM29B9U/0qrbBf93LrnPFmAVsZ5P4rtt4D3FEXGevKg7+Tstt/6N80FlhxjQsiZD4cPEiOuygRv3wB4R8W2dNRN6hjyyVhuWtENOa71Q7jvov0AqP1Z1wZ9adEAFUQiQEgUIOz9wHYQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
+ smtp.mailfrom=atnp.co.kr; dmarc=pass action=none header.from=atnp.co.kr;
+ dkim=pass header.d=atnp.co.kr; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=atnpp.onmicrosoft.com;
+ s=selector2-atnpp-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5LgFaoN6FCcupxPfPI5EUtDz4GucxIjm9Gepow4e8Hg=;
- b=XQp0DdcLAPLKnlcH2SbRW1N5tTmd7zm/a2I34U0NnWGojzJdkD8i65o+lM1f/5xkhgR5+J94xtdquGf8ue+mfYNgjmRj+Ax1gs9vMxOnv2mI3BkVYc32YyPfqzRftkv6Dga4P6GCgjhxM62jqjoRtbRQIBDwFSJbMfsN5cy4z6M=
+ bh=gXkTD4Lvd7+BxFlpP2/8CWHXvwvdAl0OIGSg2c1+ytU=;
+ b=KAByQoFdU0AavmP41EhxR2sPRAJywULHGZin7C703Jg1scJVP1B6alBUdx34mjDpzntlzzTE1OztDXYTOfgIfPNHs6jkeV/oXKeCGIzIofmUVOFig6k0O9XTniiGIhEPglC13uJ3ZIs6pgR6ls0gGjLmMBtZp4S/cY+OHqlJnkg=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PAXPR10MB4799.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:156::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.19; Sat, 20 Nov
- 2021 15:04:16 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::f9d5:61ab:5756:b391]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::f9d5:61ab:5756:b391%5]) with mapi id 15.20.4713.024; Sat, 20 Nov 2021
- 15:04:15 +0000
-From:   Fabian Stelzer <fs@gigacodes.de>
+ header.d=none;dmarc=none action=none header.from=atnp.co.kr;
+Received: from PS2P216MB1364.KORP216.PROD.OUTLOOK.COM (2603:1096:301:99::7) by
+ PS2P216MB0964.KORP216.PROD.OUTLOOK.COM (2603:1096:300:22::8) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4713.22; Sat, 20 Nov 2021 16:13:03 +0000
+Received: from PS2P216MB1364.KORP216.PROD.OUTLOOK.COM
+ ([fe80::21c2:d17:dc57:70e8]) by PS2P216MB1364.KORP216.PROD.OUTLOOK.COM
+ ([fe80::21c2:d17:dc57:70e8%6]) with mapi id 15.20.4713.024; Sat, 20 Nov 2021
+ 16:13:03 +0000
+From:   "ATNP TEAM" <mail@atnp.co.kr>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Adam Dinwoodie <adam@dinwoodie.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Fabian Stelzer <fs@gigacodes.de>
-Subject: [PATCH v3 3/3] test-lib: make BAIL_OUT() work in tests and prereq
-Date:   Sat, 20 Nov 2021 16:04:01 +0100
-Message-Id: <20211120150401.254408-4-fs@gigacodes.de>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211120150401.254408-1-fs@gigacodes.de>
-References: <20211117090410.8013-3-fs@gigacodes.de>
- <20211120150401.254408-1-fs@gigacodes.de>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: AS9PR06CA0053.eurprd06.prod.outlook.com
- (2603:10a6:20b:463::15) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+Subject: =?UTF-8?B?44Ki44Kr44Km44Oz44OI44GL44KJ44Gu44GK5pSv5omV44GE44CC5pyq5omV44GE44GM44GC44KK44G+44GZ?=
+Date:   18 Nov 2021 01:37:49 +0000
+Message-ID: <20211118013748.E90953B2937A4E1A@atnp.co.kr>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-ClientProxiedBy: CH2PR04CA0027.namprd04.prod.outlook.com
+ (2603:10b6:610:52::37) To PS2P216MB1364.KORP216.PROD.OUTLOOK.COM
+ (2603:1096:301:99::7)
 MIME-Version: 1.0
-Received: from localhost (2a02:908:178:20a0:d22:c58d:d0a4:a83a) by AS9PR06CA0053.eurprd06.prod.outlook.com (2603:10a6:20b:463::15) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.19 via Frontend Transport; Sat, 20 Nov 2021 15:04:14 +0000
+Received: from atnp.co.kr (34.135.91.193) by CH2PR04CA0027.namprd04.prod.outlook.com (2603:10b6:610:52::37) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.21 via Frontend Transport; Thu, 18 Nov 2021 01:37:49 +0000
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: f37e792c-711e-42a4-263b-08d9ac370485
-X-MS-TrafficTypeDiagnostic: PAXPR10MB4799:
-X-Microsoft-Antispam-PRVS: <PAXPR10MB4799B1F0D65A438608E003C8B69D9@PAXPR10MB4799.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:4303;
+X-MS-Office365-Filtering-Correlation-Id: 41201385-f7bd-4b65-0208-08d9aa340824
+X-MS-TrafficTypeDiagnostic: PS2P216MB0964:
+X-Microsoft-Antispam-PRVS: <PS2P216MB09649963595DAB0B77AC67B9F59D9@PS2P216MB0964.KORP216.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:1728;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?XzRE483nedJLKKO+zXwLQk+wbDXupPd13Kv5IpkbjvE/UYX9A6UT6fsbHWHg?=
- =?us-ascii?Q?F6YL2J2hZQa+Ry/KLGlaLAANyW21Cq5laca3pO86h570Km4+burxgT7VHcfV?=
- =?us-ascii?Q?aSBrhrADe/vm7Dwk0JapCdiTLAmm3m4SDJmn1kedQGXSbVVN51msZJ4PhN6z?=
- =?us-ascii?Q?mFHNgGJcGtKZkw+qTcHPlnxC9Ank/0XLG3IsF7GYDLZ3DwXTRUwur6PG4hGm?=
- =?us-ascii?Q?VfAbQp/UXRI5HAHFEprt5twDMVXqN7tV1yKEEm/372GFTaeP6+n/Qrb7I1w+?=
- =?us-ascii?Q?zKdFtNQUUj7N43h+LhTDvK/EjhWp4aiRsTP0kGUm+xUEach7CUlclal6A/DJ?=
- =?us-ascii?Q?JW+Gt9ZCDFQjNXo5okM1EV8Uut/x/rrklAZzuDVV+YPYi+KY50TILSK+ENOu?=
- =?us-ascii?Q?odkSCt1D/ibuTkfz98nP17jUROrpdrzgPvt5bMT0SnPkZhB+52I+09NM1Y4c?=
- =?us-ascii?Q?e+WKRO8pxiR/xOFP3T9KW6n6vrGlisK+vJhFeAeiuUX+y7dGab+d8zHRFE97?=
- =?us-ascii?Q?xVFJ7knlZaRkjo9X75HwOIYrXDOEwDQ09FW2KXkquT6LiMeyiucBSWdwtrdc?=
- =?us-ascii?Q?bwryXRXYjv7A6GLZ6r0fiiqIwb8ZiVv6CxCe2D9CVGe81jcYLcyOCKU/iGR2?=
- =?us-ascii?Q?X1JgFVbOeXtWIGGSgsS8TCuEWIGMrSjgy9GSstYfFgezRmPl+anyty2hq5wf?=
- =?us-ascii?Q?Ov+Q75Lj5s0uHYGdUnnabHf9cW+rk9ES363YkbjtOjTMmFkE7RMPKe019UlW?=
- =?us-ascii?Q?kzohoCS4Du6Jryf7PWcyDZX5VpJ4b3Rpg/VkYhV/q2AubKT5sPNSfZjfaiGx?=
- =?us-ascii?Q?G5x3LA+aD89KjnHdCht4uUn+7eCBdIuMvmjeqM3xyUT4ad+Fj3BdMYRZU697?=
- =?us-ascii?Q?81syESgY6j8JtyC2zba+FQWg6Str6awo1H/Cs+7dSCPrGOV8E0NOiN0gZEok?=
- =?us-ascii?Q?lmC9+l3H7+QwLjcY/y4puAWrc5/shTsAL/GCLYwVJFatlIDTgfRmztfl8bOW?=
- =?us-ascii?Q?pMK/UZCaWPfNFg7RIqxAxq/BBw=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:OSPM;SFS:(4636009)(346002)(136003)(366004)(376002)(396003)(39830400003)(6666004)(107886003)(2906002)(66476007)(316002)(6486002)(2616005)(83380400001)(66946007)(66556008)(186003)(5660300002)(38100700002)(36756003)(8676002)(54906003)(4326008)(6496006)(86362001)(8936002)(508600001)(1076003)(6916009)(52116002)(23200700001);DIR:OUT;SFP:1501;
+X-Microsoft-Antispam-Message-Info: iWFEQHiZ/w6ge07mghIXsiClRtz08Iu4QlDOlSwoA467/Uw4T+DqG78he82xhdlPx86QMUYWbhx3OEDt3lLwqSMJ2T7dTwt1PIT0VGpI5TXRWJvsQSIWldUa0Iv/qV0F5Ov/wCQI8NAMz3q/YaVxwuX3FzVKr5ZE+wJ7VCEBCs+5Vhu6EKmDAs9c0JBID6ac5uwRbmHrrYgqcrrRRq180kJ7cTqhk9nkfEGF11LYs/VECzEkZVF+TgjAWQp9a8CIb72zHVuvT4jAf+484vmkp0+sm03wlYicA6ePye52QiHpqXeXtAjKJ/Jn4PoC699tuutJEajyyWh1hYZiIlUomT7yg6XaxMJVvfaJhhea6q4g4zeTMpT/tr/56XcBxjKj/2QDsmzGOpo49qBo+X4mw2Oa6xCylJAxg1szzwKRu+NoybIesi8iH46OTm7caKyU9r6WgLzEVEJx+3S8bNTRJ259xOvcRuw9NSsixB3+1PtJ+jppWz7AC4ZjfXigfYZSxBjQ4jd8ZTfeC4QWMlq/g4RkwhIFgzTY7gPenXYnAmuVJCkBK1g4L890gsaX4LIHN7dsj0JT1mV6I60eFygY1CSAXRBeeanJKBYCqniW+c6pBLXLjH+F+fExFuR3sb4pS6mhEPZW0XmFR1V0Li6z6PhPgoY0pnHVuazyP2TO2iGtHmKZv0NQUr3dT27gAWKfQ6/7E8cBqAgYhOaIpxMZSiCY8IuGyZf22+qZVXstqh3gechQk4+0tUrPBRRcVMPb1sV/S0a3uQ5Y8cfIbGShOFfqqhzjcqCSH+DhiPGqgJCeXr2xU9EYu+7blB0ZW0LcJLILwwUUkLPNXsu4LXZsPAuI1wZm6RJV06EEBo4nLXyaxOyHBC/RVjYDGpip9SVv4B5eensy/rd1GVf22vlrbcEMd0aAjpNhBTdQ/hEMjRA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:ja;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:PS2P216MB1364.KORP216.PROD.OUTLOOK.COM;PTR:;CAT:OSPM;SFS:(39850400004)(366004)(376002)(346002)(136003)(396003)(103936005)(6916009)(2616005)(956004)(54836003)(8936002)(224303003)(508600001)(186003)(26005)(7696005)(316002)(66476007)(66946007)(66556008)(36756003)(2906002)(52116002)(55016002)(38350700002)(38100700002)(33656002)(5660300002)(1076003)(500100016);DIR:OUT;SFP:1501;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?UpPq+RjG/c4+pj4q0lqsFbVxiJXfsCB2PNLnVOE7lSKp+ZdTL6ScpVqslV+2?=
- =?us-ascii?Q?pflY/0u85Wqp/FpJag6DLRzTS75iZHjH2YAsFwecWktyPVxrbI/Cy2ITzzJN?=
- =?us-ascii?Q?SeRa9YWM+0HjokXc4TlCC7btdq886nBmahg51T4A8pngBFak0Ydu0H29en6k?=
- =?us-ascii?Q?6RIbmKWMN0k5VEMe3+yKdPbZkQOi/B+fXHmXutWy7o+al4HaICJ//lhoKkEO?=
- =?us-ascii?Q?iYh7792IuuWdl/oKTmoa3HYMwPFRmyU52MGoweIFPNHtuH4U1eT0dQXFKFLj?=
- =?us-ascii?Q?9y/3UOS1c1Wn8jcuAvJOqZM9ODMozFyWkCLvyZxIHfkod8ZY/ALVkap6XT9L?=
- =?us-ascii?Q?6MFB2+SZzx+TxXVak/OB78lk/lEDLBS+u8Y3VXfYzkvTUOAkqg80gbRlJKdi?=
- =?us-ascii?Q?KXihR4DkZ+ySLiOTpLXdnMLAYGzbbHOwae7NSLXeBKeQG+RNx6w2FF5+QEle?=
- =?us-ascii?Q?6l51XYvjw5cBEjLycLB1Ol8DcZcvDPGau8YcJwsVTfcVjDuVfP1wwjcwbcyQ?=
- =?us-ascii?Q?dW72NHRNLpSVIpwybPpV+qanqXPuW/I51taG7PxIP2VPGp5x4RVv11uwx8mK?=
- =?us-ascii?Q?rgqjbpDgU58TVnK0kbhpZ5iKdK+1CbtRkBlcbPZOB0LzCueVrG0eWmpdrqyi?=
- =?us-ascii?Q?SCAtSo4EPw3VUQVDgH+4h3ZwaBXdEiwac+zKQWpU6a4dhD7aWTjRP4gJ4+AP?=
- =?us-ascii?Q?1s7q+0xav6k8Qb+KrDwGlqZkmL1y71IGLHiPZYzNdBOQfzdnKeSpdzbKPV2R?=
- =?us-ascii?Q?E1bjbWUPWTKcVxOQCqxPPk5kUXITo4jialeZfDvcr/cvyTZwU03tJDLk5vLW?=
- =?us-ascii?Q?Joi+8FoK5Tzel3l11ifg3yPAxjaXY+6pgvQY/otc5vrCi1TG2Z1bGuOgXmh2?=
- =?us-ascii?Q?ciP4O+Oh7SgG+i519y7X3bJH30Prf4tPTeg1HY/q2yCQJwn3oL3oawsxsjLg?=
- =?us-ascii?Q?JFlrzURsUddhGHCergjHsHxBR34KQYzdcDk91x0W0iq8uyUgzsjAEGvt18rC?=
- =?us-ascii?Q?Wow/5zoZWPNLNPe+r4fYJvzlQmusGS47UNo13wrIlNdqgYXXSUx+XBZ7V5Sl?=
- =?us-ascii?Q?oNDFaJ9qkrgfVlVmcQSNiTwYQYrej0djk8t/Kt8k5F9gk+eP43i6AVDInjTi?=
- =?us-ascii?Q?+LUs6K61UsyFJJt7bpQCYqoS2RzE7zphnGp8dNYrQpRDrn6AucckXYAJJVRz?=
- =?us-ascii?Q?vsPUJQn3Mst7lvObfkRufgNGHP4XOrU/wcFldjpVO/KY63R6ZzCscuzQkWdx?=
- =?us-ascii?Q?bFHcrYhQeahW4AaCeIRAC9CbVnyg2ETIKDyde3vyyWMCVZaUt7f5DygNbF6H?=
- =?us-ascii?Q?HUP8iQMVtJVLKuaORXgepaoGArSETsK4+hbIr0QiutKl0is3B47oQ0UwKhBu?=
- =?us-ascii?Q?6b702DEpMQout3PT/2HIx9PvUz/8WeQ7nLgfRkYFnchyucA77uYLHe3nkQMX?=
- =?us-ascii?Q?dv7I5Pg7zPpT5fxDRSF33RL6KkViYuUNq/E0gmineluXMdbRsBIwHX0fbsxV?=
- =?us-ascii?Q?oS9UiS527O0u8F6Lh6AHXeVpMFxkxrO949RJ3n1T+Qiwh6odn/Hwxdf8kRam?=
- =?us-ascii?Q?OQrjcCn7mumX5db1sKEk3xEs/iUPj3UJDhhNPmxyXfbOAGG5WX1E2qmuPUEo?=
- =?us-ascii?Q?6CgJ0rSqBGsOiswmPUpqQpcJmOn0xw+7iMraxRt8b5ZX8eTjzdc76hoF8+FG?=
- =?us-ascii?Q?V2SoQ1ZhtY9IpHnWXPmzgTe1CSNLy7gw2PP6d0BO/WIVz3ctf9BqPO7GhuLg?=
- =?us-ascii?Q?bxPc/N9bZA=3D=3D?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: f37e792c-711e-42a4-263b-08d9ac370485
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UWdjeTQ0UFhiZVFDSTBvd1NFVy9zaEltMHpIU0srR3RjbU9KcXRMQ2tqMVVS?=
+ =?utf-8?B?KzczcTVRUUM2MUNuQk5xL0FNYTdSVVpxbWdrWllrOTZMRjFENldEclpVQnQ3?=
+ =?utf-8?B?KzEvWGVWU2VoVHZvZlkxby9vdUFSRlVuL0NiWndxVjRyaVJybUZYTlU4c09J?=
+ =?utf-8?B?cGQ1WTl3dExkK0dtUGJIL21XM1VUakRLM2g5V3AyUTJSOGFzQXovZG53SXBz?=
+ =?utf-8?B?WWZjVzRDRVRFM3NXNDhjMGpBUFVFb2puZkxZcTk2WGVCYmtXY2I2U2tDOEU0?=
+ =?utf-8?B?VEVSenFObjFQMGZBQWFlZDJNUkNPTG81RVBNbVVhOUNQamJSR3RYQVRQMGFt?=
+ =?utf-8?B?cm5UYzJYWE5jV1JWU3Z0Q1hlS0tmczJxQjFnN3gydnI5Rk5la1pMa202OCsx?=
+ =?utf-8?B?dkZnQWRTc3o3TlBNMHBmK3llZFNBS0dJTEpkYWU1U0VlejdJZnR1ZWQvQ240?=
+ =?utf-8?B?NVIxeGVIeitqT0xwWHRCSHF2OHZaZ2hlUmROV1dTc2NseFFtanh2Q3hheWNQ?=
+ =?utf-8?B?eE5ybXFLK0F5ZWtjd2JvNDAwaW9WLzQ5bnJlWlBBRVFXMVowcjNzVklURXFV?=
+ =?utf-8?B?QThmR0FPTXFrWDh2OTlLVVEwT0ZIMGtDcEZqbTQyRUtsTHUwZDFOZUswdCtL?=
+ =?utf-8?B?RVNGR0pGQSt3b2hOWWdyUHFRQkJKMmRlQjFPQ0x1Y0Q3WHp2dm9wYlJRUkFK?=
+ =?utf-8?B?d3dRblVRQTBxWm5jQ3MwSkNvZ3hJMjAwc3VrYmFuTS9qNnRTZkpQQ2dzZWp4?=
+ =?utf-8?B?dWVldXFuREk0VnhCYjgvcEQ4RG9PSFIxVS95ZnVHS3VpTVlkREJONFBuUjhk?=
+ =?utf-8?B?U3daWXZWUTNCdWZVV1BMRzcvbVhFdGtnMlBQc2ordE5lbGRlM3ZaN2J1V0ly?=
+ =?utf-8?B?RWM1OC9UbDltVWZNNjIyalI5cEEwRFVpYzRuSDdyY0lpWWF5TkF3eGVVS214?=
+ =?utf-8?B?TGtSREx1TWpaVk1rdFV2SHlxTEZiZkhrdEZxVjNIYmQ1eFhuNC9uell6SWxG?=
+ =?utf-8?B?UmF5d1RNN0ZuWFM5TFpDalRXMEZTNGhzbTBVZkU3Q0RwOTNlWkpIUHJIZGZx?=
+ =?utf-8?B?ZEd6UVprY1lHVjJySll6TXIrTFFBYmNCUUxCZXRSYUh6aXhKR2NKeXBlNEJK?=
+ =?utf-8?B?MnRSNTBOcTRxcmhvNTIvbi9uVzFVU2FsZ0F6SzkvMUtvZ2xZZnoxa0VIVUY2?=
+ =?utf-8?B?MHVMdXdrekNIQlNncU0wK3NXcmtwUFpQMkgvU2MvbUlOYTh3eUZXZDdlMGZ0?=
+ =?utf-8?B?RFhMQng2aU9qanVXNWJDSGVRN0RlUkFnam43MWl2VnJJcXlGK0xkZEozNW44?=
+ =?utf-8?B?U3ZPSko1L1c0bW9HUXlueExqaFpqQkZ6STJ6TlBYL3FtRDVNNVExSVhqZFU5?=
+ =?utf-8?B?WmVnNlVDY3ozYUQxWXAxa05NTkhhemhYNytUNmpCV01GV0JzVUtuMGJKZzFQ?=
+ =?utf-8?B?L2M2dis4Y09MN0dxUFMwbUN6Vk1oeUJ1a1RZSFNYQmRzOHMxQ01jYzJoT1Zj?=
+ =?utf-8?B?N21Gcm5DQVRteTFGUHR1Z3BrNUNrN0Z0aDVKQm5QR0JmaW14bDBibzJrY3h0?=
+ =?utf-8?B?MUJDOWZ3My95WVh1c0Q4dXduNWdJSGh6M09yTTZna0tSK3NJdW1XdHNnTVVu?=
+ =?utf-8?B?SDJnbHVFVUIrSVptUFUwNU95aWRJbllMbmFVREk2Y3FXU3BUV0NacGVVQUpC?=
+ =?utf-8?B?ckIrdkF0cG1rWjdMZVJpSzMxYndxcWRzNlFVRWx0R05uNVoxRWl0RlZaUWNW?=
+ =?utf-8?B?NzBTaDlLTnYzTTRUQmM2VHkzNERHWEFVV3dQVkM3YnAyZDk5MmJhLy8zSkZN?=
+ =?utf-8?B?NFQvZzZaSWtVL09GR3ptOGpaeWRzNnBlTGhqVVkzU1IwU3U2SWtXckJCWHFV?=
+ =?utf-8?B?cmlya252Z21aOUhoanhIQmJ4Tk9kc29yT3ExZEt3eFJ2WVJUWWhKdVN4ajBE?=
+ =?utf-8?B?U0RCVTNGZlY2ZHRWL1g0VUo4cUpmU1d4aEdBU0VvVlRiS3JNRkcwQVZIbmZn?=
+ =?utf-8?B?bUNHTmY2Mm4vQm1RYi9aeVk0TzBKNG9ETHUxTk1oTnJmbFBXZ21nNnZvbHFP?=
+ =?utf-8?B?OVVpUk9MVkw2a1Bocy91dkkrc2hmZFhzbFBMbStNZkYwWXZza3dXdkRYRTN5?=
+ =?utf-8?Q?gOPo=3D?=
+X-OriginatorOrg: atnp.co.kr
+X-MS-Exchange-CrossTenant-Network-Message-Id: 41201385-f7bd-4b65-0208-08d9aa340824
+X-MS-Exchange-CrossTenant-AuthSource: PS2P216MB1364.KORP216.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2021 15:04:14.9545
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2021 01:37:50.3365
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
+X-MS-Exchange-CrossTenant-Id: 61ebeddc-16a2-4dcb-8bee-d4192dfea4f3
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: itZTIkU6jpdtmRX9ziLO0sFLPMWXYyBm3gROccae8juNJKcnyl9IwI5tvGVkoQGEC45Lu9ketU/KX5dCuLbJKLQ+0HQXAWPq0Pbm7dXdSDw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR10MB4799
+X-MS-Exchange-CrossTenant-UserPrincipalName: ocoaiCEQUjRWwttpR+ZWT5UOm+uarHhpDeiQhTZ3rNHJGv9UuTEMrL/fNKXQJl+t
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS2P216MB0964
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-BAIL_OUT() is meant to abort the whole test run and print a message with
-a standard prefix that can be parsed to stdout. Since for every test the
-normal fd`s are redirected in test_eval_ this output would not be seen
-when used within the context of a test or prereq like we do in
-test_have_prereq(). To make this function work in these contexts we move
-the setup of the fd aliases a few lines up before the first use of
-BAIL_OUT() and then have this function always print to the alias.
+=E3=81=8A=E3=81=84=EF=BC=81
 
-Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
----
- t/test-lib.sh | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+=E6=AE=8B=E5=BF=B5=E3=81=AA=E3=81=8C=E3=82=89=E3=80=81=E6=82=AA=E3=81=84=E7=
+=9F=A5=E3=82=89=E3=81=9B=E3=81=8C=E3=81=82=E3=82=8A=E3=81=BE=E3=81=99=E3=80=
+=82
+=E6=95=B0=E3=83=B6=E6=9C=88=E5=89=8D=E3=80=81=E7=A7=81=E3=81=AF=E3=81=82=E3=
+=81=AA=E3=81=9F=E3=81=8C=E3=82=A4=E3=83=B3=E3=82=BF=E3=83=BC=E3=83=8D=E3=83=
+=83=E3=83=88=E3=82=92=E9=96=B2=E8=A6=A7=E3=81=99=E3=82=8B=E3=81=9F=E3=82=81=
+=E3=81=AB=E4=BD=BF=E7=94=A8=E3=81=97=E3=81=A6=E3=81=84=E3=82=8B=E3=83=87=E3=
+=83=90=E3=82=A4=E3=82=B9=E3=81=AB=E3=82=A2=E3=82=AF=E3=82=BB=E3=82=B9=E3=81=
+=97=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82
+=E3=81=9D=E3=82=8C=E4=BB=A5=E6=9D=A5=E3=80=81=E7=A7=81=E3=81=AF=E3=81=82=E3=
+=81=AA=E3=81=9F=E3=81=AE=E3=82=A4=E3=83=B3=E3=82=BF=E3=83=BC=E3=83=8D=E3=83=
+=83=E3=83=88=E6=B4=BB=E5=8B=95=E3=82=92=E7=9B=A3=E8=A6=96=E3=81=97=E3=81=A6=
+=E3=81=8D=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index f61da562f6..96a09a26a1 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -589,6 +589,11 @@ USER_TERM="$TERM"
- TERM=dumb
- export TERM USER_TERM
- 
-+# Set up additional fds so we can control single test i/o
-+exec 5>&1
-+exec 6<&0
-+exec 7>&2
-+
- _error_exit () {
- 	finalize_junit_xml
- 	GIT_EXIT_OK=t
-@@ -612,7 +617,7 @@ BAIL_OUT () {
- 	local bail_out="Bail out! "
- 	local message="$1"
- 
--	say_color error $bail_out "$message"
-+	say_color error $bail_out "$message" >&5
- 	_error_exit
- }
- 
-@@ -637,9 +642,6 @@ then
- 	exit 0
- fi
- 
--exec 5>&1
--exec 6<&0
--exec 7>&2
- if test "$verbose_log" = "t"
- then
- 	exec 3>>"$GIT_TEST_TEE_OUTPUT_FILE" 4>&3
--- 
-2.31.1
+=E5=A4=A7=E4=BA=BA=E3=81=AE=E3=82=A6=E3=82=A7=E3=83=96=E3=82=B5=E3=82=A4=E3=
+=83=88=E3=82=92=E5=AE=9A=E6=9C=9F=E7=9A=84=E3=81=AB=E8=A8=AA=E5=95=8F=E3=81=
+=97=E3=81=A6=E3=81=84=E3=82=8B=E3=81=AE=E3=81=A7=E3=80=81=E3=81=93=E3=82=8C=
+=E3=82=92=E6=8B=85=E5=BD=93=E3=81=97=E3=81=A6=E3=81=84=E3=82=8B=E3=81=AE=E3=
+=81=AF=E3=81=82=E3=81=AA=E3=81=9F=E3=81=A7=E3=81=82=E3=82=8B=E3=81=93=E3=81=
+=A8=E3=81=8C=E7=A2=BA=E8=AA=8D=E3=81=A7=E3=81=8D=E3=81=BE=E3=81=99=E3=80=82
+=E7=B0=A1=E5=8D=98=E3=81=AB=E3=81=99=E3=82=8B=E3=81=9F=E3=82=81=E3=81=AB=E3=
+=80=81=E3=82=A2=E3=82=AF=E3=82=BB=E3=82=B9=E3=81=97=E3=81=9FWeb=E3=82=B5=E3=
+=82=A4=E3=83=88=E3=81=8B=E3=82=89=E3=83=87=E3=83=BC=E3=82=BF=E3=81=B8=E3=81=
+=AE=E3=82=A2=E3=82=AF=E3=82=BB=E3=82=B9=E3=81=8C=E6=8F=90=E4=BE=9B=E3=81=95=
+=E3=82=8C=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82
 
+=E3=82=A6=E3=82=A4=E3=83=AB=E3=82=B9=E5=AF=BE=E7=AD=96=E3=82=BD=E3=83=95=E3=
+=83=88=E3=82=A6=E3=82=A7=E3=82=A2=E3=81=8C=E3=81=9D=E3=82=8C=E3=82=92=E6=A4=
+=9C=E5=87=BA=E3=81=A7=E3=81=8D=E3=81=AA=E3=81=84=E3=82=88=E3=81=86=E3=81=AB=
+=E3=81=99=E3=82=8B=E3=81=9F=E3=82=81=E3=81=AB=E3=80=811=E6=97=A5=E3=81=AB=
+=E6=95=B0=E5=9B=9E=E7=BD=B2=E5=90=8D=E3=82=92=E6=9B=B4=E6=96=B0=E3=81=99=E3=
+=82=8B=E3=83=88=E3=83=AD=E3=82=A4=E3=81=AE=E6=9C=A8=E9=A6=AC=E3=82=92=E3=83=
+=89=E3=83=A9=E3=82=A4=E3=83=90=E3=83=BC=E3=83=99=E3=83=BC=E3=82=B9=E3=81=A7=
+=E3=82=A2=E3=83=83=E3=83=97=E3=83=AD=E3=83=BC=E3=83=89
+=E3=81=97=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82=E3=81=95=E3=82=89=E3=81=AB=E3=
+=80=81=E3=81=9D=E3=82=8C=E3=81=AF=E7=A7=81=E3=81=AB=E3=81=82=E3=81=AA=E3=81=
+=9F=E3=81=AE=E3=82=AB=E3=83=A1=E3=83=A9=E3=81=A8=E3=83=9E=E3=82=A4=E3=82=AF=
+=E3=81=B8=E3=81=AE=E3=82=A2=E3=82=AF=E3=82=BB=E3=82=B9=E3=82=92=E4=B8=8E=E3=
+=81=88=E3=81=A6=E3=81=8F=E3=82=8C=E3=81=BE=E3=81=99=E3=80=82
+=E3=81=95=E3=82=89=E3=81=AB=E3=80=81=E5=86=99=E7=9C=9F=E3=80=81=E3=82=BD=E3=
+=83=BC=E3=82=B7=E3=83=A3=E3=83=AB=E3=83=A1=E3=83=87=E3=82=A3=E3=82=A2=E3=80=
+=81=E3=83=81=E3=83=A3=E3=83=83=E3=83=88=E3=80=81=E9=80=A3=E7=B5=A1=E5=85=88=
+=E3=81=AA=E3=81=A9=E3=80=81=E3=81=99=E3=81=B9=E3=81=A6=E3=81=AE=E3=83=87=E3=
+=83=BC=E3=82=BF=E3=82=92=E3=83=90=E3=83=83=E3=82=AF=E3=82=A2=E3=83=83=E3=83=
+=97=E3=81=97=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82
+
+=E3=81=A4=E3=81=84=E6=9C=80=E8=BF=91=E3=80=81=E7=A7=81=E3=81=AF=E3=80=81=E3=
+=83=93=E3=83=87=E3=82=AA=E3=81=8C=E5=88=A5=E3=81=AE=E7=94=BB=E9=9D=A2=E3=81=
+=A7=E5=90=8C=E6=99=82=E3=81=AB=E5=86=8D=E7=94=9F=E3=81=95=E3=82=8C=E3=81=A6=
+=E3=81=84=E3=82=8B=E9=96=93=E3=81=AB=E3=80=81=E7=94=BB=E9=9D=A2=E3=81=AE=E4=
+=B8=80=E9=83=A8=E3=81=A7=E4=B8=AD=E5=87=BA=E3=81=97=E3=81=99=E3=82=8B=E3=83=
+=93=E3=83=87=E3=82=AA=E3=82=92=E4=BD=9C=E6=88=90=E3=81=99=E3=82=8B=E3=81=A8=
+=E3=81=84=E3=81=86=E7=B4=A0=E6=99=B4=E3=82=89=E3=81=97=E3=81=84=E3=82=A2=E3=
+=82=A4=E3=83=87=E3=82=A2=E3=82=92=E6=80=9D=E3=81=84=E3=81=A4
+=E3=81=8D=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82=E3=81=9D=E3=82=8C=E3=81=AF=E6=
+=A5=BD=E3=81=97=E3=81=8B=E3=81=A3=E3=81=9F=EF=BC=81
+
+=E3=81=93=E3=81=AE=E3=83=93=E3=83=87=E3=82=AA=E3=81=AF=E6=95=B0=E5=9B=9E=E3=
+=82=AF=E3=83=AA=E3=83=83=E3=82=AF=E3=81=99=E3=82=8B=E3=81=A0=E3=81=91=E3=81=
+=A7=E3=81=99=E3=81=B9=E3=81=A6=E3=81=AE=E9=80=A3=E7=B5=A1=E5=85=88=E3=81=AB=
+=E7=B0=A1=E5=8D=98=E3=81=AB=E9=80=81=E4=BF=A1=E3=81=A7=E3=81=8D=E3=81=BE=E3=
+=81=99=E3=81=AE=E3=81=A7=E3=81=94=E5=AE=89=E5=BF=83=E3=81=8F=E3=81=A0=E3=81=
+=95=E3=81=84=E3=80=82=E3=81=93=E3=81=AE=E3=82=B7=E3=83=8A=E3=83=AA=E3=82=AA=
+=E3=82=92=E9=98=B2=E3=81=8E=E3=81=9F=E3=81=84=E3=81=A8=E6=80=9D=E3=81=84=E3=
+=81=BE=E3=81=99=E3=80=82
+
+=E3=81=9D=E3=82=8C=E3=82=92=E5=BF=B5=E9=A0=AD=E3=81=AB=E7=BD=AE=E3=81=84=E3=
+=81=A6=E3=80=81=E3=81=93=E3=81=93=E3=81=AB=E7=A7=81=E3=81=AE=E6=8F=90=E6=A1=
+=88=E3=81=8C=E3=81=82=E3=82=8A=E3=81=BE=E3=81=99=EF=BC=9A
+20=E4=B8=87=E5=86=86=E7=9B=B8=E5=BD=93=E3=81=AE=E9=87=91=E9=A1=8D=E3=82=92=
+=E3=83=93=E3=83=83=E3=83=88=E3=82=B3=E3=82=A4=E3=83=B3=E3=82=A6=E3=82=A9=E3=
+=83=AC=E3=83=83=E3=83=88=E3=81=AB=E9=80=81=E9=87=91=E3=81=99=E3=82=8C=E3=81=
+=B0=E3=80=81=E5=85=A8=E9=83=A8=E5=BF=98=E3=82=8C=E3=81=A6=E3=81=97=E3=81=BE=
+=E3=81=84=E3=81=BE=E3=81=99=E3=80=82=E3=81=BE=E3=81=9F=E3=80=81=E3=81=99=E3=
+=81=B9=E3=81=A6=E3=81=AE=E3=83=87=E3=83=BC=E3=82=BF=E3=81=A8=E3=83=93=E3=83=
+=87=E3=82=AA=E3=82=92=E5=AE=8C=E5=85=A8=E3=81=AB=E5=89=8A=E9=99=A4=E3=81=97=
+=E3=81=BE=E3=81=99=E3=80=82
+
+=E7=A7=81=E3=81=AE=E6=84=8F=E8=A6=8B=E3=81=A7=E3=81=AF=E3=80=81=E3=81=93=E3=
+=82=8C=E3=81=AF=E7=A7=81=E3=81=AE=E4=BB=95=E4=BA=8B=E3=81=AB=E3=81=A8=E3=81=
+=A3=E3=81=A6=E3=82=84=E3=82=84=E6=8E=A7=E3=81=88=E3=82=81=E3=81=AA=E4=BE=A1=
+=E6=A0=BC=E3=81=A7=E3=81=99=E3=80=82
+=E3=82=B0=E3=83=BC=E3=82=B0=E3=83=AB=E3=82=84=E3=83=93=E3=83=B3=E3=82=B0=E3=
+=81=AE=E3=82=88=E3=81=86=E3=81=AA=E6=A4=9C=E7=B4=A2=E3=82=A8=E3=83=B3=E3=82=
+=B8=E3=83=B3=E3=82=92=E4=BD=BF=E3=81=A3=E3=81=A6=E3=83=93=E3=83=83=E3=83=88=
+=E3=82=B3=E3=82=A4=E3=83=B3=E3=82=92=E8=B3=BC=E5=85=A5=E3=81=99=E3=82=8B=E6=
+=96=B9=E6=B3=95=E3=82=92=E7=90=86=E8=A7=A3=E3=81=99=E3=82=8B=E3=81=93=E3=81=
+=A8=E3=81=8C=E3=81=A7=E3=81=8D=E3=81=BE=E3=81=99=E3=80=81=E3=81=9D=E3=82=8C=
+=E3=81=AF=E3=81=9D=E3=82=8C=E3=81=BB=E3=81=A9=E9=9B=A3=E3=81=97=E3=81=84=E3=
+=81=93=E3=81=A8=E3=81=A7=E3=81=AF=E3=81=AA=E3=81=84=E3=81=93
+=E3=81=A8=E3=81=8C=E3=82=8F=E3=81=8B=E3=82=8A=E3=81=BE=E3=81=99=E3=80=82
+
+=E7=A7=81=E3=81=AE=E3=83=93=E3=83=83=E3=83=88=E3=82=B3=E3=82=A4=E3=83=B3=E3=
+=82=A6=E3=82=A9=E3=83=AC=E3=83=83=E3=83=88=EF=BC=88BTC=EF=BC=89=EF=BC=9A1F9=
+Qp4PMvBbCgXyRm1cRbexNdiSxkLhk8n
+
+=E8=BF=94=E4=BF=A1=E3=81=AB=E3=81=AF48=E6=99=82=E9=96=93=E3=81=82=E3=82=8A=
+=E3=81=BE=E3=81=99=E3=81=8C=E3=80=81=E6=AC=A1=E3=81=AE=E7=82=B9=E3=81=AB=E3=
+=82=82=E6=B3=A8=E6=84=8F=E3=81=99=E3=82=8B=E5=BF=85=E8=A6=81=E3=81=8C=E3=81=
+=82=E3=82=8A=E3=81=BE=E3=81=99=E3=80=82
+
+=E7=A7=81=E3=81=AB=E8=BF=94=E4=BF=A1=E3=81=99=E3=82=8B=E3=81=AE=E3=81=AF=E6=
+=84=8F=E5=91=B3=E3=81=8C=E3=81=82=E3=82=8A=E3=81=BE=E3=81=9B=E3=82=93-=E3=
+=82=A2=E3=83=89=E3=83=AC=E3=82=B9=E3=81=AF=E8=87=AA=E5=8B=95=E7=9A=84=E3=81=
+=AB=E7=94=9F=E6=88=90=E3=81=95=E3=82=8C=E3=81=A6=E3=81=84=E3=81=BE=E3=81=99=
+=E3=80=82
+=E7=A7=81=E3=81=AE=E3=83=93=E3=83=83=E3=83=88=E3=82=B3=E3=82=A4=E3=83=B3=E3=
+=82=A6=E3=82=A9=E3=83=AC=E3=83=83=E3=83=88=E3=81=A8=E4=B8=80=E7=B7=92=E3=81=
+=AB=E6=89=8B=E7=B4=99=E3=82=92=E8=BF=BD=E8=B7=A1=E3=81=99=E3=82=8B=E3=81=93=
+=E3=81=A8=E3=81=8C=E3=81=A7=E3=81=8D=E3=81=AA=E3=81=84=E3=81=AE=E3=81=A7=E3=
+=80=81=E6=96=87=E5=8F=A5=E3=82=92=E8=A8=80=E3=81=86=E3=81=93=E3=81=A8=E3=82=
+=82=E6=84=8F=E5=91=B3=E3=81=8C=E3=81=82=E3=82=8A=E3=81=BE=E3=81=9B=E3=82=93=
+=E3=80=82
+=E3=81=99=E3=81=B9=E3=81=A6=E3=81=8C=E6=AD=A3=E7=A2=BA=E3=81=AB=E8=AA=BF=E6=
+=95=B4=E3=81=95=E3=82=8C=E3=81=A6=E3=81=84=E3=81=BE=E3=81=99=E3=80=82
+
+=E3=81=82=E3=81=AA=E3=81=9F=E3=81=8C=E3=81=93=E3=81=AE=E6=89=8B=E7=B4=99=E3=
+=81=AB=E3=81=A4=E3=81=84=E3=81=A6=E8=AA=B0=E3=81=8B=E3=81=AB=E4=BD=95=E3=81=
+=8B=E8=A8=80=E5=8F=8A=E3=81=97=E3=81=9F=E3=81=93=E3=81=A8=E3=82=92=E7=A7=81=
+=E3=81=8C=E8=A6=8B=E3=81=A4=E3=81=91=E3=81=9F=E5=A0=B4=E5=90=88=E3=80=81=E3=
+=83=93=E3=83=87=E3=82=AA=E3=81=AF=E3=81=99=E3=81=90=E3=81=AB=E5=85=B1=E6=9C=
+=89=E3=81=95=E3=82=8C=E3=80=81=E3=81=82=E3=81=AA=E3=81=9F=E3=81=AE=E9=80=A3=
+=E7=B5=A1=E5=85=88=E3=81=8C=E6=9C=80=E5=88=9D=E3=81=AB=E3=81=9D=E3=82=8C=E3=
+=82=92=E5=8F=97=E3=81=91=E5=8F=96=E3=82=8A=E3=81=BE=E3=81=99
+=E3=80=82=E3=81=9D=E3=81=AE=E5=BE=8C=E3=80=81=E5=8B=95=E7=94=BB=E3=81=8C=E3=
+=82=A6=E3=82=A7=E3=83=96=E3=81=AB=E6=8E=B2=E8=BC=89=E3=81=95=E3=82=8C=E3=81=
+=BE=E3=81=99=EF=BC=81
+
+=E8=BF=BD=E4=BC=B8=E3=81=93=E3=81=AE=E6=89=8B=E7=B4=99=E3=82=92=E9=96=8B=E3=
+=81=8F=E3=81=A8=E6=99=82=E9=96=93=E3=81=8C=E5=A7=8B=E3=81=BE=E3=82=8A=E3=81=
+=BE=E3=81=99=E3=80=82 =EF=BC=88=E3=81=93=E3=81=AE=E3=83=97=E3=83=AD=E3=82=
+=B0=E3=83=A9=E3=83=A0=E3=81=AB=E3=81=AF=E3=82=BF=E3=82=A4=E3=83=9E=E3=83=BC=
+=E3=81=8C=E7=B5=84=E3=81=BF=E8=BE=BC=E3=81=BE=E3=82=8C=E3=81=A6=E3=81=84=E3=
+=81=BE=E3=81=99=EF=BC=89=E3=80=82
+
+=E9=A0=91=E5=BC=B5=E3=81=A3=E3=81=A6=E3=80=81=E6=B0=97=E6=A5=BD=E3=81=AB=EF=
+=BC=81=E9=81=8B=E3=81=8C=E6=82=AA=E3=81=8B=E3=81=A3=E3=81=9F=E3=81=AE=E3=81=
+=A7=E3=80=81=E6=AC=A1=E5=9B=9E=E3=81=AF=E6=B0=97=E3=82=92=E3=81=A4=E3=81=91=
+=E3=81=A6=E3=81=8F=E3=81=A0=E3=81=95=E3=81=84=E3=80=82
