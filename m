@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BB4CC433F5
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 20:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CDDBDC433F5
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 20:13:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43F8E61175
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 20:09:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF67561ABD
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 20:13:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233720AbhKRUMD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 15:12:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37932 "EHLO
+        id S233734AbhKRUQf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 15:16:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229921AbhKRUMC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 15:12:02 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADC36C061574
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 12:09:01 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id n12so31905050lfe.1
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 12:09:01 -0800 (PST)
+        with ESMTP id S231515AbhKRUQf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 15:16:35 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 446C6C061574
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 12:13:34 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id b40so31918686lfv.10
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 12:13:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=nNzad4xfQnVKzNB89qOQcqPp8Uu9WLyro+tEC68vZtQ=;
-        b=glzOy29XZEF8y5hVevPPAvXx2xc03Eu5tQnMB+KvYSgQED7bhx5YkgTN1WK3HZnd/f
-         1DhwxldejsxDghVcxt6b5rVADKwi3LHhC+KXyhxcYNSNp5gC4R/lSEdHOFTRKchMLDRh
-         ggBjs/hNjWo4G6caiDtuKHvzI7kh1AB5Ap3gW9duqQ+5Ld69h+uoaFJKqJ2SxclxFKuk
-         QA6Ym6/SW74HbeuyTOLsjPQLPU2SW/gxl/UuV6lIngLGEeOlAapbeV37KOU+e2oJ/RVw
-         MMbcZJZM18Oc86IEFfFY8/EtTkk+2jtLOaMCGPJPLwtMHkzhRkEtZMlqm5EG6xd0e6Vf
-         yKdw==
+        bh=fUbLVsEW1mPDdIZea0+Ceu7XgoXV0hZfgyjZ+iWTdko=;
+        b=F/7vNq1EQRZa/X8hNosii2iUOqbIZnwmjQn9/q43GOxILTenfjvaoex6mOQV1jUs9l
+         tySdbJoGEjJFK6HBTGcfgvzBkPrmZjKgUps8faKU1dAqfix+qmxhIVNEJrapjj7VAwHc
+         iHXF/xSncGq33qPFQ+Ln2QR13n1X9s8RneC7Kj4UOLxXESuykGzTYAKozE4tTTh2DXna
+         ds1xaNeDncM5Ff7yoca5nMLdKhBtQkHIVT8QUMZAnT1ExTeYRdXpjeMHzh7vmbTNTmxB
+         Cpm65qbmHuVibyqiZvftqdf+OJ4ziOA0KpyIK3nya5cG6IEmZ76SlxrdPKh76QmiTgsS
+         mnYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=nNzad4xfQnVKzNB89qOQcqPp8Uu9WLyro+tEC68vZtQ=;
-        b=49GumPw+/cbne1m0M4qQYicR8AFHWyjTJwHulXS4pE7fFleyrBeUURab1vHN8aCQnW
-         oOY8JUZD1qEEU6Jomc06geGMs8mksSgUWHLqZLxV1XDA5UJSFzCMw5v668BbikIEW9v4
-         ixauo7CJayCjbYPXRK2pYAEYz96sC1etquIG+yiP8PswGTKlASHmPDTGJzAFCqYxuDQD
-         Rtr9Vz94tUYfgsYHc5HvDCmcp++gd6krjeh1YKN/M1WPe3O95iDue5R6HXkHfkXCI2ow
-         33OLOHeKc3WHKh2S9vTQmM6eIzETKtsb2p2tFl2cor1IncfiVVGQANCU8yOXgqWCwP5I
-         QDIw==
-X-Gm-Message-State: AOAM532tNsCcRE9ZXvOrulMYDfq7r5FFm8xnwPzQaKhZEyf/Qhh4TvMC
-        4YlaLXHLB9SMefS8N55Z+6hGmfZEb59WLXSnwm8=
-X-Google-Smtp-Source: ABdhPJzY2OputAJqqIfXJmGGQkFlo40FN1Pz9jNmXHh/i7MzN0DoV7xSKUup+fqGTNsSx94qkHC+86UhAukx+oCc9ZM=
-X-Received: by 2002:a05:6512:2295:: with SMTP id f21mr27870848lfu.259.1637266140079;
- Thu, 18 Nov 2021 12:09:00 -0800 (PST)
+        bh=fUbLVsEW1mPDdIZea0+Ceu7XgoXV0hZfgyjZ+iWTdko=;
+        b=khCo5qMvlYp4AUYVJYtcotkDjKqXYfQqBVcq7UiretoEEMGC9l0ajJ2rVw89L4Y9j6
+         YtClriYuTRqoX30ZeiN/3xIkhcSVrZZGiUwa7vAGdJIqINrD5jI6PrWTPYUAeW+PsxgT
+         +gUdgfkg/ig4wRsf8Uz+GqXcl/CzFdw6iWK2bKCT1dyEhZa7ICpnZ0jm9L78+pmO37q9
+         BMdim6LUo3iTNHfwZKXbUXSv0Sljni8aolrce6npfLV2ABMXTcDHon03ucWYbIt8nExk
+         KsFwnAT4SGsUfCO8LnEGj0RVEyny4J9+TaEaw7QK86Nf+jKxYQ/GETDkJ9htkPa1zPeh
+         dgig==
+X-Gm-Message-State: AOAM530HMGTHTH6hJo147xQ8t1Jz0o3Hp4/tV/yViJbQExpagDiVAiD1
+        m4rciFCrFIynVO7sSZ9qLKySDkiF6akW2wxx8euWJ6eB
+X-Google-Smtp-Source: ABdhPJwbhFnqxXkZRmVmxYcFJMFvyaH1v6DFlnZiZJUrx57uhSkdgQnOmJYmx3JSFEfYjKNOMLy/2/5YVE25HmxvEAU=
+X-Received: by 2002:a19:4312:: with SMTP id q18mr27356841lfa.299.1637266412640;
+ Thu, 18 Nov 2021 12:13:32 -0800 (PST)
 MIME-Version: 1.0
-References: <20211118164940.8818-1-jack@suse.cz> <20211118164940.8818-2-jack@suse.cz>
-In-Reply-To: <20211118164940.8818-2-jack@suse.cz>
+References: <20211118164940.8818-1-jack@suse.cz> <20211118164940.8818-4-jack@suse.cz>
+In-Reply-To: <20211118164940.8818-4-jack@suse.cz>
 From:   Chris Torek <chris.torek@gmail.com>
-Date:   Thu, 18 Nov 2021 12:08:48 -0800
-Message-ID: <CAPx1GvdKuBmxN0XM3PKJO+0V=P3OoyB4VDzmqshv7N+3vFF8gw@mail.gmail.com>
-Subject: Re: [PATCH 01/27] bisect: Fixup test rev-list-bisect/02
+Date:   Thu, 18 Nov 2021 12:13:21 -0800
+Message-ID: <CAPx1Gvfe46JFeNT8nW6NcFFy7bnR+eWYKS0-5soPVTmPxxJccA@mail.gmail.com>
+Subject: Re: [PATCH 03/27] bisect: Fixup test bisect-porcelain/20
 To:     Jan Kara <jack@suse.cz>
 Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -60,23 +60,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 18, 2021 at 10:38 AM Jan Kara <jack@suse.cz> wrote:
-> diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
-> index b95a0212adff..48db52447fd3 100755
-> --- a/t/t6002-rev-list-bisect.sh
-> +++ b/t/t6002-rev-list-bisect.sh
-> @@ -247,8 +247,9 @@ test_expect_success 'set up fake --bisect refs' '
->  test_expect_success 'rev-list --bisect can default to good/bad refs' '
->         # the only thing between c3 and c1 is c2
->         git rev-parse c2 >expect &&
-> -       git rev-list --bisect >actual &&
-> -       test_cmp expect actual
-> +       git rev-parse b2 >>expect &&
-> +       actual=$(git rev-list --bisect) &&
-> +       grep &>/dev/null $actual expect
+On Thu, Nov 18, 2021 at 10:39 AM Jan Kara <jack@suse.cz> wrote:
+> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+> index f8cfdd3c36d2..13f7deea4d81 100755
+> --- a/t/t6030-bisect-porcelain.sh
+> +++ b/t/t6030-bisect-porcelain.sh
+> @@ -240,8 +240,13 @@ test_expect_success 'bisect skip: cannot tell between 3 commits' '
+>  test_expect_success 'bisect skip: cannot tell between 2 commits' '
+>         test_when_finished git bisect reset &&
+>         git bisect start $HASH4 $HASH1 &&
+> -       git bisect skip &&
+> -       test_expect_code 2 git bisect good >my_bisect_log.txt &&
+> +       if [ $(git rev-parse HEAD) == $HASH2 ]; then
+> +               results=('good' 'skip')
+> +       else
+> +               results=('skip' 'good')
+> +       fi &&
+> +       git bisect ${results[0]} &&
+> +       test_expect_code 2 git bisect ${results[1]} >my_bisect_log.txt &&
 
-`&>` is a bashism; you need `>/dev/null 2>&1` here for general portability.
+These are also not available in old POSIX shell - consider using two
+separate variables to hold the two strings.
 
 Chris
-
-ref: https://unix.stackexchange.com/questions/581507/redirecting-stdout-and-stderr-together-vs-redirecting-stdout-and-then-stderr-to/
