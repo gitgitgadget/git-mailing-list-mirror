@@ -2,112 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67961C433EF
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 19:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AB2AC433EF
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 19:40:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4204461260
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 19:10:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F896619BB
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 19:40:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233234AbhKRTNx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 14:13:53 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53493 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbhKRTNw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 14:13:52 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AEB51E77AF;
-        Thu, 18 Nov 2021 14:10:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Iqxt/gG8pmsKyvPDrzbMRE7BtW+Oshp3vQwXQn
-        uBF/M=; b=kEgMrlBr25eptstYp7/gbb0kC0EL3Vw3pwAR3JTUTK/0MyZkSHyM9C
-        kdTEPKAVQONxsj/IYLqq51j/95eAJTJj6W7bCgE6NN6mQb8OP9SYbiKHy+yRIWFt
-        lSMFpwj/koZ8k2bm3ChPDRJ9z7/hh4i7moPzio2rR18SCO/pBckg4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8FB07E77AE;
-        Thu, 18 Nov 2021 14:10:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D8640E77AD;
-        Thu, 18 Nov 2021 14:10:50 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Carlo Arenas <carenas@gmail.com>
-Subject: Re: [PATCH v2 1/1] git-compat-util: add a test balloon for C99 support
-References: <20211114212437.1466695-1-sandals@crustytoothpaste.net>
-        <20211116021241.1565740-1-sandals@crustytoothpaste.net>
-        <20211116021241.1565740-2-sandals@crustytoothpaste.net>
-        <YZOh370ZMMqSADUE@coredump.intra.peff.net>
-        <211116.86pmr0p82k.gmgdl@evledraar.gmail.com>
-        <YZPGKHYE/9km1rH5@coredump.intra.peff.net>
-        <YZRurUdyB/cGL6Y3@camp.crustytoothpaste.net>
-        <YZRwpekXlilhOEx4@coredump.intra.peff.net>
-        <YZWNumAlsek9Gi22@camp.crustytoothpaste.net>
-Date:   Thu, 18 Nov 2021 11:10:49 -0800
-In-Reply-To: <YZWNumAlsek9Gi22@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Wed, 17 Nov 2021 23:18:18 +0000")
-Message-ID: <xmqqy25lwa86.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232274AbhKRTn0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 14:43:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59786 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231215AbhKRTnZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 14:43:25 -0500
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF42FC061574
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 11:40:24 -0800 (PST)
+Received: by mail-oi1-x233.google.com with SMTP id bj13so16638898oib.4
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 11:40:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=vE1loFUPLLWZZKLomBJDSsYF9AwoCEOleHP0E08I1D8=;
+        b=T2Y8h0UiJ9o1o0hNp4zOFo+DhzBfqo0uQhvLhavkmBPqX5kt8/jedvObzbqzH/vZUc
+         bTpU22Lfamz39hIonJUHCvSJdyy+EZyhjN7GAFGV8zId1pU24aTL6tjCkFIqhMHRCLgm
+         M3yMhjRe4nnhY5rAg+o/9scH8163RGkX8RV+63osXWoMdfJtp7MS/j3d4VoVU3s1f1c0
+         z1L/1RZq6UVLZYtJku108OKloWN97zQZ+klNMw/rxEXC9D2c4BJPlfgf6dmBT72l+LNQ
+         Gh+yWRTXQDqmSRAJrTUrz83jjZtad0paDFuKmq2WLOtsPJe1C23t90eyrDp37TAcn9F5
+         sHwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=vE1loFUPLLWZZKLomBJDSsYF9AwoCEOleHP0E08I1D8=;
+        b=Uq3zLE3faleBlUsnB39FvM4Vkit9CLQOJC/AWYWLG8saoSmJ3aPTPt0hx/c6jw2SRr
+         sqtkLbs5PsD3ftcaScnbA1NVjzG3+IZiDSN0E40kXkHjhN5LQlF4ygc5YiWspZE/+rIk
+         gnsWE7fqh8V7aBH7JzisV8fKA/J0SVgpLDOkAgehH6+w+t0ko4J2eLA9cla80CQ7OsBJ
+         D5+2iXqyYey6PeWq9P+lu4WsTJ7WSeTvsefR6nFUfxW2DYwsbItsjkc1U1AVn4o0FAIG
+         lA4oaPY8Vsty+Gjfak2qfvcC4cLIYc5wbDu9T4Y8E/XvCdouGhtG1DiuVvIvtTyPov6+
+         0xBw==
+X-Gm-Message-State: AOAM531PVWJb3Xcahm4VEFm/bTJD6Hzu2lJIgmiBBU6p6ggAbGuonamy
+        yj6ObPlWbDopW1uMVJAPNOI=
+X-Google-Smtp-Source: ABdhPJxZOr4dpW1M99uKO4jKQ8HKUQ+VzDej/6j+WYLCfX+4PkIVHxe8XEFT1U3e5reTsHwdc2EE7w==
+X-Received: by 2002:a05:6808:20a5:: with SMTP id s37mr9517763oiw.127.1637264424134;
+        Thu, 18 Nov 2021 11:40:24 -0800 (PST)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id w4sm186759oiv.37.2021.11.18.11.40.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Nov 2021 11:40:23 -0800 (PST)
+Date:   Thu, 18 Nov 2021 11:40:21 -0800
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Hamza Mahfooz <someguy@effective-light.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 1/2] grep/pcre2: limit the instances in which UTF mode is
+ enabled
+Message-ID: <YZasJWuysic3OWS1@carlos-mbp.lan>
+References: <20211118084143.279174-1-someguy@effective-light.com>
+ <CAPUEspi5-urxZxHCsAWjyLxPWDfaYCK7nqGBL8FejU=n=qcFrQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3E9E2CCC-48A3-11EC-AD0D-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPUEspi5-urxZxHCsAWjyLxPWDfaYCK7nqGBL8FejU=n=qcFrQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Thu, Nov 18, 2021 at 02:04:08AM -0800, Carlo Arenas wrote:
+> 
+> I haven't tested it, but I think that for this to work with the log,
+> we also need to make sure that all log entries that might not be UTF-8
+> get first iconv() which is why probably Æevar mentioned[1]
+> i18n.commitEncoding in his old email.
 
-> On 2021-11-17 at 03:01:57, Jeff King wrote:
->> Yes, but I'm not at all worried about breaking our CI. That's just a
->> patch away from fixing. I'm much more worried about confused users
->> building from source, because helping them is more difficult to scale.
->
-> That's one of the reasons I had proposed the current patch, because it
-> pukes in a very noticeable way with directives on where to look to
-> continue.  Just using C99 features means that Git breaks in a very
-> subtle way where the user compiling may not be familiar with C and may
-> not know how to fix it otherwise.  For example, my previous employer
-> ships Git, but many of the folks who are doing the package updates are
-> not C programmers.
+Having tested it, it seems this might work, but needs at least the
+following to make the test for it meaningful:
 
-I wonder if this would work, then.
+diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-ascii.sh
+index 1da6b07a57..e1fbdc0f80 100755
+--- a/t/t7812-grep-icase-non-ascii.sh
++++ b/t/t7812-grep-icase-non-ascii.sh
+@@ -47,6 +47,8 @@ test_expect_success REGEX_LOCALE 'grep string with regex, with -F' '
+ '
+ 
+ test_expect_success REGEX_LOCALE 'pickaxe -i on non-ascii' '
++	GIT_COMMITTER_NAME="C O Mitter" &&
++	GIT_COMMITTER_EMAIL="committer@example.com" &&
+ 	git commit -m first &&
+ 	git log --format=%f -i -S"TILRAUN: HALLÓ HEIMUR!" >actual &&
+ 	echo first >expected &&
+@@ -72,10 +74,10 @@ test_expect_success GETTEXT_LOCALE,PCRE 'log --committer with an ascii pattern o
+ 	EOF
+ 	test_write_lines "fifth" >file5 &&
+ 	git add file5 &&
+-	GIT_COMMITTER_NAME="Ç O Mîtter" &&
++	GIT_COMMITTER_NAME=$(echo "Ç O Mîtter" | iconv -t ISO-8859-1) &&
+ 	GIT_COMMITTER_EMAIL="committer@example.com" &&
+ 	git -c i18n.commitEncoding=latin1 commit -m thïrd &&
+-	git -c i18n.logOutputEncoding=latin1 log -1 --pretty=fuller --color=always --perl-regexp --committer=" O.*" >log &&
++	git log -1 --pretty=fuller --color=always --perl-regexp --committer=" O.*" >log &&
+ 	grep Commit: log >actual.raw &&
+ 	test_decode_color <actual.raw >actual &&
+ 	test_cmp expected actual
 
- Makefile   | 3 ++-
- revision.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+The first hunk is a nice to have and mimics what is done in the previous
+test where a non UTF match will match instead an equivalent ASCII text,
+but is not strictly needed unless the expression is also tightened.
 
-diff --git c/Makefile w/Makefile
-index 201437e9d4..454118d86b 100644
---- c/Makefile
-+++ w/Makefile
-@@ -1218,7 +1218,8 @@ endif
- # Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
- # tweaked by config.* below as well as the command-line, both of
- # which'll override these defaults.
--CFLAGS = -g -O2 -Wall -std=gnu99
-+# Older versions of GCC may require adding "-std=gnu99" at the end.
-+CFLAGS = -g -O2 -Wall
- LDFLAGS =
- CC_LD_DYNPATH = -Wl,-rpath,
- BASIC_CFLAGS = -I.
-diff --git c/revision.c w/revision.c
-index 78c1ceea7b..5390a479b3 100644
---- c/revision.c
-+++ w/revision.c
-@@ -49,7 +49,8 @@ void show_object_with_name(FILE *out, struct object *obj, const char *name)
- 	 * This "for (const char *p = ..." is made as a first step towards
- 	 * making use of such declarations elsewhere in our codebase.  If
- 	 * it causes compilation problems on your platform, please report
--	 * it to the Git mailing list at git@vger.kernel.org.
-+	 * it to the Git mailing list at git@vger.kernel.org. In the meantime,
-+	 * adding -std=gnu99 to CFLAGS may help if you are with older GCC.
- 	 */
- 	for (const char *p = name; *p && *p != '\n'; p++)
- 		fputc(*p, out);
+Note the second hunk is incomplete as the message is still not really
+encoded as latin1 and will need an equivalent processing, but left it
+out so it can be done together with fixing the corresponding test.
+
+I have to admit that adding to a complex condition might be obscuring
+some other edge case, and indeed the fact the test passed even without
+this fix is concerning.
+
+From my reading of what Ævar suggested originally[1], it would seem that
+the new is_log condition should be on an branch of its own, and more code
+should be needed to make sure the contents we are going to use are indeed
+utf8 by the time it hits pcre2_*match() before setting it.
+
+Carlo
+
+[1] https://lore.kernel.org/git/211116.86tugcp8mg.gmgdl@evledraar.gmail.com/
