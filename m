@@ -2,110 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD378C433EF
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 11:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C998EC433EF
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 11:22:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B202D61B64
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 11:04:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF33761A3D
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 11:22:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343577AbhKRLH1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 06:07:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53334 "EHLO
+        id S1343723AbhKRLZ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 06:25:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245322AbhKRLHX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 06:07:23 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5217C061570
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 03:04:23 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id y13so25052522edd.13
-        for <git@vger.kernel.org>; Thu, 18 Nov 2021 03:04:23 -0800 (PST)
+        with ESMTP id S1343746AbhKRLZK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 06:25:10 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57B67C079794
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 03:16:46 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id p18so4926323wmq.5
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 03:16:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=ChkNIVoN3qfClfsp53xDVLXRdnpg5ZIWgozOmM2/isY=;
-        b=QPkQzEb+jbYoLpOjDE8PI5KxwprHt1qywJ0HSXEQqc7+JLnt7hVbUXqZUna1mjGHQw
-         6CdYf60JxTlCmmzih4/+FSnmGNs6MTJbjdmq00MH/9TCnkulcen7ddrBXT89QohwFKcM
-         YumgMvmCGDhdxo3SmCrASKITiY/r+J7/x41XLbNnsa/1vWUg/TqZMlGvILFSd7ityN1K
-         GC+VW1gnROis28MvJ3kCmiWnRV4Fnz1MvUabFxfXbjTRJw8Bha9JK4wGmNlnP1ik11mF
-         2YV3xP8o5oStVv6l8m6k1tr+zMcZ77wU55vBuiEaKEm+knx/OcP6TRzO3fVsdelifRma
-         cYQQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=8c6w/5FQqrraaIDUHGAySYZhA829PZ6OkSt+IgB9jP0=;
+        b=kqGIgaVCRo/YCP3/mCEC/t4RDbA/fYvoyC6H/RcbEgVlMexTmK5tYNKVQ6fx2kOmwf
+         +/Z01NcnjYgnZWJzRZ55VVmlJfYLP7JDmQRjcv03dfXHpDsujzKAVsipDS6qNW489Ns9
+         lOPmd0O+t21Vfc3VgrTQQROhNy/36TVZa6AkmodDIpGPVp2yDsiWWJrYumnaw1ZlFXko
+         HNpUWS6yv3WypSFPD+xkK+Oipy0YvIDzOiJhctnhf9NT3i7cUNfNlE3g/cpQzAs+9MJE
+         upVRwFdcDoYKVAdYH8YTIji0oeev0/FkxE1Z3uYKfqeTJDxqA3AHu3is4eaNecG+K7v+
+         aQ5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=ChkNIVoN3qfClfsp53xDVLXRdnpg5ZIWgozOmM2/isY=;
-        b=XvvXdUzRgPksJhsDVMylV2g3+IRT5kT1O6FNAN0hv31GPYsKJkesLcMW7CjxAJ/obp
-         WIYmA8vJXhJd4D3ghIq9TI0gctCTWvFFRJv4SfGfrojTI/IE15QWOiSia5BIoiqFmy0S
-         M2E6JJx/U4elWkh/c/ZloUVaN2pgqvt5MUWRju+I1l9eamHuJM67eZmLycLNmb977G0x
-         VYks/AErUkQxoeeIGA9PFeLFyKhQ9RyB7TBOHo6XSKDDjsS4VmPMBca3oWfLP2V5DP9x
-         W5srwfrmLpoBxc6wP2WfGSx5CzxvIPjDG/trgJlAcM2uKINusX4WCikHo1QEPQxmyLyD
-         B8Pw==
-X-Gm-Message-State: AOAM532mfj+slHdO+/VdPO31Zrwfuuh1HX/EjmrEOII2cIdTXNHLF6C5
-        K64HfskOfFIb+PKDU+UHQcbTPLHUMxKitA==
-X-Google-Smtp-Source: ABdhPJzTz0s71fl/4q9kawgCDkS30hPnkkOgOZJIPi/7OkIK+lwxKecuy4vlTq4nqWvMVSkKSRFO8w==
-X-Received: by 2002:a17:907:6ea8:: with SMTP id sh40mr31537630ejc.53.1637233462140;
-        Thu, 18 Nov 2021 03:04:22 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id go17sm1118752ejc.76.2021.11.18.03.04.21
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=8c6w/5FQqrraaIDUHGAySYZhA829PZ6OkSt+IgB9jP0=;
+        b=OfYjsZg2GwxN5JV8Yi4aevnbtV0Vq9M4FFFKzPGX1oNZfmOu6Q0lqeFuoy9cByAIV0
+         RjvMgdO3bHzJysLypcT+cGp60IWdg02GgnziWzF4cSzrzMPCpS68ON9LS9ehjU0/byJU
+         w7pOqucyjxJ5vs83wNYWMHpF0VL41HpQmgtQvvN2dyIFrEI4kz0EEIBFERpwlMwQZt4H
+         u/BCOTysXZ6EoLQ/SETu2wgLCmATNoS9e37tJXBHaZIEAzdN2SQ18ogiMzKzc+I4hcMp
+         Ar+vfbHANMIsAxNkmmB25cJIY0QZdw6ccTrBGfojIHajvjDa1giQ4AaKHauZPSTAHJpA
+         e5vA==
+X-Gm-Message-State: AOAM531A+QVBkWih8wo/SfUt8d3IOn+m74lxFfDiiOHcn32kEJhRlakq
+        cM7Ti78svEnMGM8i5C3YLy83ibK6360=
+X-Google-Smtp-Source: ABdhPJyDcFfTJCIPwOpSTWZGoEEFvY/O2Ma2cjyV/oPYdSgFsnM5UDT967pmO6fe46JL4Rd/AmLYWA==
+X-Received: by 2002:a05:600c:22d9:: with SMTP id 25mr8777759wmg.71.1637234204774;
+        Thu, 18 Nov 2021 03:16:44 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h7sm2650593wrt.64.2021.11.18.03.16.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Nov 2021 03:04:21 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mnfDJ-000QC8-6q;
-        Thu, 18 Nov 2021 12:04:21 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-Subject: Re: [PATCH 1/3] ls-tree.c: support `--oid-only` option for
- "git-ls-tree"
-Date:   Thu, 18 Nov 2021 12:00:23 +0100
-References: <211115.86r1bhsb8x.gmgdl@evledraar.gmail.com>
- <20211118092803.78395-1-dyroneteng@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <20211118092803.78395-1-dyroneteng@gmail.com>
-Message-ID: <211118.86czmx67yi.gmgdl@evledraar.gmail.com>
+        Thu, 18 Nov 2021 03:16:44 -0800 (PST)
+Message-Id: <pull.1141.git.git.1637234203401.gitgitgadget@gmail.com>
+From:   "TimTIM via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 18 Nov 2021 11:16:43 +0000
+Subject: [PATCH] http-protocol.txt: add missing flush to example
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     TimTIM <t2@live.hk>, TimTim Wong <t2@live.hk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: TimTim Wong <t2@live.hk>
 
-On Thu, Nov 18 2021, Teng Long wrote:
+Signed-off-by: Timothy Wong <i@timtim.hk>
+---
+    Fix example in documentation
+    
+    wants must be flushed with 0000 before haves
 
->> If you make these an OPT_CMDMODE you get this behavior for free. See
->> e.g. my
->> https://lore.kernel.org/git/patch-v2-06.10-d945fc94774-20211112T221506Z-avarab@gmail.com/	   
->
-> Thank you very much for providing this input.
->
-> So I try to read this patch your mentioned and try to repeat the idea in my understanding.
->
-> First, OPT_CMDMODE() can be used for:
->
->        1. Easy for checking the combined command options, such as "mutually exclusive" conditions.
->
->        2. Die and output the error message consistently when the incompatible options are found.
->
->        3. Brings better extensibilites, no need to change a lot of if/elses.
->
-> Then, you suggest to consider about to use OPT_CMDMODE instead of the current implementations.
->
-> Did I understand your suggestion right and comprehensive?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1141%2Fwegylexy%2Fpatch-1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1141/wegylexy/patch-1-v1
+Pull-Request: https://github.com/git/git/pull/1141
 
-Yes, all of that is correct.
+ Documentation/technical/http-protocol.txt | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-It's a way of defining N options, --foo, --bar, --baz, where combining
-any of them is an error.
+diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
+index cc5126cfeda..facb315a993 100644
+--- a/Documentation/technical/http-protocol.txt
++++ b/Documentation/technical/http-protocol.txt
+@@ -314,8 +314,9 @@ Clients MUST first perform ref discovery with
+    C: Content-Type: application/x-git-upload-pack-request
+    C:
+    C: 0032want 0a53e9ddeaddad63ad106860237bbf53411d11a7\n
+-   C: 0032have 441b40d833fdfa93eb2908e52742248faf0ee993\n
+    C: 0000
++   C: 0032have 441b40d833fdfa93eb2908e52742248faf0ee993\n
++   C: done
+ 
+    S: 200 OK
+    S: Content-Type: application/x-git-upload-pack-result
+@@ -337,9 +338,9 @@ server advertises capability `allow-tip-sha1-in-want` or
+ `allow-reachable-sha1-in-want`.
+ 
+   compute_request   =  want_list
++		       "0000"
+ 		       have_list
+-		       request_end
+-  request_end       =  "0000" / "done"
++		       "done"
+ 
+   want_list         =  PKT-LINE(want SP cap_list LF)
+ 		       *(want_pkt)
 
-We usually use it for a "command mode" (hence the name), but it can be
-used when the command has flags that are mutually exclusive.
-
-I think (but am not sure, and didn't check) that you can even use it for
---foo AND --bar that are exclusive, and --other --flags that are also
-mutually exclusive (but could be combined with one of --foo or --bar),
-you just need to provide another variable for it to set.
-
-But I haven't tested that or used it like that, maybe it doesn't work
-for some reason I'm forgetting...
+base-commit: cd3e606211bb1cf8bc57f7d76bab98cc17a150bc
+-- 
+gitgitgadget
