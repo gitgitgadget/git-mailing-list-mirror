@@ -2,141 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8B7AC433F5
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7927AC433EF
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:15:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A40FD6128C
-	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:13:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54D926135E
+	for <git@archiver.kernel.org>; Thu, 18 Nov 2021 07:15:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243771AbhKRHQI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Nov 2021 02:16:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56382 "EHLO
+        id S243163AbhKRHSE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Nov 2021 02:18:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243692AbhKRHO7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Nov 2021 02:14:59 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7365DC06121E
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 23:11:34 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id p18-20020a17090ad31200b001a78bb52876so7413686pju.3
-        for <git@vger.kernel.org>; Wed, 17 Nov 2021 23:11:34 -0800 (PST)
+        with ESMTP id S229594AbhKRHSB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Nov 2021 02:18:01 -0500
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 328B2C061570
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 23:15:02 -0800 (PST)
+Received: by mail-qt1-x834.google.com with SMTP id t11so5202054qtw.3
+        for <git@vger.kernel.org>; Wed, 17 Nov 2021 23:15:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=MWL+oVUsBX56daYe7mkNFI8R3ecQj59HSMMsxIlQuWo=;
-        b=dlSEZilaqTHHR3f1fUmoYZKBzhqGc+xVe5/Bv7kXbNvGZ144B6EwtkOIYwMxKUQKiQ
-         yrM9KjgkATK2ruBVpjV3qWI8y6oZseuXWaD0C/3TbT2kW9A4rb01mRrN5Z/lrn7ehIn0
-         dEit/nuKE0dHn7WhG5nZe+OF1X5tA2GYle3YRuoqHXxZ6X/HwYrY0VA5XECK91SrWHvv
-         WADN41Se8OTK4lLQcs049zFiIDh/J5KzGDQ4bWMIxN/x4hnadk41XhANgfPjdcXV85ds
-         rY37k/uI+Q6eMp4QEi7v0d0YNZpi72WLrwODd9I/KhVdQXXBMzADJrEubdl6yoSn7Grq
-         gWKg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6dwuS7bKikd69dGMhagfxRqVdQoo3I37wk6LNGhvwds=;
+        b=NgweYrT1ZCyzYrWRx7CRcfhNjKciD7bWR6G0JQRrsPptloiboQbuws0qQmbprjxTHO
+         kE8nB3FsviKbREsqr2Q4gh2sOfyGjatN9RBfBsieAwkT/YsvsFNC4JLRJ+KdT+Lg/l8N
+         SFqIOzF+Vnwt8asRXqgcwFIYK3/+nzOkwpk6G81uXAqqLC6MFwLlA+ag+3RYREUQWG2p
+         RhUJgIhEglv35Y6mVmOYhND9pG8z+xRw7qogYi4b89Kmb+jKOeLJ1VCfw4xAQV0iKtai
+         UBzz8ESDgBBWjK8uQa0figTmTBhgKLPgyfNINMbvSTXUYK/Qfhkrm2mFE72hpQi6ixOb
+         +e8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=MWL+oVUsBX56daYe7mkNFI8R3ecQj59HSMMsxIlQuWo=;
-        b=oi+Q3inPCVExBrh0TjgD4GHTo8b9w7e9TpCIaz7UbctVQszgP28axzItr45vrHN5+H
-         9MnAIBcyHlNfHbD97LIn/eZtC9LYvlBnz+wGtjZjNhOV5McjDVgXVtwFDD1cubHcsRDD
-         Q6Qb7wHaL9wSoex614iKGEAjqiCMcik4HArKnwZTZkpNrhCVnPJlNwZqBWL3mbGBF6ih
-         t1VFZ3AeR7mJHWJPgo8ff76SR8pv7pO5X27pXmGI4tqOzkuFrp93t3WDvcfnbnXant2b
-         xZQ4TOAetUh/b7uOPYnQV/bXc0zOLN0ccZF+1G4N31Vk1oiiJgNN4hsZ0u4pSqZtQLEj
-         jb9A==
-X-Gm-Message-State: AOAM533Sc7rrhbOGbKkSOi9fprXbCYpIPf3kUDfUmY/nqD84djCqq7KV
-        ihDsLDAXJc/A8PxbYbWBqTOC8s59o68XSg==
-X-Google-Smtp-Source: ABdhPJxGobHA/Nn7QqwZi1VOUYZi1Yiyox2EzWSt4rQi4pPhe/8mGeBtaKNSi5Ypayv/I3XKwHIdBA==
-X-Received: by 2002:a17:90a:2e16:: with SMTP id q22mr7898849pjd.156.1637219493720;
-        Wed, 17 Nov 2021 23:11:33 -0800 (PST)
-Received: from localhost.localdomain ([205.204.117.103])
-        by smtp.gmail.com with ESMTPSA id l4sm2011101pfc.121.2021.11.17.23.11.31
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Nov 2021 23:11:33 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com, stolee@gmail.com,
-        Teng Long <dyroneteng@gmail.com>
-Subject: [PATCH v2 1/1] midx: fix a formatting issue in "multi-pack-index.txt"
-Date:   Thu, 18 Nov 2021 15:11:14 +0800
-Message-Id: <9b910a44f4143c94787110a688f2b17ba4eeb0fc.1637218943.git.dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.33.1.9.g5fbd2fc599.dirty
-In-Reply-To: <cover.1637218943.git.dyroneteng@gmail.com>
-References: <cover.1637218943.git.dyroneteng@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6dwuS7bKikd69dGMhagfxRqVdQoo3I37wk6LNGhvwds=;
+        b=eSX5d1BXjTA8OkVGC/8jL7OK7qL8gUm3+l+AlC1kxXCbItKsuvhIaAZuh4IqK6uZrP
+         RPEw44zzbjxgOCake3qlvZ20HVpC6sFAAqDEHtxUjXILlOeb869ITNccTBvfp4HAKPOZ
+         SRZw1u5jR3h2h6oCL5G/bdzqvea6syqB+DsGym04/07vr2ZjGxd2NKKHYdlvx1QWAsom
+         GEocZwOq0rLcs89B4SLyH7N/QBqrXFqb2mxl/p5c0nxIjjMm8aqjcLaYxpu7SqS6sead
+         5XZE1neukObXb1k+UGEpSSLudXE40jAk9PkKM0UDNkGGCEXDEfIedPIutoRnoGVl6JpU
+         E0dw==
+X-Gm-Message-State: AOAM532uDdoVNdU2+7BO97FmWu80HTOCjzU/O6u4criVkkwE6nq2XQdb
+        N2OMrFv7rT0Q40LupWol1uPfBed9pXkDcG42Tpc=
+X-Google-Smtp-Source: ABdhPJxO+dcHU4sl/joMHh2QP61bLi4ydeZZumVHoAjyQKn5eDgaLy2gYu/LXcuqr8dzdHeuWv+Awnpfy/qpCEuyp5E=
+X-Received: by 2002:ac8:18c:: with SMTP id x12mr22336410qtf.378.1637219701311;
+ Wed, 17 Nov 2021 23:15:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20211009082058.41138-1-chiyutianyi@gmail.com> <20211112094010.73468-6-chiyutianyi@gmail.com>
+In-Reply-To: <20211112094010.73468-6-chiyutianyi@gmail.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Thu, 18 Nov 2021 15:14:50 +0800
+Message-ID: <CANYiYbHMoH=pEhpx36ev-KWa7AXQtXpSiyjYObP1=XEx=Y8UNQ@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] unpack-objects: unpack large object in stream
+To:     Han Xin <chiyutianyi@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Han Xin <hanxin.hx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is a formatting issue  in "multi-pack-index.html", corresponding
-to the nesting bulleted list of a wrong usage in "multi-pack-index.txt"
-and this commit fix the problem.
+On Fri, Nov 12, 2021 at 5:42 PM Han Xin <chiyutianyi@gmail.com> wrote:
+>
+> From: Han Xin <hanxin.hx@alibaba-inc.com>
+>
+> When calling "unpack_non_delta_entry()", will allocate full memory for
+> the whole size of the unpacked object and write the buffer to loose file
+> on disk. This may lead to OOM for the git-unpack-objects process when
+> unpacking a very large object.
+>
+> In function "unpack_delta_entry()", will also allocate full memory to
+> buffer the whole delta, but since there will be no delta for an object
+> larger than "core.bigFileThreshold", this issue is moderate.
+>
+> To resolve the OOM issue in "git-unpack-objects", we can unpack large
+> object to file in stream, and use "core.bigFileThreshold" to avoid OOM
+> limits when called "get_data()".
+>
+> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+> ---
+>  builtin/unpack-objects.c          | 76 ++++++++++++++++++++++++-
+>  t/t5590-receive-unpack-objects.sh | 92 +++++++++++++++++++++++++++++++
+>  2 files changed, 167 insertions(+), 1 deletion(-)
+>  create mode 100755 t/t5590-receive-unpack-objects.sh
+>
+> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+> index 4a9466295b..6c757d823b 100644
+> --- a/builtin/unpack-objects.c
+> +++ b/builtin/unpack-objects.c
+> @@ -320,11 +320,85 @@ static void added_object(unsigned nr, enum object_type type,
+>         }
+>  }
+>
+> +struct input_data_from_zstream {
+> +       git_zstream *zstream;
+> +       unsigned char buf[4096];
+> +       int status;
+> +};
+> +
+> +static const char *read_inflate_in_stream(void *data, unsigned long *readlen)
+> +{
+> +       struct input_data_from_zstream *input = data;
+> +       git_zstream *zstream = input->zstream;
+> +       void *in = fill(1);
+> +
+> +       if (!len || input->status == Z_STREAM_END) {
+> +               *readlen = 0;
+> +               return NULL;
+> +       }
+> +
+> +       zstream->next_out = input->buf;
+> +       zstream->avail_out = sizeof(input->buf);
+> +       zstream->next_in = in;
+> +       zstream->avail_in = len;
+> +
+> +       input->status = git_inflate(zstream, 0);
+> +       use(len - zstream->avail_in);
+> +       *readlen = sizeof(input->buf) - zstream->avail_out;
+> +
+> +       return (const char *)input->buf;
+> +}
+> +
+> +static void write_stream_blob(unsigned nr, unsigned long size)
+> +{
+> +       char hdr[32];
+> +       int hdrlen;
+> +       git_zstream zstream;
+> +       struct input_data_from_zstream data;
+> +       struct input_stream in_stream = {
+> +               .read = read_inflate_in_stream,
+> +               .data = &data,
+> +       };
+> +       struct object_id *oid = &obj_list[nr].oid;
+> +       int ret;
+> +
+> +       memset(&zstream, 0, sizeof(zstream));
+> +       memset(&data, 0, sizeof(data));
+> +       data.zstream = &zstream;
+> +       git_inflate_init(&zstream);
+> +
+> +       /* Generate the header */
+> +       hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX, type_name(OBJ_BLOB), (uintmax_t)size) + 1;
+> +
+> +       if ((ret = write_loose_object(oid, hdr, hdrlen, &in_stream, dry_run, 0, 0)))
+> +               die(_("failed to write object in stream %d"), ret);
+> +
+> +       if (zstream.total_out != size || data.status != Z_STREAM_END)
+> +               die(_("inflate returned %d"), data.status);
+> +       git_inflate_end(&zstream);
+> +
+> +       if (strict && !dry_run) {
+> +               struct blob *blob = lookup_blob(the_repository, oid);
+> +               if (blob)
+> +                       blob->object.flags |= FLAG_WRITTEN;
+> +               else
+> +                       die("invalid blob object from stream");
+> +       }
+> +       obj_list[nr].obj = NULL;
+> +}
+> +
+>  static void unpack_non_delta_entry(enum object_type type, unsigned long size,
+>                                    unsigned nr)
+>  {
+> -       void *buf = get_data(size);
+> +       void *buf;
+> +
+> +       /* Write large blob in stream without allocating full buffer. */
+> +       if (type == OBJ_BLOB && size > big_file_threshold) {
 
-In ASCIIDOC, it doesn't treat an indented character as the
-beginning of a sub-list. If we want to write a nested bulleted list, we
-could just use ASTERISK without any DASH like:
+Default size of big_file_threshold is 512m.  Can we use
+"write_stream_blob" for all objects?  Can we get a more suitable
+threshold through some benchmark data?
 
-      "
-      * Level 1 list item
-      ** Level 2 list item
-      *** Level 3 list item
-      ** Level 2 list item
-      * Level 1 list item
-      ** Level 2 list item
-      * Level 1 list item
-      "
+> +               write_stream_blob(nr, size);
+> +               return;
+> +       }
 
-The DASH can be used for bulleted list too, But the DASH is suggested
-only to be used as the marker for the first level because the DASH
-doesn’t work well or a best practice for nested lists,
-like (dash is as level 2 below):
-
-      "
-      * Level 1 list item
-      - Level 2 list item
-      * Level 1 list item
-      "
-
-ASTERISK is recommanded to use because it works intuitively and clearly
-("marker length = nesting level") in nested lists, but the DASH can't.
-However, when you want to write a non-nested bulleted lists, DASH works
-too, like:
-
-      "
-      - Level 1 list item
-      - Level 1 list item
-      - Level 1 list item
-      "
-
-Reviewed-by: Taylor Blau <me@ttaylorr.com>
-Reviewed-by: Derrick Stolee <stolee@gmail.com>
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
----
- Documentation/technical/multi-pack-index.txt | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/technical/multi-pack-index.txt b/Documentation/technical/multi-pack-index.txt
-index fb688976c4..642e2517f3 100644
---- a/Documentation/technical/multi-pack-index.txt
-+++ b/Documentation/technical/multi-pack-index.txt
-@@ -17,12 +17,12 @@ is not feasible due to storage space or excessive repack times.
- The multi-pack-index (MIDX for short) stores a list of objects
- and their offsets into multiple packfiles. It contains:
- 
--- A list of packfile names.
--- A sorted list of object IDs.
--- A list of metadata for the ith object ID including:
--  - A value j referring to the jth packfile.
--  - An offset within the jth packfile for the object.
--- If large offsets are required, we use another list of large
-+* A list of packfile names.
-+* A sorted list of object IDs.
-+* A list of metadata for the ith object ID including:
-+** A value j referring to the jth packfile.
-+** An offset within the jth packfile for the object.
-+* If large offsets are required, we use another list of large
-   offsets similar to version 2 pack-indexes.
- 
- Thus, we can provide O(log N) lookup time for any number
--- 
-2.33.1.9.g5fbd2fc599.dirty
-
+--
+Jiang Xin
