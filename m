@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E633CC433EF
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 23:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B87F9C433F5
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 23:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235513AbhKSXHG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 18:07:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35230 "EHLO
+        id S235417AbhKSXHH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 18:07:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235433AbhKSXHA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 18:07:00 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B5A5C0613F4
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 15:03:57 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id w29so20594547wra.12
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 15:03:57 -0800 (PST)
+        with ESMTP id S235289AbhKSXHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 18:07:01 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24228C061574
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 15:03:58 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id 67-20020a1c1946000000b0030d4c90fa87so8638365wmz.2
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 15:03:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=m7FNXGAFF5pKL7d91XTp2X+SrZe8ykWkptqO9g88h1Y=;
-        b=krJYDRU577Dj0+uabyu+CTSKr5iAPGRri1eny0GhvJKBL6m3IbOh9Jg/aPAKUH+9or
-         mN7SRhtjsLOXLHHZ+O3GvX2YaaAPDr9xiTbqcoc0ZZ9aiGVgKz3qD65YmKjZKoL5zT2l
-         LAHp1BjXgyDgGq37C6xSi2wH1A0ungmU5RXo4BUqbUxlXAwC1kCPR4GaxLqQzDP8kgtK
-         XZmOVARJDO5QcBntiv6VNGMweNa5ZutY+qZBBIILpXmBvcTAdQHHabZ0Sq9SDIcIP2KD
-         lbUtt35/np9yMV4tdelTZfp2pShwLhTywsSlGuP/QjWIBV1YvplgKxNiMYQWCs8aZPzb
-         Qwvg==
+        bh=vm/dhDtJBmVuRxe+hDMgC9L6CFNXEm12z46YWE+zzbA=;
+        b=MATMaCHhsmZxeY0tZOCRRdcLc9k0XcJE36C0BIVOZD3xFdVg31i1LzofLgeaHVouJ/
+         V6NVghbLEloogTTmhtvsn1UnwF7+9u4VSX3yan3cYQyAH3Cr6gY/hvw7CpWCOR8GC+t/
+         No0QQrBrR/BuKExIW+UZyILXHpmiCDYq7uBxXIls8AF5qTMpB9T60XwDdi78eMjm4Chm
+         TOTxg+PRL630FUCH0U9+//4xZDOQYxX6gONq3KDBVebWOV7bVzxF9Sy2OFINKuU+uv0k
+         +vY85iD+tGGYZSICrXerXZc9E7hVTcs5whoISP70VwPPCuyISsWWOTdDWxpG9I5KmF2V
+         +bJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=m7FNXGAFF5pKL7d91XTp2X+SrZe8ykWkptqO9g88h1Y=;
-        b=Q+KNM3+5JHaLAOO516s4bph8+FWXl6C2N+P7fKUwYy2S6VPtOhffm1mNW0qf4PiO3U
-         9pk4nPkxTXkW5pYX6JC7jB3RPHwlYVV5dTnMxEB+TImIKPJRNZx4WjG4Wk4kTKLbsGD3
-         LtSdqCk88jdAWkstrhqHFYcrOtKD2JL4j8h5nAi1jmNdqpsjM2dyYAKRAvmO0363jvpe
-         /i2QcqIxbtULLDJPN+11NuOsglLk2xhHOSiNI6r5f/uiy+ciO/gAucrakcge0f1C6+V6
-         2h5fhnFKhcfFpVm34n3mlYf4sa04JYuXG8EwGqupNUCrAKrMgBfq8f8h5oQuSnyzrx3S
-         pdGw==
-X-Gm-Message-State: AOAM533FiLoWz+AweF8QHsBZ2QnTcDTwmse57gZpg4QRKSer85Wyswzz
-        dwXKh2oe3UOFO6ny+faI8nekKwOCzLM=
-X-Google-Smtp-Source: ABdhPJxwaqOroQRmszQLxpc8jyLqPwSu6pZS4Uct5D3BSwI46ZUGSWBJSG+PPRHTNRfqrOy3wfjH6A==
-X-Received: by 2002:a5d:64cd:: with SMTP id f13mr12032928wri.382.1637363035461;
-        Fri, 19 Nov 2021 15:03:55 -0800 (PST)
+        bh=vm/dhDtJBmVuRxe+hDMgC9L6CFNXEm12z46YWE+zzbA=;
+        b=i+sBjyY0iylbBL5JBAu6NQg1cbtqBkroJMJzL1k+c/7n/jlJ++AUnz5BLfq6n/HiFM
+         KpGJzoWMyuHzhxaKqjHHKO+ZrwIfzjcsp/rNbVoauAK7oMSR2qC2FOH5im0wwQ2rYH7B
+         84qa+wRtnaIxLvjBdmDnbvsKKWIlwE9mRY15tzode9XKkmjbeahSjINedyF0fxsfHjQM
+         2iowVOEHL70fNstNqgvk0zzhRKaomms2tpakc65bAetmVKzUvXHYdUvvqio2mTRelV+J
+         w/L9UBYqrMTVM6BT8AYRch4gNaDec9YWqV5zxnOup6XFEUEJxLu6MX0A2yKxYHcLWpQi
+         bnZw==
+X-Gm-Message-State: AOAM532OJaYvpwHwBfkK5g3jePqmDRaku9qSvld4RWHwQKOSQ1zUOKeK
+        6Ug1AEML7bPSe3thCFzA3kRJzQ4R/Ok=
+X-Google-Smtp-Source: ABdhPJxF0F1/jg/xNuCmrF6s2vgeL2CNRCvOfjNUG9BT8pFub7W02yTZePAqYk9NLtcjVr+mr23TEw==
+X-Received: by 2002:a05:600c:1d91:: with SMTP id p17mr4258851wms.193.1637363036410;
+        Fri, 19 Nov 2021 15:03:56 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t8sm1002900wrv.30.2021.11.19.15.03.54
+        by smtp.gmail.com with ESMTPSA id j40sm15903796wms.19.2021.11.19.15.03.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 19 Nov 2021 15:03:55 -0800 (PST)
-Message-Id: <a8b2d26a8309d8ccffb51b009fc04353c44c8edf.1637363025.git.gitgitgadget@gmail.com>
+Message-Id: <ca284ff34a2aed846471620b11fd73a67942c9a2.1637363025.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com>
 References: <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com>
         <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 19 Nov 2021 23:03:41 +0000
-Subject: [PATCH v8 14/17] scalar: allow reconfiguring an existing enlistment
+Date:   Fri, 19 Nov 2021 23:03:42 +0000
+Subject: [PATCH v8 15/17] scalar: teach 'reconfigure' to optionally handle all
+ registered enlistments
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,200 +74,150 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This comes in handy during Scalar upgrades, or when config settings were
-messed up by mistake.
+After a Scalar upgrade, it can come in really handy if there is an easy
+way to reconfigure all Scalar enlistments. This new option offers this
+functionality.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c          | 79 +++++++++++++++++++++-----------
- contrib/scalar/scalar.txt        |  8 ++++
- contrib/scalar/t/t9099-scalar.sh |  8 ++++
- 3 files changed, 67 insertions(+), 28 deletions(-)
+ contrib/scalar/scalar.c          | 61 ++++++++++++++++++++++++++++++--
+ contrib/scalar/scalar.txt        |  9 +++--
+ contrib/scalar/t/t9099-scalar.sh |  3 ++
+ 3 files changed, 67 insertions(+), 6 deletions(-)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index ca524576011..b799decbc2f 100644
+index b799decbc2f..71ca573f3af 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -108,18 +108,20 @@ static int run_git(const char *arg, ...)
- 	return res;
- }
- 
--static int set_recommended_config(void)
-+static int set_recommended_config(int reconfigure)
- {
- 	struct {
- 		const char *key;
- 		const char *value;
-+		int overwrite_on_reconfigure;
- 	} config[] = {
--		{ "am.keepCR", "true" },
--		{ "core.FSCache", "true" },
--		{ "core.multiPackIndex", "true" },
--		{ "core.preloadIndex", "true" },
-+		/* Required */
-+		{ "am.keepCR", "true", 1 },
-+		{ "core.FSCache", "true", 1 },
-+		{ "core.multiPackIndex", "true", 1 },
-+		{ "core.preloadIndex", "true", 1 },
- #ifndef WIN32
--		{ "core.untrackedCache", "true" },
-+		{ "core.untrackedCache", "true", 1 },
- #else
- 		/*
- 		 * Unfortunately, Scalar's Functional Tests demonstrated
-@@ -133,28 +135,29 @@ static int set_recommended_config(void)
- 		 * Therefore, with a sad heart, we disable this very useful
- 		 * feature on Windows.
- 		 */
--		{ "core.untrackedCache", "false" },
-+		{ "core.untrackedCache", "false", 1 },
- #endif
--		{ "core.logAllRefUpdates", "true" },
--		{ "credential.https://dev.azure.com.useHttpPath", "true" },
--		{ "credential.validate", "false" }, /* GCM4W-only */
--		{ "gc.auto", "0" },
--		{ "gui.GCWarning", "false" },
--		{ "index.threads", "true" },
--		{ "index.version", "4" },
--		{ "merge.stat", "false" },
--		{ "merge.renames", "false" },
--		{ "pack.useBitmaps", "false" },
--		{ "pack.useSparse", "true" },
--		{ "receive.autoGC", "false" },
--		{ "reset.quiet", "true" },
--		{ "feature.manyFiles", "false" },
--		{ "feature.experimental", "false" },
--		{ "fetch.unpackLimit", "1" },
--		{ "fetch.writeCommitGraph", "false" },
-+		{ "core.logAllRefUpdates", "true", 1 },
-+		{ "credential.https://dev.azure.com.useHttpPath", "true", 1 },
-+		{ "credential.validate", "false", 1 }, /* GCM4W-only */
-+		{ "gc.auto", "0", 1 },
-+		{ "gui.GCWarning", "false", 1 },
-+		{ "index.threads", "true", 1 },
-+		{ "index.version", "4", 1 },
-+		{ "merge.stat", "false", 1 },
-+		{ "merge.renames", "false", 1 },
-+		{ "pack.useBitmaps", "false", 1 },
-+		{ "pack.useSparse", "true", 1 },
-+		{ "receive.autoGC", "false", 1 },
-+		{ "reset.quiet", "true", 1 },
-+		{ "feature.manyFiles", "false", 1 },
-+		{ "feature.experimental", "false", 1 },
-+		{ "fetch.unpackLimit", "1", 1 },
-+		{ "fetch.writeCommitGraph", "false", 1 },
- #ifdef WIN32
--		{ "http.sslBackend", "schannel" },
-+		{ "http.sslBackend", "schannel", 1 },
- #endif
-+		/* Optional */
- 		{ "status.aheadBehind", "false" },
- 		{ "commitGraph.generationVersion", "1" },
- 		{ "core.autoCRLF", "false" },
-@@ -166,7 +169,8 @@ static int set_recommended_config(void)
- 	char *value;
- 
- 	for (i = 0; config[i].key; i++) {
--		if (git_config_get_string(config[i].key, &value)) {
-+		if ((reconfigure && config[i].overwrite_on_reconfigure) ||
-+		    git_config_get_string(config[i].key, &value)) {
- 			trace2_data_string("scalar", the_repository, config[i].key, "created");
- 			if (git_config_set_gently(config[i].key,
- 						  config[i].value) < 0)
-@@ -231,7 +235,7 @@ static int register_dir(void)
- 	int res = add_or_remove_enlistment(1);
- 
- 	if (!res)
--		res = set_recommended_config();
-+		res = set_recommended_config(0);
- 
- 	if (!res)
- 		res = toggle_maintenance(1);
-@@ -419,7 +423,7 @@ static int cmd_clone(int argc, const char **argv)
- 	    (res = run_git("sparse-checkout", "init", "--cone", NULL)))
- 		goto cleanup;
- 
--	if (set_recommended_config())
-+	if (set_recommended_config(0))
- 		return error(_("could not configure '%s'"), dir);
- 
- 	if ((res = run_git("fetch", "--quiet", "origin", NULL))) {
-@@ -484,6 +488,24 @@ static int cmd_register(int argc, const char **argv)
+@@ -488,22 +488,77 @@ static int cmd_register(int argc, const char **argv)
  	return register_dir();
  }
  
-+static int cmd_reconfigure(int argc, const char **argv)
++static int get_scalar_repos(const char *key, const char *value, void *data)
 +{
-+	struct option options[] = {
-+		OPT_END(),
-+	};
-+	const char * const usage[] = {
-+		N_("scalar reconfigure [<enlistment>]"),
-+		NULL
-+	};
++	struct string_list *list = data;
 +
-+	argc = parse_options(argc, argv, NULL, options,
-+			     usage, 0);
++	if (!strcmp(key, "scalar.repo"))
++		string_list_append(list, value);
 +
-+	setup_enlistment_directory(argc, argv, usage, options, NULL);
-+
-+	return set_recommended_config(1);
++	return 0;
 +}
 +
- static int cmd_run(int argc, const char **argv)
+ static int cmd_reconfigure(int argc, const char **argv)
  {
++	int all = 0;
  	struct option options[] = {
-@@ -620,6 +642,7 @@ static struct {
- 	{ "register", cmd_register },
- 	{ "unregister", cmd_unregister },
- 	{ "run", cmd_run },
-+	{ "reconfigure", cmd_reconfigure },
- 	{ NULL, NULL},
- };
++		OPT_BOOL('a', "all", &all,
++			 N_("reconfigure all registered enlistments")),
+ 		OPT_END(),
+ 	};
+ 	const char * const usage[] = {
+-		N_("scalar reconfigure [<enlistment>]"),
++		N_("scalar reconfigure [--all | <enlistment>]"),
+ 		NULL
+ 	};
++	struct string_list scalar_repos = STRING_LIST_INIT_DUP;
++	int i, res = 0;
++	struct repository r = { NULL };
++	struct strbuf commondir = STRBUF_INIT, gitdir = STRBUF_INIT;
  
+ 	argc = parse_options(argc, argv, NULL, options,
+ 			     usage, 0);
+ 
+-	setup_enlistment_directory(argc, argv, usage, options, NULL);
++	if (!all) {
++		setup_enlistment_directory(argc, argv, usage, options, NULL);
++
++		return set_recommended_config(1);
++	}
++
++	if (argc > 0)
++		usage_msg_opt(_("--all or <enlistment>, but not both"),
++			      usage, options);
++
++	git_config(get_scalar_repos, &scalar_repos);
+ 
+-	return set_recommended_config(1);
++	for (i = 0; i < scalar_repos.nr; i++) {
++		const char *dir = scalar_repos.items[i].string;
++
++		strbuf_reset(&commondir);
++		strbuf_reset(&gitdir);
++
++		if (chdir(dir) < 0) {
++			warning_errno(_("could not switch to '%s'"), dir);
++			res = -1;
++		} else if (discover_git_directory(&commondir, &gitdir) < 0) {
++			warning_errno(_("git repository gone in '%s'"), dir);
++			res = -1;
++		} else {
++			git_config_clear();
++
++			the_repository = &r;
++			r.commondir = commondir.buf;
++			r.gitdir = gitdir.buf;
++
++			if (set_recommended_config(1) < 0)
++				res = -1;
++		}
++	}
++
++	string_list_clear(&scalar_repos, 1);
++	strbuf_release(&commondir);
++	strbuf_release(&gitdir);
++
++	return res;
+ }
+ 
+ static int cmd_run(int argc, const char **argv)
 diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-index 39143b08324..89fd7901585 100644
+index 89fd7901585..737cf563c1a 100644
 --- a/contrib/scalar/scalar.txt
 +++ b/contrib/scalar/scalar.txt
-@@ -13,6 +13,7 @@ scalar list
+@@ -13,7 +13,7 @@ scalar list
  scalar register [<enlistment>]
  scalar unregister [<enlistment>]
  scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]
-+scalar reconfigure <enlistment>
+-scalar reconfigure <enlistment>
++scalar reconfigure [ --all | <enlistment> ]
  
  DESCRIPTION
  -----------
-@@ -117,6 +118,13 @@ opinionated default settings that make Git work more efficiently with
- large repositories. As this task is run as part of `scalar clone`
- automatically, explicit invocations of this task are rarely needed.
+@@ -32,8 +32,8 @@ an existing Git worktree with Scalar whose name is not `src`, the enlistment
+ will be identical to the worktree.
  
-+Reconfigure
-+~~~~~~~~~~~
-+
-+After a Scalar upgrade, or when the configuration of a Scalar enlistment
-+was somehow corrupted or changed by mistake, this subcommand allows to
-+reconfigure the enlistment.
+ The `scalar` command implements various subcommands, and different options
+-depending on the subcommand. With the exception of `clone` and `list`, all
+-subcommands expect to be run in an enlistment.
++depending on the subcommand. With the exception of `clone`, `list` and
++`reconfigure --all`, all subcommands expect to be run in an enlistment.
+ 
+ COMMANDS
+ --------
+@@ -125,6 +125,9 @@ After a Scalar upgrade, or when the configuration of a Scalar enlistment
+ was somehow corrupted or changed by mistake, this subcommand allows to
+ reconfigure the enlistment.
+ 
++With the `--all` option, all enlistments currently registered with Scalar
++will be reconfigured. Use this option after each Scalar upgrade.
 +
  SEE ALSO
  --------
  linkgit:git-clone[1], linkgit:git-maintenance[1].
 diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
-index f60e086d6f9..fb5e2efee0a 100755
+index fb5e2efee0a..58af546fd84 100755
 --- a/contrib/scalar/t/t9099-scalar.sh
 +++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -65,4 +65,12 @@ test_expect_success 'scalar clone' '
- 	)
+@@ -70,6 +70,9 @@ test_expect_success 'scalar reconfigure' '
+ 	scalar register one &&
+ 	git -C one/src config core.preloadIndex false &&
+ 	scalar reconfigure one &&
++	test true = "$(git -C one/src config core.preloadIndex)" &&
++	git -C one/src config core.preloadIndex false &&
++	scalar reconfigure -a &&
+ 	test true = "$(git -C one/src config core.preloadIndex)"
  '
  
-+test_expect_success 'scalar reconfigure' '
-+	git init one/src &&
-+	scalar register one &&
-+	git -C one/src config core.preloadIndex false &&
-+	scalar reconfigure one &&
-+	test true = "$(git -C one/src config core.preloadIndex)"
-+'
-+
- test_done
 -- 
 gitgitgadget
 
