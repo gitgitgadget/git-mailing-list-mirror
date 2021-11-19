@@ -2,63 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E3A9C433EF
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 12:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C786C433F5
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 12:46:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B01D61AFB
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 12:46:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E52D861ACE
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 12:46:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235408AbhKSMtl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 07:49:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35726 "EHLO
+        id S235422AbhKSMtn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 07:49:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235415AbhKSMtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 07:49:40 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02250C061757
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 04:46:38 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id c4so17947062wrd.9
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 04:46:37 -0800 (PST)
+        with ESMTP id S235292AbhKSMtn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 07:49:43 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C9D6C061748
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 04:46:41 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id p18so8364691wmq.5
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 04:46:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8eOwOTlHoGfLMEgheBYSa+0yJBVxZVqLvoNBgpbMPUY=;
-        b=T0AFvQFpucorMyN71V1Hw3SeNXQyn8uHtiom5ROGxh1M2UNMMuG8ehsgKLZU+a+yGi
-         psjEgxKtbQ6sBRPDWky4ylHwxVTPFcOi5YwimUnk1T3HWDWu/8sag7xpPDSNW2ynJ0qq
-         FITh8KohbZRXYn9hZGYsFZrmplfvGUtSBGHfjBeETVJ3SKxucj6qTV4FNb83ZM9Eh4MR
-         u3D8X9TCxN5GmJDnZV8E9jGQ2LVxVORUIZ/MpgEFxs3reDRZ1u0FwNQ8A8BHLLM6+oep
-         jO9LxNqS1QMra971n+mMX8iXoMmV+p64+/OKFzLVEOAWnMheOOCOorx2nPC1pj6yeV4x
-         lrAw==
+        bh=2XYysDQyq6cl43Qp4X2ey92pLM889HD3ZlO/aRooU3Y=;
+        b=KPPRJi8NLHGGRh/W2KekHuTvrr6syyLVOHMpGzD/7JfiSvfKtDtyL0jTEkJl2ELuCM
+         qg3iRYhFn3l9cAI5x5EvAHMD7g280a22qti/tqe1mAjNYC2v83Us9grKjizSTIHisDZD
+         qj8sCbq9GcQR/mYnvcW+FGo29poPAQVQkcqsubdJuQ5ydPoZioCNgkaZaLiqxtDtwPnI
+         J4jSJI/DVWGQziDmepY1q3gwXSAtv+2DZ3TGgO/ygODtt60t0T/mME2sVRGqk1Xo2smJ
+         gwf314151rSk9k34Th/JTG5rj6jTN12qkNkcjoNY40mcmoou0KJXUXjOwih07Hnh+nFF
+         of2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8eOwOTlHoGfLMEgheBYSa+0yJBVxZVqLvoNBgpbMPUY=;
-        b=apmSz+26Ua4WmpxD45um8pk05ThgDEr6AFpe/q6GBQJHlMpNtRLi3Aqp/Bhm0M6Izt
-         084EOjTA0GTFLKu3aNchJemWxDwLMd1+XsCUDZCCBn//MFZdQxewzZVyzzNXxN4MgHKr
-         cStNlC2KJep9qATe4JPw5XDihy6I4mFAEgQwOj7T+ACUuFvgNeRStCNYvRvOBPIihIp+
-         Hckk66VHLXc9Ie24K/Wht47XqFpewek4f0quOnYgJBDoEVi3nhmjRAwdL7cWidPrIQpS
-         lLOOz85Wty0Zjyzoa7+NbUSCIT+iHMTWsrWSxocXT8qxlrENpFoJOaXy0Bw3xQEq4bHO
-         WSPA==
-X-Gm-Message-State: AOAM532RLwBEI7QwwXfugIFBfKhgi6EoYSIwSTfLOQMVE10S5gG84Wc+
-        9RLU0tsIrJ7A9q8YHioUvSR+fxv6keIBrA==
-X-Google-Smtp-Source: ABdhPJxHk9EeCMT02gM/OZsvDGhb+H/R+5VKVkregP1uJvPMkg8Zz7ECqBtj1zek9e/Nh90wbHCDEg==
-X-Received: by 2002:a5d:40cf:: with SMTP id b15mr6979571wrq.161.1637325996301;
-        Fri, 19 Nov 2021 04:46:36 -0800 (PST)
+        bh=2XYysDQyq6cl43Qp4X2ey92pLM889HD3ZlO/aRooU3Y=;
+        b=wySCTqVQowWaynYhBh9rtwoN46u4ec5H6YNhksvtKru67wKcckWOLdbvv7CBs+17gv
+         fYDoLW+1kd4af5gcVCaY3ODl9wPiRqVYCAmqyG+APtMkM1rtOmovgrJKDJR+ekeEwX/A
+         EnlYdzh1To7SuTrvgXdyYaamfCLG6PMsNQ8Crng50i7xtoB1q/wFfSjtiiytJdfXn+Vd
+         I1B8eJ/Sf2005udu5VKX/jyFnS1Vh53UK4LHVJqcZN+R9zZCK9i32UuhaIgL3h7WF3eN
+         0sM+IysC8fGub+B/duW8o8V4uavbwgezFzKIrM+1m94HOigTRL2M6Fuv9O25Qeam7Uew
+         hxBA==
+X-Gm-Message-State: AOAM5301Y4WGl7X+fQCH2JZcmJxZsSAkm9QxDuTIvoxeAUs7PVIUO5dt
+        VXpMx/K+pbqcPVy8L7P3SvbrzUk0jKwm3g==
+X-Google-Smtp-Source: ABdhPJwc9UiRIY3AyDqTThAgZW3i3U5uMU6mD+j44MdG9dhuumIWw0ZIXL+ydnfypo+X4mOoCsqXuw==
+X-Received: by 2002:a05:600c:1e1c:: with SMTP id ay28mr6675328wmb.131.1637325999908;
+        Fri, 19 Nov 2021 04:46:39 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id w7sm2857567wru.51.2021.11.19.04.46.35
+        by smtp.gmail.com with ESMTPSA id w7sm2857567wru.51.2021.11.19.04.46.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Nov 2021 04:46:35 -0800 (PST)
+        Fri, 19 Nov 2021 04:46:36 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 5/6] strbuf: remove unused istarts_with() function
-Date:   Fri, 19 Nov 2021 13:46:25 +0100
-Message-Id: <patch-5.6-642eec3d77c-20211119T124420Z-avarab@gmail.com>
+Subject: [PATCH 6/6] json-writer.[ch]: remove unused formatting functions
+Date:   Fri, 19 Nov 2021 13:46:26 +0100
+Message-Id: <patch-6.6-e14ee1f8c47-20211119T124420Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.817.gb03b3d32691
 In-Reply-To: <cover-0.6-00000000000-20211119T124420Z-avarab@gmail.com>
 References: <cover-0.6-00000000000-20211119T124420Z-avarab@gmail.com>
@@ -69,56 +69,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function was added in 66b8af3e124 (strbuf: add a case insensitive
-starts_with(), 2018-03-09) for use with code added in
-2f0c4a362c5 (utf8: teach same_encoding() alternative UTF encoding
-names, 2018-04-15).
-
-That use got rewritten in ed283588330 (convert: use skip_iprefix() in
-validate_encoding(), 2019-11-08) to use skip_iprefix() instead.
-
-It's arguably slightly odd to have a skip_prefix() and iskip_prefix(),
-but not both variants when it comes to starts_with(), but this is easy
-enough to resurrect should we ever need it, so let's drop it for now.
+These were added in 75459410edd (json_writer: new routines to create
+JSON data, 2018-07-13) for future use with trace2, but have not been
+used by anything. These are easy enough to bring back should we need
+them, but until then there's no point in carrying them.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-compat-util.h | 1 -
- strbuf.c          | 9 ---------
- 2 files changed, 10 deletions(-)
+ json-writer.c | 24 ------------------------
+ json-writer.h |  3 ---
+ 2 files changed, 27 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index d70ce142861..7117024a28b 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -512,7 +512,6 @@ report_fn get_warn_routine(void);
- void set_die_is_recursing_routine(int (*routine)(void));
- 
- int starts_with(const char *str, const char *prefix);
--int istarts_with(const char *str, const char *prefix);
- 
- /*
-  * If the string "str" begins with the string found in "prefix", return 1.
-diff --git a/strbuf.c b/strbuf.c
-index b22e9816559..1b52e3c8250 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -12,15 +12,6 @@ int starts_with(const char *str, const char *prefix)
- 			return 0;
+diff --git a/json-writer.c b/json-writer.c
+index f1cfd8fa8c6..8a81c2d5fce 100644
+--- a/json-writer.c
++++ b/json-writer.c
+@@ -331,36 +331,12 @@ void jw_array_false(struct json_writer *jw)
+ 	strbuf_addstr(&jw->json, "false");
  }
  
--int istarts_with(const char *str, const char *prefix)
+-void jw_array_bool(struct json_writer *jw, int value)
 -{
--	for (; ; str++, prefix++)
--		if (!*prefix)
--			return 1;
--		else if (tolower(*str) != tolower(*prefix))
--			return 0;
+-	if (value)
+-		jw_array_true(jw);
+-	else
+-		jw_array_false(jw);
 -}
 -
- int skip_to_optional_arg_default(const char *str, const char *prefix,
- 				 const char **arg, const char *def)
+ void jw_array_null(struct json_writer *jw)
  {
+ 	array_common(jw);
+ 	strbuf_addstr(&jw->json, "null");
+ }
+ 
+-void jw_array_sub_jw(struct json_writer *jw, const struct json_writer *value)
+-{
+-	assert_is_terminated(value);
+-
+-	array_common(jw);
+-	append_sub_jw(jw, value);
+-}
+-
+-void jw_array_argc_argv(struct json_writer *jw, int argc, const char **argv)
+-{
+-	int k;
+-
+-	for (k = 0; k < argc; k++)
+-		jw_array_string(jw, argv[k]);
+-}
+-
+ void jw_array_argv(struct json_writer *jw, const char **argv)
+ {
+ 	while (*argv)
+diff --git a/json-writer.h b/json-writer.h
+index 209355e0f12..563c7e0e004 100644
+--- a/json-writer.h
++++ b/json-writer.h
+@@ -95,10 +95,7 @@ void jw_array_intmax(struct json_writer *jw, intmax_t value);
+ void jw_array_double(struct json_writer *jw, int precision, double value);
+ void jw_array_true(struct json_writer *jw);
+ void jw_array_false(struct json_writer *jw);
+-void jw_array_bool(struct json_writer *jw, int value);
+ void jw_array_null(struct json_writer *jw);
+-void jw_array_sub_jw(struct json_writer *jw, const struct json_writer *value);
+-void jw_array_argc_argv(struct json_writer *jw, int argc, const char **argv);
+ void jw_array_argv(struct json_writer *jw, const char **argv);
+ 
+ void jw_array_inline_begin_object(struct json_writer *jw);
 -- 
 2.34.0.817.gb03b3d32691
 
