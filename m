@@ -2,201 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41516C433EF
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 13:40:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC795C433F5
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 13:48:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1D05761AA3
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 13:40:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D08B561A02
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 13:48:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235505AbhKSNna (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 08:43:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47970 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235424AbhKSNn1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 08:43:27 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D74C061574
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 05:40:25 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id w1so42770624edd.10
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 05:40:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=KUfSzxHCe91T1OGkxz7e1LMVP1/WmEWxK2Clsr1oV4Q=;
-        b=LwMWqxFY7nXyWJe+rhxbr112YhGZhf/qKgAXNwW9zNI/EgSqwMWuYeALXwp/0qLfGS
-         W1YoYeiUqoxOfmDYBgQ83K8UoTl3T4qXeQ4AnEd88ek+sCxy/sWweV0q89OB8YKx8JH7
-         v1Sn/PK9bG+s8P+6efexhSugXYWGxwAccHLcdmGGUy5KksU6h67QutcnHI0s6+U8s66c
-         MjQN2kdqL+8GoLY9AHk28B5JZgzRMMx0Ih1TQn2PfZiK2nFY1W1vmzeDxWxpS+4qABgY
-         a1NKejaU5CN59hMQdnx8+EXNkyKbIWbriWcabtDPCP/1ErAuS6/XVFnckLTaJ/N5VYql
-         PKIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=KUfSzxHCe91T1OGkxz7e1LMVP1/WmEWxK2Clsr1oV4Q=;
-        b=JZDKgIYow9/bku00uVnX77Gds7YhvC8OIPtE5ELwtz9pkCcjRIavNwX7PSZFGXkRMB
-         JEWCglJh/e3l1MMLMCqN/ze3qzA/SLMxeT0xawj2KJPiKxqBmfaeG4sLDygc8uZkvjGe
-         zg7xaKnb1iR08Ebt0xdlf6R1/p1CgREOCsn8RUb3HCdmYpFKQvlK2yaHl5gORCzPwqz3
-         UkJn5sT6oPe1KgpygiGh8PlvKtfaK6VSo6+vQ4z+nHhzjXyHqRyOYsJmUCcPzmigLugI
-         LxXjuJwoqnOOrexju8B5zcsgtP3jkM8uQ776UFyiqObJoGEhs1mwz66CK8o0VNYbTtvL
-         zZtQ==
-X-Gm-Message-State: AOAM531PbFCF6mUSW3aRVlW+vV5oQKZxVspo8fpIkmw9E35JFRMSDQQr
-        ov2cC6bg7b8NqZ7aDFSo1jEVCzYmLWmchg==
-X-Google-Smtp-Source: ABdhPJy2BoERE3nxjEPkTOt6QBxiaP7/m6yL59kM5SrU+Ead3LXdxhclz6eSv6g1DVnibSkirLw2Mg==
-X-Received: by 2002:a17:907:a0d4:: with SMTP id hw20mr8128426ejc.16.1637329222303;
-        Fri, 19 Nov 2021 05:40:22 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id f22sm898104edf.93.2021.11.19.05.40.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Nov 2021 05:40:21 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mo47p-000jPg-AH;
-        Fri, 19 Nov 2021 14:40:21 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        congdanhqx@gmail.com
-Subject: Re: [PATCH v2 1/1] ls-tree.c: support `--oid-only` option for
- "git-ls-tree"
-Date:   Fri, 19 Nov 2021 14:30:52 +0100
-References: <cover.1637321601.git.dyroneteng@gmail.com>
- <8b68568d6cbe379d40c61c48bf446eaa88221df5.1637321601.git.dyroneteng@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <8b68568d6cbe379d40c61c48bf446eaa88221df5.1637321601.git.dyroneteng@gmail.com>
-Message-ID: <211119.86wnl42ri2.gmgdl@evledraar.gmail.com>
+        id S230410AbhKSNve (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 08:51:34 -0500
+Received: from mail-vi1eur05on2043.outbound.protection.outlook.com ([40.107.21.43]:61793
+        "EHLO EUR05-VI1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S235594AbhKSNvd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 08:51:33 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=dGMxD3PNE2MrsZdVCX40I3QXUrOqIT+CJnZzzVh9JHVOc7OaBYCrAPmKE8o3DyAlXF++DuWQretxHmCrJQBt7UdKmbGO4dXROY33w4PPTbtiES1aJ+Teo/cCgq77LDuJHBML46r9qj8aPT8k+uROb304z8uKmCtR4KwsPfpG2jjohuFNfpYju1dvI3RZGy8102CntI1JLIzrouk1vAoUSksVF0kQoXzOy20hplnIShpRUkA/7oYEN/jg6df1Bgp2ls0Y0dEtEKlScoente/eE9FszydIzRg3vEJ1xLTyMrVPsy8HeG8PXnPBhzGYqg/IKNL3suLv45kKC/EataryCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8EXfAx8JjvrHkih8gVz1GQexrX31aEEah3112PEtJww=;
+ b=bndVnctqP1IfK+XnTzCva6MJdF2z4qrjnMQiZP8fm2+7Gvozz0khhdAqoNxhcbN8/n299IMlJFY85y4TrOibY/sKijC3RnBgwFTry0c0xQVX74k3a0g9QbR0wRSx3037XroTyWuVQh0edogWyJCOQMKpPDZzBp+R9AlGW1d6I50Zb11TIj1P//2wtWaCbfn4dmMgsXHVyzfbUo3EaPixIDRrTi6GTT0jYKp/7z62udSnuXRUoguwCg8VCestgdhpxHGnSQ6fWiVlagAqBoIv39dAtwiP4Acxu/iLu9lPOeUNMnEoKs4tGImrIFcdb8zVHQFqQ6ds5UEvOuy7ZrH1kg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
+ dkim=pass header.d=gigacodes.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8EXfAx8JjvrHkih8gVz1GQexrX31aEEah3112PEtJww=;
+ b=rccCgcIv+FGOzkS3Gb3ahK8AYLoCIK/fMsiwvCasRy/yD96c29N9/fAQXuUGkioFUZUo0kRd3TGEEO2tUjOZRsYgIQ6St1yBM/EmTtOCWvsaVMXgwTuTVONy/lTS/4uc5Vx/PGPM+XWqGkc2TA6Po0LHfi/kgOZgSbnMVU9cGOE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=gigacodes.de;
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
+ by PA4PR10MB4543.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:bd::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.22; Fri, 19 Nov
+ 2021 13:48:30 +0000
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::f9d5:61ab:5756:b391]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::f9d5:61ab:5756:b391%5]) with mapi id 15.20.4713.020; Fri, 19 Nov 2021
+ 13:48:29 +0000
+Date:   Fri, 19 Nov 2021 14:48:26 +0100
+From:   Fabian Stelzer <fs@gigacodes.de>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] test-lib: introduce required prereq for test runs
+Message-ID: <20211119134826.i66sufxzxotadxlb@fs>
+References: <20211117090410.8013-1-fs@gigacodes.de>
+ <20211117090410.8013-3-fs@gigacodes.de>
+ <211119.865yso4a9y.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <211119.865yso4a9y.gmgdl@evledraar.gmail.com>
+X-ClientProxiedBy: AM5PR0502CA0008.eurprd05.prod.outlook.com
+ (2603:10a6:203:91::18) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:102:12e::15)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Received: from localhost (2003:ea:5820:600:c042:75a0:fd5e:1472) by AM5PR0502CA0008.eurprd05.prod.outlook.com (2603:10a6:203:91::18) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.21 via Frontend Transport; Fri, 19 Nov 2021 13:48:27 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 88d8ffc2-9fc3-4113-a732-08d9ab6343c1
+X-MS-TrafficTypeDiagnostic: PA4PR10MB4543:
+X-Microsoft-Antispam-PRVS: <PA4PR10MB4543F93C1813CACD59D989DBB69C9@PA4PR10MB4543.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: rOk+IlqQ82aTWcq7ZF7T+SFHdhe8zKWK8iWyt+vlzxWhARmcZMP4EYald5qgUqxY/gCQvipLrYGkoy0mSNABbFb3IAJcK+TWwjhjmAaOyddsxcOBdVbE/mnT0210NM6j7co+x+a731aX0OqyDgKjZYpJEOJDZu/cnUI4o1viDaq3V37JKVuUbsXAGSuIocTo5pEMLErB2dDPVQvSWU/JrdAp8tlcfjpY0ddtF2wIks/R164K9OF3FlGh08GX67RXOdizRayvhKmHzxK5XtxIv7yJYok2qFm8YX+GqDRQM2O6z/cp1XkePCeYmYJ2DrAxpHrToKXjbnWJJCLTEbXNyBnws1Jp9EfpdpJNvlteXPcnMDUpAyHYVluYelcXEJQv375Xiwwav6KugwF2wm3BEm+UUZfc3RWSe6pkUriTCjpha9O9Tww/aiPTmwsRouIJBI73WFX/N0vuzCSABLu6XNnYAlhbEGmYVv/dOFI23qrH822a8tFu8oAdQr74PrnlRHJmNiLLZyNi4o9lu3CFWt7JrIPPm8gliBn+lH4hHbXJj0KIaWtkWFugQcq7xPjGvDTqsDSKcx5XWgq1/QkLOfXAklfJujWud+zMC25L/tqkRxXtbXz/z+XG5zp60Hcj3OGogV1r7kjeOWX3iOwWOA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(7916004)(4636009)(39840400004)(366004)(396003)(376002)(136003)(346002)(33716001)(9686003)(54906003)(4326008)(86362001)(316002)(2906002)(66476007)(6916009)(53546011)(52116002)(186003)(5660300002)(1076003)(4001150100001)(38100700002)(508600001)(8676002)(66556008)(66574015)(8936002)(6486002)(6496006)(66946007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aDBpbE1GM2s3STFBdmtUSGdDdGlDZzhxTFRSSFB4L0lCaXU4NDNCSjZyRWdT?=
+ =?utf-8?B?T1dOQWh0djRUTVplVVB0czNqeStkMlJOUjAyNDQvV1NsT0NxWkZTQUxUa2tV?=
+ =?utf-8?B?R0kyNHY2UUR1aGF5S1BMRDROREc4ZE9YeStWU2txNXU4UGZpempTUWtMd2I2?=
+ =?utf-8?B?TC9jYWVmL2ZNTzhZSDVXNUIvRjZMNnVvL3EzK3d3UlE3MW5sN1VLamlEN0hF?=
+ =?utf-8?B?bDVnc3h5K1VUSGNzbFJKK1ZML0ZSdVZZZStyMW9BMFk4SGUya0kwRE14T1FY?=
+ =?utf-8?B?VEFHSHhqb1I5VmVOa0w1MVJ4MjRoSU1BU0EwdUtMVDRKSUgyS2huV3NJc3hU?=
+ =?utf-8?B?RXVSZy8xTnNiM2U1VHRTa0o3OVA2QU90VGhhdWkyUWROdmdnYksyUnNDRFVZ?=
+ =?utf-8?B?bkpKdENNb1pYQ0pNeVpKYmdvcFlSd3pqRGNkeWJ3U0dqaDJ1azR2eGJlVUxh?=
+ =?utf-8?B?WTkrSzBSZlVGZGRFZVR5Q2tSVGJTRUc0ZVFybUlhSW40VkZrVUVIQkNUN1l3?=
+ =?utf-8?B?bWJKTDJYbEptSWp1bm9mYnBPeFRLMGtUeXhNMXdldnEvVnMzalcwaVBRQmMw?=
+ =?utf-8?B?b25wck5GQmd3SnNQeWs3V2JSUFA1c3pTWmlRM29PZklqR1kvYkg2cWJBYWEx?=
+ =?utf-8?B?bFk1R0ZKL3JYSjZEQnk2Y0xGVFdrNDRPRnhkelc5UTI1OFNwc21TMXEwQzlh?=
+ =?utf-8?B?TzlKTVJDTFpKblh3ckppNFJvU0ZpUHlGbkx5VXgzaitPYlBybDYxUjllazJO?=
+ =?utf-8?B?QUxBdmFqMjlBcEhQcE5WU1FnYnpUL1lOa0MzRUNMMzFGQldIbXJqWHZ0MnVt?=
+ =?utf-8?B?MGZYTW0yOXg4ZEJOd3RLRHVJcXFBQmppWGZhNFRRMmQvQnBsV0x2SWFKMnpG?=
+ =?utf-8?B?SW5KRHdPbWFFVGh2MFh3VmRlUzRkaHVTV0RxaVJRZnIxWDNwNCt6REx5OHhL?=
+ =?utf-8?B?SFROVFB2NU9HQ0hwZlVCNVBGOFFabU5QUlc3eHpBaEVEclIxMXVSVGF0Wjc3?=
+ =?utf-8?B?MjB5TFU5L2UxL1JSWlpYM0c1UXhMWWJPUzR5aWFzQzZMdDRRMUlTbFM2Uzdx?=
+ =?utf-8?B?R2swdVpTTGtwSU5pRmlxWkpMWEVzR3U1Z2svVG1NOFZXSVFtWitHeFFKNThr?=
+ =?utf-8?B?TTgxWEtjRi8zdFJEbmFtb0twbDA2Y2t4cGIyQzlxbXpDZnlTS1ZkYlZxSGVR?=
+ =?utf-8?B?dlVnQ01iR1BSbXhudnpGdjd1SkNpT1BQdFYyRG5jM2xqSHl1Y29pdVo2b2pP?=
+ =?utf-8?B?K05OOW9SZnFublBOUkNxbjFuWXEvbTQrVVhQV0crcDZTOVFSUVpSRjhHd0Vu?=
+ =?utf-8?B?VW1Sc2FiN2ZDejVjSXYraERoaFNBUEJRd3pBZ0xTTzZEUXIrMlZIUERPdkIr?=
+ =?utf-8?B?OVJmTXdTQjlhYlM1ODkvSnc0RWxncUJOUnFhT1JReDAvYWV1RjBhWGN1dEta?=
+ =?utf-8?B?NGtMU0VFRHVoR1k1WXJOanMvSWluUTZtQk96ckxIdHJwVGlwbzJBOXNlcjha?=
+ =?utf-8?B?cUZkWGxyQUNwMkR3TTJiWnB4SEJjNjdDT21aUU9hV3dLRWhFYjVxai9wTHJp?=
+ =?utf-8?B?L2FDc0NiVy9GWGFxSHlnZDJIU05saCttMGxBU0JHVjZXY050VWJydVZPUkN0?=
+ =?utf-8?B?TGdXdHd3L25vMU9mYXdFNGZ2OHFEa0hLN202NzZaRGRSYVYvblAvamQyaWQ5?=
+ =?utf-8?B?S0M4WUNxR0hPNmVjdEw3WDFPbENoZXV0UHNNbERQTUp1U2VlYUhYcklvWEZB?=
+ =?utf-8?B?Ty85NkRzNVA4MWVRdmQwcXU2K25YVWEwdHVkeldKTE13V0o4WUw5dGhET0ZZ?=
+ =?utf-8?B?S1Z6VEs2c2lnS2piVUZHdXZueUtmU0Y2Mjh2MGp4TG5wSFVvUWpDUmFQRW5F?=
+ =?utf-8?B?c25mMi9uUmJ4ZWIrVG5CZC9GUTUwVE9wRGNiSjBPaVZnTkhNNFM2QVU5eTl0?=
+ =?utf-8?B?emNYMlJxSDVFemVvc0l1THpsZ0p1MkxaNmFQc2RCWGJXM3JtL216cEdRSzFn?=
+ =?utf-8?B?dzVGQ3gvbkpmZFJ6ODZTVmg4aUNHWi9CN3UvVVl1Z2FoQTJuZTFaSk5nMTAw?=
+ =?utf-8?B?SHUvSkdnZnhNSnpxRjg2d3RCVXNCTHJWZXQxTlgxTG5DazNtVG1NMGg4dVNP?=
+ =?utf-8?B?WWl1c0l5ZTlLcVAvNlg5NmxpbWIrd0VDdUVJaG9DT3hQTkdqSDg0RTFMQytN?=
+ =?utf-8?B?VllpNmpUS0dzWU9WbmJsLy9TU2NaVTJlMEJ0MS9wenNWVlk1d3kwRkhMY2Ew?=
+ =?utf-8?B?dS83MXRIMDA2bkhya2xBcDBhZGxMeGh1bTkwTlQvcnNxOG41bWhBNHYwVUxL?=
+ =?utf-8?B?STlCbEpWL0tqNno0Y0FWcERwem84SXJlRWw1R2NpbHZiNVJhU2xaemlTSWcr?=
+ =?utf-8?Q?x2TloFpxz0f1CEpc=3D?=
+X-OriginatorOrg: gigacodes.de
+X-MS-Exchange-CrossTenant-Network-Message-Id: 88d8ffc2-9fc3-4113-a732-08d9ab6343c1
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Nov 2021 13:48:29.4404
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: tMUqgD3GR5BpUvZA32C6l/h1hu+X75vL3LhXHCNSxwU1RNpqkIBCsn6yV2aaajM0AlBC4rJJ1MHgFFZwVfxzAlnq3HCletJ+N6CPbAFIxBI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4543
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 19.11.2021 12:13, Ævar Arnfjörð Bjarmason wrote:
+>
+>On Wed, Nov 17 2021, Fabian Stelzer wrote:
+>
+>> In certain environments or for specific test scenarios we might expect a
+>> specific prerequisite check to succeed. Therefore we would like to
+>> trigger an error when running our tests if this is not the case.
+>
+>trigger an error but...
+>
+>> To remedy this we add the environment variable GIT_TEST_REQUIRE_PREREQ
+>> which can be set to a comma separated list of prereqs. If one of these
+>> prereq tests fail then the whole test run will abort.
+>
+>..here it's "abort the whole test run". If that's what you want use
+>BAIL_OUT, not error. See: 234383cd401 (test-lib.sh: use "Bail out!"
+>syntax on bad SANITIZE=leak use, 2021-10-14)
+>
 
-On Fri, Nov 19 2021, Teng Long wrote:
+ok, thanks. BAIL_OUT seems better. i grepped through the tests and
+didn't find anything like it, so i used error.
 
-> Reviewed-by: Jeff King <peff@peff.net>
-> Reviewed-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> Reviewed-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gmail=
-.com>
+>> +GIT_TEST_REQUIRE_PREREQ=<list> allows specifying a comma speparated list of
+>> +prereqs that are required to succeed. If a prereq in this list is triggered by
+>> +a test and then fails then the whole test run will abort. This can help to make
+>> +sure the expected tests are executed and not silently skipped when their
+>> +dependency breaks or is simply not present in a new environment.
+>> +
+>>  Naming Tests
+>>  ------------
+>
+>For other things we specify via lists such as GIT_SKIP_TESTS that's
+>space-separated, but here it's comma-separated, isn't that just a leaky
+>abstraction in this case? I.e. this is exposing a previously
+>internal-only implementation detail of the prereq code.
+>
+>It's less painful in shellscript if anything like this supports
+>space-separated parameters, as you can interpolate them more easily in
+>any wrapper script without using "tr" or the like...
 
-Please don't add the Reviewed-by headers yourself, either Junio
-accumulates them, or if someone explicitly mentions that you can add it
-with their name it's OK.
+Ok. easy enough to change. Should the listing of missing prereq at the
+end of a test run be space separated as well? (maybe helps with word wrapping)
 
-It doesn't just mean this person reviewed this series in some ML thread,
-but "this person is 100% OK with this in its current form".
-
->  	List only filenames (instead of the "long" output), one per line.
-> -
-> +	Cannot be used with `--oid-only` together.
-
-Better: "Cannot be combined with OPT."
-
-> +--oid-only::
-> +	List only OIDs of the objects, one per line. Cannot be used with
-> +	`--name-only` or `--name-status` together.
-
-Better: "Cannot be combined with OPT or OPT2."
-
-> +enum {
-> +	MODE_UNSPECIFIED =3D 0,
-> +	MODE_NAME_ONLY,
-> +	MODE_OID_ONLY
-> +};
-> +
-> +static int cmdmode =3D MODE_UNSPECIFIED;
-
-Better:
-
-static enum {
-	MODE_NAME_ONLY =3D 1,
-        ...
-} cmdmode =3D MODE_NAME_ONLY;
-
-I.e. no need for the MODE_UNSPECIFIED just to skip past "0".
-
-> @@ -135,10 +147,9 @@ int cmd_ls_tree(int argc, const char **argv, const c=
-har *prefix)
->  			    N_("terminate entries with NUL byte"), 0),
->  		OPT_BIT('l', "long", &ls_options, N_("include object size"),
->  			LS_SHOW_SIZE),
-> -		OPT_BIT(0, "name-only", &ls_options, N_("list only filenames"),
-> -			LS_NAME_ONLY),
-> -		OPT_BIT(0, "name-status", &ls_options, N_("list only filenames"),
-> -			LS_NAME_ONLY),
-> +		OPT_CMDMODE('n', "name-only", &cmdmode, N_("list only filenames"), MOD=
-E_NAME_ONLY),
-> +		OPT_CMDMODE('s', "name-status", &cmdmode, N_("list only filenames"), M=
-ODE_NAME_ONLY),
-> +		OPT_CMDMODE('o', "oid-only", &cmdmode, N_("list only oids"), MODE_OID_=
-ONLY),
-
-Better to preserve the wrapping here, to stay within 79 columns.
-
-> +test_expect_success 'setup' '
-> +	echo 111 >1.txt &&
-> +	echo 222 >2.txt &&
-
-Just use:
-
-    test_commit A &&
-    test_commit B
-
-etc?
-
-> +	mkdir -p path0/a/b/c &&
-> +	echo 333 >path0/a/b/c/3.txt &&
-> +	find *.txt path* \( -type f -o -type l \) -print |
-> +	xargs git update-index --add &&
-> +	tree=3D$(git write-tree) &&
-> +	echo $tree
-
-Stray echo? Unclear why this test setup is so complex, shouldn't this just =
-be (continued from above):
-
-    mkdir -p C &&
-    test_commit C/D.txt
-
-To test nested dirs?
-
-> +'
-> +
-> +test_expect_success 'usage: --oid-only' '
-> +	git ls-tree --oid-only $tree >current &&
-> +	git ls-tree $tree | awk "{print \$3}" >expected &&
-
-
-just cut -f1 instead of awk? Also don't put "git" on the LHS of a pipe,
-it might hide segfaults. Also applies to the below.
-
-> +	test_cmp current expected
-> +'
-> +
-> +test_expect_success 'usage: --oid-only with -r' '
-> +	git ls-tree --oid-only -r $tree >current &&
-> +	git ls-tree -r $tree | awk "{print \$3}" >expected &&
-> +	test_cmp current expected
-> +'
-> +
-> +test_expect_success 'usage: --oid-only with --abbrev' '
-> +	git ls-tree --oid-only --abbrev=3D6 $tree >current &&
-> +	git ls-tree --abbrev=3D6 $tree | awk "{print \$3}" > expected &&
-> +	test_cmp current expected
-> +'
-> +
-> +test_expect_failure 'usage: incompatible options: --name-only with --oid=
--only' '
-> +	test_incompatible_usage git ls-tree --oid-only --name-only
-> +'
-
-Hrm, did you copy this use of test_incompatible_usage from
-t1006-cat-file.sh without providing the function?
-
-More data for:
-https://lore.kernel.org/git/87tuhmk19c.fsf@evledraar.gmail.com/ :)
-
-Better to use:
-
-    test_expect_code 128 ... # (or was it 129?)
