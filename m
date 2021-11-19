@@ -4,115 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84C1EC433F5
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 20:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C747BC433F5
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 21:01:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F89061247
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 20:59:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9501261B2B
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 21:01:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235536AbhKSVCv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 16:02:51 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35288 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235504AbhKSVCi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 16:02:38 -0500
-Received: (qmail 9156 invoked by uid 109); 19 Nov 2021 20:58:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Nov 2021 20:58:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18815 invoked by uid 111); 19 Nov 2021 20:58:56 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Nov 2021 15:58:56 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 19 Nov 2021 15:58:55 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH] fetch-pack: ignore SIGPIPE when writing to index-pack
-Message-ID: <YZgQD3lrw4+i4EMd@coredump.intra.peff.net>
+        id S235576AbhKSVEv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 16:04:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35906 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235504AbhKSVEs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 16:04:48 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02EB3C061574
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 13:01:45 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id l25so31254652eda.11
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 13:01:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=OQTMHpYdUYp+Xt4o0tyXQKR2Qv7mbRrSjd+QnvFatUQ=;
+        b=XaHhMBx3XMN+zgu9UfekY8CJnEd1mglvnr3/XFp6O9A/aWF9xO95NYVHANyLDO5DMd
+         vtl2WUWPIC6NTYkGOD/R8YDACx2hbAtPe+keOG+QmggssUM6sDZv56IeMvmx1e+DydUv
+         IEpIvLDY4aml0v5itBigTl5NW5+tn4RgNOp0A/sJPy1zgc8WRCSrJPhl0yWQaXIXzDtR
+         O2tzog3hZZXTDD+gxXJ5xR5NzfQ9Wamj8u6N1mJeV5qpSul+g+PufuacYIrYUIEcFjz6
+         Fiy3Yktoi6EONIGq3ARTpyywn2/4HnE2sEALQl3pV3mPbLukMJ9uXAZ6uzsmsVNCXZjn
+         mnfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=OQTMHpYdUYp+Xt4o0tyXQKR2Qv7mbRrSjd+QnvFatUQ=;
+        b=RyCBjE1k+ckz0Zn6J2F/pRbku5TtvX+hGFVviPoyxUzaYiJm4eL1+SCqzY+mfT/JpW
+         1uJRGSC7dtHrF5G0gDyt6ebjLMLuZmpvX0/+pHMpZS6d9k6WkQPsJv4jGazY/vQ7Zn9z
+         0PLJbah4mmo6eFKxRpGvOjUTQAJde5ltM5ANpXDvMm+ap7/MDC3mLl1G7MHi8bY/c/H2
+         7lq8Bcvt76hX9hiUwaWa6aNIZ4B5sJYggC/OzIEN1yR3iSvZlmlbY1xPjh8Ptkv3HRyd
+         XGn7U1HvCeiZX+Wje5hpWMDLA425wzvZG+ujawKKV6Xw7u18WkOlGMn+uh2fR1VukFOA
+         44Uw==
+X-Gm-Message-State: AOAM530f3Z5YUJXnM0+IE1AdXujsUjtKx9+0Xr8ezkgW5cRp+RYZgfcJ
+        hK6nd3YYJVfZTE7p6ju/VS03wikla2L5Ww==
+X-Google-Smtp-Source: ABdhPJynMeBMod4ffvdGtGBl7BjrSdFwju88O4UNpRTUp5CEESWY2sdRL5O2lCGk1ra8xqggqk2AXA==
+X-Received: by 2002:a17:906:5811:: with SMTP id m17mr11612169ejq.289.1637355704444;
+        Fri, 19 Nov 2021 13:01:44 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id h10sm406639edk.41.2021.11.19.13.01.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Nov 2021 13:01:44 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1moB0x-000oQm-FA;
+        Fri, 19 Nov 2021 22:01:43 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Danial Alihosseini <danial.alihosseini@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
+Subject: Re: git 2.34.0: Behavior of `**` in gitignore is different from
+ previous versions.
+Date:   Fri, 19 Nov 2021 21:57:25 +0100
+References: <CACLOEFZz7bunO2S5-ec1K10B9AJU4-m50j3j9c=12R6d1D+-dg@mail.gmail.com>
+        <YZaHpJKeyDEY8qKW@coredump.intra.peff.net>
+        <2bd2269f-c7f1-7afb-7052-48fac148dffd@gmail.com>
+        <CACLOEFbY3LwMa2uhc=9jmcGFf0mvWzEM=YityLyFcuGWXVmqbw@mail.gmail.com>
+        <72fffbff-16f7-fa17-b212-67aae9e1b034@gmail.com>
+        <190a1fea-124d-2e85-38ea-9dab87f3e377@kdbg.org>
+        <429375f7-ec3e-596f-5f79-c724570c8397@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <429375f7-ec3e-596f-5f79-c724570c8397@gmail.com>
+Message-ID: <211119.86zgpz272g.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When fetching, we send the incoming pack to index-pack (or
-unpack-objects) via the sideband demuxer. If index-pack hits an error
-(e.g., because an object fails fsck), then it will die immediately. This
-may cause us to get SIGPIPE on the fetch, as we're still trying to write
-pack contents from the sideband demuxer (which is typically a thread,
-and thus takes down the whole fetch process).
 
-You can see this in action with:
+On Fri, Nov 19 2021, Derrick Stolee wrote:
 
-  ./t5702-protocol-v2.sh --stress --run=59
+> On 11/19/2021 3:05 PM, Johannes Sixt wrote:
+>> Am 19.11.21 um 15:51 schrieb Derrick Stolee:
+>>> What is unclear to me is what exactly "match a directory" means.
+>>> If we ignore a directory, then we ignore everything inside it (until
+>>> another pattern says we should care about it), but the converse
+>>> should also hold: if we have a pattern like "!data/**/", then that
+>>> should mean "include everything inside data/<A>/ where <A> is any
+>>> directory name".
+>>>
+>>> My inability to form a mental model where the existing behavior
+>>> matches the documented specification is an indicator that this was
+>>> changed erroneously. A revert patch is included at the end of this
+>>> message.
+>>>
+>>> If anyone could help clarify my understanding here, then maybe
+>>> there is room for improving the documentation.
+>> 
+>> You form a wrong mental model when you start with the grand picture of a
+>> working tree. That is, when you say
+>> 
+>> - here I have theeeeeese many files and directories,
+>> - and I want to ignore some: foo/**/,
+>> - but I don't want to ignore others: !bar/**/.
+>> 
+>> This forms the wrong mental model because that is not how Git sees the
+>> working tree: it never has a grand picture of all of its contents.
+>> 
+>> Git only ever sees the contents of one directory. When Git determines
+>> that a sub-directory is ignored, then that one's contents are never
+>> inspected, and there is no opportunity to un-ignore some of the
+>> sub-directory's contents.
+>
+> So the problem is this: I want to know "I have a file named <X>, and
+> a certain pattern set, does <X> match the patterns or not?" but in
+> fact it's not just "check <X> against the patterns in order" but
+> actually "check every parent directory of <X> in order to see if
+> any directory is unmatched, which would preclude any later matches
+> to other parents of <X>"
+>
+> So really, to check a path, we really want to first iterate on the
+> parent directories. If we get a match on a positive pattern on level
+> i, then we check level (i+1) for a match on a negative pattern. If
+> we find that negative pattern match, then continue. If we do not see
+> a negative match, then we terminate by matching the entire path <X>.
+>
+> I'm still not seeing a clear way of describing the matching procedure
+> here for a single path, and that's fine. Me understanding is not a
+> necessary condition for fixing this bug.
 
-which ends with (wrapped for readability):
+Just watching this thread on the sidelines I think it would help if it
+can be distilled down to a wildatch() test that doesn't have to do with
+the pathspec matching code.
 
-  test_must_fail: died by signal 13: git -c protocol.version=2 \
-    -c transfer.fsckobjects=1 -c fetch.uriprotocols=http,https \
-    clone http://127.0.0.1:5708/smart/http_parent http_child
-  not ok 59 - packfile-uri with transfer.fsckobjects fails on bad object
+I.e. can you stick the "should this match?" into t3070 and it does the
+same thing, or is this to do with the pathspec-specific sugar on top,
+either that it splits paths and then matches them, that there's some
+information about the path type in there added on top, or that it's to
+do with the specifics of the exclude/include gitignore matching?
 
-This is mostly cosmetic. The actual error of interest (in this case, the
-object that failed the fsck check) comes from index-pack straight to
-stderr, so the user still sees it. They _might_ even see fetch-pack
-complaining about index-pack failing, because the main thread is racing
-with the sideband-demuxer. But they'll definitely see the signal death
-in the exit code, which is what the test is complaining about.
+FWIW I have some old WIP patches somewhere where I made this match
+behavior much faster by compiling the (using a mode PCREv2 has) glob
+syntax into PCRE's, which are then JIT'ed, and matched.
 
-We can make this more predictable by just ignoring SIGPIPE. The sideband
-demuxer uses write_or_die(), so it will notice and stop (gracefully,
-because we hook die_routine() to exit just the thread). And during this
-section we're not writing anywhere else where we'd be concerned about
-SIGPIPE preventing us from wasting effort writing to nowhere.
+To do that I had to unpeel this whole truncation of the pattern thing,
+and IIRC it didn't matter for speed (or maybe it did just with the
+wildmatch code?).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I wondered if the receive-pack side would have a similar problem, but
-there I think it's accepting the input directly from the network. So the
-client-side push may see a premature hangup. But there the SIGPIPE goes
-to pack-objects (which is writing straight to the network), and the
-parent send-pack/push process detects this; see the comment near the
-"141" check at the end of send-pack.c:pack_objects().
-
-I cc'd Jonathan because it's his test, but really I think that is just
-luck. AFAICT this would be a problem for any fetch where
-transfer.fsckObjects detects a problem.
-
- fetch-pack.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index a9604f35a3..8fe3a49c1c 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -25,6 +25,7 @@
- #include "shallow.h"
- #include "commit-reach.h"
- #include "commit-graph.h"
-+#include "sigchain.h"
- 
- static int transfer_unpack_limit = -1;
- static int fetch_unpack_limit = -1;
-@@ -956,6 +957,8 @@ static int get_pack(struct fetch_pack_args *args,
- 			strvec_push(index_pack_args, cmd.args.v[i]);
- 	}
- 
-+	sigchain_push(SIGPIPE, SIG_IGN);
-+
- 	cmd.in = demux.out;
- 	cmd.git_cmd = 1;
- 	if (start_command(&cmd))
-@@ -986,6 +989,8 @@ static int get_pack(struct fetch_pack_args *args,
- 	if (use_sideband && finish_async(&demux))
- 		die(_("error in sideband demultiplexer"));
- 
-+	sigchain_pop(SIGPIPE);
-+
- 	/*
- 	 * Now that index-pack has succeeded, write the promisor file using the
- 	 * obtained .keep filename if necessary
--- 
-2.34.0.635.gde47f84164
+Maybe all of this is irrelevant, sorry. I haven't looked into this issue
+at all, just skimmed this growing thread over the past day, maybe some
+of the above helps, or not...
