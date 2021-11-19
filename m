@@ -2,196 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B80AC433EF
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 18:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A028BC433F5
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 18:50:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0882B61A70
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 18:30:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8135361AA2
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 18:50:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233438AbhKSSdi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 13:33:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58604 "EHLO
+        id S232938AbhKSSxW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 13:53:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231841AbhKSSdh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 13:33:37 -0500
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A6C4C061574
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 10:30:35 -0800 (PST)
-Received: by mail-io1-xd2e.google.com with SMTP id m9so14017854iop.0
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 10:30:35 -0800 (PST)
+        with ESMTP id S230519AbhKSSxS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 13:53:18 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42EF6C061574
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 10:50:16 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id 67-20020a1c1946000000b0030d4c90fa87so8243939wmz.2
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 10:50:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=HBaTDJTrN44yskKQGTyR4x75HU0+zT4IiIR++Qn10II=;
-        b=KewwO2zFjyirjZKQdl6IE/qRo5AV4Y6jWFdgr9kckRXgRCV//hRxmgO87q+yiaGdyZ
-         Sjxj/0/lmWNxa009tCa5njDkv4k3rwgMbJvJP4DEFy025zINB9au9j18v6F77m7f88cA
-         bcmpgWX/oKu/imrjzzcxyH9L5uQiieJtQf8VCtHF39bteyL4xEYdDt9GY2fPZLCfH3CF
-         iqrzj8uut7NQk5SrNoY/ACMSxmlaCTMKg53jV7ZAo/vemE8YiLO324/93fY1Wxa+eB/E
-         wouMp+DCqGQvQrj7uxPn27LfcnB5799wz7aV5NJ7xZsKyuxuClO29yMf2t43qXty6P59
-         0ucg==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=PZhdtoH3XJSApLQ2hUQ6eeKZHi+Rzx0GILO8uDfkXUo=;
+        b=dEPgU2N5RWJiysMSqgH38VIQQs+iMdF1AprbYLOhCKaJtifBcunnCy+TDy8u7ScMwn
+         y9FhhjeJ6uwz4gfDmzG+Py+U80aYInE6rwOIrFTaNFPLsaGmbtD2NIP/iKr/i1j26V9g
+         z2YNZug+DLyt6NDBQhINjTIvtb2BARxsTZCDDFKFqPlBuKWVHVgQSRqbtHuMuQwN5UNr
+         sEFIhlLIQ7J1z/+vVPVZcnd5124LedZxTwTujm5jFAoYQWKg/0zoe2GUAXNoyEJieDEF
+         tDUGoRk2UM+PPvp4gzQZh99wv92YRA0c/U3EaqxnBxu6IJ6jbbY4j8hk0SyhjbmvBZZJ
+         GXqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=HBaTDJTrN44yskKQGTyR4x75HU0+zT4IiIR++Qn10II=;
-        b=gF0ccBC/Karqr15OEcBtiT1NdIbhM3AUeBCneP6NOaoSm/QEQRlpkimoiH/E3XxGUS
-         B7iLXjj5ij3UwzLBPRi1TVX7Gn+gi8ucNEDaS5JDVdnZNCHxoBYOjOXe1NPZazGbCHIW
-         ETmgvSEv6gdi2YtNMMQ1lMs3H7QkBwfVXzIXagHnJnW2POx/uyaLH9IBKe4NfwiET7OJ
-         6KFjvUKOom/Xjf/pQUdj3kAFuKLdPpMIyGh742qFoC9wK3nbfqlWtqvroe7m7dYs/k+L
-         i1Auz7CfUjpGoNMGvAaIcofAK9ntqHVikx8KzjCXRtfX6wxNOQuDRCBu+YqGtuyOJBeu
-         fCRg==
-X-Gm-Message-State: AOAM530LZfO39zyC/xRnhIFrlhccTr47Zc1yAiCaOirpeLu3sn7sY6HZ
-        Mf58+WTLCOKeV9ogmtJo/L8=
-X-Google-Smtp-Source: ABdhPJzXn9l3oS9UsryqPqz44JV6S7fDaabj1S5/xbi906dkSDhejsLQ0+/D3NRlkIMx1/Y8Ovv7+Q==
-X-Received: by 2002:a05:6602:45d:: with SMTP id e29mr7316361iov.202.1637346634371;
-        Fri, 19 Nov 2021 10:30:34 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:3441:8b39:39a2:9208? ([2600:1700:e72:80a0:3441:8b39:39a2:9208])
-        by smtp.gmail.com with ESMTPSA id t6sm378057iov.39.2021.11.19.10.30.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Nov 2021 10:30:33 -0800 (PST)
-Message-ID: <e56b0227-14fc-26cf-7b98-fbf01f3c5cd7@gmail.com>
-Date:   Fri, 19 Nov 2021 13:30:33 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: [Question] Unicode weirdness breaking tests on ZFS?
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <9393e572-0666-6485-df29-abad5e0d32a1@gmail.com>
- <20211117161226.xcat77ewhf5inaif@tb-raspi4>
- <20211117170613.kyoe6ov2m5wi2i56@tb-raspi4>
- <20211117173924.maporsti5cz2ixsu@tb-raspi4>
- <8a3d0d0e-cc82-b696-00f4-b71e6452e1bd@gmail.com>
- <5d1b5ce6-d9ff-1b2a-2ff2-19813c957a24@gmail.com>
- <20211119154405.xhoqfh3vmljxbh5c@tb-raspi4> <xmqqmtm0qdqp.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqmtm0qdqp.fsf@gitster.g>
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=PZhdtoH3XJSApLQ2hUQ6eeKZHi+Rzx0GILO8uDfkXUo=;
+        b=egEb0q1dNqYrKq8wSM2DJPyarc76uGkElgKiTHzE8NAVp8nVc/5QOD5Wle/V+krpel
+         EZGh9cp901uFal97OjqoA9X5kyuWcZyL1LEHFItkQx+8ABeLQ3IddojcCIe5SEaXOlve
+         e7+lU6HHjnXqu4EK8PGXf/GvXK6EcubgQa2eHy30Sv/vMZLgNdxQnyNSPaf0gXdDQOHT
+         I5Xoowys+V+nK6av7oM//3BgwT6M0Xn+FePu/MuJ1C7B94U86945f+7B/P2pwVk859X2
+         VBZeH7jkoUkLkJlVnjAIGp/lXc4ZaRUcd1zGAtyd6S79oKJOBr6TNoP8axbIs6a/ooCt
+         hVbA==
+X-Gm-Message-State: AOAM531G5OXkPVh7aAbUXwR5nC8taQ+3sEPgEqcBpuIMlFs97q9FXtnU
+        JAJmFCYfDlrEvRVLP+yRU6iFXdCi0b8=
+X-Google-Smtp-Source: ABdhPJw9gsWYZ+VHD/r5DVCu2yOVoWSgjZ/r8pUM9KqYBr2k6PT1Rgbyk/lLfUC+cbiM5aGKBSMKzg==
+X-Received: by 2002:a1c:f609:: with SMTP id w9mr2209379wmc.99.1637347814595;
+        Fri, 19 Nov 2021 10:50:14 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w7sm508077wru.51.2021.11.19.10.50.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Nov 2021 10:50:13 -0800 (PST)
+Message-Id: <pull.1143.git.git.1637347813367.gitgitgadget@gmail.com>
+From:   "hakre via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 19 Nov 2021 18:50:13 +0000
+Subject: [PATCH] ci(check-whitespace): update stale file top comments
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        hakre <hanskrentel@yahoo.de>, hakre <hanskrentel@yahoo.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/19/2021 12:03 PM, Junio C Hamano wrote:
-> Torsten Bögershausen <tboegi@web.de> writes:
-> 
->> Should we conclude that the underlying os/zfs is not stable ?
->> Things don't seem to be reproducable
->>
->> What Git needs here in t0050 is that stat("ä") behaves the same as stat("a¨"),
->> when either "ä" or "a¨" exist on disk.
->> The same for open() and all other file system functions.
-> 
-> We either need to see these two are treated as the same thing, or
-> these two are treated as two distict filesystem entities, just like
-> stat("a") and stat("b") are.  What we absolutely need is the
-> unification either always happens or never happens consistently.
-> 
-> I wonder what readdir() is returning.  After creat("ä") in an empty
-> directory, does readdir() in there return "ä" or "a¨?  And vice
-> versa?  Is this also inconsistent?
+From: hakre <hanskrentel@yahoo.de>
 
-Following this suggestion, I added a test helper with this code:
+Earlier a066a90d (ci(check-whitespace): restrict to the intended
+commits, 2021-07-14) changed the check-whitespace task to stop using a
+shallow clone, and cc003621 (ci(check-whitespace): stop requiring a
+read/write token, 2021-07-14) changed the way how the errors the task
+discovered is signaled back to the user.
 
-int cmd__create_and_read(int argc, const char **argv)
-{
-	DIR *dir;
-	struct dirent *de;
+They however forgot to update the comment that outlines what is done in
+the task. Correct them.
 
-	if (strcmp(argv[0], "--nfc"))
-		creat("\303\244", 0766);
-	else if (strcmp(argv[0], "--nfd"))
-		creat("\141\314\210", 0766);
-	else
-		die("select --nfc or --nfd");
+Signed-off-by: Hans Krentel (hakre) <hanskrentel@yahoo.de>
+---
+    ci(check-whitespace): update stale file top comments
+    
+    NOTE: In reference to
+    https://lore.kernel.org/git/pull.1138.git.git.1636822837587.gitgitgadget@gmail.com
+    as GitGitGadget had hiccups this is an update via a new PR on Github.
+    Sorry for this added noise, this one supersedes the earlier one.
+    
+    Please find the actual (updated) description following (thanks to all
+    helping hands involved):
+    
+    Earlier a066a90d (ci(check-whitespace): restrict to the intended
+    commits, 2021-07-14) changed the check-whitespace task to stop using a
+    shallow clone, and cc003621 (ci(check-whitespace): stop requiring a
+    read/write token, 2021-07-14) changed the way how the errors the task
+    discovered is signaled back to the user.
+    
+    They however forgot to update the comment that outlines what is done in
+    the task. Correct them.
+    
+    Signed-off-by: Hans Krentel (hakre) hanskrentel@yahoo.de
 
-	dir = opendir(".");
-	readdir(dir);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1143%2Fhakre%2Fpatch-1-gitgitgadget-vanilla-sky-technical-support-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1143/hakre/patch-1-gitgitgadget-vanilla-sky-technical-support-v1
+Pull-Request: https://github.com/git/git/pull/1143
 
-	while ((de = readdir(dir)) != NULL)
-		printf("%s\n", de->d_name);
+ .github/workflows/check-whitespace.yml | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-	return 0;
-}
-
-And then added this test:
-
-test_expect_success 'unicode stuff' '
-	mkdir nfc &&
-	(
-		cd nfc &&
-		test-tool create-and-read --nfc >../nfc.txt
-	) &&
-
-	mkdir nfd &&
-	(
-		cd nfd &&
-		test-tool create-and-read --nfd >../nfd.txt
-	) &&
-
-	test_cmp nfc.txt nfd.txt
-'
-
-This test always passes for me, and is essentially doing
-a similar check that the prereq is doing, except that it
-actually writes both names to files instead of writing
-one and doing a read with the other.
-
-After changing the "$test_unicode" instances to instances of
-"test_expect_success", I ran t0050 under --stress and quickly
-got a failure on the 'merge (silent unicode normalization)'
-test:
-
-
-expecting success of 0050.11 'merge (silent unicode normalization)': 
-        git reset --hard initial &&
-        git merge topic
-
-+ git reset --hard initial
-error: unable to unlink old 'ä': No such file or directory
-fatal: Could not reset index file to revision 'initial'.
-error: last command exited with $?=128
-not ok 11 - merge (silent unicode normalization)
-
-
-Deleting that test gave mostly-consistent results, although I once
-got a failure on the "setup unicode normalization tests" tests with
-a similar error message:
-
-+ git checkout -f main
-error: unable to unlink old 'ä': No such file or directory
-Switched to branch 'main'
-error: last command exited with $?=1
-not ok 8 - setup unicode normalization tests
+diff --git a/.github/workflows/check-whitespace.yml b/.github/workflows/check-whitespace.yml
+index 8c4358d805c..ad3466ad16e 100644
+--- a/.github/workflows/check-whitespace.yml
++++ b/.github/workflows/check-whitespace.yml
+@@ -1,8 +1,9 @@
+ name: check-whitespace
  
->> ("ä" is the precomposed form "a¨" is the decomposed form,
->>  typically both render to the same glyph on the screen,
->>  and a hex dump or xxd will show what we had.
->>  I just use this notation here for illustration)
->>
->> Should we contact the zfs developers ?
+-# Get the repo with the commits(+1) in the series.
++# Get the repository with all commits to ensure that we can analyze
++# all of the commits contributed via the Pull Request.
+ # Process `git log --check` output to extract just the check errors.
+-# Add a comment to the pull request with the check errors.
++# Exit with failure upon white-space issues.
+ 
+ on:
+   pull_request:
 
-Hopefully someone has a good way to contact them, and I
-can start a thread at the appropriate place. To optimize
-for their time, what is our minimal reproduction steps?
-
-1. Build Git at the v2.34.0 tag.
-2. cd to t/
-3. ./t0050-filesystem.sh --stress
-
-Those instructions (given enough time) should get the
-repro on test 8, 'setup unicode normalization tests'.
-
-To get the faster stress, the same steps work except
-use the 'zfs-minimal' branch at my fork [1] because it
-changes the tests to expect success, and demonstrates
-the unpredictable tests more quickly.
-
-[1] https://github.com/derrickstolee/git/tree/zfs-minimal
-
-Thanks,
--Stolee
+base-commit: 5fbd2fc5997dfa4d4593a862fe729b1e7a89bcf8
+-- 
+gitgitgadget
