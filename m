@@ -2,83 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E32EC433EF
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 19:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0385C433EF
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 19:28:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 595CF61AFF
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 19:25:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C5ECF61AED
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 19:28:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232926AbhKST2U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 14:28:20 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60879 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229977AbhKST2U (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 14:28:20 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2547B16F280;
-        Fri, 19 Nov 2021 14:25:18 -0500 (EST)
+        id S235914AbhKSTbo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 14:31:44 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56019 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230127AbhKSTbm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 14:31:42 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 277F210ABCA;
+        Fri, 19 Nov 2021 14:28:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=BTjJT+aJXP6F
-        sbjY0rX3mFMge3+5oryS6iY52KkIsSY=; b=qQ9c4mGWq7aUqzGqA306qPUs2WW/
-        cLhRsFwKLCg2ZvhvXT09DLIxb4aVANXB/Mtwk5iJms5IjQpd2eAVdSYrlYbG4tSR
-        NOQXIbLLD5nw+FC+nmobD5p/BK47Xa6K4FFj+LCxSUukJ5BAto9xBxRZB6Qmmiue
-        CC4NravDz4BBdGA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1DB7C16F27F;
-        Fri, 19 Nov 2021 14:25:18 -0500 (EST)
+        :content-type; s=sasl; bh=pKzZ8hPp3opBvek0nCU4Rlht8DSoPjcg2TRNHX
+        if/ys=; b=ZxF3zWzUiIWHiR2MjvHxhMRSMIRWZvwhtMQTB83aop932nmHmjB5C5
+        SZeSd+OBSChGsM/qvP1tVcPamHzmJmKl4xH9XA9gvKVtfh7ymAERjyRY1WiGYul/
+        u9OeM2Ba9SvWsXWDaGLT4/pI2nu8i6O1Sb51dNqQXMg+MRhwxtfmg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E9AC10ABC9;
+        Fri, 19 Nov 2021 14:28:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7627516F279;
-        Fri, 19 Nov 2021 14:25:15 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8924410ABC8;
+        Fri, 19 Nov 2021 14:28:39 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Aleen =?utf-8?B?5b6Q5rKb5paH?= <pwxu@coremail.cn>
-Cc:     "Johannes Schindelin" <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        "Phillip Wood" <phillip.wood123@gmail.com>,
-        Aleen <aleen42@vip.qq.com>
-Subject: Re: [PATCH v6 0/3] am: support --empty=(die|drop|keep) option to
- handle empty patches
-References: <pull.1076.v5.git.1637141636.gitgitgadget@gmail.com>
-        <pull.1076.v6.git.1637232636.gitgitgadget@gmail.com>
-        <xmqqilwpuiv4.fsf@gitster.g>
-        <b9c1244.36.17d35decb26.Coremail.pwxu@coremail.cn>
-        <xmqqmtm0snol.fsf@gitster.g>
-        <2ebb863f.246.17d37140518.Coremail.pwxu@coremail.cn>
-        <xmqqr1bcqe6p.fsf@gitster.g>
-        <6c267a9e.471.17d39318b2b.Coremail.pwxu@coremail.cn>
-Date:   Fri, 19 Nov 2021 11:25:14 -0800
-In-Reply-To: <6c267a9e.471.17d39318b2b.Coremail.pwxu@coremail.cn> ("Aleen
- =?utf-8?B?5b6Q5rKbCeaWhyIncw==?= message of "Sat, 20 Nov 2021 01:14:47
- +0800 (CST)")
-Message-ID: <xmqqpmqwosmd.fsf@gitster.g>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] mergesort: avoid left shift overflow
+References: <5eabbe1c-4c0f-559a-da21-423afec89e7e@web.de>
+        <7fbd4cf4-5f66-a4cd-0c41-e5b12d14d761@iee.email>
+        <nycvar.QRO.7.76.6.2111191750400.63@tvgsbejvaqbjf.bet>
+        <05e6c0ab-7364-56d8-f0b2-e93c11b327e3@iee.email>
+Date:   Fri, 19 Nov 2021 11:28:38 -0800
+In-Reply-To: <05e6c0ab-7364-56d8-f0b2-e93c11b327e3@iee.email> (Philip Oakley's
+        message of "Fri, 19 Nov 2021 17:27:23 +0000")
+Message-ID: <xmqqlf1kosgp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6C5E5CA6-496E-11EC-901B-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E6026020-496E-11EC-8F90-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Aleen =E5=BE=90=E6=B2=9B=E6=96=87 <pwxu@coremail.cn> writes:
+Philip Oakley <philipoakley@iee.email> writes:
 
->> Can somebody from GGG land help this user?  I _think_ the easiest
->> workaround (other than not using GGG and sending e-mail in the old
->> fashioned way) is to commit and sign-off under the real name, and
->> push under whatever GitHub username to throw a GGG pull request,
->> which GGG should be able to take, as I have seen users forward other
->> authors commits just fine.
->
-> When it comes to GGG, I just want to know whether this is the only
-> way to contribute to Git? I think we can directly use GitHub to
-> run the reviewing procedure, rather than sending emails in this old
-> fashioned way, since that Git code has been maintained in GitHub.
+>>> My patches are in https://github.com/PhilipOakley/git/tree/oneU_t
+>> How about rebasing the remaining patches from
+>> https://github.com/git-for-windows/git/compare/main...PhilipOakley:oneU_t
+>> on top of `rs/mergesort` and then submitting them, to avoid duplicate
+>> efforts?
+>>
+> I'm not finding a `rs/mergesort` at the moment. Any particular remote I
+> should find it on, or maybe a different spelling?
+> P.
 
-No, we do not develop or maintain at GitHub at all.  The repository
-at GitHub is one of the several publishing point and development is
-done here.
+At https://github.com/gitster/git/, I publish the "broken out"
+branches.
+
+But resurrecting the tips of the topics should be fairly easy.
+
+$ git log --first-parent --oneline origin/master..origin/seen |
+  grep rs/mergesort
+
+The second parent of that merge is the tip of rs/mergesort topic
+back when the 'seen' integration branch was created.
+
