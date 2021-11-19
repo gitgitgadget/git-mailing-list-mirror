@@ -4,144 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10D8C433EF
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 20:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84C1EC433F5
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 20:59:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4F2A61283
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 20:56:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F89061247
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 20:59:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235470AbhKSU7t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 15:59:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34802 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235393AbhKSU7s (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 15:59:48 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B46CC061574
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 12:56:46 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id x6so35968082edr.5
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 12:56:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=oW6qvCZUNBJF0dSIKWykcBplytTJ7ofL0vqsSVbpwQU=;
-        b=XskytkrNqyWJ7eyYLsNeacBPBfOTjFlhTIfkNjnHU+9KPQ4h9SPkJXtREZTcA2S9ot
-         BCk6AdNV2G3rFUGJaoxvZ8Bt+Dtrd2x9jbsKNW4lB1K+ewYatIlIMNd8LllhOQ402S95
-         2yBSARqa92nmPbAz3hW8/10vR1UL1bCP7Vxn2Nv2LOI4cTNE30FadIF5/wXUmBukHhIJ
-         8z8Gud/k/TifJOj7gzrUVnLN6+0pOg6vLRjphs8mliI0Ekmu9Ou+BxVfoB67rPp/5Zmk
-         sCZuaMMvm3i2TvWRpxIRsW0NkqxWo4ks1sgSxtI6xlFxMGdVKV8ordA7AF46Ef5Enmap
-         Vdsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=oW6qvCZUNBJF0dSIKWykcBplytTJ7ofL0vqsSVbpwQU=;
-        b=sS8MjdxynMp+GhdmquVG5UF2ODh5z99tTTceA8D6dKp5hMpAmHbUIuDBMhFuDVu6Ok
-         Ch8qrdnFw3Vh5npRTyVw2/PbBTZRXoDW6kFUs4igDhzP5qL5SoT5lQsKgymcPmbo2L3/
-         4ZLyz2+hcbzUBl8uX1KDWqgethgxdvfF0HX7B3n48gRr4ayjP46StB82y3urAWSgJmFJ
-         Xm/cTkm3WFmi1U+SM8iEGNHmyT+A5N8k3ts9SW2LbkYCZNa/et5OZsr7WZBPGCgY7/Kw
-         CD5uzbIDPE9m7puorYVYgRYXcCsslPFCYb30boqdG8NCUqslOUTUbow8cq69bw/oUiXb
-         dzyw==
-X-Gm-Message-State: AOAM533XRfZVhElF6czJ+rWC4t3O9Z8EiBZcjbksDCG5ATmeycK9ehd/
-        lXF0JYE6knhjW5EcQWjcnv0=
-X-Google-Smtp-Source: ABdhPJx9MAWHclxNnzITeRu2WNl1iScDqvIgFVz4K319Zgoi32FJSKOSOY8tlg2D6hg5Be3iE4PHGA==
-X-Received: by 2002:aa7:c313:: with SMTP id l19mr29153615edq.209.1637355404924;
-        Fri, 19 Nov 2021 12:56:44 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id d1sm451781edn.56.2021.11.19.12.56.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Nov 2021 12:56:44 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1moAw7-000oJj-Mk;
-        Fri, 19 Nov 2021 21:56:43 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 0/2] CI: use shorter names for CI jobs, less truncation
-Date:   Fri, 19 Nov 2021 21:48:07 +0100
-References: <cover-0.2-00000000000-20211119T135343Z-avarab@gmail.com>
- <xmqqbl2fq5oa.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <xmqqbl2fq5oa.fsf@gitster.g>
-Message-ID: <211119.864k873lv8.gmgdl@evledraar.gmail.com>
+        id S235536AbhKSVCv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 16:02:51 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35288 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235504AbhKSVCi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 16:02:38 -0500
+Received: (qmail 9156 invoked by uid 109); 19 Nov 2021 20:58:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Nov 2021 20:58:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18815 invoked by uid 111); 19 Nov 2021 20:58:56 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Nov 2021 15:58:56 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 19 Nov 2021 15:58:55 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH] fetch-pack: ignore SIGPIPE when writing to index-pack
+Message-ID: <YZgQD3lrw4+i4EMd@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When fetching, we send the incoming pack to index-pack (or
+unpack-objects) via the sideband demuxer. If index-pack hits an error
+(e.g., because an object fails fsck), then it will die immediately. This
+may cause us to get SIGPIPE on the fetch, as we're still trying to write
+pack contents from the sideband demuxer (which is typically a thread,
+and thus takes down the whole fetch process).
 
-On Fri, Nov 19 2021, Junio C Hamano wrote:
+You can see this in action with:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> This changes the names used in GitHub CI to be shorter, because the
->> current ones are so long that they overflow the pop-up tooltips in the
->> GitHub UI.
->>
->> New pop-up visible at: https://github.com/avar/git/tree/avar/ci-shorter-=
-names
->>
->> Full CI run at (currently pending, I had a trivial last-minute
->> update):
->> https://github.com/avar/git/runs/4264929546?check_suite_focus=3Dtrue
->
-> I have found the labels on "Jobs" on the left hand side pane
-> irritatingly unhelpful.  For example, "regular (linux-gcc-default,
-> gcc..."  does not tell me much about how it is different from
-> "regular (linux-gcc, gcc, ubunt...".
+  ./t5702-protocol-v2.sh --stress --run=59
 
-Yeah, I've needed to look it up most times..
+which ends with (wrapped for readability):
 
-> The question I ask most often is "which one of these ones is the job
-> that runs tests twice, the second time with nonstandard settings?",
-> or "Only windows-test(4) is failing, but not vs-test(4); what area
-> did we break?  What is in (4)?".
+  test_must_fail: died by signal 13: git -c protocol.version=2 \
+    -c transfer.fsckobjects=1 -c fetch.uriprotocols=http,https \
+    clone http://127.0.0.1:5708/smart/http_parent http_child
+  not ok 59 - packfile-uri with transfer.fsckobjects fails on bad object
 
-Because I had to look: It's a splitting method Johannes came up with,
-first stat() all the tests, sort by size, then chunk them up, and use
-the Nth as a way of dividing those chunks.
+This is mostly cosmetic. The actual error of interest (in this case, the
+object that failed the fsck check) comes from index-pack straight to
+stderr, so the user still sees it. They _might_ even see fetch-pack
+complaining about index-pack failing, because the main thread is racing
+with the sideband-demuxer. But they'll definitely see the signal death
+in the exit code, which is what the test is complaining about.
 
-Maybe he feels strongly about it, but I think a better approach is just
-to hardcode t0xxx, t1xxx or whatever, then if one is unusually slow have
-a t1[0-4]xx & t1[5-9]xx or whatever, I.e. just manually partition them
-as a one-off.
+We can make this more predictable by just ignoring SIGPIPE. The sideband
+demuxer uses write_or_die(), so it will notice and stop (gracefully,
+because we hook die_routine() to exit just the thread). And during this
+section we're not writing anywhere else where we'd be concerned about
+SIGPIPE preventing us from wasting effort writing to nowhere.
 
-These jobs take ~30m anyway, so if one is a tad slower than another it
-doesn't really matter as much as seeing at a glance where in the test
-suite the failure is.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I wondered if the receive-pack side would have a similar problem, but
+there I think it's accepting the input directly from the network. So the
+client-side push may see a premature hangup. But there the SIGPIPE goes
+to pack-objects (which is writing straight to the network), and the
+parent send-pack/push process detects this; see the comment near the
+"141" check at the end of send-pack.c:pack_objects().
 
-I nicely split these all up in a follow-up, along with removing the
-travis CI, but anticipated the usual objections about too much of a
-scatterbrain series.
+I cc'd Jonathan because it's his test, but really I think that is just
+luck. AFAICT this would be a problem for any fetch where
+transfer.fsckObjects detects a problem.
 
-But yeah, I think all of that would be great to have, I can submit that
-as a v2, sound goood?
+ fetch-pack.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-AFAICT the whole "stick this all into one job" way of doing the
-GIT_TEST_* CI is a workaround for some Travis-specific thing.
-
-Or a micro-optimization for trying to max out our total CPU time, but
-anyway it doesn't seem worth it. By far most of the time is spent in the
-tests themselves, not the build.
-
-A WIP split I had of this, e.g. there's a linux-sha256 job,
-linux-TEST-vars for the big GIT_TEST_* accumulation etc:
-https://github.com/avar/git/runs/4265312207?check_suite_focus=3Dtrue
-
-We could (and I'd like to..., but not now) cache the build directory
-between runs. Much faster compilations, and if it breaks, well then our
-Makefile dependencies are broken, which is also nice to spot in CI (and
-the cachewillexpire) ...
-
-> I do not think relabelling "windows" -> "w32" (why not "win", by the
-> way?), "vs" -> "w32/VS", or "regular (\(.*\))" -> "\1" helps me very
-> much in these questions.  I however think the blame for it lies
-> mostly on the original naming, not your effort in this series.
-
-I'll pick "win" next time, as noted in some other follow-up replies.
+diff --git a/fetch-pack.c b/fetch-pack.c
+index a9604f35a3..8fe3a49c1c 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -25,6 +25,7 @@
+ #include "shallow.h"
+ #include "commit-reach.h"
+ #include "commit-graph.h"
++#include "sigchain.h"
+ 
+ static int transfer_unpack_limit = -1;
+ static int fetch_unpack_limit = -1;
+@@ -956,6 +957,8 @@ static int get_pack(struct fetch_pack_args *args,
+ 			strvec_push(index_pack_args, cmd.args.v[i]);
+ 	}
+ 
++	sigchain_push(SIGPIPE, SIG_IGN);
++
+ 	cmd.in = demux.out;
+ 	cmd.git_cmd = 1;
+ 	if (start_command(&cmd))
+@@ -986,6 +989,8 @@ static int get_pack(struct fetch_pack_args *args,
+ 	if (use_sideband && finish_async(&demux))
+ 		die(_("error in sideband demultiplexer"));
+ 
++	sigchain_pop(SIGPIPE);
++
+ 	/*
+ 	 * Now that index-pack has succeeded, write the promisor file using the
+ 	 * obtained .keep filename if necessary
+-- 
+2.34.0.635.gde47f84164
