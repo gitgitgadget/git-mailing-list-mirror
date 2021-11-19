@@ -2,146 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8CB6C433F5
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 21:28:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5193C433EF
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 21:38:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231231AbhKSVbf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 16:31:35 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35336 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229472AbhKSVbe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 16:31:34 -0500
-Received: (qmail 9239 invoked by uid 109); 19 Nov 2021 21:28:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Nov 2021 21:28:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19262 invoked by uid 111); 19 Nov 2021 21:28:32 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Nov 2021 16:28:32 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 19 Nov 2021 16:28:30 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH] refs: work around gcc-11 warning with REF_HAVE_NEW
-Message-ID: <YZgW/pz6CbpaywDa@coredump.intra.peff.net>
-References: <211115.86a6i5s4bn.gmgdl@evledraar.gmail.com>
- <YZLhrSoTzrC7wcQo@coredump.intra.peff.net>
- <YZQUxkYI3TES3vDo@nand.local>
- <YZQhLh2BU5Hquhpo@coredump.intra.peff.net>
- <xmqqwnl5ujxw.fsf@gitster.g>
+        id S235644AbhKSVlr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 16:41:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44112 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235637AbhKSVlp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 16:41:45 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B6AC061574
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 13:38:43 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id t5so48395891edd.0
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 13:38:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=bABW+RkaM2DTthVtlgW2JEudtmGgx78sQiZkAOu1ON4=;
+        b=L7qfpxClN/OmDtIp7U/jToKUfxfPxKX8rOFbjpayrco8bfBPQ4xcf6ereEan2RTcIY
+         ig8wDWZH+TtzKK9nPE5XB/FRy4IHuWsssYg6cjVXt1QY2GbL9SmQd02/sljOCKNcUogA
+         tN+Chq9YagXooRoDWURjnGE2rm4spD+6os++pBA7wds7HUAMjuCebiMXgIa9EdgreMls
+         XdXnKNd21wBS7R/c5wP3PdlPtLG9AaI6uYfLgsffqf+5DCzKJMVf+69Su20oBEH2he2P
+         AISt5ZAOXZbxNVrBU89/0zmHBw3BuwQ9JMc2cUoLVBtw7VNXMuR3GhcztsD1QN8PYxx8
+         sFag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=bABW+RkaM2DTthVtlgW2JEudtmGgx78sQiZkAOu1ON4=;
+        b=5ATi9a/Kt8gLuFIV4VvuLR+8TMovPEySHIfSEc9fdfsNjtjtL+3JGY66a+2W9FxROx
+         yx3HmjYG6aALYMRcO+e3BREzbnzKAaxPWhrsvfYiLYtTb5UM5RDmMEJf/FFaElsntrRa
+         +qEA3zpNd6uD0cLPCs159VY4vo+zb7raQBxFTy5ViYr8DfNECyHj8cQDWcx127NCyYir
+         IfG1oMPh6wVBQiYxUQWtuvPR0DHVf7uKwCUUv4mdMou/6BymzGWD/m0qBLmSvh7vBv86
+         RGhmkym6p555tHalL9eTNp5ko5tnO93FM8pEscISyvn2Lp+iWfFRVbELfP/m6Wwfr54Q
+         Z9xA==
+X-Gm-Message-State: AOAM531hL2uaJaKxdOHlN01w+RE7xC4A7r690RMybPeThdGjq6N1yEyB
+        MPo7RcjhyUj/aaquCI0DNM4=
+X-Google-Smtp-Source: ABdhPJwfYFwdeIHAUSJ6JMg+YdtPW25mOqgNEkEWrqpwFD6AB4nqozFPRcEzf4TwYBuTEMnbrFqjVQ==
+X-Received: by 2002:a50:d543:: with SMTP id f3mr28696358edj.56.1637357921614;
+        Fri, 19 Nov 2021 13:38:41 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id k16sm447811edq.77.2021.11.19.13.38.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Nov 2021 13:38:40 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1moBai-000pGc-2J;
+        Fri, 19 Nov 2021 22:38:40 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     phillip.wood@dunelm.org.uk,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/3] diff histogram: intern strings
+Date:   Fri, 19 Nov 2021 22:22:04 +0100
+References: <pull.1079.git.1637148025.gitgitgadget@gmail.com>
+ <38c771a74d2a348e6a752555f95b746de029b1d7.1637148025.git.gitgitgadget@gmail.com>
+ <2b2bd380-540f-959b-b950-cfdc95cbff29@gmail.com>
+ <88eaee89-4536-fba4-3aa0-c3693f58eae0@gmail.com>
+ <nycvar.QRO.7.76.6.2111181631260.11028@tvgsbejvaqbjf.bet>
+ <YZZ0e7CCGW5QbQlW@coredump.intra.peff.net>
+ <86d38148-7b97-76aa-148b-346cc179615a@gmail.com>
+ <YZe4hqF6Jf14L5tb@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <YZe4hqF6Jf14L5tb@coredump.intra.peff.net>
+Message-ID: <211119.86v90n25cv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqwnl5ujxw.fsf@gitster.g>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 18, 2021 at 03:23:55PM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > +	/*
-> > +	 * Should be a noop per the ALLOWED_FLAGS check above, but this
-> > +	 * is necessary to work around a problem with some versions of
-> > +	 * "gcc -O3 -Wnonnull", which otherwise thinks that you can have the
-> > +	 * flag set with a NULL new_oid.
-> > +	 */
-> > +	flags &= ~REF_HAVE_OLD | REF_HAVE_NEW;
-> 
-> Are you missing parentheses around ~(OLD|NEW)?
+On Fri, Nov 19 2021, Jeff King wrote:
 
-Whoops, yes. Interesting that the compiler is still happy enough with it
-to prevent the warning (it does clear OLD, but not NEW). I also expected
-it to be a bug the tests would catch, but because of the OR it clears
-nothing except REF_HAVE_OLD.
+> On Fri, Nov 19, 2021 at 10:05:32AM +0000, Phillip Wood wrote:
+>
+>> On 18/11/2021 15:42, Jeff King wrote:
+>> > On Thu, Nov 18, 2021 at 04:35:48PM +0100, Johannes Schindelin wrote:
+>> > 
+>> > > I think the really important thing to point out is that
+>> > > `xdl_classify_record()` ensures that the `ha` attribute is different for
+>> > > different text. AFAIR it even "linearizes" the `ha` values, i.e. they
+>> > > won't be all over the place but start at 0 (or 1).
+>> > > 
+>> > > So no, I'm not worried about collisions. That would be a bug in
+>> > > `xdl_classify_record()` and I think we would have caught this bug by now.
+>> > 
+>> > Ah, thanks for that explanation. That addresses my collision concern from
+>> > earlier in the thread completely.
+>> 
+>> Yes, thanks for clarifying I should have been clearer in my reply to Stolee.
+>> The reason I was waffling on about file sizes is that there can only be a
+>> collision if there are more than 2^32 unique lines. I think the minimum file
+>> size where that happens is just below 10GB when one side of the diff has
+>> 2^31 lines and the other has 2^31 + 1 lines and all the lines are unique.
+>
+> Right, that makes more sense (and we are not likely to lift the 1GB
+> limit anytime soon; there are tons of 32-bit variables and potential
+> integer overflows all through the xdiff code).
 
-It probably should just be spelled using the ALLOWED_FLAGS constant,
-though. See the patch below.
+Interestingly:
+    
+    $ du -sh 8gb*
+    8.1G    8gb
+    8.1G    8gb.cp
+    $ ~/g/git/git -P -c core.bigFileThreshold=10g diff -U0 --no-index --no-color-moved 2gb 2gb.cp
+    diff --git a/8gb b/8gb.cp
+    index a886cdfe5ce..4965a132d44 100644
+    --- a/8gb
+    +++ b/8gb.cp
+    @@ -17,0 +18 @@ more
+    +blah
 
-> > Reading over the code, it all looks OK. And that size is...weirdly huge.
-> 
-> The original bug is really annoying and this looks even worse.
-> Hopefully it won't come down from experimental to more stable tracks
-> before they are corrected.
+And the only change I made was:
+    
+    diff --git a/xdiff-interface.c b/xdiff-interface.c
+    index 75b32aef51d..cb8ca5f5d0a 100644
+    --- a/xdiff-interface.c
+    +++ b/xdiff-interface.c
+    @@ -117,9 +117,6 @@ int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t co
+            mmfile_t a = *mf1;
+            mmfile_t b = *mf2;
+     
+    -       if (mf1->size > MAX_XDIFF_SIZE || mf2->size > MAX_XDIFF_SIZE)
+    -               return -1;
+    -
+            if (!xecfg->ctxlen && !(xecfg->flags & XDL_EMIT_FUNCCONTEXT))
+                    trim_common_tail(&a, &b);
 
-Yeah, I'm willing to ignore that one for now. But we probably should
-deal with the gcc-11 one. Here's a cleaned-up version with a commit
-message.
+Perhaps we're being overly concervative with these hardcoded limits, at
+least on some platforms? This is Linux x86_64.
 
--- >8 --
-Subject: [PATCH] refs: work around gcc-11 warning with REF_HAVE_NEW
+I understand from skimming the above that it's about the pathological
+case, these two files are the same except for a trailer at the end.
 
-Using gcc-11 (or 12) to compile refs.o with -O3 results in:
-
-  In file included from hashmap.h:4,
-                   from cache.h:6,
-                   from refs.c:5:
-  In function ‘oidcpy’,
-      inlined from ‘ref_transaction_add_update’ at refs.c:1065:3,
-      inlined from ‘ref_transaction_update’ at refs.c:1094:2,
-      inlined from ‘ref_transaction_verify’ at refs.c:1132:9:
-  hash.h:262:9: warning: argument 2 null where non-null expected [-Wnonnull]
-    262 |         memcpy(dst->hash, src->hash, GIT_MAX_RAWSZ);
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  In file included from git-compat-util.h:177,
-                   from cache.h:4,
-                   from refs.c:5:
-  refs.c: In function ‘ref_transaction_verify’:
-  /usr/include/string.h:43:14: note: in a call to function ‘memcpy’ declared ‘nonnull’
-     43 | extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
-        |              ^~~~~~
-
-That call to memcpy() is in a conditional block that requires
-REF_HAVE_NEW to be set. But in ref_transaction_update(), we make sure it
-isn't set coming in:
-
-  if (flags & ~REF_TRANSACTION_UPDATE_ALLOWED_FLAGS)
-          BUG("illegal flags 0x%x passed to ref_transaction_update()", flags);
-
-and then only set it if the variable isn't NULL:
-
-  flags |= (new_oid ? REF_HAVE_NEW : 0) | (old_oid ? REF_HAVE_OLD : 0);
-
-So it should be impossible to reach that memcpy() with a NULL oid. But
-for whatever reason, gcc doesn't accept that hitting the BUG() means we
-won't go any further, even though it's marked with the noreturn
-attribute. And the conditional is correct; ALLOWED_FLAGS doesn't contain
-HAVE_NEW or HAVE_OLD, and you can even simplify it to check for those
-flags explicitly and the compiler still complains.
-
-We can work around this by just clearing the disallowed flags
-explicitly. This should be a noop because of the BUG() check, but it
-makes the compiler happy.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- refs.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/refs.c b/refs.c
-index d7cc0a23a3..33e8867a9c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1089,6 +1089,13 @@ int ref_transaction_update(struct ref_transaction *transaction,
- 	if (flags & ~REF_TRANSACTION_UPDATE_ALLOWED_FLAGS)
- 		BUG("illegal flags 0x%x passed to ref_transaction_update()", flags);
- 
-+	/*
-+	 * Clear flags outside the allowed set; this should be a noop because
-+	 * of the BUG() check above, but it works around a -Wnonnull warning
-+	 * with some versions of "gcc -O3".
-+	 */
-+	flags &= REF_TRANSACTION_UPDATE_ALLOWED_FLAGS;
-+
- 	flags |= (new_oid ? REF_HAVE_NEW : 0) | (old_oid ? REF_HAVE_OLD : 0);
- 
- 	ref_transaction_add_update(transaction, refname, flags,
--- 
-2.34.0.635.gde47f84164
-
+I wonder how far you could get with #define int size_t & the like ... :)
