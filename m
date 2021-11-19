@@ -2,122 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73C6EC433EF
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 23:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 632D0C433EF
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 23:48:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235192AbhKSXKL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 18:10:11 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53271 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235095AbhKSXKJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 18:10:09 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D481BF2F14;
-        Fri, 19 Nov 2021 18:07:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=djX2EfpNjoyblb+uMQkmpLgX/gRKaBtFv/6nln
-        qb3Nk=; b=CPvoEvimNi3eE/8FNgA0QQiV0QoZM3VogF0Glvu9MSWnthURkcb0rp
-        1GDncvWkbN6thLnbCcj7uwsSxtYyGY8acCFxaixcokYu9lZ+1F3h73WIX2xZTRYF
-        9Byk3rylM0ohyFrAhtvipanAMKfzZR2TT1gPp4rJn8KEToQ96zB8k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AB90DF2F13;
-        Fri, 19 Nov 2021 18:07:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S236152AbhKSXvI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 18:51:08 -0500
+Received: from smtp-out1.suse.de ([195.135.220.28]:39488 "EHLO
+        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235311AbhKSXvH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 18:51:07 -0500
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E71CDF2F12;
-        Fri, 19 Nov 2021 18:07:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Aleen via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Aleen =?utf-8?B?5b6Q5rKb5paH?= <pwxu@coremail.cn>,
-        Aleen <aleen42@vip.qq.com>
-Subject: Re: [PATCH v7 2/2] am: support --empty=<option> to handle empty
- patches
-References: <pull.1076.v6.git.1637232636.gitgitgadget@gmail.com>
-        <pull.1076.v7.git.1637298298.gitgitgadget@gmail.com>
-        <9e60e77c041bca28a50d706c865eb776e5fe2ec2.1637298299.git.gitgitgadget@gmail.com>
-Date:   Fri, 19 Nov 2021 15:07:03 -0800
-In-Reply-To: <9e60e77c041bca28a50d706c865eb776e5fe2ec2.1637298299.git.gitgitgadget@gmail.com>
-        (Aleen via GitGitGadget's message of "Fri, 19 Nov 2021 05:04:58
-        +0000")
-Message-ID: <xmqqpmqvoico.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id 7CC65212BC;
+        Fri, 19 Nov 2021 23:48:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1637365684; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=ItUtFXUEjklrioRrCM+lpHjpG0WiNwXMXlL+x1x4sqY=;
+        b=m/NrQnHYAAJDhNAlvfx6n/52ul7XE2QeyU64ZO8io+zbNk9Veb8b1/9n/CmNGnsCHp2JUq
+        /TAAKWHBxlB62VcstHMjbuABe5QZXK1dqXCIyan3ebvrX01mxduaiQG+CK2tui0Db07kp1
+        mIojn/ICsWdosqlhP6tfIyav5DOV80w=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1637365684;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=ItUtFXUEjklrioRrCM+lpHjpG0WiNwXMXlL+x1x4sqY=;
+        b=wBMW6/MvPNmp+ACZKP3n2vW6Git5g+3mFL5IuL2jtjuCVxLVGL8lfZDGWSxaivNfysiihe
+        825TMV9e/Q++zJDA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 04D8013B73;
+        Fri, 19 Nov 2021 23:48:03 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id 1uJML7M3mGHXSAAAMHmgww
+        (envelope-from <ematsumiya@suse.de>); Fri, 19 Nov 2021 23:48:03 +0000
+From:   Enzo Matsumiya <ematsumiya@suse.de>
+To:     git@vger.kernel.org
+Cc:     Enzo Matsumiya <ematsumiya@suse.de>
+Subject: [PATCH] pager: fix crash when pager program doesn't exist
+Date:   Fri, 19 Nov 2021 20:47:45 -0300
+Message-Id: <20211119234745.26605-1-ematsumiya@suse.de>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 696E60F8-498D-11EC-B806-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Aleen via GitGitGadget" <gitgitgadget@gmail.com> writes:
+setup_pager() doesn't properly free pager_process.argv if
+start_command() fails, nor finish_command() is ever called.
 
-> +test_expect_success 'An empty input file is error regardless of --empty option' '
+setup_pager() is called twice, once from commit_pager_choice(), and then
+from cmd_log_init_finish(). On the first run, it runs fine because
+start_command() assigns cmd->args.v to cmd->argv, and upon command
+failure, child_process_clear() clears cmd->args.
 
-Titles of all the other tests seem to begin with lowercase, so "An
-empty" -> "an empty", probably.
+On the second run, though, argv is no longer NULL, but .args has been
+cleared, so any strvec_push() operation will crash.
 
-> +	test_must_fail git am --empty=drop empty.patch 2>actual &&
-> +	echo Patch format detection failed. >expected &&
+This patch makes sure that freeing pager_process.argv is part of its
+argument preparation, as well as zeroing the whole pager_process struct.
 
-Quote for exactness, like the next test does.
+Reproduction:
+$ git config pager.show INVALID_PAGER
+$ git show $VALID_COMMIT
+error: cannot run INVALID_PAGER: No such file or directory
+[1]    3619 segmentation fault (core dumped)  git show $VALID_COMMIT
 
-    echo "Patch format detection failed." >expected
+While at it, I implemented a fallback to the DEFAULT_PAGER, so it tries
+at least one more time when the configured pager fails.
 
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'invalid when passing the --empty option alone' '
-> +	git checkout empty-commit^ &&
-> +	test_must_fail git am --empty empty-commit.patch 2>err &&
-> +	echo "error: Invalid value for --empty: empty-commit.patch" >expected &&
-> +	test_cmp expected err
-> +'
+Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
+---
+ pager.c       | 25 +++++++++++++++++++++----
+ run-command.c |  1 +
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
-This mode of failure of "am" may not leave ".git/rebase-apply"
-behind right now, or it may leave one in the future.  We do not want
-to worry about left-over cruft to interfere with the next test, so
-cleaning after ourselves with test_when_finished would be a good
-idea, i.e.
+diff --git a/pager.c b/pager.c
+index 52f27a6765c8..79a47db55d63 100644
+--- a/pager.c
++++ b/pager.c
+@@ -97,6 +97,9 @@ static void setup_pager_env(struct strvec *env)
+ 
+ void prepare_pager_args(struct child_process *pager_process, const char *pager)
+ {
++	child_process_clear(pager_process);
++	if (pager_process->argv)
++		free(pager_process->argv);
+ 	strvec_push(&pager_process->args, pager);
+ 	pager_process->use_shell = 1;
+ 	setup_pager_env(&pager_process->env_array);
+@@ -105,11 +108,14 @@ void prepare_pager_args(struct child_process *pager_process, const char *pager)
+ 
+ void setup_pager(void)
+ {
+-	const char *pager = git_pager(isatty(1));
++	const char *tmp_pager = git_pager(isatty(1));
++	char *pager;
+ 
+-	if (!pager)
++	if (!tmp_pager)
+ 		return;
+ 
++	pager = xstrdup(tmp_pager);
++
+ 	/*
+ 	 * After we redirect standard output, we won't be able to use an ioctl
+ 	 * to get the terminal size. Let's grab it now, and then set $COLUMNS
+@@ -124,12 +130,23 @@ void setup_pager(void)
+ 
+ 	setenv("GIT_PAGER_IN_USE", "true", 1);
+ 
++retry:
+ 	/* spawn the pager */
+ 	prepare_pager_args(&pager_process, pager);
+ 	pager_process.in = -1;
+ 	strvec_push(&pager_process.env_array, "GIT_PAGER_IN_USE");
+-	if (start_command(&pager_process))
+-		return;
++	if (start_command(&pager_process)) {
++		/* chosen pager failed, try again with the default pager */
++		if (strcmp(pager, DEFAULT_PAGER)) {
++			free(pager);
++			pager = xstrdup(DEFAULT_PAGER);
++			goto retry;
++		} else {
++			/* default pager failed, let caller handle it */
++			free(pager);
++			return;
++		}
++	}
+ 
+ 	/* original process continues, but writes to the pipe */
+ 	dup2(pager_process.in, 1);
+diff --git a/run-command.c b/run-command.c
+index f329391154ae..d2b7647afdd8 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -19,6 +19,7 @@ void child_process_clear(struct child_process *child)
+ {
+ 	strvec_clear(&child->args);
+ 	strvec_clear(&child->env_array);
++	memset(child, 0, sizeof(*child));
+ }
+ 
+ struct child_to_clean {
+-- 
+2.33.1
 
-    test_expect_success 'invalid when passing the --empty option alone' '
-            test_when_finished "git am --abort || :" &&
-            git checkout empty-commit^ &&
-            test_must_fail git am --empty empty-commit.patch 2>err &&
-            echo "error: Invalid value for --empty: empty-commit.patch" >expected &&
-            test_cmp expected err
-    '
-
-> +test_expect_success 'a message without a patch is an error (default)' '
-> +	test_when_finished "git am --abort || :" &&
-> +	test_must_fail git am empty-commit.patch >err &&
-> +	grep "Patch is empty" err &&
-> +	rm -fr .git/rebase-apply
-> +'
-
-And the point of test_when_finished is to run the clean-up even when
-other steps in the test fails.  For example, "test_must_fail git am"
-may fail to fail for any reason.  Or "grep" after it may fail.
-Because the pieces in a single test is strung together with &&, any
-such failure means the control would NOT reach "rm -fr".  
-
-Since we have test_when_finished that cleans up after ourselves even
-in such a case, the last "rm -fr" step is unnecessary.
-
-> +test_expect_success 'a message without a patch is an error where an explicit "--empty=die" is given' '
-> +	test_when_finished "git am --abort || :" &&
-> +	test_must_fail git am --empty=die empty-commit.patch >err &&
-> +	grep "Patch is empty." err &&
-> +	rm -fr .git/rebase-apply
-> +'
-
-Likewise.
-
-Other than that (and po/ that should not be part of this patch),
-things are looking good.
-
-Thanks.
