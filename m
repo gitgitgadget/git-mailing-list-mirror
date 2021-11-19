@@ -2,76 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53568C433F5
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 07:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5223EC433EF
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 07:24:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 259A361AFB
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 07:23:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 34F9E6128A
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 07:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231358AbhKSH02 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 02:26:28 -0500
-Received: from zg8tmtyylji0my4xnjqunzqa.icoremail.net ([162.243.164.74]:53704
-        "HELO zg8tmtyylji0my4xnjqunzqa.icoremail.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with SMTP id S230296AbhKSH01 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Nov 2021 02:26:27 -0500
-X-Greylist: delayed 11172 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Nov 2021 02:26:27 EST
-Received: from mailtech.cn (unknown [10.12.1.20])
-        by hzbj-icmmx-2 (Coremail) with SMTP id AQAAfwAnTs4FUZdhNBvXBQ--.10296S2;
-        Fri, 19 Nov 2021 15:23:49 +0800 (CST)
-Received: from pwxu$coremail.cn ( [112.94.4.17] ) by
- ajax-webmail-mailtech_rd (Coremail) ; Fri, 19 Nov 2021 15:23:18 +0800 (CST)
-X-Originating-IP: [112.94.4.17]
-Date:   Fri, 19 Nov 2021 15:23:18 +0800 (CST)
-X-CM-HeaderCharset: UTF-8
-From:   =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Aleen via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        "Phillip Wood" <phillip.wood123@gmail.com>,
-        Aleen <aleen42@vip.qq.com>
-Subject: Re: [PATCH v6 0/3] am: support --empty=(die|drop|keep) option to
- handle empty patches
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20211103(a39c0bb8)
- Copyright (c) 2002-2021 www.mailtech.cn
- mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
-In-Reply-To: <xmqqmtm0snol.fsf@gitster.g>
-References: <pull.1076.v5.git.1637141636.gitgitgadget@gmail.com>
- <pull.1076.v6.git.1637232636.gitgitgadget@gmail.com>
- <xmqqilwpuiv4.fsf@gitster.g>
- <b9c1244.36.17d35decb26.Coremail.pwxu@coremail.cn>
- <xmqqmtm0snol.fsf@gitster.g>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+        id S233720AbhKSH1J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 02:27:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47390 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233406AbhKSH1J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 02:27:09 -0500
+Received: from vuizook.err.no (vuizook.err.no [IPv6:2a02:20c8:2640::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D018FC061574
+        for <git@vger.kernel.org>; Thu, 18 Nov 2021 23:24:07 -0800 (PST)
+Received: from [2400:4160:1877:2b00:29f9:f15d:e50b:8944] (helo=glandium.org)
+        by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <mh@glandium.org>)
+        id 1mnyFf-00CQrs-6M; Fri, 19 Nov 2021 07:24:03 +0000
+Received: from glandium by goemon.lan with local (Exim 4.94.2)
+        (envelope-from <mh@glandium.org>)
+        id 1mnyFZ-00BusI-V5; Fri, 19 Nov 2021 16:23:57 +0900
+Date:   Fri, 19 Nov 2021 16:23:57 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH] Use mingw.h declarations for gmtime_r/localtime_r on
+ msys2
+Message-ID: <20211119072357.oxl5caye742blz5j@glandium.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+References: <20211005063936.588874-1-mh@glandium.org>
+ <CAPUEspgLwLxavP3bC9OEJQTphoemQ+jxv+9Nkcvbf51uaBEpww@mail.gmail.com>
+ <20211118030255.jscp2zda4p2ewact@glandium.org>
+ <CAPUEspg-5+YdfTJ6zi9hdDqF=KV2LJFCtqmECSss9Kfpn6sGrQ@mail.gmail.com>
+ <20211118053415.4axljmr4s6kmqmms@glandium.org>
+ <CAPUEsphf0d90HGg64j=jZnt-Xuhs_bwmeOyoUnmzesp_k2c4JA@mail.gmail.com>
+ <20211118090542.rcaggue6zpd7r3ht@glandium.org>
+ <CAPUEspjZmwoOWSJHBrykOfNEv=zLi2nQLs1EkUPTPr-nSNf08Q@mail.gmail.com>
 MIME-Version: 1.0
-Message-ID: <2ebb863f.246.17d37140518.Coremail.pwxu@coremail.cn>
-X-Coremail-Locale: en_US
-X-CM-TRANSID: AgIMCgDn7FXmUJdhaQYAAA--.275W
-X-CM-SenderInfo: psz03q5fruvzxdlohubq/1tbiAQcLCFGCdOPHDwAIsB
-Authentication-Results: hzbj-icmmx-2; spf=neutral smtp.mail=pwxu@corem
-        ail.cn;
-X-Coremail-Antispam: 1Uk129KBjvdXoWruw1UJF17urWxZrW8ArW8Zwb_yoW3CrX_uF
-        Z0qF1DJa1j9a9xtF48Jr4a9r1xGr9rJryrXayUXFnxG34kAFW7GFWDJF9av3Zxt395tr90
-        vF4ku3yfZrsYvjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
-        Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
-        UUUU=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPUEspjZmwoOWSJHBrykOfNEv=zLi2nQLs1EkUPTPr-nSNf08Q@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PiBZZXMuCj4gCj4gQXMgdGhlIFVSTCB5b3Ugd2VyZSByZWZlcnJlZCB0byBleHBsYWlucywgdGhl
-IHNpZ24tb2ZmIHByb2NlZHVyZSBpcwo+IHRvIGtlZXAgdHJhY2sgb2YgcHJvdmVuYW5jZSBvZiB0
-aGUgY29kZSwgd2hpY2ggaXMgYSBtb3JlICJsZWdhbCIKPiBmb3JtYWwgcmVxdWlyZW1lbnQgdGhh
-biBqdXN0ICJJIHVzZSB0aGlzIHBzZXVkb255bSBldmVyeXdoZXJlIi4KPiBXaGVuIGEgYmlnIGNv
-bXBhbnkgY29tZXMgdG8gdXMsIGNsYWltaW5nIHRoYXQgInRoaXMgY29kZSBpcyBvdXIKPiBpbnRl
-bGxlY3R1YWwgcHJvcGVydHkgc3RvbGVuIGZyb20gdXMiIGFuZCBwb2ludGluZyBhdCBjb2RlIGFk
-ZGVkIGJ5Cj4gYSBwYXRjaCBmcm9tIHlvdSwgd2UgZG8gbm90IHdhbnQgdG8gc2VlIHVzIGluIHRo
-ZSBwb3NpdGlvbiB0byBoYXZlCj4gdG8gc2F5ICJlaCwgc29tZWJvZHkgd2hvIHVzZXMgcHN1ZWRv
-bnltIFggc2lnbmVkIERDTywgYnV0IHdlIGRvIG5vdAo+IGV2ZW4ga25vdyB0aGVpciByZWFsIG5h
-bWUiLgoKSSBrbm93IGl0LCBhbmQgYXMgSSBzYWlkIGJlZm9yZSB0aGF0IGdpdGdpdGdhZGdldCBu
-ZWVkIFBSIGNyZWF0b3JzIHRvCnNpZ24gb2ZmIHVzZXIgbmFtZSBvZiBHaXRIdWIgYWNjb3VudCwg
-YWNjb3JkaW5nIHRvIHRoZSBEQ08gY2hlY2suIEkgY2FuCmNvbmZpcm1lZCB0aGF0ICJBbGVlbiIg
-YW5kICJBbGVlbiDlvpDmspvmlociIGFyZSBib3RoIHRoZSByZWFsIG5hbWUgb2YgbWluZSwKdGhl
-IGNvbW1pdHRlci4gSSBjYW4gdXNlIHRoZSBhY2NvdW50IGFsZWVuNDJAdmlwLnFxLmNvbSB0byBj
-b25maXJtIHRoaXMuCg==
+On Thu, Nov 18, 2021 at 09:38:00PM -0800, Carlo Arenas wrote:
+> On Thu, Nov 18, 2021 at 1:05 AM Mike Hommey <mh@glandium.org> wrote:
+> > Oh my bad, I overlooked an important part of the build log: it was a
+> > mingw32 build, not minwg64. Mingw64 builds fine without
+> > -D_POSIX_THREAD_SAFE_FUNCTIONS=200112L. Mingw32 requires it (because
+> > the ifdefs are for mingw64)
+> 
+> Can you confirm the version of the winpthread library in your SDK? and
+> output of your headers, or something that could back up that statement
+> of "ifdefs are for mingw64"?.
 
+The ifdef around gmtime_r and localtime_r in mingw.h is for __MINGW64_VERSION_MAJOR.
+The ifdef around _POSIX_C_SOURCE in git-compat-util.h is for
+__MINGW64__.
+I'd imagine that plays a role.
+
+winpthreads version on my system is 9.0.0.6246.ae63cde27-1.
+
+The /mingw32/i686-w64-mingw32/include/time.h section related to gtime_r
+and localtime_r starts with:
+```
+#if defined(_POSIX_C_SOURCE) && !defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#define _POSIX_THREAD_SAFE_FUNCTIONS 200112L
+#endif
+#ifdef _POSIX_THREAD_SAFE_FUNCTIONS
+__forceinline struct tm *__CRTDECL localtime_r(const time_t *_Time, struct tm *_Tm) {
+  return localtime_s(_Tm, _Time) ? NULL : _Tm;
+}
+__forceinline struct tm *__CRTDECL gmtime_r(const time_t *_Time, struct tm *_Tm) {
+  return gmtime_s(_Tm, _Time) ? NULL : _Tm;
+}
+```
+
+Mike
