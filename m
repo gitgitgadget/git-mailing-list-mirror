@@ -2,118 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B4D7C433F5
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 19:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E32EC433EF
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 19:25:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5DDD361AD0
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 19:14:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 595CF61AFF
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 19:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230494AbhKSTRh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 14:17:37 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62393 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229675AbhKSTRh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 14:17:37 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F20210AAF5;
-        Fri, 19 Nov 2021 14:14:34 -0500 (EST)
+        id S232926AbhKST2U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 14:28:20 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60879 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229977AbhKST2U (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 14:28:20 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2547B16F280;
+        Fri, 19 Nov 2021 14:25:18 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=6chzaIdsg5ok
-        PHn8LyBsMXKXjUWomx+4k/GL+FtrK30=; b=qYV6pyPdnHQzuSSqL12dZWJ+1+8X
-        PQgsSM2oWPabe+tyjbYT8UDNLRXXLre2onMG6BpOI3aZEaMVtoS/WbEvNmN3x6Mr
-        1XFK3v03Ssct+pxL0mUQ/PtnxX+xN6vUDgNYo/GjqU58J0mNsD+eWKPfTEzOpYmC
-        rq3jnxAaioTmPgA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 96CC210AAF4;
-        Fri, 19 Nov 2021 14:14:34 -0500 (EST)
+        :content-type:content-transfer-encoding; s=sasl; bh=BTjJT+aJXP6F
+        sbjY0rX3mFMge3+5oryS6iY52KkIsSY=; b=qQ9c4mGWq7aUqzGqA306qPUs2WW/
+        cLhRsFwKLCg2ZvhvXT09DLIxb4aVANXB/Mtwk5iJms5IjQpd2eAVdSYrlYbG4tSR
+        NOQXIbLLD5nw+FC+nmobD5p/BK47Xa6K4FFj+LCxSUukJ5BAto9xBxRZB6Qmmiue
+        CC4NravDz4BBdGA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1DB7C16F27F;
+        Fri, 19 Nov 2021 14:25:18 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F08A510AAF3;
-        Fri, 19 Nov 2021 14:14:33 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7627516F279;
+        Fri, 19 Nov 2021 14:25:15 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/6] strbuf: remove unused istarts_with() function
-References: <cover-0.6-00000000000-20211119T124420Z-avarab@gmail.com>
-        <patch-5.6-642eec3d77c-20211119T124420Z-avarab@gmail.com>
-Date:   Fri, 19 Nov 2021 11:14:32 -0800
-In-Reply-To: <patch-5.6-642eec3d77c-20211119T124420Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 19 Nov
- 2021 13:46:25 +0100")
-Message-ID: <xmqqtug8ot47.fsf@gitster.g>
+To:     Aleen =?utf-8?B?5b6Q5rKb5paH?= <pwxu@coremail.cn>
+Cc:     "Johannes Schindelin" <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        "Phillip Wood" <phillip.wood123@gmail.com>,
+        Aleen <aleen42@vip.qq.com>
+Subject: Re: [PATCH v6 0/3] am: support --empty=(die|drop|keep) option to
+ handle empty patches
+References: <pull.1076.v5.git.1637141636.gitgitgadget@gmail.com>
+        <pull.1076.v6.git.1637232636.gitgitgadget@gmail.com>
+        <xmqqilwpuiv4.fsf@gitster.g>
+        <b9c1244.36.17d35decb26.Coremail.pwxu@coremail.cn>
+        <xmqqmtm0snol.fsf@gitster.g>
+        <2ebb863f.246.17d37140518.Coremail.pwxu@coremail.cn>
+        <xmqqr1bcqe6p.fsf@gitster.g>
+        <6c267a9e.471.17d39318b2b.Coremail.pwxu@coremail.cn>
+Date:   Fri, 19 Nov 2021 11:25:14 -0800
+In-Reply-To: <6c267a9e.471.17d39318b2b.Coremail.pwxu@coremail.cn> ("Aleen
+ =?utf-8?B?5b6Q5rKbCeaWhyIncw==?= message of "Sat, 20 Nov 2021 01:14:47
+ +0800 (CST)")
+Message-ID: <xmqqpmqwosmd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: EE017F7E-496C-11EC-89A9-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6C5E5CA6-496E-11EC-901B-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Aleen =E5=BE=90=E6=B2=9B=E6=96=87 <pwxu@coremail.cn> writes:
 
-> It's arguably slightly odd to have a skip_prefix() and iskip_prefix(),
-> but not both variants when it comes to starts_with(), but this is easy
-> enough to resurrect should we ever need it, so let's drop it for now.
-
-Let's not go there.  It is not easy at all to know that it used to
-exist in the first place, which is more important part than knowing
-that it is there and resurrect it.  We'd end up hearing from people
-that the API is uneven, and seeing a patch that reinvents it, which
-we have to review again.
-
-Leaving an unused implementation is not without risk of going it
-stale (imagine: when iskip_prefix() learns to honor locale aware
-case insensitive comparison, istarts_with() that nobody uses may
-be left behind without anybody noticing), so carrying an unused
-function is not cost-free, but in this particular case, I think
-keeping it is much better economy than removing it, even without
-counting the cost of writing this response.
-
-Thanks.
-
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>> Can somebody from GGG land help this user?  I _think_ the easiest
+>> workaround (other than not using GGG and sending e-mail in the old
+>> fashioned way) is to commit and sign-off under the real name, and
+>> push under whatever GitHub username to throw a GGG pull request,
+>> which GGG should be able to take, as I have seen users forward other
+>> authors commits just fine.
 >
-> ---
->  git-compat-util.h | 1 -
->  strbuf.c          | 9 ---------
->  2 files changed, 10 deletions(-)
->
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index d70ce142861..7117024a28b 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -512,7 +512,6 @@ report_fn get_warn_routine(void);
->  void set_die_is_recursing_routine(int (*routine)(void));
-> =20
->  int starts_with(const char *str, const char *prefix);
-> -int istarts_with(const char *str, const char *prefix);
-> =20
->  /*
->   * If the string "str" begins with the string found in "prefix", retur=
-n 1.
-> diff --git a/strbuf.c b/strbuf.c
-> index b22e9816559..1b52e3c8250 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -12,15 +12,6 @@ int starts_with(const char *str, const char *prefix)
->  			return 0;
->  }
-> =20
-> -int istarts_with(const char *str, const char *prefix)
-> -{
-> -	for (; ; str++, prefix++)
-> -		if (!*prefix)
-> -			return 1;
-> -		else if (tolower(*str) !=3D tolower(*prefix))
-> -			return 0;
-> -}
-> -
->  int skip_to_optional_arg_default(const char *str, const char *prefix,
->  				 const char **arg, const char *def)
->  {
+> When it comes to GGG, I just want to know whether this is the only
+> way to contribute to Git? I think we can directly use GitHub to
+> run the reviewing procedure, rather than sending emails in this old
+> fashioned way, since that Git code has been maintained in GitHub.
+
+No, we do not develop or maintain at GitHub at all.  The repository
+at GitHub is one of the several publishing point and development is
+done here.
