@@ -2,99 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 136CDC433F5
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 17:15:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29CC3C433EF
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 17:16:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE1E461A03
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 17:15:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F3A4361A03
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 17:16:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236129AbhKSRSq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 12:18:46 -0500
-Received: from mout.web.de ([212.227.17.12]:40925 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232663AbhKSRSo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 12:18:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1637342135;
-        bh=Euy0XMVsoxSwLLRpTV5pA5FxpCtx90TEDI5Cp1oT2/0=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=rECayQ/jif8/+ADliIw0PBlkxeSIqqOdWEfjiVsQDtiNEf59aj/zZ3QexaavxbJzj
-         RK1mcYBkODv35OqXlTDZh4zML00tQOxDtPn6s1dDjftsSRKNH14TzCjRwS7XL867JB
-         Y7aX44Etk2JRoopvOz3Ul5D706M8v6o+38VWZd9I=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.20.171]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MZjET-1n88vY2tRX-00Wic5; Fri, 19
- Nov 2021 18:15:35 +0100
-Message-ID: <fb70a801-369b-c1b1-457b-bab06688b2bc@web.de>
-Date:   Fri, 19 Nov 2021 18:15:34 +0100
+        id S236210AbhKSRTx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 12:19:53 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53783 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230296AbhKSRTw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 12:19:52 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 85A97F0844;
+        Fri, 19 Nov 2021 12:16:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0vl6nltw9131PAUz89cgdjqDFhrsjBO0vmZfst
+        KdmF0=; b=U5W/D6AsvhNGq4H4qedWUWy3xH54MeWMJ4KcrXj20VvXY9Jg47Rops
+        a6f9AKqHnytp8y5Oi58KyIukgjeiS73S+AjUlm+l0BEenzoxMGfnqieUCHBw/n6E
+        K/YAngbx7MA9JOyMN3lW4xPyjn9fBHdtPhJYxG1Luwm2c8y8FYals=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D084F0843;
+        Fri, 19 Nov 2021 12:16:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E52F1F0842;
+        Fri, 19 Nov 2021 12:16:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] pull: don't say that merge is "the default strategy"
+References: <20211118154317.639118-1-alexhenrie24@gmail.com>
+        <xmqqk0h5w3qy.fsf@gitster.g>
+        <CAMMLpeSuL2k2semwS+K1jxTNZEV79GzCymFZo+1VcsyU6bYTrg@mail.gmail.com>
+        <CABPp-BHAqhpK4F2wTRhxZ5DXKOJExMxihbdpx1d2fYqAgtzS9w@mail.gmail.com>
+Date:   Fri, 19 Nov 2021 09:16:48 -0800
+In-Reply-To: <CABPp-BHAqhpK4F2wTRhxZ5DXKOJExMxihbdpx1d2fYqAgtzS9w@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 18 Nov 2021 21:41:22 -0800")
+Message-ID: <xmqq7dd4qd4v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.1
-Subject: Re: [PATCH] mergesort: avoid left shift overflow
-Content-Language: en-US
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Philip Oakley <philipoakley@iee.email>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <5eabbe1c-4c0f-559a-da21-423afec89e7e@web.de>
- <7fbd4cf4-5f66-a4cd-0c41-e5b12d14d761@iee.email>
- <nycvar.QRO.7.76.6.2111191750400.63@tvgsbejvaqbjf.bet>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <nycvar.QRO.7.76.6.2111191750400.63@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:P2FjrY34V2InyIKOCDt30WHyimGeC0BLoNGldEA9yv8E1IP31A2
- P2Kai/A1qKQQ/t7DXEFru20n93dUwcUNjMFFAc/y4ToN9K91klZBCvhehzwq8LfkgZ5m/Op
- q9lIlDr+l8UdfwAj5673WslrIuSHwqd8STdxiW/PfoPfXujbUEd5VzeuVjBXIfeMMwY3E20
- 6vypY4+fzzD64ky4CTqLA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:79kuM43eYvc=:S4BHYLhipW3FpcgYyiU8Ge
- MHQ/jjIqGYeBPV3DT2GhxwE0RcjcBy930ZX6l7/+8nKLsXISw73rcqIVLTnHaPnVyxtitCh7R
- 0HtZbQldzESNK4tVI3uiRjs+W4gcKJIewDbqpJZK7BdvQIlbA2HS1P3IVSBwn24TbEc81hmr3
- iwkK5CeyEYES1Q6iSr1/8qhPZDcx0sfQxr5mc/iCrBybAIhMp93j3ASHnuL0YAz55Sl5gNXUO
- tHSOksFqbfyZkAKjuu36HJzY4iuI6pnJtKsiJN3XIgdh9vJsAp/Pf8iykKlhdEMLRxawB0kDC
- 88m5lIZ//kOlZeBTeC47Grxo1rvZX07/2x93tDcrkOaLJIXyFqlg1z5qUa64+NyKN4fe2N5Lh
- CRyqBDkKkIUkqb32foBkvyMfYXyn47MS34wulxjhJtuoMpmMmMy559VfnNhNE3OONAcpQoexV
- TYurzhpmbWmrsiAMwVcdmGpSpqZSOaqqaNV1TkoCN20cvYmqFecgwQbdPXXMn4Y69czwf9vDN
- zjiGM87P85MrmKTekXN2Z2WVlYMYuqxnN3rAkXXlid1NEc4avLSD4xm7/JBNQhAr51qohv0fG
- VugGeM+fKlYpjca/Fj2zTJAZkQWFGPDPjNLqK4lqO7gG94YbFcpE9uk4PVmIwyth31ZZOCEu6
- cfF3JFesh0sRQVK/q3MhecE+XbYeaJe5+5oacVPcV5FvIHFz1zwUqDzYTwyZz8ZBwevxuIP/B
- tF8VNiA/T+u9rzDkeEwADqCAc20Xnyb8MsjjrX+UiQu9o+sKQ6ap0hi+pmRpEZppfyD4jvJB7
- 0b5pMpQHPDX1DVpawkJOR8L4bPIaD/dmD4n5GzxOCoOtL3xy4sO73G2UZsUIbYkLdoA6e4Yc4
- vTxAvf3e770OeWzRRk6Y96D3METilvzldQSEAadDspREZJy3JfgzJXpnJZUfFkzZIm/6Prd5t
- DiVatso/BO1u99A0aOT2i/jTdYoCEP/BdXiPT2y3EVR2Vxhuya8LUl6K1g2Io95bYYNTHDnXp
- q/lL1t0o+OFTDxUFyUO7Q4Epx92dyQva5KRS2WWg2aDw/Hk2FeUahCAz0IqKxz1zcybWlvaMC
- nV7Yv8nCr/cQ/A=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7B824506-495C-11EC-B5BC-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.11.21 um 17:51 schrieb Johannes Schindelin:
-> Hi Philip,
->
-> On Thu, 18 Nov 2021, Philip Oakley wrote:
->
->> I already had this locally as part of an MSVC (Visual Studio) fix for
->> the various C4334 warnings.
->>
->> The other cases are in object-file.c, diffcore-delta.c (2 occurrences) =
-,
->> and repack.c.
->>
->> My patches are in https://github.com/PhilipOakley/git/tree/oneU_t
+Elijah Newren <newren@gmail.com> writes:
 
-Good warning, that.  And scary stuff.
+>> I was referring to the patch that I originally wrote, before Elijah
+>> made the changes that actually got the patch accepted:
+>> https://lore.kernel.org/git/20210627000855.530985-1-alexhenrie24@gmail.com/
 
-builtin/repack.c shifts by 5, diffcore-delta.c by at most 17 IIUC, and
-object-file.c by at most 31, which should all be safe.  Shifting by 32
-or more would push the 1 off the right end, leaving only a surprising 0.
-Phew!  Definitely worth fixing regardless.
+Ah, with that URL, the extra paragraph would have made sense.  Here
+is how amended the log message with this new information.
 
-> How about rebasing the remaining patches from
-> https://github.com/git-for-windows/git/compare/main...PhilipOakley:oneU_=
-t
-> on top of `rs/mergesort` and then submitting them, to avoid duplicate
-> efforts?
+Thanks, all.
 
-That would be nice.  I'd also don't mind if Junio took the whole set
-incl. the mergesort.c change instead.
+----- >8 --------- >8 --------- >8 --------- >8 -----
+From: Alex Henrie <alexhenrie24@gmail.com>
+Date: Thu, 18 Nov 2021 08:43:17 -0700
+Subject: [PATCH] pull: don't say that merge is "the default strategy"
 
-Ren=C3=A9
+Git no longer has a default strategy for reconciling divergent branches,
+because there's no way for Git to know which strategy is appropriate in
+any particular situation.
+
+The initially proposed version in [*], that eventually became
+031e2f7a (pull: abort by default when fast-forwarding is not
+possible, 2021-07-22), dropped this phrase from the message, but
+it was left in the final version by accident.
+
+* https://lore.kernel.org/git/20210627000855.530985-1-alexhenrie24@gmail.com/
+
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/pull.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/pull.c b/builtin/pull.c
+index b311ea6b9d..20b585a76b 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -939,7 +939,7 @@ static void show_advice_pull_non_ff(void)
+ 		 "You can do so by running one of the following commands sometime before\n"
+ 		 "your next pull:\n"
+ 		 "\n"
+-		 "  git config pull.rebase false  # merge (the default strategy)\n"
++		 "  git config pull.rebase false  # merge\n"
+ 		 "  git config pull.rebase true   # rebase\n"
+ 		 "  git config pull.ff only       # fast-forward only\n"
+ 		 "\n"
+-- 
+2.34.0-202-gd9146917d7
+
