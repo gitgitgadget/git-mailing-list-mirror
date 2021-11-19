@@ -2,87 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E028C433EF
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 17:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2ED8C433EF
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 17:06:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 53787610CA
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 17:03:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 870FD6141B
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 17:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233711AbhKSRGr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 12:06:47 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52118 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229811AbhKSRGq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 12:06:46 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A183DF0712;
-        Fri, 19 Nov 2021 12:03:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=xS0rYfnHEUrr
-        UIGAw7aUi2tEhMO5UXpSQpGjhK6X5GI=; b=C612r1dFXE708MV4Yz0YonIXsZyP
-        RUZClhqxBpVfHPdRlm6OSjcTbHJMFTtB9FFfFj/BXuYfR15Y+X+dmDAgD3mEYmo+
-        khO9og5RPzkn0OldpX5WxW+zqel08fPPIEPJl64V286AQtMR+Ts60doRavn0QoWc
-        L+IA6AXQQtiOPUs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 969A4F0710;
-        Fri, 19 Nov 2021 12:03:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F31E2F070F;
-        Fri, 19 Nov 2021 12:03:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [Question] Unicode weirdness breaking tests on ZFS?
-References: <9393e572-0666-6485-df29-abad5e0d32a1@gmail.com>
-        <20211117161226.xcat77ewhf5inaif@tb-raspi4>
-        <20211117170613.kyoe6ov2m5wi2i56@tb-raspi4>
-        <20211117173924.maporsti5cz2ixsu@tb-raspi4>
-        <8a3d0d0e-cc82-b696-00f4-b71e6452e1bd@gmail.com>
-        <5d1b5ce6-d9ff-1b2a-2ff2-19813c957a24@gmail.com>
-        <20211119154405.xhoqfh3vmljxbh5c@tb-raspi4>
-Date:   Fri, 19 Nov 2021 09:03:42 -0800
-In-Reply-To: <20211119154405.xhoqfh3vmljxbh5c@tb-raspi4> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Fri, 19 Nov 2021 16:44:05
- +0100")
-Message-ID: <xmqqmtm0qdqp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S236210AbhKSRJT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 12:09:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39462 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230296AbhKSRJT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 12:09:19 -0500
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33371C061574
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 09:06:17 -0800 (PST)
+Received: by mail-il1-x12f.google.com with SMTP id x9so10856255ilu.6
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 09:06:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=c1DODtMCH6eu2OoGPjH6rWYihh0CiQXSjeTNy4b10M0=;
+        b=c7D6t2EOpG5U3pSll0j7lpD7VYtbeTODL+l4I7ddLtG5UCiAZMv7MTl3Q2vY6C81qy
+         bD80CqUycEYGc9PH1HoA5eLWyOBNoQIPGG1fc9GQCz/RItizdZ8PKY98IjL61hoHV+0W
+         iZ5YDU29Moraz03d+ETC+aJMj3bTiisHXcITLhUe4Ds8CnhDKksIqMAQW6bsLhzKyxez
+         2MbGef1yWL/eJmqqZq7pmpW+jqlhtxs71OIGqQw4iP4QgtgrmWCGBKtmj3fq48jNaLhb
+         KMIekrEdF/06oUEvtUfbr+i3ENEi20FbMQOA5V00LDQBuxLLkw9TRqnK0v2UjYtIayhu
+         mFIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=c1DODtMCH6eu2OoGPjH6rWYihh0CiQXSjeTNy4b10M0=;
+        b=GAFTnjzJgY5cDyFWF24DzRdlak5ZguqmREKHT4niSqYdeRPGNE4JKJYJhXspud5Zt9
+         IkvdItVdU2qmCAeFumcahOI76y7NhZNF6XoS3Ffq6OIrbmavhPbuRc+FVuqjqHXX844p
+         Dce/LJCVV/t8duNgXvaAf4B4aUo3QremiuatdRN31RpNibBTPnvAh4k1xVOl2U25if8Q
+         TgJP2e3fqhv/K9Zyqt/x9ETgkEkLS5SWWLtPT3+IZZtaqnYdBNMZ9pQE85zLtuEx0nf1
+         SnoGMu99elU9OyG5eg+PoMqQZTaSz5HNKfk//OYqYuhAlTbZKqscoTyzyHf+92ApqNL6
+         jVtw==
+X-Gm-Message-State: AOAM531Up8H4xNKeSpLgtrpl2fdTeSQsrtwMUTJxvc/AQHt1iQGARxNt
+        hm+EeUcwKgwJyMpg69Z60kgyXNOE66fCOQ7Ga2g=
+X-Google-Smtp-Source: ABdhPJzKNVSMWilRaMoocweTMVKzFhJ37COtGnaxf9g/NIVqYafjS4mT7U4289sdSiA/SQ3cQZH5omGbdwz/Vcev0zs=
+X-Received: by 2002:a92:ca0b:: with SMTP id j11mr5565781ils.289.1637341576240;
+ Fri, 19 Nov 2021 09:06:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A70CF7C2-495A-11EC-BA69-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <CACLOEFZz7bunO2S5-ec1K10B9AJU4-m50j3j9c=12R6d1D+-dg@mail.gmail.com>
+ <YZaHpJKeyDEY8qKW@coredump.intra.peff.net> <2bd2269f-c7f1-7afb-7052-48fac148dffd@gmail.com>
+ <CACLOEFbY3LwMa2uhc=9jmcGFf0mvWzEM=YityLyFcuGWXVmqbw@mail.gmail.com> <72fffbff-16f7-fa17-b212-67aae9e1b034@gmail.com>
+In-Reply-To: <72fffbff-16f7-fa17-b212-67aae9e1b034@gmail.com>
+From:   Danial Alihosseini <danial.alihosseini@gmail.com>
+Date:   Fri, 19 Nov 2021 20:36:04 +0330
+Message-ID: <CACLOEFb41ZLvvkaF6xivFShOJfSHcNupzstiShKHiNCg4DCEhQ@mail.gmail.com>
+Subject: Re: git 2.34.0: Behavior of `**` in gitignore is different from
+ previous versions.
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Derrick Stolee <dstolee@microsoft.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Thanks Derrick.
 
-> Should we conclude that the underlying os/zfs is not stable ?
-> Things don't seem to be reproducable
->
-> What Git needs here in t0050 is that stat("=C3=A4") behaves the same as=
- stat("a=C2=A8"),
-> when either "=C3=A4" or "a=C2=A8" exist on disk.
-> The same for open() and all other file system functions.
+> What is unclear to me is what exactly "match a directory" means.
+> If we ignore a directory, then we ignore everything inside it (until
+> another pattern says we should care about it), but the converse
+> should also hold: if we have a pattern like "!data/**/", then that
+> should mean "include everything inside data/<A>/ where <A> is any
+> directory name".
 
-We either need to see these two are treated as the same thing, or
-these two are treated as two distict filesystem entities, just like
-stat("a") and stat("b") are.  What we absolutely need is the
-unification either always happens or never happens consistently.
+I think if we consider directory and files separately, it would be more clear.
+If a pattern in gitignore matches a directory, it is just about that
+directory and not about its contents.
+The contents are ignored by another rule which states:
+> It is not possible to re-include a file if a parent directory of that file is excluded.
 
-I wonder what readdir() is returning.  After creat("=C3=A4") in an empty
-directory, does readdir() in there return "=C3=A4" or "a=C2=A8?  And vice
-versa?  Is this also inconsistent?
+In our test case, the "data1" directory is ignored by the "data/**" pattern.
+However, the contents are ignored by two rules. One of them is that
+the parent ("data1") is not tracked. Another one is that the "data/**"
+pattern matches them.
+By adding the "!data/**/" pattern, the "data1" directory is
+re-included, but its contents are still ignored by the "data/**"
+pattern.
 
-> ("=C3=A4" is the precomposed form "a=C2=A8" is the decomposed form,
->  typically both render to the same glyph on the screen,
->  and a hex dump or xxd will show what we had.
->  I just use this notation here for illustration)
->
-> Should we contact the zfs developers ?
+I hope this will help to make the rules more clear.
+
+Thanks
+Danial
