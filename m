@@ -4,131 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19B17C433FE
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 20:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF2B0C433F5
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 20:33:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED7FE61AA2
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 20:26:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DFA761131
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 20:33:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235280AbhKSU3k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 15:29:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56260 "EHLO
+        id S232069AbhKSUgq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 15:36:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234627AbhKSU3e (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 15:29:34 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81F21C061574
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 12:26:32 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id c4so20063834wrd.9
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 12:26:32 -0800 (PST)
+        with ESMTP id S231670AbhKSUgq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 15:36:46 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10ABCC061574
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 12:33:44 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id h12-20020a056830034c00b0055c8458126fso18604167ote.0
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 12:33:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=L0QyslBvJy5fQX2Yb6x4EkVSsmx8yIk+5/XY2SyqadY=;
-        b=QzcNWmrTCOVR0H+Q7DWZPxxhCWcjANqtfRPk4LUoiN5XraUtkjKetrYpKBAq3WHeGV
-         nqo6QJIyJ0khRZBktlPPM2RnwgK7nn+bHmusTt8J2iIWDobkrFKxk1Ch0eexhqRI5TeD
-         l+mEiKgvneCsm1M/YhZioJyY6ly4uB8QwPnO3xrpgewmZhk9RYJzOho2q64naJz/MeJI
-         zkbuW/dl3JgToSMl+f7HHsIFnLI6JQgfKZtvUiYHd72XZ2R1OiGRpi0Aj6+CFTRCR/hy
-         qHx9WMtveDipBBiAI9VFHqfeMtBXB0CiOx4m9d6BWTdTv4ObNWvTOCLTS+Q04v3i2v5G
-         DmNg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=aDOYw9n/egqqIJfD5D8Cwx6QCBgZ19zSUFSX+9WPe/E=;
+        b=M2tuTkp+0i1O854p231Ofhm++M6+uiqWUYWRLklr0xI9s9Os6akDWgQudiH10TTkmj
+         JgT/3jtXMQ6EqFu6roLCXJrNL0oJn5G4YjZIw4K5UbHoNtHr0fvPQ1bdZoZr0XR4cAwy
+         mcpyUztRsmnh7jboHbWWWlWOPkj+o3KwQ/XnBV+xQiI0KNF73GkCMxwDiUPZQI2iyErS
+         4wvJdt78p9H84W9nFuxW+t/X+XmkDkiic0LnHDlcnvrBp5nWyZhAKhzK4E5PsyUzvQxJ
+         QoE1M/3nOOI+MTmJmTzHJEkzZR5Ih8cUemarV2nJg7g5ksRkh8YnIdf9ez3BNoP8GNTq
+         Zerg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=L0QyslBvJy5fQX2Yb6x4EkVSsmx8yIk+5/XY2SyqadY=;
-        b=8CcvRQ1x10HjgxrKb3cDnHer344zA5Ejsd05PobfoyxvCCiZgiRPqGnGkaxFQMQTCd
-         CICAXf6xfBcmtOhpFfRNaxjg7349HHA7hnL7IMzTuy0WkS7F8yr+jTuY3CavczLmsa/Z
-         ubw9GK9qbYCge560FZvzE1DZG/xKJ+fVorXPu/pbROcPsqrtzndnGPL+kf3NJtVGOSFb
-         25afltgcXjDvgBpJiWsJ71TrHfZND8iXPCzj5GsiHWjs5RbW0RmqgoAZJHYoI6PeYJux
-         zJs8i+fN1zw9GyVDWOaGPKFHdTU/QTdYdA4dNaHrnkjcBOlWFeOBfKqPv1/IBoW8x5R+
-         2LLg==
-X-Gm-Message-State: AOAM532XTNUmKMccVhm0UuSsdYzc6xNTWirmq9FKXudPFHF+mLBphpk1
-        JakbzmHjrGLksmgjfYp+3hWSs3qQWAgh5Q==
-X-Google-Smtp-Source: ABdhPJytKNXOUq9fsNK0PMndAkfevcEX37DwX7KvpDzg9fHq6EU1fVUVPEdtgyzBcQkCyqLUUOzUpg==
-X-Received: by 2002:a5d:64af:: with SMTP id m15mr11042157wrp.267.1637353590144;
-        Fri, 19 Nov 2021 12:26:30 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id bg14sm856202wmb.5.2021.11.19.12.26.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Nov 2021 12:26:29 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 3/5] object-store.h: remove unused has_sha1_file*()
-Date:   Fri, 19 Nov 2021 21:26:23 +0100
-Message-Id: <patch-v2-3.5-6d0ca249001-20211119T202455Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.0.823.gcc3243ae16c
-In-Reply-To: <cover-v2-0.5-00000000000-20211119T202455Z-avarab@gmail.com>
-References: <cover-0.6-00000000000-20211119T124420Z-avarab@gmail.com> <cover-v2-0.5-00000000000-20211119T202455Z-avarab@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=aDOYw9n/egqqIJfD5D8Cwx6QCBgZ19zSUFSX+9WPe/E=;
+        b=6SnCPt0njfDRfaxQm2Xf9BdiY61XgVqxvdRxpuQWxkc58YzxIoneACZya83GIBYk6v
+         lW7NWeZ+kTFYRdN7TuM7TKpUrXXqfwdGcOUf7861R3B24CLtHXtaLvbxrG3zPkN7LSVp
+         GxwErncSIJNuIJZHMYhSyVCIIfy6hJB4tdguE8XZtQQI3WjdTEV0vgPPe8yy+/pglPlA
+         koPxPxA3LoaqzeZpPIeDTnYZoeVOipMYewuuBPumiHKcXbfqbEoG06L2pSV0g10l9hYk
+         7MJ0kNgToW88+qSijusrbNEEwYWc8NNq4tdzJOYVzYilTMVnQfMzYZGSVoionKD4cB1r
+         MEvA==
+X-Gm-Message-State: AOAM532l25pQLdrHMTB5Ueebh+xUnd6yb342eXyuplfAnKmHVXndzST6
+        D2Ae1z59FmRHr29xshlH9eY=
+X-Google-Smtp-Source: ABdhPJzXgizbp+cv0k4yHaDtY6sAzCJAOhm0GsTqtIkp/E8/9ZySZRFFsX2yqNh842zutBAC02JAUA==
+X-Received: by 2002:a9d:2077:: with SMTP id n110mr6975512ota.261.1637354023119;
+        Fri, 19 Nov 2021 12:33:43 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:3441:8b39:39a2:9208? ([2600:1700:e72:80a0:3441:8b39:39a2:9208])
+        by smtp.gmail.com with ESMTPSA id c9sm183248oog.43.2021.11.19.12.33.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Nov 2021 12:33:42 -0800 (PST)
+Message-ID: <429375f7-ec3e-596f-5f79-c724570c8397@gmail.com>
+Date:   Fri, 19 Nov 2021 15:33:41 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.1
+Subject: Re: git 2.34.0: Behavior of `**` in gitignore is different from
+ previous versions.
+Content-Language: en-US
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Danial Alihosseini <danial.alihosseini@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
+References: <CACLOEFZz7bunO2S5-ec1K10B9AJU4-m50j3j9c=12R6d1D+-dg@mail.gmail.com>
+ <YZaHpJKeyDEY8qKW@coredump.intra.peff.net>
+ <2bd2269f-c7f1-7afb-7052-48fac148dffd@gmail.com>
+ <CACLOEFbY3LwMa2uhc=9jmcGFf0mvWzEM=YityLyFcuGWXVmqbw@mail.gmail.com>
+ <72fffbff-16f7-fa17-b212-67aae9e1b034@gmail.com>
+ <190a1fea-124d-2e85-38ea-9dab87f3e377@kdbg.org>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <190a1fea-124d-2e85-38ea-9dab87f3e377@kdbg.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These macros were last used in 5d3679ee023 (sha1-file: drop
-has_sha1_file(), 2019-01-07), so let's remove coccinelle migration
-rules added 9b45f499818 (object-store: prepare has_{sha1, object}_file
-to handle any repo, 2018-11-13), along with the compatibility macros
-themselves.
+On 11/19/2021 3:05 PM, Johannes Sixt wrote:
+> Am 19.11.21 um 15:51 schrieb Derrick Stolee:
+>> What is unclear to me is what exactly "match a directory" means.
+>> If we ignore a directory, then we ignore everything inside it (until
+>> another pattern says we should care about it), but the converse
+>> should also hold: if we have a pattern like "!data/**/", then that
+>> should mean "include everything inside data/<A>/ where <A> is any
+>> directory name".
+>>
+>> My inability to form a mental model where the existing behavior
+>> matches the documented specification is an indicator that this was
+>> changed erroneously. A revert patch is included at the end of this
+>> message.
+>>
+>> If anyone could help clarify my understanding here, then maybe
+>> there is room for improving the documentation.
+> 
+> You form a wrong mental model when you start with the grand picture of a
+> working tree. That is, when you say
+> 
+> - here I have theeeeeese many files and directories,
+> - and I want to ignore some: foo/**/,
+> - but I don't want to ignore others: !bar/**/.
+> 
+> This forms the wrong mental model because that is not how Git sees the
+> working tree: it never has a grand picture of all of its contents.
+> 
+> Git only ever sees the contents of one directory. When Git determines
+> that a sub-directory is ignored, then that one's contents are never
+> inspected, and there is no opportunity to un-ignore some of the
+> sub-directory's contents.
 
-The "These functions.." in the diff context and the general comment
-about compatibility macros still applies to
-"NO_THE_REPOSITORY_COMPATIBILITY_MACROS" use just a few lines below
-this, so let's keep the comment.
+So the problem is this: I want to know "I have a file named <X>, and
+a certain pattern set, does <X> match the patterns or not?" but in
+fact it's not just "check <X> against the patterns in order" but
+actually "check every parent directory of <X> in order to see if
+any directory is unmatched, which would preclude any later matches
+to other parents of <X>"
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- contrib/coccinelle/the_repository.pending.cocci | 15 ---------------
- object-store.h                                  |  4 ----
- 2 files changed, 19 deletions(-)
+So really, to check a path, we really want to first iterate on the
+parent directories. If we get a match on a positive pattern on level
+i, then we check level (i+1) for a match on a negative pattern. If
+we find that negative pattern match, then continue. If we do not see
+a negative match, then we terminate by matching the entire path <X>.
 
-diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contrib/coccinelle/the_repository.pending.cocci
-index 2ee702ecf7f..072ea0d9228 100644
---- a/contrib/coccinelle/the_repository.pending.cocci
-+++ b/contrib/coccinelle/the_repository.pending.cocci
-@@ -11,21 +11,6 @@ expression G;
- + repo_read_object_file(the_repository,
-   E, F, G)
- 
--@@
--expression E;
--@@
--- has_sha1_file(
--+ repo_has_sha1_file(the_repository,
--  E)
--
--@@
--expression E;
--expression F;
--@@
--- has_sha1_file_with_flags(
--+ repo_has_sha1_file_with_flags(the_repository,
--  E)
--
- @@
- expression E;
- @@
-diff --git a/object-store.h b/object-store.h
-index 952efb6a4be..1717f73eea3 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -286,10 +286,6 @@ int has_object(struct repository *r, const struct object_id *oid,
-  * These functions can be removed once all callers have migrated to
-  * has_object() and/or oid_object_info_extended().
-  */
--#ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
--#define has_sha1_file_with_flags(sha1, flags) repo_has_sha1_file_with_flags(the_repository, sha1, flags)
--#define has_sha1_file(sha1) repo_has_sha1_file(the_repository, sha1)
--#endif
- int repo_has_object_file(struct repository *r, const struct object_id *oid);
- int repo_has_object_file_with_flags(struct repository *r,
- 				    const struct object_id *oid, int flags);
--- 
-2.34.0.823.gcc3243ae16c
+I'm still not seeing a clear way of describing the matching procedure
+here for a single path, and that's fine. Me understanding is not a
+necessary condition for fixing this bug.
 
+Thanks,
+-Stolee
