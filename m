@@ -2,96 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD33EC433F5
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 17:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A433C433F5
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 17:33:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC7C561A3A
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 17:32:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F3C461A3A
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 17:33:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236635AbhKSRfg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 12:35:36 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52245 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236280AbhKSRff (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 12:35:35 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 613631588CB;
-        Fri, 19 Nov 2021 12:32:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=NoLRR/4PeIGz
-        UG7NlL1D/s3Exnu7BFVgCLAjQsSKAos=; b=Fuwz7kuBq0PrAjRBaHCoMDwJyw3E
-        HQhV7uWRkPuUsBCsYEal3Q0TTBJowRdR609xJUEAdQSrTD/mPcvor0V3OcoHhCYa
-        P3GiWswiWr0rQtKW42Bs/5686lDnalhQHEYhpM931PdOPxvf03LXiwoqqca/2aZL
-        6hunNYfO6/BzLrw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 59D841588CA;
-        Fri, 19 Nov 2021 12:32:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BBEB01588C7;
-        Fri, 19 Nov 2021 12:32:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
-        peff@peff.net, congdanhqx@gmail.com
-Subject: Re: [PATCH v2 1/1] ls-tree.c: support `--oid-only` option for
- "git-ls-tree"
-References: <cover.1637321601.git.dyroneteng@gmail.com>
-        <8b68568d6cbe379d40c61c48bf446eaa88221df5.1637321601.git.dyroneteng@gmail.com>
-        <211119.86wnl42ri2.gmgdl@evledraar.gmail.com>
-Date:   Fri, 19 Nov 2021 09:32:29 -0800
-In-Reply-To: <211119.86wnl42ri2.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 19 Nov 2021 14:30:52 +0100")
-Message-ID: <xmqqy25koxua.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S236232AbhKSRgg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 12:36:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45692 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236280AbhKSRgg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 12:36:36 -0500
+Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B790C061574
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 09:33:34 -0800 (PST)
+Received: by mail-ua1-x933.google.com with SMTP id b17so22850980uas.0
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 09:33:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=UAQh8R+S8NkTkiIT7vnZlkhgzRba9LeGhRHyYgtmijI=;
+        b=aFDwCQQhLp+Cpt5KrY+tQnPuhqeuuCMGj94H0VDKyzMCAXWIr+3wbL9wlDCGIFrvyg
+         KIMCYPQT7/yv/AjhODNgUDX+fy10ibYVk1NANmo8tXtZ//KE8Nk+CiD2l/qjSlCSTN9C
+         raduZoh9YALUWC1Kx0Tg3vdRLgAZB0R1MaR+RNV0B87EQJOeBx40FGrqfqWYjr/YtS+x
+         jRN7O3ClWrcs5ZJ+D2z+LWzbcUuuIHESocBtdyFcF/jv/IFzETEsCD9ccYwpGqolxXid
+         d/lOWrrkZihnAFrLZIcU1WptH58X2MKUvO0/i4s5JZB2egWZKId9zjCXMJ/IIB6oGSp6
+         A23Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=UAQh8R+S8NkTkiIT7vnZlkhgzRba9LeGhRHyYgtmijI=;
+        b=MrnzQFShsyMEqkJ1ylr/KO++XFZsTiqLFacD4RebBZOcgr129iRnsvhEqO0ou5zxmJ
+         GOqQUnxMk/R24PaFWRURQivCr/orGa7vrWwq4t6dEiLRoc6UlGocnIk7m51qrQF2KcEK
+         PAF6In8xD/LLED5Mz20aSvcqmGGxfyvSqvWejnhx2mKNoZ38XuecM4XA26/xXiXbUnqv
+         6B4Yx/4ZCRlgPrHpH8TM4MmjTwR3mG5SQVpuXSrGAw4uP8Txn9Os3pGAPXjDqbKLC5Aj
+         on/vZpD4Sdh1xKARI3Onw02glZpwIfjsU9xOr43UtJwAB7V27rEx0y0eZP24gMmCFmwC
+         fzCg==
+X-Gm-Message-State: AOAM532cyAlsWrezvIhdd6VGH9EzWXAWlEx71btirhAhfSoilORs9C+8
+        Za8yIEeu5vrZ4o7AaIBEGMthP+8zw4bz1EK19Rw=
+X-Google-Smtp-Source: ABdhPJzMo+Nk745zaCkUKR7+3vnvcMYGi7wTcQdlOp/bRDdkAljj7N315kmcX2dnLWGNJ6g4G3Fe8L8gFRm2Fjgx/qk=
+X-Received: by 2002:a05:6102:36c:: with SMTP id f12mr93886259vsa.46.1637343213171;
+ Fri, 19 Nov 2021 09:33:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AC48AF7A-495E-11EC-A921-98D80D944F46-77302942!pb-smtp21.pobox.com
+References: <20211015161356.3372-1-someguy@effective-light.com>
+ <20211015161356.3372-3-someguy@effective-light.com> <877dd9i1zj.fsf@igel.home>
+ <211115.86fsrxqbvp.gmgdl@evledraar.gmail.com> <87o86kv6fh.fsf@igel.home>
+ <CAPUEspi=r9EsG8KPvdiD-HM7Drq8ho1yjkN_c_T1e+ZeR4eejg@mail.gmail.com>
+ <87fsrwv46h.fsf@igel.home> <CAPUEspg8ZUdn+KFz35yG1k9bbfVTe1b+7=+WdMknRS1zu8VcDQ@mail.gmail.com>
+ <634c4237-325a-13e8-0a92-09d23bdfb111@web.de> <211117.86y25m5wez.gmgdl@evledraar.gmail.com>
+ <xmqqczmxxr8o.fsf@gitster.g> <c5223004-6db6-e808-f607-d11bd45e7d99@web.de>
+ <211119.86mtm04og8.gmgdl@evledraar.gmail.com> <d1509690-0341-b6ef-5fd4-878ebbdfaf39@web.de>
+In-Reply-To: <d1509690-0341-b6ef-5fd4-878ebbdfaf39@web.de>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Fri, 19 Nov 2021 09:33:22 -0800
+Message-ID: <CAPUEspiq2tdBoCic0mzEXaiut7bwra+pUzj2ArMVU2-ee45=SQ@mail.gmail.com>
+Subject: Re: [PATCH v13 3/3] grep/pcre2: fix an edge case concerning ascii
+ patterns and UTF-8 data
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        Hamza Mahfooz <someguy@effective-light.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-I think that many points you raised in your message are valid, but
-there is one thing that is not.
-
->> +enum {
->> +	MODE_UNSPECIFIED =3D 0,
->> +	MODE_NAME_ONLY,
->> +	MODE_OID_ONLY
->> +};
->> +
->> +static int cmdmode =3D MODE_UNSPECIFIED;
+On Fri, Nov 19, 2021 at 8:08 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
 >
-> Better:
+> Am 19.11.21 um 08:00 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> >
+> > On Thu, Nov 18 2021, Ren=C3=A9 Scharfe wrote:
+> >
+> >> Am 18.11.21 um 19:17 schrieb Junio C Hamano:
+> >>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> >> [...]
+> >>> I guess this is a lot of change in the amount of text involved but
+> >>> the least amount of actual change in the behaviour.  For those with
+> >>> newer PCREv2, the behaviour would be the same as v2.34.0, and for
+> >>> others, the behaviour would be the same as v2.33.0.
+> >>>
+> >>> Having said all that, because the consensus seems to be that the
+> >>> whole "when we should match in UTF mode" may need to be rethought, I
+> >>> think reverting Hamza's [v13 3/3] would be the simplest way to clean
+> >>> up the mess for v2.34.1 that will give us a cleaner slate to later
+> >>> build on, than applying this patch.
+> >>
+> >> Makes sense to me.  It gives a better starting point to solve the issu=
+e
+> >> afresh without getting entangled in mind-melting boolean expressions.
+> >
+> > Yes, agreed. As noted I haven't had time to dig deeply into this, but
+> > from what I've seen so far there doesn't seem to be any obvious way
+> > forward in terms of a quick fix.
+> >
+> > I thought perhaps your patch would be that (but I haven't looked into i=
+t
+> > carefully enough), but since you're on-board with reverting & retrying.
 >
-> static enum {
-> 	MODE_NAME_ONLY =3D 1,
->         ...
-> } cmdmode =3D MODE_NAME_ONLY;
->
-> I.e. no need for the MODE_UNSPECIFIED just to skip past "0".
+> That patch should fix the edge case without any side-effects -- at least
+> I haven't seen any reports of ill effects that would apply to it.
 
-If the original wanted to make the default to be "unspecified", your
-suggestion changes the semantics.
+Since it isn't restricted to log, it will still cause a regression to
+the `git grep` case with binary data for versions of PCRE2 older than
+10.34 and unlike the previous one it might not trigger an error in the
+testsuite just because we are missing a test for it.
 
-"enum" is not necessarily an "int", and because the pointer of
-"cmdmode" is given to OPT_CMDMODE(), which expects a pointer to
-"int", your suggestion breaks the code there, too.
+> It's
+> easier to understand and reason about when applied after reverting, I
+> think.  But it's only for grep.c and I don't know the situation in t/.
 
-I wonder if cmdmode cannot be a on-stack variable in cmd_ls_tree()
-that is passed as the context pointer to show_tree() via
-read_tree(), though.  The enum definition still need to be visible
-throughout the file, but such a structure would let us lose a
-"global" variable.
+We had been focusing in PCRE in this discussion, but I see the strict
+behaviour of older PCRE2 as just a "coal mine canary" to point to the
+bigger problem that we are expecting git's regex to handle safely and
+correctly from the point of UTF, what is technically a binary match
+with --color making the mismatch obvious.
 
-Thanks.
+The issue is not unique to PCRE, and seems =C3=86var also acknowledges[1]
+that by seeing the same bug this was attempting to fix with probably
+some version of glibc's ERE.  I suspect FreeBSD's (and derivatives) is
+also broken and might be throwing REGILLSEQ errors as well, so I think
+that it is better to revert the whole thing.
 
+Carlo
+
+[1] https://lore.kernel.org/git/211119.86r1bc4om5.gmgdl@evledraar.gmail.com=
+/
