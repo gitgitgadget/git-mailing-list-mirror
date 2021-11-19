@@ -2,114 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA5E1C433F5
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 16:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D405C433EF
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 16:31:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7F0561A89
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 16:08:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AA35611C7
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 16:31:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236221AbhKSQL0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 11:11:26 -0500
-Received: from mout.web.de ([217.72.192.78]:50941 "EHLO mout.web.de"
+        id S235279AbhKSQe3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 11:34:29 -0500
+Received: from mout.gmx.net ([212.227.15.19]:32831 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235720AbhKSQL0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 11:11:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1637338087;
-        bh=KSwObPthOn7tPcToKZIL/WMAvEJvyok+YjNBAhA4UJk=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=DnleKjm6x2NJT7zQmDXb6b+jeRaW2MCuvyT+30Adw72/GgfND+gD0BWVIFTGsq/yU
-         E131EVpRKsvlCO22f1tH/UDpe1VHO/PtkhXMI8Ea4PrTCERKXm8zC+nRugK91eu5tL
-         Os7VqbzNS86gDKuGOxCiZc4sTZM+VtORp2JaOEZM=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.20.171]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MRW2R-1mzsWY2QCL-00NKoA; Fri, 19
- Nov 2021 17:08:07 +0100
-Message-ID: <d1509690-0341-b6ef-5fd4-878ebbdfaf39@web.de>
-Date:   Fri, 19 Nov 2021 17:08:06 +0100
+        id S232663AbhKSQe2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 11:34:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637339485;
+        bh=eHcPbDj81PbM7u3v7qj2hekTlQQujsI9ZMABkRWGNCc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=QnYBO4cGOCzQEOPG99ZRZLvgXBzIwthrs2kg33V/GSD7kq3vYAsTt7MTgQEMhbvHl
+         LmFnbnlV3VpJGIXA1PS0GfUj1QPATXcBVkT50nblDHtQbpR340SZi4oSujHB4MdNjX
+         7WS+TYxpOiutzmTO5B6zZqwh1eNnMZ/24lj53yw4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([213.196.212.25]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mzhj9-1mRbvZ44SP-00vcMA; Fri, 19
+ Nov 2021 17:31:25 +0100
+Date:   Fri, 19 Nov 2021 17:31:22 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Chris Torek <chris.torek@gmail.com>
+cc:     Jan Kara <jack@suse.cz>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 01/27] bisect: Fixup test rev-list-bisect/02
+In-Reply-To: <CAPx1GvdKuBmxN0XM3PKJO+0V=P3OoyB4VDzmqshv7N+3vFF8gw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2111191653390.63@tvgsbejvaqbjf.bet>
+References: <20211118164940.8818-1-jack@suse.cz> <20211118164940.8818-2-jack@suse.cz> <CAPx1GvdKuBmxN0XM3PKJO+0V=P3OoyB4VDzmqshv7N+3vFF8gw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.1
-Subject: Re: [PATCH v13 3/3] grep/pcre2: fix an edge case concerning ascii
- patterns and UTF-8 data
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Carlo Arenas <carenas@gmail.com>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Hamza Mahfooz <someguy@effective-light.com>,
-        git@vger.kernel.org
-References: <20211015161356.3372-1-someguy@effective-light.com>
- <20211015161356.3372-3-someguy@effective-light.com>
- <877dd9i1zj.fsf@igel.home> <211115.86fsrxqbvp.gmgdl@evledraar.gmail.com>
- <87o86kv6fh.fsf@igel.home>
- <CAPUEspi=r9EsG8KPvdiD-HM7Drq8ho1yjkN_c_T1e+ZeR4eejg@mail.gmail.com>
- <87fsrwv46h.fsf@igel.home>
- <CAPUEspg8ZUdn+KFz35yG1k9bbfVTe1b+7=+WdMknRS1zu8VcDQ@mail.gmail.com>
- <634c4237-325a-13e8-0a92-09d23bdfb111@web.de>
- <211117.86y25m5wez.gmgdl@evledraar.gmail.com> <xmqqczmxxr8o.fsf@gitster.g>
- <c5223004-6db6-e808-f607-d11bd45e7d99@web.de>
- <211119.86mtm04og8.gmgdl@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <211119.86mtm04og8.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Mp/faHIPm/2MHkJP0m2p4D9EnvKiI8UjGka92prxfb4W3xsF0jj
+ 4j/xmsVd2TS030Rz/e4W0Mp6V02uL/405EyTFR6H2L7/mcsP5jXQp3kLJu5X3UOogNQGZFp
+ xABVyIbpYzZwK2bkYV0hCnMizgUfpNCFmQ3AJ/59A4df9ZNM87qsNAeDsntMx+UTA24AA3V
+ dI3a5HcdtFQdee7MpgaNA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+iL85bt/h30=:TVpzyczJ5szdMErqIv5Acu
+ o3SeYHITQLFxd+wFSpSNefSdd7H9qdEO2mNnaUaPc3A75Vwa3f5nuRInFCHST8GNE+7twmdLR
+ nvQ9hnVuOm6dBvLd9e+VbiQfMzlSrbTS6HRiL8GUtD52Ja9iqGBqrnki5wDzSzbnXU5rxfZcQ
+ GSUkJRNxPNjvZZr66teRQExU2+aLIxvm/fOGol+cXqnxzqcqmJ5Xwn9QhXD87dGYDQAZPcRSW
+ rMDmKcDDM6DHyRhYG6JTUOyQgRzsj4/Ate/G2JdMZfp0Q6cJyXUhfkkFGOAsLx2OQGMGAOid1
+ 36SendpJ+yRhTbYWCs7f1YbmKptw1ZYyHm67TR/Mw4HP7XtBts4wiM+KUGTEj9+8KiPHPIyc/
+ BIXqMNOnCHuJjIX5G05zroUsAuIeS4udKS49cNIut2F1U03Nf6eJrGHCAgg/L0R8f530U66sy
+ 2PmfIOTOMCY3wY/eCF8Zxx9I10x4uFXHgWww/hDHXEohtlbTL4aNsLiD4ZBivIYx/6WBPMgJm
+ mV+xtIDR9q0Nw1QZhOPJM8RybojCdSjkY5z1QszWDeqqCltedr1fdSp9rr496V6W8kMdaRBDQ
+ EB48YPgU/mQba1A/g12gSVh53PtX+ylvE3MSDZ3WpJJB3uyiFvoBB6EIeHKmoQNCi2995HxJn
+ zu+nK/Uhn5ny5DFK2NMhbVgIGmJm/W8kncsmwpbhrqa0s8s6aFq9lzxg+Q3+GSB8NwXb6AySM
+ pHl35FYaouHK65743VZDTt5556MUTzNSSK7ZCrti4ecwvmMWsZ5NBoYtjVTlYCPZY2b7I6BAS
+ oMyayLltRTYgER6IrpeyBoptKrAQWXt2u6udu8Haar8gYDFtTzYsHSolyw9fAo2iR7hKJQu6F
+ BIfyeAr1bQmzKk2X5hScNdUzPxuJrXL9dLAXsJgAQIjmkInHHaffOhCYn0Yj+YA6J7XzpUMsG
+ bAZGV+W6L3Qwpt2f72zJkR/lg1+NvM0B/lBDF4/aJr1egRLPQWVr6wRiK8nyKXFWcSiQF/ai1
+ mYkM6j+k7JUIEx3Zpj8xAUhcO3Ecd2h2lQvgfKU7a6DXUmMjkR/y7ShDfi9/N/SWalyq3bRMD
+ ydbGy/OCaghRoM=
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:JSn1bFYI9z7BaypQ3jzG5xEqE3ivYGg8B9vbJMy6ztNc+K1CoPz
- RBPgk1JtE6RISQCIufvc2d6HrP7CzznvMH+/K1aqyj1CuhNEVjzsZTROLfCAx+C618ErCe9
- SrfxBpMdj4D2/wRvAKuHdWHM2l0dUU/PqnoxJe6ojspGJX07zYxHXEFs8bzSkmN32UchuTE
- WTEOnocilov1rJFuKGvHg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:JbJF3ROF/e8=:74dFN4cUdeMwEWTVgFegFb
- nVJVFqd+8c+lXQOOsllqRoEabMhB4WharkUEb2R39ojGV/Fb3Vx12ubxOzT8GDi3In/sVFItZ
- OjtjVjbcnu5VVtMISzfWvJz8pCV1c1BuVTmGu3ImmuELZxKy1Z4WmuNqAmOW66IWs6wTg9Mcp
- xZC68E56umM2OhV978vHLZNL8EhRgyNlXWabFwI9A8mMe1GIfA7NZ9E0zSSovhMv9pCxpfoGH
- KtMLuqdyPZCO/uKHrVY4MBeKmx3kdNoUdBotbzygrv8WJIDH6nNZ4uJUgQSl5SUN4fspvdcls
- BXGTWKz1V87ndv9VRHkJrC7NlmVRJdW3mUVrBeWBYH04VO/t6evdRti133oFMUopvJV77DBdj
- LV9m+K7thb4NkxK7o/DCu1eDhWfCNGgOe8RqRuC994+OsXwnUaF5fIjwg3xQuqDF7YJw/zGa0
- eGTeiglQdWg2Q0CTggv03Gb7D3LVDQ2JnGWfdRzTQt6NVAi+PnI5GhSPWY54149DsMMJfg6cT
- +qjeAX2VjeJ5aYw+ujb9Oa6wSwlC8jbhG6392EXMyVGs9pOVqqXNshi47mJR+UC2aWbRfq+pH
- irkO8J/v9krVZMHX+2tS3B0DdprPmSUZ8StzTn/2cGmtEEO7WDHx2Fr9U5Onf+VrUJJLOYfLa
- ADeYG5aUf/pKoR76XbIIvRgkpO4jtACB85TVjEe3TzitP9c3JKsXPD+0dqYH/W50UAo1NVjCZ
- +e+A7Wv1ZdpT1D/48oB/ecV7YYuefks4AxDDZKXdBv17zbtaw0CyzThox0Z5lfWn4g7hmj3oY
- 71wRm9kqjEh1GmpB3ISxnixSfxkImhjCfpFeleQUbxh3e89RaWpq5FN1z7AtMu5YyOk3aO6Ew
- FWSWtYtLdyX1umBb1buxRFFq+eekmi0wdUa+HaqNQhbHA3/yY8nWgK/ec2WaGquPunIn3Hhk5
- UaWERRgjf4uaYewLyV9ZhMvNmDBygoA8y3HtAkAxhDjR8JnIPjHIoB8oOo4jsmK50s5Gk8Pg8
- 8XCEcXx6A7nd2RRWDN1uaHXCtZYJPp2KR2UiQ8lF5+e1zdNyJQvCcfKNbNyJ8AL2UpXEjByfn
- h9MPJ0nq2b8gwg=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.11.21 um 08:00 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> On Thu, Nov 18 2021, Ren=C3=A9 Scharfe wrote:
->
->> Am 18.11.21 um 19:17 schrieb Junio C Hamano:
->>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->> [...]
->>> I guess this is a lot of change in the amount of text involved but
->>> the least amount of actual change in the behaviour.  For those with
->>> newer PCREv2, the behaviour would be the same as v2.34.0, and for
->>> others, the behaviour would be the same as v2.33.0.
->>>
->>> Having said all that, because the consensus seems to be that the
->>> whole "when we should match in UTF mode" may need to be rethought, I
->>> think reverting Hamza's [v13 3/3] would be the simplest way to clean
->>> up the mess for v2.34.1 that will give us a cleaner slate to later
->>> build on, than applying this patch.
->>
->> Makes sense to me.  It gives a better starting point to solve the issue
->> afresh without getting entangled in mind-melting boolean expressions.
->
-> Yes, agreed. As noted I haven't had time to dig deeply into this, but
-> from what I've seen so far there doesn't seem to be any obvious way
-> forward in terms of a quick fix.
->
-> I thought perhaps your patch would be that (but I haven't looked into it
-> carefully enough), but since you're on-board with reverting & retrying.
+Hi,
 
-That patch should fix the edge case without any side-effects -- at least
-I haven't seen any reports of ill effects that would apply to it.  It's
-easier to understand and reason about when applied after reverting, I
-think.  But it's only for grep.c and I don't know the situation in t/.
+On Thu, 18 Nov 2021, Chris Torek wrote:
 
-Ren=C3=A9
+> On Thu, Nov 18, 2021 at 10:38 AM Jan Kara <jack@suse.cz> wrote:
+> > diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+> > index b95a0212adff..48db52447fd3 100755
+> > --- a/t/t6002-rev-list-bisect.sh
+> > +++ b/t/t6002-rev-list-bisect.sh
+> > @@ -247,8 +247,9 @@ test_expect_success 'set up fake --bisect refs' '
+> >  test_expect_success 'rev-list --bisect can default to good/bad refs' =
+'
+> >         # the only thing between c3 and c1 is c2
+> >         git rev-parse c2 >expect &&
+> > -       git rev-list --bisect >actual &&
+> > -       test_cmp expect actual
+> > +       git rev-parse b2 >>expect &&
+> > +       actual=3D$(git rev-list --bisect) &&
+> > +       grep &>/dev/null $actual expect
+>
+> `&>` is a bashism; you need `>/dev/null 2>&1` here for general portabili=
+ty.
+
+More importantly, why do you suppress the output in the first place? This
+will make debugging breakages harder.
+
+Let's just not redirect the output?
+
+I do see a more structural problem here, though. Throughout the test
+suite, it is our custom to generate files called `expect` with what we
+consider the expected output, and then generate `actual` with the actual
+output. We then compare the results and complain if they are not
+identical.
+
+With this patch, we break that paradigm. All of a sudden, `expect` is not
+at all the expected output anymore, but a haystack in which we want to
+find one thing.
+
+And even after reading the commit message twice, I am unconvinced that b2
+(whatever that is) might be an equally good choice. I become even more
+doubtful about that statement when I look at the code comment at the
+beginning of the test case:
+
+	# the only thing between c3 and c1 is c2
+
+So either this code comment is wrong, or the patch. And if the code
+comment is wrong, I would like to know when it became wrong, and how, and
+why it slipped through our review.
+
+Ciao,
+Dscho
