@@ -2,102 +2,261 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 189ACC433EF
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 15:49:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1495CC433EF
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 16:03:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF42761221
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 15:49:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E882661A58
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 16:02:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236012AbhKSPwW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 10:52:22 -0500
-Received: from mout.gmx.net ([212.227.17.21]:44791 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229936AbhKSPwV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 10:52:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637336952;
-        bh=eb5cH7Pn+zQc3S44x7ZgJ2Uw8wbU6L76xpLQnM9Lufo=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=lGulvr8xQn8mAUwciqwc7MEWvOZExvze5hWK6bwTpTWECI+1VMqgaQDOTXQ/+qRP0
-         54lRd0q/drdoZkAhRuJG6whMOt1Zj+SophVtnAEgyn5S/6r6ifP9rW9iUr2Dwx1K+W
-         WgRVniRltQTsoYMcSAC0v/piIQUIpXHFWCsocVVE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.219.221] ([213.196.212.25]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MqJmF-1mIO0R1Z91-00nUOh; Fri, 19
- Nov 2021 16:49:12 +0100
-Date:   Fri, 19 Nov 2021 16:49:09 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/3] diff histogram: intern strings
-In-Reply-To: <86d38148-7b97-76aa-148b-346cc179615a@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111191647100.63@tvgsbejvaqbjf.bet>
-References: <pull.1079.git.1637148025.gitgitgadget@gmail.com> <38c771a74d2a348e6a752555f95b746de029b1d7.1637148025.git.gitgitgadget@gmail.com> <2b2bd380-540f-959b-b950-cfdc95cbff29@gmail.com> <88eaee89-4536-fba4-3aa0-c3693f58eae0@gmail.com>
- <nycvar.QRO.7.76.6.2111181631260.11028@tvgsbejvaqbjf.bet> <YZZ0e7CCGW5QbQlW@coredump.intra.peff.net> <86d38148-7b97-76aa-148b-346cc179615a@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S236167AbhKSQGA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 11:06:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52806 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236163AbhKSQGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 11:06:00 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ACD9C061574
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 08:02:58 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id d2so10590249qki.12
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 08:02:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=yUaygnjkFWCKRMma6AVyoUOQP9NXOeOWzEsStjeVo9g=;
+        b=Cc0GhhIvryLNeUtSmBhf1y5LxqmNOrHQXD5En6Sq2r2GSQxMva6P64aRMgvQT9YtR3
+         rkyYJj45Qt7NZu9jiUcqf9RhaF0BU+obOxd2LYu56U7DZMyoWKUw1E8rkjMKy99caCOz
+         UJmz9s9GbOlhIrGQav1Dz+wps0+p9SDpt4aO20EcGAiPqdSAgP8WxKcCuvDzlTjPpzHL
+         tBCKZ7dXx+UvBdw9HsxhFP6eCxMiYlw64fdmcELikrKiiBfKq9Lm/ySY4qDpgDdUbQsq
+         eHa+umcedvqAiSRwX7g6wnnz6VhAeZWE47AK+GqItpphQnxusB7CfeyOb/S9ekhExKP0
+         AUSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=yUaygnjkFWCKRMma6AVyoUOQP9NXOeOWzEsStjeVo9g=;
+        b=42fawYMVITk/KQVrzklGarx38RGE2OBS0g9YMLaWTA42qhapvQ0bZn93CvohCwgKF5
+         VfnqoYvrez3TcP73VKV8FWt/IkkoVckoXSyAIfLpbXDDDZZHm4rPBP05fMHzL3LHXVCf
+         iM5vOW4Rac0lXgDAKOJ8jf/yWfTZykYMxGqWHE+ky/auSS7lsO54awym5crbIS8skRb1
+         WQ21ZNXpMd3DeQLLT28y6dCXNBGSv95czMNzYIY6fSI4w12AMplgQKjnAWD/IHnGgTYj
+         djI79GgQbQTgnuKiTyLcpipVdpsFv3LNk+A9zYYYSyJIctls6+J+vy4zPlCpGi98no4E
+         Bkrg==
+X-Gm-Message-State: AOAM532NOzuFCnCt3VAekFx/a6gUnhQTIlmbxPaUU5yL6zVXOddPYDfr
+        ZxBMlna4oAwrR5Zwi95by+GU
+X-Google-Smtp-Source: ABdhPJxSTYzlDV26zNvJR4yWgtYeZEAZRyZfzolAe9pQAUBHOSrXGSpIrDftDG/XjK5LfNgW06HseQ==
+X-Received: by 2002:a37:e15:: with SMTP id 21mr29993266qko.413.1637337774344;
+        Fri, 19 Nov 2021 08:02:54 -0800 (PST)
+Received: from [192.168.0.105] (70.15.20.152.res-cmts.sm.ptd.net. [70.15.20.152])
+        by smtp.gmail.com with ESMTPSA id h11sm59732qkp.46.2021.11.19.08.02.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Nov 2021 08:02:54 -0800 (PST)
+Message-ID: <b9da6658-2b00-cc13-e1ae-124d8222dab8@github.com>
+Date:   Fri, 19 Nov 2021 11:02:53 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ZUp2jdfK7BEhJL+fVazOR923GFNw9GKbYWnsNB0OSgOpH2ZO1gW
- PpJz7kV123gd4z0zgtedHy3mgWv3GLo46Pjpy+o1AIShV05xUSFHrcoWn9UGsxiSVgFFefv
- lYCcyAXG/suu8zz3YodvLFwEACE1XFSECqlE6uAogufmATx2Yci9OFzFGF3aGUqIFYd4MJM
- 5L4fEzF6C+Zj5vNy+zvQA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:42vQleZLPg0=:caNmU2HBtj1SGnn5G796X6
- Z5tejRoFfBNpMnES8pwQ7Yu42f371f66QlW/y3mtaeGq4e3sAFBgQf3hTo22+Ny381tbgUb9M
- H7d+KxdnWbhkAY5ZiFyn5TFCYGjEIYSffzgARK8A6bujqK6FqOPVgF7RO7fR5ZGH7LbNV7+QN
- SzuEOyh9EFxCJUcKa1XJHmlCdQhVj3Z3RzF+fZxlzcL7XPNotfrCsS3gx9HefrrSA76l5npAt
- 9d2LqnYwlvctDtstUHkhGpHsSqHFSrAPE8nhBISSoZZ7wAKnC4m3LJU58CXdJEMoTBPdMf3zS
- krQE07PPISzUSqlJrQLLdpoGGah4cDnu164gk9LpieQ0epuJxizXYtDFRQQAHVCRmJ7ab7i4k
- EK4pWFfdmfG4I199zqkapNaEO2JTNVHp9tULntGvTyxqPwRvT1XpPINFpLpn0HffEB6Iu/4vS
- FXruvJlVsaV7HN0EdXLkFeh5yPXLbu7hjoY+FRmAA7o2arVhy+RPx76J9iDYFxwlothaV+sr2
- Q10Vb7nCavHP1FhPzWDIn0+5l1b/ghahztACEOU6Ia9CYoced4onPMJfhPbjeH1nkfN1C5Guf
- /wBzkZNZbm4GlaS0T6qxZMyEPhzQPsT3fD3+RBWxw8nYSEprieNPHzkgDf/IzA6GSUsGS19qq
- yqO7bgtY2wBNeH/2EZyXC2jqEbQq8xWcZY1/y0z978/nJx3CrN7OcH3OvaBMj+l6zAxuFj+2+
- m7rGR82xmK0OBpBM/rwd5kieFrKPVsuK8Pa1ViZWifec4412hxSa5ej9IeQXPgsZtOf9/8eU/
- yqWNiTQH17RsVkczf6JyAk1xwKSyDaqpPnpF1sTzsVrAT/hNqhlGqETo/ZwgboJbyAgA30G02
- g5vB01D6i7DnkxGx5uZ8ILBKMTYb/EHEKhahsrKVLFrSenR7Ek6eSyvvZ7wlnWiCMsxHbh9C8
- UeY5Y08NdfH/XJb17dx4eSwbXFHa4E614zMLz5O2w5mi9PqmqgCoLEHSRrWIo3bnpbDabaJp5
- JpT1F0+toCnisBY1EQMQpQdO4ltbTXYPkoMXRml8eW5qZbBd7BeMnZTTVR/OWmcMO781uHUn0
- /eF7IjXQB8Vn4k=
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.0
+Subject: Re: [PATCH 1/2] CI: use shorter names that fit in UX tooltips
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <cover-0.2-00000000000-20211119T135343Z-avarab@gmail.com>
+ <patch-1.2-26f80c87c8d-20211119T135343Z-avarab@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <patch-1.2-26f80c87c8d-20211119T135343Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Ævar Arnfjörð Bjarmason wrote:
+> Change the names used for the GitHub CI workflows to be short enough
+> to (mostly) fit in the pop-up tool-tips that GitHub shows in the
+> commit view. I.e. when mouse-clicking on the passing or failing
+> check-mark next to the commit subject.
+> 
+> That description is truncated to 24 characters, with the 3 at the end
+> being placed by "...".
+> 
+> E.g. the full job name (visible at [1]):
+> 
+>     "regular (linux-gcc-default, gcc, ubuntu-latest)"
+> 
+> Will, when shown in the tool-tip be truncated to:
+> 
+>     "CI/PR / regular (linu..."
+> 
+> There's then a further limit in the expanded view where the job names
+> are observably truncated to 44 characters (including "..."). I.e.:
+> 
+>     "regular (linux-gcc-default, gcc, ubuntu-l..."
+> 
 
-On Fri, 19 Nov 2021, Phillip Wood wrote:
+Tooltips like the ones you've pointed out here appear intended to be an "at
+a glance" view of the jobs (mostly for showing pass/fail/skip status) - each
+job in the tooltip has a "Details" link that takes you to the job summary
+and logs. In the current state, although the names of the are truncated in
+the tooltip, the information is still easily accessible in the full workflow
+details (one click away). For example, the details for the "linux-leaks" job
+[1] tell me the image, compiler, and job name right at the top of the page.
 
-> On 18/11/2021 15:42, Jeff King wrote:
-> > On Thu, Nov 18, 2021 at 04:35:48PM +0100, Johannes Schindelin wrote:
-> >
-> > > I think the really important thing to point out is that
-> > > `xdl_classify_record()` ensures that the `ha` attribute is different
-> > > for different text. AFAIR it even "linearizes" the `ha` values, i.e.
-> > > they won't be all over the place but start at 0 (or 1).
-> > >
-> > > So no, I'm not worried about collisions. That would be a bug in
-> > > `xdl_classify_record()` and I think we would have caught this bug by
-> > > now.
-> >
-> > Ah, thanks for that explanation. That addresses my collision concern
-> > from earlier in the thread completely.
->
-> Yes, thanks for clarifying I should have been clearer in my reply to
-> Stolee. The reason I was waffling on about file sizes is that there can
-> only be a collision if there are more than 2^32 unique lines. I think
-> the minimum file size where that happens is just below 10GB when one
-> side of the diff has 2^31 lines and the other has 2^31 + 1 lines and all
-> the lines are unique.
+[1] https://github.com/git/git/runs/4214606314?check_suite_focus=true
 
-Indeed, and as you pointed out, we already refuse to generate diffs for
-such large amounts of data.
+> With this change we shorten both the job names, and change the
+> top-level "name" from "CI/PR" to "CI", since it will be used as a
+> prefix in the tooltips. We also remove redundant or superfluous
+> information from the name, e.g. "ubuntu-latest" isn't really needed
+> for "linux-leaks", it'll suffice to say linux. For discovering what
+> image runs that specifically we can consult main.yml itself.
+> 
 
-(For what it's worth, I totally agree with punting on such large data, it
-would also take too long a time to generate diffs on such large data to be
-reasonable.)
+By optimizing for the tooltip, this patch shortens names to the point that
+they're more difficult to interpret (w32 vs. w32/VS) and/or removes valuable
+context about platform/image/etc. When a user *does* want more information
+on the job, they now have to: 
 
-Ciao,
-Dscho
+1) know that the "CI/PR" job definition is in ".github/workflows/main.yml"
+2) parse through the file to find the job they want
+3) correlate that back to the job in the workflow details they're
+   investigating. 
+
+That's a strictly worse experience for an extremely common use-case. What
+use-case is this patch attempting to improve?
+
+> The above "regular (linux-gcc-default, gcc, ubuntu-latest)" job name
+> then becomes a 1=1 match to the "$jobname" used in
+> "ci/run-build-and-tests.sh". A "( push" or " (pull_request" is then
+> added implicitly as before (from the top-level "on" parameter in
+> "main.yml"). In the tooltip we'll now show:
+> 
+>     "CI / linux-leaks (pu..."
+> 
+> We then have no truncation in the expanded view. See [2] for a
+> currently visible CI run using this commit, and [3] for the GitHub
+> workflow syntax involved being changed here.
+> 
+
+If the only problem this patch really "solves" is making some job names fit
+a bit better into the tooltip and, I think the costs (namely the loss of
+accessible contextual info) outweigh any potential benefits you gain. 
+
+> We could avoid even more truncation with more compact names,
+> e.g. changing "linux" to "lin" or "lnx", but I didn't do that since
+> any additional shortening seemed counterproductive, i.e. "w32" is a
+> well-known way of referring to "Windows", but "lin" isn't). We could
+> also shorten e.g. "::build" and "::test" to "+bld" and "+tst", but
+> those seem similarly to be overly obtuse.
+> 
+> 1. https://github.com/git/git/tree/master/
+> 2. https://github.com/avar/git/tree/avar/ci-shorter-names
+> 3. https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>> ---
+>  .github/workflows/main.yml | 13 ++++++++++++-
+>  README.md                  |  2 +-
+>  2 files changed, 13 insertions(+), 2 deletions(-)
+> 
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 6ed6a9e8076..8f4caa8f040 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -1,4 +1,4 @@
+> -name: CI/PR
+> +name: CI
+>  
+>  on: [push, pull_request]
+>  
+> @@ -7,6 +7,7 @@ env:
+>  
+>  jobs:
+>    ci-config:
+> +    name: config
+>      runs-on: ubuntu-latest
+>      outputs:
+>        enabled: ${{ steps.check-ref.outputs.enabled }}${{ steps.skip-if-redundant.outputs.enabled }}
+> @@ -77,6 +78,7 @@ jobs:
+>              }
+>  
+>    windows-build:
+> +    name: w32::build
+>      needs: ci-config
+>      if: needs.ci-config.outputs.enabled == 'yes'
+>      runs-on: windows-latest
+> @@ -97,6 +99,7 @@ jobs:
+>          name: windows-artifacts
+>          path: artifacts
+>    windows-test:
+> +    name: w32::test
+>      runs-on: windows-latest
+>      needs: [windows-build]
+>      strategy:
+> @@ -127,6 +130,7 @@ jobs:
+>          name: failed-tests-windows
+>          path: ${{env.FAILED_TEST_ARTIFACTS}}
+>    vs-build:
+> +    name: w32/VS::build
+>      needs: ci-config
+>      if: needs.ci-config.outputs.enabled == 'yes'
+>      env:
+> @@ -178,6 +182,7 @@ jobs:
+>          name: vs-artifacts
+>          path: artifacts
+>    vs-test:
+> +    name: w32/VS::test
+>      runs-on: windows-latest
+>      needs: vs-build
+>      strategy:
+> @@ -210,6 +215,7 @@ jobs:
+>          name: failed-tests-windows
+>          path: ${{env.FAILED_TEST_ARTIFACTS}}
+>    regular:
+> +    name: ${{matrix.vector.jobname}}
+>      needs: ci-config
+>      if: needs.ci-config.outputs.enabled == 'yes'
+>      strategy:
+> @@ -251,6 +257,7 @@ jobs:
+>          name: failed-tests-${{matrix.vector.jobname}}
+>          path: ${{env.FAILED_TEST_ARTIFACTS}}
+>    dockerized:
+> +    name: ${{matrix.vector.jobname}} (docker)
+>      needs: ci-config
+>      if: needs.ci-config.outputs.enabled == 'yes'
+>      strategy:
+> @@ -258,10 +265,13 @@ jobs:
+>        matrix:
+>          vector:
+>          - jobname: linux-musl
+> +          os: alpine
+>            image: alpine
+>          - jobname: Linux32
+> +          os: ubuntu32
+>            image: daald/ubuntu32:xenial
+>          - jobname: pedantic
+> +          os: fedora
+>            image: fedora
+>      env:
+>        jobname: ${{matrix.vector.jobname}}
+> @@ -310,6 +320,7 @@ jobs:
+>        run: ci/install-dependencies.sh
+>      - run: make sparse
+>    documentation:
+> +    name: documentation
+>      needs: ci-config
+>      if: needs.ci-config.outputs.enabled == 'yes'
+>      env:
+> diff --git a/README.md b/README.md
+> index eb8115e6b04..f6f43e78deb 100644
+> --- a/README.md
+> +++ b/README.md
+> @@ -1,4 +1,4 @@
+> -[![Build status](https://github.com/git/git/workflows/CI/PR/badge.svg)](https://github.com/git/git/actions?query=branch%3Amaster+event%3Apush)
+> +[![Build status](https://github.com/git/git/workflows/CI/badge.svg)](https://github.com/git/git/actions?query=branch%3Amaster+event%3Apush)
+>  
+>  Git - fast, scalable, distributed revision control system
+>  =========================================================
+> 
+
