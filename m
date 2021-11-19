@@ -2,106 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 463DAC433F5
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 12:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10F7CC433EF
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 12:10:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 24C0061875
-	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 12:09:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE70961AA7
+	for <git@archiver.kernel.org>; Fri, 19 Nov 2021 12:10:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234595AbhKSMMf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 07:12:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55660 "EHLO
+        id S234785AbhKSMNG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 07:13:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230520AbhKSMMe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 07:12:34 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB1E5C061574
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 04:09:32 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id t5so42160598edd.0
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 04:09:32 -0800 (PST)
+        with ESMTP id S230520AbhKSMNG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 07:13:06 -0500
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DB62C061574
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 04:10:05 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id b11so7956245pld.12
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 04:10:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=IBFPjmMCY9MNwd6iozRnIzPMRPVI3sCsG/wAvbd7SFo=;
-        b=LansByP6RTKHciEHmgKLbR62gsGxxX02PJ74VAKw759jEHo+RBI+rRHUz+Hc9F8cIb
-         gM2EIb/YI+5dTeuB5dPf0V6mnxUcG7XKEAm0ti210mpWGPMcKr64LAvNR5figLfU+Lvn
-         vsbrWytWvWCe8FdNsfyHsavnaV5xU3rpXc76ubjmBhdSxLJNNY9d/UanAzgIcGMckhPn
-         U8oDmpe4vV59fLtpiIkz+sMCE0DMjYAHsy+q67JmZ+gNIgqNRg126f/HDbsTh1TEngWR
-         W52orBARy9oBSG+pCVL3ApyasJHY8RpdlZVjrzsr0M2LpP8vAjcRG44Es8FizbhBkSaj
-         S8qQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=X6iCF8GSTDTi1QKrDay0Cx8vo9VZzNDFsMfIawxC5ZI=;
+        b=gdLQ9v+A8/RA1ONbXeZm1+NUtgLBnsOgCa/edVkHGjIKxza40sBkpED9VkW3tUny/z
+         aWj20Dx5B6g3sFKsH3Y6/XrTg1DIjZ2omYoXqPnWeA/samm3qoZhWc5XFg0g7m1J85jG
+         uUgDPr8+tmGmBH1cG09YHXylaXlzoxjgpRdVS3U9irDNqNXiZkK+ssqFfQsZP3/Qcusn
+         DMF4dMbEC320EfnTTzc1oEBa2d6f4R/xZYoR0HRfzIn4dlhtaonLkncipunv7Gn2UHF3
+         g/+SzqZOn3NLs0loT2cByDvk5AMN9zSM7h78L4BDFERFaEZ62Ew/qb0aQjAuAxiu4vCI
+         MkjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=IBFPjmMCY9MNwd6iozRnIzPMRPVI3sCsG/wAvbd7SFo=;
-        b=u9bNAwR4BGcrIZUpWF+bukTs5wzDOPWgPte2bT864jeK4iOs5HXjyzQKZYyRuG+vDa
-         Z5ENG2W0xnYzGtYnn1cXE+H1mm+M4UEj0F0edDbZ812YDzDccCZh7qFU2RU6o7ZoVR8/
-         GDZ3R3P3/8IkNZ5iEMFiQ6VrydZfmKkqtX7/HII8UZEc2LJgjWWlWVbKyz72Spkjq8LS
-         hMUptdRxFfs/PW4LVkgYbDHhh5c5qBJd7kdvmq/LhWRo0qAZ+OFieuBkaeN89Rpidh36
-         Y45GobykcDQ6VA4GTVmuZEl6ecycLoth01iKsJon0q1N2IyeRC1ifgTh35rm7eUVcWSQ
-         erWg==
-X-Gm-Message-State: AOAM530PFLh+ZP3v2BiYDHOx3FvPsaHe7q+6ubHt9eypV70pUKaZiKMq
-        mQH0q4qApE2TVc/d25gAAB4=
-X-Google-Smtp-Source: ABdhPJznALP/udo6jVLKoX6YZBMhY2lzF6UbvT3o3FsSscRTHX2XjrOu7knFY1NsRYnDOiz1iI6nyQ==
-X-Received: by 2002:a17:906:79c8:: with SMTP id m8mr6825835ejo.511.1637323771200;
-        Fri, 19 Nov 2021 04:09:31 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id l18sm1139087ejo.114.2021.11.19.04.09.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Nov 2021 04:09:30 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mo2ht-000hBH-Vl;
-        Fri, 19 Nov 2021 13:09:29 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] test-lib: introduce required prereq for test runs
-Date:   Fri, 19 Nov 2021 12:13:43 +0100
-References: <20211117090410.8013-1-fs@gigacodes.de>
- <20211117090410.8013-3-fs@gigacodes.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <20211117090410.8013-3-fs@gigacodes.de>
-Message-ID: <211119.865yso4a9y.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=X6iCF8GSTDTi1QKrDay0Cx8vo9VZzNDFsMfIawxC5ZI=;
+        b=tD8wkOt4jr6vXRuTYW/qRjE4WTttbVUfHHL2rrVSuzaY2aJgtuDp/5ng05zRLy61s6
+         jCdijayQp9HOikeUsljwZVS0VURehAOHoJpwD9gAQFoj/N8iFgoYHfU+LBW9fgRt7R/7
+         k2VeCV7vIBCJ2jIaMKTg4pEQjfPh78n58HYs28uiTXV6AwarwCqnUodcPI04lTOkMQ/Z
+         5I0Zwe/youmsTZEGrTVTZjjLmndGH+a3cg3LsenzXYGvWWn6HkjrGRBkYNpheo8LA0J8
+         nP0fsImsje5r200sr1bt9Yrz8n0WxOMZwkYYtAI6ax/uQ/PrxemxyG+VPYM97GgltwyQ
+         4DXA==
+X-Gm-Message-State: AOAM5321SgZQk8EJhNgqcvKgCVRSM5/AGUh2Wr2CEqMKhE8vlhLQSwCC
+        PDM5A1MxOYh80/P285YrgRA4DBdGuEmIzhTy
+X-Google-Smtp-Source: ABdhPJz/3RpZmSSZUEsPuWlmqNmxT06ORLwA2rFHJb9ydgyxg24dcNpWO7zL9q8bcpD1YAxdevnfKw==
+X-Received: by 2002:a17:902:8214:b0:142:61cf:7be with SMTP id x20-20020a170902821400b0014261cf07bemr76672255pln.0.1637323804359;
+        Fri, 19 Nov 2021 04:10:04 -0800 (PST)
+Received: from localhost.localdomain ([205.204.117.98])
+        by smtp.gmail.com with ESMTPSA id oj11sm11875381pjb.46.2021.11.19.04.10.01
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 19 Nov 2021 04:10:03 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, avarab@gmail.com,
+        congdanhqx@gmail.com, Teng Long <dyroneteng@gmail.com>
+Subject: [PATCH v2 0/1] support `--oid-only` in `ls-tree`
+Date:   Fri, 19 Nov 2021 20:09:26 +0800
+Message-Id: <cover.1637321601.git.dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.33.1.10.g8b68568d6c
+In-Reply-To: <20211115115153.48307-1-dyroneteng@gmail.com>
+References: <20211115115153.48307-1-dyroneteng@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Nov 17 2021, Fabian Stelzer wrote:
+This patch series supports for only outputing the "objects" (OID)
+with a new option names `--oid-only`.
 
-> In certain environments or for specific test scenarios we might expect a
-> specific prerequisite check to succeed. Therefore we would like to
-> trigger an error when running our tests if this is not the case.
+Changes with the first patch are :
 
-trigger an error but...
+        1. Three commits are squashed to 1 commit (Peff's advice)
+        2. The tests issues (Đoàn Trần Công Danh's advice)
+        3. Use `OPT_CMDMODE()` for mutually exclusive control
+           (Ævar Arnfjörð Bjarmason's advice)
 
-> To remedy this we add the environment variable GIT_TEST_REQUIRE_PREREQ
-> which can be set to a comma separated list of prereqs. If one of these
-> prereq tests fail then the whole test run will abort.
+Some discussions are not included in Patch 2 :
 
-..here it's "abort the whole test run". If that's what you want use
-BAIL_OUT, not error. See: 234383cd401 (test-lib.sh: use "Bail out!"
-syntax on bad SANITIZE=leak use, 2021-10-14)
+        1. `git ls-tree --long --name-only` and
+           `git ls-tree --long --oid-only` which is arguably a bug
+           (Peff's advice)
+        2. Support `--format` for `git-ls-tree`
+           (Ævar Arnfjörð Bjarmason's advice)
 
-> +GIT_TEST_REQUIRE_PREREQ=<list> allows specifying a comma speparated list of
-> +prereqs that are required to succeed. If a prereq in this list is triggered by
-> +a test and then fails then the whole test run will abort. This can help to make
-> +sure the expected tests are executed and not silently skipped when their
-> +dependency breaks or is simply not present in a new environment.
-> +
->  Naming Tests
->  ------------
+The reason why these 2 discussions not included is I'm not sure whether
+I should continue on the current patchset or start a new one. And for the
+second, I think current implementation is clear and simple to use, meeting
+the needs of the moment. Maybe I will to support `--format` option, but
+before that, I'm appreciate if there are more suggestions appear.
 
-For other things we specify via lists such as GIT_SKIP_TESTS that's
-space-separated, but here it's comma-separated, isn't that just a leaky
-abstraction in this case? I.e. this is exposing a previously
-internal-only implementation detail of the prereq code.
+Thanks.
 
-It's less painful in shellscript if anything like this supports
-space-separated parameters, as you can interpolate them more easily in
-any wrapper script without using "tr" or the like...
+Teng Long (1):
+  ls-tree.c: support `--oid-only` option for "git-ls-tree"
+
+ Documentation/git-ls-tree.txt |  8 +++++--
+ builtin/ls-tree.c             | 27 ++++++++++++++++-------
+ t/t3104-ls-tree-oid.sh        | 40 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 65 insertions(+), 10 deletions(-)
+ create mode 100755 t/t3104-ls-tree-oid.sh
+
+Range-diff against v1:
+1:  c4479178d7 < -:  ---------- ls-tree.c: support `--oid-only` option for "git-ls-tree"
+2:  853ebbcf88 < -:  ---------- t3104: add related tests for `--oid-only` option
+3:  33c68c1f11 < -:  ---------- git-ls-tree.txt: description of the 'oid-only' option
+-:  ---------- > 1:  8b68568d6c ls-tree.c: support `--oid-only` option for "git-ls-tree"
+-- 
+2.33.1.10.g1f74a882e4
+
