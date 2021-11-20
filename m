@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3229C433F5
-	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 22:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99B4BC433F5
+	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 22:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232156AbhKTWFs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Nov 2021 17:05:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53002 "EHLO
+        id S234227AbhKTWJN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Nov 2021 17:09:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230436AbhKTWFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Nov 2021 17:05:47 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE249C061574
-        for <git@vger.kernel.org>; Sat, 20 Nov 2021 14:02:43 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id r11so58549595edd.9
-        for <git@vger.kernel.org>; Sat, 20 Nov 2021 14:02:43 -0800 (PST)
+        with ESMTP id S230436AbhKTWJM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Nov 2021 17:09:12 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE84C061574
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 14:06:08 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id y12so58609308eda.12
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 14:06:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=lH6sdc8gqVx7sIgLvCBYZTRYP10kZh1Dtt1nmIHDaNo=;
-        b=hwpRPuKS3xna3c6OsebXDrWsddfqPUdYjIaIMVvtklI7xxM9UklZisEBIGPTh5DzcB
-         cyjt6Q1C9LmCDm5I+H8ZOU88VyZIGyG3Kc1K6DIlRM+l70/zrmQOQN6sTu4209vK2P6U
-         xs2HH+hXUlCtPofl/42cklFsP55p5N1/1RAAqgmilIfDS3zJGaRHlZGmhFzInNoXhGc9
-         uWZCtBglvgT1FuL9S0mLXxF26vI7dXcvO3CUygABHQjEI+c9nRpmWulDdw3s33lE+lyO
-         llEiCOt0Ee2jachof9O2EBcYlFiKNhCSiIqTLbNrUwN/uPnIdKRM7dg/Q/maIiGBBgKX
-         F2Dw==
+        bh=O8qdCo0oFJ+tG2hBtO8WBSO+V2CC+HJSys6gaaEZ8jA=;
+        b=gs3iobZEM/ibODgmkxHt8zUEgeyGmdUP62y7Y5HFrqWXT7sRi5tD/aT9YysDN4LNUz
+         j0VBSF7xTCJowNOFv+HOuFZZALGZW8bpYwVkFfe1GW72TjfuN5kvxt6Jyql2AinuiHrP
+         HTy9/X3OVc950Lw4EiuYWZcUT8bGWEIjgSPRiPntUltLWrvcjTt23UWQk0ZUR8uWm/3Q
+         BvSKQn/XsHBnY+tXcdBAiodAtYU8mAzRWVpfZvbmVydvqvEGmlev2YGt7cfbuv1agp8p
+         /hpJoP7IAQFTQ0cGQTk2gtM+XaU8PFODYPIbLpK5aFPDX4jayUCcaXkFZRmZ219DPDPc
+         rGDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=lH6sdc8gqVx7sIgLvCBYZTRYP10kZh1Dtt1nmIHDaNo=;
-        b=QIbhYiIkrf0XSm03OwNGV2ZS+JW8ZdMY0oZK5vodVYXt5pXIS0U+HO06R9TzsLN3b9
-         wiEEDhJsLJJ0PZEWeOnG1oYDXO5KfLJrNSFpDKzKC+uao7nTKao9UYu7qi8kHtLnPvMx
-         I5sHA1cNVxqS5DfwwzCHT42UiSmQz7NLZaf7jskFEgwn4Dkx091eL2XwVvbOVOm9EFp5
-         uVxBpr3TEOXXmpT8/QnvV28r5pngPvTqqvaCAXutvqifvTVs6w++b3PN/RSi3z2BwTJQ
-         2386zDDBmNBjpM+aSQpneznaLt/9wmT3w/x/Lzf/eKcqXyAQb8sKpyy9O1pkFYyEqP3c
-         R57w==
-X-Gm-Message-State: AOAM530PptHYGhGG2aABdt1pDEIoNNLx8FOdrUj+QK1p/7XpcS7+HEyW
-        9rBp+5yqxvBuXWnHvAUfpFHJFm+CTqILc65Ro18=
-X-Google-Smtp-Source: ABdhPJxydLy0G9gK3xpOoU3x143UKvdBdp8XyERtnrw7askQkp4/V1JNYrqAG3NMMOUXqMxkuq+217RR3U3PQPiEXpM=
-X-Received: by 2002:a05:6402:405:: with SMTP id q5mr42160344edv.62.1637445762194;
- Sat, 20 Nov 2021 14:02:42 -0800 (PST)
+        bh=O8qdCo0oFJ+tG2hBtO8WBSO+V2CC+HJSys6gaaEZ8jA=;
+        b=vao2zOaP6L13VG00JUAlu86R+qyX6coIIjCmHVzk78jboPwcF9kwCE0uHhInlMeR5E
+         PdlDasJdF4c87vQO+zzEvdOHk2BlXXerI1ZejRvxo2/p4VAhmbTzw9VpcrKgQkzJXFkp
+         e1OlKTF1ka1qug/GaMSlmC7NiiDD+CTZcENZHzKrgCkbKEVbEjbFYqxHffV3/H5X9hjo
+         CF/0O2kDXGKwuG6UQr5QLCrV62lPx/9xbPSlxvdwQccFQALDHQE9NlZDhy2BM7G9JZGY
+         bcUo0TftUmfBDNVS6uo2tSkq/toHkMKk8OS+9uj/RqjxMDqKp9rMzZSaeVdMsvKF5RIv
+         d7VA==
+X-Gm-Message-State: AOAM533r7xEyyF5DZPxMGyKB8eov3XNQlYWT4LNWHRy/vSItTtpSXvm+
+        lkBRf9lOR3Rfcc5NiSSfpceI4hhITTcFK+Q4VU8=
+X-Google-Smtp-Source: ABdhPJyjppmamwN5fMXZBL1IOIK75yLT84UsKv3GySkQVJKrFiOKwBdUIBnuDJaS6ww3+IOlA561YJMU/eX3mKlSu5E=
+X-Received: by 2002:a50:d6d9:: with SMTP id l25mr44470453edj.41.1637445967120;
+ Sat, 20 Nov 2021 14:06:07 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1048.v2.git.1633440057.gitgitgadget@gmail.com>
- <pull.1048.v3.git.1633641339.gitgitgadget@gmail.com> <6ef8e4e31d39386e3a6fa1e6c24acd2c005fbd54.1633641339.git.gitgitgadget@gmail.com>
-In-Reply-To: <6ef8e4e31d39386e3a6fa1e6c24acd2c005fbd54.1633641339.git.gitgitgadget@gmail.com>
+References: <pull.1048.v4.git.1633984222.gitgitgadget@gmail.com>
+ <pull.1048.v5.git.1635345563.gitgitgadget@gmail.com> <a9135a5ed64f031fa2b46baabf179611dde60e71.1635345563.git.gitgitgadget@gmail.com>
+In-Reply-To: <a9135a5ed64f031fa2b46baabf179611dde60e71.1635345563.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 20 Nov 2021 14:02:30 -0800
-Message-ID: <CABPp-BEcWutcLJWJvO-DC5B59EO4focgCJG1OWYg080j8ti44Q@mail.gmail.com>
-Subject: Re: [PATCH v3 7/8] reset: make --mixed sparse-aware
+Date:   Sat, 20 Nov 2021 14:05:55 -0800
+Message-ID: <CABPp-BH9qXZObVkEyuLOzoOvw_uPfC_n9QSR=by2+-GVgAGgSw@mail.gmail.com>
+Subject: Re: [PATCH v5 7/8] reset: make --mixed sparse-aware
 To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <stolee@gmail.com>,
@@ -58,13 +58,17 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         Taylor Blau <me@ttaylorr.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
         Victoria Dye <vdye@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 7, 2021 at 2:15 PM Victoria Dye via GitGitGadget
+Sorry, one more thing...
+
+On Wed, Oct 27, 2021 at 7:39 AM Victoria Dye via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 >
 > From: Victoria Dye <vdye@github.com>
@@ -72,10 +76,6 @@ On Thu, Oct 7, 2021 at 2:15 PM Victoria Dye via GitGitGadget
 > Remove the `ensure_full_index` guard on `read_from_tree` and update `git
 > reset --mixed` to ensure it can use sparse directory index entries wherever
 > possible. Sparse directory entries are reset use `diff_tree_oid`, which
-
-I am having trouble parsing this second sentence.  Was this meant to
-be 'Sparse directory entries _which_ are reset use...'?
-
 > requires `change` and `add_remove` functions to process the internal
 > contents of the sparse directory. The `recursive` diff option handles cases
 > in which `reset --mixed` must diff/merge files that are nested multiple
@@ -151,18 +151,7 @@ be 'Sparse directory entries _which_ are reset use...'?
 > +
 > +                               if (!S_ISSPARSEDIR(ce->ce_mode))
 > +                                       continue;
-
-This double loop over all pathspecs and over all index entries reminds
-me of the original non-cone mode sparsity patterns.  Stolee introduced
-cone mode patterns specifically to avoid the expensiveness of such
-double loops (cf.
-https://lore.kernel.org/git/19d664a5dada87a9a8dcf18d7548582275593f10.1566313865.git.gitgitgadget@gmail.com/).
-Can one of the functions he added allow us to avoid this double loop,
-or are there complications that don't allow this (e.g. the actually
-SKIP_WORKTREE paths don't quite match the requested sparsity paths in
-some cases, or here we are faced with just a leading path of multiple
-index entries)?
-
+> +
 > +                               /*
 > +                                * If the pre-wildcard length is longer than the sparse
 > +                                * directory name and the sparse directory is the first
@@ -187,17 +176,6 @@ index entries)?
 > +                       }
 > +               } else if (!path_in_cone_mode_sparse_checkout(item.original, &the_index) &&
 > +                          !matches_skip_worktree(pathspec, i, &skip_worktree_seen))
-
-Oh, so you can at least generally avoid the double loop.  That's good.
-So is this just a case of wildcards are special and there isn't a way,
-even in cone-mode, to avoid the double loop?
-
-(Given that I'm so tardy in reviewing this, even if the answer is that
-the double loop is avoidable, or if we just don't know, I'd be totally
-fine with a 'TODO: consider whether this double loop could be avoided
-in cone mode using some kind of variant of
-path_in_cone_mode_sparse_checkout()')
-
 > +                       res = 1;
 > +
 > +               if (res > 0)
@@ -228,10 +206,10 @@ path_in_cone_mode_sparse_checkout()')
 >                 return 1;
 >         diffcore_std(&opt);
 > diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 4ac93874cb2..c9343ff5b9c 100755
+> index 5664ff8f039..44d5e11c762 100755
 > --- a/t/t1092-sparse-checkout-compatibility.sh
 > +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -774,11 +774,28 @@ test_expect_success 'sparse-index is not expanded' '
+> @@ -781,11 +781,28 @@ test_expect_success 'sparse-index is not expanded' '
 >                 ensure_not_expanded reset --hard $ref || return 1
 >         done &&
 >
@@ -257,8 +235,7 @@ path_in_cone_mode_sparse_checkout()')
 > +       # Wildcard identifies only full sparse directories, no index expansion
 > +       ensure_not_expanded reset deepest -- folder\* &&
 > +
->         ensure_not_expanded checkout -f update-deep &&
->         test_config -C sparse-index pull.twohead ort &&
->         (
-> --
-> gitgitgadget
+
+You've added two testcases where a wildcard results in no index
+expansion; should there also be a test where a wildcard results in
+index expansion for completeness?
