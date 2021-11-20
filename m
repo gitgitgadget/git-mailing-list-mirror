@@ -2,105 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4218C433EF
-	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 22:14:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4CDBC433FE
+	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 22:20:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236176AbhKTWRF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Nov 2021 17:17:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55434 "EHLO
+        id S236420AbhKTWXc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Nov 2021 17:23:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235984AbhKTWRE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Nov 2021 17:17:04 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ACFEC061574
-        for <git@vger.kernel.org>; Sat, 20 Nov 2021 14:14:01 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id r11so58619769edd.9
-        for <git@vger.kernel.org>; Sat, 20 Nov 2021 14:14:00 -0800 (PST)
+        with ESMTP id S236217AbhKTWXc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Nov 2021 17:23:32 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31DD3C061574
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 14:20:28 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id r11so58661684edd.9
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 14:20:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=mFIv8nPgoNgQAIJm3kSQ4eTVer1rVh6g/pIWZEPiXFU=;
-        b=VqKp8A06Mf7JQQQ+C1Xx21g6OW+cBGXujdaArCJS8HHyVjLVVrr3eD4nzUSo5iinT6
-         qrz+PMML/hapo/S+0A5AAGfhbHXsNtaTCG1O9qr41cWENxj5paPdEUTjSF5mjSwUwy9M
-         nc5FjphmPBvsoLhcSGf5rZLDBRhb7izGHAPgKuVe2W+8L+IECQTuu+hr8tKLoVX24ENP
-         Kca0p3m8IuRZfPPYAh2T30K61UHB+wDa2Cap10avWKtAUTNOKh6cZrWuVfvnVbWy4lyo
-         mGGaJ0/ardBhkLW+wYUCpuHRFmqLkgcXIFGkkZOO2FYXB/1bHCx3hp9zQID9bjvB+sbc
-         4gXg==
+        bh=Li7tqr/dMuKyGZ1U/hoFKtuS3c/PdbLKbwDkC18cflg=;
+        b=dxW+RzLfs3Nukf+JlaAP10Gzo6D5ayhDo/sS+sSFyh3VqGVDLOd/wzLWHypzWBjHFn
+         tJWXjojR+jxkdqzBoxFNIDFyiAoQFMJZXCCsgzcefwig6JVJUGLrgJ6PGrbUWDjqEm8w
+         ZUh9Yf+r1Eoy6r5IccrbB8r0la2UZ4S+VPlo9nFgjn8dj4rFIs+ZPWPptbWADjuZHzQW
+         x7rYgBLYsnYTm60GHoQQnmZ3+y9kusTCQJVrSaOS/de3TxFTODvdV4HJTSB6ub/37+U9
+         qpnKHmeOcgqyLxsj0XbNvoGtJiUvQDZEmCo2+7bl7oyhF7dof58hvJre1lSUUiu9yQem
+         9Ssg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=mFIv8nPgoNgQAIJm3kSQ4eTVer1rVh6g/pIWZEPiXFU=;
-        b=oU03XyTHCLBuhL2/9CUqbRzEZMrG4bmZa4ZsBWp4H35s96o7T1IQNkOFqHpKdNq+I9
-         29siD0XlXAw+TpuhTrM14wTOpgsIWzOcvx70/Ggu/zltFZWj1tg8N/CW/MfSnHtW3iTk
-         O/czwU8750Rg+mtjtTHP476COrY69FAvJGqbhRo5WFFOHivm7QycVL+vELtFJPSdDPSZ
-         jQFfDgX4ajnZxusO8rhp9DLfT2UBrPGtKMf6+wbqK1r/1NxALqbU/Tfd1PWZ0o9v3fTQ
-         r5MMmgWu5bVUE4v13C4hHoUT0cypbL7Y6nv7GpTrUwCFm4TDqZ6AdLg9FrmTBYIWubPq
-         z9LA==
-X-Gm-Message-State: AOAM532ZPm5cBKXlW7P825QISDjJ559E7WY9RYpzTJKxiRe5V5IjGhOh
-        w8tSwxhDodJ+fg/aavgzoAvwQLX69q736EMb/dI=
-X-Google-Smtp-Source: ABdhPJxd5+ROKJcagS/uPqAZGzXMyYZySpoka+XpuvRLoeJs6nH6DFbgKnO10+Eft5Y3zG3E+qpxWE5klQUgrJ3INF0=
-X-Received: by 2002:a05:6402:12d3:: with SMTP id k19mr42819245edx.244.1637446439601;
- Sat, 20 Nov 2021 14:13:59 -0800 (PST)
+        bh=Li7tqr/dMuKyGZ1U/hoFKtuS3c/PdbLKbwDkC18cflg=;
+        b=14RIxuJSKVqiY97O4UMVQ8A6SNbYPH2Lipgfy/7EcPaPQ7AO6TPWv1NvJo8kq1knVA
+         w4k9Rudv0GynWZmGlsulBCcfWpxuREFt1hgKp/Hl5Pkcijl586L1PdEaUXlnnySqh/mQ
+         SmqK81GQtj4h2gOydTVI8qA12AXKKeahbgwXGkKRdYP+wWrN164jRGgKrLO+z4QxabjS
+         QQSVWlW6FeWz2mnCLlO6MEBbfIaCwFWjkMqnMGfF9/ugGeA0UkpsjTc4t4ZvLwoJv8GU
+         PhzhJbzVPhWZf0Q8Fn+E2XtH/5tyYnINJCDKZ79N3MBhXygRLuzYhVo4HeLRryR9aJXC
+         MXLA==
+X-Gm-Message-State: AOAM533PiPknl9rS0LHEi2H3VZZcmaONgpts2rIxwVr/g5v5KK+Bhsr5
+        IsVTgn8CxmRJpHjtmY/tHQbyR3fT1U1aMIvaE5Y=
+X-Google-Smtp-Source: ABdhPJySBpiSMqlEEDTsES611XsV5UZBswKz4iME89V0vIOptalJmWNrBqct2Mwg3t8n3X5kVflihXfEVpn/92GpwVw=
+X-Received: by 2002:a17:906:a08c:: with SMTP id q12mr23542593ejy.443.1637446826755;
+ Sat, 20 Nov 2021 14:20:26 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1048.v4.git.1633984222.gitgitgadget@gmail.com> <pull.1048.v5.git.1635345563.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1048.v5.git.1635345563.gitgitgadget@gmail.com>
+References: <xmqqa6hznvz1.fsf@gitster.g>
+In-Reply-To: <xmqqa6hznvz1.fsf@gitster.g>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 20 Nov 2021 14:13:48 -0800
-Message-ID: <CABPp-BEKEC74qx_KrZTLDdt_bsgAQhR9MhO9v9pTtVvFyjaX6A@mail.gmail.com>
-Subject: Re: [PATCH v5 0/8] Sparse Index: integrate with reset
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Date:   Sat, 20 Nov 2021 14:20:15 -0800
+Message-ID: <CABPp-BEM4OoAG+WvAyaWyF21a6FOUy=wb=1mt8OVFb_eGEmCLw@mail.gmail.com>
+Subject: vd/sparse-reset (Was: Re: What's cooking in git.git (Nov 2021, #05;
+ Fri, 19))
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
         Victoria Dye <vdye@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+Hi,
 
-On Wed, Oct 27, 2021 at 7:39 AM Victoria Dye via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Fri, Nov 19, 2021 at 11:53 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> This series integrates the sparse index with git reset and provides
-> miscellaneous fixes and improvements to the command in sparse checkouts.
-...
-> Changes since V3
-> ================
+> * vd/sparse-reset (2021-10-27) 8 commits
+>  - unpack-trees: improve performance of next_cache_entry
+>  - reset: make --mixed sparse-aware
+>  - reset: make sparse-aware (except --mixed)
+>  - reset: integrate with sparse index
+>  - reset: expand test coverage for sparse checkouts
+>  - sparse-index: update command for expand/collapse test
+>  - reset: preserve skip-worktree bit in mixed reset
+>  - reset: rename is_missing to !is_in_reset_tree
+>  (this branch is used by ds/fetch-pull-with-sparse-index and ld/sparse-diff-blame.)
 >
->  * Replace git update-index --force-full-index with git reset update-folder1
->    -- folder1/a, remove introduction of new --force-full-index option
->    entirely, and add comment clarifying the intent of sparse-index is
->    expanded and converted back test
->  * Fix authorship on reset: preserve skip-worktree bit in mixed reset
->    (current patch fully replaces original patch, but metadata of the
->    original wasn't properly replaced)
+>  Various operating modes of "git reset" have been made to work
+>  better with the sparse index.
 >
->
-> Changes since V4
-> ================
->
->  * Update t1092 test 'checkout and reset (mixed)' to explicitly verify
->    differences between sparse and full checkouts
+>  Will merge to 'next'?
 
-I apologize for my tardiness in reviewing your updated series.  You
-have addressed all my feedback from v2 and things look really good.  I
-had a couple small questions on patch 7.
+The series looks very good, and is quite close to ready and maybe
+close enough...but I did spot a tiny commit message issue and had two
+questions on patch 7.  (Sadly, I ineptly put one of those questions as
+a response to v3[1], while the other question was correctly a response
+to v5[2].)
 
-As with my previous review, I kinda skipped over the last patch
-because I never figured out the cache_bottom stuff.  I read it to see
-if there were any obvious mistakes to someone unfamiliar with that
-mechanism (i.e. me) but didn't see anything.  I read over the earlier
-patches much more carefully.
+Again, my apologies for the late review and not being around to look earlier.
 
-Anyway, other than patch 7 -- where I only had a minor nit on the
-commit message plus two questions (which might result in no changes),
-the series looks good.
+[1] https://lore.kernel.org/git/CABPp-BEcWutcLJWJvO-DC5B59EO4focgCJG1OWYg080j8ti44Q@mail.gmail.com/
+[2] https://lore.kernel.org/git/CABPp-BH9qXZObVkEyuLOzoOvw_uPfC_n9QSR=by2+-GVgAGgSw@mail.gmail.com/
