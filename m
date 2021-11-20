@@ -2,254 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 862A8C433EF
-	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 16:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5143C433F5
+	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 16:15:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231669AbhKTQQO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Nov 2021 11:16:14 -0500
-Received: from mail-sl2kor01hn2238.outbound.protection.outlook.com ([52.100.191.238]:15721
-        "EHLO KOR01-SL2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S229613AbhKTQQI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Nov 2021 11:16:08 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=MGxgVNUDgKnvxDOps9shGvYEcn4zoU/m1o9O7j8S+Yxz1/mvcLl+eCq5x7mjreOy5EtnT1C4ZouUgE5lslKUcuX6lPYSnK53I0RoZeEIpv863sEbjCtGcxDPDqzvqgktlIx6Awbkehe4bViB8C/hjNaV3zPU19OaqevIzwBFhwJ7S9K/XlnQHjOI+XA1j19MyWZCzuYBqGO9avpoPm/4Gx+oVe1H2zfWyHBwv9zw7nWuuARGOXKfpGI7A7h1Vp6/eIldVgqaRUUu51Gpf5YnWushxKINDpqhNGTozPp8FMKN7bkGodt5HZcWN73fWwjQ71RNVOwSDNkA2Jtv+KQjDQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gXkTD4Lvd7+BxFlpP2/8CWHXvwvdAl0OIGSg2c1+ytU=;
- b=DMr4/nfM0PrPmIOm28LO4FDtx+iBCZWFrkaf9USryyzUB1E62mAQV24obZqo3McWViyFwT4BMc0gCjKUaYaCkxofD/EpFSSFscTBlSRoezMFzDeY8cnEhhqEZBjnrUn45oBZ6eL/VODWk7I9m52YmU3B+69lG8X4Me9UQReUuC9iYQrlCWTogZGtN/eQMXCmXaTj0x+bMowIM29B9U/0qrbBf93LrnPFmAVsZ5P4rtt4D3FEXGevKg7+Tstt/6N80FlhxjQsiZD4cPEiOuygRv3wB4R8W2dNRN6hjyyVhuWtENOa71Q7jvov0AqP1Z1wZ9adEAFUQiQEgUIOz9wHYQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atnp.co.kr; dmarc=pass action=none header.from=atnp.co.kr;
- dkim=pass header.d=atnp.co.kr; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=atnpp.onmicrosoft.com;
- s=selector2-atnpp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gXkTD4Lvd7+BxFlpP2/8CWHXvwvdAl0OIGSg2c1+ytU=;
- b=KAByQoFdU0AavmP41EhxR2sPRAJywULHGZin7C703Jg1scJVP1B6alBUdx34mjDpzntlzzTE1OztDXYTOfgIfPNHs6jkeV/oXKeCGIzIofmUVOFig6k0O9XTniiGIhEPglC13uJ3ZIs6pgR6ls0gGjLmMBtZp4S/cY+OHqlJnkg=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atnp.co.kr;
-Received: from PS2P216MB1364.KORP216.PROD.OUTLOOK.COM (2603:1096:301:99::7) by
- PS2P216MB0964.KORP216.PROD.OUTLOOK.COM (2603:1096:300:22::8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4713.22; Sat, 20 Nov 2021 16:13:03 +0000
-Received: from PS2P216MB1364.KORP216.PROD.OUTLOOK.COM
- ([fe80::21c2:d17:dc57:70e8]) by PS2P216MB1364.KORP216.PROD.OUTLOOK.COM
- ([fe80::21c2:d17:dc57:70e8%6]) with mapi id 15.20.4713.024; Sat, 20 Nov 2021
- 16:13:03 +0000
-From:   "ATNP TEAM" <mail@atnp.co.kr>
+        id S234939AbhKTQSn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Nov 2021 11:18:43 -0500
+Received: from wes1-so1-redir.wedos.net ([46.28.106.44]:52411 "EHLO
+        wes1-so1.wedos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229613AbhKTQSm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Nov 2021 11:18:42 -0500
+X-Greylist: delayed 561 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Nov 2021 11:18:42 EST
+Received: from [192.168.1.150] (cgnat44-pool1-237-189.poda.cz [193.165.237.189])
+        by wes1-so1.wedos.net (Postfix) with ESMTPSA id 4HxJLK1zBlz37R
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 17:06:17 +0100 (CET)
+From:   Martin Bruzina <martin@bruzina.cz>
 To:     git@vger.kernel.org
-Subject: =?UTF-8?B?44Ki44Kr44Km44Oz44OI44GL44KJ44Gu44GK5pSv5omV44GE44CC5pyq5omV44GE44GM44GC44KK44G+44GZ?=
-Date:   18 Nov 2021 01:37:49 +0000
-Message-ID: <20211118013748.E90953B2937A4E1A@atnp.co.kr>
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: CH2PR04CA0027.namprd04.prod.outlook.com
- (2603:10b6:610:52::37) To PS2P216MB1364.KORP216.PROD.OUTLOOK.COM
- (2603:1096:301:99::7)
+Subject: Emphasize that assume-unchanged and skip-worktree bits are not
+ propagated to origin with git push
+Message-ID: <3df2bcbd-fac2-b36d-3f50-d52e573fc803@bruzina.cz>
+Date:   Sat, 20 Nov 2021 17:06:17 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Received: from atnp.co.kr (34.135.91.193) by CH2PR04CA0027.namprd04.prod.outlook.com (2603:10b6:610:52::37) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.21 via Frontend Transport; Thu, 18 Nov 2021 01:37:49 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 41201385-f7bd-4b65-0208-08d9aa340824
-X-MS-TrafficTypeDiagnostic: PS2P216MB0964:
-X-Microsoft-Antispam-PRVS: <PS2P216MB09649963595DAB0B77AC67B9F59D9@PS2P216MB0964.KORP216.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:1728;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: iWFEQHiZ/w6ge07mghIXsiClRtz08Iu4QlDOlSwoA467/Uw4T+DqG78he82xhdlPx86QMUYWbhx3OEDt3lLwqSMJ2T7dTwt1PIT0VGpI5TXRWJvsQSIWldUa0Iv/qV0F5Ov/wCQI8NAMz3q/YaVxwuX3FzVKr5ZE+wJ7VCEBCs+5Vhu6EKmDAs9c0JBID6ac5uwRbmHrrYgqcrrRRq180kJ7cTqhk9nkfEGF11LYs/VECzEkZVF+TgjAWQp9a8CIb72zHVuvT4jAf+484vmkp0+sm03wlYicA6ePye52QiHpqXeXtAjKJ/Jn4PoC699tuutJEajyyWh1hYZiIlUomT7yg6XaxMJVvfaJhhea6q4g4zeTMpT/tr/56XcBxjKj/2QDsmzGOpo49qBo+X4mw2Oa6xCylJAxg1szzwKRu+NoybIesi8iH46OTm7caKyU9r6WgLzEVEJx+3S8bNTRJ259xOvcRuw9NSsixB3+1PtJ+jppWz7AC4ZjfXigfYZSxBjQ4jd8ZTfeC4QWMlq/g4RkwhIFgzTY7gPenXYnAmuVJCkBK1g4L890gsaX4LIHN7dsj0JT1mV6I60eFygY1CSAXRBeeanJKBYCqniW+c6pBLXLjH+F+fExFuR3sb4pS6mhEPZW0XmFR1V0Li6z6PhPgoY0pnHVuazyP2TO2iGtHmKZv0NQUr3dT27gAWKfQ6/7E8cBqAgYhOaIpxMZSiCY8IuGyZf22+qZVXstqh3gechQk4+0tUrPBRRcVMPb1sV/S0a3uQ5Y8cfIbGShOFfqqhzjcqCSH+DhiPGqgJCeXr2xU9EYu+7blB0ZW0LcJLILwwUUkLPNXsu4LXZsPAuI1wZm6RJV06EEBo4nLXyaxOyHBC/RVjYDGpip9SVv4B5eensy/rd1GVf22vlrbcEMd0aAjpNhBTdQ/hEMjRA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:ja;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:PS2P216MB1364.KORP216.PROD.OUTLOOK.COM;PTR:;CAT:OSPM;SFS:(39850400004)(366004)(376002)(346002)(136003)(396003)(103936005)(6916009)(2616005)(956004)(54836003)(8936002)(224303003)(508600001)(186003)(26005)(7696005)(316002)(66476007)(66946007)(66556008)(36756003)(2906002)(52116002)(55016002)(38350700002)(38100700002)(33656002)(5660300002)(1076003)(500100016);DIR:OUT;SFP:1501;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UWdjeTQ0UFhiZVFDSTBvd1NFVy9zaEltMHpIU0srR3RjbU9KcXRMQ2tqMVVS?=
- =?utf-8?B?KzczcTVRUUM2MUNuQk5xL0FNYTdSVVpxbWdrWllrOTZMRjFENldEclpVQnQ3?=
- =?utf-8?B?KzEvWGVWU2VoVHZvZlkxby9vdUFSRlVuL0NiWndxVjRyaVJybUZYTlU4c09J?=
- =?utf-8?B?cGQ1WTl3dExkK0dtUGJIL21XM1VUakRLM2g5V3AyUTJSOGFzQXovZG53SXBz?=
- =?utf-8?B?WWZjVzRDRVRFM3NXNDhjMGpBUFVFb2puZkxZcTk2WGVCYmtXY2I2U2tDOEU0?=
- =?utf-8?B?VEVSenFObjFQMGZBQWFlZDJNUkNPTG81RVBNbVVhOUNQamJSR3RYQVRQMGFt?=
- =?utf-8?B?cm5UYzJYWE5jV1JWU3Z0Q1hlS0tmczJxQjFnN3gydnI5Rk5la1pMa202OCsx?=
- =?utf-8?B?dkZnQWRTc3o3TlBNMHBmK3llZFNBS0dJTEpkYWU1U0VlejdJZnR1ZWQvQ240?=
- =?utf-8?B?NVIxeGVIeitqT0xwWHRCSHF2OHZaZ2hlUmROV1dTc2NseFFtanh2Q3hheWNQ?=
- =?utf-8?B?eE5ybXFLK0F5ZWtjd2JvNDAwaW9WLzQ5bnJlWlBBRVFXMVowcjNzVklURXFV?=
- =?utf-8?B?QThmR0FPTXFrWDh2OTlLVVEwT0ZIMGtDcEZqbTQyRUtsTHUwZDFOZUswdCtL?=
- =?utf-8?B?RVNGR0pGQSt3b2hOWWdyUHFRQkJKMmRlQjFPQ0x1Y0Q3WHp2dm9wYlJRUkFK?=
- =?utf-8?B?d3dRblVRQTBxWm5jQ3MwSkNvZ3hJMjAwc3VrYmFuTS9qNnRTZkpQQ2dzZWp4?=
- =?utf-8?B?dWVldXFuREk0VnhCYjgvcEQ4RG9PSFIxVS95ZnVHS3VpTVlkREJONFBuUjhk?=
- =?utf-8?B?U3daWXZWUTNCdWZVV1BMRzcvbVhFdGtnMlBQc2ordE5lbGRlM3ZaN2J1V0ly?=
- =?utf-8?B?RWM1OC9UbDltVWZNNjIyalI5cEEwRFVpYzRuSDdyY0lpWWF5TkF3eGVVS214?=
- =?utf-8?B?TGtSREx1TWpaVk1rdFV2SHlxTEZiZkhrdEZxVjNIYmQ1eFhuNC9uell6SWxG?=
- =?utf-8?B?UmF5d1RNN0ZuWFM5TFpDalRXMEZTNGhzbTBVZkU3Q0RwOTNlWkpIUHJIZGZx?=
- =?utf-8?B?ZEd6UVprY1lHVjJySll6TXIrTFFBYmNCUUxCZXRSYUh6aXhKR2NKeXBlNEJK?=
- =?utf-8?B?MnRSNTBOcTRxcmhvNTIvbi9uVzFVU2FsZ0F6SzkvMUtvZ2xZZnoxa0VIVUY2?=
- =?utf-8?B?MHVMdXdrekNIQlNncU0wK3NXcmtwUFpQMkgvU2MvbUlOYTh3eUZXZDdlMGZ0?=
- =?utf-8?B?RFhMQng2aU9qanVXNWJDSGVRN0RlUkFnam43MWl2VnJJcXlGK0xkZEozNW44?=
- =?utf-8?B?U3ZPSko1L1c0bW9HUXlueExqaFpqQkZ6STJ6TlBYL3FtRDVNNVExSVhqZFU5?=
- =?utf-8?B?WmVnNlVDY3ozYUQxWXAxa05NTkhhemhYNytUNmpCV01GV0JzVUtuMGJKZzFQ?=
- =?utf-8?B?L2M2dis4Y09MN0dxUFMwbUN6Vk1oeUJ1a1RZSFNYQmRzOHMxQ01jYzJoT1Zj?=
- =?utf-8?B?N21Gcm5DQVRteTFGUHR1Z3BrNUNrN0Z0aDVKQm5QR0JmaW14bDBibzJrY3h0?=
- =?utf-8?B?MUJDOWZ3My95WVh1c0Q4dXduNWdJSGh6M09yTTZna0tSK3NJdW1XdHNnTVVu?=
- =?utf-8?B?SDJnbHVFVUIrSVptUFUwNU95aWRJbllMbmFVREk2Y3FXU3BUV0NacGVVQUpC?=
- =?utf-8?B?ckIrdkF0cG1rWjdMZVJpSzMxYndxcWRzNlFVRWx0R05uNVoxRWl0RlZaUWNW?=
- =?utf-8?B?NzBTaDlLTnYzTTRUQmM2VHkzNERHWEFVV3dQVkM3YnAyZDk5MmJhLy8zSkZN?=
- =?utf-8?B?NFQvZzZaSWtVL09GR3ptOGpaeWRzNnBlTGhqVVkzU1IwU3U2SWtXckJCWHFV?=
- =?utf-8?B?cmlya252Z21aOUhoanhIQmJ4Tk9kc29yT3ExZEt3eFJ2WVJUWWhKdVN4ajBE?=
- =?utf-8?B?U0RCVTNGZlY2ZHRWL1g0VUo4cUpmU1d4aEdBU0VvVlRiS3JNRkcwQVZIbmZn?=
- =?utf-8?B?bUNHTmY2Mm4vQm1RYi9aeVk0TzBKNG9ETHUxTk1oTnJmbFBXZ21nNnZvbHFP?=
- =?utf-8?B?OVVpUk9MVkw2a1Bocy91dkkrc2hmZFhzbFBMbStNZkYwWXZza3dXdkRYRTN5?=
- =?utf-8?Q?gOPo=3D?=
-X-OriginatorOrg: atnp.co.kr
-X-MS-Exchange-CrossTenant-Network-Message-Id: 41201385-f7bd-4b65-0208-08d9aa340824
-X-MS-Exchange-CrossTenant-AuthSource: PS2P216MB1364.KORP216.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2021 01:37:50.3365
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 61ebeddc-16a2-4dcb-8bee-d4192dfea4f3
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ocoaiCEQUjRWwttpR+ZWT5UOm+uarHhpDeiQhTZ3rNHJGv9UuTEMrL/fNKXQJl+t
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS2P216MB0964
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=E3=81=8A=E3=81=84=EF=BC=81
+General overview of the idea:
+Reference https://git-scm.com/docs/git-update-index describes 
+assume-unchanged and skip-worktree bits and should include clear 
+information on whether they are propagated to remotes with git push or not.
 
-=E6=AE=8B=E5=BF=B5=E3=81=AA=E3=81=8C=E3=82=89=E3=80=81=E6=82=AA=E3=81=84=E7=
-=9F=A5=E3=82=89=E3=81=9B=E3=81=8C=E3=81=82=E3=82=8A=E3=81=BE=E3=81=99=E3=80=
-=82
-=E6=95=B0=E3=83=B6=E6=9C=88=E5=89=8D=E3=80=81=E7=A7=81=E3=81=AF=E3=81=82=E3=
-=81=AA=E3=81=9F=E3=81=8C=E3=82=A4=E3=83=B3=E3=82=BF=E3=83=BC=E3=83=8D=E3=83=
-=83=E3=83=88=E3=82=92=E9=96=B2=E8=A6=A7=E3=81=99=E3=82=8B=E3=81=9F=E3=82=81=
-=E3=81=AB=E4=BD=BF=E7=94=A8=E3=81=97=E3=81=A6=E3=81=84=E3=82=8B=E3=83=87=E3=
-=83=90=E3=82=A4=E3=82=B9=E3=81=AB=E3=82=A2=E3=82=AF=E3=82=BB=E3=82=B9=E3=81=
-=97=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82
-=E3=81=9D=E3=82=8C=E4=BB=A5=E6=9D=A5=E3=80=81=E7=A7=81=E3=81=AF=E3=81=82=E3=
-=81=AA=E3=81=9F=E3=81=AE=E3=82=A4=E3=83=B3=E3=82=BF=E3=83=BC=E3=83=8D=E3=83=
-=83=E3=83=88=E6=B4=BB=E5=8B=95=E3=82=92=E7=9B=A3=E8=A6=96=E3=81=97=E3=81=A6=
-=E3=81=8D=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82
+What problem will this solve?
+ From https://git-scm.com/docs/git-update-index it is unclear, how 
+assume-unchanged and skip-worktree bits work in relation to remotes - if 
+they are local only, or propagated to a remote as well.
 
-=E5=A4=A7=E4=BA=BA=E3=81=AE=E3=82=A6=E3=82=A7=E3=83=96=E3=82=B5=E3=82=A4=E3=
-=83=88=E3=82=92=E5=AE=9A=E6=9C=9F=E7=9A=84=E3=81=AB=E8=A8=AA=E5=95=8F=E3=81=
-=97=E3=81=A6=E3=81=84=E3=82=8B=E3=81=AE=E3=81=A7=E3=80=81=E3=81=93=E3=82=8C=
-=E3=82=92=E6=8B=85=E5=BD=93=E3=81=97=E3=81=A6=E3=81=84=E3=82=8B=E3=81=AE=E3=
-=81=AF=E3=81=82=E3=81=AA=E3=81=9F=E3=81=A7=E3=81=82=E3=82=8B=E3=81=93=E3=81=
-=A8=E3=81=8C=E7=A2=BA=E8=AA=8D=E3=81=A7=E3=81=8D=E3=81=BE=E3=81=99=E3=80=82
-=E7=B0=A1=E5=8D=98=E3=81=AB=E3=81=99=E3=82=8B=E3=81=9F=E3=82=81=E3=81=AB=E3=
-=80=81=E3=82=A2=E3=82=AF=E3=82=BB=E3=82=B9=E3=81=97=E3=81=9FWeb=E3=82=B5=E3=
-=82=A4=E3=83=88=E3=81=8B=E3=82=89=E3=83=87=E3=83=BC=E3=82=BF=E3=81=B8=E3=81=
-=AE=E3=82=A2=E3=82=AF=E3=82=BB=E3=82=B9=E3=81=8C=E6=8F=90=E4=BE=9B=E3=81=95=
-=E3=82=8C=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82
+ From other documentation - 
+https://git-scm.com/docs/git-sparse-checkout#_sparse_checkout or 
+https://git-scm.com/docs/gitfaq, it might be deducible, but it would be 
+convenient to mention it in 
+https://git-scm.com/docs/git-update-index#_notes as well.
 
-=E3=82=A6=E3=82=A4=E3=83=AB=E3=82=B9=E5=AF=BE=E7=AD=96=E3=82=BD=E3=83=95=E3=
-=83=88=E3=82=A6=E3=82=A7=E3=82=A2=E3=81=8C=E3=81=9D=E3=82=8C=E3=82=92=E6=A4=
-=9C=E5=87=BA=E3=81=A7=E3=81=8D=E3=81=AA=E3=81=84=E3=82=88=E3=81=86=E3=81=AB=
-=E3=81=99=E3=82=8B=E3=81=9F=E3=82=81=E3=81=AB=E3=80=811=E6=97=A5=E3=81=AB=
-=E6=95=B0=E5=9B=9E=E7=BD=B2=E5=90=8D=E3=82=92=E6=9B=B4=E6=96=B0=E3=81=99=E3=
-=82=8B=E3=83=88=E3=83=AD=E3=82=A4=E3=81=AE=E6=9C=A8=E9=A6=AC=E3=82=92=E3=83=
-=89=E3=83=A9=E3=82=A4=E3=83=90=E3=83=BC=E3=83=99=E3=83=BC=E3=82=B9=E3=81=A7=
-=E3=82=A2=E3=83=83=E3=83=97=E3=83=AD=E3=83=BC=E3=83=89
-=E3=81=97=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82=E3=81=95=E3=82=89=E3=81=AB=E3=
-=80=81=E3=81=9D=E3=82=8C=E3=81=AF=E7=A7=81=E3=81=AB=E3=81=82=E3=81=AA=E3=81=
-=9F=E3=81=AE=E3=82=AB=E3=83=A1=E3=83=A9=E3=81=A8=E3=83=9E=E3=82=A4=E3=82=AF=
-=E3=81=B8=E3=81=AE=E3=82=A2=E3=82=AF=E3=82=BB=E3=82=B9=E3=82=92=E4=B8=8E=E3=
-=81=88=E3=81=A6=E3=81=8F=E3=82=8C=E3=81=BE=E3=81=99=E3=80=82
-=E3=81=95=E3=82=89=E3=81=AB=E3=80=81=E5=86=99=E7=9C=9F=E3=80=81=E3=82=BD=E3=
-=83=BC=E3=82=B7=E3=83=A3=E3=83=AB=E3=83=A1=E3=83=87=E3=82=A3=E3=82=A2=E3=80=
-=81=E3=83=81=E3=83=A3=E3=83=83=E3=83=88=E3=80=81=E9=80=A3=E7=B5=A1=E5=85=88=
-=E3=81=AA=E3=81=A9=E3=80=81=E3=81=99=E3=81=B9=E3=81=A6=E3=81=AE=E3=83=87=E3=
-=83=BC=E3=82=BF=E3=82=92=E3=83=90=E3=83=83=E3=82=AF=E3=82=A2=E3=83=83=E3=83=
-=97=E3=81=97=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82
+Have I thought about other solutions?
+Use Google - it's not easy to find the fact by Google
+Search for the information by on-page search - 
+https://git-scm.com/search/results?search=skip-worktree and 
+https://git-scm.com/search/results?search=assume-unchanged top results 
+are not helpful, but I admit that from the bottom ones it is deducible
+Write a blog about it - 
+http://blog.stephan-partzsch.de/how-to-ignore-changes-in-tracked-files-with-git/ 
+already posted the information: But no matter which option 
+(assume-unchanged and skip-worktree bits) you choose there is one point 
+to consider: The chosen bit will not be propagated by git push.
 
-=E3=81=A4=E3=81=84=E6=9C=80=E8=BF=91=E3=80=81=E7=A7=81=E3=81=AF=E3=80=81=E3=
-=83=93=E3=83=87=E3=82=AA=E3=81=8C=E5=88=A5=E3=81=AE=E7=94=BB=E9=9D=A2=E3=81=
-=A7=E5=90=8C=E6=99=82=E3=81=AB=E5=86=8D=E7=94=9F=E3=81=95=E3=82=8C=E3=81=A6=
-=E3=81=84=E3=82=8B=E9=96=93=E3=81=AB=E3=80=81=E7=94=BB=E9=9D=A2=E3=81=AE=E4=
-=B8=80=E9=83=A8=E3=81=A7=E4=B8=AD=E5=87=BA=E3=81=97=E3=81=99=E3=82=8B=E3=83=
-=93=E3=83=87=E3=82=AA=E3=82=92=E4=BD=9C=E6=88=90=E3=81=99=E3=82=8B=E3=81=A8=
-=E3=81=84=E3=81=86=E7=B4=A0=E6=99=B4=E3=82=89=E3=81=97=E3=81=84=E3=82=A2=E3=
-=82=A4=E3=83=87=E3=82=A2=E3=82=92=E6=80=9D=E3=81=84=E3=81=A4
-=E3=81=8D=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82=E3=81=9D=E3=82=8C=E3=81=AF=E6=
-=A5=BD=E3=81=97=E3=81=8B=E3=81=A3=E3=81=9F=EF=BC=81
+-- 
+S pozdravem
+Martin Bružina
 
-=E3=81=93=E3=81=AE=E3=83=93=E3=83=87=E3=82=AA=E3=81=AF=E6=95=B0=E5=9B=9E=E3=
-=82=AF=E3=83=AA=E3=83=83=E3=82=AF=E3=81=99=E3=82=8B=E3=81=A0=E3=81=91=E3=81=
-=A7=E3=81=99=E3=81=B9=E3=81=A6=E3=81=AE=E9=80=A3=E7=B5=A1=E5=85=88=E3=81=AB=
-=E7=B0=A1=E5=8D=98=E3=81=AB=E9=80=81=E4=BF=A1=E3=81=A7=E3=81=8D=E3=81=BE=E3=
-=81=99=E3=81=AE=E3=81=A7=E3=81=94=E5=AE=89=E5=BF=83=E3=81=8F=E3=81=A0=E3=81=
-=95=E3=81=84=E3=80=82=E3=81=93=E3=81=AE=E3=82=B7=E3=83=8A=E3=83=AA=E3=82=AA=
-=E3=82=92=E9=98=B2=E3=81=8E=E3=81=9F=E3=81=84=E3=81=A8=E6=80=9D=E3=81=84=E3=
-=81=BE=E3=81=99=E3=80=82
-
-=E3=81=9D=E3=82=8C=E3=82=92=E5=BF=B5=E9=A0=AD=E3=81=AB=E7=BD=AE=E3=81=84=E3=
-=81=A6=E3=80=81=E3=81=93=E3=81=93=E3=81=AB=E7=A7=81=E3=81=AE=E6=8F=90=E6=A1=
-=88=E3=81=8C=E3=81=82=E3=82=8A=E3=81=BE=E3=81=99=EF=BC=9A
-20=E4=B8=87=E5=86=86=E7=9B=B8=E5=BD=93=E3=81=AE=E9=87=91=E9=A1=8D=E3=82=92=
-=E3=83=93=E3=83=83=E3=83=88=E3=82=B3=E3=82=A4=E3=83=B3=E3=82=A6=E3=82=A9=E3=
-=83=AC=E3=83=83=E3=83=88=E3=81=AB=E9=80=81=E9=87=91=E3=81=99=E3=82=8C=E3=81=
-=B0=E3=80=81=E5=85=A8=E9=83=A8=E5=BF=98=E3=82=8C=E3=81=A6=E3=81=97=E3=81=BE=
-=E3=81=84=E3=81=BE=E3=81=99=E3=80=82=E3=81=BE=E3=81=9F=E3=80=81=E3=81=99=E3=
-=81=B9=E3=81=A6=E3=81=AE=E3=83=87=E3=83=BC=E3=82=BF=E3=81=A8=E3=83=93=E3=83=
-=87=E3=82=AA=E3=82=92=E5=AE=8C=E5=85=A8=E3=81=AB=E5=89=8A=E9=99=A4=E3=81=97=
-=E3=81=BE=E3=81=99=E3=80=82
-
-=E7=A7=81=E3=81=AE=E6=84=8F=E8=A6=8B=E3=81=A7=E3=81=AF=E3=80=81=E3=81=93=E3=
-=82=8C=E3=81=AF=E7=A7=81=E3=81=AE=E4=BB=95=E4=BA=8B=E3=81=AB=E3=81=A8=E3=81=
-=A3=E3=81=A6=E3=82=84=E3=82=84=E6=8E=A7=E3=81=88=E3=82=81=E3=81=AA=E4=BE=A1=
-=E6=A0=BC=E3=81=A7=E3=81=99=E3=80=82
-=E3=82=B0=E3=83=BC=E3=82=B0=E3=83=AB=E3=82=84=E3=83=93=E3=83=B3=E3=82=B0=E3=
-=81=AE=E3=82=88=E3=81=86=E3=81=AA=E6=A4=9C=E7=B4=A2=E3=82=A8=E3=83=B3=E3=82=
-=B8=E3=83=B3=E3=82=92=E4=BD=BF=E3=81=A3=E3=81=A6=E3=83=93=E3=83=83=E3=83=88=
-=E3=82=B3=E3=82=A4=E3=83=B3=E3=82=92=E8=B3=BC=E5=85=A5=E3=81=99=E3=82=8B=E6=
-=96=B9=E6=B3=95=E3=82=92=E7=90=86=E8=A7=A3=E3=81=99=E3=82=8B=E3=81=93=E3=81=
-=A8=E3=81=8C=E3=81=A7=E3=81=8D=E3=81=BE=E3=81=99=E3=80=81=E3=81=9D=E3=82=8C=
-=E3=81=AF=E3=81=9D=E3=82=8C=E3=81=BB=E3=81=A9=E9=9B=A3=E3=81=97=E3=81=84=E3=
-=81=93=E3=81=A8=E3=81=A7=E3=81=AF=E3=81=AA=E3=81=84=E3=81=93
-=E3=81=A8=E3=81=8C=E3=82=8F=E3=81=8B=E3=82=8A=E3=81=BE=E3=81=99=E3=80=82
-
-=E7=A7=81=E3=81=AE=E3=83=93=E3=83=83=E3=83=88=E3=82=B3=E3=82=A4=E3=83=B3=E3=
-=82=A6=E3=82=A9=E3=83=AC=E3=83=83=E3=83=88=EF=BC=88BTC=EF=BC=89=EF=BC=9A1F9=
-Qp4PMvBbCgXyRm1cRbexNdiSxkLhk8n
-
-=E8=BF=94=E4=BF=A1=E3=81=AB=E3=81=AF48=E6=99=82=E9=96=93=E3=81=82=E3=82=8A=
-=E3=81=BE=E3=81=99=E3=81=8C=E3=80=81=E6=AC=A1=E3=81=AE=E7=82=B9=E3=81=AB=E3=
-=82=82=E6=B3=A8=E6=84=8F=E3=81=99=E3=82=8B=E5=BF=85=E8=A6=81=E3=81=8C=E3=81=
-=82=E3=82=8A=E3=81=BE=E3=81=99=E3=80=82
-
-=E7=A7=81=E3=81=AB=E8=BF=94=E4=BF=A1=E3=81=99=E3=82=8B=E3=81=AE=E3=81=AF=E6=
-=84=8F=E5=91=B3=E3=81=8C=E3=81=82=E3=82=8A=E3=81=BE=E3=81=9B=E3=82=93-=E3=
-=82=A2=E3=83=89=E3=83=AC=E3=82=B9=E3=81=AF=E8=87=AA=E5=8B=95=E7=9A=84=E3=81=
-=AB=E7=94=9F=E6=88=90=E3=81=95=E3=82=8C=E3=81=A6=E3=81=84=E3=81=BE=E3=81=99=
-=E3=80=82
-=E7=A7=81=E3=81=AE=E3=83=93=E3=83=83=E3=83=88=E3=82=B3=E3=82=A4=E3=83=B3=E3=
-=82=A6=E3=82=A9=E3=83=AC=E3=83=83=E3=83=88=E3=81=A8=E4=B8=80=E7=B7=92=E3=81=
-=AB=E6=89=8B=E7=B4=99=E3=82=92=E8=BF=BD=E8=B7=A1=E3=81=99=E3=82=8B=E3=81=93=
-=E3=81=A8=E3=81=8C=E3=81=A7=E3=81=8D=E3=81=AA=E3=81=84=E3=81=AE=E3=81=A7=E3=
-=80=81=E6=96=87=E5=8F=A5=E3=82=92=E8=A8=80=E3=81=86=E3=81=93=E3=81=A8=E3=82=
-=82=E6=84=8F=E5=91=B3=E3=81=8C=E3=81=82=E3=82=8A=E3=81=BE=E3=81=9B=E3=82=93=
-=E3=80=82
-=E3=81=99=E3=81=B9=E3=81=A6=E3=81=8C=E6=AD=A3=E7=A2=BA=E3=81=AB=E8=AA=BF=E6=
-=95=B4=E3=81=95=E3=82=8C=E3=81=A6=E3=81=84=E3=81=BE=E3=81=99=E3=80=82
-
-=E3=81=82=E3=81=AA=E3=81=9F=E3=81=8C=E3=81=93=E3=81=AE=E6=89=8B=E7=B4=99=E3=
-=81=AB=E3=81=A4=E3=81=84=E3=81=A6=E8=AA=B0=E3=81=8B=E3=81=AB=E4=BD=95=E3=81=
-=8B=E8=A8=80=E5=8F=8A=E3=81=97=E3=81=9F=E3=81=93=E3=81=A8=E3=82=92=E7=A7=81=
-=E3=81=8C=E8=A6=8B=E3=81=A4=E3=81=91=E3=81=9F=E5=A0=B4=E5=90=88=E3=80=81=E3=
-=83=93=E3=83=87=E3=82=AA=E3=81=AF=E3=81=99=E3=81=90=E3=81=AB=E5=85=B1=E6=9C=
-=89=E3=81=95=E3=82=8C=E3=80=81=E3=81=82=E3=81=AA=E3=81=9F=E3=81=AE=E9=80=A3=
-=E7=B5=A1=E5=85=88=E3=81=8C=E6=9C=80=E5=88=9D=E3=81=AB=E3=81=9D=E3=82=8C=E3=
-=82=92=E5=8F=97=E3=81=91=E5=8F=96=E3=82=8A=E3=81=BE=E3=81=99
-=E3=80=82=E3=81=9D=E3=81=AE=E5=BE=8C=E3=80=81=E5=8B=95=E7=94=BB=E3=81=8C=E3=
-=82=A6=E3=82=A7=E3=83=96=E3=81=AB=E6=8E=B2=E8=BC=89=E3=81=95=E3=82=8C=E3=81=
-=BE=E3=81=99=EF=BC=81
-
-=E8=BF=BD=E4=BC=B8=E3=81=93=E3=81=AE=E6=89=8B=E7=B4=99=E3=82=92=E9=96=8B=E3=
-=81=8F=E3=81=A8=E6=99=82=E9=96=93=E3=81=8C=E5=A7=8B=E3=81=BE=E3=82=8A=E3=81=
-=BE=E3=81=99=E3=80=82 =EF=BC=88=E3=81=93=E3=81=AE=E3=83=97=E3=83=AD=E3=82=
-=B0=E3=83=A9=E3=83=A0=E3=81=AB=E3=81=AF=E3=82=BF=E3=82=A4=E3=83=9E=E3=83=BC=
-=E3=81=8C=E7=B5=84=E3=81=BF=E8=BE=BC=E3=81=BE=E3=82=8C=E3=81=A6=E3=81=84=E3=
-=81=BE=E3=81=99=EF=BC=89=E3=80=82
-
-=E9=A0=91=E5=BC=B5=E3=81=A3=E3=81=A6=E3=80=81=E6=B0=97=E6=A5=BD=E3=81=AB=EF=
-=BC=81=E9=81=8B=E3=81=8C=E6=82=AA=E3=81=8B=E3=81=A3=E3=81=9F=E3=81=AE=E3=81=
-=A7=E3=80=81=E6=AC=A1=E5=9B=9E=E3=81=AF=E6=B0=97=E3=82=92=E3=81=A4=E3=81=91=
-=E3=81=A6=E3=81=8F=E3=81=A0=E3=81=95=E3=81=84=E3=80=82
