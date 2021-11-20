@@ -2,239 +2,348 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A87AAC433EF
-	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 03:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9A86C433F5
+	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 03:28:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236704AbhKTDKT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 22:10:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60398 "EHLO
+        id S232926AbhKTDbr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 22:31:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236697AbhKTDKT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 22:10:19 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40776C061574
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 19:07:16 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id e3so50492017edu.4
-        for <git@vger.kernel.org>; Fri, 19 Nov 2021 19:07:16 -0800 (PST)
+        with ESMTP id S229908AbhKTDbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 22:31:46 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3180C061574
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 19:28:43 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id i8-20020a7bc948000000b0030db7b70b6bso11937922wml.1
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 19:28:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=mx3dOiHi5qYA/7lcIzyWk/ewzGmgd1WGfJVBeiO0eKU=;
-        b=ljJVwjN9ZLcZrolccKfbcOJXNP8zKRAvWInACHBqyfv3O2ZGqW6Imn/RJIU+Vpoy2h
-         MWVQNJvr9MdaDYQU/iTNmWy+wn2MchtbZv/wSsV6HYJa6jyvXm/MIby5JcR9MfG1Nsox
-         Vn+EXMtUN0WmKpOtNGzQ7BMwQpPCER9Hfho4DQp0CVbU7i8LIg2WuFiwcKQk0NkTMK8I
-         MVX8Rm3IKL2cUf4viR50mgvl23F0Xq9+BErfL5qwuDKZ8Nzv3cv5rlgTUJ08UG4AKMd0
-         +p5Vn0NzyyF4/XmItmSDFuTi6HvVHYi1Sqel0CfhALWn1cjH8CJ+tQZvs7Ch44sSnNnN
-         qRbw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=1dLMAqyVBszau66IU35qGqOK4yolALnlQaWj0bptO9w=;
+        b=AKMC2fa9QYlffv2U2FQUpkx49nMYNCjpiwahSpLbFJfVrWwCt/wzN6iTKfMnYPPGw6
+         VBGdfJhh+upXB/wefK1SubAKqrQlvXsW+yY/0zdzE9/b2DGf+K+/pW0rqms7r7T0GKRs
+         iZTWKAf0jgkVPPF6WTES6/M6tEoNZiFHp3ANVga96H3wxg/4GyJJuwVz2p3DvXm9dVNk
+         DPeTsfDJj0ipZpS1e6tkaABJ3i6LIvxbgt0/guftP5jBG6zFRXW88m4ICJuNqtrUTxW6
+         OR0/adGjzSsQnOVPvfai56P4fEciM7HZ0F8rYyQDKNSIiWl8J7pMr2cY6hSxWJmoEr8b
+         9NOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=mx3dOiHi5qYA/7lcIzyWk/ewzGmgd1WGfJVBeiO0eKU=;
-        b=twpy+NuqmpMxMKe/cLVLcJXFRbaQOeepAj0EYEUYFuY2GfiL+cIDjbDw7L+xc4c/R3
-         Tr34hXDX6Q90ZNzjmy+GlelXgm3kxm4JnSxX5rfBr/R56DfGEpChO0xr6EsAYpa1XHl2
-         49/0rTBxyVUapsDVy/U+OdbRvaCqjUJE3dc+r6u0Z0jQ1PUmW06+tXBmHlHXKddB8SsY
-         cL6HAjgx/g6rgifUybC3ShgiDkAxZCHcA4kRsfK9YnqZOXLN0kCIwdiPqv21ftMLc9PX
-         bMNA2Mc5cMPl7A6iz14CCro0fF24l4qkxdXIZljQChJ/7Jkp79JpGvJ6ySWG9jWsy0CZ
-         PQPQ==
-X-Gm-Message-State: AOAM531UEXFR5Y6lrpkJLR2TVkDhEUES42IZ8OOckYkB7V3mTry5mXnk
-        OKoGyjlPpD/GjXipATqHIZM=
-X-Google-Smtp-Source: ABdhPJzR8apgcSNxrF4X8EG+c5JaaG6TNYXwWJMBzzJ2hVxDW69BXYuxojNEVpiM/eHhmThl7lkvQg==
-X-Received: by 2002:a17:907:160c:: with SMTP id hb12mr14379144ejc.460.1637377634593;
-        Fri, 19 Nov 2021 19:07:14 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id e1sm703484edc.27.2021.11.19.19.07.13
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=1dLMAqyVBszau66IU35qGqOK4yolALnlQaWj0bptO9w=;
+        b=AknZNhiC3EfBsMvZjUIrMsjIEVd3BSio6Vr8K+y/XxEB7RIl/j1XYMorvq7udO34j5
+         cxu+W8KO0sE+bPyW/sGJiqWxkfcbkF1aOxcUNyVbgSGf08rI5pnagQpxyodoC+bzQVWj
+         wbYUloY07S7GnEX/Zd2WxasDJz3Budx2YWCPWxjScN1GCFT8ILgIpYoH8byjen3CMK3o
+         pt2NseAJ3YWRL4dsyd0lJV/PLXPLEnvSmm0QqBBv7gVPykWChpt/cSht+fxOSiWYakTC
+         lpKIoYU7I5n1Vmw+IUegrH4RsjXxwNh9Fip2iKlNGv4h4XSizyKteohyHEgkbmnLzbdP
+         1dpQ==
+X-Gm-Message-State: AOAM533RO0jHvdDHs83hRRC4CzkssoNMWc/8A4VMPsoAaDNEov4S6i3L
+        7UKgLUT8ufq1g6io6tCxL7yZQq5INKsw7g==
+X-Google-Smtp-Source: ABdhPJyhcZTaUbzU2FjyJ+MkrWV/6CGOwmeh4GNTEyB95fmC5RVK0D86W60Sryr12izc7iFgCmt0sw==
+X-Received: by 2002:a05:600c:1549:: with SMTP id f9mr6293190wmg.118.1637378921868;
+        Fri, 19 Nov 2021 19:28:41 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id o12sm1560623wmq.12.2021.11.19.19.28.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Nov 2021 19:07:13 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1moGif-000sLz-7z;
-        Sat, 20 Nov 2021 04:07:13 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Fri, 19 Nov 2021 19:28:41 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 1/2] CI: use shorter names that fit in UX tooltips
-Date:   Sat, 20 Nov 2021 03:51:55 +0100
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/6] CI: Remove Travis CI, shorten names for GH tooltips, split jobs
+Date:   Sat, 20 Nov 2021 04:28:30 +0100
+Message-Id: <cover-v2-0.6-00000000000-20211120T030848Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.34.0.823.gcc3243ae16c
+In-Reply-To: <cover-0.2-00000000000-20211119T135343Z-avarab@gmail.com>
 References: <cover-0.2-00000000000-20211119T135343Z-avarab@gmail.com>
-        <patch-1.2-26f80c87c8d-20211119T135343Z-avarab@gmail.com>
-        <b9da6658-2b00-cc13-e1ae-124d8222dab8@github.com>
-        <211119.86czmv3mow.gmgdl@evledraar.gmail.com>
-        <8efbd4bd-09bc-eabd-37ea-53501f75f8a6@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <8efbd4bd-09bc-eabd-37ea-53501f75f8a6@github.com>
-Message-ID: <211120.86r1bb1q5a.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I thought I'd submit a smaller change to just address the GitHub CI
+name truncation in tooltips (now 2/6), but part of the feedback was
+why we needed to update Travis CI code, and can't we split up the
+"default" job etc.
 
-On Fri, Nov 19 2021, Victoria Dye wrote:
+So here's a larger series I'd initially peeled v1[1] from a WIP
+version of.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Fri, Nov 19 2021, Victoria Dye wrote:
->>=20
->>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>>> Change the names used for the GitHub CI workflows to be short enough
->>>> to (mostly) fit in the pop-up tool-tips that GitHub shows in the
->>>> commit view. I.e. when mouse-clicking on the passing or failing
->>>> check-mark next to the commit subject.
->>>>
->>>> That description is truncated to 24 characters, with the 3 at the end
->>>> being placed by "...".
->>>>
->>>> E.g. the full job name (visible at [1]):
->>>>
->>>>     "regular (linux-gcc-default, gcc, ubuntu-latest)"
->>>>
->>>> Will, when shown in the tool-tip be truncated to:
->>>>
->>>>     "CI/PR / regular (linu..."
->>>>
->>>> There's then a further limit in the expanded view where the job names
->>>> are observably truncated to 44 characters (including "..."). I.e.:
->>>>
->>>>     "regular (linux-gcc-default, gcc, ubuntu-l..."
->>>>
->>>
->>> Tooltips like the ones you've pointed out here appear intended to be an=
- "at
->>> a glance" view of the jobs (mostly for showing pass/fail/skip status) -=
- each
->>> job in the tooltip has a "Details" link that takes you to the job summa=
-ry
->>> and logs. In the current state, although the names of the are truncated=
- in
->>> the tooltip, the information is still easily accessible in the full wor=
-kflow
->>> details (one click away). For example, the details for the "linux-leaks=
-" job
->>> [1] tell me the image, compiler, and job name right at the top of the p=
-age.
->>>
->>> [1] https://github.com/git/git/runs/4214606314?check_suite_focus=3Dtrue
->>>
->>>> With this change we shorten both the job names, and change the
->>>> top-level "name" from "CI/PR" to "CI", since it will be used as a
->>>> prefix in the tooltips. We also remove redundant or superfluous
->>>> information from the name, e.g. "ubuntu-latest" isn't really needed
->>>> for "linux-leaks", it'll suffice to say linux. For discovering what
->>>> image runs that specifically we can consult main.yml itself.
->>>>
->>>
->>> By optimizing for the tooltip, this patch shortens names to the point t=
-hat
->>> they're more difficult to interpret (w32 vs. w32/VS) and/or removes val=
-uable
->>> context about platform/image/etc. When a user *does* want more informat=
-ion
->>> on the job, they now have to:=20
->>>
->>> 1) know that the "CI/PR" job definition is in ".github/workflows/main.y=
-ml"
->>> 2) parse through the file to find the job they want
->>> 3) correlate that back to the job in the workflow details they're
->>>    investigating.=20
->>>
->>> That's a strictly worse experience for an extremely common use-case. Wh=
-at
->>> use-case is this patch attempting to improve?
->>=20
->> That I can click on the button that your co-workers implemented and see
->> the relevant information about the job :)
->>=20
->
-> I'm sure you meant this in good faith, but I don't see how where I work is
-> relevant. GitHub is a tool you can use to develop Git, and I'm reviewing
-> because this patch would affect how I work on Git.
+The end-state is that the job names are shorter, and some are now
+split up, before:
 
-Yes, sorry. That came off as quite snarky, it was just meant as a lame
-joke.
+    https://github.com/git/git/runs/4214600139
 
->> Given that it's truncated we need to pick and choose what we display if
->> we're not going to force the user to have to go to the full view every
->> time.
->>=20
->
-> This is what I wanted to dig into by asking for a use-case. Which users do
-> you expect are using this tooltip view so heavily that what's displayed
-> there justifies this change? If you're one of those users, then waiting f=
-or
-> more feedback on this patch will hopefully provide a better idea of what =
-the
-> "average" user finds helpful.
+After:
 
-Will improve the description etc. in a re-roll.
+    https://github.com/avar/git/runs/4271369035
 
->> I'll change s/w32/win/ etc, and there's room to move stuff around here,
->> but I think it's fine to just not display that it's e.g. "ubuntu" or
->> "fedora" at all. That's almost never been relevant.
->>=20
->> If we were trying to do the opposite and lengthen the names to shove
->> every bit of useful information in there at a glance I can think of 5-10
->> things we'd put there before "fedora". libc/version, compiler/version,
->> kernel/version etc.
->>=20
->
-> I'm sure there's plenty of information that would be helpful to have ther=
-e;
-> however, that's not really a justification for removing some of what we
-> already have.
+1. https://lore.kernel.org/git/cover-0.2-00000000000-20211119T135343Z-avarab@gmail.com/
 
-I'll retain more information in an incoming re-roll.
+Ævar Arnfjörð Bjarmason (6):
+  CI: remove Travis CI support
+  CI: use shorter names that fit in UX tooltips
+  CI: rename the "Linux32" job to lower-case "linux32"
+  CI: use "$runs_on_pool", not "$jobname" to select packages & config
+  CI: don't run "make test" twice in one job
+  CI: run "documentation" via run-build-and-test.sh
 
->> Whether it's a recent Gentoo or Ubuntu is something that's OK to omit.
->>=20
->> But maybe I'm wrong, are there cases you can think of where we really
->> need "ubuntu" or "fedora" etc.?
->>=20
->
-> Yes, absolutely - knowing that `fedora-latest` was the image used in the
-> failing builds for v2.34.0-rc1 led to learning that the image was updated
-> the day before the build failed, which was instrumental in quickly
-> identifying the root cause of the bug [1]. In that case, I got the
-> information to start debugging from the web UI, *not* from digging into
-> `main.yml`.=20
->
-> In general, easily finding what image a CI job was built on can help with
-> investigating bugs that arise from environmental differences. It's a minor
-> quality-of-life improvement, but it's no less significant than the benefit
-> you're suggesting this patch provides.
->
-> [1] https://lore.kernel.org/git/pull.1072.git.1635990465854.gitgitgadget@=
-gmail.com/
+ .github/workflows/main.yml        | 44 ++++++++++++++++++++--
+ .travis.yml                       | 60 ------------------------------
+ README.md                         |  2 +-
+ ci/install-dependencies.sh        | 35 ++++++++---------
+ ci/install-docker-dependencies.sh |  2 +-
+ ci/lib.sh                         | 62 ++++++++-----------------------
+ ci/print-test-failures.sh         | 10 -----
+ ci/run-build-and-tests.sh         | 47 +++++++++++++++--------
+ ci/run-docker-build.sh            | 11 +-----
+ ci/run-docker.sh                  |  4 +-
+ ci/test-documentation.sh          | 39 ++++++++-----------
+ 11 files changed, 123 insertions(+), 193 deletions(-)
+ delete mode 100644 .travis.yml
 
-I thought that case was a good example of us creating a problem for
-ourselves that we didn't need to have. as I noted downthread in:
-https://lore.kernel.org/git/211104.86v918i78r.gmgdl@evledraar.gmail.com/
+Range-diff against v1:
+-:  ----------- > 1:  cc94a353ccb CI: remove Travis CI support
+1:  26f80c87c8d ! 2:  73981cedee8 CI: use shorter names that fit in UX tooltips
+    @@ Commit message
+         commit view. I.e. when mouse-clicking on the passing or failing
+         check-mark next to the commit subject.
+     
+    -    That description is truncated to 24 characters, with the 3 at the end
+    -    being placed by "...".
+    -
+    -    E.g. the full job name (visible at [1]):
+    -
+    -        "regular (linux-gcc-default, gcc, ubuntu-latest)"
+    -
+    -    Will, when shown in the tool-tip be truncated to:
+    -
+    -        "CI/PR / regular (linu..."
+    -
+    -    There's then a further limit in the expanded view where the job names
+    -    are observably truncated to 44 characters (including "..."). I.e.:
+    -
+    -        "regular (linux-gcc-default, gcc, ubuntu-l..."
+    -
+    -    With this change we shorten both the job names, and change the
+    -    top-level "name" from "CI/PR" to "CI", since it will be used as a
+    -    prefix in the tooltips. We also remove redundant or superfluous
+    -    information from the name, e.g. "ubuntu-latest" isn't really needed
+    -    for "linux-leaks", it'll suffice to say linux. For discovering what
+    -    image runs that specifically we can consult main.yml itself.
+    -
+    -    The above "regular (linux-gcc-default, gcc, ubuntu-latest)" job name
+    -    then becomes a 1=1 match to the "$jobname" used in
+    -    "ci/run-build-and-tests.sh". A "( push" or " (pull_request" is then
+    -    added implicitly as before (from the top-level "on" parameter in
+    -    "main.yml"). In the tooltip we'll now show:
+    -
+    -        "CI / linux-leaks (pu..."
+    -
+    -    We then have no truncation in the expanded view. See [2] for a
+    -    currently visible CI run using this commit, and [3] for the GitHub
+    -    workflow syntax involved being changed here.
+    -
+    -    We could avoid even more truncation with more compact names,
+    -    e.g. changing "linux" to "lin" or "lnx", but I didn't do that since
+    -    any additional shortening seemed counterproductive, i.e. "w32" is a
+    -    well-known way of referring to "Windows", but "lin" isn't). We could
+    -    also shorten e.g. "::build" and "::test" to "+bld" and "+tst", but
+    -    those seem similarly to be overly obtuse.
+    +    These names are seemingly truncated to 17-20 characters followed by
+    +    three dots ("..."). Since a "CI/PR / " prefix is added to them the job
+    +    names looked like this before (windows-test and vs-test jobs omitted):
+    +
+    +        CI/PR / ci-config (p...
+    +        CI/PR / windows-buil...
+    +        CI/PR / vs-build (pu...
+    +        CI/PR / regular (lin...
+    +        CI/PR / regular (lin...
+    +        CI/PR / regular (os...
+    +        CI/PR / regular (os...
+    +        CI/PR / regular (lin...
+    +        CI/PR / regular (lin...
+    +        CI/PR / dockerized (...
+    +        CI/PR / dockerized (...
+    +        CI/PR / dockerized (...
+    +        CI/PR / static-anal...
+    +        CI/PR / sparse (pu...
+    +        CI/PR / documenta...
+    +
+    +    By omitting the "/PR" from the top-level name, and pushing the
+    +    $jobname to the front we'll now instead get:
+    +
+    +        CI / config (push)
+    +        CI / win build (push...
+    +        CI / win+VS build (...
+    +        CI / linux-clang (ub...
+    +        CI / linux-gcc (ubun...
+    +        CI / osx-clang (osx)...
+    +        CI / osx-gcc (osx) (...
+    +        CI / linux-gcc-defau...
+    +        CI / linux-leaks (ub...
+    +        CI / linux-musl (alp...
+    +        CI / Linux32 (daald/...
+    +        CI / pedantic (fedor...
+    +        CI / static-analysis...
+    +        CI / sparse (push)...
+    +        CI / documentation
+    +
+    +    We then have no truncation in the expanded view. See [1] for how it
+    +    looked before, [2] for a currently visible CI run using this commit,
+    +    and [3] for the GitHub workflow syntax involved being changed here.
+    +
+    +    Let's also add a field for the "os" and use it where appropriate, it's
+    +    occasionally useful to know we're running on say ubuntu
+    +    v.s. fedora (but the "-latest" suffix isn't very useful, that applies
+    +    to almost all the jobs.
+     
+         1. https://github.com/git/git/tree/master/
+    -    2. https://github.com/avar/git/tree/avar/ci-shorter-names
+    +    2. https://github.com/avar/git/tree/avar/ci-rm-travis-cleanup-ci-names-2
+         3. https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+    @@ .github/workflows/main.yml: jobs:
+                  }
+      
+        windows-build:
+    -+    name: w32::build
+    ++    name: win build
+          needs: ci-config
+          if: needs.ci-config.outputs.enabled == 'yes'
+          runs-on: windows-latest
+    @@ .github/workflows/main.yml: jobs:
+              name: windows-artifacts
+              path: artifacts
+        windows-test:
+    -+    name: w32::test
+    ++    name: win test
+          runs-on: windows-latest
+          needs: [windows-build]
+          strategy:
+    @@ .github/workflows/main.yml: jobs:
+              name: failed-tests-windows
+              path: ${{env.FAILED_TEST_ARTIFACTS}}
+        vs-build:
+    -+    name: w32/VS::build
+    ++    name: win+VS build
+          needs: ci-config
+          if: needs.ci-config.outputs.enabled == 'yes'
+          env:
+    @@ .github/workflows/main.yml: jobs:
+              name: vs-artifacts
+              path: artifacts
+        vs-test:
+    -+    name: w32/VS::test
+    ++    name: win+VS test
+          runs-on: windows-latest
+          needs: vs-build
+          strategy:
+    @@ .github/workflows/main.yml: jobs:
+              name: failed-tests-windows
+              path: ${{env.FAILED_TEST_ARTIFACTS}}
+        regular:
+    -+    name: ${{matrix.vector.jobname}}
+    ++    name: ${{matrix.vector.jobname}} (${{matrix.vector.os}})
+          needs: ci-config
+          if: needs.ci-config.outputs.enabled == 'yes'
+          strategy:
+    +@@ .github/workflows/main.yml: jobs:
+    +         vector:
+    +           - jobname: linux-clang
+    +             cc: clang
+    ++            os: ubuntu
+    +             pool: ubuntu-latest
+    +           - jobname: linux-gcc
+    +             cc: gcc
+    ++            os: ubuntu
+    +             pool: ubuntu-latest
+    +           - jobname: osx-clang
+    +             cc: clang
+    ++            os: osx
+    +             pool: macos-latest
+    +           - jobname: osx-gcc
+    +             cc: gcc
+    ++            os: osx
+    +             pool: macos-latest
+    +           - jobname: linux-gcc-default
+    +             cc: gcc
+    ++            os: ubuntu
+    +             pool: ubuntu-latest
+    +           - jobname: linux-leaks
+    +             cc: gcc
+    ++            os: ubuntu
+    +             pool: ubuntu-latest
+    +     env:
+    +       CC: ${{matrix.vector.cc}}
+     @@ .github/workflows/main.yml: jobs:
+              name: failed-tests-${{matrix.vector.jobname}}
+              path: ${{env.FAILED_TEST_ARTIFACTS}}
+        dockerized:
+    -+    name: ${{matrix.vector.jobname}} (docker)
+    ++    name: ${{matrix.vector.jobname}} (${{matrix.vector.image}})
+          needs: ci-config
+          if: needs.ci-config.outputs.enabled == 'yes'
+          strategy:
+    -@@ .github/workflows/main.yml: jobs:
+    -       matrix:
+    -         vector:
+    -         - jobname: linux-musl
+    -+          os: alpine
+    -           image: alpine
+    -         - jobname: Linux32
+    -+          os: ubuntu32
+    -           image: daald/ubuntu32:xenial
+    -         - jobname: pedantic
+    -+          os: fedora
+    -           image: fedora
+    -     env:
+    -       jobname: ${{matrix.vector.jobname}}
+     @@ .github/workflows/main.yml: jobs:
+            run: ci/install-dependencies.sh
+          - run: make sparse
+2:  9b8a3f0cdc4 ! 3:  002c183fff4 CI: rename the "Linux32" job to lower-case "linux32"
+    @@ Commit message
+     
+      ## .github/workflows/main.yml ##
+     @@ .github/workflows/main.yml: jobs:
+    +         vector:
+              - jobname: linux-musl
+    -           os: alpine
+                image: alpine
+     -        - jobname: Linux32
+     +        - jobname: linux32
+    -           os: ubuntu32
+    ++          os: ubuntu32
+                image: daald/ubuntu32:xenial
+              - jobname: pedantic
+    -
+    - ## .travis.yml ##
+    -@@ .travis.yml: matrix:
+    -       os: linux
+    -       dist: trusty
+    -       compiler:
+    --    - env: jobname=Linux32
+    -+    - env: jobname=linux32
+    -       os: linux
+    -       compiler:
+    -       addons:
+    +           image: fedora
+     
+      ## ci/install-docker-dependencies.sh ##
+     @@
+-:  ----------- > 4:  eca0ad08d4b CI: use "$runs_on_pool", not "$jobname" to select packages & config
+-:  ----------- > 5:  a113b8404ed CI: don't run "make test" twice in one job
+-:  ----------- > 6:  7c423c8283d CI: run "documentation" via run-build-and-test.sh
+-- 
+2.34.0.823.gcc3243ae16c
 
-I.e. the "fedora" part didn't actually matter, it just so happened that
-fedora had a relatively recent glibc/gcc, and when it was updated from
-under us CI runs all over the place started failing.
-
-Which is an issue that's entirely avoidable by pinning the dependency,
-and not using *-latest.
-
-In general I really don't see why who deploys software anywhere thinks
-using this pattern of fluid dependencies is worth the hassle. It's
-rather trivial to just run a cron script that bumps your dependencies,
-commits and pushes.
-
-It's not at all trivial to take software that downloads whatever
-someone's random website has available at the moment and try to figure
-out what state it was in last week, month or year when the state of that
-third party website wasn't what it was today.
-
-Anyway, I take your general point that these image names (or a derived
-name) may be useful to someone somewhere.
-
-I just thought this example was a bad one, because the only reason the
-image name or update would have been unclear to anyone (as it was to me
-when my CI started breaking due to this) is because we're using this
-anti-pattern.
