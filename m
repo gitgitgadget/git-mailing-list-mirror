@@ -2,108 +2,270 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 796A7C433EF
-	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 06:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84E77C433EF
+	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 07:02:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233702AbhKTGIu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Nov 2021 01:08:50 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55889 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234360AbhKTGIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Nov 2021 01:08:46 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E6852F5741;
-        Sat, 20 Nov 2021 01:05:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GoICGjBgrkX/N6r/lioJJ4KCprM6LkhH9w9kfd
-        cLV24=; b=HqUvDHO9qcQygv1Z9EKNUdT+1+BGdrd0ckY2YTNZxg9lc+J9NZsDVS
-        eTE7ARhmnqe7m7mdf+4MTNfZQ+SBJTVcsvolC99AzoJX1v7X2/R1OBNldainqHqW
-        sI7jU6zVGJ09ND+oHdflflhKq9mPvewxJ1rsGZlfGoMTWSIE9n2kE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD2D0F5740;
-        Sat, 20 Nov 2021 01:05:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2CA71F573F;
-        Sat, 20 Nov 2021 01:05:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Robin H. Johnson" <robbat2@gentoo.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC] single-level refs vs push --all/--mirror
-References: <robbat2-20211115T063838-612792475Z@orbis-terrarum.net>
-        <YZLLUtPVQt2XtgQX@coredump.intra.peff.net>
-        <robbat2-20211116T061554-223495439Z@orbis-terrarum.net>
-        <robbat2-20211119T234158-903098822Z@orbis-terrarum.net>
-Date:   Fri, 19 Nov 2021 22:05:40 -0800
-In-Reply-To: <robbat2-20211119T234158-903098822Z@orbis-terrarum.net> (Robin
-        H. Johnson's message of "Sat, 20 Nov 2021 00:03:36 +0000")
-Message-ID: <xmqqlf1jnyyz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S236578AbhKTHEo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Nov 2021 02:04:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54936 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235213AbhKTHEn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Nov 2021 02:04:43 -0500
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE110C061574
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 23:01:39 -0800 (PST)
+Received: by mail-qt1-x834.google.com with SMTP id t34so11621029qtc.7
+        for <git@vger.kernel.org>; Fri, 19 Nov 2021 23:01:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=eUwhNEk6VS0x+uikYHqOInvc8vTqg/9EdvSOLX920Fg=;
+        b=HIS4pvZAd7v1wREdGt6RLUrrCvWsvaWp6+xJ2x62lF86Xc6fe8q3nVjcv72lmNbQmm
+         gNalzesf2LdHtSplFjOCjP/waLktl2M9fdajm9qGwNGExxeedc1Pon2DsIqwJ0m3JZGZ
+         zrYdCcxroSYSoziMQiYEToB8oKkv33lgyVV8grQD+9hQ7v0DOZEeWSGuXYvfM1D0129V
+         aiHHa8YhVY22UVqeXtLZ95ni+bA7es9Lzgs1lZuCW+ZMmlyZx9mJLrV1IS4ja1xzT43C
+         h5Y4MqKd0/4ixBQfN2Rrytsh+P8QcvBYKzMOxWRxYs3DhbFMKhLGC/bMJoMoEoweyJv1
+         AEvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=eUwhNEk6VS0x+uikYHqOInvc8vTqg/9EdvSOLX920Fg=;
+        b=YzQrW3cl9tgPs1MPXPtjncHjgR0dc17PaIGhdfuZupK3YFha+15a7M2h/n0DOLhSnU
+         /fdJwKEGkCtZ3eoHZSoRGEy8EU28WS5P7JvoEMSAWXsOczJiXUR3ashYKMtnS5npUGVU
+         D38H1hpZ9wa14tDZ8IU6VxqP8c6H4KW/9XfOLTf3/bSR/to7IoHwHKkF0/Tpq50Gbsou
+         0Y0W9s7rvwSOF6+BJKWEtc6B9XIGaB4DtO6+h/tS1rAb/XcjdAGPQ0ApXOKkg2u2je8a
+         /ZOYr2r1fWmQMBO69EnCtLguk0axfM5inbT5XSJ5UtK9v4YGvSDSTspmteGtXJVQ15LJ
+         rgHg==
+X-Gm-Message-State: AOAM5338GgyLyW4ge+A7bH5uNCmDTg4T5GQ5Gtj9ocuuO1IX7NDMvwdl
+        TnXCRckPiDVqAG3M97vdlE7y
+X-Google-Smtp-Source: ABdhPJzgdX8i1CPgkTj38aKPTOwdkloDLYJyEbB6P+93/501f6YydIxmZABZMNGWJQxrmtRdNheiaA==
+X-Received: by 2002:ac8:5c53:: with SMTP id j19mr13142339qtj.40.1637391698244;
+        Fri, 19 Nov 2021 23:01:38 -0800 (PST)
+Received: from [192.168.0.105] (70.15.20.152.res-cmts.sm.ptd.net. [70.15.20.152])
+        by smtp.gmail.com with ESMTPSA id o17sm1152741qkp.89.2021.11.19.23.01.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Nov 2021 23:01:37 -0800 (PST)
+Message-ID: <d9b07ca5-b58d-a535-d25b-85d7f12e6295@github.com>
+Date:   Sat, 20 Nov 2021 02:01:36 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E3DF63F2-49C7-11EC-B1BB-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.0
+Subject: Re: [PATCH v2 2/6] CI: use shorter names that fit in UX tooltips
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <cover-0.2-00000000000-20211119T135343Z-avarab@gmail.com>
+ <cover-v2-0.6-00000000000-20211120T030848Z-avarab@gmail.com>
+ <patch-v2-2.6-73981cedee8-20211120T030848Z-avarab@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <patch-v2-2.6-73981cedee8-20211120T030848Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Robin H. Johnson" <robbat2@gentoo.org> writes:
+Ævar Arnfjörð Bjarmason wrote:
+> Change the names used for the GitHub CI workflows to be short enough
+> to (mostly) fit in the pop-up tool-tips that GitHub shows in the
+> commit view. I.e. when mouse-clicking on the passing or failing
+> check-mark next to the commit subject.
+> 
+> These names are seemingly truncated to 17-20 characters followed by
+> three dots ("..."). Since a "CI/PR / " prefix is added to them the job
+> names looked like this before (windows-test and vs-test jobs omitted):
+> 
+>     CI/PR / ci-config (p...
+>     CI/PR / windows-buil...
+>     CI/PR / vs-build (pu...
+>     CI/PR / regular (lin...
+>     CI/PR / regular (lin...
+>     CI/PR / regular (os...
+>     CI/PR / regular (os...
+>     CI/PR / regular (lin...
+>     CI/PR / regular (lin...
+>     CI/PR / dockerized (...
+>     CI/PR / dockerized (...
+>     CI/PR / dockerized (...
+>     CI/PR / static-anal...
+>     CI/PR / sparse (pu...
+>     CI/PR / documenta...
+> 
+> By omitting the "/PR" from the top-level name, and pushing the
+> $jobname to the front we'll now instead get:
+> 
+>     CI / config (push)
+>     CI / win build (push...
+>     CI / win+VS build (...
+>     CI / linux-clang (ub...
+>     CI / linux-gcc (ubun...
+>     CI / osx-clang (osx)...
+>     CI / osx-gcc (osx) (...
+>     CI / linux-gcc-defau...
+>     CI / linux-leaks (ub...
+>     CI / linux-musl (alp...
+>     CI / Linux32 (daald/...
+>     CI / pedantic (fedor...
+>     CI / static-analysis...
+>     CI / sparse (push)...
+>     CI / documentation
+> 
+> We then have no truncation in the expanded view. See [1] for how it
+> looked before, [2] for a currently visible CI run using this commit,
+> and [3] for the GitHub workflow syntax involved being changed here.
+> 
+> Let's also add a field for the "os" and use it where appropriate, it's
+> occasionally useful to know we're running on say ubuntu
+> v.s. fedora (but the "-latest" suffix isn't very useful, that applies
+> to almost all the jobs.
+> 
+> 1. https://github.com/git/git/tree/master/
+> 2. https://github.com/avar/git/tree/avar/ci-rm-travis-cleanup-ci-names-2
+> 3. https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  .github/workflows/main.yml | 16 +++++++++++++++-
+>  README.md                  |  2 +-
+>  2 files changed, 16 insertions(+), 2 deletions(-)
+> 
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 6ed6a9e8076..612b475fd0b 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -1,4 +1,4 @@
+> -name: CI/PR
+> +name: CI
+>  
+>  on: [push, pull_request]
+>  
+> @@ -7,6 +7,7 @@ env:
+>  
+>  jobs:
+>    ci-config:
+> +    name: config
+>      runs-on: ubuntu-latest
+>      outputs:
+>        enabled: ${{ steps.check-ref.outputs.enabled }}${{ steps.skip-if-redundant.outputs.enabled }}
+> @@ -77,6 +78,7 @@ jobs:
+>              }
+>  
+>    windows-build:
+> +    name: win build
+>      needs: ci-config
+>      if: needs.ci-config.outputs.enabled == 'yes'
+>      runs-on: windows-latest
+> @@ -97,6 +99,7 @@ jobs:
+>          name: windows-artifacts
+>          path: artifacts
+>    windows-test:
+> +    name: win test
+>      runs-on: windows-latest
+>      needs: [windows-build]
+>      strategy:
+> @@ -127,6 +130,7 @@ jobs:
+>          name: failed-tests-windows
+>          path: ${{env.FAILED_TEST_ARTIFACTS}}
+>    vs-build:
+> +    name: win+VS build
+>      needs: ci-config
+>      if: needs.ci-config.outputs.enabled == 'yes'
+>      env:
+> @@ -178,6 +182,7 @@ jobs:
+>          name: vs-artifacts
+>          path: artifacts
+>    vs-test:
+> +    name: win+VS test
+>      runs-on: windows-latest
+>      needs: vs-build
+>      strategy:
+> @@ -210,6 +215,7 @@ jobs:
+>          name: failed-tests-windows
+>          path: ${{env.FAILED_TEST_ARTIFACTS}}
+>    regular:
+> +    name: ${{matrix.vector.jobname}} (${{matrix.vector.os}})
 
-> I didn't see response from Jeff King, so I'm wondering good next steps
-> here.
->
-> I'm esp. surprised that git-stash ends up using single-level refs when
-> git-check-ref-format(1) says they aren't valid.
+The consequence of explicitly removing `-latest` (as you mentioned in the
+commit message) is the addition of the new `os` field just to remove that
+suffix (+renaming 'macos' to 'osx' to - I assume - save a bit more space).
 
-They aren't valid name to be used as regular branches, tags, etc.,
-but as an implementation detail of stash, "refs/stash" is perfectly
-good.  There is nothing to "fix".  You cannot and you do not want to
-pretend "stash" is yet another ref in the first place.
+Keeping the `-latest` doesn't really seem to hurt your goal of improving the
+tooltips, though; worst case, the `-latest` would be what's cut off in the
+tooltip. The main reason I bring this up is because I'd generally prefer
+reusing existing fields wherever possible - e.g. something like this: 
 
-You can "transfer" refs/stash by pushing the commit to an arbitrary
-ref with a regular "three level" name, like so:
+    name: ${{matrix.vector.jobname}} (${{matrix.vector.pool}})
 
-   $ git push there refs/stash:refs/my/stash
+...which has the added benefits of 1) fully reflecting the agents used
+(potentially beneficial e.g., if we switched from `macos-latest` to
+`macos-10.15`) and 2) better matching the way you've set up the docker
+image-based jobs later on. 
 
-but it wouldn't be of much use to begin with.
+>      needs: ci-config
+>      if: needs.ci-config.outputs.enabled == 'yes'
+>      strategy:
+> @@ -218,21 +224,27 @@ jobs:
+>          vector:
+>            - jobname: linux-clang
+>              cc: clang
+> +            os: ubuntu
+>              pool: ubuntu-latest
+>            - jobname: linux-gcc
+>              cc: gcc
+> +            os: ubuntu
+>              pool: ubuntu-latest
+>            - jobname: osx-clang
+>              cc: clang
+> +            os: osx
+>              pool: macos-latest
+>            - jobname: osx-gcc
+>              cc: gcc
+> +            os: osx
+>              pool: macos-latest
+>            - jobname: linux-gcc-default
+>              cc: gcc
+> +            os: ubuntu
+>              pool: ubuntu-latest
+>            - jobname: linux-leaks
+>              cc: gcc
+> +            os: ubuntu
+>              pool: ubuntu-latest
+>      env:
+>        CC: ${{matrix.vector.cc}}
+> @@ -251,6 +263,7 @@ jobs:
+>          name: failed-tests-${{matrix.vector.jobname}}
+>          path: ${{env.FAILED_TEST_ARTIFACTS}}
+>    dockerized:
+> +    name: ${{matrix.vector.jobname}} (${{matrix.vector.image}})
+>      needs: ci-config
+>      if: needs.ci-config.outputs.enabled == 'yes'
+>      strategy:
+> @@ -310,6 +323,7 @@ jobs:
+>        run: ci/install-dependencies.sh
+>      - run: make sparse
+>    documentation:
+> +    name: documentation
+>      needs: ci-config
+>      if: needs.ci-config.outputs.enabled == 'yes'
+>      env:
+> diff --git a/README.md b/README.md
+> index eb8115e6b04..f6f43e78deb 100644
+> --- a/README.md
+> +++ b/README.md
+> @@ -1,4 +1,4 @@
+> -[![Build status](https://github.com/git/git/workflows/CI/PR/badge.svg)](https://github.com/git/git/actions?query=branch%3Amaster+event%3Apush)
+> +[![Build status](https://github.com/git/git/workflows/CI/badge.svg)](https://github.com/git/git/actions?query=branch%3Amaster+event%3Apush)
+>  
+>  Git - fast, scalable, distributed revision control system
+>  =========================================================
+> 
 
-The thing is, the "list of random quick changes stashed away" is not
-something stored in the "stash" ref.  These list entries are stored
-as reflog entries for the stash ref, which is *never* transferred
-over the network.  So, if the higher level issue you want to address
-is to allow "stash" to be shared across repositories, none of these
-5 choices you listed at the end of your message helps all that much.
-
-The single-level refs are the least of your problems.
-
-Instead, you'd probably want to reimplement "stash" as a set of
-normal refs, whose current value only matters, e.g. refs/stash/0
-may be the oldest stash, refs/stash/1 is the next one, refs/stash/2
-is yet another new one, etc., and have UIs like "git stash list" 
-list them in a new way that is different from the current reflog
-based implementation, and "git stash pop/apply" take them, e.g.
-
-   $ git stash list
-   stash/0: WIP on main: cd3e606211 Git 2.34
-   stash/4: WIP on maint: Merge branch 'vd/pthread-setspecific-g11-fix' into maint
-   $ git stash apply stash/0
-
-And at that point you'd have refs/stash/* as an intermediate
-hierarchy, with another level of real refs hanging there, so you can
-transfer them just like refs/tags/* all you want.
-
-> I think Git should change git-stash and start issuing warnings to users
-> for single-level refs.
-
-No, single-level refs is perfectly fine, as long as you are using
-the current Git and using these refs locally.  The problem arises
-only when you start wanting to share stash across repositories, and
-it is not from the levels of the refname hierarchy but from the fact
-that stash is implemented in terms of reflog mechanism that is not
-shared across repositories.
-
-
+Overall, I like the fact that platform info is retained in this version
+(while also managing to shorten names and/or make the non-truncated parts
+more helpful). Thank you for the update! 
