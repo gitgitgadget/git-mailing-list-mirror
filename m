@@ -2,79 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 351F3C433FE
-	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 03:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 796A7C433EF
+	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 06:05:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235093AbhKTDps (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 22:45:48 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35526 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234823AbhKTDpn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 22:45:43 -0500
-Received: (qmail 10061 invoked by uid 109); 20 Nov 2021 03:42:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 20 Nov 2021 03:42:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22602 invoked by uid 111); 20 Nov 2021 03:42:41 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Nov 2021 22:42:41 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 19 Nov 2021 22:42:38 -0500
-From:   Jeff King <peff@peff.net>
-To:     Enzo Matsumiya <ematsumiya@suse.de>
+        id S233702AbhKTGIu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Nov 2021 01:08:50 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55889 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234360AbhKTGIq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Nov 2021 01:08:46 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E6852F5741;
+        Sat, 20 Nov 2021 01:05:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=GoICGjBgrkX/N6r/lioJJ4KCprM6LkhH9w9kfd
+        cLV24=; b=HqUvDHO9qcQygv1Z9EKNUdT+1+BGdrd0ckY2YTNZxg9lc+J9NZsDVS
+        eTE7ARhmnqe7m7mdf+4MTNfZQ+SBJTVcsvolC99AzoJX1v7X2/R1OBNldainqHqW
+        sI7jU6zVGJ09ND+oHdflflhKq9mPvewxJ1rsGZlfGoMTWSIE9n2kE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD2D0F5740;
+        Sat, 20 Nov 2021 01:05:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2CA71F573F;
+        Sat, 20 Nov 2021 01:05:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Robin H. Johnson" <robbat2@gentoo.org>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] pager: fix crash when pager program doesn't exist
-Message-ID: <YZhurgbXq7vhDTXC@coredump.intra.peff.net>
-References: <20211119234745.26605-1-ematsumiya@suse.de>
- <YZhVA8DOjHu90gzs@coredump.intra.peff.net>
- <20211120023246.7ynehp5v3iypfr6w@cyberdelia>
+Subject: Re: [RFC] single-level refs vs push --all/--mirror
+References: <robbat2-20211115T063838-612792475Z@orbis-terrarum.net>
+        <YZLLUtPVQt2XtgQX@coredump.intra.peff.net>
+        <robbat2-20211116T061554-223495439Z@orbis-terrarum.net>
+        <robbat2-20211119T234158-903098822Z@orbis-terrarum.net>
+Date:   Fri, 19 Nov 2021 22:05:40 -0800
+In-Reply-To: <robbat2-20211119T234158-903098822Z@orbis-terrarum.net> (Robin
+        H. Johnson's message of "Sat, 20 Nov 2021 00:03:36 +0000")
+Message-ID: <xmqqlf1jnyyz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20211120023246.7ynehp5v3iypfr6w@cyberdelia>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E3DF63F2-49C7-11EC-B1BB-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 19, 2021 at 11:32:46PM -0300, Enzo Matsumiya wrote:
+"Robin H. Johnson" <robbat2@gentoo.org> writes:
 
-> > GIT_PAGER=no-such-command git -p log
-> > 
-> > I had to run it with ASan to trigger a failure, as use-after-free bugs
-> > aren't always deterministic.
-> 
-> Please use my reproducer as it's 100% reliable and consistent (same
-> memory regions are affected).
-> 
-> I couldn't reproduce the issue with yours.
+> I didn't see response from Jeff King, so I'm wondering good next steps
+> here.
+>
+> I'm esp. surprised that git-stash ends up using single-level refs when
+> git-check-ref-format(1) says they aren't valid.
 
-Our reproducers are triggering the same behavior. But it won't be 100%
-reliable in the sense that the behavior is undefined. Depending upon
-random details of the allocator, we may get a segfault, or see random
-trash on the heap, or even see the old data. That's why I suggested
-using ASan; it poisons the freed memory to reliably detect problems.
+They aren't valid name to be used as regular branches, tags, etc.,
+but as an implementation detail of stash, "refs/stash" is perfectly
+good.  There is nothing to "fix".  You cannot and you do not want to
+pretend "stash" is yet another ref in the first place.
 
-But at any rate, yes, it's clear that there is a bug here.
+You can "transfer" refs/stash by pushing the commit to an arbitrary
+ref with a regular "three level" name, like so:
 
-> > diff --git a/run-command.c b/run-command.c
-> > index f40df01c77..92e00d9455 100644
-> > --- a/run-command.c
-> > +++ b/run-command.c
-> > @@ -21,6 +21,7 @@ void child_process_clear(struct child_process *child)
-> > {
-> > 	strvec_clear(&child->args);
-> > 	strvec_clear(&child->env_array);
-> > +	child_process_init(child);
-> > }
-> > 
-> > struct child_to_clean {
-> 
-> Of course this one works as well. And is more elegant IMHO.
+   $ git push there refs/stash:refs/my/stash
 
-Yeah, I think so, too.
+but it wouldn't be of much use to begin with.
 
-> Should I submit a v2 or will you?
+The thing is, the "list of random quick changes stashed away" is not
+something stored in the "stash" ref.  These list entries are stored
+as reflog entries for the stash ref, which is *never* transferred
+over the network.  So, if the higher level issue you want to address
+is to allow "stash" to be shared across repositories, none of these
+5 choices you listed at the end of your message helps all that much.
 
-Why don't you put together a v2, and I can review it.
+The single-level refs are the least of your problems.
 
--Peff
+Instead, you'd probably want to reimplement "stash" as a set of
+normal refs, whose current value only matters, e.g. refs/stash/0
+may be the oldest stash, refs/stash/1 is the next one, refs/stash/2
+is yet another new one, etc., and have UIs like "git stash list" 
+list them in a new way that is different from the current reflog
+based implementation, and "git stash pop/apply" take them, e.g.
+
+   $ git stash list
+   stash/0: WIP on main: cd3e606211 Git 2.34
+   stash/4: WIP on maint: Merge branch 'vd/pthread-setspecific-g11-fix' into maint
+   $ git stash apply stash/0
+
+And at that point you'd have refs/stash/* as an intermediate
+hierarchy, with another level of real refs hanging there, so you can
+transfer them just like refs/tags/* all you want.
+
+> I think Git should change git-stash and start issuing warnings to users
+> for single-level refs.
+
+No, single-level refs is perfectly fine, as long as you are using
+the current Git and using these refs locally.  The problem arises
+only when you start wanting to share stash across repositories, and
+it is not from the levels of the refname hierarchy but from the fact
+that stash is implemented in terms of reflog mechanism that is not
+shared across repositories.
+
+
