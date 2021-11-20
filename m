@@ -2,80 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62BA0C433EF
-	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 03:38:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 351F3C433FE
+	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 03:42:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234823AbhKTDlT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Nov 2021 22:41:19 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35522 "EHLO cloud.peff.net"
+        id S235093AbhKTDps (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Nov 2021 22:45:48 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35526 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231166AbhKTDlS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Nov 2021 22:41:18 -0500
-Received: (qmail 10055 invoked by uid 109); 20 Nov 2021 03:38:15 -0000
+        id S234823AbhKTDpn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Nov 2021 22:45:43 -0500
+Received: (qmail 10061 invoked by uid 109); 20 Nov 2021 03:42:40 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 20 Nov 2021 03:38:15 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 20 Nov 2021 03:42:40 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22566 invoked by uid 111); 20 Nov 2021 03:38:16 -0000
+Received: (qmail 22602 invoked by uid 111); 20 Nov 2021 03:42:41 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Nov 2021 22:38:16 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Nov 2021 22:42:41 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 19 Nov 2021 22:38:14 -0500
+Date:   Fri, 19 Nov 2021 22:42:38 -0500
 From:   Jeff King <peff@peff.net>
 To:     Enzo Matsumiya <ematsumiya@suse.de>
 Cc:     git@vger.kernel.org
 Subject: Re: [PATCH] pager: fix crash when pager program doesn't exist
-Message-ID: <YZhtplvcVkY0Yzmt@coredump.intra.peff.net>
+Message-ID: <YZhurgbXq7vhDTXC@coredump.intra.peff.net>
 References: <20211119234745.26605-1-ematsumiya@suse.de>
  <YZhVA8DOjHu90gzs@coredump.intra.peff.net>
  <20211120023246.7ynehp5v3iypfr6w@cyberdelia>
- <20211120030621.2xbcz5usaqkh2ald@cyberdelia>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20211120030621.2xbcz5usaqkh2ald@cyberdelia>
+In-Reply-To: <20211120023246.7ynehp5v3iypfr6w@cyberdelia>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 20, 2021 at 12:06:21AM -0300, Enzo Matsumiya wrote:
+On Fri, Nov 19, 2021 at 11:32:46PM -0300, Enzo Matsumiya wrote:
 
-> On 11/19, Enzo Matsumiya wrote:
-> > > When pager setup succeeds, the second run is a noop, because isatty(1)
-> > > is no longer true. But for the case you're interested in, the first one
-> > > fails, so we do try again. And I can reproduce your problem with:
+> > GIT_PAGER=no-such-command git -p log
 > > 
-> > No, it's not a noop such as that it's clear that things are different on
-> > the second call.
+> > I had to run it with ASan to trigger a failure, as use-after-free bugs
+> > aren't always deterministic.
 > 
-> Here I meant that setup_pager() is effectivelly called from 2 different places:
+> Please use my reproducer as it's 100% reliable and consistent (same
+> memory regions are affected).
 > 
-> First backtrace:
-> setup_pager()
-> commit_pager_choice()
-> run_builtin()
-> handle_builtin()
-> run_argv()
-> cmd_main()
-> 
-> Second backtrace:
-> setup_pager()
-> cmd_log_init_finish()
-> cmd_log_init()
-> cmd_show()
-> run_builtin()
-> handle_builtin()
-> run_argv()
-> cmd_main()
-> 
-> Also, isatty(1) is not false in neither of the calls. Otherwise I
-> wouldn't hit this bug (pager would be NULL and setup_pager() a noop as
-> you said).
+> I couldn't reproduce the issue with yours.
 
-Right, I mean in the "normal" case that the pager actually starts, the
-second call hits isatty(1), then git_pager() returns NULL, and we return
-from setup_pager() immediately.
+Our reproducers are triggering the same behavior. But it won't be 100%
+reliable in the sense that the behavior is undefined. Depending upon
+random details of the allocator, we may get a segfault, or see random
+trash on the heap, or even see the old data. That's why I suggested
+using ASan; it poisons the freed memory to reliably detect problems.
 
-It is only in the broken-pager case that the bug you found is triggered
-(which is probably why nobody has really noticed it).
+But at any rate, yes, it's clear that there is a bug here.
+
+> > diff --git a/run-command.c b/run-command.c
+> > index f40df01c77..92e00d9455 100644
+> > --- a/run-command.c
+> > +++ b/run-command.c
+> > @@ -21,6 +21,7 @@ void child_process_clear(struct child_process *child)
+> > {
+> > 	strvec_clear(&child->args);
+> > 	strvec_clear(&child->env_array);
+> > +	child_process_init(child);
+> > }
+> > 
+> > struct child_to_clean {
+> 
+> Of course this one works as well. And is more elegant IMHO.
+
+Yeah, I think so, too.
+
+> Should I submit a v2 or will you?
+
+Why don't you put together a v2, and I can review it.
 
 -Peff
