@@ -2,223 +2,227 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 310B0C433F5
-	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 12:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68CD7C433F5
+	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 15:04:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236770AbhKTMiK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Nov 2021 07:38:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42868 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235422AbhKTMiJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Nov 2021 07:38:09 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94A9CC061574
-        for <git@vger.kernel.org>; Sat, 20 Nov 2021 04:35:06 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id o20so10068713eds.10
-        for <git@vger.kernel.org>; Sat, 20 Nov 2021 04:35:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=JVvezGyd2wvciujtJ/8d5jdfEsbqCwpYqX93s5IgWzE=;
-        b=CRxfPCnO17XmFcvH2KCyEtj4XjIl6qAEGNkn36ZB5UsLKhCy4sXmV3q9Dc5fsrj+gI
-         hnPkFvg4Y2pSAka1AZEfVet39cmtuA5yeveZBvHGPRg4M3iVEDdIX2ny2RqS6zC3s5An
-         38ejhn0rr/0m8nvmhQgREIJVhI8ZGBwpnwzEzwEN9tzD0grAEhPwEcys//KSsQCjI+YE
-         jAKC0uUurwNTQIjvy4dMc2Nw1Awrd5hHz3yRVL22fc/9QRZsIXZwsZgROjvHt+xZcmnC
-         j1jLX0+E9SoAx+QcB+z3O736UHQFrTuxuxb44UkMb/zgaYAMciVmnPpTeyNd0kLtWCP0
-         btvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=JVvezGyd2wvciujtJ/8d5jdfEsbqCwpYqX93s5IgWzE=;
-        b=vaJz1FV/rqpYJtpn+UXv8F1pFRHz0XtGyGfNcpy6C3bReAj5TsSnBRNKy2yKttAtlq
-         5DCGBNRlGn1xik+kBb03OX/9fSRpuYlE0/uWeeKgpT1wepVsdqkK+dtDE4R3lpABg3BX
-         jaX1HdYGQcnXIzxG+LPJOikaLYGhu8SzaC66TpKY4Deit0VFJFABqARA808ZiLj2BShx
-         Z6YLlrcp4MntfX1PEl/PEGRwpp1vXVPC5qbT0tLZRiltGzpcxAnoHDy+TuurKgh0l9Wv
-         +/dLYEkGu2ZJ6gTeWokQeN2le8nD5izE3WoRLdzgtSqLnaKXz82wcZH54Bzk18b2wVPr
-         4G8A==
-X-Gm-Message-State: AOAM531jQy7hFOiHxyuVBNwjdWWGsqeE6tVG6DsNFsS+BO1a54EwPapU
-        mkEebEu3PDwvU2glYtDiM/Y=
-X-Google-Smtp-Source: ABdhPJxfD5NcDinizsTZjzr5TsEqTVIXCXXxbkKyeMN0cm/yhUZbzbQEQFEO67EsSzqJvVYDdRInYA==
-X-Received: by 2002:a50:bf4d:: with SMTP id g13mr37447523edk.195.1637411705030;
-        Sat, 20 Nov 2021 04:35:05 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id z7sm1179245edj.51.2021.11.20.04.35.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Nov 2021 04:35:04 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1moPaB-000vaj-Th;
-        Sat, 20 Nov 2021 13:35:03 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v2 0/6] CI: Remove Travis CI, shorten names for GH
- tooltips, split jobs
-Date:   Sat, 20 Nov 2021 13:14:51 +0100
-References: <cover-0.2-00000000000-20211119T135343Z-avarab@gmail.com>
- <cover-v2-0.6-00000000000-20211120T030848Z-avarab@gmail.com>
- <BED25714-4917-46CB-AAD4-C30158A7A42C@gmx.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <BED25714-4917-46CB-AAD4-C30158A7A42C@gmx.de>
-Message-ID: <211120.86k0h30zuw.gmgdl@evledraar.gmail.com>
+        id S237552AbhKTPHU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Nov 2021 10:07:20 -0500
+Received: from mail-am6eur05hn2201.outbound.protection.outlook.com ([52.100.174.201]:55837
+        "EHLO EUR05-AM6-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S231660AbhKTPHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Nov 2021 10:07:20 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lSzGldkCD3DqOzWMrX3N5u1BFiBKQeGZbz7nGl0wcTzLPxoQeapBgVeK+LBMQqkUb2sYekVCqPY62lvM3NMpoAIlkrGigG7cDwetQ8cH0WsA8GvXOz9r6B8EEoTBi+ykLMHjhsfhdJdvR9B0H8tnCbEmr70GfbYCXueed/hDfALKVs5LajGTyg+0HFN9VIOpkVLutxJBBW03SoMQUI1GL1afO3Syx1qyxfiPCWQ0dbXQeNrelPc3PjBDFtcHe6GOgwv9ProYGDfC4E6gFM0UHbHiNaSQ+4E3/a357pcKP40mDPBOxuScfHeEAQ8yT4v5URWSoWsVRW8wSYVQ2v5SMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5qM68hl48WJ9/9eG/rbPUg7maEMzgigSk53t8+ZOcZo=;
+ b=AMj9vYp8iTjSsq1kFYWaBnep/4QFo4CorwcfBQKXiznGviKi94zkYvcX+13fKLPus9lB83jl2cVwkh7/EDXYbFZqY3MkuXov2zvphsk+896f+TlrBjIpSK+6qttQTa6sk0DtcJ7ep+YPFLhX2X0c/lpbFMhUWxW71bEKK9pUTCIc3e7a1yD7RJXWFEePvyHXTnpCrerj4CGFKuSnA7MGf1paQGX6XiK4qfbWMpc25KLwwei2eFqmMX1ZroRJgL6IzWO9J3UqIhBoVagiQYfNfYUSLbCAF+QTgRT7alA1cwjFtMcokyGARaTaVYxAZt04D5Z0vJBekvfpvEa5du5nbw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
+ dkim=pass header.d=gigacodes.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5qM68hl48WJ9/9eG/rbPUg7maEMzgigSk53t8+ZOcZo=;
+ b=VTlXf7VNe60ewos49sDiAhXPIQswdqMUVfiCKO2WWjm6OqolkMsahpwcP2tIuLOvwpKHZ28C+IeojaruWAF23skSOkh5m5FWodgxNCFb1M0DmCoXFml1hSTmeTREIJ2v5u81NoPeKsWdkDEZwKCtetS+F/LqfbRBHOhTNQEcSo4=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=gigacodes.de;
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
+ by PAXPR10MB4799.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:156::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.19; Sat, 20 Nov
+ 2021 15:04:12 +0000
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::f9d5:61ab:5756:b391]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::f9d5:61ab:5756:b391%5]) with mapi id 15.20.4713.024; Sat, 20 Nov 2021
+ 15:04:12 +0000
+From:   Fabian Stelzer <fs@gigacodes.de>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Adam Dinwoodie <adam@dinwoodie.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Fabian Stelzer <fs@gigacodes.de>
+Subject: [PATCH v3 0/3] test-lib: improve missing prereq handling
+Date:   Sat, 20 Nov 2021 16:03:58 +0100
+Message-Id: <20211120150401.254408-1-fs@gigacodes.de>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20211117090410.8013-3-fs@gigacodes.de>
+References: <20211117090410.8013-3-fs@gigacodes.de>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: AM6P192CA0022.EURP192.PROD.OUTLOOK.COM
+ (2603:10a6:209:83::35) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:102:12e::15)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Received: from localhost (2a02:908:178:20a0:d22:c58d:d0a4:a83a) by AM6P192CA0022.EURP192.PROD.OUTLOOK.COM (2603:10a6:209:83::35) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.19 via Frontend Transport; Sat, 20 Nov 2021 15:04:11 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: f32834be-f103-40cf-ba54-08d9ac3702c0
+X-MS-TrafficTypeDiagnostic: PAXPR10MB4799:
+X-Microsoft-Antispam-PRVS: <PAXPR10MB4799AF5E55BF27340AB36B9AB69D9@PAXPR10MB4799.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:2958;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?dbOtR9Yy8jDnwLkUBflCpZTLX0EJSm1XdbAT1qJwA3j/T0G3CLX1KbAl+UPa?=
+ =?us-ascii?Q?UFrXlQKc57jm9NVGtjBkrQYpW6Y/dSufe2Ky3cHD0Hd1e9UylVlfFd6RZ3AU?=
+ =?us-ascii?Q?VLLmeBW5MzocpElYMlZurpIoZdK/tpqBstsCCTe1Xd0BXUtHtz8XIRFUoWYF?=
+ =?us-ascii?Q?GZAOeQg+p5I7SxOy57hv36XvPPLUv7m8hMpGionE1HhNBnQJ4RaQqPhgy8yT?=
+ =?us-ascii?Q?YVHXobKEVMSzzwj2BqW+0pWBN6BC96bNreRh8Ey2cVk3p3dmnn1fedrC9c2W?=
+ =?us-ascii?Q?+HOxuT/nKtc+3W/g3gUqI4Y5bVpmDhgvH477SoWVJ2POSijZVGcLhs+AzE1i?=
+ =?us-ascii?Q?Zyz/FXnC17ayc9g0AiQuu3mZGzIDQ74I9Q0flU+pnpqC6KnPelg0L4XuWkjw?=
+ =?us-ascii?Q?mdizmvLJSJXaxhniCeS2zt9G4+c+8pOf8XEDu4X96oB5P5L7ofu6oxS3/K1d?=
+ =?us-ascii?Q?eoDn3JsXfbY87GI2ezFlnAjXFgMasiaax/hykLovr541Ep57R2dFML5NDdct?=
+ =?us-ascii?Q?6tvlbjSifXx2QpmH/bQevQ6vcf6GtYpZM/TI44ehsb4tZyMfD6up+TcbGNMo?=
+ =?us-ascii?Q?7ALKw8CmqR+CmMhVAFVMcl1IfLY9ABftJWUIi5sl4+gn+AGdVAQtfqUyiCwS?=
+ =?us-ascii?Q?4Q4GeLVwqABRvHwQacalpomzmNTp61rcUShDrY49HiGom8AqZXfGZR/oXkuE?=
+ =?us-ascii?Q?mDIi1fJqK7wWCOA73TYKaar4Eq1xqCKyMWlQKD81gwXzknl0UQDTZknM4Cf0?=
+ =?us-ascii?Q?Z98q40VaYPF7TWdcuVsabByqqizgnB+r4N+K5fAfGWNudNe+4rT0b72AP1gl?=
+ =?us-ascii?Q?kIEe+HN3l9Uq7vA9DXWICHKG/6zmuKNptQpCuoSMmuQQa7C9gMjeteyhKijw?=
+ =?us-ascii?Q?4t+dB6LnIXYEtjmBHb9OwctwNHfxk/KFqw9UuR4XhTKzarqtC/ZnxT/4T8Qk?=
+ =?us-ascii?Q?L8LoTb76aoxq/zmpusO3y77PORap7praDxDAoY/qgwE9WsknVmpR8q7eL2A0?=
+ =?us-ascii?Q?NgL0AlLfTq0Gh13VT5CTR4Y8hKS8iPXIjESep777UNnOW9eT9eWx+9/VL8n2?=
+ =?us-ascii?Q?+Nxmkckp/EiHJrIvDEwrg/tlOa8dsladAOpsyiGwg/tL7tGvhs8=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:OSPM;SFS:(4636009)(346002)(136003)(366004)(376002)(396003)(39830400003)(6666004)(107886003)(2906002)(66476007)(316002)(6486002)(2616005)(83380400001)(66946007)(66556008)(186003)(5660300002)(38100700002)(36756003)(8676002)(54906003)(4326008)(6496006)(86362001)(966005)(8936002)(508600001)(1076003)(6916009)(52116002)(23200700001);DIR:OUT;SFP:1501;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?RarKNVyh9TvO5fjUB3SQ78AeoGuQO78fM5yu08H5BM+kKzk0MbIGyUZVJv+h?=
+ =?us-ascii?Q?TbFtnPXsgqSXgAw85KX8afCrlmBGUSn4Mn+GTiQK4L9j4HbQvjD4IJDW6puE?=
+ =?us-ascii?Q?fbkuyQUwfmOB1uhPPv3LUg7mUWrKRsCBj4q8hoTpeeaOYwU3QwAd8OPD//YC?=
+ =?us-ascii?Q?1Y3zVwFLzfNrkpvCbaJYUqN6ttQOG8kDWWcVgwc1xSAaD0Mo1biyA2R1Y+8h?=
+ =?us-ascii?Q?CJ8USfZ6svl0eFgsNlJRzvJutyLLqhMczNnH/w+uc3x9Q0bhTHeHGqeovLfg?=
+ =?us-ascii?Q?ovnVuQFgA39IqUiF0IXQGegmm5aMZeQYbCAdpcOn4V/ROQrcvMgqWqC4Ks1w?=
+ =?us-ascii?Q?P90duLYhjmUK1VmFpC7ygYGftqG7MSEEw5/c07mIp+9DBbZ8s6WwZurbKCVS?=
+ =?us-ascii?Q?gNa9Mt/QOyjwK8yYXp2vjW8svO7Ba6+g0gkKfWMDd/z5tUY20z5LA62sEPeP?=
+ =?us-ascii?Q?SCHM7kCZZszO31foVbkWNpgcyVXbK9cc75yQCNWAhI7jaNZx4OmVPERDjnEw?=
+ =?us-ascii?Q?2dvf7NS+idxaIgtIHiXZBovhPOft2VOZQrVN6mUGeeM8RtvAJfkix6rScZ/3?=
+ =?us-ascii?Q?m8r/LxgsxnVXY5Y3KELP6Jv1cIXvgOgZuyq0/yo86pWAH/lAnx8IfyOflQqY?=
+ =?us-ascii?Q?/f0Fl920uRQ3Z294EOUU6quIKCF+K3BEKBMBv4PxJnQSqozk71LKn3GHUSuE?=
+ =?us-ascii?Q?m192uUGBFBeEnk3OKZCq0zhF47ZaIt1c6+hQJVooYS1Qb8KRJLj1IWmxTIT6?=
+ =?us-ascii?Q?fm92E7jTIOSj9rjl03VAt4YYyWEeHlwunSXqRohKN7EE7u0cbCfhxvHlMXf9?=
+ =?us-ascii?Q?4BZjoPXBBMOaCd1XBiiRYjfL6U/BGuqLruv0czfy93Pr2cv2bt07ukpaTkcA?=
+ =?us-ascii?Q?gfr4jFFLeHUvKPmUcTb4NSB8d//d1bFaF4ZXtdEZ9aWujMKx1Cot/aFdAuZX?=
+ =?us-ascii?Q?NxK7VsklighwX5UYzYei3T378YoXi9bWV3BL48flNM4sPSPJjSWQIYq1xnpI?=
+ =?us-ascii?Q?Uxj8jf/ePpzBb2040q4Gu8HJoI19yczqlw+noeRj/5zMngXGDN/iDO3vp27j?=
+ =?us-ascii?Q?95UX3k1dz0H1yTPxMim81ECDnIFHdmxPk/UqSzDvAS8uVNZDvXclID+3G5tF?=
+ =?us-ascii?Q?V/JMAEsBirImT2wmcToTPqbTkR/jZMg/+Io0+cMRTtMBHp1GmEQ/6Q1k6qMI?=
+ =?us-ascii?Q?w589ER3dxWLO1LXeb7hGTGV1kNnaT2y9ank/cn1YEAKfXxhE+8Mxuza57rVQ?=
+ =?us-ascii?Q?rR5xf39f+zwAfkvMZwRQq7mGD8ya4tkGpN8+15orvWFPi7umN8irM6KxIz4e?=
+ =?us-ascii?Q?5le9BtV+g33WBkuX1ord3HcMu4xWRh2SlC97zxPZObYjsD/Aqnj1XFUTOcth?=
+ =?us-ascii?Q?ksi5vfN1vf7Q7DRbh8AIgZ6yL7xhKXNb7zZw53s1O94Hk6eTPEYZzggcfeoI?=
+ =?us-ascii?Q?qbYOEgmE+eN0JUeEJL+iz4+Eam/MrwHFQojGgW+MWqa54kbVzX30RIsrrqS/?=
+ =?us-ascii?Q?J2SjleNi744YK9oQtMaap1NIDAZAayz6Lhrh/4r1DE25NEBmA5hd29fZr8Z7?=
+ =?us-ascii?Q?3ljCUiK9bdUI8InMQAeIgUdi3LHAbZk+MoBpDrPYXlcp5lYfhDEnuAFQB2Bi?=
+ =?us-ascii?Q?C+BG/1VbxvhER/S4v0pHiNYtnmJFBpz7xQg4IS/nsLEO5iAmaSDYNVYHF6Jg?=
+ =?us-ascii?Q?n9vh5WPwQ3pcWcFdoRjzX+LzSKJ3+SFo1vxWMUo0im04/4kMBdJ72h6tMZ45?=
+ =?us-ascii?Q?wczcFPBW4w=3D=3D?=
+X-OriginatorOrg: gigacodes.de
+X-MS-Exchange-CrossTenant-Network-Message-Id: f32834be-f103-40cf-ba54-08d9ac3702c0
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2021 15:04:12.0831
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: seBh8G5UTPTQrNUDNPNSMrilatQWsJSiVKqfWVTJQuGWFR7MV4QE6OtLqAIGlClTRO3y8X+lfKa4VAa8PNR8HHdD6fWmIPGFT7dtEbMjNgQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR10MB4799
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The ssh signing feature was breaking tests when the broken openssh-8.7
+was used. We have now fixed that by checking for this exact case in the
+GPGSSH prereq and I will improve that check further in a future patch.
+However we are now in a situation where a broken openssh in the future
+will result in successfull tests but not a working git build afterwards
+(either not compiling in the expected feature or like in the ssh case
+runtime failures) resulting in a false sense of security in the tests.
+This patches try to improve this situation by showing which prereqs
+failed in the test summary and by adding an environment variable to
+enforce certain prereqs to succeed or abort the test otherwise.
 
-On Sat, Nov 20 2021, Johannes Schindelin wrote:
+See also:
+https://public-inbox.org/git/xmqqv916wh7t.fsf@gitster.g/
 
-> On November 20, 2021 4:28:30 AM GMT+01:00, "=C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason" <avarab@gmail.com> wrote:
->>
->>  CI: remove Travis CI support
->
-> This is a patch I am in favor of, and would prefer in its own patch
-> "series": separation of concern, and consideration in avoiding
-> reviewer fatigue, are two aspects I would like to see you optimize for
-> a bit more.
+changes sinve v2:
+ - use a space separated list for GIT_TES_REQUIRED_PREREQ like we do for
+   GIT_SKIP_TESTS
+ - use BAIL_OUT() insted of just error()
+ - make BAIL_OUT() print errors even when used within prereq context
 
-It's included due to a comment on the v1 from Jeff King. I could have
-gone either way, but I'm not going to change it around now.
+changes since v1:
+ - use \012 instead of \n for possible portability reasons
+ - fix typo in commit msg
 
-I think it's fair enough to keep up the quality of series's, but I also
-don't think it would help to go back & forth with including or not
-including this travis removal.
+Fabian Stelzer (3):
+  test-lib: show missing prereq summary
+  test-lib: introduce required prereq for test runs
+  test-lib: make BAIL_OUT() work in tests and prereq
 
-If I don't include it I've got to patch "dead" code for the rest of the
-series, if I re-roll and have two sets of patches depending on each
-other that's its own reviewer fatigue etc.
+ t/README                |  6 ++++++
+ t/aggregate-results.sh  | 17 +++++++++++++++++
+ t/test-lib-functions.sh | 11 +++++++++++
+ t/test-lib.sh           | 21 +++++++++++++++++----
+ 4 files changed, 51 insertions(+), 4 deletions(-)
 
-For some counter-advice it would be nice to see you optimize for
-responding to reviews, cf.:
-https://lore.kernel.org/git/211118.86zgq14jp1.gmgdl@evledraar.gmail.com/
-:)
+Range-diff against v2:
+1:  69e77cd854 ! 1:  35c92671e5 test-lib: show missing prereq summary
+    @@ t/aggregate-results.sh: do
+     +		tr -s "," "\n" |
+     +		grep -v '^$' |
+     +		sort -u |
+    -+		paste -s -d ',')
+    -+	if test -n $unique_missing_prereq
+    ++		paste -s -d ' ')
+    ++	if test -n "$unique_missing_prereq"
+     +	then
+     +		printf "\nmissing prereq: $unique_missing_prereq\n\n"
+     +	fi
+2:  12bd18c5ce ! 2:  d6a53f0980 test-lib: introduce required prereq for test runs
+    @@ Commit message
+         test-lib: introduce required prereq for test runs
+     
+         In certain environments or for specific test scenarios we might expect a
+    -    specific prerequisite check to be succeed. Therefore we would like to
+    -    trigger an error when running our tests if this is not the case.
+    +    specific prerequisite check to succeed. Therefore we would like to abort
+    +    running our tests if this is not the case.
+     
+         To remedy this we add the environment variable GIT_TEST_REQUIRE_PREREQ
+    -    which can be set to a comma separated list of prereqs. If one of these
+    +    which can be set to a space separated list of prereqs. If one of these
+         prereq tests fail then the whole test run will abort.
+     
+         Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
+    @@ t/README: explicitly providing repositories when accessing submodule objects is
+      complete or needs to be abandoned for whatever reason (in which case the
+      migrated codepaths still retain their performance benefits).
+      
+    -+GIT_TEST_REQUIRE_PREREQ=<list> allows specifying a comma speparated list of
+    ++GIT_TEST_REQUIRE_PREREQ=<list> allows specifying a space speparated list of
+     +prereqs that are required to succeed. If a prereq in this list is triggered by
+     +a test and then fails then the whole test run will abort. This can help to make
+     +sure the expected tests are executed and not silently skipped when their
+    @@ t/test-lib-functions.sh: test_have_prereq () {
+      			prerequisite=${negative_prereq:+!}$prerequisite
+     +
+     +			# Abort if this prereq was marked as required
+    -+			if test -n $GIT_TEST_REQUIRE_PREREQ
+    ++			if test -n "$GIT_TEST_REQUIRE_PREREQ"
+     +			then
+    -+				case ",$GIT_TEST_REQUIRE_PREREQ," in
+    -+				*,$prerequisite,*)
+    -+					error "required prereq $prerequisite failed"
+    ++				case " $GIT_TEST_REQUIRE_PREREQ " in
+    ++				*" $prerequisite "*)
+    ++					BAIL_OUT "required prereq $prerequisite failed"
+     +					;;
+     +				esac
+     +			fi
+-:  ---------- > 3:  de21c484d6 test-lib: make BAIL_OUT() work in tests and prereq
 
->>  CI: use shorter names that fit in UX tooltips
->>  CI: rename the "Linux32" job to lower-case "linux32"
->>  CI: use "$runs_on_pool", not "$jobname" to select packages & config
->
-> These strike me as simply shuffling things around and ramping up commit c=
-ount in git/git, without actually addressing any of the problems our GitHub=
- workflow _definitely_ has.
->
-> One quite obvious problem is that any failing run is very cumbersome
-> to diagnose, and you kind of have to know where you're looking. A
-> troublesome and off-putting experience for newcomers (and even some
-> oldtimers). You have to expand the print-failures step logs and search
-> for "not ok" to get even close to the relevant part of the failing
-> test case's details.
->
-> Yes, addressing this would be much harder and take more effort than just =
-going ahead and renaming things. It would also be much more useful.
+base-commit: cd3e606211bb1cf8bc57f7d76bab98cc17a150bc
+-- 
+2.31.1
 
-FWIW I do have patches for that, but getting anything in takes time etc.
-
-To do that properly needed to parse TAP, which I've got patches for in
-pure-C (not Perl or whatever) locally.
-
-One of the reasons I didn't submit that UX improvement yet is because I
-know it'll run afoul of one of your hobby horses.
-
-I.e. I'll either need to fix in-tree dead code relating to the test
-suite's XML generation blindly (it's not used, so how am I going to test
-it?), or argue with you about it being worth to remove it to move the
-test suite UX forward without having to spending time on it.
-
-Another is that someone (I think SZEDER, hopefully I'm not
-misattributing there) pointed out that they liked to have the current
-print-failure firehose of "set -x" output for both failures and
-successes, and would object to e.g. something that just peeled out the
-specific failure output.
-
-I don't think that opinion is wrong (if I even understood it
-correctl). I disagree, but I see how it's clearly a matter of
-preference. Some would like that, some don't.
-
-But whatever anyone's preference on that I think it clearly shows that
-what you're suggesting here isn't as easy as you make it
-out.
-
-I.e. something to the effect of "instead of renaming things work on
-<thing I consider a clear UX improvement>".
-
-Even if I agree that it would be an improvement in this case others
-won't, and getting that past review is a matter of arguing about that,
-addressing feedback on that topic etc.
-
-The reason I submitted this is because I thought "I'd like to rename
-this thing, not because of bikeshedding, but because I literally cannot
-see the relevant information" wouldn't be in any way contentious, but
-here we are :)
-
-If you'd like to test some of that referenced UX work out it's
-avar/support-test-verbose-under-prove-2 in my git.git clone (the CI
-changes aren't there yet, but they're made easy by the changes).
-
->>  CI: don't run "make test" twice in one job
->
-> I am in favor of the idea. As is obvious from the fact that I already pro=
-posed this years ago.
->
-> The commit message, however, is mum about that. And about the reasons
-> why my proposal was shot down. And why those reasons should somehow no
-> longer apply (and I would strongly suggest to aim for providing
-> convincing evidence over mere opinions, to back up the patch).
->
-> As has been mentioned before, this lack of diligence is
-> disappointing. Reviewers should not be forced to look up previous
-> related discussions on the Git mailing list. I would do that for a
-> first-time contributor, but you are a long-term contributor who
-> clearly has the ability, the knowledge, and the time, to accompany
-> patches with such vital information.
-
-I think in terms of over-explaining something in commit messages &
-including references to past commit I'm doing better than most in terms
-of commit messages to this project.
-
-But you've got to stop somewhere, exhaustive explanations of past
-caveats etc. are also its own fatigue.
-
-In this case I think the explanations I've provided as they stand
-suffice. Curious archaeologists can always dig in the archives for more.
-
->>  CI: run "documentation" via run-build-and-test.sh
->
-> This patch has a commit message that explains what the patch does, and de=
-scribes a little bit of related commit history.
->
-> It does not talk about any convincing reasons why the change should be de=
-sirable.
-
-I just ejected this in v3, yeah it's a bit of a mixed bag with the
-runtime of the installation.
-
-The benefit, which I thought was a bit too obvious to even point out, is
-that you can plainly see which half of asciidoc/asciidoctor fails, or
-both. So it's clear if it's a compatibility issue or doc ource issue.
-
-> This is troubling, in particular since it counteracts the major benefit o=
-f the preceding patch: to reduce the jobs' runtime.
->
-> Also, while the preceding patch makes each job's focus more obvious,
-> so that it no longer requires careful study of the entire test log
-> merely to find out which `GIT_TEST_*` settings are set, _this_ patch
-> crams the check-docs into the same job as the pretty unrelated test
-> suite run. In other words, it combines even _more unrelated_ things
-> into the same job.
-
-The "check-docs" run was already there in the pre-image, so nothing
-changed there.
-
-I agree that it would be beneficial to e.g. split out all this ci/
-script wrapping into "make" targets at the top-level, but that's a
-separate future improvement.
-
-> [...]
