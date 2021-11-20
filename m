@@ -2,153 +2,227 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67FF7C433EF
-	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 11:18:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94648C433F5
+	for <git@archiver.kernel.org>; Sat, 20 Nov 2021 12:10:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237144AbhKTLVt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Nov 2021 06:21:49 -0500
-Received: from mail-eopbgr80082.outbound.protection.outlook.com ([40.107.8.82]:60535
-        "EHLO EUR04-VI1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S231252AbhKTLVt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Nov 2021 06:21:49 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FQNHT/fOF7MhKmOl3/TA6/kSpfrwQNX7ZHKro/FZrm5VqO5Ka3xcmqWjW2FyinWZS2PRUxH8FZcvNN1j8gILX1tbr8exTozkvORwE75dJzlb0FINsETr3hc1HO2k+Cv1PS9cayQaPyYCj5gPq4QNlAH3BDEucRGtCfpfanzwpnl2LfZ5wrRM9FOxSzwCba2fHTjxYfDRD+U4BOn602nuVBeUKoj83kdEG1cj9wn1FnlwyZlDkkY2Ot6PXa5nzks70PgqCoezMQyvrki2VmJgUL8GiDSwWczh8yxnjbWMghEhKD2N/BFm+4SZdVKDkXFg3BGBo8sfvbu8+IdtgAUTUg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nY0o/SCSazH3Vk4rU6RbsQ4OeQdvn79aUmhJXoQzG1k=;
- b=Aw4FICE+FqDJgGYQUqu5hmGxTsGN0Lxi1Q1YpWrYDT/KYtThpWtWUTbbrQj8G3uaIbeDsXb/6jxkY8dyiVPTwbyrIS2x5l7QVonPwptZGAvLI91pG0UDHV2N+I1FSRyaRg4e/RzQSSNvUYV1GF3oFph7xdpwwBnWAepcW44UUjp4Xb0AHtaP78U8Ts2wSB/T5iGhGyF7dmZ6FaesIhALZpmNKwrWXHjg8fUu3xdNbyXXQdFHDJ9hNUD+lyiigDxr9h1XbjWoa2FNvnbIuAr0U3ZDGd7ydj8SfgZXuXG4CJV9mCERjSJFTh/Ws+gYkkBpvLxjpCrGh/TzjQmhoP8zOQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nY0o/SCSazH3Vk4rU6RbsQ4OeQdvn79aUmhJXoQzG1k=;
- b=Jz3uvdNLPprIK8zdSxl+16OFDDYQKnUPENlYCdvXctEOHyTXkJAbf+dmqiefkw+sS7f2ZuNOkQwUndNR0f1u1CquQzbrWLc6MRwjvFr/i1pOIZiCWm2tsXN0n/gk+qxVos0ZGXQPSHprYcSJnXpMmucPSamx+CFypTtN5iumgp0=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PA4PR10MB4334.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:10b::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.22; Sat, 20 Nov
- 2021 11:18:43 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::f9d5:61ab:5756:b391]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::f9d5:61ab:5756:b391%5]) with mapi id 15.20.4713.024; Sat, 20 Nov 2021
- 11:18:43 +0000
-Date:   Sat, 20 Nov 2021 12:18:42 +0100
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2021, #05; Fri, 19)
-Message-ID: <20211120111842.mrryee6kvffhpegs@fs>
-References: <xmqqa6hznvz1.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <xmqqa6hznvz1.fsf@gitster.g>
-X-ClientProxiedBy: AM6P195CA0069.EURP195.PROD.OUTLOOK.COM
- (2603:10a6:209:87::46) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        id S230381AbhKTMNX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Nov 2021 07:13:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37196 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230047AbhKTMNW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Nov 2021 07:13:22 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4D35C061574
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 04:10:18 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id 137so7332465wma.1
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 04:10:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=/J/IuZLdt7Ve4oDwh4kS/YbXgCBUVU+ioHnMJuXeoDE=;
+        b=hcRxS5WsksX/crIWLb4gJESxmfDr0l7iONd6xcVtM/GLYLMGQF6f4JvkBeCmvynYcH
+         FlQl+0iqR9w7piXR8rtrmdAZCZYviTG9SIqKePkuQHi3ek0YzwBnjgwTOPB1AAgbf5LR
+         5NeZr0WSTxSGsNy3PD3Dl6Kb0V5gtP1IMTSzaOyWqBdgn8MrIXSn8jJ2Gy1h9S+l1hiK
+         gZ4eji4B3SKdldkMYVr/2ot5RAgGyfHUidKLLCFwA1dQJxZw9r2TGsFh0JeNTl9FfydR
+         PkzTViNXGVYS7YO2wZ0m6wxct+uJ8ESEn1G6Dbzcmh1gDrRgV6h/Q9MlMm85gGiCD+Rz
+         qPlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=/J/IuZLdt7Ve4oDwh4kS/YbXgCBUVU+ioHnMJuXeoDE=;
+        b=dZzOHYRud3d7E5peTC/a/vYwD4G7omuC2ZXVk1LFpo66TC3NjKk4WZ1vkZe8qyGbBM
+         A40jzJeg1P52WY1/+2PJhjr+O9oFPzoQ/ztsi9B5KFnrGFAZpPwH8MGqZf6hB4FxAKsC
+         8D3GpQyUt5mDiakiXS3HtRiQrJl3TSWnp10Z5L1U12YYY+hBLw5pDz8WuWTZ3MaSjqTm
+         1LnPkYVDvc2n6UNrB4XySj8lpbqIR9CmVv2xDfF90bSw67Kgn1phIDHpVQ82/+hsrMfe
+         JZSuEb2TqXByoZ5ks9z+VdAUWnGjpoaM1Z072iFIxudTiBoWUSzVvD/gbTYROOIOSft6
+         dfxw==
+X-Gm-Message-State: AOAM5319LIGgjk5ogEQMfD0N/qcPSlZKwTD4Yi/FbQhAHl+hsfqDIQFb
+        XIsl9viG3Dwvk+OmvbVaAJijSou3znbWX3Hr
+X-Google-Smtp-Source: ABdhPJzzwhJwDOtoJL8WJqtp3t4Cgjyeznwg697YIxSlILz52xXS/AU+I8MM/v4YGaEutqvjlwm1PQ==
+X-Received: by 2002:a1c:4c13:: with SMTP id z19mr9673708wmf.143.1637410216929;
+        Sat, 20 Nov 2021 04:10:16 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id m36sm3128221wms.25.2021.11.20.04.10.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Nov 2021 04:10:15 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/5] CI: Remove Travis CI, shorten names for GH tooltips, split jobs
+Date:   Sat, 20 Nov 2021 13:10:06 +0100
+Message-Id: <cover-v3-0.5-00000000000-20211120T115414Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.34.0.818.g0f23a581583
+In-Reply-To: <cover-v2-0.6-00000000000-20211120T030848Z-avarab@gmail.com>
+References: <cover-v2-0.6-00000000000-20211120T030848Z-avarab@gmail.com>
 MIME-Version: 1.0
-Received: from localhost (2a02:908:178:20a0:d22:c58d:d0a4:a83a) by AM6P195CA0069.EURP195.PROD.OUTLOOK.COM (2603:10a6:209:87::46) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.19 via Frontend Transport; Sat, 20 Nov 2021 11:18:43 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 41e426e3-d21b-48bc-e9f5-08d9ac178316
-X-MS-TrafficTypeDiagnostic: PA4PR10MB4334:
-X-Microsoft-Antispam-PRVS: <PA4PR10MB4334C39B71FF87B0720304EBB69D9@PA4PR10MB4334.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 1gmdlXwA40ed7AaB7yYJdtQHqa7CikhcMnp0FnAmX3E/TkfA/lvJBLm6sgZMubQdV7YCscryCKlKl/CnlTFRn4e1n7PhE2aOFKEdyUC5TvQAd78K2+q0pnRGCq3uSXNpAP/GVZr9TbSx38j+dCV5OvFFeFNMByvTg+n7eTiOdg6ODQ/rKuuLuwRIB7mEJwQaeNdOq/NGxB4kupIvHUr72RW/aQxvFi6P9zFewGBatej0M+e0yedTVQXrh/mst/xihBnb0tdQ63/wgQDbJEZH5FrFiP+qvlZM/HuWuVZLmWu68PohI1HGZjoP02DlckjWujPBQ7ZbdAi7y9eTQ/FdGJMi2P7EBvA4EA8dYGBw++tV9u+qeUfYmcB/ujK8TFcqYsxWLCFISUmbFPUeigM1eDKCsqGUyCecWOlBTIDxPx1+gwswJ00F3weig/LQuQHPPM9pIj275IiGYd6BPGsgSssspPD8NwGTroWN7AqxWyuuBd6l0TlYZ0ey0ZW+dNoaVUGID5rijvt1vRQRdEwkJuOXaPkrGL6rdRDCAjGc6HVwKrg3K+QuqH7ocw8PORxzwwz/qqR9kB7miThL+qL0RGoMSNuJDkWWkDsgnmHjsLmgcd0Wc3UJgNtEmUpbU+j+ow/uLuxSfiezP7t28f0Z3Ucr3moLzIqIfKm/GZTH5D/BPo5KsFM+HbRcCYY5WJTrstOsIIr0N1CtJD7zBixsha0zsEBey9xVCmD4OQ8rELw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(7916004)(4636009)(39840400004)(346002)(396003)(376002)(366004)(136003)(966005)(52116002)(6916009)(316002)(33716001)(8936002)(508600001)(4326008)(66556008)(4001150100001)(6486002)(53546011)(83380400001)(66476007)(1076003)(6496006)(5660300002)(2906002)(66946007)(86362001)(9686003)(8676002)(186003)(38100700002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y05nL1RVK29wcXBTT2grOWZ6WHpuRGFrVlRvcVg2cm5McTFKbDR3RDJrUGVv?=
- =?utf-8?B?SkVPc242eVFkM01wMmVJN1ErQkhGRWRMbUMxbk5sdmdWWkozcjBGNzFaZUxX?=
- =?utf-8?B?WEs3Qjl5N0hmMDJ1NEhoL1Q3WXFyYlNSMC91RUNCT0VISUV6SXY5eGlOKzM4?=
- =?utf-8?B?eVY2dVJ1NmJCT3F5eXJwNEdBSm9TY3hiOXlPVDdFRE5yUUpBSFVEVGt6ZFRi?=
- =?utf-8?B?b1RjNXFPRDZBK2lRdml3bkZDbFE1emNpcnR6MXBwNDFKTG0rVVZicHRuclRm?=
- =?utf-8?B?YzR1V0lZanVXMkxnUHlrbERWRmRzYW15V2pUYUVvMUFER0diSEJsRVNsNlIx?=
- =?utf-8?B?Yy9IL0pRU1FHTFFTcngvVFowanJiV1FUb3g4dW1RckFzdEw5RVFFOE1oZE15?=
- =?utf-8?B?Wk5udllCelNtRHdHZUEvZmMxaGh1anN5TVV0YUVvTTZlcHowRzJWc0dFMUNq?=
- =?utf-8?B?cHR4ODlUYTBIc3FURGYyQU9RUHFaYzlRanlWeUpLMmpaSGg0dS9pZkJwZy8r?=
- =?utf-8?B?cnZVK2VOWnlQWEZQZzJLYUNJOHM5bGFOWEM2NC90U0s4MGYyUHd0d2VwTXli?=
- =?utf-8?B?L3ErMEZiT2RZZlR5YzR2eG1FOHJoUk05ZHZLM1hkRmRxQnFaaUhPMUhWTWlE?=
- =?utf-8?B?Mi9sWmFvQ2d3Q1QrZUZET2wwK0gzeDh3Y0JmcGNiQXVlRjEwYzJPaGRhM2hL?=
- =?utf-8?B?KzJ1ZDkvdlVYSlgwT3NQL3FDSytnMlViZXMzMEZxdFRLTW9kVFQxUTRLaS8w?=
- =?utf-8?B?TzdTVVJ1eklmdmExMHd0d0pqdlJmVENvUzkySHh0TTltOGFEc3E2blMzNUdq?=
- =?utf-8?B?VDRWRVVCd0daaWhpa2RzaEtDS2o2N3ZUOW1Ed2M0RmhVYXd4a25UeUxEUWlY?=
- =?utf-8?B?QjRmTWVENStOV1F6NlRodmljMWJrTWxERlZ2bjg1RWNWNkZxK2pjdGRvUXJC?=
- =?utf-8?B?anFwNGFxdUZyUUs3S05EUEZydXlMTXBIWXpIUkppQjlObzNvdC9rUDBGbllX?=
- =?utf-8?B?R0JnQUJtTE5lRmFzRXczWW1uRnVhMlpsNjlkR1V2bXZvNEtDaVg2RU1lenpL?=
- =?utf-8?B?b2t6b0xscVRIbmt2Yk4xbU1yaVBwbTBDWjBwcVhVZzdNWWd2NHpvandrVTVB?=
- =?utf-8?B?Y3VROTBZSVAyZ2dYUGVhNjJmVlVYaUMvNWZPNXlrTHRxbHJ5bTNwOGtIMW1i?=
- =?utf-8?B?a1d3WmNXbHNUYTdGdHhhcjdEZDh6THFGWXdLZzVDRWhjVHpUUVNxeVhVVzlW?=
- =?utf-8?B?WDVXQmpuVFkwNzNNbFl2S2xXS3dBL1lXT3hFUWg2SUpkSWlrdU1HdTRnMGh3?=
- =?utf-8?B?cUE3c1JKWUtHOU1lVXZNakhkY3BsNlJ5ckF2ajRRMlcxMEhVd0FuTkV4RFdZ?=
- =?utf-8?B?N1IxQmJybGtEZDdOWjQxL1RFenpsd3FGOWU0YjR1Z1A2bEwwZjRpVGF2Qk92?=
- =?utf-8?B?NGFyZkxZSDZTUjFBV2hrak5VblFZWHFIeWljUWdRaWwyRTJJRkxvbmZhb1hp?=
- =?utf-8?B?V3hHVS9VRjl0aEJENG5LYXhubXJYU0c1ZmtmNHByTEd0ZFJyUTNOWnFYcTJ2?=
- =?utf-8?B?WjVVandjRE9rLzBuY1dhMWtJQXE2SzhvUW16QVRiRXpBWUowOXl3QVFGVTZ1?=
- =?utf-8?B?V1dwUjdVN1d1T3U0VGNjRGJPNE1mRmI5WlF5UE9RMy9EWlMzK0lXVlpCQTlM?=
- =?utf-8?B?M1FqaUhkb3cwVlZ4dFhXUkRzUmV3WlAvSno4R1B6YXVUdFhjNzFqWWhCbXRZ?=
- =?utf-8?B?VGNCaWdKRzFFcmxDZmZ6cXFHRWladHlrQXdQQzdqT3FTd20xMTVkeW5abm5p?=
- =?utf-8?B?V0dZcHJjQ3RpbldEOUtidWlqMDR6bXBmMVh1dzVZVkdwQkpQOE13YS9KZzN4?=
- =?utf-8?B?RE9BNHFvVUdHREJxNVN5QUE5dVRES3FyUE5CRDMwT043THk5cWVFYjVJSi8v?=
- =?utf-8?B?Sll3cTloci9uTjdWbjNDS3hyQ24wQTBFQVBKWEVGMUlFeHhSUlJCRUk4WTFI?=
- =?utf-8?B?bTZ4R0FXcDZ6eGFneStwUGg4Qm9CUXhXNTlKOUxOK2VlZXlFZi9yVXdwS0Zk?=
- =?utf-8?B?VHBhMUd1WnI2RlVXd2RQcWtobFBHNm9UY2VuYjNTMWFQUmNuY2lpc1Naak9v?=
- =?utf-8?B?MGNiZ3c4Q2ZYeVl4UmN0U0theC9WT1o2L2dlaXhoK3FObzFQb2VRejB5cGJz?=
- =?utf-8?B?eHRmSzlKMHp3dzV1WUhxTGV2MEFUQlNZN3ZLMW1rZzZDWUpWYW9IRW1TMzZZ?=
- =?utf-8?B?MWhsZnNuS2lPdlB3MjMzMDNhTHVFciszckhhcUgxZENKT1QrbXBHS3NtaWJB?=
- =?utf-8?B?NERWQU1hR2JqcE44a1Z3WUZhcDI4akhBaXZXdTRFYW5Pb3BpMHpyQT09?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 41e426e3-d21b-48bc-e9f5-08d9ac178316
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2021 11:18:43.4273
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: S36qyHxojM+cdn2Vff4RoB57O4ne/5VZwIS13qO3Kt936luHuskJ52lasTD7Vy4PFWz3V3Xgl/QMDi3KSEI7CEg+zvveQwdw496IqMfmZTs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4334
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19.11.2021 23:10, Junio C Hamano wrote:
->
->* fs/ssh-signing-other-keytypes (2021-11-19) 2 commits
-> - ssh signing: make sign/amend test more resilient
-> - ssh signing: support non ssh-* keytypes
->
->
->* fs/ssh-signing-key-lifetime (2021-11-18) 10 commits
-> - ssh signing: verify ssh-keygen in test prereq
-> - ssh signing: make fmt-merge-msg consider key lifetime
-> - ssh signing: make verify-tag consider key lifetime
-> - ssh signing: make git log verify key lifetime
-> - ssh signing: make verify-commit consider key lifetime
-> - ssh signing: add key lifetime test prereqs
-> - ssh signing: use sigc struct to pass payload
-> - Merge branch 'ad/ssh-signing-testfix' into fs/ssh-signing-key-lifetime
-> - Merge branch 'fs/ssh-signing-fix' into fs/ssh-signing-key-lifetime
-> - Merge branch 'fs/ssh-signing' into fs/ssh-signing-key-lifetime
->
-> Extend the signing of objects with SSH keys and learn to pay
-> attention to the key validity time range when verifying.
->
-> Will merge to 'next'?
->
+An update to v3, now using the "pool" names instead of a new "os"
+field for the job names. Before (on master):
 
-I have some cleanup / code style changes for the ssh siginig test prereq
-code like you suggested in
-https://lore.kernel.org/git/xmqqfsrssmar.fsf@gitster.g/ that would
-conflict between these two series. Depending on which lands first or if
-the keytpye fix goes into `maint` I could apply it to either one and
-rebase the other. Or since it's just style changes I can attach it to
-some future ssh signing series. I don't mind either way. Otherwise I
-think this is ready for `next`.
+    https://github.com/git/git/runs/4214600139
+
+After:
+
+    https://github.com/avar/git/actions/runs/1484426823
+
+I peeled of the last "doc" patch based on Johannes's feedback. As with
+the split-up TEST job we'll take more CPU time, but if we can run in
+parallel take less wallclock time, but it's not really worth it for
+the asciidoc/asciidoctor job with how long the install v.s. build/test
+step takes (b.t.w. there was no change to "check-docs" running in
+those jobs in v2).
+
+1. https://lore.kernel.org/git/cover-v2-0.6-00000000000-20211120T030848Z-avarab@gmail.com/
+
+Ævar Arnfjörð Bjarmason (5):
+  CI: remove Travis CI support
+  CI: use shorter names that fit in UX tooltips
+  CI: rename the "Linux32" job to lower-case "linux32"
+  CI: use "$runs_on_pool", not "$jobname" to select packages & config
+  CI: don't run "make test" twice in one job
+
+ .github/workflows/main.yml        | 26 ++++++++++++--
+ .travis.yml                       | 60 -------------------------------
+ README.md                         |  2 +-
+ ci/install-dependencies.sh        | 33 ++++++++---------
+ ci/install-docker-dependencies.sh |  2 +-
+ ci/lib.sh                         | 60 ++++++++-----------------------
+ ci/print-test-failures.sh         | 10 ------
+ ci/run-build-and-tests.sh         | 26 +++++++-------
+ ci/run-docker-build.sh            | 11 +-----
+ ci/run-docker.sh                  |  4 +--
+ 10 files changed, 70 insertions(+), 164 deletions(-)
+ delete mode 100644 .travis.yml
+
+Range-diff against v2:
+1:  cc94a353ccb = 1:  96433bcc02f CI: remove Travis CI support
+2:  73981cedee8 ! 2:  b09cd076aeb CI: use shorter names that fit in UX tooltips
+    @@ Commit message
+         looked before, [2] for a currently visible CI run using this commit,
+         and [3] for the GitHub workflow syntax involved being changed here.
+     
+    -    Let's also add a field for the "os" and use it where appropriate, it's
+    -    occasionally useful to know we're running on say ubuntu
+    -    v.s. fedora (but the "-latest" suffix isn't very useful, that applies
+    -    to almost all the jobs.
+    +    Let's also use the existing "pool" field as before. It's occasionally
+    +    useful to know we're running on say ubuntu v.s. fedora. The "-latest"
+    +    suffix is useful to some[4], and since it's now at the end it doesn't
+    +    hurt readability in the short view compared to saying "ubuntu" or
+    +    "macos".
+     
+         1. https://github.com/git/git/tree/master/
+    -    2. https://github.com/avar/git/tree/avar/ci-rm-travis-cleanup-ci-names-2
+    +    2. https://github.com/avar/git/tree/avar/ci-rm-travis-cleanup-ci-names-3
+         3. https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
+    +    3. https://lore.kernel.org/git/d9b07ca5-b58d-a535-d25b-85d7f12e6295@github.com/
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    @@ .github/workflows/main.yml: jobs:
+              name: failed-tests-windows
+              path: ${{env.FAILED_TEST_ARTIFACTS}}
+        regular:
+    -+    name: ${{matrix.vector.jobname}} (${{matrix.vector.os}})
+    ++    name: ${{matrix.vector.jobname}} (${{matrix.vector.pool}})
+          needs: ci-config
+          if: needs.ci-config.outputs.enabled == 'yes'
+          strategy:
+    -@@ .github/workflows/main.yml: jobs:
+    -         vector:
+    -           - jobname: linux-clang
+    -             cc: clang
+    -+            os: ubuntu
+    -             pool: ubuntu-latest
+    -           - jobname: linux-gcc
+    -             cc: gcc
+    -+            os: ubuntu
+    -             pool: ubuntu-latest
+    -           - jobname: osx-clang
+    -             cc: clang
+    -+            os: osx
+    -             pool: macos-latest
+    -           - jobname: osx-gcc
+    -             cc: gcc
+    -+            os: osx
+    -             pool: macos-latest
+    -           - jobname: linux-gcc-default
+    -             cc: gcc
+    -+            os: ubuntu
+    -             pool: ubuntu-latest
+    -           - jobname: linux-leaks
+    -             cc: gcc
+    -+            os: ubuntu
+    -             pool: ubuntu-latest
+    -     env:
+    -       CC: ${{matrix.vector.cc}}
+     @@ .github/workflows/main.yml: jobs:
+              name: failed-tests-${{matrix.vector.jobname}}
+              path: ${{env.FAILED_TEST_ARTIFACTS}}
+3:  002c183fff4 = 3:  fb1b0ecbadd CI: rename the "Linux32" job to lower-case "linux32"
+4:  eca0ad08d4b ! 4:  54913e775c1 CI: use "$runs_on_pool", not "$jobname" to select packages & config
+    @@ Commit message
+     
+      ## .github/workflows/main.yml ##
+     @@ .github/workflows/main.yml: jobs:
+    +             pool: ubuntu-latest
+                - jobname: linux-gcc
+                  cc: gcc
+    -             os: ubuntu
+     +            cc_package: gcc-8
+                  pool: ubuntu-latest
+                - jobname: osx-clang
+                  cc: clang
+    -@@ .github/workflows/main.yml: jobs:
+    +             pool: macos-latest
+                - jobname: osx-gcc
+                  cc: gcc
+    -             os: osx
+     +            cc_package: gcc-9
+                  pool: macos-latest
+                - jobname: linux-gcc-default
+5:  a113b8404ed ! 5:  877f27d847c CI: don't run "make test" twice in one job
+    @@ Commit message
+     
+      ## .github/workflows/main.yml ##
+     @@ .github/workflows/main.yml: jobs:
+    +           - jobname: linux-clang
+                  cc: clang
+    -             os: ubuntu
+                  pool: ubuntu-latest
+     +          - jobname: linux-sha256
+     +            cc: clang
+    @@ .github/workflows/main.yml: jobs:
+     +            pool: ubuntu-latest
+                - jobname: linux-gcc
+                  cc: gcc
+    -             os: ubuntu
+                  cc_package: gcc-8
+                  pool: ubuntu-latest
+     +          - jobname: linux-TEST-vars
+    @@ .github/workflows/main.yml: jobs:
+     +            pool: ubuntu-latest
+                - jobname: osx-clang
+                  cc: clang
+    -             os: osx
+    +             pool: macos-latest
+     
+      ## ci/run-build-and-tests.sh ##
+     @@ ci/run-build-and-tests.sh: windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
+6:  7c423c8283d < -:  ----------- CI: run "documentation" via run-build-and-test.sh
+-- 
+2.34.0.818.g0f23a581583
 
