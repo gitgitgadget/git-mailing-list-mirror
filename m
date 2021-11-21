@@ -2,129 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCB8FC433F5
-	for <git@archiver.kernel.org>; Sun, 21 Nov 2021 08:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 744BAC433EF
+	for <git@archiver.kernel.org>; Sun, 21 Nov 2021 17:43:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237425AbhKUI7w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Nov 2021 03:59:52 -0500
-Received: from mout.web.de ([212.227.17.11]:40363 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237324AbhKUI7v (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Nov 2021 03:59:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1637484997;
-        bh=OLWuodaGuy2M6wEtjx4PSa+BscoJ1QLWjo0/7QRuTsc=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=h9s2o+GDe5l7K29r2emCCCqIr2PgYUshlka3+XF/VKSwOxUd20epHj7nnKL0nHRYF
-         WqBkKR0zG2No+8XVS+wR6fMMlQS/v8334EHK2Ysf288ve74lJXjv8GnO+ABFB8j1O6
-         Su1+TVtGbTcyxmUXluL8efHvVpSdrV3b6dzozRzA=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.20.171]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MjgSv-1mM0gI1VsZ-00kmd7; Sun, 21
- Nov 2021 09:56:37 +0100
-Message-ID: <150f9c88-f175-963d-2947-7ae9f3a2ef12@web.de>
-Date:   Sun, 21 Nov 2021 09:56:36 +0100
+        id S238554AbhKURqb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Nov 2021 12:46:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53322 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238482AbhKURq2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Nov 2021 12:46:28 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 092CAC061574
+        for <git@vger.kernel.org>; Sun, 21 Nov 2021 09:43:23 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id z5so66581908edd.3
+        for <git@vger.kernel.org>; Sun, 21 Nov 2021 09:43:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:message-id
+         :mime-version:content-transfer-encoding;
+        bh=DkHHo4/YQ/Xwyr6mSbmeClDXBqR0Jgd4rqlKvTW9w7k=;
+        b=gFDtAaiz9AkSTcfwX1k/I5/0lBvy76c6B1XJu2CgOjUZ9OmHnl+yvQYzJ+W1TXY6O6
+         cTV/fKeZ/xwWXqbwO9UzDNvsBz7y3LM7rmUsiVbF20QZP3uffl6usq6z3DrY4TS6kxuF
+         XcrZuxFongiobvP671PCbCrJrEMlPwj46C9lp3idT5eXNXWnVKz3UGNBjOO7wN84tIxE
+         lDdQusezYeOZtj6ESqou0wVCSmz02FpKWBvjv5TUZhoTw2yEDsOupE56/SfMqvOaV32K
+         zGJKbkGacvjdhrGATFrjvGNTVK3cSwoA+Z8ud00DvvfZYEBN71ziAU1oOR8roipspOFu
+         HJCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :message-id:mime-version:content-transfer-encoding;
+        bh=DkHHo4/YQ/Xwyr6mSbmeClDXBqR0Jgd4rqlKvTW9w7k=;
+        b=eJ7/1DrQzUc1EreW3LgGs44DQPgA8QKuve7OjMAnNK7QAKy4yld6CbP477MCmmMspG
+         ZqeH+hhCMVHjfvqNOfC3nWwwPlpIIQK8pkQBJuXQZs4WMGlx+Iks4JHI7/744gwjhdc2
+         yiTxMrWMSQz44XrWxi2hmW9EMisMAAZyet9S9fJovxLoky9JiS5FiwMcYLO5weYQCROb
+         /JDZEfRUt9M5g6Ya1TH6xjbtf6posbk2mVzz0/nYD1RuayHQW+GPDT/A7ZGXXDizRz6+
+         dx+ql9qtniM/jkU0/bn7MF11Y1nztKhFLOXiwe9yJNAnDc7XbYyiuSfDozX2+P2ZESWd
+         fg2Q==
+X-Gm-Message-State: AOAM530K6trPAqPmzfpDF7tIQtGXTHJ3g5XjHQw/G09lYJ2c6Zmy2qNx
+        2NYScIH5c+Kzp2qqlkFgf/8pBh2WYOE=
+X-Google-Smtp-Source: ABdhPJxhGlXcPl609elcgM+mwpLjDR/zQfJgzL2/Ah9LBJDVhg3fdDz+PzkmpfWFJSaSoDqMCI5egA==
+X-Received: by 2002:a05:6402:44c:: with SMTP id p12mr53646113edw.234.1637516600414;
+        Sun, 21 Nov 2021 09:43:20 -0800 (PST)
+Received: from gmgdl ([109.38.153.63])
+        by smtp.gmail.com with ESMTPSA id y15sm2940062eda.13.2021.11.21.09.43.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Nov 2021 09:43:19 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1moqs2-000wMx-NJ;
+        Sun, 21 Nov 2021 18:43:18 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Git ML <git@vger.kernel.org>
+Cc:     Julia Lawall <julia.lawall@inria.fr>
+Subject: Death of Gilles Muller
+Date:   Sun, 21 Nov 2021 18:31:50 +0100
+References: <alpine.DEB.2.22.394.2111191921100.18418@hadrien>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+Message-ID: <211121.86fsrp1k21.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.2
-Subject: Re: [PATCH 5/8] symlinks: do not include current working directory in
- dir removal
-Content-Language: en-US
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-References: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
- <8a69d2878c99e1b9321e57073d266cf797dc5630.1637455620.git.gitgitgadget@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <8a69d2878c99e1b9321e57073d266cf797dc5630.1637455620.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:JJip2iUnG+7upO6Q3XPjn8BAsGKP636e6kyk2EP7RSQDnKKLNJy
- c4D3oL+MBkYLergIi0p8vjquhajanIIydfiD1Cu72TGlAx7pI+oEskmuXNO4fd4BGKwdAPr
- D7IBAO8h+sGl+HX8M+WpeQCqcSqzeaBdNbS8zPZ7oOvJXh05b4ClZ9YIlWCWQjQbwB1X0ll
- m2Mz4zaFY3NSdDSuf/MNA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:lKOOOoq2Z8Y=:FT2WFZfGTIHS62cPYJSSV3
- KM7ydxZyX7+mwzp/PdtgKukrx31FhgWVJf7RYnd1uL7zkFOKWmIkFKsaZRR9yLZTqCuEWTt01
- 8E+vpwRwNtGgS91v/cJIdsmzAcoTCVEWGWoASaRY8xImrdQddcMUNcQKPRRtidIb3KNmIApax
- GVD2TE4hvx9t+ftVvdIko3vynuGsvVKPlCgQxQXMAu2f/Uv1sr2TMzaSZYVlH1k4OkCS6NV1n
- 9oQWEqGPYQbl9ZMYln8ju6T1NRF+L233RjO6z5xA1NyQzKdlWyCpTF/uV8CvUeMONZ3wjT9sJ
- 3ckgcilVKy7+vO+7TdUCl7DrZwsiEDh2oZmGSW7mLSQTwbP9smnz0SnLSHspOpSotJjBNkT/o
- 8v+YahQmnVDfvzm0NG+anqg7NACHq8LyC5w4fs7KE1JKYLWsZl1k8cV9eguZWvSqwcftoHFC+
- 6LZz4Q2aWs+0yw0VpETehgtS9csPkojwHM2vreUjqrSlicSoIW8wnEFyHaoXruoDo7FsuuQ/e
- kJfFUI5ntLz/j8q3Tj4/HC8XhvQc/iqzBtHi02BrKcYukvFxOW0q1mI8FWyJF5SBobRpa0v/A
- ywXBfdZo5QQSL/vyorY6u/ozps9teVNRduNS8+qS2iQ3cikB5BdapZAWXKi2v3B4qoI/5rEJ+
- HoosndcbsUyfkxGm4e+VqdTMTZPdfUivl0JD0p/X8cAtUZV6E9UitI/MMRc/Xv9hoP5OrR4MA
- /F0oylQBx0JuYWyMLyU97jMAxmQK9S4aeVS3GO9rrgDap6LByQYr2IO6tzb93YCNEwPbxCih1
- +c2LxpD7Zyy22P4kodh7KBAT2sn0ZNtuD3xLGbOpIPVa+4Z43qH8Cpb58VE2T9wmJi0mGkKqH
- SzlE9yLZacrW/onru4i1DCahBV8GiDBgyruSmW/GE9QrPDXZG8lk2quH85/V8qs+2epL2i0k4
- +vvLMrVdIvKHqZS8BhKV+xSNyJxkWUMfJzilDB+PGWxxJXqZKCjuiAYu5pbseJqpGFFj4V7kW
- HDh/BwejtFYKOH601rJomGpzeoIKV0hTd0J2iq3feyaxzdiSTSGTLKjJEorzl/am7Q==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 21.11.21 um 01:46 schrieb Elijah Newren via GitGitGadget:
-> From: Elijah Newren <newren@gmail.com>
->
-> symlinks has a pair of schedule_dir_for_removal() and
-> remove_scheduled_dirs() functions that ensure that directories made
-> empty by removing other files also themselves get removed.  However, we
-> want to exclude the current working directory and leave it around so
-> that subsequent git commands (and non-git commands) that the user runs
-> afterwards don't cause the user to get confused.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  symlinks.c           | 12 +++++++++++-
->  t/t2501-cwd-empty.sh | 12 ++++++------
->  2 files changed, 17 insertions(+), 7 deletions(-)
->
-> diff --git a/symlinks.c b/symlinks.c
-> index 5232d02020c..84622bedcde 100644
-> --- a/symlinks.c
-> +++ b/symlinks.c
-> @@ -275,11 +275,18 @@ static int threaded_has_dirs_only_path(struct cach=
-e_def *cache, const char *name
->
->  static struct strbuf removal =3D STRBUF_INIT;
->
-> +static int cant_remove(char *dirname)
-> +{
-> +	if (the_cwd && !strcmp(dirname, the_cwd))
 
-Initializing the_cwd to an empty string would allow removing the NULL chec=
-k
-everywhere.
+[Forwarded from the coccinelle list with Julia Lawall's permission]
 
-Is strcmp() sufficient or do we need fspathcmp() in these kinds of checks?
-Do we need to worry about normalizing directory separators?
+On Fri, Nov 19 2021, Julia Lawall wrote:
 
-> +		return 1;
-> +	return rmdir(dirname);
-> +}
+Gilles Muller was the person behind the scenes of Coccinelle.  In 2004, he
+had the original idea that led to the development of Coccinelle, he
+oversaw its original development, and over the years he ensured its
+continued research relevance, which facilitated its ongoing development
+and maintenance.  He passed away on Wednesday, November 17.
 
-I wouldn't expect a function of that name to actually try to remove
-the directory.  Or with that body to require a non-const dirname.
-It's used only once, perhaps inline it?
+If you are grateful for Coccinelle, please consider making a donation to
+the Centre Eug=C3=A8ne Marquis (https://www.centre-eugene-marquis.fr) or to
+your local center for cancer research.
 
-> +
->  static void do_remove_scheduled_dirs(int new_len)
->  {
->  	while (removal.len > new_len) {
->  		removal.buf[removal.len] =3D '\0';
-> -		if (rmdir(removal.buf))
-> +		if (cant_remove(removal.buf))
->  			break;
->  		do {
->  			removal.len--;
-> @@ -293,6 +300,9 @@ void schedule_dir_for_removal(const char *name, int =
-len)
->  {
->  	int match_len, last_slash, i, previous_slash;
->
-> +	if (the_cwd && !strcmp(name, the_cwd))
-> +		return;	/* Do not remove the current working directory */
-> +
->  	match_len =3D last_slash =3D i =3D
->  		longest_path_match(name, len, removal.buf, removal.len,
->  				   &previous_slash);
+thanks,
+julia
+
