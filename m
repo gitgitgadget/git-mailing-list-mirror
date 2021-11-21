@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2EDBC433EF
-	for <git@archiver.kernel.org>; Sun, 21 Nov 2021 00:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51614C433FE
+	for <git@archiver.kernel.org>; Sun, 21 Nov 2021 00:47:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237312AbhKUAuL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Nov 2021 19:50:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60316 "EHLO
+        id S237409AbhKUAuP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Nov 2021 19:50:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237210AbhKUAuI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232469AbhKUAuI (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 20 Nov 2021 19:50:08 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8166AC06173E
-        for <git@vger.kernel.org>; Sat, 20 Nov 2021 16:47:04 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id a9so25325594wrr.8
-        for <git@vger.kernel.org>; Sat, 20 Nov 2021 16:47:04 -0800 (PST)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF70DC061574
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 16:47:03 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id r8so25262764wra.7
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 16:47:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=vLrjPUiGJjgMCpzwqn9JDmb83ofz3HcEdCbxB0pFgAs=;
-        b=MbBctB8u0H9TsudPU4fTvMrZsnDv4zBIbf0JoPlaYbUTEmj+5g02o3SdgS3uscYT9Y
-         rYd3/jnz7fN4L3epKD0FdkAYHYE9keWAKja4mhTGeTxyoixznWjzqHOb4Ath3V6idDjp
-         m8EyFTRYHYPntXZ8+u8wxBEH0qism58dghQBAao3x5arEtm5fIap/x/FQiD3NUH/BGJK
-         SWOemEgJUgwdvoR4f/8U5pK78oXxKColY1labqpNwr1kCNEug7OJ6OzW2omK6STaGUHB
-         9cwwi2KqiWkYA9cJeI+uDZKQ/i1g85a1LdX+y7GSp4S2NGXFmEpKog8L4l6HsgTBe3S6
-         0GVA==
+        bh=BOYpUluqwNatwvKtNga45xDXh7nrcYdcitiqQBHzpx8=;
+        b=kc0Rpr54quYgXSxJvhjMdtlkCNs9Ec+d3D6TPKucIxrsL+qyXfmyoq1K5QMCtUVWJP
+         Au6VYqtnngbn/j6JZFfEh59sNYl9DkyJ8f/PZQMq9V+lthQsqJlakwri3YPltuAa40Dl
+         o2XgjEImUmdRK9uIqc26u23m0TvoOG8HZhkMP/pXmueMQLzUG0o7nON3inOOT7h+nBDk
+         lotDbhC5eE4ayGzE0Vj686aTCuo67tykXC1+UwylJHqEBL3JK1FT3z1GHTGNDDMYWkS1
+         Xvy2apxzU3szTbYJcA4Bgp3jTc3qBz+FiZtXoG44oHEprwdwAwt8QcMgL6qBYT5olipw
+         CtpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=vLrjPUiGJjgMCpzwqn9JDmb83ofz3HcEdCbxB0pFgAs=;
-        b=erptyFy3v1Y87j0YpSTeg+dhx36SUKHtsd+E+4BS7zKfS7O5iDxbD+qqKcm0c1s9Hr
-         9Uetq5Qtw2MF+wQsmfNFtTL6Fvj0sD9IPoJSngPtOX366nPADxQviXKBFklwdgO7f7ai
-         EgRi87l8/BkbdjUgSkuvZXS98+fToDK82bBHfbY+lEzNCqKq2FxZUqTx/SuypFEU8VNR
-         f6mjxIhRhoFLhKy+GM1qnU1FwbMmIhVIoy341OIbAFtqLjKPrx94PTyl6P8qAlm4gHex
-         r62qI6IBsRV2nkpb10jqSxTs8/mZiKBM3wXkhFuWexzCfs6qSez0kza1lxqAhHC1Iknu
-         n4Jg==
-X-Gm-Message-State: AOAM530oc/PilM80rHBUGSFI10qJ5e/+kFSHt+EfqSajJekX7I8z0E2s
-        LCOwjIJ+UxjgpAJXZic1w+pRWPFA3vs=
-X-Google-Smtp-Source: ABdhPJwBq1FontOzGQG/R1c+XVRSAxe+JaycAv4DR1tKVBaIpYTZY0+JMcdyV81L3f6V709b/DzqQg==
-X-Received: by 2002:a5d:69c5:: with SMTP id s5mr22313182wrw.283.1637455623035;
-        Sat, 20 Nov 2021 16:47:03 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n32sm4586325wms.42.2021.11.20.16.47.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=BOYpUluqwNatwvKtNga45xDXh7nrcYdcitiqQBHzpx8=;
+        b=AKzSoIh81QJ7eskHIO73ITAg4JIx4yc0GNtN+oxWlvm4w/Muk13O0soW4EA+qcUlGu
+         svtXV0o2OcVZEopG2rHV6jO08rv+QHktjLlviCkWUsRyd6Aou0386aWyKdOegxJfG15v
+         1C96J4kGaO7gnN8ZADphL9B1JqGeyQ07JcZuvaw1t9l3YT/gz5iIQN1qMuKEmo1n8dTe
+         REO/x6OHZvSsy13J+M74rH/71AYKRAIeCMy6tORj+E/I6kvcbb/+yVQCBtqZzzGthWVl
+         ZIVq0W5EEpVCx9x3jg2WqxAfV4TEpis9RsbdDbjmgzXvSOEMIUyscxe9kcAwQU1gWleH
+         x63Q==
+X-Gm-Message-State: AOAM532UEGbYmJqb+uNcxFUCiwJ4+Emp/9v4Nhx9WswjUg79qgx7PRXb
+        gi9KKztoM+0DQNdc/ZC8ZKbDxkEzbbA=
+X-Google-Smtp-Source: ABdhPJyFOW/eUny8jk7Ehx4J6Tnqu13nTdYtFEntWi1GjWlrfLY6H8Yp2aHHoy9iQQpDHuSlyS62LQ==
+X-Received: by 2002:adf:fe4b:: with SMTP id m11mr22284005wrs.136.1637455622122;
         Sat, 20 Nov 2021 16:47:02 -0800 (PST)
-Message-Id: <7b0c665fb75d3d73d9d8d03b629a09a0ec4244e6.1637455620.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f81sm18587674wmf.22.2021.11.20.16.47.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Nov 2021 16:47:01 -0800 (PST)
+Message-Id: <0b71996a3b462d4147fb792b20057544b9ef1710.1637455620.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
 References: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 21 Nov 2021 00:46:54 +0000
-Subject: [PATCH 2/8] repository, setup: introduce the_cwd
+Date:   Sun, 21 Nov 2021 00:46:53 +0000
+Subject: [PATCH 1/8] t2501: add various tests for removing the current working
+ directory
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,70 +67,279 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Removing the current working directory causes all subsequent git
-commands (and likely a number of non-git commands) run from that
-directory to get confused and fail with a message about being unable to
-read the current working directory.  That confuses end users,
-particularly since the command they get the error from is not the one
-that caused the problem; the problem came from the side-effect of some
-previous command.
-
-We would like to avoid removing the current working directory; towards
-this end, introduce a new the_cwd variable that tracks the current
-working directory.  Subsequent commits will make use of this new
-variable.
+Numerous commands will remove empty working directories, especially if
+they are in the way of placing needed files.  That is normally fine, but
+removing the current working directory can cause confusion for the user
+when they run subsequent commands.  Add some tests checking for such
+problems.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- repository.c | 1 +
- repository.h | 1 +
- setup.c      | 2 ++
- 3 files changed, 4 insertions(+)
+ t/t2501-cwd-empty.sh | 255 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 255 insertions(+)
+ create mode 100755 t/t2501-cwd-empty.sh
 
-diff --git a/repository.c b/repository.c
-index c5b90ba93ea..69a106c553c 100644
---- a/repository.c
-+++ b/repository.c
-@@ -17,6 +17,7 @@
- static struct repository the_repo;
- struct repository *the_repository;
- struct index_state the_index;
-+char *the_cwd;
- 
- void initialize_the_repository(void)
- {
-diff --git a/repository.h b/repository.h
-index a057653981c..45de85d18ef 100644
---- a/repository.h
-+++ b/repository.h
-@@ -147,6 +147,7 @@ struct repository {
- };
- 
- extern struct repository *the_repository;
-+extern char *the_cwd;
- 
- /*
-  * Define a custom repository layout. Any field can be NULL, which
-diff --git a/setup.c b/setup.c
-index 347d7181ae9..4466fa55af3 100644
---- a/setup.c
-+++ b/setup.c
-@@ -887,6 +887,7 @@ static const char *setup_explicit_git_dir(const char *gitdirenv,
- 		set_git_dir(gitdirenv, 1);
- 		if (chdir(worktree))
- 			die_errno(_("cannot chdir to '%s'"), worktree);
-+		the_cwd = xstrdup(cwd->buf + offset);
- 		strbuf_addch(cwd, '/');
- 		free(gitfile);
- 		return cwd->buf + offset;
-@@ -940,6 +941,7 @@ static const char *setup_discovered_git_dir(const char *gitdir,
- 	/* Make "offset" point past the '/' (already the case for root dirs) */
- 	if (offset != offset_1st_component(cwd->buf))
- 		offset++;
-+	the_cwd = xstrdup(cwd->buf + offset);
- 	/* Add a '/' at the end */
- 	strbuf_addch(cwd, '/');
- 	return cwd->buf + offset;
+diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
+new file mode 100755
+index 00000000000..5dfb456a691
+--- /dev/null
++++ b/t/t2501-cwd-empty.sh
+@@ -0,0 +1,255 @@
++#!/bin/sh
++
++test_description='Test handling of the current working directory becoming empty'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	test_commit init &&
++	mkdir subdir &&
++	test_commit subdir/file &&
++
++	git branch fd_conflict &&
++
++	mkdir -p foo/bar &&
++	test_commit foo/bar/baz &&
++
++	git revert HEAD &&
++	git tag reverted &&
++
++	git checkout fd_conflict &&
++	git rm subdir/file.t &&
++	echo not-a-directory >dirORfile &&
++	git add dirORfile &&
++	git commit -m dirORfile
++'
++
++test_expect_failure 'checkout does not clean cwd incidentally' '
++	git checkout foo/bar/baz &&
++	test_path_is_dir foo/bar &&
++
++	(
++		cd foo &&
++		git checkout init &&
++		cd ..
++	) &&
++	test_path_is_missing foo/bar/baz &&
++	test_path_is_missing foo/bar &&
++	test_path_is_dir foo
++'
++
++test_expect_failure 'checkout fails if cwd needs to be removed' '
++	git checkout foo/bar/baz &&
++	test_when_finished "git clean -fdx" &&
++
++	mkdir dirORfile &&
++	(
++		cd dirORfile &&
++
++		test_must_fail git checkout fd_conflict 2>../error &&
++		grep "Refusing to remove the current working directory" ../error
++	) &&
++
++	test_path_is_dir dirORfile
++'
++
++test_expect_failure 'reset --hard does not clean cwd incidentally' '
++	git checkout foo/bar/baz &&
++	test_path_is_dir foo/bar &&
++
++	(
++		cd foo &&
++		git reset --hard init &&
++		cd ..
++	) &&
++	test_path_is_missing foo/bar/baz &&
++	test_path_is_missing foo/bar &&
++	test_path_is_dir foo
++'
++
++test_expect_failure 'reset --hard fails if cwd needs to be removed' '
++	git checkout foo/bar/baz &&
++	test_when_finished "git clean -fdx" &&
++
++	mkdir dirORfile &&
++	(
++		cd dirORfile &&
++
++		test_must_fail git reset --hard fd_conflict 2>../error &&
++		grep "Refusing to remove.*the current working directory" ../error
++	) &&
++
++	test_path_is_dir dirORfile
++'
++
++test_expect_failure 'merge does not remove cwd incidentally' '
++	git checkout foo/bar/baz &&
++	test_when_finished "git clean -fdx" &&
++
++	(
++		cd subdir &&
++		git merge fd_conflict
++	) &&
++
++	test_path_is_missing subdir/file.t &&
++	test_path_is_dir subdir
++'
++
++test_expect_failure 'merge fails if cwd needs to be removed' '
++	git checkout foo/bar/baz &&
++	test_when_finished "git clean -fdx" &&
++
++	mkdir dirORfile &&
++	(
++		cd dirORfile &&
++		test_must_fail git merge fd_conflict 2>../error &&
++		grep "Refusing to remove the current working directory" ../error
++	) &&
++
++	test_path_is_dir dirORfile
++'
++
++test_expect_failure 'cherry-pick does not remove cwd incidentally' '
++	git checkout foo/bar/baz &&
++	test_when_finished "git clean -fdx" &&
++
++	(
++		cd subdir &&
++		git cherry-pick fd_conflict
++	) &&
++
++	test_path_is_missing subdir/file.t &&
++	test_path_is_dir subdir
++'
++
++test_expect_failure 'cherry-pick fails if cwd needs to be removed' '
++	git checkout foo/bar/baz &&
++	test_when_finished "git clean -fdx" &&
++
++	mkdir dirORfile &&
++	(
++		cd dirORfile &&
++		test_must_fail git cherry-pick fd_conflict 2>../error &&
++		grep "Refusing to remove the current working directory" ../error
++	) &&
++
++	test_path_is_dir dirORfile
++'
++
++test_expect_failure 'rebase does not remove cwd incidentally' '
++	git checkout foo/bar/baz &&
++	test_when_finished "git clean -fdx" &&
++
++	(
++		cd subdir &&
++		git rebase foo/bar/baz fd_conflict
++	) &&
++
++	test_path_is_missing subdir/file.t &&
++	test_path_is_dir subdir
++'
++
++test_expect_failure 'rebase fails if cwd needs to be removed' '
++	git checkout foo/bar/baz &&
++	test_when_finished "git clean -fdx" &&
++
++	mkdir dirORfile &&
++	(
++		cd dirORfile &&
++		test_must_fail git rebase foo/bar/baz fd_conflict 2>../error &&
++		grep "Refusing to remove the current working directory" ../error
++	) &&
++
++	test_path_is_dir dirORfile
++'
++
++test_expect_failure 'revert does not remove cwd incidentally' '
++	git checkout foo/bar/baz &&
++	test_when_finished "git clean -fdx" &&
++
++	(
++		cd subdir &&
++		git revert subdir/file
++	) &&
++
++	test_path_is_missing subdir/file.t &&
++	test_path_is_dir subdir
++'
++
++test_expect_failure 'revert fails if cwd needs to be removed' '
++	git checkout fd_conflict &&
++	git revert HEAD &&
++	test_when_finished "git clean -fdx" &&
++
++	mkdir dirORfile &&
++	(
++		cd dirORfile &&
++		test_must_fail git revert HEAD 2>../error &&
++		grep "Refusing to remove the current working directory" ../error
++	) &&
++
++	test_path_is_dir dirORfile
++'
++
++test_expect_failure 'rm does not remove cwd incidentally' '
++	test_when_finished "git reset --hard" &&
++	git checkout foo/bar/baz &&
++
++	(
++		cd foo &&
++		git rm bar/baz.t
++	) &&
++
++	test_path_is_missing foo/bar/baz &&
++	test_path_is_missing foo/bar &&
++	test_path_is_dir foo
++'
++
++test_expect_failure 'apply does not remove cwd incidentally' '
++	test_when_finished "git reset --hard" &&
++	git checkout foo/bar/baz &&
++
++	(
++		cd subdir &&
++		git diff subdir/file init | git apply
++	) &&
++
++	test_path_is_missing subdir/file.t &&
++	test_path_is_dir subdir
++'
++
++test_expect_failure 'clean does not remove cwd incidentally' '
++	git checkout foo/bar/baz &&
++	test_when_finished "git clean -fdx" &&
++
++	mkdir empty &&
++	mkdir untracked &&
++	>untracked/random &&
++	(
++		cd untracked &&
++		git clean -fd -e warnings :/ >../warnings &&
++		grep "Refusing to remove current working directory" ../warnings
++	) &&
++
++	test_path_is_missing empty &&
++	test_path_is_missing untracked/random &&
++	test_path_is_dir untracked
++'
++
++test_expect_failure 'stash does not remove cwd incidentally' '
++	git checkout foo/bar/baz &&
++	test_when_finished "git clean -fdx" &&
++
++	mkdir untracked &&
++	>untracked/random &&
++	(
++		cd untracked &&
++		git stash --include-untracked &&
++		git status
++	) &&
++
++	test_path_is_missing untracked/random &&
++	test_path_is_dir untracked
++'
++
++test_done
 -- 
 gitgitgadget
 
