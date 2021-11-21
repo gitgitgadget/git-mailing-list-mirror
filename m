@@ -2,171 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0458BC433EF
-	for <git@archiver.kernel.org>; Sun, 21 Nov 2021 01:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64D40C433EF
+	for <git@archiver.kernel.org>; Sun, 21 Nov 2021 02:00:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237626AbhKUBuK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Nov 2021 20:50:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44928 "EHLO
+        id S237631AbhKUCDr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Nov 2021 21:03:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237566AbhKUBuJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Nov 2021 20:50:09 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BF03C061574
-        for <git@vger.kernel.org>; Sat, 20 Nov 2021 17:47:05 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id z5so60112889edd.3
-        for <git@vger.kernel.org>; Sat, 20 Nov 2021 17:47:05 -0800 (PST)
+        with ESMTP id S237562AbhKUCDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Nov 2021 21:03:47 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D58D6C061574
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 18:00:42 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id y12so60093979eda.12
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 18:00:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=GewRFc5iFEG5JUFkGRQPoj2JsSBTse3xJ1gZEbZH//E=;
-        b=WoXM52qgyGrOwRl0cn4mXzaHLf993Hb+x3SS8D2lilYCGWSypCc3YYrPI+z0Di0Qyy
-         HDL/h3OPOS/6oVDhrllvY/eoexh2U2Hd5vQCtDWLXm3PqGDjIbQhj0qvSTztIf4aYbkD
-         iCI/Jklo0diopOE5eOzJAGTADrhY6wsRTiwtnzZ3JNRNAAXOe6eOOsxCb+hsSxGe7g2/
-         IZPT0eIB3iplKZTdGmdwLH0mIZCyL2yKSjdp2R5hyNnpccvoKVEHAe3BEsJmId76VhgH
-         Omzd0ziAk4FTxvdO4IeZ6b0NpMsnkJSgW4EHF+odvGgRrv0mYP3K9SEBu8tGqAt2imAC
-         hK8w==
+        bh=LQMOJJLCIRUa+91pCG2fuHck5TQBqEm6GXuBc/jCSiQ=;
+        b=i7/gXB7zltMyWBRVeD1N1G+5IzM0Z7DVavXKW4q8xSscWDUV6QGs5sRJXl1i91fKoo
+         0B15NGZ3OGjH68pLcdM0Hj+PwJ8N/7DqhAQdJEipTx/lkVy+QQc/xYdqq0jz4ze93cOa
+         IVYHL55dipol13B/3APuUyrLtE5+SGSo6oIwZAfAlKZ/nAMccEsWpJD+nxcZWtTdIVBN
+         OTNQdyjd0QPBqecxl40Bj7Fspalx0hDm/23uf/CXqcF6C8RpzD+8Iki5rIbuC9C2wG3C
+         /SaMYf9k4koJLOnfR8//ZfWWODOlXdkPUzBMlSjJkfSPcQXfKsHwaGvh7bhLtY1kMmJM
+         uzoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=GewRFc5iFEG5JUFkGRQPoj2JsSBTse3xJ1gZEbZH//E=;
-        b=NEAak5bh/zDH5D9bjiGkAFXYH5juJIICkmZYN3Xqpqf9FhcwiIWCIF8RWjfPxcZKkV
-         Sg+ZUOhr5qvyQMOI3eMEdKRdUdYswtjZQnUCVXISmjclOYyF2BGCScW4K87UjOLw/oTB
-         3DRHxHA5qNcSYRMymfQ3HCXQIoC7daGOHk02p7u/fZpUp/ou/q5AtVjj9NAxgjESnu4e
-         aP6A+uzzPAuy7c5yzt6dlAHbY3rSjleClA00Swcp9QgCkp8pSlb5bC8mpXOpCUt9PKSi
-         CpKuixdKHImdbGDWhDDc+KcCtxFXBfh5fPf56VKUtR2ivwZQq5NK7L0NlSzdKR78hCN3
-         nY7w==
-X-Gm-Message-State: AOAM532gw7OHmAug28cF8HrS69q9vYVIZrFYqnc29cuNNQrQ6S4Xf/vi
-        ufhh6hFrdhb4WqTLsoOTs4940+rgvnlxV3WJdqo=
-X-Google-Smtp-Source: ABdhPJwZIhwXUa7+92YGMHYnlR/97KCzbjj1KMygyBH0t9y6aVA96h3mHLr+jmqiyhkvgdMkRNm2xY2sMGtNl74ZGZ0=
-X-Received: by 2002:a17:906:3a4a:: with SMTP id a10mr14710667ejf.253.1637459223814;
- Sat, 20 Nov 2021 17:47:03 -0800 (PST)
+        bh=LQMOJJLCIRUa+91pCG2fuHck5TQBqEm6GXuBc/jCSiQ=;
+        b=s+MJc6Mwf1DZwdLxmye+Ehq9Nk4DyXNSIo+f4S5UffwX/ophN8LV2RMjnNGAibZzTA
+         Lp3SLpTEtF1OAjT6ARn0xvVP9WnRoO33NlpHCrvwhPa1OJOcDOCU22BsVYKoI5kexl/C
+         5y7JLemm+jKWQ+qC8ZNtp51PkvEMcx0FoR1gs6MqGP7ZZNJsTl79vLw5Hy2GTrkqU5fA
+         ET2BANL3dHezwnee5tfBkv3Ft5zqsZMiICw8T7YQRln+Q1O7hlFL8tFhggp2BqFF4KYL
+         IqTzQTYfDab1hio3AxpyjUVK+IPLI9OwhZqtUj6irP70Q9KyLz9jzJ7JNAhlcAcsGsmM
+         1CSQ==
+X-Gm-Message-State: AOAM530RoibVay/X5TfeoNsXXJnbpiiSKWc1JEmMofWuYNm0g+dpALFq
+        zlOgKHwK3bDYFm5LAFXMwB3Kpckiv8eGN2cvvA0=
+X-Google-Smtp-Source: ABdhPJzmzGg2Li1+SVNFf8CYsKDZSyn0CEMbXyZ2ZIigc9J4U2CWyaFgTjalp2kRxZx7EBLO0lwG5zex77Sdb7qyjpM=
+X-Received: by 2002:a17:906:3a4a:: with SMTP id a10mr14803889ejf.253.1637460041311;
+ Sat, 20 Nov 2021 18:00:41 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1050.v2.git.1634332835.gitgitgadget@gmail.com>
- <pull.1050.v3.git.1635802069.gitgitgadget@gmail.com> <cfdd33129ec6860cbec0cb20302598429db1115e.1635802069.git.gitgitgadget@gmail.com>
- <xmqqh7ct89us.fsf@gitster.g>
-In-Reply-To: <xmqqh7ct89us.fsf@gitster.g>
+References: <xmqqa6hznvz1.fsf@gitster.g>
+In-Reply-To: <xmqqa6hznvz1.fsf@gitster.g>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 20 Nov 2021 17:46:52 -0800
-Message-ID: <CABPp-BH2O+fezCui0utYbpShp6NaMwWapyr8i+mDDjjhzec4LQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] blame: enable and test the sparse index
+Date:   Sat, 20 Nov 2021 18:00:30 -0800
+Message-ID: <CABPp-BFEhD6MPbw79zpvpfs1_Pug46vi_MWRmdNGpqP8WYec_Q@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2021, #05; Fri, 19)
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Lessley Dennington <lessleydennington@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 3, 2021 at 9:47 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Nov 19, 2021 at 11:53 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+> * ld/sparse-diff-blame (2021-10-27) 3 commits
+>  - blame: enable and test the sparse index
+>  - diff: enable and test the sparse index
+>  - Merge branch 'vd/sparse-reset' into ld/sparse-diff-blame
+>  (this branch is used by ds/fetch-pull-with-sparse-index; uses vd/sparse-reset.)
 >
-> > We do not include paths outside the sparse checkout cone because blame
-> > currently does not support blaming files outside of the sparse definition.
-> > Attempting to do so fails with the following error:
-> >
-> >   fatal: no such path '<path outside sparse definition>' in HEAD
+>  Teach diff and blame to work well with sparse index.
 >
-> Does this indicate that we need to update how the command line
-> safety in verify_working_tree_path() works in a sparsely checked out
-> working tree?
+>  Expecting a reroll.
+>  cf. <YXgpqJIS2OgOgS+k@nand.local>
 
-I wondered the same thing, but no I don't think we need any extra
-command line safety here.  The behavior Lessley is reporting here is
-equivalent to the following in a regular (non-sparse) checkout:
-
-$ rm t/test-lib.sh
-$ git blame t/test-lib.sh
-fatal: Cannot lstat 't/test-lib.sh': No such file or directory
-$ git blame -- t/test-lib.sh
-fatal: Cannot lstat 't/test-lib.sh': No such file or directory
-
-blame without a revision has always failed for files not in the
-working tree, regardless of whether those files are found in the index
-or HEAD.
-
->  If foo/bar is outside the sparse definition,
->
->     git blame HEAD foo/bar
-
-Actually, that works; there's no error and the code with Lessley's
-patch will show the blame info for foo/bar (assuming foo/bar was a
-path in HEAD, of course).
-
-> may get such a message, but shouldn't
->
->     git blame HEAD -- foo/bar
->
-> make it work?
-
-This also works.  But both of these things are kind of testing
-something different; when given a revision, the checkout is irrelevant
-to git blame: git blame with a revision will work regardless of
-whether the checkout is full, sparse, completely empty, or
-non-existent (i.e. a bare clone).
-
-> > -# TODO: blame currently does not support blaming files outside of the
-> > -# sparse definition. It complains that the file doesn't exist locally.
-> > -test_expect_failure 'blame with pathspec outside sparse definition' '
-> > +# Blame does not support blaming files outside of the sparse
-> > +# definition, so we verify this scenario.
->
-> IOW, why is it a good idea to drop the "TODO" and "currently" and pretend
-> as if the current behaviour is the desirable one?
-
-I think dropping the TODO is correct, but the wording is confusing --
-it has nothing to do with sparse checkouts.  I'd rather say, "Without
-a specified revision, blame will only handle files present in the
-current working directory and error on any other paths"
-
-> > +test_expect_success 'blame with pathspec outside sparse definition' '
-> >       init_repos &&
-> > +     test_sparse_match git sparse-checkout set &&
-> >
-> > -     test_all_match git blame folder1/a &&
-> > -     test_all_match git blame folder2/a &&
-> > -     test_all_match git blame deep/deeper2/a &&
-> > -     test_all_match git blame deep/deeper2/deepest/a
-> > +     for file in a \
-> > +                     deep/a \
-> > +                     deep/deeper1/a \
-> > +                     deep/deeper1/deepest/a
-> > +     do
-> > +             test_sparse_match test_must_fail git blame $file &&
-> > +             cat >expect <<-EOF &&
-> > +             fatal: Cannot lstat '"'"'$file'"'"': No such file or directory
-> > +             EOF
-> > +             # We compare sparse-checkout-err and sparse-index-err in
-> > +             # `test_sparse_match`. Given we know they are the same, we
-> > +             # only check the content of sparse-index-err here.
-> > +             test_cmp expect sparse-index-err
-> > +     done
-> >  '
-> >
-> >  test_expect_success 'checkout and reset (mixed)' '
-> > @@ -878,6 +892,18 @@ test_expect_success 'sparse index is not expanded: diff' '
-> >       ensure_not_expanded diff --staged
-> >  '
-> >
-> > +test_expect_success 'sparse index is not expanded: blame' '
-> > +     init_repos &&
-> > +
-> > +     for file in a \
-> > +                     deep/a \
-> > +                     deep/deeper1/a \
-> > +                     deep/deeper1/deepest/a
-> > +     do
-> > +             ensure_not_expanded blame $file
-> > +     done
-> > +'
-> > +
-> >  # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
-> >  # in this scenario, but it shouldn't.
-> >  test_expect_success 'reset mixed and checkout orphan' '
+There was a reroll since the reference you provide here, and
+additional reasons to want another reroll beyond that.  Your status is
+good, but perhaps update the reference to
+<1a269d05-49f6-6c49-860a-044070f14ffc@gmail.com> ?
