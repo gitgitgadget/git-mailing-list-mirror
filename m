@@ -2,58 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FEA8C433EF
-	for <git@archiver.kernel.org>; Sun, 21 Nov 2021 00:47:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44233C433F5
+	for <git@archiver.kernel.org>; Sun, 21 Nov 2021 00:47:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232469AbhKUAuR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Nov 2021 19:50:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60320 "EHLO
+        id S237359AbhKUAuU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Nov 2021 19:50:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237218AbhKUAuJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Nov 2021 19:50:09 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20AC1C061574
-        for <git@vger.kernel.org>; Sat, 20 Nov 2021 16:47:05 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id w29so25282037wra.12
-        for <git@vger.kernel.org>; Sat, 20 Nov 2021 16:47:05 -0800 (PST)
+        with ESMTP id S237302AbhKUAuL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Nov 2021 19:50:11 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A79AC061757
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 16:47:07 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id b12so25320300wrh.4
+        for <git@vger.kernel.org>; Sat, 20 Nov 2021 16:47:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7uwKibAxpKQ7iPujXJcM6AnuiMkYSv9Z39P/Lfd4iUY=;
-        b=QEIkcCJO42H+54IntS9gFfTh2tU5zmBman4EVuxtZPv2UXzz/Is1MHIPCMWoKBXoc5
-         esDKhsjBR75dKgnbDUDlIQwXx00oLwRv9d4V6fDpG9oCaXCM8Yp7xKnHwb//30YrgB1x
-         EScwusqDaUieDQUYuYHfSnclqgYy0EkIcTPpiUZJu2zP6iZtTdzBmDcAjxVMGg12TkMs
-         D1tlsFAyRfafoIrM4qDvQAvPZwxHmF1YueHqRfTd6KFYS/Sunl7MHfumWI0oI6qQCiIo
-         DWThvzMSvdnIQA8q/OrQJQrPs8JfjMI33uieynsw9VmGhjaSuEm2BboUuccp0+fvM3cL
-         gXcA==
+        bh=Zn2pluaaPf4nCJdurmQT9dENP+qQU+JMTqpsfX/z46A=;
+        b=ARj/AcLbg+5lXzkO7ksHMjDNcrsIG34FmXQOWbcfxz3AVSubEcnCwSeHvuS25RU3TJ
+         O0nyX+GHfXaDEl1MxzoWvOfZGxD93eWCclBri5qdiap9do0rmIomsv6nG2QZ4XU9pX+W
+         pr+dkRiAReW8PYPV4jfHPox9W+cIeskJTq/W7cURUfTywOmLQhqtdMduL7WLkmN9XMM3
+         OgYiPahMmXw+y+wVWWLmnpMhhox5zoU58nIXXLAH5bDUyaXyx671VJ+uGvWZzv6r49qv
+         lUN/B/uRnggHBbrlMNZTEu7AFIPgQkjXO9TrClnso+/T61t2CCJInN8fpnAF77A80vzi
+         bD2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7uwKibAxpKQ7iPujXJcM6AnuiMkYSv9Z39P/Lfd4iUY=;
-        b=8P7UZULa63oAabTwqbNCLEDlyCPrTr62TRDnylfLGhHywpuUoPIyaW/QrskXZe6pRn
-         nny3W6/CM28nuJsdjbVw4k0teIVy6aWcnR0KjCjIsiSqla9UZivlJG3m+owPr0Xfz3ao
-         3Bif8GN+imjYH1iWyCvrAGRXIxqE2wr62qr3RmOzkSeRmgIDoC9iKjrszd+yk3grpl1m
-         Vmjb+/T2mhBO84qxdX/te7FbmVWxLg6CS1slhfSa//4bqJHPkd160C2E7ExgpsRcO5Ve
-         EpbXD0um9Jz+AUki8/3sYTSAaxn4O0ZC6Vx65i5suYp3nUqctBHpGaBA1FwOVrOeFUi0
-         2BjA==
-X-Gm-Message-State: AOAM532b8jDtkQiDnVW0swGXPETiuL358mjSYhX/yhztJuXwMKB+jj7l
-        LVCdKocLQC7vl8W5IFf9EhINlFsJEGI=
-X-Google-Smtp-Source: ABdhPJwoy7gn/I8cGsAwjfe8Vmvd7O2ziODWaSzplDX1+lpFyMlFbE8vw22jLTfakjRXtOjiwyoERw==
-X-Received: by 2002:a5d:47a1:: with SMTP id 1mr22002203wrb.436.1637455623594;
-        Sat, 20 Nov 2021 16:47:03 -0800 (PST)
+        bh=Zn2pluaaPf4nCJdurmQT9dENP+qQU+JMTqpsfX/z46A=;
+        b=ka8dQNNTGdwdHo4aMEEXYTNawVk20qrEEx+M/K4wlyTLVIJEo/Z8tcbDUqXh0USCn2
+         PxYnQ1K1T15ZayibqnTnBaR4jaf0YJ7GXkG81Qe52+Mrg+Zc9ji/RvwArpZ44w1mL3f5
+         bXRdBhNsONkx8uZZAxNns+AtbH6wSUJgo8sSJmeGS982BdhqkpCJ0qCwMbV/mqOLRh9V
+         TsATbp1KNhXk3CA9t2Xux/oetFIWhP6cjLqNJR7DrRKM6HPTD37259KlXfyxTt+7T92b
+         DlSwU9uS79U7XU9I85S0QONlG4hdn+P13T6EdNRlWlrS8isbxEKbKHo2rK4Ms0Fkt2p+
+         0NKw==
+X-Gm-Message-State: AOAM530OBW0E5ZUacU7UQ3PW9VeY7v0b9jv5QDYPRYBl7AQdPpWnJM1R
+        je9WQLEUE7M7YRaI1meiv2s4OtyBbt8=
+X-Google-Smtp-Source: ABdhPJyYzcwaetSr18YP47QLb4usqv/t35ElxmTeVABGjYcYyCNjPg603Bgc4eZvvroszFH2dcQdIw==
+X-Received: by 2002:adf:e109:: with SMTP id t9mr21703361wrz.387.1637455626008;
+        Sat, 20 Nov 2021 16:47:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bg12sm2489473wmb.5.2021.11.20.16.47.03
+        by smtp.gmail.com with ESMTPSA id d8sm4192397wrm.76.2021.11.20.16.47.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Nov 2021 16:47:03 -0800 (PST)
-Message-Id: <94bf468be0972ce3d6037e6688749cab01269b14.1637455620.git.gitgitgadget@gmail.com>
+        Sat, 20 Nov 2021 16:47:05 -0800 (PST)
+Message-Id: <93005b17c2880407872340d4927007db0d9e97b6.1637455620.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
 References: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 21 Nov 2021 00:46:55 +0000
-Subject: [PATCH 3/8] unpack-trees: refuse to remove the current working
- directory
+Date:   Sun, 21 Nov 2021 00:46:59 +0000
+Subject: [PATCH 7/8] stash: do not attempt to remove current working directory
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,127 +66,71 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-In the past, when a directory needs to be removed to make room for a
-file, we have always errored out when that directory contains any
-untracked (but not ignored) files.  Add an extra condition on that: also
-error out if the directory is the current working directory.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t2501-cwd-empty.sh | 10 +++++-----
- unpack-trees.c       | 16 ++++++++++++----
- unpack-trees.h       |  1 +
- 3 files changed, 18 insertions(+), 9 deletions(-)
+ builtin/stash.c      | 13 ++++++++-----
+ t/t2501-cwd-empty.sh |  2 +-
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
-index 5dfb456a691..212676d71c3 100755
---- a/t/t2501-cwd-empty.sh
-+++ b/t/t2501-cwd-empty.sh
-@@ -38,7 +38,7 @@ test_expect_failure 'checkout does not clean cwd incidentally' '
- 	test_path_is_dir foo
- '
- 
--test_expect_failure 'checkout fails if cwd needs to be removed' '
-+test_expect_success 'checkout fails if cwd needs to be removed' '
- 	git checkout foo/bar/baz &&
- 	test_when_finished "git clean -fdx" &&
- 
-@@ -95,7 +95,7 @@ test_expect_failure 'merge does not remove cwd incidentally' '
- 	test_path_is_dir subdir
- '
- 
--test_expect_failure 'merge fails if cwd needs to be removed' '
-+test_expect_success 'merge fails if cwd needs to be removed' '
- 	git checkout foo/bar/baz &&
- 	test_when_finished "git clean -fdx" &&
- 
-@@ -122,7 +122,7 @@ test_expect_failure 'cherry-pick does not remove cwd incidentally' '
- 	test_path_is_dir subdir
- '
- 
--test_expect_failure 'cherry-pick fails if cwd needs to be removed' '
-+test_expect_success 'cherry-pick fails if cwd needs to be removed' '
- 	git checkout foo/bar/baz &&
- 	test_when_finished "git clean -fdx" &&
- 
-@@ -149,7 +149,7 @@ test_expect_failure 'rebase does not remove cwd incidentally' '
- 	test_path_is_dir subdir
- '
- 
--test_expect_failure 'rebase fails if cwd needs to be removed' '
-+test_expect_success 'rebase fails if cwd needs to be removed' '
- 	git checkout foo/bar/baz &&
- 	test_when_finished "git clean -fdx" &&
- 
-@@ -176,7 +176,7 @@ test_expect_failure 'revert does not remove cwd incidentally' '
- 	test_path_is_dir subdir
- '
- 
--test_expect_failure 'revert fails if cwd needs to be removed' '
-+test_expect_success 'revert fails if cwd needs to be removed' '
- 	git checkout fd_conflict &&
- 	git revert HEAD &&
- 	test_when_finished "git clean -fdx" &&
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 89ca95ce90b..8879b8d6c8c 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -36,6 +36,9 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_WARNING_TYPES] = {
- 	/* ERROR_NOT_UPTODATE_DIR */
- 	"Updating '%s' would lose untracked files in it",
- 
-+	/* ERROR_CWD_IN_THE_WAY */
-+	"Refusing to remove '%s' since it is the current working directory.",
-+
- 	/* ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN */
- 	"Untracked working tree file '%s' would be overwritten by merge.",
- 
-@@ -131,6 +134,9 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
- 	msgs[ERROR_NOT_UPTODATE_DIR] =
- 		_("Updating the following directories would lose untracked files in them:\n%s");
- 
-+	msgs[ERROR_CWD_IN_THE_WAY] =
-+		_("Refusing to remove the current working directory:\n%s");
-+
- 	if (!strcmp(cmd, "checkout"))
- 		msg = advice_enabled(ADVICE_COMMIT_BEFORE_MERGE)
- 		      ? _("The following untracked working tree files would be removed by checkout:\n%%s"
-@@ -2146,10 +2152,7 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
- 		cnt++;
- 	}
- 
--	/*
--	 * Then we need to make sure that we do not lose a locally
--	 * present file that is not ignored.
--	 */
-+	/* Do not lose a locally present file that is not ignored. */
- 	pathbuf = xstrfmt("%.*s/", namelen, ce->name);
- 
- 	memset(&d, 0, sizeof(d));
-@@ -2160,6 +2163,11 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
- 	free(pathbuf);
- 	if (i)
- 		return add_rejected_path(o, ERROR_NOT_UPTODATE_DIR, ce->name);
-+
-+	/* Do not lose the current working directory. */
-+	if (the_cwd && !strcmp(the_cwd, ce->name))
-+		return add_rejected_path(o, ERROR_CWD_IN_THE_WAY, ce->name);
-+
- 	return cnt;
+diff --git a/builtin/stash.c b/builtin/stash.c
+index a0ccc8654df..556287cdb56 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1404,7 +1404,8 @@ static int create_stash(int argc, const char **argv, const char *prefix)
+ 	return ret;
  }
  
-diff --git a/unpack-trees.h b/unpack-trees.h
-index 71ffb7eeb0c..efb9edfbb27 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -19,6 +19,7 @@ enum unpack_trees_error_types {
- 	ERROR_WOULD_OVERWRITE = 0,
- 	ERROR_NOT_UPTODATE_FILE,
- 	ERROR_NOT_UPTODATE_DIR,
-+	ERROR_CWD_IN_THE_WAY,
- 	ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN,
- 	ERROR_WOULD_LOSE_UNTRACKED_REMOVED,
- 	ERROR_BIND_OVERLAP,
+-static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int quiet,
++static int do_push_stash(const struct pathspec *ps, const char *stash_msg,
++			 const char *prefix, int quiet,
+ 			 int keep_index, int patch_mode, int include_untracked)
+ {
+ 	int ret = 0;
+@@ -1485,8 +1486,10 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 			struct child_process cp = CHILD_PROCESS_INIT;
+ 
+ 			cp.git_cmd = 1;
++			if (prefix)
++				strvec_pushl(&cp.args, "-C", prefix, NULL);
+ 			strvec_pushl(&cp.args, "clean", "--force",
+-				     "--quiet", "-d", NULL);
++				     "--quiet", "-d", ":/", NULL);
+ 			if (include_untracked == INCLUDE_ALL_FILES)
+ 				strvec_push(&cp.args, "-x");
+ 			if (run_command(&cp)) {
+@@ -1656,8 +1659,8 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 		die(_("--pathspec-file-nul requires --pathspec-from-file"));
+ 	}
+ 
+-	return do_push_stash(&ps, stash_msg, quiet, keep_index, patch_mode,
+-			     include_untracked);
++	return do_push_stash(&ps, stash_msg, prefix, quiet, keep_index,
++			     patch_mode, include_untracked);
+ }
+ 
+ static int save_stash(int argc, const char **argv, const char *prefix)
+@@ -1693,7 +1696,7 @@ static int save_stash(int argc, const char **argv, const char *prefix)
+ 		stash_msg = strbuf_join_argv(&stash_msg_buf, argc, argv, ' ');
+ 
+ 	memset(&ps, 0, sizeof(ps));
+-	ret = do_push_stash(&ps, stash_msg, quiet, keep_index,
++	ret = do_push_stash(&ps, stash_msg, prefix, quiet, keep_index,
+ 			    patch_mode, include_untracked);
+ 
+ 	strbuf_release(&stash_msg_buf);
+diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
+index 20e1b6adede..ff4e7cd89fa 100755
+--- a/t/t2501-cwd-empty.sh
++++ b/t/t2501-cwd-empty.sh
+@@ -236,7 +236,7 @@ test_expect_success 'clean does not remove cwd incidentally' '
+ 	test_path_is_dir untracked
+ '
+ 
+-test_expect_failure 'stash does not remove cwd incidentally' '
++test_expect_success 'stash does not remove cwd incidentally' '
+ 	git checkout foo/bar/baz &&
+ 	test_when_finished "git clean -fdx" &&
+ 
 -- 
 gitgitgadget
 
