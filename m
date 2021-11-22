@@ -2,95 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFF2EC433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 13:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC5EBC433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 13:31:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233015AbhKVNYc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 08:24:32 -0500
-Received: from mout.gmx.net ([212.227.17.20]:33819 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230322AbhKVNYc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 08:24:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637587271;
-        bh=4JLAhYi3Bffiiw4GAvpFe9Z4Qm516ulYsPg3jnayukY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=BJT3wfiJc8kd1+oWlzORGys2Yt/PNr/LXLLNwANZoo3s3/u32NSGrb6az356NO89+
-         pOuXvyU0TiWpIqp4f41+I8uag+6w32gIWMPQbO9rnYLrG3TM0SJmb+G7ZgXcznounO
-         L5s4ZyFsh1iMJdEF+hoN61ywVoNK3puu5lHs8l9E=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MwwZX-1mQ22832j5-00yOIS; Mon, 22
- Nov 2021 14:21:11 +0100
-Date:   Mon, 22 Nov 2021 14:21:09 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Anders Kaseorg <andersk@mit.edu>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Andreas Heiduk <andreas.heiduk@mathema.de>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v6 0/8] protect branches checked out in all worktrees
-In-Reply-To: <20211113033358.2179376-1-andersk@mit.edu>
-Message-ID: <nycvar.QRO.7.76.6.2111221417100.63@tvgsbejvaqbjf.bet>
-References: <20211113033358.2179376-1-andersk@mit.edu>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S233134AbhKVNed (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 08:34:33 -0500
+Received: from smtp-out1.suse.de ([195.135.220.28]:53288 "EHLO
+        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232674AbhKVNec (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 08:34:32 -0500
+Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
+        by smtp-out1.suse.de (Postfix) with ESMTP id CDE49217BA;
+        Mon, 22 Nov 2021 13:31:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+        t=1637587883; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=UAK0H13lkQKMIPon5Bi2FywiKPyhNC/G83C6owgq69g=;
+        b=2ilxanhJrxaDGKzpUhCtZTwT81eAf3VKDNdxfXeOCYhNgeZo1x3zG+KTdv+A9aC3bjjnt+
+        NCMZKRfvbyzF9xvJflD5lsDxXox1fJB7FeWMOPWuiQ8moQGHzcTthcHDiKCCvdtZeQZgvF
+        Jx3BViCxpp2mMgEYcYDEMO06NT/JIl8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+        s=susede2_ed25519; t=1637587883;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=UAK0H13lkQKMIPon5Bi2FywiKPyhNC/G83C6owgq69g=;
+        b=UBFZdakH0+JZeLKQfeL05chbEtdiI9VMMaA40zYKCFI1Sub360O+G5dAlZk2D6LybnUx9b
+        rFy0QsMvqkdqloDQ==
+Received: from quack2.suse.cz (unknown [10.100.200.198])
+        by relay2.suse.de (Postfix) with ESMTP id BB305A3B84;
+        Mon, 22 Nov 2021 13:31:23 +0000 (UTC)
+Received: by quack2.suse.cz (Postfix, from userid 1000)
+        id 83DC41F2B50; Mon, 22 Nov 2021 14:31:23 +0100 (CET)
+Date:   Mon, 22 Nov 2021 14:31:23 +0100
+From:   Jan Kara <jack@suse.cz>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Jan Kara <jack@suse.cz>, git <git@vger.kernel.org>
+Subject: Re: Stochastic bisection support
+Message-ID: <20211122133123.GF24453@quack2.suse.cz>
+References: <20211118164940.8818-1-jack@suse.cz>
+ <CAP8UFD0fhKxmuXT40oVj-m6nfkgH+=0isf+vo6bcXW4YbkTEkg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1267870995-1637587094=:63"
-Content-ID: <nycvar.QRO.7.76.6.2111221418550.63@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:9ELbqf4cQlO9RskEFWLKl5TNcTUlDhLAFu4Cyi8BihPSSdO8YJI
- 3F+WhJQJ2IDW369JUE9+cm9HA7ZUsCKsMD++WxZAp+d7ipNp4L7o2bRw2zzD4lCm7NmJDwu
- msQdCJXLvxVxH5zHFtUyO1/NYxtcPXrV1l2R4u+mS/EZnjNQuK9P3KAP4k0nzlnkwESlJKG
- bWHJg/KeVy6hgU6CuOAXQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:bt3RmdK9Vr0=:kwr+czmIPXr0AXvxIj4YtP
- SxLDHzHA+MpQUKHLQkjMaRz68qoaDD1+iXs7NoPsw7ISO1fW46jSJRvbg00GHCrQ0wOQrH7cX
- aTrtExNGP78XFP92lMG0hVXybN1XWYRwc3uSQFIWgaJMm1UDO8AaFp1UGzHGHBWZPd1ssfezL
- w7seOrqZW18eRZbyup93zSviT5AkohS2sPDCWfX0ruqeA4Ip6zuXB1bpzkN3RWuvc/gKPB8+w
- OApb4KhByHfFEMmUolpeuqlZcwPRChNrjSC/d1R99wUua4/agRCGCwl/diZmjXbk8Q/qbPtpC
- psRdtQwM/ggucUJMcFBK1B2ZWUfpYYxt6rUzWkEhaE8y9S5cROWzLVjXLz0767Y2i3TXfcBye
- qv9PkBhD3dMmUheU/BFVZ2KWMarmKz6V46mEzs+w2Z34JcFumELuHOtRTIqWedvclm6yyfKgY
- CfIIAYvvar3ixOrGC85Yu1CstRHKwXJY9OcJFLc8XQhlJeAHhiudH9HQ95F8Bq9cfazU643xm
- V/Ztyk/sJjN5RFlvB+Bi5FFZeGLuOll+DeYI7zQoniP2S/R+fMupvHpY/Ak6DBX1E9c37QNvX
- 8tshXjB76hdEBnUqM4+5cb2OONpqIsQQ8nPSGrw93W2GMMbLCvkITW5h1Cu4Ipl2LSLNQPrOX
- z/E7U9MQJMktsECI6DAZJvXcPvSGX4OBUSsoNzwzi5Ryjwa4YJaYhLaP3YKet8N1Ennqv7+Ew
- NfjMM8ZwIgD62M5Ti4Qi4SJUwAlJWTS3wBGEJV5pOE7gZnnCalCl8FTP9qakKn4LvvMBG6P1y
- 80LWw0XQmAcuN5Gqtqa8jST+zGEnfaKmIY/HRVlNt/64pYxc5LpJqxnHzo8OJR4BGkbpcj1e1
- n0HC2q8ZfvWtmeRfUXiq3Z7XAqV7pOq8yJQjP9W3FyiXvX3xtIhqLWZbATcxcDe/q/yBtkGcP
- bBmIxJ7aB7LUXdIE87LjFIFHl8mc8PZrLdw2g/cQWUvf1fWDpVyLFMfcZe0sWIVTx3lWuJ1Q8
- Ews90Aqv3u3ajvRfaLYsKUi2Wgb3ZML+f5VqmxHcQZVOwCRxrNjCZNEY7vOwLbBROwNnT++Ed
- d2QO+HPa1dlNOY=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD0fhKxmuXT40oVj-m6nfkgH+=0isf+vo6bcXW4YbkTEkg@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi!
 
---8323328-1267870995-1637587094=:63
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Content-ID: <nycvar.QRO.7.76.6.2111221418551.63@tvgsbejvaqbjf.bet>
+On Mon 22-11-21 13:55:33, Christian Couder wrote:
+> On Thu, Nov 18, 2021 at 9:33 PM Jan Kara <jack@suse.cz> wrote:
+> >
+> > Hello,
+> >
+> > In some cases regressions (or generally changes) we are trying to bisect have
+> > probabilistic nature. This can for example happen for hard to trigger race
+> > condition where it is difficult to distinguish working state from just not
+> > hitting the race or it can happen for performance regressions where it is
+> > sometimes difficult to distinguish random workload fluctuations from the
+> > regression we are looking for. With standard bisection the only option we have
+> > is to repeatedly test suggested bisection point until we are sure enough which
+> > way to go. This leads to rather long bisection times and still a single wrong
+> > decision whether a commit is good to bad renders the whole bisection useless.
+> >
+> > Stochastic bisection tries to address these problems. When deciding whether a
+> > commit is good or bad, you can also specify your confidence in the decision.
+> > For performance tests you can usually directly infer this confidence from the
+> > distance of your current result from good/bad values, for hard to reproduce
+> > races you are usually 100% confident for bad commits, for good commits you need
+> > to somehow estimate your confidence based on past experience with reproducing
+> > the issue. The stochastic bisection algorithm then uses these test results
+> > and confidences to suggest next commit to try, tracking for each commit the
+> > probability the commit is the bad one given current test results. Once some
+> > commit reaches high enough probability (set when starting bisection) of being
+> > the bad one, we stop bisecting and annouce this commit.
+> 
+> The following project is based on Bayesian Search Theory and might be
+> interesting if you haven't looked at it:
+> 
+> https://github.com/Ealdwulf/BBChop
 
-Hi Anders,
+Thanks for the link. I already know about that project and I had a look
+into it when doing some initial research. But the biggest limitation of
+that project is that it works only for linear history. I need to generally
+bisect Linux kernel repository which has enough merges that the limitation
+of linear history makes the use of the above tool impractical.
 
-On Fri, 12 Nov 2021, Anders Kaseorg wrote:
+Furthermore direct integration of stochastic bisection into git makes this
+easier to integrate into our performance testing framework.
 
-> =E2=80=98git fetch=E2=80=99 (without =E2=80=98--update-head-ok=E2=80=99)=
-, =E2=80=98git receive-pack=E2=80=99, and =E2=80=98git
-> branch -M=E2=80=99 protect the currently checked out branch from being
-> accidentally updated.  However, the code for these checks predates
-> =E2=80=98git worktree=E2=80=99.  Improve it to protect branches checked =
-out in all
-> worktrees, not just the current one.
-
-I read through these patches, and in particular the last three were a real
-delight to read, a highlight of my catching-up with the mailing list
-today.
-
-I am very much in favor of these patches to advance to `next` as-are.
-
-Thank you,
-Dscho
-
---8323328-1267870995-1637587094=:63--
+								Honza
+-- 
+Jan Kara <jack@suse.com>
+SUSE Labs, CR
