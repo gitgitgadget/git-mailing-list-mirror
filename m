@@ -2,88 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD0C9C433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 01:15:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE5E0C433EF
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 02:10:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232041AbhKVBSF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Nov 2021 20:18:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38436 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229594AbhKVBSF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Nov 2021 20:18:05 -0500
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 403E0C061574
-        for <git@vger.kernel.org>; Sun, 21 Nov 2021 17:14:59 -0800 (PST)
-Received: by mail-qk1-x72a.google.com with SMTP id q64so16543194qkd.5
-        for <git@vger.kernel.org>; Sun, 21 Nov 2021 17:14:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4v5QKNd3ZCoDHN+ZjF/ERSKsBey+JLB1az1HJtR1sqc=;
-        b=pK372831F9koNEClXJo+2vPH+xUkvoynqoNepGv2Uhov208VLBLNleMIx09f35w8AP
-         wxQmzWGj9nudkImUxkRTmHCfq2N3m2bM1tX0JgveX3b7tYy5ZDEO7vb8eD9Xg9mpD/IU
-         tpZljFiQEjSTw11KtChFvi6Hv2ro9HsstZmSc8Kyd4YTKL77+dKzxJp+s3CixzswvX+j
-         tCjWDVHWmP0kMiF2dpKXpGRTXHr3y7Trq2XB7+8jK7Y08ugjLCVkrfO4Tmgv2RX+vWj1
-         U/KzwROsPsIffGELa1eBYTB2B1KtwynVSO1HPq0xWz6QcPgu9Elk2RMvsvU03bPlPNx8
-         Z3Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4v5QKNd3ZCoDHN+ZjF/ERSKsBey+JLB1az1HJtR1sqc=;
-        b=EPQFox++e8vidp6vLIXtgb5Anzf99xKbhLZzWbN1ccVlw7smVvLZKqTzBtpSXbcLVw
-         h19oBJMAzrG8dWZJ4g+BbT17gwafHx/OR9KFujdEickffMuISImyjKNNM30ev38YUMUm
-         U3/tNw5hwpocGcTreFH2Q6IesR7f1Luf0GT2hLpQ9l+KfLUEU/M3BOqF4o3mVcb01gy5
-         Y5mun618uV7gwrLJV/yWiMd43gy0ZpzeV0Cgxh420X78jXDD5jb2oCM6RyaVQcxdNoYZ
-         nNz7qLu8FyLGjqo5A1F5ZIWUiyXmZsx+WuKMB5/7+nTg7ZmBMulFxbDgfN8CQxkMyeZ0
-         Dbqw==
-X-Gm-Message-State: AOAM533ojH3xn7WDcbsd2/eaIL48uTvRqycfKQCBD77+t3Bhtpj0pe89
-        O2+cgHLDwi1tgzeHpprYhW07+w4I3lYGzZ3i65A=
-X-Google-Smtp-Source: ABdhPJwGUmWDN92dyEiR7qHVTGMqH9hENxTjKsmR95iWbPYKKD3jNIw3bNDbJWhe5V4u41TnO3ALqUzz7h4KWzEnIqQ=
-X-Received: by 2002:a05:620a:710:: with SMTP id 16mr44260647qkc.379.1637543698200;
- Sun, 21 Nov 2021 17:14:58 -0800 (PST)
+        id S231837AbhKVCNU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Nov 2021 21:13:20 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58892 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229906AbhKVCNT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Nov 2021 21:13:19 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3462CEDA4B;
+        Sun, 21 Nov 2021 21:10:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BzWpcg0PNI8bm/127j4vbLRyzaezFNkOI5yr09
+        FwZJk=; b=bMGPxiscI3KKCM06L0DkA/1gldMg++gVyM12qPldIJrjeNsjSu6Vv0
+        q5dSL3AyBqc0uqzOCXPpPPW/LvXncDwK9KEbQ6aKPo0p/wShzj/Wx4Y1pBPMy/kt
+        Rk2NNIcLW4Wlx9VNyjp8w4PvjV6+cWLqKd+/pIVHZKAAMqfPsNE8I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EDF18EDA49;
+        Sun, 21 Nov 2021 21:10:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C6FD4EDA47;
+        Sun, 21 Nov 2021 21:10:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Enzo Matsumiya <ematsumiya@suse.de>, git@vger.kernel.org
+Subject: Re: [PATCH v2] pager: fix crash when pager program doesn't exist
+References: <20211120194048.12125-1-ematsumiya@suse.de>
+        <YZqSBlvzz2KgOMnJ@coredump.intra.peff.net>
+Date:   Sun, 21 Nov 2021 18:10:08 -0800
+In-Reply-To: <YZqSBlvzz2KgOMnJ@coredump.intra.peff.net> (Jeff King's message
+        of "Sun, 21 Nov 2021 13:37:58 -0500")
+Message-ID: <xmqqfsrplz3z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20211113033358.2179376-1-andersk@mit.edu> <20211113033358.2179376-2-andersk@mit.edu>
-In-Reply-To: <20211113033358.2179376-2-andersk@mit.edu>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 22 Nov 2021 09:14:46 +0800
-Message-ID: <CANYiYbFJiTfrErw9etMHsHLBkj3jQ2jPCqJ7H1gBGZmT6QF9kA@mail.gmail.com>
-Subject: Re: [PATCH v6 1/8] fetch: lowercase error messages
-To:     Anders Kaseorg <andersk@mit.edu>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Andreas Heiduk <andreas.heiduk@mathema.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 527372FA-4B39-11EC-901B-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 13, 2021 at 11:34 AM Anders Kaseorg <andersk@mit.edu> wrote:
->  static const char warn_show_forced_updates[] =
-> -N_("Fetch normally indicates which branches had a forced update,\n"
-> -   "but that check has been disabled. To re-enable, use '--show-forced-updates'\n"
-> -   "flag or run 'git config fetch.showForcedUpdates true'.");
-> +N_("fetch normally indicates which branches had a forced update,\n"
-> +   "but that check has been disabled; to re-enable, use '--show-forced-updates'\n"
-> +   "flag or run 'git config fetch.showForcedUpdates true'");
->  static const char warn_time_show_forced_updates[] =
-> -N_("It took %.2f seconds to check forced updates. You can use\n"
-> +N_("it took %.2f seconds to check forced updates; you can use\n"
->     "'--no-show-forced-updates' or run 'git config fetch.showForcedUpdates false'\n"
-> -   " to avoid this check.\n");
-> +   " to avoid this check\n");
+Jeff King <peff@peff.net> writes:
 
-The leading space character before "to avoid ..." is not necessary.
-This will change "po/git.pot" like this:
+> We'd usually leave of "Reviewed-by" until the reviewer has had a chance
+> to see _this_ version of the patch. I.e., usually it would not be added
+> by the submitter, but by the maintainer (unless you are resending
+> verbatim a patch that already got review).
+>
+>> diff --git a/run-command.c b/run-command.c
+>> index f329391154ae..a7bf81025afb 100644
+>> --- a/run-command.c
+>> +++ b/run-command.c
+>> @@ -19,6 +19,7 @@ void child_process_clear(struct child_process *child)
+>>  {
+>>  	strvec_clear(&child->args);
+>>  	strvec_clear(&child->env_array);
+>> +	child_process_init(child);
+>>  }
+>
+> And naturally I agree that the patch itself looks good. :)
 
-    https://github.com/git-l10n/git-po/blob/pot/seen/2021-11-19.diff#L374-L377
+Well, not to me X-<.  This is way too aggressive a change to be made
+lightly without auditing the current users of run_command API.
 
-It was introduced in commit 182f59daf0 (l10n: reformat some localized
-strings for v2.23.0, 2019-08-06).
+It is rather common for us to reuse "struct child_process" in a code
+path, e.g. builtin/worktree.c::add_worktree() prepares a single
+instance of such a struct, sets cp.git_cmd to true, and runs either
+"update-ref" or "symbolic-ref" to update "HEAD".  After successful
+invocation of such a git subcommand, it then runs "git reset --hard",
+with this piece of code:
 
---
-Jiang Xin
+	cp.git_cmd = 1;
+
+	if (!is_branch)
+		strvec_pushl(&cp.args, "update-ref", "HEAD",
+			     oid_to_hex(&commit->object.oid), NULL);
+	else {
+		strvec_pushl(&cp.args, "symbolic-ref", "HEAD",
+			     symref.buf, NULL);
+		if (opts->quiet)
+			strvec_push(&cp.args, "--quiet");
+	}
+
+	cp.env = child_env.v;
+	ret = run_command(&cp);
+	if (ret)
+		goto done;
+
+	if (opts->checkout) {
+		cp.argv = NULL;
+		strvec_clear(&cp.args);
+		strvec_pushl(&cp.args, "reset", "--hard", "--no-recurse-submodules", NULL);
+		if (opts->quiet)
+			strvec_push(&cp.args, "--quiet");
+		cp.env = child_env.v;
+		ret = run_command(&cp);
+		if (ret)
+			goto done;
+	}
+
+Now, we could argue that this existing caller is too lazy to assume
+that cp.git_cmd bit will be retained after run_command()
+successfully finishes and can reuse the structure without setting
+the bit again, and it should be more defensive.  And "successful
+run_command() clears the child process so that you'll get a clean
+slate" may even be a better API in the longer term.
+
+But then a change like this one that changes the world order to make
+it a better place is also responsible to ensure that the callers are
+already following the new world order.
+
+When merged to 'seen', this literally destroys tons of tests (the
+first and easiest one to observe may be t0002).
+
+Thanks.
+
+
+
