@@ -2,81 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3E08C433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 08:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6B1FC433FE
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 09:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233105AbhKVIpy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 03:45:54 -0500
-Received: from mout.gmx.net ([212.227.17.22]:45951 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229716AbhKVIpy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 03:45:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637570558;
-        bh=Tun/svUvBMsgdnhO2vv5ivVPh+qA9JW+n8FaXhCsUb8=;
-        h=X-UI-Sender-Class:From:Subject:To:Cc:Date;
-        b=doT4x6+/kj5MtoUeviPHzpro0Q/3VGVZqOFmtqnRkKf15nXFd0Es7FPhHOIBkgMuJ
-         Mp6AmSCqcQOU9gZRBAhcJIl5Q17pMlWEjjbQMUsZK+N3RH1a793qZFA6bPoWimORg8
-         vlzOnwbiBzJMmBa1l3ZrYNwPEl7KgD6yLC8Wq9gA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from mail ([91.59.107.238]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MsHru-1mUntn3m4g-00thCq; Mon, 22
- Nov 2021 09:42:37 +0100
-From:   Alexander Veit <alexander.veit@gmx.net>
-Subject: Update to Git 2.34.0 breaks application
-To:     git@vger.kernel.org
-Cc:     thomas.wolf@paranor.ch
-Message-ID: <ee302c98-da27-da43-e684-c7ec8b225360@gmx.net>
-Date:   Mon, 22 Nov 2021 09:42:37 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S238910AbhKVJNk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 04:13:40 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50127 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231656AbhKVJNh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 04:13:37 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9F57616D111;
+        Mon, 22 Nov 2021 04:10:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=Ggs44KLIIufMNTY2nz8wtk0H1pDbafsuGCcksfwXYho=; b=KGlm
+        jUDcGsWERPgkqtIKyRDnGg8KVipxluOw59Ad4LxICdNWbcndGFrG2V/qxvjnv0L0
+        h4tKSM3MgYiUQx8W3Z5xwmlYI1cGfRG5eP7q7w6Ng8T9MDRGUp812yQ2piOSRzca
+        6fhn6J1uWlvWFyYnXmzTxYKKQmXqViRul8eRXRQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 97A4B16D110;
+        Mon, 22 Nov 2021 04:10:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0695716D10F;
+        Mon, 22 Nov 2021 04:10:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] wrapper: add a helper to generate numbers from a
+ CSPRNG
+References: <20211116033542.3247094-1-sandals@crustytoothpaste.net>
+        <20211116033542.3247094-2-sandals@crustytoothpaste.net>
+        <xmqq1r3f5izn.fsf@gitster.g>
+        <YZWJy16Emrkr6qVL@camp.crustytoothpaste.net>
+        <xmqqv90qx76b.fsf@gitster.g>
+        <YZbQu3fwfRsdEeXR@camp.crustytoothpaste.net>
+Date:   Mon, 22 Nov 2021 01:10:26 -0800
+Message-ID: <xmqq5yskk131.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: de-DE
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:S2SPzbIM3PDK+y7q7kNL6kO6v4jugFsSCPS6kC197LPjXb/SiYc
- Bzx0c/3P+jIxVswHT+d4Xz+R+goBpOnsiqRlppQoTrKbzMQKgSIjFC3Z94yeo2yX8EhawSt
- 3jVlKND7ZdWi9hpbn17ly74OAV91nDHo6tg1W2NsF/GXIi6CstcgGQ/Bkqb1hyhPTpNXfO2
- bfQT0nIoO0zSyvVBe2B6A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1rk+j5skjgM=:u7y29tfwEACa2wVIoAO3Co
- mnAJuGQtYQlKaBXmefXCisXyXgCL1oI9Ht9ZHyg8lNqOz9iCRZdXhV5jyIFry1Xz5EtAyEB5w
- 5nFhJPk87WLafk4xTDoUUsCtO2tx87oCLeJH5x/MZX973mlXiEhQlJJ0DbKlnqhoOh2pFH+xe
- zr0Gj2/rztj4pO8PXAcHKttfhpZYFmi45fKXRzSoYcku96mBDCIj1xadBqw5v6RDG3fQNKgbb
- fQXK/Zhp6j1bJ+IuatqGF+LehOcAsR9M53cKIGTiaN26f5jp6/dyZjWA+hFf6l9PAa2xkyygo
- aOMykxeWnyZwBpCB1652MTNwE9gfG3VBSLkRB4FUVuVmkoAFFzTY8L5ndjSoqmfG5+1WnY3MT
- zAMN1q9gXu32aaDwflsd8Kt43nmeYg7e2M0nZ54GEq4FV4AQRiPDiqYYoFt8szoEgly+D32VF
- +3jcXvcOR8Ng3QYVfp/vEIdjn4aBRbC5s8ZKsfV9Z7mixDoX3Iz5mKy8HU3XlMWevqpHyRTLD
- Z0KGE7Y8E0hgqb03nXX1PlFSkJgjC2iv/iwmpHf1f/8kdeIA+SH+dW2HKjy7NosmqBOqbypwE
- Pe5e8nPUzDNBqMETfO+/Vu+m95CQ/k+rBJZn+p4nGYThwOioxs4MjmHCgGvv4FLsqQutkbyX1
- q9nqXL12TYJsSxwe+lcaShNwIgK20NXGdAN37EPllnjhR1KAt90vmL2FB8Xu/iI/CeUfcdEJe
- i/lGxQE1q24fLtlqozknPfxcmfh5b0AOcJJcAW3iZGm6oWQnnpnPlWTFwsPd3QhlEEXFWdgaX
- 9FbWNEEpF/HmkLzwAFuikuZRoUXq7TTm0mCVMudQReIqzzrbQ653F3+iyvuJb9J5hDABijyYd
- kG+zL88TC8OR49bK7mlA95sNaQShktQNSZfjZJCwjAGt1caG/hXx+dXR9s1BsRw4Dtlls4Sqa
- CUkFpUn6eWx9ZWS6ABZ+ZQ4c8w5ciFjfl6x0yvunAFUofnreNMmf6vEMvYJ/BoWbwN/0rAJde
- ZJx9uTwxhFIrf4hgpX+BJNjZfmn6y6twBu8+8ILa61y8h6JrXAF6oB0+48caX10XohNeWwlKq
- dcN2ImlOVVtVIw=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 08F822CA-4B74-11EC-9721-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After an update from Git 2.25.1 to 2.34.0 the Java application that uses the Eclipse JGit library freezes.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Strace suggests that the JVM receives a SIGTTOU from the child process "git config --system --edit" created with java.lang.ProcessBuilder.
+> On 2021-11-18 at 07:19:08, Junio C Hamano wrote:
+>> Presumably csprn_bytes() grabs bytes from underlying mechanism in
+>> smaller chunk, but would not return until it fills the buffer---ah,
+>> your "make sure our buffer handling is correct" is primarily about
+>> the check that we get full 1k bytes in the loop?  We ask 1k chunk 64
+>> times and we must get full 1k chunk every time?
+>
+> Yes, that's what we'd expect to happen.
+>
+>> What I was wondering about was the other half of the check, ensuring
+>> all buckets[] are painted that gave us the cute 10^-100 math.
+>
+> Say the buffer handling is incorrect and we read only a few bytes
+> instead of the full 1 KiB.  Then we'll end up filling only some of the
+> buckets, and the check will fail much of the time, because we won't get
+> sufficient number of random bytes to fill all the buckets.
 
-Upstream[1] has identified 3d411afa[2] as the possible commit that introduced the problem.
+... meaning (64 * a few bytes) is small enough such that some slots
+in buckets[] will be left untouched (and the remainder of 1kB is
+untouched --- but the buffer[] is not initialized in any way, so
+it's not like such an "oops, we only fed a few bytes" bug would
+leave the rest to NUL or anything)?
 
-The problem does not occur on all Linux systems.
+> The check is that we got enough data that looks like random bytes over
+> the course of our requests.
 
-
--Alex
-
-Environment:
-OS: Linux Mint 20
-Kernel: 5.4.0-90-generic
-Git 2.34.0 from http://ppa.launchpad.net/git-core/ppa/ubuntu
-Java: OpenJDK 64-Bit Server VM AdoptOpenJDK (build 11.0.10+9, mixed mode)
-
-
-Ref.:
-[1] https://bugs.eclipse.org/bugs/show_bug.cgi?id=577358
-[2] https://github.com/git/git/commit/3d411afabc9a96f41d47c07d6af6edda3d29ec92#diff-01b59b6a71e42b9c1251ffbf76a1119b965be087a78538e80e01f9239c8e5880
+If the check were doing so, yes, I would have understood (whether I
+agreed with it or not), but the check is "if we taint each and every
+bucket[] even once, we are OK", not "bucket[] should be more or less
+evenly touched", and that is why I do/did not understand the test.
