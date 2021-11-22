@@ -2,52 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5057C433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DD3FC433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:33:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232588AbhKVWgN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 17:36:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43740 "EHLO
+        id S232955AbhKVWgP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 17:36:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbhKVWgN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 17:36:13 -0500
+        with ESMTP id S229502AbhKVWgP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 17:36:15 -0500
 Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6596AC061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:06 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id e7-20020aa798c7000000b004a254db7946so10554190pfm.17
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:06 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E8DFC061574
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:08 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id c6-20020aa781c6000000b004a4fcdf1d6dso768086pfn.4
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=yktJoZGKDNabWxXU6fDhVYSO9Pf+OZ/PUk0YftjXUvQ=;
-        b=NIeapA5UvvG8N1SDHsD49m2yH4XZqg3PnZJvFpVBIj160TKx7vZJikEwBwJefE8dnU
-         NlhmiGigzm6AFghcyAKTfric4myIcNLao3EYE4lAFHBXtwD7kw98gKWUSAeFm/vjN54/
-         EmZfGcmU6ei3nW5ftA0RD9NcP7wcbec3rdQNoNHRrHAA2RuxJhE0KcDVNCHkXXhjWW41
-         QtLkMuPRayVC9M+iixuSgiM+v//xY6zWzJ1BdLdOI64FHPywJdTXicPT33JNr7iVuboQ
-         kNoysDK/n1rnC+il3cgHN/NSHN3nQFEXioOwGU+xw6JGGovr1p8tDsLix5/VqPy9gqvn
-         p9zQ==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=1ZBnoYlNLuCrJ0s5Z5CcSRYjFcGti2Z5TgzLzFmgVgc=;
+        b=qXMDmhkt4yic+NhpJ3pIsauRi3kCpDeiZmpboEwUYDaEh6MiX6D5rXqUm7l+lZFS0X
+         mNnLwTPLmwxmD8KO76H1L4c6EW9V0uvUk5YQiEaXrIwg+jFMl0HiITWaE3FZCWdqz/pG
+         axwImTMavMQTbGp+SNYRDJTs7ULT6hLyBJC9y6GlrCwYC29wPB4p72VXT4RcwP6NFd59
+         Kt3Q+fo4NCMfoss4/lzIbB02cqoBcsrg+NQtoXu1rchjGwaW+E9IB0M8NtVu+KcgnkLU
+         nVVnFnwYR/fD8sfgdM0YIy1EHADJKsHoQnrMQZFiLQVMHpcOrVVA6IyFKfZifolS7MWd
+         Bygg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=yktJoZGKDNabWxXU6fDhVYSO9Pf+OZ/PUk0YftjXUvQ=;
-        b=z5GwvfOSu03do9K/fDZUxKMR2tMPWwYC2oNrjoa03OF/ULn15zmLCnk/07Qx5XeKoU
-         4aZaXxfmzmCmeLtt9tRK0RpdesDv46K2xGIPKZ45skTCWYkfibUP2vQhE+on410qPJYY
-         s1Hz65QMNLMm7sYIxJTtrMOG24B3smc+HyZf+ncEDCtxbPoFfURVb/xJKwGg1EMwaS/3
-         SnU9tlcEzRqxIKpIVMBXkpAzxe9R4Gn+t63nXMjDrHINlnqNzP8exO5veicuQ6Vd+rwg
-         WbAZI445heWggSy10TdNJyo1KqEh1sPev+Xq+r+QrsKecpE6kFqNz0n+gvk8Eu3m3UDC
-         j22g==
-X-Gm-Message-State: AOAM533fg78Y4oHPHocOVeuhGkNMLU9DZtZltppGM1+cOGVXpy8VyBjt
-        14AYRVwdhKDBjJqztBiQCCyBUQ+qKGPlkjDQArK/fA4VJ117SWMpQ07PG6/1Uq9uK5/uxwDxNiq
-        rGQ/BPxuzQES5CYy3HjoxhdJsED0rN2rkBkmgUHObjaJYGQ7jaoalg8vxVOxxDeA=
-X-Google-Smtp-Source: ABdhPJwPh53vOlc0LIYkHN405qYNzwAF756qAR1mdXAgl51oU2JgnYpDUNG34GidByPqObYSKzKbhsjkvDqRrw==
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=1ZBnoYlNLuCrJ0s5Z5CcSRYjFcGti2Z5TgzLzFmgVgc=;
+        b=wT87roo8xNmlNdfhVDd+idxWZBYbHdKbUu3qqtCLYgH3jOCOALUqCwzidM1vM+Agru
+         MLyG7+NlAw3FoximGZfLHMkiGc1D/LgjxchpdoUWvZLooeFeJbviT7k0b8Ni7kNjXfVD
+         GnWpyDulPN9wsPdBuBRxanEY5V6sN8zJztbukPCpqSdOexZ80hh/SUL5JaBp1kFe97bf
+         Nbfgkcg3+cv0vJYKTBsSDCWnQ4AeCcfY2sqgiA7DuKTCC0uRaxRLW37mzaZt917iZGfk
+         d+3IRZQ+QXV3baheaOiabh+1PEYLpfI0GFy/gWZXGl8gcPpLSJFqOLYHxDd0PvNEGHV7
+         iubA==
+X-Gm-Message-State: AOAM531vdsonf9V//0/BCH+xYZKXOR7Ymv/YyhCeBFSmKmYuo8ayRygp
+        1T3YUn1TODwCGcz46k4vSZfxfyUA79uLa89VmXgmu8xs1KT9Zj/3nNs1gR9WxyDBDGvlWqruRK1
+        4XNwHvvb6xCNMb17v/fx2Zs1W9SP/pjxKyxy8ABdKpKNETAsAXq6F3W52GZqlewk=
+X-Google-Smtp-Source: ABdhPJw3GAa1batCefvGDLELn9PpHIE0BXTneofHJtkdx5mTZ+65CeH/P09IzvrPnh/BMwEBxuy/c14Ctwu7kA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:fe85:: with SMTP id
- co5mr35899763pjb.110.1637620385813; Mon, 22 Nov 2021 14:33:05 -0800 (PST)
-Date:   Mon, 22 Nov 2021 14:32:48 -0800
-Message-Id: <20211122223252.19922-1-chooglen@google.com>
+ (user=chooglen job=sendgmr) by 2002:a17:90a:cf85:: with SMTP id
+ i5mr37422449pju.101.1637620387566; Mon, 22 Nov 2021 14:33:07 -0800 (PST)
+Date:   Mon, 22 Nov 2021 14:32:49 -0800
+In-Reply-To: <20211122223252.19922-1-chooglen@google.com>
+Message-Id: <20211122223252.19922-2-chooglen@google.com>
 Mime-Version: 1.0
+References: <20211122223252.19922-1-chooglen@google.com>
 X-Mailer: git-send-email 2.34.0.rc2.393.gf8c9666880-goog
-Subject: [PATCH 0/4] implement branch --recurse-submodules
+Subject: [PATCH 1/4] submodule-config: add submodules_of_tree() helper
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>,
@@ -59,53 +63,90 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Submodule branching RFC:
-https://lore.kernel.org/git/kl6lv912uvjv.fsf@chooglen-macbookpro.roam.corp.google.com/
+As we introduce a submodule UX with branches, we would like to be able
+to get the submodule commit ids in a superproject tree because those ids
+are the source of truth e.g. "git branch --recurse-submodules topic
+start-point" should create branches based off the commit ids recorded in
+the superproject's 'start-point' tree.
 
-Original Submodule UX RFC/Discussion:
-https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
+To make this easy, introduce a submodules_of_tree() helper function that
+iterates through a tree and returns the tree's gitlink entries as a
+list.
 
-Contributor Summit submodules Notes:
-https://lore.kernel.org/git/nycvar.QRO.7.76.6.2110211148060.56@tvgsbejvaqbjf.bet/
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+ submodule-config.c | 19 +++++++++++++++++++
+ submodule-config.h | 13 +++++++++++++
+ 2 files changed, 32 insertions(+)
 
-Submodule UX overhaul updates:
-https://lore.kernel.org/git/?q=Submodule+UX+overhaul+update
-
-This series implements branch --recurse-submodules as laid out in the
-Submodule branching RFC (linked above). If there are concerns about the
-UX/behavior, I would appreciate feedback on the RFC thread as well :)
-
-This series uses child processes to support submodules. I initially
-hoped to do this in-core and [1] and [2] were meant to prepare for that.
-But even though in-core is tantalizingly close, [1] showed that there
-is more work to be done on config.c before this is possible, and I would
-like to get more feedback on the UX before converting this to in-core.
-
-[1] https://lore.kernel.org/git/20211111171643.13805-1-chooglen@google.com/
-[2] https://lore.kernel.org/git/20211118005325.64971-1-chooglen@google.com/
-
-Glen Choo (4):
-  submodule-config: add submodules_of_tree() helper
-  branch: refactor out branch validation from create_branch()
-  branch: add --dry-run option to branch
-  branch: add --recurse-submodules option for branch creation
-
- Documentation/config/advice.txt    |   3 +
- Documentation/config/submodule.txt |   9 +
- Documentation/git-branch.txt       |   8 +-
- advice.c                           |   1 +
- advice.h                           |   1 +
- branch.c                           | 300 +++++++++++++++++++++--------
- branch.h                           |  41 +++-
- builtin/branch.c                   |  77 ++++++--
- builtin/submodule--helper.c        |  33 ++++
- submodule-config.c                 |  19 ++
- submodule-config.h                 |  13 ++
- t/t3200-branch.sh                  |  30 +++
- t/t3207-branch-submodule.sh        | 249 ++++++++++++++++++++++++
- 13 files changed, 678 insertions(+), 106 deletions(-)
- create mode 100755 t/t3207-branch-submodule.sh
-
+diff --git a/submodule-config.c b/submodule-config.c
+index f95344028b..97da373301 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -7,6 +7,7 @@
+ #include "strbuf.h"
+ #include "object-store.h"
+ #include "parse-options.h"
++#include "tree-walk.h"
+ 
+ /*
+  * submodule cache lookup structure
+@@ -726,6 +727,24 @@ const struct submodule *submodule_from_path(struct repository *r,
+ 	return config_from(r->submodule_cache, treeish_name, path, lookup_path);
+ }
+ 
++struct submodule_entry_list *
++submodules_of_tree(struct repository *r, const struct object_id *treeish_name)
++{
++	struct tree_desc tree;
++	struct name_entry entry;
++	struct submodule_entry_list *ret;
++
++	CALLOC_ARRAY(ret, 1);
++	fill_tree_descriptor(r, &tree, treeish_name);
++	while (tree_entry(&tree, &entry)) {
++		if (!S_ISGITLINK(entry.mode))
++			continue;
++		ALLOC_GROW(ret->name_entries, ret->entry_nr + 1, ret->entry_alloc);
++		ret->name_entries[ret->entry_nr++] = entry;
++	}
++	return ret;
++}
++
+ void submodule_free(struct repository *r)
+ {
+ 	if (r->submodule_cache)
+diff --git a/submodule-config.h b/submodule-config.h
+index 65875b94ea..4379ec77e3 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -6,6 +6,7 @@
+ #include "hashmap.h"
+ #include "submodule.h"
+ #include "strbuf.h"
++#include "tree-walk.h"
+ 
+ /**
+  * The submodule config cache API allows to read submodule
+@@ -67,6 +68,18 @@ const struct submodule *submodule_from_name(struct repository *r,
+ 					    const struct object_id *commit_or_tree,
+ 					    const char *name);
+ 
++struct submodule_entry_list {
++	struct name_entry *name_entries;
++	int entry_nr;
++	int entry_alloc;
++};
++
++/**
++ * Given a tree-ish, return all submodules in the tree.
++ */
++struct submodule_entry_list *
++submodules_of_tree(struct repository *r, const struct object_id *treeish_name);
++
+ /**
+  * Given a tree-ish in the superproject and a path, return the submodule that
+  * is bound at the path in the named tree.
 -- 
 2.33.GIT
 
