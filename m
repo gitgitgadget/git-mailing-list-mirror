@@ -2,88 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F4E7C433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 11:57:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB1A8C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 11:57:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236731AbhKVMAs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 07:00:48 -0500
-Received: from smtp-out2.suse.de ([195.135.220.29]:56536 "EHLO
-        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230425AbhKVMAs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 07:00:48 -0500
-Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out2.suse.de (Postfix) with ESMTP id 38A4D1FCA3;
-        Mon, 22 Nov 2021 11:57:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-        t=1637582261; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=n+rc8G96wIXBLcjklu5AKmkTnUDChm3crGheK6copPY=;
-        b=iXzIo4H8d3K3FnXNEeR+7Fr9TZCbPXdGt8HachKwexZ/e3NDJMUTDd+y9mJFflYV4LJJ3Z
-        D9lQXv+P+lznldsI9+AQJMpaJkHqkQigIv6qZtWtftHvB5UA+j9EVzwhDNsB/XyHjVj+XC
-        Gjk/ZkFkhXxbw6qtNVPl5gDuDkR0mF4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-        s=susede2_ed25519; t=1637582261;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=n+rc8G96wIXBLcjklu5AKmkTnUDChm3crGheK6copPY=;
-        b=wg3yFbLPuNpuB3UWCAtK2geE2jM89n7C1ZpjfYQ0OBU5fXyBbD3lzMSVYzttNkzbIEXgpr
-        Mi+1NBWI8HqA7fBw==
-Received: from quack2.suse.cz (unknown [10.100.200.198])
-        by relay2.suse.de (Postfix) with ESMTP id 10AC5A3B84;
-        Mon, 22 Nov 2021 11:57:41 +0000 (UTC)
-Received: by quack2.suse.cz (Postfix, from userid 1000)
-        id A530D1E3C6D; Mon, 22 Nov 2021 12:57:40 +0100 (CET)
-Date:   Mon, 22 Nov 2021 12:57:40 +0100
-From:   Jan Kara <jack@suse.cz>
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jan Kara <jack@suse.cz>, Git List <git@vger.kernel.org>
-Subject: Re: Stochastic bisection support
-Message-ID: <20211122115740.GA24453@quack2.suse.cz>
-References: <20211118164940.8818-1-jack@suse.cz>
- <nycvar.QRO.7.76.6.2111191731400.63@tvgsbejvaqbjf.bet>
- <CAPx1GvfT36SvJ6Lwf1-2KUebVXkCkNvYTUw=FU+dHBy76VN5RQ@mail.gmail.com>
+        id S239422AbhKVMAy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 07:00:54 -0500
+Received: from mout.gmx.net ([212.227.15.19]:40773 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230425AbhKVMAv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 07:00:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637582252;
+        bh=rDErKP/xHyq2zVts2HBnjBrOD7hhG8mKk0DkVw0eJMk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=eQO/x9OU9kcNZxZiVfMD6iZwGOALSEid01N3YJAF6/EzZL95WPo6RGlccsANaGlEG
+         jjVGcd0NB47Eot/vR4DQBuojWTs3aNPL0/tY/WkvW4SQyq5C1V+wm/6pcBc5RdyhdZ
+         Qw8/QXTPD79k6UnMp5xNPsREvvi4TLIPlA2wuIdY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MD9X9-1mxgWT1RBJ-0099ZY; Mon, 22
+ Nov 2021 12:57:32 +0100
+Date:   Mon, 22 Nov 2021 12:57:27 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>,
+        git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Aleen <aleen42@vip.qq.com>
+Subject: Re: [PATCH v6 0/3] am: support --empty=(die|drop|keep) option to
+ handle empty patches
+In-Reply-To: <xmqqr1bcqe6p.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2111221256040.63@tvgsbejvaqbjf.bet>
+References: <pull.1076.v5.git.1637141636.gitgitgadget@gmail.com>        <pull.1076.v6.git.1637232636.gitgitgadget@gmail.com>        <xmqqilwpuiv4.fsf@gitster.g>        <b9c1244.36.17d35decb26.Coremail.pwxu@coremail.cn>        <xmqqmtm0snol.fsf@gitster.g>  
+      <2ebb863f.246.17d37140518.Coremail.pwxu@coremail.cn> <xmqqr1bcqe6p.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPx1GvfT36SvJ6Lwf1-2KUebVXkCkNvYTUw=FU+dHBy76VN5RQ@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: multipart/mixed; boundary="8323328-100164848-1637582252=:63"
+X-Provags-ID: V03:K1:qfqbW84USDP/AuV9H8+jJThpA1t5sZdLWAvBfkUhqfdWS10/WNS
+ vNne87Htp5RvV1yKe23Aqk3P4Odkb75ppj1lGpnXw4lYvcKKGe4W2WWeALv8odtAZpD8w5W
+ eggtHL2uYyoPxQaMNEH1Y2xq5lgYGoD4WRRmzrU1GT5pIDGsGBnNjTjC6B4t6VAvF2OKidn
+ xyoRsnH77nDZTZJHvDaSw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1e4aolmop3M=:XZ2aMJWrEg8rtDldy2sB1/
+ 1BgLLeHXRRFZKNHaoUApABlSvA5fGebq1HYQ/w3v8uyMdVzp9dtpSO6pQyMEJgcm/RawS1eUd
+ BhuXrPfbEBfTvDZ6nVwP/LHGZVqHmIA9b0klqRSIDgZIhhJKzFejfc4sAVAH4aNvtEP4WzNOy
+ RKoMT8joasbp2f4DtOvcCGudwgF97UKKgpHcRmJ5e3+XvYVJnoEECzTykxZGdnRYly+D6+vbj
+ zsoclGcT0K5Wh65H6DbrPH54hJ/QCn31bUMrSgotTuUI9FcZVtUSuXIj9JVA8ROOhQl2FaYWt
+ Qh8TOWY0PaVniRmxI1sPtM0Q+vgiTj0heom3ZjyvrGCF2Ct4RTkGipweRAkiYK/RiyMFyZI8g
+ wm0/cGCFNSMnyebYQkVklaRofDmca7R4c7b0ZpYntmLqC9GQB3HPfiDfX7E1nF+85TaRrkwmy
+ IgxvvbxfM4YWfJ6Ss2tYJa2a5HyjwVxHUcZAZDIgE0iC5Zk8XpBTC4Xvb7BiekyrZR0gKnU1b
+ 2JRksSjkTRVKWJoVFzw/f+z0eS5GaWyRcZI1HxwoTQxYmjMb0uzDeEoZCmASbPyuDl1IB7Bv5
+ LiXRPAtdQIzTDE4SbAf0lKnvdcMw487U360cckZf16R/EFEqU9TlqZHNzvGa0Hwph2Tkg54WO
+ Fo70fNykRwB+LDcZ1mampocmPOkvABZhZQ/vclNP4fvh0fNtLFC+6pt/o1IkBv1amfVt3W9Rz
+ VMru4UGgEJ5F3ObPV8lXiSkCgy/WnAJUmF2dchMD1XS8vAQtTengDvSuZdGj16zS0wQmc94wG
+ RcMLU9yxNC6H72aMVs5J1Pz24AYyaziuk/zX0e7/g3yotqvNMqmsYoo7dc/ZTA81lj2Ksy/i8
+ K7zFU5DzB4XokdLHn86a35zHWIjh8K3vmMIoznoAzVd14WZlOvmdka69ZVvfTql+6JWeAmjlN
+ lPsFiuiWH2Zk5l+F5ZZolI52Nz1n8kgOm1jrFx2DfEkfLZKZEx+Hqyu65cHd/r4YzafwXppyr
+ ObzTfi1Rjwse9tayChmGIevpOfBiaAmoMTJCnric40tGsJeXEGBkxdszDJbn84nO06+ir2Q6q
+ DQriNKEvJLeqVA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri 19-11-21 23:54:12, Chris Torek wrote:
-> On Fri, Nov 19, 2021 at 8:51 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > An interesting problem, for sure!
-> >
-> > It is slightly related to a scenario that has been described to me
-> > recently: in a gigantic project whose full test suite is too large to run
-> > with every Pull Request, where tests are more likely to become flaky
-> > rather than simply break, a stochastic CI regime was introduced where a
-> > semi-random subset of the test suite is run with every CI build. That team
-> > also came up with the concept of attaching confidences as you describe.
-> >
-> > I only had time to look at the first patch closely so far. I hope to find
-> > more time next week to review further.
-> 
-> I only scanned for obvious items myself, but the idea of a
-> probabilistic test is indeed interesting.
-> 
-> I do wonder why you (Jan Kara, not Dscho :-) ) used fixed-point
-> arithmetic here though.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Ah, very good question. I guess because I'm primarily Linux kernel
-programmer and we don't have floating point arithmetics in the kernel so
-I'm used to fixedpoint :).  Secondarily because fixedpoint arithmetics
-provides me more control over where I'm loosing precision but looking at
-this now I agree the ugliness in the code is not probably worth the
-imagined win.  I'll rewrite stuff using floating point. Thanks for the
-suggestion.
+--8323328-100164848-1637582252=:63
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-								Honza
--- 
-Jan Kara <jack@suse.com>
-SUSE Labs, CR
+Hi Junio & Aleen,
+
+On Fri, 19 Nov 2021, Junio C Hamano wrote:
+
+> Aleen =E5=BE=90=E6=B2=9B=E6=96=87 <pwxu@coremail.cn> writes:
+>
+> >> Yes.
+> >>
+> >> As the URL you were referred to explains, the sign-off procedure is
+> >> to keep track of provenance of the code, which is a more "legal"
+> >> formal requirement than just "I use this pseudonym everywhere".
+> >> When a big company comes to us, claiming that "this code is our
+> >> intellectual property stolen from us" and pointing at code added by
+> >> a patch from you, we do not want to see us in the position to have
+> >> to say "eh, somebody who uses psuedonym X signed DCO, but we do not
+> >> even know their real name".
+> >
+> > I know it, and as I said before that gitgitgadget need PR creators to
+> > sign off user name of GitHub account, according to the DCO check. I ca=
+n
+> > confirmed that "Aleen" and "Aleen =E5=BE=90=E6=B2=9B=E6=96=87" are bot=
+h the real name of mine,
+> > the committer. I can use the account aleen42@vip.qq.com to confirm thi=
+s.
+>
+> Can somebody from GGG land help this user?  I _think_ the easiest
+> workaround (other than not using GGG and sending e-mail in the old
+> fashioned way) is to commit and sign-off under the real name, and
+> push under whatever GitHub username to throw a GGG pull request,
+> which GGG should be able to take, as I have seen users forward other
+> authors commits just fine.
+
+GitGitGadget looks at the author information, so you need to ensure that
+the "Author:" line in the output of `git log` shows the desired name. If
+it does not, you need to configure `user.name` (and user.email)` as
+desired, and then re-commit with `git commit --amend --reset-author`, then
+force-push.
+
+Ciao,
+Johannes
+
+--8323328-100164848-1637582252=:63--
