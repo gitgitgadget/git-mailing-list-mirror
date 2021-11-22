@@ -2,142 +2,284 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8046EC433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 13:11:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EACFC433EF
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 13:14:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231697AbhKVNOg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 08:14:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56584 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231444AbhKVNOe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 08:14:34 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65F94C061714
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 05:11:28 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id l25so60171461eda.11
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 05:11:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=g2ThIuX8/tk4HEiy2KIH/VqZ6ZA+z4NbeTqoJrGImuc=;
-        b=dvcVfp6muhZB85nJSrAYhrnziUOP0LI7gdFjnUpUIkJVYm+A20MTtacEfjnmB8mGXd
-         kHk+kHnz54n8jwJY8W41nF5bfsRTPFAMnjPJC/PGJKg3oHKlKgiznl8TY/wlbxQ1v8by
-         oGduOWa5TlW4HDzKZhpq66mKz+WsmG7IH2mRTitvPn0sJdyCMeA6UTFURJOrMzHKCIcH
-         T9EvjmTQTapQkSbe3sDy4R6ksyeUEguc/hTP2jeSvTmDTYou+ov4T+j3X5pzeCNEUi6i
-         PmNR8rnJGh4abg/cfeXflOsjd6s32qvn4oee3XTGDlT8pGb3y/DdndAa2cFaJfCdk/1L
-         dMbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=g2ThIuX8/tk4HEiy2KIH/VqZ6ZA+z4NbeTqoJrGImuc=;
-        b=KOyF46BnJr8qub/oHCiGOuvaS3aSnh1M2y7UccwG43CrPBDEkrh/k8OK98xc8wYDTw
-         4uKkip7R+J4HsAPW8cNwsLMOhiLgkYUJpi2HEbwSIxYM6ylpLMWaPa7oaI6nNe21P/mk
-         N2HLWFje26URpybkSSbQVusZ7PeKKINza/P03K/vofcIly5lPZv6e5RJ7jyOudX8DZd7
-         VfsAUpsagZ92ec6olw5zj4Yqpb7O4hmcOxYZt8O806e6ziHEVq0DFaEIlXWOAFhXIIvm
-         bB8zconH9VnEx1uk/poJarYBsmU1PusABWjSsjsUf1j/qDQMAxRLlY5lIDz2SVDHjPLT
-         1j+w==
-X-Gm-Message-State: AOAM530AYVDFY0BEM8soQ+3UAFptGyw9//48I3kl0eQD23O89yyem2Nd
-        D01XIL/HPEAT9j70Hwgq2pA=
-X-Google-Smtp-Source: ABdhPJzm5U+wOCx1loi/Q29sfOeSzkVEtbru5CYT4wLnXDQ6L5FUeWawQlnd4p3i9fOF6h92YOv19A==
-X-Received: by 2002:a50:d4d1:: with SMTP id e17mr64886575edj.348.1637586686333;
-        Mon, 22 Nov 2021 05:11:26 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id i5sm3758736ejw.121.2021.11.22.05.11.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Nov 2021 05:11:25 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mp96S-0011nL-L3;
-        Mon, 22 Nov 2021 14:11:24 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/1] git-compat-util: add a test balloon for C99 support
-Date:   Mon, 22 Nov 2021 14:05:42 +0100
-References: <20211114211622.1465981-1-sandals@crustytoothpaste.net>
- <20211114211622.1465981-2-sandals@crustytoothpaste.net>
- <nycvar.QRO.7.76.6.2111161129120.21127@tvgsbejvaqbjf.bet>
- <xmqqk0h7423v.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2111221242320.63@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <nycvar.QRO.7.76.6.2111221242320.63@tvgsbejvaqbjf.bet>
-Message-ID: <211122.86pmqsz66b.gmgdl@evledraar.gmail.com>
+        id S236595AbhKVNRQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 08:17:16 -0500
+Received: from mout.gmx.net ([212.227.17.20]:56387 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230406AbhKVNRN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 08:17:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637586834;
+        bh=I8tU67L722t1hVeDEphOXd+y81g6i68cyzHuOomAnOU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=chM0sCnw0to489TYlAzwbY2xim0spYXdvfi+hH3Of7xTUrNeigtmCTKkzPLcXzVYm
+         QvnRz5VHvHhjjTn9gYsEptbPGy/C01OALqxCop/exFf0HxvMSTadioiaSAQd672mzZ
+         fG9IENGiMgh7HFfxNCrGdSL4mENEc8VgCFE5mmX0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MkYbu-1mMzs73DIs-00m5pP; Mon, 22
+ Nov 2021 14:13:53 +0100
+Date:   Mon, 22 Nov 2021 14:13:51 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Anders Kaseorg <andersk@mit.edu>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
+        Andreas Heiduk <andreas.heiduk@mathema.de>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v6 5/8] fetch: protect branches checked out in all
+ worktrees
+In-Reply-To: <20211113033358.2179376-6-andersk@mit.edu>
+Message-ID: <nycvar.QRO.7.76.6.2111221358160.63@tvgsbejvaqbjf.bet>
+References: <20211113033358.2179376-1-andersk@mit.edu> <20211113033358.2179376-6-andersk@mit.edu>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; BOUNDARY="8323328-1786659332-1637586298=:63"
+Content-ID: <nycvar.QRO.7.76.6.2111221405350.63@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:x3ClQigW4fIBmziY2bjVluxsfUE/ztxyatM0/Nbm+ZnE7khxYRu
+ ch5up8+itBR06dDVqE/mTFwfURM1rnBP5d7mE/+5mX/EKKkev+TUE6Efc7p7DlvvKV0kNFm
+ oEsUFryyTAdVTUNjkW02Mjki8uhQrk15df8X+f0Kv1dEF0+S6z471aWTd4oXsxAvevW6sXL
+ mgXKxc1xqAsMS6nGsRw0g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:knoPv36cxbc=:4kg/2jF7OAAGdjqeFWCMwp
+ Iyl3XtxDWmXST7trTW/HLs/c9j970AAZmdaKqve7l+MTeVDJ6AIGpYSrV9+MmKH5goq+89qCD
+ ni9dbzj6OznnRIpwsYbn4X2AXHCl/gxgxj09jpKC0nUkAo1i3MFnvZ66pjQ597tfUw5sL95Z4
+ T9w9qsCA9rwqnPx3838Gq2IDGAxGPW2giBB3tQRoR5VKVht/pSgB7pn0JEfdPPdnEG9kyOQiK
+ yIt2WYxa/A2eNF04T5FdPKzRAKL76BpdAdk32DVLJMD/YdfNc9cfru82GkbNfwLggjs7iStIT
+ R0b14EElBjdKCTndtKGuazo2Rhpm0vGrS/kwD3dIha6untz/hd1slm4nSH2ijb0BWLwJg5ia6
+ oMpWRO47LaOggwZly2p+EEBhkP2jyXN8fXJSEhbTQHMV4w+n8oznnhDEuQBqbXoKBxcO6XgT1
+ YKQmppSxPeRN4/9N/UJiEUnFRVS5g3lhAHSpFoWMROR+eN3lgwbSN9pK+z4iWxHE3IWeES1Ev
+ ehqRoNA/4UCfozSVlpVclfQ3iZjLuuYBuP0nZIm5sE3Ff66k4lncfY+6b40g6Wz5st+rPAZqs
+ Y42GbiFH5Fc0LunvWzm/pxs6OK3QF+79WihBlXrDk3hqeQJ6cJq8VtLLdL5ALUBqlwnr5yZHf
+ F7LUX/ePARGcq+Y2wHJSiXqnGY8Y5CmK5sXy47Y/vjcAkQdh9NhiocWKJExggGrXzT2ElTOBN
+ dbNm0TLGoCEcd7g7vhgttnLEVu0cTBRcSrOujNN4U/yWuGWkJ2ij43cKkNT96fZ0Opxdbv5rE
+ Tvpq2zalxRvdY7azZOqav3/2rDr8ihobUAPlguO16JVIHhxAfsMBgC8R62IQKvtRbmMq5XqBd
+ 1V1GtS6Dv1KpW7splHGm6y94akwL4buyDMxj1sWHWI0jMJnN9p1cg25NNAkeD2zYOAD87hXvp
+ Duhwu5EpQF62+3CGOis1FsAt5FjMp7q8bob6Etu+smqKZBRk6gznFlY9RsNuVvkLFsNpqApxC
+ O7X+T1erKxZbgIgtapNGTCqxN8IHJn0ZAjVvJFO9PWFE0p1wa5yReN4eDYMJ3D0gD7yf3k8lQ
+ lpMsLyyad77bnc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, Nov 22 2021, Johannes Schindelin wrote:
+--8323328-1786659332-1637586298=:63
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: <nycvar.QRO.7.76.6.2111221405351.63@tvgsbejvaqbjf.bet>
 
-> Hi Junio & brian,
->
-> On Wed, 17 Nov 2021, Junio C Hamano wrote:
->
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>
->> >> Even MSVC, long a holdout against modern C, now supports both C11 and
->> >> C17 with an appropriate update.  Moreover, even if people are using an
->> >> older version of MSVC on these systems, they will generally need some
->> >> implementation of the standard Unix utilities for the testsuite, and GNU
->> >> coreutils, the most common option, has required C99 since 2009.
->> >> Therefore, we can safely assume that a suitable version of GCC or clang
->> >> is available to users even if their version of MSVC is not sufficiently
->> >> capable.
->> >
->> > I am all in favor of this patch!
->>
->> I like the direction, but ...
->>
->> >> diff --git a/Makefile b/Makefile
->> >> index 12be39ac49..22d9e67542 100644
->> >> --- a/Makefile
->> >> +++ b/Makefile
->> >> @@ -1204,7 +1204,7 @@ endif
->> >>  # Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
->> >>  # tweaked by config.* below as well as the command-line, both of
->> >>  # which'll override these defaults.
->> >> -CFLAGS = -g -O2 -Wall
->> >> +CFLAGS = -g -O2 -Wall -std=gnu99
->>
->> ... as has been already pointed out, this part probably should not
->> be there.  It is not our intention to require gcc/clang, or to
->> constrain newer systems to gnu99.
->
-> Another data point in favor of dropping this: our FreeBSD CI build reports
-> a compile error with this:
->
-> 	[...]
-> 	archive.c:337:35: error: '_Generic' is a C11 extension
-> 	[-Werror,-Wc11-extensions]
-> 			strbuf_addstr(&path_in_archive, basename(path));
-> 							^
-> 	/usr/include/libgen.h:61:21: note: expanded from macro 'basename'
-> 	#define basename(x)     __generic(x, const char *, __old_basename, basename)(x)
-> 				^
-> 	/usr/include/sys/cdefs.h:329:2: note: expanded from macro '__generic'
-> 		_Generic(expr, t: yes, default: no)
-> 		^
-> 	1 error generated.
->
-> I verified in https://github.com/gitgitgadget/git/pull/1082 that this
-> patch is indeed the cause of this compile error.
+Hi Anders,
 
-As noted in another reply I don't think this -std=* thing is worth it,
-but this isn't so much a case of breakage with this patch in particular,
-but revealing an existing issue of us implicitly requiring C11 on
-FreeBSD.
+tl;dr the patch looks nice! A few remarks below, to prove that I did not
+merely glance over the patch.
 
-Whether that's worth pursuing is another matter, but it's not some
-inherent issue in this approach, but just a platform-specific nit we
-could fix. Either by saying -std=c11 on that platform, or presumably
-defining NO_LIBGEN_H if we wanted to proceed in lockstep with
-C99-but-not-C11 everyhere.
+On Fri, 12 Nov 2021, Anders Kaseorg wrote:
 
+> Refuse to fetch into the currently checked out branch of any working
+> tree, not just the current one.
+>
+> Fixes this previously reported bug:
+>
+> https://public-inbox.org/git/cb957174-5e9a-5603-ea9e-ac9b58a2eaad@mathem=
+a.de
+
+These days, I think the lore.kernel.org/git/ links are slightly preferred.
+
+>
+> As a side effect of using find_shared_symref, we=E2=80=99ll also refuse =
+the
+> fetch when we=E2=80=99re on a detached HEAD because we=E2=80=99re rebasi=
+ng or bisecting
+> on the branch in question. This seems like a sensible change.
+>
+> Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+> ---
+>  builtin/fetch.c       | 75 +++++++++++++++++++++++--------------------
+>  t/t5516-fetch-push.sh | 18 +++++++++++
+>  2 files changed, 58 insertions(+), 35 deletions(-)
+>
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index e5971fa6e5..f373252490 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -28,6 +28,7 @@
+>  #include "promisor-remote.h"
+>  #include "commit-graph.h"
+>  #include "shallow.h"
+> +#include "worktree.h"
+>
+>  #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
+>
+> @@ -840,14 +841,13 @@ static void format_display(struct strbuf *display,=
+ char code,
+>
+>  static int update_local_ref(struct ref *ref,
+>  			    struct ref_transaction *transaction,
+> -			    const char *remote,
+> -			    const struct ref *remote_ref,
+> -			    struct strbuf *display,
+> -			    int summary_width)
+> +			    const char *remote, const struct ref *remote_ref,
+> +			    struct strbuf *display, int summary_width,
+
+As a reviewer, I prefer to spend my time reviewing the actual change. In
+this case, the re-wrapping is a bit distracting. Not really important
+here, but maybe for future contributions. The easier a contributor makes
+it on reviewers, the better (it definitely helps avoid the grumpy judge
+bias[*1*]).
+
+> +			    struct worktree **worktrees)
+>  {
+>  	struct commit *current =3D NULL, *updated;
+>  	enum object_type type;
+> -	struct branch *current_branch =3D branch_get(NULL);
+> +	const struct worktree *wt;
+>  	const char *pretty_ref =3D prettify_refname(ref->name);
+>  	int fast_forward =3D 0;
+>
+> @@ -862,16 +862,17 @@ static int update_local_ref(struct ref *ref,
+>  		return 0;
+>  	}
+>
+> -	if (current_branch &&
+> -	    !strcmp(ref->name, current_branch->name) &&
+> -	    !(update_head_ok || is_bare_repository()) &&
+> -	    !is_null_oid(&ref->old_oid)) {
+> +	if (!update_head_ok &&
+> +	    (wt =3D find_shared_symref(worktrees, "HEAD", ref->name)) &&
+> +	    !wt->is_bare && !is_null_oid(&ref->old_oid)) {
+>  		/*
+>  		 * If this is the head, and it's not okay to update
+>  		 * the head, and the old value of the head isn't empty...
+>  		 */
+>  		format_display(display, '!', _("[rejected]"),
+> -			       _("can't fetch in current branch"),
+> +			       wt->is_current ?
+> +				       _("can't fetch in current branch") :
+> +				       _("checked out in another worktree"),
+>  			       remote, pretty_ref, summary_width);
+>  		return 1;
+>  	}
+> @@ -1071,7 +1072,8 @@ N_("it took %.2f seconds to check forced updates; =
+you can use\n"
+>     " to avoid this check\n");
+>
+>  static int store_updated_refs(const char *raw_url, const char *remote_n=
+ame,
+> -			      int connectivity_checked, struct ref *ref_map)
+> +			      int connectivity_checked, struct ref *ref_map,
+> +			      struct worktree **worktrees)
+>  {
+>  	struct fetch_head fetch_head;
+>  	struct commit *commit;
+> @@ -1188,7 +1190,8 @@ static int store_updated_refs(const char *raw_url,=
+ const char *remote_name,
+>  			strbuf_reset(&note);
+>  			if (ref) {
+>  				rc |=3D update_local_ref(ref, transaction, what,
+> -						       rm, &note, summary_width);
+> +						       rm, &note, summary_width,
+> +						       worktrees);
+>  				free(ref);
+>  			} else if (write_fetch_head || dry_run) {
+>  				/*
+> @@ -1301,16 +1304,15 @@ static int fetch_refs(struct transport *transpor=
+t, struct ref *ref_map)
+>  }
+>
+>  /* Update local refs based on the ref values fetched from a remote */
+> -static int consume_refs(struct transport *transport, struct ref *ref_ma=
+p)
+> +static int consume_refs(struct transport *transport, struct ref *ref_ma=
+p,
+> +			struct worktree **worktrees)
+>  {
+>  	int connectivity_checked =3D transport->smart_options
+>  		? transport->smart_options->connectivity_checked : 0;
+>  	int ret;
+>  	trace2_region_enter("fetch", "consume_refs", the_repository);
+> -	ret =3D store_updated_refs(transport->url,
+> -				 transport->remote->name,
+> -				 connectivity_checked,
+> -				 ref_map);
+> +	ret =3D store_updated_refs(transport->url, transport->remote->name,
+> +				 connectivity_checked, ref_map, worktrees);
+
+Again, this rewrapping is slightly distracting to my brain.
+
+>  	transport_unlock_pack(transport);
+>  	trace2_region_leave("fetch", "consume_refs", the_repository);
+>  	return ret;
+> @@ -1643,7 +1647,7 @@ static int do_fetch(struct transport *transport,
+>  				  "you need to specify exactly one branch with the --set-upstream o=
+ption"));
+>  		}
+>  	}
+> - skip:
+> +skip:
+
+Okay, this one is distracting _but also_ pleasing. I am only pointing this
+out to prove that I did not go over your patch sloppily. :-)
+
+> @@ -1653,11 +1657,12 @@ static int do_fetch(struct transport *transport,
+>  		ref_map =3D NULL;
+>  		find_non_local_tags(remote_refs, &ref_map, &tail);
+>  		if (ref_map)
+> -			backfill_tags(transport, ref_map);
+> +			backfill_tags(transport, ref_map, worktrees);
+>  		free_refs(ref_map);
+>  	}
+>
+> - cleanup:
+> +cleanup:
+
+Same here.
+
+> +	free_worktrees(worktrees);
+>  	return retcode;
+>  }
+>
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index 4db8edd9c8..36fb90f4b0 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -1770,4 +1770,22 @@ test_expect_success 'denyCurrentBranch and worktr=
+ees' '
+>  	git -C cloned push origin HEAD:new-wt &&
+>  	test_must_fail git -C cloned push --delete origin new-wt
+>  '
+> +
+> +test_expect_success 'refuse fetch to current branch of worktree' '
+> +	test_when_finished "git worktree remove --force wt && git branch -D wt=
+" &&
+> +	git worktree add wt &&
+> +	test_commit apple &&
+> +	test_must_fail git fetch . HEAD:wt &&
+> +	git fetch -u . HEAD:wt
+> +'
+> +
+> +test_expect_success 'refuse fetch to current branch of bare repository =
+worktree' '
+> +	test_when_finished "rm -fr bare.git" &&
+> +	git clone --bare . bare.git &&
+> +	git -C bare.git worktree add wt &&
+> +	test_commit banana &&
+> +	test_must_fail git -C bare.git fetch .. HEAD:wt &&
+> +	git -C bare.git fetch -u .. HEAD:wt
+> +'
+> +
+>  test_done
+
+Reads nicely.
+
+Thanks,
+Dscho
+
+Footnote: https://en.wikipedia.org/wiki/Hungry_judge_effect
+
+--8323328-1786659332-1637586298=:63--
