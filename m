@@ -2,107 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5014C433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 07:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A4AAC433FE
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 07:51:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232258AbhKVHuR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 02:50:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39208 "EHLO
+        id S232786AbhKVHy0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 02:54:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230142AbhKVHuQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 02:50:16 -0500
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D05DC061574
-        for <git@vger.kernel.org>; Sun, 21 Nov 2021 23:47:10 -0800 (PST)
-Received: by mail-pf1-x434.google.com with SMTP id x131so15310177pfc.12
-        for <git@vger.kernel.org>; Sun, 21 Nov 2021 23:47:10 -0800 (PST)
+        with ESMTP id S230487AbhKVHyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 02:54:21 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD5ECC061714
+        for <git@vger.kernel.org>; Sun, 21 Nov 2021 23:51:14 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id o19-20020a1c7513000000b0033a93202467so3883465wmc.2
+        for <git@vger.kernel.org>; Sun, 21 Nov 2021 23:51:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QgHhazSZRfWOqcFXuPj0B6wmYBgdMXU2Oc/hb3wWBR4=;
-        b=KuxhZBDfH5VKYwqhhG7CU824IR9zVinDL1qVUZFw+k2cUPy5V4xSRrP6uvMFqJQfLW
-         kSgKHGfoFZjYTQc4vGrvZ1FS7W68qB9X9A8V3PJGpEL+wD4MQ/W2Zo9ucViiksa6Eqif
-         HmYzxSH3DNdIPFeKhHGh3JLhKVrcLGqBw4lfUff6fylFI/22UL8NSOHbUDR4Rc7Wqwce
-         ZmNyknrbTElqHHMBAtBEe6SpGZrtpZuzarv16hHfGzdjuvHrP4eUyimQK7UVTohB2usA
-         /AXeP1ijQnYmx9Fq9Lsr7UY4evCvXK4eGVLdYpcAupe2pm/6DVBIuGfkKTd9rH5ZAtDQ
-         oSOw==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=U+7lZBAkso1pD4vo0mcR6XahjJ0cK3/FwsQtjNOLn+M=;
+        b=aSeyWMmcC4GyUYmASrX6Cgt/B+TKdnyQ54zFTHDGB5Cinus3orLDW/fzy4p8TBKcLt
+         vhLOmrp850G+RLH4TroZtfrSasDeOYf78ENa9jBYUAb861wNExu41ElWvTmhKwT37ny9
+         sTU0nMUl2EDvxuqWeHeM82TMeAc0B8n3dZ2LAq/5XupioChqpUTar0UVcQL2sQuVaErP
+         tXYtRKQQMlx10A9FtxGAG0zwlLM9NA6odiXJqUEd+rttGgAEkW90qF3DxP/3uvVCLVWx
+         EsJIdd8nuLujcm24RO3aKLdmXTacWHB7SS6PxQPL6SUuo3pg+K7+IBjwW0UFgLd9ha9M
+         ZhlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QgHhazSZRfWOqcFXuPj0B6wmYBgdMXU2Oc/hb3wWBR4=;
-        b=X0LJoBg8BOA1dka1Kebk/N7aqPPtcDnUzbIUUoG1i27sMeNvzkkoJCTQm5/4vbeMct
-         rmCEirsgfmUN3UPN5safhzqwbcTVsqgBBBiu2z/DzA8K1IefuTm63GqEFYYVBpiysUPB
-         ZyfH50JNsFlqXBWrTw3YXRGubKBbo3Is9APWVKSeF5bKVHzc0E6XQMVh0I3s2F1LigEQ
-         a5oxrQ6ciAvfwLEgxgLegdOonS1B/+M3xLTk8ns/5Q0EVlEnPJ7vZstE3yJ9gG45uVKE
-         UQ0ZlMdW7A+WMJ1dXY/uqKyg7BiuQUzCYNmnzYupUF+WfFD5ETCcGLzUZySgyUTIkiE+
-         LODw==
-X-Gm-Message-State: AOAM531dcq9qPmiY1QDvOsgb2ykYeILw4KOPgiqom6TnIpwDztXBupX7
-        TTE2+ThTeGAIJI6Eh6Vv5K8=
-X-Google-Smtp-Source: ABdhPJzo3xHsPr1vB0qX0VO7uUM1jC9WOFFpHuSs3SfcBbme46bBEKpirclG02GVdTBeiZE+pWveqw==
-X-Received: by 2002:a05:6a00:b49:b0:49f:bad2:bd7c with SMTP id p9-20020a056a000b4900b0049fbad2bd7cmr83501784pfo.64.1637567229549;
-        Sun, 21 Nov 2021 23:47:09 -0800 (PST)
-Received: from localhost.localdomain ([205.204.117.102])
-        by smtp.gmail.com with ESMTPSA id x9sm14687717pjq.50.2021.11.21.23.47.07
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 21 Nov 2021 23:47:09 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     avarab@gmail.com
-Cc:     congdanhqx@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
-        gitster@pobox.com, peff@peff.net
-Subject: Re: [PATCH v2 1/1] ls-tree.c: support `--oid-only` option for "git-ls-tree" 
-Date:   Mon, 22 Nov 2021 15:45:38 +0800
-Message-Id: <20211122074538.87255-1-dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.33.1.10.g438dd9044d.dirty
-In-Reply-To: <211119.86wnl42ri2.gmgdl@evledraar.gmail.com>
-References: <211119.86wnl42ri2.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=U+7lZBAkso1pD4vo0mcR6XahjJ0cK3/FwsQtjNOLn+M=;
+        b=WWdCkHHDch/uE7BwiGl+EFkxjy4beZeF538P6kGTxSW0pl/BPVk460XdXuUqhWXNWD
+         WZgBRkrfpYSKFzDtwBK7Z9myhq+ZC6dVg49bbLMyRrWOtWd1sVJ0dmKYEzQzXBLNQ7Hs
+         VIOg37VnFSvobAoHGwtpLHKWGKS+OV5FsDN38EJkKJufX7HXZYF0hj3LAY2zrMS8L/LU
+         r9U+Fa7+8LCQJUdwdgdoBn38hqMy0uhZRgaInXCQ9Rqs8MXOQ1+/qfRT3ie7A6CzP6eY
+         etCy/GNwbXjNVNxfHUgywCR0kJ5GMT/2tVQ5c9kI+saSJXAJbnZhqiHB1EB/YNonYaMw
+         4tUA==
+X-Gm-Message-State: AOAM530Zz/QSSMeRBwaMaRkInLlFfVhdm7oqzMADNNXZx5Ul6Q0Ukrsp
+        lD5McjcFGEr3P9zRUya9O6nFeXRsrf0=
+X-Google-Smtp-Source: ABdhPJzOms4tqS5ztXuCq5h1jm/SVmub6MR15J2IV59z13czg7gPS5lT/AHtjL8oGviV7jeZ9RiFbw==
+X-Received: by 2002:a05:600c:3788:: with SMTP id o8mr26579454wmr.82.1637567473255;
+        Sun, 21 Nov 2021 23:51:13 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ay21sm20885245wmb.7.2021.11.21.23.51.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Nov 2021 23:51:12 -0800 (PST)
+Message-Id: <59bce7131dab858e8c87944ccb02eae8ba5fd459.1637567471.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1076.v10.git.1637567471.gitgitgadget@gmail.com>
+References: <pull.1076.v9.git.1637564554.gitgitgadget@gmail.com>
+        <pull.1076.v10.git.1637567471.gitgitgadget@gmail.com>
+From:   "Aleen via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 22 Nov 2021 07:51:10 +0000
+Subject: [PATCH v10 1/2] doc: git-format-patch: describe the option --always
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Aleen =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>,
+        Aleen <aleen42@vip.qq.com>, Aleen <aleen42@vip.qq.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Aleen <aleen42@vip.qq.com>
 
-On Fri, 19 Nov 2021 14:30:52 +0100, Ævar Arnfjörð Bjarmason wrote
+This commit has described how to use '--always' option in the command
+'git-format-patch' to include patches for commits that emit no changes.
 
-> Please don't add the Reviewed-by headers yourself, either Junio
-> accumulates them, or if someone explicitly mentions that you can add it
-> with their name it's OK.
+Signed-off-by: 徐沛文 (Aleen) <aleen42@vip.qq.com>
+---
+ Documentation/git-format-patch.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-I think I misunderstood the meanings of the header before.
-Thanks for the important tips.
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 113eabc107c..be797d7a28f 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -18,7 +18,7 @@ SYNOPSIS
+ 		   [-n | --numbered | -N | --no-numbered]
+ 		   [--start-number <n>] [--numbered-files]
+ 		   [--in-reply-to=<message id>] [--suffix=.<sfx>]
+-		   [--ignore-if-in-upstream]
++		   [--ignore-if-in-upstream] [--always]
+ 		   [--cover-from-description=<mode>]
+ 		   [--rfc] [--subject-prefix=<subject prefix>]
+ 		   [(--reroll-count|-v) <n>]
+@@ -192,6 +192,10 @@ will want to ensure that threading is disabled for `git send-email`.
+ 	patches being generated, and any patch that matches is
+ 	ignored.
+ 
++--always::
++	Include patches for commits that do not introduce any change,
++	which are omitted by default.
++
+ --cover-from-description=<mode>::
+ 	Controls which parts of the cover letter will be automatically
+ 	populated using the branch's description.
+-- 
+gitgitgadget
 
-> Better: "Cannot be combined with OPT."
-> Better: "Cannot be combined with OPT or OPT2."
-> ...
-> Better to preserve the wrapping here, to stay within 79 columns.
-
-Will apply.
-
-> Just use:
->
->     test_commit A &&
->     test_commit B
->
-> etc?
-> ...
-> Stray echo? Unclear why this test setup is so complex, shouldn't this just be (continued from above):
->
->     mkdir -p C &&
->     test_commit C/D.txt
-
-> To test nested dirs?
-
-Will apply.
-
-
-> just cut -f1 instead of awk? Also don't put "git" on the LHS of a pipe,
-> it might hide segfaults. Also applies to the below.
->
-
-Will apply, and could you please describe the problem with more details?
-(appreciate if there is an executable example)
-
-Thank you.
