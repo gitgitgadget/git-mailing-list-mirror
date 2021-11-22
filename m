@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CCE9C433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 17:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3D28C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 17:53:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239614AbhKVR4r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 12:56:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36458 "EHLO
+        id S239132AbhKVR4t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 12:56:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239505AbhKVR4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 12:56:42 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF4E0C061758
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 09:53:31 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id 133so16303373wme.0
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 09:53:31 -0800 (PST)
+        with ESMTP id S239142AbhKVR4j (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 12:56:39 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C886C061756
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 09:53:30 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id r9-20020a7bc089000000b00332f4abf43fso377282wmh.0
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 09:53:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Ll8r5Be3Os7X5TOWYVqKgtbg76oC38p7tyM4/Txj4FY=;
-        b=nGogrZqX+M1o2vB4fNVwuKXh2qX8Zejd5JwwXHIZZGuUCC+IaylvxNQ6S3C4cCaeeu
-         u0cES6BezsXr3+7hjbxEeO5iVHZrYNZQLowlqFgg27Dtdtan6cBaTwb5aXuNKRnlEFBv
-         ynnbrcvqO4ew3rHJ23fo3Jr7ubzvMDeAYnsWSxJHlRG89FbxG5mIic4fZwhcYTb7vDYX
-         CSMJOGGlhxcc+MXSu3wKdc8dfE7Jo3c9ppfRXCJlTUw2CsC8a2KOm5TbGjxWu7Iov3QS
-         KTUpbwWi/HLgEo7KvIW1HIKBmr0qNcCBA0quJhkIEC2F3d4TDuQJPhssKz1kUUCE+cfU
-         Ucrw==
+        bh=bUVgjI/gWKHf+bhQq1xm5p7rRI9c73YXrbmBH1lI+sU=;
+        b=R0GjZBzzsXDbLW+ymOD85lR8XluuEwTXGb6m3MtnuvtEVc2Q14KYSNgQ8cXZWO50BV
+         1BE7QXs+65oJp9Lnze3HFPSddVbR7HKgd0RFBen/mBvCtGBF35zUa+PAbBq7U337aDU7
+         Dik7RitEHxv0Ag+rO1bPC4OM/Qlq0keX+IyKDG5BxITFUWDty1q2La6+A2LZ2GzyRJak
+         8l/M7p7RSF9EMDo0fLNUuE7gVyMDNiLaMRJDHsG36IxFZw/Glu+BQzhXZIsOu8TbLtv9
+         +L5C6OpvR1Kh5qhAAW7xpvQa2tU04XfX5tWD88DfqCGWkR4o1dr3FTZK2ecg/1GTFXGA
+         SeEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Ll8r5Be3Os7X5TOWYVqKgtbg76oC38p7tyM4/Txj4FY=;
-        b=aIJ5mZ4qFjr9O4ox7wS4lbtzRvg7suInbzMSLRoEA9+Vs9WE21a/9b0Bba5TXBk4yU
-         krgUc3nomlF1BNNb9gpoo49bHMHr4kqI4QzN24RD5EhAeyOAoGr2YlTxhza23TDrkoga
-         d6zR8EnForR1LiUkVkAXrNHX+o+PkVUuInSPkg55gt2R/3g/MeYRGz8LHAcLhLkj2tN9
-         3yQF+4E9j1avJjAXUvdw3Z9ftruH7jf/BA+lTOHFXnNe3z9XVSvYrBAPxH/cx2pHARI/
-         lkt9PVOVfKFQQ0NkUxZu52sPDv86LOrziYWANJKvnLkCI++YoXVBMlMvwpAhjYLI/66U
-         N17A==
-X-Gm-Message-State: AOAM532AOR/kUVPzcLSagFPqn8gTtOXUIZSAMlpzLNrNmHnh8itDNeWA
-        5L6hhaXRPzcFs3/LRKY4Rz87RtN5+V1RpQ==
-X-Google-Smtp-Source: ABdhPJyMgFR7pdmoaXnCJciEZeW8dzHJDJnSAT4eU9/OTumwZbh+T9CTaxqtmyENF/WpRrFfIBT1ag==
-X-Received: by 2002:a05:600c:190e:: with SMTP id j14mr30605672wmq.75.1637603610139;
-        Mon, 22 Nov 2021 09:53:30 -0800 (PST)
+        bh=bUVgjI/gWKHf+bhQq1xm5p7rRI9c73YXrbmBH1lI+sU=;
+        b=zrlTq1Qy2wZ75wLl/NKmBzxvQyuymNg23w3vszcy29ptJXQFYcq5tiQpOP/UYezoYt
+         2wEUyX4GuI5sMMgP0qSXgm9E5viQT89sueLUfoy81ScyXnlW/XUnnLOK/DO/QSoAshlT
+         vu3jNxSDLty79dfjHdSvpW02xWw78KfiVYwgG3XKdVeP2AiWL6sttxUzgWDxEFz3j+Pc
+         jKQ11BZir4EmQgSaAhiGjFdQaiZTUu1nzWeQuEkLYwUqPVmFrwSvW6Wh5QqAahNarnoD
+         nlfDJpHH/C0Mqex3HVnFZB4pAy6LoIPLFdMN9wL7Mz4P/JqEgwffqbl9YD5+c63/jSgn
+         s01Q==
+X-Gm-Message-State: AOAM531PaVAYf7n2Xoflsw6brku+zcOfJhf/KjPwR5mAOutWm9BqrIZa
+        I4wMHcvj+fMQJGSN9n7MVmSOnfhVlBa0YA==
+X-Google-Smtp-Source: ABdhPJybqfAkzUzqVJVtzJbj0IeRB/aRQra/Exwn2K8oB/bYpFS2OeUw8N+wPP16VX6/cZFWR3NNbA==
+X-Received: by 2002:a1c:6a0e:: with SMTP id f14mr31445661wmc.58.1637603608229;
+        Mon, 22 Nov 2021 09:53:28 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l11sm9531664wrp.61.2021.11.22.09.53.29
+        by smtp.gmail.com with ESMTPSA id l11sm9531664wrp.61.2021.11.22.09.53.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Nov 2021 09:53:29 -0800 (PST)
+        Mon, 22 Nov 2021 09:53:27 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 3/3] object-name: show date for ambiguous tag objects
-Date:   Mon, 22 Nov 2021 18:53:25 +0100
-Message-Id: <patch-v4-3.3-9d24bab635d-20211122T175219Z-avarab@gmail.com>
+Subject: [PATCH v4 1/3] object-name: remove unreachable "unknown type" handling
+Date:   Mon, 22 Nov 2021 18:53:23 +0100
+Message-Id: <patch-v4-1.3-2e7090c09f9-20211122T175219Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.822.gc64b680fd55
 In-Reply-To: <cover-v4-0.3-00000000000-20211122T175219Z-avarab@gmail.com>
 References: <cover-v3-0.3-00000000000-20211008T193041Z-avarab@gmail.com> <cover-v4-0.3-00000000000-20211122T175219Z-avarab@gmail.com>
@@ -67,58 +67,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make the ambiguous tag object output nicer in the case of tag objects
-such as ebf3c04b262 (Git 2.32, 2021-06-06) by including the date in
-the "tagger" header. I.e.:
+Remove unreachable "unknown type" handling in the code that displays
+the ambiguous object list. See [1] for the current output, and [1] for
+the commit that added the "unknown type" handling.
 
-    $ git rev-parse b7e68
-    error: short object ID b7e68 is ambiguous
+The reason this code wasn't reachable is because we're not passing in
+OBJECT_INFO_ALLOW_UNKNOWN_TYPE, so we'll die in sort_ambiguous()
+before we get to show_ambiguous_object():
+
+    $ git rev-parse 8315
+    error: short object ID 8315 is ambiguous
     hint: The candidates are:
-    hint:   b7e68c41d92 tag 2021-06-06 - v2.32.0
-    hint:   b7e68ae18e0 commit 2019-12-23 - bisect: use the standard 'if (!var)' way to check for 0
-    hint:   b7e68f6b413 tree
-    hint:   b7e68490b97 blob
-    b7e68
-    [...]
+    fatal: invalid object type
 
-Before this we'd emit a "tag" line of:
+We should do better here, but let's leave that for some future
+improvement. In a subsequent commit I'll improve the output we do
+show, and not having to handle the "unknown type" case simplifies that
+change.
 
-    hint:   b7e68c41d92 tag v2.32.0
+Even though we know that this isn't reachable let's back that up with
+an assert() both for self-documentation and sanity checking.
+
+1. 5cc044e0257 (get_short_oid: sort ambiguous objects by type,
+   then SHA-1, 2018-05-10)
+2. 1ffa26c461 (get_short_sha1: list ambiguous objects on error,
+   2016-09-26)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- object-name.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ object-name.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/object-name.c b/object-name.c
-index 7a5355b4cf7..29859d3eebe 100644
+index fdff4601b2c..59e934262e7 100644
 --- a/object-name.c
 +++ b/object-name.c
-@@ -391,9 +391,12 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 	} else if (type == OBJ_TAG) {
- 		struct tag *tag = lookup_tag(ds->repo, oid);
- 		const char *tag_tag = "";
-+		timestamp_t tag_date = 0;
+@@ -361,6 +361,8 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
+ 		return 0;
  
--		if (!parse_tag(tag) && tag->tag)
-+		if (!parse_tag(tag) && tag->tag) {
- 			tag_tag = tag->tag;
-+			tag_date = tag->date;
-+		}
+ 	type = oid_object_info(ds->repo, oid, NULL);
++	assert(type == OBJ_TREE || type == OBJ_COMMIT ||
++	       type == OBJ_BLOB || type == OBJ_TAG);
+ 	if (type == OBJ_COMMIT) {
+ 		struct commit *commit = lookup_commit(ds->repo, oid);
+ 		if (commit) {
+@@ -376,8 +378,7 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
  
- 		/*
- 		 * TRANSLATORS: This is a line of
-@@ -405,7 +408,9 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 		 * object.c, it should (hopefully) already be
- 		 * translated.
- 		 */
--		strbuf_addf(&desc, _("%s tag %s"), hash, tag_tag);
-+		strbuf_addf(&desc, _("%s tag %s - %s"), hash,
-+			    show_date(tag_date, 0, DATE_MODE(SHORT)),
-+			    tag_tag);
- 	} else if (type == OBJ_TREE) {
- 		/*
- 		 * TRANSLATORS: This is a line of ambiguous <type>
+ 	advise("  %s %s%s",
+ 	       repo_find_unique_abbrev(ds->repo, oid, DEFAULT_ABBREV),
+-	       type_name(type) ? type_name(type) : "unknown type",
+-	       desc.buf);
++	       type_name(type), desc.buf);
+ 
+ 	strbuf_release(&desc);
+ 	return 0;
 -- 
 2.34.0.822.gc64b680fd55
 
