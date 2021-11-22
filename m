@@ -2,106 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6163C433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56041C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:08:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238266AbhKVWGz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 17:06:55 -0500
-Received: from mout.gmx.net ([212.227.15.15]:34791 "EHLO mout.gmx.net"
+        id S233807AbhKVWLq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 17:11:46 -0500
+Received: from mout.gmx.net ([212.227.15.15]:39739 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232667AbhKVWGy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 17:06:54 -0500
+        id S234198AbhKVWLp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 17:11:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637618596;
-        bh=GfnZ4+v/aR5nNFik/luuRLSu11uzyxhHrCZ9XcIk4dQ=;
+        s=badeba3b8450; t=1637618907;
+        bh=Nu9EBs0AUIFucIEIIxveug79byjW62F7WeoTf79bp8Q=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ge4UBeST7XafY7xaKKLvvg3xcXp3KfyOCMM07onDbnksTFvFyw5X540xHf84aXyl/
-         9LFDrZsapQQrIiF/9JmJdsaHH9mXOkdldaMIiT5PNZbYtbkatpc3lYfYpEwPzudcfp
-         MFdEs4LBDnKAoGJNpOCuxO/5RXVtOYEze9PawLqo=
+        b=lDFLA4eEYLUzCjPn56sml1ipmt3QSl+Wfd1NXpj4XrM/uFVm4RvwAWgPFFyPU7qjK
+         unIkpFQ6G33j28O4i4givokVJhLAWJE3cJC/obEDpBlMGm7eJ2aB060474PjInGizZ
+         S1xh8PkO9Y78HCcMHWVz5A3JyKqOrOqaY00+9THk=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mof9P-1mIibd0e0P-00p5So; Mon, 22
- Nov 2021 23:03:16 +0100
-Date:   Mon, 22 Nov 2021 23:03:14 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MacOW-1mEa5R0J10-00cC1O; Mon, 22
+ Nov 2021 23:08:27 +0100
+Date:   Mon, 22 Nov 2021 23:08:24 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Carlo Arenas <carenas@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/1] git-compat-util: add a test balloon for C99
- supporty
-In-Reply-To: <xmqqv90jewwa.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2111222300580.63@tvgsbejvaqbjf.bet>
-References: <20211114211622.1465981-1-sandals@crustytoothpaste.net> <20211114211622.1465981-2-sandals@crustytoothpaste.net> <nycvar.QRO.7.76.6.2111161129120.21127@tvgsbejvaqbjf.bet> <xmqqk0h7423v.fsf@gitster.g> <nycvar.QRO.7.76.6.2111221242320.63@tvgsbejvaqbjf.bet>
- <xmqq1r38hzi9.fsf@gitster.g> <CAPUEspibE6AMyoxwJGno9R=21JU5MpFVGBxCQYBCbCBwx-y25A@mail.gmail.com> <xmqq8rxgf254.fsf@gitster.g> <xmqqv90jewwa.fsf@gitster.g>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>
+Subject: Re: [PATCH v8 00/17] Upstreaming the Scalar command
+In-Reply-To: <211122.865yskyw25.gmgdl@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2111222304070.63@tvgsbejvaqbjf.bet>
+References: <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com> <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com> <CABPp-BG=fcKq2Ng2gan3HbBGcT7WCMhtZCP6m2xjA5BSuTekOg@mail.gmail.com> <nycvar.QRO.7.76.6.2111221317390.63@tvgsbejvaqbjf.bet>
+ <211122.865yskyw25.gmgdl@evledraar.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:XWYouoaRHfWUZDSdL3rSd5AyORZ35QCdh1M9s7ihSn7jjgXx3jp
- MGjJyoocxuDEVaZzYwxOevYWwOw3aw2ba3F8mjZfZ7z+OG+5R1ZNPSZSaGjXyrkfKt2AqQr
- FeMt/jUAj7HdD/q2scZ4/NhYDdypCxeMP7bUhxZzkaOMjD8y+SGx9GvgC6TjgBVzFYbZzz9
- laMc7mywaZVULMTjf0i3A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:t4TWF1qKGYI=:tI8q8F7VsFA190mgsz4cJe
- nGfCu0zPRdk3ojB6K//PevYnkz8IPhv9gRD4SxfmKMKHpiUU5CVuklOjJI8ZYxzxpn8Dr/zG/
- 2NgfonYQw9dNfpbq/vUUep33mSJwzydN2gLvLbAknTeckHjLh9o9tdMtXVrhQsp3sM6W1rmDn
- Yf9B4KJFAnV4KrkYwpeW+3RQaDu7mdQQGYJdBEke9MXeahODogFdRHCOueRoCTBZx/pA9/pkR
- SGMfG0VGoNlYr4iF0D9KNMCnsw7f0v3j4h2IE8lD136CPdlg75EVQk1Fg13S+vsL17LL/oxif
- hpqDdr+NtI54MnPtDxtaD3+W4L0bSUHiHqP5U+cF8mzvRfeFCXpCIkFO+fXbKVz367j9/AVvZ
- dC7Sen051PwN7or7VwErqEtXWqkXR6H4VImy4wbS2Q/ue2hCv0fZV1llOiSnF5QSlvG7XocnD
- Lee8OaiZUStNDvqp2G4Bi2LWlmZLOtpmZaImrSXFUp+b4BlyAYLV89ojPR1nZXY2pKTLiD2m7
- 1+6MCZLh7AVS9U0nyxvfMW1vkAIaXyl9/7uqhy0D4hoQ0GLiVKhC5Y6/hpa5Cq2yF0UCtEG4s
- kFT2VcLVZCbzMtCt05Db2QE+O6QvR75DHmUnzx10VuCq2Vgu2x3p5TNU7jNuy8aDkDn2lBVkF
- 53jV10dDOSEvVRhd9VneJHH99F6U+oqdGPr8oJpA+HvGdi7juoapBKNor6RamtvZqX46fCaYF
- EOOQs3ROCwTEAVln8QgicVRDdBPwnB5NhlMRQvT/pRuZgYxlnrQt99kHqeNTRHa3rws5I6TCg
- qALESZOxdK49vm8sxSWvg0buhtSKpBnCa0JnAYhw6IetQDXE4A75Lc22OZ3vmqp2NnhtwfxiU
- 1W+WzJtp9hWoL2ErgPTGyBF26ndHbqqfqUkyFHRr+L1C3nHY3VHisSnwvSOIvcugghFpsONuz
- xAT0zxJz2L03N9YoXltceTongcE372e44XXPTxUDC6e9yR3x0FSfsAYey7KgQDK7K7kirC7cv
- DNSFu2Bx5ofhUp5OT/usYCy0y9dtTSXi73AlaPv0TGxzi4dPTR/2LFrS4twEb2VawKoHaBkta
- cqeVorXSFYTiD0=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1944441444-1637618907=:63"
+X-Provags-ID: V03:K1:jpAZC8BGTX1izOUDtNtTkSHRII5ZFRJtRZUqF2e0Yvqfp8uNSWn
+ KZIpsGjqgxBbP3ipsIUh9jNOy+eRE/+FnPlAXM/FDR36j79Ma1gWgnD6W5dfxoqQ26b8zwA
+ euLWSld6zId4940CF1pWDVkjNCnuxvc9N0HQHpIjqyj+B6QMpV5Ycv1xfqGPk3uwS92MGFq
+ cqC5fP8Fs/YEqRoaJ51ow==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:hktV18Y+xIo=:AqXfyEKsL4pC/JlKBeBOxE
+ jzoH1Yx6RLpKHEMGeMWfY+EvwT7+AxTBMy146l/9wvwRcd5yoixyOaeUbE5EoFaH+XKgE4C+l
+ seJVVJztr+wGpTX+LB2jgLVe9OZLUWh2UCfcdA4Ki4MF1cRLY3RNsfcsJzKNbyXTVxZlnuAw7
+ U072omntnr4CzeghO9aP2SXfKTataS80hJh2K+xE4HyKQQhLS5b1mDPvJpNRvBdrPmQUjIds0
+ 6MQ/IDKBTIOORIezGEh0jF9mEpLfYdrxTqoeeW3kpxmeLCh0W4qHiwMIZYen/nfXqp8cN5Yic
+ BxDExFlBCdFFhQaQbRMj+zcx119etHBaO6GEvXZ0i80edFg3z6+gNeM3Tw6biGZ90PZuMFDpW
+ YRzztfZqQhGUpY0F2607J8jUvzVTED2S1+mL+rOwTlQ5XJVTmFqbsffg0ZdCPyyt2shBVaPyg
+ IaDZ6PubVd42kzrBQOcKugrC57wENJZloY/g+x/UwNYsMl5WH9/nMXdmGTMOYtuej1L37XsNj
+ DWNvm+vE9/LXSZOg5cL6tyVIbnCCFdzPJIIwLW1PO0Zx38Hjcmb98mMTfdzXEtsBPEWvq1d/0
+ DLJg2JAB/4KLNrV6SKdTjIWcuVbPKXT+0R3gtau9U/3ZU37kDPkRhXhBHFUkjOHVmw7qcZyrR
+ ZUF7rmqX3xCRkbuPyzB491WlJjlHYa+pRfOnAXdEW4esazyP5i2PC1271oOh22hCaXyR0uptt
+ g09UhNDoSRVZcZLnUj5D+cMByMeuo3LCyzN/G32N8Z+/PapTsp7P0bKbNs8BQWXP8i93QgZU1
+ E3oCMv6Tk8HYPCMFHdLtUiqFBjbrL5In2a4aVxVIGqX1i7tbKmHH2F3segaeyfqWqb6NJRGha
+ q/9W+1l5CdX+3OsA61rTLxo6a0bMGz/8ditGPXhKe1UcBhdEicegHrcd3frzC9SMdC42IfD6J
+ vLXWzobVLbqnHp0S3g4QbpxR4XRolqefsBdH6Nme4KQktdyv8aHipbYoNv0BkKHIllYuRwZuB
+ gnfdIDx+4uOAKUsg4vQDAJf9kwOhlgXFmMA4M1tPZ+TNjYZU1c0ZPAVr9Gp2dW5CamhDP83xB
+ sTUcn2eWSuBbIE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 22 Nov 2021, Junio C Hamano wrote:
+--8323328-1944441444-1637618907=:63
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Junio C Hamano <gitster@pobox.com> writes:
+Hi =C3=86var,
+
+On Mon, 22 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> On Mon, Nov 22 2021, Johannes Schindelin wrote:
 >
-> > Carlo Arenas <carenas@gmail.com> writes:
+> > On Sat, 20 Nov 2021, Elijah Newren wrote:
 > >
-> >> On Mon, Nov 22, 2021 at 9:27 AM Junio C Hamano <gitster@pobox.com> wr=
-ote:
+> >> On Fri, Nov 19, 2021 at 3:03 PM Johannes Schindelin via GitGitGadget
+> >> <gitgitgadget@gmail.com> wrote:
+> >> >
+> >> > tl;dr: This series contributes the core part of the Scalar command =
+to
+> >> > the Git project. This command provides an opinionated way to create
+> >> > and configure Git repositories with a focus on very large
+> >> > repositories.
 > >>
-> >>> I had an impression that it was claimed that without this, the other
-> >>> weatherbaloon for "for (type var=3D..." would not fly in some of the
-> >>> jobs we have at CI?
-> >>
-> >> It wouldn't if we have a CI job that tests with gcc < 5 but the last
-> >> version of that job died with travis-ci.org
+> >> I thought after
+> >> https://lore.kernel.org/git/nycvar.QRO.7.76.6.2110062241150.395@tvgsb=
+ejvaqbjf.bet/
+> >> that you'd update merge.renames to true on what is now patch 7.  Did
+> >> you end up changing your mind, or was this overlooked?
 > >
-> > I was wondering how Dscho's test was not failing, and that is an
-> > easy answer to that question ;-)
+> > Oops! Thank you so much for the reminder.
 > >
-> > If we wanted to resurrect that CI job, we can always add it in the
-> > CI definition anyway, so I am OK with that, too.
+> > Will fix. I do not plan on sending out a new iteration for a few more =
+days
+> > because I do not want to send lots of patches to the list right now,
+> > reviewer bandwidth seems to be stretched quite a bit already.
 >
-> But if we were to do so, perhaps we'd want something like what I
-> gave at https://lore.kernel.org/git/xmqqy25lwa86.fsf@gitster.g/ in
-> its place to avoid confusing people.
+> Bandwidth which is further stretched by continuing to send updates to
+> this topic while ignoring outstanding feedback.
 
-That sounds like a good course of action to me.
+The feedback you are referring to is probably the repeated demand to
+integrate Scalar deeply into Git's build process.
 
-Please note that the MSVC-related adjustment of the `FLEX_ARRAY` block is
-still needed, I think.
+As I have tired of replying, it is not the time for that yet.
+
+Repeating that demand does not make it more sensible, nor does it
+magically make it the right time.
+
+Nor is it credible to call the build "broken" when it does what it is
+supposed to do, thank you very much.
 
 Ciao,
-Dscho
+Johannes
 
-P.S.: In case it was not clear yet, I am in favor of going forward with
-the C99 weather balloon. We should try to move in that direction, slowly
-and gently, as is our custom.
+--8323328-1944441444-1637618907=:63--
