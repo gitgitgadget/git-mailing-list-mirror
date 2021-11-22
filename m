@@ -2,56 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BBC2C433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2191C433FE
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:33:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235025AbhKVWgZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 17:36:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43778 "EHLO
+        id S233639AbhKVWg1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 17:36:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233472AbhKVWgS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 17:36:18 -0500
+        with ESMTP id S233768AbhKVWgW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 17:36:22 -0500
 Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6771C061748
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:11 -0800 (PST)
-Received: by mail-pl1-x64a.google.com with SMTP id h1-20020a170902f54100b00143c6409dbcso525182plf.5
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:11 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E794C061756
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:13 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id p24-20020a170902a41800b001438d6c7d71so8206968plq.7
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=GrmFINVUdKN4GO230pAsYoAhNxEwlrap+M0B4LV6Vrk=;
-        b=tQABEP5COMkfMwvB66fjvfgrvrxkuGaNtFzAxJPo4nmvpizO5bP1+QSViKMY3t/DXz
-         LYznPwnvzhKI43gu3EOaCmNn2zDUq1lMlGT2YCXAXzxyrI0S6t8nDt/t1Gm1nk6ebWwN
-         JjmxIh1ESdC94ZWy6hMaukZwtlhLN1dtMdO3CJOwAkvvLQGOoyUkCkAtr2wmI0rSDXJR
-         BPbF6McKjppOPXcTtmrwG5uqrcao/XBq3coxGD/AUCZ+LSsEpsrBIqELp8WQZC4L7S2V
-         CzJR1c7RFMxowXs6+b9t/EGLN5w+8DHijcPfBmiyZj9yo3qFVIFxUt+8qQpSkkBhpbMi
-         k8Cg==
+        bh=ykyo9fXTA8SPwq7tZ4PwRLchOOHBpHekhTtdKcDZNaI=;
+        b=M9icJTJRaS3kvuqsd11QXwr68n8IGi4q+WoER5L91NNpN6E/T5ueCxHhoS1j32+AyX
+         cjJtRPTEad6E8jiQmYmoxH6Bd1W/YoEls4pUoBdSLr9JceN04/1pKluS+oJ9n516BksW
+         oNyjXpnKsyfDV7Utz3HMsiDgHaInHI5XQxk8LYsIussnsCQO/5chfbsO5S2yr2xnJRl3
+         FeugDuRm9rHDKoXA2hAYaF2Ik5uyyCB3ew8kCzLWR1YvYy2JkzIS2e8XC6O1nGh9CoTs
+         7SraHh8zDSERqG7Iqwm0okbiWu+J/MpfM3Plp3cwWrkmh6A2mi6AHES9z+SQf45Ytnxm
+         zx6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=GrmFINVUdKN4GO230pAsYoAhNxEwlrap+M0B4LV6Vrk=;
-        b=bMZFq6JYgoLH+eKrTYOMfoYVLQ7sUSf5bGUTIujxf3boN56EPGqJs8H5LJgw+So0tm
-         KegNi9oiKYdXfDUGDHptrRihpcrQXzgKJZXXx8QQh1lwkBQ9X2vrGDdyS9vXY45yDIh4
-         66txrGQ79NeLLHIbVHT6MYnQPoFyYIw9k9faDwpni05wblDK3+XIfQBee6nCvXSAbUqa
-         +DiEIzokYR2bmIeIzuV8Iu4r1/ymtOQL84ND6JPB18Z8SIThx5lcoG6K9fmQabuTp3J3
-         ulgN0mW1wB/eHfd1wg7sa3w3NYt2fZLLTNfHoCRJ4P0YyatUqzrZJhIF7+91aUqLY4PW
-         hD/g==
-X-Gm-Message-State: AOAM531y4o0r1jTTwL+kh7Fk/SbgmhoCKRFonae8CPWqyXuYMFcvF5Xz
-        EtZOcylPXZe964vj4lo4qkY3nh+EZBBUy4l61Pb3c+jAoIwaRYtSjXvDi+vMUmgAidFzwCQsG2u
-        P5gjt3TJC1KJJVdljAZsfc83RRKbRYm5PrSphlp5kgk4RIs6klpYjuXSsuB2L+A8=
-X-Google-Smtp-Source: ABdhPJzlL7qTTywSoLcZBZLjgIdbN/ZntvdQnGnITyipPd3ULEUkz+MLPCUQqLHw/tAYXLiXlOEykWlLKLQLaA==
+        bh=ykyo9fXTA8SPwq7tZ4PwRLchOOHBpHekhTtdKcDZNaI=;
+        b=hV6/CUOWLwVSUnCmlku0Y2U5exb1vmS+ksSGkkuFfL6zkj6fQEpF7+TBLl9qpkru6S
+         EBA99o5WyozdphWU2SkinXlDx/KfTsG2SHPv4250MstnvuIbuf1lNj+Gi9fBvr5AJK67
+         w9X/GCBhTD8D+U1mrpWGBWF4dtVI+adKH3/K3+XQrrQx6qQZYaJOCxJIZU00AKx9JGTM
+         /0eZOT35Adl/lo+N5KIRA6Mvf0gvqLmk2Du0ZhopYCtbAV27aHG7LRbHQ2obwwDjqjx2
+         rEd6z2MpCdKxWlspi7TcGiQvpDV182HPz0Uzdio7iDNed/vLoMRylPKXrCTZDGb+ITHp
+         VEQw==
+X-Gm-Message-State: AOAM533bM4L9JuvVT1plj0CuOpvbMlRZE+6bHyjsld/Kq2q0EE/1zesi
+        FyfQaBEs+1S/atc+AVuAz3+MAEU7b40oT+ngqx7ZVR9ZyI75+JzPEIJHyY/ZgNygfeQiYkevxV5
+        B57xDSC3/rKoDg3vhR/DANpZfBnaJ6Rjvq2XZ5s7rVJtLazXEFtuv7aoYrGG+Xgg=
+X-Google-Smtp-Source: ABdhPJxP2SqJBP5tLzfFigQIgYPCvB6mxfQaTfwZ16gvrGG7l3yUa73rjP1Hil5WikDuS1TNqOF3vO570rW9uA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:314e:: with SMTP id
- ip14mr448299pjb.130.1637620391306; Mon, 22 Nov 2021 14:33:11 -0800 (PST)
-Date:   Mon, 22 Nov 2021 14:32:51 -0800
+ (user=chooglen job=sendgmr) by 2002:aa7:84d6:0:b0:49f:a996:b714 with SMTP id
+ x22-20020aa784d6000000b0049fa996b714mr433222pfn.10.1637620392905; Mon, 22 Nov
+ 2021 14:33:12 -0800 (PST)
+Date:   Mon, 22 Nov 2021 14:32:52 -0800
 In-Reply-To: <20211122223252.19922-1-chooglen@google.com>
-Message-Id: <20211122223252.19922-4-chooglen@google.com>
+Message-Id: <20211122223252.19922-5-chooglen@google.com>
 Mime-Version: 1.0
 References: <20211122223252.19922-1-chooglen@google.com>
 X-Mailer: git-send-email 2.34.0.rc2.393.gf8c9666880-goog
-Subject: [PATCH 3/4] branch: add --dry-run option to branch
+Subject: [PATCH 4/4] branch: add --recurse-submodules option for branch creation
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>,
@@ -63,237 +64,632 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When running "git branch --recurse-submodules topic", it would be useful
-to know whether or not 'topic' is a valid branch for all repositories.
-Currently there is no way to test this without actually creating the
-branch.
-
-Add a --dry-run option to branch creation that can check whether or not
-a branch name and start point would be valid for a repository without
-creating a branch. Refactor cmd_branch() to make the chosen action more
-obvious.
-
-Incidentally, fix an incorrect usage string that combined the 'list'
-usage of git branch (-l) with the 'create' usage; this string has been
-incorrect since its inception, a8dfd5eac4 (Make builtin-branch.c use
-parse_options., 2007-10-07).
+Add a --recurse-submodules option when creating branches so that `git
+branch --recurse-submodules topic` will create the "topic" branch in the
+superproject and all submodules. Guard this (and future submodule
+branching) behavior behind a new configuration value
+'submodule.propagateBranches'.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
-The --dry-run option is motivated mainly by --recurse-submodules. To my
-knowledge, there isn't a strong existing demand, but this might be
-mildly useful to some users.
+ Documentation/config/advice.txt    |   3 +
+ Documentation/config/submodule.txt |   9 ++
+ advice.c                           |   1 +
+ advice.h                           |   1 +
+ branch.c                           | 123 ++++++++++++++
+ branch.h                           |   6 +
+ builtin/branch.c                   |  28 +++-
+ builtin/submodule--helper.c        |  33 ++++
+ t/t3207-branch-submodule.sh        | 249 +++++++++++++++++++++++++++++
+ 9 files changed, 452 insertions(+), 1 deletion(-)
+ create mode 100755 t/t3207-branch-submodule.sh
 
- Documentation/git-branch.txt |  8 ++++++-
- branch.c                     |  6 ++---
- branch.h                     | 22 ++++++++++++++++++
- builtin/branch.c             | 44 ++++++++++++++++++++++++++----------
- t/t3200-branch.sh            | 13 +++++++++++
- 5 files changed, 77 insertions(+), 16 deletions(-)
-
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 5449767121..8cdc33c097 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -16,7 +16,7 @@ SYNOPSIS
- 	[--points-at <object>] [--format=<format>]
- 	[(-r | --remotes) | (-a | --all)]
- 	[--list] [<pattern>...]
--'git branch' [--track | --no-track] [-f] <branchname> [<start-point>]
-+'git branch' [--track | --no-track] [-f] [--dry-run | -n] <branchname> [<start-point>]
- 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
- 'git branch' --unset-upstream [<branchname>]
- 'git branch' (-m | -M) [<oldbranch>] <newbranch>
-@@ -205,6 +205,12 @@ This option is only applicable in non-verbose mode.
- --no-abbrev::
- 	Display the full sha1s in the output listing rather than abbreviating them.
+diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+index 063eec2511..e52262dc69 100644
+--- a/Documentation/config/advice.txt
++++ b/Documentation/config/advice.txt
+@@ -116,6 +116,9 @@ advice.*::
+ 	submoduleAlternateErrorStrategyDie::
+ 		Advice shown when a submodule.alternateErrorStrategy option
+ 		configured to "die" causes a fatal error.
++	submodulesNotUpdated::
++		Advice shown when a user runs a submodule command that fails
++		because `git submodule update` was not run.
+ 	addIgnoredFile::
+ 		Advice shown if a user attempts to add an ignored file to
+ 		the index.
+diff --git a/Documentation/config/submodule.txt b/Documentation/config/submodule.txt
+index ee454f8126..c318b849aa 100644
+--- a/Documentation/config/submodule.txt
++++ b/Documentation/config/submodule.txt
+@@ -72,6 +72,15 @@ submodule.recurse::
+ 	For these commands a workaround is to temporarily change the
+ 	configuration value by using `git -c submodule.recurse=0`.
  
-+-n::
-+--dry-run::
-+	Can only be used when creating a branch. If the branch creation
-+	would fail, show the relevant error message. If the branch
-+	creation would succeed, show nothing.
++submodule.propagateBranches::
++	[EXPERIMENTAL] A boolean that enables branching support with
++	submodules. This allows certain commands to accept
++	`--recurse-submodules` (`git branch --recurse-submodules` will
++	create branches recursively), and certain commands that already
++	accept `--recurse-submodules` will now consider branches (`git
++	switch --recurse-submodules` will switch to the correct branch
++	in all submodules).
 +
- -t::
- --track::
- 	When creating a new branch, set up `branch.<name>.remote` and
+ submodule.fetchJobs::
+ 	Specifies how many submodules are fetched/cloned at the same time.
+ 	A positive integer allows up to that number of submodules fetched
+diff --git a/advice.c b/advice.c
+index 1dfc91d176..e00d30254c 100644
+--- a/advice.c
++++ b/advice.c
+@@ -70,6 +70,7 @@ static struct {
+ 	[ADVICE_STATUS_HINTS]				= { "statusHints", 1 },
+ 	[ADVICE_STATUS_U_OPTION]			= { "statusUoption", 1 },
+ 	[ADVICE_SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE] = { "submoduleAlternateErrorStrategyDie", 1 },
++	[ADVICE_SUBMODULES_NOT_UPDATED] 		= { "submodulesNotUpdated", 1 },
+ 	[ADVICE_UPDATE_SPARSE_PATH]			= { "updateSparsePath", 1 },
+ 	[ADVICE_WAITING_FOR_EDITOR]			= { "waitingForEditor", 1 },
+ };
+diff --git a/advice.h b/advice.h
+index 601265fd10..a7521d6087 100644
+--- a/advice.h
++++ b/advice.h
+@@ -44,6 +44,7 @@ struct string_list;
+ 	ADVICE_STATUS_HINTS,
+ 	ADVICE_STATUS_U_OPTION,
+ 	ADVICE_SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE,
++	ADVICE_SUBMODULES_NOT_UPDATED,
+ 	ADVICE_UPDATE_SPARSE_PATH,
+ 	ADVICE_WAITING_FOR_EDITOR,
+ 	ADVICE_SKIPPED_CHERRY_PICKS,
 diff --git a/branch.c b/branch.c
-index f8b755513f..528cb2d639 100644
+index 528cb2d639..404766d01d 100644
 --- a/branch.c
 +++ b/branch.c
-@@ -206,9 +206,9 @@ N_("\n"
- "will track its remote counterpart, you may want to use\n"
- "\"git push -u\" to set the upstream config as you push.");
+@@ -8,6 +8,8 @@
+ #include "sequencer.h"
+ #include "commit.h"
+ #include "worktree.h"
++#include "submodule-config.h"
++#include "run-command.h"
  
--static void validate_branch_start(struct repository *r, const char *start_name,
--				  enum branch_track track,
--				  struct object_id *oid, char **full_ref)
-+void validate_branch_start(struct repository *r, const char *start_name,
-+			   enum branch_track track, struct object_id *oid,
-+			   char **full_ref)
+ struct tracking {
+ 	struct refspec_item spec;
+@@ -345,6 +347,127 @@ void create_branch(struct repository *r, const char *name,
+ 	free(real_ref);
+ }
+ 
++static int submodule_validate_branchname(struct repository *r, const char *name,
++					 const char *start_name, int force,
++					 int quiet, char **err_msg)
++{
++	int ret = 0;
++	struct child_process child = CHILD_PROCESS_INIT;
++	struct strbuf child_err = STRBUF_INIT;
++	child.git_cmd = 1;
++	child.err = -1;
++
++	prepare_other_repo_env(&child.env_array, r->gitdir);
++	strvec_pushl(&child.args, "branch", "--dry-run", NULL);
++	if (force)
++		strvec_push(&child.args, "--force");
++	if (quiet)
++		strvec_push(&child.args, "--quiet");
++	strvec_pushl(&child.args, name, start_name, NULL);
++
++	if ((ret = start_command(&child)))
++		return ret;
++	ret = finish_command(&child);
++	strbuf_read(&child_err, child.err, 0);
++	*err_msg = strbuf_detach(&child_err, NULL);
++	return ret;
++}
++
++static int submodule_create_branch(struct repository *r, const char *name,
++				   const char *start_oid,
++				   const char *start_name, int force,
++				   int reflog, int quiet,
++				   enum branch_track track, char **err_msg)
++{
++	int ret = 0;
++	struct child_process child = CHILD_PROCESS_INIT;
++	struct strbuf child_err = STRBUF_INIT;
++	child.git_cmd = 1;
++	child.err = -1;
++
++	prepare_other_repo_env(&child.env_array, r->gitdir);
++	strvec_pushl(&child.args, "submodule--helper", "create-branch", NULL);
++	if (force)
++		strvec_push(&child.args, "--force");
++	if (quiet)
++		strvec_push(&child.args, "--quiet");
++	if (reflog)
++		strvec_push(&child.args, "--create-reflog");
++	if (track == BRANCH_TRACK_ALWAYS || track == BRANCH_TRACK_EXPLICIT)
++		strvec_push(&child.args, "--track");
++
++	strvec_pushl(&child.args, name, start_oid, start_name, NULL);
++
++	if ((ret = start_command(&child)))
++		return ret;
++	ret = finish_command(&child);
++	strbuf_read(&child_err, child.err, 0);
++	*err_msg = strbuf_detach(&child_err, NULL);
++	return ret;
++}
++
++void create_submodule_branches(struct repository *r, const char *name,
++			       const char *start_name, int force, int reflog,
++			       int quiet, enum branch_track track)
++{
++	int i = 0;
++	char *branch_point = NULL;
++	struct repository *subrepos;
++	struct submodule *submodules;
++	struct object_id super_oid;
++	struct submodule_entry_list *submodule_entry_list;
++	char *err_msg = NULL;
++
++	validate_branch_start(r, start_name, track, &super_oid, &branch_point);
++
++	submodule_entry_list = submodules_of_tree(r, &super_oid);
++	CALLOC_ARRAY(subrepos, submodule_entry_list->entry_nr);
++	CALLOC_ARRAY(submodules, submodule_entry_list->entry_nr);
++
++	for (i = 0; i < submodule_entry_list->entry_nr; i++) {
++		submodules[i] = *submodule_from_path(
++			r, &super_oid,
++			submodule_entry_list->name_entries[i].path);
++
++		if (repo_submodule_init(
++			    &subrepos[i], r,
++			    submodule_entry_list->name_entries[i].path,
++			    &super_oid)) {
++			die(_("submodule %s: unable to find submodule"),
++			    submodules[i].name);
++			if (advice_enabled(ADVICE_SUBMODULES_NOT_UPDATED))
++				advise(_("You may try initializing the submodules using 'git checkout %s && git submodule update'"),
++				       start_name);
++		}
++
++		if (submodule_validate_branchname(
++			    &subrepos[i], name,
++			    oid_to_hex(
++				    &submodule_entry_list->name_entries[i].oid),
++			    force, quiet, &err_msg))
++			die(_("submodule %s: could not create branch '%s'\n\t%s"),
++			    submodules[i].name, name, err_msg);
++	}
++
++	create_branch(the_repository, name, start_name, force, 0, reflog, quiet,
++		      track);
++
++	for (i = 0; i < submodule_entry_list->entry_nr; i++) {
++		printf_ln(_("submodule %s: creating branch '%s'"),
++			  submodules[i].name, name);
++		if (submodule_create_branch(
++			    &subrepos[i], name,
++			    oid_to_hex(
++				    &submodule_entry_list->name_entries[i].oid),
++			    branch_point, force, reflog, quiet, track,
++			    &err_msg))
++			die(_("submodule %s: could not create branch '%s'\n\t%s"),
++			    submodules[i].name, name, err_msg);
++
++		repo_clear(&subrepos[i]);
++	}
++}
++
+ void remove_merge_branch_state(struct repository *r)
  {
- 	struct commit *commit;
- 	int explicit_tracking = 0;
+ 	unlink(git_path_merge_head(r));
 diff --git a/branch.h b/branch.h
-index 75cefcdcbd..d8e5ff4e28 100644
+index d8e5ff4e28..1b4a635a2f 100644
 --- a/branch.h
 +++ b/branch.h
-@@ -3,6 +3,7 @@
- 
- struct repository;
- struct strbuf;
-+struct object_id;
- 
- enum branch_track {
- 	BRANCH_TRACK_UNSPECIFIED = -1,
-@@ -17,6 +18,27 @@ extern enum branch_track git_branch_track;
- 
- /* Functions for acting on the information about branches. */
+@@ -76,6 +76,12 @@ void create_branch(struct repository *r,
+ 		   int force, int clobber_head_ok,
+ 		   int reflog, int quiet, enum branch_track track);
  
 +/*
-+ * Validates whether a ref is a valid starting point for a branch, where:
-+ *
-+ *   - r is the repository to validate the branch for
-+ *
-+ *   - start_name is the ref that we would like to test
-+ *
-+ *   - track is the tracking mode of the new branch. If tracking is
-+ *     explicitly requested, start_name must be a branch (because
-+ *     otherwise start_name cannot be tracked)
-+ *
-+ *   - oid is an out parameter containing the object_id of start_name
-+ *
-+ *   - full_ref is an out parameter containing the 'full' form of
-+ *     start_name e.g. refs/heads/main instead of main
-+ *
++ * Creates a new branch in repository and its submodules.
 + */
-+void validate_branch_start(struct repository *r, const char *start_name,
-+			   enum branch_track track, struct object_id *oid,
-+			   char **full_ref);
-+
++void create_submodule_branches(struct repository *r, const char *name,
++			       const char *start_name, int force, int reflog,
++			       int quiet, enum branch_track track);
  /*
-  * This sets the branch.<new_ref>.{remote,merge} config settings so that
-  * branch 'new_ref' tracks 'orig_ref'. This is called when branches are
+  * Check if 'name' can be a valid name for a branch; die otherwise.
+  * Return 1 if the named branch already exists; return 0 otherwise.
 diff --git a/builtin/branch.c b/builtin/branch.c
-index eb5c117a6e..5d4b9c82b4 100644
+index 5d4b9c82b4..6a16bdb1a3 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -27,7 +27,8 @@
+@@ -39,6 +39,8 @@ static const char * const builtin_branch_usage[] = {
  
- static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged]"),
--	N_("git branch [<options>] [-l] [-f] <branch-name> [<start-point>]"),
-+	N_("git branch [<options>] [-l] [<pattern>...]"),
-+	N_("git branch [<options>] [-f] [--dry-run | -n] <branch-name> [<start-point>]"),
- 	N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
- 	N_("git branch [<options>] (-m | -M) [<old-branch>] <new-branch>"),
- 	N_("git branch [<options>] (-c | -C) [<old-branch>] <new-branch>"),
-@@ -616,14 +617,14 @@ static int edit_branch_description(const char *branch_name)
+ static const char *head;
+ static struct object_id head_oid;
++static int recurse_submodules = 0;
++static int submodule_propagate_branches = 0;
  
- int cmd_branch(int argc, const char **argv, const char *prefix)
- {
--	int delete = 0, rename = 0, copy = 0, force = 0, list = 0;
--	int show_current = 0;
--	int reflog = 0, edit_description = 0;
--	int quiet = 0, unset_upstream = 0;
-+	/* possible actions */
-+	int delete = 0, rename = 0, copy = 0, force = 0, list = 0, create = 0,
-+	    unset_upstream = 0, show_current = 0, edit_description = 0;
-+	/* possible options */
-+	int reflog = 0, quiet = 0, dry_run = 0, icase = 0;
+ static int branch_use_color = -1;
+ static char branch_colors[][COLOR_MAXLEN] = {
+@@ -101,6 +103,15 @@ static int git_branch_config(const char *var, const char *value, void *cb)
+ 			return config_error_nonbool(var);
+ 		return color_parse(value, branch_colors[slot]);
+ 	}
++	if (!strcmp(var, "submodule.recurse")) {
++		recurse_submodules = git_config_bool(var, value);
++		return 0;
++	}
++	if (!strcasecmp(var, "submodule.propagateBranches")) {
++		submodule_propagate_branches = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	return git_color_default_config(var, value, cb);
+ }
+ 
+@@ -621,7 +632,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	int delete = 0, rename = 0, copy = 0, force = 0, list = 0, create = 0,
+ 	    unset_upstream = 0, show_current = 0, edit_description = 0;
+ 	/* possible options */
+-	int reflog = 0, quiet = 0, dry_run = 0, icase = 0;
++	int reflog = 0, quiet = 0, dry_run = 0, icase = 0,
++	    recurse_submodules_explicit = 0;
  	const char *new_upstream = NULL;
  	enum branch_track track;
  	struct ref_filter filter;
--	int icase = 0;
- 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
- 	struct ref_format format = REF_FORMAT_INIT;
- 
-@@ -670,6 +671,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+@@ -670,6 +682,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK(0, "points-at", &filter.points_at, N_("object"),
  			N_("print only branches of the object"), parse_opt_object_name),
  		OPT_BOOL('i', "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
++		OPT_BOOL(0, "recurse-submodules", &recurse_submodules_explicit, N_("recurse through submodules")),
  		OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
-+		OPT__DRY_RUN(&dry_run, N_("show whether the branch would be created")),
+ 		OPT__DRY_RUN(&dry_run, N_("show whether the branch would be created")),
  		OPT_END(),
- 	};
- 
-@@ -705,10 +707,15 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	    filter.reachable_from || filter.unreachable_from || filter.points_at.nr)
- 		list = 1;
- 
--	if (!!delete + !!rename + !!copy + !!new_upstream + !!show_current +
--	    list + edit_description + unset_upstream > 1)
-+	create = 1 - (!!delete + !!rename + !!copy + !!new_upstream +
-+		      !!show_current + !!list + !!edit_description +
-+		      !!unset_upstream);
-+	if (create < 0)
+@@ -713,9 +726,16 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	if (create < 0)
  		usage_with_options(builtin_branch_usage, options);
  
-+	if (dry_run && !create)
-+		die(_("--dry-run can only be used when creating branches"));
++	if (recurse_submodules_explicit && submodule_propagate_branches &&
++	    !create)
++		die(_("--recurse-submodules can only be used to create branches"));
+ 	if (dry_run && !create)
+ 		die(_("--dry-run can only be used when creating branches"));
+ 
++	recurse_submodules =
++		(recurse_submodules || recurse_submodules_explicit) &&
++		submodule_propagate_branches;
 +
  	if (filter.abbrev == -1)
  		filter.abbrev = DEFAULT_ABBREV;
  	filter.ignore_case = icase;
-@@ -844,7 +851,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		strbuf_addf(&buf, "branch.%s.merge", branch->name);
- 		git_config_set_multivar(buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPLACE);
- 		strbuf_release(&buf);
--	} else if (argc > 0 && argc <= 2) {
-+	} else if (create && argc > 0 && argc <= 2) {
-+		const char *branch_name = argv[0];
-+		const char *start_name = (argc == 2) ? argv[1] : head;
-+
- 		if (filter.kind != FILTER_REFS_BRANCHES)
- 			die(_("The -a, and -r, options to 'git branch' do not take a branch name.\n"
- 				  "Did you mean to use: -a|-r --list <pattern>?"));
-@@ -852,10 +862,20 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		if (track == BRANCH_TRACK_OVERRIDE)
- 			die(_("the '--set-upstream' option is no longer supported. Please use '--track' or '--set-upstream-to' instead."));
- 
--		create_branch(the_repository,
--			      argv[0], (argc == 2) ? argv[1] : head,
--			      force, 0, reflog, quiet, track);
-+		if (dry_run) {
-+			struct strbuf buf = STRBUF_INIT;
-+			char *unused_full_ref;
-+			struct object_id unused_oid;
- 
-+			validate_new_branchname(branch_name, &buf, force);
-+			validate_branch_start(the_repository, start_name, track,
-+					      &unused_oid, &unused_full_ref);
-+			strbuf_release(&buf);
-+			FREE_AND_NULL(unused_full_ref);
+@@ -874,6 +894,12 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 			FREE_AND_NULL(unused_full_ref);
+ 			return 0;
+ 		}
++		if (recurse_submodules) {
++			create_submodule_branches(the_repository, branch_name,
++						  start_name, force, reflog,
++						  quiet, track);
 +			return 0;
 +		}
-+		create_branch(the_repository, branch_name, start_name, force, 0,
-+			      reflog, quiet, track);
+ 		create_branch(the_repository, branch_name, start_name, force, 0,
+ 			      reflog, quiet, track);
  	} else
- 		usage_with_options(builtin_branch_usage, options);
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 6298cbdd4e..3ea1e8cc96 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -20,6 +20,7 @@
+ #include "diff.h"
+ #include "object-store.h"
+ #include "advice.h"
++#include "branch.h"
  
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 6bf95a1707..653891736a 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -59,6 +59,19 @@ test_expect_success 'git branch --force abc should succeed when abc exists' '
- 	test_cmp expect actual
- '
+ #define OPT_QUIET (1 << 0)
+ #define OPT_CACHED (1 << 1)
+@@ -2983,6 +2984,37 @@ static int module_set_branch(int argc, const char **argv, const char *prefix)
+ 	return !!ret;
+ }
  
-+test_expect_success 'git branch --dry-run abc should fail when abc exists' '
-+	test_must_fail git branch --dry-run abc
++static int module_create_branch(int argc, const char **argv, const char *prefix)
++{
++	enum branch_track track;
++	int quiet = 0, force = 0, reflog = 0;
++
++	struct option options[] = {
++		OPT__QUIET(&quiet, N_("print only error messages")),
++		OPT__FORCE(&force, N_("force creation"), 0),
++		OPT_BOOL(0, "create-reflog", &reflog,
++			 N_("create the branch's reflog")),
++		OPT_SET_INT('t', "track", &track,
++			    N_("set up tracking mode (see git-pull(1))"),
++			    BRANCH_TRACK_EXPLICIT),
++		OPT_END()
++	};
++	const char *const usage[] = {
++		N_("git submodule--helper create-branch [-f|--force] [--create-reflog] [-q|--quiet] [-t|--track] <name> <start_oid> <start_name>"),
++		NULL
++	};
++
++	argc = parse_options(argc, argv, prefix, options, usage, 0);
++
++	if (argc != 3)
++		usage_with_options(usage, options);
++
++	create_branch(the_repository, argv[0], argv[1], force, 0, reflog, quiet,
++		      BRANCH_TRACK_NEVER);
++	setup_tracking(argv[0], argv[2], track, quiet, 0);
++
++	return 0;
++}
+ struct add_data {
+ 	const char *prefix;
+ 	const char *branch;
+@@ -3379,6 +3411,7 @@ static struct cmd_struct commands[] = {
+ 	{"config", module_config, 0},
+ 	{"set-url", module_set_url, 0},
+ 	{"set-branch", module_set_branch, 0},
++	{"create-branch", module_create_branch, 0},
+ };
+ 
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+diff --git a/t/t3207-branch-submodule.sh b/t/t3207-branch-submodule.sh
+new file mode 100755
+index 0000000000..14ff066e91
+--- /dev/null
++++ b/t/t3207-branch-submodule.sh
+@@ -0,0 +1,249 @@
++#!/bin/sh
++
++test_description='git branch submodule tests'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-rebase.sh
++
++test_expect_success 'setup superproject and submodule' '
++	git init super &&
++	test_commit foo &&
++	git init sub-upstream &&
++	test_commit -C sub-upstream foo &&
++	git -C super submodule add ../sub-upstream sub &&
++	git -C super commit -m "add submodule" &&
++	git -C super config submodule.propagateBranches true
 +'
 +
-+test_expect_success 'git branch --dry-run --force abc should succeed when abc exists' '
-+	git branch --dry-run --force abc
++cleanup_branches() {
++	super_dir="$1"
++	shift
++	(
++		cd "$super_dir" &&
++		git checkout main &&
++		for branch_name in "$@"; do
++			git branch -D "$branch_name"
++			git submodule foreach "(git checkout main && git branch -D $branch_name) || true"
++		done
++	)
++} >/dev/null 2>/dev/null
++
++# Test the argument parsing
++test_expect_success '--recurse-submodules should create branches' '
++	test_when_finished "cleanup_branches super branch-a" &&
++	(
++		cd super &&
++		git branch --recurse-submodules branch-a &&
++		git rev-parse --abbrev-ref branch-a &&
++		git -C sub rev-parse --abbrev-ref branch-a
++	)
 +'
 +
-+test_expect_success 'git branch --dry-run def should not create a branch' '
-+	git branch --dry-run def &&
-+	test_must_fail git rev-parse def
++test_expect_success '--recurse-submodules should be ignored if submodule.propagateBranches is false' '
++	test_when_finished "cleanup_branches super branch-a" &&
++	(
++		cd super &&
++		git -c submodule.propagateBranches=false branch --recurse-submodules branch-a &&
++		git rev-parse branch-a &&
++		test_must_fail git -C sub rev-parse branch-a
++	)
 +'
 +
- test_expect_success 'git branch a/b/c should create a branch' '
- 	git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c
- '
++test_expect_success '--recurse-submodules should fail when not creating branches' '
++	test_when_finished "cleanup_branches super branch-a" &&
++	(
++		cd super &&
++		git branch --recurse-submodules branch-a &&
++		test_must_fail git branch --recurse-submodules -D branch-a &&
++		# Assert that the branches were not deleted
++		git rev-parse --abbrev-ref branch-a &&
++		git -C sub rev-parse --abbrev-ref branch-a
++	)
++'
++
++test_expect_success 'should respect submodule.recurse when creating branches' '
++	test_when_finished "cleanup_branches super branch-a" &&
++	(
++		cd super &&
++		git -c submodule.recurse=true branch branch-a &&
++		git rev-parse --abbrev-ref branch-a &&
++		git -C sub rev-parse --abbrev-ref branch-a
++	)
++'
++
++test_expect_success 'should ignore submodule.recurse when not creating branches' '
++	test_when_finished "cleanup_branches super branch-a" &&
++	(
++		cd super &&
++		git branch --recurse-submodules branch-a &&
++		git -c submodule.recurse=true branch -D branch-a &&
++		test_must_fail git rev-parse --abbrev-ref branch-a &&
++		git -C sub rev-parse --abbrev-ref branch-a
++	)
++'
++
++# Test branch creation behavior
++test_expect_success 'should create branches based off commit id in superproject' '
++	test_when_finished "cleanup_branches super branch-a branch-b" &&
++	(
++		cd super &&
++		git branch --recurse-submodules branch-a &&
++		git checkout --recurse-submodules branch-a &&
++		git -C sub rev-parse HEAD >expected &&
++		# Move the tip of sub:branch-a so that it no longer matches the commit in super:branch-a
++		git -C sub checkout branch-a &&
++		test_commit -C sub bar &&
++		# Create a new branch-b branch with start-point=branch-a
++		git branch --recurse-submodules branch-b branch-a &&
++		git rev-parse branch-b &&
++		git -C sub rev-parse branch-b >actual &&
++		# Assert that the commit id of sub:second-branch matches super:branch-a and not sub:branch-a
++		test_cmp expected actual
++	)
++'
++
++test_expect_success 'should not create any branches if branch is not valid for all repos' '
++	test_when_finished "cleanup_branches super branch-a" &&
++	(
++		cd super &&
++		git -C sub branch branch-a &&
++		test_must_fail git branch --recurse-submodules branch-a 2>actual &&
++		test_must_fail git rev-parse branch-a &&
++
++		cat >expected <<EOF &&
++fatal: submodule sub: could not create branch ${SQ}branch-a${SQ}
++	fatal: A branch named ${SQ}branch-a${SQ} already exists.
++
++EOF
++		test_cmp expected actual
++	)
++'
++
++test_expect_success 'should create branches if branch exists and --force is given' '
++	test_when_finished "cleanup_branches super branch-a" &&
++	(
++		cd super &&
++		git -C sub rev-parse HEAD >expected &&
++		test_commit -C sub baz &&
++		git -C sub branch branch-a HEAD~1 &&
++		git branch --recurse-submodules --force branch-a &&
++		git rev-parse branch-a &&
++		# assert that sub:branch-a was moved
++		git -C sub rev-parse branch-a >actual &&
++		test_cmp expected actual
++	)
++'
++
++test_expect_success 'should create branch when submodule is in .git/modules but not .gitmodules' '
++	test_when_finished "cleanup_branches super branch-a branch-b branch-c" &&
++	(
++		cd super &&
++		git branch branch-a &&
++		git checkout -b branch-b &&
++		git submodule add ../sub-upstream sub2 &&
++		# branch-b now has a committed submodule not in branch-a
++		git commit -m "add second submodule" &&
++		git checkout branch-a &&
++		git branch --recurse-submodules branch-c branch-b &&
++		git rev-parse branch-c &&
++		git -C sub rev-parse branch-c &&
++		git checkout --recurse-submodules branch-c &&
++		git -C sub2 rev-parse branch-c
++	)
++'
++
++test_expect_success 'should set up tracking of local branches with track=always' '
++	test_when_finished "cleanup_branches super branch-a" &&
++	(
++		cd super &&
++		git -c branch.autoSetupMerge=always branch --recurse-submodules branch-a main &&
++		git -C sub rev-parse main &&
++		test "$(git -C sub config branch.branch-a.remote)" = . &&
++		test "$(git -C sub config branch.branch-a.merge)" = refs/heads/main
++	)
++'
++
++test_expect_success 'should set up tracking of local branches with explicit track' '
++	test_when_finished "cleanup_branches super branch-a" &&
++	(
++		cd super &&
++		git branch --track --recurse-submodules branch-a main &&
++		git -C sub rev-parse main &&
++		test "$(git -C sub config branch.branch-a.remote)" = . &&
++		test "$(git -C sub config branch.branch-a.merge)" = refs/heads/main
++	)
++'
++
++test_expect_success 'should not set up unnecessary tracking of local branches' '
++	test_when_finished "cleanup_branches super branch-a" &&
++	(
++		cd super &&
++		git branch --recurse-submodules branch-a main &&
++		git -C sub rev-parse main &&
++		test "$(git -C sub config branch.branch-a.remote)" = "" &&
++		test "$(git -C sub config branch.branch-a.merge)" = ""
++	)
++'
++
++test_expect_success 'setup remote-tracking tests' '
++	(
++		cd super &&
++		git branch branch-a &&
++		git checkout -b branch-b &&
++		git submodule add ../sub-upstream sub2 &&
++		# branch-b now has a committed submodule not in branch-a
++		git commit -m "add second submodule"
++	) &&
++	(
++		cd sub-upstream &&
++		git branch branch-a
++	) &&
++	git clone --branch main --recurse-submodules super super-clone &&
++	git -C super-clone config submodule.propagateBranches true
++'
++
++test_expect_success 'should not create branch when submodule is not in .git/modules' '
++	# The cleanup needs to delete sub2:branch-b in particular because main does not have sub2
++	test_when_finished "git -C super-clone/sub2 branch -D branch-b && \
++		cleanup_branches super-clone branch-a branch-b" &&
++	(
++		cd super-clone &&
++		# This should succeed because super-clone has sub.
++		git branch --recurse-submodules branch-a origin/branch-a &&
++		# This should fail because super-clone does not have sub2.
++		test_must_fail git branch --recurse-submodules branch-b origin/branch-b 2>actual &&
++		cat >expected <<-EOF &&
++		fatal: submodule sub: unable to find submodule
++		You may reinitialize the submodules using ${SQ}git checkout origin/branch-b && git submodule update${SQ}
++		EOF
++		test_must_fail git rev-parse branch-b &&
++		test_must_fail git -C sub rev-parse branch-b &&
++		# User can fix themselves by initializing the submodule
++		git checkout origin/branch-b &&
++		git submodule update &&
++		git branch --recurse-submodules branch-b origin/branch-b
++	)
++'
++
++test_expect_success 'should set up tracking of remote-tracking branches' '
++	test_when_finished "cleanup_branches super-clone branch-a" &&
++	(
++		cd super-clone &&
++		git branch --recurse-submodules branch-a origin/branch-a &&
++		test "$(git -C sub config branch.branch-a.remote)" = origin &&
++		test "$(git -C sub config branch.branch-a.merge)" = refs/heads/branch-a
++	)
++'
++
++test_expect_success 'should not fail when unable to set up tracking in submodule' '
++	test_when_finished "cleanup_branches super-clone branch-b" &&
++	(
++		cd super-clone &&
++		git branch --recurse-submodules branch-b origin/branch-b
++	)
++'
++
++test_done
 -- 
 2.33.GIT
 
