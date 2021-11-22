@@ -2,110 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BA90C433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 21:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E666BC433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 21:50:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233703AbhKVVrE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 16:47:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60650 "EHLO
+        id S235622AbhKVVxn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 16:53:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231418AbhKVVrC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 16:47:02 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38CDFC061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 13:43:55 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id 133so16886047wme.0
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 13:43:55 -0800 (PST)
+        with ESMTP id S230366AbhKVVxm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 16:53:42 -0500
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93419C061574
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 13:50:35 -0800 (PST)
+Received: by mail-io1-xd34.google.com with SMTP id 14so25191882ioe.2
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 13:50:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=JHe/oVud/qxIqh6EiHr+HrGQtAFfvbsp7UWFLPBXU/w=;
-        b=NKtqBtV/JjGOt1tYbsaeDjPW9si1qJlFG/Xv1zTKSXzM65lrGr99Hj2xpbnizf1ZJ6
-         eu0hB8VK0MVKsqG5w1EWGtE6WvNegcrxpXCvASXsvhYjQvCb5i5z810jtCjMkmB4wIRw
-         RAIHNNXwfIYfzhHzRd9SWjRaBtqWvEdjW+qIsXRyJUltOTD1qH/kd+d3PXetVPsCZ+QT
-         ZqCmtqBvye6mWBk8qQ1BuYu1gdONR+FkombEWRH4cJtYfOnATO3MMCzhI1wcPdSfMUhX
-         QuAQ/x0U62oq67BpDEYBoIlQcNjYCRjarYsxLPbfUJ5IGqsnv9VygDCVkg1HGXpzlicv
-         mH7g==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=bHzXVORaI0MdEeLQd8Y5ARG8IBoPeticYf/b92NHslg=;
+        b=mMgf2CjQmRHEomxkM0Lv7MCkMreRBtO9Vt75yqdwWxHCVJN8rCu45YBEXNbp9NXiAK
+         CvoB8m/ZBg0A/QRGh3poHNIVIkBBymJN6DPq7wT8kmrJqbesHKQVzEBvuVeOY8orm/FJ
+         7Szzy0Wyd4ecQeivYTj957OAuKBVnoRdc4D4ysNQ5gw+iFQ8dgBzxfbhYAJrPq7NE4sp
+         2SO3MdOIV7Q+fgTRPmLGDxGqT80brNuFlf2OCLzF/EQeMg159YUeW4vKdvwNzOxpXyDs
+         CmMSzeBwtircfMn2ltPav5A7+6fE6ubMjuLgMTaJkEINobcOa3la9nfH3Ir73z/XjzZE
+         CaVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=JHe/oVud/qxIqh6EiHr+HrGQtAFfvbsp7UWFLPBXU/w=;
-        b=4w5ZdAmjC6V5Cf1MUBpf2uBTFknQY3T6rBPVbcnu73SYdwUykHKYUk1pMeg9tBE/us
-         xtXi3hQn+gY6gxwj9hOw3+s62MITdzcRUILVmafzMEl0qmoZDLGhfhU9BLjWz5XIzrN8
-         +Eu1xp/fiUBt4n5EW1sJfyBQscZGOOXTQ6+oW0Qkrl94ED2ArVS85ePmezYFSYr88xwY
-         V2vkAKs+SdST+WS3AlI6hHMwbhgObKwBsm7e1zrrOC0+wQ1S0V+PQI3e6FXG8YuaRIAC
-         3TvryqQOXfMhc13pfBu+jErv/IpoH/Lfd2UU7n5YhfvJgWfWhKpayock2RTS9ta+Q9W1
-         Bffg==
-X-Gm-Message-State: AOAM533fR+AaU0I41RfYV1WgcRNOqeTR3ZNP5Et2KQy0EyXAl1eT5vKv
-        eqSa+1LaohMaVvtFujh6REE=
-X-Google-Smtp-Source: ABdhPJz8Xn8i1aKQ9gUAs/utvZJdLPv/Yjjme88rl97DpwyYagMGuK8Z0TK0UAfGAhxDoVk99j4oyA==
-X-Received: by 2002:a1c:f414:: with SMTP id z20mr392196wma.17.1637617433851;
-        Mon, 22 Nov 2021 13:43:53 -0800 (PST)
-Received: from [192.168.1.240] ([31.185.185.186])
-        by smtp.gmail.com with ESMTPSA id s13sm23404155wmc.47.2021.11.22.13.43.53
+        bh=bHzXVORaI0MdEeLQd8Y5ARG8IBoPeticYf/b92NHslg=;
+        b=386+lu1X6TKm+1uMAORC04re1f8h1dWkkqL66NdJN47795g6yb/vyN0FL00T5joqR0
+         vOJFPMH827kk4zHxEW8RUPtlkRm/uvgFXStsTQ9riVGT9cjNElLQMe1dRWcnChxD+RlO
+         3nXu4zZ3I3R2Q9+8kqnKIaczLQrtAx0yW5Jue9leoC7xS+g9PTz1rYVuALUe+DB5JmUH
+         txhMtu2srQbxhsZhZok0MriR3dWkQsrPkmS2VBCfrAYlFXTYcniyQPyBmJdJZeMmOFCg
+         Y4pBKwkvg8NAnuHC5sNLbMtjUihS4YgzbFcVT+bejDXvLoUW/oFYCWcMYisZ1rYJWsgO
+         bZAQ==
+X-Gm-Message-State: AOAM531DD/RP2sTsXQ2WEl1SNpjpgCysII5ptHZVtCgc+nC3k6aOJg+S
+        frIchTWk59vhseH8hiYrAJHFXHFC/wA=
+X-Google-Smtp-Source: ABdhPJxyTnLRPKnL7vMtDsE6ERX8GAyGkBq7+oFltdOp1q3mRPXUmBNFUTDgElclOsrZ9BARirEUeg==
+X-Received: by 2002:a05:6638:349e:: with SMTP id t30mr221339jal.49.1637617834518;
+        Mon, 22 Nov 2021 13:50:34 -0800 (PST)
+Received: from Derricks-MBP.attlocal.net ([2600:1700:e72:80a0:e1db:bcd3:11fe:659a])
+        by smtp.gmail.com with ESMTPSA id o7sm4552589ilo.15.2021.11.22.13.50.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Nov 2021 13:43:53 -0800 (PST)
-Message-ID: <04ab7301-ea34-476c-eae4-4044fef74b91@gmail.com>
-Date:   Mon, 22 Nov 2021 21:43:51 +0000
+        Mon, 22 Nov 2021 13:50:33 -0800 (PST)
+Subject: Re: preparing for 2.34.1
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqr1b8gkhg.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <6cc0bc51-cc28-989c-d666-75b707f2c080@gmail.com>
+Date:   Mon, 22 Nov 2021 16:50:32 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Update to Git 2.34.0 breaks application
-Content-Language: en-GB-large
-To:     Alexander Veit <alexander.veit@gmx.net>, git@vger.kernel.org
-Cc:     thomas.wolf@paranor.ch,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
-References: <ee302c98-da27-da43-e684-c7ec8b225360@gmx.net>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <ee302c98-da27-da43-e684-c7ec8b225360@gmx.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <xmqqr1b8gkhg.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex
-
-Thanks for the report
-
-On 22/11/2021 08:42, Alexander Veit wrote:
-> After an update from Git 2.25.1 to 2.34.0 the Java application that uses 
-> the Eclipse JGit library freezes.
+On 11/22/21 12:37 PM, Junio C Hamano wrote:
+> There are a few topics [*] to fix regressions introduced in the
+> previous cycle, which should be in 2.34.1 and I've merged them to
+> 'master'. I hope we can merge them to 'maint' (which now point at
+> 2.34) and tag 2.34.1 in a few days.
 > 
-> Strace suggests that the JVM receives a SIGTTOU from the child process 
-> "git config --system --edit" created with java.lang.ProcessBuilder.
-> 
-> Upstream[1] has identified 3d411afa[2] as the possible commit that 
-> introduced the problem.
-> 
-> The problem does not occur on all Linux systems.
+> After that, in yet another few days, we will see most of the stalled
+> topics ejected from the tree, the tip of 'next' rewound, and we will
+> start the cycle toward 2.35 by starting to take new topics, by the
+> beginning of the next week at the latest.
 
-I think the problem is possibly that git is calling tcsetattr() from a 
-background process group[1]. A possible fix would be to call tcgetpgrp() 
-after opening /dev/tty to see if git is in the foreground process group.
+There is a patch deep in a thread [1] that is a regression
+in 2.34.0 that would be good to include in this release. It
+fixes a sparse-checkout bug via a simple revert (plus a new
+test).
 
-Best Wishes
+Sorry that the patch was buried deep and was easy to miss.
 
-Phillip
+[1] https://lore.kernel.org/git/72fffbff-16f7-fa17-b212-67aae9e1b034@gmail.com/
 
-[1] https://www.man7.org/linux/man-pages/man3/tcsetattr.3p.html
-
-> -Alex
-> 
-> Environment:
-> OS: Linux Mint 20
-> Kernel: 5.4.0-90-generic
-> Git 2.34.0 from http://ppa.launchpad.net/git-core/ppa/ubuntu
-> Java: OpenJDK 64-Bit Server VM AdoptOpenJDK (build 11.0.10+9, mixed mode)
-> 
-> 
-> Ref.:
-> [1] https://bugs.eclipse.org/bugs/show_bug.cgi?id=577358
-> [2] 
-> https://github.com/git/git/commit/3d411afabc9a96f41d47c07d6af6edda3d29ec92#diff-01b59b6a71e42b9c1251ffbf76a1119b965be087a78538e80e01f9239c8e5880 
-> 
+Thanks,
+-Stolee
