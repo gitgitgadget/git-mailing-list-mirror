@@ -2,96 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70C9FC433FE
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 11:15:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C4CFC433EF
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 11:45:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236506AbhKVLSo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 06:18:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58118 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235437AbhKVLSo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 06:18:44 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3C7EC061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 03:15:37 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id r11so75109151edd.9
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 03:15:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=oRqkha2zcPXobexX3TvHdiE0oDyP9V6kVplNE0USsfg=;
-        b=Hz4gNo0HKaAhDHntamm5wp/OUGRH0yQdQq5MSuDQvJBNh5lt6JRw9/ChT3djtzLaSp
-         fzG5QzG7IugYC76KYJq/UkSrioAvgEiefpXc8jamtjpE4nJiS4X9UOlPn/aW+O0ipO1F
-         jmmd/55WhVmugD8RzVLBk4uixgA+6Clj6t0U3jlV8piA8Nq+GSvtOZPO7kd3Z76lGT2w
-         /CIKl0FvWw/oCX1TIszubyMAqbppsdMHTdantBCmVIUnXW1rF6rBewiDtuf5o5einzoN
-         KrYxi46ssMoxcYAxBKh7vwrsY50A4V5NkIL1Xzg6xrVhVIOLdBVY5gF5J8IJWTicsZtd
-         24uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=oRqkha2zcPXobexX3TvHdiE0oDyP9V6kVplNE0USsfg=;
-        b=yWaBnp4/u+tTocg+ISEUvuIYcjUcIlFCp3wd1yyklaw56gOAd6P3iYQtYe8QhBuxwQ
-         4EDQSn4fPrnQHQlcz+Ld6R9ZDxyT48WLswie2UTkTzmBUmEpUgmTiBQYQtAGuNHw/uLq
-         5f7c+OHm+U+M5w8b5TH4LESSQI59SorID9gyurD9BDBFK7iifAl/eanJo3nDyGDF+dLu
-         k6eiaXn14SxW/NZWGReh93s5hDShfilcLvc4VIz+8T6Wzn2ggxDSNIUxef2i6ZPokNqL
-         5K/jB6ENz8QiQ2M+uzUWEgfAn1QEThLWHe35gvOFW9cUtaA+HcQFIB4sZ2dh0fxcUVvW
-         lkGA==
-X-Gm-Message-State: AOAM532nGhztwmLhwMPISsuhAgjZ04Mam3kCCA0sGZLVQZtd2ZhaQbH3
-        5Vzem8NkUTPP7GanjcJnDQohPCjCTO0=
-X-Google-Smtp-Source: ABdhPJyTfEUAS2en1H1f5vVD1FMej/Az3RplE4JA9A67AE/s7CnY28FFDSut/6ivuf6bFWTf5srkig==
-X-Received: by 2002:a05:6402:1450:: with SMTP id d16mr64898960edx.144.1637579736098;
-        Mon, 22 Nov 2021 03:15:36 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ga37sm3200038ejc.65.2021.11.22.03.15.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Nov 2021 03:15:35 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mp7IM-000zHv-Fq;
-        Mon, 22 Nov 2021 12:15:34 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     congdanhqx@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        peff@peff.net
-Subject: Re: [PATCH v2 1/1] ls-tree.c: support `--oid-only` option for
- "git-ls-tree"
-Date:   Mon, 22 Nov 2021 12:14:14 +0100
-References: <211119.86wnl42ri2.gmgdl@evledraar.gmail.com>
- <20211122074538.87255-1-dyroneteng@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <20211122074538.87255-1-dyroneteng@gmail.com>
-Message-ID: <211122.8635no1lwp.gmgdl@evledraar.gmail.com>
+        id S239129AbhKVLsF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 06:48:05 -0500
+Received: from mout.gmx.net ([212.227.15.19]:51459 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237014AbhKVLsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 06:48:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637581480;
+        bh=zc8fnnycrgvn6/Bn3SScgiwjmAJ9TIbjbhnh4HVw35c=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ZPYr2dcisnB+M+ddyQby7BLh7JX8Z0lUGciqmy9gbcvV1ukXqMU4ElhoTVLhYIB7m
+         winxfPIhtINdpC4qV07HaYOqN/jeSJyAlIjB24R0AabmdhxpIOBKx91k3gEW63Jj8D
+         00a8TbB4viVRDHpf3HD9SQtTr+lMxr491tAA4blw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N8XPn-1mbdKj1VdB-014Rkx; Mon, 22
+ Nov 2021 12:44:40 +0100
+Date:   Mon, 22 Nov 2021 12:44:37 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/1] git-compat-util: add a test balloon for C99
+ support
+In-Reply-To: <xmqqk0h7423v.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2111221242320.63@tvgsbejvaqbjf.bet>
+References: <20211114211622.1465981-1-sandals@crustytoothpaste.net> <20211114211622.1465981-2-sandals@crustytoothpaste.net> <nycvar.QRO.7.76.6.2111161129120.21127@tvgsbejvaqbjf.bet> <xmqqk0h7423v.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:i878/0lqznpIVnBNPFVs2Fjv5DOfDO5rK9dM+RXOYSz1uQxS7JO
+ F5Jt1vqTgpZfUFJHzDBpBrFciy/arrQ29AekZHgS3T7xW/0uzwAYJ0a1MPCqEVbQEtiy+AY
+ iJKgPzdF6Ui+o+Bk9aSGfxEpKTuREF61zut6TYG6/oz1PobxwdoIsde35HKf1VQyvIhbf1Q
+ 490lnnrBwFrO8WBeae3Bw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:aQE0M7IS6Eo=:V2OWkdNrklsKJTALmRnINk
+ RZAqmx6s8UKuPpzU/6KctXoi9E3vMCI0mLTLVZdHxTkUam01dbsxaGVceAkV8Za/u7jtX4mlm
+ v+bXM9KkYM8V0foCDv6xCrEFQeS5RYg/3OrWJ8bpUhCcgMMjjm8ZwHaw+BrM4JkxvPTwh+dos
+ dHD0l8WouWnRgoVKA3WUu7pTbqyOfFvqvBJK7Fw/OvAiGbG6OSzzYhvaPMOjsQe4GYfVCVxix
+ 5RpOWLMgquq+3v/XNxGgZyldYQGI+tAkJGHA9eDInbxhIB8JKcwt3YcHhXqsfY3PfzVVwtcGH
+ QmzL3kZk8smZpuk272+y+xXNi1BcQGriyd9eT61MWRfCNKBgZx5o6ruaBz71/uJnWe7ITnj4m
+ LzhYHiileayuCuN20/P9b73Or3lS3oKTn5PjmswhcUjm0UAlrr9QurIfWRhN2B/Md6VVZ58H8
+ e1F4UCLoiKXCpv6/Zl3IaXNdiaSu4mTDhKkVdXMGzbxrmSIlTzRJ3CcRwSd7SS0x33FfKyEfw
+ FWJR7PMhGB+8QgjipsIk/gcET1ml7Npc1RIjiW/Uxzfv7FmH7CkpboNGbpMavGGNNtIVJmhTs
+ moljvn5t6qN2YNb7ERdTIaSBtXnbME1Smqwz+dkvzugWPgkJehUNbYIAd2PGGwLirfN4WRsm+
+ /yRmEQfW0UjDlMHShGwbPN9eo2IxSqNh8hnwyK/XRNHj4xaLT7k0YisPQhbBMYjb3xSs/MBc6
+ uD28YiSaxuB+6eZmw42G0qj5gU/bW0U49Is9jpuAhxDJl8w+gfFkw6pHKGZOgjSUABvRkIdCm
+ gr9SLCvHrDw782EWE7CC30Cf2jBIj6He96hD+ObmgbTz765M4N3l9CKme2pkA4KeyygPgT5MB
+ yIBHRKuhdbrX9/9UcCZyeJO0CoLb1HBecRqvuKe4kdCM5W0Zsn2B6IOZy9d+7aRWSuIwP63vY
+ R1FV3gnIdp7/ECJfsQCBCXuON3k9ECJrZRtxvldefqPLp+ig71kHNGpGMNpZaKtK+jfU9ri9q
+ pH2Ddtb0rgyGruPvyW2dW82wZHw7I7A3R4sJzy7fygKWSMQNu62ZwF8dh5+0+h8RW3d15n5ZL
+ Fpso1UvOR9RtMk=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio & brian,
 
-On Mon, Nov 22 2021, Teng Long wrote:
+On Wed, 17 Nov 2021, Junio C Hamano wrote:
 
-> On Fri, 19 Nov 2021 14:30:52 +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
-n wrote
-
->> just cut -f1 instead of awk? Also don't put "git" on the LHS of a pipe,
->> it might hide segfaults. Also applies to the below.
->>
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> Will apply, and could you please describe the problem with more details?
-> (appreciate if there is an executable example)
+> >> Even MSVC, long a holdout against modern C, now supports both C11 and
+> >> C17 with an appropriate update.  Moreover, even if people are using a=
+n
+> >> older version of MSVC on these systems, they will generally need some
+> >> implementation of the standard Unix utilities for the testsuite, and =
+GNU
+> >> coreutils, the most common option, has required C99 since 2009.
+> >> Therefore, we can safely assume that a suitable version of GCC or cla=
+ng
+> >> is available to users even if their version of MSVC is not sufficient=
+ly
+> >> capable.
+> >
+> > I am all in favor of this patch!
+>
+> I like the direction, but ...
+>
+> >> diff --git a/Makefile b/Makefile
+> >> index 12be39ac49..22d9e67542 100644
+> >> --- a/Makefile
+> >> +++ b/Makefile
+> >> @@ -1204,7 +1204,7 @@ endif
+> >>  # Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
+> >>  # tweaked by config.* below as well as the command-line, both of
+> >>  # which'll override these defaults.
+> >> -CFLAGS =3D -g -O2 -Wall
+> >> +CFLAGS =3D -g -O2 -Wall -std=3Dgnu99
+>
+> ... as has been already pointed out, this part probably should not
+> be there.  It is not our intention to require gcc/clang, or to
+> constrain newer systems to gnu99.
 
-Run this in a terminal:
+Another data point in favor of dropping this: our FreeBSD CI build reports
+a compile error with this:
 
-    git stawtus | cat; echo $?;
+	[...]
+	archive.c:337:35: error: '_Generic' is a C11 extension
+	[-Werror,-Wc11-extensions]
+			strbuf_addstr(&path_in_archive, basename(path));
+							^
+	/usr/include/libgen.h:61:21: note: expanded from macro 'basename'
+	#define basename(x)     __generic(x, const char *, __old_basename, basena=
+me)(x)
+				^
+	/usr/include/sys/cdefs.h:329:2: note: expanded from macro '__generic'
+		_Generic(expr, t: yes, default: no)
+		^
+	1 error generated.
 
-The LHS of the pipe fails, but the exit code of that command is
-hidden. So we prefer:
+I verified in https://github.com/gitgitgadget/git/pull/1082 that this
+patch is indeed the cause of this compile error.
 
-    git stawtus >out && # fails
-    [...]
-
-
-
+Ciao,
+Dscho
