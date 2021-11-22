@@ -2,193 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0F5DC433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 17:32:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B1D1C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 17:35:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240401AbhKVRfx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 12:35:53 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36432 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240440AbhKVRfs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 12:35:48 -0500
-Received: (qmail 21105 invoked by uid 109); 22 Nov 2021 17:32:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Nov 2021 17:32:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21477 invoked by uid 111); 22 Nov 2021 17:32:40 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Nov 2021 12:32:40 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 22 Nov 2021 12:32:39 -0500
-From:   Jeff King <peff@peff.net>
+        id S233367AbhKVRi0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 12:38:26 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56872 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232963AbhKVRiY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 12:38:24 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 124AEF39B0;
+        Mon, 22 Nov 2021 12:35:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=1jyrD+gXUHTO
+        2YtFsPPyEjIXvq3uXS64sjUZI5E60w8=; b=E0tOYckpALQsvZ69jkcAXqxGLeCH
+        CHGs2Myo/rTCRtXbYc0db8cLjWPU7LY1AmQFsENEU2ozvWhrn4lb2yKm5uVPiPAY
+        ucyNHLIUN1rJ36HNeuR6FVBH1I2xzfpdDd22lbJgFCSD/vu+mWFjPiiCMCWy8U9a
+        2WtPgybC5Fuwcjw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 095F3F39AE;
+        Mon, 22 Nov 2021 12:35:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 68296F39AC;
+        Mon, 22 Nov 2021 12:35:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Enzo Matsumiya <ematsumiya@suse.de>
-Subject: Re: [PATCH 5/5] run-command API: remove "argv" member, always use
- "args"
-Message-ID: <YZvUN0kuTpmf9Q7P@coredump.intra.peff.net>
-References: <YZseJ4jOVIK3+bUD@coredump.intra.peff.net>
- <cover-0.5-00000000000-20211122T153605Z-avarab@gmail.com>
- <patch-5.5-ea1011f7473-20211122T153605Z-avarab@gmail.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v3] fetch-pack: parameterize message containing 'ready'
+ keyword
+References: <20211122123415.464783-1-bagasdotme@gmail.com>
+        <211122.86tug4z6ih.gmgdl@evledraar.gmail.com>
+Date:   Mon, 22 Nov 2021 09:35:15 -0800
+In-Reply-To: <211122.86tug4z6ih.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 22 Nov 2021 14:02:40 +0100")
+Message-ID: <xmqqwnl0gkks.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-5.5-ea1011f7473-20211122T153605Z-avarab@gmail.com>
+X-Pobox-Relay-ID: 8E43A882-4BBA-11EC-8781-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 22, 2021 at 05:04:07PM +0100, Ævar Arnfjörð Bjarmason wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> This change is larger than I'd like, but there's no easy way to avoid
-> it that wouldn't involve even more verbose intermediate steps. We use
-> the "argv" as the source of truth over the "args", so we need to
-> change all parts of run-command.[ch] itself, as well as the trace2
-> logging at the same time.
+> On Mon, Nov 22 2021, Bagas Sanjaya wrote:
+>
+>> The protocol keyword 'ready' isn't meant for translation. Pass it as
+>> parameter instead of spell it in die() message (and potentially confus=
+e
+>> translators).
+>>
+>> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+>> ---
+>>  Changes since v2 [1]:
+>>    - Add missing closing single quote after the parameter (suggested b=
+y
+>>      Eric)
+>>    - Remove stray 'no' at the second message (suggested by =C3=86var)
+>>
+>>  [1]:
+>> https://lore.kernel.org/git/20211118103424.6464-1-bagasdotme@gmail.com=
+/T/#u
+>>
+>>  fetch-pack.c | 8 ++++++--
+>>  1 file changed, 6 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/fetch-pack.c b/fetch-pack.c
+>> index a9604f35a3..62d6313708 100644
+>> --- a/fetch-pack.c
+>> +++ b/fetch-pack.c
+>> @@ -1410,9 +1410,13 @@ static int process_ack(struct fetch_negotiator =
+*negotiator,
+>>  	 * otherwise.
+>>  	 */
+>>  	if (*received_ready && reader->status !=3D PACKET_READ_DELIM)
+>> -		die(_("expected packfile to be sent after 'ready'"));
+>> +		/* TRANSLATORS: The parameter will be 'ready', a protocol
+>> +		 * keyword */
+>> +		die(_("expected packfile to be sent after '%s'"), "ready");
+>>  	if (!*received_ready && reader->status !=3D PACKET_READ_FLUSH)
+>> -		die(_("expected no other sections to be sent after no 'ready'"));
+>> +		/* TRANSLATORS: The parameter will be 'ready', a protocol
+>> +		 * keyword */
+>> +		die(_("expected no other sections to be sent after '%s'"), "ready")=
+;
+>> =20
+>>  	return 0;
+>>  }
+>>
+>> base-commit: cd3e606211bb1cf8bc57f7d76bab98cc17a150bc
+>
+> This looks good to me & ready to go. Thanks for sticking with this
+> across various nits/small isues for all 3x iterations.
+>
+> The TRANSLATORS comments being added here don't use our usual style, bu=
+t
+> I'd be happy just to leave this be & take it as-is without a re-roll,
+> don't know about Junio...
 
-Yeah, agreed most of this needs to come in a bundle. But at least few spots
-could be split out into the earlier patches:
+I think in ancient time gettext suite required "/* TRANSLATORS:" at
+the beginning, which made us deliberately violate our usual
+multi-line comment style convention, but it seems that is no longer
+the case?  Hits from "git grep -e '[  ]\* TRANSLATORS \*.c" are
+fairly common, it seems.
 
->  builtin/worktree.c          |  2 --
->  t/helper/test-run-command.c | 10 +++++---
+So, yes, it would be better to fix these comments up, to avoid
+misleading people into thinking that the old comment-style exception
+still applies.
 
-as they are just users of the API.
+Thanks, both, for working on this.
 
-> diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-> index 3c4fb862234..b5519f92a19 100644
-> --- a/t/helper/test-run-command.c
-> +++ b/t/helper/test-run-command.c
-> [...]
-> @@ -396,7 +396,8 @@ int cmd__run_command(int argc, const char **argv)
->  	}
->  	if (argc < 3)
->  		return 1;
-> -	proc.argv = (const char **)argv + 2;
-> +	strvec_clear(&proc.args);
-> +	strvec_pushv(&proc.args, (const char **)argv + 2);
->  
->  	if (!strcmp(argv[1], "start-command-ENOENT")) {
->  		if (start_command(&proc) < 0 && errno == ENOENT)
-> @@ -408,7 +409,8 @@ int cmd__run_command(int argc, const char **argv)
->  		exit(run_command(&proc));
->  
->  	jobs = atoi(argv[2]);
-> -	proc.argv = (const char **)argv + 3;
-> +	strvec_clear(&proc.args);
-> +	strvec_pushv(&proc.args, (const char **)argv + 3);
->  
->  	if (!strcmp(argv[1], "run-command-parallel"))
->  		exit(run_processes_parallel(jobs, parallel_next,
-
-These two in particular are tricky. This second strvec_clear() is
-necessary because we are overwriting what was put into proc.args by the
-earlier strvec_pushv(). I think this is one of two interesting ways
-these kinds of trivial conversions can fail:
-
-  - somebody is relying on the fact that "argv = whatever" is an
-    assignment, not an append (which is the case here)
-
-  - somebody is relying on the fact that assignment of the pointer is
-    shallow, whereas strvec_push() is doing a deep copy. So converting:
-
-      cp.argv = argv;
-      argv[1] = "foo";
-
-    to:
-
-      strvec_pushv(&cp.args, argv);
-      argv[1] = "foo";
-
-    is not correct. We wouldn't use the updated "foo". I didn't notice
-    any cases like this during my rough own rough conversion, but they
-    could be lurking.
-
-The strvec_clear() in the first hunk above is also not necessary (nobody
-has written anything before it), but I don't mind it for consistency /
-being defensive.
-
-> @@ -902,8 +900,9 @@ int start_command(struct child_process *cmd)
->  #else
->  {
->  	int fhin = 0, fhout = 1, fherr = 2;
-> -	const char **sargv = cmd->argv;
-> +	const char **sargv = strvec_detach(&cmd->args);
->  	struct strvec nargv = STRVEC_INIT;
-> +	const char **temp_argv = NULL;
-
-I wondered about detaching here, because other parts of the code
-(finish_command(), tracing, etc) will be looking at cmd->args.v[0] for
-the command name.
-
-But we eventually overwrite it with munged results:
-
-> @@ -929,20 +928,26 @@ int start_command(struct child_process *cmd)
->  		fhout = dup(cmd->out);
->  
->  	if (cmd->git_cmd)
-> -		cmd->argv = prepare_git_cmd(&nargv, cmd->argv);
-> +		temp_argv = prepare_git_cmd(&nargv, sargv);
->  	else if (cmd->use_shell)
-> -		cmd->argv = prepare_shell_cmd(&nargv, cmd->argv);
-> +		temp_argv = prepare_shell_cmd(&nargv, sargv);
-> +	else
-> +		temp_argv = sargv;
-> +	if (!temp_argv)
-> +		BUG("should have some cmd->args to set");
-> +	strvec_pushv(&cmd->args, temp_argv);
-> +	strvec_clear(&nargv);
-
-So we have to do some replacement. I think the memory management gets
-confusing here, though.
-
-At this point "temp_argv" might point to nargv.v (in which case it is a
-dangling pointer after we clear nargv) or to the original sargv (in
-which case it is memory owned by us that must be freed). The former is
-OK, because we never look at it again. And the latter we eventually
-reattach into &cmd->args, but:
-
-> -	strvec_clear(&nargv);
-> -	cmd->argv = sargv;
-> +	strvec_pushv(&cmd->args, sargv);;
-> +	free(sargv);
-
-I think we still have all the entries we pushed into cmd->args from
-temp_argv earlier. So we'd need to strvec_clear() it before pushing
-sargv again.
-
-And then the free(sargv) is too shallow. It's just freeing the outer
-array, but sargv[0], etc, are leaked.
-
-I think what you really want is the equivalent of strvec_attach(). We
-don't have that, but it's basically just:
-
-  void strvec_attach(struct strvec *s, const char **v)
-  {
-	/*
-	 * this is convenient for our caller, but if we wanted to find
-	 * potential misuses, we could also BUG() if s.nr > 0
-	 */
-	strvec_clear(&s);
-
-        /* take over ownership */
-	s->v = v;
-
-	/* v must be NULL-terminated; count up to set number */
-	s->nr = 0;
-	for (; *v; v++)
-		s->nr++;
-	/*
-	 * we don't know how big the original allocation was, so we can
-	 * assume only nr. But add 1 to account for the NULL.
-	 */
-	s->alloc = s->nr + 1;
-  }
-
-I do think this whole thing would be easier to read if we left cmd->argv
-intact, and just operated on a separate argv strvec. That's what the
-non-Windows side does. But that distinction is nothing new in your
-patch, and I'm not sure if there is a reason that the Windows code does
-it differently.
-
--Peff
