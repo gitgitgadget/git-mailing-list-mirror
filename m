@@ -2,92 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA7B4C433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 18:41:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D98FAC433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 18:47:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240404AbhKVSo1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 13:44:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47526 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230453AbhKVSoZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 13:44:25 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54537C061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 10:41:18 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id iq9-20020a17090afb4900b001a54412feb0so344204pjb.1
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 10:41:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=ndyvjxWaeYb8PAIa8wuegvcFALqKom64nSch9q5g3ZE=;
-        b=Rc660D0n4UOh1XRjomWIQNDQwfW4DXGsU6tuKqxGb4a4iDgimnGI9vnWcuxIh2fEvb
-         zI55pbjjsEmWsBQg1B3lzzT6NvJAv9xPesaHqXsW4j0KzsAdqcJHO/WO6Uv9trAqIAGr
-         22iuXQdADWK5QhjBz8Rm0uexQ4HmU4wG7PIObbRRtCApNJvLvD5d0zbaj5yrE0gSBuRJ
-         jXjqVkhtmlOJsrW7CWSLYEfhIMnANNauk398r/0ZVBLoDa17GoGnjlwmcPHl7fscqENn
-         +iQZtVC6+Jx70D1AqS+buHE9vyvK0cvvo/qXmIiWL6YrjBBsWUNM3l7rXYolUvCfHIU9
-         FkLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=ndyvjxWaeYb8PAIa8wuegvcFALqKom64nSch9q5g3ZE=;
-        b=5ld7QTcxuSRgNSAz4k79yoAJWkng+oJKLggMdnBfB9J12sTgeUNgHVVZXOnhHMX0SL
-         p+vNsLO+leam6AaMmetpPxL1MWy62zyAt7CBUHv8gPJzpzb2n2rxAuGV839Ti9n09LpG
-         dukMnIcuVrdd3sOnbFikJEcRDmGCO3ujAvY1Y30oR4CG4PcY6ho334zgiu/O6THR8MfB
-         wFI1IZCoTexFhn7sEwCedjwuXVCxRJR6wEHAJUDyjWze6DKji3AZB6bYbJ3+GdZK7Ynb
-         jgClmCjMcZB3hm+G3sjLTEPAHdNNRu4qQYbjYFvSzZY2oZvPjWuM/n/OARnnTcB0wg8m
-         KBbA==
-X-Gm-Message-State: AOAM53211rcUEluqv1osV1qCQMQdtsLtkkte3vEzbEl1wfQYF5/h/ty0
-        q3bjqEAvJhsBLtuFVQX707NKwZk2s0RF29FdVLHUUFR5oMf1+Ip3gAcpMTB5KKvsDo04ATtmma1
-        LJ4x7RyLh2w7YG1dSdjz+QwzVV4D31ICPEshG1qzfGR8TVvUbD6UW8KoleY1InlZTZb2LReW0dW
-        fo
-X-Google-Smtp-Source: ABdhPJzsObNtIHkLmUff/58dG31PfeDRgUxkOMgRxaOz1T+kr15FJGbV+f2snLg27ftIJB5cthjDpsZy8mPB+gxo44y8
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:284f:: with SMTP id
- p15mr35071pjf.1.1637606477148; Mon, 22 Nov 2021 10:41:17 -0800 (PST)
-Date:   Mon, 22 Nov 2021 10:41:14 -0800
-Message-Id: <20211122184114.3328662-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.34.0.rc2.393.gf8c9666880-goog
-Subject: [PATCH] Doc: no midx and partial clone relation
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S240555AbhKVSuu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 13:50:50 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36568 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240431AbhKVSum (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 13:50:42 -0500
+Received: (qmail 22018 invoked by uid 109); 22 Nov 2021 18:47:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Nov 2021 18:47:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23613 invoked by uid 111); 22 Nov 2021 18:47:35 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Nov 2021 13:47:35 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 22 Nov 2021 13:47:34 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Enzo Matsumiya <ematsumiya@suse.de>
+Subject: Re: [PATCH 5/5] run-command API: remove "argv" member, always use
+ "args"
+Message-ID: <YZvlxn8EdL1V4Cg6@coredump.intra.peff.net>
+References: <YZseJ4jOVIK3+bUD@coredump.intra.peff.net>
+ <cover-0.5-00000000000-20211122T153605Z-avarab@gmail.com>
+ <patch-5.5-ea1011f7473-20211122T153605Z-avarab@gmail.com>
+ <YZvUN0kuTpmf9Q7P@coredump.intra.peff.net>
+ <211122.86wnl0xd24.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <211122.86wnl0xd24.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The multi-pack index treats promisor packfiles (that is, packfiles that
-have an accompanying .promisor file) the same as other packfiles. Remove
-a section in the documentation that seems to indicate otherwise.
+On Mon, Nov 22, 2021 at 07:19:14PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Stolee, can you check if my understanding is correct?
+> I did have this with a strvec_attach() locally, but figured I'd get
+> comments about growing scope & with just one caller.
 
-To my recollection, midx does not treat promisor packfiles specially,
-and searching for "promisor" in midx.c seems to support that (the only
-results are relating to selection of commits for midx bitmap creation).
----
- Documentation/technical/multi-pack-index.txt | 5 -----
- 1 file changed, 5 deletions(-)
+I do think I'd rather see us avoiding have to do this attach() by
+refactoring the Windows code. But I sympathize with your pain in the
+guess-and-wait-for-CI loop with Windows (I have an unrelated series I've
+done that with, and it's rather awful).
 
-diff --git a/Documentation/technical/multi-pack-index.txt b/Documentation/technical/multi-pack-index.txt
-index 86f40f2490..fc213cd1e6 100644
---- a/Documentation/technical/multi-pack-index.txt
-+++ b/Documentation/technical/multi-pack-index.txt
-@@ -87,11 +87,6 @@ Future Work
-   helpful to organize packfiles by object type (commit, tree, blob,
-   etc.) and use this metadata to help that maintenance.
- 
--- The partial clone feature records special "promisor" packs that
--  may point to objects that are not stored locally, but available
--  on request to a server. The multi-pack-index does not currently
--  track these promisor packs.
--
- Related Links
- -------------
- [0] https://bugs.chromium.org/p/git/issues/detail?id=6
--- 
-2.34.0.rc2.393.gf8c9666880-goog
+> This version seems to be duplicating things in the existing API though,
+> I just had the below, which I think works just as well without the
+> duplication. Perhaps you missed strvec_push_nodup()?
+> 
+> diff --git a/strvec.c b/strvec.c
+> index 61a76ce6cb9..c10008d792f 100644
+> --- a/strvec.c
+> +++ b/strvec.c
+> @@ -106,3 +106,9 @@ const char **strvec_detach(struct strvec *array)
+>                 return ret;
+>         }
+>  }
+> +
+> +void strvec_attach(struct strvec *array, const char **items)
+> +{
+> +       for (; *items; items++)
+> +               strvec_push_nodup(array, *items);
+> +}
 
+This isn't taking ownership of "items", though. We've attached the
+things it points to, but not the array itself. It would perhaps be OK to
+free() it here under the notion that we took ownership of it and it is
+ours to do with as we please. Potentially a caller might expect that
+we'd continue to use the attached buffer, but any such assumption is
+invalid once another strvec_push() is called, since that could replace
+the array anyway.
+
+It's also slightly less efficient (it grows a new array unnecessarily),
+but I doubt that matters much in practice.
+
+-Peff
