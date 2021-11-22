@@ -2,68 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 746FDC433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:36:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FD34C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:37:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232770AbhKVWjO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 17:39:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44462 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231591AbhKVWjO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 17:39:14 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11B89C061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:36:07 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id e12-20020aa7980c000000b0049fa3fc29d0so10570758pfl.10
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:36:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=5tkSgewKLdRpynXqqY+38sAUE2w9vD42k4XODXH2vzM=;
-        b=i9GPmEJOFGr4sLsLr9zPB/Xo0ZXF1sV3o9w40qkydl7FNnU+vCqAUTsNssWdBS+jtK
-         6yNsWY26UbP/oIT+7kwNRYF3VBC3IPlbgySrmgMlWHstK78++WVoZAbXB5ua0V2wwrjX
-         qybW4Y0+RLqkW/woxu6aSQcZ+6JD2NRYFHmC5gAz0OcY5BSRMbOXLpPLpGA8Hd9icRaF
-         hwEX5lKuUoUALXVRM10hTbDhlcqAC7WyD7kVf8yulA5PL7m9z4A4aGEyLtG+iAFsy1YB
-         TFwBdiOGf44fPR8ytmifefawubPbXRwuA8cJ5Dit2S5WRoltZ36eBex205afOZOkMpkY
-         ECtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=5tkSgewKLdRpynXqqY+38sAUE2w9vD42k4XODXH2vzM=;
-        b=mzDM7zxAxlA2L9BtRNP5vfa29L3yzPdo1VW3ZkAndCd4zJjO7NJlx51f5thjJbYVXh
-         X6rY2iPX6TF8YKjA2t/Q6dDJ8a0gsZ66M2w+lNMRMLSD47I79Bwmb17ASW01cb2wfOoH
-         FKoBIxz/DmnQPC24Ep1xSJTTL3NNJ+f8lQFoui+Co/Kw648tF5HsbzIxKoHOQdHTMhTL
-         dpltiZ28hmFVfWf5UBFAXKNpwQY57bxaFhosRblrv8fuW8ue6pZQHbKJ4iSOg9KogW/e
-         Oc/ePAfiWXVYSfhnwwyl2xxvONkqTVj/uaUJmYAzemZS2aPByEUJGDSXCe7XPO6P/cHW
-         xBpg==
-X-Gm-Message-State: AOAM533IuIBxnXb4KT3zjBRV9lowLbFmvjtXnMWlLR1WF4xvCNX8ViwV
-        g+Lr9TOXT9UpeqtgoQdPfAu+LaY4wjtUMg==
-X-Google-Smtp-Source: ABdhPJxDFp+KFhmd1tq+qRnUbjirR/TzTONX9d2Z2BDSzgD3Bue83Xg6+jE3QhrdFF9GUj2vkzDQvDGw5ggQSA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:903:120e:b0:143:ca35:11f6 with SMTP
- id l14-20020a170903120e00b00143ca3511f6mr823237plh.76.1637620566412; Mon, 22
- Nov 2021 14:36:06 -0800 (PST)
-Date:   Mon, 22 Nov 2021 14:36:04 -0800
-In-Reply-To: <xmqqbl2cgj6v.fsf@gitster.g>
-Message-Id: <kl6llf1frf6z.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <xmqqa6hznvz1.fsf@gitster.g> <kl6lr1b8qde3.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqbl2cgj6v.fsf@gitster.g>
-Subject: Re: What's cooking in git.git (Nov 2021, #05; Fri, 19)
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S233148AbhKVWkf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 17:40:35 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36778 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231591AbhKVWkf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 17:40:35 -0500
+Received: (qmail 22504 invoked by uid 109); 22 Nov 2021 22:37:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Nov 2021 22:37:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26582 invoked by uid 111); 22 Nov 2021 22:37:28 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Nov 2021 17:37:28 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 22 Nov 2021 17:37:26 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH v4 1/3] object-name: remove unreachable "unknown type"
+ handling
+Message-ID: <YZwbphPpfGk78w2f@coredump.intra.peff.net>
+References: <cover-v3-0.3-00000000000-20211008T193041Z-avarab@gmail.com>
+ <cover-v4-0.3-00000000000-20211122T175219Z-avarab@gmail.com>
+ <patch-v4-1.3-2e7090c09f9-20211122T175219Z-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v4-1.3-2e7090c09f9-20211122T175219Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Nov 22, 2021 at 06:53:23PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> As I promised, I've been ignoring anything that won't be in 2.34.1
-> until it goes out, so I do not know the answer to that question at
-> this moment ;-)
+> Remove unreachable "unknown type" handling in the code that displays
+> the ambiguous object list. See [1] for the current output, and [1] for
+> the commit that added the "unknown type" handling.
+> 
+> The reason this code wasn't reachable is because we're not passing in
+> OBJECT_INFO_ALLOW_UNKNOWN_TYPE, so we'll die in sort_ambiguous()
+> before we get to show_ambiguous_object():
+> 
+>     $ git rev-parse 8315
+>     error: short object ID 8315 is ambiguous
+>     hint: The candidates are:
+>     fatal: invalid object type
 
-Ah, thanks for the reminder :) Hopefully that goes smoothly.
+I'm not so sure about this reasoning. In the code we are getting the
+type fresh from oid_object_info():
+
+> @@ -361,6 +361,8 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
+>  		return 0;
+>  
+>  	type = oid_object_info(ds->repo, oid, NULL);
+> +	assert(type == OBJ_TREE || type == OBJ_COMMIT ||
+> +	       type == OBJ_BLOB || type == OBJ_TAG);
+
+so at the very least we have to worry about the answer changing between
+the two spots. You talk above about ALLOW_UNKNOWN_TYPE, but can't we
+just get a straight "-1" if there's an error opening the object?
+
+I'm also confused about the mention of die in sort_ambiguous(). It looks
+like it would just produce a funny sort order in that case.
+
+Here's a case that triggers the difference:
+
+  git init repo
+  cd repo
+
+  one=$(echo 851 | git hash-object -w --stdin)
+  two=$(echo 872 | git hash-object -w --stdin)
+  oid=$(echo $two | cut -c1-4)
+
+  fn=.git/objects/$(echo $two | perl -pe 's{..}{$&/}')
+  chmod +w $fn
+  echo broken >$fn
+
+  git show $oid
+
+Without your patch, it produces:
+
+  error: short object ID ee3d is ambiguous
+  hint: The candidates are:
+  error: inflate: data stream error (incorrect header check)
+  error: unable to unpack ee3d8abaa95a7395b373892b2593de2f426814e2 header
+  error: inflate: data stream error (incorrect header check)
+  error: unable to unpack ee3d8abaa95a7395b373892b2593de2f426814e2 header
+  hint:   ee3d8ab unknown type
+  hint:   ee3de99 blob
+
+With your patch:
+
+  error: short object ID ee3d is ambiguous
+  hint: The candidates are:
+  error: inflate: data stream error (incorrect header check)
+  error: unable to unpack ee3d8abaa95a7395b373892b2593de2f426814e2 header
+  error: inflate: data stream error (incorrect header check)
+  error: unable to unpack ee3d8abaa95a7395b373892b2593de2f426814e2 header
+  git: object-name.c:364: show_ambiguous_object: Assertion `type == OBJ_TREE || type == OBJ_COMMIT || type == OBJ_BLOB || type == OBJ_TAG' failed.
+  Aborted
+
+-Peff
