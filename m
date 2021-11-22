@@ -2,86 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AD76C433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 21:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 999EFC433EF
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 21:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236013AbhKVV5Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 16:57:16 -0500
-Received: from mout.gmx.net ([212.227.17.22]:32833 "EHLO mout.gmx.net"
+        id S238180AbhKVWCW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 17:02:22 -0500
+Received: from mout.gmx.net ([212.227.15.18]:59889 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232805AbhKVV5P (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 16:57:15 -0500
+        id S232667AbhKVWCQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 17:02:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637618044;
-        bh=8BAb/WWf+ErMWMPwX0pUu2IPl8EvjLnNV1E1OWCH+zU=;
+        s=badeba3b8450; t=1637618341;
+        bh=W6V6GhUB+g0LsmsL0RNpd3To+hVjFP7XbYDNhkcgWOw=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JGuRQ8QWWW/JzL/FX3J89OptjIqK/pbhhVBXIgKD6FHtB/8ErLFn5OjUBsDKg/tUa
-         qdvIt+SiAJ+E42P9BpovcvnyLe4HVwehNXUChr4H2rM5v2NRUcVP43iat3yWGkAWI9
-         T0B3UT2d8qb2AW8HdcH6FGCpBRlgVgxq/NddR97o=
+        b=Tyv4NKfCgWv/KymsJzvret7BidCtW2G36mfBveG0sZJ7Hdrnc0isNjD+Jybk18pfN
+         yJzyf8uHa7T1vvvMIlfWIouvNP5hS2ak0U5EHoRVRsTtgq7kpVVeywtrTBKqIRGoiB
+         lMnFLMn/yYw05/rrmJeUK0keJWLQ6qdC63nrUi4A=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MYNNy-1nBuhi2zZK-00VPSz; Mon, 22
- Nov 2021 22:54:04 +0100
-Date:   Mon, 22 Nov 2021 22:54:03 +0100 (CET)
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MrhQ6-1mJXU10dGu-00nhvR; Mon, 22
+ Nov 2021 22:59:01 +0100
+Date:   Mon, 22 Nov 2021 22:58:59 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v4 06/15] diff --color-moved: avoid false short line
- matches and bad zerba coloring
-In-Reply-To: <a6ff589e-c968-8a96-a8ec-1a982d71f6be@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111222252450.63@tvgsbejvaqbjf.bet>
-References: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com> <pull.981.v4.git.1637056178.gitgitgadget@gmail.com> <10b11526206d3b515ba08ac80ccf09ecb7a03420.1637056178.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2111221435140.63@tvgsbejvaqbjf.bet>
- <a6ff589e-c968-8a96-a8ec-1a982d71f6be@gmail.com>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fixup??? Merge branch 'ab/ci-updates' into seen
+In-Reply-To: <211122.86ee78yxts.gmgdl@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2111222257430.63@tvgsbejvaqbjf.bet>
+References: <pull.1081.git.1637578930464.gitgitgadget@gmail.com> <211122.86ee78yxts.gmgdl@evledraar.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:j7IRi+WMF0V7GXZNnYC1KFQDkx/W5PoXLpNisr48QEDNVLGdUc0
- vY5c0PMAAG4TexvtMD1bZuiufA0zXzMmKarWh5L36EsW9cURAHM8htFYEaTc08bVVOHw41v
- hwU3/DECkbfwkmJFZJQU4hafGItPk4l+tSrJCEs2tAp6xZi7HIj0p0nrBn/Ls/2v6R/Pwcg
- ty/nnThTkdSaJyiBM0zRQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:pcKT+r+Rryo=:X54cuUMOSb3Xfm4Mb87Pc7
- OK7p3d5EMNIlpNvO98P3RnnGf9QJoUYN8fn3J7FAvtNAEyn6OjU9Ona1ZZOZxjhdVuVEYCmlB
- CBjUMH6hg6Li6VH/VGiwDK7WkI9Bd2ikizHMDikOaA6oneYgI2KCC3iCFmE58GuD2SnhQZ+zc
- xQH0I3We8jsypqpJAMjO0jJU+M3qJOBZIuInfyrO0lc7/ty3r+vLAJU23cU4CafrG5xWYW4b3
- ZmXSFjQngOhKO6RJKIb0AL9sDmNWFat9H8HCUmbZk+kuoYR/yBD1+0jy+r1XhtGiryDoJlLZQ
- 4o2O9EW6lpBqF8ORYVHlMmf8eXeDWnYPAuJwvUa3jrDKNUoAnihhNJVHukqrtx/yvnpOMuAqk
- R7kuoLyCqkU11AfCh+JCf7RSe8uir9zTtm+alKd6TQS7ZPSe2tuh+wCYiuVEjysxk7CS6cDgK
- 2IHVBLk68tLrUMx0vdGw9dgtbCAkFbxFq+ocJV/OsZaAoeVOZ/X//ljOHX4Zw7g1hw/K7wPZb
- ah4to+luX4dpAtQO683vCY7XEOgY4FM8U9+yhNY9Q+WcxkHVAJskGn1f2ZWszZaZRoHJk+yAF
- eFFQJwl7lnZCHJx5N7nEFcTse88A4/n1MeJuQXg1Q1C0RA5BUGlZPITMBu0tI1BdlTYeCu6Rd
- KDdebCx4BcpazTj6e3rCiOKwqzb+alpez3OSV03Qpp6L8TqUlasGbr/KqwFJwyvX2v2rEj0zG
- 6THYrNua/T/lI6pC1bQtw4ZXC8NXA9eF7hfZvjKPRKQ5BrfOvOQl5wEaezdJURd1ZMyBygJgI
- vmtnoPGsJn1PUcY2QlUwDwckLUuHYWlTO4J+jAbc4peMkup4S86tjNKGHMGJcj51A/Bv5bz0C
- tdUnIFeGtfgem7TNaCdMiKTy297TFDUeGlwZApj5/IBT2VySaK4TRZn2MmmjUcr6D2QeHrAsf
- gaN7hTDxl8PS8NBfWJssNjFr2LetNCOQgzLpsRPF5IgwnlwrB+CqWFxWN5r6/UWlOSWW9uQ3c
- 0YT6tBqkUmnnIeXBoLraa0ryHYbDuXEG8jH6W1GwyenhWLt5sj+XP9sHVaf17F2yJ5OwJdJyI
- o0XGyCOU/Di4Qg=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-356719844-1637618341=:63"
+X-Provags-ID: V03:K1:BkR/TjY8Rn/U4CKJq3NU5aUc0mve/duI6evpuwmeLNzE0JvRotS
+ d/aSYj9A9iE3WhOfEquMDw4YFCnzLTmybkBqTyELfJMUCqSOYgNp+XP2td9FYKX7UrpnIpz
+ 11hRu6+pPLqhjRWm9sXLRcy/YbUrCvsJsDGx62evRw2OVV5EUHJEpLTFotPjOvxNe9JVAKl
+ 18rKteqCO7LyQ6B9pIXOw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6iGY9d60yT4=:TDQ5NQLpdwL7Okmzq9bOlj
+ pLV0bN5mJAACVo49el7a4p0pvFCbmTJx1B4W/Y/kB7yUnJN2L/wj38YxaYwj74ixIIN1OGjpP
+ OlmAhf1tBLPpQWs96L4jzY5atmav1qKlz03Savi74bfJwwnoF3Qbk2S+QM34d+JulobUGhTz2
+ lUIMUTyI5AU2+OizcjCWd2C0VZ+XUFl4P7v8j3/jHx+vMAwJYjapwhCH7wUoOlb4tiCVEZPxa
+ k/7zSSCSvpf9fP+TxLifR+s7G5A64Nrz/3UEyRMDVZLLxu1sO9LK9gcnqCpWetC7KjbiN30xb
+ 97JTBg7PtxEtpu77SlfHxfESrP3CucTS3Hz+EX6/4McQXGI0yMnCN/TYZNyopZAE4UNY0Jiuf
+ IY2iK8G8LVXHOgt+cY0dNm5RrJD3Du0YkuCGRhcjAr8KlDXv7rx0tQtjoY4cy0qEiQfsisQrK
+ FYi/P9+gQJV5RLLyJenOlkfzBApJjz+mhBDEi+PJqxTc0qlr2BO9OtVvXg/m/vHKcl82quMgB
+ x/J6yw+nUFp5lg2HjpsBJIAqmpnSZ59BDogRSI/pO6gXplSOeoK+S+pMdw+S/eF8rVtg8ZF+x
+ 1IIAT3Shfxmb9lcLf3QfGslmGtwO/pp6ABpFS9tfkARDCmnmg67r3pvIzD4jeI3eCEX7rnh0x
+ +f45MBJffxo9Jlx7KEQWuqITHbUj4YsPn5eQa+aHYy9PLUWwUBkFmN5i/RkREsPgYttcdBAik
+ L/QWt7LxAUw8BN/uM07XitMaq3coXK6mLi6mZu+Q+GISpXi4sFuO+4V1l/U4LCrD604nyckTb
+ gQCoq3lA4DtRemKlHgS1v6uujNuss1QN2BxCfzD30EAOrPHgATi/cfreFPt0mhaMCBU6EBsal
+ hQF7nvJBwx5gNk6BhktKEhA8UASd+ZddqHg0bSFdUMSoYnIceyIdpqK3g412MIutk9APCjyLN
+ iRa/28f0jRkxVZv05f/hN11YO/XRAiridLUouLnT6d/BExbPBg/oFkj8mYXGJeGKp/CsbaepV
+ y6eT+zjnRuz4zUEWE24ypPRjP/c3XHTKz+O7IMA7PEODsTeF22ajHtIGE1+keORhZz1AyaEDF
+ v4/wUEjhFX8Fcc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 22 Nov 2021, Phillip Wood wrote:
+--8323328-356719844-1637618341=:63
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-[... a good explanation...]
+Hi =C3=86var,
 
-> On 22/11/2021 14:18, Johannes Schindelin wrote:
+On Mon, 22 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> On Mon, Nov 22 2021, Johannes Schindelin via GitGitGadget wrote:
 >
-> > As I said, I do not quite understand this patch yet, and am looking
-> > for your guidance to wrap my head around it.
+> > diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> > index c0bae709b3b..c508c18ad44 100755
+> > --- a/ci/run-build-and-tests.sh
+> > +++ b/ci/run-build-and-tests.sh
+> > @@ -45,9 +45,8 @@ linux-gcc-4.8)
+> >  	export MAKE_TARGETS=3Dall
+> >  	;;
+> >  esac
+> > -make -C contrib/scalar test
+> > -
+> >  make $MAKE_TARGETS
+> > +make -C contrib/scalar test
+> >
+> >  check_unignored_build_artifacts
 >
-> Thanks for looking at it, I hope these comments help, let me know if I'v=
-e
-> failed to explain well enough.
+> The CI breakage was introduced with the merger with ab/ci-updates, but
+> the combination of the two just reveals an existing breakage in
+> js/scalar.
 
-Yes, thank you, I think I understand enough now to say that the patch
-looks good to me.
+Which shows that I was wrong to pander to your repeated demand to include
+Scalar in the CI builds already at this early stage.
 
-Thanks,
+Will fix,
 Dscho
+
+--8323328-356719844-1637618341=:63--
