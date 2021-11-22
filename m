@@ -2,97 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40DDDC433FE
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 18:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C270C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 18:40:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234749AbhKVSlT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 13:41:19 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36552 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240330AbhKVSlH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 13:41:07 -0500
-Received: (qmail 21996 invoked by uid 109); 22 Nov 2021 18:37:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Nov 2021 18:37:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23521 invoked by uid 111); 22 Nov 2021 18:37:57 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Nov 2021 13:37:57 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 22 Nov 2021 13:37:56 -0500
-From:   Jeff King <peff@peff.net>
+        id S235526AbhKVSni (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 13:43:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47312 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233219AbhKVSnh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 13:43:37 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EB14C061574
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 10:40:30 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id v1so47473938edx.2
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 10:40:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=F4n32TJlKuaxlFTccMR8C3oHvOsAzl22bOG3KXVIw3A=;
+        b=V5CRIW/lhntq89yD+DAmEwtXcLwQXuY/55edEe85nQCsREBa4OHlJCDnXqUhfHICzr
+         k7c1Uyg9wS9BcevAdo61TCME3mRLoPYijYAu1/ZrcjLKfWDB/hgNc5KMSuU64kGC44Hd
+         v9kDaM95ZO7yJX0Z9DYlRsLHcmJVhxHpxJayPaEBoGdJpmOOtU5p4rCqEMdQqGejyu5o
+         RMi/OyBL18M4tLoLHIl3bSgRdg2E6GTYGySOLtyqe4GN1Un+kOOTuIeL8YuKL7u+WjtE
+         JyE9iH2/DImDCfKOaism0G7evZuFagcm6Tfmgm0mgEaKdOEKEhX6igqNX2JULXSNFk9a
+         7oMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=F4n32TJlKuaxlFTccMR8C3oHvOsAzl22bOG3KXVIw3A=;
+        b=fwJBJlFgZkIDWjWqH50mRWbt5bmH44rBch/8ztVRMEdXNTDoUhQxBLa66NNg4vq92O
+         QJzgLiy4pT/ZfKGw8ZyLbkFCycOg4VGC1dY7YOXwhUGH73M5uNvIdieJhPw7vvjHQW/B
+         gqdwCKy4HKrp0fM4UgGt9mIAqEg0Kv41U8Kevoy22DvdAWgRl3YngeA5n0uT+9LWshar
+         W2ckMEHyXuvakvmyMVtsXxG3DIxxRChbQ87VOs+fEuDbB/sqmLnEPUsFB2Tq8+RDNwwS
+         cLy6nk5YIHncHwNigggnXwvAWvrCFrxdJSaxXrOZjBEKgLq8trXi5Jjy0qBSStgofRVN
+         /nGw==
+X-Gm-Message-State: AOAM533nBbneySCZevvaloZU7jIunUAgElS732g3mAmkdZb+dNMZk+dK
+        DFLDzDSPmjcNQT94lsX7ndI=
+X-Google-Smtp-Source: ABdhPJzPYt5eKJDRfLtwTMl/7HasQ0UKNo/SgSA9le4OYLScjoKOfRKFpdt3taPiiZw/fqg/Wd2n8A==
+X-Received: by 2002:a05:6402:3481:: with SMTP id v1mr68756121edc.337.1637606428614;
+        Mon, 22 Nov 2021 10:40:28 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id ig1sm4076536ejc.77.2021.11.22.10.40.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Nov 2021 10:40:28 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mpEEt-001ATD-Nx;
+        Mon, 22 Nov 2021 19:40:27 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Enzo Matsumiya <ematsumiya@suse.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+Cc:     Enzo Matsumiya <ematsumiya@suse.de>, Jeff King <peff@peff.net>,
         git@vger.kernel.org
 Subject: Re: [PATCH v2] pager: fix crash when pager program doesn't exist
-Message-ID: <YZvjhF+KM/gzu7vN@coredump.intra.peff.net>
+Date:   Mon, 22 Nov 2021 19:35:43 +0100
 References: <20211120194048.12125-1-ematsumiya@suse.de>
- <YZqSBlvzz2KgOMnJ@coredump.intra.peff.net>
- <xmqqfsrplz3z.fsf@gitster.g>
+ <YZqSBlvzz2KgOMnJ@coredump.intra.peff.net> <xmqqfsrplz3z.fsf@gitster.g>
  <20211122153119.h2t2ti3lkiycd7pb@cyberdelia>
- <211122.86a6hwyx1b.gmgdl@evledraar.gmail.com>
- <20211122164635.6zrqjqow4xa7idnn@cyberdelia>
- <xmqqk0h0gjnh.fsf@gitster.g>
- <xmqq35nogijg.fsf@gitster.g>
+ <211122.86a6hwyx1b.gmgdl@evledraar.gmail.com> <xmqq8rxgi0ej.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <xmqq8rxgi0ej.fsf@gitster.g>
+Message-ID: <211122.86k0h0xcdg.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq35nogijg.fsf@gitster.g>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 22, 2021 at 10:19:15AM -0800, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > I know $GIT_PAGER trumps core.pager, which indicates between
-> > equivalents, environment is taken as a stronger wish.  But I do not
-> > mind if the order were updated to pager.<cmd> trumps $GIT_PAGER,
-> > which in turn trumps core.pager, which in turn trumps $PAGER.
-> 
-> If such a precedence order makes it impossible to override a
-> configured pager.<cmd> value at runtime, then it is a bad idea.  But
-> luckily, we can do
-> 
->     git -c "pager.<cmd>=<this one-shot pager>" cmd ...
-> 
-> to override a configured one, so perhaps it is OK.
-> 
-> I tend to agree with opinions I read elsewhere in this thread that
-> it would be better not to do the fallback in the first place, but
-> in this case, what I said I am OK with is when pager.<cmd> is
-> defined, we do not even look at $GIT_PAGER or later choices, which
-> is orthogonal.
+On Mon, Nov 22 2021, Junio C Hamano wrote:
 
-FWIW, I also scratched my head while looking at this topic over seeing
-$GIT_PAGER take precedence over a command-specific pager.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> I think an alternate direction of simply getting rid of "argv" is better
+>> in this case, and I've just submitted a topic to do that:
+>> https://lore.kernel.org/git/cover-0.5-00000000000-20211122T153605Z-avara=
+b@gmail.com/
+>
+> I see you just submitted, but I am more curious on when you started
+> working on it.
 
-I do wonder if changing the override behavior would end up breaking some
-scripted uses, though. E.g., imagine some program which does custom
-markup of Git output, and ships with a wrapper script like:
+I've been using this series in my local build since mid-September, I
+just hadn't submitted it.
 
-  $ cat pretty-git
-  #!/bin/sh
-  GIT_PAGER='markup-git-output | less' "$@"
-
-  $ pretty-git log -p
-
-which would now behave differently if the user has pager.log set.
-
-I dunno. That is perhaps a bit far-fetched. Most tools that I know of
-like that (diff-highlight and diff-so-fancy) just tell you to set up
-pager.log in the first place.
-
-Just grepping around on GitHub, I don't see many uses, but this one[1] for
-example might get confused:
-
-  export GIT_PAGER=cat # disable pager when running interactively
-
-So I dunno. It is probably unlikely to have much fallout. On the other
-hand, I kind of wonder if the benefit is worth changing now.
-
--Peff
-
-[0] https://github.com/node-inspector/node-inspector/blob/79e01c049286374f86dd560742a614019c02402f/tools/git-changelog.sh#L38
+I just did some cosmetic fixes to it today, and got the Windows CI
+working with it (the GIT_WINDOWS_NATIVE code in run-command.c).
