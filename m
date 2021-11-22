@@ -2,334 +2,268 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A25FC433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 14:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CDECC433EF
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 14:19:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236131AbhKVOVt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 09:21:49 -0500
-Received: from mout.gmx.net ([212.227.17.22]:55661 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232494AbhKVOVt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 09:21:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637590717;
-        bh=LbCvqvfW6VkwGsjVblz2yVUZJQ/J3dIqYdycemP3SYA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=c1l1GPXH6IG+32nIbF7Qj/fT99D31xd5rWOG09K8mqnvCobiMmmi+1FkFO+Wf1wQz
-         mYtK/k9l0+8zJGjRwvSbyXGEW7rbTgK3L0hk3+kFdDSD8yx2d5suZyE4nx9x4B3yf9
-         Hqg4yyue2PLJxdfolcBFfTwmHGv4Jm0Oap5UR+w8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N1wll-1mdnKE3lgP-012F4l; Mon, 22
- Nov 2021 15:18:36 +0100
-Date:   Mon, 22 Nov 2021 15:18:34 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v4 06/15] diff --color-moved: avoid false short line
- matches and bad zerba coloring
-In-Reply-To: <10b11526206d3b515ba08ac80ccf09ecb7a03420.1637056178.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111221435140.63@tvgsbejvaqbjf.bet>
-References: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>        <pull.981.v4.git.1637056178.gitgitgadget@gmail.com> <10b11526206d3b515ba08ac80ccf09ecb7a03420.1637056178.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S236971AbhKVOWV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 09:22:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43690 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237038AbhKVOWT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 09:22:19 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4996EC06173E
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 06:19:12 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id i12so15554150wmq.4
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 06:19:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=li9ddWIvcXsuTHY5iNnPUzk8eSGj8BuNLECtLyzi3Zk=;
+        b=ZFfL0EQv4GepJhZOH+tqPad+gI/ODXphJ5ESVGlxxqbgZX/DUPjHw4VfLxpyZCeJpe
+         +Fkoi3CZki7WO5uHV8RxYFyRGVxkgil8Dq6Sh6UuV7GNo1lfXRakdfq04kYlDXU3v5CI
+         k8eGSxy08k3wuhyx9xKPl4RaiVFKiUADwCrqgSQeH3FBgl1v/rftnWnyJkDTskhyuJY9
+         FSljvbrAo0Ic9KNR2aPdakKw5WhkvmBZL0vjhK1xjssb6qaRn09Ycs5knko3xaWvQF9+
+         njOiSbWEjjxBv4i3RC5u5rKxc4vQI5CfnEkqB/m5SW77Axlnn4dmRhviHhpDOlsX4mLz
+         FCiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=li9ddWIvcXsuTHY5iNnPUzk8eSGj8BuNLECtLyzi3Zk=;
+        b=6PvN8uiw7zC/psKFTsWzyVzjfrdbnLluSoIRq9p3ODLWQvqlcoqBt+SYVnuaEDPuCZ
+         wdT18zdb9o/jEpHqpA7Rnr9NTV4KWNZiP3aKRNT+pnAZRsNhkU1J9DaIvBAgBpR5m9ph
+         umg1TGznNzdDzbHCuP1knLQlX6sj84zlsihPUel5jeuPU2osOf3BQsdAYpwwjz8bFjwB
+         ysRRjoyjmc0ohVXxfqvC2cM6UCsxM2QCRmuSrYwS14cm00SWKmD/iRapbODtd9ljBGPU
+         nIiS9JI3CJstE0jpcyAuqTQ0eZcf11dovPK+MrAjVD1hJZ0NSjBgnb5OshW8VyFW0ceH
+         uCJw==
+X-Gm-Message-State: AOAM533GblWSc0UunCNCbH5vtYtQESd5Ipqq+7rS2zDAcUkbdbNOgs4G
+        jBos5CgE3EeUkKsUtecTXxPc842XBG8=
+X-Google-Smtp-Source: ABdhPJy1r6fgE2QD/+aCexx07EPF0RHF/kz6SYjy7bJ8TDmr6cJsUqsIkXwARcyxoFugq34sMk8B5g==
+X-Received: by 2002:a05:600c:4fcd:: with SMTP id o13mr24243191wmq.175.1637590750572;
+        Mon, 22 Nov 2021 06:19:10 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l16sm10394566wmq.46.2021.11.22.06.19.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Nov 2021 06:19:10 -0800 (PST)
+Message-Id: <pull.1144.git.git.1637590749342.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 22 Nov 2021 14:19:08 +0000
+Subject: [PATCH] refs: drop force_create argument of create_reflog API
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:W0UWVz5DmdtxoGo0/7laKQd5gJcGbKZ+wBgcQyTzzfgPscCN31D
- KPTNnSGlsEvJbkBExmDfjhkNVwljzUX8tFq4DW/XzfvV89LV+ikTy872OVmEX7RC9gdjRP4
- 65Sr0QdUq5EQgOqWxlU7ShlxlZNaDynuMLovr2AbXsfNpPS8JDZmPpDO/dTjrlLl7GqFO2s
- EyYJ4y+WdT5u0OGzKb9yQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:9x+TASDqhE4=:ou9Fs4TrZ+WqYu0TS6YWO3
- ot7dR53oEe3tq0k4z2B9juYAv9MKiyZfU4L0fGOpcUvViKnkQUtug6KhtLMGJchjYXH+KS0v6
- SLnoTL8wfcyATveWTrVpLCK7gPXUwMyPCMYET2cYb/VgQLYeHQGQbeWmRrEMV04jOJJKLNUyv
- 0kJvHcQhcaZAvifyuuwAtKdkU9Ya+Vs/D7dqw/XWnnl95vzPGpPlBRZKuUQ19DHHY+9p0oMoa
- mZxTwDgEpP+/ngIzKsxVOKuDcKjS8zP54EW/hHroqDvr6J8XN+pnt54R8mS66sZoHLDV2G42D
- HJQPgbB1dvs2ySaHafSxXXSz1BtVvCQPuDWgYnIUqdajOreUU4kM7PPEEMhoangYaSb7c70g9
- Il6nqc7Alau096P0isvJyIjv1kH2e0LaByRe752hmGPkwi3U7HAwrbjTeksS2SjblTIbGWGNs
- Si+ZFItUxkGtCLXz37wqPEKjrQiRM7MBJXFsCsnwDnazWfYXR3x900oVIfAbzWQMuq0DE1zLR
- pzuQR6e1swHfgz6gS8OW3WUR8XRpTqeEWDvYUVoFtpDUYsj6WS2gobvkMIpOAAgNM1J6WwQKR
- 0c7aZNhJ1UndOkxzlllEfXi0SjLp1L3u2ZZMsrPhVoeA/SCXBVRqrhbw9aBWrDnqpSsqRIO03
- b9WBGgG2LKc1KGYzamCU4UqRJMXXPcMR35WkM2b/PCcb0jXQXUk/vYbMOEzPgA6ayksTbSJr+
- sP5s7uHy9JfciOHhU7nYy3JnWkgvwTx3qvKQUNDW6j+2mySLrQghQF364I7yex+gPqgs5SEys
- Of3NZmv8V/Eg04yLlfoD6nMURKEKrvLaK4lSc1f52Jf/ZnSWKfR0iS+Ldu0iuWOVAn2Anzein
- Oasuh5QM/nx6/5R9lKdb8EuyQ9g5F+r3jVytq6KVCBQCltBbV6gfZ9pOQO+D1ecQ8PlpatbWa
- E4B2Au1ZX5NniWupuP90EUNAKM5WbWxojknZmayNCbqDbKNQNIwXCVK9R6e/NNOlzMTsADPb0
- rTaNrDjqGE9gflZdBvWhmcZIdnNExNj+OWozpNCRJ4j6nA79ymSrG0vfaRi8sMfb+Zgl8OROl
- DFyNz0JADwCtlCqgkcD/xBbAo5F0CZWOTqTJDzFH/L9VLMtICZzqjppJKiER5QW85tpBCU6Go
- loDEA=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-The commit's oneline has a typo: zerba instead of zebra.
+There is only one caller, builtin/checkout.c, and it hardcodes
+force_create=1.
 
-On Tue, 16 Nov 2021, Phillip Wood via GitGitGadget wrote:
+This argument was introduced in abd0cd3a301 (refs: new public ref function:
+safe_create_reflog, 2015-07-21), which promised to immediately use it in a
+follow-on commit, but that never happened.
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> When marking moved lines it is possible for a block of potential
-> matched lines to extend past a change in sign when there is a sequence
-> of added lines whose text matches the text of a sequence of deleted
-> and added lines. Most of the time either `match` will be NULL or
-> `pmb_advance_or_null()` will fail when the loop encounters a change of
-> sign but there are corner cases where `match` is non-NULL and
-> `pmb_advance_or_null()` successfully advances the moved block despite
-> the change in sign.
->
-> One consequence of this is highlighting a short line as moved when it
-> should not be. For example
->
-> -moved line  # Correctly highlighted as moved
-> +short line  # Wrongly highlighted as moved
->  context
-> +moved line  # Correctly highlighted as moved
-> +short line
->  context
-> -short line
->
-> The other consequence is coloring a moved addition following a moved
-> deletion in the wrong color. In the example below the first "+moved
-> line 3" should be highlighted as newMoved not newMovedAlternate.
->
-> -moved line 1 # Correctly highlighted as oldMoved
-> -moved line 2 # Correctly highlighted as oldMovedAlternate
-> +moved line 3 # Wrongly highlighted as newMovedAlternate
->  context      # Everything else is highlighted correctly
-> +moved line 2
-> +moved line 3
->  context
-> +moved line 1
-> -moved line 3
->
-> These false matches are more likely when using --color-moved-ws with
-> the exception of --color-moved-ws=3Dallow-indentation-change which ties
-> the sign of the current whitespace delta to the sign of the line to
-> avoid this problem. The fix is to check that the sign of the new line
-> being matched is the same as the sign of the line that started the
-> block of potential matches.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  diff.c                     | 17 ++++++----
->  t/t4015-diff-whitespace.sh | 65 ++++++++++++++++++++++++++++++++++++++
->  2 files changed, 76 insertions(+), 6 deletions(-)
->
-> diff --git a/diff.c b/diff.c
-> index 53f0df75329..efba2789354 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -1176,7 +1176,7 @@ static void mark_color_as_moved(struct diff_option=
-s *o,
->  	struct moved_block *pmb =3D NULL; /* potentially moved blocks */
->  	int pmb_nr =3D 0, pmb_alloc =3D 0;
->  	int n, flipped_block =3D 0, block_length =3D 0;
-> -	enum diff_symbol last_symbol =3D 0;
-> +	enum diff_symbol moved_symbol =3D DIFF_SYMBOL_BINARY_DIFF_HEADER;
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+    refs: drop force_create argument of create_reflog API
+    
+    There is only one caller, builtin/checkout.c, and it hardcodes
+    force_create=1.
+    
+    This argument was introduced in abd0cd3a301 (refs: new public ref
+    function: safe_create_reflog, 2015-07-21), which promised to immediately
+    use it in a follow-on commit, but that never happened.
+    
+    Signed-off-by: Han-Wen Nienhuys hanwen@google.com
 
-The exact value does not matter, as long as it is different from whatever
-the next line will have, of course.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1144%2Fhanwen%2Freflog-create-arg-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1144/hanwen/reflog-create-arg-v1
+Pull-Request: https://github.com/git/git/pull/1144
 
->
->
->  	for (n =3D 0; n < o->emitted_symbols->nr; n++) {
-> @@ -1202,7 +1202,7 @@ static void mark_color_as_moved(struct diff_option=
-s *o,
->  			flipped_block =3D 0;
->  		}
->
-> -		if (!match) {
-> +		if (pmb_nr && (!match || l->s !=3D moved_symbol)) {
->  			int i;
->
->  			if (!adjust_last_block(o, n, block_length) &&
-> @@ -1219,12 +1219,13 @@ static void mark_color_as_moved(struct diff_opti=
-ons *o,
->  			pmb_nr =3D 0;
->  			block_length =3D 0;
->  			flipped_block =3D 0;
-> -			last_symbol =3D l->s;
-> +		}
+ builtin/checkout.c             | 2 +-
+ refs.c                         | 9 ++++-----
+ refs.h                         | 4 ++--
+ refs/debug.c                   | 5 ++---
+ refs/files-backend.c           | 5 ++---
+ refs/packed-backend.c          | 3 +--
+ refs/refs-internal.h           | 2 +-
+ t/helper/test-ref-store.c      | 3 +--
+ t/t1405-main-ref-store.sh      | 2 +-
+ t/t1406-submodule-ref-store.sh | 2 +-
+ 10 files changed, 16 insertions(+), 21 deletions(-)
 
-This is one of those instances where I dislike having the patch in a
-static mail. I so want to have a _convenient_ way to expand the diff
-context, to have a look around.
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index cbf73b8c9f6..19d752847f8 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -874,7 +874,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 				int ret;
+ 				struct strbuf err = STRBUF_INIT;
+ 
+-				ret = safe_create_reflog(refname, 1, &err);
++				ret = safe_create_reflog(refname, &err);
+ 				if (ret) {
+ 					fprintf(stderr, _("Can not do reflog for '%s': %s\n"),
+ 						opts->new_orphan_branch, err.buf);
+diff --git a/refs.c b/refs.c
+index d7cc0a23a3b..cc291ee49fc 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2358,16 +2358,15 @@ int reflog_exists(const char *refname)
+ }
+ 
+ int refs_create_reflog(struct ref_store *refs, const char *refname,
+-		       int force_create, struct strbuf *err)
++		       struct strbuf *err)
+ {
+-	return refs->be->create_reflog(refs, refname, force_create, err);
++	return refs->be->create_reflog(refs, refname, err);
+ }
+ 
+-int safe_create_reflog(const char *refname, int force_create,
+-		       struct strbuf *err)
++int safe_create_reflog(const char *refname, struct strbuf *err)
+ {
+ 	return refs_create_reflog(get_main_ref_store(the_repository), refname,
+-				  force_create, err);
++				  err);
+ }
+ 
+ int refs_delete_reflog(struct ref_store *refs, const char *refname)
+diff --git a/refs.h b/refs.h
+index d5099d4984e..bd3836c97ef 100644
+--- a/refs.h
++++ b/refs.h
+@@ -413,8 +413,8 @@ int refs_pack_refs(struct ref_store *refs, unsigned int flags);
+  * Setup reflog before using. Fill in err and return -1 on failure.
+  */
+ int refs_create_reflog(struct ref_store *refs, const char *refname,
+-		       int force_create, struct strbuf *err);
+-int safe_create_reflog(const char *refname, int force_create, struct strbuf *err);
++		       struct strbuf *err);
++int safe_create_reflog(const char *refname, struct strbuf *err);
+ 
+ /** Reads log for the value of ref during at_time. **/
+ int read_ref_at(struct ref_store *refs,
+diff --git a/refs/debug.c b/refs/debug.c
+index 8667c640237..756d07c7247 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -339,11 +339,10 @@ static int debug_reflog_exists(struct ref_store *ref_store, const char *refname)
+ }
+ 
+ static int debug_create_reflog(struct ref_store *ref_store, const char *refname,
+-			       int force_create, struct strbuf *err)
++			       struct strbuf *err)
+ {
+ 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
+-	int res = drefs->refs->be->create_reflog(drefs->refs, refname,
+-						 force_create, err);
++	int res = drefs->refs->be->create_reflog(drefs->refs, refname, err);
+ 	trace_printf_key(&trace_refs, "create_reflog: %s: %d\n", refname, res);
+ 	return res;
+ }
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 151b0056fe5..00f596dd68c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1639,15 +1639,14 @@ error:
+ 	return -1;
+ }
+ 
+-static int files_create_reflog(struct ref_store *ref_store,
+-			       const char *refname, int force_create,
++static int files_create_reflog(struct ref_store *ref_store, const char *refname,
+ 			       struct strbuf *err)
+ {
+ 	struct files_ref_store *refs =
+ 		files_downcast(ref_store, REF_STORE_WRITE, "create_reflog");
+ 	int fd;
+ 
+-	if (log_ref_setup(refs, refname, force_create, &fd, err))
++	if (log_ref_setup(refs, refname, 1, &fd, err))
+ 		return -1;
+ 
+ 	if (fd >= 0)
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 1c5211b03e4..472458b844e 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1628,8 +1628,7 @@ static int packed_reflog_exists(struct ref_store *ref_store,
+ }
+ 
+ static int packed_create_reflog(struct ref_store *ref_store,
+-			       const char *refname, int force_create,
+-			       struct strbuf *err)
++				const char *refname, struct strbuf *err)
+ {
+ 	BUG("packed reference store does not support reflogs");
+ }
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 12224742ede..5b40b3bbbf8 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -606,7 +606,7 @@ typedef int for_each_reflog_ent_reverse_fn(struct ref_store *ref_store,
+ 					   void *cb_data);
+ typedef int reflog_exists_fn(struct ref_store *ref_store, const char *refname);
+ typedef int create_reflog_fn(struct ref_store *ref_store, const char *refname,
+-			     int force_create, struct strbuf *err);
++			     struct strbuf *err);
+ typedef int delete_reflog_fn(struct ref_store *ref_store, const char *refname);
+ typedef int reflog_expire_fn(struct ref_store *ref_store,
+ 			     const char *refname,
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index b314b81a45b..98f827edfb7 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -181,11 +181,10 @@ static int cmd_reflog_exists(struct ref_store *refs, const char **argv)
+ static int cmd_create_reflog(struct ref_store *refs, const char **argv)
+ {
+ 	const char *refname = notnull(*argv++, "refname");
+-	int force_create = arg_flags(*argv++, "force-create");
+ 	struct strbuf err = STRBUF_INIT;
+ 	int ret;
+ 
+-	ret = refs_create_reflog(refs, refname, force_create, &err);
++	ret = refs_create_reflog(refs, refname, &err);
+ 	if (err.len)
+ 		puts(err.buf);
+ 	return ret;
+diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
+index 49718b7ea7f..c89cef2d26b 100755
+--- a/t/t1405-main-ref-store.sh
++++ b/t/t1405-main-ref-store.sh
+@@ -108,7 +108,7 @@ test_expect_success 'delete_reflog(HEAD)' '
+ '
+ 
+ test_expect_success 'create-reflog(HEAD)' '
+-	$RUN create-reflog HEAD 1 &&
++	$RUN create-reflog HEAD &&
+ 	git reflog exists HEAD
+ '
+ 
+diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
+index 0a87058971e..f1e57a9c051 100755
+--- a/t/t1406-submodule-ref-store.sh
++++ b/t/t1406-submodule-ref-store.sh
+@@ -92,7 +92,7 @@ test_expect_success 'delete_reflog() not allowed' '
+ '
+ 
+ test_expect_success 'create-reflog() not allowed' '
+-	test_must_fail $RUN create-reflog HEAD 1
++	test_must_fail $RUN create-reflog HEAD
+ '
+ 
+ test_done
 
-So I went over to
-https://github.com/gitgitgadget/git/pull/981/commits/10b11526206d3b515ba08=
-ac80ccf09ecb7a03420
-to get the convenience I need for a pleasant reviewing experience.
-
-In this instance, the `continue` that dropped out of that conditional
-block gave me pause.
-
-My understanding is that the diff makes it essentially a lot harder to
-understand what is done here: this conditional block did two things, it
-re-set the possibly-moved-block, and it skipped to the next loop
-iteration. With this patch, we now re-set the possibly-moved-block in more
-cases, but still skip to the next loop iteration under the same condition
-as before:
-
-> +		if (!match) {
-> +			moved_symbol =3D DIFF_SYMBOL_BINARY_DIFF_HEADER;
->  			continue;
->  		}
-
-However, after reading the commit message, I would have expected the
-condition above to read `if (!match || l->s !=3D moved_symbol)` instead of
-`if (!match)`. Could you help me understand what I am missing?
-
->
->  		if (o->color_moved =3D=3D COLOR_MOVED_PLAIN) {
-> -			last_symbol =3D l->s;
->  			l->flags |=3D DIFF_SYMBOL_MOVED_LINE;
->  			continue;
->  		}
-
-I want to make sure that I understand why the `last_symbol` assignment
-could be removed without any `moved_symbol` assignment in its place. But I
-don't, I still do not see why we do not need a `moved_symbol =3D l->s;`
-assignment here.
-
-Unless, that is, we extended the `!match` condition above to also cover
-the case where `l->s !=3D moved_symbol`.
-
-> @@ -1251,11 +1252,16 @@ static void mark_color_as_moved(struct diff_opti=
-ons *o,
->  							    &pmb, &pmb_alloc,
->  							    &pmb_nr);
->
-> -			if (contiguous && pmb_nr && last_symbol =3D=3D l->s)
-> +			if (contiguous && pmb_nr && moved_symbol =3D=3D l->s)
->  				flipped_block =3D (flipped_block + 1) % 2;
-
-This is totally not your fault, but I really wish we could have the much
-simpler and much easier to understand `flipped_block =3D !flipped_block`
-here.
-
->  			else
->  				flipped_block =3D 0;
->
-> +			if (pmb_nr)
-> +				moved_symbol =3D l->s;
-> +			else
-> +				moved_symbol =3D DIFF_SYMBOL_BINARY_DIFF_HEADER;
-> +
->  			block_length =3D 0;
->  		}
->
-> @@ -1265,7 +1271,6 @@ static void mark_color_as_moved(struct diff_option=
-s *o,
->  			if (flipped_block && o->color_moved !=3D COLOR_MOVED_BLOCKS)
->  				l->flags |=3D DIFF_SYMBOL_MOVED_LINE_ALT;
->  		}
-> -		last_symbol =3D l->s;
-
-That makes sense: we only set `moved_symbol` when `pmb_nr` had been 0 now,
-and don't want it to be overridden.
-
-As I said, I do not quite understand this patch yet, and am looking for
-your guidance to wrap my head around it.
-
-Thank you for working on this!
-Dscho
-
->  	}
->  	adjust_last_block(o, n, block_length);
->
-> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-> index 4e0fd76c6c5..15782c879d2 100755
-> --- a/t/t4015-diff-whitespace.sh
-> +++ b/t/t4015-diff-whitespace.sh
-> @@ -1514,6 +1514,71 @@ test_expect_success 'zebra alternate color is onl=
-y used when necessary' '
->  	test_cmp expected actual
->  '
->
-> +test_expect_success 'short lines of opposite sign do not get marked as =
-moved' '
-> +	cat >old.txt <<-\EOF &&
-> +	this line should be marked as moved
-> +	unchanged
-> +	unchanged
-> +	unchanged
-> +	unchanged
-> +	too short
-> +	this line should be marked as oldMoved newMoved
-> +	this line should be marked as oldMovedAlternate newMoved
-> +	unchanged 1
-> +	unchanged 2
-> +	unchanged 3
-> +	unchanged 4
-> +	this line should be marked as oldMoved newMoved/newMovedAlternate
-> +	EOF
-> +	cat >new.txt <<-\EOF &&
-> +	too short
-> +	unchanged
-> +	unchanged
-> +	this line should be marked as moved
-> +	too short
-> +	unchanged
-> +	unchanged
-> +	this line should be marked as oldMoved newMoved/newMovedAlternate
-> +	unchanged 1
-> +	unchanged 2
-> +	this line should be marked as oldMovedAlternate newMoved
-> +	this line should be marked as oldMoved newMoved/newMovedAlternate
-> +	unchanged 3
-> +	this line should be marked as oldMoved newMoved
-> +	unchanged 4
-> +	EOF
-> +	test_expect_code 1 git diff --no-index --color --color-moved=3Dzebra \
-> +		old.txt new.txt >output && cat output &&
-> +	grep -v index output | test_decode_color >actual &&
-> +	cat >expect <<-\EOF &&
-> +	<BOLD>diff --git a/old.txt b/new.txt<RESET>
-> +	<BOLD>--- a/old.txt<RESET>
-> +	<BOLD>+++ b/new.txt<RESET>
-> +	<CYAN>@@ -1,13 +1,15 @@<RESET>
-> +	<BOLD;MAGENTA>-this line should be marked as moved<RESET>
-> +	<GREEN>+<RESET><GREEN>too short<RESET>
-> +	 unchanged<RESET>
-> +	 unchanged<RESET>
-> +	<BOLD;CYAN>+<RESET><BOLD;CYAN>this line should be marked as moved<RESE=
-T>
-> +	<GREEN>+<RESET><GREEN>too short<RESET>
-> +	 unchanged<RESET>
-> +	 unchanged<RESET>
-> +	<RED>-too short<RESET>
-> +	<BOLD;MAGENTA>-this line should be marked as oldMoved newMoved<RESET>
-> +	<BOLD;BLUE>-this line should be marked as oldMovedAlternate newMoved<R=
-ESET>
-> +	<BOLD;CYAN>+<RESET><BOLD;CYAN>this line should be marked as oldMoved n=
-ewMoved/newMovedAlternate<RESET>
-> +	 unchanged 1<RESET>
-> +	 unchanged 2<RESET>
-> +	<BOLD;CYAN>+<RESET><BOLD;CYAN>this line should be marked as oldMovedAl=
-ternate newMoved<RESET>
-> +	<BOLD;YELLOW>+<RESET><BOLD;YELLOW>this line should be marked as oldMov=
-ed newMoved/newMovedAlternate<RESET>
-> +	 unchanged 3<RESET>
-> +	<BOLD;CYAN>+<RESET><BOLD;CYAN>this line should be marked as oldMoved n=
-ewMoved<RESET>
-> +	 unchanged 4<RESET>
-> +	<BOLD;MAGENTA>-this line should be marked as oldMoved newMoved/newMove=
-dAlternate<RESET>
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'cmd option assumes configured colored-moved' '
->  	test_config color.diff.oldMoved "magenta" &&
->  	test_config color.diff.newMoved "cyan" &&
-> --
-> gitgitgadget
->
->
+base-commit: cd3e606211bb1cf8bc57f7d76bab98cc17a150bc
+-- 
+gitgitgadget
