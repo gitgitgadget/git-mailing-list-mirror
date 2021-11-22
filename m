@@ -2,148 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1598AC433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:31:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5057C433EF
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:33:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232254AbhKVWej (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 17:34:39 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58565 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231978AbhKVWef (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 17:34:35 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F0823155C8B;
-        Mon, 22 Nov 2021 17:31:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=TP9USyzhDZg6Icx8bakfRpDAKkt1vOWL9AkypNC4Oso=; b=RSgf
-        A9699h5yN80ciXZCRj4ElSBr2G6bq2+8L0x5BzTjRKsF6JNrMoNj+7NBI6m+FP0c
-        9moPwlyM5fjR9VIVUS43I+TrqwDh6blS7G1YCroGRL63v29iY37SElWEkoRVBJmX
-        mxnS2UREEc4+0JoCZsXKi9+e8wNXzlr4YmAGN0s=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E9BAA155C8A;
-        Mon, 22 Nov 2021 17:31:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 55171155C89;
-        Mon, 22 Nov 2021 17:31:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 3/4] test-ref-store: tweaks to for-each-reflog-ent format
-References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
-        <8a1b094d54732b8b60eacb9892ab460a411bcec3.1637590855.git.gitgitgadget@gmail.com>
-Date:   Mon, 22 Nov 2021 14:31:24 -0800
-Message-ID: <xmqqr1b7bz5v.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: ED5DB5AA-4BE3-11EC-B3BA-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+        id S232588AbhKVWgN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 17:36:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43740 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229502AbhKVWgN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 17:36:13 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6596AC061574
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:06 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id e7-20020aa798c7000000b004a254db7946so10554190pfm.17
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=yktJoZGKDNabWxXU6fDhVYSO9Pf+OZ/PUk0YftjXUvQ=;
+        b=NIeapA5UvvG8N1SDHsD49m2yH4XZqg3PnZJvFpVBIj160TKx7vZJikEwBwJefE8dnU
+         NlhmiGigzm6AFghcyAKTfric4myIcNLao3EYE4lAFHBXtwD7kw98gKWUSAeFm/vjN54/
+         EmZfGcmU6ei3nW5ftA0RD9NcP7wcbec3rdQNoNHRrHAA2RuxJhE0KcDVNCHkXXhjWW41
+         QtLkMuPRayVC9M+iixuSgiM+v//xY6zWzJ1BdLdOI64FHPywJdTXicPT33JNr7iVuboQ
+         kNoysDK/n1rnC+il3cgHN/NSHN3nQFEXioOwGU+xw6JGGovr1p8tDsLix5/VqPy9gqvn
+         p9zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=yktJoZGKDNabWxXU6fDhVYSO9Pf+OZ/PUk0YftjXUvQ=;
+        b=z5GwvfOSu03do9K/fDZUxKMR2tMPWwYC2oNrjoa03OF/ULn15zmLCnk/07Qx5XeKoU
+         4aZaXxfmzmCmeLtt9tRK0RpdesDv46K2xGIPKZ45skTCWYkfibUP2vQhE+on410qPJYY
+         s1Hz65QMNLMm7sYIxJTtrMOG24B3smc+HyZf+ncEDCtxbPoFfURVb/xJKwGg1EMwaS/3
+         SnU9tlcEzRqxIKpIVMBXkpAzxe9R4Gn+t63nXMjDrHINlnqNzP8exO5veicuQ6Vd+rwg
+         WbAZI445heWggSy10TdNJyo1KqEh1sPev+Xq+r+QrsKecpE6kFqNz0n+gvk8Eu3m3UDC
+         j22g==
+X-Gm-Message-State: AOAM533fg78Y4oHPHocOVeuhGkNMLU9DZtZltppGM1+cOGVXpy8VyBjt
+        14AYRVwdhKDBjJqztBiQCCyBUQ+qKGPlkjDQArK/fA4VJ117SWMpQ07PG6/1Uq9uK5/uxwDxNiq
+        rGQ/BPxuzQES5CYy3HjoxhdJsED0rN2rkBkmgUHObjaJYGQ7jaoalg8vxVOxxDeA=
+X-Google-Smtp-Source: ABdhPJwPh53vOlc0LIYkHN405qYNzwAF756qAR1mdXAgl51oU2JgnYpDUNG34GidByPqObYSKzKbhsjkvDqRrw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90a:fe85:: with SMTP id
+ co5mr35899763pjb.110.1637620385813; Mon, 22 Nov 2021 14:33:05 -0800 (PST)
+Date:   Mon, 22 Nov 2021 14:32:48 -0800
+Message-Id: <20211122223252.19922-1-chooglen@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.34.0.rc2.393.gf8c9666880-goog
+Subject: [PATCH 0/4] implement branch --recurse-submodules
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Glen Choo <chooglen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Submodule branching RFC:
+https://lore.kernel.org/git/kl6lv912uvjv.fsf@chooglen-macbookpro.roam.corp.google.com/
 
-> From: Han-Wen Nienhuys <hanwen@google.com>
->
-> Follow the reflog format more closely, so it can be used for comparing
+Original Submodule UX RFC/Discussion:
+https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
 
-There is no v$n designator on the title line, but I have this
-feeling that I've seen this patch before.  More importantly, I
-remember that I found it unclear what you exactly mean "the" reflog
-format.  Is that what the files backend stores on one line in its
-file?  The reason I suspect that may be the answer is because I do
-not recall documenting "the" reflog format in Documentation/ and
-whatever we have historically been writing would be the most
-canonical and/or authoritative format.
+Contributor Summit submodules Notes:
+https://lore.kernel.org/git/nycvar.QRO.7.76.6.2110211148060.56@tvgsbejvaqbjf.bet/
 
-> reflogs in tests without using inspecting files under .git/logs/
+Submodule UX overhaul updates:
+https://lore.kernel.org/git/?q=Submodule+UX+overhaul+update
 
-I agree 100% with the goal.  
+This series implements branch --recurse-submodules as laid out in the
+Submodule branching RFC (linked above). If there are concerns about the
+UX/behavior, I would appreciate feedback on the RFC thread as well :)
 
-It seems that one line of .git/logs/HEAD looks like
+This series uses child processes to support submodules. I initially
+hoped to do this in-core and [1] and [2] were meant to prepare for that.
+But even though in-core is tantalizingly close, [1] showed that there
+is more work to be done on config.c before this is possible, and I would
+like to get more feedback on the UX before converting this to in-core.
 
-<new> SP <old> SP <user> SP '<' <email> '>' SP <time> SP <zone> HT <oneline> LF
+[1] https://lore.kernel.org/git/20211111171643.13805-1-chooglen@google.com/
+[2] https://lore.kernel.org/git/20211118005325.64971-1-chooglen@google.com/
 
-and being able to extract a line like that for given reflog entry
-out of any backend in a consistent way is valuable when testing
-different backends.
+Glen Choo (4):
+  submodule-config: add submodules_of_tree() helper
+  branch: refactor out branch validation from create_branch()
+  branch: add --dry-run option to branch
+  branch: add --recurse-submodules option for branch creation
 
-It seems that is what the new code is writing, so perhaps the first
-paragraph can be clarified to indicate as such.
+ Documentation/config/advice.txt    |   3 +
+ Documentation/config/submodule.txt |   9 +
+ Documentation/git-branch.txt       |   8 +-
+ advice.c                           |   1 +
+ advice.h                           |   1 +
+ branch.c                           | 300 +++++++++++++++++++++--------
+ branch.h                           |  41 +++-
+ builtin/branch.c                   |  77 ++++++--
+ builtin/submodule--helper.c        |  33 ++++
+ submodule-config.c                 |  19 ++
+ submodule-config.h                 |  13 ++
+ t/t3200-branch.sh                  |  30 +++
+ t/t3207-branch-submodule.sh        | 249 ++++++++++++++++++++++++
+ 13 files changed, 678 insertions(+), 106 deletions(-)
+ create mode 100755 t/t3207-branch-submodule.sh
 
-    We have some tests that read from files in .git/logs/ hierarchy
-    when checking if correct reflog entries are created, but that is
-    too specific to the files backend.  Other backends like reftable
-    may not store its reflog entries in such a "one line per entry"
-    format.
+-- 
+2.33.GIT
 
-    Update for-each-reflog-ent test helper to produce output that
-    would be identical to lines in a reflog file files backend uses.
-    That way, (1) the current tests can be updated to use the test
-    helper to read the reflog entries instead of (parts of) reflog
-    files, and perform the same inspection for correctness, and (2)
-    when the ref backend is swapped to another backend, the updated
-    test can be used as-is to check the correctness.
-
-or something along the line?
-
-> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-> ---
->  t/helper/test-ref-store.c | 5 ++---
->  t/t1405-main-ref-store.sh | 1 +
->  2 files changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-> index b314b81a45b..0fcad9b3812 100644
-> --- a/t/helper/test-ref-store.c
-> +++ b/t/helper/test-ref-store.c
-> @@ -151,9 +151,8 @@ static int each_reflog(struct object_id *old_oid, struct object_id *new_oid,
->  		       const char *committer, timestamp_t timestamp,
->  		       int tz, const char *msg, void *cb_data)
->  {
-> -	printf("%s %s %s %"PRItime" %d %s\n",
-> -	       oid_to_hex(old_oid), oid_to_hex(new_oid),
-> -	       committer, timestamp, tz, msg);
-> +	printf("%s %s %s %" PRItime " %+05d\t%s\n", oid_to_hex(old_oid),
-> +	       oid_to_hex(new_oid), committer, timestamp, tz, msg);
-
-Looks good to me.  We might want to make the printf format
-conditional to add \t%s only when msg is not empty, though.
-Hopefully such a change would follow the reflog format even more
-closely to make 4/4 unnecessary?
-
->  	return 0;
->  }
->  
-> diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
-> index a600bedf2cd..76b15458409 100755
-> --- a/t/t1405-main-ref-store.sh
-> +++ b/t/t1405-main-ref-store.sh
-> @@ -94,6 +94,7 @@ test_expect_success 'for_each_reflog_ent()' '
->  
->  test_expect_success 'for_each_reflog_ent_reverse()' '
->  	$RUN for-each-reflog-ent-reverse HEAD >actual &&
-> +	head -n1 actual | grep recreate-main &&
-
-I am not sure how this new test helps validate the change to the
-code.
-
-What was different in the old output was that the timezone was not
-in %+05d format, and the field separator before the log message was
-not HT.  So if this grepped for HT or +0000 to make sure we are
-using the format that is close to what actually is stored in the
-files, I would understand this change, but it is unclear what it
-proves to make sure that the oldest entry has recreate-main.
-
-In fact, with the code part of the patch reverted, this new test
-seems to pass.
-
->  	tail -n1 actual | grep one
->  '
