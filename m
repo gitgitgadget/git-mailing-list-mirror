@@ -2,112 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88A1FC433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 23:39:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6028DC433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 23:51:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231434AbhKVXmd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 18:42:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58996 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231230AbhKVXmd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 18:42:33 -0500
-Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com [IPv6:2607:f8b0:4864:20::929])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAC23C061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 15:39:25 -0800 (PST)
-Received: by mail-ua1-x929.google.com with SMTP id p2so39965430uad.11
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 15:39:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=FWh58Es4oH0Rvm8GvftCTOz9P0uZDG0qbZZF2V5rOSg=;
-        b=X035KJB3M8RGG1V63fshsyMder2GeqOwLQKxrMw2UdkYLIAhSoB+6mf3hqHbKxc3Bn
-         PwSCS4+4ItDFV6ano6n7Y/jeaSNfLWas9wt1sz4hbXFRQ4NS1Gd0ZHf8nl9AW+FRrW+t
-         E6d6CzZG5YrCEVEXIOugZF/gBy3qzFKwadREeqSmKEGUmVIpRvjy5O2Eush5qzcxmoj9
-         fzRnwKfpS5W6fkdpqfdpwi1MMnzlIG7W/jqkN1zbeiQOLI1W5Q1A/+3eY3gDnipD4Po6
-         JGiAnSgt0SerzbVlQsK7F638djYlRgP9wZyUgLmBiYH74MqL5qLtEpp/Bj/OMo4oIwXF
-         WLDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=FWh58Es4oH0Rvm8GvftCTOz9P0uZDG0qbZZF2V5rOSg=;
-        b=IGCmigGmwuwauL17FIYgqEpI8DCeU4yCGfDLYUrygjyiQWAIU5wpr9oWYuBx+uhtO3
-         XGnkPk/YT6NGfnP/hdot8t/YgxacnPgtA/MdQ3vBuFO96knGcedi/jebUedZuaMb5F49
-         zZQazjt2V8wscPtsm0/hahZzfWlkcy69qcExdlNNmvmcMVtogJ3Fri54K4jbALqcOktg
-         81HNmbX8+FvMu8KgarxwDTZ45C038kRMrmlLKDTQBXGBwPKySGaH3Y9XJBaMuX3PCSvu
-         3/TnmqduXCPMT92EoWLr3OGh32DXQhxaULksolCFzdOMTofxEwHUCbcLTQmo8gtTqOgZ
-         kdFQ==
-X-Gm-Message-State: AOAM530y9B3lPd99S2Sj6Q2gpox0MQplhiCKcrphohQptHLAODGFaLin
-        PbHsl6RjyGZm8nBMc2hTG7A/YV1mTxyJ5/T+K64U6Wf7nH4=
-X-Google-Smtp-Source: ABdhPJwtoYlaNchgGSL/rX1wEgwFkjQbeXYEeDPxeB3sJCQFLMLk6OOfd80BRjiDOAzyXNhM9pUpVhDkkWhIFm6H1Pc=
-X-Received: by 2002:ab0:14a7:: with SMTP id d36mr1322042uae.96.1637624364971;
- Mon, 22 Nov 2021 15:39:24 -0800 (PST)
+        id S232002AbhKVXyw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 18:54:52 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:39336 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231426AbhKVXyv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 18:54:51 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1AMNpdTr038979
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 22 Nov 2021 18:51:40 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     "'Carlo Arenas'" <carenas@gmail.com>, <git@vger.kernel.org>
+References: <xmqqr1b8gkhg.fsf@gitster.g>        <CAPUEsphNH9pfQoHqVgJfkQCU-Li45dz4QtGtDjWu5bDV9A3PEg@mail.gmail.com>        <nycvar.QRO.7.76.6.2111222319100.63@tvgsbejvaqbjf.bet> <xmqqmtlvbynr.fsf@gitster.g> <nycvar.QRO.7.76.6.2111230025440.63@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2111230025440.63@tvgsbejvaqbjf.bet>
+Subject: RE: preparing for 2.34.1
+Date:   Mon, 22 Nov 2021 18:51:34 -0500
+Organization: Nexbridge Inc.
+Message-ID: <039401d7dffb$e5198800$af4c9800$@nexbridge.com>
 MIME-Version: 1.0
-References: <04ab7301-ea34-476c-eae4-4044fef74b91@gmail.com>
- <20211122222850.674-1-carenas@gmail.com> <xmqqa6hvbxob.fsf@gitster.g>
-In-Reply-To: <xmqqa6hvbxob.fsf@gitster.g>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Mon, 22 Nov 2021 15:39:12 -0800
-Message-ID: <CAPUEspgDafXHHPvzNijTsPsna76yE8W=JH-78LX3jyaieSmp0A@mail.gmail.com>
-Subject: Re: [PATCH] editor: only save (and restore) the terminal if using a tty
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
-        thomas.wolf@paranor.ch, Alexander Veit <alexander.veit@gmx.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQHGoR0gTaIcVJxxdjmNpWp+zr5ahADSYqyOArMe3lMCJktwKgHjekNzq/Y45+A=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 22, 2021 at 3:03 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
->
-> > If the editor is invoked without a controlling terminal, then
-> > saving the state and restoring it later is not very useful and
-> > could generate signals that the invoking process wouldn't know
-> > how to handle.
+On November 22, 2021 6:30 PM, Johannes Schindelin wrote:
+> On Mon, 22 Nov 2021, Junio C Hamano wrote:
+> 
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > >
-> > if git's standard output is not connected to a terminal, then
-> > presume there is no need to worry if the invoking terminal could
-> > garble it.
->
-> Shouldn't the logic apply equally to all callers of save_term()?
->
-> In other words, why aren't we doing this check inside save_term()
-> implementation?  i.e. before opening /dev/tty, we can do isatty(1)
-> and return -1 if it is false, or something?  That way, when we gain
-> the second caller to save/restore other than editor (prehaps the
-> pager code path wants to do this?  I dunno), we do not have to
-> remember that isatty() check must be made before doing save_term(),
-> no?
+> > > The quickest workaround for this is probably to special-case the
+> > > editor
+> > > `echo`:
+> >
+> > "GIT_EDITOR=: git cmd" would also be a common trick people would use
+> > to bypass editor and take whatever is given as an initial template.
+> 
+> GIT_EDITOR=: is not a problem because of
+> https://github.com/git/git/blob/v2.34.0/editor.c#L59:
+> 
+> 	if (strcmp(editor, ":")) {
+> 		[...]
+> 		term_fail = save_term(1);
+> 		if (start_command(&p) < 0) {
+> 			if (!term_fail)
+> 				restore_term();
+> 			[...]
+> 		}
+> 
+> 		[...]
+> 		if (!term_fail)
+> 			restore_term();
+> 		[...]
+> 	}
+> 
+> > > However, I could imagine that other scenarios call for an editor
+> > > that _also_ does not run in the terminal, and where also no real
+> > > terminal is available for saving and restoring.
+> > >
+> > > I was tempted to suggest an `isatty(2)`, but that probably comes
+> > > with its own problems, too.
+> >
+> > I think isatty(2) is pretty much our synonym to "are we talking to an
+> > end-user sitting in front of the terminal".  Mostly we use it as a way
+> > to control the progress bars, and use of editor on terminal would be
+> > in line with these existing uses.
+> 
+> Indeed, I think that isatty(2) is a better indicator than isatty(1). We
+> sometimes _do_ redirect the output of, say, `git commit`, to capture the
+> commit hash that was generated. We typically do not redirect stderr,
+though,
+> unless calling from an application and capturing everything via pipes. So
+> isatty(2) strikes me as the best balance we can strike here.
 
-yes, my plan was to minimize the impact of this bugfix by doing this
-as narrow as possible, but you are correct that if we consider that
-the only caller for  save_term() is in editor.c then it would had make
-more sense to put it there to begin with and with supportability in
-mind for the future; but save_term() is also called internally, and so
-the logic would also propagate to other places that use
-compat/terminal.c (like our fallback version of getpass() or `git add
--p`).
+Please be careful of this one. isatty(2) may not be the issue, but the
+filedes provided by Jenkins and other CI/CD systems over SSH often
+mischaracterises the results from this call. Hacking the file descriptor
+(2>&1 etc) prior to going to git is a common thing in scripts. Stdin is
+frequently wrong when Jenkins sets up the environment to prompt for an SSH
+passphrase - happens in non-Docker nohup situations - where git will end up
+thinking it is interactive when it is not - not on NonStop fortunately, but
+this happens with a Gentoo Hypervisor and Ubuntu VM. Also, stderr gets
+redirected in scripts frequently in my experience - particularly on exotic
+operating systems, crossing over from say, legacy NonStop or IBM TSO to
+each's POSIX environment. I would expect breakages from this assumption, so
+please be cautious.
 
-I should have mentioned though that a better fix was forthcoming, just
-not with so little time before 2.34.1 gets released.
+-Randall
 
-> In any case, I am quite tempted to just revert the offending topic
-> for now, but later accept a resurrection patch with this isatty
-> check rolled in (either at this caller, or inside save_term) when
-> the dust settles.
-
-I indeed suggested[1] a revert but I wouldn't have proposed this
-alternative if it wouldn't be done safely enough, agree though that
-without a successful report that it fixes the problem by the reporter
-(who has since moved[2] on to a different hack which was proposed by
-Peff), a revert is always safer.
-
-Carlo
-
-[1] https://lore.kernel.org/git/xmqqilwjbyj4.fsf@gitster.g/T/#mad3fd4d0015e=
-c939c1e0001444d5affd720d56b2
-[2] https://git.eclipse.org/r/c/jgit/jgit/+/187938
