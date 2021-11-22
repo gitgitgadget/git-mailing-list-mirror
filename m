@@ -2,125 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0910C433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 12:28:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDCBFC433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 12:34:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239549AbhKVMbI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 07:31:08 -0500
-Received: from smtp-out1.suse.de ([195.135.220.28]:49730 "EHLO
-        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239522AbhKVMbG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 07:31:06 -0500
-Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out1.suse.de (Postfix) with ESMTP id 61A25218ED;
-        Mon, 22 Nov 2021 12:27:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-        t=1637584079; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=mPhgP/mNYh0D93oOMLOVuHr+hw6C1MV/jP56z1+M7is=;
-        b=104RfXB0fSL8UCrMvtvz1PzGccN+KqiwON9CB18X0wISIH44ErcWM6zwnymsW8GcbnmS3y
-        4EBX6yatLpbiJLj4yo8I7s3ht3oNfMzNaZ+sejm/P9o6U0+g4+UEAJXS3nlmQsDZclk6Ju
-        6aMNw8dZ5kEbUK+mjNrkvwgRf9TIuvQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-        s=susede2_ed25519; t=1637584079;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=mPhgP/mNYh0D93oOMLOVuHr+hw6C1MV/jP56z1+M7is=;
-        b=ciqlJuSC70PRuuDhgdrOYCm0z49BPUm+XchfhGBpA4TyN8PthxWQPh/DXB86sWYG4gT4H/
-        gEr3L3vcXKZ+drBQ==
-Received: from quack2.suse.cz (unknown [10.100.200.198])
-        by relay2.suse.de (Postfix) with ESMTP id 55092A3B89;
-        Mon, 22 Nov 2021 12:27:59 +0000 (UTC)
-Received: by quack2.suse.cz (Postfix, from userid 1000)
-        id 34D351E3C6D; Mon, 22 Nov 2021 13:27:59 +0100 (CET)
-Date:   Mon, 22 Nov 2021 13:27:59 +0100
-From:   Jan Kara <jack@suse.cz>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jan Kara <jack@suse.cz>, git@vger.kernel.org
-Subject: Re: [PATCH 02/27] bisect: Fixup bisect-porcelain/17
-Message-ID: <20211122122759.GC24453@quack2.suse.cz>
-References: <20211118164940.8818-1-jack@suse.cz>
- <20211118164940.8818-3-jack@suse.cz>
- <YZbOKgoYmeM/yLAs@nand.local>
+        id S236971AbhKVMhj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 07:37:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48016 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234308AbhKVMhi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 07:37:38 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67EA8C061574
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 04:34:32 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id x7so13776816pjn.0
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 04:34:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vvry0IFox4J1dl8EPfBj8fwrysTPYbBFJnqthCiBI/M=;
+        b=hwV77o+W5yp++hpRPQtb10Kd/GoaqugWXcqOsJ32dP2iBhNN2RxZG3G3qufcaZAZsG
+         3SNhpSndsPhBwyw1Lof8G1V+24Z4AnkJN+XmOMC2ADi4xwj4yoBF2nVeXEBjEaqCbZLe
+         RXAcUUedtr0+ezLn/RlKjdfW+3JBzAZV86+OYOHQpQQaSZ2pc6D+Embrx4flx6QYJKvx
+         EfLJGInuKHNdfmeJNBzyyPgxMigkGlbgRQ9x4LH+dKOd73ruL1w9kXlrDP616DptspTe
+         7YnQQklTLDq0w91K9o42IklNYsB8nMNOEzNiTCERCf6F+rxDOk+GvUWm+LQL6he1VTAb
+         +TXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vvry0IFox4J1dl8EPfBj8fwrysTPYbBFJnqthCiBI/M=;
+        b=YlO830ZvuXr3tDbCiJ2jd8JEJwCxcWHCRYgHiMgh8/VAA0eVAFLAoVeHWcFWP7radk
+         f4/2z5IDC185Sp+tSiQhgZ+b1+ng+2PNbdsmdtWYgD8Jre6vam+Fzc+WeBg+8siy/8Lv
+         CJXfo87mtnjGlD+9z5xtPQVhBTV5ut/eu1TQ1R6GMAm+M3nBPW6N6oODcg84LNV/EKN4
+         J1CHOFfja2LgsmaHdWxYxmmI+JsO4m01hsy7Y4naM3USB/LKPJTRkCP8W5nHiMA1FfbW
+         1jDSHJiFMu8NtTaCXpKOE0N63daOpt1+rm6vhQB7dfRMe1/d//HbNTCjAD59U1pKwiMl
+         nVVg==
+X-Gm-Message-State: AOAM530GgnTjfDnKFp197gZRLoJmlafzouxWbDxqwGbEwogt76v/t1D2
+        gpCwKvvzL8LYIxdpv+s4RMMzPTulH1w=
+X-Google-Smtp-Source: ABdhPJzHfIVv09fSiGfJ0OqKaAMrJhRHNTRSY6tiMCt0aWHqxX7c3uS8ToHX4TZW1UgzTQ6MOG5b2Q==
+X-Received: by 2002:a17:90a:c297:: with SMTP id f23mr30975240pjt.138.1637584471751;
+        Mon, 22 Nov 2021 04:34:31 -0800 (PST)
+Received: from ubuntu.mate (subs02-180-214-232-93.three.co.id. [180.214.232.93])
+        by smtp.gmail.com with ESMTPSA id t4sm9384794pfq.163.2021.11.22.04.34.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Nov 2021 04:34:31 -0800 (PST)
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [PATCH v3] fetch-pack: parameterize message containing 'ready' keyword
+Date:   Mon, 22 Nov 2021 19:34:14 +0700
+Message-Id: <20211122123415.464783-1-bagasdotme@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YZbOKgoYmeM/yLAs@nand.local>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu 18-11-21 17:05:41, Taylor Blau wrote:
-> On Thu, Nov 18, 2021 at 05:49:15PM +0100, Jan Kara wrote:
-> 
-> > Test 17 from t6030-bisect-porcelain.sh assumes that bisection algorithm
-> > suggests first HASH3 where HASH2 and HASH3 are equivalent choices. Make
-> > sure test correctly handles both choices, add test variant to properly
-> > test commit skipping in the second case.
-> 
-> OK, makes sense-ish: at least in the context of preparing for the
-> bisection algorithm to change. The subject line leaves a bit to be
-> desired, though. Perhaps:
-> 
->   t6030: handle equivalent bisection points gracefully
+The protocol keyword 'ready' isn't meant for translation. Pass it as
+parameter instead of spell it in die() message (and potentially confuse
+translators).
 
-Sure, I can improve all subjects to test updates like this.
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+---
+ Changes since v2 [1]:
+   - Add missing closing single quote after the parameter (suggested by
+     Eric)
+   - Remove stray 'no' at the second message (suggested by Ævar)
 
-> > diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-> > index 1be85d064e76..f8cfdd3c36d2 100755
-> > --- a/t/t6030-bisect-porcelain.sh
-> > +++ b/t/t6030-bisect-porcelain.sh
-> > @@ -197,11 +197,27 @@ test_expect_success 'bisect skip: successful result' '
-> >  	test_when_finished git bisect reset &&
-> >  	git bisect reset &&
-> >  	git bisect start $HASH4 $HASH1 &&
-> > -	git bisect skip &&
-> > +	if [ $(git rev-parse HEAD) == $HASH3 ]; then
-> 
-> This is somewhat uncommon style for Git's test suite. It might be more
-> appropriate to write instead:
-> 
->     if test "$HASH3" = "$(git rev-parse HEAD)"
->     then
->       git bisect skip
->     fi &&
->     # ...
+ [1]:
+https://lore.kernel.org/git/20211118103424.6464-1-bagasdotme@gmail.com/T/#u
 
-Sure. Will do.
+ fetch-pack.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-> > +# $HASH1 is good, $HASH4 is bad, we skip $HASH2
-> > +# but $HASH3 is good,
-> 
-> It looks like this comment should have gone above the start of the test
-> in the previous hunk.
-> 
-> But it looks like you accidentally duplicated this test in its entirety
-> (with the addition of the misplaced comment) below instead.
+diff --git a/fetch-pack.c b/fetch-pack.c
+index a9604f35a3..62d6313708 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1410,9 +1410,13 @@ static int process_ack(struct fetch_negotiator *negotiator,
+ 	 * otherwise.
+ 	 */
+ 	if (*received_ready && reader->status != PACKET_READ_DELIM)
+-		die(_("expected packfile to be sent after 'ready'"));
++		/* TRANSLATORS: The parameter will be 'ready', a protocol
++		 * keyword */
++		die(_("expected packfile to be sent after '%s'"), "ready");
+ 	if (!*received_ready && reader->status != PACKET_READ_FLUSH)
+-		die(_("expected no other sections to be sent after no 'ready'"));
++		/* TRANSLATORS: The parameter will be 'ready', a protocol
++		 * keyword */
++		die(_("expected no other sections to be sent after '%s'"), "ready");
+ 
+ 	return 0;
+ }
 
-No, I think the comment and the test are correct. The first test tests
-situation
-
-H1--H2--H3--H4
-^   ^   ^   ^
-|   bad |   bad
-good    skipped
-
-the second test tests situation
-
-H1--H2--H3--H4
-^   ^   ^   ^
-|   skipped   bad
-good    good
-
-So in both cases we can decide about the bad commit besides the skipped
-commit. And if the bisection algorithm picks H2 out of H2/H3 (which are
-equivalent) then second test tests this situation fully, if the bisection
-algorithm picks H3, then the first test tests this situation fully.
-
-								Honza
+base-commit: cd3e606211bb1cf8bc57f7d76bab98cc17a150bc
 -- 
-Jan Kara <jack@suse.com>
-SUSE Labs, CR
+An old man doll... just what I always wanted! - Clara
+
