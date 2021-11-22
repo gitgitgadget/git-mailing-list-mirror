@@ -2,107 +2,193 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26D8CC433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 17:27:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0F5DC433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 17:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240159AbhKVRaf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 12:30:35 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64053 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239211AbhKVRae (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 12:30:34 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B29AAF3934;
-        Mon, 22 Nov 2021 12:27:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iXN/e+tZLP5x89S8LJ4EIiVRmAprTqyJuLa3yr
-        iogc0=; b=bu8INbU/j9HRBAQE20bSw6HPtFtkiWh85ZjyH03opidM6qz5k2/aHy
-        aPosFeEHCap8BOj9M7c/0XaB+9HTGhmFrOOr0SuF4RlR1PpvTW2A2FcZhsMOL8Ur
-        Nk7xp7/EZyzfjhIWIM0EJSbarDN+hUUrSbqViGR89ERi1AnkGCgsI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AAEACF3933;
-        Mon, 22 Nov 2021 12:27:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 202F7F3932;
-        Mon, 22 Nov 2021 12:27:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/1] git-compat-util: add a test balloon for C99 support
-References: <20211114211622.1465981-1-sandals@crustytoothpaste.net>
-        <20211114211622.1465981-2-sandals@crustytoothpaste.net>
-        <nycvar.QRO.7.76.6.2111161129120.21127@tvgsbejvaqbjf.bet>
-        <xmqqk0h7423v.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2111221242320.63@tvgsbejvaqbjf.bet>
-Date:   Mon, 22 Nov 2021 09:27:26 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2111221242320.63@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 22 Nov 2021 12:44:37 +0100 (CET)")
-Message-ID: <xmqq1r38hzi9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S240401AbhKVRfx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 12:35:53 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36432 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240440AbhKVRfs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 12:35:48 -0500
+Received: (qmail 21105 invoked by uid 109); 22 Nov 2021 17:32:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Nov 2021 17:32:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21477 invoked by uid 111); 22 Nov 2021 17:32:40 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Nov 2021 12:32:40 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 22 Nov 2021 12:32:39 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Enzo Matsumiya <ematsumiya@suse.de>
+Subject: Re: [PATCH 5/5] run-command API: remove "argv" member, always use
+ "args"
+Message-ID: <YZvUN0kuTpmf9Q7P@coredump.intra.peff.net>
+References: <YZseJ4jOVIK3+bUD@coredump.intra.peff.net>
+ <cover-0.5-00000000000-20211122T153605Z-avarab@gmail.com>
+ <patch-5.5-ea1011f7473-20211122T153605Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 768AB646-4BB9-11EC-BF08-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-5.5-ea1011f7473-20211122T153605Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Mon, Nov 22, 2021 at 05:04:07PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
->> I like the direction, but ...
->>
->> >> diff --git a/Makefile b/Makefile
->> >> index 12be39ac49..22d9e67542 100644
->> >> --- a/Makefile
->> >> +++ b/Makefile
->> >> @@ -1204,7 +1204,7 @@ endif
->> >>  # Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
->> >>  # tweaked by config.* below as well as the command-line, both of
->> >>  # which'll override these defaults.
->> >> -CFLAGS = -g -O2 -Wall
->> >> +CFLAGS = -g -O2 -Wall -std=gnu99
->>
->> ... as has been already pointed out, this part probably should not
->> be there.  It is not our intention to require gcc/clang, or to
->> constrain newer systems to gnu99.
->
-> Another data point in favor of dropping this: our FreeBSD CI build reports
-> a compile error with this:
->
-> 	[...]
-> 	archive.c:337:35: error: '_Generic' is a C11 extension
-> 	[-Werror,-Wc11-extensions]
-> 			strbuf_addstr(&path_in_archive, basename(path));
-> 							^
-> 	/usr/include/libgen.h:61:21: note: expanded from macro 'basename'
-> 	#define basename(x)     __generic(x, const char *, __old_basename, basename)(x)
-> 				^
-> 	/usr/include/sys/cdefs.h:329:2: note: expanded from macro '__generic'
-> 		_Generic(expr, t: yes, default: no)
-> 		^
-> 	1 error generated.
->
-> I verified in https://github.com/gitgitgadget/git/pull/1082 that this
-> patch is indeed the cause of this compile error.
+> This change is larger than I'd like, but there's no easy way to avoid
+> it that wouldn't involve even more verbose intermediate steps. We use
+> the "argv" as the source of truth over the "args", so we need to
+> change all parts of run-command.[ch] itself, as well as the trace2
+> logging at the same time.
 
-Thanks.
+Yeah, agreed most of this needs to come in a bundle. But at least few spots
+could be split out into the earlier patches:
 
-I took a look at #1082, which reverted this one (and nothing else)
-to see a test succeds, and then re-reverted it to see it fail (but
-apparently only on FreeBSD/Cirrus).  
+>  builtin/worktree.c          |  2 --
+>  t/helper/test-run-command.c | 10 +++++---
 
-I had an impression that it was claimed that without this, the other
-weatherbaloon for "for (type var=..." would not fly in some of the
-jobs we have at CI?
+as they are just users of the API.
 
+> diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+> index 3c4fb862234..b5519f92a19 100644
+> --- a/t/helper/test-run-command.c
+> +++ b/t/helper/test-run-command.c
+> [...]
+> @@ -396,7 +396,8 @@ int cmd__run_command(int argc, const char **argv)
+>  	}
+>  	if (argc < 3)
+>  		return 1;
+> -	proc.argv = (const char **)argv + 2;
+> +	strvec_clear(&proc.args);
+> +	strvec_pushv(&proc.args, (const char **)argv + 2);
+>  
+>  	if (!strcmp(argv[1], "start-command-ENOENT")) {
+>  		if (start_command(&proc) < 0 && errno == ENOENT)
+> @@ -408,7 +409,8 @@ int cmd__run_command(int argc, const char **argv)
+>  		exit(run_command(&proc));
+>  
+>  	jobs = atoi(argv[2]);
+> -	proc.argv = (const char **)argv + 3;
+> +	strvec_clear(&proc.args);
+> +	strvec_pushv(&proc.args, (const char **)argv + 3);
+>  
+>  	if (!strcmp(argv[1], "run-command-parallel"))
+>  		exit(run_processes_parallel(jobs, parallel_next,
 
+These two in particular are tricky. This second strvec_clear() is
+necessary because we are overwriting what was put into proc.args by the
+earlier strvec_pushv(). I think this is one of two interesting ways
+these kinds of trivial conversions can fail:
+
+  - somebody is relying on the fact that "argv = whatever" is an
+    assignment, not an append (which is the case here)
+
+  - somebody is relying on the fact that assignment of the pointer is
+    shallow, whereas strvec_push() is doing a deep copy. So converting:
+
+      cp.argv = argv;
+      argv[1] = "foo";
+
+    to:
+
+      strvec_pushv(&cp.args, argv);
+      argv[1] = "foo";
+
+    is not correct. We wouldn't use the updated "foo". I didn't notice
+    any cases like this during my rough own rough conversion, but they
+    could be lurking.
+
+The strvec_clear() in the first hunk above is also not necessary (nobody
+has written anything before it), but I don't mind it for consistency /
+being defensive.
+
+> @@ -902,8 +900,9 @@ int start_command(struct child_process *cmd)
+>  #else
+>  {
+>  	int fhin = 0, fhout = 1, fherr = 2;
+> -	const char **sargv = cmd->argv;
+> +	const char **sargv = strvec_detach(&cmd->args);
+>  	struct strvec nargv = STRVEC_INIT;
+> +	const char **temp_argv = NULL;
+
+I wondered about detaching here, because other parts of the code
+(finish_command(), tracing, etc) will be looking at cmd->args.v[0] for
+the command name.
+
+But we eventually overwrite it with munged results:
+
+> @@ -929,20 +928,26 @@ int start_command(struct child_process *cmd)
+>  		fhout = dup(cmd->out);
+>  
+>  	if (cmd->git_cmd)
+> -		cmd->argv = prepare_git_cmd(&nargv, cmd->argv);
+> +		temp_argv = prepare_git_cmd(&nargv, sargv);
+>  	else if (cmd->use_shell)
+> -		cmd->argv = prepare_shell_cmd(&nargv, cmd->argv);
+> +		temp_argv = prepare_shell_cmd(&nargv, sargv);
+> +	else
+> +		temp_argv = sargv;
+> +	if (!temp_argv)
+> +		BUG("should have some cmd->args to set");
+> +	strvec_pushv(&cmd->args, temp_argv);
+> +	strvec_clear(&nargv);
+
+So we have to do some replacement. I think the memory management gets
+confusing here, though.
+
+At this point "temp_argv" might point to nargv.v (in which case it is a
+dangling pointer after we clear nargv) or to the original sargv (in
+which case it is memory owned by us that must be freed). The former is
+OK, because we never look at it again. And the latter we eventually
+reattach into &cmd->args, but:
+
+> -	strvec_clear(&nargv);
+> -	cmd->argv = sargv;
+> +	strvec_pushv(&cmd->args, sargv);;
+> +	free(sargv);
+
+I think we still have all the entries we pushed into cmd->args from
+temp_argv earlier. So we'd need to strvec_clear() it before pushing
+sargv again.
+
+And then the free(sargv) is too shallow. It's just freeing the outer
+array, but sargv[0], etc, are leaked.
+
+I think what you really want is the equivalent of strvec_attach(). We
+don't have that, but it's basically just:
+
+  void strvec_attach(struct strvec *s, const char **v)
+  {
+	/*
+	 * this is convenient for our caller, but if we wanted to find
+	 * potential misuses, we could also BUG() if s.nr > 0
+	 */
+	strvec_clear(&s);
+
+        /* take over ownership */
+	s->v = v;
+
+	/* v must be NULL-terminated; count up to set number */
+	s->nr = 0;
+	for (; *v; v++)
+		s->nr++;
+	/*
+	 * we don't know how big the original allocation was, so we can
+	 * assume only nr. But add 1 to account for the NULL.
+	 */
+	s->alloc = s->nr + 1;
+  }
+
+I do think this whole thing would be easier to read if we left cmd->argv
+intact, and just operated on a separate argv strvec. That's what the
+non-Windows side does. But that distinction is nothing new in your
+patch, and I'm not sure if there is a reason that the Windows code does
+it differently.
+
+-Peff
