@@ -2,133 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 187F8C433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 16:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6EDCC433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 16:50:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239798AbhKVQtq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 11:49:46 -0500
-Received: from smtp-out2.suse.de ([195.135.220.29]:46426 "EHLO
-        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235215AbhKVQtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 11:49:46 -0500
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id BDCB91FD49;
-        Mon, 22 Nov 2021 16:46:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1637599598; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=MwY9CItopwYCDWBhG7Ab99sZyNE4d5JyP/KYmEZ4qLs=;
-        b=BIklKBVghw/POD3LQLqxvrJ+wFApRscu+FvwLXwUxXn3W7whMXruQqa+MUVbJPmXaS2KOI
-        Xt/4s7DwS9Qyw/2HJeHCFIt0srluCpVN5RiwiiCQqfdVcvmwQLWMDK7aKtjqkXHdhQWGqf
-        9+v1E2LBGkyIplOhW2bPLpGvAZMOnr0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1637599598;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=MwY9CItopwYCDWBhG7Ab99sZyNE4d5JyP/KYmEZ4qLs=;
-        b=BZEk3PNng1yt3t+g9N3bpvsq7eJ+8ZMeKl7csOINiL5sPMqrHGgwwXYrpQLus+Eczl+idb
-        pfw3SF5BMDDG8fAg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 399DE13B44;
-        Mon, 22 Nov 2021 16:46:38 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id mnluAG7Jm2ETOgAAMHmgww
-        (envelope-from <ematsumiya@suse.de>); Mon, 22 Nov 2021 16:46:38 +0000
-Date:   Mon, 22 Nov 2021 13:46:35 -0300
-From:   Enzo Matsumiya <ematsumiya@suse.de>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] pager: fix crash when pager program doesn't exist
-Message-ID: <20211122164635.6zrqjqow4xa7idnn@cyberdelia>
-References: <20211120194048.12125-1-ematsumiya@suse.de>
- <YZqSBlvzz2KgOMnJ@coredump.intra.peff.net>
- <xmqqfsrplz3z.fsf@gitster.g>
- <20211122153119.h2t2ti3lkiycd7pb@cyberdelia>
- <211122.86a6hwyx1b.gmgdl@evledraar.gmail.com>
+        id S240440AbhKVQxG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 11:53:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50164 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238381AbhKVQxE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 11:53:04 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01AE8C061574
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 08:49:58 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id r11so79801290edd.9
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 08:49:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=tqdMoWk2/2wOk6JKpJZj3Xv7+BEXUgKKdoyl9dU0uSM=;
+        b=fe9y1vPDiMKCwQ492p7vt+l5Vf2ZEa7wPkkOqyuLV0J4u3WB8facOirGyITkANbpxJ
+         1gnAqB5cYvHYOFGVw1cmzUU+TOUs1FvmwERxNC8WGPTaw2pjsC/BwZdNd1uGYcMX4jxf
+         iLUTzT0sGoJSy2jlAsVPLpfmc4P0mfwn7KIWSN7K3t+xmcxOCC+ib4IrmIXethHNdA1F
+         12OAFPxFUJfecEXNsUeAEnZVSRGhT/La7wJqr0SL6+4ZLF5+OsOMffV0JWWbpuTactBF
+         Qk8op1IA/X8AaUu+66Ky6OdehFN6O/IjPxQuic/atx7c4EoACjOaiplmvyTxrTJ/1rc2
+         NkxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=tqdMoWk2/2wOk6JKpJZj3Xv7+BEXUgKKdoyl9dU0uSM=;
+        b=yFYVOT+oh31quaVH0c0UUjLFh+v85M7PXRgupyEWwgeY1ztSw11F6UIGAEPSsSFd5a
+         7I1foZxr7fIMkc0PeB7fQpOuMErG2araaHnReowbOMrP3f4NXq9ryYrPlnEGsTyXhLKL
+         Rutl0nxsbiLaO8e6Zr0cJiE5I77sL3SPkcsrv05WNWzhKzs8ARW8c515F/Hz0wPfx/XN
+         qoDFVtUGdCDAzN3s6dlhgXT4Uc45GnboVQIK9yUFUkNfQApt4Nam1jq8UocnwJQrWHpK
+         c/GwctlokCANTHQ+0braZSHBQ8hFiI9cvEwEu+L7LVa/zFYeoS5OCW6x9PbabvURgG0i
+         Bvbw==
+X-Gm-Message-State: AOAM531bw9GXsM9vLKzZwJSh47JLiMXI9OQEVhICcoHglRJ+DIrsGEB3
+        QkCOadTyUMsJOJZorObjiiI=
+X-Google-Smtp-Source: ABdhPJxazpQR7kDUSGi3So4l8k9MrbJwRhpqSmz7zkWmFtmyW+61G7h2gTKcADbceTAh7iUscD+sbw==
+X-Received: by 2002:a05:6402:3550:: with SMTP id f16mr67771868edd.377.1637599796431;
+        Mon, 22 Nov 2021 08:49:56 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id hp3sm4014540ejc.61.2021.11.22.08.49.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Nov 2021 08:49:55 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mpCVu-0017Ri-O8;
+        Mon, 22 Nov 2021 17:49:54 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>
+Subject: Re: [PATCH v8 00/17] Upstreaming the Scalar command
+Date:   Mon, 22 Nov 2021 17:36:03 +0100
+References: <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com>
+ <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com>
+ <CABPp-BG=fcKq2Ng2gan3HbBGcT7WCMhtZCP6m2xjA5BSuTekOg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2111221317390.63@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <nycvar.QRO.7.76.6.2111221317390.63@tvgsbejvaqbjf.bet>
+Message-ID: <211122.865yskyw25.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <211122.86a6hwyx1b.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/22, =C6var Arnfj=F6r=F0 Bjarmason wrote:
->I think an alternate direction of simply getting rid of "argv" is better
->in this case, and I've just submitted a topic to do that:
->https://lore.kernel.org/git/cover-0.5-00000000000-20211122T153605Z-avarab@=
-gmail.com/
 
-Well, this is my first interaction with git's source, so I can't say for
-sure, but that solution seems more complete indeed.
+On Mon, Nov 22 2021, Johannes Schindelin wrote:
 
->It still leave us with this oddity:
+> Hi Elijah,
 >
->    $ ~/g/git/git -c pager.show=3DINVALID_PAGER show  HEAD
->    error: cannot run INVALID_PAGER: No such file or directory
->    error: cannot run INVALID_PAGER: No such file or directory
+> On Sat, 20 Nov 2021, Elijah Newren wrote:
 >
->But that was the case before that topic (if we hadn't
->crashed/segfaulted), and with your proposed change here.
+>> On Fri, Nov 19, 2021 at 3:03 PM Johannes Schindelin via GitGitGadget
+>> <gitgitgadget@gmail.com> wrote:
+>> >
+>> > tl;dr: This series contributes the core part of the Scalar command to
+>> > the Git project. This command provides an opinionated way to create
+>> > and configure Git repositories with a focus on very large
+>> > repositories.
+>>
+>> I thought after
+>> https://lore.kernel.org/git/nycvar.QRO.7.76.6.2110062241150.395@tvgsbejvaqbjf.bet/
+>> that you'd update merge.renames to true on what is now patch 7.  Did
+>> you end up changing your mind, or was this overlooked?
+>
+> Oops! Thank you so much for the reminder.
+>
+> Will fix. I do not plan on sending out a new iteration for a few more days
+> because I do not want to send lots of patches to the list right now,
+> reviewer bandwidth seems to be stretched quite a bit already.
 
-Yes, I did find it weird on my initial debugging, but didn't care at
-first.
+Bandwidth which is further stretched by continuing to send updates to
+this topic while ignoring outstanding feedback.
 
-Now, looking again, it's because git (main command) have a higher
-precedence on pager preference, so it tries to setup/run the pager
-before running subcommands.
+I.e. "seen" being broken now due to a merger of this topic and another
+topic of mine, which as noted in [1] is really just revealing an
+existing breakage in this topic, which I sent you an unresponded-to
+patch to fix almost a month ago.
 
-An issue I've hit now is, if we don't want to fallback to any other
-setting, this works:
+>> Other than that, this round looks good to me.  (I have no opinion on
+>> the build system integration, other than that I like it being optional
+>> and not installed by default.)
+>
+> Yes, I very much wanted to keep this optional and as well-encapsulated as
+> possible for the moment. (Hence the way it integrates with Git's build
+> process.)
+>
+> Thank you for chiming in!
 
-diff --git a/pager.c b/pager.c
-index d93304527d62..b528bbd644b5 100644
---- a/pager.c
-+++ b/pager.c
-@@ -110,6 +110,14 @@ void setup_pager(void)
-         if (!pager)
-                 return;
+Whatever disagreement we have about the particulars of how scalar lands
+in-tree is one thing, and I'd be the first to admit that some of the
+stuff I've been suggesting is just my opinion.
 
-+       /*
-+        * There's already a pager set up and running.
-+        * Regardless if it was successful or not, we shouldn't try running
-+        * it again.
-+        */
-+       if (pager_in_use())
-+               return;
-+
-         /*
-          * After we redirect standard output, we won't be able to use an i=
-octl
-          * to get the terminal size. Let's grab it now, and then set $COLU=
-MNS
+But I've also been pointing out in reviews of this series (all/most of
+which you've ignored) that there's specific things that are
+categorically broken in this series, and clearly not working as you
+intend them to work. And you're simply ignoring those reports.
 
-However, IMHO it would make sense to try pager.<subcommand> if a
-previous attempt failed, e.g.:
+One of those is that your topic here changes CI in in a way that you
+clearly didn't intend, and which is an emergent unintended effect of how
+you're approaching this scalar integration.
 
-$ git config pager.show my-valid-pager
-$ GIT_PAGER=3Dinvalid-pager git -p show
+I.e. the compile-only CI targets now doing tests as a result, which is
+broken, and the combination of that and my CI topic revealed that
+breakage.
 
-So this will first try invalid-pager, fail, and not try again, with the
-above patch. As a user, I would expect that my-valid-pager to be run in
-case invalid-pager failed.
+Anyway, as noted in [2] I was hoping to leave this whole scalar thing
+behind, since I got tired of those reports/suggestions being
+ignored. I'm only replying here again because it's clear that you don't
+understand some of the things this scalar topic breaks/changes, and the
+only reason you wouldn't understand that is because you've been ignoring
+specific reports/patches-on top that address those breakages.
 
-What do you think?
-
-
-Cheers,
-
-Enzo
+1. https://lore.kernel.org/git/211122.86ee78yxts.gmgdl@evledraar.gmail.com/
+2. https://lore.kernel.org/git/211110.86czn8hyis.gmgdl@evledraar.gmail.com/
