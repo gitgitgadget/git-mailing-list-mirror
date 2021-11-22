@@ -2,136 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DE80C433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 04:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AF14C433EF
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 04:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231684AbhKVEi7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Nov 2021 23:38:59 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36022 "EHLO cloud.peff.net"
+        id S232178AbhKVEzB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Nov 2021 23:55:01 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36034 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229870AbhKVEi6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Nov 2021 23:38:58 -0500
-Received: (qmail 18535 invoked by uid 109); 22 Nov 2021 04:35:52 -0000
+        id S231656AbhKVEzB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Nov 2021 23:55:01 -0500
+Received: (qmail 18568 invoked by uid 109); 22 Nov 2021 04:51:55 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Nov 2021 04:35:52 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Nov 2021 04:51:55 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9495 invoked by uid 111); 22 Nov 2021 04:35:54 -0000
+Received: (qmail 9573 invoked by uid 111); 22 Nov 2021 04:51:56 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 21 Nov 2021 23:35:54 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 21 Nov 2021 23:51:56 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 21 Nov 2021 23:35:51 -0500
+Date:   Sun, 21 Nov 2021 23:51:54 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Enzo Matsumiya <ematsumiya@suse.de>, git@vger.kernel.org
-Subject: Re: [PATCH v2] pager: fix crash when pager program doesn't exist
-Message-ID: <YZseJ4jOVIK3+bUD@coredump.intra.peff.net>
-References: <20211120194048.12125-1-ematsumiya@suse.de>
- <YZqSBlvzz2KgOMnJ@coredump.intra.peff.net>
- <xmqqfsrplz3z.fsf@gitster.g>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] t7006: clean up SIGPIPE handling in trace2 tests
+Message-ID: <YZsh6mnjuKbbIrw8@coredump.intra.peff.net>
+References: <xmqq1r4b8ezp.fsf@gitster.g>
+ <20211024170349.GA2101@szeder.dev>
+ <YZqSgu4XjPWnURju@coredump.intra.peff.net>
+ <YZrCmPb5AIW8YYQ0@coredump.intra.peff.net>
+ <YZrOLy03s5ZWMQ+t@coredump.intra.peff.net>
+ <xmqqa6hxlysf.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqfsrplz3z.fsf@gitster.g>
+In-Reply-To: <xmqqa6hxlysf.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 21, 2021 at 06:10:08PM -0800, Junio C Hamano wrote:
+On Sun, Nov 21, 2021 at 06:17:04PM -0800, Junio C Hamano wrote:
 
 > Jeff King <peff@peff.net> writes:
 > 
-> > We'd usually leave of "Reviewed-by" until the reviewer has had a chance
-> > to see _this_ version of the patch. I.e., usually it would not be added
-> > by the submitter, but by the maintainer (unless you are resending
-> > verbatim a patch that already got review).
-> >
-> >> diff --git a/run-command.c b/run-command.c
-> >> index f329391154ae..a7bf81025afb 100644
-> >> --- a/run-command.c
-> >> +++ b/run-command.c
-> >> @@ -19,6 +19,7 @@ void child_process_clear(struct child_process *child)
-> >>  {
-> >>  	strvec_clear(&child->args);
-> >>  	strvec_clear(&child->env_array);
-> >> +	child_process_init(child);
-> >>  }
-> >
-> > And naturally I agree that the patch itself looks good. :)
+> > I'm not 100% sure this fixes any possible races, as the race Junio
+> > initially reported seemed to be in the "propagated signals from pager"
+> > test, which I don't think has these flaky-SIGPIPE problems. But I think
+> > it's at least correcting some of the confusion. And we can see if it
+> > happens again (I haven't been able to trigger any failures with --stress
+> > myself).
 > 
-> Well, not to me X-<.  This is way too aggressive a change to be made
-> lightly without auditing the current users of run_command API.
+> Applying this (or this and the follow-up) seems to make t7006, which
+> used to be flaky, to consistently fail at test "git returns SIGPIPE
+> on propagated signals from pager" for me ;-)
 
-Yikes. Thanks for a dose of sanity. I was looking too much at just the
-pager tests.
+Well, I guess it's good that we made things more consistent. :) It is
+curious that you get failures and I don't, though. I wonder what the
+difference is.
 
-> It is rather common for us to reuse "struct child_process" in a code
-> path, e.g. builtin/worktree.c::add_worktree() prepares a single
-> instance of such a struct, sets cp.git_cmd to true, and runs either
-> "update-ref" or "symbolic-ref" to update "HEAD".  After successful
-> invocation of such a git subcommand, it then runs "git reset --hard",
-> with this piece of code:
-> 
-> 	cp.git_cmd = 1;
-> 
-> 	if (!is_branch)
-> 		strvec_pushl(&cp.args, "update-ref", "HEAD",
-> 			     oid_to_hex(&commit->object.oid), NULL);
-> 	else {
-> 		strvec_pushl(&cp.args, "symbolic-ref", "HEAD",
-> 			     symref.buf, NULL);
-> 		if (opts->quiet)
-> 			strvec_push(&cp.args, "--quiet");
-> 	}
-> 
-> 	cp.env = child_env.v;
-> 	ret = run_command(&cp);
-> 	if (ret)
-> 		goto done;
-> 
-> 	if (opts->checkout) {
-> 		cp.argv = NULL;
-> 		strvec_clear(&cp.args);
-> 		strvec_pushl(&cp.args, "reset", "--hard", "--no-recurse-submodules", NULL);
-> 		if (opts->quiet)
-> 			strvec_push(&cp.args, "--quiet");
-> 		cp.env = child_env.v;
-> 		ret = run_command(&cp);
-> 		if (ret)
-> 			goto done;
-> 	}
+One curiosity is that the test does this:
 
-This is a pretty horrid interface, in that the caller has to understand
-which bits of "cp" need to be adjusted: setting cp.argv to NULL, but
-also potentially cp.env (if cp.env_array was used), and clearing any
-stdin/out/err descriptors created as pipes in the previous command. And
-probably more; that's just off the top of my head.
+	test_config core.pager ">pager-used; test-tool sigchain"
 
-But clearly there's a bunch of code relying on the current state of
-affairs.
+While "test-tool sigchain" will die with SIGTERM, it's the shell itself
+which will waitpid() on it. And so in the end, what Git will generally
+see is the same as if the shell had done "exit 143".
 
-> Now, we could argue that this existing caller is too lazy to assume
-> that cp.git_cmd bit will be retained after run_command()
-> successfully finishes and can reuse the structure without setting
-> the bit again, and it should be more defensive.  And "successful
-> run_command() clears the child process so that you'll get a clean
-> slate" may even be a better API in the longer term.
-> 
-> But then a change like this one that changes the world order to make
-> it a better place is also responsible to ensure that the callers are
-> already following the new world order.
+I wonder if the difference is between our shells. I know from previous
+experience that bash will sometimes directly exec the final command in a
+"-c" command, as an optimization. I don't get any difference running the
+test with dash or bash, but that makes sense; the pager command is run
+internally by Git via "sh -c".
 
-Yep. But I do worry a bit about changing the interface in such a subtle
-way, as nothing would catch topics in flight.
+Aha, that's it. If I recompile with SHELL_PATH=/bin/bash, then I see a
+failure. Likewise, if I change the test like this:
 
-> When merged to 'seen', this literally destroys tons of tests (the
-> first and easiest one to observe may be t0002).
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index 851961c798..a87ef37803 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -741,7 +741,7 @@ test_expect_success TTY 'git skips paging nonexisting command' '
+ 
+ test_expect_success TTY 'git returns SIGPIPE on propagated signals from pager' '
+ 	test_when_finished "rm pager-used trace.normal" &&
+-	test_config core.pager ">pager-used; test-tool sigchain" &&
++	test_config core.pager ">pager-used; exec test-tool sigchain" &&
+ 	GIT_TRACE2="$(pwd)/trace.normal" &&
+ 	export GIT_TRACE2 &&
+ 	test_when_finished "unset GIT_TRACE2" &&
 
-Forget 'seen'. Applying it on master shows plenty of breakages. :)
+then it fails even with dash. And that is, I think, closer to what the
+test was actually trying to cover (since checking a shell's "exit 143"
+is really no different than "exit 1", and we checked that earlier).
 
-I think we should probably punt on this direction, and just make sure
-that setup_pager() either reinitializes the child_process as appropriate
-(as in the patch I showed in the earlier thread) or just refuses to try
-running the pager twice (I didn't show a patch, but it should just be a
-matter of setting a static flag).
+So why is it failing? It looks like trace2 reports this as code "-1"
+rather than 143. I think that is because the fix from be8fc53e36 (pager:
+properly log pager exit code when signalled, 2021-02-02) is incomplete.
+It sets WEXITSTATUS() if the pager exited, but it doesn't handle signal
+death at all. I think it needs:
+
+diff --git a/run-command.c b/run-command.c
+index f40df01c77..ef9d1d4236 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -555,6 +555,8 @@ static int wait_or_whine(pid_t pid, const char *argv0, int in_signal)
+ 	if (in_signal) {
+ 		if (WIFEXITED(status))
+ 			code = WEXITSTATUS(status);
++		else if (WIFSIGNALED(status))
++			code = 128 + WTERMSIG(status); /* see comment below */
+ 		return code;
+ 	}
+ 
 
 -Peff
