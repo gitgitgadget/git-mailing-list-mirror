@@ -2,161 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB2F1C433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 23:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97895C433EF
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 23:30:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231654AbhKVXbL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 18:31:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56486 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbhKVXbL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 18:31:11 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5401C061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 15:28:03 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id x6so71806224edr.5
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 15:28:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=dKAdxZDlEITLLZyuxy8HLL4SaTNXVhQ2IPAgKR2/2q4=;
-        b=DWDfE5pCxZouAKVgPqOWBJJQTTxKDSLysTCvvLz2fsUuhP4s7sMUOO0M7+A0I02jTJ
-         /bv5YovZAvUGAG0F6o4ggyvJ/1y0Aj+Jvmv2onB7fLzqUiw6P7Za+qTH5rzTy3Y0IOjw
-         KSnIWCZ1rGBcUIuLPnT+n7BlF6hOzMeuJLe4uprYTGghhAYn6zt8F2AoiWDYkVUyRgfl
-         Rd7/LYY+nSE4/qoEdHR7xYKafRxIQuE8z1dJzzurKusR9Gsj0jQI+JK1DleM7KsSkr62
-         0car23z/zN8bt+67TVRAMVNye2SRkbYGZEaQcMgY9RICZu+SmyiKePEvgYv8GFLq6u2O
-         ZpdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=dKAdxZDlEITLLZyuxy8HLL4SaTNXVhQ2IPAgKR2/2q4=;
-        b=AAcDCQZrZIeux7mch+OwZ7xTSL9p9FcKvTGL0quUHNrkrgk0cXzH+fq48pNS6yNNxn
-         004nJLW5sCTC+r+/virVYKnjFSyeNG2Wx4ZAHoXhpIW0akXUX8SpXo+IS+k2BNInjejQ
-         6RqOJBA9MQXEgQcL+zOvTMGtdvnrRjHdOAP9TU9C8Ko95Bbe+Bt8IAyyxTQ+9D1bCAVr
-         EcpUiC9edBc0EijZzK1g4cs3NTWQR5ZFNgmMUsoCQiumRzSyh1En981gpRSWvG2QQYy4
-         GDwvItkrpN23cjRluGsKCb8FbqdZoL63p1LwH0qBEiiOiR84gl/U0PYzxK6DlKjLGYNl
-         3faQ==
-X-Gm-Message-State: AOAM532SGT7Kjzs2tvvEoNv/gM9aavmsV3BcxiTG/hlAkwz0j70cMiHO
-        M73hj+C3l7WNUrLYGPStW/s=
-X-Google-Smtp-Source: ABdhPJwSY8v7O9S5QdTqxKl6yFl0UWgboTsJ0Ax1xN4SKVu2aoglPAyZp0+EdvHQPnL3RvxjG78ndQ==
-X-Received: by 2002:a50:ee96:: with SMTP id f22mr1477395edr.77.1637623682176;
-        Mon, 22 Nov 2021 15:28:02 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id cw5sm4584706ejc.74.2021.11.22.15.28.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Nov 2021 15:28:01 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mpIjB-001DWS-Ay;
-        Tue, 23 Nov 2021 00:28:01 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fixup??? Merge branch 'ab/ci-updates' into seen
-Date:   Tue, 23 Nov 2021 00:12:24 +0100
-References: <pull.1081.git.1637578930464.gitgitgadget@gmail.com>
- <211122.86ee78yxts.gmgdl@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2111222257430.63@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <nycvar.QRO.7.76.6.2111222257430.63@tvgsbejvaqbjf.bet>
-Message-ID: <211123.8635nnydmm.gmgdl@evledraar.gmail.com>
+        id S231866AbhKVXdW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 18:33:22 -0500
+Received: from mout.gmx.net ([212.227.15.18]:42223 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231811AbhKVXdV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 18:33:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637623809;
+        bh=z6ztDMVPW+u5ESqs/lk2BUXrV47E4aXpuOrW9jW/g7w=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=blp9BbcEkfZ1dFhVFFCBpe6NaY/+9Slwo7FZvu1zZEpy6tracnzHHQRq1wgugq3h7
+         ckT5b6sprj+Yy2+hkOlKdfIIIlc7OIAwoxzFOEZRmsVKAJulU71k3nYxU2yHXXkFVW
+         oycVyiAga+Hau3lIoayU3uV4QIy/UqqSMdgw3pOo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbzuH-1mDlYU10ZT-00dYd3; Tue, 23
+ Nov 2021 00:30:09 +0100
+Date:   Tue, 23 Nov 2021 00:30:07 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
+Subject: Re: preparing for 2.34.1
+In-Reply-To: <xmqqmtlvbynr.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2111230025440.63@tvgsbejvaqbjf.bet>
+References: <xmqqr1b8gkhg.fsf@gitster.g>        <CAPUEsphNH9pfQoHqVgJfkQCU-Li45dz4QtGtDjWu5bDV9A3PEg@mail.gmail.com>        <nycvar.QRO.7.76.6.2111222319100.63@tvgsbejvaqbjf.bet> <xmqqmtlvbynr.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:tjy0fgNwgYpIqEXBxQIB9Ep66wBmNC6rRuj2/BUOHTItfv+WGvh
+ pzsnk+Bz91gd+ZIDiBT02uvzykUT//Y+iPWTFHG/k26O43E6TvPWFOdETNcEntA9pFN7FY9
+ hpa42Xvlv3jgMy8m0sblq9jz5tq7irNLVnDKLzanUWQoHBU/EQXGxYDDvNCQxxV+M+2OfjX
+ mLQUPJ7t28qRWyHKe5b1A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bydhu16iVwY=:pRiM40vH4ZSsLu31EDhy9E
+ irRWfaWE41y0D8SIkmOzBzKf2CVq1ay/8GzMCli7EOuV7UySUqMgvXIzFaBczM6T5baRSSgS7
+ xenQDis2diqS/Pw3hf4+D/fDTrmKlt8E4yoCnAl6nHU2NDpwB9mm6lnxw8hpzxt5tXatGQo+3
+ ZigIzfhMkuS/VLB9JVHK4P25Pr1KKQMnXgwJwFU/uD78L74bN8o9mnaXKUdxQCf+ljrvfd7Ad
+ 0hUemmvL4iDtV7GBQlVz5KtM34mG/DxX0MEqGxzIYlB67OMfFKs3d1jXhqkFYvQxdKje8rOFU
+ dSodky2LzbTJS9leJkxYthdqj18qN2iqVkBmHHg2swK1UOY/4HeawOGGuMoqKHdoJXBMKbx/8
+ Q3sRCgCEQniICl8GD5WMn04Cb3ImNEsnByW/Ryirs0ZbfOx8Wnea9mMXkoZnF9eNBCJeLLcwo
+ i7dnnOxuPbX8Z0EcbrJiK/mZ8MqLStnwhNR5jvD89LfxAAo6nqmojN0wxL/B2SyJELvwB3OWR
+ rTs3lrlXesYFa/Q6a90/OfJqODccZ+zaSfYp0LZ72N4EG8bh3DDW9/ChPvws03nBHj7yyF4eG
+ GQiCEsZeHP+GV6HN4EsYa5V9FCdJCcIUzrSnp4NR0lzQyiXn4k4J0LpW9nFDGOT8InhHht5Bw
+ DS8RrCZ7DHSBtn5rS1Qx/6U9ncG52MNyBtNE/UhruN/X6voSdtM7rQh7kVCjkmBjNVav7IKqe
+ 5C+EfLKNm1PG8wIq1BRF52d968noo7JTZ+8UlmvmO4v3JXV0/168us+lf1Y0hC+7VjL/43Jhs
+ /8d/PCIb1D0dLIgYceH0DvRkuEyCoiNmCC/rprPMUF+477+YdDXMeB38qZkEieQvjIQwC/wvT
+ rLw5fN4/OP6TtzchwQ5zUd/OFSI1IkXZsbG518LJhkWY3JfHo3AjoOeExHVVtY+4E5ZW4EF9J
+ ghVPsvWKYmIdwu0FN50RczNU0NvAEXwd07LCDPsalA3dMFJWxkmNWb0PViRgZVR4c9+rF8WpC
+ Wtt1Qqw6dNc7DURUd8AXe02NVq8/lb5CVVvB9V7WbBi+WZx9u8yLzn8sgsueHqUmzDqeRsAh3
+ zJrymjZVXpg7hk=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-On Mon, Nov 22 2021, Johannes Schindelin wrote:
+On Mon, 22 Nov 2021, Junio C Hamano wrote:
 
-> Hi =C3=86var,
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> On Mon, 22 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> > The quickest workaround for this is probably to special-case the edito=
+r
+> > `echo`:
 >
->> On Mon, Nov 22 2021, Johannes Schindelin via GitGitGadget wrote:
->>
->> > diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
->> > index c0bae709b3b..c508c18ad44 100755
->> > --- a/ci/run-build-and-tests.sh
->> > +++ b/ci/run-build-and-tests.sh
->> > @@ -45,9 +45,8 @@ linux-gcc-4.8)
->> >  	export MAKE_TARGETS=3Dall
->> >  	;;
->> >  esac
->> > -make -C contrib/scalar test
->> > -
->> >  make $MAKE_TARGETS
->> > +make -C contrib/scalar test
->> >
->> >  check_unignored_build_artifacts
->>
->> The CI breakage was introduced with the merger with ab/ci-updates, but
->> the combination of the two just reveals an existing breakage in
->> js/scalar.
+> "GIT_EDITOR=3D: git cmd" would also be a common trick people would use
+> to bypass editor and take whatever is given as an initial template.
+
+GIT_EDITOR=3D: is not a problem because of
+https://github.com/git/git/blob/v2.34.0/editor.c#L59:
+
+	if (strcmp(editor, ":")) {
+		[...]
+		term_fail =3D save_term(1);
+		if (start_command(&p) < 0) {
+			if (!term_fail)
+				restore_term();
+			[...]
+		}
+
+		[...]
+		if (!term_fail)
+			restore_term();
+		[...]
+	}
+
+> > However, I could imagine that other scenarios call for an editor that
+> > _also_ does not run in the terminal, and where also no real terminal i=
+s
+> > available for saving and restoring.
+> >
+> > I was tempted to suggest an `isatty(2)`, but that probably comes with =
+its
+> > own problems, too.
 >
-> Which shows that I was wrong to pander to your repeated demand to include
-> Scalar in the CI builds already at this early stage.
+> I think isatty(2) is pretty much our synonym to "are we talking to
+> an end-user sitting in front of the terminal".  Mostly we use it as
+> a way to control the progress bars, and use of editor on terminal
+> would be in line with these existing uses.
 
-Us finding an a bug in a topic that's happening outside of CI means we
-shouldn't have added it to CI in the first place? Isn't spotting these
-issues a good thing?
+Indeed, I think that isatty(2) is a better indicator than isatty(1). We
+sometimes _do_ redirect the output of, say, `git commit`, to capture the
+commit hash that was generated. We typically do not redirect stderr,
+though, unless calling from an application and capturing everything via
+pipes. So isatty(2) strikes me as the best balance we can strike here.
 
-What I'm pointing out is that this isn't an issue that happened because
-of the merger with ab/ci-updates, but merely turned into a CI failure
-because of it.
-
-Before that in your initial patch to integrate it into CI[1] the
-relevant part of the patch was, with extra context added by me:
-
-    [...]
-       linux-gcc-4.8|pedantic)
-               # Don't run the tests; we only care about whether Git can be
-               # built with GCC 4.8 or with pedantic
-               ;;
-       *)
-               make test
-               ;;
-       esac
-       make test
-       ;;
-     esac
-    +make -C contrib/scalar test
-=20=20=20=20=20
-     check_unignored_build_artifacts
-
-I.e. it added scalar testing to the linux-gcc-4.8 & "pedantic" jobs,
-which are meant to be compile-only.
-
-The other issue is that the "test" Makefile target in
-contrib/scalar/Makefile attempts to build the top-level from scratch,
-but fails (which is how it turned into a CI failure). The same thing
-happens when running it outside fo CI.
-
-I don't think I've been demanding that you do anything. I have been
-asking if there's a good reason for why we wouldn't test this code we've
-got in-tree. Your commit[1] states:
-
-    Since Scalar depends on `libgit.a`, it makes sense to ensure in the CI
-    and the PR builds that it does not get broken in case of industrious
-    refactorings of the core Git code.
-
-Which is rationale that I entirely agree with, the only extent to which
-I don't is that I don't think it goes far enough, i.e. shouldn't we also
-add this to "make test" and not just CI? Why shouldn't I see failures
-locally, and only when I push to CI (unless I go out of my way to run
-the tests-like-CI-would)?
-
-In any case, both of these breakages are present in your version of the
-version of the patches, but not the change I've been proposing on-top to
-add it to CI and "make test". You've also refused to talk about why you
-insist on that particular approach, which is shown to be more fragile
-here. So it seems rather odd to blame my suggestions (or "demands") for
-them.
-
-1. https://lore.kernel.org/git/1b0328fa236a35c2427b82f53c32944e513580d3.163=
-7158762.git.gitgitgadget@gmail.com/
-
+Ciao,
+Dscho
