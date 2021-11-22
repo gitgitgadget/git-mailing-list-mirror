@@ -2,89 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F2B5C433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 12:00:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78AA8C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 12:13:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239414AbhKVMDx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 07:03:53 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58189 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230425AbhKVMDx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 07:03:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637582436;
-        bh=qXsDP0vLK7F41hYR4rVu68HeTqMrcig9KdK4TpEfBeg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=B0fSFJwnRTW0l9en9LdGLLgfOLDvf0yaHyqBC6mQ3gGs8sZJuRNb8RwSA/Js24upP
-         qHZyH/puN5ZRWeZ4bTZpoC/g1DQs0F0X9fIUS+wEQ6OoHlKioyxiTF/YJyrdBCdzXH
-         u/eAiBEQpYAz39tPXFLzMhcTLdKPYLv+NOZvSkDo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MkYbu-1mMymA0EIQ-00m62h; Mon, 22
- Nov 2021 13:00:36 +0100
-Date:   Mon, 22 Nov 2021 13:00:31 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Aleen via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>,
-        Aleen <aleen42@vip.qq.com>, Aleen <aleen42@vip.qq.com>
-Subject: Re: [PATCH v10 1/2] doc: git-format-patch: describe the option
- --always
-In-Reply-To: <59bce7131dab858e8c87944ccb02eae8ba5fd459.1637567471.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111221258440.63@tvgsbejvaqbjf.bet>
-References: <pull.1076.v9.git.1637564554.gitgitgadget@gmail.com>        <pull.1076.v10.git.1637567471.gitgitgadget@gmail.com> <59bce7131dab858e8c87944ccb02eae8ba5fd459.1637567471.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S239431AbhKVMQS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 07:16:18 -0500
+Received: from smtp-out1.suse.de ([195.135.220.28]:49148 "EHLO
+        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236711AbhKVMQP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 07:16:15 -0500
+Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
+        by smtp-out1.suse.de (Postfix) with ESMTP id E455D218BB;
+        Mon, 22 Nov 2021 12:13:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+        t=1637583187; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=nyb/1b5Q+g9G0/yc+2Q1BGiA2SlZuZSHvwQUVZFS4pY=;
+        b=w1weHFqrFd/BZLq/n+t18FsZF0ZMn/UfAdZace+MqOwMI5VUsLT2EM4RCbQmroKdxzb3lx
+        QL6SbpDzVLNqf81013gKPD5fgWSpFrsWb4+ZJwfwtAc/kosz10uJwKN4oFvdwfyWMm44aM
+        SejlqX3GPqMvpF1TpdIUSE0SOcqd/Uk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+        s=susede2_ed25519; t=1637583187;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=nyb/1b5Q+g9G0/yc+2Q1BGiA2SlZuZSHvwQUVZFS4pY=;
+        b=LoH8a6ft2/ftEAUZUcPAl9D9P6wTyO6U5Ud2zThFDeJkR1g7Jmcq4YGhmCxJt/l2EYRZg0
+        EPSKiPhI8jGUxoDg==
+Received: from quack2.suse.cz (unknown [10.100.200.198])
+        by relay2.suse.de (Postfix) with ESMTP id D36AAA3B83;
+        Mon, 22 Nov 2021 12:13:07 +0000 (UTC)
+Received: by quack2.suse.cz (Postfix, from userid 1000)
+        id B173B1E3C6D; Mon, 22 Nov 2021 13:13:07 +0100 (CET)
+Date:   Mon, 22 Nov 2021 13:13:07 +0100
+From:   Jan Kara <jack@suse.cz>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jan Kara <jack@suse.cz>, git@vger.kernel.org
+Subject: Re: Stochastic bisection support
+Message-ID: <20211122121307.GB24453@quack2.suse.cz>
+References: <20211118164940.8818-1-jack@suse.cz>
+ <YZbYjFpA1bpeebx+@nand.local>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1672421196-1637582436=:63"
-X-Provags-ID: V03:K1:Gs8ka5b6xKU3jxJnZkCogv0Q7pQG9U6BpEWEXhKJSKcHaPwwJKW
- F07oHlCfftP6rmSgnTuQqWHBbH2M7mTzyLBGlDL+dJqxfheLE6zeD2OjjEkavCwXUJo/Zsa
- m+GIf4xsQHkiNb44qjAEcuktZB7xxzO2S5TL/fjUObhLr3fWUNmZViml2Qafihg27Hh6FLH
- gnTpFU0159jASJeGb14nw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:lboQD7l6umI=:b7MVuTkuXLSWGc9bpawvy1
- xUwlIg+YeFy2fRmKqdsWDMG5laALUnSQTgL3hEoSS0My9qbV7fZQMBqLKb6Rex2tHhP2D1dmv
- hPTlQemE1dWj08kUuQt1RyCDudXLsfbOdaObnWGFbhr4OqGB5+5G7UKt29ll2dJjZBrJD1T6I
- w2HQjnk2JrXP4NyoWGT4kcmiDrGIgdOPiWapVGqTc0Vw45IF7E/vWG1bz7lDrsHFM4w7V7708
- SBukejk/FgFRs6Iw2af8EV+DsRLBpev18YCYi/bmeZkFmq2SVbI0qqwjcLkGtEXYbPAgQEKO2
- acopB3W7SVjWjw+60gCFZs53NjOcmUvmbTfgZi2dmLT33j4pnmG5dtLt2SGioy1WLRD4Wu83q
- TDP2lmNps8FouJZni1NI6KaKCWmaOwE5nP7ZCRsFisX64hIDfXpRn3pdY3I5yiU62zva5d0uC
- DOkCCECKtlg2zmY6vcnPtYooCiU4zQ14i63pDSKRU1o6vN3qi7atTp9B6mTtqiBPVerASY+3l
- vSfVeokLwXhkYcQqAw7QGSC2VH4bD7GGST4PQXcWHBRDwsGUE8xvl1DWk99eF2gDpmfVZkTJL
- g1JMUxKbeuzchB3RWOfZu2sQ24KWPS1LI5HXQMbUEmOYlIwbxgpIILz/o14Ay3JcU8UDbnHJd
- AsbCE6Q0lD3AkWcdwWRAXVKel/su8/LzltU9pQ3orqlmg6pG7Gc+iGzDu3q+rGy4ebo+D/6/i
- wNWPgi6qjWVeZxFazV7PHbnr/1vGKByNh/DMiOqGehEVLzaR3lsrWpCqPvd0bmYco9ghK+Rj4
- cC3aBgz+a4rHF7WwvdehxmT8CSiJBDTCO+Y47x9AuGNGWI76tu3wktAS+JOSpAQ02tUtaIA5x
- pjGBqXxtyAgJjbaaipBGXpDrp89DL6C8nsoBXgH2vpIzK6lfPIQX2EFzuA7WH/d/SybC7mFH8
- lwf5vqwxNokQCmxpEn9/f8hQbmIRb+hx4AOnEBWrBktELWJubwgMQ+MStt0g4VKvzPXHDVe2k
- PgQqdhZ7uwsZfwxhP5Dr/vL7JYC5kt/0hNR3t3bvmrcIfFiQRTgBDKwwGwscOTBT7Jn4t0It3
- jySyPmrfzZIJxA=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YZbYjFpA1bpeebx+@nand.local>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu 18-11-21 17:49:48, Taylor Blau wrote:
+> On Thu, Nov 18, 2021 at 05:49:13PM +0100, Jan Kara wrote:
+> 
+> > The first part of the series improves some tests so that they accept
+> > other valid decisions for bisection points. This is needed because to
+> > make it easier to share some logic between normal and stochastic
+> > bisection, I needed to slightly change some bits for normal bisection
+> > and then since commit weights will be computed in a somewhat different
+> > order, also chosen bisection points are sometimes different.
+> 
+> I have only looked through a couple of the first half of your patches,
+> but I'm not sure I understand why non-stochastic bisection needs to
+> change at all in order to support stochastic bisection.
+> 
+> In other words, if we're tweaking all of these tests to allow picking
+> equivalent bisection points, why can't we simply leave them alone? It
+> would be nice if normal bisection didn't change as a result of adding a
+> new feature on top.
 
---8323328-1672421196-1637582436=:63
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+The big part of why results for normal bisection change are the changes in
+"bisect: Reorganize commit weight computation" to function
+do_find_bisection() where previously we didn't call approx_halfway() on the
+commits at the end of chain (looks like unintended omission) while after my
+changes we call approx_halfway() for all commits. And I have reorganized
+do_find_bisection() because I reuse it for stochastic bisection as well and
+the code is IMO easier to understand after reorganization so it is still
+comprehensible after I add there complexity of stochastic bisection.
 
-Hi Aleen,
+I understand the churn in the tests is unwelcome but long-term it seems
+like a low enough cost to pay for more maintainable code. But if git
+maintainers think otherwise I can try keeping classic bisection code
+decisions without changes. Just let me know what you prefer.
 
-On Mon, 22 Nov 2021, Aleen via GitGitGadget wrote:
-
-> From: Aleen <aleen42@vip.qq.com>
-
-FWIW this information comes from your commit, specifically from the
-author information recorded when you committed first. To re-set it in
-these two patches, run something like this:
-
-	git config --global user.name "=E5=BE=90=E6=B2=9B=E6=96=87 (Aleen)"
-	git rebase -x "git commit --amend --no-edit --reset-author" HEAD~2
-
-and then force-push to your branch.
-
-Ciao,
-Dscho
-
---8323328-1672421196-1637582436=:63--
+								Honza
+-- 
+Jan Kara <jack@suse.com>
+SUSE Labs, CR
