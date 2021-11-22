@@ -2,52 +2,48 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94CC5C4332F
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:22:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DD6FC433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:23:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231739AbhKVW0D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 17:26:03 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50318 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236532AbhKVWZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 17:25:58 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B5161F5C62;
-        Mon, 22 Nov 2021 17:22:50 -0500 (EST)
+        id S239610AbhKVW0R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 17:26:17 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52549 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238083AbhKVW0J (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 17:26:09 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6622DE97E1;
+        Mon, 22 Nov 2021 17:23:01 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Otct0HcdoNWLtLpAXdUnFozs1p/Dx3S9b2ZuaY
-        8GzpE=; b=BMsYxVAdUtJLxKwJL5oDbD5wXQhpSr1p0NCs70c5d7ZUUk/zjVgp4S
-        wgGP8abVu8IdL9uWItFlEj0WkJzxBvxZHVj7SAVK2GT3l2HdQyQuxnSqgfAi3jw7
-        3XS5im54ixn+Gc4H/y7RqcF/nYFnADk4nmopbr9ri1r7BTw/eVhE0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ABCCBF5C61;
-        Mon, 22 Nov 2021 17:22:50 -0500 (EST)
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=xJepxZxzx9mYNR53Abu+HySNgpsoldDnE2Vgzm7c8ro=; b=Pmbb
+        OJax3M2kVGk44NCXQR4mJbVbrXFu9WdJ822SKotwyfZcSnJ8oCUUwE0OXRIbc/QA
+        9wpBHZijKSNWgOOtODIeSat9Iks7VKvw6C7Mg3LTiSHWjZHBlKy20qaM6SnSK8QG
+        EBdrwNHW/fMTnQ9ai2wEgB+AMUuNxfu+Zwq9huE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4EDB7E97E0;
+        Mon, 22 Nov 2021 17:23:01 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1D567F5C60;
-        Mon, 22 Nov 2021 17:22:50 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7FF79E97DF;
+        Mon, 22 Nov 2021 17:23:00 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 4/4] t1400: use test-helper ref-store to inspect reflog
- contents
+Subject: Re: [PATCH 1/4] show-branch: show reflog message
 References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
-        <4ba97a4e70aa437f9f710746fa7a8abad0732996.1637590855.git.gitgitgadget@gmail.com>
-Date:   Mon, 22 Nov 2021 14:22:48 -0800
-In-Reply-To: <4ba97a4e70aa437f9f710746fa7a8abad0732996.1637590855.git.gitgitgadget@gmail.com>
-        (Han-Wen Nienhuys via GitGitGadget's message of "Mon, 22 Nov 2021
-        14:20:55 +0000")
-Message-ID: <xmqqlf1fde4n.fsf@gitster.g>
+        <fd2595d370a8a257c44693fdc98194cd8447e22a.1637590855.git.gitgitgadget@gmail.com>
+Date:   Mon, 22 Nov 2021 14:22:59 -0800
+Message-ID: <xmqqee77de4c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BA44085A-4BE2-11EC-862A-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C0789862-4BE2-11EC-9C29-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -56,63 +52,83 @@ X-Mailing-List: git@vger.kernel.org
 
 > From: Han-Wen Nienhuys <hanwen@google.com>
 >
-> This avoids inspecting the file system, which only works with the files ref
-> backend.
+> Before, --reflog option would look for '\t' in the reflog message. As refs.c
+> already parses the reflog line, the '\t' was never found, and show-branch
+> --reflog would always say "(none)" as reflog message
 
-Nice.
+Well spotted.  It may show that nobody pays attention to output from
+"show-branch -g" (or nobody runs it in the first place), but it is
+good to fix it anyway.
 
-Between always leaving HT after the timezone and mimicking the
-files-backend storage more closely by using HT as a separator
-only when there is actually a message, I have no strong preference,
-but as a "test-helper", being uniform would be more useful than
-being less ugly, so I think I am OK with this change (and the fact
-that test-helper unconditonally puts HT in hits output).
+Thanks.
 
-
-
->  Z=$ZERO_OID
-> +TAB='	'
+>
+> Add test.
+>
+> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> ---
+>  builtin/show-branch.c  | 12 +++++++-----
+>  t/t3202-show-branch.sh | 15 +++++++++++++++
+>  2 files changed, 22 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+> index 082449293b5..f1e8318592c 100644
+> --- a/builtin/show-branch.c
+> +++ b/builtin/show-branch.c
+> @@ -761,6 +761,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+>  			char *logmsg;
+>  			char *nth_desc;
+>  			const char *msg;
+> +			char *end;
+>  			timestamp_t timestamp;
+>  			int tz;
 >  
->  m=refs/heads/main
->  n_dir=refs/heads/gu
-> @@ -318,11 +319,12 @@ test_expect_success 'symref empty directory removal' '
->  cat >expect <<EOF
->  $Z $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	Initial Creation
->  $A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150260 +0000	Switch
-> -$B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150860 +0000
-> +$B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150860 +0000$TAB
->  EOF
->  test_expect_success "verifying $m's log (logged by touch)" '
-> -	test_when_finished "rm -rf .git/$m .git/logs expect" &&
-> -	test_cmp expect .git/logs/$m
-> +	test_when_finished "git update-ref -d $m && rm -rf .git/logs actual expect" &&
-> +	test-tool ref-store main for-each-reflog-ent $m > actual &&
+> @@ -770,11 +771,12 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+>  				reflog = i;
+>  				break;
+>  			}
+> -			msg = strchr(logmsg, '\t');
+> -			if (!msg)
+> -				msg = "(none)";
+> -			else
+> -				msg++;
+> +
+> +			end = strchr(logmsg, '\n');
+> +			if (end)
+> +				*end = '\0';
+> +
+> +			msg = (*logmsg == '\0') ? "(none)" : logmsg;
+>  			reflog_msg[i] = xstrfmt("(%s) %s",
+>  						show_date(timestamp, tz,
+>  							  DATE_MODE(RELATIVE)),
+> diff --git a/t/t3202-show-branch.sh b/t/t3202-show-branch.sh
+> index ad9902a06b9..d4d64401e4b 100755
+> --- a/t/t3202-show-branch.sh
+> +++ b/t/t3202-show-branch.sh
+> @@ -4,6 +4,9 @@ test_description='test show-branch'
+>  
+>  . ./test-lib.sh
+>  
+> +# arbitrary reference time: 2009-08-30 19:20:00
+> +GIT_TEST_DATE_NOW=1251660000; export GIT_TEST_DATE_NOW
+> +
+>  test_expect_success 'setup' '
+>  	test_commit initial &&
+>  	for i in $(test_seq 1 10)
+> @@ -146,4 +149,16 @@ test_expect_success 'show branch --merge-base with N arguments' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'show branch --reflog=2' '
+> +	sed "s/^>	//" >expect <<-\EOF &&
+> +	>	! [refs/heads/branch10@{0}] (4 years, 5 months ago) commit: branch10
+> +	>	 ! [refs/heads/branch10@{1}] (4 years, 5 months ago) commit: branch10
+> +	>	--
+> +	>	+  [refs/heads/branch10@{0}] branch10
+> +	>	++ [refs/heads/branch10@{1}] initial
+> +	EOF
+> +	git show-branch --reflog=2 >actual &&
 > +	test_cmp actual expect
->  '
->  
->  test_expect_success "create $m (logged by config)" '
-> @@ -347,11 +349,12 @@ test_expect_success "set $m (logged by config)" '
->  cat >expect <<EOF
->  $Z $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 +0000	Initial Creation
->  $A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 +0000	Switch
-> -$B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 +0000
-> +$B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 +0000$TAB
->  EOF
->  test_expect_success "verifying $m's log (logged by config)" '
-> -	test_when_finished "rm -f .git/$m .git/logs/$m expect" &&
-> -	test_cmp expect .git/logs/$m
-> +	test_when_finished "git update-ref -d $m && rm -rf .git/logs actual expect" &&
-> +	test-tool ref-store main for-each-reflog-ent $m > actual &&
-> +	test_cmp actual expect
->  '
->  
->  test_expect_success 'set up for querying the reflog' '
-> @@ -467,7 +470,8 @@ $h_OTHER $h_FIXED $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117151040 +0000	co
->  $h_FIXED $h_MERGED $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117151100 +0000	commit (merge): Merged initial commit and a later commit.
->  EOF
->  test_expect_success 'git commit logged updates' '
-> -	test_cmp expect .git/logs/$m
-> +	test-tool ref-store main for-each-reflog-ent $m >actual &&
-> +	test_cmp expect actual
->  '
->  unset h_TEST h_OTHER h_FIXED h_MERGED
+> +'
+> +
+>  test_done
