@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BAB6C433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:33:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BBC2C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:33:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232145AbhKVWgR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 17:36:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43764 "EHLO
+        id S235025AbhKVWgZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 17:36:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233148AbhKVWgR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 17:36:17 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44E1AC061746
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:10 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id o4-20020a17090a3d4400b001a66f10df6cso6533992pjf.0
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:10 -0800 (PST)
+        with ESMTP id S233472AbhKVWgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 17:36:18 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6771C061748
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:11 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id h1-20020a170902f54100b00143c6409dbcso525182plf.5
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 14:33:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=wno8FRWOoVSdU20IAC+7f3H30uVr5WbyvVEdvgNyFLY=;
-        b=E9sxUfeQO1p69F3fjGi3cTLSIKy+gfp2V8sl24eZ4OAdxuUjpy/yxlRsAwgJpsz4wb
-         J8J4O4g/D4u7qwDzs26PmgUrVmSgSoEa3R8yTZCNYB58DXq35syXQj5MxTxPBtn5YxSH
-         WKKnzW6bAbaMCSiEjKSFn4fOvWDQhcwFBPaYrLilVA5hJvcgIxE5ZOT1AZYL2d+0hRzF
-         lkyMpArOEHOxUF5G2Wp3L6Xan/+1LqblAYqZh5HLQxxhiE7KZPf1DFBoscg+0+b8cllQ
-         fsU71xMyBchCD5o5D9gAfUJHC60OIdWznkmaK7D/Jfs/UPMTASuxijLjNciVK6WsYKbe
-         FK7A==
+        bh=GrmFINVUdKN4GO230pAsYoAhNxEwlrap+M0B4LV6Vrk=;
+        b=tQABEP5COMkfMwvB66fjvfgrvrxkuGaNtFzAxJPo4nmvpizO5bP1+QSViKMY3t/DXz
+         LYznPwnvzhKI43gu3EOaCmNn2zDUq1lMlGT2YCXAXzxyrI0S6t8nDt/t1Gm1nk6ebWwN
+         JjmxIh1ESdC94ZWy6hMaukZwtlhLN1dtMdO3CJOwAkvvLQGOoyUkCkAtr2wmI0rSDXJR
+         BPbF6McKjppOPXcTtmrwG5uqrcao/XBq3coxGD/AUCZ+LSsEpsrBIqELp8WQZC4L7S2V
+         CzJR1c7RFMxowXs6+b9t/EGLN5w+8DHijcPfBmiyZj9yo3qFVIFxUt+8qQpSkkBhpbMi
+         k8Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=wno8FRWOoVSdU20IAC+7f3H30uVr5WbyvVEdvgNyFLY=;
-        b=XSiFBOGEabv5+J0tyUSppcWdYzVXARPc+a0fC25K5ON/inzEVbmr0txWvGEooO/B66
-         ZGLswvcPrOvuWUiDSwlTaZU6WCO89Oc85QyiNjKXJeX87j4+gq3zNU8TvOHzgbt7aV3c
-         vN/aAfgluTd+BOWZauuQxnhSeGmzd1tlZWqCLxvlWfXq+vybfPGeVuURZiYuJBBTtWMY
-         dEe1wlpTwLbYZMYsrDfc/QUPyc6qYhO1DQlOK4YJZJDsBMDR57ie67Xs67dg2KwT9xyM
-         XCh7bqqrNfhd/tJJ8EzyoCQ6AuTvXuG+wwLs8femUnIKwQfkrMzae0Jx2C95hP1EO/jn
-         hC8w==
-X-Gm-Message-State: AOAM530LIM01JeeG5GKSQrXUp0Fh/O+zPlX37zp2+ZFo9n6YEEOJxAjp
-        uFOXLlD4K4ZIOCd4/O9ECqCq+7HkObeUX35zbeE0xX2mz6++Od979NClm86Jfqq08dklBdwYlO9
-        sN2vmIKnkBxtY/2OOPTpWxiF+KHiUGv0FwR9ciBe9zrs918K/uO2d68DxGEC8ZNw=
-X-Google-Smtp-Source: ABdhPJxlniWIn1ykH1CAwk1TSRTOc+T2Hp7c5TW8M0bXQ37wQn4fs2HB2+PKc7DOV8WK7qbOyiZup3J1qwJOSQ==
+        bh=GrmFINVUdKN4GO230pAsYoAhNxEwlrap+M0B4LV6Vrk=;
+        b=bMZFq6JYgoLH+eKrTYOMfoYVLQ7sUSf5bGUTIujxf3boN56EPGqJs8H5LJgw+So0tm
+         KegNi9oiKYdXfDUGDHptrRihpcrQXzgKJZXXx8QQh1lwkBQ9X2vrGDdyS9vXY45yDIh4
+         66txrGQ79NeLLHIbVHT6MYnQPoFyYIw9k9faDwpni05wblDK3+XIfQBee6nCvXSAbUqa
+         +DiEIzokYR2bmIeIzuV8Iu4r1/ymtOQL84ND6JPB18Z8SIThx5lcoG6K9fmQabuTp3J3
+         ulgN0mW1wB/eHfd1wg7sa3w3NYt2fZLLTNfHoCRJ4P0YyatUqzrZJhIF7+91aUqLY4PW
+         hD/g==
+X-Gm-Message-State: AOAM531y4o0r1jTTwL+kh7Fk/SbgmhoCKRFonae8CPWqyXuYMFcvF5Xz
+        EtZOcylPXZe964vj4lo4qkY3nh+EZBBUy4l61Pb3c+jAoIwaRYtSjXvDi+vMUmgAidFzwCQsG2u
+        P5gjt3TJC1KJJVdljAZsfc83RRKbRYm5PrSphlp5kgk4RIs6klpYjuXSsuB2L+A8=
+X-Google-Smtp-Source: ABdhPJzlL7qTTywSoLcZBZLjgIdbN/ZntvdQnGnITyipPd3ULEUkz+MLPCUQqLHw/tAYXLiXlOEykWlLKLQLaA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:bb84:: with SMTP id
- v4mr36716760pjr.4.1637620389464; Mon, 22 Nov 2021 14:33:09 -0800 (PST)
-Date:   Mon, 22 Nov 2021 14:32:50 -0800
+ (user=chooglen job=sendgmr) by 2002:a17:90b:314e:: with SMTP id
+ ip14mr448299pjb.130.1637620391306; Mon, 22 Nov 2021 14:33:11 -0800 (PST)
+Date:   Mon, 22 Nov 2021 14:32:51 -0800
 In-Reply-To: <20211122223252.19922-1-chooglen@google.com>
-Message-Id: <20211122223252.19922-3-chooglen@google.com>
+Message-Id: <20211122223252.19922-4-chooglen@google.com>
 Mime-Version: 1.0
 References: <20211122223252.19922-1-chooglen@google.com>
 X-Mailer: git-send-email 2.34.0.rc2.393.gf8c9666880-goog
-Subject: [PATCH 2/4] branch: refactor out branch validation from create_branch()
+Subject: [PATCH 3/4] branch: add --dry-run option to branch
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>,
@@ -63,349 +63,232 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a subsequent commit, we would like to be able to validate whether or
-not a branch name is valid before we create it (--dry-run). This is
-useful for `git branch --recurse-submodules topic` because it allows Git
-to determine if the branch 'topic' can be created in all submodules
-without creating the branch 'topic'.
+When running "git branch --recurse-submodules topic", it would be useful
+to know whether or not 'topic' is a valid branch for all repositories.
+Currently there is no way to test this without actually creating the
+branch.
 
-A good starting point would be to refactor out the start point
-validation and dwim logic in create_branch() in a
-validate_branch_start() helper function. Once we do so, it becomes
-clear that create_branch() is more complex than it needs to be -
-create_branch() is also used to set tracking information when performing
-`git branch --set-upstream-to`. This made more sense when
-(the now unsupported) --set-upstream was first introduced in
-4fc5006676 (Add branch --set-upstream, 2010-01-18), because
-it would sometimes create a branch and sometimes update tracking
-information without creating a branch.
+Add a --dry-run option to branch creation that can check whether or not
+a branch name and start point would be valid for a repository without
+creating a branch. Refactor cmd_branch() to make the chosen action more
+obvious.
 
-Refactor out the branch validation and dwim logic from create_branch()
-into validate_branch_start(), make it so that create_branch() always
-tries to create a branch, and replace the now-incorrect create_branch()
-call with setup_tracking(). Since there were none, add tests for
-creating a branch with `--force`.
+Incidentally, fix an incorrect usage string that combined the 'list'
+usage of git branch (-l) with the 'create' usage; this string has been
+incorrect since its inception, a8dfd5eac4 (Make builtin-branch.c use
+parse_options., 2007-10-07).
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
-In this refactor, I preserved the existing behavior by making
-setup_tracking() call validate_branch_start(). setup_tracking() needs
-the dwim behavior e.g. to expand 'origin/main' into
-'refs/remotes/origin/main' but I'm doubtful that it needs the exact same
-set of validation behavior as creating a new branch e.g. validating that
-the object_id is a commit.
+The --dry-run option is motivated mainly by --recurse-submodules. To my
+knowledge, there isn't a strong existing demand, but this might be
+mildly useful to some users.
 
- branch.c          | 177 ++++++++++++++++++++++++----------------------
- branch.h          |  13 +++-
- builtin/branch.c  |   7 +-
- t/t3200-branch.sh |  17 +++++
- 4 files changed, 121 insertions(+), 93 deletions(-)
+ Documentation/git-branch.txt |  8 ++++++-
+ branch.c                     |  6 ++---
+ branch.h                     | 22 ++++++++++++++++++
+ builtin/branch.c             | 44 ++++++++++++++++++++++++++----------
+ t/t3200-branch.sh            | 13 +++++++++++
+ 5 files changed, 77 insertions(+), 16 deletions(-)
 
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 5449767121..8cdc33c097 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -16,7 +16,7 @@ SYNOPSIS
+ 	[--points-at <object>] [--format=<format>]
+ 	[(-r | --remotes) | (-a | --all)]
+ 	[--list] [<pattern>...]
+-'git branch' [--track | --no-track] [-f] <branchname> [<start-point>]
++'git branch' [--track | --no-track] [-f] [--dry-run | -n] <branchname> [<start-point>]
+ 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+ 'git branch' --unset-upstream [<branchname>]
+ 'git branch' (-m | -M) [<oldbranch>] <newbranch>
+@@ -205,6 +205,12 @@ This option is only applicable in non-verbose mode.
+ --no-abbrev::
+ 	Display the full sha1s in the output listing rather than abbreviating them.
+ 
++-n::
++--dry-run::
++	Can only be used when creating a branch. If the branch creation
++	would fail, show the relevant error message. If the branch
++	creation would succeed, show nothing.
++
+ -t::
+ --track::
+ 	When creating a new branch, set up `branch.<name>.remote` and
 diff --git a/branch.c b/branch.c
-index 07a46430b3..f8b755513f 100644
+index f8b755513f..528cb2d639 100644
 --- a/branch.c
 +++ b/branch.c
-@@ -126,43 +126,6 @@ int install_branch_config(int flag, const char *local, const char *origin, const
- 	return -1;
- }
- 
--/*
-- * This is called when new_ref is branched off of orig_ref, and tries
-- * to infer the settings for branch.<new_ref>.{remote,merge} from the
-- * config.
-- */
--static void setup_tracking(const char *new_ref, const char *orig_ref,
--			   enum branch_track track, int quiet)
--{
--	struct tracking tracking;
--	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
--
--	memset(&tracking, 0, sizeof(tracking));
--	tracking.spec.dst = (char *)orig_ref;
--	if (for_each_remote(find_tracked_branch, &tracking))
--		return;
--
--	if (!tracking.matches)
--		switch (track) {
--		case BRANCH_TRACK_ALWAYS:
--		case BRANCH_TRACK_EXPLICIT:
--		case BRANCH_TRACK_OVERRIDE:
--			break;
--		default:
--			return;
--		}
--
--	if (tracking.matches > 1)
--		die(_("Not tracking: ambiguous information for ref %s"),
--		    orig_ref);
--
--	if (install_branch_config(config_flags, new_ref, tracking.remote,
--			      tracking.src ? tracking.src : orig_ref) < 0)
--		exit(-1);
--
--	free(tracking.src);
--}
--
- int read_branch_desc(struct strbuf *buf, const char *branch_name)
- {
- 	char *v = NULL;
-@@ -243,33 +206,17 @@ N_("\n"
+@@ -206,9 +206,9 @@ N_("\n"
  "will track its remote counterpart, you may want to use\n"
  "\"git push -u\" to set the upstream config as you push.");
  
--void create_branch(struct repository *r,
--		   const char *name, const char *start_name,
--		   int force, int clobber_head_ok, int reflog,
--		   int quiet, enum branch_track track)
-+static void validate_branch_start(struct repository *r, const char *start_name,
-+				  enum branch_track track,
-+				  struct object_id *oid, char **full_ref)
+-static void validate_branch_start(struct repository *r, const char *start_name,
+-				  enum branch_track track,
+-				  struct object_id *oid, char **full_ref)
++void validate_branch_start(struct repository *r, const char *start_name,
++			   enum branch_track track, struct object_id *oid,
++			   char **full_ref)
  {
  	struct commit *commit;
--	struct object_id oid;
--	char *real_ref;
--	struct strbuf ref = STRBUF_INIT;
--	int forcing = 0;
--	int dont_change_ref = 0;
  	int explicit_tracking = 0;
- 
- 	if (track == BRANCH_TRACK_EXPLICIT || track == BRANCH_TRACK_OVERRIDE)
- 		explicit_tracking = 1;
- 
--	if ((track == BRANCH_TRACK_OVERRIDE || clobber_head_ok)
--	    ? validate_branchname(name, &ref)
--	    : validate_new_branchname(name, &ref, force)) {
--		if (!force)
--			dont_change_ref = 1;
--		else
--			forcing = 1;
--	}
--
--	real_ref = NULL;
--	if (get_oid_mb(start_name, &oid)) {
-+	if (repo_get_oid_mb(r, start_name, oid)) {
- 		if (explicit_tracking) {
- 			if (advice_enabled(ADVICE_SET_UPSTREAM_FAILURE)) {
- 				error(_(upstream_missing), start_name);
-@@ -281,7 +228,8 @@ void create_branch(struct repository *r,
- 		die(_("Not a valid object name: '%s'."), start_name);
- 	}
- 
--	switch (dwim_ref(start_name, strlen(start_name), &oid, &real_ref, 0)) {
-+	switch (repo_dwim_ref(r, start_name, strlen(start_name), oid, full_ref,
-+			      0)) {
- 	case 0:
- 		/* Not branching from any existing branch */
- 		if (explicit_tracking)
-@@ -289,12 +237,12 @@ void create_branch(struct repository *r,
- 		break;
- 	case 1:
- 		/* Unique completion -- good, only if it is a real branch */
--		if (!starts_with(real_ref, "refs/heads/") &&
--		    validate_remote_tracking_branch(real_ref)) {
-+		if (!starts_with(*full_ref, "refs/heads/") &&
-+		    validate_remote_tracking_branch(*full_ref)) {
- 			if (explicit_tracking)
- 				die(_(upstream_not_branch), start_name);
- 			else
--				FREE_AND_NULL(real_ref);
-+				FREE_AND_NULL(*full_ref);
- 		}
- 		break;
- 	default:
-@@ -302,37 +250,96 @@ void create_branch(struct repository *r,
- 		break;
- 	}
- 
--	if ((commit = lookup_commit_reference(r, &oid)) == NULL)
-+	if ((commit = lookup_commit_reference(r, oid)) == NULL)
- 		die(_("Not a valid branch point: '%s'."), start_name);
--	oidcpy(&oid, &commit->object.oid);
-+	oidcpy(oid, &commit->object.oid);
-+}
-+
-+void setup_tracking(const char *new_ref, const char *orig_ref,
-+			   enum branch_track track, int quiet, int expand_orig)
-+{
-+	struct tracking tracking;
-+	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
-+	char *full_orig_ref;
-+	struct object_id unused_oid;
-+
-+	memset(&tracking, 0, sizeof(tracking));
-+	if (expand_orig)
-+		validate_branch_start(the_repository, orig_ref, track, &unused_oid, &full_orig_ref);
-+	else
-+		full_orig_ref = xstrdup(orig_ref);
-+
-+	tracking.spec.dst = full_orig_ref;
-+	if (for_each_remote(find_tracked_branch, &tracking))
-+		goto cleanup;
-+
-+	if (!tracking.matches)
-+		switch (track) {
-+		case BRANCH_TRACK_ALWAYS:
-+		case BRANCH_TRACK_EXPLICIT:
-+		case BRANCH_TRACK_OVERRIDE:
-+			break;
-+		default:
-+			goto cleanup;
-+		}
-+
-+	if (tracking.matches > 1)
-+		die(_("Not tracking: ambiguous information for ref %s"),
-+		    full_orig_ref);
-+
-+	if (install_branch_config(config_flags, new_ref, tracking.remote,
-+			      tracking.src ? tracking.src : full_orig_ref) < 0)
-+		exit(-1);
-+
-+cleanup:
-+	free(tracking.src);
-+	free(full_orig_ref);
-+}
-+
-+void create_branch(struct repository *r, const char *name,
-+		   const char *start_name, int force, int clobber_head_ok,
-+		   int reflog, int quiet, enum branch_track track)
-+{
-+	struct object_id oid;
-+	char *real_ref;
-+	struct strbuf ref = STRBUF_INIT;
-+	int forcing = 0;
-+	struct ref_transaction *transaction;
-+	struct strbuf err = STRBUF_INIT;
-+	char *msg;
-+
-+	if (clobber_head_ok && !force)
-+		BUG("'clobber_head_ok' can only be used with 'force'");
-+
-+	if (clobber_head_ok ?
-+			  validate_branchname(name, &ref) :
-+			  validate_new_branchname(name, &ref, force)) {
-+		forcing = 1;
-+	}
-+
-+	validate_branch_start(r, start_name, track, &oid, &real_ref);
- 
- 	if (reflog)
- 		log_all_ref_updates = LOG_REFS_NORMAL;
- 
--	if (!dont_change_ref) {
--		struct ref_transaction *transaction;
--		struct strbuf err = STRBUF_INIT;
--		char *msg;
--
--		if (forcing)
--			msg = xstrfmt("branch: Reset to %s", start_name);
--		else
--			msg = xstrfmt("branch: Created from %s", start_name);
--
--		transaction = ref_transaction_begin(&err);
--		if (!transaction ||
--		    ref_transaction_update(transaction, ref.buf,
--					   &oid, forcing ? NULL : null_oid(),
--					   0, msg, &err) ||
--		    ref_transaction_commit(transaction, &err))
--			die("%s", err.buf);
--		ref_transaction_free(transaction);
--		strbuf_release(&err);
--		free(msg);
--	}
-+	if (forcing)
-+		msg = xstrfmt("branch: Reset to %s", start_name);
-+	else
-+		msg = xstrfmt("branch: Created from %s", start_name);
-+
-+	transaction = ref_transaction_begin(&err);
-+	if (!transaction ||
-+		ref_transaction_update(transaction, ref.buf,
-+					&oid, forcing ? NULL : null_oid(),
-+					0, msg, &err) ||
-+		ref_transaction_commit(transaction, &err))
-+		die("%s", err.buf);
-+	ref_transaction_free(transaction);
-+	strbuf_release(&err);
-+	free(msg);
- 
- 	if (real_ref && track)
--		setup_tracking(ref.buf + 11, real_ref, track, quiet);
-+		setup_tracking(ref.buf + 11, real_ref, track, quiet, 0);
- 
- 	strbuf_release(&ref);
- 	free(real_ref);
 diff --git a/branch.h b/branch.h
-index df0be61506..75cefcdcbd 100644
+index 75cefcdcbd..d8e5ff4e28 100644
 --- a/branch.h
 +++ b/branch.h
-@@ -17,6 +17,15 @@ extern enum branch_track git_branch_track;
+@@ -3,6 +3,7 @@
+ 
+ struct repository;
+ struct strbuf;
++struct object_id;
+ 
+ enum branch_track {
+ 	BRANCH_TRACK_UNSPECIFIED = -1,
+@@ -17,6 +18,27 @@ extern enum branch_track git_branch_track;
  
  /* Functions for acting on the information about branches. */
  
 +/*
-+ * This sets the branch.<new_ref>.{remote,merge} config settings so that
-+ * branch 'new_ref' tracks 'orig_ref'. This is called when branches are
-+ * created, or when branch configs are updated (e.g. with
-+ * git branch --set-upstream-to).
++ * Validates whether a ref is a valid starting point for a branch, where:
++ *
++ *   - r is the repository to validate the branch for
++ *
++ *   - start_name is the ref that we would like to test
++ *
++ *   - track is the tracking mode of the new branch. If tracking is
++ *     explicitly requested, start_name must be a branch (because
++ *     otherwise start_name cannot be tracked)
++ *
++ *   - oid is an out parameter containing the object_id of start_name
++ *
++ *   - full_ref is an out parameter containing the 'full' form of
++ *     start_name e.g. refs/heads/main instead of main
++ *
 + */
-+void setup_tracking(const char *new_ref, const char *orig_ref,
-+		    enum branch_track track, int quiet, int expand_orig);
++void validate_branch_start(struct repository *r, const char *start_name,
++			   enum branch_track track, struct object_id *oid,
++			   char **full_ref);
 +
  /*
-  * Creates a new branch, where:
-  *
-@@ -29,8 +38,8 @@ extern enum branch_track git_branch_track;
-  *
-  *   - force enables overwriting an existing (non-head) branch
-  *
-- *   - clobber_head_ok allows the currently checked out (hence existing)
-- *     branch to be overwritten; without 'force', it has no effect.
-+ *   - clobber_head_ok, when enabled with 'force', allows the currently
-+ *     checked out (head) branch to be overwritten
-  *
-  *   - reflog creates a reflog for the branch
-  *
+  * This sets the branch.<new_ref>.{remote,merge} config settings so that
+  * branch 'new_ref' tracks 'orig_ref'. This is called when branches are
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 0b7ed82654..eb5c117a6e 100644
+index eb5c117a6e..5d4b9c82b4 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -820,12 +820,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		if (!ref_exists(branch->refname))
- 			die(_("branch '%s' does not exist"), branch->name);
+@@ -27,7 +27,8 @@
  
--		/*
--		 * create_branch takes care of setting up the tracking
--		 * info and making sure new_upstream is correct
--		 */
--		create_branch(the_repository, branch->name, new_upstream,
--			      0, 0, 0, quiet, BRANCH_TRACK_OVERRIDE);
-+		setup_tracking(branch->name, new_upstream, BRANCH_TRACK_OVERRIDE, quiet, 1);
- 	} else if (unset_upstream) {
- 		struct branch *branch = branch_get(argv[0]);
- 		struct strbuf buf = STRBUF_INIT;
+ static const char * const builtin_branch_usage[] = {
+ 	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged]"),
+-	N_("git branch [<options>] [-l] [-f] <branch-name> [<start-point>]"),
++	N_("git branch [<options>] [-l] [<pattern>...]"),
++	N_("git branch [<options>] [-f] [--dry-run | -n] <branch-name> [<start-point>]"),
+ 	N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
+ 	N_("git branch [<options>] (-m | -M) [<old-branch>] <new-branch>"),
+ 	N_("git branch [<options>] (-c | -C) [<old-branch>] <new-branch>"),
+@@ -616,14 +617,14 @@ static int edit_branch_description(const char *branch_name)
+ 
+ int cmd_branch(int argc, const char **argv, const char *prefix)
+ {
+-	int delete = 0, rename = 0, copy = 0, force = 0, list = 0;
+-	int show_current = 0;
+-	int reflog = 0, edit_description = 0;
+-	int quiet = 0, unset_upstream = 0;
++	/* possible actions */
++	int delete = 0, rename = 0, copy = 0, force = 0, list = 0, create = 0,
++	    unset_upstream = 0, show_current = 0, edit_description = 0;
++	/* possible options */
++	int reflog = 0, quiet = 0, dry_run = 0, icase = 0;
+ 	const char *new_upstream = NULL;
+ 	enum branch_track track;
+ 	struct ref_filter filter;
+-	int icase = 0;
+ 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
+ 	struct ref_format format = REF_FORMAT_INIT;
+ 
+@@ -670,6 +671,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 			N_("print only branches of the object"), parse_opt_object_name),
+ 		OPT_BOOL('i', "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
+ 		OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
++		OPT__DRY_RUN(&dry_run, N_("show whether the branch would be created")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -705,10 +707,15 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	    filter.reachable_from || filter.unreachable_from || filter.points_at.nr)
+ 		list = 1;
+ 
+-	if (!!delete + !!rename + !!copy + !!new_upstream + !!show_current +
+-	    list + edit_description + unset_upstream > 1)
++	create = 1 - (!!delete + !!rename + !!copy + !!new_upstream +
++		      !!show_current + !!list + !!edit_description +
++		      !!unset_upstream);
++	if (create < 0)
+ 		usage_with_options(builtin_branch_usage, options);
+ 
++	if (dry_run && !create)
++		die(_("--dry-run can only be used when creating branches"));
++
+ 	if (filter.abbrev == -1)
+ 		filter.abbrev = DEFAULT_ABBREV;
+ 	filter.ignore_case = icase;
+@@ -844,7 +851,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		strbuf_addf(&buf, "branch.%s.merge", branch->name);
+ 		git_config_set_multivar(buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPLACE);
+ 		strbuf_release(&buf);
+-	} else if (argc > 0 && argc <= 2) {
++	} else if (create && argc > 0 && argc <= 2) {
++		const char *branch_name = argv[0];
++		const char *start_name = (argc == 2) ? argv[1] : head;
++
+ 		if (filter.kind != FILTER_REFS_BRANCHES)
+ 			die(_("The -a, and -r, options to 'git branch' do not take a branch name.\n"
+ 				  "Did you mean to use: -a|-r --list <pattern>?"));
+@@ -852,10 +862,20 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if (track == BRANCH_TRACK_OVERRIDE)
+ 			die(_("the '--set-upstream' option is no longer supported. Please use '--track' or '--set-upstream-to' instead."));
+ 
+-		create_branch(the_repository,
+-			      argv[0], (argc == 2) ? argv[1] : head,
+-			      force, 0, reflog, quiet, track);
++		if (dry_run) {
++			struct strbuf buf = STRBUF_INIT;
++			char *unused_full_ref;
++			struct object_id unused_oid;
+ 
++			validate_new_branchname(branch_name, &buf, force);
++			validate_branch_start(the_repository, start_name, track,
++					      &unused_oid, &unused_full_ref);
++			strbuf_release(&buf);
++			FREE_AND_NULL(unused_full_ref);
++			return 0;
++		}
++		create_branch(the_repository, branch_name, start_name, force, 0,
++			      reflog, quiet, track);
+ 	} else
+ 		usage_with_options(builtin_branch_usage, options);
+ 
 diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index e575ffb4ff..6bf95a1707 100755
+index 6bf95a1707..653891736a 100755
 --- a/t/t3200-branch.sh
 +++ b/t/t3200-branch.sh
-@@ -42,6 +42,23 @@ test_expect_success 'git branch abc should create a branch' '
- 	git branch abc && test_path_is_file .git/refs/heads/abc
+@@ -59,6 +59,19 @@ test_expect_success 'git branch --force abc should succeed when abc exists' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'git branch abc should fail when abc exists' '
-+	test_must_fail git branch abc
++test_expect_success 'git branch --dry-run abc should fail when abc exists' '
++	test_must_fail git branch --dry-run abc
 +'
 +
-+test_expect_success 'git branch --force abc should fail when abc is checked out' '
-+	test_when_finished git switch main &&
-+	git switch abc &&
-+	test_must_fail git branch --force abc HEAD~1
++test_expect_success 'git branch --dry-run --force abc should succeed when abc exists' '
++	git branch --dry-run --force abc
 +'
 +
-+test_expect_success 'git branch --force abc should succeed when abc exists' '
-+	git rev-parse HEAD~1 >expect &&
-+	git branch --force abc HEAD~1 &&
-+	git rev-parse abc >actual &&
-+	test_cmp expect actual
++test_expect_success 'git branch --dry-run def should not create a branch' '
++	git branch --dry-run def &&
++	test_must_fail git rev-parse def
 +'
 +
  test_expect_success 'git branch a/b/c should create a branch' '
