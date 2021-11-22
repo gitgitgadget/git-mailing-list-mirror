@@ -2,101 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 999EFC433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 21:59:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6163C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:03:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238180AbhKVWCW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 17:02:22 -0500
-Received: from mout.gmx.net ([212.227.15.18]:59889 "EHLO mout.gmx.net"
+        id S238266AbhKVWGz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 17:06:55 -0500
+Received: from mout.gmx.net ([212.227.15.15]:34791 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232667AbhKVWCQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 17:02:16 -0500
+        id S232667AbhKVWGy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 17:06:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637618341;
-        bh=W6V6GhUB+g0LsmsL0RNpd3To+hVjFP7XbYDNhkcgWOw=;
+        s=badeba3b8450; t=1637618596;
+        bh=GfnZ4+v/aR5nNFik/luuRLSu11uzyxhHrCZ9XcIk4dQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Tyv4NKfCgWv/KymsJzvret7BidCtW2G36mfBveG0sZJ7Hdrnc0isNjD+Jybk18pfN
-         yJzyf8uHa7T1vvvMIlfWIouvNP5hS2ak0U5EHoRVRsTtgq7kpVVeywtrTBKqIRGoiB
-         lMnFLMn/yYw05/rrmJeUK0keJWLQ6qdC63nrUi4A=
+        b=Ge4UBeST7XafY7xaKKLvvg3xcXp3KfyOCMM07onDbnksTFvFyw5X540xHf84aXyl/
+         9LFDrZsapQQrIiF/9JmJdsaHH9mXOkdldaMIiT5PNZbYtbkatpc3lYfYpEwPzudcfp
+         MFdEs4LBDnKAoGJNpOCuxO/5RXVtOYEze9PawLqo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MrhQ6-1mJXU10dGu-00nhvR; Mon, 22
- Nov 2021 22:59:01 +0100
-Date:   Mon, 22 Nov 2021 22:58:59 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mof9P-1mIibd0e0P-00p5So; Mon, 22
+ Nov 2021 23:03:16 +0100
+Date:   Mon, 22 Nov 2021 23:03:14 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fixup??? Merge branch 'ab/ci-updates' into seen
-In-Reply-To: <211122.86ee78yxts.gmgdl@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111222257430.63@tvgsbejvaqbjf.bet>
-References: <pull.1081.git.1637578930464.gitgitgadget@gmail.com> <211122.86ee78yxts.gmgdl@evledraar.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Carlo Arenas <carenas@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/1] git-compat-util: add a test balloon for C99
+ supporty
+In-Reply-To: <xmqqv90jewwa.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2111222300580.63@tvgsbejvaqbjf.bet>
+References: <20211114211622.1465981-1-sandals@crustytoothpaste.net> <20211114211622.1465981-2-sandals@crustytoothpaste.net> <nycvar.QRO.7.76.6.2111161129120.21127@tvgsbejvaqbjf.bet> <xmqqk0h7423v.fsf@gitster.g> <nycvar.QRO.7.76.6.2111221242320.63@tvgsbejvaqbjf.bet>
+ <xmqq1r38hzi9.fsf@gitster.g> <CAPUEspibE6AMyoxwJGno9R=21JU5MpFVGBxCQYBCbCBwx-y25A@mail.gmail.com> <xmqq8rxgf254.fsf@gitster.g> <xmqqv90jewwa.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-356719844-1637618341=:63"
-X-Provags-ID: V03:K1:BkR/TjY8Rn/U4CKJq3NU5aUc0mve/duI6evpuwmeLNzE0JvRotS
- d/aSYj9A9iE3WhOfEquMDw4YFCnzLTmybkBqTyELfJMUCqSOYgNp+XP2td9FYKX7UrpnIpz
- 11hRu6+pPLqhjRWm9sXLRcy/YbUrCvsJsDGx62evRw2OVV5EUHJEpLTFotPjOvxNe9JVAKl
- 18rKteqCO7LyQ6B9pIXOw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6iGY9d60yT4=:TDQ5NQLpdwL7Okmzq9bOlj
- pLV0bN5mJAACVo49el7a4p0pvFCbmTJx1B4W/Y/kB7yUnJN2L/wj38YxaYwj74ixIIN1OGjpP
- OlmAhf1tBLPpQWs96L4jzY5atmav1qKlz03Savi74bfJwwnoF3Qbk2S+QM34d+JulobUGhTz2
- lUIMUTyI5AU2+OizcjCWd2C0VZ+XUFl4P7v8j3/jHx+vMAwJYjapwhCH7wUoOlb4tiCVEZPxa
- k/7zSSCSvpf9fP+TxLifR+s7G5A64Nrz/3UEyRMDVZLLxu1sO9LK9gcnqCpWetC7KjbiN30xb
- 97JTBg7PtxEtpu77SlfHxfESrP3CucTS3Hz+EX6/4McQXGI0yMnCN/TYZNyopZAE4UNY0Jiuf
- IY2iK8G8LVXHOgt+cY0dNm5RrJD3Du0YkuCGRhcjAr8KlDXv7rx0tQtjoY4cy0qEiQfsisQrK
- FYi/P9+gQJV5RLLyJenOlkfzBApJjz+mhBDEi+PJqxTc0qlr2BO9OtVvXg/m/vHKcl82quMgB
- x/J6yw+nUFp5lg2HjpsBJIAqmpnSZ59BDogRSI/pO6gXplSOeoK+S+pMdw+S/eF8rVtg8ZF+x
- 1IIAT3Shfxmb9lcLf3QfGslmGtwO/pp6ABpFS9tfkARDCmnmg67r3pvIzD4jeI3eCEX7rnh0x
- +f45MBJffxo9Jlx7KEQWuqITHbUj4YsPn5eQa+aHYy9PLUWwUBkFmN5i/RkREsPgYttcdBAik
- L/QWt7LxAUw8BN/uM07XitMaq3coXK6mLi6mZu+Q+GISpXi4sFuO+4V1l/U4LCrD604nyckTb
- gQCoq3lA4DtRemKlHgS1v6uujNuss1QN2BxCfzD30EAOrPHgATi/cfreFPt0mhaMCBU6EBsal
- hQF7nvJBwx5gNk6BhktKEhA8UASd+ZddqHg0bSFdUMSoYnIceyIdpqK3g412MIutk9APCjyLN
- iRa/28f0jRkxVZv05f/hN11YO/XRAiridLUouLnT6d/BExbPBg/oFkj8mYXGJeGKp/CsbaepV
- y6eT+zjnRuz4zUEWE24ypPRjP/c3XHTKz+O7IMA7PEODsTeF22ajHtIGE1+keORhZz1AyaEDF
- v4/wUEjhFX8Fcc=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:XWYouoaRHfWUZDSdL3rSd5AyORZ35QCdh1M9s7ihSn7jjgXx3jp
+ MGjJyoocxuDEVaZzYwxOevYWwOw3aw2ba3F8mjZfZ7z+OG+5R1ZNPSZSaGjXyrkfKt2AqQr
+ FeMt/jUAj7HdD/q2scZ4/NhYDdypCxeMP7bUhxZzkaOMjD8y+SGx9GvgC6TjgBVzFYbZzz9
+ laMc7mywaZVULMTjf0i3A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:t4TWF1qKGYI=:tI8q8F7VsFA190mgsz4cJe
+ nGfCu0zPRdk3ojB6K//PevYnkz8IPhv9gRD4SxfmKMKHpiUU5CVuklOjJI8ZYxzxpn8Dr/zG/
+ 2NgfonYQw9dNfpbq/vUUep33mSJwzydN2gLvLbAknTeckHjLh9o9tdMtXVrhQsp3sM6W1rmDn
+ Yf9B4KJFAnV4KrkYwpeW+3RQaDu7mdQQGYJdBEke9MXeahODogFdRHCOueRoCTBZx/pA9/pkR
+ SGMfG0VGoNlYr4iF0D9KNMCnsw7f0v3j4h2IE8lD136CPdlg75EVQk1Fg13S+vsL17LL/oxif
+ hpqDdr+NtI54MnPtDxtaD3+W4L0bSUHiHqP5U+cF8mzvRfeFCXpCIkFO+fXbKVz367j9/AVvZ
+ dC7Sen051PwN7or7VwErqEtXWqkXR6H4VImy4wbS2Q/ue2hCv0fZV1llOiSnF5QSlvG7XocnD
+ Lee8OaiZUStNDvqp2G4Bi2LWlmZLOtpmZaImrSXFUp+b4BlyAYLV89ojPR1nZXY2pKTLiD2m7
+ 1+6MCZLh7AVS9U0nyxvfMW1vkAIaXyl9/7uqhy0D4hoQ0GLiVKhC5Y6/hpa5Cq2yF0UCtEG4s
+ kFT2VcLVZCbzMtCt05Db2QE+O6QvR75DHmUnzx10VuCq2Vgu2x3p5TNU7jNuy8aDkDn2lBVkF
+ 53jV10dDOSEvVRhd9VneJHH99F6U+oqdGPr8oJpA+HvGdi7juoapBKNor6RamtvZqX46fCaYF
+ EOOQs3ROCwTEAVln8QgicVRDdBPwnB5NhlMRQvT/pRuZgYxlnrQt99kHqeNTRHa3rws5I6TCg
+ qALESZOxdK49vm8sxSWvg0buhtSKpBnCa0JnAYhw6IetQDXE4A75Lc22OZ3vmqp2NnhtwfxiU
+ 1W+WzJtp9hWoL2ErgPTGyBF26ndHbqqfqUkyFHRr+L1C3nHY3VHisSnwvSOIvcugghFpsONuz
+ xAT0zxJz2L03N9YoXltceTongcE372e44XXPTxUDC6e9yR3x0FSfsAYey7KgQDK7K7kirC7cv
+ DNSFu2Bx5ofhUp5OT/usYCy0y9dtTSXi73AlaPv0TGxzi4dPTR/2LFrS4twEb2VawKoHaBkta
+ cqeVorXSFYTiD0=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-356719844-1637618341=:63
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, 22 Nov 2021, Junio C Hamano wrote:
 
-Hi =C3=86var,
-
-On Mon, 22 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> On Mon, Nov 22 2021, Johannes Schindelin via GitGitGadget wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> > diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> > index c0bae709b3b..c508c18ad44 100755
-> > --- a/ci/run-build-and-tests.sh
-> > +++ b/ci/run-build-and-tests.sh
-> > @@ -45,9 +45,8 @@ linux-gcc-4.8)
-> >  	export MAKE_TARGETS=3Dall
-> >  	;;
-> >  esac
-> > -make -C contrib/scalar test
-> > -
-> >  make $MAKE_TARGETS
-> > +make -C contrib/scalar test
+> > Carlo Arenas <carenas@gmail.com> writes:
 > >
-> >  check_unignored_build_artifacts
+> >> On Mon, Nov 22, 2021 at 9:27 AM Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> >>
+> >>> I had an impression that it was claimed that without this, the other
+> >>> weatherbaloon for "for (type var=3D..." would not fly in some of the
+> >>> jobs we have at CI?
+> >>
+> >> It wouldn't if we have a CI job that tests with gcc < 5 but the last
+> >> version of that job died with travis-ci.org
+> >
+> > I was wondering how Dscho's test was not failing, and that is an
+> > easy answer to that question ;-)
+> >
+> > If we wanted to resurrect that CI job, we can always add it in the
+> > CI definition anyway, so I am OK with that, too.
 >
-> The CI breakage was introduced with the merger with ab/ci-updates, but
-> the combination of the two just reveals an existing breakage in
-> js/scalar.
+> But if we were to do so, perhaps we'd want something like what I
+> gave at https://lore.kernel.org/git/xmqqy25lwa86.fsf@gitster.g/ in
+> its place to avoid confusing people.
 
-Which shows that I was wrong to pander to your repeated demand to include
-Scalar in the CI builds already at this early stage.
+That sounds like a good course of action to me.
 
-Will fix,
+Please note that the MSVC-related adjustment of the `FLEX_ARRAY` block is
+still needed, I think.
+
+Ciao,
 Dscho
 
---8323328-356719844-1637618341=:63--
+P.S.: In case it was not clear yet, I am in favor of going forward with
+the C99 weather balloon. We should try to move in that direction, slowly
+and gently, as is our custom.
