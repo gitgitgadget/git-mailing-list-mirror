@@ -2,218 +2,358 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A445C433FE
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 19:00:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81FC6C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 19:00:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239109AbhKVTDF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 14:03:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52004 "EHLO
+        id S234584AbhKVTDe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 14:03:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234349AbhKVTDD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 14:03:03 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1C5BC061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 10:59:56 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id o17so17573371qtk.1
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 10:59:56 -0800 (PST)
+        with ESMTP id S239723AbhKVTDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 14:03:24 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE0BFC061574
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 11:00:10 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id b12so34534159wrh.4
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 11:00:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=6HWBIFqMM/lp3GJe7c1/tRp3mZpgfFLinbumPxI9U8c=;
-        b=d/kba4mpomNPhJ1bXPWfWClOqm/nbEdp+tOhsZHaKsh6KZ2UkoMiiVyOMZyqP3Z9Ym
-         oojAqLQ3CfPNX7VMVbD93IeL4ITJ+pBMIT7oAhV96D1BU9ck8tTuSD7HVvUCJG3z7vmY
-         B5n6AxtpH9wKVqx9WPprI9KvC/xTPWB3cc6MMH+0IAnVDmvP94MIXrjyjhHWhn/uI5jH
-         Lil5coEOz+6cn5+8w5Qnq7qHm37e3N4B+BdaPJp/DU+xsfazjHwh1F/1Z/KD8hB1+Pd9
-         ccPNxqEQi5gs2iU2i++gKBeIF45KJGpK68OtuC1j1LgPcIZmlwN8BI9pmMOD39Rl8jNO
-         AC+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=6HWBIFqMM/lp3GJe7c1/tRp3mZpgfFLinbumPxI9U8c=;
-        b=JWmN9yopvsEb7nnVYl9iWLpHJNXMvEE0vBSQdDcOCdpxvME3Gqobf0s/0z1ZlcxlUr
-         iF5DYLjccNMv00YjDDPsbEPKuZed+Q5GoF+0EBAZXWrsDONt7t72OG0m8GwOY/qYjVRx
-         /Eg1RD5JvKo/fSMbkpCQC4++PRDFq1egorDIn8uUroRg19OK5QPzHGnXE36PKMIwBCnN
-         1DfMVhcmLbuqDPSPXiceA/2lP18NUOfFqjZwO4jsZQWFneKKXofDeX0FUKPgLjG3Pm+B
-         htgIcCyz5gaREzxXdpBELQK4ZQjJJXvCOj4HMWLUMWMUiU985feYieM3AYa8A62k4wcH
-         uyug==
-X-Gm-Message-State: AOAM532CKYWlVAdBxQAIPabVlswvKN65zKmd3uKYDbyjggjRHR6fWnfP
-        c3GOFSKiFH86qMQGrJRSUIHAGmTTqg0p
-X-Google-Smtp-Source: ABdhPJz4ieUuaIDBUZX5xrTLAeL7nbz1R/gd0DXexLTdWCmUOVKPEaPRa7DVsMyZXoAEBlt2C/v8hQ==
-X-Received: by 2002:a05:622a:449:: with SMTP id o9mr33357425qtx.158.1637607595904;
-        Mon, 22 Nov 2021 10:59:55 -0800 (PST)
-Received: from [192.168.0.105] (70.15.20.152.res-cmts.sm.ptd.net. [70.15.20.152])
-        by smtp.gmail.com with ESMTPSA id d16sm4543422qtn.59.2021.11.22.10.59.55
+        bh=6a9iLyZyMoV9v6d6cTA1hm6JE6GiyRRDiId1XtG8Tys=;
+        b=K7Zf7tLxU8cy1hZkTvKGjt5smIkIgEi9bDZJwhIcCRwYEWYHJvHkgnuPzWTHVpBjUH
+         ngbuEZRiFKy+1UhIVxxo9XpNYhMne5b+odflfp6kXjUrQjqpcIbwF6vj/fEilDXwbry+
+         qKZrHlvdR7mBVncQiSPyrso9AUXzbVB/4XKztfxJURcSKrYtmnbsyiB3/jpHrKNjAzFy
+         1yOozkDPljBuNpRHu+H9r8TZsChLVpGoe3Ok+dhe9eIpV8aKdxtT+bFvuHnwbWBtQqlS
+         ttcq8zC7D0PthLnQd7m3MwjO92znIAEszYMBqfeovnYiqCi+ho5222qlbWHbebqK1c2j
+         Am8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=6a9iLyZyMoV9v6d6cTA1hm6JE6GiyRRDiId1XtG8Tys=;
+        b=42c0SGWv6y/S0k5/0hq4boC4OKWtiaIsopJgNCqnYQEPCik4NQ9q5bOqBOGAwC1LTD
+         lunYnrkqePVB3G4JT1NRaGa3GQsbsa9OLhpPFPTSfQtJtp4/B4u5AChvKBtj3i6Y+KVy
+         ipKhZ7xB1enGcOlPk7OzEvN82VC/OrRIF/MHE84vpQgQo6dSqZ+bnIdbtUImi9A0+f+p
+         naNb7xG5XD6vyr8XFbxoDzv33V1hsm50sz/bbPvRryJAjInOOIORGxQlkTCrpKZXOCSr
+         tRLS8zVcuI64u+Jbj66kfnidb8HNAp9I1bf6gSHp4F1jpARftRGaD5trU9wAFgMQmt2U
+         n1FQ==
+X-Gm-Message-State: AOAM533NMhLjFJQmzsTwD/KmCHnfeZGe+ZHowZ+x/2Joisi3ugRifuWh
+        m/A1NvWMPtldKMky3d+M/WI=
+X-Google-Smtp-Source: ABdhPJyMMA1K3iL0mbK8wL9veSfXc7zM1WITzICZlee9P3KdURvSEQHlBPhUQE9ygIeKVVr3OZultQ==
+X-Received: by 2002:adf:f7c2:: with SMTP id a2mr41902313wrq.71.1637607609263;
+        Mon, 22 Nov 2021 11:00:09 -0800 (PST)
+Received: from [192.168.1.201] ([31.185.185.186])
+        by smtp.googlemail.com with ESMTPSA id v7sm9406078wrq.25.2021.11.22.11.00.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Nov 2021 10:59:55 -0800 (PST)
-Message-ID: <dc20df3f-7648-6440-0b0a-0057a7645d74@github.com>
-Date:   Mon, 22 Nov 2021 13:59:54 -0500
+        Mon, 22 Nov 2021 11:00:08 -0800 (PST)
+Message-ID: <a6ff589e-c968-8a96-a8ec-1a982d71f6be@gmail.com>
+Date:   Mon, 22 Nov 2021 19:00:07 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.0
-Subject: Re: [PATCH v4 4/4] sparse-index: update do_read_index to ensure
- correct sparsity
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 06/15] diff --color-moved: avoid false short line
+ matches and bad zerba coloring
 Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.1059.v3.git.1635358812.gitgitgadget@gmail.com>
- <pull.1059.v4.git.1635515487.gitgitgadget@gmail.com>
- <b67cd9d07f8a3802e5b50d58965f283620cd3876.1635515487.git.gitgitgadget@gmail.com>
- <CABPp-BGU=HHeydt3arF=RF2P81cFbe3NfX6tqiBHb8xkhOALgg@mail.gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <CABPp-BGU=HHeydt3arF=RF2P81cFbe3NfX6tqiBHb8xkhOALgg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>
+ <pull.981.v4.git.1637056178.gitgitgadget@gmail.com>
+ <10b11526206d3b515ba08ac80ccf09ecb7a03420.1637056178.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2111221435140.63@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <nycvar.QRO.7.76.6.2111221435140.63@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren wrote:
-> On Fri, Oct 29, 2021 at 6:56 AM Victoria Dye via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: Victoria Dye <vdye@github.com>
->>
->> If `command_requires_full_index` is false, ensure correct in-core index
->> sparsity on read by calling `ensure_correct_sparsity`. This change is meant
->> to update the how the index is read in a command after sparse index-related
+Hi Dscho
+
+Thanks ever so much for taking a detailed look at this series.
+
+On 22/11/2021 14:18, Johannes Schindelin wrote:
+> Hi Phillip,
 > 
-> s/update the how/update how/ ?
+> The commit's oneline has a typo: zerba instead of zebra.
+
+Sigh, I thought I'd fixed that
+
+> On Tue, 16 Nov 2021, Phillip Wood via GitGitGadget wrote:
 > 
-
-This was probably the result of mixing up "update the way" and "update how".
-I'll go with the latter.
-
->> repository settings are modified. Previously, for example, if `index.sparse`
->> were changed from `true` to `false`, the in-core index on the next command
->> would be sparse. The index would only be expanded to full when it was next
->> written to disk.
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >>
->> By adding a call to `ensure_correct_sparsity`, the in-core index now matches
->> the sparsity dictated by the relevant repository settings as soon as it is
->> read into memory, rather than when it is later written to disk.
-> 
-> I split up reading this series across different days, and when I got
-> here, my first reaction was "Okay, but why would you want that?
-> Sounds like extra work for no gain."  I went and looked up the cover
-> letter and saw you mentioned that this "introduces the ability to
-> enable/disable the sparse index on a command-by-command basis (e.g.,
-> allowing a user to troubleshoot a sparse-aware command with '-c
-> index.sparse=false' [1]).  That seems like a good reason to me, and
-> sounds like it belongs in this commit message.  But it sounds like you
-> had other reasons in mind.  If so, could you share them; I'm having
-> difficulty understanding how this would make a difference other than
-> in the troubleshooting scenario.
-> 
-
-The troubleshooting scenario was what inspired this change in the first
-place, but it applies any time someone changes repository settings outside
-of `git sparse-checkout init`. One relevant scenario I can imagine is if a
-user enables `index.sparse, commands would not use the sparse index until a
-command that *writes* the index is executed:
-
-$ git config index.sparse true
-$ git diff      # read full index, full in-core, no write
-$ git add .     # read full index, full in-core, write sparse
-$ git diff      # read sparse index, sparse in-core, no write
-
-Another scenario might be enabling `index.sparse`, then running a command
-that turns out to be surprisingly slow because it's operating on a full
-index in-core (i.e., much slower than the convert_to_sparse + command with
-sparse index would be). 
-
-These are definitely edge cases - they rely on manual config changes, and
-they're only really noticeable 1) if the config change is immediately
-followed by index read-only commands and 2) if the first index-writing
-command after the config change is slow. That said, on the off chance that a
-user (or future developer) encounter one of these scenarios, I think it'll
-be helpful to have `index.sparse` take effect "immediately" after the config
-change.
-
-I'll include these (and the troubleshooting) examples in the updated commit
-message.
-
+>> When marking moved lines it is possible for a block of potential
+>> matched lines to extend past a change in sign when there is a sequence
+>> of added lines whose text matches the text of a sequence of deleted
+>> and added lines. Most of the time either `match` will be NULL or
+>> `pmb_advance_or_null()` will fail when the loop encounters a change of
+>> sign but there are corner cases where `match` is non-NULL and
+>> `pmb_advance_or_null()` successfully advances the moved block despite
+>> the change in sign.
 >>
->> Helped-by: Junio C Hamano <gitster@pobox.com>
->> Co-authored-by: Derrick Stolee <dstolee@microsoft.com>
->> Signed-off-by: Victoria Dye <vdye@github.com>
+>> One consequence of this is highlighting a short line as moved when it
+>> should not be. For example
+>>
+>> -moved line  # Correctly highlighted as moved
+>> +short line  # Wrongly highlighted as moved
+>>   context
+>> +moved line  # Correctly highlighted as moved
+>> +short line
+>>   context
+>> -short line
+>>
+>> The other consequence is coloring a moved addition following a moved
+>> deletion in the wrong color. In the example below the first "+moved
+>> line 3" should be highlighted as newMoved not newMovedAlternate.
+>>
+>> -moved line 1 # Correctly highlighted as oldMoved
+>> -moved line 2 # Correctly highlighted as oldMovedAlternate
+>> +moved line 3 # Wrongly highlighted as newMovedAlternate
+>>   context      # Everything else is highlighted correctly
+>> +moved line 2
+>> +moved line 3
+>>   context
+>> +moved line 1
+>> -moved line 3
+>>
+>> These false matches are more likely when using --color-moved-ws with
+>> the exception of --color-moved-ws=allow-indentation-change which ties
+>> the sign of the current whitespace delta to the sign of the line to
+>> avoid this problem. The fix is to check that the sign of the new line
+>> being matched is the same as the sign of the line that started the
+>> block of potential matches.
+>>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 >> ---
->>  read-cache.c                             |  8 ++++++
->>  t/t1092-sparse-checkout-compatibility.sh | 31 ++++++++++++++++++++++++
->>  2 files changed, 39 insertions(+)
+>>   diff.c                     | 17 ++++++----
+>>   t/t4015-diff-whitespace.sh | 65 ++++++++++++++++++++++++++++++++++++++
+>>   2 files changed, 76 insertions(+), 6 deletions(-)
 >>
->> diff --git a/read-cache.c b/read-cache.c
->> index a78b88a41bf..b3772ba70a1 100644
->> --- a/read-cache.c
->> +++ b/read-cache.c
->> @@ -2337,9 +2337,17 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+>> diff --git a/diff.c b/diff.c
+>> index 53f0df75329..efba2789354 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -1176,7 +1176,7 @@ static void mark_color_as_moved(struct diff_options *o,
+>>   	struct moved_block *pmb = NULL; /* potentially moved blocks */
+>>   	int pmb_nr = 0, pmb_alloc = 0;
+>>   	int n, flipped_block = 0, block_length = 0;
+>> -	enum diff_symbol last_symbol = 0;
+>> +	enum diff_symbol moved_symbol = DIFF_SYMBOL_BINARY_DIFF_HEADER;
+> 
+> The exact value does not matter, as long as it is different from whatever
+> the next line will have, of course.
+> 
 >>
->>         if (!istate->repo)
->>                 istate->repo = the_repository;
+>>
+>>   	for (n = 0; n < o->emitted_symbols->nr; n++) {
+>> @@ -1202,7 +1202,7 @@ static void mark_color_as_moved(struct diff_options *o,
+>>   			flipped_block = 0;
+>>   		}
+>>
+>> -		if (!match) {
+>> +		if (pmb_nr && (!match || l->s != moved_symbol)) {
+>>   			int i;
+>>
+>>   			if (!adjust_last_block(o, n, block_length) &&
+>> @@ -1219,12 +1219,13 @@ static void mark_color_as_moved(struct diff_options *o,
+>>   			pmb_nr = 0;
+>>   			block_length = 0;
+>>   			flipped_block = 0;
+>> -			last_symbol = l->s;
+>> +		}
+> 
+> This is one of those instances where I dislike having the patch in a
+> static mail. I so want to have a _convenient_ way to expand the diff
+> context, to have a look around.
+> 
+> So I went over to
+> https://github.com/gitgitgadget/git/pull/981/commits/10b11526206d3b515ba08ac80ccf09ecb7a03420
+> to get the convenience I need for a pleasant reviewing experience.
+> 
+> In this instance, the `continue` that dropped out of that conditional
+> block gave me pause.
+> 
+> My understanding is that the diff makes it essentially a lot harder to
+> understand what is done here: this conditional block did two things, it
+> re-set the possibly-moved-block, and it skipped to the next loop
+> iteration. With this patch, we now re-set the possibly-moved-block in more
+> cases, but still skip to the next loop iteration under the same condition
+> as before:
+> 
+>> +		if (!match) {
+>> +			moved_symbol = DIFF_SYMBOL_BINARY_DIFF_HEADER;
+>>   			continue;
+>>   		}
+> 
+> However, after reading the commit message, I would have expected the
+> condition above to read `if (!match || l->s != moved_symbol)` instead of
+> `if (!match)`. Could you help me understand what I am missing?
+
+If there is a match we want to carry on executing the body of the loop 
+to start a new block of moved lines. moved_symbol will be updated at the 
+end of the loop.
+
+>>
+>>   		if (o->color_moved == COLOR_MOVED_PLAIN) {
+>> -			last_symbol = l->s;
+>>   			l->flags |= DIFF_SYMBOL_MOVED_LINE;
+>>   			continue;
+>>   		}
+> 
+> I want to make sure that I understand why the `last_symbol` assignment
+> could be removed without any `moved_symbol` assignment in its place. But I
+> don't, I still do not see why we do not need a `moved_symbol = l->s;`
+> assignment here.
+
+I had to think about it but I think the answer is that COLOR_MOVED_PLAIN 
+does not care about moved_symbol - it is only used by the zebra coloring 
+modes.
+
+> Unless, that is, we extended the `!match` condition above to also cover
+> the case where `l->s != moved_symbol`.
+> 
+>> @@ -1251,11 +1252,16 @@ static void mark_color_as_moved(struct diff_options *o,
+>>   							    &pmb, &pmb_alloc,
+>>   							    &pmb_nr);
+>>
+>> -			if (contiguous && pmb_nr && last_symbol == l->s)
+>> +			if (contiguous && pmb_nr && moved_symbol == l->s)
+>>   				flipped_block = (flipped_block + 1) % 2;
+> 
+> This is totally not your fault, but I really wish we could have the much
+> simpler and much easier to understand `flipped_block = !flipped_block`
+> here.
+
+It's partially my fault - I should have simplified it when I moved that 
+line in b0a2ba4776 ("diff --color-moved=zebra: be stricter with color 
+alternation", 2018-11-23)
+
+>>   			else
+>>   				flipped_block = 0;
+>>
+>> +			if (pmb_nr)
+>> +				moved_symbol = l->s;
+>> +			else
+>> +				moved_symbol = DIFF_SYMBOL_BINARY_DIFF_HEADER;
 >> +
->> +       /*
->> +        * If the command explicitly requires a full index, force it
->> +        * to be full. Otherwise, correct the sparsity based on repository
->> +        * settings and other properties of the index (if necessary).
->> +        */
->>         prepare_repo_settings(istate->repo);
->>         if (istate->repo->settings.command_requires_full_index)
->>                 ensure_full_index(istate);
->> +       else
->> +               ensure_correct_sparsity(istate);
+
+This is where we update moved_symbol when it did not match l->s above.
+
+    			block_length = 0;
+>>   		}
 >>
->>         return istate->cache_nr;
+>> @@ -1265,7 +1271,6 @@ static void mark_color_as_moved(struct diff_options *o,
+>>   			if (flipped_block && o->color_moved != COLOR_MOVED_BLOCKS)
+>>   				l->flags |= DIFF_SYMBOL_MOVED_LINE_ALT;
+>>   		}
+>> -		last_symbol = l->s;
+> 
+> That makes sense: we only set `moved_symbol` when `pmb_nr` had been 0 now,
+> and don't want it to be overridden.
+ >
+> As I said, I do not quite understand this patch yet, and am looking for
+> your guidance to wrap my head around it.
+> 
+> Thank you for working on this!
+
+Thanks for looking at it, I hope these comments help, let me know if 
+I've failed to explain well enough.
+
+Best Wishes
+
+Phillip
+
+> Dscho
+> 
+>>   	}
+>>   	adjust_last_block(o, n, block_length);
 >>
->> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
->> index ca91c6a67f8..59accde1fa3 100755
->> --- a/t/t1092-sparse-checkout-compatibility.sh
->> +++ b/t/t1092-sparse-checkout-compatibility.sh
->> @@ -694,6 +694,37 @@ test_expect_success 'sparse-index is expanded and converted back' '
->>         test_region index ensure_full_index trace2.txt
->>  '
+>> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+>> index 4e0fd76c6c5..15782c879d2 100755
+>> --- a/t/t4015-diff-whitespace.sh
+>> +++ b/t/t4015-diff-whitespace.sh
+>> @@ -1514,6 +1514,71 @@ test_expect_success 'zebra alternate color is only used when necessary' '
+>>   	test_cmp expected actual
+>>   '
 >>
->> +test_expect_success 'index.sparse disabled inline uses full index' '
->> +       init_repos &&
->> +
->> +       # When index.sparse is disabled inline with `git status`, the
->> +       # index is expanded at the beginning of the execution then never
->> +       # converted back to sparse. It is then written to disk as a full index.
->> +       rm -f trace2.txt &&
->> +       GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
->> +               git -C sparse-index -c index.sparse=false status &&
->> +       ! test_region index convert_to_sparse trace2.txt &&
->> +       test_region index ensure_full_index trace2.txt &&
->> +
->> +       # Since index.sparse is set to true at a repo level, the index
->> +       # is converted from full to sparse when read, then never expanded
->> +       # over the course of `git status`. It is written to disk as a sparse
->> +       # index.
->> +       rm -f trace2.txt &&
->> +       GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
->> +               git -C sparse-index status &&
->> +       test_region index convert_to_sparse trace2.txt &&
->> +       ! test_region index ensure_full_index trace2.txt &&
->> +
->> +       # Now that the index has been written to disk as sparse, it is not
->> +       # converted to sparse (or expanded to full) when read by `git status`.
->> +       rm -f trace2.txt &&
->> +       GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
->> +               git -C sparse-index status &&
->> +       ! test_region index convert_to_sparse trace2.txt &&
->> +       ! test_region index ensure_full_index trace2.txt
+>> +test_expect_success 'short lines of opposite sign do not get marked as moved' '
+>> +	cat >old.txt <<-\EOF &&
+>> +	this line should be marked as moved
+>> +	unchanged
+>> +	unchanged
+>> +	unchanged
+>> +	unchanged
+>> +	too short
+>> +	this line should be marked as oldMoved newMoved
+>> +	this line should be marked as oldMovedAlternate newMoved
+>> +	unchanged 1
+>> +	unchanged 2
+>> +	unchanged 3
+>> +	unchanged 4
+>> +	this line should be marked as oldMoved newMoved/newMovedAlternate
+>> +	EOF
+>> +	cat >new.txt <<-\EOF &&
+>> +	too short
+>> +	unchanged
+>> +	unchanged
+>> +	this line should be marked as moved
+>> +	too short
+>> +	unchanged
+>> +	unchanged
+>> +	this line should be marked as oldMoved newMoved/newMovedAlternate
+>> +	unchanged 1
+>> +	unchanged 2
+>> +	this line should be marked as oldMovedAlternate newMoved
+>> +	this line should be marked as oldMoved newMoved/newMovedAlternate
+>> +	unchanged 3
+>> +	this line should be marked as oldMoved newMoved
+>> +	unchanged 4
+>> +	EOF
+>> +	test_expect_code 1 git diff --no-index --color --color-moved=zebra \
+>> +		old.txt new.txt >output && cat output &&
+>> +	grep -v index output | test_decode_color >actual &&
+>> +	cat >expect <<-\EOF &&
+>> +	<BOLD>diff --git a/old.txt b/new.txt<RESET>
+>> +	<BOLD>--- a/old.txt<RESET>
+>> +	<BOLD>+++ b/new.txt<RESET>
+>> +	<CYAN>@@ -1,13 +1,15 @@<RESET>
+>> +	<BOLD;MAGENTA>-this line should be marked as moved<RESET>
+>> +	<GREEN>+<RESET><GREEN>too short<RESET>
+>> +	 unchanged<RESET>
+>> +	 unchanged<RESET>
+>> +	<BOLD;CYAN>+<RESET><BOLD;CYAN>this line should be marked as moved<RESET>
+>> +	<GREEN>+<RESET><GREEN>too short<RESET>
+>> +	 unchanged<RESET>
+>> +	 unchanged<RESET>
+>> +	<RED>-too short<RESET>
+>> +	<BOLD;MAGENTA>-this line should be marked as oldMoved newMoved<RESET>
+>> +	<BOLD;BLUE>-this line should be marked as oldMovedAlternate newMoved<RESET>
+>> +	<BOLD;CYAN>+<RESET><BOLD;CYAN>this line should be marked as oldMoved newMoved/newMovedAlternate<RESET>
+>> +	 unchanged 1<RESET>
+>> +	 unchanged 2<RESET>
+>> +	<BOLD;CYAN>+<RESET><BOLD;CYAN>this line should be marked as oldMovedAlternate newMoved<RESET>
+>> +	<BOLD;YELLOW>+<RESET><BOLD;YELLOW>this line should be marked as oldMoved newMoved/newMovedAlternate<RESET>
+>> +	 unchanged 3<RESET>
+>> +	<BOLD;CYAN>+<RESET><BOLD;CYAN>this line should be marked as oldMoved newMoved<RESET>
+>> +	 unchanged 4<RESET>
+>> +	<BOLD;MAGENTA>-this line should be marked as oldMoved newMoved/newMovedAlternate<RESET>
+>> +	EOF
+>> +	test_cmp expect actual
 >> +'
 >> +
->>  ensure_not_expanded () {
->>         rm -f trace2.txt &&
->>         echo >>sparse-index/untracked.txt &&
+>>   test_expect_success 'cmd option assumes configured colored-moved' '
+>>   	test_config color.diff.oldMoved "magenta" &&
+>>   	test_config color.diff.newMoved "cyan" &&
 >> --
 >> gitgitgadget
-> 
-> The rest of the patch looks fine.
-> 
+>>
+>>
 
