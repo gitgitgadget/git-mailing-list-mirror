@@ -2,110 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED87BC433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1598AC433EF
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:31:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232003AbhKVWcq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 17:32:46 -0500
-Received: from h2.fbrelay.privateemail.com ([131.153.2.43]:39143 "EHLO
-        h2.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229502AbhKVWcp (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 22 Nov 2021 17:32:45 -0500
-Received: from MTA-06-4.privateemail.com (mta-06-1.privateemail.com [68.65.122.26])
+        id S232254AbhKVWej (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 17:34:39 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58565 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231978AbhKVWef (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 17:34:35 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F0823155C8B;
+        Mon, 22 Nov 2021 17:31:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=TP9USyzhDZg6Icx8bakfRpDAKkt1vOWL9AkypNC4Oso=; b=RSgf
+        A9699h5yN80ciXZCRj4ElSBr2G6bq2+8L0x5BzTjRKsF6JNrMoNj+7NBI6m+FP0c
+        9moPwlyM5fjR9VIVUS43I+TrqwDh6blS7G1YCroGRL63v29iY37SElWEkoRVBJmX
+        mxnS2UREEc4+0JoCZsXKi9+e8wNXzlr4YmAGN0s=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E9BAA155C8A;
+        Mon, 22 Nov 2021 17:31:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by h1.fbrelay.privateemail.com (Postfix) with ESMTPS id 6F6DA80BCE
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 17:29:38 -0500 (EST)
-Received: from mta-06.privateemail.com (localhost [127.0.0.1])
-        by mta-06.privateemail.com (Postfix) with ESMTP id 3A84318000A4;
-        Mon, 22 Nov 2021 17:29:37 -0500 (EST)
-Received: from hal-station.. (unknown [10.20.151.201])
-        by mta-06.privateemail.com (Postfix) with ESMTPA id 61253180009F;
-        Mon, 22 Nov 2021 17:29:36 -0500 (EST)
-From:   Hamza Mahfooz <someguy@effective-light.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>, Andreas Schwab <schwab@linux-m68k.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Hamza Mahfooz <someguy@effective-light.com>
-Subject: [PATCH v3] ci: add a job for PCRE2
-Date:   Mon, 22 Nov 2021 17:29:33 -0500
-Message-Id: <20211122222933.11872-1-someguy@effective-light.com>
-X-Mailer: git-send-email 2.34.0
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 55171155C89;
+        Mon, 22 Nov 2021 17:31:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 3/4] test-ref-store: tweaks to for-each-reflog-ent format
+References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
+        <8a1b094d54732b8b60eacb9892ab460a411bcec3.1637590855.git.gitgitgadget@gmail.com>
+Date:   Mon, 22 Nov 2021 14:31:24 -0800
+Message-ID: <xmqqr1b7bz5v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Type: text/plain
+X-Pobox-Relay-ID: ED5DB5AA-4BE3-11EC-B3BA-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since, git aspires to support many PCRE2 versions, it is only sensible to
-test changes to git against versions of PCRE2 that are deemed to be
-notable, to ensure those changes to git don't cause regressions when using
-the aforementioned PCRE2 versions. This is underscored by the fact that,
-commit ae39ba431a (grep/pcre2: fix an edge case concerning ascii patterns
-and UTF-8 data, 2021-10-15) was able to make it's way to master while
-causing an otherwise easy to catch regression when an older version of
-PCRE2 is used. So, to address this issue, add a job for PCRE2 to build all
-of the notable versions, compile all of them against git and only run the
-tests that can possibly be impacted by PCRE2.
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Suggested-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
----
-v2: use 'ref' instead of doing a manual checkout and add jobname to
-    the env.
+> From: Han-Wen Nienhuys <hanwen@google.com>
+>
+> Follow the reflog format more closely, so it can be used for comparing
 
-v3: make the changes suggested by Ævar.
----
- .github/workflows/main.yml | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+There is no v$n designator on the title line, but I have this
+feeling that I've seen this patch before.  More importantly, I
+remember that I found it unclear what you exactly mean "the" reflog
+format.  Is that what the files backend stores on one line in its
+file?  The reason I suspect that may be the answer is because I do
+not recall documenting "the" reflog format in Documentation/ and
+whatever we have historically been writing would be the most
+canonical and/or authoritative format.
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 6ed6a9e807..e30cf6155e 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -319,3 +319,36 @@ jobs:
-     - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
-     - run: ci/test-documentation.sh
-+  pcre2:
-+    needs: ci-config
-+    if: needs.ci-config.outputs.enabled == 'yes'
-+    strategy:
-+      fail-fast: false
-+      matrix:
-+        jit: ['--enable-jit', '--disable-jit']
-+        unicode: ['--enable-unicode', '--disable-unicode']
-+        version:
-+        - 'pcre2-10.20'
-+        - 'pcre2-10.31'
-+        - 'pcre2-10.34'
-+        - 'pcre2-10.36'
-+        - '`git tag -l --sort=-version:refname | head -n 1`'
-+    env:
-+      jobname: linux-gcc-default
-+    runs-on: ubuntu-latest
-+    steps:
-+    - uses: actions/checkout@v2
-+    - run: echo "VER=${{matrix.version}}" >>$GITHUB_ENV
-+    - uses: actions/checkout@v2
-+      with:
-+        repository: 'PhilipHazel/pcre2'
-+        path: 'compat/pcre2-repo'
-+        ref: ${{env.VER}}
-+    - run: ci/install-dependencies.sh
-+    - run: |
-+        cd compat/pcre2-repo &&
-+        ./autogen.sh &&
-+        ./configure ${{matrix.jit}} ${{matrix.unicode}} --prefix="$PWD/inst" &&
-+        make install
-+    - run: make USE_LIBPCRE=Y LIBPCREDIR="$PWD/compat/pcre2-repo/inst"
-+    - run: cd t && make *{grep,log,pickaxe}*
--- 
-2.34.0
+> reflogs in tests without using inspecting files under .git/logs/
 
+I agree 100% with the goal.  
+
+It seems that one line of .git/logs/HEAD looks like
+
+<new> SP <old> SP <user> SP '<' <email> '>' SP <time> SP <zone> HT <oneline> LF
+
+and being able to extract a line like that for given reflog entry
+out of any backend in a consistent way is valuable when testing
+different backends.
+
+It seems that is what the new code is writing, so perhaps the first
+paragraph can be clarified to indicate as such.
+
+    We have some tests that read from files in .git/logs/ hierarchy
+    when checking if correct reflog entries are created, but that is
+    too specific to the files backend.  Other backends like reftable
+    may not store its reflog entries in such a "one line per entry"
+    format.
+
+    Update for-each-reflog-ent test helper to produce output that
+    would be identical to lines in a reflog file files backend uses.
+    That way, (1) the current tests can be updated to use the test
+    helper to read the reflog entries instead of (parts of) reflog
+    files, and perform the same inspection for correctness, and (2)
+    when the ref backend is swapped to another backend, the updated
+    test can be used as-is to check the correctness.
+
+or something along the line?
+
+> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> ---
+>  t/helper/test-ref-store.c | 5 ++---
+>  t/t1405-main-ref-store.sh | 1 +
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+> index b314b81a45b..0fcad9b3812 100644
+> --- a/t/helper/test-ref-store.c
+> +++ b/t/helper/test-ref-store.c
+> @@ -151,9 +151,8 @@ static int each_reflog(struct object_id *old_oid, struct object_id *new_oid,
+>  		       const char *committer, timestamp_t timestamp,
+>  		       int tz, const char *msg, void *cb_data)
+>  {
+> -	printf("%s %s %s %"PRItime" %d %s\n",
+> -	       oid_to_hex(old_oid), oid_to_hex(new_oid),
+> -	       committer, timestamp, tz, msg);
+> +	printf("%s %s %s %" PRItime " %+05d\t%s\n", oid_to_hex(old_oid),
+> +	       oid_to_hex(new_oid), committer, timestamp, tz, msg);
+
+Looks good to me.  We might want to make the printf format
+conditional to add \t%s only when msg is not empty, though.
+Hopefully such a change would follow the reflog format even more
+closely to make 4/4 unnecessary?
+
+>  	return 0;
+>  }
+>  
+> diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
+> index a600bedf2cd..76b15458409 100755
+> --- a/t/t1405-main-ref-store.sh
+> +++ b/t/t1405-main-ref-store.sh
+> @@ -94,6 +94,7 @@ test_expect_success 'for_each_reflog_ent()' '
+>  
+>  test_expect_success 'for_each_reflog_ent_reverse()' '
+>  	$RUN for-each-reflog-ent-reverse HEAD >actual &&
+> +	head -n1 actual | grep recreate-main &&
+
+I am not sure how this new test helps validate the change to the
+code.
+
+What was different in the old output was that the timezone was not
+in %+05d format, and the field separator before the log message was
+not HT.  So if this grepped for HT or +0000 to make sure we are
+using the format that is close to what actually is stored in the
+files, I would understand this change, but it is unclear what it
+proves to make sure that the oldest entry has recreate-main.
+
+In fact, with the code part of the patch reverted, this new test
+seems to pass.
+
+>  	tail -n1 actual | grep one
+>  '
