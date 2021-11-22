@@ -2,217 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53C7FC433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 08:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3E08C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 08:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238875AbhKVIMC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 03:12:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44096 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238881AbhKVIMA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 03:12:00 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F33CC061714
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 00:08:54 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id gb13-20020a17090b060d00b001a674e2c4a8so14605052pjb.4
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 00:08:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=A5uXh/QpxuG1e6srCzE8+GtLhqPzjNxGjHXswpN7Iqc=;
-        b=FQ0ACYJOt7faKjhGSa7k2IkJq4dxbzGGaeRKkzIsq9k4y/obUY+jF4VRMqcaBB/beO
-         sL44ygLgf031hhuAswsEUNVDAZ7nbap3zP4qDhSx3DspX985S+nTUxc3OWcjkFS2S0fC
-         E/M+W5qHuI1rKC+V3lhU3iL2G35oFZOsyVHXw2LL5QGzg4ULoOxHV78AojmlK4keX9QD
-         8MJGulJOOPwJSWRRmhUW+6pQw7Fu6O6cRtCkMMDkG2ewxhEcdRsOjlblAw/U5jOJJZWG
-         C0nieIsB89kUNWfugsFVHE3HdGPVyYJOGs6bMgvM3WMAHUV16WUVIQq2xd0mEd96pR7+
-         Ey/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=A5uXh/QpxuG1e6srCzE8+GtLhqPzjNxGjHXswpN7Iqc=;
-        b=CjDiBfaXDxH9uxOAYKqYNzHGoTBs8HHP0UJmAH9Ne0Pcu1LBewiZAIvr4t66xVLAh8
-         CP6EjEVvq4BleFqw3s+mk1Tms+FpHKVxKUK0aD+nPS9WHz1ak/LVCvPXrpUhtm0RvgDu
-         vkPwhrc8JNRc0myBTH+HguWuxEIuWusGXowKtdLJKhnYBo49Ayc6xebizzNV8mRIEUpT
-         QGsYRnLfcCvC9wVIXv8NNhNlgVeVQI/8B7AErrr8SpnggSD3nIPms/4Xubm6BOSEAevJ
-         48le+RD/R/R4nNBucodJSQqSaBnrYthH6BMjtzV1t0hefMpAiFQlWBy12jIMPulAAzpO
-         iReg==
-X-Gm-Message-State: AOAM532B2mn2l9fwWcUE7StfX1ggsE4PEb4TurO/liEVZNhNvl/3loX7
-        B8lKDPL2rXO3/Pq5iG0otQf+TwoKwkmuEg0U
-X-Google-Smtp-Source: ABdhPJzZlwJb1pea1n/MpiAhaiQPNBrUd1r6k6xro+t4D6f5ZB+daZ1REUKt16iipm0PB9gejWptNg==
-X-Received: by 2002:a17:90b:4a83:: with SMTP id lp3mr29181295pjb.242.1637568533854;
-        Mon, 22 Nov 2021 00:08:53 -0800 (PST)
-Received: from localhost.localdomain ([205.204.117.102])
-        by smtp.gmail.com with ESMTPSA id f185sm7512990pfg.39.2021.11.22.00.08.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Nov 2021 00:08:53 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
+        id S233105AbhKVIpy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 03:45:54 -0500
+Received: from mout.gmx.net ([212.227.17.22]:45951 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229716AbhKVIpy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 03:45:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637570558;
+        bh=Tun/svUvBMsgdnhO2vv5ivVPh+qA9JW+n8FaXhCsUb8=;
+        h=X-UI-Sender-Class:From:Subject:To:Cc:Date;
+        b=doT4x6+/kj5MtoUeviPHzpro0Q/3VGVZqOFmtqnRkKf15nXFd0Es7FPhHOIBkgMuJ
+         Mp6AmSCqcQOU9gZRBAhcJIl5Q17pMlWEjjbQMUsZK+N3RH1a793qZFA6bPoWimORg8
+         vlzOnwbiBzJMmBa1l3ZrYNwPEl7KgD6yLC8Wq9gA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from mail ([91.59.107.238]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MsHru-1mUntn3m4g-00thCq; Mon, 22
+ Nov 2021 09:42:37 +0100
+From:   Alexander Veit <alexander.veit@gmx.net>
+Subject: Update to Git 2.34.0 breaks application
 To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, congdanhqx@gmail.com, gitster@pobox.com,
-        peff@peff.net, Teng Long <dyroneteng@gmail.com>
-Subject: [PATCH v3 1/1] ls-tree.c: support `--oid-only` option for "git-ls-tree"
-Date:   Mon, 22 Nov 2021 16:07:28 +0800
-Message-Id: <6c15b4c176b7c03072fa59a4efd9f6fea7d62eae.1637567328.git.dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.33.1.10.g438dd9044d.dirty
-In-Reply-To: <cover.1637567328.git.dyroneteng@gmail.com>
-References: <cover.1637567328.git.dyroneteng@gmail.com>
+Cc:     thomas.wolf@paranor.ch
+Message-ID: <ee302c98-da27-da43-e684-c7ec8b225360@gmx.net>
+Date:   Mon, 22 Nov 2021 09:42:37 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: de-DE
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:S2SPzbIM3PDK+y7q7kNL6kO6v4jugFsSCPS6kC197LPjXb/SiYc
+ Bzx0c/3P+jIxVswHT+d4Xz+R+goBpOnsiqRlppQoTrKbzMQKgSIjFC3Z94yeo2yX8EhawSt
+ 3jVlKND7ZdWi9hpbn17ly74OAV91nDHo6tg1W2NsF/GXIi6CstcgGQ/Bkqb1hyhPTpNXfO2
+ bfQT0nIoO0zSyvVBe2B6A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1rk+j5skjgM=:u7y29tfwEACa2wVIoAO3Co
+ mnAJuGQtYQlKaBXmefXCisXyXgCL1oI9Ht9ZHyg8lNqOz9iCRZdXhV5jyIFry1Xz5EtAyEB5w
+ 5nFhJPk87WLafk4xTDoUUsCtO2tx87oCLeJH5x/MZX973mlXiEhQlJJ0DbKlnqhoOh2pFH+xe
+ zr0Gj2/rztj4pO8PXAcHKttfhpZYFmi45fKXRzSoYcku96mBDCIj1xadBqw5v6RDG3fQNKgbb
+ fQXK/Zhp6j1bJ+IuatqGF+LehOcAsR9M53cKIGTiaN26f5jp6/dyZjWA+hFf6l9PAa2xkyygo
+ aOMykxeWnyZwBpCB1652MTNwE9gfG3VBSLkRB4FUVuVmkoAFFzTY8L5ndjSoqmfG5+1WnY3MT
+ zAMN1q9gXu32aaDwflsd8Kt43nmeYg7e2M0nZ54GEq4FV4AQRiPDiqYYoFt8szoEgly+D32VF
+ +3jcXvcOR8Ng3QYVfp/vEIdjn4aBRbC5s8ZKsfV9Z7mixDoX3Iz5mKy8HU3XlMWevqpHyRTLD
+ Z0KGE7Y8E0hgqb03nXX1PlFSkJgjC2iv/iwmpHf1f/8kdeIA+SH+dW2HKjy7NosmqBOqbypwE
+ Pe5e8nPUzDNBqMETfO+/Vu+m95CQ/k+rBJZn+p4nGYThwOioxs4MjmHCgGvv4FLsqQutkbyX1
+ q9nqXL12TYJsSxwe+lcaShNwIgK20NXGdAN37EPllnjhR1KAt90vmL2FB8Xu/iI/CeUfcdEJe
+ i/lGxQE1q24fLtlqozknPfxcmfh5b0AOcJJcAW3iZGm6oWQnnpnPlWTFwsPd3QhlEEXFWdgaX
+ 9FbWNEEpF/HmkLzwAFuikuZRoUXq7TTm0mCVMudQReIqzzrbQ653F3+iyvuJb9J5hDABijyYd
+ kG+zL88TC8OR49bK7mlA95sNaQShktQNSZfjZJCwjAGt1caG/hXx+dXR9s1BsRw4Dtlls4Sqa
+ CUkFpUn6eWx9ZWS6ABZ+ZQ4c8w5ciFjfl6x0yvunAFUofnreNMmf6vEMvYJ/BoWbwN/0rAJde
+ ZJx9uTwxhFIrf4hgpX+BJNjZfmn6y6twBu8+8ILa61y8h6JrXAF6oB0+48caX10XohNeWwlKq
+ dcN2ImlOVVtVIw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sometimes, we only want to get the objects from output of `ls-tree`
-and commands like `sed` or `cut` is usually used to intercept the
-origin output to achieve this purpose in practical.
+After an update from Git 2.25.1 to 2.34.0 the Java application that uses the Eclipse JGit library freezes.
 
-This commit supply an option names `--oid-only` to let `git ls-tree`
-only print out the OID of the object. `--oid-only` and `--name-only`
-are mutually exclusive in use.
+Strace suggests that the JVM receives a SIGTTOU from the child process "git config --system --edit" created with java.lang.ProcessBuilder.
 
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
----
- Documentation/git-ls-tree.txt |  8 +++++--
- builtin/ls-tree.c             | 27 ++++++++++++++++-------
- t/t3104-ls-tree-oid.sh        | 40 +++++++++++++++++++++++++++++++++++
- 3 files changed, 65 insertions(+), 10 deletions(-)
- create mode 100755 t/t3104-ls-tree-oid.sh
+Upstream[1] has identified 3d411afa[2] as the possible commit that introduced the problem.
 
-diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
-index db02d6d79a..bc711dc00a 100644
---- a/Documentation/git-ls-tree.txt
-+++ b/Documentation/git-ls-tree.txt
-@@ -10,7 +10,8 @@ SYNOPSIS
- --------
- [verse]
- 'git ls-tree' [-d] [-r] [-t] [-l] [-z]
--	    [--name-only] [--name-status] [--full-name] [--full-tree] [--abbrev[=<n>]]
-+	    [--name-only] [--name-status] [--oid-only]
-+	    [--full-name] [--full-tree] [--abbrev[=<n>]]
- 	    <tree-ish> [<path>...]
- 
- DESCRIPTION
-@@ -59,7 +60,10 @@ OPTIONS
- --name-only::
- --name-status::
- 	List only filenames (instead of the "long" output), one per line.
--
-+	Cannot be used with `--oid-only` together.
-+--oid-only::
-+	List only OIDs of the objects, one per line. Cannot be used with
-+	`--name-only` or `--name-status` together.
- --abbrev[=<n>]::
- 	Instead of showing the full 40-byte hexadecimal object
- 	lines, show the shortest prefix that is at least '<n>'
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 3a442631c7..1e4a82e669 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -18,19 +18,26 @@ static int line_termination = '\n';
- #define LS_RECURSIVE 1
- #define LS_TREE_ONLY 2
- #define LS_SHOW_TREES 4
--#define LS_NAME_ONLY 8
--#define LS_SHOW_SIZE 16
-+#define LS_SHOW_SIZE 8
- static int abbrev;
- static int ls_options;
- static struct pathspec pathspec;
- static int chomp_prefix;
- static const char *ls_tree_prefix;
- 
--static const  char * const ls_tree_usage[] = {
-+static const char * const ls_tree_usage[] = {
- 	N_("git ls-tree [<options>] <tree-ish> [<path>...]"),
- 	NULL
- };
- 
-+enum {
-+	MODE_UNSPECIFIED = 0,
-+	MODE_NAME_ONLY,
-+	MODE_OID_ONLY
-+};
-+
-+static int cmdmode = MODE_UNSPECIFIED;
-+
- static int show_recursive(const char *base, int baselen, const char *pathname)
- {
- 	int i;
-@@ -90,7 +97,12 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
- 	else if (ls_options & LS_TREE_ONLY)
- 		return 0;
- 
--	if (!(ls_options & LS_NAME_ONLY)) {
-+	if (cmdmode == 2) {
-+		printf("%s\n", find_unique_abbrev(oid, abbrev));
-+		return 0;
-+	}
-+
-+	if (cmdmode == 0) {
- 		if (ls_options & LS_SHOW_SIZE) {
- 			char size_text[24];
- 			if (!strcmp(type, blob_type)) {
-@@ -135,10 +147,9 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 			    N_("terminate entries with NUL byte"), 0),
- 		OPT_BIT('l', "long", &ls_options, N_("include object size"),
- 			LS_SHOW_SIZE),
--		OPT_BIT(0, "name-only", &ls_options, N_("list only filenames"),
--			LS_NAME_ONLY),
--		OPT_BIT(0, "name-status", &ls_options, N_("list only filenames"),
--			LS_NAME_ONLY),
-+		OPT_CMDMODE('n', "name-only", &cmdmode, N_("list only filenames"), MODE_NAME_ONLY),
-+		OPT_CMDMODE('s', "name-status", &cmdmode, N_("list only filenames"), MODE_NAME_ONLY),
-+		OPT_CMDMODE('o', "oid-only", &cmdmode, N_("list only oids"), MODE_OID_ONLY),
- 		OPT_SET_INT(0, "full-name", &chomp_prefix,
- 			    N_("use full path names"), 0),
- 		OPT_BOOL(0, "full-tree", &full_tree,
-diff --git a/t/t3104-ls-tree-oid.sh b/t/t3104-ls-tree-oid.sh
-new file mode 100755
-index 0000000000..4c02cdd3c3
---- /dev/null
-+++ b/t/t3104-ls-tree-oid.sh
-@@ -0,0 +1,40 @@
-+#!/bin/sh
-+
-+test_description='git ls-tree oids handling.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	echo 111 >1.txt &&
-+	echo 222 >2.txt &&
-+	mkdir -p path0/a/b/c &&
-+	echo 333 >path0/a/b/c/3.txt &&
-+	find *.txt path* \( -type f -o -type l \) -print |
-+	xargs git update-index --add &&
-+	tree=$(git write-tree) &&
-+	echo $tree
-+'
-+
-+test_expect_success 'usage: --oid-only' '
-+	git ls-tree --oid-only $tree >current &&
-+	git ls-tree $tree | awk "{print \$3}" >expected &&
-+	test_cmp current expected
-+'
-+
-+test_expect_success 'usage: --oid-only with -r' '
-+	git ls-tree --oid-only -r $tree >current &&
-+	git ls-tree -r $tree | awk "{print \$3}" >expected &&
-+	test_cmp current expected
-+'
-+
-+test_expect_success 'usage: --oid-only with --abbrev' '
-+	git ls-tree --oid-only --abbrev=6 $tree >current &&
-+	git ls-tree --abbrev=6 $tree | awk "{print \$3}" > expected &&
-+	test_cmp current expected
-+'
-+
-+test_expect_failure 'usage: incompatible options: --name-only with --oid-only' '
-+	test_incompatible_usage git ls-tree --oid-only --name-only
-+'
-+
-+test_done
--- 
-2.33.1.10.g438dd9044d.dirty
+The problem does not occur on all Linux systems.
 
+
+-Alex
+
+Environment:
+OS: Linux Mint 20
+Kernel: 5.4.0-90-generic
+Git 2.34.0 from http://ppa.launchpad.net/git-core/ppa/ubuntu
+Java: OpenJDK 64-Bit Server VM AdoptOpenJDK (build 11.0.10+9, mixed mode)
+
+
+Ref.:
+[1] https://bugs.eclipse.org/bugs/show_bug.cgi?id=577358
+[2] https://github.com/git/git/commit/3d411afabc9a96f41d47c07d6af6edda3d29ec92#diff-01b59b6a71e42b9c1251ffbf76a1119b965be087a78538e80e01f9239c8e5880
