@@ -2,162 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54BA5C433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 23:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB2F1C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 23:28:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231133AbhKVXMn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 18:12:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52360 "EHLO
+        id S231654AbhKVXbL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 18:31:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229619AbhKVXMm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 18:12:42 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12D24C061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 15:09:35 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id y13so83608984edd.13
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 15:09:35 -0800 (PST)
+        with ESMTP id S229575AbhKVXbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 18:31:11 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5401C061574
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 15:28:03 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id x6so71806224edr.5
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 15:28:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=LjHVNQa7nBdfUaEgUfoHUmxqzY3gsltUy2al1Cml3Nk=;
-        b=Ia7h5a39vgZIMoIoXZCYiN8A4i9gw6LC2JB0kT05cW22TcHtYIRVi+MER0NnmGZ+sJ
-         pJLzA/MlTZ5MZtY1mUHC+YywJTL30ta6J8Rfm3zjUqFz8t11C7392/0Ux48O5EgW0CbT
-         BVcUp2qMVnE3NFZHb6vRskZyIg3josvEKjlZybtrxDNp3IRszQCL/wZ17xofndl8M64e
-         oqMtu79/LB9gZxgcAd/IPXu/2ODZ7rngZmXH08zx4wfagaXU3LdImpOldS2t/0RQzlGu
-         INeb6LngUo/4+VwZV33LjOKISZ9fxtozvmYDaBLRGPc0yqaQ77dDCTOds3DxB1fJVEaH
-         7Upw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=dKAdxZDlEITLLZyuxy8HLL4SaTNXVhQ2IPAgKR2/2q4=;
+        b=DWDfE5pCxZouAKVgPqOWBJJQTTxKDSLysTCvvLz2fsUuhP4s7sMUOO0M7+A0I02jTJ
+         /bv5YovZAvUGAG0F6o4ggyvJ/1y0Aj+Jvmv2onB7fLzqUiw6P7Za+qTH5rzTy3Y0IOjw
+         KSnIWCZ1rGBcUIuLPnT+n7BlF6hOzMeuJLe4uprYTGghhAYn6zt8F2AoiWDYkVUyRgfl
+         Rd7/LYY+nSE4/qoEdHR7xYKafRxIQuE8z1dJzzurKusR9Gsj0jQI+JK1DleM7KsSkr62
+         0car23z/zN8bt+67TVRAMVNye2SRkbYGZEaQcMgY9RICZu+SmyiKePEvgYv8GFLq6u2O
+         ZpdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=LjHVNQa7nBdfUaEgUfoHUmxqzY3gsltUy2al1Cml3Nk=;
-        b=j+Xm0RcV4zKKlJ7vqGkExOWb5OVvq3d7YbNatD7Xk3YyJyypHqEEgIn+7DS3AS6Hjc
-         4vwnB1bi6i9k3GXD5UCNOG0O7fwB7gYZALB5MDS7mDREy/8yeaLtwmr1z4LubRthRRDC
-         fjFuF5ULYCj9foT5m41m+vw4WSc2dVtSaZQla+XMQWhXe7pN6ddieHa6njsHRrmpIvJ/
-         X4XJKZXY72jOC9adnuk/21+vHTNmDww97LlLRt2sWpzvBDj62Z2Nj1aVXgMJsqO7yK7w
-         Dyi2vklXBFBWOCglhVp+e2XKH7NqIEvkyH5GFVEDB/sg2n3xPLp0J1jEMa3vz5bkanC6
-         iYlw==
-X-Gm-Message-State: AOAM531Prt0w2mWp9B+gEDdov9kvsJpOshQtPIiLUlOD8U/BJB3J/Q5B
-        BvLd69ku16fJ5M/eAliZ3Ex+dCsf6BOmTCcjbGY=
-X-Google-Smtp-Source: ABdhPJynhmNn0Ph2jRdb1n3aKUZs0eI2YhPvAFLRvxagK4NRh3r1KvU57wTbmG9zEkKt/WaLC7Fc1LVu+T+wm3Uid0I=
-X-Received: by 2002:a05:6402:134a:: with SMTP id y10mr1273007edw.241.1637622573581;
- Mon, 22 Nov 2021 15:09:33 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=dKAdxZDlEITLLZyuxy8HLL4SaTNXVhQ2IPAgKR2/2q4=;
+        b=AAcDCQZrZIeux7mch+OwZ7xTSL9p9FcKvTGL0quUHNrkrgk0cXzH+fq48pNS6yNNxn
+         004nJLW5sCTC+r+/virVYKnjFSyeNG2Wx4ZAHoXhpIW0akXUX8SpXo+IS+k2BNInjejQ
+         6RqOJBA9MQXEgQcL+zOvTMGtdvnrRjHdOAP9TU9C8Ko95Bbe+Bt8IAyyxTQ+9D1bCAVr
+         EcpUiC9edBc0EijZzK1g4cs3NTWQR5ZFNgmMUsoCQiumRzSyh1En981gpRSWvG2QQYy4
+         GDwvItkrpN23cjRluGsKCb8FbqdZoL63p1LwH0qBEiiOiR84gl/U0PYzxK6DlKjLGYNl
+         3faQ==
+X-Gm-Message-State: AOAM532SGT7Kjzs2tvvEoNv/gM9aavmsV3BcxiTG/hlAkwz0j70cMiHO
+        M73hj+C3l7WNUrLYGPStW/s=
+X-Google-Smtp-Source: ABdhPJwSY8v7O9S5QdTqxKl6yFl0UWgboTsJ0Ax1xN4SKVu2aoglPAyZp0+EdvHQPnL3RvxjG78ndQ==
+X-Received: by 2002:a50:ee96:: with SMTP id f22mr1477395edr.77.1637623682176;
+        Mon, 22 Nov 2021 15:28:02 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id cw5sm4584706ejc.74.2021.11.22.15.28.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Nov 2021 15:28:01 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mpIjB-001DWS-Ay;
+        Tue, 23 Nov 2021 00:28:01 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fixup??? Merge branch 'ab/ci-updates' into seen
+Date:   Tue, 23 Nov 2021 00:12:24 +0100
+References: <pull.1081.git.1637578930464.gitgitgadget@gmail.com>
+ <211122.86ee78yxts.gmgdl@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.2111222257430.63@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <nycvar.QRO.7.76.6.2111222257430.63@tvgsbejvaqbjf.bet>
+Message-ID: <211123.8635nnydmm.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
- <7b0c665fb75d3d73d9d8d03b629a09a0ec4244e6.1637455620.git.gitgitgadget@gmail.com>
- <776abd16-53d5-46c0-8008-c518a4415f7d@web.de>
-In-Reply-To: <776abd16-53d5-46c0-8008-c518a4415f7d@web.de>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 22 Nov 2021 15:09:22 -0800
-Message-ID: <CABPp-BH2C1J9AAYnxcptoqgE5WeUCV=4W7qdW0P9KyMi2L3Abw@mail.gmail.com>
-Subject: Re: [PATCH 2/8] repository, setup: introduce the_cwd
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 21, 2021 at 12:56 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->
-> Am 21.11.21 um 01:46 schrieb Elijah Newren via GitGitGadget:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > Removing the current working directory causes all subsequent git
-> > commands (and likely a number of non-git commands) run from that
-> > directory to get confused and fail with a message about being unable to
-> > read the current working directory.  That confuses end users,
-> > particularly since the command they get the error from is not the one
-> > that caused the problem; the problem came from the side-effect of some
-> > previous command.
-> >
-> > We would like to avoid removing the current working directory;
->
-> A worthy goal.
->
-> > towards
-> > this end, introduce a new the_cwd variable that tracks the current
-> > working directory.  Subsequent commits will make use of this new
-> > variable.
->
-> Why make it a global variable instead of getting the working directory
-> in the places that try to delete directories?  (Honest question, not a
-> suggestion.)
 
-As I mentioned in my response to Junio, I need to be clearer that what
-I want to protect is the current working directory as of the startup
-of the git process, as a proxy for the current working directory of
-the parent process, so that subsequent commands started from the
-parent process don't get confused.
+On Mon, Nov 22 2021, Johannes Schindelin wrote:
 
-As such, we don't want to get the working directory again later,
-because that'd give us the wrong thing.  Also, setup.c has some nice
-massaging of getcwd() from an absolute path into a relative path that
-is much more convenient for us to do our later comparisons, and we'd
-rather not do those additional tweaks with every check.  Since the
-relative path from the project root to the _original_ current working
-directory is a single value, a global seemed to make sense for saving
-it.  Perhaps I should tweak it to be const as well.
+> Hi =C3=86var,
+>
+> On Mon, 22 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> On Mon, Nov 22 2021, Johannes Schindelin via GitGitGadget wrote:
+>>
+>> > diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+>> > index c0bae709b3b..c508c18ad44 100755
+>> > --- a/ci/run-build-and-tests.sh
+>> > +++ b/ci/run-build-and-tests.sh
+>> > @@ -45,9 +45,8 @@ linux-gcc-4.8)
+>> >  	export MAKE_TARGETS=3Dall
+>> >  	;;
+>> >  esac
+>> > -make -C contrib/scalar test
+>> > -
+>> >  make $MAKE_TARGETS
+>> > +make -C contrib/scalar test
+>> >
+>> >  check_unignored_build_artifacts
+>>
+>> The CI breakage was introduced with the merger with ab/ci-updates, but
+>> the combination of the two just reveals an existing breakage in
+>> js/scalar.
+>
+> Which shows that I was wrong to pander to your repeated demand to include
+> Scalar in the CI builds already at this early stage.
 
->
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  repository.c | 1 +
-> >  repository.h | 1 +
-> >  setup.c      | 2 ++
-> >  3 files changed, 4 insertions(+)
-> >
-> > diff --git a/repository.c b/repository.c
-> > index c5b90ba93ea..69a106c553c 100644
-> > --- a/repository.c
-> > +++ b/repository.c
-> > @@ -17,6 +17,7 @@
-> >  static struct repository the_repo;
-> >  struct repository *the_repository;
-> >  struct index_state the_index;
-> > +char *the_cwd;
-> >
-> >  void initialize_the_repository(void)
-> >  {
-> > diff --git a/repository.h b/repository.h
-> > index a057653981c..45de85d18ef 100644
-> > --- a/repository.h
-> > +++ b/repository.h
-> > @@ -147,6 +147,7 @@ struct repository {
-> >  };
-> >
-> >  extern struct repository *the_repository;
-> > +extern char *the_cwd;
-> >
-> >  /*
-> >   * Define a custom repository layout. Any field can be NULL, which
-> > diff --git a/setup.c b/setup.c
-> > index 347d7181ae9..4466fa55af3 100644
-> > --- a/setup.c
-> > +++ b/setup.c
-> > @@ -887,6 +887,7 @@ static const char *setup_explicit_git_dir(const cha=
-r *gitdirenv,
-> >               set_git_dir(gitdirenv, 1);
-> >               if (chdir(worktree))
-> >                       die_errno(_("cannot chdir to '%s'"), worktree);
-> > +             the_cwd =3D xstrdup(cwd->buf + offset);
-> >               strbuf_addch(cwd, '/');
-> >               free(gitfile);
-> >               return cwd->buf + offset;
-> > @@ -940,6 +941,7 @@ static const char *setup_discovered_git_dir(const c=
-har *gitdir,
-> >       /* Make "offset" point past the '/' (already the case for root di=
-rs) */
-> >       if (offset !=3D offset_1st_component(cwd->buf))
-> >               offset++;
-> > +     the_cwd =3D xstrdup(cwd->buf + offset);
-> >       /* Add a '/' at the end */
-> >       strbuf_addch(cwd, '/');
-> >       return cwd->buf + offset;
-> >
->
+Us finding an a bug in a topic that's happening outside of CI means we
+shouldn't have added it to CI in the first place? Isn't spotting these
+issues a good thing?
+
+What I'm pointing out is that this isn't an issue that happened because
+of the merger with ab/ci-updates, but merely turned into a CI failure
+because of it.
+
+Before that in your initial patch to integrate it into CI[1] the
+relevant part of the patch was, with extra context added by me:
+
+    [...]
+       linux-gcc-4.8|pedantic)
+               # Don't run the tests; we only care about whether Git can be
+               # built with GCC 4.8 or with pedantic
+               ;;
+       *)
+               make test
+               ;;
+       esac
+       make test
+       ;;
+     esac
+    +make -C contrib/scalar test
+=20=20=20=20=20
+     check_unignored_build_artifacts
+
+I.e. it added scalar testing to the linux-gcc-4.8 & "pedantic" jobs,
+which are meant to be compile-only.
+
+The other issue is that the "test" Makefile target in
+contrib/scalar/Makefile attempts to build the top-level from scratch,
+but fails (which is how it turned into a CI failure). The same thing
+happens when running it outside fo CI.
+
+I don't think I've been demanding that you do anything. I have been
+asking if there's a good reason for why we wouldn't test this code we've
+got in-tree. Your commit[1] states:
+
+    Since Scalar depends on `libgit.a`, it makes sense to ensure in the CI
+    and the PR builds that it does not get broken in case of industrious
+    refactorings of the core Git code.
+
+Which is rationale that I entirely agree with, the only extent to which
+I don't is that I don't think it goes far enough, i.e. shouldn't we also
+add this to "make test" and not just CI? Why shouldn't I see failures
+locally, and only when I push to CI (unless I go out of my way to run
+the tests-like-CI-would)?
+
+In any case, both of these breakages are present in your version of the
+version of the patches, but not the change I've been proposing on-top to
+add it to CI and "make test". You've also refused to talk about why you
+insist on that particular approach, which is shown to be more fragile
+here. So it seems rather odd to blame my suggestions (or "demands") for
+them.
+
+1. https://lore.kernel.org/git/1b0328fa236a35c2427b82f53c32944e513580d3.163=
+7158762.git.gitgitgadget@gmail.com/
+
