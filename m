@@ -2,80 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E901BC433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 18:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CDC1C433FE
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 18:00:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239851AbhKVSDa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 13:03:30 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56675 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238011AbhKVSD2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 13:03:28 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C80AF3D2B;
-        Mon, 22 Nov 2021 13:00:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ujxOp/TmGqpY
-        hryh4BcF3Tp3yfwQ1P4gQjCwlVtq2Dw=; b=UcOR9e9VSb6/hpZJr2U8ogj/oDfU
-        Xc03O5xVhp/Dhs6aswh4kWrU4hqJoazXC49VA0km/QCuStlQanEOb9f92MxF5l3w
-        /oYcQgltAfpDie9w4ij5ex/8SD9252WkAOSf8180wE+SEVY0JL01qVEI4ukpxk7r
-        za9+Tu/azn7paYU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 12821F3D2A;
-        Mon, 22 Nov 2021 13:00:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6F080F3D26;
-        Mon, 22 Nov 2021 13:00:20 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Enzo Matsumiya <ematsumiya@suse.de>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] pager: fix crash when pager program doesn't exist
-References: <20211120194048.12125-1-ematsumiya@suse.de>
-        <YZqSBlvzz2KgOMnJ@coredump.intra.peff.net>
-        <xmqqfsrplz3z.fsf@gitster.g>
-        <20211122153119.h2t2ti3lkiycd7pb@cyberdelia>
-        <211122.86a6hwyx1b.gmgdl@evledraar.gmail.com>
-        <20211122164635.6zrqjqow4xa7idnn@cyberdelia>
-        <211122.861r38yuun.gmgdl@evledraar.gmail.com>
-Date:   Mon, 22 Nov 2021 10:00:19 -0800
-In-Reply-To: <211122.861r38yuun.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 22 Nov 2021 18:10:47 +0100")
-Message-ID: <xmqqfsrogjf0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0EBC4368-4BBE-11EC-A146-62A2C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S235439AbhKVSDb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 13:03:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38148 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234349AbhKVSD3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 13:03:29 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E77FCC061746
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 10:00:22 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id x25-20020aa79199000000b0044caf0d1ba8so10293099pfa.1
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 10:00:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
+        bh=Z5kfxSQx37YMq6HHFu924is5yEICO4+eSf1vT5gxcG4=;
+        b=QUUQ7xJKYtKwVOh9bQ6k7F3vWPEe0scsV7P1CiiznHcgvw/H9L2+xjbJ6iqkajY2zX
+         SNtnZmYtA0J+Ikmx5N0MoG8Zy5hzPdEFFHVsjCGzt2MW/+cG/r68itw/IcYNkz1AxcLk
+         ug/H4sH3fT0ahRKzOZJPXT6pc6bEXMwF2IKtt6ncv+VcKn24h5JbOGqVxsWIVXQ9qXAb
+         TX8+rED7rQgLybuGWDy0/IOGR/waewejP3IUz3/lOyYCER97Yd1hL3cjHPeHYFaX8cfx
+         UHbjSsxD77w3epF4/57OFzRGNHrd0/v/tEvpxfaR7C2lLkspxOgZnc+odYpkuNWvgRsf
+         6mhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to;
+        bh=Z5kfxSQx37YMq6HHFu924is5yEICO4+eSf1vT5gxcG4=;
+        b=KPB+LYRagoskGg3tuk0Y26N4PNi/PW5WBwvobHE+r4MnDzv4wPLRTqAEpkOHH5wd9e
+         ynW5HPi3qyiShhbF6vkz9wRCKIViKvv+K7/Rep74uSe6GkCMrf34V3bxC4laI6iYTnHB
+         e4RIyqeW53tZ1S30nwmW9wFIuN9QYNrDQnucOAkGdIWyLRbgYlJTTTRSQNd8n6CPmSx6
+         D3YhICCE0Cl/RCvtKtuNYRKDy0M9bNT1wKIV0Pe+71955iY+iQwizEmASvrF2HV750bl
+         BUxn20Rcw1NkDgvGxdS1oTjbI/wYDYYoRvEHFastcC+h/fD67/t87v08xTZDf1rXfd2Z
+         oW7A==
+X-Gm-Message-State: AOAM533u5eE1AGcVf5Pr3G72blsdGbECYApYtaQ5NwSHJ+xYGsl/RQtt
+        D4leXe0O3sLvYsk8zDQnihsENJ4d6u6L9Q==
+X-Google-Smtp-Source: ABdhPJxFG6jQpmVNCb3L8azxcwKUVelgg29tJPME+rlgZZkxAemGY2miagE/Z6Zr5VOCcV5RrI2/TT3sTBEdQQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:903:245:b0:143:c5ba:8bd8 with SMTP id
+ j5-20020a170903024500b00143c5ba8bd8mr86206280plh.64.1637604022386; Mon, 22
+ Nov 2021 10:00:22 -0800 (PST)
+Date:   Mon, 22 Nov 2021 10:00:20 -0800
+In-Reply-To: <xmqqa6hznvz1.fsf@gitster.g>
+Message-Id: <kl6lr1b8qde3.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <xmqqa6hznvz1.fsf@gitster.g>
+Subject: Re: What's cooking in git.git (Nov 2021, #05; Fri, 19)
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> We then use that to check if we set it up ourselves and skip setting it
-> up, but any other program invoked by us will be fooled by
-> GIT_PAGER_IN_USE=3Dtrue. Maybe that's intentional,...
+> * gc/remote-with-fewer-static-global-variables (2021-11-18) 5 commits
+>  - remote: die if branch is not found in repository
+>  - remote: remove the_repository->remote_state from static methods
+>  - remote: use remote_state parameter internally
+>  - remote: move static variables into per-repository struct
+>  - t5516: add test case for pushing remote refspecs
+>
+>  Code clean-up to eventually allow information on remotes defined
+>  for an arbitrary repository to be read.
+>
+>  Will merge to 'next'?
 
-I think there is no other reason than to ensure subprocesses we
-spawn (be it git or somebody else that will later spawn git) are
-affected; otherwise a global variable in environment.c would have
-sufficed.
-
-> Presumably we can invoke N git <something>, where those <something> hav=
-e
-> different pager.<something> config...
-
-A tangent, but pager.<cmd> should be renamed/transitioned to
-pager.<cmd>.program, I would think.  Not that we allow characters
-that are unsafe in the configuration variable names (like dot ".")
-in the names of Git subcommands right now, but any name that is
-taken from an unbounded set should not appear anywhere but the
-second level of a three-level configuration variable name.
+This got a Reviewed-by from Jonathan Tan; do we need more reviewers to
+look at this?
