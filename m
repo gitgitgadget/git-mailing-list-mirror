@@ -2,269 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E902C433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:28:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1525C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 22:28:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231714AbhKVWbE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 17:31:04 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54148 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbhKVWbB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 17:31:01 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3ECE4F5CA1;
-        Mon, 22 Nov 2021 17:27:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=UvuFipkJfV2xoO0cuhWs1r4MxOY7TaAHiOwFmzAy6uw=; b=WwPy
-        +cGswJwFSybeAEdIuyd/Z+DwZ5Cr84wQTG50/XMOM/cSOqWeBfSOZiJfwz4d+t58
-        wngJMKTmJrYNq7TIKOGeORWzgRBMO744mKPDP856Vr2JDvieIs/ojIM70frZZTzy
-        y2HUnGcFnwUsNA6YoZ4HQ/DrOP+A3N8/MZijPd8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36AD0F5CA0;
-        Mon, 22 Nov 2021 17:27:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 94151F5C9F;
-        Mon, 22 Nov 2021 17:27:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 2/4] refs: trim newline from reflog message
-References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
-        <dfb639373234a6b8d5f9110380a66ffccbe0b1d6.1637590855.git.gitgitgadget@gmail.com>
-Date:   Mon, 22 Nov 2021 14:27:52 -0800
-Message-ID: <xmqq35nnddw7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230447AbhKVWbk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 17:31:40 -0500
+Received: from mout.gmx.net ([212.227.15.15]:43393 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229502AbhKVWbf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 17:31:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637620104;
+        bh=InjyHJ88R/dqAtGicCgJfffiBjchD6KwCeQXGxHGcWY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Izo9QpnqUaKRkS92mXdDE65du4Gp8ry3GKpe19ohADzsV7GODdzmXXAMlfxSZ1SEv
+         2O4HlQg3+CDQx75zKOrwmdVXBTe0c5WKkvzS/UbWd1A4GqnDXf4ZV2al+3OOUVGIJ/
+         Vc3+hhmxYTWbdyjY554v7NyVrWsf02DWB5UNBHxY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M4JqV-1mpYmP2PqL-000ObV; Mon, 22
+ Nov 2021 23:28:24 +0100
+Date:   Mon, 22 Nov 2021 23:28:22 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Carlo Arenas <carenas@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: preparing for 2.34.1
+In-Reply-To: <CAPUEsphNH9pfQoHqVgJfkQCU-Li45dz4QtGtDjWu5bDV9A3PEg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2111222319100.63@tvgsbejvaqbjf.bet>
+References: <xmqqr1b8gkhg.fsf@gitster.g> <CAPUEsphNH9pfQoHqVgJfkQCU-Li45dz4QtGtDjWu5bDV9A3PEg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6F28970E-4BE3-11EC-AD13-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:MVquk4aLMhaLJlfsZjWbQ+HzECE0A8qKYFzZshDGhJ5WxeAquGr
+ NKbCJ/5fiaQIh3xLeejtI4D0onITMRidGq3n45RPsDKAmxjJ1PBc0ddgGWPP27NzhzRPCsY
+ vrxhxhDZtNklgikDK2MN6XxbdmvXnv1CgHtz4ow5tsrF39GV/UoYZFMr/e0nZYooY1rUPmH
+ B2BdoG4Ipl7n67qzhGiYw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:FGwiVzIEhXE=:YntqFLD2m10vEprsajfUIL
+ B3hiLwlFWEEr/cUmHVUXn4TnZhfU72MRWdhy1QcP4OZtEhZ7m5SYPOIHNYzjC6Sn274hwoFLK
+ OBXq0HDAzqmcuNYZUBhoBt04de3hrQkkNkEhFJe5p8rgR8PxhD1yDQF8Btr/2p4g97JRau0pV
+ K0UN7mlXtX2VFbkCF+M9ZZTXuB6ioAec2LZqAUio6xZ5LzxeQx+sh4HLVKSeN37lQBgPBfZVM
+ nKJJaCsIBfasjwVHVynWWeeFq0xR6kYmpZw6ffq614Y4lgiqlo+oe4blAu6vcRBRhBhpxorIo
+ BxrnHnXn9bw5QRtsudDy1IZHlj4cBtUvf8RYUYgwpzGOSO7EE/PtenVAxcUNNf1WZTiUCHPib
+ GdolIjiCfsXzph5oB0VPD2+E8nUMUEIeObAzT7uE85KGfupNam12HOnLzWBPY01nRfjaRtW+a
+ au1HIeiB+qSDDl4EnPOSo/YcDLWlSxYnuFGngpJn9VvnncEZd91u9NRndxWWrSS23ic1xtgdc
+ iect0dRtdWCvq5YFrCEeDwmWMjcJSKVuUpPha6oatwsgD2AVJaPpOeN+gEJsBM0I7y118qSen
+ 8LoJl8APAUD2tHi6AC/016sn0ZJ60H59dZrPzaHWm9xIDfL1JglMqZYyGjnWFJs3HARrGAwM2
+ Oo+l3DkN2iKrqm17gxv68xreMIlRExMuNxKXSmRq7diqeyDAM2IlON2ljR4LdDKoVEYO+g+4M
+ pu1Gd0qiscpLPgILOcg2iJ/geU1FWeCGSLwikA9Qhcu6F7lqICW50PeyIWCVEbzr5i7Y3/Jtd
+ hsRVZlzZf+w8tscaU3tYdlbGOvX2905q7hLpQe08GuARjyjcaIzu2ZVhTn7X/8lxQT8TBdSCY
+ LbyC5SC+11qpU3BpSRCF7yQykTHqNA6TXjGyXWSggNX6O8QZ+bTE4qp6PSn8AR8bZfH/5p1d7
+ lDRGRo+GDp5Z7Ke8Iu+z5qiT/zWhMyViVypXpxULwPC9k+s0HXR2yXd49JU8sqzfG9md/eC4A
+ /Z1YSMGxGPzErkEmKe8IiRepHQowNBK80O91j9/lOdXJf+yZej3egjXKQcy8f1Vmu1dDmnQoK
+ QYuTNqixTlEYiU=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Carlo,
 
-> From: Han-Wen Nienhuys <hanwen@google.com>
+On Mon, 22 Nov 2021, Carlo Arenas wrote:
+
+> On Mon, Nov 22, 2021 at 11:54 AM Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> >
+> > There are a few topics [*] to fix regressions introduced in the
+> > previous cycle
 >
-> Commit 523fa69c ("reflog: cleanse messages in the refs.c layer") standardizes
-> how write entries into the reflog. This commit standardizes how we get messages
-> out of the reflog. Before, the files backend implicitly added '\n' to the end of
-> reflog message on reading, which creates a subtle incompatibility with alternate
-> ref storage backends, such as reftable.
+> There was another regression report[1] that I just fished out of my
+> spam folder and that I introduced in 3d411afabc (editor: save and
+> reset terminal after calling EDITOR, 2021-10-05), but that I have not
+> yet produced a fix for or fully understood.
 >
-> We address this by stripping LF from the message before we pass it to the
-> user-provided callback.
+> The gist is that some people seem to be using a hack[2] dscho posted a
 
-If this were truly "user-provided", then I'd argue that all backends
-should follow whatever the files backend has been doing forever---if
-the files added LF implicitly, others should, too, because that is
-pretty much what these "user-provided" callbacks have been expecting
-to see.
+You mean
 
-In other words, it would be a bug for newer backends to behave
-differently.
+https://lore.kernel.org/git/nycvar.QRO.7.76.6.1903221436590.41@tvgsbejvaqb=
+jf.bet/
 
-But I _think_ these callbacks are all under our control, and if that
-is the case, I am fine either way, even though I would have a strong
-preference not to have to change the API without a good reason, even
-if it is a purely internal one.
+right? I.e. figuring out what Git considers its system config location via
 
-So, let's go and see if we can find a good reason in the changes we
-can make to the callback functions ;-)
+	GIT_EDITOR=3Decho git config --system -e 2>/dev/null
 
-> -			end = strchr(logmsg, '\n');
-> -			if (end)
-> -				*end = '\0';
-> -
+> few years ago to get info from git programmatically and I just didn't
+> expect someone would try to invoke the EDITOR unless they had a
+> terminal, so the fix might be to just add an isatty(0) call, but
+> reverting that commit would be also an option.
 
-We could argue that the lack of LF at the end from the API output
-made this caller simpler, which may be a plus.
+The quickest workaround for this is probably to special-case the editor
+`echo`:
 
-> diff --git a/reflog-walk.c b/reflog-walk.c
-> index 8ac4b284b6b..3ee59a98d2f 100644
-> --- a/reflog-walk.c
-> +++ b/reflog-walk.c
-> @@ -244,8 +244,6 @@ void get_reflog_message(struct strbuf *sb,
->  
->  	info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
->  	len = strlen(info->message);
-> -	if (len > 0)
-> -		len--; /* strip away trailing newline */
+=2D- snip --
+diff --git a/editor.c b/editor.c
+index 674309eed8bd..1b97f7da9920 100644
+=2D-- a/editor.c
++++ b/editor.c
+@@ -51,12 +51,11 @@ const char *git_sequence_editor(void)
+ static int launch_specified_editor(const char *editor, const char *path,
+ 				   struct strbuf *buffer, const char *const *env)
+ {
+-	int term_fail;
+-
+ 	if (!editor)
+ 		return error("Terminal is dumb, but EDITOR unset");
 
-Likewise.
+ 	if (strcmp(editor, ":")) {
++		int save_and_restore_term =3D strcmp(editor, "echo");
+ 		struct strbuf realpath =3D STRBUF_INIT;
+ 		const char *args[] =3D { editor, NULL, NULL };
+ 		struct child_process p =3D CHILD_PROCESS_INIT;
+@@ -86,9 +85,10 @@ static int launch_specified_editor(const char *editor, =
+const char *path,
+ 		p.env =3D env;
+ 		p.use_shell =3D 1;
+ 		p.trace2_child_class =3D "editor";
+-		term_fail =3D save_term(1);
++		if (save_and_restore_term)
++			save_and_restore_term =3D !save_term(1);
+ 		if (start_command(&p) < 0) {
+-			if (!term_fail)
++			if (save_and_restore_term)
+ 				restore_term();
+ 			strbuf_release(&realpath);
+ 			return error("unable to start editor '%s'", editor);
+@@ -97,7 +97,7 @@ static int launch_specified_editor(const char *editor, c=
+onst char *path,
+ 		sigchain_push(SIGINT, SIG_IGN);
+ 		sigchain_push(SIGQUIT, SIG_IGN);
+ 		ret =3D finish_command(&p);
+-		if (!term_fail)
++		if (!save_and_restore_term)
+ 			restore_term();
+ 		strbuf_release(&realpath);
+ 		sig =3D ret - 128;
+=2D- snap --
 
-> @@ -284,10 +282,10 @@ void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
->  		info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
->  		get_reflog_selector(&selector, reflog_info, dmode, force_date, 0);
->  		if (oneline) {
-> -			printf("%s: %s", selector.buf, info->message);
-> +			printf("%s: %s\n", selector.buf, info->message);
->  		}
->  		else {
-> -			printf("Reflog: %s (%s)\nReflog message: %s",
-> +			printf("Reflog: %s (%s)\nReflog message: %s\n",
->  			       selector.buf, info->email, info->message);
->  		}
+However, I could imagine that other scenarios call for an editor that
+_also_ does not run in the terminal, and where also no real terminal is
+available for saving and restoring.
 
-This is Meh either way.
+I was tempted to suggest an `isatty(2)`, but that probably comes with its
+own problems, too.
 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 151b0056fe5..583bbc5f8b9 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -1936,17 +1936,15 @@ static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *c
->  	int tz;
->  	const char *p = sb->buf;
->  
-> -	/* old SP new SP name <email> SP time TAB msg LF */
-> -	if (!sb->len || sb->buf[sb->len - 1] != '\n' ||
-> -	    parse_oid_hex(p, &ooid, &p) || *p++ != ' ' ||
-> +	/* old SP new SP name <email> SP time TAB msg */
-> +	if (!sb->len || parse_oid_hex(p, &ooid, &p) || *p++ != ' ' ||
->  	    parse_oid_hex(p, &noid, &p) || *p++ != ' ' ||
-> -	    !(email_end = strchr(p, '>')) ||
-> -	    email_end[1] != ' ' ||
-> +	    !(email_end = strchr(p, '>')) || email_end[1] != ' ' ||
->  	    !(timestamp = parse_timestamp(email_end + 2, &message, 10)) ||
->  	    !message || message[0] != ' ' ||
-> -	    (message[1] != '+' && message[1] != '-') ||
-> -	    !isdigit(message[2]) || !isdigit(message[3]) ||
-> -	    !isdigit(message[4]) || !isdigit(message[5]))
-> +	    (message[1] != '+' && message[1] != '-') || !isdigit(message[2]) ||
-> +	    !isdigit(message[3]) || !isdigit(message[4]) ||
-> +	    !isdigit(message[5]))
->  		return 0; /* corrupt? */
->  	email_end[1] = '\0';
->  	tz = strtol(message + 1, NULL, 10);
-> @@ -2038,6 +2036,7 @@ static int files_for_each_reflog_ent_reverse(struct ref_store *ref_store,
->  				strbuf_splice(&sb, 0, 0, bp + 1, endp - (bp + 1));
->  				scanp = bp;
->  				endp = bp + 1;
-> +				strbuf_trim_trailing_newline(&sb);
->  				ret = show_one_reflog_ent(&sb, fn, cb_data);
->  				strbuf_reset(&sb);
->  				if (ret)
-> @@ -2050,6 +2049,7 @@ static int files_for_each_reflog_ent_reverse(struct ref_store *ref_store,
->  				 * Process it, and we can end the loop.
->  				 */
->  				strbuf_splice(&sb, 0, 0, buf, endp - buf);
-> +				strbuf_trim_trailing_newline(&sb);
->  				ret = show_one_reflog_ent(&sb, fn, cb_data);
->  				strbuf_reset(&sb);
->  				break;
-> @@ -2099,7 +2099,7 @@ static int files_for_each_reflog_ent(struct ref_store *ref_store,
->  	if (!logfp)
->  		return -1;
->  
-> -	while (!ret && !strbuf_getwholeline(&sb, logfp, '\n'))
-> +	while (!ret && !strbuf_getline(&sb, logfp))
->  		ret = show_one_reflog_ent(&sb, fn, cb_data);
->  	fclose(logfp);
->  	strbuf_release(&sb);
-> @@ -3059,18 +3059,18 @@ static int expire_reflog_ent(struct object_id *ooid, struct object_id *noid,
->  	if ((*cb->should_prune_fn)(ooid, noid, email, timestamp, tz,
->  				   message, policy_cb)) {
->  		if (!cb->newlog)
-> -			printf("would prune %s", message);
-> +			printf("would prune %s\n", message);
->  		else if (cb->flags & EXPIRE_REFLOGS_VERBOSE)
-> -			printf("prune %s", message);
-> +			printf("prune %s\n", message);
->  	} else {
->  		if (cb->newlog) {
-> -			fprintf(cb->newlog, "%s %s %s %"PRItime" %+05d\t%s",
-> -				oid_to_hex(ooid), oid_to_hex(noid),
-> -				email, timestamp, tz, message);
-> +			fprintf(cb->newlog, "%s %s %s %" PRItime " %+05d\t%s\n",
-> +				oid_to_hex(ooid), oid_to_hex(noid), email,
-> +				timestamp, tz, message);
->  			oidcpy(&cb->last_kept_oid, noid);
->  		}
->  		if (cb->flags & EXPIRE_REFLOGS_VERBOSE)
-> -			printf("keep %s", message);
-> +			printf("keep %s\n", message);
->  	}
->  	return 0;
->  }
+Ciao,
+Dscho
 
-Hmmmm.  I'll defer my judgment to the end.
-
-> diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
-> index 49718b7ea7f..a600bedf2cd 100755
-> --- a/t/t1405-main-ref-store.sh
-> +++ b/t/t1405-main-ref-store.sh
-> @@ -89,13 +89,12 @@ test_expect_success 'for_each_reflog()' '
->  test_expect_success 'for_each_reflog_ent()' '
->  	$RUN for-each-reflog-ent HEAD >actual &&
->  	head -n1 actual | grep one &&
-> -	tail -n2 actual | head -n1 | grep recreate-main
-> +	tail -n1 actual | grep recreate-main
->  '
->  
->  test_expect_success 'for_each_reflog_ent_reverse()' '
->  	$RUN for-each-reflog-ent-reverse HEAD >actual &&
-> -	head -n1 actual | grep recreate-main &&
-> -	tail -n2 actual | head -n1 | grep one
-> +	tail -n1 actual | grep one
->  '
->  
->  test_expect_success 'reflog_exists(HEAD)' '
-> diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
-> index 0a87058971e..b0365c1fee0 100755
-> --- a/t/t1406-submodule-ref-store.sh
-> +++ b/t/t1406-submodule-ref-store.sh
-> @@ -74,13 +74,13 @@ test_expect_success 'for_each_reflog()' '
->  test_expect_success 'for_each_reflog_ent()' '
->  	$RUN for-each-reflog-ent HEAD >actual &&
->  	head -n1 actual | grep first &&
-> -	tail -n2 actual | head -n1 | grep main.to.new
-> +	tail -n1 actual | grep main.to.new
->  '
->  
->  test_expect_success 'for_each_reflog_ent_reverse()' '
->  	$RUN for-each-reflog-ent-reverse HEAD >actual &&
->  	head -n1 actual | grep main.to.new &&
-> -	tail -n2 actual | head -n1 | grep first
-> +	tail -n1 actual | grep first
->  '
->  
->  test_expect_success 'reflog_exists(HEAD)' '
-
-I got an impression from the proposed log message and the changes to
-the code (except for the refs/files-backend.c, which I only skimmed)
-that the idea is that the refs API stops adding LF at the end, and
-the callers got a matching change to compensate for the (now)
-missing LF.  If that is the idea behind the change, why do we need
-to change any existing test?  The only way any tests need to be
-modified due to such a change I can think of is when we forget to or
-failed to make compensating change to the callers of the API.
-
-Puzzled...
-
-Ah, the $RUN is hiding what is really going on; it is running the
-"test-tool ref-store" helper, and we did not adjust that helper.  So
-if we make a compensating change to the test-tool then we do not
-have to have these changes at all?  But that point may be moot.
-
-In any case, in order to lose 5 lines from show-branch.c, and 2
-lines from reflog-walk.c, I see that we had to touch 30+ lines in
-refs/files-backend.c.  I find it a bit hard to sell this as an
-improvement to the API, to be honest.
-
-Luckily, it looks to me that this step is mostly unreleated to the
-main thrust of these patches in the series, which is "reading
-.git/logs/ in the test would work only when testing files backend;
-use for-each-ref test helper to recreate what would have been read
-by such tests from the files backend's files and inspect that
-instead, and that would allow us test other backends for free".
-
-So I suspect that this step can be safely dropped?
-
-Thanks.
-
+>
+> Carlo
+>
+> [1] https://lore.kernel.org/git/ee302c98-da27-da43-e684-c7ec8b225360@gmx=
+.net/
+> [2] https://yhbt.net/lore/all/nycvar.QRO.7.76.6.1903221436590.41@tvgsbej=
+vaqbjf.bet/T/
+>
+>
