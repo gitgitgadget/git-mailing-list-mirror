@@ -2,82 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73F4EC433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 17:55:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04EDEC433EF
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 17:59:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239614AbhKVR60 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 12:58:26 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52451 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231383AbhKVR6Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 12:58:25 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AB10A16FFC9;
-        Mon, 22 Nov 2021 12:55:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KD4xOkA33tDDzhgbQbb1fmyqKMvNhGMc8KJ71+
-        rpnxU=; b=hmEBPVb3a/sH7TQiomiN23uvbupFLtszHiffcYurRZF+hSCdBcLtHA
-        jGbCOle8B7LuVS5b40fiqxLIXqtH+Pt0q3UWX37pJzS1v4BBdfWTNKj/STNczhDh
-        Z5yCcRIL3LtGdBAv0FkzCqx9iUyv2D9N6dZelbLVOCwK1u/BsJcTY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A376916FFC8;
-        Mon, 22 Nov 2021 12:55:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 090B016FFC7;
-        Mon, 22 Nov 2021 12:55:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Enzo Matsumiya <ematsumiya@suse.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH v2] pager: fix crash when pager program doesn't exist
-References: <20211120194048.12125-1-ematsumiya@suse.de>
-        <YZqSBlvzz2KgOMnJ@coredump.intra.peff.net>
-        <xmqqfsrplz3z.fsf@gitster.g>
-        <20211122153119.h2t2ti3lkiycd7pb@cyberdelia>
-        <211122.86a6hwyx1b.gmgdl@evledraar.gmail.com>
-        <20211122164635.6zrqjqow4xa7idnn@cyberdelia>
-Date:   Mon, 22 Nov 2021 09:55:14 -0800
-In-Reply-To: <20211122164635.6zrqjqow4xa7idnn@cyberdelia> (Enzo Matsumiya's
-        message of "Mon, 22 Nov 2021 13:46:35 -0300")
-Message-ID: <xmqqk0h0gjnh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237533AbhKVSDE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 13:03:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38024 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234020AbhKVSDE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 13:03:04 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D73BC061574
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 09:59:57 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id g14so80781878edb.8
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 09:59:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+QdeQH+J7w4Ao01vdc+WcW1TQ3F3dXFfgihlo6voAZ0=;
+        b=b5WZbcnpKDIUkWEZjJfhmiRR2h+29jR++p7C0CH2mQqhSOHO0a+OdrF6oyVu25FvoM
+         IHfbYINA+iRKBGIjzEMvu3RsnvgsAGDolRBdIlFB7OdS5i0MnMIOm1R4nK2qWoPyeUnr
+         /gt7CYmM53GgHN5bgUeOr0/t2scIIDkIJ83+jUWz1zZnhZBHNI8xiqdbNOKHGbTE0LGm
+         teqGs+zS7+mIE61MLNQM8NiyVr9tnNroNmcnkb8WFZqTBzfGkGq4ubJZil+EYDTTBcA4
+         yOSFjMJn9AzY4A3IhsFpUpgMaHSqQa1E+8vy5LWRB+cCubWErR4NgJfhrDbcEBT4+Pfr
+         zp4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+QdeQH+J7w4Ao01vdc+WcW1TQ3F3dXFfgihlo6voAZ0=;
+        b=F/CHQFMoU7tCXQN1oOG7ZMe5obIsT9IYdg/Kz8eSNeGD0L5yysJ9jECsINsytaH0ef
+         Q3ViIV0V5rxgLj3dCW37CJPrltt6bTRQT+gpPsXS8CtRQHvdIG0yWfyW0oum1QEYBliz
+         IBHpZ82ZyzWZInnswkponZZvGFX1mlNYnv3s3cFsSqV7OWkwZkJAWiUAm8KvrQBM919A
+         4GB5epR+kSIn0WYLxgx0Zre0TdobuUXJWmqMLt6CxR3m+i3P/3B6QtGGBWYlV1yrWHaG
+         pbiMeH4GvRrEDb3DQo9Isoz7BDSd6QPOokAcW0AS44YbwWpTIk+uFKUx6wRhZ/Ip7BVn
+         MPHw==
+X-Gm-Message-State: AOAM533cZXRUECX3rJBYaLCEfZtD2Fil/xtHydJNlymG1v5AqkXrYKBR
+        j31NPvUyFHwZqKtxCpx5X+lnBXDjyIcgpWif/cBo6sgZ
+X-Google-Smtp-Source: ABdhPJxEfG01nhaWDDvbjTofWsUZ+adu0EA1ycRgTbHlLyLKPLAJLfRedrQqFjcQqnE/NBGXrOmf72P/qfoiLDtoYTY=
+X-Received: by 2002:a17:907:1c9d:: with SMTP id nb29mr44524279ejc.74.1637603995726;
+ Mon, 22 Nov 2021 09:59:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 594976E0-4BBD-11EC-AA5F-98D80D944F46-77302942!pb-smtp21.pobox.com
+References: <xmqqa6hznvz1.fsf@gitster.g>
+In-Reply-To: <xmqqa6hznvz1.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 22 Nov 2021 09:59:44 -0800
+Message-ID: <CABPp-BGdhwcVhGPeY+09MMv+0384TY+OOimtBUgFE0Wv09riDA@mail.gmail.com>
+Subject: vd/sparse-sparsity-fix-on-read (Was: Re: What's cooking in git.git
+ (Nov 2021, #05; Fri, 19))
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Enzo Matsumiya <ematsumiya@suse.de> writes:
-
-> However, IMHO it would make sense to try pager.<subcommand> if a
-> previous attempt failed, e.g.:
+On Fri, Nov 19, 2021 at 11:53 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> $ git config pager.show my-valid-pager
-> $ GIT_PAGER=invalid-pager git -p show
+> * vd/sparse-sparsity-fix-on-read (2021-10-27) 3 commits
+>  - sparse-index: update do_read_index to ensure correct sparsity
+>  - sparse-index: add ensure_correct_sparsity function
+>  - test-read-cache.c: prepare_repo_settings after config init
 >
-> So this will first try invalid-pager, fail, and not try again, with the
-> above patch. As a user, I would expect that my-valid-pager to be run in
-> case invalid-pager failed.
+>  Ensure that the sparseness of the in-core index matches the
+>  index.sparse configuration specified by the repository immediately
+>  after the on-disk index file is read.
 >
-> What do you think?
+>  Will merge to 'next'?
 
-Interesting.  As presented here, it makes it look as if the user is
-trying to override configured values for this particular invocation,
-which would mean the environment must win (i.e. we should ignore
-pager.<cmd> and only pay attention to GIT_PAGER), but if we consider
-the way envionment is normally used, that is a faulty logic.  Just
-like configuration variables are to set the value that the user
-normally uses unless overridden, environment variables are the same
-way.
+I spotted two minor things with the commit message of the final patch
+(which don't necessarily need to block the series, but would be nice
+to see fixed)[1].  Otherwise the series looks ready to me, and Stolee
+also put his stamp of approval on the series[2].  Perhaps wait to see
+if Victoria wants to fix up those two small things I pointed out
+before merging down?
 
-I know $GIT_PAGER trumps core.pager, which indicates between
-equivalents, environment is taken as a stronger wish.  But I do not
-mind if the order were updated to pager.<cmd> trumps $GIT_PAGER,
-which in turn trumps core.pager, which in turn trumps $PAGER.
+[1] https://lore.kernel.org/git/CABPp-BGU=HHeydt3arF=RF2P81cFbe3NfX6tqiBHb8xkhOALgg@mail.gmail.com/
+[2] https://lore.kernel.org/git/e1c6fe43-ebd1-7c6f-c5b6-c528fb4e6774@gmail.com/
