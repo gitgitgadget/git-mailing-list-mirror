@@ -2,79 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 035BDC433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 06:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2402FC433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 06:46:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230058AbhKVGIN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 01:08:13 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51924 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbhKVGIM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 01:08:12 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8791A16C33B;
-        Mon, 22 Nov 2021 01:05:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4VGYWBin0KR4KCD3TPjeFH0gNop2iscVTZ+3Bm
-        O1FWo=; b=J38tf8OnabpOFmLWAwCzeYeHc1CfNLPALAs8C5K5rVdMmEjPp5SzrI
-        AE1QnmjXdKY39G0DU79nt5U5DYzxC4n+vWXr5IiOqQ6gPqQx7HINAuJsA2iGT7Lu
-        M8YKRhtDVHgHhG8bkZobwY5o2j7JHjTpLYoV3a6NAVURbD55Hre4M=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 804E816C33A;
-        Mon, 22 Nov 2021 01:05:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CE2BE16C339;
-        Mon, 22 Nov 2021 01:05:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] t7006: clean up SIGPIPE handling in trace2 tests
-References: <xmqq1r4b8ezp.fsf@gitster.g> <20211024170349.GA2101@szeder.dev>
-        <YZqSgu4XjPWnURju@coredump.intra.peff.net>
-        <YZrCmPb5AIW8YYQ0@coredump.intra.peff.net>
-        <YZrOLy03s5ZWMQ+t@coredump.intra.peff.net>
-        <xmqqa6hxlysf.fsf@gitster.g>
-        <YZsh6mnjuKbbIrw8@coredump.intra.peff.net>
-        <YZsih3ar+g1ZTZOc@coredump.intra.peff.net>
-        <xmqq5yskn3ir.fsf@gitster.g>
-Date:   Sun, 21 Nov 2021 22:05:02 -0800
-In-Reply-To: <xmqq5yskn3ir.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
-        21 Nov 2021 21:49:32 -0800")
-Message-ID: <xmqq1r38n2sx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232421AbhKVGuC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 01:50:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54052 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230087AbhKVGuB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 01:50:01 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FE19C061574
+        for <git@vger.kernel.org>; Sun, 21 Nov 2021 22:46:55 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id f7-20020a1c1f07000000b0032ee11917ceso12721004wmf.0
+        for <git@vger.kernel.org>; Sun, 21 Nov 2021 22:46:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=fN2giLhJTEe9srNs8cpKUEOdFG2xX4GVxwQG3a1bMjc=;
+        b=Hu7kjEPgbtun5GztAmKaykDwuvBzE2Tvu3iU2STnXGAuQMOu96SCTWILZFc1qXOOs5
+         TNpjT2SjlACpL1XEMfq2zW2voX/AArMeA/ctsPnv7287PmOuEvuMDYgF++ELQep4pRnc
+         RBBvVfWntNg63AHXMk5nQDVJ9svOIJeP0KMa3BjuJca3536tquWxqCO4jOusPu4SgHsv
+         2ALEVdijX0Jo/Yj9v85SEou9r8S6Rx++tZWGtbKAxr4Z7kDL7UEAR3IlDRyHE+mzkWAJ
+         vDt7XY1HqLRY2clbVz+V4gn6YyBr2vBP/V70eTQF82doXR0Jn1OHHed0yrIyvvVfrvVE
+         MFOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=fN2giLhJTEe9srNs8cpKUEOdFG2xX4GVxwQG3a1bMjc=;
+        b=1nOtSa2dAE2/TEN9RrQiTnCPEpUGpaTqN/HCd239yy4rd5sGumfREZ6JBzHdHt/tsB
+         YUZf8r28ndPAzBmzQdMSlahZnRXkOPkvkJRv5Y6ZN1pFbX6ty3imU0gtw6qleLmOvTJU
+         HbAB4VkG2Gn63Vhl0Bu8pjiE5fMmPqnhjQeH6DWT8w3PhXoo5BmDKSSlEj6rLA9K3jZt
+         EYksRkYObYfoTY5YseNhJfpxlKNPQH9gumiZ5scM9ItzCk5vpceIBg0qjoOUFYjaMkwp
+         LkwnXft927y2cIs76QgW/IwU7Hgu7vpiMGmNzLwGDdgMuCgF/j18t0CERLi2Ta6pVJR/
+         4Agw==
+X-Gm-Message-State: AOAM530ywblksJ6JgVimdrRAnTCpNFRSsX1ZOg8SG5m3x901cBwn1qJc
+        X+9r4ruvs4peJm0yjMjqLNw6SChH6rw=
+X-Google-Smtp-Source: ABdhPJwkD+/eil17OlmQSOmm0KIp9mVPGutnIJ6eNT/Glp3OpJpNr4qnW6So6RodjX7c9fur8tnj+w==
+X-Received: by 2002:a05:600c:3c8a:: with SMTP id bg10mr27202700wmb.106.1637563613901;
+        Sun, 21 Nov 2021 22:46:53 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f13sm9406012wmq.29.2021.11.21.22.46.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Nov 2021 22:46:53 -0800 (PST)
+Message-Id: <5d98a088e143c59ab26c98af4f888b789ac29c59.1637563611.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1076.v8.git.1637563611.gitgitgadget@gmail.com>
+References: <pull.1076.v7.git.1637298298.gitgitgadget@gmail.com>
+        <pull.1076.v8.git.1637563611.gitgitgadget@gmail.com>
+From:   "Aleen via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 22 Nov 2021 06:46:50 +0000
+Subject: [PATCH v8 1/2] doc: git-format-patch: describe the option --always
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2270BB82-4B5A-11EC-A326-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Aleen =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>,
+        Aleen <aleen42@vip.qq.com>, Aleen <aleen42@vip.qq.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Aleen <aleen42@vip.qq.com>
 
-> Jeff King <peff@peff.net> writes:
-> ...
->> That's a lot more tedious "if (!in_signal)" checks, but:
->>
->>   - we don't have to duplicate any of the actual application logic
->>
->>   - we'd now cover the extra cases for waitpid failing or returning the
->>     wrong pid (previously if waitpid() failed we'd still look at status,
->>     which could contain complete garbage!)
-> ...
-> Yeah, the repeated "if (!in_signal)" look a bit ugly, but fixing
-> that "we only deal with ifexited in in_signal case" to do the right
-> thing would make the code even more annoying and harder to maintain.
+This commit has described how to use '--always' option in the command
+'git-format-patch' to include patches for commits that emit no changes.
 
-Eh, what I meant was that it would be annoying and harder to
-maintain, if done inside the single "if (in_signal) { ... }" near
-the beginning. (IOW, I am completely in agreement with your
-reasoning above).
+Signed-off-by: Aleen 徐沛文 <aleen42@vip.qq.com>
+---
+ Documentation/git-format-patch.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 113eabc107c..be797d7a28f 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -18,7 +18,7 @@ SYNOPSIS
+ 		   [-n | --numbered | -N | --no-numbered]
+ 		   [--start-number <n>] [--numbered-files]
+ 		   [--in-reply-to=<message id>] [--suffix=.<sfx>]
+-		   [--ignore-if-in-upstream]
++		   [--ignore-if-in-upstream] [--always]
+ 		   [--cover-from-description=<mode>]
+ 		   [--rfc] [--subject-prefix=<subject prefix>]
+ 		   [(--reroll-count|-v) <n>]
+@@ -192,6 +192,10 @@ will want to ensure that threading is disabled for `git send-email`.
+ 	patches being generated, and any patch that matches is
+ 	ignored.
+ 
++--always::
++	Include patches for commits that do not introduce any change,
++	which are omitted by default.
++
+ --cover-from-description=<mode>::
+ 	Controls which parts of the cover letter will be automatically
+ 	populated using the branch's description.
+-- 
+gitgitgadget
 
