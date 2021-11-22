@@ -2,88 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E666BC433F5
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 21:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AD76C433F5
+	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 21:54:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235622AbhKVVxn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 16:53:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33914 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230366AbhKVVxm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 16:53:42 -0500
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93419C061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 13:50:35 -0800 (PST)
-Received: by mail-io1-xd34.google.com with SMTP id 14so25191882ioe.2
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 13:50:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=bHzXVORaI0MdEeLQd8Y5ARG8IBoPeticYf/b92NHslg=;
-        b=mMgf2CjQmRHEomxkM0Lv7MCkMreRBtO9Vt75yqdwWxHCVJN8rCu45YBEXNbp9NXiAK
-         CvoB8m/ZBg0A/QRGh3poHNIVIkBBymJN6DPq7wT8kmrJqbesHKQVzEBvuVeOY8orm/FJ
-         7Szzy0Wyd4ecQeivYTj957OAuKBVnoRdc4D4ysNQ5gw+iFQ8dgBzxfbhYAJrPq7NE4sp
-         2SO3MdOIV7Q+fgTRPmLGDxGqT80brNuFlf2OCLzF/EQeMg159YUeW4vKdvwNzOxpXyDs
-         CmMSzeBwtircfMn2ltPav5A7+6fE6ubMjuLgMTaJkEINobcOa3la9nfH3Ir73z/XjzZE
-         CaVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=bHzXVORaI0MdEeLQd8Y5ARG8IBoPeticYf/b92NHslg=;
-        b=386+lu1X6TKm+1uMAORC04re1f8h1dWkkqL66NdJN47795g6yb/vyN0FL00T5joqR0
-         vOJFPMH827kk4zHxEW8RUPtlkRm/uvgFXStsTQ9riVGT9cjNElLQMe1dRWcnChxD+RlO
-         3nXu4zZ3I3R2Q9+8kqnKIaczLQrtAx0yW5Jue9leoC7xS+g9PTz1rYVuALUe+DB5JmUH
-         txhMtu2srQbxhsZhZok0MriR3dWkQsrPkmS2VBCfrAYlFXTYcniyQPyBmJdJZeMmOFCg
-         Y4pBKwkvg8NAnuHC5sNLbMtjUihS4YgzbFcVT+bejDXvLoUW/oFYCWcMYisZ1rYJWsgO
-         bZAQ==
-X-Gm-Message-State: AOAM531DD/RP2sTsXQ2WEl1SNpjpgCysII5ptHZVtCgc+nC3k6aOJg+S
-        frIchTWk59vhseH8hiYrAJHFXHFC/wA=
-X-Google-Smtp-Source: ABdhPJxyTnLRPKnL7vMtDsE6ERX8GAyGkBq7+oFltdOp1q3mRPXUmBNFUTDgElclOsrZ9BARirEUeg==
-X-Received: by 2002:a05:6638:349e:: with SMTP id t30mr221339jal.49.1637617834518;
-        Mon, 22 Nov 2021 13:50:34 -0800 (PST)
-Received: from Derricks-MBP.attlocal.net ([2600:1700:e72:80a0:e1db:bcd3:11fe:659a])
-        by smtp.gmail.com with ESMTPSA id o7sm4552589ilo.15.2021.11.22.13.50.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Nov 2021 13:50:33 -0800 (PST)
-Subject: Re: preparing for 2.34.1
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqr1b8gkhg.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <6cc0bc51-cc28-989c-d666-75b707f2c080@gmail.com>
-Date:   Mon, 22 Nov 2021 16:50:32 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S236013AbhKVV5Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 16:57:16 -0500
+Received: from mout.gmx.net ([212.227.17.22]:32833 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232805AbhKVV5P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 16:57:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637618044;
+        bh=8BAb/WWf+ErMWMPwX0pUu2IPl8EvjLnNV1E1OWCH+zU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=JGuRQ8QWWW/JzL/FX3J89OptjIqK/pbhhVBXIgKD6FHtB/8ErLFn5OjUBsDKg/tUa
+         qdvIt+SiAJ+E42P9BpovcvnyLe4HVwehNXUChr4H2rM5v2NRUcVP43iat3yWGkAWI9
+         T0B3UT2d8qb2AW8HdcH6FGCpBRlgVgxq/NddR97o=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MYNNy-1nBuhi2zZK-00VPSz; Mon, 22
+ Nov 2021 22:54:04 +0100
+Date:   Mon, 22 Nov 2021 22:54:03 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 06/15] diff --color-moved: avoid false short line
+ matches and bad zerba coloring
+In-Reply-To: <a6ff589e-c968-8a96-a8ec-1a982d71f6be@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2111222252450.63@tvgsbejvaqbjf.bet>
+References: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com> <pull.981.v4.git.1637056178.gitgitgadget@gmail.com> <10b11526206d3b515ba08ac80ccf09ecb7a03420.1637056178.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2111221435140.63@tvgsbejvaqbjf.bet>
+ <a6ff589e-c968-8a96-a8ec-1a982d71f6be@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqqr1b8gkhg.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:j7IRi+WMF0V7GXZNnYC1KFQDkx/W5PoXLpNisr48QEDNVLGdUc0
+ vY5c0PMAAG4TexvtMD1bZuiufA0zXzMmKarWh5L36EsW9cURAHM8htFYEaTc08bVVOHw41v
+ hwU3/DECkbfwkmJFZJQU4hafGItPk4l+tSrJCEs2tAp6xZi7HIj0p0nrBn/Ls/2v6R/Pwcg
+ ty/nnThTkdSaJyiBM0zRQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:pcKT+r+Rryo=:X54cuUMOSb3Xfm4Mb87Pc7
+ OK7p3d5EMNIlpNvO98P3RnnGf9QJoUYN8fn3J7FAvtNAEyn6OjU9Ona1ZZOZxjhdVuVEYCmlB
+ CBjUMH6hg6Li6VH/VGiwDK7WkI9Bd2ikizHMDikOaA6oneYgI2KCC3iCFmE58GuD2SnhQZ+zc
+ xQH0I3We8jsypqpJAMjO0jJU+M3qJOBZIuInfyrO0lc7/ty3r+vLAJU23cU4CafrG5xWYW4b3
+ ZmXSFjQngOhKO6RJKIb0AL9sDmNWFat9H8HCUmbZk+kuoYR/yBD1+0jy+r1XhtGiryDoJlLZQ
+ 4o2O9EW6lpBqF8ORYVHlMmf8eXeDWnYPAuJwvUa3jrDKNUoAnihhNJVHukqrtx/yvnpOMuAqk
+ R7kuoLyCqkU11AfCh+JCf7RSe8uir9zTtm+alKd6TQS7ZPSe2tuh+wCYiuVEjysxk7CS6cDgK
+ 2IHVBLk68tLrUMx0vdGw9dgtbCAkFbxFq+ocJV/OsZaAoeVOZ/X//ljOHX4Zw7g1hw/K7wPZb
+ ah4to+luX4dpAtQO683vCY7XEOgY4FM8U9+yhNY9Q+WcxkHVAJskGn1f2ZWszZaZRoHJk+yAF
+ eFFQJwl7lnZCHJx5N7nEFcTse88A4/n1MeJuQXg1Q1C0RA5BUGlZPITMBu0tI1BdlTYeCu6Rd
+ KDdebCx4BcpazTj6e3rCiOKwqzb+alpez3OSV03Qpp6L8TqUlasGbr/KqwFJwyvX2v2rEj0zG
+ 6THYrNua/T/lI6pC1bQtw4ZXC8NXA9eF7hfZvjKPRKQ5BrfOvOQl5wEaezdJURd1ZMyBygJgI
+ vmtnoPGsJn1PUcY2QlUwDwckLUuHYWlTO4J+jAbc4peMkup4S86tjNKGHMGJcj51A/Bv5bz0C
+ tdUnIFeGtfgem7TNaCdMiKTy297TFDUeGlwZApj5/IBT2VySaK4TRZn2MmmjUcr6D2QeHrAsf
+ gaN7hTDxl8PS8NBfWJssNjFr2LetNCOQgzLpsRPF5IgwnlwrB+CqWFxWN5r6/UWlOSWW9uQ3c
+ 0YT6tBqkUmnnIeXBoLraa0ryHYbDuXEG8jH6W1GwyenhWLt5sj+XP9sHVaf17F2yJ5OwJdJyI
+ o0XGyCOU/Di4Qg=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/22/21 12:37 PM, Junio C Hamano wrote:
-> There are a few topics [*] to fix regressions introduced in the
-> previous cycle, which should be in 2.34.1 and I've merged them to
-> 'master'. I hope we can merge them to 'maint' (which now point at
-> 2.34) and tag 2.34.1 in a few days.
-> 
-> After that, in yet another few days, we will see most of the stalled
-> topics ejected from the tree, the tip of 'next' rewound, and we will
-> start the cycle toward 2.35 by starting to take new topics, by the
-> beginning of the next week at the latest.
+Hi Phillip,
 
-There is a patch deep in a thread [1] that is a regression
-in 2.34.0 that would be good to include in this release. It
-fixes a sparse-checkout bug via a simple revert (plus a new
-test).
+On Mon, 22 Nov 2021, Phillip Wood wrote:
 
-Sorry that the patch was buried deep and was easy to miss.
+[... a good explanation...]
 
-[1] https://lore.kernel.org/git/72fffbff-16f7-fa17-b212-67aae9e1b034@gmail.com/
+> On 22/11/2021 14:18, Johannes Schindelin wrote:
+>
+> > As I said, I do not quite understand this patch yet, and am looking
+> > for your guidance to wrap my head around it.
+>
+> Thanks for looking at it, I hope these comments help, let me know if I'v=
+e
+> failed to explain well enough.
+
+Yes, thank you, I think I understand enough now to say that the patch
+looks good to me.
 
 Thanks,
--Stolee
+Dscho
