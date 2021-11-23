@@ -2,106 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05C5BC433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 01:22:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77676C433F5
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 01:25:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232289AbhKWBZo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 20:25:44 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51267 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbhKWBZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 20:25:42 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F1B1F6F35;
-        Mon, 22 Nov 2021 20:22:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CKBWgU7v4xksnty56otzH0FP3Uj4J1/G4EQcGP
-        IB/3Q=; b=qSSmDZO6nc1v/hCM9jXKEIky53VDHLn82i+apowf6Wt1+Yrm1c9r0R
-        Ot081KH/sARiuB/AhUnqtVGvsubnGZOL0ESumcVrAZyWY6WrMJk3KcIYe2o2ArSx
-        vVnyWuiAXQmQOoac0ApHab04xQ2Psk2vLHybueAlSyPitVs+JqZsY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 86594F6F34;
-        Mon, 22 Nov 2021 20:22:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EF78FF6F33;
-        Mon, 22 Nov 2021 20:22:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, emilyshaffer@google.com, peff@peff.net,
-        avarab@gmail.com
-Subject: Re: [PATCH v3 2/2] config: include file if remote URL matches a glob
-References: <cover.1634077795.git.jonathantanmy@google.com>
-        <cover.1637020610.git.jonathantanmy@google.com>
-        <1c1a07a0b65d4bbbb0f2628a3ddf1980e37d5065.1637020610.git.jonathantanmy@google.com>
-Date:   Mon, 22 Nov 2021 17:22:32 -0800
-In-Reply-To: <1c1a07a0b65d4bbbb0f2628a3ddf1980e37d5065.1637020610.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Mon, 15 Nov 2021 16:00:33 -0800")
-Message-ID: <xmqqtug3aco7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232073AbhKWB2l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 20:28:41 -0500
+Received: from zg8tmtm4lje5ny4xodqumjaa.icoremail.net ([138.197.184.20]:38193
+        "HELO zg8tmtm4lje5ny4xodqumjaa.icoremail.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with SMTP id S230017AbhKWB2l (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 22 Nov 2021 20:28:41 -0500
+Received: from mailtech.cn (unknown [10.12.1.20])
+        by hzbj-icmmx-1 (Coremail) with SMTP id AQAAfwCHT6zFQpxhCUy6CA--.22337S2;
+        Tue, 23 Nov 2021 09:24:21 +0800 (CST)
+Received: from pwxu$coremail.cn ( [112.94.4.17] ) by
+ ajax-webmail-mailtech_rd (Coremail) ; Tue, 23 Nov 2021 09:25:26 +0800 (CST)
+X-Originating-IP: [112.94.4.17]
+Date:   Tue, 23 Nov 2021 09:25:26 +0800 (CST)
+X-CM-HeaderCharset: UTF-8
+From:   =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Cc:     "Aleen via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Aleen <aleen42@vip.qq.com>,
+        "Junio C Hamano" <gitster@pobox.com>,
+        "Phillip Wood" <phillip.wood123@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH v10 1/2] doc: git-format-patch: describe the option
+ --always
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20211103(a39c0bb8)
+ Copyright (c) 2002-2021 www.mailtech.cn
+ mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
+In-Reply-To: <nycvar.QRO.7.76.6.2111221258440.63@tvgsbejvaqbjf.bet>
+References: <pull.1076.v9.git.1637564554.gitgitgadget@gmail.com>
+ <pull.1076.v10.git.1637567471.gitgitgadget@gmail.com>
+ <59bce7131dab858e8c87944ccb02eae8ba5fd459.1637567471.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2111221258440.63@tvgsbejvaqbjf.bet>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D5F318A2-4BFB-11EC-98AF-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+Message-ID: <683ecd80.13.17d4a65cf94.Coremail.pwxu@coremail.cn>
+X-Coremail-Locale: en_US
+X-CM-TRANSID: AgIMCgD300QGQ5xhLAIAAA--.42W
+X-CM-SenderInfo: psz03q5fruvzxdlohubq/1tbiAQcOCFGCdOPsEAADs7
+Authentication-Results: hzbj-icmmx-1; spf=neutral smtp.mail=pwxu@corem
+        ail.cn;
+X-Coremail-Antispam: 1Uk129KBjvdXoWrAF17Aw18Ww17GF15XFWkZwb_yoWxGFb_uF
+        yak392kFyDZF47t3ZIgr45Zr15Jayq9FyrAw15Arn8Ja43Xan5CF1kZr93Gw4rX3yxKr98
+        u3sIgasxZ34xujkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
+        Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
+        UUUU=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
-> This is a feature that supports config file inclusion conditional on
-> whether the repo has a remote with a URL that matches a glob.
->
-> Similar to my previous work on remote-suggested hooks [1], the main
-> motivation is to allow remote repo administrators to provide recommended
-> configs in a way that can be consumed more easily (e.g. through a
-> package installable by a package manager - it could, for example,
-> contain a file to be included conditionally and a post-install script
-> that adds the include directive to the system-wide config file).
->
-> In order to do this, Git reruns the config parsing mechanism upon
-> noticing the first URL-conditional include in order to find all remote
-> URLs, and these remote URLs are then used to determine if that first and
-> all subsequent includes are executed. Remote URLs are not allowed to be
-> configued in any URL-conditionally-included file.
->
-> [1] https://lore.kernel.org/git/cover.1623881977.git.jonathantanmy@google.com/
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  Documentation/config.txt |  11 ++++
->  config.c                 | 121 ++++++++++++++++++++++++++++++++++++---
->  config.h                 |   7 +++
->  t/t1300-config.sh        | 100 ++++++++++++++++++++++++++++++++
->  4 files changed, 231 insertions(+), 8 deletions(-)
-
-Here is just a design level comment, without trying to outline the
-implementation in my head like I usually do before making any
-suggestion, but it strikes me somewhat sad that config.c needs to
-know specifically about "remote_url".
-
-I wonder if this can be a more generalized framework that allows us
-to say "we introduce a new [includeIf] variant to get another file
-included only if some condition is met for the configuration
-variables we read without the includeIf directive", with variations
-of "condition" including
-
- - a literal X is among the values of multi-valued variable Y.
- - a pattern X matches one of the values of multi-valued variable Y.
- - a literal Y is the name of an existing configuration variable.
- - a pattern Y matches the name of an existing configuration variable.
-
-If that is done, I would imagine that the feature can become a thin
-specialization e.g. "there is an existing configuration variable
-whose name is 'remotes.https://github.com/janathantanmy/git.url'"
-
-Perhaps I am dreaming?
-
-Thanks.
-
-
+PiBIaSBBbGVlbiwKPiAKPiBPbiBNb24sIDIyIE5vdiAyMDIxLCBBbGVlbiB2aWEgR2l0R2l0R2Fk
+Z2V0IHdyb3RlOgo+IAo+ID4gRnJvbTogQWxlZW4gPGFsZWVuNDJAdmlwLnFxLmNvbT4KPiAKPiBG
+V0lXIHRoaXMgaW5mb3JtYXRpb24gY29tZXMgZnJvbSB5b3VyIGNvbW1pdCwgc3BlY2lmaWNhbGx5
+IGZyb20gdGhlCj4gYXV0aG9yIGluZm9ybWF0aW9uIHJlY29yZGVkIHdoZW4geW91IGNvbW1pdHRl
+ZCBmaXJzdC4gVG8gcmUtc2V0IGl0IGluCj4gdGhlc2UgdHdvIHBhdGNoZXMsIHJ1biBzb21ldGhp
+bmcgbGlrZSB0aGlzOgo+IAo+IAlnaXQgY29uZmlnIC0tZ2xvYmFsIHVzZXIubmFtZSAi5b6Q5rKb
+5paHIChBbGVlbikiCj4gCWdpdCByZWJhc2UgLXggImdpdCBjb21taXQgLS1hbWVuZCAtLW5vLWVk
+aXQgLS1yZXNldC1hdXRob3IiIEhFQUR+Mgo+IAo+IGFuZCB0aGVuIGZvcmNlLXB1c2ggdG8geW91
+ciBicmFuY2guCj4gCj4gQ2lhbywKPiBEc2NobwoKVGhlIG1haW4gcHJvYmxlbSBpcyB0aGF0IGl0
+IGJyb2tlIHdoZW4gSSB0cmllZCB0byBzdWJtaXQgdmlhIEdHRzoKaHR0cHM6Ly9naXRodWIuY29t
+L2dpdGdpdGdhZGdldC9naXQvcHVsbC8xMDc2I2lzc3VlY29tbWVudC05NzYwODc0MjE=
 
