@@ -2,104 +2,247 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E81C433F5
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 13:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0ECFC433EF
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 14:51:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234153AbhKWNbK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 08:31:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48538 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231682AbhKWNbK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 08:31:10 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE61C061574
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 05:28:02 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id y12so92124909eda.12
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 05:28:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=2IxGog++glsz3t20TicpS+aY4oQXPM5+EE7reGEIF8M=;
-        b=ocR/KzKclHdEOPUzDK3Xv06Uxfg2OPqfErW/tGgJlxnownjbtSuKmkaieNG23Wj7+0
-         9MWl8Z/WWE/WzgcxCoOt5weKJe3ACShhyKWBMr8bTj6Jwt8NkY0vMbrMdv6yWSBZTEjj
-         nQA5ncBC2WvRcyqzJ/b05f1OVNuYETKp9g+YKDyfY2DBvLshXccEdGgD8pIxwmWRI8Qs
-         lqp0Zwpa/8KviQ7i9iSv3RQ+ULYKSuHjlA4wo6hRySnaj2xiwZc+1KE6JAuBgBh2wtem
-         xbrET87IVb1xZdrxixP/cQLn91YFdTG028k0G8GOdUE5LIJmSPA+XKq2YUDM3uLtRlca
-         CMlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=2IxGog++glsz3t20TicpS+aY4oQXPM5+EE7reGEIF8M=;
-        b=QhmCi9dgZRS2Sizf9A9HKu7qYPakgRXh5AIi6IPoNjkrzbCxJCqrAAxd7zt3hc4RNk
-         wigV7cIqjRe9agH75OxM+FaTs+4/WxWwCL517z5skCCbnFuHST68sc86F7F82MpzI9xT
-         XdrsuEfY2mjEYE8zjZmw5dDjRv/Kv7wL0eyH5peEScFhQmnqAzwUDQ66aaJ+iqXlJrI+
-         MbPgCTMT7Mb3yocP5u1O8zlRT2rz7G6JlQk6jQA4Gld3eDTW3OTiwNvLbyr9vMay6IlB
-         pUG+9opY/L9Lw8dxj7AUFjew9o8iH1tFgkbya5thLbjZs9XrqTIPYid4yv3OkLxgjgdG
-         oGAQ==
-X-Gm-Message-State: AOAM533VRCRixR1gQuRluCnF8qpqhiO3mpBgw4mb976z3jlnbLNlSCX8
-        5PttlpVLVpsMwmA1nRabTMo=
-X-Google-Smtp-Source: ABdhPJz1OgA7gVz8ipQhTCmvkEtIkk2VvAhBFi/gyjFFCXlBQo5JMY63RP29wHnG/DvIyHS12pP6iA==
-X-Received: by 2002:a17:906:8794:: with SMTP id za20mr7557123ejb.11.1637674080588;
-        Tue, 23 Nov 2021 05:28:00 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id gb42sm601535ejc.49.2021.11.23.05.27.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Nov 2021 05:27:59 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mpVq3-001NiU-7b;
-        Tue, 23 Nov 2021 14:27:59 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: ab/mark-leak-free-tests-even-more (was: What's cooking in git.git
- (Nov 2021, #05; Fri, 19))
-Date:   Tue, 23 Nov 2021 14:22:16 +0100
-References: <xmqqa6hznvz1.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <xmqqa6hznvz1.fsf@gitster.g>
-Message-ID: <211123.861r37uhls.gmgdl@evledraar.gmail.com>
+        id S238272AbhKWOy5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 09:54:57 -0500
+Received: from mout.gmx.net ([212.227.17.21]:57207 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233112AbhKWOy5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 09:54:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637679104;
+        bh=woVwendueqoMa7Ld+SblcfrvN6uFl0FQN29X/A7ZX4A=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ZDMuTVGDWfA42ew62QFB9kISyIb0Yb41AO9gc8M37W6s926KdbHoYwOPQiMGfNYby
+         D9SRBdFJR9DyLM8oKH9Mru7tPGexNoeB7lXa2qRJM5lSXdlUr11XZ2KQ1cJ6aG9Nzw
+         URVm0JO67ehQ4tJxsU/BN1/mGiuBoFyBg4/EDOSM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOzSu-1mzX3c19gK-00PJpa; Tue, 23
+ Nov 2021 15:51:44 +0100
+Date:   Tue, 23 Nov 2021 15:51:42 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 08/15] diff --color-moved-ws=allow-indentation-change:
+ simplify and optimize
+In-Reply-To: <d7bbc0041e076077d3c3299858799cc9907d9831.1637056179.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2111231540280.63@tvgsbejvaqbjf.bet>
+References: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>        <pull.981.v4.git.1637056178.gitgitgadget@gmail.com> <d7bbc0041e076077d3c3299858799cc9907d9831.1637056179.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:tV0lCXpd8RXEFOJwSjuTvp9VIoCTjbSQkOt19OqKqQZp/Ea0iLd
+ eYcvIIMb5lRUnc3pKjlJYKuv/oPVvoJf3xj0L45Ajohuj4pDgyjiQL4oDAKTU/xNaEE5CO6
+ ty7Qd3l+Ty/VnRGEZheL3y6lLr1HgB928zawVCqr2chmeKs7gMgeLdO7BUACOytQqBtxWEw
+ CZkCCDCzmzlR+sTjHEhJQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XYaOaKGlEVk=:aHTPhR/OSe9HGQtxRgr0pK
+ yVqpOs1nUnWRkTcF0MK9Zie19J1szYMrKdIDFv1dvbp5h+E6hiJRDzA5Hr4JG2Ru3ZJJpAoVR
+ CKzortEltnxq4vxmLPe4hlggViJXaYWwtUobAvSfb95ANoyIPdk34t404C7Bw8Rwf73eOLuZG
+ u37qRGlJEz1m6NB34QHW9wkdU+VbI1CSL98YqCsVLz3Re+basbH2bXnKgWQ+RTN1Kdc1TyKWW
+ hqBen2KARiG7JskKe7dHkWJw++w7jo1P04EdztEGX751nmeQNbqMZcSPWYPSsJxYRgQicAiha
+ UOv3gdcDNja7VvxQq4Cw3MDS7eZECxelYZrFStcWjRBRcdnVnGLWDWyuRkYqunBoGVjV8m/Bz
+ jiTCt8EFQyCRuHkgeoryDlTSRpEXupDSEJwrL5IbldLc9c+3750H0wJ+Hq//9B/ddGJobcDKj
+ GGJDhVDXYQ59807Raben9MpEv8tdwOpAaGoQuzocklX9rUcXAGqgxBIw3ihj5Fuv3MFRbwKWE
+ FrZ+EwNtZC6m0JctLegSnr+Bk8zYCDbzAYMjEw9re30hwfvikhphSFAZLX/pAPK4PQ4v9MGah
+ odebImsDbokkVPI2QNbXKA8SyXziwEPnVzMmPQfk7X0pcTzPmyfV7hqgJ5B2qu9HCf3slkb+C
+ HY2cA52L8c28NPd0AgDxEtDiHW7aX4YWmFFM9YoHq0LSqTk+k940S4O0Rkkcj4zu1Z41gulwg
+ dNv9EgLLHpsJW1TYul5fqP5wwg+jWPw6LIZut7Vv8Pu4sNl45fGw+0/CS5DQr578jNlj0fsiO
+ VElsywUrN+1D5lO2bET5p2RDHcXC0YFMQJqG53Qz3WnfjLvVKf1gGOkSoF8/bZP8OqYYyB62/
+ rc9JeFwxn3XYijSUk3f4OkIbN1HZ8O3bNuRGqxSIaxAjedH3bnewAamoIQP60//A0SWdh9IAW
+ rHeNd8pSrUxKR3/QfjqGxGAnkmXLhei0xCm6Rn7W/7MI9M/gjey3r5q0e0HAXq7YGMA7jAAGF
+ iA5i5lTh8w7cMDeNJg7gJm4ZFML/hi0vCGO3/MjG96LE4Ba5olW9coj7e5JYUdbeeo+6gz3LB
+ KgzRyF2e9x9CrM=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Phillip,
 
-On Fri, Nov 19 2021, Junio C Hamano wrote:
+tl;dr: the patch looks good to me (it is a bit tricky to review, though,
+but that is not your fault, it is our code review process' fault).
 
-> * ab/mark-leak-free-tests-even-more (2021-11-01) 15 commits
->  - leak tests: mark some fast-import tests as passing with SANITIZE=leak
->  - leak tests: mark some config tests as passing with SANITIZE=leak
->  - leak tests: mark some status tests as passing with SANITIZE=leak
->  - leak tests: mark some clone tests as passing with SANITIZE=leak
->  - leak tests: mark some add tests as passing with SANITIZE=leak
->  - leak tests: mark some diff tests as passing with SANITIZE=leak
->  - leak tests: mark some apply tests as passing with SANITIZE=leak
->  - leak tests: mark some notes tests as passing with SANITIZE=leak
->  - leak tests: mark some update-index tests as passing with SANITIZE=leak
->  - leak tests: mark some rev-parse tests as passing with SANITIZE=leak
->  - leak tests: mark some rev-list tests as passing with SANITIZE=leak
->  - leak tests: mark some misc tests as passing with SANITIZE=leak
->  - leak tests: mark most gettext tests as passing with SANITIZE=leak
->  - leak tests: mark "sort" test as passing SANITIZE=leak
->  - leak tests: mark a read-tree test as passing SANITIZE=leak
+On Tue, 16 Nov 2021, Phillip Wood via GitGitGadget wrote:
+
+>   git diff --color-moved-ws=3Dallow-indentation-change v2.28.0 v2.29.0
+> by 93% compared to master and simplifies the code.
+
+Nice!
+
+> diff --git a/diff.c b/diff.c
+> index 9aff167be27..78a486021ab 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -879,37 +879,21 @@ static int compute_ws_delta(const struct emitted_d=
+iff_symbol *a,
+>  	return 1;
+>  }
 >
->  More tests are marked as leak-free.
+> -static int cmp_in_block_with_wsd(const struct diff_options *o,
+> -				 const struct moved_entry *cur,
+> -				 const struct moved_entry *match,
+> -				 struct moved_block *pmb,
+> -				 int n)
+> -{
+> -	struct emitted_diff_symbol *l =3D &o->emitted_symbols->buf[n];
+> -	int al =3D cur->es->len, bl =3D match->es->len, cl =3D l->len;
+> +static int cmp_in_block_with_wsd(const struct moved_entry *cur,
+> +				 const struct emitted_diff_symbol *l,
+> +				 struct moved_block *pmb)
+> +{
+> +	int al =3D cur->es->len, bl =3D l->len;
+
+Once I realized that the old `b` was removed and the old `c` became the
+new `b`, it was a breeze to validate this hunk.
+
+>  	const char *a =3D cur->es->line,
+> -		   *b =3D match->es->line,
+> -		   *c =3D l->line;
+> +		   *b =3D l->line;
+>  	int a_off =3D cur->es->indent_off,
+>  	    a_width =3D cur->es->indent_width,
+> -	    c_off =3D l->indent_off,
+> -	    c_width =3D l->indent_width;
+> +	    b_off =3D l->indent_off,
+> +	    b_width =3D l->indent_width;
+>  	int delta;
 >
->  Will merge to 'next'?
+> -	/*
+> -	 * We need to check if 'cur' is equal to 'match'.  As those
+> -	 * are from the same (+/-) side, we do not need to adjust for
+> -	 * indent changes. However these were found using fuzzy
+> -	 * matching so we do have to check if they are equal. Here we
+> -	 * just check the lengths. We delay calling memcmp() to check
+> -	 * the contents until later as if the length comparison for a
+> -	 * and c fails we can avoid the call all together.
+> -	 */
+> -	if (al !=3D bl)
+> -		return 1;
 
-FWIW Elijah reviewed it and acked merging it to "next" in response to
-the previous What's Cooking:
+The commit message really helped understanding why this is not needed.
+Thank you!
 
-    https://lore.kernel.org/git/CABPp-BES7SX06i3+AZS2gxkGdbS6nHy5r00E_WhMaSpZ6PdjrA@mail.gmail.com/
+> -
+>  	/* If 'l' and 'cur' are both blank then they match. */
+> -	if (a_width =3D=3D INDENT_BLANKLINE && c_width =3D=3D INDENT_BLANKLINE=
+)
+> +	if (a_width =3D=3D INDENT_BLANKLINE && b_width =3D=3D INDENT_BLANKLINE=
+)
+>  		return 0;
+>
+>  	/*
+> @@ -918,7 +902,7 @@ static int cmp_in_block_with_wsd(const struct diff_o=
+ptions *o,
+>  	 * match those of the current block and that the text of 'l' and 'cur'
+>  	 * after the indentation match.
+>  	 */
+> -	delta =3D c_width - a_width;
+> +	delta =3D b_width - a_width;
+>
+>  	/*
+>  	 * If the previous lines of this block were all blank then set its
+> @@ -927,9 +911,8 @@ static int cmp_in_block_with_wsd(const struct diff_o=
+ptions *o,
+>  	if (pmb->wsd =3D=3D INDENT_BLANKLINE)
+>  		pmb->wsd =3D delta;
+>
+> -	return !(delta =3D=3D pmb->wsd && al - a_off =3D=3D cl - c_off &&
+> -		 !memcmp(a, b, al) && !
+> -		 memcmp(a + a_off, c + c_off, al - a_off));
+> +	return !(delta =3D=3D pmb->wsd && al - a_off =3D=3D bl - b_off &&
+> +		 !memcmp(a + a_off, b + b_off, al - a_off));
+>  }
 
-I also think it's ready, and along with ab/checkout-branch-info-leakfix
-(marked for 'next', yay).
+Once again, I am sad that we have no better platform to do our code
+contribution and review. Whatever you can say about GitHub's UI, it is
+better than static diffs in mails.
 
-Together those two form a good basis for follow-ing up and fixing some
-other "big leaks". I'll be doing the big one of "struct rev_info" soon
-after these land.
+But you used GitGitGadget, and I finally broke down and wrote a script
+that allows me to magic my way from the mail into the correct commit in
+the GitGitGadget PR in the browser. It is still shell script (at some
+stage, I will need to extend the script to be much smarter than any shell
+script can be, and probably convert it to node.js, but not today).
 
+This helped me verify that there are no left-over references to the old
+`b`. So all is good!
+
+>
+>  static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
+> @@ -1030,36 +1013,23 @@ static void pmb_advance_or_null(struct diff_opti=
+ons *o,
+>  }
+>
+>  static void pmb_advance_or_null_multi_match(struct diff_options *o,
+> -					    struct moved_entry *match,
+> -					    struct hashmap *hm,
+> +					    struct emitted_diff_symbol *l,
+>  					    struct moved_block *pmb,
+> -					    int pmb_nr, int n)
+> +					    int pmb_nr)
+>  {
+>  	int i;
+> -	char *got_match =3D xcalloc(1, pmb_nr);
+> -
+> -	hashmap_for_each_entry_from(hm, match, ent) {
+> -		for (i =3D 0; i < pmb_nr; i++) {
+> -			struct moved_entry *prev =3D pmb[i].match;
+> -			struct moved_entry *cur =3D (prev && prev->next_line) ?
+> -					prev->next_line : NULL;
+> -			if (!cur)
+> -				continue;
+> -			if (!cmp_in_block_with_wsd(o, cur, match, &pmb[i], n))
+> -				got_match[i] |=3D 1;
+> -		}
+> -	}
+>
+>  	for (i =3D 0; i < pmb_nr; i++) {
+> -		if (got_match[i]) {
+> +		struct moved_entry *prev =3D pmb[i].match;
+> +		struct moved_entry *cur =3D (prev && prev->next_line) ?
+> +			prev->next_line : NULL;
+> +		if (cur && !cmp_in_block_with_wsd(cur, l, &pmb[i])) {
+>  			/* Advance to the next line */
+> -			pmb[i].match =3D pmb[i].match->next_line;
+> +			pmb[i].match =3D cur;
+>  		} else {
+>  			moved_block_clear(&pmb[i]);
+>  		}
+>  	}
+> -
+> -	free(got_match);
+
+Even got rid of an allocation. Very nice.
+
+>  }
+>
+>  static int shrink_potential_moved_blocks(struct moved_block *pmb,
+> @@ -1223,7 +1193,7 @@ static void mark_color_as_moved(struct diff_option=
+s *o,
+>
+>  		if (o->color_moved_ws_handling &
+>  		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
+> -			pmb_advance_or_null_multi_match(o, match, hm, pmb, pmb_nr, n);
+> +			pmb_advance_or_null_multi_match(o, l, pmb, pmb_nr);
+
+Again, magic button to the rescue! And I can verify that `l` is assigned
+to `&o->emitted_symbols->buf[n]`, so: the patch does the correct thing.
+
+Thank you,
+Dscho
+
+>  		else
+>  			pmb_advance_or_null(o, match, hm, pmb, pmb_nr);
+>
+> --
+> gitgitgadget
+>
+>
