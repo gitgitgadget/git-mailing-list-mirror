@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BF63C433F5
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 12:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4178FC433EF
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 12:08:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236985AbhKWMLV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 07:11:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58260 "EHLO
+        id S236944AbhKWML1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 07:11:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236886AbhKWMLP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 07:11:15 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FC70C061574
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 04:08:07 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id 133so18565705wme.0
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 04:08:07 -0800 (PST)
+        with ESMTP id S236942AbhKWMLQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 07:11:16 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35AE0C061756
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 04:08:08 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id p27-20020a05600c1d9b00b0033bf8532855so1783142wms.3
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 04:08:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vanj0MUo4sOg0itoxokjUJGiaC8D19hd6GPO+JqRQpI=;
-        b=gln8VxUGBM/vZDab15UUv+76smChkJJoeA4BwFKvCD0RbVBZKU0xlmzL+6jD9bdJE7
-         eeTTCnlLrqrKu0r+cUyC/sTXW/JMeXcwrZIj6KFlZJgMvWpk/+8Tp+DhKATIwCvrgvsr
-         I/mns7pNuYj1BAdltF5PBoxId7QWlD6GmbV/dtEEaxPjIt/8TSFBp5MspWSPhIblzZIe
-         RAnufZKnu0nzwuimLpJ8VSnpiFH5fT+6FO4NjTekiQwtSMCa3m+e0LdNnp0prC2oIsof
-         VcTp5ZIBjRpn/LCWAuciuBecr7LY293CWTtci0VAVLZh9GJPKE56m76g/tADd7XMx56Z
-         M0Rw==
+        bh=meQ6KK/SiaZeFv6oojUIpZbKcIgBAiccNEXIT0rpN0I=;
+        b=MX3zwOct4C/YDcU9wD5O1GkDGwwRx+IxQvp/GzUoQJb+3kaUqcEkQTR2Z0OrVtDoTM
+         snl1HYNRREAfHw2nuoJsH/59ae4ZbTfdBgtyYkuFDPLFpUL64Pj3DUfTOluWcrO8K6t+
+         n90kND5krKrWfT7jK30kAvI93mMNKHl9rOIzddhnkiSBo4j8ie/ZSXoDORUMJ7Xadote
+         ytlGbKNfRIP/47byBjKt+jhlgu2w4MNeUOumLb9NxKJUVMQMEsy+WwHc0enzRrsIbdiN
+         zQQLmTR2dQ8Iur2h0mEr5gHOLEcGoqhPxKFeN6apd6pOV0fm0kHor1T+X0vjd2WSB+y7
+         PcTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vanj0MUo4sOg0itoxokjUJGiaC8D19hd6GPO+JqRQpI=;
-        b=mK7/Ol22HjBaPSysg+/CXM4OvBa4/8lWTxPzd5VC/BKdMvQPkrxI9n0ji7LoQFsfdV
-         dcmwFf58LWoN258LriZ5tVuq5b9fUfQI9yjOJ98R7LREa3AUPCqrBtlUB8hg+AbpW553
-         /6qoY8lx6NzbWqd783jgZqUHAvKscZUrKRhnz1vpJ2XQCVaQCCkUsuXacwUTvp8b8/Ft
-         qVnOx9455wdsljThvEhwKLMTU91QaQclAIK7rQmu8A22ECfhXjfUekI/o2IwjY3nviwG
-         ghlemYinG3eMJ7z1TKyZiZYUqH65ki9a6X528nHJ6K5qrcAmS1HhmEbVFbyKQU8mTw4g
-         qONQ==
-X-Gm-Message-State: AOAM532Ob2j3LVWKP4A8zTLGH2OW+Vcd17fEvkQS8u8p4JUBPxWXXnIP
-        J8PFtiK69aBRFudhPJFYQfJ8tZVi+nFfFw==
-X-Google-Smtp-Source: ABdhPJy2zBw1tmw7MhAR461X3UQ6OvqncXZJdSt5yd5Q2A2RnmV9PvVxmDZZd0512nZl7V6WHO692A==
-X-Received: by 2002:a7b:cbc3:: with SMTP id n3mr2510698wmi.90.1637669285403;
-        Tue, 23 Nov 2021 04:08:05 -0800 (PST)
+        bh=meQ6KK/SiaZeFv6oojUIpZbKcIgBAiccNEXIT0rpN0I=;
+        b=lqPGJAMz1sOnkC7Zsa6BUz/ydRcp7CoN85Ve99M9TZvQSxQOIlHMIqJQEIxiweB2f+
+         /ewkTOnMlQ//+I9fiWV8b/2LsLoC86nouQBUX9qhE4yFRxyiEHzBcij98l2PQEW7e6Sf
+         V9vK63H3Qyum1Rm794zL2wnxXucalH8C9GdvW9cILgXurWKajDK6sS9HW1MEWbx1XuD8
+         7lQsgS3t4Q8Rsrln32gfcFBCFyq9eNhTlH3lN4dDfb+gcY+p4lufsOmu7uAPEPueZc97
+         1Dy62uCKq3byxHaI4PnZ5iFAIGtkfXP/hkfdlbyg8PSrtP3/gUTuaonV9v2ETY5imTvx
+         H/dw==
+X-Gm-Message-State: AOAM531h7Qn4wZoPE1vnAC2Jkqik4Ndcr+Pm3SS3tIk2x7VIWFNS89CY
+        G7oO7rRgBmLn36dP40tlptZ1XKwTNiMclA==
+X-Google-Smtp-Source: ABdhPJx0LOng/coXNbz9IsEu+Sib/ylKMY0GqkkONnMYV6f1g/kvJf/jjweFuzojluWwWdNOvIEAVw==
+X-Received: by 2002:a05:600c:4c96:: with SMTP id g22mr2509786wmp.46.1637669286475;
+        Tue, 23 Nov 2021 04:08:06 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m9sm1220299wmq.1.2021.11.23.04.08.03
+        by smtp.gmail.com with ESMTPSA id m9sm1220299wmq.1.2021.11.23.04.08.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Nov 2021 04:08:04 -0800 (PST)
+        Tue, 23 Nov 2021 04:08:05 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Enzo Matsumiya <ematsumiya@suse.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 7/9] run-command API: remove "argv" member, always use "args"
-Date:   Tue, 23 Nov 2021 13:06:34 +0100
-Message-Id: <patch-v2-7.9-67ab5114ed7-20211123T115551Z-avarab@gmail.com>
+Subject: [PATCH v2 8/9] difftool: use "env_array" to simplify memory management
+Date:   Tue, 23 Nov 2021 13:06:35 +0100
+Message-Id: <patch-v2-8.9-b8387a4a76d-20211123T115551Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.831.gd33babec0d1
 In-Reply-To: <cover-v2-0.9-00000000000-20211123T115551Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20211122T153605Z-avarab@gmail.com> <cover-v2-0.9-00000000000-20211123T115551Z-avarab@gmail.com>
@@ -67,298 +67,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the "argv" member from the run-command API, ever since "args"
-was added in c460c0ecdca (run-command: store an optional argv_array,
-2014-05-15) being able to provide either "argv" or "args" has led to
-some confusion and bugs.
-
-If we hadn't gone in that direction and only had an "argv" our
-problems wouldn't have been solved either, as noted in [1] (and in the
-documentation amended here) it comes with inherent memory management
-issues: The caller would have to hang on to the "argv" until the
-run-command API was finished. If the "argv" was an argument to main()
-this wasn't an issue, but if it it was manually constructed using the
-API might be painful.
-
-We also have a recent report[2] of a user of the API segfaulting,
-which is a direct result of it being complex to use. This commit
-addresses the root cause of that bug.
-
-This change is larger than I'd like, but there's no easy way to avoid
-it that wouldn't involve even more verbose intermediate steps. We use
-the "argv" as the source of truth over the "args", so we need to
-change all parts of run-command.[ch] itself, as well as the trace2
-logging at the same time.
-
-The resulting Windows-specific code in start_command() is a bit nasty,
-as we're now assigning to a strvec's "v" member, instead of to our own
-"argv". There was a suggestion of some alternate approaches in reply
-to an earlier version of this commit[3], but let's leave larger a
-larger and needless refactoring of this code for now.
-
-1. http://lore.kernel.org/git/YT6BnnXeAWn8BycF@coredump.intra.peff.net
-2. https://lore.kernel.org/git/20211120194048.12125-1-ematsumiya@suse.de/
-3. https://lore.kernel.org/git/patch-5.5-ea1011f7473-20211122T153605Z-avarab@gmail.com/
+Amend code added in 03831ef7b50 (difftool: implement the functionality
+in the builtin, 2017-01-19) to use the "env_array" in the
+run_command.[ch] API. Now we no longer need to manage our own
+"index_env" buffer.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- run-command.c           | 42 ++++++++++++++++++++---------------------
- run-command.h           | 20 ++++++++------------
- sub-process.c           |  2 +-
- trace2/tr2_tgt_event.c  |  2 +-
- trace2/tr2_tgt_normal.c |  2 +-
- trace2/tr2_tgt_perf.c   |  4 ++--
- 6 files changed, 33 insertions(+), 39 deletions(-)
+ builtin/difftool.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index 620a06ca2f5..99dc93e7300 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -380,7 +380,7 @@ static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
- 	switch (cerr->err) {
- 	case CHILD_ERR_CHDIR:
- 		error_errno("exec '%s': cd to '%s' failed",
--			    cmd->argv[0], cmd->dir);
-+			    cmd->args.v[0], cmd->dir);
- 		break;
- 	case CHILD_ERR_DUP2:
- 		error_errno("dup2() in child failed");
-@@ -392,12 +392,12 @@ static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
- 		error_errno("sigprocmask failed restoring signals");
- 		break;
- 	case CHILD_ERR_ENOENT:
--		error_errno("cannot run %s", cmd->argv[0]);
-+		error_errno("cannot run %s", cmd->args.v[0]);
- 		break;
- 	case CHILD_ERR_SILENT:
- 		break;
- 	case CHILD_ERR_ERRNO:
--		error_errno("cannot exec '%s'", cmd->argv[0]);
-+		error_errno("cannot exec '%s'", cmd->args.v[0]);
- 		break;
- 	}
- 	set_error_routine(old_errfn);
-@@ -405,7 +405,7 @@ static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
- 
- static int prepare_cmd(struct strvec *out, const struct child_process *cmd)
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index 4931c108451..4ee40fe3a06 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -202,15 +202,10 @@ static void changed_files(struct hashmap *result, const char *index_path,
  {
--	if (!cmd->argv[0])
-+	if (!cmd->args.v[0])
- 		BUG("command is empty");
+ 	struct child_process update_index = CHILD_PROCESS_INIT;
+ 	struct child_process diff_files = CHILD_PROCESS_INIT;
+-	struct strbuf index_env = STRBUF_INIT, buf = STRBUF_INIT;
+-	const char *git_dir = absolute_path(get_git_dir()), *env[] = {
+-		NULL, NULL
+-	};
++	struct strbuf buf = STRBUF_INIT;
++	const char *git_dir = absolute_path(get_git_dir());
+ 	FILE *fp;
  
- 	/*
-@@ -415,11 +415,11 @@ static int prepare_cmd(struct strvec *out, const struct child_process *cmd)
- 	strvec_push(out, SHELL_PATH);
- 
- 	if (cmd->git_cmd) {
--		prepare_git_cmd(out, cmd->argv);
-+		prepare_git_cmd(out, cmd->args.v);
- 	} else if (cmd->use_shell) {
--		prepare_shell_cmd(out, cmd->argv);
-+		prepare_shell_cmd(out, cmd->args.v);
- 	} else {
--		strvec_pushv(out, cmd->argv);
-+		strvec_pushv(out, cmd->args.v);
- 	}
- 
- 	/*
-@@ -663,7 +663,7 @@ static void trace_run_command(const struct child_process *cp)
- 		trace_add_env(&buf, cp->env);
- 	if (cp->git_cmd)
- 		strbuf_addstr(&buf, " git");
--	sq_quote_argv_pretty(&buf, cp->argv);
-+	sq_quote_argv_pretty(&buf, cp->args.v);
- 
- 	trace_printf("%s", buf.buf);
- 	strbuf_release(&buf);
-@@ -676,8 +676,6 @@ int start_command(struct child_process *cmd)
- 	int failed_errno;
- 	char *str;
- 
--	if (!cmd->argv)
--		cmd->argv = cmd->args.v;
- 	if (!cmd->env)
- 		cmd->env = cmd->env_array.v;
- 
-@@ -729,7 +727,7 @@ int start_command(struct child_process *cmd)
- 			str = "standard error";
- fail_pipe:
- 			error("cannot create %s pipe for %s: %s",
--				str, cmd->argv[0], strerror(failed_errno));
-+				str, cmd->args.v[0], strerror(failed_errno));
- 			child_process_clear(cmd);
- 			errno = failed_errno;
- 			return -1;
-@@ -758,7 +756,7 @@ int start_command(struct child_process *cmd)
- 		failed_errno = errno;
- 		cmd->pid = -1;
- 		if (!cmd->silent_exec_failure)
--			error_errno("cannot run %s", cmd->argv[0]);
-+			error_errno("cannot run %s", cmd->args.v[0]);
- 		goto end_of_spawn;
- 	}
- 
-@@ -868,7 +866,7 @@ int start_command(struct child_process *cmd)
- 	}
- 	atfork_parent(&as);
- 	if (cmd->pid < 0)
--		error_errno("cannot fork() for %s", cmd->argv[0]);
-+		error_errno("cannot fork() for %s", cmd->args.v[0]);
- 	else if (cmd->clean_on_exit)
- 		mark_child_for_cleanup(cmd->pid, cmd);
- 
-@@ -885,7 +883,7 @@ int start_command(struct child_process *cmd)
- 		 * At this point we know that fork() succeeded, but exec()
- 		 * failed. Errors have been reported to our stderr.
- 		 */
--		wait_or_whine(cmd->pid, cmd->argv[0], 0);
-+		wait_or_whine(cmd->pid, cmd->args.v[0], 0);
- 		child_err_spew(cmd, &cerr);
- 		failed_errno = errno;
- 		cmd->pid = -1;
-@@ -902,7 +900,7 @@ int start_command(struct child_process *cmd)
- #else
- {
- 	int fhin = 0, fhout = 1, fherr = 2;
--	const char **sargv = cmd->argv;
-+	const char **sargv = cmd->args.v;
- 	struct strvec nargv = STRVEC_INIT;
- 
- 	if (cmd->no_stdin)
-@@ -929,20 +927,20 @@ int start_command(struct child_process *cmd)
- 		fhout = dup(cmd->out);
- 
- 	if (cmd->git_cmd)
--		cmd->argv = prepare_git_cmd(&nargv, cmd->argv);
-+		cmd->args.v = prepare_git_cmd(&nargv, sargv);
- 	else if (cmd->use_shell)
--		cmd->argv = prepare_shell_cmd(&nargv, cmd->argv);
-+		cmd->args.v = prepare_shell_cmd(&nargv, sargv);
- 
--	cmd->pid = mingw_spawnvpe(cmd->argv[0], cmd->argv, (char**) cmd->env,
-+	cmd->pid = mingw_spawnvpe(cmd->args.v[0], cmd->args.v, (char**) cmd->env,
- 			cmd->dir, fhin, fhout, fherr);
- 	failed_errno = errno;
- 	if (cmd->pid < 0 && (!cmd->silent_exec_failure || errno != ENOENT))
--		error_errno("cannot spawn %s", cmd->argv[0]);
-+		error_errno("cannot spawn %s", cmd->args.v[0]);
- 	if (cmd->clean_on_exit && cmd->pid >= 0)
- 		mark_child_for_cleanup(cmd->pid, cmd);
- 
- 	strvec_clear(&nargv);
--	cmd->argv = sargv;
-+	cmd->args.v = sargv;
- 	if (fhin != 0)
- 		close(fhin);
- 	if (fhout != 1)
-@@ -992,7 +990,7 @@ int start_command(struct child_process *cmd)
- 
- int finish_command(struct child_process *cmd)
- {
--	int ret = wait_or_whine(cmd->pid, cmd->argv[0], 0);
-+	int ret = wait_or_whine(cmd->pid, cmd->args.v[0], 0);
- 	trace2_child_exit(cmd, ret);
- 	child_process_clear(cmd);
- 	invalidate_lstat_cache();
-@@ -1001,7 +999,7 @@ int finish_command(struct child_process *cmd)
- 
- int finish_command_in_signal(struct child_process *cmd)
- {
--	int ret = wait_or_whine(cmd->pid, cmd->argv[0], 1);
-+	int ret = wait_or_whine(cmd->pid, cmd->args.v[0], 1);
- 	trace2_child_exit(cmd, ret);
- 	return ret;
- }
-diff --git a/run-command.h b/run-command.h
-index 49878262584..c0d1210cc63 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -44,21 +44,17 @@
- struct child_process {
- 
- 	/**
--	 * The .argv member is set up as an array of string pointers (NULL
--	 * terminated), of which .argv[0] is the program name to run (usually
--	 * without a path). If the command to run is a git command, set argv[0] to
--	 * the command name without the 'git-' prefix and set .git_cmd = 1.
-+	 * The .args is a `struct strvec', use that API to manipulate
-+	 * it, e.g. strvec_pushv() to add an existing "const char **"
-+	 * vector.
- 	 *
--	 * Note that the ownership of the memory pointed to by .argv stays with the
--	 * caller, but it should survive until `finish_command` completes. If the
--	 * .argv member is NULL, `start_command` will point it at the .args
--	 * `strvec` (so you may use one or the other, but you must use exactly
--	 * one). The memory in .args will be cleaned up automatically during
--	 * `finish_command` (or during `start_command` when it is unsuccessful).
-+	 * If the command to run is a git command, set the first
-+	 * element in the strvec to the command name without the
-+	 * 'git-' prefix and set .git_cmd = 1.
- 	 *
-+	 * The memory in .args will be cleaned up automatically during
-+	 * `finish_command` (or during `start_command` when it is unsuccessful).
- 	 */
--	const char **argv;
+-	strbuf_addf(&index_env, "GIT_INDEX_FILE=%s", index_path);
+-	env[0] = index_env.buf;
 -
- 	struct strvec args;
- 	struct strvec env_array;
- 	pid_t pid;
-diff --git a/sub-process.c b/sub-process.c
-index dfa790d3ff9..cae56ae6b80 100644
---- a/sub-process.c
-+++ b/sub-process.c
-@@ -187,7 +187,7 @@ static int handshake_capabilities(struct child_process *process,
- 				*supported_capabilities |= capabilities[i].flag;
- 		} else {
- 			die("subprocess '%s' requested unsupported capability '%s'",
--			    process->argv[0], p);
-+			    process->args.v[0], p);
- 		}
- 	}
+ 	strvec_pushl(&update_index.args,
+ 		     "--git-dir", git_dir, "--work-tree", workdir,
+ 		     "update-index", "--really-refresh", "-q",
+@@ -222,7 +217,7 @@ static void changed_files(struct hashmap *result, const char *index_path,
+ 	update_index.use_shell = 0;
+ 	update_index.clean_on_exit = 1;
+ 	update_index.dir = workdir;
+-	update_index.env = env;
++	strvec_pushf(&update_index.env_array, "GIT_INDEX_FILE=%s", index_path);
+ 	/* Ignore any errors of update-index */
+ 	run_command(&update_index);
  
-diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-index 3a0014417cc..bd17ecdc321 100644
---- a/trace2/tr2_tgt_event.c
-+++ b/trace2/tr2_tgt_event.c
-@@ -354,7 +354,7 @@ static void fn_child_start_fl(const char *file, int line,
- 	jw_object_inline_begin_array(&jw, "argv");
- 	if (cmd->git_cmd)
- 		jw_array_string(&jw, "git");
--	jw_array_argv(&jw, cmd->argv);
-+	jw_array_argv(&jw, cmd->args.v);
- 	jw_end(&jw);
- 	jw_end(&jw);
+@@ -235,7 +230,7 @@ static void changed_files(struct hashmap *result, const char *index_path,
+ 	diff_files.clean_on_exit = 1;
+ 	diff_files.out = -1;
+ 	diff_files.dir = workdir;
+-	diff_files.env = env;
++	strvec_pushf(&diff_files.env_array, "GIT_INDEX_FILE=%s", index_path);
+ 	if (start_command(&diff_files))
+ 		die("could not obtain raw diff");
+ 	fp = xfdopen(diff_files.out, "r");
+@@ -248,7 +243,6 @@ static void changed_files(struct hashmap *result, const char *index_path,
+ 	fclose(fp);
+ 	if (finish_command(&diff_files))
+ 		die("diff-files did not exit properly");
+-	strbuf_release(&index_env);
+ 	strbuf_release(&buf);
+ }
  
-diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-index 58d9e430f05..6e429a3fb9e 100644
---- a/trace2/tr2_tgt_normal.c
-+++ b/trace2/tr2_tgt_normal.c
-@@ -232,7 +232,7 @@ static void fn_child_start_fl(const char *file, int line,
- 	strbuf_addch(&buf_payload, ' ');
- 	if (cmd->git_cmd)
- 		strbuf_addstr(&buf_payload, "git ");
--	sq_append_quote_argv_pretty(&buf_payload, cmd->argv);
-+	sq_append_quote_argv_pretty(&buf_payload, cmd->args.v);
- 
- 	normal_io_write_fl(file, line, &buf_payload);
- 	strbuf_release(&buf_payload);
-diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-index e4acca13d64..2ff9cf70835 100644
---- a/trace2/tr2_tgt_perf.c
-+++ b/trace2/tr2_tgt_perf.c
-@@ -335,10 +335,10 @@ static void fn_child_start_fl(const char *file, int line,
- 	strbuf_addstr(&buf_payload, " argv:[");
- 	if (cmd->git_cmd) {
- 		strbuf_addstr(&buf_payload, "git");
--		if (cmd->argv[0])
-+		if (cmd->args.nr)
- 			strbuf_addch(&buf_payload, ' ');
- 	}
--	sq_append_quote_argv_pretty(&buf_payload, cmd->argv);
-+	sq_append_quote_argv_pretty(&buf_payload, cmd->args.v);
- 	strbuf_addch(&buf_payload, ']');
- 
- 	perf_io_write_fl(file, line, event_name, NULL, &us_elapsed_absolute,
 -- 
 2.34.0.831.gd33babec0d1
 
