@@ -2,247 +2,234 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0ECFC433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 14:51:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2553C433EF
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 14:52:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238272AbhKWOy5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 09:54:57 -0500
-Received: from mout.gmx.net ([212.227.17.21]:57207 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233112AbhKWOy5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 09:54:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637679104;
-        bh=woVwendueqoMa7Ld+SblcfrvN6uFl0FQN29X/A7ZX4A=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ZDMuTVGDWfA42ew62QFB9kISyIb0Yb41AO9gc8M37W6s926KdbHoYwOPQiMGfNYby
-         D9SRBdFJR9DyLM8oKH9Mru7tPGexNoeB7lXa2qRJM5lSXdlUr11XZ2KQ1cJ6aG9Nzw
-         URVm0JO67ehQ4tJxsU/BN1/mGiuBoFyBg4/EDOSM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOzSu-1mzX3c19gK-00PJpa; Tue, 23
- Nov 2021 15:51:44 +0100
-Date:   Tue, 23 Nov 2021 15:51:42 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v4 08/15] diff --color-moved-ws=allow-indentation-change:
- simplify and optimize
-In-Reply-To: <d7bbc0041e076077d3c3299858799cc9907d9831.1637056179.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111231540280.63@tvgsbejvaqbjf.bet>
-References: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>        <pull.981.v4.git.1637056178.gitgitgadget@gmail.com> <d7bbc0041e076077d3c3299858799cc9907d9831.1637056179.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S237926AbhKWO4C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 09:56:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40398 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233112AbhKWO4B (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 09:56:01 -0500
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB088C061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 06:52:53 -0800 (PST)
+Received: by mail-il1-x132.google.com with SMTP id h23so21944782ila.4
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 06:52:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=JSvrWLwdC3OO/3avJ0DYg+Ea+earG/GBPG9GgWijk2A=;
+        b=B16Y4+3zynI4jwoig5BBYjnVSbh5OSJR0v11uE+DITc6XRzwCop5VNpC0UiTn8AC6i
+         MMXBfihT5svI95UtqhFATAzIzr8/SkU7+xoA4j0tpezydA1RKKz/6tjXOH6zPwribqG6
+         m//IVHwFMojhzvNtixNwGM14+gmIKhUjLls/Yom/OyFB4I/qbdT2xmtrbWvz8mhQFdpJ
+         fDAEJNKj9+vOvnOQqCQbmJTJDzvtds8UiJzCUVlFhAPfjpRygyEcqgpZu5seYy4sjjAU
+         IDnkbQ4Gl3XVmpznxi88JWL6HrDQxtKH21DXSbg3CaixJaQ2rNKmhQW/PihnsSXoM9l2
+         LL0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=JSvrWLwdC3OO/3avJ0DYg+Ea+earG/GBPG9GgWijk2A=;
+        b=2rVTzS5r8WSIfO5H4VYP+yDKGP6H7FAOCd8H8nw3sJaqcGopnRbzOnFDZ8EgAugc3J
+         zk5kPXonQpIRttXnj9YsagrjLXgIlL9wYUO8kaQNn2Lr7KRR5TrJCiYNisnfxOIk2TpK
+         OHcDh+XYvNcpsPFeJ050bMpiMa1CrGuw//ZQ+KGe0ddkXC5a+uNeL5zHZu4Rf42X+d0O
+         5C/3lqsTlO/NvXF6jEuT4h0IanBFPI6+ynaSbiq+ylf+ypWxPA/rz7CtdmewUEEkGm+Y
+         F/K7/rlmBgM9r7TphmEBBgEWBGfZKFfiYJa3Y+qgkuHMAcglmKIlkLnugIaf6T5Cu8Ea
+         znzg==
+X-Gm-Message-State: AOAM530DS1cY43/CfOxKJdCaXSTmU0IbcAsvpVxFMcUsT6ZS6OH2Pntx
+        tqTTkbqcOUM51yJuNOJd3Xk=
+X-Google-Smtp-Source: ABdhPJx3FsAQ3ccdxeMQyEN/spUbAYz65NrcewO7qs/Svz6Sl+OcOt9ZD3YnVJq9nLipjouSsa4S7A==
+X-Received: by 2002:a92:ca0b:: with SMTP id j11mr6071343ils.289.1637679172479;
+        Tue, 23 Nov 2021 06:52:52 -0800 (PST)
+Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
+        by smtp.gmail.com with ESMTPSA id g8sm9273558ilf.33.2021.11.23.06.52.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Nov 2021 06:52:51 -0800 (PST)
+Message-ID: <cd9f20aa-0fff-6749-eaec-0527cf4cf4cc@gmail.com>
+Date:   Tue, 23 Nov 2021 06:52:49 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:tV0lCXpd8RXEFOJwSjuTvp9VIoCTjbSQkOt19OqKqQZp/Ea0iLd
- eYcvIIMb5lRUnc3pKjlJYKuv/oPVvoJf3xj0L45Ajohuj4pDgyjiQL4oDAKTU/xNaEE5CO6
- ty7Qd3l+Ty/VnRGEZheL3y6lLr1HgB928zawVCqr2chmeKs7gMgeLdO7BUACOytQqBtxWEw
- CZkCCDCzmzlR+sTjHEhJQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XYaOaKGlEVk=:aHTPhR/OSe9HGQtxRgr0pK
- yVqpOs1nUnWRkTcF0MK9Zie19J1szYMrKdIDFv1dvbp5h+E6hiJRDzA5Hr4JG2Ru3ZJJpAoVR
- CKzortEltnxq4vxmLPe4hlggViJXaYWwtUobAvSfb95ANoyIPdk34t404C7Bw8Rwf73eOLuZG
- u37qRGlJEz1m6NB34QHW9wkdU+VbI1CSL98YqCsVLz3Re+basbH2bXnKgWQ+RTN1Kdc1TyKWW
- hqBen2KARiG7JskKe7dHkWJw++w7jo1P04EdztEGX751nmeQNbqMZcSPWYPSsJxYRgQicAiha
- UOv3gdcDNja7VvxQq4Cw3MDS7eZECxelYZrFStcWjRBRcdnVnGLWDWyuRkYqunBoGVjV8m/Bz
- jiTCt8EFQyCRuHkgeoryDlTSRpEXupDSEJwrL5IbldLc9c+3750H0wJ+Hq//9B/ddGJobcDKj
- GGJDhVDXYQ59807Raben9MpEv8tdwOpAaGoQuzocklX9rUcXAGqgxBIw3ihj5Fuv3MFRbwKWE
- FrZ+EwNtZC6m0JctLegSnr+Bk8zYCDbzAYMjEw9re30hwfvikhphSFAZLX/pAPK4PQ4v9MGah
- odebImsDbokkVPI2QNbXKA8SyXziwEPnVzMmPQfk7X0pcTzPmyfV7hqgJ5B2qu9HCf3slkb+C
- HY2cA52L8c28NPd0AgDxEtDiHW7aX4YWmFFM9YoHq0LSqTk+k940S4O0Rkkcj4zu1Z41gulwg
- dNv9EgLLHpsJW1TYul5fqP5wwg+jWPw6LIZut7Vv8Pu4sNl45fGw+0/CS5DQr578jNlj0fsiO
- VElsywUrN+1D5lO2bET5p2RDHcXC0YFMQJqG53Qz3WnfjLvVKf1gGOkSoF8/bZP8OqYYyB62/
- rc9JeFwxn3XYijSUk3f4OkIbN1HZ8O3bNuRGqxSIaxAjedH3bnewAamoIQP60//A0SWdh9IAW
- rHeNd8pSrUxKR3/QfjqGxGAnkmXLhei0xCm6Rn7W/7MI9M/gjey3r5q0e0HAXq7YGMA7jAAGF
- iA5i5lTh8w7cMDeNJg7gJm4ZFML/hi0vCGO3/MjG96LE4Ba5olW9coj7e5JYUdbeeo+6gz3LB
- KgzRyF2e9x9CrM=
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.2
+Subject: Re: [PATCH v4 1/4] sparse index: enable only for git repos
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>,
+        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+References: <pull.1050.v3.git.1635802069.gitgitgadget@gmail.com>
+ <pull.1050.v4.git.1637620958.gitgitgadget@gmail.com>
+ <81e208cf454b61c761fa66e4f43a464ed439ba59.1637620958.git.gitgitgadget@gmail.com>
+ <CABPp-BEM+FpdQ4yJxDcqvdz3LNmFV+5CBMAQdAnEfc0ytbZ-dA@mail.gmail.com>
+From:   Lessley Dennington <lessleydennington@gmail.com>
+In-Reply-To: <CABPp-BEM+FpdQ4yJxDcqvdz3LNmFV+5CBMAQdAnEfc0ytbZ-dA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
 
-tl;dr: the patch looks good to me (it is a bit tricky to review, though,
-but that is not your fault, it is our code review process' fault).
 
-On Tue, 16 Nov 2021, Phillip Wood via GitGitGadget wrote:
-
->   git diff --color-moved-ws=3Dallow-indentation-change v2.28.0 v2.29.0
-> by 93% compared to master and simplifies the code.
-
-Nice!
-
-> diff --git a/diff.c b/diff.c
-> index 9aff167be27..78a486021ab 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -879,37 +879,21 @@ static int compute_ws_delta(const struct emitted_d=
-iff_symbol *a,
->  	return 1;
->  }
->
-> -static int cmp_in_block_with_wsd(const struct diff_options *o,
-> -				 const struct moved_entry *cur,
-> -				 const struct moved_entry *match,
-> -				 struct moved_block *pmb,
-> -				 int n)
-> -{
-> -	struct emitted_diff_symbol *l =3D &o->emitted_symbols->buf[n];
-> -	int al =3D cur->es->len, bl =3D match->es->len, cl =3D l->len;
-> +static int cmp_in_block_with_wsd(const struct moved_entry *cur,
-> +				 const struct emitted_diff_symbol *l,
-> +				 struct moved_block *pmb)
-> +{
-> +	int al =3D cur->es->len, bl =3D l->len;
-
-Once I realized that the old `b` was removed and the old `c` became the
-new `b`, it was a breeze to validate this hunk.
-
->  	const char *a =3D cur->es->line,
-> -		   *b =3D match->es->line,
-> -		   *c =3D l->line;
-> +		   *b =3D l->line;
->  	int a_off =3D cur->es->indent_off,
->  	    a_width =3D cur->es->indent_width,
-> -	    c_off =3D l->indent_off,
-> -	    c_width =3D l->indent_width;
-> +	    b_off =3D l->indent_off,
-> +	    b_width =3D l->indent_width;
->  	int delta;
->
-> -	/*
-> -	 * We need to check if 'cur' is equal to 'match'.  As those
-> -	 * are from the same (+/-) side, we do not need to adjust for
-> -	 * indent changes. However these were found using fuzzy
-> -	 * matching so we do have to check if they are equal. Here we
-> -	 * just check the lengths. We delay calling memcmp() to check
-> -	 * the contents until later as if the length comparison for a
-> -	 * and c fails we can avoid the call all together.
-> -	 */
-> -	if (al !=3D bl)
-> -		return 1;
-
-The commit message really helped understanding why this is not needed.
-Thank you!
-
-> -
->  	/* If 'l' and 'cur' are both blank then they match. */
-> -	if (a_width =3D=3D INDENT_BLANKLINE && c_width =3D=3D INDENT_BLANKLINE=
-)
-> +	if (a_width =3D=3D INDENT_BLANKLINE && b_width =3D=3D INDENT_BLANKLINE=
-)
->  		return 0;
->
->  	/*
-> @@ -918,7 +902,7 @@ static int cmp_in_block_with_wsd(const struct diff_o=
-ptions *o,
->  	 * match those of the current block and that the text of 'l' and 'cur'
->  	 * after the indentation match.
->  	 */
-> -	delta =3D c_width - a_width;
-> +	delta =3D b_width - a_width;
->
->  	/*
->  	 * If the previous lines of this block were all blank then set its
-> @@ -927,9 +911,8 @@ static int cmp_in_block_with_wsd(const struct diff_o=
-ptions *o,
->  	if (pmb->wsd =3D=3D INDENT_BLANKLINE)
->  		pmb->wsd =3D delta;
->
-> -	return !(delta =3D=3D pmb->wsd && al - a_off =3D=3D cl - c_off &&
-> -		 !memcmp(a, b, al) && !
-> -		 memcmp(a + a_off, c + c_off, al - a_off));
-> +	return !(delta =3D=3D pmb->wsd && al - a_off =3D=3D bl - b_off &&
-> +		 !memcmp(a + a_off, b + b_off, al - a_off));
->  }
-
-Once again, I am sad that we have no better platform to do our code
-contribution and review. Whatever you can say about GitHub's UI, it is
-better than static diffs in mails.
-
-But you used GitGitGadget, and I finally broke down and wrote a script
-that allows me to magic my way from the mail into the correct commit in
-the GitGitGadget PR in the browser. It is still shell script (at some
-stage, I will need to extend the script to be much smarter than any shell
-script can be, and probably convert it to node.js, but not today).
-
-This helped me verify that there are no left-over references to the old
-`b`. So all is good!
-
->
->  static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
-> @@ -1030,36 +1013,23 @@ static void pmb_advance_or_null(struct diff_opti=
-ons *o,
->  }
->
->  static void pmb_advance_or_null_multi_match(struct diff_options *o,
-> -					    struct moved_entry *match,
-> -					    struct hashmap *hm,
-> +					    struct emitted_diff_symbol *l,
->  					    struct moved_block *pmb,
-> -					    int pmb_nr, int n)
-> +					    int pmb_nr)
->  {
->  	int i;
-> -	char *got_match =3D xcalloc(1, pmb_nr);
-> -
-> -	hashmap_for_each_entry_from(hm, match, ent) {
-> -		for (i =3D 0; i < pmb_nr; i++) {
-> -			struct moved_entry *prev =3D pmb[i].match;
-> -			struct moved_entry *cur =3D (prev && prev->next_line) ?
-> -					prev->next_line : NULL;
-> -			if (!cur)
-> -				continue;
-> -			if (!cmp_in_block_with_wsd(o, cur, match, &pmb[i], n))
-> -				got_match[i] |=3D 1;
-> -		}
-> -	}
->
->  	for (i =3D 0; i < pmb_nr; i++) {
-> -		if (got_match[i]) {
-> +		struct moved_entry *prev =3D pmb[i].match;
-> +		struct moved_entry *cur =3D (prev && prev->next_line) ?
-> +			prev->next_line : NULL;
-> +		if (cur && !cmp_in_block_with_wsd(cur, l, &pmb[i])) {
->  			/* Advance to the next line */
-> -			pmb[i].match =3D pmb[i].match->next_line;
-> +			pmb[i].match =3D cur;
->  		} else {
->  			moved_block_clear(&pmb[i]);
->  		}
->  	}
-> -
-> -	free(got_match);
-
-Even got rid of an allocation. Very nice.
-
->  }
->
->  static int shrink_potential_moved_blocks(struct moved_block *pmb,
-> @@ -1223,7 +1193,7 @@ static void mark_color_as_moved(struct diff_option=
-s *o,
->
->  		if (o->color_moved_ws_handling &
->  		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-> -			pmb_advance_or_null_multi_match(o, match, hm, pmb, pmb_nr, n);
-> +			pmb_advance_or_null_multi_match(o, l, pmb, pmb_nr);
-
-Again, magic button to the rescue! And I can verify that `l` is assigned
-to `&o->emitted_symbols->buf[n]`, so: the patch does the correct thing.
-
-Thank you,
-Dscho
-
->  		else
->  			pmb_advance_or_null(o, match, hm, pmb, pmb_nr);
->
-> --
-> gitgitgadget
->
->
+On 11/22/21 11:41 PM, Elijah Newren wrote:
+> On Mon, Nov 22, 2021 at 2:42 PM Lessley Dennington via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Lessley Dennington <lessleydennington@gmail.com>
+>>
+>> Check whether git dir exists before adding any repo settings. If it
+>> does not exist, BUG with the message that one cannot add settings for an
+>> uninitialized repository. If it does exist, proceed with adding repo
+>> settings.
+>>
+>> Additionally, ensure the above BUG is not triggered when users pass the -h
+>> flag by adding a check for the repository to the checkout and pack-objects
+>> builtins.
+> 
+> Why only checkout and pack-objects?  Why don't the -h flags to all of
+> the following need it as well?:
+> 
+> $ git grep -l prepare_repo_settings | grep builtin/
+> builtin/add.c
+> builtin/blame.c
+> builtin/checkout.c
+> builtin/commit.c
+> builtin/diff.c
+> builtin/fetch.c
+> builtin/gc.c
+> builtin/merge.c
+> builtin/pack-objects.c
+> builtin/rebase.c
+> builtin/reset.c
+> builtin/revert.c
+> builtin/sparse-checkout.c
+> builtin/update-index.c
+> 
+> If none of these need it, was it because they put
+> prepare_repo_settings() calls after some other basic checks had been
+> done so more do not have to be added?  If so, is there a similar place
+> in checkout and pack-objects where their calls to
+> prepare_repo_settings() can be moved?  (Looking ahead, it appears you
+> moved some code in patch 2 to do something like this.  Are the similar
+> moves that could be done here?)
+> 
+Thank you for the quick feedback. Yes, I believe there are similar moves 
+that can be done here. I was attempting to be explicit about the case I'm 
+guarding against, but you're right - it shouldn't be done one way for some 
+builtins and another way for others.
+>> Finally, ensure the above BUG is not triggered for commit-graph by
+>> returning early if the git directory does not exist.
+> 
+> If commit-graph needs a special case to avoid triggering the BUG,
+> wouldn't several of these need it too?:
+> 
+> $ git grep -l prepare_repo_settings | grep -v builtin/
+> commit-graph.c
+> fetch-negotiator.c
+> merge-recursive.c
+> midx.c
+> read-cache.c
+> repo-settings.c
+> repository.c
+> repository.h
+> sparse-index.c
+> t/helper/test-read-cache.c
+> t/helper/test-read-graph.c
+> unpack-trees.c
+> 
+> or are their calls to prepare_repo_settings() only done after gitdir
+> setup?  If the latter, perhaps the commit-graph function calls could
+> be moved after gitdir setup too to avoid the need to do extra checks
+> in it?
+> 
+Agreed, I can move this as well.
+>> Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
+>> ---
+>>   builtin/checkout.c     | 6 ++++--
+>>   builtin/pack-objects.c | 9 ++++++---
+>>   commit-graph.c         | 5 ++++-
+>>   repo-settings.c        | 3 +++
+>>   4 files changed, 17 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/builtin/checkout.c b/builtin/checkout.c
+>> index 8c69dcdf72a..31632b07888 100644
+>> --- a/builtin/checkout.c
+>> +++ b/builtin/checkout.c
+>> @@ -1588,8 +1588,10 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>>
+>>          git_config(git_checkout_config, opts);
+>>
+>> -       prepare_repo_settings(the_repository);
+>> -       the_repository->settings.command_requires_full_index = 0;
+>> +       if (startup_info->have_repository) {
+>> +               prepare_repo_settings(the_repository);
+>> +               the_repository->settings.command_requires_full_index = 0;
+>> +       }
+>>
+>>          opts->track = BRANCH_TRACK_UNSPECIFIED;
+>>
+>> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+>> index 1a3dd445f83..45dc2258dc7 100644
+>> --- a/builtin/pack-objects.c
+>> +++ b/builtin/pack-objects.c
+>> @@ -3976,9 +3976,12 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+>>          read_replace_refs = 0;
+>>
+>>          sparse = git_env_bool("GIT_TEST_PACK_SPARSE", -1);
+>> -       prepare_repo_settings(the_repository);
+>> -       if (sparse < 0)
+>> -               sparse = the_repository->settings.pack_use_sparse;
+>> +
+>> +       if (startup_info->have_repository) {
+>> +               prepare_repo_settings(the_repository);
+>> +               if (sparse < 0)
+>> +                       sparse = the_repository->settings.pack_use_sparse;
+>> +       }
+>>
+>>          reset_pack_idx_option(&pack_idx_opts);
+>>          git_config(git_pack_config, NULL);
+>> diff --git a/commit-graph.c b/commit-graph.c
+>> index 2706683acfe..265c010122e 100644
+>> --- a/commit-graph.c
+>> +++ b/commit-graph.c
+>> @@ -632,10 +632,13 @@ static int prepare_commit_graph(struct repository *r)
+>>          struct object_directory *odb;
+>>
+>>          /*
+>> +        * Early return if there is no git dir or if the commit graph is
+>> +        * disabled.
+>> +        *
+>>           * This must come before the "already attempted?" check below, because
+>>           * we want to disable even an already-loaded graph file.
+>>           */
+>> -       if (r->commit_graph_disabled)
+>> +       if (!r->gitdir || r->commit_graph_disabled)
+>>                  return 0;
+>>
+>>          if (r->objects->commit_graph_attempted)
+>> diff --git a/repo-settings.c b/repo-settings.c
+>> index b93e91a212e..00ca5571a1a 100644
+>> --- a/repo-settings.c
+>> +++ b/repo-settings.c
+>> @@ -17,6 +17,9 @@ void prepare_repo_settings(struct repository *r)
+>>          char *strval;
+>>          int manyfiles;
+>>
+>> +       if (!r->gitdir)
+>> +               BUG("Cannot add settings for uninitialized repository");
+>> +
+>>          if (r->settings.initialized++)
+>>                  return;
+> 
+> I'm not what the BUG() is trying to help us catch, but I'm worried
+> that there are many additional places that now need workarounds to
+> avoid triggering bugs.
+> 
+I see your point. We're trying to make sure we catch issues like the 
+nongit scenario I overlooked in diff in earlier versions of this series. 
+But if we feel this change is too disruptive and will likely cause issues 
+beyond those I've fixed to ensure our tests pass, I can remove.
