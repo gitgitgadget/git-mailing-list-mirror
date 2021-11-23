@@ -2,86 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D477FC433F5
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 17:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8253FC433EF
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 17:28:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238988AbhKWRap (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 12:30:45 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54467 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235451AbhKWRam (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 12:30:42 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F9FDF0D09;
-        Tue, 23 Nov 2021 12:27:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tw1YlqKwn2dfJX9P+Xd3wnRN7ZNWr88QY8fDPO
-        QePWE=; b=kBBXsJSMQR/WgJe7HTBSvlKWRvpmlKoLZMQn8dkF+uxo6JiXWo4FGx
-        RdcSvR3yvhsn+/pXVXQXVorPqriC43mgykaldrRnVs16Q6DfCInMEm1RV9HGPv3G
-        qvXlyMHIXJIObIV3yedq+AJ713FhN/+d17yZdl07u3AIpg8z023cM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 35C1AF0D08;
-        Tue, 23 Nov 2021 12:27:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9E394F0D07;
-        Tue, 23 Nov 2021 12:27:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
-        git@vger.kernel.org, thomas.wolf@paranor.ch,
-        Alexander Veit <alexander.veit@gmx.net>
-Subject: Re: [PATCH] editor: only save (and restore) the terminal if using a
- tty
-References: <04ab7301-ea34-476c-eae4-4044fef74b91@gmail.com>
-        <20211122222850.674-1-carenas@gmail.com>
-        <b1f2257a-044c-17bb-2737-42b8026421eb@gmail.com>
-Date:   Tue, 23 Nov 2021 09:27:31 -0800
-In-Reply-To: <b1f2257a-044c-17bb-2737-42b8026421eb@gmail.com> (Phillip Wood's
-        message of "Tue, 23 Nov 2021 11:05:16 +0000")
-Message-ID: <xmqqy25e93zw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237655AbhKWRbq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 12:31:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49190 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230359AbhKWRbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 12:31:45 -0500
+Received: from mail-vk1-xa36.google.com (mail-vk1-xa36.google.com [IPv6:2607:f8b0:4864:20::a36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 254C6C061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 09:28:37 -0800 (PST)
+Received: by mail-vk1-xa36.google.com with SMTP id e27so9933790vkd.4
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 09:28:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=td+Yzt2mN9JHg1acIBBqDdaavC1cJn9AmppD4fAfsn8=;
+        b=VYBHnkTWIb8wNO8vQ72iX3exzVV3H1VUetIgqamepiNVp1+M5IRu3cYsw7jiDYJWR/
+         kRGPfrIUqNjHqL0YlC9nj2GgF6P3/rJ0Qb7rgCaZtW311yT6/R9npeoxrjMr8+Af+Uhg
+         OUXkorOZ24rS2YcFlkvR7Ht8bXeeRIkP5OkTCt2RfOxfAtMOzsOeYCB2FFHz/bDi1vtP
+         omOUqTdsSt5bWHL5J2FvGeNa1KqUdNKs1V5w3IGs1r6e8cuglDFTYnmBOylq5RUUhIgP
+         iDZEl7ZStyO3gtZ3gzh7mKIlygyIF/0I2/mbAbEQ4NIGXV/WnUX9T5q3R3+uoqoLyGQg
+         cDNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=td+Yzt2mN9JHg1acIBBqDdaavC1cJn9AmppD4fAfsn8=;
+        b=yOiE8Dg6gaHhRnB3qul9xel0l1z/jQPBHzgXK5hFsEHzkc27Z1JYQALit9jmTRNPoG
+         fmRyWXC5LPmDCTbmAydFsXL9VUjTHvqGCOE5lqCsy4ngFRwrnOTg6al/5dNyudFwhCtP
+         LzmvAi6VG1EBsXckP93xF4dxJ+S7mK9AmqZZEWKiBDnZAiZ89X4h3m7QDpcr58DvtgP9
+         XxXKZzsSbC5QeDbX0Y38f4IvvnQgaQ5oQ9s5OyvviGvun1r9jThsB8MPdoPR83hIIalX
+         i4/cd5pFujQjXTfhHgvWpDByRWAAXFQjlAofOypjJnc7mK1IVsMAPirde7A/XqQd9k39
+         Ur7Q==
+X-Gm-Message-State: AOAM530d1vLBD5o+iME0B8AKKpqwUedzVdqV4uu5/CRBiHVRepqi7avY
+        usk09nv6inmaZ7NLBHhP4jSERS5g9pvhlpxyI5PEoA==
+X-Google-Smtp-Source: ABdhPJzBGRL3b3uauiJHJg+zAywvm0YWDseUPGJ1FM7+Q2zltv8LjTrDHqql0M7oemzSsuXtAq3X5eGRGUZMMdq7tys=
+X-Received: by 2002:a05:6122:98d:: with SMTP id g13mr13659856vkd.15.1637688516045;
+ Tue, 23 Nov 2021 09:28:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A4D6F02C-4C82-11EC-886A-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
+ <dfb639373234a6b8d5f9110380a66ffccbe0b1d6.1637590855.git.gitgitgadget@gmail.com>
+ <xmqq35nnddw7.fsf@gitster.g> <CAFQ2z_PE7TMj=qfQVroK_gRfZk-xF9PKhk2yxqF-bB+2aA7eoQ@mail.gmail.com>
+ <xmqqczmqajdk.fsf@gitster.g>
+In-Reply-To: <xmqqczmqajdk.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Tue, 23 Nov 2021 18:28:24 +0100
+Message-ID: <CAFQ2z_Mct+KBZ3vO6udwqeiHYA8od8CGH_w5BO5LaidP-AYDsg@mail.gmail.com>
+Subject: Re: [PATCH 2/4] refs: trim newline from reflog message
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
-> Checking if stdout is a terminal fixes the Eclipse case where stdout
-> is a pipe or /dev/null but if git is started in the background from a 
-> terminal then calling isatty() will not prevent git from receiving
-> SIGTTOU. For example if the user is using a gui editor then the 
-> following used to work
+On Tue, Nov 23, 2021 at 6:10 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> GIT_EDITOR=gedit git commit&
+> Han-Wen Nienhuys <hanwen@google.com> writes:
+>
+> > On Mon, Nov 22, 2021 at 11:27 PM Junio C Hamano <gitster@pobox.com> wro=
+te:
+> >>
+> >> If this were truly "user-provided", then I'd argue that all backends
+> >> should follow whatever the files backend has been doing forever---if
+> >> the files added LF implicitly, others should, too, because that is
+> >> pretty much what these "user-provided" callbacks have been expecting
+> >> to see.
+> >
+> > I think it's just wrong. If you pass `msg` to a storage API, you
+> > should get `msg` when you read it back, not (msg + "\n").
+>
+> If you give a log message "git commit -m 'single line'", you get LF
+> at the end of the commit message for free.  This is no different.
+> And you know that this is not a "storage API" that stores the input
+> in verbatim after looking at refs.c::copy_reflog_msg().
 
-It is a good one ;-)
+I'm talking about refs/refs-internal.h. It seems you want to add something =
+like
 
-> Now git receives SIGTTOU when the editor exits because we call
-> tcsetattr() from a background process group. One can argue it does not 
-> make much sense to be starting git in the background but it did work
-> before these changes. I think a combination of isatty() and
-> tcgetpgrp() is probably the best solution.
+/* The ref backend should add a '\n' relative to the message supplied
+to the delete/symref/update functions. */
+typedef int for_each_reflog_ent_fn(struct ref_store *ref_store,
+                                   const char *refname,
+                                   each_reflog_ent_fn fn,
+                                   void *cb_data);
 
-If we are not foreground, we can and we should just skip doing this
-whole save/restore thing, no?  The "editor might screw up the stty
-setting so we restore to help the buggy editor" is releavant only
-when the said editor actually uses the terminal, and it would get
-TTOU if it tries to do so from the background.
+?
 
-So, I agree it would be a good thing to do, if we still want to do
-it.  In the meantime, I've reverted the offending change from 'master'
-and am planning to merge it down for 2.34.1 but I do not mind taking
-a corrected change (not incremental on top of the broken 2.34.0) for
-future releases.
+--
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+--
 
-jgit stopped doing 'GIT_EDITOR=echo git config --system --edit' thing,
-but not everybody will upgrade immediately.
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
