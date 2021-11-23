@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C9E3C433FE
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 11:46:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1C95C433EF
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 11:46:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236446AbhKWLtt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 06:49:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53134 "EHLO
+        id S236502AbhKWLtw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 06:49:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236480AbhKWLtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 06:49:40 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BE42C0613F4
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 03:46:31 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id o19-20020a1c7513000000b0033a93202467so2325393wmc.2
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 03:46:30 -0800 (PST)
+        with ESMTP id S236530AbhKWLtn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 06:49:43 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7AE5C061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 03:46:34 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id i8-20020a7bc948000000b0030db7b70b6bso1975218wml.1
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 03:46:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DAsytXaxXjOs1TERHWkOTicdxYVnof0YOd+nc8NYEG4=;
-        b=Pt9O/EN3vI5H3F5gKFfqwe6/gTxYyBBuxDJ8MqONkER+1o7494Nf31LMpfU/BwgX7Z
-         9avpr6pbijpta3BvbMXZfEkX+DMGewMcCSI9hQSV0kli2BxRjO8Eo8YTDxUWoTX9HYuP
-         yXfIhOsXwhe6Wj6V8cT6oUOH0GhU13X9g98lhYmhomvRnPefVAKatznN3wS8kbu9q/1s
-         fOADzx5Ko1VbgqLm+fIpRyuAsMSPy9WI/nar7MHv+rpvM9/Qq5lRa0yA9+VILBcnmoLN
-         SdGZn27dLgg2Qb7B6A64/0fkmb3GIjkINL32snFKye8dNyTcA/0FNbLEXedRrWX6gSsH
-         TUTA==
+        bh=frEk3qpS9FC+yX72+I6birfDNCIdPpN/tyFL8oNp9RA=;
+        b=Bb+UskuypgcVR0A0mIrjaKv8GEG5xriNoJ9eQXaPxyOh+4cInRmOy3ZLLpfzZrSAK4
+         YJ7kofm44x6kB+WHLkKsbf5UaAyySjedifj5h29fBp2N/A54nsi9NLHYIHCNl7uoNVRX
+         OKPh/Sv+sw1313ueoZIx4T4RlrKQwBhkkxV9KM4zaRELINMRotGPbRF+3CEuzOaBysiw
+         GrKWW1fhFe9Cov+NznQrUPDO4Joj1B1+q9IKTkBcHBJ0a/Fmj0Ku8SVRFyMgRBV4GzpX
+         ayniRgFkNe2wbruyE1uv0izNV06qrWRTG2szS8StcaoYDXbWBAvbxmGUPPQeDMlxZm43
+         ztBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DAsytXaxXjOs1TERHWkOTicdxYVnof0YOd+nc8NYEG4=;
-        b=z/pc3zteXwe1Xn8ju2Qd67HVm/sWLc5xESbFYU1AtJurJga+ZeH6YWp4qeHVHBbh4o
-         xcBxZjNxSCYyTW6PwrECDTEx64hG2duAA+fFDA8NAo4odhcM0WKCyU3yUD31SB9ks3tJ
-         wIGYNGlM87+8t6tKKe6crnPFEDmrG8UZxSBagZSMYKAODdga0qCRf2nPT9QiKnAUURAd
-         fA8dKBglslAsxD6vWJEmwXb/5g7CUz452p/czGC/0TMi+9HBpjpI6cLyYB/c7Qaf0BWj
-         EwXEydX3PYx+Ss8zeISpoR2yBHiul45SyJYuey275elsR550eqNlABUf9Fe8NFg/W6mV
-         LdZA==
-X-Gm-Message-State: AOAM531BwnPWzswYdC0C+lA0ZHZqxCX7fk8vuphNxQW/c9enais9KadQ
-        +bFG+Auzd66cV5z96FBw98ykdjB6PrtWOQ==
-X-Google-Smtp-Source: ABdhPJxYcrPB6uMogrroImrLk5x1JRDotnai2YdVGu0Qm6y+ozZ4Zi1shvQ5CuJYEl/qF4mMm44dxw==
-X-Received: by 2002:a05:600c:4ed2:: with SMTP id g18mr2367701wmq.122.1637667989322;
-        Tue, 23 Nov 2021 03:46:29 -0800 (PST)
+        bh=frEk3qpS9FC+yX72+I6birfDNCIdPpN/tyFL8oNp9RA=;
+        b=jU33GuyYuOtlt8DHlix6yFWctmOwnQdTwGNgqNCaLTpRZ6Fz+MIwU2bay7YU42QOk1
+         Vs+PcJeJKsrd9XlfUEvurwrLVDR7DL0W9eR1El12dRad2y6cdnS7Aidp2jojev4y2Vb4
+         9qIQ4WdnCWzRPAyRjfH323NZnYPEq3Kq5pNWyetMj3w1K+QZ2ddeq+LTRhPkdmTak750
+         Z6IAYPztXphNHzo2gGL2xuBAM7q6a90XV3CXdrg19Mc6bmhjqSu+N60FDHKqegf++OSS
+         ZEeirIV4u1FPJqszLEZCqSZhxrKXNFNcYHFcN4uk231hoEpf7XoRfEIyMt8hoMeJx7/F
+         E3RQ==
+X-Gm-Message-State: AOAM532MhLfliiqXqSKF/hbHkf+pSypxcak5Ajl4uRHX5i5OqDRIaCrd
+        Lhl8mFvgxKKkezH3R9UYCaNmO3eoKFCyeg==
+X-Google-Smtp-Source: ABdhPJwxW79SDMPlNbJuscTEyEKHr/CZFq0Hhg4Lo2kmwBkQzIS6Ff50GxUt4apaVkJZE91hNxL9wA==
+X-Received: by 2002:a05:600c:350c:: with SMTP id h12mr2197878wmq.123.1637667993253;
+        Tue, 23 Nov 2021 03:46:33 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c11sm1723145wmq.27.2021.11.23.03.46.28
+        by smtp.gmail.com with ESMTPSA id c11sm1723145wmq.27.2021.11.23.03.46.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Nov 2021 03:46:28 -0800 (PST)
+        Tue, 23 Nov 2021 03:46:32 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 10/17] hooks: convert worktree 'post-checkout' hook to hook library
-Date:   Tue, 23 Nov 2021 12:46:09 +0100
-Message-Id: <patch-v5-10.17-b7599be95a7-20211123T114206Z-avarab@gmail.com>
+Subject: [PATCH v5 14/17] commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
+Date:   Tue, 23 Nov 2021 12:46:13 +0100
+Message-Id: <patch-v5-14.17-9a5956cc028-20211123T114206Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.831.gd33babec0d1
 In-Reply-To: <cover-v5-00.17-00000000000-20211123T114206Z-avarab@gmail.com>
 References: <cover-v4-00.17-00000000000-20211101T184938Z-avarab@gmail.com> <cover-v5-00.17-00000000000-20211123T114206Z-avarab@gmail.com>
@@ -72,120 +72,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Move the running of the 'post-checkout' hook away from run-command.h
-to the new hook.h library in builtin/worktree.c. For this special case
-we need a change to the hook API to teach it to run the hook from a
-given directory.
-
-We cannot skip the "absolute_path" flag and just check if "dir" is
-specified as we'd then fail to find our hook in the new dir we'd
-chdir() to. We currently don't have a use-case for running a hook not
-in our "base" repository at a given absolute path, so let's have "dir"
-imply absolute_path(find_hook(hook_name)).
+Move these hooks hook away from run-command.h to and over to the new
+hook.h library.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/worktree.c | 27 +++++++++++----------------
- hook.c             |  8 ++++++++
- hook.h             |  6 ++++++
- 3 files changed, 25 insertions(+), 16 deletions(-)
+ commit.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d22ece93e1a..4d9df5ecc4c 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -382,22 +382,17 @@ static int add_worktree(const char *path, const char *refname,
- 	 * is_junk is cleared, but do return appropriate code when hook fails.
- 	 */
- 	if (!ret && opts->checkout) {
--		const char *hook = find_hook("post-checkout");
--		if (hook) {
--			const char *env[] = { "GIT_DIR", "GIT_WORK_TREE", NULL };
--			cp.git_cmd = 0;
--			cp.no_stdin = 1;
--			cp.stdout_to_stderr = 1;
--			cp.dir = path;
--			cp.env = env;
--			cp.argv = NULL;
--			cp.trace2_hook_name = "post-checkout";
--			strvec_pushl(&cp.args, absolute_path(hook),
--				     oid_to_hex(null_oid()),
--				     oid_to_hex(&commit->object.oid),
--				     "1", NULL);
--			ret = run_command(&cp);
--		}
-+		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-+
-+		strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
-+		strvec_pushl(&opt.args,
-+			     oid_to_hex(null_oid()),
-+			     oid_to_hex(&commit->object.oid),
-+			     "1",
-+			     NULL);
-+		opt.dir = path;
-+
-+		ret = run_hooks_opt("post-checkout", &opt);
- 	}
+diff --git a/commit.c b/commit.c
+index 551de4903c1..581d7dc216c 100644
+--- a/commit.c
++++ b/commit.c
+@@ -21,6 +21,7 @@
+ #include "commit-reach.h"
+ #include "run-command.h"
+ #include "shallow.h"
++#include "hook.h"
  
- 	strvec_clear(&child_env);
-diff --git a/hook.c b/hook.c
-index 1ad123422b2..69a215b2c3c 100644
---- a/hook.c
-+++ b/hook.c
-@@ -57,6 +57,7 @@ static int pick_next_hook(struct child_process *cp,
- 	strvec_pushv(&cp->env_array, hook_cb->options->env.v);
- 	cp->stdout_to_stderr = 1;
- 	cp->trace2_hook_name = hook_cb->hook_name;
-+	cp->dir = hook_cb->options->dir;
+ static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
  
- 	strvec_push(&cp->args, hook_path);
- 	strvec_pushv(&cp->args, hook_cb->options->args.v);
-@@ -109,6 +110,7 @@ static void run_hooks_opt_clear(struct run_hooks_opt *options)
- 
- int run_hooks_opt(const char *hook_name, struct run_hooks_opt *options)
+@@ -1700,22 +1701,22 @@ size_t ignore_non_trailer(const char *buf, size_t len)
+ int run_commit_hook(int editor_is_used, const char *index_file,
+ 		    const char *name, ...)
  {
-+	struct strbuf abs_path = STRBUF_INIT;
- 	struct hook_cb_data cb_data = {
- 		.rc = 0,
- 		.hook_name = hook_name,
-@@ -130,6 +132,11 @@ int run_hooks_opt(const char *hook_name, struct run_hooks_opt *options)
- 	}
+-	struct strvec hook_env = STRVEC_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 	va_list args;
+-	int ret;
++	const char *arg;
  
- 	cb_data.hook_path = hook_path;
-+	if (options->dir) {
-+		strbuf_add_absolute_path(&abs_path, hook_path);
-+		cb_data.hook_path = abs_path.buf;
-+	}
-+
- 	run_processes_parallel_tr2(jobs,
- 				   pick_next_hook,
- 				   notify_start_failure,
-@@ -139,6 +146,7 @@ int run_hooks_opt(const char *hook_name, struct run_hooks_opt *options)
- 				   hook_name);
- 	ret = cb_data.rc;
- cleanup:
-+	strbuf_release(&abs_path);
- 	run_hooks_opt_clear(options);
- 	return ret;
+-	strvec_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
++	strvec_pushf(&opt.env, "GIT_INDEX_FILE=%s", index_file);
+ 
+ 	/*
+ 	 * Let the hook know that no editor will be launched.
+ 	 */
+ 	if (!editor_is_used)
+-		strvec_push(&hook_env, "GIT_EDITOR=:");
++		strvec_push(&opt.env, "GIT_EDITOR=:");
+ 
+ 	va_start(args, name);
+-	ret = run_hook_ve(hook_env.v, name, args);
++	while ((arg = va_arg(args, const char *)))
++		strvec_push(&opt.args, arg);
+ 	va_end(args);
+-	strvec_clear(&hook_env);
+ 
+-	return ret;
++	return run_hooks_opt(name, &opt);
  }
-diff --git a/hook.h b/hook.h
-index 54528395953..18d90aedf14 100644
---- a/hook.h
-+++ b/hook.h
-@@ -12,6 +12,12 @@ struct run_hooks_opt
- 
- 	/* Emit an error if the hook is missing */
- 	unsigned int error_if_missing:1;
-+
-+	/**
-+	 * An optional initial working directory for the hook,
-+	 * translates to "struct child_process"'s "dir" member.
-+	 */
-+	const char *dir;
- };
- 
- #define RUN_HOOKS_OPT_INIT { \
 -- 
 2.34.0.831.gd33babec0d1
 
