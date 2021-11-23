@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7486FC433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 12:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BF63C433F5
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 12:08:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236980AbhKWMLU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 07:11:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58250 "EHLO
+        id S236985AbhKWMLV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 07:11:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236928AbhKWMLO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 07:11:14 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 883E9C061757
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 04:08:05 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id v11so85427wrw.10
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 04:08:05 -0800 (PST)
+        with ESMTP id S236886AbhKWMLP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 07:11:15 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FC70C061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 04:08:07 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id 133so18565705wme.0
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 04:08:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iJfvOziKFpkJZLFKzrPb6H6frO+MVhN16zQN4S2UQhU=;
-        b=qPD3Yv8OmCo2mzhj/84U4icLMUJMJcLHdy2atbqh5zYq8/SnwPOGhv2Y/rzlJQ5fWU
-         V+dQrs365a1plC0RaMBGJUhwWJc61nnGtxclzI5xrkyLYej8OU6Ns/ebS0q73EINuqYP
-         L+NwlUOu+VYwKZwAzG3EqR0HsMu8VFNj76fm30bgtVxCUm0tF7p/sxqdl77hOTasmNBk
-         uT8fmMkdVusQoP9vgZFcTFIKgGQKuc0KQ8EPQNd4bl/wvSeWe8jU+uOFtk+s2OjAy14O
-         LfwcFuixNee/Eevf7hyMkR5aehz/Q5+bTpKBO6sQWKo/6TbnIRPSsjYlIIxhcX5f8r2q
-         cTcg==
+        bh=vanj0MUo4sOg0itoxokjUJGiaC8D19hd6GPO+JqRQpI=;
+        b=gln8VxUGBM/vZDab15UUv+76smChkJJoeA4BwFKvCD0RbVBZKU0xlmzL+6jD9bdJE7
+         eeTTCnlLrqrKu0r+cUyC/sTXW/JMeXcwrZIj6KFlZJgMvWpk/+8Tp+DhKATIwCvrgvsr
+         I/mns7pNuYj1BAdltF5PBoxId7QWlD6GmbV/dtEEaxPjIt/8TSFBp5MspWSPhIblzZIe
+         RAnufZKnu0nzwuimLpJ8VSnpiFH5fT+6FO4NjTekiQwtSMCa3m+e0LdNnp0prC2oIsof
+         VcTp5ZIBjRpn/LCWAuciuBecr7LY293CWTtci0VAVLZh9GJPKE56m76g/tADd7XMx56Z
+         M0Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iJfvOziKFpkJZLFKzrPb6H6frO+MVhN16zQN4S2UQhU=;
-        b=IB9jl/0PYFmISfjC2KOOoty1vqwfKB0p/avj06B3dtLyK+p0CF+kmzNxYVdLcIe3zy
-         kOlUyOGsg607D2yPaqDR9LHbWRqkEoN0AcdmnTfoL7Vxit1rkquPqfH1sO8Q6bB/PDhd
-         NR9oVIYbMW9QGQpqe14hQi/jYUChj0ZFcjsecs88ZEY23MJ+eTbqUJzs0ZO0qI6RNCTy
-         VYqM2i1N2YE9YPmZdulACd+czylD4BajXhbeCZ7+a1U1+O8cy4eWXNpQM/60Zk7yYSks
-         PFGK5yPIDQaWJIMwYEWXlj4n0v2LuAji0aUl5PefZm+cuvm49sj8IsV+Q0xIFteLCit+
-         JOJw==
-X-Gm-Message-State: AOAM533BCGcU3oMv70h1IbHRs3SgAi1QPKk3fzp4yr3AMQHwVE2SeV5J
-        uhhGjYFCf0CwBrqfG4YqugucAthkCgzueg==
-X-Google-Smtp-Source: ABdhPJx0sml2FXTuMbopbf22T1uOHlXBKheHm2eczNOFMNHn3L09fe/11wjEU9kwbxaU+T9M5d5HJA==
-X-Received: by 2002:adf:f88f:: with SMTP id u15mr4575046wrp.18.1637669283758;
-        Tue, 23 Nov 2021 04:08:03 -0800 (PST)
+        bh=vanj0MUo4sOg0itoxokjUJGiaC8D19hd6GPO+JqRQpI=;
+        b=mK7/Ol22HjBaPSysg+/CXM4OvBa4/8lWTxPzd5VC/BKdMvQPkrxI9n0ji7LoQFsfdV
+         dcmwFf58LWoN258LriZ5tVuq5b9fUfQI9yjOJ98R7LREa3AUPCqrBtlUB8hg+AbpW553
+         /6qoY8lx6NzbWqd783jgZqUHAvKscZUrKRhnz1vpJ2XQCVaQCCkUsuXacwUTvp8b8/Ft
+         qVnOx9455wdsljThvEhwKLMTU91QaQclAIK7rQmu8A22ECfhXjfUekI/o2IwjY3nviwG
+         ghlemYinG3eMJ7z1TKyZiZYUqH65ki9a6X528nHJ6K5qrcAmS1HhmEbVFbyKQU8mTw4g
+         qONQ==
+X-Gm-Message-State: AOAM532Ob2j3LVWKP4A8zTLGH2OW+Vcd17fEvkQS8u8p4JUBPxWXXnIP
+        J8PFtiK69aBRFudhPJFYQfJ8tZVi+nFfFw==
+X-Google-Smtp-Source: ABdhPJy2zBw1tmw7MhAR461X3UQ6OvqncXZJdSt5yd5Q2A2RnmV9PvVxmDZZd0512nZl7V6WHO692A==
+X-Received: by 2002:a7b:cbc3:: with SMTP id n3mr2510698wmi.90.1637669285403;
+        Tue, 23 Nov 2021 04:08:05 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m9sm1220299wmq.1.2021.11.23.04.08.02
+        by smtp.gmail.com with ESMTPSA id m9sm1220299wmq.1.2021.11.23.04.08.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Nov 2021 04:08:03 -0800 (PST)
+        Tue, 23 Nov 2021 04:08:04 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Enzo Matsumiya <ematsumiya@suse.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 6/9] run-command API users: use strvec_push(), not argv construction
-Date:   Tue, 23 Nov 2021 13:06:33 +0100
-Message-Id: <patch-v2-6.9-fad420dc563-20211123T115551Z-avarab@gmail.com>
+Subject: [PATCH v2 7/9] run-command API: remove "argv" member, always use "args"
+Date:   Tue, 23 Nov 2021 13:06:34 +0100
+Message-Id: <patch-v2-7.9-67ab5114ed7-20211123T115551Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.831.gd33babec0d1
 In-Reply-To: <cover-v2-0.9-00000000000-20211123T115551Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20211122T153605Z-avarab@gmail.com> <cover-v2-0.9-00000000000-20211123T115551Z-avarab@gmail.com>
@@ -67,253 +67,298 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change a pattern of hardcoding an "argv" array size, populating it and
-assigning to the "argv" member of "struct child_process" to instead
-use "strvec_push()" to add data to the "args" member.
+Remove the "argv" member from the run-command API, ever since "args"
+was added in c460c0ecdca (run-command: store an optional argv_array,
+2014-05-15) being able to provide either "argv" or "args" has led to
+some confusion and bugs.
 
-As noted in the preceding commit this moves us further towards being
-able to remove the "argv" member in a subsequent commit
+If we hadn't gone in that direction and only had an "argv" our
+problems wouldn't have been solved either, as noted in [1] (and in the
+documentation amended here) it comes with inherent memory management
+issues: The caller would have to hang on to the "argv" until the
+run-command API was finished. If the "argv" was an argument to main()
+this wasn't an issue, but if it it was manually constructed using the
+API might be painful.
 
-These callers could have used strvec_pushl(), but moving to
-strvec_push() makes the diff easier to read, and keeps the arguments
-aligned as before.
+We also have a recent report[2] of a user of the API segfaulting,
+which is a direct result of it being complex to use. This commit
+addresses the root cause of that bug.
+
+This change is larger than I'd like, but there's no easy way to avoid
+it that wouldn't involve even more verbose intermediate steps. We use
+the "argv" as the source of truth over the "args", so we need to
+change all parts of run-command.[ch] itself, as well as the trace2
+logging at the same time.
+
+The resulting Windows-specific code in start_command() is a bit nasty,
+as we're now assigning to a strvec's "v" member, instead of to our own
+"argv". There was a suggestion of some alternate approaches in reply
+to an earlier version of this commit[3], but let's leave larger a
+larger and needless refactoring of this code for now.
+
+1. http://lore.kernel.org/git/YT6BnnXeAWn8BycF@coredump.intra.peff.net
+2. https://lore.kernel.org/git/20211120194048.12125-1-ematsumiya@suse.de/
+3. https://lore.kernel.org/git/patch-5.5-ea1011f7473-20211122T153605Z-avarab@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- archive-tar.c          |  9 +++------
- builtin/receive-pack.c | 31 ++++++++++++-------------------
- daemon.c               | 18 +++++++-----------
- diff.c                 |  8 ++------
- prompt.c               |  7 ++-----
- transport.c            | 11 +++++------
- 6 files changed, 31 insertions(+), 53 deletions(-)
+ run-command.c           | 42 ++++++++++++++++++++---------------------
+ run-command.h           | 20 ++++++++------------
+ sub-process.c           |  2 +-
+ trace2/tr2_tgt_event.c  |  2 +-
+ trace2/tr2_tgt_normal.c |  2 +-
+ trace2/tr2_tgt_perf.c   |  4 ++--
+ 6 files changed, 33 insertions(+), 39 deletions(-)
 
-diff --git a/archive-tar.c b/archive-tar.c
-index 05d2455870d..3c74db17468 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -430,7 +430,6 @@ static int write_tar_filter_archive(const struct archiver *ar,
- {
- 	struct strbuf cmd = STRBUF_INIT;
- 	struct child_process filter = CHILD_PROCESS_INIT;
--	const char *argv[2];
- 	int r;
- 
- 	if (!ar->data)
-@@ -440,14 +439,12 @@ static int write_tar_filter_archive(const struct archiver *ar,
- 	if (args->compression_level >= 0)
- 		strbuf_addf(&cmd, " -%d", args->compression_level);
- 
--	argv[0] = cmd.buf;
--	argv[1] = NULL;
--	filter.argv = argv;
-+	strvec_push(&filter.args, cmd.buf);
- 	filter.use_shell = 1;
- 	filter.in = -1;
- 
- 	if (start_command(&filter) < 0)
--		die_errno(_("unable to start '%s' filter"), argv[0]);
-+		die_errno(_("unable to start '%s' filter"), cmd.buf);
- 	close(1);
- 	if (dup2(filter.in, 1) < 0)
- 		die_errno(_("unable to redirect descriptor"));
-@@ -457,7 +454,7 @@ static int write_tar_filter_archive(const struct archiver *ar,
- 
- 	close(1);
- 	if (finish_command(&filter) != 0)
--		die(_("'%s' filter reported error"), argv[0]);
-+		die(_("'%s' filter reported error"), cmd.buf);
- 
- 	strbuf_release(&cmd);
- 	return r;
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 6149d507965..48c99c8ee45 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -812,16 +812,13 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
- {
- 	struct child_process proc = CHILD_PROCESS_INIT;
- 	struct async muxer;
--	const char *argv[2];
- 	int code;
-+	const char *hook_path = find_hook(hook_name);
- 
--	argv[0] = find_hook(hook_name);
--	if (!argv[0])
-+	if (!hook_path)
- 		return 0;
- 
--	argv[1] = NULL;
--
--	proc.argv = argv;
-+	strvec_push(&proc.args, hook_path);
- 	proc.in = -1;
- 	proc.stdout_to_stderr = 1;
- 	proc.trace2_hook_name = hook_name;
-@@ -943,23 +940,21 @@ static int run_receive_hook(struct command *commands,
- 
- static int run_update_hook(struct command *cmd)
- {
--	const char *argv[5];
- 	struct child_process proc = CHILD_PROCESS_INIT;
- 	int code;
-+	const char *hook_path = find_hook("update");
- 
--	argv[0] = find_hook("update");
--	if (!argv[0])
-+	if (!hook_path)
- 		return 0;
- 
--	argv[1] = cmd->ref_name;
--	argv[2] = oid_to_hex(&cmd->old_oid);
--	argv[3] = oid_to_hex(&cmd->new_oid);
--	argv[4] = NULL;
-+	strvec_push(&proc.args, hook_path);
-+	strvec_push(&proc.args, cmd->ref_name);
-+	strvec_push(&proc.args, oid_to_hex(&cmd->old_oid));
-+	strvec_push(&proc.args, oid_to_hex(&cmd->new_oid));
- 
- 	proc.no_stdin = 1;
- 	proc.stdout_to_stderr = 1;
- 	proc.err = use_sideband ? -1 : 0;
--	proc.argv = argv;
- 	proc.trace2_hook_name = "update";
- 
- 	code = start_command(&proc);
-@@ -1117,22 +1112,20 @@ static int run_proc_receive_hook(struct command *commands,
- 	struct child_process proc = CHILD_PROCESS_INIT;
- 	struct async muxer;
- 	struct command *cmd;
--	const char *argv[2];
- 	struct packet_reader reader;
- 	struct strbuf cap = STRBUF_INIT;
- 	struct strbuf errmsg = STRBUF_INIT;
- 	int hook_use_push_options = 0;
- 	int version = 0;
- 	int code;
-+	const char *hook_path = find_hook("proc-receive");
- 
--	argv[0] = find_hook("proc-receive");
--	if (!argv[0]) {
-+	if (!hook_path) {
- 		rp_error("cannot find hook 'proc-receive'");
- 		return -1;
+diff --git a/run-command.c b/run-command.c
+index 620a06ca2f5..99dc93e7300 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -380,7 +380,7 @@ static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
+ 	switch (cerr->err) {
+ 	case CHILD_ERR_CHDIR:
+ 		error_errno("exec '%s': cd to '%s' failed",
+-			    cmd->argv[0], cmd->dir);
++			    cmd->args.v[0], cmd->dir);
+ 		break;
+ 	case CHILD_ERR_DUP2:
+ 		error_errno("dup2() in child failed");
+@@ -392,12 +392,12 @@ static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
+ 		error_errno("sigprocmask failed restoring signals");
+ 		break;
+ 	case CHILD_ERR_ENOENT:
+-		error_errno("cannot run %s", cmd->argv[0]);
++		error_errno("cannot run %s", cmd->args.v[0]);
+ 		break;
+ 	case CHILD_ERR_SILENT:
+ 		break;
+ 	case CHILD_ERR_ERRNO:
+-		error_errno("cannot exec '%s'", cmd->argv[0]);
++		error_errno("cannot exec '%s'", cmd->args.v[0]);
+ 		break;
  	}
--	argv[1] = NULL;
+ 	set_error_routine(old_errfn);
+@@ -405,7 +405,7 @@ static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
  
--	proc.argv = argv;
-+	strvec_push(&proc.args, hook_path);
- 	proc.in = -1;
- 	proc.out = -1;
- 	proc.trace2_hook_name = "proc-receive";
-diff --git a/daemon.c b/daemon.c
-index 8df21f2130c..4a000ee4afa 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -326,22 +326,18 @@ static int run_access_hook(struct daemon_service *service, const char *dir,
+ static int prepare_cmd(struct strvec *out, const struct child_process *cmd)
  {
- 	struct child_process child = CHILD_PROCESS_INIT;
- 	struct strbuf buf = STRBUF_INIT;
--	const char *argv[8];
--	const char **arg = argv;
- 	char *eol;
- 	int seen_errors = 0;
+-	if (!cmd->argv[0])
++	if (!cmd->args.v[0])
+ 		BUG("command is empty");
  
--	*arg++ = access_hook;
--	*arg++ = service->name;
--	*arg++ = path;
--	*arg++ = hi->hostname.buf;
--	*arg++ = get_canon_hostname(hi);
--	*arg++ = get_ip_address(hi);
--	*arg++ = hi->tcp_port.buf;
--	*arg = NULL;
-+	strvec_push(&child.args, access_hook);
-+	strvec_push(&child.args, service->name);
-+	strvec_push(&child.args, path);
-+	strvec_push(&child.args, hi->hostname.buf);
-+	strvec_push(&child.args, get_canon_hostname(hi));
-+	strvec_push(&child.args, get_ip_address(hi));
-+	strvec_push(&child.args, hi->tcp_port.buf);
+ 	/*
+@@ -415,11 +415,11 @@ static int prepare_cmd(struct strvec *out, const struct child_process *cmd)
+ 	strvec_push(out, SHELL_PATH);
  
- 	child.use_shell = 1;
--	child.argv = argv;
- 	child.no_stdin = 1;
- 	child.no_stderr = 1;
- 	child.out = -1;
-diff --git a/diff.c b/diff.c
-index 861282db1c3..41076857428 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6921,19 +6921,15 @@ static char *run_textconv(struct repository *r,
- 			  size_t *outsize)
+ 	if (cmd->git_cmd) {
+-		prepare_git_cmd(out, cmd->argv);
++		prepare_git_cmd(out, cmd->args.v);
+ 	} else if (cmd->use_shell) {
+-		prepare_shell_cmd(out, cmd->argv);
++		prepare_shell_cmd(out, cmd->args.v);
+ 	} else {
+-		strvec_pushv(out, cmd->argv);
++		strvec_pushv(out, cmd->args.v);
+ 	}
+ 
+ 	/*
+@@ -663,7 +663,7 @@ static void trace_run_command(const struct child_process *cp)
+ 		trace_add_env(&buf, cp->env);
+ 	if (cp->git_cmd)
+ 		strbuf_addstr(&buf, " git");
+-	sq_quote_argv_pretty(&buf, cp->argv);
++	sq_quote_argv_pretty(&buf, cp->args.v);
+ 
+ 	trace_printf("%s", buf.buf);
+ 	strbuf_release(&buf);
+@@ -676,8 +676,6 @@ int start_command(struct child_process *cmd)
+ 	int failed_errno;
+ 	char *str;
+ 
+-	if (!cmd->argv)
+-		cmd->argv = cmd->args.v;
+ 	if (!cmd->env)
+ 		cmd->env = cmd->env_array.v;
+ 
+@@ -729,7 +727,7 @@ int start_command(struct child_process *cmd)
+ 			str = "standard error";
+ fail_pipe:
+ 			error("cannot create %s pipe for %s: %s",
+-				str, cmd->argv[0], strerror(failed_errno));
++				str, cmd->args.v[0], strerror(failed_errno));
+ 			child_process_clear(cmd);
+ 			errno = failed_errno;
+ 			return -1;
+@@ -758,7 +756,7 @@ int start_command(struct child_process *cmd)
+ 		failed_errno = errno;
+ 		cmd->pid = -1;
+ 		if (!cmd->silent_exec_failure)
+-			error_errno("cannot run %s", cmd->argv[0]);
++			error_errno("cannot run %s", cmd->args.v[0]);
+ 		goto end_of_spawn;
+ 	}
+ 
+@@ -868,7 +866,7 @@ int start_command(struct child_process *cmd)
+ 	}
+ 	atfork_parent(&as);
+ 	if (cmd->pid < 0)
+-		error_errno("cannot fork() for %s", cmd->argv[0]);
++		error_errno("cannot fork() for %s", cmd->args.v[0]);
+ 	else if (cmd->clean_on_exit)
+ 		mark_child_for_cleanup(cmd->pid, cmd);
+ 
+@@ -885,7 +883,7 @@ int start_command(struct child_process *cmd)
+ 		 * At this point we know that fork() succeeded, but exec()
+ 		 * failed. Errors have been reported to our stderr.
+ 		 */
+-		wait_or_whine(cmd->pid, cmd->argv[0], 0);
++		wait_or_whine(cmd->pid, cmd->args.v[0], 0);
+ 		child_err_spew(cmd, &cerr);
+ 		failed_errno = errno;
+ 		cmd->pid = -1;
+@@ -902,7 +900,7 @@ int start_command(struct child_process *cmd)
+ #else
  {
- 	struct diff_tempfile *temp;
--	const char *argv[3];
--	const char **arg = argv;
- 	struct child_process child = CHILD_PROCESS_INIT;
- 	struct strbuf buf = STRBUF_INIT;
- 	int err = 0;
+ 	int fhin = 0, fhout = 1, fherr = 2;
+-	const char **sargv = cmd->argv;
++	const char **sargv = cmd->args.v;
+ 	struct strvec nargv = STRVEC_INIT;
  
- 	temp = prepare_temp_file(r, spec->path, spec);
--	*arg++ = pgm;
--	*arg++ = temp->name;
--	*arg = NULL;
-+	strvec_push(&child.args, pgm);
-+	strvec_push(&child.args, temp->name);
+ 	if (cmd->no_stdin)
+@@ -929,20 +927,20 @@ int start_command(struct child_process *cmd)
+ 		fhout = dup(cmd->out);
  
- 	child.use_shell = 1;
--	child.argv = argv;
- 	child.out = -1;
- 	if (start_command(&child)) {
- 		remove_tempfile();
-diff --git a/prompt.c b/prompt.c
-index 5ded21a017f..50df17279d1 100644
---- a/prompt.c
-+++ b/prompt.c
-@@ -8,15 +8,12 @@
- static char *do_askpass(const char *cmd, const char *prompt)
+ 	if (cmd->git_cmd)
+-		cmd->argv = prepare_git_cmd(&nargv, cmd->argv);
++		cmd->args.v = prepare_git_cmd(&nargv, sargv);
+ 	else if (cmd->use_shell)
+-		cmd->argv = prepare_shell_cmd(&nargv, cmd->argv);
++		cmd->args.v = prepare_shell_cmd(&nargv, sargv);
+ 
+-	cmd->pid = mingw_spawnvpe(cmd->argv[0], cmd->argv, (char**) cmd->env,
++	cmd->pid = mingw_spawnvpe(cmd->args.v[0], cmd->args.v, (char**) cmd->env,
+ 			cmd->dir, fhin, fhout, fherr);
+ 	failed_errno = errno;
+ 	if (cmd->pid < 0 && (!cmd->silent_exec_failure || errno != ENOENT))
+-		error_errno("cannot spawn %s", cmd->argv[0]);
++		error_errno("cannot spawn %s", cmd->args.v[0]);
+ 	if (cmd->clean_on_exit && cmd->pid >= 0)
+ 		mark_child_for_cleanup(cmd->pid, cmd);
+ 
+ 	strvec_clear(&nargv);
+-	cmd->argv = sargv;
++	cmd->args.v = sargv;
+ 	if (fhin != 0)
+ 		close(fhin);
+ 	if (fhout != 1)
+@@ -992,7 +990,7 @@ int start_command(struct child_process *cmd)
+ 
+ int finish_command(struct child_process *cmd)
  {
- 	struct child_process pass = CHILD_PROCESS_INIT;
--	const char *args[3];
- 	static struct strbuf buffer = STRBUF_INIT;
- 	int err = 0;
+-	int ret = wait_or_whine(cmd->pid, cmd->argv[0], 0);
++	int ret = wait_or_whine(cmd->pid, cmd->args.v[0], 0);
+ 	trace2_child_exit(cmd, ret);
+ 	child_process_clear(cmd);
+ 	invalidate_lstat_cache();
+@@ -1001,7 +999,7 @@ int finish_command(struct child_process *cmd)
  
--	args[0] = cmd;
--	args[1]	= prompt;
--	args[2] = NULL;
-+	strvec_push(&pass.args, cmd);
-+	strvec_push(&pass.args, prompt);
+ int finish_command_in_signal(struct child_process *cmd)
+ {
+-	int ret = wait_or_whine(cmd->pid, cmd->argv[0], 1);
++	int ret = wait_or_whine(cmd->pid, cmd->args.v[0], 1);
+ 	trace2_child_exit(cmd, ret);
+ 	return ret;
+ }
+diff --git a/run-command.h b/run-command.h
+index 49878262584..c0d1210cc63 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -44,21 +44,17 @@
+ struct child_process {
  
--	pass.argv = args;
- 	pass.out = -1;
+ 	/**
+-	 * The .argv member is set up as an array of string pointers (NULL
+-	 * terminated), of which .argv[0] is the program name to run (usually
+-	 * without a path). If the command to run is a git command, set argv[0] to
+-	 * the command name without the 'git-' prefix and set .git_cmd = 1.
++	 * The .args is a `struct strvec', use that API to manipulate
++	 * it, e.g. strvec_pushv() to add an existing "const char **"
++	 * vector.
+ 	 *
+-	 * Note that the ownership of the memory pointed to by .argv stays with the
+-	 * caller, but it should survive until `finish_command` completes. If the
+-	 * .argv member is NULL, `start_command` will point it at the .args
+-	 * `strvec` (so you may use one or the other, but you must use exactly
+-	 * one). The memory in .args will be cleaned up automatically during
+-	 * `finish_command` (or during `start_command` when it is unsuccessful).
++	 * If the command to run is a git command, set the first
++	 * element in the strvec to the command name without the
++	 * 'git-' prefix and set .git_cmd = 1.
+ 	 *
++	 * The memory in .args will be cleaned up automatically during
++	 * `finish_command` (or during `start_command` when it is unsuccessful).
+ 	 */
+-	const char **argv;
+-
+ 	struct strvec args;
+ 	struct strvec env_array;
+ 	pid_t pid;
+diff --git a/sub-process.c b/sub-process.c
+index dfa790d3ff9..cae56ae6b80 100644
+--- a/sub-process.c
++++ b/sub-process.c
+@@ -187,7 +187,7 @@ static int handshake_capabilities(struct child_process *process,
+ 				*supported_capabilities |= capabilities[i].flag;
+ 		} else {
+ 			die("subprocess '%s' requested unsupported capability '%s'",
+-			    process->argv[0], p);
++			    process->args.v[0], p);
+ 		}
+ 	}
  
- 	if (start_command(&pass))
-diff --git a/transport.c b/transport.c
-index e4f1decae20..92ab9a3fa6b 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1204,16 +1204,15 @@ static int run_pre_push_hook(struct transport *transport,
- 	struct ref *r;
- 	struct child_process proc = CHILD_PROCESS_INIT;
- 	struct strbuf buf;
--	const char *argv[4];
-+	const char *hook_path = find_hook("pre-push");
+diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+index 3a0014417cc..bd17ecdc321 100644
+--- a/trace2/tr2_tgt_event.c
++++ b/trace2/tr2_tgt_event.c
+@@ -354,7 +354,7 @@ static void fn_child_start_fl(const char *file, int line,
+ 	jw_object_inline_begin_array(&jw, "argv");
+ 	if (cmd->git_cmd)
+ 		jw_array_string(&jw, "git");
+-	jw_array_argv(&jw, cmd->argv);
++	jw_array_argv(&jw, cmd->args.v);
+ 	jw_end(&jw);
+ 	jw_end(&jw);
  
--	if (!(argv[0] = find_hook("pre-push")))
-+	if (!hook_path)
- 		return 0;
+diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
+index 58d9e430f05..6e429a3fb9e 100644
+--- a/trace2/tr2_tgt_normal.c
++++ b/trace2/tr2_tgt_normal.c
+@@ -232,7 +232,7 @@ static void fn_child_start_fl(const char *file, int line,
+ 	strbuf_addch(&buf_payload, ' ');
+ 	if (cmd->git_cmd)
+ 		strbuf_addstr(&buf_payload, "git ");
+-	sq_append_quote_argv_pretty(&buf_payload, cmd->argv);
++	sq_append_quote_argv_pretty(&buf_payload, cmd->args.v);
  
--	argv[1] = transport->remote->name;
--	argv[2] = transport->url;
--	argv[3] = NULL;
-+	strvec_push(&proc.args, hook_path);
-+	strvec_push(&proc.args, transport->remote->name);
-+	strvec_push(&proc.args, transport->url);
+ 	normal_io_write_fl(file, line, &buf_payload);
+ 	strbuf_release(&buf_payload);
+diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+index e4acca13d64..2ff9cf70835 100644
+--- a/trace2/tr2_tgt_perf.c
++++ b/trace2/tr2_tgt_perf.c
+@@ -335,10 +335,10 @@ static void fn_child_start_fl(const char *file, int line,
+ 	strbuf_addstr(&buf_payload, " argv:[");
+ 	if (cmd->git_cmd) {
+ 		strbuf_addstr(&buf_payload, "git");
+-		if (cmd->argv[0])
++		if (cmd->args.nr)
+ 			strbuf_addch(&buf_payload, ' ');
+ 	}
+-	sq_append_quote_argv_pretty(&buf_payload, cmd->argv);
++	sq_append_quote_argv_pretty(&buf_payload, cmd->args.v);
+ 	strbuf_addch(&buf_payload, ']');
  
--	proc.argv = argv;
- 	proc.in = -1;
- 	proc.trace2_hook_name = "pre-push";
- 
+ 	perf_io_write_fl(file, line, event_name, NULL, &us_elapsed_absolute,
 -- 
 2.34.0.831.gd33babec0d1
 
