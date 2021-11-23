@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3611C433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 16:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C919C433FE
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 16:29:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233492AbhKWQcx (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S233581AbhKWQcx (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 23 Nov 2021 11:32:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34590 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233262AbhKWQcs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 11:32:48 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE832C061574
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 08:29:39 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id l16so2002573wrp.11
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 08:29:39 -0800 (PST)
+        with ESMTP id S233507AbhKWQcv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 11:32:51 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1029C06175A
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 08:29:42 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id 77-20020a1c0450000000b0033123de3425so2854830wme.0
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 08:29:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=p0AZtYYcmA9zHCJOuuf99m3eNgUjUnp25nXilSdjD7I=;
-        b=Wp4TzSpHkCJCSuZFTlN6fSAJNIN3PK3vrSTUciHdBUymPoMN7gCZlJg0sB4Slr3C4I
-         I+J5/r5+Pr+bCTfz6LHv744T40KWxWHw3+yiA6GhDqaHAKGzfksLtnXVlnsvL/9U8S4V
-         28nM8Fi0tQSScyqb71q4z3WVguSMmlgB51vNj7VRi8XrSZ+Zae7KSba3f4SBwzV7Jubt
-         0PqFOSUx781z7HxKTbPcZGOl85jgcjMHCHq6UR6+5rsfFYmQBov8mQGxjy7mxRHDKH3Y
-         44FGaY+in5pc1f/NjtYsQiFnnwNuODwZp252znEs4F5ZysTTiyb4pQ60UlpADnz+1sgl
-         cNPg==
+        bh=2MaEZJJv7BpQjQ70XBjjm0QEMe+H+kgnTctqvaXQc0A=;
+        b=SRsOPz7QqiQsVTtr/LC2HQoaQFMeKr/x1xKPLi7lGkJff3DlD2UVQdvi7g79BxXfF6
+         h3VwWms7JhlMjtyq5BI8hnbcHaewpng+ika8f6PSNVyWHy/PASd0VF+o/jNSks1Hc4sM
+         JSvbKQw0zOcJDg+aSfJ2obusJJaA6ZZaJDmcYX7iK6fzvJwNaJnJIM9LQJjG7z8+B60t
+         eztxQrAWcOecavKtOid7UhWowbFcEwNelAotJYcRX73a3zxeizDsuqwU2q5O3reunSpp
+         BIi+ZPb65kvOyjdy1eYqQaAEg0ZNlyGIK5dyerHJPA0qP1SGHiaCyyZX8mdwy4rUy6Zr
+         2saA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=p0AZtYYcmA9zHCJOuuf99m3eNgUjUnp25nXilSdjD7I=;
-        b=CqOf0Pbn3Tg8UCHeqecNYYMZXO2yPAp0b+zTPls5pWYcx63OB60mGwI6XSeZzcAStI
-         J6d5gWLQtwkgkFpVk0WVK+xGVpnNWuySnXCAGJVuv4264up7oBmiZ/k9beuWZ6Fi7W6X
-         /qV8wCdTCqMuTS0AKSiHOguRDd+eBc3Ewe+Tdf46auZ0iG4SAgCYROum+exAI3/9fBgO
-         V9KSHsWzc7Vad4Jwxtga+wc2YYvNQ23H5pkxpV2oPQmVRmb4OGTxZPbp3nm/rL5+xuT0
-         whaSTB7I8vs4E1a6MjBC+zBo1nTDpSxjbcHr7wzCwGIHA6XFJ1CCZ46MLDiiCCAOa6Ky
-         966w==
-X-Gm-Message-State: AOAM533yLazFJcSNQ/yIvyI7OhdEcSler8fuE0lLSAQOBiJoiGYQCFUV
-        BHIW3A5IQaWeq7YKInz2s/l+v4uelR4L7Q==
-X-Google-Smtp-Source: ABdhPJwkAphJonTm9SIcUlkSUrRuglBHOe+y5hF66lr5tLxDjE25wmU8l7wzg1dWrBN+YYTud9OvwQ==
-X-Received: by 2002:a5d:4ece:: with SMTP id s14mr8457667wrv.371.1637684978238;
-        Tue, 23 Nov 2021 08:29:38 -0800 (PST)
+        bh=2MaEZJJv7BpQjQ70XBjjm0QEMe+H+kgnTctqvaXQc0A=;
+        b=CEhV0gQKqHT/J1C/SFkoOfixWHg+0ly7hbLntF+j3wCcgS4kr9foCuW6Q+wzR3SCsy
+         5FJ23Ud4D4DjgwbByZBoLL0+K6FxfJo0HSKB47de3XOSG8qJ/p5KlbGuNXUzQ/23Zrmi
+         lD93AUf8Gmu6gTDnK8MZZu3OgsQHoJLeUant9M/6MRH+bOUq4kmE88pXAexqNZPa6pE8
+         vCpkmbkQjIHm7Yqs98Sp7xfaEofYf2uCnGpogOwrKwbgFfN+yG4kD44O6S2SyPMgflTD
+         4OZmq58ALhoogmZGNdTgAJR9dY/Dpf0Zpyx+ukpMBa1nwXAfgYEURJsOTaGWOo96GB5b
+         uc+Q==
+X-Gm-Message-State: AOAM532iAbIsN+MnLeXeDg1G2exhScEwvDnOfWt6Xp1O0Khy/abrndo7
+        0zXTKhPubUdv8uUo1XximxFgK+qX+Seneg==
+X-Google-Smtp-Source: ABdhPJxvpp5XNKtIwsciDF04gGzd0QLRUcWiYAC9Mfxt2i/nSisUaFXvTtCF1M4N4cpae3j0WgyZ6w==
+X-Received: by 2002:a05:600c:4e8d:: with SMTP id f13mr4801322wmq.7.1637684980955;
+        Tue, 23 Nov 2021 08:29:40 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h22sm2059940wmq.14.2021.11.23.08.29.36
+        by smtp.gmail.com with ESMTPSA id h22sm2059940wmq.14.2021.11.23.08.29.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Nov 2021 08:29:37 -0800 (PST)
+        Tue, 23 Nov 2021 08:29:40 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Victoria Dye <vdye@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 3/5] CI: rename the "Linux32" job to lower-case "linux32"
-Date:   Tue, 23 Nov 2021 17:29:10 +0100
-Message-Id: <patch-v4-3.5-37b97fc6c3a-20211123T134300Z-avarab@gmail.com>
+Subject: [PATCH v4 5/5] CI: don't run "make test" twice in one job
+Date:   Tue, 23 Nov 2021 17:29:12 +0100
+Message-Id: <patch-v4-5.5-ee2f9254fc7-20211123T134300Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.0.830.g6387a5d107e
 In-Reply-To: <cover-v4-0.5-00000000000-20211123T134300Z-avarab@gmail.com>
 References: <cover-v3-0.5-00000000000-20211120T115414Z-avarab@gmail.com> <cover-v4-0.5-00000000000-20211123T134300Z-avarab@gmail.com>
@@ -69,86 +69,115 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As a follow-up to the preceding commit's shortening of CI job names,
-rename the only job that starts with an upper-case letter to be
-consistent with the rest. It was added in 88dedd5e72c (Travis: also
-test on 32-bit Linux, 2017-03-05).
+The "linux-clang" and "linux-gcc" jobs both run "make test" twice, but
+with different environment variables. Running these in sequence seems
+to have been done to work around some constraint on Travis, see
+ae59a4e44f3 (travis: run tests with GIT_TEST_SPLIT_INDEX, 2018-01-07).
+
+By having these run in parallel we'll get jobs that finish much sooner
+than they otherwise would have.
+
+We can also simplify the control flow in "ci/run-build-and-tests.sh"
+as a result, since we won't run "make test" twice we don't need to run
+"make" twice at all, let's default to "make all test" after setting
+the variables, and then override it to just "all" for the compile-only
+tests.
+
+Add a comment to clarify that new "test" targets should adjust
+$MAKE_TARGETS rather than being added after the "case/esac". This
+should avoid future confusion where e.g. the compilation-only
+"pedantic" target will unexpectedly start running tests. See [1] and
+[2].
+
+1. https://lore.kernel.org/git/211122.86ee78yxts.gmgdl@evledraar.gmail.com/
+2. https://lore.kernel.org/git/211123.86ilwjujmd.gmgdl@evledraar.gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .github/workflows/main.yml        | 3 ++-
- ci/install-docker-dependencies.sh | 2 +-
- ci/lib.sh                         | 2 +-
- ci/run-docker-build.sh            | 2 +-
- ci/run-docker.sh                  | 2 +-
- 5 files changed, 6 insertions(+), 5 deletions(-)
+ .github/workflows/main.yml |  9 +++++++++
+ ci/run-build-and-tests.sh  | 23 +++++++++++------------
+ 2 files changed, 20 insertions(+), 12 deletions(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index c7c10456572..91b565f75bb 100644
+index d402402a18b..628bcbf495e 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -266,7 +266,8 @@ jobs:
-         vector:
-         - jobname: linux-musl
-           image: alpine
--        - jobname: Linux32
-+        - jobname: linux32
-+          os: ubuntu32
-           image: daald/ubuntu32:xenial
-         - jobname: pedantic
-           image: fedora
-diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependencies.sh
-index 07a8c6b199d..78b7e326da6 100755
---- a/ci/install-docker-dependencies.sh
-+++ b/ci/install-docker-dependencies.sh
-@@ -4,7 +4,7 @@
- #
+@@ -225,10 +225,19 @@ jobs:
+           - jobname: linux-clang
+             cc: clang
+             pool: ubuntu-latest
++          - jobname: linux-sha256
++            cc: clang
++            os: ubuntu
++            pool: ubuntu-latest
+           - jobname: linux-gcc
+             cc: gcc
+             cc_package: gcc-8
+             pool: ubuntu-latest
++          - jobname: linux-TEST-vars
++            cc: gcc
++            os: ubuntu
++            cc_package: gcc-8
++            pool: ubuntu-latest
+           - jobname: osx-clang
+             cc: clang
+             pool: macos-latest
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 18056501ec2..280dda7d285 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -10,16 +10,13 @@ windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
+ *) ln -s "$cache_dir/.prove" t/.prove;;
+ esac
  
- case "$jobname" in
--Linux32)
-+linux32)
- 	linux32 --32bit i386 sh -c '
- 		apt update >/dev/null &&
- 		apt install -y build-essential libcurl4-openssl-dev \
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 73d959e87f7..0b3b0144882 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -191,7 +191,7 @@ osx-clang|osx-gcc)
- 	;;
- linux-gcc-default)
- 	;;
--Linux32)
-+linux32)
- 	CC=gcc
- 	;;
- linux-musl)
-diff --git a/ci/run-docker-build.sh b/ci/run-docker-build.sh
-index 5d2764ad3a3..6cd832efb9c 100755
---- a/ci/run-docker-build.sh
-+++ b/ci/run-docker-build.sh
-@@ -15,7 +15,7 @@ then
- fi
+-if test "$jobname" = "pedantic"
+-then
+-	export DEVOPTS=pedantic
+-fi
++export MAKE_TARGETS="all test"
  
+-make
  case "$jobname" in
--Linux32)
-+linux32)
- 	switch_cmd="linux32 --32bit i386"
+ linux-gcc)
+ 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+-	make test
++	;;
++linux-TEST-vars)
+ 	export GIT_TEST_SPLIT_INDEX=yes
+ 	export GIT_TEST_MERGE_ALGORITHM=recursive
+ 	export GIT_TEST_FULL_IN_PACK_ARRAY=true
+@@ -33,23 +30,25 @@ linux-gcc)
+ 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+ 	export GIT_TEST_WRITE_REV_INDEX=1
+ 	export GIT_TEST_CHECKOUT_WORKERS=2
+-	make test
  	;;
- linux-musl)
-diff --git a/ci/run-docker.sh b/ci/run-docker.sh
-index b610dd4db84..af89d1624a4 100755
---- a/ci/run-docker.sh
-+++ b/ci/run-docker.sh
-@@ -6,7 +6,7 @@
- . ${0%/*}/lib.sh
+ linux-clang)
+ 	export GIT_TEST_DEFAULT_HASH=sha1
+-	make test
++	;;
++linux-sha256)
+ 	export GIT_TEST_DEFAULT_HASH=sha256
+-	make test
+ 	;;
+ pedantic)
+ 	# Don't run the tests; we only care about whether Git can be
+ 	# built.
+-	;;
+-*)
+-	make test
++	export DEVOPTS=pedantic
++	export MAKE_TARGETS=all
+ 	;;
+ esac
  
- case "$jobname" in
--Linux32)
-+linux32)
- 	CI_CONTAINER="daald/ubuntu32:xenial"
- 	;;
- linux-musl)
++# Any new "test" targets should not go after this "make", but should
++# adjust $MAKE_TARGETS. Otherwise compilation-only targets above will
++# start running tests.
++make $MAKE_TARGETS
+ check_unignored_build_artifacts
+ 
+ save_good_tree
 -- 
 2.34.0.830.gb9cdc59c8af
 
