@@ -2,112 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65738C433F5
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 01:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05C5BC433EF
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 01:22:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231176AbhKWBWg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 20:22:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53382 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231363AbhKWBWg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 20:22:36 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D558C061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 17:19:28 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id z5so84989945edd.3
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 17:19:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1UiqXPN7YvxB7B/wHyRtsw7lv+l5FkL+S96vkTKcsQ0=;
-        b=GXvFjACVW16ZmnDUylunOnjHN1diPHJVbprCiqiioTXJmDcncumzCvUSm1jPhJTIF4
-         0fAwzj85h5jECzD90sYUuGNkBQoMCk/iX+4Tbm78NdO8P9XyvRJE+hae0UY2AtqOKk3v
-         bKNvR1MiNLKuOpt4GqiRlMhwYm+1nEgqUDV2vqsuHPx2sOORUjwqCIqU6psTtWQPTwnv
-         c+GD0bPEAaQfBPfTFkE7xqgtKp3fmuglMiGTVMbvA4fSJLW0dYg41OXy7+/1LWrouxBW
-         hYCa1J1U8HGtEBVp5raCiS3oCMFmvDxWAMtA+660yprU9B5waexNvJIXYDP8q0aaWEuz
-         GNzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1UiqXPN7YvxB7B/wHyRtsw7lv+l5FkL+S96vkTKcsQ0=;
-        b=BKB2/cFZBA2DCeVPKtMKE6KoEsPw+aGWgfgb+C4hPI5NYp1lZsAI6dMOVFT6+LFCp1
-         Pz1WUkjFthX3U3cUX2DtNmfPstj0x4ByNrjzavTjdX6WSSO4PEO46MoW591i7sfhx9KM
-         5zG+yHSEV3YMH1dYlpFJGp0h8ApDCjmkhWjypyBZD3EJcqRpRTK7dxAuonCiS4Iq/gn/
-         go3wh6YioHISQNDFaFYk1puj7y0e5lyvwvLs23UVZa3O2L/hZ0boVAHlxmErNFRSKlej
-         2q324ANq6llXSCg+mRXX6QPdNb+WIQ+FLZdwwkBbGNE00xYNWHrrqLUcd2l/AVcmEiyL
-         Zaew==
-X-Gm-Message-State: AOAM530jHz6EwIZNnDhHeWvCMScqCZzg9O6HYM4R9ix4VVPTSdzmBEQV
-        jAA48AEfiOi7J8e7ymEf7Y6EG6NtlyE9pqW66DY=
-X-Google-Smtp-Source: ABdhPJxL3PUnYsvfI88TsaLvoKKQOak+wp68LnElKAyE6Favo23jyuahdqOMvxFxlGA3GXuEhDbTMkmb2DU3iE47YiI=
-X-Received: by 2002:a17:906:4c9:: with SMTP id g9mr2397777eja.172.1637630366970;
- Mon, 22 Nov 2021 17:19:26 -0800 (PST)
+        id S232289AbhKWBZo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 20:25:44 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51267 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229484AbhKWBZm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 20:25:42 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F1B1F6F35;
+        Mon, 22 Nov 2021 20:22:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=CKBWgU7v4xksnty56otzH0FP3Uj4J1/G4EQcGP
+        IB/3Q=; b=qSSmDZO6nc1v/hCM9jXKEIky53VDHLn82i+apowf6Wt1+Yrm1c9r0R
+        Ot081KH/sARiuB/AhUnqtVGvsubnGZOL0ESumcVrAZyWY6WrMJk3KcIYe2o2ArSx
+        vVnyWuiAXQmQOoac0ApHab04xQ2Psk2vLHybueAlSyPitVs+JqZsY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 86594F6F34;
+        Mon, 22 Nov 2021 20:22:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EF78FF6F33;
+        Mon, 22 Nov 2021 20:22:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com, peff@peff.net,
+        avarab@gmail.com
+Subject: Re: [PATCH v3 2/2] config: include file if remote URL matches a glob
+References: <cover.1634077795.git.jonathantanmy@google.com>
+        <cover.1637020610.git.jonathantanmy@google.com>
+        <1c1a07a0b65d4bbbb0f2628a3ddf1980e37d5065.1637020610.git.jonathantanmy@google.com>
+Date:   Mon, 22 Nov 2021 17:22:32 -0800
+In-Reply-To: <1c1a07a0b65d4bbbb0f2628a3ddf1980e37d5065.1637020610.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Mon, 15 Nov 2021 16:00:33 -0800")
+Message-ID: <xmqqtug3aco7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <a5528cbb14ddbbf26cde873e3f3e95744d59b950.1637455620.git.gitgitgadget@gmail.com>
- <20211123003958.3978-1-chooglen@google.com>
-In-Reply-To: <20211123003958.3978-1-chooglen@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 22 Nov 2021 17:19:15 -0800
-Message-ID: <CABPp-BE0Bcimwr1wwcnnh+6apx7r114Oqnu=QDgKEn6VAHAtFg@mail.gmail.com>
-Subject: Re: [PATCH 8/8] dir: avoid removing the current working directory
-To:     Glen Choo <chooglen@google.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D5F318A2-4BFB-11EC-98AF-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 22, 2021 at 4:40 PM Glen Choo <chooglen@google.com> wrote:
+Jonathan Tan <jonathantanmy@google.com> writes:
+
+> This is a feature that supports config file inclusion conditional on
+> whether the repo has a remote with a URL that matches a glob.
 >
-> > @@ -3259,9 +3259,12 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
-> >       closedir(dir);
-> >
-> >       strbuf_setlen(path, original_len);
-> > -     if (!ret && !keep_toplevel && !kept_down)
-> > -             ret = (!rmdir(path->buf) || errno == ENOENT) ? 0 : -1;
-> > -     else if (kept_up)
-> > +     if (!ret && !keep_toplevel && !kept_down) {
-> > +             if (the_cwd && !strcmp(the_cwd, path->buf))
-> > +                     ret = -1; /* Do not remove current working directory */
-> > +             else
-> > +                     ret = (!rmdir(path->buf) || errno == ENOENT) ? 0 : -1;
-> > +     } else if (kept_up)
-> >               /*
-> >                * report the uplevel that it is not an error that we
-> >                * did not rmdir() our directory.
-> > @@ -3327,6 +3330,8 @@ int remove_path(const char *name)
-> >               slash = dirs + (slash - name);
-> >               do {
-> >                       *slash = '\0';
-> > +                     if (the_cwd && !strcmp(the_cwd, dirs))
-> > +                             break;
-> >               } while (rmdir(dirs) == 0 && (slash = strrchr(dirs, '/')));
-> >               free(dirs);
-> >       }
+> Similar to my previous work on remote-suggested hooks [1], the main
+> motivation is to allow remote repo administrators to provide recommended
+> configs in a way that can be consumed more easily (e.g. through a
+> package installable by a package manager - it could, for example,
+> contain a file to be included conditionally and a post-install script
+> that adds the include directive to the system-wide config file).
 >
-> I don't think it's appropriate to implement user-facing concern (don't remove
-> cwd because this will confuse users) in library functions like remove_path().
-> remove_path() has other callers e.g. midx.c, and possible future callers e.g.
-> we're working on adding a command to delete corrupted commit-graphs and this
-> library function would be extremely handy.
+> In order to do this, Git reruns the config parsing mechanism upon
+> noticing the first URL-conditional include in order to find all remote
+> URLs, and these remote URLs are then used to determine if that first and
+> all subsequent includes are executed. Remote URLs are not allowed to be
+> configued in any URL-conditionally-included file.
+>
+> [1] https://lore.kernel.org/git/cover.1623881977.git.jonathantanmy@google.com/
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  Documentation/config.txt |  11 ++++
+>  config.c                 | 121 ++++++++++++++++++++++++++++++++++++---
+>  config.h                 |   7 +++
+>  t/t1300-config.sh        | 100 ++++++++++++++++++++++++++++++++
+>  4 files changed, 231 insertions(+), 8 deletions(-)
 
-I think we'd want this code change for those cases too.  Said another
-way, why wouldn't these callers want to avoid deleting the original
-current working directory of the git process (which is likely still
-the current working directory of the parent process)?  Deleting that
-directory causes problems regardless of whether it's a user-facing
-command (rm, merge, stash, etc.) or something more internal (midx or
-commit-graphs stuff being called by gc) that is doing the deleting.
+Here is just a design level comment, without trying to outline the
+implementation in my head like I usually do before making any
+suggestion, but it strikes me somewhat sad that config.c needs to
+know specifically about "remote_url".
 
-Putting it in this helper function means we protect all current and
-future callers without developers having to remember which
-"remove_path()" variant they need and why.
+I wonder if this can be a more generalized framework that allows us
+to say "we introduce a new [includeIf] variant to get another file
+included only if some condition is met for the configuration
+variables we read without the includeIf directive", with variations
+of "condition" including
 
-> It seems more appropriate to check the_cwd from builtin/add.c and builtin/rm.c
-> instead.
+ - a literal X is among the values of multi-valued variable Y.
+ - a pattern X matches one of the values of multi-valued variable Y.
+ - a literal Y is the name of an existing configuration variable.
+ - a pattern Y matches the name of an existing configuration variable.
 
-Not sure how you determined that those two paths are affected or that
-those are the only two.
+If that is done, I would imagine that the feature can become a thin
+specialization e.g. "there is an existing configuration variable
+whose name is 'remotes.https://github.com/janathantanmy/git.url'"
+
+Perhaps I am dreaming?
+
+Thanks.
+
+
+
