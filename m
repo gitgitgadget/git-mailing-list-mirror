@@ -2,140 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69B7BC433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 17:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED087C433F5
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 18:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239498AbhKWSCE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 13:02:04 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54043 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239024AbhKWSCE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 13:02:04 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A936CFCF28;
-        Tue, 23 Nov 2021 12:58:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=8PJd1VdiuIG2
-        DEkhtdGJNBww9Q+nb3cg31KcqIn5Pak=; b=nyRF1wSVfQ+Vcoc+xx0cNIm8v3tC
-        KfCJt8873SsshszuTAlp+sj7tDbbyo1oJrFZA7sMT4Ho0XL4fzvdbnsvQyPa24bd
-        j5PeDV611YFs7SFvMIL87OJ3SHx6dC+hPLMuTZcCXBvOmtHlrcrQTl7xfZKpFJbZ
-        KDYrChOE31wAeCg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0A49FCF27;
-        Tue, 23 Nov 2021 12:58:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 021B9FCF26;
-        Tue, 23 Nov 2021 12:58:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
+        id S239365AbhKWSW3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 13:22:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60796 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232326AbhKWSW3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 13:22:29 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D42A1C061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 10:19:20 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id m17-20020a170902db1100b001421cb34857so9390052plx.15
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 10:19:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=FrgZD5aWDWQdvl8X88DjDRYDBylXwekNznqFn2/NYEE=;
+        b=EECtx0fvn/vxpSzbEPT4JFZ5OXxMdDZY52nzitU3x6tNZIDiDE7PDiMHRX/PpYVuaE
+         leQ1It2UbMyLE6CZtEuzjI4SktCHwrj6EJA+9N0f8mcxdiWvGoB4CKL2Lv0aTBsaPoze
+         gWx1z2Lu+NtR7Ajjal/0Bzqk131MbqazcBjCOIEWmvO9uBDYFBDOC8/VxxNxsitiBiAG
+         YpefwS98I13qD4oS7+lY65NHzOzxC0nHHOzW3K5KKDrthFzUZBFg0pcRXc7HwgogOBIv
+         C+KvKbgkmKESAZq6qAdHBFZuuGThRmGMHgE31sMLpRUqapC4O4Wv0WjYU8kaPLNbeG2K
+         saJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=FrgZD5aWDWQdvl8X88DjDRYDBylXwekNznqFn2/NYEE=;
+        b=K60lkF050m0HDT4IVABpo8xAV+6q+hta/o4I1k+wqWhE71CXCGMJXBRtdCKDyES5yw
+         efxabJqFJ5AF4/s7wo3eUSMKMuIbO05cWJUslLZR03iKd+FsNYRI/R133UOtfD+PoEAB
+         tgMHda/0gcluNdaUi/Dd0OQcZPKkiUh7aguFn8iQa4PA4vgQ1DN7UmlpU5uOabMiB9Zf
+         uqlxvbYsPDhzPq9WI4R/nWCCQCaHSbzIypKiN54YU33Zj7F0Tz74yAOHWauWR0iF0/kf
+         MSgc9uun2TFH2a2DrmQZNKb30YwPkLkouS2aSs/z5EpvpsVjZdtLEfI9jRhSzPvbOkhf
+         jH7A==
+X-Gm-Message-State: AOAM533Wq0QlxBW/aV7QuvD2l71QEnWeRXiIM0paNjkOik/P2q6tHQTQ
+        99/rDLB3qAlp8AmpvkYFg7fopVB6aHMSeQ==
+X-Google-Smtp-Source: ABdhPJyZynO0SoySZlY0MBBYIzMjNJq/du72+kvAAfQUQeT9Rk8qEp+yvccscPXGj3T+1AuRSj9HvFHuwtvFQQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:6b47:b0:142:82e1:6c92 with SMTP
+ id g7-20020a1709026b4700b0014282e16c92mr9656537plt.84.1637691560360; Tue, 23
+ Nov 2021 10:19:20 -0800 (PST)
+Date:   Tue, 23 Nov 2021 10:19:18 -0800
+In-Reply-To: <CABPp-BE0Bcimwr1wwcnnh+6apx7r114Oqnu=QDgKEn6VAHAtFg@mail.gmail.com>
+Message-Id: <kl6lmtluka55.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <a5528cbb14ddbbf26cde873e3f3e95744d59b950.1637455620.git.gitgitgadget@gmail.com>
+ <20211123003958.3978-1-chooglen@google.com> <CABPp-BE0Bcimwr1wwcnnh+6apx7r114Oqnu=QDgKEn6VAHAtFg@mail.gmail.com>
+Subject: Re: [PATCH 8/8] dir: avoid removing the current working directory
+From:   Glen Choo <chooglen@google.com>
+To:     Elijah Newren <newren@gmail.com>
 Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] fixup??? Merge branch 'ab/ci-updates' into seen
-References: <pull.1081.git.1637578930464.gitgitgadget@gmail.com>
-        <211122.86ee78yxts.gmgdl@evledraar.gmail.com>
-        <nycvar.QRO.7.76.6.2111222257430.63@tvgsbejvaqbjf.bet>
-        <211123.8635nnydmm.gmgdl@evledraar.gmail.com>
-        <nycvar.QRO.7.76.6.2111231215020.63@tvgsbejvaqbjf.bet>
-        <211123.86ilwjujmd.gmgdl@evledraar.gmail.com>
-Date:   Tue, 23 Nov 2021 09:58:53 -0800
-In-Reply-To: <211123.86ilwjujmd.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Tue, 23 Nov 2021 13:18:09 +0100")
-Message-ID: <xmqqo86a92jm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0637F3EE-4C87-11EC-A2E6-62A2C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> I'm pointing out that your patch to "master" has a logic error where yo=
-u
-> added the scalar tests after that case/esac, but on "master" any new
-> "make new-test" needs to be added thusly:
+>> I don't think it's appropriate to implement user-facing concern (don't remove
+>> cwd because this will confuse users) in library functions like remove_path().
+>> remove_path() has other callers e.g. midx.c, and possible future callers e.g.
+>> we're working on adding a command to delete corrupted commit-graphs and this
+>> library function would be extremely handy.
 >
->     diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
->     index cc62616d806..37df8e2397a 100755
->     --- a/ci/run-build-and-tests.sh
->     +++ b/ci/run-build-and-tests.sh
->     @@ -34,21 +34,28 @@ linux-gcc)
-> ...
->      *)
->             make test
->     +       make new-test
->             ;;
->      esac
->     +"and not here, as it would run under pedantic"
->     =20
->      check_unignored_build_artifacts
->     =20
-> As a result if you look at your own CI run's "pedantic" job at
-> https://github.com/gitgitgadget/git/runs/4292915519?check_suite_focus=3D=
-true
-> you'll see that it runs the scalar test, which is not the
-> intention. That job should be compile-only job with the -pedantic flag.
+> I think we'd want this code change for those cases too.  Said another
+> way, why wouldn't these callers want to avoid deleting the original
+> current working directory of the git process (which is likely still
+> the current working directory of the parent process)?  Deleting that
+> directory causes problems regardless of whether it's a user-facing
+> command (rm, merge, stash, etc.) or something more internal (midx or
+> commit-graphs stuff being called by gc) that is doing the deleting.
 
-I think the above shows that it is a bug in the topic itself, but
-the presense of the ab/ci-updates topic makes the issue harder to
-see.  It makes the problem manifest in quite a different way.  The
-band-aid we saw from Dscho does "fix" the manifestation after two
-topics get merged (i.e. scalar build or test must follow the primary
-build and cannot be done by itself), without correcting the original
-bug (i.e.  scalar test is done in a wrong CI job).
+I agree that most, possibly all, of our commands should prefer to die
+than to remove the cwd, but that doesn't justify adding
+application-level concerns to a general-purpose utility function. Even
+if it sounds overly defensive, having an obviously correct utility
+function makes it easier for future authors to know exactly what their
+code is doing and why. And surely if we're imaginative enough, we can
+definitely dream up some possible use cases for remove_path() that don't
+want this dying behavior e.g. other applications that link to our
+libraries, or some new merge strategy that may need to remove + restore
+the cwd.
 
-Also, when writing recipes for CI, if you know that scalar build or
-test must be preceded by primary build, I wonder if it is with more
-good manners to write
+I'm not going to say that we'll *definitely* need remove_path()
+in its current form, but mixing concerns like this is an invitation to
+unexpected behavior. An (imperfect) example that demonstrates this
+principle is https://lore.kernel.org/git/24bffdab139435173712101aaf72f7277298c99d.1632497954.git.gitgitgadget@gmail.com/,
+where we made a change to a generic path matching function in order to
+speed up unpack_trees(), but accidentally ended up breaking gitignore.
 
-	make test
--	make -C scalar test
-+	make && make -C scalar test
+> Putting it in this helper function means we protect all current and
+> future callers without developers having to remember which
+> "remove_path()" variant they need and why.
 
-to make the dendency clear?  In addition, it would be courteous to
-the fellow developers to make the public entry points like "all" and
-"test" self contained.  The Makefile of scalar knows as well as, or
-better than, the developers that going up to the top-level of the
-working tree and running "make" is required before "all" target can
-be built, so automating that would help everybody from the trouble,
-and the silly ugliness of "make && make -C there" I suggested above.
+Code comments sound like adequate protection to me. Fudging the names a
+little..
 
-I do not, for example, mind at all if something silly like this was
-done in contrib/scalar/Makefile:
+  /*
+   * Pretend we have utility function that generalizes
+   * check-then-delete (though we probably won't need it).
+   */
+  static int remove_path_conditionally(const char *name, check_path_fn can_delete_path);
 
-    all: ../../git
-    ../../git:
-	$(MAKE) -C ../..
-    test: all
-	...
+  /**
+   * This is identical to remove_path(), except that it will die if
+   * attempting to remove the_cwd. When writing Git commands, prefer
+   * using this over remove_path() so that we don't delete the cwd and
+   * leave the user in a confusing state.
+   */
+  int remove_path_except_cwd(const char *name)
+  {
+    return remove_path_conditionally(name, die_on_cwd);
+  }
 
-which is with clearly broken dependencies (e.g. if you edit
-revision.c, scalar will not be rebuilt or the change would not
-affect scalar's tests), but for the purpose of "letting CI build and
-test from scratch to smoke out problems early", it is good enough.
+  /*
+   * Tries to remove the path with empty directories along it, ignores
+   * ENOENT. Unless you really need to remove the path unconditionally,
+   * consider using remove_path_except_cwd() instead.
+   */
+  int remove_path(const char *name);
 
-Perhaps =C3=86var's suggestions were a lot more perfectionist than what
-pragmatic me would say, and didn't mesh well with the test of Dscho
-who is even more pragmatic than me?  In a separate message, Dscho
-talks about weeks of delay, but it does not look to me that it is
-solely =C3=86var's fault.
+>> It seems more appropriate to check the_cwd from builtin/add.c and builtin/rm.c
+>> instead.
+>
+> Not sure how you determined that those two paths are affected or that
+> those are the only two.
 
-We know we hope to be able to make scalar as part of the top-level
-offering from the project someday, but before that, we should make
-sure it is as good as it has been advertiesed so far, and by not
-even being able to easily integrate "correctly" (i.e. in line with
-the design of the surrounding code) with the CI, we are stumbling at
-the first step.
+Typo: s/add/apply.
 
-Thanks, both.
+I took the example from your test cases:
+
+  diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
+  index ff4e7cd89fa..4362e7b15e5 100755
+  --- a/t/t2501-cwd-empty.sh
+  +++ b/t/t2501-cwd-empty.sh
+  @@ -191,7 +191,7 @@ test_expect_success 'revert fails if cwd needs to be removed' '
+    test_path_is_dir dirORfile
+   '
+ 
+  -test_expect_failure 'rm does not remove cwd incidentally' '
+  +test_expect_success 'rm does not remove cwd incidentally' '
+    test_when_finished "git reset --hard" &&
+    git checkout foo/bar/baz &&
+ 
+  @@ -205,7 +205,7 @@ test_expect_failure 'rm does not remove cwd incidentally' '
+    test_path_is_dir foo
+   '
+ 
+  -test_expect_failure 'apply does not remove cwd incidentally' '
+  +test_expect_success 'apply does not remove cwd incidentally' '
+    test_when_finished "git reset --hard" &&
+    git checkout foo/bar/baz &&
+
+I read this as "I made these changes in order to make these tests pass".
+I really like the 'TDD-ish' approach you used in this series; as a
+reader, it gave me a clear idea of the expected outcome of your changes.
+From that perspective, the fact that there are certainly untested paths
+which are affected takes away some of the benefits of this approach.
