@@ -2,64 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02D66C433F5
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 09:04:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2FCDC433F5
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 09:09:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232412AbhKWJHW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 04:07:22 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.20]:20612 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232331AbhKWJHT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 04:07:19 -0500
-X-Greylist: delayed 357 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Nov 2021 04:07:18 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1637657528;
-    s=strato-dkim-0002; d=nezwerg.de;
-    h=In-Reply-To:Date:Message-ID:From:References:Cc:To:Subject:Cc:Date:
-    From:Subject:Sender;
-    bh=jpwFQzrqn7hQUBq2aBcJvKaJmA4flshg/1WH7oGhKFQ=;
-    b=TI2BKfv/5EAIrweu/ViGhGJcLhHg6LQZKDYXxHjRbgJMbyf1jkI8ZG9MLnegpkPJfO
-    QBnUx6TbuiPmjCd/GQBmwhc+PIGO+PtQurzR/K75WUa01cbAZJJJ51yhNLYhB9/xWexe
-    VIXAwc2y1gbptSwO1q9llJDPK2eCyUGbl6vXwx8TrmKuA123GgZF5r5dM+cp6moXpybt
-    vOf9T7/tt4fjEMxXG0xVpbsHPe7NoeLRRhzL3agiedCdtMFmP2XCQlMdhjDRlCmlrMWU
-    XXUzd2Fv5x73abdnhN5FeNzhQKprsnKRhl2qsa7YPhrEolGvITxh32pE3h1YRKHvtHjZ
-    akLg==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":IGUXYWCmfuWscPL1D1JO6dFpyf1vPb4ynTLEQ3AnwxYpaMfYGx6jswzFFT4lHLOpNiP/"
-X-RZG-CLASS-ID: mo00
-Received: from mail
-    by smtp.strato.de (RZmta 47.34.6 DYNA|AUTH)
-    with ESMTPSA id Y0a096xAN8q8413
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 23 Nov 2021 09:52:08 +0100 (CET)
-Subject: Re: [PATCH] editor: only save (and restore) the terminal if using a
- tty
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
-        thomas.wolf@paranor.ch, Alexander Veit <alexander.veit@gmx.net>
+        id S234149AbhKWJMN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 04:12:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45136 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233815AbhKWJMM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 04:12:12 -0500
+Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 456E4C061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 01:09:05 -0800 (PST)
+Received: by mail-vk1-xa31.google.com with SMTP id 70so3560774vkx.7
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 01:09:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ON/HQKE8wuGSZ4XNEjqCSQDd2audmvh9U906rLGpDTQ=;
+        b=fClkBd5LTmHwO45YZiXVUs2FktGvx9GjvigwrExv9B0fdG3Lzl0WIHaqwuJ/I/sepF
+         ovge84uwa6jJU1L17/3oSh8pKyUddgGgCJ4FPPn1B6ta4eBPHusQrKCzrqXrsjmpQEUI
+         z/MGZG2eZGwIiPVUXuALZYZhgzlwCzXpKBFmMt3fTYFttGniZC/emBk7x1Xm6lEwks05
+         kixj+IvLsc1oMSzqysTYgErv4/fnz6r6m4hrJDWJSw2xE37MjEdhPKO8zCO/kgl9RHQ2
+         QfELmlAeK2kANTVE17vpb4kAuJp0d7HoVQM47oIwr3xndINWr5pG0zO+JMEM/pfnIfF5
+         dm8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ON/HQKE8wuGSZ4XNEjqCSQDd2audmvh9U906rLGpDTQ=;
+        b=LjJiuB1NgTenNsghZhTvJbxRRlZ0b9fK69t4ev/3W3P81Cwri+xOjORnsSDUeqS5j0
+         X8Ql4s/P0jcgFM2MLsP2iWGO3rY4HMcjOF0HbT+PiqG5IWUdzCd0TH4J3k+f4dsJg29X
+         LhxWvjHM0W++mvSfUpOZ4v803fjutzld3bkCLqI9R4a+qEdry6GEQ3cku4RCAEwAnwLc
+         qR62Tk/1MkEwJbifIBHnyNe1UBUiXLBMAMhg4scjoJvJQ3v7C8LPPLeaFO++0FB25/cd
+         vqDJl4u7c4I3VZWfieFijo0/b7RWUxK3d9GuBTFcIY8C5m0CRt32V6fCQffcMIc/QxMU
+         b2Aw==
+X-Gm-Message-State: AOAM532IwoMSeqaAmu8njte/QSDApSWWEtVwbIjTue5oeItB5/KKoQHZ
+        jz5FpnhW0Kql3S1mJpQahsR5iPZ9P2vEZHgiFy8=
+X-Google-Smtp-Source: ABdhPJzngwPvHTxu+eJtwO1vSI+8Mo1jQeZK9rD0P8lsOyVNDP8/DVOTsGTCFr5NctiF+lnQWdSvleyHa+jTXiO8cco=
+X-Received: by 2002:a05:6122:201e:: with SMTP id l30mr7572849vkd.10.1637658544425;
+ Tue, 23 Nov 2021 01:09:04 -0800 (PST)
+MIME-Version: 1.0
 References: <04ab7301-ea34-476c-eae4-4044fef74b91@gmail.com>
  <20211122222850.674-1-carenas@gmail.com> <xmqqa6hvbxob.fsf@gitster.g>
- <xmqq5ysjbxfm.fsf@gitster.g>
-From:   Alexander Veit <list@nezwerg.de>
-Message-ID: <37d7c35e-54a3-04f5-b03c-b8197a8070a3@nezwerg.de>
-Date:   Tue, 23 Nov 2021 09:52:08 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <xmqq5ysjbxfm.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: de-DE
-Content-Transfer-Encoding: 7bit
+ <xmqq5ysjbxfm.fsf@gitster.g> <37d7c35e-54a3-04f5-b03c-b8197a8070a3@nezwerg.de>
+In-Reply-To: <37d7c35e-54a3-04f5-b03c-b8197a8070a3@nezwerg.de>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Tue, 23 Nov 2021 01:08:53 -0800
+Message-ID: <CAPUEspiD+-FF5oqA_LrZeVf+tSzUttHdpLGB8QwrGBZ8uqUSKg@mail.gmail.com>
+Subject: Re: [PATCH] editor: only save (and restore) the terminal if using a tty
+To:     Alexander Veit <list@nezwerg.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        phillip.wood123@gmail.com, thomas.wolf@paranor.ch,
+        Alexander Veit <alexander.veit@gmx.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 23.11.21 um 00:08 schrieb Junio C Hamano:
-> So, here is that first step, to be hopefully mergeable to 'master'
-> and also to 'maint' for 2.34.1
+On Tue, Nov 23, 2021 at 12:52 AM Alexander Veit <list@nezwerg.de> wrote:
+>
+> Am 23.11.21 um 00:08 schrieb Junio C Hamano:
+> > So, here is that first step, to be hopefully mergeable to 'master'
+> > and also to 'maint' for 2.34.1
+>
+> I've applied the patch to 'maint' and it worked. The application does not freeze anymore.
 
-I've applied the patch to 'maint' and it worked. The application does not freeze anymore.
+great news; apologies for the disruption.
 
--Alex
+Carlo
