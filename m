@@ -2,224 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAAE9C433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 14:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33FDFC433F5
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 15:09:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234894AbhKWPBL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 10:01:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41568 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231387AbhKWPBK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 10:01:10 -0500
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAB37C061574
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 06:58:01 -0800 (PST)
-Received: by mail-il1-x12f.google.com with SMTP id i9so16478732ilu.1
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 06:58:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=tbd0ISlYYdYBfypdDHnHElbsN8KCDPuvKnRJ2jjQQGo=;
-        b=DvciHIFJmnbblJJaXyEibq+FvSEjGSSUVxpiqxPifYzhaHJgSV/rQqG3qujoEwyny7
-         +CVkEGjYI/8bynSiSxJXN6XpPTbVfGiHFjj/d6m7tJWIQGKtfZqD6VfQR0WG21o7yzH6
-         tL/gdyK3RhGIM9LNQ1ARoZdGDsC1AYJOw51BIGTEMi67jhVWt0NMvgeLHVtoTUnNW+km
-         yTDE4Slww/ec+67O0Ggw3/UlZr3ye9zRC6Gjm8QrrVKn3e0UH+G2eHs2+2OpwOSDzBtN
-         ly+ubFL8cDI3Vmkm4fscjVCyL1DxyLRjm2p65uUR9mzFLs65a2sdCUOgd/whU7114JKi
-         Mncw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=tbd0ISlYYdYBfypdDHnHElbsN8KCDPuvKnRJ2jjQQGo=;
-        b=SkSuKWki3FnQs5I/FKVyw65o9zW18v6fhTi+WlUk/RgdoAtKeVwNZcF6wmH0B4MMNd
-         ri5u3VD9BkvKliNpc6wAE77lQM141q0e+YeGKzj9X/Nfp4rokyHIK0nOlruhcm8cFazu
-         wvez9L0mHLmKPHIC2srmStRY6c1/yciO60aQE3YWqxU/IytEmBLmcI/Do7zEWLt+hrF4
-         Ew6u8GyBWqZtdKatlUoQk3wA7zd7Tw8+nsmgQuHwbckQwrDKzjZyv2Bd87ppxeqcjgQP
-         UTDEHCAAcnVRc46dRon1tdXLkIeXCQ/bSqaPu1s9OuhA0hd2K/WoKr0NJ5TThk83Wvnv
-         FzHw==
-X-Gm-Message-State: AOAM530XI7b34Eduv7LlyJeaKVRABWkSSeyaPzMJipa5bK8dzdlDGhJG
-        SO+nbjDnGs5EJ4Hwv10jNTQ=
-X-Google-Smtp-Source: ABdhPJxrY7ctCp0gi+sMAHMjgn9EH4RsFcOeIuShaCl6Bjo9PwFwPTRqYkOGjVgdFOEOB5fqVehvSw==
-X-Received: by 2002:a92:d24e:: with SMTP id v14mr5871799ilg.55.1637679481215;
-        Tue, 23 Nov 2021 06:58:01 -0800 (PST)
-Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
-        by smtp.gmail.com with ESMTPSA id g15sm5590565ile.88.2021.11.23.06.58.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Nov 2021 06:58:00 -0800 (PST)
-Message-ID: <2ac61ff8-816d-99b4-333b-381d9a1dbdeb@gmail.com>
-Date:   Tue, 23 Nov 2021 06:57:59 -0800
+        id S232670AbhKWPMp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 10:12:45 -0500
+Received: from mout.gmx.net ([212.227.15.15]:40427 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229606AbhKWPMo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 10:12:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637680171;
+        bh=XTKiEm7sZ67l+AL8FiYoxEoRb5RoF4eC/ZuhsWkJys4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=A3g8/D/x1H9BhWATOQRKzgUaca2sAMo/sOMWGrqb03zGYtjk6hW8NY4mLcpSj/UHN
+         sm9mlTJqy4ro+bg0xIx9gH34h9UdZ5ZqPEMb0fuR4Fi5abNCrXLsf/F/chAHxXSPYQ
+         68mjbELBCj48yqIvHxgNT5louKa7b2sWmqBo2qcM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MZTmO-1nB6Zp2SXO-00WTVL; Tue, 23
+ Nov 2021 16:09:31 +0100
+Date:   Tue, 23 Nov 2021 16:09:29 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 09/15] diff --color-moved: call comparison function
+ directly
+In-Reply-To: <c3e5dce1910b3d640757e0845d646c3b040a8e28.1637056179.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2111231605520.63@tvgsbejvaqbjf.bet>
+References: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com>        <pull.981.v4.git.1637056178.gitgitgadget@gmail.com> <c3e5dce1910b3d640757e0845d646c3b040a8e28.1637056179.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.2
-Subject: Re: [PATCH 2/2] blame: enable and test the sparse index
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.1050.git.1634232352.gitgitgadget@gmail.com>
- <ddcee003c9292d1b4cdd64a97f9e1731a72faee8.1634232353.git.gitgitgadget@gmail.com>
- <CABPp-BGM-57Xxxb-MRvkkgGFbVn4z6PEZFKryuBCwj7Ymr_oSA@mail.gmail.com>
-From:   Lessley Dennington <lessleydennington@gmail.com>
-In-Reply-To: <CABPp-BGM-57Xxxb-MRvkkgGFbVn4z6PEZFKryuBCwj7Ymr_oSA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ufa8GFG+L5j4TYQnx4pOjXNxFA9MwL/DIELez6ufLqTV6QxbqXC
+ +BY7Jxg4rwYX29EVk4G4c5BshOLiOgWJLXX4OJjA2yZT1LLR0l/GqaMMYN3ySB1Ypcvy3IQ
+ cTMt5nPXIGvWsIegjMG41mKUScHWTOEdakx8BRaWrA/9rTq3FvIiEkPiernzWsMjsDWpj4y
+ pVlfRRhnt3M7+Q4g3pWaA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:wN9wJPW/x64=:jKUZ+xzWs1Zo3KHXB2PuJs
+ 1fl8H4x95KIYw9sGs7tCBLsCH+mXdZ6X9zzzP87Jziv3uKr9D910dkwB/dsI26kgBsfLwhw/Z
+ n5/NjSWacUVOy/i7JH3IkZqP7Tg5OhacxkTE+3GiuxosVxFrPtCjehul0zeYLStjGjnmrWqCK
+ oc+vMYuWq5C1W6jap93way2Ftt51petnkRjBE+WgpD/MWnFfTblqj2emfMeL7fnAX0LvMoYUM
+ M/z/OPXUWpLZqHNX88UEWfHHGLr98bmg/SsmQcDpO1z9U/hNdowwm/eWgW6HAH5X1qAEPWG2D
+ zL6VZa3DC+xdBcgtpIN5KWsmDWn5T3xGuF9sIoGJru0uobEenZYOxEwR3CnTr9rze/h0x2tRl
+ csnCgFi3F+A3vtZIS439sR7FElR9eqUpmrMlvUH3QitWWxDVWe42Z8xUdLkeWr0XDzRohy8ul
+ GgoXNjNoqC/Q6eFZQXK5112Nd6wH84770VawVjoPRY/7qQNLtSLjhh37aKg3+fACuhH3McLg0
+ Qc8WAHSngcp7CiPv/AXN/u9tL6Dx8UEiQgMBVo1ELGvrjthOHHLN7TwpwA6hEqvf/9+5fuXMB
+ uJJGiDyRb3kfxluth9ZxGWCuazWcbNuoqOM5jbOXLQXcDYPdBusnYEWeI/uQaMhcvpXM5+fgu
+ JvPaCw0phoH0bKQapopHBz4DFMf1X+MVX52U6GkbKlm46JDECSaTjakd0NiQOIK1b3iwp8tE2
+ Y4MZ+n8TlidgiNX5V0VQUP0SmVmXxxN42NoxVOmg/I4QTkIlOtBbpfHdPPimF9iuaZTl3gbhy
+ F3raJC1uDFENwBlaEtssfvrzesj2DK5VQUSYCfiut1+EFhBRujddAu/8ZN1097SUzSjabsYmY
+ S+ZqflmKs/fLIigfrxvmJGBdlYXsP+DU0YQ2uM/egE8qQXIqN58+0KK3d5WJohtJ5MfDV87gw
+ cvtxB9QwPJNV6l3QW/jPokbRLGPsjeGMiXtCcYfpTv6e1IDLJ/oOJU+TiwylhjGO3eJ7hX2Hs
+ yormLI5ESB/3dFt2Ujnr3beVUNF0QBFuGBZk3+oNQaN7HidY85fD+pwk3wME+aVwpmMqiiJBI
+ VZO5cpzqNSfh2E=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Phillip,
 
+On Tue, 16 Nov 2021, Phillip Wood via GitGitGadget wrote:
 
-On 11/22/21 11:57 PM, Elijah Newren wrote:
-> On Thu, Oct 14, 2021 at 10:25 AM Lessley Dennington via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: Lessley Dennington <lessleydennington@gmail.com>
->>
->> Enable the sparse index for the 'git blame' command. The index was already
->> not expanded with this command, so the most interesting thing to do is to
->> add tests that verify that 'git blame' behaves correctly when the sparse
->> index is enabled and that its performance improves. More specifically, these
->> cases are:
->>
->> 1. The index is not expanded for 'blame' when given paths in the sparse
->> checkout cone at multiple levels.
->>
->> 2. Performance measurably improves for 'blame' with sparse index when given
->> paths in the sparse checkout cone at multiple levels.
->>
->> The `p2000` tests demonstrate a ~60% execution time reduction when running
->> 'blame' for a file two levels deep and and a ~30% execution time reduction
->> for a file three levels deep.
->>
->> Test                                         before  after
->> ----------------------------------------------------------------
->> 2000.62: git blame f2/f4/a (full-v3)         0.31    0.32 +3.2%
->> 2000.63: git blame f2/f4/a (full-v4)         0.29    0.31 +6.9%
->> 2000.64: git blame f2/f4/a (sparse-v3)       0.55    0.23 -58.2%
->> 2000.65: git blame f2/f4/a (sparse-v4)       0.57    0.23 -59.6%
->> 2000.66: git blame f2/f4/f3/a (full-v3)      0.77    0.85 +10.4%
->> 2000.67: git blame f2/f4/f3/a (full-v4)      0.78    0.81 +3.8%
->> 2000.68: git blame f2/f4/f3/a (sparse-v3)    1.07    0.72 -32.7%
->> 2000.99: git blame f2/f4/f3/a (sparse-v4)    1.05    0.73 -30.5%
-> 
-> Looks good.
-> 
->> We do not include paths outside the sparse checkout cone because blame
->> currently does not support blaming files outside of the sparse definition.
->> Attempting to do so fails with the following error:
->>
->> fatal: no such path '<path outside sparse definition>' in HEAD
-> 
-> While technically accurate, this wording is misleading; it implies
-> that there is something unique to sparse checkouts, and perhaps even
-> to cone mode, affecting how blame handles files not in the working
-> directory.  That's not true, though; git blame without a revision has
-> always reported an error when given a file that does not exist in the
-> working tree.  Try this in git.git:
-> 
-> $ rm t/README
-> $ git blame t/README
-> fatal: Cannot lstat 't/README': No such file or directory
-> 
-> The reason is that with no revisions, calling git blame with a
-> filename means asking the question "Which commit did each line in that
-> file come from?"  If there's no file, the question just doesn't make
-> sense.  You could make sense of it by thinking in terms of some
-> revision of the file, but then you're passing a revision along --
-> which works just fine in a sparse checkout too.
-> 
-Thank you for clarifying that this is actually the expected behavior and 
-isn't something we need to "fix" for sparse-checkout. I will update 
-accordingly for v5.
->>
->> Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
->> ---
->>   builtin/blame.c                          |  3 +++
->>   t/perf/p2000-sparse-operations.sh        |  2 ++
->>   t/t1092-sparse-checkout-compatibility.sh | 24 +++++++++++++++++-------
->>   3 files changed, 22 insertions(+), 7 deletions(-)
->>
->> diff --git a/builtin/blame.c b/builtin/blame.c
->> index 641523ff9af..af3d81e2bd4 100644
->> --- a/builtin/blame.c
->> +++ b/builtin/blame.c
->> @@ -902,6 +902,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
->>          long anchor;
->>          const int hexsz = the_hash_algo->hexsz;
->>
->> +       prepare_repo_settings(the_repository);
->> +       the_repository->settings.command_requires_full_index = 0;
->> +
->>          setup_default_color_by_age();
->>          git_config(git_blame_config, &output_option);
->>          repo_init_revisions(the_repository, &revs, NULL);
->> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
->> index bff93f16e93..9ac76a049b8 100755
->> --- a/t/perf/p2000-sparse-operations.sh
->> +++ b/t/perf/p2000-sparse-operations.sh
->> @@ -115,5 +115,7 @@ test_perf_on_all git reset --hard
->>   test_perf_on_all git reset -- does-not-exist
->>   test_perf_on_all git diff
->>   test_perf_on_all git diff --staged
->> +test_perf_on_all git blame $SPARSE_CONE/a
->> +test_perf_on_all git blame $SPARSE_CONE/f3/a
->>
->>   test_done
->> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
->> index 1070bff1a83..54826e858a9 100755
->> --- a/t/t1092-sparse-checkout-compatibility.sh
->> +++ b/t/t1092-sparse-checkout-compatibility.sh
->> @@ -485,15 +485,16 @@ test_expect_success 'blame with pathspec inside sparse definition' '
->>          test_all_match git blame deep/deeper1/deepest/a
->>   '
->>
->> -# TODO: blame currently does not support blaming files outside of the
->> -# sparse definition. It complains that the file doesn't exist locally.
->> -test_expect_failure 'blame with pathspec outside sparse definition' '
->> +# Blame does not support blaming files outside of the sparse
->> +# definition, so we verify this scenario.
-> 
-> As above, this is misleading.  It'd be better to word it something like:
-> 
-> # Without a revision specified, blame will error if passed any file that
-> # is not present in the working directory (even if the file is tracked).
-> # Here we just verify that this is also true with sparse checkouts.
-> 
-Thank you. Will update for v5.
->> +test_expect_success 'blame with pathspec outside sparse definition' '
->>          init_repos &&
->>
->> -       test_all_match git blame folder1/a &&
->> -       test_all_match git blame folder2/a &&
->> -       test_all_match git blame deep/deeper2/a &&
->> -       test_all_match git blame deep/deeper2/deepest/a
->> +       test_sparse_match git sparse-checkout set &&
->> +       test_sparse_match test_must_fail git blame folder1/a &&
->> +       test_sparse_match test_must_fail git blame folder2/a &&
->> +       test_sparse_match test_must_fail git blame deep/deeper2/a &&
->> +       test_sparse_match test_must_fail git blame deep/deeper2/deepest/a
->>   '
->>
->>   test_expect_success 'checkout and reset (mixed)' '
->> @@ -871,6 +872,15 @@ test_expect_success 'sparse-index is not expanded: merge conflict in cone' '
->>          )
->>   '
->>
->> +test_expect_success 'sparse index is not expanded: blame' '
->> +       init_repos &&
->> +
->> +       ensure_not_expanded blame a &&
->> +       ensure_not_expanded blame deep/a &&
->> +       ensure_not_expanded blame deep/deeper1/a &&
->> +       ensure_not_expanded blame deep/deeper1/deepest/a
->> +'
->> +
->>   # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
->>   # in this scenario, but it shouldn't.
->>   test_expect_success 'reset mixed and checkout orphan' '
->> --
->> gitgitgadget
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> This change will allow us to easily combine pmb_advance_or_null() and
+> pmb_advance_or_null_multi_match() in the next commit. Calling
+> xdiff_compare_lines() directly rather than using a function pointer
+> from the hash map has little effect on the run time.
+
+Good. I verified that the function `moved_entry_cmp()`
+(https://github.com/gitgitgadget/git/blob/c3e5dce191/diff.c#L918-L944)
+calls `xdiff_compare_lines()`, and it is this function that is used for
+both `del_lines` and `add_lines` which would have been passed as `hm`:
+https://github.com/gitgitgadget/git/blob/c3e5dce191/diff.c#L6339-L6340
+
+>
+> Test                                                                  HE=
+AD^             HEAD
+> ------------------------------------------------------------------------=
+-------------------------------------
+> 4002.1: diff --no-color-moved --no-color-moved-ws large change        0.=
+38(0.35+0.03)   0.38(0.32+0.06) +0.0%
+> 4002.2: diff --color-moved --no-color-moved-ws large change           0.=
+87(0.83+0.04)   0.87(0.80+0.06) +0.0%
+> 4002.3: diff --color-moved-ws=3Dallow-indentation-change large change   =
+0.97(0.92+0.04)   0.97(0.93+0.04) +0.0%
+> 4002.4: log --no-color-moved --no-color-moved-ws                      1.=
+17(1.06+0.10)   1.16(1.10+0.05) -0.9%
+> 4002.5: log --color-moved --no-color-moved-ws                         1.=
+32(1.24+0.08)   1.31(1.22+0.09) -0.8%
+> 4002.6: log --color-moved-ws=3Dallow-indentation-change                 =
+1.36(1.25+0.10)   1.35(1.25+0.10) -0.7%
+
+Honestly, I would have expected an improvement, given that
+`moved_entry_cmp()` has to do a few things before it can call
+`xdiff_compare_lines()`.
+
+I love your attention to detail, providing performance numbers in the
+commit message to prove that it at least has no negative impact on the
+speed.
+
+Thanks,
+Dscho
+
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  diff.c | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
+>
+> diff --git a/diff.c b/diff.c
+> index 78a486021ab..22e0edac173 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -994,17 +994,20 @@ static void add_lines_to_move_detection(struct dif=
+f_options *o,
+>  }
+>
+>  static void pmb_advance_or_null(struct diff_options *o,
+> -				struct moved_entry *match,
+> -				struct hashmap *hm,
+> +				struct emitted_diff_symbol *l,
+>  				struct moved_block *pmb,
+>  				int pmb_nr)
+>  {
+>  	int i;
+> +	unsigned flags =3D o->color_moved_ws_handling & XDF_WHITESPACE_FLAGS;
+> +
+>  	for (i =3D 0; i < pmb_nr; i++) {
+>  		struct moved_entry *prev =3D pmb[i].match;
+>  		struct moved_entry *cur =3D (prev && prev->next_line) ?
+>  				prev->next_line : NULL;
+> -		if (cur && !hm->cmpfn(o, &cur->ent, &match->ent, NULL)) {
+> +		if (cur && xdiff_compare_lines(cur->es->line, cur->es->len,
+> +						l->line, l->len,
+> +						flags)) {
+>  			pmb[i].match =3D cur;
+>  		} else {
+>  			pmb[i].match =3D NULL;
+> @@ -1195,7 +1198,7 @@ static void mark_color_as_moved(struct diff_option=
+s *o,
+>  		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
+>  			pmb_advance_or_null_multi_match(o, l, pmb, pmb_nr);
+>  		else
+> -			pmb_advance_or_null(o, match, hm, pmb, pmb_nr);
+> +			pmb_advance_or_null(o, l, pmb, pmb_nr);
+>
+>  		pmb_nr =3D shrink_potential_moved_blocks(pmb, pmb_nr);
+>
+> --
+> gitgitgadget
+>
+>
