@@ -2,93 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBCBCC433F5
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 16:12:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7709FC433EF
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 16:14:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237545AbhKWQPY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 11:15:24 -0500
-Received: from mout.gmx.net ([212.227.17.20]:50087 "EHLO mout.gmx.net"
+        id S235249AbhKWQRj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 11:17:39 -0500
+Received: from mout.gmx.net ([212.227.17.20]:56281 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237455AbhKWQPY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 11:15:24 -0500
+        id S234340AbhKWQRi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 11:17:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637683925;
-        bh=SkZvNnvdEpJ1N05PEYHtC05bQJRmQRZ0sjU4HwSgpA4=;
+        s=badeba3b8450; t=1637684068;
+        bh=ekDdREAfd+oBQPTdgmddBR8AQcVqg6KuPCeTblwNszE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RmNtHKUZls3k7bCoT38szqoZffgiHnqnYb2NAvj/EbHuj9EoEdSQA1QfOe4cIxpNA
-         2khAiqggkD50hFFoFVDKUabR0hE8wUItoHhKEljh9LGFW7t5BnAybjLDi/Vpj51EJ2
-         XEUSZ0npnuvUjJRYQ5bKfaQFHumrGn91Be+/676Y=
+        b=X0sCrotYeo3Ae6fCPFS10lxxThoX/nZGpcfwO9G5QRry4h2mpzqstEHWfIhzY9z/I
+         i4YGJrKuvcRRY9CdSMGKnNrs6ndgKjNi5Fdi7sZeKerJ4PX7TwsVeD2ndvNLgENTqj
+         P4wVi3wXGui/j5NeUDCuZp6EWQgYuV5C2cXB3FRk=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N3bSt-1mhGh53yvz-010bO9; Tue, 23
- Nov 2021 17:12:05 +0100
-Date:   Tue, 23 Nov 2021 17:12:00 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mr9G2-1mKMc62OMI-00oJ0r; Tue, 23
+ Nov 2021 17:14:28 +0100
+Date:   Tue, 23 Nov 2021 17:14:27 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>,
-        Aleen <aleen42@vip.qq.com>,
-        =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29?= 
-        <aleen42@vip.qq.com>
-Subject: Re: [PATCH v11 1/2] doc: git-format-patch: describe the option
- --always
-In-Reply-To: <3d7e96ce2b32096a6b900abe825b9df7b0ec3831.1637681215.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111231710500.63@tvgsbejvaqbjf.bet>
-References: <pull.1076.v10.git.1637567471.gitgitgadget@gmail.com> <pull.1076.v11.git.1637681215.gitgitgadget@gmail.com> <3d7e96ce2b32096a6b900abe825b9df7b0ec3831.1637681215.git.gitgitgadget@gmail.com>
+To:     Marcos Alano <marcoshalano@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: "format-patch" command doesn't support SSH signing
+In-Reply-To: <710dc612-0e3f-bf10-b123-f9443e605d00@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2111231712510.63@tvgsbejvaqbjf.bet>
+References: <710dc612-0e3f-bf10-b123-f9443e605d00@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2146207588-1637683925=:63"
-X-Provags-ID: V03:K1:9upfY06chxbBwRcBMzrWknEjhZPHxylKZUWP1kBBgNACfuPP8TF
- oqb4YlnOSRGp311tfMwmUYVPBvIkw8Z+FHX0kIG/KzqsD89Wb2yd61dvsGUMuRpxb9t/v8X
- 91Ky0aK3swHmVoX+jNQM7UOvuCBDetAzCcLFY7hQMXyfZDNLCLZzYeBCaCm2B26txX7cAcK
- K5QO3w4WjPZS1wSLb3lQQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:KN8T/MTCzl8=:KdlL9DOk1YI+Hbwqem9yDU
- otyEgePuYXH9bLNR+clu2cYeaqR3DthMitVn+gdr2pnoUrpRJmvCgMUZt92utueoTQbJ6/Rcm
- 2LMOWlQl+Z3wWcRlPQPIjScSQ6GE7Is5McRHY20+tFFnuan6X9+kInJWNhhPTUGjUOBJWjRBG
- GExn394f/YQAT03k3nnydfB00rZ6vYjrlyGDkQeoacZqEIOHa/rdSEwgWiwSbnPqbiB7jmicR
- ftHj51E+hM5orlNaWOQpJ0XO0SGNFIsb9FKzkzdQER/mp3zLWsCEeieheBh3R3OjsTqaaD9L6
- SAbxmedd5aXqPRDcjSZyQ13kqcHd2InQmJWn66eQjwOh9JIF+hQfSOSuYz4aCrV9JZqRM9JZG
- gHg6q3qn/CIFjKQyEI1iVWp3uSp1HyvLLIbHCVsvzwcz4M5XKfOuBbMGX9a/l6nMgXXazswRa
- PlNZKGHj2uCutFkayajUs8yze9jxS5Mj59ga8+L+PqkJXGb+/FEjgXfNYHA2j8iJCSqzAYy33
- Jki3k94dMU/zajE7zFwb615eOwFk3KLrp1xGWaQOCqy+mZZZkNgpJx5G1BfWEQi4qudQjixdi
- umK7sWiIhKWyGpEMLo7lA0oupqsA/6G9raWx5ekyq7daJbs4QukfB6qxBy4blpm7rzt6bVjVW
- lvxtwOhIbyWcEXtcH2/uDI0xQYDhG35hzHouF6vSn4gQ3r42E9pf+trfK1ZkVdcjNW0ryXDiW
- UBvojeKw49YC4eadeVKRiHf9CkW+kit/cEim4daM9LrK7dMcYzkWtFFJ4fTcI2ZR0NR5Hj9BI
- gMRE8lOTqFx55YvYAyiL1ligf2k6UkpsRyK+qMEzBHGvWMTEf1LxuI/Xjnv0+mveahkcUNJCu
- anlQgsXQYpjlYv+h9t7XxcWKkuhk1mI/Ua8Yt508H57rXWlh8+G1TsnqcpWOT+n24CS7y43dN
- tH3Flb3nkCTs0UtBT4CLMhhAq3f9l32hHG5ixDC0PApfqwFBEEOEBR60D+IDJR76wEBMbmua2
- kG2vBzUIn3iAuMY2n6UTEMM4zdb0jvjuyFwoGHytHcLSKGr3rKFQ1lOyIVYZcu7xQzhgLeww9
- FLfp0iD1OKtZGM=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:jLkj6hZYzN08BLBI96d0y6KuE4yeVVDHDe/KMl6MqwWBmPpsdmB
+ Ou+Umcosl0sz3vPsrEf+vuDGuV/K27cAUjGAlPwN2p14+U9Yh+2BrCm6gAOhMMPTRshn/Ha
+ 0leJXbuT3C+GCPQQsL0ncODD6iGSBAM4tXb58qjseyLH64JInQooZOC6lvD4Q7tGkxc2NJW
+ /C2MrFtS74Udcb4DYQKbw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SXEVvcCYGRU=:/Ow34+5c7VZ1j7NpqASRyf
+ +/y/SesWv3h+nMdb91DoDpiL85ItFbaLrkxUvOvX/e3bv7O/TODVCBcttqBwo7gSGkeOOj4nS
+ Wk3WQ6fcJP+OvN2U6bshkxnjtFW/P9CJQRF0DkR4DvJHNis/46XMwpfd2l3r3nokafyQSg/51
+ HriHsK4sIctD2B8USoPocs5WgSSv8muEZPCneejBMnrV3/1QDEQA5i8qgOF6U4fT+FaIQ37au
+ cjtQXb30tBDnBUUImPBqW1F/k/Y9UyBPJX1CTdsOzPYwTnqOzFQH+dHYBjGcSBGhv5SHf/3x0
+ wTOH2KySniBp9Mga4L6H6GuzoursIGu9t2Jx9Fu4LLDC4yRMngi0gECemvaAsuvDpIeDF636w
+ 0Zrdk+MJ4Rq13tBum3ybqWWSkP+0k6OA/jBIdw5fF9ZCwzNBO1LFFd2kfehr2UU6Qfrrd6QXV
+ bRNEWmOxSrwMd2jMNpLszRTOw48Ze/B7z/J7NjB3oaFspRqbylh/A7ibVOYPnJO4A+MQ2vHBe
+ YES8gumWHc9qzFbawMel8E6U/CGYyiwjtkZMD9FnKfOkSskMro7rjdPn98QaTwWeIE1aqILQ0
+ 2MY8vAf4aRQFsnB0XCgAgJeiQ5D8wT6MW4T+z6RJXxqcaBwAfncfQhqWAI8dkleG+RfsuuvfH
+ w2uVB1UJ2SusRawONhXk85Z0Wq/wixrKCkhVwcev1c64mN5hyX5bOKKdo1zhxXj2O1LhMRDN3
+ 5sIbw2IQndU3z8d5o1b79TpooAtNW269Az/Lw86rw3cN76odAD4T3ymjoD+lUcqcBudkY1q41
+ 3IhydjfBniUmVeDdrwgIzUbY5jB63T41ppPUmoEXHpNKKbiFDfNkZAIRWd7qKYAcPN7d1uhMD
+ JTpgtUqVBcs/MF9/dT6qzaeVEpd60r6w17WI+ZBKOoCCAgq+yBmvrtcbHVYysdCpK/SWZp9ks
+ M1odSxwtoTzR8JoaKKl7AGX1yoaAMnnUlENXnf1Xo5ZNisg794la5Rvvc0Zv5/xlgkD43kXHt
+ TB/89jdwiFwLgR/cgycc1x6EapUhwSWeC4tHbhNhOrcSTeYOUi9ibfUMo1yhC8FugRJiIdIAC
+ i2AT8/WZ8jq+5s=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Marcos,
 
---8323328-2146207588-1637683925=:63
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, 23 Nov 2021, Marcos Alano wrote:
 
-Hi,
+> I was trying to generate a patch to send to a project (Linux specifically) but
+> when I generate the patch using "format-patch" I saw there was no "Signed-Off"
+> line, but my commit is signed using SSH. My git version is the latest, 2.34.
 
-On Tue, 23 Nov 2021, =E5=BE=90=E6=B2=9B=E6=96=87 (Aleen) via GitGitGadget =
-wrote:
+A "Sign-off" is a convention for the commit message, but _signing a
+commit_ is a cryptographic signature. They are two different things.
 
-> From: =3D?UTF-8?q?=3DE5=3DBE=3D90=3DE6=3DB2=3D9B=3DE6=3D96=3D87=3D20=3D2=
-8Aleen=3D29?=3D
->  <aleen42@vip.qq.com>
-
-I triggered the Azure Pipeline to submit this patch series after merging
-the PR that fixed parsing of the `From:` line.
-
-It looks a bit funny that this is in two lines, so I downloaded the mail
-from https://lore.kernel.org/git/ and fed it to `git am`, which was just
-fine with it.
+You can add the "Signed-off-by:" trailers via `git format-patch`'s
+`--signoff` option:
+https://git-scm.com/docs/git-format-patch#Documentation/git-format-patch.txt---signoff
 
 Ciao,
-Dscho
-
---8323328-2146207588-1637683925=:63--
+Johannes
