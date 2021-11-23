@@ -2,146 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A598AC433F5
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 13:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0652DC433F5
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 13:07:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231240AbhKWNJF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 08:09:05 -0500
-Received: from mout.gmx.net ([212.227.15.15]:45587 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231255AbhKWNJD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 08:09:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637672744;
-        bh=HlEgIM5Kn9NGPFqnJdMlkDYbPicwLeed0ZObf3ZRtV0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ShCCwtZJGBNkHEslWhrjHYX+IVNWZqMnCxb+1l+eP+nizEnfBaL7MvwdCHTIcipj0
-         r/9Hu29+vJNNUigXf2oJtqv8MKTjG8qhgUjxlc8xGUZjhoZ6/Sr2i+HiBo3FWdek3K
-         1TLMEvRNI36yko50yfG1KAMywMTgwMI2hFXYW4os=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MfYPi-1m9bAO2qaW-00g0ye; Tue, 23
- Nov 2021 14:05:44 +0100
-Date:   Tue, 23 Nov 2021 14:05:42 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>
-Subject: Re: [PATCH v8 00/17] Upstreaming the Scalar command
-In-Reply-To: <211123.86ee77uj18.gmgdl@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111231403030.63@tvgsbejvaqbjf.bet>
-References: <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com>        <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com>        <CABPp-BG=fcKq2Ng2gan3HbBGcT7WCMhtZCP6m2xjA5BSuTekOg@mail.gmail.com>        <nycvar.QRO.7.76.6.2111221317390.63@tvgsbejvaqbjf.bet>
-        <211122.865yskyw25.gmgdl@evledraar.gmail.com>        <nycvar.QRO.7.76.6.2111222304070.63@tvgsbejvaqbjf.bet>        <211123.86y25fwxup.gmgdl@evledraar.gmail.com>        <nycvar.QRO.7.76.6.2111231249080.63@tvgsbejvaqbjf.bet>
- <211123.86ee77uj18.gmgdl@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S234464AbhKWNKU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 08:10:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43794 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231255AbhKWNKT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 08:10:19 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D0F7C061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 05:07:11 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id g14so91961907edb.8
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 05:07:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=XONr0/uRw7J42XB0ILKUKicfgqj4QUOPNDfPnce107Y=;
+        b=ArzCtfQedbvGr3NpzgYeE/a2kHHKb7IpJJ5pktteVdpSioUZsWoFuN8GzOhUEZXOLv
+         dYJiUg4OXYamXHVoh7G5SPBdjVmZyU0anli0u2q1+yXgi+IoFF2724kJK/AHB9xqp9cW
+         ++XbyV0o2c5YAfkeJpe62Q0VnN8LB3fu5x9RHFkBzYcrrzUyNIcYJk4oNPgKIwBhQcdr
+         uaKAeRTA1bcmSJhOz89WH8UScuQ8wjxx3abrt0xrUXMCZyFGlkUR+W1Yx/1S0eI2jA7e
+         aNAxLbF/y6RIzYKrnbvSUBv7qG+pmtjxBVPbQ4puKfl1tC+6Rp30nqrca+/Rc76JGHj5
+         DsXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=XONr0/uRw7J42XB0ILKUKicfgqj4QUOPNDfPnce107Y=;
+        b=LH9UMueDHn765/h+8bjd4u3hAITWJwasjKyQPLIvaIePxKfYv7kXX9afxRxj5kGxZC
+         fVQUjPYXNM8/gmujk5w3BdJSycZn3k8xJ7ArJuITl5EQ2i/VqFmqruBhrQOSHQiiwEUw
+         LCZohS6L8z5DOgNKdt6LdJBtJLI4g0TlDmVWZKRv7POkF2PJ1ccpsG/8jM/pEWF+DY2n
+         j2NMw1C+k5eNM12QU1Sh4Uc18fSlAJDtQ7h8NJsVHg6cUfdAz9OmE/IfUPTZPDXGVoJa
+         vQ7nAq+RtNr4jM38GpgSLAI7ea80OaUC+sCn45anU9UKXiQQdMaidL2f5Sh1zAkAJ7EI
+         zqfA==
+X-Gm-Message-State: AOAM531QJFLmHimdPLZLGDzYk4vPQ+88ncFbE/twDcWzg1PvT+al9G2c
+        uTCmmL/w52fgayc49hs8KGM=
+X-Google-Smtp-Source: ABdhPJzDsB1YA461lMwbHjTGR0CKQCkjiG1TZuMIxp9idkw84b3iOAPW8tV0s30nXy21JyMFMKSZYg==
+X-Received: by 2002:a17:906:7009:: with SMTP id n9mr7455764ejj.431.1637672829663;
+        Tue, 23 Nov 2021 05:07:09 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id sd2sm5644258ejc.22.2021.11.23.05.07.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Nov 2021 05:07:08 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mpVVs-001NDI-8W;
+        Tue, 23 Nov 2021 14:07:08 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] Makefile: add deprecation message for strip target
+Date:   Tue, 23 Nov 2021 14:00:43 +0100
+References: <20211123122934.639428-1-bagasdotme@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211123122934.639428-1-bagasdotme@gmail.com>
+Message-ID: <211123.86a6hvuikj.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1328822684-1637672745=:63"
-X-Provags-ID: V03:K1:mpS8tUee8ojmXfG3MB2UOtFBEuP9UaGZG+7U4m+xci2GUBf+mBk
- IXIsIpaRKIK3BZCJf2oYGkBSoZPtjH9XzpK24JgtBAMtdIU/AL6cUhnSgwYS5fz7H8AhvD7
- TBErDf8ZNu7LvHMkn9gP7LQGHO63H9CqrcvhcYLgrtJ1D1YoMRNrDV3uzyRUrzomH1mu8CS
- hdRf/RIiKqTR+3SQawRcg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XL1rGTiwvm0=:RIS1Empg1hJccXlrAkJ5tM
- yszY3ZZVywVgRuw3iMaH7FFi+aV8oYUdhs6aB01JI/GQ1mfzIq0iuhNLm4bw9IGQC4Kbp8Gjc
- BtMxy+XiA9mMKZOZJZ3mdAPjxLo3VV30e1xjmcxnLTiAPv0jEmLjnmN7q5fy9A0zv5udRihl3
- kWs6CEGFagQ/CGnPAd/adJRn0xC6fGAaeGCKE9m59ICbjjg+im1XPxg6USE1AV8gA+KKZSZXm
- JnsnWnJP/xwehe03ytGR0YBLuzNJgIb79+bOfZCY72wIKP+etDLGJ17NdXIgtBDwWcsvUhRLQ
- NZFJydwMPaTpd1A1T3BAl1kcpuqoAu/noaOk7tJjDVy+VIgZpFX1AWhFpL/Sr/rT0Z2dVgaKw
- +0I5AX3LKoxklAMaiFw0XlUnBrNEAVydIorwbvSmRzHyGTemimI/RzEAf13s87Ker4ZW/ier5
- rrZP8+FPOn26l5hiMpz3iWHQyLNYbX4me1a7perGPHNoNxVZpXh+Xs/giisTsPanI3k3xrWaE
- Xgc+6gnpo4Usw+Fo2zYpUfMhMnQbViQeyrs09u9g+v3B4MLx4bz1ShGv0kikeG9MofK2tryDn
- Mt6iZWExN4ugQVOpenxdjivyMHRfoKDJ2+rXMrAuzzQH3pOGmj9hWgso5kwsUIR68dl6he4+O
- yOl+M1HU1ore5PAG8pIa2u6m2u1WuQSEaGYXGBCnjM6tvNihy+A2FKgD74Ov/iV7E/oXpE5Yj
- ruwLgcBHw3zrdiY0hTL1vhnneA+ykhHT7GJ2JELw/vn9K3yCawNdzTcvGlgvqoWau+gTfx/Me
- Pm04T1/BAj7D5AI+yGKkk4tt5f4ksRuxhBXswHlwRWNpU3Viwfd/35Gw5YxYc1bbvVFqM3v0r
- Tye3WV89P5b8QoeqpHsB5P+ImYPQ+hfMSQ5zGBHsVJM2cD5WWWE8E6JsVarMm98fQ3dwldOKW
- sb/u2dDUa1pFQm3C4aqe1O/kDTQkymhPDl5rvmewN+1VXqJBrdkIghCkQ41zySOTjpd4o1psD
- 3hnz9gHoY62ovOOULhgrlG7QwMRm38Sz5tydpqFs1fcBGEdL9U3NyBwOOemrJIv+95xrW7PoI
- Ox62uFJZPw5YXU=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1328822684-1637672745=:63
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, Nov 23 2021, Bagas Sanjaya wrote:
 
-Hi =C3=86var,
-
-On Tue, 23 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> On Tue, Nov 23 2021, Johannes Schindelin wrote:
+> Now that $INSTALL_STRIP variable can be defined since 3231f41009 (make:
+> add INSTALL_STRIP option variable, 2021-09-05), deprecate 'strip' target
+> to encourage users to move to $INSTALL_STRIP. The target will eventually
+> be removed in Git 2.35+1.
 >
-> > Hi =C3=86var,
-> >
-> > On Tue, 23 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >
-> >> [...]
-> >>     $ make clean; make -C contrib/scalar test
-> >>     [...]
-> >>         CC hook.o
-> >>         CC version.o
-> >>         CC help.o
-> >>         AR libgit.a
-> >>     make[1]: Leaving directory '/home/avar/g/git'
-> >>         SUBDIR ../..
-> >>     make[1]: Entering directory '/home/avar/g/git'
-> >>         * new link flags
-> >>         CC contrib/scalar/scalar.o
-> >>         LINK contrib/scalar/scalar
-> >>     make[1]: Leaving directory '/home/avar/g/git'
-> >>     make -C t
-> >>     make[1]: Entering directory '/home/avar/g/git/contrib/scalar/t'
-> >>     *** prove ***
-> >>     error: GIT-BUILD-OPTIONS missing (has Git been built?).
-> >>     t9099-scalar.sh .. Dubious, test returned 1 (wstat 256, 0x100)
-> >>     No subtests run
-> >
-> > That's cute. You seem to have missed that this is `contrib/`? The
-> > assumption of pretty much _everything_ in there is that Git was alread=
-y
-> > built.
-> >
-> > Try this at home: `make clean && make -C contrib/subtree/ test`
-> >
-> > Yep. It "fails" in the same way. "has Git been built?".
-> >
-> > So if that was all the evidence in favor of that misinformation "Scala=
-r's
-> > build is broken! Broken, broken, BROKEN!", I think we can now let it r=
-est.
-> > At last.
+> Only deprecation message is printed.
 >
-> No, it doesn't fail in the same way. Really, it seems like you're either
-> not fully reading through E-Mails before replying, or entirely
-> misunderstanding what I'm saying.
+> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> ---
+>  Makefile | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/Makefile b/Makefile
+> index 12be39ac49..ee83860f7d 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2159,6 +2159,8 @@ please_set_SHELL_PATH_to_a_more_modern_shell:
+>  shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
+>  
+>  strip: $(PROGRAMS) git$X
+> +	@echo "The 'strip' target is deprecated, define INSTALL_STRIP if you want to"
+> +	@echo "install Git with stripped binaries."
+>  	$(STRIP) $(STRIP_OPTS) $^
+>  
+>  ### Flags affecting all rules
+>
+> base-commit: cd3e606211bb1cf8bc57f7d76bab98cc17a150bc
 
-That's really... fresh.
+This is a better way to do this:
 
-I told you half a dozen times that at this point, the build works well
-enough, and that what you keep insisting is a problem simply isn't.
+diff --git a/Makefile b/Makefile
+index 12be39ac497..fd4736dff2f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2159,6 +2159,8 @@ please_set_SHELL_PATH_to_a_more_modern_shell:
+ shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
+ 
+ strip: $(PROGRAMS) git$X
++       $(warning The 'strip' target is deprecated, define INSTALL_STRIP if you want to \
++install stripped binaries)
+        $(STRIP) $(STRIP_OPTS) $^
+ 
+ ### Flags affecting all rules
 
-Yes, you have to build Git before building Scalar.
+I.e. GNU make has a built-in way to do this which emits the line number.
 
-Have you actually looked at the design of Scalar? What it does to allow
-working with large repositories?
+The message also needs to be reworded, now it's telling me "do xyz to
+..." do what I just did successfully? It should say something like
 
-_That_ is what counts.
+    you just did X, but doing that via Y will soon be deprecated, do Z instead
+    to accomplish X"
 
-That you are told to please build Git before running Scalar's tests is
-maybe a minor annoyance, but not worth the dozens of mails and the weeks
-of delay that you caused over this.
+See also:
 
-Ciao,
-Johannes
+    git log -p -G'\$\((warning|error)' -- Makefile
 
---8323328-1328822684-1637672745=:63--
+For some recent-ish ways of doing phase-in deprecation.
+
+Personally I think just starting with $(error) would be fine here. If
+someone needs to adjust their build system anyway they can just adjust
+it the first time around, it's not like a missing feature in git itself
+where the carpet is rudely swept from under you. You'll still be able to
+build, you just need to tweak your recipe.
+
+The real value of $(warning) (or the same with @echo) is IMO something
+like 6cdccfce1e0 (i18n: make GETTEXT_POISON a runtime option,
+2018-11-08), i.e. to give someone a hint that something works
+differently now (although I'd probably just make that $(error) if I was
+doing it now, with the same rationale).
