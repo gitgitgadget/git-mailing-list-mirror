@@ -2,223 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 675FDC433FE
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 23:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D571DC433EF
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 23:39:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237459AbhKWX1R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 18:27:17 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52210 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235626AbhKWX1Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 18:27:16 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1920A159CFC;
-        Tue, 23 Nov 2021 18:24:08 -0500 (EST)
+        id S233785AbhKWXmn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 18:42:43 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52897 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233393AbhKWXmm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 18:42:42 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 182EEFF348;
+        Tue, 23 Nov 2021 18:39:33 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yNdmljhXw8hojVNl289DEmPBrAH02ZY2kcIkmw
-        SEZsk=; b=OKvpZ0Lggj6BmFttM4WfipVWPUKcX+Ek9442ut0AgILLsYOfwMddHy
-        0ZHGPdRxqt8Nmu919FACIIE2myHpY856qJiATTdcdlsqJtloYf25fI3kHS1W83/J
-        ZPIIEkBgkI6f2yjzo1Z3RQ09TylmHaAI4u9UiYQocnfAjiqiNZLLA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1127E159CFA;
-        Tue, 23 Nov 2021 18:24:08 -0500 (EST)
+        :content-type; s=sasl; bh=xoJXW6yErrRRdsJSi4znfY3xO053AP1JvtudH2
+        UOrNY=; b=htveEMt0MOIcfbycFFhp1Qj2tVuLmjQDTytqmp9fEh1KTjd8xfiDgt
+        N71Nn/+khoaC1rfZ9cwN2lcFrTKfZLnONis+C/Fj0T3eo/sf5GfslfLSRb/JscBy
+        xeCXH9WP2Rk7XB8RXYDMpyfRP70OWM1g+BzE41Sq0pjXVwRCc7S04=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 091B4FF347;
+        Tue, 23 Nov 2021 18:39:33 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 69B50159CF8;
-        Tue, 23 Nov 2021 18:24:05 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5A0D4FF346;
+        Tue, 23 Nov 2021 18:39:32 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Han Xin <chiyutianyi@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: Re: [PATCH v3 1/5] object-file: refactor write_loose_object() to
- read buffer from stream
-References: <20211009082058.41138-1-chiyutianyi@gmail.com>
-        <20211122033220.32883-2-chiyutianyi@gmail.com>
-Date:   Tue, 23 Nov 2021 15:24:04 -0800
-In-Reply-To: <20211122033220.32883-2-chiyutianyi@gmail.com> (Han Xin's message
-        of "Mon, 22 Nov 2021 11:32:16 +0800")
-Message-ID: <xmqqczmq78x7.fsf@gitster.g>
+To:     "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, newren@gmail.com,
+        Taylor Blau <me@ttaylorr.com>,
+        Lessley Dennington <lessleydennington@gmail.com>
+Subject: Re: [PATCH v4 1/4] sparse index: enable only for git repos
+References: <pull.1050.v3.git.1635802069.gitgitgadget@gmail.com>
+        <pull.1050.v4.git.1637620958.gitgitgadget@gmail.com>
+        <81e208cf454b61c761fa66e4f43a464ed439ba59.1637620958.git.gitgitgadget@gmail.com>
+Date:   Tue, 23 Nov 2021 15:39:31 -0800
+In-Reply-To: <81e208cf454b61c761fa66e4f43a464ed439ba59.1637620958.git.gitgitgadget@gmail.com>
+        (Lessley Dennington via GitGitGadget's message of "Mon, 22 Nov 2021
+        22:42:35 +0000")
+Message-ID: <xmqq8rxe787g.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7355FE1C-4CB4-11EC-85E3-98D80D944F46-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 9BD61F32-4CB6-11EC-89D3-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han Xin <chiyutianyi@gmail.com> writes:
+"Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> From: Han Xin <hanxin.hx@alibaba-inc.com>
+> From: Lessley Dennington <lessleydennington@gmail.com>
 >
-> We used to call "get_data()" in "unpack_non_delta_entry()" to read the
-> entire contents of a blob object, no matter how big it is. This
-> implementation may consume all the memory and cause OOM.
+> Check whether git dir exists before adding any repo settings. If it
+> does not exist, BUG with the message that one cannot add settings for an
+> uninitialized repository. If it does exist, proceed with adding repo
+> settings.
 >
-> This can be improved by feeding data to "write_loose_object()" in a
-> stream. The input stream is implemented as an interface. In the first
-> step, we make a simple implementation, feeding the entire buffer in the
-> "stream" to "write_loose_object()" as a refactor.
-
-Possibly a stupid question (not a review).
-
-How does this compare with "struct git_istream" implemented for a
-few existing codepaths?  It seems that the existing users are
-pack-objects, index-pack and archive and all of them use the
-interface to obtain data given an object name without having to grab
-everything in core at once.
-
-If we are adding a new streaming interface to go in the opposite
-direction, i.e. from the working tree data to object store, I would
-understand it as a complementary interface (but then I suspect there
-is a half of it already in bulk-checkin API), but I am not sure how
-this new thing fits in the larger picture.
-
-
-
-> Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+> Additionally, ensure the above BUG is not triggered when users pass the -h
+> flag by adding a check for the repository to the checkout and pack-objects
+> builtins.
+>
+> Finally, ensure the above BUG is not triggered for commit-graph by
+> returning early if the git directory does not exist.
+>
+> Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
 > ---
->  object-file.c  | 50 ++++++++++++++++++++++++++++++++++++++++++++++----
->  object-store.h |  5 +++++
->  2 files changed, 51 insertions(+), 4 deletions(-)
+>  builtin/checkout.c     | 6 ++++--
+>  builtin/pack-objects.c | 9 ++++++---
+>  commit-graph.c         | 5 ++++-
+>  repo-settings.c        | 3 +++
+>  4 files changed, 17 insertions(+), 6 deletions(-)
 >
-> diff --git a/object-file.c b/object-file.c
-> index c3d866a287..227f53a0de 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1860,8 +1860,26 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
->  	return fd;
->  }
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 8c69dcdf72a..31632b07888 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1588,8 +1588,10 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
 >  
-> +struct simple_input_stream_data {
-> +	const void *buf;
-> +	unsigned long len;
-> +};
-> +
-> +static const void *feed_simple_input_stream(struct input_stream *in_stream, unsigned long *len)
-> +{
-> +	struct simple_input_stream_data *data = in_stream->data;
-> +
-> +	if (data->len == 0) {
-> +		*len = 0;
-> +		return NULL;
+>  	git_config(git_checkout_config, opts);
+>  
+> -	prepare_repo_settings(the_repository);
+> -	the_repository->settings.command_requires_full_index = 0;
+> +	if (startup_info->have_repository) {
+> +		prepare_repo_settings(the_repository);
+> +		the_repository->settings.command_requires_full_index = 0;
 > +	}
-> +	*len = data->len;
-> +	data->len = 0;
-> +	return data->buf;
-> +}
-> +
->  static int write_loose_object(const struct object_id *oid, char *hdr,
-> -			      int hdrlen, const void *buf, unsigned long len,
-> +			      int hdrlen, struct input_stream *in_stream,
->  			      time_t mtime, unsigned flags)
->  {
->  	int fd, ret;
-> @@ -1871,6 +1889,8 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
->  	struct object_id parano_oid;
->  	static struct strbuf tmp_file = STRBUF_INIT;
->  	static struct strbuf filename = STRBUF_INIT;
-> +	const void *buf;
-> +	unsigned long len;
->  
->  	loose_object_path(the_repository, &filename, oid);
->  
-> @@ -1898,6 +1918,7 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
->  	the_hash_algo->update_fn(&c, hdr, hdrlen);
->  
->  	/* Then the data itself.. */
-> +	buf = in_stream->read(in_stream, &len);
->  	stream.next_in = (void *)buf;
->  	stream.avail_in = len;
->  	do {
-> @@ -1960,6 +1981,13 @@ int write_object_file_flags(const void *buf, unsigned long len,
->  {
->  	char hdr[MAX_HEADER_LEN];
->  	int hdrlen = sizeof(hdr);
-> +	struct input_stream in_stream = {
-> +		.read = feed_simple_input_stream,
-> +		.data = (void *)&(struct simple_input_stream_data) {
-> +			.buf = buf,
-> +			.len = len,
-> +		},
-> +	};
->  
->  	/* Normally if we have it in the pack then we do not bother writing
->  	 * it out into .git/objects/??/?{38} file.
-> @@ -1968,7 +1996,7 @@ int write_object_file_flags(const void *buf, unsigned long len,
->  				  &hdrlen);
->  	if (freshen_packed_object(oid) || freshen_loose_object(oid))
+
+I am kind-a surprised if the control reaches this deep if you are
+not in a repository.  In git.c::commands[] list, all three primary
+entry points that call checkout_main(), namely, cmd_checkout(),
+cmd_restore(), and cmd_switch(), are marked with RUN_SETUP bit,
+which makes us call setup_git_directory() even before we call the
+cmd_X() function.  And setup_git_directory() dies with "not a git
+repository (or any of the parent directories)" outside a repository.
+
+So, how can startup_info->have_repository bit be false if the
+control flow reaches here?  Or am I grossly misunderstanding what
+you are trying to do?
+
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 1a3dd445f83..45dc2258dc7 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -3976,9 +3976,12 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+>  	read_replace_refs = 0;
+
+Ditto wrt RUN_SETUP.
+
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 2706683acfe..265c010122e 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -632,10 +632,13 @@ static int prepare_commit_graph(struct repository *r)
+>  	struct object_directory *odb;
+>  	/*
+> +	 * Early return if there is no git dir or if the commit graph is
+> +	 * disabled.
+> +	 *
+>  	 * This must come before the "already attempted?" check below, because
+>  	 * we want to disable even an already-loaded graph file.
+>  	 */
+> -	if (r->commit_graph_disabled)
+> +	if (!r->gitdir || r->commit_graph_disabled)
 >  		return 0;
-> -	return write_loose_object(oid, hdr, hdrlen, buf, len, 0, flags);
-> +	return write_loose_object(oid, hdr, hdrlen, &in_stream, 0, flags);
->  }
+
+I haven't followed the control flow, but this one probably is a good
+addition (in other words, unlike cmd_pack_objects(), I cannot convince
+myself that r->gitdir will never be NULL here).
+
+> diff --git a/repo-settings.c b/repo-settings.c
+> index b93e91a212e..00ca5571a1a 100644
+> --- a/repo-settings.c
+> +++ b/repo-settings.c
+> @@ -17,6 +17,9 @@ void prepare_repo_settings(struct repository *r)
+>  	char *strval;
+>  	int manyfiles;
 >  
->  int hash_object_file_literally(const void *buf, unsigned long len,
-> @@ -1977,6 +2005,13 @@ int hash_object_file_literally(const void *buf, unsigned long len,
->  {
->  	char *header;
->  	int hdrlen, status = 0;
-> +	struct input_stream in_stream = {
-> +		.read = feed_simple_input_stream,
-> +		.data = (void *)&(struct simple_input_stream_data) {
-> +			.buf = buf,
-> +			.len = len,
-> +		},
-> +	};
->  
->  	/* type string, SP, %lu of the length plus NUL must fit this */
->  	hdrlen = strlen(type) + MAX_HEADER_LEN;
-> @@ -1988,7 +2023,7 @@ int hash_object_file_literally(const void *buf, unsigned long len,
->  		goto cleanup;
->  	if (freshen_packed_object(oid) || freshen_loose_object(oid))
->  		goto cleanup;
-> -	status = write_loose_object(oid, header, hdrlen, buf, len, 0, 0);
-> +	status = write_loose_object(oid, header, hdrlen, &in_stream, 0, 0);
->  
->  cleanup:
->  	free(header);
-> @@ -2003,14 +2038,21 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
->  	char hdr[MAX_HEADER_LEN];
->  	int hdrlen;
->  	int ret;
-> +	struct simple_input_stream_data data;
-> +	struct input_stream in_stream = {
-> +		.read = feed_simple_input_stream,
-> +		.data = &data,
-> +	};
->  
->  	if (has_loose_object(oid))
->  		return 0;
->  	buf = read_object(the_repository, oid, &type, &len);
->  	if (!buf)
->  		return error(_("cannot read object for %s"), oid_to_hex(oid));
-> +	data.buf = buf;
-> +	data.len = len;
->  	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), (uintmax_t)len) + 1;
-> -	ret = write_loose_object(oid, hdr, hdrlen, buf, len, mtime, 0);
-> +	ret = write_loose_object(oid, hdr, hdrlen, &in_stream, mtime, 0);
->  	free(buf);
->  
->  	return ret;
-> diff --git a/object-store.h b/object-store.h
-> index 952efb6a4b..ccc1fc9c1a 100644
-> --- a/object-store.h
-> +++ b/object-store.h
-> @@ -34,6 +34,11 @@ struct object_directory {
->  	char *path;
->  };
->  
-> +struct input_stream {
-> +	const void *(*read)(struct input_stream *, unsigned long *len);
-> +	void *data;
-> +};
+> +	if (!r->gitdir)
+> +		BUG("Cannot add settings for uninitialized repository");
 > +
->  KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
->  	struct object_directory *, 1, fspathhash, fspatheq)
+
+This is a very good idea.  If I recall correctly, I think I reviewed
+a bugfix patch that would have been simplified if we had this check
+here.
