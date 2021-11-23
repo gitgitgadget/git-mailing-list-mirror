@@ -2,152 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE1F2C433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 11:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48AB2C433F5
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 11:52:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236639AbhKWLuD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 06:50:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53086 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236466AbhKWLtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 06:49:40 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07B98C0613E0
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 03:46:30 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id d24so38534061wra.0
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 03:46:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=p+lXTBdQs+y2f8EPIlH6LT7vkrHqlHb5zjym8NAfE7w=;
-        b=UMjHSLrqC8e4RrluZDnK1xso63uippkUuK2pVIhURIaotsYThyjpcagWeezDUFVJxT
-         314xn3s9c8CUxw+sMZgWRjFYI9zgEuVRaho6PMe+1y0wcxG2iLzF6UwaVC/k2VUs+oJr
-         pMDXS7mUdpoXIRz8usEOoLiqKlGjf4UlCs750og6dlRdBQ6jvZjLwJiCQczvMWLqynkS
-         XSDSHLvy6mbD3itneBSDi/rQwNcgY1evE7wRp9W/EVSz7uCKgD9gz+Fe45oNu1xFsVN0
-         WHJEvdGYQDm0CGic1jfeEr1+gGqq/anAEjBgepZWIFUjaLQ/COemFIa7rUPBlWUPAKud
-         R7bA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=p+lXTBdQs+y2f8EPIlH6LT7vkrHqlHb5zjym8NAfE7w=;
-        b=ajxxgZlW5js8DTAoBTgW96TmlITUb4PK66ljQTh544APu97/wyMRXoeqnc4vHrfKke
-         35P0vr5yFDlPuWQkOInoxDj2mKdkMDy/ThblemI1Wr+6k4+LS7/eRdbnkgNIfw/9vydl
-         fjadWrpvo0e3AmbBs0guNd/w3G4KzVAXN++/63jmVHPeZ+A9e+0JnHbmc853HR4gvKa3
-         Qy0AW0PxPoz3/oGH7G+fBwqNg8mRKuCQAriEetILDdIwVpeYIccVdJzvpRMRX6lKlS2a
-         bQafXT5G+H3giwr87SSchKVJ6WwPQ/TSyQr6wq4PTNB7nrqcRbZJM6i867X3gUjmgHLV
-         wLyw==
-X-Gm-Message-State: AOAM5306fpixQI1UunPJaiMEunSKn6U3oPm8zJ8hSL3tI97RBKIbg+J3
-        WGv3yj4c3RXi29LBhO8RBXyxqKYVVunkOQ==
-X-Google-Smtp-Source: ABdhPJzi8pbWFvlOgSQISOygaxAaqf2a1vmoDS+LyjlCeS5LlTY6bHXivl11wYdGcwPEyj7jh8loTA==
-X-Received: by 2002:adf:cf05:: with SMTP id o5mr6769858wrj.325.1637667988361;
-        Tue, 23 Nov 2021 03:46:28 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c11sm1723145wmq.27.2021.11.23.03.46.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Nov 2021 03:46:27 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        id S235497AbhKWLzn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 06:55:43 -0500
+Received: from mout.gmx.net ([212.227.15.15]:34181 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235109AbhKWLzm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 06:55:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637668341;
+        bh=vaMv2113munUgbAK0RTbV6RdFXXixcOBZdwGnmWS8z8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=AP/7KP9KpwLNVWQc/VGDdVy16hbz1Iswl0uvUIpxN2Q6sDEhbIXOSdoKD1stMrQTi
+         7nT9j/r4aGjv8JKRbgsAzwNP3kG6epNogbdfUpVj0vsEX9Gvu8jDmvfYIc31GE1p+d
+         7J1/BuuOjEFG1Lxgm5xOzlwq5pgq5YikQYuMByHs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MNbp3-1n1Eha2caR-00P4Jt; Tue, 23
+ Nov 2021 12:52:21 +0100
+Date:   Tue, 23 Nov 2021 12:52:19 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+cc:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v5 09/17] hooks: convert non-worktree 'post-checkout' hook to hook library
-Date:   Tue, 23 Nov 2021 12:46:08 +0100
-Message-Id: <patch-v5-09.17-359ba416e84-20211123T114206Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.0.831.gd33babec0d1
-In-Reply-To: <cover-v5-00.17-00000000000-20211123T114206Z-avarab@gmail.com>
-References: <cover-v4-00.17-00000000000-20211101T184938Z-avarab@gmail.com> <cover-v5-00.17-00000000000-20211123T114206Z-avarab@gmail.com>
+        Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>
+Subject: Re: [PATCH v8 00/17] Upstreaming the Scalar command
+In-Reply-To: <211123.86y25fwxup.gmgdl@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2111231249080.63@tvgsbejvaqbjf.bet>
+References: <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com> <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com> <CABPp-BG=fcKq2Ng2gan3HbBGcT7WCMhtZCP6m2xjA5BSuTekOg@mail.gmail.com> <nycvar.QRO.7.76.6.2111221317390.63@tvgsbejvaqbjf.bet>
+ <211122.865yskyw25.gmgdl@evledraar.gmail.com> <nycvar.QRO.7.76.6.2111222304070.63@tvgsbejvaqbjf.bet> <211123.86y25fwxup.gmgdl@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-71259208-1637668341=:63"
+X-Provags-ID: V03:K1:Zdof3sGHRY/FDyl/tS/oZMSgEGT5HvW5zPODdV6muQAtffYfiDk
+ ivFNJRY1JfvvjS6eh+4Card8Wvi426VHgEt4FyEUNkoja3zvQOIGejFGS+kZ3P0IWYDUwP0
+ Q2YwdhAty6u1n2GG7ijrx3bzXQplCIUod5yRIPODr9pNt5q5jp2mXEr01bLRCR8AA2m4GwU
+ Uu3z6y+vtnLO5rQawivkQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RzUHypRRYD4=:e2+t7BgOtHoQDUARePDuM0
+ 6pSF6dw/AHYP1/DMH6hb2xHa25xHcO/MDuULd1TW8Cdl3l1LsWuB/7x6rOEioQ5TWpCsKTcJ3
+ g94k0eyknWhONoAuRb2rkpdRu9rzdRpgQvatHzt2UbDA1HvX9AryzUkGHjJC5Yi4hkJ+T8hXP
+ gB1yDJqG8JYY8M3WLocTtjwr805Wp+Bdkv40OeOZ8otjHrVT1DjvXz/XKUNG1Rvj7Hb0vu9pF
+ RNl9NDdNaThGKEos1OSpqKThsn5utxb+MKlO0vwAE77OX9lmE22RrsppI0FT3Uqj0CKs2fu9F
+ ZiIZQIkBRQNW52gSVI/1Eb/c4LwjEKYIWfTsq6/hEZQZXrPqyYa0GiCMNMZW+2TF3mY8H4G9C
+ 4sGPfeMpKAY0obX9Wyw4hxOWBqq/3vRwhaPZUFVJPT9jpDceNeGe9291kcOXznwddZM74hy9K
+ VK/d6PXITY6dU7+hR4IbZCcSaK7XEEf4nRMwwQh/2G/CbVdiwe2FvBJQ/DwFODaRfCxVqUjec
+ GEecqlGepveSALBy9ruz/gMUV96cXmfC1oMhmQfSLPxfMUnE6u5+W4RmzILKpc5zFlfqohwsb
+ 43CTr0pQlUnAR+LXK+BJq3vO6U4DEt15+SpUa18QN2G6/Dl4IGA8q1/ICoSVwUhUe7iulG/Lm
+ TONQ8iv2Vehfi2/RfB8uWsPR56g1bhdKcagMDBbPSps6dGoObeCkULYqzi6DaAUVId3wcgojL
+ TjekP/WoUrx3DkE3xiBcVxGEJY4kyZejiA3JW212fRQAsxyu4lfzaohXzMY8o0v4iEQbBphMt
+ Qv1pOBeXfuF3LEahEuKNIrALFaL3axVzcsOqolpX8kHBIy2Kxfw5UJYtgVk1mv4liUNoFMlTg
+ jmLGdmimZgfGUyDXOGtr5jRhd39htJIsVEGU5C3jbMyPZ1QdntOYrQeENn5Jd4YFjZgQh4bVe
+ CO9qL7/3yK8gGTwiAiipq9z5OjPS17srSJnjvfbLRlChBZvFkHRc0itWds/7EU3DlfejhmMeN
+ cUrV9XzKmCEzQ7tRHRieNI+7tHsnUhJ57kB35zTwKsxc4y+XVvEcU0xUg5cJHb9x4ZJ7zYCcg
+ /Grntj2+4VRjeE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Emily Shaffer <emilyshaffer@google.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Move the running of the 'post-checkout' hook away from run-command.h
-to the new hook.h library, except in the case of
-builtin/worktree.c. That special-case will be handled in a subsequent
-commit.
+--8323328-71259208-1637668341=:63
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/checkout.c | 3 ++-
- builtin/clone.c    | 3 ++-
- reset.c            | 3 ++-
- 3 files changed, 6 insertions(+), 3 deletions(-)
+Hi =C3=86var,
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index cbf73b8c9f6..4af17d17217 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -9,6 +9,7 @@
- #include "config.h"
- #include "diff.h"
- #include "dir.h"
-+#include "hook.h"
- #include "ll-merge.h"
- #include "lockfile.h"
- #include "merge-recursive.h"
-@@ -106,7 +107,7 @@ struct branch_info {
- static int post_checkout_hook(struct commit *old_commit, struct commit *new_commit,
- 			      int changed)
- {
--	return run_hook_le(NULL, "post-checkout",
-+	return run_hooks_l("post-checkout",
- 			   oid_to_hex(old_commit ? &old_commit->object.oid : null_oid()),
- 			   oid_to_hex(new_commit ? &new_commit->object.oid : null_oid()),
- 			   changed ? "1" : "0", NULL);
-diff --git a/builtin/clone.c b/builtin/clone.c
-index fb377b27657..ee27b9f8114 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -32,6 +32,7 @@
- #include "connected.h"
- #include "packfile.h"
- #include "list-objects-filter-options.h"
-+#include "hook.h"
- 
- /*
-  * Overall FIXMEs:
-@@ -705,7 +706,7 @@ static int checkout(int submodule_progress)
- 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
- 		die(_("unable to write new index file"));
- 
--	err |= run_hook_le(NULL, "post-checkout", oid_to_hex(null_oid()),
-+	err |= run_hooks_l("post-checkout", oid_to_hex(null_oid()),
- 			   oid_to_hex(&oid), "1", NULL);
- 
- 	if (!err && (option_recurse_submodules.nr > 0)) {
-diff --git a/reset.c b/reset.c
-index f214df3d96c..0881e636915 100644
---- a/reset.c
-+++ b/reset.c
-@@ -7,6 +7,7 @@
- #include "tree-walk.h"
- #include "tree.h"
- #include "unpack-trees.h"
-+#include "hook.h"
- 
- int reset_head(struct repository *r, struct object_id *oid, const char *action,
- 	       const char *switch_to_branch, unsigned flags,
-@@ -127,7 +128,7 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
- 					    reflog_head);
- 	}
- 	if (run_hook)
--		run_hook_le(NULL, "post-checkout",
-+		run_hooks_l("post-checkout",
- 			    oid_to_hex(orig ? orig : null_oid()),
- 			    oid_to_hex(oid), "1", NULL);
- 
--- 
-2.34.0.831.gd33babec0d1
+On Tue, 23 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
+> [...]
+>     $ make clean; make -C contrib/scalar test
+>     [...]
+>         CC hook.o
+>         CC version.o
+>         CC help.o
+>         AR libgit.a
+>     make[1]: Leaving directory '/home/avar/g/git'
+>         SUBDIR ../..
+>     make[1]: Entering directory '/home/avar/g/git'
+>         * new link flags
+>         CC contrib/scalar/scalar.o
+>         LINK contrib/scalar/scalar
+>     make[1]: Leaving directory '/home/avar/g/git'
+>     make -C t
+>     make[1]: Entering directory '/home/avar/g/git/contrib/scalar/t'
+>     *** prove ***
+>     error: GIT-BUILD-OPTIONS missing (has Git been built?).
+>     t9099-scalar.sh .. Dubious, test returned 1 (wstat 256, 0x100)
+>     No subtests run
+
+That's cute. You seem to have missed that this is `contrib/`? The
+assumption of pretty much _everything_ in there is that Git was already
+built.
+
+Try this at home: `make clean && make -C contrib/subtree/ test`
+
+Yep. It "fails" in the same way. "has Git been built?".
+
+So if that was all the evidence in favor of that misinformation "Scalar's
+build is broken! Broken, broken, BROKEN!", I think we can now let it rest.
+At last.
+
+Ciao,
+Johannes
+
+--8323328-71259208-1637668341=:63--
