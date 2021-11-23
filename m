@@ -2,115 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AF8AC433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 20:33:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B3E1C433EF
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 20:34:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232269AbhKWUg3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 15:36:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35798 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbhKWUg0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 15:36:26 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56E02C061574
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 12:33:18 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id b8-20020a17090a10c800b001a61dff6c9dso214803pje.5
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 12:33:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=qj9DDjF+mySAWg/v5UyWgXyne+T1Mdt24tJgJXRJFaI=;
-        b=tPRfKp2g6NgHXZ5PWNfMLQPL1Es2/d1/wnhcsbx3qsGsPowHRNovxtjkZ4j24naQGF
-         QjoanNe0FjdxubvShMeSMMENuVx4RyB+L499BhWxioOyMpIYkymFGfd5uqL+ZLO7+e2B
-         TQOGwlZcvaMf31eWhPkddOk2DcOMJEIxptX2ABPBRQSdKZg4z/oY9T+uBLUyOc2upH1f
-         fDW6V5trB6T+oojDn2yNe7eIfSXtBzDb/F3VXkXhjT4zCgpde3q6oI65bPSy5v6E/ckp
-         Q4Y0RjHT8Gmli8u1DJjiQKvuLRkCe/esiv9WQ4T/ke5EkDnAozDJai+UjlkgSdREI4z2
-         Xydw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=qj9DDjF+mySAWg/v5UyWgXyne+T1Mdt24tJgJXRJFaI=;
-        b=eW2l59pXXPUIuaa7grkZs5HHyrp3tthCbMY7auCYC0+GfDTxGziIg+20zZePYsuMIs
-         T+Pdsjv0ECR+N2ZBm2dl+7ct0WzNTHFkTp+OZk0URX+7+3yZThwtErson57/vV5IfJwN
-         xI+ZkjOGyfIOzRpkaIQoPLcqXEdlsdYhSaKUVAlBrAqn2+tq/gqaT7xlEsM/B7k9Uc8L
-         qTyiAJeqCoOtMCCJeIfw6Vn4/kuVDAyPFP3lq346rweA54mBQ4fMPXTxnfAqo6CVTLjI
-         38+IYw/pG5Hdu3GlSqbIqb96XRm57ppsN29Bx0nr1H1jyIoIHw1kYnW4JX2WxMbPmzSy
-         A3+Q==
-X-Gm-Message-State: AOAM5317Sbzir940n9yJgf6hNDWnR757shIBVK6J4MFL4vEowTIUwfVs
-        /Vi6ILaRvcbIdwgVJEOe8ubrk4xcH/BaSg==
-X-Google-Smtp-Source: ABdhPJxbgdvFL9XXwaTESyzWUq4SurMVf8DiYEzGmMTdCqtZ1H99F+gfCA6Ilsxchdsi43szbHzs5lurbkFekA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:72c4:: with SMTP id
- l4mr6682414pjk.149.1637699597800; Tue, 23 Nov 2021 12:33:17 -0800 (PST)
-Date:   Tue, 23 Nov 2021 12:32:43 -0800
-In-Reply-To: <CABPp-BGr9PDTE0q5zev4Ffx19g+hG083zdNShoSdH47VqzT8mw@mail.gmail.com>
-Message-Id: <kl6lzgputxxw.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <a5528cbb14ddbbf26cde873e3f3e95744d59b950.1637455620.git.gitgitgadget@gmail.com>
- <20211123003958.3978-1-chooglen@google.com> <CABPp-BE0Bcimwr1wwcnnh+6apx7r114Oqnu=QDgKEn6VAHAtFg@mail.gmail.com>
- <kl6lmtluka55.fsf@chooglen-macbookpro.roam.corp.google.com> <CABPp-BGr9PDTE0q5zev4Ffx19g+hG083zdNShoSdH47VqzT8mw@mail.gmail.com>
-Subject: Re: [PATCH 8/8] dir: avoid removing the current working directory
-From:   Glen Choo <chooglen@google.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+        id S232900AbhKWUhl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 15:37:41 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59295 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232388AbhKWUhk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 15:37:40 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E5D8D15E33A;
+        Tue, 23 Nov 2021 15:34:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=K0OtoxpdBHxg0ADr3ADOp9TtOFnsMq/ST2gK5z
+        6dVls=; b=ZN9Jw68AvUud3iXia2wuDmWtEkSIDj0vOAwToJ4XLRHl7IKo0SHeOL
+        H1VDSj7nWSVeQo/DEJ83e0HsgDNklAqmAwQjY8qJoWhfWleBcjdNU0JDxVPUv1Iu
+        gI+Pp7BbrUtThWdoilmFQ2tjTMZ0P0UnN3nJZ4OUf2ok1pe7r0vVI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DE7EB15E339;
+        Tue, 23 Nov 2021 15:34:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 45D6C15E338;
+        Tue, 23 Nov 2021 15:34:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH 2/4] refs: trim newline from reflog message
+References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
+        <dfb639373234a6b8d5f9110380a66ffccbe0b1d6.1637590855.git.gitgitgadget@gmail.com>
+        <xmqq35nnddw7.fsf@gitster.g>
+        <CAFQ2z_PE7TMj=qfQVroK_gRfZk-xF9PKhk2yxqF-bB+2aA7eoQ@mail.gmail.com>
+        <xmqqczmqajdk.fsf@gitster.g>
+        <CAFQ2z_Mct+KBZ3vO6udwqeiHYA8od8CGH_w5BO5LaidP-AYDsg@mail.gmail.com>
+Date:   Tue, 23 Nov 2021 12:34:28 -0800
+In-Reply-To: <CAFQ2z_Mct+KBZ3vO6udwqeiHYA8od8CGH_w5BO5LaidP-AYDsg@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Tue, 23 Nov 2021 18:28:24 +0100")
+Message-ID: <xmqqzgpu7grv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: C1E13262-4C9C-11EC-8AF2-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
->> I agree that most, possibly all, of our commands should prefer to die
->> than to remove the cwd, but that doesn't justify adding
->> application-level concerns to a general-purpose utility function. Even
->> if it sounds overly defensive, having an obviously correct utility
->> function makes it easier for future authors to know exactly what their
->> code is doing and why. And surely if we're imaginative enough, we can
->> definitely dream up some possible use cases for remove_path() that don't
->> want this dying behavior e.g. other applications that link to our
->> libraries, or some new merge strategy that may need to remove + restore
->> the cwd.
+> I'm talking about refs/refs-internal.h. It seems you want to add something like
 >
-> Sounds like your objections here are based on a misunderstanding.  I
-> totally agree with you that adding dying behavior to these functions
-> would be wrong.
+> /* The ref backend should add a '\n' relative to the message supplied
+> to the delete/symref/update functions. */
+> typedef int for_each_reflog_ent_fn(struct ref_store *ref_store,
+>                                    const char *refname,
+>                                    each_reflog_ent_fn fn,
+>                                    void *cb_data);
 >
-> My patch doesn't do that.
+> ?
 
-Ah my mistake, that should be s/die/'stop gently'. Even so, that is not
-at the core of my objection, mixing of concerns is.
+Sorry, I do not follow.  Doesn't the ref backend already ensure that
+the message is not an incomplete line?  If you feed a single
+complete line when updating, I do not think the backend should add
+any extra LF relative to the given message:
 
->> I'm not going to say that we'll *definitely* need remove_path()
->> in its current form, but mixing concerns like this is an invitation to
->> unexpected behavior. An (imperfect) example that demonstrates this
->> principle is https://lore.kernel.org/git/24bffdab139435173712101aaf72f7277298c99d.1632497954.git.gitgitgadget@gmail.com/,
->> where we made a change to a generic path matching function in order to
->> speed up unpack_trees(), but accidentally ended up breaking gitignore.
->
-> There's no mixture of concerns; my patch is correcting this library
-> function to more fully match its documented intent; from dir.h:
->
->     /* tries to remove the path with empty directories along it,
-> ignores ENOENT */
->     int remove_path(const char *path);
+    $ git update-ref -m 'creating a new branch manually
+    ' refs/heads/newtest master
+    $ git update-ref -m 'updating a new branch manually
+    ' refs/heads/newtest master~1
+    $ git reflog refs/heads/newtest
+    4150a1677b refs/heads/newtest@{0}: updating a new branch manually
+    5f439a0ecf refs/heads/newtest@{1}: updating the reference
 
-I don't think that there is a mismatch; reading the implementation +
-documented intent seems to make it clear that 'emptiness' is defined by
-directory contents, not the presence of any processes using it as its
-current working directory.
+I think what deserves such a comment more is the prototype for
+each_reflog_ent_fn describing what the parameters to that callback
+function, to help the callers of the iterator what to expect.  That
+is the end-user facing part.
 
-> Since the parent process's current working directory is still likely
-> parked in that directory, there is a good reason to treat it as
-> non-empty.  Thus the cwd should not be one of those directories
-> removed along with the specified path.  No need to die, just stop
-> removing the leading directories once it hits the cwd (much like it'd
-> stop once it hit a directory that had files left in it).
+/*
+ * Callback to process a reflog entry found by the iteration functions (see
+ * below)
+ */
+typedef int each_reflog_ent_fn(
+		struct object_id *old_oid, struct object_id *new_oid,
+		const char *committer, timestamp_t timestamp,
+		int tz, const char *msg, void *cb_data);
 
-This doesn't sound like a typical definition of 'emptiness' to me, but I
-can accept it if others also find it compelling. IOW if your definition
-of 'emptiness' is compelling enough, then I'll be convinced that there
-is no mixing of concerns and there would be no objection.
+Currently it only says "Callback (see below)" but "below" has only
+comments about the difference between refs_for_each_reflog_ent() and
+refs_for_each_reflog_entreverse() functions, and does not talk about
+what "committer" looks like (i.e. does it give user.name equivalent,
+user.name plus <user.email>, or something else?), and what "msg"
+looks like (i.e. if a multi-line message was given when a ref was
+updated or created, do we get these lines intact? if it gets
+mangled, how? if the original was a single-liner incomplete line, do
+we lack the final LF?), and how tz is encoded.
+
+I think the rule for "msg" is that:
+
+   a multi-line message, or a message on a single incomplete-line,
+   are normalized into a single complete line, and callback gets a
+   single complete line.
+
+Once these rules get specified tightly and fully, it is up to the
+ref(log) backends how to implement the interface.  If files-backend
+wants to keep LF at the end of the message when storing (so that it
+can easily use it as record delimiter), it can do so and reuse the
+LF at the end of the message as part of the msg parameter to the
+callback.  If another backend wants to drop LF at the end of the
+message when storing (to save space), it can do so as long as the
+callback function gets the LF just like the other backend.
+
