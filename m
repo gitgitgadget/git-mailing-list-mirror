@@ -2,70 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A0D9C433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 02:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34F30C433F5
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 02:35:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232270AbhKWCax (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 21:30:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40228 "EHLO
+        id S232613AbhKWCid (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 21:38:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229678AbhKWCax (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 21:30:53 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE334C061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 18:27:45 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id l25so68510995eda.11
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 18:27:45 -0800 (PST)
+        with ESMTP id S229672AbhKWCid (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 21:38:33 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03512C061574
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 18:35:26 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id z5so85613497edd.3
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 18:35:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=HR9wQ76lZRDMGBqRMqlbUmMh/II8UU2wN+1qH3zSoQA=;
-        b=Z/AWrM3ryqH+SlW3bIYKysH3M9VOBY0YjSncX5a54WDCa/+NCCXsReLrlpl3JhiKf8
-         BZw6dcbx+EN8xHR75SAgUcs5+RP8GMkCyttP+sZmeERcG8dEUR4Aw867DSM4SDK0mwsW
-         J67zcDrUpl6C8Uc+TBHv0Ipzvv/b1927q4LGQ0f+L5yFjFOybbbdO8jwmfumfItl2r3h
-         hPpWz/dK8PMjxNz9Dpi1t4Z+Wc3ai37iPKRQrdXKtv/FVvbBAkweW+DFy59ml9f22O2Z
-         tvzS6tBmhgYgGtS5s9e7ZnUiTXvOe8JNE0IdIXqM8p9eEz1jRl62mNJhepHdMoZ+YXYC
-         wiIQ==
+        bh=qWMiBCwh7EBzQl3DbbYVoJoe/3KqfmJRM59R5l/ShcQ=;
+        b=A2fna0wIr/ww4g4A1FDdFHPSSJSfT0d1s4jqB5zdBG//y7I2VpEi08P7JBz3Pgs4fJ
+         n/zwPBLeQcwtj4RpLs7evEba3cZva4gxgM7yISvQ/wjmtp3hqHYkVNlOogr6hxuNpCH7
+         9UavIiwrhaguMFfOcU1Re20Qls4bbTgiT+vjvWhstAE/h0777nRM4IzQX8HG+ZPsWsx2
+         ta1ZQVR3bDp6LbwbistRDjMO+A+ZzhtGNow8CSBEXjKSV5qwBativRBpZRmbXd5Fbw3L
+         BKg9lO5PZFrJq3fmND0c1tW96vRlBOPoqUU3iEWpMbJZYqhSh0wt9kxB0N63Vr2ekt8c
+         VwIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=HR9wQ76lZRDMGBqRMqlbUmMh/II8UU2wN+1qH3zSoQA=;
-        b=RaLXZfpOsVem0SXt1alEnxpWnPox1oRZV3iZvQY2w1E5Nxn9854zGuNz0IEUQG7wSp
-         uj6GfWsNgxMEHMxSf7UOcZANCRc4XkXOAIJUQydYG3ylGlOrvjDAWz5Z0yp2OldQwjxQ
-         cLCWnC+MRXjqV7shHKBdRvNhuO3inqh5swZ3vwXL/gruMKCrkAaH900fQ1gwWyI2kPDC
-         UpjqLaHpngAHFaNKGWeQDgz+z6yV9hAUv+MCSBrDX1KO7yrOUTf8cseL8vlMTw5yMG6y
-         ehJxrRM37oV6DT4hvCY3UZu9+7P9fy3ZpIWSLVx7aHno57W6IV2+kkMo7ufkOaOY24w+
-         OcQQ==
-X-Gm-Message-State: AOAM533MutqbJ6G3ucs+JYkl67N2PQgeihkAE59fwoufC8ZuaV9Atpdq
-        1X+8DrX/Mwzsd+5N0YUO9GJGRH9x8eXoPw==
-X-Google-Smtp-Source: ABdhPJzxLAtofuU1qWWo2Bp8w+4lODAbbD9+TBbkN0ODrOzvIYLBWPWafEbLTjau/OTnSe5e4cdS6Q==
-X-Received: by 2002:a05:6402:50ca:: with SMTP id h10mr3302064edb.70.1637634464416;
-        Mon, 22 Nov 2021 18:27:44 -0800 (PST)
+        bh=qWMiBCwh7EBzQl3DbbYVoJoe/3KqfmJRM59R5l/ShcQ=;
+        b=DtxIC2a/a89Q+EJGqcr5SnSAzaVU3ixZgIhjewXJXUozlTom2w/PzSW4BDLVmmjmQf
+         peFLXIacZbW+hg0LXXzH2oqTHDPqNb1lexQIEOf/1Z9tsPW5i1wS5rqR3ehSbt2M+are
+         0CHPGzIDqV0hPIqGfIJdnXqskx+r3/ruaLaHCsXnr2kts0fDPBdglUN1oKM7giD6szcG
+         kNUAx/x8KIb5WCLjmKBJANdWuGQ4TZu5IqI6zibi3dHx4Mvmv1P2t1E5VulvWvPRHzH9
+         BUyGyostL7NE2A+ZEqxVfmzdsWbmHCnxjg7FaTJS3Df6aj5J1ea6lud04KKqtMuoTb3g
+         KPcw==
+X-Gm-Message-State: AOAM531tV9ycvRajmps4wHHEPBreKh6eQQlkqT0henPrz3C43OmrG83b
+        vefwFiuAuyHEAZo89XdejPo=
+X-Google-Smtp-Source: ABdhPJzF+fQNLnilaROh90Tq1BIsPe0coyJED9N8EPeGdnKiEJ3ts2utOew+5GNuUHAa11yxP3Za+w==
+X-Received: by 2002:a05:6402:84f:: with SMTP id b15mr3140537edz.375.1637634924428;
+        Mon, 22 Nov 2021 18:35:24 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id gs17sm4460413ejc.28.2021.11.22.18.27.43
+        by smtp.gmail.com with ESMTPSA id og14sm4571894ejc.107.2021.11.22.18.35.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Nov 2021 18:27:44 -0800 (PST)
+        Mon, 22 Nov 2021 18:35:24 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mpLX5-001HZ0-IP;
-        Tue, 23 Nov 2021 03:27:43 +0100
+        id 1mpLeV-001Hjj-Ik;
+        Tue, 23 Nov 2021 03:35:23 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH 1/8] t2501: add various tests for removing the current
- working directory
-Date:   Tue, 23 Nov 2021 03:19:47 +0100
-References: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
- <0b71996a3b462d4147fb792b20057544b9ef1710.1637455620.git.gitgitgadget@gmail.com>
- <211121.867dd11jbl.gmgdl@evledraar.gmail.com>
- <CABPp-BEp3OL7F2J_LzqtC-x-8pBUPO8ZR1fTx_6XbqZeOH1kRw@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
+        congdanhqx@gmail.com, peff@peff.net
+Subject: Re: [PATCH v3 1/1] ls-tree.c: support `--oid-only` option for
+ "git-ls-tree"
+Date:   Tue, 23 Nov 2021 03:28:15 +0100
+References: <cover.1637567328.git.dyroneteng@gmail.com>
+ <6c15b4c176b7c03072fa59a4efd9f6fea7d62eae.1637567328.git.dyroneteng@gmail.com>
+ <xmqqczmsf2d2.fsf@gitster.g> <211123.86tug3wu8v.gmgdl@evledraar.gmail.com>
+ <xmqqpmqrachl.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <CABPp-BEp3OL7F2J_LzqtC-x-8pBUPO8ZR1fTx_6XbqZeOH1kRw@mail.gmail.com>
-Message-ID: <211123.86czmrwqqo.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqpmqrachl.fsf@gitster.g>
+Message-ID: <211123.868rxfwqdw.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -74,83 +73,36 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Nov 22 2021, Elijah Newren wrote:
+On Mon, Nov 22 2021, Junio C Hamano wrote:
 
-> On Sun, Nov 21, 2021 at 9:59 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->>
->> On Sun, Nov 21 2021, Elijah Newren via GitGitGadget wrote:
->>
->> > From: Elijah Newren <newren@gmail.com>
->>
->> > +test_expect_failure 'checkout fails if cwd needs to be removed' '
->> > +     git checkout foo/bar/baz &&
->> > +     test_when_finished "git clean -fdx" &&
->> > +
->> > +     mkdir dirORfile &&
->> > +     (
->> > +             cd dirORfile &&
->> > +
->> > +             test_must_fail git checkout fd_conflict 2>../error &&
->> > +             grep "Refusing to remove the current working directory" =
-../error
->> > +     ) &&
->> > +
->> > +     test_path_is_dir dirORfile
->>
->>
->> I'd find this & the rest of this series much easier to understand if we
->> started out by positively asserting the current behavior here, and
->> didn't test_cmp/grep for erro r messages that don't exist anymore.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> Yeah, this is my fault for my bad commit message.  I stated I was
-> adding tests checking for the problems of interest, making it sound
-> like I was testing existing behavior, but I should have stated I was
-> adding tests with the behavior we'd prefer to have (i.e. basically a
-> test-driven-development) setup.
+>> All of which (and more) would also be addressed in an obvious way by
+>> just supporting --format as I suggested in
+>> https://lore.kernel.org/git/211115.86o86lqe3c.gmgdl@evledraar.gmail.com/;
+>> don't you think that's a better approach?
 >
-> Also, there really wouldn't need to be so many tests for describing
-> the existing behavior.  It's basically just `git
-> $OPERATION_THAT_REMOVES_CWD_AS_SIDE_EFFECT` followed by nearly any
-> other git command will cause the second and later commands to fail
-> with:
+> That is what I would call over-engineering that I would rather not
+> to have in low level plumbing.
 >
-> ```
-> shell-init: error retrieving current directory: getcwd: cannot access
-> parent directories: No such file or directory
-> fatal: Unable to read current working directory: No such file or directory
-> ```
+> I am all for making _parsing_ the output from the tool easier by
+> scripts; I am not interested in eliminating the _output_ by scripts.
+> They should capture and format the pieces we output in any way they
+> want.
 >
-> However, we do need a lot of tests for corrected behavior, because
-> there are so many different codepaths we can follow which will lead to
-> deletion of the current working directory.
+> So, no, I do not think it is a better approach at all.
 
-Currently if I do e.g.:
+We've got --format for for-each-ref and family (also branch etc.), and
+for the "log" family.
 
-    git checkout master
-    git clean -dxf
-    cd perl
-    git checkout v0.99
-    cd ../
-    git clean -dxfn
+I'm not sure I understand what you're saying, do you think if we could
+go back and change it that the "FIELD NAMES" in git-for-each-ref (which
+is plumbing) would have been better done as
+--field-name=3Drefname,objecttype,... etc?
 
-Nothing breaks and I don't end up with an empty perl/ to remove. With
-these patches we'd either die on the "checkout" (I think) keep the
-"perl" and have an empty perl/ to report in the "git clean -dxfn" at the
-end (I'm not sure which, I forgot and haven't re-read this series just
-now).
+Having used it extensively it's been very hard to have the flexibility
+of formatting, e.g. to specify arbitrary delimiters.
 
-I think changing it anyway might be justifiable, but changing the
-behavior of things like that tickles my spidey sense a bit. I.e. I can
-see people having written scripts like that which would break (it's
-often easier to cd around after globbing than staying at the top-level,
-then jump back).
-
-So I wonder (especially with Glen's comment in
-<20211123003958.3978-1-chooglen@google.com>) if this is being done at
-the right API level. E.g. maybe it would be better for some commands to
-ease into this with an advise() or warning() and not a die() or error(),
-or have the die() be in the likes of "git switch" but not "reset
---hard".
-
-Or maybe not, just food for thought...
+It also leaves the door open to teaching ls-tree etc. the %(if) syntax
+in the ref-filter, e.g. if you'd like to only print out certain data for
+certain object types or whatever.
