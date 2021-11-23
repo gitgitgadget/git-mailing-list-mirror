@@ -2,113 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D44CC433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 18:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FB36C433F5
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 18:35:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239847AbhKWSeO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 13:34:14 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53700 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239829AbhKWSeN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 13:34:13 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5A7C715D3DC;
-        Tue, 23 Nov 2021 13:31:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=eYglfDo2BXm1
-        lneJz3IFDJPtZlUbn5QLBVYYHZd9MG0=; b=lTQYkRyWFH0M/7INia5shW/nXnig
-        7euMIFHvy7xy0H4YXyqjjR81+xKWPTx/QHBKlpGtRuFEh8JeFAgVsicSo3lAJqPb
-        T6YqOqaHBtFd7BYwenDQSoAGjQgW/038qAbeGQmditCHSHisjxlGVCYUkngjZkQ+
-        75b+jNR4/7CviY8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 52B5D15D3DB;
-        Tue, 23 Nov 2021 13:31:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B079D15D3D4;
-        Tue, 23 Nov 2021 13:31:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 3/4] test-ref-store: tweaks to for-each-reflog-ent format
-References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
-        <8a1b094d54732b8b60eacb9892ab460a411bcec3.1637590855.git.gitgitgadget@gmail.com>
-        <xmqqr1b7bz5v.fsf@gitster.g>
-        <CAFQ2z_PhazkdC8JOqDW-=VD4iLq_==x23+fN7T-Vp9M2DoW=qw@mail.gmail.com>
-Date:   Tue, 23 Nov 2021 10:31:01 -0800
-In-Reply-To: <CAFQ2z_PhazkdC8JOqDW-=VD4iLq_==x23+fN7T-Vp9M2DoW=qw@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Tue, 23 Nov 2021 18:06:37 +0100")
-Message-ID: <xmqqfsrm9122.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 83399A24-4C8B-11EC-9E75-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+        id S239776AbhKWSi1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 13:38:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36138 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235305AbhKWSi1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 13:38:27 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E218FC061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 10:35:18 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id s22-20020a056a0008d600b00480fea2e96cso72258pfu.7
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 10:35:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=zJCmovhiqY65lQnJq/p+Rs8PBoonqsD4lPVyplhBvEI=;
+        b=Fj7gWLclgwtdYJgo4WxDylIMTkA3DHJLqHqD0QAWqz5o8uZfZ2yROfL+haQSzsWPNI
+         clMJeSqO3VECLGAbRHrHn5wdXUdlJi151ZUwkXdt4M1yToZSywiyKTqcFyRH+6UwWKj4
+         a9Bk17xBoR0OToAqymSeqHxLe08s+49FdSS0BeSujRi4UmJLHTVl1HdCtBVP07mI+37b
+         3/4rj6meeSeaZbvXi2W479qyALeQ69vGu7BZgBe1MU0gx/P6S0hACBl+B7y896ZMrd0K
+         oS+DTqgxPblEk9roFyCcXUw8VA2qrTP/ZymElp/uTB1sGbB7O1+Dhkq+FZGEfXW3H0eq
+         Kk0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=zJCmovhiqY65lQnJq/p+Rs8PBoonqsD4lPVyplhBvEI=;
+        b=vw1Ye3XU/2VDJDT+hWJRdhYjT9Elw75WmMo98RXbQ6gNtIXRQ34Ozza3ANip4G45k2
+         38zs7i/Ukyp5ym51Cpk9keNBYWf6yBgbvgZVb1POZJD7ZGKsCErrevsLVjC5SWvh69f2
+         bCemiwNemtBKhnssizE5zm5c/HfTUVLm4GAJyZRFs9RzVL13YYjYDxVAcaL3lqid4Sz4
+         FGR0j2hjMbBluYeEICDoFGxxZcjAhFU37Bfo2MoRmBxrPAvUFu4cmWnwTXg8WNM9Xx1U
+         lLJYORVS/15yz1kmqZ6IyRJCrVY04nYsJhF1RRMkLgKES9u317oj+S9KXzS+3o8s4MzK
+         S2FA==
+X-Gm-Message-State: AOAM531abPWU7YPtqICUYwXExZlDn8gFQF59TfcvBFL/QXbVVLNbUM6p
+        DDmZdlxxF4WXClWLLwwC6wh1k5q00Ocu5Q==
+X-Google-Smtp-Source: ABdhPJxHp1evE/AxBYMkfMLAly8DEC5VHshN13ge8i8JFT4M4jH91dX2Dcn394xLLbjYX8kAESq3Fx5k2MYjYA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90a:4815:: with SMTP id
+ a21mr5572677pjh.111.1637692518355; Tue, 23 Nov 2021 10:35:18 -0800 (PST)
+Date:   Tue, 23 Nov 2021 10:35:16 -0800
+In-Reply-To: <211123.86r1b7uoil.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6lk0gyk9ej.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20211122223252.19922-1-chooglen@google.com> <20211122223252.19922-2-chooglen@google.com>
+ <211123.86r1b7uoil.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH 1/4] submodule-config: add submodules_of_tree() helper
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
->> > +     printf("%s %s %s %" PRItime " %+05d\t%s\n", oid_to_hex(old_oid=
-),
->> > +            oid_to_hex(new_oid), committer, timestamp, tz, msg);
->>
->> Looks good to me.  We might want to make the printf format
->> conditional to add \t%s only when msg is not empty, though.
->> Hopefully such a change would follow the reflog format even more
->> closely to make 4/4 unnecessary?
+> Having skimmed through this topic isn't this in 4/4 the only resulting ca=
+ller:
+> =09
+> 	+void create_submodule_branches(struct repository *r, const char *name,
+> 	+			       const char *start_name, int force, int reflog,
+> 	+			       int quiet, enum branch_track track)
+> 	+{
+> 	+	int i =3D 0;
+> 	+	char *branch_point =3D NULL;
+> 	+	struct repository *subrepos;
+> 	+	struct submodule *submodules;
+> 	+	struct object_id super_oid;
+> 	+	struct submodule_entry_list *submodule_entry_list;
+> 	+	char *err_msg =3D NULL;
+> 	+
+> 	+	validate_branch_start(r, start_name, track, &super_oid, &branch_point)=
+;
+> 	+
+> 	+	submodule_entry_list =3D submodules_of_tree(r, &super_oid);
+> 	+	CALLOC_ARRAY(subrepos, submodule_entry_list->entry_nr);
+> 	+	CALLOC_ARRAY(submodules, submodule_entry_list->entry_nr);
+> 	+
+> 	+	for (i =3D 0; i < submodule_entry_list->entry_nr; i++) {
 >
-> I think the conditional formatting of \t is impractical. It makes thing=
-s like
+> I think it would be better to just intorduce this function at the same
+> time as its (only?) user, which also makes it clear how it's used.
+
+Yes that makes sense. That is the only user (for now).=20
+
+> In this case this seems like quite a bit of over-allocation. I.e. we
+> return a malloc'd pointer, and iterate with tree_entry(), the caller
+> then needs to loop over that and do its own allocations of "struct
+> repository *" and "struct submodule *".
 >
->   (metadata, msg) =3D line.split('\t')
+> Wouldn't it be better just to have this new submodule_entry_list contain
+> a list of not "struct name_entry", but:
 >
-> in Python require special casing in case msg is empty.
-
-Doesn't it however make it cumobersome (as we saw in 4/4 and =C3=86var's
-reaction to it) to write tests to add trailing whitespace like this,
-I am afraid?
-
-Without trailing HT, a self-test of this data dumper would become
-trivial---just run it and compare its output with the real file in
-.git/refs/logs/ directory, no?
-
-As this is only test-helper, I do not mind the deviation from the
-format, even though the log message claims to make it closer, to
-always show HT.  And because the consumers of this data are only
-test scripts, I do not mind they are sloppier than the real-world
-code.
-
-But if this were a pair of real world data producer/consumer, the
-consumer would be prepared to see and deal with a line that ought to
-have but lacks HT anyway, so I suspect that the amount of code to
-parse conditionally added HT is not that large.
-
->> > diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
->> > index a600bedf2cd..76b15458409 100755
->> > --- a/t/t1405-main-ref-store.sh
->> > +++ b/t/t1405-main-ref-store.sh
->> > @@ -94,6 +94,7 @@ test_expect_success 'for_each_reflog_ent()' '
->> >
->> >  test_expect_success 'for_each_reflog_ent_reverse()' '
->> >       $RUN for-each-reflog-ent-reverse HEAD >actual &&
->> > +     head -n1 actual | grep recreate-main &&
->>
->> I am not sure how this new test helps validate the change to the
->> code.
+>     struct new_thingy {
+>         struct name_entry *entry;
+>         struct repository *repo;
+>         struct submodule *submodule;
+>     }
 >
-> It's for consistency with the preceding test. I can make a separate com=
-mit.
+> Then have the caller allocate the container on the stack, pass it to
+> this function.
 
-Meaning this is an unrelated clean-up of the existing test before
-this series started?  Sure, just like the show-branch bugfix, it
-would be nicer to have a separate commit for it.
+I thought about it as well. "struct new_thingy" is obviously the right
+struct for create_submodule_branches(), but I'm not sure if it is the
+right thing for other future callers e.g. "struct submodule" is only
+used to give a submodule name to users in help messages.
 
-Thanks.
+But chances are, any caller that needs 'submodules of a tree' will need
+very similar pieces of information, so it seems reasonable to do what
+you said instead of over-allocating in all of the callers.
+
+> Maybe not, just musings while doing some light reading. I was surprised
+> at what are effectively two loops over the same data, first allocating
+> 1/3, then the other doing the other 2/3...
+
+The first loop validates all submodules before creating any branches
+(and also happens to allocate). If we didn't have the validation step,
+allocation + creating branches could just be one loop :)
