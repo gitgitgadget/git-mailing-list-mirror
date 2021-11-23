@@ -2,130 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BAF7C433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 12:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A6E4C433F5
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 12:08:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236793AbhKWMGE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 07:06:04 -0500
-Received: from mout.gmx.net ([212.227.15.15]:50129 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235898AbhKWMGD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 07:06:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1637668971;
-        bh=pYPqwIHwpiH673HWxwkrPjbCHPC8a9jQY+porRttFos=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=EBGZGw4kOm5K37UHsS/6U0+gKqGUtrsS9FX7E3TNZJ+cchnMDdxh3SIJMLUQWSnrR
-         luY0WKIIO76b9yGommIrp2fhhn02elepllJftgsrbWy0HNn5uQBEltLkfR3Dx0p1h0
-         O1OSKyZNQihtb+bEUy3JWRuZiPuRvoIxATOMEg1s=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQvCv-1n2Kw123QF-00Nz8k; Tue, 23
- Nov 2021 13:02:50 +0100
-Date:   Tue, 23 Nov 2021 13:02:48 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        id S236773AbhKWMLI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 07:11:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58214 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236031AbhKWMLH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 07:11:07 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ADD2C061714
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 04:07:59 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id l16so615991wrp.11
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 04:07:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fRF/7Eh0SHw8SQQbZK2gL5AnCoFCJ7XHT770r09PPMk=;
+        b=Q8Kdkp8FC68drERy4YH5mL3KqyGGJrQXCw2D0Hbofc/REQcuW+seVhA3duyIaNVFCV
+         wDFvtvlnEt3Vfgzsi1LzNAVae4jbF0W8shS8wl0dep68K+KJw3X1cDrDlbUgjUEQhWgx
+         PvGzGqVrOnl4Ob/OpF3Yucp9b85JmoALbdeAH7sX34dcR1QD4No19HOf58bbF9G+mKax
+         EKq2pNsTqfbyqGwWcMnye32zRBzNiopJnhe1ccHuIE8xL0mg1Bu6K+MURVhpA03IKv8Y
+         q3iOqwBVVOushgYHJlS4dIe09buy4aPvVqntLu0F+U5UpaBFYgOQIRObZO4zH6a/dipP
+         6PTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fRF/7Eh0SHw8SQQbZK2gL5AnCoFCJ7XHT770r09PPMk=;
+        b=pfEgQwsn02ddvFM+ZvXOl4YpH4FdU1B8PBmVoJEuOTLTpubJvNTcpxMeUhzSGFZ6DG
+         6C7ofyTi8TTMaf2LLO86fh24DcZrGPCMW7loamYUNeW2Xqrn6cM5DpV1O+HY5nJGtrgI
+         yquBpb3ckS88EWTaZiwIP0TQMz+bNDjNPhg9BSmpyOcY4IRQA4hJJsZZ/M0joKsRiHt3
+         hUChAQMOxdi9Pt3DRooqI3JhjFLevf5zs/rAU5vbGOu2SD5sU48bbl51aJ3C5FlgStCe
+         900Hgurdc1WdgR7gRDDGKyz8mg2CC/7rA1/uFWsGasIUJ4NHoGOdQr0VjNVnD7gn+fVg
+         vfnw==
+X-Gm-Message-State: AOAM53049bx8CvU8tKbocinwaisM7b1DmJ1F5EOWrzwkfzAOqBxvrzuq
+        Fmko57WnVfR1qQ4dvh0VyDpvVshUT+bGrg==
+X-Google-Smtp-Source: ABdhPJylw+3L+fYy+UkjbjZtDKDUsaiSG5oQ1tWEaV9PURupVCWSqPL5SOVySE0RW1Y01wA2iSKpdw==
+X-Received: by 2002:a05:6000:18a3:: with SMTP id b3mr6657842wri.343.1637669277456;
+        Tue, 23 Nov 2021 04:07:57 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id m9sm1220299wmq.1.2021.11.23.04.07.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Nov 2021 04:07:57 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fixup??? Merge branch 'ab/ci-updates' into seen
-In-Reply-To: <211123.8635nnydmm.gmgdl@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2111231215020.63@tvgsbejvaqbjf.bet>
-References: <pull.1081.git.1637578930464.gitgitgadget@gmail.com> <211122.86ee78yxts.gmgdl@evledraar.gmail.com> <nycvar.QRO.7.76.6.2111222257430.63@tvgsbejvaqbjf.bet> <211123.8635nnydmm.gmgdl@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Enzo Matsumiya <ematsumiya@suse.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 1/9] worktree: remove redundant NULL-ing of "cp.argv
+Date:   Tue, 23 Nov 2021 13:06:28 +0100
+Message-Id: <patch-v2-1.9-9cc220ce5a3-20211123T115551Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.34.0.831.gd33babec0d1
+In-Reply-To: <cover-v2-0.9-00000000000-20211123T115551Z-avarab@gmail.com>
+References: <cover-0.5-00000000000-20211122T153605Z-avarab@gmail.com> <cover-v2-0.9-00000000000-20211123T115551Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1098819565-1637667704=:63"
-Content-ID: <nycvar.QRO.7.76.6.2111231252460.63@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:5sAVluA2Tlr3MtCbBkCzD0RZrFEuPfhBSm22TZ5x4eYUgnYfG0t
- tO9OfcekYfMN+pYMddd/NgVB+nScCjb2lYXAJELdSfHVTeT1ODkvxZ/1ym9Lo1zdlt4qP03
- aWaBWc0ist8C4J1Q1w19RtE4u4JslmiNNXA8NkbP9+rjM+p/pivBl7aqZsLknwvnQSn+txI
- OqiPeUJfnE7R7ujZZjUSA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:W8xWC1GNqQk=:k44dWGIPH3i5QlU4Qky3hK
- ebWAg5+WteKQETlRN1QBnKfdKaW54i2qwNkfCHTym22kK0i9jdrY3lc2ZkstwrSdhkH7VrFxh
- hdw3Qu/nCvDGSMNsxd8FR29X+DPRKiKWASYVNBxo0bddEroKAOk5oaz4irVbPFvq5F3UsWnvn
- LPR+eRJr/4XRrxsJV+oTOBVJODzbuqtbPJkzzZ7R9SgJSTua3/utu61yKzFYyju71X8kl54G2
- 0+0nSyoYP49oflYJ5F0/5L1+0E0qbiW7orsEih7csD4EzEiP6nblUJkNQUAZEdiTnGRRkFelk
- vZYpK2oXkcDKNxLnPNYlvhr//uovrPHm8X27KVI3DBGmcjd7sxLJw5+uE4lLsVpvR6jSt/Yyr
- G9qnxtEKMqEVhGwhPGx2iTmk9AGzpS28gGaFOTroKQKgMhNTtguh3md5/3GjkBInorwiE4GKv
- Bf/BGAWJ9A52nSpbKAE0vqn0ukfF1iDBEBztQC76DyFdBSZoICRvrXPtOZLIqsWqVY9Ze5z/v
- q5mv8Hch/oEvE2mr+6hBUjbvAxD/DEC5W4AGgov/pRxTV76a7hmlI2BUI6OdBPw+pQl1z1c8s
- lkgsQfBVq8CZ5nnzjT9jyRgTMQ8gDglyrYEiLnwbxT+jRL5efZkVSvdyIY6er7F8C2uL2WArC
- C3AuDlDWnh418+cwTGPW2FMP1R5mMN4rVq0dM4B9uIMfyj1UPA1i53EDAGV7taAAoE7QSrJ48
- 809J1U3Obf2CrUprWYoLzmVM1EtEWG+2XXxQJqD4ZF2NoD1TRYe7FjO6yvm8GRypSfxc715+V
- ttoogxvDeiVU1IIZtFWUD4TlfnfKu5C73U95xxcBFuTCICv6Q5ilOl+kTvhZXG/tKk14dRXoj
- odm7cj8Q8Y5kzOxrWCCm9ZX5QdTuK1lPPezLw/0CL5yyx9tykZGSC8XSJrzdedBsJTeLmP0SA
- xAE88vHf54bQt3yZlN0SptLFWUCq8HAlaIRf7P2b/zntCkeKSbwn9WAw9X0sm7Jw3oeduuO3N
- 8AlTed7aXMXuBItnCdBACM7msCjXCAblJwTMl60e9IVlPj6U0aoXMZBo/ZdermjbGZsHgn4eu
- Nb1nQ3SQFwnyI8=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The clearing of "argv" was added in 7f44e3d1de0 (worktree: make setup
+of new HEAD distinct from worktree population, 2015-07-17) when the
+"cp" variable wasn't initialized. It hasn't been needed since
+542aa25d974 (use CHILD_PROCESS_INIT to initialize automatic variables,
+2016-08-05).
 
---8323328-1098819565-1637667704=:63
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Content-ID: <nycvar.QRO.7.76.6.2111231252461.63@tvgsbejvaqbjf.bet>
+Let's remove it to make a later change that gets rid of the "argv"
+member from "struct child_process" smaller.
 
-Hi =C3=86var,
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/worktree.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-On Tue, 23 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index d22ece93e1a..7264a5b5de0 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -355,7 +355,6 @@ static int add_worktree(const char *path, const char *refname,
+ 		goto done;
+ 
+ 	if (opts->checkout) {
+-		cp.argv = NULL;
+ 		strvec_clear(&cp.args);
+ 		strvec_pushl(&cp.args, "reset", "--hard", "--no-recurse-submodules", NULL);
+ 		if (opts->quiet)
+@@ -390,7 +389,6 @@ static int add_worktree(const char *path, const char *refname,
+ 			cp.stdout_to_stderr = 1;
+ 			cp.dir = path;
+ 			cp.env = env;
+-			cp.argv = NULL;
+ 			cp.trace2_hook_name = "post-checkout";
+ 			strvec_pushl(&cp.args, absolute_path(hook),
+ 				     oid_to_hex(null_oid()),
+-- 
+2.34.0.831.gd33babec0d1
 
-> On Mon, Nov 22 2021, Johannes Schindelin wrote:
->
-> > On Mon, 22 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >
-> >> On Mon, Nov 22 2021, Johannes Schindelin via GitGitGadget wrote:
-> >>
-> >> > diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> >> > index c0bae709b3b..c508c18ad44 100755
-> >> > --- a/ci/run-build-and-tests.sh
-> >> > +++ b/ci/run-build-and-tests.sh
-> >> > @@ -45,9 +45,8 @@ linux-gcc-4.8)
-> >> >  	export MAKE_TARGETS=3Dall
-> >> >  	;;
-> >> >  esac
-> >> > -make -C contrib/scalar test
-> >> > -
-> >> >  make $MAKE_TARGETS
-> >> > +make -C contrib/scalar test
-> >> >
-> >> >  check_unignored_build_artifacts
-> >>
-> >> The CI breakage was introduced with the merger with ab/ci-updates, bu=
-t
-> >> the combination of the two just reveals an existing breakage in
-> >> js/scalar.
-> >
-> > Which shows that I was wrong to pander to your repeated demand to incl=
-ude
-> > Scalar in the CI builds already at this early stage.
->
-> Us finding an a bug in a topic that's happening outside of CI means we
-> shouldn't have added it to CI in the first place? Isn't spotting these
-> issues a good thing?
-
-Let's analyze "these issues".
-
-Before your patch series, Scalar's `make -C contrib/scalar test` came
-after the `make test` which ensured that Git was built. As designed.
-
-After merging your patch series, the `make test` was magically moved
-_after_ `make -C contrib/scalar test` (which is wrong for more reasons
-than just that Git was not built yet).
-
-So the "issue" is a simple mis-merge, and I provided a fix.
-
-Ciao,
-Johannes
-
-P.S.: Of course, this could have been easily avoided by holding off
-patches that intentionally touch the very same code as other patch series
-that are already in flight. This kind of conflict seems to happen more
-often than usual as of late. It happened with the FSMonitor patches and
-repo-settings, with the hooks patches, the pager patch yesterday, etc.
-
---8323328-1098819565-1637667704=:63--
