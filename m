@@ -2,90 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCE66C433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 17:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AFE7C433EF
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 17:35:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239193AbhKWRem (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 12:34:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49860 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237463AbhKWRel (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 12:34:41 -0500
-Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C3E8C061574
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 09:31:33 -0800 (PST)
-Received: by mail-ua1-x92e.google.com with SMTP id ay21so45267540uab.12
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 09:31:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DDVMYE9jjUqW/eH6yBMhE4d9XTc5MLyM/gRumFWvgG4=;
-        b=XK+W5w/AxlHzai1Ac7CGCBApiZq+cTLf8BRBFZJUzc2NUqJjrGh7DdWcJG1wkQb8Hg
-         nxeUwHWJXziloe2OrLTUADIZf2fOzb8YV6wUIIQgbNs7PpWNuMejp17dUGW1iY/f2RJM
-         l6zEuv+1IgzO74ocVVqurQsoXukcJN/FWnkgo5oIjZdx3ZIr9rSGCOka+GU4dRMBIXH4
-         D3Sx48Ij5EECdSzic9gGjT3VTClN7hfue00DNxQXis3mpiH5eX08XBLTEH1NbAnk2T+q
-         C8+vh8+mtfjFWJ6uM0R8cO57eEfDzbciDb3XD+20bijMEZP69XCU/XpiRhscdBVArYWf
-         mMsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DDVMYE9jjUqW/eH6yBMhE4d9XTc5MLyM/gRumFWvgG4=;
-        b=M4sFv7efmGvCEUeLr7MQN8emShSIqhVLOnthxDjBlC+sivg5NrdSMBSeaiCK0kjB87
-         Iacl9zPrZsKhA5/Tgmez1aZNkKRBUobp3Ar+4XSk7AazLw+N4tXwB5bJYgSuShj56o7X
-         loykFTANi+/8WzeB4E57pINv0POKbeDfp2UC3l4B/udhbbjqIqovEcyErCWsqvicxiI+
-         N7Phz7PJjJGTZ1ixuKMjwhcDcCT6Vm+kQOwHZxms0qqhbjbbjwUa3Ae2M5bMqFFIL6dR
-         UMNBOmCxJ7/YDC8B/a4qWJga9xdHa2Qke2oGZraFwymIRJq8dh+0dQhVZkzIrpyoN3W3
-         hYAA==
-X-Gm-Message-State: AOAM530UC9wHmC4DjutBNgwYz8Xz3dDgADCQqEX8/dX/mWlEI9bu+eWz
-        cLSo+MO9aXYcGdKhm9sS74ZNnpc0BK22ZmobfqROhUZvrj8=
-X-Google-Smtp-Source: ABdhPJwgatoEcFG6SqBTQJuADAMacCGVdYt4yc1rnTciGtqEqSatje3ioZdrBlf5bFrmAXscFE5Vq9UaXcFYlin/c50=
-X-Received: by 2002:a67:c181:: with SMTP id h1mr12133503vsj.3.1637688691718;
- Tue, 23 Nov 2021 09:31:31 -0800 (PST)
-MIME-Version: 1.0
+        id S237964AbhKWRio (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 12:38:44 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51478 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236580AbhKWRim (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 12:38:42 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 70623177789;
+        Tue, 23 Nov 2021 12:35:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xthussQkIXNI8hojOj6G4zaakEFDcK9eCCn0tb
+        HrvNA=; b=ykq/tlcwat8zGNJZXORqHZbnzCvNjOnGWmKdroz8K8AZFLQ9NxmBBs
+        F2rGmUjHWfz4QzbQ/U/L49XqpXAK84d3KwRcM6YgWC+iLhQOBkDzcGck+P1MBep3
+        6VRnhU3bR2Y1yTsvzDH2nhXOsULuQcd+8bWfklYZFBtOX4JieRju0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 68E39177788;
+        Tue, 23 Nov 2021 12:35:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CC82F177786;
+        Tue, 23 Nov 2021 12:35:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
+        thomas.wolf@paranor.ch, Alexander Veit <alexander.veit@gmx.net>
+Subject: Re: [PATCH] editor: only save (and restore) the terminal if using a
+ tty
 References: <04ab7301-ea34-476c-eae4-4044fef74b91@gmail.com>
- <20211122222850.674-1-carenas@gmail.com> <b1f2257a-044c-17bb-2737-42b8026421eb@gmail.com>
-In-Reply-To: <b1f2257a-044c-17bb-2737-42b8026421eb@gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Tue, 23 Nov 2021 09:31:20 -0800
-Message-ID: <CAPUEsphP2GRaHJa0Qnvf22WUnNB+GnnfG8TgHqwJvSGdYfUQGA@mail.gmail.com>
-Subject: Re: [PATCH] editor: only save (and restore) the terminal if using a tty
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, thomas.wolf@paranor.ch,
-        Alexander Veit <alexander.veit@gmx.net>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        <20211122222850.674-1-carenas@gmail.com> <xmqqa6hvbxob.fsf@gitster.g>
+        <CAPUEspgDafXHHPvzNijTsPsna76yE8W=JH-78LX3jyaieSmp0A@mail.gmail.com>
+Date:   Tue, 23 Nov 2021 09:35:30 -0800
+In-Reply-To: <CAPUEspgDafXHHPvzNijTsPsna76yE8W=JH-78LX3jyaieSmp0A@mail.gmail.com>
+        (Carlo Arenas's message of "Mon, 22 Nov 2021 15:39:12 -0800")
+Message-ID: <xmqqtug293ml.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: C1DC64B2-4C83-11EC-839C-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 23, 2021 at 3:05 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> I think a combination of isatty() and tcgetpgrp() is probably the best solution.
+Carlo Arenas <carenas@gmail.com> writes:
 
-Definitely agree the long term fix needs to include tcgetpgrp() as
-shown by this initial draft[1] (which I apologize, just noticed is
-missing your "Helped-by")
+> yes, my plan was to minimize the impact of this bugfix by doing this
+> as narrow as possible, but you are correct that if we consider that
+> ...
+> I should have mentioned though that a better fix was forthcoming, just
+> not with so little time before 2.34.1 gets released.
+> ...
+>> In any case, I am quite tempted to just revert the offending topic
+>> for now, but later accept a resurrection patch with this isatty
+>> check rolled in (either at this caller, or inside save_term) when
+>> the dust settles.
+>
+> I indeed suggested[1] a revert but I wouldn't have proposed this
+> alternative if it wouldn't be done safely enough,
 
-That of course introduces a regression on the other direction though;
-before this change, git compiled to use our getpass() replacement
-(HAVE_DEV_TTY=1) function, the following will be normally stopped by a
-SIGTTOU just like getpass() if running in the background (need to also
-not have GIT_ASKPASS or SSH_ASKPASS defined in the environment)  :
+I think the minimum impact fix is to revert the whole thing (people
+survived without it for long time), so that is what 2.34.1 will
+hopefully have.  As I said elsewhere, I am open to a rebooted effort
+for the future cycles, but the conclusion for the topic in 2.34 series
+is that we pretend we never heard about it ;-)
 
-  $ echo "https://user@example.com/" | git credential fill
-
-I suspect that is probably fine though, as when that happens our
-getpass() function still misbehaves if put back in the foreground
-(unlike getpass()) and this "feature" might be undesired anyway as the
-equivalent C code also runs sometimes in daemon-like processes, and
-could even explain some of the workarounds put in place to disable
-password prompts (ex: GIT_TERMINAL_PROMPT=0), but luckily we have all
-the 2.35 dev cycle to figure out.
-
-Restricting this feature further, maybe through a configuration
-property or even special casing the EDITOR is also IMHO a good idea.
-
-Carlo
-
-[1] https://github.com/carenas/git/commit/64d15b2a74206f31e04cf0200f7be83a54a00517
+Thanks.
