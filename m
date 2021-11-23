@@ -2,237 +2,240 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B502C433EF
-	for <git@archiver.kernel.org>; Mon, 22 Nov 2021 23:54:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 896CAC433F5
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 00:14:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231256AbhKVX5S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Nov 2021 18:57:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34066 "EHLO
+        id S231240AbhKWARc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Nov 2021 19:17:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229776AbhKVX5R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Nov 2021 18:57:17 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 600EAC061574
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 15:54:09 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id r25so47199797edq.7
-        for <git@vger.kernel.org>; Mon, 22 Nov 2021 15:54:09 -0800 (PST)
+        with ESMTP id S230394AbhKWAR3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Nov 2021 19:17:29 -0500
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E7F6C061574
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 16:14:22 -0800 (PST)
+Received: by mail-pl1-x62a.google.com with SMTP id q17so15491379plr.11
+        for <git@vger.kernel.org>; Mon, 22 Nov 2021 16:14:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=q3SByp0gjGfA3jdn4O+Nbr3plxhWW9Ef8Zgxpz/pKKw=;
-        b=Wty8U8NJbKY/JT6onxZw8SBCwg9O4jUjmX4ABPGTGCGvhiD7MDZtwbaL/n69CHfRT2
-         tW2NOQN9DPv8LsV9Az9zFEKbyX1wfMoUNA4ejLaAbMGyB2eLiX8QlqJxrbnOTqXx/QKE
-         +iYJANhUqk9Mkz79hDxj/UrNm+VftLkowqoeWUs1l4gN9UFiWqGkgAfdE6q0gYhHUNb9
-         Gc5Pu89dgkHwBraCRxsH651iu/Jtl0mXEmXDptJEbdMoh0fPq/OE02I5hlj/1iAfobG2
-         Do3jFREmNYAbzGPIeBNiHUHRuF3Fs5MEsiS2Qe2gP6a9dTzpBfpATASwR5pPObtfrdj2
-         NUmA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=/VZiSEdjr1oibLhhzUFaTyx+QW7ClvEcI87lNTXepdU=;
+        b=b8gWe8mGBzyafqZJDKQ+NDZtekI8Pnh6pa8HfCLsHfgDlTirZjPQFXAmtwu5THt3Ex
+         X2jXXHz1Z/BuTogySkUjP4wecrhew7G9XIdKkIFp/qW0p+v6dvIF09NzxGyPpYXujCYL
+         2S/h4htXuoJ3SsRCq9P7+BBCtYyMVnxnUqLCjLGDU7r0t8DdLOgMaYuSy+n0RI7sMWG+
+         MBfXWgUiZh2/9W5baxWJ6Ox70FDQzGLbREasooauDawOkVkcFZlcnRN85T+InnrybexX
+         X6yS3tdkoL9QsnoTb3e1ReYqI4n5aIPNsjTlICrwCKIyt9kURrEpQBp8cWPsizn0eGx8
+         nN8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=q3SByp0gjGfA3jdn4O+Nbr3plxhWW9Ef8Zgxpz/pKKw=;
-        b=PkUYOqY8LtqPnkAIcqkc+AOHDjd3mYxS/Ab03aBJdlWlNVz2Wf3x6e5u0EFlTc6Gug
-         E6CTNIu9xTfEjiP59TawsqUkQgOGkiqIXen1VJfvcv3A1MFFa8iRyWiHsuNUaD+5KrPx
-         7muZgH8Ywt1F5Gpqa0c+XJNnkvguWxtwL/+6nArOdfZhH+fWLr5gfWob99tPsOhO8x6g
-         u2h6knUV4y8PlqhaC6J0elYiL1bywf2GOld/aPu5A6n+a5N++m5uHHrLcE8sy4Qk9ySy
-         EWReffYiFrQHDlEyxQyUo9Vyy8iXBaoVzJMaF2CQb2YvYdMb9oWGxhDqkf8n/CctUDvc
-         4Zbw==
-X-Gm-Message-State: AOAM531xqU5ZZsAsx+PNKWmO2jt47pwM/PfsSY8zqgk8B+74vz7ho/bC
-        h70b4svBV7uTXwNA/lRKbUE=
-X-Google-Smtp-Source: ABdhPJzjyQhsQXTRTs82rAYVMVN3JAQzpKQNVDcNuoj2VLxE4ouGPzPwCy0+KtxDpiYh+UF3EJ06dA==
-X-Received: by 2002:a17:906:579a:: with SMTP id k26mr1765868ejq.250.1637625247811;
-        Mon, 22 Nov 2021 15:54:07 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id f16sm5107351edd.37.2021.11.22.15.54.07
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/VZiSEdjr1oibLhhzUFaTyx+QW7ClvEcI87lNTXepdU=;
+        b=hK9QPjfsYp/yuHLCLj+5YZELli25vc9CzT2sz5f3tJw19N5iky61wu58KqQRhMWSyd
+         GbOFW+O967RkPpGHsQCHF+6ZR6sOnTQ7W3qwr26D8q6S/OsXFahO/M5sATSbwU+JR3T6
+         EW0Z3g4yBDZ5bJXSV3JUGfgqg8oyIRPhy1S6/Sily4PZm9PyuWkSaxXjbbyMiTV4D8n7
+         k6GGkc5pHhhVKP+9rxFAR/QPKsz/Biqe3wgCE1tZSWKR5uSl/zvImcb8/9NKEiIJyVUF
+         pk8YmdqRPNbsEDBW+s4P1FtZDd4rqWLXJh5VEpu9TzHBiy8CiLz50tbE9L+bnvA977I3
+         V5wQ==
+X-Gm-Message-State: AOAM530B4iZfspH271KlK89/Gi3/PIfeHvwfH2hRX8jq/so2Dp/P75Sx
+        8tnJ3OdCX+a39W7nq354q/sHTnviATw=
+X-Google-Smtp-Source: ABdhPJzciwhD/A/QOola6fkGkvkJssZGAyPp5ourhBT/7hDCQ1nDWjCYv9v39tJ1uBXGutmquMdtxw==
+X-Received: by 2002:a17:902:758b:b0:144:ea8e:1bd4 with SMTP id j11-20020a170902758b00b00144ea8e1bd4mr1734918pll.25.1637626461746;
+        Mon, 22 Nov 2021 16:14:21 -0800 (PST)
+Received: from localhost ([2402:800:63b8:cddb:bcc6:43b2:1270:7935])
+        by smtp.gmail.com with ESMTPSA id b10sm10603872pfl.200.2021.11.22.16.14.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Nov 2021 15:54:07 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mpJ8Q-001E6u-JY;
-        Tue, 23 Nov 2021 00:54:06 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>
-Subject: Re: [PATCH v8 00/17] Upstreaming the Scalar command
-Date:   Tue, 23 Nov 2021 00:29:13 +0100
-References: <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com>
-        <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com>
-        <CABPp-BG=fcKq2Ng2gan3HbBGcT7WCMhtZCP6m2xjA5BSuTekOg@mail.gmail.com>
-        <nycvar.QRO.7.76.6.2111221317390.63@tvgsbejvaqbjf.bet>
-        <211122.865yskyw25.gmgdl@evledraar.gmail.com>
-        <nycvar.QRO.7.76.6.2111222304070.63@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <nycvar.QRO.7.76.6.2111222304070.63@tvgsbejvaqbjf.bet>
-Message-ID: <211123.86y25fwxup.gmgdl@evledraar.gmail.com>
+        Mon, 22 Nov 2021 16:14:21 -0800 (PST)
+Date:   Tue, 23 Nov 2021 07:14:20 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
+        peff@peff.net
+Subject: Re: [PATCH v3 1/1] ls-tree.c: support `--oid-only` option for
+ "git-ls-tree"
+Message-ID: <YZwyXAn+gxUZ+aD9@danh.dev>
+References: <cover.1637567328.git.dyroneteng@gmail.com>
+ <6c15b4c176b7c03072fa59a4efd9f6fea7d62eae.1637567328.git.dyroneteng@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6c15b4c176b7c03072fa59a4efd9f6fea7d62eae.1637567328.git.dyroneteng@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2021-11-22 16:07:28+0800, Teng Long <dyroneteng@gmail.com> wrote:
+> Sometimes, we only want to get the objects from output of `ls-tree`
+> and commands like `sed` or `cut` is usually used to intercept the
+> origin output to achieve this purpose in practical.
+> 
+> This commit supply an option names `--oid-only` to let `git ls-tree`
+> only print out the OID of the object. `--oid-only` and `--name-only`
+> are mutually exclusive in use.
+> 
+> Signed-off-by: Teng Long <dyroneteng@gmail.com>
+> ---
+>  Documentation/git-ls-tree.txt |  8 +++++--
+>  builtin/ls-tree.c             | 27 ++++++++++++++++-------
+>  t/t3104-ls-tree-oid.sh        | 40 +++++++++++++++++++++++++++++++++++
+>  3 files changed, 65 insertions(+), 10 deletions(-)
+>  create mode 100755 t/t3104-ls-tree-oid.sh
+> 
+> diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
+> index db02d6d79a..bc711dc00a 100644
+> --- a/Documentation/git-ls-tree.txt
+> +++ b/Documentation/git-ls-tree.txt
+> @@ -10,7 +10,8 @@ SYNOPSIS
+>  --------
+>  [verse]
+>  'git ls-tree' [-d] [-r] [-t] [-l] [-z]
+> -	    [--name-only] [--name-status] [--full-name] [--full-tree] [--abbrev[=<n>]]
+> +	    [--name-only] [--name-status] [--oid-only]
 
-On Mon, Nov 22 2021, Johannes Schindelin wrote:
+Please indicate those options are incompatible (as someone else said):
 
-> On Mon, 22 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> On Mon, Nov 22 2021, Johannes Schindelin wrote:
->>
->> > On Sat, 20 Nov 2021, Elijah Newren wrote:
->> >
->> >> On Fri, Nov 19, 2021 at 3:03 PM Johannes Schindelin via GitGitGadget
->> >> <gitgitgadget@gmail.com> wrote:
->> >> >
->> >> > tl;dr: This series contributes the core part of the Scalar command =
-to
->> >> > the Git project. This command provides an opinionated way to create
->> >> > and configure Git repositories with a focus on very large
->> >> > repositories.
->> >>
->> >> I thought after
->> >> https://lore.kernel.org/git/nycvar.QRO.7.76.6.2110062241150.395@tvgsb=
-ejvaqbjf.bet/
->> >> that you'd update merge.renames to true on what is now patch 7.  Did
->> >> you end up changing your mind, or was this overlooked?
->> >
->> > Oops! Thank you so much for the reminder.
->> >
->> > Will fix. I do not plan on sending out a new iteration for a few more =
-days
->> > because I do not want to send lots of patches to the list right now,
->> > reviewer bandwidth seems to be stretched quite a bit already.
->>
->> Bandwidth which is further stretched by continuing to send updates to
->> this topic while ignoring outstanding feedback.
->
-> The feedback you are referring to is probably the repeated demand to
-> integrate Scalar deeply into Git's build process.
->
-> As I have tired of replying, it is not the time for that yet.
->
-> Repeating that demand does not make it more sensible, nor does it
-> magically make it the right time.
+	[--name-only | --name-status | --oid-only]
 
-I'm not repeating that demand. I clearly also think the approach you're
-insisting picking isn't a good one, but let's leave that aside.
+> +	    [--full-name] [--full-tree] [--abbrev[=<n>]]
+>  	    <tree-ish> [<path>...]
+>  
+>  DESCRIPTION
+> @@ -59,7 +60,10 @@ OPTIONS
+>  --name-only::
+>  --name-status::
+>  	List only filenames (instead of the "long" output), one per line.
+> -
+> +	Cannot be used with `--oid-only` together.
+> +--oid-only::
+> +	List only OIDs of the objects, one per line. Cannot be used with
+> +	`--name-only` or `--name-status` together.
+>  --abbrev[=<n>]::
+>  	Instead of showing the full 40-byte hexadecimal object
+>  	lines, show the shortest prefix that is at least '<n>'
+> diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+> index 3a442631c7..1e4a82e669 100644
+> --- a/builtin/ls-tree.c
+> +++ b/builtin/ls-tree.c
+> @@ -18,19 +18,26 @@ static int line_termination = '\n';
+>  #define LS_RECURSIVE 1
+>  #define LS_TREE_ONLY 2
+>  #define LS_SHOW_TREES 4
+> -#define LS_NAME_ONLY 8
+> -#define LS_SHOW_SIZE 16
+> +#define LS_SHOW_SIZE 8
+>  static int abbrev;
+>  static int ls_options;
+>  static struct pathspec pathspec;
+>  static int chomp_prefix;
+>  static const char *ls_tree_prefix;
+>  
+> -static const  char * const ls_tree_usage[] = {
+> +static const char * const ls_tree_usage[] = {
+>  	N_("git ls-tree [<options>] <tree-ish> [<path>...]"),
+>  	NULL
+>  };
+>  
+> +enum {
+> +	MODE_UNSPECIFIED = 0,
+> +	MODE_NAME_ONLY,
+> +	MODE_OID_ONLY
+> +};
+> +
+> +static int cmdmode = MODE_UNSPECIFIED;
+> +
+>  static int show_recursive(const char *base, int baselen, const char *pathname)
+>  {
+>  	int i;
+> @@ -90,7 +97,12 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
+>  	else if (ls_options & LS_TREE_ONLY)
+>  		return 0;
+>  
+> -	if (!(ls_options & LS_NAME_ONLY)) {
+> +	if (cmdmode == 2) {
 
-What I'm referring to with "I've also been pointing out" in the context
-you elided is that if you:
+I think it's better to use the enum name:
 
- 1. Check out your topic
- 2. Apply my proposed patch on top (a newer version than on-list is
-    in avar/scalar-move-build-from-contrib-2 in my GH fork)
- 3. Push both to CI
- 4. Diff the two logs of the runs (or just manually click through
-    and inspect them)
+	if (cmdmode == MODE_OID_ONLY) {
 
-You'd have seen before sending your version of the CI integration that
-the difference in behavior that started with your version of the topic
-was particular to the contrib/scalar/ integration, but not the top-level
-Makefile integration. I.e. adding the scalar tests to the previously
-build-only jobs.
+> +		printf("%s\n", find_unique_abbrev(oid, abbrev));
+> +		return 0;
+> +	}
+> +
+> +	if (cmdmode == 0) {
 
-I've been noting that as clearly as I'm able to in numerous past
-exchanges. You've either ignored those reports, or like here,
-selectivtely replied only to parts of what I've told you.
+Ditto:
 
-I.e. something like "I'm not going 100% for the approach you
-suggest". Sure, I'm not saying you have to. But I also noted that the
-patch with that suggested approach can be considered a bug report
-against your series.
+	if (cmdmode == MODE_UNSPECIFIED) {
 
-The reason that patch isn't split into two things, one fixing all the
-issues I noticed, and another implementing some "alternate build"
-approach is that I found that to be impossible to do.
+Speaking about this, where will MODE_NAME_ONLY be used?
 
-Those issues are all particular to emergent effects of the build
-integration you're choosing to go with.
+>  		if (ls_options & LS_SHOW_SIZE) {
+>  			char size_text[24];
+>  			if (!strcmp(type, blob_type)) {
+> @@ -135,10 +147,9 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+>  			    N_("terminate entries with NUL byte"), 0),
+>  		OPT_BIT('l', "long", &ls_options, N_("include object size"),
+>  			LS_SHOW_SIZE),
+> -		OPT_BIT(0, "name-only", &ls_options, N_("list only filenames"),
+> -			LS_NAME_ONLY),
+> -		OPT_BIT(0, "name-status", &ls_options, N_("list only filenames"),
+> -			LS_NAME_ONLY),
+> +		OPT_CMDMODE('n', "name-only", &cmdmode, N_("list only filenames"), MODE_NAME_ONLY),
+> +		OPT_CMDMODE('s', "name-status", &cmdmode, N_("list only filenames"), MODE_NAME_ONLY),
+> +		OPT_CMDMODE('o', "oid-only", &cmdmode, N_("list only oids"), MODE_OID_ONLY),
+>  		OPT_SET_INT(0, "full-name", &chomp_prefix,
+>  			    N_("use full path names"), 0),
+>  		OPT_BOOL(0, "full-tree", &full_tree,
+> diff --git a/t/t3104-ls-tree-oid.sh b/t/t3104-ls-tree-oid.sh
+> new file mode 100755
+> index 0000000000..4c02cdd3c3
+> --- /dev/null
+> +++ b/t/t3104-ls-tree-oid.sh
+> @@ -0,0 +1,40 @@
+> +#!/bin/sh
+> +
+> +test_description='git ls-tree oids handling.'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup' '
+> +	echo 111 >1.txt &&
+> +	echo 222 >2.txt &&
+> +	mkdir -p path0/a/b/c &&
+> +	echo 333 >path0/a/b/c/3.txt &&
+> +	find *.txt path* \( -type f -o -type l \) -print |
+> +	xargs git update-index --add &&
+> +	tree=$(git write-tree) &&
+> +	echo $tree
+> +'
+> +
+> +test_expect_success 'usage: --oid-only' '
+> +	git ls-tree --oid-only $tree >current &&
+> +	git ls-tree $tree | awk "{print \$3}" >expected &&
+> +	test_cmp current expected
+> +'
+> +
+> +test_expect_success 'usage: --oid-only with -r' '
+> +	git ls-tree --oid-only -r $tree >current &&
+> +	git ls-tree -r $tree | awk "{print \$3}" >expected &&
+> +	test_cmp current expected
+> +'
+> +
+> +test_expect_success 'usage: --oid-only with --abbrev' '
+> +	git ls-tree --oid-only --abbrev=6 $tree >current &&
+> +	git ls-tree --abbrev=6 $tree | awk "{print \$3}" > expected &&
+> +	test_cmp current expected
+> +'
+> +
+> +test_expect_failure 'usage: incompatible options: --name-only with --oid-only' '
+> +	test_incompatible_usage git ls-tree --oid-only --name-only
+> +'
+> +
+> +test_done
 
-E.g. in the case of "seen" being broken the CI simply runs "make test"
-as it did before, and scalar integrates into that, and you can run that
-target without having built anything already.
+It seems like you haven't updated the test code from v2
 
-> Nor is it credible to call the build "broken" when it does what it is
-> supposed to do, thank you very much.
-
-Here's specific commands showing that it's broken.
-
-On your version (I've got v7 locally, but the same is true of v8):
-
-    $ make clean; make -C contrib/scalar test
-    [...]
-        CC hook.o
-        CC version.o
-        CC help.o
-        AR libgit.a
-    make[1]: Leaving directory '/home/avar/g/git'
-        SUBDIR ../..
-    make[1]: Entering directory '/home/avar/g/git'
-        * new link flags
-        CC contrib/scalar/scalar.o
-        LINK contrib/scalar/scalar
-    make[1]: Leaving directory '/home/avar/g/git'
-    make -C t
-    make[1]: Entering directory '/home/avar/g/git/contrib/scalar/t'
-    *** prove ***
-    error: GIT-BUILD-OPTIONS missing (has Git been built?).
-    t9099-scalar.sh .. Dubious, test returned 1 (wstat 256, 0x100)
-    No subtests run=20
-=20=20=20=20
-    Test Summary Report
-    -------------------
-    t9099-scalar.sh (Wstat: 256 Tests: 0 Failed: 0)
-      Non-zero exit status: 1
-      Parse errors: No plan found in TAP output
-
-On the patch I proposed to apply on top:
-
-    $ make clean; make test T=3Dt9099-scalar.sh
-    [...]
-        CC t/helper/test-xml-encode.o
-        GEN bin-wrappers/git
-        GEN bin-wrappers/git-receive-pack
-        GEN bin-wrappers/git-shell
-        GEN bin-wrappers/git-upload-archive
-        GEN bin-wrappers/git-upload-pack
-        GEN bin-wrappers/scalar
-        GEN bin-wrappers/git-cvsserver
-        GEN bin-wrappers/test-fake-ssh
-        GEN bin-wrappers/test-tool
-        LINK t/helper/test-fake-ssh
-        LINK t/helper/test-tool
-    make -C t/ all
-    make[1]: Entering directory '/home/avar/g/git/t'
-    rm -f -r 'test-results'
-    *** prove ***
-    t9099-scalar.sh .. ok=20=20=20
-    All tests successful.
-
-You might correctly note that this doesn't work either on that version
-(or for any other existing test in t/):
-
-    $ make clean >/dev/null; make -C t T=3Dt9099-scalar.sh=20
-    GIT_VERSION =3D 2.34.GIT-dev
-    make: Entering directory '/home/avar/g/git/t'
-    rm -f -r 'test-results'
-    *** prove ***
-    error: GIT-BUILD-OPTIONS missing (has Git been built?).
-    t9099-scalar.sh .. Dubious, test returned 1 (wstat 256, 0x100)
-    No subtests run=20
-=20=20=20=20
-    Test Summary Report
-    -------------------
-    t9099-scalar.sh (Wstat: 256 Tests: 0 Failed: 0)
-      Non-zero exit status: 1
-      Parse errors: No plan found in TAP output
-
-Which is true, but that's not broken because it's not attempting to
-build the top-level via some incomplete integration, but your version
-is.
+-- 
+Danh
