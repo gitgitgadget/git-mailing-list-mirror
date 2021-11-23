@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2553C433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 14:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F31DC433F5
+	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 14:54:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237926AbhKWO4C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 09:56:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40398 "EHLO
+        id S235796AbhKWO5G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 09:57:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233112AbhKWO4B (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 09:56:01 -0500
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB088C061574
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 06:52:53 -0800 (PST)
-Received: by mail-il1-x132.google.com with SMTP id h23so21944782ila.4
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 06:52:53 -0800 (PST)
+        with ESMTP id S230176AbhKWO5F (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 09:57:05 -0500
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EC76C061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 06:53:57 -0800 (PST)
+Received: by mail-il1-x12e.google.com with SMTP id j7so14645013ilk.13
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 06:53:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=JSvrWLwdC3OO/3avJ0DYg+Ea+earG/GBPG9GgWijk2A=;
-        b=B16Y4+3zynI4jwoig5BBYjnVSbh5OSJR0v11uE+DITc6XRzwCop5VNpC0UiTn8AC6i
-         MMXBfihT5svI95UtqhFATAzIzr8/SkU7+xoA4j0tpezydA1RKKz/6tjXOH6zPwribqG6
-         m//IVHwFMojhzvNtixNwGM14+gmIKhUjLls/Yom/OyFB4I/qbdT2xmtrbWvz8mhQFdpJ
-         fDAEJNKj9+vOvnOQqCQbmJTJDzvtds8UiJzCUVlFhAPfjpRygyEcqgpZu5seYy4sjjAU
-         IDnkbQ4Gl3XVmpznxi88JWL6HrDQxtKH21DXSbg3CaixJaQ2rNKmhQW/PihnsSXoM9l2
-         LL0w==
+        bh=I98xLwA18Pr1i+UQqkWCVURlLDYIcVnzfUSZGDrk7mw=;
+        b=Lw0uT5/mKCP8vJ5hfPkqz+oU3enyy2TuH1jGNcwd8ycQeWWqgxfvTM9T9bnriB7MYH
+         vP6sE74gOHit8ZKrwQWJ+KNihKiVp2+GJ4eYxmP/gqWy9Kjyzs5iRF88jMInNgTXu63X
+         FaP4BMV/J/JVmHR9W+D8EypIedCNIy5YFLK4gbiUky9bhrzenPK+wmbFZmKq+qJSNzxO
+         mFDsg0zBbL2qdcSkuoliUl0jIBFemnpXMQ6HGIBxyPzJLB2kIicxAzn5KVuDldjEoHqk
+         2Ihwp56QEc/L3jW1suFeVth5Bk9rLcB1H2l6ZBK9PID2M2CW937IxCwZCTg3//A5TqCS
+         tP3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=JSvrWLwdC3OO/3avJ0DYg+Ea+earG/GBPG9GgWijk2A=;
-        b=2rVTzS5r8WSIfO5H4VYP+yDKGP6H7FAOCd8H8nw3sJaqcGopnRbzOnFDZ8EgAugc3J
-         zk5kPXonQpIRttXnj9YsagrjLXgIlL9wYUO8kaQNn2Lr7KRR5TrJCiYNisnfxOIk2TpK
-         OHcDh+XYvNcpsPFeJ050bMpiMa1CrGuw//ZQ+KGe0ddkXC5a+uNeL5zHZu4Rf42X+d0O
-         5C/3lqsTlO/NvXF6jEuT4h0IanBFPI6+ynaSbiq+ylf+ypWxPA/rz7CtdmewUEEkGm+Y
-         F/K7/rlmBgM9r7TphmEBBgEWBGfZKFfiYJa3Y+qgkuHMAcglmKIlkLnugIaf6T5Cu8Ea
-         znzg==
-X-Gm-Message-State: AOAM530DS1cY43/CfOxKJdCaXSTmU0IbcAsvpVxFMcUsT6ZS6OH2Pntx
-        tqTTkbqcOUM51yJuNOJd3Xk=
-X-Google-Smtp-Source: ABdhPJx3FsAQ3ccdxeMQyEN/spUbAYz65NrcewO7qs/Svz6Sl+OcOt9ZD3YnVJq9nLipjouSsa4S7A==
-X-Received: by 2002:a92:ca0b:: with SMTP id j11mr6071343ils.289.1637679172479;
-        Tue, 23 Nov 2021 06:52:52 -0800 (PST)
+        bh=I98xLwA18Pr1i+UQqkWCVURlLDYIcVnzfUSZGDrk7mw=;
+        b=Fgjy/5S+9JYIYXXKQdGJLdfdefFyiwrQbn+lypRzkXXwYRA5xnTiCV3dXYJGSQTsqK
+         DGGGVk4GyvLDobs+z+y2K0cy4vUloL4UEL2paavncCYdNbAXUqNVV3pi+/pfNbblwJMk
+         RwIkTxmHN1mBq/vAMstWYPUOheSRXJZvNPyHAzsAZTtj1xcpw4Nen6QAIVcXZtM1njSP
+         /XM2B42kKmTNSK+2AAmJUx0fz2lPUm6i/B0B4W6jvsZC276In9SgRJTQgcz3fKXiSstA
+         5oKNytE39CQBUkLtPLGAQjZNBWXiT6x56J95XfsPl0AwyHxbqwj3eV0A+h2NuYZ4V1V/
+         dSQQ==
+X-Gm-Message-State: AOAM530DyAbYJzOnfjNDnioOrUU51UKRXqwLab/mzMjvKSc4PhE9mPmL
+        kRS8TvOtellzvGmzz+/cOixmXP/MYvs=
+X-Google-Smtp-Source: ABdhPJxbMmwocr3CE/0dhcAokuyF+ggoLjTFWePYpxURso2bbn/tcTA5ItHnY7XigvIDU07sI5Hn8g==
+X-Received: by 2002:a92:da4c:: with SMTP id p12mr5614300ilq.32.1637679236940;
+        Tue, 23 Nov 2021 06:53:56 -0800 (PST)
 Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
-        by smtp.gmail.com with ESMTPSA id g8sm9273558ilf.33.2021.11.23.06.52.50
+        by smtp.gmail.com with ESMTPSA id x5sm7809664iov.50.2021.11.23.06.53.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Nov 2021 06:52:51 -0800 (PST)
-Message-ID: <cd9f20aa-0fff-6749-eaec-0527cf4cf4cc@gmail.com>
-Date:   Tue, 23 Nov 2021 06:52:49 -0800
+        Tue, 23 Nov 2021 06:53:56 -0800 (PST)
+Message-ID: <f86c920b-6b56-27ca-fba5-a54c5c15c765@gmail.com>
+Date:   Tue, 23 Nov 2021 06:53:55 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.3.2
-Subject: Re: [PATCH v4 1/4] sparse index: enable only for git repos
+Subject: Re: [PATCH v4 3/4] diff: enable and test the sparse index
 Content-Language: en-US
 To:     Elijah Newren <newren@gmail.com>,
         Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>
@@ -63,10 +63,10 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         Taylor Blau <me@ttaylorr.com>
 References: <pull.1050.v3.git.1635802069.gitgitgadget@gmail.com>
  <pull.1050.v4.git.1637620958.gitgitgadget@gmail.com>
- <81e208cf454b61c761fa66e4f43a464ed439ba59.1637620958.git.gitgitgadget@gmail.com>
- <CABPp-BEM+FpdQ4yJxDcqvdz3LNmFV+5CBMAQdAnEfc0ytbZ-dA@mail.gmail.com>
+ <273ee16b74ed4b36ffba5762fa892410317ea02b.1637620958.git.gitgitgadget@gmail.com>
+ <CABPp-BEurZH8RaLLB2vvw3aPCWy4Aq1Zs+PkTY9WFboq8OuZ2w@mail.gmail.com>
 From:   Lessley Dennington <lessleydennington@gmail.com>
-In-Reply-To: <CABPp-BEM+FpdQ4yJxDcqvdz3LNmFV+5CBMAQdAnEfc0ytbZ-dA@mail.gmail.com>
+In-Reply-To: <CABPp-BEurZH8RaLLB2vvw3aPCWy4Aq1Zs+PkTY9WFboq8OuZ2w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -75,161 +75,159 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 11/22/21 11:41 PM, Elijah Newren wrote:
+On 11/22/21 11:47 PM, Elijah Newren wrote:
 > On Mon, Nov 22, 2021 at 2:42 PM Lessley Dennington via GitGitGadget
 > <gitgitgadget@gmail.com> wrote:
 >>
 >> From: Lessley Dennington <lessleydennington@gmail.com>
 >>
->> Check whether git dir exists before adding any repo settings. If it
->> does not exist, BUG with the message that one cannot add settings for an
->> uninitialized repository. If it does exist, proceed with adding repo
->> settings.
+>> Enable the sparse index within the 'git diff' command. Its implementation
+>> already safely integrates with the sparse index because it shares code
+>> with the 'git status' and 'git checkout' commands that were already
+>> integrated.  For more details see:
 >>
->> Additionally, ensure the above BUG is not triggered when users pass the -h
->> flag by adding a check for the repository to the checkout and pack-objects
->> builtins.
+>> d76723e (status: use sparse-index throughout, 2021-07-14)
+>> 1ba5f45 (checkout: stop expanding sparse indexes, 2021-06-29)
 > 
-> Why only checkout and pack-objects?  Why don't the -h flags to all of
-> the following need it as well?:
+> I preferred the references in your v3:
 > 
-> $ git grep -l prepare_repo_settings | grep builtin/
-> builtin/add.c
-> builtin/blame.c
-> builtin/checkout.c
-> builtin/commit.c
-> builtin/diff.c
-> builtin/fetch.c
-> builtin/gc.c
-> builtin/merge.c
-> builtin/pack-objects.c
-> builtin/rebase.c
-> builtin/reset.c
-> builtin/revert.c
-> builtin/sparse-checkout.c
-> builtin/update-index.c
+> d76723ee53 (status: use sparse-index throughout, 2021-07-14)
+> 1ba5f45132 (checkout: stop expanding sparse indexes, 2021-06-29)
 > 
-> If none of these need it, was it because they put
-> prepare_repo_settings() calls after some other basic checks had been
-> done so more do not have to be added?  If so, is there a similar place
-> in checkout and pack-objects where their calls to
-> prepare_repo_settings() can be moved?  (Looking ahead, it appears you
-> moved some code in patch 2 to do something like this.  Are the similar
-> moves that could be done here?)
+> because 7-character abbreviations aren't very future proof;
+> 10-character seems better to me.
 > 
-Thank you for the quick feedback. Yes, I believe there are similar moves 
-that can be done here. I was attempting to be explicit about the case I'm 
-guarding against, but you're right - it shouldn't be done one way for some 
-builtins and another way for others.
->> Finally, ensure the above BUG is not triggered for commit-graph by
->> returning early if the git directory does not exist.
+> (Very micro nit.)
 > 
-> If commit-graph needs a special case to avoid triggering the BUG,
-> wouldn't several of these need it too?:
-> 
-> $ git grep -l prepare_repo_settings | grep -v builtin/
-> commit-graph.c
-> fetch-negotiator.c
-> merge-recursive.c
-> midx.c
-> read-cache.c
-> repo-settings.c
-> repository.c
-> repository.h
-> sparse-index.c
-> t/helper/test-read-cache.c
-> t/helper/test-read-graph.c
-> unpack-trees.c
-> 
-> or are their calls to prepare_repo_settings() only done after gitdir
-> setup?  If the latter, perhaps the commit-graph function calls could
-> be moved after gitdir setup too to avoid the need to do extra checks
-> in it?
-> 
-Agreed, I can move this as well.
+Appreciate the pointer - I'll return to the old formatting for v5.
+>>
+>> The most interesting thing to do is to add tests that verify that 'git
+>> diff' behaves correctly when the sparse index is enabled. These cases are:
+>>
+>> 1. The index is not expanded for 'diff' and 'diff --staged'
+>> 2. 'diff' and 'diff --staged' behave the same in full checkout, sparse
+>> checkout, and sparse index repositories in the following partially-staged
+>> scenarios (i.e. the index, HEAD, and working directory differ at a given
+>> path):
+>>      1. Path is within sparse-checkout cone
+>>      2. Path is outside sparse-checkout cone
+>>      3. A merge conflict exists for paths outside sparse-checkout cone
+>>
+>> The `p2000` tests demonstrate a ~44% execution time reduction for 'git
+>> diff' and a ~86% execution time reduction for 'git diff --staged' using a
+>> sparse index:
+>>
+>> Test                                      before  after
+>> -------------------------------------------------------------
+>> 2000.30: git diff (full-v3)               0.33    0.34 +3.0%
+>> 2000.31: git diff (full-v4)               0.33    0.35 +6.1%
+>> 2000.32: git diff (sparse-v3)             0.53    0.31 -41.5%
+>> 2000.33: git diff (sparse-v4)             0.54    0.29 -46.3%
+>> 2000.34: git diff --cached (full-v3)      0.07    0.07 +0.0%
+>> 2000.35: git diff --cached (full-v4)      0.07    0.08 +14.3%
+>> 2000.36: git diff --cached (sparse-v3)    0.28    0.04 -85.7%
+>> 2000.37: git diff --cached (sparse-v4)    0.23    0.03 -87.0%
+>>
+>> Co-authored-by: Derrick Stolee <dstolee@microsoft.com>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 >> Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
 >> ---
->>   builtin/checkout.c     | 6 ++++--
->>   builtin/pack-objects.c | 9 ++++++---
->>   commit-graph.c         | 5 ++++-
->>   repo-settings.c        | 3 +++
->>   4 files changed, 17 insertions(+), 6 deletions(-)
+>>   builtin/diff.c                           |  5 +++
+>>   t/perf/p2000-sparse-operations.sh        |  2 ++
+>>   t/t1092-sparse-checkout-compatibility.sh | 46 ++++++++++++++++++++++++
+>>   3 files changed, 53 insertions(+)
 >>
->> diff --git a/builtin/checkout.c b/builtin/checkout.c
->> index 8c69dcdf72a..31632b07888 100644
->> --- a/builtin/checkout.c
->> +++ b/builtin/checkout.c
->> @@ -1588,8 +1588,10 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>> diff --git a/builtin/diff.c b/builtin/diff.c
+>> index dd8ce688ba7..fa4683377eb 100644
+>> --- a/builtin/diff.c
+>> +++ b/builtin/diff.c
+>> @@ -437,6 +437,11 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
 >>
->>          git_config(git_checkout_config, opts);
+>>          prefix = setup_git_directory_gently(&nongit);
 >>
->> -       prepare_repo_settings(the_repository);
->> -       the_repository->settings.command_requires_full_index = 0;
->> +       if (startup_info->have_repository) {
+>> +       if (!nongit) {
 >> +               prepare_repo_settings(the_repository);
 >> +               the_repository->settings.command_requires_full_index = 0;
 >> +       }
->>
->>          opts->track = BRANCH_TRACK_UNSPECIFIED;
->>
->> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
->> index 1a3dd445f83..45dc2258dc7 100644
->> --- a/builtin/pack-objects.c
->> +++ b/builtin/pack-objects.c
->> @@ -3976,9 +3976,12 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
->>          read_replace_refs = 0;
->>
->>          sparse = git_env_bool("GIT_TEST_PACK_SPARSE", -1);
->> -       prepare_repo_settings(the_repository);
->> -       if (sparse < 0)
->> -               sparse = the_repository->settings.pack_use_sparse;
 >> +
->> +       if (startup_info->have_repository) {
->> +               prepare_repo_settings(the_repository);
->> +               if (sparse < 0)
->> +                       sparse = the_repository->settings.pack_use_sparse;
->> +       }
+>>          if (!no_index) {
+>>                  /*
+>>                   * Treat git diff with at least one path outside of the
+>> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+>> index bfd332120c8..5cf94627383 100755
+>> --- a/t/perf/p2000-sparse-operations.sh
+>> +++ b/t/perf/p2000-sparse-operations.sh
+>> @@ -113,5 +113,7 @@ test_perf_on_all git checkout -f -
+>>   test_perf_on_all git reset
+>>   test_perf_on_all git reset --hard
+>>   test_perf_on_all git reset -- does-not-exist
+>> +test_perf_on_all git diff
+>> +test_perf_on_all git diff --cached
 >>
->>          reset_pack_idx_option(&pack_idx_opts);
->>          git_config(git_pack_config, NULL);
->> diff --git a/commit-graph.c b/commit-graph.c
->> index 2706683acfe..265c010122e 100644
->> --- a/commit-graph.c
->> +++ b/commit-graph.c
->> @@ -632,10 +632,13 @@ static int prepare_commit_graph(struct repository *r)
->>          struct object_directory *odb;
+>>   test_done
+>> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+>> index 44d5e11c762..53524660759 100755
+>> --- a/t/t1092-sparse-checkout-compatibility.sh
+>> +++ b/t/t1092-sparse-checkout-compatibility.sh
+>> @@ -832,6 +832,52 @@ test_expect_success 'sparse-index is not expanded: merge conflict in cone' '
+>>          )
+>>   '
 >>
->>          /*
->> +        * Early return if there is no git dir or if the commit graph is
->> +        * disabled.
->> +        *
->>           * This must come before the "already attempted?" check below, because
->>           * we want to disable even an already-loaded graph file.
->>           */
->> -       if (r->commit_graph_disabled)
->> +       if (!r->gitdir || r->commit_graph_disabled)
->>                  return 0;
->>
->>          if (r->objects->commit_graph_attempted)
->> diff --git a/repo-settings.c b/repo-settings.c
->> index b93e91a212e..00ca5571a1a 100644
->> --- a/repo-settings.c
->> +++ b/repo-settings.c
->> @@ -17,6 +17,9 @@ void prepare_repo_settings(struct repository *r)
->>          char *strval;
->>          int manyfiles;
->>
->> +       if (!r->gitdir)
->> +               BUG("Cannot add settings for uninitialized repository");
+>> +test_expect_success 'sparse index is not expanded: diff' '
+>> +       init_repos &&
 >> +
->>          if (r->settings.initialized++)
->>                  return;
+>> +       write_script edit-contents <<-\EOF &&
+>> +       echo text >>$1
+>> +       EOF
+>> +
+>> +       # Add file within cone
+>> +       test_sparse_match git sparse-checkout set deep &&
+>> +       run_on_all ../edit-contents deep/testfile &&
+>> +       test_all_match git add deep/testfile &&
+>> +       run_on_all ../edit-contents deep/testfile &&
+>> +
+>> +       test_all_match git diff &&
+>> +       test_all_match git diff --staged &&
+>> +       ensure_not_expanded diff &&
+>> +       ensure_not_expanded diff --staged &&
+>> +
+>> +       # Add file outside cone
+>> +       test_all_match git reset --hard &&
+>> +       run_on_all mkdir newdirectory &&
+>> +       run_on_all ../edit-contents newdirectory/testfile &&
+>> +       test_sparse_match git sparse-checkout set newdirectory &&
+>> +       test_all_match git add newdirectory/testfile &&
+>> +       run_on_all ../edit-contents newdirectory/testfile &&
+>> +       test_sparse_match git sparse-checkout set &&
+>> +
+>> +       test_all_match git diff &&
+>> +       test_all_match git diff --staged &&
+>> +       ensure_not_expanded diff &&
+>> +       ensure_not_expanded diff --staged &&
+>> +
+>> +       # Merge conflict outside cone
+>> +       # The sparse checkout will report a warning that is not in the
+>> +       # full checkout, so we use `run_on_all` instead of
+>> +       # `test_all_match`
+>> +       run_on_all git reset --hard &&
+>> +       test_all_match git checkout merge-left &&
+>> +       test_all_match test_must_fail git merge merge-right &&
+>> +
+>> +       test_all_match git diff &&
+>> +       test_all_match git diff --staged &&
+>> +       ensure_not_expanded diff &&
+>> +       ensure_not_expanded diff --staged
 > 
-> I'm not what the BUG() is trying to help us catch, but I'm worried
-> that there are many additional places that now need workarounds to
-> avoid triggering bugs.
+> You've changed some of the --staged to --cached, but based on Junio's
+> comments on the previous round, you probably want to convert the
+> others too.
 > 
-I see your point. We're trying to make sure we catch issues like the 
-nongit scenario I overlooked in diff in earlier versions of this series. 
-But if we feel this change is too disruptive and will likely cause issues 
-beyond those I've fixed to ensure our tests pass, I can remove.
+Will do for v5.
+>> +'
+>> +
+>>   # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
+>>   # in this scenario, but it shouldn't.
+>>   test_expect_success 'reset mixed and checkout orphan' '
+>> --
+>> gitgitgadget
+>>
