@@ -2,142 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B9CC433F5
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 00:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33B0BC433FE
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 01:19:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232313AbhKXAzv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 19:55:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37170 "EHLO
+        id S233351AbhKXBWZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 20:22:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232185AbhKXAzs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 19:55:48 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71CE0C061574
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 16:52:39 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id a16-20020a17090aa51000b001a78699acceso2332631pjq.8
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 16:52:39 -0800 (PST)
+        with ESMTP id S233183AbhKXBWX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 20:22:23 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58FFBC061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 17:19:14 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id l25so2652329eda.11
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 17:19:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=Dw1+gHemo75yZ4yD8iEL9VgFEYOB4MkHBWtk1AKekiI=;
-        b=fQjLY3JxF6mfavfGCMHfVCJSUCfEJaV4rbV8VFvrQA9w+HzCcEzE4cYd/QBr/pUi2X
-         /STa2kiQGxO+0V6WlmUHjs7zEtjYKEi9IkccxD8e9y8A2K1sXdNky9mrf9ZowOt1luXL
-         U2EEGnEGSN66LDlfEEkhn+z6bCA3sEOjLXPlxFQR07rcbrHwdS6Zf+KUicCCGaXigPdK
-         3hAl4H9l0fwT+vy8gdJZ+U6dV1HyRqdc5eEK2oj+uF8Ivh18b0rpBIi6MzRAHvJoEFQR
-         5w/FuBaYL9yRr1mC1PcsacxvmWjJABIL7L0VzUaT2c69XHnNfH0TN1OrPe/eO7G9SOms
-         dlWw==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=9tg68rrNxZ2e6fO48ostyAxfQBmJdZlqq95lEgcjM2U=;
+        b=g8QPHLCIKVnVHrRHJ1wBgfaEbV4UqysoNBTfsyiCJCNIOQKDzkFnJjY17fXHV+o/Ov
+         l+qiymkGBu+g7iD++TML/zu8fSnOWGPoGeJDESSTJ3QApZJIV4pDo4yiOWPjIiLI99fO
+         ++5Otc16jNJNrnFFigeuxmhL1NIeMSdJXBNm5ji826ZyyWyvENA8ovX+suZsGrgoAeTB
+         MsYHJ1LT2J1OSLWO0d6y4i0yemxV/5Elw5j3RQ9OaoSJAclgtP4RC8Mo3HHlEEELuTB4
+         5+4bpbwRCG7mO5Ly8eUGOpS/55Upp+7GWr+n4lC+Ezfpn4QMYlDBN3/5q180f1EKPtyt
+         iGHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Dw1+gHemo75yZ4yD8iEL9VgFEYOB4MkHBWtk1AKekiI=;
-        b=Tvns1YM0LBrPCFTXq8VLT7VxoBLyz6tZVGhJ/nGj31L25505aPgFJFIDMfqoypyxY0
-         Sa0XvMAJDegRZeHqjqqXTVivUBGgdvi6lqlPYQjCZITWQHPTQcRHHnXujIbHdcpefEms
-         kHOSOyKh6dVKJltwTys9JDlxAmlxHlwApTSdPhTvGTB48sf1gTeOg0anmDIfPF3xilEL
-         MC1a45ygrd4mfVhR0g6RcsKnLPr42ccPxTX4ZqAalqfsfuuQONOCSVgIq+AgAWSWWuuH
-         fXqMubIUYZ7PGVfPMqPSdVt5SFKmk4GElXdw2NkK44qnwOjdhWx14OhrK20OdMDnT1cA
-         lSzQ==
-X-Gm-Message-State: AOAM531ESAgEv9Y0jCQOWme3dGSFz8Q0hp3+K+28qGSXLkN4UGcdvgCy
-        ynXDyLheSbJeyhsf0biiy4VvG7wlL54f3A==
-X-Google-Smtp-Source: ABdhPJx8ZydoxmEOAOCl0eW6Ok78PDMr1KPodIDJyipSJHNu6BdGLFd+xNVkuh+prZQzSABJIAlfitxbJSc9YQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:8f94:b0:143:8e81:3ec1 with SMTP
- id z20-20020a1709028f9400b001438e813ec1mr12569384plo.52.1637715158939; Tue,
- 23 Nov 2021 16:52:38 -0800 (PST)
-Date:   Tue, 23 Nov 2021 16:52:37 -0800
-In-Reply-To: <20211123231035.3607109-1-jonathantanmy@google.com>
-Message-Id: <kl6lr1b6tlwq.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20211122223252.19922-4-chooglen@google.com> <20211123231035.3607109-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 3/4] branch: add --dry-run option to branch
-From:   Glen Choo <chooglen@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, steadmon@google.com,
-        emilyshaffer@google.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=9tg68rrNxZ2e6fO48ostyAxfQBmJdZlqq95lEgcjM2U=;
+        b=SZcwuJQyiTBm5HeXgU9R0TI77uCGW4YCjtdTSter9Var1pLP5QoqEwxqDt2yKiRIy+
+         JszM4hCl2a0wGFzxzDUg0d7aULbduyJ+vf9xS4JCIkURJ8aB+zn6LhqHP9VOUphdfDB/
+         rgPZA4T/zWvxQAJPWGKZlTnbD2DTjuZNG9UEViJzaMM/3GNavMqT/chkS/uL1rVLBnBc
+         DqpO7P826P8fT1FfapRtGiSv/RtR2mbo/XfexJeuhAaWxd41zkPv2m1oojoL4DnFeOiU
+         HndLY4/iRMapZX5ehBiXMxnCH4deHygFVdPd2Lr7MU0VO863ySIvdTXvgFVeMZTEVFmW
+         f19g==
+X-Gm-Message-State: AOAM530AXpZZ3ItpyeJ7fA5sjnrixf/jAdjBqSs0gd8ruenFOuv8XY3J
+        z3SmTQTeoOr94KHJCKyVI2fVlPuJPQbZrQ==
+X-Google-Smtp-Source: ABdhPJwBf8tUMDzkzH0Dh5vdruA8SH9LGCkeCmuYlOxC1/zPUoJYoZBTJhUzOa1DsxfUjJC4zlx9Qw==
+X-Received: by 2002:a17:906:c112:: with SMTP id do18mr14538927ejc.103.1637716752870;
+        Tue, 23 Nov 2021 17:19:12 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id e7sm6896525edk.3.2021.11.23.17.19.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Nov 2021 17:19:12 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mpgwJ-0007GQ-0u;
+        Wed, 24 Nov 2021 02:19:11 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Glen Choo <chooglen@google.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 8/8] dir: avoid removing the current working directory
+Date:   Wed, 24 Nov 2021 02:10:04 +0100
+References: <a5528cbb14ddbbf26cde873e3f3e95744d59b950.1637455620.git.gitgitgadget@gmail.com>
+        <20211123003958.3978-1-chooglen@google.com>
+        <CABPp-BE0Bcimwr1wwcnnh+6apx7r114Oqnu=QDgKEn6VAHAtFg@mail.gmail.com>
+        <kl6lmtluka55.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <CABPp-BGr9PDTE0q5zev4Ffx19g+hG083zdNShoSdH47VqzT8mw@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <CABPp-BGr9PDTE0q5zev4Ffx19g+hG083zdNShoSdH47VqzT8mw@mail.gmail.com>
+Message-ID: <211124.86ee76e4fl.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
 
-> Glen Choo <chooglen@google.com> writes:
->> When running "git branch --recurse-submodules topic"
+On Tue, Nov 23 2021, Elijah Newren wrote:
+
+> On Tue, Nov 23, 2021 at 10:19 AM Glen Choo <chooglen@google.com> wrote:
+>>
+>> Elijah Newren <newren@gmail.com> writes:
+>> [...]
+>> I'm not going to say that we'll *definitely* need remove_path()
+>> in its current form, but mixing concerns like this is an invitation to
+>> unexpected behavior. An (imperfect) example that demonstrates this
+>> principle is https://lore.kernel.org/git/24bffdab139435173712101aaf72f7277298c99d.1632497954.git.gitgitgadget@gmail.com/,
+>> where we made a change to a generic path matching function in order to
+>> speed up unpack_trees(), but accidentally ended up breaking gitignore.
 >
-> At this point, this argument has not been introduced yet, so better to
-> just say "A future patch will introduce branch creation that recurses
-> into submodules, so..."
+> There's no mixture of concerns; my patch is correcting this library
+> function to more fully match its documented intent; from dir.h:
 >
->> +-n::
->> +--dry-run::
->> +	Can only be used when creating a branch. If the branch creation
->> +	would fail, show the relevant error message. If the branch
->> +	creation would succeed, show nothing.
+>     /* tries to remove the path with empty directories along it,
+> ignores ENOENT */
+>     int remove_path(const char *path);
 >
-> Right now we only plan to use this internally so it's not worth using a
-> single character argument for this right now, I think. We can always add
-> it later if we find it useful.
+> Since the parent process's current working directory is still likely
+> parked in that directory, there is a good reason to treat it as
+> non-empty.  Thus the cwd should not be one of those directories
+> removed along with the specified path.  No need to die, just stop
+> removing the leading directories once it hits the cwd (much like it'd
+> stop once it hit a directory that had files left in it).
 
-For the reasons you specified, I didn't intend to add -n. However, -n is
-automatically added by OPT__DRY_RUN, so I thought it was appropriate to
-document it.
+I can buy that we'd pick this new behavior as a worthwhile trade-off,
+but not that anyone intended for this to be the behavior all along.
 
->> -	if (!!delete + !!rename + !!copy + !!new_upstream + !!show_current +
->> -	    list + edit_description + unset_upstream > 1)
->> +	create = 1 - (!!delete + !!rename + !!copy + !!new_upstream +
->> +		      !!show_current + !!list + !!edit_description +
->> +		      !!unset_upstream);
->> +	if (create < 0)
->>  		usage_with_options(builtin_branch_usage, options);
->
-> Hmm...I think it would be clearer just to call it noncreate_options and
-> print usage if it is greater than 1. Then whenever you want to check if
-> it's create, check `!noncreate_options` instead.
+I don't think "a process is sitting in it" has ever been anyone's idea
+of a "non-empty directory". Rather it's what rmdir() returning EEXIST or
+ENOTEMPTY maps to.
 
-Sounds good.
+Doesn't this series also change the behavior of e.g.:
 
->> @@ -852,10 +862,20 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->>  		if (track == BRANCH_TRACK_OVERRIDE)
->>  			die(_("the '--set-upstream' option is no longer supported. Please use '--track' or '--set-upstream-to' instead."));
->>  
->> -		create_branch(the_repository,
->> -			      argv[0], (argc == 2) ? argv[1] : head,
->> -			      force, 0, reflog, quiet, track);
->> +		if (dry_run) {
->> +			struct strbuf buf = STRBUF_INIT;
->> +			char *unused_full_ref;
->> +			struct object_id unused_oid;
->>  
->> +			validate_new_branchname(branch_name, &buf, force);
->> +			validate_branch_start(the_repository, start_name, track,
->> +					      &unused_oid, &unused_full_ref);
->> +			strbuf_release(&buf);
->> +			FREE_AND_NULL(unused_full_ref);
->> +			return 0;
->> +		}
->> +		create_branch(the_repository, branch_name, start_name, force, 0,
->> +			      reflog, quiet, track);
->>  	} else
->>  		usage_with_options(builtin_branch_usage, options);
->>  
->
-> I don't think we should use separate code paths for the dry run and the
-> regular run - could create_branch() take a dry_run parameter instead?
-> (If there are too many boolean parameters, it might be time to convert
-> some or all to a struct.)
+    cd contrib/subtree
+    git rm -r ../subtree
 
-That sounds reasonable, it would be good not to have duplicate code
-paths.
-
-> This suggestion would require a reworking of patch 2, which is why I
-> didn't comment there. But if we are not going to use this suggestion and
-> are going to stick with patch 2, then my comment on it is that it seems
-> to be doing too much: I ran "git show --color-moved" on it and saw that
-> quite a few lines were newly introduced (not just moved around).
-
-I will do the reworking, but the final result will probably look very
-similar to the one in patch 2. Does it look more acceptable with
---color-moved-ws=ignore-all-space? Some text had to be reindented
-(because I removed one conditional), but I also replaced some functions
-with repo_* versions.
+If so then re the "spidey sense" comment I had earlier: There's no rm
+codepaths or tests changed by this series, so the implementation of
+doing it at this lower level might be casting too wide a net. Wouldn't
+e.g. changing callers that use "remove_dir_recursively()" to use a
+"remove_dir_recursively_not_cwd()" (or whatever) be a gentler way of
+introducing this, and make sure that each step of the way we grok what's
+being changed, that there's test coverage etc.
