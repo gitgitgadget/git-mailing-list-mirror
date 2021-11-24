@@ -2,89 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9991C433F5
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 01:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 291A8C433F5
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 02:04:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238596AbhKXB51 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 20:57:27 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51764 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232950AbhKXB5X (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 20:57:23 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 52E7F15AC68;
-        Tue, 23 Nov 2021 20:54:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IsjnNiAUEt/tJoVVXR8fiHQ7JUi4gtxNtMiCIe
-        S3lTI=; b=WDb1ImNEAsYLJwEWJBAdvo6PEU2zRNc/R3TT9gmQ1tKzPnmabBF5Ly
-        dLMkiVsx/KIaMNAFk3u5ZlG5lB6kEXmaqEht6CtVi1B10tRmeJrjeXUEN2WvRl1j
-        JrPao577q3IJjp7iROb+BhUq0BNzNZBTvhoQLfC3IfUfOVQVvo0do=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4D58615AC67;
-        Tue, 23 Nov 2021 20:54:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A98A515AC66;
-        Tue, 23 Nov 2021 20:54:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Enzo Matsumiya <ematsumiya@suse.de>
-Subject: Re: [PATCH v2 1/9] worktree: remove redundant NULL-ing of "cp.argv
-References: <cover-0.5-00000000000-20211122T153605Z-avarab@gmail.com>
-        <cover-v2-0.9-00000000000-20211123T115551Z-avarab@gmail.com>
-        <patch-v2-1.9-9cc220ce5a3-20211123T115551Z-avarab@gmail.com>
-        <CAPig+cStZp=AOPHW8i7AqwDOV6djYzHC6GmcVeb=4PUj5bjvAw@mail.gmail.com>
-Date:   Tue, 23 Nov 2021 17:54:10 -0800
-In-Reply-To: <CAPig+cStZp=AOPHW8i7AqwDOV6djYzHC6GmcVeb=4PUj5bjvAw@mail.gmail.com>
-        (Eric Sunshine's message of "Tue, 23 Nov 2021 10:26:56 -0500")
-Message-ID: <xmqqy25e48u5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S240110AbhKXCHz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 21:07:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53296 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239993AbhKXCHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 21:07:51 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD48BC061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 18:04:42 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id w1so3145312edc.6
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 18:04:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=kFotKgttT5ZjrV5/5XmpnTFCJ84nazlZDTHhH3Rd13o=;
+        b=FClmrspmCH4ym/Tce5sYwImEqhl4GnDyV2Nu8jwiJZ3+2mtGzDjRkDZopHoFC04RIp
+         9wfq9W/gSwFaz2TEaF+ZowPCdZgEnQxfEIk3VGr5s3UqBT0EicE3NOKhUEembQCFWZfr
+         qV14PUVB3GukNlbSpc7d2VkrhXUmyssrDICYt0aV+YkmN1LKHvWCj6qKZfj3O8uqzLEK
+         D82MJ35eXgCZzDqw6UNf228hPA67ZXUuOrBjYsCVvHORJcGFgUt7DSzj22EYylgD7wLd
+         hk7/jNW8ZnAI+XAssPCS7pE5UpHjsjeR6diD6so8fngnf1iDPTlZFdQ/VjNXqRxUntNX
+         8f8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=kFotKgttT5ZjrV5/5XmpnTFCJ84nazlZDTHhH3Rd13o=;
+        b=HXLpn0vfs6e7yoxXgF1TBkb+7MHdHjtk0f/U992j6rnti3Jc366fjmu+aGXDirc4Ak
+         +KmHcKpgnky3JO5Ptnqg0IhpPSd4e/gsmLhPLeWFpiceswl0J13i2rWto4GgC8v05jXn
+         bUA6ILTx9sRLnMnbHe4kl1+aIkwSAvU1I+agGnTGQEeazJYhgm30zFiH1fnSSUvWTlXG
+         oGLkizZ6rh7dfVxA4ieTGbv8fehxT/UCS/lBu1tc9ejW7fD+7DXdLy+UVmpuYJCskxzx
+         R+XWXa02UrS9xDOCLttHsZK0fdGEbir+MM0VsfWXJyDeBoaoqxJNgWYU+ZRPiFkq+vW1
+         96Fw==
+X-Gm-Message-State: AOAM533oWwyVpwe2xyUyjRFVoDIBA2aQSc5c1105iJXsf/9V1B5Uwd2K
+        Q6M+VygGOtzr+/5ctq5P5Bc=
+X-Google-Smtp-Source: ABdhPJy1PG6SffQWNhMezOwYA3COlB5JRCA/jlo19iIGczf5mVrWilDPCjOcXSxd+gHOActDiq134A==
+X-Received: by 2002:a05:6402:3594:: with SMTP id y20mr18043096edc.328.1637719481448;
+        Tue, 23 Nov 2021 18:04:41 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id e1sm5803476ejy.82.2021.11.23.18.04.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Nov 2021 18:04:40 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mpheK-0008P7-Az;
+        Wed, 24 Nov 2021 03:04:40 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Enzo Matsumiya <ematsumiya@suse.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2] pager: fix crash when pager program doesn't exist
+Date:   Wed, 24 Nov 2021 02:55:20 +0100
+References: <20211120194048.12125-1-ematsumiya@suse.de>
+        <YZqSBlvzz2KgOMnJ@coredump.intra.peff.net>
+        <xmqqfsrplz3z.fsf@gitster.g>
+        <YZseJ4jOVIK3+bUD@coredump.intra.peff.net>
+        <20211122145222.m2zrmtbaeu5kzbtt@cyberdelia>
+        <xmqqczmsi0i5.fsf@gitster.g>
+        <20211123164015.6zkbf3xmnofykedz@cyberdelia>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211123164015.6zkbf3xmnofykedz@cyberdelia>
+Message-ID: <211124.865ysie2br.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6B7C3192-4CC9-11EC-9D93-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> ... At best, following this change,
-> git-worktree is only working "by accident" if the underlying
-> child_process::args.v doesn't get reallocated between run_command()
-> invocations. Relying upon this "by accident" behavior feels rather
-> unsafe.
+On Tue, Nov 23 2021, Enzo Matsumiya wrote:
 
-Very true.  Relying on the "if argv is null, point it at args.v"
-assignment at the very beginning of the start_command() function is
-safe because by that time the reallocations have happened already
-if needed.
+> On 11/22, Junio C Hamano wrote:
+>>Enzo Matsumiya <ematsumiya@suse.de> writes:
+>>
+>>> I'm preparing v3 with the above suggestions in mind.
+>>
+>>Thanks for an update, and thanks for working on this one.
+>
+> Btw I'm on hold until =C3=86var's patchset is sorted out, which seems to =
+kind
+> of overlap/invalidate my fix.
+>
+> Sorry I couldn't follow much of yesterday's discussion.
 
-The pattern with or without NULLing is
+I think per https://lore.kernel.org/git/xmqq7dd0giwp.fsf@gitster.g/ that
+Junio's in turn waiting on you, and in my v2 re-roll of my topic[1] I
+ejected the test derived from your report, on the assumption that an
+earlier fix from you would land first.
 
-	initialize cp
-	push to cp.args
-	use cp
+I.e. I understood that Junio wanted to queue up your more narrow fix
+which would fix the segfault, and my larger topic to remove "argv" and
+"env" might come some time later.
 
-	/* cp.argv = NULL */
-	strvec_clear(&cp.args);
-	push to cp.args
+I don't mind either way as long as the root cause of "argv" and "env"
+gets fixed eventually.
 
-and strvec_clear() frees the underying array, and the first push
-will reallocates from NULL, so there is no guarantee that cp.argv
-in the first use that used to be pointing at cp.args that has
-already been freed is still valid.
+I do wonder re [2] and [3] if a simpler and self-contained/isolated
+patch in this area might not be a mirage of sorts. I.e. to know whether
+the approach in [2] and [3] is safe we basically have to reason about
+all the callers of this API anyway, which is what my larger series does.
 
-Thanks for spotting this.  Has this patch ever been tested with
-sanitizer?  Do we have gap in test coverage?
+But I honestly didn't look too deeply into your approach & what could be
+done to safely work around "argv" and/or "env" on the current "master",
+since I had the alternate patches to remove them entirely :)
 
-
-
-
-
+1. https://lore.kernel.org/git/cover-v2-0.9-00000000000-20211123T115551Z-av=
+arab@gmail.com/
+2. https://lore.kernel.org/git/20211122153119.h2t2ti3lkiycd7pb@cyberdelia/
+3. https://lore.kernel.org/git/YZvFkwivicJ%2ftFAo@coredump.intra.peff.net/
