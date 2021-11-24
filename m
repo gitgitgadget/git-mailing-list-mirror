@@ -2,238 +2,284 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AF89C433F5
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 11:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F029CC433F5
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 11:57:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241286AbhKXLg6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Nov 2021 06:36:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37850 "EHLO
+        id S241822AbhKXMAQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Nov 2021 07:00:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238267AbhKXLg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Nov 2021 06:36:57 -0500
+        with ESMTP id S231266AbhKXMAP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Nov 2021 07:00:15 -0500
 Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 219EDC061574
-        for <git@vger.kernel.org>; Wed, 24 Nov 2021 03:33:48 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id r25so8892497edq.7
-        for <git@vger.kernel.org>; Wed, 24 Nov 2021 03:33:48 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29B60C061574
+        for <git@vger.kernel.org>; Wed, 24 Nov 2021 03:57:06 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id z5so9294773edd.3
+        for <git@vger.kernel.org>; Wed, 24 Nov 2021 03:57:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Zs/YOTywqoRHW3pp3K+jqn8aIcFgI8PYNkntOWRoBTs=;
-        b=pw9Mjym0zsbgIjfRx/w0n7rn6L2DfAiMWJLSgixKO+VuyjPQ7BUKDMnKNCWaUA5tgz
-         ifrHNuaB95XFTJnmfGevtgpHfQJiAcMXGi7HXa7uY7DF/XUMyFoh2NZgbm1MTQuOIR62
-         cOe7HF2bAEVHb8SVByIYGFtVuIYxJftP9WZNFZ4dZQGeVNWDwWKhDO+7b1Ws0e5LHAcA
-         dAWkpn7CLCZMpRXXiZm8TR3mUPKwiID2FQ9+Hb4P7zYrcduWClpboPAQxkan3htLtUSv
-         D1tYvVf/hiqPpgaIz6rWaIImyorJy7yxUIED+RhZluAEVBTXSpZaqLMdaJb/AetA+biV
-         yWUA==
+        d=unity3d.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=g3rmkRdPVOHg6JhkHnOYHa0idSXHwdMzkcUe57vMUm8=;
+        b=OUQhU42HtgJNfurqEbdPBe0TkxAVOsul65TVD+wr3TIvtrNb+/HjAPg7ZQYadJJccD
+         +0zDQGiKzHaxokjqDEk/LQqcX0HmT6WD4+4Qtgr5N9aWhd4CfHwyVZ3AiUTyGe6X9qd3
+         U3LBvM+JNoLnQ+W3MCrZOv5yMg1UDhnbW3GZ3VWsu6e28Ea2GyiSNJ+u1RK8JSQDZy/G
+         lcIdvnLCV8/22FtiJRWIcgjzptE6QwRjkr92soXFEdNVcHChBw/X7HVGtGkf9kCKO3DM
+         ZOfSavfWyNmatxwygPq/+KCxpDaIky5y1DX5JAev13Peykx/PcdKGyKLtQtfjBau/Xm+
+         a65Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Zs/YOTywqoRHW3pp3K+jqn8aIcFgI8PYNkntOWRoBTs=;
-        b=jmXEQTVaWfFkSGQLaRMkWm23QNb1wkCKhVOt2gtE/H1yy71SK0HsxZrOtRCPA2b5Dp
-         uGUqUqfgC51WQq3liTujU3403wKqG+ROCH931J3mKPYILcT9qHM3Qjka1yKxK46iGaRJ
-         6hAYyXPjXkg/wuqlmvZVKWbF46Rk8WuAoC3dIOVo9feW6bnOBLrjGVno39RxuD3wjwQu
-         hmLFqGcBbowuVX0sYgt5rzIpHvoBz4IuUF+5P23Fq2hGYFckSJE2eQ6LFRJ05Btywn2X
-         5yo2etclKB9FKfHRmJIl1aDz6BILdu7djNbQQluVpVSl6ldrr+SPgyacB+5ah4XbJlVb
-         oMkg==
-X-Gm-Message-State: AOAM531dR3grHjL3HqtAhjghbZtucuf1vMEUEABMWlS6BqTf/GWd8SWj
-        5AgLavWHDP1eg/oprSMJpUuddafXyL6o7A==
-X-Google-Smtp-Source: ABdhPJzB2G36bf9m1cZkdQdIlw1SvAOJpPuIubPswAHSjDiwqhdeYs4o6z0qOlhRBaCk2LaIssomOA==
-X-Received: by 2002:a05:6402:1014:: with SMTP id c20mr23944703edu.186.1637753626471;
-        Wed, 24 Nov 2021 03:33:46 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p26sm6742154edt.94.2021.11.24.03.33.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Nov 2021 03:33:46 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mpqX3-000AqS-Ej;
-        Wed, 24 Nov 2021 12:33:45 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Glen Choo <chooglen@google.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 8/8] dir: avoid removing the current working directory
-Date:   Wed, 24 Nov 2021 12:14:05 +0100
-References: <a5528cbb14ddbbf26cde873e3f3e95744d59b950.1637455620.git.gitgitgadget@gmail.com>
- <20211123003958.3978-1-chooglen@google.com>
- <CABPp-BE0Bcimwr1wwcnnh+6apx7r114Oqnu=QDgKEn6VAHAtFg@mail.gmail.com>
- <kl6lmtluka55.fsf@chooglen-macbookpro.roam.corp.google.com>
- <CABPp-BGr9PDTE0q5zev4Ffx19g+hG083zdNShoSdH47VqzT8mw@mail.gmail.com>
- <211124.86ee76e4fl.gmgdl@evledraar.gmail.com>
- <CABPp-BGZPheDqWD1pXbePOYe2BcT1-TqX-zGVqnNLGtFuXab1g@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <CABPp-BGZPheDqWD1pXbePOYe2BcT1-TqX-zGVqnNLGtFuXab1g@mail.gmail.com>
-Message-ID: <211124.86wnkxdbza.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=g3rmkRdPVOHg6JhkHnOYHa0idSXHwdMzkcUe57vMUm8=;
+        b=PQAT6XyUQCjNBum+mqet4b3oTjjZKGS0pjuz1T5lHViMCiW8fe8YfBjlHg5cCzuw12
+         456SabA4Mz+Q/LEI9rM0F5hfWAMcoVJwpLFWkI18+ZVjvUsf1+4HxUagVgU0sCEuqqiY
+         YBs8l3ES1q9ugHx/Huy8PEl7snYJ7JNbUP9UQui9o3U2nWrdDJjdpTWLQJSRhHm6se1W
+         ONZESH/kNT2Og11OUZuOAXvEYtZD7PJ5nFTNbaxrWtoMo95E5H0RdUSqxmnM2dbGJRBk
+         SaSmBIoa42dtq92Kp3IMuZVfc7z0qvCQGFyUwSzyo3OGJdHT1gFmsIMsOi1ANfvgjbTO
+         FbBA==
+X-Gm-Message-State: AOAM531nBo6uE0kfw/Ya5t4PL2GVPBm7mLVv4bRpWU1zRLuznnJUN9vA
+        aNYlVSf2P+vpcfrxOhHwE6W/WA==
+X-Google-Smtp-Source: ABdhPJyl5uUI2JglcEjbFnigOigsjzr6XMWKkkYeXQDXDIYk21q0zi4YEemoal5vAmTqqO0YrsFWhA==
+X-Received: by 2002:a17:906:c152:: with SMTP id dp18mr19105937ejc.241.1637755024652;
+        Wed, 24 Nov 2021 03:57:04 -0800 (PST)
+Received: from [10.45.33.40] ([80.80.14.217])
+        by smtp.gmail.com with ESMTPSA id ne33sm6858204ejc.6.2021.11.24.03.57.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Nov 2021 03:57:04 -0800 (PST)
+Message-ID: <7c2a01ec-8a69-b7af-cabb-c6a6ef7483a9@unity3d.com>
+Date:   Wed, 24 Nov 2021 12:57:03 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.2
+Subject: Re: [PATCH] fast-export: fix surprising behavior with --first-parent
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        William Sprent via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.1084.git.1637666927224.gitgitgadget@gmail.com>
+ <211123.865ysjui34.gmgdl@evledraar.gmail.com>
+From:   William Sprent <williams@unity3d.com>
+In-Reply-To: <211123.865ysjui34.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Nov 23 2021, Elijah Newren wrote:
-
-> On Tue, Nov 23, 2021 at 5:19 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
-
->> Doesn't this series also change the behavior of e.g.:
+On 23/11/2021 14.07, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Tue, Nov 23 2021, William Sprent via GitGitGadget wrote:
+> 
+>> From: William Sprent <williams@unity3d.com>
 >>
->>     cd contrib/subtree
->>     git rm -r ../subtree
->
-> Yes, of course!
->
-> Before:
->
->     $ cd contrib/subtree
->     $ git rm -r -q ../subtree/
->     $ ls -ld ../subtree/
->     ls: cannot access '../subtree/': No such file or directory
->     $ git status --porcelain
->     fatal: Unable to read current working directory: No such file or dire=
-ctory
->     $ git checkout HEAD ../subtree/
->     fatal: Unable to read current working directory: No such file or dire=
-ctory
->
-> After:
->
->     $ cd contrib/subtree
->     $ git rm -r -q ../subtree/
->     $ ls -ld ../subtree/
->     drwxrwxr-x. 1 newren newren 0 Nov 23 19:18 ../subtree/
->     $ git status --porcelain
->     D  contrib/subtree/.gitignore
->     D  contrib/subtree/COPYING
->     D  contrib/subtree/INSTALL
->     D  contrib/subtree/Makefile
->     D  contrib/subtree/README
->     D  contrib/subtree/git-subtree.sh
->     D  contrib/subtree/git-subtree.txt
->     D  contrib/subtree/t/Makefile
->     D  contrib/subtree/t/t7900-subtree.sh
->     D  contrib/subtree/todo
->     $ git checkout HEAD ../subtree/
->     Updated 10 paths from c557be478e
->
-> Very nice fix, don't you think?
+>> When invoking git-fast-export with the --first-parent flag on a branch
+>> with merges, fast-export would early-out on processing the first merge
+>> on the branch. If combined with --reverse, fast-export would instead
+>> output all single parent commits on the branch.
+>>
+>> This commit makes fast-export output the same commits as rev-list
+>> --first-parent, and makes --reverse not have an effect on which commits
+>> are output.
+>>
+>> The fix involves removing logic within fast-export which was responsible
+>> for ensuring that parents are processed before their children, which was
+>> what was exiting early due to missing second parents. This is replaced
+>> by setting 'reverse = 1' before revision walking, which, in conjuction
+>> with topo_order, allows for delegating the ordering of commits to
+>> revision.c. The reverse flag is set after parsing rev-list arguments to
+>> avoid having it disabled.
+>>
+>> Signed-off-by: William Sprent <williams@unity3d.com>
+>> ---
+>>      fast-export: fix surprising behavior with --first-parent
+>>      
+>>      Hi,
+>>      
+>>      This is my first time patching git, so I probably need some guidance on
+>>      my approach. :)
+> 
+> Hi, thanks for your first contribution to git. This is a rather shallow
+> review, a deeper one is much deserved.
+> > I notice that you're removing code in builtin/fast-export.c, presumably
+> we have code in revision.c that does the same thing. It would really
+> help a reviewer for you to dig a bit into the relevant commit history
+> and note it in the commit message.
+> 
+> I.e. could revision.c always do this, and this was always needless
+> duplication, or at time X it was needed, but as of Y revision.c learned
+> to do this, and callers A, B and C were adjusted, but just not this
+> missed call D? etc.
+> 
 
-I'd be more sympathetic to this for the "checkout" etc. commands, but
-once I add a "-f" to that "rm" I'm *really* expecting it to rm the
-directory, but it won't anymore because it's in the underlying library
-function.
+That's a really good suggestion. I should've done that. I did dig just 
+enough to see that the logic has been around since fast-export was 
+introduced, but I didn't check whether the 'reverse' option was part of 
+revision.c at that point. I see that Elijah has done that homework for 
+me later in this thread and discovered that --reverse was introduce a 
+year or so before fast-export though.
 
-But if the goal is to get "git status" and the like working isn't a much
-more pointed fix to have setup.c handle the case of getting ENOENT from
-getcwd() more gracefully. I.e. currently (and even with your patches):
+>> -static int has_unshown_parent(struct commit *commit)
+>> -{
+>> -	struct commit_list *parent;
+>> -
+>> -	for (parent = commit->parents; parent; parent = parent->next)
+>> -		if (!(parent->item->object.flags & SHOWN) &&
+>> -		    !(parent->item->object.flags & UNINTERESTING))
+>> -			return 1;
+>> -	return 0;
+>> -}
+>> -
+>>   struct anonymized_entry {
+>>   	struct hashmap_entry hash;
+>>   	const char *anon;
+>> @@ -752,20 +740,6 @@ static char *anonymize_tag(void *data)
+>>   	return strbuf_detach(&out, NULL);
+>>   }
+>>   
+>> -static void handle_tail(struct object_array *commits, struct rev_info *revs,
+>> -			struct string_list *paths_of_changed_objects)
+>> -{
+>> -	struct commit *commit;
+>> -	while (commits->nr) {
+>> -		commit = (struct commit *)object_array_pop(commits);
+>> -		if (has_unshown_parent(commit)) {
+>> -			/* Queue again, to be handled later */
+>> -			add_object_array(&commit->object, NULL, commits);
+>> -			return;
+>> -		}
+>> -		handle_commit(commit, revs, paths_of_changed_objects);
+>> -	}
+>> -}
+> 
+> ...
+> 
+>>   static void handle_tag(const char *name, struct tag *tag)
+>>   {
+>> @@ -1185,7 +1159,6 @@ static int parse_opt_anonymize_map(const struct option *opt,
+>>   int cmd_fast_export(int argc, const char **argv, const char *prefix)
+>>   {
+>>   	struct rev_info revs;
+>> -	struct object_array commits = OBJECT_ARRAY_INIT;
+>>   	struct commit *commit;
+>>   	char *export_filename = NULL,
+>>   	     *import_filename = NULL,
+>> @@ -1281,19 +1254,14 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+>>   
+>>   	get_tags_and_duplicates(&revs.cmdline);
+>>   
+>> +	revs.reverse = 1;
+> 
+> Is the placement of revs.reverse = 1 here important, or could it go
+> earlier after init_revision_sources() when we assign some other values
+> ir revs?
+> 
+>>   	if (prepare_revision_walk(&revs))
+>>   		die("revision walk setup failed");
+> 
+> A light reading of prepare_revision_walk() suggests it could come after,
+> but maybe I'm entirely wrong.
 
-    $ (mkdir blah && cd blah && rmdir ../blah && git status)
-    fatal: Unable to read current working directory: No such file or direct=
-ory
+It needs to go after the setup_revisions() call as otherwise a --reverse 
+passed to fast-export will toggle the option off again. You are right in 
+that it can be moved down. I've done that in my working directory for 
+the next patch.
 
-Whereas if we do e.g.:
-=09
-	diff --git a/strbuf.c b/strbuf.c
-	index b22e9816559..3f9a957ff9d 100644
-	--- a/strbuf.c
-	+++ b/strbuf.c
-	@@ -600,6 +600,16 @@ int strbuf_getcwd(struct strbuf *sb)
-	                        return 0;
-	                }
-=09
-	+               if (errno =3D=3D ENOENT){
-	+                       const char *pwd =3D getenv("PWD");
-	+
-	+                       if (pwd) {
-	+                               warning(_("unable to getcwd(), but can rea=
-d PWD, limping along with that..."));
-	+                               strbuf_addstr(sb, pwd);
-	+                               return 0;
-	+                       }
-	+               }
-	+
-	                /*
-	                 * If getcwd(3) is implemented as a syscall that falls
-	                 * back to a regular lookup using readdir(3) etc. then
+Another option would be to move the revs.reverse up as you suggest and 
+then then call die() if it was toggled off by setup_revisions(). The 
+only downside I can think of is that it would make any current usage of 
+'fast-export --reverse' go from a no-op to an error.
 
-We'll get:
-=09
-	$ (mkdir blah && cd blah && rmdir ../blah && GIT_DISCOVERY_ACROSS_FILESYST=
-EM=3D1 ~/g/git/git status)
-	warning: unable to getcwd(), but can read PWD, limping along with that...
-	On branch master
-	Your branch is up to date with 'origin/master'.
-=09
-	Changes not staged for commit:
-	  (use "git add <file>..." to update what will be committed)
-	  (use "git restore <file>..." to discard changes in working directory)
-	        modified:   ../strbuf.c
-=09
-	no changes added to commit (use "git add" and/or "git commit -a")
+>>   	revs.diffopt.format_callback = show_filemodify;
+>>   	revs.diffopt.format_callback_data = &paths_of_changed_objects;
+>>   	revs.diffopt.flags.recursive = 1;
+>>   	while ((commit = get_revision(&revs))) {
+>> -		if (has_unshown_parent(commit)) {
+>> -			add_object_array(&commit->object, NULL, &commits);
+>> -		}
+>> -		else {
+>> -			handle_commit(commit, &revs, &paths_of_changed_objects);
+>> -			handle_tail(&commits, &revs, &paths_of_changed_objects);
+>> -		}
+>> +		handle_commit(commit, &revs, &paths_of_changed_objects);
+>>   	}
+>>   
+> 
+> Yay code deletion, good if it works (I didn't check).
+> 
+> Since this is just a one-statement while-loop we can also remove its
+> braces now.
+>  >> +test_expect_success 'fast-export --first-parent outputs all 
+revisions output by revision walk' '
+>> +	git init first-parent &&
+>> +	cd first-parent &&
+> 
+> Do any such "cd" in a sub-shell:
+> 
+> 	git init x &&
+> 	(
+>      		cd x &&
+>                  ...
+> 	)
+> Otherwise the next test after you is going to run in anotherdirectory.
+> 
+>> +	test_commit init &&
+>> +	git checkout -b topic1 &&
+>> +	test_commit file2 file2.txt &&
+>> +	git checkout main &&
+>> +	git merge topic1 --no-ff &&
+>> +
+>> +	git checkout -b topic2 &&
+>> +	test_commit file3 file3.txt &&
+>> +	git checkout main &&
+>> +	git merge topic2 --no-ff &&
+> 
+> Just a nit. I'd use "test_commit A", "test_commit B" etc. when the
+> filenames etc. aren't important. There's no subsequent reference here,
+> so I assume they're not.
+> 
+>> +	test_commit branch-head &&
+>> +
+>> +	git rev-list --format="%ad%B" --first-parent --topo-order --no-commit-header main > expected &&
+> 
+> nit; >expected, not > expected is the usual style.
+>> +
+>> +	git fast-export main -- --first-parent > first-parent-export &&
+>> +	git fast-export main -- --first-parent --reverse > first-parent-reverse-export &&
+> 
+> ditto:
+> 
+>> +	git init import && cd import &&
+> 
+> ditto earlier "cd" comment.
+> 
+>> +	cat ../first-parent-export | git fast-import &&
+> 
+> Instead of "cat x | prog" do "prog <x".
+> 
+>> +	git rev-list --format="%ad%B" --topo-order --all --no-commit-header > actual &&
+> 
+>> +	test $(git rev-list --all | wc -l) -eq 4 &&
+> 
+> Instead:
+> 
+>      git rev-list --all >tmp &&
+>      test_line_count = 4 tmp
+> 
+> (for some value of tmp)
+> 
+>> +	test_cmp ../expected actual &&
+>> +	test_cmp ../first-parent-export ../first-parent-reverse-export
+>> +'
+> 
+> Maybe some of the CD-ing around here wouldu be easier by not doing that
+> and instead running e.g.:
+> 
+>      git -C subdir fast-export >file-not-in-subdir &&
+>      ...
+> 
 
-I think that getenv("PWD") trick is widely supported, and once we get
-past that we seem OK. The relative path to strbuf.c is even correct.
-
-Currently you'd need to set GIT_DISCOVERY_ACROSS_FILESYSTEM=3D1 because we
-run into another case in setup.c where we're not carrying that ENOENT
-forward, but we could just patch strbuf_getcwd() or that subsequent code
-to handle this edge case.
-
->> If so then re the "spidey sense" comment I had earlier: There's no rm
->> codepaths or tests changed by this series,
->
-> That's not correct; I explicitly added a new rm test in the first
-> patch in my series.  Further, that same test was modified to mark it
-> as passing by this particular patch you are commenting on.
-
-Sorry about that, I didn't look carefully enough.
-
->> so the implementation of
->> doing it at this lower level might be casting too wide a net.
->
-> I'm getting the vibe that you are assuming I'm changing these two
-> functions without realizing what places might be calling them;
-> basically, that I'm just flippantly changing them.  Ignoring the
-> ramifications of such an assumption, if this vibe is correct[...]
-
-Sorry no, I didn't mean to imply that. I snipped the rest, but hopefully
-this answers the questions you had well enough (and in the time I have
-for this reply):
-
-I'm not concerned that you didn't research this change well enough, I
-just find it a bit iffy to introduce semantics in git around FS
-operations that don't conform with that of POSIX & the underlying OS. My
-*nix system happily accepts an "rm -rf" or an "rmdir" of the directory
-I'm in, I'd expect git to do the same.
-
-But whatever research we do on in-tree users we're left with changing
-behavior for users in the wild, e.g. a script that cd's to each subdir
-in a repo, inspects something, and if it wants to remove that does an
-"git rm -r" of the directory it's in, commits, and expects the repo to
-be clean afterwards.
-
-I did follow/read at least one of the the original discussions[1] a bit,
-and some earlier discussion I'm vaguely recalling around bisect in a
-subdir.
-
-If the underlying goal is to address the UX problem in git of e.g. "git
-status" and the like hard-dying I wonder if something in the direction
-of the setup.c/strbuf.c change above might be more of a gentle change.
-
-That approach of a more gentler setup.c also has the benefit of having
-git work when it ends up in this situation without the git commands
-having landed it there, as in the above "rmdir" example.
-
-Anyway, I really didn't have time to look at this very carefully. I just
-remember looking into this with bisect/status etc. in the past, and
-thinking that these problems were solvable in those cases, i.e. they
-were just being overly anal about ENOENT, and not falling back on "PWD"
-etc.
-
-1. https://lore.kernel.org/git/YS3Tv7UfNkF+adry@coredump.intra.peff.net/
+Thanks for taking the time to give your feedback. :) I'll remove those 
+braces from the while loop and incorporate your comments about the test 
+for v2.
