@@ -2,65 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59444C433F5
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 21:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FAB5C433F5
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 21:21:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242725AbhKXVPa convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 24 Nov 2021 16:15:30 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:64361 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235268AbhKXVP3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Nov 2021 16:15:29 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1AOLCFmk045210
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 24 Nov 2021 16:12:15 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>, <git-packagers@googlegroups.com>
-References: <xmqq7dcx1ent.fsf@gitster.g>        <000201d7e173$3eb3d320$bc1b7960$@nexbridge.com> <000301d7e174$1b568570$52039050$@nexbridge.com> <xmqq35nl1dsh.fsf@gitster.g>
-In-Reply-To: <xmqq35nl1dsh.fsf@gitster.g>
-Subject: RE: [ANNOUNCE] Git v2.34.1
-Date:   Wed, 24 Nov 2021 16:12:08 -0500
-Organization: Nexbridge Inc.
-Message-ID: <000c01d7e177$f43327b0$dc997710$@nexbridge.com>
+        id S244269AbhKXVYM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Nov 2021 16:24:12 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64688 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232874AbhKXVYM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Nov 2021 16:24:12 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 07E13167461;
+        Wed, 24 Nov 2021 16:21:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0vsBZHqFf/amMM0VwZ1Hgf3+KLL34eNnBn8UtA
+        7NvOQ=; b=r5G4VXAUNORUGELnxaZMxrV38F60S8nSHwGi34dT+c+Q9nZTpkU5sL
+        24QA6opVVJWouGtO5o0VfjBSmJWS/DSgLUYMrubneQ8FhW7kiMmWxcgmbegST/DG
+        /iLgHjInHmzc7wEMO7FXP+D0R29V0ZvUSofidVUtq7BLoW3p7jYkY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F3CB4167460;
+        Wed, 24 Nov 2021 16:21:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5E99D16745C;
+        Wed, 24 Nov 2021 16:20:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin von Zweigbergk <martinvonz@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Letting tools partially resolve conflicts in a file
+References: <CANiSa6iNpm6--qHpUFYhPfSi+ounGttA8=TAsep18A-=iyoFEQ@mail.gmail.com>
+Date:   Wed, 24 Nov 2021 13:20:58 -0800
+In-Reply-To: <CANiSa6iNpm6--qHpUFYhPfSi+ounGttA8=TAsep18A-=iyoFEQ@mail.gmail.com>
+        (Martin von Zweigbergk's message of "Wed, 24 Nov 2021 08:31:19 -0800")
+Message-ID: <xmqqmtltz1vp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHLMPeZyQzNqkxJMp5NZJ0GWXnoyAHsQPH9Av+RRgcC+Nw176vtaDqw
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6B5289FC-4D6C-11EC-BFCA-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On November 24, 2021 3:48 PM, Junio C Hamano:
-> <rsbecker@nexbridge.com> writes:
-> 
-> >> In an unusual situation, make reports:
-> >>
-> >> GIT_VERSION = 2.34.GIT
-> >>
-> >> Instead of the expected
-> >>
-> >> GIT_VERSION = 2.34.1
-> >>
-> >> which we see usually.
-> >>
-> >> Am I missing a step that was added since 2.34.0?
-> >
-> > Oops. I have to build off 'maint' not master. Got it.
-> > -R.
-> 
-> You made me cut my lunch break short to double check, but all is well if the
-> release materials are good after all ;-)
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
 
-Hopefully when travel is permitted and I can next get to your area, I can repair this with beer 😉
-Cheers,
--Randall
+> I've searched the list and not found anything about this topic, but I
+> figured I'd ask to be sure. The question is not specific to Git, but
+> this seems like a forum where it might have been brought up.
+>
+> You could imagine having a merge tool that was specialized for some
+> purpose and only able to resolve a particular kind of conflict. An
+> example would be a tool that resolves conflicts in `#include` lines or
+> `import` lines. It could be useful to have such tools run as part of a
+> chain of merge tools, where the final merge tool is what users
+> normally have configured (such as `meld`, or the internal "attempt
+> merge, or leave conflict markers" tool).
+>
+> Has this problem come up before?
+
+I do not recall seeing such a topic, but I am not sure how practical
+your idea is to implement from the Git side.
+
+As a zeroth order approximation, instead of such a half-auto-merge
+tool, while resolving a conflicted merge with two conflicted hunks
+in a file, if you hand edit one conflicted hunk and then run "git
+mergetool", is your "half resolution by hand" seen by the mergetool
+backend correctly?
+
+I tried to follow from git-mergetool.sh::main() what happens.  Each
+path is given to merge_file() helper function, and three temporary
+files, $BASE, $LOCAL, and $REMOTE, are prepared from the blob object
+registered in the index at stages #1, #2 and #3.  A mergetool
+backend, e.g. mergetools/meld, looks at these three files in its
+merge_cmd() function.
+
+Notice that the contents in the working tree file after a conflicted
+auto-merge does not even get looked at by the mergetool backend in
+the above picture?  I am not sure if replacing the contents of LOCAL
+with your half-resolved contents would give us the behaviour you
+want.  If it were the case, perhaps vanilla "git mergetools" would
+have fed the current file in the working tree, which was half
+resolved by "git merge" with conflict markers, as LOCAL to the
+mergetool backend even before we started discussing this topic, so I
+am not that optimistic.
+
+I assume that your idea is that various small "I know how to resolve
+only this kind of conflicts" tools can plug into a larger merge
+helper framework to improve end-user experience, and I find the idea
+intriguing.  I would be surprised if such an idea has never been
+discussed by folks in projects that develop and maintain merge
+helpers, like meld and kompare.  But I am not convinced if it is a
+good idea to do that on our side, before we spawn these mergetool
+backends.
+
 
