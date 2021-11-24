@@ -2,105 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D1ECC433EF
-	for <git@archiver.kernel.org>; Tue, 23 Nov 2021 23:54:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6B43C433F5
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 00:39:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233264AbhKWX5T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 18:57:19 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61928 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240577AbhKWX5H (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 18:57:07 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A4D9815A01C;
-        Tue, 23 Nov 2021 18:53:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2KOA5RtxZ1lQqKUavct3/CgF83ZSM/pWKTC8MA
-        XZalM=; b=rxZCY+AvTRPMbxPtlHkTFlawlu30ZF6/BI8gFRs4dEMbnNKNMUcgFE
-        Gvw0Ye8rqzVv6drI3/adjVaTF3twpSI/ScuIbilznkp27XMIymwLoPhcJKt/r40I
-        tpsr41502Xw7BmDQ4HDaqZlYVOY/4icyQFulnCa5MwO91tj/v4JBw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9CECC15A01B;
-        Tue, 23 Nov 2021 18:53:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C73A415A01A;
-        Tue, 23 Nov 2021 18:53:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, newren@gmail.com,
-        Taylor Blau <me@ttaylorr.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
-Subject: Re: [PATCH v4 4/4] blame: enable and test the sparse index
-References: <pull.1050.v3.git.1635802069.gitgitgadget@gmail.com>
-        <pull.1050.v4.git.1637620958.gitgitgadget@gmail.com>
-        <7acf5118bf5602fbafca2d42c4f363b5adbcbd54.1637620958.git.gitgitgadget@gmail.com>
-Date:   Tue, 23 Nov 2021 15:53:54 -0800
-In-Reply-To: <7acf5118bf5602fbafca2d42c4f363b5adbcbd54.1637620958.git.gitgitgadget@gmail.com>
-        (Lessley Dennington via GitGitGadget's message of "Mon, 22 Nov 2021
-        22:42:38 +0000")
-Message-ID: <xmqqr1b65sz1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9E7C9C78-4CB8-11EC-82BC-98D80D944F46-77302942!pb-smtp21.pobox.com
+        id S231266AbhKXAnG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 19:43:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34368 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229825AbhKXAnF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 19:43:05 -0500
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7817FC061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 16:39:56 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id m20-20020a63ed54000000b003213f4670c0so126972pgk.2
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 16:39:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=11gklu2XHSbYLHAmqH1Plb04zCbHlAAdWYLXyrNCYeU=;
+        b=DVpWkNrGj58yH8Gngcd3CbCa4ocFQJIv6UN1Mdzkgm5TutYPeJKLtRmDUwoLMaWHZA
+         r/wM5us5fLFyBt1ujxYA2yiZ69+evN/KYM/bJ2pE2msfyIAmEArll9O98A0nyhmVK4rY
+         9ori2PxeFXzr8k2Q4mivevhAyle9m5mcP+hB8nT5KCIlxtCy/PkcWV0JAnQBf+Zggq8K
+         qmRNcQMs90TcKcKSBK4Ok7wH5BAu2CrnWmbc0aDjtA720A1jCyt1GYujBnqtwAvoAsU9
+         gjOMV12t6nb052rN/yNupj/I0la6dg7nGto0PKYcsPwLkRk24RAgGwluGYdOphooD7Na
+         lCxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=11gklu2XHSbYLHAmqH1Plb04zCbHlAAdWYLXyrNCYeU=;
+        b=oFvWWKd7d5msQ9TCf07EqwEqNthvVcdWZ5zCfrt57zkmHAqXM6fhRNsSxOkyE6oANp
+         F6hZjOdN9NdbgRb9FPfEYgGDryVDUpIQY6bkjw+J5KmoihXCceBxr6zEuX6apAktXLUi
+         uOsEvw93lswKWjAB6e1YQtwU26YurO6q6zbFEdzImBenXYBIU4Qq43xSC65FMiluhRdG
+         vsZ+ahyxBTRy7S/RXhwYmlm6WR4HYqyjWIOS2+XoM4S6FbGriifMMR/+EpvYOQvKo3wa
+         wa2SGzLL4YtJy2nDe0g9YzuwAXRZuIJDNV2KDIV0JFkQpJ2fujRUcGGQ4jDPTyFk5FZU
+         DfQw==
+X-Gm-Message-State: AOAM531mIZbMMPevENuPJ9+9MZ/eijR336KM5MeapnKbsHkorQ9T1ASv
+        PQEm9bicrC+oJ1I3NfqMlsBKfnYqoAAL+g==
+X-Google-Smtp-Source: ABdhPJy85Ie6zB+xssZLKB0mXgxBatdB4CHEzujdsWdpzwVUogtmptp6ysv4iZnqk+eNQ2gUEdzCyKz0c2eczg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:2296:b0:49f:feb4:6457 with SMTP
+ id f22-20020a056a00229600b0049ffeb46457mr1725824pfe.58.1637714395937; Tue, 23
+ Nov 2021 16:39:55 -0800 (PST)
+Date:   Tue, 23 Nov 2021 16:39:53 -0800
+In-Reply-To: <CABPp-BHn0bE4ZSx25+28GD58sae=FVs63eQW-Fp8zwFAALcKFA@mail.gmail.com>
+Message-Id: <kl6ltug2tmhy.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <a5528cbb14ddbbf26cde873e3f3e95744d59b950.1637455620.git.gitgitgadget@gmail.com>
+ <20211123003958.3978-1-chooglen@google.com> <CABPp-BE0Bcimwr1wwcnnh+6apx7r114Oqnu=QDgKEn6VAHAtFg@mail.gmail.com>
+ <kl6lmtluka55.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <CABPp-BGr9PDTE0q5zev4Ffx19g+hG083zdNShoSdH47VqzT8mw@mail.gmail.com>
+ <kl6lzgputxxw.fsf@chooglen-macbookpro.roam.corp.google.com> <CABPp-BHn0bE4ZSx25+28GD58sae=FVs63eQW-Fp8zwFAALcKFA@mail.gmail.com>
+Subject: Re: [PATCH 8/8] dir: avoid removing the current working directory
+From:   Glen Choo <chooglen@google.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 641523ff9af..247b9eaf88f 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -902,6 +902,11 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
->  	long anchor;
->  	const int hexsz = the_hash_algo->hexsz;
->  
-> +	if (startup_info->have_repository) {
+>> >> I agree that most, possibly all, of our commands should prefer to die
+>> >> than to remove the cwd, but that doesn't justify adding
+>> >> application-level concerns to a general-purpose utility function. Even
+>> >> if it sounds overly defensive, having an obviously correct utility
+>> >> function makes it easier for future authors to know exactly what their
+>> >> code is doing and why. And surely if we're imaginative enough, we can
+>> >> definitely dream up some possible use cases for remove_path() that don't
+>> >> want this dying behavior e.g. other applications that link to our
+>> >> libraries, or some new merge strategy that may need to remove + restore
+>> >> the cwd.
+>> >
+>> > Sounds like your objections here are based on a misunderstanding.  I
+>> > totally agree with you that adding dying behavior to these functions
+>> > would be wrong.
+>> >
+>> > My patch doesn't do that.
+>>
+>> Ah my mistake, that should be s/die/'stop gently'. Even so, that is not
+>> at the core of my objection, mixing of concerns is.
+>
+> If I were to introduce a new function, say remove_path_not_cwd(), to
+> avoid this claimed mixing of concerns, what would that buy us?
+> I've looked at every single caller of remove_path() in the git
+> codebase.  If I did introduce a new function, as you seem to want, my
+> series would include two more commits: one that would replace _every_
+> call of remove_path() in the codebase with a call to the new function,
+> and one that would delete the remove_path() declaration and definition
+> in dir.[ch] since they would be unused.
 
-The command is marked with RUN_SETUP bit in git.c::commands[] list,
-so I would think we wouldn't even get called if we are not in a
-repository here.
+There is at least one other possible outcome, which is that
+remove_path() is replaced with remove_path_not_cwd() in all callers that
+obviously want it e.g. builtins, but not replaced in other callers. My
+mental model of this is that the two functions serve two different use
+cases:
 
-Under what condition can startup_info->have_repository be false at
-this point in the control flow?  If there is such a case, it would
-mean that startup_info->have_repository bit can be false even if we
-are in a repository.  That sounds like a bug in some code (I do not
-know where offhand) that is supposed to prepare the startup_info
-before cmd_X() functions are called.
+1) remove_path(): Remove a path and all empty directories
+2) remove_path_not_cwd(): Remove a path and all empty directories,
+   except cwd
 
-> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-> index 5cf94627383..9ac76a049b8 100755
-> --- a/t/perf/p2000-sparse-operations.sh
-> +++ b/t/perf/p2000-sparse-operations.sh
-> @@ -114,6 +114,8 @@ test_perf_on_all git reset
->  test_perf_on_all git reset --hard
->  test_perf_on_all git reset -- does-not-exist
->  test_perf_on_all git diff
-> -test_perf_on_all git diff --cached
-> +test_perf_on_all git diff --staged
+> I haven't yet found or heard of any potential callers, even
+> hypothetical, that would be harmed by the modified behavior.  Every
+> case suggested so far actually sounds like a good candidate for the
+> modified behavior.
 
-That's a funny revert of what the previous step did; I thought this
-step was about "blame" and not "diff".
+I trust that you have considered this change carefully, so I will
+downgrade my objection to a nitpick. remove_path() seems nice to have as
+a low-level function but I certainly can't imagine any non-contrived
+use cases that *wouldn't* benefit.
 
-> +test_perf_on_all git blame $SPARSE_CONE/a
-> +test_perf_on_all git blame $SPARSE_CONE/f3/a
->  
->  test_done
-> -# TODO: blame currently does not support blaming files outside of the
-> -# sparse definition. It complains that the file doesn't exist locally.
-> -test_expect_failure 'blame with pathspec outside sparse definition' '
-> +# NEEDSWORK: This test documents the current behavior, but this could
-> +# change in the future if we decide to support blaming files outside
-> +# the sparse definition.
+To me, a more compelling argument is that protecting cwd is important
+in order to ensure correctness, and user experience is an incidental
+benefit. AFAICT that is not the argument you are making, but perhaps
+there is some correctness benefit as well?
 
-OK.  From the description it is clear that we do not support it
-right now, which is OK by me.
