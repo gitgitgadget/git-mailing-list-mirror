@@ -2,287 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5467AC433F5
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 18:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68C8AC433EF
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 18:24:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243850AbhKXSWA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Nov 2021 13:22:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45186 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242520AbhKXSV6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Nov 2021 13:21:58 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AA69C061574
-        for <git@vger.kernel.org>; Wed, 24 Nov 2021 10:18:48 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id x18-20020a17090a789200b001a7317f995cso3660646pjk.4
-        for <git@vger.kernel.org>; Wed, 24 Nov 2021 10:18:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=B0G6KBSRLRiCqzhQIWpFcfdb1pOTXqPYs8DKdhfLLF8=;
-        b=Q3BK3OIxJj0B4WBh7KPM6BdBZbHmbsAxiMfoilnU5LUj2IzteqBkL9EaIqlNKrTGVY
-         ZSd39BHbtnAksE1gAQowttIOCxr44sLFOFD9qI1o5mUd5xWGCguQE/NBm2G47NZmlNwZ
-         tpjttPWpBRaxayBnWGVeduyBZ98AiYDBKMtFsc6tOkyMTWZFXXIkmtJa18v2Mt3g+ypo
-         i0+tBzh9gcHVItqH3YY57UUALgSHLbEApcZ4cS4bqdLD/ce6/3ydbvmTQq4k1dpE57wj
-         nv5R76/frwlW7hfCiJVS8kBQCUY4BlaWJ3dT7m/OK6UxjGPjSd6jJMDX1ZwSISvgr/8+
-         DVkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=B0G6KBSRLRiCqzhQIWpFcfdb1pOTXqPYs8DKdhfLLF8=;
-        b=Yk8dhNOx+Wez7owmJr6fuG5VYsVGc1/A805CrPceuYTqxmRqFIgh1o9rqoyJZ6mxLz
-         FRgDH8k7hb7ZvVi8hFeT2TW1R9Cag5XHuDJewwIP7afceKmKlF4ULJEgwwoFx/0QQkFH
-         tzz0/0gyKWu84/ys/Y1dPSoMxxaQN0KaBxVACtj60j6FN+1KUlfLISfgGzfvsACLham+
-         RMay5cvQOjYdPALgu1gCTAKhEBrhBhBHOQJ4irYMZku6qIBQCiyd+QAO8ADhF/3WPkgu
-         +Obtp2QqazcXpK8IW4BF/5bmaJ3XG+ylAZZsYyM87IMAokhV3+CjxpsvH0zCVD/6BAwf
-         l+Jg==
-X-Gm-Message-State: AOAM531FKrDe/k9zFWsq6iVK7kaWkAN5Xr0utzGVraCeNO5o6EvpxWEQ
-        1asWNvfoP1IkZkCU+Ll9sPjOUlocLawv4Q==
-X-Google-Smtp-Source: ABdhPJwSs3yqls+dsUk1jx+NaSWZFFfTTe2r3xoqrbRbQ902EasifzSJGpgL70MOGs3LuxvcFXL4gyCEtpjXCg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:7d8b:b0:144:e29b:4f2b with SMTP
- id a11-20020a1709027d8b00b00144e29b4f2bmr21430651plm.57.1637777927944; Wed,
- 24 Nov 2021 10:18:47 -0800 (PST)
-Date:   Wed, 24 Nov 2021 10:18:46 -0800
-In-Reply-To: <20211124013153.3619998-1-jonathantanmy@google.com>
-Message-Id: <kl6lmtltto1l.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20211122223252.19922-5-chooglen@google.com> <20211124013153.3619998-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 4/4] branch: add --recurse-submodules option for branch creation
-From:   Glen Choo <chooglen@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, steadmon@google.com,
-        emilyshaffer@google.com
-Content-Type: text/plain; charset="UTF-8"
+        id S242687AbhKXS1M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Nov 2021 13:27:12 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58411 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236629AbhKXS1L (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Nov 2021 13:27:11 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD77CF9EA0;
+        Wed, 24 Nov 2021 13:24:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=f+378GxRRQVXgpJlzHlQPvR5z8kvVePMCp6isF
+        mxEV0=; b=EQXOcR0koqQXDyQoPCDGXYLEszm+9+O+1/ZlN8q69IiT/XDCjI+/V0
+        vu36lhpgxZgEJvgu0rAiVTSYHjkpBy/XcQgDdeQdd5tR0gz78/rxIO2AM9tTZYWw
+        z244UAEhUMLByaI2fo71ohQLuoIcwMtfMOPZmORA+B9RKyP6Qoke8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 77770F9E9F;
+        Wed, 24 Nov 2021 13:24:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 997A7F9E9D;
+        Wed, 24 Nov 2021 13:23:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lessley Dennington <lessleydennington@gmail.com>
+Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com, newren@gmail.com,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v4 1/4] sparse index: enable only for git repos
+References: <pull.1050.v3.git.1635802069.gitgitgadget@gmail.com>
+        <pull.1050.v4.git.1637620958.gitgitgadget@gmail.com>
+        <81e208cf454b61c761fa66e4f43a464ed439ba59.1637620958.git.gitgitgadget@gmail.com>
+        <xmqq8rxe787g.fsf@gitster.g>
+        <724abbd4-b9ee-3b3d-226c-b7999f138152@gmail.com>
+Date:   Wed, 24 Nov 2021 10:23:58 -0800
+In-Reply-To: <724abbd4-b9ee-3b3d-226c-b7999f138152@gmail.com> (Lessley
+        Dennington's message of "Wed, 24 Nov 2021 06:41:26 -0800")
+Message-ID: <xmqqzgpt2z0h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: B1746752-4D53-11EC-91DF-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Lessley Dennington <lessleydennington@gmail.com> writes:
 
-Thanks! The feedback is really useful.
+>>> @@ -1588,8 +1588,10 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>>>     	git_config(git_checkout_config, opts);
+>>>   -	prepare_repo_settings(the_repository);
+>>> -	the_repository->settings.command_requires_full_index = 0;
+>>> +	if (startup_info->have_repository) {
+>>> +		prepare_repo_settings(the_repository);
+>>> +		the_repository->settings.command_requires_full_index = 0;
+>>> +	}
+>> I am kind-a surprised if the control reaches this deep if you are
+>> not in a repository.  In git.c::commands[] list, all three primary
+>> entry points that call checkout_main(), namely, cmd_checkout(),
+>> cmd_restore(), and cmd_switch(), are marked with RUN_SETUP bit,
+>> which makes us call setup_git_directory() even before we call the
+>> cmd_X() function.  And setup_git_directory() dies with "not a git
+>> repository (or any of the parent directories)" outside a repository.
+>> So, how can startup_info->have_repository bit be false if the
+>> control flow reaches here?  Or am I grossly misunderstanding what
+>> you are trying to do?
+>> 
+> This was in reaction to the t0012-help.sh tests failing with the
+> new BUG in prepare_repo_settings. However, Elijah pointed out that
+> it's a better idea to move prepare_repo_settings farther down
+> (after parse_options) instead. So I will be issuing that change as
+> part of v5.
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+I forgot that "git foo -h" for a builtin command 'foo' calls
+run_builtin() but bypasses the RUN_SETUP and NEED_WORK_TREE handling
+before it in turn calls cmd_foo().  We expect a call in cmd_foo() to
+parse_options() emit a short-help and exit.
 
->> +static int submodule_create_branch(struct repository *r, const char *name,
->> +				   const char *start_oid,
->> +				   const char *start_name, int force,
->> +				   int reflog, int quiet,
->> +				   enum branch_track track, char **err_msg)
->> +{
->> +	int ret = 0;
->> +	struct child_process child = CHILD_PROCESS_INIT;
->> +	struct strbuf child_err = STRBUF_INIT;
->> +	child.git_cmd = 1;
->> +	child.err = -1;
->> +
->> +	prepare_other_repo_env(&child.env_array, r->gitdir);
->> +	strvec_pushl(&child.args, "submodule--helper", "create-branch", NULL);
->
-> Before this function is a function that calls "git branch" directly -
-> couldn't this function do the same? (And then you can make both of them
-> into one function.) The functionality should be exactly the same except
-> that one has "--dry-run" and the other doesn't.
+So, yes, there is a way to reach this point in the codeflow without
+being in a repository (or even when in a repository, we may have
+chosen not to realize it).  Feels ugly.
 
-I see two somewhat valid interpretations, so I will address both.
+Now a bit of tangent.
 
-If you are suggesting that I should call "git branch" instead of a new
-"git submodule--helper create-branch", that unfortunately does not work.
-Because of how we've defined the semantics, we want the submodule to
-branch off the commit in the superproject tree (which is a bare object
-id), but we want to set up tracking based off the ref that the user gave
-(evaluating it in the context of the submodule). This is why
-submodule--helper.c:module_create_branch() makes two calls like so:
+I wonder if it is a problem to completely bypass RUN_SETUP in such a
+case.  In general, we read the configuration to tweak the hardcoded
+default behaviour, and then further override it by parsing command
+line options.  In order to read configuration fully, we'd need to
+know where the repository is.  So the start-up sequence must be in
+this order:
 
-	create_branch(the_repository, "<branch name>", "<object id>", force, 0, reflog, quiet,
-		      BRANCH_TRACK_NEVER);
-	setup_tracking("<branch name>", "<tracking name>", track, quiet, 0);
+ - discover where the repository is (either gently or with a hard failure)
+ - read the configuration files
+ - call parse_options()
 
-On the other hand, you might be suggesting that I should just add
---dry-run to "git submodule--helper create-branch". That way, the
-dry-run form of the command is validating the non dry-run form (instead
-of using "git branch --dry-run" to validate "git submodule--helper
-create-branch"). That's a reasonable suggestion that avoids
-bikeshedding around "git branch --dry-run".
+And by completly bypassing RUN_SETUP, we are not reading per-repo
+settings from the configuration files.
 
->> @@ -874,6 +894,12 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->>  			FREE_AND_NULL(unused_full_ref);
->>  			return 0;
->>  		}
->> +		if (recurse_submodules) {
->> +			create_submodule_branches(the_repository, branch_name,
->> +						  start_name, force, reflog,
->> +						  quiet, track);
->> +			return 0;
->> +		}
->>  		create_branch(the_repository, branch_name, start_name, force, 0,
->>  			      reflog, quiet, track);
->>  	} else
->
-> create_submodule_branches() here is a bit misleading since it also
-> creates branches in the_repository. Might be better to write explicitly
-> check in submodules -> create in main repository -> create in
-> submodules. Or, if you want to combine all the submodule code in one
-> function, (check in submodules -> create in submodules) -> create in
-> main repository.
+Something along this line (note: there is an always-taken if block
+to reduce the patch noise for this illustration), perhaps.
 
-Philippe had a similar comment, I will rename it.
 
->> +test_expect_success 'setup superproject and submodule' '
->> +	git init super &&
->> +	test_commit foo &&
->> +	git init sub-upstream &&
->> +	test_commit -C sub-upstream foo &&
->> +	git -C super submodule add ../sub-upstream sub &&
->> +	git -C super commit -m "add submodule" &&
->> +	git -C super config submodule.propagateBranches true
->> +'
->
-> If making each test independent is important (which seems like a good
-> goal to me, although I know that the Git tests are inconsistent on
-> that), we could make this into a bash function (with test_when_finished)
-> that gets called in every test. It doesn't violate the t/README request
-> to put all test code inside test_expect_success assertions (since the
-> function is still being run inside an assertion).
 
-That's an interesting idea and it's more likely to be correct than my
-approach. I think it lines up better with testing best practices.
-However...
 
-> In the general case, it will make test code slower to run, but if you're
-> going to have to cleanup branches, I think it's better to just recreate
-> the repo. In any case, for the general case, I can start a separate
-> email thread for this discussion.
+ git.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-I'm concerned about the same thing and I suspect that recreating the
-repo won't be kindly received by some reviewers, even if they might be
-able to stomach cleanup_branches(). I think your suggestion is a better
-long-term direction, but I'd like to see discussion on the general case
-before changing the tests. A separate thread sounds good.
-
->> +test_expect_success '--recurse-submodules should be ignored if submodule.propagateBranches is false' '
->> +	test_when_finished "cleanup_branches super branch-a" &&
->> +	(
->> +		cd super &&
->> +		git -c submodule.propagateBranches=false branch --recurse-submodules branch-a &&
->> +		git rev-parse branch-a &&
->> +		test_must_fail git -C sub rev-parse branch-a
->> +	)
->> +'
->
-> This doesn't sound like the right behavior to me - I think it's fine if
-> it was the config "submodule.recurse" instead of "--recurse-submodules",
-> but if the argument is given on CLI, it should be a fatal error.
-
-Philippe mentioned the same thing, which sounds right to me.
-
->> +test_expect_success 'should create branch when submodule is in .git/modules but not .gitmodules' '
->> +	test_when_finished "cleanup_branches super branch-a branch-b branch-c" &&
->> +	(
->> +		cd super &&
->> +		git branch branch-a &&
->> +		git checkout -b branch-b &&
->> +		git submodule add ../sub-upstream sub2 &&
->> +		# branch-b now has a committed submodule not in branch-a
->> +		git commit -m "add second submodule" &&
->> +		git checkout branch-a &&
->> +		git branch --recurse-submodules branch-c branch-b &&
->> +		git rev-parse branch-c &&
->> +		git -C sub rev-parse branch-c &&
->> +		git checkout --recurse-submodules branch-c &&
->> +		git -C sub2 rev-parse branch-c
->> +	)
->> +'
->
-> Hmm...how is this submodule in .git/modules but not .gitmodules? It
-> looks like a normal submodule to me.
-
-The test title is probably too terse - the submodule is not in the
-working tree's .gitmodules, but it is in branch-b's .gitmodules. I'll
-reword the title.
-
->> +test_expect_success 'should not create branch when submodule is not in .git/modules' '
->
-> The title of this test contradicts the title of the test that I quoted
-> previously.
-
-I'm not sure how this is a contradiction, from before..
-
-  should create branch when submodule is in .git/modules but not
-  [the working tree's] .gitmodules
-
-meaning "we should create the branch if we can find the submodule in
-.git/modules", i.e. the implication is: presence in .git/modules => can
-create branch.
-
-Whereas
-
-  should not create branch when submodule is not in .git/modules
-
-meaning "we should not create the branch if we cannot find the submodule
-in .git/modules", i.e. the implication is: absence in .git/modules =>
-cannot create branch.
-
-Taken together, they assert that presence in .git/modules is a necessary
-condition for the subodule branch to be created.
-
->> +test_expect_success 'should not fail when unable to set up tracking in submodule' '
->> +	test_when_finished "cleanup_branches super-clone branch-b" &&
->> +	(
->> +		cd super-clone &&
->> +		git branch --recurse-submodules branch-b origin/branch-b
->> +	)
->> +'
->
-> Is there a warning printed that we can check?
-
-"git branch" does not warn if tracking is not set up when it is not
-explicitly required, so this does not warn. However, I can imagine that
-if the superproject branch has tracking set up, a user might expect that
-all submodules would also have tracking set up, and thus a warning might
-be useful. I don't think it will be _that_ useful for most users, but at
-least some users would probably appreciate it.
-
-For slightly unrelated reasons, I tried to get the tracking info of a
-newly created branch and it is tedious. For this reason and the fact
-that I'm not sure if the benefit is that great, I'm tempted *not* to add
-the warning, but perhaps you feel more strongly than I do?
-
-> Also, this patch set doesn't discuss the case in which the branch in a
-> submodule already exists, but it points to the exact commit that we
-> want. What is the functionality in that case?
-
-The behavior is identical to the general case where the branch already
-exists - branch validation (git branch --dry-run) fails.
-
-> I would say that the user should be able to recursively create the
-> branch in this case, but am open to other opinions.
-
-I'm inclined to disagree. To illustrate this in the real world, say a
-user wants to create a 'new-feature' branch recursively, but there is
-already a 'new-feature in a submodule. Here are two possible sets of
-events that could lead to this situation:
-
-1) the 'new-feature' branch was intended for the same work as the new
-   branch but the user just happened to create the 'new-feature'
-   subomdule branch first
-2) the existing 'new-feature' branch doesn't actually contain the same
-   work (maybe it's an overloaded term, or maybe the user used a branch
-   to bookmark a commit before starting work on it)
-
-What would happen if we allowed the branch to be created? In case 1,
-the user would be more than happy (because we read their mind! woohoo!)
-But in case 2, the user might not realize that their bookmark is getting
-clobbered by the new recursive branch - they might try revisiting their
-bookmark only to realize that they've accidentally committed on top of
-it.
-
-I think the incidence of case 2 is far lower than case 1's, but I think
-it's reasonable to be defensive by default. In any case, we can change
-the default after more user testing.
-
-> In any case, that case should be tested.
-
-Testing this case would make the intended behavior clearer, so I will
-add this test.
+diff --git i/git.c w/git.c
+index 5ff21be21f..50e258508e 100644
+--- i/git.c
++++ w/git.c
+@@ -421,25 +421,30 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+ 	int status, help;
+ 	struct stat st;
+ 	const char *prefix;
++	int run_setup = (p->option & (RUN_SETUP | RUN_SETUP_GENTLY));
+ 
+ 	prefix = NULL;
+ 	help = argc == 2 && !strcmp(argv[1], "-h");
+-	if (!help) {
+-		if (p->option & RUN_SETUP)
++	if (help && (run_setup & RUN_SETUP))
++		/* demote to GENTLY to allow 'git cmd -h' outside repo */
++		run_setup = RUN_SETUP_GENTLY;
++
++	if (1) {
++		if (run_setup & RUN_SETUP)
+ 			prefix = setup_git_directory();
+-		else if (p->option & RUN_SETUP_GENTLY) {
++		else if (run_setup & RUN_SETUP_GENTLY) {
+ 			int nongit_ok;
+ 			prefix = setup_git_directory_gently(&nongit_ok);
+ 		}
+ 		precompose_argv_prefix(argc, argv, NULL);
+-		if (use_pager == -1 && p->option & (RUN_SETUP | RUN_SETUP_GENTLY) &&
++		if (use_pager == -1 && run_setup &&
+ 		    !(p->option & DELAY_PAGER_CONFIG))
+ 			use_pager = check_pager_config(p->cmd);
+ 		if (use_pager == -1 && p->option & USE_PAGER)
+ 			use_pager = 1;
+ 
+-		if ((p->option & (RUN_SETUP | RUN_SETUP_GENTLY)) &&
+-		    startup_info->have_repository) /* get_git_dir() may set up repo, avoid that */
++		if (run_setup && startup_info->have_repository)
++			/* get_git_dir() may set up repo, avoid that */
+ 			trace_repo_setup(prefix);
+ 	}
+ 	commit_pager_choice();
