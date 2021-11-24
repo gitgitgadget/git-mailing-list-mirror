@@ -2,148 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84E0FC433EF
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 05:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 839BCC433EF
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 05:46:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232979AbhKXFsH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Nov 2021 00:48:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44932 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231421AbhKXFsG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Nov 2021 00:48:06 -0500
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3AF5C061574
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 21:44:57 -0800 (PST)
-Received: by mail-io1-xd35.google.com with SMTP id y16so1708454ioc.8
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 21:44:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=YMwbTfbQz++3amTNUmFV0WRKnE9khcvEaDO1Y2BGdio=;
-        b=ST95IwLS6JmJN/MKkr1Qnm6tKsEl0GAiRm/RhFyC7mLSsz92WP+POj8oVUsEBVUBqU
-         5xeQdmF6W+DWq75hqQPDttvjo3E+QUfpJSffiO3SO8IkXAlLgGxMMf2SSgPC8tQFJWxp
-         J0G+z/IpT/q4CHow4QRyLXUqX87R0D0xkF3WA51+iRNt/UBMYOcZftxsmbUohJ8qwR/M
-         vhHePDGEVIYjM1/pusJwwPqZnI83ys6FJpmqOcoSAS4RqNiisWtPC3cYKZhBCLOdbBpc
-         k4RX4dxxfVcL58suF+SsvLJeOXeFU5pj4+oKAOC9o2x8RtkAGOc6g/xH163NUeUPMLIC
-         aPbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=YMwbTfbQz++3amTNUmFV0WRKnE9khcvEaDO1Y2BGdio=;
-        b=g+vhx8GCzuMJUg7/7kdUxmEgqvNgMLnfC4cZzDx+3EKSoi6vt+5Lcjxm7CI4KCYzET
-         EQ+hjW7/tJ5r+4Dkt0F1OVDbLluCDdoYUG5NnBnnUCzYZ3AEG/i5fAJjDuxz9zO+4Dn4
-         unVMhi1BkGg5UlLbVc4CxXnWyiyIZaNkjqFUkjF2HySbEDcTPPdaJurN7eDueVAfZgkn
-         20z5JMJ7RCw1dymJSo3XWBZ86KcdMiOSQ8wqrqRoRaEQZ98iwrcOn36tFaU2uQ6Ytfyl
-         PaQtqw0mRAz03FWV4yhxACyV+8eVagiqs1lSyNLB6PUy718F2Wcw7stsB1n3Udpj84wv
-         Kv6A==
-X-Gm-Message-State: AOAM532BQYGRc3hWj4y58EYr/3ldCfHk3jXNiqSsxpkXt5fcVF0GaYwe
-        HoUyBBjcCXWc49Ns22nGcBU=
-X-Google-Smtp-Source: ABdhPJzymckZYCgWTEawTmgiL8hHKSva+1fQ0t6cD1h8zxpYQXuZf2kAqf9DqJPZHuJUPb+DgnFciQ==
-X-Received: by 2002:a05:6602:13c4:: with SMTP id o4mr11849576iov.152.1637732697015;
-        Tue, 23 Nov 2021 21:44:57 -0800 (PST)
-Received: from flurp.local (097-069-216-153.res.spectrum.com. [97.69.216.153])
-        by smtp.gmail.com with ESMTPSA id f16sm9017715iov.33.2021.11.23.21.44.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Nov 2021 21:44:56 -0800 (PST)
-Sender: Eric Sunshine <ericsunshine@gmail.com>
-Date:   Wed, 24 Nov 2021 00:44:50 -0500
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Enzo Matsumiya <ematsumiya@suse.de>
-Subject: Re: [PATCH v2 1/9] worktree: remove redundant NULL-ing of "cp.argv
-Message-ID: <YZ3RUkGpixYAREcI@flurp.local>
-References: <cover-0.5-00000000000-20211122T153605Z-avarab@gmail.com>
- <cover-v2-0.9-00000000000-20211123T115551Z-avarab@gmail.com>
- <patch-v2-1.9-9cc220ce5a3-20211123T115551Z-avarab@gmail.com>
- <CAPig+cStZp=AOPHW8i7AqwDOV6djYzHC6GmcVeb=4PUj5bjvAw@mail.gmail.com>
+        id S233027AbhKXFtQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Nov 2021 00:49:16 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59607 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231421AbhKXFtQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Nov 2021 00:49:16 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 86F9B1012C5;
+        Wed, 24 Nov 2021 00:46:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YeShdswJ5EQ73yrP/Bi8tt4Zur5zmMXpvWPQBd
+        AST4Q=; b=rVKzONvxTxJwUBB54brHq1mlnr2HhUtwP/UZSjtMZDdAXzoU9VQ26F
+        SO1B0fqfm7VVRkhW/+rAhUn3lDGT6dmpwOW5Hv62C9XliCkYkYbYnTZcsVyyi6t2
+        xjyKqOhYE8c7iW4Sta1yQAzLu6GQT3kmADF+K2jrwBdy0biJzZaSI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E82C1012C4;
+        Wed, 24 Nov 2021 00:46:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 630331012C3;
+        Wed, 24 Nov 2021 00:46:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 8/8] dir: avoid removing the current working directory
+References: <a5528cbb14ddbbf26cde873e3f3e95744d59b950.1637455620.git.gitgitgadget@gmail.com>
+        <20211123003958.3978-1-chooglen@google.com>
+        <CABPp-BE0Bcimwr1wwcnnh+6apx7r114Oqnu=QDgKEn6VAHAtFg@mail.gmail.com>
+        <kl6lmtluka55.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <CABPp-BGr9PDTE0q5zev4Ffx19g+hG083zdNShoSdH47VqzT8mw@mail.gmail.com>
+        <kl6lzgputxxw.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <CABPp-BHn0bE4ZSx25+28GD58sae=FVs63eQW-Fp8zwFAALcKFA@mail.gmail.com>
+        <kl6ltug2tmhy.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Tue, 23 Nov 2021 21:46:04 -0800
+In-Reply-To: <kl6ltug2tmhy.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Tue, 23 Nov 2021 16:39:53 -0800")
+Message-ID: <xmqqh7c23y3n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPig+cStZp=AOPHW8i7AqwDOV6djYzHC6GmcVeb=4PUj5bjvAw@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D0B5F99C-4CE9-11EC-9B2C-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 23, 2021 at 10:26:56AM -0500, Eric Sunshine wrote:
-> I think perhaps the simplest thing to do is merely to squash this
-> patch into the patch which ultimately removes the child_process::argv
-> member (and the removal of these lines from worktree.c probably
-> doesn't even need mention in the commit message -- or maybe just a
-> minor mention).
+Glen Choo <chooglen@google.com> writes:
 
-On second thought, squashing this patch into the patch which
-ultimately retires child_process::argv is probably not necessary. If
-the patch is instead rewritten as below, then it prepares
-builtin/worktree.c for eventual retirement of child_process::argv
-without breaking git-worktree functionality.
+> To me, a more compelling argument is that protecting cwd is important
+> in order to ensure correctness, and user experience is an incidental
+> benefit. AFAICT that is not the argument you are making, but perhaps
+> there is some correctness benefit as well?
 
-(You could also extend this patch so it prepares for removal of
-child_process::env, as well, or keep it minimal as I did here.)
+I doubt there is.
 
--- >8 --
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] worktree: stop being overly intimate with run_command()
- internals
+It would be annoying if the command fails to remove a directory that
+becomes empty after an operation only because your interactive shell
+that spawned "git" was there, especially if your system allows
+interactive shell to still sit in an unlinked directory.  After such
+a rmdir, `/bin/pwd` or `cd ..` may not work, but then the only thing
+you need to do to recover from this situation is to run `cd
+/path/to/repository` and we can continue working, without having to
+worry about a leftover directory.
 
-add_worktree() reuses a `child_process` for three run_command()
-invocations, but to do so, it has overly-intimate knowledge of
-run-command.c internals. In particular, it knows that it must reset
-child_process::argv to NULL for each subsequent invocation[*] in order
-for start_command() to latch the newly-populated child_process::args for
-each invocation, even though this behavior is not a part of the
-documented API. Beyond having overly-intimate knowledge of run-command.c
-internals, the reuse of one `child_process` for three run_command()
-invocations smells like an unnecessary micro-optimization. Therefore,
-stop sharing one `child_process` and instead use a new one for each
-run_command() call.
+That may be a more pleasant end-user experience than what is being
+proposed, which forces you (1) to realize that you are in a
+directory that was to be removed if you weren't sitting there, and
+(2) to compute how many levels of otherwise empty directories were
+left because of your presense, and (3) to go up sufficient number of
+levels and manually run "rm -fr" the hierarchy, to recover.
 
-[*] If child_process::argv is not reset to NULL, then subsequent
-run_command() invocations will instead incorrectly access a dangling
-pointer to freed memory which had been allocated by child_process::args
-on the previous run. This is due to the following code in
-start_command():
-
-    if (!cmd->argv)
-        cmd->argv = cmd->args.v;
-
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- builtin/worktree.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d22ece93e1..9edd3e2829 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -355,8 +355,8 @@ static int add_worktree(const char *path, const char *refname,
- 		goto done;
- 
- 	if (opts->checkout) {
--		cp.argv = NULL;
--		strvec_clear(&cp.args);
-+		struct child_process cp = CHILD_PROCESS_INIT;
-+		cp.git_cmd = 1;
- 		strvec_pushl(&cp.args, "reset", "--hard", "--no-recurse-submodules", NULL);
- 		if (opts->quiet)
- 			strvec_push(&cp.args, "--quiet");
-@@ -385,12 +385,11 @@ static int add_worktree(const char *path, const char *refname,
- 		const char *hook = find_hook("post-checkout");
- 		if (hook) {
- 			const char *env[] = { "GIT_DIR", "GIT_WORK_TREE", NULL };
--			cp.git_cmd = 0;
-+			struct child_process cp = CHILD_PROCESS_INIT;
- 			cp.no_stdin = 1;
- 			cp.stdout_to_stderr = 1;
- 			cp.dir = path;
- 			cp.env = env;
--			cp.argv = NULL;
- 			cp.trace2_hook_name = "post-checkout";
- 			strvec_pushl(&cp.args, absolute_path(hook),
- 				     oid_to_hex(null_oid()),
--- 
-2.34.0.399.gdf2c515fd2
-
--- >8 --
+So, I dunno.  It does make the end-user experience on such a system
+that allows your cwd to go away equally unpleasant to the end-user
+experience on a system that does not allow your cwd to go away, so
+we might be gaining a bit in the consistency department, but as has
+been already discussed, "git" level protection can only notice the
+process immediately above us and we wouldn't be able to pay
+attention to the fact some other unrelated process is using a
+directory as its cwd, so even such a consistency argument does not
+go all that far.
