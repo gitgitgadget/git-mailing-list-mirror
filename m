@@ -2,122 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6B43C433F5
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 00:39:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3C47C433F5
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 00:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231266AbhKXAnG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 19:43:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34368 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbhKXAnF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 19:43:05 -0500
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7817FC061574
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 16:39:56 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id m20-20020a63ed54000000b003213f4670c0so126972pgk.2
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 16:39:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=11gklu2XHSbYLHAmqH1Plb04zCbHlAAdWYLXyrNCYeU=;
-        b=DVpWkNrGj58yH8Gngcd3CbCa4ocFQJIv6UN1Mdzkgm5TutYPeJKLtRmDUwoLMaWHZA
-         r/wM5us5fLFyBt1ujxYA2yiZ69+evN/KYM/bJ2pE2msfyIAmEArll9O98A0nyhmVK4rY
-         9ori2PxeFXzr8k2Q4mivevhAyle9m5mcP+hB8nT5KCIlxtCy/PkcWV0JAnQBf+Zggq8K
-         qmRNcQMs90TcKcKSBK4Ok7wH5BAu2CrnWmbc0aDjtA720A1jCyt1GYujBnqtwAvoAsU9
-         gjOMV12t6nb052rN/yNupj/I0la6dg7nGto0PKYcsPwLkRk24RAgGwluGYdOphooD7Na
-         lCxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=11gklu2XHSbYLHAmqH1Plb04zCbHlAAdWYLXyrNCYeU=;
-        b=oFvWWKd7d5msQ9TCf07EqwEqNthvVcdWZ5zCfrt57zkmHAqXM6fhRNsSxOkyE6oANp
-         F6hZjOdN9NdbgRb9FPfEYgGDryVDUpIQY6bkjw+J5KmoihXCceBxr6zEuX6apAktXLUi
-         uOsEvw93lswKWjAB6e1YQtwU26YurO6q6zbFEdzImBenXYBIU4Qq43xSC65FMiluhRdG
-         vsZ+ahyxBTRy7S/RXhwYmlm6WR4HYqyjWIOS2+XoM4S6FbGriifMMR/+EpvYOQvKo3wa
-         wa2SGzLL4YtJy2nDe0g9YzuwAXRZuIJDNV2KDIV0JFkQpJ2fujRUcGGQ4jDPTyFk5FZU
-         DfQw==
-X-Gm-Message-State: AOAM531mIZbMMPevENuPJ9+9MZ/eijR336KM5MeapnKbsHkorQ9T1ASv
-        PQEm9bicrC+oJ1I3NfqMlsBKfnYqoAAL+g==
-X-Google-Smtp-Source: ABdhPJy85Ie6zB+xssZLKB0mXgxBatdB4CHEzujdsWdpzwVUogtmptp6ysv4iZnqk+eNQ2gUEdzCyKz0c2eczg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:2296:b0:49f:feb4:6457 with SMTP
- id f22-20020a056a00229600b0049ffeb46457mr1725824pfe.58.1637714395937; Tue, 23
- Nov 2021 16:39:55 -0800 (PST)
-Date:   Tue, 23 Nov 2021 16:39:53 -0800
-In-Reply-To: <CABPp-BHn0bE4ZSx25+28GD58sae=FVs63eQW-Fp8zwFAALcKFA@mail.gmail.com>
-Message-Id: <kl6ltug2tmhy.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <a5528cbb14ddbbf26cde873e3f3e95744d59b950.1637455620.git.gitgitgadget@gmail.com>
- <20211123003958.3978-1-chooglen@google.com> <CABPp-BE0Bcimwr1wwcnnh+6apx7r114Oqnu=QDgKEn6VAHAtFg@mail.gmail.com>
- <kl6lmtluka55.fsf@chooglen-macbookpro.roam.corp.google.com>
- <CABPp-BGr9PDTE0q5zev4Ffx19g+hG083zdNShoSdH47VqzT8mw@mail.gmail.com>
- <kl6lzgputxxw.fsf@chooglen-macbookpro.roam.corp.google.com> <CABPp-BHn0bE4ZSx25+28GD58sae=FVs63eQW-Fp8zwFAALcKFA@mail.gmail.com>
-Subject: Re: [PATCH 8/8] dir: avoid removing the current working directory
-From:   Glen Choo <chooglen@google.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+        id S231607AbhKXAoX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 19:44:23 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64010 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231303AbhKXAoP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 19:44:15 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id ED7C015A5B2;
+        Tue, 23 Nov 2021 19:41:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=nhmh/R8kKEUl3OCsnDsnSfA3OY5ZSS3CfTiuGP
+        CmPew=; b=E1qCZUxj7Rf1TnAtbepa3ZVMzeICR/U8shL2rt4pw/Qf4bMBkg9IHT
+        BFkMdWtZWHwzMZZurd3loFF4849SVpY3IKbwIza72VfpW9IC60Ui3Ni8NBM8aw+z
+        SCYmnvuXeeQG22j3pmxysq1RUcJeParPvgkK2HIQaFyXPYjIV81qs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E5E7D15A5B1;
+        Tue, 23 Nov 2021 19:41:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EB96115A5AF;
+        Tue, 23 Nov 2021 19:41:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "William Sprent via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, William Sprent <williams@unity3d.com>
+Subject: Re: [PATCH] fast-export: fix surprising behavior with --first-parent
+References: <pull.1084.git.1637666927224.gitgitgadget@gmail.com>
+Date:   Tue, 23 Nov 2021 16:41:00 -0800
+In-Reply-To: <pull.1084.git.1637666927224.gitgitgadget@gmail.com> (William
+        Sprent via GitGitGadget's message of "Tue, 23 Nov 2021 11:28:47
+        +0000")
+Message-ID: <xmqqh7c25qsj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3300490C-4CBF-11EC-9EEC-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+"William Sprent via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> >> I agree that most, possibly all, of our commands should prefer to die
->> >> than to remove the cwd, but that doesn't justify adding
->> >> application-level concerns to a general-purpose utility function. Even
->> >> if it sounds overly defensive, having an obviously correct utility
->> >> function makes it easier for future authors to know exactly what their
->> >> code is doing and why. And surely if we're imaginative enough, we can
->> >> definitely dream up some possible use cases for remove_path() that don't
->> >> want this dying behavior e.g. other applications that link to our
->> >> libraries, or some new merge strategy that may need to remove + restore
->> >> the cwd.
->> >
->> > Sounds like your objections here are based on a misunderstanding.  I
->> > totally agree with you that adding dying behavior to these functions
->> > would be wrong.
->> >
->> > My patch doesn't do that.
->>
->> Ah my mistake, that should be s/die/'stop gently'. Even so, that is not
->> at the core of my objection, mixing of concerns is.
+> From: William Sprent <williams@unity3d.com>
 >
-> If I were to introduce a new function, say remove_path_not_cwd(), to
-> avoid this claimed mixing of concerns, what would that buy us?
-> I've looked at every single caller of remove_path() in the git
-> codebase.  If I did introduce a new function, as you seem to want, my
-> series would include two more commits: one that would replace _every_
-> call of remove_path() in the codebase with a call to the new function,
-> and one that would delete the remove_path() declaration and definition
-> in dir.[ch] since they would be unused.
+> When invoking git-fast-export with the --first-parent flag on a branch
+> with merges, fast-export would early-out on processing the first merge
+> on the branch. If combined with --reverse, fast-export would instead
+> output all single parent commits on the branch.
 
-There is at least one other possible outcome, which is that
-remove_path() is replaced with remove_path_not_cwd() in all callers that
-obviously want it e.g. builtins, but not replaced in other callers. My
-mental model of this is that the two functions serve two different use
-cases:
+I do not doubt we would want to make the command behave sensibly
+with all options it accepts, but let me first ask a more basic and
+possibly stupid question.
 
-1) remove_path(): Remove a path and all empty directories
-2) remove_path_not_cwd(): Remove a path and all empty directories,
-   except cwd
+What is "git fast-export --first-parent <options>" supposed to do
+differently from "git fast-export <options>" (with the same set of
+options other than "--first-parent")?  Should it omit merge commits
+altogether, pretending that the first single-parent ancestor it
+finds on the first parent chain is a direct parent of a
+single-parent descendant, e.g. if the real history were with two
+single-parente commits A and B, with two merges M and N, on the
+mainline, making the resulting commits into a single strand of two
+pearls, with A and B before and after the rewrite to have the same
+tree objects?
 
-> I haven't yet found or heard of any potential callers, even
-> hypothetical, that would be harmed by the modified behavior.  Every
-> case suggested so far actually sounds like a good candidate for the
-> modified behavior.
+    ---A---M---N---B             ---A---B
+          /   /           ==>
+         X   Y
 
-I trust that you have considered this change carefully, so I will
-downgrade my objection to a nitpick. remove_path() seems nice to have as
-a low-level function but I certainly can't imagine any non-contrived
-use cases that *wouldn't* benefit.
+Or should it pretend merge commits have only their first parent as
+their parents, i.e.
 
-To me, a more compelling argument is that protecting cwd is important
-in order to ensure correctness, and user experience is an incidental
-benefit. AFAICT that is not the argument you are making, but perhaps
-there is some correctness benefit as well?
+    ---A---M---N---B             ---A---M---N---B
+          /   /           ==>
+         X   Y
 
+"git fast-export --help" does not even mention "--first-parent" and
+pretend that any and all [<git-rev-list-args>...] are valid requests
+to make to the command, but I am wondering if that is what we intend
+to support in the first place.  In builtin/fast-export.c, I do not
+see any attempt to do anything differently when "--first-parent" is
+requested.  Perhaps we shouldn't be even taking "--first-parent" as
+an option to begin with.
+
+The "--reverse" feels even more iffy.  Are we reversing the history
+with such an export, i.e. pretending that parents are children and
+merges are forks?
+
+    ---A---M---N---B             B---N---M---A---
+          /   /           ==>         \   \
+         X   Y                         X   Y
+
+Or are we supposed to produce the same history in the end, just
+spewing older commits first in the output stream?  I am not sure
+what purpose such a request serves---the "fast-import" downstream
+would need the same set of objects before it can create each commit
+anyway, so I am not sure what the point of giving "--reverse" is.
+
+If there is no sensible interpretation for some of the options that
+are valid in rev-list in the context of "fast-export" command, should
+we just error out when we parse the command line, instead of producing
+nonsense output stream, I wonder.
