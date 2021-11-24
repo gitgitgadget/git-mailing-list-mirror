@@ -2,246 +2,275 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBD4DC433FE
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 08:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1411AC433EF
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 09:00:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241076AbhKXIKu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Nov 2021 03:10:50 -0500
-Received: from outboundhk.mxmail.xiaomi.com ([207.226.244.123]:46381 "EHLO
-        hkspamc1-admin.mioffice.cn" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S240729AbhKXIKt (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 24 Nov 2021 03:10:49 -0500
-X-IronPort-AV: E=Sophos;i="5.87,260,1631548800"; 
-   d="scan'208";a="12418066"
-Received: from hk-mbx03.mioffice.cn (HELO xiaomi.com) ([10.56.8.123])
-  by hkspamc1-admin.mioffice.cn with ESMTP; 24 Nov 2021 16:07:24 +0800
-Received: from BJ-MBX03.mioffice.cn (10.237.8.123) by HK-MBX03.mioffice.cn
- (10.56.8.123) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.9; Wed, 24 Nov 2021
- 16:07:15 +0800
-Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by BJ-MBX03.mioffice.cn
- (10.237.8.123) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.9; Wed, 24 Nov 2021
- 16:07:15 +0800
-Received: from BJ-MBX01.mioffice.cn ([::1]) by BJ-MBX01.mioffice.cn
- ([fe80::840f:e91a:2517:14d5%9]) with mapi id 15.02.0986.009; Wed, 24 Nov 2021
- 16:07:15 +0800
-From:   =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
-To:     Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [External Mail]Re: why git is so slow for a tiny git push?
-Thread-Topic: [External Mail]Re: why git is so slow for a tiny git push?
-Thread-Index: Ade84mmmstEBXQTRSsexpdzlhc8vnAAVTYYAAAAT7KAAUV7NAAAwVDmA//+FzYCAABgnAIAAw5wA/751pyD/e1OvsA==
-Date:   Wed, 24 Nov 2021 08:07:15 +0000
-Message-ID: <feaf3bace8394837ad0ec020d01b545c@xiaomi.com>
-References: <c5a8595658d6416684c2bbd317494c49@xiaomi.com>
- <5a6f3e8f29f74c93bf3af5da636df973@xiaomi.com>
- <576b2f3e162e4f86992d8f4e680d0881@xiaomi.com>
- <YWRr9g32cMlIc37V@coredump.intra.peff.net>
- <ef2aa0d3ea8a4d98b910abdfd55191d0@xiaomi.com>
- <YWVJyRJhRTdg39tX@coredump.intra.peff.net>
- <87pmsak0hl.fsf@evledraar.gmail.com>
- <YWYCIndv/u67lNQU@coredump.intra.peff.net> 
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.237.8.11]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S230262AbhKXJDY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Nov 2021 04:03:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60158 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229566AbhKXJDX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Nov 2021 04:03:23 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF77EC061574
+        for <git@vger.kernel.org>; Wed, 24 Nov 2021 01:00:13 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id y26so5278273lfa.11
+        for <git@vger.kernel.org>; Wed, 24 Nov 2021 01:00:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=aUDGJDOmYIhDhCdm5fFU76NMQX4oReifubaBKyS9KMo=;
+        b=mUuXoY7lDCE7MOAlIQZdmTCueQRBBm/Zar7WPRAl24c14Iovax8YgJwtxEnxasaFjM
+         npyDbbmUOdypfW52n28Ls+BOvxvXdiPfJF7HYEFcViUaJESAqOy6sHHp3LRntg5BESbT
+         wHST7e9wYI7ZfPaCv00JO3IFomOQ+7KLb4iHzKE65hRbnR7UVQWrkOW/CTLNGCv4/SWl
+         5KZlvzCqy11ZKm0IaypIiTluzdwgBap7STagLezlGCmeDwRtmfIEMXnIVYLWdTih0ols
+         fp6OBvzbKPdNSOtR+Kz2qj/OIqIXOD2vqFWn3O8ozDKKKwAo7G3iemGlsmH3imVDwiZ0
+         Jc2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=aUDGJDOmYIhDhCdm5fFU76NMQX4oReifubaBKyS9KMo=;
+        b=XICKg5YPqFAZbE+Lkke5cfGoYpM7GuD+GN2nOUobFX5Wfy0ZU3PIYSTBEQAYh4hQyn
+         PjSpAUPoXU1eeEX4rxisjm5M/dt5AOSuQqjZ6VK7bFjLcVDQ70pAs/u2uMKt3Af42e21
+         aoOB1iVFo4LduuD0iBBpqpaKgMQFlDi9fPhZ79I7BJ/rk/CzXi9uM+4MtXzCY9ZgVZkz
+         khhJxgz601e+Q7o0fWNTF1y8t15rzBNfRrVH2Z10GZ9gkhP/5a97h8cmPDgoabuZWMLj
+         L2jkzr+vNiXKjPTg/HRlEk2xkJSBaAu2Gaszz0obaDHcXr+MAjQEguKR44gf468WQW4g
+         0Wuw==
+X-Gm-Message-State: AOAM531WvP/j3n62Dk/qGG/nfvAxP0WLMCI9gR1vh4gqElASZcgwoe+6
+        F0WVyfTNwzOqjQ03bWy5e44C3qpr/N/tof1nxYkudCGHfMuZcvL/
+X-Google-Smtp-Source: ABdhPJyV4HUUJ8umIgvsrwe0GgGzVDCzovKFj2MbFc4R4u19bPUqCD+WZaBPh+l8Bpml5UtR9olDExgs6WZ1KJQpmaw=
+X-Received: by 2002:a05:6512:2314:: with SMTP id o20mr12263696lfu.51.1637744411873;
+ Wed, 24 Nov 2021 01:00:11 -0800 (PST)
 MIME-Version: 1.0
+References: <20211009082058.41138-1-chiyutianyi@gmail.com> <20211122033220.32883-2-chiyutianyi@gmail.com>
+ <xmqqczmq78x7.fsf@gitster.g>
+In-Reply-To: <xmqqczmq78x7.fsf@gitster.g>
+From:   Han Xin <chiyutianyi@gmail.com>
+Date:   Wed, 24 Nov 2021 17:00:00 +0800
+Message-ID: <CAO0brD3tQuzyHXbdndJrgqYd21pANYntmg5h7YKasne7QQ6Now@mail.gmail.com>
+Subject: Re: [PATCH v3 1/5] object-file: refactor write_loose_object() to read
+ buffer from stream
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Han Xin <hanxin.hx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SXQgc2VlbXMgdGhhdCwgICJnZXRfb2JqZWN0X2xpc3RfZnJvbV9iaXRtYXAiIHRha2VzIDkgc2Vj
-b25kcy4NCkRvZXMgaXQgbWVldCB0aGUgZXhwZWN0YXRpb24/DQoNCkknbSBub3Qgc3VyZS4gQnV0
-IGhlcmUgaXMgbXkgZ3Vlc3M6DQpTaW5jZSBJIGhhdmUgMzAwayByZWZzLiBCdXQgY2xvbmUgd2l0
-aCBgLS1uby10YWdzYCBvbmx5IHJlcXVpcmVzICJyZWZzL2hlYWRzLyoiLiBHaXQgaGFzIHRvIHNl
-YXJjaCBhbmQgZmlsdGVyIHJlZnMgaW4gdGhlIHdob2xlIGJpdG1hcCBmaWxlLCB3aGljaCB0YWtl
-cyBhIGxvdCBvZiB0aW1lLg0KSSB0aGluayBqZ2l0IGRvIGl0IGluIGEgcmVhbGx5IHNtYXJ0IHdh
-eS4gSXQgcGFjayBhbGwgcmVmcy9oZWFkcyBpbnRvIG9uZSBiaXRtYXBmaWxlICxhbmQgdGhlIG90
-aGVyIHJlZnMgaW4gYW5vdGhlciBiaXRtYXAgZmlsZS4gQmVjYXVzZSA5MCUgb2YgY2xvbmUgb3Bl
-cmF0aW9uIG9ubHkgcmVxdWlyZXMgYWxsIHJlZnMvaGVhZHMuDQoNCg0KLS0tLS1PcmlnaW5hbCBN
-ZXNzYWdlLS0tLS0NCkZyb206IOeoi+a0iw0KU2VudDogVHVlc2RheSwgTm92ZW1iZXIgMjMsIDIw
-MjEgMjo0MiBQTQ0KVG86ICdKZWZmIEtpbmcnIDxwZWZmQHBlZmYubmV0Pjsgw4Z2YXIgQXJuZmrD
-tnLDsCBCamFybWFzb24gPGF2YXJhYkBnbWFpbC5jb20+DQpDYzogZ2l0QHZnZXIua2VybmVsLm9y
-Zw0KU3ViamVjdDogUkU6IFtFeHRlcm5hbCBNYWlsXVJlOiB3aHkgZ2l0IGlzIHNvIHNsb3cgZm9y
-IGEgdGlueSBnaXQgcHVzaD8NCg0KSSBnb3QgYW5vdGhlciBwcm9ibGVtIGhlcmUuDQpXaGVuIEkg
-dHJpZXMgdG8gY2xvbmUgZnJvbSByZW1vdGUgc2VydmVyLiBJdCB0b29rIG1lIDI1IHNlY29uZHMg
-dG8gZW51bWVyYXRpbmcgb2JqZWN0cy4gQW5kIHRoZW4gMSBzZWNvbmQgdG8gYGNvdXRpbmcgb2Jq
-ZWN0c2AgYnkgYml0bWFwLg0KSSBkb24ndCB1bmRlcnN0YW5kLCB3aHkgYSBmcmVzaCBjbG9uZSBu
-ZWVkIGBlbnVtZXJhdGluZyBvYmplY3RzYCA/IElzIGBjb3V0aW5nIG9iamVjdHNgIGVub3VnaCBm
-b3IgdGhlIHNlcnZlciB0byBkZXRlcm1pbmUgd2hhdCB0byBzZW5kPw0KDQpIZXJlIGlzIHRoZSBy
-ZW1vdGUgc2VydmVyIHRyYWNlOg0KDQoNCjExOjQ5OjEyLjQzODUxOSBjb21tb24tbWFpbi5jOjQ4
-ICAgICAgICAgICAgIHwgZDAgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCB2ZXJzaW9uICAg
-ICAgfCAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCAyLjMzLjEu
-NTU4LmcyYmQyZjI1OGY0LmRpcnR5DQoxMTo0OToxMi40Mzg1NTYgY29tbW9uLW1haW4uYzo0OSAg
-ICAgICAgICAgICB8IGQwIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgc3RhcnQgICAgICAg
-IHwgICAgIHwgIDAuMDAwMjc0IHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgZ2l0IGRhZW1v
-biAtLWluZXRkIC0tc3lzbG9nIC0tZXhwb3J0LWFsbCAtLWVuYWJsZT11cGxvYWQtcGFjayAtLWVu
-YWJsZT1yZWNlaXZlLXBhY2sgLS1iYXNlLXBhdGg9L2hvbWUvd29yay9yZXBvc2l0b3JpZXMNCjEx
-OjQ5OjEyLjQzODYwNyBjb21wYXQvbGludXgvcHJvY2luZm8uYzoxNzAgIHwgZDAgfCBtYWluICAg
-ICAgICAgICAgICAgICAgICAgfCBjbWRfYW5jZXN0cnkgfCAgICAgfCAgICAgICAgICAgfCAgICAg
-ICAgICAgfCAgICAgICAgICAgICAgfCBhbmNlc3RyeTpbeGluZXRkIHN5c3RlbWRdDQoxMTo0OTox
-Mi40Mzg2NTUgZ2l0LmM6NzM3ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8
-IGQwIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgY21kX25hbWUgICAgIHwgICAgIHwgICAg
-ICAgICAgIHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgX3J1bl9kYXNoZWRfIChfcnVuX2Rh
-c2hlZF8pDQoxMTo0OToxMi40Mzg2NjggcnVuLWNvbW1hbmQuYzo3MzkgICAgICAgICAgICAgICAg
-IHwgZDAgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCBjaGlsZF9zdGFydCAgfCAgICAgfCAg
-MC4wMDAzOTAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCBbY2gwXSBjbGFzczpkYXNoZWQg
-YXJndjpbZ2l0LWRhZW1vbiAtLWluZXRkIC0tc3lzbG9nIC0tZXhwb3J0LWFsbCAtLWVuYWJsZT11
-cGxvYWQtcGFjayAtLWVuYWJsZT1yZWNlaXZlLXBhY2sgLS1iYXNlLXBhdGg9L2hvbWUvd29yay9y
-ZXBvc2l0b3JpZXNdDQoxMTo0OToxMi40Mzk1NTUgY29tbW9uLW1haW4uYzo0OCAgICAgICAgICAg
-ICAgICAgIHwgZDEgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCB2ZXJzaW9uICAgICAgfCAg
-ICAgfCAgICAgICAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCAyLjMzLjEuNTU4Lmcy
-YmQyZjI1OGY0LmRpcnR5DQoxMTo0OToxMi40Mzk1ODkgY29tbW9uLW1haW4uYzo0OSAgICAgICAg
-ICAgICAgICAgIHwgZDEgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCBzdGFydCAgICAgICAg
-fCAgICAgfCAgMC4wMDAyNDIgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCAvdXNyL2xpYmV4
-ZWMvZ2l0LWNvcmUvZ2l0LWRhZW1vbiAtLWluZXRkIC0tc3lzbG9nIC0tZXhwb3J0LWFsbCAtLWVu
-YWJsZT11cGxvYWQtcGFjayAtLWVuYWJsZT1yZWNlaXZlLXBhY2sgLS1iYXNlLXBhdGg9L2hvbWUv
-d29yay9yZXBvc2l0b3JpZXMNCjExOjQ5OjEyLjQzOTY0NSBjb21wYXQvbGludXgvcHJvY2luZm8u
-YzoxNzAgIHwgZDEgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCBjbWRfYW5jZXN0cnkgfCAg
-ICAgfCAgICAgICAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCBhbmNlc3RyeTpbZ2l0
-IHhpbmV0ZCBzeXN0ZW1kXQ0KMTE6NDk6MTIuNDM5ODA5IHJ1bi1jb21tYW5kLmM6NzM5ICAgICAg
-ICAgICAgfCBkMSB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IGNoaWxkX3N0YXJ0ICB8ICAg
-ICB8ICAwLjAwMDQ2NyB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IFtjaDBdIGNsYXNzOj8g
-YXJndjpbZ2l0IHVwbG9hZC1wYWNrIC0tc3RyaWN0IC0tdGltZW91dD0wIC5dDQoxMTo0OToxMi40
-NDA3NDcgY29tbW9uLW1haW4uYzo0OCAgICAgICAgICAgICB8IGQyIHwgbWFpbiAgICAgICAgICAg
-ICAgICAgICAgIHwgdmVyc2lvbiAgICAgIHwgICAgIHwgICAgICAgICAgIHwgICAgICAgICAgIHwg
-ICAgICAgICAgICAgIHwgMi4zMy4xLjU1OC5nMmJkMmYyNThmNC5kaXJ0eQ0KMTE6NDk6MTIuNDQw
-NzcyIGNvbW1vbi1tYWluLmM6NDkgICAgICAgICAgICAgfCBkMiB8IG1haW4gICAgICAgICAgICAg
-ICAgICAgICB8IHN0YXJ0ICAgICAgICB8ICAgICB8ICAwLjAwMDI1MiB8ICAgICAgICAgICB8ICAg
-ICAgICAgICAgICB8IC91c3IvbGliZXhlYy9naXQtY29yZS9naXQgdXBsb2FkLXBhY2sgLS1zdHJp
-Y3QgLS10aW1lb3V0PTAgLg0KMTE6NDk6MTIuNDQwODMzIGNvbXBhdC9saW51eC9wcm9jaW5mby5j
-OjE3MCAgfCBkMiB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IGNtZF9hbmNlc3RyeSB8ICAg
-ICB8ICAgICAgICAgICB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IGFuY2VzdHJ5OltnaXQt
-ZGFlbW9uIGdpdCB4aW5ldGQgc3lzdGVtZF0NCjExOjQ5OjEyLjQ0MDg1MyBnaXQuYzo0NTYgICAg
-ICAgICAgICAgICAgICAgIHwgZDIgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCBjbWRfbmFt
-ZSAgICAgfCAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCB1cGxv
-YWQtcGFjayAoX3J1bl9kYXNoZWRfL3VwbG9hZC1wYWNrKQ0KMTE6NDk6MTIuNDQxMDEzIHByb3Rv
-Y29sLmM6NzYgICAgICAgICAgICAgICAgfCBkMiB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8
-IGRhdGEgICAgICAgICB8ICAgICB8ICAwLjAwMDQ5NCB8ICAwLjAwMDQ5NCB8IHRyYW5zZmVyICAg
-ICB8IG5lZ290aWF0ZWQtdmVyc2lvbjoyDQoxMTo0OToxMi40ODEyMDggcnVuLWNvbW1hbmQuYzo3
-MzkgICAgICAgICAgICB8IGQyIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgY2hpbGRfc3Rh
-cnQgIHwgICAgIHwgIDAuMDQwNjg0IHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgW2NoMF0g
-Y2xhc3M6PyBhcmd2OltnaXQgcGFjay1vYmplY3RzIC0tcmV2cyAtLXRoaW4gLS1zdGRvdXQgLS1w
-cm9ncmVzcyAtLWRlbHRhLWJhc2Utb2Zmc2V0XQ0KMTE6NDk6MTIuNDgyMzA3IGNvbW1vbi1tYWlu
-LmM6NDggICAgICAgICAgICAgfCBkMyB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IHZlcnNp
-b24gICAgICB8ICAgICB8ICAgICAgICAgICB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IDIu
-MzMuMS41NTguZzJiZDJmMjU4ZjQuZGlydHkNCjExOjQ5OjEyLjQ4MjMzNCBjb21tb24tbWFpbi5j
-OjQ5ICAgICAgICAgICAgIHwgZDMgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCBzdGFydCAg
-ICAgICAgfCAgICAgfCAgMC4wMDAyMjAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCAvdXNy
-L2xpYmV4ZWMvZ2l0LWNvcmUvZ2l0IHBhY2stb2JqZWN0cyAtLXJldnMgLS10aGluIC0tc3Rkb3V0
-IC0tcHJvZ3Jlc3MgLS1kZWx0YS1iYXNlLW9mZnNldA0KMTE6NDk6MTIuNDgyNDA1IGNvbXBhdC9s
-aW51eC9wcm9jaW5mby5jOjE3MCAgfCBkMyB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IGNt
-ZF9hbmNlc3RyeSB8ICAgICB8ICAgICAgICAgICB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8
-IGFuY2VzdHJ5OltnaXQgZ2l0LWRhZW1vbiBnaXQgeGluZXRkIHN5c3RlbWRdDQoxMTo0OToxMi40
-ODI1MDAgZ2l0LmM6NDU2ICAgICAgICAgICAgICAgICAgICB8IGQzIHwgbWFpbiAgICAgICAgICAg
-ICAgICAgICAgIHwgY21kX25hbWUgICAgIHwgICAgIHwgICAgICAgICAgIHwgICAgICAgICAgIHwg
-ICAgICAgICAgICAgIHwgcGFjay1vYmplY3RzIChfcnVuX2Rhc2hlZF8vdXBsb2FkLXBhY2svcGFj
-ay1vYmplY3RzKQ0KMTE6NDk6MTIuNDgyNjMyIGJ1aWx0aW4vcGFjay1vYmplY3RzLmM6NDE0MCAg
-fCBkMyB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IHJlZ2lvbl9lbnRlciB8IHIwICB8ICAw
-LjAwMDUyMiB8ICAgICAgICAgICB8IHBhY2stb2JqZWN0cyB8IGxhYmVsOmVudW1lcmF0ZS1vYmpl
-Y3RzDQoxMTo0OToxMi40ODI4MjUgcHJvZ3Jlc3MuYzoyNjggICAgICAgICAgICAgICB8IGQzIHwg
-bWFpbiAgICAgICAgICAgICAgICAgICAgIHwgcmVnaW9uX2VudGVyIHwgcjAgIHwgIDAuMDAwNzE1
-IHwgICAgICAgICAgIHwgcHJvZ3Jlc3MgICAgIHwgLi5sYWJlbDpFbnVtZXJhdGluZyBvYmplY3Rz
-DQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tDQoxMTo0OToyMS40Nzc3ODMgcHJvZ3Jlc3MuYzozMjkgICAgICAgICAgICAg
-ICB8IGQzIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgZGF0YSAgICAgICAgIHwgcjAgIHwg
-IDguOTk1NjcwIHwgIDguOTk0OTU1IHwgcHJvZ3Jlc3MgICAgIHwgLi4uLnRvdGFsX29iamVjdHM6
-MA0KMTE6NDk6MjEuNDc3ODQ4IHByb2dyZXNzLmM6MzM2ICAgICAgICAgICAgICAgfCBkMyB8IG1h
-aW4gICAgICAgICAgICAgICAgICAgICB8IHJlZ2lvbl9sZWF2ZSB8IHIwICB8ICA4Ljk5NTczOCB8
-ICA4Ljk5NTAyMyB8IHByb2dyZXNzICAgICB8IC4ubGFiZWw6RW51bWVyYXRpbmcgb2JqZWN0cw0K
-MTE6NDk6MjEuNDc3ODgwIGJ1aWx0aW4vcGFjay1vYmplY3RzLmM6NDE2MiAgfCBkMyB8IG1haW4g
-ICAgICAgICAgICAgICAgICAgICB8IHJlZ2lvbl9sZWF2ZSB8IHIwICB8ICA4Ljk5NTc3MCB8ICA4
-Ljk5NTI0OCB8IHBhY2stb2JqZWN0cyB8IGxhYmVsOmVudW1lcmF0ZS1vYmplY3RzDQoxMTo0OToy
-MS40Nzc4OTEgYnVpbHRpbi9wYWNrLW9iamVjdHMuYzo0MTY4ICB8IGQzIHwgbWFpbiAgICAgICAg
-ICAgICAgICAgICAgIHwgcmVnaW9uX2VudGVyIHwgcjAgIHwgIDguOTk1NzgyIHwgICAgICAgICAg
-IHwgcGFjay1vYmplY3RzIHwgbGFiZWw6cHJlcGFyZS1wYWNrDQoxMTo0OToyMS40Nzc5MDMgcHJv
-Z3Jlc3MuYzoyNjggICAgICAgICAgICAgICB8IGQzIHwgbWFpbiAgICAgICAgICAgICAgICAgICAg
-IHwgcmVnaW9uX2VudGVyIHwgcjAgIHwgIDguOTk1Nzk0IHwgICAgICAgICAgIHwgcHJvZ3Jlc3Mg
-ICAgIHwgLi5sYWJlbDpDb3VudGluZyBvYmplY3RzDQoxMTo0OToyMi4zMTY4MDYgcHJvZ3Jlc3Mu
-YzozMjkgICAgICAgICAgICAgICB8IGQzIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgZGF0
-YSAgICAgICAgIHwgcjAgIHwgIDkuODM0Njk1IHwgIDAuODM4OTAxIHwgcHJvZ3Jlc3MgICAgIHwg
-Li4uLnRvdGFsX29iamVjdHM6MTM4MzM5Ng0KMTE6NDk6MjIuMzE2ODQ4IHByb2dyZXNzLmM6MzM2
-ICAgICAgICAgICAgICAgfCBkMyB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IHJlZ2lvbl9s
-ZWF2ZSB8IHIwICB8ICA5LjgzNDczOCB8ICAwLjgzODk0NCB8IHByb2dyZXNzICAgICB8IC4ubGFi
-ZWw6Q291bnRpbmcgb2JqZWN0cw0KMTE6NDk6MjIuMzY2MTA5IHByb2dyZXNzLmM6MjY4ICAgICAg
-ICAgICAgICAgfCBkMyB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IHJlZ2lvbl9lbnRlciB8
-IHIwICB8ICA5Ljg4Mzk5OCB8ICAgICAgICAgICB8IHByb2dyZXNzICAgICB8IC4ubGFiZWw6Q29t
-cHJlc3Npbmcgb2JqZWN0cw0KMTE6NDk6MzQuMjA4MzIzIHRyYWNlMi90cjJfdGd0X3BlcmYuYzoy
-MDEgICAgfCBkMiB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IHNpZ25hbCAgICAgICB8ICAg
-ICB8IDIxLjc2Nzc5NSB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IHNpZ25vOjEzDQoxMTo0
-OTozNC4yMDgzNzIgdHJhY2UyL3RyMl90Z3RfcGVyZi5jOjIwMSAgICB8IGQzIHwgbWFpbiAgICAg
-ICAgICAgICAgICAgICAgIHwgc2lnbmFsICAgICAgIHwgICAgIHwgMjEuNzI2MjE5IHwgICAgICAg
-ICAgIHwgICAgICAgICAgICAgIHwgLi4uLnNpZ25vOjEzDQoxMTo0OTozNC4yMTg3NjcgcnVuLWNv
-bW1hbmQuYzo5OTUgICAgICAgICAgICB8IGQxIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwg
-Y2hpbGRfZXhpdCAgIHwgICAgIHwgMjEuNzc5NDE3IHwgMjEuNzc4OTUwIHwgICAgICAgICAgICAg
-IHwgW2NoMF0gcGlkOjQ4NzI1IGNvZGU6MTQxDQoxMTo0OTozNC4yMTg4MDkgY29tbW9uLW1haW4u
-Yzo1NCAgICAgICAgICAgICB8IGQxIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgZXhpdCAg
-ICAgICAgIHwgICAgIHwgMjEuNzc5NDY5IHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgY29k
-ZToxNDENCjExOjQ5OjM0LjIxODgyMiB0cmFjZTIvdHIyX3RndF9wZXJmLmM6MjEzICAgIHwgZDEg
-fCBtYWluICAgICAgICAgICAgICAgICAgICAgfCBhdGV4aXQgICAgICAgfCAgICAgfCAyMS43Nzk0
-ODIgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCBjb2RlOjE0MQ0KMTE6NDk6MzQuMjE5MTM1
-IHJ1bi1jb21tYW5kLmM6OTk1ICAgICAgICAgICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAg
-ICAgICB8IGNoaWxkX2V4aXQgICB8ICAgICB8IDIxLjc4MDg1NSB8IDIxLjc4MDQ2NSB8ICAgICAg
-ICAgICAgICB8IFtjaDBdIHBpZDo0ODcyNCBjb2RlOjE0MQ0KMTE6NDk6MzQuMjE5MTcwIGdpdC5j
-Ojc1OSAgICAgICAgICAgICAgICAgICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8
-IGV4aXQgICAgICAgICB8ICAgICB8IDIxLjc4MDg5MyB8ICAgICAgICAgICB8ICAgICAgICAgICAg
-ICB8IGNvZGU6MTQxDQoxMTo0OTozNC4yMTkxODIgdHJhY2UyL3RyMl90Z3RfcGVyZi5jOjIxMyAg
-ICB8IGQwIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgYXRleGl0ICAgICAgIHwgICAgIHwg
-MjEuNzgwOTA2IHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgY29kZToxNDENCi0tLS0tT3Jp
-Z2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBKZWZmIEtpbmcgPHBlZmZAcGVmZi5uZXQ+DQpTZW50
-OiBXZWRuZXNkYXksIE9jdG9iZXIgMTMsIDIwMjEgNTo0NiBBTQ0KVG86IMOGdmFyIEFybmZqw7Zy
-w7AgQmphcm1hc29uIDxhdmFyYWJAZ21haWwuY29tPg0KQ2M6IOeoi+a0iyA8Y2hlbmd5YW5nQHhp
-YW9taS5jb20+OyBnaXRAdmdlci5rZXJuZWwub3JnDQpTdWJqZWN0OiBSZTogW0V4dGVybmFsIE1h
-aWxdUmU6IHdoeSBnaXQgaXMgc28gc2xvdyBmb3IgYSB0aW55IGdpdCBwdXNoPw0KDQoqVGhpcyBt
-ZXNzYWdlIG9yaWdpbmF0ZWQgZnJvbSBvdXRzaWRlIG9mIFhJQU9NSS4gUGxlYXNlIHRyZWF0IHRo
-aXMgZW1haWwgd2l0aCBjYXV0aW9uKg0KDQoNCk9uIFR1ZSwgT2N0IDEyLCAyMDIxIGF0IDEyOjA2
-OjA0UE0gKzAyMDAsIMOGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uIHdyb3RlOg0KDQo+IEJ1dCBt
-b3JlIGdlbmVyYWxseSB3aXRoIHRoZXNlIHNpZGUtaW5kZXhlcyBpdCBzZWVtcyB0byBtZSB0aGF0
-IHRoZQ0KPiBjb2RlIGludm9sdmVkIG1pZ2h0IG5vdCBiZSBjb25zaWRlcmluZyB0aGVzZSBzb3J0
-cyBvZiBlZGdlIGNhc2VzLCBpLmUuDQo+IG15IHVuZGVyc3RhbmRpbmcgZnJvbSB5b3UgYWJvdmUg
-aXMgdGhhdCBpZiB3ZSBoYXZlIGJpdG1hcHMgYW55d2hlcmUNCj4gd2UnbGwgdHJ5IHRvIGluLW1l
-bW9yeSB1c2UgdGhlbSBmb3IgYWxsIHRoZSBvYmplY3RzIGluIHBsYXk/IE9yIHRoYXQNCj4gb3Ro
-ZXJ3aXNlIGhhdmluZyAicGFydGlhbCIgYml0bWFwcyBsZWFkcyB0byBwYXRob2xvZ2ljYWwgYmVo
-YXZpb3IuDQoNClN1cmUsIGlmIHRoZXJlIHdhcyBhbiBlYXN5IHdheSB0byBrbm93IGJlZm9yZWhh
-bmQgd2hldGhlciB0aGUgYml0bWFwIHdhcyBnb2luZyB0byBoZWxwIG9yIHJ1biBpbnRvIHRoZXNl
-IHBhdGhvbG9naWNhbCBjYXNlcywgaXQgd291bGQgYmUgbmljZSB0byBkZXRlY3QgaXQuIEkgZG9u
-J3Qga25vdyB3aGF0IHRoYXQgaXMgKGFuZCBJJ3ZlIGdpdmVuIGl0IHF1aXRlIGEgbG90IG9mIHRo
-b3VnaHQgb3ZlciB0aGUgcGFzdCA4IHllYXJzKS4NCg0KSSBzdXNwZWN0IHRoZSBtb3N0IGRpcmVj
-dGlvbiB3b3VsZCBiZSB0byB0ZWFjaCB0aGUgYml0bWFwIGNvZGUgdG8gYmVoYXZlIG1vcmUgbGlr
-ZSB0aGUgcmVndWxhciB0cmF2ZXJzYWwgYnkganVzdCB3YWxraW5nIGRvd24gdG8gdGhlIFVOSU5U
-RVJFU1RJTkcgY29tbWl0cy4gUmlnaHQgbm93IGl0IGdldHMgYSBjb21wbGV0ZSBiaXRtYXAgZm9y
-IHRoZSBjb21taXRzIHdlIGRvbid0IHdhbnQsIGFuZCB0aGVuIGEgYml0bWFwIGZvciB0aGUgb25l
-cyB3ZSBkbyB3YW50LCBhbmQgdGFrZXMgYSBzZXQgZGlmZmVyZW5jZS4NCg0KSXQgY291bGQgaW5z
-dGVhZCB3YWxrIGJvdGggc2lkZXMgaW4gdGhlIHVzdWFsIHdheSwgZmlsbGluZyBpbiB0aGUgYml0
-bWFwIGZvciBlYWNoLCBhbmQgdGhlbiBzdG9wIHdoZW4gaXQgaGl0cyBib3VuZGFyeSBjb21taXRz
-LiBUaGUgYml0bWFwIGZvciB0aGUgYm91bmRhcnkgY29tbWl0IChpZiB3ZSBkb24ndCBoYXZlIGEg
-ZnVsbCBvbmUgb24tZGlzaykgaXMgZmlsbGVkIGluIHdpdGggd2hhdCdzIGluIGl0cyB0cmVlLiBU
-aGF0IG1lYW5zIGl0J3MgaW5jb21wbGV0ZSwgYW5kIHRoZSByZXN1bHQgbWlnaHQgaW5jbHVkZSBz
-b21lIGV4dHJhIG9iamVjdHMgKGUuZy4sIGlmIGJvdW5kYXJ5fjEwMCBoYWQgYSBibG9iIHRoYXQg
-d2VudCBhd2F5LCBidXQgbGF0ZXIgY2FtZSBiYWNrIGluIGEgZGVzY2VuZGFudCB0aGF0IGlzbid0
-IG1hcmtlZCB1bmludGVyZXN0aW5nKS4gVGhhdCdzIHRoZSBzYW1lIHRyYWRlb2ZmIHRoZSBub24t
-Yml0bWFwIHRyYXZlcnNhbCBtYWtlcy4NCg0KSXQgd291bGQgYmUgcHJldHR5IG1ham9yIHN1cmdl
-cnkgdG8gdGhlIGJpdG1hcCBjb2RlLiBJIGhhdmVuJ3QgYWN0dWFsbHkgdHJpZWQgaXQgYmVmb3Jl
-Lg0KDQotUGVmZg0KIy8qKioqKirmnKzpgq7ku7blj4rlhbbpmYTku7blkKvmnInlsI/nsbPlhazl
-j7jnmoTkv53lr4bkv6Hmga/vvIzku4XpmZDkuo7lj5HpgIHnu5nkuIrpnaLlnLDlnYDkuK3liJfl
-h7rnmoTkuKrkurrmiJbnvqTnu4TjgILnpoHmraLku7vkvZXlhbbku5bkurrku6Xku7vkvZXlvaLl
-vI/kvb/nlKjvvIjljIXmi6zkvYbkuI3pmZDkuo7lhajpg6jmiJbpg6jliIblnLDms4TpnLLjgIHl
-pI3liLbjgIHmiJbmlaPlj5HvvInmnKzpgq7ku7bkuK3nmoTkv6Hmga/jgILlpoLmnpzmgqjplJnm
-lLbkuobmnKzpgq7ku7bvvIzor7fmgqjnq4vljbPnlLXor53miJbpgq7ku7bpgJrnn6Xlj5Hku7bk
-urrlubbliKDpmaTmnKzpgq7ku7bvvIEgVGhpcyBlLW1haWwgYW5kIGl0cyBhdHRhY2htZW50cyBj
-b250YWluIGNvbmZpZGVudGlhbCBpbmZvcm1hdGlvbiBmcm9tIFhJQU9NSSwgd2hpY2ggaXMgaW50
-ZW5kZWQgb25seSBmb3IgdGhlIHBlcnNvbiBvciBlbnRpdHkgd2hvc2UgYWRkcmVzcyBpcyBsaXN0
-ZWQgYWJvdmUuIEFueSB1c2Ugb2YgdGhlIGluZm9ybWF0aW9uIGNvbnRhaW5lZCBoZXJlaW4gaW4g
-YW55IHdheSAoaW5jbHVkaW5nLCBidXQgbm90IGxpbWl0ZWQgdG8sIHRvdGFsIG9yIHBhcnRpYWwg
-ZGlzY2xvc3VyZSwgcmVwcm9kdWN0aW9uLCBvciBkaXNzZW1pbmF0aW9uKSBieSBwZXJzb25zIG90
-aGVyIHRoYW4gdGhlIGludGVuZGVkIHJlY2lwaWVudChzKSBpcyBwcm9oaWJpdGVkLiBJZiB5b3Ug
-cmVjZWl2ZSB0aGlzIGUtbWFpbCBpbiBlcnJvciwgcGxlYXNlIG5vdGlmeSB0aGUgc2VuZGVyIGJ5
-IHBob25lIG9yIGVtYWlsIGltbWVkaWF0ZWx5IGFuZCBkZWxldGUgaXQhKioqKioqLyMNCg==
+Junio C Hamano <gitster@pobox.com> writes:
+
+>
+> Han Xin <chiyutianyi@gmail.com> writes:
+>
+> > From: Han Xin <hanxin.hx@alibaba-inc.com>
+> >
+> > We used to call "get_data()" in "unpack_non_delta_entry()" to read the
+> > entire contents of a blob object, no matter how big it is. This
+> > implementation may consume all the memory and cause OOM.
+> >
+> > This can be improved by feeding data to "write_loose_object()" in a
+> > stream. The input stream is implemented as an interface. In the first
+> > step, we make a simple implementation, feeding the entire buffer in the
+> > "stream" to "write_loose_object()" as a refactor.
+>
+> Possibly a stupid question (not a review).
+>
+> How does this compare with "struct git_istream" implemented for a
+> few existing codepaths?  It seems that the existing users are
+> pack-objects, index-pack and archive and all of them use the
+> interface to obtain data given an object name without having to grab
+> everything in core at once.
+>
+> If we are adding a new streaming interface to go in the opposite
+> direction, i.e. from the working tree data to object store, I would
+> understand it as a complementary interface (but then I suspect there
+> is a half of it already in bulk-checkin API), but I am not sure how
+> this new thing fits in the larger picture.
+>
+
+Thank you for your reply.
+
+Before starting to make this patch, I did consider whether I should
+reuse "struct  git_istream" to solve the problem, but I found that in the
+process of git unpack-objects, the data comes from stdin, and we
+cannot get an oid in advance until the whole object data is read.
+Also, we can't do "lseek()=E2=80=9C on stdin to change the data reading pos=
+ition.
+
+I compared the implementation of "bulk-checkin", and they do have
+some similarities.
+I think the difference in the reverse implementation is that we do not
+always clearly know where the boundary of the target data is. For
+example, in the process of "unpack-objects", the "buffer" has been
+partially read after calling "fill()". And the "buffer" remaining after
+reading cannot be discarded because it is the beginning of the next
+object.
+Perhaps "struct input_stream" can make some improvements to
+"index_bulk_checkin()", so that it can read from an inner buffer in
+addition to reading from "fd" if necessary.
+
+>
+>
+> > Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> > Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+> > ---
+> >  object-file.c  | 50 ++++++++++++++++++++++++++++++++++++++++++++++----
+> >  object-store.h |  5 +++++
+> >  2 files changed, 51 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/object-file.c b/object-file.c
+> > index c3d866a287..227f53a0de 100644
+> > --- a/object-file.c
+> > +++ b/object-file.c
+> > @@ -1860,8 +1860,26 @@ static int create_tmpfile(struct strbuf *tmp, co=
+nst char *filename)
+> >       return fd;
+> >  }
+> >
+> > +struct simple_input_stream_data {
+> > +     const void *buf;
+> > +     unsigned long len;
+> > +};
+> > +
+> > +static const void *feed_simple_input_stream(struct input_stream *in_st=
+ream, unsigned long *len)
+> > +{
+> > +     struct simple_input_stream_data *data =3D in_stream->data;
+> > +
+> > +     if (data->len =3D=3D 0) {
+> > +             *len =3D 0;
+> > +             return NULL;
+> > +     }
+> > +     *len =3D data->len;
+> > +     data->len =3D 0;
+> > +     return data->buf;
+> > +}
+> > +
+> >  static int write_loose_object(const struct object_id *oid, char *hdr,
+> > -                           int hdrlen, const void *buf, unsigned long =
+len,
+> > +                           int hdrlen, struct input_stream *in_stream,
+> >                             time_t mtime, unsigned flags)
+> >  {
+> >       int fd, ret;
+> > @@ -1871,6 +1889,8 @@ static int write_loose_object(const struct object=
+_id *oid, char *hdr,
+> >       struct object_id parano_oid;
+> >       static struct strbuf tmp_file =3D STRBUF_INIT;
+> >       static struct strbuf filename =3D STRBUF_INIT;
+> > +     const void *buf;
+> > +     unsigned long len;
+> >
+> >       loose_object_path(the_repository, &filename, oid);
+> >
+> > @@ -1898,6 +1918,7 @@ static int write_loose_object(const struct object=
+_id *oid, char *hdr,
+> >       the_hash_algo->update_fn(&c, hdr, hdrlen);
+> >
+> >       /* Then the data itself.. */
+> > +     buf =3D in_stream->read(in_stream, &len);
+> >       stream.next_in =3D (void *)buf;
+> >       stream.avail_in =3D len;
+> >       do {
+> > @@ -1960,6 +1981,13 @@ int write_object_file_flags(const void *buf, uns=
+igned long len,
+> >  {
+> >       char hdr[MAX_HEADER_LEN];
+> >       int hdrlen =3D sizeof(hdr);
+> > +     struct input_stream in_stream =3D {
+> > +             .read =3D feed_simple_input_stream,
+> > +             .data =3D (void *)&(struct simple_input_stream_data) {
+> > +                     .buf =3D buf,
+> > +                     .len =3D len,
+> > +             },
+> > +     };
+> >
+> >       /* Normally if we have it in the pack then we do not bother writi=
+ng
+> >        * it out into .git/objects/??/?{38} file.
+> > @@ -1968,7 +1996,7 @@ int write_object_file_flags(const void *buf, unsi=
+gned long len,
+> >                                 &hdrlen);
+> >       if (freshen_packed_object(oid) || freshen_loose_object(oid))
+> >               return 0;
+> > -     return write_loose_object(oid, hdr, hdrlen, buf, len, 0, flags);
+> > +     return write_loose_object(oid, hdr, hdrlen, &in_stream, 0, flags)=
+;
+> >  }
+> >
+> >  int hash_object_file_literally(const void *buf, unsigned long len,
+> > @@ -1977,6 +2005,13 @@ int hash_object_file_literally(const void *buf, =
+unsigned long len,
+> >  {
+> >       char *header;
+> >       int hdrlen, status =3D 0;
+> > +     struct input_stream in_stream =3D {
+> > +             .read =3D feed_simple_input_stream,
+> > +             .data =3D (void *)&(struct simple_input_stream_data) {
+> > +                     .buf =3D buf,
+> > +                     .len =3D len,
+> > +             },
+> > +     };
+> >
+> >       /* type string, SP, %lu of the length plus NUL must fit this */
+> >       hdrlen =3D strlen(type) + MAX_HEADER_LEN;
+> > @@ -1988,7 +2023,7 @@ int hash_object_file_literally(const void *buf, u=
+nsigned long len,
+> >               goto cleanup;
+> >       if (freshen_packed_object(oid) || freshen_loose_object(oid))
+> >               goto cleanup;
+> > -     status =3D write_loose_object(oid, header, hdrlen, buf, len, 0, 0=
+);
+> > +     status =3D write_loose_object(oid, header, hdrlen, &in_stream, 0,=
+ 0);
+> >
+> >  cleanup:
+> >       free(header);
+> > @@ -2003,14 +2038,21 @@ int force_object_loose(const struct object_id *=
+oid, time_t mtime)
+> >       char hdr[MAX_HEADER_LEN];
+> >       int hdrlen;
+> >       int ret;
+> > +     struct simple_input_stream_data data;
+> > +     struct input_stream in_stream =3D {
+> > +             .read =3D feed_simple_input_stream,
+> > +             .data =3D &data,
+> > +     };
+> >
+> >       if (has_loose_object(oid))
+> >               return 0;
+> >       buf =3D read_object(the_repository, oid, &type, &len);
+> >       if (!buf)
+> >               return error(_("cannot read object for %s"), oid_to_hex(o=
+id));
+> > +     data.buf =3D buf;
+> > +     data.len =3D len;
+> >       hdrlen =3D xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(=
+type), (uintmax_t)len) + 1;
+> > -     ret =3D write_loose_object(oid, hdr, hdrlen, buf, len, mtime, 0);
+> > +     ret =3D write_loose_object(oid, hdr, hdrlen, &in_stream, mtime, 0=
+);
+> >       free(buf);
+> >
+> >       return ret;
+> > diff --git a/object-store.h b/object-store.h
+> > index 952efb6a4b..ccc1fc9c1a 100644
+> > --- a/object-store.h
+> > +++ b/object-store.h
+> > @@ -34,6 +34,11 @@ struct object_directory {
+> >       char *path;
+> >  };
+> >
+> > +struct input_stream {
+> > +     const void *(*read)(struct input_stream *, unsigned long *len);
+> > +     void *data;
+> > +};
+> > +
+> >  KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
+> >       struct object_directory *, 1, fspathhash, fspatheq)
