@@ -2,108 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C2F0C433EF
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 05:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F216C433EF
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 06:01:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233093AbhKXFtZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Nov 2021 00:49:25 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64427 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231421AbhKXFtY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Nov 2021 00:49:24 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AC85615C237;
-        Wed, 24 Nov 2021 00:46:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=ysM4lec4xLqQwylxfcM54vib8aQs8pMOoWobAmcqB6Q=; b=Eszx
-        NibvNeuxNr1hwldXCleUXxnJoBQni6RR5k6WO0bFggPFj3aLVHaZZ03PhTopao7+
-        G499k16gdmjdPs+xqlPkYk7Tkw7jzaO2a7FOGy6sSinJprQGfGXioNr2HLmJYsuH
-        UJx5wpPfYyDqYTM3N37cDV3731Iv3bvLfD0Hn6g=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A4F8C15C236;
-        Wed, 24 Nov 2021 00:46:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1161915C229;
-        Wed, 24 Nov 2021 00:46:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Glen Choo <chooglen@google.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 8/8] dir: avoid removing the current working directory
-References: <a5528cbb14ddbbf26cde873e3f3e95744d59b950.1637455620.git.gitgitgadget@gmail.com>
-        <20211123003958.3978-1-chooglen@google.com>
-        <CABPp-BE0Bcimwr1wwcnnh+6apx7r114Oqnu=QDgKEn6VAHAtFg@mail.gmail.com>
-        <kl6lmtluka55.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <CABPp-BGr9PDTE0q5zev4Ffx19g+hG083zdNShoSdH47VqzT8mw@mail.gmail.com>
-        <kl6lzgputxxw.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <xmqqv90i7cxd.fsf@gitster.g>
-        <CABPp-BHUj=3b8xZhD3weBPYuWaVR5MrrM8+KCwhtcB8diZcJyg@mail.gmail.com>
-Date:   Tue, 23 Nov 2021 21:46:11 -0800
-Message-ID: <xmqqa6hu3y3g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233994AbhKXGEJ convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 24 Nov 2021 01:04:09 -0500
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:41768 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233917AbhKXGEE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Nov 2021 01:04:04 -0500
+Received: by mail-ed1-f45.google.com with SMTP id g14so5183710edb.8
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 22:00:55 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=aRdwwKbd4z/VO5JUahyzHA0WE87uTkVdAMqmgHHipDk=;
+        b=AiBPDC4ClCR2InvNmXCeQlWH12DLp+tEyD53HbVpfGEe+Vympxo9igAsKODso3KuaM
+         QtHzspeN23JfLQaut6KQhrUBAp1vMz+x7rZFlngQWkioVU7WKpV9l5pthQUGshY/GKKG
+         pfh4+DCO+m/vK35ZIsrOiLtetS/HiY7k2g5JjmwQk43AugEjI6bm8uAt8KZl5KO8Amya
+         xuC/J+Jn4DLvfNGaro55yWpnTRWRiezJ1Z0nQzitXOyXaZgeQd5mIbfxtFZek6PfJHUF
+         kEjXLxCjf4XPZc8gtmhYgCwla/9vMthw48mAKd/5M+U6UOyunCRO/ocYvlyvX/b53fbX
+         y00Q==
+X-Gm-Message-State: AOAM533/kqm6TEJ+SwwjZcNuo2gBEbn0KC+G0j3/lrchXUhd+mDAXM5S
+        KpsbxOYL1fea3wX7Sy5ns1lVymyrmClhMRvw3Sc=
+X-Google-Smtp-Source: ABdhPJxF2ZEsbAJjXrLW/KpbAOCaUXLebQduAXiklplJ/7rSLpaza6ryWSAsdrFvJ6K4sH7wNpd5xoVME1Y0NbDoYdY=
+X-Received: by 2002:a05:6402:50ca:: with SMTP id h10mr20571120edb.70.1637733654323;
+ Tue, 23 Nov 2021 22:00:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D545E8B4-4CE9-11EC-8D05-98D80D944F46-77302942!pb-smtp21.pobox.com
+References: <cover-0.5-00000000000-20211122T153605Z-avarab@gmail.com>
+ <cover-v2-0.9-00000000000-20211123T115551Z-avarab@gmail.com>
+ <patch-v2-1.9-9cc220ce5a3-20211123T115551Z-avarab@gmail.com>
+ <CAPig+cStZp=AOPHW8i7AqwDOV6djYzHC6GmcVeb=4PUj5bjvAw@mail.gmail.com> <xmqqy25e48u5.fsf@gitster.g>
+In-Reply-To: <xmqqy25e48u5.fsf@gitster.g>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 24 Nov 2021 01:00:43 -0500
+Message-ID: <CAPig+cRMYiCvq7=ESSk7+PM50p4PeoKFat+w9svXMxsCHA6HEw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/9] worktree: remove redundant NULL-ing of "cp.argv
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Enzo Matsumiya <ematsumiya@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-
-> On Tue, Nov 23, 2021 at 1:57 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Glen Choo <chooglen@google.com> writes:
->>
->> > This doesn't sound like a typical definition of 'emptiness' to me, but I
->> > can accept it if others also find it compelling. IOW if your definition
->> > of 'emptiness' is compelling enough, then I'll be convinced that there
->> > is no mixing of concerns and there would be no objection.
->>
->> FWIW, I do not find it compelling.  I can grant that it might be
->> convenient, but I do not think it is a good idea to explain the
->> reason why the directory is protected is because it is "not empty".
+On Tue, Nov 23, 2021 at 8:54 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > ... At best, following this change,
+> > git-worktree is only working "by accident" if the underlying
+> > child_process::args.v doesn't get reallocated between run_command()
+> > invocations. Relying upon this "by accident" behavior feels rather
+> > unsafe.
 >
-> Is the objection to my hand-wavy explanation?  If so, point taken.
-
-The objection is against the definition of 'emptiness' Glen
-perceived in your explanation ;-)
-
-A directory is empty when there is no filesystem entity hangs below
-it.  A process can have any directory as its cwd, even an empty one,
-but the presense of such a process does not make an empty directory
-suddenly non-empty.  That is the objection.
-
-> However, I'm curious if you're also objecting to my commit message
-> and/or the patch as well.
+> The pattern with or without NULLing is
+>         /* cp.argv = NULL */
+>         strvec_clear(&cp.args);
+>         push to cp.args
 >
-> If your objection also includes my commit message, but not the patch,
-> would the following suit your taste better? :
->
-> """
-> remove_path() was added in 4a92d1bfb784 (Add remove_path: a function to
-> remove as much as possible of a path, 2008-09-27) to, as it says, remove
-> as much of a path as possible.  Why remove as much as possible?  Well,
-> at the time we probably would have said something like:
->
->   * removing leading directories makes things feel tidy
->   * removing leading directories doesn't hurt anything so long as they
->     had no files in them.
+> and strvec_clear() frees the underying array, and the first push
+> will reallocates from NULL, so there is no guarantee that cp.argv
+> in the first use that used to be pointing at cp.args that has
+> already been freed is still valid.
 
-I think you meant trailing, but I do not think you need to say it
-twice---they say pretty much the same thing.  We are removing as
-many directories that contain no files (i.e. non-directories)
-underneath to make things tidy, as such a directory serves no useful
-purpose.
+Indeed, so this is even worse than I thought. I was somewhat pressed
+for time when I wrote the review, thus didn't look at the
+implementation of strvec_clear(), and incorrectly thought that it only
+reset its `nr` member to 0 but kept the array allocated (much like
+strbuf_reset()). That's why I thought it was only working "by
+accident". But, as you point out, strvec_clear() does free its
+allocated array (much like strbuf_release()), so -- with this patch
+applied -- each subsequent run_command() invocation is _definitely_
+accessing the dangling pointer in child_process::argv, and that
+dangling pointer would (in the "best" case) be referencing the
+original populated value of child_process::args, not the repopulated
+value. So, even if it didn't crash outright, it would just re-run the
+same command three times (unless by chance it reallocated the same
+memory it had freed earlier.)
 
-I am not saying that an empty directory should not be protected even
-when the current process sits there.  I just do not think it is a
-good idea to call the protection "we protect a non-empty directory".
-It is something else.
+> Thanks for spotting this.  Has this patch ever been tested with
+> sanitizer?  Do we have gap in test coverage?
+
+The question about potential gap in test coverage is a good one.
+Maybe, by chance it reallocated the same memory that it had earlier
+freed, thus did indeed work "by accident". Another possibility is that
+Ævar only ran the tests after applying the full patch series, in which
+case this dangling-pointer bug would be gone, rather than running the
+tests after each patch.
