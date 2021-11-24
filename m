@@ -2,740 +2,257 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95EBAC433EF
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 01:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99DE7C433F5
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 01:52:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233972AbhKXBk2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 20:40:28 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56724 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229729AbhKXBk2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 20:40:28 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 73551FFED5;
-        Tue, 23 Nov 2021 20:37:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=gPS7B65AmWqs
-        FpzTYgE45rgBpx9lbpMrdgQ/IUoEl44=; b=MNemlHC5ze2N/bzWtqgskb/Oc0Zk
-        4QFtZZ7qZSuiwyij32muHjcopJ2OtVSDxvqI9iH7fN9cPJzZzNeQfaLXGXGEVKjX
-        YIs9bB5VzqJ/95YV36zcjnq92NZ1FlzXDOOb2Hj5TQcDLFBJl5yDABe6fVLteBkW
-        dVw3UzrUgK5cCVE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6AE3FFFED4;
-        Tue, 23 Nov 2021 20:37:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF733FFED3;
-        Tue, 23 Nov 2021 20:37:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     Thorsten Leemhuis <linux@leemhuis.info>, workflows@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Jonathan Corbet <corbet@lwn.net>, git@vger.kernel.org
-Subject: Re: [RFC PATCH v1 1/1] docs: add the new commit-msg tags
- 'Reported:' and 'Reviewed:'
-References: <cover.1637566224.git.linux@leemhuis.info>
-        <6b760115ecdd3687d4b82680b284f55a04f3ad90.1637566224.git.linux@leemhuis.info>
-        <20211123185237.M476855@dcvr>
-Date:   Tue, 23 Nov 2021 17:37:16 -0800
-In-Reply-To: <20211123185237.M476855@dcvr> (Eric Wong's message of "Tue, 23
-        Nov 2021 18:52:37 +0000")
-Message-ID: <xmqq4k825o6r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237653AbhKXBzY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Nov 2021 20:55:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50382 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233344AbhKXBzY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Nov 2021 20:55:24 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F472C061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 17:52:15 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id x15so3124303edv.1
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 17:52:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=/ndq6H0V75ff3f4Tzg+rH12gGYrJhRE3Wf3wgMH54xw=;
+        b=d+Iv/DuM3oBIqH0APznN1ctNym+1/iJpHysBF2DBrQ2FHVpkMQeyf+6Ju2ogVt4g79
+         xlXPjODesfRmPJ50iB04drzggSVRmYEm2LDtmZ7KfCPoM+Q/Q6XmCeqme/B03x37v5gM
+         v2+skyn48Oy7td6LZEaL8wt80tkjBLBaiz9TH+Ura0tzcU0/Uv6Sp/DUHQaE8Z6hKo1c
+         1TjFZm8dy45aOKfUQ8lSTy78QWwqGetAEJW8jtVszUowOUmoOWxStCH5i5p1Kp0nsx0l
+         5cVlmNaLBQ+CFcTYiHehoqQFOoSnuE0mHCeR3ip5A+wEqDRpJ6aalm2O43Fih1xT8uUq
+         ezAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=/ndq6H0V75ff3f4Tzg+rH12gGYrJhRE3Wf3wgMH54xw=;
+        b=IitaaSq4+KjaJrk4DvgXRM/8IT5UOEf7k8bBe/lVdpB4QAQzvdFJ1o0YkqyDffodWt
+         ED+/CHnK9+uzrHflqBTnYoUB9szHRwVmiInH1SzxffSqYiM6zuUUIY47flSxYx4i41Ff
+         ml+V9NVkX//EE7Kr9uuWEBjpW4HP4bJJRWe5xXSuOXbPc+WcD9zOR4TNPRChlwEGcH73
+         zY9HU+UqsGOdSPlPYWi0FFX52kqfTNxIyoMaeRPj+uW5NGYfFQR6KgP989aUtXEr6ret
+         ++Nfud2wMJmbhrS7dLL6SYD1tkMAWw80nWQoQQKybhxdnXzdQw7MRDGfykrH4rlrG+QV
+         y+zQ==
+X-Gm-Message-State: AOAM532O1lXCCyLoewr2ZAE/hON9+8VO04QpNk3GmbIp3SgxzE8vxx7X
+        n9tiY4QR1yGNC5hEEqiVoLQNAxmFiPtxiw==
+X-Google-Smtp-Source: ABdhPJyKlHdnKrDrXi/V6+iMgAUFrlSpZ6k50lyUL3FSVdDmL84xYSoU4IuGM7ViKXzhR3ylbPcfYA==
+X-Received: by 2002:a50:da4e:: with SMTP id a14mr17893755edk.154.1637718733338;
+        Tue, 23 Nov 2021 17:52:13 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id de15sm5940389ejc.70.2021.11.23.17.52.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Nov 2021 17:52:12 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mphSF-00082w-UM;
+        Wed, 24 Nov 2021 02:52:11 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Albert Cui <albertcui@google.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [RFC PATCH 0/2] submodule: test what happens if
+ submodule.superprojectGitDir isn't around
+Date:   Wed, 24 Nov 2021 02:38:20 +0100
+References: <20211117005701.371808-1-emilyshaffer@google.com>
+ <RFC-cover-0.2-00000000000-20211117T113134Z-avarab@gmail.com>
+ <YZ1KLNwsxx7IR1+5@google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <YZ1KLNwsxx7IR1+5@google.com>
+Message-ID: <211124.86a6hue2wk.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0F1D462C-4CC7-11EC-B0BF-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
 
-> git send-email's capitalization does annoy me and I've looked
-> into changing it; but there's a bunch of tests and probably
-> dependent code that also need to be updated...
+On Tue, Nov 23 2021, Emily Shaffer wrote:
 
-It does annoy me, too, and I do not mind if it gets "fixed", but I
-do not know if the cost for vetting a bulk update like that is worth
-it.  There is another one outside send-email in log-tree.c that is
-responsible for output from format-patch.
+> On Wed, Nov 17, 2021 at 12:43:38PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>=20
+>> On Tue, Nov 16 2021, Emily Shaffer wrote:
+>>=20
+>> > [...]
+>> > A couple things. Firstly, a semantics change *back* to the semantics of
+>> > v3 - we map from gitdir to gitdir, *not* from common dir to common dir,
+>> > so that theoretically a submodule with multiple worktrees in multiple
+>> > superproject worktrees will be able to figure out which worktree of the
+>> > superproject it's in. (Realistically, that's not really possible right
+>> > now, but I'd like to change that soon.)
+>> >
+>> > Secondly, a rewording of comments and commit messages to indicate that
+>> > this isn't a cache of some expensive operation, but rather intended to
+>> > be the source of truth for all submodules. I also added a fifth commit
+>> > rewriting `git rev-parse --show-superproject-working-tree` to
+>> > demonstrate what that means in practice - but from a practical
+>> > standpoint, I'm a little worried about that fifth patch. More details =
+in
+>> > the patch 5 description.
+>> >
+>> > I did discuss =C3=86var's idea of relying on in-process filesystem dig=
+ging to
+>> > find the superproject's gitdir with the rest of the Google team, but in
+>> > the end decided that there are some worries about filesystem digging in
+>> > this way (namely, some ugly interactions with network drives that are
+>> > actually already an issue for Googler Linux machines). Plus, the allure
+>> > of being able to definitively know that we're a submodule is pretty
+>> > strong. ;) But overall, this is the direction I'd prefer to keep
+>> > going
+>> > in, rather than trying to guess from the filesystem going forward.
+>>=20
+>> Did you try running the ad-hoc benchmark I included in [1] on that
+>> Google NFS? I've dealt with some slow-ish network filesystems, but if
+>> it's slower than AIX's local FS (where I couldn't see a difference) I'd
+>> put money on it being a cross-Atlantic mount or something :)
+>>=20
+>> Re your:
+>>=20
+>>     "this isn't a cache of some expensive operation, but rather
+>> intended to be the source of truth for all submodules."
+>>=20
+>> In your 5/5 it says, in seeming contradiction to this:
+>>=20
+>>     This commit may be more of an RFC - to demonstrate what life looks l=
+ike
+>>     if we use submodule.superprojectGitDir as the source of truth. But s=
+ince
+>>     'git rev-parse --show-superproject-working-tree' is used in a lot of
+>>     scripts in the wild[1], I'm not so sure it's a great example.
+>>=20
+>>     To be honest, I'd prefer to die("Try running 'git submodule update'")
+>>     here, but I don't think that's very script-friendly. However, falling
+>>     back on the old implementation kind of undermines the idea of treati=
+ng
+>>     submodule.superprojectGitDir as the point of truth.
+>>=20
+>> Most of what I've been suggesting in my [1] and related is that I'm
+>> confused about if & how this is a pure caching mechanism.
+>>=20
+>> Removing mentions of it being a cache but it seemingly still being a
+>> cache at the tip of this series has just added to that confusion for
+>> me :)
+>
+> Yeah, I think this was a bad choice for me to include that patch. I was
+> really hopeful that I could show off "look, we don't need to ever hunt
+> in the FS above us", but for established repos, that's a bad idea
+> (because lots of people are already using this 'git rev-parse
+> --show-superproject-work-tree' thing in scripts, like I mentioned). So I
+> think it was a mistake to include it at all. Rather, I think it's
+> probably a better idea to treat that particular entry point as "legacy"
+> and implement other things using 'submodule.superprojectGitDir'
+> directly.
+>
+> Because the patch 5 illustrates: "I'm saying that this new config isn't
+> a cache, but look, here's how I can treat it like a cache that might be
+> invalid and here's how I can fall back on a potentially expensive
+> operation anyways." I think I could have illustrated it a little better
+> with something like "here's a brand new 'git rev-parse
+> --show-superproject-gitdir'" which directly calls on the new config.
+>
+> So, sorry about that.
 
-Here is the extent of damage in my trial change that seems to pass
-the tests locally.
+The RFC series here shows that the config & the on-the-fly discovery 1=3D1
+map to each other (at least in terms of the tests your series adds).
 
- Documentation/MyFirstContribution.txt | 14 ++++-----
- Documentation/git-format-patch.txt    |  4 +--
- Documentation/git-send-email.txt      |  2 +-
- git-send-email.perl                   |  4 +--
- log-tree.c                            |  2 +-
- mailinfo.c                            |  4 +--
- t/t4014-format-patch.sh               | 56 +++++++++++++++++------------=
-------
- t/t4150-am.sh                         |  8 ++---
- t/t4258/mbox                          |  2 +-
- t/t5100/msg0002                       |  2 +-
- t/t5100/msg0003                       |  2 +-
- t/t5100/msg0012--message-id           |  2 +-
- t/t5100/quoted-cr.mbox                |  4 +--
- t/t5100/sample.mbox                   |  6 ++--
- t/t9001-send-email.sh                 | 38 ++++++++++++------------
- 15 files changed, 75 insertions(+), 75 deletions(-)
+Why wouldn't the same be the case with a --show-superproject-gitdir?
+Unless the fallback implementation was intentionally removed.
 
-diff --git i/Documentation/MyFirstContribution.txt w/Documentation/MyFirs=
-tContribution.txt
-index b20bc8e914..91cb204d52 100644
---- i/Documentation/MyFirstContribution.txt
-+++ w/Documentation/MyFirstContribution.txt
-@@ -1071,21 +1071,21 @@ between your last version and now, if it's someth=
-ing significant. You do not
- need the exact same body in your second cover letter; focus on explainin=
-g to
- reviewers the changes you've made that may not be as visible.
-=20
--You will also need to go and find the Message-Id of your previous cover =
-letter.
-+You will also need to go and find the Message-ID of your previous cover =
-letter.
- You can either note it when you send the first series, from the output o=
-f `git
- send-email`, or you can look it up on the
- https://lore.kernel.org/git[mailing list]. Find your cover letter in the
--archives, click on it, then click "permalink" or "raw" to reveal the Mes=
-sage-Id
-+archives, click on it, then click "permalink" or "raw" to reveal the Mes=
-sage-ID
- header. It should match:
-=20
- ----
--Message-Id: <foo.12345.author@example.com>
-+Message-ID: <foo.12345.author@example.com>
- ----
-=20
--Your Message-Id is `<foo.12345.author@example.com>`. This example will b=
-e used
--below as well; make sure to replace it with the correct Message-Id for y=
-our
--**previous cover letter** - that is, if you're sending v2, use the Messa=
-ge-Id
--from v1; if you're sending v3, use the Message-Id from v2.
-+Your Message-ID is `<foo.12345.author@example.com>`. This example will b=
-e used
-+below as well; make sure to replace it with the correct Message-ID for y=
-our
-+**previous cover letter** - that is, if you're sending v2, use the Messa=
-ge-ID
-+from v1; if you're sending v3, use the Message-ID from v2.
-=20
- While you're looking at the email, you should also note who is CC'd, as =
-it's
- common practice in the mailing list to keep all CCs on a thread. You can=
- add
-diff --git i/Documentation/git-format-patch.txt w/Documentation/git-forma=
-t-patch.txt
-index 113eabc107..daf911f249 100644
---- i/Documentation/git-format-patch.txt
-+++ w/Documentation/git-format-patch.txt
-@@ -99,7 +99,7 @@ To omit patch numbers from the subject, use `-N`.
-=20
- If given `--thread`, `git-format-patch` will generate `In-Reply-To` and
- `References` headers to make the second and subsequent patch mails appea=
-r
--as replies to the first mail; this also generates a `Message-Id` header =
-to
-+as replies to the first mail; this also generates a `Message-ID` header =
-to
- reference.
-=20
- OPTIONS
-@@ -163,7 +163,7 @@ include::diff-options.txt[]
- --no-thread::
- 	Controls addition of `In-Reply-To` and `References` headers to
- 	make the second and subsequent mails appear as replies to the
--	first.  Also controls generation of the `Message-Id` header to
-+	first.  Also controls generation of the `Message-ID` header to
- 	reference.
- +
- The optional <style> argument can be either `shallow` or `deep`.
-diff --git i/Documentation/git-send-email.txt w/Documentation/git-send-em=
-ail.txt
-index 3db4eab4ba..086f132229 100644
---- i/Documentation/git-send-email.txt
-+++ w/Documentation/git-send-email.txt
-@@ -91,7 +91,7 @@ See the CONFIGURATION section for `sendemail.multiEdit`=
-.
-=20
- --in-reply-to=3D<identifier>::
- 	Make the first mail (or all the mails with `--no-thread`) appear as a
--	reply to the given Message-Id, which avoids breaking threads to
-+	reply to the given Message-ID, which avoids breaking threads to
- 	provide a new patch series.
- 	The second and subsequent emails will be sent as replies according to
- 	the `--[no-]chain-reply-to` setting.
-diff --git i/git-send-email.perl w/git-send-email.perl
-index 5262d88ee3..a61134c7d3 100755
---- i/git-send-email.perl
-+++ w/git-send-email.perl
-@@ -1494,7 +1494,7 @@ sub send_message {
- To: $to${ccline}
- Subject: $subject
- Date: $date
--Message-Id: $message_id
-+Message-ID: $message_id
- ";
- 	if ($use_xmailer) {
- 		$header .=3D "X-Mailer: git-send-email $gitversion\n";
-@@ -1789,7 +1789,7 @@ sub process_file {
- 				$has_mime_version =3D 1;
- 				push @xh, $_;
- 			}
--			elsif (/^Message-Id: (.*)/i) {
-+			elsif (/^Message-ID: (.*)/i) {
- 				$message_id =3D $1;
- 			}
- 			elsif (/^Content-Transfer-Encoding: (.*)/i) {
-diff --git i/log-tree.c w/log-tree.c
-index 644893fd8c..818cea5f12 100644
---- i/log-tree.c
-+++ w/log-tree.c
-@@ -428,7 +428,7 @@ void log_write_email_headers(struct rev_info *opt, st=
-ruct commit *commit,
- 	fprintf(opt->diffopt.file, "From %s Mon Sep 17 00:00:00 2001\n", name);
- 	graph_show_oneline(opt->graph);
- 	if (opt->message_id) {
--		fprintf(opt->diffopt.file, "Message-Id: <%s>\n", opt->message_id);
-+		fprintf(opt->diffopt.file, "Message-ID: <%s>\n", opt->message_id);
- 		graph_show_oneline(opt->graph);
- 	}
- 	if (opt->ref_message_ids && opt->ref_message_ids->nr > 0) {
-diff --git i/mailinfo.c w/mailinfo.c
-index 02f6f95357..855349cc0e 100644
---- i/mailinfo.c
-+++ w/mailinfo.c
-@@ -597,7 +597,7 @@ static int check_header(struct mailinfo *mi,
- 		ret =3D 1;
- 		goto check_header_out;
- 	}
--	if (parse_header(line, "Message-Id", mi, &sb)) {
-+	if (parse_header(line, "Message-ID", mi, &sb)) {
- 		if (mi->add_message_id)
- 			mi->message_id =3D strbuf_detach(&sb, NULL);
- 		ret =3D 1;
-@@ -829,7 +829,7 @@ static int handle_commit_msg(struct mailinfo *mi, str=
-uct strbuf *line)
- 	if (patchbreak(line)) {
- 		if (mi->message_id)
- 			strbuf_addf(&mi->log_message,
--				    "Message-Id: %s\n", mi->message_id);
-+				    "Message-ID: %s\n", mi->message_id);
- 		return 1;
- 	}
-=20
-diff --git i/t/t4014-format-patch.sh w/t/t4014-format-patch.sh
-index 712d4b5ddf..973899d165 100755
---- i/t/t4014-format-patch.sh
-+++ w/t/t4014-format-patch.sh
-@@ -445,13 +445,13 @@ test_expect_success 'no threading' '
-=20
- cat >expect.thread <<EOF
- ---
--Message-Id: <0>
-+Message-ID: <0>
- ---
--Message-Id: <1>
-+Message-ID: <1>
- In-Reply-To: <0>
- References: <0>
- ---
--Message-Id: <2>
-+Message-ID: <2>
- In-Reply-To: <0>
- References: <0>
- EOF
-@@ -462,15 +462,15 @@ test_expect_success 'thread' '
-=20
- cat >expect.in-reply-to <<EOF
- ---
--Message-Id: <0>
-+Message-ID: <0>
- In-Reply-To: <1>
- References: <1>
- ---
--Message-Id: <2>
-+Message-ID: <2>
- In-Reply-To: <1>
- References: <1>
- ---
--Message-Id: <3>
-+Message-ID: <3>
- In-Reply-To: <1>
- References: <1>
- EOF
-@@ -482,17 +482,17 @@ test_expect_success 'thread in-reply-to' '
-=20
- cat >expect.cover-letter <<EOF
- ---
--Message-Id: <0>
-+Message-ID: <0>
- ---
--Message-Id: <1>
-+Message-ID: <1>
- In-Reply-To: <0>
- References: <0>
- ---
--Message-Id: <2>
-+Message-ID: <2>
- In-Reply-To: <0>
- References: <0>
- ---
--Message-Id: <3>
-+Message-ID: <3>
- In-Reply-To: <0>
- References: <0>
- EOF
-@@ -503,21 +503,21 @@ test_expect_success 'thread cover-letter' '
-=20
- cat >expect.cl-irt <<EOF
- ---
--Message-Id: <0>
-+Message-ID: <0>
- In-Reply-To: <1>
- References: <1>
- ---
--Message-Id: <2>
-+Message-ID: <2>
- In-Reply-To: <0>
- References: <1>
- 	<0>
- ---
--Message-Id: <3>
-+Message-ID: <3>
- In-Reply-To: <0>
- References: <1>
- 	<0>
- ---
--Message-Id: <4>
-+Message-ID: <4>
- In-Reply-To: <0>
- References: <1>
- 	<0>
-@@ -535,13 +535,13 @@ test_expect_success 'thread explicit shallow' '
-=20
- cat >expect.deep <<EOF
- ---
--Message-Id: <0>
-+Message-ID: <0>
- ---
--Message-Id: <1>
-+Message-ID: <1>
- In-Reply-To: <0>
- References: <0>
- ---
--Message-Id: <2>
-+Message-ID: <2>
- In-Reply-To: <1>
- References: <0>
- 	<1>
-@@ -553,16 +553,16 @@ test_expect_success 'thread deep' '
-=20
- cat >expect.deep-irt <<EOF
- ---
--Message-Id: <0>
-+Message-ID: <0>
- In-Reply-To: <1>
- References: <1>
- ---
--Message-Id: <2>
-+Message-ID: <2>
- In-Reply-To: <0>
- References: <1>
- 	<0>
- ---
--Message-Id: <3>
-+Message-ID: <3>
- In-Reply-To: <2>
- References: <1>
- 	<0>
-@@ -576,18 +576,18 @@ test_expect_success 'thread deep in-reply-to' '
-=20
- cat >expect.deep-cl <<EOF
- ---
--Message-Id: <0>
-+Message-ID: <0>
- ---
--Message-Id: <1>
-+Message-ID: <1>
- In-Reply-To: <0>
- References: <0>
- ---
--Message-Id: <2>
-+Message-ID: <2>
- In-Reply-To: <1>
- References: <0>
- 	<1>
- ---
--Message-Id: <3>
-+Message-ID: <3>
- In-Reply-To: <2>
- References: <0>
- 	<1>
-@@ -600,22 +600,22 @@ test_expect_success 'thread deep cover-letter' '
-=20
- cat >expect.deep-cl-irt <<EOF
- ---
--Message-Id: <0>
-+Message-ID: <0>
- In-Reply-To: <1>
- References: <1>
- ---
--Message-Id: <2>
-+Message-ID: <2>
- In-Reply-To: <0>
- References: <1>
- 	<0>
- ---
--Message-Id: <3>
-+Message-ID: <3>
- In-Reply-To: <2>
- References: <1>
- 	<0>
- 	<2>
- ---
--Message-Id: <4>
-+Message-ID: <4>
- In-Reply-To: <3>
- References: <1>
- 	<0>
-diff --git i/t/t4150-am.sh w/t/t4150-am.sh
-index 2aaaa0d7de..f41418c6e9 100755
---- i/t/t4150-am.sh
-+++ w/t/t4150-am.sh
-@@ -103,7 +103,7 @@ test_expect_success setup '
-=20
- 	git format-patch --stdout first >patch1 &&
- 	{
--		echo "Message-Id: <1226501681-24923-1-git-send-email-bda@mnsspb.ru>" &=
-&
-+		echo "Message-ID: <1226501681-24923-1-git-send-email-bda@mnsspb.ru>" &=
-&
- 		echo "X-Fake-Field: Line One" &&
- 		echo "X-Fake-Field: Line Two" &&
- 		echo "X-Fake-Field: Line Three" &&
-@@ -916,7 +916,7 @@ test_expect_success 'am --message-id really adds the =
-message id' '
- 	git am --message-id patch1.eml &&
- 	test_path_is_missing .git/rebase-apply &&
- 	git cat-file commit HEAD | tail -n1 >actual &&
--	grep Message-Id patch1.eml >expected &&
-+	grep Message-ID patch1.eml >expected &&
- 	test_cmp expected actual
- '
-=20
-@@ -928,7 +928,7 @@ test_expect_success 'am.messageid really adds the mes=
-sage id' '
- 	git am patch1.eml &&
- 	test_path_is_missing .git/rebase-apply &&
- 	git cat-file commit HEAD | tail -n1 >actual &&
--	grep Message-Id patch1.eml >expected &&
-+	grep Message-ID patch1.eml >expected &&
- 	test_cmp expected actual
- '
-=20
-@@ -939,7 +939,7 @@ test_expect_success 'am --message-id -s signs off aft=
-er the message id' '
- 	git am -s --message-id patch1.eml &&
- 	test_path_is_missing .git/rebase-apply &&
- 	git cat-file commit HEAD | tail -n2 | head -n1 >actual &&
--	grep Message-Id patch1.eml >expected &&
-+	grep Message-ID patch1.eml >expected &&
- 	test_cmp expected actual
- '
-=20
-diff --git i/t/t4258/mbox w/t/t4258/mbox
-index c62819f3d2..1ae528ba78 100644
---- i/t/t4258/mbox
-+++ w/t/t4258/mbox
-@@ -2,7 +2,7 @@ From: A U Thor <mail@example.com>
- To: list@example.org
- Subject: [PATCH v2] sample
- Date: Mon,  3 Aug 2020 22:40:55 +0700
--Message-Id: <msg-id@example.com>
-+Message-ID: <msg-id@example.com>
- Content-Type: text/plain; charset=3D"utf-8"
- Content-Transfer-Encoding: base64
-=20
-diff --git i/t/t5100/msg0002 w/t/t5100/msg0002
-index e2546ec733..1089382425 100644
---- i/t/t5100/msg0002
-+++ w/t/t5100/msg0002
-@@ -3,7 +3,7 @@ message:
-=20
- From: Nit Picker <nit.picker@example.net>
- Subject: foo is too old
--Message-Id: <nitpicker.12121212@example.net>
-+Message-ID: <nitpicker.12121212@example.net>
-=20
- Hopefully this would fix the problem stated there.
-=20
-diff --git i/t/t5100/msg0003 w/t/t5100/msg0003
-index 1ac68101b1..3402b534a6 100644
---- i/t/t5100/msg0003
-+++ w/t/t5100/msg0003
-@@ -3,7 +3,7 @@ message:
-=20
- From: Nit Picker <nit.picker@example.net>
- Subject: foo is too old
--Message-Id: <nitpicker.12121212@example.net>
-+Message-ID: <nitpicker.12121212@example.net>
-=20
- Hopefully this would fix the problem stated there.
-=20
-diff --git i/t/t5100/msg0012--message-id w/t/t5100/msg0012--message-id
-index 376e26e9ae..44482958ce 100644
---- i/t/t5100/msg0012--message-id
-+++ w/t/t5100/msg0012--message-id
-@@ -5,4 +5,4 @@ docutils =D0=B7=D0=B0=D0=BC=D0=B5=D0=BD=D1=91=D0=BD =D0=BD=
-=D0=B0 python-docutils
- python-docutils. =D0=92 =D1=82=D0=BE =D0=B2=D1=80=D0=B5=D0=BC=D1=8F =D0=BA=
-=D0=B0=D0=BA =D1=81=D0=B0=D0=BC rest2web =D0=BD=D0=B5 =D0=BD=D1=83=D0=B6=D0=
-=B5=D0=BD.
-=20
- Signed-off-by: Dmitriy Blinov <bda@mnsspb.ru>
--Message-Id: <1226501681-24923-1-git-send-email-bda@mnsspb.ru>
-+Message-ID: <1226501681-24923-1-git-send-email-bda@mnsspb.ru>
-diff --git i/t/t5100/quoted-cr.mbox w/t/t5100/quoted-cr.mbox
-index 909021bb7a..a529d4de08 100644
---- i/t/t5100/quoted-cr.mbox
-+++ w/t/t5100/quoted-cr.mbox
-@@ -3,7 +3,7 @@ From: A U Thor <mail@example.com>
- To: list@example.org
- Subject: [PATCH v2] sample
- Date: Mon,  3 Aug 2020 22:40:55 +0700
--Message-Id: <msg-id@example.com>
-+Message-ID: <msg-id@example.com>
- Content-Type: text/plain; charset=3D"utf-8"
- Content-Transfer-Encoding: base64
-=20
-@@ -27,7 +27,7 @@ From: A U Thor <mail@example.com>
- To: list@example.org
- Subject: [PATCH v2] sample
- Date: Mon,  3 Aug 2020 22:40:55 +0700
--Message-Id: <msg-id2@example.com>
-+Message-ID: <msg-id2@example.com>
- Content-Type: text/plain; charset=3D"utf-8"
- Content-Transfer-Encoding: base64
-=20
-diff --git i/t/t5100/sample.mbox w/t/t5100/sample.mbox
-index 6d4d0e4474..4a54ee5171 100644
---- i/t/t5100/sample.mbox
-+++ w/t/t5100/sample.mbox
-@@ -35,7 +35,7 @@ message:
-=20
- From: Nit Picker <nit.picker@example.net>
- Subject: foo is too old
--Message-Id: <nitpicker.12121212@example.net>
-+Message-ID: <nitpicker.12121212@example.net>
-=20
- Hopefully this would fix the problem stated there.
-=20
-@@ -78,7 +78,7 @@ message:
-=20
- From: Nit Picker <nit.picker@example.net>
- Subject: foo is too old
--Message-Id: <nitpicker.12121212@example.net>
-+Message-ID: <nitpicker.12121212@example.net>
-=20
- Hopefully this would fix the problem stated there.
-=20
-@@ -508,7 +508,7 @@ From bda@mnsspb.ru Wed Nov 12 17:54:41 2008
- From: Dmitriy Blinov <bda@mnsspb.ru>
- To: navy-patches@dinar.mns.mnsspb.ru
- Date: Wed, 12 Nov 2008 17:54:41 +0300
--Message-Id: <1226501681-24923-1-git-send-email-bda@mnsspb.ru>
-+Message-ID: <1226501681-24923-1-git-send-email-bda@mnsspb.ru>
- X-Mailer: git-send-email 1.5.6.5
- MIME-Version: 1.0
- Content-Type: text/plain;
-diff --git i/t/t9001-send-email.sh w/t/t9001-send-email.sh
-index aa0c20499b..ce09cf1fe3 100755
---- i/t/t9001-send-email.sh
-+++ w/t/t9001-send-email.sh
-@@ -11,7 +11,7 @@ PREREQ=3D"PERL"
-=20
- replace_variable_fields () {
- 	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
--		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
-+		-e "s/^\(Message-ID:\).*/\1 MESSAGE-ID-STRING/" \
- 		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/"
- }
-=20
-@@ -224,7 +224,7 @@ Cc: cc@example.com,
- 	two@example.com
- Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
--Message-Id: MESSAGE-ID-STRING
-+Message-ID: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
- In-Reply-To: <unique-message-id@example.com>
- References: <unique-message-id@example.com>
-@@ -616,7 +616,7 @@ test_expect_success $PREREQ 'In-Reply-To without --ch=
-ain-reply-to' '
- 	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt1 >actual &&
- 	test_cmp expect actual &&
- 	# Second and subsequent messages are replies to the first one
--	sed -n -e "s/^Message-Id: *\(.*\)/\1/p" msgtxt1 >expect &&
-+	sed -n -e "s/^Message-ID: *\(.*\)/\1/p" msgtxt1 >expect &&
- 	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt2 >actual &&
- 	test_cmp expect actual &&
- 	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt3 >actual &&
-@@ -636,10 +636,10 @@ test_expect_success $PREREQ 'In-Reply-To with --cha=
-in-reply-to' '
- 		2>errors &&
- 	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt1 >actual &&
- 	test_cmp expect actual &&
--	sed -n -e "s/^Message-Id: *\(.*\)/\1/p" msgtxt1 >expect &&
-+	sed -n -e "s/^Message-ID: *\(.*\)/\1/p" msgtxt1 >expect &&
- 	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt2 >actual &&
- 	test_cmp expect actual &&
--	sed -n -e "s/^Message-Id: *\(.*\)/\1/p" msgtxt2 >expect &&
-+	sed -n -e "s/^Message-ID: *\(.*\)/\1/p" msgtxt2 >expect &&
- 	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt3 >actual &&
- 	test_cmp expect actual
- '
-@@ -712,7 +712,7 @@ Cc: cc@example.com,
- 	two@example.com
- Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
--Message-Id: MESSAGE-ID-STRING
-+Message-ID: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
- MIME-Version: 1.0
- Content-Transfer-Encoding: 8bit
-@@ -758,7 +758,7 @@ Cc: A <author@example.com>,
- 	two@example.com
- Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
--Message-Id: MESSAGE-ID-STRING
-+Message-ID: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
- MIME-Version: 1.0
- Content-Transfer-Encoding: 8bit
-@@ -795,7 +795,7 @@ Cc: A <author@example.com>,
- 	C O Mitter <committer@example.com>
- Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
--Message-Id: MESSAGE-ID-STRING
-+Message-ID: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
- MIME-Version: 1.0
- Content-Transfer-Encoding: 8bit
-@@ -823,7 +823,7 @@ From: Example <from@example.com>
- To: to@example.com
- Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
--Message-Id: MESSAGE-ID-STRING
-+Message-ID: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
- MIME-Version: 1.0
- Content-Transfer-Encoding: 8bit
-@@ -859,7 +859,7 @@ Cc: A <author@example.com>,
- 	cc-cmd@example.com
- Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
--Message-Id: MESSAGE-ID-STRING
-+Message-ID: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
- MIME-Version: 1.0
- Content-Transfer-Encoding: 8bit
-@@ -892,7 +892,7 @@ Cc: A <author@example.com>,
- 	two@example.com
- Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
--Message-Id: MESSAGE-ID-STRING
-+Message-ID: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
- MIME-Version: 1.0
- Content-Transfer-Encoding: 8bit
-@@ -925,7 +925,7 @@ Cc: A <author@example.com>,
- 	two@example.com
- Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
--Message-Id: MESSAGE-ID-STRING
-+Message-ID: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
- MIME-Version: 1.0
- Content-Transfer-Encoding: 8bit
-@@ -962,7 +962,7 @@ Cc: A <author@example.com>,
- 	C O Mitter <committer@example.com>
- Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
--Message-Id: MESSAGE-ID-STRING
-+Message-ID: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
- MIME-Version: 1.0
- Content-Transfer-Encoding: 8bit
-@@ -992,7 +992,7 @@ Cc: A <author@example.com>,
- 	C O Mitter <committer@example.com>
- Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
--Message-Id: MESSAGE-ID-STRING
-+Message-ID: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
- MIME-Version: 1.0
- Content-Transfer-Encoding: 8bit
-@@ -1477,7 +1477,7 @@ test_expect_success $PREREQ 'To headers from files =
-reset each patch' '
- test_expect_success $PREREQ 'setup expect' '
- cat >email-using-8bit <<\EOF
- From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
--Message-Id: <bogus-message-id@example.com>
-+Message-ID: <bogus-message-id@example.com>
- From: author@example.com
- Date: Sat, 12 Jun 2010 15:53:58 +0200
- Subject: subject goes here
-@@ -1563,7 +1563,7 @@ test_expect_success $PREREQ '--8bit-encoding overri=
-des sendemail.8bitEncoding' '
- test_expect_success $PREREQ 'setup expect' '
- 	cat >email-using-8bit <<-\EOF
- 	From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
--	Message-Id: <bogus-message-id@example.com>
-+	Message-ID: <bogus-message-id@example.com>
- 	From: author@example.com
- 	Date: Sat, 12 Jun 2010 15:53:58 +0200
- 	Subject: Dieser Betreff enth=C3=A4lt auch einen Umlaut!
-@@ -1592,7 +1592,7 @@ test_expect_success $PREREQ '--8bit-encoding also t=
-reats subject' '
- test_expect_success $PREREQ 'setup expect' '
- 	cat >email-using-8bit <<-\EOF
- 	From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
--	Message-Id: <bogus-message-id@example.com>
-+	Message-ID: <bogus-message-id@example.com>
- 	From: A U Thor <author@example.com>
- 	Date: Sat, 12 Jun 2010 15:53:58 +0200
- 	Content-Type: text/plain; charset=3DUTF-8
-@@ -1673,7 +1673,7 @@ test_expect_success $PREREQ '8-bit and sendemail.tr=
-ansferencoding=3Dbase64' '
- test_expect_success $PREREQ 'setup expect' '
- 	cat >email-using-qp <<-\EOF
- 	From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
--	Message-Id: <bogus-message-id@example.com>
-+	Message-ID: <bogus-message-id@example.com>
- 	From: A U Thor <author@example.com>
- 	Date: Sat, 12 Jun 2010 15:53:58 +0200
- 	MIME-Version: 1.0
-@@ -1699,7 +1699,7 @@ test_expect_success $PREREQ 'convert from quoted-pr=
-intable to base64' '
- test_expect_success $PREREQ 'setup expect' "
- tr -d '\\015' | tr '%' '\\015' >email-using-crlf <<EOF
- From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
--Message-Id: <bogus-message-id@example.com>
-+Message-ID: <bogus-message-id@example.com>
- From: A U Thor <author@example.com>
- Date: Sat, 12 Jun 2010 15:53:58 +0200
- Content-Type: text/plain; charset=3DUTF-8
+>>=20
+>> Anyway. While I do think this caching mechanism is probably
+>> unnecessary in the short to medium term, i.e. it seems to the extent
+>> that it was ever needed was due to some bridging of *.sh<->*.c that
+>> we're *this* close to eliminating anyway.
+>>=20
+>> But maybe I'm wrong. The benchmark I suggested above on that Google
+>> NFS might be indicative. I don't really see how something that'll be
+>> doing a bunch of FS ops anyway is going to be noticeably slower with
+>> that approach, but maybe opening the index/tree of the superproject is
+>> more expensive than I'm expecting.
+>>=20
+>> In any case, all of that's not the hill I'm picking to die on. If
+>> you'd like to go ahead with this cache-or-not-a-cache then sure, I
+>> won't belabor that point.
+>
+> Yeah, I think I would. I've heard some serious reservations from others
+> on my team about trying to use filesystem traversal here at all, so I
+> think that would be an uphill battle.
+
+Do they have any benchmarks to share? :)
+
+>>=20
+>> I *do* strongly think if we're doing so though that we should have
+>> something like this on top. I.e. let's test wha happens if we do and
+>> don't have this "caching" variable, which is demonstrably easy to do.
+>>=20
+>> Benchmarking the two gives me:
+>>=20
+>>     $ git hyperfine -L rev HEAD~0 -L s true,false -s 'make -j8 all' '(cd=
+ t && GIT_TEST_SUBMODULE_CACHE_SUPERPROJECT_DIR=3D{s} ./t7412-submodule-abs=
+orbgitdirs.sh)'
+>>     Benchmark 1: (cd t && GIT_TEST_SUBMODULE_CACHE_SUPERPROJECT_DIR=3Dtr=
+ue ./t7412-submodule-absorbgitdirs.sh)' in 'HEAD~0
+>>       Time (mean =C2=B1 =CF=83):     545.9 ms =C2=B1   1.6 ms    [User: =
+490.3 ms, System: 114.0 ms]
+>>       Range (min =E2=80=A6 max):   543.5 ms =E2=80=A6 548.1 ms    10 runs
+>>=20=20=20=20=20=20
+>>     Benchmark 2: (cd t && GIT_TEST_SUBMODULE_CACHE_SUPERPROJECT_DIR=3Dfa=
+lse ./t7412-submodule-absorbgitdirs.sh)' in 'HEAD~0
+>>       Time (mean =C2=B1 =CF=83):     537.9 ms =C2=B1  11.4 ms    [User: =
+476.8 ms, System: 117.6 ms]
+>>       Range (min =E2=80=A6 max):   532.7 ms =E2=80=A6 570.1 ms    10 runs
+>>=20=20=20=20=20=20
+>>     Summary
+>>       '(cd t && GIT_TEST_SUBMODULE_CACHE_SUPERPROJECT_DIR=3Dfalse ./t741=
+2-submodule-absorbgitdirs.sh)' in 'HEAD~0' ran
+>>         1.01 =C2=B1 0.02 times faster than '(cd t && GIT_TEST_SUBMODULE_=
+CACHE_SUPERPROJECT_DIR=3Dtrue ./t7412-submodule-absorbgitdirs.sh)' in 'HEAD=
+~0'
+>>=20
+>> I.e. not using the cache is either indistinguishable or a bit faster
+>> (the "a bit faster" is definitely due to just running less test code
+>> though).
+>
+> Yeah, once again, I think it is better to treat "git rev-parse
+> --show-superproject-work-tree" as "legacy" and to rely solely on the
+> config for new options, meaning that "what happens without this
+> variable" is as simple as "we treat it like it's a standalone repository
+> with no superproject", rather than a performance difference at all.
+
+Why would it be better to have a hard reliance on the config for new
+features or options? Your original CL says[1]:
+
+    It's expensive and non-definitive to try and guess whether or not the
+    current repo is a submodule.
+
+Maybe that's the case somewhere, I haven't been able to dig up the
+"expensive" part (aside from the fixable case of exec-ing rev-parse in a
+loop).
+
+Which leaves "non-definitive", that may be the case, but as the RFC
+patches here show if there is such a case, it's not covered by any of
+your existing tests in this series.
+
+I'd think if those two things hold true (not expensive, and we can
+unambiguously discover it on the fly) our bias should be towards not
+introducing an indirection in the config, as such a thing needs to be
+kept up-to-date, and which may become inaccurate for whatever
+reason. Whereas the FS relationship between the won't ever be
+out-of-date.
+
+1. https://lore.kernel.org/git/20210611225428.1208973-1-emilyshaffer@google=
+.com
