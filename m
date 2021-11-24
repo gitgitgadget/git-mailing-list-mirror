@@ -2,108 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A420C433FE
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 15:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5101BC433EF
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 15:15:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232312AbhKXPNt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Nov 2021 10:13:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57748 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231848AbhKXPNs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Nov 2021 10:13:48 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CC68C061574
-        for <git@vger.kernel.org>; Wed, 24 Nov 2021 07:10:38 -0800 (PST)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2600:1700:f991:38c0::485])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 9223F5B462;
-        Wed, 24 Nov 2021 15:10:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1637766637;
-        bh=P22pGueTMd7fZq5eGyNfp6Ug3MrSYO0hfM2BsBbJTWM=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=UZTKLsjq3DsvrEpbfPoOh3EOiCyjeA5g+j8JMEg6KqNDc1PM4KBYfyzeCuRcVOgop
-         mizag2CSNVvrf8dRJRwaXBnsdiIB9Is6TtUxIq5FSRq6v0MTL/004LgJE0nLrQoItT
-         xNH6L8CYVRDMlnV9pRPAfybdht9tRaKssllULyufWy0GS5L+Dy88DifPWaxn4yIWB4
-         WF7ak6+pZEHDoR3UhAfVjsTxXS9uhhq9dF09dHjKYW/HXzxBxaOqZxTxDFpdOVaU47
-         DlEvaVnukRMUSDB4guSZilBkauKrIb3Ptbc0b/ozAkjLBBz9G1PIHEH6p3HhgZZA7d
-         IEx+S9egyOHWzR1kCC+YzGalRr1jtMSaPcCILhTipC159lzwZOAtHr0myPRhfBtl7y
-         RRndzrECg3e9AkJwkTQ+cUzi6wUOXJ7SLkRe0rQuYUUO3N9Q24u8O46Qya9biYDoEQ
-         PHbtvxJtG+72xLmQFBMp94EoRgFaXTva9PNewe+Rw2bEodYAbeV
-Date:   Wed, 24 Nov 2021 15:10:12 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/1] git-compat-util: add a test balloon for C99 supporty
-Message-ID: <YZ5V1I7Mj5dx/pMt@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-References: <xmqqk0h7423v.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2111221242320.63@tvgsbejvaqbjf.bet>
- <xmqq1r38hzi9.fsf@gitster.g>
- <CAPUEspibE6AMyoxwJGno9R=21JU5MpFVGBxCQYBCbCBwx-y25A@mail.gmail.com>
- <xmqq8rxgf254.fsf@gitster.g>
- <xmqqv90jewwa.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2111222300580.63@tvgsbejvaqbjf.bet>
- <xmqqwnkzdepm.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2111231331530.63@tvgsbejvaqbjf.bet>
- <xmqq8rxe8w49.fsf@gitster.g>
+        id S233084AbhKXPSx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Nov 2021 10:18:53 -0500
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:45579 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230158AbhKXPSv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Nov 2021 10:18:51 -0500
+Received: by mail-ed1-f42.google.com with SMTP id y12so11855237eda.12
+        for <git@vger.kernel.org>; Wed, 24 Nov 2021 07:15:41 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Z7EZKuECqTG50x9cRWS/lup7RFbVsWTnYdEg9T84qic=;
+        b=FcA0zUPFEgSqaQlEC6bv/mnLkBHJATcHVlaC6yb3r0awvsFFCxoc5NQpjivlyX5qEk
+         9WfvWmRiAgJC8XAMXwXXXXcKDYoFyFFSgadN/DUnpCW1UDnqQAzUXBbFVzam9aZdrAvo
+         aBurSKA6r5+cSQ1oxtaDTMZDTd0Tt0tXG3vhFyoaBRMR+4X+XZfNaG6g5NBhvbjzzHO4
+         G7OVb4lM7p5kY9CfcnxbEpBOQVvPS4VB/2QjkSXij9p3k+WSsygZYAyB1CkcUuDnskdW
+         iAPSsCXtuo66j3J7Q0jNxfmpi6N5gmOB3dYWbOiudsZNiV9scVMfIh97Cl9aVHI93sIp
+         FTEw==
+X-Gm-Message-State: AOAM531fJ1qA36ouA6XeLQlehM5+4DmAg858rRh2cQXLGcnIG68sQa+l
+        EjAN5QV1X7rscycKQwRq3x8rGVBxE8/1MESsIAJr9WvFnpQ=
+X-Google-Smtp-Source: ABdhPJxEYTcDICXwd1baZ+WHGwt9XaJpjpAhPSIrLMF3ALmYLETmBHhIB/xVCYmTmXimR0rGz9gZbGhEXqw7W7MF0HA=
+X-Received: by 2002:a50:d49d:: with SMTP id s29mr26162495edi.55.1637766941080;
+ Wed, 24 Nov 2021 07:15:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="b0D0j5fr9aggf023"
-Content-Disposition: inline
-In-Reply-To: <xmqq8rxe8w49.fsf@gitster.g>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+References: <20211124145409.8779-1-ematsumiya@suse.de>
+In-Reply-To: <20211124145409.8779-1-ematsumiya@suse.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 24 Nov 2021 10:15:29 -0500
+Message-ID: <CAPig+cT0-bu2tcgJrRR+9J86bmGEOOpFZv0JygCp26gieP-2pg@mail.gmail.com>
+Subject: Re: [PATCH v3] pager: fix crash when pager program doesn't exist
+To:     Enzo Matsumiya <ematsumiya@suse.de>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Nov 24, 2021 at 9:54 AM Enzo Matsumiya <ematsumiya@suse.de> wrote:
+> [...]
+> Reproducer:
+> $ git config pager.show INVALID_PAGER
+> $ git show $VALID_COMMIT
+> error: cannot run INVALID_PAGER: No such file or directory
+> [1]    3619 segmentation fault (core dumped)  git show $VALID_COMMIT
+>
+> Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
+> ---
+> diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+> @@ -786,4 +786,9 @@ test_expect_success TTY 'git returns SIGPIPE on propagated signals from pager' '
+> +test_expect_success TTY 'handle attempt to run an invalid pager' '
+> +       test_config pager.show invalid-pager &&
+> +       test_terminal git show
+> +'
 
---b0D0j5fr9aggf023
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This is a minor observation (so you decide what value it might have),
+but the terminology "handle ... invalid pager" in the test title
+doesn't convey very much information to some future reader of this
+test, and that person will be forced to consult the commit message --
+which does a good job of explaining the problem -- to really
+understand what this test is checking. If you change the title to, for
+instance:
 
-On 2021-11-23 at 20:17:42, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->=20
-> > I thought we were only dropping the `--std=3Dgnu99` part, not the chang=
-e to
-> > the `git-compat-util.h` header file, nor the patch to the CMake
-> > configuration for MS Visual C.
->=20
-> Ah, yes, I think these parts need to be kept.  I am just dropping
-> the latest iteration with -std=3Dgnu99 from consideration to merge
-> down to 'next' and below.
+    non-existent pager doesn't cause crash
 
-I'll try to get a v3 out relatively soon with those changes.  Due to
-visiting family in the U.S., I've been a bit busy with things, but I
-should have some time coming up to do a v3.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---b0D0j5fr9aggf023
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYZ5V0wAKCRB8DEliiIei
-gemrAP4yiSCu3AC8+Yjo49Q27oq5hI5usNkFKapMtv+jKojIPQEAwqx2bMRxpYS7
-cl0LdVvRviqR1H8Ht8EJuA5aMSNI3AA=
-=3x35
------END PGP SIGNATURE-----
-
---b0D0j5fr9aggf023--
+then the reader will have an easier time understanding what this test
+is about. It's true that the reader will still need to consult the
+commit message for a detailed picture of the problem, but won't be
+left head-scratching, as might be the case with the current test
+title.
