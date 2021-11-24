@@ -2,284 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F029CC433F5
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 11:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 775D2C433F5
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 13:31:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241822AbhKXMAQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Nov 2021 07:00:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43194 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231266AbhKXMAP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Nov 2021 07:00:15 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29B60C061574
-        for <git@vger.kernel.org>; Wed, 24 Nov 2021 03:57:06 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id z5so9294773edd.3
-        for <git@vger.kernel.org>; Wed, 24 Nov 2021 03:57:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=unity3d.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=g3rmkRdPVOHg6JhkHnOYHa0idSXHwdMzkcUe57vMUm8=;
-        b=OUQhU42HtgJNfurqEbdPBe0TkxAVOsul65TVD+wr3TIvtrNb+/HjAPg7ZQYadJJccD
-         +0zDQGiKzHaxokjqDEk/LQqcX0HmT6WD4+4Qtgr5N9aWhd4CfHwyVZ3AiUTyGe6X9qd3
-         U3LBvM+JNoLnQ+W3MCrZOv5yMg1UDhnbW3GZ3VWsu6e28Ea2GyiSNJ+u1RK8JSQDZy/G
-         lcIdvnLCV8/22FtiJRWIcgjzptE6QwRjkr92soXFEdNVcHChBw/X7HVGtGkf9kCKO3DM
-         ZOfSavfWyNmatxwygPq/+KCxpDaIky5y1DX5JAev13Peykx/PcdKGyKLtQtfjBau/Xm+
-         a65Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=g3rmkRdPVOHg6JhkHnOYHa0idSXHwdMzkcUe57vMUm8=;
-        b=PQAT6XyUQCjNBum+mqet4b3oTjjZKGS0pjuz1T5lHViMCiW8fe8YfBjlHg5cCzuw12
-         456SabA4Mz+Q/LEI9rM0F5hfWAMcoVJwpLFWkI18+ZVjvUsf1+4HxUagVgU0sCEuqqiY
-         YBs8l3ES1q9ugHx/Huy8PEl7snYJ7JNbUP9UQui9o3U2nWrdDJjdpTWLQJSRhHm6se1W
-         ONZESH/kNT2Og11OUZuOAXvEYtZD7PJ5nFTNbaxrWtoMo95E5H0RdUSqxmnM2dbGJRBk
-         SaSmBIoa42dtq92Kp3IMuZVfc7z0qvCQGFyUwSzyo3OGJdHT1gFmsIMsOi1ANfvgjbTO
-         FbBA==
-X-Gm-Message-State: AOAM531nBo6uE0kfw/Ya5t4PL2GVPBm7mLVv4bRpWU1zRLuznnJUN9vA
-        aNYlVSf2P+vpcfrxOhHwE6W/WA==
-X-Google-Smtp-Source: ABdhPJyl5uUI2JglcEjbFnigOigsjzr6XMWKkkYeXQDXDIYk21q0zi4YEemoal5vAmTqqO0YrsFWhA==
-X-Received: by 2002:a17:906:c152:: with SMTP id dp18mr19105937ejc.241.1637755024652;
-        Wed, 24 Nov 2021 03:57:04 -0800 (PST)
-Received: from [10.45.33.40] ([80.80.14.217])
-        by smtp.gmail.com with ESMTPSA id ne33sm6858204ejc.6.2021.11.24.03.57.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Nov 2021 03:57:04 -0800 (PST)
-Message-ID: <7c2a01ec-8a69-b7af-cabb-c6a6ef7483a9@unity3d.com>
-Date:   Wed, 24 Nov 2021 12:57:03 +0100
+        id S1349658AbhKXNeY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Nov 2021 08:34:24 -0500
+Received: from mout.gmx.net ([212.227.17.21]:56289 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1348773AbhKXNcs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Nov 2021 08:32:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637760572;
+        bh=9kgxlBmWizZE/2KireOyUT7bzVL9vcz15FQYKAUlAT4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=cJxlLoxipjMV9s5JNuuTjq3bbxQkLLlEYMSgO6Aaur3uAhq/isCoa20G1pIAgATJt
+         namsyhDQJMWLFqQWOzYNkxjz6wnWuF0hCl+54slskaCiiItJTPDtXbsLPsuDP8ZEMQ
+         705DIwLFbmetE/4Gh5yopS2y7q15HFJ/EjiF1F+Q=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N1OXT-1melQe3pLX-012ngL; Wed, 24
+ Nov 2021 14:29:32 +0100
+Date:   Wed, 24 Nov 2021 14:29:29 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
+        phillip.wood123@gmail.com, thomas.wolf@paranor.ch,
+        Alexander Veit <alexander.veit@gmx.net>
+Subject: Re: [PATCH] editor: only save (and restore) the terminal if using
+ a tty
+In-Reply-To: <xmqqtug293ml.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2111241428190.63@tvgsbejvaqbjf.bet>
+References: <04ab7301-ea34-476c-eae4-4044fef74b91@gmail.com>        <20211122222850.674-1-carenas@gmail.com> <xmqqa6hvbxob.fsf@gitster.g>        <CAPUEspgDafXHHPvzNijTsPsna76yE8W=JH-78LX3jyaieSmp0A@mail.gmail.com> <xmqqtug293ml.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.2
-Subject: Re: [PATCH] fast-export: fix surprising behavior with --first-parent
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        William Sprent via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.1084.git.1637666927224.gitgitgadget@gmail.com>
- <211123.865ysjui34.gmgdl@evledraar.gmail.com>
-From:   William Sprent <williams@unity3d.com>
-In-Reply-To: <211123.865ysjui34.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:FdkKbLd0MVx+hK/p6vvMdulWHVYhXNn+bQsr0y7OJBbyOevf8Nm
+ 65dt0nxnaT8/Y3LnoIWuOLXAxVK4vpx312ItGSWTPYBeR8E0xttaXZzORmdjQDjzr3r6s2n
+ qhSlT63d4VTUb0pVyGCkHqVDJ79fQ1xEsDrWyKr6tCVeWc4uvcBzD19PtBygCpE15QUlMpY
+ rAfOyeGagpz8Q2aBE8Q6g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lgiyWETrfPk=:/QZmLGGsAKMW8xu2FKCp4L
+ 8sBmqrHJfMdd+72DKdeCx57Mw2iwkrfft8CtY6+bjd3M5/w8PXzKCCsR3hsisQin21rcUy4iP
+ lg74JEYFb3wklKCOLddK92HCluO1CKLeNgTmZ+7kfpJ5H2XGYNScdmYCRRCV5vPKo7gG64zuM
+ rUaBD0mpms4Z+8o9uH0L9mRTSG9CejVPkWyyuQDlcdFg2kPrlMV6rmvreD7mzxxsWtxOYXwgZ
+ 3FIFD+uTA40EJoNGywWtFoGE73dhzOeAse8OVpRDpDUlOmOhJnatJ7/6hXfM0krvtqGwKihYL
+ WrzHYYSosVWWdGln7K5ycl7IN5EupBUuzFmWSHUk6gJM38tHtS/FM5WAqYgONG6cmiPhhNQox
+ iB3eEJPTG+cGDmFkqppsITU1bRWepAz3x6uJ1MOhSS4HPt5/cLEB6HIV9LryEM0t/CX5XVgO0
+ QdpMe+ZBbRSXwvTOPTFNHyv05SthPB7Guh3g2fjywRjOE8iD6DZCdpkyVzRWUnv6Vrir+dZdr
+ IHrltXIdB3350OiCbXkweSoDnh556CJYQHpLYmaEnw9s/ps/stdldYaiXpagdJ3PaptNabeKP
+ EL3ogO14VWx0yJ8+AJmL/zYwFH0Y8JzJ+U3PaZk8fvrggACqPXLl1Qsbe8B/zNvhxiIdsauQf
+ 96srOtqbAJGWm5ktJaoQU2sM0kXCufCasS/lwEMTiteVrj4BHoFefmr0k6aRHoEqQhhJmLnNl
+ SXMTBjnErs12nvFsg1w6HvySbOcC+N2pXkE5iIn/qs8c2yk2POpFjW9511450XlQQQn3CjH1X
+ gQbj6oT57NP7cx8uPS+ye3Wkyrd7v71Nw6UkBOYrITGatLsITlnnXcdmUp4yEXlUrx0/OwOqV
+ 2mhgZ6n/iGg6W30v/xeviGU4ZMPwH/GEwbT5lbePn9nWXkhayPYh6ysCQeURLpo7zeScc+mBB
+ aLqDTeYI6TLnrNE+IsLuu0oCKX0VR4mQM5dDOZiKfrov+Y7aYWkwxGujZsGY2pzEFjW8YfMBh
+ w+aB/xP11oHISjoyaasSWfTbyXOFVsShWI3zYWL9VShBoa65/ETWavDiLrwlyv+zSb5Y1EW6j
+ 07V3vgEB4u5gIA=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/11/2021 14.07, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Tue, Nov 23 2021, William Sprent via GitGitGadget wrote:
-> 
->> From: William Sprent <williams@unity3d.com>
->>
->> When invoking git-fast-export with the --first-parent flag on a branch
->> with merges, fast-export would early-out on processing the first merge
->> on the branch. If combined with --reverse, fast-export would instead
->> output all single parent commits on the branch.
->>
->> This commit makes fast-export output the same commits as rev-list
->> --first-parent, and makes --reverse not have an effect on which commits
->> are output.
->>
->> The fix involves removing logic within fast-export which was responsible
->> for ensuring that parents are processed before their children, which was
->> what was exiting early due to missing second parents. This is replaced
->> by setting 'reverse = 1' before revision walking, which, in conjuction
->> with topo_order, allows for delegating the ordering of commits to
->> revision.c. The reverse flag is set after parsing rev-list arguments to
->> avoid having it disabled.
->>
->> Signed-off-by: William Sprent <williams@unity3d.com>
->> ---
->>      fast-export: fix surprising behavior with --first-parent
->>      
->>      Hi,
->>      
->>      This is my first time patching git, so I probably need some guidance on
->>      my approach. :)
-> 
-> Hi, thanks for your first contribution to git. This is a rather shallow
-> review, a deeper one is much deserved.
-> > I notice that you're removing code in builtin/fast-export.c, presumably
-> we have code in revision.c that does the same thing. It would really
-> help a reviewer for you to dig a bit into the relevant commit history
-> and note it in the commit message.
-> 
-> I.e. could revision.c always do this, and this was always needless
-> duplication, or at time X it was needed, but as of Y revision.c learned
-> to do this, and callers A, B and C were adjusted, but just not this
-> missed call D? etc.
-> 
+Hi,
 
-That's a really good suggestion. I should've done that. I did dig just 
-enough to see that the logic has been around since fast-export was 
-introduced, but I didn't check whether the 'reverse' option was part of 
-revision.c at that point. I see that Elijah has done that homework for 
-me later in this thread and discovered that --reverse was introduce a 
-year or so before fast-export though.
+On Tue, 23 Nov 2021, Junio C Hamano wrote:
 
->> -static int has_unshown_parent(struct commit *commit)
->> -{
->> -	struct commit_list *parent;
->> -
->> -	for (parent = commit->parents; parent; parent = parent->next)
->> -		if (!(parent->item->object.flags & SHOWN) &&
->> -		    !(parent->item->object.flags & UNINTERESTING))
->> -			return 1;
->> -	return 0;
->> -}
->> -
->>   struct anonymized_entry {
->>   	struct hashmap_entry hash;
->>   	const char *anon;
->> @@ -752,20 +740,6 @@ static char *anonymize_tag(void *data)
->>   	return strbuf_detach(&out, NULL);
->>   }
->>   
->> -static void handle_tail(struct object_array *commits, struct rev_info *revs,
->> -			struct string_list *paths_of_changed_objects)
->> -{
->> -	struct commit *commit;
->> -	while (commits->nr) {
->> -		commit = (struct commit *)object_array_pop(commits);
->> -		if (has_unshown_parent(commit)) {
->> -			/* Queue again, to be handled later */
->> -			add_object_array(&commit->object, NULL, commits);
->> -			return;
->> -		}
->> -		handle_commit(commit, revs, paths_of_changed_objects);
->> -	}
->> -}
-> 
-> ...
-> 
->>   static void handle_tag(const char *name, struct tag *tag)
->>   {
->> @@ -1185,7 +1159,6 @@ static int parse_opt_anonymize_map(const struct option *opt,
->>   int cmd_fast_export(int argc, const char **argv, const char *prefix)
->>   {
->>   	struct rev_info revs;
->> -	struct object_array commits = OBJECT_ARRAY_INIT;
->>   	struct commit *commit;
->>   	char *export_filename = NULL,
->>   	     *import_filename = NULL,
->> @@ -1281,19 +1254,14 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
->>   
->>   	get_tags_and_duplicates(&revs.cmdline);
->>   
->> +	revs.reverse = 1;
-> 
-> Is the placement of revs.reverse = 1 here important, or could it go
-> earlier after init_revision_sources() when we assign some other values
-> ir revs?
-> 
->>   	if (prepare_revision_walk(&revs))
->>   		die("revision walk setup failed");
-> 
-> A light reading of prepare_revision_walk() suggests it could come after,
-> but maybe I'm entirely wrong.
+> Carlo Arenas <carenas@gmail.com> writes:
+>
+> > yes, my plan was to minimize the impact of this bugfix by doing this
+> > as narrow as possible, but you are correct that if we consider that
+> > ...
+> > I should have mentioned though that a better fix was forthcoming, just
+> > not with so little time before 2.34.1 gets released.
+> > ...
+> >> In any case, I am quite tempted to just revert the offending topic
+> >> for now, but later accept a resurrection patch with this isatty
+> >> check rolled in (either at this caller, or inside save_term) when
+> >> the dust settles.
+> >
+> > I indeed suggested[1] a revert but I wouldn't have proposed this
+> > alternative if it wouldn't be done safely enough,
+>
+> I think the minimum impact fix is to revert the whole thing (people
+> survived without it for long time), so that is what 2.34.1 will
+> hopefully have.  As I said elsewhere, I am open to a rebooted effort
+> for the future cycles, but the conclusion for the topic in 2.34 series
+> is that we pretend we never heard about it ;-)
 
-It needs to go after the setup_revisions() call as otherwise a --reverse 
-passed to fast-export will toggle the option off again. You are right in 
-that it can be moved down. I've done that in my working directory for 
-the next patch.
+Maybe a better approach would be to hide the `save_term()` dance behind a
+new config option, and then have it turned on automatically if the
+`editor` _happens_ to be `vi` or `vim`.
 
-Another option would be to move the revs.reverse up as you suggest and 
-then then call die() if it was toggled off by setup_revisions(). The 
-only downside I can think of is that it would make any current usage of 
-'fast-export --reverse' go from a no-op to an error.
+That would help the problem reported in the Windows Terminal project.
 
->>   	revs.diffopt.format_callback = show_filemodify;
->>   	revs.diffopt.format_callback_data = &paths_of_changed_objects;
->>   	revs.diffopt.flags.recursive = 1;
->>   	while ((commit = get_revision(&revs))) {
->> -		if (has_unshown_parent(commit)) {
->> -			add_object_array(&commit->object, NULL, &commits);
->> -		}
->> -		else {
->> -			handle_commit(commit, &revs, &paths_of_changed_objects);
->> -			handle_tail(&commits, &revs, &paths_of_changed_objects);
->> -		}
->> +		handle_commit(commit, &revs, &paths_of_changed_objects);
->>   	}
->>   
-> 
-> Yay code deletion, good if it works (I didn't check).
-> 
-> Since this is just a one-statement while-loop we can also remove its
-> braces now.
->  >> +test_expect_success 'fast-export --first-parent outputs all 
-revisions output by revision walk' '
->> +	git init first-parent &&
->> +	cd first-parent &&
-> 
-> Do any such "cd" in a sub-shell:
-> 
-> 	git init x &&
-> 	(
->      		cd x &&
->                  ...
-> 	)
-> Otherwise the next test after you is going to run in anotherdirectory.
-> 
->> +	test_commit init &&
->> +	git checkout -b topic1 &&
->> +	test_commit file2 file2.txt &&
->> +	git checkout main &&
->> +	git merge topic1 --no-ff &&
->> +
->> +	git checkout -b topic2 &&
->> +	test_commit file3 file3.txt &&
->> +	git checkout main &&
->> +	git merge topic2 --no-ff &&
-> 
-> Just a nit. I'd use "test_commit A", "test_commit B" etc. when the
-> filenames etc. aren't important. There's no subsequent reference here,
-> so I assume they're not.
-> 
->> +	test_commit branch-head &&
->> +
->> +	git rev-list --format="%ad%B" --first-parent --topo-order --no-commit-header main > expected &&
-> 
-> nit; >expected, not > expected is the usual style.
->> +
->> +	git fast-export main -- --first-parent > first-parent-export &&
->> +	git fast-export main -- --first-parent --reverse > first-parent-reverse-export &&
-> 
-> ditto:
-> 
->> +	git init import && cd import &&
-> 
-> ditto earlier "cd" comment.
-> 
->> +	cat ../first-parent-export | git fast-import &&
-> 
-> Instead of "cat x | prog" do "prog <x".
-> 
->> +	git rev-list --format="%ad%B" --topo-order --all --no-commit-header > actual &&
-> 
->> +	test $(git rev-list --all | wc -l) -eq 4 &&
-> 
-> Instead:
-> 
->      git rev-list --all >tmp &&
->      test_line_count = 4 tmp
-> 
-> (for some value of tmp)
-> 
->> +	test_cmp ../expected actual &&
->> +	test_cmp ../first-parent-export ../first-parent-reverse-export
->> +'
-> 
-> Maybe some of the CD-ing around here wouldu be easier by not doing that
-> and instead running e.g.:
-> 
->      git -C subdir fast-export >file-not-in-subdir &&
->      ...
-> 
-
-Thanks for taking the time to give your feedback. :) I'll remove those 
-braces from the while loop and incorporate your comments about the test 
-for v2.
+Ciao,
+Dscho
