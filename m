@@ -2,230 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7451EC433EF
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 04:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84E0FC433EF
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 05:44:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239225AbhKXEjH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Nov 2021 23:39:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58170 "EHLO
+        id S232979AbhKXFsH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Nov 2021 00:48:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232802AbhKXEjH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Nov 2021 23:39:07 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCEC1C061574
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 20:35:57 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id x6so4473095edr.5
-        for <git@vger.kernel.org>; Tue, 23 Nov 2021 20:35:57 -0800 (PST)
+        with ESMTP id S231421AbhKXFsG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Nov 2021 00:48:06 -0500
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3AF5C061574
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 21:44:57 -0800 (PST)
+Received: by mail-io1-xd35.google.com with SMTP id y16so1708454ioc.8
+        for <git@vger.kernel.org>; Tue, 23 Nov 2021 21:44:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=6Ft6BxRhjizfOIDThZlMSqXXpOzHQwXGxOfrpXiBB9U=;
-        b=eZw4Njw1ccjnIY9qop07eVSw2Kq6QdkLtcg66OBcY85lcz8xmqkp19G3dQUbbveH2G
-         nBUCTzGxFWOX+AFeKW6Ze4SW8IdqCHxZatQ0NJxV89VQ9YuHVnzs7A/haqs7IZdxXZAb
-         Sm9q696dCn/JZL5HFd8FcnxxNiryEe/uk62F11wB8zt4LC+ItN5UmE+Wksxr3Pk+VzAb
-         vFcVqJeOeERRnvX55dSyhcpuKr0YL26Ie9Yh1PZgbnq4/I9r81TgWpIyfLKfnGF5Benz
-         e2gaiedUzaU2aw4fnmQz/uRbeA4ue+4D7XchkrrqrjLBlyJXdWNLpfS7yuzsp7wKkgzv
-         VcpQ==
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=YMwbTfbQz++3amTNUmFV0WRKnE9khcvEaDO1Y2BGdio=;
+        b=ST95IwLS6JmJN/MKkr1Qnm6tKsEl0GAiRm/RhFyC7mLSsz92WP+POj8oVUsEBVUBqU
+         5xeQdmF6W+DWq75hqQPDttvjo3E+QUfpJSffiO3SO8IkXAlLgGxMMf2SSgPC8tQFJWxp
+         J0G+z/IpT/q4CHow4QRyLXUqX87R0D0xkF3WA51+iRNt/UBMYOcZftxsmbUohJ8qwR/M
+         vhHePDGEVIYjM1/pusJwwPqZnI83ys6FJpmqOcoSAS4RqNiisWtPC3cYKZhBCLOdbBpc
+         k4RX4dxxfVcL58suF+SsvLJeOXeFU5pj4+oKAOC9o2x8RtkAGOc6g/xH163NUeUPMLIC
+         aPbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=6Ft6BxRhjizfOIDThZlMSqXXpOzHQwXGxOfrpXiBB9U=;
-        b=SpGq5WS5Wn1fDA2mOv6xWYBMy+31o4ptX6cxEWrKT6YnSxpCtq7F9uTRaLA8oig/kL
-         WU9H2CHWtYr+R0KZ6Y8TSxn6fc8cUlq8LSYlTnVHYzS/H3oEfBu9kD02Cx5KNVueVvA+
-         7ePkx8Xj5ciMmqm0RNfwn5J61UKDfxwQphMhDZV2JmEqlYQJHL4TBh/+zMSiCF8ek3Sw
-         nXdokmuZPVmhNRDs2AS4qZtO11sYPmNNAbVf2UARo97feN3HuGoJ4HVOXijA+tptU21k
-         cXZhuTgn77cyWNmSuoE3X+ofI0oegkAZgloBwF+/5OSKb7wfQjYBv6fYn89V2s4dJEGZ
-         1BaA==
-X-Gm-Message-State: AOAM531YNwR0fAZWHEbVzItMCJb5rBCE7EcwZG9KI3teVpF9vJIxdGYV
-        7X+J5eSVB2OHeB2L8LtIZGsJzk9NmXSF1vfg4kY=
-X-Google-Smtp-Source: ABdhPJy9umhAkcLi3AYpPWXwGrqSnNoGdpbRtm66rH9Jwwp9De8q1NFCcDhyXjP9f2vxQnnue7aEq6F5HDRXygORKj8=
-X-Received: by 2002:a17:907:75d3:: with SMTP id jl19mr15739921ejc.520.1637728556164;
- Tue, 23 Nov 2021 20:35:56 -0800 (PST)
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=YMwbTfbQz++3amTNUmFV0WRKnE9khcvEaDO1Y2BGdio=;
+        b=g+vhx8GCzuMJUg7/7kdUxmEgqvNgMLnfC4cZzDx+3EKSoi6vt+5Lcjxm7CI4KCYzET
+         EQ+hjW7/tJ5r+4Dkt0F1OVDbLluCDdoYUG5NnBnnUCzYZ3AEG/i5fAJjDuxz9zO+4Dn4
+         unVMhi1BkGg5UlLbVc4CxXnWyiyIZaNkjqFUkjF2HySbEDcTPPdaJurN7eDueVAfZgkn
+         20z5JMJ7RCw1dymJSo3XWBZ86KcdMiOSQ8wqrqRoRaEQZ98iwrcOn36tFaU2uQ6Ytfyl
+         PaQtqw0mRAz03FWV4yhxACyV+8eVagiqs1lSyNLB6PUy718F2Wcw7stsB1n3Udpj84wv
+         Kv6A==
+X-Gm-Message-State: AOAM532BQYGRc3hWj4y58EYr/3ldCfHk3jXNiqSsxpkXt5fcVF0GaYwe
+        HoUyBBjcCXWc49Ns22nGcBU=
+X-Google-Smtp-Source: ABdhPJzymckZYCgWTEawTmgiL8hHKSva+1fQ0t6cD1h8zxpYQXuZf2kAqf9DqJPZHuJUPb+DgnFciQ==
+X-Received: by 2002:a05:6602:13c4:: with SMTP id o4mr11849576iov.152.1637732697015;
+        Tue, 23 Nov 2021 21:44:57 -0800 (PST)
+Received: from flurp.local (097-069-216-153.res.spectrum.com. [97.69.216.153])
+        by smtp.gmail.com with ESMTPSA id f16sm9017715iov.33.2021.11.23.21.44.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Nov 2021 21:44:56 -0800 (PST)
+Sender: Eric Sunshine <ericsunshine@gmail.com>
+Date:   Wed, 24 Nov 2021 00:44:50 -0500
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Enzo Matsumiya <ematsumiya@suse.de>
+Subject: Re: [PATCH v2 1/9] worktree: remove redundant NULL-ing of "cp.argv
+Message-ID: <YZ3RUkGpixYAREcI@flurp.local>
+References: <cover-0.5-00000000000-20211122T153605Z-avarab@gmail.com>
+ <cover-v2-0.9-00000000000-20211123T115551Z-avarab@gmail.com>
+ <patch-v2-1.9-9cc220ce5a3-20211123T115551Z-avarab@gmail.com>
+ <CAPig+cStZp=AOPHW8i7AqwDOV6djYzHC6GmcVeb=4PUj5bjvAw@mail.gmail.com>
 MIME-Version: 1.0
-References: <a5528cbb14ddbbf26cde873e3f3e95744d59b950.1637455620.git.gitgitgadget@gmail.com>
- <20211123003958.3978-1-chooglen@google.com> <CABPp-BE0Bcimwr1wwcnnh+6apx7r114Oqnu=QDgKEn6VAHAtFg@mail.gmail.com>
- <kl6lmtluka55.fsf@chooglen-macbookpro.roam.corp.google.com>
- <CABPp-BGr9PDTE0q5zev4Ffx19g+hG083zdNShoSdH47VqzT8mw@mail.gmail.com> <211124.86ee76e4fl.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211124.86ee76e4fl.gmgdl@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 23 Nov 2021 20:35:44 -0800
-Message-ID: <CABPp-BGZPheDqWD1pXbePOYe2BcT1-TqX-zGVqnNLGtFuXab1g@mail.gmail.com>
-Subject: Re: [PATCH 8/8] dir: avoid removing the current working directory
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Glen Choo <chooglen@google.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cStZp=AOPHW8i7AqwDOV6djYzHC6GmcVeb=4PUj5bjvAw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 23, 2021 at 5:19 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Tue, Nov 23 2021, Elijah Newren wrote:
->
-> > On Tue, Nov 23, 2021 at 10:19 AM Glen Choo <chooglen@google.com> wrote:
-> >>
-> >> Elijah Newren <newren@gmail.com> writes:
-> >> [...]
-> >> I'm not going to say that we'll *definitely* need remove_path()
-> >> in its current form, but mixing concerns like this is an invitation to
-> >> unexpected behavior. An (imperfect) example that demonstrates this
-> >> principle is https://lore.kernel.org/git/24bffdab139435173712101aaf72f=
-7277298c99d.1632497954.git.gitgitgadget@gmail.com/,
-> >> where we made a change to a generic path matching function in order to
-> >> speed up unpack_trees(), but accidentally ended up breaking gitignore.
-> >
-> > There's no mixture of concerns; my patch is correcting this library
-> > function to more fully match its documented intent; from dir.h:
-> >
-> >     /* tries to remove the path with empty directories along it,
-> > ignores ENOENT */
-> >     int remove_path(const char *path);
-> >
-> > Since the parent process's current working directory is still likely
-> > parked in that directory, there is a good reason to treat it as
-> > non-empty.  Thus the cwd should not be one of those directories
-> > removed along with the specified path.  No need to die, just stop
-> > removing the leading directories once it hits the cwd (much like it'd
-> > stop once it hit a directory that had files left in it).
->
-> I can buy that we'd pick this new behavior as a worthwhile trade-off,
-> but not that anyone intended for this to be the behavior all along.
->
-> I don't think "a process is sitting in it" has ever been anyone's idea
-> of a "non-empty directory". Rather it's what rmdir() returning EEXIST or
-> ENOTEMPTY maps to.
+On Tue, Nov 23, 2021 at 10:26:56AM -0500, Eric Sunshine wrote:
+> I think perhaps the simplest thing to do is merely to squash this
+> patch into the patch which ultimately removes the child_process::argv
+> member (and the removal of these lines from worktree.c probably
+> doesn't even need mention in the commit message -- or maybe just a
+> minor mention).
 
-Yeah, Junio commented on my reasoning in that same paragraph of mine.
-Bad reasoning on my part, and you were both right to call it out.
+On second thought, squashing this patch into the patch which
+ultimately retires child_process::argv is probably not necessary. If
+the patch is instead rewritten as below, then it prepares
+builtin/worktree.c for eventual retirement of child_process::argv
+without breaking git-worktree functionality.
 
-But that reasoning wasn't the underlying motivation for Peff to
-suggest the behavior behind this series[1] and this patch, nor the
-rationale Junio used to say that the overall behavioral change behind
-this series "makes sense".[2]
+(You could also extend this patch so it prepares for removal of
+child_process::env, as well, or keep it minimal as I did here.)
 
-[1] https://lore.kernel.org/git/YS8eEtwQvF7TaLCb@coredump.intra.peff.net/
-[2] https://lore.kernel.org/git/xmqqo86elyht.fsf@gitster.g/
+-- >8 --
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] worktree: stop being overly intimate with run_command()
+ internals
 
-> Doesn't this series also change the behavior of e.g.:
->
->     cd contrib/subtree
->     git rm -r ../subtree
+add_worktree() reuses a `child_process` for three run_command()
+invocations, but to do so, it has overly-intimate knowledge of
+run-command.c internals. In particular, it knows that it must reset
+child_process::argv to NULL for each subsequent invocation[*] in order
+for start_command() to latch the newly-populated child_process::args for
+each invocation, even though this behavior is not a part of the
+documented API. Beyond having overly-intimate knowledge of run-command.c
+internals, the reuse of one `child_process` for three run_command()
+invocations smells like an unnecessary micro-optimization. Therefore,
+stop sharing one `child_process` and instead use a new one for each
+run_command() call.
 
-Yes, of course!
+[*] If child_process::argv is not reset to NULL, then subsequent
+run_command() invocations will instead incorrectly access a dangling
+pointer to freed memory which had been allocated by child_process::args
+on the previous run. This is due to the following code in
+start_command():
 
-Before:
+    if (!cmd->argv)
+        cmd->argv = cmd->args.v;
 
-    $ cd contrib/subtree
-    $ git rm -r -q ../subtree/
-    $ ls -ld ../subtree/
-    ls: cannot access '../subtree/': No such file or directory
-    $ git status --porcelain
-    fatal: Unable to read current working directory: No such file or direct=
-ory
-    $ git checkout HEAD ../subtree/
-    fatal: Unable to read current working directory: No such file or direct=
-ory
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ builtin/worktree.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-After:
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index d22ece93e1..9edd3e2829 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -355,8 +355,8 @@ static int add_worktree(const char *path, const char *refname,
+ 		goto done;
+ 
+ 	if (opts->checkout) {
+-		cp.argv = NULL;
+-		strvec_clear(&cp.args);
++		struct child_process cp = CHILD_PROCESS_INIT;
++		cp.git_cmd = 1;
+ 		strvec_pushl(&cp.args, "reset", "--hard", "--no-recurse-submodules", NULL);
+ 		if (opts->quiet)
+ 			strvec_push(&cp.args, "--quiet");
+@@ -385,12 +385,11 @@ static int add_worktree(const char *path, const char *refname,
+ 		const char *hook = find_hook("post-checkout");
+ 		if (hook) {
+ 			const char *env[] = { "GIT_DIR", "GIT_WORK_TREE", NULL };
+-			cp.git_cmd = 0;
++			struct child_process cp = CHILD_PROCESS_INIT;
+ 			cp.no_stdin = 1;
+ 			cp.stdout_to_stderr = 1;
+ 			cp.dir = path;
+ 			cp.env = env;
+-			cp.argv = NULL;
+ 			cp.trace2_hook_name = "post-checkout";
+ 			strvec_pushl(&cp.args, absolute_path(hook),
+ 				     oid_to_hex(null_oid()),
+-- 
+2.34.0.399.gdf2c515fd2
 
-    $ cd contrib/subtree
-    $ git rm -r -q ../subtree/
-    $ ls -ld ../subtree/
-    drwxrwxr-x. 1 newren newren 0 Nov 23 19:18 ../subtree/
-    $ git status --porcelain
-    D  contrib/subtree/.gitignore
-    D  contrib/subtree/COPYING
-    D  contrib/subtree/INSTALL
-    D  contrib/subtree/Makefile
-    D  contrib/subtree/README
-    D  contrib/subtree/git-subtree.sh
-    D  contrib/subtree/git-subtree.txt
-    D  contrib/subtree/t/Makefile
-    D  contrib/subtree/t/t7900-subtree.sh
-    D  contrib/subtree/todo
-    $ git checkout HEAD ../subtree/
-    Updated 10 paths from c557be478e
-
-Very nice fix, don't you think?
-
-
-> If so then re the "spidey sense" comment I had earlier: There's no rm
-> codepaths or tests changed by this series,
-
-That's not correct; I explicitly added a new rm test in the first
-patch in my series.  Further, that same test was modified to mark it
-as passing by this particular patch you are commenting on.
-
-> so the implementation of
-> doing it at this lower level might be casting too wide a net.
-
-I'm getting the vibe that you are assuming I'm changing these two
-functions without realizing what places might be calling them;
-basically, that I'm just flippantly changing them.  Ignoring the
-ramifications of such an assumption, if this vibe is correct, then let
-me inform you that I've read over each and every caller (as well as
-searched for other callers of unlink() and rmdir() throughout the tree
-to see if they needed similar changes).  In my opinion, *each* *and*
-*every* *single* *one* of the calls to remove_path() and
-remove_dir_recursively() should take the behavioral change suggested
-in this patch.
-
-It's also not clear to me that you understand the point of the change
-behind the series.  Clearly, I'm not doing well explaining it, but
-have you read Peff's or Junio's comments on why they thought
-protecting the_original_cwd makes sense?  Again, see the links [1] and
-[2] above.  I think it'd help me understand how to respond to you
-better if you could clarify to me whether you disagree with them, or
-whether you agree with them but think I've gone wrong in the
-implementation of their high level explanation somehow in this
-particular patch.
-
-> e.g. changing callers that use "remove_dir_recursively()" to use a
-> "remove_dir_recursively_not_cwd()" (or whatever) be a gentler way of
-> introducing this, and make sure that each step of the way we grok what's
-> being changed, that there's test coverage etc.
-
-I'll ask you the same two questions I asked Glen when he suggested
-basically the same thing; if you can provide an answer to either one
-of my questions that is compelling to me, I'd be totally onboard with
-your suggested change:
-
-(1) Can you point to any concrete example caller anywhere in the code
-tree (or even provide a future hypothetical caller) that would in fact
-be harmed by the change in this patch?
-
-...and no, I'm not asking you to do my work for me; I've done that
-same work -- in fact looking at all callsites -- and came up
-empty-handed.  Since this and your previous email are essentially
-claiming that I've probably missed things, I think it's a fair
-question.
-
-(2) What benefit would there be to introducing these new functions?
-
-In particular, if I were to introduce these new functions, it would
-look like this:
-
-  * add new remove_path_not_cwd() and remove_dir_recursively_not_cwd()
-function in one patch
-  * convert all relevant callsites to use these new functions in the
-subsequent patch(es)
-  * delete the existing remove_path() and remove_dir_recursively()
-functions for two reasons: (1) they are now unused, and (2) future
-potential callers of these old functions would more than likely
-reintroduce the bugs this series is trying to fix if they were to use
-them and should be discouraged from doing so
-  * rename {remove_path,remove_dir_recursively}_not_cwd() to remove
-the "_not_cwd" suffix in order to have more memorable and less ugly
-names
-
-Once finished, the end result would be identical to this patch.  Well,
-identical other than taking more patches to get to the same end result
-and using up more reviewer time.  If there's some benefit to taking
-this circuitous route, though, I'm more than willing to do so.
+-- >8 --
