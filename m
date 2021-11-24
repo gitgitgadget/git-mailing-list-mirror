@@ -2,120 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF432C433EF
-	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 15:10:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A420C433FE
+	for <git@archiver.kernel.org>; Wed, 24 Nov 2021 15:10:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232070AbhKXPNr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Nov 2021 10:13:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57738 "EHLO
+        id S232312AbhKXPNt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Nov 2021 10:13:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231848AbhKXPNq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Nov 2021 10:13:46 -0500
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CE86C061574
-        for <git@vger.kernel.org>; Wed, 24 Nov 2021 07:10:37 -0800 (PST)
-Received: by mail-oi1-x231.google.com with SMTP id n66so5912589oia.9
-        for <git@vger.kernel.org>; Wed, 24 Nov 2021 07:10:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=VgtB2HX9ILURgM/qSpzCtCgJqZvyFaAGXXA114kE2Z4=;
-        b=mQzaFTeaZSXtYY2Vqdd9umAfQj2M51ibNoG0J59Zlq6+dZi0lXlKV4VaCGihIGpVB6
-         xkBXjhe9QZCyj8SuBXkqoBS6R/9F1CgjPaEHMLe1xny9+zFWZpfJ1I/gEtXxlSudbwFb
-         /OUS8iKO+lyW5GYbzEd46CzW7ju/BVCbIYkqyhtdo9CP7YnElz80LGinYwKhrVpaF7Jz
-         tk9UOEBZiRdujYj5ixGNAXedbX2UC3nN40ALgobvdQ0w2fVFS7qmd9wzNP3YuYdrSCiv
-         WjJIp+TP8EG5fLM1K0NrNdyYjJpIcgZ2ftCHvHivh3fKIocMK5Lwnd/DVcHqUZka5XAT
-         MdDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=VgtB2HX9ILURgM/qSpzCtCgJqZvyFaAGXXA114kE2Z4=;
-        b=7T62dXocz3CGi4jr2HsL+QiaHupdnUTbFZVec4HKK0dcP2Aj8f5h9EGT//oV8MmOCb
-         TJ3xWVvq7Ycpq9gI5NUlFNfJ0AzLy6UZTb5Vfgty1fMwcMiTmq1iXFwxFxQEKnwiYupq
-         0cYbGveIzE7JbZG26tDejPChyFkNLDQiPLbbsfxd1JPjFp9XS3N45j9h64KzZKsbts01
-         hpdzwwN8P8wrjGAilbNOWYWBHfpz4SPatgdquiHxpz3PhXhF3ICJDh13DWLWm9kOsuMM
-         CcyAdX9/XrdiHP34dqPMAdDHK5sAt1EqydbzYOiBCV5qpizYTRXsc0Gp6DLx+4xv1rq9
-         Gw6w==
-X-Gm-Message-State: AOAM5320L53uu13gX64xVvev6MXX8JJ68F+be9lmty9FTYtp3nytyLEt
-        w4Td4ckfwyUpK7WfiRR9H+s=
-X-Google-Smtp-Source: ABdhPJwrNIL7tJDcw/fiQ/CSvNCe8HzRbhjakp6/JjtHuHc6EWqW46Uwi51j9xPnRHPKN1pIWUHiMA==
-X-Received: by 2002:aca:eb02:: with SMTP id j2mr6712201oih.3.1637766635170;
-        Wed, 24 Nov 2021 07:10:35 -0800 (PST)
-Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
-        by smtp.gmail.com with ESMTPSA id v20sm8895otj.27.2021.11.24.07.10.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Nov 2021 07:10:34 -0800 (PST)
-Message-ID: <0372ee0b-8dda-c505-2b83-30da74e4fb36@gmail.com>
-Date:   Wed, 24 Nov 2021 07:10:33 -0800
+        with ESMTP id S231848AbhKXPNs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Nov 2021 10:13:48 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CC68C061574
+        for <git@vger.kernel.org>; Wed, 24 Nov 2021 07:10:38 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2600:1700:f991:38c0::485])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 9223F5B462;
+        Wed, 24 Nov 2021 15:10:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1637766637;
+        bh=P22pGueTMd7fZq5eGyNfp6Ug3MrSYO0hfM2BsBbJTWM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=UZTKLsjq3DsvrEpbfPoOh3EOiCyjeA5g+j8JMEg6KqNDc1PM4KBYfyzeCuRcVOgop
+         mizag2CSNVvrf8dRJRwaXBnsdiIB9Is6TtUxIq5FSRq6v0MTL/004LgJE0nLrQoItT
+         xNH6L8CYVRDMlnV9pRPAfybdht9tRaKssllULyufWy0GS5L+Dy88DifPWaxn4yIWB4
+         WF7ak6+pZEHDoR3UhAfVjsTxXS9uhhq9dF09dHjKYW/HXzxBxaOqZxTxDFpdOVaU47
+         DlEvaVnukRMUSDB4guSZilBkauKrIb3Ptbc0b/ozAkjLBBz9G1PIHEH6p3HhgZZA7d
+         IEx+S9egyOHWzR1kCC+YzGalRr1jtMSaPcCILhTipC159lzwZOAtHr0myPRhfBtl7y
+         RRndzrECg3e9AkJwkTQ+cUzi6wUOXJ7SLkRe0rQuYUUO3N9Q24u8O46Qya9biYDoEQ
+         PHbtvxJtG+72xLmQFBMp94EoRgFaXTva9PNewe+Rw2bEodYAbeV
+Date:   Wed, 24 Nov 2021 15:10:12 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/1] git-compat-util: add a test balloon for C99 supporty
+Message-ID: <YZ5V1I7Mj5dx/pMt@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+References: <xmqqk0h7423v.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2111221242320.63@tvgsbejvaqbjf.bet>
+ <xmqq1r38hzi9.fsf@gitster.g>
+ <CAPUEspibE6AMyoxwJGno9R=21JU5MpFVGBxCQYBCbCBwx-y25A@mail.gmail.com>
+ <xmqq8rxgf254.fsf@gitster.g>
+ <xmqqv90jewwa.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2111222300580.63@tvgsbejvaqbjf.bet>
+ <xmqqwnkzdepm.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2111231331530.63@tvgsbejvaqbjf.bet>
+ <xmqq8rxe8w49.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.2
-Subject: Re: [PATCH v4 2/4] test-read-cache: set up repo after git directory
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, newren@gmail.com,
-        Taylor Blau <me@ttaylorr.com>
-References: <pull.1050.v3.git.1635802069.gitgitgadget@gmail.com>
- <pull.1050.v4.git.1637620958.gitgitgadget@gmail.com>
- <5bc5e8465ab5fe871965e6c6d578efc51e55b505.1637620958.git.gitgitgadget@gmail.com>
- <xmqq4k82781w.fsf@gitster.g>
-From:   Lessley Dennington <lessleydennington@gmail.com>
-In-Reply-To: <xmqq4k82781w.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="b0D0j5fr9aggf023"
+Content-Disposition: inline
+In-Reply-To: <xmqq8rxe8w49.fsf@gitster.g>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+--b0D0j5fr9aggf023
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 11/23/21 3:42 PM, Junio C Hamano wrote:
-> "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
->> From: Lessley Dennington <lessleydennington@gmail.com>
->>
->> Move repo setup to occur after git directory is set up. This will ensure
->> enabling the sparse index for `diff` (and guarding against the nongit
->> scenario) will not cause tests to start failing, since that change will include
->> adding a check to prepare_repo_settings() with the new BUG.
-> 
-> This looks obviously the right thing to do.  Would anything break
-> because of the "wrong" ordering of events in the original code?
-> 
-> IOW, can this "bugfix" be protected with a new test against
-> regression?
-> 
-Yep! Tests 2, 3, 28, and 34 in t1092-sparse-checkout-compatibility.sh
-will fail without this change.
->> Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
->> ---
->>   t/helper/test-read-cache.c | 5 +++--
->>   1 file changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
->> index b52c174acc7..0d9f08931a1 100644
->> --- a/t/helper/test-read-cache.c
->> +++ b/t/helper/test-read-cache.c
->> @@ -39,8 +39,6 @@ int cmd__read_cache(int argc, const char **argv)
->>   	int table = 0, expand = 0;
->>   
->>   	initialize_the_repository();
->> -	prepare_repo_settings(r);
->> -	r->settings.command_requires_full_index = 0;
->>   
->>   	for (++argv, --argc; *argv && starts_with(*argv, "--"); ++argv, --argc) {
->>   		if (skip_prefix(*argv, "--print-and-refresh=", &name))
->> @@ -56,6 +54,9 @@ int cmd__read_cache(int argc, const char **argv)
->>   	setup_git_directory();
->>   	git_config(git_default_config, NULL);
->>   
->> +	prepare_repo_settings(r);
->> +	r->settings.command_requires_full_index = 0;
->> +
->>   	for (i = 0; i < cnt; i++) {
->>   		repo_read_index(r);
+On 2021-11-23 at 20:17:42, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>=20
+> > I thought we were only dropping the `--std=3Dgnu99` part, not the chang=
+e to
+> > the `git-compat-util.h` header file, nor the patch to the CMake
+> > configuration for MS Visual C.
+>=20
+> Ah, yes, I think these parts need to be kept.  I am just dropping
+> the latest iteration with -std=3Dgnu99 from consideration to merge
+> down to 'next' and below.
+
+I'll try to get a v3 out relatively soon with those changes.  Due to
+visiting family in the U.S., I've been a bit busy with things, but I
+should have some time coming up to do a v3.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--b0D0j5fr9aggf023
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYZ5V0wAKCRB8DEliiIei
+gemrAP4yiSCu3AC8+Yjo49Q27oq5hI5usNkFKapMtv+jKojIPQEAwqx2bMRxpYS7
+cl0LdVvRviqR1H8Ht8EJuA5aMSNI3AA=
+=3x35
+-----END PGP SIGNATURE-----
+
+--b0D0j5fr9aggf023--
