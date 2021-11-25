@@ -2,222 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7516C433EF
-	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 11:41:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99BE8C433FE
+	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 11:47:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235636AbhKYLpB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Nov 2021 06:45:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49142 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235860AbhKYLm7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Nov 2021 06:42:59 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8375FC0613FC
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 03:36:59 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id v11so10917809wrw.10
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 03:36:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=BoRC4SLUdHBgMFCmpUs4CTbpsRy44x811GAPAcmmqv8=;
-        b=BuxnI73Ph7sf8vHkOVkT+7bCJKY4zr7nqhab5iB+CupOBXyZQx7PWfCHBG11CqH7yQ
-         gj3zSENgUMsPYe42c5l1AsJv523ObLzT5SU1bHSfL2YqcP9rLJrRn98agcbrns6YY5km
-         BddUvgUa7srAVhjHMPC1v6MjQxYsvAvUvp/1DeSHUvEjLJ0me0g8C1ANWOB250PgQipA
-         GLEjYB9j0ugdiZ8/14HWpIB+Xu4hqVwjQFQ9n4DGa3Thbwwvvn3qYHm3WzGfdJ6YWjOa
-         1epZp6KvNyW9lHNuIJMxozUM2m1WEhnR65YnK6a26r1nh73ESSPKXmOBowKES5gqNKsv
-         SxwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=BoRC4SLUdHBgMFCmpUs4CTbpsRy44x811GAPAcmmqv8=;
-        b=qe2ByPWrxpOkfhj1C0rkDpYnHXJmKKwgBcDQ2km1RCxHrLyFAXi+mt+K2Ko81HGg5D
-         Ssuh6JDSnOjohfZw0p5WapEc6NGc1SeXcy9ARZqOTxgCdq2ppzCLr8R1Y9JbWJ3rtenL
-         o+RkxcEjHqA/s+jpZRKMz+J2BAKC3TCSjmIf4hbdGqxsRSbWISm8Q8C2kL3b+Xskc/t7
-         aJndLZT6i28gZn9r07kI2p8O0dNllgpZnur8aHOyPvOIgedJtL9/RumbZU/9MGtGBklU
-         wJTVGhfye2E+h17PSVEamnL9qXWX4PtTyLj4wv1Jq62znkwsnBXvR77LkCICqppgL0lE
-         7geQ==
-X-Gm-Message-State: AOAM533gbcxgRR/tj8cnvN/sDO1Ii3Hnhjn+2qEbmLPkzs/5iQVi13io
-        5I/rAOOk+xwXHUzd2P5/+JCETFW9txU=
-X-Google-Smtp-Source: ABdhPJyUI9SZ7AUD8JuhVkQz7n2HxWpW3p/SN8eNGJwQNQc1hn845ZR6T9mD/Ejz0BND4rSJM6iY2g==
-X-Received: by 2002:a5d:4904:: with SMTP id x4mr5737810wrq.139.1637840217866;
-        Thu, 25 Nov 2021 03:36:57 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m3sm2497868wrv.95.2021.11.25.03.36.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Nov 2021 03:36:57 -0800 (PST)
-Message-Id: <pull.1146.git.git.1637840216877.gitgitgadget@gmail.com>
-From:   "Mahdi Hosseinzadeh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 25 Nov 2021 11:36:56 +0000
-Subject: [PATCH] githubci: add a workflow for creating GitHub release notes
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S239229AbhKYLvB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Nov 2021 06:51:01 -0500
+Received: from mout.gmx.net ([212.227.17.21]:44489 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235336AbhKYLtA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Nov 2021 06:49:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1637840746;
+        bh=8SYIrxA+ruFOlN2ITbgz69WFVz8xShiIZMShD8qDzto=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=f+XqhU3pDXVnb7f3jMvF9nrO/Ohol1vBzF63G+Npz1PFJS8d6KvCqc0xZhIT0xqqP
+         ojbsPVtKyYQkptXYgjeBFV/M3QaKyVQLuqrcZETqxDVN/oBMF1f2DqjHt1wD3msg++
+         I0CaNLT8dpSiEVXjGNUOoEpLi0b3a9ENVUQ3mJTc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M5wLT-1mim932nxT-007WeG; Thu, 25
+ Nov 2021 12:45:46 +0100
+Date:   Thu, 25 Nov 2021 12:45:45 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
+        Yoichi Nakayama <yoichi.nakayama@gmail.com>
+Subject: Re: [PATCH] completion: add human and auto: date format
+In-Reply-To: <pull.1083.git.1637666875171.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2111251245200.63@tvgsbejvaqbjf.bet>
+References: <pull.1083.git.1637666875171.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Mahdi Hosseinzadeh <mdihosseinzadeh@gmail.com>,
-        Mahdi Hosseinzadeh <mdihosseinzadeh@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:TdPq0J48QKRk5waBYL7Oyg5dN1CCmtK0nC6mBfNkevXipVwaVTv
+ oSB9F1yzdxvXYJRmvXl94XbZKfwXa9Fow+LmShH+ese37cH/1vP3q5LDg6hIlkBQ/SFKoq0
+ ZtQJKbvkNnLzejIYn03gQDke22XR7MeI/UtwMbtTF1y2fKPAimv14i1mYuc1aFG2WhBrk3P
+ hsRnE+ELvfeyk4kWGqkUg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:CEWjNS0xbY4=:lbt12p9R+7fJCFRKs6uBFs
+ RQPY4k1UZuFV1cdg25PaqeRn6rVktZmaefqEdwOZmJJ7gLd/ZlU181U9WkY+TzgwFfkJ8d3f9
+ hTxXMXmdHC8/0iymKcgYpKUei7P3YVOuPUFeeKcmhp5WqI7Dsg83SBKdR6JKi40pqLe78kusC
+ JbGq03Zk88iQKW2fK3yRXL6NbXJVUfyWbWv6hRijYl9m9I7prXsSaLQE8UxBrYzSuhSR/NXTR
+ 8ZASXbIIlk9vtjG5ZvDdlklIhdbumuTTZFciPrRlG4xeWcC+ePhUR/n7e8qk/OhHetpSXW1mx
+ w8ungSKLSaff5kNQfL5j2NJiXC920WJacmRK78Y1danNl2QlZt17SbQtTQgngJPqB2H0BydvS
+ ij1ZNTy2VKR2tmriTgYdNDhE8JIOzqbuc8+axGc8y995e43AVOwELuRwilcBWU2rL5sTgW1Qk
+ z03YkqhoSECBPvLSY0Rtnt3mAx2bDDvx+jXcBZjQcycKgKitGpLdQMyJDiQ9x9aGOEgC5MlL9
+ BsUCiS+NMak8JbwyIa2Lf8f4JV9flRZtV0KUe/sxBJ9Ju5MGYrtIxFmVuHU5w2ybu1uZDAEdo
+ +scXKZuELghDWb/Qtx8qoZSy/i8kXq3oqgFG06NXVF14hGT/XJ82x4useJqEd7qzy8ezOhosH
+ jVZjZebeo3i7tjWHxUoKoMPn6KLEI3a25kPjkCy4V2zRYqsOVnNWwYbBVkYYEVOlF/7m2ciNh
+ NC5z1jY2bKpEbn/F3H2QPFDsrIGtsYYtnaERFYOTR9CQE+sF90ritUVZnhavUrIkDptjBMf6x
+ HlGFuU1sa2zTriEbgvn00MtHQMzV6bEaTFnCiZUThNHiM9ApBb7MQdUEA8cjlyUS0ny1APunE
+ e8d6nAVqystKQgw4AtdJfRmWDzEX1MX38tObqPVmt1+plsVjJyOlmNgx/nLvMuOJxB3COWMIH
+ 2+bIx+q1TeLZT2ibkTQEmyuaCEZjePDSl2Oex/M1wcX1wsNQUtFdpGp/Np3XkRAOgU00/Huz1
+ FaWtyyLBQzquIb0AKGq+IdLhbTFZotUEZw8AoKBXOWf+jZC+fBBmSda0O3TfG+ZLcOymh5+Mc
+ XAHzae6UKxuuTk=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Mahdi Hosseinzadeh <mdihosseinzadeh@gmail.com>
+Hi Yoichi,
 
-GitHub now allows users to subscribe only to
-"release" notifications of a repository.
-So, users can be notified of new releases and their
-changelog/release notes automatically.
+On Tue, 23 Nov 2021, Yoichi NAKAYAMA via GitGitGadget wrote:
 
-This workflow works whenever:
-    a new version tag
-    (with the format following the regex "v\d+\..*")
-    is pushed to the repository
-AND
-    the commit that the tag points to, created/modified
-    a release notes file from Doumentation/RelNotes/ directory.
+> From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
+>
+> human was introduced in acdd37769de8b0fe37a74bfc0475b63bdc55e9dc
+> auto:* was introduced in 2fd7c22992d37469db957e9a4d3884a6c0a4d182
+>
+> Those formats were missing when other values were added to completion
+> at 5a59a2301f6ec9bcf1b101edb9ca33beb465842f
+>
+> Signed-off-by: Yoichi Nakayama <yoichi.nakayama@gmail.com>
 
-The script for generating the temporary changelog file is
-written in Kotlin language which can be a much better alternative
-to shell scripts in terms of features and readability
-(it is like a python script but with static typing support).
-The Kotlin runner is pre-installed in GitHub Actions environments;
-for more information see
-    https://github.com/actions/virtual-environments/
-    https://stackoverflow.com/a/69116750/8583692
+The commit message and the patch look good to me.
 
-The "Release Notes (yyyy-MM-dd)" link in https://git-scm.com/
-website can also link to these GitHub release pages instead of
-to the raw .txt release note file in the repository.
+Thanks!
+Dscho
 
-See the issue related to GitHub release notifications:
-https://github.com/isaacs/github/issues/410
-
-Also see GitHub announcement for this feature:
-https://github.blog/changelog/2018-11-27-watch-releases/
-
-Signed-off-by: Mahdi Hosseinzadeh <mdihosseinzadeh@gmail.com>
----
-    Add a workflow for creating GitHub release notes
-    
-    Because this is not directly the git code and is related to GitHub CI, I
-    post it here.
-    
-    This pull request adds a new GitHub Actions workflow that automatically
-    creates releases on GitHub repository when pushing a new tag to the
-    repository.
-    
-    GitHub now allows users to subscribe only to "release" notifications of
-    a repository. So, users can be notified of new releases and their
-    changelog/release notes automatically.
-    
-    This workflow works whenever: a new version tag (with the format
-    following the regex v\d+\..*) is pushed to the repository AND the commit
-    that the tag points to, created/modified a release notes file from
-    Doumentation/RelNotes/ directory.
-    
-    The script for generating the temporary changelog file is written in
-    Kotlin language [https://kotlinlang.org/] which can be a better
-    alternative to shell scripts in terms of features and readability (it is
-    like a python script but with static typing support). The Kotlin runner
-    is pre-installed in GitHub Actions environments; for more information
-    see https://github.com/actions/virtual-environments/
-    https://stackoverflow.com/a/69116750/8583692
-    
-    The Release Notes (yyyy-MM-dd) link in https://git-scm.com/ website can
-    also link to these GitHub release pages instead of to the raw .txt
-    release note file in the repository.
-    
-    See the issue related to GitHub release notifications:
-    https://github.com/isaacs/github/issues/410
-    
-    Also see GitHub announcement for this feature:
-    https://github.blog/changelog/2018-11-27-watch-releases/
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1146%2Fmahozad%2Fadd-github-releases-workflow-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1146/mahozad/add-github-releases-workflow-v1
-Pull-Request: https://github.com/git/git/pull/1146
-
- .../generate-github-changelog.main.kts        | 21 ++++++++++
- .github/workflows/create-release.yml          | 40 +++++++++++++++++++
- 2 files changed, 61 insertions(+)
- create mode 100644 .github/scripts/generate-github-changelog.main.kts
- create mode 100644 .github/workflows/create-release.yml
-
-diff --git a/.github/scripts/generate-github-changelog.main.kts b/.github/scripts/generate-github-changelog.main.kts
-new file mode 100644
-index 00000000000..e57fd2a6ae5
---- /dev/null
-+++ b/.github/scripts/generate-github-changelog.main.kts
-@@ -0,0 +1,21 @@
-+#!/usr/bin/env kotlin
-+
-+/**
-+ * Copies contents of the release notes file created/modified
-+ * in this commit to a new file to be used by the workflow.
-+ */
-+
-+import java.io.File
-+
-+println("Files modified in this commit:")
-+args.forEachIndexed { index, name ->
-+    println("\t${index + 1}- $name")
-+}
-+
-+val notesFile = args
-+    .map(::File)
-+    .singleOrNull { "RelNotes" in it.parent }
-+
-+notesFile
-+    ?.copyTo(File("changelog.txt"))
-+    ?: println("No release notes file modified in this commit")
-diff --git a/.github/workflows/create-release.yml b/.github/workflows/create-release.yml
-new file mode 100644
-index 00000000000..711ba105e42
---- /dev/null
-+++ b/.github/workflows/create-release.yml
-@@ -0,0 +1,40 @@
-+name: Create GH release
-+
-+# Create a GitHub release for each new tag.
-+# The release notes are taken from the release notes file
-+# modified in that commit located in Documentation/RelNotes directory.
-+
-+on:
-+  push:
-+    tags:
-+      - v[0-9]+.*
-+
-+permissions:
-+  contents: write
-+
-+jobs:
-+  create-gh-release:
-+    name: Create a new release or update an existing release in the GitHub repository
-+    runs-on: ubuntu-latest
-+    steps:
-+      - name: Checkout the repository
-+        uses: actions/checkout@v2
-+        with:
-+          fetch-depth: 2  # OR '0' To retrieve all preceding commit.
-+      - name: Get changed files
-+        uses: tj-actions/changed-files@v11.7
-+        id: changed-files
-+        with:
-+          separator: ' '
-+      - name: Generate the changelog
-+        run: kotlin .github/scripts/generate-github-changelog.main.kts ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
-+      - name: Create the release
-+        uses: actions/create-release@v1
-+        env:
-+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-+        with:
-+          tag_name: ${{ github.ref_name }}
-+          release_name: ${{ github.ref_name }}
-+          body_path: changelog.txt
-+          draft: false
-+          prerelease: false
-
-base-commit: 5f439a0ecfb4657100ec1e56ef9c6eca963b5a94
--- 
-gitgitgadget
+> ---
+>     completion: add human and auto: date format
+>
+>     In bash/zsh completion for git log --date=3D, following values are
+>     missing:
+>
+>      * human (introduced in acdd37769de8b0fe37a74bfc0475b63bdc55e9dc)
+>      * auto:* (introduced in 2fd7c22992d37469db957e9a4d3884a6c0a4d182)
+>
+>     They did exist when other values were added to completion at
+>     5a59a2301f6ec9bcf1b101edb9ca33beb465842f
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1083%2=
+Fyoichi%2Flog-date-completion-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1083/yoic=
+hi/log-date-completion-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1083
+>
+>  contrib/completion/git-completion.bash | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion=
+/git-completion.bash
+> index 7c3a75373a4..37fd5c4c885 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -2001,7 +2001,7 @@ __git_log_shortlog_options=3D"
+>  "
+>
+>  __git_log_pretty_formats=3D"oneline short medium full fuller reference =
+email raw format: tformat: mboxrd"
+> -__git_log_date_formats=3D"relative iso8601 iso8601-strict rfc2822 short=
+ local default raw unix format:"
+> +__git_log_date_formats=3D"relative iso8601 iso8601-strict rfc2822 short=
+ local default human raw unix auto: format:"
+>
+>  _git_log ()
+>  {
+>
+> base-commit: 0ea906d20517145895193a99666d5f2860a04360
+> --
+> gitgitgadget
+>
