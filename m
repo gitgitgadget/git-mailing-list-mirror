@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6071CC433FE
-	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 08:41:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51D4CC433F5
+	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 08:41:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353579AbhKYIod (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Nov 2021 03:44:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38358 "EHLO
+        id S1353583AbhKYIog (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Nov 2021 03:44:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353356AbhKYImc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Nov 2021 03:42:32 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40690C06175C
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 00:39:21 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id y196so4843960wmc.3
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 00:39:21 -0800 (PST)
+        with ESMTP id S1353361AbhKYImd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Nov 2021 03:42:33 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C409C061761
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 00:39:22 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id u18so9898628wrg.5
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 00:39:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8XVljRNRP03QkD5N2mWUjNprvwcPNj5TXePdLPaYnmk=;
-        b=XqMI5AHQt3U67JUkk7ph7AhGPTqJKxCOatV1wpx87GsfW16ipUCQXbNaX9WxiquPyo
-         2d7V282nhWlm/OAbpofn53sIjTApFF2yv68c9tPaANywIO14YWyO5L99YnAy3B3/LPjm
-         I+PW94YmEGE+8bVH/6pZXJ5F77rssnxcnpTMP9B2CTeKjqcJ91T4HxAqwOx4woWdZuoD
-         Q0IA/VJC6ardWmffot+rSQQumUHPVjowD82XS/qG9DhYppXcWNhjFafvtM1Eldbqbo5E
-         paplIf3DDmP2g3qlsN/jcnjK2GS60TjswYiqJddZ7SXyO/J2ikH10X6irbiEVv7vs9qq
-         dePQ==
+        bh=pGZm9gqf6Zg1QWoZPxdqgWYYWEoJTRxsD2IfU0/75HQ=;
+        b=gum124UDEpNlfiJL75IXehel0e1kEf7DHoN8ESAmYnhVYhjC813dWfIUDV+9OsyT5S
+         LpY/nmQE0lxMCzP3e1FZ1TVta/lMhf+WJEOjbKN7SVlpLJuxS40fK9zuas3MSZOP/JwU
+         QORfSytySurL3XF73u1hFxL0FVRwLMQABildu865awVDLyBQgF9+LqlZzidzkBxzIo5G
+         FTJCCFCiexASX+MTrXw4TXKKA3SKtrSCNDDIr00jzeBWXcbnUl1DVDV5fd8+uygRQG8e
+         B5IwbNnc5vlNwzxWMLvGltPOMaJO17hdj9O6Wjy7y6z6CY59YHaKxsAIkJhXcBjjjKtg
+         YF3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8XVljRNRP03QkD5N2mWUjNprvwcPNj5TXePdLPaYnmk=;
-        b=4/T2LUO5LHeCGm4RV16PGSQywNOo3kjFX1cO08DMdeZv1BwqTgrzPM3q5HQw7gJJ1W
-         M74LJLRvAWnVInFuVF4CmOtmC/pn4wtXrOGTuYAyd1BrxcI0zT0iI94kelvgC3NH+QAh
-         FqwPtFq7a9jrhVyaS3mHTlDll+oQZ98847FXjFHcgO3KAsPIn/Emtx//5rqVnzkHaLOq
-         Y+gjnjjUrl1fSjwpDPJVZ+wujS9TChfYKmNtEJBFdatxTeMuL1IrgyHSflGuSj8F1nBT
-         GI8DO0KHeVgaaFSAQt/sxXy6E7fME5iKnvBmoAyj2cKzUmZ8NpLjIxnYAk4Mp/12roQ3
-         UBjQ==
-X-Gm-Message-State: AOAM531e91U/FIBNIQI/0aa5PkfYsKD+stdQDvUpmwaOK2nZyuGcXT5W
-        5Wz6A7zbzr0KHOoyNOFDmSRJwUU9PZo=
-X-Google-Smtp-Source: ABdhPJy92fiTDQlzJmk8x57yZGQvlyC8cfyE4upmO+UHua/dR5j3PJCfLxBxwEJTyYWro7t9ZMnF4g==
-X-Received: by 2002:a05:600c:4154:: with SMTP id h20mr5046610wmm.189.1637829559565;
-        Thu, 25 Nov 2021 00:39:19 -0800 (PST)
+        bh=pGZm9gqf6Zg1QWoZPxdqgWYYWEoJTRxsD2IfU0/75HQ=;
+        b=hfDS0UqokzVAQvB1KOycYDZhWljvobtXQUmYpoNx4UFvTw683vBGy9w1wyKK1Cy5vo
+         7oRYy3JDuPgqWb5w8fPCfmJ5D1tGAk1Voh94MPXuwbtR0v9Si3rk/d9AFCMTzQFS3XGZ
+         1TfiT/UW2aDWwo0q6I5bc74Z5f2N19p6qxtSEqPbIY97mbK1QaWZbsjUddJ+DiWGnceT
+         BwYS3vNRWwJGUNPenVUaeichm35XQ71ddpNU0X9B5fvMKuZVuJ/z87x/ibrR9yKO4gW0
+         +4/JBLWV4WNsTAxSIuOMOZkSIQDcHkOYcfpzuCKXhUt8+aW8zK8581uT/LdyIs3DIXx2
+         WZoQ==
+X-Gm-Message-State: AOAM532a5mu4jXKuMHZ7szBTgHvYqps17VwcDvbCoBx2NHXmYbMhl0Mb
+        60OKZACAD7EeP1LaWy9Bdl4PsJT+jPo=
+X-Google-Smtp-Source: ABdhPJwLvrZQ4nZMbozk2h/vxBYyJ75YT3nzKBHx7yJKMEvpxyscVUB9rRL1t3RFVPjBzxt9ic91uA==
+X-Received: by 2002:adf:9bc4:: with SMTP id e4mr4609147wrc.476.1637829560521;
+        Thu, 25 Nov 2021 00:39:20 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h18sm2435900wre.46.2021.11.25.00.39.18
+        by smtp.gmail.com with ESMTPSA id o1sm2139077wrn.63.2021.11.25.00.39.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Nov 2021 00:39:19 -0800 (PST)
-Message-Id: <f6129a8ac9c3d052fb7fb508a62d4eedb8d9ed57.1637829556.git.gitgitgadget@gmail.com>
+        Thu, 25 Nov 2021 00:39:20 -0800 (PST)
+Message-Id: <e74975e83cc7a11b8f0378d59a8c2c4a97d3aa50.1637829556.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1140.v2.git.git.1637829556.gitgitgadget@gmail.com>
 References: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
         <pull.1140.v2.git.git.1637829556.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 25 Nov 2021 08:39:09 +0000
-Subject: [PATCH v2 2/9] setup: introduce startup_info->original_cwd
+Date:   Thu, 25 Nov 2021 08:39:10 +0000
+Subject: [PATCH v2 3/9] unpack-trees: refuse to remove
+ startup_info->original_cwd
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,132 +74,129 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Removing the current working directory causes all subsequent git
-commands run from that directory to get confused and fail with a message
-about being unable to read the current working directory:
-
-    $ git status
-    fatal: Unable to read current working directory: No such file or directory
-
-Non-git commands likely have similar warnings or even errors, e.g.
-
-    $ bash -c 'echo hello'
-    shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
-    hello
-
-This confuses end users, particularly since the command they get the
-error from is not the one that caused the problem; the problem came from
-the side-effect of some previous command.
-
-We would like to avoid removing the current working directory of our
-parent process; towards this end, introduce a new variable,
-startup_info->original_cwd, that tracks the current working directory
-that we inherited from our parent process.  For convenience of later
-comparisons, we prefer that this new variable store a path relative to
-the toplevel working directory (thus much like 'prefix'), except without
-the trailing slash.
-
-Subsequent commits will make use of this new variable.
+In the past, when a directory needs to be removed to make room for a
+file, we have always errored out when that directory contains any
+untracked (but not ignored) files.  Add an extra condition on that: also
+error out if the directory is the current working directory we inherited
+from our parent process.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- cache.h |  1 +
- git.c   |  2 ++
- setup.c | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 52 insertions(+)
+ t/t2501-cwd-empty.sh | 10 +++++-----
+ unpack-trees.c       | 17 +++++++++++++----
+ unpack-trees.h       |  1 +
+ 3 files changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index eba12487b99..d7903c65b57 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1834,6 +1834,7 @@ void overlay_tree_on_index(struct index_state *istate,
- struct startup_info {
- 	int have_repository;
- 	const char *prefix;
-+	const char *original_cwd;
- };
- extern struct startup_info *startup_info;
+diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
+index 5dfb456a691..212676d71c3 100755
+--- a/t/t2501-cwd-empty.sh
++++ b/t/t2501-cwd-empty.sh
+@@ -38,7 +38,7 @@ test_expect_failure 'checkout does not clean cwd incidentally' '
+ 	test_path_is_dir foo
+ '
  
-diff --git a/git.c b/git.c
-index 5ff21be21f3..2c98ab48936 100644
---- a/git.c
-+++ b/git.c
-@@ -866,6 +866,8 @@ int cmd_main(int argc, const char **argv)
+-test_expect_failure 'checkout fails if cwd needs to be removed' '
++test_expect_success 'checkout fails if cwd needs to be removed' '
+ 	git checkout foo/bar/baz &&
+ 	test_when_finished "git clean -fdx" &&
  
- 	trace_command_performance(argv);
+@@ -95,7 +95,7 @@ test_expect_failure 'merge does not remove cwd incidentally' '
+ 	test_path_is_dir subdir
+ '
  
-+	startup_info->original_cwd = xgetcwd();
-+
- 	/*
- 	 * "git-xxxx" is the same as "git xxxx", but we obviously:
- 	 *
-diff --git a/setup.c b/setup.c
-index 347d7181ae9..f30657723ea 100644
---- a/setup.c
-+++ b/setup.c
-@@ -432,6 +432,54 @@ void setup_work_tree(void)
- 	initialized = 1;
- }
+-test_expect_failure 'merge fails if cwd needs to be removed' '
++test_expect_success 'merge fails if cwd needs to be removed' '
+ 	git checkout foo/bar/baz &&
+ 	test_when_finished "git clean -fdx" &&
  
-+static void setup_original_cwd(void)
-+{
-+	struct strbuf tmp = STRBUF_INIT;
-+	const char *worktree = NULL;
-+	int offset = -1;
+@@ -122,7 +122,7 @@ test_expect_failure 'cherry-pick does not remove cwd incidentally' '
+ 	test_path_is_dir subdir
+ '
+ 
+-test_expect_failure 'cherry-pick fails if cwd needs to be removed' '
++test_expect_success 'cherry-pick fails if cwd needs to be removed' '
+ 	git checkout foo/bar/baz &&
+ 	test_when_finished "git clean -fdx" &&
+ 
+@@ -149,7 +149,7 @@ test_expect_failure 'rebase does not remove cwd incidentally' '
+ 	test_path_is_dir subdir
+ '
+ 
+-test_expect_failure 'rebase fails if cwd needs to be removed' '
++test_expect_success 'rebase fails if cwd needs to be removed' '
+ 	git checkout foo/bar/baz &&
+ 	test_when_finished "git clean -fdx" &&
+ 
+@@ -176,7 +176,7 @@ test_expect_failure 'revert does not remove cwd incidentally' '
+ 	test_path_is_dir subdir
+ '
+ 
+-test_expect_failure 'revert fails if cwd needs to be removed' '
++test_expect_success 'revert fails if cwd needs to be removed' '
+ 	git checkout fd_conflict &&
+ 	git revert HEAD &&
+ 	test_when_finished "git clean -fdx" &&
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 89ca95ce90b..6bc16f3a714 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -36,6 +36,9 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_WARNING_TYPES] = {
+ 	/* ERROR_NOT_UPTODATE_DIR */
+ 	"Updating '%s' would lose untracked files in it",
+ 
++	/* ERROR_CWD_IN_THE_WAY */
++	"Refusing to remove '%s' since it is the current working directory.",
 +
-+	/*
-+	 * startup_info->original_cwd wass set early on in cmd_main(), unless
-+	 * we're an auxiliary tool like git-remote-http or test-tool.
-+	 */
-+	if (!startup_info->original_cwd)
-+		return;
+ 	/* ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN */
+ 	"Untracked working tree file '%s' would be overwritten by merge.",
+ 
+@@ -131,6 +134,9 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 	msgs[ERROR_NOT_UPTODATE_DIR] =
+ 		_("Updating the following directories would lose untracked files in them:\n%s");
+ 
++	msgs[ERROR_CWD_IN_THE_WAY] =
++		_("Refusing to remove the current working directory:\n%s");
 +
-+	/*
-+	 * startup_info->original_cwd points to the current working
-+	 * directory we inherited from our parent process, which is a
-+	 * directory we want to avoid incidentally removing.
-+	 *
-+	 * For convience, we would like to have the path relative to the
-+	 * worktree instead of an absolute path.
-+	 *
-+	 * Yes, startup_info->original_cwd is usually the same as 'prefix',
-+	 * but differs in two ways:
-+	 *   - prefix has a trailing '/'
-+	 *   - if the user passes '-C' to git, that modifies the prefix but
-+	 *     not startup_info->original_cwd.
-+	 */
-+
-+	/* Normalize the directory */
-+	strbuf_realpath(&tmp, startup_info->original_cwd, 1);
-+	free((char*)startup_info->original_cwd);
-+	startup_info->original_cwd = strbuf_detach(&tmp, NULL);
-+
-+	/* Find out if this is in the worktree */
-+	worktree = get_git_work_tree();
-+	if (worktree)
-+		offset = dir_inside_of(startup_info->original_cwd, worktree);
-+	if (offset >= 0) {
-+		/*
-+		 * original_cwd was inside worktree; precompose it just as
-+		 * we do prefix so that built up paths will match
-+		 */
-+		startup_info->original_cwd = \
-+			precompose_string_if_needed(startup_info->original_cwd
-+						    + offset);
-+	}
-+}
-+
- static int read_worktree_config(const char *var, const char *value, void *vdata)
- {
- 	struct repository_format *data = vdata;
-@@ -1330,6 +1378,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 		setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
+ 	if (!strcmp(cmd, "checkout"))
+ 		msg = advice_enabled(ADVICE_COMMIT_BEFORE_MERGE)
+ 		      ? _("The following untracked working tree files would be removed by checkout:\n%%s"
+@@ -2146,10 +2152,7 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
+ 		cnt++;
  	}
  
-+	setup_original_cwd();
+-	/*
+-	 * Then we need to make sure that we do not lose a locally
+-	 * present file that is not ignored.
+-	 */
++	/* Do not lose a locally present file that is not ignored. */
+ 	pathbuf = xstrfmt("%.*s/", namelen, ce->name);
  
- 	strbuf_release(&dir);
- 	strbuf_release(&gitdir);
+ 	memset(&d, 0, sizeof(d));
+@@ -2160,6 +2163,12 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
+ 	free(pathbuf);
+ 	if (i)
+ 		return add_rejected_path(o, ERROR_NOT_UPTODATE_DIR, ce->name);
++
++	/* Do not lose startup_info->original_cwd */
++	if (startup_info->original_cwd &&
++	    !strcmp(startup_info->original_cwd, ce->name))
++		return add_rejected_path(o, ERROR_CWD_IN_THE_WAY, ce->name);
++
+ 	return cnt;
+ }
+ 
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 71ffb7eeb0c..efb9edfbb27 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -19,6 +19,7 @@ enum unpack_trees_error_types {
+ 	ERROR_WOULD_OVERWRITE = 0,
+ 	ERROR_NOT_UPTODATE_FILE,
+ 	ERROR_NOT_UPTODATE_DIR,
++	ERROR_CWD_IN_THE_WAY,
+ 	ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN,
+ 	ERROR_WOULD_LOSE_UNTRACKED_REMOVED,
+ 	ERROR_BIND_OVERLAP,
 -- 
 gitgitgadget
 
