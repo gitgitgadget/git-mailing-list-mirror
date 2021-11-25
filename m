@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF5F6C433EF
-	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 22:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A06E0C433FE
+	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 22:54:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239272AbhKYW5p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Nov 2021 17:57:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57560 "EHLO
+        id S243827AbhKYW5u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Nov 2021 17:57:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233653AbhKYWzn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Nov 2021 17:55:43 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 360C8C061746
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 14:52:31 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id p27-20020a05600c1d9b00b0033bf8532855so5617135wms.3
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 14:52:31 -0800 (PST)
+        with ESMTP id S236157AbhKYWzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Nov 2021 17:55:44 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8F40C06174A
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 14:52:32 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id i8-20020a7bc948000000b0030db7b70b6bso9407374wml.1
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 14:52:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TvQflBWFBqNZAJoD0HXbPiWOLNkmUz45gIFX8uTeCFo=;
-        b=TXBiwo5o8I7e+Q1vR0Ycrjg8nuCrTDi6btulp8XyO4U2I8Bz7s1D/cOwJcBzhoON6P
-         3kdLFRenILc2kJG8KTHoILC5sEu3ccc0e9e6brKjZsLSdlf0rBFyfUeIzh672EzKR+7+
-         N4qcPr5loeHHmsQQ7DGhsYsp5q2mLup9AO8aNVZhYH3tOQoo4gRCW+qu/tJfo0AMAm6j
-         bt7jKGEAQ6erX5tgbLIy5YL8bcM3qnSxT0+wR82Ba3MmKw0U1tgiXdyiB2VmxD87758Z
-         vVJd0Vw6CWpQR3CzP269StVa+V/fRYm4lC2wh9W28ljvR6wdxgVQyTEpisSEZ3WhOMAT
-         0fHQ==
+        bh=eQ4PjCDnLFArC5f08daji1CSyq+B7ba+7v/SclBvCuA=;
+        b=EPSiCpYnHV/U7TjUINXY/KsZ0g1RD/CGJKOhrgKa82jrn9BNAKICw21v/5jnMRfnx7
+         XkiGn2e22sGo3R/XIUnOE+ZUvgwaDi1eKCGAVQJ6O+W6g0Rfl//OVyYYwhgusg6BQFc2
+         sLp7tS7J5Da+HLI/ZTkIX8EGNGrZH4HUxniVTEXnKgvlusJJMKokRUt3JE+ttW5owIqA
+         mAMl4QaHo45jSpTZC9JAGDnWFGK7Na5cMc9sutWbb09X63RLyNwTwBEqCThsVu47fdUc
+         yJNyj+CTdl+dc6fVuiRlRBr6sMJLSJuJ7AJhgfJEWHrTa3tyoch3Udw9BXYUTibTdWe7
+         k9Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TvQflBWFBqNZAJoD0HXbPiWOLNkmUz45gIFX8uTeCFo=;
-        b=ViyXsSc/SKJ4XDJi8TDlcZrCZmvodWqgKLzMaX2cCAEHb49k+r5Qbyvi29RNAlw0Jv
-         ecsRjmWSq/iPlWM2xKK4WCnQVLxxlIVnoEdAJeiUY4eYAUsRkSZUWjw2baB7FKXXxpid
-         3BhqCVCHWS2WrNsQIvI2hMrqVndOdunNrrhy2o0rkik9F19FU4LFZv+86jaQiL3E1Eeh
-         rdb6Tx3gNcDJxEIJBwVVjz3svQU5JcV/ftANLeDj9i7s4VhHH4IS0z07+ETNHe7cRUxu
-         XGs7OrMAf6pG1SPGh5AtWR+yuc2e4Sw5gEJYMQs5SHTZ878u5VCkfJkhE888yNHtG4DN
-         q9Og==
-X-Gm-Message-State: AOAM5305l7ekMuTu4zIZcpabwQO0zTf71vEkhi8RZXXUq+3XDd8BGgNO
-        V5fnGPtFHEBBN2rEIjo0T6NdLLDrGBY+Pw==
-X-Google-Smtp-Source: ABdhPJzP3sQDOvFRsDNyylmQbYkwA+gioQ9Jc9avgf7Th7RtAZEdS+VPi2cI7p0P4D/Xeb872TODVA==
-X-Received: by 2002:a1c:7f43:: with SMTP id a64mr11616707wmd.133.1637880749613;
-        Thu, 25 Nov 2021 14:52:29 -0800 (PST)
+        bh=eQ4PjCDnLFArC5f08daji1CSyq+B7ba+7v/SclBvCuA=;
+        b=5aH6co5SMsUC3K9lkTA952vKXGEhrPsbuZeRMPbbKGKffzM4hVtrX5K2UJBJ9attUx
+         1WPZsxNEntuzbMzI40RFL9UIxle2sDnXvFCY+Bsvdt/r4P1C9NCu0Y7sjXjf0JZ22ol4
+         hsZr/sF5cOO0F7+TzkmQkld5CboIwjtcyS8RmXGj7sqK87nejLNGrMbvqmq5CctdmX0J
+         VP5bEk34iJeAjWRrkUf/lhe5LKNI93s11yRirRwN/gpmQDhg3Ql6bk2LrA21iTO6uMFd
+         lcaqPX47nETcyQOeqoSB1a3bpI8m46R3YvFwpy6DdagTPTk0rcdf4FsZ7pzebCzNFRru
+         0ehQ==
+X-Gm-Message-State: AOAM532lVeV654+yNug7p2zZC0GH97/Ai+7VbLEMzkDPAs0zHpWkjfuC
+        gXcLhZA5ds/Q96uedXMFLJVH34rBHaqiuQ==
+X-Google-Smtp-Source: ABdhPJyBa5v1wdUUh9CgFfeEkXAPRwM80qLfgWYHbCVBOf9ZcsHUjXB84jTCbazkAz9fGznV1KBfSA==
+X-Received: by 2002:a05:600c:4e45:: with SMTP id e5mr11820009wmq.43.1637880751147;
+        Thu, 25 Nov 2021 14:52:31 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h22sm5001257wmq.14.2021.11.25.14.52.28
+        by smtp.gmail.com with ESMTPSA id h22sm5001257wmq.14.2021.11.25.14.52.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Nov 2021 14:52:29 -0800 (PST)
+        Thu, 25 Nov 2021 14:52:30 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 2/9] upload-archive: use regular "struct child_process" pattern
-Date:   Thu, 25 Nov 2021 23:52:17 +0100
-Message-Id: <patch-v3-2.9-d3a418b3809-20211125T224833Z-avarab@gmail.com>
+Subject: [PATCH v3 4/9] run-command tests: use strvec_pushv(), not argv assignment
+Date:   Thu, 25 Nov 2021 23:52:19 +0100
+Message-Id: <patch-v3-4.9-764c9b813fb-20211125T224833Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.838.g779e9098efb
 In-Reply-To: <cover-v3-0.9-00000000000-20211125T224833Z-avarab@gmail.com>
 References: <cover-v2-0.9-00000000000-20211123T115551Z-avarab@gmail.com> <cover-v3-0.9-00000000000-20211125T224833Z-avarab@gmail.com>
@@ -68,47 +68,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This pattern added [1] in seems to have been intentional, but since
-[2] and [3] we've wanted do initialization of what's now the "struct
-strvec" "args" and "env_array" members. Let's not trample on that
-initialization here.
-
-1. 1bc01efed17 (upload-archive: use start_command instead of fork,
-   2011-11-19)
-2. c460c0ecdca (run-command: store an optional argv_array, 2014-05-15)
-3. 9a583dc39e (run-command: add env_array, an optional argv_array for
-   env, 2014-10-19)
+As in the preceding commit change this API user to use strvec_pushv()
+instead of assigning to the "argv" member directly. This leaves us
+without test coverage of how the "argv" assignment in this API works,
+but we'll be removing it in a subsequent commit.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/upload-archive.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ t/helper/test-run-command.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
-index 24654b4c9bf..98d028dae67 100644
---- a/builtin/upload-archive.c
-+++ b/builtin/upload-archive.c
-@@ -77,7 +77,7 @@ static ssize_t process_input(int child_fd, int band)
+diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+index 3c4fb862234..913775a14b7 100644
+--- a/t/helper/test-run-command.c
++++ b/t/helper/test-run-command.c
+@@ -31,7 +31,7 @@ static int parallel_next(struct child_process *cp,
+ 	if (number_callbacks >= 4)
+ 		return 0;
  
- int cmd_upload_archive(int argc, const char **argv, const char *prefix)
- {
--	struct child_process writer = { argv };
-+	struct child_process writer = CHILD_PROCESS_INIT;
+-	strvec_pushv(&cp->args, d->argv);
++	strvec_pushv(&cp->args, d->args.v);
+ 	strbuf_addstr(err, "preloaded output of a child\n");
+ 	number_callbacks++;
+ 	return 1;
+@@ -274,7 +274,7 @@ static int quote_stress_test(int argc, const char **argv)
+ 		if (i < skip)
+ 			continue;
  
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage(upload_archive_usage);
-@@ -89,9 +89,10 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
- 	 * multiplexed out to our fd#1.  If the child dies, we tell the other
- 	 * end over channel #3.
- 	 */
--	argv[0] = "upload-archive--writer";
- 	writer.out = writer.err = -1;
- 	writer.git_cmd = 1;
-+	strvec_push(&writer.args, "upload-archive--writer");
-+	strvec_pushv(&writer.args, argv + 1);
- 	if (start_command(&writer)) {
- 		int err = errno;
- 		packet_write_fmt(1, "NACK unable to spawn subprocess\n");
+-		cp.argv = args.v;
++		strvec_pushv(&cp.args, args.v);
+ 		strbuf_reset(&out);
+ 		if (pipe_command(&cp, NULL, 0, &out, 0, NULL, 0) < 0)
+ 			return error("Failed to spawn child process");
+@@ -396,7 +396,7 @@ int cmd__run_command(int argc, const char **argv)
+ 	}
+ 	if (argc < 3)
+ 		return 1;
+-	proc.argv = (const char **)argv + 2;
++	strvec_pushv(&proc.args, (const char **)argv + 2);
+ 
+ 	if (!strcmp(argv[1], "start-command-ENOENT")) {
+ 		if (start_command(&proc) < 0 && errno == ENOENT)
+@@ -408,7 +408,8 @@ int cmd__run_command(int argc, const char **argv)
+ 		exit(run_command(&proc));
+ 
+ 	jobs = atoi(argv[2]);
+-	proc.argv = (const char **)argv + 3;
++	strvec_clear(&proc.args);
++	strvec_pushv(&proc.args, (const char **)argv + 3);
+ 
+ 	if (!strcmp(argv[1], "run-command-parallel"))
+ 		exit(run_processes_parallel(jobs, parallel_next,
 -- 
 2.34.1.838.g779e9098efb
 
