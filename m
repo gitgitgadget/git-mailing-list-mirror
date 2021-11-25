@@ -2,93 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DE74C433EF
-	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 16:09:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF69BC433F5
+	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 16:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356442AbhKYQM4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Nov 2021 11:12:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53488 "EHLO
+        id S1356434AbhKYQMy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Nov 2021 11:12:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356391AbhKYQKy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Nov 2021 11:10:54 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D22C0619DF
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 07:56:05 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id v11so12579079wrw.10
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 07:56:05 -0800 (PST)
+        with ESMTP id S233947AbhKYQKx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Nov 2021 11:10:53 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7738EC0619DE
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 07:56:04 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id v11so12579034wrw.10
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 07:56:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=PSFgT9kvFOoMZ0ZTJJHfE++msvyiVThB9xsajCaHxPA=;
-        b=GIv4nxkmVKw8UaBVaHgsLX5WVyxiVKOaURdmjlcFXSjcqOrwo3owmqvhpm8G2O06Mb
-         IxgVHIg6kcJOcm7qfFKvTeA8jsRpzOf5jy7ihAXcefjMaeQbgC5ANKjScZQEJxfHp+ge
-         jjDi/1m22iRuextOf9qbPz3OyNnv+8CZlGJzn5R2JPTmVN7TY+CNWyN0BG0sLzvmqeOO
-         MskRsnB9NTHnoypO+1uhmOUFl1q+x6Iwc04RrCOf5rNcN+DqINqo/SRw7tUzwoFhIiXO
-         9Jmu4h7oQ8Cn2D7I2XcWUTcmnVuMJtBd9CUMfLMdqQBjsXMOtcyuY+TJGGqJiMBAJrUT
-         bhhA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=8IP/LxAVD/5QBEpqfvIaHlWtJbsr2xHZCM/kCh7CoI0=;
+        b=QzErc/jl3Lv36y1uIwxk9Ege2R2HPmHqjgGZ79RYgvpn7fgf9PKSn1UAUbvrmIJmzj
+         21/RpSTi5/eSUnDpcrlXiYxdkKJ6krLvhoxe3wsfF8MdAhtUq+QtQDdWmZ0XO2PhkXZW
+         Ovf8umTZVyUuogqel0TbAMDJ3nwXvz+XFR224haxTjg6baPrzWTIAkbJFNY9Y5++2Re9
+         jk50aM4d/JyUvBcIou1Xr8Prjj5TPVSYRimWvEhvT0d3vPKiERm4BsFPDaN6ehA3Rlob
+         P2rOARcfq4ptXnqzTtwNb7vLP/Z5qihSRhGFZXvejVUkSnO1N4edj5fRrfFtY8qCtQ3b
+         67UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=PSFgT9kvFOoMZ0ZTJJHfE++msvyiVThB9xsajCaHxPA=;
-        b=xulAJz7KznVCHLRw0NCjXS3VghyLagz/gloBWf8scouJW2G0r1aVedZHmic23pr11e
-         bmg9EYEpXtxDWqwmPA/FGOFwoL2gryp8L/lkBv8CHTb7EnrjS5e/CvCBcaIREHc3/3aS
-         9VS0dEpQ1EOcj0Sqlahs8ECORPTJBJ82snYJd0C7whOuxG8THu8njwuVOXr5pyr2P9Mx
-         C9w858SxRKODX3nGIw8pQJho2NNWK28TQWhmO1vwHLhCxHV88HUu1JdtF2g9+hA0pyyQ
-         xix4eQi/FkEdn/SoM+hZ6L5OLFQqLMp0CGZUfvpmwy5wdH/ug/T+Z5xyilXS5/IIqpQZ
-         SW2g==
-X-Gm-Message-State: AOAM532W3YUPZc00Tf+nbtKZbtLVMWLp5uLSSVKfxBdtETrlkeJ1hoA3
-        8U89PyVyWXrrukr2nPdwV1S1mAux5/M=
-X-Google-Smtp-Source: ABdhPJyfq0C2nQIKvmC4fRTsPD4lxL7CxeDaEGSnLlHJfsdvRCXjMN+gqe292Ema5GoJnxi7qV+orA==
-X-Received: by 2002:adf:fe81:: with SMTP id l1mr7840642wrr.522.1637855763593;
-        Thu, 25 Nov 2021 07:56:03 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=8IP/LxAVD/5QBEpqfvIaHlWtJbsr2xHZCM/kCh7CoI0=;
+        b=Ayrxq0TSfSWP4JbVrOvqCk3pRt7G+gejwhzvE9dvn0lP5kCFurg8tpDNroFKDmQgpB
+         zFQVo9nhqPWguAvlUAGINJxD5TZ9s98vzoHnu1wx0fbmgiGArzAZSgYT6GCmm63iuHTR
+         N4nFFyWWt66Qa8TdHnMiajfAhvz2cx99K5NABjsSULDACQN2yZ5frEuMr6Ldk7/B2cCO
+         QH3ikmHzOakK0Gax8/tJrxogNkBHZFGEnBbt7w+kEyq27e4aIb4sR3HB/c/MNQD7UZS6
+         rQmHblaIoAihUjbjF5jOxapRiER9g1krjpfxPowhZUVkYgRxvdmNpWpRXzSNRnXFtzs0
+         xUog==
+X-Gm-Message-State: AOAM532EdZ4kZ8G5U0dDuT9k6OaLbe4Ux4Q5xsO3ZaUEKhTNs0i6HS6a
+        5APUfHScieObJSaCvnbzqJ0QVvjEZ+I=
+X-Google-Smtp-Source: ABdhPJzou38VR5NTe47vYJ8FNiuXuV/03JoiLisQ1zPRbTokDmhUY+WQ6fbv5t3p3/SCoEYxE3EJHw==
+X-Received: by 2002:adf:cd89:: with SMTP id q9mr7643951wrj.205.1637855762865;
+        Thu, 25 Nov 2021 07:56:02 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f7sm10417439wmg.6.2021.11.25.07.56.03
+        by smtp.gmail.com with ESMTPSA id m1sm3418893wme.39.2021.11.25.07.56.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Nov 2021 07:56:03 -0800 (PST)
-Message-Id: <b83bfda2443bd10930e46efadc9bd051de5ec43d.1637855761.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1147.git.git.1637855761.gitgitgadget@gmail.com>
-References: <pull.1147.git.git.1637855761.gitgitgadget@gmail.com>
+        Thu, 25 Nov 2021 07:56:02 -0800 (PST)
+Message-Id: <pull.1147.git.git.1637855761.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 25 Nov 2021 15:56:00 +0000
-Subject: [PATCH 1/2] refs: update comment.
+Date:   Thu, 25 Nov 2021 15:55:59 +0000
+Subject: [PATCH 0/2] Allow writing invalid OIDs into refs for testing purposes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+this covers a few cases of direct filesystem access to the ref database in
+tests.
 
-REF_IS_PRUNING is right below this comment, so it clearly does not belong in
-this comment. This was apparently introduced in commit 5ac95fee (Nov 5, 2017
-"refs: tidy up and adjust visibility of the `ref_update` flags").
+Han-Wen Nienhuys (2):
+  refs: update comment.
+  refs: allow skipping OID verification
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
- refs/files-backend.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ refs.h               |  8 ++++++-
+ refs/files-backend.c | 53 +++++++++++++++++++++++++-------------------
+ t/t1006-cat-file.sh  |  5 ++---
+ t/t3800-mktag.sh     |  6 +++--
+ 4 files changed, 43 insertions(+), 29 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 151b0056fe5..5cfdec1e820 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -16,8 +16,7 @@
-  * This backend uses the following flags in `ref_update::flags` for
-  * internal bookkeeping purposes. Their numerical values must not
-  * conflict with REF_NO_DEREF, REF_FORCE_CREATE_REFLOG, REF_HAVE_NEW,
-- * REF_HAVE_OLD, or REF_IS_PRUNING, which are also stored in
-- * `ref_update::flags`.
-+ * or REF_HAVE_OLD, which are also stored in `ref_update::flags`.
-  */
- 
- /*
+
+base-commit: 5f439a0ecfb4657100ec1e56ef9c6eca963b5a94
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1147%2Fhanwen%2Fskip-verification-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1147/hanwen/skip-verification-v1
+Pull-Request: https://github.com/git/git/pull/1147
 -- 
 gitgitgadget
-
