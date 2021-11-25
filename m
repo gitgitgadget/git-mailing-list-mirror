@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D87ECC433F5
-	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 08:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 223DAC433EF
+	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 08:41:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353602AbhKYIoj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Nov 2021 03:44:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38368 "EHLO
+        id S1353630AbhKYIoo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Nov 2021 03:44:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353366AbhKYIme (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Nov 2021 03:42:34 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AE88C061763
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 00:39:23 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id u18so9898723wrg.5
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 00:39:23 -0800 (PST)
+        with ESMTP id S1353370AbhKYImk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Nov 2021 03:42:40 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A4B8C0613D7
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 00:39:26 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id j3so9940907wrp.1
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 00:39:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=OMvVoWV6a4igUhCPJwdvCNYU8tR72Q0wviYGWDVUkTg=;
-        b=UiRd/uz1EjQdLQ/By0nqTpaT19/MexBx3y8XYcLL/wF4avhUi77B1LCiwuaz9JTQ31
-         ww7KMPg+GPWZZYaTVD4nQIG3eRp2t2IX/LN79JnmR4FVdD8EwNAJZUwI0nfa0hLexo2u
-         jKia48rVlIw2n00U24M7XdnUCWYGV9MkoUHjqbTXpug7HPMb0YRm9HUsUwXQqTRj2woD
-         gCBZkYgjrhIVN9IL30YTt3+2GZhuebNyLc2suA72vdmJnYXRwwMZx8V86Tp9tR+9Odxv
-         njTlMGzeWBVIRT92u9RAp7xqW1fU9mmynpkoj5GDS/dLcivHo9/IecthMNpNsX5LUMCv
-         MRdQ==
+        bh=JsrOSNc7nQWW8eYxfSa7bNB/249vTV4VJg/WfpGDcBQ=;
+        b=CcwvBo3M8F3CmpGYfvSce12ACBnJUWbgDNWGq+5mU/vJgL37KBtNRqScDbpeEcByll
+         aSORt9J59TPKvlEQ5G1lnqEXA+wA3SWzTUzZheOQIVpMUaVjnlQkcX6zqNwoDlad+V5U
+         kArDDBlsCE/SdbwZ06qTzyippWwlnHwiegHSCQ67Dmk7otxx3rX13FhCmSO7gvOnGajM
+         95KhvChXgPolEB1RvhfDyoIZPDc51hQusEW/gO7QpofyEYLWi2MD5HoBsGVonwn25TtI
+         wBYFs/7NIEiGmv/JrSBTHXSRjZdBG9mNsANcrTX6knY+owbaLAHXYe2y5AtLWYkpyNQm
+         N3OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OMvVoWV6a4igUhCPJwdvCNYU8tR72Q0wviYGWDVUkTg=;
-        b=eG7PA14B2fMGy7IuxlStUkzu1iCnPPq98D6FTwslC8pWP151R1c6nPXwwbIIfEWfyG
-         53xruHuMtzw0PvyKmOGkxO3mgttViIeph/qWJlWjTZJQAFRiglDtQRZIqEHsDt87da6P
-         1LHWDEg193EKwhy90bSGAx/kiPBHFoZ4pZOtX8Q2YPL81aBm5ZJSEeD/XUkflE/E9z8o
-         2FUagZZIkrlGABqlGs5ugN/ouZ9yhDV2gJ4jdLAnOfDnlNfRSgnKTFdCpDB9ucDpvZ4X
-         EBSW9z2AZ64Qbvz4abLWRSJVLWmPFaHbtYFSJkD7/IqladNDp5jApTZSmVY7dYdIk0E6
-         iZng==
-X-Gm-Message-State: AOAM532di+g4mu/Kl90XhEN5mKbil4/xMyiM+JwPIQBL/6vAGpuo1Cd7
-        MRiVktaQhVO9qR3cqj1vGVBVSv9Upt8=
-X-Google-Smtp-Source: ABdhPJz4JdvhYSz3ZxrPlFnu/yMgB9noQD72NuzbQl6IECBGGvdgdF8HPOBM5spKHM/PIui77AwuxA==
-X-Received: by 2002:adf:8bda:: with SMTP id w26mr4561841wra.440.1637829561518;
-        Thu, 25 Nov 2021 00:39:21 -0800 (PST)
+        bh=JsrOSNc7nQWW8eYxfSa7bNB/249vTV4VJg/WfpGDcBQ=;
+        b=mgLiMVdNRxX46KOGFkvistv38FeflaA8GfSb5EeM2Nq69kCigY5B1p2zuNTEVSVvKw
+         34Jm+SEcB3+6eoSpQXbCPHPC/UddxD43EPed54HH8rt2e6oSYlU5M6u8/Z5OcG4+cwxg
+         BZaSOYJfqLEpIuTFE0dPO4WH2XqZ5QwWm0yXpoM3Z1TZp4aRIgPgPd9lSZ+ZU9/ha/ea
+         GhVv9QWKcHy8KJlfQz4S4dbIwWsKGarYDoX0baeM6mQGAkUOTdY0VUtuJkxgu+2TqbvN
+         9DK6kfGCuiXbGRnd+h2A5jDt0dLFB7Ga/FpFyFJ51pjDFo96ErUzNy3GQv81ClLv+Jqn
+         p8CQ==
+X-Gm-Message-State: AOAM531ShsiBzKlbfyc6C0N1rknCm+7tXomdPSi80W+wgTTsd9yuX7TK
+        OXiOWR/MrtZKyE5bqs50cPONfRCwrTk=
+X-Google-Smtp-Source: ABdhPJxQtBd7IyjOWIo/siRPXY9pwFcbgzR81+HAEAb+X1ZB/iXRtd2eYa+HttKrHSvsrqV9Oc/DHg==
+X-Received: by 2002:adf:c406:: with SMTP id v6mr4625991wrf.570.1637829564420;
+        Thu, 25 Nov 2021 00:39:24 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h204sm2423637wmh.33.2021.11.25.00.39.20
+        by smtp.gmail.com with ESMTPSA id x1sm2179277wru.40.2021.11.25.00.39.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Nov 2021 00:39:21 -0800 (PST)
-Message-Id: <e06806e3a3266fa6fdc973fcd7b479bd395c3023.1637829556.git.gitgitgadget@gmail.com>
+        Thu, 25 Nov 2021 00:39:22 -0800 (PST)
+Message-Id: <46728f74ea175a33ef592319893ed32146229b33.1637829556.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1140.v2.git.git.1637829556.gitgitgadget@gmail.com>
 References: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
         <pull.1140.v2.git.git.1637829556.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 25 Nov 2021 08:39:11 +0000
-Subject: [PATCH v2 4/9] unpack-trees: add special cwd handling
+Date:   Thu, 25 Nov 2021 08:39:12 +0000
+Subject: [PATCH v2 5/9] symlinks: do not include startup_info->original_cwd in
+ dir removal
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,64 +74,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-When running commands such as `git reset --hard` from a subdirectory, if
-that subdirectory is in the way of adding needed files, bail with an
-error message.
-
-Note that this change looks kind of like it duplicates the new lines of
-code from the previous commit in verify_clean_subdirectory().  However,
-when we are preserving untracked files, we would rather any error
-messages about untracked files being in the way take precedence over
-error messages about a subdirectory that happens to be the_original_cwd
-being in the way.  But in the UNPACK_RESET_OVERWRITE_UNTRACKED case,
-there is no untracked checking to be done, so we simply add a special
-case near the top of verify_absent_1.
+symlinks has a pair of schedule_dir_for_removal() and
+remove_scheduled_dirs() functions that ensure that directories made
+empty by removing other files also themselves get removed.  However, we
+want to exclude startup_info->original_cwd and leave it around.  This
+avoids the user getting confused by subsequent git commands (and non-git
+commands) that would otherwise report confusing messages about being
+unable to read the current working directory.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t2501-cwd-empty.sh |  2 +-
- unpack-trees.c       | 13 +++++++++++--
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ symlinks.c           |  8 +++++++-
+ t/t2501-cwd-empty.sh | 12 ++++++------
+ 2 files changed, 13 insertions(+), 7 deletions(-)
 
+diff --git a/symlinks.c b/symlinks.c
+index 5232d02020c..c667baa949b 100644
+--- a/symlinks.c
++++ b/symlinks.c
+@@ -279,7 +279,9 @@ static void do_remove_scheduled_dirs(int new_len)
+ {
+ 	while (removal.len > new_len) {
+ 		removal.buf[removal.len] = '\0';
+-		if (rmdir(removal.buf))
++		if ((startup_info->original_cwd &&
++		     !strcmp(removal.buf, startup_info->original_cwd)) ||
++		    rmdir(removal.buf))
+ 			break;
+ 		do {
+ 			removal.len--;
+@@ -293,6 +295,10 @@ void schedule_dir_for_removal(const char *name, int len)
+ {
+ 	int match_len, last_slash, i, previous_slash;
+ 
++	if (startup_info->original_cwd &&
++	    !strcmp(name, startup_info->original_cwd))
++		return;	/* Do not remove the current working directory */
++
+ 	match_len = last_slash = i =
+ 		longest_path_match(name, len, removal.buf, removal.len,
+ 				   &previous_slash);
 diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
-index 212676d71c3..526d8ec2ee3 100755
+index 526d8ec2ee3..b92e1a9bb16 100755
 --- a/t/t2501-cwd-empty.sh
 +++ b/t/t2501-cwd-empty.sh
-@@ -67,7 +67,7 @@ test_expect_failure 'reset --hard does not clean cwd incidentally' '
- 	test_path_is_dir foo
+@@ -24,7 +24,7 @@ test_expect_success setup '
+ 	git commit -m dirORfile
  '
  
--test_expect_failure 'reset --hard fails if cwd needs to be removed' '
-+test_expect_success 'reset --hard fails if cwd needs to be removed' '
+-test_expect_failure 'checkout does not clean cwd incidentally' '
++test_expect_success 'checkout does not clean cwd incidentally' '
+ 	git checkout foo/bar/baz &&
+ 	test_path_is_dir foo/bar &&
+ 
+@@ -53,7 +53,7 @@ test_expect_success 'checkout fails if cwd needs to be removed' '
+ 	test_path_is_dir dirORfile
+ '
+ 
+-test_expect_failure 'reset --hard does not clean cwd incidentally' '
++test_expect_success 'reset --hard does not clean cwd incidentally' '
+ 	git checkout foo/bar/baz &&
+ 	test_path_is_dir foo/bar &&
+ 
+@@ -82,7 +82,7 @@ test_expect_success 'reset --hard fails if cwd needs to be removed' '
+ 	test_path_is_dir dirORfile
+ '
+ 
+-test_expect_failure 'merge does not remove cwd incidentally' '
++test_expect_success 'merge does not remove cwd incidentally' '
  	git checkout foo/bar/baz &&
  	test_when_finished "git clean -fdx" &&
  
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 6bc16f3a714..5852807d2fb 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -2261,10 +2261,19 @@ static int verify_absent_1(const struct cache_entry *ce,
- 	int len;
- 	struct stat st;
+@@ -109,7 +109,7 @@ test_expect_success 'merge fails if cwd needs to be removed' '
+ 	test_path_is_dir dirORfile
+ '
  
--	if (o->index_only || !o->update ||
--	    o->reset == UNPACK_RESET_OVERWRITE_UNTRACKED)
-+	if (o->index_only || !o->update)
- 		return 0;
+-test_expect_failure 'cherry-pick does not remove cwd incidentally' '
++test_expect_success 'cherry-pick does not remove cwd incidentally' '
+ 	git checkout foo/bar/baz &&
+ 	test_when_finished "git clean -fdx" &&
  
-+	if (o->reset == UNPACK_RESET_OVERWRITE_UNTRACKED) {
-+		/* Avoid nuking startup_info->original_cwd... */
-+		if (startup_info->original_cwd &&
-+		    !strcmp(startup_info->original_cwd, ce->name))
-+			return add_rejected_path(o, ERROR_CWD_IN_THE_WAY,
-+						 ce->name);
-+		/* ...but nuke anything else. */
-+		return 0;
-+	}
-+
- 	len = check_leading_path(ce->name, ce_namelen(ce), 0);
- 	if (!len)
- 		return 0;
+@@ -136,7 +136,7 @@ test_expect_success 'cherry-pick fails if cwd needs to be removed' '
+ 	test_path_is_dir dirORfile
+ '
+ 
+-test_expect_failure 'rebase does not remove cwd incidentally' '
++test_expect_success 'rebase does not remove cwd incidentally' '
+ 	git checkout foo/bar/baz &&
+ 	test_when_finished "git clean -fdx" &&
+ 
+@@ -163,7 +163,7 @@ test_expect_success 'rebase fails if cwd needs to be removed' '
+ 	test_path_is_dir dirORfile
+ '
+ 
+-test_expect_failure 'revert does not remove cwd incidentally' '
++test_expect_success 'revert does not remove cwd incidentally' '
+ 	git checkout foo/bar/baz &&
+ 	test_when_finished "git clean -fdx" &&
+ 
 -- 
 gitgitgadget
 
