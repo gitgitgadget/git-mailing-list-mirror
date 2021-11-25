@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AFDCC433FE
-	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 22:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFB62C433F5
+	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 22:56:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346150AbhKYW7n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Nov 2021 17:59:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57982 "EHLO
+        id S1346263AbhKYW7q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Nov 2021 17:59:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232830AbhKYW5l (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Nov 2021 17:57:41 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C974FC061756
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 14:52:33 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id a9so14604088wrr.8
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 14:52:33 -0800 (PST)
+        with ESMTP id S230091AbhKYW5m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Nov 2021 17:57:42 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EADC1C061758
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 14:52:35 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id d24so14688027wra.0
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 14:52:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bY+2ZJS1sprpQzhplco7lSIRxZzXqhEHd27hLy0Ykjw=;
-        b=JtTz42Zh64gvOWOoKQUQlFuAA3h0XqY64d1YF4m0Z6xu62Uz07QUt7pC4Sv4duVqnS
-         VKJibVLyOT89QHXuj4RWkg7cS9iSmOaBmUlRcC9RofhR1Lma99TXrXx28DN5rqHj3SWA
-         7FqB3koQJR5XRKrGvl8YHIJkAYNZ8SkIXjiaJcePTlIDkOYeIKhvWq+XpGxM70sGHjBm
-         ytyg5NJ/XbEGj4tEWOdmSYpue/ehHlnpQy1qVRz6gV3dqjbi+COIQ9GZFObMyZ1suO04
-         qrBf6ak2YRJgS8vDP9zW0GU5GAdRcdRgKSk5qKWBeqpbrLgTkKwWo9xutdNz9tVFmZrY
-         sOnA==
+        bh=ktV1uXEGvzIUIz+w+85KX4GkKFIlhKJkGJ/a1K0n4DM=;
+        b=GUHZqluabodUEZ9BzbMgWpqwXjopc5u9dyc7MzH3EOSWl0QaUHtFUMHw7qr8Q+A8eS
+         AiO6DOd4QFqkaGAde3Q0brXMch8jd/Yyg25ZFaXO0K9jfxaRRW8OeUXCdT5n4KuOnyoI
+         TBuCaM1x3Aq+lfxDbEk+3x0/gXJvu52SLzmQkRc4TdKTgeGwf6ODyBkbCfvhkw6ivYuk
+         CE55uXIQwzQRFsVwbjUtswMXWj/F9aOkWCoIOGzsVg6wGgk+EJFNvgjkE8tkRDQpDCqE
+         smdeVVWc8LWXjAP2FriaeYUypjykMtN5fx3xEbaOemsrB/sbwyoTUM+HJlsHG/m49ims
+         huHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bY+2ZJS1sprpQzhplco7lSIRxZzXqhEHd27hLy0Ykjw=;
-        b=eZAlNjcZUkV0pq7iYUBL8wjPjfG+9uhlxR0meoWKszDpvPdUiezTtOT75BLPrGJgck
-         bzK6HovLV/Fwm7qPyS1+s1KobzQ1WcLm0xNPgf5f1jGMVBQtH1g3a+r5JlY5LHbirSrv
-         GXwrikLC8Z0wHmbNp9/WOM9WIaPGxidtrWxOa75otKv31IkWFGA9N2iI6ZZBawswPgln
-         vHuWU4TQQGiLctxeOAcZ/fq+S9z34etY3Ue9aF2iNuv/xsDQmdsHwWIb75kRNP5rLB8g
-         EvGLMXvBKgYq35wR2zXGiVkhFOnfptEjwIV4FJ4j+IrvTQ38ts6e6hQ7K0YFZWa3cdpe
-         2JDg==
-X-Gm-Message-State: AOAM533KWlagnyytFCX2FlCQOx/oFJeaL3pvXM3p5/IPtqw++FCNN7Gv
-        TEI5V4xudbcn+7ORhhHhivPMsw/cGM1HPQ==
-X-Google-Smtp-Source: ABdhPJyyvToLjrOTiuVp9Zgm9mx9mS2GC/JXU/Za2Mgn8C95Iht4dTtPYY0cORugQ8YtI7oKZwJ4+A==
-X-Received: by 2002:a5d:4e0b:: with SMTP id p11mr10437961wrt.88.1637880752108;
-        Thu, 25 Nov 2021 14:52:32 -0800 (PST)
+        bh=ktV1uXEGvzIUIz+w+85KX4GkKFIlhKJkGJ/a1K0n4DM=;
+        b=nfmi+yvOWmEuDDWJFOj3KPOn+YUTDMs+ZYG+PwSkMqz9ByItajkupDVI41PhV6C89h
+         v2j5hq7y1Ir0OXIeOk1z94+xii9D9PqYVsTb9gtVAvNLx9oI7Bituklw4/IuZvqUkY4I
+         VIWxYEXNplTlh+Y3puZ7t3TjBIserOpM9qzewBGn3YjVyq9KAw64Q/i2kNlNchH+u0lk
+         4uvsd6MphTooJbiJj+t0PiilAIiquxrbcYEnKAvoweXud/DtZk8gnZBwSDdYW0+APcDz
+         y1ZgqHQeE386X3B1Kha/EfmNRkKbV4iZyQMJjDerdMsOqO0tZH/mjemS7/vS4YtCR7Mq
+         ByWQ==
+X-Gm-Message-State: AOAM530ZjjC2RprNa1lplP2NpJvQ1CNm30nPJI7sfoVFtGp1kkMEqI8F
+        MlDUWfSKh6UsBXoNRyVcbMc4TSf15SAKPA==
+X-Google-Smtp-Source: ABdhPJzO4fsprqrEySNhXIBhA4bw7IGUTpz9Jqd9x+UMub76RTLlyBhLywlr2I1eFlkmwmyid4z6BA==
+X-Received: by 2002:a05:6000:1a41:: with SMTP id t1mr10552018wry.261.1637880754250;
+        Thu, 25 Nov 2021 14:52:34 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h22sm5001257wmq.14.2021.11.25.14.52.31
+        by smtp.gmail.com with ESMTPSA id h22sm5001257wmq.14.2021.11.25.14.52.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Nov 2021 14:52:31 -0800 (PST)
+        Thu, 25 Nov 2021 14:52:33 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 5/9] run-command API users: use strvec_pushl(), not argv construction
-Date:   Thu, 25 Nov 2021 23:52:20 +0100
-Message-Id: <patch-v3-5.9-45803236764-20211125T224833Z-avarab@gmail.com>
+Subject: [PATCH v3 7/9] run-command API: remove "argv" member, always use "args"
+Date:   Thu, 25 Nov 2021 23:52:22 +0100
+Message-Id: <patch-v3-7.9-275535a447e-20211125T224833Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.838.g779e9098efb
 In-Reply-To: <cover-v3-0.9-00000000000-20211125T224833Z-avarab@gmail.com>
 References: <cover-v2-0.9-00000000000-20211123T115551Z-avarab@gmail.com> <cover-v3-0.9-00000000000-20211125T224833Z-avarab@gmail.com>
@@ -68,331 +68,298 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change a pattern of hardcoding an "argv" array size, populating it and
-assigning to the "argv" member of "struct child_process" to instead
-use "strvec_pushl()" to add data to the "args" member.
+Remove the "argv" member from the run-command API, ever since "args"
+was added in c460c0ecdca (run-command: store an optional argv_array,
+2014-05-15) being able to provide either "argv" or "args" has led to
+some confusion and bugs.
 
-This implements the same behavior as before in fewer lines of code,
-and moves us further towards being able to remove the "argv" member in
-a subsequent commit.
+If we hadn't gone in that direction and only had an "argv" our
+problems wouldn't have been solved either, as noted in [1] (and in the
+documentation amended here) it comes with inherent memory management
+issues: The caller would have to hang on to the "argv" until the
+run-command API was finished. If the "argv" was an argument to main()
+this wasn't an issue, but if it it was manually constructed using the
+API might be painful.
 
-Since we've entirely removed the "argv" variable(s) we can be sure
-that no potential logic errors of the type discussed in a preceding
-commit are being introduced here, i.e. ones where the local "argv" was
-being modified after the assignment to "struct child_process"'s
-"argv".
+We also have a recent report[2] of a user of the API segfaulting,
+which is a direct result of it being complex to use. This commit
+addresses the root cause of that bug.
+
+This change is larger than I'd like, but there's no easy way to avoid
+it that wouldn't involve even more verbose intermediate steps. We use
+the "argv" as the source of truth over the "args", so we need to
+change all parts of run-command.[ch] itself, as well as the trace2
+logging at the same time.
+
+The resulting Windows-specific code in start_command() is a bit nasty,
+as we're now assigning to a strvec's "v" member, instead of to our own
+"argv". There was a suggestion of some alternate approaches in reply
+to an earlier version of this commit[3], but let's leave larger a
+larger and needless refactoring of this code for now.
+
+1. http://lore.kernel.org/git/YT6BnnXeAWn8BycF@coredump.intra.peff.net
+2. https://lore.kernel.org/git/20211120194048.12125-1-ematsumiya@suse.de/
+3. https://lore.kernel.org/git/patch-5.5-ea1011f7473-20211122T153605Z-avarab@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/add.c          |  7 ++-----
- builtin/fsck.c         | 12 ++++--------
- builtin/help.c         |  3 +--
- builtin/merge.c        |  3 +--
- builtin/notes.c        |  5 ++---
- builtin/receive-pack.c | 38 +++++++++++++-------------------------
- builtin/replace.c      |  3 +--
- editor.c               |  4 +---
- sequencer.c            | 10 +++-------
- upload-pack.c          |  5 +----
- 10 files changed, 29 insertions(+), 61 deletions(-)
+ run-command.c           | 42 ++++++++++++++++++++---------------------
+ run-command.h           | 20 ++++++++------------
+ sub-process.c           |  2 +-
+ trace2/tr2_tgt_event.c  |  2 +-
+ trace2/tr2_tgt_normal.c |  2 +-
+ trace2/tr2_tgt_perf.c   |  4 ++--
+ 6 files changed, 33 insertions(+), 39 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index ef6b619c45e..a010b2c325f 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -302,15 +302,11 @@ int interactive_add(const char **argv, const char *prefix, int patch)
- static int edit_patch(int argc, const char **argv, const char *prefix)
- {
- 	char *file = git_pathdup("ADD_EDIT.patch");
--	const char *apply_argv[] = { "apply", "--recount", "--cached",
--		NULL, NULL };
- 	struct child_process child = CHILD_PROCESS_INIT;
- 	struct rev_info rev;
- 	int out;
- 	struct stat st;
+diff --git a/run-command.c b/run-command.c
+index 620a06ca2f5..99dc93e7300 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -380,7 +380,7 @@ static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
+ 	switch (cerr->err) {
+ 	case CHILD_ERR_CHDIR:
+ 		error_errno("exec '%s': cd to '%s' failed",
+-			    cmd->argv[0], cmd->dir);
++			    cmd->args.v[0], cmd->dir);
+ 		break;
+ 	case CHILD_ERR_DUP2:
+ 		error_errno("dup2() in child failed");
+@@ -392,12 +392,12 @@ static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
+ 		error_errno("sigprocmask failed restoring signals");
+ 		break;
+ 	case CHILD_ERR_ENOENT:
+-		error_errno("cannot run %s", cmd->argv[0]);
++		error_errno("cannot run %s", cmd->args.v[0]);
+ 		break;
+ 	case CHILD_ERR_SILENT:
+ 		break;
+ 	case CHILD_ERR_ERRNO:
+-		error_errno("cannot exec '%s'", cmd->argv[0]);
++		error_errno("cannot exec '%s'", cmd->args.v[0]);
+ 		break;
+ 	}
+ 	set_error_routine(old_errfn);
+@@ -405,7 +405,7 @@ static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
  
--	apply_argv[3] = file;
+ static int prepare_cmd(struct strvec *out, const struct child_process *cmd)
+ {
+-	if (!cmd->argv[0])
++	if (!cmd->args.v[0])
+ 		BUG("command is empty");
+ 
+ 	/*
+@@ -415,11 +415,11 @@ static int prepare_cmd(struct strvec *out, const struct child_process *cmd)
+ 	strvec_push(out, SHELL_PATH);
+ 
+ 	if (cmd->git_cmd) {
+-		prepare_git_cmd(out, cmd->argv);
++		prepare_git_cmd(out, cmd->args.v);
+ 	} else if (cmd->use_shell) {
+-		prepare_shell_cmd(out, cmd->argv);
++		prepare_shell_cmd(out, cmd->args.v);
+ 	} else {
+-		strvec_pushv(out, cmd->argv);
++		strvec_pushv(out, cmd->args.v);
+ 	}
+ 
+ 	/*
+@@ -663,7 +663,7 @@ static void trace_run_command(const struct child_process *cp)
+ 		trace_add_env(&buf, cp->env);
+ 	if (cp->git_cmd)
+ 		strbuf_addstr(&buf, " git");
+-	sq_quote_argv_pretty(&buf, cp->argv);
++	sq_quote_argv_pretty(&buf, cp->args.v);
+ 
+ 	trace_printf("%s", buf.buf);
+ 	strbuf_release(&buf);
+@@ -676,8 +676,6 @@ int start_command(struct child_process *cmd)
+ 	int failed_errno;
+ 	char *str;
+ 
+-	if (!cmd->argv)
+-		cmd->argv = cmd->args.v;
+ 	if (!cmd->env)
+ 		cmd->env = cmd->env_array.v;
+ 
+@@ -729,7 +727,7 @@ int start_command(struct child_process *cmd)
+ 			str = "standard error";
+ fail_pipe:
+ 			error("cannot create %s pipe for %s: %s",
+-				str, cmd->argv[0], strerror(failed_errno));
++				str, cmd->args.v[0], strerror(failed_errno));
+ 			child_process_clear(cmd);
+ 			errno = failed_errno;
+ 			return -1;
+@@ -758,7 +756,7 @@ int start_command(struct child_process *cmd)
+ 		failed_errno = errno;
+ 		cmd->pid = -1;
+ 		if (!cmd->silent_exec_failure)
+-			error_errno("cannot run %s", cmd->argv[0]);
++			error_errno("cannot run %s", cmd->args.v[0]);
+ 		goto end_of_spawn;
+ 	}
+ 
+@@ -868,7 +866,7 @@ int start_command(struct child_process *cmd)
+ 	}
+ 	atfork_parent(&as);
+ 	if (cmd->pid < 0)
+-		error_errno("cannot fork() for %s", cmd->argv[0]);
++		error_errno("cannot fork() for %s", cmd->args.v[0]);
+ 	else if (cmd->clean_on_exit)
+ 		mark_child_for_cleanup(cmd->pid, cmd);
+ 
+@@ -885,7 +883,7 @@ int start_command(struct child_process *cmd)
+ 		 * At this point we know that fork() succeeded, but exec()
+ 		 * failed. Errors have been reported to our stderr.
+ 		 */
+-		wait_or_whine(cmd->pid, cmd->argv[0], 0);
++		wait_or_whine(cmd->pid, cmd->args.v[0], 0);
+ 		child_err_spew(cmd, &cerr);
+ 		failed_errno = errno;
+ 		cmd->pid = -1;
+@@ -902,7 +900,7 @@ int start_command(struct child_process *cmd)
+ #else
+ {
+ 	int fhin = 0, fhout = 1, fherr = 2;
+-	const char **sargv = cmd->argv;
++	const char **sargv = cmd->args.v;
+ 	struct strvec nargv = STRVEC_INIT;
+ 
+ 	if (cmd->no_stdin)
+@@ -929,20 +927,20 @@ int start_command(struct child_process *cmd)
+ 		fhout = dup(cmd->out);
+ 
+ 	if (cmd->git_cmd)
+-		cmd->argv = prepare_git_cmd(&nargv, cmd->argv);
++		cmd->args.v = prepare_git_cmd(&nargv, sargv);
+ 	else if (cmd->use_shell)
+-		cmd->argv = prepare_shell_cmd(&nargv, cmd->argv);
++		cmd->args.v = prepare_shell_cmd(&nargv, sargv);
+ 
+-	cmd->pid = mingw_spawnvpe(cmd->argv[0], cmd->argv, (char**) cmd->env,
++	cmd->pid = mingw_spawnvpe(cmd->args.v[0], cmd->args.v, (char**) cmd->env,
+ 			cmd->dir, fhin, fhout, fherr);
+ 	failed_errno = errno;
+ 	if (cmd->pid < 0 && (!cmd->silent_exec_failure || errno != ENOENT))
+-		error_errno("cannot spawn %s", cmd->argv[0]);
++		error_errno("cannot spawn %s", cmd->args.v[0]);
+ 	if (cmd->clean_on_exit && cmd->pid >= 0)
+ 		mark_child_for_cleanup(cmd->pid, cmd);
+ 
+ 	strvec_clear(&nargv);
+-	cmd->argv = sargv;
++	cmd->args.v = sargv;
+ 	if (fhin != 0)
+ 		close(fhin);
+ 	if (fhout != 1)
+@@ -992,7 +990,7 @@ int start_command(struct child_process *cmd)
+ 
+ int finish_command(struct child_process *cmd)
+ {
+-	int ret = wait_or_whine(cmd->pid, cmd->argv[0], 0);
++	int ret = wait_or_whine(cmd->pid, cmd->args.v[0], 0);
+ 	trace2_child_exit(cmd, ret);
+ 	child_process_clear(cmd);
+ 	invalidate_lstat_cache();
+@@ -1001,7 +999,7 @@ int finish_command(struct child_process *cmd)
+ 
+ int finish_command_in_signal(struct child_process *cmd)
+ {
+-	int ret = wait_or_whine(cmd->pid, cmd->argv[0], 1);
++	int ret = wait_or_whine(cmd->pid, cmd->args.v[0], 1);
+ 	trace2_child_exit(cmd, ret);
+ 	return ret;
+ }
+diff --git a/run-command.h b/run-command.h
+index 49878262584..c0d1210cc63 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -44,21 +44,17 @@
+ struct child_process {
+ 
+ 	/**
+-	 * The .argv member is set up as an array of string pointers (NULL
+-	 * terminated), of which .argv[0] is the program name to run (usually
+-	 * without a path). If the command to run is a git command, set argv[0] to
+-	 * the command name without the 'git-' prefix and set .git_cmd = 1.
++	 * The .args is a `struct strvec', use that API to manipulate
++	 * it, e.g. strvec_pushv() to add an existing "const char **"
++	 * vector.
+ 	 *
+-	 * Note that the ownership of the memory pointed to by .argv stays with the
+-	 * caller, but it should survive until `finish_command` completes. If the
+-	 * .argv member is NULL, `start_command` will point it at the .args
+-	 * `strvec` (so you may use one or the other, but you must use exactly
+-	 * one). The memory in .args will be cleaned up automatically during
+-	 * `finish_command` (or during `start_command` when it is unsuccessful).
++	 * If the command to run is a git command, set the first
++	 * element in the strvec to the command name without the
++	 * 'git-' prefix and set .git_cmd = 1.
+ 	 *
++	 * The memory in .args will be cleaned up automatically during
++	 * `finish_command` (or during `start_command` when it is unsuccessful).
+ 	 */
+-	const char **argv;
 -
- 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
- 
- 	if (read_cache() < 0)
-@@ -338,7 +334,8 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
- 		die(_("Empty patch. Aborted."));
- 
- 	child.git_cmd = 1;
--	child.argv = apply_argv;
-+	strvec_pushl(&child.args, "apply", "--recount", "--cached", file,
-+		     NULL);
- 	if (run_command(&child))
- 		die(_("Could not apply '%s'"), file);
- 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 27b9e78094d..9e54892311d 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -944,15 +944,13 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 
- 	if (the_repository->settings.core_commit_graph) {
- 		struct child_process commit_graph_verify = CHILD_PROCESS_INIT;
--		const char *verify_argv[] = { "commit-graph", "verify", NULL, NULL, NULL };
- 
- 		prepare_alt_odb(the_repository);
- 		for (odb = the_repository->objects->odb; odb; odb = odb->next) {
- 			child_process_init(&commit_graph_verify);
--			commit_graph_verify.argv = verify_argv;
- 			commit_graph_verify.git_cmd = 1;
--			verify_argv[2] = "--object-dir";
--			verify_argv[3] = odb->path;
-+			strvec_pushl(&commit_graph_verify.args, "commit-graph",
-+				     "verify", "--object-dir", odb->path, NULL);
- 			if (run_command(&commit_graph_verify))
- 				errors_found |= ERROR_COMMIT_GRAPH;
+ 	struct strvec args;
+ 	struct strvec env_array;
+ 	pid_t pid;
+diff --git a/sub-process.c b/sub-process.c
+index dfa790d3ff9..cae56ae6b80 100644
+--- a/sub-process.c
++++ b/sub-process.c
+@@ -187,7 +187,7 @@ static int handshake_capabilities(struct child_process *process,
+ 				*supported_capabilities |= capabilities[i].flag;
+ 		} else {
+ 			die("subprocess '%s' requested unsupported capability '%s'",
+-			    process->argv[0], p);
++			    process->args.v[0], p);
  		}
-@@ -960,15 +958,13 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 	}
  
- 	if (the_repository->settings.core_multi_pack_index) {
- 		struct child_process midx_verify = CHILD_PROCESS_INIT;
--		const char *midx_argv[] = { "multi-pack-index", "verify", NULL, NULL, NULL };
+diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+index 3a0014417cc..bd17ecdc321 100644
+--- a/trace2/tr2_tgt_event.c
++++ b/trace2/tr2_tgt_event.c
+@@ -354,7 +354,7 @@ static void fn_child_start_fl(const char *file, int line,
+ 	jw_object_inline_begin_array(&jw, "argv");
+ 	if (cmd->git_cmd)
+ 		jw_array_string(&jw, "git");
+-	jw_array_argv(&jw, cmd->argv);
++	jw_array_argv(&jw, cmd->args.v);
+ 	jw_end(&jw);
+ 	jw_end(&jw);
  
- 		prepare_alt_odb(the_repository);
- 		for (odb = the_repository->objects->odb; odb; odb = odb->next) {
- 			child_process_init(&midx_verify);
--			midx_verify.argv = midx_argv;
- 			midx_verify.git_cmd = 1;
--			midx_argv[2] = "--object-dir";
--			midx_argv[3] = odb->path;
-+			strvec_pushl(&midx_verify.args, "multi-pack-index",
-+				     "verify", "--object-dir", odb->path, NULL);
- 			if (run_command(&midx_verify))
- 				errors_found |= ERROR_MULTI_PACK_INDEX;
- 		}
-diff --git a/builtin/help.c b/builtin/help.c
-index 75cd2fb407f..d387131dd83 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -212,11 +212,10 @@ static int check_emacsclient_version(void)
- {
- 	struct strbuf buffer = STRBUF_INIT;
- 	struct child_process ec_process = CHILD_PROCESS_INIT;
--	const char *argv_ec[] = { "emacsclient", "--version", NULL };
- 	int version;
+diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
+index 58d9e430f05..6e429a3fb9e 100644
+--- a/trace2/tr2_tgt_normal.c
++++ b/trace2/tr2_tgt_normal.c
+@@ -232,7 +232,7 @@ static void fn_child_start_fl(const char *file, int line,
+ 	strbuf_addch(&buf_payload, ' ');
+ 	if (cmd->git_cmd)
+ 		strbuf_addstr(&buf_payload, "git ");
+-	sq_append_quote_argv_pretty(&buf_payload, cmd->argv);
++	sq_append_quote_argv_pretty(&buf_payload, cmd->args.v);
  
- 	/* emacsclient prints its version number on stderr */
--	ec_process.argv = argv_ec;
-+	strvec_pushl(&ec_process.args, "emacsclient", "--version", NULL);
- 	ec_process.err = -1;
- 	ec_process.stdout_to_stderr = 1;
- 	if (start_command(&ec_process))
-diff --git a/builtin/merge.c b/builtin/merge.c
-index ea3112e0c0b..5f0476b0b76 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -310,10 +310,9 @@ static int save_state(struct object_id *stash)
- 	int len;
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct strbuf buffer = STRBUF_INIT;
--	const char *argv[] = {"stash", "create", NULL};
- 	int rc = -1;
+ 	normal_io_write_fl(file, line, &buf_payload);
+ 	strbuf_release(&buf_payload);
+diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+index e4acca13d64..2ff9cf70835 100644
+--- a/trace2/tr2_tgt_perf.c
++++ b/trace2/tr2_tgt_perf.c
+@@ -335,10 +335,10 @@ static void fn_child_start_fl(const char *file, int line,
+ 	strbuf_addstr(&buf_payload, " argv:[");
+ 	if (cmd->git_cmd) {
+ 		strbuf_addstr(&buf_payload, "git");
+-		if (cmd->argv[0])
++		if (cmd->args.nr)
+ 			strbuf_addch(&buf_payload, ' ');
+ 	}
+-	sq_append_quote_argv_pretty(&buf_payload, cmd->argv);
++	sq_append_quote_argv_pretty(&buf_payload, cmd->args.v);
+ 	strbuf_addch(&buf_payload, ']');
  
--	cp.argv = argv;
-+	strvec_pushl(&cp.args, "stash", "create", NULL);
- 	cp.out = -1;
- 	cp.git_cmd = 1;
- 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 71c59583a17..85d1abad884 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -134,14 +134,13 @@ static void copy_obj_to_fd(int fd, const struct object_id *oid)
- 
- static void write_commented_object(int fd, const struct object_id *object)
- {
--	const char *show_args[5] =
--		{"show", "--stat", "--no-notes", oid_to_hex(object), NULL};
- 	struct child_process show = CHILD_PROCESS_INIT;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf cbuf = STRBUF_INIT;
- 
- 	/* Invoke "git show --stat --no-notes $object" */
--	show.argv = show_args;
-+	strvec_pushl(&show.args, "show", "--stat", "--no-notes",
-+		     oid_to_hex(object), NULL);
- 	show.no_stdin = 1;
- 	show.out = -1;
- 	show.err = 0;
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 49b846d9605..6149d507965 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1370,22 +1370,10 @@ static const char *push_to_deploy(unsigned char *sha1,
- 				  struct strvec *env,
- 				  const char *work_tree)
- {
--	const char *update_refresh[] = {
--		"update-index", "-q", "--ignore-submodules", "--refresh", NULL
--	};
--	const char *diff_files[] = {
--		"diff-files", "--quiet", "--ignore-submodules", "--", NULL
--	};
--	const char *diff_index[] = {
--		"diff-index", "--quiet", "--cached", "--ignore-submodules",
--		NULL, "--", NULL
--	};
--	const char *read_tree[] = {
--		"read-tree", "-u", "-m", NULL, NULL
--	};
- 	struct child_process child = CHILD_PROCESS_INIT;
- 
--	child.argv = update_refresh;
-+	strvec_pushl(&child.args, "update-index", "-q", "--ignore-submodules",
-+		     "--refresh", NULL);
- 	child.env = env->v;
- 	child.dir = work_tree;
- 	child.no_stdin = 1;
-@@ -1396,7 +1384,8 @@ static const char *push_to_deploy(unsigned char *sha1,
- 
- 	/* run_command() does not clean up completely; reinitialize */
- 	child_process_init(&child);
--	child.argv = diff_files;
-+	strvec_pushl(&child.args, "diff-files", "--quiet",
-+		     "--ignore-submodules", "--", NULL);
- 	child.env = env->v;
- 	child.dir = work_tree;
- 	child.no_stdin = 1;
-@@ -1405,11 +1394,12 @@ static const char *push_to_deploy(unsigned char *sha1,
- 	if (run_command(&child))
- 		return "Working directory has unstaged changes";
- 
--	/* diff-index with either HEAD or an empty tree */
--	diff_index[4] = head_has_history() ? "HEAD" : empty_tree_oid_hex();
--
- 	child_process_init(&child);
--	child.argv = diff_index;
-+	strvec_pushl(&child.args, "diff-index", "--quiet", "--cached",
-+		     "--ignore-submodules",
-+		     /* diff-index with either HEAD or an empty tree */
-+		     head_has_history() ? "HEAD" : empty_tree_oid_hex(),
-+		     "--", NULL);
- 	child.env = env->v;
- 	child.no_stdin = 1;
- 	child.no_stdout = 1;
-@@ -1418,9 +1408,9 @@ static const char *push_to_deploy(unsigned char *sha1,
- 	if (run_command(&child))
- 		return "Working directory has staged changes";
- 
--	read_tree[3] = hash_to_hex(sha1);
- 	child_process_init(&child);
--	child.argv = read_tree;
-+	strvec_pushl(&child.args, "read-tree", "-u", "-m", hash_to_hex(sha1),
-+		     NULL);
- 	child.env = env->v;
- 	child.dir = work_tree;
- 	child.no_stdin = 1;
-@@ -2575,16 +2565,14 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		run_update_post_hook(commands);
- 		string_list_clear(&push_options, 0);
- 		if (auto_gc) {
--			const char *argv_gc_auto[] = {
--				"gc", "--auto", "--quiet", NULL,
--			};
- 			struct child_process proc = CHILD_PROCESS_INIT;
- 
- 			proc.no_stdin = 1;
- 			proc.stdout_to_stderr = 1;
- 			proc.err = use_sideband ? -1 : 0;
- 			proc.git_cmd = proc.close_object_store = 1;
--			proc.argv = argv_gc_auto;
-+			strvec_pushl(&proc.args, "gc", "--auto", "--quiet",
-+				     NULL);
- 
- 			if (!start_command(&proc)) {
- 				if (use_sideband)
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 946938d011e..6ff1734d587 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -258,11 +258,10 @@ static int import_object(struct object_id *oid, enum object_type type,
- 		return error_errno(_("unable to open %s for reading"), filename);
- 
- 	if (!raw && type == OBJ_TREE) {
--		const char *argv[] = { "mktree", NULL };
- 		struct child_process cmd = CHILD_PROCESS_INIT;
- 		struct strbuf result = STRBUF_INIT;
- 
--		cmd.argv = argv;
-+		strvec_push(&cmd.args, "mktree");
- 		cmd.git_cmd = 1;
- 		cmd.in = fd;
- 		cmd.out = -1;
-diff --git a/editor.c b/editor.c
-index fdd3eeafa94..d92a8d9ab5b 100644
---- a/editor.c
-+++ b/editor.c
-@@ -55,7 +55,6 @@ static int launch_specified_editor(const char *editor, const char *path,
- 
- 	if (strcmp(editor, ":")) {
- 		struct strbuf realpath = STRBUF_INIT;
--		const char *args[] = { editor, NULL, NULL };
- 		struct child_process p = CHILD_PROCESS_INIT;
- 		int ret, sig;
- 		int print_waiting_for_editor = advice_enabled(ADVICE_WAITING_FOR_EDITOR) && isatty(2);
-@@ -77,9 +76,8 @@ static int launch_specified_editor(const char *editor, const char *path,
- 		}
- 
- 		strbuf_realpath(&realpath, path, 1);
--		args[1] = realpath.buf;
- 
--		p.argv = args;
-+		strvec_pushl(&p.args, editor, realpath.buf, NULL);
- 		p.env = env;
- 		p.use_shell = 1;
- 		p.trace2_child_class = "editor";
-diff --git a/sequencer.c b/sequencer.c
-index ea96837cde3..6e02210db7a 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1164,18 +1164,14 @@ static int run_rewrite_hook(const struct object_id *oldoid,
- 			    const struct object_id *newoid)
- {
- 	struct child_process proc = CHILD_PROCESS_INIT;
--	const char *argv[3];
- 	int code;
- 	struct strbuf sb = STRBUF_INIT;
-+	const char *hook_path = find_hook("post-rewrite");
- 
--	argv[0] = find_hook("post-rewrite");
--	if (!argv[0])
-+	if (!hook_path)
- 		return 0;
- 
--	argv[1] = "amend";
--	argv[2] = NULL;
--
--	proc.argv = argv;
-+	strvec_pushl(&proc.args, hook_path, "amend", NULL);
- 	proc.in = -1;
- 	proc.stdout_to_stderr = 1;
- 	proc.trace2_hook_name = "post-rewrite";
-diff --git a/upload-pack.c b/upload-pack.c
-index c78d55bc674..9b5db32623f 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -596,14 +596,11 @@ static int do_reachable_revlist(struct child_process *cmd,
- 				struct object_array *reachable,
- 				enum allow_uor allow_uor)
- {
--	static const char *argv[] = {
--		"rev-list", "--stdin", NULL,
--	};
- 	struct object *o;
- 	FILE *cmd_in = NULL;
- 	int i;
- 
--	cmd->argv = argv;
-+	strvec_pushl(&cmd->args, "rev-list", "--stdin", NULL);
- 	cmd->git_cmd = 1;
- 	cmd->no_stderr = 1;
- 	cmd->in = -1;
+ 	perf_io_write_fl(file, line, event_name, NULL, &us_elapsed_absolute,
 -- 
 2.34.1.838.g779e9098efb
 
