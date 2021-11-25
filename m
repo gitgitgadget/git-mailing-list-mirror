@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 223DAC433EF
-	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 08:41:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97498C433FE
+	for <git@archiver.kernel.org>; Thu, 25 Nov 2021 08:42:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353630AbhKYIoo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Nov 2021 03:44:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37932 "EHLO
+        id S1353804AbhKYIpS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Nov 2021 03:45:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353370AbhKYImk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Nov 2021 03:42:40 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A4B8C0613D7
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 00:39:26 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id j3so9940907wrp.1
-        for <git@vger.kernel.org>; Thu, 25 Nov 2021 00:39:25 -0800 (PST)
+        with ESMTP id S1353425AbhKYInR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Nov 2021 03:43:17 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAF8BC0613F1
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 00:39:27 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id b12so9906355wrh.4
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 00:39:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=JsrOSNc7nQWW8eYxfSa7bNB/249vTV4VJg/WfpGDcBQ=;
-        b=CcwvBo3M8F3CmpGYfvSce12ACBnJUWbgDNWGq+5mU/vJgL37KBtNRqScDbpeEcByll
-         aSORt9J59TPKvlEQ5G1lnqEXA+wA3SWzTUzZheOQIVpMUaVjnlQkcX6zqNwoDlad+V5U
-         kArDDBlsCE/SdbwZ06qTzyippWwlnHwiegHSCQ67Dmk7otxx3rX13FhCmSO7gvOnGajM
-         95KhvChXgPolEB1RvhfDyoIZPDc51hQusEW/gO7QpofyEYLWi2MD5HoBsGVonwn25TtI
-         wBYFs/7NIEiGmv/JrSBTHXSRjZdBG9mNsANcrTX6knY+owbaLAHXYe2y5AtLWYkpyNQm
-         N3OQ==
+        bh=k8ksTLhk6dw/Y0Uea/a7jNB64e2HNpj7JfoIEHOv3Vc=;
+        b=arL7jaLKcZ78Kf0ahtvy5qOCDNc+XSD+c/gvrvCGrptLGCfVD9YNMVDFqVi/siajqX
+         GB7cVTJ/nFz1LSsRNIyk488Qw07D5J/EzqNOUUlHws2C2wXfV20Fnrq5zr8fLBI1jGGb
+         Vn73EO/2VoBm4ioJ3PgErF4RxOYOUjeUaCyKfBvuAKpgZ498SHrkIRKJxy5FUryQgCSA
+         xflFf6jtP1vbMXzVCKnMBIAvT6uFz/SzBWAXG5HhhLtkTds4xaJbp6In3wQJNEX9qXc0
+         +dlHMbZOzpaAI3859LsbABZ+FySLLscjDNM/y0J6t9+R0ZjsXUe96qMjIEDludRwbMYt
+         1t8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JsrOSNc7nQWW8eYxfSa7bNB/249vTV4VJg/WfpGDcBQ=;
-        b=mgLiMVdNRxX46KOGFkvistv38FeflaA8GfSb5EeM2Nq69kCigY5B1p2zuNTEVSVvKw
-         34Jm+SEcB3+6eoSpQXbCPHPC/UddxD43EPed54HH8rt2e6oSYlU5M6u8/Z5OcG4+cwxg
-         BZaSOYJfqLEpIuTFE0dPO4WH2XqZ5QwWm0yXpoM3Z1TZp4aRIgPgPd9lSZ+ZU9/ha/ea
-         GhVv9QWKcHy8KJlfQz4S4dbIwWsKGarYDoX0baeM6mQGAkUOTdY0VUtuJkxgu+2TqbvN
-         9DK6kfGCuiXbGRnd+h2A5jDt0dLFB7Ga/FpFyFJ51pjDFo96ErUzNy3GQv81ClLv+Jqn
-         p8CQ==
-X-Gm-Message-State: AOAM531ShsiBzKlbfyc6C0N1rknCm+7tXomdPSi80W+wgTTsd9yuX7TK
-        OXiOWR/MrtZKyE5bqs50cPONfRCwrTk=
-X-Google-Smtp-Source: ABdhPJxQtBd7IyjOWIo/siRPXY9pwFcbgzR81+HAEAb+X1ZB/iXRtd2eYa+HttKrHSvsrqV9Oc/DHg==
-X-Received: by 2002:adf:c406:: with SMTP id v6mr4625991wrf.570.1637829564420;
-        Thu, 25 Nov 2021 00:39:24 -0800 (PST)
+        bh=k8ksTLhk6dw/Y0Uea/a7jNB64e2HNpj7JfoIEHOv3Vc=;
+        b=myaaYalEKTz1lhfGCMmMpUDjQyJiNa4HBkcbEQEppvw0z8rBMF5LvSQOcqTKGdZLGl
+         tF8n77+nqasGN8f3VhpK4W3Ii6b5qgfBEZg1uuk7bePxDgdonqalliLP2dl1mNmC0rB2
+         PjqMSj0Vdw/Zfy3u/iCL1dwQl9FhBzvrT4yl0xvzFHtmwsw9vZe917SCy/w6p74cW7UO
+         N90z//fe8Sjgg7LOw2/3NjimOPovqpAR1P13MQQTJxs449RSerl0mQq3y0IInrF0RpCy
+         MBba0QMVMZSIMgo8YvUSEOW9dPPnEHAEISanm6zCvN7NQhv5cNDUSXcLzMbhbtlV1v1g
+         KUSw==
+X-Gm-Message-State: AOAM530pN1IdHJ91eI1ThMJJIhjHz5Qdkb+e+60QVZySaXR4fvLzpfVB
+        27yTFh9gcqfL/I7fDmIJ+yw2QascyfQ=
+X-Google-Smtp-Source: ABdhPJyLD/GhGOheJChooxoQL7zQFpRGYqrQmoXJ/Nz8vQSHErsdQ+O4W4+mt5oFdDqaI6+Pi/Iegw==
+X-Received: by 2002:a05:6000:11cd:: with SMTP id i13mr94568wrx.524.1637829566083;
+        Thu, 25 Nov 2021 00:39:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x1sm2179277wru.40.2021.11.25.00.39.21
+        by smtp.gmail.com with ESMTPSA id b188sm2260565wmd.45.2021.11.25.00.39.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Nov 2021 00:39:22 -0800 (PST)
-Message-Id: <46728f74ea175a33ef592319893ed32146229b33.1637829556.git.gitgitgadget@gmail.com>
+        Thu, 25 Nov 2021 00:39:25 -0800 (PST)
+Message-Id: <edec0894ca2a01c7afbc70590efd5ee8a0d1abde.1637829556.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1140.v2.git.git.1637829556.gitgitgadget@gmail.com>
 References: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
         <pull.1140.v2.git.git.1637829556.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 25 Nov 2021 08:39:12 +0000
-Subject: [PATCH v2 5/9] symlinks: do not include startup_info->original_cwd in
- dir removal
+Date:   Thu, 25 Nov 2021 08:39:14 +0000
+Subject: [PATCH v2 7/9] stash: do not attempt to remove
+ startup_info->original_cwd
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,101 +74,40 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-symlinks has a pair of schedule_dir_for_removal() and
-remove_scheduled_dirs() functions that ensure that directories made
-empty by removing other files also themselves get removed.  However, we
-want to exclude startup_info->original_cwd and leave it around.  This
-avoids the user getting confused by subsequent git commands (and non-git
-commands) that would otherwise report confusing messages about being
-unable to read the current working directory.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- symlinks.c           |  8 +++++++-
- t/t2501-cwd-empty.sh | 12 ++++++------
- 2 files changed, 13 insertions(+), 7 deletions(-)
+ builtin/stash.c      | 6 +++++-
+ t/t2501-cwd-empty.sh | 2 +-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/symlinks.c b/symlinks.c
-index 5232d02020c..c667baa949b 100644
---- a/symlinks.c
-+++ b/symlinks.c
-@@ -279,7 +279,9 @@ static void do_remove_scheduled_dirs(int new_len)
- {
- 	while (removal.len > new_len) {
- 		removal.buf[removal.len] = '\0';
--		if (rmdir(removal.buf))
-+		if ((startup_info->original_cwd &&
-+		     !strcmp(removal.buf, startup_info->original_cwd)) ||
-+		    rmdir(removal.buf))
- 			break;
- 		do {
- 			removal.len--;
-@@ -293,6 +295,10 @@ void schedule_dir_for_removal(const char *name, int len)
- {
- 	int match_len, last_slash, i, previous_slash;
+diff --git a/builtin/stash.c b/builtin/stash.c
+index a0ccc8654df..50b4875980c 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1485,8 +1485,12 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+ 			struct child_process cp = CHILD_PROCESS_INIT;
  
-+	if (startup_info->original_cwd &&
-+	    !strcmp(name, startup_info->original_cwd))
-+		return;	/* Do not remove the current working directory */
-+
- 	match_len = last_slash = i =
- 		longest_path_match(name, len, removal.buf, removal.len,
- 				   &previous_slash);
+ 			cp.git_cmd = 1;
++			if (startup_info->original_cwd &&
++			    *startup_info->original_cwd &&
++			    !is_absolute_path(startup_info->original_cwd))
++				cp.dir = startup_info->original_cwd;
+ 			strvec_pushl(&cp.args, "clean", "--force",
+-				     "--quiet", "-d", NULL);
++				     "--quiet", "-d", ":/", NULL);
+ 			if (include_untracked == INCLUDE_ALL_FILES)
+ 				strvec_push(&cp.args, "-x");
+ 			if (run_command(&cp)) {
 diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
-index 526d8ec2ee3..b92e1a9bb16 100755
+index 20e1b6adede..ff4e7cd89fa 100755
 --- a/t/t2501-cwd-empty.sh
 +++ b/t/t2501-cwd-empty.sh
-@@ -24,7 +24,7 @@ test_expect_success setup '
- 	git commit -m dirORfile
+@@ -236,7 +236,7 @@ test_expect_success 'clean does not remove cwd incidentally' '
+ 	test_path_is_dir untracked
  '
  
--test_expect_failure 'checkout does not clean cwd incidentally' '
-+test_expect_success 'checkout does not clean cwd incidentally' '
- 	git checkout foo/bar/baz &&
- 	test_path_is_dir foo/bar &&
- 
-@@ -53,7 +53,7 @@ test_expect_success 'checkout fails if cwd needs to be removed' '
- 	test_path_is_dir dirORfile
- '
- 
--test_expect_failure 'reset --hard does not clean cwd incidentally' '
-+test_expect_success 'reset --hard does not clean cwd incidentally' '
- 	git checkout foo/bar/baz &&
- 	test_path_is_dir foo/bar &&
- 
-@@ -82,7 +82,7 @@ test_expect_success 'reset --hard fails if cwd needs to be removed' '
- 	test_path_is_dir dirORfile
- '
- 
--test_expect_failure 'merge does not remove cwd incidentally' '
-+test_expect_success 'merge does not remove cwd incidentally' '
- 	git checkout foo/bar/baz &&
- 	test_when_finished "git clean -fdx" &&
- 
-@@ -109,7 +109,7 @@ test_expect_success 'merge fails if cwd needs to be removed' '
- 	test_path_is_dir dirORfile
- '
- 
--test_expect_failure 'cherry-pick does not remove cwd incidentally' '
-+test_expect_success 'cherry-pick does not remove cwd incidentally' '
- 	git checkout foo/bar/baz &&
- 	test_when_finished "git clean -fdx" &&
- 
-@@ -136,7 +136,7 @@ test_expect_success 'cherry-pick fails if cwd needs to be removed' '
- 	test_path_is_dir dirORfile
- '
- 
--test_expect_failure 'rebase does not remove cwd incidentally' '
-+test_expect_success 'rebase does not remove cwd incidentally' '
- 	git checkout foo/bar/baz &&
- 	test_when_finished "git clean -fdx" &&
- 
-@@ -163,7 +163,7 @@ test_expect_success 'rebase fails if cwd needs to be removed' '
- 	test_path_is_dir dirORfile
- '
- 
--test_expect_failure 'revert does not remove cwd incidentally' '
-+test_expect_success 'revert does not remove cwd incidentally' '
+-test_expect_failure 'stash does not remove cwd incidentally' '
++test_expect_success 'stash does not remove cwd incidentally' '
  	git checkout foo/bar/baz &&
  	test_when_finished "git clean -fdx" &&
  
