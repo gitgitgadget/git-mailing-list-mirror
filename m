@@ -2,65 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D6EBC433EF
-	for <git@archiver.kernel.org>; Fri, 26 Nov 2021 07:31:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C7E1C433F5
+	for <git@archiver.kernel.org>; Fri, 26 Nov 2021 07:34:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359267AbhKZHed (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Nov 2021 02:34:33 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52688 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235855AbhKZHcd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Nov 2021 02:32:33 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B300105385;
-        Fri, 26 Nov 2021 02:29:20 -0500 (EST)
+        id S1359154AbhKZHhV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Nov 2021 02:37:21 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61069 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245483AbhKZHfV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Nov 2021 02:35:21 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A2E4C16C86D;
+        Fri, 26 Nov 2021 02:32:08 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=X9SHEJuUZI9OLah/ESHWHX3C7vLOTzDna4+Afw
-        Fge0A=; b=j/M3FeaGS0b4Sdf9GvGB+fI2jl8HaevwlI1bSkGymINkVc+em8evHa
-        Qu9tP90J5sWQbvofYch6JP1fc5FbQIrcwOywhRy7DOX3eIR4ullpIghSic2VH0es
-        LBvbRo4//TOzS5afctMawMC2eLCrgqKa8pStm2cTAznFixx4RzvnU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 91F46105384;
-        Fri, 26 Nov 2021 02:29:20 -0500 (EST)
+        :content-type; s=sasl; bh=moQvCWZV6F5PUio9NiUFJcjl2cqhTOY2gj6RcE
+        gTqYg=; b=PK7dpzJ2pN/QTp15Ch6xN0aIdeVuF8lKqXBrh3HVGhqhCtg7zU0elA
+        EFN/CtTdyBGlOgtG/SRYf0XUQkgmfPI+ERWEmiMNPtDFXifwIfbh2RO+Kn8IYhpD
+        gqUaDtIyBY80lRp28GSizumSjIVmR9dvwFo4HolwVI9hgmxIp3Itc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9BD2716C86C;
+        Fri, 26 Nov 2021 02:32:08 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 03897105383;
-        Fri, 26 Nov 2021 02:29:19 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B46DC16C86B;
+        Fri, 26 Nov 2021 02:32:04 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2] Makefile: error out invoking strip target
-References: <20211125122607.26602-1-bagasdotme@gmail.com>
-Date:   Thu, 25 Nov 2021 23:29:18 -0800
-In-Reply-To: <20211125122607.26602-1-bagasdotme@gmail.com> (Bagas Sanjaya's
-        message of "Thu, 25 Nov 2021 19:26:08 +0700")
-Message-ID: <xmqqilwf8je9.fsf@gitster.g>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 2/2] refs: allow skipping OID verification
+References: <pull.1147.git.git.1637855761.gitgitgadget@gmail.com>
+        <900cea2ade9e86b135e4189070a68deea5e9b575.1637855761.git.gitgitgadget@gmail.com>
+Date:   Thu, 25 Nov 2021 23:32:03 -0800
+In-Reply-To: <900cea2ade9e86b135e4189070a68deea5e9b575.1637855761.git.gitgitgadget@gmail.com>
+        (Han-Wen Nienhuys via GitGitGadget's message of "Thu, 25 Nov 2021
+        15:56:01 +0000")
+Message-ID: <xmqqbl278j9o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 91CEBABE-4E8A-11EC-B9AF-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: F3FCFFA2-4E8A-11EC-A5C7-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Now that $INSTALL_STRIP variable can be defined since 3231f41009 (make:
-> add INSTALL_STRIP option variable, 2021-09-05), it is redundant to have
-> 'strip' target when $INSTALL_STRIP does the job. Error out when invoking
-> the target so that users are forced to define the variable instead.
+> From: Han-Wen Nienhuys <hanwen@google.com>
+>
+> This introduces the REF_SKIP_OID_VERIFICATION flag, which lets the ref-store
+> test helper write non-existent or unparsable objects into the ref storage.
 
-It is not exactly redundant for folks who like to build and use in
-place without installing.
+Yay.
 
-What is the reason why we might want to eventually remove the
-"strip" target, making "make strip" an error?  I do not quite see
-much downsides for having just a target with a simple one-liner
-recipe.
+> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+> index 658628375c8..f5333196b07 100755
+> --- a/t/t1006-cat-file.sh
+> +++ b/t/t1006-cat-file.sh
+> @@ -452,9 +452,8 @@ test_expect_success 'the --allow-unknown-type option does not consider replaceme
+>  	# Create it manually, as "git replace" will die on bogus
+>  	# types.
+>  	head=$(git rev-parse --verify HEAD) &&
+> -	test_when_finished "rm -rf .git/refs/replace" &&
+> -	mkdir -p .git/refs/replace &&
+> -	echo $head >.git/refs/replace/$bogus_short_sha1 &&
+> +	test_when_finished "test-tool ref-store main delete-refs 0 msg refs/replace/$bogus_short_sha1" &&
+> +	test-tool ref-store main update-ref msg "refs/replace/$bogus_short_sha1" $head $ZERO_OID 1024 &&
 
+Double yay.  Tests that are independent of backend is indeed much nicer.
