@@ -2,76 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C7E1C433F5
-	for <git@archiver.kernel.org>; Fri, 26 Nov 2021 07:34:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AAB1C433F5
+	for <git@archiver.kernel.org>; Fri, 26 Nov 2021 07:41:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359154AbhKZHhV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Nov 2021 02:37:21 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61069 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245483AbhKZHfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Nov 2021 02:35:21 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A2E4C16C86D;
-        Fri, 26 Nov 2021 02:32:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=moQvCWZV6F5PUio9NiUFJcjl2cqhTOY2gj6RcE
-        gTqYg=; b=PK7dpzJ2pN/QTp15Ch6xN0aIdeVuF8lKqXBrh3HVGhqhCtg7zU0elA
-        EFN/CtTdyBGlOgtG/SRYf0XUQkgmfPI+ERWEmiMNPtDFXifwIfbh2RO+Kn8IYhpD
-        gqUaDtIyBY80lRp28GSizumSjIVmR9dvwFo4HolwVI9hgmxIp3Itc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9BD2716C86C;
-        Fri, 26 Nov 2021 02:32:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B46DC16C86B;
-        Fri, 26 Nov 2021 02:32:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 2/2] refs: allow skipping OID verification
-References: <pull.1147.git.git.1637855761.gitgitgadget@gmail.com>
-        <900cea2ade9e86b135e4189070a68deea5e9b575.1637855761.git.gitgitgadget@gmail.com>
-Date:   Thu, 25 Nov 2021 23:32:03 -0800
-In-Reply-To: <900cea2ade9e86b135e4189070a68deea5e9b575.1637855761.git.gitgitgadget@gmail.com>
-        (Han-Wen Nienhuys via GitGitGadget's message of "Thu, 25 Nov 2021
-        15:56:01 +0000")
-Message-ID: <xmqqbl278j9o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1359308AbhKZHoQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Nov 2021 02:44:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59100 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1359156AbhKZHmP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Nov 2021 02:42:15 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7A0FC061746
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 23:39:03 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id n26so8127810pff.3
+        for <git@vger.kernel.org>; Thu, 25 Nov 2021 23:39:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=p2HUpPOAzyKanI82AEWcB9T5tlntHbEo2vWX4S2WKmY=;
+        b=LH2YIlatQeaoJGRRvWAXFSpqBUmwhDUtIbq5WthzZeC13yaWN7sbW95X3qm3CkKIWN
+         +HbQ8cooUyu3xtAkewzBhQ44za/fpq6u5P/CuV9169ZUxnviemiiPoncyuql45yWHkWI
+         Nw65SrUoO4zFk8zQGE3akyVLFZIxOo0EBzk+4LEXMtrrP1ZBgJJjwS7+BLtRgqPs5K0t
+         mbbUCORITgZkct0KIOpjdl9XHJGlztl0ArtNzUEnFnkitketRlhOFqKZsQDrvJvTCa9N
+         pOOxZbu8nLIMbaWowZzBlMLSmGvsnQEHcW6A1RJ0uulrP1846gSCirJuiLL7Lko89gjs
+         BnEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=p2HUpPOAzyKanI82AEWcB9T5tlntHbEo2vWX4S2WKmY=;
+        b=fHoPACiSEeq7b0AxHRXxdBhjZytyOKOmC7/kRgWnGN1i3m8lBA5dYRhzs28FeqYCrB
+         B1f1m+bzj616RLeTyPc2miamPrYIq6rZme1TAU2iIQ8ZdqlwFOmMW+YR8WZ8YE6EKuPT
+         GWHsIJUTNt0+0dg2Y/QXF7DRwm5qmRJqXPbdGXdWXEol9KWAIiQb/yy+smIgL/A9noL8
+         g4gPnYA9uefcySjKWA33Ujlm7NbcURwFQIuVl7s4n0D3l4Ovf3+Dp/q4y2idq4JHCj0e
+         Z0p3YQ8Nu0FgETL4L3TCGQnX/A28Sd9ySiIxTGZceLfJ54cG/Py5tJnW6TB/CMVMK71x
+         SusQ==
+X-Gm-Message-State: AOAM530H7ogcOuHS88PKMjxi7DR2frNmf4u1t1zRpxrH2eNJ76yWlK0n
+        ViGt9HlzMu7fKRZfLghkP/YhrawelWA=
+X-Google-Smtp-Source: ABdhPJyuA9uFMfN/9njBSdPKcjkGAMa62t8l7EeUBU3tEjwntRqzjg2uirZqzhBLn9eaBLNI/H8hKA==
+X-Received: by 2002:a63:89c8:: with SMTP id v191mr20197724pgd.268.1637912343139;
+        Thu, 25 Nov 2021 23:39:03 -0800 (PST)
+Received: from [192.168.43.80] (subs32-116-206-28-20.three.co.id. [116.206.28.20])
+        by smtp.gmail.com with ESMTPSA id d7sm6268555pfj.91.2021.11.25.23.39.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Nov 2021 23:39:02 -0800 (PST)
+Message-ID: <c057b7fc-54b3-4946-16ad-8fbd548b505d@gmail.com>
+Date:   Fri, 26 Nov 2021 14:38:59 +0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F3FCFFA2-4E8A-11EC-A5C7-98D80D944F46-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v2] Makefile: error out invoking strip target
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20211125122607.26602-1-bagasdotme@gmail.com>
+ <xmqqilwf8je9.fsf@gitster.g>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <xmqqilwf8je9.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 26/11/21 14.29, Junio C Hamano wrote:
+> Bagas Sanjaya <bagasdotme@gmail.com> writes:
+> 
+>> Now that $INSTALL_STRIP variable can be defined since 3231f41009 (make:
+>> add INSTALL_STRIP option variable, 2021-09-05), it is redundant to have
+>> 'strip' target when $INSTALL_STRIP does the job. Error out when invoking
+>> the target so that users are forced to define the variable instead.
+> 
+> It is not exactly redundant for folks who like to build and use in
+> place without installing.
+> 
+> What is the reason why we might want to eventually remove the
+> "strip" target, making "make strip" an error?  I do not quite see
+> much downsides for having just a target with a simple one-liner
+> recipe.
+> 
 
-> From: Han-Wen Nienhuys <hanwen@google.com>
->
-> This introduces the REF_SKIP_OID_VERIFICATION flag, which lets the ref-store
-> test helper write non-existent or unparsable objects into the ref storage.
+I think we have two ways to do the same thing (installing stripped) and I want 
+to push users to go with $INSTALL_STRIP instead of strip target.
 
-Yay.
+Regarding deprecation, making $(warning) message instead of $(error) is better 
+option, because users can still use the target (albeit it is deprecated) and 
+they can update their build recipe to use $INSTALL_STRIP before we flip to 
+$(error) or remove the target.
 
-> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> index 658628375c8..f5333196b07 100755
-> --- a/t/t1006-cat-file.sh
-> +++ b/t/t1006-cat-file.sh
-> @@ -452,9 +452,8 @@ test_expect_success 'the --allow-unknown-type option does not consider replaceme
->  	# Create it manually, as "git replace" will die on bogus
->  	# types.
->  	head=$(git rev-parse --verify HEAD) &&
-> -	test_when_finished "rm -rf .git/refs/replace" &&
-> -	mkdir -p .git/refs/replace &&
-> -	echo $head >.git/refs/replace/$bogus_short_sha1 &&
-> +	test_when_finished "test-tool ref-store main delete-refs 0 msg refs/replace/$bogus_short_sha1" &&
-> +	test-tool ref-store main update-ref msg "refs/replace/$bogus_short_sha1" $head $ZERO_OID 1024 &&
-
-Double yay.  Tests that are independent of backend is indeed much nicer.
+-- 
+An old man doll... just what I always wanted! - Clara
