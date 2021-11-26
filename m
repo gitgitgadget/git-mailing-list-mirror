@@ -2,81 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71CA7C433FE
-	for <git@archiver.kernel.org>; Fri, 26 Nov 2021 07:31:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D6EBC433EF
+	for <git@archiver.kernel.org>; Fri, 26 Nov 2021 07:31:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353060AbhKZHeW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Nov 2021 02:34:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56930 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232938AbhKZHcW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Nov 2021 02:32:22 -0500
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [IPv6:2a01:488:42:1000:50ed:8234::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7B2BC061574;
-        Thu, 25 Nov 2021 23:29:09 -0800 (PST)
-Received: from ip4d173d4a.dynamic.kabel-deutschland.de ([77.23.61.74] helo=[192.168.66.200]); authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1mqVfO-0006Q9-Rs; Fri, 26 Nov 2021 08:29:06 +0100
-Message-ID: <12cefa81-495b-3083-5f19-b319c704ebf7@leemhuis.info>
-Date:   Fri, 26 Nov 2021 08:29:05 +0100
+        id S1359267AbhKZHed (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Nov 2021 02:34:33 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52688 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235855AbhKZHcd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Nov 2021 02:32:33 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B300105385;
+        Fri, 26 Nov 2021 02:29:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=X9SHEJuUZI9OLah/ESHWHX3C7vLOTzDna4+Afw
+        Fge0A=; b=j/M3FeaGS0b4Sdf9GvGB+fI2jl8HaevwlI1bSkGymINkVc+em8evHa
+        Qu9tP90J5sWQbvofYch6JP1fc5FbQIrcwOywhRy7DOX3eIR4ullpIghSic2VH0es
+        LBvbRo4//TOzS5afctMawMC2eLCrgqKa8pStm2cTAznFixx4RzvnU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 91F46105384;
+        Fri, 26 Nov 2021 02:29:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 03897105383;
+        Fri, 26 Nov 2021 02:29:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2] Makefile: error out invoking strip target
+References: <20211125122607.26602-1-bagasdotme@gmail.com>
+Date:   Thu, 25 Nov 2021 23:29:18 -0800
+In-Reply-To: <20211125122607.26602-1-bagasdotme@gmail.com> (Bagas Sanjaya's
+        message of "Thu, 25 Nov 2021 19:26:08 +0700")
+Message-ID: <xmqqilwf8je9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Content-Language: en-BS
-To:     Eric Wong <e@80x24.org>
-Cc:     workflows@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Jonathan Corbet <corbet@lwn.net>, git@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Kees Cook <keescook@chromium.org>
-References: <cover.1637566224.git.linux@leemhuis.info>
- <6b760115ecdd3687d4b82680b284f55a04f3ad90.1637566224.git.linux@leemhuis.info>
- <20211123185237.M476855@dcvr>
-From:   Thorsten Leemhuis <linux@leemhuis.info>
-Subject: Re: [RFC PATCH v1 1/1] docs: add the new commit-msg tags 'Reported:'
- and 'Reviewed:'
-In-Reply-To: <20211123185237.M476855@dcvr>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;linux@leemhuis.info;1637911750;b7264f3e;
-X-HE-SMSGID: 1mqVfO-0006Q9-Rs
+Content-Type: text/plain
+X-Pobox-Relay-ID: 91CEBABE-4E8A-11EC-B9AF-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ccing Linus Walleij, who added this, and Kees, who apparently came up
-with this originally.
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-On 23.11.21 19:52, Eric Wong wrote:
-> Thorsten Leemhuis <linux@leemhuis.info> wrote:
->> diff --git a/Documentation/maintainer/configure-git.rst b/Documentation/maintainer/configure-git.rst
->> index 80ae5030a590..8429d45d661c 100644
->> --- a/Documentation/maintainer/configure-git.rst
->> +++ b/Documentation/maintainer/configure-git.rst
-> 
-> <snip>, +cc git@vger
-> 
->> @@ -56,7 +56,7 @@ by adding the following hook into your git:
->>  	$ cat >.git/hooks/applypatch-msg <<'EOF'
->>  	#!/bin/sh
->>  	. git-sh-setup
->> -	perl -pi -e 's|^Message-Id:\s*<?([^>]+)>?$|Link: https://lore.kernel.org/r/$1|g;' "$1"
->> +	perl -pi -e 's|^Message-Id:\s*<?([^>]+)>?$|Reviewed: https://lore.kernel.org/r/$1|g;' "$1"
-> 
-> Side note: that regexp should match "Message-ID" case-insensitively.
-> git send-email is an outlier in its capitalization of "Message-Id",
-> most RFCs capitalize it "Message-ID", as do common MUAs.
+> Now that $INSTALL_STRIP variable can be defined since 3231f41009 (make:
+> add INSTALL_STRIP option variable, 2021-09-05), it is redundant to have
+> 'strip' target when $INSTALL_STRIP does the job. Error out when invoking
+> the target so that users are forced to define the variable instead.
 
-Argh :-/
+It is not exactly redundant for folks who like to build and use in
+place without installing.
 
-It's still totally unclear if that or a similar patch will be accepted.
-And even if it is: the "don't do two different things in one commit"
-rule might not be that strict enforced when it comes to the Linux
-kernel's docs, but changing this regexp as part of another patch crosses
-the line.
+What is the reason why we might want to eventually remove the
+"strip" target, making "make strip" an error?  I do not quite see
+much downsides for having just a target with a simple one-liner
+recipe.
 
-IOW: we afaics need a separate patch to make the regexp
-case-insensitively. Eric, do you want to submit one, as you brought it
-up? Or are there any other volunteers?
-
-Ciao, Thorsten
