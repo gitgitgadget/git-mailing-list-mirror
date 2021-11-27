@@ -2,185 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3916C433F5
-	for <git@archiver.kernel.org>; Sat, 27 Nov 2021 10:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD596C433EF
+	for <git@archiver.kernel.org>; Sat, 27 Nov 2021 10:37:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236702AbhK0KUw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Nov 2021 05:20:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38722 "EHLO
+        id S1354281AbhK0KkU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Nov 2021 05:40:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231149AbhK0KSu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Nov 2021 05:18:50 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1FC2C061574
-        for <git@vger.kernel.org>; Sat, 27 Nov 2021 02:15:35 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id d9so3252413wrw.4
-        for <git@vger.kernel.org>; Sat, 27 Nov 2021 02:15:35 -0800 (PST)
+        with ESMTP id S229711AbhK0KiT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Nov 2021 05:38:19 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15127C06173E
+        for <git@vger.kernel.org>; Sat, 27 Nov 2021 02:35:05 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id z5so49311199edd.3
+        for <git@vger.kernel.org>; Sat, 27 Nov 2021 02:35:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=vRwUFNplJgt4+gwqzv6BWgFZNHmfb8PSKeS6uRJyz0g=;
-        b=goVGN/KZXgSiKiryYiILxZcRKnblytWTI6s5yGYUGPEEymU/tkVnFPiwigE9/S+kRT
-         Iff2PsCYJ0iyrJyOGB+afQCOuza8k6ou24B3o/HeuxKHexHSCrSKkiRktXLuz8FBWC4O
-         wm6jzoJjFUdcqBh3D6qlH9fMMQucC18WdvgHGSzvs+t7ujyL9SVIhSA1kZRHpMWWOcHy
-         vLvL/F4/fbISt9QyPSUXb/k94CJ4WKq/8Z3Y+26TvutGtvhycT6Huj8XcJA1XihwDQOm
-         jKrLlerYtl92luaEy3dILTee3TLOhwz+s6Pt/ANkOJr5VzhW1dtDaVVtyukZ4clLKOT8
-         PK6g==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=YcZxnuoTXKBFACAO9GAgSCF2z5t7zFEDd7TYJeOvoks=;
+        b=KIpogkrav0whqxXGLYeTxlni9AtuVATd3SgRFZsS1VZymp6Qikw3a96zI5tjjnux/X
+         cZEyvBjbn+X/yWmgAZs0Y5fhXHj0ksu3r7aNu/rWYKx3J0qjLfp2qZLn6QPGg8lfbB5t
+         N9JrxCY2I+xE1gFGX8yzPFKk2262NywwztCIGsDII3sTBPYgDXJp4nVgdJsW67zefaRL
+         ILyCSVlFn54lLcbcm13TOO6nOjLB9JMUuW/vDYkcNzEMgyqj0hO/6Tpu7owLIqr3GWco
+         QY1cex8pWIbJo+116aOBvEJYaGqZD2NrM1qm3XWK8wOwJMHBNfIEmG9IVXGSGVf5lRVJ
+         x1OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=vRwUFNplJgt4+gwqzv6BWgFZNHmfb8PSKeS6uRJyz0g=;
-        b=FQw6czUYuldL1NznOtcCrg7Jl9ermCuuIui5YewcL04p262Mu8PIvXnkw36qi84kz7
-         AXyeIFBUBW8nA2ixpLkv8h4rylF9F7qcSmRYRddji2LJNlMd3VBRIcjjfhbPxXOiEalJ
-         g6xVXszuWlR5IKbhxsMyrQigCSyUGj7JLy0+6X/RQSWJ4eX8auWaPm6VtcEmob9jozza
-         PRcFuCtp5U0+MrglNmwirGfjEpQqDcUWfMdHIfjGinmjaZek2rg03VKeeIgRwvwMZoEW
-         mxvRbVDfparBigNf3AGCJjEQBJ6FyVkuGD3HqDoc/ud5KLRDfJICBZHUSbThxFS4/wXn
-         fL5w==
-X-Gm-Message-State: AOAM531oFyS7lkJINYjltqSdFvP2TRntBrNgfnnRzQ4qxVjO6ByYulEV
-        Wqh9ZvgZugFezrKVLSlCOzDiakbeYeY=
-X-Google-Smtp-Source: ABdhPJx1N6bG+/RMKGlHzssEy2WovGzZUCIJcFxnm9mmeBJQ6amkTZbosZJIYuU4WjS12mKZ/s4fvA==
-X-Received: by 2002:adf:d225:: with SMTP id k5mr19870418wrh.612.1638008134140;
-        Sat, 27 Nov 2021 02:15:34 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m125sm13306213wmm.39.2021.11.27.02.15.33
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=YcZxnuoTXKBFACAO9GAgSCF2z5t7zFEDd7TYJeOvoks=;
+        b=xXkF2LhH24zu9DlPOpSLE46MiZRPNTVytJLLwA9eO/gQp0k0JX3d+DzpdiPxCEno6i
+         DNdrfOQaTW+vUINgQ3/QlCbNCPxsp8ulmq+hYsKIkXDxHuTujOxQSMNzF0IKV2R2/fkC
+         WyOAhvIcm3sqsH/ulZUziUdaDU31J7qQ06iC35HyGO2zHmK95IYxK0Vnct8xnMCE9BAG
+         mr4MY3wTE3GTWgXGluklpGLTzM4nMgadK+xvd10es9bEyy5USlpNu8UcJx6PN8pKo111
+         8mZVrYTKcZlWQRNN38Ijw6s4fl01wnEewdyrtaDuGthVsReEEkeBplFVMqoyWNEhCsRH
+         sKkQ==
+X-Gm-Message-State: AOAM533O9glboBwDltuUkjuoYI6MEi3a7nnRaKucjfjY1AaW2ONTJd1g
+        XPWuhE4CWlbCgGqhb8AJqwGH4S1UQZw=
+X-Google-Smtp-Source: ABdhPJweDEGNv7G2lNkcOsm7djY0dGe2tIlamwArAktwVKz0w7E8xumxitKod4uVXaSX4gfLpTDEJg==
+X-Received: by 2002:a50:d88a:: with SMTP id p10mr54317534edj.274.1638009303313;
+        Sat, 27 Nov 2021 02:35:03 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id w5sm6019919edc.58.2021.11.27.02.35.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Nov 2021 02:15:33 -0800 (PST)
-Message-Id: <pull.1142.v2.git.git.1638008132992.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1142.git.git.1637817792914.gitgitgadget@gmail.com>
-References: <pull.1142.git.git.1637817792914.gitgitgadget@gmail.com>
-From:   "Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Sat, 27 Nov 2021 10:15:32 +0000
-Subject: [PATCH v2] mingw: avoid fallback for {local,gm}time_r()
+        Sat, 27 Nov 2021 02:35:02 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mqv2s-000Ust-7b;
+        Sat, 27 Nov 2021 11:35:02 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Glen Choo <chooglen@google.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3 01/11] t2501: add various tests for removing the
+ current working directory
+Date:   Sat, 27 Nov 2021 11:32:17 +0100
+References: <pull.1140.v2.git.git.1637829556.gitgitgadget@gmail.com>
+ <pull.1140.v3.git.git.1637966463.gitgitgadget@gmail.com>
+ <4b0044656b0ebe81db60f605a184948f728c4b9d.1637966463.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <4b0044656b0ebe81db60f605a184948f728c4b9d.1637966463.git.gitgitgadget@gmail.com>
+Message-ID: <211127.864k7xj38p.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
 
-mingw-w64's pthread_unistd.h had a bug that mistakenly (because there is
-no support for the *lockfile() functions required[1]) defined
-_POSIX_THREAD_SAFE_FUNCTIONS and that was being worked around since
-3ecd153a3b (compat/mingw: support MSys2-based MinGW build, 2016-01-14).
+On Fri, Nov 26 2021, Elijah Newren via GitGitGadget wrote:
 
-The bug was fixed in winphtreads, but as a side effect, leaves the
-reentrant functions from time.h no longer visible and therefore breaks
-the build.
+> From: Elijah Newren <newren@gmail.com>
 
-Since the intention all along was to avoid using the fallback functions,
-formalize the use of POSIX by setting the corresponding feature flag and
-compile out the implementation for the fallback functions.
+> +		# Although we want pwd & git status to pass, test for existing
+> +		# rather than desired behavior.
+> +		if [[ $works == "success" ]]; then
 
-[1] https://unix.org/whitepapers/reentrant.html
+Wasn't "[[" bash-specific or something? In any case a more regular "if
+test "$works" = "success" would work here.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
-    mingw: fix 64 bit build because of missing *time_r() function
-    definitions
-    
-    This is a cherry-pick from git-for-windows/git#3398, that is needed to
-    be able to build recent master with the Git for Windows SDK or recent
-    MinGW64.
-    
-    It was discussed recently on list[1], and might need further
-    adjustements if the 32-bit Git for Windows SDK also updates their
-    winpthread headers, requiring a similar fix, but since without it a
-    plain build from master wouldn't work in Windows I think it is worth
-    reviewing on its own merits, and had withstood the test of time in the
-    Git for Windows fork since it was originally merged there late August.
-    
-    Changes since v1:
-    
-     * Fixed grammar in the commit message (suggested by Junio)
-     * Added ACK (proposed by dscho)
-    
-    [1] https://lore.kernel.org/git/20211005063936.588874-1-mh@glandium.org/
+> +			pwd -P &&
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1142%2Fcarenas%2Fwinbuild-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1142/carenas/winbuild-v2
-Pull-Request: https://github.com/git/git/pull/1142
+I wonder if this is doing what we want everywhere cf. 482e1488a9b
+(t0001: fix broken not-quite getcwd(3) test in bed67874e2, 2021-07-30),
+but haven't looked much/thought about it.
 
-Range-diff vs v1:
+> +test_expect_success 'checkout does not clean cwd incidentally' '
+> +	test_incidental_dir_removal failure git checkout init
+> +'
+> +
+> +test_expect_success 'checkout fails if cwd needs to be removed' '
+> +	test_required_dir_removal failure git checkout fd_conflict
+> +'
+> +
+> +test_expect_success 'reset --hard does not clean cwd incidentally' '
+> +	test_incidental_dir_removal failure git reset --hard init
+> +'
+> +
+> +test_expect_success 'reset --hard fails if cwd needs to be removed' '
+> +	test_required_dir_removal failure git reset --hard fd_conflict
+> +'
+> +
+> +test_expect_success 'merge does not clean cwd incidentally' '
+> +	test_incidental_dir_removal failure git merge reverted
+> +'
 
- 1:  363b644f801 ! 1:  c6b3fc5a16a mingw: avoid fallback for {local,gm}time_r()
-     @@ Commit message
-          _POSIX_THREAD_SAFE_FUNCTIONS and that was being worked around since
-          3ecd153a3b (compat/mingw: support MSys2-based MinGW build, 2016-01-14).
-      
-     -    the bug was fixed in winphtreads, but as a sideeffect, leaves the
-     -    reentrant functions from time.h not longer visible and therefore breaks
-     +    The bug was fixed in winphtreads, but as a side effect, leaves the
-     +    reentrant functions from time.h no longer visible and therefore breaks
-          the build.
-      
-     -    since the intention all along was to avoid using the fallback functions,
-     +    Since the intention all along was to avoid using the fallback functions,
-          formalize the use of POSIX by setting the corresponding feature flag and
-     -    to make the intention clearer compile out the fallback functions.
-     +    compile out the implementation for the fallback functions.
-      
-          [1] https://unix.org/whitepapers/reentrant.html
-      
-          Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-     +    Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-      
-       ## compat/mingw.c ##
-      @@ compat/mingw.c: int pipe(int filedes[2])
-
-
- compat/mingw.c    | 2 ++
- git-compat-util.h | 4 +++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 9e0cd1e097f..e14f2d5f77c 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1083,6 +1083,7 @@ int pipe(int filedes[2])
- 	return 0;
- }
- 
-+#ifndef __MINGW64__
- struct tm *gmtime_r(const time_t *timep, struct tm *result)
- {
- 	if (gmtime_s(result, timep) == 0)
-@@ -1096,6 +1097,7 @@ struct tm *localtime_r(const time_t *timep, struct tm *result)
- 		return result;
- 	return NULL;
- }
-+#endif
- 
- char *mingw_getcwd(char *pointer, int len)
- {
-diff --git a/git-compat-util.h b/git-compat-util.h
-index d70ce142861..c8005db3fb6 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -127,7 +127,9 @@
- /* Approximation of the length of the decimal representation of this type. */
- #define decimal_length(x)	((int)(sizeof(x) * 2.56 + 0.5) + 1)
- 
--#if defined(__sun__)
-+#ifdef __MINGW64__
-+#define _POSIX_C_SOURCE 1
-+#elif defined(__sun__)
-  /*
-   * On Solaris, when _XOPEN_EXTENDED is set, its header file
-   * forces the programs to be XPG4v2, defeating any _XOPEN_SOURCE
-
-base-commit: cd3e606211bb1cf8bc57f7d76bab98cc17a150bc
--- 
-gitgitgadget
+This testing the current behavior (and below) looks much better, thanks!
