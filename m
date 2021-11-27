@@ -2,102 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0736C433F5
-	for <git@archiver.kernel.org>; Sat, 27 Nov 2021 07:34:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EA9BC433F5
+	for <git@archiver.kernel.org>; Sat, 27 Nov 2021 09:05:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242902AbhK0Hhz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Nov 2021 02:37:55 -0500
-Received: from mout.web.de ([212.227.17.11]:37365 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234455AbhK0Hfy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Nov 2021 02:35:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1637998352;
-        bh=N5mkVn2DmCwnN0Z0tiRnoj0cTi69en3mO2nVy+nfai4=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=Wixu1LCEBM5VJy1Idm3QWNXStehk9YRnG1fHwPCYNjiNazV633n0J65McnjGqvuLr
-         rXeTMrXkIpOkn4ODNjcRjq7xBEdjaJR5g53RFtYGuRIrjYwQ17UGu2I8dVnLS4u5d1
-         Ku5C9PqsuZALovhjndnA0imhGYfeXo7Zr3B0rl9I=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([91.47.144.144]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MdO5C-1mHXRg2smO-00Za4q; Sat, 27
- Nov 2021 08:32:32 +0100
-Message-ID: <9c3d6d3c-1f3b-f51c-6856-b5ced44a8f4b@web.de>
-Date:   Sat, 27 Nov 2021 08:32:31 +0100
+        id S1350121AbhK0JIQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Nov 2021 04:08:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51168 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239311AbhK0JGQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Nov 2021 04:06:16 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B410C061574
+        for <git@vger.kernel.org>; Sat, 27 Nov 2021 01:03:02 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id y13so48412211edd.13
+        for <git@vger.kernel.org>; Sat, 27 Nov 2021 01:03:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=n50NWK80mUw3Kx7HxXeuaApDW3ZHqImTssFRlWKd3hw=;
+        b=qcxXDKEFxbYvZy6WCYiW/uhpTofV77Q7WJXpaJrMTjCEdaT8pKKEoqpbIrHw1rX2WY
+         JNK43X7K+f0bXQlOpOhCw5XM/xaUWIvkrFPsWyqco9Pa5iHqzWV6mYAtC3wALBt56LkH
+         2aTSaoEqy79mTV9FBFpPkanuGde6hIWaVEUS0e249KnnyFwAVY5PRqV3nwOGY7MiIdjt
+         QXiBhZL3fahcbL6JzCe1ZeBLViwAbvnb+2VWbaq1q8Lg5Vh+WMS0aumb2qdnwbf/bXqO
+         1HSGA6yBG9E7sYbYiSM9rd4OXe/lGToPWJ1nMPY6+nTX4Yr+s64+0M1iL78xvnHP2SzI
+         lGVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=n50NWK80mUw3Kx7HxXeuaApDW3ZHqImTssFRlWKd3hw=;
+        b=xDqBWcYDG0NL1yWEKvzohm5h9UGS95YTBqXE/ynoSknvSj3TW/c0ZtyirysPPTRrjF
+         fxQ1//qEdJcQ5OgnGMMMtZo0g3IE9MSb9vkvadHXcbRal2YQThDhX+hbcnNq3PNQXH+M
+         lByAEgherrF1aaElA9COr8lVpuFc6hRb23hnKAqOkJtT6DOFdCqF5WVsV/C+4VQ5Okgq
+         /veX46EHr//Twj/6xH6N+MJegfC8wnHQJFGBt7dOHQqvQhrr1S9xSz9VWZpf1lYZiFcx
+         2HTNnApNAsUshnWe8bGkeYFPRSIvROSdi3c+VS5sLWcw9ZBh/z9GsuqYDSMWGvO9ru+A
+         yuiw==
+X-Gm-Message-State: AOAM5323/SjGDHS5BIuM3U2ZFGsaGOmqlF2YcusZnpqTpPi9iPmyfK3p
+        OvGLnNgtzuVyHCFzk/r6lWjudmyz41CRr9ZmmzVca7OcHes=
+X-Google-Smtp-Source: ABdhPJwOX4VG824mWTgsMSvI1jceBEMgcoifT5RqZ87ux8ECTHvij3xkwNwHJuvqG7CkBA+FKckHfK6asUhSWVTY0ow=
+X-Received: by 2002:a05:6402:350b:: with SMTP id b11mr54376061edd.212.1638003780445;
+ Sat, 27 Nov 2021 01:03:00 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.2
-Subject: Re: [PATCH 1/4] mergesort.c: LLP64 compatibility, upcast unity for
- left shift
-Content-Language: en-US
-To:     Philip Oakley <philipoakley@iee.email>,
-        GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20211126113614.709-1-philipoakley@iee.email>
- <20211126113614.709-2-philipoakley@iee.email>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20211126113614.709-2-philipoakley@iee.email>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:YHBYLJK8eVrAahNpF02yjFgCdB0mAO36PZrxXeBfu2ku4qtM4wd
- 0cu3eCOLXurM2eJqvONpm1hZrTNduMV93r0S7Q83MAIZphcpxZtydPrRv9CKy+oSXyKAj3y
- sCsKVtDF9HZSnlDIxqi46FrTt7AYc8Cml5sauReKVv7qF/HzR5FYi0wKAlt0TA6LefpqBxB
- 9VLr2UXPHNqAahw8y39Ug==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:9RTBS8AKTqo=:6EQ2TPGfsDeKOnKiDJdqwP
- 0rd8duzM1+dd/isaU5KsFUdukjBJ9HJgrZ1lWSw28Gnl4w6stm7VysspOO4dCoZvICTDJMVyh
- CDz4tC/+8H2ruWl6xd1qYE1N8k/X0mnESCYhT8+PDHlfkIdByD+bZx+4CK6FqvokhPFXu7m+Z
- D7M8itSRpV/vZi+U8ZJNf6ruVXAy1/YQI7xafKeW4b4Csh0M7l/jUofUwdCmv7yoqlGwum/69
- OC+Zb+DpqI+OCUmEYpv8Ho8TpUi29t82jWqkKbt14Biq5QZmfYwr/aU6dL6avPreKrrKcONJd
- +5uZDipaN3kBzd0ALCx+9/m0Sk2uKFMu7LwqwgwPKm0eblddAGrLL27vJA4EFb1Tinf1CzCkz
- EeFVUD0p02TSOl1dLXt11sDR9lq3jAnIJB4ggfoXqbEppJAj/KBv17ZZITjQn81LEIyTltKW5
- E3/sgf8lmK6uPRBtiqMLtDZKzwS4r/6UZd/YqcRV2Si1pLy546O1STqkOH4js6IUqTxW29hA8
- Ig+M+gXSm+l4FwLdgsb+7eRuNLtmLtl9LRhJT4amY/H4EnHzLOnQ6S8OGVCkqSpbdVPCXB0PS
- vpxyFeFUNcvNL+McK0BcWQ42wwmcEbhw2q6Heg7eoW+YTipbxM2qk/vD6f+Fz/AqlDBCcGDWd
- 5JEyISmCHFQnwqo5F1/3gj/DZgqhXiTHWReUlFbMjF8w6UnZOMtPBFi/JqBfYhkVS+TXuR3y4
- TSuSsZUJD9R0pwKBc5kIqR8PWbfaxnhD6OCPEnW3zCbBRBRfMLVYPA+2Zrjzn80PMRt/8lWdu
- S47yTfTG/1UsmaJArlFOSnZn2InPruNOdAsb9Fp3wKYLrIhQ79YkXQB9STdwtdIzndi7vUZUy
- 4GpwHzb39vNgTIheeiwdIOdqIzDGKxgsBCdUc9aL5f6oXex5pi0AL6kaG5IAv09XH1nv82HXx
- 4lJFD0ecvl7mtEFaHyCVmouA/STLiGT1t8tTWURSMXbyjsSxtrAnBVTrGPOex0Wp2TvGdWlA5
- Bx4600ubGjPvV2dZFJSxcnn20ouW32IDLwB+AkxbYeHyaP3f0UFjHGMvI0bbeOtQgg==
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 27 Nov 2021 10:02:49 +0100
+Message-ID: <CAP8UFD0EnURwcwKCGnmQsTw1t8soBYe3=xtexYN7icpGUBFZSg@mail.gmail.com>
+Subject: Draft of Git Rev News edition 81
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.11.21 um 12:36 schrieb Philip Oakley:
-> Visual Studio reports C4334 "was 64-bit shift intended" size mismatch
-> warning because of size miss-match.
->
-> Promote unity to the matching type to fit with the `&` operator.
->
-> Signed-off-by: Philip Oakley <philipoakley@iee.email>
->
-> ---
-> This is the same fix that Ren=C3=A9 Scharfe provided in 42c456ff81
-> (mergesort: avoid left shift overflow, 2021-11-16)
->
-> Use size_t to match n when building the bitmask for checking whether a
-> rank is occupied, instead of the default signed int.
+Hi everyone!
 
-Fine with me -- it's just nicer to take the whole set.
+A draft of a new Git Rev News edition is available here:
 
-Ren=C3=A9
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-81.md
 
-> ---
->  mergesort.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/mergesort.c b/mergesort.c
-> index 6216835566..bd9c6ef8ee 100644
-> --- a/mergesort.c
-> +++ b/mergesort.c
-> @@ -63,7 +63,7 @@ void *llist_mergesort(void *list,
->  		void *next =3D get_next_fn(list);
->  		if (next)
->  			set_next_fn(list, NULL);
-> -		for (i =3D 0; n & (1 << i); i++)
-> +		for (i =3D 0; n & ((size_t)1 << i); i++)
->  			list =3D llist_merge(ranks[i], list, get_next_fn,
->  					   set_next_fn, compare_fn);
->  		n++;
->
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
+  https://github.com/git/git.github.io/issues/529
+
+You can also reply to this email.
+
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition on Monday
+November 29th.
+
+Thanks,
+Christian.
