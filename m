@@ -2,138 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BD28C433F5
-	for <git@archiver.kernel.org>; Sun, 28 Nov 2021 12:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE6BBC433EF
+	for <git@archiver.kernel.org>; Sun, 28 Nov 2021 16:51:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352645AbhK1NCY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Nov 2021 08:02:24 -0500
-Received: from mail-eopbgr130073.outbound.protection.outlook.com ([40.107.13.73]:16926
-        "EHLO EUR01-HE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1357490AbhK1NAX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Nov 2021 08:00:23 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Te+tPRJE0XX+PnWEpZO7GaEkM30/3ow2lv3CKsTw0mIpS1PD9NZSKrz5+QmxUsSBMi1RZ+AQSlPt/lxXMSa0NKYh/II79VDdZtlOSIKlsaZUcNW+zy5FDA+3S2D4zbFZX6DXrWLzQIL7LK3YyN2GJKFVJ89Krl4Jp55XEFyxxlJJAYVzemIkfrR+4Ei3nk7yPf6J9PZpHnFrlvusTXu1QCeWvyFuzyPRwHYXWTP3pwVjYTfpxjC9xItHV4SLT3H1HtvNm+ppzixWTDQN5u00C0YEcDDanCiGfj9om8XCwUbMTM2s5SJjj7BmdH7mWCIU/lQn0JI+PQteHaMVzgvGLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fRHmswTW/Sbrum73kd2RUNI2E6v/T4WJlZIU10h7y2c=;
- b=W5lA2Tno9vwZwYMLbQ0NfMdwoupuVCJSbAQOxw9I2Gqyk3nMBx/ITVcTTmecWo7Xu+gl4ql809MWRQvRI5wovE3J/GTGiA/I8w2NxAHKj+Yf4MBJ3OZR7pF69Nw8ivO0DRONa3KaSGKn5j+G2piYZiPl8i3376xlONfvJyru06bwSK/XEZ3+NSO9en5AXke8rgZ4dTpmO92zX8WSrnmhLRFQJEQg4iOp28//K9pM4AYp70ZWs0CDDAc31KXTg5f/41u3DOGUOZPr9ub1hPGvAhp3p8tjUF2B8kcMMqeQ3GRe0pFLosvgu9Vakx4yQuIXRwdGhhM2C5Ott/ucTCpwNA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fRHmswTW/Sbrum73kd2RUNI2E6v/T4WJlZIU10h7y2c=;
- b=DgzjwNuhPntK1o6v9F7m6JzbtUlWgiW+BaFj67ws4k6fSp6vs/xfoXajiGL6q7cn6ntX7BrgtScd2cPGl4OyaKEmcMG0airE35AYdwwJkCO2DUrYnV8DVGt0ih+3iNMEHs1ywXcucg1ohUmw1sPoMyyQC5zg9qeLXUC/ewsdmEQ=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PA4PR10MB4496.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:103::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4734.21; Sun, 28 Nov
- 2021 12:57:05 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::d9de:b41b:461d:fb5b]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::d9de:b41b:461d:fb5b%6]) with mapi id 15.20.4734.023; Sun, 28 Nov 2021
- 12:57:05 +0000
-Date:   Sun, 28 Nov 2021 13:57:04 +0100
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     git@vger.kernel.org
-Subject: Git SSH/GPG signing flags and config
-Message-ID: <20211128125704.4twinfd3wriwdntz@fs>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-X-ClientProxiedBy: AS8PR04CA0090.eurprd04.prod.outlook.com
- (2603:10a6:20b:313::35) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        id S1350807AbhK1Qym (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Nov 2021 11:54:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38558 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1353162AbhK1Qwl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Nov 2021 11:52:41 -0500
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EADAC061748
+        for <git@vger.kernel.org>; Sun, 28 Nov 2021 08:47:52 -0800 (PST)
+Received: by mail-yb1-xb34.google.com with SMTP id j2so34978243ybg.9
+        for <git@vger.kernel.org>; Sun, 28 Nov 2021 08:47:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4I/VzjHcSTR/ReYPm2D37wG6rIg9vm416Uc8X1hF+48=;
+        b=I2klB866jCzSjOgadzpqK9BVo/Kn/Kkez2qlFVSFFlwUPH0Vc25yAAS7+2GfU/Gjmd
+         H78+uvW8F5zlnigorT9dn4VTW9Rt0zWDHL/5Kv1+cCUUn/u/oQTwZi6UVO/ccLMsAoji
+         aTwxXUWctQo3DnHhoejzfjJdY1CQMMUikT7piaMR3Sy7+7F1LGUiZfdMP5PFHWTJrNPt
+         /xby5khOf4VPxj3O2nW74ZIKMwpWyQnDFuFVwhm2BMtoaFbvgZfeGeL5CvG3/mmGyP56
+         gFdn23llhR/tCu2tq2VL7qOixtJYrgQvVp7TcTF9dmjhjJEqBPJNxSTRnbI+9NmSq5Qt
+         8csg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4I/VzjHcSTR/ReYPm2D37wG6rIg9vm416Uc8X1hF+48=;
+        b=v1mK31ZuVK2tJBTZooAZadUlaTG+9qY6lb845wKit6vphCDC1jZdyWD0KwsviIH7M8
+         7THUtm4liWWiq5nNm6/iJ7Xy0xVeV1bcI8RAc1eMXJDukgWuHHEZfV5epFiN3tug8NA1
+         pwVo+9NH9Xa8PhnyxZkMRAVQSQxx2/BbKpRZyy4Cl/IEmLsXp8EBXyleWSnZwqJnkS8f
+         w1wxgyjP3f2dXpRo7r+mu4BVpg9qXgnrhcjmFACamI5O50S4TKdfeMdWn6LvGeJtyAyC
+         JNnwmojltfApGfvDj26WC/t487P41xKIdDKx7dIz55Uj6wiYpnZo6E7wRt1HqajFcyP8
+         8Nfw==
+X-Gm-Message-State: AOAM530cuiyKVpFkv96G+FfN5IdCFcTlFS345W79mjoEPKhBzJSOjG1p
+        wWMdOdoFohMeuVXP7ICL0wtVtYw3FHhR83GDtN+gLP2RbYY=
+X-Google-Smtp-Source: ABdhPJyIQJaQcy0EOt1lS0oeY13j30ngdYubKMQjvpWIT6/QMU3uCqoGlokNPrBYkTmy/SMZJ+ZZHXH+i7plKAIEolA=
+X-Received: by 2002:a25:3307:: with SMTP id z7mr30407599ybz.129.1638118071117;
+ Sun, 28 Nov 2021 08:47:51 -0800 (PST)
 MIME-Version: 1.0
-Received: from localhost (2a02:908:178:20a0:d22:c58d:d0a4:a83a) by AS8PR04CA0090.eurprd04.prod.outlook.com (2603:10a6:20b:313::35) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4734.22 via Frontend Transport; Sun, 28 Nov 2021 12:57:05 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 713b089d-a28c-496c-12ac-08d9b26e9445
-X-MS-TrafficTypeDiagnostic: PA4PR10MB4496:
-X-Microsoft-Antispam-PRVS: <PA4PR10MB4496C8F80DBE30A29D4B285AB6659@PA4PR10MB4496.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: dnl5NhSWj15NzsLvJMcQZ7GIBiAhg9NEh2A4OT0S1z5KM2odNQoaTCEfL/WNKwmeDAWYLm4NVkghxocjqYKKy4/eUiVRQyTeiqCLQ+gc83dOuIWsqQcmyje3UewL2bVphR+VpMaPxVmQ62gycGZDoKec3O7ucdsutIXYERL3T68aVlIu6tcj/P/Ak84M368WVhRmxdkC3L/kiw4/odqvAUfFxZISqfICrC7bdBheMUhOOJtuFVAQ1e89xJ9Q4leZ5DjK5LCjkduyLmcNurOeQrMR8IK7FHiqUemB3OJ8QVeDpZo8kuJPMIXqtvFu+cRoOuesKGAdCkpLZbZam17Jz+tQikUVsY4134NoY0IuAV0DTw6BLO1SZQmIHkcLej+tibDS1nnZJJvc1fQalMAsADz4JEHYjKOYCIePpo2xy43ZaG+QG4ZzPQf5F3/VVOBvKsnlt3PnYKBvjw3zxoHs1BCDNxnC+iARL5We4s5/wyGhZzJ+VyimK2/Jj+FG/ggK8VCJ2DafF1YeS63vx/AkIPkpCKhUhu8LPghr/Iz7ixNSHyKQ4oPM2v3z2hG5lmpqhCyPgqKANFhhL4i+kxXxZI4j4xriiV1rUBxrVqnxAFrkfqd658Ye+alJa2Zkms8YMWLkgNkN3+5OCq79Y31esQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(7916004)(4636009)(136003)(396003)(376002)(346002)(366004)(39830400003)(66946007)(316002)(6486002)(2906002)(66476007)(508600001)(52116002)(33716001)(5660300002)(38100700002)(1076003)(9686003)(66556008)(186003)(6916009)(86362001)(8936002)(6496006)(8676002)(83380400001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VmJ6MWhtTXRVaThmTEdMcFkrSUd3UUZnZjN1WHgyeFYxMm9IeGFjTk9uZk5X?=
- =?utf-8?B?S205Z0NMWG5oaXIxZjd0QlhzOE5QZ1dLTjY5V2ZtRWcwVU9PM1ozVm1Oc0VJ?=
- =?utf-8?B?bWIxOFl4bDdzWWhpMzEvQ0F1aFhtQjVuTzJCRCtzenhIbFZndTY2REY3Tm1m?=
- =?utf-8?B?VWFNU3FPRUpmKzNlTTNReEczVnhseVBrNUVFOTYyNWZXLzN1SjdiVWUrem56?=
- =?utf-8?B?VmFIL3RsWkw0dGNIYWo1ZDJXa2FMQUhOQkpiRkZDNUxLOUtUaU5NTVl5cEhY?=
- =?utf-8?B?ZDczU0tUckFQSW10ck5EbHhvOTZNakVGQzVFNHZEQVFHS054aDEwd0VUSkM3?=
- =?utf-8?B?S1lLaVNwY1FKZFdmSXFMb2d0ZFZwVkxlVi81dnlqSlFzdW1naE5LVk40RmJr?=
- =?utf-8?B?eCtwTXhsZk9MdjNiSElLRU1Lc1BxTXVVVWk0UEphenQxTEhpMHFNeXNFZ0M5?=
- =?utf-8?B?Y2laZHFkQ21lSWFTZC90eEdGSVd5bHROZG1LV2tralhRM2lEWURhL2x3bGlt?=
- =?utf-8?B?TmVoQjgzWDQwbDllTTJONXM3TS93NkFpc0RoT1FDSUEvRjBQZjNsVkRJa0tU?=
- =?utf-8?B?NXhqbklwR2hHQ0x3TEZ5TnNNOXh5MEdHMkI3M2xMWGw1TW1ObEpTVWxFZzc0?=
- =?utf-8?B?cHkySGM2Tjl2T3VhWlV0OHg4Wnp6TzNSbFpyZ2I5T0pKYWNyc3JJUmR0MGdq?=
- =?utf-8?B?YStXNEp3QXd4anVZeENGUGp0eDh3YU0vdDBFUUtJazhwSGNCbjBxTkZ4WENp?=
- =?utf-8?B?b3RKbVlONnNrQlRXRHFRQmxad1FLcXYxY08rbkRJWnF4OVRaMlZEL3dkV3lz?=
- =?utf-8?B?U2trcjB4N01ZTDRPYS9jT3FHQUZ1cmNWTmkwV3psaFNBQmJ5a0hsdTNuVm1Z?=
- =?utf-8?B?dHd4NitkbzV6S2FZbTE4K0N4VUFUd2M2OE0xbG5iZ3YvbE9MSkxJQTJkWFVI?=
- =?utf-8?B?Y2hkWW9salBpa3Z1YlphU1hCR3VpYzdJMlplWFUzRzAvQ1RsK0JiQkZnbGEv?=
- =?utf-8?B?ZkF0U0dwVDF5RTVCb1VaRGVBYmRRaTVoSGpZMzhjRkpIU3FvK3VIKzFzRWdq?=
- =?utf-8?B?OGJmdk9VZVJaNHZhSTNDMFRMY1NDV25kOWlOeU5aSUpaK25hM0VwQk02NnFO?=
- =?utf-8?B?RHFYbmRxcVZqTkFQSDRPOTUyTThpOG52eU1qTEpvc1JZU3NrNXBBOUdKTnVi?=
- =?utf-8?B?NzRwOUp6ajd2L3hRejVrZXJFVHIyOGh0ZG02NzdMSy9JR0FOYmkyaFRnZHVl?=
- =?utf-8?B?QjBjV2VNeDR4TEt4dWNKeFVlSUZzTDM5MGdtM1cxK1IwVHY5OXh1MVdlMVJn?=
- =?utf-8?B?N0d3MmE1ZHJVMmtBK2c3MFNjNThBOFBOY0ErYWtnOHBrZURzd1NvakNlQmk5?=
- =?utf-8?B?T1NmRGNEVmhpMHZwNGpKRFZYbm0rUzlSUHRtMVdwZUVWWnp2Z1ZIamtLcW1I?=
- =?utf-8?B?ZU9Da1hwK09tZExTQjN5Tmtzbzh5THg4OVdWUnRNTTkrM0hYU0ZLYmVTUVlu?=
- =?utf-8?B?djBqeUViY3lLajhVRFh6bHRPOHVCTUZXRktQdnlOWHlMM25ZbHRXMUJzYkhh?=
- =?utf-8?B?UEIxa21UdlhiTElXVmo4MGpBWk9ZTWxhckc5dllYN2J1MUc1eHozYlBac202?=
- =?utf-8?B?VUFUQjU0eGdJQkFkeUxjTVpRa0llRXVuVmk4bGs0aG40VTFRSytvYkdCMzd3?=
- =?utf-8?B?U2dxcTB3MXovM0tlVUZFNTFyU2EzOXJhZk1RbThaREF1ZEhra1RReXd6aU5h?=
- =?utf-8?B?ZFE0MDh4WlplUW9vek1LUlI4dmNJSG1ZcGxuUGkxdCtXc2JPUEYrNE1HOHVZ?=
- =?utf-8?B?YkhxRW5Qbzh3dkNHd3N5V0VVK0lNOHpxalFicnJZZkJ4VEErS0s1WFk1MnV3?=
- =?utf-8?B?TFMweUFMWlZqZlcyRmxOVjZZdk5qMngzTXFUNjV2aXF2bmxxREZ4dUsyMG85?=
- =?utf-8?B?NHZlUjd0eUhJRXJDTlZ1MEZuU0J1VkgwVWVJRW8vTGRqZmFKV1hrSTQzKzl5?=
- =?utf-8?B?Y2tnN3F3ZFhESW55bFdiNnBLK2xvdjhpR3pKdkpwYUhIZ3dEUmx5Q0JNczZa?=
- =?utf-8?B?dXBrQkxOZjdJalVrcDU2czEyQkVxUVBPWDBiVWd5RS9lajZ5N0xOWDVKK1V3?=
- =?utf-8?B?Z1M3OXpORUtKN3pmSStqSHU2MVk3dlRtbXd5OFlXbmVqc09kMVdOWllxdFhB?=
- =?utf-8?B?TDNxR0F0OUlqVnF5VHVzMEpLcXhlcTVGSlAvY2w1TTdldllNTFQyNXpRZ3Nq?=
- =?utf-8?B?ZExqL0RTWmdLd2pzUHI2MGJoTHJjMXlTVlAzYzBBRTEvK09kU2xBcXcyRFFX?=
- =?utf-8?B?L3o0VEZkVWtiaWlNTWhobHIwbE43M2RlYlFsL1UrK0pwQVJIWHVvdz09?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 713b089d-a28c-496c-12ac-08d9b26e9445
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Nov 2021 12:57:05.4293
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /PKLqzcMAIMy2U/0fYtsGqnNFZ1v7BKZAqzuRbenvDRNGj4Tc52qFbwD+n38rf4ic7KL2fM7brO5IsiFpnLWYTh+v94UOeKvdxNt7EUal98=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4496
+References: <CA+34VNLj6VB1kCkA=MfM7TZR+6HgqNi5-UaziAoCXacSVkch4A@mail.gmail.com>
+ <CAPig+cQ224Tz5iQ5Yt4fMadehLmrJWGzH7kwUSr+UT4hcQf14w@mail.gmail.com>
+In-Reply-To: <CAPig+cQ224Tz5iQ5Yt4fMadehLmrJWGzH7kwUSr+UT4hcQf14w@mail.gmail.com>
+From:   Baruch Burstein <bmburstein@gmail.com>
+Date:   Sun, 28 Nov 2021 18:47:14 +0200
+Message-ID: <CA+34VNJbOHYhYgN+p7EsGiRAzf+aAQGeMxCzG1dizFjDRVQVbg@mail.gmail.com>
+Subject: Re: misleading message printed when worktree add fails
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
-the `signing git objects with ssh` series was released with 2.34 and i'd 
-like to thank everyone for your support and the good reviews!
-I think it would be beneficial now to adjust some of the wording in flags 
-and the config. Currently everything is configured via gpg.* and all the 
-`please sign this` flags are named --(no-?)gpg-sign.
-I would be in favor of a more generic flag independent of the signing 
-mechanism. Adding something like `--ssh-sign` would suggest that you'd be 
-able to switch signing format with it which i think would not be terribly 
-useful. If you need to use multiple signing mechanism those would usually be 
-configured per repository and can easily be done with an `includeif gitdir:` 
-in your config.
-Therefore i would suggest just adding a generic `--(no-?)sign` to all the 
-commands that support gpg-sign right now. The only problem i see is a 
-conflict with `--signoff` so i'm open to other naming ideas. The same goes 
-for the config. `sign.` as an alias to `gpg.` would work well with the 
-current settings.
-Let me know what you think and i could prepare a first patch for one command 
-to see what the alias / config / docs change could look like.
+I see them in the other order:
 
-Best regards,
-Fabian
+    fatal: 'master' is already checked out at 'C:/Users/bmbur/temp'
+    Preparing worktree (checking out 'master')
+
+which I understood as "there was an error, but we managed to recover
+somehow and set up the worktree anyway"
+
+
+On Sun, Nov 28, 2021 at 2:37 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> Thanks for reporting. Inline comments below...
+>
+> On Sun, Nov 28, 2021 at 1:53 AM Baruch Burstein <bmburstein@gmail.com> wrote:
+> > What did you do before the bug happened? (Steps to reproduce your issue)
+> >
+> > run `git worktree add <path> <branch>`, where <branch> is an already
+> > checked-out branch
+> >
+> > What happened instead? (Actual behavior)
+> >
+> > worktree was not created, but a confusing message was printed:
+> > "Preparing worktree (checking out '<branch>')"
+> >
+> > What's different between what you expected and what actually happened?
+> >
+> > The printed message seems to indicate that the command was a success,
+> > when in fact
+> > it was not
+>
+> When I perform these actions, I see a "fatal error" message which
+> clearly indicates failure, not success:
+>
+>     % git worktree add ../foo bar
+>     Preparing worktree (checking out 'bar')
+>     fatal: 'bar' is already checked out at '.../wherever'
+>
+> Is your installation not showing the "fatal error" message?
+>
+> Or, are you saying that the "Preparing worktree" message is
+> misleading? I read that message as telling me what the command is
+> trying to do (i.e. "Preparing"), and the error happens as it makes the
+> attempts, which seems logical to me, thus I don't see anything
+> misleading in that.
+>
+> Are you reading it differently, as if it is saying that it already
+> performed that action (i.e. "Prepared")?
