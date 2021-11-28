@@ -2,370 +2,278 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4B26C433F5
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 22:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 825BEC433EF
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 22:24:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233295AbhK2WXm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 17:23:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57180 "EHLO
+        id S231583AbhK2W1T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 17:27:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231558AbhK2WVy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 17:21:54 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 725DAC21885E
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 12:13:28 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id d9so18529172wrw.4
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 12:13:28 -0800 (PST)
+        with ESMTP id S232594AbhK2WZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 17:25:04 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD09AC0C084A
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 12:41:46 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id y13so77218211edd.13
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 12:41:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=1jwBtOMrpFLLJEXEaf6wA3J1VBielWmgta3mDIEewTI=;
-        b=d4qCzu3QBThCcrZrToZEYULJ33p0ECDGwKGDOp6+VvaFTUwluXpVFnOwERNm6xW99b
-         /l5SKgrrS9T9kBc+BDo22UfkMp3MvQoIldwMESpCeFuC7eDogdNynAzrmQP5Qejh6L54
-         BBirlv3juzUOB5VGsRijeJLqCDy1hoSNgMW4U4PJikxhXObDLzfpE0BP9ru0r3La3Fqh
-         ZFjU+jXLatT6iQNYBX6WaGKSdORApiDd7hP19RMZyOyTtDkW/hDVNbMOVJzzmLEj8Kf1
-         lwerlpAY7wahOd8b3V4CrEgxjtR3WsM33fYzCAARWb0dr7cRTgV5Lq9rqOyaNPPiDENf
-         A3Gg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=KrfhMH0P/6pZC9Hfn+88gEH76xSiI4nWXMIJ8WoB2W0=;
+        b=L94icezZrTdewwziMD9wtOKONenAbvwM/EbT697ZNiAKCYhh7jN1HLpgL14MnD9AoO
+         wdKxdXgu5VfIRXRZsavd+3heem5M+DgfucJEmNqhJ9HeNo9IlePY5pLJE5AOXq8sQyDP
+         BtPiPmF8r/CTDFzFrkglMMNcO6sh7EAmtO+T4qqMjWdmh0bstFzVB1GZbb7W9sxuQSEJ
+         O3ACcYV/QnXWX7oCxHbpsDAH4joX28CDtSoBHOU1tQjX95KoEuQ0Bj1V0H7MOKYwZNKt
+         ws2/qIuk7qbn4qZOs0qUsGcgf6vUvkQRZFku+M6tZ+ppurV6hJTev59+AOMevfGjoLcM
+         +6FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=1jwBtOMrpFLLJEXEaf6wA3J1VBielWmgta3mDIEewTI=;
-        b=LWBesqDONlvuk7yUwcYA5OdeYgbhRxqUoXek0pCY1Q7v0wY/WK8f2HVvdTc+deeWde
-         OrAiuyMR3j7XWrbOjsH3TSkNg117nRm2xqXjOeiPqvNxlGtO3zCLgBDGJcKxH3vEvlFx
-         qBlNXnPHUTk47VonB8euFDWVM7AGwfWEsKTWwhkQh/+Zpc1IIq5FAJq+6oym+4EAtHCZ
-         aYPHs18Lt6e5tD4jhw4gAb6mw8L1tJSNy3jmiGVbsi1v6KVIOzSxyyTckQuytQWurHf4
-         kk2gdMS5NQDMVcVS59IjMK6yrnRoWVzQonS8R3Q7tL7SNcIl2GzuRHwHphDNLVfwziRt
-         roLA==
-X-Gm-Message-State: AOAM531uMndyVC5TywLoJJVlCk87SVFyk5a+ogK+btWUkXHDg16es2Zs
-        H43APr9pfnSohrgKlq3kiWQWMHBw4lBy2g==
-X-Google-Smtp-Source: ABdhPJyutGgynelqN6wQby1cay9P6m5OAfF7OwZd1Q80+9HoOWHsD5UZYjmKpKlVizGx/0NgYgnsWQ==
-X-Received: by 2002:a5d:4846:: with SMTP id n6mr36427641wrs.249.1638216806698;
-        Mon, 29 Nov 2021 12:13:26 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e12sm19333767wrq.20.2021.11.29.12.13.26
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=KrfhMH0P/6pZC9Hfn+88gEH76xSiI4nWXMIJ8WoB2W0=;
+        b=ra1P9vZT5Xm8zbpbu7FDqm1hznKzy1DNYYFv5Y6CnQ++VdE27Py6dzZNUkEI9CMIYv
+         IOd+Gkj1u+0H/9V4I0COKUmD+USFvri6tHnE8tzu3CnMw7bg3H3fYk1skMQp93KKS3c4
+         4lApujTFpAulD1jc8ZX3M1qXPvSFsMrd9RpwKZdTdj1OVc0rtlasKs6AT4jFGIuKKrWU
+         rG4oO2KOgfNidE20MnxJ54eySukYUZDUsyeGTr1VLWxhaDlj++3DCB81hF85sI7IGBrJ
+         issArzV/exFTD31Z9gP+i8O7vh50zW0eBxdkTd0Ij8gL8PTYuDML0zF8i6bpLR9QQmww
+         5OMg==
+X-Gm-Message-State: AOAM531xz/01e2A5UYbXM1hOpnKpaZcdrgqiwkkwZbrVKx6Lo7V7Np9R
+        bSVAQ0x6zgXdkzNbjBdiOu0Ta6hYzqHuJg==
+X-Google-Smtp-Source: ABdhPJz8R9so3t5+bEDhZkNoxnMYiIlnycN4H93mDkBejK23/vsavPbPauNAQNkrJDPpDyzWR+Nanw==
+X-Received: by 2002:aa7:dd56:: with SMTP id o22mr77383385edw.73.1638218505135;
+        Mon, 29 Nov 2021 12:41:45 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id ig1sm7809661ejc.77.2021.11.29.12.41.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Nov 2021 12:13:26 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] test-lib.sh: have all tests pass under "-x", remove BASH_XTRACEFD
-Date:   Mon, 29 Nov 2021 21:13:23 +0100
-Message-Id: <patch-1.1-9f735bd0d49-20211129T200950Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.1.841.ge54f711571c
-In-Reply-To: <pull.1085.git.1638193666.gitgitgadget@gmail.com>
-References: <pull.1085.git.1638193666.gitgitgadget@gmail.com>
+        Mon, 29 Nov 2021 12:41:44 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mrnT5-000rOK-Qg;
+        Mon, 29 Nov 2021 21:41:43 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Glen Choo <chooglen@google.com>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v3 02/11] setup: introduce startup_info->original_cwd
+Date:   Sun, 28 Nov 2021 19:04:25 +0100
+References: <pull.1140.v2.git.git.1637829556.gitgitgadget@gmail.com>
+        <pull.1140.v3.git.git.1637966463.gitgitgadget@gmail.com>
+        <200ddece05d3d0599b16897ff9533cdfb3324b0c.1637966463.git.gitgitgadget@gmail.com>
+        <211127.86v90dhf5g.gmgdl@evledraar.gmail.com>
+        <CABPp-BFuKBht2yZ+tYkG+C4Rpek6dLT0gx6pZNH4rXqv0UFf3Q@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <CABPp-BFuKBht2yZ+tYkG+C4Rpek6dLT0gx6pZNH4rXqv0UFf3Q@mail.gmail.com>
+Message-ID: <211129.868rx6g0e0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the "t1510-repo-setup.sh" test to use a new
-"test_must_be_empty_trace" wrapper, instead of turning on
-"test_untraceable=UnfortunatelyYes".
 
-The only reason the test was incompatible with "-x" was because of
-these "test_must_be_empty" checks, which we can instead instead skip
-if we're running under "set -x".
+On Sat, Nov 27 2021, Elijah Newren wrote:
 
-Skipping the tests is preferable to not having the "-x" output at all,
-as it's much easier to debug the test. The result loss of test
-coverage is minimal. If someone is adjusting a "test_must_be_empty"
-test a failure might go away under "-x", but the new "say" we emit
-here should highlight that appropriately.
+> On Sat, Nov 27, 2021 at 6:00 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>>
+>> On Fri, Nov 26 2021, Elijah Newren via GitGitGadget wrote:
+>>
+>> [Just some more "I haven't really looked at this in all that much
+>> detail" commentary, so maybe it's stupid, sorry]
+>>
+>> > From: Elijah Newren <newren@gmail.com>
+>> >
+>> > Removing the current working directory causes all subsequent git
+>> > commands run from that directory to get confused and fail with a messa=
+ge
+>> > about being unable to read the current working directory:
+>> >
+>> >     $ git status
+>> >     fatal: Unable to read current working directory: No such file or d=
+irectory
+>> >
+>> > Non-git commands likely have similar warnings or even errors, e.g.
+>> >
+>> >     $ bash -c 'echo hello'
+>> >     shell-init: error retrieving current directory: getcwd: cannot acc=
+ess parent directories: No such file or directory
+>> >     hello
+>>
+>> Is that really realistic?
+>
+> I have 321 shell scripts (or symlinks thereto) in /usr/bin/ on my
+> Fedora laptop, and 951 shell scripts in /usr/bin/ on my Ubuntu
+> workstation at $DAYJOB.  That's not even considering stuff in other
+> directories.  Note that I didn't place any of those scripts in
+> /usr/bin/; they came from the distribution and/or corporate packages
+> from others.  Any invocation of bash will see the above "error"
+> message.  Granted, bash calls it an 'error' but continues anyway, but
+> I thought it showed that there were clearly programs besides git where
+> users could run into problems.
+>
+>> Any "normal" command would use "pwd" or look
+>> at $PWD, both of which "work", this error is only because we're starting
+>> a new shell.
+>
+> <grin>
+>
+> Yeah, good point.  Who would use an unusual program like git?  Or a
+> shell script?  Or a java program?  Or emacs?  Or other programs like
+> them?  Besides, git, bash, java, and emacs are all relatively young
+> commands with small development teams.  Maybe we should just rely on
+> users only using commands that get the pwd/$PWD detail right; perhaps
+> limiting to commands that are more mature and have bigger development
+> teams than those four.
+>
+> Silly users.
+>
+> ;-)
+>
+> Sorry, couldn't resist a little friendly teasing.
+>
+>
+> However, for "pwd"...by "work", do you mean "doesn't necessarily
+> work"?  On my machine:
+>
+> $ mkdir gone
+> $ cd gone
+> $ rmdir ../gone
+> $ pwd -P
+> pwd: error retrieving current directory: getcwd: cannot access parent
+> directories: No such file or directory
+> $ pwd
+> pwd: error retrieving current directory: getcwd: cannot access parent
+> directories: No such file or directory
+> $ echo $PWD
+> /home/newren/floss/git/gone
+>
+> If I do not run `pwd -P` first then a plain `pwd` works.  But your
+> advice to use `pwd` seems misguided for programs, since they'll hit
+> this problem if users have run a previous `pwd -P`.  (The $PWD trick
+> would have worked, as shown above)
+>
+>> I wonder if it was just because you ran into our bin-wrappers edge case,
+>> but that should be really obscure for any real users.
 
-Since the only user of "test_untraceable" is gone, we can remove that,
-not only isn't it used now, but I think the rationale for using it in
-the future no longer applies.
+For some reason I was under the misimpression that the "#!/bin/bash"
+part of the bin-wrappers and other scripts somehow immunized them from
+the $PWD/"pwd" reset, and it was only the programs they invoked (like
+git in the bin-wrappers) that didn't get the values passed along.
 
-We'll be better off by using a simple wrapper like the new
-"test_must_be_empty_trace". See 58275069288 (t1510-repo-setup: mark as
-untraceable with '-x', 2018-02-24) and 5fc98e79fc0 (t: add means to
-disable '-x' tracing for individual test scripts, 2018-02-24) for the
-addition of "test_untraceable".
+But that's clearly incorrect as you demonstrate above, so the only thing
+that'll work OK (seemingly) is running "pwd" (but not "pwd -P"), or
+looking at $PWD in your terminal shell itself.
 
-Once that's been removed we can dig deeper and see that we only have
-"BASH_XTRACEFD" due to an earlier attempt to work around the same
-issue. See d88785e424a (test-lib: set BASH_XTRACEFD automatically,
-2016-05-11) and the 90c8a1db9d6 (test-lib: silence "-x" cleanup under
-bash, 2017-12-08) follow-up.
+Invoking non-POSIX shell programs "works" in that they can use the same
+trick, after the dance of "mkdir x && cd x && rm -rf ..x" e.g. Perl
+says:
+=20=20=20=20
+    $ perl -MCwd=3Dgetcwd -wE 'say $ENV{PWD}; say getcwd'
+    /home/avar/g/git/x
+    Use of uninitialized value in say at -e line 1
 
-I.e. we had redirection in "test_eval_" to get more relevant trace
-output under bash, which in turn was only needed because
-BASH_XTRACEFD=1 was set, which in turn was trying to work around test
-failures under "set -x".
+This "pwd -P" behavior isn't just something weird in your shell & mine,
+it semse to be mandated by POSIX:
+https://pubs.opengroup.org/onlinepubs/007904875/utilities/pwd.html
 
-It's better if our test suite works the same way on all shells, rather
-than getting a passing run under "bash", only to have it fail with
-"-x" under say "dash". As the deleted code shows this is much simpler
-to implement across our supported POSIX shells.
+All of which is to say I'm much more sympathetic to this approach
+now. I.e. it seemed like purely a way to work around fixable breakages
+in our own and other programs. Well, I guess "don't use shellscript if
+you care about this edge case" is a "fix", but not a trivial one.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+I do still think a better starting point would be fixing the setup.c
+dying in our own code, and see where that leaves us, but up to you
+etc. I'm not going to work on it any time soon.
 
-I hacked this up the other day when looking at the --verbose-log
-v.s. -v failure[1] that's now being addressed in[2].
+> Yes, I agree our bin-wrappers is a really obscure edge case not worth
+> considering.  I don't see how you jump from there to painting all
+> shell scripts combined with the same brush, though.
 
-I'd originally run into that because I was trying to debug
-t1510-repo-setup.sh and found that -x inexplicably didn't work, only
-to discover it was he only consumer of "test_untracable".
+*nod*
 
-1. https://lore.kernel.org/git/211125.86pmqoifp8.gmgdl@evledraar.gmail.com/
-2. https://lore.kernel.org/git/pull.1085.git.1638193666.gitgitgadget@gmail.com/
+>> > This confuses end users, particularly since the command they get the
+>> > error from is not the one that caused the problem; the problem came fr=
+om
+>> > the side-effect of some previous command.
+>> >
+>> > We would like to avoid removing the current working directory of our
+>> > parent process; towards this end, introduce a new variable,
+>> > startup_info->original_cwd, that tracks the current working directory
+>> > that we inherited from our parent process.  For convenience of later
+>> > comparisons, we prefer that this new variable store a path relative to
+>> > the toplevel working directory (thus much like 'prefix'), except witho=
+ut
+>> > the trailing slash.
+>>
+>> I'm still not clear at all on why we need a "original_cwd" at all then
+>> as opposed to just using "prefix" (or adding "the_prefix" if passing it
+>> down is painful). I.e. we discover our relative path, we resolve the
+>> relative path to the root, can't we use that as the "don't remove our
+>> CWD" guard?
+>>
+>> Does our prefix change at some point, then maybe "orig_prefix" would
+>> make more sense?
+>
+> No; see the code comment in the same patch:
+>
+> +       /*
+> +        * startup_info->original_cwd points to the current working
+> +        * directory we inherited from our parent process, which is a
+> +        * directory we want to avoid removing.
+> +        *
+> +        * For convience, we would like to have the path relative to the
+> +        * worktree instead of an absolute path.
+> +        *
+> +        * Yes, startup_info->original_cwd is usually the same as 'prefix=
+',
+> +        * but differs in two ways:
+> +        *   - prefix has a trailing '/'
+> +        *   - if the user passes '-C' to git, that modifies the prefix b=
+ut
+> +        *     not startup_info->original_cwd.
+> +        */
+>
+> It's never equal to prefix, even though it's usually semantically
+> referring to the same directory.  However, even if it weren't for the
+> trailing slash issue, the -C case means it is not appropriate to think
+> of it as "orig_prefix" either.
 
- t/README              |  3 --
- t/t1510-repo-setup.sh | 34 +++++++++++++---------
- t/test-lib.sh         | 66 +++++--------------------------------------
- 3 files changed, 27 insertions(+), 76 deletions(-)
+Ah, with -C of e.g. t/helper we'll first chdir(t/helper), and then run
+the usual setup.c dance to find that we need to chdir() again to the
+(equivalent of) "../../". But our prefix stays at "t/helper".
 
-diff --git a/t/README b/t/README
-index 29f72354bf1..3d30bbff34a 100644
---- a/t/README
-+++ b/t/README
-@@ -86,9 +86,6 @@ appropriately before running "make". Short options can be bundled, i.e.
- -x::
- 	Turn on shell tracing (i.e., `set -x`) during the tests
- 	themselves. Implies `--verbose`.
--	Ignored in test scripts that set the variable 'test_untraceable'
--	to a non-empty value, unless it's run with a Bash version
--	supporting BASH_XTRACEFD, i.e. v4.1 or later.
- 
- -d::
- --debug::
-diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-index 591505a39c0..7eb65a52c08 100755
---- a/t/t1510-repo-setup.sh
-+++ b/t/t1510-repo-setup.sh
-@@ -40,8 +40,14 @@ A few rules for repo setup:
-     prefix is NULL.
- "
- 
--# This test heavily relies on the standard error of nested function calls.
--test_untraceable=UnfortunatelyYes
-+test_must_be_empty_trace () {
-+	if want_trace
-+	then
-+		say "$TEST_NAME does not check test_must_be_empty on \"$@\" under -x"
-+		return 0
-+	fi
-+	test_must_be_empty "$@"
-+}
- 
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
-@@ -235,14 +241,14 @@ test_expect_success '#0: nonbare repo, no explicit configuration' '
- 	try_repo 0 unset unset unset "" unset \
- 		.git "$here/0" "$here/0" "(null)" \
- 		.git "$here/0" "$here/0" sub/ 2>message &&
--	test_must_be_empty message
-+	test_must_be_empty_trace message
- '
- 
- test_expect_success '#1: GIT_WORK_TREE without explicit GIT_DIR is accepted' '
- 	try_repo 1 "$here" unset unset "" unset \
- 		"$here/1/.git" "$here" "$here" 1/ \
- 		"$here/1/.git" "$here" "$here" 1/sub/ 2>message &&
--	test_must_be_empty message
-+	test_must_be_empty_trace message
- '
- 
- test_expect_success '#2: worktree defaults to cwd with explicit GIT_DIR' '
-@@ -269,7 +275,7 @@ test_expect_success '#4: core.worktree without GIT_DIR set is accepted' '
- 	try_case 4 unset unset \
- 		.git "$here/4/sub" "$here/4" "(null)" \
- 		"$here/4/.git" "$here/4/sub" "$here/4/sub" "(null)" 2>message &&
--	test_must_be_empty message
-+	test_must_be_empty_trace message
- '
- 
- test_expect_success '#5: core.worktree + GIT_WORK_TREE is accepted' '
-@@ -280,7 +286,7 @@ test_expect_success '#5: core.worktree + GIT_WORK_TREE is accepted' '
- 	try_repo 5a .. unset "$here/5a" "" unset \
- 		"$here/5a/.git" "$here" "$here" 5a/ \
- 		"$here/5a/.git" "$here/5a" "$here/5a" sub/ &&
--	test_must_be_empty message
-+	test_must_be_empty_trace message
- '
- 
- test_expect_success '#6: setting GIT_DIR brings core.worktree to life' '
-@@ -377,7 +383,7 @@ test_expect_success '#9: GIT_WORK_TREE accepted with gitfile' '
- 	try_repo 9 wt unset unset gitfile unset \
- 		"$here/9.git" "$here/9/wt" "$here/9" "(null)" \
- 		"$here/9.git" "$here/9/sub/wt" "$here/9/sub" "(null)" 2>message &&
--	test_must_be_empty message
-+	test_must_be_empty_trace message
- '
- 
- test_expect_success '#10: GIT_DIR can point to gitfile' '
-@@ -403,7 +409,7 @@ test_expect_success '#12: core.worktree with gitfile is accepted' '
- 	try_repo 12 unset unset "$here/12" gitfile unset \
- 		"$here/12.git" "$here/12" "$here/12" "(null)" \
- 		"$here/12.git" "$here/12" "$here/12" sub/ 2>message &&
--	test_must_be_empty message
-+	test_must_be_empty_trace message
- '
- 
- test_expect_success '#13: core.worktree+GIT_WORK_TREE accepted (with gitfile)' '
-@@ -411,7 +417,7 @@ test_expect_success '#13: core.worktree+GIT_WORK_TREE accepted (with gitfile)' '
- 	try_repo 13 non-existent-too unset non-existent gitfile unset \
- 		"$here/13.git" "$here/13/non-existent-too" "$here/13" "(null)" \
- 		"$here/13.git" "$here/13/sub/non-existent-too" "$here/13/sub" "(null)" 2>message &&
--	test_must_be_empty message
-+	test_must_be_empty_trace message
- '
- 
- # case #14.
-@@ -566,7 +572,7 @@ test_expect_success '#17: GIT_WORK_TREE without explicit GIT_DIR is accepted (ba
- 	try_repo 17c "$here/17c" unset unset "" true \
- 		.git "$here/17c" "$here/17c" "(null)" \
- 		"$here/17c/.git" "$here/17c" "$here/17c" sub/ 2>message &&
--	test_must_be_empty message
-+	test_must_be_empty_trace message
- '
- 
- test_expect_success '#18: bare .git named by GIT_DIR has no worktree' '
-@@ -595,7 +601,7 @@ test_expect_success '#20a: core.worktree without GIT_DIR accepted (inside .git)'
- 		"$here/20a/.git" "$here/20a" "$here/20a" .git/wt/ &&
- 	try_case 20a/.git/wt/sub unset unset \
- 		"$here/20a/.git" "$here/20a" "$here/20a" .git/wt/sub/ &&
--	test_must_be_empty message
-+	test_must_be_empty_trace message
- '
- 
- test_expect_success '#20b/c: core.worktree and core.bare conflict' '
-@@ -627,7 +633,7 @@ test_expect_success '#21: setup, core.worktree warns before overriding core.bare
- 		export GIT_WORK_TREE &&
- 		git status >/dev/null
- 	) 2>message &&
--	test_must_be_empty message
-+	test_must_be_empty_trace message
- 
- '
- run_wt_tests 21
-@@ -743,7 +749,7 @@ test_expect_success '#25: GIT_WORK_TREE accepted if GIT_DIR unset (bare gitfile
- 	try_repo 25 "$here/25" unset unset gitfile true \
- 		"$here/25.git" "$here/25" "$here/25" "(null)"  \
- 		"$here/25.git" "$here/25" "$here/25" "sub/" 2>message &&
--	test_must_be_empty message
-+	test_must_be_empty_trace message
- '
- 
- test_expect_success '#26: bare repo has no worktree (GIT_DIR -> gitfile case)' '
-@@ -781,7 +787,7 @@ test_expect_success '#29: setup' '
- 		export GIT_WORK_TREE &&
- 		git status
- 	) 2>message &&
--	test_must_be_empty message
-+	test_must_be_empty_trace message
- '
- run_wt_tests 29 gitfile
- 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 2679a7596a6..38a0fc558c9 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -381,29 +381,6 @@ then
- 	exit
- fi
- 
--if test -n "$trace" && test -n "$test_untraceable"
--then
--	# '-x' tracing requested, but this test script can't be reliably
--	# traced, unless it is run with a Bash version supporting
--	# BASH_XTRACEFD (introduced in Bash v4.1).
--	#
--	# Perform this version check _after_ the test script was
--	# potentially re-executed with $TEST_SHELL_PATH for '--tee' or
--	# '--verbose-log', so the right shell is checked and the
--	# warning is issued only once.
--	if test -n "$BASH_VERSION" && eval '
--	     test ${BASH_VERSINFO[0]} -gt 4 || {
--	       test ${BASH_VERSINFO[0]} -eq 4 &&
--	       test ${BASH_VERSINFO[1]} -ge 1
--	     }
--	   '
--	then
--		: Executed by a Bash version supporting BASH_XTRACEFD.  Good.
--	else
--		echo >&2 "warning: ignoring -x; '$0' is untraceable without BASH_XTRACEFD"
--		trace=
--	fi
--fi
- if test -n "$trace" && test -z "$verbose_log"
- then
- 	verbose=t
-@@ -650,19 +627,6 @@ else
- 	exec 4>/dev/null 3>/dev/null
- fi
- 
--# Send any "-x" output directly to stderr to avoid polluting tests
--# which capture stderr. We can do this unconditionally since it
--# has no effect if tracing isn't turned on.
--#
--# Note that this sets up the trace fd as soon as we assign the variable, so it
--# must come after the creation of descriptor 4 above. Likewise, we must never
--# unset this, as it has the side effect of closing descriptor 4, which we
--# use to show verbose tests to the user.
--#
--# Note also that we don't need or want to export it. The tracing is local to
--# this shell, and we would not want to influence any shells we exec.
--BASH_XTRACEFD=4
--
- test_failure=0
- test_count=0
- test_fixed=0
-@@ -949,36 +913,20 @@ test_eval_ () {
- 	# the shell from printing the "set +x" to turn it off (nor the saving
- 	# of $? before that). But we can make sure that the output goes to
- 	# /dev/null.
--	#
--	# There are a few subtleties here:
--	#
--	#   - we have to redirect descriptor 4 in addition to 2, to cover
--	#     BASH_XTRACEFD
--	#
--	#   - the actual eval has to come before the redirection block (since
--	#     it needs to see descriptor 4 to set up its stderr)
--	#
--	#   - likewise, any error message we print must be outside the block to
--	#     access descriptor 4
--	#
--	#   - checking $? has to come immediately after the eval, but it must
--	#     be _inside_ the block to avoid polluting the "set -x" output
--	#
--
--	test_eval_inner_ "$@" </dev/null >&3 2>&4
- 	{
-+		test_eval_inner_ "$@" </dev/null >&3 2>&4
- 		test_eval_ret_=$?
- 		if want_trace
- 		then
- 			test 1 = $trace_level_ && set +x
- 			trace_level_=$(($trace_level_-1))
--		fi
--	} 2>/dev/null 4>&2
- 
--	if test "$test_eval_ret_" != 0 && want_trace
--	then
--		say_color error >&4 "error: last command exited with \$?=$test_eval_ret_"
--	fi
-+			if test "$test_eval_ret_" != 0
-+			then
-+				say_color error >&4 "error: last command exited with \$?=$test_eval_ret_"
-+			fi
-+		fi
-+	} 2>/dev/null
- 	return $test_eval_ret_
- }
- 
--- 
-2.34.1.841.ge54f711571c
+I'm a bit confused about the trailing slash case, isn't the prefix
+always going to point to a directory? Why would t/helper v.s. t/helper/
+matter?
 
+I think it won't matter for rmdir(2) et al, but maybe I'm wrong.
+
+What got me confused about the "prefix" v.s. "original_cwd" is that I
+was assuming they'd be the same. The commentary on setup_git_directory()
+says as much, i.e.:
+
+    Returns the "prefix", a path to the current working directory
+    relative to the work tree root, or NULL,
+
+But of course we know that's a white lie, it's not the $PWD/getcwd(). So
+you're only trying to save the user in cases of e.g. (in t/helper):
+
+    git rm ../helper
+
+If they actually run it while in t/helper, but would like to explicitly
+omit the case of (at the top-level):
+
+    git -C t/helper rm ../helper
+
+That's fair enough I guess. I'd just assumed those cases would be
+treated the same way.
+
+Even in that case, I can't think of a case where this "original_cwd"
+wouldn't be made redundant by some boolean flag to accompany "prefix" to
+indicate that we've chdir'd out of the prefix (or not).
