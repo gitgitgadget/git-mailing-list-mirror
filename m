@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29D6BC433F5
-	for <git@archiver.kernel.org>; Sun, 28 Nov 2021 08:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C65CC433F5
+	for <git@archiver.kernel.org>; Sun, 28 Nov 2021 08:00:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356121AbhK1ID7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Nov 2021 03:03:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37404 "EHLO
+        id S1356386AbhK1IEI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Nov 2021 03:04:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356160AbhK1IB7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Nov 2021 03:01:59 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56E00C061746
-        for <git@vger.kernel.org>; Sat, 27 Nov 2021 23:58:43 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id s13so29282859wrb.3
-        for <git@vger.kernel.org>; Sat, 27 Nov 2021 23:58:43 -0800 (PST)
+        with ESMTP id S1356166AbhK1ICH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Nov 2021 03:02:07 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9F33C061748
+        for <git@vger.kernel.org>; Sat, 27 Nov 2021 23:58:51 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id c4so29206658wrd.9
+        for <git@vger.kernel.org>; Sat, 27 Nov 2021 23:58:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OdtLRwHCQikPA5pU9bHeW5G3cAhq/A9PizlP8Wlch9I=;
-        b=LTq+HKll7G1J4n7xxlgV76n4uKnSJop9nNb3WLaYCLPngy3VP3VV1lIOJB+gF8GgWo
-         5jT5JGt7FTpH6ajji7fTZspLqHytKH2oRO+dRI9qZktesgxvYkxIv1hWTr0nSI1gXJ67
-         6MraJXAFBzgIIF+2Jj9dwBrULegoj/j+ed1As78+6aAp0YugIXqV8Y4+7YU+JGOwx7LF
-         xHxV90K7rhmXvdJq6jF2VTcpiAUxYN+1OcxMnuus/FD9A3JBhlNE67rUUc1/HbiDRsh9
-         Dbc4Lmg3+LsiROiuvKO3hM/3kWk7/DcLxctgbykUlVoUoug2rCrR6uJqwBwcAtm9C6rh
-         N7Ow==
+        bh=95ueL+o+J4xP799GdklJ58l1cZqmUQRh72GVTLQ9x+g=;
+        b=J8mJZIdrx6QdLn37Nzyx+zzmh3QAHBuKe3N4dt5jIEpNlVhM6H/fLD0KspA5KYa9GJ
+         ieTPWuY9cBBpyjfv0Rp9jrTiAgfQ/x5NaM0zu54X7dYuhB6sMEPFcReCrROnhC32jLUB
+         2wIhFWiAFbz7jco5hi0RJxG90QG3gFNEjM285wNOtGzFmeQA9bwNWU9ssTCrFzYIue04
+         PWSuirCJpL3zSjNt7YOfLI8Oiy1DMh+oKurR4g08YSwT9ntCJMILA/mDglIyokGNXbiY
+         GjBeDuDJUgtUr6gdmSi3q7k4/VWFvx6tLpAL5rzrYJrSC4D/Ll+Fl632aBQlAV8L6Qya
+         +1JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OdtLRwHCQikPA5pU9bHeW5G3cAhq/A9PizlP8Wlch9I=;
-        b=U+hyZwCJvFIEAIzSHjXO/j2Dz4g9c1Oje5Q+y15Bm1E4sEflv//bGNmeS5ZvxFriCu
-         q1B0m6Ll2SVs0n+lSDMvuRgrEO+e6hWW0iswgsyqhG7MgdoLOzIpeEz4YWIfJBQk+Wye
-         8ktlWcOsMfkVseNkoQE8sZ8rPOTHYCX9DwF/nPtC7SZAT+0uAHajCA4TPpXLPTbkf+kM
-         Qa0Tkury7A8hkVlQcJy7M1vPGc+Z87v/vxXWU5VzMS+HiCOHp4L3tBNE+PEC47RmvSc/
-         st2xuCWBePsg1ef1mjcH4/HQmncLJj1d40JpEANd2zTdWgu2dl/1OICRyU46rJnu+tDd
-         Fm9Q==
-X-Gm-Message-State: AOAM533cOft8L3Khx+yDn7rvqTuQu6nFVdS8JDa4i1bZg/0Da1LUk5wq
-        +YyUFr6rELVhUylp90krYvON8U2vKZ8=
-X-Google-Smtp-Source: ABdhPJyCShZBqJ3pYUMgEyfzUvKU7C6vTkGuAOHQpzuJVX9S+JCJ8wjGhnH1jBfB/bFD+HyzMHyWWQ==
-X-Received: by 2002:a05:6000:1010:: with SMTP id a16mr25568221wrx.155.1638086321948;
-        Sat, 27 Nov 2021 23:58:41 -0800 (PST)
+        bh=95ueL+o+J4xP799GdklJ58l1cZqmUQRh72GVTLQ9x+g=;
+        b=Hl+Ua48zug2mOyzL/MJi1MDBHAvPRe0PCgbD5vBUBA+H5/jv1c4VW/g0KwEmojQyJ4
+         Bco+gkdZZNk3kGLk+5ZFQZXaEUUov7pvHfrRN8TA6p2CsrucEv9JIXJFlmSHboaPAe7N
+         xb2NBtiBQQ0Dg+Uy6XpcasXORx7LpLip+rALz8mCBP4+MftHfgUh0fQlegmaXdqFg/I5
+         TAb7pRmmPKkJhglW09arC6gdcpT1kaT4+pbbR7+vzb/83t2M/VtLgWI0MFK8/Swgu+J7
+         2lq7N+56S38Ak9fW9BXySZOSPXOKJm4XmIDPzDK4EuCFO8HDqVG61FGjoGDwYdhevi/p
+         d7xw==
+X-Gm-Message-State: AOAM533NP5bt5+U4BMY6gfed1vyyvOihpPrLlLJDd5wFcyfoRs8t6EwK
+        i1Ku69X1WmjLvF3VSAIf9X/eEEaRGCA=
+X-Google-Smtp-Source: ABdhPJzUOYRol7hyOZdJwozfYixTFXbSnCQAWLbwd6i45kp5EZrBkLTt0MiT3m6uMKtCsBw9Quuwug==
+X-Received: by 2002:adf:c5d1:: with SMTP id v17mr25292466wrg.571.1638086330412;
+        Sat, 27 Nov 2021 23:58:50 -0800 (PST)
 Received: from lesale.home (194-166-82-161.adsl.highway.telekom.at. [194.166.82.161])
-        by smtp.gmail.com with ESMTPSA id d15sm14271725wri.50.2021.11.27.23.58.41
+        by smtp.gmail.com with ESMTPSA id d15sm14271725wri.50.2021.11.27.23.58.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Nov 2021 23:58:41 -0800 (PST)
+        Sat, 27 Nov 2021 23:58:49 -0800 (PST)
 From:   Johannes Altmanninger <aclopte@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Altmanninger <aclopte@gmail.com>
-Subject: [PATCH tig 1/2] argv_format(): extract bool params into bitfield
-Date:   Sun, 28 Nov 2021 08:58:17 +0100
-Message-Id: <20211128075818.981790-2-aclopte@gmail.com>
+Subject: [PATCH tig 2/2] Allow to toggle revision filter
+Date:   Sun, 28 Nov 2021 08:58:18 +0100
+Message-Id: <20211128075818.981790-3-aclopte@gmail.com>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211128075818.981790-1-aclopte@gmail.com>
 References: <20211128075818.981790-1-aclopte@gmail.com>
@@ -62,119 +62,172 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-argv_format() takes two boolean parameters, and the next patch wants
-to add another one.
+"tig -- <pathspec>" shows only commits that touch files matching
+<pathspec>.  The command ":toggle file-filter" (bound to %) can be
+used to toggle this filtering dynamically.
 
-Add the same bitfield to struct format_context, instead of just the
-file-filter bit.  This is not strictly needed -- we don't read the
-extra bits -- but this forces us to consistently access it with "&
-argv_flag_file_filter", also in callees of argv_format().
+"tig <revisions range>" shows only commits in the given range.
+This patch adds ":toggle rev-filter" (bound to ^) to quickly toggle
+this filter.
+
+There is already ":toggle rev-args" which is meant to disable rev
+filtering but that does not work because it fails to redraw the
+view. Also it cannot re-enable filtering.
+Also ":set rev-args = HEAD" works but doesn't redraw the view either.
+We should fix that (should be easy but I didn't check yet), and make
+":toggle rev-args" reversible, then both the rev-filter and file-filter
+toggles will be obsolete.
+
+This feature is particularly useful with a new feature in Tig 2.5.2:
+when pressing m in the blame view, Tig will show the blamed commit
+centered in the main view, making it easy to explore adjacent
+commits. Note that if there are many commits between the blamed commit
+and HEAD, you'll need to wait a bit after pressing m.
 ---
- include/tig/argv.h |  7 ++++++-
- src/argv.c         | 14 +++++++-------
- src/prompt.c       |  6 +++---
- src/reflog.c       |  2 +-
- src/refs.c         |  2 +-
- src/stash.c        |  2 +-
- src/status.c       |  2 +-
- src/view.c         |  8 ++++++--
- 8 files changed, 26 insertions(+), 17 deletions(-)
+ doc/manual.adoc                         |  1 +
+ include/tig/argv.h                      |  1 +
+ include/tig/options.h                   |  1 +
+ include/tig/view.h                      | 15 ++++++++-------
+ src/argv.c                              |  4 ++--
+ src/main.c                              |  2 +-
+ src/options.c                           |  2 ++
+ src/prompt.c                            |  6 +++---
+ src/tig.c                               |  1 +
+ src/view.c                              |  2 ++
+ test/help/all-keybindings-test          |  2 +-
+ test/help/all-keybindings-test.expected |  3 ++-
+ test/help/default-test                  |  4 ++--
+ test/help/user-command-test             |  2 +-
+ tigrc                                   |  3 ++-
+ 15 files changed, 30 insertions(+), 19 deletions(-)
 
+diff --git a/doc/manual.adoc b/doc/manual.adoc
+index 8f456d26..81f06535 100644
+--- a/doc/manual.adoc
++++ b/doc/manual.adoc
+@@ -470,6 +470,7 @@ Misc
+ |X	|Toggle commit ID display on/off
+ |%	|Toggle file filtering in order to see the full diff instead of only
+ 	 the diff concerning the currently selected file.
++|^      |Toggle revision filtering in the main view.
+ |$	|Toggle highlighting of commit title overflow.
+ |H	|Go to the HEAD commit.
+ |:	|Open prompt. This allows you to specify what command to run and also to
 diff --git a/include/tig/argv.h b/include/tig/argv.h
-index cc8a5691..395ede94 100644
+index 395ede94..96bb2bd5 100644
 --- a/include/tig/argv.h
 +++ b/include/tig/argv.h
-@@ -69,7 +69,12 @@ struct argv_env {
- 
- extern struct argv_env argv_env;
- 
--bool argv_format(struct argv_env *argv_env, const char ***dst_argv, const char *src_argv[], bool first, bool file_filter);
-+enum argv_flag {
-+	argv_flag_first = 1 << 0,
-+	argv_flag_file_filter = 1 << 1,
-+};
-+
-+bool argv_format(struct argv_env *argv_env, const char ***dst_argv, const char *src_argv[], int flags);
- char *argv_format_arg(struct argv_env *argv_env, const char *src_arg);
- 
- struct rev_flags {
-diff --git a/src/argv.c b/src/argv.c
-index 5ba7fc17..40e9256e 100644
---- a/src/argv.c
-+++ b/src/argv.c
-@@ -277,7 +277,7 @@ struct format_context {
- 	size_t vars_size;
- 	char buf[SIZEOF_MED_STR];
- 	size_t bufpos;
--	bool file_filter;
-+	int argv_flags;
+@@ -72,6 +72,7 @@ extern struct argv_env argv_env;
+ enum argv_flag {
+ 	argv_flag_first = 1 << 0,
+ 	argv_flag_file_filter = 1 << 1,
++	argv_flag_rev_filter = 1 << 2,
  };
  
- #define ARGV_ENV_INIT(type, name, ifempty, initval)	initval,
-@@ -318,7 +318,7 @@ format_expand_arg(struct format_context *format, const char *name, const char *e
- 		if (string_enum_compare(name, vars[i].name, vars[i].namelen))
- 			continue;
+ bool argv_format(struct argv_env *argv_env, const char ***dst_argv, const char *src_argv[], int flags);
+diff --git a/include/tig/options.h b/include/tig/options.h
+index 9fc1eecc..1550dbea 100644
+--- a/include/tig/options.h
++++ b/include/tig/options.h
+@@ -69,6 +69,7 @@ typedef struct view_column *view_settings;
+ 	_(refresh_mode,			enum refresh_mode,	VIEW_NO_FLAGS) \
+ 	_(refs_view,			view_settings,		VIEW_NO_FLAGS) \
+ 	_(rev_args,			const char **,		VIEW_NO_FLAGS) \
++	_(rev_filter,			bool,			VIEW_LOG_LIKE) \
+ 	_(send_child_enter,		bool,			VIEW_NO_FLAGS) \
+ 	_(show_changes,			bool,			VIEW_NO_FLAGS) \
+ 	_(show_notes,			bool,			VIEW_NO_FLAGS) \
+diff --git a/include/tig/view.h b/include/tig/view.h
+index a0defaf4..83fc6535 100644
+--- a/include/tig/view.h
++++ b/include/tig/view.h
+@@ -65,13 +65,14 @@ enum view_flag {
+ 	VIEW_BLAME_LIKE		= 1 << 8,
+ 	VIEW_SEND_CHILD_ENTER	= 1 << 9,
+ 	VIEW_FILE_FILTER	= 1 << 10,
+-	VIEW_LOG_LIKE		= 1 << 11,
+-	VIEW_STATUS_LIKE	= 1 << 12,
+-	VIEW_REFRESH		= 1 << 13,
+-	VIEW_GREP_LIKE		= 1 << 14,
+-	VIEW_SORTABLE		= 1 << 15,
+-	VIEW_FLEX_WIDTH		= 1 << 16,
+-	VIEW_RESET_DISPLAY	= 1 << 17,
++	VIEW_REV_FILTER		= 1 << 11,
++	VIEW_LOG_LIKE		= 1 << 12,
++	VIEW_STATUS_LIKE	= 1 << 13,
++	VIEW_REFRESH		= 1 << 14,
++	VIEW_GREP_LIKE		= 1 << 15,
++	VIEW_SORTABLE		= 1 << 16,
++	VIEW_FLEX_WIDTH		= 1 << 17,
++	VIEW_RESET_DISPLAY	= 1 << 18,
+ };
  
--		if (vars[i].value_ref == &argv_env.file && !format->file_filter)
-+		if (vars[i].value_ref == &argv_env.file && !(format->argv_flags & argv_flag_file_filter))
- 			return true;
- 
- 		return vars[i].formatter(format, &vars[i]);
-@@ -420,7 +420,7 @@ repo_rev_formatter(struct format_context *format, struct format_var *var)
- }
- 
- bool
--argv_format(struct argv_env *argv_env, const char ***dst_argv, const char *src_argv[], bool first, bool file_filter)
-+argv_format(struct argv_env *argv_env, const char ***dst_argv, const char *src_argv[], int flags)
- {
- 	struct format_var vars[] = {
- #define FORMAT_VAR(type, name, ifempty, initval) \
-@@ -430,7 +430,7 @@ argv_format(struct argv_env *argv_env, const char ***dst_argv, const char *src_a
- 	{ "%(repo:" #name ")", STRING_SIZE("%(repo:" #name ")"), type ## _formatter, &repo.name, "" },
- 		REPO_INFO(FORMAT_REPO_VAR)
- 	};
--	struct format_context format = { vars, ARRAY_SIZE(vars), "", 0, file_filter };
-+	struct format_context format = { vars, ARRAY_SIZE(vars), "", 0, flags };
- 	int argc;
- 
- 	argv_free(*dst_argv);
-@@ -439,7 +439,7 @@ argv_format(struct argv_env *argv_env, const char ***dst_argv, const char *src_a
- 		const char *arg = src_argv[argc];
- 
- 		if (!strcmp(arg, "%(fileargs)")) {
--			if (file_filter && !argv_append_array(dst_argv, opt_file_args))
-+			if ((flags & argv_flag_file_filter) && !argv_append_array(dst_argv, opt_file_args))
- 				break;
- 
- 		} else if (!strcmp(arg, DIFF_ARGS)) {
-@@ -463,7 +463,7 @@ argv_format(struct argv_env *argv_env, const char ***dst_argv, const char *src_a
- 				break;
+ #define view_has_flags(view, flag)	((view)->ops->flags & (flag))
+diff --git a/src/argv.c b/src/argv.c
+index 40e9256e..154c3767 100644
+--- a/src/argv.c
++++ b/src/argv.c
+@@ -464,7 +464,7 @@ argv_format(struct argv_env *argv_env, const char ***dst_argv, const char *src_a
  
  		} else if (!strcmp(arg, "%(revargs)") ||
--			   (first && !strcmp(arg, "%(commit)"))) {
-+			   ((flags & argv_flag_first) && !strcmp(arg, "%(commit)"))) {
- 			if (!argv_append_array(dst_argv, opt_rev_args))
+ 			   ((flags & argv_flag_first) && !strcmp(arg, "%(commit)"))) {
+-			if (!argv_append_array(dst_argv, opt_rev_args))
++			if ((flags & argv_flag_rev_filter) && !argv_append_array(dst_argv, opt_rev_args))
  				break;
  
+ 		} else if (!format_append_arg(&format, dst_argv, arg)) {
 @@ -606,7 +606,7 @@ argv_format_arg(struct argv_env *argv_env, const char *src_arg)
  	const char **dst_argv = NULL;
  	char *dst_arg = NULL;
  
--	if (argv_format(argv_env, &dst_argv, src_argv, false, true))
-+	if (argv_format(argv_env, &dst_argv, src_argv, argv_flag_file_filter))
+-	if (argv_format(argv_env, &dst_argv, src_argv, argv_flag_file_filter))
++	if (argv_format(argv_env, &dst_argv, src_argv, argv_flag_file_filter | argv_flag_rev_filter))
  		dst_arg = (char *) dst_argv[0];
  
  	free(dst_argv);
+diff --git a/src/main.c b/src/main.c
+index 54ca950c..d6f656be 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -629,7 +629,7 @@ main_select(struct view *view, struct line *line)
+ static struct view_ops main_ops = {
+ 	"commit",
+ 	argv_env.head,
+-	VIEW_SEND_CHILD_ENTER | VIEW_FILE_FILTER | VIEW_LOG_LIKE | VIEW_REFRESH,
++	VIEW_SEND_CHILD_ENTER | VIEW_FILE_FILTER | VIEW_REV_FILTER | VIEW_LOG_LIKE | VIEW_REFRESH,
+ 	sizeof(struct main_state),
+ 	main_open,
+ 	main_read,
+diff --git a/src/options.c b/src/options.c
+index f5ee2bc2..4977da80 100644
+--- a/src/options.c
++++ b/src/options.c
+@@ -873,6 +873,7 @@ option_bind_command(int argc, const char *argv[])
+ 			{ "toggle-date",		"date" },
+ 			{ "toggle-files",		"file-filter" },
+ 			{ "toggle-file-filter",		"file-filter" },
++			{ "toggle-rev-filter",		"rev-filter" },
+ 			{ "toggle-file-size",		"file-size" },
+ 			{ "toggle-filename",		"filename" },
+ 			{ "toggle-graphic",		"show-graphic" },
+@@ -1058,6 +1059,7 @@ load_options(void)
+ 	char buf[SIZEOF_STR];
+ 
+ 	opt_file_filter = true;
++	opt_rev_filter = true;
+ 	if (!find_option_info_by_value(&opt_diff_context)->seen)
+ 		opt_diff_context = -3;
+ 
 diff --git a/src/prompt.c b/src/prompt.c
-index bc037a95..961b61d3 100644
+index 961b61d3..b0ed7a45 100644
 --- a/src/prompt.c
 +++ b/src/prompt.c
 @@ -939,7 +939,7 @@ run_prompt_command(struct view *view, const char *argv[])
  
  		/* Trim the leading '!'. */
  		argv[0] = cmd + 1;
--		copied = argv_format(view->env, &next->argv, argv, false, true);
-+		copied = argv_format(view->env, &next->argv, argv, argv_flag_file_filter);
+-		copied = argv_format(view->env, &next->argv, argv, argv_flag_file_filter);
++		copied = argv_format(view->env, &next->argv, argv, argv_flag_file_filter | argv_flag_rev_filter);
  		argv[0] = cmd;
  
  		if (!copied) {
@@ -182,8 +235,8 @@ index bc037a95..961b61d3 100644
  
  		if (argv[1]
  		    && strlen(argv[1]) > 0
--		    && (!argv_format(view->env, &fmt_argv, &argv[1], false, true)
-+		    && (!argv_format(view->env, &fmt_argv, &argv[1], argv_flag_file_filter)
+-		    && (!argv_format(view->env, &fmt_argv, &argv[1], argv_flag_file_filter)
++		    && (!argv_format(view->env, &fmt_argv, &argv[1], argv_flag_file_filter | argv_flag_rev_filter)
  			|| !argv_to_string(fmt_argv, text, sizeof(text), " ")
  			)) {
  			report("Failed to format echo string");
@@ -191,84 +244,114 @@ index bc037a95..961b61d3 100644
  
  	if (!argv_to_string(req->argv, cmd, sizeof(cmd), " ")
  	    || !argv_from_string_no_quotes(req_argv, &req_argc, cmd)
--	    || !argv_format(view->env, &argv, req_argv, false, true)
-+	    || !argv_format(view->env, &argv, req_argv, argv_flag_file_filter)
+-	    || !argv_format(view->env, &argv, req_argv, argv_flag_file_filter)
++	    || !argv_format(view->env, &argv, req_argv, argv_flag_file_filter | argv_flag_rev_filter)
  	    || !argv) {
  		report("Failed to format arguments");
  		return REQ_NONE;
-diff --git a/src/reflog.c b/src/reflog.c
-index 67a10694..0f5dd0eb 100644
---- a/src/reflog.c
-+++ b/src/reflog.c
-@@ -48,7 +48,7 @@ reflog_request(struct view *view, enum request request, struct line *line)
- 		};
- 		enum open_flags flags = view_is_displayed(view) ? OPEN_SPLIT : OPEN_DEFAULT;
- 
--		if (!argv_format(main_view.env, &main_view.argv, main_argv, false, false))
-+		if (!argv_format(main_view.env, &main_view.argv, main_argv, 0))
- 			report("Failed to format argument");
- 		else
- 			open_main_view(view, flags | OPEN_PREPARED);
-diff --git a/src/refs.c b/src/refs.c
-index 86ff4032..49b12726 100644
---- a/src/refs.c
-+++ b/src/refs.c
-@@ -81,7 +81,7 @@ refs_request(struct view *view, enum request request, struct line *line)
- 		};
- 		enum open_flags flags = view_is_displayed(view) ? OPEN_SPLIT : OPEN_DEFAULT;
- 
--		if (!argv_format(main_view.env, &main_view.argv, all_references_argv, false, false))
-+		if (!argv_format(main_view.env, &main_view.argv, all_references_argv, 0))
- 			report("Failed to format argument");
- 		else
- 			open_main_view(view, flags | OPEN_PREPARED);
-diff --git a/src/stash.c b/src/stash.c
-index c32bcab7..255c8052 100644
---- a/src/stash.c
-+++ b/src/stash.c
-@@ -87,7 +87,7 @@ stash_request(struct view *view, enum request request, struct line *line)
- 					"--no-color", "%(stash)", NULL
- 			};
- 
--			if (!argv_format(diff_view.env, &diff_view.argv, diff_argv, false, false))
-+			if (!argv_format(diff_view.env, &diff_view.argv, diff_argv, 0))
- 				report("Failed to format argument");
- 			else
- 				open_diff_view(view, flags | OPEN_PREPARED);
-diff --git a/src/status.c b/src/status.c
-index 6e3953b5..c3f1e262 100644
---- a/src/status.c
-+++ b/src/status.c
-@@ -91,7 +91,7 @@ status_run(struct view *view, const char *argv[], char status, enum line_type ty
- 	struct buffer buf;
- 	struct io io;
- 	const char **status_argv = NULL;
--	bool ok = argv_format(view->env, &status_argv, argv, false, false) &&
-+	bool ok = argv_format(view->env, &status_argv, argv, 0) &&
- 		  io_run(&io, IO_RD, repo.exec_dir, NULL, status_argv);
- 
- 	argv_free(status_argv);
+diff --git a/src/tig.c b/src/tig.c
+index 1c332f52..4546a7cf 100644
+--- a/src/tig.c
++++ b/src/tig.c
+@@ -104,6 +104,7 @@ view_request(struct view *view, enum request request)
+ 	_('C', "local change display",		"show-changes"), \
+ 	_('X', "commit ID display",		"id"), \
+ 	_('%', "file filtering",		"file-filter"), \
++	_('^', "revision filtering",		"rev-filter"), \
+ 	_('$', "commit title overflow display",	"commit-title-overflow"), \
+ 	_('d', "untracked directory info",	"status-show-untracked-dirs"), \
+ 	_('|', "view split",			"vertical-split"), \
 diff --git a/src/view.c b/src/view.c
-index 52c808d1..4da10581 100644
+index 4da10581..f4f3dea9 100644
 --- a/src/view.c
 +++ b/src/view.c
-@@ -575,10 +575,14 @@ begin_update(struct view *view, const char *dir, const char **argv, enum open_fl
- 	view->unrefreshable = open_in_pager_mode(flags);
- 
- 	if (!refresh && argv) {
--		bool file_filter = !view_has_flags(view, VIEW_FILE_FILTER) || opt_file_filter;
-+		int flags = 0;
-+		if (!view->prev)
-+			flags |= argv_flag_first;
-+		if (!view_has_flags(view, VIEW_FILE_FILTER) || opt_file_filter)
-+			flags |= argv_flag_file_filter;
+@@ -580,6 +580,8 @@ begin_update(struct view *view, const char *dir, const char **argv, enum open_fl
+ 			flags |= argv_flag_first;
+ 		if (!view_has_flags(view, VIEW_FILE_FILTER) || opt_file_filter)
+ 			flags |= argv_flag_file_filter;
++		if (!view_has_flags(view, VIEW_REV_FILTER) || opt_rev_filter)
++			flags |= argv_flag_rev_filter;
  
  		view->dir = dir;
--		if (!argv_format(view->env, &view->argv, argv, !view->prev, file_filter))
-+		if (!argv_format(view->env, &view->argv, argv, flags))
- 			return error("Failed to format %s arguments", view->name);
- 	}
+ 		if (!argv_format(view->env, &view->argv, argv, flags))
+diff --git a/test/help/all-keybindings-test b/test/help/all-keybindings-test
+index f47b6dcd..1139e4bd 100755
+--- a/test/help/all-keybindings-test
++++ b/test/help/all-keybindings-test
+@@ -3,7 +3,7 @@
+ . libtest.sh
  
+ export COLUMNS=90
+-export LINES=129
++export LINES=130
+ 
+ steps '
+ 	:view-help
+diff --git a/test/help/all-keybindings-test.expected b/test/help/all-keybindings-test.expected
+index f69e1703..ae66028a 100755
+--- a/test/help/all-keybindings-test.expected
++++ b/test/help/all-keybindings-test.expected
+@@ -68,6 +68,7 @@ Option toggling:
+                            X :toggle id
+                            $ :toggle commit-title-overflow
+                            % :toggle file-filter
++                           ^ :toggle rev-filter
+ [-] search bindings
+ View manipulation
+                     <Ctrl-C> view-close          Close the current view
+@@ -125,4 +126,4 @@ External commands:
+ [-] pager bindings
+ Internal commands:
+                            @ :/^@@
+-[help] - line 1 of 127                                                                100%
++[help] - line 1 of 128                                                                 100%
+diff --git a/test/help/default-test b/test/help/default-test
+index f60bcd13..8adb397f 100755
+--- a/test/help/default-test
++++ b/test/help/default-test
+@@ -51,7 +51,7 @@ View manipulation
+                      R, <F5> refresh             Reload and refresh view
+                            O maximize            Maximize the current view
+                            q view-close          Close the current view
+-[help] - line 1 of 127                                                       22%
++[help] - line 1 of 128                                                       21%
+ EOF
+ 
+ assert_equals 'help-search.screen' <<EOF
+@@ -83,7 +83,7 @@ View manipulation
+                      R, <F5> refresh             Reload and refresh view
+                            O maximize            Maximize the current view
+                            q view-close          Close the current view
+-[help] - line 19 of 127                                                      22%
++[help] - line 19 of 128                                                      21%
+ EOF
+ 
+ assert_equals 'help-collapsed.screen' <<EOF
+diff --git a/test/help/user-command-test b/test/help/user-command-test
+index c0218bf5..9de58285 100755
+--- a/test/help/user-command-test
++++ b/test/help/user-command-test
+@@ -55,5 +55,5 @@ Searching
+ [-] main bindings
+ Cursor navigation
+                               G move-last-line      Move cursor to last line
+-[help] - line 80 of 154                                                                          69%
++[help] - line 81 of 155                                                                          69%
+ EOF
+diff --git a/tigrc b/tigrc
+index e2f1f84d..7e671fba 100644
+--- a/tigrc
++++ b/tigrc
+@@ -309,7 +309,8 @@ bind generic	$	:toggle commit-title-overflow
+ # bind generic	???	:toggle status-show-untracked-dirs
+ 						# Toggle display of file in untracked directories
+ # bind generic	???	:toggle vertical-split	# Toggle vertical split
+-bind generic	%	:toggle file-filter
++bind generic	%	:toggle file-filter	# Toggle filtering by pathspecs in file-args
++bind generic	^	:toggle rev-filter	# Toggle filtering by revisions in rev-args
+ 
+ # Misc
+ bind generic	e	edit			# Open in editor
 -- 
 2.33.1
 
