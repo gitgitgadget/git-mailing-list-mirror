@@ -2,121 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01004C433EF
-	for <git@archiver.kernel.org>; Sun, 28 Nov 2021 09:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B51E2C433F5
+	for <git@archiver.kernel.org>; Sun, 28 Nov 2021 12:39:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231992AbhK1JUm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Nov 2021 04:20:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53888 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229570AbhK1JSk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Nov 2021 04:18:40 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F34E7C061746
-        for <git@vger.kernel.org>; Sun, 28 Nov 2021 01:15:24 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id d72-20020a1c1d4b000000b00331140f3dc8so10075133wmd.1
-        for <git@vger.kernel.org>; Sun, 28 Nov 2021 01:15:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=tupSa7sr5U7v9oLcJRuULTDmDZHd7I11EPgOLF2lQQE=;
-        b=MH5iblxbmYAxYqWhSEmfh2axsrSxIdXQEH4Kqb1rAe8V0P7ESWoXVhdV48sd2m+cQb
-         JXFACE0y3UohmKWyWr49u2a31MhqmgswY8iQUBkAskfI0X7WSHjeNVqGtW2wXeb0OIil
-         IEjnSUUxK2YrzAgKq3LBWOWmgS+LoVYB0iDV9ISnCC5tK8CusaBKwM6OTNAFqF3qYZRj
-         Oii5LXJ54LhHhcTbpVqKqkPM2kZqIe8WWxD4e2CAWiPEL0D1ExBsjBnxlC1YSuY6m2pp
-         IplIG5HQBMWS5aKcceLW5d2O/0fQfBQ01xr7279RGRzzrqUPsieLIg0LdkCH5KFe6Iyn
-         XzYg==
+        id S1357382AbhK1Mm7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Nov 2021 07:42:59 -0500
+Received: from mail-pj1-f54.google.com ([209.85.216.54]:37645 "EHLO
+        mail-pj1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1357389AbhK1Mk6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Nov 2021 07:40:58 -0500
+Received: by mail-pj1-f54.google.com with SMTP id cq22-20020a17090af99600b001a9550a17a5so13186630pjb.2
+        for <git@vger.kernel.org>; Sun, 28 Nov 2021 04:37:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=tupSa7sr5U7v9oLcJRuULTDmDZHd7I11EPgOLF2lQQE=;
-        b=vmHtUe/yaBAgQ/qOiup4lFRoLvrWG9/t6fxavIGks5DE3x0kSpfRiWbYXFOySKZK9Q
-         bhcr4V7PeJOzhtDI7ip/eZCC5BCOrZUUyCmML7TjhvNmj9k0lx9YkLwEC2MvLjb+fDsj
-         JXuDUXfdiN/l6JR6zs/AtZMm+PNwblIvn47DcdLJ+5pIhJfWJ+d779dbrwaWXtNZTYmo
-         BPX24mPEDejUrIJyLJuZgCdHZVruYTV+bb/SV6DdE8qGF4+ymXftLDaVwzM62HWJlCMx
-         Ub34wsPG+gneWlQqonrXEV5szSUeyRhnEryy0iLD6+Gz0rVtohM2sqB2h8ZKu8qiP4LG
-         W21A==
-X-Gm-Message-State: AOAM532FK3w5yrs+4HzWm7h0khqCyYo0z0gKWnbHf9brODMJnKuWdqqV
-        Snu064c8jec2nLxJ4DR9NogtyvrZoKw=
-X-Google-Smtp-Source: ABdhPJzt75CMtR2Rj6h7hmwlDKZU53mxUrUcyA4KVSKmR040MwkzqxT8qWw3Xd6WQmM9WbUy2czIxw==
-X-Received: by 2002:a7b:c157:: with SMTP id z23mr27907192wmi.113.1638090923514;
-        Sun, 28 Nov 2021 01:15:23 -0800 (PST)
-Received: from gmail.com (194-166-82-161.adsl.highway.telekom.at. [194.166.82.161])
-        by smtp.gmail.com with ESMTPSA id t16sm3573750wrn.49.2021.11.28.01.15.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Nov 2021 01:15:23 -0800 (PST)
-Date:   Sun, 28 Nov 2021 10:15:21 +0100
-From:   Johannes Altmanninger <aclopte@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
-Subject: git diff -I<regex> does not work with empty +/- lines
-Message-ID: <20211128091521.7ysocurtt4qlgcf6@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=c9DwHRSaOrncO0W9KNAcSmjMK2qXm99qTgd/jnMKEmY=;
+        b=aD51oDoOXbBOMhKZJlEGaGkboQWxawsvcDvjGaN7JdYrW38dZhUW0fXYjvkn6C1PGw
+         +VpnPzH0bNvMxLRvXPpFEOf4fQeGSH4Eq3PmCQs4b0q9WzP6Nw6WyTKgbuoEvRVJwn/Y
+         P26F6dgtzein4+h5bSZSP/PJZ0FToQIkSsKp6oHIPWc100XoRM/mp2vnPvVrLucIXn1O
+         3nZ1W1x8RBgLwM3VGxyLe5iOFxxyLZnfPSFSf74msk4n6E0VNcLgUB0D+hWk+MCTiSaV
+         mll3Ar2DAgYABch6uQq6SJH2fz4VcHwyS35d1GAPeJJCC7WhQUpi8noJzl2k9s90icAL
+         XBbg==
+X-Gm-Message-State: AOAM532WOPqkXDbYoV0JowzKVFc9S5u4gTZH6I4nFBgJyt7WY0QSlZeE
+        xTTzVPfRp2WAyxa18V1FqQNtH/eBY515Xhq+iyazvpEvNCs=
+X-Google-Smtp-Source: ABdhPJyJcppYj6fD8TRe9iLE4zEVAxU7+UrSLU3aJXBfHg00gu0VI8drl1t6ByTVD5+Ur0K3TcuhGcGE5wcXLd72kO0=
+X-Received: by 2002:a17:90b:4d08:: with SMTP id mw8mr31148142pjb.236.1638103062545;
+ Sun, 28 Nov 2021 04:37:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <CA+34VNLj6VB1kCkA=MfM7TZR+6HgqNi5-UaziAoCXacSVkch4A@mail.gmail.com>
+In-Reply-To: <CA+34VNLj6VB1kCkA=MfM7TZR+6HgqNi5-UaziAoCXacSVkch4A@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 28 Nov 2021 07:37:31 -0500
+Message-ID: <CAPig+cQ224Tz5iQ5Yt4fMadehLmrJWGzH7kwUSr+UT4hcQf14w@mail.gmail.com>
+Subject: Re: misleading message printed when worktree add fails
+To:     Baruch Burstein <bmburstein@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-diff -I<regex> suppresses hunks where all +/- lines match <regex>.
-it is useful to filter away boilerplate changes.
+Thanks for reporting. Inline comments below...
 
-Unfortunately, it doesn't help if a hunk has a blank line, because the one
-obvious way to filter out blank lines (^$) match *every* line, surprisingly.
-This is because for a line "01\n"
-we have a zero-width match here ^$ (offset 3).
+On Sun, Nov 28, 2021 at 1:53 AM Baruch Burstein <bmburstein@gmail.com> wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>
+> run `git worktree add <path> <branch>`, where <branch> is an already
+> checked-out branch
+>
+> What happened instead? (Actual behavior)
+>
+> worktree was not created, but a confusing message was printed:
+> "Preparing worktree (checking out '<branch>')"
+>
+> What's different between what you expected and what actually happened?
+>
+> The printed message seems to indicate that the command was a success,
+> when in fact
+> it was not
 
-IOW, while we succesfully ignore deleted blank lines
+When I perform these actions, I see a "fatal error" message which
+clearly indicates failure, not success:
 
-	printf '\n' | git diff --no-index - /dev/null -I'^$'
-	diff --git a/- b/-
-	deleted file mode 100644
+    % git worktree add ../foo bar
+    Preparing worktree (checking out 'bar')
+    fatal: 'bar' is already checked out at '.../wherever'
 
-we also ignore non-blank lines (very surprising)
+Is your installation not showing the "fatal error" message?
 
-	printf 'non-blank-line\n' | git diff --no-index - /dev/null -I'^$'
-	diff --git a/- b/-
-	deleted file mode 100644
+Or, are you saying that the "Preparing worktree" message is
+misleading? I read that message as telling me what the command is
+trying to do (i.e. "Preparing"), and the error happens as it makes the
+attempts, which seems logical to me, thus I don't see anything
+misleading in that.
 
-unless they don't end in a newline (special case)
-
-	printf 'line without ending newline' | git diff --no-index - /dev/null -I'^$'
-	diff --git a/- b/-
-	deleted file mode 100644
-	--- a/-
-	+++ /dev/null
-	@@ -1 +0,0 @@
-	-line without ending newline
-	\ No newline at end of file
-
-This patch fixes the second example. Is this the right direction?
-Do we want to honor core.eol, so we preserve the \r when we have Unix endings?
-
-In any case -I<regex> won't be able to discern between "line\n" and "line"
-but that's not important to me.
-
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index a4542c05b6..23325022b9 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -1016,10 +1016,17 @@ static void xdl_mark_ignorable_lines(xdchange_t *xscr, xdfenv_t *xe, long flags)
- static int record_matches_regex(xrecord_t *rec, xpparam_t const *xpp) {
- 	regmatch_t regmatch;
- 	int i;
-+	const char *end = rec->ptr + rec->size;
-+
-+	if (rec->size >= 2 && end[-2] == '\r' && end[-1] == '\n') {
-+		end -= 2;
-+	} else if (rec->size && end[-1] == '\n') {
-+		end -= 1;
-+	}
- 
- 	for (i = 0; i < xpp->ignore_regex_nr; i++)
--		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
--				 &regmatch, 0))
-+		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr,
-+				 end - rec->ptr, 1, &regmatch, 0))
- 			return 1;
- 
- 	return 0;
+Are you reading it differently, as if it is saying that it already
+performed that action (i.e. "Prepared")?
