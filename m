@@ -2,78 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 551A4C433F5
-	for <git@archiver.kernel.org>; Sun, 28 Nov 2021 23:22:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD8AFC433F5
+	for <git@archiver.kernel.org>; Sun, 28 Nov 2021 23:28:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241396AbhK1XZ5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Nov 2021 18:25:57 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55528 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359474AbhK1XX4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Nov 2021 18:23:56 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9577AE8173;
-        Sun, 28 Nov 2021 18:20:39 -0500 (EST)
+        id S1359474AbhK1Xb3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Nov 2021 18:31:29 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65332 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1359483AbhK1X33 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Nov 2021 18:29:29 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 51BB71062A9;
+        Sun, 28 Nov 2021 18:26:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=emh0zBzJVPRceJTj6bFd3Z695zAHxkqlsMOBjL
-        HTN00=; b=d6Mptin+tAm9YmfyBEuiDxSSE7mrm9L4Qmzf08gc5Ss7/2/Y6L1NFp
-        spZsWTdMKFbWw1dE0ckIE/6JN8iaaxZ6CGC/0qBDsK7JSiSJx3XOU0jmG7fadC2B
-        CfzjO2HuD+Y8H4zbC6Icd7GrO1EiP4Y0VE7sG6FgQBm/e3PdTGizM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8DFE5E8170;
-        Sun, 28 Nov 2021 18:20:39 -0500 (EST)
+        :content-type; s=sasl; bh=JIwft7SNgiqkFtt2KmT127RjXZluvMsA/NLAIe
+        PvDE4=; b=FdgQdx0RfxV+zUk/2Y3bxBvRgMb2xQFhEHGI4AagxXG1UJlBntQZDD
+        W7y/GEjpiBbK4eBH8LmXl2VhJ8I0QudW3h2wBp7QmxUxX57XD/gG8kUmUzKBx4Kt
+        y3U27UhQ5gZ6O5t51gsHLo/aLsNtimT09pOUHStZjQUKWSBfWtHXs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 482E41062A8;
+        Sun, 28 Nov 2021 18:26:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E9635E816F;
-        Sun, 28 Nov 2021 18:20:38 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B3D681062A7;
+        Sun, 28 Nov 2021 18:26:11 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Git SSH/GPG signing flags and config
-References: <20211128125704.4twinfd3wriwdntz@fs>
-Date:   Sun, 28 Nov 2021 15:20:37 -0800
-In-Reply-To: <20211128125704.4twinfd3wriwdntz@fs> (Fabian Stelzer's message of
-        "Sun, 28 Nov 2021 13:57:04 +0100")
-Message-ID: <xmqqzgpn50l6.fsf@gitster.g>
+To:     Johannes Altmanninger <aclopte@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
+Subject: Re: git diff -I<regex> does not work with empty +/- lines
+References: <20211128091521.7ysocurtt4qlgcf6@gmail.com>
+Date:   Sun, 28 Nov 2021 15:26:10 -0800
+In-Reply-To: <20211128091521.7ysocurtt4qlgcf6@gmail.com> (Johannes
+        Altmanninger's message of "Sun, 28 Nov 2021 10:15:21 +0100")
+Message-ID: <xmqqtufv50bx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CC54D452-50A1-11EC-B33A-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 92AF4CCC-50A2-11EC-86B3-62A2C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fabian Stelzer <fs@gigacodes.de> writes:
+Johannes Altmanninger <aclopte@gmail.com> writes:
 
-> Hi everyone,
-> the `signing git objects with ssh` series was released with 2.34 and
-> i'd like to thank everyone for your support and the good reviews!
-> I think it would be beneficial now to adjust some of the wording in
-> flags and the config. Currently everything is configured via gpg.* and
-> all the `please sign this` flags are named --(no-?)gpg-sign.
-> I would be in favor of a more generic flag independent of the signing
-> mechanism. Adding something like `--ssh-sign` would suggest that you'd
-> be able to switch signing format with it which i think would not be
-> terribly useful. If you need to use multiple signing mechanism those
-> would usually be configured per repository and can easily be done with
-> an `includeif gitdir:` in your config.
-> Therefore i would suggest just adding a generic `--(no-?)sign` to all
-> the commands that support gpg-sign right now. The only problem i see
-> is a conflict with `--signoff` so i'm open to other naming ideas. The
-> same goes for the config. `sign.` as an alias to `gpg.` would work
-> well with the current settings.
-> Let me know what you think and i could prepare a first patch for one
-> command to see what the alias / config / docs change could look like.
+> diff -I<regex> suppresses hunks where all +/- lines match <regex>.
+> it is useful to filter away boilerplate changes.
+>
+> Unfortunately, it doesn't help if a hunk has a blank line, because the one
+> obvious way to filter out blank lines (^$) match *every* line, surprisingly.
+> This is because for a line "01\n"
+> we have a zero-width match here ^$ (offset 3).
+>
+> IOW, while we succesfully ignore deleted blank lines
+>
+> 	printf '\n' | git diff --no-index - /dev/null -I'^$'
+> 	diff --git a/- b/-
+> 	deleted file mode 100644
+>
+> we also ignore non-blank lines (very surprising)
+>
+> 	printf 'non-blank-line\n' | git diff --no-index - /dev/null -I'^$'
+> 	diff --git a/- b/-
+> 	deleted file mode 100644
+>
+> unless they don't end in a newline (special case)
+>
+> 	printf 'line without ending newline' | git diff --no-index - /dev/null -I'^$'
+> 	diff --git a/- b/-
+> 	deleted file mode 100644
+> 	--- a/-
+> 	+++ /dev/null
+> 	@@ -1 +0,0 @@
+> 	-line without ending newline
+> 	\ No newline at end of file
+>
+> This patch fixes the second example. Is this the right direction?
 
-I do share your worry about --sign to be confused with the sign-off
-procedure, and that was why the original used --gpg-sign.  We are
-extending "gpg" part because "gpg" is not the only cryptographic
-signing protocol we support, so perhaps --crypto-sign would still be
-in the orginal spirit of "This is different from the sign-off, but
-is a cryptographic signature, but it is a mouthful.
+I do not know where in the code the breakage in the first example
+comes from.  It sounds like a bug if a pattern is not matched
+honoring the anchor, whether the beginning-of-line "^" or the
+end-of-line "$" one.
 
+> Do we want to honor core.eol, so we preserve the \r when we have Unix endings?
+
+Absolutely.  I think the code paths that work on blob data (i.e. Git
+internal, before the smudge operation is applied to externalize it
+to a working tree file) should only consider LF as the end of line
+(and any existing code that doesn't is a bug).
+
+> In any case -I<regex> won't be able to discern between "line\n" and "line"
+> but that's not important to me.
+>
+> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+> index a4542c05b6..23325022b9 100644
+> --- a/xdiff/xdiffi.c
+> +++ b/xdiff/xdiffi.c
+> @@ -1016,10 +1016,17 @@ static void xdl_mark_ignorable_lines(xdchange_t *xscr, xdfenv_t *xe, long flags)
+>  static int record_matches_regex(xrecord_t *rec, xpparam_t const *xpp) {
+>  	regmatch_t regmatch;
+>  	int i;
+> +	const char *end = rec->ptr + rec->size;
+> +
+> +	if (rec->size >= 2 && end[-2] == '\r' && end[-1] == '\n') {
+> +		end -= 2;
+> +	} else if (rec->size && end[-1] == '\n') {
+> +		end -= 1;
+> +	}
+>  
+>  	for (i = 0; i < xpp->ignore_regex_nr; i++)
+> -		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
+> -				 &regmatch, 0))
+> +		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr,
+> +				 end - rec->ptr, 1, &regmatch, 0))
+>  			return 1;
+>  
+>  	return 0;
