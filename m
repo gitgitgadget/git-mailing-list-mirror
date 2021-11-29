@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CF82C43219
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 22:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01700C433F5
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 22:19:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232220AbhK2WW3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 17:22:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56588 "EHLO
+        id S230337AbhK2WWb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 17:22:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbhK2WUf (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231865AbhK2WUf (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 29 Nov 2021 17:20:35 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9474C08EACB
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 11:59:16 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id t9so22355059wrx.7
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 11:59:16 -0800 (PST)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EFEBC08EACD
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 11:59:18 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id j140-20020a1c2392000000b003399ae48f58so17762440wmj.5
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 11:59:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=crXcE+kVXP7rdNV/rbhjFkNiVm8INcY04p9pUzcsfUs=;
-        b=EBKYSDYFU7kFOJ0RaPWTKky/SMrlxLgPt2H3DI5ZfYgTg36M5JBtj6HHrZU+xjyL/P
-         27UMTSBMASy6SEm0FKi54071UcaUyy8HDLdqMuyZQxs/f0Iz53T/vg3Kz1kt6XcKpJfI
-         brM2W02P+8viSYcJuc2hxqkDXlOscMFj/TZGtopYY2QaXvpAgjnqT7H1dK/DjD6rwW5U
-         1PxTsfCokGs0NJh4mcseN9b4DwNgIKMYIppcJqXdFcuofPZ+CsnxGMV6RU21V2utFuoJ
-         LliiVdyx1vbiAnvA8bCobmhUnt2Pp/6r3t8PJsx170b1DosYtriUbQHB8Q8XBtkR97Za
-         mEnQ==
+        bh=94vz5/T2qwv/A1tDCdkUEbEMnynLu13SjBepaHKfWZ0=;
+        b=aHgmLiggK3nMlvYnVHMVpDPXswdAX0EZrdS65tU068Ve8JyT75s4OtZN7UvFSkCxBo
+         wzz48hU4X+ls/29aZhr8KHz+E6dxd1KYrAt2vcAlDVDhDpPdR8Ba91Fz9wud9/yTPOrb
+         2fOkwL+Ei0ix7iOCh0qSejdvyI9xSwR6OmzA3nT6tK2m7tSwYUFpMjLRmaNKOP4mnkdY
+         u4jsmJIBX3Xj4ykal+wJ6uJ3O4BjprrZQYJWaU4rwm3QOGfdngw2Xi8QoW+DmY8kgrPJ
+         ppLxCuCPmb5YQKsFKvSww4u0UHLIl/AepxHaC/+N3ih5fqAyr+bYGV3jc3GoiSpYI/Qt
+         5Acg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=crXcE+kVXP7rdNV/rbhjFkNiVm8INcY04p9pUzcsfUs=;
-        b=CXm6JKhrg6i74j47bqn8RsyCXlIaucJrtAtqnJKavqVFnfMexEkqelnf2q3pVI3BYS
-         Px+rdTbp805FNaYchZVKaVZahi9GPFEld2l9TxM4tJ4H1p+sSi1Me9FgJ4dUqdY1gjZa
-         xIuv2Y07ljn9RtrwMPc9JIMdvmUNgmz9Mxq20NqyNsGCIz8UI5cRdobiVabxdJhpEXEI
-         12ippaTCFPbnolqVxd+x4TiCs2WllDdtZSGEQQXJqww+tvAP8wKfre9dYFUDE20l8cs1
-         M1egt4+dYC0gm8jopTcVRY6if5nBHmHML6Xp+fHx0hfnAFjXmdgzqhWiVZSKPkUvnZv+
-         gB4w==
-X-Gm-Message-State: AOAM530Wo6q2Siy3asDLNaspfUYNRh8zKYEPAWPiM4nQTCTTC08Y0Cvd
-        eJSadWL3QL/eyx8wYzU7Z8ilUaiNPtTstA==
-X-Google-Smtp-Source: ABdhPJz5Zb4bTZMS8QQElyr89dvxg4Pt09Pt3aKlHuU1ZzOcH4800ZGguMd0v//eP6mLREKZ4AI2PA==
-X-Received: by 2002:a5d:47c7:: with SMTP id o7mr35231748wrc.204.1638215955117;
-        Mon, 29 Nov 2021 11:59:15 -0800 (PST)
+        bh=94vz5/T2qwv/A1tDCdkUEbEMnynLu13SjBepaHKfWZ0=;
+        b=Zsu9ccnG+nWsywCiV17lqCaMOvgQRb0OqgD6uVyVECjq5OfriruRzA4Z9rwTfo2WKH
+         +yDr+Ek9jHZquHBmc1PpDlgBJAZRItccVidhAc5GFdX3tpTol796QVU3vCaXuhTV7fhV
+         chy7V21DJRWVuQLc4Y1w7bXVWYonUtSlE1SJtYf2hJHgs+l8+TqAAhGxVsOeEwm3v68K
+         KfTfB0WRcg3psYNxPDbHtdfCfjeXCnW51ka4VUj4ANyzKo6h6+yuZOKLq1cFLYdiQxxI
+         VDUSeLqMIFDFzELy27z7gxie9Vb3OEkN5b3hPVUfC8FprzbuwddV4whE8gSPqwECMiKZ
+         /sJg==
+X-Gm-Message-State: AOAM533YyHsfbRFv0Wvev9jf3ol/s6GuiPFejKkmllJw71gYVUmB23P0
+        fufhh42m7+hsP5MNOFIlWaUhMvnQbpN/oA==
+X-Google-Smtp-Source: ABdhPJxtD/oTf5H6+5z+SkmB9EDqLsTxC2dVfvpAAGNMykOUtaoeeZAygPRymKYYlbfKwtH/2etgUg==
+X-Received: by 2002:a05:600c:3658:: with SMTP id y24mr130550wmq.161.1638215956716;
+        Mon, 29 Nov 2021 11:59:16 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id t8sm298200wmq.32.2021.11.29.11.59.14
+        by smtp.gmail.com with ESMTPSA id t8sm298200wmq.32.2021.11.29.11.59.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Nov 2021 11:59:14 -0800 (PST)
+        Mon, 29 Nov 2021 11:59:16 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Sergey Organov <sorganov@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 01/10] cat-file tests: test bad usage
-Date:   Mon, 29 Nov 2021 20:57:41 +0100
-Message-Id: <patch-v3-01.10-d77771e3ea0-20211129T195357Z-avarab@gmail.com>
+Subject: [PATCH v3 03/10] parse-options API: add a usage_msg_optf()
+Date:   Mon, 29 Nov 2021 20:57:43 +0100
+Message-Id: <patch-v3-03.10-69ef1ae48c3-20211129T195357Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.841.gf15fb7e6f34
 In-Reply-To: <cover-v3-00.10-00000000000-20211129T195357Z-avarab@gmail.com>
 References: <cover-v2-00.10-00000000000-20211112T221506Z-avarab@gmail.com> <cover-v3-00.10-00000000000-20211129T195357Z-avarab@gmail.com>
@@ -68,130 +68,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stress test the usage emitted when options are combined in ways that
-isn't supported. Let's test various option combinations, some of these
-we buggily allow right now.
+Add a usage_msg_optf() as a shorthand for the sort of
+usage_msg_opt(xstrfmt(...)) used in builtin/stash.c. I'll make more
+use of this function in builtin/cat-file.c shortly.
 
-E.g. this reveals a bug in 321459439e1 (cat-file: support
---textconv/--filters in batch mode, 2016-09-09) that we'll fix in a
-subsequent commit. We're supposed to be emitting a relevant message
-when --batch-all-objects is combined with --textconv or --filters, but
-we don't.
-
-The cases of needing to assign to opt=2 in the "opt" loop are because
-on those we do the right thing already, in subsequent commits the
-"test_expect_failure" cases will be fixed, and the for-loops unified.
+The disconnect between the "..." and "fmt" is a bit unusual, but it
+works just fine and this keeps it consistent with usage_msg_opt(),
+i.e. a caller of it can be moved to usage_msg_optf() and not have to
+have its arguments re-arranged.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1006-cat-file.sh | 94 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 94 insertions(+)
+ builtin/stash.c |  4 ++--
+ parse-options.c | 13 +++++++++++++
+ parse-options.h | 10 ++++++++++
+ 3 files changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 658628375c8..fc9191c1b94 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -4,6 +4,100 @@ test_description='git cat-file'
+diff --git a/builtin/stash.c b/builtin/stash.c
+index a0ccc8654df..e27ade3e821 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1749,8 +1749,8 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
+ 	else if (!strcmp(argv[0], "save"))
+ 		return !!save_stash(argc, argv, prefix);
+ 	else if (*argv[0] != '-')
+-		usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
+-			      git_stash_usage, options);
++		usage_msg_optf(_("unknown subcommand: %s"),
++			       git_stash_usage, options, argv[0]);
  
- . ./test-lib.sh
- 
-+test_cmdmode_usage () {
-+	test_expect_code 129 "$@" 2>err &&
-+	grep "^error:.*is incompatible with" err
-+}
-+
-+for switches in \
-+	'-e -p' \
-+	'-p -t' \
-+	'-t -s' \
-+	'-s --textconv' \
-+	'--textconv --filters'
-+do
-+	test_expect_success "usage: cmdmode $switches" '
-+		test_cmdmode_usage git cat-file $switches
-+	'
-+done
-+
-+test_incompatible_usage () {
-+	test_expect_code 129 "$@" 2>err &&
-+	grep -E "^error:.**needs" err
-+}
-+
-+for opt in --batch --batch-check
-+do
-+	test_expect_success "usage: incompatible options: --path with $opt" '
-+		test_incompatible_usage git cat-file --path=foo $opt
-+	'
-+done
-+
-+short_modes="-e -p -t -s"
-+cw_modes="--textconv --filters"
-+
-+for opt in $cw_modes
-+do
-+	test_expect_success "usage: $opt requires another option" '
-+		test_expect_code 129 git cat-file $opt
-+	'
-+
-+	test_expect_failure "usage: incompatible options: --batch-all-objects with $opt" '
-+		test_incompatible_usage git cat-file --batch-all-objects $opt
-+	'
-+done
-+
-+for opt in $short_modes
-+do
-+	test_expect_success "usage: $opt requires another option" '
-+		test_expect_code 129 git cat-file $opt
-+	'
-+
-+	for opt2 in --batch \
-+		--batch-check \
-+		--follow-symlinks
-+	do
-+		test_expect_failure "usage: incompatible options: $opt and $opt2" '
-+			test_incompatible_usage git cat-file $opt $opt2
-+		'
-+	done
-+
-+	opt2="--path=foo HEAD:some-path.txt"
-+	test_expect_success "usage: incompatible options: $opt and $opt2" '
-+		test_incompatible_usage git cat-file $opt $opt2
-+	'
-+done
-+
-+for opt in $short_modes $cw_modes
-+do
-+	args="one two three"
-+	test_expect_success "usage: too many arguments: $opt $args" '
-+		test_expect_code 129 git cat-file $opt $args
-+	'
-+
-+	for opt2 in --buffer --follow-symlinks
-+	do
-+		test_expect_success "usage: incompatible arguments: $opt with batch option $opt2" '
-+			test_expect_code 129 git cat-file $opt $opt2
-+		'
-+	done
-+done
-+
-+for opt in --buffer \
-+	--follow-symlinks \
-+	--batch-all-objects
-+do
-+	status=success
-+	if test $opt = "--buffer"
-+	then
-+		status=failure
-+	fi
-+	test_expect_$status "usage: bad option combination: $opt without batch mode" '
-+		test_expect_code 129 git cat-file $opt &&
-+		test_expect_code 129 git cat-file $opt commit HEAD
-+	'
-+done
-+
- echo_without_newline () {
-     printf '%s' "$*"
+ 	/* Assume 'stash push' */
+ 	strvec_push(&args, "push");
+diff --git a/parse-options.c b/parse-options.c
+index fc5b43ff0b2..5a319dda7d5 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -1078,3 +1078,16 @@ void NORETURN usage_msg_opt(const char *msg,
+ 	fprintf(stderr, "fatal: %s\n\n", msg);
+ 	usage_with_options(usagestr, options);
  }
++
++void NORETURN usage_msg_optf(const char * const fmt,
++			     const char * const *usagestr,
++			     const struct option *options, ...)
++{
++	struct strbuf msg = STRBUF_INIT;
++	va_list ap;
++	va_start(ap, options);
++	strbuf_vaddf(&msg, fmt, ap);
++	va_end(ap);
++
++	usage_msg_opt(msg.buf, usagestr, options);
++}
+diff --git a/parse-options.h b/parse-options.h
+index 275fb440818..4a9fa8a84d7 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -225,6 +225,16 @@ NORETURN void usage_msg_opt(const char *msg,
+ 			    const char * const *usagestr,
+ 			    const struct option *options);
+ 
++/**
++ * usage_msg_optf() is like usage_msg_opt() except that the first
++ * argument is a format string, and optional format arguments follow
++ * after the 3rd option.
++ */
++__attribute__((format (printf,1,4)))
++void NORETURN usage_msg_optf(const char *fmt,
++			     const char * const *usagestr,
++			     const struct option *options, ...);
++
+ /*
+  * Use these assertions for callbacks that expect to be called with NONEG and
+  * NOARG respectively, and do not otherwise handle the "unset" and "arg"
 -- 
 2.34.1.841.gf15fb7e6f34
 
