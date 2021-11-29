@@ -2,112 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B41E0C4332F
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 19:14:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A6D7C433EF
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 19:22:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348444AbhK2TRl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 14:17:41 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39470 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234209AbhK2TPl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 14:15:41 -0500
-Received: (qmail 5374 invoked by uid 109); 29 Nov 2021 19:12:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 29 Nov 2021 19:12:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5043 invoked by uid 111); 29 Nov 2021 19:12:23 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Nov 2021 14:12:23 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 29 Nov 2021 14:12:22 -0500
-From:   Jeff King <peff@peff.net>
-To:     Han Xin <chiyutianyi@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: Re: [PATCH v3 0/5] unpack large objects in stream
-Message-ID: <YaUmFpIeCvHdKixj@coredump.intra.peff.net>
-References: <20211009082058.41138-1-chiyutianyi@gmail.com>
- <20211122033220.32883-1-chiyutianyi@gmail.com>
- <CAO0brD3VPtUrpCE2kCJDram=bLMN=89++=bgf1TddriTYo-nsA@mail.gmail.com>
+        id S1351001AbhK2TZZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 14:25:25 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54610 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233311AbhK2TXZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 14:23:25 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2582915FC36;
+        Mon, 29 Nov 2021 14:20:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=DbsPQHl+YDBYNX6pXHX2GUpZSQtv2vSMMiIFAK
+        b3NrA=; b=qBP4F6JXIDl9jvnkkHOj8LmaslxWzKu6+jPclXSyyyQXjs2Wuy3M8X
+        ZiuegbEWggUVqzIHIYVBclpq56F0UCivkecoj5V/IXCcN8ELStiIYaH5eE0dvz+C
+        LtsSMiEht0R86wzMNX63FyQTnfV1LJrfuJvPyMo4KRgt8FZiYqerI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1D76B15FC35;
+        Mon, 29 Nov 2021 14:20:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2A14715FC33;
+        Mon, 29 Nov 2021 14:20:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v2 5/5] refs/debug: trim trailing LF from reflog message
+References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
+        <pull.1145.v2.git.git.1637855872.gitgitgadget@gmail.com>
+        <0288e743eb2e96e2effd6b0b90c6f885009bf337.1637855872.git.gitgitgadget@gmail.com>
+        <xmqqilwf72nf.fsf@gitster.g>
+        <CAFQ2z_N20ESyzkPLdGbS9q8HEHGB7_gmaX8FUBR=jGqXLGcL1Q@mail.gmail.com>
+Date:   Mon, 29 Nov 2021 11:19:59 -0800
+In-Reply-To: <CAFQ2z_N20ESyzkPLdGbS9q8HEHGB7_gmaX8FUBR=jGqXLGcL1Q@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Mon, 29 Nov 2021 19:29:18 +0100")
+Message-ID: <xmqq1r2y7ork.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAO0brD3VPtUrpCE2kCJDram=bLMN=89++=bgf1TddriTYo-nsA@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5927D1AC-5149-11EC-8B74-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 29, 2021 at 03:01:47PM +0800, Han Xin wrote:
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-> Han Xin <chiyutianyi@gmail.com> writes:
-> >
-> > From: Han Xin <hanxin.hx@alibaba-inc.com>
-> >
-> > Although we do not recommend users push large binary files to the git repositories,
-> > it's difficult to prevent them from doing so. Once, we found a problem with a surge
-> > in memory usage on the server. The source of the problem is that a user submitted
-> > a single object with a size of 15GB. Once someone initiates a git push, the git
-> > process will immediately allocate 15G of memory, resulting in an OOM risk.
-> >
-> > Through further analysis, we found that when we execute git unpack-objects, in
-> > unpack_non_delta_entry(), "void *buf = get_data(size);" will directly allocate
-> > memory equal to the size of the object. This is quite a scary thing, because the
-> > pre-receive hook has not been executed at this time, and we cannot avoid this by hooks.
-> >
-> > I got inspiration from the deflate process of zlib, maybe it would be a good idea
-> > to change unpack-objects to stream deflate.
-> >
-> 
-> Hi, Jeff.
-> 
-> I hope you can share with me how Github solves this problem.
-> 
-> As you said in your reply at：
-> https://lore.kernel.org/git/YVaw6agcPNclhws8@coredump.intra.peff.net/
-> "we don't have a match in unpack-objects, but we always run index-pack
-> on incoming packs".
-> 
-> In the original implementation of "index-pack", for objects larger than
-> big_file_threshold, "fixed_buf" with a size of 8192 will be used to
-> complete the calculation of "oid".
+> On Fri, Nov 26, 2021 at 9:16 AM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> The API promises to have only LF, not CRLF, at the end, so
+>> strbuf_trim_trailing_newline() is a bit overkill (and if payload
+>> happened to end with CR, we would lose it).
+>
+> it would be best if there was a way to escape characters (ie. "\n" =>
+> "\\n"). Do we have a function for that?
 
-We set transfer.unpackLimit to "1", so we never run unpack-objects at
-all. We always run index-pack, and every push, no matter how small,
-results in a pack.
+Mere escaping would not work in a backward compatible way, without a
+trick.  It was envisioned that we probably could encode *and* signal
+the fact that the message is encoded by appending a trailing SP at
+the end of the message.  See the log message of 523fa69c (reflog:
+cleanse messages in the refs.c layer, 2020-07-10) for details.
 
-We also set GIT_ALLOC_LIMIT to limit any single allocation. We also have
-custom code in index-pack to detect large objects (where our definition
-of "large" is 100MB by default):
+Having said that, that is about introducing a whole new reflog
+message format (whose use is signalled by the trailing SP), and I
+would prefer it to happen
 
-  - for large blobs, we do index it as normal, writing the oid out to a
-    file which is then processed by a pre-receive hook (since people
-    often push up large files accidentally, the hook generates a nice
-    error message, including finding the path at which the blob is
-    referenced)
+ (1) after we integrate with reftable, and
 
-  - for other large objects, we die immediately (with an error message).
-    100MB commit messages aren't a common user error, and it closes off
-    a whole set of possible integer-overflow parsing attacks (e.g.,
-    index-pack in strict-mode will run every tree through fsck_tree(),
-    so there's otherwise nothing stopping you from having a 4GB filename
-    in a tree).
+ (2) implemented as an option in the normalize_reflog_message()
+     function, so that no ref backends has to worry about it.
 
-> I tried the implementation in jk/no-more-unpack-objects, as you noted:
->   /* XXX This will expand too-large objects! */
->   if (!data)
->   data = new_data = get_data_from_pack(obj_entry);
-> If the conditions of --unpack are given, there will be risks here.
-> When I create an object larger than 1GB and execute index-pack, the
-> result is as follows:
->   $GIT_ALLOC_LIMIT=1024m git index-pack --unpack --stdin <large.pack
->   fatal: attempting to allocate 1228800001 over limit 1073741824
+outside this topic.
 
-Yeah, that issue was one of the reasons I never sent the "index-pack
---unpack" code to the list. We don't actually use those patches at
-GitHub. It was something I was working on for upstream but never
-finished.
+> I beg to differ - despite this being fewer lines of code, I think
+> pointer arithmetic is best avoided if possible.
 
--Peff
+I think repeated allocation and deallocation is best avoided, and
+that is why I recommended it.  I do not see anything to fear in
+poiter arithmetic, as long as it is done clearly (e.g. in a narrow
+scope) and correctly.
+
+If trace_printf() does not allow counted bytes "%.*s", the whole
+discussion is moot; I didn't go back to check.
