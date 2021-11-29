@@ -2,115 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4FAFC433EF
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 21:12:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF334C433F5
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 21:15:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229577AbhK2VPp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 16:15:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42438 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230463AbhK2VNo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 16:13:44 -0500
-Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com [IPv6:2607:f8b0:4864:20::92b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A549AC0E499F
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 10:24:42 -0800 (PST)
-Received: by mail-ua1-x92b.google.com with SMTP id a14so36105609uak.0
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 10:24:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=nCxvgk6O70z5LWyWdAsQtpMgkv+4ixFFOPISCCkMMoA=;
-        b=qWBdQZb4ULVOdSHztJRoLzSHZWmGCjRmAN7YDn+H27Wv0d7GmAF/Axl6rrD0FRioII
-         jmxD8uddn8DWkhwMd6wyGkONtYaMGhJJFOY6tLw9ggyzdBJK/Q58c3/StdTjABl9joHa
-         3lJTvsNBKD45Ih4Syq+Uw4OiI6edjHIgQvuxG1sjCZxqydOBq2esUSsIg93lHwNnjvBf
-         UQkT5VGRhBAMgvg47inh4JpgOcH4W6FoBU4Cewkm3p0jY/4qXajgy7LAUhv54U+mi0br
-         Yti2gv8vHJQX6HH1tilnx78cH4bEgXLtTWip7gsveJwzXFjN76WhBNyJbLgt+du0LZ63
-         hlrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=nCxvgk6O70z5LWyWdAsQtpMgkv+4ixFFOPISCCkMMoA=;
-        b=NCHgQGNR75RMP7u3RXu7NkFq8N6RFo6rgg4J5bytZ0/7ENF/znmev82hYHIT4VIW16
-         rgwtxIveZJfGJdTJ5V1hoeHImgS9pmWWPWkdG9Zx0hKEiMtfugMJotSbUz3NrGeASxtr
-         KdxKQjQWLFUwzVd75AfZvqtZEJdgZ+u0XLGje8guIyQ02pIQi9VcKdhpa1FlxYTFcima
-         VA965tXhY71o7miampqC+RP/M0FvwsQxjxcmb6Nbh0SZjnmF43RTXxTUHS1fPp/msFqU
-         F8FIuXWvrFtpqQWhQHeeMlgICEbdSgo15iwzcKTv42QeixlJNW4PI9Y3t5BqCADX/VJZ
-         2fvg==
-X-Gm-Message-State: AOAM530+01/+Tqz6lguptSCtiPeS6B02PwB75V9VlD5oSiavk8mzmQCu
-        dF4UNFR5Bm1FjGpxAOVa9gvC7Ygd5aG8wuwJF79RKw==
-X-Google-Smtp-Source: ABdhPJxNvKXp6nGClvjqbKyoOeXsWKVBt5HReWWEBMPKPXgLDod76Xvn9jysJRlQljlSMd7qHU6n2nsQrrhR6hxvSzo=
-X-Received: by 2002:a05:6102:dcb:: with SMTP id e11mr35943537vst.8.1638210281628;
- Mon, 29 Nov 2021 10:24:41 -0800 (PST)
+        id S229920AbhK2VSk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 16:18:40 -0500
+Received: from mout.gmx.net ([212.227.15.19]:35339 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232664AbhK2VQM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 16:16:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1638220366;
+        bh=NQ1zsUArbvSziHRBwGK89d9+r9ik5Wvob6shbv67dUo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Yz+3iEvG4C3u9M2RJdPFJP7RFRFXlMkai1WYUtOQiIIDj7Rhclk8Ys/d+W7TK70kX
+         31e9ZH6+VYUojlGkgbM28VWzpzafrtvX/niPERpv/LbayRF2qUIh2E2SPbJZdj3OQD
+         HUDd0Yjs5W5wFJw23FJAAQP/I+D013yl5lvy5OAE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.219.221] ([89.1.212.219]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MUGe1-1n0qMP1ryF-00RH5B; Mon, 29
+ Nov 2021 22:12:46 +0100
+Date:   Mon, 29 Nov 2021 22:12:44 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
+        phillip.wood123@gmail.com, thomas.wolf@paranor.ch,
+        Alexander Veit <alexander.veit@gmx.net>
+Subject: Re: [PATCH] editor: only save (and restore) the terminal if using
+ a tty
+In-Reply-To: <xmqqwnkx1h5y.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2111292208180.63@tvgsbejvaqbjf.bet>
+References: <04ab7301-ea34-476c-eae4-4044fef74b91@gmail.com>        <20211122222850.674-1-carenas@gmail.com> <xmqqa6hvbxob.fsf@gitster.g>        <CAPUEspgDafXHHPvzNijTsPsna76yE8W=JH-78LX3jyaieSmp0A@mail.gmail.com>        <xmqqtug293ml.fsf@gitster.g>       
+ <nycvar.QRO.7.76.6.2111241428190.63@tvgsbejvaqbjf.bet> <xmqqwnkx1h5y.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
- <pull.1145.v2.git.git.1637855872.gitgitgadget@gmail.com> <211129.86czmjgtfd.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211129.86czmjgtfd.gmgdl@evledraar.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 29 Nov 2021 19:24:28 +0100
-Message-ID: <CAFQ2z_OioNmOP+_VvP71DTDqkaVLZg01yx5QVNo+mVGXxsUJ9Q@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] Inspect reflog data programmatically in more tests
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Ik1u+FFgZV40H96RwQs7jnLElmYR6xy7+mzIY/9dEYtPRFoo1Y8
+ y7PquhVbFQfU/8cOU1A1Sz/VneUvvBY2WDdxh1c8pqkA68AapVKG1EPXgG9/WW2Waq/ZEcC
+ C1Zlv92zdxjyFVWI4Rm6vIi+o10ijC7wro5ByXQoUF/q/Cjl0Gx5cTtP5mW2IvzB32A7dIY
+ poK8XX0JTxqpA30Mf019A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:W2Y9iBZGsaY=:z+vyQyWwIE6Mbu6bV8cXiO
+ 5SGe8boMhYHJ8KQoqMBznZslCt8q6MIv38Qrg8ppYX241e3eImt/epsw7PTlHnKfbXToqAhI2
+ 0jkW+qsZ0jpfPgQiwm15V6843fbNi+TN79Z20qqxTSJWb60ddXX7fNdRthZL7LCFLN7KQKwBG
+ 5OOBEhLxNxVXn3maMprxXtRtHObrwj0fQiNZIpFERKx8W+8ex9F2Lgc4qPicIGTrObvACq8hO
+ t117fUVMtyeuRrI/T29Rp32CODAq4bjcejN9dQkZobmnVgw3/GDiZyU1Z1kbo3Mr/BphbrHbr
+ LkkmEyYLCHY0n4AQ2wWxcMgYrODlVGp+Eg4nEb5DjTjnz4TXYSQC/CW0MD+kFkyJdigxxqHR8
+ 0o4itaD1l0WZmlc+yYAuxOtuYvPVMc6bx+FYx9NzIwj2L9c6p7sHSdwEo8JKnqmuVFKgmrLa1
+ aMHWaSyOnPneIC97gUEvbKjUGIl/lPbcyyRaCVV0sadUWYF/v65zN9O3966nPv45ath4POMiJ
+ IQWD6jAwMTMyjRULQHUQTQ01MP1QdZM+Ooi7aHvMI+b3vedZVMTInwzbxozdbvROQcBQPBl24
+ i0mAKRGN/aXT2LsisIjhSAGhP1/hsnqFMKV00RYagrRcmHv3ThKrNtEtrtTASP4Ugfz1aGYxv
+ M9wdm0JDBLyEJPNkpRVw0jwGgcP180G+jnqwGFbnCnoEa5ketb+3c5Lbn9I5CDJpWyyXWSrSw
+ p3qOpsKGI/v0E0IyahFLWvbbrCMJhBaZXkh4FI3WQsqHSRBbpDjTiXMSpn9VMc61BacdqES+O
+ BXd3Z68E0FCwGsGt3ZwD22LPlo8W7D6Fcp2pekJ9uaP/jyla2f7Or/O0jHEGQ+BaL5Rrg8LC0
+ GHGV4vgWSaN+1t9gpz6ZW+pspElbU2k51RIjTBif/uYT9Wh6SR/dfJ6wnSf6RDSB2hZyo19u5
+ uvQfF/+F3nAwLqVNyM/cCaZzfwmzM6B45E7VKBCRLd3USj5iNy1BfzvhAN8hfZXEHGQKPNExo
+ DB7aRI4HQ18BY64ecq7WrltxcFw3Xf/oskH8XBRcAhs9vRcJ6aRuE4jE5EVtjipZI9JxhE/86
+ 9rdbLZZ0KM5C/g=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 29, 2021 at 11:14 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> > This helps for reftable support, and will help if we want to reconsider
-> > under which conditions reflogs get created/updated.
+Hi Junio,
+
+On Wed, 24 Nov 2021, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> Having looked at this in a bit more detail than last time
-> (https://lore.kernel.org/git/211123.864k83w3y4.gmgdl@evledraar.gmail.com/=
-)
-> I applaud the goals, but to be blunt the specific approach just seems a
-> bit backwards to me.
+> > Maybe a better approach would be to hide the `save_term()` dance behin=
+d a
+> > new config option, and then have it turned on automatically if the
+> > `editor` _happens_ to be `vi` or `vim`.
 >
-> As noted in that message I have patches to tweak the "verbose" mode to
-> be backend-independent, which as we see from your series is one thing in
-> the files backend that consumes the "message" and assumes things about
-> newlines.
+> Why 'vi' and 'vim' are so special?
 
-In v2, I went with Jun's suggestion, and left the newlines alone, just
-trimming them in refs/debug.c .  I think that makes most of your mail
-irrelevant?
+Git's default editor is `vi`. That's what makes it special.
 
-> Perhaps reftable is capable of just handing the underlying code pointers
-> into the mmap()'d file, so we could even skip all (re)allocations? Or if
-> not, that certainly seems like a sensible thing to anticipate in a
-> backend-independent interface. We could do that in the file backend if
-> we were a bit smarter and used mmap() instead of the
-> fopen()/read-in-a-loop pattern.
+> Is this an attempt to paper over a bug in 'vim' on the caller side?
 
-It sounds like premature optimization. Reading reflogs is not usually
-a performance sensitive operation. Also, if you hand out mmap'd
-pointers, how would the reftable storage code know when it is safe to
-close and munmap the file?
+While this works around a concrete bug reported at
+https://github.com/microsoft/terminal/issues/9359, the mere fact that this
+bug was possible indicates that Git needs to be able to deal with such
+bugs, whether the bug is in the editor, in a POSIX emulation layer, in the
+used shell or in the terminal. It is all the more important to have such a
+knob because there are so many potential sources for buggy behavior that
+users are unlikely to have the expertise to even identify which component
+is at fault.
 
->
-> Just my 0.02, if you're interested in running with the below assume my
-> SOB.
-
-What is SOB in this context?
-
-
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Ciao,
+Dscho
