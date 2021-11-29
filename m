@@ -2,156 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FCDBC433F5
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 22:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A758C43219
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 22:37:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232006AbhK2Wi0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 17:38:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33856 "EHLO
+        id S233684AbhK2WkW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 17:40:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232333AbhK2Whr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 17:37:47 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92DADC1A1969
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 10:37:32 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id v1so75872502edx.2
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 10:37:32 -0800 (PST)
+        with ESMTP id S234051AbhK2Wjy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 17:39:54 -0500
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D233C126285
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 09:50:58 -0800 (PST)
+Received: by mail-oi1-x22f.google.com with SMTP id t19so36144268oij.1
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 09:50:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UvkHauOUUcGqFx9+RC+5ZaCyTAtCoMcUU6KZG04vKZg=;
-        b=WNoYyjYnZVlPNTeWlRJG+YJ/jR05rn6zVMzbvnIUuYHDAR6se3gl7S4zKSRM9b5f3i
-         NwLCmbWOTCo8p3tnhfoVKgDHS/s5TErLkUIRv9MAvOFXQs7k39CLGVCtSG7dPHpf7g/j
-         2bbuhTVXj0B9J/NNpbZS1FdAEH9H4fmWod5eQuUgEKG9XuhHsGq2FGfdT5499ASxf2F2
-         NoQUMx0UwKa6maawyEDB/7sTEfaFHnAMNQjrOBwZcTx+BzaGeFEQusN6xDTrN56iaa1b
-         K3TIQML1wQmM99JnY9tiVyMYuUa6tsUOwTKWvB83fb2a+7rz16JsXcdwlsUFMpJyFcYd
-         goNA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=tVbBLphu9mUdJtXcVZ2RnH2R3mGH3MuA9JpJs1qyey4=;
+        b=CLNtht7zhNw66zi8uvenfzQ/bXD1JCKOe4G2jatg3XojjyzouQc1UcLnrZtmlSZUsO
+         2fD9NYK7TebrLllAIev3l18FnI+OFTBMb/4lZvnllyJvVRlNpMlpDcu7oCSiEbFJbi6f
+         lji8s6mTohrBJL0YQ7OTBQN7lqM6T7o4fB1115A13t1r7bQT5GKIbP03ZOVimoeZR6mP
+         jYi+6qDIBXb7zGotH8o88aNT77LFbjK5zNSZ8JgqDSySF+6+BYyhZV3HmDKQrDCAbE7r
+         DbMvjzNDiid3dje9SYioscsdDFjvgIuGQkbDY0DF18SGa97+17ehaQR6uqwF2UL5uG6I
+         kl7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UvkHauOUUcGqFx9+RC+5ZaCyTAtCoMcUU6KZG04vKZg=;
-        b=2QCn3Zxj6P4+WEQ7SdbUWdRz1y5DRDNTElg+R+YlS7IF+9gYabBQC9HLUFYUZiTqlv
-         9I8nvLIrSc3K08lJfsOfe0TV/r7XG55e01/UfVn8pZmI8Ss+LMuSXThDqy+J7OzNOgop
-         rlSnG2X8xQrzK3K22ienDTJVEmu3RQV29OyjBEefcbXPFeMcOEa8ePRHhXzgkOokXDJ4
-         eMIGZd2Hl0czveG1znT51HM7k02cgIMYp12w1HmQt3S24zgU/dyAqgAuu6eH8VRebyE4
-         Ftj7y9p5ES3e5VQZZQx2JZ3dq92GGinG68HKep0MSS7iq2kdTITYDjzlhPQ9lUTydGzX
-         SB5A==
-X-Gm-Message-State: AOAM533/BDFJKZLZnJxpwMjojUE0RbgcufKpLRBWE72QhjpD9exZqS5M
-        /q+pUYw2mAghyHII0BSf7yk7sbHe4tK/8bRu/i4=
-X-Google-Smtp-Source: ABdhPJzYqcpvXFyhjzi/hXR563UUH8DdWmNkUwT9p+k7BAHrn1WmnUcOZ9gfKd5V0mcuQD7A1NN96meAUAQumuicyYQ=
-X-Received: by 2002:a05:6402:d73:: with SMTP id ec51mr77657474edb.175.1638211050738;
- Mon, 29 Nov 2021 10:37:30 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=tVbBLphu9mUdJtXcVZ2RnH2R3mGH3MuA9JpJs1qyey4=;
+        b=XIwNak7mVJq7U5vuZaUKjQr/2P45FejOBdk4Nki3bOps4I5saLxxQGqwYd4pZnkQzr
+         XeyNCuY71ecBHaNPbmnheYT/tWQ+T1PgwjBiCwFy9eNA4Ux+OvEy1sJSW2u0AaruXvW/
+         YZQEraeXyJc9Je2TxrpTE3Oq1R5MbbkoHw+E52VDwjIv3bXoZxtX7fNE1NlpTEyd1du9
+         ssjZQedV8w/OuI1nI8d2UOJPdxLR52VBV+TXWVfCBXNL23prz4ZySnlgNHqN/hB9sEJc
+         pIqT4yeoKCtNM7b8LTY/Nshl3XeffavY39/453b0mN505bFkKg4GpniY1jHzRX7jMCnw
+         krFw==
+X-Gm-Message-State: AOAM530B3i2eJbPJqJ8lkmBC1WUUrTtd5ArzyVt9RUYd62whiLlCkYdX
+        ckQocchcL5Z1FEV2xCjWRwg6GfQjR8M=
+X-Google-Smtp-Source: ABdhPJz8rS12wRzwjKSVO+eHR2GlkK1P09EcLZ6deIm2Iz/jdurgNIsos07LrTvwHOf/PF8nyadqPA==
+X-Received: by 2002:a54:4402:: with SMTP id k2mr8234698oiw.141.1638208257499;
+        Mon, 29 Nov 2021 09:50:57 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:3085:654c:eb81:848b? ([2600:1700:e72:80a0:3085:654c:eb81:848b])
+        by smtp.gmail.com with ESMTPSA id bh12sm3214620oib.25.2021.11.29.09.50.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Nov 2021 09:50:57 -0800 (PST)
+Message-ID: <7d90bf61-59c6-045e-1987-81d50454c260@gmail.com>
+Date:   Mon, 29 Nov 2021 12:50:55 -0500
 MIME-Version: 1.0
-References: <pull.1048.v5.git.1635345563.gitgitgadget@gmail.com> <pull.1048.v6.git.1638201164.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1048.v6.git.1638201164.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 29 Nov 2021 10:37:19 -0800
-Message-ID: <CABPp-BG0iDHf268UAnRyA=0y0T69YTc+bLMdxCmSbrL8s=9ziA@mail.gmail.com>
-Subject: Re: [PATCH v6 0/8] Sparse Index: integrate with reset
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v3 07/11] rebase: do not attempt to remove
+ startup_info->original_cwd
+Content-Language: en-US
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
+        Elijah Newren <newren@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Philip Oakley <philipoakley@iee.email>
+References: <pull.1140.v2.git.git.1637829556.gitgitgadget@gmail.com>
+ <pull.1140.v3.git.git.1637966463.gitgitgadget@gmail.com>
+ <39b1f3a225ec74a79320503eff04ba47ae4259fd.1637966463.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <39b1f3a225ec74a79320503eff04ba47ae4259fd.1637966463.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 11/26/2021 5:40 PM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> Since rebase spawns a `checkout` subprocess, make sure we run that from
+> the startup_info->original_cwd directory, so that the checkout process
+> knows to protect that directory.
+> 
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  sequencer.c          | 3 +++
+>  t/t2501-cwd-empty.sh | 4 ++--
+>  2 files changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index ea96837cde3..b71f7b8a0a6 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -4228,6 +4228,9 @@ static int run_git_checkout(struct repository *r, struct replay_opts *opts,
+>  
+>  	cmd.git_cmd = 1;
+>  
+> +	if (startup_info->original_cwd &&
+> +	    !is_absolute_path(startup_info->original_cwd))
+> +		cmd.dir = startup_info->original_cwd;
 
-On Mon, Nov 29, 2021 at 7:52 AM Victoria Dye via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> Changes since V5
-> ================
->
->  * Update t1092 test 'reset with wildcard pathspec' with more cases and
->    better checks
->  * Add "special case" wildcard pathspec check when determining whether to
->    expand the index (avoids double-loop over pathspecs & index entries)
+I was initially confused by the "!is_absolute_path()" because
+it seemed to me like it would be natural to store an absolute
+path there, but I see this comment in patch 2:
 
-Looks pretty good.  However, I'm worried this special case you added
-at my prodding might be problematic, and that I may have been wrong to
-prod you into it...
++	 * For convience, we would like to have the path relative to the
++	 * worktree instead of an absolute path.
 
-> Thanks! -Victoria
->
-> Range-diff vs v5:
->
->  7:  a9135a5ed64 ! 7:  822d7344587 reset: make --mixed sparse-aware
->      @@ Commit message
->
->           Remove the `ensure_full_index` guard on `read_from_tree` and update `git
->           reset --mixed` to ensure it can use sparse directory index entries wherever
->      -    possible. Sparse directory entries are reset use `diff_tree_oid`, which
->      +    possible. Sparse directory entries are reset using `diff_tree_oid`, which
->           requires `change` and `add_remove` functions to process the internal
->           contents of the sparse directory. The `recursive` diff option handles cases
->           in which `reset --mixed` must diff/merge files that are nested multiple
->      @@ builtin/reset.c: static void update_index_from_diff(struct diff_queue_struct *q,
->       +          * (since we can reset whole sparse directories without expanding them).
->       +          */
->       +         if (item.nowildcard_len < item.len) {
->      ++                 /*
->      ++                  * Special case: if the pattern is a path inside the cone
->      ++                  * followed by only wildcards, the pattern cannot match
->      ++                  * partial sparse directories, so we don't expand the index.
->      ++                  */
->      ++                 if (path_in_cone_mode_sparse_checkout(item.original, &the_index) &&
->      ++                     strspn(item.original + item.nowildcard_len, "*") == item.len - item.nowildcard_len)
+So it seems that we won't store it as an absolute path. Is
+there any value in this condition, then?
 
-I usually expect in an &&-chain to see the cheaper function call first
-(because that ordering often avoids the need to call the second
-function), and I would presume that strspn() would be the cheaper of
-the two.  Did you switch the order because you expect the strspn call
-to nearly always return true, though?
+This assignment of cmd.dir to the relative path has a lot
+of baked-in knowledge of this variable _and_ the current
+state (Git chdir()'d to the root of the worktree). If the
+path is always relative, then it should be a BUG() if we
+see an absolute path. Also, it seems like we would want
+cmd.dir to be a concatenation of the worktree root and the
+original_cwd.
 
-Could the strspn() call be replaced by a `item.len ==
-item.nowildcard_len + 1`?  I mean, sure, folks could list multiple
-asterisks in a row in their pathspec, but that seems super unlikely
-and even if it does happen the code will just fall back to the slower
-codepath and still give them the right answer.  And the simpler check
-feels a lot easier to parse for human readers.
+Or perhaps I'm being overly cautious and this could all be
+resolved with a comment about the expected state of the
+working directory and original_cwd. The tests will catch if
+any of those expectations change.
 
-But I'm worried there's a deeper issue here:
-
-
-Is the wildcard character (or characters) in path treated as a literal
-by path_in_cone_mode_sparse_checkout()?  I think it is...and I'm
-worried that may be incorrect.  For example, if the path is
-
-   foo/*
-
-and the user has done a
-
-  git sparse-checkout set foo/bar/
-
-Then 'foo/baz/file' is not in the sparse checkout.  However, 'foo/*'
-should match 'foo/baz/file' and yet 'foo/*' when treated as a literal
-path would be considered in the sparse checkout by
-path_in_cone_mode_sparse_checkout.  Does this result in the code
-returning an incorrect answer?  (Or did I misunderstand something so
-far?)
-
-I'm wondering if I misled you earlier in my musings about whether we
-could avoid the slow codepath for pathspecs with wildcard characters.
-Maybe there's no safe optimization here and wildcard characters should
-always go through the slower codepath.
-
->      ++                         continue;
->      ++
->       +                 for (pos = 0; pos < active_nr; pos++) {
->       +                         struct cache_entry *ce = active_cache[pos];
->       +
->  8:  f91d1dcf024 = 8:  ddd97fb2837 unpack-trees: improve performance of next_cache_entry
->
-> --
-> gitgitgadget
+Thanks,
+-Stolee
