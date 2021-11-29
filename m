@@ -2,140 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EC0BC433EF
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 22:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05DCEC433EF
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 22:48:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234530AbhK2Wuf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 17:50:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36458 "EHLO
+        id S235920AbhK2Wvx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 17:51:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235375AbhK2Wtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 17:49:50 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4839BC111CF4
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 09:43:20 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id bj13so36080919oib.4
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 09:43:20 -0800 (PST)
+        with ESMTP id S236006AbhK2WuX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 17:50:23 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 368ECC0E5F4D
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 13:02:50 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id r25so12186562edq.7
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 13:02:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ymBB5iRdoxWCNCWESjE9Xzqq3wDI/vcCVpXZg/7ahO0=;
-        b=mPaYutHR/RJWa6DglMH7mPhCZeFyKTHrkHT3QLtmXmmRMO2qVoWHHK+wsAhvIvpach
-         jb30qTu9TTkS7CrYdH5LEMLUidTG4ljba7YEdEpyRh7bzdKYFxVXA4NN4qHpgLzul17r
-         pFJ4s30dpasMFumRfTaedyHar9PftlUkhR1zYsEF9V9LqZSPZVR+P2qE9/xen/ZAeeHD
-         FzGRjZozwU9L0BK8t7gfsoi1WWzJK+kCVdWYKYQ76WSATJ8L+HvawUB3WMad63wjEAEu
-         6L43eyxx4LWLG0vISSAFoxMVyRWnu4cSlHJfKXmpZH8eFPTmnBteDit2vrAHRo44RQub
-         rBNQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=QmaFCsS8lfQyol3ueeVMZoQG3Oii6ZXDC4R7ZvCPfpY=;
+        b=BypE0D6/klI6UfNhkbfA95UCxiMvciy0FIPnK/hUnPVApXhJ+CulUjHefWuKuwOlQu
+         cFXA665BtPa3PYhWj5TnaTkUKVyX3UAEb6WXkc6z9ADQjjlwGVTl02ykCbLRAqJW4VSc
+         5X2BcLwFK3M4QXo3srrdJf+kbEdL2JslO+1+FWHgZqam0ISDRz6budcE28uFkYAVDtcY
+         MMcrJyu93n3gSx5NFU85qNUjfhBv55xPp1E2jA4EFcMDDsphCPKLgJfSyIvUyBMzvdpX
+         4DwHAzCN9VYG4Fv5z/7sAHP33tYCsFr3yAVtmaqdYnqqK0JwlqpZWmuyt7/QuaA22EOY
+         pdgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=ymBB5iRdoxWCNCWESjE9Xzqq3wDI/vcCVpXZg/7ahO0=;
-        b=YpO0GalnS883OVzsCI0Mtvf3GTEimgXZbLpKwIaGtgK30JGRZuVNQVMIGVSZ/sgMfP
-         /Nk4ZwwG1iHJuxYLuqMnrmP1fQF26d5LL4uMc/gMkuoDn/R4ELEb7f18Ulgt/wXZtb9m
-         7Ylb0CdZzZ0kE14XXQTPaGWEU8e5N1915sS94zqC6GX1V4oYItN9MbtPdSU0j3pBcEC8
-         WRZmVwZTlTEqmXOTI7msySjAKFfncGOBy7ivjoGO3alLI4s4MYFQXNeJSEjMoNwY0vrR
-         go/O5Gs093pESC3tdraI5cIpqqlZlPNOHSJdl7viRN3n0UDZEJ2+rRkCGDwpNTwmVVbg
-         PZOg==
-X-Gm-Message-State: AOAM531ejyMZxn0lVa+bLWoJE+AcRgYAt2z0xtFdTgpwPXA0f1GtIY+y
-        gDsRZ9ZaR+Pnm6kIQeCNclU=
-X-Google-Smtp-Source: ABdhPJxZ+tYcd3gwBb5F/eNnyHrhOuJVQOw1MO3W6HjYhPnUFVBs6f9/0pY2rE0ZE6kK0dPczweF7w==
-X-Received: by 2002:a05:6808:20e:: with SMTP id l14mr42006630oie.119.1638207799625;
-        Mon, 29 Nov 2021 09:43:19 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:3085:654c:eb81:848b? ([2600:1700:e72:80a0:3085:654c:eb81:848b])
-        by smtp.gmail.com with ESMTPSA id n26sm2353954ooq.36.2021.11.29.09.43.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Nov 2021 09:43:19 -0800 (PST)
-Message-ID: <068b7faf-2ade-14a7-fee3-83fec26ae856@gmail.com>
-Date:   Mon, 29 Nov 2021 12:43:17 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=QmaFCsS8lfQyol3ueeVMZoQG3Oii6ZXDC4R7ZvCPfpY=;
+        b=jc7irffclBPtS82/OHLVSKJ21tr3YQa0Gx9ijzIQ+IJrkAiLdmlQdxnm4UNme39YeJ
+         WKNVfyoRt0OXKlBBn+fRnhKP8VAL7hYHg0DK/bvZaxH+OLa7BcsYTQa1SvdIgMa+JBUy
+         EP59Gec6Q9JiD/qbTRMxI3hmpSRDgmHakV7W3Wzpx8h4Cbn7uHKSXHEd/UzwJlcmC6Vf
+         Q2wMS0bgYxgTNX4go2ts99SjNxG4WG0laoJZ2GCOCdUwPLk6Oep2jmP+B4wVQi2FRm4m
+         plsDR8Gd5tsiV2a/GxCz5mtxgSu070EgFXTsny76MutitbSUHD7wT7eo7aEhQDuWMmVU
+         5eqg==
+X-Gm-Message-State: AOAM530hW5l6csIoCECEQUw1WLaArFxIrK/f892ybC5Mw4Fb0MiXFu9i
+        o1YsSJwYVv3fV0D3gWYvk08=
+X-Google-Smtp-Source: ABdhPJx1b7Zu/pq6RxXkhTWGIA3GgWCPRnjngCvUrKh6WCxDDwOyDOi/DUWca0Qrz1RkdhimDezSFQ==
+X-Received: by 2002:a05:6402:2210:: with SMTP id cq16mr78206597edb.32.1638219768765;
+        Mon, 29 Nov 2021 13:02:48 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id og14sm7920510ejc.107.2021.11.29.13.02.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 13:02:47 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mrnnT-000rvk-5S;
+        Mon, 29 Nov 2021 22:02:47 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v2 5/5] refs/debug: trim trailing LF from reflog message
+Date:   Mon, 29 Nov 2021 21:59:52 +0100
+References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
+ <pull.1145.v2.git.git.1637855872.gitgitgadget@gmail.com>
+ <0288e743eb2e96e2effd6b0b90c6f885009bf337.1637855872.git.gitgitgadget@gmail.com>
+ <xmqqilwf72nf.fsf@gitster.g>
+ <CAFQ2z_N20ESyzkPLdGbS9q8HEHGB7_gmaX8FUBR=jGqXLGcL1Q@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <CAFQ2z_N20ESyzkPLdGbS9q8HEHGB7_gmaX8FUBR=jGqXLGcL1Q@mail.gmail.com>
+Message-ID: <211129.86v90aekug.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v2 2/9] setup: introduce startup_info->original_cwd
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Glen Choo <chooglen@google.com>,
-        Philip Oakley <philipoakley@iee.email>
-References: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
- <pull.1140.v2.git.git.1637829556.gitgitgadget@gmail.com>
- <f6129a8ac9c3d052fb7fb508a62d4eedb8d9ed57.1637829556.git.gitgitgadget@gmail.com>
- <48fced3c-1fcb-d5cd-cec0-b9e58be40259@gmail.com>
- <CABPp-BHStJ2x53cffJPb7miaxL2cKr0usgK13HxNDyYMQv11_g@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BHStJ2x53cffJPb7miaxL2cKr0usgK13HxNDyYMQv11_g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Mon, Nov 29 2021, Han-Wen Nienhuys wrote:
 
-On 11/29/2021 12:18 PM, Elijah Newren wrote:
-> On Mon, Nov 29, 2021 at 6:05 AM Derrick Stolee <stolee@gmail.com> wrote:
+> On Fri, Nov 26, 2021 at 9:16 AM Junio C Hamano <gitster@pobox.com> wrote:
 >>
->> On 11/25/2021 3:39 AM, Elijah Newren via GitGitGadget wrote:
->>> From: Elijah Newren <newren@gmail.com>
+>> The API promises to have only LF, not CRLF, at the end, so
+>> strbuf_trim_trailing_newline() is a bit overkill (and if payload
+>> happened to end with CR, we would lose it).
+>
+> it would be best if there was a way to escape characters (ie. "\n" =>
+> "\\n"). Do we have a function for that?
+>
+>> > +     trace_printf_key(&trace_refs,
+>> > +                      "reflog_ent %s (ret %d): %s -> %s, %s %ld \"%s\"\n",
+>> > +                      dbg->refname, ret, o, n, committer,
+>> > +                      (long int)timestamp, trimmed.buf);
+>> > +     strbuf_release(&trimmed);
+>> >       return ret;
+>> >  }
 >>
->>> @@ -866,6 +866,8 @@ int cmd_main(int argc, const char **argv)
->>>
->>>       trace_command_performance(argv);
->>>
->>> +     startup_info->original_cwd = xgetcwd();
->>> +
->>
->> I see this initial assignment in cmd_main()...
-> 
-> It looks like you accidentally responded to v2 when there's a v3
-> (something I occasionally do too).  v3 changes this to put it in
-> common-main instead of here, as suggested by Ævar, but to answer the
-> question...
+>> Can we use counted bytes in trace_printf()?  If we can, it would be
+>> simpler to just scan "msg" for LF and then show only the span
+>> between the beginning of the string and the found LF using "%.*s",
+>> perhaps like this?
+>
+> I beg to differ - despite this being fewer lines of code, I think
+> pointer arithmetic is best avoided if possible.
 
-Yes, sorry about that. My inbox was delayed in showing me that a v3
-existed until I was halfway through reviewing v2. (It then only
-showed me half of the patches from v3, so something was causing
-a delay.)
+We usually do this with pointer arithmetic, but the %.*s format doesn't
+require that, just code like:
 
->>> +static void setup_original_cwd(void)
->>> +{
->>> +     struct strbuf tmp = STRBUF_INIT;
->>> +     const char *worktree = NULL;
->>> +     int offset = -1;
->>> +
->>> +     /*
->>> +      * startup_info->original_cwd wass set early on in cmd_main(), unless
->>> +      * we're an auxiliary tool like git-remote-http or test-tool.
->>> +      */
->>> +     if (!startup_info->original_cwd)
->>> +             return;
->>
->> ...which is assumed to be run before this method was called...
->>
->>> @@ -1330,6 +1378,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
->>>               setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
->>>       }
->>>
->>> +     setup_original_cwd();
->>
->> ...here in setup_git_directory_gently().
->>
->> Why do we need that assignment in cmd_main()? Could we instead
->> let setup_original_cwd() do the initial assignment? Or is it
->> possible that a chdir has happened already before this point?
-> 
-> In v1, I made that mistake.  Then I realized that when users pass the
-> -C option to git, there is a chdir() call immediately upon parsing of
-> the -C option.  So I had to move the strbuf_getcwd() call earlier.
+    const char *str = "foobar";
+    size_t len = strlen(str);
+    len -= 1; /* give me less! */
+    printf("%.*s", (int)len, str);
 
-Ok. I wonder if we could setup_original_cwd() earlier than that
-parsing, but I'm sure you've already explored that option.
+So you can also feed it (len - 1) or whatever if you know it to end with
+a character you don't want.
 
-Thanks,
--Stolee
+It's (more simply done as) pointer arithmetic if you're finding that end
+marker with strstr() or whatever, but you can also bend over backwards
+and get a "len" instead through other means, and in either case I think
+it beats reallocating the whole thing (more for readability than any
+optimization reasons).
