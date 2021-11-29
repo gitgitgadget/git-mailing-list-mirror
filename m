@@ -2,59 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CD3CC433EF
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 23:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E37E0C433F5
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 23:10:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236787AbhK2XNg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 18:13:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41816 "EHLO
+        id S235136AbhK2XNi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 18:13:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237495AbhK2XMy (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237498AbhK2XMy (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 29 Nov 2021 18:12:54 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E149DC043CC2
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D3A2C07E5EF
         for <git@vger.kernel.org>; Mon, 29 Nov 2021 14:37:17 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id c4so40046074wrd.9
+Received: by mail-wr1-x431.google.com with SMTP id l16so40069405wrp.11
         for <git@vger.kernel.org>; Mon, 29 Nov 2021 14:37:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Bk4GOjxgMvBSHn0D9lmAsXRFCpFAmS9hU2Ro9ah3t/o=;
-        b=n6Ha4jNvFjkAv+U5Im/mRuYsGQHJNhA8n31iobLAbW0n8S4F6dgPTWKrSek4PZZtLm
-         QJLl1CIl5jvYhg3mmoTvzt6jVqLdNiBwZUShrPpCkqMD9xn2ZKMMZxlWE+dFFMekQmwA
-         in0rjvS4uDsf4lt6QHYo4japQIx0MbeCXxNN2EISH2/Bej+iOTB2UC+M/2giU28mfJfZ
-         CfI2F0klkyJ0VLrbpEvdwZ3nuiXpZuikOVOt+WzfBK4ZpBjhkHvtgxqUlgRWTxUUz8ZQ
-         igJqjYMyh53+Dzrs9xhqAcoCvumST9H0SlTgmApfzt89iYyBboaStP2xeHcLw76CwRbD
-         QT0w==
+        bh=q19L1OhqS0MpwvGIghUt5V8UdbdNe7C3txmiG0gRqjQ=;
+        b=ktiaX1Q+hTFu836AIdlyAHOUg7R88p66LpyzSX3d4o2M+mQvJ8FO1QM7/qf7wBiCkS
+         XjfmhJxyNrv881ELPB28B34gsubLLhEh8mZdoDhWrG1WFNQyuAQl34vevzsUfdQg71Nv
+         fuhD0qUpOd3IAEw7Lbw51O/gx1Pbx4pCV1Sp8sd5lVUPSHyIAzei7P6lc00QxKQ5d/pB
+         XXzxp9mGBgWQQcZz03Ionq7XgntN9Z5IK/32c1yK5MR/nCIFgMDRZnb1qjrBlQAKzNyQ
+         mQ5LkmuCae/K0ygUvD1JuFAkXNhmt2/qYGE3GEOyQ98li/mPavogpRenn9t+QF2VGKmN
+         uHXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Bk4GOjxgMvBSHn0D9lmAsXRFCpFAmS9hU2Ro9ah3t/o=;
-        b=oxj/0UkxbhCe9Fc6Jvlr9tt532YOl9LPOSBRKhVQ81pMcD1j9cwcisslDAEsNKIn/J
-         wFc/3QdAxn/xstIfoCj8jBxfCtVsu56gLKCAkrvuu783kk4J/cojccDMvTsh5Rmbnfcy
-         +FIZ+ai1UJB2fZvOSYB7LfaXjKOG5Qv4h2YzXKLi1I0BisUzaewctAjl4iCnJKDqxZWp
-         Z0BAWh6ID7pjoBwVvtw8m9ouPgfrdS7i0s/FhWbvoU0CqraCQNkJBxYaYpE3SwcQcDfW
-         VQi+5JrdG5L91nnqIaH/vq4pIDTIJxi359RcqvKEw+RF8iWroxz+gMWiqB0a5YQtwHwG
-         43pg==
-X-Gm-Message-State: AOAM532wNScLut6m0sghKb6tKBJroMWURyfeThjG9ZORdBR5yn6U9uO7
-        qexfenPqRUzstNqlNLqMe+ulhc+5urI=
-X-Google-Smtp-Source: ABdhPJywo4HkMelpPJ6v8p9G74E+CABCBW14EDUM+6JgnbJtEBgLdz/4QdwWmOSi6yQFPXLSX9BsXw==
-X-Received: by 2002:a05:6000:1289:: with SMTP id f9mr35560108wrx.329.1638225436242;
-        Mon, 29 Nov 2021 14:37:16 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y142sm569233wmc.40.2021.11.29.14.37.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=q19L1OhqS0MpwvGIghUt5V8UdbdNe7C3txmiG0gRqjQ=;
+        b=ckQKkMiBtJ6oXC8kjzsBnetew1ea2ju8G6JO0GlKl20RxLtidrdBqSOhXmtdZAIKBz
+         GFDtJ59sX69qyqc7+vsl7/0lldFX1myxhM4Qu+xxF3gnhtSnYFl4KuZQmYMKpkfR0pbl
+         85wUE3P6+9TbaBFSEy3q3I75ZSYq37kP7D8pMs2c1bOOP9z82nnnL4miaF6bv6LogvJX
+         /YnC5gtMgk87qPxJebvDahrKY32/xjh+SNkbyMmQL9nhE1sjxe21IyUmtZLcU7bha6Co
+         YlZxvct34sHcTgCgdgU9Zbv8YVb4dY4+Y66e2fbAcriZ1VVD0fsjQglBKQrZgYGSPvn+
+         yHVg==
+X-Gm-Message-State: AOAM532PRLfGdbBQ7dlN0/7H82ClTMFkJ6Q4CbIOa7ggY/7WQHf7OHKv
+        JVCKdCTyEfuCVSxOWi4SDvWFCkn/GWM=
+X-Google-Smtp-Source: ABdhPJwHq2V6FnRiCtuTxhRYE/vy6PQnWmDgeBrrH7uSUGjGlGr3//R8A2sJHixyttWA3bc/dC5qyg==
+X-Received: by 2002:a05:6000:11cd:: with SMTP id i13mr33244359wrx.524.1638225435391;
         Mon, 29 Nov 2021 14:37:15 -0800 (PST)
-Message-Id: <a45b3f088025795d11a78055f90b8632d435d74f.1638225434.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y7sm14608199wrw.55.2021.11.29.14.37.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 14:37:14 -0800 (PST)
+Message-Id: <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1140.v3.git.git.1637966463.gitgitgadget@gmail.com>
 References: <pull.1140.v3.git.git.1637966463.gitgitgadget@gmail.com>
-        <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 29 Nov 2021 22:37:04 +0000
-Subject: [PATCH v4 01/11] t2501: add various tests for removing the current
- working directory
+Date:   Mon, 29 Nov 2021 22:37:03 +0000
+Subject: [PATCH v4 00/11] Avoid removing the current working directory, even if it becomes empty
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,401 +65,376 @@ Cc:     Jeff King <peff@peff.net>,
         Glen Choo <chooglen@google.com>,
         Philip Oakley <philipoakley@iee.email>,
         Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Traditionally, if folks run git commands such as checkout or rebase from a
+subdirectory, that git command could remove their current working directory
+and result in subsequent git and non-git commands either getting confused or
+printing messages that confuse the user (e.g. "fatal: Unable to read current
+working directory: No such file or directory"). Many commands either
+silently avoid removing directories that are not empty (i.e. those that have
+untracked or modified files in them)[1], or show an error and abort,
+depending on which is more appropriate for the command in question. With
+this series, we augment the reasons to avoid removing directories to include
+not just has-untracked-or-modified-files, but also to avoid removing the
+original_cwd as well.
 
-Numerous commands will remove directories left empty as a "convenience"
-after removing files within them.  That is normally fine, but removing
-the current working directory can be rather inconvenient since it can
-cause confusion for the user when they run subsequent commands.  For
-example, after one git process has removed the current working
-directory, git status/log/diff will all abort with the message:
+Peff and Junio provided some good pros/cons, if it helps:
 
-    fatal: Unable to read current working directory: No such file or directory
+ * Pros: Peff (original suggester of the idea)[2], and Junio[3]
+ * Cons: Peff [2, again -- see the "P.S."], and Junio[4]
 
-We also have code paths that, when a file needs to be placed where a
-directory is (due to e.g. checkout, merge, reset, whatever), will check
-if this is okay and error out if not.  These rules include:
-  * all tracked files under that directory are intended to be removed by
-    the operation
-  * none of the tracked files under that directory have uncommitted
-    modification
-  * there are no untracked files under that directory
-However, if we end up remove the current working directory, we can cause
-user confusion when they run subsequent commands, so we would prefer if
-there was a fourth rule added to this list: avoid removing the current
-working directory.
+[1] well, with a few exceptions; see
+https://lore.kernel.org/git/pull.1036.v3.git.1632760428.gitgitgadget@gmail.com/
+[2] https://lore.kernel.org/git/YS8eEtwQvF7TaLCb@coredump.intra.peff.net/
+[3] https://lore.kernel.org/git/xmqqo86elyht.fsf@gitster.g/ [4]
+https://lore.kernel.org/git/xmqqo8691gr8.fsf@gitster.g/
 
-Since there are several code paths that can result in the current
-working directory being removed, add several tests of various different
-codepaths.  To make it clearer what the difference between the current
-behavior and the behavior at the end of the series, code both of them
-into the tests and have the appropriate behavior be selected by a flag.
-Subsequent commits will toggle the flag from current to desired
-behavior.
+Changes since v3:
 
-Also add a few tests suggested during the review of earlier rounds of
-this patch series.
+ * fixed one codepath from v2 so that the series really is only about the
+   working tree
+ * used test-tool getcwd instead of pwd -P as suggested by Ævar for some
+   less common platforms
+ * fixed bashism
+ * check for clean index/worktree after verifying that expected-to-abort
+   codepaths do abort, to make it clearer that we expect an early abort
+ * remove a leftover (and confusing) is_absolute_dir() check in sequencer
+   and stash from an earlier round of the series
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t2501-cwd-empty.sh | 342 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 342 insertions(+)
+Changes since v2:
+
+ * the series is now only about the working tree. So if the original cwd is
+   outside the worktree (or we're in a bare repo), then the new code is a
+   no-op.
+ * fixed ugly early die() possibility (uses strbuf_getcwd() instead of
+   xgetcwd())
+ * modified the initial tests to show both expected and desired behavior.
+   subsequent patches fix the tests. One new patch added at the end which
+   simplifies the tests to only check for desired behavior.
+ * NULLify startup_info->original_cwd when it matches the toplevel worktree;
+   that is already protected and we don't need secondary protection for it.
+   This simplified some other codepaths so we don't have to check for
+   startup_info->original_cwd == "".
+ * clarified some commit messages
+
+Changes since v1:
+
+ * clarified multiple commit messages
+ * renamed the_cwd to startup_info->original_cwd to make it clearer that
+   it's our parent process'es cwd that really matters, which we inherited at
+   program startup. Also pulls it out of the global namespace.
+ * Normalize the path for startup_info->original_cwd, and ensure that it's
+   actually the original cwd even if -C is passed to git.
+ * small code cleanups suggested by René and Ævar
+ * split the final patch (which got the most comments) into two -- one for
+   each function being modified. Also, add a bunch more history to the first
+   of the two resulting commit messages
+ * no longer has a content conflict with so/stash-staged
+ * add another value for the flags parameter that remove_dir_recursively()
+   takes so that it can opt into either the old or the new behavior. Use
+   that for the one special corner case I could find where it matters, and
+   add a few tests around it to highlight the utility of the flag.
+
+Elijah Newren (11):
+  t2501: add various tests for removing the current working directory
+  setup: introduce startup_info->original_cwd
+  unpack-trees: refuse to remove startup_info->original_cwd
+  unpack-trees: add special cwd handling
+  symlinks: do not include startup_info->original_cwd in dir removal
+  clean: do not attempt to remove startup_info->original_cwd
+  rebase: do not attempt to remove startup_info->original_cwd
+  stash: do not attempt to remove startup_info->original_cwd
+  dir: avoid incidentally removing the original_cwd in remove_path()
+  dir: new flag to remove_dir_recurse() to spare the original_cwd
+  t2501: simplify the tests since we can now assume desired behavior
+
+ builtin/clean.c      |  44 +++++--
+ builtin/rm.c         |   3 +-
+ builtin/stash.c      |   4 +-
+ cache.h              |   2 +
+ common-main.c        |   4 +
+ dir.c                |  15 ++-
+ dir.h                |   9 +-
+ sequencer.c          |   2 +
+ setup.c              |  65 ++++++++++
+ symlinks.c           |   8 +-
+ t/t2501-cwd-empty.sh | 277 +++++++++++++++++++++++++++++++++++++++++++
+ unpack-trees.c       |  30 ++++-
+ unpack-trees.h       |   1 +
+ 13 files changed, 442 insertions(+), 22 deletions(-)
  create mode 100755 t/t2501-cwd-empty.sh
 
-diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
-new file mode 100755
-index 00000000000..fd83fe921d5
---- /dev/null
-+++ b/t/t2501-cwd-empty.sh
-@@ -0,0 +1,342 @@
-+#!/bin/sh
-+
-+test_description='Test handling of the current working directory becoming empty'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	test_commit init &&
-+
-+	git branch fd_conflict &&
-+
-+	mkdir -p foo/bar &&
-+	test_commit foo/bar/baz &&
-+
-+	git revert HEAD &&
-+	git tag reverted &&
-+
-+	git checkout fd_conflict &&
-+	mkdir dirORfile &&
-+	test_commit dirORfile/foo &&
-+
-+	git rm -r dirORfile &&
-+	echo not-a-directory >dirORfile &&
-+	git add dirORfile &&
-+	git commit -m dirORfile &&
-+
-+	git switch -c df_conflict HEAD~1 &&
-+	test_commit random_file &&
-+
-+	git switch -c undo_fd_conflict fd_conflict &&
-+	git revert HEAD
-+'
-+
-+test_incidental_dir_removal () {
-+	works=$1 &&
-+	shift &&
-+
-+	test_when_finished "git reset --hard" &&
-+
-+	git checkout foo/bar/baz^{commit} &&
-+	test_path_is_dir foo/bar &&
-+
-+	(
-+		cd foo &&
-+		"$@" &&
-+
-+		# Although we want pwd & git status to pass, test for existing
-+		# rather than desired behavior.
-+		if test "$works" == "success"
-+		then
-+			test-tool getcwd &&
-+			git status --porcelain
-+		else
-+			! test-tool getcwd &&
-+			test_might_fail git status --porcelain
-+		fi
-+	) &&
-+	test_path_is_missing foo/bar/baz &&
-+	test_path_is_missing foo/bar &&
-+
-+	# Although we want dir to be present, test for existing rather
-+	# than desired behavior.
-+	if test "$works" == "success"
-+	then
-+		test_path_is_dir foo
-+	else
-+		test_path_is_missing foo
-+	fi
-+}
-+
-+test_required_dir_removal () {
-+	works=$1 &&
-+	shift &&
-+
-+	git checkout df_conflict^{commit} &&
-+	test_when_finished "git clean -fdx" &&
-+
-+	(
-+		cd dirORfile &&
-+
-+		# We'd like for the command to fail (much as it would if there
-+		# was an untracked file there), and for the index and worktree
-+		# to be left clean with pwd and git status working afterwards.
-+		# But test for existing rather than desired behavior.
-+		if test "$works" == "success"
-+		then
-+			test_must_fail "$@" 2>../error &&
-+			grep "Refusing to remove.*current working directory" ../error &&
-+
-+			git diff --exit-code HEAD &&
-+
-+			test-tool getcwd &&
-+			git status --porcelain
-+		else
-+			"$@" &&
-+			! test-tool getcwd &&
-+			test_might_fail git status --porcelain
-+		fi
-+	) &&
-+
-+	# Although we want dirORfile to be present, test for existing rather
-+	# than desired behavior.
-+	if test "$works" == "success"
-+	then
-+		test_path_is_dir dirORfile
-+	else
-+		test_path_is_file dirORfile
-+	fi
-+}
-+
-+test_expect_success 'checkout does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git checkout init
-+'
-+
-+test_expect_success 'checkout fails if cwd needs to be removed' '
-+	test_required_dir_removal failure git checkout fd_conflict
-+'
-+
-+test_expect_success 'reset --hard does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git reset --hard init
-+'
-+
-+test_expect_success 'reset --hard fails if cwd needs to be removed' '
-+	test_required_dir_removal failure git reset --hard fd_conflict
-+'
-+
-+test_expect_success 'merge does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git merge reverted
-+'
-+
-+# This file uses some simple merges where
-+#   Base: 'dirORfile/' exists
-+#   Side1: random other file changed
-+#   Side2: 'dirORfile/' removed, 'dirORfile' added
-+# this should resolve cleanly, but merge-recursive throws merge conflicts
-+# because it's dumb.  Add a special test for checking merge-recursive (and
-+# merge-ort), then after this just hard require ort for all remaining tests.
-+#
-+test_expect_success 'merge fails if cwd needs to be removed; recursive friendly' '
-+	git checkout foo/bar/baz &&
-+	test_when_finished "git clean -fdx" &&
-+
-+	mkdir dirORfile &&
-+	(
-+		cd dirORfile &&
-+
-+		# We would rather this failed, but we test for existing
-+		# rather than desired behavior
-+		git merge fd_conflict 2>../error
-+	) &&
-+
-+	## Here is the behavior we would rather have:
-+	#test_path_is_dir dirORfile &&
-+	#grep "Refusing to remove the current working directory" error
-+	## But instead we test for existing behavior
-+	test_path_is_file dirORfile &&
-+	test_must_be_empty error
-+'
-+
-+GIT_TEST_MERGE_ALGORITHM=ort
-+
-+test_expect_success 'merge fails if cwd needs to be removed' '
-+	test_required_dir_removal failure git merge fd_conflict
-+'
-+
-+test_expect_success 'cherry-pick does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git cherry-pick reverted
-+'
-+
-+test_expect_success 'cherry-pick fails if cwd needs to be removed' '
-+	test_required_dir_removal failure git cherry-pick fd_conflict
-+'
-+
-+test_expect_success 'rebase does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git rebase reverted
-+'
-+
-+test_expect_success 'rebase fails if cwd needs to be removed' '
-+	test_required_dir_removal failure git rebase fd_conflict
-+'
-+
-+test_expect_success 'revert does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git revert HEAD
-+'
-+
-+test_expect_success 'revert fails if cwd needs to be removed' '
-+	test_required_dir_removal failure git revert undo_fd_conflict
-+'
-+
-+test_expect_success 'rm does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git rm bar/baz.t
-+'
-+
-+test_expect_success 'apply does not remove cwd incidentally' '
-+	git diff HEAD HEAD~1 >patch &&
-+	test_incidental_dir_removal failure git apply ../patch
-+'
-+
-+test_incidental_untracked_dir_removal () {
-+	works=$1 &&
-+	shift &&
-+
-+	test_when_finished "git reset --hard" &&
-+
-+	git checkout foo/bar/baz^{commit} &&
-+	mkdir -p untracked &&
-+	mkdir empty
-+	>untracked/random &&
-+
-+	(
-+		cd untracked &&
-+		"$@" &&
-+
-+		# Although we want pwd & git status to pass, test for existing
-+		# rather than desired behavior.
-+		if test "$works" == "success"
-+		then
-+			test-tool getcwd &&
-+			git status --porcelain
-+		else
-+			! test-tool getcwd &&
-+			test_might_fail git status --porcelain
-+		fi
-+	) &&
-+	test_path_is_missing empty &&
-+	test_path_is_missing untracked/random &&
-+
-+	# Although we want dir to be present, test for existing rather
-+	# than desired behavior.
-+	if test "$works" == "success"
-+	then
-+		test_path_is_dir untracked
-+	else
-+		test_path_is_missing untracked
-+	fi
-+}
-+
-+test_expect_success 'clean does not remove cwd incidentally' '
-+	test_incidental_untracked_dir_removal failure \
-+		git -C .. clean -fd -e warnings . >warnings
-+'
-+
-+test_expect_success 'stash does not remove cwd incidentally' '
-+	test_incidental_untracked_dir_removal failure \
-+		git stash --include-untracked
-+'
-+
-+test_expect_success '`rm -rf dir` only removes a subset of dir' '
-+	test_when_finished "rm -rf a/" &&
-+
-+	mkdir -p a/b/c &&
-+	>a/b/c/untracked &&
-+	>a/b/c/tracked &&
-+	git add a/b/c/tracked &&
-+
-+	(
-+		cd a/b &&
-+		git rm -rf ../b
-+	) &&
-+
-+	test_path_is_dir a/b &&
-+	test_path_is_missing a/b/c/tracked &&
-+	test_path_is_file a/b/c/untracked
-+'
-+
-+test_expect_success '`rm -rf dir` even with only tracked files will remove something else' '
-+	test_when_finished "rm -rf a/" &&
-+
-+	mkdir -p a/b/c &&
-+	>a/b/c/tracked &&
-+	git add a/b/c/tracked &&
-+
-+	(
-+		cd a/b &&
-+		git rm -rf ../b
-+	) &&
-+
-+	test_path_is_missing a/b/c/tracked &&
-+	## We would prefer if a/b was still present, though empty, since it
-+	## was the current working directory
-+	#test_path_is_dir a/b
-+	## But the current behavior is that it not only deletes the directory
-+	## a/b as requested, but also goes and deletes a
-+	test_path_is_missing a
-+'
-+
-+test_expect_success 'git version continues working from a deleted dir' '
-+	mkdir tmp &&
-+	(
-+		cd tmp &&
-+		rm -rf ../tmp &&
-+		git version
-+	)
-+'
-+
-+test_submodule_removal () {
-+	path_status=$1 &&
-+	shift &&
-+
-+	test_status=
-+	test "$path_status" = dir && test_status=test_must_fail
-+
-+	# Actually, while path_status == dir && test_status=test_must_fail
-+	# reflect our desired behavior, current behavior is:
-+	path_status=missing
-+	test_status=
-+
-+	test_when_finished "git reset --hard HEAD~1" &&
-+	test_when_finished "rm -rf .git/modules/my_submodule" &&
-+
-+	git checkout foo/bar/baz &&
-+
-+	git init my_submodule &&
-+	touch my_submodule/file &&
-+	git -C my_submodule add file &&
-+	git -C my_submodule commit -m "initial commit" &&
-+	git submodule add ./my_submodule &&
-+	git commit -m "Add the submodule" &&
-+
-+	(
-+		cd my_submodule &&
-+		$test_status "$@"
-+	) &&
-+
-+	test_path_is_${path_status} my_submodule
-+}
-+
-+test_expect_success 'rm -r with -C leaves submodule if cwd inside' '
-+	test_submodule_removal dir git -C .. rm -r my_submodule/
-+'
-+
-+test_expect_success 'rm -r leaves submodule if cwd inside' '
-+	test_submodule_removal dir \
-+		git --git-dir=../.git --work-tree=.. rm -r ../my_submodule/
-+'
-+
-+test_expect_success 'rm -rf removes submodule even if cwd inside' '
-+	test_submodule_removal missing \
-+		git --git-dir=../.git --work-tree=.. rm -rf ../my_submodule/
-+'
-+
-+test_done
+
+base-commit: 88d915a634b449147855041d44875322de2b286d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1140%2Fnewren%2Fcwd_removal-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1140/newren/cwd_removal-v4
+Pull-Request: https://github.com/git/git/pull/1140
+
+Range-diff vs v3:
+
+  1:  4b0044656b0 !  1:  a45b3f08802 t2501: add various tests for removing the current working directory
+     @@ t/t2501-cwd-empty.sh (new)
+      +
+      +		# Although we want pwd & git status to pass, test for existing
+      +		# rather than desired behavior.
+     -+		if [[ $works == "success" ]]; then
+     -+			pwd -P &&
+     ++		if test "$works" == "success"
+     ++		then
+     ++			test-tool getcwd &&
+      +			git status --porcelain
+      +		else
+     -+			! pwd -P &&
+     ++			! test-tool getcwd &&
+      +			test_might_fail git status --porcelain
+      +		fi
+      +	) &&
+     @@ t/t2501-cwd-empty.sh (new)
+      +
+      +	# Although we want dir to be present, test for existing rather
+      +	# than desired behavior.
+     -+	if [[ $works == "success" ]]; then
+     ++	if test "$works" == "success"
+     ++	then
+      +		test_path_is_dir foo
+      +	else
+      +		test_path_is_missing foo
+     @@ t/t2501-cwd-empty.sh (new)
+      +		cd dirORfile &&
+      +
+      +		# We'd like for the command to fail (much as it would if there
+     -+		# was an untracked file there), and for pwd & git status to
+     -+		# succeed afterwards.  But test for existing rather than
+     -+		# desired behavior.
+     -+		if [[ $works == "success" ]]; then
+     ++		# was an untracked file there), and for the index and worktree
+     ++		# to be left clean with pwd and git status working afterwards.
+     ++		# But test for existing rather than desired behavior.
+     ++		if test "$works" == "success"
+     ++		then
+      +			test_must_fail "$@" 2>../error &&
+      +			grep "Refusing to remove.*current working directory" ../error &&
+     -+			pwd -P &&
+     ++
+     ++			git diff --exit-code HEAD &&
+     ++
+     ++			test-tool getcwd &&
+      +			git status --porcelain
+      +		else
+      +			"$@" &&
+     -+			! pwd -P &&
+     ++			! test-tool getcwd &&
+      +			test_might_fail git status --porcelain
+      +		fi
+      +	) &&
+      +
+      +	# Although we want dirORfile to be present, test for existing rather
+      +	# than desired behavior.
+     -+	if [[ $works == "success" ]]; then
+     ++	if test "$works" == "success"
+     ++	then
+      +		test_path_is_dir dirORfile
+      +	else
+      +		test_path_is_file dirORfile
+     @@ t/t2501-cwd-empty.sh (new)
+      +
+      +		# Although we want pwd & git status to pass, test for existing
+      +		# rather than desired behavior.
+     -+		if [[ $works == "success" ]]; then
+     -+			pwd -P &&
+     ++		if test "$works" == "success"
+     ++		then
+     ++			test-tool getcwd &&
+      +			git status --porcelain
+      +		else
+     -+			! pwd -P &&
+     ++			! test-tool getcwd &&
+      +			test_might_fail git status --porcelain
+      +		fi
+      +	) &&
+     @@ t/t2501-cwd-empty.sh (new)
+      +
+      +	# Although we want dir to be present, test for existing rather
+      +	# than desired behavior.
+     -+	if [[ $works == "success" ]]; then
+     ++	if test "$works" == "success"
+     ++	then
+      +		test_path_is_dir untracked
+      +	else
+      +		test_path_is_missing untracked
+     @@ t/t2501-cwd-empty.sh (new)
+      +	shift &&
+      +
+      +	test_status=
+     -+	test $path_status = dir && test_status=test_must_fail
+     ++	test "$path_status" = dir && test_status=test_must_fail
+      +
+      +	# Actually, while path_status == dir && test_status=test_must_fail
+      +	# reflect our desired behavior, current behavior is:
+  2:  200ddece05d !  2:  ca9f632bd11 setup: introduce startup_info->original_cwd
+     @@ setup.c: void setup_work_tree(void)
+      +		startup_info->original_cwd = \
+      +			precompose_string_if_needed(startup_info->original_cwd
+      +						    + offset);
+     ++		return;
+      +	}
+     -+	return;
+      +
+      +no_prevention_needed:
+      +	free((char*)startup_info->original_cwd);
+  3:  68ae90546fe =  3:  41a82eff41e unpack-trees: refuse to remove startup_info->original_cwd
+  4:  1bb8905900c =  4:  2e2ea02f97b unpack-trees: add special cwd handling
+  5:  8a33d74e7cf =  5:  f444a541da4 symlinks: do not include startup_info->original_cwd in dir removal
+  6:  11e4ec881bb =  6:  1990e36bb41 clean: do not attempt to remove startup_info->original_cwd
+  7:  39b1f3a225e !  7:  1035ee7f9ce rebase: do not attempt to remove startup_info->original_cwd
+     @@ sequencer.c: static int run_git_checkout(struct repository *r, struct replay_opt
+       
+       	cmd.git_cmd = 1;
+       
+     -+	if (startup_info->original_cwd &&
+     -+	    !is_absolute_path(startup_info->original_cwd))
+     ++	if (startup_info->original_cwd)
+      +		cmd.dir = startup_info->original_cwd;
+       	strvec_push(&cmd.args, "checkout");
+       	strvec_push(&cmd.args, commit);
+  8:  0110462a19c !  8:  a2be40a22d1 stash: do not attempt to remove startup_info->original_cwd
+     @@ builtin/stash.c: static int do_push_stash(const struct pathspec *ps, const char
+       			struct child_process cp = CHILD_PROCESS_INIT;
+       
+       			cp.git_cmd = 1;
+     -+			if (startup_info->original_cwd &&
+     -+			    !is_absolute_path(startup_info->original_cwd))
+     ++			if (startup_info->original_cwd)
+      +				cp.dir = startup_info->original_cwd;
+       			strvec_pushl(&cp.args, "clean", "--force",
+      -				     "--quiet", "-d", NULL);
+  9:  2c73a09a2e8 =  9:  834031be9e0 dir: avoid incidentally removing the original_cwd in remove_path()
+ 10:  d4e50b4053d ! 10:  d5750fcb6d5 dir: new flag to remove_dir_recurse() to spare the original_cwd
+     @@ dir.h: int get_sparse_checkout_patterns(struct pattern_list *pl);
+       ## t/t2501-cwd-empty.sh ##
+      @@ t/t2501-cwd-empty.sh: test_submodule_removal () {
+       	test_status=
+     - 	test $path_status = dir && test_status=test_must_fail
+     + 	test "$path_status" = dir && test_status=test_must_fail
+       
+      -	# Actually, while path_status == dir && test_status=test_must_fail
+      -	# reflect our desired behavior, current behavior is:
+ 11:  7eb6281be4b ! 11:  21ff99a767c t2501: simplify the tests since we can now assume desired behavior
+     @@ t/t2501-cwd-empty.sh: test_incidental_dir_removal () {
+       
+      -		# Although we want pwd & git status to pass, test for existing
+      -		# rather than desired behavior.
+     --		if [[ $works == "success" ]]; then
+     --			pwd -P &&
+     +-		if test "$works" == "success"
+     +-		then
+     +-			test-tool getcwd &&
+      -			git status --porcelain
+      -		else
+     --			! pwd -P &&
+     +-			! test-tool getcwd &&
+      -			test_might_fail git status --porcelain
+      -		fi
+     -+		pwd -P &&
+     ++		# Make sure foo still exists, and commands needing it work
+     ++		test-tool getcwd &&
+      +		git status --porcelain
+       	) &&
+       	test_path_is_missing foo/bar/baz &&
+     @@ t/t2501-cwd-empty.sh: test_incidental_dir_removal () {
+       
+      -	# Although we want dir to be present, test for existing rather
+      -	# than desired behavior.
+     --	if [[ $works == "success" ]]; then
+     +-	if test "$works" == "success"
+     +-	then
+      -		test_path_is_dir foo
+      -	else
+      -		test_path_is_missing foo
+     @@ t/t2501-cwd-empty.sh: test_incidental_dir_removal () {
+       		cd dirORfile &&
+       
+      -		# We'd like for the command to fail (much as it would if there
+     --		# was an untracked file there), and for pwd & git status to
+     --		# succeed afterwards.  But test for existing rather than
+     --		# desired behavior.
+     --		if [[ $works == "success" ]]; then
+     +-		# was an untracked file there), and for the index and worktree
+     +-		# to be left clean with pwd and git status working afterwards.
+     +-		# But test for existing rather than desired behavior.
+     +-		if test "$works" == "success"
+     +-		then
+      -			test_must_fail "$@" 2>../error &&
+      -			grep "Refusing to remove.*current working directory" ../error &&
+     --			pwd -P &&
+     +-
+     +-			git diff --exit-code HEAD &&
+     +-
+     +-			test-tool getcwd &&
+      -			git status --porcelain
+      -		else
+      -			"$@" &&
+     --			! pwd -P &&
+     +-			! test-tool getcwd &&
+      -			test_might_fail git status --porcelain
+      -		fi
+     ++		# Ensure command refuses to run
+      +		test_must_fail "$@" 2>../error &&
+      +		grep "Refusing to remove.*current working directory" ../error &&
+     -+		pwd -P &&
+     ++
+     ++		# ...and that the index and working tree are left clean
+     ++		git diff --exit-code HEAD &&
+     ++
+     ++		# Ensure that getcwd and git status do not error out (which
+     ++		# they might if the current working directory had been removed)
+     ++		test-tool getcwd &&
+      +		git status --porcelain
+       	) &&
+       
+      -	# Although we want dirORfile to be present, test for existing rather
+      -	# than desired behavior.
+     --	if [[ $works == "success" ]]; then
+     +-	if test "$works" == "success"
+     +-	then
+      -		test_path_is_dir dirORfile
+      -	else
+      -		test_path_is_file dirORfile
+     @@ t/t2501-cwd-empty.sh: test_incidental_untracked_dir_removal () {
+       
+      -		# Although we want pwd & git status to pass, test for existing
+      -		# rather than desired behavior.
+     --		if [[ $works == "success" ]]; then
+     --			pwd -P &&
+     +-		if test "$works" == "success"
+     +-		then
+     +-			test-tool getcwd &&
+      -			git status --porcelain
+      -		else
+     --			! pwd -P &&
+     +-			! test-tool getcwd &&
+      -			test_might_fail git status --porcelain
+      -		fi
+     -+		pwd -P &&
+     ++		# Make sure untracked still exists, and commands needing it work
+     ++		test-tool getcwd &&
+      +		git status --porcelain
+       	) &&
+       	test_path_is_missing empty &&
+     @@ t/t2501-cwd-empty.sh: test_incidental_untracked_dir_removal () {
+       
+      -	# Although we want dir to be present, test for existing rather
+      -	# than desired behavior.
+     --	if [[ $works == "success" ]]; then
+     +-	if test "$works" == "success"
+     +-	then
+      -		test_path_is_dir untracked
+      -	else
+      -		test_path_is_missing untracked
+
 -- 
 gitgitgadget
-
