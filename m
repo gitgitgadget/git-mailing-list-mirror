@@ -2,104 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DB84C433FE
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 22:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CF7DC433EF
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 22:51:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234092AbhK2WwC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 17:52:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36282 "EHLO
+        id S235425AbhK2Wyh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 17:54:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234922AbhK2Wuk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 17:50:40 -0500
-Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34386C12A4E0
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 10:29:30 -0800 (PST)
-Received: by mail-vk1-xa2a.google.com with SMTP id b192so11776579vkf.3
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 10:29:30 -0800 (PST)
+        with ESMTP id S235561AbhK2Wxs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 17:53:48 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3863AC043AE3
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 12:51:45 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id y13so77314865edd.13
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 12:51:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ZHD04RfGuvQi5myjHt1WNpY7mRIP8qGZDU9pNCBp+4Q=;
-        b=CezOtGNl75a/oJfAiT0KzCsCJFx+qPqd49JfFMqAZ4dDKKS5VXuRqsbzQKkac0K1Cj
-         R1E+2yqPIqNbiYFgPbeyocHbXbbgx0PTX8d8yqrulBl2dIkSFcmExLGQS5UFz2PB5wk0
-         IizBC/LeIiTz93gQzQKzhIMLHdwWLkJAKtIUB/yAcSv0ffxY5ThZCZXnoEN6fQZXExTR
-         uUoMeGEbQ7TTmo2qnoNQ72QXb9ArIrr6FN3rDGyATwTg6Lne7KB7sB+I1qGQA4pNebxH
-         ydYYtm0xXolj8UcbqREcSVoo+fGmnx7KKgt7+T9n7tOQslHTGD3mOPfspNDC8Kxc2Iz6
-         F5XQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=cT6MCw4ua+3NMtlmsBt7ZazwQiDIr9Pn9B3Mk4oe894=;
+        b=WaalYrmHYigxKICmf+c7UEx1ddgZGLKZm9UQwrLn5XfLIwvMqz6w9Ekfs5chbsM6Fh
+         WuNROtViki7UeB9AGOi5fu+pwq58IbqLnaaW0AQrzyNkBQJtXEmazCuVJ/YxgTwgUzMn
+         JpmR5TlbnsVmhSgFXuSDrM3PJUnOmZDCfo/WttaooNJRYHl5RtHkZtfAB2e5iRuVALSW
+         3++Sx5yHe98f+rZcEyTuILRSm0BdrIHbcfkD6QMZ89iYomiRqcIjCYxKVdN7NF4Nu2os
+         rM0xVhvYyeUXT0tsDEEAri3pt3hunWNErsb5tRA5EaVoSjcWPpvhXtoLfls6NSYr3v5W
+         IQCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ZHD04RfGuvQi5myjHt1WNpY7mRIP8qGZDU9pNCBp+4Q=;
-        b=R2BTLWk4LpEAkdOMOTpa0Gp60qLYUO0irs7dZSd/lsbzBlkWYMI53U6cv0+RlyaIgT
-         047wWfitT7XVGfwy3mqz+k+3lH+YEXPqt6M30ivQaH+Sn/NAJTnUaois1hCVRA/FXkMI
-         SWbGjH54XvJ4TJUvIf3nTVb0yhrUi6ZtgWdne0Sf6rUZgdBFFZjA7hXsM8kkkM6JTUIR
-         zRW03ZSRdpzytjRJwETGr+VhViR6ytsveCyAEN/dOHCxe26hHf84fgrYfTJh6MmUtLPV
-         p/IWGGjYDFlB0kkAwl7ytUOYgJH6RHZwPYBIrfeiYDKM0ba27PGg4bdci1z6MLPub7RL
-         dUfw==
-X-Gm-Message-State: AOAM532lR+u0J2gQQBZ+qLazmcLCknIf7vpwfiBwe4brFMse2k93qvPz
-        ADHIz7bdzCqPpPtu+Hp4lrhw7oBhvLnoaP1U8pL7bg==
-X-Google-Smtp-Source: ABdhPJz+ljZklk7HGGcmwei3jRX9gVK23F9LTNi3OLf46RXgd552q9HNcMQfSvFSVgqU/G0sbBJ200AdSbeSW0mrZQw=
-X-Received: by 2002:a1f:a3ca:: with SMTP id m193mr38214068vke.4.1638210568909;
- Mon, 29 Nov 2021 10:29:28 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=cT6MCw4ua+3NMtlmsBt7ZazwQiDIr9Pn9B3Mk4oe894=;
+        b=SbnS7anyFiPcEbqXNdsiYl+w5LiK2RBz/x5LnU1CHzVNvn+21dbGkhWxeqdyprCmKL
+         9OQsMxPjZ/xa04HwluLcxnpwo/1I+QULfy5klkxBNvK5fkxh+7UEqlQZ8KX5/83jY/7T
+         dBRNZMJy9tVL3/gU9c3rBE2gd60qc126SfAfzCaiifd7V48gyET52xEQimPKVkLqUQ2G
+         pRtL4ZLsW4wlTETYLaqarlt/YvR2A3MI1Xjg7PyS1Yejpc+eCySYCNS5Dkn0LsvSdi9s
+         Lk9UpZTk3kE7zccorc1EemDXbQm/Vgg5NkqghSWeFW6q+NqMoMFwceVLh2bjUQyyTE1o
+         PwTg==
+X-Gm-Message-State: AOAM530KSmeUrrsMulGnihbRwUUWy+yTB9faN1zXSf1EM6w0HY9vVydM
+        UUGIsEx3frGnvks3BFZiOghSimETkViC0w==
+X-Google-Smtp-Source: ABdhPJyHJDgTQW7u7VUtwRbqjN/cDjKITBtJDz//0GbQ7JLPMoU5t0Z0aBBuFllp+biM1OrAK8urzQ==
+X-Received: by 2002:a50:955c:: with SMTP id v28mr75888740eda.293.1638219103477;
+        Mon, 29 Nov 2021 12:51:43 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id g12sm9656116edj.45.2021.11.29.12.51.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 12:51:43 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mrnck-000rdE-KI;
+        Mon, 29 Nov 2021 21:51:42 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com, peff@peff.net,
+        gitster@pobox.com
+Subject: Re: [PATCH v3 2/2] config: include file if remote URL matches a glob
+Date:   Mon, 29 Nov 2021 21:50:11 +0100
+References: <211123.86pmqrwtf2.gmgdl@evledraar.gmail.com>
+ <20211129183348.384067-1-jonathantanmy@google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211129183348.384067-1-jonathantanmy@google.com>
+Message-ID: <211129.86zgpmelcx.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
- <pull.1145.v2.git.git.1637855872.gitgitgadget@gmail.com> <0288e743eb2e96e2effd6b0b90c6f885009bf337.1637855872.git.gitgitgadget@gmail.com>
- <xmqqilwf72nf.fsf@gitster.g>
-In-Reply-To: <xmqqilwf72nf.fsf@gitster.g>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 29 Nov 2021 19:29:18 +0100
-Message-ID: <CAFQ2z_N20ESyzkPLdGbS9q8HEHGB7_gmaX8FUBR=jGqXLGcL1Q@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] refs/debug: trim trailing LF from reflog message
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 26, 2021 at 9:16 AM Junio C Hamano <gitster@pobox.com> wrote:
+
+On Mon, Nov 29 2021, Jonathan Tan wrote:
+
+>> On Mon, Nov 15 2021, Jonathan Tan wrote:
+>> 
+>> > +`hasremoteurl`::
+>> > +	The data that follows the keyword `hasremoteurl:` is taken to
+>> 
+>> Both here..
+>> 
+>> > +		die(_("remote URLs cannot be configured in file directly or indirectly included by includeIf.hasremoteurl"));
+>> 
+>> ..and here...
+>> 
+>> > +		if (skip_prefix_mem(cond, cond_len, "hasremoteurl:", &url,
+>> 
+>> ...but not here (C code)..
+>> 
+>> > +	 * For internal use. Include all includeif.hasremoteurl paths without
+>> 
+>> ..but here..
+>> 
+>> > +test_expect_success 'includeIf.hasremoteurl' '
+>> 
+>> ..and also here etc., let's consistently camelCase config keys whenever
+>> we're not using them for lookups in the C
+>> code.
+>> 
+>> I.e. "includeIf.hasRemoteUrl" (possibly "includeIf.hasRemoteURL"?). It
+>> makes them a lot easier to read, and makes the end-user documentation &
+>> messaging more consistent.
 >
-> The API promises to have only LF, not CRLF, at the end, so
-> strbuf_trim_trailing_newline() is a bit overkill (and if payload
-> happened to end with CR, we would lose it).
+> The middle part is not case-insensitive, though - I tried changing it in
+> the test and the test now fails. (Unless you mean that we should also
+> change the code to make it case-insensitive - but I would think that
+> it's better for the URL to be case-sensitive, and by extension, the
+> "hasremoteurl:" part connected to it.)
 
-it would be best if there was a way to escape characters (ie. "\n" =3D>
-"\\n"). Do we have a function for that?
+Ah, I forgot about that edge case. sorry. And sent [1] without having
+seen this as a reminder on v4. Makes sense.
 
-> > +     trace_printf_key(&trace_refs,
-> > +                      "reflog_ent %s (ret %d): %s -> %s, %s %ld \"%s\"=
-\n",
-> > +                      dbg->refname, ret, o, n, committer,
-> > +                      (long int)timestamp, trimmed.buf);
-> > +     strbuf_release(&trimmed);
-> >       return ret;
-> >  }
->
-> Can we use counted bytes in trace_printf()?  If we can, it would be
-> simpler to just scan "msg" for LF and then show only the span
-> between the beginning of the string and the found LF using "%.*s",
-> perhaps like this?
+(I seem to be getting really slow delivery from kernel.org to GMail
+these days, sometimes I can see things on lore.kernel.org hours or half
+a day before it pops up in my mail...)
 
-I beg to differ - despite this being fewer lines of code, I think
-pointer arithmetic is best avoided if possible.
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+1. https://lore.kernel.org/git/211129.864k7ug02c.gmgdl@evledraar.gmail.com/
