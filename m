@@ -2,110 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC959C433EF
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 09:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C944C433EF
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 09:42:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244737AbhK2JYw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 04:24:52 -0500
-Received: from azure-sdnproxy.icoremail.net ([52.229.168.213]:59773 "HELO
-        azure-sdnproxy-2.icoremail.net" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with SMTP id S233086AbhK2JWt (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 29 Nov 2021 04:22:49 -0500
-Received: from mailtech.cn (unknown [10.12.1.20])
-        by hzbj-icmmx-1 (Coremail) with SMTP id AQAAfwC3f6zNmqRh2PwuCQ--.56607S2;
-        Mon, 29 Nov 2021 17:18:05 +0800 (CST)
-Received: from pwxu$coremail.cn ( [112.94.4.17] ) by
- ajax-webmail-mailtech_rd (Coremail) ; Mon, 29 Nov 2021 17:19:11 +0800 (CST)
-X-Originating-IP: [112.94.4.17]
-Date:   Mon, 29 Nov 2021 17:19:11 +0800 (CST)
-X-CM-HeaderCharset: UTF-8
-From:   =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, "Git Mailing List" <git@vger.kernel.org>,
-        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29?= 
-        <aleen42@vip.qq.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        "Elijah Newren" <newren@gmail.com>
-Subject: Re: [PATCH v11 2/2] am: support --empty=<option> to handle empty
- patches
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20211103(a39c0bb8)
- Copyright (c) 2002-2021 www.mailtech.cn
- mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
-In-Reply-To: <CABPp-BF-eYcJ7eS==VK3M2xOqf5z4KNK4dP6qd_UcfLO1NWBeg@mail.gmail.com>
-References: <pull.1076.v10.git.1637567471.gitgitgadget@gmail.com>
- <pull.1076.v11.git.1637681215.gitgitgadget@gmail.com>
- <6051ad9440a966124e9147ec344ee6d87c46944a.1637681215.git.gitgitgadget@gmail.com>
- <CABPp-BF-eYcJ7eS==VK3M2xOqf5z4KNK4dP6qd_UcfLO1NWBeg@mail.gmail.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+        id S245113AbhK2Jpt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 04:45:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60634 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245132AbhK2Jnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 04:43:49 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C486C06179C
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 01:24:30 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id g14so68879760edb.8
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 01:24:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=SDRMpstBl/qe3yMPTlRJLSLxENtFQ9gA8Z0U/ITApJI=;
+        b=F52f3u1QpBF32r3ZNo7BX+ciM3Z06y1YVQe0vY2MEzg9kdAKlAed7ZmZzuy2IauR1N
+         ZMquIpg0kv8d6VE0qarI49bV/UBS1FMQbSOQdOjp+/KZnTvP24BUUNjbscjHWzL4mKiL
+         54w3Z7V/ZJALxyGH9rnuqOmZBYNT9XH9cf9FXGnNA2mpRJdRRGLmg6PvjVDF3a41k5sA
+         G3DIuBlqGKf5Vd0VQ0487L+9U4PoDXPIFN7aXVERB1ex6KcwO/sUfZVDPghrEnnFpRUH
+         8A502O4pSw2A18h9sFp2b16wqn6xa3RuSDPBuJnimN6QHtLKhDkGNhB9i9Iqe6lzhpgR
+         6/Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=SDRMpstBl/qe3yMPTlRJLSLxENtFQ9gA8Z0U/ITApJI=;
+        b=XMwJxS8sgvYSDP8gJ9lS3Q3r0CvOvcFQdNdjpyKGojMXU4xov+izbnlWUfA3thIdOX
+         tOgi1Yv3d9EydnEzpV/WgzgAcUmKPxmYeRpXQJgKcoyplIW08NIMdTj8YW0xNwvAhs0v
+         gUk67SoPfErxoqYFLgBC7D7K8VYPl/UmRegGhiqpcQ05V0Aia9QzDE7fTfP4wSUHfi59
+         xtdbpmZDFHTzyHqvPvdV0OW0L0g+wKz7024NdRlQ1oB8hJoL34HkC9OkxPuYZufdcWJ6
+         6IFNs8JAw1UIW1PLmBXniYjiSZFTntDRMK9NENOKucHlpoHV8X3I++r1stiE6h7+x79C
+         7Rhw==
+X-Gm-Message-State: AOAM530A6VBvpmz9G8idZ1vuZa7HOgehU1dkV64HBdXuPaN/lzgg19+U
+        PLdv/XkGicmlej1tq27uaP4=
+X-Google-Smtp-Source: ABdhPJyrNDCMNR8jUpSTJZ9A3l9CfNMTadalpRCHhCC70uvuT/RzIs0/jk6dHRPiMrBl6w6tno2E6Q==
+X-Received: by 2002:a17:906:dfe4:: with SMTP id lc4mr61096203ejc.125.1638177868530;
+        Mon, 29 Nov 2021 01:24:28 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id de15sm6963650ejc.70.2021.11.29.01.24.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 01:24:27 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mrcte-000fup-OA;
+        Mon, 29 Nov 2021 10:24:26 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: Re* [PATCH 2/4] refs: trim newline from reflog message
+Date:   Mon, 29 Nov 2021 09:39:58 +0100
+References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
+        <dfb639373234a6b8d5f9110380a66ffccbe0b1d6.1637590855.git.gitgitgadget@gmail.com>
+        <xmqq35nnddw7.fsf@gitster.g>
+        <CAFQ2z_PE7TMj=qfQVroK_gRfZk-xF9PKhk2yxqF-bB+2aA7eoQ@mail.gmail.com>
+        <xmqqczmqajdk.fsf@gitster.g>
+        <CAFQ2z_Mct+KBZ3vO6udwqeiHYA8od8CGH_w5BO5LaidP-AYDsg@mail.gmail.com>
+        <xmqqzgpu7grv.fsf@gitster.g> <xmqqczmn71ru.fsf_-_@gitster.g>
+        <211128.86r1b0gnv6.gmgdl@evledraar.gmail.com>
+        <xmqqpmqk5co6.fsf@gitster.g> <xmqqk0gs5bgw.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <xmqqk0gs5bgw.fsf@gitster.g>
+Message-ID: <211129.86h7bvgvqt.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Message-ID: <36706841.2ec.17d6afdb326.Coremail.pwxu@coremail.cn>
-X-Coremail-Locale: en_US
-X-CM-TRANSID: AgIMCgCX4kMPm6RhRwcAAA--.301W
-X-CM-SenderInfo: psz03q5fruvzxdlohubq/1tbiAQcBCFGCdORIbAAAso
-Authentication-Results: hzbj-icmmx-1; spf=neutral smtp.mail=pwxu@corem
-        ail.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxJFyrZw13KrWfKr4kWw1DGFg_yoW5Wr4fpa
-        yYk39Yyrs7Jr1rCwn7Cw4xXFyrWr93tFsxGr15Aw1UuF4DtryI9r4xKFs0vryUWryrZw4j
-        vFWYkrWrG3W7u3DanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
-        DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
-        UUUUU
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-RGVhcnMgSGFtYW5vLAoKICAgRWxpamFoIE5ld3JlbiBoYXMgZ2l2ZW4gdHdvIGJldHRlciBzdWdn
-ZXN0aW9uczoKCiAgICAgICAxLiBVc2UgJ2FzaycgcmF0aGVyIHRoYW4gJ2RpZScKICAgICAgIDIu
-IFdoZW4gZXJyb3Jpbmcgb3V0ICdQYXRjaCBpcyBlbXB0eScsIHByaW50IG91dCBhIHR1dG9yaWFs
-IGluZm9ybWF0aW9uCiAgICAgICAgICB0byBoZWxwIHVzZXJzIHVzaW5nICdnaXQgY29tbWl0IC0t
-YWxsb3ctZW1wdHknIHRvIGtlZXAgcmVjb3JkaW5nIGFzIAogICAgICAgICAgYW4gZW1wdHkgY29t
-bWl0LgoKICAgU2hvdWxkIHdlIGNvbnRpbnVlIHRvIGltcGxlbWVudCB0aGVzZSBmZWF0dXJlcyBp
-biBjdXJyZW50IFBSPwoKQWxlZW4KCj4gPiArLS1lbXB0eT0oZGllfGRyb3B8a2VlcCk6Ogo+ID4g
-KyAgICAgICBCeSBkZWZhdWx0LCBvciB3aGVuIHRoZSBvcHRpb24gaXMgc2V0IHRvICdkaWUnLCB0
-aGUgY29tbWFuZAo+ID4gKyAgICAgICBlcnJvcnMgb3V0IG9uIGFuIGlucHV0IGUtbWFpbCBtZXNz
-YWdlIHRoYXQgbGFja3MgYSBwYXRjaC4gV2hlbgo+ID4gKyAgICAgICB0aGlzIG9wdGlvbiBpcyBz
-ZXQgdG8gJ2Ryb3AnLCBza2lwIHN1Y2ggYW4gZS1tYWlsIG1lc3NhZ2UgaW5zdGVhZC4KPiA+ICsg
-ICAgICAgV2hlbiB0aGlzIG9wdGlvbiBpcyBzZXQgdG8gJ2tlZXAnLCBjcmVhdGUgYW4gZW1wdHkg
-Y29tbWl0LAo+ID4gKyAgICAgICByZWNvcmRpbmcgdGhlIGNvbnRlbnRzIG9mIHRoZSBlLW1haWwg
-bWVzc2FnZSBhcyBpdHMgbG9nLgo+IAo+IFdoYXQgZG9lcyAnZXJyb3JzIG91dCcgbWVhbj8gIElz
-IHRoZSBhbSBvcGVyYXRpb24gYWJvcnRlZCwgYW5kIHRoZQo+IHVzZXIgcmV0dXJuIHRvIHRoZSBw
-cmUtYW0gc3RhdGU/ICBPciBpcyB0aGUgYW0gb3BlcmF0aW9uIGludGVycnVwdGVkLAo+IHdpdGgg
-dGhlIHVzZXIgYmVpbmcgYXNrZWQgdG8gY2hvb3NlIHdoZXRoZXIgdG8ga2VlcCBvciBkcm9wIHRo
-ZSBwYXRjaD8KPiAgT3Igc29tZXRoaW5nIGVsc2UgKG15IGZpcnN0IHRob3VnaHQgd2FzICJBcmUg
-eW91IGdvaW5nIHRvIGxlYXZlIHRoZQo+IGluZGV4IGxvY2tlZD8iKT8gIFRoaXMgZGVzY3JpcHRp
-b24gaXMgbm90IHRoYXQgY2xlYXIuICBUbyBtZSwgdGhlCj4gd29yZGluZyBzdWdnZXN0cyBhYm9y
-dGVkIChvciB3b3JzZSksIGJ1dCB3aGF0IHlvdSBhY3R1YWxseSBpbXBsZW1lbnRlZAo+IHdhcyBh
-biBpbnRlcnJ1cHQtYW5kLWFzay4KPiAKPiBDYW4gSSBzdWdnZXN0IHVzaW5nICdhc2snIGluc3Rl
-YWQgb2YgJ2RpZSc/ICBJIHRoaW5rIHRoYXQgd2lsbCBiZQo+IGNsZWFyZXIsIGFuZCBpdCBtYXRj
-aGVzIHRoZSB0ZXJtIHVzZWQgYnkgZ2l0IHJlYmFzZSAtLWVtcHR5Lgo+IAo+IEFsc28sIHRoZSBv
-bmx5IGluc3RydWN0aW9ucyBnaXZlbiB0byB0aGUgdXNlciB3aGVuIHlvdSBpbnRlcnJ1cHQKPiBp
-bmNsdWRlIGhvdyB0byBza2lwIHRoZSBwYXRjaCwgYnV0IEkgZG9uJ3Qgc2VlIGFueXRoaW5nIGZv
-ciBob3cgdG8KPiBrZWVwIGl0LiAgVGhlIGluc3RydWN0aW9ucyBhcmU6Cj4gJycnCj4gUGF0Y2gg
-aXMgZW1wdHkuCj4gV2hlbiB5b3UgaGF2ZSByZXNvbHZlZCB0aGlzIHByb2JsZW0sIHJ1biAiZ2l0
-IGFtIC0tY29udGludWUiLgo+IElmIHlvdSBwcmVmZXIgdG8gc2tpcCB0aGlzIHBhdGNoLCBydW4g
-ImdpdCBhbSAtLXNraXAiIGluc3RlYWQuCj4gVG8gcmVzdG9yZSB0aGUgb3JpZ2luYWwgYnJhbmNo
-IGFuZCBzdG9wIHBhdGNoaW5nLCBydW4gImdpdCBhbSAtLWFib3J0Ii4KPiAnJycKPiAKPiBJIHRy
-aWVkIGl0IG1hbnVhbGx5LCBhbmQgaXQgdHVybnMgb3V0ICJnaXQgYW0gLS1jb250aW51ZSIgd2ls
-bCBqdXN0Cj4gc3BpdCBvdXQgYmFzaWNhbGx5IHRoZSBzYW1lIG1lc3NhZ2UgYWdhaW46Cj4gJycn
-Cj4gQXBwbHlpbmc6IGVtcHR5IGNvbW1pdAo+IE5vIGNoYW5nZXMgLSBkaWQgeW91IGZvcmdldCB0
-byB1c2UgJ2dpdCBhZGQnPwo+IElmIHRoZXJlIGlzIG5vdGhpbmcgbGVmdCB0byBzdGFnZSwgY2hh
-bmNlcyBhcmUgdGhhdCBzb21ldGhpbmcgZWxzZQo+IGFscmVhZHkgaW50cm9kdWNlZCB0aGUgc2Ft
-ZSBjaGFuZ2VzOyB5b3UgbWlnaHQgd2FudCB0byBza2lwIHRoaXMgcGF0Y2guCj4gV2hlbiB5b3Ug
-aGF2ZSByZXNvbHZlZCB0aGlzIHByb2JsZW0sIHJ1biAiZ2l0IGFtIC0tY29udGludWUiLgo+IElm
-IHlvdSBwcmVmZXIgdG8gc2tpcCB0aGlzIHBhdGNoLCBydW4gImdpdCBhbSAtLXNraXAiIGluc3Rl
-YWQuCj4gVG8gcmVzdG9yZSB0aGUgb3JpZ2luYWwgYnJhbmNoIGFuZCBzdG9wIHBhdGNoaW5nLCBy
-dW4gImdpdCBhbSAtLWFib3J0Ii4KPiAnJycKPiAKPiBBbmQgaWYgSSB0cnkgdG8gcnVuIGBnaXQg
-Y29tbWl0IC0tYWxsb3ctZW1wdHlgICh3aGljaCBJIGhhcHBlbiB0bwo+IHJlbWVtYmVyIGlzIHRo
-ZSBjb21tYW5kIHN1Z2dlc3RlZCBieSBgZ2l0IHJlYmFzZSAtLWVtcHR5PWFza2Agd2hlbiBpdAo+
-IHN0b3BzKSwgdGhlbiBJJ20gZ2l2ZW4gYW4gZW1wdHkgZWRpdG9yOyBpdCBpcyBub3QgcHJlLXBv
-cHVsYXRlZCB3aXRoCj4gdGhlIGFwcHJvcHJpYXRlIGNvbW1pdCBtZXNzYWdlLiAgQ2FuIHRoZSBw
-b3J0aW9uIG9mIHRoZSBlbXB0eSBwYXRjaAo+IGNvcnJlc3BvbmRpbmcgdG8gdGhlIGNvbW1pdCBt
-ZXNzYWdlIGJlIGFkZGVkIHRvIC5naXQvQ09NTUlUX0VESVRNU0cgdG8KPiBjb3JyZWN0IHRoYXQ/
-ICBBbHNvLCBjYW4gc29tZSBleHRyYSB3b3JkcyBiZSBwcmludGVkIGJlZm9yZQo+IGludGVycnVw
-dGluZyB0byBleHBsYWluIHdoYXQgdG8gZG8gd2hlbiB5b3Ugd2FudCB0byBrZWVwIHRoZSBlbXB0
-eQo+IGNvbW1pdD8gIFNvbWV0aGluZyBsaWtlOgo+ICIiIgo+IFRoZSBjdXJyZW50IGNvbW1pdCBi
-ZWluZyBhcHBsaWVkIGlzIGVtcHR5LiAgSWYgeW91IHdpc2ggdG8gY29tbWl0IGl0Cj4gYW55d2F5
-LCB1c2U6Cj4gICAgIGdpdCBjb21taXQgLS1hbGxvdy1lbXB0eQo+ICIiIgo=
 
+On Sun, Nov 28 2021, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>
+>>> Nitpicking aside, perhaps these two pargaraphs would be better as simply
+>>> replaced by:
+>>>
+>>>     Consult "Git internal format" in git-commit-tree(1) for
+>>>     details about the "<unix timestamp> <time zone offset>" format, and
+>>>     see show_one_reflog_ent() for the parsing function.
+>>
+>> Much nicer; this is developer facing and reducing risk of
+>> inconsistency by incorrectly duplicating is much more important than
+>> having the info available in a single place.
+>
+> Having actually read the description, I do not think
+> "Documentation/date-formats.txt::Git internal format" is a good fit.
+> We are describing the format of a single string there (e.g. <unix
+> timestamp> and <time zone offset> form a single string with one SP
+> in between), but the parameters are integral types.
+>
+> Specifically because the "Git internal format" is textual, an
+> example "+0100" given there makes it sufficiently clear that the
+> offset is a "a sign followed by 4 digits" string, but those who need
+> to use the value in "int tz" must know that is represented as a
+> positive one hundred, not sixty, which does not have to be captured
+> there for the intended audience of date-formats.txt pagelet.
+>
+> Here is what I came up with
+>
+> ---- >8 -------- >8 -------- >8 -------- >8 -------- >8 ----
+> Subject: [PATCH v2] refs: document callback for reflog-ent iterators
+>
+> refs_for_each_reflog_ent() and refs_for_each_reflog_ent_reverse()
+> functions take a callback function that gets called with the details
+> of each reflog entry.  Its parameters were not documented beyond
+> their names.  Elaborate a bit on each of them.
+>
+> Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * rewrite timestamp and tz, adjusting the internal format's
+>    description from Documentation/date-formats.txt pagelet, as
+>    pointed out by =C3=86var.
+>
+>  refs.h | 24 +++++++++++++++++++++++-
+>  1 file changed, 23 insertions(+), 1 deletion(-)
+>
+>  The indented patch shows the part that was changed from the
+>  previous one.
+>
+>     diff --git i/refs.h w/refs.h
+>     index 4fa97d77cf..f6fed5c7d8 100644
+>     --- i/refs.h
+>     +++ w/refs.h
+>     @@ -467,13 +467,15 @@ int delete_reflog(const char *refname);
+>       * The committer parameter is a single string, in the form
+>       * "$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" (without double quot=
+es).
+>       *
+>     - * The timestamp parameter gives the seconds since epoch when the re=
+flog
+>     - * entry was created.
+>     - *
+>     - * The tz parameter is an up to 4 digits integer, whose absolute val=
+ue
+>     - * gives the hour and minute offset from GMT (the lower 2 digits are
+>     - * minutes, the higher 2 digits are hours).  A negative tz means wes=
+t of,
+>     - * and a positive tz means east of GMT.
+>     + * The timestamp parameter gives the time when entry was created as =
+the number
+>     + * of seconds since the UNIX epoch.
+>     + *
+>     + * The tz parameter gives the timezone offset for the user who creat=
+ed
+>     + * the reflog entry, and its value gives a positive or negative offs=
+et
+>     + * from UTC.  Its absolute value is formed by multiplying the hour
+>     + * part by 100 and adding the minute part.  For example, 1 hour ahead
+>     + * of UTC, CET =3D=3D "+0100", is represented as positive one hundre=
+d (not
+>     + * postiive sixty).
+>       *
+>       * The msg parameter is a single complete line; a reflog message giv=
+en
+>       * to refs_delete_ref, refs_update_ref, etc. is returned to the
+
+Thanks, this version of these docs looks good to me!
