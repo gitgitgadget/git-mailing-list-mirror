@@ -2,438 +2,249 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE86DC433EF
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 22:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B364C433EF
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 22:54:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235887AbhK2W4k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 17:56:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37510 "EHLO
+        id S235196AbhK2W5v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 17:57:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236179AbhK2W4M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 17:56:12 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6746FC08ED6A
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 12:23:50 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id q82-20020a627555000000b004a4f8cadb6fso11434420pfc.20
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 12:23:50 -0800 (PST)
+        with ESMTP id S235395AbhK2W5R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 17:57:17 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 799D5C06139E
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 10:49:50 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id q3so16110197wru.5
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 10:49:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=iix3ST+jGkk/e66UMZs6tX3LlAtWHqCksONANNRN+O4=;
-        b=XtZpo7AhhnKIqQ31RXSUpwScyqaejgtuQmK8lspDfQCQrUD1OdK7+dbjJnf9efn0YX
-         hCf/+8jQfVrf6KuSVS5C+NIZWb+5NDWoLgrKRdDoe3wjqVhqI2hR9y0ZVil3/E68UYo4
-         cOtWbrx0of3f39lfbRk4Ww6JjmliLW7ogeLdGU00xtWbLSsDiWhtleazVuef8r8QrDD3
-         9q4qjq1sMUWNdgoBr/ffLSyKz9ywdRmS4f0ASGo2vO0nT2U7vhhwggh5QilTsuoOr4cQ
-         IKAbeqTz9+1MfZe2zEWaYE2WYKoThquwC2IIzx8ILexkcfdvqh8M7L3UD1sXjZcy5bVa
-         97cg==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=tnD+EksciJjt6lu/AUx/uUiNsF4xuT/jBC7k5GvwHgg=;
+        b=WB/0688XrSHQ3RYQPI6xYbKfSa1pJheV2fuKKmankoqGotsHrWiQyGqg/2fx5gwYw0
+         F2H8ihMJcAh2R/fLVeNCY/XAMt46H7vZisF4FBNqMemDfJDcn2hSb9j3wGBJoBYvA3mU
+         E0K2FxusmA7iwQE3yWTpMyLcodk4FZwFqVCF4Z6osb8n9mcTVvrBhJSLaGzjvPaVXNDe
+         TT1UEoo1N7ypzTsEwOw1W36wTvBDPK11ndrLuCjj9RUyLYTHdjmFwY8m6ZuQtPl3QP43
+         L7LkudojW9CEhAjn+ZECuR2Em1GElwoifa3SLio1ilE4jvg7zzBppYFSPzZ7vZ5s/opv
+         EYBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=iix3ST+jGkk/e66UMZs6tX3LlAtWHqCksONANNRN+O4=;
-        b=fVX9Sk3SPEmhyrjJNLtuspLb1NMAH7MzrDYbRGTHpOcmAu3TycyR8F9QcewVsYKMJT
-         Qcvb8bzhdh/mXjSEnNw7a9lodeyEmhkBHgAyyIwwWu5YQUQSKAwT4GhSaiohi5m1ayu/
-         bLSLGDbIOAFtVqqnxVE5MdpSrQnvHccHvrwtq9XORn1RrVdXIJdUVj0QEvzuXMG3yLZ/
-         ycqMdXVqKnjzQs9lJiyUsTFQ5Vqb1FzV91Rb6UYkNss/P3FUBk53Ze8iPadiUKV4wyxm
-         Uc9xswa3ZkqemvZ87DqWDQ369toQEj9XkimVYhJlSnO+EypxegnWcl61NtYT61tlLIsb
-         QEfQ==
-X-Gm-Message-State: AOAM531XANgIqaq/Rko1WVUWoDx7+HXGKrZ1cT3lB2PGyZ6KoQW4Zd5X
-        yf9KXqj9bNAd9XglNh682FlJmrb3VQXxiyhhXqrhMeIss0iC8BtVjDUH0ecg1HDAV22670xjrV4
-        Bn05bnfE2HnQWeyF+VHm7yekTEpKV6fbWxVlAfowSHDp9x8zfGFsGfl1F3nZ+/G5m8klJkszxJb
-        pD
-X-Google-Smtp-Source: ABdhPJywotGRHFqQZsTLxB16SCnaIKmBAxCi0GHIOBWomhu3FkvKZbtVGptKaxZMhccgE+VFgL627zlVyMePHGmDqGy5
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:b189:b0:143:8079:3d3b with
- SMTP id s9-20020a170902b18900b0014380793d3bmr61326753plr.71.1638217429694;
- Mon, 29 Nov 2021 12:23:49 -0800 (PST)
-Date:   Mon, 29 Nov 2021 12:23:42 -0800
-In-Reply-To: <cover.1638217387.git.jonathantanmy@google.com>
-Message-Id: <3b3af0da983c65ac8282b14141495f6859cd575a.1638217387.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <cover.1634077795.git.jonathantanmy@google.com> <cover.1638217387.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.34.0.rc2.393.gf8c9666880-goog
-Subject: [PATCH v4 2/2] config: include file if remote URL matches a glob
-From:   Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=tnD+EksciJjt6lu/AUx/uUiNsF4xuT/jBC7k5GvwHgg=;
+        b=Fkj2JQrzZ2W87GyrNgaOU9kIXyDi5Xo32VgBOX4hYqO5SOMR0owotpp+bp3BNMtfdo
+         4W5BHf1SV3k4/Zc/LSvoKEvLmlMutvf0043IUlQH7plPkHOQQ+BKohWZ46gMI46hQGvz
+         wxDK7kwMZrmuUpjEpd6R22gTo1J7wdLbqLex1G/Y/eC93JfKtMzAAp6W4xSGkWao37Ok
+         X7r5XfM152ME3PynMLep4QgySz6nlPFleQARJXr6SPQDu7dv/ZRffE9RiDsofbZRwsGb
+         iiizxDLKv9TaWZrl97B2PcZJ4RbFWHPJfy+hf1doJwZBw0syvJtVufYXHyCXwDLma3uH
+         hpPw==
+X-Gm-Message-State: AOAM530U6iaK3lBYxq69VB5JmdbWMyqpXCMFw0gMCk1p1xks2QTivfnM
+        gSqwJH4+4KZCEvVQrJJCEATNtjMVASY=
+X-Google-Smtp-Source: ABdhPJynF3WY8gnVWuUOlBCzNpjg/FbYjnBjdfqzhLeWcJj/Uy2U48zgXagFIB2pXT9016IawV5tig==
+X-Received: by 2002:a5d:65c7:: with SMTP id e7mr35278955wrw.319.1638211788880;
+        Mon, 29 Nov 2021 10:49:48 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k13sm14210016wri.6.2021.11.29.10.49.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 10:49:48 -0800 (PST)
+Message-Id: <93fe3f03fb2a10f36aff4a6e4702053daeaa1d64.1638211786.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1147.v2.git.git.1638211786.gitgitgadget@gmail.com>
+References: <pull.1147.git.git.1637855761.gitgitgadget@gmail.com>
+        <pull.1147.v2.git.git.1638211786.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 29 Nov 2021 18:49:43 +0000
+Subject: [PATCH v2 3/6] refs: allow skipping OID verification
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, chooglen@google.com,
-        gitster@pobox.com, avarab@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a feature that supports config file inclusion conditional on
-whether the repo has a remote with a URL that matches a glob.
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-Similar to my previous work on remote-suggested hooks [1], the main
-motivation is to allow remote repo administrators to provide recommended
-configs in a way that can be consumed more easily (e.g. through a
-package installable by a package manager - it could, for example,
-contain a file to be included conditionally and a post-install script
-that adds the include directive to the system-wide config file).
+This introduces the REF_SKIP_OID_VERIFICATION flag, which lets the ref-store
+test helper write non-existent or unparsable objects into the ref storage.
 
-In order to do this, Git reruns the config parsing mechanism upon
-noticing the first URL-conditional include in order to find all remote
-URLs, and these remote URLs are then used to determine if that first and
-all subsequent includes are executed. Remote URLs are not allowed to be
-configued in any URL-conditionally-included file.
+Use this to make t1006 and t3800 independent of the files storage backend.
 
-[1] https://lore.kernel.org/git/cover.1623881977.git.jonathantanmy@google.com/
-
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- Documentation/config.txt |  12 ++++
- config.c                 | 121 ++++++++++++++++++++++++++++++++++++---
- config.h                 |   7 +++
- t/t1300-config.sh        | 118 ++++++++++++++++++++++++++++++++++++++
- 4 files changed, 250 insertions(+), 8 deletions(-)
+ refs.h               |  8 ++++++-
+ refs/files-backend.c | 50 +++++++++++++++++++++++++-------------------
+ t/t1006-cat-file.sh  |  5 ++---
+ t/t3800-mktag.sh     |  6 ++++--
+ 4 files changed, 42 insertions(+), 27 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 0c0e6b859f..bfc9e22d78 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -159,6 +159,18 @@ all branches that begin with `foo/`. This is useful if your branches are
- organized hierarchically and you would like to apply a configuration to
- all the branches in that hierarchy.
+diff --git a/refs.h b/refs.h
+index d5099d4984e..46e68fd4c2a 100644
+--- a/refs.h
++++ b/refs.h
+@@ -611,12 +611,18 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
+  */
+ #define REF_FORCE_CREATE_REFLOG (1 << 1)
  
-+`hasremoteurl`::
-+	The data that follows the keyword `hasremoteurl:` is taken to
-+	be a pattern with standard globbing wildcards and two
-+	additional ones, `**/` and `/**`, that can match multiple
-+	components. The first time this keyword is seen, the rest of
-+	the config files will be scanned for remote URLs (without
-+	applying any values). If there exists at least one remote URL
-+	that matches this pattern, the include condition is met.
-++
-+Files included by this option (directly or indirectly) are not allowed
-+to contain remote URLs.
++/*
++ * Blindly write an object_id. This is useful for testing data corruption
++ * scenarios.
++ */
++#define REF_SKIP_OID_VERIFICATION (1 << 10)
 +
- A few more notes on matching via `gitdir` and `gitdir/i`:
+ /*
+  * Bitmask of all of the flags that are allowed to be passed in to
+  * ref_transaction_update() and friends:
+  */
+ #define REF_TRANSACTION_UPDATE_ALLOWED_FLAGS \
+-	(REF_NO_DEREF | REF_FORCE_CREATE_REFLOG)
++	(REF_NO_DEREF | REF_FORCE_CREATE_REFLOG | REF_SKIP_OID_VERIFICATION)
  
-  * Symlinks in `$GIT_DIR` are not resolved before matching.
-diff --git a/config.c b/config.c
-index 94ad5ce913..4ffc1e87e9 100644
---- a/config.c
-+++ b/config.c
-@@ -125,6 +125,12 @@ struct config_include_data {
- 	config_fn_t fn;
- 	void *data;
- 	const struct config_options *opts;
-+	struct git_config_source *config_source;
-+
-+	/*
-+	 * All remote URLs discovered when reading all config files.
-+	 */
-+	struct string_list *remote_urls;
- };
- #define CONFIG_INCLUDE_INIT { 0 }
- 
-@@ -316,12 +322,83 @@ static int include_condition_is_true(const struct config_options *opts,
- 	return 0;
+ /*
+  * Add a reference update to transaction. `new_oid` is the value that
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 5cfdec1e820..28a349b24ad 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1351,7 +1351,8 @@ static int rename_tmp_log(struct files_ref_store *refs, const char *newrefname)
  }
  
-+static int add_remote_url(const char *var, const char *value, void *data)
-+{
-+	struct string_list *remote_urls = data;
-+	const char *remote_name;
-+	size_t remote_name_len;
-+	const char *key;
-+
-+	if (!parse_config_key(var, "remote", &remote_name, &remote_name_len,
-+			      &key) &&
-+	    remote_name &&
-+	    !strcmp(key, "url"))
-+		string_list_append(remote_urls, value);
-+	return 0;
-+}
-+
-+static void populate_remote_urls(struct config_include_data *inc)
-+{
-+	struct config_options opts;
-+
-+	struct config_source *store_cf = cf;
-+	struct key_value_info *store_kvi = current_config_kvi;
-+	enum config_scope store_scope = current_parsing_scope;
-+
-+	opts = *inc->opts;
-+	opts.unconditional_remote_url = 1;
-+
-+	cf = NULL;
-+	current_config_kvi = NULL;
-+	current_parsing_scope = 0;
-+
-+	inc->remote_urls = xmalloc(sizeof(*inc->remote_urls));
-+	string_list_init_dup(inc->remote_urls);
-+	config_with_options(add_remote_url, inc->remote_urls, inc->config_source, &opts);
-+
-+	cf = store_cf;
-+	current_config_kvi = store_kvi;
-+	current_parsing_scope = store_scope;
-+}
-+
-+static int forbid_remote_url(const char *var, const char *value, void *data)
-+{
-+	const char *remote_name;
-+	size_t remote_name_len;
-+	const char *key;
-+
-+	if (!parse_config_key(var, "remote", &remote_name, &remote_name_len,
-+			      &key) &&
-+	    remote_name &&
-+	    !strcmp(key, "url"))
-+		die(_("remote URLs cannot be configured in file directly or indirectly included by includeIf.hasremoteurl"));
-+	return 0;
-+}
-+
-+static int at_least_one_url_matches_glob(const char *glob, int glob_len,
-+					 struct string_list *remote_urls)
-+{
-+	struct strbuf pattern = STRBUF_INIT;
-+	struct string_list_item *url_item;
-+	int found = 0;
-+
-+	strbuf_add(&pattern, glob, glob_len);
-+	for_each_string_list_item(url_item, remote_urls) {
-+		if (!wildmatch(pattern.buf, url_item->string, WM_PATHNAME)) {
-+			found = 1;
-+			break;
-+		}
-+	}
-+	strbuf_release(&pattern);
-+	return found;
-+}
-+
- static int git_config_include(const char *var, const char *value, void *data)
- {
- 	struct config_include_data *inc = data;
- 	const char *cond, *key;
- 	size_t cond_len;
--	int ret;
-+	int ret = 0;
- 
- 	/*
- 	 * Pass along all values, including "include" directives; this makes it
-@@ -335,9 +412,29 @@ static int git_config_include(const char *var, const char *value, void *data)
- 		ret = handle_path_include(value, inc);
- 
- 	if (!parse_config_key(var, "includeif", &cond, &cond_len, &key) &&
--	    (cond && include_condition_is_true(inc->opts, cond, cond_len)) &&
--	    !strcmp(key, "path"))
--		ret = handle_path_include(value, inc);
-+	    cond && !strcmp(key, "path")) {
-+		const char *url;
-+		size_t url_len;
-+
-+		if (skip_prefix_mem(cond, cond_len, "hasremoteurl:", &url,
-+				    &url_len)) {
-+			if (inc->opts->unconditional_remote_url) {
-+				config_fn_t old_fn = inc->fn;
-+
-+				inc->fn = forbid_remote_url;
-+				ret = handle_path_include(value, inc);
-+				inc->fn = old_fn;
-+			} else {
-+				if (!inc->remote_urls)
-+					populate_remote_urls(inc);
-+				if (at_least_one_url_matches_glob(
-+						url, url_len, inc->remote_urls))
-+					ret = handle_path_include(value, inc);
-+			}
-+		} else if (include_condition_is_true(inc->opts, cond, cond_len)) {
-+			ret = handle_path_include(value, inc);
-+		}
-+	}
- 
- 	return ret;
- }
-@@ -1933,11 +2030,13 @@ int config_with_options(config_fn_t fn, void *data,
- 			const struct config_options *opts)
- {
- 	struct config_include_data inc = CONFIG_INCLUDE_INIT;
-+	int ret;
- 
- 	if (opts->respect_includes) {
- 		inc.fn = fn;
- 		inc.data = data;
- 		inc.opts = opts;
-+		inc.config_source = config_source;
- 		fn = git_config_include;
- 		data = &inc;
+ static int write_ref_to_lockfile(struct ref_lock *lock,
+-				 const struct object_id *oid, struct strbuf *err);
++				 const struct object_id *oid,
++				 int skip_oid_verification, struct strbuf *err);
+ static int commit_ref_update(struct files_ref_store *refs,
+ 			     struct ref_lock *lock,
+ 			     const struct object_id *oid, const char *logmsg,
+@@ -1468,7 +1469,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
  	}
-@@ -1950,17 +2049,23 @@ int config_with_options(config_fn_t fn, void *data,
- 	 * regular lookup sequence.
- 	 */
- 	if (config_source && config_source->use_stdin) {
--		return git_config_from_stdin(fn, data);
-+		ret = git_config_from_stdin(fn, data);
- 	} else if (config_source && config_source->file) {
--		return git_config_from_file(fn, config_source->file, data);
-+		ret = git_config_from_file(fn, config_source->file, data);
- 	} else if (config_source && config_source->blob) {
- 		struct repository *repo = config_source->repo ?
- 			config_source->repo : the_repository;
--		return git_config_from_blob_ref(fn, repo, config_source->blob,
-+		ret = git_config_from_blob_ref(fn, repo, config_source->blob,
- 						data);
-+	} else {
-+		ret = do_git_config_sequence(opts, fn, data);
- 	}
+ 	oidcpy(&lock->old_oid, &orig_oid);
  
--	return do_git_config_sequence(opts, fn, data);
-+	if (inc.remote_urls) {
-+		string_list_clear(inc.remote_urls, 0);
-+		FREE_AND_NULL(inc.remote_urls);
-+	}
-+	return ret;
+-	if (write_ref_to_lockfile(lock, &orig_oid, &err) ||
++	if (write_ref_to_lockfile(lock, &orig_oid, 0, &err) ||
+ 	    commit_ref_update(refs, lock, &orig_oid, logmsg, &err)) {
+ 		error("unable to write current sha1 into %s: %s", newrefname, err.buf);
+ 		strbuf_release(&err);
+@@ -1488,7 +1489,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
+ 
+ 	flag = log_all_ref_updates;
+ 	log_all_ref_updates = LOG_REFS_NONE;
+-	if (write_ref_to_lockfile(lock, &orig_oid, &err) ||
++	if (write_ref_to_lockfile(lock, &orig_oid, 0, &err) ||
+ 	    commit_ref_update(refs, lock, &orig_oid, NULL, &err)) {
+ 		error("unable to write current sha1 into %s: %s", oldrefname, err.buf);
+ 		strbuf_release(&err);
+@@ -1724,26 +1725,31 @@ static int files_log_ref_write(struct files_ref_store *refs,
+  * errors, rollback the lockfile, fill in *err and return -1.
+  */
+ static int write_ref_to_lockfile(struct ref_lock *lock,
+-				 const struct object_id *oid, struct strbuf *err)
++				 const struct object_id *oid,
++				 int skip_oid_verification, struct strbuf *err)
+ {
+ 	static char term = '\n';
+ 	struct object *o;
+ 	int fd;
+ 
+-	o = parse_object(the_repository, oid);
+-	if (!o) {
+-		strbuf_addf(err,
+-			    "trying to write ref '%s' with nonexistent object %s",
+-			    lock->ref_name, oid_to_hex(oid));
+-		unlock_ref(lock);
+-		return -1;
+-	}
+-	if (o->type != OBJ_COMMIT && is_branch(lock->ref_name)) {
+-		strbuf_addf(err,
+-			    "trying to write non-commit object %s to branch '%s'",
+-			    oid_to_hex(oid), lock->ref_name);
+-		unlock_ref(lock);
+-		return -1;
++	if (!skip_oid_verification) {
++		o = parse_object(the_repository, oid);
++		if (!o) {
++			strbuf_addf(
++				err,
++				"trying to write ref '%s' with nonexistent object %s",
++				lock->ref_name, oid_to_hex(oid));
++			unlock_ref(lock);
++			return -1;
++		}
++		if (o->type != OBJ_COMMIT && is_branch(lock->ref_name)) {
++			strbuf_addf(
++				err,
++				"trying to write non-commit object %s to branch '%s'",
++				oid_to_hex(oid), lock->ref_name);
++			unlock_ref(lock);
++			return -1;
++		}
+ 	}
+ 	fd = get_lock_file_fd(&lock->lk);
+ 	if (write_in_full(fd, oid_to_hex(oid), the_hash_algo->hexsz) < 0 ||
+@@ -2150,7 +2156,7 @@ static int files_reflog_iterator_advance(struct ref_iterator *ref_iterator)
  }
  
- static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
-diff --git a/config.h b/config.h
-index 48a5e472ca..c24458b10a 100644
---- a/config.h
-+++ b/config.h
-@@ -89,6 +89,13 @@ struct config_options {
- 	unsigned int ignore_worktree : 1;
- 	unsigned int ignore_cmdline : 1;
- 	unsigned int system_gently : 1;
-+
-+	/*
-+	 * For internal use. Include all includeif.hasremoteurl paths without
-+	 * checking if the repo has that remote URL.
-+	 */
-+	unsigned int unconditional_remote_url : 1;
-+
- 	const char *commondir;
- 	const char *git_dir;
- 	config_parser_event_fn_t event_fn;
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 9ff46f3b04..9bd299d3f8 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -2387,4 +2387,122 @@ test_expect_success '--get and --get-all with --fixed-value' '
- 	test_must_fail git config --file=config --get-regexp --fixed-value fixed+ non-existent
- '
+ static int files_reflog_iterator_peel(struct ref_iterator *ref_iterator,
+-				   struct object_id *peeled)
++				      struct object_id *peeled)
+ {
+ 	BUG("ref_iterator_peel() called for reflog_iterator");
+ }
+@@ -2534,8 +2540,10 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 			 * The reference already has the desired
+ 			 * value, so we don't need to write it.
+ 			 */
+-		} else if (write_ref_to_lockfile(lock, &update->new_oid,
+-						 err)) {
++		} else if (write_ref_to_lockfile(
++				   lock, &update->new_oid,
++				   update->flags & REF_SKIP_OID_VERIFICATION,
++				   err)) {
+ 			char *write_err = strbuf_detach(err, NULL);
  
-+test_expect_success 'includeIf.hasremoteurl' '
-+	git init hasremoteurlTest &&
-+	test_when_finished "rm -rf hasremoteurlTest" &&
-+
-+	cat >"$(pwd)"/include-this <<-\EOF &&
-+	[user]
-+		this = this-is-included
-+	EOF
-+	cat >"$(pwd)"/dont-include-that <<-\EOF &&
-+	[user]
-+		that = that-is-not-included
-+	EOF
-+	cat >>hasremoteurlTest/.git/config <<-EOF &&
-+	[includeIf "hasremoteurl:foo"]
-+		path = "$(pwd)/include-this"
-+	[includeIf "hasremoteurl:bar"]
-+		path = "$(pwd)/dont-include-that"
-+	[remote "foo"]
-+		url = foo
-+	EOF
-+
-+	echo this-is-included >expect-this &&
-+	git -C hasremoteurlTest config --get user.this >actual-this &&
-+	test_cmp expect-this actual-this &&
-+
-+	test_must_fail git -C hasremoteurlTest config --get user.that
-+'
-+
-+test_expect_success 'includeIf.hasremoteurl respects last-config-wins' '
-+	git init hasremoteurlTest &&
-+	test_when_finished "rm -rf hasremoteurlTest" &&
-+
-+	cat >"$(pwd)"/include-two-three <<-\EOF &&
-+	[user]
-+		two = included-config
-+		three = included-config
-+	EOF
-+	cat >>hasremoteurlTest/.git/config <<-EOF &&
-+	[remote "foo"]
-+		url = foo
-+	[user]
-+		one = main-config
-+		two = main-config
-+	[includeIf "hasremoteurl:foo"]
-+		path = "$(pwd)/include-two-three"
-+	[user]
-+		three = main-config
-+	EOF
-+
-+	echo main-config >expect-main-config &&
-+	echo included-config >expect-included-config &&
-+
-+	git -C hasremoteurlTest config --get user.one >actual &&
-+	test_cmp expect-main-config actual &&
-+
-+	git -C hasremoteurlTest config --get user.two >actual &&
-+	test_cmp expect-included-config actual &&
-+
-+	git -C hasremoteurlTest config --get user.three >actual &&
-+	test_cmp expect-main-config actual
-+'
-+
-+test_expect_success 'includeIf.hasremoteurl globs' '
-+	git init hasremoteurlTest &&
-+	test_when_finished "rm -rf hasremoteurlTest" &&
-+
-+	printf "[user]\ndss = yes\n" >"$(pwd)/double-star-start" &&
-+	printf "[user]\ndse = yes\n" >"$(pwd)/double-star-end" &&
-+	printf "[user]\ndsm = yes\n" >"$(pwd)/double-star-middle" &&
-+	printf "[user]\nssm = yes\n" >"$(pwd)/single-star-middle" &&
-+	printf "[user]\nno = no\n" >"$(pwd)/no" &&
-+
-+	cat >>hasremoteurlTest/.git/config <<-EOF &&
-+	[remote "foo"]
-+		url = https://foo/bar/baz
-+	[includeIf "hasremoteurl:**/baz"]
-+		path = "$(pwd)/double-star-start"
-+	[includeIf "hasremoteurl:**/nomatch"]
-+		path = "$(pwd)/no"
-+	[includeIf "hasremoteurl:https:/**"]
-+		path = "$(pwd)/double-star-end"
-+	[includeIf "hasremoteurl:nomatch:/**"]
-+		path = "$(pwd)/no"
-+	[includeIf "hasremoteurl:https:/**/baz"]
-+		path = "$(pwd)/double-star-middle"
-+	[includeIf "hasremoteurl:https:/**/nomatch"]
-+		path = "$(pwd)/no"
-+	[includeIf "hasremoteurl:https://*/bar/baz"]
-+		path = "$(pwd)/single-star-middle"
-+	[includeIf "hasremoteurl:https://*/baz"]
-+		path = "$(pwd)/no"
-+	EOF
-+
-+	git -C hasremoteurlTest config --get user.dss &&
-+	git -C hasremoteurlTest config --get user.dse &&
-+	git -C hasremoteurlTest config --get user.dsm &&
-+	git -C hasremoteurlTest config --get user.ssm &&
-+	test_must_fail git -C hasremoteurlTest config --get user.no
-+'
-+
-+test_expect_success 'includeIf.hasremoteurl forbids remote url in such included files' '
-+	git init hasremoteurlTest &&
-+	test_when_finished "rm -rf hasremoteurlTest" &&
-+
-+	cat >"$(pwd)"/include-with-url <<-\EOF &&
-+	[remote "bar"]
-+		url = bar
-+	EOF
-+	cat >>hasremoteurlTest/.git/config <<-EOF &&
-+	[includeIf "hasremoteurl:foo"]
-+		path = "$(pwd)/include-with-url"
-+	EOF
-+
-+	# test with any Git command
-+	test_must_fail git -C hasremoteurlTest status 2>err &&
-+	grep "fatal: remote URLs cannot be configured in file directly or indirectly included by includeIf.hasremoteurl" err
-+'
-+
- test_done
+ 			/*
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 658628375c8..f5333196b07 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -452,9 +452,8 @@ test_expect_success 'the --allow-unknown-type option does not consider replaceme
+ 	# Create it manually, as "git replace" will die on bogus
+ 	# types.
+ 	head=$(git rev-parse --verify HEAD) &&
+-	test_when_finished "rm -rf .git/refs/replace" &&
+-	mkdir -p .git/refs/replace &&
+-	echo $head >.git/refs/replace/$bogus_short_sha1 &&
++	test_when_finished "test-tool ref-store main delete-refs 0 msg refs/replace/$bogus_short_sha1" &&
++	test-tool ref-store main update-ref msg "refs/replace/$bogus_short_sha1" $head $ZERO_OID 1024 &&
+ 
+ 	cat >expect <<-EOF &&
+ 	commit
+diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
+index 0544d58a6ea..128d374f740 100755
+--- a/t/t3800-mktag.sh
++++ b/t/t3800-mktag.sh
+@@ -72,7 +72,8 @@ check_verify_failure () {
+ 
+ 		# Manually create the broken, we cannot do it with
+ 		# update-ref
+-		echo "$bad_tag" >"bad-tag/$tag_ref" &&
++		test-tool -C bad-tag ref-store main delete-refs 0 msg "$tag_ref" &&
++		test-tool -C bad-tag ref-store main update-ref msg "$tag_ref" $bad_tag $ZERO_OID 1024 &&
+ 
+ 		# Unlike fsck-ing unreachable content above, this
+ 		# will always fail.
+@@ -83,7 +84,8 @@ check_verify_failure () {
+ 		# Make sure the earlier test created it for us
+ 		git rev-parse "$bad_tag" &&
+ 
+-		echo "$bad_tag" >"bad-tag/$tag_ref" &&
++		test-tool -C bad-tag ref-store main delete-refs 0 msg "$tag_ref" &&
++		test-tool -C bad-tag ref-store main update-ref msg "$tag_ref" $bad_tag $ZERO_OID 1024 &&
+ 
+ 		printf "%s tag\t%s\n" "$bad_tag" "$tag_ref" >expected &&
+ 		git -C bad-tag for-each-ref "$tag_ref" >actual &&
 -- 
-2.34.0.rc2.393.gf8c9666880-goog
+gitgitgadget
 
