@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D6AC433F5
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 19:35:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF124C433F5
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 19:35:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352492AbhK2TjG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 14:39:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48496 "EHLO
+        id S1352735AbhK2TjJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 14:39:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbhK2Tg6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 14:36:58 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7C15C09B18C
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 07:52:50 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id s13so37903073wrb.3
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 07:52:50 -0800 (PST)
+        with ESMTP id S242094AbhK2ThB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 14:37:01 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58DACC09B18F
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 07:52:51 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id d72-20020a1c1d4b000000b00331140f3dc8so12740768wmd.1
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 07:52:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=3s/qAAEmURIchvWtfDhw3vOEGGtlnQ4I11yNkVLL8xc=;
-        b=Mpjulo+gdBX4SA5XIx5c+5GoZWjK/iB4DBVTMaiFZJmjBsXRqTPUZygF3W6zXRI+sa
-         1A5wBW07meYJ++QdPDP3YiqTLXF1Ktn59xpwA2Tl2VYZ4drW5dStmY+/L6hJlzQEK9A7
-         owgEQ1EHa7soqZhRAec1jQOb875IESFAMmiDBMRaKEIzUltxL0FYBLhfUUEADd0RHAe0
-         u1QAR6z2lSrvdg3IaJjpjrfrIo0JttP2Q9Nd5jHCurvL98KdIiJ/RdOMp9+8Ka//Wsay
-         pjI03PN39C0TPrVx0/tygnIXjSSqBbj1ZQKWMlXMDb0hbV8ZCq0ezwCsIxIzIV65e/Tp
-         3Yig==
+        bh=bCfMr+Jv2pEDwIaUjIBgrO8Hy49HM0OPtV6mD7B78o4=;
+        b=CoIH4m1Mt5xTtRCFqpG3d39sPfz9fRibVgEJZeBC95zzoSegeb+cJQWnteAuvupmTu
+         F9/n1pqNRFbRQ4hky2KsTtZvQqGQaMvb8C/zztMRkMp7Xonpw/3aJnhLD2R/vtI06f2D
+         aVZBhnKLHshBZeeO+1LoGEKrzy59bMP3omQzH6qbcOYJMG1XmgW9QcCzbZSDUk6UyYL2
+         DVThhiafULbOe1gynD2HLG0dIzHZtwkX6jAmN+2VCHeizewMoQBRJWgJTYlgElCM25Vu
+         ynnHPfGup852ZuM5sCM7XE/fI5P/UaOaqMv1GSM6KuLmILessziOvpO3XB8pexCbLarS
+         MtOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3s/qAAEmURIchvWtfDhw3vOEGGtlnQ4I11yNkVLL8xc=;
-        b=z6QMN0fTGo6qB03jSS+UAyppYHySqvapd/Ly4HLqMcGyVSrAw+uPalktQdeMid5m93
-         6W73YHhfr/BD9ZVy/BIF1rWajGaVmgEefu+3KsHmRxR1wQ3iHL8nZ/Ac3w+hXfLEGtmq
-         wmpIPkcJSWk7j+7A2CgxWnl5c5tqPuA7mNntOrpwbuL5EL7J/HHjQ+i0W5qCPN3dqYr+
-         JaNE3bbB/PbgRZTa72z0vmuxgr3doF4IcKCfMljNZuw7UFdtu2L5PmFBLi9mp9IlEq2t
-         +lKRvFN1FPJ+8X59MngLJjYCYZqnw9/WIXVNT+DZIApotne+ry9HT5dGvBdYfJdpsSpm
-         so2g==
-X-Gm-Message-State: AOAM531NgrHr5HnWJVtUdc7zJbjrdOfOVY7JwUbkOTu1cXn+QyM+aSZV
-        Zf3ApOQX2sTI+RgaXJ4PIyvDFFzhdsU=
-X-Google-Smtp-Source: ABdhPJzd425oQ32il0cbRo3T0GZ4/isdJmTzbYFj04pqdwheTbmWyKmLTFbWxTkaSdKhFBKPylGC0g==
-X-Received: by 2002:a5d:59af:: with SMTP id p15mr36574194wrr.314.1638201169010;
+        bh=bCfMr+Jv2pEDwIaUjIBgrO8Hy49HM0OPtV6mD7B78o4=;
+        b=cjmve4rhZhReOGmYOqWcBATdm0l03XRTOgehhYp4xjpgrHqdnX0QgiuTEdrhVzKywE
+         MQcUwYEVaBTvnNZWXgFMYcCS+WBIG0QBmWUJCPDHLhuFuzLtRYU+c64cBgFalJLUQZCJ
+         GTWKVjl3tjcF4lZu4C+GN9LLFNioMKofTsN+sm1fpogCFWe7T7KTaCyUN63h9YwUuPaF
+         H6noJ49IUw0cD9aX+iDxZD8hIGrQaoI0N58NRT/i6YXew64bxvyBY3PX5tq/yoFUeS8s
+         3QpS8VqpRzkGyxNlcFCV/6/cGJ8yzQJekJnnHAeqa8I/yfmNqnUiV9L5SFuGgAMl/8M8
+         HPUQ==
+X-Gm-Message-State: AOAM532Xg4h+sGGhM9eWV8+WO58AEsgWQLrRHmrg9B+Bf7J0NQbkR5Mh
+        1tGNZaaqQsaW1mrPOP2q4wr3QpkYi04=
+X-Google-Smtp-Source: ABdhPJx3P11C2Iw3ruBK72tJUOzCuyPYYm6Eehd8Up8PpPa/osqD+4jTALeWVyAHY1A0WzG4aIioaQ==
+X-Received: by 2002:a05:600c:2118:: with SMTP id u24mr37739048wml.0.1638201169740;
         Mon, 29 Nov 2021 07:52:49 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u2sm16586808wrs.17.2021.11.29.07.52.48
+        by smtp.gmail.com with ESMTPSA id j40sm17271478wms.16.2021.11.29.07.52.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Nov 2021 07:52:48 -0800 (PST)
-Message-Id: <908c84005b9b0961a0a5b3b3c34b841a884c0ada.1638201164.git.gitgitgadget@gmail.com>
+        Mon, 29 Nov 2021 07:52:49 -0800 (PST)
+Message-Id: <822d7344587f698e73abba1ca726c3a905f7b403.1638201164.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1048.v6.git.1638201164.gitgitgadget@gmail.com>
 References: <pull.1048.v5.git.1635345563.gitgitgadget@gmail.com>
         <pull.1048.v6.git.1638201164.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 29 Nov 2021 15:52:41 +0000
-Subject: [PATCH v6 6/8] reset: make sparse-aware (except --mixed)
+Date:   Mon, 29 Nov 2021 15:52:42 +0000
+Subject: [PATCH v6 7/8] reset: make --mixed sparse-aware
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,254 +72,176 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Remove `ensure_full_index` guard on `prime_cache_tree` and update
-`prime_cache_tree_rec` to correctly reconstruct sparse directory entries in
-the cache tree. While processing a tree's entries, `prime_cache_tree_rec`
-must determine whether a directory entry is sparse or not by searching for
-it in the index (*without* expanding the index). If a matching sparse
-directory index entry is found, no subtrees are added to the cache tree
-entry and the entry count is set to 1 (representing the sparse directory
-itself). Otherwise, the tree is assumed to not be sparse and its subtrees
-are recursively added to the cache tree.
+Remove the `ensure_full_index` guard on `read_from_tree` and update `git
+reset --mixed` to ensure it can use sparse directory index entries wherever
+possible. Sparse directory entries are reset using `diff_tree_oid`, which
+requires `change` and `add_remove` functions to process the internal
+contents of the sparse directory. The `recursive` diff option handles cases
+in which `reset --mixed` must diff/merge files that are nested multiple
+levels deep in a sparse directory.
+
+The use of pathspecs with `git reset --mixed` introduces scenarios in which
+internal contents of sparse directories may be matched by the pathspec. In
+order to reset *all* files in the repo that may match the pathspec, the
+following conditions on the pathspec require index expansion before
+performing the reset:
+
+* "magic" pathspecs
+* wildcard pathspecs that do not match only in-cone files or entire sparse
+  directories
+* literal pathspecs matching something outside the sparse checkout
+  definition
 
 Helped-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- cache-tree.c                             | 47 ++++++++++++++++++++++--
- cache.h                                  | 10 +++++
- read-cache.c                             | 27 ++++++++++----
- t/t1092-sparse-checkout-compatibility.sh | 15 +++++++-
- 4 files changed, 86 insertions(+), 13 deletions(-)
+ builtin/reset.c                          | 87 +++++++++++++++++++++++-
+ t/t1092-sparse-checkout-compatibility.sh | 17 +++++
+ 2 files changed, 102 insertions(+), 2 deletions(-)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 9be19c85b66..2866101052c 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -740,15 +740,26 @@ out:
- 	return ret;
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 0ac0de7dc97..dcb79fb43a3 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -148,7 +148,9 @@ static void update_index_from_diff(struct diff_queue_struct *q,
+ 		 * If the file 1) corresponds to an existing index entry with
+ 		 * skip-worktree set, or 2) does not exist in the index but is
+ 		 * outside the sparse checkout definition, add a skip-worktree bit
+-		 * to the new index entry.
++		 * to the new index entry. Note that a sparse index will be expanded
++		 * if this entry is outside the sparse cone - this is necessary
++		 * to properly construct the reset sparse directory.
+ 		 */
+ 		pos = cache_name_pos(one->path, strlen(one->path));
+ 		if ((pos >= 0 && ce_skip_worktree(active_cache[pos])) ||
+@@ -166,6 +168,82 @@ static void update_index_from_diff(struct diff_queue_struct *q,
+ 	}
  }
  
-+static void prime_cache_tree_sparse_dir(struct cache_tree *it,
-+					struct tree *tree)
++static int pathspec_needs_expanded_index(const struct pathspec *pathspec)
 +{
++	unsigned int i, pos;
++	int res = 0;
++	char *skip_worktree_seen = NULL;
 +
-+	oidcpy(&it->oid, &tree->object.oid);
-+	it->entry_count = 1;
-+}
++	/*
++	 * When using a magic pathspec, assume for the sake of simplicity that
++	 * the index needs to be expanded to match all matchable files.
++	 */
++	if (pathspec->magic)
++		return 1;
 +
- static void prime_cache_tree_rec(struct repository *r,
- 				 struct cache_tree *it,
--				 struct tree *tree)
-+				 struct tree *tree,
-+				 struct strbuf *tree_path)
- {
- 	struct tree_desc desc;
- 	struct name_entry entry;
- 	int cnt;
-+	int base_path_len = tree_path->len;
- 
- 	oidcpy(&it->oid, &tree->object.oid);
++	for (i = 0; i < pathspec->nr; i++) {
++		struct pathspec_item item = pathspec->items[i];
 +
- 	init_tree_desc(&desc, tree->buffer, tree->size);
- 	cnt = 0;
- 	while (tree_entry(&desc, &entry)) {
-@@ -757,14 +768,40 @@ static void prime_cache_tree_rec(struct repository *r,
- 		else {
- 			struct cache_tree_sub *sub;
- 			struct tree *subtree = lookup_tree(r, &entry.oid);
-+
- 			if (!subtree->object.parsed)
- 				parse_tree(subtree);
- 			sub = cache_tree_sub(it, entry.path);
- 			sub->cache_tree = cache_tree();
--			prime_cache_tree_rec(r, sub->cache_tree, subtree);
-+
++		/*
++		 * If the pathspec item has a wildcard, the index should be expanded
++		 * if the pathspec has the possibility of matching a subset of entries inside
++		 * of a sparse directory (but not the entire directory).
++		 *
++		 * If the pathspec item is a literal path, the index only needs to be expanded
++		 * if a) the pathspec isn't in the sparse checkout cone (to make sure we don't
++		 * expand for in-cone files) and b) it doesn't match any sparse directories
++		 * (since we can reset whole sparse directories without expanding them).
++		 */
++		if (item.nowildcard_len < item.len) {
 +			/*
-+			 * Recursively-constructed subtree path is only needed when working
-+			 * in a sparse index (where it's used to determine whether the
-+			 * subtree is a sparse directory in the index).
++			 * Special case: if the pattern is a path inside the cone
++			 * followed by only wildcards, the pattern cannot match
++			 * partial sparse directories, so we don't expand the index.
 +			 */
-+			if (r->index->sparse_index) {
-+				strbuf_setlen(tree_path, base_path_len);
-+				strbuf_grow(tree_path, base_path_len + entry.pathlen + 1);
-+				strbuf_add(tree_path, entry.path, entry.pathlen);
-+				strbuf_addch(tree_path, '/');
++			if (path_in_cone_mode_sparse_checkout(item.original, &the_index) &&
++			    strspn(item.original + item.nowildcard_len, "*") == item.len - item.nowildcard_len)
++				continue;
++
++			for (pos = 0; pos < active_nr; pos++) {
++				struct cache_entry *ce = active_cache[pos];
++
++				if (!S_ISSPARSEDIR(ce->ce_mode))
++					continue;
++
++				/*
++				 * If the pre-wildcard length is longer than the sparse
++				 * directory name and the sparse directory is the first
++				 * component of the pathspec, need to expand the index.
++				 */
++				if (item.nowildcard_len > ce_namelen(ce) &&
++				    !strncmp(item.original, ce->name, ce_namelen(ce))) {
++					res = 1;
++					break;
++				}
++
++				/*
++				 * If the pre-wildcard length is shorter than the sparse
++				 * directory and the pathspec does not match the whole
++				 * directory, need to expand the index.
++				 */
++				if (!strncmp(item.original, ce->name, item.nowildcard_len) &&
++				    wildmatch(item.original, ce->name, 0)) {
++					res = 1;
++					break;
++				}
 +			}
++		} else if (!path_in_cone_mode_sparse_checkout(item.original, &the_index) &&
++			   !matches_skip_worktree(pathspec, i, &skip_worktree_seen))
++			res = 1;
 +
-+			/*
-+			 * If a sparse index is in use, the directory being processed may be
-+			 * sparse. To confirm that, we can check whether an entry with that
-+			 * exact name exists in the index. If it does, the created subtree
-+			 * should be sparse. Otherwise, cache tree expansion should continue
-+			 * as normal.
-+			 */
-+			if (r->index->sparse_index &&
-+			    index_entry_exists(r->index, tree_path->buf, tree_path->len))
-+				prime_cache_tree_sparse_dir(sub->cache_tree, subtree);
-+			else
-+				prime_cache_tree_rec(r, sub->cache_tree, subtree, tree_path);
- 			cnt += sub->cache_tree->entry_count;
- 		}
- 	}
++		if (res > 0)
++			break;
++	}
 +
- 	it->entry_count = cnt;
- }
- 
-@@ -772,12 +809,14 @@ void prime_cache_tree(struct repository *r,
- 		      struct index_state *istate,
- 		      struct tree *tree)
- {
-+	struct strbuf tree_path = STRBUF_INIT;
-+
- 	trace2_region_enter("cache-tree", "prime_cache_tree", the_repository);
- 	cache_tree_free(&istate->cache_tree);
- 	istate->cache_tree = cache_tree();
- 
--	ensure_full_index(istate);
--	prime_cache_tree_rec(r, istate->cache_tree, tree);
-+	prime_cache_tree_rec(r, istate->cache_tree, tree, &tree_path);
-+	strbuf_release(&tree_path);
- 	istate->cache_changed |= CACHE_TREE_CHANGED;
- 	trace2_region_leave("cache-tree", "prime_cache_tree", the_repository);
- }
-diff --git a/cache.h b/cache.h
-index f6295f3b048..1d3e4665562 100644
---- a/cache.h
-+++ b/cache.h
-@@ -816,6 +816,16 @@ struct cache_entry *index_file_exists(struct index_state *istate, const char *na
-  */
- int index_name_pos(struct index_state *, const char *name, int namelen);
- 
-+/*
-+ * Determines whether an entry with the given name exists within the
-+ * given index. The return value is 1 if an exact match is found, otherwise
-+ * it is 0. Note that, unlike index_name_pos, this function does not expand
-+ * the index if it is sparse. If an item exists within the full index but it
-+ * is contained within a sparse directory (and not in the sparse index), 0 is
-+ * returned.
-+ */
-+int index_entry_exists(struct index_state *, const char *name, int namelen);
-+
- /*
-  * Some functions return the negative complement of an insert position when a
-  * precise match was not found but a position was found where the entry would
-diff --git a/read-cache.c b/read-cache.c
-index f5d4385c408..c079ece981a 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -68,6 +68,11 @@
-  */
- #define CACHE_ENTRY_PATH_LENGTH 80
- 
-+enum index_search_mode {
-+	NO_EXPAND_SPARSE = 0,
-+	EXPAND_SPARSE = 1
-+};
-+
- static inline struct cache_entry *mem_pool__ce_alloc(struct mem_pool *mem_pool, size_t len)
- {
- 	struct cache_entry *ce;
-@@ -551,7 +556,10 @@ int cache_name_stage_compare(const char *name1, int len1, int stage1, const char
- 	return 0;
- }
- 
--static int index_name_stage_pos(struct index_state *istate, const char *name, int namelen, int stage)
-+static int index_name_stage_pos(struct index_state *istate,
-+				const char *name, int namelen,
-+				int stage,
-+				enum index_search_mode search_mode)
- {
- 	int first, last;
- 
-@@ -570,7 +578,7 @@ static int index_name_stage_pos(struct index_state *istate, const char *name, in
- 		first = next+1;
- 	}
- 
--	if (istate->sparse_index &&
-+	if (search_mode == EXPAND_SPARSE && istate->sparse_index &&
- 	    first > 0) {
- 		/* Note: first <= istate->cache_nr */
- 		struct cache_entry *ce = istate->cache[first - 1];
-@@ -586,7 +594,7 @@ static int index_name_stage_pos(struct index_state *istate, const char *name, in
- 		    ce_namelen(ce) < namelen &&
- 		    !strncmp(name, ce->name, ce_namelen(ce))) {
- 			ensure_full_index(istate);
--			return index_name_stage_pos(istate, name, namelen, stage);
-+			return index_name_stage_pos(istate, name, namelen, stage, search_mode);
- 		}
- 	}
- 
-@@ -595,7 +603,12 @@ static int index_name_stage_pos(struct index_state *istate, const char *name, in
- 
- int index_name_pos(struct index_state *istate, const char *name, int namelen)
- {
--	return index_name_stage_pos(istate, name, namelen, 0);
-+	return index_name_stage_pos(istate, name, namelen, 0, EXPAND_SPARSE);
++	free(skip_worktree_seen);
++	return res;
 +}
 +
-+int index_entry_exists(struct index_state *istate, const char *name, int namelen)
-+{
-+	return index_name_stage_pos(istate, name, namelen, 0, NO_EXPAND_SPARSE) >= 0;
- }
+ static int read_from_tree(const struct pathspec *pathspec,
+ 			  struct object_id *tree_oid,
+ 			  int intent_to_add)
+@@ -178,9 +256,14 @@ static int read_from_tree(const struct pathspec *pathspec,
+ 	opt.format_callback = update_index_from_diff;
+ 	opt.format_callback_data = &intent_to_add;
+ 	opt.flags.override_submodule_config = 1;
++	opt.flags.recursive = 1;
+ 	opt.repo = the_repository;
++	opt.change = diff_change;
++	opt.add_remove = diff_addremove;
++
++	if (pathspec->nr && the_index.sparse_index && pathspec_needs_expanded_index(pathspec))
++		ensure_full_index(&the_index);
  
- int remove_index_entry_at(struct index_state *istate, int pos)
-@@ -1222,7 +1235,7 @@ static int has_dir_name(struct index_state *istate,
- 			 */
- 		}
- 
--		pos = index_name_stage_pos(istate, name, len, stage);
-+		pos = index_name_stage_pos(istate, name, len, stage, EXPAND_SPARSE);
- 		if (pos >= 0) {
- 			/*
- 			 * Found one, but not so fast.  This could
-@@ -1322,7 +1335,7 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
- 		pos = index_pos_to_insert_pos(istate->cache_nr);
- 	else
--		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
-+		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce), EXPAND_SPARSE);
- 
- 	/* existing match? Just replace it. */
- 	if (pos >= 0) {
-@@ -1357,7 +1370,7 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 		if (!ok_to_replace)
- 			return error(_("'%s' appears as both a file and as a directory"),
- 				     ce->name);
--		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
-+		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce), EXPAND_SPARSE);
- 		pos = -pos-1;
- 	}
- 	return pos + 1;
+-	ensure_full_index(&the_index);
+ 	if (do_diff_cache(tree_oid, &opt))
+ 		return 1;
+ 	diffcore_std(&opt);
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 4125525ab86..871cc3fcb8d 100755
+index 871cc3fcb8d..77e302a0ef3 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -777,9 +777,9 @@ test_expect_success 'sparse-index is not expanded' '
- 	ensure_not_expanded checkout - &&
- 	ensure_not_expanded switch rename-out-to-out &&
- 	ensure_not_expanded switch - &&
--	git -C sparse-index reset --hard &&
-+	ensure_not_expanded reset --hard &&
- 	ensure_not_expanded checkout rename-out-to-out -- deep/deeper1 &&
--	git -C sparse-index reset --hard &&
-+	ensure_not_expanded reset --hard &&
- 	ensure_not_expanded restore -s rename-out-to-out -- deep/deeper1 &&
+@@ -795,11 +795,28 @@ test_expect_success 'sparse-index is not expanded' '
+ 		ensure_not_expanded reset --hard $ref || return 1
+ 	done &&
  
- 	echo >>sparse-index/README.md &&
-@@ -789,6 +789,17 @@ test_expect_success 'sparse-index is not expanded' '
- 	echo >>sparse-index/untracked.txt &&
- 	ensure_not_expanded add . &&
++	ensure_not_expanded reset --mixed base &&
+ 	ensure_not_expanded reset --hard update-deep &&
+ 	ensure_not_expanded reset --keep base &&
+ 	ensure_not_expanded reset --merge update-deep &&
+ 	ensure_not_expanded reset --hard &&
  
-+	for ref in update-deep update-folder1 update-folder2 update-deep
-+	do
-+		echo >>sparse-index/README.md &&
-+		ensure_not_expanded reset --hard $ref || return 1
-+	done &&
++	ensure_not_expanded reset base -- deep/a &&
++	ensure_not_expanded reset base -- nonexistent-file &&
++	ensure_not_expanded reset deepest -- deep &&
 +
-+	ensure_not_expanded reset --hard update-deep &&
-+	ensure_not_expanded reset --keep base &&
-+	ensure_not_expanded reset --merge update-deep &&
-+	ensure_not_expanded reset --hard &&
++	# Although folder1 is outside the sparse definition, it exists as a
++	# directory entry in the index, so the pathspec will not force the
++	# index to be expanded.
++	ensure_not_expanded reset deepest -- folder1 &&
++	ensure_not_expanded reset deepest -- folder1/ &&
++
++	# Wildcard identifies only in-cone files, no index expansion
++	ensure_not_expanded reset deepest -- deep/\* &&
++
++	# Wildcard identifies only full sparse directories, no index expansion
++	ensure_not_expanded reset deepest -- folder\* &&
 +
  	ensure_not_expanded checkout -f update-deep &&
  	test_config -C sparse-index pull.twohead ort &&
