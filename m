@@ -2,69 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCFACC433F5
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 02:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FA9EC433EF
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 02:32:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239235AbhK2CfK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Nov 2021 21:35:10 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54802 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236803AbhK2CdK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Nov 2021 21:33:10 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 647CF168152;
-        Sun, 28 Nov 2021 21:29:53 -0500 (EST)
+        id S238883AbhK2Cfz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Nov 2021 21:35:55 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60570 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233050AbhK2Cdz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Nov 2021 21:33:55 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E8E44E9411;
+        Sun, 28 Nov 2021 21:30:37 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=ycznGDuqaEQXRfe+U6ACX+2fo
-        jPgraEFAC7PUn2fBo4=; b=d0RYleZ3N0KE/tlFGYgRdAQavMfZhcPdHy05Oh+uB
-        pHyhB/oXXiS8iXRFCb/3mkYhTKccZ5BczZjZ5r+dZI701VCJ7puw9jFDAI/VsZeJ
-        pBFR4ejcAjVvvXrJSYdUClcKvvDDAfcxcEL7LtrPdaStCsTvVhK/U2h3unRkLmQY
-        Tg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5D0F0168151;
-        Sun, 28 Nov 2021 21:29:53 -0500 (EST)
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=cKtKoJrwWW+e5HuXOuY2o/NJB8VkCSvq/SLcQoKtXoA=; b=bSJa
+        c55ZUkTKYlVkyKkIX4/SgKICzfO5qFSJ+ZjLQO87uhLqWg1dX1bs1CvuH3TahmBk
+        KN1zQTOQrNj3AGr56FyAmWXw0TRdkD9wP77bg6NKoMEiO2N4epQ8Do9i+2THy62r
+        b9jo9o+C98VLO6Olf9u4DxEe6p0UKjL9X6jRh/8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF8C2E9410;
+        Sun, 28 Nov 2021 21:30:37 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6D134168150;
-        Sun, 28 Nov 2021 21:29:49 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4EA10E940F;
+        Sun, 28 Nov 2021 21:30:37 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: bc/require-c99 + jc/c99-var-decl-in-for-loop
-References: <xmqqlf1caica.fsf@gitster.g>
-        <211126.86czmnhwu4.gmgdl@evledraar.gmail.com>
-Date:   Sun, 28 Nov 2021 18:29:47 -0800
-Message-ID: <xmqqh7bv4rtw.fsf@gitster.g>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH 2/4] refs: trim newline from reflog message
+References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
+        <dfb639373234a6b8d5f9110380a66ffccbe0b1d6.1637590855.git.gitgitgadget@gmail.com>
+        <xmqq35nnddw7.fsf@gitster.g>
+        <CAFQ2z_PE7TMj=qfQVroK_gRfZk-xF9PKhk2yxqF-bB+2aA7eoQ@mail.gmail.com>
+        <xmqqczmqajdk.fsf@gitster.g>
+        <CAFQ2z_Mct+KBZ3vO6udwqeiHYA8od8CGH_w5BO5LaidP-AYDsg@mail.gmail.com>
+        <xmqqzgpu7grv.fsf@gitster.g>
+        <CAFQ2z_Mb+NzQfXfMhdQoPs09p2j1AWRAdXcX3JSznn+H9+T0Bw@mail.gmail.com>
+        <xmqqpmqp2xmz.fsf@gitster.g>
+        <CAFQ2z_PqgwYy+RxQm7d7WDQYvQQ2vVE0cXHdDKNwQJm3Xc+NFw@mail.gmail.com>
+        <xmqqtug1z32j.fsf@gitster.g>
+        <CAFQ2z_N-XY6MrvYjKvkH-vNz1824p12aNeiHj8m8VPzPD0JxEA@mail.gmail.com>
+Date:   Sun, 28 Nov 2021 18:30:36 -0800
+Message-ID: <xmqqa6hn4rsj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 39C03B48-50BC-11EC-8078-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 564989A4-50BC-11EC-80BA-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-> On Wed, Nov 24 2021, Junio C Hamano wrote:
->
->> * bc/require-c99 (2021-11-18) 1 commit
->>  . git-compat-util: add a test balloon for C99 support
+> On Wed, Nov 24, 2021 at 9:55 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> Ehh, let's step back a bit.
 >>
->>  Weather balloon to break people with compilers that do not support
->>  C99.
+>> Is there anything in the common part and files backend in ref API
+>> that needs to be changed to fix some bug?  I do not see anything
+>> broken that needs to be fixed by "assert that the string ends in LF
+>> and doesn't need to add LF itself" or by "always add LF".
 >
-> It would be nice if they'd upgrade, but maybe breaking those people is
-> going a bit far :)
+> Clearly, you and I disagree about what is logical behavior here.
+>
+> I've reworked the series to fit with your opinion on the matter. PTAL.
 
-You cannot tell who if anybody is not ready without a small piece of
-change, which is very easy to revert locally, that would break them
-hard.  If you look at the patch in question, especially if you pay
-attention to what message it gives those who are not ready when it
-happens, I would think you agree with the patch thta it is not going
-too far.
+Thanks.
+
+I find both are logical and internally consistent, so I prefer a
+choice that requires fewer changes to what is already working.
