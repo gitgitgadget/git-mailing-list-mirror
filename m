@@ -2,104 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B1D8C433F5
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 13:43:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56028C433EF
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 14:14:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240409AbhK2Nqa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 08:46:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57068 "EHLO
+        id S241648AbhK2ORm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 09:17:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237654AbhK2No3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 08:44:29 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C19E3C09CE40
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 04:25:29 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id x6so70949809edr.5
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 04:25:29 -0800 (PST)
+        with ESMTP id S231195AbhK2OPm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 09:15:42 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B008DC008197
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 04:51:23 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id t5so71641103edd.0
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 04:51:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=fGz43Wq0/uigNe8DuF6ZjjQwpqZay8Y/ryc9M28sdD0=;
-        b=PwhL/PCpAWrbO9KKdg47owYdW3d0drBA9dqplWvDUJH3bXf+tZyaobhBXyOyYKpwpb
-         jehAtOnC4AdCfRFs/R41htrmL1WN0IKJm3QyMZ5iZ7ghMpcDOG1Ii0MibkIsrEmweNT3
-         xY/gaFPa0pSOSKJ28kTyGaDwp9LCO1TRfyeVQNPCAKKL36oDrL3n41/lKHLlfuCb3pN5
-         56aO9c/GBPrDfWUnH6Hf15IjOB+h2btIqEHWSHJtruB+dsDFPj42C9BM8nvIrrchFEwf
-         iI/4LCE5eGk8ec5bJdIXS6OBz4TY22+3YR/syO6VlSWjnzSOF/yHcyBaa+BdBjRMi0ep
-         2vsg==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=+5D6pcRXlzNefhSSimU8y1eD1aLTjMUCuSdIh+7juN0=;
+        b=BSRtNK/ZKBzIqK9WglCmyZWT+DwpUL2syzFRxLUsElzQcdFr7QvptKJ91u/PPrTxTm
+         qIYdWxmSbD8yPV6j7Y6ks3/dq3rUkeUtWyMJ1CQdxHxFFOazK9f7mCeC7fc+jvPIo7x7
+         oeQjZwyyLwdoQ0bT/lOiwoQdKfc3noDsG91CzJMejcz0+CO3umnNwW32GhXEy3zOGWTT
+         3/srOxEg6IkUeX3mUwxG9WzskZpsg/iz9w4+j9n6W5mf7upf0L7+KR0puXpndLPS3KNZ
+         vPQxEfOwAnHc+DgGQXMRsFmvH6CprbIy7xIIcLwJmLRQOcN0vjESyVm/1gEEeWGrow16
+         8U4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=fGz43Wq0/uigNe8DuF6ZjjQwpqZay8Y/ryc9M28sdD0=;
-        b=Re1/QyUFwJI770fOoh8u+h8QoWr6CRE2rgPsfYlyqComEYUnmUdnnyru1/rxjBvkds
-         gDOE83vABBpIF1icbbHIMn2JyKc4bakWoJAvOPvCwx4eK0Evz+dATRNs2PPvPeecAgfE
-         K0kRqmVUiQX3LGuio2ehBuh4s48Keq9M9rFwI9CTqdjNdxlngAMPe9VSs++Jk8lHKv3S
-         eXusKaggrFRYD/tK08VVON4NbLtt67ZRxH74SBJLsle722AKLX71uJOONaO3ieH6GWOA
-         09TSZulPrDapPjH8xCwdBYPbbkKbK1RxS6YECnHofuXi3YLcgHimsVmBm81SyI/leEnG
-         qk+g==
-X-Gm-Message-State: AOAM532Buot4/Mwvp3lMq4Q6MrDR4jzxFnh6I1cxj4SAftnG6clrsC9n
-        HmZeK9m0qC0nkQjgBxeWXlqJenm1CrE=
-X-Google-Smtp-Source: ABdhPJwl2Tl+471Hc0AzgZVmOtQaOtkSCwJo1ZJdBd3ulZJS0Y+iFGrKLC8gXOeHKp9/doCBZX3EKA==
-X-Received: by 2002:a17:906:dc90:: with SMTP id cs16mr59228534ejc.432.1638188728313;
-        Mon, 29 Nov 2021 04:25:28 -0800 (PST)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=+5D6pcRXlzNefhSSimU8y1eD1aLTjMUCuSdIh+7juN0=;
+        b=pcfkcQIYxwCmavMpkBTDt69xM4v791U6qBGEanckIwuSYWz/defciFsAXumixalZ/1
+         l+t22Libm1sD6Bqem2QwBNFFRk45K0RYOObcWhL7RRUzkovmfEnYWypsvVG8TOedKzRC
+         2AijElC0iBdurC+ItwxBRoRn2kCpmOipGTyJpKX4DhrasEBZn2wHw/zqgDe+Io2Vjq0g
+         WwZ4WmaadaoCKBytrzZyK+m6h87edVqYpGMh1KNkrGKRXS1FVvqxDyWLKag111mkoVRW
+         rGjpqxbs87C5iB/ton57L12PxYwb0C6hGOVVOsH04F8x0J3BQIlEsGfR9CRKpPK9C+k7
+         Ugqw==
+X-Gm-Message-State: AOAM530LL61uyp2FmaRM9juFx15km/5aSHxuWtaUkhLtfyDbv7lgsu6t
+        Fp8EYZHKXsW3LEyFw5fGCpk=
+X-Google-Smtp-Source: ABdhPJx4Hy0I0nWmEkQI/tOK25euW3KWtHyxyNJNKXB1Nd76PUP8tm1A/cVfu/U6SPaewSMsh7aXQA==
+X-Received: by 2002:a17:907:1c07:: with SMTP id nc7mr58021426ejc.546.1638190282103;
+        Mon, 29 Nov 2021 04:51:22 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id dp16sm8161142ejc.34.2021.11.29.04.25.27
+        by smtp.gmail.com with ESMTPSA id w22sm9878043edd.49.2021.11.29.04.51.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Nov 2021 04:25:27 -0800 (PST)
+        Mon, 29 Nov 2021 04:51:21 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mrfio-000hz5-SF;
-        Mon, 29 Nov 2021 13:25:26 +0100
+        id 1mrg7s-000izU-Vq;
+        Mon, 29 Nov 2021 13:51:20 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Nikita Bobko <nikitabobko@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG REPORT] `git rebase --exec` shouldn't run the exec command
- when there is nothing to rebase
-Date:   Mon, 29 Nov 2021 13:07:46 +0100
-References: <CAMJzOtyw78-8gt3oGscN7KUzpzRRWtAQuGfcJ+R_Fjoom9Lexw@mail.gmail.com>
+To:     Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Mahdi Hosseinzadeh via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Mahdi Hosseinzadeh <mdihosseinzadeh@gmail.com>
+Subject: Re: [PATCH] githubci: add a workflow for creating GitHub release notes
+Date:   Mon, 29 Nov 2021 13:49:20 +0100
+References: <pull.1146.git.git.1637840216877.gitgitgadget@gmail.com>
+ <AM0PR04MB60196EFE984652ECCBD591A8A5629@AM0PR04MB6019.eurprd04.prod.outlook.com>
+ <nycvar.QRO.7.76.6.2111261455590.63@tvgsbejvaqbjf.bet>
+ <AM0PR04MB601972377B5CC2E24B6BA1DFA5639@AM0PR04MB6019.eurprd04.prod.outlook.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <CAMJzOtyw78-8gt3oGscN7KUzpzRRWtAQuGfcJ+R_Fjoom9Lexw@mail.gmail.com>
-Message-ID: <211129.868rx7gnd5.gmgdl@evledraar.gmail.com>
+In-reply-to: <AM0PR04MB601972377B5CC2E24B6BA1DFA5639@AM0PR04MB6019.eurprd04.prod.outlook.com>
+Message-ID: <211129.86k0grf7lj.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Nov 26 2021, Nikita Bobko wrote:
+On Fri, Nov 26 2021, Matthias A=C3=9Fhauer wrote:
 
-> Steps:
-> git rebase HEAD --exec "echo foo"
+> On Fri, 26 Nov 2021, Johannes Schindelin wrote:
 >
-> EXPECTED: since 0 commits are going to be rebased then I expect "foo"
-> NOT to be printed
-> ACTUAL:   "foo" is printed
+>> Hi,
+>>
+>
+> [...]
+>
+>> One thing I had not thought of earlier: do we really want to do this in
+>> every fork of git/git? I know for a fact that microsoft/git has a very
+>> different workflow upon pushing a tag.
+>>
+>> So maybe we need something like this, too:
+>>
+>>   create-gh-release:
+>> +    if: github.repository =3D=3D 'git/git'
+>>     name: Create a new release or update an existing release in the GitH=
+ub repository
+>
+> I think you're right. This would have unidesirable side effects if it
+> ran in forks.
 
-I don't think this is a bug, but explicitly desired behavior. When you
-do:
+Rather than hardcode given repositories, which e.g. for testing the CI
+itself can be bothersome, perhaps a better thing is to put this into the
+existing ci-config? I.e. git/git.git could opt itself in to behavior
+that would be off by default?
 
-    git rebase -x 'make test' BASE
-
-You expect to run 'make test' for all of BASE..HEAD inclusive of
-"base". E.g. for HEAD~1 we'll run 'make test' twice, and you know both
-your HEAD~ and HEAD passed tests.
-
-So why wouldn't doing the same for HEAD make sense?
-
-That being said perhaps some users would think an option or
-configuration to skip the injection of "exec" after "noop" would make
-sense in that case.
-
-But does this really have anything per-se to do with --exec? Wouldn't
-such an option/configuration be the same as rebase in general dying if
-there's no work to do?
-
-And wouldn't such a thing be more useful than a narrow change to make
---exec a NOOP in these cases?
-
-E.g. if I've got a "topic" that has commit "A", that's since been
-integrated into my upstream and I have a script to "make test" on my
-topics, won't simply dying (and thus indicating that the topic is
-dead/integrated) be better than noop-ing?
+I don't know how much that matters in this case, but I don't see why
+we'd hardcode repository paths in general since we've got the ci-config.
