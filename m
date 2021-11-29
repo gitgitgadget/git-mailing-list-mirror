@@ -2,80 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFCF7C4332F
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 17:28:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D116FC433EF
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 17:32:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348291AbhK2Rbi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 12:31:38 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:36032 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236413AbhK2R3h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 12:29:37 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id F0D1B1F953;
-        Mon, 29 Nov 2021 17:26:18 +0000 (UTC)
-Date:   Mon, 29 Nov 2021 17:26:18 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Jani Nikula <jani.nikula@intel.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Thorsten Leemhuis <linux@leemhuis.info>,
-        workflows@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Jonathan Corbet <corbet@lwn.net>, git@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Kees Cook <keescook@chromium.org>
-Subject: Re: [RFC PATCH v1 1/1] docs: add the new commit-msg tags 'Reported:'
- and 'Reviewed:'
-Message-ID: <20211129172618.GA26651@dcvr>
-References: <cover.1637566224.git.linux@leemhuis.info>
- <6b760115ecdd3687d4b82680b284f55a04f3ad90.1637566224.git.linux@leemhuis.info>
- <20211123185237.M476855@dcvr>
- <12cefa81-495b-3083-5f19-b319c704ebf7@leemhuis.info>
- <20211126171141.GA21826@dcvr>
- <42ff6b8d-0b7c-12e0-4648-a9232b0f577c@leemhuis.info>
- <20211127195231.GA4636@dcvr>
- <xmqqtufx5p19.fsf@gitster.g>
- <87mtlnjhj6.fsf@intel.com>
+        id S1348366AbhK2Rfp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 12:35:45 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55565 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232009AbhK2Rdo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 12:33:44 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1BE10EEC86;
+        Mon, 29 Nov 2021 12:30:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=O+K7eAjeJGWL
+        pUK68rjO+HljNqocdhR2GMKFMrm6Vcg=; b=jbnkPUwEFdHYiZeFkdfJMnUaJIze
+        xvtsMzKH/x51CdtW/wjWx+xJx5ObEhcUgp7X1Ue4o5kgfMr9R5tVGdyljUS/XOqC
+        7hySz7qCNQllu1PqFuhbCvPwoXAoeTqUUsZ33JTYwwq8hV4i5wuTlGp6M+abCKlu
+        GoPyCIT2X+mZIbs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FA4BEEC85;
+        Mon, 29 Nov 2021 12:30:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 79420EEC83;
+        Mon, 29 Nov 2021 12:30:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: Re: [PATCH v2] mingw: avoid fallback for {local,gm}time_r()
+References: <pull.1142.git.git.1637817792914.gitgitgadget@gmail.com>
+        <pull.1142.v2.git.git.1638008132992.gitgitgadget@gmail.com>
+Date:   Mon, 29 Nov 2021 09:30:24 -0800
+In-Reply-To: <pull.1142.v2.git.git.1638008132992.gitgitgadget@gmail.com>
+        ("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget"'s message
+ of "Sat, 27
+        Nov 2021 10:15:32 +0000")
+Message-ID: <xmqq1r2y50pb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87mtlnjhj6.fsf@intel.com>
+X-Pobox-Relay-ID: 0A57EDC8-513A-11EC-8E66-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jani Nikula <jani.nikula@intel.com> wrote:
-> From the RFC nitpicking department, msg-id is allowed to contain CFWS
-> (comments and folding white space) outside the angle brackets, which
-> means you could have RFC compliant Message-ID header field:
-> 
-> Message-ID: 
->   <message-id@example.com>
-> 
-> or
-> 
-> Message-ID: (comment) 
->   <message-id@example.com>
-> 
-> or even worse, really.
-> 
-> The moral of the story is that you should always offload the header
-> parsing to some tool or library designed to do that.
+"Carlo Marcelo Arenas Bel=C3=B3n via GitGitGadget"
+<gitgitgadget@gmail.com> writes:
 
-It's a bit much for common cases with git-send-email and
-reasonable MUAs, I think.  I don't know if formail is commonly
-installed, nowadays...
+> From: =3D?UTF-8?q?Carlo=3D20Marcelo=3D20Arenas=3D20Bel=3DC3=3DB3n?=3D <=
+carenas@gmail.com>
+>
+> mingw-w64's pthread_unistd.h had a bug that mistakenly (because there i=
+s
+> no support for the *lockfile() functions required[1]) defined
+> _POSIX_THREAD_SAFE_FUNCTIONS and that was being worked around since
+> 3ecd153a3b (compat/mingw: support MSys2-based MinGW build, 2016-01-14).
+> ...
+>     Changes since v1:
+>    =20
+>      * Fixed grammar in the commit message (suggested by Junio)
+>      * Added ACK (proposed by dscho)
 
-Fwiw, the code running lore uses something like this:
-
-	/^Message-ID:[ \t]*([^\n]*\r?\n # 1st line
-			# continuation lines:
-			(?:[^:\n]*?[ \t]+[^\n]*\r?\n)*)
-			/ismx
-
-I'm fine with this non-trivial regexp being included with
-GPL-2.0 code; but it could be too big for a one-liner *shrug*
-
-... And <([^>]+)>/s to extract Message-IDs, but ISTR the code
-behind lore doesn't handle spaces inside <> properly, but I'm
-not sure if there's enough valid, non-spam messages with them...
+Thanks. Queued.
