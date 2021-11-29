@@ -2,118 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D5EEC433FE
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 12:05:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B1D8C433F5
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 13:43:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245054AbhK2MIp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 07:08:45 -0500
-Received: from mga02.intel.com ([134.134.136.20]:63418 "EHLO mga02.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236237AbhK2MGo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 07:06:44 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10182"; a="223179093"
-X-IronPort-AV: E=Sophos;i="5.87,273,1631602800"; 
-   d="scan'208";a="223179093"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2021 04:03:22 -0800
-X-IronPort-AV: E=Sophos;i="5.87,273,1631602800"; 
-   d="scan'208";a="511658562"
-Received: from mkabdel-mobl.ger.corp.intel.com (HELO localhost) ([10.252.11.182])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2021 04:03:19 -0800
-From:   Jani Nikula <jani.nikula@intel.com>
-To:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>
-Cc:     Thorsten Leemhuis <linux@leemhuis.info>, workflows@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Jonathan Corbet <corbet@lwn.net>, git@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Kees Cook <keescook@chromium.org>
-Subject: Re: [RFC PATCH v1 1/1] docs: add the new commit-msg tags
- 'Reported:' and 'Reviewed:'
-In-Reply-To: <xmqqtufx5p19.fsf@gitster.g>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <cover.1637566224.git.linux@leemhuis.info>
- <6b760115ecdd3687d4b82680b284f55a04f3ad90.1637566224.git.linux@leemhuis.info>
- <20211123185237.M476855@dcvr>
- <12cefa81-495b-3083-5f19-b319c704ebf7@leemhuis.info>
- <20211126171141.GA21826@dcvr>
- <42ff6b8d-0b7c-12e0-4648-a9232b0f577c@leemhuis.info>
- <20211127195231.GA4636@dcvr> <xmqqtufx5p19.fsf@gitster.g>
-Date:   Mon, 29 Nov 2021 14:03:09 +0200
-Message-ID: <87mtlnjhj6.fsf@intel.com>
+        id S240409AbhK2Nqa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 08:46:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57068 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237654AbhK2No3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 08:44:29 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C19E3C09CE40
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 04:25:29 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id x6so70949809edr.5
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 04:25:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=fGz43Wq0/uigNe8DuF6ZjjQwpqZay8Y/ryc9M28sdD0=;
+        b=PwhL/PCpAWrbO9KKdg47owYdW3d0drBA9dqplWvDUJH3bXf+tZyaobhBXyOyYKpwpb
+         jehAtOnC4AdCfRFs/R41htrmL1WN0IKJm3QyMZ5iZ7ghMpcDOG1Ii0MibkIsrEmweNT3
+         xY/gaFPa0pSOSKJ28kTyGaDwp9LCO1TRfyeVQNPCAKKL36oDrL3n41/lKHLlfuCb3pN5
+         56aO9c/GBPrDfWUnH6Hf15IjOB+h2btIqEHWSHJtruB+dsDFPj42C9BM8nvIrrchFEwf
+         iI/4LCE5eGk8ec5bJdIXS6OBz4TY22+3YR/syO6VlSWjnzSOF/yHcyBaa+BdBjRMi0ep
+         2vsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=fGz43Wq0/uigNe8DuF6ZjjQwpqZay8Y/ryc9M28sdD0=;
+        b=Re1/QyUFwJI770fOoh8u+h8QoWr6CRE2rgPsfYlyqComEYUnmUdnnyru1/rxjBvkds
+         gDOE83vABBpIF1icbbHIMn2JyKc4bakWoJAvOPvCwx4eK0Evz+dATRNs2PPvPeecAgfE
+         K0kRqmVUiQX3LGuio2ehBuh4s48Keq9M9rFwI9CTqdjNdxlngAMPe9VSs++Jk8lHKv3S
+         eXusKaggrFRYD/tK08VVON4NbLtt67ZRxH74SBJLsle722AKLX71uJOONaO3ieH6GWOA
+         09TSZulPrDapPjH8xCwdBYPbbkKbK1RxS6YECnHofuXi3YLcgHimsVmBm81SyI/leEnG
+         qk+g==
+X-Gm-Message-State: AOAM532Buot4/Mwvp3lMq4Q6MrDR4jzxFnh6I1cxj4SAftnG6clrsC9n
+        HmZeK9m0qC0nkQjgBxeWXlqJenm1CrE=
+X-Google-Smtp-Source: ABdhPJwl2Tl+471Hc0AzgZVmOtQaOtkSCwJo1ZJdBd3ulZJS0Y+iFGrKLC8gXOeHKp9/doCBZX3EKA==
+X-Received: by 2002:a17:906:dc90:: with SMTP id cs16mr59228534ejc.432.1638188728313;
+        Mon, 29 Nov 2021 04:25:28 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id dp16sm8161142ejc.34.2021.11.29.04.25.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 04:25:27 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mrfio-000hz5-SF;
+        Mon, 29 Nov 2021 13:25:26 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Nikita Bobko <nikitabobko@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG REPORT] `git rebase --exec` shouldn't run the exec command
+ when there is nothing to rebase
+Date:   Mon, 29 Nov 2021 13:07:46 +0100
+References: <CAMJzOtyw78-8gt3oGscN7KUzpzRRWtAQuGfcJ+R_Fjoom9Lexw@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <CAMJzOtyw78-8gt3oGscN7KUzpzRRWtAQuGfcJ+R_Fjoom9Lexw@mail.gmail.com>
+Message-ID: <211129.868rx7gnd5.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 27 Nov 2021, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Wong <e@80x24.org> writes:
->
->> Thorsten Leemhuis <linux@leemhuis.info> wrote:
->>> Just to be sure I'll do what you expect to be done: I assume you want to see
->>> it changed like this?
->>> 
->>> -	perl -pi -e 's|^Message-Id:\s*<?([^>]+)>?$|Link: https://lore.kernel.org/r/$1|g;' "$1"
->> ...
->> The entire match should be case-insensitive[1], so I'd add `i'
->> at the end:
->>
->> 	perl -pi -e 's|^Message-ID:\s*<?([^>]+)>?$|Link: https://lore.kernel.org/r/$1|gi;' "$1"
->>
->> Fwiw, every mail and HTTP/1.x header parser I've looked at works
->> case-insensitively.  Also, I'm not sure if `g' is needed, actually...
->
-> It is left anchored with "^" so it would be hard to match more than
-> once on the same line ;-)
->
-> I agree that it is the right solution to make the whole thing
-> case-insensitive by adding 'i' at the end.
->
-> FWIW, the RFC first says this:
->
->     1.2.2. Syntactic notation
->
->        This standard uses the Augmented Backus-Naur Form (ABNF) notation
->        specified in [RFC2234] for the formal definitions of the syntax of
->        messages.  Characters will be specified either by a decimal value
->        (e.g., the value %d65 for uppercase A and %d97 for lowercase A) or by
->        a case-insensitive literal value enclosed in quotation marks (e.g.,
->        "A" for either uppercase or lowercase A).
->
-> and then goes on to define how message-id should look like.
->
->     3.6.4. Identification fields
->
->     message-id      =       "Message-ID:" msg-id CRLF
->
->
-> But if you go the "add /i at the end" route, you do not have to
-> upcase "d" to "D" and that may reduce the patch noise (it only
-> matters if the patch viewer highlights letter-by-letter changes for
-> your recipients).
 
-From the RFC nitpicking department, msg-id is allowed to contain CFWS
-(comments and folding white space) outside the angle brackets, which
-means you could have RFC compliant Message-ID header field:
+On Fri, Nov 26 2021, Nikita Bobko wrote:
 
-Message-ID: 
-  <message-id@example.com>
+> Steps:
+> git rebase HEAD --exec "echo foo"
+>
+> EXPECTED: since 0 commits are going to be rebased then I expect "foo"
+> NOT to be printed
+> ACTUAL:   "foo" is printed
 
-or
+I don't think this is a bug, but explicitly desired behavior. When you
+do:
 
-Message-ID: (comment) 
-  <message-id@example.com>
+    git rebase -x 'make test' BASE
 
-or even worse, really.
+You expect to run 'make test' for all of BASE..HEAD inclusive of
+"base". E.g. for HEAD~1 we'll run 'make test' twice, and you know both
+your HEAD~ and HEAD passed tests.
 
-The moral of the story is that you should always offload the header
-parsing to some tool or library designed to do that.
+So why wouldn't doing the same for HEAD make sense?
 
+That being said perhaps some users would think an option or
+configuration to skip the injection of "exec" after "noop" would make
+sense in that case.
 
-BR,
-Jani.
+But does this really have anything per-se to do with --exec? Wouldn't
+such an option/configuration be the same as rebase in general dying if
+there's no work to do?
 
+And wouldn't such a thing be more useful than a narrow change to make
+--exec a NOOP in these cases?
 
--- 
-Jani Nikula, Intel Open Source Graphics Center
+E.g. if I've got a "topic" that has commit "A", that's since been
+integrated into my upstream and I have a script to "make test" on my
+topics, won't simply dying (and thus indicating that the topic is
+dead/integrated) be better than noop-ing?
