@@ -2,198 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3483FC433EF
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 23:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C17AC433EF
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 23:08:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236729AbhK2XKm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 18:10:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41730 "EHLO
+        id S233990AbhK2XLy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 18:11:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237303AbhK2XKI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 18:10:08 -0500
-Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C5BC0698C4
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 11:44:12 -0800 (PST)
-Received: by mail-qv1-xf34.google.com with SMTP id gu12so15628010qvb.6
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 11:44:12 -0800 (PST)
+        with ESMTP id S236236AbhK2XLa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 18:11:30 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D221C04C33B
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 14:30:51 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id x131so18422940pfc.12
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 14:30:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=BdGkBRaAl/RzFoS4Yp8ZQWvFhZk4AORD6/9f3T/OCm4=;
-        b=jyRqFpMLsIITQF6ZntLPvTIvvO0bv//2jLMWVIkIcQdnKFjXfC5vcnkXPZeedbgu/+
-         uuJl2N8a4m4iXoh+XtqrFDHDCi7THdsaL5ff7arsL59TtRc/2d4iIcKxdsOwCwrAxPrp
-         OYid0PQJSLum02i+ywsGlUBL9suH9hYHw/PPrybLCcJ2VczzjGMD8hXlKwFn7r5PIAay
-         ngu8CSX64lYLjYKjoll02WYCHl7DJlcBRHj3aECewxWVqKHrJdT7cGD8hjeUHE3BDb6f
-         hsVOHH+xK2qJo+qVkbr03JbYhns4i16Gos2FU2QCmkrJzwklBFiFEGTio6AwB5p5gm2h
-         pZHA==
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=PVAIOIrW+N955RS2utYt/mJK0iOMLzDjNAzLQQHXDa8=;
+        b=TzMHVPB/JI5mT6K8Iumn4YPxHJFuKfcd2n1OPaegKQlRIfO/18zrntdGmP76JYJy9h
+         bFc3NmJL7n2m95Z9LDvWw6D9nXWhXLuAalteQC7hlq1Jfs5Ofgh8KMEaBThe8MC762qJ
+         W1HloPat5txewmWwaZaIVennLnmy/lPog0fmcxv0i75708QwzxiR6cOfhuzU7VNhdrcQ
+         zA5NfOGWHSP8uOdF6qMQVO8tnu6fYcoL+yy7de7OeDh+60rm71c8SIgUXlHnsgL08S+g
+         KBHIjVu9JTvIdEWTd2PhuorEo74DJpu++arzF0kVdezqjMjV9/oKLVTBrWKkGyyzrJDc
+         IV9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=BdGkBRaAl/RzFoS4Yp8ZQWvFhZk4AORD6/9f3T/OCm4=;
-        b=nlSySZhMlajpvollLsxN646/NJGAbiCj85mRFYl4/BYJEriM42AcYb0YX5z01DJtCN
-         /8pMKd4UUI7odZmVBhzxjVCAvGUAC6flFkJpnkQTqxwj4vY84oszQk0L75e4JwKBZmWU
-         mSpVcqcI5Dyh1RbXh79h24tYFVgzJXzNO0T+ZuWboGuPR/ucW5ar4W6HxLiMbgc80r3z
-         FWvfoRu/cwPqdry7zbmDAMNILMBMGmK/249li0YIUuS0iwV2OslaYjmrsHE8LBIvzd0K
-         cCAEiZbqEgvbIaYYM9sRDoHKcVBv5oS+mEtQc50SetmcX1G/VcgE8rUxgtroU07s8Edt
-         rvhw==
-X-Gm-Message-State: AOAM533yO07YJhm+rEJGNDbjwFIpMyVbMWXAjKaJP0Ej23DXGn3sB/t7
-        2NduFX23aWFC+p8nSrfT5j+7
-X-Google-Smtp-Source: ABdhPJxrp8CvVN8JbsnHfFQ+TwZ7BUOCIq6CMZwsH9cPkzz3+QaiwvdcfjMIR3zgcjLgm7nFtRo08w==
-X-Received: by 2002:a05:6214:2584:: with SMTP id fq4mr44900056qvb.53.1638215052140;
-        Mon, 29 Nov 2021 11:44:12 -0800 (PST)
-Received: from [192.168.0.105] (70.15.20.152.res-cmts.sm.ptd.net. [70.15.20.152])
-        by smtp.gmail.com with ESMTPSA id d17sm9152609qtx.96.2021.11.29.11.44.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Nov 2021 11:44:11 -0800 (PST)
-Message-ID: <9c5b7067-b0e3-0153-5cd3-042bae92f91e@github.com>
-Date:   Mon, 29 Nov 2021 14:44:10 -0500
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=PVAIOIrW+N955RS2utYt/mJK0iOMLzDjNAzLQQHXDa8=;
+        b=MY30qjgcCMiRxEzmu8LXA4mvyTST27uYrGWtPulruavehtKW6y8Lb+bnv7zxV0DbZx
+         W41tbLSXJvhutO2j1i8uztw188Wy/K6m7jtN8DM6H7CK2MMxWSa6RAL46WqP7VN2Z+pw
+         tQHBS3I+uSQY/wtD89iaUbG+syaNBtQdhU+OPcyUV9bZB94Zxr7u78u9TU04L+tHt4qR
+         01EIRqteFXhG1Ckn2vsXAqYiOGsEkY/hPNZJ9+9FPesFyd7CIZo1JD0GPkbqO5CYLAE3
+         kzkIAVNxZT2TJoo6Q213qfDiuJfYauaVMRC6B6nZ6P6OYDfHiKCNjcHNsJu8kRnzDJsd
+         Ld5A==
+X-Gm-Message-State: AOAM531QkjyhbToHJ1BsYkATTDuoPbnD8sYEqvyoX3T+gmQpdxDyuLj8
+        frmBMwDQIOJF0oj0HQEtLmbt7A==
+X-Google-Smtp-Source: ABdhPJwHViE/sALcjBycXuXcfT6efOmS2Es3e9YFNckE1CEd7sv0NL8X2xEcMLoPDr1PDvIanp/rnQ==
+X-Received: by 2002:a63:3c0f:: with SMTP id j15mr20819566pga.243.1638225050707;
+        Mon, 29 Nov 2021 14:30:50 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:ac8a:2304:bdf1:44e9])
+        by smtp.gmail.com with ESMTPSA id e11sm320389pjl.20.2021.11.29.14.30.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 14:30:49 -0800 (PST)
+Date:   Mon, 29 Nov 2021 14:30:45 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, gitscale@google.com
+Subject: Submodules UX overhaul update (was: What's cooking in git.git (Nov
+ 2021, #06; Wed, 24))
+Message-ID: <YaVUlYVa5ZWCIInd@google.com>
+References: <xmqqlf1caica.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.2
-Subject: Re: [PATCH v6 0/8] Sparse Index: integrate with reset
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-References: <pull.1048.v5.git.1635345563.gitgitgadget@gmail.com>
- <pull.1048.v6.git.1638201164.gitgitgadget@gmail.com>
- <CABPp-BG0iDHf268UAnRyA=0y0T69YTc+bLMdxCmSbrL8s=9ziA@mail.gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <CABPp-BG0iDHf268UAnRyA=0y0T69YTc+bLMdxCmSbrL8s=9ziA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqlf1caica.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren wrote:
-> Hi,
+On Wed, Nov 24, 2021 at 09:56:53PM -0800, Junio C Hamano wrote:
+> --------------------------------------------------
+> [Stalled]
 > 
-> On Mon, Nov 29, 2021 at 7:52 AM Victoria Dye via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> Changes since V5
->> ================
->>
->>  * Update t1092 test 'reset with wildcard pathspec' with more cases and
->>    better checks
->>  * Add "special case" wildcard pathspec check when determining whether to
->>    expand the index (avoids double-loop over pathspecs & index entries)
+> * ar/submodule-update (2021-10-13) 9 commits
+>  . submodule--helper: rename helper functions
+>  . submodule--helper: remove unused helpers
+>  . submodule: move core cmd_update() logic to C
+>  . submodule--helper: run update using child process struct
+>  . submodule--helper: allow setting superprefix for init_submodule()
+>  . submodule--helper: refactor get_submodule_displaypath()
+>  . submodule--helper: rename helpers for update-clone
+>  . submodule--helper: get remote names from any repository
+>  . submodule--helper: split up ensure_core_worktree()
 > 
-> Looks pretty good.  However, I'm worried this special case you added
-> at my prodding might be problematic, and that I may have been wrong to
-> prod you into it...
+>  Rewrite of "git submodule update" in C.
 > 
->> Thanks! -Victoria
->>
->> Range-diff vs v5:
->>
->>  7:  a9135a5ed64 ! 7:  822d7344587 reset: make --mixed sparse-aware
->>      @@ Commit message
->>
->>           Remove the `ensure_full_index` guard on `read_from_tree` and update `git
->>           reset --mixed` to ensure it can use sparse directory index entries wherever
->>      -    possible. Sparse directory entries are reset use `diff_tree_oid`, which
->>      +    possible. Sparse directory entries are reset using `diff_tree_oid`, which
->>           requires `change` and `add_remove` functions to process the internal
->>           contents of the sparse directory. The `recursive` diff option handles cases
->>           in which `reset --mixed` must diff/merge files that are nested multiple
->>      @@ builtin/reset.c: static void update_index_from_diff(struct diff_queue_struct *q,
->>       +          * (since we can reset whole sparse directories without expanding them).
->>       +          */
->>       +         if (item.nowildcard_len < item.len) {
->>      ++                 /*
->>      ++                  * Special case: if the pattern is a path inside the cone
->>      ++                  * followed by only wildcards, the pattern cannot match
->>      ++                  * partial sparse directories, so we don't expand the index.
->>      ++                  */
->>      ++                 if (path_in_cone_mode_sparse_checkout(item.original, &the_index) &&
->>      ++                     strspn(item.original + item.nowildcard_len, "*") == item.len - item.nowildcard_len)
-> 
-> I usually expect in an &&-chain to see the cheaper function call first
-> (because that ordering often avoids the need to call the second
-> function), and I would presume that strspn() would be the cheaper of
-> the two.  Did you switch the order because you expect the strspn call
-> to nearly always return true, though?
-> 
+>  Kicked out of 'seen' to make room for es/superproject-aware-submodules
+>  which is among the topics this topic stomps on.
 
-This is a miss on my part, the `strspn()` check is probably less expensive
-and should be first.
+Update on es/superproject-aware-submodules to follow.
 
-> Could the strspn() call be replaced by a `item.len ==
-> item.nowildcard_len + 1`?  I mean, sure, folks could list multiple
-> asterisks in a row in their pathspec, but that seems super unlikely
-> and even if it does happen the code will just fall back to the slower
-> codepath and still give them the right answer.  And the simpler check
-> feels a lot easier to parse for human readers.
+> --------------------------------------------------
+> [Cooking]
 > 
+> * gc/remote-with-fewer-static-global-variables (2021-11-18) 5 commits
+>  - remote: die if branch is not found in repository
+>  - remote: remove the_repository->remote_state from static methods
+>  - remote: use remote_state parameter internally
+>  - remote: move static variables into per-repository struct
+>  - t5516: add test case for pushing remote refspecs
+> 
+>  Code clean-up to eventually allow information on remotes defined
+>  for an arbitrary repository to be read.
+> 
+>  Will merge to 'next'.
 
-Agreed on wanting better readability - if the multiple-wildcard case is
-unlikely, the `PATHSPEC_ONESTAR` flag would indicate whether the pathspec
-ends in a single wildcard character. If that flag is still too obscure,
-though, I can stick with the length comparison.
+Thanks.
 
-> But I'm worried there's a deeper issue here:
+> * ab/config-based-hooks-2 (2021-11-24) 18 commits
+>  - run-command: remove old run_hook_{le,ve}() hook API
+>  - receive-pack: convert push-to-checkout hook to hook.h
+>  - read-cache: convert post-index-change to use hook.h
+>  - commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
+>  - git-p4: use 'git hook' to run hooks
+>  - send-email: use 'git hook run' for 'sendemail-validate'
+>  - git hook run: add an --ignore-missing flag
+>  - hooks: convert worktree 'post-checkout' hook to hook library
+>  - hooks: convert non-worktree 'post-checkout' hook to hook library
+>  - merge: convert post-merge to use hook.h
+>  - am: convert applypatch-msg to use hook.h
+>  - rebase: convert pre-rebase to use hook.h
+>  - hook API: add a run_hooks_l() wrapper
+>  - am: convert {pre,post}-applypatch to use hook.h
+>  - gc: use hook library for pre-auto-gc hook
+>  - hook API: add a run_hooks() wrapper
+>  - hook: add 'run' subcommand
+>  - Merge branch 'ab/config-based-hooks-1' into ab/config-based-hooks-2
 > 
-> 
-> Is the wildcard character (or characters) in path treated as a literal
-> by path_in_cone_mode_sparse_checkout()?  I think it is...and I'm
-> worried that may be incorrect.  For example, if the path is
-> 
->    foo/*
-> 
-> and the user has done a
-> 
->   git sparse-checkout set foo/bar/
-> 
-> Then 'foo/baz/file' is not in the sparse checkout.  However, 'foo/*'
-> should match 'foo/baz/file' and yet 'foo/*' when treated as a literal
-> path would be considered in the sparse checkout by
-> path_in_cone_mode_sparse_checkout.  Does this result in the code
-> returning an incorrect answer?  (Or did I misunderstand something so
-> far?)
-> 
+>  More "config-based hooks".
 
-Correct: `path_in_cone_mode_sparse_checkout` interprets the wildcard
-literally, and the checks here take that into account. The goal of
-`pathspec_needs_expanded_index` is to determine if the pathspec *may* match
-only partial contents of a sparse directory (like '*.c', or 'f*le'). For a
-`git reset --mixed`, only this scenario requires expansion; if an entire
-sparse directory is matched by a pathspec, the entire sparse directory is
-reset. 
+I think I haven't looked at the update on 2021-11-01, so I probably owe
+a review. Other reviews welcome, since I have bias :)
 
-Using your example, 'foo/*' does match 'foo/baz/file', but it also matches
-'foo/' itself; as a result, the `foo/` sparse directory index entry is reset
-(rather than some individual files contained within it). The same goes for a
-patchspec like 'fo*' ("in-cone" and ending in a wildcard). Conversely, a
-pathspec like 'foo/ba*' would _not_ work (it wouldn't match something like
-'foo/test-file'), and neither would 'f*o' (it would match all of 'foo', but
-would only match files ending in "o" in a directory 'f/').
-
-Hope that helps!
-
-> I'm wondering if I misled you earlier in my musings about whether we
-> could avoid the slow codepath for pathspecs with wildcard characters.
-> Maybe there's no safe optimization here and wildcard characters should
-> always go through the slower codepath.
+> * js/branch-track-inherit (2021-11-18) 1 commit
+>  - branch: add flags and config to inherit tracking
 > 
->>      ++                         continue;
->>      ++
->>       +                 for (pos = 0; pos < active_nr; pos++) {
->>       +                         struct cache_entry *ce = active_cache[pos];
->>       +
->>  8:  f91d1dcf024 = 8:  ddd97fb2837 unpack-trees: improve performance of next_cache_entry
->>
->> --
->> gitgitgadget
+>  "git -c branch.autosetupmerge=inherit branch new old" makes "new"
+>  to have the same upstream as the "old" branch, instead of marking
+>  "old" itself as its upstream.
 
+We're hoping this one will pave the way for a user to run simply 'git
+push' from the superproject and have all submodules push to the correct
+branch, even if it's different from the superproject's branch.
+
+> * es/superproject-aware-submodules (2021-11-18) 5 commits
+>  - submodule: use config to find superproject worktree
+>  - submodule: record superproject gitdir during 'update'
+>  - submodule: record superproject gitdir during absorbgitdirs
+>  - introduce submodule.superprojectGitDir record
+>  - t7400-submodule-basic: modernize inspect() helper
+> 
+>  A configuration variable in a submodule points at the location of
+>  the superproject it is bound to (RFC).
+
+Needs another reroll, but there is some quibbling over whether it makes
+sense for this series to exist at all (or whether to just search the
+filesystem every time we think we might be in a submodule). Ævar asked
+for some benchmarking, I'll see if I can find some time.
+
+Missing from this list, a few things we're still worried about:
+
+Glen Choo: implement branch --recurse-submodules
+https://lore.kernel.org/git/20211122223252.19922-1-chooglen%40google.com
+
+An example implementation of 'git branch --recurse-submodules' in line
+with the previously discussed RFC.
+
+Jonathan Tan: Conditional config includes based on remote URL
+https://patchwork.kernel.org/project/git/patch/cover.1637020610.git.jonathantanmy%40google.com
+
+This one should allow users to distribute config-based hooks more
+easily in managed environments where /etc/gitconfig is distributed to
+all users, or by package manager via clever postinstall scripts.
+
+ - Emily
