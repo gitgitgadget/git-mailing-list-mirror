@@ -2,114 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6645C433EF
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 04:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9B8BC433F5
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 07:06:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229872AbhK2FA7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 00:00:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55392 "EHLO
+        id S230501AbhK2HKL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 02:10:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241870AbhK2E66 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Nov 2021 23:58:58 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7A71C061761
-        for <git@vger.kernel.org>; Sun, 28 Nov 2021 20:54:25 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id s13so33926921wrb.3
-        for <git@vger.kernel.org>; Sun, 28 Nov 2021 20:54:25 -0800 (PST)
+        with ESMTP id S231628AbhK2HIK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 02:08:10 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B6F7C061785
+        for <git@vger.kernel.org>; Sun, 28 Nov 2021 23:02:00 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id f18so41920636lfv.6
+        for <git@vger.kernel.org>; Sun, 28 Nov 2021 23:02:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=hZ5T6/Br8lCObqUmpwwkb8tljmIEzla7aa+sTgw7rQ8=;
-        b=SYB+myTbue2l1Gv/fh226SDXWTn5M/84shHT2/lE93oFov15VGHMCIP1PW9en91rTZ
-         OInXaRRR7WM+g4OQr12k9KKJStVgf9mi7xcu1MOeDcQkhdga9WTOHntQwAQg7uGiLjWX
-         J1Ftn/mFR0VP35mLMOFRIw8OZslL2WXzjw8X/t11CuwmlJEay6M+2cPTtFxz3XK8jn3h
-         sdskBJbmTugSj5e1VEBnKuwgOiw7pQ38mHahk2Y50PyljnG2XX55+clUejbKRztkz96V
-         SIwyGsXc3NdvizeRtnzxUN0pGPsFGokg9gn65dxRA4XuyjjgCsF/OkEDS/k8hhUK0x6k
-         /qvw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=iKKHpncn0tzGshnEHaR7Ecx7KqAwXEBWX70v5OfdYA0=;
+        b=UgNnWKDLSIVFTW6WaY8CY+1HFghXtqxMLYHFh5hPFyv7IpyPctJma0wGvgYEjNENgQ
+         fsKU52P/pWDcE3M5AMOt8QP2+ug+cTUU0/iCMukJHIgxygEMqxbRu9ewTnhYHL6uz06w
+         4sQg9SSuSOc8+Zv577vq8AxY4jUrFPmKH/QGs0NXibo7hfkpTR/MPobIDK8epyIkAYTf
+         +Ca7CLi3NTIb9bthzLnIkT7LnWvSCWj4hfri2ETaVMtr8O1l/1Pu15hM0S+l+tPNR2rc
+         WHnMsyM1P18j87r0geiDfPIJz5bnYSUX5Z90b08POPp12bmMJUTATeMz2racU1Vipz38
+         A5BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=hZ5T6/Br8lCObqUmpwwkb8tljmIEzla7aa+sTgw7rQ8=;
-        b=AVwI+7pKZ467/DE4f3QQWe1I2KJ5qNe0J1dZrUunBecaWsdYwLz/aKOtJTZL0Uw1+G
-         XeRct+SgYGCUCC88OMwDenzUWLO0FhI4TaPHiUbu/uisQJf9LFLOGS6idsBDy0gSnAm8
-         iyGgqOU2xR4C+mHEmSJjwlNhARQq/9y5z0GElZgZt+JU4fVwUxiciuUWRXPiVRR9zrEQ
-         RmpA/3SdpMshic7hecKWMDiuAAjE5GyVa9JpELkqJP4mBfdEPcZyxEXa23BqVJPT6lHK
-         Z1/kKcjh+ZG5JKNiFmX6TO5epZN0z2AAmwOWZW0nhQN/lc+bv6o/0JEKMa1qwZecFFBf
-         MMTg==
-X-Gm-Message-State: AOAM530CFqsOqFWK83q92jaOL5m2fmm61QhfbcSRZrWCDRu5o5Xj3OOL
-        sna6KtNOEei20QaCaxFUy48=
-X-Google-Smtp-Source: ABdhPJzbRdZwsFgBTP/fNK/13W9vJjNlf9kfKPaXCWJezeNmK1SDrVcw5moTWg6kt4FBHlvVeKZeWw==
-X-Received: by 2002:a5d:4143:: with SMTP id c3mr31494904wrq.254.1638161664277;
-        Sun, 28 Nov 2021 20:54:24 -0800 (PST)
-Received: from gmail.com (193-81-61-105.adsl.highway.telekom.at. [193.81.61.105])
-        by smtp.gmail.com with ESMTPSA id p8sm12687005wrx.25.2021.11.28.20.54.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Nov 2021 20:54:23 -0800 (PST)
-Date:   Mon, 29 Nov 2021 05:54:22 +0100
-From:   Johannes Altmanninger <aclopte@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
-Subject: Re: git diff -I<regex> does not work with empty +/- lines
-Message-ID: <20211129045422.fyowpxfabmyahaov@gmail.com>
-References: <20211128091521.7ysocurtt4qlgcf6@gmail.com>
- <xmqqtufv50bx.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=iKKHpncn0tzGshnEHaR7Ecx7KqAwXEBWX70v5OfdYA0=;
+        b=nN9iYCrVgoDCxoTXfosBtoaeYFlYL1pbK7aMmvxgTpwkw9OzkoiM+Nh2390Ri5UEBq
+         VItX8m9qzGRpAXhFzcXq0dspTERIsgQFIZC6sqZ7sGRXhpoOs+Yvunw4pCw9bF3L9Sl2
+         60HdPi3Qk70douKeNntEGZwnQdvJbcbBymbPxroaEogSatYfj/XRpGkvojZD7K+/7Xdh
+         WkjCLtywNhsiL/gHrRA+RW0zQAW65k//kySFnkehgeg5Rqdv/BM55HDV0JQ/6mwsmn6d
+         8PHf2dDJdBhppSzyk6zC6rDAS8he1owLyzvJaM9GgZLYhNuUkxsVZNBxybEsB/m7r94F
+         2yrg==
+X-Gm-Message-State: AOAM530Em6ulNwxVuz8XIj6BCKLqKy1HXchyVJcdKUcfnL8e/bdt52TZ
+        0qlSsBJdr9UhCO42SU9rrDTwIfRZBSyDk66U0ofKOhfReg6FQJ7B
+X-Google-Smtp-Source: ABdhPJy1A4WSD3NuW06fsiJNTgnzqfJPlRgEwoYZmYQ8q1rliCcQAPM/KI0ho6i33Jj8qCqNxAc2ZQBuAjZaP6mqgmI=
+X-Received: by 2002:a05:6512:168b:: with SMTP id bu11mr7463840lfb.401.1638169318500;
+ Sun, 28 Nov 2021 23:01:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtufv50bx.fsf@gitster.g>
+References: <20211009082058.41138-1-chiyutianyi@gmail.com> <20211122033220.32883-1-chiyutianyi@gmail.com>
+In-Reply-To: <20211122033220.32883-1-chiyutianyi@gmail.com>
+From:   Han Xin <chiyutianyi@gmail.com>
+Date:   Mon, 29 Nov 2021 15:01:47 +0800
+Message-ID: <CAO0brD3VPtUrpCE2kCJDram=bLMN=89++=bgf1TddriTYo-nsA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/5] unpack large objects in stream
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>
+Cc:     Han Xin <hanxin.hx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 28, 2021 at 03:26:10PM -0800, Junio C Hamano wrote:
-> Johannes Altmanninger <aclopte@gmail.com> writes:
-> 
-> > diff -I<regex> suppresses hunks where all +/- lines match <regex>.
-> > it is useful to filter away boilerplate changes.
-> >
-> > Unfortunately, it doesn't help if a hunk has a blank line, because the one
-> > obvious way to filter out blank lines (^$) match *every* line, surprisingly.
-> > This is because for a line "01\n"
-> > we have a zero-width match here ^$ (offset 3).
-> >
-> > IOW, while we succesfully ignore deleted blank lines
-> >
-> > 	printf '\n' | git diff --no-index - /dev/null -I'^$'
-> > 	diff --git a/- b/-
-> > 	deleted file mode 100644
-> >
-> > we also ignore non-blank lines (very surprising)
-> >
-> > 	printf 'non-blank-line\n' | git diff --no-index - /dev/null -I'^$'
-> > 	diff --git a/- b/-
-> > 	deleted file mode 100644
-> >
-> > unless they don't end in a newline (special case)
-> >
-> > 	printf 'line without ending newline' | git diff --no-index - /dev/null -I'^$'
-> > 	diff --git a/- b/-
-> > 	deleted file mode 100644
-> > 	--- a/-
-> > 	+++ /dev/null
-> > 	@@ -1 +0,0 @@
-> > 	-line without ending newline
-> > 	\ No newline at end of file
-> >
-> > This patch fixes the second example. Is this the right direction?
-> 
-> I do not know where in the code the breakage in the first example
-> comes from.  It sounds like a bug if a pattern is not matched
-> honoring the anchor, whether the beginning-of-line "^" or the
-> end-of-line "$" one.
+Han Xin <chiyutianyi@gmail.com> writes:
+>
+> From: Han Xin <hanxin.hx@alibaba-inc.com>
+>
+> Although we do not recommend users push large binary files to the git rep=
+ositories,
+> it's difficult to prevent them from doing so. Once, we found a problem wi=
+th a surge
+> in memory usage on the server. The source of the problem is that a user s=
+ubmitted
+> a single object with a size of 15GB. Once someone initiates a git push, t=
+he git
+> process will immediately allocate 15G of memory, resulting in an OOM risk=
+.
+>
+> Through further analysis, we found that when we execute git unpack-object=
+s, in
+> unpack_non_delta_entry(), "void *buf =3D get_data(size);" will directly a=
+llocate
+> memory equal to the size of the object. This is quite a scary thing, beca=
+use the
+> pre-receive hook has not been executed at this time, and we cannot avoid =
+this by hooks.
+>
+> I got inspiration from the deflate process of zlib, maybe it would be a g=
+ood idea
+> to change unpack-objects to stream deflate.
+>
 
-THe first example (printf '\n' | ... -I'^$') works fine AFAICT.
-The regex matches the empty line, so the hunk is ignored
-(but the file header is still printed).
-Only the second example (printf 'non-blank-line\n' | ... -I'^$')
-shows that we ignore too much, because ^$ (incorrectly) matches,
-but it should only match blank lines.
+Hi, Jeff.
 
-Thanks
+I hope you can share with me how Github solves this problem.
+
+As you said in your reply at=EF=BC=9A
+https://lore.kernel.org/git/YVaw6agcPNclhws8@coredump.intra.peff.net/
+"we don't have a match in unpack-objects, but we always run index-pack
+on incoming packs".
+
+In the original implementation of "index-pack", for objects larger than
+big_file_threshold, "fixed_buf" with a size of 8192 will be used to
+complete the calculation of "oid".
+
+I tried the implementation in jk/no-more-unpack-objects, as you noted:
+  /* XXX This will expand too-large objects! */
+  if (!data)
+  data =3D new_data =3D get_data_from_pack(obj_entry);
+If the conditions of --unpack are given, there will be risks here.
+When I create an object larger than 1GB and execute index-pack, the
+result is as follows:
+  $GIT_ALLOC_LIMIT=3D1024m git index-pack --unpack --stdin <large.pack
+  fatal: attempting to allocate 1228800001 over limit 1073741824
+
+Looking forward to your reply.
