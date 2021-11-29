@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E9CDC433F5
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 15:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5868C433F5
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 16:08:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242583AbhK2QAh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 11:00:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57676 "EHLO
+        id S1344716AbhK2QLd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 11:11:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242107AbhK2P6f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 10:58:35 -0500
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9185C061D5E
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 06:05:58 -0800 (PST)
-Received: by mail-ot1-x32a.google.com with SMTP id n17-20020a9d64d1000000b00579cf677301so25606770otl.8
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 06:05:58 -0800 (PST)
+        with ESMTP id S232856AbhK2QJc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 11:09:32 -0500
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 458E5C0423B3
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 06:10:40 -0800 (PST)
+Received: by mail-ot1-x335.google.com with SMTP id i5-20020a05683033e500b0057a369ac614so4198626otu.10
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 06:10:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=L7E+hyF2eGa9ytqT4KEljlJIlxzMxQ7OVP9FZqeiMbM=;
-        b=QnDMSMMYuEQxwptwv21x3UaYO/ZmW7S5+bGWCtFKgZG1It43fCu0O3uDXD1mlrivrQ
-         s36Dv94dmwfHcdDMuGJi2SUkOF6OvgBZIuew5CQX+w4VoS0r4dNCVHkSS4fMGpfGE3ak
-         jRhy+zYtjp7z2o3kCDebWxlVuP0VrUpMqb2nteCyF2eViPNlp/wj1RXa0YB3UM0DFJbO
-         U7GVeDj2knlbrxzgUCyXgCnyqnUYmeW0V7oEysG2AdQ5NDyR0PjnoymXb3LqXtZHX3Mn
-         NeNQlGMIqyRez2RuGlpT87lZaQb7Y/WcWDT+PjtQcK+pCFZxlBXF+Wfv4QcPrscLxHpj
-         guYQ==
+        bh=vvXtw0ZBr+ijw4n55ze30/q70h99ZvDv8NhiT36HtOc=;
+        b=bqYsEyLlx2AXJCGEaEXuWVTdVWMWvoLeARbbHw/sRJ9oPLHXpg4cBfAscNTz8KoiUz
+         /KVUBgHO1z22RG/yB305GF8/lHrbARvLpOEO2N+5AkDoqCFAbmwB/hxk8DWZuq1lFSqA
+         CIgQUQ2oRXex2k07NbwkYJSJ9+v/T14NklwEVh3/3WAVIgtUYd7Omvl6Vq+x+c8QkB/E
+         f3mIEFYr7/62N1+gR+dFlEdmh8iy14NHDcDwWRM1NYaiearvhi63Q7ZZHcBM4FpBFH+d
+         V3SO87YhKgS/HMlGLYDaUlwgk8VSMQ9omIR7DowPPjFxDDd+ZcaGVbZlesFTHZHcGb62
+         vcLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=L7E+hyF2eGa9ytqT4KEljlJIlxzMxQ7OVP9FZqeiMbM=;
-        b=0woMiOzS3S/mrqcR5hDcN7UlxznJ2HV7yxi7quNC12E5ZUs7gRF/L8xSTt4tw+hnV7
-         zMpVgr9mGTHMH9/J/nVrCuAobYp0yKaJi7y3ojgiyPaoCIX/BJJzRgN9RFxgIeM7UnPA
-         tKHOstcQ9dTh+3HlXl2pU7inY1Ol5b7SCEgdkPvcddHO9bFU4Ut+HIByDCqnGRltxdkZ
-         JJ3ObHC6NYyR1jWC3CtdrN4/RDZOrNblvl4CHHmB+yCKOpqgNgKjKgJubf4TY2AJVwAi
-         kaP7KNnwijO4LiLOZSrqSRduGOMTVtteUKvOH3uud820oajf9Kkvrd6LagIgvPhy2r8Z
-         JXvg==
-X-Gm-Message-State: AOAM531dt0b4VHXHe7YYo5GqUYIQvM6rq/hYVX+qULVHdGiX5jWK1l5p
-        oe86vOxnR1RlHfXlNj1ZsffddDqtEQE=
-X-Google-Smtp-Source: ABdhPJyfuzhoZdyrBDdrJR/dyQKA3GFqz0ee5TfVIgtTxl8nocM2fuxGfnQyv2F+GMV7PO5rHRgyxQ==
-X-Received: by 2002:a9d:f63:: with SMTP id 90mr45097372ott.268.1638194758013;
-        Mon, 29 Nov 2021 06:05:58 -0800 (PST)
+        bh=vvXtw0ZBr+ijw4n55ze30/q70h99ZvDv8NhiT36HtOc=;
+        b=MhmahwJ84FAoQC5GIJI5Idp5LIAm7tjBnP7ZYACh7UPZek/6ys8aPC1J5M+9iwUpTq
+         TSi51AkAr681jXl5K0bnDCDUFB02MBW9WGPSkCVWZmP0kJUpAiColBLEseTsfvM3uYpl
+         BSmPI5igpN6N3x5CXpv9t903oTUerd55Fi7nG+ulOUNgDSzELcVAp0j0GoPBw61KcwYp
+         XV8r8b8r9iVHa1bvUtUA7CS3XtQRulAxOEoZaMNVjzPcQHRcJ+TDGg4yrSFy0rtNVDlp
+         9FvHI4V+n9+ABMq0UefWgIg6HYvgkqGftapv+pdayS/mx3PPVemo5T1XLD/wHmIJNXtB
+         ZM8A==
+X-Gm-Message-State: AOAM532cfPCdKFfIz0dZYtf2CGEb2JoWjkxmXEsWA+kJoTp9+4oiwmdX
+        7gnijlVPjKjwv9A8uoafFJg=
+X-Google-Smtp-Source: ABdhPJwt/+TSlbvkoYcq2rGRZyT+ecIjimhkUj0KomqK/XhYT4IhpgN4wDiNsDMmL15Hz0uCV251xA==
+X-Received: by 2002:a9d:12b4:: with SMTP id g49mr45124634otg.232.1638195036248;
+        Mon, 29 Nov 2021 06:10:36 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:3085:654c:eb81:848b? ([2600:1700:e72:80a0:3085:654c:eb81:848b])
-        by smtp.gmail.com with ESMTPSA id r25sm2379282ote.73.2021.11.29.06.05.56
+        by smtp.gmail.com with ESMTPSA id k12sm2664117ots.77.2021.11.29.06.10.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Nov 2021 06:05:57 -0800 (PST)
-Message-ID: <48fced3c-1fcb-d5cd-cec0-b9e58be40259@gmail.com>
-Date:   Mon, 29 Nov 2021 09:05:55 -0500
+        Mon, 29 Nov 2021 06:10:35 -0800 (PST)
+Message-ID: <ac7e7241-d852-f0e7-d9c1-053adb242fee@gmail.com>
+Date:   Mon, 29 Nov 2021 09:10:33 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.2
-Subject: Re: [PATCH v2 2/9] setup: introduce startup_info->original_cwd
+Subject: Re: [PATCH v2 3/9] unpack-trees: refuse to remove
+ startup_info->original_cwd
 Content-Language: en-US
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -65,9 +66,9 @@ Cc:     Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>
 References: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
  <pull.1140.v2.git.git.1637829556.gitgitgadget@gmail.com>
- <f6129a8ac9c3d052fb7fb508a62d4eedb8d9ed57.1637829556.git.gitgitgadget@gmail.com>
+ <e74975e83cc7a11b8f0378d59a8c2c4a97d3aa50.1637829556.git.gitgitgadget@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <f6129a8ac9c3d052fb7fb508a62d4eedb8d9ed57.1637829556.git.gitgitgadget@gmail.com>
+In-Reply-To: <e74975e83cc7a11b8f0378d59a8c2c4a97d3aa50.1637829556.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -77,41 +78,20 @@ X-Mailing-List: git@vger.kernel.org
 On 11/25/2021 3:39 AM, Elijah Newren via GitGitGadget wrote:
 > From: Elijah Newren <newren@gmail.com>
 
-> @@ -866,6 +866,8 @@ int cmd_main(int argc, const char **argv)
+> @@ -36,6 +36,9 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_WARNING_TYPES] = {
+>  	/* ERROR_NOT_UPTODATE_DIR */
+>  	"Updating '%s' would lose untracked files in it",
 >  
->  	trace_command_performance(argv);
->  
-> +	startup_info->original_cwd = xgetcwd();
+> +	/* ERROR_CWD_IN_THE_WAY */
+> +	"Refusing to remove '%s' since it is the current working directory.",
 > +
+>  	/* ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN */
+>  	"Untracked working tree file '%s' would be overwritten by merge.",
 
-I see this initial assignment in cmd_main()...
-
-> +static void setup_original_cwd(void)
-> +{
-> +	struct strbuf tmp = STRBUF_INIT;
-> +	const char *worktree = NULL;
-> +	int offset = -1;
-> +
-> +	/*
-> +	 * startup_info->original_cwd wass set early on in cmd_main(), unless
-> +	 * we're an auxiliary tool like git-remote-http or test-tool.
-> +	 */
-> +	if (!startup_info->original_cwd)
-> +		return;
-
-...which is assumed to be run before this method was called...
-
-> @@ -1330,6 +1378,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
->  		setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
->  	}
->  
-> +	setup_original_cwd();
-
-...here in setup_git_directory_gently().
-
-Why do we need that assignment in cmd_main()? Could we instead
-let setup_original_cwd() do the initial assignment? Or is it
-possible that a chdir has happened already before this point?
+Your new message includes a hard stop (".") which is non-standard. I
+see that the message after yours has one, but the preceding one does
+not. Since the file you are in is not consistent, I would choose to
+drop the hard stop here.
 
 Thanks,
 -Stolee
