@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5868C433F5
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 16:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 318C7C433F5
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 16:17:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344716AbhK2QLd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 11:11:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60526 "EHLO
+        id S242882AbhK2QUg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 11:20:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232856AbhK2QJc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 11:09:32 -0500
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 458E5C0423B3
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 06:10:40 -0800 (PST)
-Received: by mail-ot1-x335.google.com with SMTP id i5-20020a05683033e500b0057a369ac614so4198626otu.10
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 06:10:40 -0800 (PST)
+        with ESMTP id S244735AbhK2QSg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 11:18:36 -0500
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E4FBC07CA1A
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 06:14:23 -0800 (PST)
+Received: by mail-ot1-x32b.google.com with SMTP id 35-20020a9d08a6000000b00579cd5e605eso25781261otf.0
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 06:14:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=vvXtw0ZBr+ijw4n55ze30/q70h99ZvDv8NhiT36HtOc=;
-        b=bqYsEyLlx2AXJCGEaEXuWVTdVWMWvoLeARbbHw/sRJ9oPLHXpg4cBfAscNTz8KoiUz
-         /KVUBgHO1z22RG/yB305GF8/lHrbARvLpOEO2N+5AkDoqCFAbmwB/hxk8DWZuq1lFSqA
-         CIgQUQ2oRXex2k07NbwkYJSJ9+v/T14NklwEVh3/3WAVIgtUYd7Omvl6Vq+x+c8QkB/E
-         f3mIEFYr7/62N1+gR+dFlEdmh8iy14NHDcDwWRM1NYaiearvhi63Q7ZZHcBM4FpBFH+d
-         V3SO87YhKgS/HMlGLYDaUlwgk8VSMQ9omIR7DowPPjFxDDd+ZcaGVbZlesFTHZHcGb62
-         vcLw==
+        bh=AMihqUBUyb1192UI3d8WzNAwmOztB8ZLLbSAED+lq2A=;
+        b=myuxJ7Y0u5/jJ9j8sAT1mvq7ewwm+VUiDCdAW0udS0tqsWdvqFOmRdXQmU3wJMVL2Z
+         mzCz4s2uGDnEoH6OsT38OC7aYkB4/zHB5TSi2Gh+vL4ZRR1hdcF6sW8CBM3KfqvwO/E5
+         vpOIds8qZEYsieDQQ5U7ZJsaUWXRNEwGYcDJOnzpxIjkKDtDYkClfgwEj8jUoAUUoi3L
+         IYLU+GPk1rsTIfpuPb+8EeDpHQ2BDD02Q7KrFKnSmTPu9qdEKvdPPW/bExQ4lbO7cBec
+         pRqk5Z1n0cOrokunondsw4Ndcc4R6XS3B48VoLJIsMTIZhkvHQ3MpD2QMz6zzv05dnui
+         bgbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=vvXtw0ZBr+ijw4n55ze30/q70h99ZvDv8NhiT36HtOc=;
-        b=MhmahwJ84FAoQC5GIJI5Idp5LIAm7tjBnP7ZYACh7UPZek/6ys8aPC1J5M+9iwUpTq
-         TSi51AkAr681jXl5K0bnDCDUFB02MBW9WGPSkCVWZmP0kJUpAiColBLEseTsfvM3uYpl
-         BSmPI5igpN6N3x5CXpv9t903oTUerd55Fi7nG+ulOUNgDSzELcVAp0j0GoPBw61KcwYp
-         XV8r8b8r9iVHa1bvUtUA7CS3XtQRulAxOEoZaMNVjzPcQHRcJ+TDGg4yrSFy0rtNVDlp
-         9FvHI4V+n9+ABMq0UefWgIg6HYvgkqGftapv+pdayS/mx3PPVemo5T1XLD/wHmIJNXtB
-         ZM8A==
-X-Gm-Message-State: AOAM532cfPCdKFfIz0dZYtf2CGEb2JoWjkxmXEsWA+kJoTp9+4oiwmdX
-        7gnijlVPjKjwv9A8uoafFJg=
-X-Google-Smtp-Source: ABdhPJwt/+TSlbvkoYcq2rGRZyT+ecIjimhkUj0KomqK/XhYT4IhpgN4wDiNsDMmL15Hz0uCV251xA==
-X-Received: by 2002:a9d:12b4:: with SMTP id g49mr45124634otg.232.1638195036248;
-        Mon, 29 Nov 2021 06:10:36 -0800 (PST)
+        bh=AMihqUBUyb1192UI3d8WzNAwmOztB8ZLLbSAED+lq2A=;
+        b=EgNIZ+baWMRgNZRLhPPXgSnuiJcQPbcLiyArG9c23RQzkdD7kl4BLwuJcq8IowfKxi
+         kvFyjUQsKFA6TKF6pjXme1LYo0TIpIUdZ9T29WyaPd7fcrQqI6OwpEUZR+DtMK9BN9M1
+         ZQNBkYWX3ZB4DrFm2D893tpm1l7bkHkYXEZCGeB9W+miBZvxO6V8y8VLlGTqZK9KBHYd
+         SXTc3Bfwo4wQ5Q03BS466zohApoQyg+s6+B8uT1Z+cwau0/5/dMFGPNV9q4Uh+QEzsS2
+         gOjnKKETH00qaJQf7VUbZq3pOybSnhuhDW0ZJh0PW0JjWEWc06hjRhg56+zJWRmFqksy
+         Zaiw==
+X-Gm-Message-State: AOAM533+UlI9BvKIYs1Uu6kp8ZG9x0BIB2E8yXzKPg0eUCO0Zb8LCHPb
+        Qz3T8sbBY5+SeFckyhoefP4=
+X-Google-Smtp-Source: ABdhPJwzewes5EGlmdRkNp7j3D//jWdAAuIoSBS7HsPzhTBhi7HLRDhpJDz9MeSzY76JJuJFMPGMuw==
+X-Received: by 2002:a9d:f4a:: with SMTP id 68mr45611635ott.327.1638195262376;
+        Mon, 29 Nov 2021 06:14:22 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:3085:654c:eb81:848b? ([2600:1700:e72:80a0:3085:654c:eb81:848b])
-        by smtp.gmail.com with ESMTPSA id k12sm2664117ots.77.2021.11.29.06.10.34
+        by smtp.gmail.com with ESMTPSA id 16sm2981171oix.46.2021.11.29.06.14.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Nov 2021 06:10:35 -0800 (PST)
-Message-ID: <ac7e7241-d852-f0e7-d9c1-053adb242fee@gmail.com>
-Date:   Mon, 29 Nov 2021 09:10:33 -0500
+        Mon, 29 Nov 2021 06:14:22 -0800 (PST)
+Message-ID: <f65473df-4cb0-afdb-70e3-ee7685e6d817@gmail.com>
+Date:   Mon, 29 Nov 2021 09:14:19 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.2
-Subject: Re: [PATCH v2 3/9] unpack-trees: refuse to remove
- startup_info->original_cwd
+Subject: Re: [PATCH v2 4/9] unpack-trees: add special cwd handling
 Content-Language: en-US
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -66,9 +65,9 @@ Cc:     Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>
 References: <pull.1140.git.git.1637455620.gitgitgadget@gmail.com>
  <pull.1140.v2.git.git.1637829556.gitgitgadget@gmail.com>
- <e74975e83cc7a11b8f0378d59a8c2c4a97d3aa50.1637829556.git.gitgitgadget@gmail.com>
+ <e06806e3a3266fa6fdc973fcd7b479bd395c3023.1637829556.git.gitgitgadget@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <e74975e83cc7a11b8f0378d59a8c2c4a97d3aa50.1637829556.git.gitgitgadget@gmail.com>
+In-Reply-To: <e06806e3a3266fa6fdc973fcd7b479bd395c3023.1637829556.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -77,21 +76,37 @@ X-Mailing-List: git@vger.kernel.org
 
 On 11/25/2021 3:39 AM, Elijah Newren via GitGitGadget wrote:
 > From: Elijah Newren <newren@gmail.com>
+> 
+> When running commands such as `git reset --hard` from a subdirectory, if
+> that subdirectory is in the way of adding needed files, bail with an
+> error message.
+...
+> -test_expect_failure 'reset --hard fails if cwd needs to be removed' '
+> +test_expect_success 'reset --hard fails if cwd needs to be removed' '
+>  	git checkout foo/bar/baz &&
+>  	test_when_finished "git clean -fdx" &&
 
-> @@ -36,6 +36,9 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_WARNING_TYPES] = {
->  	/* ERROR_NOT_UPTODATE_DIR */
->  	"Updating '%s' would lose untracked files in it",
->  
-> +	/* ERROR_CWD_IN_THE_WAY */
-> +	"Refusing to remove '%s' since it is the current working directory.",
+This test doesn't include any condition on the final state of
+the worktree. I could imagine that an implementation could be
+writing to the worktree incrementally and then bail halfway
+through. A clean "git status" would give us some confidence that
+the worktree and index are in a good state after the command
+fails.
+
+> +	if (o->reset == UNPACK_RESET_OVERWRITE_UNTRACKED) {
+> +		/* Avoid nuking startup_info->original_cwd... */
+> +		if (startup_info->original_cwd &&
+> +		    !strcmp(startup_info->original_cwd, ce->name))
+> +			return add_rejected_path(o, ERROR_CWD_IN_THE_WAY,
+> +						 ce->name);
+> +		/* ...but nuke anything else. */
+> +		return 0;
+> +	}
 > +
->  	/* ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN */
->  	"Untracked working tree file '%s' would be overwritten by merge.",
 
-Your new message includes a hard stop (".") which is non-standard. I
-see that the message after yours has one, but the preceding one does
-not. Since the file you are in is not consistent, I would choose to
-drop the hard stop here.
+This implementation appears to do the right thing in the case
+I'm describing: we check which entries would need to change and
+we reject them before doing any real work.
 
 Thanks,
 -Stolee
