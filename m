@@ -2,72 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17051C433EF
-	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 10:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8CB6C433F5
+	for <git@archiver.kernel.org>; Mon, 29 Nov 2021 10:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349868AbhK2KFs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 05:05:48 -0500
-Received: from zg8tmtyylji0my4xnjeumjiw.icoremail.net ([162.243.161.220]:47472
-        "HELO zg8tmtyylji0my4xnjeumjiw.icoremail.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with SMTP id S1350179AbhK2KDq (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 29 Nov 2021 05:03:46 -0500
-Received: from mailtech.cn (unknown [10.12.1.20])
-        by hzbj-icmmx-2 (Coremail) with SMTP id AQAAfwBXgdHWpKRhNQBFBg--.22545S2;
-        Mon, 29 Nov 2021 18:00:54 +0800 (CST)
-Received: from pwxu$coremail.cn ( [112.94.4.17] ) by
- ajax-webmail-mailtech_rd (Coremail) ; Mon, 29 Nov 2021 18:00:24 +0800 (CST)
-X-Originating-IP: [112.94.4.17]
-Date:   Mon, 29 Nov 2021 18:00:24 +0800 (CST)
-X-CM-HeaderCharset: UTF-8
-From:   =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, "Git Mailing List" <git@vger.kernel.org>,
-        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29?= 
-        <aleen42@vip.qq.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        "Elijah Newren" <newren@gmail.com>
-Subject: Re: Re: [PATCH v11 2/2] am: support --empty=<option> to handle
- empty patches
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20211103(a39c0bb8)
- Copyright (c) 2002-2021 www.mailtech.cn
- mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
-In-Reply-To: <36706841.2ec.17d6afdb326.Coremail.pwxu@coremail.cn>
-References: <pull.1076.v10.git.1637567471.gitgitgadget@gmail.com>
- <pull.1076.v11.git.1637681215.gitgitgadget@gmail.com>
- <6051ad9440a966124e9147ec344ee6d87c46944a.1637681215.git.gitgitgadget@gmail.com>
- <CABPp-BF-eYcJ7eS==VK3M2xOqf5z4KNK4dP6qd_UcfLO1NWBeg@mail.gmail.com>
- <36706841.2ec.17d6afdb326.Coremail.pwxu@coremail.cn>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+        id S1351473AbhK2Kov (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 05:44:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44468 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229732AbhK2Kmu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 05:42:50 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F7D2C061A30
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 02:06:08 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id r25so4111628edq.7
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 02:06:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=pDWVOF8AHkrUYI3bwRVmVYJLIjkfN1yG1Hn+U3E18W0=;
+        b=a7hJgDje1r6C813fzX6KcWC/u94rhwGnf/6TD9jDE/k/qh2pEssUT2oUkRTc+v8P64
+         wWj+GIyL7kfUdf/Hm+NQ9tYNf841us/kefVimm8GGGTg3i1GmAlDDfG9Ngy7sHcsxqjT
+         Hbp9Dyvm4QV5sqFDJR8uK7a2K3ZRUs5bGwLkhPL8Uv4X0rbxk0H449sMVY33Yc2Mg8Sd
+         P6vISmF9Thp4cXmKG8vFvWtfzZSWfgYPinqpdoy8jItwVOCcQ3HD0PIbYhQ29k4XMV0y
+         G3GkRN79C/jtAEAdaEXVy0hrQdXWq9hBJNig1eWduJqQhvpOVCVrYh1r6dnX/MujVIV2
+         eWvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=pDWVOF8AHkrUYI3bwRVmVYJLIjkfN1yG1Hn+U3E18W0=;
+        b=MWNVoE3hOhAeY0BkHEmxusFGv6e0Snr1bF/uc40b/qaMUfgwjOtiHd0lZXFyXHcJ0U
+         tUfob5Rz//TLM9sZnGXPlJqz9fqb/dAGXRUQpb/IqTt7Z3osHmI0dd3V/ILGbybCEJF1
+         QxhmAfkr9YVLVX2rXZScO8oXseRQAa8CuwnVaEuIfsGMdTRhemKa5c2CRBlShF++BDX4
+         eVEHLZGr1jAF0YfLohezK3NM5/UuizhHs30EQ4YDqxaKyZFbT/6TvxCayCT5ZZTQUQpQ
+         dvt/8t9c1k7B9cdjknTWPNWM0HSZPdTcU3HMcXN1Kr/d2HPOoeZTtKPe5vFM2NwVdUXh
+         HoHQ==
+X-Gm-Message-State: AOAM532VxsguAidP4UEGHZLlke+Hp2IGkxvRHeeRo2StxEW2/3Tx6yRo
+        YZJrDMIG8XHFCN4Ax/isRIftQOyLfU8DtXfykXO8BAmb
+X-Google-Smtp-Source: ABdhPJx3supWDeSpW4Z/0VriLn1lfsKiklDf2KnG4nfBPmHmNjZFviTlCQKN2pwr5uKhifsNVqTwKaiVVcCF3Xp3ptY=
+X-Received: by 2002:a17:907:608b:: with SMTP id ht11mr23548817ejc.80.1638180366372;
+ Mon, 29 Nov 2021 02:06:06 -0800 (PST)
 MIME-Version: 1.0
-Message-ID: <7cffa143.3af.17d6b2371c7.Coremail.pwxu@coremail.cn>
-X-Coremail-Locale: en_US
-X-CM-TRANSID: AgIMCgAXpES4pKRh1AcAAA--.391W
-X-CM-SenderInfo: psz03q5fruvzxdlohubq/1tbiAQcBCFGCdORJswAAs2
-Authentication-Results: hzbj-icmmx-2; spf=neutral smtp.mail=pwxu@corem
-        ail.cn;
-X-Coremail-Antispam: 1Uk129KBjvdXoWrAF13tFWrZr47CrW3Xw17GFg_yoWxWrc_CF
-        n5W348K3y5Ar13JaySyF1rZFy3X3y5u34DJ3y3Wrn3CryktFs3CF4kArZ8GF1xZrZI9w1Y
-        9rsrJFWqk3W2vjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
-        Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
-        UUUU=
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 29 Nov 2021 11:05:55 +0100
+Message-ID: <CAP8UFD1evgGO6623r_gFqVL_aHJ+kgXKSrj9SJ2c-kSD4mhxYg@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 81
+To:     git <git@vger.kernel.org>
+Cc:     Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>, lwn@lwn.net,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SXQgaXMgcXVpdGUgY29tcGxpY2F0ZWQgdG8gc3VwcG9ydCAnZ2l0IGNvbW1pdCAtLWFsbG93LWVt
-cHR5JyBleHRyYWN0aW5nIG1lc3NhZ2VzCmZyb20gYW4gZW1wdHkgcGF0Y2gsIGJlY2F1c2UgJ2dp
-dCBhbScgaGFzIHRvIGZpbmQgc29tZXdoZXJlIHRvIHN0b3JlIHRoZSBwYXJzZWQgc3RhdGUKZm9y
-ICdnaXQgY29tbWl0JyB0byByZWFkLiBIb3cgYWJvdXQgZGlyZWN0bHkgc3VwcG9ydGluZyBhbm90
-aGVyIGludGVyYWN0aXZlIG9wdGlvbgonLS1hbGxvdy1lbXB0eScgZm9yICdnaXQgYW0nIHRvIGtl
-ZXAgcmVjb3JkaW5nPwoKPiBEZWFycyBIYW1hbm8sCj4gCj4gICAgRWxpamFoIE5ld3JlbiBoYXMg
-Z2l2ZW4gdHdvIGJldHRlciBzdWdnZXN0aW9uczoKPiAKPiAgICAgICAgMS4gVXNlICdhc2snIHJh
-dGhlciB0aGFuICdkaWUnCj4gICAgICAgIDIuIFdoZW4gZXJyb3Jpbmcgb3V0ICdQYXRjaCBpcyBl
-bXB0eScsIHByaW50IG91dCBhIHR1dG9yaWFsIGluZm9ybWF0aW9uCj4gICAgICAgICAgIHRvIGhl
-bHAgdXNlcnMgdXNpbmcgJ2dpdCBjb21taXQgLS1hbGxvdy1lbXB0eScgdG8ga2VlcCByZWNvcmRp
-bmcgYXMgCj4gICAgICAgICAgIGFuIGVtcHR5IGNvbW1pdC4KPiAKPiAgICBTaG91bGQgd2UgY29u
-dGludWUgdG8gaW1wbGVtZW50IHRoZXNlIGZlYXR1cmVzIGluIGN1cnJlbnQgUFI/Cj4gCj4gQWxl
-ZW4K
+Hi everyone,
 
+The 81st edition of Git Rev News is now published:
+
+  https://git.github.io/rev_news/2021/11/29/edition-81/
+
+Thanks a lot to Dscho (Johannes Schindelin) and J6t (Johannes Sixt)
+who helped this month!
+
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
+
+PS: An issue for the next edition is already opened and contributions
+are welcome:
+
+  https://github.com/git/git.github.io/issues/532
