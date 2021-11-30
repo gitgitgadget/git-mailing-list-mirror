@@ -2,103 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE7D4C433F5
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 15:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 377BDC433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 18:38:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235441AbhK3Ph1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 10:37:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42964 "EHLO
+        id S245530AbhK3Sla (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 13:41:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234833AbhK3Ph0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 10:37:26 -0500
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F265C061574
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 07:34:07 -0800 (PST)
-Received: by mail-oi1-x231.google.com with SMTP id bj13so41986987oib.4
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 07:34:07 -0800 (PST)
+        with ESMTP id S238047AbhK3Sl3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 13:41:29 -0500
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9001C061574
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 10:38:09 -0800 (PST)
+Received: by mail-qk1-x72a.google.com with SMTP id 193so27870042qkh.10
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 10:38:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=suevOa5l+2o1trjZO5a8+JNtfhbgFgi7cooF3L8uDS8=;
-        b=JxgROlD+JaWRVXPyiL97Lumj4vQWKh+jhTss7wMyupBiU7F5QU+p5jFQ+dJyKqlYrh
-         R2Ydb3REzifq+grFGsejJmaGKyMtfHLTr4r7qUCqsD1/RBh/8agn3W0TXDq/FC5DmiCt
-         UkpeK7Vvh8ivco+Dv3kg+BCDW1r6abcWCf401wZ9tTv1czkxb1zxQ5GPSo6ChqZ5Wn4K
-         8RW+cE+lSGjzZHjlaPhOFNlYuri2e7L3tZFVYE/9/IiUNVpIVRhM/sC6WDBixV4d7EMV
-         JUNdJnqbhzzBfg2lBXsrhHyKs0UAZMcpXZaY25G9JNv8CccYjKjFHB8xg6+9EHXYtIbT
-         FbWQ==
+        bh=fyTmvTSLXerM4vPvUcOE0TDhdTbV0QmsH+P19kTy18o=;
+        b=II9tZwLlIy8J3qhUOQ4e8LpvW6sHJGDUj8RY4+cZH47aed+hz0hJ/fv44vEsDkCH7Y
+         6kwrr/JxgputINOm/blDV363LJ6MDJXTcEzK3ELPrvRmmOiA6IwF1xZFO7pZRXeimf0q
+         mPOmoIXrlMc+B+zSfIMdV9fiNKJ6O2tO5kWyc1bF4dSOvT7DbG/JpCEwm5H1XH/A9cE6
+         AwUOFkdsBkEdMb5fipzEvBr4SRb11HQbyix8GDtVN9Uwx1vqPn+gIXTsUbQ7ljjRlY0A
+         21DUN2NJn306DqhbyGjSHScmwwMaFSvM5AvKQt1NXjb4WUkMWizpmt8OZ2etbFRcvouw
+         VGRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=suevOa5l+2o1trjZO5a8+JNtfhbgFgi7cooF3L8uDS8=;
-        b=1SusjSHcey2WVjOHjsC/frnKxFZ26SkVYSP53Qd9SKtqz4YOhJ9/E/D55bIDHTAsCT
-         LeeVq19hsSKn/aofKs7sDUCKMcV/i3wtDLv3X8wjg5HsguO9NGgw7xHdtCO/V1Xoichj
-         kStJBHUSdw5RxPryeTHdVyDSjtSwjWcqR/cOOImRru8/FIzkzeX7ZGJcS6QALkRX8iHC
-         Cyo4Zow47zPNQP0QSGOnEUG/mrScomXTNeKtHlHMzvYodYE2QPQKEZeWG7SVwJ8ZVCKb
-         QphrmD9kfTBi6zN1azdCH7yPuWR8iANmu9PvT+1LXVRhUC8lcbuqJqLeKymCSxjyb56x
-         2ZwQ==
-X-Gm-Message-State: AOAM53078K/XRdXLpGxYafFeJi2cQamTJXIL0ax7ZQ+5vzHuR8Kh+y6O
-        6Cr7941c/rtzOqrFiXXC8Fw=
-X-Google-Smtp-Source: ABdhPJzPfgihbwDEWw4pHE+a2os653fDvsFsmaAuvRREbfix9WXuTKhkCoYzB1U1FjEeKSOeOHFl6A==
-X-Received: by 2002:a05:6808:228c:: with SMTP id bo12mr95156oib.93.1638286446384;
-        Tue, 30 Nov 2021 07:34:06 -0800 (PST)
+        bh=fyTmvTSLXerM4vPvUcOE0TDhdTbV0QmsH+P19kTy18o=;
+        b=tcjAWth7YVzXlqOl14dk04c64ZGot7IQPKU81xpylIpHLQDHpglYjBuo5GMibgR4Au
+         WwsXRSgBxJmiRE/iwvirx2VITZ3Y69D4uIjMy04h4OaRuetA2vO+NkJJOkAQSQWPUxyu
+         DII8uOHSaVavi+LqB1FdM7T08WkGCtd+Q+wfOFjwE48uPwd8kWfFLyQPe/i0x2rDP3TH
+         EeXK4sO3pSnsnz/RwieN6wGuB/Bq19VKFiNJfFvRA/F2pB7MX00XQ/yRcigPmjWz88Y+
+         pkPrccQPXxRSxHnAizI7MXEaGMGaMkqVb4UD0x5zuTcUpZpkV+Vzy4/FoJJB9O3apuoQ
+         2Syg==
+X-Gm-Message-State: AOAM530fJZy9lq786YXj/el1tKiZTjSdkV6aht45NwYW02hAmymAUHgl
+        OlRcpsFPmR0TcBQGLlOLoHM=
+X-Google-Smtp-Source: ABdhPJzkJt4oWoSS87I6BMANow4PKW7E8JNgWKbGyJMZOSxTU2R6CKyE9f1wHGU1yRt3cElm2gq9PA==
+X-Received: by 2002:a05:620a:4502:: with SMTP id t2mr1157363qkp.193.1638297488998;
+        Tue, 30 Nov 2021 10:38:08 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:ecc1:c98a:cda5:6f9d? ([2600:1700:e72:80a0:ecc1:c98a:cda5:6f9d])
-        by smtp.gmail.com with ESMTPSA id u28sm3161480otj.57.2021.11.30.07.34.04
+        by smtp.gmail.com with ESMTPSA id x15sm8602135qko.82.2021.11.30.10.38.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Nov 2021 07:34:05 -0800 (PST)
-Message-ID: <86555f24-e7c4-64cb-a55c-7e2580e895f2@gmail.com>
-Date:   Tue, 30 Nov 2021 10:34:03 -0500
+        Tue, 30 Nov 2021 10:38:08 -0800 (PST)
+Message-ID: <446c3677-140f-3033-138f-1ef9b1f546a5@gmail.com>
+Date:   Tue, 30 Nov 2021 13:38:07 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.2
-Subject: Re: [PATCH 0/2] Set GIT_TRACE2_EVENT_NESTING in test-lib.sh
+Subject: Re: [PATCH v3 5/5] unpack-objects: unpack_non_delta_entry() read data
+ in a stream
 Content-Language: en-US
-To:     Jeff King <peff@peff.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
-        me@ttaylorr.com, Derrick Stolee <derrickstolee@github.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
-References: <pull.1085.git.1638193666.gitgitgadget@gmail.com>
- <YaUegEGxfAf72O9Z@coredump.intra.peff.net>
+To:     Han Xin <chiyutianyi@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Han Xin <hanxin.hx@alibaba-inc.com>
+References: <20211009082058.41138-1-chiyutianyi@gmail.com>
+ <20211122033220.32883-6-chiyutianyi@gmail.com>
+ <8ff89e50-1b80-7932-f0e2-af401ee04bb1@gmail.com>
+ <CAO0brD0oPHMwGNQXpC2XVhU=fY7XrrtBeu-x8GmJndeVptJaBg@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <YaUegEGxfAf72O9Z@coredump.intra.peff.net>
+In-Reply-To: <CAO0brD0oPHMwGNQXpC2XVhU=fY7XrrtBeu-x8GmJndeVptJaBg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/29/2021 1:40 PM, Jeff King wrote:
-> On Mon, Nov 29, 2021 at 01:47:44PM +0000, Derrick Stolee via GitGitGadget wrote:
+On 11/30/2021 8:49 AM, Han Xin wrote:
+> On Tue, Nov 30, 2021 at 1:37 AM Derrick Stolee <stolee@gmail.com> wrote:
+>> $ hyperfine \
+>>         --prepare 'rm -rf dest.git && git init --bare dest.git' \
+>>         -n 'old' '~/_git/git-upstream/git -C dest.git unpack-objects <big.pack' \
+>>         -n 'new' '~/_git/git/git -C dest.git unpack-objects <big.pack' \
+>>         -n 'new (small threshold)' '~/_git/git/git -c core.bigfilethreshold=64k -C dest.git unpack-objects <big.pack'
+>>
+>> Benchmark 1: old
+>>   Time (mean ± σ):     20.835 s ±  0.058 s    [User: 14.510 s, System: 6.284 s]
+>>   Range (min … max):   20.741 s … 20.909 s    10 runs
+>>
+>> Benchmark 2: new
+>>   Time (mean ± σ):     26.515 s ±  0.072 s    [User: 19.783 s, System: 6.696 s]
+>>   Range (min … max):   26.419 s … 26.611 s    10 runs
+>>
+>> Benchmark 3: new (small threshold)
+>>   Time (mean ± σ):     26.523 s ±  0.101 s    [User: 19.805 s, System: 6.680 s]
+>>   Range (min … max):   26.416 s … 26.739 s    10 runs
+>>
+>> Summary
+>>   'old' ran
+>>     1.27 ± 0.00 times faster than 'new'
+>>     1.27 ± 0.01 times faster than 'new (small threshold)'
+>>
+>> (Here, 'old' is testing a compiled version of the latest 'master'
+>> branch, while 'new' has your patches applied on top.)
+>>
+>> Notice from this example I had a pack with many small objects (mostly
+>> commits and trees) and I see that this change introduces significant
+>> overhead to this case.
+>>
+>> It would be nice to understand this overhead and fix it before taking
+>> this change any further.
+>>
+>> Thanks,
+>> -Stolee
 > 
->> As reported by Ævar [1] and diagnosed by Peff in a reply, the default
->> GIT_TRACE2_EVENT_NESTING is set so low that tests that look for trace2
->> events can start failing due to an added trace2 region. This can even be
->> subtle, including the fact that the progress API adds trace2 regions when in
->> use (which can depend on the verbose output of a test script).
-> 
-> I think this is a good change for fixing the immediate problem of the
-> test suite failing.
-> 
-> But I have to wonder if this is masking a problem that real users will
-> see. Aren't we silently discarding trace2 output that could be useful to
-> somebody debugging or trying to get performance metrics?
-> 
-> I.e., should we be bumping the internal nesting max of 2 to something
-> higher? If that would that cause problems with existing metrics, should
-> we be designing new metrics to avoid nesting?
+> Can you show me the specific information of the repository you
+> tested, so that I can analyze it further.
 
-One thing this makes me think about is that we might want to
-have items such as trace2_data_intmax() and trace2_data_string()
-not be subject to the nesting limit. Only have the nesting apply
-to the regions (which nest).
+I used a pack-file from an internal repo. It happened to be using
+partial clone, so here is a repro with the git/git repository
+after cloning this way:
 
-CC'ing Jeff Hostetler for his thoughts on that idea. We will have
-a discussion offline to see if the progress regions have started
-to cause inconsistencies in our existing telemetry stream of
-internal users.
+$ git clone --no-checkout --filter=blob:none https://github.com/git/git
+
+(copy the large .pack from git/.git/objects/pack/ to big.pack)
+
+$ hyperfine \
+	--prepare 'rm -rf dest.git && git init --bare dest.git' \
+	-n 'old' '~/_git/git-upstream/git -C dest.git unpack-objects <big.pack' \
+	-n 'new' '~/_git/git/git -C dest.git unpack-objects <big.pack' \
+	-n 'new (small threshold)' '~/_git/git/git -c core.bigfilethreshold=64k -C dest.git unpack-objects <big.pack'
+
+Benchmark 1: old
+  Time (mean ± σ):     82.748 s ±  0.445 s    [User: 50.512 s, System: 32.049 s]
+  Range (min … max):   82.042 s … 83.587 s    10 runs
+ 
+Benchmark 2: new
+  Time (mean ± σ):     101.644 s ±  0.524 s    [User: 67.470 s, System: 34.047 s]
+  Range (min … max):   100.866 s … 102.633 s    10 runs
+ 
+Benchmark 3: new (small threshold)
+  Time (mean ± σ):     101.093 s ±  0.269 s    [User: 67.404 s, System: 33.559 s]
+  Range (min … max):   100.639 s … 101.375 s    10 runs
+ 
+Summary
+  'old' ran
+    1.22 ± 0.01 times faster than 'new (small threshold)'
+    1.23 ± 0.01 times faster than 'new'
+
+I'm also able to repro this with a smaller repo (microsoft/scalar)
+so the tests complete much faster:
+
+$ hyperfine \
+        --prepare 'rm -rf dest.git && git init --bare dest.git' \
+        -n 'old' '~/_git/git-upstream/git -C dest.git unpack-objects <small.pack' \
+        -n 'new' '~/_git/git/git -C dest.git unpack-objects <small.pack' \
+        -n 'new (small threshold)' '~/_git/git/git -c core.bigfilethreshold=64k -C dest.git unpack-objects <small.pack'
+
+Benchmark 1: old
+  Time (mean ± σ):      3.295 s ±  0.023 s    [User: 1.063 s, System: 2.228 s]
+  Range (min … max):    3.269 s …  3.351 s    10 runs
+ 
+Benchmark 2: new
+  Time (mean ± σ):      3.592 s ±  0.105 s    [User: 1.261 s, System: 2.328 s]
+  Range (min … max):    3.378 s …  3.679 s    10 runs
+ 
+Benchmark 3: new (small threshold)
+  Time (mean ± σ):      3.584 s ±  0.144 s    [User: 1.241 s, System: 2.339 s]
+  Range (min … max):    3.359 s …  3.747 s    10 runs
+ 
+Summary
+  'old' ran
+    1.09 ± 0.04 times faster than 'new (small threshold)'
+    1.09 ± 0.03 times faster than 'new'
+
+It's not the same relative overhead, but still significant.
+
+These pack-files contain (mostly) small objects, no large blobs.
+I know that's not the target of your efforts, but it would be
+good to avoid a regression here.
 
 Thanks,
 -Stolee
