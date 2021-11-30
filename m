@@ -2,84 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63793C433F5
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 06:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBAE0C433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 07:14:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234731AbhK3G4m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 01:56:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33778 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232051AbhK3G4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 01:56:42 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5324AC061574
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 22:53:23 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id x6so82124625edr.5
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 22:53:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9emPHnWQEfeTlL8RiDQQR0V7XdxSSU1nb3FAWil9b20=;
-        b=DKp5jffhgB8PQbQzJc3BeCXc9V+/p52eDQYT2LHYZwZ4z6NV3A8Rdpag8TZtnaX4MU
-         gLkjYLvQ8uW360RFkM7zSn+KRNRKBaqwr1Gsv4giHPZL/l5DhEVUmtKygEHgU/6a+4cf
-         QX0ONOjp+37/60jSjp1iD/tjVGOYD2BZ3N/FDUPYquKKZ/9QgNOYhiFnGWTKfsAwfG8g
-         pz9OFe8aguOGen8EV7+LGO3faZlGmVB8aiaGnTGZzzigaOfv/6674JLL0tw5b2yxDYBu
-         QOztv2EWkkdY2X/kWrllGazAGAbaAEo1QzXq8jsOC+XAwr73lzTNOdQzp1AV8XHfGQ1R
-         XF0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9emPHnWQEfeTlL8RiDQQR0V7XdxSSU1nb3FAWil9b20=;
-        b=ld9YryHeRzNiMQ3fZrFIWhTOaovlj/xheFgF7TPTmQl+e//FLaREEWe4RiFc513Ayj
-         dahT5CwfOnvTfaJZIlBzUp0EOBtvKRPC/vs2L5cj2IDG8tadMW5B+Y4jR3gZdcmBlRUu
-         PrNyfLJYZDEzMaDPy90JeJSMP0CcMuDjDTiZUzflhWd89UdiGh8woBLeUhZFOVonzDrE
-         W65r9vTg7fvMtyGW3AKgoSM1BZOCJ3s1lVlBMofNk/THHUE0Ew753N3ajEtl9/WljgGm
-         qCinCXHUCP4BCIAVD/qSo6nOmwv5dp5kLdycznHkYzbcJmc0rnyjuxitkca/JGnkEUfx
-         SWAA==
-X-Gm-Message-State: AOAM5310n9Bap7IsKUfyWw0S8glmm9FjAFADC6orwEzJvJZ/K/jlqrKc
-        T/2BsnDswtQhgvxzWM9dKp0silNMuzeNOy1JP+4=
-X-Google-Smtp-Source: ABdhPJyVpDzlHODKeIMP3X7Onx6D/1GythiaZRAYmpqFZOWv3iU2h48z3Oo7oc9EKolHXZBqJy+m+N21YTQvNuuWXnY=
-X-Received: by 2002:a05:6402:5cb:: with SMTP id n11mr82408294edx.279.1638255201946;
- Mon, 29 Nov 2021 22:53:21 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.1140.v3.git.git.1637966463.gitgitgadget@gmail.com>
- <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com> <a45b3f088025795d11a78055f90b8632d435d74f.1638225434.git.gitgitgadget@gmail.com>
- <xmqqilwa2l8f.fsf@gitster.g>
-In-Reply-To: <xmqqilwa2l8f.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 29 Nov 2021 22:53:10 -0800
-Message-ID: <CABPp-BHQsQqjCwjCUk-bSe_i52Wza-QgTDbHVsLn90D8q5FkuQ@mail.gmail.com>
-Subject: Re: [PATCH v4 01/11] t2501: add various tests for removing the
- current working directory
+        id S239000AbhK3HRw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 02:17:52 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39966 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233216AbhK3HRw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 02:17:52 -0500
+Received: (qmail 11851 invoked by uid 109); 30 Nov 2021 07:14:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Nov 2021 07:14:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12327 invoked by uid 111); 30 Nov 2021 07:14:28 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Nov 2021 02:14:28 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 30 Nov 2021 02:14:25 -0500
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Glen Choo <chooglen@google.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+        Baruch Burstein <bmburstein@gmail.com>,
+        Randall Becker <rsbecker@nexbridge.com>
+Subject: Re: [RFC PATCH] vreportf: ensure sensible ordering of normal and
+ error output
+Message-ID: <YaXPUe9Sz3JBlzYL@coredump.intra.peff.net>
+References: <20211130043946.19987-1-sunshine@sunshineco.com>
+ <xmqqtufu2pll.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtufu2pll.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 29, 2021 at 10:47 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > +             # Although we want pwd & git status to pass, test for existing
-> > +             # rather than desired behavior.
-> > +             if test "$works" == "success"
->
-> Don't double "=" here.  We are not writing for bash.  There are a
-> few more instances of the same mistake in this patch.
+On Mon, Nov 29, 2021 at 09:13:10PM -0800, Junio C Hamano wrote:
 
-Yep, also pointed out by Eric.  I've got a v5 queued up whose change
-is just fixing this, but I'm waiting a bit to see if other items are
-spotted in review before sending.
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+> > This is RFC because I naturally worry about potential fallout from
+> > making a change to such a core function. I can't think of any case that
+> > it wouldn't be advantageous to flush stdout before stderr, so this
+> > change _seems_ safe, however, it may be that I'm just not imaginative
+> > enough, hence my hesitancy.
+> 
+> If stdout and stderr are both going to the same place (e.g. the
+> user's terminal), this would probably is an improvement, but if the
+> standard output is going to a pipe talking to another process, which
+> may care when the output is flushed, this may hurt.
+> 
+> But as long as the calling code is using stdio, it cannot precisely
+> control when the buffered contents are flushed anyway, so as long as
+> the caller has working standard output, this may be OK.
 
-Thanks for spotting.
+Yeah, I think this logic applies to the "happy" case. Any caller which
+is depending on the time of flush is already racily buggy.
+
+What I wonder about is the error case. What can happen if flushing
+fails? There are two interesting cases I can think of:
+
+  - flushing causes an error (which is quite likely, as we may
+    vreportf() because of an error on stdout). We should be OK, as we do
+    not care about the return value here, nor eventually checking
+    ferror(stdout). We may overwrite errno, but at this point in
+    vreportf(), we are committed to whatever error we're going to show
+    (and obviously the stderr flush below could cause the same issues).
+
+  - flushing causes us to block. This implies our stdout is connected to
+    a pipe or socket, and the other side is not expecting to read. A
+    plausible case here is a client sending us a big input which we find
+    to be bogus (maybe index-pack checking an incoming pack). We call
+    die() to complain about the input, but the client is still writing.
+    In the current code, we'd write out our error and then exit; the
+    client would get SIGPIPE or a write() error and abort. But with a
+    flush here, we could block writing back to the client, and now we're
+    in a deadlock; they are trying to write to us but we are no longer
+    reading, and we are blocked trying to get out a little bit of
+    irrelevant stdout data.
+
+    I _think_ we're probably OK here. The scenario above means that the
+    caller is already doing asynchronous I/O via stdio and is subject to
+    deadlock. Because the segment of buffer we try to flush here _could_
+    have been flushed already under the hood, which would have caused
+    the same blocking. A careful caller might be using select() or
+    similar to decide when it is OK to write, but I find it highly
+    unlikely they'd be using stdio in that case.
+
+Of the two, the deadlock case worries me more, just because it would be
+quiet subtle and racy. As I said, I think we may be OK, but my reasoning
+there is pretty hand-wavy.
+
+-Peff
