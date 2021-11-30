@@ -2,63 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85FD8C433FE
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 22:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A93CCC433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 22:28:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344703AbhK3WNn convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 30 Nov 2021 17:13:43 -0500
-Received: from mail-pl1-f180.google.com ([209.85.214.180]:43802 "EHLO
-        mail-pl1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344795AbhK3WNb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 17:13:31 -0500
-Received: by mail-pl1-f180.google.com with SMTP id m24so16053643pls.10
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 14:10:12 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qjtrOrTUwyddpM5bVJ88xzb520X9/tPbi1dPJ3RSNJo=;
-        b=m1MfgYYJQlyhKjeXy6sgvBKKzblXfPhdveOsJOUGj8Bog1BUZiQh1X0hXwHgcR+DnK
-         5HM1lIJbJoX2d0pDU9At4X9zpQLeXxDnOCPZ/IC+TaLOoXR+VpTtz/dnFhrnQAJzQbv0
-         fJoc4lxjvGR4limMN1Yvu63gy6oCs0ka/s9o8ACFBAYV6x/r+ewCdBfxtTWmyNOAcKz0
-         l/qVIFTtb3xRGnqxludYZTyup5VjcLwlUbodSYPhfaRMN4+aV9J3ujGMetPzwX5xbED0
-         4PmUfRajbAjoYyDbYxm3TZwLNMB/X7TQp9H38Wu5DfGkvVFr+FG2A6Kc9dd0JXwbiX3W
-         rNrw==
-X-Gm-Message-State: AOAM5327lU5fw6AUXshSLV/vaafix2MGA/uR9hJ5G7U5xY2fsF2+yvAf
-        mXLDZHeEaF7WOA6nrAvPvQq478lrXIv4mMhPBdA=
-X-Google-Smtp-Source: ABdhPJx0Fs8uQzKGrVlhaWrYupD0FhJAD9+AeAsZdmxVJ2qss12PfJgTI9ZHopwaSNOyBlc0wijQMcYDLZDRyo+/Cto=
-X-Received: by 2002:a17:90b:4f44:: with SMTP id pj4mr2272340pjb.150.1638310209489;
- Tue, 30 Nov 2021 14:10:09 -0800 (PST)
+        id S233795AbhK3Wb2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 17:31:28 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:39480 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233346AbhK3Wb1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 17:31:27 -0500
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1msBbY-0009p0-EK; Tue, 30 Nov 2021 22:28:05 +0000
+Message-ID: <13a5828d-596f-a215-7053-9570be939e5b@iee.email>
+Date:   Tue, 30 Nov 2021 22:28:05 +0000
 MIME-Version: 1.0
-References: <xmqqzgpm2xrd.fsf@gitster.g> <211130.86k0gpcpy2.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211130.86k0gpcpy2.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 30 Nov 2021 17:09:58 -0500
-Message-ID: <CAPig+cSvFgJTiq8pXrWy_7ukQwE1y9ZGwMgKmyjWuQHdNGxiDQ@mail.gmail.com>
-Subject: Re: ab/run-command + em/missing-pager (was: What's cooking in git.git
- (Nov 2021, #07; Mon, 29))
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Enzo Matsumiya <ematsumiya@suse.de>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH 2/4] repack.c: LLP64 compatibility, upcast unity for left
+ shift
+Content-Language: en-GB
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20211126113614.709-1-philipoakley@iee.email>
+ <20211126113614.709-3-philipoakley@iee.email> <YaVxwFuMeK3QsfZj@nand.local>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <YaVxwFuMeK3QsfZj@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 30, 2021 at 4:07 PM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> On Mon, Nov 29 2021, Junio C Hamano wrote:
-> > * ab/run-command (2021-11-25) 9 commits
-> >  - worktree: stop being overly intimate with run_command() internals
->
-> I think the only outstanding thing for this topic is Eric's [1] comment
-> (on his own code). I think that variable shadowing is OK.
->
-> 1. https://lore.kernel.org/git/CAPig+cRi6SeuV7k_+9JCcnf79daLZp5B=EyHK-KxC1VGN0B4ig@mail.gmail.com/
+On 30/11/2021 00:35, Taylor Blau wrote:
+> On Fri, Nov 26, 2021 at 11:36:12AM +0000, Philip Oakley wrote:
+>> Visual Studio reports C4334 "was 64-bit shift intended" warning
+>> because of size miss-match.
+> s/miss-/mis
 
-I'm also fine with the variable shadowing and don't consider it an
-outstanding issue with the topic (it was just a minor observation in
-case anyone complained). I didn't see anything else worth commenting
-on in the remainder of the series.
+Thanks. Looks like "miss-pelling" is my blind spot. Will fix V2 soon.
+>
+>> diff --git a/builtin/repack.c b/builtin/repack.c
+>> index 0b2d1e5d82..6da66474fd 100644
+>> --- a/builtin/repack.c
+>> +++ b/builtin/repack.c
+>> @@ -842,7 +842,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+>>  			fname_old = mkpathdup("%s-%s%s",
+>>  					packtmp, item->string, exts[ext].name);
+>>
+>> -			if (((uintptr_t)item->util) & (1 << ext)) {
+>> +			if (((uintptr_t)item->util) & ((uintptr_t)1 << ext)) {
+> This line blames to me from back in 2fcb03b52d (builtin/repack.c: don't
+> move existing packs out of the way, 2020-11-17).
+>
+> The proposed fix here looks good to me (though we were never at any
+> practical risk of getting bitten by a down-cast here since the maximum
+> value for `ext` is 5).
+Agreed. It's nice to get a head start on fixing a group of warnings.
+
+> Thanks,
+> Taylor
+Philip
