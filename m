@@ -2,147 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11897C433EF
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 21:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8ADFC433FE
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 21:52:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344210AbhK3Vm4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 16:42:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42616 "EHLO
+        id S232274AbhK3Vzq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 16:55:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344117AbhK3Vmv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 16:42:51 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB4D0C061574
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 13:39:31 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id gb13-20020a17090b060d00b001a674e2c4a8so18505027pjb.4
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 13:39:31 -0800 (PST)
+        with ESMTP id S231477AbhK3Vzp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 16:55:45 -0500
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07E9DC061574
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 13:52:25 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id l7so43879915lja.2
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 13:52:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian.com; s=google;
+        d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=+ol0nFiQoMwuH8zwgcTuPFB4X807VAVrUvWmtni+i2Q=;
-        b=haAlSkod0zvp60SdZxlYZVwGvJG5cB/QdiYfAw6bcMUylIpX/gwiGZPufp4+oOG774
-         jdPxptaXdBaEFDQznD4T7QuEorhwVd77aRWmDvB/ojXODCc6/zI3L7kaRM7HHZvBCpdO
-         NqPKByUhk38YtUqdq4fCh7+q4m/EzyZ0eUFm2Y60cqCkJmeKMezvqRCNEtUA8gmeSjIE
-         Lx0cKXCb2IvS5yk5auW3taLV+Ycj0n3SuKGSGxEsVC3eJ+olpvBC3a9/XKkD16CywL6M
-         rYdv17XzkhH4n3Upq12K2oMSl32TD7s3GYGpipCcXCrZY+QBdb4GwWudPebiUJt4JG8h
-         Uc1g==
+        bh=Mf9+TmxXf5metaHp9HHxs6UOmAGs2kvkYKNeBr+D0wE=;
+        b=HqmODgu9UrwkY0rI4fWEcvpS36pzqMVN8cSNs154lLrJYZbaRkEP6t6cuy6t3qoP3M
+         jE5e3miWgNRDE3VXTxNEbKtYCj8DEROzsIh4bg2dLGMHRLZevcsBwZrGVkgKMGZEcYOX
+         HXJcx1drWGR/exUs7Zjd2nQzkvu5P8uvs2NG1EB1RtfSCEPW7F407Sr9Jb249J+0oYp3
+         4b+tiO52j+WZ9OSm8dlGcnbrY1zPOo7id8kQIeHFcU2BL05dhJpW6tJCHLOMGSvybBYB
+         zyIMgPVZQotLE7i1O/XQ9ckpm1/8hIXJLosocGXPktDMpX+QI7nEQPEvg4g1+gqUiPpD
+         hJ+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=+ol0nFiQoMwuH8zwgcTuPFB4X807VAVrUvWmtni+i2Q=;
-        b=yLhnW0vUOHcgQaa7WrZI1AP8zYtNMOtYzWDR/hrXCPF3ItwfDACd4KoJxlxablLavB
-         1vWh1aX+JHPBAIQLi2ZcTmXU+hIqXLRhzm9sT3D4H6lrnNW6MD/OiY29ADO5dTvH5pJ2
-         NzLZcTADuyeQ60PI+kOzlQKoHVU1V/us5ellrn/sNfJgLsRzdKwjMMi+3XN+ENlL/cyE
-         NpqWP5ZEDZNtooT5xqkIKUddTcHFUTIIYv5dIsoRdstD8gFHOIj5KC7o/DuGtM9B8eGs
-         dPlT6KMDpW+NnQyXhwTIi3yDhhb0+cX260vfe1RF55KKF2WgcCDb2ehiD2PdRAIBhwYE
-         uXHw==
-X-Gm-Message-State: AOAM531+pS9koi/lYMKCKYzxV99ZvmiHDiA73wkAsVM/AMIUg/26gZe4
-        lh/HOBYyk1FFdr4rk5YVgqTuPsKTCPLNnPXJnhxi/Q==
-X-Google-Smtp-Source: ABdhPJz9DVdyVOVVwyOFjvVJdE7pfMQuY+pwYL92qz+CsAmy0iuXkek+sIGLgSsiTxMCCuyfabipogNfe0coQgsaa/Q=
-X-Received: by 2002:a17:90a:2e16:: with SMTP id q22mr2062295pjd.156.1638308371122;
- Tue, 30 Nov 2021 13:39:31 -0800 (PST)
+        bh=Mf9+TmxXf5metaHp9HHxs6UOmAGs2kvkYKNeBr+D0wE=;
+        b=SKimMWmOigSCfWER82iHiUQsiiK4yN0lCATUwH/nn61XGI+yKbRSXxx70FSKW8niVz
+         WnG1vsO5Jigz5hSu9qtcWe6kRKMI0vUWo3eQN+vSr67Ic6uNehg6s3ReX7Bks+YCQNBE
+         14NQ+MfWazl/vvqkEjXFcMkkSxq0rDc8xSymrErb1kYon/R6Neo2d1OSMnK4EhvLIEF0
+         ZvPTDz0Sjt5/2Y0845ZjclAeLihdk4+vKP2KuNDQapsHLnVJ8w8wyhZS+1H/bM/IczqH
+         P9VlLAj+CUN81ZxnqCZrj7M9mYVRIuNRIPXTmeYr98aG7m+Oa7+k763dbw34bCTCAo/p
+         08Cg==
+X-Gm-Message-State: AOAM532k0lvfyg8L+PObAgNXfNteIYzLNIuG4pwE6MHcGU6chprXSrfR
+        r7tBFNqBqKdbYjNjhFF+0HLa6It+BoB3IMfyl2I=
+X-Google-Smtp-Source: ABdhPJxQRlnbl+pUwsMKQrgzlFxywCZUMuXUYU7PzcW2cli1iJnrhZRxbPAwYWrl+M4jJsHE3vIvFAIqkq4gkbZUuWw=
+X-Received: by 2002:a05:651c:2119:: with SMTP id a25mr1526315ljq.131.1638309143205;
+ Tue, 30 Nov 2021 13:52:23 -0800 (PST)
 MIME-Version: 1.0
-References: <CALa_nQ=Q1h9b_BZcg9AeJurLeRpGrpUFuyoMz-DYKB3bgFJj4Q@mail.gmail.com>
-In-Reply-To: <CALa_nQ=Q1h9b_BZcg9AeJurLeRpGrpUFuyoMz-DYKB3bgFJj4Q@mail.gmail.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Tue, 30 Nov 2021 13:39:20 -0800
-Message-ID: <CAGyf7-Ea719UNEAQSTeeSYyCcsqMo5TWXR+dSr8sDqDfj+tLAA@mail.gmail.com>
-Subject: Re: `git diff` after `git checkout from-branch -- files` reports nothing
-To:     Noel Yap <noel.yap@gmail.com>
-Cc:     git@vger.kernel.org
+References: <pull.1076.v8.git.git.1633366667.gitgitgadget@gmail.com>
+ <pull.1076.v9.git.git.1637020263.gitgitgadget@gmail.com> <6b27afa60e05c6c0b7752f1bcf6629c446ede520.1637020263.git.gitgitgadget@gmail.com>
+ <CABPp-BH6m4q_EoX77bqLcpCN1HRfJ_XayeCV2O0sRybX53rPrw@mail.gmail.com>
+In-Reply-To: <CABPp-BH6m4q_EoX77bqLcpCN1HRfJ_XayeCV2O0sRybX53rPrw@mail.gmail.com>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Tue, 30 Nov 2021 13:52:12 -0800
+Message-ID: <CANQDOdd7EHUqD_JBdO9ArpvOQYUnU9GSL6EVR7W7XXgNASZyhQ@mail.gmail.com>
+Subject: Re: [PATCH v9 1/9] tmp-objdir: new API for creating temporary
+ writable databases
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Christoph Hellwig <hch@lst.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 30, 2021 at 12:49 PM Noel Yap <noel.yap@gmail.com> wrote:
+On Tue, Nov 30, 2021 at 1:27 PM Elijah Newren <newren@gmail.com> wrote:
 >
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
+> On Mon, Nov 15, 2021 at 3:51 PM Neeraj Singh via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: Neeraj Singh <neerajsi@microsoft.com>
+> >
+> > The tmp_objdir API provides the ability to create temporary object
+> > directories, but was designed with the goal of having subprocesses
+> > access these object stores, followed by the main process migrating
+> > objects from it to the main object store or just deleting it.  The
+> > subprocesses would view it as their primary datastore and write to it.
+> >
+> > Here we add the tmp_objdir_replace_primary_odb function that replaces
+> > the current process's writable "main" object directory with the
+> > specified one. The previous main object directory is restored in either
+> > tmp_objdir_migrate or tmp_objdir_destroy.
+> >
+> > For the --remerge-diff usecase, add a new `will_destroy` flag in `struct
+> > object_database` to mark ephemeral object databases that do not require
+> > fsync durability.
+> >
+> > Add 'git prune' support for removing temporary object databases, and
+> > make sure that they have a name starting with tmp_ and containing an
+> > operation-specific name.
+> >
+> > Based-on-patch-by: Elijah Newren <newren@gmail.com>
+> >
+> > Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> > ---
+> >  builtin/prune.c        | 23 +++++++++++++++---
+> >  builtin/receive-pack.c |  2 +-
+> >  environment.c          |  5 ++++
+> >  object-file.c          | 44 +++++++++++++++++++++++++++++++--
+> >  object-store.h         | 19 +++++++++++++++
+> >  object.c               |  2 +-
+> >  tmp-objdir.c           | 55 +++++++++++++++++++++++++++++++++++++++---
+> >  tmp-objdir.h           | 29 +++++++++++++++++++---
+> >  8 files changed, 165 insertions(+), 14 deletions(-)
+> >
+> > diff --git a/builtin/prune.c b/builtin/prune.c
+> > index 485c9a3c56f..a76e6a5f0e8 100644
+> > --- a/builtin/prune.c
+> > +++ b/builtin/prune.c
+> > @@ -18,6 +18,7 @@ static int show_only;
+> >  static int verbose;
+> >  static timestamp_t expire;
+> >  static int show_progress = -1;
+> > +static struct strbuf remove_dir_buf = STRBUF_INIT;
+> >
+> >  static int prune_tmp_file(const char *fullpath)
+> >  {
+> > @@ -26,10 +27,20 @@ static int prune_tmp_file(const char *fullpath)
+> >                 return error("Could not stat '%s'", fullpath);
+> >         if (st.st_mtime > expire)
+> >                 return 0;
+> > -       if (show_only || verbose)
+> > -               printf("Removing stale temporary file %s\n", fullpath);
+> > -       if (!show_only)
+> > -               unlink_or_warn(fullpath);
+> > +       if (S_ISDIR(st.st_mode)) {
+> > +               if (show_only || verbose)
+> > +                       printf("Removing stale temporary directory %s\n", fullpath);
+> > +               if (!show_only) {
+> > +                       strbuf_reset(&remove_dir_buf);
+> > +                       strbuf_addstr(&remove_dir_buf, fullpath);
+> > +                       remove_dir_recursively(&remove_dir_buf, 0);
 >
-> What did you do before the bug happened? (Steps to reproduce your issue)
+> Why not just define remove_dir_buf here rather than as a global?  It'd
+> not only make the code more readable by keeping everything localized,
+> it would have prevented the forgotten strbuf_reset() bug from the
+> earlier round of this patch.
 >
-> `git checkout -b to-branch; git checkout from-branch -- filenames; git
-> status; git diff`
+> Sure, that'd be an extra memory allocation/free for each directory you
+> hit, which should be negligible compared to the cost of
+> remove_dir_recursively()...and I'm not sure this is performance
+> critical anyway (I don't see why we'd expect more than O(1) cruft
+> temporary directories).
 
-"git diff" as run here by default only shows _unstaged_ changes. Since
-you ran "git checkout from-branch -- filenames", those changes were
-_staged_. That means you'd need "git diff --cached" or "git diff
---staged" to see them.
->
-> What did you expect to happen? (Expected behavior)
->
-> `git status` expected to show updated files and `git diff` expected to
-> show file changes.
->
-> What happened instead? (Actual behavior)
->
-> `git status` showed updated files but `git diff` showed no file changes.
+I'll take this suggestion.
 
-"git status" compares the working copy to the index, so it will always
-show the changes, but it has 2 different blocks, staged and unstaged
-changes. If your changes appear in the staged block, you need "git
-diff --cached" or "git diff --staged". If they're in the unstaged
-block, they'll be visible in "git diff".
+> > +               }
+> > +       } else {
+> > +               if (show_only || verbose)
+> > +                       printf("Removing stale temporary file %s\n", fullpath);
+> > +               if (!show_only)
+> > +                       unlink_or_warn(fullpath);
+> > +       }
+> >         return 0;
+> >  }
+> >
+> > @@ -97,6 +108,9 @@ static int prune_cruft(const char *basename, const char *path, void *data)
+> >
+> >  static int prune_subdir(unsigned int nr, const char *path, void *data)
+> >  {
+> > +       if (verbose)
+>
+> Shouldn't this be
+>     if (show_only || verbose)
+> ?
 
->
-> What's different between what you expected and what actually happened?
->
-> `git diff` was expected to show file changes but it showed nothing instead.
->
-> Anything else you want to add:
->
-> If I `git reset -q HEAD -- filenames`, `git diff` starts showing file changes.
+Doing that breaks one of the tests, since we print extra stuff that's
+unexpected. I think I'm going to just revert this change, since it
+appears that we call this callback and try to remove the directory
+even if it's non-empty.
 
-This unstaged the changes, at which point they show in a plain "git
-diff". They also would move from the staged block to the unstaged
-block in your "git status" output.
+Do you have any comments or thoughts on how we want to allow the user
+to configure fsync settings?
 
-As far as I can tell everything is working as intended.
-
-Hope this helps,
-Bryan Turner
-
->
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
->
->
-> [System Info]
-> git version:
-> git version 2.34.1
-> cpu: x86_64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> uname: Linux 5.11.0-36-generic #40~20.04.1-Ubuntu SMP Sat Sep 18
-> 02:14:19 UTC 2021 x86_64
-> compiler info: gnuc: 9.3
-> libc info: glibc: 2.31
-> $SHELL (typically, interactive shell): /bin/bash
->
->
-> [Enabled Hooks]
-> applypatch-msg
-> commit-msg
-> post-applypatch
-> post-checkout
-> post-commit
-> post-merge
-> post-receive
-> post-rewrite
-> post-update
-> pre-applypatch
-> pre-auto-gc
-> pre-commit
-> pre-merge-commit
-> pre-push
-> pre-rebase
-> pre-receive
-> prepare-commit-msg
-> push-to-checkout
-> sendemail-validate
-> update
+Thanks,
+Neeraj
