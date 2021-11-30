@@ -2,127 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FCC6C433EF
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 14:02:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B0D3C433EF
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 14:06:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241867AbhK3OF1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 09:05:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48904 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235286AbhK3OF1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 09:05:27 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00F81C061574
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 06:02:08 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id v1so87082809edx.2
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 06:02:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=36sKn9H6CgjF+7dkYY+DBdQ3nqm4mCTyqVvijIFEH/w=;
-        b=aFZjgtGgnOTa96R+zDqeqX38t2/ZdJD0Zwy23jxqWn4HfD/Zehw/2T3QcgSKwoN+fS
-         vLEESXmzY10/MGx0wUlY1YnXkN8r6PsrVGog6IXnuwACdeTBz+mG1giXmFd5AS145nwI
-         GMyLtlQv21HvD+s2MKnDXpE0GGWe0R3ug/9SbbWOx/2xxnCYPL64Xvyo0m6c1cRkxmc9
-         6oYiyr3mss3fWH27Kg+nUArz7uUYDAahm0R0zesZH0zn24H8otyXOTrY7YWchO15DxmT
-         swFJb8ohI7JNQ1s237RGfgIL3rmJHQeNLbuErLxDnhBxUMkBGv0sdTkA6GEZ7TYXfK/y
-         WQ4Q==
+        id S241983AbhK3OJ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 09:09:26 -0500
+Received: from mail-pg1-f170.google.com ([209.85.215.170]:35808 "EHLO
+        mail-pg1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241977AbhK3OJZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 09:09:25 -0500
+Received: by mail-pg1-f170.google.com with SMTP id j11so9963729pgs.2
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 06:06:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=36sKn9H6CgjF+7dkYY+DBdQ3nqm4mCTyqVvijIFEH/w=;
-        b=zaY8lqqRTKBWi4WbGVqCzuqDCpgsrmxfKFbqSsaxigKDJuesvm7zWoEKrpqudbGFz+
-         lszCH62wZNpsJPycn2oMX0ifIE0CkQoZ9+wauiCq1Ns078xZUMcIqZX/HQDkZ1CGlvZv
-         saSnhCgnFTGu5Rqt6aaJRWoPVtBe7EMYLN+mTySvZL7tH5+KeWLBsGfxPr/S+zyKoaXC
-         bCAqxSwrsXIDynxItpY3X3CPbOgWCO+jhGqO3bGn9jvlGTZV7amHCKsNfunGBWtxAEmD
-         b7R1Kozv+E/2gF6BOnOblNRoTvNV9/jdwj4Gyr9QCLU1eh8G/E0Jyky3dfqahwahMs8x
-         CkyQ==
-X-Gm-Message-State: AOAM532jcXuX4x8z3kACCZxQJTkm2AvspbFsN7Wjq6kqvqbMSGWlF6ux
-        Z3yVGTuFBaa/HdN3RtDBODg=
-X-Google-Smtp-Source: ABdhPJxzzdGUySdB3gBpbGL5PKYJGliLlNVR04VtYcl1WMBBtAxgC888P8izUw4aI+6Gnj7UUPQPTw==
-X-Received: by 2002:a17:907:94ce:: with SMTP id dn14mr69087204ejc.85.1638280924520;
-        Tue, 30 Nov 2021 06:02:04 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id a17sm11219470edx.14.2021.11.30.06.02.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 06:02:04 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1ms3hr-0010t9-KH;
-        Tue, 30 Nov 2021 15:02:03 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Anselm =?utf-8?Q?Sch=C3=BCler?= <mail@anselmschueler.com>,
-        git <git@vger.kernel.org>
-Subject: Re: patch: change =?utf-8?Q?=E2=80=9CEverything_up-to-date?=
- =?utf-8?Q?=E2=80=9D?= to =?utf-8?Q?=E2=80=9CAlready?= up to =?utf-8?Q?dat?=
- =?utf-8?Q?e=2E=E2=80=9D?=
- (No-op messages for git-push and git-pull)
-Date:   Tue, 30 Nov 2021 14:55:47 +0100
-References: <VUYC3R.9YCVE0AMVVIF@anselmschueler.com>
- <CAPig+cRRxYmFqYimTHSi9uzmWU0FRXQ2hGXJK6jYLJcsFce_Rw@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <CAPig+cRRxYmFqYimTHSi9uzmWU0FRXQ2hGXJK6jYLJcsFce_Rw@mail.gmail.com>
-Message-ID: <211130.86a6hleo84.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Orjy2ZPJTs71fi5oJuysnFOaIfkpKZhne4xlsBzW03w=;
+        b=gqmpV6sqFRAqkif72OTm99GKOCC0iBkn1o7nAna4Kiowdsm+nOsEJdj3Uokrm/hFwO
+         sabfkwHfmicFy/KzxbPZZcgaqoXHIUdAzO1HpRi1242pHcm5NmVxpnxZW46GQRycLWg1
+         ONoijlJ67irToo/1uMiCHxY1cWs22/FH7HJewwo7adkVuKO45rheAHEvC1LpQdD8GZW5
+         z4SJ6vXW9nH7Nq5EliJJPIogUhHiQ+Pd47EbZEUw1pFySpSGPFmWt4DHbu+4oDBuJUmB
+         Yq/lzu0GyQ39WhdWtmj32yyizMlYg7K1ofzBa3UmkWoWWAIn9Eel23gKywGdEMHeILZT
+         hvdw==
+X-Gm-Message-State: AOAM533Mdl4l1PCGyxiqDQf6s3eNEbLz2ymrjrp3O7eBpPsR5yfepQ3M
+        JJOwOa+3THnSuRQEP56h63KEg0uytXp6lLhnSM79IXFgeUDJsA==
+X-Google-Smtp-Source: ABdhPJw6iX4j18jRQNqhAZgV18OsgU4NL8JybcQTz7+BymIhaCJ3N6t4PTAR3piZ6gKmaHx5pCpNObm3FkonWjdcBk8=
+X-Received: by 2002:a63:380e:: with SMTP id f14mr39928576pga.227.1638281165849;
+ Tue, 30 Nov 2021 06:06:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20211130043946.19987-1-sunshine@sunshineco.com> <YaXQ/HinYZH1wL7E@coredump.intra.peff.net>
+In-Reply-To: <YaXQ/HinYZH1wL7E@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 30 Nov 2021 09:05:54 -0500
+Message-ID: <CAPig+cRQqm8Ce29PnkndT47NNxM3UhJv12RZGZZJD-AyGVC7Zw@mail.gmail.com>
+Subject: Re: [RFC PATCH] vreportf: ensure sensible ordering of normal and
+ error output
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>,
+        Baruch Burstein <bmburstein@gmail.com>,
+        Randall Becker <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Nov 29 2021, Eric Sunshine wrote:
-
-> On Mon, Nov 29, 2021 at 7:04 PM Anselm Sch=C3=BCler <mail@anselmschueler.=
-com> wrote:
->> Why are the no-op messages for git-push and git-pull (i.e. when remote
->> and local are identical) so different, while describing something very
->> similar? IMO the messages should be either identical or very similar.
->> git-pull results in =E2=80=9CAlready up to date.=E2=80=9D, while git-pus=
-h results
->> in =E2=80=9CEverything up-to-date=E2=80=9D.
->>
->> It should be considered that other messages reading =E2=80=9CAlready up =
-to
->> date.=E2=80=9D seem to use a translation system, it might be better to u=
-se
->> that system here, too. Unfortunately, I don=E2=80=99t know how to do that
->> (currently). At any rate, this patch could serve as a temporary
->> =E2=80=9Cfix=E2=80=9D.
+On Tue, Nov 30, 2021 at 2:21 AM Jeff King <peff@peff.net> wrote:
+> On Mon, Nov 29, 2021 at 11:39:46PM -0500, Eric Sunshine wrote:
+> > Rather than attempting to address this issue on a case by case basis,
+> > address it by making vreportf() -- which is the heart of error-reporting
+> > functions die(), error(), warn(), etc. -- flush stdout before emitting
+> > the error message to stderr.
 >
-> This question/issue is raised from time to time, and the short answer
-> is that send-pack is plumbing, thus there likely will be resistance to
-> an arbitrary change of text. Denton goes into a bit more detail in his
-> reply[1].
+> I left some thoughts on whether this flush is safe elsewhere in the
+> thread. But for this particular case, two things occur to me:
 >
-> [1]: https://lore.kernel.org/git/20191122180433.GA57478@generichostname/
+>   - shouldn't status messages like this go to stderr anyway? I know some
+>     people follow the "unless it is an error, it should not to go
+>     stderr" philosophy. But I think in general our approach in Git is
+>     more "if it is the main output of the program, it goes to stdout; if
+>     it is chatter or progress for the user, it goes to stderr".
 
-Yes, but this isn't really applicable to what Anselm really wants to
-change.
+I considered this as well and agree that it would be a nicer localized
+fix, but...
 
-Here, i.e. yes the builtin/send-pack.c part of his patch mayb e suspect,
-but we can simply skiip that and change the transport.c part, it's API
-that only builtin/push.c uses.
+(1) I don't think the practice is documented anywhere, so people --
+including me when I wrote builtin/worktree.c -- might not know about
+it. Indeed, we don't seem to be entirely consistent about doing it
+this way. Randomly picking submodule-helper.c, for instance, I see
+status-like messages going to stdout:
 
-Currently transport_push() returns -1 or 0. I think the best change
-there would be to chang it and its callers to return an enum, so we
-could have it indicate whether it pushed anything or not.
+    printf(_("Entering '%s'\n"), displaypath);
+    printf(_("Synchronizing submodule url for '%s'\n"), ...);
 
-Probably even better would be to make it stop printing output entirely,
-and to merely have the "struct ref *" of remote refs returned to the
-caller. Then the caller could do the equivalent of
-transport_refs_pushed() itself.
+    if (...)
+        format = _("Cleared directory '%s'\n");
+    else
+        format = _("Could not remove submodule work tree '%s'\n");
+    printf(format, displaypath);
 
-I.e. we might want to print these in various mixtures of these
-scenarios:
+(2) With git-worktree being four or five years old, for
+backward-compatibility concerns, I worry that "that ship has sailed",
+where 'that' is the freedom to relocate those status-like messages
+from stdout to stderr. I don't want to break tooling which exists
+around git-worktree.
 
-    Already up-to-date
-    Pushed all requested refs
-    Pushed X/Y refs, Y-X were already up-to-date
+I'd be happy to be wrong on the second point -- indeed, git-worktree
+is still marked "experimental" in the man-page, but that may not mean
+anything this late in the game -- and submit a patch which places
+git-worktree's status-like messages on stderr instead of stdout.
+Thoughts?
 
-Anselm: If you're interested in following-up please read
-Documentation/SubmittingPatches, i.e. send your patch with
-git-send-email or another method that doesn't send the patch as an
-attachment.
+>   - the reason it works consistently on glibc is that stdout to a
+>     terminal is line buffered by default, so the "preparing" line is
+>     flushed immediately. If that isn't the case on Windows, should we
+>     consider calling setlinebuf() preemptively when isatty(1)?
+
+I'll let the Windows experts chime in on this (Dscho?). For all I
+know, that might introduce a bad performance regression on that
+platform under whatever terminal-like or pseudo-tty-like emulation
+they are using.
