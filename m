@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70077C433FE
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 11:55:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87CBAC433EF
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 11:55:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234246AbhK3L67 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 06:58:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47500 "EHLO
+        id S241306AbhK3L7B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 06:59:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237083AbhK3L6T (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 06:58:19 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 870BDC06174A
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 03:54:59 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id c6-20020a05600c0ac600b0033c3aedd30aso14554329wmr.5
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 03:54:59 -0800 (PST)
+        with ESMTP id S241036AbhK3L61 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 06:58:27 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05E8DC06175A
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 03:55:03 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id v11so43817012wrw.10
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 03:55:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=AdTnGWdf70EJL03j4oz0mW5N6Ss1tIPbDoMbKCDSoeQ=;
-        b=IdV25p34XAtViOBKTuWs0m5wxoP1qvKcYFGAADleCQZ+avGd61CMw9D2aabn6xLqY6
-         BTtD+xHBJTQIve7yymPfMSwzkccLMo/A2rwokrjWpZq9qJRoNMhcl0k3J5iK/Yj7EAnR
-         N0ILM5SPkTuDyISeCM5p8VC9JUlxToiXz3M9PXyCnGdu+KxDy2ykLYZDNKZe86asyUNp
-         EsQZmyvwYOP8SfUMI2RleJVe6thCuIpHZqhgo6b9r1SsBy1T3T+sNMURGYT6rDX4H7SD
-         XBrAAFuJVyt9yLtbnGnWMnHr5k1gcpT390TMhW5AauFg7tWwwi91QsmkXgaNJFdP8n47
-         ksXg==
+        bh=EnAo9DzhsdMVbWYI2vdFvzuNwGGFw58Qp+EsKM7jcZU=;
+        b=hjGHRykTdHfGGHahrnoi7PKOpYOyXI4uiLBXDKFzM6K0wAyBzaL+zpP+cxcm9rqvaR
+         Vs4kxRcqIG8B6YwgCxLGlvKm1GdtJo1lTN26q5u4/uHbzshwxFqPNVZEe5Ewd4phL5Cr
+         TnLBA32J9gCl3OQd+kjQnNYBukZImdw3etKO9yHLx2ozhRKRgSVUa4fbuGtkQecwgSp1
+         kqrqDhNq+ziZZ0gZgck5Bkcc3CuwvvcLkOBmlrrWOD7PK64mbdTAbBhmLzxuRT2JxarL
+         +QRJGucgOwhzwAdNNvWGPGs46IgJuITU8n4BlADGXuXPvgj2Hn+W61Q54PsKxqQ7hXqe
+         3oyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AdTnGWdf70EJL03j4oz0mW5N6Ss1tIPbDoMbKCDSoeQ=;
-        b=Z5qN2aXhS0Wj1YqlmdyhuckcpITlCoquF5UtvEAv4J1H2dVTbc3plKLfhIlVwmPiYe
-         icUGYBcr89dWnH8VHzeiqZdGyXEIBQV9tcqwV6E+tK7UvAiPyNavrt08s/Ybk3jyb8D7
-         EuijNIr5bJmCx72rH4QUd7OH5g4RUq9AytGVMGLDojuKPknBmdXA8wAuDoOmadLsBFps
-         mwlKP5Eo69MwkBYu3DaDeGlaGrK+RmdJUJfFIHYtXvvJM/8pADIf4TVaNV5dlH+mgKNs
-         R4xa2S+nW30Srx5u+CxctHXCZR/Tssh8szU/i3mj6r9vrvZv3qhR+4J4pvdYlMOGhSEu
-         sXTg==
-X-Gm-Message-State: AOAM533vJfxmidZKYTXvnMRabMVuZoK7e1NnUX2bVFXyyrrOHD/VV0iu
-        dQsAIV7LSbhwr2ZLUJwAVt/Wz2pEooA=
-X-Google-Smtp-Source: ABdhPJzTARS/6MLwSYkL0y9s9qwkBaGjdsDhIVXmzM4JDlCPUah/+gzY5r6DD5RN7I7L4R12KgDTfg==
-X-Received: by 2002:a1c:3b04:: with SMTP id i4mr4437597wma.126.1638273298048;
-        Tue, 30 Nov 2021 03:54:58 -0800 (PST)
+        bh=EnAo9DzhsdMVbWYI2vdFvzuNwGGFw58Qp+EsKM7jcZU=;
+        b=tTyZrrbPBsRA9LcIp9RppaMdj0EW1qOfjTTADjahs8/iMjCVYvixMdB4ynCyoCMegG
+         GM9QVLp6oc9SLzBagFtoTIEM3BkGH5NIWapon5HdpTg6WsOJmHTk3XqDLQVvBsgen03O
+         vMNa65GsugOQjsPefJvFjXU0MjXduysrDNXzNadmgJb29hZTT5FQb2dDtzAlDJ4XRDUL
+         QJrMfqO9Ufizn/OQ/mA893jTq2ZiPxtp7fxatiy6Cs3m89fRkP6tBAfTYxawwFjlJeER
+         MQrsOu2q5bcuxTpuIZaI6uNW5l3pKNZz9rPFek/j8CxeBJ6r5dxibfOy37slEVqav8e9
+         /JGg==
+X-Gm-Message-State: AOAM532jAgi+FVsKQe0LD5DKBjc7ze3C6PM2s21MgOs6YQmqZr+2m9RS
+        j4JnzS8Dk+nY+oCf8KythflUeKQrNYo=
+X-Google-Smtp-Source: ABdhPJxAKKN6LLuwyZLFzbnniHHwZM/fwZj2BKHQ11hYBJzjDdqdNhSAD2e/9zOMfdLxIhuwI/0o4g==
+X-Received: by 2002:adf:d22a:: with SMTP id k10mr41159295wrh.80.1638273301526;
+        Tue, 30 Nov 2021 03:55:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f18sm15962803wre.7.2021.11.30.03.54.57
+        by smtp.gmail.com with ESMTPSA id d15sm22270484wri.50.2021.11.30.03.55.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 03:54:57 -0800 (PST)
-Message-Id: <6afb2eb4163ab92d8e107674f7766281b05fbe24.1638273289.git.gitgitgadget@gmail.com>
+        Tue, 30 Nov 2021 03:55:01 -0800 (PST)
+Message-Id: <0cec6dbd2cbf35e2978bf98ca8bbc2f812621e62.1638273289.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
 References: <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com>
         <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 30 Nov 2021 11:54:42 +0000
-Subject: [PATCH v9 10/17] scalar: implement 'scalar list'
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 30 Nov 2021 11:54:47 +0000
+Subject: [PATCH v9 15/17] scalar: teach 'reconfigure' to optionally handle all
+ registered enlistments
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,84 +67,156 @@ Cc:     Derrick Stolee <stolee@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The produced list simply consists of those repositories registered under
-the multi-valued `scalar.repo` config setting in the user's Git config.
+After a Scalar upgrade, it can come in really handy if there is an easy
+way to reconfigure all Scalar enlistments. This new option offers this
+functionality.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c   | 11 +++++++++++
- contrib/scalar/scalar.txt | 11 ++++++++++-
- 2 files changed, 21 insertions(+), 1 deletion(-)
+ contrib/scalar/scalar.c          | 61 ++++++++++++++++++++++++++++++--
+ contrib/scalar/scalar.txt        |  9 +++--
+ contrib/scalar/t/t9099-scalar.sh |  3 ++
+ 3 files changed, 67 insertions(+), 6 deletions(-)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index ec783e72ef3..65da885c5ac 100644
+index d7306b43cae..305b080663b 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -251,6 +251,16 @@ static int unregister_dir(void)
- 	return res;
+@@ -488,22 +488,77 @@ static int cmd_register(int argc, const char **argv)
+ 	return register_dir();
  }
  
-+static int cmd_list(int argc, const char **argv)
++static int get_scalar_repos(const char *key, const char *value, void *data)
 +{
-+	if (argc != 1)
-+		die(_("`scalar list` does not take arguments"));
++	struct string_list *list = data;
 +
-+	if (run_git("config", "--global", "--get-all", "scalar.repo", NULL) < 0)
-+		return -1;
++	if (!strcmp(key, "scalar.repo"))
++		string_list_append(list, value);
++
 +	return 0;
 +}
 +
- static int cmd_register(int argc, const char **argv)
+ static int cmd_reconfigure(int argc, const char **argv)
  {
++	int all = 0;
  	struct option options[] = {
-@@ -337,6 +347,7 @@ static struct {
- 	const char *name;
- 	int (*fn)(int, const char **);
- } builtins[] = {
-+	{ "list", cmd_list },
- 	{ "register", cmd_register },
- 	{ "unregister", cmd_unregister },
- 	{ NULL, NULL},
++		OPT_BOOL('a', "all", &all,
++			 N_("reconfigure all registered enlistments")),
+ 		OPT_END(),
+ 	};
+ 	const char * const usage[] = {
+-		N_("scalar reconfigure [<enlistment>]"),
++		N_("scalar reconfigure [--all | <enlistment>]"),
+ 		NULL
+ 	};
++	struct string_list scalar_repos = STRING_LIST_INIT_DUP;
++	int i, res = 0;
++	struct repository r = { NULL };
++	struct strbuf commondir = STRBUF_INIT, gitdir = STRBUF_INIT;
+ 
+ 	argc = parse_options(argc, argv, NULL, options,
+ 			     usage, 0);
+ 
+-	setup_enlistment_directory(argc, argv, usage, options, NULL);
++	if (!all) {
++		setup_enlistment_directory(argc, argv, usage, options, NULL);
++
++		return set_recommended_config(1);
++	}
++
++	if (argc > 0)
++		usage_msg_opt(_("--all or <enlistment>, but not both"),
++			      usage, options);
++
++	git_config(get_scalar_repos, &scalar_repos);
+ 
+-	return set_recommended_config(1);
++	for (i = 0; i < scalar_repos.nr; i++) {
++		const char *dir = scalar_repos.items[i].string;
++
++		strbuf_reset(&commondir);
++		strbuf_reset(&gitdir);
++
++		if (chdir(dir) < 0) {
++			warning_errno(_("could not switch to '%s'"), dir);
++			res = -1;
++		} else if (discover_git_directory(&commondir, &gitdir) < 0) {
++			warning_errno(_("git repository gone in '%s'"), dir);
++			res = -1;
++		} else {
++			git_config_clear();
++
++			the_repository = &r;
++			r.commondir = commondir.buf;
++			r.gitdir = gitdir.buf;
++
++			if (set_recommended_config(1) < 0)
++				res = -1;
++		}
++	}
++
++	string_list_clear(&scalar_repos, 1);
++	strbuf_release(&commondir);
++	strbuf_release(&gitdir);
++
++	return res;
+ }
+ 
+ static int cmd_run(int argc, const char **argv)
 diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-index d9a79984492..f93e3d00efd 100644
+index 89fd7901585..737cf563c1a 100644
 --- a/contrib/scalar/scalar.txt
 +++ b/contrib/scalar/scalar.txt
-@@ -8,6 +8,7 @@ scalar - an opinionated repository management tool
- SYNOPSIS
- --------
- [verse]
-+scalar list
+@@ -13,7 +13,7 @@ scalar list
  scalar register [<enlistment>]
  scalar unregister [<enlistment>]
+ scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]
+-scalar reconfigure <enlistment>
++scalar reconfigure [ --all | <enlistment> ]
  
-@@ -28,11 +29,19 @@ an existing Git worktree with Scalar whose name is not `src`, the enlistment
+ DESCRIPTION
+ -----------
+@@ -32,8 +32,8 @@ an existing Git worktree with Scalar whose name is not `src`, the enlistment
  will be identical to the worktree.
  
  The `scalar` command implements various subcommands, and different options
--depending on the subcommand.
-+depending on the subcommand. With the exception of `list`, all subcommands
-+expect to be run in an enlistment.
+-depending on the subcommand. With the exception of `clone` and `list`, all
+-subcommands expect to be run in an enlistment.
++depending on the subcommand. With the exception of `clone`, `list` and
++`reconfigure --all`, all subcommands expect to be run in an enlistment.
  
  COMMANDS
  --------
+@@ -125,6 +125,9 @@ After a Scalar upgrade, or when the configuration of a Scalar enlistment
+ was somehow corrupted or changed by mistake, this subcommand allows to
+ reconfigure the enlistment.
  
-+List
-+~~~~
++With the `--all` option, all enlistments currently registered with Scalar
++will be reconfigured. Use this option after each Scalar upgrade.
 +
-+list::
-+	List enlistments that are currently registered by Scalar. This
-+	subcommand does not need to be run inside an enlistment.
-+
- Register
- ~~~~~~~~
+ SEE ALSO
+ --------
+ linkgit:git-clone[1], linkgit:git-maintenance[1].
+diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
+index fb5e2efee0a..58af546fd84 100755
+--- a/contrib/scalar/t/t9099-scalar.sh
++++ b/contrib/scalar/t/t9099-scalar.sh
+@@ -70,6 +70,9 @@ test_expect_success 'scalar reconfigure' '
+ 	scalar register one &&
+ 	git -C one/src config core.preloadIndex false &&
+ 	scalar reconfigure one &&
++	test true = "$(git -C one/src config core.preloadIndex)" &&
++	git -C one/src config core.preloadIndex false &&
++	scalar reconfigure -a &&
+ 	test true = "$(git -C one/src config core.preloadIndex)"
+ '
  
 -- 
 gitgitgadget
