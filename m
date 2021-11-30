@@ -2,105 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BFFFC433EF
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 00:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 718EEC433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 00:14:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231401AbhK3AIO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 19:08:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55614 "EHLO
+        id S232654AbhK3ASE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 19:18:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231168AbhK3AIL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 19:08:11 -0500
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98C89C061574
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 16:04:53 -0800 (PST)
-Received: by mail-il1-x134.google.com with SMTP id z8so9174422ilu.7
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 16:04:53 -0800 (PST)
+        with ESMTP id S232517AbhK3ASE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 19:18:04 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02425C061574
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 16:14:46 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id z5so13940633edd.3
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 16:14:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=sq43Ybqkq/t10mDQ+5AMHGrByNkZDa/wpbDtuNSxGTQ=;
-        b=uAkx9H2HX+PK7vcEPTA543CJ8axE4uikfL0YWC2FiPCXosKtJ3ouwTE8v5KQ8z3zZm
-         1dHSoa1JG8VdjWI2eY3A7Pj76M72xa8tsfT+nf4lSC3cfXsHwMev6lFttbbhCJNuXkNG
-         WBJUI1iZqFCHbk0cYMiPfAnI1RgbmZnWV+G7BYZTWeNMHoD1njRhqxioOuA0C63SiALh
-         jBTpgg+BxiJ2ihayy1QtiJnLV1FVJ8JvPwzMOqtbWAU+gbh1fzfexd7x7nOSb+sANAts
-         tGNHGBzzzzGvGf70cGtZaDr6r/ngHsF0+BOYAzzztZNsFz8ZGC+LYwTllfRmos73L51b
-         tqbw==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=30hyLvMHy6ptkInR3uBMQ2mYT+pNHNaXaiqaLRC9X0w=;
+        b=A1tVqk6HBeUe/AJN3C5E2bNVsgbsogCC81XPG77n+Nun+/nmwscEN2MkSEe1ektTNN
+         j5FbbcnI7BtLI/Nz+hW9wUfX+TTGZVcwHurRgD6lsFPxsmtC5JFhSbvhcQZG6N5u3azD
+         b1ZOD2AeDo27MX/KhJqNUMDsjtMcH5EX3CVtBRZX6l2bdEoxgqF9bAlVqgx4Ba3Jr0L4
+         DiFiY9JIztNMyqDIZK4IkYJOo/toVqYeMmviwTHwAHijLxmU7+5NrThF026sq2XSFS2f
+         vHHJxMilF435lUQDgLmzuAZ/smwwlLpQgAyrpKfX7Ug5U9GpUFsYiXR5Q6sNuaAWso8I
+         8gQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=sq43Ybqkq/t10mDQ+5AMHGrByNkZDa/wpbDtuNSxGTQ=;
-        b=7dBEoZG8JsgdtBKkyMajZd/5SA/jLNMl09TvPhzoaRMPVKR0yBJFjuIePle1Z4HDlZ
-         7F2Hbz87RHvApt2N89SQryP4Nkl3/B20WNHTOzAWg42usYGgIurhGGolp6TIs/yFi6+h
-         4Fn06OGp4UVB2vGQ13hWhFY4A2YrEO6FqU1OpxnKx7QNCV+kxmwvIB+wAmKfrQxVYbca
-         NQsKKfjcTp3fYsVGen4O6KoxHPWPd4zbaocOICFU/yX6+lxt2pTQtrL2VcPu1n8hFhLA
-         mpCn1qCjg1Xrg7fooT+vRzeTYoBDMrbT37EKmQ7N/auArNbh5sZmnwckDKrHagL6qdDs
-         XeVA==
-X-Gm-Message-State: AOAM533LXnfdh4Vu5qvv9NuCK5POOiwr5Dz7QfxsCeOG/rBi8kfmPogo
-        Ai9AIqmTG6Mcb7wjcMogPMotsw==
-X-Google-Smtp-Source: ABdhPJxSvygaHyKHy90mncTARJy4+ilBobzKm4hIpVAOtlSPPeK+ieDeehSd6JtpceU1QLRiOI0MPQ==
-X-Received: by 2002:a05:6e02:12e2:: with SMTP id l2mr60590327iln.251.1638230692975;
-        Mon, 29 Nov 2021 16:04:52 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id q12sm9722888ile.77.2021.11.29.16.04.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Nov 2021 16:04:52 -0800 (PST)
-Date:   Mon, 29 Nov 2021 19:04:51 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 0/2] Set GIT_TRACE2_EVENT_NESTING in test-lib.sh
-Message-ID: <YaVqo476kVKtT1Rg@nand.local>
-References: <pull.1085.git.1638193666.gitgitgadget@gmail.com>
- <YaUegEGxfAf72O9Z@coredump.intra.peff.net>
- <YaUfq88UwWVcb7KG@coredump.intra.peff.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=30hyLvMHy6ptkInR3uBMQ2mYT+pNHNaXaiqaLRC9X0w=;
+        b=aOYnemYh2l5TCW9b4hKODMCa0MpxKrrcv/95Ia+QPMRjX7KeDa6K6eRipxmJ1my0em
+         8/2Z4bXaH6kK2eeXICd9zLTU+6RDGYrAbI3hV9rzG/Iq1AH8As0NeqMCjfgcjc154fDO
+         Q6ayocMJ3aOCB1M8tYDi+MacMK2/8D2ZxzA+1Yml9p5aMAZodngg64bFPHiphWyzyn82
+         AuRAaX3xLJJLTXV5eAuJbw8WPHm2TZG4yp+9go+yk1L+4visLuyVo0DJAWwRfiyfF1hv
+         ahecQ1hHSaXlmwi2reAy/RF2Yd1pMpZKPapKZVWHtscDHlHmF67zfwWo+Peeg3JfA5yZ
+         vbAw==
+X-Gm-Message-State: AOAM530JfbM6R+p45RQXOyuVDfds3gdWAw+AlONjPLQ5cFNHM+pKH3xC
+        WbCeBKT6fiVYadq4Ez7sVvGp2NCVLLvDHxsFNCyyrVq6FUI=
+X-Google-Smtp-Source: ABdhPJw3HqdyN6ai4PjNZYxF+rMgIbBeUMcksalIJg7++xQnXTFDsooow3gbdiILR0YN1BiDKjcpxxQTedIo0C2En6Y=
+X-Received: by 2002:aa7:c902:: with SMTP id b2mr77100105edt.320.1638231284574;
+ Mon, 29 Nov 2021 16:14:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YaUfq88UwWVcb7KG@coredump.intra.peff.net>
+References: <CAMJzOtyw78-8gt3oGscN7KUzpzRRWtAQuGfcJ+R_Fjoom9Lexw@mail.gmail.com>
+ <211129.868rx7gnd5.gmgdl@evledraar.gmail.com>
+In-Reply-To: <211129.868rx7gnd5.gmgdl@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 29 Nov 2021 16:14:33 -0800
+Message-ID: <CABPp-BFRE2=Owf15WzkacNfdNKbkd2n4GZh7HqDokKzeviBWRw@mail.gmail.com>
+Subject: Re: [BUG REPORT] `git rebase --exec` shouldn't run the exec command
+ when there is nothing to rebase
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Nikita Bobko <nikitabobko@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 29, 2021 at 01:44:59PM -0500, Jeff King wrote:
-> On Mon, Nov 29, 2021 at 01:40:00PM -0500, Jeff King wrote:
+On Mon, Nov 29, 2021 at 2:25 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> > On Mon, Nov 29, 2021 at 01:47:44PM +0000, Derrick Stolee via GitGitGadget wrote:
-> >
-> > > As reported by Ævar [1] and diagnosed by Peff in a reply, the default
-> > > GIT_TRACE2_EVENT_NESTING is set so low that tests that look for trace2
-> > > events can start failing due to an added trace2 region. This can even be
-> > > subtle, including the fact that the progress API adds trace2 regions when in
-> > > use (which can depend on the verbose output of a test script).
-> >
-> > I think this is a good change for fixing the immediate problem of the
-> > test suite failing.
-> >
-> > But I have to wonder if this is masking a problem that real users will
-> > see. Aren't we silently discarding trace2 output that could be useful to
-> > somebody debugging or trying to get performance metrics?
-> >
-> > I.e., should we be bumping the internal nesting max of 2 to something
-> > higher? If that would that cause problems with existing metrics, should
-> > we be designing new metrics to avoid nesting?
+> On Fri, Nov 26 2021, Nikita Bobko wrote:
 >
-> One thing I should have added to the first paragraph: the patches
-> themselves look fine and I'm OK with this as a band-aid in the short
-> term.
+> > Steps:
+> > git rebase HEAD --exec "echo foo"
+> >
+> > EXPECTED: since 0 commits are going to be rebased then I expect "foo"
+> > NOT to be printed
+> > ACTUAL:   "foo" is printed
+>
+> I don't think this is a bug, but explicitly desired behavior.
 
-Yeah, I agree. This test in particular must have bad luck, because I
-noticed the same failure in GitHub's fork when merging with 2.33 (but
-due to some custom trace2 regions causing us to blow past the limit even
-without `-v`).
+My reading of the docs are such that I'd expect the same as Nikita here:
 
-It might be nice to allow setting 'GIT_TRACE2_EVENT_NESTING=false' or
-something similar, but let's deal with that elsewhere.
+        Append "exec <cmd>" after each line creating a commit in the final
+        history.
+        ...
+        If --autosquash is used, "exec" lines will not be appended for the
+        intermediate commits, and will only appear at the end of each
+        squash/fixup series.
 
-hanks,
-Taylor
+There is no line creating a commit in the final history when you do a
+git rebase -i --exec "echo foo" HEAD (there is only a noop line), so
+there should be no exec line.
+
+> When you do:
+>
+>     git rebase -x 'make test' BASE
+>
+> You expect to run 'make test' for all of BASE..HEAD inclusive of
+> "base". E.g. for HEAD~1 we'll run 'make test' twice, and you know both
+> your HEAD~ and HEAD passed tests.
+
+This is not true.  Try `git rebase -i --exec HEAD~$N` for various
+values of N>0.  base is not included.
+
+> So why wouldn't doing the same for HEAD make sense?
+
+Indeed; HEAD is weirdly inconsistent and should be brought in line
+with the others.
+
+> That being said perhaps some users would think an option or
+> configuration to skip the injection of "exec" after "noop" would make
+> sense in that case.
+>
+> But does this really have anything per-se to do with --exec? Wouldn't
+> such an option/configuration be the same as rebase in general dying if
+> there's no work to do?
+>
+> And wouldn't such a thing be more useful than a narrow change to make
+> --exec a NOOP in these cases?
+>
+> E.g. if I've got a "topic" that has commit "A", that's since been
+> integrated into my upstream and I have a script to "make test" on my
+> topics, won't simply dying (and thus indicating that the topic is
+> dead/integrated) be better than noop-ing?
+
+Why do you suggest "dying" rather than early completion with success?
+
+Anyway, rebase does early exit in non-interactive mode when there is
+nothing to do, it's just that interactive mode suggests users might
+want to do something special, so they get a TODO list containing only
+"noop".  Since --exec was written in terms of interactive rebase by
+editing the TODO list and inserting an exec command after each of the
+picks, and it accidentally always added one at the end of the todo
+list even if the last instruction (group) was not a pick/fixup/squash,
+we hit this bug.
+
+Anyway, I've got a patch I'll send in.
