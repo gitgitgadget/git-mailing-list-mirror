@@ -2,90 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0783C433FE
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 07:51:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 760EAC433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 08:24:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239275AbhK3HzJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 02:55:09 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56723 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239219AbhK3HzF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 02:55:05 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E8612171BAC;
-        Tue, 30 Nov 2021 02:51:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZyLdiE6rCffG
-        5jFOz5xVf8rw4UIYKwl5o/NLI9SL5t8=; b=TLulwMT+HFIAOZHRX9Sc0YdYzurS
-        uuGWnw5Xf/1SyGwY1lWf9m7NLEHw2pZ9m+iGZSi1MceE2QENkZtnNTywTqmjZkAA
-        DQHiHlm4NUtYLPY3FUxmwrSR8ZOkPYDk7egnNyv7qqYYiUAOodCPI3mjVRpgYxhG
-        cMMGaAu7va8YRXg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E0A56171BAB;
-        Tue, 30 Nov 2021 02:51:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 048C2171BA9;
-        Tue, 30 Nov 2021 02:51:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        chooglen@google.com
-Subject: Re: [PATCH v4 0/2] Conditional config includes based on remote URL
-References: <cover.1634077795.git.jonathantanmy@google.com>
-        <cover.1638217387.git.jonathantanmy@google.com>
-        <211129.864k7ug02c.gmgdl@evledraar.gmail.com>
-Date:   Mon, 29 Nov 2021 23:51:40 -0800
-In-Reply-To: <211129.864k7ug02c.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 29 Nov 2021 21:48:16 +0100")
-Message-ID: <xmqq4k7u2i9f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S239578AbhK3I1q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 03:27:46 -0500
+Received: from mail-ua1-f51.google.com ([209.85.222.51]:44576 "EHLO
+        mail-ua1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234234AbhK3I1p (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 03:27:45 -0500
+Received: by mail-ua1-f51.google.com with SMTP id p2so39634611uad.11;
+        Tue, 30 Nov 2021 00:24:26 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=J5WX3b9eBzW68ooaz80a8Xaxaty63apmS35CTcN24SU=;
+        b=xlK/ACjGX5AiqAU3DwKahbIusndCQFhWcJHCcBL2TKZPdaejlY0hLafthfssSlVnGk
+         nIj871rQtvnf0toPniChR0Bwk2FFWvO345x+uOYP88sBVS5n6ktWEFJrPtEICMUeI7UP
+         DxsLe/wEDaRzft1hHQ/V80IzlD6SOJejOdrFT9nLMOChAbhXnme2WUdbl8UFkRADgsHU
+         +wcOjjZ9NBlPhbzZ8H9CkMhWrFf0HXMuGcV2RrhyzGj6gnZQB7DtLnW1CQeNgd29GDKG
+         cWkVKiNkBD2wkIKVMgQfPBFP4DYBi6ZdNONjFtWR9z7T/vekXqsUDfm8v8Xr1HlM5/T2
+         k/Rw==
+X-Gm-Message-State: AOAM533cHU25fUUVHOUI5tSCFjRnMDmM8Dag1RVDUD04JrkMtmlLn+LM
+        zqHFwEOXQ+WOih7egtn3AYgvjhDZfTL95w==
+X-Google-Smtp-Source: ABdhPJwbYSZXeqV6CQT8qfwl7U40MCKLzJCLs/63sT459r1IAOh1qs1JYvC1rv80SfP3/3tseS3NXQ==
+X-Received: by 2002:ab0:70cd:: with SMTP id r13mr54397416ual.99.1638260666183;
+        Tue, 30 Nov 2021 00:24:26 -0800 (PST)
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com. [209.85.221.177])
+        by smtp.gmail.com with ESMTPSA id q26sm10341433vsp.23.2021.11.30.00.24.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Nov 2021 00:24:25 -0800 (PST)
+Received: by mail-vk1-f177.google.com with SMTP id u68so12998207vke.11;
+        Tue, 30 Nov 2021 00:24:25 -0800 (PST)
+X-Received: by 2002:a05:6122:2193:: with SMTP id j19mr43169775vkd.7.1638260665465;
+ Tue, 30 Nov 2021 00:24:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5B5AF062-51B2-11EC-9D01-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <cover.1637566224.git.linux@leemhuis.info> <6b760115ecdd3687d4b82680b284f55a04f3ad90.1637566224.git.linux@leemhuis.info>
+ <20211123185237.M476855@dcvr> <12cefa81-495b-3083-5f19-b319c704ebf7@leemhuis.info>
+ <20211126171141.GA21826@dcvr> <42ff6b8d-0b7c-12e0-4648-a9232b0f577c@leemhuis.info>
+ <20211127195231.GA4636@dcvr> <xmqqtufx5p19.fsf@gitster.g> <87mtlnjhj6.fsf@intel.com>
+ <20211129172618.GA26651@dcvr>
+In-Reply-To: <20211129172618.GA26651@dcvr>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Tue, 30 Nov 2021 09:24:14 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdWygx9kTemsrZdru-ieYyJXm=8276Q_ZSxZGkqsu5OWVg@mail.gmail.com>
+Message-ID: <CAMuHMdWygx9kTemsrZdru-ieYyJXm=8276Q_ZSxZGkqsu5OWVg@mail.gmail.com>
+Subject: Re: [RFC PATCH v1 1/1] docs: add the new commit-msg tags 'Reported:'
+ and 'Reviewed:'
+To:     Eric Wong <e@80x24.org>
+Cc:     Jani Nikula <jani.nikula@intel.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thorsten Leemhuis <linux@leemhuis.info>,
+        workflows@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Kees Cook <keescook@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Hi Eric,
 
-> On Mon, Nov 29 2021, Jonathan Tan wrote:
->
->> Thanks everyone for your comments. Here's an update.
->
-> Just from skimming this (minor) feedback on v3 still applies:
-> https://lore.kernel.org/git/211123.86pmqrwtf2.gmgdl@evledraar.gmail.com=
-/
->
-> I.e. s/hasremoteurl/hasRemoteURL/ etc. in appropriate places.
+On Mon, Nov 29, 2021 at 11:29 PM Eric Wong <e@80x24.org> wrote:
+> It's a bit much for common cases with git-send-email and
+> reasonable MUAs, I think.  I don't know if formail is commonly
+> installed, nowadays...
 
-Is there any appropriate place, though?
+Of course ;-) You need it to run checkpatch on patch series obtained
+through "b4 am", before you apply them to your tree:
 
-"hasremoteurl" is a new directive to be used as the leading part of
-<condition> in the name of `includeIf.<condition>.path` variable.
-The <condtion> part is case sensitive, and we do not want people to
-spell it, and the existing "gitdir", "gitdir/i", and "onbranch", in
-mixed cases.
+$ cat *mbx | formail -s scripts/checkpatch.pl
 
-See config.c::include_condition_is_true() function and its use of
-skip_prefix_mem() to locate these existing conditions.
+Gr{oetje,eeting}s,
 
-It is troubling that this patch is *NOT* extend the implementation
-of include_condition_is_true() function (which gives a very clean
-abstraction and makes the caller very readable); it instead mucks
-with the caller of include_condition_is_true() and adds a parallel
-logic that include_condition_is_true() does not know about.  It may
-have been an expedite way to implement this, and the result may not
-seem to hurt when include_condition_is_true() is called by only one
-caller, but I find the resulting code structure unnecessarily ugly.
+                        Geert
 
-Can't the body of if (skip_prefix_mem(..."hasremoteurl:", ...)) block
-become include_by_remoteurl() function, similar to include_by_foo()
-functions include_condition_is_true() already calls?
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
