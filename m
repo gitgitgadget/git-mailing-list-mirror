@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 393EDC433F5
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 11:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C00CC433EF
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 11:55:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236917AbhK3L6n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 06:58:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47490 "EHLO
+        id S241075AbhK3L6q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 06:58:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232764AbhK3L6R (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 06:58:17 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D7B4C061574
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 03:54:58 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id k37-20020a05600c1ca500b00330cb84834fso19318311wms.2
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 03:54:58 -0800 (PST)
+        with ESMTP id S233082AbhK3L6U (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 06:58:20 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA7F3C061757
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 03:55:00 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id l16so43816681wrp.11
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 03:55:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RfUF/RYS/teZLMILSS48GFBpV9FtCRub18a9JOXeUIU=;
-        b=e2z/w9IvjFXCtoldOcmW1bhK53Spl3536/MijUfqmLHiHXWKEitas/uynVozTWf/hp
-         Y0SNdmtLXw6CzAntSsDNjLvkEjaAduUgmwiSwxVDcDJ6ZMaEugwoci1JG2HHNBPIKyLZ
-         tsvKUUKllOOJO3aLhpFC3hSsRLsRXPG3EXV2xYrHG7ugMDWqizUiImmiDtvRhQ5sby7n
-         kcmJwRE17Flk71FylK7GtL+B7EZutVUNwZzHuZhv9FUmEIxf4zN/ag0VggPuIqeXTxAy
-         sia/BAAV5dnUywefX3AgduwgSXtJS9ICCcsiyqcoE2RiJoxO5VStcj3jIlm5OGWoCvIe
-         It1A==
+        bh=zMOqWXrQqZ2IHpZK6hFdtyVBHSAW6HN1jJsmuhexxWc=;
+        b=G2QQD2VZc7hhxW2KHkw3Fuvsm7A3ulefWLpfYKeUc4bFTbkTHM60hQuSxI+KVLL9sI
+         syAb73qGbiNM09ZOeehGtnV7d/EQQo6UN+v24iRCQSYsnhkNr7A8FXdvHqofwTOrfbxv
+         PFq6eZKFGsGizqHBY8UAkPPrtQfjWJaYMJCK9h4/tQLZVk/HUIcRN1oF5S++w0XGP57x
+         2to9x9N0rCb44oKIZ4BZfC3Rq9Mt2pZbEDtBmLKdODuko8zrCX+uX2QD2X3X6d5Tj6HQ
+         bSwPA0yVm1USedqgNYa52PJjkZoodUrSI0vLznUPas1WfChH9+f2kVhiA2XFpgPJbeLp
+         JNHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RfUF/RYS/teZLMILSS48GFBpV9FtCRub18a9JOXeUIU=;
-        b=5uOtPlteZq6Nq85krMOrl5+NmF5tWEAli4vghixQui0LJcWqKp8ExMjTPOtI5ms1mh
-         I4xG0BaSAzYaS1+DFAkMoXJlkH3ndzg5NSOfSqLbO86eWsA2IBP7YiT2ivKifuzZNnqu
-         BSdRXsbWMjwlZ7LcXzx1xn/XOG4rphwgpO9mXLWai4DuKqsJfJhpwGXkivZZOCf0UtqP
-         B8V2+ghhYZSgKxff0BoBxCL6xLtEEsgWq3/ZPDEIjaslQb9k2TOXHp6gxDgjlA/vBFzW
-         g7L37D+w1kML9sLr2veJb+zgZw9ElpN59uC91bLGXYBapomfua5nuukKDU5GYOjsv+z6
-         kPHQ==
-X-Gm-Message-State: AOAM532dC5UuX39yotV/SDbsiPzH/9fwVD7YuT4VovyN7abjar9HGuzt
-        KPLStihDzvoEMehblJRHSUHZ857cbDQ=
-X-Google-Smtp-Source: ABdhPJyU7oBh6oIP4LiuER2KWyCwSvZS7xYwhxstLnG5ivUJkCPNOxsbcvqZXdatA9+n4wWlTmhomA==
-X-Received: by 2002:a7b:c744:: with SMTP id w4mr4560149wmk.50.1638273296583;
-        Tue, 30 Nov 2021 03:54:56 -0800 (PST)
+        bh=zMOqWXrQqZ2IHpZK6hFdtyVBHSAW6HN1jJsmuhexxWc=;
+        b=4Lz2+Jkp8BFytIVL86/8tTNNuqouK0HXP8XhlDNCf2qmAFnqpcJ1X36valV08FKnT4
+         432B+zuhMP1Wbu/q0TvDB/yNdsMKdnKmBKh7VUFlTbGWEIE2PCC2xzIG/f2LxP8clGKK
+         EuuYmXt/7stMSIXU5Ctvem+1leDSGT0RNMu728LhkdsfHTXbxtnClr4QtM/Zw58ffeRy
+         FSYe3k8ps4UTmxt9WTJUmM2QrK9ToCSoa/oX2na60+7fCTLzdfLVWqYk7nU1ezJnfTyT
+         caZovXAB2cfMZU3L29TPvnob6BDn7IAYLblB+BdLZ1cu6aHpRaI0HAnDGJj99chVH/JO
+         7IFA==
+X-Gm-Message-State: AOAM531jgolFPvtjYCsL5ZWaxNLHRok8m5wNHwL+/d0F93pnEhB3vsQA
+        029tSqw2cXm+epx58h73yK7kg3ybt+s=
+X-Google-Smtp-Source: ABdhPJxE8F9yd3RTETOLOi8egX12mIr3oWrKhZB1U+wAoCokROGZ78IAYkcTBL66TeTGCEadrWneVw==
+X-Received: by 2002:a5d:52c3:: with SMTP id r3mr40411610wrv.115.1638273299384;
+        Tue, 30 Nov 2021 03:54:59 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m17sm15859519wrz.22.2021.11.30.03.54.56
+        by smtp.gmail.com with ESMTPSA id z18sm16243868wrq.11.2021.11.30.03.54.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 03:54:56 -0800 (PST)
-Message-Id: <09a15f86c3d1a79d76c73e051c6895496ea0e8a7.1638273289.git.gitgitgadget@gmail.com>
+        Tue, 30 Nov 2021 03:54:58 -0800 (PST)
+Message-Id: <abd9c8827cd5cd756a4d0ceab0c968f19b1b59ad.1638273289.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
 References: <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com>
         <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 30 Nov 2021 11:54:40 +0000
-Subject: [PATCH v9 08/17] scalar: 'unregister' stops background maintenance
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 30 Nov 2021 11:54:44 +0000
+Subject: [PATCH v9 12/17] scalar: teach 'clone' to support the --single-branch
+ option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,152 +67,108 @@ Cc:     Derrick Stolee <stolee@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Just like `scalar register` starts the scheduled background maintenance,
-`scalar unregister` stops it. Note that we use `git maintenance start`
-in `scalar register`, but we do not use `git maintenance stop` in
-`scalar unregister`: this would stop maintenance for _all_ repositories,
-not just for the one we want to unregister.
+Just like `git clone`, the `scalar clone` command now also offers to
+restrict the clone to a single branch.
 
-The `unregister` command also removes the corresponding entry from the
-`[scalar]` section in the global Git config.
-
-Co-authored-by: Victoria Dye <vdye@github.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c   | 50 ++++++++++++++++++++++++++++++++-------
- contrib/scalar/scalar.txt |  8 +++++++
- 2 files changed, 50 insertions(+), 8 deletions(-)
+ contrib/scalar/scalar.c          |  9 +++++++--
+ contrib/scalar/scalar.txt        | 12 +++++++++++-
+ contrib/scalar/t/t9099-scalar.sh |  6 +++++-
+ 3 files changed, 23 insertions(+), 4 deletions(-)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 55a304442d4..9ab9dffe3ac 100644
+index 60a9466421b..61b66e48aa8 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -198,12 +198,12 @@ static int set_recommended_config(void)
- 	return 0;
- }
- 
--static int start_maintenance(void)
-+static int toggle_maintenance(int enable)
+@@ -327,12 +327,15 @@ static char *remote_default_branch(const char *url)
+ static int cmd_clone(int argc, const char **argv)
  {
--	return run_git("maintenance", "start", NULL);
-+	return run_git("maintenance", enable ? "start" : "unregister", NULL);
- }
+ 	const char *branch = NULL;
+-	int full_clone = 0;
++	int full_clone = 0, single_branch = 0;
+ 	struct option clone_options[] = {
+ 		OPT_STRING('b', "branch", &branch, N_("<branch>"),
+ 			   N_("branch to checkout after clone")),
+ 		OPT_BOOL(0, "full-clone", &full_clone,
+ 			 N_("when cloning, create full working directory")),
++		OPT_BOOL(0, "single-branch", &single_branch,
++			 N_("only download metadata for the branch that will "
++			    "be checked out")),
+ 		OPT_END(),
+ 	};
+ 	const char * const clone_usage[] = {
+@@ -403,7 +406,9 @@ static int cmd_clone(int argc, const char **argv)
  
--static int add_enlistment(void)
-+static int add_or_remove_enlistment(int add)
- {
- 	int res;
- 
-@@ -214,24 +214,39 @@ static int add_enlistment(void)
- 		      "scalar.repo", the_repository->worktree, NULL);
- 
- 	/*
--	 * If the setting is already there, then do nothing.
-+	 * If we want to add and the setting is already there, then do nothing.
-+	 * If we want to remove and the setting is not there, then do nothing.
- 	 */
--	if (!res)
-+	if ((add && !res) || (!add && res))
- 		return 0;
- 
--	return run_git("config", "--global", "--add",
-+	return run_git("config", "--global", add ? "--add" : "--unset",
-+		       add ? "--no-fixed-value" : "--fixed-value",
- 		       "scalar.repo", the_repository->worktree, NULL);
- }
- 
- static int register_dir(void)
- {
--	int res = add_enlistment();
-+	int res = add_or_remove_enlistment(1);
- 
- 	if (!res)
- 		res = set_recommended_config();
- 
- 	if (!res)
--		res = start_maintenance();
-+		res = toggle_maintenance(1);
-+
-+	return res;
-+}
-+
-+static int unregister_dir(void)
-+{
-+	int res = 0;
-+
-+	if (toggle_maintenance(0) < 0)
-+		res = -1;
-+
-+	if (add_or_remove_enlistment(0) < 0)
-+		res = -1;
- 
- 	return res;
- }
-@@ -254,11 +269,30 @@ static int cmd_register(int argc, const char **argv)
- 	return register_dir();
- }
- 
-+static int cmd_unregister(int argc, const char **argv)
-+{
-+	struct option options[] = {
-+		OPT_END(),
-+	};
-+	const char * const usage[] = {
-+		N_("scalar unregister [<enlistment>]"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, NULL, options,
-+			     usage, 0);
-+
-+	setup_enlistment_directory(argc, argv, usage, options, NULL);
-+
-+	return unregister_dir();
-+}
-+
- static struct {
- 	const char *name;
- 	int (*fn)(int, const char **);
- } builtins[] = {
- 	{ "register", cmd_register },
-+	{ "unregister", cmd_unregister },
- 	{ NULL, NULL},
- };
- 
+ 	if (set_config("remote.origin.url=%s", url) ||
+ 	    set_config("remote.origin.fetch="
+-		       "+refs/heads/*:refs/remotes/origin/*") ||
++		       "+refs/heads/%s:refs/remotes/origin/%s",
++		       single_branch ? branch : "*",
++		       single_branch ? branch : "*") ||
+ 	    set_config("remote.origin.promisor=true") ||
+ 	    set_config("remote.origin.partialCloneFilter=blob:none")) {
+ 		res = error(_("could not configure remote in '%s'"), dir);
 diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-index 568987064b2..d9a79984492 100644
+index e8730967f16..56f744a4aa9 100644
 --- a/contrib/scalar/scalar.txt
 +++ b/contrib/scalar/scalar.txt
-@@ -9,6 +9,7 @@ SYNOPSIS
+@@ -8,7 +8,7 @@ scalar - an opinionated repository management tool
+ SYNOPSIS
  --------
  [verse]
+-scalar clone [--branch <main-branch>] [--full-clone] <url> [<enlistment>]
++scalar clone [--single-branch] [--branch <main-branch>] [--full-clone] <url> [<enlistment>]
+ scalar list
  scalar register [<enlistment>]
-+scalar unregister [<enlistment>]
+ scalar unregister [<enlistment>]
+@@ -57,6 +57,16 @@ HEAD[:<directory>]`.
+ 	Instead of checking out the branch pointed to by the cloned
+ 	repository's HEAD, check out the `<name>` branch instead.
  
- DESCRIPTION
- -----------
-@@ -45,6 +46,13 @@ Note: when this subcommand is called in a worktree that is called `src/`, its
- parent directory is considered to be the Scalar enlistment. If the worktree is
- _not_ called `src/`, it itself will be considered to be the Scalar enlistment.
++--[no-]single-branch::
++	Clone only the history leading to the tip of a single branch, either
++	specified by the `--branch` option or the primary branch remote's
++	`HEAD` points at.
+++
++Further fetches into the resulting repository will only update the
++remote-tracking branch for the branch this option was used for the initial
++cloning. If the HEAD at the remote did not point at any branch when
++`--single-branch` clone was made, no remote-tracking branch is created.
++
+ --[no-]full-clone::
+ 	A sparse-checkout is initialized by default. This behavior can be
+ 	turned off via `--full-clone`.
+diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
+index 984d69e8f75..f60e086d6f9 100755
+--- a/contrib/scalar/t/t9099-scalar.sh
++++ b/contrib/scalar/t/t9099-scalar.sh
+@@ -45,13 +45,17 @@ test_expect_success 'set up repository to clone' '
  
-+Unregister
-+~~~~~~~~~~
+ test_expect_success 'scalar clone' '
+ 	second=$(git rev-parse --verify second:second.t) &&
+-	scalar clone "file://$(pwd)" cloned &&
++	scalar clone "file://$(pwd)" cloned --single-branch &&
+ 	(
+ 		cd cloned/src &&
+ 
+ 		git config --get --global --fixed-value maintenance.repo \
+ 			"$(pwd)" &&
+ 
++		git for-each-ref --format="%(refname)" refs/remotes/origin/ >actual &&
++		echo "refs/remotes/origin/parallel" >expect &&
++		test_cmp expect actual &&
 +
-+unregister [<enlistment>]::
-+	Remove the specified repository from the list of repositories
-+	registered with Scalar and stop the scheduled background maintenance.
-+
- SEE ALSO
- --------
- linkgit:git-maintenance[1].
+ 		test_path_is_missing 1/2 &&
+ 		test_must_fail git rev-list --missing=print $second &&
+ 		git rev-list $second &&
 -- 
 gitgitgadget
 
