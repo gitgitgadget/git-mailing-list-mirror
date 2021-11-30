@@ -2,125 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E7CFC433FE
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 20:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0746FC433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 20:47:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343797AbhK3UrN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 15:47:13 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:32925 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1343780AbhK3UrF (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 30 Nov 2021 15:47:05 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 69BDB5C02CC;
-        Tue, 30 Nov 2021 15:43:45 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 30 Nov 2021 15:43:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=from
-        :to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-transfer-encoding; s=fm3; bh=Y3wuRgVYO71V/
-        5zWFdLco+031rFjVW+Q3ghyW8EeFDg=; b=eeNhL3Fhsn4LQInuK8O/AnGivRez0
-        OvTPkkZ5xH5ffw2oLg4XS+nJRw9s6+Zs7hanUqoVu08podpZvFd4kgNnomYJcJ72
-        QXZH7vBxbMB2P1NrRgsh+g7KSdzusxa/arTKFD6/wWlMELGJNQ7tuNR+dGJXVjWl
-        Amgg0tMu4E5Wg93d1fDQkRFCslskZGbOqm1zaawhH53RCmEp0yiV+4sdaxqxSE4y
-        vopG6Qmgene0amU1yYLegv/b9Ec4BYUfDsm8+67G/afkEOu29QgJYIGRPe+eAq4g
-        XIY7IrLVwEQq5c9tevHUbozn7IG2jWdYlZtjm5NcP/CqI2sL4SfniHodA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:date:from
-        :in-reply-to:message-id:mime-version:references:subject:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; bh=Y3wuRgVYO71V/5zWFdLco+031rFjVW+Q3ghyW8EeFDg=; b=efbS/MZh
-        xH0jlh2NhV3URG0jzTDnIlgNxg8lgxlMhVoE4BySK22/mBbdWMEGgBfkmiLiHbO+
-        fFbTcaBmYRugQs9siOWHPi9hToR5uOIjzyPvyapesEemmg8H1/1bBG+LY+csPiKE
-        rjdYB0tBFruOqsXbr9x5OQz1tn+O7Jak3T8u6nk59iAE/lHw8Oc+9G+4pjCO+sdY
-        vRfP0ZUwJAgDhAyqghExkJmzCKauJgxxpVhHexDyi1dqNorwZ4l0GtKnTfQhDpu1
-        ryikpXQ/SZ6aN4HOHxm/haYYTsqXhtTr9z65K3peLWFyMyZWNFStFxFw3KidUpYN
-        sRX+jMx0Ue1LQQ==
-X-ME-Sender: <xms:AY2mYYYDZhyuFsPtRxtCdrtWx9U29r85W2E32PWOZ1COrNPahxChSw>
-    <xme:AY2mYTYAGHogW74GhQXxN6Fmn_LnXynx3_SVvRg3KHg0v59Q8KDk9I6iCc-BwSeTx
-    FohgiR9RYP0szIU1w>
-X-ME-Received: <xmr:AY2mYS_zkIk6Oz2PaFa9BTf8D-c3P9Uw-qfWvz-jQBUs65OCCSf9JbBj7-lmd5DrZf7t>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddriedugddugedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
-    dtredttdenucfhrhhomhephfgvrhhnrghnughoucftrghmohhsuceoghhrvggvnhhfohho
-    sehuledvrdgvuheqnecuggftrfgrthhtvghrnhepkeelkeejtdehjeehkeefgfegvedvgf
-    eugeffueevudfhheeugeekieejvddvjeefnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhrvggvnhhfohhosehuledvrdgvuh
-X-ME-Proxy: <xmx:AY2mYSoxawPxJ9ek-v3KB9Ue8l5ANG7qeMjM_J2xJKiURw0dQepwRw>
-    <xmx:AY2mYTpvy71MK-xdqFOSonauIUYmLMapQpu8JTEfdu378TXkg1EC3Q>
-    <xmx:AY2mYQQU6-t4G2zmaewd8Mn_Rh8wBi5EpdaeKtYA8zVvhLcvEGVMNg>
-    <xmx:AY2mYUD6PaprYMj8EKpfwhjMHXnGbnSHBCelJvdG0MFf3xvczQmzpg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Nov 2021 15:43:43 -0500 (EST)
-From:   Fernando Ramos <greenfoo@u92.eu>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, davvid@gmail.com, sunshine@sunshineco.com,
-        seth@eseth.com, levraiphilippeblain@gmail.com,
-        rogi@skylittlesystem.org
-Subject: [PATCH v3 3/3] vimdiff: integrate layout tests in the unit tests framework ('t' folder)
-Date:   Tue, 30 Nov 2021 21:43:33 +0100
-Message-Id: <20211130204333.174967-4-greenfoo@u92.eu>
-X-Mailer: git-send-email 2.34.0
-In-Reply-To: <20211130204333.174967-1-greenfoo@u92.eu>
-References: <20211130204333.174967-1-greenfoo@u92.eu>
+        id S1343796AbhK3Uug (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 15:50:36 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40462 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240271AbhK3Uuf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 15:50:35 -0500
+Received: (qmail 13938 invoked by uid 109); 30 Nov 2021 20:47:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Nov 2021 20:47:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30097 invoked by uid 111); 30 Nov 2021 20:47:15 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Nov 2021 15:47:15 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 30 Nov 2021 15:47:14 -0500
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Baruch Burstein <bmburstein@gmail.com>,
+        Randall Becker <rsbecker@nexbridge.com>
+Subject: Re: [RFC PATCH] vreportf: ensure sensible ordering of normal and
+ error output
+Message-ID: <YaaN0pibKWgjcVk3@coredump.intra.peff.net>
+References: <20211130043946.19987-1-sunshine@sunshineco.com>
+ <YaXQ/HinYZH1wL7E@coredump.intra.peff.net>
+ <CAPig+cRQqm8Ce29PnkndT47NNxM3UhJv12RZGZZJD-AyGVC7Zw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRQqm8Ce29PnkndT47NNxM3UhJv12RZGZZJD-AyGVC7Zw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a new test case file for the different available merge tools.
-Right now it only tests the 'mergetool.vimdiff.layout' options. Other
-merge tools might be interested in adding their own tests here too.
+On Tue, Nov 30, 2021 at 09:05:54AM -0500, Eric Sunshine wrote:
 
-Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
----
- mergetools/vimdiff        |  2 +-
- t/t7609-mergetool--lib.sh | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
- create mode 100755 t/t7609-mergetool--lib.sh
+> >   - shouldn't status messages like this go to stderr anyway? I know some
+> >     people follow the "unless it is an error, it should not to go
+> >     stderr" philosophy. But I think in general our approach in Git is
+> >     more "if it is the main output of the program, it goes to stdout; if
+> >     it is chatter or progress for the user, it goes to stderr".
+> 
+> I considered this as well and agree that it would be a nicer localized
+> fix, but...
+> 
+> (1) I don't think the practice is documented anywhere, so people --
+> including me when I wrote builtin/worktree.c -- might not know about
+> it. Indeed, we don't seem to be entirely consistent about doing it
+> this way. Randomly picking submodule-helper.c, for instance, I see
+> status-like messages going to stdout:
+> 
+>     printf(_("Entering '%s'\n"), displaypath);
+>     printf(_("Synchronizing submodule url for '%s'\n"), ...);
+> 
+>     if (...)
+>         format = _("Cleared directory '%s'\n");
+>     else
+>         format = _("Could not remove submodule work tree '%s'\n");
+>     printf(format, displaypath);
 
-diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-index 8614253ef1..5085e4ad0e 100644
---- a/mergetools/vimdiff
-+++ b/mergetools/vimdiff
-@@ -552,6 +552,7 @@ merge_cmd_help() {
- 	esac
- 
- 	return 0
-+
- }
- 
- 
-@@ -594,4 +595,3 @@ if test -n "$GIT_MERGETOOL_VIMDIFF_UNITTESTS"
- then
- 	run_unit_tests
- fi
--
-diff --git a/t/t7609-mergetool--lib.sh b/t/t7609-mergetool--lib.sh
-new file mode 100755
-index 0000000000..35cc287124
---- /dev/null
-+++ b/t/t7609-mergetool--lib.sh
-@@ -0,0 +1,17 @@
-+#!/bin/sh
-+
-+test_description='git mergetool
-+
-+Testing basic merge tools options'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'mergetool --tool=vimdiff creates the expected layout' '
-+	GIT_MERGETOOL_VIMDIFF_UNITTESTS=1 bash $GIT_BUILD_DIR/mergetools/vimdiff
-+'
-+
-+test_done
-+
--- 
-2.34.0
+Yeah, we've definitely not been consistent here. There's no silver
+bullet for this aside from vigilance during review, but probably laying
+out guidelines could help.
 
+Here's a past discussion (that actually goes the other way: somebody
+complaining that stderr should be on stdout!) where I laid out my mental
+model:
+
+  https://lore.kernel.org/git/20110907215716.GJ13364@sigill.intra.peff.net/
+
+> (2) With git-worktree being four or five years old, for
+> backward-compatibility concerns, I worry that "that ship has sailed",
+> where 'that' is the freedom to relocate those status-like messages
+> from stdout to stderr. I don't want to break tooling which exists
+> around git-worktree.
+
+IMHO it would be OK to change these. They are, after all, marked for
+translation, so they're not reliably machine-readable anyway. It's
+possible that some script could not be parsing them, but just trying to
+redirect them. Or even keying on content in stderr as a sign of an error
+(as tcl likes to do). But I don't think that's a guarantee we want to be
+bound by.
+
+See 68b939b2f0 (clone: send diagnostic messages to stderr, 2013-09-18)
+for a similar case in the past.
+
+> I'd be happy to be wrong on the second point -- indeed, git-worktree
+> is still marked "experimental" in the man-page, but that may not mean
+> anything this late in the game -- and submit a patch which places
+> git-worktree's status-like messages on stderr instead of stdout.
+> Thoughts?
+
+I'm in favor. :)
+
+-Peff
