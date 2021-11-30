@@ -2,181 +2,378 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 377BDC433F5
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 18:38:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 174F8C433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 20:43:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245530AbhK3Sla (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 13:41:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57674 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238047AbhK3Sl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 13:41:29 -0500
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9001C061574
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 10:38:09 -0800 (PST)
-Received: by mail-qk1-x72a.google.com with SMTP id 193so27870042qkh.10
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 10:38:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=fyTmvTSLXerM4vPvUcOE0TDhdTbV0QmsH+P19kTy18o=;
-        b=II9tZwLlIy8J3qhUOQ4e8LpvW6sHJGDUj8RY4+cZH47aed+hz0hJ/fv44vEsDkCH7Y
-         6kwrr/JxgputINOm/blDV363LJ6MDJXTcEzK3ELPrvRmmOiA6IwF1xZFO7pZRXeimf0q
-         mPOmoIXrlMc+B+zSfIMdV9fiNKJ6O2tO5kWyc1bF4dSOvT7DbG/JpCEwm5H1XH/A9cE6
-         AwUOFkdsBkEdMb5fipzEvBr4SRb11HQbyix8GDtVN9Uwx1vqPn+gIXTsUbQ7ljjRlY0A
-         21DUN2NJn306DqhbyGjSHScmwwMaFSvM5AvKQt1NXjb4WUkMWizpmt8OZ2etbFRcvouw
-         VGRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=fyTmvTSLXerM4vPvUcOE0TDhdTbV0QmsH+P19kTy18o=;
-        b=tcjAWth7YVzXlqOl14dk04c64ZGot7IQPKU81xpylIpHLQDHpglYjBuo5GMibgR4Au
-         WwsXRSgBxJmiRE/iwvirx2VITZ3Y69D4uIjMy04h4OaRuetA2vO+NkJJOkAQSQWPUxyu
-         DII8uOHSaVavi+LqB1FdM7T08WkGCtd+Q+wfOFjwE48uPwd8kWfFLyQPe/i0x2rDP3TH
-         EeXK4sO3pSnsnz/RwieN6wGuB/Bq19VKFiNJfFvRA/F2pB7MX00XQ/yRcigPmjWz88Y+
-         pkPrccQPXxRSxHnAizI7MXEaGMGaMkqVb4UD0x5zuTcUpZpkV+Vzy4/FoJJB9O3apuoQ
-         2Syg==
-X-Gm-Message-State: AOAM530fJZy9lq786YXj/el1tKiZTjSdkV6aht45NwYW02hAmymAUHgl
-        OlRcpsFPmR0TcBQGLlOLoHM=
-X-Google-Smtp-Source: ABdhPJzkJt4oWoSS87I6BMANow4PKW7E8JNgWKbGyJMZOSxTU2R6CKyE9f1wHGU1yRt3cElm2gq9PA==
-X-Received: by 2002:a05:620a:4502:: with SMTP id t2mr1157363qkp.193.1638297488998;
-        Tue, 30 Nov 2021 10:38:08 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:ecc1:c98a:cda5:6f9d? ([2600:1700:e72:80a0:ecc1:c98a:cda5:6f9d])
-        by smtp.gmail.com with ESMTPSA id x15sm8602135qko.82.2021.11.30.10.38.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Nov 2021 10:38:08 -0800 (PST)
-Message-ID: <446c3677-140f-3033-138f-1ef9b1f546a5@gmail.com>
-Date:   Tue, 30 Nov 2021 13:38:07 -0500
+        id S244417AbhK3UrC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 15:47:02 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:33841 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233340AbhK3Uq7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 30 Nov 2021 15:46:59 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id C471D5C0275;
+        Tue, 30 Nov 2021 15:43:38 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Tue, 30 Nov 2021 15:43:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=from
+        :to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm3; bh=2aECx+8T6niNOCoEietSP3/6BZ
+        oLqwnPChMqKqZ8ye0=; b=l6/9BlV27TFCI4tXmyz6rQtDx0NOae5stK+EPCNP8H
+        juUskb7Q0MsqePoj9v/xVQ6GCHX7PtpKynckJJifD8xB+KId+gC4BVMlKepA7PNH
+        ouDsIgAZeOtSm/47EErzDRo7Leplydx2ViZFaFyEixq1LsVwn9W5XLt5fBnS+5TZ
+        VOCucAo2R1YwdEG4uiMXolYYZKq7ukj/32/CiehLtqTcOnTyk2WOpQZw9xjz2bSA
+        DRBobZxHf3izdLm540dxSvqiEwrCvrT3nYN6Dr0cRxKsCwNgBVIOuPkjjYQzOUj9
+        wMQ01nEbI7S0scVEseV/+gMGSFy/XTiUL8uZxaxTCInA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=2aECx+8T6niNOCoEi
+        etSP3/6BZoLqwnPChMqKqZ8ye0=; b=Z6KLf9AAX7DPCwdDtmVnee+Edw6U3HeTo
+        b24YepvOfuRyH3j8A161eJbnOu7rMz5kb8IB7+t7ndw3NUGzB17C5XpoNog1t1fo
+        qstIpj2Gmg2bh0+I+gcljlQWzWgv9vgASZ20z1l6UMIFCL/4/+sQyZ7zevEOqCJh
+        miRm1W+HmN4RGL3qt8K+JyanGxf75+STX7aswr1wrXCvBaEldil7TgiTM7wRo97Y
+        9uIMkZBzGGfWPv/k0mkyD7xjByK8wDeLc/joUNUD48foq9eiwM2XW09bBTELOboj
+        Ji5iq23zjsaA1DL6jFYTtOFitg5luy0Vrl5s0xyELPUo15GuC/CMQ==
+X-ME-Sender: <xms:-oymYexFYnWdpMOQsJVOngGADFZ8Cb5kFrVmeeVU8HJ-4gZ3RZNIbQ>
+    <xme:-oymYaTpL6twM8FMT9dNccJuod3Ko3xGh4McPk9MR1DXRwuUIQwbKs1easPYunvIw
+    pHIQZ5OkKpLJoXRig>
+X-ME-Received: <xmr:-oymYQUr4IFn3rI391NmBWoCJqO_Vdh8HAojBRZBDrlkqubdooubEiRkEK-_DgCqAWKH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddriedugddugeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
+    dttdenucfhrhhomhephfgvrhhnrghnughoucftrghmohhsuceoghhrvggvnhhfohhosehu
+    ledvrdgvuheqnecuggftrfgrthhtvghrnhepgfeifeduheegudehfeevfffhffelieefte
+    effeehgeeileekuefhgeegueethfeinecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdp
+    phgrshhtvggsihhnrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepghhrvggvnhhfohhosehuledvrdgvuh
+X-ME-Proxy: <xmx:-oymYUg7mPbUnYInxCfytsUUS40TLBk6_yI4PWY-smYuV4j657BQwA>
+    <xmx:-oymYQCytxYbcP2vODi7fmbCPi3_n9KtEQPfmxr-mqDLCLDiiJFW-Q>
+    <xmx:-oymYVJmCU-2lXS8DABUvylpg0eIywpSshlZXZqP6B_QAX7JrfDtNg>
+    <xmx:-oymYf5JpZS9Yi3gwduSzMUx9l0S09brl26LFnXNt5GYYDLT0XzqvQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 30 Nov 2021 15:43:36 -0500 (EST)
+From:   Fernando Ramos <greenfoo@u92.eu>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, davvid@gmail.com, sunshine@sunshineco.com,
+        seth@eseth.com, levraiphilippeblain@gmail.com,
+        rogi@skylittlesystem.org
+Subject: [PATCH v3 0/3] vimdiff: new implementation with layout support 
+Date:   Tue, 30 Nov 2021 21:43:30 +0100
+Message-Id: <20211130204333.174967-1-greenfoo@u92.eu>
+X-Mailer: git-send-email 2.34.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v3 5/5] unpack-objects: unpack_non_delta_entry() read data
- in a stream
-Content-Language: en-US
-To:     Han Xin <chiyutianyi@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
-References: <20211009082058.41138-1-chiyutianyi@gmail.com>
- <20211122033220.32883-6-chiyutianyi@gmail.com>
- <8ff89e50-1b80-7932-f0e2-af401ee04bb1@gmail.com>
- <CAO0brD0oPHMwGNQXpC2XVhU=fY7XrrtBeu-x8GmJndeVptJaBg@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CAO0brD0oPHMwGNQXpC2XVhU=fY7XrrtBeu-x8GmJndeVptJaBg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/30/2021 8:49 AM, Han Xin wrote:
-> On Tue, Nov 30, 2021 at 1:37 AM Derrick Stolee <stolee@gmail.com> wrote:
->> $ hyperfine \
->>         --prepare 'rm -rf dest.git && git init --bare dest.git' \
->>         -n 'old' '~/_git/git-upstream/git -C dest.git unpack-objects <big.pack' \
->>         -n 'new' '~/_git/git/git -C dest.git unpack-objects <big.pack' \
->>         -n 'new (small threshold)' '~/_git/git/git -c core.bigfilethreshold=64k -C dest.git unpack-objects <big.pack'
->>
->> Benchmark 1: old
->>   Time (mean ± σ):     20.835 s ±  0.058 s    [User: 14.510 s, System: 6.284 s]
->>   Range (min … max):   20.741 s … 20.909 s    10 runs
->>
->> Benchmark 2: new
->>   Time (mean ± σ):     26.515 s ±  0.072 s    [User: 19.783 s, System: 6.696 s]
->>   Range (min … max):   26.419 s … 26.611 s    10 runs
->>
->> Benchmark 3: new (small threshold)
->>   Time (mean ± σ):     26.523 s ±  0.101 s    [User: 19.805 s, System: 6.680 s]
->>   Range (min … max):   26.416 s … 26.739 s    10 runs
->>
->> Summary
->>   'old' ran
->>     1.27 ± 0.00 times faster than 'new'
->>     1.27 ± 0.01 times faster than 'new (small threshold)'
->>
->> (Here, 'old' is testing a compiled version of the latest 'master'
->> branch, while 'new' has your patches applied on top.)
->>
->> Notice from this example I had a pack with many small objects (mostly
->> commits and trees) and I see that this change introduces significant
->> overhead to this case.
->>
->> It would be nice to understand this overhead and fix it before taking
->> this change any further.
->>
->> Thanks,
->> -Stolee
-> 
-> Can you show me the specific information of the repository you
-> tested, so that I can analyze it further.
+A few weeks ago I presented this RFC [1] where I introduced a new variant of the
+vimdiff merge tool ("vimdiff4") that creates three tabs (instead of just one)
+that look like this:
 
-I used a pack-file from an internal repo. It happened to be using
-partial clone, so here is a repro with the git/git repository
-after cloning this way:
+    ------------------------------------------
+    | <TAB #1> |  TAB #2  |  TAB #3  |       |
+    ------------------------------------------
+    |             |           |              |
+    |   LOCAL     |   BASE    |   REMOTE     |
+    |             |           |              |   <---- Same information
+    ------------------------------------------         presented by the
+    |                                        |         "standard" vimdiff
+    |                MERGED                  |         merge tool
+    |                                        |
+    ------------------------------------------
+    
+    ------------------------------------------
+    |  TAB #1  | <TAB #2> |  TAB #3  |       |
+    ------------------------------------------
+    |                   |                    |
+    |                   |                    |
+    |                   |                    |
+    |     BASE          |    LOCAL           |   <---- Only differences
+    |                   |                    |         between BASE and
+    |                   |                    |         LOCAL are shown
+    |                   |                    |
+    ------------------------------------------
+    
+    ------------------------------------------
+    |  TAB #1  |  TAB #2  | <TAB #3> |       |
+    ------------------------------------------
+    |                   |                    |
+    |                   |                    |
+    |                   |                    |
+    |     BASE          |    REMOTE          |   <---- Only differences
+    |                   |                    |         between BASE and
+    |                   |                    |         REMOTE are shown
+    |                   |                    |
+    ------------------------------------------
 
-$ git clone --no-checkout --filter=blob:none https://github.com/git/git
 
-(copy the large .pack from git/.git/objects/pack/ to big.pack)
+The motivation behind this was that, for non-trivial merges, the three way diff
+presented in the first tab tends to be very confusing and in these cases
+indivial diffs between BASE and LOCAL and between BASE and REMOTE are very
+useful.
 
-$ hyperfine \
-	--prepare 'rm -rf dest.git && git init --bare dest.git' \
-	-n 'old' '~/_git/git-upstream/git -C dest.git unpack-objects <big.pack' \
-	-n 'new' '~/_git/git/git -C dest.git unpack-objects <big.pack' \
-	-n 'new (small threshold)' '~/_git/git/git -c core.bigfilethreshold=64k -C dest.git unpack-objects <big.pack'
+I have been using a "custom" merge tool for months to achieve this same result
+by adding these lines to my .gitconfig file:
 
-Benchmark 1: old
-  Time (mean ± σ):     82.748 s ±  0.445 s    [User: 50.512 s, System: 32.049 s]
-  Range (min … max):   82.042 s … 83.587 s    10 runs
- 
-Benchmark 2: new
-  Time (mean ± σ):     101.644 s ±  0.524 s    [User: 67.470 s, System: 34.047 s]
-  Range (min … max):   100.866 s … 102.633 s    10 runs
- 
-Benchmark 3: new (small threshold)
-  Time (mean ± σ):     101.093 s ±  0.269 s    [User: 67.404 s, System: 33.559 s]
-  Range (min … max):   100.639 s … 101.375 s    10 runs
- 
-Summary
-  'old' ran
-    1.22 ± 0.01 times faster than 'new (small threshold)'
-    1.23 ± 0.01 times faster than 'new'
+  [mergetool "supermerge"]
+        cmd = vim -f -d -c \"4wincmd w | wincmd J | tabnew | edit $LOCAL | vertical diffsplit $BASE | tabnew | edit $REMOTE | vertical diffsplit $BASE | 2tabprevious\" \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"$MERGED\"
+        trustExitCode = true
 
-I'm also able to repro this with a smaller repo (microsoft/scalar)
-so the tests complete much faster:
+...and, because I found this "trick" very useful, I thought it would be a good
+idea to add it as a git built-in merge tool (called "vimdiff4" because  1, 2 and
+3 had already been taken) for everyone to use... and that's exactly what the RFC
+I published did.
 
-$ hyperfine \
-        --prepare 'rm -rf dest.git && git init --bare dest.git' \
-        -n 'old' '~/_git/git-upstream/git -C dest.git unpack-objects <small.pack' \
-        -n 'new' '~/_git/git/git -C dest.git unpack-objects <small.pack' \
-        -n 'new (small threshold)' '~/_git/git/git -c core.bigfilethreshold=64k -C dest.git unpack-objects <small.pack'
+Now... as you can see in the RFC thread [1], David and Juno suggested that
+maybe, instead of creating *yet another vimdiff variant*, we should take this
+opportunity to:
 
-Benchmark 1: old
-  Time (mean ± σ):      3.295 s ±  0.023 s    [User: 1.063 s, System: 2.228 s]
-  Range (min … max):    3.269 s …  3.351 s    10 runs
- 
-Benchmark 2: new
-  Time (mean ± σ):      3.592 s ±  0.105 s    [User: 1.261 s, System: 2.328 s]
-  Range (min … max):    3.378 s …  3.679 s    10 runs
- 
-Benchmark 3: new (small threshold)
-  Time (mean ± σ):      3.584 s ±  0.144 s    [User: 1.241 s, System: 2.339 s]
-  Range (min … max):    3.359 s …  3.747 s    10 runs
- 
-Summary
-  'old' ran
-    1.09 ± 0.04 times faster than 'new (small threshold)'
-    1.09 ± 0.03 times faster than 'new'
+  * Come up with a more general way of defining arbitrary vim layouts.
+  
+  * Re-implement "vimdiff1", "vimdiff2" and "vimdiff3" using this new mechanism
+    (after all, the only difference among them is that they present different
+    layouts to the user)
 
-It's not the same relative overhead, but still significant.
+  * Add documentation to all of this.
 
-These pack-files contain (mostly) small objects, no large blobs.
-I know that's not the target of your efforts, but it would be
-good to avoid a regression here.
+And the result of that work is what I'm presenting today :)
 
-Thanks,
--Stolee
+Some things I would like to mention:
+
+  1. There are three commits in this patch series:
+
+     - The first one implements the logic to generate new arbitrary layouts and
+       also re-defines "vimdiff1", "vimdiff2" and "vimdiff3" on top of it.
+
+     - The second one adds documentation. It is probably a good idea to start
+       reviewing this commit before the first one!
+
+     - The last commit *is not meant to be merged now*. It removes "vimdiff1",
+       "vimdiff2" and "vimdiff3", which is something that should only be done
+       after one or two releases with a deprecation notice and only if everyone
+       agrees to do so :)
+
+  2. "mergetools/vimdiff" is now a ~800 lines bash script, but most of it is
+     documentation (which is embedded in the tool itself for easier maintenance)
+     and unit tests.
+     I have only tested it with bash, but I've tried not to use any command not
+     already being used somewhere else, so I expect it to work in the same
+     places it was working before (however, let me know if there are some shell
+     compatibility requirements and I'll try to check them).
+
+  3. Regarding unit tests, "mergetool/vimdiff" contains instructions on how to
+     run them (just call the script without arguments after making changes, to
+     make sure you didn't break anything).
+     Right now it prints "OK" on all test cases (obviously) [2]
+
+  3. The "git {diff,merge}tool --tool-help" command now also prints the
+     documentation for each tool (instead of just its name, as before).
+     You can see an example of the output here ([3] and [4])
+
+Finally, let me say that, while I like what this patch series achieves, I would
+also *completely* understand if you decide not to merge it due to being a
+complex solution to a simple problem that can be solved (as I had been doing up
+until today) by just adding three line to one's .gitconfig.
+
+  [mergetool "supermerge"]
+        cmd = vim -f -d -c ...(custom complex sequence of vim commands)...
+        trustExitCode = true
+
+Let me know what you think.
+
+Thanks.
+
+References:
+
+  [1] https://lore.kernel.org/git/20211019212020.25385-1-greenfoo@u92.eu/#r
+  [2] https://pastebin.com/kuQ5pETG
+  [3] https://pastebin.com/yvLWxeiM
+  [4] https://pastebin.com/qNc7qymp
+
+
+New in v2:
+
+  * Remove deprecation of vimdiff{1,2,3} (they will remain for backwards
+    compatibility, but built on top of the new generic layout mechanism)
+
+  * Remove unnecessary "IFS="
+
+  * Replace DEBUG --> GIT_MERGETOOL_VIMDIFF_DEBUG
+
+  * Stop using "local" (turns out it was not necessary)
+
+  * Stop using bash arrays (use arrays of variables instead)
+
+  * Stop using bash substring expansion (use a new "substring" function
+    instead).
+
+  * Refactor some of the internal loops to make the code faster. This was needed
+    because the two previous changes (specially the one where I stop using
+    "substring expansion") slowed down the script to a point where I had to wait
+    for a few *seconds* before the "layout" string was resolved (recursion +
+    bash forks are a recipe for sluggishness). Fortunately we are back to the
+    low hundreds of milliseconds range.
+
+  * Change markers:
+    - File to save: * --> @
+    - New tab     : ; --> +
+    - Vert split  : | --> ,
+    - Horz split  : - --> /
+
+  * Rewrite examples to use as few parenthesis as possible (typically zero)
+    and better explain operators priority.
+
+  * Other fixes to remove problems reported by "shellcheck --shell=sh" (which
+    checks syntax agains the POSIX shell spec)
+
+  * Rename "index_..." vars to make more obvious what they do.
+
+  * Use "$" inside arithmetic expressions $((...))
+    NOTE: "shellcheck" issues a warning stating that "$" is not needed inside
+    arithmetic expressions.
+
+  * Use "test -n" instead of "! test -z"
+
+  * Use "=" instead of "==" in "test"
+
+  * Use "= 0" instead of "-eq 0"
+
+  * Do not use "eval" nor "--" when copying a file to MERGED
+
+  * Do not use "-o" with grep
+
+  * Use <<-\EOF instead of <<\ENDOFMESSAGE and remove extra indent in "here
+    docs".
+
+  * Also, let me put here some answers to questions made in the replies to
+    version v1 of this patch set:
+
+    > What do backticks do in here?
+    >
+    >     some_var=(
+    >         `# Name`       "Rick Deckard"
+    >         `# Age`        "Unknown"
+    >         `# Occupation` "Blade runner"
+    >     )
+
+    The backticks execute the code inside, which is a comment (everything after
+    a "#" is considered a comment by the shell), thus it does nothing.
+
+    The `# ...` trick can be used to insert inline comments in bash. Another
+    example:
+
+        $ ls -l `# long format` -h `# human readable` *.txt
+
+    In any case, as you can see in this new revision, because I'm no longer
+    using bash arrays, this trick to comment each test case is not needed
+    anymore.
+
+    > Why is "eval" needed here:
+    >
+    >     eval "$merge_tool_path" \
+    >              -f "$FINAL_CMD" "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
+
+    Variable "$FINAL_CMD" contains a string that looks like this:
+
+        $ echo $FINAL_CMD
+        -c "vim cmd 1 | vim cmd 2 | ..." -c "tabfirst"
+
+    We need to call "vim" exactly like that, but if we do this...
+
+         $ vim $FINAL_CMD
+
+    ...then "vim" will be excev'ed with the following arguments:
+
+        1. -c
+        2. "vim
+        3. cmd
+        4. 1
+        ...
+
+    ...instead of the desired scenario:
+
+       1. -c
+       2. cmd 1 | cmd 2 | ...
+       3. -c
+       4. tabfirst
+
+     Using "eval" fixes this. A shorter example shows how this works:
+
+         $ A="1 \"2 3\""
+
+         $ ls $A
+         ls: cannot access '1': No such file or directory
+         ls: cannot access '"2': No such file or directory
+         ls: cannot access '3"': No such file or directory
+
+         $ eval ls $A
+         ls: cannot access '1': No such file or directory
+         ls: cannot access '2 3': No such file or directory
+
+  * Finally, I think I have addressed all comments to v1 *except for two
+    things*:
+
+        1. Moving the documentation to "Documentation/" instead of having it
+           embedded inside the "mergetools/vimdiff" script.
+
+        2. Move unit tests to the "test suit"
+
+    For (1) I would like more details. Is the idea not to print any
+    documentation when running "git mergetool --tool-help" and have all the
+    details included in "git help mergetool" instead?
+    Right now "git help mergetool" does not mention any tool specific details
+    and, instead, redirects the user to "git mergetool --tool-help" (that's why
+    I originally placed the new documentation there).
+    In any case, all the doc has been placed on its own commit, so once we
+    decide how to proceed its just a matter of reverting it.
+
+    For (2) I still need to investigate how this is done and prepare a "v3" if
+    needed :)
+
+
+New in v3:
+
+   * Rebase on top of latest master
+
+   * Documentation moved to "Documentation/". Running "git mergetool
+     --tool-help" now works like before (ie. it just lists all available merge
+     tools) except that a one line reference to a "man" entry is also printed
+     for those entries providing one (right now, only vimdiff):
+
+         $ git mergetool --tool-help
+         'git mergetool --tool=<tool>' may be set to one of the following:
+                         araxis
+                         meld
+                         vimdiff
+                                 Run 'man git-mergetool--vimdiff' for details
+                         vimdiff1
+                                 Run 'man git-mergetool--vimdiff' for details
+                         ...
+
+   * New test file "t/7609-mergetool--lib.sh" created. Right now it only
+     contains one test which calls "mergetools/vimdiff" with a special
+     environment set, causing layout unit tests to run.
+
+Fernando Ramos (3):
+  vimdiff: new implementation with layout support
+  vimdiff: add tool documentation
+  vimdiff: integrate layout tests in the unit tests framework ('t'
+    folder)
+
+ Documentation/git-difftool--vimdiff.txt  |  41 ++
+ Documentation/git-mergetool--vimdiff.txt | 195 ++++++++
+ git-mergetool--lib.sh                    |  14 +
+ mergetools/vimdiff                       | 577 ++++++++++++++++++++++-
+ t/t7609-mergetool--lib.sh                |  17 +
+ 5 files changed, 819 insertions(+), 25 deletions(-)
+ create mode 100644 Documentation/git-difftool--vimdiff.txt
+ create mode 100644 Documentation/git-mergetool--vimdiff.txt
+ create mode 100755 t/t7609-mergetool--lib.sh
+
+
+base-commit: 35151cf0720460a897cde9b8039af364743240e7
+-- 
+2.34.0
+
