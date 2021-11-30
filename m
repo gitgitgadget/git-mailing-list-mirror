@@ -2,125 +2,179 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED537C433EF
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 15:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EB38C433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 15:14:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245459AbhK3PGo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 10:06:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33502 "EHLO
+        id S243399AbhK3PSE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 10:18:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245300AbhK3PDI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 10:03:08 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5C36C06179E
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 06:58:04 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id o20so87448315eds.10
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 06:58:04 -0800 (PST)
+        with ESMTP id S244532AbhK3PPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 10:15:55 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67421C07E5F2
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 07:06:12 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id z5so22890432edd.3
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 07:06:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=i2GsHLpCnhVTO9mm82dlgb/BY4+TLo9yvmB2d/fh468=;
-        b=Psa8TRK//QcXZsrswLhf4MHyXLGzDtpmCb0YrQLx9vR0R0h+pwLDe62bSqYYMufmEW
-         k7Br1hK7KDkBtq/XUHl49A3H/vYKgKjXjx+ABw3sm+5vrOarYly97qgS8cA9Y/k9Itz5
-         AX/32Zgqf0I8xknlu5X/hLcLUjSr3O+XX3G6BO3u+uIV2cI2QQywIvNXIYaSFsUh/Mwn
-         dQ70UOH8kgs277mmysHqS10z2eBw/bXCDCDTN5EMH2FBvLHsYtI64WIleDLSDqaNNMZV
-         4y+K0mZVEFkdbrIBmtoFSDfwkyPfchSrWBDp52dmazji/iCZ2wjSOnbQEW1NwI/kQKUx
-         KMpg==
+         :message-id:mime-version;
+        bh=S7mCqdt7wOs048rVW2ynmmeiA26bhPz+e2NM4Ks7VW4=;
+        b=myZd2OJPmHixdrI699pCHh08QxCNVnT+rI4QzoCc9+TONLnbMGRHNkRxQT3GcqSuuM
+         hkL3ks4WNOBQ/94UHRMqacxoTFUlc0ev09DLp8EYQRL1wcNk7x0eDxqZjAGVGRBYFmhi
+         tERrmxYMWlMkT2G9+5y2yMGeG/gWYTRaP9XgEiyjn/GevDqieiAzWNuNGigUhGbjQwNY
+         Ruexso8xjk0z/tpjL0NdpyiGSODau809m4XY8nvT/qqM8hg6bTNkEzJTmZPINj3l8dMT
+         2x3UtWqegkX4AQa7MmsjZwi/GJjeyVuUzS8fHRW60CIuXJfP9YYu136BGD3asa8rMty6
+         e1rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=i2GsHLpCnhVTO9mm82dlgb/BY4+TLo9yvmB2d/fh468=;
-        b=B/F+2xMx842rkgAYCjOeVx9iWnL2EY77ZRPYr8pIzezDifU/O2gFTiszY7Fxq/0jSU
-         EKCSOBcmnBBA30m+N98gZxewvReK1BkChDh1HzdX3wfIqJCqVfXBEHUJ9Kw2CzXS/D1H
-         Op1xszG9mxBcfJDeZzc2y6bTpYiH/Vi5Kc4uVkbt7/RZuHGzcRcIoqX3Qrej7RxdRC/l
-         PyPhlLtGbdxBfbZJ0lFKuWZE/JMevYKM7GWp/rymwLyl/aOBL10Q33qIQLmKN2rxeNaE
-         lYsWdHFS2lnCpDkDT61bSy9s4d7pF3HxBsfnCe4Z3+5+E1bwR2kjq2JFPMNYRiMW2ssn
-         6t7g==
-X-Gm-Message-State: AOAM531Qq1OmCJajrWu2a0dA6uZcKaKf2mn6lYIT+r0DOO/M7ty1th4V
-        hH7VC+TeRo7cJemkQKfnd/fT5SXSimaDlQ==
-X-Google-Smtp-Source: ABdhPJyu9UhkZalGX4hXy56JoubsNk/iAxpJVC+GK3bfvnX46JTUH8gIfl2vCD4ylgoLDfPOFP5tSQ==
-X-Received: by 2002:a17:907:2bd1:: with SMTP id gv17mr67019194ejc.231.1638284279822;
-        Tue, 30 Nov 2021 06:57:59 -0800 (PST)
+         :in-reply-to:message-id:mime-version;
+        bh=S7mCqdt7wOs048rVW2ynmmeiA26bhPz+e2NM4Ks7VW4=;
+        b=0FDhLclGA6sQWoivGFadmbu1J0aPfM8+Y9j2vXKEUPfcmQEaXNDe5yCN3HyvYs/E9w
+         pseb+WjuZlyjNqCv1xG1t82MrWKjlplhhtnSGXhb55ULaJkp99w9C7imz+63f8r/p1Mu
+         rCWhKVk66U1usmZD3C1SXodMKPR19vULAr7Lnir7YKBpidLmPdrrVbOGLkDTFkWowTzA
+         jchor0mbiHNKxIu+KJMXD7LX/cAOPC9nMeNvMNZ9F115WyHPdlApwrEKnDUs5+f6EhNp
+         kGkjxT6UffTrF4itZrxKmIx4AG3kJYGaFIELRsrBZ/mTaesW0h75P+i+mzD8Seo+Lt89
+         pNEw==
+X-Gm-Message-State: AOAM5313Gdp3/pZA73qG4XcIycglOv5TShe7HK+bSlgA+Y0cmbIwkZ1s
+        RextQcqYHE8M7FguCEJ/WFZ4wlfq2dhyKA==
+X-Google-Smtp-Source: ABdhPJxoje1xzM4wBLWnL81ErRg7yw8Rqx0fOc+2Kydv8tGxBOf5POHmTNVCiePwz7HFPbu4KqBzQA==
+X-Received: by 2002:a17:906:bc46:: with SMTP id s6mr69351343ejv.467.1638284770895;
+        Tue, 30 Nov 2021 07:06:10 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id gs15sm9150033ejc.42.2021.11.30.06.57.59
+        by smtp.gmail.com with ESMTPSA id s4sm9753540ejn.25.2021.11.30.07.06.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 06:57:59 -0800 (PST)
+        Tue, 30 Nov 2021 07:06:10 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1ms4Zy-0012DG-Q7;
-        Tue, 30 Nov 2021 15:57:58 +0100
+        id 1ms4ht-0012P9-Nb;
+        Tue, 30 Nov 2021 16:06:09 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v9 00/17] Upstreaming the Scalar command
-Date:   Tue, 30 Nov 2021 15:50:08 +0100
-References: <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com>
- <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
- <211130.86mtlleqhm.gmgdl@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2111301450030.63@tvgsbejvaqbjf.bet>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Adam Dinwoodie <adam@dinwoodie.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 3/3] test-lib: make BAIL_OUT() work in tests and prereq
+Date:   Tue, 30 Nov 2021 15:59:27 +0100
+References: <20211117090410.8013-3-fs@gigacodes.de>
+ <20211120150401.254408-1-fs@gigacodes.de>
+ <20211120150401.254408-4-fs@gigacodes.de>
+ <211122.86y25gz9q7.gmgdl@evledraar.gmail.com> <xmqqh7c4i0jh.fsf@gitster.g>
+ <20211126095509.weeknmg4p6sx7bdn@fs> <xmqqy25a636c.fsf@gitster.g>
+ <20211127124733.ulicqyiudur3s5h4@fs> <xmqqo8634zrz.fsf@gitster.g>
+ <20211130143821.7dz5jj2z2x2q2ytn@fs>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <nycvar.QRO.7.76.6.2111301450030.63@tvgsbejvaqbjf.bet>
-Message-ID: <211130.861r2xelmx.gmgdl@evledraar.gmail.com>
+In-reply-to: <20211130143821.7dz5jj2z2x2q2ytn@fs>
+Message-ID: <211130.86wnkpd6ou.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Nov 30 2021, Johannes Schindelin wrote:
+On Tue, Nov 30 2021, Fabian Stelzer wrote:
 
-> Hi =C3=86var,
->
-> On Tue, 30 Nov 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> On Tue, Nov 30 2021, Johannes Schindelin via GitGitGadget wrote:
+> On 28.11.2021 15:38, Junio C Hamano wrote:
+>>Fabian Stelzer <fs@gigacodes.de> writes:
 >>
->> > [...]
+>>>>I was expecting something along the lines of ...
+>>>>
+>>>># What is written by tests to their FD #1 and #2 are sent to
+>>>># different places depending on the test mode (e.g. /dev/null in
+>>>># non-verbose mode, piped to tee with --tee option, etc.)  Original
+>>>># FD #1 and #2 are saved away to #5 and #7, so that test framework
+>>>># can use them to send the output to these low FDs before the
+>>>># mode-specific redirection.
+>>>>
+>>>>... but this only talks about the output side.  The final version
+>>>>needs to mention the input side, too.
+>>>>
+>>>
+>>> I like to use the term stdin/err/out since that is what i would grep for
+>>> when trying to find out more about the test i/o behaviour.
+>>
+>>I do not mind phrasing "original FD #1" as "original standard
+>>output" at all.  I just wanted to make sure it is clear to readers
+>>whose FD #1 and FD #5 we are talking about. In other words, the
+>>readers should get a clear understanding of where they are writing
+>>to, when the code they write in test_expect_success block outputs to
+>>FD #1, and what the code needs to do if it wants to always show
+>>something to the original standard output stream.
 >
-> Unfortunately, you clipped the most important part, the part that I put in
-> there mostly for your benefit. So let me repeat it once again:
+> The current version in my branch is now:
 >
-> This patch series' focus is entirely on Scalar, on choosing sensible
-> defaults and offering a delightful user experience around working with
-> monorepos, and not about changing any existing paradigms for contrib/.
+> What is written by tests to stdout and stderr is sent so different places
+> depending on the test mode (e.g. /dev/null in non-verbose mode, piped to tee
+> with --tee option, etc.). We save the original stdin to FD #6 and stdout and
+> stderr to #5 and #7, so that the test framework can use them (e.g. for
+> printing errors within the test framework) independently of the test mode.
 >
-> I do see that you want to drag the conversation back to discussing the
-> build process, and the CI integration. And on changing the way things are
-> done in `contrib/`. You've made that point abundantly clear. I just don't
-> see how that could possibly improve Scalar. I mean, if it failed during
-> the past 4 months, why expect any different outcome in the future.
+> which I think should make this sufficiently clear.
+> I'm wondering now though if we should write to #7 instead of #5 in
+> BAIL_OUT(). The current use in test-lib/test-lib-functions seems a bit 
+> inconsistent.
+>
+> For example:
+> error >&7 "bug in the test script: $*"
+> echo >&7 "test_must_fail: only 'git' is allowed: $*"
+>
+> but:
+> echo >&5 "FATAL: Cannot prepare test area"
+> echo >&5 "FATAL: Unexpected exit with code $code"
+>
+> Sometimes these errors result in immediate exit 1, but not always.
+>
+> I'm not sure if the TAP framework that BAIL_OUT() references expects
+> the bail out error on a specific fd.
 
-The seemingly unintentional behavior change in CI jobs that aren't
-scalar jobs you're introducing started in v7 of this series, submitted
-on November 17th:
+All TAP must be emitted to stdout. You can test that with e.g.:
+    
+    $ cat tap.sh
+    #!/bin/sh 
+    echo "ok 1 one"
+    echo "ok 2 two" >&2
+    echo "1..1"
+    $ prove --exec /bin/sh tap.sh
+    tap.sh .. 1/? ok 2 two
+    tap.sh .. ok   
+    All tests successful.
+    Files=1, Tests=1,  0 wallclock secs ( 0.01 usr +  0.00 sys =  0.01 CPU)
+    Result: PASS
 
-    https://lore.kernel.org/git/1b0328fa236a35c2427b82f53c32944e513580d3.16=
-37158762.git.gitgitgadget@gmail.com/
+Note how the "ok 2 two" is emitted to STDERR, and doesn't count towards
+the number of tests. If it's changed to:
+    
+    $ cat tap.sh
+    #!/bin/sh
+    echo "ok 1 one"
+    echo "ok 2 two"
+    echo "1..2"
+    $ prove --exec /bin/sh tap.sh
+    tap.sh .. ok   
+    All tests successful.
+    Files=1, Tests=2,  0 wallclock secs ( 0.00 usr +  0.01 sys =  0.01 CPU)
+    Result: PASS
 
-So as far as any CI testing is concerned we're talking about just under
-2 weeks.
+You can see it runs two tests.
 
-I really don't see how that and other unintentional behavior changes in
-the CI on top of "master" have anything to do with "the build process"
-in the sense that we've discussed as part of the greater scalar
-integration topic in the past.
+The reason the existing cases are inconsistent are because of various
+reasons, probably none good at this point.
 
-I only linked to those thread(s) because some of that behavior changing
-(i.e. now running tests in a previously compile-only job) is apparent
-when either running with my patch-on-top of this series, or it was
-discussed in some threads related to that & the merger with
-ab/ci-updates.
+Some are just because the error handling pre-dates the TAP support in
+the test suite, I think at this point we should just be moving to making
+it first-class in terms of TAP support. I.e. it's clearly the most
+commonly used test mode (and we use it in CI etc.). So we should emit
+all directives on STDOUT.
 
-Is it intentional that the previously compile-only "pedantic" job is now
-running the scalar tests?
+And some are probably just copy/pasting, or error handling that didn't
+consider TAP at the time of writing.
+
+Note that not all of these should be "Bail out!". We should really
+reserve that for wanting to stall the entire test run, but e.g. not for
+"cannot prep test area", which might only be a permission error with one
+trash directory.
+
+
+
