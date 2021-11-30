@@ -2,183 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AF0FC433F5
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 13:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FCC6C433EF
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 14:02:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241736AbhK3Nx2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 08:53:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46104 "EHLO
+        id S241867AbhK3OF1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 09:05:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240008AbhK3Nx1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 08:53:27 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1822AC061574
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 05:50:08 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id l22so53927588lfg.7
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 05:50:08 -0800 (PST)
+        with ESMTP id S235286AbhK3OF1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 09:05:27 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00F81C061574
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 06:02:08 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id v1so87082809edx.2
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 06:02:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=HSxXiY6WcWkWd0j1+azoKFgYig+IWiYqXEOA6HWMsYQ=;
-        b=dIpyHv9uDLxl3mSuaxRvJ8VEvNQQg5DihtjOAlpIXxK4Gj21qWjs8Q5nZsXTihfP/V
-         kSIZ6uyGnil9rPwEqGCftRP0UHtIKtBo4yGFGuARkERJ3ylO6vsSV21Jvb8bxgj4MIMg
-         cPwxQgK3F2tNryrFXBfATqI776nkLRUhfKjCiQonPMbRA5ppKdGRBfMyW/GZjSMPeXEH
-         em9PTVpPGA5gA5XOZHOUIklLExhsE1nPmqasit2fouQW+axE3xJiGwXDu1DbVpWOXoOK
-         baR7WkrMVVd+CTjtYR2TmlZuOGL2qkIvQQgIWBUk7s0+23Y0lDndR76nZotMh1M589su
-         JhOg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=36sKn9H6CgjF+7dkYY+DBdQ3nqm4mCTyqVvijIFEH/w=;
+        b=aFZjgtGgnOTa96R+zDqeqX38t2/ZdJD0Zwy23jxqWn4HfD/Zehw/2T3QcgSKwoN+fS
+         vLEESXmzY10/MGx0wUlY1YnXkN8r6PsrVGog6IXnuwACdeTBz+mG1giXmFd5AS145nwI
+         GMyLtlQv21HvD+s2MKnDXpE0GGWe0R3ug/9SbbWOx/2xxnCYPL64Xvyo0m6c1cRkxmc9
+         6oYiyr3mss3fWH27Kg+nUArz7uUYDAahm0R0zesZH0zn24H8otyXOTrY7YWchO15DxmT
+         swFJb8ohI7JNQ1s237RGfgIL3rmJHQeNLbuErLxDnhBxUMkBGv0sdTkA6GEZ7TYXfK/y
+         WQ4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HSxXiY6WcWkWd0j1+azoKFgYig+IWiYqXEOA6HWMsYQ=;
-        b=7laAWiOUPQV2fDqOnSQIVmBlkKYkwReW/kXHp0oL0P+tNjyjiHsIfzUXMfSH598zQX
-         WSYkDsgSQxohktM9sojsX8ljXnzswUItAwOvbKd8E4pf0fXEL2k4IBA7C7ntiCAhSynZ
-         n62/qSrWzkvffF6HxRAnUJmovEtb33zt4A1W2bm5Ine5e6PWkWa/IN5ueK3OuWCdHR4m
-         iIbWx3YGj6u5bUz6dP304sZ0Znl4MipvQN6JrRXEJg2i7W6/Fp4/wzAYdh1qs6i095zy
-         uZw1Ge0zjXFbJGSpScwz6HfSORfqTzgrM0+XzYYV7memO7kT4uRaps6M+C2rqV6oCN3y
-         v4Tw==
-X-Gm-Message-State: AOAM531GiyGud+ZdlDASIoMdOYa6NrveC0mKtNCX0TZmWdFVOMpivr4v
-        UmGzAASt3BNFJ8U9Lw0fOVY/XQmdPXGPPDFFWfk=
-X-Google-Smtp-Source: ABdhPJzRmCK7qRGIGFcSmfBMKvir+zuqVcZwqAawQmxyBes/a+JlD5wnUmv+3JZIWUySDvRKFdXtRslicjyZW9NsRaY=
-X-Received: by 2002:a19:5052:: with SMTP id z18mr54919300lfj.23.1638280206223;
- Tue, 30 Nov 2021 05:50:06 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=36sKn9H6CgjF+7dkYY+DBdQ3nqm4mCTyqVvijIFEH/w=;
+        b=zaY8lqqRTKBWi4WbGVqCzuqDCpgsrmxfKFbqSsaxigKDJuesvm7zWoEKrpqudbGFz+
+         lszCH62wZNpsJPycn2oMX0ifIE0CkQoZ9+wauiCq1Ns078xZUMcIqZX/HQDkZ1CGlvZv
+         saSnhCgnFTGu5Rqt6aaJRWoPVtBe7EMYLN+mTySvZL7tH5+KeWLBsGfxPr/S+zyKoaXC
+         bCAqxSwrsXIDynxItpY3X3CPbOgWCO+jhGqO3bGn9jvlGTZV7amHCKsNfunGBWtxAEmD
+         b7R1Kozv+E/2gF6BOnOblNRoTvNV9/jdwj4Gyr9QCLU1eh8G/E0Jyky3dfqahwahMs8x
+         CkyQ==
+X-Gm-Message-State: AOAM532jcXuX4x8z3kACCZxQJTkm2AvspbFsN7Wjq6kqvqbMSGWlF6ux
+        Z3yVGTuFBaa/HdN3RtDBODg=
+X-Google-Smtp-Source: ABdhPJxzzdGUySdB3gBpbGL5PKYJGliLlNVR04VtYcl1WMBBtAxgC888P8izUw4aI+6Gnj7UUPQPTw==
+X-Received: by 2002:a17:907:94ce:: with SMTP id dn14mr69087204ejc.85.1638280924520;
+        Tue, 30 Nov 2021 06:02:04 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id a17sm11219470edx.14.2021.11.30.06.02.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Nov 2021 06:02:04 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1ms3hr-0010t9-KH;
+        Tue, 30 Nov 2021 15:02:03 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Anselm =?utf-8?Q?Sch=C3=BCler?= <mail@anselmschueler.com>,
+        git <git@vger.kernel.org>
+Subject: Re: patch: change =?utf-8?Q?=E2=80=9CEverything_up-to-date?=
+ =?utf-8?Q?=E2=80=9D?= to =?utf-8?Q?=E2=80=9CAlready?= up to =?utf-8?Q?dat?=
+ =?utf-8?Q?e=2E=E2=80=9D?=
+ (No-op messages for git-push and git-pull)
+Date:   Tue, 30 Nov 2021 14:55:47 +0100
+References: <VUYC3R.9YCVE0AMVVIF@anselmschueler.com>
+ <CAPig+cRRxYmFqYimTHSi9uzmWU0FRXQ2hGXJK6jYLJcsFce_Rw@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <CAPig+cRRxYmFqYimTHSi9uzmWU0FRXQ2hGXJK6jYLJcsFce_Rw@mail.gmail.com>
+Message-ID: <211130.86a6hleo84.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20211009082058.41138-1-chiyutianyi@gmail.com> <20211122033220.32883-6-chiyutianyi@gmail.com>
- <8ff89e50-1b80-7932-f0e2-af401ee04bb1@gmail.com>
-In-Reply-To: <8ff89e50-1b80-7932-f0e2-af401ee04bb1@gmail.com>
-From:   Han Xin <chiyutianyi@gmail.com>
-Date:   Tue, 30 Nov 2021 21:49:53 +0800
-Message-ID: <CAO0brD0oPHMwGNQXpC2XVhU=fY7XrrtBeu-x8GmJndeVptJaBg@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] unpack-objects: unpack_non_delta_entry() read data
- in a stream
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 30, 2021 at 1:37 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 11/21/2021 10:32 PM, Han Xin wrote:
-> > From: Han Xin <hanxin.hx@alibaba-inc.com>
-> >
-> > We used to call "get_data()" in "unpack_non_delta_entry()" to read the
-> > entire contents of a blob object, no matter how big it is. This
-> > implementation may consume all the memory and cause OOM.
-> >
-> > By implementing a zstream version of input_stream interface, we can use
-> > a small fixed buffer for "unpack_non_delta_entry()".
-> >
-> > However, unpack non-delta objects from a stream instead of from an entr=
-ie
-> > buffer will have 10% performance penalty. Therefore, only unpack object
-> > larger than the "big_file_threshold" in zstream. See the following
-> > benchmarks:
-> >
-> >     $ hyperfine \
-> >     --prepare 'rm -rf dest.git && git init --bare dest.git' \
-> >     'git -C dest.git unpack-objects <binary_320M.pack'
-> >     Benchmark 1: git -C dest.git unpack-objects <binary_320M.pack
-> >       Time (mean =C2=B1 =CF=83):     10.029 s =C2=B1  0.270 s    [User:=
- 8.265 s, System: 1.522 s]
-> >       Range (min =E2=80=A6 max):    9.786 s =E2=80=A6 10.603 s    10 ru=
-ns
-> >
-> >     $ hyperfine \
-> >     --prepare 'rm -rf dest.git && git init --bare dest.git' \
-> >     'git -c core.bigFileThreshold=3D2m -C dest.git unpack-objects <bina=
-ry_320M.pack'
-> >     Benchmark 1: git -c core.bigFileThreshold=3D2m -C dest.git unpack-o=
-bjects <binary_320M.pack
-> >       Time (mean =C2=B1 =CF=83):     10.859 s =C2=B1  0.774 s    [User:=
- 8.813 s, System: 1.898 s]
-> >       Range (min =E2=80=A6 max):    9.884 s =E2=80=A6 12.192 s    10 ru=
-ns
->
-> It seems that you want us to compare this pair of results, and
-> hyperfine can assist with that by including multiple benchmarks
-> (with labels, using '-n') as follows:
->
-> $ hyperfine \
->         --prepare 'rm -rf dest.git && git init --bare dest.git' \
->         -n 'old' '~/_git/git-upstream/git -C dest.git unpack-objects <big=
-.pack' \
->         -n 'new' '~/_git/git/git -C dest.git unpack-objects <big.pack' \
->         -n 'new (small threshold)' '~/_git/git/git -c core.bigfilethresho=
-ld=3D64k -C dest.git unpack-objects <big.pack'
->
-> Benchmark 1: old
->   Time (mean =C2=B1 =CF=83):     20.835 s =C2=B1  0.058 s    [User: 14.51=
-0 s, System: 6.284 s]
->   Range (min =E2=80=A6 max):   20.741 s =E2=80=A6 20.909 s    10 runs
->
-> Benchmark 2: new
->   Time (mean =C2=B1 =CF=83):     26.515 s =C2=B1  0.072 s    [User: 19.78=
-3 s, System: 6.696 s]
->   Range (min =E2=80=A6 max):   26.419 s =E2=80=A6 26.611 s    10 runs
->
-> Benchmark 3: new (small threshold)
->   Time (mean =C2=B1 =CF=83):     26.523 s =C2=B1  0.101 s    [User: 19.80=
-5 s, System: 6.680 s]
->   Range (min =E2=80=A6 max):   26.416 s =E2=80=A6 26.739 s    10 runs
->
-> Summary
->   'old' ran
->     1.27 =C2=B1 0.00 times faster than 'new'
->     1.27 =C2=B1 0.01 times faster than 'new (small threshold)'
->
-> (Here, 'old' is testing a compiled version of the latest 'master'
-> branch, while 'new' has your patches applied on top.)
->
-> Notice from this example I had a pack with many small objects (mostly
-> commits and trees) and I see that this change introduces significant
-> overhead to this case.
->
-> It would be nice to understand this overhead and fix it before taking
-> this change any further.
->
-> Thanks,
-> -Stolee
 
-Can you show me the specific information of the repository you
-tested, so that I can analyze it further.
+On Mon, Nov 29 2021, Eric Sunshine wrote:
 
-I test this repository, but did not meet the problem:
+> On Mon, Nov 29, 2021 at 7:04 PM Anselm Sch=C3=BCler <mail@anselmschueler.=
+com> wrote:
+>> Why are the no-op messages for git-push and git-pull (i.e. when remote
+>> and local are identical) so different, while describing something very
+>> similar? IMO the messages should be either identical or very similar.
+>> git-pull results in =E2=80=9CAlready up to date.=E2=80=9D, while git-pus=
+h results
+>> in =E2=80=9CEverything up-to-date=E2=80=9D.
+>>
+>> It should be considered that other messages reading =E2=80=9CAlready up =
+to
+>> date.=E2=80=9D seem to use a translation system, it might be better to u=
+se
+>> that system here, too. Unfortunately, I don=E2=80=99t know how to do that
+>> (currently). At any rate, this patch could serve as a temporary
+>> =E2=80=9Cfix=E2=80=9D.
+>
+> This question/issue is raised from time to time, and the short answer
+> is that send-pack is plumbing, thus there likely will be resistance to
+> an arbitrary change of text. Denton goes into a bit more detail in his
+> reply[1].
+>
+> [1]: https://lore.kernel.org/git/20191122180433.GA57478@generichostname/
 
- Unpacking objects: 100% (18345/18345), 43.15 MiB
+Yes, but this isn't really applicable to what Anselm really wants to
+change.
 
-hyperfine \
-        --prepare 'rm -rf dest.git && git init --bare dest.git' \
-        -n 'old' 'git -C dest.git unpack-objects <big.pack' \
-        -n 'new' 'new/git -C dest.git unpack-objects <big.pack' \
-        -n 'new (small threshold)' 'new/git -c
-core.bigfilethreshold=3D64k -C dest.git unpack-objects <big.pack'
-Benchmark 1: old
-  Time (mean =C2=B1 =CF=83):     17.403 s =C2=B1  0.880 s    [User: 4.996 s=
-, System: 11.803 s]
-  Range (min =E2=80=A6 max):   15.911 s =E2=80=A6 19.368 s    10 runs
+Here, i.e. yes the builtin/send-pack.c part of his patch mayb e suspect,
+but we can simply skiip that and change the transport.c part, it's API
+that only builtin/push.c uses.
 
-Benchmark 2: new
-  Time (mean =C2=B1 =CF=83):     17.788 s =C2=B1  0.199 s    [User: 5.054 s=
-, System: 12.257 s]
-  Range (min =E2=80=A6 max):   17.420 s =E2=80=A6 18.195 s    10 runs
+Currently transport_push() returns -1 or 0. I think the best change
+there would be to chang it and its callers to return an enum, so we
+could have it indicate whether it pushed anything or not.
 
-Benchmark 3: new (small threshold)
-  Time (mean =C2=B1 =CF=83):     18.433 s =C2=B1  0.711 s    [User: 4.982 s=
-, System: 12.338 s]
-  Range (min =E2=80=A6 max):   17.518 s =E2=80=A6 19.775 s    10 runs
+Probably even better would be to make it stop printing output entirely,
+and to merely have the "struct ref *" of remote refs returned to the
+caller. Then the caller could do the equivalent of
+transport_refs_pushed() itself.
 
-Summary
-  'old' ran
-    1.02 =C2=B1 0.05 times faster than 'new'
-    1.06 =C2=B1 0.07 times faster than 'new (small threshold)'
+I.e. we might want to print these in various mixtures of these
+scenarios:
 
-Thanks,
-- Han Xin
+    Already up-to-date
+    Pushed all requested refs
+    Pushed X/Y refs, Y-X were already up-to-date
+
+Anselm: If you're interested in following-up please read
+Documentation/SubmittingPatches, i.e. send your patch with
+git-send-email or another method that doesn't send the patch as an
+attachment.
