@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98A11C433F5
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 02:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7207CC433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 03:23:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232416AbhK3DBN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 22:01:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38268 "EHLO
+        id S237843AbhK3D1C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 22:27:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229996AbhK3DBM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 22:01:12 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 310AFC061574
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 18:57:54 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id bu18so50008699lfb.0
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 18:57:54 -0800 (PST)
+        with ESMTP id S232594AbhK3D1B (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 22:27:01 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00C2BC061574
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 19:23:43 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id z7so15713680lfi.11
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 19:23:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=cLYBJbk+TNciwKSjH0UIKTGBj2ICsoIHzrWT9zkNrLg=;
-        b=YapbvcQb+GSwRpugrwaRiojPVZBp5LBq8QO/HlYUpV3UHUOPY9t9CFc6WE0Sr77847
-         +q3nERjcgGxibD+saxsyVkPL5CayaZnKje+CN+coRWAaFUNcUwpEK9xsGNC9+kYc6TPD
-         9dvnfeqOnvfNwPHcChlsABhD99EKIFjBpdG8NI8FoLK93tGKHvSU+4uY7+6kNBGPTDjX
-         7Z7SRaDKPUt/MUf1EbpwHojBL1CD+IAF9rgF0Uls6+QfAHpo+fqpV6qmZIW7fWqRcWTX
-         BY3i0RJiGjR+qipNHbx50KR9zgzbVnb53nOhwxBvsxjc8VeukH4+i2TsZRVz9O4YjFof
-         CDYA==
+        bh=UIW3mZCZOAer/KsKD669LFokJhbnb9WO2yBui55ztnE=;
+        b=iRYL6eFE1ElcKQC3KjhkDsmS/RQ5PoJubrrtdIiF+DD2tQmF6m5A1dpZyGk3sqmdYl
+         yzhS9EX8GYNnCqW2JNAXml+0ERudIV1FvZE9EsXykfIIjLQpCI5uKggRNuQMFXJcvTa3
+         cvEG7F4WEiGXVfeG9mtcdXHSE0x1pJmXt6q2XjsIt/9IqSggROTuzPL0z+y+sR8V3cLR
+         HP9KDuht9jkBPInvLvw/II3GvDVDXZG949AX0bdPkRDpYK2L7T7CZTcmEF8eczFkdPX2
+         DAxqKRr5Mf0k7YnsP10rax5XYsCK4hpAa0/Yc+6ctUdroB3IVRu20d2tPSrWCInPBpS5
+         Dm0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=cLYBJbk+TNciwKSjH0UIKTGBj2ICsoIHzrWT9zkNrLg=;
-        b=2uU3xVKgOR0FY9/rLPR200+8d3eqyR/M0Hx1TC+HbZcjse2FZsGV3sSOiB0J2GvPbO
-         RYVOcFH02/YZD2T3tzvGj/mOi+3Ylr10dPxu/6H5lWdp+6Ds0bF1mKQOq7S2har2u5ef
-         /R9ESiNe9zj5srJE4bquA2WxN2g16yJm1NLgVArUkrmuQ3Cg1LXIfogOXa2uCUmexh0w
-         oM962BfWyOkzR0CmJOp3iONiKcWSKzHgCg0EkqW9JtQPZ24FJGfH9g5AKUbeQbndH0mH
-         BduvVIMM06vGi/QAzYewfmx9Ai2OIWrk8O2jiI+9m16otdKMrzEJF+ahtrRP6+zZMWxq
-         wNXw==
-X-Gm-Message-State: AOAM531WqDMLMiMr71w80A7V/X+hzlXgu3Hvv1UbxTTHJaMj4jcvyuJz
-        lBNBvNspG3wwD53aWYLl90I8l8Q+YaqymzwScoU=
-X-Google-Smtp-Source: ABdhPJy51AMKSuflAv6ggyxLZdZN2IFjJWz63HthFA6dMN4o70G0erk3wYiL7dHCzTkyngoZyEc0jHgU4ososo0y3A8=
-X-Received: by 2002:a05:6512:2314:: with SMTP id o20mr50090775lfu.51.1638241072397;
- Mon, 29 Nov 2021 18:57:52 -0800 (PST)
+        bh=UIW3mZCZOAer/KsKD669LFokJhbnb9WO2yBui55ztnE=;
+        b=zxoHic++hv7GOP5w4DTYJn43wNI8O6CEpDgM9XSY5fAlPdqf16w5Cy1Qx96HSIuB/f
+         sgIkxK+mGTv+5gg4SvOq48MPBL9il/0Hf7vsKAMYNX5HdlWp3WncGKYv8OloThTfbWzG
+         AGj0zWrf8ljvqWqXiH8kNI56AoIVATKoA9T4U7qIvY2zFf8BmtAldCB6Mq93LxCf42Zs
+         8YEVa83sC8qmt80QEVbKblMagEt2eb5ijkYdRfNpz4CL9HZKh5BCVv20nuZuLvpzMGls
+         onlfH1DAZIlyMxQnJSXTQzvFj6BConSTyPnMIj1LqEDzjXMc3BrN1KRQWczROVoZN4de
+         CDkA==
+X-Gm-Message-State: AOAM530pkKWboWymsw5HKdm8CC0+L19jSuz7kTtPcyMzgPT0VDrt5Q/R
+        LjjqCBoy8xq8+kP3pMfdZMGq1UaVxliQynffo8s=
+X-Google-Smtp-Source: ABdhPJyZdkdfEgYG67X/a5bUbrgE0Ry2tmbVRksJlEml3lPGYwrpr2WL+1S1HgUlg8rjHVR27ivRgbg/yaoBeU4owG8=
+X-Received: by 2002:a05:6512:ace:: with SMTP id n14mr23066341lfu.53.1638242621304;
+ Mon, 29 Nov 2021 19:23:41 -0800 (PST)
 MIME-Version: 1.0
-References: <20211009082058.41138-1-chiyutianyi@gmail.com> <20211122033220.32883-1-chiyutianyi@gmail.com>
- <CAO0brD3VPtUrpCE2kCJDram=bLMN=89++=bgf1TddriTYo-nsA@mail.gmail.com> <YaUmFpIeCvHdKixj@coredump.intra.peff.net>
-In-Reply-To: <YaUmFpIeCvHdKixj@coredump.intra.peff.net>
+References: <20211009082058.41138-1-chiyutianyi@gmail.com> <20211122033220.32883-3-chiyutianyi@gmail.com>
+ <47b3e2ad-4fa1-040a-24c1-6da0445bd1a5@gmail.com> <xmqqsfve669w.fsf@gitster.g> <2271576b-79d3-7983-d3df-5548e0a12e85@gmail.com>
+In-Reply-To: <2271576b-79d3-7983-d3df-5548e0a12e85@gmail.com>
 From:   Han Xin <chiyutianyi@gmail.com>
-Date:   Tue, 30 Nov 2021 10:57:40 +0800
-Message-ID: <CAO0brD3bSaYabKgdDZjqJd97CJ2hN1XuxWGc+Ww1GZ2wpKA4ZQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] unpack large objects in stream
-To:     Jeff King <peff@peff.net>
+Date:   Tue, 30 Nov 2021 11:23:29 +0800
+Message-ID: <CAO0brD1U+zbqBGjOV+Vc5+AQAdrG5ULp_0=PMYeUQSxqvWQ65w@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] object-file.c: handle undetermined oid in write_loose_object()
+To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>,
         Philip Oakley <philipoakley@iee.email>,
         Han Xin <hanxin.hx@alibaba-inc.com>
@@ -61,32 +62,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 30, 2021 at 3:12 AM Jeff King <peff@peff.net> wrote:
-> We set transfer.unpackLimit to "1", so we never run unpack-objects at
-> all. We always run index-pack, and every push, no matter how small,
-> results in a pack.
+On Tue, Nov 30, 2021 at 6:18 AM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> We also set GIT_ALLOC_LIMIT to limit any single allocation. We also have
-> custom code in index-pack to detect large objects (where our definition
-> of "large" is 100MB by default):
+> On 11/29/2021 3:44 PM, Junio C Hamano wrote:
+> > Derrick Stolee <stolee@gmail.com> writes:
+> >
+> >> My first reaction is to not write into .git/objects/ directly, but
+> >> instead make a .git/objects/tmp/ directory and write within that
+> >> directory. The idea is to prevent leaving stale files in the
+> >> .git/objects/ directory if the process terminates strangely (say,
+> >> a power outage or segfault).
+> >
+> > Even if we know the name of the object we are writing beforehand, I
+> > do not think it is a good idea to open-write-close the final object
+> > file.  The approach we already use everywhere is to write into a
+> > tmpfile/lockfile and rename it to the final name
+> >
+> > object-file.c::write_loose_object() uses create_tmpfile() to prepare
+> > a temporary file whose name begins with "tmp_obj_", so that "gc" can
+> > recognize stale ones and remove them.
 >
->   - for large blobs, we do index it as normal, writing the oid out to a
->     file which is then processed by a pre-receive hook (since people
->     often push up large files accidentally, the hook generates a nice
->     error message, including finding the path at which the blob is
->     referenced)
+> The only difference is that the tmp_obj_* file would go into the
+> loose object directory corresponding to the first two hex characters
+> of the OID, but that no longer happens now.
 >
->   - for other large objects, we die immediately (with an error message).
->     100MB commit messages aren't a common user error, and it closes off
->     a whole set of possible integer-overflow parsing attacks (e.g.,
->     index-pack in strict-mode will run every tree through fsck_tree(),
->     so there's otherwise nothing stopping you from having a 4GB filename
->     in a tree).
 
-Thank you very much for sharing.
+At the beginning of this patch, I did save the temporary object in a
+two hex characters directory of "null_oid", but this is also a very
+strange behavior. "Gc" will indeed clean up these tmp_obj_* files, no
+matter if they are in .git/objects/ or .git/objects/xx.
 
-The way Github handles it reminds me of what Shawn Pearce introduced in
-"Scaling up JGit". I guess "mulit-pack-index" and "bitmap" must play an
-important role in this.
-
-I will seriously consider this solution, thanks a lot.
+Thanks,
+-Han Xin
