@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79E30C433EF
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 11:55:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86468C433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 11:55:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232984AbhK3L6f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 06:58:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47464 "EHLO
+        id S241151AbhK3L6h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 06:58:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236242AbhK3L6P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 06:58:15 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D1F8C061746
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 03:54:55 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id t9so26850655wrx.7
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 03:54:55 -0800 (PST)
+        with ESMTP id S233849AbhK3L6Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 06:58:16 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A254FC06174A
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 03:54:56 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id p3-20020a05600c1d8300b003334fab53afso19301342wms.3
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 03:54:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=urTN5i86EXuc5a/mSz2OtPkPDT42VYR77j7zOne496I=;
-        b=GHW5bAlg6+qVK18u98ji4KS4ohFWGOTItR/aEwjCf9v7u+RqRueJ1p3RZcByk3+GLM
-         WQ5Vw8GMxBEf41xevaqi4C0BB6WuWxAY+v5o9dloscLNI2yI/yS2FXwwBfh/1fWne3v6
-         7U+zL1TF8j/VXl40SkUBynWzdzqsDsXBLLWDXcw5VC8E+ik5Ja5p5LPJy9b8Rt7pY9sC
-         PlFNpHF8iUbL0RpHLMVj/dht7ToKDVX2M0NMcDepw5YUSPf6i+dsy7w2O0LITCy13NG8
-         98hlaX4n8LmL1+hJtDoL/KWUHIFkPa8URCqlIp3DEAlWofZG9taNQCAtuptjI6li3xRZ
-         c80w==
+        bh=hHq6ERyLqJt0pGG1xYZK5xj6JbiIVjBcTQKQ6BZvI6I=;
+        b=pI/AZUSFmvnQqeY3KRyHkX9kE7i+4AHaNfqDw0XzIajfVGEuqLJODzxL25SrS08YBk
+         c9MwS/p0jjc9mG+0CJB58gb3gzp4TgrozNqMw6jv15hdsfMCsiCT4/c3KuKgtbMc67Uy
+         keN4GW0PKtcDPqas82KaY332OwIaVuMmGJ29g4t8j+yYkZWmucWirBNBg63bnI2HPbRJ
+         Az3WbHjkKOXTPfx2emc17LlJee13lUIg/QMLVVqoZjkoKgQm9OrS87MP4gWsnawzZG+x
+         Nv0GoYCb5b3URAKrThHQz1nd2rqB7/Es7oqSQMhELg/oIbdq33S7U+tnjo7Pe7ldp1AO
+         cM0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=urTN5i86EXuc5a/mSz2OtPkPDT42VYR77j7zOne496I=;
-        b=Eqcd7W+BPQ9sif+lWn1aohJMYYzaunLO24ZAYFwQ8S9enhXRkaNXuBH8ojajGPCicq
-         cI9xhVK2aXOvkQG+a1jvfsm/SmpLolH+bje1MQcjdPUAd/iCvzZWgnLovOJ1CICSmSGI
-         Fl+2ww972sCsW8SMnqAoMoTTukNZG8TuuEYsczTTIazuU57yhhVlpNPJq3tFXD+iDWFT
-         bm5T108AzoXXCUGPP6yoIbb9KFUBxEk9vF33uWXjvLwksnujrSmN35/x8zA7SkzdSlax
-         Udat9KJW1V8aCaD7p9wbctN5y9nTsyPVf6KX2CBaqHoBhtj26wH8Qy1/79k4SpHwf4VC
-         DKpg==
-X-Gm-Message-State: AOAM533dj7rPrxH8ESyB0hzCjCOml3MEO3knWoLKe//vB9faJrLSy12N
-        1Zv4mRVPJw0IjqBY+KS40/nUYdJpYyc=
-X-Google-Smtp-Source: ABdhPJxkeXIQyTRIi4n4FKRKDz186N2z6yvFM1EjnziUwaKABNT+15KVTTVMQ7yfGuLfnAnzCeMNew==
-X-Received: by 2002:a5d:4901:: with SMTP id x1mr39552715wrq.473.1638273293692;
-        Tue, 30 Nov 2021 03:54:53 -0800 (PST)
+        bh=hHq6ERyLqJt0pGG1xYZK5xj6JbiIVjBcTQKQ6BZvI6I=;
+        b=sKBzjhZfDUb4SdDvInD5qeTkdfluVVvR5uODQEJ2SUcZsfAHFWm1k6CdXRgLhZfZT5
+         Z4451lUpQYTFZkCN1KteaT9KTCgC0HvJ0btJXdQOsMXfjzRyR7x/yJakjtNVH/vJcIIl
+         rpWcvlW/eLHJEh2SfeuEV5WDKyKs2A4Sssk3kBcbA6nF8hWR4ruJUrt/1mdeSw4NMqHH
+         CszrfCTcM5ebRigRTRjyrdkcC4hi6hZHBvs0YfPiqG9TXAW0cQvlF9i9VhgvLSsSMz5p
+         pAWI6PzGz+pGl2unpHofZ2BiKykYIhved9bQ3Cq+ApOSX7rUZwDbAz2lxJuboWdObJdo
+         +xwQ==
+X-Gm-Message-State: AOAM53339TP9N098zgg2f0j8CZT9IH6aifB8MhWSiLRxRKOoVBrRTyri
+        tssTkvXRdOjUcmkWS63HBYYhK8ahql4=
+X-Google-Smtp-Source: ABdhPJyOYqpql2nbjPLx5pqUscUdAsgD8/xOMrshXY3dOb1aO1Xq2oze6bAwYr/61vBGFRPsXcXciw==
+X-Received: by 2002:a05:600c:4e01:: with SMTP id b1mr4377464wmq.109.1638273295169;
+        Tue, 30 Nov 2021 03:54:55 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l3sm2557392wmq.46.2021.11.30.03.54.53
+        by smtp.gmail.com with ESMTPSA id z5sm2642667wmp.26.2021.11.30.03.54.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 03:54:53 -0800 (PST)
-Message-Id: <37231a4dd07833807639c8a650185569d0c99af2.1638273289.git.gitgitgadget@gmail.com>
+        Tue, 30 Nov 2021 03:54:54 -0800 (PST)
+Message-Id: <8c6762def30e676a26d23636e924229f10fa5d09.1638273289.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
 References: <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com>
         <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 30 Nov 2021 11:54:36 +0000
-Subject: [PATCH v9 04/17] scalar: create test infrastructure
+Date:   Tue, 30 Nov 2021 11:54:38 +0000
+Subject: [PATCH v9 06/17] ci: also run the `scalar` tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,182 +73,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-To test the Scalar command, create a test script in contrib/scalar/t
-that is executed as `make -C contrib/scalar test`. Since Scalar has no
-meaningful capabilities yet, the only test is rather simple. We will add
-more tests in subsequent commits that introduce corresponding, new
-functionality.
-
-Note: This test script is intended to test `scalar` only lightly, even
-after all of the functionality is implemented.
-
-A more comprehensive functional (or: integration) test suite can be
-found at https://github.com/microsoft/scalar; It is used in the workflow
-https://github.com/microsoft/git/blob/HEAD/.github/workflows/scalar-functional-tests.yml
-in Microsoft's Git fork. This test suite performs end-to-end tests with
-a real remote repository, and is run as part of the regular CI and PR
-builds in that fork.
-
-Since those tests require some functionality supported only by
-Microsoft's Git fork ("GVFS protocol"), there is no intention to port
-that fuller test suite to `contrib/scalar/`.
+Since Scalar depends on `libgit.a`, it makes sense to ensure in the CI
+and the PR builds that it does not get broken in case of industrious
+refactorings of the core Git code.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/Makefile          | 17 +++++--
- contrib/scalar/t/Makefile        | 78 ++++++++++++++++++++++++++++++++
- contrib/scalar/t/t9099-scalar.sh | 17 +++++++
- 3 files changed, 109 insertions(+), 3 deletions(-)
- create mode 100644 contrib/scalar/t/Makefile
- create mode 100755 contrib/scalar/t/t9099-scalar.sh
+ .github/workflows/main.yml | 15 +++++++++++++++
+ ci/run-build-and-tests.sh  |  2 ++
+ ci/run-test-slice.sh       |  5 +++++
+ 3 files changed, 22 insertions(+)
 
-diff --git a/contrib/scalar/Makefile b/contrib/scalar/Makefile
-index f6f0036f0fa..231b1ee1796 100644
---- a/contrib/scalar/Makefile
-+++ b/contrib/scalar/Makefile
-@@ -3,6 +3,7 @@ QUIET_SUBDIR1  =
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 6ed6a9e8076..6eda6be895d 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -89,6 +89,13 @@ jobs:
+         HOME: ${{runner.workspace}}
+         NO_PERL: 1
+       run: . /etc/profile && ci/make-test-artifacts.sh artifacts
++    - name: build Scalar
++      shell: bash
++      run: |
++        make -C contrib/scalar &&
++        mkdir -p artifacts/bin-wrappers artifacts/contrib/scalar &&
++        cp contrib/scalar/scalar.exe artifacts/contrib/scalar/ &&
++        cp bin-wrappers/scalar artifacts/bin-wrappers/
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+@@ -157,6 +164,8 @@ jobs:
+       run: compat\vcbuild\vcpkg_copy_dlls.bat release
+     - name: generate Visual Studio solution
+       shell: bash
++      env:
++        INCLUDE_SCALAR: YesPlease
+       run: |
+         cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=`pwd`/compat/vcbuild/vcpkg/installed/x64-windows \
+         -DNO_GETTEXT=YesPlease -DPERL_TESTS=OFF -DPYTHON_TESTS=OFF -DCURL_NO_CURL_CMAKE=ON
+@@ -170,6 +179,12 @@ jobs:
+       run: |
+         mkdir -p artifacts &&
+         eval "$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts NO_GETTEXT=YesPlease 2>&1 | grep ^tar)"
++    - name: copy Scalar
++      shell: bash
++      run: |
++        mkdir -p artifacts/bin-wrappers artifacts/contrib/scalar &&
++        cp contrib/scalar/scalar.exe artifacts/contrib/scalar/ &&
++        cp bin-wrappers/scalar artifacts/bin-wrappers/
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index cc62616d806..2ef9fbfdd38 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -52,4 +52,6 @@ esac
  
- ifneq ($(findstring s,$(MAKEFLAGS)),s)
- ifndef V
-+	QUIET_GEN      = @echo '   ' GEN $@;
- 	QUIET_SUBDIR0  = +@subdir=
- 	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
- 			 $(MAKE) $(PRINT_DIR) -C $$subdir
-@@ -20,7 +21,7 @@ include ../../config.mak.uname
- TARGETS = scalar$(X) scalar.o
- GITLIBS = ../../common-main.o ../../libgit.a ../../xdiff/lib.a
+ check_unignored_build_artifacts
  
--all: scalar$(X)
-+all: scalar$(X) ../../bin-wrappers/scalar
++make && make -C contrib/scalar test
++
+ save_good_tree
+diff --git a/ci/run-test-slice.sh b/ci/run-test-slice.sh
+index f8c2c3106a2..b741fd8f361 100755
+--- a/ci/run-test-slice.sh
++++ b/ci/run-test-slice.sh
+@@ -14,4 +14,9 @@ make --quiet -C t T="$(cd t &&
+ 	./helper/test-tool path-utils slice-tests "$1" "$2" t[0-9]*.sh |
+ 	tr '\n' ' ')"
  
- $(GITLIBS):
- 	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) $(subst ../../,,$@)
-@@ -29,6 +30,16 @@ $(TARGETS): $(GITLIBS) scalar.c
- 	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) $(patsubst %,contrib/scalar/%,$@)
- 
- clean:
--	$(RM) $(TARGETS)
-+	$(RM) $(TARGETS) ../../bin-wrappers/scalar
- 
--.PHONY: $(GITLIBS) all clean FORCE
-+../../bin-wrappers/scalar: ../../wrap-for-bin.sh Makefile
-+	@mkdir -p ../../bin-wrappers
-+	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-+	     -e 's|@@BUILD_DIR@@|$(shell cd ../.. && pwd)|' \
-+	     -e 's|@@PROG@@|contrib/scalar/scalar$(X)|' < $< > $@ && \
-+	chmod +x $@
++if test 0 = "$1"
++then
++	make -C contrib/scalar test
++fi
 +
-+test: all
-+	$(MAKE) -C t
-+
-+.PHONY: $(GITLIBS) all clean test FORCE
-diff --git a/contrib/scalar/t/Makefile b/contrib/scalar/t/Makefile
-new file mode 100644
-index 00000000000..6170672bb37
---- /dev/null
-+++ b/contrib/scalar/t/Makefile
-@@ -0,0 +1,78 @@
-+# Run scalar tests
-+#
-+# Copyright (c) 2005,2021 Junio C Hamano, Johannes Schindelin
-+#
-+
-+-include ../../../config.mak.autogen
-+-include ../../../config.mak
-+
-+SHELL_PATH ?= $(SHELL)
-+PERL_PATH ?= /usr/bin/perl
-+RM ?= rm -f
-+PROVE ?= prove
-+DEFAULT_TEST_TARGET ?= test
-+TEST_LINT ?= test-lint
-+
-+ifdef TEST_OUTPUT_DIRECTORY
-+TEST_RESULTS_DIRECTORY = $(TEST_OUTPUT_DIRECTORY)/test-results
-+else
-+TEST_RESULTS_DIRECTORY = ../../../t/test-results
-+endif
-+
-+# Shell quote;
-+SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-+PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
-+TEST_RESULTS_DIRECTORY_SQ = $(subst ','\'',$(TEST_RESULTS_DIRECTORY))
-+
-+T = $(sort $(wildcard t[0-9][0-9][0-9][0-9]-*.sh))
-+
-+all: $(DEFAULT_TEST_TARGET)
-+
-+test: $(TEST_LINT)
-+	$(MAKE) aggregate-results-and-cleanup
-+
-+prove: $(TEST_LINT)
-+	@echo "*** prove ***"; GIT_CONFIG=.git/config $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
-+	$(MAKE) clean-except-prove-cache
-+
-+$(T):
-+	@echo "*** $@ ***"; GIT_CONFIG=.git/config '$(SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
-+
-+clean-except-prove-cache:
-+	$(RM) -r 'trash directory'.* '$(TEST_RESULTS_DIRECTORY_SQ)'
-+	$(RM) -r valgrind/bin
-+
-+clean: clean-except-prove-cache
-+	$(RM) .prove
-+
-+test-lint: test-lint-duplicates test-lint-executable test-lint-shell-syntax
-+
-+test-lint-duplicates:
-+	@dups=`echo $(T) | tr ' ' '\n' | sed 's/-.*//' | sort | uniq -d` && \
-+		test -z "$$dups" || { \
-+		echo >&2 "duplicate test numbers:" $$dups; exit 1; }
-+
-+test-lint-executable:
-+	@bad=`for i in $(T); do test -x "$$i" || echo $$i; done` && \
-+		test -z "$$bad" || { \
-+		echo >&2 "non-executable tests:" $$bad; exit 1; }
-+
-+test-lint-shell-syntax:
-+	@'$(PERL_PATH_SQ)' ../../../t/check-non-portable-shell.pl $(T)
-+
-+aggregate-results-and-cleanup: $(T)
-+	$(MAKE) aggregate-results
-+	$(MAKE) clean
-+
-+aggregate-results:
-+	for f in '$(TEST_RESULTS_DIRECTORY_SQ)'/t*-*.counts; do \
-+		echo "$$f"; \
-+	done | '$(SHELL_PATH_SQ)' ../../../t/aggregate-results.sh
-+
-+valgrind:
-+	$(MAKE) GIT_TEST_OPTS="$(GIT_TEST_OPTS) --valgrind"
-+
-+test-results:
-+	mkdir -p test-results
-+
-+.PHONY: $(T) aggregate-results clean valgrind
-diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
-new file mode 100755
-index 00000000000..16f2b72b126
---- /dev/null
-+++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -0,0 +1,17 @@
-+#!/bin/sh
-+
-+test_description='test the `scalar` command'
-+
-+TEST_DIRECTORY=$PWD/../../../t
-+export TEST_DIRECTORY
-+
-+# Make it work with --no-bin-wrappers
-+PATH=$PWD/..:$PATH
-+
-+. ../../../t/test-lib.sh
-+
-+test_expect_success 'scalar shows a usage' '
-+	test_expect_code 129 scalar -h
-+'
-+
-+test_done
+ check_unignored_build_artifacts
 -- 
 gitgitgadget
 
