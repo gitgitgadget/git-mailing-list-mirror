@@ -2,118 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4553C433F5
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 20:49:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 037D0C433EF
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 20:52:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343819AbhK3UxI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 15:53:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58852 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343817AbhK3Uwl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 15:52:41 -0500
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACBA4C061759
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 12:49:13 -0800 (PST)
-Received: by mail-qt1-x82f.google.com with SMTP id m25so21554209qtq.13
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 12:49:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=hmF6z2gYxx51jXgfLX/tIiU9WlU77rqH8aUAjjOS/Eg=;
-        b=gXD4guyTcgNUD6thI/XCQLLN2dN9VKAkk2o0G4/PY5OLrHGno6heeZDwsH8UYsIDvI
-         eta93Xv3bWmw71cwlEvj8XXfdRhvXwzgoQ1smJPjsICmw2BKVo6xr2hplok8A8dPeBaD
-         IgmKBTwUgE8Nr8nwD9BbAc7XdxQSyu3gnIpG/1Jdr1L/aPLmQFoxbKHWpOh+JejGFpF3
-         QLfsDwwDEL1SticMuZZbRd3soulkK/W6ImqfciGVe3hSsRE/KmTdYQlNaoI3NNvfbH69
-         7yIogXoXcjFckgSHWvuIb0T4/IjR9m7xlMiUYuh2yx+efT5ZEPrgyYPf//qUX8yymZxU
-         3fXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=hmF6z2gYxx51jXgfLX/tIiU9WlU77rqH8aUAjjOS/Eg=;
-        b=mlP94qQXgaOSzUIurAcxU1ARUkqk2ZsGybVU3NwseUBkL1uOw0FM8Y+ND+ScpTbFdL
-         a1maCJXX61vcbK+Bn0WEs14HtmdgeHFOkQSk/5k7aKQrZNLdciWlLiIaL8mti7QEgnBO
-         6W3TMtXGCoJxkneZX6JrgFlTXi8o1SiZdBdCDn0LOlPv0IXdkFrjYKncxzoGNOjVdgtO
-         /1FChOtksWm7AtrGr/eH5TNRFeSaA2vJKJFlJBmH92hwujI4jom0p3Nagr2wI5FaYaRP
-         bej6VW5SwvUgfOy+hwXwbH7OEFHYn/Pkw0zMk7Ufdy7J7WS2yjIAVaziLzwauqIGJKZ2
-         MdIw==
-X-Gm-Message-State: AOAM532Dfck+J0KIE8ckrzTAjn84o7Svljuk/lAjz/papgttYr6kxUbs
-        osOKtwQ+XinNs/DTYkXpbHtu/JCcIkJLbbcZ+K1NYJ5O5+o=
-X-Google-Smtp-Source: ABdhPJyjGJFX1EAvZn1Je+buAVN+brp51RcRMd8UAR7R7cHf88JFUeGGggEuFnVFHWPlkXSid5Tapgm7C5QCoKyOyYY=
-X-Received: by 2002:ac8:5c8f:: with SMTP id r15mr2082821qta.465.1638305352527;
- Tue, 30 Nov 2021 12:49:12 -0800 (PST)
+        id S1343817AbhK3UzY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 15:55:24 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40466 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S242493AbhK3UzW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 15:55:22 -0500
+Received: (qmail 13952 invoked by uid 109); 30 Nov 2021 20:52:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Nov 2021 20:52:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30136 invoked by uid 111); 30 Nov 2021 20:52:03 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Nov 2021 15:52:03 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 30 Nov 2021 15:52:01 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+        Baruch Burstein <bmburstein@gmail.com>,
+        Randall Becker <rsbecker@nexbridge.com>
+Subject: Re: [RFC PATCH] vreportf: ensure sensible ordering of normal and
+ error output
+Message-ID: <YaaO8dxOwi7YKbmZ@coredump.intra.peff.net>
+References: <20211130043946.19987-1-sunshine@sunshineco.com>
+ <xmqqtufu2pll.fsf@gitster.g>
+ <YaXPUe9Sz3JBlzYL@coredump.intra.peff.net>
+ <YaXRd2YBQR+ifNTE@coredump.intra.peff.net>
+ <211130.86sfvdd6eo.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   Noel Yap <noel.yap@gmail.com>
-Date:   Tue, 30 Nov 2021 12:48:46 -0800
-Message-ID: <CALa_nQ=Q1h9b_BZcg9AeJurLeRpGrpUFuyoMz-DYKB3bgFJj4Q@mail.gmail.com>
-Subject: `git diff` after `git checkout from-branch -- files` reports nothing
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <211130.86sfvdd6eo.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Tue, Nov 30, 2021 at 04:10:37PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+> 
+> On Tue, Nov 30 2021, Jeff King wrote:
+> 
+> > On Tue, Nov 30, 2021 at 02:14:25AM -0500, Jeff King wrote:
+> >
+> >>   - flushing causes us to block. This implies our stdout is connected to
+> >>     a pipe or socket, and the other side is not expecting to read. A
+> >>     plausible case here is a client sending us a big input which we find
+> >>     to be bogus (maybe index-pack checking an incoming pack). We call
+> >>     die() to complain about the input, but the client is still writing.
+> >>     In the current code, we'd write out our error and then exit; the
+> >>     client would get SIGPIPE or a write() error and abort. But with a
+> >>     flush here, we could block writing back to the client, and now we're
+> >>     in a deadlock; they are trying to write to us but we are no longer
+> >>     reading, and we are blocked trying to get out a little bit of
+> >>     irrelevant stdout data.
+> >> 
+> >>     I _think_ we're probably OK here. The scenario above means that the
+> >>     caller is already doing asynchronous I/O via stdio and is subject to
+> >>     deadlock. Because the segment of buffer we try to flush here _could_
+> >>     have been flushed already under the hood, which would have caused
+> >>     the same blocking. A careful caller might be using select() or
+> >>     similar to decide when it is OK to write, but I find it highly
+> >>     unlikely they'd be using stdio in that case.
+> >> 
+> >> Of the two, the deadlock case worries me more, just because it would be
+> >> quiet subtle and racy. As I said, I think we may be OK, but my reasoning
+> >> there is pretty hand-wavy.
+> >
+> > Thinking on this a bit more: I guess as soon as we exit libc would call
+> > the equivalent of fflush(NULL) anyway, and try that same flush. So in a
+> > sense this is just ordering a bit differently, and not introducing any
+> > new problems. (Unless libc is clever enough to avoid blocking, but that
+> > doesn't seem like something we could or should rely on in general).
+> 
+> I think this change is probably OK too, but let's not forget about
+> warning() and error(). I.e. we are not always on a path to a fatal error
+> with vreportf(), that's just with die(), usage() and BUG().
 
-`git checkout -b to-branch; git checkout from-branch -- filenames; git
-status; git diff`
+My gut feeling is that warning() and error() would encounter a subset of
+the problems that die() would. Because die() is actually changing the
+program state in a much more drastic way (by exiting), whereas error and
+warning would continue and eventually flush anyway. They might care more
+about things like errno being touched if they continue on, but they
+already must assume that vreportf() can affect errno (because of the
+existing flush and write on stderr).
 
-What did you expect to happen? (Expected behavior)
+Likewise BUG() is an interesting one. It doesn't call exit(), but
+instead abort(). So unlike die(), it doesn't actually flush, and the "we
+would fflush(NULL) on exit anyway" caveat above does not apply.
 
-`git status` expected to show updated files and `git diff` expected to
-show file changes.
+I still suspect that any caller doing async I/O on stdio like this is
+already flaky, though. It could have decided to flush and blocked during
+any write.
 
-What happened instead? (Actual behavior)
-
-`git status` showed updated files but `git diff` showed no file changes.
-
-What's different between what you expected and what actually happened?
-
-`git diff` was expected to show file changes but it showed nothing instead.
-
-Anything else you want to add:
-
-If I `git reset -q HEAD -- filenames`, `git diff` starts showing file changes.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.34.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.11.0-36-generic #40~20.04.1-Ubuntu SMP Sat Sep 18
-02:14:19 UTC 2021 x86_64
-compiler info: gnuc: 9.3
-libc info: glibc: 2.31
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-applypatch-msg
-commit-msg
-post-applypatch
-post-checkout
-post-commit
-post-merge
-post-receive
-post-rewrite
-post-update
-pre-applypatch
-pre-auto-gc
-pre-commit
-pre-merge-commit
-pre-push
-pre-rebase
-pre-receive
-prepare-commit-msg
-push-to-checkout
-sendemail-validate
-update
+-Peff
