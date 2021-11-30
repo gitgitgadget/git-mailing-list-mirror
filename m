@@ -2,96 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A755C433EF
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 13:25:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2043C433EF
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 13:35:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240089AbhK3N2T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 08:28:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40278 "EHLO
+        id S240801AbhK3Nii (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 08:38:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232336AbhK3N2O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 08:28:14 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25F44C061574
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 05:24:55 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id e3so86754805edu.4
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 05:24:55 -0800 (PST)
+        with ESMTP id S231627AbhK3Nid (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 08:38:33 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93B28C061574
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 05:35:14 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id l25so86612797eda.11
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 05:35:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:user-agent:message-id:mime-version;
-        bh=15hizer7m1uK+GwK66V8nLD5+qgBRWxnaPGEMNs88+8=;
-        b=P/7YEum4+qf6gzLGyscbgTLiislbm2aK860f4NJ1+UQNVZCIwvQUVV0j368ik3XVcw
-         LdIKa5t+fukkezeETfQVOkvlvphAtqkBwK/rlOIYLRnI+gm6G31+1d9bzyF3zFmgnlXh
-         eMhXBgACX8cEV/3p6sqbX+N5qwUbqLusr1b6zy/d8WTvymSNO3pjzdjC896NF4Kdo+TH
-         PjnV+HAp0TdL7JEzn9pBeJ5fCbnuPPolLZj8PeWbTJB4NzklXMG7aTMkMy/tlPIDoEtP
-         sez2TdcxwR+zd+b3bfPns+8NI7hbzk2ZZkXKDnjiwQys5XwJ95OlyOO6V6YDg5PJZlsX
-         N1kg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=nEhw/OkVmSCsmGvOxJohnuQiXdJf17YUUW/d27Osn8Q=;
+        b=C7S/0RHo6N8AHZL1hmzt1l0LcQu272rX/QJ1ZZw90YK6N8tPJXk+WdnHUtzsPmMgX4
+         B3/qXgaX3OOsNwrTQ8+09vr16plNUQcoNblA720ksPPUdoI6q85NLI3ObyGrbkis+58T
+         3WbLHUElj4SaBiSpBHj3D2mjwqit45nkpXSJ0Bia6tZWOZtL/mHujDRoNn7C3JkcIsHO
+         E1woCaoc0jqH53HEodImzMbhO6fxjLG9NGtaZ1gtnVJjORt+U7CTWbNapIe32mNfW9S6
+         zsoe8nKkiloXgIJY26irCnetbd7qF7CavcfVsb+bERtDIwSF8FibGWTsiRLTfunQsTBh
+         xjgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:user-agent:message-id
-         :mime-version;
-        bh=15hizer7m1uK+GwK66V8nLD5+qgBRWxnaPGEMNs88+8=;
-        b=CZIKtPVrmm9WUF4rUaPZZXxgdZTlDvJkeMC4iVSqzNozxienzG5FwePZ6Fv5JRry+s
-         MpDd/mRP87Xy+6O5XhE/wS7hXaeMg1XTf4PKFwJpgeJQE+diDtYxSSrFWqkXBjde74bC
-         Ihn7oBJK5FyvDXFB+9e75aIgJSF5Mm04+gKm3Zk5oO0WZSCzwq/WAuOBQsNN2VjPLWaw
-         CQTY/UjwQQXwfznxBKDbIT1uLkW9VdKQdgqKJb9s+0JiJKIkVaMJnyU2QrUn751AUnG5
-         YpP4tvQs9QUdZ+dzkstQL7Q+vPfhnujVxipfDO+qghyS8yB1EfJ3YyeKx35LQ+ZscVer
-         dzbA==
-X-Gm-Message-State: AOAM532SJ1yhuLz8sOUPMDcScxk0gtqavkodQ6zhPFYEYbtxtgKx+e3n
-        kUc44YS1y3hm2v8MWqXCdZU=
-X-Google-Smtp-Source: ABdhPJxnw4whtIns/fVBSuAqNv/Orf5WjiAyol+If5MnMccvuxPJLQWT7CCgKBEaGU/8f+8sr+8/gQ==
-X-Received: by 2002:a17:907:3e1d:: with SMTP id hp29mr68003813ejc.70.1638278693583;
-        Tue, 30 Nov 2021 05:24:53 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=nEhw/OkVmSCsmGvOxJohnuQiXdJf17YUUW/d27Osn8Q=;
+        b=HmILkoZQUCS5TIEht0LZJnaogyTXyWVPeNjUYTB4mDg5ssLzkrT3d0kyS0fnN8pzn5
+         mBjd5yY+5pMVPFWAHXRWzr1iBsL/bQS++kXo4YF+68fKODG58phHbCMXnHcAlan/taDW
+         WIONp2wEo8leEGajQIub1oxT3gptdvoiDOTO4zP2n+VR+lTE0vB+ze+OAubdqKnHRsjq
+         jx81eLyVCIjDmyCLffh8iB9omNOJs2SufxEPJ1p4njmxqQpzrFyrWVBwm5lNrQLNEaGQ
+         Avk4u3O9W8Q0kg8DPMnn1aY031JY6/ELnOsmhqopJ+NHl3TXAcTOIKtc/ZWRvWELarES
+         5gEQ==
+X-Gm-Message-State: AOAM5307V7V602tJ17u2dyMNB/GFznOgH2Jjs086z3DFiON/tvaFIviH
+        YFulLu9+/IkpFzyifYuWLdGww5jOZL8nYA==
+X-Google-Smtp-Source: ABdhPJzt9kqMLqRd9UFvwwc9MNXjWzE93+6Szxmt2RJfmR/KCWKz7Gj/rE7DsKAyKYcxqomvZqfShw==
+X-Received: by 2002:aa7:d80d:: with SMTP id v13mr83649195edq.7.1638279312885;
+        Tue, 30 Nov 2021 05:35:12 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id b14sm11369781edw.6.2021.11.30.05.24.53
+        by smtp.gmail.com with ESMTPSA id di4sm9462928ejc.11.2021.11.30.05.35.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 05:24:53 -0800 (PST)
+        Tue, 30 Nov 2021 05:35:12 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1ms37s-000zye-K1;
-        Tue, 30 Nov 2021 14:24:52 +0100
+        id 1ms3Hr-0010EL-Rw;
+        Tue, 30 Nov 2021 14:35:11 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     "Git ML" <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Will -fsyntax-only hide issues with -pedantic? I think not...
-Date:   Tue, 30 Nov 2021 14:13:11 +0100
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v8 04/17] scalar: create test infrastructure
+Date:   Tue, 30 Nov 2021 14:27:03 +0100
+References: <pull.1005.v7.git.1637158762.gitgitgadget@gmail.com>
+ <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com>
+ <37231a4dd07833807639c8a650185569d0c99af2.1637363025.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-Message-ID: <211130.86ilw9epy3.gmgdl@evledraar.gmail.com>
+In-reply-to: <37231a4dd07833807639c8a650185569d0c99af2.1637363025.git.gitgitgadget@gmail.com>
+Message-ID: <211130.86ee6xepgw.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The answer to $subject is not at all urgent, but I noticed we can get
-some (very modest) speed increases in the "pedantic" CI job when adding
--fsyntax-only to CFLAGS. This currently requires monkeypatching out the
-"-o <target> -c" part hardcoded in the Makefile. See cebead1ebfb (ci:
-run a pedantic build as part of the GitHub workflow, 2021-08-08) for the
-pedantic job.
 
-I.e. I'm aware of CFLAGS's -O<n> changing which warings we emit, but
-does -fsyntax-only?
+On Fri, Nov 19 2021, Johannes Schindelin via GitGitGadget wrote:
 
-The gcc manpage suggests that it would, saying:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> [...]
+> +-include ../../../config.mak.autogen
+> +-include ../../../config.mak
+> +
+> +SHELL_PATH ?= $(SHELL)
+> +PERL_PATH ?= /usr/bin/perl
+> +RM ?= rm -f
+> +PROVE ?= prove
+> +DEFAULT_TEST_TARGET ?= test
+> +TEST_LINT ?= test-lint
+> +
+> +ifdef TEST_OUTPUT_DIRECTORY
+> +TEST_RESULTS_DIRECTORY = $(TEST_OUTPUT_DIRECTORY)/test-results
+> +else
+> +TEST_RESULTS_DIRECTORY = ../../../t/test-results
+> +endif
 
-    Check the code for syntax errors, but don't do anything beyond that
+So here we'll inject our output into t/test-results[...]
 
-Whereas clang's says:
+> +T = $(sort $(wildcard t[0-9][0-9][0-9][0-9]-*.sh))
 
-    Run the preprocessor, parser and type checking stages. 
+...end up with a $(T) with just the one scalar test...
 
-I think gcc's is a case of its docs drifting out of sync with the
-implementation. Both will warn on e.g. this program under -pedantic,
-which gcc wouldn't be doing if it only did syntax parsing (and didn't
-run the warning machinery):
-    
-    int main(void)
-    {
-            int v[0];
-            return 0;
-    }
+> +test-lint-duplicates:
+> +	@dups=`echo $(T) | tr ' ' '\n' | sed 's/-.*//' | sort | uniq -d` && \
+> +		test -z "$$dups" || { \
+> +		echo >&2 "duplicate test numbers:" $$dups; exit 1; }
+> +
 
-I don't have any practical use for this now. We could squeeze some
-slight performance out of one CI jobs, but perhaps it'll be more
-interesting in the future.
+...so I *think* (but haven't checked) that print-test-failures.sh will
+work with the later CI integration, but both t/Makefile & this one
+assume in some ways that test numbers are unique, this now lives in the
+same namespace, but neither check the two for conflicts.
+
+We only have the one t9099 test here, so unless we add another one in
+the top-level t/ that should be OK, but is there any reason to carry
+this at all? It seems pointless given the above.
+
+I think to make this meaningful we'd need to teach t/Makefile to have a
+T_ALL variable or something, derived from its T, and have that wildcard
+the scalar tests and other contrib tests and check them for namespacing
+conflicts.
+
+> +test-results:
+> +	mkdir -p test-results
+> +
+
+This target seems to be unused, don't we always use the top-level
+t/test-results? This seems to be copy/pasting also dead code from
+contrib/subtree/t/Makefile.
