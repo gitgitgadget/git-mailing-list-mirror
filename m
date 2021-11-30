@@ -2,152 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7DDCC433EF
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 22:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85FD8C433FE
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 22:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344342AbhK3WJE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 17:09:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49062 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344372AbhK3WJA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 17:09:00 -0500
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEC4DC061746
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 14:05:40 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id n26so22071962pff.3
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 14:05:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=wGY9Qtepd9kdKVKdHiCeg9BeR5SCSmUarfkkqOrpq3U=;
-        b=SGMpfCT2CZlQrtv1TsbLQEygNyzKWEEakhANPotTpFJmcllwvnXJAvtbMhhKaSG2yC
-         Jr8hIZXJfojk41DHZz/Cit4zyDMVFj/BrLPIqRqjTyUBU6oVFzEDvFZ8bRb5iCli7jHX
-         DCGU2JL/jLW3ns1Ubiu5yZtT7AsVb91yaxeKYl3sozxzCczzK71i1GGibCYkndCkJSvi
-         jKHmFgZhfeUJ5KUKduA6muV1cCzDv6vKNZj4uvedzrKUg0mqw1w/WhQvV5lD0QiE6hWc
-         /GkNKIPuwRHpKsWu7b1Y5zLvvfd/RNvAduMLvt/I30YvtWmHqQc3Wub+qLcTvZAg0Jab
-         kQBQ==
+        id S1344703AbhK3WNn convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 30 Nov 2021 17:13:43 -0500
+Received: from mail-pl1-f180.google.com ([209.85.214.180]:43802 "EHLO
+        mail-pl1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344795AbhK3WNb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 17:13:31 -0500
+Received: by mail-pl1-f180.google.com with SMTP id m24so16053643pls.10
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 14:10:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=wGY9Qtepd9kdKVKdHiCeg9BeR5SCSmUarfkkqOrpq3U=;
-        b=nXssYfFHdFJtJaZm/nyrJMw0YyhMV1H4Vkhrk9lV/z31SUO1CTUynME3V9BRK7QL4H
-         6sZDU6MVa/HtKLHRcLubi6YNCxjOUkG5kQzrRXTouYjfAjKTELU4/20L8bm+bZqu1bp1
-         71uqhvmoGG8i1zDUjzttzLx/YFiwq4ay6HTBahsFV1x7UqdMU2EaCbJ0Mg38+nPp+OX6
-         jI8h/zzWdNOPdG7wVssXjgKNAvHTEf5FSUNHOd3DpWoGwKYheWfRsjEYF2ojCtpDL53i
-         36WB2Kfjrx4sK/jY1JA9Q6EmYzFcDJLY6V5lFR3buP30sbvaaSqCvt3VootyA5YjT+XS
-         RuEw==
-X-Gm-Message-State: AOAM5311VXezTNMZSsVDx7MI0yXbHb+G+bKcTgBt67+sr5jYXtpdqSS7
-        U+vWlBxGnfFCuE3Fw1k0xCBMQg==
-X-Google-Smtp-Source: ABdhPJzSUMezuNv7bpkjEn/XI8YUQ1CK6GKX/FQzONMzc6cBNbORc+UgSt8pse8mcWlt+7+158L+3Q==
-X-Received: by 2002:a63:80c8:: with SMTP id j191mr1581944pgd.143.1638309939902;
-        Tue, 30 Nov 2021 14:05:39 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:5174:44bd:79e9:4429])
-        by smtp.gmail.com with ESMTPSA id i185sm21338927pfg.80.2021.11.30.14.05.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 14:05:39 -0800 (PST)
-Date:   Tue, 30 Nov 2021 14:05:34 -0800
-From:   Josh Steadmon <steadmon@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, chooglen@google.com, avarab@gmail.com
-Subject: Re: [PATCH v4] branch: add flags and config to inherit tracking
-Message-ID: <YaagLkQOUia7RsYq@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        chooglen@google.com, avarab@gmail.com
-References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
- <7ad7507f183332cb2b5fdf2eb76fbbc9dd7199ef.1637085915.git.steadmon@google.com>
- <xmqqbl2hw10h.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=qjtrOrTUwyddpM5bVJ88xzb520X9/tPbi1dPJ3RSNJo=;
+        b=m1MfgYYJQlyhKjeXy6sgvBKKzblXfPhdveOsJOUGj8Bog1BUZiQh1X0hXwHgcR+DnK
+         5HM1lIJbJoX2d0pDU9At4X9zpQLeXxDnOCPZ/IC+TaLOoXR+VpTtz/dnFhrnQAJzQbv0
+         fJoc4lxjvGR4limMN1Yvu63gy6oCs0ka/s9o8ACFBAYV6x/r+ewCdBfxtTWmyNOAcKz0
+         l/qVIFTtb3xRGnqxludYZTyup5VjcLwlUbodSYPhfaRMN4+aV9J3ujGMetPzwX5xbED0
+         4PmUfRajbAjoYyDbYxm3TZwLNMB/X7TQp9H38Wu5DfGkvVFr+FG2A6Kc9dd0JXwbiX3W
+         rNrw==
+X-Gm-Message-State: AOAM5327lU5fw6AUXshSLV/vaafix2MGA/uR9hJ5G7U5xY2fsF2+yvAf
+        mXLDZHeEaF7WOA6nrAvPvQq478lrXIv4mMhPBdA=
+X-Google-Smtp-Source: ABdhPJx0Fs8uQzKGrVlhaWrYupD0FhJAD9+AeAsZdmxVJ2qss12PfJgTI9ZHopwaSNOyBlc0wijQMcYDLZDRyo+/Cto=
+X-Received: by 2002:a17:90b:4f44:: with SMTP id pj4mr2272340pjb.150.1638310209489;
+ Tue, 30 Nov 2021 14:10:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqbl2hw10h.fsf@gitster.g>
+References: <xmqqzgpm2xrd.fsf@gitster.g> <211130.86k0gpcpy2.gmgdl@evledraar.gmail.com>
+In-Reply-To: <211130.86k0gpcpy2.gmgdl@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 30 Nov 2021 17:09:58 -0500
+Message-ID: <CAPig+cSvFgJTiq8pXrWy_7ukQwE1y9ZGwMgKmyjWuQHdNGxiDQ@mail.gmail.com>
+Subject: Re: ab/run-command + em/missing-pager (was: What's cooking in git.git
+ (Nov 2021, #07; Mon, 29))
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Enzo Matsumiya <ematsumiya@suse.de>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021.11.18 14:29, Junio C Hamano wrote:
-> Josh Steadmon <steadmon@google.com> writes:
-> 
-> > I've addressed Glen's feedback from V3. However, this brings up a new
-> > issue that was not obvious before: "branch.<name>.merge" can be
-> > specified more than once. On the other hand, the existing tracking setup
-> > code supports only a single merge entry. For now I'm defaulting to use
-> > the first merge entry listed in the branch struct, but I'm curious what
-> > people think the best solution would be. This may be another point in
-> > favor of �var's suggestion to reuse the copy-branch-config machinery.
-> 
-> Or we can extend "existing tracking setup code" to support multiple
-> merge sources.
-> 
-> How does the "git pull" machinery react to them, by the way?  I
-> think the original intention is to support pulling multiple branches
-> from the (single) remote configured for the branch with a single
-> invocation of "git pull", creating an octopus merge, but does it
-> still work, or nobody uses such a crazy curiosity anymore and it was
-> once broken and left in non-working state ever since?  What I am
-> dreaming here is if we can safely ignore all but one of them, taking
-> the usual "last-one-wins" rule, after some transition period.
+On Tue, Nov 30, 2021 at 4:07 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> On Mon, Nov 29 2021, Junio C Hamano wrote:
+> > * ab/run-command (2021-11-25) 9 commits
+> >  - worktree: stop being overly intimate with run_command() internals
+>
+> I think the only outstanding thing for this topic is Eric's [1] comment
+> (on his own code). I think that variable shadowing is OK.
+>
+> 1. https://lore.kernel.org/git/CAPig+cRi6SeuV7k_+9JCcnf79daLZp5B=EyHK-KxC1VGN0B4ig@mail.gmail.com/
 
-It does still work and creates an octopus merge. Tested as follows:
-
-$ git clone https://github.com/gitster/git
-$ cd git
-$ git config pull.rebase false
-$ git checkout -b test-branch v2.30.0
-$ cat >>.git/config <<EOF
-[branch "test-branch"]
-	remote = origin
-	merge = refs/heads/master
-	merge = refs/heads/ab/ambiguous-object-name
-	merge = refs/heads/js/scalar
-EOF
-$ git pull
-Fast-forwarding to: 4ef9e1ce4ac4ad79f99f5c5712146254b4cca530
-Trying simple merge with 352f8e8fcba4726340c946200149e6285c514fc0
-Trying simple merge with abe6bb3905392d5eb6b01fa6e54d7e784e0522aa
-Simple merge did not work, trying automatic merge.
-Auto-merging Makefile
-Auto-merging contrib/buildsystems/CMakeLists.txt
-Merge made by the 'octopus' strategy.
-[...]
-
-$ git cat-file commit HEAD
-tree 78bd62c62edfc6e51beb956e548b92b97210ddd4
-parent 4ef9e1ce4ac4ad79f99f5c5712146254b4cca530
-parent 352f8e8fcba4726340c946200149e6285c514fc0
-parent abe6bb3905392d5eb6b01fa6e54d7e784e0522aa
-author Josh Steadmon <josh@steadmon.net> 1638309707 -0800
-committer Josh Steadmon <josh@steadmon.net> 1638309707 -0800
-
-Merge branches 'ab/ambiguous-object-name', 'js/scalar' and 'master' of https://github.com/gitster/git into test-branch
-
-
-
-> > +int parse_opt_tracking_mode(const struct option *opt, const char *arg, int unset) {
-> > +	if (unset)
-> > +		*(enum branch_track *)opt->value = BRANCH_TRACK_NEVER;
-> > +	else if (!arg || !strcmp(arg, "direct"))
-> > +		*(enum branch_track *)opt->value = BRANCH_TRACK_EXPLICIT;
-> > +	else if (!strcmp(arg, "inherit"))
-> > +		*(enum branch_track *)opt->value = BRANCH_TRACK_INHERIT;
-> > +	else
-> > +		return error(_("option `--track' expects \"direct\" or \"inherit\""));
-> 
-> According to recent discussion in another thread,
-> 
-> 	error(_("option '--%s` expects '%s' or '%s'"),
-> 		"track", "direct", "inherit");
-> 
-> would be more translater friendly, as these three words are not
-> subject to translation?  I am not sure if it is really worth it,
-> though.
-
-I don't really feel strongly either way, so I switched to the more
-translatable version. I was originally following some other examples in
-the file, where it seemed that most strings that would require more than
-one field expansion were just hardcoded instead.
+I'm also fine with the variable shadowing and don't consider it an
+outstanding issue with the topic (it was just a minor observation in
+case anyone complained). I didn't see anything else worth commenting
+on in the remainder of the series.
