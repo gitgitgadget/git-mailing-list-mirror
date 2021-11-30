@@ -2,95 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7207CC433F5
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 03:23:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AE37C433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 03:58:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237843AbhK3D1C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 22:27:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43912 "EHLO
+        id S234967AbhK3ECB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 23:02:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232594AbhK3D1B (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 22:27:01 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00C2BC061574
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 19:23:43 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id z7so15713680lfi.11
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 19:23:42 -0800 (PST)
+        with ESMTP id S229521AbhK3ECA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 23:02:00 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CABF4C061574
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 19:58:41 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id a9so41310925wrr.8
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 19:58:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UIW3mZCZOAer/KsKD669LFokJhbnb9WO2yBui55ztnE=;
-        b=iRYL6eFE1ElcKQC3KjhkDsmS/RQ5PoJubrrtdIiF+DD2tQmF6m5A1dpZyGk3sqmdYl
-         yzhS9EX8GYNnCqW2JNAXml+0ERudIV1FvZE9EsXykfIIjLQpCI5uKggRNuQMFXJcvTa3
-         cvEG7F4WEiGXVfeG9mtcdXHSE0x1pJmXt6q2XjsIt/9IqSggROTuzPL0z+y+sR8V3cLR
-         HP9KDuht9jkBPInvLvw/II3GvDVDXZG949AX0bdPkRDpYK2L7T7CZTcmEF8eczFkdPX2
-         DAxqKRr5Mf0k7YnsP10rax5XYsCK4hpAa0/Yc+6ctUdroB3IVRu20d2tPSrWCInPBpS5
-         Dm0Q==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=q7P4useCnDz0k/DCjMmm2TSHwbajN3xgPJ6Dej4bC74=;
+        b=lyqA7xeXqggq60adfXCwi8po75tviX/gxyOSp/U60QKdrIzS9dTk4IHeBdWMV+xdaL
+         Gs99cP4zmpw4xWGsmENj7lKxyAO6ugqu04MqLIXxTy0W9cf3+WIvB6paFfJ85VuolB5v
+         kU2okNdReHg8sJDryGHUtc29Qj3ztnXtQ4yxMny3xPBLe5UKLvefjJ3xpUjQl1eo7R79
+         0O/fNNcFb7LXAWCRcI94W5pwk8QRERZL4m92aT5roaqJ8uDC6mWV9EZ5W0XqM1sEcqKY
+         hMJu0ACKZ/pPsR6CjYz3dYcd8tBKgGdRapLL1QE5c5DYmrvpydnI+ribPX4Ikk3t/wj/
+         r8QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UIW3mZCZOAer/KsKD669LFokJhbnb9WO2yBui55ztnE=;
-        b=zxoHic++hv7GOP5w4DTYJn43wNI8O6CEpDgM9XSY5fAlPdqf16w5Cy1Qx96HSIuB/f
-         sgIkxK+mGTv+5gg4SvOq48MPBL9il/0Hf7vsKAMYNX5HdlWp3WncGKYv8OloThTfbWzG
-         AGj0zWrf8ljvqWqXiH8kNI56AoIVATKoA9T4U7qIvY2zFf8BmtAldCB6Mq93LxCf42Zs
-         8YEVa83sC8qmt80QEVbKblMagEt2eb5ijkYdRfNpz4CL9HZKh5BCVv20nuZuLvpzMGls
-         onlfH1DAZIlyMxQnJSXTQzvFj6BConSTyPnMIj1LqEDzjXMc3BrN1KRQWczROVoZN4de
-         CDkA==
-X-Gm-Message-State: AOAM530pkKWboWymsw5HKdm8CC0+L19jSuz7kTtPcyMzgPT0VDrt5Q/R
-        LjjqCBoy8xq8+kP3pMfdZMGq1UaVxliQynffo8s=
-X-Google-Smtp-Source: ABdhPJyZdkdfEgYG67X/a5bUbrgE0Ry2tmbVRksJlEml3lPGYwrpr2WL+1S1HgUlg8rjHVR27ivRgbg/yaoBeU4owG8=
-X-Received: by 2002:a05:6512:ace:: with SMTP id n14mr23066341lfu.53.1638242621304;
- Mon, 29 Nov 2021 19:23:41 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=q7P4useCnDz0k/DCjMmm2TSHwbajN3xgPJ6Dej4bC74=;
+        b=L98M1iBITc0xTBInmuMBOVVRszPRup/TQxBB3X3Qk9FCE7b6wV4Etbty5Tah4ISu6D
+         eeJxnOiA6Mgaumm+42YxuD7O/8Z85+XHkGxMrjqVj+5X/sR2MbpT+yQi3+c3DmB5ULfr
+         C6gtxS8vjVpOlCjBHzyyHGn6RybJmcURfWtaRgPpbGW1NGbDEvr9raveoxbJbBtCBpgd
+         Z8TnzuRCkZ4pYEZra6tc3rCjhnlgVzGHJMaFALbZfJSVQgpF55eCfNJNEnbn0bfX1YAS
+         zsSC0kKGgN3wj8WuRVHU9WpEQ7vFaxw9yCDd6stDfoi3Sul4PeIFl1nY40+sYiNxe2Bp
+         HdPg==
+X-Gm-Message-State: AOAM532+dIl3z6VPla3O/CeAWdtxYWweG78bXcu8fUKuBtUqZ5gv0sVk
+        PD+INuUfr47OX2uV3AS1EKvBGNYxAto=
+X-Google-Smtp-Source: ABdhPJw9Qnq1JN/n5NeiutvQUc3JPhnvogCUYhqqmkoEixw8ZOUbhEIgPdPT0wrLyz/Ls5+U7P1Bqw==
+X-Received: by 2002:a5d:5272:: with SMTP id l18mr38282745wrc.208.1638244720215;
+        Mon, 29 Nov 2021 19:58:40 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b10sm15523131wrt.36.2021.11.29.19.58.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 19:58:39 -0800 (PST)
+Message-Id: <pull.1149.git.git.1638244719381.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 30 Nov 2021 03:58:39 +0000
+Subject: [PATCH] sequencer: avoid adding exec commands for non-commit creating
+ commands
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20211009082058.41138-1-chiyutianyi@gmail.com> <20211122033220.32883-3-chiyutianyi@gmail.com>
- <47b3e2ad-4fa1-040a-24c1-6da0445bd1a5@gmail.com> <xmqqsfve669w.fsf@gitster.g> <2271576b-79d3-7983-d3df-5548e0a12e85@gmail.com>
-In-Reply-To: <2271576b-79d3-7983-d3df-5548e0a12e85@gmail.com>
-From:   Han Xin <chiyutianyi@gmail.com>
-Date:   Tue, 30 Nov 2021 11:23:29 +0800
-Message-ID: <CAO0brD1U+zbqBGjOV+Vc5+AQAdrG5ULp_0=PMYeUQSxqvWQ65w@mail.gmail.com>
-Subject: Re: [PATCH v3 2/5] object-file.c: handle undetermined oid in write_loose_object()
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 30, 2021 at 6:18 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 11/29/2021 3:44 PM, Junio C Hamano wrote:
-> > Derrick Stolee <stolee@gmail.com> writes:
-> >
-> >> My first reaction is to not write into .git/objects/ directly, but
-> >> instead make a .git/objects/tmp/ directory and write within that
-> >> directory. The idea is to prevent leaving stale files in the
-> >> .git/objects/ directory if the process terminates strangely (say,
-> >> a power outage or segfault).
-> >
-> > Even if we know the name of the object we are writing beforehand, I
-> > do not think it is a good idea to open-write-close the final object
-> > file.  The approach we already use everywhere is to write into a
-> > tmpfile/lockfile and rename it to the final name
-> >
-> > object-file.c::write_loose_object() uses create_tmpfile() to prepare
-> > a temporary file whose name begins with "tmp_obj_", so that "gc" can
-> > recognize stale ones and remove them.
->
-> The only difference is that the tmp_obj_* file would go into the
-> loose object directory corresponding to the first two hex characters
-> of the OID, but that no longer happens now.
->
+From: Elijah Newren <newren@gmail.com>
 
-At the beginning of this patch, I did save the temporary object in a
-two hex characters directory of "null_oid", but this is also a very
-strange behavior. "Gc" will indeed clean up these tmp_obj_* files, no
-matter if they are in .git/objects/ or .git/objects/xx.
+The `--exec <cmd>` is documented as
 
-Thanks,
--Han Xin
+    Append "exec <cmd>" after each line creating a commit in the final
+    history.
+    ...
+    If --autosquash is used, "exec" lines will not be appended for the
+    intermediate commits, and will only appear at the end of each
+    squash/fixup series.
+
+Unfortunately, it would also add exec commands after non-pick
+operations, such as 'no-op', which could be seen for example with
+    git rebase -i --exec true HEAD
+
+todo_list_add_exec_commands() intent was to insert exec commands after
+each logical pick, while trying to consider a chains of fixup and squash
+commits to be part of the pick before it.  So it would keep an 'insert'
+boolean tracking if it had seen a pick or merge, but not write the exec
+command until it saw the next non-fixup/squash command.  Since that
+would make it miss the final exec command, it had some code that would
+check whether it still needed to insert one at the end, but instead of a
+simple
+
+    if (insert)
+
+it had a
+
+    if (insert || <condition that is always true>)
+
+That's buggy; as per the docs, we should only add exec commands for
+lines that create commits, i.e. only if insert is true.  Fix the
+conditional.
+
+There was one testcase in the testsuite that we tweak for this change;
+it was introduced in 54fd3243da ("rebase -i: reread the todo list if
+`exec` touched it", 2017-04-26), and was merely testing that after an
+exec had fired that the todo list would be re-read.  The test at the
+time would have worked given any revision at all, though it would only
+work with 'HEAD' as a side-effect of this bug.  Since we're fixing this
+bug, choose something other than 'HEAD' for that test.
+
+Finally, add a testcase that verifies when we have no commits to pick,
+that we get no exec lines in the generated todo list.
+
+Reported-by: Nikita Bobko <nikitabobko@gmail.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    sequencer: avoid adding exec commands for non-commit creating commands
+    
+    Original report over at
+    https://lore.kernel.org/git/YaVzufpKcC0t+q+L@nand.local/T/#m13fbd7b054c06ba1f98ae66e6d1b9fcc51bb875e
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1149%2Fnewren%2Frebase-exec-empty-bug-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1149/newren/rebase-exec-empty-bug-v1
+Pull-Request: https://github.com/git/git/pull/1149
+
+ sequencer.c                 | 2 +-
+ t/t3429-rebase-edit-todo.sh | 7 ++++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index ea96837cde3..aa790f0bba8 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5496,7 +5496,7 @@ static void todo_list_add_exec_commands(struct todo_list *todo_list,
+ 	}
+ 
+ 	/* insert or append final <commands> */
+-	if (insert || nr == todo_list->nr) {
++	if (insert) {
+ 		ALLOC_GROW(items, nr + commands->nr, alloc);
+ 		COPY_ARRAY(items + nr, base_items, commands->nr);
+ 		nr += commands->nr;
+diff --git a/t/t3429-rebase-edit-todo.sh b/t/t3429-rebase-edit-todo.sh
+index 7024d49ae7b..abd66f36021 100755
+--- a/t/t3429-rebase-edit-todo.sh
++++ b/t/t3429-rebase-edit-todo.sh
+@@ -13,10 +13,15 @@ test_expect_success 'setup' '
+ 
+ test_expect_success 'rebase exec modifies rebase-todo' '
+ 	todo=.git/rebase-merge/git-rebase-todo &&
+-	git rebase HEAD -x "echo exec touch F >>$todo" &&
++	git rebase HEAD~1 -x "echo exec touch F >>$todo" &&
+ 	test -e F
+ '
+ 
++test_expect_success 'rebase exec with an empty list does not exec anything' '
++	git rebase HEAD -x "true" 2>output &&
++	! grep "Executing: true" output
++'
++
+ test_expect_success 'loose object cache vs re-reading todo list' '
+ 	GIT_REBASE_TODO=.git/rebase-merge/git-rebase-todo &&
+ 	export GIT_REBASE_TODO &&
+
+base-commit: 35151cf0720460a897cde9b8039af364743240e7
+-- 
+gitgitgadget
