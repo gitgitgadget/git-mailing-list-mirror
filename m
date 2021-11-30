@@ -2,47 +2,47 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1AADC433EF
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 21:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A923BC433FE
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 21:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344163AbhK3Vlm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 16:41:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42224 "EHLO
+        id S1344234AbhK3Vln (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 16:41:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344057AbhK3Vlj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 16:41:39 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 579D7C061748
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 13:38:19 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id p18so18655651wmq.5
-        for <git@vger.kernel.org>; Tue, 30 Nov 2021 13:38:19 -0800 (PST)
+        with ESMTP id S1344191AbhK3Vlk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 16:41:40 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2621BC06174A
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 13:38:20 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id d72-20020a1c1d4b000000b00331140f3dc8so15785436wmd.1
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 13:38:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WbITkZ4vmTfzm0R2pCpqhKRnAComYIB2UINvvbPkm4w=;
-        b=Hj7ApwOnL0zwWmQrDpeRzYEHvSsy3XbuDOJxZmyoGqcjGVetfqu8YgMHp6bPyuVlGh
-         l3fNx6N47SE9GcOLahxRQvqFCPoBq2eqJ+ruchFFhIvDLj0p+Vf8niaYD7a9iE0VDOLw
-         XEg3Fl1Fpd9R5Rgm7GLTCg/aIqr1motqtmgERi5E27QALhrA7tKz85srjWBjrrXOPXwL
-         MzS2+xsK5u9kafZUwiCMJo+3rlvx0kll3ovqrgNFArC86eCgYvBphySe6c7jxn4X8qB5
-         VhI2oeoj8O0D4LpzAGqc4Kist/HNq4+uXMPHV8o5Hgc2R5poF5IUA2Kj2l8pmexn6iT3
-         5c+w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=1FHFqGRrLhQUZc7KZwrka720Uzz4l3XACZCj2Ti0sHk=;
+        b=DhVNlnK1APM7w86rYUDn8tINABvvQ8T6Gjbqrr5vYtkEyxmycYTxKTYG7m3UDewuho
+         q42pMWzRkfNfAdVVt2SlViYIOP8uII1KQmEf+r1s2VhoYfKcyLTh5oT8w/LTiumLb7yT
+         r5e8ST//aDCbZHk+CUHOK/sax3oOGNhLAr/wi6vVywMezh/XdkXjciGjBuK+/92jLZET
+         018SLalGQqS9+e1jrNnYlNh7rPUUj9MQkEo0K7a/CtZ0HtsbNtk/7uTzIvavko+fkBT6
+         tFjE+TtRIj8rPS/VGjOZ4waHy3z3CrqbEBMbJ7csD+dKDRX8FfwgnKHTl+zLo/8zv53I
+         bAPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WbITkZ4vmTfzm0R2pCpqhKRnAComYIB2UINvvbPkm4w=;
-        b=6HhyVdicKzZak66Ayd5GMafvRsOeF/UV/9FpslbGEVoitHVSusOugxeT+WEVZ5SP9c
-         Y7i2V5hzYA8Tz9RilGqd6A/YJnt9Xa0momzhERUk+7ujyjr5Bz4oi7OVmWojVUfBdUN5
-         7EEGqLaevHnVtUUNiBBxpjSAYE/E5PbAXt3fz+7zbXBz7howgRtH+bRroP1o1LRrEBda
-         6RXjvoHcA9yFgeShnagDwGYZGSRyxHgpZpaT7h2NRbxUEUEnbOtCUBINbRqqjR57eJl1
-         /qewFqF+qGP3toKS8CHIW16Qx4Bkx92w3eipMOIx1Sv4135TxxGHI9j58crv+QZz9ott
-         sxag==
-X-Gm-Message-State: AOAM532O10DWxtlGFkyKEghTS6u+kEekmgk24yDkCf/bu+Lm1dDKs+LD
-        0jVPFRopw4kS817PwXObawdN/IyREOU=
-X-Google-Smtp-Source: ABdhPJyeA4+XJM+WW1is3nqjkdTd43zegZMB75RxWjmgVbr54wk7nMjq8lb9FJu2oS+ihT7cwxHxug==
-X-Received: by 2002:a7b:c153:: with SMTP id z19mr1537453wmi.171.1638308297740;
-        Tue, 30 Nov 2021 13:38:17 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=1FHFqGRrLhQUZc7KZwrka720Uzz4l3XACZCj2Ti0sHk=;
+        b=UlDHa5qAu3Czyqbi7n9YOGxWnFdyT6MUeSbzXdWJYERpfJiDf9SMWVupSXwt+i+TUX
+         u/PhOfTZz3VIVgnD6uj60au+dRgOydkQ8KYJ9cEiKRdXq/OSp53TqtY9jikpGNRMUxhp
+         LwVTPwhWBMzcj1qn1AzjIjhmM8wwjO3NCRqiBAGzxDj5MP3NRz6WNgETmqYeqOoax3nC
+         2oh3K0X0jw4hhV7AOARhZE8ETSzjQv5Ox8sK7UShdbJsG5DQMbfNL/1VYw+z7AmLDqmI
+         TouztnIzZ0+KaQ/8H5hNE0Uq/u4rguJ4EGDCMIjybBHq55fTOb/qAsHj7XeyOQKoxdAm
+         F3/g==
+X-Gm-Message-State: AOAM533uzpYI7ligQXaI4md8aXreyWyVTV261RRTZg5r18m0Guknu56n
+        picqM/2beHmSiXtY9qNlJ3rhmGqoofY=
+X-Google-Smtp-Source: ABdhPJwYiy3weeWhEuhs6iFkAi4T98AyvTBvZn8lrggbl6cSnqn0pO6ZpSZW/lKctUisN2DoC1Ojxw==
+X-Received: by 2002:a05:600c:4f03:: with SMTP id l3mr1628588wmq.47.1638308298460;
+        Tue, 30 Nov 2021 13:38:18 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id v8sm17006914wrd.84.2021.11.30.13.38.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -55,10 +55,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 00/12] reflog + gc: refactor, progress output, reftable-readyness
-Date:   Tue, 30 Nov 2021 22:38:02 +0100
-Message-Id: <cover-00.12-00000000000-20211130T213319Z-avarab@gmail.com>
+Subject: [PATCH 01/12] reflog delete: narrow scope of "cmd" passed to count_reflog_ent()
+Date:   Tue, 30 Nov 2021 22:38:03 +0100
+Message-Id: <patch-01.12-99e8a639163-20211130T213319Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.877.g7d5b0a3b8a6
+In-Reply-To: <cover-00.12-00000000000-20211130T213319Z-avarab@gmail.com>
+References: <cover-00.12-00000000000-20211130T213319Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,60 +68,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a follow-up topic I had for my "errno" refs API changes that
-just landed[1]. I initially thought I'd split this into multiple
-submissions, but I think it's probably better to consider it in
-unison.
+Change the "cb_data" we pass to the count_reflog_ent() to be the
+&cb.cmd itself, instead of passing &cb and having the callback lookup
+cb->cmd.
 
-Comments on individual patches below:
+This makes it clear that the "cb" itself is the same memzero'd
+structure on each iteration of the for-loop that uses &cb, except for
+the "cmd" member.
 
-1. https://lore.kernel.org/git/cover-v2-00.21-00000000000-20211016T093845Z-avarab@gmail.com/
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/reflog.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-Ævar Arnfjörð Bjarmason (12):
-  reflog delete: narrow scope of "cmd" passed to count_reflog_ent()
-  reflog expire: narrow scope of "cb" in cmd_reflog_expire()
-  reflog: change one->many worktree->refnames to use a string_list
-  reflog expire: don't do negative comparison on enum values
-  reflog expire: refactor & use "tip_commit" only for UE_NORMAL
-  reflog expire: don't use lookup_commit_reference_gently()
-  reflog: reduce scope of "struct rev_info"
-  refs files-backend: assume cb->newlog if !EXPIRE_REFLOGS_DRY_RUN
-
-This is all refactorings to make the reflog-related code smaller,
-easier to read, using string-list instead of a custom home-grown flex
-array API etc, and to make it clear what variables and data is used
-where. This really helps for subsequent steps.
-
-  reflog + refs-backend: move "verbose" out of the backend
-
-As noted in
-https://lore.kernel.org/git/211123.864k83w3y4.gmgdl@evledraar.gmail.com/
-this makes the "verbose" API independent, so the reftable backend
-we'll have soon won't need to do anything special to support it.
-
-It used to conflict with Han-Wen's topic, but in his v2 he picked
-another approach.
-
-  reflog expire: add progress output on --stale-fix
-  gc + reflog: emit progress output from "reflog expire --all"
-  gc + reflog: don't stall before initial "git gc" progress output
-
-These are all progress additions to "reflog expire" including fixing
-the long-standing oddity that on large repos "git gc"'s progress seems
-to simply hang before reaching "Enumerating objects".
-
-As noted in 12/12 this is partly a bit of a hack, but I've got other
-in-flight progress.c API changes that'll eventually lead to supporting
-"nested" progress bars, which this code will be one of the first
-consumers of.
-
- Documentation/git-reflog.txt |   8 ++
- builtin/gc.c                 |   4 +-
- builtin/reflog.c             | 260 ++++++++++++++++++++++-------------
- refs.h                       |   3 +-
- refs/files-backend.c         |  44 +++---
- 5 files changed, 194 insertions(+), 125 deletions(-)
-
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 175c83e7cc2..4c15d71f3e9 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -662,20 +662,18 @@ static int count_reflog_ent(struct object_id *ooid, struct object_id *noid,
+ 		const char *email, timestamp_t timestamp, int tz,
+ 		const char *message, void *cb_data)
+ {
+-	struct expire_reflog_policy_cb *cb = cb_data;
+-	if (!cb->cmd.expire_total || timestamp < cb->cmd.expire_total)
+-		cb->cmd.recno++;
++	struct cmd_reflog_expire_cb *cb = cb_data;
++	if (!cb->expire_total || timestamp < cb->expire_total)
++		cb->recno++;
+ 	return 0;
+ }
+ 
+ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ {
+-	struct expire_reflog_policy_cb cb;
++	struct cmd_reflog_expire_cb cmd = { 0 };
+ 	int i, status = 0;
+ 	unsigned int flags = 0;
+ 
+-	memset(&cb, 0, sizeof(cb));
+-
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 		if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
+@@ -703,6 +701,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 		const char *spec = strstr(argv[i], "@{");
+ 		char *ep, *ref;
+ 		int recno;
++		struct expire_reflog_policy_cb cb = { 0 };
+ 
+ 		if (!spec) {
+ 			status |= error(_("not a reflog: %s"), argv[i]);
+@@ -716,14 +715,15 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 
+ 		recno = strtoul(spec + 2, &ep, 10);
+ 		if (*ep == '}') {
+-			cb.cmd.recno = -recno;
+-			for_each_reflog_ent(ref, count_reflog_ent, &cb);
++			cmd.recno = -recno;
++			for_each_reflog_ent(ref, count_reflog_ent, &cmd);
+ 		} else {
+-			cb.cmd.expire_total = approxidate(spec + 2);
+-			for_each_reflog_ent(ref, count_reflog_ent, &cb);
+-			cb.cmd.expire_total = 0;
++			cmd.expire_total = approxidate(spec + 2);
++			for_each_reflog_ent(ref, count_reflog_ent, &cmd);
++			cmd.expire_total = 0;
+ 		}
+ 
++		cb.cmd = cmd;
+ 		status |= reflog_expire(ref, flags,
+ 					reflog_expiry_prepare,
+ 					should_expire_reflog_ent,
 -- 
 2.34.1.877.g7d5b0a3b8a6
 
