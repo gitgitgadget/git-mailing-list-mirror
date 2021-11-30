@@ -2,182 +2,257 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54D55C433EF
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 14:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC217C433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 14:45:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237007AbhK3Olp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 09:41:45 -0500
-Received: from mail-eopbgr70048.outbound.protection.outlook.com ([40.107.7.48]:52480
-        "EHLO EUR04-HE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S231570AbhK3Oln (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 09:41:43 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GO1n77z1o49SAGi1HwR17eJm9vJkUufqL3oQPoVdZrTcOOV/yzn9GL6CZGTaDbG9EJCBNIPhyNK6OsWYo84WzwB4c58tPtb4KyaQb8jyMbEAHFQiu+vXfgqR9eqcUgveGDTR6PrOhtrYkUV3CrJmuM4wCKQH51WiZTVNhwG/HY9nbJBBcKawkJh1SM1+zrbR6tE9ris3rF6ROz+WPVFyTuHlKI2ZYzxabQsY+Lly2nlAFRg9Tl6edP5Kxrf9FN5vctjaMWWgf/AfjC1Iy1WRxj5/ecyCpprIIwrjxT7Bwars/vJjAQMbQgdCAtbJb59zGaJ/YBoil8okfUhrPYqb2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=U0kLOEglqbTUGb+CuIu3NdDJXCYOU7FJEjHecqYPJQg=;
- b=XJS+coP7m4kxE3yCLkqK4AOkwf8X51tfw4QaG3njth8rSQNR0lydonSYTUmEytkaD6KDWPfscsT0o3Shc8hfkNCeNxEXUyFz0WFveYkdarBTcNR9Zurab6JIXfm5/SzUcJGRj1oSSkXs4OYJJI8H8z8np3S/kh9ENctx8vnRvmK16z8PB6lyuHqnJJAO5WsadWsVyyOEZ6rMVac9smXhF40XjMc7aoyUG2+FhlZZWKYy5tWyhpssqWRSLuOY6nQth1S2LgpswrOoCvTTbtXVIO9NbG6c/V4uyVM6Wtz6WEdEBmlINE4pZtXGjSIUdOmWxZdoRYHh+twmt9X8E5xBfw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=U0kLOEglqbTUGb+CuIu3NdDJXCYOU7FJEjHecqYPJQg=;
- b=GZJrTEttLXNt1P5N/0Sa3qhAjpkFUTwCYcOc2lfKuLWhbIdouWXcMiGbiVK+bjgwZ0ZMX7PLNXL7DzCw8o3runDecMYN24HMqBgOfzxB97nXcW0Kgc+YKKnVHxTmnzo9gZEL4eYeZFJN41dFxpzGqWoG56sgjXNLAwY70k/hQAc=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PA4PR10MB4463.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:10c::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4734.23; Tue, 30 Nov
- 2021 14:38:22 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::d9de:b41b:461d:fb5b]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::d9de:b41b:461d:fb5b%8]) with mapi id 15.20.4755.011; Tue, 30 Nov 2021
- 14:38:22 +0000
-Date:   Tue, 30 Nov 2021 15:38:21 +0100
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 3/3] test-lib: make BAIL_OUT() work in tests and prereq
-Message-ID: <20211130143821.7dz5jj2z2x2q2ytn@fs>
-References: <20211117090410.8013-3-fs@gigacodes.de>
- <20211120150401.254408-1-fs@gigacodes.de>
- <20211120150401.254408-4-fs@gigacodes.de>
- <211122.86y25gz9q7.gmgdl@evledraar.gmail.com>
- <xmqqh7c4i0jh.fsf@gitster.g>
- <20211126095509.weeknmg4p6sx7bdn@fs>
- <xmqqy25a636c.fsf@gitster.g>
- <20211127124733.ulicqyiudur3s5h4@fs>
- <xmqqo8634zrz.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <xmqqo8634zrz.fsf@gitster.g>
-X-ClientProxiedBy: AS8PR04CA0138.eurprd04.prod.outlook.com
- (2603:10a6:20b:127::23) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        id S242340AbhK3OtO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 09:49:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59344 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233823AbhK3OtN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 09:49:13 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA49FC061574
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 06:45:53 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id r25so22379778edq.7
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 06:45:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=OA0aX2vaCr6+RV9gM6HGxp1fgXeLWGibIXDLbOU47AQ=;
+        b=G6XqejlLj8Yl6s+SyEYvjLjLHQCU4/CIHrIElBfSfR2w0+yKye9iWZKAokK+2BOVYE
+         Mt3otYUzgkcPIv5f/xc8fFCleuW4eFQ6lTwnBPEASLwSvDGS768AMlyYqk4GpwpJoy4+
+         QFdD+sS4Js3GdXxrIgjGFNRy5bEdOG71fNuOSCv9MJzBMCZY3RmEwr9g+FFxHg8qUhRL
+         XKLfTrlcoPg9r4rLQmJ7H2EGlhrPGk+HVeEcfExX91lhgur38jA3zgE/AqEFPzdnJ2Kh
+         0BQde0KDoG5W2PBi0Kb/5ZX9ITYzInh1GKydav1iox1z5OjJe7kZPPxM8QD8g+/eb4U1
+         9NDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=OA0aX2vaCr6+RV9gM6HGxp1fgXeLWGibIXDLbOU47AQ=;
+        b=O5RO2h1Naj+QMTfvrjz4bZH70E6vlECDp3s/v/e8KrFNd7GDW5bwBDkY8cqA/EFX3x
+         fjITuHPK2JkahDtTPCbMnI/OEoXN6+HRSWVRWg4Um5c9YqEPfccbGVX+QqVdHHZowhdS
+         nNSmN4SiV/M+osdBGcEhKOaGmhE2olH+XaWj9TZIej9bDq813HxslInmAQBFrk3RPnBC
+         x9KS+0YOa2elgSdsnWIzPoVGSPuFNw/iC6VSXwBiwAX+joUWaIwHzg3hg6vsC2I9vOWC
+         m4ea+N3NjZBHvihPbIt2yUX1WFiX9CmXKsy7elLA3C5QpbkY8iMLUujpAVn/RJQEbMDL
+         1GNw==
+X-Gm-Message-State: AOAM530AV3eGRCVwi9VXIABIpKLIB2rGXnofDmawumSpbjX9oSNVZ5Dc
+        1EcBNv1ig2UCQje/ypHaFEM=
+X-Google-Smtp-Source: ABdhPJwse2tZIWmjvk7cMZzXGc7fVdMhrF9QlEJ1lSeAI0SkilZXwJGNJc6mZp/11BM7CHg6S8pUlQ==
+X-Received: by 2002:a17:907:9723:: with SMTP id jg35mr71767689ejc.329.1638283552023;
+        Tue, 30 Nov 2021 06:45:52 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id s16sm11248191edt.30.2021.11.30.06.45.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Nov 2021 06:45:51 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1ms4OE-0011ug-Ni;
+        Tue, 30 Nov 2021 15:45:50 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Nikita Bobko <nikitabobko@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+        Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [BUG REPORT] `git rebase --exec` shouldn't run the exec command
+ when there is nothing to rebase
+Date:   Tue, 30 Nov 2021 15:03:57 +0100
+References: <CAMJzOtyw78-8gt3oGscN7KUzpzRRWtAQuGfcJ+R_Fjoom9Lexw@mail.gmail.com>
+        <211129.868rx7gnd5.gmgdl@evledraar.gmail.com>
+        <CABPp-BFRE2=Owf15WzkacNfdNKbkd2n4GZh7HqDokKzeviBWRw@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <pull.1149.git.git.1638244719381.gitgitgadget@gmail.com>
+Message-ID: <211130.865ys9em75.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: from localhost (2003:ea:5820:600:c042:75a0:fd5e:1472) by AS8PR04CA0138.eurprd04.prod.outlook.com (2603:10a6:20b:127::23) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4734.22 via Frontend Transport; Tue, 30 Nov 2021 14:38:21 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: a97d884b-a4f8-4209-e33c-08d9b40f0f1a
-X-MS-TrafficTypeDiagnostic: PA4PR10MB4463:
-X-Microsoft-Antispam-PRVS: <PA4PR10MB44632595A5B3C27E857571E5B6679@PA4PR10MB4463.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: +Pq2F03eTBXzmIyZ0jtQj+du8ckpc7PPsONKvcvVX9fV34D+qdhuY57gIdsnAXNZra59fq0y2pbXL/OmUoG9cKgqeqxtpFp+rFxRBuQs33Zd5N/1yCgmcxufKq0YVJNnWsjtnybgl5ngE9QLh5iVQTRwnbhENff4B0Bua5u8Z0P0EhLqEcKPyIc3w8iFeduqFMIifmAhazusMlwkfHUi25Cw094Ydbyx6N5FJ/VOpQCm7LAuhAbFO4LiONq4OLt7rH4dV6cm0Y8xvJ2YRMIiK/NtBU+HlyMCd6OpB2lWJ9f0ObImxTRwEGqxwyiiCXpmhNVUbZl6G+rHWcEOOsc3iR2GVy01o+zs2asQR5TnmKVkRZFX+OPt5fwSUF1gA2usuP2JcPra7xW7lBLFrpDe6hfLFI2ys5Y0nGCvXRfLV5UxA9aVUp2xTG8VHuU60XsqCYEJ3oDUr+FaAH8PL7RbNI9FZkOZcGSl+nvlzxN2eEcNPfIKDZ1noIvQDVBsIsEDzPIyRiQKUEzSAfxWkhqOQFWyxXEdXumqG7tFKlTrcdBCemJ7mvth+7mAp3rWHgPSD16xJhYQz7W48w7Vm0SDCAR2FEnrKGOisEv3WqjCEkQo/wnpDIRQ49S7gOf9HJFEUN5mFDOUuwTO651sBodiXA==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(7916004)(366004)(136003)(396003)(39840400004)(346002)(376002)(6496006)(6486002)(1076003)(6916009)(9686003)(86362001)(508600001)(4326008)(66946007)(53546011)(5660300002)(186003)(66556008)(66476007)(33716001)(8936002)(8676002)(38100700002)(316002)(83380400001)(2906002)(54906003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZHZEaHdoYkIxR3NZelowTFkyRWhRU0wyWnZnQWM3eFIyVXhpRDA4bWtwY1FL?=
- =?utf-8?B?bWF1ak1qRmFNQThiNjJEQXhNemUzRGFJZ25GVnBOMjhQeUNkaEJ5RWNWbnBM?=
- =?utf-8?B?L1lsTmxyN2x0SnM0cVVuam5oeTB1K0wvVDlveDRuMzhZaFpsbTlZK002SHh6?=
- =?utf-8?B?ZlhDLzhucUwzdXVMeFJZWW1lWjc3OWV6SXUzYlFFWWJuLy9aZGJQaUNsQ3pR?=
- =?utf-8?B?RmVONUhSZk1wdzhDOWhsb3J4QU1mcEN6M0RVd1doREpqcUE2UVpObVdXaFZF?=
- =?utf-8?B?Q1hQdnRuakt2ZHE4QzhQd0hFdkUwaUNxUEdUNUtlRWU2RjN0YWl3eFNjTWtP?=
- =?utf-8?B?Vk1TZDNKb0dqekV1WXkxVmtYRzdOakZVT3lCVFFxL2FLYVBTNnZBYTU0K0VN?=
- =?utf-8?B?NWQyN2dJUGhtdnlkRG96TnZGR0psSllaN2hRckY0ZEZVVUJ4eUtEQm0xNHpW?=
- =?utf-8?B?ZVN4Q0lzUGpUcDRITlFkUUpmME1nWFU0OGdFZnEyVklGMXdTRzVvUG5Gby9M?=
- =?utf-8?B?OXVwM25VbS9BM2pidU55K2xZMW0wRHl3b05uOTdScHczUkZ5R0cvdWV6L01Y?=
- =?utf-8?B?b0hjUHNYMHd2dFQvOE96V09lVDZJeE5oRTdEWVd2RVhEQS9FMlZQR282VGJG?=
- =?utf-8?B?NExMWWg1ekRaMTFHQ2phdy9lWUtkdmJQZUVkeFRmaXBOOE5TRm5nb3RHelVX?=
- =?utf-8?B?UGVwVGsvOHBPK245K1lMRmtCQlFuZldnQWlNdEw3M2llOVlTdFE1RnNoNlMy?=
- =?utf-8?B?SU52ZFR3NHk4WkZvV3R2YjJXcG9taEZnNHlXaVVhaDNlVCs2c3FUdTlnUEV6?=
- =?utf-8?B?TUo5UnlOc2pzTlZoYStRNXZ1Q3JaMSs4L3hwSURpcU5DQmwyUEU5YlovMnpI?=
- =?utf-8?B?YTZad0JlTmQyREZKTUJ6MHBMWDk3TDNHeDZuUlhQWUxqa3JWcnZhTzN2d3Rr?=
- =?utf-8?B?RVZrOFJIRDJmRU94NTZNVTBINTROelplMzdsby9MVGF5SUs0NGs0RXV1bkZh?=
- =?utf-8?B?eGlBemRpQ1p0MzAwdTVDS2VNNnJSY2o1aG9XZnVNb0o0dHNnTUxZQmZwY1h5?=
- =?utf-8?B?WnZHTnVnRnp6M2hGY1B3U0JiM0JoTW9Hc3NWWmsyc01jbzVqOVFnNFRKbGsy?=
- =?utf-8?B?c1c5QnRlb0dQcGoyZ292dHFkeUR5aWQ3YUdBWllKVUR4K2h3UFRySkkyYTky?=
- =?utf-8?B?aXcwNE5jeDRZR2lRcG94T3k4NGUwSTNyYmJVdHRsbzVDRHN1RU1lRHhqcGhy?=
- =?utf-8?B?YVE0YkpsalRXSlNWYzZ2eDRuZVpGTUtJdnBtMUhYbUtKeXBiQTlHb0E2M3Zk?=
- =?utf-8?B?NTRXVE5TZ0tyTERLSFFRSjQrZlNFNFNuV2g0NmR1M0xBSXpQdEhLZHIrL0p0?=
- =?utf-8?B?MnEvL3JsVzkrWG1reEpCemd0NlJFTXRPWVFiakgwSzg2OEZJYUhqTEM4YkVP?=
- =?utf-8?B?d2NLMzVPOUs5N01nYWp2QW5vOEJEcVg5TEhPem4zKzB5eGVHa1FGMTJzeXU1?=
- =?utf-8?B?dkdxQkJta3ZLbjdIRXpOeXhqV3g4NXZxTGhrWm5EL0NzRDhKTHVJWlUwQjJt?=
- =?utf-8?B?NWNreEJMMm8xeFlTbkdqQ2IxcDQ3TXJXSUgzU2lNQTFuQi9ybEdsbVRGNmVD?=
- =?utf-8?B?UHpidjh0NS9SaXhFcVB1QldLZ1owTVo5bmozdEw0ZUU0aThiT1Z5azI0QlBM?=
- =?utf-8?B?Rlkzd2tNZjVkUTQvcWdKMUprN2hjQXFHN1Q1RVl1a2ZTUTdKRUpveThMV3Ba?=
- =?utf-8?B?MVB3N3VDaC83d1RiUnhKL2dRZ09ZNU1ocG8xbWF5RTNoQk9sRXBmVGNMMjQy?=
- =?utf-8?B?RXRzTkxIZzU5MXFHcmJLTlBpbVZIN3hwcGNuZDlqL2NsbnkvTS9QOXhYQkN4?=
- =?utf-8?B?MXFjcHVHV2JudW5iZFpwYU5heEN0ZElBRnk3QnkxajZET2VvaVJ4aWdsSXk5?=
- =?utf-8?B?aEFkeEhvWlpxWEhGUkh1VWNnbmN6NkdQa3B1VHJDSG5QaXVKdTg0amloR21E?=
- =?utf-8?B?Z0pNUGU5ODFtaEsyejIyWTcyUDAvRmFqUkxkTzcvSkRSdUZmNzZkY041dHhl?=
- =?utf-8?B?blcvbnV4Qml0TjJuVFJxakFGVHhKK0ZLSmwxaUs3OURaVjRkQy9LK3J0a3R6?=
- =?utf-8?B?WHpLQ1FTYU1aVzBQVVdIbmRXWkJXU2VzenpQd1h0STI1VllIOEdESlRIOVNK?=
- =?utf-8?B?THM5dEJLZ2NCWTFnYjlwMnlIejVybHRBY2RnNGxoKy9oTCtvOE9Ccno3N2o0?=
- =?utf-8?B?bXpHYXJISFYyTXREc2FJZVoyc3BqaEw3ZitVeThjTlE3L2VzcXBxMDVlOFpR?=
- =?utf-8?B?TkpzYjRXZjREUk5xSDZraXk2NDFhMkptdXNLWi9xTFFmUmo2SWZHVTk0MFBO?=
- =?utf-8?Q?Uwn01j/WYtBL2suw=3D?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: a97d884b-a4f8-4209-e33c-08d9b40f0f1a
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2021 14:38:22.4219
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7pZ5GR6hC0P8/A5FEMdieLAnhYi9BvMVfVC/uFYsZjxpmdr/mrobkaYICX0kQt87DeUX/LDLIiS4myan82STcVCSRJ2E5dLymuo14FQECJA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4463
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 28.11.2021 15:38, Junio C Hamano wrote:
->Fabian Stelzer <fs@gigacodes.de> writes:
->
->>>I was expecting something along the lines of ...
->>>
->>># What is written by tests to their FD #1 and #2 are sent to
->>># different places depending on the test mode (e.g. /dev/null in
->>># non-verbose mode, piped to tee with --tee option, etc.)  Original
->>># FD #1 and #2 are saved away to #5 and #7, so that test framework
->>># can use them to send the output to these low FDs before the
->>># mode-specific redirection.
->>>
->>>... but this only talks about the output side.  The final version
->>>needs to mention the input side, too.
->>>
+
+On Mon, Nov 29 2021, Elijah Newren wrote:
+
+[Moving this between threads, from
+https://lore.kernel.org/git/CABPp-BFRE2=3DOwf15WzkacNfdNKbkd2n4GZh7HqDokKze=
+viBWRw@mail.gmail.com/
+to the patch]
+
+> On Mon, Nov 29, 2021 at 2:25 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
 >>
->> I like to use the term stdin/err/out since that is what i would grep for
->> when trying to find out more about the test i/o behaviour.
+>> On Fri, Nov 26 2021, Nikita Bobko wrote:
+>>
+>> > Steps:
+>> > git rebase HEAD --exec "echo foo"
+>> >
+>> > EXPECTED: since 0 commits are going to be rebased then I expect "foo"
+>> > NOT to be printed
+>> > ACTUAL:   "foo" is printed
+>>
+>> I don't think this is a bug, but explicitly desired behavior.
 >
->I do not mind phrasing "original FD #1" as "original standard
->output" at all.  I just wanted to make sure it is clear to readers
->whose FD #1 and FD #5 we are talking about. In other words, the
->readers should get a clear understanding of where they are writing
->to, when the code they write in test_expect_success block outputs to
->FD #1, and what the code needs to do if it wants to always show
->something to the original standard output stream.
+> My reading of the docs are such that I'd expect the same as Nikita here:
+>
+>         Append "exec <cmd>" after each line creating a commit in the final
+>         history.
+>         ...
+>         If --autosquash is used, "exec" lines will not be appended for the
+>         intermediate commits, and will only appear at the end of each
+>         squash/fixup series.
+>
+> There is no line creating a commit in the final history when you do a
+> git rebase -i --exec "echo foo" HEAD (there is only a noop line), so
+> there should be no exec line.
 
-The current version in my branch is now:
+Maybe you're right & we can just change it. Keep in mind that those docs
+were added by a non-native speaker (or rather, I'm assuming so based on
+the name / E-Mail address).
 
-What is written by tests to stdout and stderr is sent so different places
-depending on the test mode (e.g. /dev/null in non-verbose mode, piped to tee
-with --tee option, etc.). We save the original stdin to FD #6 and stdout and
-stderr to #5 and #7, so that the test framework can use them (e.g. for
-printing errors within the test framework) independently of the test mode.
+See c214538416e (rebase -i: teach "--exec <cmd>", 2012-06-12). I agree
+that the reading you've got of it is the more obvious one.
 
-which I think should make this sufficiently clear.
-I'm wondering now though if we should write to #7 instead of #5 in 
-BAIL_OUT(). The current use in test-lib/test-lib-functions seems a bit 
-inconsistent.
+The reason I thought it wasn't a bug (some of which I dug more into
+afterwards):
 
-For example:
-error >&7 "bug in the test script: $*"
-echo >&7 "test_must_fail: only 'git' is allowed: $*"
+ 1. I read that "commit in the final history" as referring to the range of
+    commits to be rebased. Having only one commit or zero is perfectly OK,
+    since...
 
-but:
-echo >&5 "FATAL: Cannot prepare test area"
-echo >&5 "FATAL: Unexpected exit with code $code"
+ 2. ... with "exec" we don't know if the "commit in the final history" isn't
+   affected with an argument of HEAD. I.e. yes you can also provide "HEAD~"=
+, but
+   that's the difference between having a "pick" line or not. I don't think=
+ the
+   sequencer cares, but maybe third party scripting via the sequence editor=
+ does?
 
-Sometimes these errors result in immediate exit 1, but not always.
+   We already have an explicit facility to early abort the rebasing. See
+   ff74126c03a (rebase -i: do not fail when there is no commit to cherry-pi=
+ck,
+   2008-10-10)
 
-I'm not sure if the TAP framework that BAIL_OUT() references expects the 
-bail out error on a specific fd.
+   So the feature that Nikita wants is already possible via GIT_SEQUENCE_ED=
+ITOR.
+   Now, that's a painful UI, but perhaps if this patch is implemented as a =
+1=3D1
+   mapping to that we'll discover some new edge case that wasn't considered?
+
+ 3. This isn't just a theoretical concern. It's *interactive* rebase, e.g. a
+    perfectly fine use for it (which I've occasionally used is):
+
+        # no local commits
+        git checkout master
+        # opens my editor with just a "noop" line
+        git rebase -i
+
+    And then adding/copying around *new* commits in the buffer and saving
+    it, i.e. using it as an interactive text-based cherry-pick (this is
+    particularly nice with Emacs's magit mode).
+
+For #3 we can just say "well use HEAD~ then and ignore the one 'pick'"
+line. Sure, I've probably only used this once or twice.
+
+I just worry that we'll break thinsg for other users because we're
+narrowly focusing on --exec as a way to follow-up interactive rebase
+commands that we insert, and forgetting that this is a generic
+templating language that others are intercepting and modifying.
+
+So e.g. if you want to cherry-pick new commits and always use the same
+10 "exec" lines to build and test those you can just rebase to HEAD with
+those --exec, then copy/paste them for each new thing you insert.
+
+You can also do that with HEAD~ and carry forward any "pick" line, but
+that's *different*. I.e. we're forcing whoever relies on the current
+semantics to change their GIT_SEQUENCE_EDITOR script from (pseudocode):
+
+    if grep ^noop git-rebase-todo
+    then
+        for c in commits
+        do
+            echo "pick $c"
+            # get the exec lines for each one, if any
+            cat git-rebase-todo
+        done
+    fi
+
+To something that'll have to handle a single "pick" line.
+
+>> When you do:
+>>
+>>     git rebase -x 'make test' BASE
+>>
+>> You expect to run 'make test' for all of BASE..HEAD inclusive of
+>> "base". E.g. for HEAD~1 we'll run 'make test' twice, and you know both
+>> your HEAD~ and HEAD passed tests.
+>
+> This is not true.  Try `git rebase -i --exec HEAD~$N` for various
+> values of N>0.  base is not included.
+
+Sorry, I meant "inclusive of HEAD". I.e. we'll run "make test" for HEAD,
+not just HEAD~. Likewise with any "exec" commands.
+
+>> So why wouldn't doing the same for HEAD make sense?
+>
+> Indeed; HEAD is weirdly inconsistent and should be brought in line
+> with the others.
+
+I mean why shouldn't we run "make test" on HEAD, sorry. I agree that
+running "make test" on "base" would make no sense. You can rebase to
+BASE~ if you want that.
+
+But yes, the result is the same as a rebase to HEAD~, so maybe it's fine
+to change it...
+
+>> That being said perhaps some users would think an option or
+>> configuration to skip the injection of "exec" after "noop" would make
+>> sense in that case.
+>>
+>> But does this really have anything per-se to do with --exec? Wouldn't
+>> such an option/configuration be the same as rebase in general dying if
+>> there's no work to do?
+>>
+>> And wouldn't such a thing be more useful than a narrow change to make
+>> --exec a NOOP in these cases?
+>>
+>> E.g. if I've got a "topic" that has commit "A", that's since been
+>> integrated into my upstream and I have a script to "make test" on my
+>> topics, won't simply dying (and thus indicating that the topic is
+>> dead/integrated) be better than noop-ing?
+>
+> Why do you suggest "dying" rather than early completion with success?
+
+If you do:
+
+    git rebase -i HEAD
+
+Comment out the "noop" line, and save you'll get:
+
+    error: nothing to do
+
+And an exit code of 1.
+
+Maybe we should silently return 0 there, but it seems to me like this
+behavior needs to be consistent with whatever "noop" is trying to
+accomplish in general (see ff74126c03a above).
+
+That's why I said "does this really have anything per-se to do with
+--exec?". I.e. we already observe this behavior without --exec, we just
+get a noop line, and if we had no line at all we'd error with nothing to
+do.
+
+If we're going to make "git rebase -i HEAD" do nothing, why would it
+have behavior different from a TODO list of just a "noop" line (which is
+not the same thing as "nothing to do").
+
+That's partially a matter of consistency, but mostly the general
+paranoia that if we're going to subtly change what's *probably* an
+obscure feature hopefully many aren't relying on, then at least having
+it die instead of silently "succeed" would be better. I.e. we'll now
+silently ignore the "--exec" commands, but didn't before.
+
