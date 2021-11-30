@@ -2,62 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2749C433EF
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 04:46:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 451B9C433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 05:13:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238269AbhK3Etq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 23:49:46 -0500
-Received: from mail-pl1-f181.google.com ([209.85.214.181]:45908 "EHLO
-        mail-pl1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238255AbhK3Eto (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 23:49:44 -0500
-Received: by mail-pl1-f181.google.com with SMTP id b11so13911893pld.12
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 20:46:26 -0800 (PST)
+        id S235172AbhK3FQZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 00:16:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39642 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233871AbhK3FQX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 00:16:23 -0500
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 638DDC061574
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 21:13:05 -0800 (PST)
+Received: by mail-io1-xd2a.google.com with SMTP id y16so24460940ioc.8
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 21:13:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=4565NApiFsqOLrYA8eE9MNIAGfugQW7+A5uAp/kqXko=;
+        b=n4LxbxZarfNb/qYA+QwKSiVTmkOgQTJN7hbwwQhD9TskJx3+pXEj7iYQfU6c63tRsN
+         GFXZyhUyqS3xi3uFKN2SDF2yWCtWJlsuj6KgloanYBV0l1Pu1DOUv6fAw+VQFhDouU0C
+         KS3zrw8CVoVtgsfrsc+irCnZLnjZbeUYqoNrotk6MgiEtnQY/uQZ3QkE46bnhIhgnf9V
+         bJjRomaVscJXgLGoIc2lv9hFtc9ShvZQ07i4/urDsJW2rWn1QT/9aK3TlTlD10C52F45
+         T3RemRDvgPItE+vYMAdk1PtdO1QyNcKX2qwrC/3/VPitwZnjKPTcUIRppL60Ttlp5g8K
+         qXvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AHQPFqm1mlMDLrDDdAAe5dDOovtb0ievvsm3hWt/huw=;
-        b=fzG6shDSA+oQfhznGHGXGgahrcCgLoRa0lBJI/eJQ2VgOJbSdBSgEbdZVssL6oefCn
-         emYTozHDcNQ4RJCFIQhPj8Bk0TPeffjLfuZgM+KJ50cajdEdGe/eGSug6Jl5XVHZcmyA
-         FcKe0iNY9IYLUgTTyO7YsXDjuukmKqgUTqMFazgVj9gMXwT17rvO2i93pqhUOULOijYO
-         KzPvjIIwfxs9hFJ2FcJmerc6usgQEO/gcN+9L52zMLVFLQMaIyhyw+94wzdB1KCV859K
-         HH3R3KSD096zLTZOR5PCmY//8LBijuN/5WRcokgALj0rDKXL9ZjYaT9t9MjCnQoNM9GC
-         OMJg==
-X-Gm-Message-State: AOAM533lUuZMdHuUwSZ4M8h2B/SutJtPDxB6uqCCEHHGdGrlVw7b88pr
-        ZK2ChgMXdOKqPW/csIkC58lRX3hztLH1r/sKgQE=
-X-Google-Smtp-Source: ABdhPJwL9aRTZ6kvgkAbgmNIbMiwr6wINuqKzZiKvD7552rxtM7UzQXtah3DbrOVumnmayr2jicKOWnSMmUM8/X5d+Y=
-X-Received: by 2002:a17:902:7d8b:b0:144:e29b:4f2b with SMTP id
- a11-20020a1709027d8b00b00144e29b4f2bmr65636368plm.57.1638247586014; Mon, 29
- Nov 2021 20:46:26 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=4565NApiFsqOLrYA8eE9MNIAGfugQW7+A5uAp/kqXko=;
+        b=ySerlll63gzMfh97TJgDK/s+RrfDsOanPqs+7b+6Kw1/ZSzLh9pNmRSVWn+ZOBFbPh
+         tSOzP4jw1zFHMiU33K5NoQGkMndKzYtHSqIPBwtObyRYe067t5OAF6Z9aWdHPyOuzFsI
+         H7IwYjiSbaWQ8scWqgAgzqJHkcSeF2/LiJYTVUUeYNegoBNrB1wT56TFxmk8Xpd3w6K6
+         qFM6DHWNfwchWE9ochLeHt9seZmlG8wFV7b5PVcC4LveGNg26lylYIxMpPZUTO199R/a
+         Rvb9HligXjXuZlQd6zELIeZ/Owwo/HuTWv2CAXunyXbBf509uncXWByoTwwqQEMA8G6z
+         QEHQ==
+X-Gm-Message-State: AOAM5337PiYaBdKBAzeBiqHEvfkSVm09JjbxM1+7LQxS06zdXOD1j6lB
+        +AjSj/VHerZVx9qMEMwRknic5A==
+X-Google-Smtp-Source: ABdhPJzrC7Cj+uTnbcqkwWplhpFCJ+BAhkdxJ9K+2thaq+Vu7PSBv11/wAOe01AjCyXzNStnd+TFZg==
+X-Received: by 2002:a5d:8451:: with SMTP id w17mr67195643ior.139.1638249184792;
+        Mon, 29 Nov 2021 21:13:04 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id f4sm9490387ilr.79.2021.11.29.21.13.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 21:13:04 -0800 (PST)
+Date:   Tue, 30 Nov 2021 00:13:03 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] sequencer: avoid adding exec commands for non-commit
+ creating commands
+Message-ID: <YaWy3+nXC/6oLb1A@nand.local>
+References: <pull.1149.git.git.1638244719381.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <CA+34VNLj6VB1kCkA=MfM7TZR+6HgqNi5-UaziAoCXacSVkch4A@mail.gmail.com>
- <CAPig+cQ224Tz5iQ5Yt4fMadehLmrJWGzH7kwUSr+UT4hcQf14w@mail.gmail.com>
- <CA+34VNJbOHYhYgN+p7EsGiRAzf+aAQGeMxCzG1dizFjDRVQVbg@mail.gmail.com> <CAPig+cTGq-10ZTBts2LXRVdPMf2vNMX8HTuhg_+ZHSiLX-brOQ@mail.gmail.com>
-In-Reply-To: <CAPig+cTGq-10ZTBts2LXRVdPMf2vNMX8HTuhg_+ZHSiLX-brOQ@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 29 Nov 2021 23:46:15 -0500
-Message-ID: <CAPig+cSRonrX2SUARS=spEnWzapH6osvi3ZvZ2rPURA2zRSkvQ@mail.gmail.com>
-Subject: Re: misleading message printed when worktree add fails
-To:     Baruch Burstein <bmburstein@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1149.git.git.1638244719381.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 28, 2021 at 12:00 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> Okay, that's happening because the "Preparing" message is sent to
-> stdout, whereas the "fatal" error is sent to stderr, and the streams
-> are being flushed on Windows in a different order than what we
-> typically see on Unix platforms even though the "Preparing" message is
-> actually output first by the code.
+On Tue, Nov 30, 2021 at 03:58:39AM +0000, Elijah Newren via GitGitGadget wrote:
+> diff --git a/sequencer.c b/sequencer.c
+> index ea96837cde3..aa790f0bba8 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -5496,7 +5496,7 @@ static void todo_list_add_exec_commands(struct todo_list *todo_list,
+>  	}
 >
-> A general fix (not specific to git-worktree) might be to have die()
-> (or maybe vreportf()?) flush stdout before reporting the error message
-> on stderr. That should make output order more predictable, such that
-> general status messages appear before error messages.
+>  	/* insert or append final <commands> */
+> -	if (insert || nr == todo_list->nr) {
+> +	if (insert) {
 
-An RFC patch has been posted to address this issue.
-https://lore.kernel.org/git/20211130043946.19987-1-sunshine@sunshineco.com/
+Looks good. My worry after first reading this is that we wouldn't insert
+an `--autosquash` rebase that ends in a fixup, e.g.:
+
+    git commit -m foo
+    git commit --fixup HEAD
+    git rebase -i --autosquash -x true HEAD~2
+
+But we're OK there, since we set insert to 1 when we see the first pick,
+and leave it because we never saw another fixup. Then we'll still have
+fixup as 1 when we exit the loop, and we correctly insert an exec line
+at the end of the fixup chain.
+
+So I think that having "|| nr == todo_list->nr" part of the conditional
+was broken to begin with.
+
+As far as I can tell, this behavior of always sticking an 'exec' line at
+the end of the todo list has existed since the inception of the `-x`
+option back in c214538416 (rebase -i: teach "--exec <cmd>", 2012-06-12).
+See the unconditional `printf "%s" "$cmd"` at the end of the sub-shell
+within `add_exec_commands()` from that commit.
+
+But this is broken according to the docs, and I think that your fix and
+test coverage are sensible. Thanks!
+
+Thanks,
+Taylor
