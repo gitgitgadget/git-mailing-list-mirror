@@ -2,141 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 666E9C433F5
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 04:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38E3AC433EF
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 04:40:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238051AbhK3EEm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Nov 2021 23:04:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52216 "EHLO
+        id S238207AbhK3Ens (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Nov 2021 23:43:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230427AbhK3EEm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Nov 2021 23:04:42 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F029C061574
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 20:01:23 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id x15so80880006edv.1
-        for <git@vger.kernel.org>; Mon, 29 Nov 2021 20:01:23 -0800 (PST)
+        with ESMTP id S233276AbhK3Enr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Nov 2021 23:43:47 -0500
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04955C061574
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 20:40:29 -0800 (PST)
+Received: by mail-io1-xd2a.google.com with SMTP id z18so24428385iof.5
+        for <git@vger.kernel.org>; Mon, 29 Nov 2021 20:40:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=B1qbypoWB5O2yIq3uSVmJMSltiBNsSynUfy3mazbdRU=;
-        b=HlxbpDUuPJq6PT9fhdU99zvqUCOQoDW9n/clYhcYwgltAgqQH3+UxSiUce02DdsAmh
-         VNDuG3uqe2AeHhyqDJipcdMS3KeoJIsNlh7waSSQ/dsxrgKEJ+wiGyPNQ/RQNVFxHr6R
-         F32mcMCZQqdTRhlN7YO0KUjioY9nlZ1pqW5aJgGHpE0j40ZLT+iYa+IiN125yAJVob+F
-         Wy4ohGs6vIpLar8qLBqo+aEKUBJV07awhgKsJ7+sFKtaN5z9YrWQSOsvq+ZEKG/9Jsss
-         SWsNyIQ8mfehIbVMrVcrjvjMcKVgxQOkWom7Ks1oriUCQ5IuSm1KYogyBgWook6OzFtZ
-         02Fg==
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VhuGAvcxG2oBXTPCdcf5zBFueLoqeQRfIqDi0qQ96GU=;
+        b=p37Xx7gUovHkgkyj5IMSlTz6D+0ocf5z6H7EOahYJce+2++6LHnH9wip243sL4t58N
+         r26E+4iWC7UBfqucEYY7FmOM8AeZivS47EqnKvPrg9A/9FVqe0pfXiPUz2Vc7Ql4eIeE
+         mfkTIpugBm24yxQ2ZU20eZVrBtXUTesl/k1eU7VdLw1WAwshgC6VKV7edYnM2qUF7mYJ
+         SowwuNIGl4LaTrMYo9sP838zzpTOJM1Rjxz8A7sgqp1Ztq/jZ+mYfTK2GNoHDY5mMHWg
+         yKG2IJXlwtXvGmtHMruZ33MqOzqyLEiQqsCYlSfemBVya5JV1HC63/AX7kUSDQ42ENiP
+         KaWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=B1qbypoWB5O2yIq3uSVmJMSltiBNsSynUfy3mazbdRU=;
-        b=ZoiNQZP6bVOHear6kn8EG3x9BXPrkIHth7FbceM4uAuOCZdIbwPtttGojEa2aPaBj8
-         rcSnyYpeuWr/1dpUdhMGhZMYnsyFuXWWYoO9COgshZgjWYhs/TjuwtTvO4i1fK/Fmczu
-         UDrAe5IwBba+2u8MTuDbQaPZn/GZzyvyEZXfkQV/4UFiIHjaVTxIDnqeCTeyNnZHWcJf
-         q+sOev9SjUS1Br2bzx8Yh+qz8nMMSPlG1z9uHW12jMuMdsW1VDf7ZiV8dsUwje/qf8Cw
-         XQ9CatOGK82gIWXHnoyJmt7xSt509r/9Y6Ec2M6V6Eaw6Zo7dOx7NCHfBwLxZdo4UQp1
-         eH2Q==
-X-Gm-Message-State: AOAM532NduqMv1/BpABIbHRys9vM0LTt7o06lDWkMW4ji2JH8cw7x5J8
-        l0GoJ6V3iVVWPPtup6BdIYCx27DYOyPQvMjGN7Hw/i0/Ji0=
-X-Google-Smtp-Source: ABdhPJzRLQm61rWTUi+6tVq6M+bTjgzicaD3JmyBbUQFYRATce2+Ia5xpUhakyrRfHHCvQ6Ga6ZBYabi2orZrvahr7s=
-X-Received: by 2002:a17:906:31c2:: with SMTP id f2mr65838933ejf.341.1638244881966;
- Mon, 29 Nov 2021 20:01:21 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=VhuGAvcxG2oBXTPCdcf5zBFueLoqeQRfIqDi0qQ96GU=;
+        b=e/2cOrPV/BmBPIZ8UTR/PO2gDVzPTr5xrxaM/rKArqHAL0XHVzr0o7WBBuvGreTCyu
+         N/9dLLyx1A+EV2Nv015qXbP9Prd5Cd7ji8cL/6qK10k5GHakBz31z2I/7bNzzmbCsG/F
+         /VOWuJQ21mPvWPrM9sPqcipTH9o7L8Pk9uIuROmx82kH/m/LQ4SsJUXSzO/EAhfW2SZU
+         jTQFsetgEdwIAfFpK2CXtNlFTgY9WFvEWQfZbrroMmQtGdIV2ZpRp9tBsTaj0hI/1y6F
+         T4GWniROAY+aiswPP8+xmKzd/O2EBP8icT6nIyB35yTVNl1imESTtCIHMqMZ2Y2RDNo4
+         ZhTg==
+X-Gm-Message-State: AOAM532QoKcR2IjFTtrUo1hX3sZJASGOuWygAXMqa7lSzemVxKmVfc+z
+        4k0UcNv4Y/t1ig6tZy30RCC4r9MgRWJyoQ==
+X-Google-Smtp-Source: ABdhPJwj6cHx8nWHhEQjL19DsSL6sc8sQQ/rrAJk2vagJy55Z0m4PEcP7A67LmDnOevOFA1wU1wJZg==
+X-Received: by 2002:a02:a91a:: with SMTP id n26mr69550985jam.46.1638247227977;
+        Mon, 29 Nov 2021 20:40:27 -0800 (PST)
+Received: from localhost.localdomain (097-069-216-153.res.spectrum.com. [97.69.216.153])
+        by smtp.gmail.com with ESMTPSA id c2sm9443985ilr.70.2021.11.29.20.40.26
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Nov 2021 20:40:27 -0800 (PST)
+Sender: Eric Sunshine <ericsunshine@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Baruch Burstein <bmburstein@gmail.com>,
+        Randall Becker <rsbecker@nexbridge.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [RFC PATCH] vreportf: ensure sensible ordering of normal and error output
+Date:   Mon, 29 Nov 2021 23:39:46 -0500
+Message-Id: <20211130043946.19987-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.34.1.75.gabe6bb3905
 MIME-Version: 1.0
-References: <CAMJzOtyw78-8gt3oGscN7KUzpzRRWtAQuGfcJ+R_Fjoom9Lexw@mail.gmail.com>
- <211129.868rx7gnd5.gmgdl@evledraar.gmail.com> <CABPp-BFRE2=Owf15WzkacNfdNKbkd2n4GZh7HqDokKzeviBWRw@mail.gmail.com>
-In-Reply-To: <CABPp-BFRE2=Owf15WzkacNfdNKbkd2n4GZh7HqDokKzeviBWRw@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 29 Nov 2021 20:01:10 -0800
-Message-ID: <CABPp-BFdw7wL40WcM7_pfLCRx5CrF30cOgu3mL5EB6DysEqZWQ@mail.gmail.com>
-Subject: Re: [BUG REPORT] `git rebase --exec` shouldn't run the exec command
- when there is nothing to rebase
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Nikita Bobko <nikitabobko@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 29, 2021 at 4:14 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Mon, Nov 29, 2021 at 2:25 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
-> >
-> > On Fri, Nov 26 2021, Nikita Bobko wrote:
-> >
-> > > Steps:
-> > > git rebase HEAD --exec "echo foo"
-> > >
-> > > EXPECTED: since 0 commits are going to be rebased then I expect "foo"
-> > > NOT to be printed
-> > > ACTUAL:   "foo" is printed
-> >
-> > I don't think this is a bug, but explicitly desired behavior.
->
-> My reading of the docs are such that I'd expect the same as Nikita here:
->
->         Append "exec <cmd>" after each line creating a commit in the fina=
-l
->         history.
->         ...
->         If --autosquash is used, "exec" lines will not be appended for th=
-e
->         intermediate commits, and will only appear at the end of each
->         squash/fixup series.
->
-> There is no line creating a commit in the final history when you do a
-> git rebase -i --exec "echo foo" HEAD (there is only a noop line), so
-> there should be no exec line.
->
-> > When you do:
-> >
-> >     git rebase -x 'make test' BASE
-> >
-> > You expect to run 'make test' for all of BASE..HEAD inclusive of
-> > "base". E.g. for HEAD~1 we'll run 'make test' twice, and you know both
-> > your HEAD~ and HEAD passed tests.
->
-> This is not true.  Try `git rebase -i --exec HEAD~$N` for various
-> values of N>0.  base is not included.
->
-> > So why wouldn't doing the same for HEAD make sense?
->
-> Indeed; HEAD is weirdly inconsistent and should be brought in line
-> with the others.
->
-> > That being said perhaps some users would think an option or
-> > configuration to skip the injection of "exec" after "noop" would make
-> > sense in that case.
-> >
-> > But does this really have anything per-se to do with --exec? Wouldn't
-> > such an option/configuration be the same as rebase in general dying if
-> > there's no work to do?
-> >
-> > And wouldn't such a thing be more useful than a narrow change to make
-> > --exec a NOOP in these cases?
-> >
-> > E.g. if I've got a "topic" that has commit "A", that's since been
-> > integrated into my upstream and I have a script to "make test" on my
-> > topics, won't simply dying (and thus indicating that the topic is
-> > dead/integrated) be better than noop-ing?
->
-> Why do you suggest "dying" rather than early completion with success?
->
-> Anyway, rebase does early exit in non-interactive mode when there is
-> nothing to do, it's just that interactive mode suggests users might
-> want to do something special, so they get a TODO list containing only
-> "noop".  Since --exec was written in terms of interactive rebase by
-> editing the TODO list and inserting an exec command after each of the
-> picks, and it accidentally always added one at the end of the todo
-> list even if the last instruction (group) was not a pick/fixup/squash,
-> we hit this bug.
->
-> Anyway, I've got a patch I'll send in.
+The order in which the stdout and stderr streams are flushed is not
+guaranteed to be the same across platforms or `libc` implementations.
+This lack of determinism can lead to anomalous and potentially confusing
+output if normal (stdout) output is flushed after error (stderr) output.
+For instance, the following output which clearly indicates a failure due
+to a fatal error:
 
-Found over here:
-https://lore.kernel.org/git/pull.1149.git.git.1638244719381.gitgitgadget@gm=
-ail.com/
+    % git worktree add ../foo bar
+    Preparing worktree (checking out 'bar')
+    fatal: 'bar' is already checked out at '.../wherever'
+
+has been reported[1] on Microsoft Windows to appear as:
+
+    % git worktree add ../foo bar
+    fatal: 'bar' is already checked out at '.../wherever'
+    Preparing worktree (checking out 'bar')
+
+which may confuse the reader into thinking that the command somehow
+recovered and ran to completion despite the error.
+
+Rather than attempting to address this issue on a case by case basis,
+address it by making vreportf() -- which is the heart of error-reporting
+functions die(), error(), warn(), etc. -- flush stdout before emitting
+the error message to stderr.
+
+[1]: https://lore.kernel.org/git/CA+34VNLj6VB1kCkA=MfM7TZR+6HgqNi5-UaziAoCXacSVkch4A@mail.gmail.com/T/
+
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+
+This is RFC because I naturally worry about potential fallout from
+making a change to such a core function. I can't think of any case that
+it wouldn't be advantageous to flush stdout before stderr, so this
+change _seems_ safe, however, it may be that I'm just not imaginative
+enough, hence my hesitancy.
+
+ usage.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/usage.c b/usage.c
+index c7d233b0de..0fc7640b25 100644
+--- a/usage.c
++++ b/usage.c
+@@ -27,6 +27,7 @@ void vreportf(const char *prefix, const char *err, va_list params)
+ 	}
+ 
+ 	*(p++) = '\n'; /* we no longer need a NUL */
++	fflush(stdout);
+ 	fflush(stderr);
+ 	write_in_full(2, msg, p - msg);
+ }
+-- 
+2.34.1.75.gabe6bb3905
+
