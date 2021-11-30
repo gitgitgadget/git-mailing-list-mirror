@@ -2,123 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BED21C433FE
-	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 22:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 143F9C433F5
+	for <git@archiver.kernel.org>; Tue, 30 Nov 2021 22:44:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345106AbhK3WrS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 17:47:18 -0500
-Received: from siwi.pair.com ([209.68.5.199]:19097 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236587AbhK3WrE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Nov 2021 17:47:04 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 54B0E3F48AB;
-        Tue, 30 Nov 2021 17:43:29 -0500 (EST)
-Received: from msranlcmt20.fareast.corp.microsoft.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 07DA83F4868;
-        Tue, 30 Nov 2021 17:43:28 -0500 (EST)
-Subject: Re: [PATCH 0/2] Set GIT_TRACE2_EVENT_NESTING in test-lib.sh
-To:     Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
-        me@ttaylorr.com, Derrick Stolee <derrickstolee@github.com>
+        id S1345052AbhK3WsN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 17:48:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58156 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344866AbhK3WsC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Nov 2021 17:48:02 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2304DC061574
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 14:44:42 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id a18so47836644wrn.6
+        for <git@vger.kernel.org>; Tue, 30 Nov 2021 14:44:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=O9S0n9NJ0lkitlDCSsoCk40Oks6St603EjnduNeYAiM=;
+        b=jg1lx1qFIH8edGNzFUFE79VahFuiUoHU5haQSqHT/XJkUYRpEhnvcrJr/4MjF8v+zx
+         f4S0XAkt7424N1dsVqGYBpRcY6wZ1blcyzyZkbDPWjZFdBK6rZRztA3TVKwdn1gNHPQa
+         /5lbfRwDJTSuIact4VSRgSXLSISwTFDz6F6reQYkOd1qbW7TOgeIGeOoNvtaIbPhSDMr
+         7Ua4QWdzntm9HsbOXRKi9NHLWqwgUUYna6IYN3xTXSDrE+A/1r0WJj3Y/epOdioqtBTF
+         K9xGsid/7p+bNAnMnCGflbO1X0dOuknCtoH6pkZZk+B0CbWNVTNcjyX0vS1nNeI/z/1W
+         dCwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=O9S0n9NJ0lkitlDCSsoCk40Oks6St603EjnduNeYAiM=;
+        b=Kw5QnIxCdIQiGInpXde/mGVO7i2Q2ZTcWz1mxuFOjyen0Q43qdL+3ltJLXRP5gzb4p
+         yFO/AzZ+eH9PKMqQW5zymMPnpmum2ihA9SI/7KKF/EAuOaKgmjVGfGOvReePyosWGKYk
+         uL5+XuXIO0whvbdKsJMA0q/zeqEiFhAzP2l6zLx5WFF0JOGywX8Rovz0vL8bZmCZH+50
+         uSiFPgxLHsVgT2PaGMOxpfOiiNZVXRJsqMKSvptxDnQLl6wj0xDCb9j6kdzPgKTfit0K
+         eDLDlcM/EfiOMFYe0eAh2tVcllef8Ow7eqv5sgneOtde55oft2FcyWyJtaYpZmFpYUHu
+         zwqA==
+X-Gm-Message-State: AOAM533OukQ6p9qo1FIfDoUZt9zxW+hNHKUMpbZ5nhAfpnfprHoBsxID
+        Pgy13DnlnD23v2fH/pXEASk=
+X-Google-Smtp-Source: ABdhPJwa8J40XDMtjaHa0LYaF10CPXg0jERjhjGiBQBnL5CalfNahEIZtPYuO7dnDaYD1/qSy/LZ8g==
+X-Received: by 2002:a5d:6085:: with SMTP id w5mr2251677wrt.122.1638312280642;
+        Tue, 30 Nov 2021 14:44:40 -0800 (PST)
+Received: from szeder.dev (78-131-17-57.pool.digikabel.hu. [78.131.17.57])
+        by smtp.gmail.com with ESMTPSA id s63sm3920390wme.22.2021.11.30.14.44.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Nov 2021 14:44:40 -0800 (PST)
+Date:   Tue, 30 Nov 2021 23:44:35 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] test-lib.sh: have all tests pass under "-x", remove
+ BASH_XTRACEFD
+Message-ID: <20211130224435.GA1991@szeder.dev>
 References: <pull.1085.git.1638193666.gitgitgadget@gmail.com>
- <YaUegEGxfAf72O9Z@coredump.intra.peff.net>
- <86555f24-e7c4-64cb-a55c-7e2580e895f2@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <8c80be3d-7151-272c-dc42-377380bf9754@jeffhostetler.com>
-Date:   Tue, 30 Nov 2021 17:43:28 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+ <patch-1.1-9f735bd0d49-20211129T200950Z-avarab@gmail.com>
+ <YaaS4Idhdyo2wZ9q@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <86555f24-e7c4-64cb-a55c-7e2580e895f2@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <YaaS4Idhdyo2wZ9q@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 11/30/21 10:34 AM, Derrick Stolee wrote:
-> On 11/29/2021 1:40 PM, Jeff King wrote:
->> On Mon, Nov 29, 2021 at 01:47:44PM +0000, Derrick Stolee via GitGitGadget wrote:
->>
->>> As reported by Ævar [1] and diagnosed by Peff in a reply, the default
->>> GIT_TRACE2_EVENT_NESTING is set so low that tests that look for trace2
->>> events can start failing due to an added trace2 region. This can even be
->>> subtle, including the fact that the progress API adds trace2 regions when in
->>> use (which can depend on the verbose output of a test script).
->>
->> I think this is a good change for fixing the immediate problem of the
->> test suite failing.
->>
->> But I have to wonder if this is masking a problem that real users will
->> see. Aren't we silently discarding trace2 output that could be useful to
->> somebody debugging or trying to get performance metrics?
->>
->> I.e., should we be bumping the internal nesting max of 2 to something
->> higher? If that would that cause problems with existing metrics, should
->> we be designing new metrics to avoid nesting?
+On Tue, Nov 30, 2021 at 04:08:48PM -0500, Jeff King wrote:
+> On Mon, Nov 29, 2021 at 09:13:23PM +0100, Ævar Arnfjörð Bjarmason wrote:
 > 
-> One thing this makes me think about is that we might want to
-> have items such as trace2_data_intmax() and trace2_data_string()
-> not be subject to the nesting limit. Only have the nesting apply
-> to the regions (which nest).
+> > Once that's been removed we can dig deeper and see that we only have
+> > "BASH_XTRACEFD" due to an earlier attempt to work around the same
+> > issue. See d88785e424a (test-lib: set BASH_XTRACEFD automatically,
+> > 2016-05-11) and the 90c8a1db9d6 (test-lib: silence "-x" cleanup under
+> > bash, 2017-12-08) follow-up.
+> >
+> > I.e. we had redirection in "test_eval_" to get more relevant trace
+> > output under bash, which in turn was only needed because
+> > BASH_XTRACEFD=1 was set, which in turn was trying to work around test
+> > failures under "set -x".
+> > 
+> > It's better if our test suite works the same way on all shells, rather
+> > than getting a passing run under "bash", only to have it fail with
+> > "-x" under say "dash". As the deleted code shows this is much simpler
+> > to implement across our supported POSIX shells.
 > 
-> CC'ing Jeff Hostetler for his thoughts on that idea. We will have
-> a discussion offline to see if the progress regions have started
-> to cause inconsistencies in our existing telemetry stream of
-> internal users.
+> I'm mildly negative on dropping BASH_XTRACEFD.
+
+I agree, using BASH_XTRACEFD is the most robust (and least hacky) way
+to get reliable trace from our test scripts, and we should definitely
+keep it.
+
+> IMHO it is not worth the
+> maintenance headache to have to remain vigilant against any shell
+> function's stderr being examined, when there is single-line solution
+> that fixes everything. Yes, the cost of using bash is high on some
+> platforms, but "-x" is an optional feature (though I am sympathetic to
+> people who are _surprised_ when "-x" breaks things, because it really is
+> a subtle thing, and knowing "you should try using bash" is not
+> immediately obvious).
 > 
-> Thanks,
-> -Stolee
-> 
+> Some folks (like Gábor) disagree and have done the work so far to make
+> sure that we pass even with "-x". But it feels like this is committing
+> the whole project to that maintenance. I dunno.
 
+It's not that I disagree but rather it's in our best interest to keep
+'-x' working with non-Bash shells as well, because:
 
-yeah, I set a fairly conservative nesting limit.  my fear was that
-someone would add a region or data event to something that recurses
-deeply -- like treewalking or directory scanning -- which in a monorepo
-would be bad since we might get millions of rows of data.
+  - We run our tests with '-x' in CI, because we want to get as much
+    information out of test failures as possible.
 
-most of the useful timing data comes from the higher level regions,
-such as we spent x% scanning tracked files and y% scanning untracked
-files.  once we get down inside a particular "concept", the directory-
-by-directory numbers aren't usually that useful (and/or the overhead of
-logging every directory we visit dominates).
-
-WRT allowing data events to ignore the nesting limit, we have the
-same monorepo risk if for example someone logs how many files were
-in each directory visited, the name of every untracked file, or every
-file that had some property of interest.  That might look fine on a
-shallow WT, but might generate an unusable amount of data on a large
-repo.  so i'd recommend we proceed carefully here.  (i'm not against
-it, i'm just saying we should think about it.)
-
-
-using trace2 in a test to confirm that a piece of code was visited
-or not visited is cool, but something i don't think i anticipated.
-so i agree that we should increase the limit in the test suite.
-
-
-and yes, the addition of trace2 calls inside the progress code
-complicates the nesting.  I'm wondering if the progress code should
-always emit the trace2 events, regardless of whether the progress msg
-itself appears on the user's console.  That way we have consistent
-logging -- the whole point of adding the region in the progress
-code was to bracket the time spent doing the thing that needed
-progress messaging after all.  the fact that you don't have a console
-doesn't change the fact that there's an expensive computation there.
-
-(i'd also consider changing the "total_objects" data event to include
-include the region title so that they are more easily identified in a
-grep, but I digress.)
-
-
-Thanks,
-Jeff
+  - We run our tests with dash in the Ubuntu jobs not only because
+    that's the default /bin/sh, but more importantly because we want
+    to avoid bashisms in our test suite.
 
