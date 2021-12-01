@@ -2,108 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EC3BC433F5
-	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 22:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EC73C433F5
+	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 22:31:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353573AbhLAW2f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Dec 2021 17:28:35 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62721 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353470AbhLAW2e (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Dec 2021 17:28:34 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F17F2FA996;
-        Wed,  1 Dec 2021 17:25:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tSAJ9bun3h+pv3k71jJyT/pADf6GTMJydhDmWT
-        2HQ4M=; b=bJUfnq1aC2LgA1JBGSV1AWNYUO0KPzCaYdRJmV6FX5kbCp6R8lh9HH
-        iPxev1qn+fG2YaRax1XPaq7Fs7KhxlgcM0HtDJS9l9DdSmivKkRpCKIAl1fLH/rX
-        YTNuKbj5dGPM4NP692+Z+unC4m9azSxgfy2GIbyJ4Na1Tw19McJQs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E7303FA994;
-        Wed,  1 Dec 2021 17:25:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 409C4FA993;
-        Wed,  1 Dec 2021 17:25:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Slavica =?utf-8?B?xJB1a2nEhw==?= <slawica92@hotmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] t2016: require the PERL prereq only when necessary
-References: <pull.1087.git.1638281655.gitgitgadget@gmail.com>
-        <a0cf71031781b481b092d0f501bc4d78376543f3.1638281655.git.gitgitgadget@gmail.com>
-Date:   Wed, 01 Dec 2021 14:25:11 -0800
-In-Reply-To: <a0cf71031781b481b092d0f501bc4d78376543f3.1638281655.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Tue, 30 Nov 2021
-        14:14:14 +0000")
-Message-ID: <xmqqlf14ynco.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8CB6FC8E-52F5-11EC-9AF6-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+        id S1353637AbhLAWel (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Dec 2021 17:34:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45148 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1353625AbhLAWe3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Dec 2021 17:34:29 -0500
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB88BC061574
+        for <git@vger.kernel.org>; Wed,  1 Dec 2021 14:31:06 -0800 (PST)
+Received: by mail-qt1-x829.google.com with SMTP id a2so25648750qtx.11
+        for <git@vger.kernel.org>; Wed, 01 Dec 2021 14:31:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=voiceflow-com.20210112.gappssmtp.com; s=20210112;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=beZkwI2gjg8fHGrSO2AqDGlho/yYx+ZCfoZXGRx03bU=;
+        b=eBTuqFTYYv9eYAY7anI2YetFeeVLK/9B74zc5DDMaT8rrxUgDSSWhuwvAZT/r/N0zn
+         hs3jhnQ1PIOwrGo64a4D/La2Wvcci3honmEOsuTv10cwiDUcIpW8VQYrfOCgX5ClsjuK
+         zm23GiZsrp+O7wDNfZxs+89ggQCy6Su/Mpdf1b2c8UIhjJ6hskp8vWn/6zu4Nd6MxBc2
+         /s+o3hCwbaucyny2FdRVK0hAVLHA34eVMU7tpVD3KbHwVDWurfXnnPP4e4FLyVYNZ/x8
+         WG+oQTDfIb7FP+RomWCquZPISDmgsTYYxA/JEwcxCRk+pwychaw/c5+j8LEQXl8+R4fz
+         TfNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=beZkwI2gjg8fHGrSO2AqDGlho/yYx+ZCfoZXGRx03bU=;
+        b=TbPJeK8jhJl6/uJpRzHxihIMKPcWn1DaFUachpmpxe93AfljOYsgfb0i7wSd+0UuSE
+         h0+DKqhK909mRTOxEc5kxjfiQOyw7JVycLlKweMgVyHURIZGhWPeTXAW2ffcVSYfImRZ
+         fgw5MX9ozC8JoItd4h2GokjLaYiNNEeXx3jqK15meUgGlkXo4v3aUG8Grecv7jVdCMGV
+         w2ov5dpCK0QUlhBch24e+ZKoT3MnQHfSJoxn5411FvUh6ULldK6wmetN+hG7v3htLGZX
+         gm6WzH5MS5Bj4Lt2J6K+1jtJHHJmQrsVEiDP6OZSHTEsKoAJr5+po1tb0MaI+KBWjH7u
+         zW0w==
+X-Gm-Message-State: AOAM533AYyXvyliZ8yK1Ls+hpO+QuU/OZ/AiwMUBKyXWEPTAUVd+aNwN
+        pe6pec9lP9HnJ4zeAkj0u5Kr95KJeC+1QQ==
+X-Google-Smtp-Source: ABdhPJyroVoSQ4tdPag3ZAvuefA4hJnyt9rcBlxYXrfx1pPbrLDzzZKrNvtqTt2p/MIpZ/zwkP7DjA==
+X-Received: by 2002:ac8:4e28:: with SMTP id d8mr10256765qtw.11.1638397865071;
+        Wed, 01 Dec 2021 14:31:05 -0800 (PST)
+Received: from smtpclient.apple ([97.108.238.149])
+        by smtp.gmail.com with ESMTPSA id k2sm577609qtg.35.2021.12.01.14.31.04
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Dec 2021 14:31:04 -0800 (PST)
+From:   Josh Rampersad <josh.rampersad@voiceflow.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Bug Report
+Message-Id: <C29F5770-5092-40A6-9604-DA5F7166575D@voiceflow.com>
+Date:   Wed, 1 Dec 2021 17:31:03 -0500
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> The scripted version of the interactive mode of `git add` still requires
-> Perl, but the built-in version does not. Let's only require the PERL
-> prereq if testing the scripted version.
->
-> This addresses a long-standing NEEDSWORK added in 35166b1fb54 (t2016:
-> add a NEEDSWORK about the PERL prerequisite, 2020-10-07).
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  t/t2016-checkout-patch.sh | 42 ++++++++++++++++++++-------------------
->  1 file changed, 22 insertions(+), 20 deletions(-)
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Good.  I suspect there may not be too many developers who lack PERL
-prerequisite around here, so it is not like the built-in version was
-not sufficiently tested in developers' environment without this
-patch, but it is nice to see us move in this direction.  Of course,
-when we remove the non-builtin version, we'd further be able to lose
-these prerequisites.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> diff --git a/t/t2016-checkout-patch.sh b/t/t2016-checkout-patch.sh
-> index abfd586c32b..71c5a15be00 100755
-> --- a/t/t2016-checkout-patch.sh
-> +++ b/t/t2016-checkout-patch.sh
-> @@ -4,7 +4,13 @@ test_description='git checkout --patch'
->  
->  . ./lib-patch-mode.sh
->  
-> -test_expect_success PERL 'setup' '
-> +if ! test_bool_env GIT_TEST_ADD_I_USE_BUILTIN false && ! test_have_prereq PERL
-> +then
-> +	skip_all='skipping interactive add tests, PERL not set'
-> +	test_done
-> +fi
-> +
-> +test_expect_success 'setup' '
->  	mkdir dir &&
->  	echo parent > dir/foo &&
->  	echo dummy > bar &&
-> @@ -18,44 +24,40 @@ test_expect_success PERL 'setup' '
->  
->  # note: bar sorts before dir/foo, so the first 'n' is always to skip 'bar'
->  
-> -# NEEDSWORK: Since the builtin add-p is used when $GIT_TEST_ADD_I_USE_BUILTIN
-> -# is given, we should replace the PERL prerequisite with an ADD_I prerequisite
-> -# which first checks if $GIT_TEST_ADD_I_USE_BUILTIN is defined before checking
-> -# PERL.
-> -test_expect_success PERL 'saying "n" does nothing' '
-> +test_expect_success 'saying "n" does nothing' '
+Navigated to a non-default branch of the repo.
+I wanted a list of tagged commits for a specific tag pattern relating to =
+a
+package in my repo.
+Ran the command: `git log origin/master --no-walk --grep=3D'my-package' =
+--tags=3D'*my-package*' --decorate-refs=3D'*my-package*'  =
+--format=3D'format:%ct %H %D'`
+The output was as expected with the tags not relating to my-package =
+being filtered out from the output by the decorate-refs option.
+I then, wanted to pipe this output to a separate program.
 
+
+What did you expect to happen? (Expected behavior)
+
+I expected that the piped output would be the same as the output in my =
+terminal.
+
+What happened instead? (Actual behavior)
+
+The filtering I got from the decorate-refs flag was no longer being =
+applied. Thus giving me a bunch of tags I did not want
+
+What's different between what you expected and what actually happened?
+
+Whether the decorate-refs option worked as expected.
+
+Anything else you want to add:
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.31.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Darwin 20.6.0 Darwin Kernel Version 20.6.0: Wed Jun 23 00:26:27 =
+PDT
+2021; root:xnu-7195.141.2~5/RELEASE_ARM64_T8101 x86_64
+compiler info: clang: 12.0.0 (clang-1200.0.32.29)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]=
