@@ -2,126 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECFD6C433EF
-	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 20:59:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4877C433EF
+	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 21:05:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353469AbhLAVC7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Dec 2021 16:02:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52116 "EHLO
+        id S240310AbhLAVJP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Dec 2021 16:09:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353169AbhLAVBH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Dec 2021 16:01:07 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC714C0613B7
-        for <git@vger.kernel.org>; Wed,  1 Dec 2021 12:56:47 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id x15so107005401edv.1
-        for <git@vger.kernel.org>; Wed, 01 Dec 2021 12:56:47 -0800 (PST)
+        with ESMTP id S233009AbhLAVJO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Dec 2021 16:09:14 -0500
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75837C061574
+        for <git@vger.kernel.org>; Wed,  1 Dec 2021 13:05:53 -0800 (PST)
+Received: by mail-yb1-xb2d.google.com with SMTP id d10so34423171ybn.0
+        for <git@vger.kernel.org>; Wed, 01 Dec 2021 13:05:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=dinwoodie.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=IcErk62aq6sx+2j0rUV38xWUsd5yKaV+zCwaMoCUqJ0=;
-        b=i4PKOhZZzsLEm2FpBmXLW6kIQNfQyMqeQX8sNpRucuqxTSsHpMRWt0jwswtbazVV/j
-         m5McAsEXJKMHvAJORqmIst62RzuuHYs3KJUO3eT4Yb/KOs/R/ev6YlAMRhXaJL+ZFo3M
-         jhux+PshapxSSPn5x7l2W29avFEK29cy80ecnNAJRn5cX0ik5WFk0at8UssbVqufLndU
-         wCOOtZCxYyYSBbQ46jJYJeUlxccV1zsODbPHrbccBVj1vF8blB+w66w8gbZtx1444MSo
-         h/pg9/dpxgxDMKQnXaAufZodua9aSv0r2LDt5J3Ptkdv2huU0GM4f7cjcXJizTElhVs1
-         izgQ==
+         :cc;
+        bh=UQnwhXdEDPBFN/KsHyJOk2PjAi8gMj/RWGZA3oz7dZ8=;
+        b=lCdThUg4ZrOk4I68jr6eUVQkAq6nD4dLl0tcmxwKvESIN94+K+lQP8plDSRQtvqe2y
+         klQhW7p+4iI7Kgpn00D2u3wVE617UfVLFaQ34HLlBIpHOyCVPu7IhBCM65LNeUHDtsP+
+         0rk4jlOngLj1Aw2W2dJuRDUBYrR7X1bSjp1xI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=IcErk62aq6sx+2j0rUV38xWUsd5yKaV+zCwaMoCUqJ0=;
-        b=RB++63v5m2Ol+uEbFqpUQsuhpIj4b2BmSSIdsyy11+mci77PRTuc08v/i/KyG9g5mb
-         zX3x3flGEiif/Z5rK0khmXHgLHqm1VPhBaUe6h+BUB0wxQXwjVrJs6yDAarwQbltaJJM
-         eQh6SRwA7aBbutglgcjq5kUKwbYLWrqQKuFqk6iyETib6LCYr9bf2EMYWg3xL2FAQUuE
-         1VoC53+Mo9oPFj/aY2JeecR0x8mdjkFbWj9uzz+QuL5t7xTwM2K/XUFNmnKu9SpoJ+uW
-         uNeCuICloirmIblq+yACg+//gs5ccv2Ag19BDu12fFFifwfjQhitL7XCkmV+Hmfjxbk2
-         Qf3g==
-X-Gm-Message-State: AOAM532XmhJQdDBrs3lCANlg6bMyOKpxxgwFilYALIp7bE+0VNbO9jSE
-        jKpHs80OfNV6MOVQirmr7c8k4ZthTf6qdbozsP8=
-X-Google-Smtp-Source: ABdhPJzkUhyShVQgl34Rq8qRT7cO0TkHELy6rz6aDoluw53nqloZbmCd/zHWsM9+DyaUn7i6c42+v8PaArewiWvHVhQ=
-X-Received: by 2002:a05:6402:5cb:: with SMTP id n11mr11901644edx.279.1638392206289;
- Wed, 01 Dec 2021 12:56:46 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=UQnwhXdEDPBFN/KsHyJOk2PjAi8gMj/RWGZA3oz7dZ8=;
+        b=eBU/HqdkFEJMdiA7FbqNz5VHHfTxO+8YMcR6DtuXEOhO70OZmbMG+O6cMdv6/s9T3D
+         2bEWviM7iZ8N8CK9DZDL39czfXdUbLJhrfE6UBgtSoe0SteFPt/tj0CITxgap6ol9Kt2
+         YlrIlK4ZSn0GOg3F3H1lWtfhiOkWfA2djXIsUPox5yon/MHhGDaRhTJBhDxjl23a2V69
+         pwrRvXGXZpGgovrRedzizRWIByy13j1WW/9MOMO4XX/D7XHVKiBSrTxtIAiP1O75ZcsA
+         co0Eek+SAWLPsxPKxTNxlcz6fDJKZXtVvGd50irpb74bMGqmRUcAcjVhhCVNQJsJI6M1
+         BHqQ==
+X-Gm-Message-State: AOAM53123JtzrJaNbv8OnlcqUjduV1mHxzCWr0dq6iTaqgtSYuZBNp4X
+        OrrCYGBgyAeh1C1Xtbxur473Dra/EZXW246JpTW40xmbD5xqwA==
+X-Google-Smtp-Source: ABdhPJySQfe077nHajg3Yie1LX25GA1amnE8A+8Gcbp+PeEJR8jUXyJxLoql3X73EJpZ/a+Naz+ww4NkR/EJqQB/AUE=
+X-Received: by 2002:a05:6902:1022:: with SMTP id x2mr10970030ybt.391.1638392752557;
+ Wed, 01 Dec 2021 13:05:52 -0800 (PST)
 MIME-Version: 1.0
-References: <xmqqzgpm2xrd.fsf@gitster.g> <CABPp-BE4uYBFnb-AgVJhNo6iK4da5hiEFEBhd=7Ea3Ov=4K4zw@mail.gmail.com>
- <d95f092.3f.17d73a85761.Coremail.pwxu@coremail.cn>
-In-Reply-To: <d95f092.3f.17d73a85761.Coremail.pwxu@coremail.cn>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 1 Dec 2021 12:56:34 -0800
-Message-ID: <CABPp-BG9jHaJYekDnvZT+8QW_fLGM_bmz-oOqzJswaotyVDFBA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2021, #07; Mon, 29)
-To:     =?UTF-8?B?QWxlZW4g5b6Q5rKb5paH?= <pwxu@coremail.cn>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?5b6Q5rKb5paHIChBbGVlbik=?= <aleen42@vip.qq.com>,
-        Aleen via GitGitGadget <gitgitgadget@gmail.com>
+References: <20211120150401.254408-1-fs@gigacodes.de> <20211201085315.576865-1-fs@gigacodes.de>
+In-Reply-To: <20211201085315.576865-1-fs@gigacodes.de>
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+Date:   Wed, 1 Dec 2021 21:05:26 +0000
+Message-ID: <CA+kUOa=Yh0NdoKWEQbYP4YXv8JmMHkjrKREAj-5YAA_JBTqEbQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/3] test-lib: improve missing prereq handling
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 30, 2021 at 5:42 PM Aleen =E5=BE=90=E6=B2=9B=E6=96=87 <pwxu@cor=
-email.cn> wrote:
+On Wed, 1 Dec 2021 at 08:53, Fabian Stelzer <fs@gigacodes.de> wrote:
 >
-> > Please don't, at least not this version.  There have been newer
-> > submissions with three commits.
-> >
-> > I also still find the word 'die' confusing, since to me it suggests
-> > aborting the whole am operation, and the documentation does not dispel
-> > that concern.  Even if you don't like 'ask' (for consistency with
-> > git-rebase), I think 'stop' or 'interrupt' would be much better
-> > options than 'die'.  If you really want it to be 'die', I think the
-> > behavior needs to be explained in the documentation, rather than just
-> > assumed that users will understand it (because I didn't understand it
-> > until I read the code).
->
-> Dears Newren,
->
->     I don't think 'stop' and 'interrupt' words are better to explain more=
- than 'die'
->     because they still indicate that it will stop or interrupt the whole =
-am session,
->     rather than stop in the middle of it.
+> The ssh signing feature was breaking tests when the broken openssh-8.7
+> was used. We have now fixed that by checking for this exact case in the
+> GPGSSH prereq and I will improve that check further in a future patch.
+> However we are now in a situation where a broken openssh in the future
+> will result in successfull tests but not a working git build afterwards
 
-Since you've been through several rounds of revisions already, if this
-is the only remaining issue with your series, I wouldn't try to hold
-it up for this issue; I just thought it could be fixed while you were
-working on the --allow-empty stuff.
+Nit, purely because I just spotted it: "successfull" should be "successful".
 
-However, while I don't think it's worth holding up your series for
-just this issue, I would definitely submit a follow-up RFC patch to
-fix the wording, because I do disagree with your assertion here pretty
-strongly.  Let's look at the meanings of the terms:
+> (either not compiling in the expected feature or like in the ssh case
+> runtime failures) resulting in a false sense of security in the tests.
+> This patches try to improve this situation by showing which prereqs
+> failed in the test summary and by adding an environment variable to
+> enforce certain prereqs to succeed or abort the test otherwise.
 
-die: connotes something pretty final and irreversible -- people tend
-not to revive after death as far as recorded history goes; most such
-recorded instances tend to be causes for people to debate the
-definition of 'dead'.
+I've not managed to keep up with the ongoing development of this
+function, but I've just tested a recent version (specifically, from
+Junio's tree, 1ade7d2334 (test-lib: make BAIL_OUT() work in tests and
+prereq, 2021-11-20)). This looks like it would have been fantastically
+useful when I was first taking over the maintainership of Git for
+Cygwin, and I'm looking forward to having the extra confidence of my
+builds and tests after I can add GIT_TEST_REQUIRE_PREREQ to my build
+scripts.
 
-stop: could be final, but is often used in a transitory setting: "stop
-and go traffic", "stopped to catch my breath",  "the train will stop
-at this station", "stop! I want to get out", etc.
-
-interrupt: seems to nearly always be used as a transitory thing
-
-Now, in the computer science context, all three terms come up relative
-to processes.  You can interrupt a process (the kernel does all the
-time), but it'll usually continue afterwards.  Or you can give it a
-SIGINT (interrupt from keyboard signal), which the process can catch
-and ignore.  You can stop a process (and SIGSTOP cannot be caught),
-but you can also continue it later.  die essentially means the process
-is going to be gone for good (at least short of some kind of black
-magic like a reversible debugger such as rr).
-
-So, I think it's much more likely that 'die' will be misunderstood to
-mean abortion of the entire am-process, than that 'stop' or
-'interrupt' would.
-
->     It may be a good choice to just add an
->     additional description about the behaviour when not passing the '--em=
-pty' option
->     or passing '--empty=3Ddie'.
-
-That would be good.
+Thank you!
