@@ -2,181 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B08A4C433F5
-	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 08:33:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 904D7C433EF
+	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 08:53:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241985AbhLAIg2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Dec 2021 03:36:28 -0500
-Received: from mail-db8eur05on2045.outbound.protection.outlook.com ([40.107.20.45]:46688
-        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
+        id S242238AbhLAI4m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Dec 2021 03:56:42 -0500
+Received: from mail-eopbgr00072.outbound.protection.outlook.com ([40.107.0.72]:3017
+        "EHLO EUR02-AM5-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S230433AbhLAIgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Dec 2021 03:36:25 -0500
+        id S236947AbhLAI4l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Dec 2021 03:56:41 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fYZMXy8y0fFRm85lkEOr+cxayOPfnGbc7hxB3+1iwBV+cuBAw9MLfRSW6agXLL9DQSzEFYoBFmqUdUbZLiMxF728MsXBIokZNinpk69iyVjTfW/VFHaezgbhLpgp7L84dVgZgpT5dlrC5mn7j/UDMXeXCbsFAQcEYjALnlD7bvDVmxf9xSfmUUL0dt/qpeiPVbXJLRBcKDs26zAbq/CV3GMrxJC/Sx4BWK5tOc1ukFjFrRIhO3mbZXpPtKBHE33GKJEiFcpZ7GY3XsxMHBrTzsf+XHbaHkRn7PTXITNmf11LTNG9D2QLQVZMd7sieEphdNiueOExAWyS14v17Zwzfg==
+ b=YPO0zadpPSpjvnumXkF4BVv3CeWE8ebqWvzxyoBSKynrx2ZVcAS97bJayXGLAp3PpTaru4KkMICkN8b541Cx3GDUchUwoPkvBTyMvcHne+SHRBcwsfIxqyVOoHmazEi5AYGszWbVx1h23EnBKpd6saOPcUzl9Oh5om9z7NAnBsb1CDvsN1D6CA9taeBq3++yanl7FRqPkyhKOr4N+41hxj+fE2rojd8BrQRsQo/p9A9m3uraNRQIGqpE8HrI3NiR3ovnYmtsBLJJ/MiytJ3W4BKbSpPCmZgHQyt7v/pWEuycntthkh31I9R41UKSCPb27wOrMfYJxA6iXBMdun51Aw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hGl7Yz/0Az1nkX+UZr1SkB5ZtKOM234KwTJFrQUo2Fw=;
- b=K5YGZQh+YCWMKVXqYbnufNEVICWLnKB/2afbfcuey1fzhKIon2Pj4h8d4ZQrT8FDKPgKvEQBRf2xXK7uh9eRlKmLNv4u6BY1Kb0RXM+bPbr+J9k7bsI3JyN46eD9PtdfHv8M2WlbZ5qwujbJ3czbJ9aZTbygjKRD3jq9j5xhzB3hgkUs0lSweDfjsRAgiBJN9796dSPpaRdfxKRjlqjJ4ZKLxv6fKg8P6YVEfxFME9+a1f0yLzSFrNkq+EpVHVbDDfPC3Pdas5Wesgzl1kalWuIwmr3M3uoF2ugMclagQcsxVKE8BTgk1senjdLSS2SgrSip6vydx+4QaKxI5EV5SA==
+ bh=43NZnd/N3Ujl1k4oBZy6ksiJDCFYYdsc+Q1HhAnnAuM=;
+ b=hVwdlvz/dsyvLGO/PMUXPJa8aZUWSKqoseMV1oLzhOq5JfdcV9FqUCzHxDL7kkVCJJFgGAw1PLBcs09M7iDdpIz9Cn+s3khIUYNeF2jsmNGHNYX/C5X+wpkL9KtMcy+6p1+zMj0XqFLFpc3ZxouYHt/BCbCREnyUGiJrYPowzR8whcYNg8u9xAiAZzfG//pah6mdwK5YnvJ6XK6n1ursCP8Z1D6LuN7ajXMj7WDXfx0/bDD/ZSCkC38ntFLaKe9VZcd4P9wBt9LIKcP/FsbD46QB3Jyonilkal7V1D0Ef2So4fcqq7BC3i7efATHliwy2IYk9ChC1AXEszkZ3hDk0w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
  dkim=pass header.d=gigacodes.de; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hGl7Yz/0Az1nkX+UZr1SkB5ZtKOM234KwTJFrQUo2Fw=;
- b=Rr+4hsrKbPgQ5qaT/huAEOY640BndE7lcGTi1m46oyQaJJPy+ThsN9S5nDnsJxyYH2JF94KSJzqD/akjc+94LFfUotM/I2KDAvdey6J6wLR1a0DJFsIi2QrrgWoQFf055ap2vSQ4W6BsT1mZtlM0NL85sj5Rxbtoy09oFhDUsLg=
+ bh=43NZnd/N3Ujl1k4oBZy6ksiJDCFYYdsc+Q1HhAnnAuM=;
+ b=swSjxPoVh1geL7fGwcwlqhg0rwjZIp3yqf3yAwiKKU5KrkHhTr2DRKO39k/C238k1btt0Ef0Q8Feh46f68vWzl9Mx1nazeGNSbE6H9WTWNzdXKw5LdprPlRtTxd/HA0hyrpfDT32sB0q/xFx+/ea45vdrrwdgyoTLVojTZ8x+S8=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=gigacodes.de;
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PR3PR10MB3997.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:a7::14) with
+ by PR3PR10MB4157.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:af::17) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4734.22; Wed, 1 Dec
- 2021 08:33:03 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4734.24; Wed, 1 Dec
+ 2021 08:53:18 +0000
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::d9de:b41b:461d:fb5b]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::d9de:b41b:461d:fb5b%8]) with mapi id 15.20.4755.014; Wed, 1 Dec 2021
- 08:33:02 +0000
-Date:   Wed, 1 Dec 2021 09:33:01 +0100
+ 08:53:18 +0000
 From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Randall Becker <rsbecker@nexbridge.com>,
-        Baruch Burstein <bmburstein@gmail.com>
-Subject: Re: [PATCH] CodingGuidelines: document which output goes to stdout
- vs. stderr
-Message-ID: <20211201083301.ozrhi2brjk4zx5ll@fs>
-References: <20211201053214.2902-1-sunshine@sunshineco.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20211201053214.2902-1-sunshine@sunshineco.com>
-X-ClientProxiedBy: AS8PR04CA0089.eurprd04.prod.outlook.com
- (2603:10a6:20b:313::34) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>, Jeff King <peff@peff.net>,
+        Fabian Stelzer <fs@gigacodes.de>
+Subject: [PATCH v4 0/3] test-lib: improve missing prereq handling
+Date:   Wed,  1 Dec 2021 09:53:12 +0100
+Message-Id: <20211201085315.576865-1-fs@gigacodes.de>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20211120150401.254408-1-fs@gigacodes.de>
+References: <20211120150401.254408-1-fs@gigacodes.de>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: AM5PR0201CA0023.eurprd02.prod.outlook.com
+ (2603:10a6:203:3d::33) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  (2603:10a6:102:12e::15)
 MIME-Version: 1.0
-Received: from localhost (2003:ea:5820:600:c042:75a0:fd5e:1472) by AS8PR04CA0089.eurprd04.prod.outlook.com (2603:10a6:20b:313::34) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.11 via Frontend Transport; Wed, 1 Dec 2021 08:33:02 +0000
+Received: from localhost (2003:ea:5820:600:c042:75a0:fd5e:1472) by AM5PR0201CA0023.eurprd02.prod.outlook.com (2603:10a6:203:3d::33) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4734.24 via Frontend Transport; Wed, 1 Dec 2021 08:53:18 +0000
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 3d40c502-5429-4e97-7c8a-08d9b4a53098
-X-MS-TrafficTypeDiagnostic: PR3PR10MB3997:
-X-Microsoft-Antispam-PRVS: <PR3PR10MB3997BF143BB68B05FF4E4F62B6689@PR3PR10MB3997.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
+X-MS-Office365-Filtering-Correlation-Id: 2652765b-cf63-4796-35a3-08d9b4a80543
+X-MS-TrafficTypeDiagnostic: PR3PR10MB4157:
+X-Microsoft-Antispam-PRVS: <PR3PR10MB415744D2D7460F273611C26EB6689@PR3PR10MB4157.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:489;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: b08aIoQmRZ+7jSWSW7ZkESgB1N6D4zyg5jZFsUp75jHexVcK8Xn+Xwc5ESCOEtiwELDHuGXYyR2AIEFYLOL1w0BHXeycc2KjuGSP2Gdg45RAnQqA6MyH6x1T2xBZ2lPmZxl/el04zCaLphLP9sxY+klZSaUx/4Q2FWPn37eskAeCFnAaQQHrYHZMOC9f+8z4huivi401I8ItfXsEkTmdie0T/waa/MOzE+KOVYfJwnTnmUMyk5c85zlH+wbG/5q5Jx3cadXkeDd/YaJm2QAboPkrnBywD9aPj0Flmz5XU0Zx+k4sKF8Er3DjlQ+wiPGXF/H+RGNB/pMYchNazT4OicaJAYRR/6m5T0fXqjiDrNguQhdHR0W5n7ZWBdTPEla62/rVP+bkskq2fbZJ6Y/gooC0jRWyrTEttwSUgGZ8roltsi62Jl1rPAt3jhddi/udUvDMMyh1bDg65ah6SrVZzv5ZPuvv3Ih3HU/bowItFqrfIC4JXygHZgD8OpJVyD1Br3oOPQGVScB9qTaRJIeqlllMl4uJRmVy6b5ZgK916+iiM9iZIjjTvVaNtiiFcm6wfBunJR9pumE40+zHlrl+dYylbwzKeUqsfO4C+hrt6ziUfH3BPI3aFXrxtAUHcmtHR0u+qsOJn7B1ohEOFIYSSfPrLPe/gy7TSlmgcVzFsFvBLmJITndrfDPWF1ve1SpebTZMlSukFjjfWZLVWM7ciqWAZMXrskcn46tgnxEuKcE=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(7916004)(4636009)(39830400003)(396003)(376002)(346002)(136003)(366004)(186003)(9686003)(66556008)(66476007)(6496006)(6486002)(5660300002)(66946007)(33716001)(53546011)(4326008)(316002)(508600001)(966005)(8936002)(6916009)(83380400001)(54906003)(8676002)(38100700002)(2906002)(86362001)(1076003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: Jw/0n6XI6kNFRfQ0533VmHJFBaJcf20H4gr9UaGWo5QlNSZbxRvhiESdpqOggJ/JCKVRhElMSnnqkKLXs323azoq80phoKKDmr50dQDSQoqVGrv5A+a+75pvK0NHuV2bUSW+tOXKXNHnkRSQTsKlbA78SR3v8+gALgp3p6ZO0wKPzp4PFpZPcm7chmwhpe+Y/dzrY0TJH4arNvFiiGxbPHokmShkq1sYGuJ2hu+eOxD8lduTGw9oSOjblonb/cwM1Tehop7cj3CVMc7j/0JVXlm6drtA6pufqLusV0rj6bDNuFWGucw/U9b0tIa8+nJebmwy3+rD7SojzBZLXiCQ31bUDKJObSAoceLE0HHLHa07WNaPVo4Y03ED2qTh+JUl5r/UywUeTQveBMEE8X6SQlLitV9MZbpSiHQMR/nc7HkZvav0NPAFSY9OZuCmqsW6MJUwpXJ6fU2HlWkfiMZkpRsa22F/gDUBarX08G0E4yNZwyddTae4W9jbnYftu+6uu7lF3Q7krToXY6j2i05PYkj46VuaSAvJYO/6eXOqwEXvnpDYDvWC8QXNYwRUp85S3PrAGGc4WvaGJkUQ8L5748OUwyTiIH1Rkwk8at+DgETKErVflvKH6W+50FXJ/DCnjziK/ScNyKGjv4LuhGOufn6oj5tw5bqLnxsO6aDv0ZBBuYiF+EpC7AogXaklBZasPwPCUV5QqAMGW/fcILvWAMNFow11Kh9jtmD+DSj9Ieo=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(396003)(346002)(366004)(136003)(39830400003)(376002)(508600001)(66476007)(6666004)(36756003)(66946007)(66556008)(966005)(4326008)(38100700002)(2616005)(186003)(6496006)(6916009)(1076003)(83380400001)(2906002)(107886003)(5660300002)(8676002)(316002)(54906003)(6486002)(8936002)(86362001);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OWZsbzV5UFhEbDhvcE90dTZOMHFuTTUyMU9ORjVMVUQ5bVVqV2l1S2NDdzJG?=
- =?utf-8?B?MXMrR1FucmVaV0Z1clZZc1FWbEhRUmx6Q1JLM1pVSVl1T0htMUpCSDVPUjlL?=
- =?utf-8?B?bktibXFkZG1WTDllZ2FVcWZ5VGhBem03UjN0dGN2dnFGZHc5bTdGZkxpT25N?=
- =?utf-8?B?UXVZT01MTGx4U29UMFRzMDdSRk1EWjk4R2drRExxRG00NTY2UWxHNTBEbWE1?=
- =?utf-8?B?TjhMZkhDTnRkVyt0Z29WUzlSVE10dlZmWGlVZnhYTHp1eUdQUERaUzZRSDRI?=
- =?utf-8?B?ajVkbDhpdXNRck5FYXZyTktablhZWEhhZkYyMW5XeDhLZTBGVE1IY1hxZVNF?=
- =?utf-8?B?VDVjUlVCNWhjWGtZRVVNb0ZEZ3BlOVVvbXdTV09zQWZTcWQ0ZjRaaE4vMkpm?=
- =?utf-8?B?c1Q2OHhsY0NRL2NsQXNNM0wyUVl2OHhjN2FySHNKeEF0V0U2YUttcFVESFpi?=
- =?utf-8?B?Ti9nd1dLdyt2Z3YrRy9DQ3BqaThkb1FpcVh3UDFYRlppcnhicUNuVmNjd0lm?=
- =?utf-8?B?TXpZdlhQeS8xdUlyeWprd0ZXTmRjUWEwQnZ5S2todXJTZDNFQktaSy9RMFlG?=
- =?utf-8?B?RDdIZ1JVbzloUkYwai9Fc1VBK2haYjVCTXhiZDlzZnJjNmkvWkdad0lZOGYr?=
- =?utf-8?B?bFhtc3BlTHhwSDNzUnFWOVYzWTZ2bjFaTVcwUFE0NzlGdVZhY1F3R0tqeXBG?=
- =?utf-8?B?Qzl4NzlQbVl4Uk9qRDExdHRidDI1RFdBVVVLM1dJVTRSVUlGNEw4VE85QzMy?=
- =?utf-8?B?aHVpaGRkdklSS2EyZEVrMk9QZWNjQllCUC9QT1lwaWpUMHZ2YmhqNEVlaXBH?=
- =?utf-8?B?Rk9vY1BpNzZYMmMrZlVUWTJNMjExMW1CRkFYM3pSY2tJdFJwendSUlFVUFBZ?=
- =?utf-8?B?citYRFNaOHgwRzlZTzE4akN0bVlqU1QxN1FjL3RzRklSeHRQRCtaNU83YnEz?=
- =?utf-8?B?Tzh3elFxSDhUelVYNWo1ZUdxUVovSVZlVThqTGtyUkVWamFWV3FNUTFodE5H?=
- =?utf-8?B?NXd6Rm43ajlWK1Q3MEdURmJtb2haMGFTbXhhZG9tOE5TbVVNdzBaQnlsanRr?=
- =?utf-8?B?WXlPb3NPR3JrRnNBeVVXMDRqKzJTOWJaVkZ2d1FiclovNm93dW1kMjl2WFBk?=
- =?utf-8?B?RkwzY1ZXN2VhUk1LZ1VrckVydjEzYU03Q0tGMGtCemJldmtMdkdKT0FzOVZp?=
- =?utf-8?B?VmdNK1Y3S3lGTjlERnBkRUV1bm5CZ2NyN0ZqSG1TenRYTHlnRFArNjZiZDFS?=
- =?utf-8?B?WUlISmdUYWFsODdrVWtQUVo0SUZhQVNDSE9VWXdhd1BrdENrMTZHVHFKNGo1?=
- =?utf-8?B?bHpueVJXYlBnUnlhMGtBV00xbGhFeUIxVEJFMWxLUjlpWFFIamZqQ3BPS1ls?=
- =?utf-8?B?eWcwdVJvMTJZV3Z6OXBsbmlLNjR6cHVWbEJpR3FZbzJKWVRaQWVPZFl3YXRJ?=
- =?utf-8?B?Mk1MYXhUVUF6OVpQaEFCUURUSFU5eGxpVDhCcVJzc1RmU0E3WUVTYW12am8z?=
- =?utf-8?B?ZGNhRDRRT2xlU2owWHVRTWlLQ1JadURtT3lWemJhb1ptUkwrdUpsdjAyZjE2?=
- =?utf-8?B?TjZVdGNSSmRSaXJ6cVYybU05QWRTSVA4YStPNmo1SXcwb08yc1ZqRFEvVGMy?=
- =?utf-8?B?M2lDNFN6QWR5NkkzbUhJZ0VxVlFsbjB1MVhrU0FlNGtpNFY0RHdXYTFDRmly?=
- =?utf-8?B?QktLWmo2S0J3dlJlQXhMekRjcmlhYkVwbDMvdUtEUTJGOGl6TFRndXIzMTQ3?=
- =?utf-8?B?L0YzTVBFTXExS2dteitZZkVGMGtJckRmSWcrVkcyUkhTdkJsZlVRRHJVTkE2?=
- =?utf-8?B?M2hXeUhIR2JBNmpDMDh3M2VCZlZaanY5OG1aSWtKRjVydGlvQXRpbWZxNkFB?=
- =?utf-8?B?TUtkYmkxRlIySG9HSTcrak9RbERJTDR2eDJEaVVMWG1IZ2R1R2s0MTFCU0Vt?=
- =?utf-8?B?T29EUTlTUHp5ekl5YUUyZjVJaitBTGlDZXBBdHh3eTBWRkgxK0VGTXNheUQv?=
- =?utf-8?B?R09uNTZzampoMldpclFtbGVma2pmakoyVGErcHBTeENmSytVcVBiUEF5UHJ1?=
- =?utf-8?B?YmE1R2MwVEQyVEwwMW90c28zRXJOYzd4Qklvb25WVHhqVjlTRjFtY0FNeGlW?=
- =?utf-8?B?dG1iOXFVR2VJMnNRMUFXcEhrM2h1T09OTWQwaWQ1R2ZUR2VzQWo4c1BDTkxK?=
- =?utf-8?B?NnVKZTI3YlhaZ3NvRTlEVC84ZGxoQUtzREd3WGI3ZnpNQVdMUXdvMTZKWkwv?=
- =?utf-8?B?UlptSmpZSGNNWmNwZXFxMFN4MTR0ZXVSUndkM1U2ZjlUMWx3bFRVVUE3UWZX?=
- =?utf-8?B?VHN5NjJQQjZ4SXhwQlBCRkNNOEM2cDFiZ011aDBUcGNoN21BUEtLMWROdzJR?=
- =?utf-8?Q?d/f6RY49UD3SxCNw=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?XGimjzxOBCcF4JI9XfJs1GjewMQmeNSLWA8wX+1nB/wn8nksYo7zy/JBWE4+?=
+ =?us-ascii?Q?bWPZDtz3xOhARa/AJt3n0BzRUmMEsM00Ji2r4GuXdt7oMTR0hmRP5zY1wQJR?=
+ =?us-ascii?Q?wMonDD/mHac82IZ5gdHbD3xFFY4HpeVVsqh6AWjQ0v/8Xop3OcsLkqqebeSA?=
+ =?us-ascii?Q?lzFT9MCmSoxcqbIaqdeuHAkyMW35ZpEyDs5kiSHOtuX+QXIVkA/LPzt4PSiJ?=
+ =?us-ascii?Q?Fo/7XP+finDcggq6E/Ik2sV4TyMlmIzEbT5lsc+6DoVkf9epG1d1vyrBOIt/?=
+ =?us-ascii?Q?y59yXIzCFNHZ/8+7/ZGEu08Y0QG++e3gV9wCtz/04JGQIXnxrrJkeDYwZxeZ?=
+ =?us-ascii?Q?6RLDD2/t+Z24OsgPpbiHv0pniaJ7JFT++bHj3DhWYe49031arWLGpRTHnAD5?=
+ =?us-ascii?Q?Or4y56UUg7Ldb9lrkdNTsi1GoKiaWxeQrEEbmjdOHV/Ezb2tZrjLilMyuvzJ?=
+ =?us-ascii?Q?uAPo/lc8QHNJG4K11+JxvtaF3Xy5p4AOi7CbY5RF0xwTfQtbHzb5YmQ9MBiT?=
+ =?us-ascii?Q?VotTifmyt1I0NMUuINpv17lreuhjx1q2LgmFqqrxfsIEiMJPIkwgDrwHxmm8?=
+ =?us-ascii?Q?IUnZVCfpwS0GdB3vcbTzkAPqa/YJdTc8tvBTOC+miodop2XMzNH0BpMYjQtO?=
+ =?us-ascii?Q?W+rQ/0y7URUsXZYq6SkVN37IRe2LY5afrcwUEzf+Th3d+wN+cinzK1zAIFfr?=
+ =?us-ascii?Q?w0GCqA0EhmGC2E3FPMwaMlhL6speVhYfuWIciijCfcT8ApbuLkGR1jRLsXK2?=
+ =?us-ascii?Q?FLtyZItrrlxiDW1WAhPeWAy57mJOoyfxqvRTXlNnFtjo4mT31Va+Cox1S7k0?=
+ =?us-ascii?Q?CwCcd7e+4yolE40CBJjbqsIywz68kIibVNKc+e1HlpSOxG7jzDJNEd3uSaeG?=
+ =?us-ascii?Q?imdRwtw5U83roI1ajzXysRYT8482zm5s1hmFhC0x+6Mg4sS+ItdsOD1qoVud?=
+ =?us-ascii?Q?LdbLaRapKpsF9v4jLyIqCUd9FPjBlfVNSjSgTGqlxRdlRqJ4mFPHVGSs+bX0?=
+ =?us-ascii?Q?KkgQiOpJFnU/ZeULS3EcLyTUgocq1SnPMfEpRAxA0mf4u9sKG8x2dnslVfa7?=
+ =?us-ascii?Q?0gjBWLQ6K6xaWLbLQ0zWfe3OHHvNqwZN7ZEotsQD3vTnMoZfgboUD/oi1tD2?=
+ =?us-ascii?Q?EKKJ6KhU/uFrRagNjfZusIU6QxtFuWHLASgCHqT2wrDwTv810Xn48hAj/Yvh?=
+ =?us-ascii?Q?bYeHrzZ/+HKUtpS5n45A2T3S6bV3A87c9/X3mEPOX7g5Vafuq669a220sYOt?=
+ =?us-ascii?Q?fX+IS2b8rcm/T767rvZoZtVD5MmeTi37wRgcqQQ+YCeerOQgSpbfUSDmwyio?=
+ =?us-ascii?Q?poEkiTmmRYGzjmd2+d10E44CCV6u7omtbxF0SgktauZGrkfV1PjpmFYNXj2R?=
+ =?us-ascii?Q?0REHlZMSvSWAiJ6WuSRLvHcSgmbB+Rg2/TqzDAbtvLBu+Bc75/ZteK0t9Rlm?=
+ =?us-ascii?Q?WJIIxCckhkat50Z1mKIybnCNf3B/WPZoSdlXwBASDiCPL5tAd72DQOa0lh4N?=
+ =?us-ascii?Q?RLKIgtCi4s4UvOJMvCi4P/TJvXX1uzMn0uIyLpfhsK8kxweDjupG3+bXEpLs?=
+ =?us-ascii?Q?Fu9OmagqqoWuXwvjO8kz/b6hm9BfW841klxDPagZ5wrheoqchPISQLEF5lof?=
+ =?us-ascii?Q?zxaveRyHkpGLwwVUsNiTUaHi6XU/Tw+M8SsFDMY2CDgTOZ8qzP39Zb7++lW9?=
+ =?us-ascii?Q?hLynK+ruc89JaOBZjvD1JmKF/8smR6J8yce1ZbGd+Nt3R4FAJL5Gv/bK03tR?=
+ =?us-ascii?Q?GKHXEYGEdaveeKYYmn6yo7bs3sZRWzE=3D?=
 X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3d40c502-5429-4e97-7c8a-08d9b4a53098
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2652765b-cf63-4796-35a3-08d9b4a80543
 X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Dec 2021 08:33:02.8923
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Dec 2021 08:53:18.6656
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: W11bPJsaP+644H8EwvZMKL9MzZGNXJ2knRqevz73F6ZQIz8hvux3XlpMvT5rXiETslyOY/n8EzkWv5NqUC9VDbuQ7huqpRF4Z/hRgU5fNIQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB3997
+X-MS-Exchange-CrossTenant-UserPrincipalName: ayXnK7wm8QLO5Fn9ujVueq8hvKHZbcdvI5NWOTHcXV+aGub6tk2GiFKibSZ7MvVjVhCMbKTQxDXHiDvrqs3kmVVkHdWDEiSslGB3kKwHDQI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB4157
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01.12.2021 00:32, Eric Sunshine wrote:
->It has long been practice in this project for a command to emit its
->primary output to stdout so that it can be captured to a file or sent
->down a pipe, and to emit "chatty" messages (such as those reporting
->progress) to stderr so that they don't interfere with the primary
->output. However, this idiomatic Unix practice is not necessarily
->universally understood and may be at odds with other schools of thought,
->such as the somewhat common one that only error messages should go to
->stderr, and all other messages to stdout. Let's help newcomers by
->documenting how stdout and stderr are used on this project.
->
->Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
->---
-> Documentation/CodingGuidelines | 26 ++++++++++++++++++++++++++
-> 1 file changed, 26 insertions(+)
->
->diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
->index 711cb9171e..44dd178dc9 100644
->--- a/Documentation/CodingGuidelines
->+++ b/Documentation/CodingGuidelines
->@@ -499,6 +499,32 @@ For Python scripts:
->  - Where required libraries do not restrict us to Python 2, we try to
->    also be compatible with Python 3.1 and later.
->
->+
->+Program Output
->+
->+ We make a distinction between a command's primary output and output
->+ which is merely chatty feedback (for instance, status messages,
->+ running transcript, or progress display), as well as error messages.
->+ Roughly speaking, a command's primary output is that which one might
->+ want to capture to a file or send down a pipe; its chatty output
->+ should not interfere with those use-cases.
->+
->+ As such, primary output should be sent to the standard output stream
->+ (stdout), and chatty output should be sent to the standard error
->+ stream (stderr). Examples of commands which produce primary output
->+ include `git log`, `git show`, and `git branch --list` which generate
->+ output on the stdout stream.
->+
->+ Not all commands have primary output; this is often true of commands
->+ whose main function is to perform an action. Some action commands are
->+ silent, whereas others are chatty. An example of a chatty action
->+ commands is `git clone` with its "Cloning into '<path>'..." and
->+ "Checking connectivity..." status messages which it sends to the
->+ stderr stream.
->+
->+ Error messages are always sent to the stderr stream.
->+
+The ssh signing feature was breaking tests when the broken openssh-8.7
+was used. We have now fixed that by checking for this exact case in the
+GPGSSH prereq and I will improve that check further in a future patch.
+However we are now in a situation where a broken openssh in the future
+will result in successfull tests but not a working git build afterwards
+(either not compiling in the expected feature or like in the ssh case
+runtime failures) resulting in a false sense of security in the tests.
+This patches try to improve this situation by showing which prereqs
+failed in the test summary and by adding an environment variable to
+enforce certain prereqs to succeed or abort the test otherwise.
 
-This is not necessarily true in the context of the tests.
-We just spoke about this in: 
-https://lore.kernel.org/git/211130.86wnkpd6ou.gmgdl@evledraar.gmail.com/T/#u
+See also:
+https://public-inbox.org/git/xmqqv916wh7t.fsf@gitster.g/
 
-I don't think it necessary to bloat this explanation with the test details.  
-But mentioning it as an exception would be good.
+changes since v3:
+ - reword comment about test framework fd setup
+
+changes sinve v2:
+ - use a space separated list for GIT_TES_REQUIRED_PREREQ like we do for
+   GIT_SKIP_TESTS
+ - use BAIL_OUT() insted of just error()
+ - make BAIL_OUT() print errors even when used within prereq context
+
+changes since v1:
+ - use \012 instead of \n for possible portability reasons
+ - fix typo in commit msg
+
+Fabian Stelzer (3):
+  test-lib: show missing prereq summary
+  test-lib: introduce required prereq for test runs
+  test-lib: make BAIL_OUT() work in tests and prereq
+
+ t/README                |  6 ++++++
+ t/aggregate-results.sh  | 17 +++++++++++++++++
+ t/test-lib-functions.sh | 11 +++++++++++
+ t/test-lib.sh           | 25 +++++++++++++++++++++----
+ 4 files changed, 55 insertions(+), 4 deletions(-)
+
+Range-diff against v3:
+1:  35c92671e5 = 1:  9617d336c7 test-lib: show missing prereq summary
+2:  d6a53f0980 = 2:  409694823a test-lib: introduce required prereq for test runs
+3:  de21c484d6 ! 3:  3757e4e238 test-lib: make BAIL_OUT() work in tests and prereq
+    @@ t/test-lib.sh: USER_TERM="$TERM"
+      TERM=dumb
+      export TERM USER_TERM
+      
+    -+# Set up additional fds so we can control single test i/o
+    ++# What is written by tests to stdout and stderr is sent so different places
+    ++# depending on the test mode (e.g. /dev/null in non-verbose mode, piped to tee
+    ++# with --tee option, etc.). We save the original stdin to FD #6 and stdout and
+    ++# stderr to #5 and #7, so that the test framework can use them (e.g. for
+    ++# printing errors within the test framework) independently of the test mode.
+     +exec 5>&1
+     +exec 6<&0
+     +exec 7>&2
+
+base-commit: abe6bb3905392d5eb6b01fa6e54d7e784e0522aa
+-- 
+2.31.1
+
