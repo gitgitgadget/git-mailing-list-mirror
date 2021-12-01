@@ -2,213 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABB0EC433F5
-	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 20:35:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECFD6C433EF
+	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 20:59:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352955AbhLAUim (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Dec 2021 15:38:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46740 "EHLO
+        id S1353469AbhLAVC7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Dec 2021 16:02:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352909AbhLAUiP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Dec 2021 15:38:15 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A453EC061758
-        for <git@vger.kernel.org>; Wed,  1 Dec 2021 12:34:51 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id y12so106875134eda.12
-        for <git@vger.kernel.org>; Wed, 01 Dec 2021 12:34:51 -0800 (PST)
+        with ESMTP id S1353169AbhLAVBH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Dec 2021 16:01:07 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC714C0613B7
+        for <git@vger.kernel.org>; Wed,  1 Dec 2021 12:56:47 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id x15so107005401edv.1
+        for <git@vger.kernel.org>; Wed, 01 Dec 2021 12:56:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=1sjm+AUi4/9qhcuSRdtUYzVftzNepk1+bdDl6r4qxfo=;
-        b=HxdnwSRhkiO6df4ombcOEbrrk6ILHXQnivkFbrI0Tn0a9FFlrpGX7KiaGPRq4+DFW8
-         RtKOZFshY2az5DYfOhwVMa28F4SA6O/xnb8tivgf+4e8JfSYk0ZXX2PX8skS7pcQ/cP3
-         jy0WMTVPMAc+DllerSgBoM6uvISof73rAiYA0lkXuO7T27AB969jcINaHJKgLOPZ+rUS
-         uokwESNHPmQP2XXS3kjNkCxZ4MTLKXSUweTpZWxhwt/JHLMtbLA8ltYd9y16UkfQs70m
-         uzo3fEIsMDzzxEXa9QCONlNk9tz2GcB4n+dBrNC7yba9fJ1Isl4W2AOPmfpVhDR6v5cK
-         h9ig==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=IcErk62aq6sx+2j0rUV38xWUsd5yKaV+zCwaMoCUqJ0=;
+        b=i4PKOhZZzsLEm2FpBmXLW6kIQNfQyMqeQX8sNpRucuqxTSsHpMRWt0jwswtbazVV/j
+         m5McAsEXJKMHvAJORqmIst62RzuuHYs3KJUO3eT4Yb/KOs/R/ev6YlAMRhXaJL+ZFo3M
+         jhux+PshapxSSPn5x7l2W29avFEK29cy80ecnNAJRn5cX0ik5WFk0at8UssbVqufLndU
+         wCOOtZCxYyYSBbQ46jJYJeUlxccV1zsODbPHrbccBVj1vF8blB+w66w8gbZtx1444MSo
+         h/pg9/dpxgxDMKQnXaAufZodua9aSv0r2LDt5J3Ptkdv2huU0GM4f7cjcXJizTElhVs1
+         izgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=1sjm+AUi4/9qhcuSRdtUYzVftzNepk1+bdDl6r4qxfo=;
-        b=4bI69toGYajkzaKij6He6tF7pz3om8+Am0vfT34PSuy1H+IYXbo7lHcbwO9pDgc0oD
-         ThKKR64iXxNgj16ehOLflSihza9CmgHnuTcKE5Wsxj6YdvxQvEdhHZwKlBQvWSZzNzFf
-         yvkRaPJNLEq2cmbx+y8tRuUHIn3Z4HkkmyUZqzvm4+xUrzmzp/II1cZPS/rC+BAhIcLs
-         bJaMLmBV0tvn8/isLcZ5USQmvWtj5kip+ygYAcITgpSE8GU+BFRF+td+jJM+dAOS+64N
-         Ba14s27s0VJe97ZPRcfhYWRwox8dsfqG4MF8nx6PxSGRGUpZ0WJk4AQ8/wK6GgDdDQi7
-         I7yg==
-X-Gm-Message-State: AOAM531kOi0uvltfXkl9XQLfv9l24QWFJP8nhk0Q8ovW9dv7wj2TY7Xl
-        06LkWMoGlY2/VGvBo71b7Lc=
-X-Google-Smtp-Source: ABdhPJyUa/YZLx0ZPaHj+c9PIVelFCFLRx2XPreYVcas4hbHQ0LeAT2o2wfJ9Vi/BQOJCCmrvxfjQw==
-X-Received: by 2002:a17:906:48c9:: with SMTP id d9mr10031255ejt.57.1638390890075;
-        Wed, 01 Dec 2021 12:34:50 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p13sm485297eds.38.2021.12.01.12.34.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Dec 2021 12:34:49 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1msWJV-001OHD-28;
-        Wed, 01 Dec 2021 21:34:49 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v6 0/8] Sparse Index: integrate with reset
-Date:   Wed, 01 Dec 2021 21:26:12 +0100
-References: <pull.1048.v5.git.1635345563.gitgitgadget@gmail.com>
- <pull.1048.v6.git.1638201164.gitgitgadget@gmail.com>
- <CABPp-BG0iDHf268UAnRyA=0y0T69YTc+bLMdxCmSbrL8s=9ziA@mail.gmail.com>
- <9c5b7067-b0e3-0153-5cd3-042bae92f91e@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <9c5b7067-b0e3-0153-5cd3-042bae92f91e@github.com>
-Message-ID: <211201.86v9089i8m.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=IcErk62aq6sx+2j0rUV38xWUsd5yKaV+zCwaMoCUqJ0=;
+        b=RB++63v5m2Ol+uEbFqpUQsuhpIj4b2BmSSIdsyy11+mci77PRTuc08v/i/KyG9g5mb
+         zX3x3flGEiif/Z5rK0khmXHgLHqm1VPhBaUe6h+BUB0wxQXwjVrJs6yDAarwQbltaJJM
+         eQh6SRwA7aBbutglgcjq5kUKwbYLWrqQKuFqk6iyETib6LCYr9bf2EMYWg3xL2FAQUuE
+         1VoC53+Mo9oPFj/aY2JeecR0x8mdjkFbWj9uzz+QuL5t7xTwM2K/XUFNmnKu9SpoJ+uW
+         uNeCuICloirmIblq+yACg+//gs5ccv2Ag19BDu12fFFifwfjQhitL7XCkmV+Hmfjxbk2
+         Qf3g==
+X-Gm-Message-State: AOAM532XmhJQdDBrs3lCANlg6bMyOKpxxgwFilYALIp7bE+0VNbO9jSE
+        jKpHs80OfNV6MOVQirmr7c8k4ZthTf6qdbozsP8=
+X-Google-Smtp-Source: ABdhPJzkUhyShVQgl34Rq8qRT7cO0TkHELy6rz6aDoluw53nqloZbmCd/zHWsM9+DyaUn7i6c42+v8PaArewiWvHVhQ=
+X-Received: by 2002:a05:6402:5cb:: with SMTP id n11mr11901644edx.279.1638392206289;
+ Wed, 01 Dec 2021 12:56:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqqzgpm2xrd.fsf@gitster.g> <CABPp-BE4uYBFnb-AgVJhNo6iK4da5hiEFEBhd=7Ea3Ov=4K4zw@mail.gmail.com>
+ <d95f092.3f.17d73a85761.Coremail.pwxu@coremail.cn>
+In-Reply-To: <d95f092.3f.17d73a85761.Coremail.pwxu@coremail.cn>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 1 Dec 2021 12:56:34 -0800
+Message-ID: <CABPp-BG9jHaJYekDnvZT+8QW_fLGM_bmz-oOqzJswaotyVDFBA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2021, #07; Mon, 29)
+To:     =?UTF-8?B?QWxlZW4g5b6Q5rKb5paH?= <pwxu@coremail.cn>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?5b6Q5rKb5paHIChBbGVlbik=?= <aleen42@vip.qq.com>,
+        Aleen via GitGitGadget <gitgitgadget@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Nov 29 2021, Victoria Dye wrote:
-
-> Elijah Newren wrote:
->> Hi,
->> 
->> On Mon, Nov 29, 2021 at 7:52 AM Victoria Dye via GitGitGadget
->> <gitgitgadget@gmail.com> wrote:
->>>
->>> Changes since V5
->>> ================
->>>
->>>  * Update t1092 test 'reset with wildcard pathspec' with more cases and
->>>    better checks
->>>  * Add "special case" wildcard pathspec check when determining whether to
->>>    expand the index (avoids double-loop over pathspecs & index entries)
->> 
->> Looks pretty good.  However, I'm worried this special case you added
->> at my prodding might be problematic, and that I may have been wrong to
->> prod you into it...
->> 
->>> Thanks! -Victoria
->>>
->>> Range-diff vs v5:
->>>
->>>  7:  a9135a5ed64 ! 7:  822d7344587 reset: make --mixed sparse-aware
->>>      @@ Commit message
->>>
->>>           Remove the `ensure_full_index` guard on `read_from_tree` and update `git
->>>           reset --mixed` to ensure it can use sparse directory index entries wherever
->>>      -    possible. Sparse directory entries are reset use `diff_tree_oid`, which
->>>      +    possible. Sparse directory entries are reset using `diff_tree_oid`, which
->>>           requires `change` and `add_remove` functions to process the internal
->>>           contents of the sparse directory. The `recursive` diff option handles cases
->>>           in which `reset --mixed` must diff/merge files that are nested multiple
->>>      @@ builtin/reset.c: static void update_index_from_diff(struct diff_queue_struct *q,
->>>       +          * (since we can reset whole sparse directories without expanding them).
->>>       +          */
->>>       +         if (item.nowildcard_len < item.len) {
->>>      ++                 /*
->>>      ++                  * Special case: if the pattern is a path inside the cone
->>>      ++                  * followed by only wildcards, the pattern cannot match
->>>      ++                  * partial sparse directories, so we don't expand the index.
->>>      ++                  */
->>>      ++                 if (path_in_cone_mode_sparse_checkout(item.original, &the_index) &&
->>>      ++                     strspn(item.original + item.nowildcard_len, "*") == item.len - item.nowildcard_len)
->> 
->> I usually expect in an &&-chain to see the cheaper function call first
->> (because that ordering often avoids the need to call the second
->> function), and I would presume that strspn() would be the cheaper of
->> the two.  Did you switch the order because you expect the strspn call
->> to nearly always return true, though?
->> 
+On Tue, Nov 30, 2021 at 5:42 PM Aleen =E5=BE=90=E6=B2=9B=E6=96=87 <pwxu@cor=
+email.cn> wrote:
 >
-> This is a miss on my part, the `strspn()` check is probably less expensive
-> and should be first.
+> > Please don't, at least not this version.  There have been newer
+> > submissions with three commits.
+> >
+> > I also still find the word 'die' confusing, since to me it suggests
+> > aborting the whole am operation, and the documentation does not dispel
+> > that concern.  Even if you don't like 'ask' (for consistency with
+> > git-rebase), I think 'stop' or 'interrupt' would be much better
+> > options than 'die'.  If you really want it to be 'die', I think the
+> > behavior needs to be explained in the documentation, rather than just
+> > assumed that users will understand it (because I didn't understand it
+> > until I read the code).
+>
+> Dears Newren,
+>
+>     I don't think 'stop' and 'interrupt' words are better to explain more=
+ than 'die'
+>     because they still indicate that it will stop or interrupt the whole =
+am session,
+>     rather than stop in the middle of it.
 
-I doubt it matters either way, and I didn't look into this to any degree
-of carefulness.
+Since you've been through several rounds of revisions already, if this
+is the only remaining issue with your series, I wouldn't try to hold
+it up for this issue; I just thought it could be fixed while you were
+working on the --allow-empty stuff.
 
-But having followed the breadcrumb trail from the "What's Cooking"
-discussion & looked at the code one thing that stuck out for me was that
-path_in_cone_mode_sparse_checkout() appears returns 1 inconditionally in
-some cases based on global state:
+However, while I don't think it's worth holding up your series for
+just this issue, I would definitely submit a follow-up RFC patch to
+fix the wording, because I do disagree with your assertion here pretty
+strongly.  Let's look at the meanings of the terms:
 
-	/*
-	 * We default to accepting a path if there are no patterns or
-	 * they are of the wrong type.
-	 */
-	if (init_sparse_checkout_patterns(istate) ||
-	    (require_cone_mode &&
-	     !istate->sparse_checkout_patterns->use_cone_patterns))
-		return 1;
+die: connotes something pretty final and irreversible -- people tend
+not to revive after death as far as recorded history goes; most such
+recorded instances tend to be causes for people to debate the
+definition of 'dead'.
 
-So moreso than the nano-optimization of strspn()
-v.s. path_in_cone_mode_sparse_checkout() I found it a bit odd that we're
-calling something in a loop where presumably we can punt out a lot
-earlier, and at least make that "continue" a "break" or "return" in that
-case.
+stop: could be final, but is often used in a transitory setting: "stop
+and go traffic", "stopped to catch my breath",  "the train will stop
+at this station", "stop! I want to get out", etc.
 
-I.e. something in this direction (this patch obviously doesn't even
-compile, but should clarify what I'm blathering about :); but again, I
-really haven't looked at this properly, so just food for thought:
+interrupt: seems to nearly always be used as a transitory thing
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index b1ff699b43a..cefdabb09c2 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -187,6 +187,9 @@ static int pathspec_needs_expanded_index(const struct pathspec *pathspec)
- 	if (pathspec->magic)
- 		return 1;
- 
-+	if (cant_possibly_have_path_in_cone_mode_blah_blah(&the_index))
-+		return 1;
-+
- 	for (i = 0; i < pathspec->nr; i++) {
- 		struct pathspec_item item = pathspec->items[i];
- 
-diff --git a/dir.c b/dir.c
-index 5aa6fbad0b7..19f2d989dd3 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1456,14 +1456,8 @@ int init_sparse_checkout_patterns(struct index_state *istate)
- 	return 0;
- }
- 
--static int path_in_sparse_checkout_1(const char *path,
--				     struct index_state *istate,
--				     int require_cone_mode)
-+int cant_possibly_have_path_in_cone_mode_blah_blah(...)
- {
--	int dtype = DT_REG;
--	enum pattern_match_result match = UNDECIDED;
--	const char *end, *slash;
--
- 	/*
- 	 * We default to accepting a path if there are no patterns or
- 	 * they are of the wrong type.
-@@ -1472,6 +1466,16 @@ static int path_in_sparse_checkout_1(const char *path,
- 	    (require_cone_mode &&
- 	     !istate->sparse_checkout_patterns->use_cone_patterns))
- 		return 1;
-+}
-+
-+
-+static int path_in_sparse_checkout_1(const char *path,
-+				     struct index_state *istate,
-+				     int require_cone_mode)
-+{
-+	int dtype = DT_REG;
-+	enum pattern_match_result match = UNDECIDED;
-+	const char *end, *slash;
- 
- 	/*
- 	 * If UNDECIDED, use the match from the parent dir (recursively), or
+Now, in the computer science context, all three terms come up relative
+to processes.  You can interrupt a process (the kernel does all the
+time), but it'll usually continue afterwards.  Or you can give it a
+SIGINT (interrupt from keyboard signal), which the process can catch
+and ignore.  You can stop a process (and SIGSTOP cannot be caught),
+but you can also continue it later.  die essentially means the process
+is going to be gone for good (at least short of some kind of black
+magic like a reversible debugger such as rr).
+
+So, I think it's much more likely that 'die' will be misunderstood to
+mean abortion of the entire am-process, than that 'stop' or
+'interrupt' would.
+
+>     It may be a good choice to just add an
+>     additional description about the behaviour when not passing the '--em=
+pty' option
+>     or passing '--empty=3Ddie'.
+
+That would be good.
