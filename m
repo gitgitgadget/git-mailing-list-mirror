@@ -2,100 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6819DC433F5
-	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 18:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D4DDC433F5
+	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 18:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352574AbhLASmV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Dec 2021 13:42:21 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62240 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238768AbhLASmT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Dec 2021 13:42:19 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0BDDBF9135;
-        Wed,  1 Dec 2021 13:38:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=YmJNc8X9zzOF
-        0ldeY6UEcXAAp5+GfklQIusfu5yPsBw=; b=ER/JSUpwfRo6hyycOtCzNkM02FFY
-        ghc0rzZQIyLrRlGfiwFbDRbyfLFmyoj0T0BHR1dPbjRL/264oV5E0prlQLDYqJH+
-        ChPZ6yuBfNbMIgLpyHc+FXPSsEvCDpBtQUH+mtNQlK4SOyDW9K8xUUOICIZ/GxX+
-        HExIuOPMGXtH2c4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0282CF9134;
-        Wed,  1 Dec 2021 13:38:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 634CFF9133;
-        Wed,  1 Dec 2021 13:38:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] test-lib.sh: have all tests pass under "-x", remove
- BASH_XTRACEFD
-References: <pull.1085.git.1638193666.gitgitgadget@gmail.com>
-        <patch-1.1-9f735bd0d49-20211129T200950Z-avarab@gmail.com>
-Date:   Wed, 01 Dec 2021 10:38:56 -0800
-In-Reply-To: <patch-1.1-9f735bd0d49-20211129T200950Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 29 Nov
- 2021 21:13:23 +0100")
-Message-ID: <xmqqpmqg1873.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1352435AbhLASxR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Dec 2021 13:53:17 -0500
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:43721 "EHLO
+        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S244640AbhLASxQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 1 Dec 2021 13:53:16 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 4BF7B5C01A1;
+        Wed,  1 Dec 2021 13:49:54 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Wed, 01 Dec 2021 13:49:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=yN25uhzGLH5N2AUT5gnEqxStWUw
+        Fbk9SuPDZHpRoa1w=; b=MMdykqIDP8ZJ17XVCtRO2zvcw6bL7c0BltQS8507DIH
+        2utRqxOJcCoAFLxH8ogE51proaGT2VFGBBYdAoxS2AO4SmuITSt6L/V9M2GWSt0t
+        JNXxW+lLnlBXf93+rXL4pBL20tuPeJOy9Rc8Oo97lT43UBhLGZJE8JtCX+XZi0/w
+        FZNtXEjTj6ky73vpMdkj5yn2crrvmNleAOpmWS24NXEytOJbBU2cHagcj2+Fnbgd
+        o2xZMRuWA9ijy8l5iJMzCQ5Iddrq+Xx7uY02Udrz6Z1rUKsY4rTYTCyGvZf1unaE
+        f2kZO/aIDCWL2B5ZF3L9R8cay10Ybe0nnhHvpU8KpNA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=yN25uh
+        zGLH5N2AUT5gnEqxStWUwFbk9SuPDZHpRoa1w=; b=NyZpBrDIjWZbMk5yj7A7M5
+        clJPIP0Dyh7hFbub4YxrZyOX8dJRBHf85mLDMyl0gTg5TET+qkuNSaLQRsoAMwsV
+        LvzibYChsDrMahVJSO74iZQgtSVGYa0arPUHJumSo0pQSParcc3I5Yg0jzLgduRn
+        KZFy1F19ULpeIZNh0SkKbz/orkhU0K6eBhNaoY1PjFIDUkt4BtECbJal8mPXaxT3
+        HZ5x63kaSrf45gu+Ey69Y0abGNP1X7MYtZ+1/ppSM5eulL1VEX3T7KGHm73YWLf8
+        b5nyPzQMRsYscoyNTygS9F9M1dc/1XJYnoj0AZqY7vVmOtNwo6Oiwj47mJZPhNrA
+        ==
+X-ME-Sender: <xms:0cOnYaVHzcHANkYc2jJY44CPNE_fNLPnuTn47AR-Sx5_63CUBwJjWw>
+    <xme:0cOnYWnb11xm4wDbXXtnd3uW0p4cA0gtfo6VRgKxh2Do2UJo9OkpoI-LNTRTXADwu
+    esmkZ2RwbI25eHSDQ>
+X-ME-Received: <xmr:0cOnYeYZNcEjbED928lRwjr6tBb03vh8pjc05xChUX8-aMNHAyhOBIy8ofzNOZC-NcS67zCF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrieefgdduudejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehttdortddttdejnecuhfhrohhmpefhvghrnhgr
+    nhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohesuhelvddrvghuqeenucggtffrrghtth
+    gvrhhnpeetheevvdejfeevieetjeehtdeiueeujeefheekudfgueefkeelffetjeevleeu
+    veenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrh
+    gvvghnfhhoohesuhelvddrvghu
+X-ME-Proxy: <xmx:0cOnYRUXzJEcAOiBDArUNuxBKvNgx1BeM-OotqPZXaBYKtuZUYxbjw>
+    <xmx:0cOnYUl2Qir61QA_7rr7113l5IMOvi0iMNQQ2vqnRlvkwN7GpTA90A>
+    <xmx:0cOnYWePxI7rdovkF2-qEnfTxpGHklhUYW-KkhH-aWEHcMfwDcHPmQ>
+    <xmx:0sOnYTvsAFnu9fcim2ulbS8ue5OyI-VY9-71OVQ6v2N77x-ZdzY9sg>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 1 Dec 2021 13:49:51 -0500 (EST)
+Date:   Wed, 1 Dec 2021 19:49:48 +0100
+From:   Fernando Ramos <greenfoo@u92.eu>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        David Aguilar <davvid@gmail.com>, Seth House <seth@eseth.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        rogi@skylittlesystem.org
+Subject: Re: [PATCH v3 0/3] vimdiff: new implementation with layout support
+Message-ID: <YafDzJmSHoiJFmKT@zacax395.localdomain>
+References: <20211130204333.174967-1-greenfoo@u92.eu>
+ <CAPig+cQg=P1BNCwfmNAE3oHZHh4CPJ5QNQh-vgfOQDGGwenMow@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F1766382-52D5-11EC-B5E3-62A2C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQg=P1BNCwfmNAE3oHZHh4CPJ5QNQh-vgfOQDGGwenMow@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On 21/12/01 12:03AM, Eric Sunshine wrote:
+> Just a side note: I understand that [1] recommended adding the "$"
+> inside arithmetic expressions, but by chance I happened to be browsing
+> the history of CodingGuidelines and ran across 32b5fe7f0e
+> (CodingGuidelines: drop arithmetic expansion advice to use "$x",
+> 2020-05-04) which dropped[2] the recommendation to use "$" inside the
+> expression. Anyhow, certainly not worth a re-roll.
 
-> Change the "t1510-repo-setup.sh" test to use a new
-> "test_must_be_empty_trace" wrapper, instead of turning on
-> "test_untraceable=3DUnfortunatelyYes".
->
-> The only reason the test was incompatible with "-x" was because of
-> these "test_must_be_empty" checks, which we can instead instead skip
-> if we're running under "set -x".
->
-> Skipping the tests is preferable to not having the "-x" output at all,
+I don't mind preparing a v4 with this change. I also think it makes the code
+cleaner. I'll do that :)
 
-Even more preferrable is not to skip the tests, no?  Is this because
-we capture the standard error stream and do not care where, between
-the command being tested and the shell running the command, the
-output came from?
 
-> Once that's been removed we can dig deeper and see that we only have
-> "BASH_XTRACEFD" due to an earlier attempt to work around the same
-> issue. See d88785e424a (test-lib: set BASH_XTRACEFD automatically,
-> 2016-05-11) and the 90c8a1db9d6 (test-lib: silence "-x" cleanup under
-> bash, 2017-12-08) follow-up.
+> By the way, since you've removed Bashisms, do you still need the
+> `#!/bin/bash` at the top of the script?
 
-If the objective is to work around the "shell trace and program
-output are mixed together" issue, BASH_XTRACEFD is doing much more
-superb job to "solve" it than "some tests depend on running without
-'-x', so punt and skip them" to "work around" it, I would have to
-say.
+Good catch. Will do.
 
-> It's better if our test suite works the same way on all shells, rather
-> than getting a passing run under "bash", only to have it fail with
-> "-x" under say "dash". As the deleted code shows this is much simpler
-> to implement across our supported POSIX shells.
-
-It is much simpler to punt and skip all tests.  You can even have
-"if run with -x stop and skip all" in early part of test-lib.sh and
-that would "work around" without developers constantly having to
-worry about the distinction between test_must_be_empty and the trace
-variant.
-
-It is a sad that you have to trade one good thing for another.
-Somehow, this change feels like a regression, not an improvement.
-
+I'll wait a few more days for extra comments and prepare a v4 with these
+changes. Thanks for the suggestions.
 
