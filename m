@@ -2,118 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EC73C433F5
-	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 22:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4332C433F5
+	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 22:34:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353637AbhLAWel (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Dec 2021 17:34:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45148 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353625AbhLAWe3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Dec 2021 17:34:29 -0500
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB88BC061574
-        for <git@vger.kernel.org>; Wed,  1 Dec 2021 14:31:06 -0800 (PST)
-Received: by mail-qt1-x829.google.com with SMTP id a2so25648750qtx.11
-        for <git@vger.kernel.org>; Wed, 01 Dec 2021 14:31:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=voiceflow-com.20210112.gappssmtp.com; s=20210112;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=beZkwI2gjg8fHGrSO2AqDGlho/yYx+ZCfoZXGRx03bU=;
-        b=eBTuqFTYYv9eYAY7anI2YetFeeVLK/9B74zc5DDMaT8rrxUgDSSWhuwvAZT/r/N0zn
-         hs3jhnQ1PIOwrGo64a4D/La2Wvcci3honmEOsuTv10cwiDUcIpW8VQYrfOCgX5ClsjuK
-         zm23GiZsrp+O7wDNfZxs+89ggQCy6Su/Mpdf1b2c8UIhjJ6hskp8vWn/6zu4Nd6MxBc2
-         /s+o3hCwbaucyny2FdRVK0hAVLHA34eVMU7tpVD3KbHwVDWurfXnnPP4e4FLyVYNZ/x8
-         WG+oQTDfIb7FP+RomWCquZPISDmgsTYYxA/JEwcxCRk+pwychaw/c5+j8LEQXl8+R4fz
-         TfNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=beZkwI2gjg8fHGrSO2AqDGlho/yYx+ZCfoZXGRx03bU=;
-        b=TbPJeK8jhJl6/uJpRzHxihIMKPcWn1DaFUachpmpxe93AfljOYsgfb0i7wSd+0UuSE
-         h0+DKqhK909mRTOxEc5kxjfiQOyw7JVycLlKweMgVyHURIZGhWPeTXAW2ffcVSYfImRZ
-         fgw5MX9ozC8JoItd4h2GokjLaYiNNEeXx3jqK15meUgGlkXo4v3aUG8Grecv7jVdCMGV
-         w2ov5dpCK0QUlhBch24e+ZKoT3MnQHfSJoxn5411FvUh6ULldK6wmetN+hG7v3htLGZX
-         gm6WzH5MS5Bj4Lt2J6K+1jtJHHJmQrsVEiDP6OZSHTEsKoAJr5+po1tb0MaI+KBWjH7u
-         zW0w==
-X-Gm-Message-State: AOAM533AYyXvyliZ8yK1Ls+hpO+QuU/OZ/AiwMUBKyXWEPTAUVd+aNwN
-        pe6pec9lP9HnJ4zeAkj0u5Kr95KJeC+1QQ==
-X-Google-Smtp-Source: ABdhPJyroVoSQ4tdPag3ZAvuefA4hJnyt9rcBlxYXrfx1pPbrLDzzZKrNvtqTt2p/MIpZ/zwkP7DjA==
-X-Received: by 2002:ac8:4e28:: with SMTP id d8mr10256765qtw.11.1638397865071;
-        Wed, 01 Dec 2021 14:31:05 -0800 (PST)
-Received: from smtpclient.apple ([97.108.238.149])
-        by smtp.gmail.com with ESMTPSA id k2sm577609qtg.35.2021.12.01.14.31.04
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Dec 2021 14:31:04 -0800 (PST)
-From:   Josh Rampersad <josh.rampersad@voiceflow.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Bug Report
-Message-Id: <C29F5770-5092-40A6-9604-DA5F7166575D@voiceflow.com>
-Date:   Wed, 1 Dec 2021 17:31:03 -0500
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
+        id S1343649AbhLAWiC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Dec 2021 17:38:02 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54626 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234078AbhLAWiB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Dec 2021 17:38:01 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9B34B17381C;
+        Wed,  1 Dec 2021 17:34:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=CxuDaiy0fYt8DsaKsxE3g6YVDrSnrWfq9y3ZK7
+        MxmeI=; b=O/TXKnJWs8YXRZFCoyekYQcn/GSEKcEfa0O+4hY+tieucVzCAc5kOK
+        qW8j3+aHzLgW6qeSv4VZcaEY1YWlJ2LPcaczak4e9RiSBQkQnGWVZ3R7irurbvkM
+        WnUgJeZrtx9Hls5q9z+HaU/4MqK7GFQuBQIi4QBbK9ay6SKHMS6vY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 939F317381B;
+        Wed,  1 Dec 2021 17:34:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4C28C17381A;
+        Wed,  1 Dec 2021 17:34:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Slavica =?utf-8?B?xJB1a2nEhw==?= <slawica92@hotmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] add -i: default to the built-in implementation
+References: <pull.1087.git.1638281655.gitgitgadget@gmail.com>
+        <84824918ae4564a9194a1a55124ee8694f210437.1638281655.git.gitgitgadget@gmail.com>
+Date:   Wed, 01 Dec 2021 14:34:33 -0800
+In-Reply-To: <84824918ae4564a9194a1a55124ee8694f210437.1638281655.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Tue, 30 Nov 2021
+        14:14:15 +0000")
+Message-ID: <xmqqee6wymx2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: DC4F61B8-52F6-11EC-82CD-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> In 9a5315edfdf (Merge branch 'js/patch-mode-in-others-in-c',
+> 2020-02-05), Git acquired a built-in implementation of `git add`'s
+> interactive mode that could be turned on via the config option
+> `add.interactive.useBuiltin`.
+>
+> The first official Git version to support this knob was v2.26.0.
+>
+> In 2df2d81ddd0 (add -i: use the built-in version when
+> feature.experimental is set, 2020-09-08), this built-in implementation
+> was also enabled via `feature.experimental`. The first version with this
+> change was v2.29.0.
+>
+> More than a year (and very few bug reports) later, it is time to declare
+> the built-in implementation mature and to turn it on by default.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-Navigated to a non-default branch of the repo.
-I wanted a list of tagged commits for a specific tag pattern relating to =
-a
-package in my repo.
-Ran the command: `git log origin/master --no-walk --grep=3D'my-package' =
---tags=3D'*my-package*' --decorate-refs=3D'*my-package*'  =
---format=3D'format:%ct %H %D'`
-The output was as expected with the tags not relating to my-package =
-being filtered out from the output by the decorate-refs option.
-I then, wanted to pipe this output to a separate program.
-
-
-What did you expect to happen? (Expected behavior)
-
-I expected that the piped output would be the same as the output in my =
-terminal.
-
-What happened instead? (Actual behavior)
-
-The filtering I got from the decorate-refs flag was no longer being =
-applied. Thus giving me a bunch of tags I did not want
-
-What's different between what you expected and what actually happened?
-
-Whether the decorate-refs option worked as expected.
-
-Anything else you want to add:
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
+I think that declaration is a bit premature.  I do agree that by now
+we should have killed as many bugs as we could without unleashing it
+tot he general public by keeping it behind the experimental flag, and
+we should move forward by turn it on by default.  In a month or two
+after this change hits a stable release of major distros, we can learn
+that the implementation was mature, but not until then ;-).
 
 
-[System Info]
-git version:
-git version 2.31.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Darwin 20.6.0 Darwin Kernel Version 20.6.0: Wed Jun 23 00:26:27 =
-PDT
-2021; root:xnu-7195.141.2~5/RELEASE_ARM64_T8101 x86_64
-compiler info: clang: 12.0.0 (clang-1200.0.32.29)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
+> We specifically leave the `add.interactive.useBuiltin` configuration in
+> place, to give users an "escape hatch" in the unexpected case should
+> they encounter a previously undetected bug in that implementation.
 
+Good thinking.
 
-[Enabled Hooks]=
+>  add.interactive.useBuiltin::
+> -	[EXPERIMENTAL] Set to `true` to use the experimental built-in
+> -	implementation of the interactive version of linkgit:git-add[1]
+> -	instead of the Perl script version. Is `false` by default.
+> +	Set to `false` to fall back to the original Perl implementation of
+> +	the interactive version of linkgit:git-add[1] instead of the built-in
+> +	version. Is `true` by default.
+> diff --git a/builtin/add.c b/builtin/add.c
+> index ef6b619c45e..8ef230a345b 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -237,17 +237,12 @@ int run_add_interactive(const char *revision, const char *patch_mode,
+>  	int use_builtin_add_i =
+>  		git_env_bool("GIT_TEST_ADD_I_USE_BUILTIN", -1);
+>  
+> -	if (use_builtin_add_i < 0) {
+> -		int experimental;
+> -		if (!git_config_get_bool("add.interactive.usebuiltin",
+> -					 &use_builtin_add_i))
+> -			; /* ok */
+> -		else if (!git_config_get_bool("feature.experimental", &experimental) &&
+> -			 experimental)
+> -			use_builtin_add_i = 1;
+> -	}
+> +	if (use_builtin_add_i < 0 &&
+> +	    git_config_get_bool("add.interactive.usebuiltin",
+> +				&use_builtin_add_i))
+> +		use_builtin_add_i = 1;
+>  
+> -	if (use_builtin_add_i == 1) {
+> +	if (use_builtin_add_i != 0) {
+
+Nit.
+
+	if (use_builtin_add_i) {
+
+I wondered if these random calls to git_config_get_X() should be
+consolidated into the existing add_config() callback, but this
+conditional will go away hopefully in a few releases, so it probably
+is not worth it.  Inheriting the way the original code grabbed the
+configuration variables is good enough for our purpose here.
+
+> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> index cc62616d806..660ebe8d108 100755
+> --- a/ci/run-build-and-tests.sh
+> +++ b/ci/run-build-and-tests.sh
+> @@ -29,7 +29,7 @@ linux-gcc)
+>  	export GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=1
+>  	export GIT_TEST_MULTI_PACK_INDEX=1
+>  	export GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=1
+> -	export GIT_TEST_ADD_I_USE_BUILTIN=1
+> +	export GIT_TEST_ADD_I_USE_BUILTIN=0
+>  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+>  	export GIT_TEST_WRITE_REV_INDEX=1
+>  	export GIT_TEST_CHECKOUT_WORKERS=2
+
+OK.
+
+> diff --git a/t/README b/t/README
+> index 29f72354bf1..2c22337d6e7 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -419,7 +419,7 @@ the --sparse command-line argument.
+>  GIT_TEST_PRELOAD_INDEX=<boolean> exercises the preload-index code path
+>  by overriding the minimum number of cache entries required per thread.
+>  
+> -GIT_TEST_ADD_I_USE_BUILTIN=<boolean>, when true, enables the
+> +GIT_TEST_ADD_I_USE_BUILTIN=<boolean>, when false, disables the
+>  built-in version of git add -i. See 'add.interactive.useBuiltin' in
+>  git-config(1).
+>  
+> diff --git a/t/t2016-checkout-patch.sh b/t/t2016-checkout-patch.sh
+> index 71c5a15be00..bc3f69b4b1d 100755
+> --- a/t/t2016-checkout-patch.sh
+> +++ b/t/t2016-checkout-patch.sh
+> @@ -4,7 +4,7 @@ test_description='git checkout --patch'
+>  
+>  . ./lib-patch-mode.sh
+>  
+> -if ! test_bool_env GIT_TEST_ADD_I_USE_BUILTIN false && ! test_have_prereq PERL
+> +if ! test_bool_env GIT_TEST_ADD_I_USE_BUILTIN true && ! test_have_prereq PERL
+>  then
+>  	skip_all='skipping interactive add tests, PERL not set'
+>  	test_done
+
+Looks good.
+
+Thanks.
