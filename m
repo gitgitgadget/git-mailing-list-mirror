@@ -2,183 +2,257 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49761C433EF
-	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 11:24:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6751C433F5
+	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 11:45:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348916AbhLAL1v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Dec 2021 06:27:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59496 "EHLO
+        id S239541AbhLALsg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Dec 2021 06:48:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237345AbhLAL1u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Dec 2021 06:27:50 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F011C061574
-        for <git@vger.kernel.org>; Wed,  1 Dec 2021 03:24:29 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id r9-20020a7bc089000000b00332f4abf43fso652468wmh.0
-        for <git@vger.kernel.org>; Wed, 01 Dec 2021 03:24:29 -0800 (PST)
+        with ESMTP id S229743AbhLALse (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Dec 2021 06:48:34 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C63B9C061574
+        for <git@vger.kernel.org>; Wed,  1 Dec 2021 03:45:13 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id n33-20020a05600c502100b0032fb900951eso22011063wmr.4
+        for <git@vger.kernel.org>; Wed, 01 Dec 2021 03:45:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=p/xPiqWhxxgdXDObOSC6xQBfU7VliRtBqFTVMHluMTs=;
-        b=VsmHM4bZKPhJ3000p8b5xkA+02GyC5VHSzyxuAn1WQtf8cgguWuTQuQSHHmrCYFnaO
-         ZLsq5iybFQcW3Nsj2t1EPrkkLuV7BZvaxD7m5+pwfr98YU7zLh4XDuTP/l8po0dgCluu
-         Vb85R15pta0NSgpn8tgekoxFIqWsLblLBFHlDv0wnOE9+HI6NqDtTfOz3AHoh9yVJQLE
-         PJ8NN+cV6Uq+fauU9uIm1uXZdsCMezyWlMJGHF7QEdFT8gJRqsitUrz2679fp+PH/ivq
-         nZh3Q64ddmJLGnXL6JySGNqM8hpgZHTwxICjDCr0he0CDnQlM4oPwVpry6ZxwjYQz62h
-         HtbA==
+        bh=jsKnT+bWNfy0xbz5Mn4CRAuCuqmsQi8XzmEnib0aSAk=;
+        b=ZhnrgWxEMJTQb5V518x4LX/8t4et/1xNsHIEnvOB+aLEAop6HvNZsjg/O1+cpVRhZe
+         No8BKIybSE3gesV5MnnCrE+yVqlz7Q06gijd2AxeiZCENyoqhN9qu3moQGNs0QXEvX6H
+         trqwsZiHBmrOaZ6+6FZ+/xFrU+EkCufY3O2S20QhulPp+GaHffpkv6iZXR+80e5o1PEc
+         HIW+lV1DZFd4xQygKEpTb9NZG+f0Olc62mtCyIcJkLhQrouXYA1h0udpd7NO2DCHueE2
+         DSeuARAXIft7ZkykJRNs0AuxDHbqK+jIuGpoClouLjQnQoB23dvbl2MmGSfJAOyHjNi3
+         jySA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=p/xPiqWhxxgdXDObOSC6xQBfU7VliRtBqFTVMHluMTs=;
-        b=T46KoU66sppqlNh3lB+97if9+D5JNG/Ju6aOu5c5jaxrTVntHrE+KuKytupi2rvVjq
-         +vjSRa9xufjturiXLVFPsS2YL0wQT8VP4X0kxYHGDRiB5e2ooEELkRIKSgmtD5/t/46w
-         Zn0Tf8mJ9KN/n+Ub4Cll+dcb+h4SOMtwneynAynsgpntC6ogrMLCLET06y/tQUNxcRU4
-         6e7hnlsEnfzCJT/E6PnJc3IN0E8Ve519KgTtylWLJuFjSDGX9lsfVdXWkXArATW4LfOA
-         QqbjoJwt3rFoTDOfL9K7JjdJJk9Vg6HRrMWwAaAcHMe+vGrV8sPcUOCiQHrtpoA6N7rz
-         IOIw==
-X-Gm-Message-State: AOAM532HSWzWTuJI4xwB+zDDtP3/DY+Ij5M3hUPCByLCNx2mIo7ASVzx
-        P6OkFoiFtgCzM7kEJIvpRhY=
-X-Google-Smtp-Source: ABdhPJyWJc06OVbW9DZA71PSS+coOoxARECD5h98ef3O8ii6dU8U8QbwRYDD3BuwMKoWz4/VABadcQ==
-X-Received: by 2002:a05:600c:1c07:: with SMTP id j7mr6365540wms.12.1638357867852;
-        Wed, 01 Dec 2021 03:24:27 -0800 (PST)
+        bh=jsKnT+bWNfy0xbz5Mn4CRAuCuqmsQi8XzmEnib0aSAk=;
+        b=FFDgz6aRk1pNx/7ku7aFrlk9uqQgto/WNZyEsiL9e5DfhL/eN+5pFtxh0Ox4WSPHH2
+         Dj4Z5mTXyaJh2OELMjutl2lRkzFP/Yle2i6Fk95LRKDQ3FpR8MC1iHdOTP1FzzqNYwLe
+         gw0ivgwal7086Ghg8nuPq97ILXyZqiG29h4/S3vdLg1hTNTPsiRFHll3RIK/m8xeVqGj
+         9Oal/3KIYIvd38x4HK4GbYsc/enAzgsRFBjx3rTW1ZQL6rWpCq6COkFJWM1OzQh48QU7
+         hUTPEDCp/XyfvusdvKwXP3aBcZcw2R9NsqkOINF9jHXNAnqxRMyCCvtKSUUq8Fw9GUeG
+         tkCw==
+X-Gm-Message-State: AOAM532nb/hO636LH7KCHR9fuduGd5IYm7j5/vVSqoE9B8Lu0w7DDh/v
+        v0zndk35GIdwCVqJu8l5xJE=
+X-Google-Smtp-Source: ABdhPJwmFXDmJll/xqxFhUn/I0jKPEUjUll7Ox8dncw7Pf/eOUE/FCkkxafAABfykhzD7sVQMw+jqg==
+X-Received: by 2002:a1c:a301:: with SMTP id m1mr6457701wme.118.1638359112343;
+        Wed, 01 Dec 2021 03:45:12 -0800 (PST)
 Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id l15sm693447wme.47.2021.12.01.03.24.27
+        by smtp.googlemail.com with ESMTPSA id 4sm25126239wrz.90.2021.12.01.03.45.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Dec 2021 03:24:27 -0800 (PST)
-Message-ID: <4fa55654-1e7a-aa8e-7e8d-a8512c55447d@gmail.com>
-Date:   Wed, 1 Dec 2021 11:24:26 +0000
+        Wed, 01 Dec 2021 03:45:11 -0800 (PST)
+Message-ID: <4a6387a9-ade0-3690-0003-df28081f76a3@gmail.com>
+Date:   Wed, 1 Dec 2021 11:45:10 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.2
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] sequencer: avoid adding exec commands for non-commit
- creating commands
+Subject: Re: [BUG REPORT] `git rebase --exec` shouldn't run the exec command
+ when there is nothing to rebase
 Content-Language: en-US
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.1149.git.git.1638244719381.gitgitgadget@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     Nikita Bobko <nikitabobko@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Lucien Kong <Lucien.Kong@ensimag.imag.fr>,
+        Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <CAMJzOtyw78-8gt3oGscN7KUzpzRRWtAQuGfcJ+R_Fjoom9Lexw@mail.gmail.com>
+ <211129.868rx7gnd5.gmgdl@evledraar.gmail.com>
+ <CABPp-BFRE2=Owf15WzkacNfdNKbkd2n4GZh7HqDokKzeviBWRw@mail.gmail.com>
+ <211130.865ys9em75.gmgdl@evledraar.gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.1149.git.git.1638244719381.gitgitgadget@gmail.com>
+In-Reply-To: <211130.865ys9em75.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah
+On 30/11/2021 14:03, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Nov 29 2021, Elijah Newren wrote:
+> 
+> [Moving this between threads, from
+> https://lore.kernel.org/git/CABPp-BFRE2=Owf15WzkacNfdNKbkd2n4GZh7HqDokKzeviBWRw@mail.gmail.com/
+> to the patch]
+> 
+>> On Mon, Nov 29, 2021 at 2:25 PM Ævar Arnfjörð Bjarmason
+>> <avarab@gmail.com> wrote:
+>>>
+>>> On Fri, Nov 26 2021, Nikita Bobko wrote:
+>>>
+>>>> Steps:
+>>>> git rebase HEAD --exec "echo foo"
+>>>>
+>>>> EXPECTED: since 0 commits are going to be rebased then I expect "foo"
+>>>> NOT to be printed
+>>>> ACTUAL:   "foo" is printed
+>>>
+>>> I don't think this is a bug, but explicitly desired behavior.
+>>
+>> My reading of the docs are such that I'd expect the same as Nikita here:
+>>
+>>          Append "exec <cmd>" after each line creating a commit in the final
+>>          history.
+>>          ...
+>>          If --autosquash is used, "exec" lines will not be appended for the
+>>          intermediate commits, and will only appear at the end of each
+>>          squash/fixup series.
+>>
+>> There is no line creating a commit in the final history when you do a
+>> git rebase -i --exec "echo foo" HEAD (there is only a noop line), so
+>> there should be no exec line.
+> 
+> Maybe you're right & we can just change it. Keep in mind that those docs
+> were added by a non-native speaker (or rather, I'm assuming so based on
+> the name / E-Mail address).
+> 
+> See c214538416e (rebase -i: teach "--exec <cmd>", 2012-06-12). I agree
+> that the reading you've got of it is the more obvious one.
+> 
+> The reason I thought it wasn't a bug (some of which I dug more into
+> afterwards):
+> 
+>   1. I read that "commit in the final history" as referring to the range of
+>      commits to be rebased. Having only one commit or zero is perfectly OK,
+>      since...
+> 
+>   2. ... with "exec" we don't know if the "commit in the final history" isn't
+>     affected with an argument of HEAD. I.e. yes you can also provide "HEAD~", but
+>     that's the difference between having a "pick" line or not. I don't think the
+>     sequencer cares, but maybe third party scripting via the sequence editor does?
+> 
+>     We already have an explicit facility to early abort the rebasing. See
+>     ff74126c03a (rebase -i: do not fail when there is no commit to cherry-pick,
+>     2008-10-10)
+> 
+>     So the feature that Nikita wants is already possible via GIT_SEQUENCE_EDITOR.
+>     Now, that's a painful UI, but perhaps if this patch is implemented as a 1=1
+>     mapping to that we'll discover some new edge case that wasn't considered?
+> 
+>   3. This isn't just a theoretical concern. It's *interactive* rebase, e.g. a
+>      perfectly fine use for it (which I've occasionally used is):
+> 
+>          # no local commits
+>          git checkout master
+>          # opens my editor with just a "noop" line
+>          git rebase -i
+> 
+>      And then adding/copying around *new* commits in the buffer and saving
+>      it, i.e. using it as an interactive text-based cherry-pick (this is
+>      particularly nice with Emacs's magit mode).
+> 
+> For #3 we can just say "well use HEAD~ then and ignore the one 'pick'"
+> line. Sure, I've probably only used this once or twice.
 
-On 30/11/2021 03:58, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> The `--exec <cmd>` is documented as
-> 
->      Append "exec <cmd>" after each line creating a commit in the final
->      history.
->      ...
->      If --autosquash is used, "exec" lines will not be appended for the
->      intermediate commits, and will only appear at the end of each
->      squash/fixup series.
-> 
-> Unfortunately, it would also add exec commands after non-pick
-> operations, such as 'no-op', which could be seen for example with
->      git rebase -i --exec true HEAD
-> 
-> todo_list_add_exec_commands() intent was to insert exec commands after
-> each logical pick, while trying to consider a chains of fixup and squash
-> commits to be part of the pick before it.  So it would keep an 'insert'
-> boolean tracking if it had seen a pick or merge, but not write the exec
-> command until it saw the next non-fixup/squash command.  Since that
-> would make it miss the final exec command, it had some code that would
-> check whether it still needed to insert one at the end, but instead of a
-> simple
-> 
->      if (insert)
-> 
-> it had a
-> 
->      if (insert || <condition that is always true>)
-> 
-> That's buggy; as per the docs, we should only add exec commands for
-> lines that create commits, i.e. only if insert is true.  Fix the
-> conditional.
-> 
-> There was one testcase in the testsuite that we tweak for this change;
-> it was introduced in 54fd3243da ("rebase -i: reread the todo list if
-> `exec` touched it", 2017-04-26), and was merely testing that after an
-> exec had fired that the todo list would be re-read.  The test at the
-> time would have worked given any revision at all, though it would only
-> work with 'HEAD' as a side-effect of this bug.  Since we're fixing this
-> bug, choose something other than 'HEAD' for that test.
-> 
-> Finally, add a testcase that verifies when we have no commits to pick,
-> that we get no exec lines in the generated todo list.
+I'm not sure I really follow. For #3 you can just type the exec command 
+into the editor rather than passing it on the command line. You already 
+have to manually add exec commands after any new pick lines anyway.
 
-Thanks for fixing this, the patch looks good and the commit message is 
-excellent. I did see Ævar's concerns in another thread but I think this 
-is the least surprising approach - if we're not actually rebasing 
-anything it seems odd to run the exec command.
+> I just worry that we'll break thinsg for other users because we're
+> narrowly focusing on --exec as a way to follow-up interactive rebase
+> commands that we insert, and forgetting that this is a generic
+> templating language that others are intercepting and modifying.
+
+I see what you're getting at but I think this is a small enough corner 
+case that we shouldn't worry too much. I think it is simpler to say if 
+we don't pick any commits we don't add any exec commands.
+
+ >[...]
+>>> When you do:
+>>>
+>>>      git rebase -x 'make test' BASE
+>>>
+>>> You expect to run 'make test' for all of BASE..HEAD inclusive of
+>>> "base". E.g. for HEAD~1 we'll run 'make test' twice, and you know both
+>>> your HEAD~ and HEAD passed tests.
+>>
+>> This is not true.  Try `git rebase -i --exec HEAD~$N` for various
+>> values of N>0.  base is not included.
+> 
+> Sorry, I meant "inclusive of HEAD". I.e. we'll run "make test" for HEAD,
+> not just HEAD~. Likewise with any "exec" commands.
+
+We do not run "make test" for HEAD~ when executing "git rebase -x 'make 
+test' HEAD~1".
+
+>>> So why wouldn't doing the same for HEAD make sense?
+>>
+>> Indeed; HEAD is weirdly inconsistent and should be brought in line
+>> with the others.
+> 
+> I mean why shouldn't we run "make test" on HEAD, sorry. I agree that
+> running "make test" on "base" would make no sense. You can rebase to
+> BASE~ if you want that.
+> 
+> But yes, the result is the same as a rebase to HEAD~, so maybe it's fine
+> to change it...
+> 
+>>> That being said perhaps some users would think an option or
+>>> configuration to skip the injection of "exec" after "noop" would make
+>>> sense in that case.
+>>>
+>>> But does this really have anything per-se to do with --exec? Wouldn't
+>>> such an option/configuration be the same as rebase in general dying if
+>>> there's no work to do?
+>>>
+>>> And wouldn't such a thing be more useful than a narrow change to make
+>>> --exec a NOOP in these cases?
+>>>
+>>> E.g. if I've got a "topic" that has commit "A", that's since been
+>>> integrated into my upstream and I have a script to "make test" on my
+>>> topics, won't simply dying (and thus indicating that the topic is
+>>> dead/integrated) be better than noop-ing?
+>>
+>> Why do you suggest "dying" rather than early completion with success?
+> 
+> If you do:
+> 
+>      git rebase -i HEAD
+> 
+> Comment out the "noop" line, and save you'll get:
+> 
+>      error: nothing to do
+> 
+> And an exit code of 1.
+> 
+> Maybe we should silently return 0 there, but it seems to me like this
+> behavior needs to be consistent with whatever "noop" is trying to
+> accomplish in general (see ff74126c03a above).
+> 
+> That's why I said "does this really have anything per-se to do with
+> --exec?". I.e. we already observe this behavior without --exec, we just
+> get a noop line, and if we had no line at all we'd error with nothing to
+> do.
+> 
+> If we're going to make "git rebase -i HEAD" do nothing, why would it
+> have behavior different from a TODO list of just a "noop" line (which is
+> not the same thing as "nothing to do").
+> 
+> That's partially a matter of consistency, but mostly the general
+> paranoia that if we're going to subtly change what's *probably* an
+> obscure feature hopefully many aren't relying on, then at least having
+> it die instead of silently "succeed" would be better. I.e. we'll now
+> silently ignore the "--exec" commands, but didn't before.
+
+I wonder if we could print a warning if the exec command gets ignored. I 
+haven't looked how hard it would be to do in general but certainly for 
+'rebase -x cmd HEAD' it should be simple(ish?) to do that. We also pick 
+nothing if we're already up to date. If HEAD is an ancestor of 
+<upstream> then I think we avoid fast-forwarding when there is an exec 
+command so we will pick commits in that case.
 
 Best Wishes
 
 Phillip
-
-> Reported-by: Nikita Bobko <nikitabobko@gmail.com>
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->      sequencer: avoid adding exec commands for non-commit creating commands
->      
->      Original report over at
->      https://lore.kernel.org/git/YaVzufpKcC0t+q+L@nand.local/T/#m13fbd7b054c06ba1f98ae66e6d1b9fcc51bb875e
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1149%2Fnewren%2Frebase-exec-empty-bug-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1149/newren/rebase-exec-empty-bug-v1
-> Pull-Request: https://github.com/git/git/pull/1149
-> 
->   sequencer.c                 | 2 +-
->   t/t3429-rebase-edit-todo.sh | 7 ++++++-
->   2 files changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index ea96837cde3..aa790f0bba8 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -5496,7 +5496,7 @@ static void todo_list_add_exec_commands(struct todo_list *todo_list,
->   	}
->   
->   	/* insert or append final <commands> */
-> -	if (insert || nr == todo_list->nr) {
-> +	if (insert) {
->   		ALLOC_GROW(items, nr + commands->nr, alloc);
->   		COPY_ARRAY(items + nr, base_items, commands->nr);
->   		nr += commands->nr;
-> diff --git a/t/t3429-rebase-edit-todo.sh b/t/t3429-rebase-edit-todo.sh
-> index 7024d49ae7b..abd66f36021 100755
-> --- a/t/t3429-rebase-edit-todo.sh
-> +++ b/t/t3429-rebase-edit-todo.sh
-> @@ -13,10 +13,15 @@ test_expect_success 'setup' '
->   
->   test_expect_success 'rebase exec modifies rebase-todo' '
->   	todo=.git/rebase-merge/git-rebase-todo &&
-> -	git rebase HEAD -x "echo exec touch F >>$todo" &&
-> +	git rebase HEAD~1 -x "echo exec touch F >>$todo" &&
->   	test -e F
->   '
->   
-> +test_expect_success 'rebase exec with an empty list does not exec anything' '
-> +	git rebase HEAD -x "true" 2>output &&
-> +	! grep "Executing: true" output
-> +'
-> +
->   test_expect_success 'loose object cache vs re-reading todo list' '
->   	GIT_REBASE_TODO=.git/rebase-merge/git-rebase-todo &&
->   	export GIT_REBASE_TODO &&
-> 
-> base-commit: 35151cf0720460a897cde9b8039af364743240e7
-> 
 
