@@ -2,23 +2,23 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EDCEC433EF
-	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 00:29:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CC4EC433F5
+	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 00:29:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345760AbhLAAce (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Nov 2021 19:32:34 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:54226 "EHLO
+        id S1345764AbhLAAcf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Nov 2021 19:32:35 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:50952 "EHLO
         smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345740AbhLAAcc (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1345744AbhLAAcc (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 30 Nov 2021 19:32:32 -0500
 Received: from localhost.localdomain ([84.13.154.214])
         by smtp.talktalk.net with SMTP
-        id sDUkmByoui2JdsDUlmSxSD; Wed, 01 Dec 2021 00:29:11 +0000
+        id sDUkmByoui2JdsDUlmSxSL; Wed, 01 Dec 2021 00:29:11 +0000
 X-Originating-IP: [84.13.154.214]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=f5U2+96M c=1 sm=1 tr=0 a=nZAgPUNe/8GoCGAv1ndepQ==:117
  a=nZAgPUNe/8GoCGAv1ndepQ==:17 a=MKtGQD3n3ToA:10 a=1oJP67jkp3AA:10
- a=ldyaYNNxDcoA:10 a=ZZnuYtJkoWoA:10 a=WJ5fosVX2o5eYQUPKkoA:9
+ a=ldyaYNNxDcoA:10 a=ZZnuYtJkoWoA:10 a=gIu6M3af8k3AuybQZX8A:9
 From:   Philip Oakley <philipoakley@iee.email>
 To:     GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
@@ -26,9 +26,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Derrick Stolee <stolee@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
         Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH v2 2/3] diffcore-delta.c: LLP64 compatibility, upcast unity for left shift
-Date:   Wed,  1 Dec 2021 00:29:01 +0000
-Message-Id: <20211201002902.1042-3-philipoakley@iee.email>
+Subject: [PATCH v2 3/3] object-file.c: LLP64 compatibility, upcast unity for left shift
+Date:   Wed,  1 Dec 2021 00:29:02 +0000
+Message-Id: <20211201002902.1042-4-philipoakley@iee.email>
 X-Mailer: git-send-email 2.34.1.windows.1
 In-Reply-To: <20211201002902.1042-1-philipoakley@iee.email>
 References: <20211201002902.1042-1-philipoakley@iee.email>
@@ -42,42 +42,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Visual Studio reports C4334 "was 64-bit shift intended" warning
-because of size miss-match.
+Visual Studio reports C4334 "was 64-bit shift intended" warning because
+of size miss-match.
 
-Promote unity to the matching type to fit with its subsequent operation.
+Promote unity to the matching type to fit with the assignment.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.email>
 ---
- diffcore-delta.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ object-file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/diffcore-delta.c b/diffcore-delta.c
-index 5668ace60d..18d8f766d7 100644
---- a/diffcore-delta.c
-+++ b/diffcore-delta.c
-@@ -133,10 +133,10 @@ static struct spanhash_top *hash_chars(struct repository *r,
+diff --git a/object-file.c b/object-file.c
+index c3d866a287..da8821cb91 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2425,7 +2425,7 @@ struct oidtree *odb_loose_cache(struct object_directory *odb,
+ 	struct strbuf buf = STRBUF_INIT;
+ 	size_t word_bits = bitsizeof(odb->loose_objects_subdir_seen[0]);
+ 	size_t word_index = subdir_nr / word_bits;
+-	size_t mask = 1u << (subdir_nr % word_bits);
++	size_t mask = (size_t)1u << (subdir_nr % word_bits);
+ 	uint32_t *bitmap;
  
- 	i = INITIAL_HASH_SIZE;
- 	hash = xmalloc(st_add(sizeof(*hash),
--			      st_mult(sizeof(struct spanhash), 1<<i)));
-+			      st_mult(sizeof(struct spanhash), (size_t)1 << i)));
- 	hash->alloc_log2 = i;
- 	hash->free = INITIAL_FREE(i);
--	memset(hash->data, 0, sizeof(struct spanhash) * (1<<i));
-+	memset(hash->data, 0, sizeof(struct spanhash) * ((size_t)1 << i));
- 
- 	n = 0;
- 	accum1 = accum2 = 0;
-@@ -159,7 +159,7 @@ static struct spanhash_top *hash_chars(struct repository *r,
- 		n = 0;
- 		accum1 = accum2 = 0;
- 	}
--	QSORT(hash->data, 1ul << hash->alloc_log2, spanhash_cmp);
-+	QSORT(hash->data, (size_t)1ul << hash->alloc_log2, spanhash_cmp);
- 	return hash;
- }
- 
+ 	if (subdir_nr < 0 ||
 -- 
 2.34.0.rc1.windows.1.4.ga126985b17
 
