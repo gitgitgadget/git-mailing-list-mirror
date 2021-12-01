@@ -2,119 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68B56C433F5
-	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 23:13:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56EAFC433F5
+	for <git@archiver.kernel.org>; Wed,  1 Dec 2021 23:27:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245603AbhLAXRF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Dec 2021 18:17:05 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57064 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245055AbhLAXRE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Dec 2021 18:17:04 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BD947173BD6;
-        Wed,  1 Dec 2021 18:13:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mhtTpmfv3Agcifa1QdtlVxpPtqkvSnf84GeLI4
-        GtkeE=; b=IfAFGKAjL+q7rrkV4zNtVy0aBjwrTsPq4ixxxlF4ELZ/On3AdKxs8z
-        ynuvUXWaOILdvU85jZ6Frw6KfUrm5Og2OaY2qgAZkz1LKAK4KbN0xcbdVGMV8Y+n
-        //FDQm8c7SY7EGjZ61RkM9E24t0TNlzSxDTvfYp1kqXj6T4alq8mA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B5D33173BD5;
-        Wed,  1 Dec 2021 18:13:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6E694173BD4;
-        Wed,  1 Dec 2021 18:13:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 3/3] test-lib: make BAIL_OUT() work in tests and prereq
-References: <20211120150401.254408-1-fs@gigacodes.de>
-        <20211201085315.576865-1-fs@gigacodes.de>
-        <20211201085315.576865-4-fs@gigacodes.de>
-Date:   Wed, 01 Dec 2021 15:13:35 -0800
-In-Reply-To: <20211201085315.576865-4-fs@gigacodes.de> (Fabian Stelzer's
-        message of "Wed, 1 Dec 2021 09:53:15 +0100")
-Message-ID: <xmqqv907yl40.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1344042AbhLAXaq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Dec 2021 18:30:46 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:60418 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1353795AbhLAXao (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Dec 2021 18:30:44 -0500
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1msZ0T-0000x7-Dn; Wed, 01 Dec 2021 23:27:22 +0000
+Message-ID: <1f0cc771-b661-42ae-e928-75c27f1dab07@iee.email>
+Date:   Wed, 1 Dec 2021 23:27:20 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5055C99E-52FC-11EC-9E3A-98D80D944F46-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH] CodingGuidelines: document which output goes to stdout
+ vs. stderr
+Content-Language: en-GB
+To:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Randall Becker <rsbecker@nexbridge.com>,
+        Baruch Burstein <bmburstein@gmail.com>
+References: <20211201053214.2902-1-sunshine@sunshineco.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <20211201053214.2902-1-sunshine@sunshineco.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fabian Stelzer <fs@gigacodes.de> writes:
-
-> BAIL_OUT() is meant to abort the whole test run and print a message with
-> a standard prefix that can be parsed to stdout. Since for every test the
-> normal fd`s are redirected in test_eval_ this output would not be seen
-> when used within the context of a test or prereq like we do in
-> test_have_prereq(). To make this function work in these contexts we move
-> the setup of the fd aliases a few lines up before the first use of
-> BAIL_OUT() and then have this function always print to the alias.
+On 01/12/2021 05:32, Eric Sunshine wrote:
+> It has long been practice in this project for a command to emit its
+> primary output to stdout so that it can be captured to a file or sent
+> down a pipe, and to emit "chatty" messages (such as those reporting
+> progress) to stderr so that they don't interfere with the primary
+> output. However, this idiomatic Unix practice is not necessarily
+> universally understood and may be at odds with other schools of thought,
+> such as the somewhat common one that only error messages should go to
+> stderr, and all other messages to stdout. Let's help newcomers by
+> documenting how stdout and stderr are used on this project.
 >
-> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 > ---
->  t/test-lib.sh | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
+>  Documentation/CodingGuidelines | 26 ++++++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
 >
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 9090ce1225..14a7aeae0f 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -589,6 +589,15 @@ USER_TERM="$TERM"
->  TERM=dumb
->  export TERM USER_TERM
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+> index 711cb9171e..44dd178dc9 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -499,6 +499,32 @@ For Python scripts:
+>   - Where required libraries do not restrict us to Python 2, we try to
+>     also be compatible with Python 3.1 and later.
 >  
-> +# What is written by tests to stdout and stderr is sent so different places
-
-"sent so" -> "sent to".  I'll tweak locally, so no need to resend.
-
-> +# depending on the test mode (e.g. /dev/null in non-verbose mode, piped to tee
-> +# with --tee option, etc.). We save the original stdin to FD #6 and stdout and
-> +# stderr to #5 and #7, so that the test framework can use them (e.g. for
-> +# printing errors within the test framework) independently of the test mode.
-> +exec 5>&1
-> +exec 6<&0
-> +exec 7>&2
 > +
->  _error_exit () {
->  	finalize_junit_xml
->  	GIT_EXIT_OK=t
-> @@ -612,7 +621,7 @@ BAIL_OUT () {
->  	local bail_out="Bail out! "
->  	local message="$1"
+> +Program Output
+> +
+> + We make a distinction between a command's primary output and output
+> + which is merely chatty feedback (for instance, status messages,
+> + running transcript, or progress display), as well as error messages.
+> + Roughly speaking, a command's primary output is that which one might
+> + want to capture to a file or send down a pipe; its chatty output
+> + should not interfere with those use-cases.
+
+Is there a case for commenting on whether chatty output may be
+suppressed if not feeding a terminal, or is that mentioned elsewhere? I
+often see comments about the isatty() detection.
+
+> +
+> + As such, primary output should be sent to the standard output stream
+> + (stdout), and chatty output should be sent to the standard error
+> + stream (stderr). Examples of commands which produce primary output
+> + include `git log`, `git show`, and `git branch --list` which generate
+> + output on the stdout stream.
+> +
+> + Not all commands have primary output; this is often true of commands
+> + whose main function is to perform an action. Some action commands are
+> + silent, whereas others are chatty. An example of a chatty action
+> + commands is `git clone` with its "Cloning into '<path>'..." and
+> + "Checking connectivity..." status messages which it sends to the
+> + stderr stream.
+> +
+> + Error messages are always sent to the stderr stream.
+> +
+> +
+>  Error Messages
 >  
-> -	say_color error $bail_out "$message"
-> +	say_color error $bail_out "$message" >&5
-
-This is merely a style thing, but as commands get longer, it becomes
-easier to spot redirection if it is written immediately after the
-verb, i.e.
-
-	say_color >&5 error $bail_out "$message"
-
->  	_error_exit
->  }
->  
-> @@ -637,9 +646,6 @@ then
->  	exit 0
->  fi
->  
-> -exec 5>&1
-> -exec 6<&0
-> -exec 7>&2
->  if test "$verbose_log" = "t"
->  then
->  	exec 3>>"$GIT_TEST_TEE_OUTPUT_FILE" 4>&3
-
-Looks good.  Thanks.
+>   - Do not end error messages with a full stop.
+Philip
