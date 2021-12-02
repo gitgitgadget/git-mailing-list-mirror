@@ -2,140 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A171FC433EF
-	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 22:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF86CC433EF
+	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 22:32:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238803AbhLBWfa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Dec 2021 17:35:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33480 "EHLO
+        id S238984AbhLBWf7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Dec 2021 17:35:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231240AbhLBWfa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Dec 2021 17:35:30 -0500
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 430CCC06174A
-        for <git@vger.kernel.org>; Thu,  2 Dec 2021 14:32:07 -0800 (PST)
-Received: by mail-il1-x133.google.com with SMTP id i9so941938ilu.1
-        for <git@vger.kernel.org>; Thu, 02 Dec 2021 14:32:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=1EM7ljFaNPl8Yh4jJEKkNZLiEa6tgRC6U4QrJ/A9z7E=;
-        b=kkq1xWzGCFV5J5buCXk85d8cec9rRIS/y6VimbYvdqrAWX5KloFOQ6Hy4wlgsK0NxW
-         oJ0e99aasFFQp3jDBwLTIs/l/cRkyQEi4dAcH2qv6zBTRlZ277cHl4xDilbw2PCH6KJk
-         ijWNm2yXfJVjVq6LDrYNFb5HQ0RusgsJ5GHVzTLHMpbgmo+0xjdakkUeOzvOHC09UETs
-         Iw6j057xsarAkbgD6ZQZ7LMGd9qKDMvufWLuZtygeiSUJ2p5wgSwX2HfDh93eWgTgHQf
-         0kSaR2Er0LOb+1w8xfYqnNVS4uesdaQpVvSTHAaYk8aTIw4ms72QwIunKaBQWoYcrInv
-         aU/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=1EM7ljFaNPl8Yh4jJEKkNZLiEa6tgRC6U4QrJ/A9z7E=;
-        b=D1g9C+vkkyslHSOYcUj6hlplq0ylLlggiWLtOqEQa0auTOmc0zt/YlbO75lisOSQSD
-         9+Zp/8QfNA8nUkKLc9JLYxh8Epa1JvG5r8BiftgpNcEcVBP3kS2IhjVfHCsiW6T2umUO
-         hhTJMmG5NznvNIjtMiYH2Y0OHW8srco5hr1dwQWUxRbmAow3mNg2IWqjjrxyWINShlQ8
-         txQE1REn8VmNjiIfG/RRrBBA+veVPzDOy2ZcNN8bq7Ok/9WteDEx3Ylu8oyCtmYRfmSe
-         VQLanNdpdugyQuYTQd3ncaNhKJoyNslVVv5nmG2yD+UGel6WmkC/V4j8V1m0HX7A8Nu0
-         daow==
-X-Gm-Message-State: AOAM53351dQHn9vnRm+2GIgSP8jq7PkWsNbQTg6bBgF7oY1dVYgKWm32
-        QNg7FyWIPZQfScml7uS4w8plhcLuLE34SA==
-X-Google-Smtp-Source: ABdhPJz8kesyUuwBEzEduX9FqYz9fYR8Y9mgZf9D5+vz5chhb1A2E9V0hzUL/UYOICgdsOc9lfgADQ==
-X-Received: by 2002:a05:6e02:1c02:: with SMTP id l2mr18719176ilh.0.1638484326271;
-        Thu, 02 Dec 2021 14:32:06 -0800 (PST)
-Received: from localhost.localdomain (097-069-216-153.res.spectrum.com. [97.69.216.153])
-        by smtp.gmail.com with ESMTPSA id y21sm524811ioj.41.2021.12.02.14.32.04
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Dec 2021 14:32:05 -0800 (PST)
-Sender: Eric Sunshine <ericsunshine@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Randall Becker <rsbecker@nexbridge.com>,
-        Baruch Burstein <bmburstein@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Philip Oakley <philipoakley@iee.email>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2] CodingGuidelines: document which output goes to stdout vs. stderr
-Date:   Thu,  2 Dec 2021 17:31:10 -0500
-Message-Id: <20211202223110.22062-1-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0
-In-Reply-To: <20211201053214.2902-1-sunshine@sunshineco.com>
-References: <20211201053214.2902-1-sunshine@sunshineco.com>
+        with ESMTP id S231240AbhLBWf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Dec 2021 17:35:58 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E97CAC06174A
+        for <git@vger.kernel.org>; Thu,  2 Dec 2021 14:32:34 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 1D3AC5D407;
+        Thu,  2 Dec 2021 22:32:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1638484354;
+        bh=FZOzAYykLc1WLVForoong5CpEcc7HjP1UJIpMo+ezzQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=hZUTs4+aaBe1PGF7xEhRL4S7n+kc7iKcxsuFGvnfR6FASSji3QOUs0P5Ch2F/kH2t
+         W+9VHZuB8LAm3vdQMTZ0BVzPWkUP2YMHVMvL3Ops2MrV32DHe5/jslzTm/6JbYhRSQ
+         iBHXJgOSbtZ0XcOUhgQYlJw5napdrnS8/JAMpXyfw+9Pkmtw5pezo36H+MQWurXcab
+         7Ds7kn1slrKH45jdqgUGWnjD+8YkTGIsXxfqq1BUZN+otFCSWORklr7Z0zoLsaEm3I
+         CQia6VRYMTmKLTyHBqSN3UPx9qn1Z4Ud7ryXbZA+uVJKKrv//vGzbIaZw4/RLqZCXd
+         5NMsxmtaNaEa95Dkf8CJare9hjSctglvtgFc6kK8of6CK9wo+gzVW4bvzG5owLtoVo
+         n4zAwtOcCPzLp/BYQQhEcWMlHxh1bIbS0dGmEd80GTJUQG31nu85S6D9B7nYDHPeo+
+         d8GNu9lLuEgZzdW8od3FaLcDgY9LsNSZnp8QWT6VyfNTyh3euuB
+Date:   Thu, 2 Dec 2021 22:32:32 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        gitster@pobox.com, larsxschneider@gmail.com, peff@peff.net,
+        tytso@mit.edu
+Subject: Re: [PATCH 02/17] pack-mtimes: support reading .mtimes files
+Message-ID: <YalJgGJFoGGgCazx@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+        git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
+        peff@peff.net, tytso@mit.edu
+References: <cover.1638224692.git.me@ttaylorr.com>
+ <7d4ae7bd3e28e2ec904abb37b6f26505e37531c5.1638224692.git.me@ttaylorr.com>
+ <ef10c824-e2d9-f113-f010-6a1ac307427a@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="DtFINUxo8xPA0rEl"
+Content-Disposition: inline
+In-Reply-To: <ef10c824-e2d9-f113-f010-6a1ac307427a@gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It has long been practice on this project for a command to emit its
-primary output to stdout so that it can be captured to a file or sent
-down a pipe, and to emit "chatty" messages (such as those reporting
-progress) to stderr so that they don't interfere with the primary
-output. However, this practice is not necessarily universal; another
-common practice is to send only error messages to stderr, and all other
-messages to stdout. Therefore, help newcomers out by documenting how
-stdout and stderr are used on this project.
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
+--DtFINUxo8xPA0rEl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Changes since v1[*]:
+On 2021-12-02 at 15:06:07, Derrick Stolee wrote:
+> On 11/29/2021 5:25 PM, Taylor Blau wrote:
+>=20
+> > +=3D=3D pack-*.mtimes files have the format:
+> > +
+> > +  - A 4-byte magic number '0x4d544d45' ('MTME').
+> > +
+> > +  - A 4-byte version identifier (=3D 1).
+> > +
+> > +  - A 4-byte hash function identifier (=3D 1 for SHA-1, 2 for SHA-256).
+>=20
+> I vaguely remember complaints about using a 1-byte identifier in
+> the commit-graph and multi-pack-index formats because the "standard"
+> way to refer to these hash functions was a magic number that had a
+> meaning in ASCII that helped human readers a bit. I cannot find an
+> example of such 4-byte identifiers, but perhaps brian (CC'd) could
+> remind us.
+>=20
+> You are using a 4-byte identifier, but using the same values as
+> those 1-byte identifiers.
 
-* tone down the commit message (peff)
+The preferred value is the_hash_algo->format_id.  For SHA-1, that's
+"sha1", big-endian (0x73686131) and for SHA-256 it's "s256", big-endian
+(0x73323536).
 
-* replace "command" in the patch body with "Git command" in a few places
-  to make it more clear that the new "Program Output" section is
-  providing guidelines for how Git commands should behave, as opposed
-  to, say, how stdout/stderr should be used in test scripts (fabian)
+There's also hash_algo_by_id to turn the format ID into an index into
+the hash_algos array, but you need to check for GIT_HASH_UNKNOWN (0)
+first.
 
-No interdiff/range-diff since they are too noisy in this case, and the
-patch is short enough to easily re-read in its entirety.
+These will be used in index v3, which I haven't sent out patches for
+yet.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-[*]: https://lore.kernel.org/git/20211201053214.2902-1-sunshine@sunshineco.com/
+--DtFINUxo8xPA0rEl
+Content-Type: application/pgp-signature; name="signature.asc"
 
- Documentation/CodingGuidelines | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 711cb9171e..0e27b5395d 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -499,6 +499,33 @@ For Python scripts:
-  - Where required libraries do not restrict us to Python 2, we try to
-    also be compatible with Python 3.1 and later.
- 
-+
-+Program Output
-+
-+ We make a distinction between a Git command's primary output and
-+ output which is merely chatty feedback (for instance, status
-+ messages, running transcript, or progress display), as well as error
-+ messages. Roughly speaking, a Git command's primary output is that
-+ which one might want to capture to a file or send down a pipe; its
-+ chatty output should not interfere with these use-cases.
-+
-+ As such, primary output should be sent to the standard output stream
-+ (stdout), and chatty output should be sent to the standard error
-+ stream (stderr). Examples of commands which produce primary output
-+ include `git log`, `git show`, and `git branch --list` which generate
-+ output on the stdout stream.
-+
-+ Not all Git commands have primary output; this is often true of
-+ commands whose main function is to perform an action. Some action
-+ commands are silent, whereas others are chatty. An example of a
-+ chatty action commands is `git clone` with its "Cloning into
-+ '<path>'..." and "Checking connectivity..." status messages which it
-+ sends to the stderr stream.
-+
-+ Error messages from Git commands should always be sent to the stderr
-+ stream.
-+
-+
- Error Messages
- 
-  - Do not end error messages with a full stop.
--- 
-2.34.1.173.g76aa8bc2d0
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYalJfwAKCRB8DEliiIei
+gbZHAQCmjEa4ZfKCFoVjYpV6tS+4dL9vVK7nWCkLcNUD6RVFmgEAnG7kVkLcIySN
+mmUQ1b3XHXTjj6rbJOQdSoStZE8Dpwk=
+=Q5SH
+-----END PGP SIGNATURE-----
 
+--DtFINUxo8xPA0rEl--
