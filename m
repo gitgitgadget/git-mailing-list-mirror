@@ -2,122 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 841B2C433F5
-	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 00:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33AD8C433EF
+	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 00:32:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354130AbhLBAVp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Dec 2021 19:21:45 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60237 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354160AbhLBAVn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Dec 2021 19:21:43 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE77510363E;
-        Wed,  1 Dec 2021 19:18:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=kY7/Sl/jvd1wyDO8ulMUqvmE6MIxQhtVW+EgUBnKALY=; b=Bn57
-        94WHbca+TmdJG8YCgLnNLn6bJPa/8Mkgs1NkcVnD0XYdLz6Dg3QATpxuXuIPh8ZO
-        srfgA7Lf9xD7P2vq7H1fgxtT5IfOo3NwoBcwMDtMYeefJX5MRW2sqFonA2J6M1Q5
-        NHACdRF9Rb0o45du9ez7GQjBV8EMiIZrujqMq0k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A5D4410363D;
-        Wed,  1 Dec 2021 19:18:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 13FAB10363C;
-        Wed,  1 Dec 2021 19:18:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v4 7/7] ssh signing: verify ssh-keygen in test prereq
-References: <20211117093529.13953-1-fs@gigacodes.de>
-        <20211130141112.78193-1-fs@gigacodes.de>
-        <20211130141112.78193-8-fs@gigacodes.de>
-Date:   Wed, 01 Dec 2021 16:18:19 -0800
-Message-ID: <xmqqczmfyi44.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1354500AbhLBAfw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Dec 2021 19:35:52 -0500
+Received: from mail-pf1-f179.google.com ([209.85.210.179]:37509 "EHLO
+        mail-pf1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1354486AbhLBAfs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Dec 2021 19:35:48 -0500
+Received: by mail-pf1-f179.google.com with SMTP id 8so26280224pfo.4
+        for <git@vger.kernel.org>; Wed, 01 Dec 2021 16:32:26 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=R79bdG02kgi+8zsJArVihOpVRR1Fjpdetl6OfTu7hUw=;
+        b=kcMZbQgxghLvQgbPur/CVVuhLT6XJ+emOPhew2D4XIjtVkoFEogP+IEPRUi//gN1Zf
+         Ei1BAKJ1es7c/DTvJ6uB+M1NFEHdp6dDNNyUNFi8wLVXCxOMJhCIlp4HXBbqVvvtK8wx
+         w2nLkJtzDEWW9eayLke+5EqJc4urDqyktrvOFO4cnNXGd9COqS8UCjWrc+Vb+9a/PcqN
+         LCy6Z447WM04v8bJSz1oMxq6FmI+NMMsQSCV3/H9p0AOuLF3+vlvv2jyaaA3jxtSgN/e
+         +DDgBVmbU/FPiSodm66lYpJjn3Gj9VdMgOblPB+e3j1syjkhSc7V04AOj1ekv6PgD9UO
+         ihFw==
+X-Gm-Message-State: AOAM532nXu1irK1wqqUWfQC4yL/kUFoY28eBXp34Gfvv6p+eDIwfgIDq
+        gFJF/I3AlKDQYWVtM70kfVmOEfGBlaPEjZsZJrk=
+X-Google-Smtp-Source: ABdhPJykhMoBMW6x/fL4viMlEHx9yf5mTusHITqSAG3mhCkxKQc2Sl1LI1x8lUxq/3huJKGQy7IP4U8DDWWJhdKwpoA=
+X-Received: by 2002:a05:6a00:2349:b0:4a8:d87:e8ad with SMTP id
+ j9-20020a056a00234900b004a80d87e8admr9699584pfj.15.1638405146483; Wed, 01 Dec
+ 2021 16:32:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5B28F932-5305-11EC-AC60-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+References: <20211201221547.1796213-1-andersk@mit.edu> <20211201221547.1796213-5-andersk@mit.edu>
+ <CAPig+cSNP-RBmsWWfT690-shFUCZ3J0X+FBiNjCqg=AkoBMBqQ@mail.gmail.com>
+ <f8262c3b-2ca5-4920-1379-41ff29b37d9f@mit.edu> <CAPig+cRX94vMLkW=dAKncPTuuk0Opaj+8-Yqe-qFD1b7mrZ89A@mail.gmail.com>
+In-Reply-To: <CAPig+cRX94vMLkW=dAKncPTuuk0Opaj+8-Yqe-qFD1b7mrZ89A@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 1 Dec 2021 19:32:15 -0500
+Message-ID: <CAPig+cT3psyPhsssvJsQw4wzTMLOxf0rhP4H7V4s5g9Wd_kK1g@mail.gmail.com>
+Subject: Re: [PATCH v7 4/8] worktree: simplify find_shared_symref() memory
+ ownership model
+To:     Anders Kaseorg <andersk@mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Andreas Heiduk <andreas.heiduk@mathema.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fabian Stelzer <fs@gigacodes.de> writes:
-
-> Do a full ssh signing, find-principals and verify operation in the test
-> prereq's to make sure ssh-keygen works as expected. Only generating the
-> keys and verifying its presence is not sufficient in some situations.
-> One example was ssh-keygen creating unusable ssh keys in cygwin because
-> of unsafe default permissions for the key files. The other a broken
-> openssh 8.7 that segfaulted on any find-principals operation. This
-> extended prereq check avoids future test breakages in case ssh-keygen or
-> any environment behaviour changes.
+On Wed, Dec 1, 2021 at 7:13 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> If we instead hoist ownership of `worktrees` up to execute_commands()
+> -- which calls execute_commands_atomic() or
+> execute_commands_non_atomic() -- then we can get by with retrieving
+> the worktrees just once, and all those noise changes in update() can
+> be dropped since it will no longer be responsible for allocating or
+> freeing `worktrees`. For instance:
 >
-> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
-> ---
+>     static void execute_commands(...)
+>     {
+>         struct worktree **worktrees;
+>         ...
+>         worktrees = get_worktrees();
+>          if (use_atomic)
+>             execute_commands_atomic(commands, si, worktrees);
+>         else
+>             execute_commands_non_atomic(commands, si, worktrees);
+>         free_worktrees(worktrees);
+>         ...
+>     }
+>
+> and then execute_commands_atomic() and execute_commands_non_atomic()
+> can pass `worktrees` along to update().
 
-The way keys are set-up has become much easier to follow.
-
-This unfortunately interacts with the old way of adding a test key
-done in <20211119150707.3924636-2-fs@gigacodes.de> 350a2518 (ssh
-signing: support non ssh-* keytypes, 2021-11-19)
-
-Here is my attempt (which is in 'seen') to resolve the inevitable
-merge conflicts between the topics. 
-
-Thanks.
-
-commit fa6c2973744b419c95b5eaf6a697c795ab7823fa
-Merge: 2a8505f6a0 3b4b5a793a
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Wed Dec 1 16:01:54 2021 -0800
-
-    Merge branch 'fs/ssh-signing-other-keytypes' into jch
-    
-    * fs/ssh-signing-other-keytypes:
-      ssh signing: make sign/amend test more resilient
-      ssh signing: support non ssh-* keytypes
-
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index ff944f0548..3e7ee1386a 100644
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -117,13 +117,14 @@ test_lazy_prereq GPGSSH '
- 	ssh-keygen -t ed25519 -N "" -C "git ed25519 key" -f "${GPGSSH_KEY_PRIMARY}" >/dev/null &&
- 	ssh-keygen -t rsa -b 2048 -N "" -C "git rsa2048 key" -f "${GPGSSH_KEY_SECONDARY}" >/dev/null &&
- 	ssh-keygen -t ed25519 -N "${GPGSSH_KEY_PASSPHRASE}" -C "git ed25519 encrypted key" -f "${GPGSSH_KEY_WITH_PASSPHRASE}" >/dev/null &&
--<<<<<<< 2a8505f6a0 (Merge branch 'fs/ssh-signing-key-lifetime' into jch)
-+	ssh-keygen -t ecdsa -N "" -f "${GPGSSH_KEY_ECDSA}" >/dev/null &&
- 	ssh-keygen -t ed25519 -N "" -C "git ed25519 key" -f "${GPGSSH_KEY_UNTRUSTED}" >/dev/null &&
- 
- 	cat >"${GPGSSH_ALLOWED_SIGNERS}" <<-EOF &&
- 	"principal with number 1" $(cat "${GPGSSH_KEY_PRIMARY}.pub")"
- 	"principal with number 2" $(cat "${GPGSSH_KEY_SECONDARY}.pub")"
- 	"principal with number 3" $(cat "${GPGSSH_KEY_WITH_PASSPHRASE}.pub")"
-+	"principal with number 4" $(cat "${GPGSSH_KEY_ECDSA}.pub")"
- 	EOF
- 
- 	# Verify if at least one key and ssh-keygen works as expected
-@@ -166,15 +167,6 @@ test_lazy_prereq GPGSSH_VERIFYTIME '
- 	echo "testpayload" |
- 	ssh-keygen -Y sign -n "git" -f "${GPGSSH_KEY_EXPIRED}" >gpgssh_verifytime_prereq.sig &&
- 	! (ssh-keygen -Y verify -n "git" -f "${GPGSSH_ALLOWED_SIGNERS}" -I "principal with expired key" -s gpgssh_verifytime_prereq.sig)
--||||||| cd3e606211
--	echo "\"principal with number 3\" $(cat "${GPGSSH_KEY_WITH_PASSPHRASE}.pub")" >> "${GPGSSH_ALLOWED_SIGNERS}" &&
--	ssh-keygen -t ed25519 -N "" -f "${GPGSSH_KEY_UNTRUSTED}" >/dev/null
--=======
--	echo "\"principal with number 3\" $(cat "${GPGSSH_KEY_WITH_PASSPHRASE}.pub")" >> "${GPGSSH_ALLOWED_SIGNERS}" &&
--	ssh-keygen -t ecdsa -N "" -f "${GPGSSH_KEY_ECDSA}" >/dev/null
--	echo "\"principal with number 4\" $(cat "${GPGSSH_KEY_ECDSA}.pub")" >> "${GPGSSH_ALLOWED_SIGNERS}" &&
--	ssh-keygen -t ed25519 -N "" -f "${GPGSSH_KEY_UNTRUSTED}" >/dev/null
-->>>>>>> 3b4b5a793a (ssh signing: make sign/amend test more resilient)
- '
- 
- sanitize_pgp() {
+By the way, I wouldn't typically recommend this sort of change for
+public API since it probably exposes too much implementation detail to
+callers, but as these are all private (static) worker functions --
+with very few callers, moreover -- I don't find it terribly worrying.
