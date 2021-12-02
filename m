@@ -2,132 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B306C433F5
-	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 00:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35140C433EF
+	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 00:43:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354669AbhLBArF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Dec 2021 19:47:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47074 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354957AbhLBApJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Dec 2021 19:45:09 -0500
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ADE2C06175A
-        for <git@vger.kernel.org>; Wed,  1 Dec 2021 16:41:43 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id r26so52135858oiw.5
-        for <git@vger.kernel.org>; Wed, 01 Dec 2021 16:41:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=W/4pDFYAfRSIWoTbeclI1eoAsTEEynIJMJvzvVCQZPk=;
-        b=XmXsI1enMIbcPQqG6oCPuqnrPFTdFRmfhGuL4REqxe6m5IuK+A3KsJi2TkRl/ukYLU
-         OpffNsXp4YSS3DyXSM1OonOCMWg5wTzZeDgXScu7Bmv9/JqbfIUkziW7St3IDlwEGK9o
-         iMWy/D7WzfW5jkNEbkvZCd/lK1yjrwxbTFYDMZJ4LoJq1QA2VRlJQMPkd8OEWDeAkHmb
-         N34fuxfNcOlZmDaY2G6/auxSAkqD6/YxiKJyNmMC3A8Ugltx/VWvyMKgWvickJ0x05Hw
-         N8ooUyNu34nHYAArt00KLWwKyoUDqDkb5hVD/+bB4Z0t0hYn+6uOp47a3vwsBmc6iBDF
-         fiSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=W/4pDFYAfRSIWoTbeclI1eoAsTEEynIJMJvzvVCQZPk=;
-        b=WkqCWXNWj0529zDHqQq2YmMkJuQwi/288QIc19FTTVEylWO4H7EK77czTgv4DPdciO
-         We49BKx0MA9skkKtcHF4L5qcMQfWzrg6kNSbCTNe6UJW0Z9VWmcxGefs+oqU/LUaXSZM
-         QXAQHFbvzj4D7wByyVvJOJD6XaaSroo0Vk+MMhe5ESQVljmgJ0rpJRDf0xvniZDfnV/V
-         AA/OSTXHzwNl1Dlz6XqMAjTUtJ2KN7T/+prCEwnorFSFmGbSi2f68S6rXgZG7FdKA8KZ
-         KX3mVv5iuSG2U69dCj/mDFSGGyl/aRs8usrc3cIXsDp/NwpzR1qYQ9aYEW+7KtPyFJHu
-         Zd8g==
-X-Gm-Message-State: AOAM531S88EG7vo6oJJWCbsWwsDS2YNAbvdVsS580C3LwgDwUWJrm4zn
-        N+sUcr+++stjuMUKf7Vs3yY=
-X-Google-Smtp-Source: ABdhPJwT8baQbxq87q1hR2asHSS6LrmiRrDXN6uTziGihmca7rcZgovL+ldqE/i4/rDevYZ7iA3YHA==
-X-Received: by 2002:a05:6808:300b:: with SMTP id ay11mr1783439oib.120.1638405702555;
-        Wed, 01 Dec 2021 16:41:42 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:ed3e:6f2c:4b0e:6260? ([2600:1700:e72:80a0:ed3e:6f2c:4b0e:6260])
-        by smtp.gmail.com with ESMTPSA id v12sm529122ote.9.2021.12.01.16.41.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Dec 2021 16:41:42 -0800 (PST)
-Message-ID: <d981adbf-7f6a-32f8-2d3e-8af5c36a6f8f@gmail.com>
-Date:   Wed, 1 Dec 2021 19:41:40 -0500
+        id S1344275AbhLBArP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Dec 2021 19:47:15 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62592 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1354737AbhLBArH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Dec 2021 19:47:07 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 899A01038CC;
+        Wed,  1 Dec 2021 19:43:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=kiAtPo8RIaym
+        qqs1ofCtJQTSvz+mjh/e/irXOpFiuGU=; b=U/8ZderqkcRP654jK9jboo8HIgIl
+        tkrKXqXkf+X/z01JK1BvPCRiNvxMVdPyv3aIAaWbDrg15UgUoCkJA14WHsT7IyFv
+        YMpX7qgdozLyQaAaCq/eugw4+wgC4XoPGXNxkvVKJ4o+rJ9nOaaj3gauEBD6YAYb
+        PUQOtWPc2XYIDEY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 80EE81038CB;
+        Wed,  1 Dec 2021 19:43:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DC2251038C9;
+        Wed,  1 Dec 2021 19:43:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Baruch Burstein <bmburstein@gmail.com>,
+        Randall Becker <rsbecker@nexbridge.com>
+Subject: Re: [RFC PATCH] vreportf: ensure sensible ordering of normal and
+ error output
+References: <20211130043946.19987-1-sunshine@sunshineco.com>
+        <YaXQ/HinYZH1wL7E@coredump.intra.peff.net>
+        <CAPig+cRQqm8Ce29PnkndT47NNxM3UhJv12RZGZZJD-AyGVC7Zw@mail.gmail.com>
+        <YaaN0pibKWgjcVk3@coredump.intra.peff.net>
+        <211201.86mtlk9fx4.gmgdl@evledraar.gmail.com>
+Date:   Wed, 01 Dec 2021 16:43:43 -0800
+In-Reply-To: <211201.86mtlk9fx4.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 01 Dec 2021 22:20:11 +0100")
+Message-ID: <xmqq35nbygxs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: 2.34 regression (and workaround): deleting untracked files both
- outside *and inside* desired sparsity cone
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Victoria Dye <vdye@github.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CABPp-BE8TJ8QGAQWsSGT7S+9Xp-XmApcC9PSw3K=RQOP0rt+PQ@mail.gmail.com>
- <9c7afd37-9940-e6e7-da41-8a44840defb3@gmail.com>
- <CABPp-BHSPQMUw8a6E7Kz+7L6NuD8c9GrHdTMf_rBzQR+2VGs-Q@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BHSPQMUw8a6E7Kz+7L6NuD8c9GrHdTMf_rBzQR+2VGs-Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E76D4CC4-5308-11EC-BF49-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/1/2021 6:40 PM, Elijah Newren wrote:
-> On Wed, Dec 1, 2021 at 11:19 AM Derrick Stolee <stolee@gmail.com> wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+>> Here's a past discussion (that actually goes the other way: somebody
+>> complaining that stderr should be on stdout!) where I laid out my ment=
+al
+>> model:
 >>
->> We would want to be careful now that
->> "--option" could be interpreted as a path to recommend using
->>
->>   git sparse-checkout set <options> -- <path1> ... <pathN>
-> 
-> Makes sense.  However, wasn't this already an issue when you added
-> `--stdin` as an option for the `set` command?
+>>   https://lore.kernel.org/git/20110907215716.GJ13364@sigill.intra.peff=
+.net/
+>
+> ...and a third way (which git doesn't conform to at all), which is that
+> std*err* is really what we should be using for errors only.
+>
+> You shouldn't write anything that isn't an error there, or at least
+> that's what I've seen some software in the wild assume.
 
-You are right. This should already be handled in a sane way.
- 
->> While you are here, I would be interested in making 'git clone
->> --sparse' default to cone mode. Or, should it be 'git clone
->> --sparse=cone' or something? Not making it default to cone mode
->> is a big regret of mine.
-> 
-> I agree it'd be much nicer to have it default to cone mode, and the
-> big warning in git-sparse-checkout.txt might permit us to do so.  A
-> few related questions:
-> 
-> * Should we document how to change from cone mode to non-cone mode?
-> We have --sparse-index, --no-sparse-index, and --cone flags, but no
-> --no-cone one.  Should we?  (Do these flags belong somewhere other
-> than `init` since it's toggling some other flag while already using a
-> sparse-checkout?)
-
---no-cone exists, it probably just isn't in the docs. Our 'init'
-options are defined as follows:
-
-	static struct option builtin_sparse_checkout_init_options[] = {
-		OPT_BOOL(0, "cone", &init_opts.cone_mode,
-			 N_("initialize the sparse-checkout in cone mode")),
-		OPT_BOOL(0, "sparse-index", &init_opts.sparse_index,
-			 N_("toggle the use of a sparse index")),
-		OPT_END(),
-	};
-
-
-so --no-cone exists the same way --no-sparse-index does.
-
-> * Should we clean up the wording in clone's --sparse option?  In particular:
-> 
-> --sparse::
-> Initialize the sparse-checkout file so the working
-> directory starts with only the files in the root
-> of the repository. The sparse-checkout file can be
-> modified to grow the working directory as needed.
-> 
-> This wording seems to suggest direct editing of
-> .git/info/sparse-checkout, and might confuse users.  Perhaps the last
-> sentence could change "sparse-checkout file can be modified" ->
-> "sparse-checkout command can be used" or something like that?
-
-This is probably just too old. It could use updates to link to
-git-sparse-checkout.
-
-Thanks,
--Stolee
+That is already covered in the old thread Peff cited (not in the
+message from Peff, but you can find what others said on the topic
+back then from that page).  We saw programs that declare any output
+to standard error by programs they spawn indicates an error, instead
+of checking the exit status of the programs they spawn, which would
+of course break when they try to drive git.
