@@ -2,101 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88966C433EF
-	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 15:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 478EAC433EF
+	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 15:27:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358918AbhLBPZb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Dec 2021 10:25:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48764 "EHLO
+        id S1346524AbhLBPav (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Dec 2021 10:30:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358903AbhLBPZa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Dec 2021 10:25:30 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F300C06174A
-        for <git@vger.kernel.org>; Thu,  2 Dec 2021 07:22:08 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id o4so56116155oia.10
-        for <git@vger.kernel.org>; Thu, 02 Dec 2021 07:22:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=AbeMiG9Tn5pIjJnmSRixN7ZvM4CVe8dC5YGveJZYxfs=;
-        b=l1pUWULhUh0RSSsUSDG6Jn3QfToDRNGhvdPdL03co5kfd/vBaKdmzOVWSwSbk5Gr8s
-         z8895JFJUurgCEE9rybwWECDOGPBBzVdYd17IQBmK/SYXkhQmNOyaUv1w80PH3ne99wG
-         JLW3hgqpvrkR/q4NebR5PWiLTamajzbN4Otoy+DcwtOkr5Y9lbDfb/a9nXlG6F6tDpoQ
-         AQLn9Ekc0fXMy6sTF3GLa0zoZcuVQomFdCU0cYM2MISK+b2sho79xMiyYpZQtNwjlvP3
-         05WdSXFq2Md0jSyNi/Qpomfl7uxVCdn1z2/H59Kdg0SFZkZ7OzHBXz+cm4SUP88E8P0p
-         rgSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=AbeMiG9Tn5pIjJnmSRixN7ZvM4CVe8dC5YGveJZYxfs=;
-        b=VZ/+7Q6A/msoa6+nXe9pWai1jKoQwfEqPLk3xXfdSWflzdC10AxlIfzKKGF7VNa96B
-         mqC17q0U9dLUan78zJZKeglHGvnguXVMMDIGoYWR4MrShOtKVjI6/WRN3mOWs813MdtO
-         QtvU9tkppbeW2UblJhYqZNeA4xuny2q9BZo2F3fps+L1VwAGgm9rmE+HvutK0SrOhgKQ
-         JolTYfO+Z4ai87LrICNGFsPUA6zhILFN6HShHEWCfvFZKyEZ4w2yxt2fziy8I4iD2BVS
-         VVJj87w/1Aqi5UcGy++ZzbLfPAWBNwqN/1OnGioMxyO+MlpQ4XyBoMvl0k0zWEO/Kyhr
-         jeQw==
-X-Gm-Message-State: AOAM5309Tjaa5rCI3YDEc8I0AMm3ZVerC2MJeQ88TzHfw9necauBWAUq
-        SSq9i3nmjnFqdH6ECc2yZVY=
-X-Google-Smtp-Source: ABdhPJyHzrZnRirSeER0mTt8scErD4Fyx92PkjiXdG9N+VmP6OdDqwN/2CJPRv4sHJ6+YWF65d+W5A==
-X-Received: by 2002:a54:4819:: with SMTP id j25mr4816869oij.66.1638458527428;
-        Thu, 02 Dec 2021 07:22:07 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:a483:be4f:55c1:3cc8? ([2600:1700:e72:80a0:a483:be4f:55c1:3cc8])
-        by smtp.gmail.com with ESMTPSA id v19sm64943ott.13.2021.12.02.07.22.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Dec 2021 07:22:06 -0800 (PST)
-Message-ID: <2d5456f6-5a4d-1600-83f3-2b6d3e1b270a@gmail.com>
-Date:   Thu, 2 Dec 2021 10:22:05 -0500
+        with ESMTP id S239981AbhLBPau (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Dec 2021 10:30:50 -0500
+Received: from sprint-2.amdmi3.ru (sprint-2.amdmi3.ru [IPv6:2a0a:2b41:94:cb5e::])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id ED13AC06174A
+        for <git@vger.kernel.org>; Thu,  2 Dec 2021 07:27:27 -0800 (PST)
+Received: from amdmi3.ru (localhost [IPv6:::1])
+        by sprint-2.amdmi3.ru (Postfix) with SMTP id CCA67188880;
+        Thu,  2 Dec 2021 18:27:22 +0300 (MSK)
+Received: by amdmi3.ru (nbSMTP-1.00) for uid 1000
+        amdmi3@amdmi3.ru; Thu,  2 Dec 2021 18:27:22 +0300 (MSK)
+Date:   Thu, 2 Dec 2021 18:26:05 +0300
+From:   Dmitry Marakasov <amdmi3@amdmi3.ru>
+To:     Jeff King <peff@peff.net>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+Subject: Re: pull.rebase config option broken in 2.33.1
+Message-ID: <Yajlf6e2aRIpTBqB@hades.panopticon>
+Mail-Followup-To: Jeff King <peff@peff.net>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+References: <YYFEE/2g3SiM04zx@hades.panopticon>
+ <YYFJEASSimMhEsYz@coredump.intra.peff.net>
+ <YaEh+k2q+9LoLXNh@hades.panopticon>
+ <YaFVVMa9cg4gpI6b@coredump.intra.peff.net>
+ <YaFViM1tTTAc48ZG@coredump.intra.peff.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH 04/17] chunk-format.h: extract oid_version()
-Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, larsxschneider@gmail.com, peff@peff.net,
-        tytso@mit.edu
-References: <cover.1638224692.git.me@ttaylorr.com>
- <ea245b7216067093fdd3a5b2e3a9390f634c8af0.1638224692.git.me@ttaylorr.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <ea245b7216067093fdd3a5b2e3a9390f634c8af0.1638224692.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YaFViM1tTTAc48ZG@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/29/2021 5:25 PM, Taylor Blau wrote:
-> There are three definitions of an identical function which converts
-> `the_hash_algo` into either 1 (for SHA-1) or 2 (for SHA-256). There is a
-> copy of this function for writing both the commit-graph and
-> multi-pack-index file, and another inline definition used to write the
-> .rev header.
-> 
-> Consolidate these into a single definition in chunk-format.h. It's not
-> clear that this is the best header to define this function in, but it
-> should do for now.
+* Jeff King (peff@peff.net) wrote:
 
-Thanks for consolidating these!
- 
-> (Worth noting, the .rev caller expects a 4-byte unsigned, but the other
-> two callers work with a single unsigned byte. The consolidated version
-> uses the latter type, and lets the compiler widen it when required).
-> 
-> Another caller will be added in a subsequent patch.
+> > > > > After update from 2.33.0 to 2.33.1 the pull.rebase = true option
+> > > > > no longer works: `git pull` no longer tries to rebase (however manual
+> > > > > `git pull --rebase` works fine):
+> > > > > 
+> > > > > % git config pull.rebase
+> > > > > true
+> > > > > % git pull
+> > > > > fatal: Not possible to fast-forward, aborting.
+> > > > > % git pull --rebase
+> > > > > Successfully rebased and updated refs/heads/local-fixes.
+> > > > > % git pull
+> > > > > fatal: Not possible to fast-forward, aborting.
+> > > > > % grep -C1 rebase .git/config
+> > > > > [pull]
+> > > > > 	rebase = true
+> > > > > [rebase]
+> > > > > 	autostash = true
+> > > > > 
+> > > > > After downgrade to 2.33.0:
+> > > > > 
+> > > > > % git pull
+> > > > > Current branch local-fixes is up to date.
+> > > > 
+> > > > This looks like the same bug discussed in:
+> > > > 
+> > > >   https://lore.kernel.org/git/CH2PR06MB650424B4205102AC6A48F489B1BD9@CH2PR06MB6504.namprd06.prod.outlook.com/
+> > > > 
+> > > > There's a fix in that thread. It's currently in "next", but didn't quite
+> > > > make the cutoff for the upcoming v2.34.0.
+> > > 
+> > > For the record, the problem is still present in 2.34.1
+> > 
+> > In the bug I linked (and what got fixed in 2.34.1), the issue is that
+> > when the local branch is ahead of the remote, we don't say "up to date",
+> > but complain about fast-forwards.
+> > 
+> > It's hard to tell from the output above, but it looks like you have a
+> > case where there are new commits both locally and on the remote? In
+> > which case a rebase would work just fine.
+> > 
+> > But why are we complaining about "not possible to fast-forward"? Testing
+> > locally with something like:
+> > 
+> > -- >8 --
+> > git init repo
+> > cd repo
+> > 
+> > commit() {
+> > 	echo $1 >$1
+> > 	git add $1
+> > 	git commit -m $1
+> > }
+> > 
+> > git checkout -b local
+> > commit base
+> > commit local
+> > 
+> > git checkout -b remote HEAD^
+> > commit remote
+> > 
+> > git checkout local
+> > git config pull.rebase true
+> > git pull . remote
+> > -- >8 --
+> > 
+> > shows that we do rebase. If I set:
+> > 
+> >   git config pull.ff only
+> > 
+> > then we start complaining. And that behavior did change in 2.33.1, but
+> > I'm not sure it's wrong. We have two conflicting config options, and the
+> > precedence for which one we pick switched.
+> > 
+> > Do you have that option set in your config? Try:
+> > 
+> >   git config --show-origin --show-scope --get-regexp 'pull\..*'
 
->  chunk-format.c | 12 ++++++++++++
->  chunk-format.h |  3 +++
->  commit-graph.c | 18 +++---------------
->  midx.c         | 18 +++---------------
->  pack-write.c   | 15 ++-------------
+Yes, I have both `pull.ff=only` and `pull.rebase` set, but these
+come from different configs:
 
-I notice that you don't use this in load_pack_mtimes_file(),
-in pack-mtimes.c but you could at this point.
+  % git config --show-origin --show-scope --get-regexp 'pull\..*'
+  global  file:/home/marakasov/.gitconfig pull.ff only
+  local   file:.git/config    pull.rebase true
 
-The code you do touch looks good.
+IMO the setup is perfectly legal, as I want to disable merge on pull
+in any case, and I also want rebase for a specific repo. So the
+problem is then in how these options override (not) each other.
 
-Thanks,
--Stolee
+The following change in repo's config fixes this issue for me:
+
+   [pull]
+  +    ff = yes
+       rebase = true
+
+But IMO it still needs to be fixed in git, as the cause of this
+problem is quite unobvious and it does not feel right that local
+repo config should be aware of global config and include explicit
+overrides not really realated to the local repo config, for the
+latter to work as expected.
+
+It looks like it could be fixed by either making `pull.rebase` on
+repo level override `pull.ff` on global level, or reorganizing the
+options so no override is required, for example by introducing e.g.
+`pull.merge=off` instead of `pull.ff=only`. This way having both
+`pull.merge=off` and `pull.rebase=true` will not contradict each
+other and will not require any cross-variable override logic.
+
+-- 
+Dmitry Marakasov   .   55B5 0596 FF1E 8D84 5F56  9510 D35A 80DD F9D2 F77D
+amdmi3@amdmi3.ru  ..:     https://github.com/AMDmi3  https://amdmi3.ru
+
