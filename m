@@ -2,89 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89473C433F5
-	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 16:24:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD5E4C433EF
+	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 16:40:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359420AbhLBQ2E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Dec 2021 11:28:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35264 "EHLO
+        id S1359541AbhLBQoR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Dec 2021 11:44:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347508AbhLBQ2C (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Dec 2021 11:28:02 -0500
-Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32FD3C06174A
-        for <git@vger.kernel.org>; Thu,  2 Dec 2021 08:24:40 -0800 (PST)
-Received: by mail-ua1-x92d.google.com with SMTP id o1so106278uap.4
-        for <git@vger.kernel.org>; Thu, 02 Dec 2021 08:24:40 -0800 (PST)
+        with ESMTP id S1359173AbhLBQoP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Dec 2021 11:44:15 -0500
+Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com [IPv6:2607:f8b0:4864:20::929])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73E6AC06174A
+        for <git@vger.kernel.org>; Thu,  2 Dec 2021 08:40:53 -0800 (PST)
+Received: by mail-ua1-x929.google.com with SMTP id p2so124018uad.11
+        for <git@vger.kernel.org>; Thu, 02 Dec 2021 08:40:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=qXjnFJvCyfUrbloGPfJ0t66ZMGZP0RKK9O0q5xjgw9g=;
-        b=gYYhDtJCVj7lhOxj0OEHahWoeYQLRiyuV2Gy6MnbfhP43H/Wh6k9Rb1FxaVG22cxSN
-         RTDJemO6lPlDg0zfmIs/0TXZsayMrV3sXmvXDtkjwkhdN9ymVfyzgD6cOCHTxzHKbmZd
-         nZoSzCgPgf9S22tP3nkZCD4gnScnl7vuX5wxQof5+wjy9BPF99vNi7WVyZIxfjMwN3Tv
-         U5b3T+vNmEoi7MEHEFNQNKlrsYV1T8Eo0Y6OSoe61ANXuUabIWJQOCqtXNcV8iuEp7gZ
-         L/n2dkSaFxq0rZ6ci8tWaiLGvcuE+zK6fudLD9IqvukPORy8RXvYmcgLl4l5n7eIpvoj
-         Ze3A==
+        bh=H4vUJyGsIGk7fysi3iRrJp5rc+qP7n8iOQNPOe4rXVY=;
+        b=PrqrVNEzfm0/bdK/Hb0eWNZ0siJDIMuYqOw9FvoPXjTg2n8kxVJN4tq6gJuXVq3PB0
+         z8l9Twh6e2bHmhOaCubrnkoRXQWhn8yCAPUZOZTt9m8IF+37DP2m0KMVPr7zQY7MRkpP
+         9Gc/WXX4AUXWwBvwz/JWNRf5BTnZDnN3uhRLHgHzP+GSVkWwM5Ei07cVMxLaZ+fJvzB6
+         PMy7jr1+LSiOt7u4KaNFlhO5QaD0iJHoQ20C9Kp/C3+6q9xaz4KPANmArLFg+QKmT3O7
+         spKjRyWQvHelv0WoRULn4nsrWt+L/F7Kpzyz0COofjurAg4ZgZsIOLggdv55BeTOcNJS
+         7fNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qXjnFJvCyfUrbloGPfJ0t66ZMGZP0RKK9O0q5xjgw9g=;
-        b=tsVPdnq2c98VTzzV2vjFKDpnnRIjEXSe5AwdvY73NkPWHXgtB/fDxlq3Z10ONJFf+F
-         onTyMOUStkt5RNjIF23MwaUZ1dZVgZg9USSkQ+yjCfFnzbKZQRtcQVyznYEZZaLXsF2M
-         pYxy4tFTH4YMhD0l9RwJAK5YKrvIzlH4/ZnfGjP6NaqxCLe/ud1FGKM54jGcbhd59iYa
-         p9F139PbsCthY/mFzIlYqS7OvK5jBFCIOCo1RTHOCYj7bHuoqQgWGUPmqPV6TbidMQRf
-         T5gGYJw98c0wqTlw/a5Wf7FBzqfY8c5ZPGBX4jk08VEKiZlra5daHyjkKXo22bgnjktv
-         Ogeg==
-X-Gm-Message-State: AOAM531sC8OthI2vZ+izvPTg23j3ln0ZNn/hhXyztJOXSy3s1i6zB6I3
-        txtHBA3UM2hMtGoYnkiCqAiBH7j1phDlMwTxHy7s/Q==
-X-Google-Smtp-Source: ABdhPJwZsFUVDrmlVgD0JJAGMu9n2n95ve3TWAsqmy1vWlQ2OUQiJmf2/KCgqWcfJWoeTyNGKPrhQ02TpS/8LArhQj8=
-X-Received: by 2002:ab0:36fa:: with SMTP id x26mr16374427uau.15.1638462279214;
- Thu, 02 Dec 2021 08:24:39 -0800 (PST)
+        bh=H4vUJyGsIGk7fysi3iRrJp5rc+qP7n8iOQNPOe4rXVY=;
+        b=lh0daABGiBOxRFl7A9NPPf0bvR7JREhAOnqd01E/U2zu8N9QbnsCx/LMYdDBMImlZ4
+         6P5G3lMseRMw/Nv6qhMOEdQki4zT1Wo+g5ZpzHq6larUbVFItaWuj4J9lv0bqn8wEmAb
+         uW6TDcGQydA0Z9yBTFFJ+xqyd/zI3mKziPgN2T6tN92FVDabsgyJm5QLxBR9S9balplJ
+         Jqw1ALBd+PeZbMW0TlzIbjDOwYR1nDicT5LVrL0waF930jAGyh5lXHo1oLBe5W+c7OX7
+         0IJTE1d7PY/pMXW7A58NF32rqr3QgZtfwgTTSxyF/YooavtBFkiHagZOo3Z++10HkXBn
+         g9sQ==
+X-Gm-Message-State: AOAM532C/tCcXgws1O8jbcJvHqKEHRr/uhtvu0WnMdCavPCbn1i9oH1D
+        I3JmDBrukzJgFKywQ1L+iF3JdbqRP2XxoBO/oP6ywKBXCGM=
+X-Google-Smtp-Source: ABdhPJzx5xJ2hYce3RjwTeaOUinsHCuYeg7jxxQEwqwltM8wiRc8ILvLeFLu8j/ioXmckutWe1bp4Wh33YINihbi9Jk=
+X-Received: by 2002:a05:6102:dcb:: with SMTP id e11mr16476345vst.8.1638463252447;
+ Thu, 02 Dec 2021 08:40:52 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1145.git.git.1637590855.gitgitgadget@gmail.com>
- <pull.1145.v2.git.git.1637855872.gitgitgadget@gmail.com> <0288e743eb2e96e2effd6b0b90c6f885009bf337.1637855872.git.gitgitgadget@gmail.com>
- <xmqqilwf72nf.fsf@gitster.g> <CAFQ2z_N20ESyzkPLdGbS9q8HEHGB7_gmaX8FUBR=jGqXLGcL1Q@mail.gmail.com>
- <xmqq1r2y7ork.fsf@gitster.g>
-In-Reply-To: <xmqq1r2y7ork.fsf@gitster.g>
+References: <pull.1147.git.git.1637855761.gitgitgadget@gmail.com>
+ <pull.1147.v2.git.git.1638211786.gitgitgadget@gmail.com> <0a297f0c3e884c2d4cfb24a6d3b9f1973fc83125.1638211786.git.gitgitgadget@gmail.com>
+ <xmqqbl224k09.fsf@gitster.g> <CAFQ2z_M35tbF6+C2MkMRm7hO8CNdUSrGTcx+8Os348+rHu4ojg@mail.gmail.com>
+ <xmqqh7bs177v.fsf@gitster.g> <YafMS6qI+6t6SOtg@coredump.intra.peff.net>
+In-Reply-To: <YafMS6qI+6t6SOtg@coredump.intra.peff.net>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 2 Dec 2021 17:24:28 +0100
-Message-ID: <CAFQ2z_NYgsiLM1Ffw3O9gAFHVuq68iAfrRbgodHdUPRo5Pm0UA@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] refs/debug: trim trailing LF from reflog message
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
+Date:   Thu, 2 Dec 2021 17:40:41 +0100
+Message-ID: <CAFQ2z_NvHK17w3Rd958uwNziT2w5wXhiAJTSkCgBi32smgQuOg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/6] refs: add REF_SKIP_REFNAME_VERIFICATION flag
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 29, 2021 at 8:20 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, Dec 1, 2021 at 8:26 PM Jeff King <peff@peff.net> wrote:
 >
-> Han-Wen Nienhuys <hanwen@google.com> writes:
+> On Wed, Dec 01, 2021 at 11:00:04AM -0800, Junio C Hamano wrote:
 >
-> > On Fri, Nov 26, 2021 at 9:16 AM Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> >>
-> >> The API promises to have only LF, not CRLF, at the end, so
-> >> strbuf_trim_trailing_newline() is a bit overkill (and if payload
-> >> happened to end with CR, we would lose it).
+> > > The test helper takes the flag as an argument, in decimal. If you loo=
+k
+> > > for 2048, you should find it.
 > >
-> > it would be best if there was a way to escape characters (ie. "\n" =3D>
-> > "\\n"). Do we have a function for that?
+> > Awful---when the symbolic constants change in the code, the test
+> > will silently break?
 >
-> Mere escaping would not work in a backward compatible way, without a
-> trick.  It was envisioned that we probably could encode *and* signal
+> Agreed, this is quite nasty.
 
-I'm talking about the debug output, which isn't subject to
-compatibility guarantees.
+I've added parsing symbolic constants in v3.
 
 --=20
 Han-Wen Nienhuys - Google Munich
