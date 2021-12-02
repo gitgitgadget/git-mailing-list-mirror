@@ -2,142 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E699EC433EF
-	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 18:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9373C433F5
+	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 18:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376647AbhLBSnt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Dec 2021 13:43:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37920 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376635AbhLBSng (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Dec 2021 13:43:36 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED41EC061759
-        for <git@vger.kernel.org>; Thu,  2 Dec 2021 10:40:11 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id o29so515224wms.2
-        for <git@vger.kernel.org>; Thu, 02 Dec 2021 10:40:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=f9F7TJyomLrMSKcIkZcwHRa0eTQ9RZcolol+/4rLphg=;
-        b=eL1/3Wh5C0XcyhraE7LvRwSywnoOO8huF/yjQAA+FvzGGb4VAR0j2iP6xcKQx2BAQt
-         H9j9uqrw1E/kW5GmwTUCNFV8i5hTa0iJ7S2Jr3P4LtFBPzhAkt7GGjaaeqmPAQ/uxvXN
-         IGWHatELgF9dKH1fbg5PgBuQhNhuaJjj9kg3KOl1oFV3xZwm9JNgM264FtS04UztE1Rb
-         CayhPKZCs9KJtrpLJ8UtdfbfoR0uy0FKCpQJAdOlNuzrfzS31EHtHZICglegZX4RM3vq
-         35O8Zp5KsgIoLf5CI7xnl4xfV91g238i/QvINXiqQFy3TzfN81our0itJIX8DX5LsUZy
-         cTMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=f9F7TJyomLrMSKcIkZcwHRa0eTQ9RZcolol+/4rLphg=;
-        b=BZFvBUb7Z0+IkhzGQiSxPKXG/Ix8SVzDUvkaAqtRf5Z1axLA1NvzAnNUgHZQ7rdYq8
-         uiydtXzSzHkhZkYcbUuWZWDZf5fpfgK6ZIZN4tVz0EozeYhzq5fwBdRoFOhbW92ChCu5
-         jlxB60xBAVC4wErAf5apHOUkMKQo5qOzD8JWZAgzwqklx2FW/Sr5XrHmPLFIX7zi43Co
-         CVR43Vd0zjK3X3Vo0WVCpSOd7nvSo4vuzmPu4r3wIxbWoClCYymgnJVDV8KWGiS6c8j8
-         4FK3FgfP3twBxE2lq2INxZtCLHg/by0jzquTjTbA4FUUw/lKSVwdmi/4hD97PrNip3iO
-         R+Mg==
-X-Gm-Message-State: AOAM531zgUMXmoflgU6Qy3VseU0ONUD01qhSxaTd1BBuWqJTMhQ5OTcw
-        DHkep6y0/VxxhcB/PqacwH90vf9yTdE=
-X-Google-Smtp-Source: ABdhPJzPxtYwjGZm2o9TimrOcNOLnCpVCIjZCJgBC93Y8icS8VcHNoN6Ika8gMraGHNu6MDnBm/Bvw==
-X-Received: by 2002:a1c:ed0a:: with SMTP id l10mr8459874wmh.140.1638470410413;
-        Thu, 02 Dec 2021 10:40:10 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l3sm518037wmq.46.2021.12.02.10.40.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Dec 2021 10:40:10 -0800 (PST)
-Message-Id: <ca7f8aea3d9423bb3e572618920e4ca3b3f26492.1638470403.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1147.v3.git.git.1638470403.gitgitgadget@gmail.com>
-References: <pull.1147.v2.git.git.1638211786.gitgitgadget@gmail.com>
-        <pull.1147.v3.git.git.1638470403.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 02 Dec 2021 18:40:02 +0000
-Subject: [PATCH v3 8/8] t1430: create valid symrefs using test-helper
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S242418AbhLBSpx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Dec 2021 13:45:53 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52744 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229950AbhLBSpw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Dec 2021 13:45:52 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A021E9A28;
+        Thu,  2 Dec 2021 13:42:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LgFtQPDecBV3UB2ItwadYYILA85WfOcNPItsHa
+        HTb7E=; b=b6/plF4ZArLWAJj8nQBPsWhllacON/8iYLJiKkVx10IsyJ0nG6V2jd
+        YloxFzkn8B3ceza05dRblUynsRoUiO6UhPrAeA3luRREV/fmvIhMYxR0dCl+G57t
+        hXnvFjlvWllnOceVpWNHroMxCHpT9QMtZzmWgLJOkOxEBWSYotb8o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 502E9E9A27;
+        Thu,  2 Dec 2021 13:42:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AD292E9A26;
+        Thu,  2 Dec 2021 13:42:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "Theodore Ts'o" <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: Re: [PATCH v9 00/17] Upstreaming the Scalar command
+References: <pull.1005.v8.git.1637363024.gitgitgadget@gmail.com>
+        <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
+        <211130.86mtlleqhm.gmgdl@evledraar.gmail.com>
+        <nycvar.QRO.7.76.6.2111301450030.63@tvgsbejvaqbjf.bet>
+        <xmqqtufs1a39.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2112021549330.63@tvgsbejvaqbjf.bet>
+        <xmqq1r2vvszo.fsf@gitster.g>
+        <CABPp-BGaHHUuQqvvDLBSaRG7C=SzS-ykOLi4HCdDDXQHgHjmJA@mail.gmail.com>
+Date:   Thu, 02 Dec 2021 10:42:27 -0800
+In-Reply-To: <CABPp-BGaHHUuQqvvDLBSaRG7C=SzS-ykOLi4HCdDDXQHgHjmJA@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 2 Dec 2021 09:39:12 -0800")
+Message-ID: <xmqq35navofg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 99D37B22-539F-11EC-9600-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+Elijah Newren <newren@gmail.com> writes:
 
-This still leaves some other direct filesystem access. Currently, the files
-backend does not allow invalidly named symrefs. Fixes for this are currently in
-the 'seen' branch
+> while I think CI testing would be nice once we have a functionally
+> useful scalar, the CI tests of this early version aren't really
+> netting us anything.  And they're blocking future scalar series
+> unnecessarily.  Johannes already said he had planned CI testing for a
+> future series, so I'd rather just take this version of js/scalar minus
+> the CI integration for next.)
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
- t/t1430-bad-ref-name.sh | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+Yeah, with less stomping on each others' toes, things may flow
+smoother.  As long as people are happy with the core part, that
+sounds like the best approach forward.
 
-diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
-index 84e912777c5..ff1c967d550 100755
---- a/t/t1430-bad-ref-name.sh
-+++ b/t/t1430-bad-ref-name.sh
-@@ -153,7 +153,7 @@ test_expect_success 'rev-parse skips symref pointing to broken name' '
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/broken...ref" &&
- 	git branch shadow one &&
- 	test-tool ref-store main update-ref msg "refs/heads/broken...ref" $main_sha1 $ZERO_OID REF_SKIP_REFNAME_VERIFICATION &&
--	printf "ref: refs/heads/broken...ref\n" >.git/refs/tags/shadow &&
-+	test-tool ref-store main create-symref refs/tags/shadow refs/heads/broken...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/tags/shadow" &&
- 	git rev-parse --verify one >expect &&
- 	git rev-parse --verify shadow >actual 2>err &&
-@@ -203,7 +203,7 @@ test_expect_success 'update-ref --no-deref -d can delete symref to broken name'
- 	test-tool ref-store main update-ref msg "refs/heads/broken...ref" $main_sha1 $ZERO_OID REF_SKIP_REFNAME_VERIFICATION &&
- 
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/broken...ref" &&
--	printf "ref: refs/heads/broken...ref\n" >.git/refs/heads/badname &&
-+	test-tool ref-store main create-symref refs/heads/badname refs/heads/broken...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/badname" &&
- 	git update-ref --no-deref -d refs/heads/badname >output 2>error &&
- 	test_path_is_missing .git/refs/heads/badname &&
-@@ -213,9 +213,8 @@ test_expect_success 'update-ref --no-deref -d can delete symref to broken name'
- 
- test_expect_success 'branch -d can delete symref to broken name' '
- 	test-tool ref-store main update-ref msg "refs/heads/broken...ref" $main_sha1 $ZERO_OID REF_SKIP_REFNAME_VERIFICATION &&
--
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/broken...ref" &&
--	printf "ref: refs/heads/broken...ref\n" >.git/refs/heads/badname &&
-+	test-tool ref-store main create-symref refs/heads/badname refs/heads/broken...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/badname" &&
- 	git branch -d badname >output 2>error &&
- 	test_path_is_missing .git/refs/heads/badname &&
-@@ -224,7 +223,7 @@ test_expect_success 'branch -d can delete symref to broken name' '
- '
- 
- test_expect_success 'update-ref --no-deref -d can delete dangling symref to broken name' '
--	printf "ref: refs/heads/broken...ref\n" >.git/refs/heads/badname &&
-+	test-tool ref-store main create-symref refs/heads/badname refs/heads/broken...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/badname" &&
- 	git update-ref --no-deref -d refs/heads/badname >output 2>error &&
- 	test_path_is_missing .git/refs/heads/badname &&
-@@ -233,7 +232,7 @@ test_expect_success 'update-ref --no-deref -d can delete dangling symref to brok
- '
- 
- test_expect_success 'branch -d can delete dangling symref to broken name' '
--	printf "ref: refs/heads/broken...ref\n" >.git/refs/heads/badname &&
-+	test-tool ref-store main create-symref refs/heads/badname refs/heads/broken...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/badname" &&
- 	git branch -d badname >output 2>error &&
- 	test_path_is_missing .git/refs/heads/badname &&
-@@ -243,9 +242,8 @@ test_expect_success 'branch -d can delete dangling symref to broken name' '
- 
- test_expect_success 'update-ref -d can delete broken name through symref' '
- 	test-tool ref-store main update-ref msg "refs/heads/broken...ref" $main_sha1 $ZERO_OID REF_SKIP_REFNAME_VERIFICATION &&
--
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/broken...ref" &&
--	printf "ref: refs/heads/broken...ref\n" >.git/refs/heads/badname &&
-+	test-tool ref-store main create-symref refs/heads/badname refs/heads/broken...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/badname" &&
- 	git update-ref -d refs/heads/badname >output 2>error &&
- 	test_path_is_missing .git/refs/heads/broken...ref &&
--- 
-gitgitgadget
