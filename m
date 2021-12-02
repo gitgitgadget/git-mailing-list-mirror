@@ -2,98 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C6F2C433F5
-	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 23:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CBD2C433EF
+	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 23:14:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356508AbhLBXRb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Dec 2021 18:17:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43240 "EHLO
+        id S1356568AbhLBXRw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Dec 2021 18:17:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244721AbhLBXRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Dec 2021 18:17:30 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 328E2C06174A
-        for <git@vger.kernel.org>; Thu,  2 Dec 2021 15:14:07 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id p1-20020aa79e81000000b004a82ea1b82bso707313pfq.1
-        for <git@vger.kernel.org>; Thu, 02 Dec 2021 15:14:07 -0800 (PST)
+        with ESMTP id S244721AbhLBXRv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Dec 2021 18:17:51 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57966C06174A
+        for <git@vger.kernel.org>; Thu,  2 Dec 2021 15:14:28 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id a9so1880613wrr.8
+        for <git@vger.kernel.org>; Thu, 02 Dec 2021 15:14:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=8AmenpjrqVfrp8jLl+j0Q0q60z1a1IxSBvn8YFS/v/8=;
-        b=ILqXfuSzlcP7oyVgqONP+WFYB7Q4u+FIFalEFWp4hfNatt7dTnpJ2lZBxFmPAO8RVZ
-         1Bd8V6jwecijkFcPxC4kgq4BFU1FsQ6aBgKMfd8WBXRfTX9NzL2noMTqiYNXxBxzFuVs
-         y79ta/BkhZcBzZ87g/CLVX1KuhHYlxVEHGf3migcPhlERb6bsN1Hn4jLONf4PbF5Lh5+
-         4McEhlMxbqd4vTItQWQLFMmfyh/Df3LrcznEvxyh0sKGAlKvJo2G82AAiQ88tJD8yil4
-         c+MI18iKMIqdl1zze3vIuVBW2AwKXLzsdSaybLkecuSZ/PZOWrR5oPDr7xXFDHDaFGmk
-         dE4A==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=ZpqSfPkSbxzY7TBnJQQPSsvMimgqEtONK/TGgK4v9/U=;
+        b=mWRRxz4lSv5Qd5eLs6GlYveAPJfDvmzfkjuktUhjRvcRCk3r0LnOguIz7fSWZ4RWsQ
+         WJtnDvQHtzE4FDytri7vy0BIEK5Q+w9HcKBeemInbnt/X5+yuXcDASAFmq0P3kFV2Y3e
+         hCIue4KqDdVq2sd6b95yEJmKTHNvBj8JncpSOAp67b9jmESZiuYW6ms40DYCu9s5+u/I
+         7nY7l+eHzyYlrmq3HHmVa3oCSFn+Z0mYmVS+g4L2R5eJUGi+1qDp7PiUIzzNsv54YsLb
+         fbJcCzE8YQeC0y4WvIw3QTjU+IKHaGkVw9e3nhzPvK7f02iuYbRIOQa4QbSEixd/zMUp
+         XcnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=8AmenpjrqVfrp8jLl+j0Q0q60z1a1IxSBvn8YFS/v/8=;
-        b=KMNA5ydnuaE+I0LliHMejPGhO14XxPQKUX5JlD50Y9N5fxJ4/UnKgxvwPH7hEOHK7b
-         2mb/6NAs8L6HmeowRJCuJew/3ICvXJAYdmhziu/6ortcVXolDy+c6LEb2uNwRf2Jk6m3
-         LJLnJeOdHBqiZvGKE45c/MK+/LH4CHfvVmFZN0+gwh9RrtAiyOeVbvxFGI3F98I09RgM
-         XB3FXbkoSmeAnIUN1cjLBenesbEdpyzsm/kisGXWaYLVmOdVkDhzygmacU1pHaR0GD7H
-         MLYaFIPP3mHwa4To4bhAwf+O3QNh5Q+t8K1JtQne2m2WTHbK1ccJMo7s5rMTH2kBcrnM
-         kk+w==
-X-Gm-Message-State: AOAM533pko2DYRSeQcdRz72NQnvyu64YAr3CFk4eoew3Mh9lX2CGdsSw
-        mUykqXydEy5QasQGpVzGz6j/d8bGYb6LmbDg4P9x
-X-Google-Smtp-Source: ABdhPJzgPr8G8/FnerLPUmrO+EBzEGBEIQZNpZlClRhLuXYi2jeVsUi9qC2RvzThXTfBwx9+VQgiVSOXBH2uEq3ZDesa
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:1250:b0:4a8:18f8:5001 with
- SMTP id u16-20020a056a00125000b004a818f85001mr15673744pfi.59.1638486846607;
- Thu, 02 Dec 2021 15:14:06 -0800 (PST)
-Date:   Thu,  2 Dec 2021 15:14:03 -0800
-In-Reply-To: <xmqqlf1417mo.fsf@gitster.g>
-Message-Id: <20211202231403.3451471-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqlf1417mo.fsf@gitster.g>
-X-Mailer: git-send-email 2.34.1.400.ga245620fadb-goog
-Subject: Re: [PATCH v3 2/2] config: include file if remote URL matches a glob
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org,
-        emilyshaffer@google.com, peff@peff.net, avarab@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=ZpqSfPkSbxzY7TBnJQQPSsvMimgqEtONK/TGgK4v9/U=;
+        b=CfsIQvxUU2eMDlgFe48MPfdd9jO0lrjKZmoY54hcTN9LcQSGAFkfIBWXUFa9tDS1ig
+         eHHCSRK4HKGZqtCvs5wY9FF4FlmRQXtTcG3CjqIgwFGtk2Na2mL+fno4aesL1eVDk8aB
+         T/douFMFk2SqAk3F5VbQOejz2EoPvi7Pzn/ZqKyTMrJd2Znw+J78JTM/6NYwNcwPDqzc
+         J1D2cIXfuriGy2txYD7WyX6wPvnZDQirc3ZXm4M3nHjTLBEutCuP2sy/nuVW8UBN6Ipc
+         ykG/YWc5X90KKwVJpi2We6DBeDFDj3LMqlF9zXIriu9DU3i5RhTzm0tvVyI1cCK58rJT
+         +eeA==
+X-Gm-Message-State: AOAM531p/PZ/GdlNVsBt/cn5fO0i9a3rl4okzPHhjwsTL8mMN6H0Hqom
+        aO9IDThcJO1RRLQK+OicIGc=
+X-Google-Smtp-Source: ABdhPJxhmO3oTMXzRAJ1ZlmFnEGWwj41kDSvm8BkGXLP39Os6joKwAT6Gv5CldRcc66KOjZy4/uMtw==
+X-Received: by 2002:adf:f7d2:: with SMTP id a18mr17347501wrq.354.1638486866986;
+        Thu, 02 Dec 2021 15:14:26 -0800 (PST)
+Received: from szeder.dev (78-131-17-57.pool.digikabel.hu. [78.131.17.57])
+        by smtp.gmail.com with ESMTPSA id g18sm1054006wrv.42.2021.12.02.15.14.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Dec 2021 15:14:26 -0800 (PST)
+Date:   Fri, 3 Dec 2021 00:14:21 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v3 10/10] progress.c: add & assert a "global_progress"
+ variable
+Message-ID: <20211202231421.GA624717@szeder.dev>
+References: <cover-v2-0.8-00000000000-20210920T225701Z-avarab@gmail.com>
+ <cover-v3-00.10-00000000000-20211013T222329Z-avarab@gmail.com>
+ <patch-v3-10.10-01d5bbfce76-20211013T222329Z-avarab@gmail.com>
+ <20211025050202.GC2101@szeder.dev>
+ <xmqq35op4f7n.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq35op4f7n.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Jonathan Tan <jonathantanmy@google.com> writes:
+On Mon, Oct 25, 2021 at 02:38:04AM -0700, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
 > 
-> >> variables we read without the includeIf directive", with variations
-> >> of "condition" including
-> >> 
-> >>  - a literal X is among the values of multi-valued variable Y.
-> >>  - a pattern X matches one of the values of multi-valued variable Y.
-> >>  - a literal Y is the name of an existing configuration variable.
-> >>  - a pattern Y matches the name of an existing configuration variable.
-> > ...
-> > code), in this case, unless there is another use case for this, I think
-> > we should proceed with the use case that we know about first
-> > (conditional include of a file supplied by a remote repo administrator).
+> > I still very much dislike the idea of a BUG() in the progress code
+> > that can trigger outside of the test suite, because the progress line
+> > is only a UI gimmick and not a crucial part of any Git operation, and
+> > even though a progress line might be buggy, the underlying Git
+> > operation is not affected by it and would still finish successfully,
+> > as was the case with the dozen of so progress line bugs in the past.
 > 
-> Doing it that way without thinking flexibility through will paint us
-> into a corner, from which we cannot get out of, doesn't it?
+> I too recall that we have fixed numerous bugs in the past year in
+> the area, but weren't they kind of obvious ones _once_ they are
+> pointed out at you (e.g. progress never reaching to 100%)?  Yet the
+> developers have failed to catch them because their eyes would coast
+> over without paying attention to them, exactly because the progress
+> bar is merely a UI gimmick.
 > 
-> People will start asking "Why should we even have
-> 'hasremoteurl:$URL' variant in 'includeIf' conditions, when one of
-> the 'variableExists:Y' and friends can express the same thing",
-> somebody new who is not yet in this community today will propose
-> deprecating hasremoteurl in favor of more generalized approach and
-> we have to give a sad answer "no, we earlier made a mistake of
-> starting with a special case variant for expediency's sake, without
-> thinking the general cases through.  Because existing users depend
-> on it, we have to support it til the end of time."
-> 
-> We have the same regret with "why do we need grep.extendedRegexp
-> when grep.patternType suffices?"  I am reluctant to see us knowingly
-> commit the same mistake here, unless there is a very good reason.
+> I haven't formed a firm opinion on this yet, but I think the idea
+> behind these BUG() is to help such problems be caught while they are
+> still in the lab.  You may not notice when your live progress bar
+> behaved a bit funny, but if you hit a BUG(), that would be squarely
+> in your face and you cannot ignore it.
 
-Hmm...that's true. I was thinking that there wouldn't be a way to
-predict exactly what we'll need, but perhaps making the config variable
-name be of the form 'includeIf."hasconfig:remote.*.url".path' might give
-us enough flexibility for the future.. I'll take a look.
+The "outside of the test suite" part is important.  Running the test
+suite with a GIT_TEST_CHECK_PROGRESS knob is sufficient to catch these
+issues as my inital two patch series have shown at the very beginning
+of this thread before Ævar hijacked them.  Interested Git developers
+can even enable it in their .profile if they wish; I did so with
+GIT_TEST_SPLIT_INDEX for a while to expose some of my patches to more
+real-world use.
+
+However, I think it's conceptually a bad idea to abort with a BUG() an
+otherwise successful Git operation by default, when that bug happens
+to be in such an ancillary component as the progress display, and find
+the justifications given in the commit message unconvincing.
+
