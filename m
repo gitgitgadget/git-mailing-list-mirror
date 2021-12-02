@@ -2,155 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 035DDC433F5
-	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 00:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDDF9C433EF
+	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 00:14:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354271AbhLBAQP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Dec 2021 19:16:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39834 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354248AbhLBAQF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Dec 2021 19:16:05 -0500
-Received: from a3.inai.de (a3.inai.de [IPv6:2a01:4f8:10b:45d8::f5])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4672C06175D
-        for <git@vger.kernel.org>; Wed,  1 Dec 2021 16:12:41 -0800 (PST)
-Received: by a3.inai.de (Postfix, from userid 65534)
-        id 0EC7C58058C07; Thu,  2 Dec 2021 01:12:39 +0100 (CET)
-Received: from a4.inai.de (a4.inai.de [IPv6:2a01:4f8:10b:45d8::f8])
-        by a3.inai.de (Postfix) with ESMTP id 943575805951A
-        for <git@vger.kernel.org>; Thu,  2 Dec 2021 01:12:38 +0100 (CET)
-From:   Jan Engelhardt <jengelh@inai.de>
-To:     git@vger.kernel.org
-Subject: [PATCH 1/2] http-backend: CGI error messages need to be output on stdout
-Date:   Thu,  2 Dec 2021 01:12:37 +0100
-Message-Id: <20211202001238.21808-1-jengelh@inai.de>
-X-Mailer: git-send-email 2.34.0
+        id S1354285AbhLBARn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Dec 2021 19:17:43 -0500
+Received: from mail-pj1-f47.google.com ([209.85.216.47]:54824 "EHLO
+        mail-pj1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1354273AbhLBAQm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Dec 2021 19:16:42 -0500
+Received: by mail-pj1-f47.google.com with SMTP id np3so19239820pjb.4
+        for <git@vger.kernel.org>; Wed, 01 Dec 2021 16:13:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LH5fwqcSuYbKjwGrJegrfeEJmKl6NWBawyIvB+7ip5Q=;
+        b=O1pCRtmPKnvu2YBLI1hCRnkFLakboeCNV6ZE2RM4xhXvuBX90f2hD/l2zO5OUkANST
+         8tpxuaD7xGKoWV1QoHGQgsSo21ETT0DEhOcUrd6522Es19tbH9mOYBw7JYIiJzXh5V92
+         lKgyI/XETBPSfm2sWlMC75kiz125dIagC9Wyn42d2XfATNXxgOiWvcRip0eh0hrE/2/z
+         AVj7H8eeSheuhWTf17E0NqOGfpNRbx+/UgRLmKweFI7/hK1sKduvY9c36LBiHSRsWn2F
+         gM8reELt/igCaQ6BsWSo1V+3acPXSlD3Gt9FK6pJHGVnJbmBQ32P0tB3vd1Ck+wcMMJo
+         nDmQ==
+X-Gm-Message-State: AOAM530C2m2+ykSdEIfvZdRIJxNXmyPKVEbQjQH9utVIIEQX4BYI0fQ6
+        0RoOLK2Fh2CEh4EHsDqgFgLmpKcFOmDbTF9QBcIebpDMtpl1rw==
+X-Google-Smtp-Source: ABdhPJxIuVWQQd+/GlGXfuOgQaO4Jyw5WVYgLxOg4CpHo68vwM1+zvwkdCVrGmKfDlw1WjG1mUwZPWCXAng3Y7iygNk=
+X-Received: by 2002:a17:90b:4d08:: with SMTP id mw8mr1927834pjb.236.1638404000765;
+ Wed, 01 Dec 2021 16:13:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20211201221547.1796213-1-andersk@mit.edu> <20211201221547.1796213-5-andersk@mit.edu>
+ <CAPig+cSNP-RBmsWWfT690-shFUCZ3J0X+FBiNjCqg=AkoBMBqQ@mail.gmail.com> <f8262c3b-2ca5-4920-1379-41ff29b37d9f@mit.edu>
+In-Reply-To: <f8262c3b-2ca5-4920-1379-41ff29b37d9f@mit.edu>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 1 Dec 2021 19:13:09 -0500
+Message-ID: <CAPig+cRX94vMLkW=dAKncPTuuk0Opaj+8-Yqe-qFD1b7mrZ89A@mail.gmail.com>
+Subject: Re: [PATCH v7 4/8] worktree: simplify find_shared_symref() memory
+ ownership model
+To:     Anders Kaseorg <andersk@mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Andreas Heiduk <andreas.heiduk@mathema.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Accessing a clone-only URL with a browser would always show a blank
-page, because the reason string "Request is not supported" was
-sent to the wrong file descriptor.
+On Wed, Dec 1, 2021 at 6:48 PM Anders Kaseorg <andersk@mit.edu> wrote:
+> On 12/1/21 15:10, Eric Sunshine wrote:
+> > As far as I can see, this code only cares whether find_shared_symref()
+> > returned a result; it doesn't actually consult the returned worktree
+> > at all, thus it semantically considers `worktree` as a boolean, not as
+> > a `struct worktree`.
+>
+> No, the update_worktree(new_oid->hash, worktree) call uses it in a
+> non-boolean way, so we do need to keep it around.
 
-Signed-off-by: Jan Engelhardt <jengelh@inai.de>
----
- http-backend.c          |  4 ++--
- t/t5561-http-backend.sh | 46 ++++++++++++++++++++---------------------
- 2 files changed, 25 insertions(+), 25 deletions(-)
+Okay, I missed that call to update_worktree() in the "noise" of all
+those other changes, but looking at the code a bit more carefully, it
+seems as if we might still be able to drop all the noise changes
+anyhow by hoisting ownership of `worktrees` up a level or two. In
+particular, both execute_commands_atomic() and
+execute_commands_non_atomic() are calling update() in a loop, and
+update() is calling get_worktrees() / free_worktrees() each time it is
+called within those loops, which seems unnecessarily expensive.
 
-diff --git http-backend.c http-backend.c
-index 3d6e2ff17f..8f1b69d127 100644
---- http-backend.c
-+++ http-backend.c
-@@ -134,7 +134,7 @@ static NORETURN void not_found(struct strbuf *hdr, const char *err, ...)
- 
- 	va_start(params, err);
- 	if (err && *err)
--		vfprintf(stderr, err, params);
-+		vprintf(err, params);
- 	va_end(params);
- 	exit(0);
- }
-@@ -150,7 +150,7 @@ static NORETURN void forbidden(struct strbuf *hdr, const char *err, ...)
- 
- 	va_start(params, err);
- 	if (err && *err)
--		vfprintf(stderr, err, params);
-+		vprintf(err, params);
- 	va_end(params);
- 	exit(0);
- }
-diff --git t/t5561-http-backend.sh t/t5561-http-backend.sh
-index 9c57d84315..d8add36fb4 100755
---- t/t5561-http-backend.sh
-+++ t/t5561-http-backend.sh
-@@ -44,7 +44,7 @@ grep '^[^#]' >exp <<EOF
- 
- ###  refs/heads/main
- ###
--GET  /smart/repo.git/refs/heads/main HTTP/1.1 404 -
-+GET  /smart/repo.git/refs/heads/main HTTP/1.1 404
- 
- ###  getanyfile default
- ###
-@@ -59,14 +59,14 @@ GET  /smart/repo.git/$IDX_URL HTTP/1.1 200
- 
- ###  no git-daemon-export-ok
- ###
--GET  /smart_noexport/repo.git/HEAD HTTP/1.1 404 -
--GET  /smart_noexport/repo.git/info/refs HTTP/1.1 404 -
--GET  /smart_noexport/repo.git/objects/info/packs HTTP/1.1 404 -
--GET  /smart_noexport/repo.git/objects/info/alternates HTTP/1.1 404 -
--GET  /smart_noexport/repo.git/objects/info/http-alternates HTTP/1.1 404 -
--GET  /smart_noexport/repo.git/$LOOSE_URL HTTP/1.1 404 -
--GET  /smart_noexport/repo.git/$PACK_URL HTTP/1.1 404 -
--GET  /smart_noexport/repo.git/$IDX_URL HTTP/1.1 404 -
-+GET  /smart_noexport/repo.git/HEAD HTTP/1.1 404
-+GET  /smart_noexport/repo.git/info/refs HTTP/1.1 404
-+GET  /smart_noexport/repo.git/objects/info/packs HTTP/1.1 404
-+GET  /smart_noexport/repo.git/objects/info/alternates HTTP/1.1 404
-+GET  /smart_noexport/repo.git/objects/info/http-alternates HTTP/1.1 404
-+GET  /smart_noexport/repo.git/$LOOSE_URL HTTP/1.1 404
-+GET  /smart_noexport/repo.git/$PACK_URL HTTP/1.1 404
-+GET  /smart_noexport/repo.git/$IDX_URL HTTP/1.1 404
- 
- ###  git-daemon-export-ok
- ###
-@@ -92,14 +92,14 @@ GET  /smart/repo.git/$IDX_URL HTTP/1.1 200
- 
- ###  getanyfile false
- ###
--GET  /smart/repo.git/HEAD HTTP/1.1 403 -
--GET  /smart/repo.git/info/refs HTTP/1.1 403 -
--GET  /smart/repo.git/objects/info/packs HTTP/1.1 403 -
--GET  /smart/repo.git/objects/info/alternates HTTP/1.1 403 -
--GET  /smart/repo.git/objects/info/http-alternates HTTP/1.1 403 -
--GET  /smart/repo.git/$LOOSE_URL HTTP/1.1 403 -
--GET  /smart/repo.git/$PACK_URL HTTP/1.1 403 -
--GET  /smart/repo.git/$IDX_URL HTTP/1.1 403 -
-+GET  /smart/repo.git/HEAD HTTP/1.1 403
-+GET  /smart/repo.git/info/refs HTTP/1.1 403
-+GET  /smart/repo.git/objects/info/packs HTTP/1.1 403
-+GET  /smart/repo.git/objects/info/alternates HTTP/1.1 403
-+GET  /smart/repo.git/objects/info/http-alternates HTTP/1.1 403
-+GET  /smart/repo.git/$LOOSE_URL HTTP/1.1 403
-+GET  /smart/repo.git/$PACK_URL HTTP/1.1 403
-+GET  /smart/repo.git/$IDX_URL HTTP/1.1 403
- 
- ###  uploadpack default
- ###
-@@ -113,13 +113,13 @@ POST /smart/repo.git/git-upload-pack HTTP/1.1 200 -
- 
- ###  uploadpack false
- ###
--GET  /smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1 403 -
--POST /smart/repo.git/git-upload-pack HTTP/1.1 403 -
-+GET  /smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1 403
-+POST /smart/repo.git/git-upload-pack HTTP/1.1 403
- 
- ###  receivepack default
- ###
--GET  /smart/repo.git/info/refs?service=git-receive-pack HTTP/1.1 403 -
--POST /smart/repo.git/git-receive-pack HTTP/1.1 403 -
-+GET  /smart/repo.git/info/refs?service=git-receive-pack HTTP/1.1 403
-+POST /smart/repo.git/git-receive-pack HTTP/1.1 403
- 
- ###  receivepack true
- ###
-@@ -128,8 +128,8 @@ POST /smart/repo.git/git-receive-pack HTTP/1.1 200 -
- 
- ###  receivepack false
- ###
--GET  /smart/repo.git/info/refs?service=git-receive-pack HTTP/1.1 403 -
--POST /smart/repo.git/git-receive-pack HTTP/1.1 403 -
-+GET  /smart/repo.git/info/refs?service=git-receive-pack HTTP/1.1 403
-+POST /smart/repo.git/git-receive-pack HTTP/1.1 403
- EOF
- test_expect_success 'server request log matches test results' '
- 	check_access_log exp
--- 
-2.34.0
+If we instead hoist ownership of `worktrees` up to execute_commands()
+-- which calls execute_commands_atomic() or
+execute_commands_non_atomic() -- then we can get by with retrieving
+the worktrees just once, and all those noise changes in update() can
+be dropped since it will no longer be responsible for allocating or
+freeing `worktrees`. For instance:
 
+    static void execute_commands(...)
+    {
+        struct worktree **worktrees;
+        ...
+        worktrees = get_worktrees();
+         if (use_atomic)
+            execute_commands_atomic(commands, si, worktrees);
+        else
+            execute_commands_non_atomic(commands, si, worktrees);
+        free_worktrees(worktrees);
+        ...
+    }
+
+and then execute_commands_atomic() and execute_commands_non_atomic()
+can pass `worktrees` along to update().
