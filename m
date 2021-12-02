@@ -2,103 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99238C433F5
-	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 17:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ABFEC433EF
+	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 17:36:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348094AbhLBRgw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Dec 2021 12:36:52 -0500
-Received: from mout.gmx.net ([212.227.15.19]:34019 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1346939AbhLBRgv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Dec 2021 12:36:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1638466405;
-        bh=Qg1T2g6oh/ZB1IkQhf+g4M3s/055MZCZZ7DwcFOGiEU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=aC1zT3xL5pdWWVEFmtMAlHEEd5fKSJYz1euejnFTchig1UZ/z8fo+UQf1UWxNgiNa
-         6sYdR2EJotZ1vvCJtygkvfEzO2caXHiEnUbg1wLG9oLCCEQKtZWpZTtDOs+1mbTwrd
-         b9hE19HiNvD/JpCJg0uaWsIf4NJOLa/OPk7hSPWc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.219.221] ([89.1.212.223]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQvCv-1nGIUs1v1z-00NzBl; Thu, 02
- Dec 2021 18:33:25 +0100
-Date:   Thu, 2 Dec 2021 18:33:24 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Carlo Arenas <carenas@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?Slavica_=C4=90uki=C4=87?= <slawica92@hotmail.com>,
-        Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH 0/2] Use the built-in implementation of the interactive
- add command by default
-In-Reply-To: <CAPUEsphxCcfOgPQP9ci6sSn87g5=w+8kjh21=QywTX=on5vTdw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2112021832060.63@tvgsbejvaqbjf.bet>
-References: <pull.1087.git.1638281655.gitgitgadget@gmail.com> <CAPUEsphxCcfOgPQP9ci6sSn87g5=w+8kjh21=QywTX=on5vTdw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1348196AbhLBRkA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Dec 2021 12:40:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51844 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1348094AbhLBRj7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Dec 2021 12:39:59 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1AC5C06174A
+        for <git@vger.kernel.org>; Thu,  2 Dec 2021 09:36:36 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id v11so293197wrw.10
+        for <git@vger.kernel.org>; Thu, 02 Dec 2021 09:36:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=o+yzR3v+HICxu0KErUEfDfQZ02iD/O6cIOZQpZWU2Zw=;
+        b=AHUIlJMk6YWWnvXHzh7vu5DNuUXJiBH8ilR4YRmfe2AC89niOeum9s9RYWu4jvxg7O
+         PuQ/aJR3rRqUIU2LydHZ5sfrkBwiktktasGtl63oY6i6wg7zvZocdGSr6GjF4MHDcm5m
+         OEtP1wR0uCbM3HGe61tey/ZWV7TL3FpEx2hN2ogHTMEs8oH33vE6i3m/g0u7IYuoffPD
+         mA2YMVLCqV++AyOu5EDXY6sIh6oiXB+4EJHRzYUGdhLrP992FTpqREvLle5EkYo7JGEH
+         Ed5s8mBClmozcdm1mDDsfEuqLgvJmqEVXYDoNuZNWp/Z2JQMV5vc7VcQznJ4fen0vYUx
+         zCWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=o+yzR3v+HICxu0KErUEfDfQZ02iD/O6cIOZQpZWU2Zw=;
+        b=Zfc2DQtK0MI6h/ufzxV9mkFPYBm4yi7BWLeusY6yHFKNjSCv2EjKj9Zsf+MZ4BFq0x
+         w0K5tIohVuvT9NKGdPlTvL/jokOk5JDjUWs0UQdb5d69IpPeurq6tr3NYgemXOIOCciI
+         uhOLWGBlmYt4dAgJHIch64dJZlXwIE0gZANO5dFi9in/0yeYjpqDrx89N9F/w65LupYm
+         iRfWXRNd5y5GhduIaB3KBNjZ3pYnHLwAtrZeUdlPN/5KgUPfStoD6Sv92VYOIVq9o4yy
+         2l9KVKMpQ6wzbPtzYQUpRFmUzpwaobpjZqn0Mikd+5ai4ohTHYXLf4w/bw2YK6KGpVlK
+         hJow==
+X-Gm-Message-State: AOAM533RNr1Mbo1nh08kKzI63SqI/tPoLVTn23ZXWpCbYn4bPK4hwvxf
+        DkomO7ibSoCT7kghqLjQtJzMFmpPXYs=
+X-Google-Smtp-Source: ABdhPJzf6u7tMxEiwNRST/IPyeuEdR+7te47LHy8D9OXAAipMB3eGFxo7fQqr9/4ByOGeVihbgkzdA==
+X-Received: by 2002:a05:6000:1a86:: with SMTP id f6mr15835092wry.230.1638466595100;
+        Thu, 02 Dec 2021 09:36:35 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a1sm567347wri.89.2021.12.02.09.36.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Dec 2021 09:36:34 -0800 (PST)
+Message-Id: <pull.1145.v3.git.git.1638466593.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1145.v2.git.git.1637855872.gitgitgadget@gmail.com>
+References: <pull.1145.v2.git.git.1637855872.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 02 Dec 2021 17:36:28 +0000
+Subject: [PATCH v3 0/5] Inspect reflog data programmatically in more tests
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:gcqmg0Vt8tLSIiMvBx68Lx1Hq8XXvanmtCTJ0GhO40s3TtQcg+y
- dsn+5JopnKBMhEC5xFFcR79Ww1UUINQczr2HPQwRgvd+eAEzZSg/68zTIMQS2XzPr+BHoT4
- HhxmmBqPe+TdydjVREPaywTRzV1QrQhBA2X1rqujv6Vvu3EJeN3jrFxwvUo7ejzq+BlC2vF
- c+Nbz1kIF6YcG3oZivulg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/btXbZNCH5Q=:BYVIZPsDFX1cyaf7vF9uyB
- TyoJdsRu699fmwE0d/4HycXZv3B9BMs4s3ued11eF/7iXxMBNQii+gQ/HQ4OmdAg+CRQT+szd
- g1emDHm4qkpgaUEPCEfe76Vv/aEKXvvvUmvxjw9yo4wIRhZdivnUnbdu4i9VxgjJzc3XZb4Qo
- IHKNcbPkTAx+ZNF3Bcm5F8q/J2Emu1auoPrBcFOGiuVdwYJdKs9o/Bk7z2C1FwAtrgDzNg5V8
- bEsHoE9DWEIeweIu8mwRnablNxB9ckaqbsB9Ktt5WCrY45jmRE9Oyj9caEqljZlhuai2NEVQL
- qfJvrQ6iAjvRx+ve5FTzwQcDiXcT3XeBovPrFRtpUJocgaMSg2L0jyCpJGYsCqFkcEZnDEBvB
- GG+Far2b0EsweAQyh8aO/CzT+ta8/+R80gF+UWh9vaULk16ugEJzINMiGUCUSAzTBSp5f+REl
- EZWUPy50YloPhjlLj/vWR0oq1jTxAnq2Y+UZPVq9+rz0o1i+u/ur0d1Q512qqsh41+DGOuwf+
- kMu1FIrGTYXY74GTJbe492wq+BWw566wbqt6bQsCTNPxVXTBqOX+4M8t+AwsYxI0RjAbLKK+t
- jSAziza5h4WtRg/lOJ2KsZyIamoIA7NoE7wAbjjOqOgVCd6xfMzoNdM5h/3GuUgxu8GBDofSG
- XtsuKrXeAzFUhe+6ZpeMe4Rv+CyVzaVSBmRPM+/yGSTmemmOuGpHtTPbAav61RqKzL+JyR3/w
- 9j1qXpFxB4gvNbn2OBNoCsJKTqhb3bQVPkjwLJA3RuMgbQKPg8iBHrImP+TF9zwalfPlb285t
- AbFn2pezR0nyf31E9LMkptjSS0rDvysMrisuc0CpXOdw9lfKfxNAwvYkcdk13Ye1mK5BiHfaQ
- VJTUmPFEGzlaRnnpr9FRgkj8VgQIN4Wt4CLxgOdXZqFlc20LniomNCMGjIf3JE4HKd+5N2xJU
- nrtrCglHxscXgTiNsu2jiWsSR0iWJdtPI9wy68KkINyVO0xL1Gx6xxWjkJSVk2Vr9jZ6pGgeS
- cJXsZM9Xyjg4TzjiKZaNEb1GhJnbgEGYV70S9i51bhx5LPN5wFC2ZTSEOFl5IgTfIG8XcI/zM
- K4cR/EKcUE9jgI=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Han-Wen Nienhuys <hanwen@google.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Carlo,
+This helps for reftable support, and will help if we want to reconsider
+under which conditions reflogs get created/updated.
 
-On Wed, 1 Dec 2021, Carlo Arenas wrote:
+v3: pointer arithmetic for trimming newline.
 
-> On Wed, Dec 1, 2021 at 12:40 AM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > It is time to declare this implementation robust, to use it by default=
-, and
-> > to start deprecating the scripted implementation.
-> >
-> > Johannes Schindelin (2):
-> >   t2016: require the PERL prereq only when necessary
-> >   add -i: default to the built-in implementation
->
-> Sadly this implementation has a few bugs that still need fixing, with
-> at least one IMHO being a showstopper.
->
-> The way macOS implements stdin (through a device) it will always
-> timeout in poll(), so escape keys that are left in the unread buffer
-> and that could match some of the entries will result in the wrong
-> entry being selected.
->
-> I have a series[1] that reimplements this and that seemed to work fine
-> in my tests while making the code simpler, but that I didn't
-> prioritize (and wanted to clean up further) since I wanted to
-> prioritize the EDITOR fixes in the same area.
->
-> Carlo
->
-> [1] https://github.com/git/git/pull/1150
+Han-Wen Nienhuys (5):
+  show-branch: show reflog message
+  test-ref-store: don't add newline to reflog message
+  t1405: check for_each_reflog_ent_reverse() more thoroughly
+  test-ref-store: tweaks to for-each-reflog-ent format
+  refs/debug: trim trailing LF from reflog message
 
-Thank you for pointing that out. I agree both with prioritizing your macOS
-patches, and with prioritizing the editor patches before that. Please just
-let me know when would be a good time to move forward with this here patch
-series.
+ builtin/show-branch.c          | 12 +++++++-----
+ refs/debug.c                   |  7 +++++--
+ t/helper/test-ref-store.c      |  6 +++---
+ t/t1400-update-ref.sh          | 13 ++++++++-----
+ t/t1405-main-ref-store.sh      |  4 ++--
+ t/t1406-submodule-ref-store.sh |  4 ++--
+ t/t3202-show-branch.sh         | 15 +++++++++++++++
+ 7 files changed, 42 insertions(+), 19 deletions(-)
 
-Thank you,
-Dscho
+
+base-commit: abe6bb3905392d5eb6b01fa6e54d7e784e0522aa
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1145%2Fhanwen%2Freflog-prelims-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1145/hanwen/reflog-prelims-v3
+Pull-Request: https://github.com/git/git/pull/1145
+
+Range-diff vs v2:
+
+ 1:  9d8394d8c76 = 1:  6e94a6fbe05 show-branch: show reflog message
+ 2:  4a86d212589 ! 2:  062481ffece test-ref-store: don't add newline to reflog message
+     @@ Metadata
+       ## Commit message ##
+          test-ref-store: don't add newline to reflog message
+      
+     -    The files backend produces a newline for messages automatically, so before we
+     -    would print blank lines between entries.
+     +    By convention, reflog messages always end in '\n', so
+     +    before we would print blank lines between entries.
+      
+          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+      
+ 3:  0319503045b = 3:  46a8e13a5e6 t1405: check for_each_reflog_ent_reverse() more thoroughly
+ 4:  62f5cb8a824 ! 4:  40ba92dbf0d test-ref-store: tweaks to for-each-reflog-ent format
+     @@ t/t1400-update-ref.sh: $A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 11171502
+      -	test_when_finished "rm -rf .git/$m .git/logs expect" &&
+      -	test_cmp expect .git/logs/$m
+      +	test_when_finished "git update-ref -d $m && rm -rf .git/logs actual expect" &&
+     -+	test-tool ref-store main for-each-reflog-ent $m > actual &&
+     ++	test-tool ref-store main for-each-reflog-ent $m >actual &&
+      +	test_cmp actual expect
+       '
+       
+     @@ t/t1400-update-ref.sh: $A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 11171503
+      -	test_when_finished "rm -f .git/$m .git/logs/$m expect" &&
+      -	test_cmp expect .git/logs/$m
+      +	test_when_finished "git update-ref -d $m && rm -rf .git/logs actual expect" &&
+     -+	test-tool ref-store main for-each-reflog-ent $m > actual &&
+     ++	test-tool ref-store main for-each-reflog-ent $m >actual &&
+      +	test_cmp actual expect
+       '
+       
+ 5:  0288e743eb2 ! 5:  751f713a025 refs/debug: trim trailing LF from reflog message
+     @@ refs/debug.c: static int debug_print_reflog_ent(struct object_id *old_oid,
+       	int ret;
+       	char o[GIT_MAX_HEXSZ + 1] = "null";
+       	char n[GIT_MAX_HEXSZ + 1] = "null";
+     -+	struct strbuf trimmed = STRBUF_INIT;
+     ++	char *msgend = strchrnul(msg, '\n');
+       	if (old_oid)
+       		oid_to_hex_r(o, old_oid);
+       	if (new_oid)
+     - 		oid_to_hex_r(n, new_oid);
+     +@@ refs/debug.c: static int debug_print_reflog_ent(struct object_id *old_oid,
+       
+     -+	strbuf_addstr(&trimmed, msg);
+       	ret = dbg->fn(old_oid, new_oid, committer, timestamp, tz, msg,
+       		      dbg->cb_data);
+      -	trace_printf_key(&trace_refs, "reflog_ent %s (ret %d): %s -> %s, %s %ld \"%s\"\n",
+      -		dbg->refname, ret, o, n, committer, (long int)timestamp, msg);
+     -+	strbuf_trim_trailing_newline(&trimmed);
+      +	trace_printf_key(&trace_refs,
+     -+			 "reflog_ent %s (ret %d): %s -> %s, %s %ld \"%s\"\n",
+     ++			 "reflog_ent %s (ret %d): %s -> %s, %s %ld \"%.*s\"\n",
+      +			 dbg->refname, ret, o, n, committer,
+     -+			 (long int)timestamp, trimmed.buf);
+     -+	strbuf_release(&trimmed);
+     ++			 (long int)timestamp, (int)(msgend - msg), msg);
+       	return ret;
+       }
+       
+
+-- 
+gitgitgadget
