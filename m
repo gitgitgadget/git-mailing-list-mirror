@@ -2,151 +2,206 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B5BCC433EF
-	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 00:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5555C4332F
+	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 00:39:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354678AbhLBAmu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Dec 2021 19:42:50 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62978 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354662AbhLBAmc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Dec 2021 19:42:32 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D21C315903B;
-        Wed,  1 Dec 2021 19:39:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bdXyICMJyDvMulCC27urMO1gTWHW4arG/W/2Kd
-        kvGAc=; b=CBJdxbFa2XKgxn6GeWLyyNv4tfxjJhTcssbLDIC6hj359fM41euv1K
-        802bT78OFcEjNKY9mj5q3GVY8rIXxUoAU0VFJiE24/5wn1BE8+RpW/mOxnsYGgkt
-        LEu/7MXe5aZkp9m17bsoCmKz05hYiat/4GbxXB1v4n7TNJSU1E/4w=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CA9AB15903A;
-        Wed,  1 Dec 2021 19:39:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8347D159038;
-        Wed,  1 Dec 2021 19:39:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Chris Torek <chris.torek@gmail.com>,
-        Carlo Arenas <carenas@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>,
-        thomas.wolf@paranor.ch, Alexander Veit <alexander.veit@gmx.net>
-Subject: Re: [PATCH] editor: only save (and restore) the terminal if using a
- tty
-References: <04ab7301-ea34-476c-eae4-4044fef74b91@gmail.com>
-        <20211122222850.674-1-carenas@gmail.com>
-        <b1f2257a-044c-17bb-2737-42b8026421eb@gmail.com>
-        <CAPUEsphP2GRaHJa0Qnvf22WUnNB+GnnfG8TgHqwJvSGdYfUQGA@mail.gmail.com>
-        <7138fa14-02b2-b123-4d8d-df73763f8431@gmail.com>
-        <CAPx1GvcML9TvmP1BSLN0vKWD++8LBj-68Xwmz-KrZM32Q=0_Ug@mail.gmail.com>
-        <xmqq35nc15nr.fsf@gitster.g>
-Date:   Wed, 01 Dec 2021 16:38:59 -0800
-In-Reply-To: <xmqq35nc15nr.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        01 Dec 2021 11:33:44 -0800")
-Message-ID: <xmqq7dcnyh5o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1354691AbhLBAms (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Dec 2021 19:42:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46414 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1354670AbhLBAmY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Dec 2021 19:42:24 -0500
+Received: from a3.inai.de (a3.inai.de [IPv6:2a01:4f8:10b:45d8::f5])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E225C06174A
+        for <git@vger.kernel.org>; Wed,  1 Dec 2021 16:39:02 -0800 (PST)
+Received: by a3.inai.de (Postfix, from userid 65534)
+        id CB0AE59C59B76; Thu,  2 Dec 2021 01:39:00 +0100 (CET)
+Received: from a4.inai.de (a4.inai.de [IPv6:2a01:4f8:10b:45d8::f8])
+        by a3.inai.de (Postfix) with ESMTP id 80ED859C59B75
+        for <git@vger.kernel.org>; Thu,  2 Dec 2021 01:39:00 +0100 (CET)
+From:   Jan Engelhardt <jengelh@inai.de>
+To:     git@vger.kernel.org
+Subject: [PATCH] http-backend: give a hint that web browser access is not supported
+Date:   Thu,  2 Dec 2021 01:39:00 +0100
+Message-Id: <20211202003900.26124-1-jengelh@inai.de>
+X-Mailer: git-send-email 2.34.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3E878B06-5308-11EC-85BB-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+When using a browser to access a URI that is served by http-backend,
+nothing but a blank page is shown. This is not helpful.
 
->  - Add a multi-valued configuration variable whose value is the name
->    of an editor program that needs this save/restore; optionally, we
->    may want a way to say "don't do save/restore on this editor",
->    e.g. "!emacs" may countermand an earlier value that would include
->    the editor in the list.
->
->  - Around the program invocation in launch_specified_editor(), check
->    the name of the editor against this list and do the save/restore
->    as necessary;
->
->  - When the variable is not defined in the configuration, pretend
->    that "vi" is on that list (coming up with the list of editors is
->    left as an exercise to readers).
->
-> That would give us your flexibility to apply the save/restore on an
-> arbitrary editor that is not "vi", Dscho's convenience to special
-> case "vi" out of the box when unconfigured, and an escape hatch for
-> "vi" users for whom it hurts to do the save/restore on their "vi".
->
-> Hmm?
+Emit the same "Request not handled" messages, but to the CGI stream
+at stdout. Use the HTTP REQUEST_URI for this so that filesystem paths
+are not revealed more than necessary. Add a paragraph that browsing
+to http-backend URIs is not something that should normally be done.
 
-That's an overkill.
+Signed-off-by: Jan Engelhardt <jengelh@inai.de>
+---
+Previously botched the commit message. not_found is not very nice
+to extend; one can but make a new function.
 
-A single configuration variable as an escape hatch, that enables the
-save/restore around editor invocation, whose default value is
-determined by the name of the editor, is probably the right degree
-of flexibility.
+ http-backend.c          | 36 +++++++++++++++++++++++++++-----
+ t/t5561-http-backend.sh | 46 ++++++++++++++++++++---------------------
+ 2 files changed, 54 insertions(+), 28 deletions(-)
 
-Something along this line, perhaps?
-
- editor.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
-
-diff --git c/editor.c w/editor.c
-index fdd3eeafa9..70d3f80966 100644
---- c/editor.c
-+++ w/editor.c
-@@ -3,6 +3,7 @@
- #include "strbuf.h"
- #include "run-command.h"
- #include "sigchain.h"
-+#include "compat/terminal.h"
- 
- #ifndef DEFAULT_EDITOR
- #define DEFAULT_EDITOR "vi"
-@@ -47,6 +48,16 @@ const char *git_sequence_editor(void)
- 	return editor;
+diff --git http-backend.c http-backend.c
+index 3d6e2ff17f..f7858e9c49 100644
+--- http-backend.c
++++ http-backend.c
+@@ -139,6 +139,25 @@ static NORETURN void not_found(struct strbuf *hdr, const char *err, ...)
+ 	exit(0);
  }
  
-+static int prepare_term(const char *editor)
++static NORETURN void not_found_2(struct strbuf *hdr, const char *dir,
++				 const char *pathinfo, const char *err,
++				 const char *hint)
 +{
-+	int need_saverestore = !strcmp(editor, "vi");
++	http_status(hdr, 404, "Not Found");
++	hdr_nocache(hdr);
++	strbuf_add(hdr, "\r\n", 2);
++	if (pathinfo != NULL)
++		strbuf_addf(hdr, "%s: ", pathinfo);
++	strbuf_addf(hdr, "%s.\r\n", err);
++	if (hint != NULL)
++		strbuf_addf(hdr, "%s\r\n", hint);
++	end_headers(hdr);
 +
-+	git_config_get_bool("editor.stty", &need_saverestore);
-+	if (need_saverestore)
-+		return save_term(1);
-+	return 0;
++	if (err && *err)
++		fprintf(stderr, "%s: %s\n", dir, err);
++	exit(0);
 +}
 +
- static int launch_specified_editor(const char *editor, const char *path,
- 				   struct strbuf *buffer, const char *const *env)
+ __attribute__((format (printf, 2, 3)))
+ static NORETURN void forbidden(struct strbuf *hdr, const char *err, ...)
  {
-@@ -57,7 +68,7 @@ static int launch_specified_editor(const char *editor, const char *path,
- 		struct strbuf realpath = STRBUF_INIT;
- 		const char *args[] = { editor, NULL, NULL };
- 		struct child_process p = CHILD_PROCESS_INIT;
--		int ret, sig;
-+		int ret, sig, need_restore = 0;
- 		int print_waiting_for_editor = advice_enabled(ADVICE_WAITING_FOR_EDITOR) && isatty(2);
+@@ -736,7 +755,8 @@ static int bad_request(struct strbuf *hdr, const struct service_cmd *c)
  
- 		if (print_waiting_for_editor) {
-@@ -83,7 +94,10 @@ static int launch_specified_editor(const char *editor, const char *path,
- 		p.env = env;
- 		p.use_shell = 1;
- 		p.trace2_child_class = "editor";
-+		need_restore = prepare_term(editor);
- 		if (start_command(&p) < 0) {
-+			if (need_restore)
-+				restore_term();
- 			strbuf_release(&realpath);
- 			return error("unable to start editor '%s'", editor);
- 		}
-@@ -91,6 +105,8 @@ static int launch_specified_editor(const char *editor, const char *path,
- 		sigchain_push(SIGINT, SIG_IGN);
- 		sigchain_push(SIGQUIT, SIG_IGN);
- 		ret = finish_command(&p);
-+		if (need_restore)
-+			restore_term();
- 		strbuf_release(&realpath);
- 		sig = ret - 128;
- 		sigchain_pop(SIGINT);
+ int cmd_main(int argc, const char **argv)
+ {
+-	char *method = getenv("REQUEST_METHOD");
++	const char *method = getenv("REQUEST_METHOD");
++	const char *pathinfo = getenv("PATH_INFO");
+ 	const char *proto_header;
+ 	char *dir;
+ 	struct service_cmd *cmd = NULL;
+@@ -775,15 +795,21 @@ int cmd_main(int argc, const char **argv)
+ 		regfree(&re);
+ 	}
+ 
+-	if (!cmd)
+-		not_found(&hdr, "Request not supported: '%s'", dir);
++	if (!cmd) {
++		const char *hint = "";
++		if (strcmp(method, "GET") == 0)
++			hint = "You cannot use a web browser to access "
++			       "this URL. Only git operations like "
++			       "clone/ls-remote/etc. will work.\n";
++		not_found_2(&hdr, dir, pathinfo, "Request not supported", hint);
++	}
+ 
+ 	setup_path();
+ 	if (!enter_repo(dir, 0))
+-		not_found(&hdr, "Not a git repository: '%s'", dir);
++		not_found_2(&hdr, dir, pathinfo, "Not a git repository", NULL);
+ 	if (!getenv("GIT_HTTP_EXPORT_ALL") &&
+ 	    access("git-daemon-export-ok", F_OK) )
+-		not_found(&hdr, "Repository not exported: '%s'", dir);
++		not_found_2(&hdr, dir, pathinfo, "Repository not exported", NULL);
+ 
+ 	http_config();
+ 	max_request_buffer = git_env_ulong("GIT_HTTP_MAX_REQUEST_BUFFER",
+diff --git t/t5561-http-backend.sh t/t5561-http-backend.sh
+index 9c57d84315..d8add36fb4 100755
+--- t/t5561-http-backend.sh
++++ t/t5561-http-backend.sh
+@@ -44,7 +44,7 @@ grep '^[^#]' >exp <<EOF
+ 
+ ###  refs/heads/main
+ ###
+-GET  /smart/repo.git/refs/heads/main HTTP/1.1 404 -
++GET  /smart/repo.git/refs/heads/main HTTP/1.1 404
+ 
+ ###  getanyfile default
+ ###
+@@ -59,14 +59,14 @@ GET  /smart/repo.git/$IDX_URL HTTP/1.1 200
+ 
+ ###  no git-daemon-export-ok
+ ###
+-GET  /smart_noexport/repo.git/HEAD HTTP/1.1 404 -
+-GET  /smart_noexport/repo.git/info/refs HTTP/1.1 404 -
+-GET  /smart_noexport/repo.git/objects/info/packs HTTP/1.1 404 -
+-GET  /smart_noexport/repo.git/objects/info/alternates HTTP/1.1 404 -
+-GET  /smart_noexport/repo.git/objects/info/http-alternates HTTP/1.1 404 -
+-GET  /smart_noexport/repo.git/$LOOSE_URL HTTP/1.1 404 -
+-GET  /smart_noexport/repo.git/$PACK_URL HTTP/1.1 404 -
+-GET  /smart_noexport/repo.git/$IDX_URL HTTP/1.1 404 -
++GET  /smart_noexport/repo.git/HEAD HTTP/1.1 404
++GET  /smart_noexport/repo.git/info/refs HTTP/1.1 404
++GET  /smart_noexport/repo.git/objects/info/packs HTTP/1.1 404
++GET  /smart_noexport/repo.git/objects/info/alternates HTTP/1.1 404
++GET  /smart_noexport/repo.git/objects/info/http-alternates HTTP/1.1 404
++GET  /smart_noexport/repo.git/$LOOSE_URL HTTP/1.1 404
++GET  /smart_noexport/repo.git/$PACK_URL HTTP/1.1 404
++GET  /smart_noexport/repo.git/$IDX_URL HTTP/1.1 404
+ 
+ ###  git-daemon-export-ok
+ ###
+@@ -92,14 +92,14 @@ GET  /smart/repo.git/$IDX_URL HTTP/1.1 200
+ 
+ ###  getanyfile false
+ ###
+-GET  /smart/repo.git/HEAD HTTP/1.1 403 -
+-GET  /smart/repo.git/info/refs HTTP/1.1 403 -
+-GET  /smart/repo.git/objects/info/packs HTTP/1.1 403 -
+-GET  /smart/repo.git/objects/info/alternates HTTP/1.1 403 -
+-GET  /smart/repo.git/objects/info/http-alternates HTTP/1.1 403 -
+-GET  /smart/repo.git/$LOOSE_URL HTTP/1.1 403 -
+-GET  /smart/repo.git/$PACK_URL HTTP/1.1 403 -
+-GET  /smart/repo.git/$IDX_URL HTTP/1.1 403 -
++GET  /smart/repo.git/HEAD HTTP/1.1 403
++GET  /smart/repo.git/info/refs HTTP/1.1 403
++GET  /smart/repo.git/objects/info/packs HTTP/1.1 403
++GET  /smart/repo.git/objects/info/alternates HTTP/1.1 403
++GET  /smart/repo.git/objects/info/http-alternates HTTP/1.1 403
++GET  /smart/repo.git/$LOOSE_URL HTTP/1.1 403
++GET  /smart/repo.git/$PACK_URL HTTP/1.1 403
++GET  /smart/repo.git/$IDX_URL HTTP/1.1 403
+ 
+ ###  uploadpack default
+ ###
+@@ -113,13 +113,13 @@ POST /smart/repo.git/git-upload-pack HTTP/1.1 200 -
+ 
+ ###  uploadpack false
+ ###
+-GET  /smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1 403 -
+-POST /smart/repo.git/git-upload-pack HTTP/1.1 403 -
++GET  /smart/repo.git/info/refs?service=git-upload-pack HTTP/1.1 403
++POST /smart/repo.git/git-upload-pack HTTP/1.1 403
+ 
+ ###  receivepack default
+ ###
+-GET  /smart/repo.git/info/refs?service=git-receive-pack HTTP/1.1 403 -
+-POST /smart/repo.git/git-receive-pack HTTP/1.1 403 -
++GET  /smart/repo.git/info/refs?service=git-receive-pack HTTP/1.1 403
++POST /smart/repo.git/git-receive-pack HTTP/1.1 403
+ 
+ ###  receivepack true
+ ###
+@@ -128,8 +128,8 @@ POST /smart/repo.git/git-receive-pack HTTP/1.1 200 -
+ 
+ ###  receivepack false
+ ###
+-GET  /smart/repo.git/info/refs?service=git-receive-pack HTTP/1.1 403 -
+-POST /smart/repo.git/git-receive-pack HTTP/1.1 403 -
++GET  /smart/repo.git/info/refs?service=git-receive-pack HTTP/1.1 403
++POST /smart/repo.git/git-receive-pack HTTP/1.1 403
+ EOF
+ test_expect_success 'server request log matches test results' '
+ 	check_access_log exp
+-- 
+2.34.0
+
