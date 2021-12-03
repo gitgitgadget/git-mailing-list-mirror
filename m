@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EB95C433F5
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 13:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57D35C433EF
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 13:35:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381133AbhLCNiW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 08:38:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40630 "EHLO
+        id S1381136AbhLCNiX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 08:38:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381060AbhLCNiN (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1381120AbhLCNiN (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 3 Dec 2021 08:38:13 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BC45C0613F2
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F35C0613F4
         for <git@vger.kernel.org>; Fri,  3 Dec 2021 05:34:45 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id m25-20020a7bcb99000000b0033aa12cdd33so4536306wmi.1
+Received: by mail-wr1-x436.google.com with SMTP id a18so5790696wrn.6
         for <git@vger.kernel.org>; Fri, 03 Dec 2021 05:34:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=EnAo9DzhsdMVbWYI2vdFvzuNwGGFw58Qp+EsKM7jcZU=;
-        b=FU6u/ZTy7FVpuM403JiJKiQluzB2H3n4D7CB+qeiK1utbt62xDJdSxjFhyFIjcfPD5
-         eMIw74TO/hFKczltWKFDgGsAjMT2MeDMPLv/ONaQ7QMlvJ/qWYO0Hp6uUEZ5py/kODMg
-         OioBpxBCDzWVR2XK3CzAsSt33MwsZdSOcumO04lKxRxb/q35mPV93JhAzNfYz+nZHt9t
-         JXyj/4M4Cb5OdjPpRS64QqhgdNWmopKnZI8TCcK4S4c7VbOijtZRi0W+KtD0sD8dUhc/
-         ZOP6NwPufO9GX5S+xXTEADpE4mvVFBvOhGZuTu/WwqpBnl8MeCvBQr7NtAjCFpUFJUHa
-         RnnA==
+        bh=dywTmLrB9oe3ZROlnvpiXOATJJ0fOgNh7eK+EgeoRDQ=;
+        b=R5kXSD7qjKsK7jOOGBcOLBqHrWY/8PFg3+tTV/628aG5V9YLImGW+B12ItfoB6TReR
+         UwsN44f8w2UC0RSXHO6J3AL7Oq/JpBy83ScuknooQTTQxUaXpB0h3ffAI7lOEoivWSKj
+         iLE9z5LI4Xihg8oneFupwbuKqWg+akQtdy8XtxisnZTlp9d8CTpd8sDkW13UtepwBZsf
+         R1HN+sc7RAoNtSYFJ/q5SD6rBXWC09ZBeoKgvEgcfjVnhm69g7O9Bgol9xvwXF/q1ih9
+         et7Ovr5yJ32YC/OR6CsqmdVDYB/paZxfnV9GE9KJSIr094zH4vx4dkM/LXVZVoHzNFxq
+         ddpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=EnAo9DzhsdMVbWYI2vdFvzuNwGGFw58Qp+EsKM7jcZU=;
-        b=BASkMfxyRSdkm3Q67T4WkHyMozQszoTp+nM/sOBrR93+TvzCOxLLbmrt8EPIvutx86
-         XOGdcyjRsnpZXZkht7LsDRBaU6biuNwrWHdMSSZiaecWD0vnRLI45OzKZ5jyu/1l2S1d
-         UNQCLL6+43713UJr5clR4TMUCbBBlo8ZujwWeeKlKnD8/YXE1zx//iBlkYerOwrG/e00
-         uk+5TXD9Mahm5RdRH57iDBcrMs32E2I3HeJ+BeIP//uACB38fFZxnCkutMEVTI1OHNLC
-         oer/A6hDQmq2Ow1lGLb07XDVX8AoI4GBJASVGXsBWLFzLKikPFzl3aI1ItSk/UBfk1MH
-         BNmg==
-X-Gm-Message-State: AOAM532yONlsZAicpOHO6nxW+r9iewCTOtw0U1njAFQLgUV5DeIkuGYr
-        XnXSaiq2AC7Ev00MQCZIClITazUpTLY=
-X-Google-Smtp-Source: ABdhPJyFSRqZImQir8sdDahqY+ZVR7GvaL8dgL2lY6SEAj0af0HOwERjMa4oHRwBJ11zL9IlDOvi3A==
-X-Received: by 2002:a7b:c2f7:: with SMTP id e23mr15120833wmk.92.1638538483301;
-        Fri, 03 Dec 2021 05:34:43 -0800 (PST)
+        bh=dywTmLrB9oe3ZROlnvpiXOATJJ0fOgNh7eK+EgeoRDQ=;
+        b=AX//USvDFvzyY8dr5pbPfJxy/Ndoq1edTu049UX0/vckCK22uhzTJv/g0EYmvUJ7gx
+         GW6g1BIJl1Oj84kveMKYjWJnDt3GXSnVDJfsuH7lqRndCcU5bqKFt7Gfkl/O1IW+D1BD
+         vq8FiWAPGQ7alVD7HE04ZtwKMrbA7jDX+Gis5le/5bwx3bM2Rozf0kKx/1RXcSh6Av7Z
+         x4bQRVAsvSmARHObepuNs7RLHeeAnBKl9I8mhBlpafUbwnd1fVq/8JfAejyVr6aFvyUm
+         5YwFhLc+ocSW5KKKcdWfxHPQFqGWP3uO0c7QujREwJbqAQ9LuSVZWaIcx1vBwvWZYLMy
+         cNhg==
+X-Gm-Message-State: AOAM531MESsPaCnkMonZPtJw1DURJSfLr893NOfpz8Nuq/nA3LgtjuOA
+        Tg6q6pzPxPk0KrJ0LrPDCbpxQnqudm4=
+X-Google-Smtp-Source: ABdhPJz+l4jwC7J6xBql4Kf4x0tqsDSiMJ1oZky4S14WiSzsJeGJrHUfoRqr5vFXdYUjooefB5DGMw==
+X-Received: by 2002:a05:6000:2a2:: with SMTP id l2mr21607973wry.110.1638538484359;
+        Fri, 03 Dec 2021 05:34:44 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y7sm2620633wrw.55.2021.12.03.05.34.42
+        by smtp.gmail.com with ESMTPSA id y12sm2624700wrn.73.2021.12.03.05.34.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 05:34:42 -0800 (PST)
-Message-Id: <efd808a0c4a5e5101e97fbc4b705d8fb7d256322.1638538470.git.gitgitgadget@gmail.com>
+        Fri, 03 Dec 2021 05:34:43 -0800 (PST)
+Message-Id: <8b69462b906437c16f3f46300279674ad2455bba.1638538470.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v10.git.1638538470.gitgitgadget@gmail.com>
 References: <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
         <pull.1005.v10.git.1638538470.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 03 Dec 2021 13:34:27 +0000
-Subject: [PATCH v10 13/15] scalar: teach 'reconfigure' to optionally handle
- all registered enlistments
+From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 03 Dec 2021 13:34:28 +0000
+Subject: [PATCH v10 14/15] scalar: implement the `delete` command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,157 +66,170 @@ Cc:     Derrick Stolee <stolee@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Matthew John Cheetham <mjcheetham@outlook.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-After a Scalar upgrade, it can come in really handy if there is an easy
-way to reconfigure all Scalar enlistments. This new option offers this
-functionality.
+Delete an enlistment by first unregistering the repository and then
+deleting the enlistment directory (usually the directory containing the
+worktree `src/` directory).
 
+On Windows, if the current directory is inside the enlistment's
+directory, change to the parent of the enlistment directory, to allow us
+to delete the enlistment (directories used by processes e.g. as current
+working directories cannot be deleted on Windows).
+
+Co-authored-by: Victoria Dye <vdye@github.com>
+Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c          | 61 ++++++++++++++++++++++++++++++--
- contrib/scalar/scalar.txt        |  9 +++--
- contrib/scalar/t/t9099-scalar.sh |  3 ++
- 3 files changed, 67 insertions(+), 6 deletions(-)
+ contrib/scalar/scalar.c          | 63 ++++++++++++++++++++++++++++++++
+ contrib/scalar/scalar.txt        |  8 ++++
+ contrib/scalar/t/t9099-scalar.sh |  9 +++++
+ 3 files changed, 80 insertions(+)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index d7306b43cae..305b080663b 100644
+index 305b080663b..d4303c7c4a2 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -488,22 +488,77 @@ static int cmd_register(int argc, const char **argv)
- 	return register_dir();
+@@ -8,6 +8,8 @@
+ #include "config.h"
+ #include "run-command.h"
+ #include "refs.h"
++#include "dir.h"
++#include "packfile.h"
+ 
+ /*
+  * Remove the deepest subdirectory in the provided path string. Path must not
+@@ -328,6 +330,33 @@ static char *remote_default_branch(const char *url)
+ 	return NULL;
  }
  
-+static int get_scalar_repos(const char *key, const char *value, void *data)
++static int delete_enlistment(struct strbuf *enlistment)
 +{
-+	struct string_list *list = data;
++#ifdef WIN32
++	struct strbuf parent = STRBUF_INIT;
++#endif
 +
-+	if (!strcmp(key, "scalar.repo"))
-+		string_list_append(list, value);
++	if (unregister_dir())
++		die(_("failed to unregister repository"));
++
++#ifdef WIN32
++	/*
++	 * Change the current directory to one outside of the enlistment so
++	 * that we may delete everything underneath it.
++	 */
++	strbuf_addbuf(&parent, enlistment);
++	strbuf_parent_directory(&parent);
++	if (chdir(parent.buf) < 0)
++		die_errno(_("could not switch to '%s'"), parent.buf);
++	strbuf_release(&parent);
++#endif
++
++	if (remove_dir_recursively(enlistment, 0))
++		die(_("failed to delete enlistment directory"));
 +
 +	return 0;
 +}
 +
- static int cmd_reconfigure(int argc, const char **argv)
+ static int cmd_clone(int argc, const char **argv)
  {
-+	int all = 0;
- 	struct option options[] = {
-+		OPT_BOOL('a', "all", &all,
-+			 N_("reconfigure all registered enlistments")),
- 		OPT_END(),
- 	};
- 	const char * const usage[] = {
--		N_("scalar reconfigure [<enlistment>]"),
-+		N_("scalar reconfigure [--all | <enlistment>]"),
- 		NULL
- 	};
-+	struct string_list scalar_repos = STRING_LIST_INIT_DUP;
-+	int i, res = 0;
-+	struct repository r = { NULL };
-+	struct strbuf commondir = STRBUF_INIT, gitdir = STRBUF_INIT;
- 
- 	argc = parse_options(argc, argv, NULL, options,
- 			     usage, 0);
- 
--	setup_enlistment_directory(argc, argv, usage, options, NULL);
-+	if (!all) {
-+		setup_enlistment_directory(argc, argv, usage, options, NULL);
-+
-+		return set_recommended_config(1);
-+	}
-+
-+	if (argc > 0)
-+		usage_msg_opt(_("--all or <enlistment>, but not both"),
-+			      usage, options);
-+
-+	git_config(get_scalar_repos, &scalar_repos);
- 
--	return set_recommended_config(1);
-+	for (i = 0; i < scalar_repos.nr; i++) {
-+		const char *dir = scalar_repos.items[i].string;
-+
-+		strbuf_reset(&commondir);
-+		strbuf_reset(&gitdir);
-+
-+		if (chdir(dir) < 0) {
-+			warning_errno(_("could not switch to '%s'"), dir);
-+			res = -1;
-+		} else if (discover_git_directory(&commondir, &gitdir) < 0) {
-+			warning_errno(_("git repository gone in '%s'"), dir);
-+			res = -1;
-+		} else {
-+			git_config_clear();
-+
-+			the_repository = &r;
-+			r.commondir = commondir.buf;
-+			r.gitdir = gitdir.buf;
-+
-+			if (set_recommended_config(1) < 0)
-+				res = -1;
-+		}
-+	}
-+
-+	string_list_clear(&scalar_repos, 1);
-+	strbuf_release(&commondir);
-+	strbuf_release(&gitdir);
-+
-+	return res;
+ 	const char *branch = NULL;
+@@ -688,6 +717,39 @@ static int cmd_unregister(int argc, const char **argv)
+ 	return unregister_dir();
  }
  
- static int cmd_run(int argc, const char **argv)
++static int cmd_delete(int argc, const char **argv)
++{
++	char *cwd = xgetcwd();
++	struct option options[] = {
++		OPT_END(),
++	};
++	const char * const usage[] = {
++		N_("scalar delete <enlistment>"),
++		NULL
++	};
++	struct strbuf enlistment = STRBUF_INIT;
++	int res = 0;
++
++	argc = parse_options(argc, argv, NULL, options,
++			     usage, 0);
++
++	if (argc != 1)
++		usage_with_options(usage, options);
++
++	setup_enlistment_directory(argc, argv, usage, options, &enlistment);
++
++	if (dir_inside_of(cwd, enlistment.buf) >= 0)
++		res = error(_("refusing to delete current working directory"));
++	else {
++		close_object_store(the_repository->objects);
++		res = delete_enlistment(&enlistment);
++	}
++	strbuf_release(&enlistment);
++	free(cwd);
++
++	return res;
++}
++
+ static struct {
+ 	const char *name;
+ 	int (*fn)(int, const char **);
+@@ -698,6 +760,7 @@ static struct {
+ 	{ "unregister", cmd_unregister },
+ 	{ "run", cmd_run },
+ 	{ "reconfigure", cmd_reconfigure },
++	{ "delete", cmd_delete },
+ 	{ NULL, NULL},
+ };
+ 
 diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-index 89fd7901585..737cf563c1a 100644
+index 737cf563c1a..f416d637289 100644
 --- a/contrib/scalar/scalar.txt
 +++ b/contrib/scalar/scalar.txt
-@@ -13,7 +13,7 @@ scalar list
- scalar register [<enlistment>]
+@@ -14,6 +14,7 @@ scalar register [<enlistment>]
  scalar unregister [<enlistment>]
  scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]
--scalar reconfigure <enlistment>
-+scalar reconfigure [ --all | <enlistment> ]
+ scalar reconfigure [ --all | <enlistment> ]
++scalar delete <enlistment>
  
  DESCRIPTION
  -----------
-@@ -32,8 +32,8 @@ an existing Git worktree with Scalar whose name is not `src`, the enlistment
- will be identical to the worktree.
+@@ -128,6 +129,13 @@ reconfigure the enlistment.
+ With the `--all` option, all enlistments currently registered with Scalar
+ will be reconfigured. Use this option after each Scalar upgrade.
  
- The `scalar` command implements various subcommands, and different options
--depending on the subcommand. With the exception of `clone` and `list`, all
--subcommands expect to be run in an enlistment.
-+depending on the subcommand. With the exception of `clone`, `list` and
-+`reconfigure --all`, all subcommands expect to be run in an enlistment.
- 
- COMMANDS
- --------
-@@ -125,6 +125,9 @@ After a Scalar upgrade, or when the configuration of a Scalar enlistment
- was somehow corrupted or changed by mistake, this subcommand allows to
- reconfigure the enlistment.
- 
-+With the `--all` option, all enlistments currently registered with Scalar
-+will be reconfigured. Use this option after each Scalar upgrade.
++Delete
++~~~~~~
++
++delete <enlistment>::
++	This subcommand lets you delete an existing Scalar enlistment from your
++	local file system, unregistering the repository.
 +
  SEE ALSO
  --------
  linkgit:git-clone[1], linkgit:git-maintenance[1].
 diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
-index fb5e2efee0a..58af546fd84 100755
+index 58af546fd84..2e1502ad45e 100755
 --- a/contrib/scalar/t/t9099-scalar.sh
 +++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -70,6 +70,9 @@ test_expect_success 'scalar reconfigure' '
- 	scalar register one &&
- 	git -C one/src config core.preloadIndex false &&
- 	scalar reconfigure one &&
-+	test true = "$(git -C one/src config core.preloadIndex)" &&
-+	git -C one/src config core.preloadIndex false &&
-+	scalar reconfigure -a &&
+@@ -76,4 +76,13 @@ test_expect_success 'scalar reconfigure' '
  	test true = "$(git -C one/src config core.preloadIndex)"
  '
  
++test_expect_success 'scalar delete without enlistment shows a usage' '
++	test_expect_code 129 scalar delete
++'
++
++test_expect_success 'scalar delete with enlistment' '
++	scalar delete cloned &&
++	test_path_is_missing cloned
++'
++
+ test_done
 -- 
 gitgitgadget
 
