@@ -2,358 +2,228 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9290FC433EF
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 10:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF602C433F5
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 11:02:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379861AbhLCKXy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 05:23:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52012 "EHLO
+        id S1351658AbhLCLFu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 06:05:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379849AbhLCKXo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 05:23:44 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 148D9C06175B
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 02:20:15 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id d24so4795312wra.0
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 02:20:15 -0800 (PST)
+        with ESMTP id S232427AbhLCLFs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 06:05:48 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31E49C06173E
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 03:02:24 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id e3so9973304edu.4
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 03:02:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bugnlNEMlH9NB+u6AMjYl2hMQxzz2SFjcy54lLTBNnA=;
-        b=KIhyLU2YrlM5O/DGnd882LqqGTSQcIe66iYp+Jqw+1Xuc/AMyorDUdPhQl1ti8e5pt
-         tQfb/qrJG/jqydIf8z3Bt7St2iA28wwp1iJurPK8kMKX6wroF2YFGpN/aRSaIVZo+you
-         Gd3/PHKBWLZGvniPBAqZ2nhJSoe7YACAtPFiVuSp5DDDZP2kgszph2mdmg69UxSQxaeb
-         esk8HVERjXj7BINoHxWHhpqcmDU4cLCj3vFH+YBfTVjABj8H/shVuV8UpsDlvK9zxr7E
-         Q1J8dZC1Wm1Xrqn2Tk13sNk0AQX33UMoJWc0hrMbwxe1NSk5d6gbV9J5o1Wuc5+i4oQ5
-         nZXQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=bbtl9A2z+blWIQb0I0X9YMx1nFcUNhWLaxi7T9cU/5I=;
+        b=E9v928SIwi0pUdpSErRal2Ytp6En3TGBgGUt4nJdrKnyVXteDYZTyh9kpN7kWy4DL2
+         VIKmIT7LiWqGHRMbx3M0onzcKoJGYrgx/A64BuWpZNDdc2tLgY9sDyHmaqS9RWDGn00i
+         sRcifubKgqdhKW7ZdCjN4H3uol2TaPdjxa6DRxqDI0MSWYrWXenGN4fu3zSH8fv8YkGN
+         /LLHJ0gmzNFm+NNeuA/Mox+NjGzuL29zQK4i2u2NGrO8qviQmKPMIZa9JFGEYK3cBRbB
+         AeExvcybVS+Nx5UUZ96I1MTfpRne7GPkEEYJhCwt/aqPs8/O0n+ORrn0uXh/g07Y0R3/
+         I8QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bugnlNEMlH9NB+u6AMjYl2hMQxzz2SFjcy54lLTBNnA=;
-        b=d9eIlIMadrQaTh9PXUWsHR8ARo1lYIRODJz9BUX3F4pkVznscDBYEANQn9UOF89jAD
-         jlDqMpw39ptqCM0D1F+UtbDbYiRbDCT9o4zfXxSuXj3fOuz5F3aGt2iIUKoQAkDp5DDi
-         p2SBhmO60Wtaawj+h5GEd2Tw3BewbnNwhAmnerZSLo8QeNilXKLiteWcI6V/5ppgv6wP
-         C4DGvmc5PQ/NA+faFfSLtiq7fJYsrO8yXSNnwlrpJ8p2hj8DW8Hy/b96Y6HF3FNoq2mm
-         aTFtD/2I7sXyenYbCeyela6h9gBWrzgiVz+hiNjEE6vrY+92LVka3pQKhqGejQOqIumq
-         Xt/A==
-X-Gm-Message-State: AOAM533CSBiSpN7YXsHY3948+x6jxlinKNkR1PBJpHwdc5gcTReeswc8
-        oTIZGrva5Jmr2sXpk1yD6cOUOynATD1EOw==
-X-Google-Smtp-Source: ABdhPJyG4SgtPvUSPQiPEre/eg+LO8nfQFzyZO45MdvGOzpDzFuvISu1s5t0brVqO7qP9oT0mwJjGw==
-X-Received: by 2002:adf:e484:: with SMTP id i4mr21241234wrm.49.1638526813346;
-        Fri, 03 Dec 2021 02:20:13 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r8sm2798448wrz.43.2021.12.03.02.20.12
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=bbtl9A2z+blWIQb0I0X9YMx1nFcUNhWLaxi7T9cU/5I=;
+        b=bPPzdWHPszkpMVccYS3sj0NNHrMHBtiHhdB/mbpqRvi64uhcq3d/CHPXsV3jl0I0ZT
+         q9PnWEkKJRZy8+7CS4gt8etxG349I9YWj1uSN88V9a5rlVMh8PY47AsAoEWNCrJ/Zol8
+         ia5MYaIueXmDMetpv04g/dAfM8VkWjEMO0oVkWccIj1h6NxDD8msggEUpuwWt8YUD07M
+         +S8IRAk1f6PuUPciAFjTrRrDfQr5RYxXhfwpLAaDBOUt3PmSq+pL+GSLk9GvINBw4IQd
+         k+1Md/SOw0Y1tuu/acHSO2njekM1VfigrqUpccmp5BF9ZCmNoXabKpYQMZxH+aYHYMAL
+         oFMw==
+X-Gm-Message-State: AOAM531FJZttsGKbz60OWn3gf6AIrk2PkAsDoYMor3KYDWMCDMtxoBgS
+        iMBXvPzImdxAWpqVnPRz/rw=
+X-Google-Smtp-Source: ABdhPJxk7BRxA+dIUBJXe2MF491Bo2eHrGrcd4fhWAv183V7kz5dILev25xCZE4xYq2py4VDI28rkA==
+X-Received: by 2002:a05:6402:2686:: with SMTP id w6mr25699689edd.141.1638529342515;
+        Fri, 03 Dec 2021 03:02:22 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id u10sm1675724edo.16.2021.12.03.03.02.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 02:20:12 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, J Smith <dark.panda@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 7/7] grep: simplify config parsing and option parsing
-Date:   Fri,  3 Dec 2021 11:19:54 +0100
-Message-Id: <patch-v4-7.7-efbd1c50b43-20211203T101348Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.1.875.gb925cffed1e
-In-Reply-To: <cover-v4-0.7-00000000000-20211203T101348Z-avarab@gmail.com>
-References: <cover-v2-0.8-00000000000-20211110T013632Z-avarab@gmail.com> <cover-v4-0.7-00000000000-20211203T101348Z-avarab@gmail.com>
+        Fri, 03 Dec 2021 03:02:21 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mt6Ka-0005Ya-At;
+        Fri, 03 Dec 2021 12:02:20 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v3 10/10] progress.c: add & assert a "global_progress"
+ variable
+Date:   Fri, 03 Dec 2021 11:29:26 +0100
+References: <cover-v2-0.8-00000000000-20210920T225701Z-avarab@gmail.com>
+        <cover-v3-00.10-00000000000-20211013T222329Z-avarab@gmail.com>
+        <patch-v3-10.10-01d5bbfce76-20211013T222329Z-avarab@gmail.com>
+        <20211025050202.GC2101@szeder.dev> <xmqq35op4f7n.fsf@gitster.g>
+        <20211202231421.GA624717@szeder.dev>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211202231421.GA624717@szeder.dev>
+Message-ID: <211203.868rx2t0hv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Simplify the parsing of "grep.patternType" and
-"grep.extendedRegexp". This changes no behavior, but gets rid of
-complex parsing logic that isn't needed anymore.
 
-When "grep.patternType" was introduced in 84befcd0a4a (grep: add a
-grep.patternType configuration setting, 2012-08-03) we promised that:
+On Fri, Dec 03 2021, SZEDER G=C3=A1bor wrote:
 
- 1. You can set "grep.patternType", and "[setting it to] 'default'
-    will return to the default matching behavior".
+> On Mon, Oct 25, 2021 at 02:38:04AM -0700, Junio C Hamano wrote:
+>> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+>>=20
+>> > I still very much dislike the idea of a BUG() in the progress code
+>> > that can trigger outside of the test suite, because the progress line
+>> > is only a UI gimmick and not a crucial part of any Git operation, and
+>> > even though a progress line might be buggy, the underlying Git
+>> > operation is not affected by it and would still finish successfully,
+>> > as was the case with the dozen of so progress line bugs in the past.
+>>=20
+>> I too recall that we have fixed numerous bugs in the past year in
+>> the area, but weren't they kind of obvious ones _once_ they are
+>> pointed out at you (e.g. progress never reaching to 100%)?  Yet the
+>> developers have failed to catch them because their eyes would coast
+>> over without paying attention to them, exactly because the progress
+>> bar is merely a UI gimmick.
+>>=20
+>> I haven't formed a firm opinion on this yet, but I think the idea
+>> behind these BUG() is to help such problems be caught while they are
+>> still in the lab.  You may not notice when your live progress bar
+>> behaved a bit funny, but if you hit a BUG(), that would be squarely
+>> in your face and you cannot ignore it.
+>
+> The "outside of the test suite" part is important.  Running the test
+> suite with a GIT_TEST_CHECK_PROGRESS knob is sufficient to catch these
+> issues as my inital two patch series have shown at the very beginning
+> of this thread before =C3=86var hijacked them.
 
- 2. We'd support the existing "grep.extendedRegexp" option, but ignore
-    it when the new "grep.patternType" option is set. We said we'd
-    only ignore the older "grep.extendedRegexp" option "when the
-    `grep.patternType` option is set. to a value other than
-    'default'".
+FWIW I didn't hijack and adjust your patches to be BUG() instead of a
+test mode. We came up with more-or-less the same thing
+independently around the same time.
 
-In a preceding commit we changed grep_config() to be called after
-grep_init(), which means that much of the complexity here can go
-away.
+You submitted yours on the 20th of June, but I hacked up mine on top af
+on already-WIP series I had ~5 days earlier in response to another
+discussion about progress.c[1]. You submitter yours first, and I then
+replied to the effect of "here's a similar thing I had locally, RFC"[2].
 
-Now as before when we only understand a "grep.extendedRegexp" setting
-of "true", and if "grep.patterntype=default" is set we'll interpret it
-as "grep.patterntype=basic", except if we previously saw a
-"grep.extendedRegexp", then it's interpreted as
-"grep.patterntype=extended".
+Or do you mean the smaller "fix bogus counting" fixed that are now
+landed[3]? I just wanted to push that forward since it seemed you
+weren't per[4]. Sorry if I stepped on any toes there...
 
-See my 07a3d411739 (grep: remove regflags from the public grep_opt
-API, 2017-06-29) for addition of the two comments being removed here,
-i.e. the complexity noted in that commit is now going away.
+> Interested Git developers
+> can even enable it in their .profile if they wish; I did so with
+> GIT_TEST_SPLIT_INDEX for a while to expose some of my patches to more
+> real-world use.
+>
+> However, I think it's conceptually a bad idea to abort with a BUG() an
+> otherwise successful Git operation by default, when that bug happens
+> to be in such an ancillary component as the progress display, and find
+> the justifications given in the commit message unconvincing.
 
-We don't need grep_commit_pattern_type() anymore, we can instead have
-OPT_SET_INT() in "builtin/grep.c" manipulate the "pattern_type_option"
-member in "struct grep_opt" directly.
+I think it's important to get to the root of what we really disagree
+about here.
 
-We can also do away with the indirection of the "int fixed" and "int
-pcre2" members in favor of using "pattern_type_option" directly in
-"grep.c".
+We hard die on all sorts of trivial things in BUG() already, as paging
+through this shows:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/grep.c | 10 +++----
- grep.c         | 81 +++++++++++---------------------------------------
- grep.h         |  9 ++----
- revision.c     |  2 --
- 4 files changed, 24 insertions(+), 78 deletions(-)
+    git grep -w -F 'BUG('
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 0ea124321b6..942c4b25077 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -845,7 +845,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	int i;
- 	int dummy;
- 	int use_index = 1;
--	int pattern_type_arg = GREP_PATTERN_TYPE_UNSPECIFIED;
- 	int allow_revs;
- 
- 	struct option options[] = {
-@@ -879,16 +878,16 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			N_("descend at most <depth> levels"), PARSE_OPT_NONEG,
- 			NULL, 1 },
- 		OPT_GROUP(""),
--		OPT_SET_INT('E', "extended-regexp", &pattern_type_arg,
-+		OPT_SET_INT('E', "extended-regexp", &opt.pattern_type_option,
- 			    N_("use extended POSIX regular expressions"),
- 			    GREP_PATTERN_TYPE_ERE),
--		OPT_SET_INT('G', "basic-regexp", &pattern_type_arg,
-+		OPT_SET_INT('G', "basic-regexp", &opt.pattern_type_option,
- 			    N_("use basic POSIX regular expressions (default)"),
- 			    GREP_PATTERN_TYPE_BRE),
--		OPT_SET_INT('F', "fixed-strings", &pattern_type_arg,
-+		OPT_SET_INT('F', "fixed-strings", &opt.pattern_type_option,
- 			    N_("interpret patterns as fixed strings"),
- 			    GREP_PATTERN_TYPE_FIXED),
--		OPT_SET_INT('P', "perl-regexp", &pattern_type_arg,
-+		OPT_SET_INT('P', "perl-regexp", &opt.pattern_type_option,
- 			    N_("use Perl-compatible regular expressions"),
- 			    GREP_PATTERN_TYPE_PCRE),
- 		OPT_GROUP(""),
-@@ -982,7 +981,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options, grep_usage,
- 			     PARSE_OPT_KEEP_DASHDASH |
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
--	grep_commit_pattern_type(pattern_type_arg, &opt);
- 
- 	if (use_index && !startup_info->have_repository) {
- 		int fallback = 0;
-diff --git a/grep.c b/grep.c
-index 8dfa0300786..b5342064066 100644
---- a/grep.c
-+++ b/grep.c
-@@ -33,9 +33,7 @@ static const char *color_grep_slots[] = {
- 
- static int parse_pattern_type_arg(const char *opt, const char *arg)
- {
--	if (!strcmp(arg, "default"))
--		return GREP_PATTERN_TYPE_UNSPECIFIED;
--	else if (!strcmp(arg, "basic"))
-+	if (!strcmp(arg, "basic"))
- 		return GREP_PATTERN_TYPE_BRE;
- 	else if (!strcmp(arg, "extended"))
- 		return GREP_PATTERN_TYPE_ERE;
-@@ -61,11 +59,23 @@ int grep_config(const char *var, const char *value, void *cb)
- 		return -1;
- 
- 	if (!strcmp(var, "grep.extendedregexp")) {
-+		if (opt->extended_regexp_option)
-+			return 0;
- 		opt->extended_regexp_option = git_config_bool(var, value);
-+		if (opt->extended_regexp_option)
-+			opt->pattern_type_option = GREP_PATTERN_TYPE_ERE;
-+		return 0;
-+	}
-+
-+	if (!strcmp(var, "grep.patterntype") &&
-+	    !strcmp(value, "default")) {
-+		opt->pattern_type_option = opt->extended_regexp_option == 1
-+			? GREP_PATTERN_TYPE_ERE : GREP_PATTERN_TYPE_BRE;
- 		return 0;
- 	}
- 
- 	if (!strcmp(var, "grep.patterntype")) {
-+		opt->extended_regexp_option = -1; /* ignore */
- 		opt->pattern_type_option = parse_pattern_type_arg(var, value);
- 		return 0;
- 	}
-@@ -115,62 +125,6 @@ void grep_init(struct grep_opt *opt, struct repository *repo)
- 	opt->header_tail = &opt->header_list;
- }
- 
--static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, struct grep_opt *opt)
--{
--	/*
--	 * When committing to the pattern type by setting the relevant
--	 * fields in grep_opt it's generally not necessary to zero out
--	 * the fields we're not choosing, since they won't have been
--	 * set by anything. The extended_regexp_option field is the
--	 * only exception to this.
--	 *
--	 * This is because in the process of parsing grep.patternType
--	 * & grep.extendedRegexp we set opt->pattern_type_option and
--	 * opt->extended_regexp_option, respectively. We then
--	 * internally use opt->extended_regexp_option to see if we're
--	 * compiling an ERE. It must be unset if that's not actually
--	 * the case.
--	 */
--	if (pattern_type != GREP_PATTERN_TYPE_ERE &&
--	    opt->extended_regexp_option)
--		opt->extended_regexp_option = 0;
--
--	switch (pattern_type) {
--	case GREP_PATTERN_TYPE_UNSPECIFIED:
--		/* fall through */
--
--	case GREP_PATTERN_TYPE_BRE:
--		break;
--
--	case GREP_PATTERN_TYPE_ERE:
--		opt->extended_regexp_option = 1;
--		break;
--
--	case GREP_PATTERN_TYPE_FIXED:
--		opt->fixed = 1;
--		break;
--
--	case GREP_PATTERN_TYPE_PCRE:
--		opt->pcre2 = 1;
--		break;
--	}
--}
--
--void grep_commit_pattern_type(enum grep_pattern_type pattern_type, struct grep_opt *opt)
--{
--	if (pattern_type != GREP_PATTERN_TYPE_UNSPECIFIED)
--		grep_set_pattern_type_option(pattern_type, opt);
--	else if (opt->pattern_type_option != GREP_PATTERN_TYPE_UNSPECIFIED)
--		grep_set_pattern_type_option(opt->pattern_type_option, opt);
--	else if (opt->extended_regexp_option)
--		/*
--		 * This branch *must* happen after setting from the
--		 * opt->pattern_type_option above, we don't want
--		 * grep.extendedRegexp to override grep.patternType!
--		 */
--		grep_set_pattern_type_option(GREP_PATTERN_TYPE_ERE, opt);
--}
--
- static struct grep_pat *create_grep_pat(const char *pat, size_t patlen,
- 					const char *origin, int no,
- 					enum grep_pat_token t,
-@@ -490,9 +444,10 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- 
- 	p->word_regexp = opt->word_regexp;
- 	p->ignore_case = opt->ignore_case;
--	p->fixed = opt->fixed;
-+	p->fixed = opt->pattern_type_option == GREP_PATTERN_TYPE_FIXED;
- 
--	if (memchr(p->pattern, 0, p->patternlen) && !opt->pcre2)
-+	if (opt->pattern_type_option != GREP_PATTERN_TYPE_PCRE &&
-+	    memchr(p->pattern, 0, p->patternlen))
- 		die(_("given pattern contains NULL byte (via -f <file>). This is only supported with -P under PCRE v2"));
- 
- 	p->is_fixed = is_fixed(p->pattern, p->patternlen);
-@@ -543,14 +498,14 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- 		return;
- 	}
- 
--	if (opt->pcre2) {
-+	if (opt->pattern_type_option == GREP_PATTERN_TYPE_PCRE) {
- 		compile_pcre2_pattern(p, opt);
- 		return;
- 	}
- 
- 	if (p->ignore_case)
- 		regflags |= REG_ICASE;
--	if (opt->extended_regexp_option)
-+	if (opt->pattern_type_option == GREP_PATTERN_TYPE_ERE)
- 		regflags |= REG_EXTENDED;
- 	err = regcomp(&p->regexp, p->pattern, regflags);
- 	if (err) {
-diff --git a/grep.h b/grep.h
-index b651eb291f7..ab2ce833b40 100644
---- a/grep.h
-+++ b/grep.h
-@@ -94,8 +94,7 @@ enum grep_expr_node {
- };
- 
- enum grep_pattern_type {
--	GREP_PATTERN_TYPE_UNSPECIFIED = 0,
--	GREP_PATTERN_TYPE_BRE,
-+	GREP_PATTERN_TYPE_BRE = 0,
- 	GREP_PATTERN_TYPE_ERE,
- 	GREP_PATTERN_TYPE_FIXED,
- 	GREP_PATTERN_TYPE_PCRE
-@@ -143,7 +142,6 @@ struct grep_opt {
- 	int unmatch_name_only;
- 	int count;
- 	int word_regexp;
--	int fixed;
- 	int all_match;
- #define GREP_BINARY_DEFAULT	0
- #define GREP_BINARY_NOMATCH	1
-@@ -152,7 +150,6 @@ struct grep_opt {
- 	int allow_textconv;
- 	int extended;
- 	int use_reflog_filter;
--	int pcre2;
- 	int relative;
- 	int pathname;
- 	int null_following_name;
-@@ -162,7 +159,7 @@ struct grep_opt {
- 	int funcname;
- 	int funcbody;
- 	int extended_regexp_option;
--	int pattern_type_option;
-+	enum grep_pattern_type pattern_type_option;
- 	int ignore_locale;
- 	char colors[NR_GREP_COLORS][COLOR_MAXLEN];
- 	unsigned pre_context;
-@@ -181,7 +178,6 @@ struct grep_opt {
- 	.relative = 1, \
- 	.pathname = 1, \
- 	.max_depth = -1, \
--	.pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED, \
- 	.colors = { \
- 		[GREP_COLOR_CONTEXT] = "", \
- 		[GREP_COLOR_FILENAME] = "", \
-@@ -200,7 +196,6 @@ struct grep_opt {
- 
- int grep_config(const char *var, const char *value, void *);
- void grep_init(struct grep_opt *, struct repository *repo);
--void grep_commit_pattern_type(enum grep_pattern_type, struct grep_opt *opt);
- 
- void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen, const char *origin, int no, enum grep_pat_token t);
- void append_grep_pattern(struct grep_opt *opt, const char *pat, const char *origin, int no, enum grep_pat_token t);
-diff --git a/revision.c b/revision.c
-index a82e31df869..d08c7ae6c35 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2855,8 +2855,6 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 
- 	diff_setup_done(&revs->diffopt);
- 
--	grep_commit_pattern_type(GREP_PATTERN_TYPE_UNSPECIFIED,
--				 &revs->grep_filter);
- 	if (!is_encoding_utf8(get_log_output_encoding()))
- 		revs->grep_filter.ignore_locale = 1;
- 	compile_grep_patterns(&revs->grep_filter);
--- 
-2.34.1.875.gb925cffed1e
+I.e. the general criteria for BUG() isn't whether we could
+hypothetically recover from the scenario.
 
+Which, if you adjust the code around many existing BUG()s to trigger the
+"bad thing" (as it were..) is the case. I haven't done any exhaustive
+checking, but I'd bet it's more common than not, or at least something
+like 1/4 or 1/8 of them.
+
+Rather it's a combination of:
+
+ A. This should absolutely not happen
+ B. We are sure (or are sure as we can be) that it doesn't
+ C. We think if it does, we'll know/really want to know via tests/early int=
+egration testing.
+ D. We mark it with a BUG() because we're as confident as we reasonably can=
+ be in A and B
+
+I took your earlier comments to mean that you agreed on "A", but you
+weren't so sure about "B". I agree that without confidence about "B"
+that having "D" would be overzealous.
+
+But here with your mention of "conceptually a bad idea to[...]" I'm not
+so sure, i.e. it seems like you're saying that you're categorically
+opposed to such use of BUG(). I think that's a fair stance to take if
+that's what you're going for, but per the above I also think it's true
+to say that a lot of our existing use of that API doesn't match that
+worldview. I.e. it's not an UNRECOVARABLE_BUG(), but
+SHOULD_NOT_ESCAPE_DEVELOPMENT_BUG().
+
+I think that in this case we should be confident that we've got "B", as
+explained in detail in the upthread patch[5].
+
+I would be exceedingly paranoid about more exhaustive checks, e.g. I
+don't think we've got enough coverage to have BUG() checks for some of
+the things you added test-only asserts (which would be good) for in your
+initial series.
+
+I.e. asserting whether we hit 99% and not 100%, whether
+display_progress() "misses" updates, or if we miss a call to
+stop_progress(), or whatever else one might assert.
+
+I've been running my personal git with many of those sorts of pedantic
+assertions for a while now, but I'm still not confident those changes
+are OK to submit for inclusion. I very much share your concerns in that
+area.
+
+But I think (and [5] argues) that it's *much* easier to be confident
+about the narrow BUG() assertion being added here.
+
+I.e. it's trivial to discover that almost all callers of progress.c are
+never going to start more than one progress bar ever, so we can discard
+those out of hand. For the rest they're rather easily auditable.
+
+But clearly you disagree, and I thinks it helps neither of us to just
+repeat our points, which is not what I'm trying to do here, but to get
+to the following:
+
+ - Can you cite specifically what about [5] you think wouldn't catch any
+   cases where we couldn't be certain about the BUG(). I.e. it outlines
+   the sort of testing I did, which involved forcing all hidden progress ba=
+rs
+   to ignore their existing isatty() checks, adding more pedantic asserts
+   to narrow down potentially affected callers etc.
+
+   Do you think that testing could have missed something? How & why?
+
+ - Related to that, are there cases where you would agree that we've got "B=
+",
+   as opposed to others where we don't?
+
+   As I've argued I do think these patches are ready as-is, but one alterna=
+tive
+   way forward with them would be to add the BUG() to everything, but white=
+list
+   those current callers that have >1 progress bar. Then as a (slow) follow=
+-up
+   proceed to un-whitelist those one at a time.
+
+I'm not familiar with the GIT_TEST_SPLIT_INDEX changes you're
+mentioning, but I'd think that those cases would have been more complex
+(the code flow around index-related stuff) than the progress API users.
+
+1. https://lore.kernel.org/git/87o8c8z105.fsf@evledraar.gmail.com/
+2. https://lore.kernel.org/git/cover-00.25-00000000000-20210623T155626Z-ava=
+rab@gmail.com/
+3. https://lore.kernel.org/git/cover-v4-0.2-00000000000-20210909T010722Z-av=
+arab@gmail.com/
+4. https://lore.kernel.org/git/cover-0.3-0000000000-20210722T121801Z-avarab=
+@gmail.com/
+5. https://lore.kernel.org/git/patch-v6-8.8-bff919994b5-20211102T122507Z-av=
+arab@gmail.com/
