@@ -2,151 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45D61C433F5
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 20:08:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9937DC433EF
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 20:14:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383011AbhLCUL0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 15:11:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46808 "EHLO
+        id S1357565AbhLCURm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 15:17:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1383009AbhLCUL0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 15:11:26 -0500
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16DBDC061353
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 12:08:02 -0800 (PST)
-Received: by mail-io1-xd2a.google.com with SMTP id q72so597371iod.12
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 12:08:02 -0800 (PST)
+        with ESMTP id S1353691AbhLCURk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 15:17:40 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4858BC061751
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 12:14:16 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id z5so16463005edd.3
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 12:14:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=WkYiPm6DrPFwD0Ad3m9iImPS3hyuVyqRdQK79k8DMxE=;
-        b=jRF1UtG28LhKFcZLV2oP1/P03DQxtOfVp2J7TXbexnOnKOTZEH0J9EIuUZhmITyYGE
-         xOjbku/DNFBSoVG9M/J0r1q8QllIp3IVrR6zx8FxrQF6s5bCPfdcEAaqzWZhNmp8z1to
-         nJEwmO9zkZWz9vqMJqsT7zV9WYSXqk9lvvg/zdSC3nfT/uCb5i60kQ44z2thxuOYlctX
-         VoHtXhbCkkvx/boBWi6XVBC+BuncrubhSUO0ay0xZ/1fnmAzVz1tn3/lg/pswHLGqL1Z
-         XVSIEcM0FWi3HVOXIxWKVDs/MsYgK30kPdoe3GLG554UC3TKgNDaEDMpsu4n57fRoIFc
-         T9lQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:in-reply-to:date:user-agent:message-id
+         :mime-version;
+        bh=20/n8l02zTgm09S4CSxVb7FVOzTvo3hehueN8dBOUio=;
+        b=L+acsjYYFxRVYxlQU6f9knHXwadZEFldeI4L8cg7zzGFpctJIXaFvXiFAAJ5/AVxrQ
+         I8HFd5FT0/MYiW9t3WwCTccVyLfaQMa4EAnyxWxrYD1M3or9ZQFbeiMrPF6jrSIRSDTo
+         IjM6RlDFS3qIjOHh+rp2OjVUsCNH3dKCsFQQ7vDf++R44n0PX/eJDbllklQYAG8WqIpu
+         YIOIWI2GjERDcMIi/N0lEm3Qxsb9OmkoVKFZTnxHTvV5IhaMFXYPbZbiyWPdL4yYlNqz
+         AdJjKNkU8zh4i6xkB/ZtCjqJZQynizKvezaI8OirzLrXwdiVqVNRYDNX+avi8QIONHBA
+         tC0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WkYiPm6DrPFwD0Ad3m9iImPS3hyuVyqRdQK79k8DMxE=;
-        b=ai2v5wX/Yj6kV8tBWuC0RlQeh2d7ABVkWKHA8dNcrjOC/anm6KWC30tbPaF7+VsJlh
-         VrRD5y3x1l7iuMNDrjHTASSHYKV9IY49z0V9iFruRVjT7THAG2DHT0DYQ6huPcwJMWab
-         PiZXtlo2hUUAzv3K4BeGdHpfbG9jRZXnrvccrU/lH0OMyIlK8Pq4RnnWYYO5dBV9vE/k
-         vm/44bIavvvNif9xZZTxw5W/KvvFP1rON9I1MWBvU9nPR8AHW+9UW2UUF3bdDqYaMlok
-         Bwp3h94oqZ+NaF35pSwH7SI5nlR/IuRumkdT7jnVrWPi+Ya3DHP42JgWCQnYQlsQcFrA
-         Qnhg==
-X-Gm-Message-State: AOAM531XB+FApLri4Ab1IS9RCVyqUg9TIcCTQx3rzsFhef3h8BHeKHKD
-        FdaRjI0vl7Q0f0VsFnVruL9LXz6lb6xbcw==
-X-Google-Smtp-Source: ABdhPJw0PzNIgK3cZxkHyGbo185Wo8G3Dr/Lmr2hsvjwgYR2Jl/EZrjDNRdzNtm74KXTimZIyPLarA==
-X-Received: by 2002:a05:6638:2105:: with SMTP id n5mr27656178jaj.32.1638562080924;
-        Fri, 03 Dec 2021 12:08:00 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g15sm2295330ile.88.2021.12.03.12.08.00
+        h=x-gm-message-state:from:to:cc:subject:in-reply-to:date:user-agent
+         :message-id:mime-version;
+        bh=20/n8l02zTgm09S4CSxVb7FVOzTvo3hehueN8dBOUio=;
+        b=Zpj/JLNUOrBjcbP45HVbCKC8BIJU9EEaF6OCz0teNOhreGj28t43qoWmezQ9TsRQoe
+         RBbbvpnnnym2m0RmD1OmFiWXqrq9szFI4RjnaSMQJghvvbxNzC15jLjyymUVYBYOWqwZ
+         Y5htd0mjMFXF5lfMhzWIg4F5Av39yOPdQ1HZ9HjuPjoZbW7xoln+/9gMeYcaYatzb6WM
+         KlhubFTAFRcCbJH79O/GAaDIIxUjnTyaaUoDZ67Vg8neSvIjL6EbYxTAMtyEJbA/8a6R
+         Y+0fpzuwO809Dti3fPqvISsSbkdtQ9EkeqZdkQjbIm5ddQ/DBzqSqbjvorNI+mIGduti
+         0jig==
+X-Gm-Message-State: AOAM532bG6nLlWRKPEcnpdf01E0n3oBgJOBX85ygdDUQIIMRWYoykGZP
+        cgTD5b0XnXnt5EweFaxor/bvsOqxCwOFNw==
+X-Google-Smtp-Source: ABdhPJxZmDgz/EUOVi3AoeS0Kw7C8TI96EK2YVxUbVcvrReeicsq0qCBTR6wdgvuGQlRsMS37HyVrg==
+X-Received: by 2002:a17:907:3f19:: with SMTP id hq25mr25266604ejc.225.1638562454497;
+        Fri, 03 Dec 2021 12:14:14 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id sh33sm2647304ejc.56.2021.12.03.12.14.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 12:08:00 -0800 (PST)
-Date:   Fri, 3 Dec 2021 15:08:00 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, larsxschneider@gmail.com, peff@peff.net,
-        tytso@mit.edu
-Subject: Re: [PATCH 00/17] cruft packs
-Message-ID: <Yap5INmX2ACfjoda@nand.local>
-References: <cover.1638224692.git.me@ttaylorr.com>
- <xmqq5ys5sbzc.fsf@gitster.g>
+        Fri, 03 Dec 2021 12:14:13 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mtEwf-000Igf-By;
+        Fri, 03 Dec 2021 21:14:13 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Subject: Re: Large delays in mailing list delivery?
+In-Reply-To: <CABPp-BF_xsOpQ6GSaWs9u9JcnPQT_OXP-gCsAuxPtMj-X1tgOg@mail.gmail.com>
+Date:   Fri, 03 Dec 2021 21:02:48 +0100
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+Message-ID: <211203.86sfv9qwdm.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq5ys5sbzc.fsf@gitster.g>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 03, 2021 at 11:51:51AM -0800, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > This series implements "cruft packs", a pack which stores accumulated
-> > unreachable objects, along with a new ".mtimes" file which tracks each
-> > object's last known modification time.
->
-> Let me rephrase the above to test my understanding, since I need to
-> write a summary for the  "What's cooking" report.
->
->  Instead of leaving unreachable objects in loose form when packing,
->  or ejecting them into loose form when repacking, gather them in a
->  packfile with an auxiliary file that records the last-use time of
->  these objects.
 
-Exactly. Thanks for such a concise and accurate description of the
-topic.
+On Fri, 3 Dec 2021 11:52:58 -0800 Elijah Newren wrote:
 
-> That way, we do not have to waste so many inodes for loose objects
-> that is not likely to be used, which feels like a win.
+> Are there some rather large delays in mailing list delivery these
+> days?  Anyone know who to contact to investigate?  [*]
 
-Yes. This had historically been a problem for GitHub. We don't
-automatically prune unreachable objects during repacking, but sometimes
-customers will ask us to do it on their behalf (if, for example, they
-accidentally pushed sensitive information to us, and then force-pushed
-over it).
+I've got E-Mail delays so large that I manually crafted In-Reply-To
+etc. to reply to this :)
 
-But occasionally we'd get bitten by exploding many years of loose
-objects (because we used to freshen packfiles too aggressively when
-moving them around).
+I'm 99% sure it's some weird thing at GMail, and nothing to do with
+kernel.org.
 
-We've been running this series in production for the past few months,
-and it's been a huge relief on the folks who typically run these pruning
-GCs.
+When I've experienced delays (sometimes of half a day or more) both
+https://public-inbox.org/git/ and https://lore.kernel.org/git/ have been
+updated.
 
-> >   - The final patch handles object freshening for objects stored in a
-> >     cruft pack.
->
-> I am not going to read it today, but I think this is the most
-> interesting part of the series.  Instead of using mtime of an
-> individual loose object file, we'd need to record the time of
-> last use for each object in a pack.
->
-> Stepping back a bit, I do not see how we can get away without doing
-> the same .mtimes file for non-cruft packs.  An object that is in a
-> non-cruft pack may be referenced immediately after the repack that
-> created the pack, but the ref that was referencing the object may
-> have gone away and now the pack is a month old.  If we were to
-> repack the object, we do not know when was the last time the object
-> was reachable from any of the refs and index entries (collectively
-> known as anchor points).
+Konstantin Ryabitsev notes (and would be in a position to know) that
+GMail throttles delivery (with an smtp 451 error?).
 
-In that situation, we would use the mtime of the pack which contains
-that object itself as a proxy (or the mtime of a loose copy of the
-object, if it is more recent).
+But the other day when Junio sent out a What's Cooking and I saw it on
+lore, but it wasn't in my mailbox for some hours. That time I looked a
+bi tinto it.
 
-That isn't perfect, as you note, since if the pack isn't otherwise
-freshened, we'd consider that object to be a month old, even if the
-reference pointing at it was deleted a mere second ago.
+I went into the gmail UI and searched for rfc822msgid:$id, nothing. It
+was neither there on IMAP or in the UI.
 
-I can't recall if Peff and I talked about this off-list, but I have a
-vague sense we probably did (and I forgot the details).
+However when the E-Mail finally arrived I looked at the raw headers, and
+all the "Received" headers (including GMail's own internal routing) were
+within a couple of minutes of Junio having sent the mail (and in the
+meantime it went through vger etc.).
 
-> Of course, recording all mtimes for all
-> packed objects all the time would involve quite a lot of overhead.
-> I am guessing (I will not spend time today to figure it out myself)
-> that .mtimes update at runtime will happen in-place (i.e. via
-> seek(2)+write(2), or pwrite()), and I wonder what the safety concern
-> would be (which is the primary reason why we tend not to do in-place
-> updates but recreate-and-rename updates).
+So, I'm hazy on E-Mail infrastructure details these days (but worked no
+it in a past life), but that really seems to me like GMail in fact got
+the E-Mail, but it was just sitting in some local queue of theirs before
+it got served to me.
 
-Yeah, this series avoids doing an in-place update, and similarly avoids
-recreating the entire .mtimes file before moving into place. Instead,
-freshening an object stored in a cruft pack takes place by rewriting a
-copy of the object loose, since we consider an object's mtime to be the
-most recent of (a) what's in the .mtimes file, (b) the mtime of the
-containing pack, and (c) the mtime of a loose copy (if one exists).
+Right now I can't see the mail I'm replying to in my inbox[1], but I can
+report the full headers once it arrives if that helps.
 
-It can be wasteful, but in practice "resurrecting" an object in a cruft
-pack is pretty rare, so on balance it ends up costing less work to do.
-
-> Thanks for working on such an interesting topic.
-
-I'm glad to have piqued your interest.
-
-Taylor
+1. A search for:
+   rfc822msgid:CABPp-BF_xsOpQ6GSaWs9u9JcnPQT_OXP-gCsAuxPtMj-X1tgOg@mail.gmail.com
