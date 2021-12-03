@@ -2,94 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF57FC433EF
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 20:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2275DC433F5
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 20:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383103AbhLCUcC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 15:32:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51510 "EHLO
+        id S1383115AbhLCUvB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 15:51:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1383105AbhLCUcB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 15:32:01 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 144E4C061751
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 12:28:37 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id r11so15988331edd.9
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 12:28:37 -0800 (PST)
+        with ESMTP id S239909AbhLCUvB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 15:51:01 -0500
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2E01C061751
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 12:47:36 -0800 (PST)
+Received: by mail-il1-x133.google.com with SMTP id z8so3945066ilu.7
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 12:47:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=IJ0h8lTE6UuE3psW5YrjZeQofbEQwjw/6HTBRTg3tz4=;
-        b=hFZZXunikjwwMGE35rU92wtVV8kKYjLzRHBx/p+xl+fR+1sm6b/cRw31wbgI2X/N9q
-         AADC8uovBbPvbhcscHfJ9EzTwJakpA3CQDLWjagxvbKCpmohWNNM7ajrC3Qq8lkxK1NH
-         yldNVG2NXBIi3Sw3ASVtbsFGP0NjChCciwI0PNBBmght8Mqr56sjljYIghRPMaZMBhTn
-         4jJs5l2uCAdzVa4tp9QzcTFhR9e2CCwLsxRoKUJDneTDeGHsNPPHBNa0vEE+hwoGcdav
-         vNN7+OL5MpKkKIIFPBaVuCIKy1NCoeBrEwQdDxUAl+SHw8hqFFcWt+Oi4mxrCO0Tz/se
-         JTIA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=P1Z/9Y+Zd2YDzej6Umwg37LM6WGSDpMMiBQz0dA7gKE=;
+        b=wUrEinFHoywVF06FysI6OV/ZL7sLe2Re+4GsFKD7rljuepwYRATZisrIgb27ZR5aAv
+         Nw1I6+n9+dm/e9+kRIl/2MZabcs8danB5Lrk7Cc2Ueb6xdxml7AnxxfE4h/nUsRD7fuB
+         Q3HveaC8OVhe2/UX1egZzhTOGAhRtahm9U9ZemHp0c7oUlJA/oBlFlPwVlr/X6iFejd5
+         brSx7Y+Ufo4cccZYIsqlW2BpQ/ex+6Kpi7RqhUeEFQWJz/2+gDDWfag+4m+249ch7V0N
+         /tVg2aagsZPpgMWv0eB+ef5Dzefi1o7aha/RWcy1/xnRMexUwnXphNmOGrY85qP/fnIb
+         5ixg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=IJ0h8lTE6UuE3psW5YrjZeQofbEQwjw/6HTBRTg3tz4=;
-        b=MkbBNavETIN4pYRLak4+Zhx/pwdv6k/bfNnjda7Ej96i51xX59lANbinqcT44wn7rS
-         6AzuffCHTw0XI8WiJHf26Xf2DGqO8jYeaL4fanfFOhwKzEntyoJnNsbK+ftVFjXuHfEg
-         hBz8rO1zlhrEh58sdcLnwcdKCjCWmiyp/pzh8TmXr8MJVIDb6kQgBAVRx11rgGHso6iR
-         3jYY9l0Ctizh9AhBjvpj+ZFo5s15ns5jXI/p0o2mQ745WKjYsqQiEGBS239O8tT26sVt
-         b1x4UUspCA2I+E8WWRk+HI/NvVMVEpttA6YsR3dI1VaOx7hz9eHiyZ8i+7LrKo49WuQx
-         LqNA==
-X-Gm-Message-State: AOAM531RLCsa7LhU4Gz0ZFGSr0IkTQBbaG3foUQUncmK61I+qzponstd
-        HO2UivuarMb9CDLnUPnhXOrRQXtBV2r2hA==
-X-Google-Smtp-Source: ABdhPJz1oaZ2hlz5cn0qxaqvO/jHz3l3WRSpUCj5zt3OQaXaQ6Jhl+m4nRUYta5jHgA760N6nWVWCQ==
-X-Received: by 2002:a17:907:7250:: with SMTP id ds16mr26333482ejc.54.1638563315677;
-        Fri, 03 Dec 2021 12:28:35 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id oz31sm2466626ejc.35.2021.12.03.12.28.35
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=P1Z/9Y+Zd2YDzej6Umwg37LM6WGSDpMMiBQz0dA7gKE=;
+        b=NipiDQZRTz86xZv4hy6y9QCyOeQWlcfk0Yw0wMmZn+rk9mjZPR0hnRckWZXgSvja+t
+         drJra+rshD5kbT7Rvq5EcvE4dSkdEm6vchKHncn3DvIDRunWVkm60ySiGuKGSe3s38b0
+         DwM+5Tl+x/9UMvooe5s+cWp472msgIimoozLgAiuY4ShFa1lMbpXhBAZRnX8dz/gf08G
+         W14aaDlnlcun25KtcYaB7DM8XFCDX/3+7yzAGO4EkTzLvFbHPhY2yzdR31oZvgXE63to
+         AA6qd+8EHJ6QdiVWUQCTiBc5XWKFT47Rq2hxKMxt0Z1xT6TJvlzD9OI54nGz/8WeNHCq
+         vvhA==
+X-Gm-Message-State: AOAM532OQSfuDRQa9p51UsbTKh/w35f+0d19aD5Z3KVW+lCjgUnZmEQI
+        KE5srnNric31jJNnnxIu4R+HCQ==
+X-Google-Smtp-Source: ABdhPJzlHLLU8qgIuKXjCJXyDlVdwrdoSUgjrF69QWkl9V3E5jk8lI0P3WHpAREAdTNM3fo1UkXYZA==
+X-Received: by 2002:a05:6e02:4c7:: with SMTP id f7mr21070024ils.232.1638564456239;
+        Fri, 03 Dec 2021 12:47:36 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id h14sm2318545ild.16.2021.12.03.12.47.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 12:28:35 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mtFAY-000J83-O3;
-        Fri, 03 Dec 2021 21:28:34 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: Large delays in mailing list delivery?
-Date:   Fri, 03 Dec 2021 21:26:08 +0100
-References: <CABPp-BF_xsOpQ6GSaWs9u9JcnPQT_OXP-gCsAuxPtMj-X1tgOg@mail.gmail.com>
- <211203.86sfv9qwdm.gmgdl@evledraar.gmail.com>
- <20211203202427.o575sgrx4auqkmjp@meerkat.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <20211203202427.o575sgrx4auqkmjp@meerkat.local>
-Message-ID: <211203.86k0glqvpp.gmgdl@evledraar.gmail.com>
+        Fri, 03 Dec 2021 12:47:35 -0800 (PST)
+Date:   Fri, 3 Dec 2021 15:47:35 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, larsxschneider@gmail.com, peff@peff.net,
+        tytso@mit.edu
+Subject: Re: [PATCH 00/17] cruft packs
+Message-ID: <YaqCZ7BPwuMGmkZY@nand.local>
+References: <cover.1638224692.git.me@ttaylorr.com>
+ <xmqq5ys5sbzc.fsf@gitster.g>
+ <Yap5INmX2ACfjoda@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <Yap5INmX2ACfjoda@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Dec 03 2021, Konstantin Ryabitsev wrote:
-
-> On Fri, Dec 03, 2021 at 09:02:48PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> When I've experienced delays (sometimes of half a day or more) both
->> https://public-inbox.org/git/ and https://lore.kernel.org/git/ have been
->> updated.
+On Fri, Dec 03, 2021 at 03:08:00PM -0500, Taylor Blau wrote:
+> On Fri, Dec 03, 2021 at 11:51:51AM -0800, Junio C Hamano wrote:
+> > Stepping back a bit, I do not see how we can get away without doing
+> > the same .mtimes file for non-cruft packs.  An object that is in a
+> > non-cruft pack may be referenced immediately after the repack that
+> > created the pack, but the ref that was referencing the object may
+> > have gone away and now the pack is a month old.  If we were to
+> > repack the object, we do not know when was the last time the object
+> > was reachable from any of the refs and index entries (collectively
+> > known as anchor points).
 >
-> Btw, you can source lore.kernel.org straight into your gmail inbox. :)
+> In that situation, we would use the mtime of the pack which contains
+> that object itself as a proxy (or the mtime of a loose copy of the
+> object, if it is more recent).
 >
->     https://people.kernel.org/monsieuricon/lore-lei-part-1-getting-started
->     https://people.kernel.org/monsieuricon/lore-lei-part-2-now-with-imap
+> That isn't perfect, as you note, since if the pack isn't otherwise
+> freshened, we'd consider that object to be a month old, even if the
+> reference pointing at it was deleted a mere second ago.
 >
-> Or, you can read it via nntp://nntp.lore.kernel.org/.
+> I can't recall if Peff and I talked about this off-list, but I have a
+> vague sense we probably did (and I forgot the details).
 
-Nice. I was looking into doing that the other day but stopped at not
-finding a way to do that with the public-inbox software itself.
+Maybe I can rephrase the problem as being orthogonal to what we're
+addressing here. Modification time can be a useful-ish proxy for "last
+referenced time", but they are ultimately different.
 
-Well, "the other day" was probably ~6 months ago, but at the time I
-could only find some TODO item for a Maildir export. Looks like that
-works now, great!
+Forgetting cruft packs for a moment, our behavior today in that
+situation would be to prune the object if our grace period did not cover
+the time in which the pack was last modified. So if the pack was a month
+old, the grace period was two weeks, but the reference pointing at some
+object in that pack was deleted only a second before starting a pruning
+GC, we'd prune that object before this series (just as we would do the
+same thing with this series).
+
+Aside from pruning, what happens to the value recorded in the .mtimes
+file is more interesting. For the case you're talking about, we'll err
+on the side of newer mtimes (either the original timestamp is recorded,
+or some future time when the containing pack was rewritten). But the
+more interesting case is when an object becomes re-referenced. Since the
+ref-update doesn't cause the object to be rewritten, we wouldn't change
+the timestamp.
+
+Anyway, both of these are still independent from cruft packs, so we're
+not changing the status quo there, I don't think.
+
+Thanks,
+Taylor
