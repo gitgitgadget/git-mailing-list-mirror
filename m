@@ -2,70 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31B60C433F5
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 16:46:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7857C433EF
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 16:52:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382143AbhLCQtn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 11:49:43 -0500
-Received: from smtp.hosts.co.uk ([85.233.160.19]:8458 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1354840AbhLCQtn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 11:49:43 -0500
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1mtBhR-0002Qb-BT; Fri, 03 Dec 2021 16:46:17 +0000
-Message-ID: <90007c1b-9183-d7f4-f7d0-6a90c5f6e247@iee.email>
-Date:   Fri, 3 Dec 2021 16:46:17 +0000
+        id S1382217AbhLCQze convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 3 Dec 2021 11:55:34 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:55951 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1352889AbhLCQze (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 11:55:34 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1B3Gq7sK040857
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 3 Dec 2021 11:52:07 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Loic Fouray'" <loic@yeplaa.net>
+Cc:     <git@vger.kernel.org>
+References: <008001d7e6ad$a155e290$e401a7b0$@nexbridge.com> <C1412C97-E67D-44F0-AC40-2FB723AFD017@yeplaa.net>
+In-Reply-To: <C1412C97-E67D-44F0-AC40-2FB723AFD017@yeplaa.net>
+Subject: RE: Merge conflict when lines next to each other are changed
+Date:   Fri, 3 Dec 2021 11:52:02 -0500
+Organization: Nexbridge Inc.
+Message-ID: <006001d7e866$1bd374b0$537a5e10$@nexbridge.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [RFC PATCH 0/1] making --set-upstream have default arguments
-Content-Language: en-GB
-To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Cc:     git@vger.kernel.org
-References: <b9bfd60b-9e4e-caa6-9836-e0f0e984a997@iee.email>
- <20211203160346.18221-1-chakrabortyabhradeep79@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <20211203160346.18221-1-chakrabortyabhradeep79@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQGj38bjHIvLgEDcmNMroe5cXBmSkQH2KLWjrHlZlPA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/12/2021 16:03, Abhradeep Chakraborty wrote:
-> Philip Oakley wrote:
->
->> Can we protect the expectations of a user with a `pushDefault` setting?
-> Are you talking about 'push.default'? If so, then I think, the proposed
-> change would not affect the working of 'push.default' (if the idea is
-> implemented in the right way). I am adding tests to be sure about it. 
->
->> If the user has one set, then the upstream won't be where they push in a
->> triangular repo workflow.
-> Pardon me, I am unable to understand what you are trying to say. Could you
-> please explain a little bit?
->
-> Thanks.
->
-In my scenario I am tracking various upstream repositories, none of
-which I have push permission for. This means I have set up a
-`remote.pushDefault` [1] to the remote "my", which is mapped to my
-GitHub repo where I can publish work (i.e. push). 
+On December 3, 2021 11:30 AM, Loic Fouray wrote:
+> > Le 1 déc. 2021 à 13:19, rsbecker@nexbridge.com a écrit :
+> >
+> > ﻿On December 1, 2021 4:30 AM, Loic Fouray wrote:
+> >> In a file, I have this 2 lines one below the other:
+> >>
+> >> Repository: myvalue
+> >> Tag: 8.2.10
+> >>
+> >> On my local branch i have updated repository myvalue.
+> >> On the upstream repo, they updated often the tag value (not updated
+> >> of my side).
+> >>
+> >> When i perform a merge from upstream to local branch, i have a conflit.
+> >> It seems that it’s related to neighboring lines.
+> >> Could you confirm that it ‘s a normal git operation?
+> >>
+> >> Also, i need to automate this merge. Is It possible with git tools to
+> >> avoid this conflict or to resolve this conflict automatically?
+> >
+> > I try to keep version-specific identifying information, which is already
+> contained in git, out of my code. This includes change logs/history in each
+> source file because git is good at keeping that information - it is redundant in
+> the code. However, for organizations that need to do that, I suggest using
+> clean/smudge filters so that the code inside the repository is clean, while
+> things like the repo name and tag get injected into the code as git puts it into
+> the working directory. The code is then cleaned up while being staged. This
+> removes the possibility of the conflict on these lines by removing the
+> differing lines. You can script this using a combination of sed and git
+> commands. My own git front end does this all the time but it is not generally
+> applicable to all platforms (only NonStop and MVS) so I have not contributed
+> it.
+> >
 
-So when I push, I am pushing to "my" remote, but when rebasing, the
-upstream is not that destination, and in a collaboration environment,
-may not even be the place I first forked from (e.g. the distinction
-between 'git.git' [git], 'git-for-windows.git' [gfw], and Junio's repo
-[gitster], all with the same root). I can then either send PRs (if
-acceptable) or send patches (cover letter link to my publish repo).
+> Regarding the clean/smudge filters usage, do you know if this filters could be
+> triggered by the merge git? Indeed, it would good if the change performed
+> by the filters could be integrated with the merge commit.
+>
 
-In the case where a user has set their remote.pushDefault, then it's not
-clear that there should be a default at all, though I maybe
-misunderstanding the approach here.
+I do not think my point came across. The idea is that the merge should not even see the lines that are causing the conflict because they are not in the file. Your file should have something like the following inside:
 
-Philip
+Repo: $repo$
+Tag: $tag$
 
-[1]
-https://git-scm.com/docs/git-config#Documentation/git-config.txt-remotepushDefault
+A smudge filter can replace the $repo$ with your repository name, and $tag$ with whatever appropriate tag is. A clean filter would remove the conflicting content so merge would never see it.
+
+If you are going to change the same line in each version just to identify that the version changed, you are always going to get conflicts.
+
+[DO NOT DO THE FOLLOWNG] It is like doing the following:
+
+Commit abc1213:
+
+   Line1: This is version 1.0.
+
+Commit 3533adf:
+
+   Line1: This is version 1.1.
+
+This is not how git is intended to be used, in my view.
+
+-Randall
+
+P.S. Please put your responses at the end on this mailing list.
+
