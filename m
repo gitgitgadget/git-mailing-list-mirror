@@ -2,104 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7857C433EF
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 16:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E148FC433FE
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 17:10:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382217AbhLCQze convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 3 Dec 2021 11:55:34 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:55951 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352889AbhLCQze (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 11:55:34 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1B3Gq7sK040857
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 3 Dec 2021 11:52:07 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Loic Fouray'" <loic@yeplaa.net>
-Cc:     <git@vger.kernel.org>
-References: <008001d7e6ad$a155e290$e401a7b0$@nexbridge.com> <C1412C97-E67D-44F0-AC40-2FB723AFD017@yeplaa.net>
-In-Reply-To: <C1412C97-E67D-44F0-AC40-2FB723AFD017@yeplaa.net>
-Subject: RE: Merge conflict when lines next to each other are changed
-Date:   Fri, 3 Dec 2021 11:52:02 -0500
-Organization: Nexbridge Inc.
-Message-ID: <006001d7e866$1bd374b0$537a5e10$@nexbridge.com>
+        id S1353409AbhLCRNy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 12:13:54 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56450 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1353346AbhLCRNs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 12:13:48 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 25AC4167D11;
+        Fri,  3 Dec 2021 12:10:23 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fLVQIKrRH+jNDCJhS7T55YRV3teeGyTxQ56nyK
+        g3bSY=; b=ESDTis/ogzEptGX4DLHtItp4qKWMeYOLWa7am7xYerFFX3BmAqcngv
+        wbFSGAA/IKfOxeTwiCRtdM2Voo61KaM1zqdVcjx3p2gekc2fYGw50EzrZ9AM8sL/
+        Qx7MJJkWcGyC90i9jfXu/R178SkdricPvZhCAlQiklnGybvi6c2m4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1E1C2167D10;
+        Fri,  3 Dec 2021 12:10:23 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 214BC167D0F;
+        Fri,  3 Dec 2021 12:10:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: t7900 failures when $HOME is symlinked
+References: <4cf14040-c8e1-0f75-0ec4-fd8cf6bed0a5@gmail.com>
+Date:   Fri, 03 Dec 2021 09:10:16 -0800
+In-Reply-To: <4cf14040-c8e1-0f75-0ec4-fd8cf6bed0a5@gmail.com> (Philippe
+        Blain's message of "Fri, 3 Dec 2021 09:56:28 -0500")
+Message-ID: <xmqq1r2tty13.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQGj38bjHIvLgEDcmNMroe5cXBmSkQH2KLWjrHlZlPA=
+Content-Type: text/plain
+X-Pobox-Relay-ID: E45A68E2-545B-11EC-932F-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 3, 2021 11:30 AM, Loic Fouray wrote:
-> > Le 1 déc. 2021 à 13:19, rsbecker@nexbridge.com a écrit :
-> >
-> > ﻿On December 1, 2021 4:30 AM, Loic Fouray wrote:
-> >> In a file, I have this 2 lines one below the other:
-> >>
-> >> Repository: myvalue
-> >> Tag: 8.2.10
-> >>
-> >> On my local branch i have updated repository myvalue.
-> >> On the upstream repo, they updated often the tag value (not updated
-> >> of my side).
-> >>
-> >> When i perform a merge from upstream to local branch, i have a conflit.
-> >> It seems that it’s related to neighboring lines.
-> >> Could you confirm that it ‘s a normal git operation?
-> >>
-> >> Also, i need to automate this merge. Is It possible with git tools to
-> >> avoid this conflict or to resolve this conflict automatically?
-> >
-> > I try to keep version-specific identifying information, which is already
-> contained in git, out of my code. This includes change logs/history in each
-> source file because git is good at keeping that information - it is redundant in
-> the code. However, for organizations that need to do that, I suggest using
-> clean/smudge filters so that the code inside the repository is clean, while
-> things like the repo name and tag get injected into the code as git puts it into
-> the working directory. The code is then cleaned up while being staged. This
-> removes the possibility of the conflict on these lines by removing the
-> differing lines. You can script this using a combination of sed and git
-> commands. My own git front end does this all the time but it is not generally
-> applicable to all platforms (only NonStop and MVS) so I have not contributed
-> it.
-> >
+Philippe Blain <levraiphilippeblain@gmail.com> writes:
 
-> Regarding the clean/smudge filters usage, do you know if this filters could be
-> triggered by the merge git? Indeed, it would good if the change performed
-> by the filters could be integrated with the merge commit.
+> Hi Stolee,
 >
+> I noticed two failures, t7900.32 and t7900.36, on a system where
+> $HOME is symlinked, i.e.
+>
+>     $ cd $HOME && pwd
+>     /home/me
+>     $ pwd -P
+>     /some/other/path/me
+>
+> These two tests use 'pfx = $(cd $HOME && pwd)', so $pfx is '/home/me',
+> but the actual path that gets written by Git is canonicalized, i.e.
+> '/some/other/path/me'. I think a simple fix would be to use 'pwd -P'
+> instead, which fixes it for me.
 
-I do not think my point came across. The idea is that the merge should not even see the lines that are causing the conflict because they are not in the file. Your file should have something like the following inside:
+Curious.  Your personal HOME shouldn't have much to do with the
+tests, but obviously it can indirectly affect the outcome because it
+affects where you place your repository.
 
-Repo: $repo$
-Tag: $tag$
+HOME during tests is set in t/test-lib.sh, based on where
+TRASH_DIRECTORY is, and the latter is often derived from
+TEST_OUTPUT_DIRECTORY (unless --root is given), which comes from
+TEST_DIRECTORY and it is set like so:
 
-A smudge filter can replace the $repo$ with your repository name, and $tag$ with whatever appropriate tag is. A clean filter would remove the conflicting content so merge would never see it.
+    # Test the binaries we have just built.  The tests are kept in
+    # t/ subdirectory and are run in 'trash directory' subdirectory.
+    if test -z "$TEST_DIRECTORY"
+    then
+            # We allow tests to override this, in case they want to run tests
+            # outside of t/, e.g. for running tests on the test library
+            # itself.
+            TEST_DIRECTORY=$(pwd)
+    else
+            # ensure that TEST_DIRECTORY is an absolute path so that it
+            # is valid even if the current working directory is changed
+            TEST_DIRECTORY=$(cd "$TEST_DIRECTORY" && pwd) || exit 1
+    fi
+    if test -z "$TEST_OUTPUT_DIRECTORY"
+    then
+            # Similarly, override this to store the test-results subdir
+            # elsewhere
+            TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
+    fi
+    GIT_BUILD_DIR="$TEST_DIRECTORY"/..
 
-If you are going to change the same line in each version just to identify that the version changed, you are always going to get conflicts.
+If you want to do $(pwd -P) somewhere, isn't it that one you want to
+change to avoid similar problems in any code, including the ones
+that are not yet written, that uses $(pwd)?
 
-[DO NOT DO THE FOLLOWNG] It is like doing the following:
+This is a tangent, but I think I found a small bug while spelunking
+for the origin of HOME during tests.
 
-Commit abc1213:
+ * We parse out --root=* option like this:
 
-   Line1: This is version 1.0.
+	--root=*)
+		root=${opt#--*=} ;;
 
-Commit 3533adf:
+   Notice that we do not require it to be absolute path.
 
-   Line1: This is version 1.1.
+ * TRASH_DIRECTORY is originally set to "trash directory." with a
+   suffix to make it unique across test scripts, but it immediately
+   gets turned into an absolute path by doing this:
 
-This is not how git is intended to be used, in my view.
+        test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
+        case "$TRASH_DIRECTORY" in
+        /*) ;; # absolute path is good
+         *) TRASH_DIRECTORY="$TEST_OUTPUT_DIRECTORY/$TRASH_DIRECTORY" ;;
+        esac
 
--Randall
+   I notice that a root that is not absolute is silently lost during
+   this process.
 
-P.S. Please put your responses at the end on this mailing list.
+   TEST_OUTPUT_DIRECTORY is set to TEST_DIRECTORY that comes from
+   $(pwd) we saw earlier, or TEST_OUTPUT_DIRECTORY_OVERRIDE, which
+   is also set to $(pwd) elsewhere, so the case statement does make
+   it absolute in the end.  It just loses --root=* without complaint
+   which is what I found iffy.
 
