@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C702EC433F5
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 07:01:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05736C433FE
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 07:02:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378760AbhLCHFW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 02:05:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35348 "EHLO
+        id S1378766AbhLCHFX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 02:05:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350984AbhLCHFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 02:05:19 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53142C061758
-        for <git@vger.kernel.org>; Thu,  2 Dec 2021 23:01:55 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id d24so3806146wra.0
-        for <git@vger.kernel.org>; Thu, 02 Dec 2021 23:01:55 -0800 (PST)
+        with ESMTP id S1378758AbhLCHFU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 02:05:20 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09494C061757
+        for <git@vger.kernel.org>; Thu,  2 Dec 2021 23:01:57 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id d9so3679234wrw.4
+        for <git@vger.kernel.org>; Thu, 02 Dec 2021 23:01:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=Kla0Up95nG9fLDAaKha+D5grTsqperIJFk04R2nlff4=;
-        b=YRTbch8CRzq6PeARpk/9kpanp1FkBoqTsE2lCZV2rKgNneQ9F2BEij7RwnZcnlfZSV
-         te8AztZ96XBAAYVbHBiOjXBoODdCX/v1lQU1ioVQ2KBcMDRlriW5XNfbM9L3z10oF2ze
-         RPLaeUNIkKDUOa1lcEt7LMV6TLgrIJkH8g8eirGIV6yb0IuGNIQ4vsCHAbUJsOOpcWWC
-         ju0ZMOOQqCkJbSJjR05anoH/LWSWWZonpiIACUgrym3raUbpklhLjBytRbre96GLmd3o
-         pXQXJb8h1p6aTCKaZufTn/14vWG+VryvQ1+0PAlx83y3otq1493M5mBePhBJkp0qZ+y/
-         naug==
+        bh=3NIj3RGET4+cxqJiOuqdUckWmvKtMttcb0xrR2p7udo=;
+        b=dhHhJZCpkbDyD90lNxtcjeAbHIV6BCKJxMVuJl6IpHCyh32Nh9XuoJk1DX8WGQ7VqH
+         z0YU1hzWPoKHgdmoAU4aiUQ+0vstoCq1k553u4u223alLLHFhmP2PULBR6NslNz2yXST
+         ImIrcfgGNzR3FlPjn8SWMc5tRztEdd1QQZ4oov0iNTCjgbntwRn4uMlEojP/qDXvkliR
+         h8CfNtkYcB4tqSPU+2h+2/pMdMVCKVzIldDrRvQ9dEgrXB6V5DTudacSdj5FAOwADmz+
+         Psg1xf2AkhqO9tzZ0Pu7rqXF6jQkVOEjAXd86QTCC4/tvdDTtJbyeJtFtiAT3Xh/alkw
+         7YJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=Kla0Up95nG9fLDAaKha+D5grTsqperIJFk04R2nlff4=;
-        b=4iy3kSjBp3SpmIXdHTF2fSPBGuLeOHOj8NON8qXkGhBmrlGsfKjJc2XilEDY/1z48X
-         LKxcsssA8tNP1EgZZRWVhz8iwCiFOP2zhFJABvUGsn+ccdGbbm97yYC+/Sj0+6My0J1e
-         DoaHkYajABlgmFAHxLFHiqXOiDvBixL3hAYL5r6izF1U5R2MLhE1BQiOjW00aXmWZfmA
-         YiaVIf44CUk510jwCghSYenUOhpHULopsKJ9CuzCW5lcLeAnXoIujqdGgKXx3xclOtlW
-         HyO+jkLaGED5jybUec5AnF6gSM5bAyApVqYJ3gDSrOBrOGaSabKgnXW6y3Tp6GHvV1iV
-         IVuA==
-X-Gm-Message-State: AOAM5336pYG0oWX7Nw5YVeEqKZh1mTsuZWrpEROy+SNFwt4s4Sf4ZALW
-        jIoydGDUFiSke45dDbqBkZkmtjdlsjU=
-X-Google-Smtp-Source: ABdhPJxTReErEicK1809YtT0GCqMJX8qM3MoaEml+ZpeymmGaFdpZ4Boak69YCjTCreXC36qj2qtzQ==
-X-Received: by 2002:a05:6000:1a45:: with SMTP id t5mr20701111wry.306.1638514913721;
-        Thu, 02 Dec 2021 23:01:53 -0800 (PST)
+        bh=3NIj3RGET4+cxqJiOuqdUckWmvKtMttcb0xrR2p7udo=;
+        b=jy2ktxe/0HUAn97e2Q+GTqDPtC8fOELa5CAV1A392OBP0DQ/s18nFjJeFSYRPXYF5m
+         pm3Gp3/guYaNc+UOcPaOUCj/B7wAo7CW43SLxiu/gh5Jjd+qchhH4RDzxVB+IkzvhFjF
+         biW/7I4ZJ73fSUtHjGB5DpUOwcmSQuui8m0rcH3RhvTV8yBSwfR1X8AK13dNioce2vyz
+         3uDlWob9w+6QjKX3we09M3Bjv29IfxQX1QXd+cjmsHlOY+xEZelEYJTPEpnG6Jd0rWhk
+         htTieI2Mceu+JraR28FHgFH7oj9S8xDAa83Ezlvf/9iACvldK0nnMLskXsqVCWcM8l7z
+         LgEQ==
+X-Gm-Message-State: AOAM531WxGIrbv7pT9vPG94LHQjPavcU3Ni0rIff104+m1FMOMjRdT+u
+        e1mbwCJ8wweo5ywVEXXcjYb+Bia1j7U=
+X-Google-Smtp-Source: ABdhPJzZVrncVDeQpkvk8tIG4bbzFGV2EKhKqfwsgGevpDtUbQL5mD/o1cwVOzfXD32RW0rT7ReNhg==
+X-Received: by 2002:a5d:4b45:: with SMTP id w5mr19788144wrs.272.1638514915486;
+        Thu, 02 Dec 2021 23:01:55 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ay21sm4374565wmb.7.2021.12.02.23.01.53
+        by smtp.gmail.com with ESMTPSA id m36sm1784132wms.25.2021.12.02.23.01.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Dec 2021 23:01:53 -0800 (PST)
-Message-Id: <32c7799388b876466a2380c967e6e0dd47de2d23.1638514910.git.gitgitgadget@gmail.com>
+        Thu, 02 Dec 2021 23:01:55 -0800 (PST)
+Message-Id: <d408cecc85fad1177676c1cb404c0dd0b0a8fbb6.1638514910.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1088.git.1638514909.gitgitgadget@gmail.com>
 References: <pull.1088.git.1638514909.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Fri, 03 Dec 2021 07:01:41 +0000
-Subject: [PATCH 02/10] i18n: refactor "%s, %s and %s are mutually exclusive"
+Date:   Fri, 03 Dec 2021 07:01:43 +0000
+Subject: [PATCH 04/10] i18n: standardize "cannot open" and "cannot read"
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,68 +67,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Use placeholders for constant tokens.
-
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- builtin/difftool.c | 2 +-
- builtin/log.c      | 2 +-
- builtin/worktree.c | 2 +-
- diff.c             | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ archive.c       | 4 ++--
+ builtin/fetch.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 4931c108451..61ebfa9c68c 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -739,7 +739,7 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 		die(_("--dir-diff is incompatible with --no-index"));
+diff --git a/archive.c b/archive.c
+index 10376be7161..f1208beacff 100644
+--- a/archive.c
++++ b/archive.c
+@@ -185,7 +185,7 @@ static int write_archive_entry(const struct object_id *oid, const char *base,
  
- 	if (use_gui_tool + !!difftool_cmd + !!extcmd > 1)
--		die(_("--gui, --tool and --extcmd are mutually exclusive"));
-+		die(_("%s, %s and %s are mutually exclusive"), "--gui", "--tool", "--extcmd");
+ 	buffer = object_file_to_archive(args, path.buf, oid, mode, &type, &size);
+ 	if (!buffer)
+-		return error(_("cannot read %s"), oid_to_hex(oid));
++		return error(_("cannot read '%s'"), oid_to_hex(oid));
+ 	err = write_entry(args, oid, path.buf, path.len, mode, buffer, size);
+ 	free(buffer);
+ 	return err;
+@@ -338,7 +338,7 @@ int write_archive_entries(struct archiver_args *args,
  
- 	if (use_gui_tool)
- 		setenv("GIT_MERGETOOL_GUI", "true", 1);
-diff --git a/builtin/log.c b/builtin/log.c
-index a2005e3c778..c39b974ea37 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1964,7 +1964,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		load_display_notes(&rev.notes_opt);
+ 		strbuf_reset(&content);
+ 		if (strbuf_read_file(&content, path, info->stat.st_size) < 0)
+-			err = error_errno(_("could not read '%s'"), path);
++			err = error_errno(_("cannot read '%s'"), path);
+ 		else
+ 			err = write_entry(args, &fake_oid, path_in_archive.buf,
+ 					  path_in_archive.len,
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index bec3cc7535e..b0d63149388 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -995,7 +995,7 @@ static int open_fetch_head(struct fetch_head *fetch_head)
+ 	if (write_fetch_head) {
+ 		fetch_head->fp = fopen(filename, "a");
+ 		if (!fetch_head->fp)
+-			return error_errno(_("cannot open %s"), filename);
++			return error_errno(_("cannot open '%s'"), filename);
+ 		strbuf_init(&fetch_head->buf, 0);
+ 	} else {
+ 		fetch_head->fp = NULL;
+@@ -1405,7 +1405,7 @@ static int truncate_fetch_head(void)
+ 	FILE *fp = fopen_for_writing(filename);
  
- 	if (use_stdout + rev.diffopt.close_file + !!output_directory > 1)
--		die(_("--stdout, --output, and --output-directory are mutually exclusive"));
-+		die(_("%s, %s and %s are mutually exclusive"), "--stdout", "--output", "--output-directory");
- 
- 	if (use_stdout) {
- 		setup_pager();
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 9287c455594..73ee505234c 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -504,7 +504,7 @@ static int add(int ac, const char **av, const char *prefix)
- 	opts.checkout = 1;
- 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
- 	if (!!opts.detach + !!new_branch + !!new_branch_force > 1)
--		die(_("-b, -B, and --detach are mutually exclusive"));
-+		die(_("%s, %s and %s are mutually exclusive"), "-b", "-B", "--detach");
- 	if (lock_reason && !keep_locked)
- 		die(_("--reason requires --lock"));
- 	if (lock_reason)
-diff --git a/diff.c b/diff.c
-index 861282db1c3..342e53f1c1f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4642,7 +4642,7 @@ void diff_setup_done(struct diff_options *options)
- 		die(_("--name-only, --name-status, --check and -s are mutually exclusive"));
- 
- 	if (HAS_MULTI_BITS(options->pickaxe_opts & DIFF_PICKAXE_KINDS_MASK))
--		die(_("-G, -S and --find-object are mutually exclusive"));
-+		die(_("%s, %s and %s are mutually exclusive"), "-G", "-S", "--find-object");
- 
- 	if (HAS_MULTI_BITS(options->pickaxe_opts & DIFF_PICKAXE_KINDS_G_REGEX_MASK))
- 		die(_("-G and --pickaxe-regex are mutually exclusive, use --pickaxe-regex with -S"));
+ 	if (!fp)
+-		return error_errno(_("cannot open %s"), filename);
++		return error_errno(_("cannot open '%s'"), filename);
+ 	fclose(fp);
+ 	return 0;
+ }
 -- 
 gitgitgadget
 
