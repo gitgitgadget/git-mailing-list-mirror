@@ -2,110 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ADD9C433F5
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 07:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92D2DC433F5
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 07:13:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345605AbhLCHFe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 02:05:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35414 "EHLO
+        id S1378789AbhLCHRK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 02:17:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378774AbhLCHF1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 02:05:27 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A544C061759
-        for <git@vger.kernel.org>; Thu,  2 Dec 2021 23:02:02 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id d9so3679558wrw.4
-        for <git@vger.kernel.org>; Thu, 02 Dec 2021 23:02:02 -0800 (PST)
+        with ESMTP id S1378786AbhLCHRJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 02:17:09 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12FE6C06174A
+        for <git@vger.kernel.org>; Thu,  2 Dec 2021 23:13:46 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id i12so1546426wmq.4
+        for <git@vger.kernel.org>; Thu, 02 Dec 2021 23:13:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=Cc1qSmhkRH9mEiAkeWW//bHs4MCli1Fze6wkuo2IMdo=;
-        b=lptudOfEMMWUWgFI0WPp38z7AK404xDWwssH5b1xitdustZb+NjDSJ0rr1g8T7d+MZ
-         LsVOvDWtBU0kTgRDK5kxI0FC2L2JTQ/xP4qPesCM69jB+oenAksghlPTjceseHed1vrJ
-         uifxHe1vd1KXNeakymrP4+YH4ekXlqjj5oXGiE/+0DXoBF6lF3P8Gj6oalnRjEPBrjf2
-         c0e7hBB9emyShoyHFmK2M8+Bmj8Oa+fNA/9r7tUSmlMFuL6haN/AIf6FNKgZCXpW9f7P
-         A1YsNQlsrWk+3PUSWJVaaFegczxr6MkrCCqtxDhl0WB84mbi8IonsN6O5H2Po88bkCQ0
-         ANSw==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=92i7f5ZK7nNy61yfapP5L+1b8yZdSLPHDRn+7/nsggc=;
+        b=BDJuqecRMBHR1eD+G+Q2zng4xO+ozg8yzpFAOIfxebkR/hDoSpy8FNIHNw3LXo1COH
+         6OUleTlTecXho7+fHWjttXOKwiWGBzUsOgq9nCyLwB3VSnKw8isBPeShuujmxdQN2GvT
+         HzCnNNQyNuNU9NDEn8OOLHfFNRArb8BWZ4aFvM+TWXbIx58r4LgurRbO0VqWpVvV5zxM
+         jKoSTHzD9YbKr07Vmbg/I0kjiITpyxWHLGDWapLxpVSofBhT0kteoNeBAusD6NAIPiJN
+         AOQSb3Ab0xJ7Oa2k3ijRfKpeStaaDEq031Y9foNca/9auW62KCc5zQKaRe1h4gnYed8f
+         d2ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=Cc1qSmhkRH9mEiAkeWW//bHs4MCli1Fze6wkuo2IMdo=;
-        b=Y2j6Ptc1kewDyAAQnwyaEjx+vyAsRcIEFwkiCAhQuGwk+jtV+jAu7cpyK+A+uSKB1k
-         SRfn9kYNbuKDa4Udptzy6MNvAFSb20DZ1Z0jyaFAp8cps/szQvUNiRFLH+tkcilkfdcy
-         xqr87OYDzSUOVThf75x6aHXK7/g+YruqLGAhumK3nvf8MtlqE/uxXxjv4zm+edQWXNhQ
-         +jGoauimv7/q3vAC7+eNcKQ10n4CbFN2uYGwJEI3hx6v+NAkrDIczuJUJfiin0J0a6MH
-         VW7KAWMM5wCyoS3UTXRiXZ4KgU9ni5nVN4rFGmmY4LVJ+C+6KDk8A0mKYMl1m8n12Y88
-         iJ+g==
-X-Gm-Message-State: AOAM532xHQjVPeO7RTpnOHy62Sl8EbQ8s0LJLBZFd3aBWrA9yyqIZy13
-        MDBpok6x6m3Sr/KiiS4fy6i4gCFj/lQ=
-X-Google-Smtp-Source: ABdhPJytvSolvSXM5JwfU4e2wRwuEWkrQNshuKXKR+GjnMVXZG1qzLPg6EBliIukL58/w8KR9XqhnQ==
-X-Received: by 2002:a05:6000:547:: with SMTP id b7mr19772044wrf.543.1638514920175;
-        Thu, 02 Dec 2021 23:02:00 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h13sm1856984wrx.82.2021.12.02.23.01.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Dec 2021 23:01:59 -0800 (PST)
-Message-Id: <7d97cbe7e9a9c55048f4db646626598774e6d92e.1638514910.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1088.git.1638514909.gitgitgadget@gmail.com>
-References: <pull.1088.git.1638514909.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Fri, 03 Dec 2021 07:01:49 +0000
-Subject: [PATCH 10/10] i18n: ref-filter: factorize "%(foo) atom used without
- %(bar) atom"
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=92i7f5ZK7nNy61yfapP5L+1b8yZdSLPHDRn+7/nsggc=;
+        b=k8sHQzLPIB2agQN07Z6X5hp9B2RBGnoj2idbHTHfhLDBOA4FWBuo6803bPE0mjRN0R
+         WGtPzaNY4A7cGmQBHUCoG1pfk4VfoVLEgZ4vR67m2FCZmbiMx0NhRS5Lnf3z7Vvk8cQ+
+         kC8jTKMuYBJo3L5qe8AuMGlMpvv3BLqPoUv1l2LDrBRrvj1shqZ7dvWCfrtjLRjD256K
+         yB204z6cFvUAXFKrjaj7oMqaL2SPFnA4ypltvS8NwRZaB3KANqRb5rTNTk9AyWy5PaoJ
+         N+sOv+3hfM4CEXrwgyjEUtSNoUW3bVIb+pdvPXJPRr32kviY3qxTSLEzuszbUPwI8T9C
+         XEEw==
+X-Gm-Message-State: AOAM532aUEiAu58bTKQ7fqWrfk5t5R+dD8uvG7C0ngmbl5QgSXAGXVnc
+        ZqqwMGW3XLDjxjyAQfIFIshKmbkzZt0=
+X-Google-Smtp-Source: ABdhPJwN3fd1yjr/ssVHr7QGwKWab1GuhvaU/an4ENMLKsVFcnydpJchamvzC1XhYHj2n22sEVFEnA==
+X-Received: by 2002:a05:600c:a45:: with SMTP id c5mr12786601wmq.79.1638515624263;
+        Thu, 02 Dec 2021 23:13:44 -0800 (PST)
+Received: from ?IPv6:2a01:e0a:d1:f360:572d:8330:19bb:81f3? ([2a01:e0a:d1:f360:572d:8330:19bb:81f3])
+        by smtp.googlemail.com with ESMTPSA id x13sm1895206wrr.47.2021.12.02.23.13.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Dec 2021 23:13:43 -0800 (PST)
+Subject: Re: Merge conflict when lines next to each other are changed
+To:     Loic Fouray <loic@yeplaa.net>, git@vger.kernel.org
+References: <A5C94370-A9D0-43B2-9B32-0935703BCC94@yeplaa.net>
+From:   =?UTF-8?Q?Jean-No=c3=abl_Avila?= <avila.jn@gmail.com>
+Message-ID: <78fd768d-6248-556c-4b74-7e35bb09a197@gmail.com>
+Date:   Fri, 3 Dec 2021 08:13:43 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <A5C94370-A9D0-43B2-9B32-0935703BCC94@yeplaa.net>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Content-Language: fr
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Le 01/12/2021 à 10:30, Loic Fouray a écrit :
+> Hi,
+>
+> In a file, I have this 2 lines one below the other:
+>
+> Repository: myvalue
+> Tag: 8.2.10
+>
+> On my local branch i have updated repository myvalue.
+> On the upstream repo, they updated often the tag value (not updated of my side).
+>
+> When i perform a merge from upstream to local branch, i have a conflit. 
+> It seems that it’s related to neighboring lines. 
+> Could you confirm that it ‘s a normal git operation?
+>
+> Also, i need to automate this merge. Is It possible with git tools to avoid this conflict or to resolv this conflict automatically?
+>
+> Thanks for tour help
+> Loïc 
+>
+>
+Hi,
 
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
----
- ref-filter.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+This is a use-case for git attribute "merge" :
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 554c2ba1b17..b515efeaa25 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -841,7 +841,7 @@ static void if_then_else_handler(struct ref_formatting_stack **stack)
- 	struct if_then_else *if_then_else = (struct if_then_else *)cur->at_end_data;
- 
- 	if (!if_then_else->then_atom_seen)
--		die(_("format: %%(if) atom used without a %%(then) atom"));
-+		die(_("format: %%(%s) atom used without a %%(%s) atom"), "if", "then");
- 
- 	if (if_then_else->else_atom_seen) {
- 		/*
-@@ -907,7 +907,7 @@ static int then_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
- 	if (cur->at_end == if_then_else_handler)
- 		if_then_else = (struct if_then_else *)cur->at_end_data;
- 	if (!if_then_else)
--		return strbuf_addf_ret(err, -1, _("format: %%(then) atom used without an %%(if) atom"));
-+		return strbuf_addf_ret(err, -1, _("format: %%(%s) atom used without a %%(%s) atom"), "then", "if");
- 	if (if_then_else->then_atom_seen)
- 		return strbuf_addf_ret(err, -1, _("format: %%(then) atom used more than once"));
- 	if (if_then_else->else_atom_seen)
-@@ -943,9 +943,9 @@ static int else_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
- 	if (prev->at_end == if_then_else_handler)
- 		if_then_else = (struct if_then_else *)prev->at_end_data;
- 	if (!if_then_else)
--		return strbuf_addf_ret(err, -1, _("format: %%(else) atom used without an %%(if) atom"));
-+		return strbuf_addf_ret(err, -1, _("format: %%(%s) atom used without a %%(%s) atom"), "else", "if");
- 	if (!if_then_else->then_atom_seen)
--		return strbuf_addf_ret(err, -1, _("format: %%(else) atom used without a %%(then) atom"));
-+		return strbuf_addf_ret(err, -1, _("format: %%(%s) atom used without a %%(%s) atom"), "else", "then");
- 	if (if_then_else->else_atom_seen)
- 		return strbuf_addf_ret(err, -1, _("format: %%(else) atom used more than once"));
- 	if_then_else->else_atom_seen = 1;
--- 
-gitgitgadget
+https://git-scm.com/docs/gitattributes#_performing_a_three_way_merge
+
+
+BR
+
+
+Jean-Noël
+
