@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84E71C433FE
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 07:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2378C433F5
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 07:02:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378791AbhLCHF2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 02:05:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35374 "EHLO
+        id S1378799AbhLCHFb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 02:05:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378765AbhLCHFX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 02:05:23 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F0D9C061757
-        for <git@vger.kernel.org>; Thu,  2 Dec 2021 23:01:59 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id c4so3624923wrd.9
-        for <git@vger.kernel.org>; Thu, 02 Dec 2021 23:01:59 -0800 (PST)
+        with ESMTP id S1378750AbhLCHFY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 02:05:24 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C453C061757
+        for <git@vger.kernel.org>; Thu,  2 Dec 2021 23:02:01 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id i12so1530058wmq.4
+        for <git@vger.kernel.org>; Thu, 02 Dec 2021 23:02:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=FRIu9ENK5TNQ1VitLq87DV6Jzcm3JFMqG+yx+KfTc0Y=;
-        b=AI3CDPlVAisD+8JdN+MDyoygab0HP/ZI0/XE47W/oAqepP958Lc60VMLhpAUAPYKWS
-         0P0v9276GYRbeYWkVwRE3HOBx+R96QCXrm0Be6V0yjf/iJFEgJhGIUJAl6ZVOyD8Ic0W
-         k8yC3dlL9qgYZir2O7P3sUWNuXxVWgJvVyA00KiELjw6en82sEAbJt+nh4KcrUMEc5uP
-         TsXKZEa60PokQKc0DtAsmc4ZvpTFFUaaaCCAZrc4xtz4MKnFUIWbXoy+Sb8Xr0NvM6uI
-         0S/clC4E/28gU0pHs41bAL33Q29Pg2sPvwDczRiK2nQ0YJTCE3eXYPyq4X7SGwDSuF/h
-         D26g==
+        bh=XZyz9Qqvb+s7RBAh8LCpOU5OHAyNYHhDzL+R9o/OFeE=;
+        b=OOFB+eztlRQNl4ILBYZ2p4Qq56enqCg+Vz1SN1/NGCByIk2U5y7H/i682edViE9+yP
+         NFtC+Kl6v+SK4NJMZHEUFkIq3OgnX0y7c865EpcgLX6nMpklvT56bvXmM+229YDbPtKI
+         /V5TSh5D+fQF5+z4ro82AuqRttznyi1dfC2KcutjfbA+u6W+rUjimgUQm4l81s/+/PaO
+         k8QjSID1W2tURLG6ul0yAHpWgIDiClcZ57wHAomifZtwkY1Ruifxsgm3UmW9VkeJi3cP
+         4ez/gOpUV1TFoQuypk0CUjLKAgtSdp0rswTAaN55RYfQ41H4GOAsQb6KuDBmkQ0iMvDQ
+         ejtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=FRIu9ENK5TNQ1VitLq87DV6Jzcm3JFMqG+yx+KfTc0Y=;
-        b=vFo7WUM41Q5OQpNgwom9Uqh7rp7j4gDfSLM+2Mg5bjqQa1SbVqCoaXP8R8U3CoWuDU
-         naJFowG3TPYNiXvuiX2KKi2CkMmI3Hjdv8KdkxDQam4hzmTciMLYLzz/VPjYgDLHbTHj
-         rVeiaGkX+tIdO+3gdCivmxGw45lKLj2PBVHKt4YUT94TXM3Oq3FueFYKTFvTOGrbk5H/
-         qGl4694OT3704p7Mxbdn+k9H0IfdZjrGkM5VeWnH43rfFmTSZjabcGJiNeMoMg+aPF1s
-         RnfHN5kgpVe3VtUor2nfNk36JgWeXTjnNdUZOV5yPwbnC3f9g8s8rDFk2ihHxEXZxPtg
-         KVvA==
-X-Gm-Message-State: AOAM531lVVXeBcC8bYR5EbBP5stMQvLLuykXEDMMI9jBLDxcC1b0VUR9
-        g/6qmLsYtnAGtc1kHCmu6LizTJGhHHA=
-X-Google-Smtp-Source: ABdhPJzwhSqb9s/Jl8AYjrHqDM3yv14pfEQ/n6ByVYJzI+n997SZHQbWdj4h2t880T9iIZAOUqcegQ==
-X-Received: by 2002:a5d:64ea:: with SMTP id g10mr20096608wri.242.1638514917961;
-        Thu, 02 Dec 2021 23:01:57 -0800 (PST)
+        bh=XZyz9Qqvb+s7RBAh8LCpOU5OHAyNYHhDzL+R9o/OFeE=;
+        b=y+2gpR/Ly9J7zkW7I85+tKK4Fq6ln25RVFQQ9E/Dbn4T0pkHY2FGM2WBHTB7i4Gbqu
+         AatV12ZQkSSwSEwkd/5DmeovFrvahhDoczYd2Bhhu2HqDMrwWBtI5EIxY8ATjpBWnews
+         zWqF29HQPeqE6hCvJ4Arz+A4ZLpTxIfVhgSb6qTQL39NzW31TjgR3rkiQTCeNoto2y6r
+         4P+CL+8WxIWHxJEm/C5oBqtKL3+5DwXkniJJPszUJGY/VNdLfJ+RTxg8MDG8rfFCH7Ay
+         tuLpczXEPdiyqEZNcNjTIKVB1C5AFgUFLNh6EPe+3NSxyny5mRnllEHXu3E+ob4nU3lD
+         80mQ==
+X-Gm-Message-State: AOAM531QRizztpiLvlK1uguj5j97uwyzTMTpdeUqlWqWGZam9Xgy8oKB
+        jsJXlyn569PeH5mUyhLK1mXBnXH+pjc=
+X-Google-Smtp-Source: ABdhPJwz6Iz9YlJLAe2KrV1DRbxlF7Sb1X2G0HDiIlPo9yct0MnJErY9a/1aIH9PmxmsMObIH8eYvA==
+X-Received: by 2002:a1c:98ca:: with SMTP id a193mr12991762wme.162.1638514919504;
+        Thu, 02 Dec 2021 23:01:59 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m1sm1727525wme.39.2021.12.02.23.01.57
+        by smtp.gmail.com with ESMTPSA id t127sm4262449wma.9.2021.12.02.23.01.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Dec 2021 23:01:57 -0800 (PST)
-Message-Id: <4b0e1ff29cb2cb8ad934997ea0502cb22df5532b.1638514910.git.gitgitgadget@gmail.com>
+        Thu, 02 Dec 2021 23:01:59 -0800 (PST)
+Message-Id: <6196bccf086251a390c039b18b4f88fdb9e59dea.1638514910.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1088.git.1638514909.gitgitgadget@gmail.com>
 References: <pull.1088.git.1638514909.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Fri, 03 Dec 2021 07:01:46 +0000
-Subject: [PATCH 07/10] i18n: factorize "no directory given for --foo"
+Date:   Fri, 03 Dec 2021 07:01:48 +0000
+Subject: [PATCH 09/10] i18n: factorize "--foo outside a repository"
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,40 +69,35 @@ From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- git.c | 6 +++---
+ apply.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/git.c b/git.c
-index 5ff21be21f3..8624730f022 100644
---- a/git.c
-+++ b/git.c
-@@ -185,7 +185,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--git-dir")) {
- 			if (*argc < 2) {
--				fprintf(stderr, _("no directory given for --git-dir\n" ));
-+				fprintf(stderr, _("no directory given for %s\n" ), "--git-dir");
- 				usage(git_usage_string);
- 			}
- 			setenv(GIT_DIR_ENVIRONMENT, (*argv)[1], 1);
-@@ -213,7 +213,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--work-tree")) {
- 			if (*argc < 2) {
--				fprintf(stderr, _("no directory given for --work-tree\n" ));
-+				fprintf(stderr, _("no directory given for %s\n" ), "--work-tree");
- 				usage(git_usage_string);
- 			}
- 			setenv(GIT_WORK_TREE_ENVIRONMENT, (*argv)[1], 1);
-@@ -297,7 +297,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 				*envchanged = 1;
- 		} else if (!strcmp(cmd, "-C")) {
- 			if (*argc < 2) {
--				fprintf(stderr, _("no directory given for -C\n" ));
-+				fprintf(stderr, _("no directory given for %s\n" ), "-C");
- 				usage(git_usage_string);
- 			}
- 			if ((*argv)[1][0]) {
+diff --git a/apply.c b/apply.c
+index fefec23f1ec..13b9abafe9d 100644
+--- a/apply.c
++++ b/apply.c
+@@ -136,7 +136,7 @@ int check_apply_state(struct apply_state *state, int force_apply)
+ 		return error(_("%s and %s are mutually exclusive"),"--reject",  "--3way");
+ 	if (state->threeway) {
+ 		if (is_not_gitdir)
+-			return error(_("--3way outside a repository"));
++			return error(_("%s outside a repository"), "--3way");
+ 		state->check_index = 1;
+ 	}
+ 	if (state->apply_with_reject) {
+@@ -147,10 +147,10 @@ int check_apply_state(struct apply_state *state, int force_apply)
+ 	if (!force_apply && (state->diffstat || state->numstat || state->summary || state->check || state->fake_ancestor))
+ 		state->apply = 0;
+ 	if (state->check_index && is_not_gitdir)
+-		return error(_("--index outside a repository"));
++		return error(_("%s outside a repository"), "--index");
+ 	if (state->cached) {
+ 		if (is_not_gitdir)
+-			return error(_("--cached outside a repository"));
++			return error(_("%s outside a repository"), "--cached");
+ 		state->check_index = 1;
+ 	}
+ 	if (state->ita_only && (state->check_index || is_not_gitdir))
 -- 
 gitgitgadget
 
