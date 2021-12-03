@@ -2,130 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5025C433F5
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 22:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBC2BC433EF
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 22:40:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383433AbhLCWoE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 17:44:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52686 "EHLO
+        id S1383441AbhLCWoH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 17:44:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359632AbhLCWoD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 17:44:03 -0500
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FC42C061751
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 14:40:39 -0800 (PST)
-Received: by mail-qv1-xf2b.google.com with SMTP id kl8so4201532qvb.3
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 14:40:39 -0800 (PST)
+        with ESMTP id S1383440AbhLCWoH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 17:44:07 -0500
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5A5BC061353
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 14:40:42 -0800 (PST)
+Received: by mail-il1-x12d.google.com with SMTP id j7so4159137ilk.13
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 14:40:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=1cvQGWdJTCLkFiWeTamxFHpNT3AmHjoBKbHo+vWlMEk=;
-        b=n5N+MjdGxCh+x3AX4Tpi52crhK5DFa5VRBHoS9K9R0W0Z7XCNcHVHA/MdigBL9HasJ
-         xGh/+PNNXYW2teMDGwc3kai/T25gkP35atPMAH4FnYWK2BmviZlFn832mCcrac0T7fTS
-         /aDqMi5HTJnUCD/SpcKBGzIX1ZlePPxuYVe2K6zzdfEZTuh+tMkunXoJo9Rp9G5Pqit6
-         gJpfsdSQx+eycNusl1sF0wiIfh1mX14Ba2s8ZqTQiKE9p3/K0Hm9VX3GxK0e8ygIXeJL
-         0aOn54EobSt80z0gcUOHf1jGFsGTsKs1b7edxt0qP6PpZIfMBecHIZmOBY8NMfp0Q64l
-         7KbQ==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=W7aRLaoNv6hNhqxRcXVoOgQOi1mnX21a+Yj5VqFJAIw=;
+        b=HfvzMxPPMKCiNwRNg9hTz3TGDs4RzjUAQ2yyr9e5EqJ/hv/0N3694A8DI1OwWHmKwI
+         pCWyaBeB8DeiknoQBVT+mhJ246hxKQY1k6XkDYGgad25WAkBMTu3PoO0mTBF/dTdSPSr
+         YWuaom1C8CgB4feyicQ5bCslVL7vr2Vc79BKDifdOHohECpXDHuyzz/LX4pvG6g3LbUT
+         aNfapBSwU8YpU56xbZrb7RZPc1T1euwiwi+YfZUjTUJuM2CfHrt3B0enIYpmIG2lB7jw
+         fqgUsu6vf55sCrLu4dhMoM3cmDsQX2hB/pv3pTx6syqPkywzHsj4rJNdAH5eG0Fe1K1T
+         2uXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=1cvQGWdJTCLkFiWeTamxFHpNT3AmHjoBKbHo+vWlMEk=;
-        b=jSNp/4j7Rez2Q2qF2kzdcwiPO8XLQUCKw9G7O9IEkYNU5pf/S8hm5/M+RirbLmHAGk
-         bCzihmqz3lywYk31ySoeZlmiy4YatsMMyVR2gHWWEQnLmSfnGHJdoZBU4DYZyuvLxGW0
-         TDi61SwX+K7gErwtstKTHQHmFb4xVhExdLbUOVLzCgyjfyCbJxmyp1FqcvH/WCbkM/Ja
-         xmVCK3wJCd0YnlA9FyAZ5PD9uKs8S/X5drrXqnKSX7iYxJszCTBLbYo4E0k0e3+3XIdj
-         fiGqXQRDK6eNbbVCMFNn5dR+Vhn43sfOJevw8RLAqdac0ngFM2L2NotVteh5xck37Y/C
-         WZug==
-X-Gm-Message-State: AOAM533mqy/VfsTxCijYkaBESpELY8D2EcIkEd50JJYtSZlurIxQCjyu
-        8PImAA3WJI3OaJoFFMzuVJVERkFxKFg=
-X-Google-Smtp-Source: ABdhPJyscgnan9NgDHLKCVwvfxjqkQ2Ww3n5AarpAJvyqVETi+YOa5ySyojfQ/jAYibmQGIb85LoZQ==
-X-Received: by 2002:a05:6214:20a1:: with SMTP id 1mr21888836qvd.29.1638571238495;
-        Fri, 03 Dec 2021 14:40:38 -0800 (PST)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id a10sm2773486qkc.92.2021.12.03.14.40.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Dec 2021 14:40:38 -0800 (PST)
-Subject: Re: t7900 failures when $HOME is symlinked
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <4cf14040-c8e1-0f75-0ec4-fd8cf6bed0a5@gmail.com>
- <xmqq1r2tty13.fsf@gitster.g>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <837581db-b3d7-2a73-9a61-7c40f77f264b@gmail.com>
-Date:   Fri, 3 Dec 2021 17:40:37 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=W7aRLaoNv6hNhqxRcXVoOgQOi1mnX21a+Yj5VqFJAIw=;
+        b=Kljzmoo9gVpv20mhLLDYlwi9Dduc4V+Jr7qDh01sZXpSuA+pMqwsuNvR46flggBP38
+         rPj8fsZuFmhQVET2SQ6qxbzLkp6wpXkoLQU3yp6ERH/K9Jl+l6p0NZfQQO/8pp4Ahgte
+         W00pd3eyND4WL3eocnfKeeoxIqVi6TtfjqVKzGH5LItHwPBam8c66ThBXHSYfVBzl0bG
+         5IcPXMHyt0FgtidqdocdGqhrklM6pJhNf6eNzQpNkbNLF8oEzMiJFhTRnNCm6RV6q2ov
+         k4ambv+lVcfE4QL0/BHHXffcozhmhJbKzbvGteZn8cYDRtOZlROZ/ZyMffKENUTw+vKf
+         5nAg==
+X-Gm-Message-State: AOAM531i5o9z+agqx9pdafptr170XuiYbroHhXGhnkQBDxZzVa1pkJXZ
+        1j5Aoql7R92YaHjvwG1nbui7OA==
+X-Google-Smtp-Source: ABdhPJwurxYsSQq23tEyBSs//ZZqBkXU+QVCwxQ50Kai21DG7KfP77Fz3HjWsASsO1JmmIwbnbZHCA==
+X-Received: by 2002:a05:6e02:20e7:: with SMTP id q7mr21692297ilv.3.1638571242017;
+        Fri, 03 Dec 2021 14:40:42 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id i26sm2903352ila.12.2021.12.03.14.40.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Dec 2021 14:40:41 -0800 (PST)
+Date:   Fri, 3 Dec 2021 17:40:40 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
+        peff@peff.net, tytso@mit.edu
+Subject: Re: [PATCH 04/17] chunk-format.h: extract oid_version()
+Message-ID: <Yaqc6FYo1pLhsNSB@nand.local>
+References: <cover.1638224692.git.me@ttaylorr.com>
+ <ea245b7216067093fdd3a5b2e3a9390f634c8af0.1638224692.git.me@ttaylorr.com>
+ <2d5456f6-5a4d-1600-83f3-2b6d3e1b270a@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq1r2tty13.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2d5456f6-5a4d-1600-83f3-2b6d3e1b270a@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Thu, Dec 02, 2021 at 10:22:05AM -0500, Derrick Stolee wrote:
+> I notice that you don't use this in load_pack_mtimes_file(),
+> in pack-mtimes.c but you could at this point.
 
-Le 2021-12-03 à 12:10, Junio C Hamano a écrit :
-> Philippe Blain <levraiphilippeblain@gmail.com> writes:
-> 
->> Hi Stolee,
->>
->> I noticed two failures, t7900.32 and t7900.36, on a system where
->> $HOME is symlinked, i.e.
->>
->>      $ cd $HOME && pwd
->>      /home/me
->>      $ pwd -P
->>      /some/other/path/me
->>
->> These two tests use 'pfx = $(cd $HOME && pwd)', so $pfx is '/home/me',
->> but the actual path that gets written by Git is canonicalized, i.e.
->> '/some/other/path/me'. I think a simple fix would be to use 'pwd -P'
->> instead, which fixes it for me.
-> 
-> Curious.  Your personal HOME shouldn't have much to do with the
-> tests, but obviously it can indirectly affect the outcome because it
-> affects where you place your repository.
-
-Indeed, the source code was cloned somewhere in my HOME.
-
-> HOME during tests is set in t/test-lib.sh, based on where
-> TRASH_DIRECTORY is, and the latter is often derived from
-> TEST_OUTPUT_DIRECTORY (unless --root is given), which comes from
-> TEST_DIRECTORY and it is set like so:
-> 
->      # Test the binaries we have just built.  The tests are kept in
->      # t/ subdirectory and are run in 'trash directory' subdirectory.
->      if test -z "$TEST_DIRECTORY"
->      then
->              # We allow tests to override this, in case they want to run tests
->              # outside of t/, e.g. for running tests on the test library
->              # itself.
->              TEST_DIRECTORY=$(pwd)
->      else
->              # ensure that TEST_DIRECTORY is an absolute path so that it
->              # is valid even if the current working directory is changed
->              TEST_DIRECTORY=$(cd "$TEST_DIRECTORY" && pwd) || exit 1
->      fi
->      if test -z "$TEST_OUTPUT_DIRECTORY"
->      then
->              # Similarly, override this to store the test-results subdir
->              # elsewhere
->              TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
->      fi
->      GIT_BUILD_DIR="$TEST_DIRECTORY"/..
-> 
-> If you want to do $(pwd -P) somewhere, isn't it that one you want to
-> change to avoid similar problems in any code, including the ones
-> that are not yet written, that uses $(pwd)?
-
-Indeed, that works and it looks like a more robust fix.
+Hmm, I'm confused. Te extracted function converts a pointer to a struct
+git_hash_algo into a uint32, but here we just care about reading the
+four byte value we wrote.
 
 Thanks,
-
-Philippe.
+Taylor
