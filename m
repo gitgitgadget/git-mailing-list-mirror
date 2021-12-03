@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB330C433F5
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 13:41:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FE9BC433F5
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 13:54:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381209AbhLCNov (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 08:44:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42310 "EHLO
+        id S1352369AbhLCN57 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 08:57:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381200AbhLCNom (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 08:44:42 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DFDDC06173E
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 05:41:18 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id l25so11566012eda.11
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 05:41:18 -0800 (PST)
+        with ESMTP id S243650AbhLCN56 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 08:57:58 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90A50C06173E
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 05:54:34 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id t5so12061460edd.0
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 05:54:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=M7swm+nG7z3utSFw6qWZEc+yWDv4Q0TmDBXXgEpR0mE=;
-        b=O1h8K4qO6jrTDbkZz0/R0tGJJ1eRC88QnkBXa6sVW3T8aa+yPNkppXGZt+XlbVTlB4
-         jNXdRGxdLxNYMaxseYFH7KnaZ6Ci6yA6de5XRzKDfw7CkuZCPimziqo7DZJkq8PrSKNK
-         rTWwLbP2rNF1EZWHhAWvjXe7FrJZKPDbOzPPE5rD0JmCkTw9XUpVvT5jLEj4WvVY0ziI
-         uBImwgbqNkVVgCP7Mi88H6ifS5x29/MZbHQV40pE5qUfuQwOOzjCKG+06uD3RWWoh2NW
-         1Z3dsYiYNSIJGKiXlcGMXLTpFWqQl5+yQJtuTfU0x89D4QrKISCFLYPsAIsxNKEcflbT
-         Sy5A==
+        bh=bz7rNuUvbOoG2aWJgouJK2/L01AfZnpuVYX9BYmOo+g=;
+        b=pnTaNxyyKL9F0SfsdUtklh7oL/uNqoFG6zMVKB/FqU7Eavb3w3gkBOGvx4goxPQLyR
+         RTDF4fG2hLYTPVZI4HCUYliYg3BGOQ4OPB7qVZPWDwRATIDq6BFnAkM/70r6OkI3tpED
+         4cBwrCkwW51+1ftyakKVv88l5P23Fi1CqZQKSMwjgPeYWvXen0HmUPyvGbuZndnag4gw
+         f59m0Bqdb6CAnHfkXTfUm7MLaR2qwH4W8BRLb7uATyiOrjx/ePSHYKdBmZrreZyasgBo
+         N9uoPRR+jfW1Lb/GvYxfUok6w4e+L8X4MkP8vJgmr4Zy28YuXM35Jq9Sb/dbc9zo8Y95
+         stGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=M7swm+nG7z3utSFw6qWZEc+yWDv4Q0TmDBXXgEpR0mE=;
-        b=22vEry76NWmW4/tLS2ooMGkwdZbUpe4ycISUxLZjjaqtqI7/UZUE29HBhT7jfc4AJh
-         WYGfBZzdMjrnD0qrdypVlXjLBjcacMbjQfpr4N9hsHzLuEtJ2yNyFLrSJngUh9hITh3k
-         AJd9X3hU3Im9qxMxxZV+/iAcjbCt7lhBwj63MLCLhMCvdLQdB/6mgrnz+W+3hGonqLud
-         3jXzZp2IupzI0VisVjMw9IVqJNFhdXM6RB5YMcgD76IFGKAWVGZnTk/NK4gwSZ4ZFVmU
-         sa8ojywE3WlEeMo4F5DA9Qst87N+sEWYgjPTzRRQbCROmVY2vdLIJrTSec7YI6/6zahY
-         cPug==
-X-Gm-Message-State: AOAM530XYDgM/qaqYwJ/KU8/2Zb8Nk6/PEuhRiuWDcgGgJndDQ5gGYz/
-        8dFRhpfbv4xQRrQqghdODAs=
-X-Google-Smtp-Source: ABdhPJwhRAoINXNkBxU7WIl5oBSc9mZAdD36m/aRLzkpG0HFXGGPFci56jz/y8sYI32PS9dlUaMyUw==
-X-Received: by 2002:a17:907:3f9d:: with SMTP id hr29mr24279617ejc.369.1638538876561;
-        Fri, 03 Dec 2021 05:41:16 -0800 (PST)
+        bh=bz7rNuUvbOoG2aWJgouJK2/L01AfZnpuVYX9BYmOo+g=;
+        b=5Za96/NsUKw4DwB53jlk0rtJd1zJcsC0ph33xpXUubom8oV2pdGOInuwvIGDaVD8SO
+         ngVry8FP1t5Q5ryG4rjFAzogUdcGh7zgvJIhd4cPqBzlByB/Ky7jyJRvzVEGu5OokyXg
+         2OaJhQJii03myifHZwt15sPAd5D57tVgb+f5HR2jcIxzWe6A3oBNP0vDVtHXBbg7NowN
+         kcDC1Zdku9nhu6Zzm9nhdR7vEjMZ+EIVdNxjrksUGbGmtwonVOG+N/dibq9KrPKca3dn
+         WJB3R+cUNBuuszZtDq0eG8KBFtXmmzN6xEwfKzslIfyiDQsPnQvJgcWbfI3ZOfak3oys
+         Zf9g==
+X-Gm-Message-State: AOAM53144HevKNqF8ro6/ga4xBhzx0clGXMJBeGITSKEKGdvsxw9u9uS
+        zVzK90/knEnERk9hKHX1R6Y=
+X-Google-Smtp-Source: ABdhPJxMCdTiI+7PXrh8wHi5Sq0KXiiGAYprikz4voF41NLBJAszZ84r18H+wOJtGlfQYZZEDT72kA==
+X-Received: by 2002:aa7:c155:: with SMTP id r21mr27252665edp.124.1638539664895;
+        Fri, 03 Dec 2021 05:54:24 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id g9sm2021242edb.52.2021.12.03.05.41.16
+        by smtp.gmail.com with ESMTPSA id s4sm2181267ejn.25.2021.12.03.05.54.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 05:41:16 -0800 (PST)
+        Fri, 03 Dec 2021 05:54:24 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mt8oN-00094C-K4;
-        Fri, 03 Dec 2021 14:41:15 +0100
+        id 1mt915-0009Ox-Kz;
+        Fri, 03 Dec 2021 14:54:23 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Han Xin <chiyutianyi@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
@@ -59,14 +59,14 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Philip Oakley <philipoakley@iee.email>,
         Derrick Stolee <stolee@gmail.com>,
         Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: Re: [PATCH v4 1/5] object-file: refactor write_loose_object() to
- read buffer from stream
-Date:   Fri, 03 Dec 2021 14:28:24 +0100
+Subject: Re: [PATCH v4 2/5] object-file.c: handle undetermined oid in
+ write_loose_object()
+Date:   Fri, 03 Dec 2021 14:41:28 +0100
 References: <20211122033220.32883-1-chiyutianyi@gmail.com>
- <20211203093530.93589-2-chiyutianyi@gmail.com>
+ <20211203093530.93589-3-chiyutianyi@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <20211203093530.93589-2-chiyutianyi@gmail.com>
-Message-ID: <211203.86r1atst50.gmgdl@evledraar.gmail.com>
+In-reply-to: <20211203093530.93589-3-chiyutianyi@gmail.com>
+Message-ID: <211203.86mtlhssj4.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -78,158 +78,115 @@ On Fri, Dec 03 2021, Han Xin wrote:
 
 > From: Han Xin <hanxin.hx@alibaba-inc.com>
 >
-> We used to call "get_data()" in "unpack_non_delta_entry()" to read the
-> entire contents of a blob object, no matter how big it is. This
-> implementation may consume all the memory and cause OOM.
+> When streaming a large blob object to "write_loose_object()", we have no
+> chance to run "write_object_file_prepare()" to calculate the oid in
+> advance. So we need to handle undetermined oid in function
+> "write_loose_object()".
 >
-> This can be improved by feeding data to "write_loose_object()" in a
-> stream. The input stream is implemented as an interface. In the first
-> step, we make a simple implementation, feeding the entire buffer in the
-> "stream" to "write_loose_object()" as a refactor.
+> In the original implementation, we know the oid and we can write the
+> temporary file in the same directory as the final object, but for an
+> object with an undetermined oid, we don't know the exact directory for
+> the object, so we have to save the temporary file in ".git/objects/"
+> directory instead.
 >
 > Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 > Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
 > ---
->  object-file.c  | 53 ++++++++++++++++++++++++++++++++++++++++++++++----
->  object-store.h |  6 ++++++
->  2 files changed, 55 insertions(+), 4 deletions(-)
+>  object-file.c | 30 ++++++++++++++++++++++++++++--
+>  1 file changed, 28 insertions(+), 2 deletions(-)
 >
 > diff --git a/object-file.c b/object-file.c
-> index eb972cdccd..82656f7428 100644
+> index 82656f7428..1c41587bfb 100644
 > --- a/object-file.c
 > +++ b/object-file.c
-> @@ -1860,8 +1860,26 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
->  	return fd;
->  }
+> @@ -1892,7 +1892,14 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+>  	const void *buf;
+>  	unsigned long len;
 >  
-> +struct simple_input_stream_data {
-> +	const void *buf;
-> +	unsigned long len;
-> +};
+> -	loose_object_path(the_repository, &filename, oid);
+> +	if (is_null_oid(oid)) {
+> +		/* When oid is not determined, save tmp file to odb path. */
+> +		strbuf_reset(&filename);
 
-I see why you picked "const void *buf" here, over say const char *, it's
-what "struct input_stream" uses.
+Why re-use this & leak memory? An existing strbuf use in this function
+doesn't leak in the same way. Just release it as in the below patch on
+top (the ret v.s. err variable naming is a bit confused, maybe could do
+with a prep cleanup step.).
 
-But why not use size_t for the length, as input_stream does?
+> +		strbuf_addstr(&filename, the_repository->objects->odb->path);
+> +		strbuf_addch(&filename, '/');
 
-> +static const void *feed_simple_input_stream(struct input_stream *in_stream, unsigned long *len)
-> +{
-> +	struct simple_input_stream_data *data = in_stream->data;
-> +
-> +	if (data->len == 0) {
+And once we do that this could just become:
 
-nit: if (!data->len)...
+	strbuf_addf($filename, "%s/", ...)
 
-> +		*len = 0;
-> +		return NULL;
-> +	}
-> +	*len = data->len;
-> +	data->len = 0;
-> +	return data->buf;
+Is there's existing uses of this pattern, so mayb e not worth it, but it
+allows you to remove the braces on the if/else.
 
-But isn't the body of this functin the same as:
-
-        *len = data->len;
-        if (!len)
-                return NULL;
-        data->len = 0;
-        return data->buf;
-
-I.e. you don't need the condition for setting "*len" if it's 0, then
-data->len is also 0. You just want to return NULL afterwards, and not
-set (harmless, but no need) data->len to 0)< or return data->buf.
-> +	struct input_stream in_stream = {
-> +		.read = feed_simple_input_stream,
-> +		.data = (void *)&(struct simple_input_stream_data) {
-> +			.buf = buf,
-> +			.len = len,
-> +		},
-> +		.size = len,
-> +	};
-
-Maybe it's that I'm unused to it, but I find this a bit more readable:
-	
-	@@ -2013,12 +2011,13 @@ int write_object_file_flags(const void *buf, unsigned long len,
-	 {
-	 	char hdr[MAX_HEADER_LEN];
-	 	int hdrlen = sizeof(hdr);
-	+	struct simple_input_stream_data tmp = {
-	+		.buf = buf,
-	+		.len = len,
-	+	};
-	 	struct input_stream in_stream = {
-	 		.read = feed_simple_input_stream,
-	-		.data = (void *)&(struct simple_input_stream_data) {
-	-			.buf = buf,
-	-			.len = len,
-	-		},
-	+		.data = (void *)&tmp,
-	 		.size = len,
-	 	};
-	
-Yes there's a temporary variable, but no denser inline casting. Also
-easier to strep through in a debugger (which will have the type
-information on "tmp".
-
->  int hash_object_file_literally(const void *buf, unsigned long len,
-> @@ -1977,6 +2006,14 @@ int hash_object_file_literally(const void *buf, unsigned long len,
->  {
->  	char *header;
->  	int hdrlen, status = 0;
-> +	struct input_stream in_stream = {
-> +		.read = feed_simple_input_stream,
-> +		.data = (void *)&(struct simple_input_stream_data) {
-> +			.buf = buf,
-> +			.len = len,
-> +		},
-> +		.size = len,
-> +	};
-
-ditto..
-
->  	/* type string, SP, %lu of the length plus NUL must fit this */
->  	hdrlen = strlen(type) + MAX_HEADER_LEN;
-> @@ -1988,7 +2025,7 @@ int hash_object_file_literally(const void *buf, unsigned long len,
->  		goto cleanup;
->  	if (freshen_packed_object(oid) || freshen_loose_object(oid))
->  		goto cleanup;
-> -	status = write_loose_object(oid, header, hdrlen, buf, len, 0, 0);
-> +	status = write_loose_object(oid, header, hdrlen, &in_stream, 0, 0);
->  
->  cleanup:
->  	free(header);
-> @@ -2003,14 +2040,22 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
->  	char hdr[MAX_HEADER_LEN];
->  	int hdrlen;
->  	int ret;
-> +	struct simple_input_stream_data data;
-> +	struct input_stream in_stream = {
-> +		.read = feed_simple_input_stream,
-> +		.data = &data,
-> +	};
->  
->  	if (has_loose_object(oid))
->  		return 0;
->  	buf = read_object(the_repository, oid, &type, &len);
-> +	in_stream.size = len;
-
-Why are we setting this here?...
-
->  	if (!buf)
->  		return error(_("cannot read object for %s"), oid_to_hex(oid));
-
-...Insted of after this point, as we may error and never use it?
-
-> +	data.buf = buf;
-> +	data.len = len;
-
-Probably won't matter,  just a nit...
-
-> +struct input_stream {
-> +	const void *(*read)(struct input_stream *, unsigned long *len);
-> +	void *data;
-> +	size_t size;
-> +};
-> +
-
-Ah, and here's the size_t... :)
+diff --git a/object-file.c b/object-file.c
+index 8bd89e7b7ba..2b52f3fc1cc 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1880,7 +1880,7 @@ int write_loose_object(const struct object_id *oid, char *hdr,
+ 		       int hdrlen, struct input_stream *in_stream,
+ 		       time_t mtime, unsigned flags)
+ {
+-	int fd, ret;
++	int fd, ret, err = 0;
+ 	unsigned char compressed[4096];
+ 	git_zstream stream;
+ 	git_hash_ctx c;
+@@ -1892,7 +1892,6 @@ int write_loose_object(const struct object_id *oid, char *hdr,
+ 
+ 	if (is_null_oid(oid)) {
+ 		/* When oid is not determined, save tmp file to odb path. */
+-		strbuf_reset(&filename);
+ 		strbuf_addstr(&filename, the_repository->objects->odb->path);
+ 		strbuf_addch(&filename, '/');
+ 	} else {
+@@ -1902,11 +1901,12 @@ int write_loose_object(const struct object_id *oid, char *hdr,
+ 	fd = create_tmpfile(&tmp_file, filename.buf);
+ 	if (fd < 0) {
+ 		if (flags & HASH_SILENT)
+-			return -1;
++			err = -1;
+ 		else if (errno == EACCES)
+-			return error(_("insufficient permission for adding an object to repository database %s"), get_object_directory());
++			err = error(_("insufficient permission for adding an object to repository database %s"), get_object_directory());
+ 		else
+-			return error_errno(_("unable to create temporary file"));
++			err = error_errno(_("unable to create temporary file"));
++		goto cleanup;
+ 	}
+ 
+ 	/* Set it up */
+@@ -1968,10 +1968,13 @@ int write_loose_object(const struct object_id *oid, char *hdr,
+ 			struct strbuf dir = STRBUF_INIT;
+ 			strbuf_add(&dir, filename.buf, dirlen - 1);
+ 			if (mkdir(dir.buf, 0777) && errno != EEXIST)
+-				return -1;
+-			if (adjust_shared_perm(dir.buf))
+-				return -1;
+-			strbuf_release(&dir);
++				err = -1;
++			else if (adjust_shared_perm(dir.buf))
++				err = -1;
++			else
++				strbuf_release(&dir);
++			if (err < 0)
++				goto cleanup;
+ 		}
+ 	}
+ 
+@@ -1984,7 +1987,10 @@ int write_loose_object(const struct object_id *oid, char *hdr,
+ 			warning_errno(_("failed utime() on %s"), tmp_file.buf);
+ 	}
+ 
+-	return finalize_object_file(tmp_file.buf, filename.buf);
++	err = finalize_object_file(tmp_file.buf, filename.buf);
++cleanup:
++	strbuf_release(&filename);
++	return err;
+ }
+ 
+ static int freshen_loose_object(const struct object_id *oid)
