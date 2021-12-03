@@ -2,292 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AF3DC433EF
-	for <git@archiver.kernel.org>; Thu,  2 Dec 2021 23:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B526C433EF
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 00:40:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377610AbhLCACM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Dec 2021 19:02:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53358 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235895AbhLCACL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Dec 2021 19:02:11 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5B37C06174A
-        for <git@vger.kernel.org>; Thu,  2 Dec 2021 15:58:48 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id x15so4633642edv.1
-        for <git@vger.kernel.org>; Thu, 02 Dec 2021 15:58:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RMeDiWFoLtkp26ka6aHdFouRKvK6uev3187pcSrg6sE=;
-        b=N0XjbRUwkz8bJb91s4BJ9dcLXCNNyegXrj4FACL9fq3HEvpimW+FX6n9TjLMLiMEtm
-         hcGkGTpNic3UDeov9tnnbhrGp2d47gnzUyi4ooVnBLqBnuwADQOvcjJjs9ACFNWNDZqQ
-         JBTLluptM7DVKd+E2uXrkGzJ75vDlVXj9y8aSHLQ2LvGDiWYPIDyZuoNh4m+S8KZvYxY
-         J0Yx7Ad8lOhZyXZWdhVwp3A5qdRZ4Ulym/WoRcC/5EExd1dwW4/lyx5Sx4Z5Pbko1Pc8
-         jDpqj0dCI+tEnLeMRON03NtdPHpBl+RbGQpBBqVPbhHRb3j8dEIZCOvdd+Jnl4+pRDqA
-         bYTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RMeDiWFoLtkp26ka6aHdFouRKvK6uev3187pcSrg6sE=;
-        b=3uTeJGWW1hO3PeByi0UhpBS/I3prqhkJ4kQbG88HuqZh2tniiA2XQ2FZEa5pZ2HQF0
-         7Br+Psq+0Q3xKfd7jVFNoHYA5hpnnVdLXmNSyHfa0anaHYtn24Ly3I7qQ4JV/X5BgMrq
-         u0Wx26y5BATfwKPxs+E+Y9a/o1ry25m42dSnFsenDHyq9feHKjOCVTXTbvYtvzqYEP4R
-         pwM8aW9Wz7whmVlR87jtt5tP5eyMfKClJsi0/LzGmMIp6v86vkony7uK134Ck91IoFq7
-         cpccLypv9dMEmCAG+Xre2XI8ae3EScJeqHHumrQu4++q/ByLNUWKpjaDbCk7pXDZPRT3
-         SLiw==
-X-Gm-Message-State: AOAM533/ffg5dBBYDdYFZIY7/C6wZAh1f04w1bm27JOra8Kvc2IRLGMk
-        lEYH++iQtvG/0pcYrXUBMCgZHBoVeFuxzsI4rhvMfnIEhVs=
-X-Google-Smtp-Source: ABdhPJw6sFIHaBbrQ+JUbePgaGJTTWk1vuYiqjo12zM/P1E2HP1XLaSgKwXsKwxrjz+YGdlAt6YR7gM21X3oT32wmYc=
-X-Received: by 2002:a05:6402:d73:: with SMTP id ec51mr21607653edb.175.1638489526996;
- Thu, 02 Dec 2021 15:58:46 -0800 (PST)
-MIME-Version: 1.0
-References: <1638470726.ql5i6zljva.none.ref@localhost> <1638470726.ql5i6zljva.none@localhost>
-In-Reply-To: <1638470726.ql5i6zljva.none@localhost>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 2 Dec 2021 15:58:35 -0800
-Message-ID: <CABPp-BEyy97x-9od+9E9DxCDHHq-m8hyZJWqxFutkRy3G7Hu9g@mail.gmail.com>
+        id S1377783AbhLCAnk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Dec 2021 19:43:40 -0500
+Received: from sonic317-21.consmr.mail.gq1.yahoo.com ([98.137.66.147]:35567
+        "EHLO sonic317-21.consmr.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1349629AbhLCAnk (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 2 Dec 2021 19:43:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.ca; s=s2048; t=1638492016; bh=CFKcRFQBMStQHeXCZSXfc30vBjxRa1QnUAdDKfMXkpQ=; h=Date:From:Subject:To:Cc:References:In-Reply-To:From:Subject:Reply-To; b=bkq/pib+QFxkKcztLulV2T0JoM3ztkPDN1eI0U8zJeONi0B6Al9zmnTJXV5Gph36iia86l/AVpATcYEBGTkBaYle01U/iWDa9qaSXMfgS1yNLBSli+cZ/UyNZl/M1nLYxCql4OlCqT7CtFfO30akeeat4PbXNJePdvYe+EXSyt2yeJJitsWsLUEB8xwEV62Yo5RdnC8jeaozvvhoJtfNgnTihQwCFJ3TbicNG16qMnL5MDQ40wPYZ6RgGZnmxsSlKgPK45UAOqZD7EhpJLkjuiJnirkS0alzHK+Vtsx1bjmXSrCe9Ennqw60NEQfPGVF02V9UFjVTErKCL9Gx2VyrQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1638492016; bh=LYiHERSig5hVNijA8JFkV1AFrNbrgREMxJuD4GqbnsQ=; h=X-Sonic-MF:Date:From:Subject:To:From:Subject; b=RGQP/LkSMtUISZ+Z3OocI1FJyG9x4wc2fda3QG4iMm/Uy7VUfgnan71CEDoG9x87M/YJzkS8VlTDAnMLPgKRA2lkBMw+9v2JeJ7phKSDCFouVTw2lNep1sIAA5nDo+eHJubJTgZvNbX2xE2N55q385B4LMH8odP7nMo+B8aFCR44GRw0SQd5gIhIcK/dlX/P7wCqpq25PzVnUY4/p3BSzo1luM4tWjEeAXBX90vT6tVsKTxda2grR+Thv68u6fSe8ALIC9edpVXIgx17dxjZ+aJH8TfjbcoLHr2he5IjLaoyNqHgeomLkaNRMRbETc1Lwd084mNyzJSvJnCgp8PulQ==
+X-YMail-OSG: YUKqvh0VM1k3pvZMPFjtaDayBxLTjf5CFqfZm.wmf30mQIx7cfcbDhmR5KfOrr0
+ 1ep6N4APpA.lfbAtLFeSyR4uSP8CGTqiKJfY_HJ1WIGft6GSKeDShWh1DFekrCz.PINMdKQiTugG
+ _OyK9dMAdq1rWtFxZiQRQ8RaOoH_Qf_zugZlAvFJiRkWPPBV_MJ1R1AzPv6vMk3T6M50Uq9PDiE7
+ ZBnCjfDnJ7qt6PySnhAVkGrhvOkQUOSklCuYYyP2sxUDpf5pg2q8J6t52jcK9PrYXC3cMb1xSLia
+ IZtyihdMuKlG9qX5KwK7TmWqD2sB7Ni3WWnTDHFVtG3pBcI4hyv0xnZHBs4AxLA2mH4JcPRGYTWk
+ ydeFtqV2XEuM4ZxyM7q37ozrkPS_A_IFB0Aw3ZOoc96i9AoS94uE7I.1qo7VJ_83kI4opRrH.yQo
+ nni2BGfRK5X7ZVDCB7gTVVoW96z9sVGTN4qwc6FYnptkUicJPru5YryDtea_K0xhs2uwPiTLL8Bi
+ 9RPstqUFDBaE4wCyVt7EzWCAPQjWDvonHVg_9eEA2LUVGHWFLBctu.FXMQEgNNNeDvjfhu.gvFaK
+ pZtTTcbLi4jwLpb9NSh3aO_Ay440nq2dVfkdsyFqAXtYs0mHgkICBWFlyku1.o813v3WDkr5o9de
+ uJv83SVEaIXh.nIXhPU5rUok9RHu0oGuFi3TjudL5xYL2KTHPug4hqXZ1CfPLQMWkj4DDGRCgArn
+ ynVsFbAulfS5D_zCm141OV4Gl5Ti7devpGojeaTIFovs3wd8y.4FyK3u8Rvn_NmwS7cHNiDeH7bc
+ h0ro0D_0Noy7G9w5x_F5KgzWEEMbInwfm0zM.WekjtlCNYSnX0T8Ksf9vcb4rtKButPPhnVErzT.
+ V.ctkUAg5MkwYh7LzsB0ilmXufGS3puC7Fx78ESc7W.amL854Ve7Y4u_Kr9Pal0PRsR617jff_7p
+ ls4pdhaFusS1O3PMFaDtFHYd31MCUKIK3.5WtAFLy3wa1WcY4Ee93FVv5dHXD0IHDFZ8_DPekLMK
+ 2Sq89MijKDdK7548EGAeLoKId9kIRlXbG9uXW6nxzuNmWcuN9rdgQCGMxkBTDXjPi8JiNebKPRoS
+ S6grb5gvXV.oJiZAS0WuosUTg1oAICeTl96F15GOivTUtd0qg1uBPml_Sn81fOrQdr7qkLXkgkZl
+ SA1CubyLvvZOrlk9kHSJfwp9yya2wZ3qpWLmtvPYNgiKx8.JNUyv3PyN1qcmKUlxH3dWiDEKP4JH
+ QGZB5b6qqltNN.DTe39hYKWYsAxrnPI2wdRrdL6ONGbUw5wdZAxQQn2So09nI4jksV_oTafYEb39
+ nqaMnxv0SLA7dBWbDiuo.2w.ilIH_6nFS7TEzAgtB45yC8QRN72yGriOd.ITm94ufiQq4nQKjq5L
+ w8B5jo6JJFop3.HBbrVaTx1MMgHMa31hc0ZIMCKO1cL4lyvlnEMiyQW7yDgSXb.h8NqKULL7UdhM
+ CoLvXzxxt.0vF1.N29VGTUJGsvTszu7x8646N2wyo0GYLEy62ZB2UIboJuHc8UaSVP.CcxTxsDki
+ SJEgZ55_Rt_2rsg9rKbMwPgQIlpjSpQV0psycIOS5TwOlAPyS1SGxzb6ZRj7JNvlNGfhzm2zZ1Te
+ 1qD8Qyv9Ak2mqWrV1UYu5E93BO09PhrcNAmpyr7gIFrcxxZE.rK9l6UuwTN4JVf3N4iWIPo6v_eb
+ nmc6_2OTITBI4wuI2rNyx0c8vAYOI88T3r8x_DUm5Bh_3Z8cjnFnT4JKfYzyet0NGoIZrK5745v9
+ 2e25VE7dS.jANs0PQGOwuf4hKZGN8O0gm6HcOScBM1AZ5LTtHUgd5IDge3XN0sAR_ryOrUu4hdrp
+ 4xZWUqi7NC8FJnoBKBPxM9DTRtR.QtaTr0R0..PR_vLfyGRF4pGg_ZgeETxhQrusvpn7.DxMn7H8
+ P0JdgKZXw1XGiOi9IaDjZfYwRA_bb1XLaT95FGFkxqoB7RRyLGseLqnR2vZXI63rwzpUkjxfn57f
+ LiZS8q_Ip_C4Z0LQxMGL7_RhXnnedi6OYLW4kz7ImA55UQvK7KeS0yQDgWRGhnZt83ZqxygcMOP0
+ 8KQ5M5_OCf1QCz2fOqaN7KvFrcd15V2BycuzFBrZK3QJtLmreGGFpGERpYGEgaKXvbHhCBx6aHQu
+ r3G3TQur9I3NyidPdP.NgfJ3g7EMs5b6Oy.ps18hY.driEHYsnZ6tASAqvd_l_xxPSDlxhYIMP3S
+ HgOn7f19jYU2KqG2lolleqDfX16ZgLblIPL0G9Usl4FDw4q248nAiru6gF.KQYQ395w--
+X-Sonic-MF: <alex_y_xu@yahoo.ca>
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic317.consmr.mail.gq1.yahoo.com with HTTP; Fri, 3 Dec 2021 00:40:16 +0000
+Received: by kubenode512.mail-prod1.omega.ne1.yahoo.com (VZM Hermes SMTP Server) with ESMTPA ID f5a24c40069725080ddb9e10cb290d32;
+          Fri, 03 Dec 2021 00:40:13 +0000 (UTC)
+Date:   Thu, 02 Dec 2021 19:40:10 -0500
+From:   "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
 Subject: Re: Confusing (maybe wrong?) conflict output with ort
-To:     "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
+To:     Elijah Newren <newren@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+References: <1638470726.ql5i6zljva.none.ref@localhost>
+        <1638470726.ql5i6zljva.none@localhost>
+        <CABPp-BEyy97x-9od+9E9DxCDHHq-m8hyZJWqxFutkRy3G7Hu9g@mail.gmail.com>
+In-Reply-To: <CABPp-BEyy97x-9od+9E9DxCDHHq-m8hyZJWqxFutkRy3G7Hu9g@mail.gmail.com>
+MIME-Version: 1.0
+Message-Id: <1638491699.9sjos0rkh4.none@localhost>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: WebService/1.1.19306 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Excerpts from Elijah Newren's message of December 2, 2021 6:58 pm:
+> Hi,
+>=20
+> On Thu, Dec 2, 2021 at 11:08 AM Alex Xu (Hello71) <alex_y_xu@yahoo.ca> wr=
+ote:
+>>
+>> Hi all,
+>>
+>> After upgrading to git 2.34.1, I tried to rebase [0] onto [1], but
+>> encountered "strange" conflict results.
+>>
+>> git rebase -s recursive main produces [[RECURSIVE]]. It is roughly what
+>> I expected to be output. If I take all the changes from the upper
+>> section of the conflict, my changes will be effectively undone. If I
+>> take all the changes from the lower section, then the upstream changes
+>> will be undone.
+>=20
+> In general, this does not work.  The only time it can work is if every
+> region of the code considered by the three-way content merge ended up
+> with conflicts.  (If any of those regions had automatically resolvable
+> changes, then after taking just the upper section(s) or just the lower
+> section(s) of each conflict would still result in a file that is a
+> mixture of changes from both sides due to the automatically resolvable
+> chunks that the merge already handled.)
+>=20
+>> On the other hand, running git rebase -s ort main produces [[ORT]]. I am
+>> unsure if it is wrong, strictly speaking, but it is certainly unexpected
+>> and difficult for me to resolve. Selecting the upper section of the
+>> conflict does erase my changes, as before, but selecting the lower
+>> section results in syntactically incorrect code (foreach is ended by
+>> endif). The diff3 output makes even less sense to me.
+>=20
+> The output from using ort is identical to that obtained by
+>=20
+>    git rebase -s recursive -Xdiff-algorithm=3Dhistogram ...
+>=20
+> on your testcase; i.e. this is due to a difference between the
+> histogram and myers diff algorithms.
+> (recursive defaults to using myers diff; ort uses histogram diff.)
 
-On Thu, Dec 2, 2021 at 11:08 AM Alex Xu (Hello71) <alex_y_xu@yahoo.ca> wrote:
->
-> Hi all,
->
-> After upgrading to git 2.34.1, I tried to rebase [0] onto [1], but
-> encountered "strange" conflict results.
->
-> git rebase -s recursive main produces [[RECURSIVE]]. It is roughly what
-> I expected to be output. If I take all the changes from the upper
-> section of the conflict, my changes will be effectively undone. If I
-> take all the changes from the lower section, then the upstream changes
-> will be undone.
+[ ... ]
 
-In general, this does not work.  The only time it can work is if every
-region of the code considered by the three-way content merge ended up
-with conflicts.  (If any of those regions had automatically resolvable
-changes, then after taking just the upper section(s) or just the lower
-section(s) of each conflict would still result in a file that is a
-mixture of changes from both sides due to the automatically resolvable
-chunks that the merge already handled.)
+> Does that help explain things?
 
-> On the other hand, running git rebase -s ort main produces [[ORT]]. I am
-> unsure if it is wrong, strictly speaking, but it is certainly unexpected
-> and difficult for me to resolve. Selecting the upper section of the
-> conflict does erase my changes, as before, but selecting the lower
-> section results in syntactically incorrect code (foreach is ended by
-> endif). The diff3 output makes even less sense to me.
+Hm, I did try both default and patience and it didn't make a difference.=20
+git rebase -s recursive -Xdiff-algorithm=3Dhistogram master does produce=20
+the same result as ort though. I probably should have tried that first.=20
+Thanks for the explanation though, that's very helpful!
 
-The output from using ort is identical to that obtained by
-
-   git rebase -s recursive -Xdiff-algorithm=histogram ...
-
-on your testcase; i.e. this is due to a difference between the
-histogram and myers diff algorithms.
-(recursive defaults to using myers diff; ort uses histogram diff.)
-
-> A script is attached to assist in reproducing my results. Running it
-> initializes the repository to the desired state. Then, run "git rebase
-> -s strategy master" to produce the conflict.
-
-Thanks.  I'll note for others that there's a missing 'git add
-meson.build' (without which the script errors out), and folks should
-probably run this from an empty directory that they can nuke later.
-
-
-Let's use a simpler example for demonstration purposes with some made
-up pseudocode.  I'll label each line so I can refer to it ('B' for
-base, plus a line number), but the lines are everything after the
-label:
-
-B01 if condition1:
-B02   if condition2:
-B03     do_stuff2()
-B04   endif
-B05   for var in range:
-B06     if condition3:
-B07       do_stuff3()
-B08     endif
-B09   endfor
-B10 endif
-
-And let's say that locally, you modified line 7 to do something more
-complex, so that the local version looks like this: (prefixing the
-line numbers with 'L' for local)
-
-L01 if condition1:
-L02   if condition2:
-L03     do_stuff2()
-L04   endif
-L05   for var in range:
-L06     if condition3:
-L07       more_detailed_stuff3()
-L08     endif
-L09   endfor
-L10 endif
-
-Further, let's say that upstream either determined that condition1 was
-always true, or just that they wanted to run all the code
-unconditionally so they removed the outer if and un-indented
-everything.  So they have (prefixing the line numbers with 'U' for
-upstream):
-
-U01 if condition2:
-U02   do_stuff2()
-U03 endif
-U04 for var in range:
-U05   if condition3:
-U06     do_stuff3()
-U07   endif
-U08 endfor
-
-
-There's multiple equally valid ways to attempt to merge this.  One
-could be just considering the entire region to conflict, so you'd end
-up with a conflict region that looks like this:
-
-    <<<<<<
-L01 if condition1:
-L02   if condition2:
-L03     do_stuff2()
-L04   endif
-L05   for var in range:
-L06     if condition 3:
-L07       do_stuff3()
-L08     endif
-L09   endfor
-L10 endif
-    ||||||
-B01 if condition1:
-B02   if condition2:
-B03     do_stuff2()
-B04   endif
-B05   for var in range:
-B06     if condition3:
-B07       do_stuff3()
-B08     endif
-B09   endfor
-B10 endif
-    ======
-U01 if condition2:
-U02   do_stuff2()
-U03 endif
-U04 for var in range:
-U05   if condition3:
-U06     do_stuff3()
-U07   endif
-U08 endfor
-    >>>>>>
-
-Of course, you can leave out the middle region if not doing diff3.
-
-Alternatively, if you look closely, there is exactly one line that
-matches in all three versions of the code: B04 == L04 == U07 (if you
-think there are other lines that match, you're not paying enough
-attention to leading whitespace).  That one matching line could be
-used to break us into two conflict regions, which we'll take as a
-first step towards simplifying this:
-
-    <<<<<<
-L01 if condition1:
-L02   if condition2:
-L03     do_stuff2()
-    ||||||
-B01 if condition1:
-B02   if condition2:
-B03     do_stuff2()
-    ======
-U01 if condition2:
-U02   do_stuff2()
-U03 endif
-U04 for var in range:
-U05   if condition3:
-U06     do_stuff3()
-    >>>>>>
-B04   endif
-    <<<<<<
-L05   for var in range:
-L06     if condition 3:
-L07       more_detailed_stuff3()
-L08     endif
-L09   endfor
-L10 endif
-    ||||||
-B05   for var in range:
-B06     if condition3:
-B07       do_stuff3()
-B08     endif
-B09   endfor
-B10 endif
-    ======
-U08 endfor
-    >>>>>>
-
-Now, if you look at the first conflict region, the local side matches
-the base side exactly, so it can be trivially merged -- we should just
-take the upstream side.  Doing that gives us the following:
-
-U01 if condition2:
-U02   do_stuff2()
-U03 endif
-U04 for var in range:
-U05   if condition3:
-U06     do_stuff3()
-B04   endif
-    <<<<<<
-L05   for var in range:
-L06     if condition 3:
-L07       more_detailed_stuff3()
-L08     endif
-L09   endfor
-L10 endif
-    ||||||
-B05   for var in range:
-B06     if condition3:
-B07       do_stuff3()
-B08     endif
-B09   endfor
-B10 endif
-    ======
-U08 endfor
-    >>>>>>
-
-Or, if you don't use the diff3 format, then we can leave out the
-middle section of the remaining conflict and get just:
-
-U01 if condition2:
-U02   do_stuff2()
-U03 endif
-U04 for var in range:
-U05   if condition3:
-U06     do_stuff3()
-B04   endif
-    <<<<<<
-L05   for var in range:
-L06     if condition 3:
-L07       more_detailed_stuff3()
-L08     endif
-L09   endfor
-L10 endif
-    ======
-U08 endfor
-    >>>>>>
-
-Now, if you try to use just the "left" side of the remaining conflict,
-you get code that doesn't even compile because it's mixing upstream
-and local code (and in particular ends U04's "for" with L10's "endif",
-similar to the example you gave).  The lines U04-B04 roughly
-correspond to L05-L08 (though U06 needs updating based on L07), and
-your confusion is probably that both are included in the result.  But
-the above is why.
-
-Does that help explain things?
+Cheers,
+Alex.
