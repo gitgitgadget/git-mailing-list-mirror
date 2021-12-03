@@ -2,161 +2,234 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21138C433EF
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 13:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB330C433F5
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 13:41:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381154AbhLCNiY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 08:38:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40640 "EHLO
+        id S1381209AbhLCNov (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 08:44:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381076AbhLCNiN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 08:38:13 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5D81C0613FD
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 05:34:46 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id o13so5716191wrs.12
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 05:34:46 -0800 (PST)
+        with ESMTP id S1381200AbhLCNom (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 08:44:42 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DFDDC06173E
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 05:41:18 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id l25so11566012eda.11
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 05:41:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=OV69YLrfn+4NmtmyV55tOgEZ82XpKu32hPU3F6o5+x4=;
-        b=oVEZdvdf3UdETbk98H/hQKl+vN1GW7FNBj93Eu1ip8nn6ivnHqDPmmFoG5BsZj+DLm
-         PJBnETpGGuD2YamjF0I8FuOmPjB68UjiF3fSqH4m1jHcFyU0hB1rUiQSqTzkvjIW1Qyd
-         yLwX6zw7m8hgMrFF9wAG48ewxcv+/AXrGOLsUVx7ZcR8LeHgptCMU26s70U6bSeXLEoo
-         5UqUa/UCCLeWq8C0VcmpVBjgXMvwwMwouSJjKhtpXjHAJEpCQuaj2phAYnV43ly+D+wG
-         aTvqVhsdj/0fJqFJ27zCxCKX6U/f0UaC3aP9mTZ0LFHTAy804pxr0RiPT9njhJBH9xTr
-         qtyw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=M7swm+nG7z3utSFw6qWZEc+yWDv4Q0TmDBXXgEpR0mE=;
+        b=O1h8K4qO6jrTDbkZz0/R0tGJJ1eRC88QnkBXa6sVW3T8aa+yPNkppXGZt+XlbVTlB4
+         jNXdRGxdLxNYMaxseYFH7KnaZ6Ci6yA6de5XRzKDfw7CkuZCPimziqo7DZJkq8PrSKNK
+         rTWwLbP2rNF1EZWHhAWvjXe7FrJZKPDbOzPPE5rD0JmCkTw9XUpVvT5jLEj4WvVY0ziI
+         uBImwgbqNkVVgCP7Mi88H6ifS5x29/MZbHQV40pE5qUfuQwOOzjCKG+06uD3RWWoh2NW
+         1Z3dsYiYNSIJGKiXlcGMXLTpFWqQl5+yQJtuTfU0x89D4QrKISCFLYPsAIsxNKEcflbT
+         Sy5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OV69YLrfn+4NmtmyV55tOgEZ82XpKu32hPU3F6o5+x4=;
-        b=zIleBi8Ko5xm8EwpNeYOXXA1LU1UopIjglR1sAuCzl6ZygZ2aIo2vNpFXow3ReCAbn
-         KMBpm+OCeaE5BcokJmUa97eF94Z1GP51Z3SgJrH3gSi0IvO9jO08emv1mxIbd9U1xKv7
-         7vmtqni1DxdbgvTiiLFz3gFgQ4WlpeDYpvZWbmaNQ91+gFEGgyg+Yy6Uvuk7SrIWlhSw
-         hHcCjFdR21dMQAXgZ6vWhfbgfCOU1Yuk4lb+d9BBfNtWFKh4EcC6P/3JP5WVBtfgwbYf
-         woYEDPv+SRNnbAsPa8cOZVPYM1/ri7NwmktK6ctzBAsdvEfGSQ+VmR+KQx9QCqPvQmas
-         rGkA==
-X-Gm-Message-State: AOAM531QVCTtqVyFNA5Lnq/UvA+GfboN5VTwbtb0TYxaiMvUb3pdaejV
-        dG+61MK3riAOgLMTGJ6qPH1yq+AqqPw=
-X-Google-Smtp-Source: ABdhPJytagIthqwTo0Dr8N5mbEQM19GqxX4qeq412W83GGdTlcFO1mo7xCKSIvo3sKF5mZ9IcbhMYw==
-X-Received: by 2002:a05:6000:1289:: with SMTP id f9mr20969143wrx.329.1638538485244;
-        Fri, 03 Dec 2021 05:34:45 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b10sm2727591wrt.36.2021.12.03.05.34.44
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=M7swm+nG7z3utSFw6qWZEc+yWDv4Q0TmDBXXgEpR0mE=;
+        b=22vEry76NWmW4/tLS2ooMGkwdZbUpe4ycISUxLZjjaqtqI7/UZUE29HBhT7jfc4AJh
+         WYGfBZzdMjrnD0qrdypVlXjLBjcacMbjQfpr4N9hsHzLuEtJ2yNyFLrSJngUh9hITh3k
+         AJd9X3hU3Im9qxMxxZV+/iAcjbCt7lhBwj63MLCLhMCvdLQdB/6mgrnz+W+3hGonqLud
+         3jXzZp2IupzI0VisVjMw9IVqJNFhdXM6RB5YMcgD76IFGKAWVGZnTk/NK4gwSZ4ZFVmU
+         sa8ojywE3WlEeMo4F5DA9Qst87N+sEWYgjPTzRRQbCROmVY2vdLIJrTSec7YI6/6zahY
+         cPug==
+X-Gm-Message-State: AOAM530XYDgM/qaqYwJ/KU8/2Zb8Nk6/PEuhRiuWDcgGgJndDQ5gGYz/
+        8dFRhpfbv4xQRrQqghdODAs=
+X-Google-Smtp-Source: ABdhPJwhRAoINXNkBxU7WIl5oBSc9mZAdD36m/aRLzkpG0HFXGGPFci56jz/y8sYI32PS9dlUaMyUw==
+X-Received: by 2002:a17:907:3f9d:: with SMTP id hr29mr24279617ejc.369.1638538876561;
+        Fri, 03 Dec 2021 05:41:16 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id g9sm2021242edb.52.2021.12.03.05.41.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 05:34:44 -0800 (PST)
-Message-Id: <b5f416d79b4a3d8388f0081380044d28474ede50.1638538470.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1005.v10.git.1638538470.gitgitgadget@gmail.com>
-References: <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
-        <pull.1005.v10.git.1638538470.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 03 Dec 2021 13:34:29 +0000
-Subject: [PATCH v10 15/15] scalar: implement the `version` command
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Fri, 03 Dec 2021 05:41:16 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mt8oN-00094C-K4;
+        Fri, 03 Dec 2021 14:41:15 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Han Xin <chiyutianyi@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>,
+        Han Xin <hanxin.hx@alibaba-inc.com>
+Subject: Re: [PATCH v4 1/5] object-file: refactor write_loose_object() to
+ read buffer from stream
+Date:   Fri, 03 Dec 2021 14:28:24 +0100
+References: <20211122033220.32883-1-chiyutianyi@gmail.com>
+ <20211203093530.93589-2-chiyutianyi@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <20211203093530.93589-2-chiyutianyi@gmail.com>
+Message-ID: <211203.86r1atst50.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The .NET version of Scalar has a `version` command. This was necessary
-because it was versioned independently of Git.
+On Fri, Dec 03 2021, Han Xin wrote:
 
-Since Scalar is now tightly coupled with Git, it does not make sense for
-them to show different versions. Therefore, it shows the same output as
-`git version`. For backwards-compatibility with the .NET version,
-`scalar version` prints to `stderr`, though (`git version` prints to
-`stdout` instead).
+> From: Han Xin <hanxin.hx@alibaba-inc.com>
+>
+> We used to call "get_data()" in "unpack_non_delta_entry()" to read the
+> entire contents of a blob object, no matter how big it is. This
+> implementation may consume all the memory and cause OOM.
+>
+> This can be improved by feeding data to "write_loose_object()" in a
+> stream. The input stream is implemented as an interface. In the first
+> step, we make a simple implementation, feeding the entire buffer in the
+> "stream" to "write_loose_object()" as a refactor.
+>
+> Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+> ---
+>  object-file.c  | 53 ++++++++++++++++++++++++++++++++++++++++++++++----
+>  object-store.h |  6 ++++++
+>  2 files changed, 55 insertions(+), 4 deletions(-)
+>
+> diff --git a/object-file.c b/object-file.c
+> index eb972cdccd..82656f7428 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1860,8 +1860,26 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
+>  	return fd;
+>  }
+>  
+> +struct simple_input_stream_data {
+> +	const void *buf;
+> +	unsigned long len;
+> +};
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- contrib/scalar/scalar.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+I see why you picked "const void *buf" here, over say const char *, it's
+what "struct input_stream" uses.
 
-diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index d4303c7c4a2..1ce9c2b00e8 100644
---- a/contrib/scalar/scalar.c
-+++ b/contrib/scalar/scalar.c
-@@ -10,6 +10,7 @@
- #include "refs.h"
- #include "dir.h"
- #include "packfile.h"
-+#include "help.h"
- 
- /*
-  * Remove the deepest subdirectory in the provided path string. Path must not
-@@ -357,6 +358,15 @@ static int delete_enlistment(struct strbuf *enlistment)
- 	return 0;
- }
- 
-+/*
-+ * Dummy implementation; Using `get_version_info()` would cause a link error
-+ * without this.
-+ */
-+void load_builtin_commands(const char *prefix, struct cmdnames *cmds)
-+{
-+	die("not implemented");
-+}
-+
- static int cmd_clone(int argc, const char **argv)
- {
- 	const char *branch = NULL;
-@@ -750,6 +760,34 @@ static int cmd_delete(int argc, const char **argv)
- 	return res;
- }
- 
-+static int cmd_version(int argc, const char **argv)
-+{
-+	int verbose = 0, build_options = 0;
-+	struct option options[] = {
-+		OPT__VERBOSE(&verbose, N_("include Git version")),
-+		OPT_BOOL(0, "build-options", &build_options,
-+			 N_("include Git's build options")),
-+		OPT_END(),
-+	};
-+	const char * const usage[] = {
-+		N_("scalar verbose [-v | --verbose] [--build-options]"),
-+		NULL
-+	};
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	argc = parse_options(argc, argv, NULL, options,
-+			     usage, 0);
-+
-+	if (argc != 0)
-+		usage_with_options(usage, options);
-+
-+	get_version_info(&buf, build_options);
-+	fprintf(stderr, "%s\n", buf.buf);
-+	strbuf_release(&buf);
-+
-+	return 0;
-+}
-+
- static struct {
- 	const char *name;
- 	int (*fn)(int, const char **);
-@@ -761,6 +799,7 @@ static struct {
- 	{ "run", cmd_run },
- 	{ "reconfigure", cmd_reconfigure },
- 	{ "delete", cmd_delete },
-+	{ "version", cmd_version },
- 	{ NULL, NULL},
- };
- 
--- 
-gitgitgadget
+But why not use size_t for the length, as input_stream does?
+
+> +static const void *feed_simple_input_stream(struct input_stream *in_stream, unsigned long *len)
+> +{
+> +	struct simple_input_stream_data *data = in_stream->data;
+> +
+> +	if (data->len == 0) {
+
+nit: if (!data->len)...
+
+> +		*len = 0;
+> +		return NULL;
+> +	}
+> +	*len = data->len;
+> +	data->len = 0;
+> +	return data->buf;
+
+But isn't the body of this functin the same as:
+
+        *len = data->len;
+        if (!len)
+                return NULL;
+        data->len = 0;
+        return data->buf;
+
+I.e. you don't need the condition for setting "*len" if it's 0, then
+data->len is also 0. You just want to return NULL afterwards, and not
+set (harmless, but no need) data->len to 0)< or return data->buf.
+> +	struct input_stream in_stream = {
+> +		.read = feed_simple_input_stream,
+> +		.data = (void *)&(struct simple_input_stream_data) {
+> +			.buf = buf,
+> +			.len = len,
+> +		},
+> +		.size = len,
+> +	};
+
+Maybe it's that I'm unused to it, but I find this a bit more readable:
+	
+	@@ -2013,12 +2011,13 @@ int write_object_file_flags(const void *buf, unsigned long len,
+	 {
+	 	char hdr[MAX_HEADER_LEN];
+	 	int hdrlen = sizeof(hdr);
+	+	struct simple_input_stream_data tmp = {
+	+		.buf = buf,
+	+		.len = len,
+	+	};
+	 	struct input_stream in_stream = {
+	 		.read = feed_simple_input_stream,
+	-		.data = (void *)&(struct simple_input_stream_data) {
+	-			.buf = buf,
+	-			.len = len,
+	-		},
+	+		.data = (void *)&tmp,
+	 		.size = len,
+	 	};
+	
+Yes there's a temporary variable, but no denser inline casting. Also
+easier to strep through in a debugger (which will have the type
+information on "tmp".
+
+>  int hash_object_file_literally(const void *buf, unsigned long len,
+> @@ -1977,6 +2006,14 @@ int hash_object_file_literally(const void *buf, unsigned long len,
+>  {
+>  	char *header;
+>  	int hdrlen, status = 0;
+> +	struct input_stream in_stream = {
+> +		.read = feed_simple_input_stream,
+> +		.data = (void *)&(struct simple_input_stream_data) {
+> +			.buf = buf,
+> +			.len = len,
+> +		},
+> +		.size = len,
+> +	};
+
+ditto..
+
+>  	/* type string, SP, %lu of the length plus NUL must fit this */
+>  	hdrlen = strlen(type) + MAX_HEADER_LEN;
+> @@ -1988,7 +2025,7 @@ int hash_object_file_literally(const void *buf, unsigned long len,
+>  		goto cleanup;
+>  	if (freshen_packed_object(oid) || freshen_loose_object(oid))
+>  		goto cleanup;
+> -	status = write_loose_object(oid, header, hdrlen, buf, len, 0, 0);
+> +	status = write_loose_object(oid, header, hdrlen, &in_stream, 0, 0);
+>  
+>  cleanup:
+>  	free(header);
+> @@ -2003,14 +2040,22 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
+>  	char hdr[MAX_HEADER_LEN];
+>  	int hdrlen;
+>  	int ret;
+> +	struct simple_input_stream_data data;
+> +	struct input_stream in_stream = {
+> +		.read = feed_simple_input_stream,
+> +		.data = &data,
+> +	};
+>  
+>  	if (has_loose_object(oid))
+>  		return 0;
+>  	buf = read_object(the_repository, oid, &type, &len);
+> +	in_stream.size = len;
+
+Why are we setting this here?...
+
+>  	if (!buf)
+>  		return error(_("cannot read object for %s"), oid_to_hex(oid));
+
+...Insted of after this point, as we may error and never use it?
+
+> +	data.buf = buf;
+> +	data.len = len;
+
+Probably won't matter,  just a nit...
+
+> +struct input_stream {
+> +	const void *(*read)(struct input_stream *, unsigned long *len);
+> +	void *data;
+> +	size_t size;
+> +};
+> +
+
+Ah, and here's the size_t... :)
