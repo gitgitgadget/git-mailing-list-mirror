@@ -2,101 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20801C433EF
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 22:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5025C433F5
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 22:40:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343898AbhLCWeX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 17:34:23 -0500
-Received: from mout.gmx.net ([212.227.17.22]:59141 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238444AbhLCWeX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 17:34:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1638570647;
-        bh=M+m0SBhjANDI9jrfxMfi5ga4iEaS1/N6IqMWS2juZN8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=SjJdIul2mryOo/hjWdFajkQpEbZsBvx+24n/IEhpO4HEhyIK6cZtY2nkkyCt+wCl/
-         BOfRi7OFsawkUunTbCzvpUoDeYb7bVOcsYziLGWiBV/8j6M97vgBxnlTj3cR0hep0A
-         Nfdk7qOnozFvgQ5HqhqcQaK8pMrn8uE5y2PNkqd8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.219.221] ([89.1.212.223]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MA7KU-1mhkUv2WFO-00Bebm; Fri, 03
- Dec 2021 23:30:47 +0100
-Date:   Fri, 3 Dec 2021 23:30:45 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>,
-        Aleen <aleen42@vip.qq.com>,
-        =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29?= 
-        <aleen42@vip.qq.com>
-Subject: Re: [PATCH v14 2/3] am: support --empty=<option> to handle empty
- patches
-In-Reply-To: <b6a04fc12dfd1680b81bc946b09d4519edf3555e.1638329848.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2112032327180.63@tvgsbejvaqbjf.bet>
-References: <pull.1076.v13.git.1638266115.gitgitgadget@gmail.com>        <pull.1076.v14.git.1638329848.gitgitgadget@gmail.com> <b6a04fc12dfd1680b81bc946b09d4519edf3555e.1638329848.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1383433AbhLCWoE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 17:44:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52686 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1359632AbhLCWoD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 17:44:03 -0500
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FC42C061751
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 14:40:39 -0800 (PST)
+Received: by mail-qv1-xf2b.google.com with SMTP id kl8so4201532qvb.3
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 14:40:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=1cvQGWdJTCLkFiWeTamxFHpNT3AmHjoBKbHo+vWlMEk=;
+        b=n5N+MjdGxCh+x3AX4Tpi52crhK5DFa5VRBHoS9K9R0W0Z7XCNcHVHA/MdigBL9HasJ
+         xGh/+PNNXYW2teMDGwc3kai/T25gkP35atPMAH4FnYWK2BmviZlFn832mCcrac0T7fTS
+         /aDqMi5HTJnUCD/SpcKBGzIX1ZlePPxuYVe2K6zzdfEZTuh+tMkunXoJo9Rp9G5Pqit6
+         gJpfsdSQx+eycNusl1sF0wiIfh1mX14Ba2s8ZqTQiKE9p3/K0Hm9VX3GxK0e8ygIXeJL
+         0aOn54EobSt80z0gcUOHf1jGFsGTsKs1b7edxt0qP6PpZIfMBecHIZmOBY8NMfp0Q64l
+         7KbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=1cvQGWdJTCLkFiWeTamxFHpNT3AmHjoBKbHo+vWlMEk=;
+        b=jSNp/4j7Rez2Q2qF2kzdcwiPO8XLQUCKw9G7O9IEkYNU5pf/S8hm5/M+RirbLmHAGk
+         bCzihmqz3lywYk31ySoeZlmiy4YatsMMyVR2gHWWEQnLmSfnGHJdoZBU4DYZyuvLxGW0
+         TDi61SwX+K7gErwtstKTHQHmFb4xVhExdLbUOVLzCgyjfyCbJxmyp1FqcvH/WCbkM/Ja
+         xmVCK3wJCd0YnlA9FyAZ5PD9uKs8S/X5drrXqnKSX7iYxJszCTBLbYo4E0k0e3+3XIdj
+         fiGqXQRDK6eNbbVCMFNn5dR+Vhn43sfOJevw8RLAqdac0ngFM2L2NotVteh5xck37Y/C
+         WZug==
+X-Gm-Message-State: AOAM533mqy/VfsTxCijYkaBESpELY8D2EcIkEd50JJYtSZlurIxQCjyu
+        8PImAA3WJI3OaJoFFMzuVJVERkFxKFg=
+X-Google-Smtp-Source: ABdhPJyscgnan9NgDHLKCVwvfxjqkQ2Ww3n5AarpAJvyqVETi+YOa5ySyojfQ/jAYibmQGIb85LoZQ==
+X-Received: by 2002:a05:6214:20a1:: with SMTP id 1mr21888836qvd.29.1638571238495;
+        Fri, 03 Dec 2021 14:40:38 -0800 (PST)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id a10sm2773486qkc.92.2021.12.03.14.40.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Dec 2021 14:40:38 -0800 (PST)
+Subject: Re: t7900 failures when $HOME is symlinked
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <4cf14040-c8e1-0f75-0ec4-fd8cf6bed0a5@gmail.com>
+ <xmqq1r2tty13.fsf@gitster.g>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <837581db-b3d7-2a73-9a61-7c40f77f264b@gmail.com>
+Date:   Fri, 3 Dec 2021 17:40:37 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1974447232-1638570647=:63"
-X-Provags-ID: V03:K1:FaiDJAkm8CIBF0Vj0+vvuAtbyamY/jffXEDsnAv5XorGLGPKaoX
- zdDyvJX70vqYvMnQ1jVSn+haJqdejX5BkfpjMn7pTJUgJelMas5hMtOP+7JR7feKZchMMuS
- bSgTr7F/nD28IiWsmto6g6X8GkCjJd1OU6pMWJvWTIY4u3z5Q1LtNKzjHtt+IiviOwABtoU
- RRLI30mFG1iart7an+pKg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:43v1WVA3yNQ=:xg4G+Wh9/GAHX+OwBEimIZ
- Hr4D6jJtEnusPn3NorIOrlFMsapJ1+0wE1tKRQKtHjUuUp/OHDEUOsYL5dxMArjvZULfesllK
- rq9O6BXBhbGGMkeZondd6J2zPA6+HFy3Z4IvL7kZOk/fp328WPjnasPz0jo+17OjCWbD4EdUx
- GzO/7GKoK7vcspfpXMASbvZ4fzJTM+RYnr9MAyV/OohdnoaToNTBClHIP23SfIoS3jp+w8Y/g
- Z+0Q4wAO/UvnXmjOhJsCjApo/5aLg/3J6pLprULlKnZTu9ZCLzXVColmAErNqNOYnVCc70KVp
- qOAQ9XzhaKnK6pyYqGZzhbR1W4cybbCgsOH701Qg+47tNPVsbuUako06c+ce2cHx9nERywSeF
- umXQwxCMkJBKzH2NKNOLmAZLTGgD+Q0DOrgFhvdh09Y3ALektoQ6AmhW0365cNvUdwW4J5w4p
- 2VRA4qyw8Yv1RSPGSDeW3YXlEZQYxrU+2G9ZKirTqM679/clf2Hlf2QredZN2na0lNMr+wa1F
- HAK86nnRwRzP7V5+V6ROr2h6655MKVuHsZu0UYctfgKnsDqnfhqrsFtls0nETDFJGyTPOOnmE
- VnVAGysiaIIeRC7grU6DO/G+aXbF+3Hf/oxU1OrMTNVBRdY+Kur3Asl6WVjOFecV/JZKYlHQr
- D8EZiH0U3HCT1PG+Og+nPr1h4gJ7GKWs0KApnrPtMTKyxxpsnfniUTX8btlbLxVTLTORqTAK8
- tyX9UYiefN9M5RP/FwtTEoGCTlnKHelplTnmaQXs15zMFWMJG/Gmb1KiBr2HhMd3Fxi2R2qFK
- ie7etQF5CHkpbDcRU+MVZyhRZjDlMCcj7hKWWDkOZFc1aYlrpWv8PA6uzH+iX3QhY0bzGSIgr
- NY7MunOm1iIZKZtumi7TZWdF1aXhuTlBJcvA+K+7/9BmJP9/A5lKA3B3kRi3oHbcN7fZkOO1n
- i2TTf6SI9pAegVlEu3etTDqIcjzhwtybh6Vdnq1pdlV4ZVeqq8YcXBiCPtiCV+lWC2R5YdRih
- PyD7gXCkp0t4dSco2T1oYdg+u/ND7zqCD77tUAniZ54Q/Kl/zY1/YrZdL+IVqPgTQ+/3MsZgr
- 9l9RCWxltG4Q1Y=
+In-Reply-To: <xmqq1r2tty13.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-1974447232-1638570647=:63
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Le 2021-12-03 à 12:10, Junio C Hamano a écrit :
+> Philippe Blain <levraiphilippeblain@gmail.com> writes:
+> 
+>> Hi Stolee,
+>>
+>> I noticed two failures, t7900.32 and t7900.36, on a system where
+>> $HOME is symlinked, i.e.
+>>
+>>      $ cd $HOME && pwd
+>>      /home/me
+>>      $ pwd -P
+>>      /some/other/path/me
+>>
+>> These two tests use 'pfx = $(cd $HOME && pwd)', so $pfx is '/home/me',
+>> but the actual path that gets written by Git is canonicalized, i.e.
+>> '/some/other/path/me'. I think a simple fix would be to use 'pwd -P'
+>> instead, which fixes it for me.
+> 
+> Curious.  Your personal HOME shouldn't have much to do with the
+> tests, but obviously it can indirectly affect the outcome because it
+> affects where you place your repository.
 
-Hi Aleen,
+Indeed, the source code was cloned somewhere in my HOME.
 
-On Wed, 1 Dec 2021, =E5=BE=90=E6=B2=9B=E6=96=87 (Aleen) via GitGitGadget w=
-rote:
+> HOME during tests is set in t/test-lib.sh, based on where
+> TRASH_DIRECTORY is, and the latter is often derived from
+> TEST_OUTPUT_DIRECTORY (unless --root is given), which comes from
+> TEST_DIRECTORY and it is set like so:
+> 
+>      # Test the binaries we have just built.  The tests are kept in
+>      # t/ subdirectory and are run in 'trash directory' subdirectory.
+>      if test -z "$TEST_DIRECTORY"
+>      then
+>              # We allow tests to override this, in case they want to run tests
+>              # outside of t/, e.g. for running tests on the test library
+>              # itself.
+>              TEST_DIRECTORY=$(pwd)
+>      else
+>              # ensure that TEST_DIRECTORY is an absolute path so that it
+>              # is valid even if the current working directory is changed
+>              TEST_DIRECTORY=$(cd "$TEST_DIRECTORY" && pwd) || exit 1
+>      fi
+>      if test -z "$TEST_OUTPUT_DIRECTORY"
+>      then
+>              # Similarly, override this to store the test-results subdir
+>              # elsewhere
+>              TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
+>      fi
+>      GIT_BUILD_DIR="$TEST_DIRECTORY"/..
+> 
+> If you want to do $(pwd -P) somewhere, isn't it that one you want to
+> change to avoid similar problems in any code, including the ones
+> that are not yet written, that uses $(pwd)?
 
-> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-> index 0a4a984dfde..cf9cace9678 100644
-> --- a/Documentation/git-am.txt
-> +++ b/Documentation/git-am.txt
-> @@ -16,6 +16,7 @@ SYNOPSIS
->  	 [--exclude=3D<path>] [--include=3D<path>] [--reject] [-q | --quiet]
->  	 [--[no-]scissors] [-S[<keyid>]] [--patch-format=3D<format>]
->  	 [--quoted-cr=3D<action>]
-> +	 [--empty=3D(die|drop|keep)]
+Indeed, that works and it looks like a more robust fix.
 
-I have to agree with Elijah that "to die" is used differently in Git's
-context. This should probably be called "stop" instead. Or "error". But
-not "die".
+Thanks,
 
-Ciao,
-Dscho
-
-P.S.: The enum value should probably have an `_ON_` in it, i.e.
-`STOP_ON_EMPTY_COMMIT` or `ERROR_ON_EMPTY_COMMIT`.
-
---8323328-1974447232-1638570647=:63--
+Philippe.
