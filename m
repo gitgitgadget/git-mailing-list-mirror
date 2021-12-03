@@ -2,122 +2,244 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38EFCC433EF
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 09:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 976CDC433F5
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 09:36:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379509AbhLCJXF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 04:23:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38364 "EHLO
+        id S1351402AbhLCJja (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 04:39:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351316AbhLCJXD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 04:23:03 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AFCEC06173E
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 01:19:40 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id x15so9021439edv.1
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 01:19:40 -0800 (PST)
+        with ESMTP id S238201AbhLCJj3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 04:39:29 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01967C06173E
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 01:36:06 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id o14so1705768plg.5
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 01:36:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=8t14LYi6sxXnbT7jmGTphBjU736vvvCQTWne/muFKmU=;
-        b=SnKeg9OcLLF0zuZ3OeC/fw0AVN24ZZRSr0xC9YQ42L3nrrzC9q560bCBvrLS62pMaX
-         Drg0qtfDUs0oN4KmuUA03kgA4oFnZMbaEieTx1Q04mWivFzCNu+f0EnsjPe1GOjuDYui
-         ZqSayBP68QGQSxOmm3GsV/pVrp9kc2tikIL3Zd3RDsb+Mrpenf7WNOd2Nn2UtdWbn6FL
-         ANxlLQ3fVTSkfgdWP/Y/hBe/Vp9Z7PQ3PUHNxoYJNtCTN1+Lse5Vw3P7VVAcezRItS0h
-         rA1WGl3uFFwLggDqJqavpvd+ZD9WEWSxitFr7hg5JkfTDvluznihetMvieOT3XVA+aSH
-         MQWw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=DLfcp4oo97FlrFuefuc0uBZv2WKFfx19R1W+y2Yj73Y=;
+        b=LZuKb8Y6KirPwyqPEjtC2HCDrDXYPmPliR6TqVDcreF1Sd4p+Zhs81ulFdijjOEBVc
+         guezam9gaIYYvhU38hkxELTgWiSru+4muhttx5NJE2XxdnNoKA8LhK3g+DEe6dFIzGVb
+         hvo0EStNJnw95wzP+AWAa1hJ5p43oU2VrGjFmgE1jawdd6MZTsir05YgwRm3S6KwwaCI
+         7G+BFmf3rB5Vw3Z45YNfgk0LNA7EGnPdslTbOOyvl9uPwSiqHNlqn6HrJ0LW5F6Bt976
+         qJd5qf54e0YvPBrYec8xpQIGtYTeZll5KVageU3LbNK5f3Q/kzOXnR+StpZHY6KrvWxW
+         bZ7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=8t14LYi6sxXnbT7jmGTphBjU736vvvCQTWne/muFKmU=;
-        b=0OXJf1Gj+Ccap1dVHqKWdPGq4untRtWRzqe/kocQF1We1QfzGuHmvTK9aJo9Wh3vQf
-         I0eyyyhS2iEDuRDVD1HMZBkVNI8MAhgpxRG1CvBRYU9ukT1lHXNEl+Xl1u/Ro9Gk7K9N
-         Bj3hMl8M5mwceZdZYrneiGc34TkYboSNO4AV4GK1dsxbgfzC28UfbPdrQDHXCgoYvbtd
-         mn5ycvgcNMSElLIgP9MAft1SGuV+Z/emc/QJMR6p1u8wOHRjUUXdbdgHDBNlNQtdErJg
-         /CPhZRlBuRruqJPLzUWSwMwpEuIaSqzdId7uz/+bY4nRNDXhrH6s/WXdqLktLebTQO13
-         Coig==
-X-Gm-Message-State: AOAM530GtHKwEORFaj8qS4Dr5dqhsQ7pigWA5yAGM5DAfl1rg10b29Ub
-        mIy3xy+/iO7S3Zo6JPAKrgqoUouGlpg=
-X-Google-Smtp-Source: ABdhPJwJLnN4WJdJz1FAgmvBQHmCmOFzmv+eBcbmd4aLckyHToUUlP/nz2NrmnV+wAFfUlWg3ZzXTg==
-X-Received: by 2002:a17:906:580a:: with SMTP id m10mr23189748ejq.213.1638523178609;
-        Fri, 03 Dec 2021 01:19:38 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id m6sm1570202edc.36.2021.12.03.01.19.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 01:19:38 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mt4jB-0003hg-GG;
-        Fri, 03 Dec 2021 10:19:37 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org, Baruch Burstein <bmburstein@gmail.com>,
-        Randall Becker <rsbecker@nexbridge.com>,
-        Junio C Hamano <gitster@pobox.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=DLfcp4oo97FlrFuefuc0uBZv2WKFfx19R1W+y2Yj73Y=;
+        b=ZvNJ1kBH8WVM/GuqB57m/NaGUeyLAi3+wZ/cmmJQPFo4Vhjebew1Yci0dVQ7Dn/JzM
+         Ghbl9S/bn/d5odoO8pgDTmc7CM/9jtEiRPvsi8lYoWhSoGz3l5ad0lCwE6H5tZe6oxJJ
+         FNae6BFh6boMUVUsZJmyi8oymA5RKyv1M+LLodhQPSnLopqj9I+zycg++y40xOEVtQHw
+         ny/6RAlkXe3XQrfB/Vlv9qeXXc75bQ9Cx+dhbYlwIUXamofcmZ6EWokbFJ3hxW6EuUHy
+         kn8lXeCV9oiUXKZ4MBPZkzkFBJ06DQfeNUkorZFL0DNg1htfRapLmoqA/EeCeyNsKlSh
+         NKkQ==
+X-Gm-Message-State: AOAM533QLgKuEp/ww70nxPfMm64YdGuegrt7MaJ87YbMDdg+lvSYebO6
+        lpOXY/kCPsZQLuiCbzxAW7M=
+X-Google-Smtp-Source: ABdhPJwkljFIA2FrlU2n7VYjUAKDqkhyGHF03fOdvNhzInTRyhjthVIeDpZDhGKAPVyoeYyQz3xG0Q==
+X-Received: by 2002:a17:90b:341:: with SMTP id fh1mr12752130pjb.90.1638524165352;
+        Fri, 03 Dec 2021 01:36:05 -0800 (PST)
+Received: from localhost.localdomain ([205.204.117.99])
+        by smtp.gmail.com with ESMTPSA id g9sm2708142pfj.160.2021.12.03.01.36.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 Dec 2021 01:36:04 -0800 (PST)
+From:   Han Xin <chiyutianyi@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Subject: Re: [PATCH 1/2] worktree: send "chatty" messages to stderr
-Date:   Fri, 03 Dec 2021 10:17:02 +0100
-References: <20211203034420.47447-1-sunshine@sunshineco.com>
- <20211203034420.47447-2-sunshine@sunshineco.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <20211203034420.47447-2-sunshine@sunshineco.com>
-Message-ID: <211203.86fsrat592.gmgdl@evledraar.gmail.com>
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>
+Cc:     Han Xin <hanxin.hx@alibaba-inc.com>
+Subject: [PATCH v4 0/5] unpack large objects in stream
+Date:   Fri,  3 Dec 2021 17:35:25 +0800
+Message-Id: <20211203093530.93589-1-chiyutianyi@gmail.com>
+X-Mailer: git-send-email 2.34.0
+In-Reply-To: <20211122033220.32883-1-chiyutianyi@gmail.com>
+References: <20211122033220.32883-1-chiyutianyi@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Han Xin <hanxin.hx@alibaba-inc.com>
 
-On Thu, Dec 02 2021, Eric Sunshine wrote:
+Changes since v3:
+* Add "size" to "struct input_stream" which used by following commits.
 
-> The order in which the stdout and stderr streams are flushed is not
-> guaranteed to be the same across platforms or `libc` implementations.
-> This lack of determinism can lead to anomalous and potentially confusing
-> output if normal (stdout) output is flushed after error (stderr) output.
-> For instance, the following output which clearly indicates a failure due
-> to a fatal error:
->
->     % git worktree add ../foo bar
->     Preparing worktree (checking out 'bar')
->     fatal: 'bar' is already checked out at '.../wherever'
->
-> has been reported[1] on Microsoft Windows to appear as:
->
->     % git worktree add ../foo bar
->     fatal: 'bar' is already checked out at '.../wherever'
->     Preparing worktree (checking out 'bar')
+* Increase the buffer size of "struct input_zstream_data" from 4096 to
+  8192, which is consistent with the "fixed_buf" in the "index-pack.c".
 
-Makes sense.
+* Refactor "read stream in a loop in write_loose_object()" which
+  introduced a performance problem reported by Derrick Stolee[1].
 
->  test_expect_success 'repair incorrect gitdir' '
-> @@ -141,10 +139,9 @@ test_expect_success 'repair incorrect gitdir' '
->  	git worktree add --detach orig &&
->  	sed s,orig/\.git$,moved/.git, .git/worktrees/orig/gitdir >expect &&
->  	mv orig moved &&
-> -	git worktree repair moved >out 2>err &&
-> +	git worktree repair moved 2>err &&
->  	test_cmp expect .git/worktrees/orig/gitdir &&
-> -	test_i18ngrep "gitdir incorrect" out &&
-> -	test_must_be_empty err
-> +	test_i18ngrep "gitdir incorrect" err
->  '
+* Rewrite benchmarks in "unpack-objects: unpack_non_delta_entry() read
+  data in a stream" with sugguestions by Derrick Stolee[1] and
+  Ævar Arnfjörð Bjarmason[2]. 
+  Now use "scalar.git" to benchmark, which contains more than 28000
+  objects and 96 objects larger than 16kB.
 
-This is just a "for bonus points", but maybe we could/should while we're
-at it harden and make the tests more exhaustive by checking the full
-output of both, e.g.
+1. https://lore.kernel.org/git/8ff89e50-1b80-7932-f0e2-af401ee04bb1@gmail.com/
+2. https://lore.kernel.org/git/211201.86r1aw9gbd.gmgdl@evledraar.gmail.com/
 
-	cat >actual.out <<-\EOF &&
-	Preparing worktree (checking out 'bar')
-	EOF
-	cat >actual.err <<-\EOF &&
-	fatal: 'bar' is already checked out at '.../wherever'
-	EOF
-        <cmd> [...]
-	test_cmp expect.out actual.out &&
-	test_cmp expect.err actual.err
+Han Xin (5):
+  object-file: refactor write_loose_object() to read buffer from stream
+  object-file.c: handle undetermined oid in write_loose_object()
+  object-file.c: read stream in a loop in write_loose_object()
+  unpack-objects.c: add dry_run mode for get_data()
+  unpack-objects: unpack_non_delta_entry() read data in a stream
 
-Doesn't need a re-roll etc., just if you're interested... :)
+ builtin/unpack-objects.c            |  93 +++++++++++++++++++++++--
+ object-file.c                       | 102 ++++++++++++++++++++++++----
+ object-store.h                      |  10 +++
+ t/t5590-unpack-non-delta-objects.sh |  76 +++++++++++++++++++++
+ 4 files changed, 262 insertions(+), 19 deletions(-)
+ create mode 100755 t/t5590-unpack-non-delta-objects.sh
+
+Range-diff against v3:
+1:  8640b04f6d ! 1:  af707ef304 object-file: refactor write_loose_object() to read buffer from stream
+    @@ object-file.c: int write_object_file_flags(const void *buf, unsigned long len,
+     +			.buf = buf,
+     +			.len = len,
+     +		},
+    ++		.size = len,
+     +	};
+      
+      	/* Normally if we have it in the pack then we do not bother writing
+    @@ object-file.c: int hash_object_file_literally(const void *buf, unsigned long len
+     +			.buf = buf,
+     +			.len = len,
+     +		},
+    ++		.size = len,
+     +	};
+      
+      	/* type string, SP, %lu of the length plus NUL must fit this */
+    @@ object-file.c: int force_object_loose(const struct object_id *oid, time_t mtime)
+      	if (has_loose_object(oid))
+      		return 0;
+      	buf = read_object(the_repository, oid, &type, &len);
+    ++	in_stream.size = len;
+      	if (!buf)
+      		return error(_("cannot read object for %s"), oid_to_hex(oid));
+     +	data.buf = buf;
+    @@ object-store.h: struct object_directory {
+     +struct input_stream {
+     +	const void *(*read)(struct input_stream *, unsigned long *len);
+     +	void *data;
+    ++	size_t size;
+     +};
+     +
+      KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
+2:  d4a2caf2bd = 2:  321ad90d8e object-file.c: handle undetermined oid in write_loose_object()
+3:  2575900449 ! 3:  1992ac39af object-file.c: read stream in a loop in write_loose_object()
+    @@ object-file.c: static int write_loose_object(const struct object_id *oid, char *
+     -		ret = git_deflate(&stream, Z_FINISH);
+     +		if (!stream.avail_in) {
+     +			buf = in_stream->read(in_stream, &stream.avail_in);
+    -+			if (buf) {
+    -+				stream.next_in = (void *)buf;
+    -+				in0 = (unsigned char *)buf;
+    -+			} else {
+    ++			stream.next_in = (void *)buf;
+    ++			in0 = (unsigned char *)buf;
+    ++			/* All data has been read. */
+    ++			if (in_stream->size + hdrlen == stream.total_in + stream.avail_in)
+     +				flush = Z_FINISH;
+    -+			}
+     +		}
+     +		ret = git_deflate(&stream, flush);
+      		the_hash_algo->update_fn(&c, in0, stream.next_in - in0);
+      		if (write_buffer(fd, compressed, stream.next_out - compressed) < 0)
+      			die(_("unable to write loose object file"));
+    + 		stream.next_out = compressed;
+    + 		stream.avail_out = sizeof(compressed);
+    +-	} while (ret == Z_OK);
+    ++	} while (ret == Z_OK || ret == Z_BUF_ERROR);
+    + 
+    + 	if (ret != Z_STREAM_END)
+    + 		die(_("unable to deflate new object %s (%d)"), oid_to_hex(oid),
+4:  ca93ecc780 = 4:  c41eb06533 unpack-objects.c: add dry_run mode for get_data()
+5:  39a072ee2a ! 5:  9427775bdc unpack-objects: unpack_non_delta_entry() read data in a stream
+    @@ Commit message
+         larger than the "big_file_threshold" in zstream. See the following
+         benchmarks:
+     
+    -        $ hyperfine \
+    -        --prepare 'rm -rf dest.git && git init --bare dest.git' \
+    -        'git -C dest.git unpack-objects <binary_320M.pack'
+    -        Benchmark 1: git -C dest.git unpack-objects <binary_320M.pack
+    -          Time (mean ± σ):     10.029 s ±  0.270 s    [User: 8.265 s, System: 1.522 s]
+    -          Range (min … max):    9.786 s … 10.603 s    10 runs
+    +        hyperfine \
+    +          --setup \
+    +          'if ! test -d scalar.git; then git clone --bare https://github.com/microsoft/scalar.git; cp scalar.git/objects/pack/*.pack small.pack; fi' \
+    +          --prepare 'rm -rf dest.git && git init --bare dest.git' \
+    +          -n 'old' 'git -C dest.git unpack-objects <small.pack' \
+    +          -n 'new' 'new/git -C dest.git unpack-objects <small.pack' \
+    +          -n 'new (small threshold)' \
+    +          'new/git -c core.bigfilethreshold=16k -C dest.git unpack-objects <small.pack'
+    +        Benchmark 1: old
+    +          Time (mean ± σ):      6.075 s ±  0.069 s    [User: 5.047 s, System: 0.991 s]
+    +          Range (min … max):    6.018 s …  6.189 s    10 runs
+     
+    -        $ hyperfine \
+    -        --prepare 'rm -rf dest.git && git init --bare dest.git' \
+    -        'git -c core.bigFileThreshold=2m -C dest.git unpack-objects <binary_320M.pack'
+    -        Benchmark 1: git -c core.bigFileThreshold=2m -C dest.git unpack-objects <binary_320M.pack
+    -          Time (mean ± σ):     10.859 s ±  0.774 s    [User: 8.813 s, System: 1.898 s]
+    -          Range (min … max):    9.884 s … 12.192 s    10 runs
+    +        Benchmark 2: new
+    +          Time (mean ± σ):      6.090 s ±  0.033 s    [User: 5.075 s, System: 0.976 s]
+    +          Range (min … max):    6.030 s …  6.142 s    10 runs
+     
+    -        $ hyperfine \
+    -        --prepare 'rm -rf dest.git && git init --bare dest.git' \
+    -        'git -C dest.git unpack-objects <binary_96M.pack'
+    -        Benchmark 1: git -C dest.git unpack-objects <binary_96M.pack
+    -          Time (mean ± σ):      2.678 s ±  0.037 s    [User: 2.205 s, System: 0.450 s]
+    -          Range (min … max):    2.639 s …  2.743 s    10 runs
+    +        Benchmark 3: new (small threshold)
+    +          Time (mean ± σ):      6.755 s ±  0.029 s    [User: 5.150 s, System: 1.560 s]
+    +          Range (min … max):    6.711 s …  6.809 s    10 runs
+     
+    -        $ hyperfine \
+    -        --prepare 'rm -rf dest.git && git init --bare dest.git' \
+    -        'git -c core.bigFileThreshold=2m -C dest.git unpack-objects <binary_96M.pack'
+    -        Benchmark 1: git -c core.bigFileThreshold=2m -C dest.git unpack-objects <binary_96M.pack
+    -          Time (mean ± σ):      2.819 s ±  0.124 s    [User: 2.216 s, System: 0.564 s]
+    -          Range (min … max):    2.679 s …  3.125 s    10 runs
+    +        Summary
+    +          'old' ran
+    +            1.00 ± 0.01 times faster than 'new'
+    +            1.11 ± 0.01 times faster than 'new (small threshold)'
+     
+    +    Helped-by: Derrick Stolee <stolee@gmail.com>
+         Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+         Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+     
+    @@ builtin/unpack-objects.c: static void added_object(unsigned nr, enum object_type
+      
+     +struct input_zstream_data {
+     +	git_zstream *zstream;
+    -+	unsigned char buf[4096];
+    ++	unsigned char buf[8192];
+     +	int status;
+     +};
+     +
+    @@ builtin/unpack-objects.c: static void added_object(unsigned nr, enum object_type
+     +	struct input_stream in_stream = {
+     +		.read = feed_input_zstream,
+     +		.data = &data,
+    ++		.size = size,
+     +	};
+     +	struct object_id *oid = &obj_list[nr].oid;
+     +	int ret;
+-- 
+2.34.0
+
