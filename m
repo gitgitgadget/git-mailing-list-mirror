@@ -2,86 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 724ADC433EF
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 19:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97A8AC433EF
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 19:27:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353493AbhLCTYk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 14:24:40 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54486 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240241AbhLCTYk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 14:24:40 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87F9EEA28B;
-        Fri,  3 Dec 2021 14:21:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4jK9Ry9thDFq+ArTQef52n68lfAXqY7tDpgSMJ
-        LMRTc=; b=j3yGoqWXEHYSIOCaVzpzX0jDXiJogXKwHZhsb0HsjIMiOJkc8wZklJ
-        vxN7XzhLu7QkRjJbdflBNuT0mNF4B7nRDIfzytI+Nh0XOPfrhSsuO1YlFRX7d0I6
-        9PxaSC+rBEIHIxNQJ/vj3hXuostXjcRjvwEdF+swvSTwHlZfnLhOg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 801EFEA28A;
-        Fri,  3 Dec 2021 14:21:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B793EEA289;
-        Fri,  3 Dec 2021 14:21:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: ns/tmp-objdir and ns/remerge-diff
-References: <xmqqzgpm2xrd.fsf@gitster.g>
-        <CABPp-BHq4DnkCZZ+HcnGiZYKHpWJgzMBjMDuWbbTFYPesm2sXA@mail.gmail.com>
-Date:   Fri, 03 Dec 2021 11:21:13 -0800
-In-Reply-To: <CABPp-BHq4DnkCZZ+HcnGiZYKHpWJgzMBjMDuWbbTFYPesm2sXA@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 30 Nov 2021 15:07:32 -0800")
-Message-ID: <xmqqa6hhsdee.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2EAAAD8C-546E-11EC-8B64-62A2C8D8090B-77302942!pb-smtp1.pobox.com
+        id S1353723AbhLCTbK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 14:31:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37676 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237366AbhLCTbJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 14:31:09 -0500
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D108C061751
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 11:27:45 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id 8so3803981pfo.4
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 11:27:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=GPfN3L6zC+5/fVxY9+/JkYg6RqEmkftKB2Tg3mmLdX8=;
+        b=o9mwvvG6MPfUCN7pZzRabwUrb5ECPcsWrF40SUwYdS8Zaa7iKTiuWumK/oFL2Uv8aE
+         dgqaA5B7D9xP7RIVm3jMmb0vTCU3lzRfanQ5ENg4+wzhzhIs481zFO/XhwdofRykI51A
+         QJ0htKJKxU+Uo0d3+XO5nc0islOG9Nqs3CPDzUXJe+z8TeVCgduu/fUj5RPXri0+qfk3
+         6GAzYQ2hedZyq6qdf+j8lWR8KYr/gaJJ4N0UomvH5bTqMk7VGvZWSE/WgyDlrPBtERUx
+         VCLgwgS968aOdLU3J3GWEnDjYyytTc9+XuZgIXoPFQYfT4yZwJmmCalkoj2PMnIruoiV
+         sIiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=GPfN3L6zC+5/fVxY9+/JkYg6RqEmkftKB2Tg3mmLdX8=;
+        b=W4FJAuGQF9fV8y63NHCszpghlT19xYQNk/A1ujMK/PaJsyhW0gaFL69U+r3yaIqGpY
+         QBfTtsIqMh0IO7Z12UwB8j5AYO93uPhjRLF5AVCIudL5cQaWVGUl66eAmLSzc+lryfuf
+         h7ceNPovRBvR/4vWY4lxRmHxZz5AM6+u+ziA+SwzP3hpvSzHLu5KcUwTqiPbDPOdl5Zt
+         Ue/nI54tDUy6MQMVZ2DXpiGIUerxHIJPhS0NMMtLvydg/mTwM2odDa9oC85JRZ8jb+MW
+         1VcIC/kEvMmaqBVmJ8FVTq4TOgRmqc+t+sevHU5kbat6RZPz1VVPv/wKgt7ciC842mka
+         4Vpw==
+X-Gm-Message-State: AOAM533hYBFgiRU2VQNmJ3xJYkspG5rTRc/ThVFonS6wQRjqYJIFvu74
+        HiEKblTzxq5DoyO4cNwiBbWSKRQ/UaXKTw==
+X-Google-Smtp-Source: ABdhPJy0d+n0+UBQYYb/0LvhSyC2NRDH9bdn24asgwccqMIg+eA8iEAio07cmSLPugDHqU9QlzQOiw==
+X-Received: by 2002:a63:60d:: with SMTP id 13mr6047051pgg.359.1638559664686;
+        Fri, 03 Dec 2021 11:27:44 -0800 (PST)
+Received: from LAPTOP-FJDAS7G4.localdomain ([157.40.237.213])
+        by smtp.gmail.com with ESMTPSA id l6sm4227490pfu.129.2021.12.03.11.27.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Dec 2021 11:27:44 -0800 (PST)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [RFC PATCH 1/1] push: make '-u' have default arguments
+Date:   Sat,  4 Dec 2021 00:57:16 +0530
+Message-Id: <20211203192716.18444-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <xmqqtufpsikp.fsf@gitster.g>
+References: <xmqqtufpsikp.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> ns/tmp-objdir had a re-roll that has not been picked up, at [1] --
-> perhaps because it's an combination of ns/tmp-objdir and
-> ns/batched-fsync (it'd be nicer to have those two split).  I gave the
-> ns/tmp-objdir part another read over and was only able to spot two
-> small things.  I think you should mark it as expecting a reroll based
-> on [2] ("Good catch. I'll fix this.") and [3] ("I'll take this
-> suggestion."), but I think it could be merged to next quickly after
-> that.
->
-> [1] https://lore.kernel.org/git/pull.1076.v9.git.git.1637020263.gitgitgadget@gmail.com/
-> [2] https://lore.kernel.org/git/CANQDOddCC7+gGUy1VBxxwvN7ieP+N8mQhbxK2xx6ySqZc6U7-g@mail.gmail.com/
-> [3] https://lore.kernel.org/git/CANQDOdd7EHUqD_JBdO9ArpvOQYUnU9GSL6EVR7W7XXgNASZyhQ@mail.gmail.com/
->
->>  Also ns/remerge-diff that is Neeraj's rebase of the
->> remerge-diff topic needs Elijah's Ack at least.
->
-> Mark it as expecting a re-roll; I've been waiting for ns/tmp-objdir to
-> settle so I can rebase on it.
+> That of course is not an improvement but actively hurts them.  We
+> shouldn't be making it easier for our users to hurt themselves.
 
-I took a quick look at the rerolled one on list, and I agree that
-keeping tmp-objdir and batched-fsync as two separate topics makes
-sense, since the former can graduate much more smoothly and quickly,
-and it can have other dependant topics.
+Hmm. In the scenario you mentioned, the proposed change is clearly
+breaking. Thanks for notifying.
 
-So I'll mark all three (ns/tmp-objdir, ns/batched-fsync and
-remerge-diff) as "Expecting a reroll".
+> Shouldn't the rule be something like "if 'git push $args' (where
+> $args may be nothing, or any options other than '-u') pushes a
+> branch (or a set of branches) to a repository, 'git push -u $args'
+> (with the same $args) should set the branch.*.{remote,merge} for the
+> branch(es) to the same repository" for the introduction of default
+> to be truly an improvement?  Or is it too strict and makes the rule
+> not to trigger even for the intended audience?
 
-As I announced, I won't be taking any new topics or new rerolls
-today (or possibly tomorrow) until I can sift the topics I've
-already seen to come up with a tested set of candidate topics to
-merge to 'next', so there is no need to rush.
-
-Thanks.
+Sounds good to me. But what if 'push.default' set to 'nothing'? Do the
+proposed default arguments (I am saying about only the default arguments;
+not the changes in code) are right fit for that case?
