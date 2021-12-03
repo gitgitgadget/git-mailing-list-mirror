@@ -2,65 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9937DC433EF
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 20:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5D62C433F5
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 20:17:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357565AbhLCURm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 15:17:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48220 "EHLO
+        id S1383071AbhLCUVP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 15:21:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353691AbhLCURk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 15:17:40 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4858BC061751
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 12:14:16 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id z5so16463005edd.3
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 12:14:16 -0800 (PST)
+        with ESMTP id S234814AbhLCUVO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 15:21:14 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FE18C061751
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 12:17:50 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id r11so15894403edd.9
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 12:17:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:in-reply-to:date:user-agent:message-id
-         :mime-version;
-        bh=20/n8l02zTgm09S4CSxVb7FVOzTvo3hehueN8dBOUio=;
-        b=L+acsjYYFxRVYxlQU6f9knHXwadZEFldeI4L8cg7zzGFpctJIXaFvXiFAAJ5/AVxrQ
-         I8HFd5FT0/MYiW9t3WwCTccVyLfaQMa4EAnyxWxrYD1M3or9ZQFbeiMrPF6jrSIRSDTo
-         IjM6RlDFS3qIjOHh+rp2OjVUsCNH3dKCsFQQ7vDf++R44n0PX/eJDbllklQYAG8WqIpu
-         YIOIWI2GjERDcMIi/N0lEm3Qxsb9OmkoVKFZTnxHTvV5IhaMFXYPbZbiyWPdL4yYlNqz
-         AdJjKNkU8zh4i6xkB/ZtCjqJZQynizKvezaI8OirzLrXwdiVqVNRYDNX+avi8QIONHBA
-         tC0Q==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=R0AvS4p5qMRFy9o/v8zsBt/HLq+vKxxapnEL8AUV8C0=;
+        b=XgeEUFs3gEbEjiM8gqWqCJXnvj+RFNJAYT97qp8NoSqceFvZoZrPZjN/U6PLeSZcBy
+         nZ05WwuiodBiKXMjCE6Eg/+tHOXHgd2gcqaUfmnjT6Kumse22/15baXQC8cYTv0FFbdK
+         V7z5UakHFuOHl7gSOLmTAxsuC6cvutqGV9cRiweo/Q4ZIPob3VQ47B/IYhi4+06ilCHY
+         zMRzKecRC2b40CKMxnNQkr3DdmCSPmOqIlheM9IKdUmUtPjBO5Nb57LhZDOTZ1lxv4p/
+         sK2v7KrhmRzW52Yp4ALkceDDV+nWT8X8cAvUfPDUO7TZzV4JskEPuL978Tl9eKiCxm3K
+         959Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:in-reply-to:date:user-agent
-         :message-id:mime-version;
-        bh=20/n8l02zTgm09S4CSxVb7FVOzTvo3hehueN8dBOUio=;
-        b=Zpj/JLNUOrBjcbP45HVbCKC8BIJU9EEaF6OCz0teNOhreGj28t43qoWmezQ9TsRQoe
-         RBbbvpnnnym2m0RmD1OmFiWXqrq9szFI4RjnaSMQJghvvbxNzC15jLjyymUVYBYOWqwZ
-         Y5htd0mjMFXF5lfMhzWIg4F5Av39yOPdQ1HZ9HjuPjoZbW7xoln+/9gMeYcaYatzb6WM
-         KlhubFTAFRcCbJH79O/GAaDIIxUjnTyaaUoDZ67Vg8neSvIjL6EbYxTAMtyEJbA/8a6R
-         Y+0fpzuwO809Dti3fPqvISsSbkdtQ9EkeqZdkQjbIm5ddQ/DBzqSqbjvorNI+mIGduti
-         0jig==
-X-Gm-Message-State: AOAM532bG6nLlWRKPEcnpdf01E0n3oBgJOBX85ygdDUQIIMRWYoykGZP
-        cgTD5b0XnXnt5EweFaxor/bvsOqxCwOFNw==
-X-Google-Smtp-Source: ABdhPJxZmDgz/EUOVi3AoeS0Kw7C8TI96EK2YVxUbVcvrReeicsq0qCBTR6wdgvuGQlRsMS37HyVrg==
-X-Received: by 2002:a17:907:3f19:: with SMTP id hq25mr25266604ejc.225.1638562454497;
-        Fri, 03 Dec 2021 12:14:14 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=R0AvS4p5qMRFy9o/v8zsBt/HLq+vKxxapnEL8AUV8C0=;
+        b=zXyHETFy3DF9SINQ3eF0UdIkdZRmMKx1HXAua3Tdtkpnrvw15wPDtOf9twnB3sX7jk
+         Tl/XNZdsCQpVUPfKd0ocjSKxnO/aduKOJcCwDmrdGrBnQgEy7n3RYS2m29ZIrnSQ8UBc
+         vVDw9zph/BIVPpclJcoKmKrIZB+2iJ7b0fJTBtjU5UrWJLL+3jNhtgzyD/gpEvT4UsMW
+         5Dvbams1nqNyq7JJ0LcDKUiN1tyAghUXDllpBRG6nCbEA1KxuVuw+2bZZGunlX3LTMXm
+         f0ZooQWhTEWo6yK6InQDWiT9P1/vC3il4Lg00jggvtrZa5TLGdlnPJq8XSVHQdQ+QRTP
+         DLJw==
+X-Gm-Message-State: AOAM533MOFe2k1tBbcqqCWHqVpluH0HYyhPESeolKX3L2fCQQvQmR8OG
+        NssMcfJ2XkFfOpyYfTai9KrOdBYADkAUgA==
+X-Google-Smtp-Source: ABdhPJwFViEcr2Yi9cEs0m60Z698EO8NGx3OEc/zB+96VYBw+qNNTyDE3N2lop7PEMJuVyTHKMh/7g==
+X-Received: by 2002:a17:906:f748:: with SMTP id jp8mr26772424ejb.513.1638562668945;
+        Fri, 03 Dec 2021 12:17:48 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id sh33sm2647304ejc.56.2021.12.03.12.14.13
+        by smtp.gmail.com with ESMTPSA id r3sm2552099ejr.79.2021.12.03.12.17.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 12:14:13 -0800 (PST)
+        Fri, 03 Dec 2021 12:17:48 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mtEwf-000Igf-By;
-        Fri, 03 Dec 2021 21:14:13 +0100
+        id 1mtF07-000InT-GT;
+        Fri, 03 Dec 2021 21:17:47 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: Re: Large delays in mailing list delivery?
-In-Reply-To: <CABPp-BF_xsOpQ6GSaWs9u9JcnPQT_OXP-gCsAuxPtMj-X1tgOg@mail.gmail.com>
-Date:   Fri, 03 Dec 2021 21:02:48 +0100
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Atharva Raykar <raykar.ath@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        christian.couder@gmail.com, git@vger.kernel.org,
+        jrnieder@gmail.com, kaartic.sivaraam@gmail.com, pc44800@gmail.com,
+        periperidip@gmail.com
+Subject: Re: [PATCH v3 0/9] submodule: convert the rest of 'update' to C
+Date:   Fri, 03 Dec 2021 21:15:42 +0100
+References: <20210916103241.62376-1-raykar.ath@gmail.com>
+ <20211013051805.45662-1-raykar.ath@gmail.com> <xmqqczo8eahl.fsf@gitster.g>
+ <YWiXL+plA7GHfuVv@google.com> <xmqqfsr9secx.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-Message-ID: <211203.86sfv9qwdm.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqfsr9secx.fsf@gitster.g>
+Message-ID: <211203.86o85xqw7o.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -68,43 +73,45 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, 3 Dec 2021 11:52:58 -0800 Elijah Newren wrote:
+On Fri, Dec 03 2021, Junio C Hamano wrote:
 
-> Are there some rather large delays in mailing list delivery these
-> days?  Anyone know who to contact to investigate?  [*]
+> Emily Shaffer <emilyshaffer@google.com> writes:
+>
+>> On Wed, Oct 13, 2021 at 05:05:58PM -0700, Junio C Hamano wrote:
+>>> 
+>>> Atharva Raykar <raykar.ath@gmail.com> writes:
+>>> 
+>>> > I have attempted to make a version of this series that is based on that topic [2],
+>>> > and added the superproject gitdir caching code in C [3]. It passes the tests,
+>>> > but I am not too confident about its correctness. I hope that branch can be
+>>> > helpful in some way.
+>>> ..
+>>> The "C rewrite" of the code [3] that unconditionally sets of the
+>>> submodule.superprojectgitdir varible seems straightforward enough.
+>>> 
+>>> Emily, how solid do you think your "superproject aware submodule"
+>>> topic already is?  Would it be stable enough to build other things
+>>> on top, or is it a bit too premature?
+>>
+>> As of the version I sent today
+>> (https://lore.kernel.org/git/20211014203416.2802639-1-emilyshaffer%40google.com)
+>> I think it is stable enough to build on top of. There was general
+>> consensus on the semantics of submodule.superprojectgitdir as it's sent
+>> in v4.
+>
+> Does the above statement still hold true today?
+>
+> And more importantly, Atharva, are you on board with the plan Emily
+> suggested to have this one built on top of her series?
 
-I've got E-Mail delays so large that I manually crafted In-Reply-To
-etc. to reply to this :)
+I think the current state of it is that Emily & I were having a
+discussion about the semantics of that series. See [1] and [2].
 
-I'm 99% sure it's some weird thing at GMail, and nothing to do with
-kernel.org.
+That's still outstanding. I.e. I haven't been able to reproduce cases
+where we actually need this caching for performance reasons (which is
+the reason it exists), but even if we end up keeping it I'd think we'd
+want something picked from the RFC patches I sent[1] to test the
+"caching" v.s. "non-caching" behavior, and assert that they're the same.
 
-When I've experienced delays (sometimes of half a day or more) both
-https://public-inbox.org/git/ and https://lore.kernel.org/git/ have been
-updated.
-
-Konstantin Ryabitsev notes (and would be in a position to know) that
-GMail throttles delivery (with an smtp 451 error?).
-
-But the other day when Junio sent out a What's Cooking and I saw it on
-lore, but it wasn't in my mailbox for some hours. That time I looked a
-bi tinto it.
-
-I went into the gmail UI and searched for rfc822msgid:$id, nothing. It
-was neither there on IMAP or in the UI.
-
-However when the E-Mail finally arrived I looked at the raw headers, and
-all the "Received" headers (including GMail's own internal routing) were
-within a couple of minutes of Junio having sent the mail (and in the
-meantime it went through vger etc.).
-
-So, I'm hazy on E-Mail infrastructure details these days (but worked no
-it in a past life), but that really seems to me like GMail in fact got
-the E-Mail, but it was just sitting in some local queue of theirs before
-it got served to me.
-
-Right now I can't see the mail I'm replying to in my inbox[1], but I can
-report the full headers once it arrives if that helps.
-
-1. A search for:
-   rfc822msgid:CABPp-BF_xsOpQ6GSaWs9u9JcnPQT_OXP-gCsAuxPtMj-X1tgOg@mail.gmail.com
+1. https://lore.kernel.org/git/RFC-cover-0.2-00000000000-20211117T113134Z-avarab@gmail.com/
+2. https://lore.kernel.org/git/211124.86a6hue2wk.gmgdl@evledraar.gmail.com/
