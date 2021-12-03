@@ -2,69 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0E39C433EF
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 01:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D25CC433EF
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 03:48:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231902AbhLCBPz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Dec 2021 20:15:55 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:65465 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229570AbhLCBPx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Dec 2021 20:15:53 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0F58A15DC3F;
-        Thu,  2 Dec 2021 20:12:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2SmvSZ78gBCB8TdVQpjEjL6TLTRXZ4e/ch3Cdb
-        tsXy8=; b=hDWj8oMlHnQgJHa2v+T4/1pEAvKbRUhErhW9p/CTLO1EzA1xuGepbD
-        VBwf8Vguwt1BIK1J3NPy5RkxnHipS5EtV7GEhTssQOE2Nj+AV0QvvpdM4IUWFk9r
-        9AOugJ8jVMnP63ttxAQ0dqHJR0c/z71yS++jJ0bxIftx8omh3phEQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0846015DC3E;
-        Thu,  2 Dec 2021 20:12:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B5E2515DC3C;
-        Thu,  2 Dec 2021 20:12:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1378330AbhLCDwA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Dec 2021 22:52:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48500 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1378236AbhLCDwA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Dec 2021 22:52:00 -0500
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E139BC061757
+        for <git@vger.kernel.org>; Thu,  2 Dec 2021 19:48:36 -0800 (PST)
+Received: by mail-io1-xd2a.google.com with SMTP id p65so2177017iof.3
+        for <git@vger.kernel.org>; Thu, 02 Dec 2021 19:48:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=41ir+GcIh+wG62xFtfYu57AlTtSOUsE8ghvzNhmfP2I=;
+        b=olPVtef5l+7dCFj0onXXsu+1FaZ5JZprRra9i+Ff4dMTXz7urK2Hux0s36qCmOsjZt
+         2B0IT+crfgB2juDZ33HEURJ6FSTThOPu3bi4jVnUV7H7gY+Q7o2YhQPvyGL+3y6NC5oq
+         ePfDUHmsYw97eE8iQMbkIvvixs86Uqsr7WtVSL8Cc5PvepGtIETmjNU3Ti4kQQo8N+Un
+         mn+Lc8SO5CSjtjJnzRmnn8SjevzGmxJhM7QPMhHttSY3fvo4COD+cLFBSsppUzpSUVeI
+         +wIQRMJbdO9136w3Mp8QECbdBqPiMd5VsncQMrSBC9y+7xlKTXT2iRepx3Zb0RNNKZhK
+         LmFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=41ir+GcIh+wG62xFtfYu57AlTtSOUsE8ghvzNhmfP2I=;
+        b=8L5G/e1vMNDZi7YCyGyJO6Bh9+0iwdWWXaW3A5c7S+D+Ru2jRClyNRkixpUixOHiEe
+         kNjxvQjZwxS/bGo6f72ZPg5eANhnXdbvKrStwwKOOFj6z0ZiHVqeNMN1CsYU9XquHig+
+         1JJfUxzNXPgit52i23imtj48TsDnyLatjf4JZtvsSqJ3pC4Y8pc6p5C8DQ+xiB4ZQOxx
+         awwwBwolyfMQmtarTcP53bRuFqtIoQByDAHwZyVHybV51sG+43hPoAAIM6O5wgYapdDV
+         +u+AXboIEX5Yz1oQUqKj5DGnO70VwxOWcW6Q33rMtMGNTNoGYbYuQwOMDa455+zDXsLr
+         jGKA==
+X-Gm-Message-State: AOAM532SHvluA7YZKtaLSO1I5/Buc4HG+JMyWpHW0pXgvYHxXYDfl8eJ
+        9rT5hBM8jLljgqGRn4gKkFrpLWXBJv1jSQ==
+X-Google-Smtp-Source: ABdhPJwx7OoMKfm0xQy3/ej4BjshtZsOUjd9iQq1coTOYZrOirxK397i4rdLlS5Rg8jsw21dCnPIKw==
+X-Received: by 2002:a6b:2bc3:: with SMTP id r186mr18501488ior.167.1638503314889;
+        Thu, 02 Dec 2021 19:48:34 -0800 (PST)
+Received: from localhost.localdomain (097-069-216-153.res.spectrum.com. [97.69.216.153])
+        by smtp.gmail.com with ESMTPSA id x2sm975639ilv.65.2021.12.02.19.48.33
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 02 Dec 2021 19:48:34 -0800 (PST)
+Sender: Eric Sunshine <ericsunshine@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2021, #07; Mon, 29)
-References: <xmqqzgpm2xrd.fsf@gitster.g>
-Date:   Thu, 02 Dec 2021 17:12:22 -0800
-In-Reply-To: <xmqqzgpm2xrd.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        29 Nov 2021 18:16:54 -0800")
-Message-ID: <xmqqa6hitrt5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Cc:     Baruch Burstein <bmburstein@gmail.com>,
+        Randall Becker <rsbecker@nexbridge.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 0/2] worktree: fix incorrectly-ordered messages on Windows
+Date:   Thu,  2 Dec 2021 22:44:18 -0500
+Message-Id: <20211203034420.47447-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 12F1AA02-53D6-11EC-87C5-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As of this evening, my tree is not yet in a good enough shape to
-issue the next iteration of "What's cooking" report, but I've
-managed to merge some topics to 'next'.  No, nothing exciting is in
-there.  This first batch of topics consists of stuff that would have
-been in 'next' or even in the release if the previous cycle were
-longer by a week or two.
+This patch series fixes a problem in which a chatty "Preparing worktree"
+message and a subsequent fatal error message appear in the wrong order
+on Microsoft Windows, which may confuse readers into thinking that the
+operation somehow succeeded despite the error.
 
-I plan to reserve time for picking and trial-merging other topics
-that we want to have in 'next' tomorrow, so that I can finish the
-"What's cooking" report with more topics marked for 'next'.
+Unlike the original RFC attempt[*] to fix this problem at a low level in
+a generalized fashion, patch [1/2] localizes the fix to git-worktree
+itself by making it conform to common Git practice of issuing chatty
+messages to stderr rather than to stdout as is currently the case.
 
-To make sure I can make progress, I'll promise that I will not look
-at or comment on patches that are sent to the list tomorrow (or in
-the coming few days), except that a reroll of an existing topic will
-be taken as a sign that the stale version I have in my tree needs to
-be replaced before it can be merged to 'next' (but I won't pick the
-new iteration up---I know from experience that it would stall and
-delay me).
+Patch [2/2] is just a drive-by fix for a minor documentation problem I
+noticed along the way.
 
+[*]: https://lore.kernel.org/git/20211130043946.19987-1-sunshine@sunshineco.com/
 
+Eric Sunshine (2):
+  worktree: send "chatty" messages to stderr
+  git-worktree.txt: add missing `-v` to synopsis for `worktree list`
+
+ Documentation/git-worktree.txt |  2 +-
+ builtin/worktree.c             | 14 +++++++-------
+ t/t2401-worktree-prune.sh      | 14 +++++++-------
+ t/t2402-worktree-list.sh       |  2 +-
+ t/t2406-worktree-repair.sh     | 30 ++++++++++++------------------
+ 5 files changed, 28 insertions(+), 34 deletions(-)
+
+-- 
+2.34.1.173.g76aa8bc2d0
 
