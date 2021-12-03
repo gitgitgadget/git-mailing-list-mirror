@@ -2,103 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD658C433F5
-	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 13:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E82AAC433EF
+	for <git@archiver.kernel.org>; Fri,  3 Dec 2021 13:31:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242229AbhLCNen (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 08:34:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39770 "EHLO
+        id S1352218AbhLCNeu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 08:34:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241102AbhLCNen (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 08:34:43 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30172C06173E
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 05:31:19 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id o13so5696702wrs.12
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 05:31:19 -0800 (PST)
+        with ESMTP id S241102AbhLCNet (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 08:34:49 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AB92C06173E
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 05:31:25 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id l16so5715667wrp.11
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 05:31:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=dFbP6O2gHXHlyueZ8X/OjhO0NUJOQ56OdjUkpAfmlgk=;
-        b=BmttqeOByFrkoA5rmCxGdWFUi45UA5IhySvfGP8Fna7y5LL3reHUJTH2P8OsKfGRCA
-         4grDMi9x07bcXVXxgyG4DMTq/pXQMkXgWOksemOlRTlm2qDRo4k6uiGxs49U4HavrXp8
-         YxMWQzZ3d1GCSNLgca4tg1GmwEtrla8lAEB2uAkDSVPiIdjb9IdqCxgmR7i/HB4ZUkNz
-         NSgXYMks1lRk56Xw4MwCxfwTng41Gwcq2qgF1xRjIZ9o9/cnV8iF0pVtLO2T9u2Ya9a4
-         Af6/itDsG3treuxtw/mGXZeMrmr4ipeu3pQmEGcrxujgT86s7qFHKlVY69pNcpH1VtBF
-         PwgQ==
+        d=yeplaa-net.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:from:mime-version:subject:date:message-id
+         :references:cc:in-reply-to:to;
+        bh=xIghneUb1rY5d/WCvngxrzoLJIt6O5BZBYltFhQfL4E=;
+        b=J2Ss1fubJtkfI7dE46zXQXDiJDMmd66D6BXbQSTE9TmOrD92S41vRBLM3jvPIkq3v0
+         LvungsG9Qd/4gh4TQKuZGBVfz+zMM0zkGXCiSQ0hynsy/K8vyiiXM73YN9oEeX7U0syC
+         FcF8EDIZrN8DMsF04FlJubiC3CGMrX8ZOjI02Koj5kP4bLd6wNxwCitO1rXtnRqyBrZf
+         TrK0tcCpOr4KnYYvZDb2RFf2TU3LaFSGL2QqsIUg/aWxDZCISOhOFxCF92UulXeC/kyz
+         cdHHX2UX0mivfiJVj7tjQZaLSOKJ5RoxyYQ8bw+RQ6a9uANgQFH5IwwQA43B6VylciKg
+         dUWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=dFbP6O2gHXHlyueZ8X/OjhO0NUJOQ56OdjUkpAfmlgk=;
-        b=qmkvQgEHRMjhNSlMUqfwcV7b06VAa+hFaqIYaFozb6YQs8WIqfJq9V/wzi2VJa6Pxu
-         V8kmPYMIYqXNOA8qLEvj3ODvGrYtFW3UU88AM07T2QCWAj41cV+HbgQC+r5vcZUfwO4q
-         8quVraq9FFuf2AZ4t5v+pHaKphlrfJghI6gcsDlmDVPBGfe2Mo5q2RxFPbjTzzYfGrHj
-         2U+EMw3P+YBtk52i6nMGE4NLHF7RciR3nFVIuva0r2AgPN5oshJOZCgWY2og6wxkuO7k
-         H1J69n0IBjHj+GHk6ZMJt1+6iYdE9fgeYyVe8/c3SqnevzOq+ykCDiRe1uINyBeFl60z
-         yqYQ==
-X-Gm-Message-State: AOAM531vK3HvEybOHD95lAqTVgdGujNMu05yYTa8k52DlJXuLfKL/MoA
-        VAkTcUN82Ibt6Fnga7INnwEOX2QbEUE=
-X-Google-Smtp-Source: ABdhPJxLFDbiGY/WnfLWbEjwgPmu395RP2b4kSayrGOQ/YLjmoU8cSwqk6DHUXqF1cpHXslE4GFsoA==
-X-Received: by 2002:a5d:424c:: with SMTP id s12mr21498015wrr.370.1638538277633;
-        Fri, 03 Dec 2021 05:31:17 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m1sm2636333wme.39.2021.12.03.05.31.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 05:31:17 -0800 (PST)
-Message-Id: <pull.1090.git.1638538276608.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 03 Dec 2021 13:31:16 +0000
-Subject: [PATCH] gpg-interface: trim CR from ssh-keygen -Y find-principals
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        pedro martelletto <pedro@yubico.com>
+        h=x-gm-message-state:content-transfer-encoding:from:mime-version
+         :subject:date:message-id:references:cc:in-reply-to:to;
+        bh=xIghneUb1rY5d/WCvngxrzoLJIt6O5BZBYltFhQfL4E=;
+        b=P5riZNj5FxY176A4LjfKAQKGaox0nPni9X4Ypz6ckCxKrcJAAYhO2fyQMvmwrIL8bU
+         joRE1JeDPWKgT3NiDd9Ccv02kOpFN8/XX5Ve5WuaS+1NjVq1PFNSr8KEZR9GqJ+cjEMZ
+         upyw7WXnf+CzJGmYyIOJmQkmcwMZe78dOdSaerYRoAbdUTflElMwY4nIkGmwITd4az9I
+         1ih3wanhvdOQi3BCBriXiNmACaaJFAZoeJR65sk+UXKfSyTKKonZ005yTW6UJa+jAWoY
+         +Spj7RYhzwPwwBPIgxJzPEypqcMHz7uU0CPD0WOybxMyzJR18DOdiNCNjOYeRTG9DBhw
+         IEBQ==
+X-Gm-Message-State: AOAM532O7TDuT+jVRgRag1RdGcvw1JRWsLnsB1n8TrLpFzML0MXwwd2k
+        +do/NrXSaA+ybOYhGWoZd7+QEUzpvfzHnXCK
+X-Google-Smtp-Source: ABdhPJwod/qx47C6MO408Hs68gVJ6WExHVTrF4EG40EdBk2Y5Al7kdlnjWCgbtui+PwIafp+JmjXZA==
+X-Received: by 2002:adf:900f:: with SMTP id h15mr22229927wrh.562.1638538283839;
+        Fri, 03 Dec 2021 05:31:23 -0800 (PST)
+Received: from smtpclient.apple (2a01cb04076245007166bfd26b591e68.ipv6.abo.wanadoo.fr. [2a01:cb04:762:4500:7166:bfd2:6b59:1e68])
+        by smtp.gmail.com with ESMTPSA id h15sm5535684wmq.32.2021.12.03.05.31.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Dec 2021 05:31:22 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From:   Loic Fouray <loic@yeplaa.net>
+Mime-Version: 1.0 (1.0)
+Subject: Re: Merge conflict when lines next to each other are changed
+Date:   Fri, 3 Dec 2021 14:31:22 +0100
+Message-Id: <F3B50D52-01B2-4EFA-A107-311E215FB518@yeplaa.net>
+References: <78fd768d-6248-556c-4b74-7e35bb09a197@gmail.com>
+Cc:     git@vger.kernel.org
+In-Reply-To: <78fd768d-6248-556c-4b74-7e35bb09a197@gmail.com>
+To:     =?utf-8?Q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>
+X-Mailer: iPhone Mail (19B81)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: pedro martelletto <pedro@yubico.com>
+Hi,
 
-We need to trim \r from the output of 'ssh-keygen -Y find-principals' on
-Windows, or we end up calling 'ssh-keygen -Y verify' with a bogus signer
-identity. ssh-keygen.c:2841 contains a call to puts(3), which confirms this
-hypothesis. Signature verification passes with the fix.
+Thanks Jean-No=C3=ABl for your reply.
 
-Signed-off-by: pedro martelletto <pedro@yubico.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    Allow for CR in the output of ssh-keygen
-    
-    This came in via https://github.com/git-for-windows/git/pull/3561. It
-    affects current Windows versions of OpenSSH (but apparently not the
-    MSYS2 version included in Git for Windows).
+When you create a custom merge driver on a specific file, do you know if It p=
+ossible to apply it only on a part of the file and apply also the standard m=
+erge strategy on this file ?=20
+The purpose would be to able to identify other merge conflits if this is the=
+ case =E2=80=A6
+I don=E2=80=99t think that is possible..
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1090%2Fdscho%2Fallow-cr-from-ssh-keygen-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1090/dscho/allow-cr-from-ssh-keygen-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1090
+Lo=C3=AFc=20
 
- gpg-interface.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Envoy=C3=A9 de mon iPhone
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 3e7255a2a91..85e26882782 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -497,7 +497,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 			if (!*line)
- 				break;
- 
--			trust_size = strcspn(line, "\n");
-+			trust_size = strcspn(line, "\r\n");
- 			principal = xmemdupz(line, trust_size);
- 
- 			child_process_init(&ssh_keygen);
+> Le 3 d=C3=A9c. 2021 =C3=A0 08:13, Jean-No=C3=ABl Avila <avila.jn@gmail.com=
+> a =C3=A9crit :
+>=20
+> =EF=BB=BFLe 01/12/2021 =C3=A0 10:30, Loic Fouray a =C3=A9crit :
+>> Hi,
+>>=20
+>> In a file, I have this 2 lines one below the other:
+>>=20
+>> Repository: myvalue
+>> Tag: 8.2.10
+>>=20
+>> On my local branch i have updated repository myvalue.
+>> On the upstream repo, they updated often the tag value (not updated of my=
+ side).
+>>=20
+>> When i perform a merge from upstream to local branch, i have a conflit.=20=
 
-base-commit: abe6bb3905392d5eb6b01fa6e54d7e784e0522aa
--- 
-gitgitgadget
+>> It seems that it=E2=80=99s related to neighboring lines.=20
+>> Could you confirm that it =E2=80=98s a normal git operation?
+>>=20
+>> Also, i need to automate this merge. Is It possible with git tools to avo=
+id this conflict or to resolv this conflict automatically?
+>>=20
+>> Thanks for tour help
+>> Lo=C3=AFc=20
+>>=20
+>>=20
+> Hi,
+>=20
+> This is a use-case for git attribute "merge" :
+>=20
+> https://git-scm.com/docs/gitattributes#_performing_a_three_way_merge
+>=20
+>=20
+> BR
+>=20
+>=20
+> Jean-No=C3=ABl
+>=20
