@@ -2,244 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3AE1C433EF
-	for <git@archiver.kernel.org>; Sat,  4 Dec 2021 05:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37C9DC433EF
+	for <git@archiver.kernel.org>; Sat,  4 Dec 2021 05:43:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232193AbhLDFk1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Dec 2021 00:40:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58758 "EHLO
+        id S232193AbhLDFq3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Dec 2021 00:46:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230083AbhLDFk1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Dec 2021 00:40:27 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E521C061751
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 21:37:02 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id d24so10348404wra.0
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 21:37:02 -0800 (PST)
+        with ESMTP id S230083AbhLDFq3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Dec 2021 00:46:29 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B3E1C061751
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 21:43:04 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id g14so19626401edb.8
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 21:43:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=snML+fKBbbiWLP0GCW5zSDOeQsw9/kBbnObPT4kOlvs=;
-        b=KBU7DWosVD+1NIrT37KfPPG4N2cezZ4rBSCMqJ+b+Rw9WYF+6AvqaTb/NWzwIa5n6b
-         ck26o0HS3pRX7DjJOdkKYJt3axDkdNlDcbY/OGkrR5Sa03RMzH4YjH3y8HKOvk8GOx3q
-         YnhXT1beflMZ7cmToezQ+bwa8WHQgLAM2VEXZ2nGhCK4CrEUWSJW6KtfDWjT9kXtmw6V
-         i4OB5r6zYtsYX21QfULX+vCaYxZ9PksrGN8K/pQfTqNfU6hmdVpKuBLgvVvn8uLVdhbf
-         QzZA/LOWDmrbIhfzW3Fe2FgQdLBEF/ajEyJydtu/u7hlTaxVyg0ZrI5r2a8z8d7PfkRo
-         9/ag==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=RkMN+uNVOhq9bp2cZ1BGmxi9GhVcaYqpHgrHFwyE3iY=;
+        b=OTGweJgZi2zR2d0tXPA8TyiiecRU6jMkXO4ywcf0nMALfAQoumGKWPaVUrFITRWSyM
+         2j2gQUgrvuesX39UAiTDEJTEgDfnKDsIm32ilJsM3YN+3J6DFh0ZbhR2yqWETdydgZov
+         Od8HzUjUmd22l48+Hks2wfYYhdRNupIq3/+hLQcYwaOp4u9/rFe5W1Ww5gSo1G6Ru1uL
+         3KBYICxNdDEEx3Y0AAn1GpOrCRA62EDNd8EjMejsFQwVcwAvq8dKMXSzY8Px5dKcqJQ6
+         z+8BerzBXyvOoUkngnMFgTmUDrwhObKrIOPRJQyHD9O6X+fc8dB1XntCipSItmuIqAZd
+         gZIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=snML+fKBbbiWLP0GCW5zSDOeQsw9/kBbnObPT4kOlvs=;
-        b=nPRJ/7bO3pHlaNU0U1yCSysHtfSHHEtX4GeOS6t9ZRoDQfViW1FRE5oFhihVlyJa/R
-         QFVpnkfaYUHyYds0E5P7s2UQ/aeDyJyCJYZTENxfiis5W4aeKGHHQNKE/Y3MW2vbyLuZ
-         AglA9MfdkdGIshGWN7kWqBEu40dUYufW5qwIix2IvRQl8GXwUS6IhpWXWIfWHmzfXr8j
-         xhU8gIa/F4w4w5+Ad5Vkv/8IClPFEvWsn1MjeJ7EH9XnCoxEA0C6gR1S1tJaKSdmc+iH
-         efwZU1Jeg02RXzVv4Pz3HewuVsNAaUClQc9uP3Sw5I11sWEJWAF8TH+yupZvepoOkkLG
-         RDZQ==
-X-Gm-Message-State: AOAM530V5frjxpePpvX5kJ0uYAzsK9qpgOIUF0kQ5XNbb53tp6Yb5r4h
-        ODFr5fT3LJ1ihkCE/NJPb2UK9hP75Ts=
-X-Google-Smtp-Source: ABdhPJwCRybRL6vqG2dVWbDIqH0U6TdMPrK1rY6fG8S3xTzGjUuWb4KgSnK081C4TTjPone0PRpaOw==
-X-Received: by 2002:adf:e54a:: with SMTP id z10mr25726678wrm.328.1638596220712;
-        Fri, 03 Dec 2021 21:37:00 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y7sm4389188wrw.55.2021.12.03.21.37.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 21:37:00 -0800 (PST)
-Message-Id: <pull.1134.v3.git.git.1638596219656.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1134.v2.git.git.1637041986945.gitgitgadget@gmail.com>
-References: <pull.1134.v2.git.git.1637041986945.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 04 Dec 2021 05:36:59 +0000
-Subject: [PATCH v3] sequencer: do not export GIT_DIR and GIT_WORK_TREE for
- 'exec'
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RkMN+uNVOhq9bp2cZ1BGmxi9GhVcaYqpHgrHFwyE3iY=;
+        b=5Cb5Y5uv44xCLXaXGnQjzewJanjowJHh3vbIppvmpRmTe+kPp8hAYkuLRqJagbmztm
+         wb9IYSbLerrZDXSJ0uG1FbnLuMkD+EQe/KUCL0xKN7genZ/xKpuvRRjpjbvYc4plL8yP
+         qEe/n1DBdIeyl34vPI6onDxZWBrBvew0vYqzCn31zkmhyZ1QscjBaV7geg5fjTBdMK5A
+         NzXxYzVmePocIdHxGCuKYGhLqvS8oaKBa5+u0mLJHXq9sNy5MHBqxw48dLEUF2pNF94o
+         iOkPsnNp/BfvcTIGFFEVkWWbNbFscYeEFJLcl2HnOL+sF7CdgCXZ7pDJJnnxwtxVCbMo
+         9Lng==
+X-Gm-Message-State: AOAM531bxJOZfpZDLGrhrhDu48GDGqn7zPXQ7v1W4eHPHq/MIIicbWWF
+        d6OjWHkYIjWGb7Lh7V/nyCmCAfA9xVbEF75A7eE=
+X-Google-Smtp-Source: ABdhPJzktEd+jtlfieidnjXov8SK0e0IpH9nytVKaPJj/RliI1aIyapIC4ub9dgJAAtzwj9nW/astqSa7iuvvhxCgkw=
+X-Received: by 2002:a05:6402:1014:: with SMTP id c20mr33116918edu.186.1638596582490;
+ Fri, 03 Dec 2021 21:43:02 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+References: <pull.1092.git.1638586534.gitgitgadget@gmail.com> <c91421996562ecedab18f8af4ed8a02896584540.1638586534.git.gitgitgadget@gmail.com>
+In-Reply-To: <c91421996562ecedab18f8af4ed8a02896584540.1638586534.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 3 Dec 2021 21:42:50 -0800
+Message-ID: <CABPp-BEs8_F7SKsxDMd8p03oMn9M3H47=hrPP=AzxsacUkGg_A@mail.gmail.com>
+Subject: Re: [PATCH 2/2] unpack-trees: use traverse_path instead of name
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On Fri, Dec 3, 2021 at 6:55 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The sparse_dir_matches_path() method compares a cache entry that is a
+> sparse directory entry against a 'struct traverse_info *info' and a
+> 'struct name_entry *p' to see if the cache entry has exactly the right
+> name for those other inputs.
+>
+> This method was introduced in 523506d (unpack-trees: unpack sparse
+> directory entries, 2021-07-14), but included a significant mistake. The
+> path comparisons used 'info->name' instead of 'info->traverse_path'.
+> Since 'info->name' only stores a single tree entry name while
+> 'info->traverse_path' stores the full path from root, this method does
+> not work when 'info' is in a subdirectory of a directory. Replacing the
+> right strings and their corresponding lengths make the method work
+> properly.
+>
+> The previous change included a failing test that exposes this issue.
+> That test now passes. The critical detail is that as we go deep into
+> unpack_trees(), the logic for merging a sparse directory entry with a
+> tree entry during 'git checkout' relies on this
+> sparse_dir_matches_path() in order to avoid calling
+> traverse_trees_recursive() during unpack_callback() in this hunk:
+>
+>         if (!is_sparse_directory_entry(src[0], names, info) &&
+>             traverse_trees_recursive(n, dirmask, mask & ~dirmask,
+>                                             names, info) < 0) {
+>                 return -1;
+>         }
+>
+> For deep paths, the short-circuit never occurred and
+> traverse_trees_recursive() was being called incorrectly and that was
+> causing other strange issues. Specifically, the error message from the
+> now-passing test previously included this:
+>
+>       error: Your local changes to the following files would be overwritten by checkout:
+>               deep/deeper1/deepest2/a
+>               deep/deeper1/deepest3/a
+>       Please commit your changes or stash them before you switch branches.
+>       Aborting
+>
+> These messages occurred because the 'current' cache entry in
+> twoway_merge() was showing as NULL because the index did not contain
+> entries for the paths contained within the sparse directory entries. We
+> instead had 'oldtree' given as the entry at HEAD and 'newtree' as the
+> entry in the target tree. This led to reject_merge() listing these
+> paths.
+>
+> Now that sparse_dir_matches_path() works the same for deep paths as it
+> does for shallow depths, the rest of the logic kicks in to properly
+> handle modifying the sparse directory entries as designed.
 
-Commands executed from `git rebase --exec` can give different behavior
-from within that environment than they would outside of it, due to the
-fact that sequencer.c exports both GIT_DIR and GIT_WORK_TREE.  For
-example, if the relevant script calls something like
+Eek, sorry for not catching this in my earlier review.  Thanks for the
+detailed explanation; well analyzed.
 
-  git -C ../otherdir log --format=%H --no-walk
+>
+> Reported-by: Gustave Granroth <gus.gran@gmail.com>
+> Reported-by: Mike Marcelais <michmarc@exchange.microsoft.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  t/t1092-sparse-checkout-compatibility.sh |  2 +-
+>  unpack-trees.c                           | 10 +++++-----
+>  2 files changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index e6aef40e9b3..f04a02c6b20 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -307,7 +307,7 @@ test_expect_success 'add, commit, checkout' '
+>         test_all_match git checkout -
+>  '
+>
+> -test_expect_failure 'deep changes during checkout' '
+> +test_expect_success 'deep changes during checkout' '
+>         init_repos &&
+>
+>         test_sparse_match git sparse-checkout set deep/deeper1/deepest &&
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 89ca95ce90b..7381c275768 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -1243,11 +1243,11 @@ static int sparse_dir_matches_path(const struct cache_entry *ce,
+>         assert(S_ISSPARSEDIR(ce->ce_mode));
+>         assert(ce->name[ce->ce_namelen - 1] == '/');
+>
+> -       if (info->namelen)
+> -               return ce->ce_namelen == info->namelen + p->pathlen + 2 &&
+> -                      ce->name[info->namelen] == '/' &&
+> -                      !strncmp(ce->name, info->name, info->namelen) &&
+> -                      !strncmp(ce->name + info->namelen + 1, p->path, p->pathlen);
+> +       if (info->pathlen)
+> +               return ce->ce_namelen == info->pathlen + p->pathlen + 1 &&
+> +                      ce->name[info->pathlen - 1] == '/' &&
+> +                      !strncmp(ce->name, info->traverse_path, info->pathlen) &&
+> +                      !strncmp(ce->name + info->pathlen, p->path, p->pathlen);
+>         return ce->ce_namelen == p->pathlen + 1 &&
+>                !strncmp(ce->name, p->path, p->pathlen);
+>  }
+> --
 
-the user may be surprised to find that the command above does not show a
-commit hash from ../otherdir, because $GIT_DIR prevents automatic gitdir
-detection and makes the -C option useless.
-
-This is a regression in behavior from the original legacy
-implemented-in-shell rebase.  It is perhaps rare for it to cause
-problems in practice, especially since most small problems that were
-caused by this area of bugs has been fixed-up in the past in a way that
-masked the particular bug observed without fixing the real underlying
-problem.
-
-An explanation of how we arrived at the current situation is perhaps
-merited.  The setting of GIT_DIR and GIT_WORK_TREE done by sequencer.c
-arose from a sequence of historical accidents:
-
-* When rebase was implemented as a shell command, it would call
-  git-sh-setup, which among other things would set GIT_DIR -- but not
-  export it.  This meant that when rebase --exec commands were run via
-      /bin/sh -c "$COMMAND"
-  they would not inherit the GIT_DIR setting.  The fact that GIT_DIR
-  was not set in the run $COMMAND is the behavior we'd like to restore.
-
-* When the rebase--helper builtin was introduced to allow incrementally
-  replacing shell with C code, we had an implementation that was half
-  shell, half C.  In particular, commit 18633e1a22 ("rebase -i: use the
-  rebase--helper builtin", 2017-02-09) added calls to
-      exec git rebase--helper ...
-  which caused rebase--helper to inherit the GIT_DIR environment
-  variable from the shell.  git's setup would change the environment
-  variable from an absolute path to a relative one (".git"), but would
-  leave it set.  This meant that when rebase --exec commands were run
-  via
-      run_command_v_opt(...)
-  they would inherit the GIT_DIR setting.
-
-* In commit 09d7b6c6fa ("sequencer: pass absolute GIT_DIR to exec
-  commands", 2017-10-31), it was noted that the GIT_DIR caused problems
-  with some commands; e.g.
-      git rebase --exec 'cd subdir && git describe' ...
-  would have GIT_DIR=.git which was invalid due to the change to the
-  subdirectory.  Instead of questioning why GIT_DIR was set, that commit
-  instead made sequencer change GIT_DIR to be an absolute path and
-  explicitly export it via
-      argv_array_pushf(&child_env, "GIT_DIR=%s", absolute_path(get_git_dir()));
-      run_command_v_opt_cd_env(..., child_env.argv)
-
-* In commit ab5e67d751 ("sequencer: pass absolute GIT_WORK_TREE to exec
-  commands", 2018-07-14), it was noted that when GIT_DIR is set but
-  GIT_WORK_TREE is not, that we do not discover GIT_WORK_TREE but just
-  assume it is '.'.  That is incorrect if trying to run commands from a
-  subdirectory.  However, rather than question why GIT_DIR was set, that
-  commit instead also added GIT_WORK_TREE to the list of things to
-  export.
-
-Each of the above problems would have been fixed automatically when
-git-rebase became a full builtin, had it not been for the fact that
-sequencer.c started exporting GIT_DIR and GIT_WORK_TREE in the interim.
-Stop exporting them now.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
-Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Acked-by: Johannes Altmanninger <aclopte@gmail.com>
-Acked-by: Phillip Wood <phillip.wood123@gmail.com>
----
-    sequencer: fix environment that 'exec' commands run under
-    
-    Changes since v2:
-    
-     * Make sure I've included all 3 Acked-by's.
-     * The 2.35 cycle has started and it's been weeks since I sent v2, so
-       it's time to resend. :-)
-    
-    Changes since v1:
-    
-     * Fix wording in multiple locations pointed out by Johannes
-       Altmanninger
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1134%2Fnewren%2Ffix-rebase-exec-environ-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1134/newren/fix-rebase-exec-environ-v3
-Pull-Request: https://github.com/git/git/pull/1134
-
-Range-diff vs v2:
-
- 1:  c647c45375a ! 1:  4f5862c212f sequencer: do not export GIT_DIR and GIT_WORK_TREE for 'exec'
-     @@ Commit message
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-          Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-     +    Acked-by: Johannes Altmanninger <aclopte@gmail.com>
-     +    Acked-by: Phillip Wood <phillip.wood123@gmail.com>
-      
-       ## sequencer.c ##
-      @@ sequencer.c: static int error_failed_squash(struct repository *r,
-
-
- sequencer.c               |  9 +--------
- t/t3409-rebase-environ.sh | 23 +++++++++++++++++++++++
- 2 files changed, 24 insertions(+), 8 deletions(-)
- create mode 100755 t/t3409-rebase-environ.sh
-
-diff --git a/sequencer.c b/sequencer.c
-index ea96837cde3..9afdbe3e3d1 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3495,17 +3495,12 @@ static int error_failed_squash(struct repository *r,
- 
- static int do_exec(struct repository *r, const char *command_line)
- {
--	struct strvec child_env = STRVEC_INIT;
- 	const char *child_argv[] = { NULL, NULL };
- 	int dirty, status;
- 
- 	fprintf(stderr, _("Executing: %s\n"), command_line);
- 	child_argv[0] = command_line;
--	strvec_pushf(&child_env, "GIT_DIR=%s", absolute_path(get_git_dir()));
--	strvec_pushf(&child_env, "GIT_WORK_TREE=%s",
--		     absolute_path(get_git_work_tree()));
--	status = run_command_v_opt_cd_env(child_argv, RUN_USING_SHELL, NULL,
--					  child_env.v);
-+	status = run_command_v_opt(child_argv, RUN_USING_SHELL);
- 
- 	/* force re-reading of the cache */
- 	if (discard_index(r->index) < 0 || repo_read_index(r) < 0)
-@@ -3535,8 +3530,6 @@ static int do_exec(struct repository *r, const char *command_line)
- 		status = 1;
- 	}
- 
--	strvec_clear(&child_env);
--
- 	return status;
- }
- 
-diff --git a/t/t3409-rebase-environ.sh b/t/t3409-rebase-environ.sh
-new file mode 100755
-index 00000000000..83ffb39d9ff
---- /dev/null
-+++ b/t/t3409-rebase-environ.sh
-@@ -0,0 +1,23 @@
-+#!/bin/sh
-+
-+test_description='git rebase interactive environment'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit one &&
-+	test_commit two &&
-+	test_commit three
-+'
-+
-+test_expect_success 'rebase --exec does not muck with GIT_DIR' '
-+	git rebase --exec "printf %s \$GIT_DIR >environ" HEAD~1 &&
-+	test_must_be_empty environ
-+'
-+
-+test_expect_success 'rebase --exec does not muck with GIT_WORK_TREE' '
-+	git rebase --exec "printf %s \$GIT_WORK_TREE >environ" HEAD~1 &&
-+	test_must_be_empty environ
-+'
-+
-+test_done
-
-base-commit: 88d915a634b449147855041d44875322de2b286d
--- 
-gitgitgadget
+The comment at the beginning of this function (not shown in this
+patch) is now stale and misleading; it should be corrected too.
