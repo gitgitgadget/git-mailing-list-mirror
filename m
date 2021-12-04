@@ -2,196 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B42C0C4332F
-	for <git@archiver.kernel.org>; Sat,  4 Dec 2021 02:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A7CAC433FE
+	for <git@archiver.kernel.org>; Sat,  4 Dec 2021 02:55:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384119AbhLDCo3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 21:44:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49236 "EHLO
+        id S1384099AbhLDC7C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 21:59:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1384112AbhLDCo1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 21:44:27 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B913FC061359
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 18:41:02 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id n33-20020a05600c502100b0032fb900951eso6275282wmr.4
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 18:41:02 -0800 (PST)
+        with ESMTP id S238466AbhLDC7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 21:59:02 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BB96C061751
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 18:55:37 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id u1so9576206wru.13
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 18:55:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=nIwWOzyteUPgtg6V/gbptI+dO14mDOtHt15Ldl+xrEE=;
-        b=YvjE7bawO012+ypSC8WyE1cUtiMq10j2dqtjLbHk2rxLx/WQRstnHHbqZV81PDxLOV
-         BYfY6VAzHXbWIh64fRX8kfUVa1c74z2keDI+Yx169XsjL0XCfjyl7dYmP0CIbRVFL0Mp
-         /IDrgAcYxFdEKYB8SEBCdntPKm0MS7I+zMSZo5ecl95JrNu13BeXJXRFnctuxHKOPTrY
-         23sOAs4e5lMRI6yr3sq5p0te1yodjLfDHozN0l3eorCPhqJRvSL0sYHt8sCwKTTWw5Sw
-         ImuGUuvJCQaOqU/MydMAc5QQgPzA6wk/igF6e8RqRiXcpQvyanANsEbSdoGrQlq/5eJW
-         6aag==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=BRbFsIWE8FRYYsLc9p3xKYutVaHyD9NwxFuE6OgGodc=;
+        b=Zfh30ZpEfj9EuJBiv8O7eOd/2skCHvl7j8RswLOathoWoz9yDUn2itE9yidewK9N0U
+         yoCWyP2VFFOzIw/872s2RW7kAVrU/utYTdwRirvUGBV2svTSxbAp9dk3O2CtFQW4li6/
+         k4qut4Axb6YsJ1Hs2AgSsw2lxWEP90qRhSNQNAXTvoC7O25W/n2NXQ6QpuM9ls8IDFqk
+         7aBKlk/k1J3sZ/Z2njF079myynM1O0wpSgocC6Du9zCa2SFhxGqEVeSITwVtNup+uOyA
+         pOoIvE7Wi/G46P7RAbqhEKvAXXcN47YBzryBMxJ4oMkc80G7aHyVJuO4w7yTrxG+DP8L
+         TZKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=nIwWOzyteUPgtg6V/gbptI+dO14mDOtHt15Ldl+xrEE=;
-        b=q5s2fzcrkvBcKmT5Ui+ptuFUe36iZxJ3ouiHLkw2FxwOHdVYaXgzwh7DOmpOGkNICp
-         5sQylqM2m5/WT1ZvLjljWUgJXYin4X9dAnA247Fj6bmtKZwrexGMhJ3sy3SXuXQf+Eiv
-         SAe8q2fgGk0VBHLvTlZFQnkdA6812o5aZosZ44Z7TEq8zqnL6UDngXBn0OCIBv4wvGs4
-         VBfeCWEfEqGhDNvTQUqXQagXndbcuNAtmkucklSK6x7KrO082Kgx+rcRQqIAEDdTlkd8
-         nj4OshFbFVkW2E8xwZLQwGoCupXy+nCYnak8hVNt1jLS8LVqxXA20L7HRGPQkOmXCr84
-         +pxA==
-X-Gm-Message-State: AOAM5337gKnGEvNs4/iyLOXA28pplTPtFaPuP5fNueCWl4VD1noaNGDu
-        nYjo3GBbbxJhZKJ2I/RKIgxg3GKarTY=
-X-Google-Smtp-Source: ABdhPJysw+UrEAFkK81Cvq+x1Y/UpaTMZ70xp9bK9qjjcUNsNWLsKjPFueZlSzr12T13ZhIQWuPtsQ==
-X-Received: by 2002:a05:600c:3ba3:: with SMTP id n35mr20337975wms.88.1638585661192;
-        Fri, 03 Dec 2021 18:41:01 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=BRbFsIWE8FRYYsLc9p3xKYutVaHyD9NwxFuE6OgGodc=;
+        b=h66yAdHO4AeMVtV3djVEJ4JB5MWRXj3F4hCVNOEZug/pB+pWJ4GYZj43WGL1r2H8z/
+         9Bbrwos7DyHxP5eUSyw0gM0KHfuOS6Uuux/QNYfTFJAHuvXOAffxZTcYKNq5+A1+ZKRM
+         UlvByH9Nc3MjoiUa10BksIfDSS6bWc7WfooSKV7OfAA8C681YY0sTGXV1BVEReH5sMG1
+         yldOODP2J/IN0sWeiyj5Y3/5sqoA+aTnG1v25vP/WFpCJ32Xxt5Fuuhs1dbsU4Na9jMn
+         zSnAS3zVPbgSwcJH/Sd8bn6wk7erjvBm55Er7wLs3W6Rf6kf1NMjs4EtmNgclTgCSYfw
+         G4fQ==
+X-Gm-Message-State: AOAM530wPhhaDu2kc6sTVHWMUVMK7qK37Ki+KDXPymqRdmSM1H5Lo8ox
+        4xbowNB9C+PmbdT5nNcNzdQIA+/gNZ4=
+X-Google-Smtp-Source: ABdhPJwls6duV6T5Vb4Q3IudVyP6+82Q3XMw9cu3y0T4SXZh0c6jOVMT8zHTW0JTGUcZgOAgV/3x9A==
+X-Received: by 2002:adf:d1c1:: with SMTP id b1mr4526093wrd.204.1638586535806;
+        Fri, 03 Dec 2021 18:55:35 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l21sm4191881wrb.38.2021.12.03.18.41.00
+        by smtp.gmail.com with ESMTPSA id z15sm3892325wrr.65.2021.12.03.18.55.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 18:41:00 -0800 (PST)
-Message-Id: <d8ae001500c788cdabf4e6918da0a7ce89a48fc6.1638585658.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1091.git.1638585658.gitgitgadget@gmail.com>
-References: <pull.1091.git.1638585658.gitgitgadget@gmail.com>
-From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 04 Dec 2021 02:40:58 +0000
-Subject: [PATCH 2/2] tmp-objdir: disable ref updates when replacing the
- primary odb
+        Fri, 03 Dec 2021 18:55:35 -0800 (PST)
+Message-Id: <pull.1092.git.1638586534.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 04 Dec 2021 02:55:32 +0000
+Subject: [PATCH 0/2] Sparse Index: fix a checkout bug with deep sparse-checkout patterns
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     "Neeraj K. Singh" <neerajsi@microsoft.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
+Cc:     stolee@gmail.com, vdye@github.com, gitster@pobox.com,
+        newren@gmail.com, Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Neeraj Singh <neerajsi@microsoft.com>
+This week, we rolled out the sparse index to a large internal monorepo. We
+got two very similar bug reports that dealt with a strange error that
+involved the same set of paths. One was during git pull (pull was a red
+herring) and the other was git checkout. The git checkout case gave enough
+of a reproduction to debug deep into unpack-trees.c and find the problem.
 
-When creating a subprocess with a temporary ODB, we set the
-GIT_QUARANTINE_ENVIRONMENT env var to tell child Git processes not
-to update refs, since the tmp-objdir may go away.
+This bug dates back to 523506d (unpack-trees: unpack sparse directory
+entries, 2021-07-14). The reason we didn't hit this before is because it
+requires the following:
 
-Introduce a similar mechanism for in-process temporary ODBs when
-we call tmp_objdir_replace_primary_odb. Now both mechanisms set
-the disable_ref_updates flag on the odb, which is queried by
-the ref_transaction_prepare function.
+ 1. The sparse-checkout definition needs to have recursive inclusion of deep
+    folders (depth 3 or more).
+ 2. Adjacent to those deep folders, we need a deep sparse directory entry
+    that receives changes.
+ 3. In this particular repo, deep directories are only added to the
+    sparse-checkout in rare occasions and those adjacent folders are rarely
+    updated. They happened to update this week and hit our sparse index
+    dogfooders in surprising ways.
 
-Note: This change adds an assumption that the state of
-the_repository is relevant for any ref transaction that might
-be initiated. Unwinding this assumption should be straightforward
-by saving the relevant repository to query in the transaction or
-the ref_store.
+The first patch adds a test that fails without the fix. It requires
+modifying our test data to make adjacent, deep sparse directory entries
+possible. It's a rather simple test after we have that data change.
 
-Peff's test case was invoking ref updates via the cachetextconv
-setting. That particular code silently does nothing when a ref
-update is forbidden. See the call to notes_cache_put in
-fill_textconv where errors are ignored.
+The second patch includes the actual fix. It's really just an error of not
+understanding the difference between the name and traverse_path members of
+the struct traverse_info structure. name only stores a single tree entry
+while traverse_path actually includes the full name from root. The method we
+are editing also has an additional struct name_entry that fills in the tree
+entry on top of the traverse_path, which explains how this worked to depth
+two, but not depth three.
 
-Reported-by: Jeff King <peff@peff.net>
+Thanks, -Stolee
 
-Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- environment.c  | 4 ++++
- object-file.c  | 6 ++++++
- object-store.h | 9 ++++++++-
- refs.c         | 2 +-
- repository.c   | 2 ++
- repository.h   | 1 +
- 6 files changed, 22 insertions(+), 2 deletions(-)
+Derrick Stolee (2):
+  t1092: add deeper changes during a checkout
+  unpack-trees: use traverse_path instead of name
 
-diff --git a/environment.c b/environment.c
-index 342400fcaad..2701dfeeec8 100644
---- a/environment.c
-+++ b/environment.c
-@@ -169,6 +169,10 @@ void setup_git_env(const char *git_dir)
- 	args.graft_file = getenv_safe(&to_free, GRAFT_ENVIRONMENT);
- 	args.index_file = getenv_safe(&to_free, INDEX_ENVIRONMENT);
- 	args.alternate_db = getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT);
-+	if (getenv(GIT_QUARANTINE_ENVIRONMENT)) {
-+		args.disable_ref_updates = 1;
-+	}
-+
- 	repo_set_gitdir(the_repository, git_dir, &args);
- 	strvec_clear(&to_free);
- 
-diff --git a/object-file.c b/object-file.c
-index 0b6a61aeaff..659ef7623ff 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -699,6 +699,12 @@ struct object_directory *set_temporary_primary_odb(const char *dir, int will_des
- 	 */
- 	new_odb = xcalloc(1, sizeof(*new_odb));
- 	new_odb->path = xstrdup(dir);
-+
-+	/*
-+	 * Disable ref updates while a temporary odb is active, since
-+	 * the objects in the database may roll back.
-+	 */
-+	new_odb->disable_ref_updates = 1;
- 	new_odb->will_destroy = will_destroy;
- 	new_odb->next = the_repository->objects->odb;
- 	the_repository->objects->odb = new_odb;
-diff --git a/object-store.h b/object-store.h
-index cb173e69392..9ae9262c340 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -27,10 +27,17 @@ struct object_directory {
- 	uint32_t loose_objects_subdir_seen[8]; /* 256 bits */
- 	struct oidtree *loose_objects_cache;
- 
-+	/*
-+	 * This is a temporary object store created by the tmp_objdir
-+	 * facility. Disable ref updates since the objects in the store
-+	 * might be discarded on rollback.
-+	 */
-+	unsigned int disable_ref_updates : 1;
-+
- 	/*
- 	 * This object store is ephemeral, so there is no need to fsync.
- 	 */
--	int will_destroy;
-+	unsigned int will_destroy : 1;
- 
- 	/*
- 	 * Path to the alternative object store. If this is a relative path,
-diff --git a/refs.c b/refs.c
-index d7cc0a23a3b..27ec7d1fc64 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2137,7 +2137,7 @@ int ref_transaction_prepare(struct ref_transaction *transaction,
- 		break;
- 	}
- 
--	if (getenv(GIT_QUARANTINE_ENVIRONMENT)) {
-+	if (the_repository->objects->odb->disable_ref_updates) {
- 		strbuf_addstr(err,
- 			      _("ref updates forbidden inside quarantine environment"));
- 		return -1;
-diff --git a/repository.c b/repository.c
-index c5b90ba93ea..dce8e35ac20 100644
---- a/repository.c
-+++ b/repository.c
-@@ -80,6 +80,8 @@ void repo_set_gitdir(struct repository *repo,
- 	expand_base_dir(&repo->objects->odb->path, o->object_dir,
- 			repo->commondir, "objects");
- 
-+	repo->objects->odb->disable_ref_updates = o->disable_ref_updates;
-+
- 	free(repo->objects->alternate_db);
- 	repo->objects->alternate_db = xstrdup_or_null(o->alternate_db);
- 	expand_base_dir(&repo->graft_file, o->graft_file,
-diff --git a/repository.h b/repository.h
-index a057653981c..7c04e99ac5c 100644
---- a/repository.h
-+++ b/repository.h
-@@ -158,6 +158,7 @@ struct set_gitdir_args {
- 	const char *graft_file;
- 	const char *index_file;
- 	const char *alternate_db;
-+	int disable_ref_updates;
- };
- 
- void repo_set_gitdir(struct repository *repo, const char *root,
+ t/t1092-sparse-checkout-compatibility.sh | 16 +++++++++++++++-
+ unpack-trees.c                           | 10 +++++-----
+ 2 files changed, 20 insertions(+), 6 deletions(-)
+
+
+base-commit: cd3e606211bb1cf8bc57f7d76bab98cc17a150bc
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1092%2Fderrickstolee%2Fsparse-index%2Fcheckout-bug-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1092/derrickstolee/sparse-index/checkout-bug-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1092
 -- 
 gitgitgadget
