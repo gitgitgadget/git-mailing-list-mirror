@@ -2,111 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 385B4C433F5
-	for <git@archiver.kernel.org>; Sat,  4 Dec 2021 05:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14E74C433EF
+	for <git@archiver.kernel.org>; Sat,  4 Dec 2021 08:09:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232859AbhLDFy4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Dec 2021 00:54:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33638 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230083AbhLDFyz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Dec 2021 00:54:55 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2041C061751
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 21:51:30 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id r11so19877524edd.9
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 21:51:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=c0IEenH+sKcvjkf3tRvPqfsFBXNaDKkj0V49axolE84=;
-        b=aMV80/oz3hd7/oKnjdhMIesI4oA9L2u8ME9btkvjeZYCW5FUxlwXZCriJ14Mx4CBS3
-         AtpC1RjmpS9FJxP7ZbP0buEhtmp9dw/1kzkzDgO0MFI6t/7xxoPj9U0WyY3JG5nYr0bc
-         yugpfS3nqhS8LALEnZKuq488krvvYv0KHpj/G0cYJDvaeNG71+nQh55Fif/QS3x+tcrB
-         6H2ALGP8QqD3Zu1donPpM+P2j5CyUPzlt9VOvkfyY/bxrR2v3rdicoQjeAcg6Ue5+sFA
-         w1dDIRmJIHoeWGVqoyr6aLu6iZjAjyAE8YlxHHZR76qqVwLQDnpm6jRHgKQIxNIrh3xa
-         Kqrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=c0IEenH+sKcvjkf3tRvPqfsFBXNaDKkj0V49axolE84=;
-        b=fua9kED9aNvgrw8Z4z2OlgbKsKwsDcuXfJIKjOV+1b2YqC2cEWAjb4wNn2pMNngnaX
-         jEubUtbR1gD1F8Ec7+Gw6dq0Bsq0ujb5BFw9tDs1kqg6FKMdir7pL3CxI3jXj6HgdmEd
-         wIQu3LMjb8U56lILOKG1oCwCpBLZPS8DzsjI2pUxY9ygwkAi2+kQpWOaDfG48aQbRJKJ
-         LGSqJ33HTImw91tvUMm4kItdrWa8+X4bGYD2qGorQdbBH6jG/ZiZV7ZeB3XR/6qQ9M1m
-         riGl69wSl2qejFxuVTG+nQEFfG4zqUkKiyB6tti1rgpwS2QVY7I3BTyz54fkwG/I2Guj
-         j+Wg==
-X-Gm-Message-State: AOAM532ciP4RjXhWv0x+q/E5dvVx+yCZ1hwOwNWelA1U/O6D/NW94IhA
-        tk7FUPMmNSH5zU4m3xNPl1MNXb1O7Z3hoia7BYc=
-X-Google-Smtp-Source: ABdhPJws4JxyRirp5M/80iKazx6CE8oR47Hg2gS6Eo2+8iQGZAQvhkxve7nzSUax7+WLlSSWi+6dU+0FUtOrWCI0NJ4=
-X-Received: by 2002:a17:906:2f10:: with SMTP id v16mr29226025eji.434.1638597089068;
- Fri, 03 Dec 2021 21:51:29 -0800 (PST)
+        id S1354946AbhLDIMt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Dec 2021 03:12:49 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52401 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1354766AbhLDIMr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Dec 2021 03:12:47 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B633BF7D20;
+        Sat,  4 Dec 2021 03:09:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HuqxMiNdrflxkASOn3lNKsRVO8nxoK7RcAMS3y
+        jQJR0=; b=YnSWzNgVBmv0OC4ogx6UjP0zfPObcgqJ8XZhILCctQG/gTKGMeRI7I
+        y30/nnsaPHQBLrN6ISfSVNOvMZAVkdH46f0iq9hHJQrkdI67ameGYZyvuwgI5wQt
+        6BWdYtP4d7S7Aswg8JVv0YzMk3ac9TNIpSubWGO3IqPfx6u0twNVI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ACA56F7D1E;
+        Sat,  4 Dec 2021 03:09:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED45BF7D1D;
+        Sat,  4 Dec 2021 03:09:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jan Engelhardt <jengelh@inai.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] http-backend: give a hint that web browser access is
+ not supported
+References: <xmqqee6vwj67.fsf@gitster.g>
+        <20211202102855.23907-1-jengelh@inai.de>
+Date:   Sat, 04 Dec 2021 00:09:19 -0800
+In-Reply-To: <20211202102855.23907-1-jengelh@inai.de> (Jan Engelhardt's
+        message of "Thu, 2 Dec 2021 11:28:55 +0100")
+Message-ID: <xmqqee6spz9s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <xmqqzgpm2xrd.fsf@gitster.g> <CABPp-BHq4DnkCZZ+HcnGiZYKHpWJgzMBjMDuWbbTFYPesm2sXA@mail.gmail.com>
- <xmqqa6hhsdee.fsf@gitster.g> <20211204025820.GA17138@neerajsi-x1.localdomain>
-In-Reply-To: <20211204025820.GA17138@neerajsi-x1.localdomain>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 3 Dec 2021 21:51:18 -0800
-Message-ID: <CABPp-BH8grgsKwPpE+7xMVsW5NAeh40y1fHUKvqRD4ZNa2kX1Q@mail.gmail.com>
-Subject: Re: ns/tmp-objdir and ns/remerge-diff
-To:     Neeraj Singh <nksingh85@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7C31B0A8-54D9-11EC-9DA2-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 3, 2021 at 6:58 PM Neeraj Singh <nksingh85@gmail.com> wrote:
->
-> On Fri, Dec 03, 2021 at 11:21:13AM -0800, Junio C Hamano wrote:
-> > Elijah Newren <newren@gmail.com> writes:
-> >
-> > > ns/tmp-objdir had a re-roll that has not been picked up, at [1] --
-> > > perhaps because it's an combination of ns/tmp-objdir and
-> > > ns/batched-fsync (it'd be nicer to have those two split).  I gave the
-> > > ns/tmp-objdir part another read over and was only able to spot two
-> > > small things.  I think you should mark it as expecting a reroll based
-> > > on [2] ("Good catch. I'll fix this.") and [3] ("I'll take this
-> > > suggestion."), but I think it could be merged to next quickly after
-> > > that.
-> > >
-> > > [1] https://lore.kernel.org/git/pull.1076.v9.git.git.1637020263.gitgitgadget@gmail.com/
-> > > [2] https://lore.kernel.org/git/CANQDOddCC7+gGUy1VBxxwvN7ieP+N8mQhbxK2xx6ySqZc6U7-g@mail.gmail.com/
-> > > [3] https://lore.kernel.org/git/CANQDOdd7EHUqD_JBdO9ArpvOQYUnU9GSL6EVR7W7XXgNASZyhQ@mail.gmail.com/
-> > >
-> > >>  Also ns/remerge-diff that is Neeraj's rebase of the
-> > >> remerge-diff topic needs Elijah's Ack at least.
-> > >
-> > > Mark it as expecting a re-roll; I've been waiting for ns/tmp-objdir to
-> > > settle so I can rebase on it.
-> >
-> > I took a quick look at the rerolled one on list, and I agree that
-> > keeping tmp-objdir and batched-fsync as two separate topics makes
-> > sense, since the former can graduate much more smoothly and quickly,
-> > and it can have other dependant topics.
-> >
-> > So I'll mark all three (ns/tmp-objdir, ns/batched-fsync and
-> > remerge-diff) as "Expecting a reroll".
-> >
-> > As I announced, I won't be taking any new topics or new rerolls
-> > today (or possibly tomorrow) until I can sift the topics I've
-> > already seen to come up with a tested set of candidate topics to
-> > merge to 'next', so there is no need to rush.
-> >
-> > Thanks.
->
-> I submitted a new PR (with a new mail thread) for ns/tmp-objdir.  Hopefully
-> that one can sail in smoothly now.
+Jan Engelhardt <jengelh@inai.de> writes:
 
-Thanks for sending that out.  I wasn't cc'ed on them, and I'm dealing
-with multi-day delay of git emails that I'm not cc'ed on, but I read
-them over on lore.kernel.org/git and those two patches look good and
-appear to me to be ready for next.  :-)
+> When using a browser to access a URI that is served by http-backend,
+> nothing but a blank page is shown. This is not helpful.
+>
+> Emit the same "Request not handled" messages, but to the CGI stream
 
-> ns/batched-fsync will take a bit more time to settle.  I'm going to post a
-> new series called ns/core-fsync, which is focused on the extensible interface
-> for syncing parts of the tree.
+Puzzled.  Same with what?  The closest one in the code without this
+patch is "Request not supported" and one call (among the three) to
+the not_found_2() function does use that string, so perhaps that is
+what was meant here?
+
+> +static NORETURN void not_found_2(struct strbuf *hdr, const char *dir,
+> +				 const char *pathinfo, const char *err,
+> +				 const char *hint)
+> +{
+> +	http_status(hdr, 404, "Not Found");
+> +	hdr_nocache(hdr);
+> +	strbuf_add(hdr, "\r\n", 2);
+> +	if (pathinfo != NULL)
+> +		strbuf_addf(hdr, "%s: ", pathinfo);
+> +	strbuf_addf(hdr, "%s.\r\n", err);
+
+What is in "pathinfo" parameter?  Can it safely be on the left side
+of the colon?  I am reading that this part is emitting a series of
+HTTP header lines, so I would understand it if it were producing
+lines like 
+
+    PATH-INFO: /hello+world
+
+but it seems that you are instead writing
+
+    /hello+world: <error string>.
+
+here.
+
+Notice that the above code already relies on err being non-NULL.
+
+> +	if (hint != NULL)
+> +		strbuf_addf(hdr, "%s\r\n", hint);
+
+Likewise.  This just emits a random unstructured string.
+
+By the way, do not compare pathinfo and hint pointers with != NULL;
+with "git grep" in this file you'll notice no existing code does that.
+Just write
+
+	if (pathinfo)
+		do_this();
+
+> +	end_headers(hdr);
+
+So here is where the HTTP headers end.
+
+I think the use of internal API in http-backend.c in the new code is
+wrong; I haven't seen how it is used until now, so take this with a
+grain of salt, though.
+
+Did you actually mean something different, that is:
+
+	struct strbuf body = STRBUF_INIT;
+
+	http_status(hdr, 404, "Not Found");
+	hdr_nocache(hdr);
+       
+	/* stuff pathinfo, err, and hint into "body" strbuf ... */
+	if (pathinfo)
+		strbuf_addf(&body, "%s: ", pathinfo);
+	strbuf_addf(&body, "%s.\r\n", err);
+        if (hint)
+		strbuf_addf(&body, "%s\r\n", hint);
+
+	/* ... and send it out */
+	send_strbuf(hdr, "text/plain", &body);
+	strbuf_release(&body);
+
+As end_headers() call emitted the necessary blank line after the
+header, anything you write to fd #1 after this point will become
+the body of the HTTP message.  And send_strbuf() seems to be a
+helper that was designed for exactly this kind of usage.
+
+> +	if (err && *err)
+> +		fprintf(stderr, "%s: %s\n", dir, err);
+
+We know err is not NULL already, so the first part "err &&" is way
+too late to be useful safety.
+
+I notice that this is still going to the standard error stream.  Is
+the intention that the remote requestor may get a lightly redacted
+error message while the log will leave detailed record to help
+debugging?  In that case, I suspect that we may want to rename "dir"
+and "pathinfo" to make the distinction clearer (my understanding is
+that the former is the unredacted version and pathinfo is the
+redacted one).
+
+Why do we need the original not_found()?  It seems that there is
+only one remaining caller, so I think you can make it also use the
+new not_found_2() with NULL pathinfo and NULL dir (as that existing
+caller does not need it), and make the caller prepare the error
+string appropriately.
+
+	char *p = git_pathdup("%s", name);
+	size_t buf_alloc = 8192;
+	char *buf = xmalloc(buf_alloc);
+	int fd;
+	struct stat sb;
+
+	fd = open(p, O_RDONLY);
+	if (fd < 0)
+		not_found(hdr, "Cannot open '%s': %s", p, strerror(errno));
+
+'p' is an unredacted one and we can use "dir" parameter for it,
+while 'name' can be stuffed in the "pathinfo" parameter, I guess.
+I wonder if something like this is close enough:
+
+	not_found_2(hdr,
+        	    p /* sensitive */,
+                    name /* public */,
+                    xstrfmt("Cannot open (%s)", strerror(errno)),
+		    NULL);
+
+ANd if we can get rid of the use of the original not_found(), we
+could even take its nice name over. 
