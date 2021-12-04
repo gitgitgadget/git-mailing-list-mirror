@@ -2,58 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1497FC433F5
-	for <git@archiver.kernel.org>; Sat,  4 Dec 2021 20:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4632DC433FE
+	for <git@archiver.kernel.org>; Sat,  4 Dec 2021 20:00:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378534AbhLDUD6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Dec 2021 15:03:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50014 "EHLO
+        id S1378667AbhLDUED (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Dec 2021 15:04:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355813AbhLDUDx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Dec 2021 15:03:53 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70598C0611F7
-        for <git@vger.kernel.org>; Sat,  4 Dec 2021 12:00:27 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id i5so13385426wrb.2
+        with ESMTP id S1378395AbhLDUDy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Dec 2021 15:03:54 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C486C061D60
+        for <git@vger.kernel.org>; Sat,  4 Dec 2021 12:00:28 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id y196so5055887wmc.3
         for <git@vger.kernel.org>; Sat, 04 Dec 2021 12:00:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=zJiKSk3jn17B2YS9f23vblDHHajI/cQ+P5TWEQ6r3a0=;
-        b=iSQT1YQ+SFeg6gJ8j1UTenPu4e1wPaRDrrZewdCnE/sbzSa5txtDT9cICA/QAfx5iy
-         vYd+YuoSQCxl1p0PEkoW5WdWUJFrjVnr1zUYYpujZ0UhL7+trWkpZacAXBXfrk1vG1Bp
-         77TDHYGKuw6F9BIYtPLfz7A3AvF8TTGAjPDQdf9g8P+VqgSY66qciDgpGCppJaSTnGUn
-         syA9YkDdAg9GLhkYJ5f2G7+x+NhraZgDJQeb4/rljUXLPxLCtnm/JUvKygVgpLpXT9/O
-         3ZRMqpyIsmrjDbCr0RF/Yms+tFU6n3vmRIrDXEKZ6GEmJjNiSbnMkAnJkNs9ePwpb6YF
-         8S6A==
+        bh=4MItie7vNQS2KAIdrLM9LL/xACe4+d25xi00b/lXefA=;
+        b=g0eRzzKJRh1vyqOY1UvXCVXB4zQusmzHyFv9mAtfLoQQmPuQRvCxwDbvC7t3cR9EMd
+         1YYT0zFJvgNluUugLstwCWF+NGlKYwTTcFVkssEXP7F0LrfK35aQ594XA8LAgSKG85xI
+         p2x+f3wgpnQivQv7uGKEzfoS5cGLowNMz7mIjen4oFyDnbFSAqk4JGH9goqXPxAIZxSk
+         v8qVuTkG31J+FRCxp0v2gWWg1uRlpr5Aj3Rg+JJ7hqBLSSS6DHYgdp/beBk5k96kWys4
+         wxgV0Fl9AhpjdhMWmLF23N1Pm4Q6/59B/0KxdqHBo8E5XYDnSPoR5i2iwTL5iCW2dXUc
+         4cvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zJiKSk3jn17B2YS9f23vblDHHajI/cQ+P5TWEQ6r3a0=;
-        b=DAJ6AUiHTEfac8jmryF3+awmRgNk6uoWM0pbmWtMwIILG4u62TtCAW7x/0dUqf+pKM
-         IBeSJH4yGSpZJVUTj/yX2IpEhMgkOSffRoubUn9hcd9u/GiA2zvFYJ00VFZBy1P4tElI
-         QKNhlY39LVamU1TFX2K3Q2Wha8KwU9dqmeeBq76ROOcrkemBHpwrQU29jLXOFTsEL91R
-         Y/QsaXCuoER81q88JUKenMRo/Jg/KEJRQq9L7sc4oytQIPr3lF7keBXw6TrpPocfeEXj
-         jwq3vCftmb8K3SVJDoXuSCOzTypCofCZYysK82II3xgDQaVYJu/ppfs2r+S8o3qfWYhW
-         FSEg==
-X-Gm-Message-State: AOAM533C70lJS4vZNlPDN0D8xpNR3ZE0ejzOhnIzjYt5WWh6dhHcmX97
-        GdPbpN3gviVCG+nvIo/3jh+R+R6M73E=
-X-Google-Smtp-Source: ABdhPJyegG/GpiGV1StQnHKs0aNcIOUihcCAFMxU7ynN+ox2EBXu/iZO0DrEn7/QTdyrDkGDVAPldA==
-X-Received: by 2002:a5d:4d51:: with SMTP id a17mr29581301wru.384.1638648025877;
-        Sat, 04 Dec 2021 12:00:25 -0800 (PST)
+        bh=4MItie7vNQS2KAIdrLM9LL/xACe4+d25xi00b/lXefA=;
+        b=uWW8EzKeQcUASuXponFTGaiyfiY6quabbH7N+pTx+q5bB5Aw/qT1sqZi7TCIjSgVN1
+         VCHCMs3PQdCZmldZ0HgDja5Lib5ySLaM7PWbCORCbKmeLklV1QWUpDZkCY1ZIsNgr+3C
+         ekeyOhA3eLDlyP+0mbm53gjvFUhCPmK0E2e077VhHRFHRRWHgDrYXZLtRnPpWlaYZOxU
+         BClupjZNZOeVomJb4AUYPsc+RO7VBFYRe2qqdBAkzSuUXcl/XQ6+hnJz7mNF0tijDcug
+         1gJHUF9W4XdBJw+PaEn+k3kn90+gsfwY5Sa5LqbQradg7HnaghJkXy/zKG9KEwd6xEuf
+         k6nA==
+X-Gm-Message-State: AOAM533FABE4VpmTgYo58NdR3O9QcNGpQZM7d0XwC+XPJZPmErn/I4xY
+        F4YDeweXtijXTFdfeS1rWnDvZ5J9sUs=
+X-Google-Smtp-Source: ABdhPJwlZIg6lwrr8kTnc3kS2Jp/Zu3D1FX5zqgTMtjaLDahWiNHHStydur2YnkxeFFGdrwzQY3VwA==
+X-Received: by 2002:a1c:1b15:: with SMTP id b21mr25677236wmb.174.1638648026500;
+        Sat, 04 Dec 2021 12:00:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e7sm8629291wrg.31.2021.12.04.12.00.25
+        by smtp.gmail.com with ESMTPSA id d2sm9334552wmb.24.2021.12.04.12.00.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Dec 2021 12:00:25 -0800 (PST)
-Message-Id: <9d455f1fb518140dc98430dde7561cbf36642322.1638648020.git.gitgitgadget@gmail.com>
+        Sat, 04 Dec 2021 12:00:26 -0800 (PST)
+Message-Id: <2ad404874eed9bebd3102466bbc1e0d92cdecc30.1638648020.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1151.git.git.1638648020.gitgitgadget@gmail.com>
 References: <pull.1151.git.git.1638648020.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 04 Dec 2021 20:00:19 +0000
-Subject: [PATCH 5/6] Documentation: clarify/correct a few sparsity related
- statements
+Date:   Sat, 04 Dec 2021 20:00:20 +0000
+Subject: [PATCH 6/6] clone: avoid using deprecated `sparse-checkout init`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,44 +69,26 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
+The previous commits marked `sparse-checkout init` as deprecated; we
+can just use `set` instead here and pass it no paths.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-clone.txt           | 8 ++++----
- Documentation/git-sparse-checkout.txt | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ builtin/clone.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 3fe3810f1ce..b348a71fc68 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -167,10 +167,10 @@ objects from the source repository into a pack in the cloned repository.
- 	configuration variables are created.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index fb377b27657..5bed37f8b51 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -633,7 +633,7 @@ static int git_sparse_checkout_init(const char *repo)
+ {
+ 	struct strvec argv = STRVEC_INIT;
+ 	int result = 0;
+-	strvec_pushl(&argv, "-C", repo, "sparse-checkout", "init", NULL);
++	strvec_pushl(&argv, "-C", repo, "sparse-checkout", "set", NULL);
  
- --sparse::
--	Initialize the sparse-checkout file so the working
--	directory starts with only the files in the root
--	of the repository. The sparse-checkout file can be
--	modified to grow the working directory as needed.
-+	Employ a sparse-checkout, with only files in the toplevel
-+	directory initially being present.  The
-+	linkgit:git-sparse-checkout[1] command can be used to grow the
-+	working directory as needed.
- 
- --filter=<filter-spec>::
- 	Use the partial clone feature and request that the server sends
-diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-index d22c925ecf8..73e7645b77a 100644
---- a/Documentation/git-sparse-checkout.txt
-+++ b/Documentation/git-sparse-checkout.txt
-@@ -115,7 +115,7 @@ SPARSE CHECKOUT
- It uses the skip-worktree bit (see linkgit:git-update-index[1]) to tell
- Git whether a file in the working directory is worth looking at. If
- the skip-worktree bit is set, then the file is ignored in the working
--directory. Git will not populate the contents of those files, which
-+directory. Git will avoid populating the contents of those files, which
- makes a sparse checkout helpful when working in a repository with many
- files, but only a few are important to the current user.
- 
+ 	/*
+ 	 * We must apply the setting in the current process
 -- 
 gitgitgadget
-
