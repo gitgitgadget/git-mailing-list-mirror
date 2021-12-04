@@ -2,144 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20471C433F5
-	for <git@archiver.kernel.org>; Sat,  4 Dec 2021 02:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08C4FC433EF
+	for <git@archiver.kernel.org>; Sat,  4 Dec 2021 02:58:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384116AbhLDC7E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Dec 2021 21:59:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52382 "EHLO
+        id S243599AbhLDDBs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Dec 2021 22:01:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238466AbhLDC7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Dec 2021 21:59:03 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32201C061751
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 18:55:38 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id r9-20020a7bc089000000b00332f4abf43fso5470854wmh.0
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 18:55:38 -0800 (PST)
+        with ESMTP id S232665AbhLDDBs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Dec 2021 22:01:48 -0500
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADB34C061751
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 18:58:23 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id z6so4659661pfe.7
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 18:58:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=gQ0ypipIOhDEidSqnzGSV2bK/YJ6VXsd7/PALHaW+mw=;
-        b=OqOpHdoHNSxlQM2MuRRSk1912q5Z/nX/DwA9iiAk9Scn+jdp7800oDbdEDpvcivXTm
-         L7/+qIqtupsr+N/7DrLIFPy/zhdvNS8lQ83Tt0rzte7k+08STL7Jp4fQXSpoMotwVzVy
-         8TcwYeFY+9c7KbTkYgochjDKswRmQHcEnlZz/m0z2PJJoLfK25eP4uo8yQq38VEckwjm
-         NR2YTyYzfm4EoY8UWmXLqQXQlIeRQX0SeK0sYbZxoTFZC6vIcy0tzXsj6/FpnRUZnoGc
-         qzqXAvWExqgocIH9tmUvHTN8WYxBgErzHGtlOPEzKc41KnKM+EQMT9rkvhpgkvqZVQkC
-         k6iw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=bD6d1sikXsUEJMr6te5F2uD+GsFPlMgFUugygSOVWXM=;
+        b=DyqNMZ59X28wnnbyeY5DrewJsZh8Yy3TiQwsuF7GjkrCLNDBhjdyvlHGyMU6aYTOnu
+         bihQwGDiOVx0S0OfefHVn5r7jhfahTdaAEJ9SW3Juh8AEdbnvR/+zmyClTkhsRrDnMYd
+         5T9m5bCjInx6fPDjGgem2nfyJmecbXMMPLH/hs0bweQa+KCzOfFLDY50qrKMiCs8JihS
+         iD2chFIjJQcCE7X5MYaCc7tuyura8T7A1TjEAhEXBEIXW0cqoXVP90bnQMazWvCZDkYs
+         tdWCh8zHL2Y3HfNoFLRGtxGyr8ePG8/eEbBig9vNu9xGjjipGoZM/JmQD40gMVcVM+rv
+         HkTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gQ0ypipIOhDEidSqnzGSV2bK/YJ6VXsd7/PALHaW+mw=;
-        b=VgKcOpEC0tD5Apz2fVHJGehUp7b+KuUJvbshHB1i8M2mb6c4u//KJgjIs0MogvcchK
-         yBmPAkHS0y03mt2kCGH40qGDHxS6aSd6LXSIqtO/wsaRv6U18zBRDImKO+qzV6DBxCE3
-         +2sfHBpjskzRNorPp/hQ9AL9PwDvG95DOk2It2uVRVM9n2BRQB2qH+B4ZOW6PiQkIGRv
-         DE2a4LKB/Va/MQSE2SC2B4JWllg/LerY63llmr5nm6aR7nRyygHdi14o4X6ea4a5WW8d
-         9Kp9DWUiuQofpE6Ad2BdjHxSQkJTwNANAVjGieKnCXfk3lEPBp61fpLryJW+eDX+Fglu
-         td5g==
-X-Gm-Message-State: AOAM531DOb8UvS2VdFeWuSIUmYfl2rwZYmPr+QehUcngfRO3kkh17fc2
-        YMk47Ker1g0kCVaIkU8YIe0RD2fPSSE=
-X-Google-Smtp-Source: ABdhPJwZmR8KZ2m9bTWdVIpZdnI1w2VeJT4GljsJqFVhP3spoYBQpPqNR3ytMar0bXX6CeMDmDPu4A==
-X-Received: by 2002:a1c:ed0a:: with SMTP id l10mr19809800wmh.140.1638586536616;
-        Fri, 03 Dec 2021 18:55:36 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i15sm7708185wmq.18.2021.12.03.18.55.36
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=bD6d1sikXsUEJMr6te5F2uD+GsFPlMgFUugygSOVWXM=;
+        b=m/g1va3FNNbHYsupagmtFhLaRCZaw/wh/wbtVNhtJYRfxsuIW1rDx63QZpE20GNkqy
+         XzlSDUIG5KEploJSNjvNC4NFXkQv6ryZrC5oNwkd9hEDeOjs8OgsQ+qux4auXRPybSyP
+         7VWOKfY+qWmWrB7AbF3ia2YOx5kOYopm9k0lA2pOusOispu3P2IvAt8oWfBd/8X+LFgE
+         0j9KrZcbo9JPxBVOJUfOvU0gV3AJvk0Mp8HbFTHff7PdCYXPBu2xDXDhTOUDIwG0k1gH
+         41u+FU0eoUP0mjAxqzfahYKEPEJ66dciLchpgRj1u6AB7yd+dpNtxHigqGW+++92wh+f
+         etSw==
+X-Gm-Message-State: AOAM533jESdWoW+Hf6LixZR1vNK7KiyEC9cJ2FwqbAb9s/mNw2x+gMFX
+        4sksqYx80aiFAqVIu1DDXRs=
+X-Google-Smtp-Source: ABdhPJwe+JdbV3gubTOuivTuMHH0C8X44fA0QTDy80xDiB55lXT4yujv2H0ohfdEEdRsSHoe8MEyug==
+X-Received: by 2002:a63:80c8:: with SMTP id j191mr7781960pgd.143.1638586703146;
+        Fri, 03 Dec 2021 18:58:23 -0800 (PST)
+Received: from neerajsi-x1.localdomain (c-24-56-226-231.customer.broadstripe.net. [24.56.226.231])
+        by smtp.gmail.com with ESMTPSA id 35sm181593pgx.49.2021.12.03.18.58.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 18:55:36 -0800 (PST)
-Message-Id: <ba05d7d4149bc4e9e931aa225cd1fc013796d7b3.1638586534.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1092.git.1638586534.gitgitgadget@gmail.com>
-References: <pull.1092.git.1638586534.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 04 Dec 2021 02:55:33 +0000
-Subject: [PATCH 1/2] t1092: add deeper changes during a checkout
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Fri, 03 Dec 2021 18:58:22 -0800 (PST)
+Date:   Fri, 3 Dec 2021 18:58:20 -0800
+From:   Neeraj Singh <nksingh85@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: ns/tmp-objdir and ns/remerge-diff
+Message-ID: <20211204025820.GA17138@neerajsi-x1.localdomain>
+References: <xmqqzgpm2xrd.fsf@gitster.g>
+ <CABPp-BHq4DnkCZZ+HcnGiZYKHpWJgzMBjMDuWbbTFYPesm2sXA@mail.gmail.com>
+ <xmqqa6hhsdee.fsf@gitster.g>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, vdye@github.com, gitster@pobox.com,
-        newren@gmail.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqa6hhsdee.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On Fri, Dec 03, 2021 at 11:21:13AM -0800, Junio C Hamano wrote:
+> Elijah Newren <newren@gmail.com> writes:
+> 
+> > ns/tmp-objdir had a re-roll that has not been picked up, at [1] --
+> > perhaps because it's an combination of ns/tmp-objdir and
+> > ns/batched-fsync (it'd be nicer to have those two split).  I gave the
+> > ns/tmp-objdir part another read over and was only able to spot two
+> > small things.  I think you should mark it as expecting a reroll based
+> > on [2] ("Good catch. I'll fix this.") and [3] ("I'll take this
+> > suggestion."), but I think it could be merged to next quickly after
+> > that.
+> >
+> > [1] https://lore.kernel.org/git/pull.1076.v9.git.git.1637020263.gitgitgadget@gmail.com/
+> > [2] https://lore.kernel.org/git/CANQDOddCC7+gGUy1VBxxwvN7ieP+N8mQhbxK2xx6ySqZc6U7-g@mail.gmail.com/
+> > [3] https://lore.kernel.org/git/CANQDOdd7EHUqD_JBdO9ArpvOQYUnU9GSL6EVR7W7XXgNASZyhQ@mail.gmail.com/
+> >
+> >>  Also ns/remerge-diff that is Neeraj's rebase of the
+> >> remerge-diff topic needs Elijah's Ack at least.
+> >
+> > Mark it as expecting a re-roll; I've been waiting for ns/tmp-objdir to
+> > settle so I can rebase on it.
+> 
+> I took a quick look at the rerolled one on list, and I agree that
+> keeping tmp-objdir and batched-fsync as two separate topics makes
+> sense, since the former can graduate much more smoothly and quickly,
+> and it can have other dependant topics.
+> 
+> So I'll mark all three (ns/tmp-objdir, ns/batched-fsync and
+> remerge-diff) as "Expecting a reroll".
+> 
+> As I announced, I won't be taking any new topics or new rerolls
+> today (or possibly tomorrow) until I can sift the topics I've
+> already seen to come up with a tested set of candidate topics to
+> merge to 'next', so there is no need to rush.
+> 
+> Thanks.
 
-Extend the repository data in the setup of t1092 to include more
-directories within two parent directories. This reproduces a bug found
-by users of the sparse index feature with suitably-complicated
-sparse-checkout definitions.
+I submitted a new PR (with a new mail thread) for ns/tmp-objdir.  Hopefully
+that one can sail in smoothly now.
 
-Add a failing test that fails in its first 'git checkout deepest' run in
-the sparse index case with this error:
+ns/batched-fsync will take a bit more time to settle.  I'm going to post a
+new series called ns/core-fsync, which is focused on the extensible interface
+for syncing parts of the tree.
 
-  error: Your local changes to the following files would be overwritten by checkout:
-          deep/deeper1/deepest2/a
-          deep/deeper1/deepest3/a
-  Please commit your changes or stash them before you switch branches.
-  Aborting
-
-The next change will fix this error, and that fix will make it clear why
-the extra depth is necessary for revealing this bug. The assignment of
-the sparse-checkout definition to include deep/deeper1/deepest as a
-sibling directory is important to ensure that deep/deeper1 is not a
-sparse directory entry, but deep/deeper1/deepest2 is.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- t/t1092-sparse-checkout-compatibility.sh | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
-
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 16fbd2c6db9..e6aef40e9b3 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -19,6 +19,8 @@ test_expect_success 'setup' '
- 		mkdir folder1 folder2 deep x &&
- 		mkdir deep/deeper1 deep/deeper2 deep/before deep/later &&
- 		mkdir deep/deeper1/deepest &&
-+		mkdir deep/deeper1/deepest2 &&
-+		mkdir deep/deeper1/deepest3 &&
- 		echo "after deeper1" >deep/e &&
- 		echo "after deepest" >deep/deeper1/e &&
- 		cp a folder1 &&
-@@ -30,7 +32,9 @@ test_expect_success 'setup' '
- 		cp a deep/deeper2 &&
- 		cp a deep/later &&
- 		cp a deep/deeper1/deepest &&
--		cp -r deep/deeper1/deepest deep/deeper2 &&
-+		cp a deep/deeper1/deepest2 &&
-+		cp a deep/deeper1/deepest3 &&
-+		cp -r deep/deeper1/ deep/deeper2 &&
- 		mkdir deep/deeper1/0 &&
- 		mkdir deep/deeper1/0/0 &&
- 		touch deep/deeper1/0/1 &&
-@@ -126,6 +130,8 @@ test_expect_success 'setup' '
- 
- 		git checkout -b deepest base &&
- 		echo "updated deepest" >deep/deeper1/deepest/a &&
-+		echo "updated deepest2" >deep/deeper1/deepest2/a &&
-+		echo "updated deepest3" >deep/deeper1/deepest3/a &&
- 		git commit -a -m "update deepest" &&
- 
- 		git checkout -f base &&
-@@ -301,6 +307,14 @@ test_expect_success 'add, commit, checkout' '
- 	test_all_match git checkout -
- '
- 
-+test_expect_failure 'deep changes during checkout' '
-+	init_repos &&
-+
-+	test_sparse_match git sparse-checkout set deep/deeper1/deepest &&
-+	test_all_match git checkout deepest &&
-+	test_all_match git checkout base
-+'
-+
- test_expect_success 'add outside sparse cone' '
- 	init_repos &&
- 
--- 
-gitgitgadget
-
+Thanks,
+Neeraj
