@@ -2,65 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 599CBC433F5
-	for <git@archiver.kernel.org>; Sat,  4 Dec 2021 05:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3AE1C433EF
+	for <git@archiver.kernel.org>; Sat,  4 Dec 2021 05:37:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231924AbhLDFjV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Dec 2021 00:39:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58498 "EHLO
+        id S232193AbhLDFk1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Dec 2021 00:40:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230083AbhLDFjU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Dec 2021 00:39:20 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A963FC061751
-        for <git@vger.kernel.org>; Fri,  3 Dec 2021 21:35:55 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id u1so10126291wru.13
-        for <git@vger.kernel.org>; Fri, 03 Dec 2021 21:35:55 -0800 (PST)
+        with ESMTP id S230083AbhLDFk1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Dec 2021 00:40:27 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E521C061751
+        for <git@vger.kernel.org>; Fri,  3 Dec 2021 21:37:02 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id d24so10348404wra.0
+        for <git@vger.kernel.org>; Fri, 03 Dec 2021 21:37:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=2pxRHH3Rxl5y/9NZs0n++D0rTUjZ8J6XLfy7eWqmF4w=;
-        b=eDidkHGp9u7/Mzu7V81FjES7aWPsBL9lKpNqrA+H26A90o3+lJr5M1uq9vtxBAYbiY
-         QYQSZ32FB288tSVF7GMJ3bU8HhBoNu/4pBWIqbIFjeDx+fwnl+tIM0iNKgQAO5kdJa+G
-         9hxxzDz03TfJXiz1v2hZ8DdKVBOcNgONHJcGIPGWn8/GLMha4Z9JOzVhguQZVQ9cAbXH
-         eUjpQ6mweq4Rk/Z8zGyIkkKJzfq2qAwtSjhtrBSksQcf5SBI23uBptm+jy83+u8q9dgV
-         g8EvV0BP+0A6bn9v1MC7eIqKG5/Z6GFQbaszwZztsa7KmxMhM/c7/5sbUXibcy0wcJJ8
-         xgxg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=snML+fKBbbiWLP0GCW5zSDOeQsw9/kBbnObPT4kOlvs=;
+        b=KBU7DWosVD+1NIrT37KfPPG4N2cezZ4rBSCMqJ+b+Rw9WYF+6AvqaTb/NWzwIa5n6b
+         ck26o0HS3pRX7DjJOdkKYJt3axDkdNlDcbY/OGkrR5Sa03RMzH4YjH3y8HKOvk8GOx3q
+         YnhXT1beflMZ7cmToezQ+bwa8WHQgLAM2VEXZ2nGhCK4CrEUWSJW6KtfDWjT9kXtmw6V
+         i4OB5r6zYtsYX21QfULX+vCaYxZ9PksrGN8K/pQfTqNfU6hmdVpKuBLgvVvn8uLVdhbf
+         QzZA/LOWDmrbIhfzW3Fe2FgQdLBEF/ajEyJydtu/u7hlTaxVyg0ZrI5r2a8z8d7PfkRo
+         9/ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=2pxRHH3Rxl5y/9NZs0n++D0rTUjZ8J6XLfy7eWqmF4w=;
-        b=Rmg67vNjcrZL06tzEy95E9gncwo9Eb4DQcD2kPQxD9ux1nPVcPn+NlDh7LgNX3h8M+
-         w0g3FJ0IHDRGMlGErIwuNRcoiUb1ApsTqodMEo6EM/jq0qWTxq3NahXSu0/2sJHH65Vl
-         MCcgUGZGPKBL0e4lQMOg9gPk15j9ilpMXLmufxOm4/dz+BLr7mDgGz5CCWLUxNSVn5OY
-         o2t4oweLF4VQWYIlsR22j3fv1idx9rZsiWk4m7YG4HX1PZJ8Bck9jihPtKh2Gwq1n5VX
-         qd9eD70tD+Vs9g4F8qc9f3MuZ47clB9wwKzgmthu2GHkDlY/ZLIT9DdprAgVGoakW/38
-         MqBg==
-X-Gm-Message-State: AOAM532jBC/znjgXeZ4fEMLZhUkcHyuvU3td6EJw7tHo8sfvCvwbSync
-        fKErdTjpx85MgnyBAS0uAGtwwIMVpok=
-X-Google-Smtp-Source: ABdhPJxMhuw1MntdAAWcrWEVeKN3S8TC/LeLhKk7TQ8A+jjpdyfrmvvVKEx8qarvMZNVCF3Ws/h+TA==
-X-Received: by 2002:a5d:5303:: with SMTP id e3mr26581469wrv.73.1638596153775;
-        Fri, 03 Dec 2021 21:35:53 -0800 (PST)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=snML+fKBbbiWLP0GCW5zSDOeQsw9/kBbnObPT4kOlvs=;
+        b=nPRJ/7bO3pHlaNU0U1yCSysHtfSHHEtX4GeOS6t9ZRoDQfViW1FRE5oFhihVlyJa/R
+         QFVpnkfaYUHyYds0E5P7s2UQ/aeDyJyCJYZTENxfiis5W4aeKGHHQNKE/Y3MW2vbyLuZ
+         AglA9MfdkdGIshGWN7kWqBEu40dUYufW5qwIix2IvRQl8GXwUS6IhpWXWIfWHmzfXr8j
+         xhU8gIa/F4w4w5+Ad5Vkv/8IClPFEvWsn1MjeJ7EH9XnCoxEA0C6gR1S1tJaKSdmc+iH
+         efwZU1Jeg02RXzVv4Pz3HewuVsNAaUClQc9uP3Sw5I11sWEJWAF8TH+yupZvepoOkkLG
+         RDZQ==
+X-Gm-Message-State: AOAM530V5frjxpePpvX5kJ0uYAzsK9qpgOIUF0kQ5XNbb53tp6Yb5r4h
+        ODFr5fT3LJ1ihkCE/NJPb2UK9hP75Ts=
+X-Google-Smtp-Source: ABdhPJwCRybRL6vqG2dVWbDIqH0U6TdMPrK1rY6fG8S3xTzGjUuWb4KgSnK081C4TTjPone0PRpaOw==
+X-Received: by 2002:adf:e54a:: with SMTP id z10mr25726678wrm.328.1638596220712;
+        Fri, 03 Dec 2021 21:37:00 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n32sm8071065wms.1.2021.12.03.21.35.52
+        by smtp.gmail.com with ESMTPSA id y7sm4389188wrw.55.2021.12.03.21.37.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 21:35:53 -0800 (PST)
-Message-Id: <pull.1119.v2.git.git.1638596152340.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1119.git.git.1636762454792.gitgitgadget@gmail.com>
-References: <pull.1119.git.git.1636762454792.gitgitgadget@gmail.com>
+        Fri, 03 Dec 2021 21:37:00 -0800 (PST)
+Message-Id: <pull.1134.v3.git.git.1638596219656.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1134.v2.git.git.1637041986945.gitgitgadget@gmail.com>
+References: <pull.1134.v2.git.git.1637041986945.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 04 Dec 2021 05:35:52 +0000
-Subject: [PATCH v2] name-rev: prefer shorter names over following merges
-MIME-Version: 1.0
+Date:   Sat, 04 Dec 2021 05:36:59 +0000
+Subject: [PATCH v3] sequencer: do not export GIT_DIR and GIT_WORK_TREE for
+ 'exec'
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
 Precedence: bulk
@@ -69,251 +71,175 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-name-rev has a MERGE_TRAVERSAL_WEIGHT to say that traversing a second or
-later parent of a merge should be 65535 times more expensive than a
-first-parent traversal, as per ac076c29ae8d (name-rev: Fix non-shortest
-description, 2007-08-27).  The point of this weight is to prefer names
-like
+Commands executed from `git rebase --exec` can give different behavior
+from within that environment than they would outside of it, due to the
+fact that sequencer.c exports both GIT_DIR and GIT_WORK_TREE.  For
+example, if the relevant script calls something like
 
-    v2.32.0~1471^2
+  git -C ../otherdir log --format=%H --no-walk
 
-over names like
+the user may be surprised to find that the command above does not show a
+commit hash from ../otherdir, because $GIT_DIR prevents automatic gitdir
+detection and makes the -C option useless.
 
-    v2.32.0~43^2~15^2~11^2~20^2~31^2
+This is a regression in behavior from the original legacy
+implemented-in-shell rebase.  It is perhaps rare for it to cause
+problems in practice, especially since most small problems that were
+caused by this area of bugs has been fixed-up in the past in a way that
+masked the particular bug observed without fixing the real underlying
+problem.
 
-which are two equally valid names in git.git for the same commit.  Note
-that the first follows 1472 parent traversals compared to a mere 125 for
-the second.  Weighting all traversals equally would clearly prefer the
-second name since it has fewer parent traversals, but humans aren't
-going to be traversing commits and they tend to have an easier time
-digesting names with fewer segments.  The fact that the former only has
-two segments (~1471, ^2) makes it much simpler than the latter which has
-six segments (~43, ^2, ~15, etc.).  Since name-rev is meant to "find
-symbolic names suitable for human digestion", we prefer fewer segments.
+An explanation of how we arrived at the current situation is perhaps
+merited.  The setting of GIT_DIR and GIT_WORK_TREE done by sequencer.c
+arose from a sequence of historical accidents:
 
-However, the particular rule implemented in name-rev would actually
-prefer
+* When rebase was implemented as a shell command, it would call
+  git-sh-setup, which among other things would set GIT_DIR -- but not
+  export it.  This meant that when rebase --exec commands were run via
+      /bin/sh -c "$COMMAND"
+  they would not inherit the GIT_DIR setting.  The fact that GIT_DIR
+  was not set in the run $COMMAND is the behavior we'd like to restore.
 
-    v2.33.0-rc0~11^2~1
+* When the rebase--helper builtin was introduced to allow incrementally
+  replacing shell with C code, we had an implementation that was half
+  shell, half C.  In particular, commit 18633e1a22 ("rebase -i: use the
+  rebase--helper builtin", 2017-02-09) added calls to
+      exec git rebase--helper ...
+  which caused rebase--helper to inherit the GIT_DIR environment
+  variable from the shell.  git's setup would change the environment
+  variable from an absolute path to a relative one (".git"), but would
+  leave it set.  This meant that when rebase --exec commands were run
+  via
+      run_command_v_opt(...)
+  they would inherit the GIT_DIR setting.
 
-over
+* In commit 09d7b6c6fa ("sequencer: pass absolute GIT_DIR to exec
+  commands", 2017-10-31), it was noted that the GIT_DIR caused problems
+  with some commands; e.g.
+      git rebase --exec 'cd subdir && git describe' ...
+  would have GIT_DIR=.git which was invalid due to the change to the
+  subdirectory.  Instead of questioning why GIT_DIR was set, that commit
+  instead made sequencer change GIT_DIR to be an absolute path and
+  explicitly export it via
+      argv_array_pushf(&child_env, "GIT_DIR=%s", absolute_path(get_git_dir()));
+      run_command_v_opt_cd_env(..., child_env.argv)
 
-    v2.33.0-rc0~20^2
+* In commit ab5e67d751 ("sequencer: pass absolute GIT_WORK_TREE to exec
+  commands", 2018-07-14), it was noted that when GIT_DIR is set but
+  GIT_WORK_TREE is not, that we do not discover GIT_WORK_TREE but just
+  assume it is '.'.  That is incorrect if trying to run commands from a
+  subdirectory.  However, rather than question why GIT_DIR was set, that
+  commit instead also added GIT_WORK_TREE to the list of things to
+  export.
 
-because both have precisely one second parent traversal, and it gives
-the tie breaker to shortest number of total parent traversals.  Fewer
-segments is more important for human consumption than number of hops, so
-we'd rather see the latter which has one fewer segment.
-
-Include the generation in is_better_name() and use a new
-effective_distance() calculation so that we prefer fewer segments in
-the printed name over fewer total parent traversals performed to get the
-answer.
-
-== Side-note on tie-breakers ==
-
-When there are the same number of segments for two different names, we
-actually use the name of an ancestor commit as a tie-breaker as well.
-For example, for the commit cbdca289fb in the git.git repository, we
-prefer the name v2.33.0-rc0~112^2~1 over v2.33.0-rc0~57^2~5.  This is
-because:
-
-  * cbdca289fb is the parent of 25e65b6dd5, which implies the name for
-    cbdca289fb should be the first parent of the preferred name for
-    25e65b6dd5
-  * 25e65b6dd5 could be named either v2.33.0-rc0~112^2 or
-    v2.33.0-rc0~57^2~4, but the former is preferred over the latter due
-    to fewer segments
-  * combine the two previous facts, and the name we get for cbdca289fb
-    is "v2.33.0-rc0~112^2~1" rather than "v2.33.0-rc0~57^2~5".
-
-Technically, we get this for free out of the implementation since we
-only keep track of one name for each commit as we walk history (and
-re-add parents to the queue if we find a better name for those parents),
-but the first bullet point above ensures users get results that feel
-more consistent.
-
-== Alternative Ideas and Meanings Discussed ==
-
-One suggestion that came up during review was that shortest
-string-length might be easiest for users to consume.  However, such a
-scheme would be rather computationally expensive (we'd have to track all
-names for each commit as we traversed the graph) and would additionally
-come with the possibly perplexing result that on a linear segment of
-history we could rapidly swap back and forth on names:
-   MYTAG~3^2     would     be preferred over   MYTAG~9998
-   MYTAG~3^2~1   would NOT be preferred over   MYTAG~9999
-   MYTAG~3^2~2   might     be preferred over   MYTAG~10000
-
-Another item that came up was possible auxiliary semantic meanings for
-name-rev results either before or after this patch.  The basic answer
-was that the previous implementation had no known useful auxiliary
-semantics, but that for many repositories (most in my experience), the
-new scheme does.  In particular, the new name-rev output can often be
-used to answer the question, "How or when did this commit get merged?"
-Since that usefulness depends on how merges happen within the repository
-and thus isn't universally applicable, details are omitted here but you
-can see them at [1].
-
-[1] https://lore.kernel.org/git/CABPp-BEeUM+3NLKDVdak90_UUeNghYCx=Dgir6=8ixvYmvyq3Q@mail.gmail.com/
-
-Finally, it was noted that the algorithm could be improved by just
-explicitly tracking the number of segments and using both it and
-distance in the comparison, instead of giving a magic number that tries
-to blend the two (and which therefore might give suboptimal results in
-repositories with really huge numbers of commits that periodically merge
-older code).  However, "[this patch] seems to give us a much better
-results than the current code, so let's take it and leave further
-futzing outside the scope."
+Each of the above problems would have been fixed automatically when
+git-rebase became a full builtin, had it not been for the fact that
+sequencer.c started exporting GIT_DIR and GIT_WORK_TREE in the interim.
+Stop exporting them now.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
-Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Acked-by: Johannes Altmanninger <aclopte@gmail.com>
+Acked-by: Phillip Wood <phillip.wood123@gmail.com>
 ---
-    name-rev: prefer shorter names over following merges
+    sequencer: fix environment that 'exec' commands run under
+    
+    Changes since v2:
+    
+     * Make sure I've included all 3 Acked-by's.
+     * The 2.35 cycle has started and it's been weeks since I sent v2, so
+       it's time to resend. :-)
     
     Changes since v1:
     
-     * Include acks from Ævar and Dscho
-     * To aid future readers, added a few comments to the commit message
-       from the mailing list discussion about tie-breakers and other
-       possible improvements
-     * The 2.35 cycle has started and it's been weeks since I sent v1, so
-       it's time to resend. :-)
+     * Fix wording in multiple locations pointed out by Johannes
+       Altmanninger
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1119%2Fnewren%2Fprefer-shorter-names-in-name-rev-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1119/newren/prefer-shorter-names-in-name-rev-v2
-Pull-Request: https://github.com/git/git/pull/1119
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1134%2Fnewren%2Ffix-rebase-exec-environ-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1134/newren/fix-rebase-exec-environ-v3
+Pull-Request: https://github.com/git/git/pull/1134
 
-Range-diff vs v1:
+Range-diff vs v2:
 
- 1:  50812ed6fdf ! 1:  5d068486f9f name-rev: prefer shorter names over following merges
+ 1:  c647c45375a ! 1:  4f5862c212f sequencer: do not export GIT_DIR and GIT_WORK_TREE for 'exec'
      @@ Commit message
-          the printed name over fewer total parent traversals performed to get the
-          answer.
       
-     +    == Side-note on tie-breakers ==
-     +
-     +    When there are the same number of segments for two different names, we
-     +    actually use the name of an ancestor commit as a tie-breaker as well.
-     +    For example, for the commit cbdca289fb in the git.git repository, we
-     +    prefer the name v2.33.0-rc0~112^2~1 over v2.33.0-rc0~57^2~5.  This is
-     +    because:
-     +
-     +      * cbdca289fb is the parent of 25e65b6dd5, which implies the name for
-     +        cbdca289fb should be the first parent of the preferred name for
-     +        25e65b6dd5
-     +      * 25e65b6dd5 could be named either v2.33.0-rc0~112^2 or
-     +        v2.33.0-rc0~57^2~4, but the former is preferred over the latter due
-     +        to fewer segments
-     +      * combine the two previous facts, and the name we get for cbdca289fb
-     +        is "v2.33.0-rc0~112^2~1" rather than "v2.33.0-rc0~57^2~5".
-     +
-     +    Technically, we get this for free out of the implementation since we
-     +    only keep track of one name for each commit as we walk history (and
-     +    re-add parents to the queue if we find a better name for those parents),
-     +    but the first bullet point above ensures users get results that feel
-     +    more consistent.
-     +
-     +    == Alternative Ideas and Meanings Discussed ==
-     +
-     +    One suggestion that came up during review was that shortest
-     +    string-length might be easiest for users to consume.  However, such a
-     +    scheme would be rather computationally expensive (we'd have to track all
-     +    names for each commit as we traversed the graph) and would additionally
-     +    come with the possibly perplexing result that on a linear segment of
-     +    history we could rapidly swap back and forth on names:
-     +       MYTAG~3^2     would     be preferred over   MYTAG~9998
-     +       MYTAG~3^2~1   would NOT be preferred over   MYTAG~9999
-     +       MYTAG~3^2~2   might     be preferred over   MYTAG~10000
-     +
-     +    Another item that came up was possible auxiliary semantic meanings for
-     +    name-rev results either before or after this patch.  The basic answer
-     +    was that the previous implementation had no known useful auxiliary
-     +    semantics, but that for many repositories (most in my experience), the
-     +    new scheme does.  In particular, the new name-rev output can often be
-     +    used to answer the question, "How or when did this commit get merged?"
-     +    Since that usefulness depends on how merges happen within the repository
-     +    and thus isn't universally applicable, details are omitted here but you
-     +    can see them at [1].
-     +
-     +    [1] https://lore.kernel.org/git/CABPp-BEeUM+3NLKDVdak90_UUeNghYCx=Dgir6=8ixvYmvyq3Q@mail.gmail.com/
-     +
-     +    Finally, it was noted that the algorithm could be improved by just
-     +    explicitly tracking the number of segments and using both it and
-     +    distance in the comparison, instead of giving a magic number that tries
-     +    to blend the two (and which therefore might give suboptimal results in
-     +    repositories with really huge numbers of commits that periodically merge
-     +    older code).  However, "[this patch] seems to give us a much better
-     +    results than the current code, so let's take it and leave further
-     +    futzing outside the scope."
-     +
           Signed-off-by: Elijah Newren <newren@gmail.com>
-     +    Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     +    Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+          Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+     +    Acked-by: Johannes Altmanninger <aclopte@gmail.com>
+     +    Acked-by: Phillip Wood <phillip.wood123@gmail.com>
       
-       ## builtin/name-rev.c ##
-      @@ builtin/name-rev.c: static struct rev_name *get_commit_rev_name(const struct commit *commit)
+       ## sequencer.c ##
+      @@ sequencer.c: static int error_failed_squash(struct repository *r,
 
 
- builtin/name-rev.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ sequencer.c               |  9 +--------
+ t/t3409-rebase-environ.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 24 insertions(+), 8 deletions(-)
+ create mode 100755 t/t3409-rebase-environ.sh
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index b221d300147..27f60153a6c 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -44,11 +44,20 @@ static struct rev_name *get_commit_rev_name(const struct commit *commit)
- 	return is_valid_rev_name(name) ? name : NULL;
+diff --git a/sequencer.c b/sequencer.c
+index ea96837cde3..9afdbe3e3d1 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3495,17 +3495,12 @@ static int error_failed_squash(struct repository *r,
+ 
+ static int do_exec(struct repository *r, const char *command_line)
+ {
+-	struct strvec child_env = STRVEC_INIT;
+ 	const char *child_argv[] = { NULL, NULL };
+ 	int dirty, status;
+ 
+ 	fprintf(stderr, _("Executing: %s\n"), command_line);
+ 	child_argv[0] = command_line;
+-	strvec_pushf(&child_env, "GIT_DIR=%s", absolute_path(get_git_dir()));
+-	strvec_pushf(&child_env, "GIT_WORK_TREE=%s",
+-		     absolute_path(get_git_work_tree()));
+-	status = run_command_v_opt_cd_env(child_argv, RUN_USING_SHELL, NULL,
+-					  child_env.v);
++	status = run_command_v_opt(child_argv, RUN_USING_SHELL);
+ 
+ 	/* force re-reading of the cache */
+ 	if (discard_index(r->index) < 0 || repo_read_index(r) < 0)
+@@ -3535,8 +3530,6 @@ static int do_exec(struct repository *r, const char *command_line)
+ 		status = 1;
+ 	}
+ 
+-	strvec_clear(&child_env);
+-
+ 	return status;
  }
  
-+static int effective_distance(int distance, int generation)
-+{
-+	return distance + (generation > 0 ? MERGE_TRAVERSAL_WEIGHT : 0);
-+}
+diff --git a/t/t3409-rebase-environ.sh b/t/t3409-rebase-environ.sh
+new file mode 100755
+index 00000000000..83ffb39d9ff
+--- /dev/null
++++ b/t/t3409-rebase-environ.sh
+@@ -0,0 +1,23 @@
++#!/bin/sh
 +
- static int is_better_name(struct rev_name *name,
- 			  timestamp_t taggerdate,
-+			  int generation,
- 			  int distance,
- 			  int from_tag)
- {
-+	int name_distance = effective_distance(name->distance, name->generation);
-+	int new_distance = effective_distance(distance, generation);
++test_description='git rebase interactive environment'
 +
- 	/*
- 	 * When comparing names based on tags, prefer names
- 	 * based on the older tag, even if it is farther away.
-@@ -56,7 +65,7 @@ static int is_better_name(struct rev_name *name,
- 	if (from_tag && name->from_tag)
- 		return (name->taggerdate > taggerdate ||
- 			(name->taggerdate == taggerdate &&
--			 name->distance > distance));
-+			 name_distance > new_distance));
- 
- 	/*
- 	 * We know that at least one of them is a non-tag at this point.
-@@ -69,8 +78,8 @@ static int is_better_name(struct rev_name *name,
- 	 * We are now looking at two non-tags.  Tiebreak to favor
- 	 * shorter hops.
- 	 */
--	if (name->distance != distance)
--		return name->distance > distance;
-+	if (name_distance != new_distance)
-+		return name_distance > new_distance;
- 
- 	/* ... or tiebreak to favor older date */
- 	if (name->taggerdate != taggerdate)
-@@ -88,7 +97,7 @@ static struct rev_name *create_or_update_name(struct commit *commit,
- 	struct rev_name *name = commit_rev_name_at(&rev_names, commit);
- 
- 	if (is_valid_rev_name(name)) {
--		if (!is_better_name(name, taggerdate, distance, from_tag))
-+		if (!is_better_name(name, taggerdate, generation, distance, from_tag))
- 			return NULL;
- 
- 		/*
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_commit one &&
++	test_commit two &&
++	test_commit three
++'
++
++test_expect_success 'rebase --exec does not muck with GIT_DIR' '
++	git rebase --exec "printf %s \$GIT_DIR >environ" HEAD~1 &&
++	test_must_be_empty environ
++'
++
++test_expect_success 'rebase --exec does not muck with GIT_WORK_TREE' '
++	git rebase --exec "printf %s \$GIT_WORK_TREE >environ" HEAD~1 &&
++	test_must_be_empty environ
++'
++
++test_done
 
-base-commit: abe6bb3905392d5eb6b01fa6e54d7e784e0522aa
+base-commit: 88d915a634b449147855041d44875322de2b286d
 -- 
 gitgitgadget
