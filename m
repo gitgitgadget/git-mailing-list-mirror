@@ -2,65 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A45DAC433EF
-	for <git@archiver.kernel.org>; Sun,  5 Dec 2021 17:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4883C433EF
+	for <git@archiver.kernel.org>; Sun,  5 Dec 2021 18:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236740AbhLER3J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Dec 2021 12:29:09 -0500
-Received: from smtp4-g21.free.fr ([212.27.42.4]:40834 "EHLO smtp4-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236660AbhLER3I (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Dec 2021 12:29:08 -0500
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:9225:6fd8:b89b:1501])
-        (Authenticated sender: jn.avila@free.fr)
-        by smtp4-g21.free.fr (Postfix) with ESMTPSA id E850C19F5CD;
-        Sun,  5 Dec 2021 18:25:29 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-        s=smtp-20201208; t=1638725139;
-        bh=dvSdTBDabUgJmk9I40adNXC8Vigc1clvQeFljJdfRas=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JdoxYtIJZaiJ+ItSYSoPLhMt/7dBnfAxIjuajuIbAliX5outRra/cRQc1HuRJ7/zo
-         ncPTg9xijMNOUqp3X7HRdgFCJK13Oug/cM8mdwJZgkYE3ZyP0OcC6NA/OUo0pxDgKg
-         79N0EPXoXV4ROa3I4GuPOUebYagrAasFqvMKWjGQyqIebOg3YIKlPBR24HV/4lvnP6
-         iQFHtMxfMgv8jUnpk8E5+dWDMACUKFtNhb2fBTbrAxB5xYT3he+5GrU2TpMupeQ8e/
-         +Jmz3rr+f7atKIzIqHSuWxrSH8j8UMjDlDM3k/8y3UmXb1nadepdpIyzrOufRC2V/e
-         nRtQb/JAEb3IA==
-From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 00/10] Factorization of messages with similar meaning
-Date:   Sun, 05 Dec 2021 18:25:28 +0100
-Message-ID: <8718669.4XknugNGDb@cayenne>
-In-Reply-To: <xmqqfsr7mrs5.fsf@gitster.g>
-References: <pull.1088.git.1638514909.gitgitgadget@gmail.com> <d687f69b-efdc-6b1c-c63c-8544ff37d1c2@kdbg.org> <xmqqfsr7mrs5.fsf@gitster.g>
+        id S237131AbhLES0m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Dec 2021 13:26:42 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64824 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236811AbhLES0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Dec 2021 13:26:41 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 48F1417682E;
+        Sun,  5 Dec 2021 13:23:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UN85Hn+o18VXVVxFRPZE2AoE+g8TGqcicUZG4x
+        iW/5U=; b=hfm2ZliDOMciZHl+kFWWK9FJhCZDRR0kIsjN7BvhaiT1mR1bEdD5YI
+        pfkPOFc/DW+qNaXrNmP88OxF6leyNVbxbh2s9fkb98G645kSaNTHByEIuCPxsRHQ
+        pdQk7kwKuhaC7xF8g1NVk073GndLhPsGw4QNK+k7DpHu+a3a1Sve0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4265917682D;
+        Sun,  5 Dec 2021 13:23:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4EC0017682C;
+        Sun,  5 Dec 2021 13:23:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: Re: [PATCH 2/2] tmp-objdir: disable ref updates when replacing the
+ primary odb
+References: <pull.1091.git.1638585658.gitgitgadget@gmail.com>
+        <d8ae001500c788cdabf4e6918da0a7ce89a48fc6.1638585658.git.gitgitgadget@gmail.com>
+Date:   Sun, 05 Dec 2021 10:23:08 -0800
+In-Reply-To: <d8ae001500c788cdabf4e6918da0a7ce89a48fc6.1638585658.git.gitgitgadget@gmail.com>
+        (Neeraj Singh via GitGitGadget's message of "Sat, 04 Dec 2021 02:40:58
+        +0000")
+Message-ID: <xmqqtufmlxmb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 669BBBD8-55F8-11EC-BC01-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sunday, 5 December 2021 08:31:38 CET Junio C Hamano wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
-> > Another aspect is that translators lose context. For example, "%s and %s
-> > are mutally exclusive" may have to be translated differently depending
-> > on what kind of text is substituted for %s. In this example it's
-> > probably always command line options (I haven't checked), so not an
-> > immediate problem. But something to keep in mind.
-> 
-> Yup.  I do not think we are quite ready to have two identical msgid
-> strings to be translated into two different msgstr strings.  We've
-> briefly talked about pgettext() a few months ago, but nothing
-> concrete came out of it, as far as I can recall.
-> 
-> 
+"Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-As a translator, I made sure that all the messages are with the same grammatical structure where the placeholders are only command line options. The same messages with placeholders are meant to convey exactly the same meaning at all their use point. We have all the control on the source code to tailor them so that one message model is only used with specific types of variables (options here). That's another reason why I was proposing to define and name them.
+>  	/*
+>  	 * This object store is ephemeral, so there is no need to fsync.
+>  	 */
+> -	int will_destroy;
+> +	unsigned int will_destroy : 1;
 
-If needed, "%s and %s are mutually exclusive" could be turned into "options %s and %s are mutually exclusive" to make it clear that the placeholders can only hold option names.
+<CANQDOddCC7+gGUy1VBxxwvN7ieP+N8mQhbxK2xx6ySqZc6U7-g@mail.gmail.com>
+?
 
-
-
+(https://github.com/git/git/pull/1076#discussion_r750645345)
