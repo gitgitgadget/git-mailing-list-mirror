@@ -2,64 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9BC5C433EF
-	for <git@archiver.kernel.org>; Sun,  5 Dec 2021 10:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FE84C433F5
+	for <git@archiver.kernel.org>; Sun,  5 Dec 2021 10:13:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232810AbhLEKGJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Dec 2021 05:06:09 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59442 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230470AbhLEKGH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Dec 2021 05:06:07 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BA108FFB47;
-        Sun,  5 Dec 2021 05:02:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=GvF238KdQN+kXCe4WR1wnAxezw/RSNbV1iXYe2htD0Y=; b=BFjZ
-        5letI3wjoYTx756actwMzWuW6z+Hh2xyAXXlhM1rRrfEiOzDeESlc5mt9qqKdTcW
-        /9SB3gOTd0VxjyYOU/zCnd8T4npk2kroM6RHmMC2g5MaAALHHFjZqKWDS8GqszMZ
-        nzUW7QLXT1i6DFxxTF4CNFAwxJVV8C3ZQfajrl8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B2148FFB46;
-        Sun,  5 Dec 2021 05:02:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 203AEFFB44;
-        Sun,  5 Dec 2021 05:02:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: t7900 failures when $HOME is symlinked
-References: <4cf14040-c8e1-0f75-0ec4-fd8cf6bed0a5@gmail.com>
-        <xmqq1r2tty13.fsf@gitster.g>
-        <YapW/CfjFiPvsVbj@coredump.intra.peff.net>
-Date:   Sun, 05 Dec 2021 02:02:38 -0800
-Message-ID: <xmqqy24zl681.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232844AbhLEKRC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Dec 2021 05:17:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36230 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232546AbhLEKRB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Dec 2021 05:17:01 -0500
+Received: from a3.inai.de (a3.inai.de [IPv6:2a01:4f8:10b:45d8::f5])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2835BC061714
+        for <git@vger.kernel.org>; Sun,  5 Dec 2021 02:13:34 -0800 (PST)
+Received: by a3.inai.de (Postfix, from userid 25121)
+        id AB73458730218; Sun,  5 Dec 2021 11:13:32 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by a3.inai.de (Postfix) with ESMTP id A775060C28B14;
+        Sun,  5 Dec 2021 11:13:32 +0100 (CET)
+Date:   Sun, 5 Dec 2021 11:13:32 +0100 (CET)
+From:   Jan Engelhardt <jengelh@inai.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] http-backend: give a hint that web browser access is
+ not supported
+In-Reply-To: <xmqqtufnonor.fsf@gitster.g>
+Message-ID: <34pqs81o-36p6-s416-s791-1onsqo1734oo@vanv.qr>
+References: <xmqqee6vwj67.fsf@gitster.g> <20211202102855.23907-1-jengelh@inai.de> <xmqqee6spz9s.fsf@gitster.g> <7r23s082-o3q0-479o-srqn-r45q778s5nq7@vanv.qr> <xmqqtufnonor.fsf@gitster.g>
+User-Agent: Alpine 2.25 (LSU 592 2021-09-18)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7B385790-55B2-11EC-98B9-CD991BBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> I don't think it's lost. It becomes part of $TRASH_DIRECTORY in the
-> first line, so the final line which prepends $TEST_OUTPUT_DIRECTORY
-> makes it relative to that. E.g.:
+On Sunday 2021-12-05 02:17, Junio C Hamano wrote:
+>>>What is in "pathinfo" parameter?
+>> It is getenv("PATH_INFO").
 >
->   $ cd t
->   $ ./t0000-basic.sh --root=foo --debug
->   [...]
->   $ ls foo
->   trash directory.t0000-basic/
+>That part I know.  The question was what would a typical value of
+>that parameter look like in the context of somebody mistakenly
+>visiting Git smart HTTP endpoint via their browser.
 
-Ah, OK.  Thanks.
+As far as I can tell, it contains the request URI plus index.html resolution;
+https://git.inai.de/ reports /index.html while
+https://git.inai.de/foo reports /foo (since foo does not exist in the fs).
+
+>I am basically wondering if it is helping the user enough, or if it
+>is sufficient to give just the "err" and "hint", and nothing else.
+
+I felt that, because ls(1) reports the filename again, e.g.
+
+$ ls x
+ls: cannot access 'x': No such file or directory
+
+that git-http-backend could do the same, especially since
+pathinfo isn't just $ENV{REQUEST_URI} again at all times.
+
+>> Yes, that seems more like it. I was not aware of send_strbuf.
+>
+>Heh, I wasn't either.  The review of this topic was the first time I
+>seriously read any part of that file, and I think I still only read
+>just about 20% of it ;-)
+>
+>Also, will the real Git clients, which are the primary intended
+>audiences this program is trying to talk to, be OK if we suddenly
+>start giving a non-empty 404 page?
+
+I am confident enough to say yes. It's not like git-http-backend
+returned anything previously in the 404 case (like JSON or so),
+therefore clients could not possibly depend on content.
+
+>If any implementations of Git HTTP client this program is serving
+>(1) uses a 404 response as a cue to decide its next request
+>(e.g. there may be some "try this URL and if it fails, do another
+>one" fallback logic)
+
+Not sure if they heed Location: headers, but I am not changing
+that :-)
