@@ -2,208 +2,318 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4477BC433EF
-	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 16:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1EB4C433F5
+	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 16:15:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359017AbhLFQOd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 11:14:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39910 "EHLO
+        id S1386921AbhLFQTZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 11:19:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1389106AbhLFQNt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 11:13:49 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1605C0D9411
-        for <git@vger.kernel.org>; Mon,  6 Dec 2021 07:56:09 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id i5so23463110wrb.2
-        for <git@vger.kernel.org>; Mon, 06 Dec 2021 07:56:09 -0800 (PST)
+        with ESMTP id S1357463AbhLFQS7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 11:18:59 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24555C08E886
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 08:11:22 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id j140-20020a1c2392000000b003399ae48f58so10800087wmj.5
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 08:11:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=zAyiLu7NKqiK1xZtBC/at22Yvf3tgxEoUxqg4XC6F30=;
-        b=PGMObh9lkjbnYcxJUQJKhmT3m5LQHq0VPG1j8kX4umd8ZDlLY4FBe1UGyvh6NhSic9
-         gX861lyTjJSHF64oesHQmVM5E2sNMsU5MO4UViUoEyYb3ybJsOd1Ynlh7ELqd3BZaiao
-         AbAk4HiKxQ9TCJ3HTN72FBC4KPiZVpyimnz/k5kFoUdO6hZV/8G8KGTLMb1lFY1kQ9Mv
-         8V4JY6V0zfneJnT1e3DFEBQtP1hIU6t4mizT1Qz78bgu43aLY/PlSxVS5fo99Mjw06x1
-         eNnWueo4P0hcQ+/Uh/xctUy6+/p6wLMlZ8U9j5yLFvZcUYfeHBbg+g0uhKeIUaMz45Wg
-         ywaA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VZ/21kSufmPE1z6dLC3YKlsyjbpoRbO28TtrBRfXmSI=;
+        b=RqWFkUFc3WmjKVtBIk/JsbDifu9b50pk9mPZYVDztKZt3BVqDyGVfVkOIGxKYuqQ5S
+         WiPWAvmZgNk2mK7ZBbyCQMmjqpe/WLGcTPaapZsmd/WxnMLR/pNKx62BqrlhRdV3S8s9
+         HBlnBQHnzBZ7TRs5n+miki7z/ioLfngDBmW2NSeaKeh6cEeqCnuJLfaDPS91X64XrD9u
+         /yTDirWpo2TkWTzmYrjbSL1YBesEed6EzY9duOXNZDVpVdfUsnuj25uWZzHpgQ3ytJEt
+         dh7gCrN0NeStzIh2RpwA4oy+vRNwj0F9/sety4MtAxsjh3ehcZo6JfhWUR3umnILqZ/V
+         FiEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zAyiLu7NKqiK1xZtBC/at22Yvf3tgxEoUxqg4XC6F30=;
-        b=W/L3N4ix7fT99kuqnhIDV1g8T3Fn+UbQkvOxCBm8iKbKMB4Q/1T9Oo5jMSsYotvwmZ
-         oU371js6MDIOyeg22DXC3EF7Ef0KGrfR81SbYIKd7DzPAugRDIgNmh+hoPbrGLFuL2Jr
-         xvrugFHLEYAha/p3rlJMIsXYzWXDVNdYd3BlKgrpHqxnHGDgQnSoFM9LZrGH7ifNx2Is
-         tkqFwH1ZjDZlMvGEaOrd+uq7cLdx1178sCgKY3kIHp9cjo4C0La8wwhnBUQSCDczzZnH
-         jt/wnANddcma1Lzz85e67wnzlnbhOfgDkpASauNKc0o4pQqDseBqGezjDXMbwdd59ffo
-         FxRw==
-X-Gm-Message-State: AOAM530/0xb2CyyWnYxLxlA+EEth+tS8KamVXTRDdsSXy/TMQy6M5A4m
-        /yHlilfOMrP69Nnj1+d4ypDavJhU7ZI=
-X-Google-Smtp-Source: ABdhPJwKHChSuxM3A8S4lZgwnLdbSRxeWFXYOlPEwV3xWtAvtH/1/KMiPaYNfOGBkta5HvvpRPrHvg==
-X-Received: by 2002:a05:6000:23a:: with SMTP id l26mr44147453wrz.215.1638806168164;
-        Mon, 06 Dec 2021 07:56:08 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d1sm11179654wrz.92.2021.12.06.07.56.07
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VZ/21kSufmPE1z6dLC3YKlsyjbpoRbO28TtrBRfXmSI=;
+        b=kmLZSXo5LVGsw4tYqn6zNvEGkehHMaMitg+fv/cN8kQ8oph+kUHpmoQ3gbdw3Nkpue
+         uad8raNChdD1FXTO9Q44e7wrVYMWytQ9uN7ECfcX6uBwo6Vmo6LrKnZWnUhVABNCsd3H
+         RTiDXA7jJAYhM4AD+snM9I1fBNiTgaduGMhJh23Rd72Id75Kfaok9itDwi9VDgBYa/bd
+         3L4GYF7eWXY5jlpx0bj1flFqTfzXTsK9XTHCGBeE5XKbAZfOgBZ3Ikuy0QQeTsuF9+FQ
+         oRChpWixl0IexD2DaB8sQceYr1cnd4Rn9abQfpcUZ1y7Osjzt1fqFydaYrzerk90G78k
+         9Stw==
+X-Gm-Message-State: AOAM531hEsrKlk5bZdUWwYjHgn7aBRV5QPZZLAnvHjiXJQrpLqZO5ljS
+        x/aiAy+cz/rgIbRN9kiW29YZeWqbpG7hMg==
+X-Google-Smtp-Source: ABdhPJwci+PBtDLQpYA8GlJq1PzEQJdreJcC2jdqdYAiNwTe5DFnpIOLQD7ObCLgrZ9aKUjA+ikk5A==
+X-Received: by 2002:a1c:4d13:: with SMTP id o19mr39867170wmh.164.1638807080228;
+        Mon, 06 Dec 2021 08:11:20 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id e24sm12187008wra.78.2021.12.06.08.11.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 07:56:07 -0800 (PST)
-Message-Id: <85bcbaa1771c97a0f6ca3cc03c80f02ee2f84061.1638806161.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1050.v6.git.1638806161.gitgitgadget@gmail.com>
-References: <pull.1050.v5.git.1638566165.gitgitgadget@gmail.com>
-        <pull.1050.v6.git.1638806161.gitgitgadget@gmail.com>
-From:   "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 06 Dec 2021 15:56:01 +0000
-Subject: [PATCH v6 7/7] blame: enable and test the sparse index
-Fcc:    Sent
+        Mon, 06 Dec 2021 08:11:19 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v1] common-main.c: call exit(), don't return
+Date:   Mon,  6 Dec 2021 17:11:03 +0100
+Message-Id: <patch-v1-1.1-6fedf9969b6-20211206T161001Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.34.1.898.g5a552c2e5f0
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, gitster@pobox.com, newren@gmail.com,
-        Taylor Blau <me@ttaylorr.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lessley Dennington <lessleydennington@gmail.com>
+Change the main() function to call "exit()" instead of ending with a
+"return" statement. The "exit()" function is our own wrapper that
+calls trace2_cmd_exit_fl() for us, from git-compat-util.h:
 
-Enable the sparse index for the 'git blame' command. The index was already
-not expanded with this command, so the most interesting thing to do is to
-add tests that verify that 'git blame' behaves correctly when the sparse
-index is enabled and that its performance improves. More specifically, these
-cases are:
+	#define exit(code) exit(trace2_cmd_exit_fl(__FILE__, __LINE__, (code)))
 
-1. The index is not expanded for 'blame' when given paths in the sparse
-checkout cone at multiple levels.
+That "exit()" wrapper has been in use ever since ee4512ed481 (trace2:
+create new combined trace facility, 2019-02-22).
 
-2. Performance measurably improves for 'blame' with sparse index when given
-paths in the sparse checkout cone at multiple levels.
+This changes nothing about how we "exit()", as we'd invoke
+"trace2_cmd_exit_fl()" in both cases due to the wrapper, this change
+makes it easier to reason about this code, as we're now always
+obviously relying on our "exit()" wrapper.
 
-The `p2000` tests demonstrate a ~60% execution time reduction when running
-'blame' for a file two levels deep and and a ~30% execution time reduction
-for a file three levels deep.
+There is already code immediately downstream of our "main()" which has
+a hard reliance on that, e.g. the various "exit()" calls downstream of
+"cmd_main()" in "git.c".
 
-Test                                         before  after
-----------------------------------------------------------------
-2000.62: git blame f2/f4/a (full-v3)         0.31    0.32 +3.2%
-2000.63: git blame f2/f4/a (full-v4)         0.29    0.31 +6.9%
-2000.64: git blame f2/f4/a (sparse-v3)       0.55    0.23 -58.2%
-2000.65: git blame f2/f4/a (sparse-v4)       0.57    0.23 -59.6%
-2000.66: git blame f2/f4/f3/a (full-v3)      0.77    0.85 +10.4%
-2000.67: git blame f2/f4/f3/a (full-v4)      0.78    0.81 +3.8%
-2000.68: git blame f2/f4/f3/a (sparse-v3)    1.07    0.72 -32.7%
-2000.99: git blame f2/f4/f3/a (sparse-v4)    1.05    0.73 -30.5%
+We even had a comment in "t/helper/test-trace2.c" that seemed to be
+confused about how the "exit()" wrapper interacted with uses of
+"return", even though it was introduced in the same trace2 series in
+a15860dca3f (trace2: t/helper/test-trace2, t0210.sh, t0211.sh,
+t0212.sh, 2019-02-22), after the aforementioned ee4512ed481. Perhaps
+it pre-dated the "exit()" wrapper?
 
-We do not include paths outside the sparse checkout cone because blame
-does not support blaming files that are not present in the working
-directory. This is true in both sparse and full checkouts.
+Let's also update both the documentation and comments accordingly: The
+documentation added in e544221d97a (trace2:
+Documentation/technical/api-trace2.txt, 2019-02-22) already said of
+the "exit" event that "[it] is emitted when git calls `exit()". But
+the "main()" example then called trace2_cmd_exit(). Let's have it
+invoke "exit()" instead, as the code in "common-main.c" now does.
 
-Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
-Reviewed-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/blame.c                          |  3 ++
- t/perf/p2000-sparse-operations.sh        |  2 +
- t/t1092-sparse-checkout-compatibility.sh | 49 ++++++++++++++++++------
- 3 files changed, 43 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 641523ff9af..33e411d2203 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -940,6 +940,9 @@ parse_done:
- 	revs.diffopt.flags.follow_renames = 0;
- 	argc = parse_options_end(&ctx);
+The diffstat here is neutral, and as noted this changes no behavior,
+so this isn't really needed for anything.
+
+But as argued above I think this makes things a lot easier for readers
+of the code. I've had at least a couple of traces through git's
+execution from command-main.c downwards and thought that the "exit()"
+calls in git.c might be a bug, until I (re-)discovered that we're
+defining an exit() wrapper via a macro.
+
+It might be a good follow-up at some point to see if we could hoist
+some of the cleanups we do in run_builtin() to to this level. I.e. the
+code referenced in my 338abb0f045 (builtins + test helpers: use return
+instead of exit() in cmd_*, 2021-06-08) (and similar).
+
+Even that code could probably do with some tweaks, e.g. we should
+probably try to fflush() stdout/stderr even if we're about to return
+non-zero (now we'll only do it on success).
+
+But for now this is one small readability improvement to some code
+central to git's execution.
+
+A version of this was originally submitted as
+https://lore.kernel.org/git/RFC-patch-07.21-3f897bf6b0e-20211115T220831Z-avarab@gmail.com/;
+range-diff against that initial version below.
+
+Range-diff against v0:
+1:  3f897bf6b0e ! 1:  6fedf9969b6 common-main.c: call exit(), don't return
+    @@ Metadata
+      ## Commit message ##
+         common-main.c: call exit(), don't return
+     
+    -    Refactor the main() function so that we always take the same path
+    -    towards trace2_cmd_exit() whether exit() is invoked, or we end up in
+    -    the "return" in the pre-image. This contains no functional change, and
+    -    is only intended for the benefit of readers of the code, who'll now be
+    -    pointed to our exit() wrapper.
+    -
+    -    Since ee4512ed481 (trace2: create new combined trace facility,
+    -    2019-02-22) we've defined "exit" with a macro to call
+    -    trace2_cmd_exit() for us in "git-compat-util.h". So in cases where an
+    -    exit() is invoked (such as in several places in "git.c") we don't
+    -    reach the trace2_cmd_exit() in the pre-image. This makes it so that
+    -    we'll always take that same exit() path.
+    +    Change the main() function to call "exit()" instead of ending with a
+    +    "return" statement. The "exit()" function is our own wrapper that
+    +    calls trace2_cmd_exit_fl() for us, from git-compat-util.h:
+    +
+    +            #define exit(code) exit(trace2_cmd_exit_fl(__FILE__, __LINE__, (code)))
+    +
+    +    That "exit()" wrapper has been in use ever since ee4512ed481 (trace2:
+    +    create new combined trace facility, 2019-02-22).
+    +
+    +    This changes nothing about how we "exit()", as we'd invoke
+    +    "trace2_cmd_exit_fl()" in both cases due to the wrapper, this change
+    +    makes it easier to reason about this code, as we're now always
+    +    obviously relying on our "exit()" wrapper.
+    +
+    +    There is already code immediately downstream of our "main()" which has
+    +    a hard reliance on that, e.g. the various "exit()" calls downstream of
+    +    "cmd_main()" in "git.c".
+    +
+    +    We even had a comment in "t/helper/test-trace2.c" that seemed to be
+    +    confused about how the "exit()" wrapper interacted with uses of
+    +    "return", even though it was introduced in the same trace2 series in
+    +    a15860dca3f (trace2: t/helper/test-trace2, t0210.sh, t0211.sh,
+    +    t0212.sh, 2019-02-22), after the aforementioned ee4512ed481. Perhaps
+    +    it pre-dated the "exit()" wrapper?
+    +
+    +    Let's also update both the documentation and comments accordingly: The
+    +    documentation added in e544221d97a (trace2:
+    +    Documentation/technical/api-trace2.txt, 2019-02-22) already said of
+    +    the "exit" event that "[it] is emitted when git calls `exit()". But
+    +    the "main()" example then called trace2_cmd_exit(). Let's have it
+    +    invoke "exit()" instead, as the code in "common-main.c" now does.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    + ## Documentation/technical/api-trace2.txt ##
+    +@@ Documentation/technical/api-trace2.txt: Initialization::
+    + ----------------
+    + int main(int argc, const char **argv)
+    + {
+    +-	int exit_code;
+    +-
+    + 	trace2_initialize();
+    + 	trace2_cmd_start(argv);
+    + 
+    +-	exit_code = cmd_main(argc, argv);
+    +-
+    +-	trace2_cmd_exit(exit_code);
+    +-
+    +-	return exit_code;
+    ++	/* Our exit() will call trace2_cmd_exit_fl() */
+    ++	exit(cmd_main(argc, argv));
+    + }
+    + ----------------
+    + 
+    +
+      ## common-main.c ##
+     @@ common-main.c: int main(int argc, const char **argv)
+      
+    @@ common-main.c: int main(int argc, const char **argv)
+     +	 */
+     +	exit(result);
+      }
+    +
+    + ## t/helper/test-trace2.c ##
+    +@@ t/helper/test-trace2.c: static int print_usage(void)
+    +  *    [] the "cmd_name" event has been generated.
+    +  *    [] this writes various "def_param" events for interesting config values.
+    +  *
+    +- * We further assume that if we return (rather than exit()), trace2_cmd_exit()
+    +- * will be called by test-tool.c:cmd_main().
+    ++ * It doesn't matter if we "return" here or call "exit()", since our
+    ++ * "exit()" is a wrapper that will call trace2_cmd_exit_fl. It would
+    ++ * matter if we bypassed it and called "_exit()". Even if it doesn't
+    ++ * matter for the narrow case of trace2 testing, let's be nice to
+    ++ * test-tool.c's "cmd_main()" and common-main.c's "main()" and
+    ++ * "return" here.
+    +  */
+    + int cmd__trace2(int argc, const char **argv)
+    + {
+    +
+    + ## trace2.h ##
+    +@@ trace2.h: void trace2_cmd_start_fl(const char *file, int line, const char **argv);
+    +  */
+    + int trace2_cmd_exit_fl(const char *file, int line, int code);
+    + 
+    +-#define trace2_cmd_exit(code) (trace2_cmd_exit_fl(__FILE__, __LINE__, (code)))
+    +-
+    + /*
+    +  * Emit an 'error' event.
+    +  *
+
+ Documentation/technical/api-trace2.txt | 9 ++-------
+ common-main.c                          | 9 ++++++---
+ t/helper/test-trace2.c                 | 8 ++++++--
+ trace2.h                               | 2 --
+ 4 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index bb13ca3db8b..568a909222a 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -828,16 +828,11 @@ Initialization::
+ ----------------
+ int main(int argc, const char **argv)
+ {
+-	int exit_code;
+-
+ 	trace2_initialize();
+ 	trace2_cmd_start(argv);
  
-+	prepare_repo_settings(the_repository);
-+	the_repository->settings.command_requires_full_index = 0;
-+
- 	if (incremental || (output_option & OUTPUT_PORCELAIN)) {
- 		if (show_progress > 0)
- 			die(_("--progress can't be used with --incremental or porcelain formats"));
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-index 5cf94627383..cb777c74a24 100755
---- a/t/perf/p2000-sparse-operations.sh
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -115,5 +115,7 @@ test_perf_on_all git reset --hard
- test_perf_on_all git reset -- does-not-exist
- test_perf_on_all git diff
- test_perf_on_all git diff --cached
-+test_perf_on_all git blame $SPARSE_CONE/a
-+test_perf_on_all git blame $SPARSE_CONE/f3/a
+-	exit_code = cmd_main(argc, argv);
+-
+-	trace2_cmd_exit(exit_code);
+-
+-	return exit_code;
++	/* Our exit() will call trace2_cmd_exit_fl() */
++	exit(cmd_main(argc, argv));
+ }
+ ----------------
  
- test_done
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index abfb4994bb9..6187a997b7d 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -442,21 +442,36 @@ test_expect_success 'log with pathspec outside sparse definition' '
- test_expect_success 'blame with pathspec inside sparse definition' '
- 	init_repos &&
+diff --git a/common-main.c b/common-main.c
+index 71e21dd20a3..eafc70718a5 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -51,7 +51,10 @@ int main(int argc, const char **argv)
  
--	test_all_match git blame a &&
--	test_all_match git blame deep/a &&
--	test_all_match git blame deep/deeper1/a &&
--	test_all_match git blame deep/deeper1/deepest/a
-+	for file in a \
-+			deep/a \
-+			deep/deeper1/a \
-+			deep/deeper1/deepest/a
-+	do
-+		test_all_match git blame $file
-+	done
- '
+ 	result = cmd_main(argc, argv);
  
--# TODO: blame currently does not support blaming files outside of the
--# sparse definition. It complains that the file doesn't exist locally.
--test_expect_failure 'blame with pathspec outside sparse definition' '
-+# Without a revision specified, blame will error if passed any file that
-+# is not present in the working directory (even if the file is tracked).
-+# Here we just verify that this is also true with sparse checkouts.
-+test_expect_success 'blame with pathspec outside sparse definition' '
- 	init_repos &&
-+	test_sparse_match git sparse-checkout set &&
+-	trace2_cmd_exit(result);
+-
+-	return result;
++	/*
++	 * We define exit() to call trace2_cmd_exit_fl() in
++	 * git-compat-util.h. Whether we reach this or exit()
++	 * elsewhere we'll always run our trace2 exit handler.
++	 */
++	exit(result);
+ }
+diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
+index f93633f895a..9954010bc89 100644
+--- a/t/helper/test-trace2.c
++++ b/t/helper/test-trace2.c
+@@ -262,8 +262,12 @@ static int print_usage(void)
+  *    [] the "cmd_name" event has been generated.
+  *    [] this writes various "def_param" events for interesting config values.
+  *
+- * We further assume that if we return (rather than exit()), trace2_cmd_exit()
+- * will be called by test-tool.c:cmd_main().
++ * It doesn't matter if we "return" here or call "exit()", since our
++ * "exit()" is a wrapper that will call trace2_cmd_exit_fl. It would
++ * matter if we bypassed it and called "_exit()". Even if it doesn't
++ * matter for the narrow case of trace2 testing, let's be nice to
++ * test-tool.c's "cmd_main()" and common-main.c's "main()" and
++ * "return" here.
+  */
+ int cmd__trace2(int argc, const char **argv)
+ {
+diff --git a/trace2.h b/trace2.h
+index 0cc7b5f5312..73876781294 100644
+--- a/trace2.h
++++ b/trace2.h
+@@ -110,8 +110,6 @@ void trace2_cmd_start_fl(const char *file, int line, const char **argv);
+  */
+ int trace2_cmd_exit_fl(const char *file, int line, int code);
  
--	test_all_match git blame folder1/a &&
--	test_all_match git blame folder2/a &&
--	test_all_match git blame deep/deeper2/a &&
--	test_all_match git blame deep/deeper2/deepest/a
-+	for file in a \
-+			deep/a \
-+			deep/deeper1/a \
-+			deep/deeper1/deepest/a
-+	do
-+		test_sparse_match test_must_fail git blame $file &&
-+		cat >expect <<-EOF &&
-+		fatal: Cannot lstat '"'"'$file'"'"': No such file or directory
-+		EOF
-+		# We compare sparse-checkout-err and sparse-index-err in
-+		# `test_sparse_match`. Given we know they are the same, we
-+		# only check the content of sparse-index-err here.
-+		test_cmp expect sparse-index-err
-+	done
- '
- 
- test_expect_success 'checkout and reset (mixed)' '
-@@ -892,6 +907,18 @@ test_expect_success 'sparse index is not expanded: diff' '
- 	ensure_not_expanded diff --cached
- '
- 
-+test_expect_success 'sparse index is not expanded: blame' '
-+	init_repos &&
-+
-+	for file in a \
-+			deep/a \
-+			deep/deeper1/a \
-+			deep/deeper1/deepest/a
-+	do
-+		ensure_not_expanded blame $file
-+	done
-+'
-+
- # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
- # in this scenario, but it shouldn't.
- test_expect_success 'reset mixed and checkout orphan' '
+-#define trace2_cmd_exit(code) (trace2_cmd_exit_fl(__FILE__, __LINE__, (code)))
+-
+ /*
+  * Emit an 'error' event.
+  *
 -- 
-gitgitgadget
+2.34.1.898.g5a552c2e5f0
+
