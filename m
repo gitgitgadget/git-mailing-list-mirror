@@ -2,94 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75C38C433F5
-	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 17:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9625FC433F5
+	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 17:37:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243468AbhLFRkn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 12:40:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35838 "EHLO
+        id S243512AbhLFRlR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 12:41:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231511AbhLFRkm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 12:40:42 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D9C4C061746
-        for <git@vger.kernel.org>; Mon,  6 Dec 2021 09:37:13 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id w1so46181818edc.6
-        for <git@vger.kernel.org>; Mon, 06 Dec 2021 09:37:13 -0800 (PST)
+        with ESMTP id S231511AbhLFRlR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 12:41:17 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5512CC061746
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 09:37:48 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id w1so46188223edc.6
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 09:37:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
+        d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LTwkkDMmo2NaSF8K8xFJrOGFKHsJbmUmx9oUvEpbJsE=;
-        b=rWppTq5onrZt99tzw1wDc667RXOUGjupdPrE/3l5PQJuMJ+gLcApBQ7yqirKaXF+9h
-         SLkVJK3RE4ogqMaa0qvdyjLbMRlSI/ECdajm1ALDi6Sfn84Ml7tAc/71m9xCClvuf1tI
-         FQyMSd4Mm4J7nb2543P8V66p99pFPOhsTSIs/t5ZPqDvF6dg/YvHWsbfYS/w6aCWbSYU
-         D2d56S9C0SyKZpYTOlpSnaa5C+E5ajd/3tYpzvbFkZ4fJEgJBkQ31DLnvPrqIeulKHl/
-         Tj690lN6LKSlFLwPij7g/x+GarzTOvZFcq1g+sZJhvXjapPHmomqDxg3XuVJYjBv8ab7
-         FyRQ==
+         :cc:content-transfer-encoding;
+        bh=SbIGcpTWQ09xUFLaSnZvRdysvTKxtaFJQ6lEtoXrlAg=;
+        b=Rj5LYXqQpUoa4KG370uBJo1Q4KNXkdWUKP0e9jcE4ybvSUzczMnfIHJpx9ZP5J94rx
+         uOCq8CW7WNlIEEnktlxmJ2+uo9g69VmATWkJPUe+Evma4S6ILhQci1zMC1D6dI1QUCy0
+         yozEesRPLDKe6OAVC8SgyRFZCmXr1HG3DiA72hBZ+dIDqZ6JhKmFX/mFILEngteJuJlk
+         aNlyjJRBWmYRflVMkstB0kvqpvtcPrQPvUiQqMFf/kHuxnPmpLVzBUTbYGYAXRgVQEMS
+         2Hs2sgc1YRNNHa46sCx8o/ALAPUaT04U3LOyzxBWiWVKOUOQM09KOj5UB8CyAy1nW4/E
+         C1nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LTwkkDMmo2NaSF8K8xFJrOGFKHsJbmUmx9oUvEpbJsE=;
-        b=3cNhw4s4oxH/u0K9qKF4PUPlExQWzltRlbA0bG6rOBYZOLEf7fgz6Y/1PFywvwymTe
-         H5SOmnn0r7ERspTtzlHRnlk9APxntNWCWw35SA+EnulHa74PZniby+TCfWp/aejn8ROZ
-         mu/GHV/aIQmGNJP5+Wu6zv5EBJalY3YHvO637fPacnu1nbhf6QVsF9Hgfhn6Apsl4q0I
-         TCcdGNdjXqSPYlrjMrxnvHMzkG108u7CT0No+DTpaE/716HzeQ8n+9BKGR04eyautkmM
-         TBACSCZYnlOH/n/NJTvEzwNPf8HxahaB9r3LsCteogn5ENYhElzb0h8AIPOXLG+ICqyt
-         c29A==
-X-Gm-Message-State: AOAM532vJh2reQ+vLfjlwU+xK1s43GLHrFzrTBeD7DowX1BntpCuhi5W
-        OX7xsw1ObKnVKp2rMv0RzDnKBpsTWJ508bX1egTzR31A/8Q=
-X-Google-Smtp-Source: ABdhPJxaNKE00ram+c1wZ3XEE93jZS4xUOvEsyR9SJSk3Hz5xMjcIZvTfOpOrOjlf5GKLIKRqgqv0TR5pq8cIJ/fRZU=
-X-Received: by 2002:a17:907:3e22:: with SMTP id hp34mr47257041ejc.491.1638812231725;
- Mon, 06 Dec 2021 09:37:11 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SbIGcpTWQ09xUFLaSnZvRdysvTKxtaFJQ6lEtoXrlAg=;
+        b=XjDeBDVcqNpR5fsU5H0F5FB/prWfew8LYUOPKvkAxJxBphIzWKNrXys2mLsWltR0jB
+         uyLH9xTkfDkYW+PNaFLLDS5OHIBqHj3tX1RY0f/hsGqYUHv0Ipj6R+tvnGTch5S0Lis/
+         pR1Eg31GP6FtBcA6sJjR3JL0q5Q2ctDqJ5qzKMHuLjbbAZVo5v+PbSFfvfap9kKOE4B4
+         0PR3baRrOPixFK6ywPB5Q3OT8UZz/anCUB7sToZdeDBz2k7Gbrt3JtVQZ/iop2PzvaKn
+         NXCmYenha0zpEuxHGRzxaL+fj7vDu4vBqzA+PoiMYwKLeeUD1Vt7cUCNIe2iqEVwbFP8
+         FnRQ==
+X-Gm-Message-State: AOAM532+VYuoH229M6sI3zgMkxbNLUhRePsmpUpTATDLeY6DKxTznxAl
+        6I/y0TZCmVvHKKz/gXE3D2RUaiB6PNeOhL39ThM=
+X-Google-Smtp-Source: ABdhPJw2/hEx21aXPVUkufT4XKEgbvYa+HkY/6aRZkZe9ECkMxrC5CWKUX1RdSSP/72vbt55awQwLppNyl3ejr4/9M8=
+X-Received: by 2002:a05:6402:d73:: with SMTP id ec51mr636259edb.175.1638812266884;
+ Mon, 06 Dec 2021 09:37:46 -0800 (PST)
 MIME-Version: 1.0
-References: <CAO6o7kKXZg37ydC145yf5uZt+tsKdYADnVfinO0sHAN=cHo-FA@mail.gmail.com>
- <CAPig+cQr27ra4DTjC1gyZO7YdV81Jq5J3s-LcAf+wePP=+n59g@mail.gmail.com>
-In-Reply-To: <CAPig+cQr27ra4DTjC1gyZO7YdV81Jq5J3s-LcAf+wePP=+n59g@mail.gmail.com>
-From:   Will Beason <willbeason@google.com>
-Date:   Mon, 6 Dec 2021 11:36:58 -0600
-Message-ID: <CAO6o7k+hphmVKtZtrJEvkZq7TQv8HRCMBSFQ-5JARK2fRoq4sQ@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_Checkout_previous_branch_command_not_working_on_?=
-        =?UTF-8?Q?=E2=80=8B2=2E34=2E1=2E400?=
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
+References: <xmqqzgpm2xrd.fsf@gitster.g> <CABPp-BE4uYBFnb-AgVJhNo6iK4da5hiEFEBhd=7Ea3Ov=4K4zw@mail.gmail.com>
+ <d95f092.3f.17d73a85761.Coremail.pwxu@coremail.cn> <CABPp-BG9jHaJYekDnvZT+8QW_fLGM_bmz-oOqzJswaotyVDFBA@mail.gmail.com>
+ <211203.861r2tsfej.gmgdl@evledraar.gmail.com> <CABPp-BGE5Ff=adH3nREMDm38DGLEmtRTcPwuJowHw-ckwpbmqQ@mail.gmail.com>
+ <211203.86wnklqx05.gmgdl@evledraar.gmail.com> <30b4169a.18.17d8d589b6d.Coremail.pwxu@coremail.cn>
+ <xmqqilw2i6w1.fsf@gitster.g>
+In-Reply-To: <xmqqilw2i6w1.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 6 Dec 2021 09:37:35 -0800
+Message-ID: <CABPp-BGk9fYqtuYTACmzdXakpV7TP635eqHtHxkoHRT3aa4qFQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2021, #07; Mon, 29)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?QWxlZW4g5b6Q5rKb5paH?= <pwxu@coremail.cn>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?5b6Q5rKb5paHIChBbGVlbik=?= <aleen42@vip.qq.com>,
+        Aleen via GitGitGadget <gitgitgadget@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm going to bet you're absolutely correct. Yeah, the error message
-could be clearer.
-
-After using "git checkout [branch]" for a while, I reflexively typed
-"git checkout -" and it worked again.
-
-- Will Beason
-
-On Mon, Dec 6, 2021 at 11:17 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Sun, Dec 5, 2021 at 10:28 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Mon, Dec 6, 2021 at 12:04 PM Will Beason <willbeason@google.com> wrote:
-> > I typed "git checkout -"
-> > error: pathspec '-' did not match any file(s) known to git
+> Aleen =E5=BE=90=E6=B2=9B=E6=96=87 <pwxu@coremail.cn> writes:
+>
+> > Dears Hamano,
 > >
-> > I expected the previously-working behavior of switching to previous branch to
-> > work, but it didn't.
+> >     In my opinion, the '--empty' should act as a strategy option like t=
+he
+> >     'X' option to 'git-rebase'. Since that the default behaviour of not=
+ passing
+> >     the option is stopped in the middle of an am session, should the 'd=
+ie' value
+> >     dies the whole process but not the middle state? It may also make i=
+t not
+> >     confusing.
 >
-> If I recall correctly, for `-` to work it consults the reflog, but if
-> the reflog has been cleared or expired, it won't be able to determine
-> the previous branch. For instance, try this:
+> Hmph, unlike "git rebase" or "git merge", "git am" does not employ
+> different strategy backends, so "-X<option>" would be out of place,
+> I would think.
 >
->     % git init foo
->     % cd foo
->     % echo data >data
->     % git add data
->     % git commit -m data
->     % git checkout -b other
->     % git checkout -
->     % git reflog expire --expire=now --all
->     % git checkout -
->     error: pathspec '-' did not match any file(s) known to git
->
-> So, this is probably expected behavior, though the error message isn't
-> very helpful and perhaps could be improved.
+> Among what we already have, what kills the entire session is called
+> "git am --abort".  Since I do not find it unnatural to say "'git am'
+> dies" when it stops and gives control back to the user, so that the
+> user can decide what to do next, I am not sure where the aversion to
+> the word comes from
+
+When I first read the documentation, it sounded to me like it was
+implying an abort.  I find 'die' very unnatural as a way to explain
+this behavior; it's too strong of a word.
+
+> (on the other hand, I find 'ask' highly
+> unnatural since we do not ask anything---we just throw the control
+> back the user).
+
+Okay, but what about my previous suggestions of 'stop' or 'interrupt'?
