@@ -2,84 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C580BC433EF
-	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 13:34:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 500F4C433EF
+	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 13:59:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244021AbhLFNhw convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 6 Dec 2021 08:37:52 -0500
-Received: from mail-pf1-f179.google.com ([209.85.210.179]:33777 "EHLO
-        mail-pf1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243606AbhLFNhv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 08:37:51 -0500
-Received: by mail-pf1-f179.google.com with SMTP id x5so10216082pfr.0
-        for <git@vger.kernel.org>; Mon, 06 Dec 2021 05:34:23 -0800 (PST)
+        id S245003AbhLFOCk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 09:02:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37588 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231828AbhLFOCj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 09:02:39 -0500
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09038C061746
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 05:59:11 -0800 (PST)
+Received: by mail-qk1-x734.google.com with SMTP id 193so11120874qkh.10
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 05:59:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=q9+FYNYL4SuTDwKyTKh16bAfMXQ+Rj9C0GWtot/K3W4=;
+        b=IdBqJuocOXr+MjlACCK0DbBPHkHI7yscLswWwGWBcNYWYL7iUEPpEdXtHcOnorh50w
+         xx/pCfGTVBiT6sMwJkcGuXdjNYSTII3+kSZ8cqraEI8aymAjDCEEyfX19G1hIMjJ4TE1
+         nkfntCprtPM7Kju0nfXg7ydIury+YGbyX8hqP7pCBk4vJUvQXXinN/UHO/fJIrtdVP4z
+         8SREORpg3QhmC7CSO8aMIBZhPLknmPjg4loxNmY8W5bWl7LFNwzerrIJYxXEKq+LxMj2
+         7ExfF5C32k9nqToAb1GiHI66jH8W4p8SNV2WAb3uoCgqw/DmFAhTgAagt4QKkQ+qPtyr
+         TJXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=84GKrSKUXchOQkO0hwIAt4y+T8+szq9dzNH7cvPiDHQ=;
-        b=l7k/f3WItY+KFPduzWWi6vDGF57XXIahWg5Hy0gY8IaN09rfH+UiRgc+lKlYYyTiZj
-         qJG5qmPLbLfUSODKe/DTtwyI6m++9BKCixGMXXjbddWsNMmzTLwA4iEGLV86QNMpybp2
-         YYxeP/hS3eVDXWmjCii5ZBNGT4yIhEO1Rpm0R76EdZf5Kn3ktAZaP2tlhcCUcPGT9m7S
-         /TULRnXsbuC1CVzDUPn1txCo+hJO7VV4t6i96qyg+aYM2QiC+2DyiFdmuKyL035Hlbmb
-         vQweU54IhUbs/BbN2cm2JnmAUHkTNvu7wVYgXXfdJPaB0f3ZSX6p+ZNoj8UkAaGeEx3S
-         caog==
-X-Gm-Message-State: AOAM533TxYzWCavH7OxZAvaJGcnAkSdsQW0cKvXHHVPqdM4meSKVN/+0
-        L5knO+3n6APnE14gaC292RxEa9csRtSif/tBt1chdhzciEH/RQ==
-X-Google-Smtp-Source: ABdhPJwxNxB4+3nlHDEWBrSd1rLde+UHVjR0as4deE3gOsj8bfKV5YnwJFH+8uWZ3Lvtl+UxRcfNqNGB+m+Vii6YYFw=
-X-Received: by 2002:a05:6a00:2349:b0:4a8:d87:e8ad with SMTP id
- j9-20020a056a00234900b004a80d87e8admr36687932pfj.15.1638797662541; Mon, 06
- Dec 2021 05:34:22 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=q9+FYNYL4SuTDwKyTKh16bAfMXQ+Rj9C0GWtot/K3W4=;
+        b=AzK2Gtscr2BawCGcNRJ33pJRHBhH1iTw0YCzQ+XrTKcIrI1hIcCCFd9qQJUsz/TaPB
+         ZoOOMiBLt/+72KqAspbbJ8ra0V2Nr0eSCpvpMplpqFArGWanygfjlTQbHpGGW2xM5RhD
+         qdZ8sm4VnWW9KuIlnYR8kq0b6RGof685BxOejIC+14L/QFpcVFN3FPjySDqrYzXaHhRf
+         CmQ54U99FFVU7lWBLbdDp0Kzf/meMVes/yPQ0BvFhCT9CRjr+Z4ve3fmJalYQdF5W1gz
+         MOYDDrrV0Oq1rft81WxuIAvDMMycOvMToZnd16GNbZRGFJzjLRNTrlCvBUuN8zzUfN+v
+         lyDw==
+X-Gm-Message-State: AOAM5316kjBeWNcuy6WxueeZf2rTMLNDgqkGsq973WyBzKZIAFCY8nO4
+        YffhlJ4QBK/dp0lUCgg1yjc=
+X-Google-Smtp-Source: ABdhPJxhzO+4yULdQUYJls/nfC5998g5F2MUHjK8b0eqhHNjNJJQt39aEK8a6SWpKQlWhCoyjdKJvg==
+X-Received: by 2002:a37:4554:: with SMTP id s81mr32231248qka.762.1638799149961;
+        Mon, 06 Dec 2021 05:59:09 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:a127:30a:f299:4fac? ([2600:1700:e72:80a0:a127:30a:f299:4fac])
+        by smtp.gmail.com with ESMTPSA id y12sm6294327qko.36.2021.12.06.05.59.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Dec 2021 05:59:08 -0800 (PST)
+Message-ID: <166c107e-1884-ca53-fa46-12b39e6af13f@gmail.com>
+Date:   Mon, 6 Dec 2021 08:59:07 -0500
 MIME-Version: 1.0
-References: <20211203034420.47447-1-sunshine@sunshineco.com>
- <20211203034420.47447-3-sunshine@sunshineco.com> <211203.86k0gmt5fl.gmgdl@evledraar.gmail.com>
- <CAPig+cR7f1koM7d2GoHMcDhZkQe3=XJD2RVuMajXSpcwZiyGtQ@mail.gmail.com> <xmqqa6hfmn3u.fsf@gitster.g>
-In-Reply-To: <xmqqa6hfmn3u.fsf@gitster.g>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 6 Dec 2021 08:34:11 -0500
-Message-ID: <CAPig+cQ82UC3MRSswGtnCcB13wdhTNYzDex=tFSuFwFCjL3ErA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] git-worktree.txt: add missing `-v` to synopsis for
- `worktree list`
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Baruch Burstein <bmburstein@gmail.com>,
-        Randall Becker <rsbecker@nexbridge.com>,
-        Jeff King <peff@peff.net>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH 2/2] unpack-trees: use traverse_path instead of name
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1092.git.1638586534.gitgitgadget@gmail.com>
+ <c91421996562ecedab18f8af4ed8a02896584540.1638586534.git.gitgitgadget@gmail.com>
+ <CABPp-BEs8_F7SKsxDMd8p03oMn9M3H47=hrPP=AzxsacUkGg_A@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CABPp-BEs8_F7SKsxDMd8p03oMn9M3H47=hrPP=AzxsacUkGg_A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 5, 2021 at 4:12 AM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > On Fri, Dec 3, 2021 at 4:15 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> >> Aside: I've been thinking of hacking something up to just change all
-> >> these "[verse]" bits in the *.txt source to:
-> >>
-> >>     [verse]
-> >>     $(git worktree -h)
-> >>
-> >> And then have the doc build process pick that up, run 'git $name -h', do
-> >> some light search/replacement (e.g. "$cmd" to "'$cmd'") and build the
-> >> docs like that.
-> >
-> > One caution that springs to mind is that there may be external tooling
-> > which processes these documentation files directly, and such a change
-> > might break them. (The one which popped to mind immediately was the
-> > git-scm.{org,com} website, though I don't know what their tooling
-> > looks like.)
->
-> Also it would slow us down by making the .txt variant we see in the
-> source tree harder to read (or in this case, impossible to see without
-> building the documentation).
+On 12/4/2021 12:42 AM, Elijah Newren wrote:
+> On Fri, Dec 3, 2021 at 6:55 PM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
 
-Taking this point into consideration, a middle-ground alternative to
-Ævar's idea would be to add tooling which only compares (by some
-definition of "compare") the output of `git blah -h` with the synopsis
-in `git-blah.txt` and complains if there are significant differences
-(by some definition "significant" and "difference"). It doesn't
-automate-away the work of keeping the synopsis up-to-date, but at
-least would flag inconsistencies.
+>> @@ -1243,11 +1243,11 @@ static int sparse_dir_matches_path(const struct cache_entry *ce,
+>>         assert(S_ISSPARSEDIR(ce->ce_mode));
+>>         assert(ce->name[ce->ce_namelen - 1] == '/');
+>>
+>> -       if (info->namelen)
+>> -               return ce->ce_namelen == info->namelen + p->pathlen + 2 &&
+>> -                      ce->name[info->namelen] == '/' &&
+>> -                      !strncmp(ce->name, info->name, info->namelen) &&
+>> -                      !strncmp(ce->name + info->namelen + 1, p->path, p->pathlen);
+>> +       if (info->pathlen)
+>> +               return ce->ce_namelen == info->pathlen + p->pathlen + 1 &&
+>> +                      ce->name[info->pathlen - 1] == '/' &&
+>> +                      !strncmp(ce->name, info->traverse_path, info->pathlen) &&
+>> +                      !strncmp(ce->name + info->pathlen, p->path, p->pathlen);
+>>         return ce->ce_namelen == p->pathlen + 1 &&
+>>                !strncmp(ce->name, p->path, p->pathlen);
+>>  }
+>> --
+> 
+> The comment at the beginning of this function (not shown in this
+> patch) is now stale and misleading; it should be corrected too.
+ 
+Will do! Thanks for catching that.
+
+Thanks,
+-Stolee
