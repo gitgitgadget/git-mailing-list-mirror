@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50219C4332F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 735BEC43217
 	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 17:04:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241850AbhLFRHk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 12:07:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53888 "EHLO
+        id S231172AbhLFRHm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 12:07:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235190AbhLFQ70 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 11:59:26 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3847C061746
-        for <git@vger.kernel.org>; Mon,  6 Dec 2021 08:55:57 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id a18so23830286wrn.6
-        for <git@vger.kernel.org>; Mon, 06 Dec 2021 08:55:57 -0800 (PST)
+        with ESMTP id S1347632AbhLFQ72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 11:59:28 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41963C061746
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 08:55:59 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id d24so23934254wra.0
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 08:55:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=wYFlVHr0fWz6eadJWJ4z1VO6MjidyFdIxCZv8yxJnsY=;
-        b=Geub8S/yKcX80mdUGEPZKAf2HU89o1zu6MnM2s51x1mUg+qATLY/hkAdtOVsgUCEYM
-         AozQUos9HdBYUu635LqnMhRtPsnz8JM9U+EVjnlYtdEwliyf0eGef5d92ykG3/088N2G
-         p95pNLHPO1kJq25NQV6rasDe9iXfuRCbpByRvymnLLYFQvSs0ynDt2NTWUsDfims5tUu
-         HFbtt7gy4aAzGyU0dK67xTl4oq09+oP0czt+9njIQJxrxdXtkWyoQdfmL8Y4wLpqayeW
-         o8LDbRXT1iGJ4r2bdYqzas5f5fR3G9mIXpWrzqJLyt6XKCG7DCE1ON6o9J37GV7jwu6W
-         +Fyw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=RS8g8b1m0rSADL1KI1UkqxXJYX3nHi6MXAdizSUwaB4=;
+        b=K1DJAEaaDTKHMg94fdcra454JcRXHGaMNjTQIfEtjojFE86q1YCakNjJmQdDQv51j4
+         cHbOgYAaxskRJ9kZFVsIWmUpvkb9QnJZkzy+nlUUF4880AYkWC11qkTSDTByjWuwrsP/
+         Fg9Q05fU0WR/WjdR1pohZnZs/ckDTsImXuH16QV/Xg60plJ2cPK/rfEBnsJ8DI9/Dxk1
+         9Uu2GyTXJS7tFl9ryHaetXNs/P0e71M+WpBmVWTI9RItkV6hLu2VUZNbumcbdv2lxnGy
+         /v+W9kYiSGBWlYP9w6gLHZsaUsQT8mS8eOOAq2/p+UAugDznWJD6yAzsrR1JfBEB7cBO
+         bwqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=wYFlVHr0fWz6eadJWJ4z1VO6MjidyFdIxCZv8yxJnsY=;
-        b=efKgsvryux4LtDwpgXwvnWK4IDMkqUwzMUcln9nI7AhDEJ+6XY+OfCdzOgWbzPjxLE
-         7HiZXCrI0SvQs2IzmbzpwmU4zybVsFvU7FLEQcnNb7LvwTnmJXjeJpLOyy+1DJUViDRw
-         MR5j5D+dLar3vKL39QRr8bHi4fl+QGXfgD/eC+3RTFpAn8LZlK8YbnBxtdlp07haC3lO
-         9WYoFUyEZh4lc3JVyUtUc+8BWSDLXYnv10hsF1WrJU1eHh0HymSKqZpKRILAoWONjzWJ
-         cf5k75hxnVRXfd3XjJes4XBK9egHwoc9wYip6RaqlDDWHlLlsu3kNKdzagDel94iNKuo
-         ZG8w==
-X-Gm-Message-State: AOAM531b3wwQ0CbgWczf9o5wPd3ALpDrmqt/LSB+rQjBIkquUsJ89ZdP
-        JrdvgoYpKslq6e3e5mBUDvvqxMZnbSAMhg==
-X-Google-Smtp-Source: ABdhPJx4hWMnHXI7Bmn+LRvnsHo4VQVfl3B1f5fIfbZ44mdeqYPRENy6cpRwaJOidHnGFR1JqLzdVg==
-X-Received: by 2002:adf:f90a:: with SMTP id b10mr43038072wrr.255.1638809756019;
-        Mon, 06 Dec 2021 08:55:56 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=RS8g8b1m0rSADL1KI1UkqxXJYX3nHi6MXAdizSUwaB4=;
+        b=aLNOYCvRymMxBkMhNs8SDoFC72m9z4tW8/Fltfmhaufe/T8vVJ57T9YbdrAPoMOrFE
+         uCDXq98UuzJ3nkpGk2huhEVxlgX4YoiBTdIIb/qbqgRPTZrHp3Dm9kdJ/JCMGHTOrWPa
+         8jLE3kznc1pyVAQ0dCnFQ8XaEsiOkUEt9EdjdR0EvLrF+94NlPMD09XSSE0xmqKgvsS8
+         MhphW1drvzcUuTVOQSJ2YKyF8aDUvW0uhV+0GCJCz9mgiOWvpEYUQ64VB3G+1xLaJsrh
+         ANlu8yBXa3CQZlJuJxUOzkbX46bYllxLtGe4Z4r3UMxQ5v5Byt6x2yK+W98f1J9aImgB
+         KxRQ==
+X-Gm-Message-State: AOAM530un0CtlnVfSRdd/DJghOyL38JmrbMHeNrSfMy6oQjyepZU07iV
+        ki0ClrVy8Y1t0SnCDj4DOT9BkSzDoB1P+g==
+X-Google-Smtp-Source: ABdhPJzZE1j0O3VBeuc1TvboWxKCR/iclksa48MGv9hHfX9gc0DXkQ+rPYvX3KfywucHGjdrdf9BQA==
+X-Received: by 2002:adf:fb05:: with SMTP id c5mr43920821wrr.497.1638809757592;
+        Mon, 06 Dec 2021 08:55:57 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j40sm11775419wms.16.2021.12.06.08.55.55
+        by smtp.gmail.com with ESMTPSA id j40sm11775419wms.16.2021.12.06.08.55.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 08:55:55 -0800 (PST)
+        Mon, 06 Dec 2021 08:55:57 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,10 +55,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/4] usage API: Add and use die_message()
-Date:   Mon,  6 Dec 2021 17:55:49 +0100
-Message-Id: <cover-0.4-00000000000-20211206T165221Z-avarab@gmail.com>
+Subject: [PATCH 2/4] usage.c API users: use die_message() where appropriate
+Date:   Mon,  6 Dec 2021 17:55:51 +0100
+Message-Id: <patch-2.4-36c050c90c2-20211206T165221Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.898.g5a552c2e5f0
+In-Reply-To: <cover-0.4-00000000000-20211206T165221Z-avarab@gmail.com>
+References: <cover-0.4-00000000000-20211206T165221Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,105 +68,201 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A small series to add both die_message() and die_message_errno()
-functions. By using these we can make vreportf() in usage.c static.
+Change code that either called error() and proceeded to exit with 128,
+or emitted its own "fatal: " messages to use the die_message()
+function added in a preceding commit.
 
-Doing so opens the door to later feature work on vreportf() that I
-submitted an RFC series for[1], but wanted to peel off this more
-trivial (and more easy to review) part.
+In order to do that we need to add a get_die_message_routine()
+function, which works like the other get_*_routine() functions in
+usage.c. There is no set_die_message_rotine(), as it hasn't been
+needed yet. We can add it if we ever need it.
 
-The range-diff below shows changes since the RFC version. There was a
-stupid bug of the die_message_errno() helper returning -1 instead of
-128 as its die_message() sibling, I also f ixed up the commit messages
-a bit, and had builtin/gc.c call "return" instead of "exit()" while I
-was at it.
-
-1. https://lore.kernel.org/git/RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com/
-
-Ævar Arnfjörð Bjarmason (4):
-  usage.c: add a die_message() routine
-  usage.c API users: use die_message() where appropriate
-  usage.c + gc: add and use a die_message_errno()
-  config API: don't use vreportf(), make it static in usage.c
-
- builtin/fast-import.c | 19 +++++++++++--------
- builtin/gc.c          | 21 ++++++++++++---------
- builtin/notes.c       | 15 +++++++++------
- config.c              | 22 +++++++++-------------
- config.h              | 10 ++++++----
- git-compat-util.h     |  4 +++-
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/fast-import.c | 12 +++++++-----
+ builtin/notes.c       |  9 +++++----
+ git-compat-util.h     |  1 +
  http-backend.c        |  3 ++-
- imap-send.c           |  3 ++-
  parse-options.c       |  2 +-
  run-command.c         | 16 +++++-----------
- usage.c               | 42 ++++++++++++++++++++++++++++++++++++++----
- 11 files changed, 98 insertions(+), 59 deletions(-)
+ usage.c               | 12 ++++++++++--
+ 7 files changed, 31 insertions(+), 24 deletions(-)
 
-Range-diff:
-1:  ae05d2398fb ! 1:  5a9ab85fa56 usage.c: add a die_message() routine
-    @@ Commit message
-         helper routine to bridge this gap in the API.
-     
-         Functionally this behaves just like the error() routine, except it'll
-    -    print a "fatal: " prefix, and it will exit with 128 instead of -1,
-    -    this is so that caller can pas the return value to exit(128), instead
-    -    of having to hardcode "128".
-    +    print a "fatal: " prefix, and it will return with 128 instead of -1,
-    +    this is so that caller can pass the return value to "exit()", instead
-    +    of having to hardcode "exit(128)".
-     
-         A subsequent commit will migrate various callers that benefit from
-    -    this function over to it, for now we're just adding the routine and
-    +    this function over to it. For now we're just adding the routine and
-         making die_builtin() in usage.c itself use it.
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-2:  b4ff6ddf986 = 2:  36c050c90c2 usage.c API users: use die_message() where appropriate
-3:  f93d95ab288 ! 3:  8747afecdcd usage.c + gc: add and use a die_message_errno()
-    @@ Commit message
-         errors to use a "fatal: " prefix instead. This adds a sibling function
-         to the die_errno() added in a preceding commit.
-     
-    -    Since it returns 128 instead of -1 we'll need to adjust
-    -    report_last_gc_error(). Let's adjust it while we're at it to not
-    -    conflate the "should skip" and "exit with this non-zero code"
-    -    conditions, as the caller is no longer hardcoding "128", but relying
-    -    on die_errno() to return a nen-zero exit() status.
-    +    Since it returns 128 instead of -1 (like die_message()) we'll need to
-    +    adjust report_last_gc_error().
-    +
-    +    Let's adjust it while we're at it to not conflate the "should skip"
-    +    and "exit with this non-zero code" conditions, as the caller is no
-    +    longer hardcoding "128", but relying on die_errno() to return a
-    +    nen-zero exit() status.
-    +
-    +    Since we're touching this code let's also use "return ret" in place of
-    +    an "exit(ret)". This is kinder to any cleanup our our "cmd_main()" in
-    +    "git.c" might want to do.
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    @@ builtin/gc.c: int cmd_gc(int argc, const char **argv, const char *prefix)
-      				/* Last gc --auto failed. Skip this one. */
-      				return 0;
-     +			if (ret)
-    -+				/* an error occurred, already reported */
-    -+				exit(ret);
-    ++				/* an I/O error occurred, already reported */
-    ++				return ret;
-      
-      			if (lock_repo_for_gc(force, &pid))
-      				return 0;
-    @@ usage.c: int die_message(const char *err, ...)
-     +	va_start(params, fmt);
-     +	die_message_routine(fmt_with_err(buf, sizeof(buf), fmt), params);
-     +	va_end(params);
-    -+	return -1;
-    ++	return 128;
-     +}
-     +
-      #undef error_errno
-4:  40fe7cf81a8 = 4:  e0e6427cbd3 config API: don't use vreportf(), make it static in usage.c
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 20406f67754..2b2e28bad79 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -401,16 +401,18 @@ static void dump_marks(void);
+ 
+ static NORETURN void die_nicely(const char *err, va_list params)
+ {
++	va_list cp;
+ 	static int zombie;
+-	char message[2 * PATH_MAX];
++	report_fn die_message_fn = get_die_message_routine();
+ 
+-	vsnprintf(message, sizeof(message), err, params);
+-	fputs("fatal: ", stderr);
+-	fputs(message, stderr);
+-	fputc('\n', stderr);
++	va_copy(cp, params);
++	die_message_fn(err, params);
+ 
+ 	if (!zombie) {
++		char message[2 * PATH_MAX];
++
+ 		zombie = 1;
++		vsnprintf(message, sizeof(message), err, cp);
+ 		write_crash_report(message);
+ 		end_packfile();
+ 		unkeep_all_packs();
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 71c59583a17..2812d1eac40 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -201,11 +201,12 @@ static void prepare_note_data(const struct object_id *object, struct note_data *
+ static void write_note_data(struct note_data *d, struct object_id *oid)
+ {
+ 	if (write_object_file(d->buf.buf, d->buf.len, blob_type, oid)) {
+-		error(_("unable to write note object"));
++		int status = die_message(_("unable to write note object"));
++
+ 		if (d->edit_path)
+-			error(_("the note contents have been left in %s"),
+-				d->edit_path);
+-		exit(128);
++			die_message(_("the note contents have been left in %s"),
++				    d->edit_path);
++		exit(status);
+ 	}
+ }
+ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index a83fbdf6398..d5e495529c8 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -514,6 +514,7 @@ static inline int const_error(void)
+ typedef void (*report_fn)(const char *, va_list params);
+ 
+ void set_die_routine(NORETURN_PTR report_fn routine);
++report_fn get_die_message_routine(void);
+ void set_error_routine(report_fn routine);
+ report_fn get_error_routine(void);
+ void set_warn_routine(report_fn routine);
+diff --git a/http-backend.c b/http-backend.c
+index 3d6e2ff17f8..982cb62c7cb 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -659,8 +659,9 @@ static NORETURN void die_webcgi(const char *err, va_list params)
+ {
+ 	if (dead <= 1) {
+ 		struct strbuf hdr = STRBUF_INIT;
++		report_fn die_message_fn = get_die_message_routine();
+ 
+-		vreportf("fatal: ", err, params);
++		die_message_fn(err, params);
+ 
+ 		http_status(&hdr, 500, "Internal Server Error");
+ 		hdr_nocache(&hdr);
+diff --git a/parse-options.c b/parse-options.c
+index fc5b43ff0b2..8bc0a21f1d7 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -1075,6 +1075,6 @@ void NORETURN usage_msg_opt(const char *msg,
+ 		   const char * const *usagestr,
+ 		   const struct option *options)
+ {
+-	fprintf(stderr, "fatal: %s\n\n", msg);
++	die_message("%s\n", msg); /* The extra \n is intentional */
+ 	usage_with_options(usagestr, options);
+ }
+diff --git a/run-command.c b/run-command.c
+index f40df01c772..a790fe9799d 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -340,15 +340,6 @@ static void child_close_pair(int fd[2])
+ 	child_close(fd[1]);
+ }
+ 
+-/*
+- * parent will make it look like the child spewed a fatal error and died
+- * this is needed to prevent changes to t0061.
+- */
+-static void fake_fatal(const char *err, va_list params)
+-{
+-	vreportf("fatal: ", err, params);
+-}
+-
+ static void child_error_fn(const char *err, va_list params)
+ {
+ 	const char msg[] = "error() should not be called in child\n";
+@@ -372,9 +363,10 @@ static void NORETURN child_die_fn(const char *err, va_list params)
+ static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
+ {
+ 	static void (*old_errfn)(const char *err, va_list params);
++	report_fn die_message_routine = get_die_message_routine();
+ 
+ 	old_errfn = get_error_routine();
+-	set_error_routine(fake_fatal);
++	set_error_routine(die_message_routine);
+ 	errno = cerr->syserr;
+ 
+ 	switch (cerr->err) {
+@@ -1082,7 +1074,9 @@ static void *run_thread(void *data)
+ 
+ static NORETURN void die_async(const char *err, va_list params)
+ {
+-	vreportf("fatal: ", err, params);
++	report_fn die_message_fn = get_die_message_routine();
++
++	die_message_fn(err, params);
+ 
+ 	if (in_async()) {
+ 		struct async *async = pthread_getspecific(async_key);
+diff --git a/usage.c b/usage.c
+index 74b43c5db6f..76399ba8409 100644
+--- a/usage.c
++++ b/usage.c
+@@ -68,7 +68,9 @@ static void die_message_builtin(const char *err, va_list params)
+  */
+ static NORETURN void die_builtin(const char *err, va_list params)
+ {
+-	die_message_builtin(err, params);
++	report_fn die_message_fn = get_die_message_routine();
++
++	die_message_fn(err, params);
+ 	exit(128);
+ }
+ 
+@@ -112,6 +114,7 @@ static int die_is_recursing_builtin(void)
+  * (ugh), so keep things static. */
+ static NORETURN_PTR report_fn usage_routine = usage_builtin;
+ static NORETURN_PTR report_fn die_routine = die_builtin;
++static report_fn die_message_routine = die_message_builtin;
+ static report_fn error_routine = error_builtin;
+ static report_fn warn_routine = warn_builtin;
+ static int (*die_is_recursing)(void) = die_is_recursing_builtin;
+@@ -121,6 +124,11 @@ void set_die_routine(NORETURN_PTR report_fn routine)
+ 	die_routine = routine;
+ }
+ 
++report_fn get_die_message_routine(void)
++{
++	return die_message_routine;
++}
++
+ void set_error_routine(report_fn routine)
+ {
+ 	error_routine = routine;
+@@ -220,7 +228,7 @@ int die_message(const char *err, ...)
+ 	va_list params;
+ 
+ 	va_start(params, err);
+-	die_message_builtin(err, params);
++	die_message_routine(err, params);
+ 	va_end(params);
+ 	return 128;
+ }
 -- 
 2.34.1.898.g5a552c2e5f0
 
