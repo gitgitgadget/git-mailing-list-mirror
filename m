@@ -2,98 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F566C4332F
-	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 16:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41AB2C433EF
+	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 16:26:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237277AbhLFQUt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 11:20:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42338 "EHLO
+        id S1357162AbhLFQ3k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 11:29:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1387358AbhLFQUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 11:20:03 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30F12C07E5C3
-        for <git@vger.kernel.org>; Mon,  6 Dec 2021 08:16:25 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id x15so45393652edv.1
-        for <git@vger.kernel.org>; Mon, 06 Dec 2021 08:16:25 -0800 (PST)
+        with ESMTP id S1352992AbhLFQ3j (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 11:29:39 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 445DFC061354
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 08:26:10 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id 133so8663022wme.0
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 08:26:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=eBv6kLS0QqA/KgrOvgo8mcnixBbLiwBOGyYSYRfwRb8=;
-        b=FhmL2yYeKxcnLDGK3QCucnICmXsmzEAX2WPC0hqDYFGfQ8VJNB+gZwhr+PdHRj5otR
-         MbdAeSSW7Cno2MizMJ7T5LUlddeUA+sPtYSNhKd01GoPVYUSK1o6r7pFAMUwMVYUYxse
-         M2eif9xRWcO4oWLByo932ECzyw4icTqV4OiiPc6xrCMEnH2nYjsck9O8vuU/6LlQO0DK
-         5ORXQNz6VGQm3TWRnqk24M5PH+zkDwAKXxeMy3GQespUTuVEAFp7cHSokvCygIEONvHr
-         4aLDnihyMIqAEsODEoDyZO9DCH1NuWUafVuNnG6rfM+RKCKW2/0mhZJWQ1ZzejvsXbSv
-         BLcw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KPfIek90TfVSRbr+iLkt9sJcCzUkgKILx7faOC4bAS4=;
+        b=ZrmTMgPbKYXW43fpE3D/qMZ/azVFo5c6oRn8dPNUVhYSmfmvTkyY1kUL/d8+O7xyxD
+         NQ+RMRg4hbI7z7UCy7PxfYdOG1UNZbu2zK0DMlNaFKZ/SeTAV+vfdE/Voe6EsfGiDfX5
+         ZePI5vzicbIWV3o0NhVNG/4Kd9ITF7TdeZ443sSsMUS22Nz99NRyD7wjy+LuhrpDR88y
+         DOiYtGl2W9mNDqh4a0KeGsf89rmA2xKmsFUiAPleuE2IT3Pzt3p2JqZMG0/JY3F1b+tU
+         GtDaxiotzeFRCeetT0CObwWiVlJzw/cqPj/sfi43O8QZ1G/Kj9IWQ+VGacYP/m0qCIlv
+         Q5vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=eBv6kLS0QqA/KgrOvgo8mcnixBbLiwBOGyYSYRfwRb8=;
-        b=wDdst2gxVLEyCrC0x1MyYMb7AxKYRTPYIsN5DeWHb7Bq29WA20pluIqIuQEuzua9xA
-         D+YHe5e0TIj3tbL4zcrxBeBRQIOLfz7h1J9+A587AUVB9fCkEOiSgRudC03rQGNo3opF
-         T4xafcX7BtkQuX+PVaRwveO9nlKrOl//Pl0n19Ns5Hvp2Srbd82jf0twu5juYbm8N0Ww
-         j8664W1SUpJlCnWbdS9cBtRwB1TBvtaEpUWKcTuoPlerUDSlqA0R+whjWGJ+EyxJUAt7
-         7vHvO9diK93fyFoxrfFt9kG9jD5UXp6ci9LSSLnvqWRPArlAol3/4B1qLBAJs0g9xuNN
-         IFLg==
-X-Gm-Message-State: AOAM5324hfUKNbMEuTIIKPqxkyFiurvdpZBNppAlp0FZLvhrcqMywFdg
-        xmwPxk8nPvH/7Ga5qW0BTOhSkTgGb5pkbQ==
-X-Google-Smtp-Source: ABdhPJw0bcbFzST0SuFmfXX1Invy9eeb52H+sZqbYB+ITKcj20iiNrUIZKf1Dadm4brMqRtrTBpyNg==
-X-Received: by 2002:a17:907:e8e:: with SMTP id ho14mr47027746ejc.12.1638807383689;
-        Mon, 06 Dec 2021 08:16:23 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id y17sm8806200edd.31.2021.12.06.08.16.23
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KPfIek90TfVSRbr+iLkt9sJcCzUkgKILx7faOC4bAS4=;
+        b=ZCR1fKP86rvVmQPTJloTKLR07rJ0MhM1+hLUXq644FSfzEEP5mCc0vMFG55SNjTslm
+         +pEY97lg9m9B9c+cfWOM+U1M/sUi746R72SGgpbOjB6smmqDuOSd8yPDlBZnw/h6wXGP
+         3BeG3mGh86RrzmJ2pNNRbdIXdck9MeDyJFpjFzJXxj+gm+Pb9k9bNZ2PKR66QiIe15RK
+         F8pKX14rX8jScXU2JRhXTlaerG37vmU1SGu6KhsvCmXwowBXn8zZ6VplaP/PvR57M2em
+         wMZBZv6cwd0ClTlwZ5KB7mLkgm0geLWcLdWMYwbj0t57CjC8EdWex0kv6gXB6zOR+DoO
+         WekQ==
+X-Gm-Message-State: AOAM530DbS9w+JSVHSvHuTXuIoUxom9sliFG1X6T2QH+k6l+/kwOGkQi
+        pKPKPLrvzzgVkEm8VcwgI8rARI7gLUrvxg==
+X-Google-Smtp-Source: ABdhPJzvb9xcBXSxh3ZZsE81CdvXa2x/Gmo4Zw8yeUSO17nXceXv8dZ0RK9cLjr3lIseni2fEDW1dg==
+X-Received: by 2002:a1c:9d48:: with SMTP id g69mr41262638wme.188.1638807967491;
+        Mon, 06 Dec 2021 08:26:07 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id q26sm11740173wrc.39.2021.12.06.08.26.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 08:16:23 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1muGf8-000pMj-Ob;
-        Mon, 06 Dec 2021 17:16:22 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>, meta@public-inbox.org
-Subject: Re: Large delays in mailing list delivery?
-Date:   Mon, 06 Dec 2021 17:12:57 +0100
-References: <CABPp-BF_xsOpQ6GSaWs9u9JcnPQT_OXP-gCsAuxPtMj-X1tgOg@mail.gmail.com>
- <211203.86sfv9qwdm.gmgdl@evledraar.gmail.com>
- <20211203202427.o575sgrx4auqkmjp@meerkat.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <20211203202427.o575sgrx4auqkmjp@meerkat.local>
-Message-ID: <211206.867dchr9nt.gmgdl@evledraar.gmail.com>
+        Mon, 06 Dec 2021 08:26:06 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/2] replace die("BUG: ...") with BUG("...")
+Date:   Mon,  6 Dec 2021 17:25:19 +0100
+Message-Id: <cover-0.2-00000000000-20211206T162442Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.34.1.898.g5a552c2e5f0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+A trivial clean-up to change a couple of die() uses to BUG() where
+appropriate. This is split off from an earlier RFC series I sent
+in[1], as the range-diff to the relevant patches there shown there are
+no changes since then.
 
-On Fri, Dec 03 2021, Konstantin Ryabitsev wrote:
+1. https://lore.kernel.org/git/RFC-patch-07.21-3f897bf6b0e-20211115T220831Z-avarab@gmail.com/
 
-> On Fri, Dec 03, 2021 at 09:02:48PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> When I've experienced delays (sometimes of half a day or more) both
->> https://public-inbox.org/git/ and https://lore.kernel.org/git/ have been
->> updated.
->
-> Btw, you can source lore.kernel.org straight into your gmail inbox. :)
->
->     https://people.kernel.org/monsieuricon/lore-lei-part-1-getting-started
->     https://people.kernel.org/monsieuricon/lore-lei-part-2-now-with-imap
->
-> Or, you can read it via nntp://nntp.lore.kernel.org/.
+Ævar Arnfjörð Bjarmason (2):
+  pack-objects: use BUG(...) not die("BUG: ...")
+  strbuf.h: use BUG(...) not die("BUG: ...")
 
-[CC'd meta@public-inbox.org, probably best to move this thread over
-there sooner than later, but CC'ing git@ still in case this is
-interesting to others]
+ builtin/pack-objects.c | 2 +-
+ strbuf.h               | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-I poked a bit at setting this up but couldn't find from building
-public-inbox.org & trying to page through the docs how I'd get from an
-existing public-inbox.org/git/ checkout to a local Maildir.
+Range-diff:
+1:  2507ea71700 = 1:  2a17ed9f135 pack-objects: use BUG(...) not die("BUG: ...")
+2:  5dedcee3fb0 = 2:  ab89fec50c3 strbuf.h: use BUG(...) not die("BUG: ...")
+-- 
+2.34.1.898.g5a552c2e5f0
 
-If you could share some recipe or a pointer to the right docs for that
-that would be much appreciated. Thanks!
