@@ -2,126 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D27ECC433EF
-	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 17:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78516C433EF
+	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 17:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344719AbhLFRxn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 12:53:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39056 "EHLO
+        id S1345254AbhLFR5D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 12:57:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344076AbhLFRxm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 12:53:42 -0500
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5DC4C061746
-        for <git@vger.kernel.org>; Mon,  6 Dec 2021 09:50:13 -0800 (PST)
-Received: by mail-pg1-x530.google.com with SMTP id f125so11262293pgc.0
-        for <git@vger.kernel.org>; Mon, 06 Dec 2021 09:50:13 -0800 (PST)
+        with ESMTP id S1345200AbhLFR5C (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 12:57:02 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30671C0613F8
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 09:53:34 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id gx15-20020a17090b124f00b001a695f3734aso518371pjb.0
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 09:53:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=l/6qEl4+u7fQjYQP/k+oPSIgl5d+6mra3aFAG+tH0ck=;
-        b=NK/LO2qdLj9WacM8ZGzYuVZ/wnm0L5aHhknNDQyql85czjOrzB1c3yE0eQc4KcjfcI
-         I0+geZF4lkH+D15jzlysTfhAFMXaunb96NGTT/ZrgK9B64+sG0R4nXUxMVJXP0rHE/Vu
-         qMid4c8CEHLneFmVG8UBnMPYIFC3XOXSbZkyAh1vRrIdRSE/MgmtI/3mBRa5uZ5u/1Si
-         9SYblBVCtawrSeMPxQ/h+2v4vfNqvAnWHHRENtGQ71x/7wJ6NJIWUGGbzeBsAgBdmdUU
-         Rh7LZAZSXjOsdOfUaR38ZDiE18f954e8YhLKCZmpIJu2MBZkvopgZ7XmSjDpgt0Knp6W
-         m9SQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=5Z7jA34SMVywaSgl9Olo6+DIvEZeCjUPwdeGlZiCULc=;
+        b=JBSaiTe9WJtLi4oHt373QP7lXlgcMRptvhxWAtkXQH0isHDeDLaTSzmalBsy49Kp+v
+         Kqs2KXPaGMChn9EdNDrfApUx9KuvgzZkMAK9pmdZmTveICQza/eYO9B/66R7DfFbFjJl
+         NVZCPaN3El9q35zp8TiGKnI4Almk+blwn8lc2RwrhU7KpYD2CH0sjCKBJ0xeb637PjAn
+         c3y5u6e8sU9whWPmLfACkDfypi7BVFRPXEZ9Gl1bEH5HP+2OOqA1MBOJv/TKlh0qdq6V
+         GmY9ugbvvMtPnixIXprEAuc7G15jc3yq1/zzYE82TptsZjfDW++ofMjFIspuN5GGL5LV
+         yxBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=l/6qEl4+u7fQjYQP/k+oPSIgl5d+6mra3aFAG+tH0ck=;
-        b=5cwik9Y1JsGIT/+6HpsCnyzLpdn3cwgGs5jJUZuQlFD5JE7tKZp/G7Xgmz8JM6O9FK
-         1b22TuAngFyXzy61y8x4XGYJLvPW/PCrFV5wPhJVGg3tdbFRQqVMdOJ194zzEN9kdNCB
-         bNt8A8Hf0PYQ2Ae4Ql6Bmg5e8udjr6QZQLjdGmuIUb4hGfM2Wq9ft+fQPnmghUTnOd58
-         Rigun9Qlucn/taurYSPnn23IFKZv2fo6eOXPeqaJ/xY4HpuXPM71hIP4qHDW24bLbX1B
-         0gzqngcL2KtpKVyZpko13hNOLPw2GLQTsVwZKzYSnW1xBb1q5cJN0hnF7GWK4Rb8wDuj
-         c5Xg==
-X-Gm-Message-State: AOAM530NV4vUsdZfyuVOQeQ+r88XbMLVjSNp8HCQssX5LR/0zGBO08Ek
-        i6t/9Vo31lE1N2LuSd9sU8o=
-X-Google-Smtp-Source: ABdhPJy3ph26B2r7OfdT4IqdBx2hPDt9tvIOvCoFvHAsPsLhbvvu2mhniAg7YKDjYHm4ImRmDueiFg==
-X-Received: by 2002:a63:be4f:: with SMTP id g15mr19555020pgo.417.1638813013214;
-        Mon, 06 Dec 2021 09:50:13 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=5Z7jA34SMVywaSgl9Olo6+DIvEZeCjUPwdeGlZiCULc=;
+        b=neHcheiUdftNHhEfIG5Qob+hp40xYi9BfMojiAsfwZAAmUHdEnCuvt0d3O0e7vv5rB
+         xFlo923I5pffEE0xk6lUXdMKFsS3gFr9671JXV+NWC47bKzc/ngqTzaPV4Ob6myqsv8V
+         7FsF7KW5TPeNfw+brlb8+s4HCj/JFird45o9JQTptD3kcq2B0do1k9lLVrYWBv9LYZyK
+         7YTsOarh/EuBwyS/tD+PO+szgmTkDuCSsTfaETnEIFwPvYj/kJ33kGJ6mrux8qG8hFuX
+         unJmGuC/SN0HwuPhkQj6IZq91j+HiRiXfPhvNQQXiwCTGDKE+5jnlstbHvXk9sNcA4jM
+         2nAA==
+X-Gm-Message-State: AOAM532uez+TiedndNNMhldMYi7bky9SJPyJepSHSGmWs0sROnNmC8nt
+        TfdAl/jSNCTAU2s31R9AIBM=
+X-Google-Smtp-Source: ABdhPJzRvBlvZVY2Z0zIpJ6ZPlZ8G3aRgext9WoQAxLzonoxRt94OxhXedEkdbiPlEQ0+JhuA6u5gQ==
+X-Received: by 2002:a17:903:11cd:b0:143:d220:fddb with SMTP id q13-20020a17090311cd00b00143d220fddbmr45181910plh.5.1638813213630;
+        Mon, 06 Dec 2021 09:53:33 -0800 (PST)
 Received: from localhost ([2620:15c:289:200:9206:9546:da97:4e9c])
-        by smtp.gmail.com with ESMTPSA id ml24sm29313pjb.16.2021.12.06.09.50.12
+        by smtp.gmail.com with ESMTPSA id mv22sm26024pjb.36.2021.12.06.09.53.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 09:50:12 -0800 (PST)
+        Mon, 06 Dec 2021 09:53:32 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Aleen =?utf-8?B?5b6Q5rKb5paH?= <pwxu@coremail.cn>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?5b6Q5rKb5paHIChBbGVlbik=?= <aleen42@vip.qq.com>,
-        Aleen via GitGitGadget <gitgitgadget@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2021, #07; Mon, 29)
-References: <xmqqzgpm2xrd.fsf@gitster.g>
-        <CABPp-BE4uYBFnb-AgVJhNo6iK4da5hiEFEBhd=7Ea3Ov=4K4zw@mail.gmail.com>
-        <d95f092.3f.17d73a85761.Coremail.pwxu@coremail.cn>
-        <CABPp-BG9jHaJYekDnvZT+8QW_fLGM_bmz-oOqzJswaotyVDFBA@mail.gmail.com>
-        <211203.861r2tsfej.gmgdl@evledraar.gmail.com>
-        <CABPp-BGE5Ff=adH3nREMDm38DGLEmtRTcPwuJowHw-ckwpbmqQ@mail.gmail.com>
-        <211203.86wnklqx05.gmgdl@evledraar.gmail.com>
-        <30b4169a.18.17d8d589b6d.Coremail.pwxu@coremail.cn>
-        <xmqqilw2i6w1.fsf@gitster.g>
-        <CABPp-BGk9fYqtuYTACmzdXakpV7TP635eqHtHxkoHRT3aa4qFQ@mail.gmail.com>
-Date:   Mon, 06 Dec 2021 09:50:11 -0800
-In-Reply-To: <CABPp-BGk9fYqtuYTACmzdXakpV7TP635eqHtHxkoHRT3aa4qFQ@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 6 Dec 2021 09:37:35 -0800")
-Message-ID: <xmqqlf0xhbcc.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Baruch Burstein <bmburstein@gmail.com>,
+        Randall Becker <rsbecker@nexbridge.com>,
+        Jeff King <peff@peff.net>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>
+Subject: Re: [PATCH 2/2] git-worktree.txt: add missing `-v` to synopsis for
+ `worktree list`
+References: <20211203034420.47447-1-sunshine@sunshineco.com>
+        <20211203034420.47447-3-sunshine@sunshineco.com>
+        <211203.86k0gmt5fl.gmgdl@evledraar.gmail.com>
+        <CAPig+cR7f1koM7d2GoHMcDhZkQe3=XJD2RVuMajXSpcwZiyGtQ@mail.gmail.com>
+        <xmqqa6hfmn3u.fsf@gitster.g>
+        <CAPig+cQ82UC3MRSswGtnCcB13wdhTNYzDex=tFSuFwFCjL3ErA@mail.gmail.com>
+        <211206.86bl1trbdp.gmgdl@evledraar.gmail.com>
+Date:   Mon, 06 Dec 2021 09:53:32 -0800
+In-Reply-To: <211206.86bl1trbdp.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 06 Dec 2021 16:06:10 +0100")
+Message-ID: <xmqqh7blhb6r.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> When I first read the documentation, it sounded to me like it was
-> implying an abort.  I find 'die' very unnatural as a way to explain
-> this behavior; it's too strong of a word.
-
-The way we currently document "git am", we have no word "die" used
-anywhere in the page.  The existing mention of the behaviour are
-found in these places:
-
-    --continue::
-    -r::
-    --resolved::
-            After a patch failure (e.g. attempting to apply
-            conflicting patch), the user has applied it by hand and
-            the index file stores the result of the application.
-            Make a commit using the authorship and commit log
-            extracted from the e-mail message and the current index
-            file, and continue.
-
-This uses "failure", and "the user has applied" implies that the
-user somehow got control back.  We give "error:" messages to state
-that the patch does not apply from apply.c::apply_all_patches() and
-the caller silently exits, without calling die.
-
-    --show-current-patch[=(diff|raw)]::
-            Show the message at which `git am` has stopped due to
-            conflicts.  If `raw` is specified, show the raw contents of
-            the e-mail message; if `diff`, show the diff portion only.
-            Defaults to `raw`.
-
-This uses "has stopped" to describe the same situation.
-
->> (on the other hand, I find 'ask' highly
->> unnatural since we do not ask anything---we just throw the control
->> back the user).
+>> Taking this point into consideration, a middle-ground alternative to
+>> Ævar's idea would be to add tooling which only compares (by some
+>> definition of "compare") the output of `git blah -h` with the synopsis
+>> in `git-blah.txt` and complains if there are significant differences
+>> (by some definition "significant" and "difference"). It doesn't
+>> automate-away the work of keeping the synopsis up-to-date, but at
+>> least would flag inconsistencies.
 >
-> Okay, but what about my previous suggestions of 'stop' or 'interrupt'?
+> Or we could do the reverse and move the source code version of it to be
+> generated from the [verse] sections in the documentation.
 
-I agree that "stop" would be a good word that is already used to
-describe "the command cannot make further progress without
-assistance by the user, so it stops and gives control back".
-
-After that, the user can say "am --skip", "am --abort", or edit plus
-"am --continue".
+Either would be far more preferrable than committing generated files,
+or committing us to work on unreadable sources.
 
 Thanks.
+
