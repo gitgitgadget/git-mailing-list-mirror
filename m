@@ -2,170 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8861C433EF
-	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 02:51:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC223C433F5
+	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 03:10:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235249AbhLFCz0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Dec 2021 21:55:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57038 "EHLO
+        id S235660AbhLFDNp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Dec 2021 22:13:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229809AbhLFCzZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Dec 2021 21:55:25 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62D3DC0613F8
-        for <git@vger.kernel.org>; Sun,  5 Dec 2021 18:51:57 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id b40so21727301lfv.10
-        for <git@vger.kernel.org>; Sun, 05 Dec 2021 18:51:57 -0800 (PST)
+        with ESMTP id S235402AbhLFDNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Dec 2021 22:13:45 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ACC6C0613F8
+        for <git@vger.kernel.org>; Sun,  5 Dec 2021 19:10:17 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id k37so21913041lfv.3
+        for <git@vger.kernel.org>; Sun, 05 Dec 2021 19:10:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=lk3bpRb3WFVx+G9z9B6KWXtTAF3SRkspIth8ALyNJgI=;
-        b=joh/G8sKksAIGaUZrxR2X9+B9EypLOxM2OWPevaJX2picHw91xTwCsI96er8zu16qr
-         hXUpAwCJhaC1JWM9AfXjQmoS6OdTsg8WQTqb6YFxNQiVW6W1z1Iqrsp23+y8d42WjfiX
-         xO5CW7AJMVPgvTV0QP5vbcDExKSDYOs1Hd31uCtfNArWHzSuoJQSDPVe5gSWMQHSjBBR
-         ZnaBj6eqWPXfL8Ah/b6ZXz573NrvgBkDIjArNjJITA965B/3zUqWXWNA9iIBUdF50ESJ
-         JrStEjkUqQVky07fZlW3+laqDdSAm5+l/L4hOzQ1R/j8rgc4bjrK3T6rbSGfAIBjrvgA
-         VK0A==
+         :cc;
+        bh=kMBY0zQg+oerudXdREtCvJYBNQp1GyAV9/wIoU9Qi2A=;
+        b=F+spaIqr/pRELvmC9F1Bg5HQxibOHGwGSgzVlr9CbsgkhCjUWXIrHEm8mK9ZbrRGCf
+         k/XM99afUmmIwJGQY7sNUxtnD4glZdyrzPJNai9Q0h1O2znHOfYnfkJRh9JPEtTVy7rG
+         c+jPGGqtjRgE9wPkX3Z8gNY64p3MTzVvg6ELRm9Y2/W1nPbVDJOOHz7sOI9Kaj9vUtNG
+         DdZ7LMomSIX07UXI28+vVvZuQI/U6iSzndtBCuCYd9k2hfW/gm3L2OlIkzgf8NbcsdXI
+         v5J1zckMfn9V5aliFwnYUIqMpgR/IITgfyWnmr1wUpjfX9dM0fwCh2/qwUuGH60QHdSL
+         hqiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lk3bpRb3WFVx+G9z9B6KWXtTAF3SRkspIth8ALyNJgI=;
-        b=3EDHrjh6AnMAaiM/F7S1M2Y7N2rWY6y8y+rIGL+/Zj3R5f7RVwwbteVaSAl82eGlm5
-         D095F2Oy8A7yhJS41nINACoXuHbB1pwTVm1Hd2siiyTN6aT3RzYbQjB3JyCmckU3N35G
-         xQPeiUtN58tIFqIEYUxBmX2sBrihrqi0Mrg8d8Zt8vwefqkKuxlUofmHGWpVlkdDs5QY
-         tCMP8RsAi+OjRpc5Jxe7lzfuoVvgFHIS1pDl+18TVUiV8ce5ULeQTKuWuIbPujnMmecR
-         4aEe0evzg/8w/uIo9XG09KY7nP/MwlUwkfRtGuJEVrnFtOZvreFeaOVi/PslRLjubdRw
-         IAIw==
-X-Gm-Message-State: AOAM533kARFyqrBEPuMR/IYZyZDUto86E23p0tK5ruPsK47c81nUPtK2
-        K0s6+pJx9ihAKzDS1E5Xv80hCP1NigBOglGuBwI=
-X-Google-Smtp-Source: ABdhPJxs7fLTo7eH+q0MVknK9+Vn7Yaz4ed9GWn3YXx371Z0r7P3kooftBch01UiTfNDcRZVUQLRvH7Y/M8cjgfTkVk=
-X-Received: by 2002:a05:6512:ace:: with SMTP id n14mr32314853lfu.53.1638759115651;
- Sun, 05 Dec 2021 18:51:55 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=kMBY0zQg+oerudXdREtCvJYBNQp1GyAV9/wIoU9Qi2A=;
+        b=qHxSo/1SKDvAkV21OhetW1P0CTkPhAGuWp4FuDGZoatOtaoDw1h/LKOzuEV/jGkMJJ
+         ZoWkAgPOCfAiwNpWRc5Bqeuvm9nkPfmh/iMgZa3EEcqhxlDCrDrlxwSZG/CTbJxsRDVW
+         PW2rgoh7iKm5AWfoRNaqn4oZkB4254FDMYS90w4QfWV5+M78zQW7sWKifwLDlXLIQeH2
+         GGfnf2cRuofUGDv5CmCI+FzkikJMuMbhVZ9Qq9GHLKVdpkCPV63V4B0CS88W/VWp1Bji
+         O3U8wnMoNmRFVNEL1wsChaDIvLYJhm3esHY2BmyWBH/2ldSZ/HsLeM97fiVG8sc4PvAT
+         kuZA==
+X-Gm-Message-State: AOAM533XkXFdmkEDaiunS7+/WvdZ1z+yiFkxninKeyhox1PQHv1k7F7u
+        FfA9XOm8Dgle8PelbFVxtNd5KAziFkBEz58e4fI=
+X-Google-Smtp-Source: ABdhPJw27TCKhP6D5FihSuJydtF2flZlU9CJy4RZeUy2hbk4qGYXHUhEiSmf5T8giJxbgt2xPAI3c90XwCXYvKY2O6E=
+X-Received: by 2002:a05:6512:50f:: with SMTP id o15mr33241649lfb.522.1638760215482;
+ Sun, 05 Dec 2021 19:10:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20211122033220.32883-1-chiyutianyi@gmail.com> <20211203093530.93589-3-chiyutianyi@gmail.com>
- <211203.86v905stru.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211203.86v905stru.gmgdl@evledraar.gmail.com>
-From:   Han Xin <chiyutianyi@gmail.com>
-Date:   Mon, 6 Dec 2021 10:51:44 +0800
-Message-ID: <CAO0brD2_TvxCMhGiyZC5ex-73dk+3CafWFT43K9CPfE8WAXKXQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/5] object-file.c: handle undetermined oid in write_loose_object()
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
+References: <pull.1091.git.1638585658.gitgitgadget@gmail.com>
+ <d8ae001500c788cdabf4e6918da0a7ce89a48fc6.1638585658.git.gitgitgadget@gmail.com>
+ <xmqqtufmlxmb.fsf@gitster.g> <20211205234408.GA26229@neerajsi-x1.localdomain> <xmqqsfv6ip1y.fsf@gitster.g>
+In-Reply-To: <xmqqsfv6ip1y.fsf@gitster.g>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Sun, 5 Dec 2021 19:10:04 -0800
+Message-ID: <CANQDOdfyoEM0pELKWzoK5ZUrDqwWnQLtbAycESzCqRRdWyWUSA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] tmp-objdir: disable ref updates when replacing the
+ primary odb
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 3, 2021 at 9:27 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
+On Sun, Dec 5, 2021 at 3:56 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
+> Neeraj Singh <nksingh85@gmail.com> writes:
 >
-> On Fri, Dec 03 2021, Han Xin wrote:
+> > On Sun, Dec 05, 2021 at 10:23:08AM -0800, Junio C Hamano wrote:
+> >> "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >>
+> >> >    /*
+> >> >     * This object store is ephemeral, so there is no need to fsync.
+> >> >     */
+> >> > -  int will_destroy;
+> >> > +  unsigned int will_destroy : 1;
+> >>
+> >> <CANQDOddCC7+gGUy1VBxxwvN7ieP+N8mQhbxK2xx6ySqZc6U7-g@mail.gmail.com>
+> >> ?
+> >>
+> >> (https://github.com/git/git/pull/1076#discussion_r750645345)
+> >
+> > Thanks for noticing this! I also lost one other change
+> > while splitting this out: we are referencing
+> > the_repository from the refs code, but as of 34224e14d we
+> > should be picking it up from the ref_store. I'll submit
+> > an updated series as soon as it passes CI.
 >
-> > From: Han Xin <hanxin.hx@alibaba-inc.com>
-> >
-> > When streaming a large blob object to "write_loose_object()", we have n=
-o
-> > chance to run "write_object_file_prepare()" to calculate the oid in
-> > advance. So we need to handle undetermined oid in function
-> > "write_loose_object()".
-> >
-> > In the original implementation, we know the oid and we can write the
-> > temporary file in the same directory as the final object, but for an
-> > object with an undetermined oid, we don't know the exact directory for
-> > the object, so we have to save the temporary file in ".git/objects/"
-> > directory instead.
-> >
-> > Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> > Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-> > ---
-> >  object-file.c | 30 ++++++++++++++++++++++++++++--
-> >  1 file changed, 28 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/object-file.c b/object-file.c
-> > index 82656f7428..1c41587bfb 100644
-> > --- a/object-file.c
-> > +++ b/object-file.c
-> > @@ -1892,7 +1892,14 @@ static int write_loose_object(const struct objec=
-t_id *oid, char *hdr,
-> >       const void *buf;
-> >       unsigned long len;
-> >
-> > -     loose_object_path(the_repository, &filename, oid);
-> > +     if (is_null_oid(oid)) {
-> > +             /* When oid is not determined, save tmp file to odb path.=
- */
-> > +             strbuf_reset(&filename);
-> > +             strbuf_addstr(&filename, the_repository->objects->odb->pa=
-th);
-> > +             strbuf_addch(&filename, '/');
-> > +     } else {
-> > +             loose_object_path(the_repository, &filename, oid);
-> > +     }
-> >
-> >       fd =3D create_tmpfile(&tmp_file, filename.buf);
-> >       if (fd < 0) {
-> > @@ -1939,12 +1946,31 @@ static int write_loose_object(const struct obje=
-ct_id *oid, char *hdr,
-> >               die(_("deflateEnd on object %s failed (%d)"), oid_to_hex(=
-oid),
-> >                   ret);
-> >       the_hash_algo->final_oid_fn(&parano_oid, &c);
-> > -     if (!oideq(oid, &parano_oid))
-> > +     if (!is_null_oid(oid) && !oideq(oid, &parano_oid))
-> >               die(_("confused by unstable object source data for %s"),
-> >                   oid_to_hex(oid));
-> >
-> >       close_loose_object(fd);
-> >
-> > +     if (is_null_oid(oid)) {
-> > +             int dirlen;
-> > +
-> > +             oidcpy((struct object_id *)oid, &parano_oid);
-> > +             loose_object_path(the_repository, &filename, oid);
+> No rush.
 >
-> Why are we breaking the promise that "oid" is constant here? I tested
-> locally with the below on top, and it seems to work (at least no tests
-> broke). Isn't it preferrable to the cast & the caller having its "oid"
-> changed?
+> Reviewers and other project participants would appreciate you more
+> if you took a deep breath, after seeing a CI success, and gave a
+> final re-reading of the patches with a critical pair of eyes, before
+> you send the updated series out.
 >
-> diff --git a/object-file.c b/object-file.c
-> index 71d510614b9..d014e6942ea 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1958,10 +1958,11 @@ int write_loose_object(const struct object_id *oi=
-d, char *hdr,
->         close_loose_object(fd);
->
->         if (is_null_oid(oid)) {
-> +               struct object_id oid2;
->                 int dirlen;
->
-> -               oidcpy((struct object_id *)oid, &parano_oid);
-> -               loose_object_path(the_repository, &filename, oid);
-> +               oidcpy(&oid2, &parano_oid);
-> +               loose_object_path(the_repository, &filename, &oid2);
->
->                 /* We finally know the object path, and create the missin=
-g dir. */
->                 dirlen =3D directory_size(filename.buf);
+> Thanks.
 
-Maybe I should change the promise that "oid" is constant in
-"write_loose_object()".
-
-The original write_object_file_flags() defines a variable "oid", and
-completes the calculation of the "oid" in
-"write_object_file_prepare()" which will be passed to
-"write_loose_object()".
-
-If a null oid is maintained after calling "write_loose_object()",
-"--strict" will become meaningless, although it does not break existing
-test cases.
+Fair enough.  Of course I didn't see your email before I resubmitted.
+Thanks for the feedback.
