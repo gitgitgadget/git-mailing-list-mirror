@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D095C433EF
-	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 16:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD5C7C433F5
+	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 16:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1385672AbhLFQOP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 11:14:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39872 "EHLO
+        id S1358778AbhLFQO3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 11:14:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1388756AbhLFQNn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 11:13:43 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D99EC00FDFD
-        for <git@vger.kernel.org>; Mon,  6 Dec 2021 07:56:07 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id o29so8538772wms.2
-        for <git@vger.kernel.org>; Mon, 06 Dec 2021 07:56:07 -0800 (PST)
+        with ESMTP id S1389075AbhLFQNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 11:13:45 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1611EC0D940A
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 07:56:08 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id a9so23351528wrr.8
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 07:56:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=gH3g4kfU8Y2PYneljW76tLyHpoW5kOXX5YMI78kGvl8=;
-        b=lNX8P0W8EH6326aMCKDC6VWnMpMCbPI3DsiFIbgiDBRJlVBZ2X/0SCnYMFD4EmdnAV
-         y7BhrbIyr6VAFOMkVdh8yt3S43GJQ0sHbpDwqSUcj+zsyVRypQvTs8bLF1enB5/RIwxZ
-         Ks+7xqaxwfd5c7cIXK3l1goDFnWRbJiWjhpvHwhMD9j0vLV4AywwMGAgAqwS8VZ450qb
-         9i8TLus/yyzbtaZIOq0Kg7zGPKkZ+bvtvmtSeFel41v2hZJdn1bEP8VUNNexoMnmJ6Tl
-         R3oEvNFOSfmrSrT9MMOZEj/kRbh439L6qfOIku+0C9d3Tp2Ex9EOkV7EGtpg6z0UXCvN
-         +JwQ==
+        bh=2WvfLHDRn5PtUSv8R0fF8N/KMYsMG9QkL9V0gTjzwPo=;
+        b=q5apoVE8X7L/Ig4RnqblGgD8dbcDUVetJPw+ntEd081/ftMCc9t+BBC1aPjTPX7uKz
+         u6Nxj1nxq7y/xbuGNPYjqjVTV9AKmtxNBWFglu6PRo/sca+RYqLz2ytdxg0wQpvx9Zhf
+         +Shbtk+qMzsEIs9CPh1NFMvhKILK2SJZmZiueOXwfK4XA9dSJz+QudVur6dkGLq9pERV
+         HCd9WCcLbuOIwKVfIpOJnju53h+ZzLxLxbPxY0NfluqqjT2xmeyY7az2V36hAjo4HFuh
+         23+qDqrSN8X17RrTjONTkuZqTFKgFSHa64DyP9X/hjrvoOfx0pE0KEWmvSrchUpBqN6s
+         /WEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gH3g4kfU8Y2PYneljW76tLyHpoW5kOXX5YMI78kGvl8=;
-        b=DODNx6jvsecKQrcOnykgMUkttWGwPAGK5AW2v/sjM3gB393z751PXdlcsWGwRzenJq
-         n/MYzaiu5QQ9XfBEaDnPXvAvNB4xjvBpGgYgbQKL5XL6S3xGvNpnfRt8jjH77FzKyaW8
-         v7JSG1401eek104Nvqc84+zfHJzaa2CepsiymyPmAOVpPkt40I/bdynfPNAu/QGY+kwi
-         p35lFZvSu7sdtoYjxmHLxUAvVsbMOZqUONRRG2QlFt4Y4+YjlR2odm+W95gGdmMrdh0t
-         PPljto1vxMfQxQ915/UueaXj7Joix2+JyCRoWccdOvj0+DXq2O8NHferqBRUhJ9OZHot
-         U7Iw==
-X-Gm-Message-State: AOAM531zirDS7Proy4qT694GCyDoWgjHCUEbMES1/2N3ItGgpsG8v3/n
-        8W2t+YtTsya5vhqrCJ94UV8ReHICtOk=
-X-Google-Smtp-Source: ABdhPJx/o81ryeM9gdyMvWjnAXcx0mkNLcZyPFxtU6zhFGwA579pMEjPAyI+QL6Yh0IBt5COI8ZS9g==
-X-Received: by 2002:a05:600c:4ed2:: with SMTP id g18mr39357973wmq.18.1638806165897;
-        Mon, 06 Dec 2021 07:56:05 -0800 (PST)
+        bh=2WvfLHDRn5PtUSv8R0fF8N/KMYsMG9QkL9V0gTjzwPo=;
+        b=FVm/4cnYvikoq8rXiutV2pCtB45/f5GMVPTGbtOjmI+zYhVE9IOKaOAzAzX2JvnCqB
+         a9NPL10a8bCOCQ1qPCsvd767gMZmtWJEu7OQsZdfw0hhM6wD5+YvI+iO0u5mj2hDxs0V
+         JzwBYXFx/xGY6n5RtG/OMIF49cALe6mSxtfGhEiqMFCl26tlcUPZfzxHk+NrXzhZQ4Hn
+         UMKS7rEP+gcXfONalF2f61valldECjBzGGIhcjHKldQb0WqWhQdj3RXFjq5KUSNz/efk
+         uTdwceFdEYJhReDZzuU5TH3xSVJlifucwI7bXHmsRRXT2rIw1fQP3v/oLxpxT6jI3eEK
+         2rHQ==
+X-Gm-Message-State: AOAM530EEZ9xp6ZyaeDYJ+DSu12FFO7Pz3Y3sWwL6QEd/5R/Tr9mGa0a
+        8hE5IU6FjX+ziqru808YwB8dwF7UMHA=
+X-Google-Smtp-Source: ABdhPJzkxMzG6bZXaTUfHbsZocaJaoJuhXdMvn9b1LGB2w6BlapJ1qucWz7f3fP5hhaHK/TfO9vYyA==
+X-Received: by 2002:a5d:52c2:: with SMTP id r2mr44863137wrv.548.1638806166611;
+        Mon, 06 Dec 2021 07:56:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u23sm12478162wru.21.2021.12.06.07.56.05
+        by smtp.gmail.com with ESMTPSA id g16sm13720364wmq.20.2021.12.06.07.56.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 07:56:05 -0800 (PST)
-Message-Id: <fd28be71ca47a71b224a5b08cb81f903ada6a2bd.1638806161.git.gitgitgadget@gmail.com>
+        Mon, 06 Dec 2021 07:56:06 -0800 (PST)
+Message-Id: <2a1524a7e9ac267a550d5b88c02f853fe36fe08c.1638806161.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1050.v6.git.1638806161.gitgitgadget@gmail.com>
 References: <pull.1050.v5.git.1638566165.gitgitgadget@gmail.com>
         <pull.1050.v6.git.1638806161.gitgitgadget@gmail.com>
 From:   "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 06 Dec 2021 15:55:58 +0000
-Subject: [PATCH v6 4/7] repo-settings: prepare_repo_settings only in git repos
+Date:   Mon, 06 Dec 2021 15:55:59 +0000
+Subject: [PATCH v6 5/7] diff: replace --staged with --cached in t1092 tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,30 +69,64 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lessley Dennington <lessleydennington@gmail.com>
 
-Check whether git directory exists before adding any repo settings. If it
-does not exist, BUG with the message that one cannot add settings for an
-uninitialized repository. If it does exist, proceed with adding repo
-settings.
+Replace uses of the synonym --staged in t1092 tests with --cached (which
+is the real and preferred option). This will allow consistency in the new
+tests to be added with the upcoming change to enable the sparse index for
+diff.
 
 Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
 Reviewed-by: Elijah Newren <newren@gmail.com>
 ---
- repo-settings.c | 3 +++
- 1 file changed, 3 insertions(+)
+ t/t1092-sparse-checkout-compatibility.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/repo-settings.c b/repo-settings.c
-index b93e91a212e..00ca5571a1a 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -17,6 +17,9 @@ void prepare_repo_settings(struct repository *r)
- 	char *strval;
- 	int manyfiles;
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 77e302a0ef3..203a594fa45 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -371,7 +371,7 @@ test_expect_success 'checkout and reset --hard' '
+ 	test_all_match git reset --hard update-folder2
+ '
  
-+	if (!r->gitdir)
-+		BUG("Cannot add settings for uninitialized repository");
-+
- 	if (r->settings.initialized++)
- 		return;
+-test_expect_success 'diff --staged' '
++test_expect_success 'diff --cached' '
+ 	init_repos &&
+ 
+ 	write_script edit-contents <<-\EOF &&
+@@ -380,10 +380,10 @@ test_expect_success 'diff --staged' '
+ 	run_on_all ../edit-contents &&
+ 
+ 	test_all_match git diff &&
+-	test_all_match git diff --staged &&
++	test_all_match git diff --cached &&
+ 	test_all_match git add README.md &&
+ 	test_all_match git diff &&
+-	test_all_match git diff --staged
++	test_all_match git diff --cached
+ '
+ 
+ # NEEDSWORK: sparse-checkout behaves differently from full-checkout when
+@@ -400,8 +400,8 @@ test_expect_success 'diff with renames and conflicts' '
+ 		test_all_match git checkout rename-base &&
+ 		test_all_match git checkout $branch -- . &&
+ 		test_all_match git status --porcelain=v2 &&
+-		test_all_match git diff --staged --no-renames &&
+-		test_all_match git diff --staged --find-renames || return 1
++		test_all_match git diff --cached --no-renames &&
++		test_all_match git diff --cached --find-renames || return 1
+ 	done
+ '
+ 
+@@ -420,8 +420,8 @@ test_expect_success 'diff with directory/file conflicts' '
+ 		test_all_match git checkout $branch &&
+ 		test_all_match git checkout rename-base -- . &&
+ 		test_all_match git status --porcelain=v2 &&
+-		test_all_match git diff --staged --no-renames &&
+-		test_all_match git diff --staged --find-renames || return 1
++		test_all_match git diff --cached --no-renames &&
++		test_all_match git diff --cached --find-renames || return 1
+ 	done
+ '
  
 -- 
 gitgitgadget
