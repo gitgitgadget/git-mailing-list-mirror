@@ -2,107 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8274CC433F5
-	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 20:48:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 477DBC433EF
+	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 21:16:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349824AbhLFUwR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 15:52:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52626 "EHLO
+        id S1350785AbhLFVTy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 16:19:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238973AbhLFUwQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 15:52:16 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353F0C061746
-        for <git@vger.kernel.org>; Mon,  6 Dec 2021 12:48:47 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id p18so9109246wmq.5
-        for <git@vger.kernel.org>; Mon, 06 Dec 2021 12:48:47 -0800 (PST)
+        with ESMTP id S1351013AbhLFVTh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 16:19:37 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67F97C061746
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 13:16:07 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id bk14so23826386oib.7
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 13:16:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=UDjcsFrC04xfORpMQuRDcYTm+NcN2AlN8Ua1oYD57Lg=;
-        b=cYG89AFrGGwtkRHeDI78du9MNU70ERRd4DRNOclH2/zTf7KZIOmN/fTkbLWGRa84vw
-         ec+r6I1XCv52hRgOasyycmcnzztsX4fEwpBNpiEJXHBXy2bm7B5gPqQOf1glZ2s4SHgR
-         QNJVogG6PY16hZZruyjsxKhGwDTrg1moci/ir1S2Q6UW+tjYqrPwFXtttTLJysDxadWp
-         QJL3S4IIzcTDAIIIFbtmi4xmZ0YWvcHa4BNHFFrMybfAgN8VJ2qQY1Y8pt2cX0gtPXCS
-         +K0KTv6dZg4Y6bI1qVsfaOlBj9YChDw7kJ8IWf3xnxTvr0jFzDMemZX1ntEM5nTShD1n
-         MWYg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=MNtqRu3LI1mfBPoIJB1z3c6bNzxZdJQo/8sDeqJQIyw=;
+        b=SYo23TX85SoNmPiHy3fABYxzciX/2bA6kRJ/tNTRV47/qW0M9GFz05gNXyS+32ASce
+         Xl+ZVhJ1ROHRmt6e+DeiwmGLEJXkMSWAKx2AToIrRjMHu7SzHObkcXvxhnEC3+sGxCg3
+         IPwe0lgfAx3ZovMPKrP6ZltkIFpwYBufEL8G4OiCEn3kGO14aQaNJLVPXs8hJmIxIxMS
+         NhTs6SlzKWsG5YhWVusj4DaLVbVXN9GO6VUxloGapNQB+L5Uia1XkylnON/3GNtA/W4j
+         oLd6i086vIYABMGBfp/1nniRB3M1h1Kzj0D91m9wCaQJFYQzZdjxkqevgKgAdq/eb+80
+         5jYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=UDjcsFrC04xfORpMQuRDcYTm+NcN2AlN8Ua1oYD57Lg=;
-        b=cnI3lMPuIJbCeMr9rlLEFfeM+p9oSHmZU8QrZGkoni0yCRaVgf1HGavqeKPQZUA+J4
-         SZFl/GjhDnxWj49nwRyvMVdyE3D4uvydo3XjYbIenPQLF63H0EyxTBRPySGTLyg5IIgg
-         K212HJZY/hlVHGO5hWhbZ+54Y5X6+bUwPAfIRm0DzhPellLKa39afypSSVArd9TVypY7
-         PuxuwsWwquyo4chTWS6xOvrcC9fEY7ISVM/fCjuUpTMEGHoDsGGub1K+aLee1NAQF7i6
-         q4s7xb/1vWOe4RVgNPXdbG/+lHcgWbG6iQqHgFtFjOc8o6w2CtnoiJMdFk36VIil/9WQ
-         Viqw==
-X-Gm-Message-State: AOAM530cT9Re9Ic/CqxzqjtxstK2veGYpTAnNSR9+07ePViuUvoUS3hR
-        4jdkx/BSx61+A2n0zHlaHYb+sa7MQKc=
-X-Google-Smtp-Source: ABdhPJyhg4pyv0farzBcVaE24Wa0W91WPq9/ghk5tnHJP0wLF2if7vREICXMXx74Pe1aGQ5GI3UVdA==
-X-Received: by 2002:a7b:c76e:: with SMTP id x14mr1180272wmk.27.1638823725642;
-        Mon, 06 Dec 2021 12:48:45 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j40sm451341wms.19.2021.12.06.12.48.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 12:48:45 -0800 (PST)
-Message-Id: <pull.1094.git.1638823724410.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 06 Dec 2021 20:48:44 +0000
-Subject: [PATCH] git-compat-util(msvc): C11 does not imply support for
- zero-sized arrays
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=MNtqRu3LI1mfBPoIJB1z3c6bNzxZdJQo/8sDeqJQIyw=;
+        b=ZMNIFp/fMf2Lwo/K28wJD/dein7Ob9vGRAAB4nNAzeRw5+k6hAMgi4OvRFYQGTM302
+         QHnK416JTJE+3Ys0cX23rkhO2b+hlScAzFQMQuctsWXJZfsmp2RKRaDtZlv+dQc1ib2V
+         Kr1Qlhw80GLc2DJ0zPUjy5lnJEGao5bPe53jtGiLGaWpKIR361FAfEMYzlo8drObOvdT
+         y5YeaZBFPrzNobEvYCmJ28g4L4zXiuv7/PYnSE2Qmby8HVJN3xDlBPuBHv4ljAoicGJ8
+         n3fx2G0F8aTNeHao9t4C126FRzvo4brQThBBk8HS25zFArOuzTN7ZiFx4ljm1rX+ETvA
+         ML1A==
+X-Gm-Message-State: AOAM533uS6R/7ZnhObOR/zXtbr7BHSt+xiykyBJGTmAYHkZtHCNtXCPN
+        ZSr/vS5bXLRsXWjRyGU/iH4=
+X-Google-Smtp-Source: ABdhPJwagfqZzYNmtT1kY0zOTGUNZ7zyqvqP0VnC3dNPuWtaJ/0D7q40s8L8N3qQcMuQ2mz/aBJKKw==
+X-Received: by 2002:a54:480b:: with SMTP id j11mr1214948oij.102.1638825366719;
+        Mon, 06 Dec 2021 13:16:06 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:88f0:5cbe:30c7:d6dc? ([2600:1700:e72:80a0:88f0:5cbe:30c7:d6dc])
+        by smtp.gmail.com with ESMTPSA id m22sm2613779ooj.8.2021.12.06.13.16.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Dec 2021 13:16:05 -0800 (PST)
+Message-ID: <15f1bbc6-7ae6-0ed3-872a-51feebd1296c@gmail.com>
+Date:   Mon, 6 Dec 2021 16:16:04 -0500
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH 06/17] t/helper: add 'pack-mtimes' test-tool
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, larsxschneider@gmail.com, peff@peff.net,
+        tytso@mit.edu
+References: <cover.1638224692.git.me@ttaylorr.com>
+ <e0a7b3b310c69350d8e2c0561e0991bb7045a66d.1638224692.git.me@ttaylorr.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <e0a7b3b310c69350d8e2c0561e0991bb7045a66d.1638224692.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 11/29/2021 5:25 PM, Taylor Blau wrote:
+> +static int dump_mtimes(struct packed_git *p)
 
-This seems to be required to define `FLEX_ARRAY` in a manner that MSVC
-in C11 mode accepts. Without this fix, building Git for Windows'
-experimental FSCache code would fail thusly:
+nit: you return an int here so you can use it as an error code...
 
-	error C2229: struct 'heap_fsentry' has an illegal zero-sized array
+> +{
+> +	uint32_t i;
+> +	if (load_pack_mtimes(p) < 0)
+> +		die("could not load pack .mtimes");
+> +
+> +	for (i = 0; i < p->num_objects; i++) {
+> +		struct object_id oid;
+> +		if (nth_packed_object_id(&oid, p, i) < 0)
+> +			die("could not load object id at position %"PRIu32, i);
+> +
+> +		printf("%s %"PRIu32"\n",
+> +		       oid_to_hex(&oid), nth_packed_mtime(p, i));
+> +	}
+> +
+> +	return 0;
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    git-compat-util(msvc): C11 does not imply support for zero-sized arrays
-    
-    In Git for Windows' continuously-rebased branches, I found this problem
-    [https://github.com/git-for-windows/git/runs/4431149285?check_suite_focus=true#step:9:14507]
-    (which uses FLEX_ARRAY correctly, but fails because FLEX_ARRAY is no
-    longer defined as required by MS Visual C).
-    
-    This patch is based on bc/require-c99.
+But always return 0 unless you die().
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1094%2Fdscho%2Fflex-array-and-msvc-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1094/dscho/flex-array-and-msvc-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1094
+> +	return p ? dump_mtimes(p) : 1;
 
- git-compat-util.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+It makes this line concise, I suppose.
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 19943e214ba..c9f508b3a83 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -46,7 +46,7 @@
- /*
-  * See if our compiler is known to support flexible array members.
-  */
--#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L) && (!defined(__SUNPRO_C) || (__SUNPRO_C > 0x580))
-+#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L) && !defined(_MSC_VER) && (!defined(__SUNPRO_C) || (__SUNPRO_C > 0x580))
- # define FLEX_ARRAY /* empty */
- #elif defined(__GNUC__)
- # if (__GNUC__ >= 3)
+Perhaps just use "return dump_mtimes(p)" and have dump_mtimes()
+return 1 if the given pack is NULL?
 
-base-commit: 7bc341e21b566c6685b7d993ca80459f9994be38
--- 
-gitgitgadget
+Thanks,
+-Stolee
