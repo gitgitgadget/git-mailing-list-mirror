@@ -2,180 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED622C433EF
-	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 08:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7DF5C433F5
+	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 08:53:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239568AbhLFIm6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 03:42:58 -0500
-Received: from mail-vi1eur05on2043.outbound.protection.outlook.com ([40.107.21.43]:38597
-        "EHLO EUR05-VI1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S239563AbhLFIm5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 03:42:57 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cZ3Z44m1oHULvW+R6fF1rdpDye6/AoJVDTpgyak4l41DMHxY8MAL5W3/wpQOvot1Ur6Mrv80Yek3YW41EX03DwUHXHxtvzPmXz9hOA0mVSJ1FxXhuvr38TVHyk76KUbO3o8jN6YqsyM8MiMRBlao+OwbWbGaiv6e/R/9eL7UCGQ7bURx0XCDzklej9bl/IX9N6TtF4T16fDCCwq6j0FO76QFy+lxaeGgVIq4DOxhW4yZ8i3gOu6ZFbVHom/JDba4IUeVFPKVsUpb1BAGhPQsvIMXEcyX2JT0faTrVGbF4+ufHkMWK32Ewjo0kro7nOCcHeeEQI2v8nz1/oTU7dLEMw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=y0POnnCYsIK7BTah6wM3wfXGfWEEM4PqAvFxbjbuRAM=;
- b=VvPOgG6Jg2NpCMSrDm84/J/9MxBJtL2PNIRh4aiKs/8tsUzS26lW+fT6EBQFyXp0z9PKY/feTuVLYT3sE+6GYugaXJYuObhHlWbxq7UbxldYtdXUbmOjprveFHTELJ6dRuEhmECvT7O9JrO9Q2BeSR5urth2Xm8ntnEjbgFf5b0UIbeYpk2oUZk3u9eFlsV++Tc3WAyMp5vFeKDAeEUKHlPuh7YpVntDZzKXJJDyi/kDQe0N5HOwxP91vjXCXCt0DGsRudJzeWjNqvpLPCzjHQkxhr0sDNFC09eWQUX+u9UO6vHpTo44Boh7snH7jEzIY/v2fdwgFqpp1xRuG0mkxA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=y0POnnCYsIK7BTah6wM3wfXGfWEEM4PqAvFxbjbuRAM=;
- b=CZnDFK09RUmUtR531LrS4OyEzE8tygzDcOmfkG1oWQC0n66JTVZYPkWZ6BKjhBNr4uie9dgrh2H/y9C3/G9oCmzzx83pL2XRMIE0qRI98IUm22eQgQYy1DNFSO0XiRigBh6vSALVtZIZcystCrXlFumVsUcI0kcDgnCylow2XS0=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PR3PR10MB4094.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:97::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.16; Mon, 6 Dec
- 2021 08:39:27 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::d9de:b41b:461d:fb5b]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::d9de:b41b:461d:fb5b%8]) with mapi id 15.20.4755.014; Mon, 6 Dec 2021
- 08:39:26 +0000
-Date:   Mon, 6 Dec 2021 09:39:25 +0100
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Damien Miller <djm@mindrot.org>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        pedro martelletto <pedro@yubico.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gpg-interface: trim CR from ssh-keygen -Y find-principals
-Message-ID: <20211206083925.tuy2w3wzlgpc36bj@fs>
-References: <pull.1090.git.1638538276608.gitgitgadget@gmail.com>
- <Yao+l0ckDWZNf4AE@coredump.intra.peff.net>
- <20211204131149.cvyu7dvf6p66dotq@fs>
- <70cee773-9547-e3cf-9327-ac0213d327e@mindrot.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <70cee773-9547-e3cf-9327-ac0213d327e@mindrot.org>
-X-ClientProxiedBy: AS9PR06CA0055.eurprd06.prod.outlook.com
- (2603:10a6:20b:463::6) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        id S239749AbhLFI4c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 03:56:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51618 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229542AbhLFI4c (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 03:56:32 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9984C061746
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 00:53:03 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id v23so7163754pjr.5
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 00:53:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=vd22hPX/D8Q9hwM4AtE81X3mrFPzt0NLygjoQ/wRTgI=;
+        b=MZzcwUQi7BjRz7OdURv4qOg735/xLnlyuEPjhDG16Xy0Wf7rg/MCTaPpcz8K67UFjq
+         ZwyUxgB/S+NipNWgIZA8Mw/W1PRAw0PTaqxcYvhVq7QI5VtSr4td/RiYm+Vh/KWxtLQz
+         qEDpZXFUjJGWIjSgPUTbAhpey1WW7B8Q//YqMxerNAjYPVueH5OndLucxUfe9fh8G9pr
+         ihO2eUY/nculgVTbZ8WX02y/eDNOsGed7DT10EPi3ZobcLjkOI+6IPO8lFhT2Sy4zh7V
+         SZDFK7Eb95wzdl9C+/xWTfi7d84ErjJtuJckkBCoJCYkzCWG5mvZX+lPVMfzNsuCn72P
+         J3pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=vd22hPX/D8Q9hwM4AtE81X3mrFPzt0NLygjoQ/wRTgI=;
+        b=EYwpFW3bZkojlBiMea3FNza+jgPb1NJDmJJFC0iUDfGaNTtadzMz65S+SRPCfhViQr
+         6cXFJH2ChZizf0MvSXZeghuNWqGHtSQ6ZbottA7bUzRtVfhhnPC65KDFyBvsHXM6YiB2
+         a8ddsRWIDuORr79qUenwUAekXoq0uBGuHEIvvX/ATBRBj+pTxaqujqsLc8yIfk4SN6R1
+         Y/CNpELgVwB6EsMPqVBAZyqg0+x/D9RDldhn5uzfW4zp6qHMN9PWnR+nPCoXktQZTElG
+         ExWMNSzXQ1Bi9h5VYxAOWq/KCYVtYKSNFjaRM/LMu03r2neYeQrkJTFT4HQ4zut1EiIj
+         +gCA==
+X-Gm-Message-State: AOAM530SJQPnAVrI1sL4m5sf+jysIyP4ivihNLsP5w0drImK+yW2eC0G
+        E4s5a2OhO7QVm45T8NcGe2E=
+X-Google-Smtp-Source: ABdhPJx+urZ7OBOIxH3J1Lw/SBaPKaxkzBZ1vz4VT5H6W2rfIqtTmjW4RsyTDFtOhVqkDZ8PqMYJCQ==
+X-Received: by 2002:a17:90b:97:: with SMTP id bb23mr36160542pjb.201.1638780783355;
+        Mon, 06 Dec 2021 00:53:03 -0800 (PST)
+Received: from neerajsi-x1.localdomain (c-24-56-226-231.customer.broadstripe.net. [24.56.226.231])
+        by smtp.gmail.com with ESMTPSA id l1sm12186216pjh.28.2021.12.06.00.53.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Dec 2021 00:53:02 -0800 (PST)
+Date:   Mon, 6 Dec 2021 00:53:00 -0800
+From:   Neeraj Singh <nksingh85@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: Re: [PATCH v2 1/2] tmp-objdir: new API for creating temporary
+ writable databases
+Message-ID: <20211206085300.GA26699@neerajsi-x1.localdomain>
+References: <pull.1091.git.1638585658.gitgitgadget@gmail.com>
+ <pull.1091.v2.git.1638750965.gitgitgadget@gmail.com>
+ <36c00613d9a6ad4fc768e15b9ec23f9af520338a.1638750965.git.gitgitgadget@gmail.com>
+ <xmqq4k7mi3g4.fsf@gitster.g>
 MIME-Version: 1.0
-Received: from localhost (2003:ea:5820:600:c042:75a0:fd5e:1472) by AS9PR06CA0055.eurprd06.prod.outlook.com (2603:10a6:20b:463::6) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.17 via Frontend Transport; Mon, 6 Dec 2021 08:39:26 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 464cfe56-abd1-497a-afce-08d9b893e961
-X-MS-TrafficTypeDiagnostic: PR3PR10MB4094:EE_
-X-Microsoft-Antispam-PRVS: <PR3PR10MB4094D4B7F8D986CD80CF8475B66D9@PR3PR10MB4094.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: D9O5Adc9o4EOCGe7Hd6tLqnsYT/ouP3U9S+lkws2D9/pe30vEb45mnFV3e1pB0uE9mardIB0/+B06qKIahjKL9xBL9t4UoPg/qu0prKUNUnjPksD1FbTy089rjWpDhT3zImCkrywldWVbKQC9wymShaQZ88e59UmWlqQPCAdGAaW9pzDJ25bCfan9T8dN7/5uWE/qtAPzUYjNab8MvDoKu0L9LsqCjhu/5HkC9yUOI4ZVmdmF+1LkGhO2usKqST1ctgTn94k9OjAYIXHKjQMiitH7Lpxop8vRsspcTKMpUPxpZgF8jPSi8BHJ3BFiuzU1tn6+c7DscizwT4Lu6Lc8+yEgf6acTAz0kch9zqlPDHxzoqPSBU46n5yr++QXzUoEfMFWfaCNxjNg3bSBHA4tPXo6J1FpY61pUDzHuHxDDNLZ2QPuRQRXytQM+Lywzfrao4KAVz2zIoJjtnrMDDCXYkP5S/Kzq4Sc0eqRfmucBcnjdU+JGJqRlIFZsLU+wHwAvnPUkJ0yTSrzBVcjs1UcdwgWaa2pNowQst4x1NLWnXgLNQFTHIENlmcY4siZGiT2F9jo1EjG3iiHrkSy112Aely4QMhN1vfL/mFWD0Unb7p0ki8cdgeaMVIGuAt7qbf1jjsDktggSRCtUhnDwJlJjgS0vwiFlvVYrWMfrlyHI86bfAr1cOxvQHF4lWNeBn0jabqtXx0uwXtrjTNw2ifI/qXyKIQunZQjWt4pWOdS50=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(7916004)(346002)(366004)(376002)(39830400003)(136003)(396003)(86362001)(38100700002)(33716001)(54906003)(83380400001)(6486002)(508600001)(66946007)(1076003)(8936002)(316002)(66556008)(66476007)(8676002)(186003)(2906002)(6496006)(53546011)(9686003)(5660300002)(4326008)(6916009);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YlhnWVZTMEtmVlA2MHR5TWF6cUFIMi9UenVZY0Q0bHhhaTFHa3FwL0xUK01v?=
- =?utf-8?B?Qk5URi90Wk1USDdyMmdiczkvYmpDWEFLalBvTFpWV3pWb3RJRS8wVFM4bXA0?=
- =?utf-8?B?cG1EQzhpMEZOUHZ5YzA5U3hvaU9KdStQMU8vMXNoQU9GQ0dHOFV0VVM1S0RL?=
- =?utf-8?B?ZENGRktOdzEraFEwd2pLNTNKUDhTTkdReXBOczkvTUZNMWp0WDFQakRDU081?=
- =?utf-8?B?NExmNExZcjU2VzJXMm9TRnB4Nk52UzZPVE1mTEFjWUt1a3pGaGlyVE5BUHJm?=
- =?utf-8?B?VS9xZmdWOW82K0daUEdLRjhlTE5nNVBtcmRKbXoranhub2kwYVBJV25MSFNh?=
- =?utf-8?B?WE1xbm1wRmlTYkhVcHNKQ1o3ZkgxSjBBaFFWY0txSGw5WlZISm5vSTNFVW1I?=
- =?utf-8?B?cnZkYWhvR2JrMTQrR1dSRkNqUXI2L0h6Z3NickkyMXpoOEdsaGR4bDNoUm5a?=
- =?utf-8?B?aXZXRzRjMkNHdmVXTWEvSEtzekRUU2QwbWFjRVZ3czRjdXJROFdoQXBTaDFm?=
- =?utf-8?B?Ylh6ZnJZSm9KNTNrRXAvRUNiK3ZzemJOaVBuOHlEcHNyWXJJaUpmVDZmbVlH?=
- =?utf-8?B?OVFmcCtoOWlNQ24zVEhJLzZicXplNzYyRHFwT1laR2djZjgyL0szdkFNTzJo?=
- =?utf-8?B?TG04dTM1TG01SVdIdGVld3BlWlZLZldOK01uM05NeFZJMWpwaXJBNHFsbDUr?=
- =?utf-8?B?OXB3Z3VYT1hOQXZVMnkvWThLTjNLWExQS1NPMzRlTjB5dDFjUkJwdVZESnY5?=
- =?utf-8?B?Q0d6SnFpZUlNNmtuZ1BiQWY1Y3g0ekFkZmIwMWV4TmM2UWppK25PektFVzBy?=
- =?utf-8?B?WStsZUF5TExsK3l1V2VGdklvQUdvaXFUZ0FyNzJJeG9vQ2twWC9MV0I3MlQ4?=
- =?utf-8?B?U1NVTXViRWd5bmxhMXdFOGNDUUZabUtTQjVJM1VFZFdLamZvTnFNemJzbFJ1?=
- =?utf-8?B?bjVhSVhQVFR5bERVTUFPeGNCbVNFaXNVSi9oQ3A1dUV3ZElFZjlTVHFNTkpW?=
- =?utf-8?B?Yk9Vb3FEYWhnb2hCOW90ZlNNNUxLSnc4R1lpcWFqaE0zdXVzazJjMmVQbnFI?=
- =?utf-8?B?aU5FNHo2L3UzalM2Y0hwSHlZZDV1MzJQdzRJeWYwOWJNWk1JR1NZY3FubDlv?=
- =?utf-8?B?d0piU1pSU3ROT2gxcEQ0M21pd1RlbEhpRjIrTnhLZ0duYSsxQXN1WXZqWHF3?=
- =?utf-8?B?ZFFxRERyODFvSWRWT1VQWlRuRVRSVGtzeEtqNjZwZXBNVGxrZU5Xb25GeEpD?=
- =?utf-8?B?M2lDaFgrM1RlYUJkK21iTkkzMWk4eEdpT2hKQy9wVmJCM1loRE5oUXQ2bVZt?=
- =?utf-8?B?eFIvcUFwWUppU0MxWGFxWEpCVEd0TXhkYTM5ZjZSbkF3VFhRTVdiZnRjaG9x?=
- =?utf-8?B?SVlRZy9obzlzRXRaWVNYTExLVHNJMFg4ZTlsWVRmZm5Vc3FJU3YwbG1LYTFW?=
- =?utf-8?B?QnpINXFHQkRMVDhVaXloNWF1RjZaSFFEZWFPOE1teEJhalRNOU9TMkcyVVk0?=
- =?utf-8?B?amFkYVFKNzlhUi9leFBZZ0hzbS9rcjhkTHVzeFBVZExXV0xpOU1Gd3NiR1J5?=
- =?utf-8?B?cktDUmxuZWVmWVBxdERPbS9jT0hBSGNhdVF4QXhOU25IMDBBOWxXazJkb2xt?=
- =?utf-8?B?UTdDQW5YZDBrV1RzTld4RjhBT0ZoQmVkM0pZN3dGQ1NDNlcrajhYMTNrcVVa?=
- =?utf-8?B?UThSWUp6OGlRZFdYZU9iaE1nMmZrZzlCcUlmd1U5eVBXaysvRkRMbnZRVXRX?=
- =?utf-8?B?NTFwNERuM3U4aDk3TEJES014R3lQVUNhL2xsYTZaTjNOTUJPQ0Z0UTh1Qk5h?=
- =?utf-8?B?WkRZbWd0RytKT1poMEo5RHF0aXY2MGJrWWNhSDJKbC9ZVTArcUlzV2JkalJ0?=
- =?utf-8?B?c3p4VDVvK0ZQdXlReTFUcDI5bVJwQldrZFh5Tjl1K0p0NmFiSCtHSjg2UnNa?=
- =?utf-8?B?dzJIdk84TDI2aG9ZY2NiL1c0T2Jib1VBaVJTcVpWOFIyUk1hNzRxOWIvTmEz?=
- =?utf-8?B?dGhsTHlzVFQ2NE1mS1Zjblhya2RhSlF6cUFLTEhzVXN0SVVrYmVyZm9SYlUw?=
- =?utf-8?B?TEIweHBxQjRNcm0zWE9KU01BMkI4c0lyNFFWVzlJdGxQcFJydzZ4eUJDV0th?=
- =?utf-8?B?aDJXNHBmT2lUOHpJeGd6Y3VYVDVXM3ZSSkI2RHN0UnVOblBrOHNXYXFyd05z?=
- =?utf-8?B?YnNxcjJsZHFyN2hnOUl2TEF3Y01VVEMwSDREOEF4UDRPbXlCUXVmRHpYa3Zj?=
- =?utf-8?B?R0lNK0hXcWhLNDJLQnN4NmtCQmpGM3JlZkRaemFCNUtBeHVQdUhtUmxoU3ND?=
- =?utf-8?B?YWh0Tnc0aDVzQ1ZGQklzZmtBTGZNZER2N1FLL3pNbzdFbkhUV3R5dz09?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 464cfe56-abd1-497a-afce-08d9b893e961
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Dec 2021 08:39:26.7301
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VmJVk6jSFKcuM9uT2uVHbLjmfF0ZnhgtcYxgOknGoL/ZwXEOTk9FmlUxPIWaUwcNPk/1BFT1T09q8yGgZi3n9usSKZz8WhDSS/7oejgjGgg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB4094
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4k7mi3g4.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06.12.2021 10:06, Damien Miller wrote:
->On Sat, 4 Dec 2021, Fabian Stelzer wrote:
->
->> > I'm guessing probably not, but when it comes to something with security
->> > implications like this, it pays to be extra careful. I'm hoping somebody
->> > familiar with the ssh-keygen side and how the rest of the parsing works
->> > (like Fabian) can verify that this is OK.
->> >
->>
->> A good point. I just tested this and CR is a valid character to use in a
->> principal name in the allowed signers file and as of now the principal will be
->> passed to the verify call `as is` and everything works just fine. When we
->> introduce the patch above a principal with a CR in it will fail to verify.
->
->Are you sure? I thought that we split principals in allowed_signers on
->most whitespace, including \r. Follow:
->
->https://github.com/openssh/openssh-portable/blob/e9c7149/sshsig.c#L742
->https://github.com/openssh/openssh-portable/blob/e9c7149/misc.c#L452
->https://github.com/openssh/openssh-portable/blob/e9c7149/misc.c#L408
->
+On Sun, Dec 05, 2021 at 11:43:07PM -0800, Junio C Hamano wrote:
+> "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+> > @@ -331,10 +332,14 @@ static void update_relative_gitdir(const char *name,
+> >  				   void *data)
+> >  {
+> >  	char *path = reparent_relative_path(old_cwd, new_cwd, get_git_dir());
+> > +	struct tmp_objdir *tmp_objdir = tmp_objdir_unapply_primary_odb();
+> >  	trace_printf_key(&trace_setup_key,
+> >  			 "setup: move $GIT_DIR to '%s'",
+> >  			 path);
+> > +
+> >  	set_git_dir_1(path);
+> 
+> If a blank line needs to be added, have it between the variable
+> declarations and the first statement (i.e. before the above call to
+> "trace_printf_key()").
+> 
 
-Sorry, I should have mentioned that I quoted the principal. Within the 
-quotes whitespace (and \r) works. Since find-principals then returns one
-principal per line the line ending issue can come up.
+Will fix.
 
->> I've added Damien Miller to this thread. He knows more about what the expected
->> behaviour for the principal would/should be. I think at the moment almost
->> everything except \n or \0 goes. Maybe restricting \r as well would make life
->> easier for other uses too?
->
->IMO sensible content for the principals section would be printable, non-
->whitespace characters, excluding wildcards ('*', '?'). ssh-keygen mostly
->assumes that the file is in good order, but maybe it could be stricter.
->
+> > +	if (tmp_objdir)
+> > +		tmp_objdir_reapply_primary_odb(tmp_objdir, old_cwd, new_cwd);
+> >  	free(path);
+> >  }
+> 
+> This is called during set_git_dir(), which happens fairly early in
+> the set-up sequence.  I wonder if there is a real use case that
+> creates a tmp-objdir that early in the process to require this
+> unapply-reapply sequence.
+> 
 
-Ok, I think we can make sure of that when adding principals and use Junios 
-suggested patch for trimming the \r at the line ending.
+The lack of this code was causing a failure, I believe in
+t2107-update-index-basic.sh: "--refresh triggers late setup_work_tree".
 
->> If we add `trust on first use` in a future series I would assume we use the
->> email address from the commit/tag author ident when adding a new principal to
->> the file. Can the ident contain a CR?
->> Even if it did, I would only allow a list of allowed alphanumeric chars to be
->> added anyway since a principal can contain wildcards which we obviously don't
->> want to trust on first use ;).
->
->Yeah. my mental model for the allowed_signers file is that it's similar
->to ~/.ssh/authorized_keys in that it directly controls authn/authz
->decisions, and if you put bad stuff in there then you're going to have
->a bad day...
->
+This problem came up after applying: https://lore.kernel.org/git/4a40fd4a29a468b9ce320bc7b22f19e5a526fad6.1637020263.git.gitgitgadget@gmail.com/
 
-Thanks for your input.
+I thought it would be best to fix this in the tmp-objdir code so that
+callers could plug/unplug bulk checkin without any subtle surprises.
+
+> > @@ -1809,8 +1846,11 @@ int hash_object_file(const struct git_hash_algo *algo, const void *buf,
+> >  /* Finalize a file on disk, and close it. */
+> >  static void close_loose_object(int fd)
+> >  {
+> > -	if (fsync_object_files)
+> > -		fsync_or_die(fd, "loose object file");
+> > +	if (!the_repository->objects->odb->will_destroy) {
+> > +		if (fsync_object_files)
+> > +			fsync_or_die(fd, "loose object file");
+> 
+> OK, so we omit fsync because these newly created loose objects may
+> not survive and instead get discarded.  Presumably when we migrate
+> them to the real object store, we'll make sure they hit the disk
+> platter in some other way?
+> 
+> 	... goes and cheats by reading ahead ...
+> 
+> Ahh, ok, new objects created in a temporary object store that is
+> marked with the will_destroy bit is not allowed to migrate to the
+> real object store, so there is no point to fsync them.
+> 
+> set_temporary_primary_odb() and tmp_objdir_replace_primary_odb() can
+> mark the temporary one to be throw-away, but unfortunately there is
+> no caller in this step, so it is a bit hard to see when a throw-away
+> object store is useful.  I guess remerge-diff wants to do tentative
+> merges that create new objects in a throw-away object directory,
+> because it is logically a read-only operation.
+> 
+
+Yes, this code is there exactly for remerge-diff and anyone doing something
+similar in the future.
+
+> > diff --git a/tmp-objdir.c b/tmp-objdir.c
+> > index b8d880e3626..3d38eeab66b 100644
+> > --- a/tmp-objdir.c
+> > +++ b/tmp-objdir.c
+> > @@ -1,5 +1,6 @@
+> >  #include "cache.h"
+> >  #include "tmp-objdir.h"
+> > +#include "chdir-notify.h"
+> >  #include "dir.h"
+> >  #include "sigchain.h"
+> >  #include "string-list.h"
+> > @@ -11,6 +12,8 @@
+> >  struct tmp_objdir {
+> >  	struct strbuf path;
+> >  	struct strvec env;
+> > +	struct object_directory *prev_odb;
+> > +	int will_destroy;
+> 
+> The other one was a one-bit unsigned bitfield, but this is a full
+> integer.  I somehow think that the other one can and should be a
+> full integer, too---it's not like there are tons of bits need to be
+> stored in the structure or we will have tons of instances of the
+> structure that storing many bits compactly matters.
+> 
+
+The principle I was trying to follow here is that the only flag in a
+structure might as well be a full integer, but when we have two or more
+it might be worth combining them into a single machine word.  Given that
+these are not highly replicated structures, you're right that's it's not
+a big benefit.
+
+I'll switch everything to an int and call it good.
+
+Given that this patch series introduces functions with no users, are you
+going to hold off on putting this into 'next' until another next-worthy
+patch series is ready?  I've already reworked the batch mode stuff on Github,
+but I'll need to do a lot more testing before sending it to the list.
+
+Thanks,
+Neeraj
