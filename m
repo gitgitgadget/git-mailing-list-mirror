@@ -2,103 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9625FC433F5
-	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 17:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1F32C433EF
+	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 17:39:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243512AbhLFRlR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 12:41:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35978 "EHLO
+        id S243468AbhLFRmx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 12:42:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231511AbhLFRlR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 12:41:17 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5512CC061746
-        for <git@vger.kernel.org>; Mon,  6 Dec 2021 09:37:48 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id w1so46188223edc.6
-        for <git@vger.kernel.org>; Mon, 06 Dec 2021 09:37:48 -0800 (PST)
+        with ESMTP id S243543AbhLFRmw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 12:42:52 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3581EC061746
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 09:39:23 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id 71so11189599pgb.4
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 09:39:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=SbIGcpTWQ09xUFLaSnZvRdysvTKxtaFJQ6lEtoXrlAg=;
-        b=Rj5LYXqQpUoa4KG370uBJo1Q4KNXkdWUKP0e9jcE4ybvSUzczMnfIHJpx9ZP5J94rx
-         uOCq8CW7WNlIEEnktlxmJ2+uo9g69VmATWkJPUe+Evma4S6ILhQci1zMC1D6dI1QUCy0
-         yozEesRPLDKe6OAVC8SgyRFZCmXr1HG3DiA72hBZ+dIDqZ6JhKmFX/mFILEngteJuJlk
-         aNlyjJRBWmYRflVMkstB0kvqpvtcPrQPvUiQqMFf/kHuxnPmpLVzBUTbYGYAXRgVQEMS
-         2Hs2sgc1YRNNHa46sCx8o/ALAPUaT04U3LOyzxBWiWVKOUOQM09KOj5UB8CyAy1nW4/E
-         C1nA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=2rqM5Q93w8mJEn7ul4XEBcORQO44GAvidzl7mytHCM0=;
+        b=k0XUiZhrmGuJqqXG7615sdK1zxTVd3WtzMJnXHuZf9GztP4fM+jf1RHt5vXJWb51HQ
+         bR9zTYx1yf3srlaC23EbNoGuC1xyllx26uIfGVecM98XOJzUxbcaz8HtQDIQ9GMFq7qp
+         Z8b2WDLVSu9t4RvVKHTjpIaaKofBCVfYMJYweJ8fjVEYQ8XWA8QSApk5r/LIJOTdw/GO
+         JS9MsSoJCD2PFokGw7JG9aTCHPK2EfuK78Kbhi/tA/U9UJVcNA5QQn6eoOO3RBAqvWGo
+         RHmA+s7YTNE1YCaElORSPO8/OVu6mYGON9xCdosaSIc5M+V/GxagTIdx+2YwG0zrq6Bh
+         kkcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=SbIGcpTWQ09xUFLaSnZvRdysvTKxtaFJQ6lEtoXrlAg=;
-        b=XjDeBDVcqNpR5fsU5H0F5FB/prWfew8LYUOPKvkAxJxBphIzWKNrXys2mLsWltR0jB
-         uyLH9xTkfDkYW+PNaFLLDS5OHIBqHj3tX1RY0f/hsGqYUHv0Ipj6R+tvnGTch5S0Lis/
-         pR1Eg31GP6FtBcA6sJjR3JL0q5Q2ctDqJ5qzKMHuLjbbAZVo5v+PbSFfvfap9kKOE4B4
-         0PR3baRrOPixFK6ywPB5Q3OT8UZz/anCUB7sToZdeDBz2k7Gbrt3JtVQZ/iop2PzvaKn
-         NXCmYenha0zpEuxHGRzxaL+fj7vDu4vBqzA+PoiMYwKLeeUD1Vt7cUCNIe2iqEVwbFP8
-         FnRQ==
-X-Gm-Message-State: AOAM532+VYuoH229M6sI3zgMkxbNLUhRePsmpUpTATDLeY6DKxTznxAl
-        6I/y0TZCmVvHKKz/gXE3D2RUaiB6PNeOhL39ThM=
-X-Google-Smtp-Source: ABdhPJw2/hEx21aXPVUkufT4XKEgbvYa+HkY/6aRZkZe9ECkMxrC5CWKUX1RdSSP/72vbt55awQwLppNyl3ejr4/9M8=
-X-Received: by 2002:a05:6402:d73:: with SMTP id ec51mr636259edb.175.1638812266884;
- Mon, 06 Dec 2021 09:37:46 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=2rqM5Q93w8mJEn7ul4XEBcORQO44GAvidzl7mytHCM0=;
+        b=jCFHU7zn/F4cUlfNfKtuFxbIhx7NPI7xO17p8dyvZ/WBiCuej9tBXbtoNa99LL8bOS
+         Cv7gAFzwtGV0SpojOXrOGn3nJ9r8tEAgELSsUuBXpx3y9W5IoQ1xobzSrZNTQL/fzB23
+         G5GbLB9r8P6jWPb6KHH3QlfIk9XcmpnGWYf/EQrNSesSyOJDgtKF4E2XGXjDp0CPhN7J
+         Y9sDWrb4aN+whE/otOp7C1v0smC8TQvejriBWstJEqIZuv7d+XSOF23hqRH2rXp0R2vq
+         KtHUyDuDoEvcVvebhEZaKURLFDFdJwSRuFz7UNxpWEhDY3PVBAnTjYZkdkRc3v6wEl/t
+         U+ww==
+X-Gm-Message-State: AOAM530dbAdkxhy3YqTuNfQvC4FhKwMGAs9cWqjtXHKvuygi+HX6imQ6
+        HrxlHeZJH/DxE9orI8gsL9My6TCpquw=
+X-Google-Smtp-Source: ABdhPJzJBPNqbLjtAUngyS26nIEVI60TxUuZETU9hl93Y6P/xMkEvdidT8RIrQZ3Bcb7BaYwnjbqnw==
+X-Received: by 2002:a63:5f14:: with SMTP id t20mr11375327pgb.382.1638812362597;
+        Mon, 06 Dec 2021 09:39:22 -0800 (PST)
+Received: from localhost ([2620:15c:289:200:9206:9546:da97:4e9c])
+        by smtp.gmail.com with ESMTPSA id f19sm13162844pfv.76.2021.12.06.09.39.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Dec 2021 09:39:21 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Neeraj Singh <nksingh85@gmail.com>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: Re: [PATCH v2 1/2] tmp-objdir: new API for creating temporary
+ writable databases
+References: <pull.1091.git.1638585658.gitgitgadget@gmail.com>
+        <pull.1091.v2.git.1638750965.gitgitgadget@gmail.com>
+        <36c00613d9a6ad4fc768e15b9ec23f9af520338a.1638750965.git.gitgitgadget@gmail.com>
+        <xmqq4k7mi3g4.fsf@gitster.g>
+        <20211206085300.GA26699@neerajsi-x1.localdomain>
+Date:   Mon, 06 Dec 2021 09:39:21 -0800
+In-Reply-To: <20211206085300.GA26699@neerajsi-x1.localdomain> (Neeraj Singh's
+        message of "Mon, 6 Dec 2021 00:53:00 -0800")
+Message-ID: <xmqqr1aphbue.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <xmqqzgpm2xrd.fsf@gitster.g> <CABPp-BE4uYBFnb-AgVJhNo6iK4da5hiEFEBhd=7Ea3Ov=4K4zw@mail.gmail.com>
- <d95f092.3f.17d73a85761.Coremail.pwxu@coremail.cn> <CABPp-BG9jHaJYekDnvZT+8QW_fLGM_bmz-oOqzJswaotyVDFBA@mail.gmail.com>
- <211203.861r2tsfej.gmgdl@evledraar.gmail.com> <CABPp-BGE5Ff=adH3nREMDm38DGLEmtRTcPwuJowHw-ckwpbmqQ@mail.gmail.com>
- <211203.86wnklqx05.gmgdl@evledraar.gmail.com> <30b4169a.18.17d8d589b6d.Coremail.pwxu@coremail.cn>
- <xmqqilw2i6w1.fsf@gitster.g>
-In-Reply-To: <xmqqilw2i6w1.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 6 Dec 2021 09:37:35 -0800
-Message-ID: <CABPp-BGk9fYqtuYTACmzdXakpV7TP635eqHtHxkoHRT3aa4qFQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2021, #07; Mon, 29)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?QWxlZW4g5b6Q5rKb5paH?= <pwxu@coremail.cn>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?5b6Q5rKb5paHIChBbGVlbik=?= <aleen42@vip.qq.com>,
-        Aleen via GitGitGadget <gitgitgadget@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 5, 2021 at 10:28 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Aleen =E5=BE=90=E6=B2=9B=E6=96=87 <pwxu@coremail.cn> writes:
->
-> > Dears Hamano,
-> >
-> >     In my opinion, the '--empty' should act as a strategy option like t=
-he
-> >     'X' option to 'git-rebase'. Since that the default behaviour of not=
- passing
-> >     the option is stopped in the middle of an am session, should the 'd=
-ie' value
-> >     dies the whole process but not the middle state? It may also make i=
-t not
-> >     confusing.
->
-> Hmph, unlike "git rebase" or "git merge", "git am" does not employ
-> different strategy backends, so "-X<option>" would be out of place,
-> I would think.
->
-> Among what we already have, what kills the entire session is called
-> "git am --abort".  Since I do not find it unnatural to say "'git am'
-> dies" when it stops and gives control back to the user, so that the
-> user can decide what to do next, I am not sure where the aversion to
-> the word comes from
+Neeraj Singh <nksingh85@gmail.com> writes:
 
-When I first read the documentation, it sounded to me like it was
-implying an abort.  I find 'die' very unnatural as a way to explain
-this behavior; it's too strong of a word.
+>> > +	if (tmp_objdir)
+>> > +		tmp_objdir_reapply_primary_odb(tmp_objdir, old_cwd, new_cwd);
+>> >  	free(path);
+>> >  }
+>> 
+>> This is called during set_git_dir(), which happens fairly early in
+>> the set-up sequence.  I wonder if there is a real use case that
+>> creates a tmp-objdir that early in the process to require this
+>> unapply-reapply sequence.
+>> 
+>
+> The lack of this code was causing a failure, I believe in
+> t2107-update-index-basic.sh: "--refresh triggers late setup_work_tree".
+>
+> This problem came up after applying: https://lore.kernel.org/git/4a40fd4a29a468b9ce320bc7b22f19e5a526fad6.1637020263.git.gitgitgadget@gmail.com/
+>
+> I thought it would be best to fix this in the tmp-objdir code so that
+> callers could plug/unplug bulk checkin without any subtle surprises.
 
-> (on the other hand, I find 'ask' highly
-> unnatural since we do not ask anything---we just throw the control
-> back the user).
+OK, I think that is fine.
 
-Okay, but what about my previous suggestions of 'stop' or 'interrupt'?
+As a slightly-related tangent that is outside the topic, I think we
+should revisit "update-index", which is one of the oldest plumbing
+commands with its own quirks.  I do not offhand see why it needs to
+sprinkle this many setup_work_tree() calls everywhere.  Having an
+index to work on means we must have a working tree to update and/or
+refresh from.  We should be able to get away with the NEED_WORK_TREE
+bit in the git.c::commands[] table for this command.  If this were a
+more recent command, I may suspect that there were valid reasons
+like "in this particular mode, update-index must work inside a bare
+repository" to force us to take this unusual program structure, but
+because this is probably a lot older than NEED_WORK_TREE bit, I
+would not be surprised if the answer were "nobody noticed the
+ugliness so far".
+
+> Given that this patch series introduces functions with no users, are you
+> going to hold off on putting this into 'next' until another next-worthy
+> patch series is ready?
+
+Even without any existing callers, as long as we see Reviewed-by: by
+Elijah, who we know will have to build on top of this series, I
+think this can and should go to 'next'.
+
+Thanks.
+
