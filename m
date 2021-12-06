@@ -2,144 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C3F2C433F5
-	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 19:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05359C433EF
+	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 19:19:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348311AbhLFTQl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 14:16:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58360 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242520AbhLFTQk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 14:16:40 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF690C061746
-        for <git@vger.kernel.org>; Mon,  6 Dec 2021 11:13:11 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id az34-20020a05600c602200b0033bf8662572so606275wmb.0
-        for <git@vger.kernel.org>; Mon, 06 Dec 2021 11:13:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:references:from:cc:in-reply-to
-         :content-transfer-encoding;
-        bh=911nXUOxNUKsSh+wMMZMPoyrnw4uQDDkw92xroEgvrI=;
-        b=D1wgqXK+/kxSPocnKiXbmJzYzB2aHAyUa10HguX3J/iaO6Dj2CDnbpNE9hRTuKpMYu
-         rEX7StRfp5gFovCbb1KQWN38yehQliIB0rsjhXhRuQzIzca38ntKKe2vsFQVWQT/6es1
-         vzXAUv/460Nkhtp5vry8GWc8NEM1IhfZzyrltT+KveK0SZ3+vDSkFlrNDsFtJqbkY0fY
-         7Xf2sQvL6zoE4EAEhWmMenhObbJcrYFK+Qq0404cUdwFfK2ns3r0MS+6B96AAmqVkkzK
-         SJrQOc1fh9Cbckm4R/LXE9hANjA29NSTjUtqJ7mrauPPeZpBJbEJllsA/GEOr/TCnv9j
-         RDiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:references:from:cc:in-reply-to
-         :content-transfer-encoding;
-        bh=911nXUOxNUKsSh+wMMZMPoyrnw4uQDDkw92xroEgvrI=;
-        b=X89ANq9pNg38mPPEygPn1Hh6VMJl06+LH30Sl5M2PJD4UYVhqYrHnss3eEuwwfzbO6
-         ehf0WJTKt1fHhQyppOUyXXDKs/22LOX7Wsio/CpqZXx65flRSw0ek5HyZo15bzmRZElc
-         51L7+3YtyKy29/5wvV/9WhtXKpmGs6qlSxuzNKUJkNvrp5tB5sRxu8PTuCXfXfgkrha/
-         v4NLVKwZxTExezLHgR8DN+e5YuyA+JIlQrRA1cOG++xYg8UX/HYk9/z0Xju8mmALBx5a
-         DCFhLiJPicP+eDu2WqMEAFR/k0/Qh6jut6FhHmBA3LOVzx2qG3U36xiaqHH/WdnJXDRX
-         65ag==
-X-Gm-Message-State: AOAM533aavEt34m3qql+VnHEuYLKxEHmsDwy/InQyRL3IX4hD8jYQFt6
-        m2qFdmobCXsQzXtD7BwaPO0=
-X-Google-Smtp-Source: ABdhPJzZ0tZlmKpe7WOR9WhSvUJsUQ1LGr2LOACDmOiEWoRs6jp8q14FLLBoGZVr9D9Fh6bssb0lpA==
-X-Received: by 2002:a1c:1906:: with SMTP id 6mr590524wmz.19.1638817990340;
-        Mon, 06 Dec 2021 11:13:10 -0800 (PST)
-Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id g16sm290542wmq.20.2021.12.06.11.13.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Dec 2021 11:13:10 -0800 (PST)
-Message-ID: <e1aadd47-533c-fd8b-4fae-f64a53c81ec9@gmail.com>
-Date:   Mon, 6 Dec 2021 19:13:08 +0000
+        id S1347759AbhLFTW2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 14:22:28 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60260 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235258AbhLFTW2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 14:22:28 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3DD2D101ECD;
+        Mon,  6 Dec 2021 14:18:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=r1DYCm7EIyS4
+        BT/v6dBM05zyU0hhFguinm5+d+hgjbc=; b=i4PbRRE7CG3owha/SYmOIPWSPU+h
+        pRWNbm8i/+x7fEc+dPh/MsWkAeJIWXtUn35YXplb5btXPrkTOlftu5dvrDEmRlJ6
+        Xphw66g9XOqj26+1RRyrkxUmfWc3nXKw5KUfJS/7jCbQLCPNO3YI6HmYDft3TU5V
+        upRq0stdRNcpW5M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 335D4101ECC;
+        Mon,  6 Dec 2021 14:18:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8D300101ECB;
+        Mon,  6 Dec 2021 14:18:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 00/10] Factorization of messages with similar meaning
+In-Reply-To: <96b2d1c2-895d-6196-df8d-ee1e9b6107ce@kdbg.org> (Johannes Sixt's
+        message of "Sun, 5 Dec 2021 20:50:13 +0100")
+References: <pull.1088.git.1638514909.gitgitgadget@gmail.com>
+        <d687f69b-efdc-6b1c-c63c-8544ff37d1c2@kdbg.org>
+        <xmqqfsr7mrs5.fsf@gitster.g> <8718669.4XknugNGDb@cayenne>
+        <96b2d1c2-895d-6196-df8d-ee1e9b6107ce@kdbg.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Date:   Mon, 06 Dec 2021 11:18:56 -0800
+Message-ID: <xmqqo85tfsnz.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (Dec 2021, #01; Fri, 3)
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqh7bpqhf0.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-In-Reply-To: <xmqqh7bpqhf0.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 5C24D762-56C9-11EC-B8C1-E10CCAD8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/12/2021 01:37, Junio C Hamano wrote:
-> This is probably the first issue of the "What's cooking" report, in
-> which all topics have some sort of description.
-> 
-> That's a small achievement, at least for me.
-> 
-> Even better, each and every topic is annotated with some sort of
-> verdict (like "Will discard", "Expecting a reroll", "Will merge to
-> 'next'?" etc.).  There is no topic in the "Undecided" category when
-> this report is fed to "cook -w" script (found in the 'todo' branch).
-> 
-> A handful of topics are added to 'next', and we have about 40 topics
-> cooking there.  For them, the future is automated---they spend about
-> a week in 'next', and if we find issues in them, we incrementally
-> improve them, or get merged to 'master'.
-> 
-> Then we have about a dozen topics that are marked for 'next' (please
-> raise your hand if you have objection before a real damage is done),
-> and 8 more that may be ready for 'next' (please raise your hand if
-> you want to nudge them in either direction, for or against).
->[...]
-> * pw/fix-some-issues-in-reset-head (2021-10-01) 12 commits
->   - rebase -m: don't fork git checkout
->   - rebase --apply: set ORIG_HEAD correctly
->   - rebase --apply: fix reflog
->   - reset_head(): take struct rebase_head_opts
->   - rebase: cleanup reset_head() calls
->   - reset_head(): make default_reflog_action optional
->   - reset_head(): factor out ref updates
->   - reset_head(): remove action parameter
->   - reset_head(): don't run checkout hook if there is an error
->   - reset_head(): fix checkout
->   - rebase: factor out checkout for up to date branch
->   - Merge branch 'pw/rebase-of-a-tag-fix' into pw/fix-some-issues-in-reset-head
-> 
->   Fix "some issues" in a helper function reset_head().
-> 
->   Will discard.
->   This needs a lot better explanation, including what the issues are,
->   which codepaths the helper is used in and to do what, and tests to
->   protect the fixes.
->   source: <pull.1049.git.1633082702.gitgitgadget@gmail.com>
+Johannes Sixt <j6t@kdbg.org> writes:
 
-I've got a re-roll which I think is almost ready but feel free to drop 
-it in the meantime.
+> Am 05.12.21 um 18:25 schrieb Jean-No=C3=ABl AVILA:
+>> If needed, "%s and %s are mutually exclusive" could be turned into
+>> "options %s and %s are mutually exclusive" to make it clear that the
+>> placeholders can only hold option names.
+>
+> IMO, being less terse helps not only translators, but also users.
+>
+> Regarding this particular message, personally, I am not a fan of
+> "mutually exclusive" (sounds like it's been taken from a law text). How
+> about "options ... are incompatible" or "... cannot be used together"?
 
-> * pw/diff-color-moved-fix (2021-10-27) 15 commits
->   - diff --color-moved: intern strings
->   - diff: use designated initializers for emitted_diff_symbol
->   - diff --color-moved-ws=allow-indentation-change: improve hash lookups
->   - diff --color-moved: stop clearing potential moved blocks
->   - diff --color-moved: shrink potential moved blocks as we go
->   - diff --color-moved: unify moved block growth functions
->   - diff --color-moved: call comparison function directly
->   - diff --color-moved-ws=allow-indentation-change: simplify and optimize
->   - diff: simplify allow-indentation-change delta calculation
->   - diff --color-moved: avoid false short line matches and bad zerba coloring
->   - diff --color-moved=zebra: fix alternate coloring
->   - diff --color-moved: rewind when discarding pmb
->   - diff --color-moved: factor out function
->   - diff --color-moved: clear all flags on blocks that are too short
->   - diff --color-moved: add perf tests
-> 
->   Long-overdue correctness and performance update to "diff
->   --color-moved" feature.
-> 
->   Need to pick up the reroll before merging to 'next'.
->   cf. <pull.981.v4.git.1637056178.gitgitgadget@gmail.com>
+Sounds good.  Or perhaps "X cannot be used with Y", which may be
+even shorter and is still clear what it wants to say.
 
-Dscho spotted a typo which I was going to correct with a re-roll but 
-I've been holding off in case he has time to read the rest of the series.
+    X and Y are incompatible.
+    X and Y cannot be used together.
+    X cannot be used with Y.
 
-Best Wishes
-
-Phillip
