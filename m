@@ -2,142 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3116BC433EF
-	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 21:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21B64C433EF
+	for <git@archiver.kernel.org>; Mon,  6 Dec 2021 21:44:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351596AbhLFV3s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 16:29:48 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54720 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351553AbhLFV3q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 16:29:46 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87EED102CEB;
-        Mon,  6 Dec 2021 16:26:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=hBXW0/ewGkHD
-        bCFh9Mu5U9scBF2TWDIUDWU8mKOH+SE=; b=CvqScyrOEdega3VjhB49TPf47Hek
-        PUWqJrWPfalAcCcJJ3fKiBHCre1YTUB4oapvmNoTAKHIRYKC6UTGALNSNqEgtOhP
-        JHt1xKu8xrnvvrFot5s4oJIYWxueiwNRdbRKBbw4CO5tnte6q1PI6rhb4vX6ctDk
-        1xUyHXKl08NHEps=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 711A2102CEA;
-        Mon,  6 Dec 2021 16:26:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B9576102CE9;
-        Mon,  6 Dec 2021 16:26:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 4/4] config API: don't use vreportf(), make it static in
- usage.c
-References: <cover-0.4-00000000000-20211206T165221Z-avarab@gmail.com>
-        <patch-4.4-e0e6427cbd3-20211206T165221Z-avarab@gmail.com>
-Date:   Mon, 06 Dec 2021 13:26:13 -0800
-In-Reply-To: <patch-4.4-e0e6427cbd3-20211206T165221Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 6 Dec
- 2021 17:55:53 +0100")
-Message-ID: <xmqqfsr5e87e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1352374AbhLFVsI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 16:48:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38170 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1352372AbhLFVsD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 16:48:03 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35BCFC061A83
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 13:44:34 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id i5-20020a05683033e500b0057a369ac614so15410057otu.10
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 13:44:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=f3gM61BqKcFEyPcOdZjQyHgLOqrHAGiECb+Q/I4AUZQ=;
+        b=Qgh2lpnctJsfidMim9RnHHtMDKqxKLqJ87xUCkljHrh2q14yvmaJjrTVm1LmLo+pRR
+         ApJkI4+WEUmjHu8SG7X6lGn+acWZ2sHeoTX+pErxrhfio46iVg7dszydESoV5G0VDu+5
+         mIFEJXnMWaiP84880rsqzVo0+Npkr8gjOuf9orGGETLO5RxP0nSoCqNcmslLIEpCW6EU
+         nxDqqHhPQaaxsYOnPZMADJV/lTZdbF0WJzimLz+KMe0RKG2vjpTKL/nLMNdnPatKgq4o
+         lOMGukc/dyC5ZpHkfUFriOX9e8M7Qdfi6+th4hQEAfl+221DNZ5nPMbnchh5xRnIhT/x
+         mVgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=f3gM61BqKcFEyPcOdZjQyHgLOqrHAGiECb+Q/I4AUZQ=;
+        b=R2qde1FRw/LDkUPu3rumKldKA70TY6MGD8FOL3Tw91nnT3oGREmlyR4di52SnBm+aR
+         sTSUMZKM8ePHftC2kLsoAuP31S6jzThNCGo7JZXj44x/AyCrrrcG9ncbftA82uy2XCAX
+         HkCRe0g33M56aQqtN9rPJOTnSPbr1dnkY7pfNz/1LZ3il0w6un7WP6gegBAqlH+vnFZq
+         FM0LKM7gRfhkDcgdEjHTskMrb9g2POwGh0n4ny/v7g+5F4xEd1DZ98Ep/iqKRc1hpQrA
+         6Jv9l3ZD7CIvQpOuTfmHA9O/5LehLqWrvy40BUCh42Vg/qNTvS+WVTCx0s4l5L5m5U1n
+         DgHQ==
+X-Gm-Message-State: AOAM533wkdXsPDDVl3g7NrkoJJOqRYl2dCohZCEjdxdYyqjhN/037dX7
+        OW8XVvvBXc60SoEOKUjFoUM=
+X-Google-Smtp-Source: ABdhPJxv1JXlJRj5aKz1aKFmYWSDjs5bm00MiCDCzT6j/CydLaI0X72NvLtY4MypEc1TlplBFlY1Pw==
+X-Received: by 2002:a9d:7993:: with SMTP id h19mr32571583otm.245.1638827073433;
+        Mon, 06 Dec 2021 13:44:33 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:88f0:5cbe:30c7:d6dc? ([2600:1700:e72:80a0:88f0:5cbe:30c7:d6dc])
+        by smtp.gmail.com with ESMTPSA id l6sm2419069otu.12.2021.12.06.13.44.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Dec 2021 13:44:32 -0800 (PST)
+Message-ID: <b3a30e27-7821-1fcb-bacc-07a6d2b3df76@gmail.com>
+Date:   Mon, 6 Dec 2021 16:44:31 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 24426078-56DB-11EC-AE95-E10CCAD8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH 08/17] builtin/pack-objects.c: --cruft without expiration
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, larsxschneider@gmail.com, peff@peff.net,
+        tytso@mit.edu
+References: <cover.1638224692.git.me@ttaylorr.com>
+ <66165917a4660f63ce60b820d178d52a51304d20.1638224692.git.me@ttaylorr.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <66165917a4660f63ce60b820d178d52a51304d20.1638224692.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On 11/29/2021 5:25 PM, Taylor Blau wrote:
+> Generating a non-expiring cruft packs works as follows:
 
-> In preceding commits the rest of the vreportf() users outside of
-> usage.c have been migrated to die_message(), leaving only the
-> git_die_config() function added in 5a80e97c827 (config: add
-> `git_die_config()` to the config-set API, 2014-08-07).
->
-> Let's have its callers call error() themselves if they want to emit a
-> message, which is exactly what git_die_config() was doing for them
-> before emitting its own die() message.
+I had trouble parsing the documentation changes below, so I came back
+to this commit message to see if that helps.
+ 
+>   - Callers provide a list of every pack they know about, and indicate
+>     which packs are about to be removed.
 
-I do not quite get this.  If git_die_config() has been showing the
-message for them, and if the existing callers can just use error(),
-why not git_die_config() call error() on behalf of these callers?
+This corresponds to the list over stdin.
+ 
+>   - All packs which are going to be removed (we'll call these the
+>     redundant ones) are marked as kept in-core, as well as any packs
+>     that `pack-objects` found but the caller did not specify.
 
-> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-> index 2b2e28bad79..4e2432bb491 100644
-> --- a/builtin/fast-import.c
-> +++ b/builtin/fast-import.c
-> @@ -3456,9 +3456,10 @@ static void git_pack_config(void)
->  	}
->  	if (!git_config_get_int("pack.indexversion", &indexversion_value)) {
->  		pack_idx_opts.version =3D indexversion_value;
-> -		if (pack_idx_opts.version > 2)
-> -			git_die_config("pack.indexversion",
-> -					"bad pack.indexversion=3D%"PRIu32, pack_idx_opts.version);
-> +		if (pack_idx_opts.version > 2) {
-> +			error("bad pack.indexversion=3D%"PRIu32, pack_idx_opts.version);
-> +			git_die_config("pack.indexversion");
-> +		}
+Ok, so as an implementation detail we mark these as keep packs.
 
-This is exactly what triggered the question above, and the pattern
-repeats elsewhere, too.
+>     These packs are presumed to have entered the repository between
+>     the caller collecting packs and invoking `pack-objects`. Since we
+>     do not want to include objects in these packs (because we don't know
+>     which of their objects are or aren't reachable), these are also
+>     marked as kept in-core.
 
-> @@ -2550,18 +2552,12 @@ void git_die_config_linenr(const char *key, con=
-st char *filename, int linenr)
->  		    key, filename, linenr);
->  }
-> =20
-> -NORETURN __attribute__((format(printf, 2, 3)))
-> -void git_die_config(const char *key, const char *err, ...)
-> +NORETURN
-> +void git_die_config(const char *key)
->  {
->  	const struct string_list *values;
->  	struct key_value_info *kv_info;
-> =20
-> -	if (err) {
-> -		va_list params;
-> -		va_start(params, err);
-> -		vreportf("error: ", err, params);
-> -		va_end(params);
+Here, "are presumed" is doing a lot of work. Theoretically, there could
+be three categories:
 
-I get that we do not want to expose vreportf() to this caller, and I
-agree with the goal, but wouldn't it be the matter of calling
-get_error_routine() and calling it with err and params here, instead
-of losing the whole block?  Is that insufficient to avoid toucing
-all the callers?
+1. This pack was just repacked and will be removed because all of its
+   objects were placed into new objects.
 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index c6c6f7d6b51..bdb3977b9ec 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -474,7 +474,6 @@ static inline int git_has_dir_sep(const char *path)
->  struct strbuf;
-> =20
->  /* General helper functions */
-> -void vreportf(const char *prefix, const char *err, va_list params);
+2. Either this pack was repacked and contains important reachable objects
+   OR we did a repack of reachable objects and this pack contained some
+   extra, unreachable objects.
 
-Good.
+3. This pack was added to the repository while creating those repacked
+   packs from category 2, so we don't know if things are reachable or
+   not.
 
-> diff --git a/usage.c b/usage.c
-> index 3d09e8eea48..9943dd8742e 100644
-> --- a/usage.c
-> +++ b/usage.c
-> @@ -6,7 +6,7 @@
->  #include "git-compat-util.h"
->  #include "cache.h"
-> =20
-> -void vreportf(const char *prefix, const char *err, va_list params)
-> +static void vreportf(const char *prefix, const char *err, va_list para=
-ms)
+So, the packs that we discover on-disk but are not specified over stdin
+are in this third category, but these are grouped with category 1 as we
+will treat them the same.
 
-Good, too.
+>   - Then, we enumerate all objects in the repository, and add them to
+>     our packing list if they do not appear in an in-core kept pack.
 
-Thanks.
+Here, we are looking at all of the objects in category 2 as well as
+loose objects.
+
+> This results in a new cruft pack which contains all known objects that
+> aren't included in the kept packs. When the kept pack is the result of
+> `git repack -A`, the resulting pack contains all unreachable objects.
+
+This now describes how 'git repack' will interface with this new change
+to pack-objects. I'll keep an eye out for that.
+
+> +--cruft::
+
+Now getting to this description.
+
+> +	Packs unreachable objects into a separate "cruft" pack, denoted
+> +	by the existence of a `.mtimes` file. Pack names provided over
+> +	stdin indicate which packs will remain after a `git repack`.
+> +	Pack names prefixed with a `-` indicate those which will be
+> +	removed. (...)
+
+This description is too tied to 'git repack'. Can we describe the
+input using terms independent of the 'git repack' operation? I need
+to keep reading.
+
+> (...) The contents of the cruft pack are all objects not
+> +	contained in the surviving packs specified by `--keep-pack`)
+
+Now you use --keep-pack, which is a way of specifying a pack as
+"in-core keep" which was not in your commit message. Here, we also
+don't link the packs over stdin to the concept of keep packs.
+
+> +	which have not exceeded the grace period (see
+> +	`--cruft-expiration` below), or which have exceeded the grace
+> +	period, but are reachable from an other object which hasn't.
+
+And now we think about the grace period! There is so much going on
+that I need to break it down to understand.
+
+  An object is _excluded_ from the new cruft pack if
+
+  1. It is reachable from at least one reference.
+  2. It is in a pack from stdin prefixed with "-"
+  3. It is in a pack specified by `--keep-pack`
+  4. It is in an existing cruft pack and the .mtimes file states
+     that its mtime is at least as recent as the time specified by
+     the --cruft-expiration option.
+
+Breaking it down into a list like this helps me, at least. I'm not
+sure what the best way would look like.
+
+(Needing to pause here and look at the implementation later.)
+
+Thanks,
+-Stolee
