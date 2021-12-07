@@ -2,209 +2,220 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE569C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 08:24:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B33E8C433EF
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 08:31:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232504AbhLGI2P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 03:28:15 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44887 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232440AbhLGI2O (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 7 Dec 2021 03:28:14 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 39A0E5C0254;
-        Tue,  7 Dec 2021 03:24:44 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 07 Dec 2021 03:24:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=ps8pFRNlkDbnXRWkCj+h2JNsHbx
-        1/XZhjp3xSFpOR60=; b=VwbtYT7ObTvhHP0kcXQ4tr/aH7eqW5RKxLexmbPKDxw
-        GQ2sRLmtGqUV5CcGihCsLWPO6TCJR09tq80DSNr5BUeyP5xKJOlB+cNY2JhtlfKz
-        zzpyKARFiZXHlHWu+8SGwMMC5K0FjJ0kekG3hZCEW9vkISaks8qlb2bK3P6yU10q
-        nEoNsMyjh0ynn79ln238boUvXMXkOwFui58Uy2Tdb7GfVPEAvHeJJ5YtW7V17G9Z
-        U7whHEmjYsG5PF4rEbr4o75R8cnuRioO0RfWxYoRm9oVs7F0UybgnJ31djzkLCvI
-        mfluoMuSCAeEpmquBVoZ6da6ExuX23hsCnOxCbPiNgw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=ps8pFR
-        NlkDbnXRWkCj+h2JNsHbx1/XZhjp3xSFpOR60=; b=DkWSKWUPx4DTZMBFy3c/Uy
-        8XSFnFUQBHO2I+IGcw06Fy+oH9wNplaH83fI4+skDC2g/RdEPQx/1JqcPAURhLD8
-        HLUWn1d9MgrkZZ9RGYrQ1LP9rHPhRhWdIpu72GSrg8Xeoc40kDLwLl/z6dVOEfOB
-        piHuXc0U6m8FfMpfXelO4OoETABHgVTDMADq4U3Zl6/aqmK4qFiD+QKgIkrXdXAZ
-        jCgVWMnBu7zYc5jz7Jg8Z0nMFzZtju7tXLvRfoVvLb5M5t/nRqKDBTl6k/Ubt7tH
-        swYHltx3HIvaBTvNLa+fjgAItFWBMIVLd6MRSTBz2rNDX1MFsk0NSIkMdv4brylg
-        ==
-X-ME-Sender: <xms:SxqvYdNBzlug80-BGGTKH_eo0WgHhxVAjL4jqyIOTK6PSGDHe8jv7A>
-    <xme:SxqvYf-0b1ZDy0enrha4BT-9OC0JYA5W8w4y5DOyJmQvU89JMUuLsy6vh0Gv4Xlxh
-    GMtkqg2QSnctZ0m9A>
-X-ME-Received: <xmr:SxqvYcSCoR42brjcv9L0_c7WfL5tWW1niXs3ZQKVR0YBnF2LqpPFAxK9uYCU8Arq0j9piaHcHR4plH94NSSEHQ3JAlCtqAqTJpUmIhq_EBu-MThT_AgDu7Ez>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrjeeggdduvddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeejjedtiefggeekgfejheevveejjeevuedvtdeikeffveelgeelhffggfejjeeffeen
-    ucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:SxqvYZsx1O_Zgy2G19KWgowWXxOi0FOa6SL3WoDgWbm37MGfBuV27Q>
-    <xmx:SxqvYVclEiOBDXWMCSSraKnv_1wrfASPvjnD_mOLgiX6qlDxwp6KJA>
-    <xmx:SxqvYV2sYJu3fI6rDNmH3ieMHuDPeRaaTQyk-Qf1vioHkZ6sPd3OTA>
-    <xmx:TBqvYWrm5fVkCOfzotIaDNh2jP58quA6qItvna8av8IbkgbIuwyLQw>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Dec 2021 03:24:43 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 9f05d633 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 7 Dec 2021 09:54:23 +0000 (UTC)
-Date:   Tue, 7 Dec 2021 09:24:00 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Jeff King <peff@peff.net>
-Cc:     Bryan Turner <bturner@atlassian.com>,
-        Waleed Khan <me@waleedkhan.name>, git@vger.kernel.org
-Subject: Re: Bug report: Strange behavior with `git gc` and
- `reference-transaction` hook
-Message-ID: <Ya8aIAAOlValUL2o@ncase>
-References: <CAKjfCeBcuYC3OXRVtxxDGWRGOxC38Fb7CNuSh_dMmxpGVip_9Q@mail.gmail.com>
- <CAGyf7-FoRyVtQHa2ETQtRA6fD7x0GDhKVPg+eAajhgPNrsw_OQ@mail.gmail.com>
- <YZaWqTwPOyQz0/mu@coredump.intra.peff.net>
+        id S232895AbhLGIf2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 03:35:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44774 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232585AbhLGIf1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 03:35:27 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C98BC061354
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 00:31:57 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id u1so27739092wru.13
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 00:31:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=L6McFVKidntjTRJgeRckrxaOo5wa4JA7cy7O95l/ZPU=;
+        b=WfhmqLsFlrf/Qr+9XoJFt9skfE6VLUeb4qqf7vH7DgKfaM3i7nN6tF/6XLpXZeXpXD
+         BX7iPUtaVVD7+/d6Ccq3YDCJc7bFWpJ8GcXZX83cM2hj3w8ka/Lx+2bgyXW1f1MPIGNH
+         vMeQyntoXhBmaBUnaVALGjsJDMsDuC3F6wEEND+FraYdX2d1QFX3QCBe3yqMs92K2ysI
+         cuwwcCePbSHAjhMRN9YkzNGKZ3nLkaikTkhEcZgY1yHQtSHbvAYN6Pob9O6qNC4hkpSX
+         k+Oi4sxzp0dhAPcf6V7VBza2BoMXuwAldGKR9ROlKLpmBYuIHF73pQruqS5gxddcMfKw
+         1pAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=L6McFVKidntjTRJgeRckrxaOo5wa4JA7cy7O95l/ZPU=;
+        b=ZHr8ALHU2POhGY9qy5tnqjefmXMmtdgLapToBZKlT7UTOdCtyOirg2RE+39jDVLGOV
+         lF27c7SvJHf+w/9I/+27GFbSMBNwyaAzLaSpu0T/msunCJ1EMz4ZJH8HEm/1cgvx1Imr
+         ZUJzXvusm/bYiDDMpcPSkuZC06xd0elBURewSYyYkh3WYSUtNvId7F00dlyy81cM1N2f
+         uMNk1r/sFInxx7K75HGx3QzdpbOBDz1IvVU/pEE8XzOGDDhscOjBO1cYolYE8Gs/d1Ff
+         GAeS/MqA24XIwyP4lgKNne0TmYpjnjeum9U6i3RAZyIC8Q4cuiMcVEwAKlqj2G0f1O3W
+         0rTw==
+X-Gm-Message-State: AOAM532bKXDGU7PtTIWzokQ2NB2E+Q1y5CNUpikuPC33TSqLXuLx9TqT
+        1nCs6QmlZpjQUUctRGAsGUekX4Et9x0=
+X-Google-Smtp-Source: ABdhPJztTIIkz4p77M1cQFtFW6Nr/9Eh4ECUjtWi8NUXDxqaWg69GZGq2JJPy749SmXJ7dyLSZcFbA==
+X-Received: by 2002:a05:6000:1548:: with SMTP id 8mr49347890wry.279.1638865914598;
+        Tue, 07 Dec 2021 00:31:54 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r17sm2098258wmq.11.2021.12.07.00.31.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Dec 2021 00:31:54 -0800 (PST)
+Message-Id: <pull.1076.v17.git.1638865913.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1076.v16.git.1638853295.gitgitgadget@gmail.com>
+References: <pull.1076.v16.git.1638853295.gitgitgadget@gmail.com>
+From:   "Aleen via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 07 Dec 2021 08:31:50 +0000
+Subject: [PATCH v17 0/3] am: support --empty=(die|drop|keep) option and --allow-empty option to
+ handle empty patches
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="jJs51Zi5GOLT8umN"
-Content-Disposition: inline
-In-Reply-To: <YZaWqTwPOyQz0/mu@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        Aleen =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>,
+        Aleen <aleen42@vip.qq.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Since that git has supported the --always option for the git-format-patch
+command to create a patch with an empty commit message, git-am should
+support applying and committing with empty patches.
 
---jJs51Zi5GOLT8umN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+----------------------------------------------------------------------------
 
-On Thu, Nov 18, 2021 at 01:08:41PM -0500, Jeff King wrote:
-> [+cc pks]
->=20
-> On Wed, Nov 17, 2021 at 04:52:46PM -0800, Bryan Turner wrote:
->=20
-> > > The expected behavior would be that the latest reference transaction
-> > > hook refers to the state of the references on disk. That is, either
-> > > `master` should point to 0 (be deleted), or it should have said that
-> > > `master` pointed to `e197d1`.
-> > >
-> > > But if we actually examine `master`, it's set to `e197d1`, just as you
-> > > would expect. The GC should have been a no-op overall.
-> >=20
-> > One of the subtasks of "git gc" is "git pack-refs". If you inspect in
-> > more detail, I suspect you'll find that "refs/heads/master" was loose
-> > before "git gc" ran (as in, there was a file
-> > "$GIT_DIR/refs/heads/master") and "packed-refs" either didn't have a
-> > "refs/heads/master" entry or had a different hash. (Loose refs always
-> > "win" over packed, since ref updates only write loose refs.)
->=20
-> It seems totally broken to me that we'd trigger the
-> reference-transaction hook for ref packing. The point of the hook is to
-> track logical updates to the refs. But during ref packing that does not
-> change at all; the value remains the same. So I don't think we should be
-> triggering the hook at all, let alone with confusing values.
->=20
-> This snippet shows a simple case that I think is wrong:
->=20
-> -- >8 --
-> git init -q repo
-> cd repo
->=20
-> cat >.git/hooks/reference-transaction <<\EOF
-> #!/bin/sh
-> echo >&2 "=3D=3D> reference-transaction $*"
-> sed 's/^/  /'
-> EOF
-> chmod +x .git/hooks/reference-transaction
->=20
-> echo >&2 "running commit..."
-> git commit --allow-empty -qm foo
-> echo >&2 "running pack-refs..."
-> git pack-refs --all --prune
-> -- >8 --
->=20
-> It produces:
->=20
->   running commit...
->   =3D=3D> reference-transaction prepared
->     0000000000000000000000000000000000000000 77bcab0d950aee3021e8aa13a15d=
-40e7a9a5f71b HEAD
->     0000000000000000000000000000000000000000 77bcab0d950aee3021e8aa13a15d=
-40e7a9a5f71b refs/heads/main
->   =3D=3D> reference-transaction committed
->     0000000000000000000000000000000000000000 77bcab0d950aee3021e8aa13a15d=
-40e7a9a5f71b HEAD
->     0000000000000000000000000000000000000000 77bcab0d950aee3021e8aa13a15d=
-40e7a9a5f71b refs/heads/main
->   running pack-refs...
->   =3D=3D> reference-transaction prepared
->     0000000000000000000000000000000000000000 77bcab0d950aee3021e8aa13a15d=
-40e7a9a5f71b refs/heads/main
->   =3D=3D> reference-transaction committed
->     0000000000000000000000000000000000000000 77bcab0d950aee3021e8aa13a15d=
-40e7a9a5f71b refs/heads/main
->   =3D=3D> reference-transaction prepared
->     77bcab0d950aee3021e8aa13a15d40e7a9a5f71b 0000000000000000000000000000=
-000000000000 refs/heads/main
->   =3D=3D> reference-transaction committed
->     77bcab0d950aee3021e8aa13a15d40e7a9a5f71b 0000000000000000000000000000=
-000000000000 refs/heads/main
->=20
-> I think the final four invocations should be skipped entirely. They're
-> pointless at best (nothing actually changed), and extremely misleading
-> at worst (they look like the ref ended up deleted!).
->=20
-> -Peff
+Changes since v1:
 
-Yeah, I agree that this is something that is totally misleading.
+ 1. add a case when not passing the --always option.
+ 2. rename the --always option to --allow-empty.
 
-For what it's worth, we also hit a similar case in production at GitLab,
-where we use the hook to do voting on ref updates across different
-nodes. Sometimes we observed different votes on a subset of nodes, and
-it took me quite some time to figure out that this was dependent on
-whether a ref was packed or not. We're now filtering out transactions
-which consist only of force-deletions [1], which are _likely_ to be
-cleanups of such packed refs. But this is very clearly a hack, and I
-agree that calling the hook for=20
+----------------------------------------------------------------------------
 
-In the end, these really are special cases of how the "files" backend
-works and thus are implementation details which shouldn't be exposed to
-the user at all. With these implementation details exposed, we'll start
-to see different behaviour of when the hook is executed depending on
-which ref backend you use, which is even worse compared to the current
-state where it's at least consistently misleading.
+Changes since v2:
 
-As Peff said, the hook should really only track logical changes and not
-expose any implementation details.
+ 1. rename the --allow-empty option to --empty-commit.
+ 2. introduce three different strategies (die|skip|asis) when trying to
+    record empty patches as empty commits.
 
-Patrick
+----------------------------------------------------------------------------
 
-[1]: https://gitlab.com/gitlab-org/gitaly/-/blob/3ef55853e9e161204464868390=
-d97d1a1577042d/internal/gitaly/hook/referencetransaction.go#L58
+Changes since v3:
 
---jJs51Zi5GOLT8umN
-Content-Type: application/pgp-signature; name="signature.asc"
+ 1. generate the missed file for test cases.
+ 2. grep -f cannot be used under Mac OS.
 
------BEGIN PGP SIGNATURE-----
+----------------------------------------------------------------------------
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmGvGh8ACgkQVbJhu7ck
-PpTCFQ/+KitA3RK31gv+9xuds1fIqH4IwvMH1AzLt5uZmR4Wb6lMo1XZEWU1GAlW
-wHSdu6qFt9bfdUP5xGm/mB9xuSFc3rbUEmzWKIRQHGOHiDO0srsqopExByi3cKjh
-28R1t/57/XjKyCbyKaSgdST328EhK1KWfmIFBxaoIqlQTBdZkJMoahIe/i7Lflsy
-gLgEhQDXvhrnFsvtuVyL9D4bM3lorb+DOW5CfQtmAVcdcZFpXiIDxitw1Jl1AopE
-9ijXxsikds5J70lHHw7zNAWvoqB7lqT6CfvRNJNr6bPXY39Mz0ms2noV0oofySNl
-EjsYW0NoqcRM4bDCt+f+vKIh2S3XhiG2RjmxwL6zI3Dsz3rGAtF7jp/oPPYJ/mMa
-JntPEgNfjMRfXtV/cIwulE6TWjWL96TVJo+Tr9JyuM4RYPUNiMQT2nRrykFVWy+s
-/C8R1NrJyHoHNSDd9mxpv59DGG/JsEk8Iv4ZbHkb+QE3mYPf+xy8ehA087Ter0f+
-SMlLq87AmLAdU1u6WNwUIVvvqe1/VmNRJjuHuFWrwwjUI/xdWZtsf7SJgoNSbZqx
-cDZAxnLwcwTAAZC9EOghRh8neZZW9mcKB3EZu443a//18zwomBxrtY4OzGpiSm4s
-zN1s0dbxMqoe4tNGBtqXpzHlMc1XKbOj/dLXuFEKiefisVg+tcg=
-=FsWd
------END PGP SIGNATURE-----
+Changes since v4:
 
---jJs51Zi5GOLT8umN--
+ 1. rename the --empty-commit option to --empty.
+ 2. rename three different strategies (die|skip|asis) to die, drop and keep
+    correspondingly.
+
+----------------------------------------------------------------------------
+
+Changes since v5:
+
+ 1. throw an error when passing --empty option without value.
+
+----------------------------------------------------------------------------
+
+Changes since v6:
+
+ 1. add i18n resources.
+
+----------------------------------------------------------------------------
+
+Changes since v7:
+
+ 1. update code according to the seen branch.
+ 2. fix the wrong document of git-am.
+ 3. sign off commits by a real name.
+
+----------------------------------------------------------------------------
+
+Changes since v8:
+
+ 1. update the committer's name with my real name to fix DCO of GGG.
+
+----------------------------------------------------------------------------
+
+Changes since v9:
+
+ 1. imitate the signed name format of
+    https://lore.kernel.org/git/pull.1143.git.git.1637347813367.gitgitgadget@gmail.com
+    .
+
+----------------------------------------------------------------------------
+
+Changes since v11:
+
+ 1. introduce an interactive option --allow-empty for git-am to record empty
+    patches in the middle of an am session.
+
+----------------------------------------------------------------------------
+
+Changes since v12:
+
+ 1. record the empty patch as an empty commit only when there are no
+    changes.
+ 2. fix indentation problems.
+ 3. simplify "to keep recording" to "to record".
+ 4. add a test case for skipping empty patches via the --skip option.
+
+----------------------------------------------------------------------------
+
+Changes since v13:
+
+ 1. add an additional description about the 'die' value.
+
+----------------------------------------------------------------------------
+
+Changes since v14:
+
+ 1. reimplement the 'die' value and stop the whole session. (Expected a
+    reroll)
+ 2. the --allow-empty option is a valid resume value only when: (Expected a
+    reroll)
+    * index has not changed
+    * lacking a patch
+
+----------------------------------------------------------------------------
+
+Changes since v15:
+
+ 1. rename "die" to "stop".
+
+----------------------------------------------------------------------------
+
+Changes since v16:
+
+ 1. fix typo from "had" to "has" in the comment.
+
+徐沛文 (Aleen) (3):
+  doc: git-format-patch: describe the option --always
+  am: support --empty=<option> to handle empty patches
+  am: support --allow-empty to record specific empty patches
+
+ Documentation/git-am.txt           |  16 ++++-
+ Documentation/git-format-patch.txt |   6 +-
+ builtin/am.c                       |  90 +++++++++++++++++++++----
+ t/t4150-am.sh                      | 102 +++++++++++++++++++++++++++++
+ t/t7512-status-help.sh             |   1 +
+ wt-status.c                        |   3 +
+ 6 files changed, 203 insertions(+), 15 deletions(-)
+
+
+base-commit: abe6bb3905392d5eb6b01fa6e54d7e784e0522aa
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1076%2Faleen42%2Fnext-v17
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1076/aleen42/next-v17
+Pull-Request: https://github.com/gitgitgadget/git/pull/1076
+
+Range-diff vs v16:
+
+ 1:  a524ca6adfa = 1:  a524ca6adfa doc: git-format-patch: describe the option --always
+ 2:  b9e03f2342b = 2:  b9e03f2342b am: support --empty=<option> to handle empty patches
+ 3:  abcdfa1b375 ! 3:  ea2dc088b37 am: support --allow-empty to record specific empty patches
+     @@ builtin/am.c: next:
+        * all the hard work, and we do not have to do any patch application. Just
+      - * trust and commit what the user has in the index and working tree.
+      + * trust and commit what the user has in the index and working tree. If `allow_empty`
+     -+ * is true, commit as an empty commit when index had not changed and lacking a patch.
+     ++ * is true, commit as an empty commit when index has not changed and lacking a patch.
+        */
+      -static void am_resolve(struct am_state *state)
+      +static void am_resolve(struct am_state *state, int allow_empty)
+
+-- 
+gitgitgadget
