@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED7C2C433EF
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 17:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 033B2C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 17:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239784AbhLGRI1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 12:08:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54686 "EHLO
+        id S235340AbhLGRJs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 12:09:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239803AbhLGRI0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 12:08:26 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2329EC061746
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 09:04:56 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id o20so59642978eds.10
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 09:04:56 -0800 (PST)
+        with ESMTP id S234465AbhLGRJr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 12:09:47 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03CE3C061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 09:06:17 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id w1so59499217edc.6
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 09:06:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Dwvwd8G1C6OXPrpkotY/kU4PqB1h76qRxiVFmKkNubU=;
-        b=BIS7kwc1eqONv1z5OoMbFOo6hoH0j12Pvq/i2OH+4v1wJaUnJptzEiMx6ydsKOd/qC
-         I8Au2u85fSu8beJkwQOAVQVwpBvGcTJ02+benffxJZxziBZLGbUhsYB/ST48jgPvkhaA
-         IW6Fae/FgxG3NEszgdbOSYZ8AMlLAXBBbMKrJpiOS92a64cju9LfOd3Om8HhThQXGPcr
-         7YQyCAMK4lDKMEiAgtqeb4MEHst3XekGWuloPLN1QfKOFsmM7sX2UTzU8VMlpk0WZCzP
-         6S/p1hVTzK80Kl1EiuAgf+RdwxCDppb1iTx7mGi/nadoim3nD29bfwo19rEag6azueRi
-         7Yfg==
+        bh=AdGk4l3wWbtCdWXKi3xgeb8DFYXBq7zeiIGlhwoZuGg=;
+        b=c1Yx9D7gqyMwDiRAQnoJRD1DRS+Guzmw4xzjF+MABXWLQkM+lCpuLeg5E8e5T3jV0e
+         3uH8XXHjBpxjtz0qvt3nQYkSk0IOknbBymLSPVIXqh9iXxKdiV9wjBrMJ8OGrz2w8HM6
+         cPScu0ZEIQg3LJlEoUlaI9xJFlLbrjLD8jC+CmqTApR/Dn69/Erm3aqwnwY3xtRzEnLv
+         0mxfURkedGsV1ppkKncsxhhyjFwWnGuBI9w30m0smm5XvGnedTwcm/dNTi7kVRNpf/+Y
+         zM911KrkVirSRDO1IQSQR5Iq9KryzmREqhOL6HH3ZBllqMEnPwvaNBSVuTdfKrzUOk40
+         +jjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Dwvwd8G1C6OXPrpkotY/kU4PqB1h76qRxiVFmKkNubU=;
-        b=oUTlDoEmZjyoiepRkJ1LVGL7yImW5zNvBg5d3yZL7AGZFGHO4svF8If7I0gGd5jV8a
-         euhuEMgcg2Ttrfbd1TwWpN1xkjP45pa8gd3Zc1n0/OyLwquIMnQiojyY9uqZbhKji6/h
-         u12ZXo2FezlThZ2oEBrkovJclVLFHBA9eNVoR1eq+hUlSX7C9jlJ7qWmHFhX91eB8cf3
-         0kIffLWNZ9jd/doUDclMuHSqHdSyrawrkBdjhwbLgcEUdzUkot4GDP3OeixQBitkpWyW
-         Da6dCvNRYRorGEnn7A4aLV+nTw/Vsfr3DuDguNzheDba3ECwrpeD7qtNwz/dnsntvxxn
-         qYOA==
-X-Gm-Message-State: AOAM5304AXdJlf5R6MILUIgKYn4l5dsBW1I7L4AAFYx4iDJkN7nDlVRm
-        UYcOlE7MaUv3WvjA2nqo3RcqiWIz8RIOmosuAtbtCw0o
-X-Google-Smtp-Source: ABdhPJwDFrSVonKjhaA/RG95/5VlIgY6e/gh5/3JslbfJo2ojDU7jzfev3cUVhNMFvRLQUP69ogVbob0AdKXix+Fq+M=
-X-Received: by 2002:a17:907:75d3:: with SMTP id jl19mr705199ejc.520.1638896694420;
- Tue, 07 Dec 2021 09:04:54 -0800 (PST)
+        bh=AdGk4l3wWbtCdWXKi3xgeb8DFYXBq7zeiIGlhwoZuGg=;
+        b=QHJSDmxpkijoylM0jQi2plYLs1C/upVd8A04RkjxOJ6pcYFiygeYPfkbq3PRAPMmL7
+         +ZIM3RqKRCIE1w0LaUPEOzsEIKFotxMPQUE972geLVcL4Q7VwoBXrofACTL+N+ve3TzC
+         6TKXFSKTwYdcrK2Zzt/rM9DCRcqv+KILf/y0sTAUfWCsoUfQ+T+/843WhBOOWi8DeU//
+         9Ilvc4xcOOuTQ4z5xPdaC+Xryt62Tvdh2lhdv3mDzxF7vO9xvczzWIjwTgkHml+NkvD6
+         ZS8+ZDgRYuwJ9lUj+MygnWq2PqPRGWXwbdfOTvtgT5CpLXCdLK8BfgqKhWOgs6A92+yZ
+         9XOQ==
+X-Gm-Message-State: AOAM530WTlLuXX/p9m/K0kik8V7EW8EYiNIupcY3hEFZcJNfVBEmS64S
+        Um8cd0Qv1I7DjB6wvnzUGFVuPRjqfvUi2x9nAwI=
+X-Google-Smtp-Source: ABdhPJzMatJVncNkhCdLXo25T17EilA/A5YC7zVjhNo31OoxU9dtGlyU9VOfiGgFOANjzUXvyT3yxRG26eOYtd4TjzM=
+X-Received: by 2002:a17:906:7209:: with SMTP id m9mr719242ejk.434.1638896775360;
+ Tue, 07 Dec 2021 09:06:15 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1151.git.git.1638648020.gitgitgadget@gmail.com>
- <a90687eb4c1ea6569250391cd2a8111a0e338316.1638648020.git.gitgitgadget@gmail.com>
- <bb738571-f90c-7df5-2e20-ff716ed8a4f0@github.com>
-In-Reply-To: <bb738571-f90c-7df5-2e20-ff716ed8a4f0@github.com>
+ <95d3df78b2ffe2e0d6234f326f8f7acbd2b67301.1638648020.git.gitgitgadget@gmail.com>
+ <9e4e34c9-5485-c10d-48b6-a1a6f5e12486@github.com>
+In-Reply-To: <9e4e34c9-5485-c10d-48b6-a1a6f5e12486@github.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 7 Dec 2021 09:04:42 -0800
-Message-ID: <CABPp-BF-7DRmE+DPZOFuCYwSRdD8yk4pPsYpFN4=5fALEkqATg@mail.gmail.com>
-Subject: Re: [PATCH 3/6] sparse-checkout: enable `set` to initialize
- sparse-checkout mode
+Date:   Tue, 7 Dec 2021 09:06:03 -0800
+Message-ID: <CABPp-BG=uO0bcUTDhy07Wv1bQRD4yGy+4Mrfp=XGCpzRoTWPPA@mail.gmail.com>
+Subject: Re: [PATCH 4/6] git-sparse-checkout.txt: update to document that set
+ handles init
 To:     Victoria Dye <vdye@github.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -63,151 +63,166 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 4, 2021 at 1:40 PM Victoria Dye <vdye@github.com> wrote:
+On Sat, Dec 4, 2021 at 1:48 PM Victoria Dye <vdye@github.com> wrote:
 >
 > Elijah Newren via GitGitGadget wrote:
 > > From: Elijah Newren <newren@gmail.com>
 > >
-> > The previously suggested workflow:
-> >   git sparse-checkout init ...
-> >   git sparse-checkout set ...
+> > As noted in the previous commit, using separate `init` and `set` steps
+> > with sparse-checkout result in a number of issues.  The previous commit
+> > made `set` able to handle the work of both commands.  Update the
+> > documentation to reflect this, and mark `init` as deprecated.
 > >
-> > Suffered from three problems:
-> >   1) It would delete nearly all files in the first step, then
-> >      restore them in the second.  That was poor performance and
-> >      forced unnecessary rebuilds.
-> >   2) The two-step process resulted in two progress bars, which
-> >      was suboptimal from a UI point of view for wrappers that
-> >      invoked both of these commands but only exposed a single
-> >      command to their end users.
-> >   3) With cone mode, the first step would delete nearly all
-> >      ignored files everywhere, because everything was considered
-> >      to be outside of the specified sparsity paths.  (The user was
-> >      not allowed to specify any sparsity paths in the `init` step.)
-> >
-> > Avoid these problems by teaching `set` to understand the extra
-> > parameters that `init` takes and performing any necessary initialization
-> > if not already in a sparse checkout.
-> >
->
-> I really like this change! It always seemed weird that `set` would
-> implicitly `init`, but without any of the options in `init`.
->
 > > Signed-off-by: Elijah Newren <newren@gmail.com>
 > > ---
-> >  builtin/sparse-checkout.c | 52 ++++++++++++++++++++++++++++++++++++++-
-> >  1 file changed, 51 insertions(+), 1 deletion(-)
+> >  Documentation/git-sparse-checkout.txt | 92 ++++++++++++++-------------
+> >  1 file changed, 49 insertions(+), 43 deletions(-)
 > >
-> > diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> > index e252b82136e..cf6a6c6c3a7 100644
-> > --- a/builtin/sparse-checkout.c
-> > +++ b/builtin/sparse-checkout.c
-> > @@ -682,17 +682,26 @@ static int sparse_checkout_add(int argc, const char **argv, const char *prefix)
-> >  }
+> > diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+> > index 42056ee9ff9..d22c925ecf8 100644
+> > --- a/Documentation/git-sparse-checkout.txt
+> > +++ b/Documentation/git-sparse-checkout.txt
+> > @@ -30,28 +30,35 @@ COMMANDS
+> >  'list'::
+> >       Describe the patterns in the sparse-checkout file.
 > >
-> >  static char const * const builtin_sparse_checkout_set_usage[] = {
-> > -     N_("git sparse-checkout set (--stdin | <patterns>)"),
-> > +     N_("git sparse-checkout set [--cone] [--[no-]sparse-index] (--stdin | <patterns>)"),
+> > -'init'::
+> > -     Enable the `core.sparseCheckout` setting. If the
+> > -     sparse-checkout file does not exist, then populate it with
+> > -     patterns that match every file in the root directory and
+> > -     no other directories, then will remove all directories tracked
+> > -     by Git. Add patterns to the sparse-checkout file to
+> > -     repopulate the working directory.
+> > +'set'::
+> > +     Enable the necessary config settings
+> > +     (extensions.worktreeConfig, core.sparseCheckout,
+> > +     core.sparseCheckoutCone) if they are not already enabled, and
+> > +     write a set of patterns to the sparse-checkout file from the
+> > +     list of arguments following the 'set' subcommand. Update the
+> > +     working directory to match the new patterns.
+> >  +
+> > -To avoid interfering with other worktrees, it first enables the
+> > -`extensions.worktreeConfig` setting and makes sure to set the
+> > -`core.sparseCheckout` setting in the worktree-specific config file.
+> > +When the `--stdin` option is provided, the patterns are read from
+> > +standard in as a newline-delimited list instead of from the arguments.
+> >  +
+> > -When `--cone` is provided, the `core.sparseCheckoutCone` setting is
+> > -also set, allowing for better performance with a limited set of
+> > -patterns (see 'CONE PATTERN SET' below).
+> > +When `--cone` is passed or `core.sparseCheckoutCone` is enabled, the
+> > +input list is considered a list of directories instead of
+> > +sparse-checkout patterns.  This allows for better performance with a
+> > +limited set of patterns (see 'CONE PATTERN SET' below).  Note that the
+> > +set command will write patterns to the sparse-checkout file to include
+> > +all files contained in those directories (recursively) as well as
+> > +files that are siblings of ancestor directories. The input format
+> > +matches the output of `git ls-tree --name-only`.  This includes
+> > +interpreting pathnames that begin with a double quote (") as C-style
+> > +quoted strings.
+> >  +
+> > -Use the `--[no-]sparse-index` option to toggle the use of the sparse
+> > -index format. This reduces the size of the index to be more closely
+> > -aligned with your sparse-checkout definition. This can have significant
+> > -performance advantages for commands such as `git status` or `git add`.
+> > -This feature is still experimental. Some commands might be slower with
+> > -a sparse index until they are properly integrated with the feature.
+> > +Use the `--[no-]sparse-index` option to use a sparse index (the
+> > +default is to not use it).  A sparse index reduces the size of the
+> > +index to be more closely aligned with your sparse-checkout
+> > +definition. This can have significant performance advantages for
+> > +commands such as `git status` or `git add`.  This feature is still
+> > +experimental. Some commands might be slower with a sparse index until
+> > +they are properly integrated with the feature.
+> >  +
+> >  **WARNING:** Using a sparse index requires modifying the index in a way
+> >  that is not completely understood by external tools. If you have trouble
+> > @@ -60,23 +67,6 @@ to rewrite your index to not be sparse. Older versions of Git will not
+> >  understand the sparse directory entries index extension and may fail to
+> >  interact with your repository until it is disabled.
+> >
+> > -'set'::
+> > -     Write a set of patterns to the sparse-checkout file, as given as
+> > -     a list of arguments following the 'set' subcommand. Update the
+> > -     working directory to match the new patterns. Enable the
+> > -     core.sparseCheckout config setting if it is not already enabled.
+> > -+
+> > -When the `--stdin` option is provided, the patterns are read from
+> > -standard in as a newline-delimited list instead of from the arguments.
+> > -+
+> > -When `core.sparseCheckoutCone` is enabled, the input list is considered a
+> > -list of directories instead of sparse-checkout patterns. The command writes
+> > -patterns to the sparse-checkout file to include all files contained in those
+> > -directories (recursively) as well as files that are siblings of ancestor
+> > -directories. The input format matches the output of `git ls-tree --name-only`.
+> > -This includes interpreting pathnames that begin with a double quote (") as
+> > -C-style quoted strings.
+> > -
+> >  'add'::
+> >       Update the sparse-checkout file to include additional patterns.
+> >       By default, these patterns are read from the command-line arguments,
+> > @@ -96,9 +86,27 @@ C-style quoted strings.
+> >
+> >  'disable'::
+> >       Disable the `core.sparseCheckout` config setting, and restore the
+> > -     working directory to include all files. Leaves the sparse-checkout
+> > -     file intact so a later 'git sparse-checkout init' command may
+> > -     return the working directory to the same state.
+> > +     working directory to include all files.
+> > +
+> > +'init'::
+> > +     Deprecated command that behaves like `set` with no specified paths.
+> > +     May be removed in the future.
 >
-> Since `cone` is an `OPT_BOOL`, shouldn't it appear in the usage string as
-> `--[no-]cone`? Without a `--no-cone` option, it's not clear how a user would
-> disable cone mode (since `set` preserves the existing cone mode setting if
-> `--cone` isn't given).
-
-Yeah, fair point.  When copying from init I probably should have double checked.
-
-Also, it makes me wonder if we should just make cone mode the default...
-
-> >       NULL
-> >  };
-> >
-> >  static struct sparse_checkout_set_opts {
-> > +     int cone_mode;
-> > +     int sparse_index;
-> >       int use_stdin;
-> >  } set_opts;
-> >
-> >  static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
-> >  {
-> > +     int mode, record_mode;
-> > +     const char *default_patterns[] = {"/*", "!/*/"};
-> > +
-> >       static struct option builtin_sparse_checkout_set_options[] = {
-> > +             OPT_BOOL(0, "cone", &set_opts.cone_mode,
-> > +                      N_("initialize the sparse-checkout in cone mode")),
-> > +             OPT_BOOL(0, "sparse-index", &set_opts.sparse_index,
-> > +                      N_("toggle the use of a sparse index")),
-> >               OPT_BOOL(0, "stdin", &set_opts.use_stdin,
-> >                        N_("read patterns from standard in")),
+> I'm on board with deprecating `init`, but one usage that's not covered by
+> the updated `set` is toggling the sparse index *without* modifying the
+> patterns. That likely won't matter to most users, but ones that assume `git
+> sparse-checkout set --[no-]sparse-index` works the same way as `git
+> sparse-checkout init --[no-]sparse-index` would find themselves losing their
+> existing pattern set.
 >
-> I know this isn't part of this patch, but is `stdin` really a bool (i.e.
-> someone might specify `--no-stdin`)? If not, I think `OPT_SET_INT` might be
-> more appropriate.
+> Maybe `--[no-]sparse-index` should be added to `git sparse-checkout
+> reapply`? For changing settings without updating patterns, that probably
+> makes more sense than `init` or `set` anyway. If adding that option is
+> outside the scope of what you want to do in this series, though, I'd be
+> happy with a note somewhere in this documentation explicitly noting that
+> `set` (unlike `init`) will change your patterns, even when toggling
+> `index.sparse` (or `core.sparseCheckoutCone`).
 
-Good point.  OPT_SET_INT() wouldn't fix it, though; you need to use
-OPT_BOOL_F or OPT_SET_INT_F and pass PARSE_OPT_NONEG as a flag.  I can
-include that.
+I like that idea; reapply seems like the right place to allow folks to
+toggle options without updating sparsity paths.  I'll add it.
 
-> >               OPT_END(),
-> > @@ -700,11 +709,52 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+> > ++
+> > +Historically, `set` did not used to handle all the necessary config
+> > +settings, which meant that both `init` and `set` had to be called.
+> > +Invoking both meant the `init` step would first remove nearly all
+> > +tracked files (and in cone mode, ignored files too), then the `set`
+> > +step would add many of the tracked files (but not ignored files) back.
+> > +In addition to the lost files, the performance and UI of this
+> > +combination was poor.
+> > ++
+> > +Also, historically, `init` would not actually initialize the
+> > +sparse-checkout file if it already existed.  This meant it was
+> > +possible to return to a sparse-checkout without remembering which
+> > +paths to pass to a subsequent 'set' or 'add' command.  However,
+> > +`--cone` and `--sparse-index` options would not be remembered across
+> > +the disable command, so the easy restore of calling a plain `init`
+> > +decreased in utility.
 > >
-> >       repo_read_index(the_repository);
+> >  SPARSE CHECKOUT
+> >  ---------------
+> > @@ -117,10 +125,8 @@ directory, it updates the skip-worktree bits in the index based
+> >  on this file. The files matching the patterns in the file will
+> >  appear in the working directory, and the rest will not.
 > >
-> > +     set_opts.cone_mode = -1;
-> > +     set_opts.sparse_index = -1;
-> > +
-> >       argc = parse_options(argc, argv, prefix,
-> >                            builtin_sparse_checkout_set_options,
-> >                            builtin_sparse_checkout_set_usage,
-> >                            PARSE_OPT_KEEP_UNKNOWN);
+> > -To enable the sparse-checkout feature, run `git sparse-checkout init` to
+> > -initialize a simple sparse-checkout file and enable the `core.sparseCheckout`
+> > -config setting. Then, run `git sparse-checkout set` to modify the patterns in
+> > -the sparse-checkout file.
+> > +To enable the sparse-checkout feature, run `git sparse-checkout set` to
+> > +set the patterns you want to use.
 > >
-> > +     /* Determine if we need to record the mode; ensure sparse checkout on */
-> > +     record_mode = (set_opts.cone_mode != -1) || !core_apply_sparse_checkout;
-> > +     core_apply_sparse_checkout = 1;
-> > +
-> > +     /* If not specified, use previous definition of cone mode */
-> > +     if (set_opts.cone_mode == -1 && core_apply_sparse_checkout)
+> >  To repopulate the working directory with all files, use the
+> >  `git sparse-checkout disable` command.
+> >
 >
-> I *think* this is supposed go before the `core_apply_sparse_checkout = 1;`
-> above it (if the intention is to only use the pre-existing cone mode setting
-> when already in a sparse checkout). If not, the `core_apply_sparse_checkout`
-> part of the condition is redundant and can be removed entirely.
-
-Eek.  I had it there originally, then moved it later while doing
-various changes.  This definitely should be later; thanks for
-catching.
-
-> > +             set_opts.cone_mode = core_sparse_checkout_cone;
-> > +
-> > +     /* Set cone/non-cone mode appropriately */
-> > +     if (set_opts.cone_mode == 1) {
-> > +             mode = MODE_CONE_PATTERNS;
-> > +             core_sparse_checkout_cone = 1;
-> > +     } else {
-> > +             mode = MODE_ALL_PATTERNS;
-> > +     }
-> > +     if (record_mode && set_config(mode))
-> > +             return 1;
-> > +
-> > +     /* Set sparse-index/non-sparse-index mode if specified */
-> > +     if (set_opts.sparse_index >= 0) {
-> > +             if (set_sparse_index_config(the_repository, set_opts.sparse_index) < 0)
-> > +                     die(_("failed to modify sparse-index config"));
-> > +
-> > +             /* force an index rewrite */
-> > +             repo_read_index(the_repository);
-> > +             the_repository->index->updated_workdir = 1;
-> > +     }
-> > +
-> > +     /*
-> > +      * Cone mode automatically specifies the toplevel directory.  For
-> > +      * non-cone mode, if nothing is specified, manually select just the
-> > +      * top-level directory (much as 'init' would do).
-> > +      */
-> > +     if (!core_sparse_checkout_cone && argc == 0) {
-> > +             argv = default_patterns;
-> > +             argc = 2;
-> > +     }
-> > +
-> >       return modify_pattern_list(argc, argv, set_opts.use_stdin, REPLACE);
-> >  }
