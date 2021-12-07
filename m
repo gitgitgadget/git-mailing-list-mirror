@@ -2,45 +2,45 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C73ADC433EF
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 11:45:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B1CBC433FE
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 11:54:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235785AbhLGLsx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 06:48:53 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:53043 "EHLO
+        id S235605AbhLGL5q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 06:57:46 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:55945 "EHLO
         out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231338AbhLGLsw (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 7 Dec 2021 06:48:52 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id CC3935C01AA;
-        Tue,  7 Dec 2021 06:45:21 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Tue, 07 Dec 2021 06:45:21 -0500
+        by vger.kernel.org with ESMTP id S230001AbhLGL5p (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 7 Dec 2021 06:57:45 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 38C435C023A;
+        Tue,  7 Dec 2021 06:54:15 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Tue, 07 Dec 2021 06:54:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=XvOmJBSbsoU56lMyE5+GmcBndjc
-        +vP39zCI2XMB5G+w=; b=HdT7zQR6kAVlCFO067ZPSFySyhh/+HusF3YfBVlRFbT
-        VzxqK6bakXnx8YS6B853E6nS7/0Z6MKODeNMDD0eoOHSKC67IsyZGJyG7YU0+EMk
-        FvNRYPWAJNjsL/tyHkfum9ddfaNvm9U1WBJlOtrsAJN2T+HEM4PXNNZybWDjdUBL
-        EZhXUsbwy3L0qnGn5H9EJXhtW+i0yptHzAUIuKXUWFQJdj3CPLuXRP9khIAtH6He
-        xOae/x/6FwO8XUr7BeVPydEIS7MrnUeKKXR3Gr3vbZ6v4sQaSw1MZM6GR5eu843E
-        7Jiddm0aj4wKOrTxHmGiH1ybKlLXpkwPiTQiOORDdgA==
+        :content-type:in-reply-to; s=fm2; bh=dOTjRXloMdyloxRyPDfYt46L2h5
+        Z+c/8xp7GPaUVf/c=; b=lCjzONArVVB9GTRSaki1XhoNKnK9Kts6oVwzWB1zLWQ
+        VtbGsOJiwWe04aSKbC29PscpoSMW2bA24uYYfu4rygLnKLMO5wEIEJ58OpK15TIS
+        NRi1qpMMwh9ks+sSssWQyFG00VB9KnkKSQ0Dv8tci2BoUIwX+d67iKhe2ux2sE5U
+        v7kiCdw52qJm+i4xifAgrrhXHvHzYeXZMelDG1jrhpbYXWvL75L0/BoQI/FSk+rD
+        N0uI73QIqRnU5p5iXMTrUwTdUesijGUg70j/ByOP4LHq0N/UD0W6yn5ODijimxZr
+        DoozBzu678DiBBwmeYru3qXt3C8nnMcdwQ0xDIJU7lQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=XvOmJB
-        SbsoU56lMyE5+GmcBndjc+vP39zCI2XMB5G+w=; b=BhM60vS4LCTJ/4ox/EI6Ob
-        jAxQslsw7QhKekOJGMIizB2eCRnB3T9ARhlWqAB62jsbtxWns98AHjlxS0H4tLFD
-        jPY1g+gOdezel8c9NmXW5QvfUnFIMWcT1hBbPtRlXvHqDwpnWBSZhBHNpzaG2CPq
-        X5j/1WRUt1mNe8yG/Gvgbt+ALfKtl3st12kEdwFp1OYTKUkQX7FaiCZf8YKF5zeh
-        4tFmWPZwdb8gjlvfIDX//Ihg2L28V5mFW7faK41wEWrnll2w+UZjgN3r/yVngabf
-        rCCP3z1epMiPwnvOLizrO5YArlNP4iuJIYsj7Pv2lESKlAF3T3KZrrhscQ6X6QMw
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=dOTjRX
+        loMdyloxRyPDfYt46L2h5Z+c/8xp7GPaUVf/c=; b=OSYseDB7BQlz4ihO6WphMO
+        OAxlwbzDKOaAH1V8IO9BM4K/e1HVUPxG7jS0Mbu/OpK9Qx/6Hgs8xT0yXT6U0D+D
+        yWjETl1HSmT1pqQnNItVOnY1vrTGdZgWnIAqny7NyN4YBWjBuLnle23KugR9JdeM
+        8kS58YH+mnktRbMxL8uAYv5j6dZ8w4Ydu6nMqwbPKMGzSV1qAqV3/PJlZ7PZAj77
+        hjdLllxkWb6YNP/UAWTRt5fZzTMotaxdebVKlmVddObkwAZu/cGNv8Ahp5E8PM5S
+        cYEMubYKZRTuWJs+nhtDQY9nZxDjLMipZIsCBj1piU+tdIpTcWnYGwB6szT8W+Lg
         ==
-X-ME-Sender: <xms:UUmvYf-QE0HZadiwg6mkgEEVAgj8lfBPkove_9c4bPa2RyPRe9Rq5w>
-    <xme:UUmvYbvyo16Puz45PD7w2gV3iJLIjI3ETJKNzkZpRj4_3H013iNbEeoWMVyDr_d7O
-    S7NRAeBBgPcZGFsCw>
-X-ME-Received: <xmr:UUmvYdCzpn0xkynKPV2xIZaJRgBWfJF5fC6YEgfxq_WcqnVUJg27xaBuWUYTqJ9pgPyM99FQ5J_VYQn9gMUYC-n6fmC4sIi9VD67mU4Q4DBQGvPSDj2U00ZD>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrjeehgdeffecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:Z0uvYWRXzjQrB4japtGKMQa4RElzCz4x4NTy0FpqFvIb9DneVeVELw>
+    <xme:Z0uvYbwphW4K25I7E_cKUGj9-JjGQUatnvkIcGueYMypcvzAwx_JLMzNoA6VJnnLp
+    7BXj68Fk3tUXuFBCw>
+X-ME-Received: <xmr:Z0uvYT0F4ioOcjkKtqdzJyxzjaXhc7AfujLrc75PvWrrkBI0lXWW0l61kWbJ8fDW6baOTB6ecMlg7vQpnkJAH_LDOYOQ_D95uSi-dIVhePNSWOXrCfdTp8Ot>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrjeehgdefhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
@@ -48,217 +48,385 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrjeehgdeffecutefuodetggdote
     epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimh
-X-ME-Proxy: <xmx:UUmvYbfbKq5JtkW38B0qF1S3bLclkao-81-yRKgK73eF60KATv_grg>
-    <xmx:UUmvYUO7nSTHbkR_maXo0YEnSNGEjZJiueHCSueI1DhHhkWbNsu6GQ>
-    <xmx:UUmvYdmJEYovA8NLExqDMDZSCHhnzMhGxCOM4Mp_w8a9pjExgGhGIw>
-    <xmx:UUmvYQA0E6y_muZIhuViVUXQCPLcjrhktwhSQsPsyHC75oKRbqDA7Q>
+X-ME-Proxy: <xmx:Z0uvYSB1EFLCUnfKRRdb844Ltf9iE1HtTBNO0aEoKdSZ-LTZsdDVpw>
+    <xmx:Z0uvYfhiALASvP3YxqGTQTZHorfYy9ZoC3fwDCOO0CUQkCGmqJDgtA>
+    <xmx:Z0uvYeqPmxaSZUCKwYSUKm3-as6mWKa6WXUpAt95TtisOdzmCgP6Dw>
+    <xmx:Z0uvYaVd0Ml-GVJRXR7OCuOV4IcE_0n2pjPFZYUq1h4dgqP-oUH8uQ>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Dec 2021 06:45:20 -0500 (EST)
+ 7 Dec 2021 06:54:13 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 9fd2bf31 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 7 Dec 2021 13:14:56 +0000 (UTC)
-Date:   Tue, 7 Dec 2021 12:44:38 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id e15f927c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 7 Dec 2021 13:23:49 +0000 (UTC)
+Date:   Tue, 7 Dec 2021 12:53:32 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, rsbecker@nexbridge.com, bagasdotme@gmail.com,
         newren@gmail.com, avarab@gmail.com, nksingh85@gmail.com,
         "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH v2 1/3] core.fsyncmethod: add writeout-only mode
-Message-ID: <Ya9JJlItvDJCLHqj@ncase>
+Subject: Re: [PATCH v2 2/3] core.fsync: introduce granular fsync control
+Message-ID: <Ya9LPOseu8geBi4v@ncase>
 References: <pull.1093.git.1638588503.gitgitgadget@gmail.com>
  <pull.1093.v2.git.1638845211.gitgitgadget@gmail.com>
- <e79522cbdd4feb45b062b75225475f34039d1866.1638845211.git.gitgitgadget@gmail.com>
+ <ff80a94bf9add8a6fabcd5146e5177edf5e35e49.1638845211.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="FRW3ky2b/hqIXfuW"
+        protocol="application/pgp-signature"; boundary="rj+/7kVG+u/4iNlT"
 Content-Disposition: inline
-In-Reply-To: <e79522cbdd4feb45b062b75225475f34039d1866.1638845211.git.gitgitgadget@gmail.com>
+In-Reply-To: <ff80a94bf9add8a6fabcd5146e5177edf5e35e49.1638845211.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---FRW3ky2b/hqIXfuW
+--rj+/7kVG+u/4iNlT
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Dec 07, 2021 at 02:46:49AM +0000, Neeraj Singh via GitGitGadget wro=
+On Tue, Dec 07, 2021 at 02:46:50AM +0000, Neeraj Singh via GitGitGadget wro=
 te:
 > From: Neeraj Singh <neerajsi@microsoft.com>
 [snip]
-> --- a/compat/mingw.h
-> +++ b/compat/mingw.h
-> @@ -329,6 +329,9 @@ int mingw_getpagesize(void);
->  #define getpagesize mingw_getpagesize
->  #endif
-> =20
-> +int win32_fsync_no_flush(int fd);
-> +#define fsync_no_flush win32_fsync_no_flush
-> +
->  struct rlimit {
->  	unsigned int rlim_cur;
->  };
-> diff --git a/compat/win32/flush.c b/compat/win32/flush.c
-> new file mode 100644
-> index 00000000000..75324c24ee7
-> --- /dev/null
-> +++ b/compat/win32/flush.c
-> @@ -0,0 +1,28 @@
-> +#include "../../git-compat-util.h"
-> +#include <winternl.h>
-> +#include "lazyload.h"
-> +
-> +int win32_fsync_no_flush(int fd)
-> +{
-> +       IO_STATUS_BLOCK io_status;
-> +
-> +#define FLUSH_FLAGS_FILE_DATA_ONLY 1
-> +
-> +       DECLARE_PROC_ADDR(ntdll.dll, NTSTATUS, NtFlushBuffersFileEx,
-> +			 HANDLE FileHandle, ULONG Flags, PVOID Parameters, ULONG ParameterSiz=
-e,
-> +			 PIO_STATUS_BLOCK IoStatusBlock);
-> +
-> +       if (!INIT_PROC_ADDR(NtFlushBuffersFileEx)) {
-> +		errno =3D ENOSYS;
-> +		return -1;
-> +       }
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index c23d01de7dc..c32534c13b4 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -1286,7 +1286,7 @@ static void conclude_pack(int fix_thin_pack, const =
+char *curr_pack, unsigned cha
+>  			    nr_objects - nr_objects_initial);
+>  		stop_progress_msg(&progress, msg.buf);
+>  		strbuf_release(&msg);
+> -		finalize_hashfile(f, tail_hash, 0);
+> +		finalize_hashfile(f, tail_hash, FSYNC_COMPONENT_PACK, 0);
+>  		hashcpy(read_hash, pack_hash);
+>  		fixup_pack_header_footer(output_fd, pack_hash,
+>  					 curr_pack, nr_objects,
+> @@ -1508,7 +1508,7 @@ static void final(const char *final_pack_name, cons=
+t char *curr_pack_name,
+>  	if (!from_stdin) {
+>  		close(input_fd);
+>  	} else {
+> -		fsync_or_die(output_fd, curr_pack_name);
+> +		fsync_component_or_die(FSYNC_COMPONENT_PACK, output_fd, curr_pack_name=
+);
+>  		err =3D close(output_fd);
+>  		if (err)
+>  			die_errno(_("error while closing pack file"));
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 857be7826f3..916c55d6ce9 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1204,11 +1204,13 @@ static void write_pack_file(void)
+>  		 * If so, rewrite it like in fast-import
+>  		 */
+>  		if (pack_to_stdout) {
+> -			finalize_hashfile(f, hash, CSUM_HASH_IN_STREAM | CSUM_CLOSE);
+> +			finalize_hashfile(f, hash, FSYNC_COMPONENT_NONE,
+> +					  CSUM_HASH_IN_STREAM | CSUM_CLOSE);
 
-I'm wondering whether it would make sense to fall back to fsync(3P) in
-case we cannot use writeout-only, but I see that were doing essentially
-that in `fsync_or_die()`. There is no indicator to the user though that
-writeout-only doesn't work -- do we want to print a one-time warning?
-
-> +       memset(&io_status, 0, sizeof(io_status));
-> +       if (NtFlushBuffersFileEx((HANDLE)_get_osfhandle(fd), FLUSH_FLAGS_=
-FILE_DATA_ONLY,
-> +				NULL, 0, &io_status)) {
-> +		errno =3D EINVAL;
-> +		return -1;
-> +       }
-> +
-> +       return 0;
-> +}
+It doesn't have any effect here given that we don't sync at all when
+writing to stdout, but I wonder whether we should set up the component
+correctly regardless of that such that it makes for a less confusing
+read.
 
 [snip]
-> diff --git a/wrapper.c b/wrapper.c
-> index 36e12119d76..1c5f2c87791 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -546,6 +546,62 @@ int xmkstemp_mode(char *filename_template, int mode)
->  	return fd;
+> diff --git a/config.c b/config.c
+> index c3410b8a868..29c867aab03 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1213,6 +1213,73 @@ static int git_parse_maybe_bool_text(const char *v=
+alue)
+>  	return -1;
 >  }
 > =20
-> +int git_fsync(int fd, enum fsync_action action)
-> +{
-> +	switch (action) {
-> +	case FSYNC_WRITEOUT_ONLY:
+> +static const struct fsync_component_entry {
+> +	const char *name;
+> +	enum fsync_component component_bits;
+> +} fsync_component_table[] =3D {
+> +	{ "loose-object", FSYNC_COMPONENT_LOOSE_OBJECT },
+> +	{ "pack", FSYNC_COMPONENT_PACK },
+> +	{ "pack-metadata", FSYNC_COMPONENT_PACK_METADATA },
+> +	{ "commit-graph", FSYNC_COMPONENT_COMMIT_GRAPH },
+> +	{ "objects", FSYNC_COMPONENTS_OBJECTS },
+> +	{ "default", FSYNC_COMPONENTS_DEFAULT },
+> +	{ "all", FSYNC_COMPONENTS_ALL },
+> +};
 > +
-> +#ifdef __APPLE__
-> +		/*
-> +		 * on macOS, fsync just causes filesystem cache writeback but does not
-> +		 * flush hardware caches.
-> +		 */
-> +		return fsync(fd);
+> +static enum fsync_component parse_fsync_components(const char *var, cons=
+t char *string)
+> +{
+> +	enum fsync_component output =3D 0;
+> +
+> +	if (!strcmp(string, "none"))
+> +		return output;
+> +
+> +	while (string) {
+> +		int i;
+> +		size_t len;
+> +		const char *ep;
+> +		int negated =3D 0;
+> +		int found =3D 0;
+> +
+> +		string =3D string + strspn(string, ", \t\n\r");
+> +		ep =3D strchrnul(string, ',');
+> +		len =3D ep - string;
+> +
+> +		if (*string =3D=3D '-') {
+> +			negated =3D 1;
+> +			string++;
+> +			len--;
+> +			if (!len)
+> +				warning(_("invalid value for variable %s"), var);
+> +		}
+> +
+> +		if (!len)
+> +			break;
+> +
+> +		for (i =3D 0; i < ARRAY_SIZE(fsync_component_table); ++i) {
+> +			const struct fsync_component_entry *entry =3D &fsync_component_table[=
+i];
+> +
+> +			if (strncmp(entry->name, string, len))
+> +				continue;
+> +
+> +			found =3D 1;
+> +			if (negated)
+> +				output &=3D ~entry->component_bits;
+> +			else
+> +				output |=3D entry->component_bits;
+> +		}
+> +
+> +		if (!found) {
+> +			char *component =3D xstrndup(string, len);
+> +			warning(_("unknown %s value '%s'"), var, component);
+> +			free(component);
+> +		}
+> +
+> +		string =3D ep;
+> +	}
+> +
+> +	return output;
+> +}
+> +
+>  int git_parse_maybe_bool(const char *value)
+>  {
+>  	int v =3D git_parse_maybe_bool_text(value);
+> @@ -1490,6 +1557,13 @@ static int git_default_core_config(const char *var=
+, const char *value, void *cb)
+>  		return 0;
+>  	}
+> =20
+> +	if (!strcmp(var, "core.fsync")) {
+> +		if (!value)
+> +			return config_error_nonbool(var);
+> +		fsync_components =3D parse_fsync_components(var, value);
+> +		return 0;
+> +	}
+> +
+>  	if (!strcmp(var, "core.fsyncmethod")) {
+>  		if (!value)
+>  			return config_error_nonbool(var);
+> @@ -1503,7 +1577,7 @@ static int git_default_core_config(const char *var,=
+ const char *value, void *cb)
+>  	}
+> =20
+>  	if (!strcmp(var, "core.fsyncobjectfiles")) {
+> -		fsync_object_files =3D git_config_bool(var, value);
+> +		warning(_("core.fsyncobjectfiles is deprecated; use core.fsync instead=
+"));
+>  		return 0;
+>  	}
 
-Below we're looping around `EINTR` -- are Apple systems never returning
+Shouldn't we continue to support this for now such that users can
+migrate from the old, deprecated value first before we start to ignore
 it?
 
 Patrick
 
-> +#endif
-> +
-> +#ifdef HAVE_SYNC_FILE_RANGE
-> +		/*
-> +		 * On linux 2.6.17 and above, sync_file_range is the way to issue
-> +		 * a writeback without a hardware flush. An offset of 0 and size of 0
-> +		 * indicates writeout of the entire file and the wait flags ensure tha=
-t all
-> +		 * dirty data is written to the disk (potentially in a disk-side cache)
-> +		 * before we continue.
-> +		 */
-> +
-> +		return sync_file_range(fd, 0, 0, SYNC_FILE_RANGE_WAIT_BEFORE |
-> +						 SYNC_FILE_RANGE_WRITE |
-> +						 SYNC_FILE_RANGE_WAIT_AFTER);
-> +#endif
-> +
-> +#ifdef fsync_no_flush
-> +		return fsync_no_flush(fd);
-> +#endif
-> +
-> +		errno =3D ENOSYS;
-> +		return -1;
-> +
-> +	case FSYNC_HARDWARE_FLUSH:
-> +		/*
-> +		 * On some platforms fsync may return EINTR. Try again in this
-> +		 * case, since callers asking for a hardware flush may die if
-> +		 * this function returns an error.
-> +		 */
-> +		for (;;) {
-> +			int err;
-> +#ifdef __APPLE__
-> +			err =3D fcntl(fd, F_FULLFSYNC);
-> +#else
-> +			err =3D fsync(fd);
-> +#endif
-> +			if (err >=3D 0 || errno !=3D EINTR)
-> +				return err;
-> +		}
-> +
-> +	default:
-> +		BUG("unexpected git_fsync(%d) call", action);
-> +	}
-> +}
-> +
->  static int warn_if_unremovable(const char *op, const char *file, int rc)
->  {
->  	int err;
-> diff --git a/write-or-die.c b/write-or-die.c
-> index 0b1ec8190b6..0702acdd5e8 100644
-> --- a/write-or-die.c
-> +++ b/write-or-die.c
-> @@ -57,10 +57,12 @@ void fprintf_or_die(FILE *f, const char *fmt, ...)
-> =20
->  void fsync_or_die(int fd, const char *msg)
->  {
-> -	while (fsync(fd) < 0) {
-> -		if (errno !=3D EINTR)
-> -			die_errno("fsync error on '%s'", msg);
-> -	}
-> +	if (fsync_method =3D=3D FSYNC_METHOD_WRITEOUT_ONLY &&
-> +	    git_fsync(fd, FSYNC_WRITEOUT_ONLY) >=3D 0)
-> +		return;
-> +
-> +	if (git_fsync(fd, FSYNC_HARDWARE_FLUSH) < 0)
-> +		die_errno("fsync error on '%s'", msg);
+> diff --git a/csum-file.c b/csum-file.c
+> index 26e8a6df44e..59ef3398ca2 100644
+> --- a/csum-file.c
+> +++ b/csum-file.c
+> @@ -58,7 +58,8 @@ static void free_hashfile(struct hashfile *f)
+>  	free(f);
 >  }
 > =20
->  void write_or_die(int fd, const void *buf, size_t count)
+> -int finalize_hashfile(struct hashfile *f, unsigned char *result, unsigne=
+d int flags)
+> +int finalize_hashfile(struct hashfile *f, unsigned char *result,
+> +		      enum fsync_component component, unsigned int flags)
+>  {
+>  	int fd;
+> =20
+> @@ -69,7 +70,7 @@ int finalize_hashfile(struct hashfile *f, unsigned char=
+ *result, unsigned int fl
+>  	if (flags & CSUM_HASH_IN_STREAM)
+>  		flush(f, f->buffer, the_hash_algo->rawsz);
+>  	if (flags & CSUM_FSYNC)
+> -		fsync_or_die(f->fd, f->name);
+> +		fsync_component_or_die(component, f->fd, f->name);
+>  	if (flags & CSUM_CLOSE) {
+>  		if (close(f->fd))
+>  			die_errno("%s: sha1 file error on close", f->name);
+> diff --git a/csum-file.h b/csum-file.h
+> index 291215b34eb..0d29f528fbc 100644
+> --- a/csum-file.h
+> +++ b/csum-file.h
+> @@ -1,6 +1,7 @@
+>  #ifndef CSUM_FILE_H
+>  #define CSUM_FILE_H
+> =20
+> +#include "cache.h"
+>  #include "hash.h"
+> =20
+>  struct progress;
+> @@ -38,7 +39,7 @@ int hashfile_truncate(struct hashfile *, struct hashfil=
+e_checkpoint *);
+>  struct hashfile *hashfd(int fd, const char *name);
+>  struct hashfile *hashfd_check(const char *name);
+>  struct hashfile *hashfd_throughput(int fd, const char *name, struct prog=
+ress *tp);
+> -int finalize_hashfile(struct hashfile *, unsigned char *, unsigned int);
+> +int finalize_hashfile(struct hashfile *, unsigned char *, enum fsync_com=
+ponent, unsigned int);
+>  void hashwrite(struct hashfile *, const void *, unsigned int);
+>  void hashflush(struct hashfile *f);
+>  void crc32_begin(struct hashfile *);
+> diff --git a/environment.c b/environment.c
+> index f9140e842cf..09905adecf9 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -42,6 +42,7 @@ const char *git_hooks_path;
+>  int zlib_compression_level =3D Z_BEST_SPEED;
+>  int pack_compression_level =3D Z_DEFAULT_COMPRESSION;
+>  enum fsync_method fsync_method =3D FSYNC_METHOD_DEFAULT;
+> +enum fsync_component fsync_components =3D FSYNC_COMPONENTS_DEFAULT;
+>  size_t packed_git_window_size =3D DEFAULT_PACKED_GIT_WINDOW_SIZE;
+>  size_t packed_git_limit =3D DEFAULT_PACKED_GIT_LIMIT;
+>  size_t delta_base_cache_limit =3D 96 * 1024 * 1024;
+> diff --git a/midx.c b/midx.c
+> index 837b46b2af5..882f91f7d57 100644
+> --- a/midx.c
+> +++ b/midx.c
+> @@ -1406,7 +1406,8 @@ static int write_midx_internal(const char *object_d=
+ir,
+>  	write_midx_header(f, get_num_chunks(cf), ctx.nr - dropped_packs);
+>  	write_chunkfile(cf, &ctx);
+> =20
+> -	finalize_hashfile(f, midx_hash, CSUM_FSYNC | CSUM_HASH_IN_STREAM);
+> +	finalize_hashfile(f, midx_hash, FSYNC_COMPONENT_PACK_METADATA,
+> +			  CSUM_FSYNC | CSUM_HASH_IN_STREAM);
+>  	free_chunkfile(cf);
+> =20
+>  	if (flags & (MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP))
+> diff --git a/object-file.c b/object-file.c
+> index eb972cdccd2..9d9c4a39e85 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1809,8 +1809,7 @@ int hash_object_file(const struct git_hash_algo *al=
+go, const void *buf,
+>  /* Finalize a file on disk, and close it. */
+>  static void close_loose_object(int fd)
+>  {
+> -	if (fsync_object_files)
+> -		fsync_or_die(fd, "loose object file");
+> +	fsync_component_or_die(FSYNC_COMPONENT_LOOSE_OBJECT, fd, "loose object =
+file");
+>  	if (close(fd) !=3D 0)
+>  		die_errno(_("error when closing loose object file"));
+>  }
+> diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+> index 9c55c1531e1..c16e43d1669 100644
+> --- a/pack-bitmap-write.c
+> +++ b/pack-bitmap-write.c
+> @@ -719,7 +719,8 @@ void bitmap_writer_finish(struct pack_idx_entry **ind=
+ex,
+>  	if (options & BITMAP_OPT_HASH_CACHE)
+>  		write_hash_cache(f, index, index_nr);
+> =20
+> -	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_FSYNC | CSUM_CLOS=
+E);
+> +	finalize_hashfile(f, NULL, FSYNC_COMPONENT_PACK_METADATA,
+> +			  CSUM_HASH_IN_STREAM | CSUM_FSYNC | CSUM_CLOSE);
+> =20
+>  	if (adjust_shared_perm(tmp_file.buf))
+>  		die_errno("unable to make temporary bitmap file readable");
+> diff --git a/pack-write.c b/pack-write.c
+> index a5846f3a346..51812cb1299 100644
+> --- a/pack-write.c
+> +++ b/pack-write.c
+> @@ -159,9 +159,9 @@ const char *write_idx_file(const char *index_name, st=
+ruct pack_idx_entry **objec
+>  	}
+> =20
+>  	hashwrite(f, sha1, the_hash_algo->rawsz);
+> -	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_CLOSE |
+> -				    ((opts->flags & WRITE_IDX_VERIFY)
+> -				    ? 0 : CSUM_FSYNC));
+> +	finalize_hashfile(f, NULL, FSYNC_COMPONENT_PACK_METADATA,
+> +			  CSUM_HASH_IN_STREAM | CSUM_CLOSE |
+> +			  ((opts->flags & WRITE_IDX_VERIFY) ? 0 : CSUM_FSYNC));
+>  	return index_name;
+>  }
+> =20
+> @@ -281,8 +281,9 @@ const char *write_rev_file_order(const char *rev_name,
+>  	if (rev_name && adjust_shared_perm(rev_name) < 0)
+>  		die(_("failed to make %s readable"), rev_name);
+> =20
+> -	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_CLOSE |
+> -				    ((flags & WRITE_IDX_VERIFY) ? 0 : CSUM_FSYNC));
+> +	finalize_hashfile(f, NULL, FSYNC_COMPONENT_PACK_METADATA,
+> +			  CSUM_HASH_IN_STREAM | CSUM_CLOSE |
+> +			  ((flags & WRITE_IDX_VERIFY) ? 0 : CSUM_FSYNC));
+> =20
+>  	return rev_name;
+>  }
+> @@ -390,7 +391,7 @@ void fixup_pack_header_footer(int pack_fd,
+>  		the_hash_algo->final_fn(partial_pack_hash, &old_hash_ctx);
+>  	the_hash_algo->final_fn(new_pack_hash, &new_hash_ctx);
+>  	write_or_die(pack_fd, new_pack_hash, the_hash_algo->rawsz);
+> -	fsync_or_die(pack_fd, pack_name);
+> +	fsync_component_or_die(FSYNC_COMPONENT_PACK, pack_fd, pack_name);
+>  }
+> =20
+>  char *index_pack_lockfile(int ip_out, int *is_well_formed)
+> diff --git a/read-cache.c b/read-cache.c
+> index f3986596623..f3539681f49 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -3060,7 +3060,7 @@ static int do_write_index(struct index_state *istat=
+e, struct tempfile *tempfile,
+>  			return -1;
+>  	}
+> =20
+> -	finalize_hashfile(f, istate->oid.hash, CSUM_HASH_IN_STREAM);
+> +	finalize_hashfile(f, istate->oid.hash, FSYNC_COMPONENT_NONE, CSUM_HASH_=
+IN_STREAM);
+>  	if (close_tempfile_gently(tempfile)) {
+>  		error(_("could not close '%s'"), get_tempfile_path(tempfile));
+>  		return -1;
 > --=20
 > gitgitgadget
 >=20
 
---FRW3ky2b/hqIXfuW
+--rj+/7kVG+u/4iNlT
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmGvSSYACgkQVbJhu7ck
-PpSusRAAkSCjo70fipT9enLRntvP2bsxSqddv23zIdvhQMzsThePBBlvA8+6lK6H
-VT6LHKUpeSeknLmMNOOF1+JX38aKOqn1OGFTviNchPDrsJYxM6wRUGrMoEpD1yOJ
-fol0XQ74XC9v5eW81Fc4XEc6rsXMfByRT5Iyp3e5mp+plekzspUh4+i4v/FdrE4e
-eY7dRZOD009h2sxXqlHQVUjPZ1O2eIUGKjdHX1T1T/4/ctuv2zkOR1dHpAChNKRe
-KxKjTDWiR0sLZjrvwpuDu7Wyo+z5bDg3t8NFthZKYmmvf+R40GOOlXN8eVDT6kiU
-zF6h3L4+sNCJl13KWKIaHLSVech4Xst0c4cEfVyE9Z7d7MDBRuRBBJbEEm1znLJm
-54LfkAFIvGArfUFSyecwgL+4k7PAncrn3uIR5Qf0qSgIsGdYI8cbnl8N3w9zOdNM
-GMH6VafsDwPQG5+jGt4KpQIOTq6KsoYaTkyntvCTkgRNyg0FneEj/HRFnwuGx8h4
-P7q7VMhgD3Q7YFxLWyYNQMxyCgPdMNhhcw83CfTMgubcGCHr3Ubw0xYrFIt7wtfV
-RDmrtrCculP94prD4tJwpvkkvbtVXBYIQDu7lDgk50yMvKSYfZu0FqelaiuMwKzX
-u6RTZ56FHEYYeuuJoPJk4zulJOpSiu50ETYUsloS15kSrYfxpMQ=
-=oHAu
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmGvSzsACgkQVbJhu7ck
+PpQzlg/9H/anSyKJQnHnBpnzSJ3FvmehwLWUbeM96Sk/zcA2q0A+Xb0nKe9vvBcY
+LlGV/rxcAUuwZMlJ9pm88Q92EI3fUNUzqJP5lyaW48hUQsA91vSx9tZE2FiaDryp
+V4gMzkc6tOhqu739HjSIBYkJ2XW+iabcpITNLodeKl0nFSKJ8rDTK3m69O0NEB4z
+pGZs/agFpkI8FPBS/FKioVpmAOe/eM2mcWLGfL4gy2NjtO4FJsFNuP/sKtIxak6Q
+0eaRgFcHDknkrvmgtmSCikZtCcuG58CnqcfVy1t1j2E8VwW3bvyrawBD7vWcFRb/
+XALqryMaF3+8Rq/yhp7gCtfPqU18xSo/8/t6rjclBL0ldmYaBqXBLA8Ci9TXdDkh
+QKlp28wMs4EnhthqXCjm/iUk+0izrDfPWbHPHnGhwiVqHP83fVF4+cNNbrYk6tM5
+XaCrR5USoAjQ5IAlpOeuTr5tT2qVHBf5opiX69Ld+riIczFPrBFavV0DP32HMuPM
+VOVBcveLBB+LVCR5a6JKMUxJXvypwNN61YOli7fSLhIzzW+voqIlu9q1VbdFZkkS
+kscXsSTnKf+tGTEBZi2q5+SfpQFz4rfhAr710W+Zlbp5KZBgDR9v2qOKdnPfMYi4
+qx1EfL4k9OmE9SLuvHMfWBiIiYdzJpUWMQ2oVO7hsfOTMKuYDvo=
+=xPhw
 -----END PGP SIGNATURE-----
 
---FRW3ky2b/hqIXfuW--
+--rj+/7kVG+u/4iNlT--
