@@ -2,106 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E521C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 01:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A648C433EF
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 01:59:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235603AbhLGBfN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 20:35:13 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53293 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243831AbhLGBdG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Dec 2021 20:33:06 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0424F104665;
-        Mon,  6 Dec 2021 20:29:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=AonP520B9aDF
-        cF5Q+s+XQGBW5J6rCfhUQNK0h3y32X4=; b=CP3+PeMUHE+kIqyKL3IWXTG3yAoR
-        gCK6DpjjtqJ912MWeuTNck5PQKFZWOW1j5c4k6qkD/KZOXTAGx+hQ4hEcyu6iUkt
-        BsjZZatJB21M3T4w/4eQIL4obHY808zmS4K436krG9V8jBWF4IUlmMxNEnqa6Pye
-        t6YLLOkuL92BvRs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EFCBC104664;
-        Mon,  6 Dec 2021 20:29:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6578D104663;
-        Mon,  6 Dec 2021 20:29:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Aleen =?utf-8?B?5b6Q5rKb5paH?= <pwxu@coremail.cn>
+        id S239151AbhLGCCc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 21:02:32 -0500
+Received: from zg8tmty3ljk5ljewns4xndka.icoremail.net ([167.99.105.149]:51630
+        "HELO zg8tmty3ljk5ljewns4xndka.icoremail.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with SMTP id S229958AbhLGCC2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 6 Dec 2021 21:02:28 -0500
+Received: from mailtech.cn (unknown [10.12.1.20])
+        by hzbj-icmmx-2 (Coremail) with SMTP id AQAAfwCXucnqv65hP4GzBg--.2877S2;
+        Tue, 07 Dec 2021 09:59:26 +0800 (CST)
+Received: from pwxu$coremail.cn ( [112.94.4.17] ) by
+ ajax-webmail-mailtech_rd (Coremail) ; Tue, 7 Dec 2021 09:58:36 +0800 (CST)
+X-Originating-IP: [112.94.4.17]
+Date:   Tue, 7 Dec 2021 09:58:36 +0800 (CST)
+X-CM-HeaderCharset: UTF-8
+From:   =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>
+To:     "Junio C Hamano" <gitster@pobox.com>
 Cc:     "Elijah Newren" <newren@gmail.com>,
         "Git Mailing List" <git@vger.kernel.org>,
-        =?utf-8?B?5b6Q5rKb5paHIChBbGVlbik=?= <aleen42@vip.qq.com>,
+        =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29?= 
+        <aleen42@vip.qq.com>,
         "Aleen via GitGitGadget" <gitgitgadget@gmail.com>,
         "Johannes Schindelin" <johannes.schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
 Subject: Re: What's cooking in git.git (Nov 2021, #07; Mon, 29)
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20211103(a39c0bb8)
+ Copyright (c) 2002-2021 www.mailtech.cn
+ mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
+In-Reply-To: <xmqqa6hdb3sx.fsf@gitster.g>
 References: <xmqqzgpm2xrd.fsf@gitster.g>
-        <CABPp-BE4uYBFnb-AgVJhNo6iK4da5hiEFEBhd=7Ea3Ov=4K4zw@mail.gmail.com>
-        <d95f092.3f.17d73a85761.Coremail.pwxu@coremail.cn>
-        <CABPp-BG9jHaJYekDnvZT+8QW_fLGM_bmz-oOqzJswaotyVDFBA@mail.gmail.com>
-        <211203.861r2tsfej.gmgdl@evledraar.gmail.com>
-        <CABPp-BGE5Ff=adH3nREMDm38DGLEmtRTcPwuJowHw-ckwpbmqQ@mail.gmail.com>
-        <211203.86wnklqx05.gmgdl@evledraar.gmail.com>
-        <30b4169a.18.17d8d589b6d.Coremail.pwxu@coremail.cn>
-        <xmqqilw2i6w1.fsf@gitster.g>
-        <6fa17536.18b.17d8e7c7a09.Coremail.pwxu@coremail.cn>
-        <xmqqwnkhhck4.fsf@gitster.g>
-        <584bbe43.e.17d926d909f.Coremail.pwxu@coremail.cn>
-Date:   Mon, 06 Dec 2021 17:29:34 -0800
-In-Reply-To: <584bbe43.e.17d926d909f.Coremail.pwxu@coremail.cn> ("Aleen
- =?utf-8?B?5b6Q5rKb5paH?=
-        "'s message of "Tue, 7 Dec 2021 09:06:33 +0800 (CST)")
-Message-ID: <xmqqa6hdb3sx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+ <CABPp-BE4uYBFnb-AgVJhNo6iK4da5hiEFEBhd=7Ea3Ov=4K4zw@mail.gmail.com>
+ <d95f092.3f.17d73a85761.Coremail.pwxu@coremail.cn>
+ <CABPp-BG9jHaJYekDnvZT+8QW_fLGM_bmz-oOqzJswaotyVDFBA@mail.gmail.com>
+ <211203.861r2tsfej.gmgdl@evledraar.gmail.com>
+ <CABPp-BGE5Ff=adH3nREMDm38DGLEmtRTcPwuJowHw-ckwpbmqQ@mail.gmail.com>
+ <211203.86wnklqx05.gmgdl@evledraar.gmail.com>
+ <30b4169a.18.17d8d589b6d.Coremail.pwxu@coremail.cn>
+ <xmqqilw2i6w1.fsf@gitster.g>
+ <6fa17536.18b.17d8e7c7a09.Coremail.pwxu@coremail.cn>
+ <xmqqwnkhhck4.fsf@gitster.g>
+ <584bbe43.e.17d926d909f.Coremail.pwxu@coremail.cn>
+ <xmqqa6hdb3sx.fsf@gitster.g>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 22ED85D2-56FD-11EC-AA55-E10CCAD8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <1f1d7b66.4a.17d929d357c.Coremail.pwxu@coremail.cn>
+X-Coremail-Locale: en_US
+X-CM-TRANSID: AgIMCgD3QGTMv65hoAIAAA--.125W
+X-CM-SenderInfo: psz03q5fruvzxdlohubq/1tbiAQcJCFGCdOS0KAABsZ
+Authentication-Results: hzbj-icmmx-2; spf=neutral smtp.mail=pwxu@corem
+        ail.cn;
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+        ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+        nUUI43ZEXa7xR_UUUUUUUUU==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Aleen =E5=BE=90=E6=B2=9B=E6=96=87 <pwxu@coremail.cn> writes:
+PiBBZGRpbmcgYW4gb3B0aW9uIHRoYXQgYWJvcnRzIGFuZCB0cmFzaGVzIHRoZSBzdGF0ZSBkaXJl
+Y3RvcnkgaXMgbXVjaAo+IHdvcnNlIHRoYW4gbm90IGhhdmluZyBhIGNob2ljZSBvdGhlciB0aGFu
+IGRyb3AgYW5kIGtlZXAsIHdoaWNoIGlzIGluCj4gdHVybiBhIGJpdCB3b3JzZSB0aGFuIGhhdmlu
+ZyBhIHdheSB0byBjb3VudGVybWFuZCBhbiBvcHRpb24gdGhhdCB3YXMKPiBnaXZlbiBlYXJsaWVy
+IG9uIHRoZSBjb21tYW5kIGxpbmUuCgpBbm90aGVyIG9wdGlvbiB0byBjb3VudGVybWFuZCBhbiBv
+cHRpb24gaXMgb25seSBtZWFuaW5nZnVsIHdoZW4gaXQgY2FuIGJlCmFwcGxpZWQgYXMgYSByZXN1
+bWUgdmFsdWUgYnV0IG5vdCBpbiBzdWNoIGEgY2FzZSwgSSB0aGluay4gIi0tZW1wdHk9PG9wdGlv
+bj4iCmlzIG9ubHkga2VwdCBpbiBlYWNoIGFtIHNlc3Npb24sIGFuZCBpdCBzZWVtcyB3ZSBjYW4n
+dCBjb3VudGVybWFuZCB0aGUgb3B0aW9uCmFmdGVyIHRoZSBzZXNzaW9uLg==
 
->> It is my understanding that the ONLY reason the patch proposes to
->> add an option other than "skip the step" and "create an empty
->> commit" is to allow an earlier "--empty=3Dskip" on the command line to
->> be overridden by a later "--empty=3Ddie".  If that option does not
->> make the command behave identically to "--empty=3D<anything>" option
->> on the command line, i.e. ERR_EMPTY_COMMIT case, it does not serve
->> the intended purpose of overriding the earlier option to revert the
->> behaviour back to the default.
-
-[jc: do not top-post, as people read from top to bottom]
-
->     I have doubted that since that the default behaviour is that stoppi=
-ng
->     when meeting commit messages lacking a patch and giving control bac=
-k
->     to the user, is that necessary to provide duplicated '--empty=3Ddie=
-'?
->     Should we just provide '--empty=3D(drop|keep)'?
-
-Adding an option that aborts and trashes the state directory is much
-worse than not having a choice other than drop and keep, which is in
-turn a bit worse than having a way to countermand an option that was
-given earlier on the command line.
-
-If we were to have an option other than drop/keep, as Elijah
-suggested, it may make sense to call it "stop" rather than "die" (I
-think "ask" is a mistake, as we do not ask anything to the user).
-
->> By the way, I agree with an earlier comment (I think it was from Dscho=
-)
->> that these names should say "${DO_THIS}_ON_EMPTY_COMMIT"; the above
->> without "ON" feels somewhat strange.
-
-This still stands, too.
-
-Thanks.
