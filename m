@@ -2,292 +2,305 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 632C2C433EF
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 08:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61B7CC433F5
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 09:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232910AbhLGIfg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 03:35:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44792 "EHLO
+        id S233386AbhLGJLW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 04:11:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232891AbhLGIf3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 03:35:29 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3888C061359
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 00:31:59 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id v11so27771200wrw.10
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 00:31:59 -0800 (PST)
+        with ESMTP id S232860AbhLGJLW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 04:11:22 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0DDCC061746
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 01:07:51 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id v1so54207923edx.2
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 01:07:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=J7DLlG6zsP99VZ80Scj5Y3zVfPJjO8z7GJFY3hnxSJs=;
-        b=QABG+P8sfJxYGMYFxr1sDKLDvs4marvB8VteJApCR6dvlTmV0Mrop/LnF/3KQoNpDa
-         Pw17aWyBEpibKsBbhimt2FbGvyBgBEkCoPRbWIepJCdTXVEB9ApRIo8HCWbL2zcVY2Rv
-         7fxawhaYhwpBL6P2V4JQql8aN7F6t9fhEfk/E8IUfK0QOXnQYrRn1qWwiXO4uGpB+/Uw
-         ateRxIARw7gqd2EH+YFcUXKMkVJ+zUaL7glRzpByei9bOhjgbwL+OpE7VEtmXBezyi1W
-         7PK/9Ehjo+RgQ8EppuD6iK8mMOt2UXMImaDG3/XY8giA6m1ZNAcyWZyV/V8JbQckx1q4
-         3cQA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=Jpes4HRnJXoGki+Jdb6MplA5JDtvg6TAtCS7Tzdb4v0=;
+        b=oq5yXZ2LfaGosKPJNB6jtZdYjb39DyZT6AKy7EbfL0u+Zd2nnbXl8DKHqgh90Jgvzj
+         aG5o1Fn0nFLUqaIEaAoM035paAMTV+6L6QkQTgP+hXie4g4l5/BmKtQfmWnbN8hv3JFK
+         AxTi+v4Uj1FFSKugDPTRyY4Z+A/zU3MCbBBFNZp7iKWKZ8r7sUndurHV2wC6N8P8YKqc
+         pGVte3zhTrUnRdqPazYzEiJUlGsXLfZ2QZC4yqng4ZU5+jpbVXPo34loodjPcRaHnW7W
+         I79Lc1+RDDX2w5SibBzvFG3Ogwmf3b4i+NZP66/PEtCjLqiz7gtswa9iPjjKqkTyqxHd
+         tUVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=J7DLlG6zsP99VZ80Scj5Y3zVfPJjO8z7GJFY3hnxSJs=;
-        b=7TS7Jyqg4PxcbvaNHk/tMDRjw3FMXRnczXx6kaBi58StLf6LDGaFzb4wAikjCsMfAH
-         hxS22sV9MP4AtMSAzDoOajsH9e3dNd3+rBbg3oiMMlLn4idUFK1VjY/SNSZ+xy0LIv0+
-         gtA7ZUbojZuq6YhtG6MbN+UtiiPFm8fgomgFGHMz8Ro+pdccclgjtAe1X2q5wf3g12Bk
-         rDlTvXVC1yaPbN2Y+oWykryF/y5MROPf12u3ZghxHcEgzH+tfdWXSJPw1aLM4KcN0ntG
-         jWdmBc83nnUvVWQUGEPs85ZXGgBvTbNlDP25aEDjNvQ1v1UHKpTXjCkunL9n+IXM6Uf9
-         Wnuw==
-X-Gm-Message-State: AOAM531BtI/338iF9qmjQQu3FweHeb4vAug2YkQpH2QIQknUAlR0ENAV
-        1MZcDogD7eP2GtK7I3Y8hiCIDdS2/cc=
-X-Google-Smtp-Source: ABdhPJzb4bFd3eD+lrLr4nhAHfprdmrvETCRJr5azJIRg+M/FFd05mkFFFitp0q7ANKlp9mRvvoWPw==
-X-Received: by 2002:a5d:628f:: with SMTP id k15mr51891317wru.363.1638865918048;
-        Tue, 07 Dec 2021 00:31:58 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m21sm13984158wrb.2.2021.12.07.00.31.57
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=Jpes4HRnJXoGki+Jdb6MplA5JDtvg6TAtCS7Tzdb4v0=;
+        b=qT+GWJ74Q0je+i4DweSJ/xkYL5w4or1LAWu967S88OtKjuqIHClMmw0mTLa7WKwNoM
+         ys3/fHDym48C9xl4tLQ1tRAX7df2Fqjfbf2VEOJamYeifWYiyq/ZoIAp8GWhYbHEMVV+
+         BjqKLYJ2b1nc2/BzTXKxCn5DksN1qbi+jH0iLAKP5kgOJbJBBZ7nFF0PgRONmx7Ghq+j
+         r5478n8A2zb4WeoSUWC/3FhKM3ii6WC530df5F84UYsrKAzdngr4YTs6FofwEDzhYfpZ
+         d1j11YzN9y4nBVxRq0OrUVk+USsqwyOUz6Rwg0H4SYEbg1t4sY+wb31ESOkaE/QCYZ9A
+         7arA==
+X-Gm-Message-State: AOAM532iCnRbzz3u0p7ygpTtjdpK9SXGUOCWHowr9IRaPbsHJymGMKiS
+        QedRMb7Od2AzR3zaBfW8/8/axLcANCHRxw==
+X-Google-Smtp-Source: ABdhPJxPPBLYl0M0WrESYeStlVktFTdV5fqXXnXMdaMKM7IVGCyCUz66PFclO9dJd/JQHxsOGLEAfg==
+X-Received: by 2002:a05:6402:4312:: with SMTP id m18mr7015281edc.273.1638868069920;
+        Tue, 07 Dec 2021 01:07:49 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id g15sm8022603ejt.10.2021.12.07.01.07.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 00:31:57 -0800 (PST)
-Message-Id: <ea2dc088b37670cd7969a57777798b8f5bdd94e4.1638865913.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1076.v17.git.1638865913.gitgitgadget@gmail.com>
-References: <pull.1076.v16.git.1638853295.gitgitgadget@gmail.com>
-        <pull.1076.v17.git.1638865913.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?=E5=BE=90=E6=B2=9B=E6=96=87=20=28Aleen=29?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Tue, 07 Dec 2021 08:31:53 +0000
-Subject: [PATCH v17 3/3] am: support --allow-empty to record specific empty
- patches
+        Tue, 07 Dec 2021 01:07:49 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1muWRv-00136t-R1;
+        Tue, 07 Dec 2021 10:07:47 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, chooglen@google.com,
+        emilyshaffer@google.com
+Subject: Re: [PATCH v5 1/2] branch: accept multiple upstream branches for
+ tracking
+Date:   Tue, 07 Dec 2021 09:57:22 +0100
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+ <cover.1638859949.git.steadmon@google.com>
+ <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
+Message-ID: <211207.86mtlcpyu4.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Aleen =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>,
-        Aleen <aleen42@vip.qq.com>,
-        =?UTF-8?q?=E5=BE=90=E6=B2=9B=E6=96=87=20=28Aleen=29?= 
-        <aleen42@vip.qq.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?=E5=BE=90=E6=B2=9B=E6=96=87=20=28Aleen=29?=
- <aleen42@vip.qq.com>
 
-This option helps to record specific empty patches in the middle
-of an am session. However, it is a valid resume value only when:
+On Mon, Dec 06 2021, Josh Steadmon wrote:
 
-    1. index has not changed
-    2. lacking a branch
+> Add a new static variant of install_branch_config() that accepts
+> multiple remote branch names for tracking. This will be used in an
+> upcoming commit that enables inheriting the tracking configuration from
+> a parent branch.
+>
+> Currently, all callers of install_branch_config() pass only a single
+> remote. Make install_branch_config() a small wrapper around
+> install_branch_config_multiple_remotes() so that existing callers do not
+> need to be changed.
+>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>  branch.c | 120 ++++++++++++++++++++++++++++++++++++++++---------------
+>  1 file changed, 87 insertions(+), 33 deletions(-)
+>
+> diff --git a/branch.c b/branch.c
+> index 7a88a4861e..1aabef4de0 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -55,19 +55,24 @@ N_("\n"
+>  "the remote tracking information by invoking\n"
+>  "\"git branch --set-upstream-to=%s%s%s\".");
+>  
+> -int install_branch_config(int flag, const char *local, const char *origin, const char *remote)
+> +static int install_branch_config_multiple_remotes(int flag, const char *local, const char *origin,
+> +		struct string_list *remotes)
+>  {
+>  	const char *shortname = NULL;
+>  	struct strbuf key = STRBUF_INIT;
+> -	int rebasing = should_setup_rebase(origin);
+> -
+> -	if (skip_prefix(remote, "refs/heads/", &shortname)
+> -	    && !strcmp(local, shortname)
+> -	    && !origin) {
+> -		warning(_("Not setting branch %s as its own upstream."),
+> -			local);
+> -		return 0;
+> -	}
+> +	int i, rebasing = should_setup_rebase(origin);
+> +
+> +	if (remotes->nr < 1)
+> +		BUG("must provide at least one remote for branch config");
 
-Signed-off-by: 徐沛文 (Aleen) <aleen42@vip.qq.com>
----
- Documentation/git-am.txt |  7 +++++-
- builtin/am.c             | 37 +++++++++++++++++++++-------
- t/t4150-am.sh            | 53 ++++++++++++++++++++++++++++++++++++++++
- t/t7512-status-help.sh   |  1 +
- wt-status.c              |  3 +++
- 5 files changed, 91 insertions(+), 10 deletions(-)
+Since it's unsigned IMO this would be clearer: if (!remotes->nr)
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 7676bd58ae7..8d3aa552a20 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -18,7 +18,7 @@ SYNOPSIS
- 	 [--quoted-cr=<action>]
- 	 [--empty=(stop|drop|keep)]
- 	 [(<mbox> | <Maildir>)...]
--'git am' (--continue | --skip | --abort | --quit | --show-current-patch[=(diff|raw)])
-+'git am' (--continue | --skip | --abort | --quit | --show-current-patch[=(diff|raw)] | --allow-empty)
- 
- DESCRIPTION
- -----------
-@@ -200,6 +200,11 @@ default.   You can use `--no-utf8` to override this.
- 	the e-mail message; if `diff`, show the diff portion only.
- 	Defaults to `raw`.
- 
-+--allow-empty::
-+	After a patch failure on an input e-mail message lacking a patch,
-+	the user can still record the empty patch as an empty commit with
-+	the contents of the e-mail message as its log.
-+
- DISCUSSION
- ----------
- 
-diff --git a/builtin/am.c b/builtin/am.c
-index f45aa33366f..89a29ccac89 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1825,7 +1825,8 @@ static void am_run(struct am_state *state, int resume)
- 				to_keep = 1;
- 				break;
- 			case STOP_ON_EMPTY_COMMIT:
--				printf_ln(_("Patch is empty."));
-+				printf_ln(_("Patch is empty.\n"
-+					    "If you want to record it as an empty commit, run \"git am --allow-empty\"."));
- 				die_user_resolve(state);
- 				break;
- 			}
-@@ -1898,21 +1899,34 @@ next:
- /**
-  * Resume the current am session after patch application failure. The user did
-  * all the hard work, and we do not have to do any patch application. Just
-- * trust and commit what the user has in the index and working tree.
-+ * trust and commit what the user has in the index and working tree. If `allow_empty`
-+ * is true, commit as an empty commit when index has not changed and lacking a patch.
-  */
--static void am_resolve(struct am_state *state)
-+static void am_resolve(struct am_state *state, int allow_empty)
- {
-+	int index_changed;
-+
- 	validate_resume_state(state);
- 
- 	say(state, stdout, _("Applying: %.*s"), linelen(state->msg), state->msg);
- 
--	if (!repo_index_has_changes(the_repository, NULL, NULL)) {
--		printf_ln(_("No changes - did you forget to use 'git add'?\n"
--			"If there is nothing left to stage, chances are that something else\n"
--			"already introduced the same changes; you might want to skip this patch."));
-+	index_changed = repo_index_has_changes(the_repository, NULL, NULL);
-+	if (allow_empty && (index_changed || !is_empty_or_missing_file(am_path(state, "patch")))) {
-+		printf_ln(_("Invalid resume value."));
- 		die_user_resolve(state);
- 	}
- 
-+	if (!index_changed) {
-+		if (allow_empty)
-+			printf_ln(_("No changes - record it as an empty commit."));
-+		else {
-+			printf_ln(_("No changes - did you forget to use 'git add'?\n"
-+				    "If there is nothing left to stage, chances are that something else\n"
-+				    "already introduced the same changes; you might want to skip this patch."));
-+			die_user_resolve(state);
-+		}
-+	}
-+
- 	if (unmerged_cache()) {
- 		printf_ln(_("You still have unmerged paths in your index.\n"
- 			"You should 'git add' each file with resolved conflicts to mark them as such.\n"
-@@ -2237,7 +2251,8 @@ enum resume_type {
- 	RESUME_SKIP,
- 	RESUME_ABORT,
- 	RESUME_QUIT,
--	RESUME_SHOW_PATCH
-+	RESUME_SHOW_PATCH,
-+	RESUME_ALLOW_EMPTY
- };
- 
- struct resume_mode {
-@@ -2390,6 +2405,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 		  N_("show the patch being applied"),
- 		  PARSE_OPT_CMDMODE | PARSE_OPT_OPTARG | PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
- 		  parse_opt_show_current_patch, RESUME_SHOW_PATCH },
-+		OPT_CMDMODE(0, "allow-empty", &resume.mode,
-+			N_("record the empty patch as an empty commit"),
-+			RESUME_ALLOW_EMPTY),
- 		OPT_BOOL(0, "committer-date-is-author-date",
- 			&state.committer_date_is_author_date,
- 			N_("lie about committer date")),
-@@ -2498,7 +2516,8 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 		am_run(&state, 1);
- 		break;
- 	case RESUME_RESOLVED:
--		am_resolve(&state);
-+	case RESUME_ALLOW_EMPTY:
-+		am_resolve(&state, resume.mode == RESUME_ALLOW_EMPTY ? 1 : 0);
- 		break;
- 	case RESUME_SKIP:
- 		am_skip(&state);
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index ce8e8e79ace..e154b4201b7 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -1201,4 +1201,57 @@ test_expect_success 'record as an empty commit when meeting e-mail message that
- 	test_cmp actual expected
- '
- 
-+test_expect_success 'skip an empty patch in the middle of an am session' '
-+	git checkout empty-commit^ &&
-+	test_must_fail git am empty-commit.patch >err &&
-+	grep "Patch is empty." err &&
-+	grep "If you want to record it as an empty commit, run \"git am --allow-empty\"." err &&
-+	git am --skip &&
-+	test_path_is_missing .git/rebase-apply &&
-+	git rev-parse empty-commit^ >expected &&
-+	git rev-parse HEAD >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'record an empty patch as an empty commit in the middle of an am session' '
-+	git checkout empty-commit^ &&
-+	test_must_fail git am empty-commit.patch >err &&
-+	grep "Patch is empty." err &&
-+	grep "If you want to record it as an empty commit, run \"git am --allow-empty\"." err &&
-+	git am --allow-empty &&
-+	test_path_is_missing .git/rebase-apply &&
-+	git show empty-commit --format="%s" >expected &&
-+	git show HEAD --format="%s" >actual &&
-+	test_cmp actual expected
-+'
-+
-+test_expect_success 'cannot create empty commits when the index is changed' '
-+	git checkout empty-commit^ &&
-+	test_must_fail git am empty-commit.patch >err &&
-+	: >empty-file &&
-+	git add empty-file &&
-+	test_must_fail git am --allow-empty >err &&
-+	grep "Invalid resume value." err
-+'
-+
-+test_expect_success 'cannot create empty commits when there is a clean index due to merge conflicts' '
-+	test_when_finished "git am --abort || :" &&
-+	git rev-parse HEAD >expected &&
-+	test_must_fail git am seq.patch &&
-+	test_must_fail git am --allow-empty >err &&
-+	grep "Invalid resume value." err &&
-+	git rev-parse HEAD >actual &&
-+	test_cmp actual expected
-+'
-+
-+test_expect_success 'cannot create empty commits when there is unmerged index due to merge conflicts' '
-+	test_when_finished "git am --abort || :" &&
-+	git rev-parse HEAD >expected &&
-+	test_must_fail git am -3 seq.patch &&
-+	test_must_fail git am --allow-empty >err &&
-+	grep "Invalid resume value." err &&
-+	git rev-parse HEAD >actual &&
-+	test_cmp actual expected
-+'
-+
- test_done
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index 7f2956d77ad..9309becfe03 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -658,6 +658,7 @@ test_expect_success 'status in an am session: empty patch' '
- On branch am_empty
- You are in the middle of an am session.
- The current patch is empty.
-+  (use "git am --allow-empty" to record this patch as an empty commit)
-   (use "git am --skip" to skip this patch)
-   (use "git am --abort" to restore the original branch)
- 
-diff --git a/wt-status.c b/wt-status.c
-index 5d215f4e4f1..d578a0e9192 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1227,6 +1227,9 @@ static void show_am_in_progress(struct wt_status *s,
- 		if (!s->state.am_empty_patch)
- 			status_printf_ln(s, color,
- 				_("  (fix conflicts and then run \"git am --continue\")"));
-+		else
-+			status_printf_ln(s, color,
-+				_("  (use \"git am --allow-empty\" to record this patch as an empty commit)"));
- 		status_printf_ln(s, color,
- 			_("  (use \"git am --skip\" to skip this patch)"));
- 		status_printf_ln(s, color,
--- 
-gitgitgadget
+> +
+> +	if (!origin)
+> +		for (i = 0; i < remotes->nr; i++)
+> +			if (skip_prefix(remotes->items[i].string, "refs/heads/", &shortname)
+
+For this and others, since you don't use the [i] for anything except
+getting the current item using for_each_string_list_item() would be
+better.
+
+Partially a nit, partially that I've got another WIP
+soon-to-be-submitted topic to fix overflow bugs in that API, and not
+having "int i" etc. hardcoded in various places
+helps. I.e. for_each_string_list_item() is future-proof.
+
+> +			    && !strcmp(local, shortname)) {
+> +				warning(_("Not setting branch %s as its own upstream."),
+
+Better to quote '%s', also s/Not/not/ (lower-case) for all error/warning/die etc.
+
+> +					local);
+> +				return 0;
+> +			}
+>  
+>  	strbuf_addf(&key, "branch.%s.remote", local);
+>  	if (git_config_set_gently(key.buf, origin ? origin : ".") < 0)
+> @@ -75,8 +80,17 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+>  
+>  	strbuf_reset(&key);
+>  	strbuf_addf(&key, "branch.%s.merge", local);
+> -	if (git_config_set_gently(key.buf, remote) < 0)
+> +	/*
+> +	 * We want to overwrite any existing config with all the branches in
+> +	 * "remotes". Override any existing config with the first branch, but if
+> +	 * more than one is provided, use CONFIG_REGEX_NONE to preserve what
+> +	 * we've written so far.
+> +	 */
+> +	if (git_config_set_gently(key.buf, remotes->items[0].string) < 0)
+>  		goto out_err;
+> +	for (i = 1; i < remotes->nr; i++)
+> +		if (git_config_set_multivar_gently(key.buf, remotes->items[i].string, CONFIG_REGEX_NONE, 0) < 0)
+> +			goto out_err;
+>  
+>  	if (rebasing) {
+>  		strbuf_reset(&key);
+> @@ -87,29 +101,62 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+>  	strbuf_release(&key);
+>  
+>  	if (flag & BRANCH_CONFIG_VERBOSE) {
+> -		if (shortname) {
+> -			if (origin)
+> -				printf_ln(rebasing ?
+> -					  _("Branch '%s' set up to track remote branch '%s' from '%s' by rebasing.") :
+> -					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
+> -					  local, shortname, origin);
+> -			else
+> -				printf_ln(rebasing ?
+> -					  _("Branch '%s' set up to track local branch '%s' by rebasing.") :
+> -					  _("Branch '%s' set up to track local branch '%s'."),
+> -					  local, shortname);
+> +		int plural = remotes->nr > 1;
+
+This....
+
+> +		int all_shortnames = 1;
+> +		const char *msg_fmt;
+> +		struct strbuf ref_string = STRBUF_INIT;
+> +
+> +		for (i = 0; i < remotes->nr; i++)
+> +			if (skip_prefix(remotes->items[i].string, "refs/heads/", &shortname)) {
+> +				strbuf_addf(&ref_string, "'%s', ", shortname);
+> +			} else {
+> +				all_shortnames = 0;
+> +				strbuf_addf(&ref_string, "'%s', ", remotes->items[i].string);
+> +			}
+> +		/* The last two characters are an extraneous ", ", so trim those. */
+> +		strbuf_setlen(&ref_string, ref_string.len - 2);
+
+languages RTL in around way wrong the be to going is thing of sort This.
+
+:)
+
+We deal with this in most other places by just formatting a list of
+branches. E.g. in the ambiguous object output:
+
+    https://lore.kernel.org/git/patch-v5-4.6-36b6b440c37-20211125T215529Z-avarab@gmail.com/
+
+> +
+> +		if (all_shortnames && origin) {
+> +			if (rebasing && plural)
+> +				msg_fmt = "Branch '%s' set up to track remote branches %s from '%s' by rebasing.";
+> +			else if (rebasing && !plural)
+> +				msg_fmt = "Branch '%s' set up to track remote branch %s from '%s' by rebasing.";
+> +			else if (!rebasing && plural)
+> +				msg_fmt = "Branch '%s' set up to track remote branches %s from '%s'.";
+> +			else if (!rebasing && !plural)
+> +				msg_fmt = "Branch '%s' set up to track remote branch %s from '%s'.";
+
+...and this is hardcoding plural rules used in English that don't apply
+in a lot of other languages...
+
+> +
+> +			printf_ln(_(msg_fmt), local, ref_string, origin);
+>  		} else {
+> -			if (origin)
+> -				printf_ln(rebasing ?
+> -					  _("Branch '%s' set up to track remote ref '%s' by rebasing.") :
+> -					  _("Branch '%s' set up to track remote ref '%s'."),
+> -					  local, remote);
+> -			else
+> -				printf_ln(rebasing ?
+> -					  _("Branch '%s' set up to track local ref '%s' by rebasing.") :
+> -					  _("Branch '%s' set up to track local ref '%s'."),
+> -					  local, remote);
+> +			if (all_shortnames && !origin && rebasing && plural)
+> +				msg_fmt = "Branch '%s' set up to track local branches %s by rebasing.";
+> +			if (all_shortnames && !origin && rebasing && !plural)
+> +				msg_fmt = "Branch '%s' set up to track local branch %s by rebasing.";
+> +			if (all_shortnames && !origin && !rebasing && plural)
+> +				msg_fmt = "Branch '%s' set up to track local branches %s.";
+> +			if (all_shortnames && !origin && !rebasing && !plural)
+> +				msg_fmt = "Branch '%s' set up to track local branch %s.";
+> +			if (!all_shortnames && origin && rebasing && plural)
+> +				msg_fmt = "Branch '%s' set up to track remote refs %s by rebasing.";
+> +			if (!all_shortnames && origin && rebasing && !plural)
+> +				msg_fmt = "Branch '%s' set up to track remote ref %s by rebasing.";
+> +			if (!all_shortnames && origin && !rebasing && plural)
+> +				msg_fmt = "Branch '%s' set up to track remote refs %s.";
+> +			if (!all_shortnames && origin && !rebasing && !plural)
+> +				msg_fmt = "Branch '%s' set up to track remote ref %s.";
+> +			if (!all_shortnames && !origin && rebasing && plural)
+> +				msg_fmt = "Branch '%s' set up to track local refs %s by rebasing.";
+> +			if (!all_shortnames && !origin && rebasing && !plural)
+> +				msg_fmt = "Branch '%s' set up to track local ref %s by rebasing.";
+> +			if (!all_shortnames && !origin && !rebasing && plural)
+> +				msg_fmt = "Branch '%s' set up to track local refs %s.";
+> +			if (!all_shortnames && !origin && !rebasing && !plural)
+> +				msg_fmt = "Branch '%s' set up to track local ref %s.";
+
+...in English you've got one dog, then dogs, so == 1 and >1, but in
+various other languages it's:
+
+    git grep Plural-Forms -- po
+
+Anyway, this is easily solved, and even with less verbosity, see:
+
+    git grep -E -W '\bQ_\('
+
+For examples of how to use the magic of libintl to do this for you.
+
+> +
+> +			printf_ln(_(msg_fmt), local, ref_string);
+
+...also s/Branch/branch/ for all of them/.
+
+>  		}
+> +
+> +		strbuf_release(&ref_string);
+>  	}
+>  
+>  	return 0;
+> @@ -121,11 +168,18 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+>  	advise(_(tracking_advice),
+>  	       origin ? origin : "",
+>  	       origin ? "/" : "",
+> -	       shortname ? shortname : remote);
+> +	       remotes->items[0].string);
+>  
+>  	return -1;
+>  }
+>  
+> +int install_branch_config(int flag, const char *local, const char *origin, const char *remote) {
+
+nit: overly long line..
+> +	struct string_list remotes = STRING_LIST_INIT_DUP;
+
+nit: an extra \n after variable decls...
+
+> +	string_list_append(&remotes, remote);
+> +	return install_branch_config_multiple_remotes(flag, local, origin, &remotes);
+> +	string_list_clear(&remotes, 0);
+> +}
+> +
+>  /*
+>   * This is called when new_ref is branched off of orig_ref, and tries
+>   * to infer the settings for branch.<new_ref>.{remote,merge} from the
+
