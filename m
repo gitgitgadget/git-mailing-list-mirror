@@ -2,85 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25E02C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 11:02:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9509C433EF
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 11:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235346AbhLGLFf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 06:05:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52476 "EHLO
+        id S235567AbhLGLJ7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 06:09:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230293AbhLGLFc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 06:05:32 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9BB6C061574
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 03:02:01 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id x6so55220885edr.5
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 03:02:01 -0800 (PST)
+        with ESMTP id S235549AbhLGLJ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 06:09:58 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9F3EC061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 03:06:28 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id c4so28626760wrd.9
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 03:06:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=3ODtdTcTkmEFkWmipSOp0ApieyZ/0sAQcfbc0YkxN1Y=;
-        b=lP0Qldz3qreQWCntZJ93jwX/vo2RWM6w2xzELlimAipbrFcYvp+9E/mPAgmTLq9tG8
-         C4RLmIPrMGcQAJvjSWpnr1KIPmwfVpOBAOk/+W9GRZ6Q0mterZrVw+sBXA6zHXzQnLl3
-         JIdzsqSNC3BgBcodCCBtWdq3PHHYZ+UCbpO0c7/odQ6Axeewwn2/u61zrXnSrwXlg4VC
-         zVMnJM2VXfoi4NriQ8bBRPtDnXa7NTgWLSMibDgO4CEqRBWKHhmeagtT2enrzUNtttlL
-         ExgTWdMpn9NtVoc46sTEbjYcy1EJLJ+FRcQhnw94PPJQvesY/pB3xxp8IuhB1gaU+OjY
-         sQMw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SNhyhgQJcFuT41h4CBxjy0LvoRmmJ+Z2ga7pvRSWJ3c=;
+        b=nMQhtRiW8Zcf8KThuRLOSbi9WxMBn7kXSqahnHksD9PvOduCTW5fLK3oraZyZ+UiJ+
+         6c0QtX+PUSwfbgv0H8rC4Gvx8h4CGdNzWsdTYR2rkIgLBSrOv9Vi8w8ttg5BUpYp5xuM
+         K3Alj69Ac3HzmWdrwRyRlDmWMZpsbqnr+QWketurs/Pe9HixRDqxceJHPFRoII6FrA7M
+         WX55cgQq3MPn1qK5Y7hW5DxjRXMGw6lVVWBkGfC/BFoBU5Wo7Gy3pfrRFlsZV79nNEJF
+         2sHuA58AjKAkuMGn8QLZdY4AWRXiPyBh9RgCVFwS7vVkG5TQB/X+yb9PPm4hj5AlsKUT
+         XV+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=3ODtdTcTkmEFkWmipSOp0ApieyZ/0sAQcfbc0YkxN1Y=;
-        b=yteA4gak+Rwk5SaPzLjvuG9gEndrIPolOWt2D4nVbpg0Tocai7KfdxZSJAX6UBv6G2
-         EqEipLbumXPYFU0/+3EUzpCM8lucWlL9AgcXD7yYCw7H7rcNwP5zGjX1bZ1dgzigQN9W
-         0nfcmLA0us5y4PqazilA2r/X/P4IacKvRus61d+nIu0fSm0+dwKYIroqaSOa/ESCwTW2
-         Sbsr47lxcJiCePUJUCLzeTaIzCnG1cbMxRu1N7LTlUaGZzHYSpHnOfH5KOXEUpUadkvx
-         GIgekq5Tow/CNHtsZZcg4rg+aqdKoX9eJe8VSa9PtKCvyy1Zu1fxqpMrFg4iygL7m4Ge
-         bYWA==
-X-Gm-Message-State: AOAM532VIJ+ZOYax2n4fp0G2IYSrnvbwSypdf3mfSKMZHjWJ5Rv5tS27
-        BGJwASmSVckNEarOrqs3fwQ=
-X-Google-Smtp-Source: ABdhPJzqa0t2pAoQS7cVGeTEOBX1fGLF9avjOUBkZtrYOQ8deF4nFqs+zCwxDe8eLa3G34r4q05+Mg==
-X-Received: by 2002:aa7:ca4f:: with SMTP id j15mr7782841edt.178.1638874920352;
-        Tue, 07 Dec 2021 03:02:00 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id m25sm10056633edj.80.2021.12.07.03.01.59
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SNhyhgQJcFuT41h4CBxjy0LvoRmmJ+Z2ga7pvRSWJ3c=;
+        b=nTXgUycV/3cb0G0hxxlCM8g8gKu6tsZ8C8F3GTNU4/BmI+jFLmWpGkyrjm6HEeLXVG
+         MJSrT+csqOC+QlWHQ9nWaZ0aNEmYCGJuHfCzueefEHePillBl4M3e8YaeSX97buiAYRc
+         OhZXtYpf/B6XJajIzdk0buoEZzw82YVjRLFo93xUknzw1Y5Jzdk4VDnsZWMeyjoQtr/k
+         3/NDXgUlG2AVCBEN3LopyQYpDn7QrsJFfNuxDsxybUigcNYfUP1yMhaGxZ8rWf70PFSB
+         d4JIDipIjpPbwjVqSeyLs1IanOP1T9bM5Q5GRuOBcGZXA6Lh+bNuAP5AkVHJvVhDaAhp
+         0WIA==
+X-Gm-Message-State: AOAM530zZZiIFPhSeznDWnF1hcYr/IRHPc25fogLLi/Uymsd31wxIOp8
+        Kfm4kZESn5Uu1f+GRzuFN1PkZZLFAepEUg==
+X-Google-Smtp-Source: ABdhPJxnTCWJCxaJgNowkRVm53XLEzZVSSn0HBlMKPsReV6hc22gIwD5ugXtj2HtJzw0F5OQDBs0vQ==
+X-Received: by 2002:a05:6000:1842:: with SMTP id c2mr49706368wri.301.1638875187130;
+        Tue, 07 Dec 2021 03:06:27 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id r17sm2629587wmq.11.2021.12.07.03.06.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 03:01:59 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1muYER-0016Lq-AA;
-        Tue, 07 Dec 2021 12:01:59 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/2] replace die("BUG: ...") with BUG("...")
-Date:   Tue, 07 Dec 2021 12:00:42 +0100
+        Tue, 07 Dec 2021 03:06:26 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/4] replace die("BUG: ...") with BUG("...")
+Date:   Tue,  7 Dec 2021 12:05:50 +0100
+Message-Id: <cover-v2-0.4-00000000000-20211207T110440Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.34.1.898.g5a552c2e5f0
+In-Reply-To: <cover-0.2-00000000000-20211206T162442Z-avarab@gmail.com>
 References: <cover-0.2-00000000000-20211206T162442Z-avarab@gmail.com>
- <xmqqv901fu8m.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <xmqqv901fu8m.fsf@gitster.g>
-Message-ID: <211207.86a6hcptjs.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+A re-roll of this trivial clean-up series, now with 2x more patches
+for missed cases pointed-out by Junio at
+https://lore.kernel.org/git/xmqqsfv5b6u6.fsf@gitster.g/
 
-On Mon, Dec 06 2021, Junio C Hamano wrote:
+Ævar Arnfjörð Bjarmason (4):
+  pack-objects: use BUG(...) not die("BUG: ...")
+  strbuf.h: use BUG(...) not die("BUG: ...")
+  pathspec: use BUG(...) not die("BUG:%s:%d....", <file>, <line>)
+  object.h: use BUG(...) no die("BUG: ...") in lookup_object_by_type()
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> A trivial clean-up to change a couple of die() uses to BUG() where
->> appropriate.
->
-> Makes sense.  I wonder contrib/coccinelle/ can help us maintain
-> them, though.
+ builtin/pack-objects.c | 2 +-
+ object.c               | 2 +-
+ pathspec.h             | 3 +--
+ strbuf.h               | 2 +-
+ tree-diff.c            | 3 +--
+ 5 files changed, 5 insertions(+), 7 deletions(-)
 
-I tried to come up with a rule for this after browsing around in linux's
-sources & coccicheck's own test cases, but didn't find any example I
-could adapt. It's rather thin on string munging like that, and I don't
-know spatch well enough.
+Range-diff against v1:
+1:  2a17ed9f135 = 1:  4f39177a763 pack-objects: use BUG(...) not die("BUG: ...")
+2:  ab89fec50c3 = 2:  6740c5d0da8 strbuf.h: use BUG(...) not die("BUG: ...")
+-:  ----------- > 3:  81e354fa3be pathspec: use BUG(...) not die("BUG:%s:%d....", <file>, <line>)
+-:  ----------- > 4:  aaf952a9ede object.h: use BUG(...) no die("BUG: ...") in lookup_object_by_type()
+-- 
+2.34.1.898.g5a552c2e5f0
+
