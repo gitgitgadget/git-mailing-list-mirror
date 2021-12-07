@@ -2,151 +2,240 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D34D7C433EF
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 20:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFFACC433EF
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 20:47:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236863AbhLGUqs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 15:46:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50300 "EHLO
+        id S241151AbhLGUui (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 15:50:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236824AbhLGUqs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 15:46:48 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 629B0C061574
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 12:43:17 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id r25so780501edq.7
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 12:43:17 -0800 (PST)
+        with ESMTP id S236863AbhLGUui (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 15:50:38 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 370EEC061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 12:47:07 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id d10so1136089lfg.6
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 12:47:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=PePUutyZf5obsqts0/IdNsQ9M6AXduswK+PBftikWLY=;
-        b=fR82WpZUoornYv/mOlcSK22HOjopABBuXmkulOtiDyKA6MarKivW1q8z1JO3Ri66yq
-         18rgqHqRrc80DPUd6UXg5grYJ6uhrvQrmfyEurx0Q4IlM9IWNVQPH28ZGjz+wiYIpfoz
-         JJf0urfAtkB/hp7nk3wUSCjOcF8GrLGyb1DQJ7+j7drmT+sI1bmqp42n4kI9y8/pp8Hi
-         VY24ZzfoWRWA7QKnv/OXcIHBw1PAgWX+CTAapnw/jCi9DCq/OWxlF+JJW/NWj7gw1bUZ
-         v7mOuyn9miiu+N2nhNFEcaMXNkuqjwx1zZpKNK7NgMC+hZcU+v8u6k3yGsTw42O2VD7k
-         7jmw==
+        bh=7W4q3ZJQn0AFcsz+4yKGptggGtHot5+f584UokrUKIo=;
+        b=Ng0yxIC2nPPEnP51WAIZfH2JWL4FGILyaczIFX7bU3uFd5jns6IifgYEQpPb+nd3YU
+         ONgLNrg8duv9VN+VIFyOhHbcTFAIyL6DzEauw4aay1E1FL1ydsd+pEY1qbXAF9Cn4XVr
+         iO355Wx8koZPzYsHaNNkucfzQ2EXCobvSN2eXG1OgZCcqGLyvR0t3/FFI5HAliIYNBZJ
+         6pQeco3HCg1uCwZ3DZ8/Ji8/1rq7KYuLy8PP+KgpcAOKitXkVD6cegGjd/CHcXyLW7Wy
+         7A786fNoY+pQCzd2K/owYzs4l+YiM0uQs9Ge88Qo3G6EPFbZZnGc1kgWFX+xejI7ENbT
+         6Phg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=PePUutyZf5obsqts0/IdNsQ9M6AXduswK+PBftikWLY=;
-        b=f7RmbwaXYhhlrPxCnpQ1NYydHH+/k+uicsdCHgh69uLN8LxgEeHMSE3LB3EOX6Owv3
-         6uXvj22QbAbYROUNv3MIFku5BY5DF+gxeYnntUpBLIS11ZY4Hvh1gpV6xbXtJ8Czp1RF
-         TpilBKzsXZ0OqnnKgqrMVFUQmzgX9COpYKjsfEiKVFt16nx2uOqVJC3fJsIr2ncnys9+
-         iELcGYpfK4pxmJDle4CFY8rwqhc2Og+68AdtYJbSMRKlodO839sKgmGpx9UZtn4Qc/HZ
-         6DvL+EtDSD9GrpMHPdz+8V91HI50fCQ86mZJp+PcpNmODgBrGh6jZDLsZjzjZ64QHyOE
-         IuEw==
-X-Gm-Message-State: AOAM5308xtWjU3cewhU2i1OD6Tn8i+7pDcUVxZa76LQsGgdSymHAVf0s
-        CPAwi4P46RG/aIqGgKq3wPMmc2HPZ9mEDXw6+lw=
-X-Google-Smtp-Source: ABdhPJyZUn7hI5j7J17RQjCN2Ohn13d3uoAFo8jrhOUaA6VbOnkc6Gq/QHAZrzUEar04iuyo91pgvggaRQKTf/3T79c=
-X-Received: by 2002:a05:6402:491:: with SMTP id k17mr12547752edv.333.1638909795872;
- Tue, 07 Dec 2021 12:43:15 -0800 (PST)
+        bh=7W4q3ZJQn0AFcsz+4yKGptggGtHot5+f584UokrUKIo=;
+        b=JLkYLzr3H5c8mV3+EhJHjtyfMQ1vZm+R8qlg0RsCaf6lvcJYUWetwC6jB4CDiAk7m5
+         k98fBiS1WnMHOHhCs7ijMgu1VYfIVlAWVT9Smoc+1hCFPGZTlcWDfjqp1RnbM7cMsHBY
+         47i8PmBw8FBLWFMCzUbma5478mHB1YZ10CaeWRM8KiZ5TvMixxZegQ2KpWxkAG1rVcNC
+         sK8GJOTba/xLsyBbcJ+DGSNqUQdBgWGWjSKcFLz24wQotXJiHrZymW6/M8tAWcK2f8gX
+         qu7hkoD4qCAQopvYcIxVOvPz0HWALhkcyh6THU7oB2JLpY3SxhDd66NF5AIj6DTSXwhe
+         8lzA==
+X-Gm-Message-State: AOAM5315lKg6tF1RdEZCtlDlYLJBzO/6wHl2zzyff7cWpSIiJQbnI7G4
+        hzCi6SOd1KoWEc3iIybmb8YmZa32CG/CP8N6n+0=
+X-Google-Smtp-Source: ABdhPJzVGNQ/lbY9rpm6j84UlcgGLDvNJGibManwAPxAdA9MEMOwv36opRfPgExS5H8VquL1BjXU/Q5c0Kmj9gUDYGg=
+X-Received: by 2002:a05:6512:3182:: with SMTP id i2mr41490771lfe.241.1638910025295;
+ Tue, 07 Dec 2021 12:47:05 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com>
- <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com> <aa85e35d-143e-93e4-f54b-146b38dd4b88@gmail.com>
-In-Reply-To: <aa85e35d-143e-93e4-f54b-146b38dd4b88@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 7 Dec 2021 12:43:03 -0800
-Message-ID: <CABPp-BHRse4BwXTjd4cRruOdymt=DJRPDL1jyPzX5HDqx4ymDw@mail.gmail.com>
-Subject: Re: [PATCH v5 00/11] Avoid removing the current working directory,
- even if it becomes empty
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+References: <pull.1093.git.1638588503.gitgitgadget@gmail.com>
+ <pull.1093.v2.git.1638845211.gitgitgadget@gmail.com> <ff80a94bf9add8a6fabcd5146e5177edf5e35e49.1638845211.git.gitgitgadget@gmail.com>
+ <Ya9LPOseu8geBi4v@ncase>
+In-Reply-To: <Ya9LPOseu8geBi4v@ncase>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Tue, 7 Dec 2021 12:46:54 -0800
+Message-ID: <CANQDOddgwc4X2snAGvoz0KFaCWcx+k2U3qfoLywcUS=6yF=Htg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] core.fsync: introduce granular fsync control
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Glen Choo <chooglen@google.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 7, 2021 at 8:09 AM Derrick Stolee <stolee@gmail.com> wrote:
+On Tue, Dec 7, 2021 at 3:54 AM Patrick Steinhardt <ps@pks.im> wrote:
 >
-> On 12/1/2021 1:40 AM, Elijah Newren via GitGitGadget wrote:
-> > Traditionally, if folks run git commands such as checkout or rebase from a
-> > subdirectory, that git command could remove their current working directory
-> > and result in subsequent git and non-git commands either getting confused or
-> > printing messages that confuse the user (e.g. "fatal: Unable to read current
-> > working directory: No such file or directory"). Many commands either
-> > silently avoid removing directories that are not empty (i.e. those that have
-> > untracked or modified files in them)[1], or show an error and abort,
-> > depending on which is more appropriate for the command in question. With
-> > this series, we augment the reasons to avoid removing directories to include
-> > not just has-untracked-or-modified-files, but also to avoid removing the
-> > original_cwd as well.
+> On Tue, Dec 07, 2021 at 02:46:50AM +0000, Neeraj Singh via GitGitGadget wrote:
+> > From: Neeraj Singh <neerajsi@microsoft.com>
+> [snip]
+> > diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> > index c23d01de7dc..c32534c13b4 100644
+> > --- a/builtin/index-pack.c
+> > +++ b/builtin/index-pack.c
+> > @@ -1286,7 +1286,7 @@ static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned cha
+> >                           nr_objects - nr_objects_initial);
+> >               stop_progress_msg(&progress, msg.buf);
+> >               strbuf_release(&msg);
+> > -             finalize_hashfile(f, tail_hash, 0);
+> > +             finalize_hashfile(f, tail_hash, FSYNC_COMPONENT_PACK, 0);
+> >               hashcpy(read_hash, pack_hash);
+> >               fixup_pack_header_footer(output_fd, pack_hash,
+> >                                        curr_pack, nr_objects,
+> > @@ -1508,7 +1508,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+> >       if (!from_stdin) {
+> >               close(input_fd);
+> >       } else {
+> > -             fsync_or_die(output_fd, curr_pack_name);
+> > +             fsync_component_or_die(FSYNC_COMPONENT_PACK, output_fd, curr_pack_name);
+> >               err = close(output_fd);
+> >               if (err)
+> >                       die_errno(_("error while closing pack file"));
+> > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> > index 857be7826f3..916c55d6ce9 100644
+> > --- a/builtin/pack-objects.c
+> > +++ b/builtin/pack-objects.c
+> > @@ -1204,11 +1204,13 @@ static void write_pack_file(void)
+> >                * If so, rewrite it like in fast-import
+> >                */
+> >               if (pack_to_stdout) {
+> > -                     finalize_hashfile(f, hash, CSUM_HASH_IN_STREAM | CSUM_CLOSE);
+> > +                     finalize_hashfile(f, hash, FSYNC_COMPONENT_NONE,
+> > +                                       CSUM_HASH_IN_STREAM | CSUM_CLOSE);
 >
-> I did not clearly voice my approval of the core idea here, but I do like it.
+> It doesn't have any effect here given that we don't sync at all when
+> writing to stdout, but I wonder whether we should set up the component
+> correctly regardless of that such that it makes for a less confusing
+> read.
 >
-> I think this fits squarely into a category of "help the user not get stuck"
-> which Git has enough of those situations that we don't need this one. Even
-> expert users won't know for sure if a 'git checkout' will cause their current
-> directory to be removed, however unlikely.
->
-> In the Git project, we spend a lot of time in the root of our workdir, but
-> this is not the typical case for large projects. I remember spending most of
-> my time in a previous role working four levels deep in the directory hierarchy.
->
->
-> I read the previous two range-diffs and took another pass at this v5 and
-> didn't see anything worth commenting on. This version is good to go.
->
-> There is _also_ more work to do, as follow-ups. In particular, the thing
-> that I thought about was sparse-checkout and created this test which still
-> fails at the end of your series (as an addition to t1092)
 
-Interesting testcase...
+If it's not actually a file with some name known to git, is it really
+a component of the repository? I'd like to leave this one as-is.
 
-> test_expect_success 'remove cwd' '
->         init_repos &&
+> [snip]
+> > diff --git a/config.c b/config.c
+> > index c3410b8a868..29c867aab03 100644
+> > --- a/config.c
+> > +++ b/config.c
+> > @@ -1213,6 +1213,73 @@ static int git_parse_maybe_bool_text(const char *value)
+> >       return -1;
+> >  }
+> >
+> > +static const struct fsync_component_entry {
+> > +     const char *name;
+> > +     enum fsync_component component_bits;
+> > +} fsync_component_table[] = {
+> > +     { "loose-object", FSYNC_COMPONENT_LOOSE_OBJECT },
+> > +     { "pack", FSYNC_COMPONENT_PACK },
+> > +     { "pack-metadata", FSYNC_COMPONENT_PACK_METADATA },
+> > +     { "commit-graph", FSYNC_COMPONENT_COMMIT_GRAPH },
+> > +     { "objects", FSYNC_COMPONENTS_OBJECTS },
+> > +     { "default", FSYNC_COMPONENTS_DEFAULT },
+> > +     { "all", FSYNC_COMPONENTS_ALL },
+> > +};
+> > +
+> > +static enum fsync_component parse_fsync_components(const char *var, const char *string)
+> > +{
+> > +     enum fsync_component output = 0;
+> > +
+> > +     if (!strcmp(string, "none"))
+> > +             return output;
+> > +
+> > +     while (string) {
+> > +             int i;
+> > +             size_t len;
+> > +             const char *ep;
+> > +             int negated = 0;
+> > +             int found = 0;
+> > +
+> > +             string = string + strspn(string, ", \t\n\r");
+> > +             ep = strchrnul(string, ',');
+> > +             len = ep - string;
+> > +
+> > +             if (*string == '-') {
+> > +                     negated = 1;
+> > +                     string++;
+> > +                     len--;
+> > +                     if (!len)
+> > +                             warning(_("invalid value for variable %s"), var);
+> > +             }
+> > +
+> > +             if (!len)
+> > +                     break;
+> > +
+> > +             for (i = 0; i < ARRAY_SIZE(fsync_component_table); ++i) {
+> > +                     const struct fsync_component_entry *entry = &fsync_component_table[i];
+> > +
+> > +                     if (strncmp(entry->name, string, len))
+> > +                             continue;
+> > +
+> > +                     found = 1;
+> > +                     if (negated)
+> > +                             output &= ~entry->component_bits;
+> > +                     else
+> > +                             output |= entry->component_bits;
+> > +             }
+> > +
+> > +             if (!found) {
+> > +                     char *component = xstrndup(string, len);
+> > +                     warning(_("unknown %s value '%s'"), var, component);
+> > +                     free(component);
+> > +             }
+> > +
+> > +             string = ep;
+> > +     }
+> > +
+> > +     return output;
+> > +}
+> > +
+> >  int git_parse_maybe_bool(const char *value)
+> >  {
+> >       int v = git_parse_maybe_bool_text(value);
+> > @@ -1490,6 +1557,13 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+> >               return 0;
+> >       }
+> >
+> > +     if (!strcmp(var, "core.fsync")) {
+> > +             if (!value)
+> > +                     return config_error_nonbool(var);
+> > +             fsync_components = parse_fsync_components(var, value);
+> > +             return 0;
+> > +     }
+> > +
+> >       if (!strcmp(var, "core.fsyncmethod")) {
+> >               if (!value)
+> >                       return config_error_nonbool(var);
+> > @@ -1503,7 +1577,7 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+> >       }
+> >
+> >       if (!strcmp(var, "core.fsyncobjectfiles")) {
+> > -             fsync_object_files = git_config_bool(var, value);
+> > +             warning(_("core.fsyncobjectfiles is deprecated; use core.fsync instead"));
+> >               return 0;
+> >       }
 >
->         test_sparse_match git sparse-checkout set deep/deeper1/deepest &&
->         for repo in sparse-checkout sparse-index
->         do
->                 (
->                         cd $repo/deep/deeper1 &&
->                         test-tool getcwd >"$TRASH_DIRECTORY/expect" &&
->                         git sparse-checkout set &&
+> Shouldn't we continue to support this for now such that users can
+> migrate from the old, deprecated value first before we start to ignore
+> it?
 >
->                         test-tool getcwd >"$TRASH_DIRECTORY/actual" &&
->                         test_sparse_match git status --porcelain &&
-
-However, this line is broken even if the directory weren't removed.
-Not because of the "git status --porcelain" part, but because of two
-other reasons:
-
-1) test_sparse_match presumes it is run from the directory above the
-repos while you still have it in $repo/deep/deeper1
-2) The point of test_sparse_match is to compare the results in two
-different repositories, but it'll do this twice and the first time
-without the changes having been made to the sparse-index repo.
-Perhaps this belonged outside the surrounding for loop?
-
-I think I'd either drop the "test_sparse_match" or else just drop the
-whole line; the real comparison is the expect/actual files.  Dropping
-this line makes it a good test.
-
->                         cd "$TRASH_DIRECTORY" &&
->                         test_cmp expect actual
->                 )
->         done
-> '
+> Patrick
 >
-> Please do not let this test delay the advancement of this series. As we
-> find these kinds of issues, we can fix them one-by-one as needed.
 
-Yeah, sounds good.  Since you piqued my interest, though, the problem
-is that we're passing an absolute path to remove_dir_recursively()
-inside clean_tracked_sparse_directories() when we should be passing a
-relative path.  (We always chdir(r->worktree) in setup.c, so there's
-no need to prepend the path with r->worktree+'/'.)
+That's a good question and one I was hoping to answer through this
+discussion.  I'm guessing that most users do not have this setting
+explicitly set, and it's largely a non-functional change. Git only
+behaves differently in the extreme corner case of a system crash after
+git exits.  That's why I believe it's okay to deprecate and remove in
+one release.
 
-Still, the current series is long enough and unless there are issues
-others have spotted with it, I'd rather just let it proceed as-is and
-then send this fix and a correction of your testcase in separately.
+If we choose to keep supporting the setting, it would introduce a
+little complexity in the configuration code, but it should be doable.
+I think the right semantics would be to ignore core.fsyncobjectfiles
+if core.fsync is specified with any value. Otherwise,
+core.fsyncobjectfiles would be equivalent to `default,-loose-object`
+or `default,loose-object` for `false` and `true` respectively. I'd
+prefer not to do this if I can get away with it :).
+
+Thanks,
+Neeraj
