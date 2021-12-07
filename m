@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2D1FC433EF
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 18:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EAC2C433FE
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 18:26:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240507AbhLGSaQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 13:30:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45930 "EHLO
+        id S240535AbhLGSaR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 13:30:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240489AbhLGSaL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 13:30:11 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E8A1C061746
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 10:26:41 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id d24so31501359wra.0
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 10:26:41 -0800 (PST)
+        with ESMTP id S240511AbhLGSaM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 13:30:12 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3580EC061748
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 10:26:42 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id y196so37088wmc.3
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 10:26:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fQiDBoUv4PoVV50Mi4s1PrR/XLFDdMZ4hpU2GP7lv5U=;
-        b=J6bFt0pR5BUHIhSZZjAaQHKHUo3+nrq8LJrLa4kre1o8ER66SWsfksctR3l4wYqxId
-         SzmMNHD7iTRf0OpZNejZMrD1zRhIiZvwD8DuEhDW5Jlo4/Si5k7wI6DyK+7LcglimqBh
-         fZnJBlFHoCdeNJH6oN+x07eiVuEd09VF9aFp+RuJKvX7aKwlJiCckxtQvJASn2HxBByF
-         mN/T+CpDytqvHcQI4s4qx5hiNpNR4c3w6+9ZqanGe++6BGq3xrs3Aj+bUoJNDcd8xpj0
-         fq1IWYGzr4weyESWrKtVHfUkTajgoGA78kxBmhi4JNVlYpeNu1gLQchtvEn+pj7HXVC+
-         qmSQ==
+        bh=2uycJOgZjS1ilY6ExAuPKHz0Yiufkcvb3Ta35cuXsRI=;
+        b=lixYfbHVIZVulyTHYADwqLDUF/l8mEE51ug7ITlwxo49mGJ0oCmnqRBpbNWxr656iV
+         jlelbteqOkh8s0Ettua2BCgKu9wOWdbufwQMND5PjTu5zQSG9ZRG/4A9ePlCAj19QDAT
+         092ft8S7mrRgbNLnvf3SYSw7t9OfDvW52OcpIgA3exUF0NKNyFPDKL6os9x/eYahUL/a
+         b2ODqVD6BZkdLM5BPYarQaGRr85DL7J6UhiI8DMxFb76qbUlogoD9/EAGO4LU8lvz3av
+         tJWuaTGQg4UukUliIpUFooGJfjCVO8Gy8q9Rhpi2n/hmkE4e/g0BsHLltdZyhd1HMfjn
+         7wmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fQiDBoUv4PoVV50Mi4s1PrR/XLFDdMZ4hpU2GP7lv5U=;
-        b=AQExzHbJ6NreZyI//Kqe91Kx63VHFjP6kAnIalxP8N3eJKruwu2JpT6xNFCvwjawG8
-         rpdWRzlzFoWciRABtNpe+0FrlrgbTL0z4J0SwjI3ujvObLsYzj98ecO3dqwYl90Xi1Q9
-         qaMtHZ/+rVFd8HtlKbRLZ4ttVfoZ9cJoplJg+c8nzHeuL2Csj8JQ00BjiYZmSpDNzYSH
-         FnJsX+6n6Qk+9+RhV87K7KTV2/WXilGClR0WOCZn15jtOEoOLAC+5jzEFngqaXheINXq
-         eQ3GZvuHwPbAo1LovkXvC5WXBKyPl31ImadGOrnV7+bMwOomfOu+U4lNKSJmSw1Hu52u
-         36tw==
-X-Gm-Message-State: AOAM531wXIVX2VkNkjDDpc6HyEafshFmc1x7P9rrbxH2++nSYmiN+SiL
-        /0mWWdsAU86SavGMVXvzQ7M0WqQcanPu/A==
-X-Google-Smtp-Source: ABdhPJwT9dv+jlpv75g95U+GyFAr7Tcx/26l9TcVX/wsuv6tW/HWtbzpFPxZRmH7g90QAtO9kRkmlQ==
-X-Received: by 2002:adf:8bda:: with SMTP id w26mr52649747wra.534.1638901599407;
-        Tue, 07 Dec 2021 10:26:39 -0800 (PST)
+        bh=2uycJOgZjS1ilY6ExAuPKHz0Yiufkcvb3Ta35cuXsRI=;
+        b=p9gcICRIgrIFzvD/9a5TQiuM5DBJz99qTn4rD60dPXkYyJE/TFw/77F7/8rhF2cYn2
+         c05ne604PZqpfN1QK/Jxe+89d26hNpgp3Krd7A1pDrBxZrzU0Vkrt4N3iHMdxWVd7+wy
+         RRnVW/46FGrF62jHun5BVZlHOTCCr8pTidTGzShmdkEwRVCG9v/ebOx+mvUmZ4OoW7j9
+         wLpAjewJcFpLoR/RShMnuCZhGVhady7w1qNdGblr1d8VeZpF4O1sKECu8iG4F1yyojN8
+         BkCaM0RPAnoOPJUIiz9OP1sgrUsbqCnUY1x94yoHenohwCiwaBpy0+uwrXTRa/VltT/7
+         sPuA==
+X-Gm-Message-State: AOAM530Chd3ENzPoj7M/eietzQQd1IK34kPTZ4O8aOPVFUA991uAH7yU
+        YmMGdH4Po7E6UN1CcExVO5gJ1gz05xyO0w==
+X-Google-Smtp-Source: ABdhPJxmyQ+DaXxflaFHo9hfAnqO3vY/b26BW02MpnCCwkVZBZ5pIAgkrjKSRQwTHg+YrWn/44qJ9Q==
+X-Received: by 2002:a7b:c38d:: with SMTP id s13mr9139388wmj.12.1638901600529;
+        Tue, 07 Dec 2021 10:26:40 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id t8sm450496wrv.30.2021.12.07.10.26.38
+        by smtp.gmail.com with ESMTPSA id t8sm450496wrv.30.2021.12.07.10.26.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 10:26:38 -0800 (PST)
+        Tue, 07 Dec 2021 10:26:39 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/6] usage.c API users: use die_message() for error() + exit 128
-Date:   Tue,  7 Dec 2021 19:26:31 +0100
-Message-Id: <patch-v2-3.6-c7d67fd41fa-20211207T182419Z-avarab@gmail.com>
+Subject: [PATCH v2 4/6] gc: return from cmd_gc(), don't call exit()
+Date:   Tue,  7 Dec 2021 19:26:32 +0100
+Message-Id: <patch-v2-4.6-f224a281a10-20211207T182419Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.898.g5a552c2e5f0
 In-Reply-To: <cover-v2-0.6-00000000000-20211207T182419Z-avarab@gmail.com>
 References: <cover-0.4-00000000000-20211206T165221Z-avarab@gmail.com> <cover-v2-0.6-00000000000-20211207T182419Z-avarab@gmail.com>
@@ -68,41 +68,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Continue the migration of code that printed a message and exited with
-128. In this case the caller used "error()", so we'll be changing the
-output from "error: " to "fatal: ". This change is intentional and
-desired.
+A minor code cleanup. Let's "return" from cmd_gc() instead of calling
+exit(). See 338abb0f045 (builtins + test helpers: use return instead
+of exit() in cmd_*, 2021-06-08) for other such cases.
 
-This code is dying, so it should emit "fatal", the only reason it
-didn't do so was because before the existence of "die_message()" it
-would have needed to craft its own "fatal: " message.
+While we're at it add a \n to separate the variable declaration from
+the rest of the code in this block. Both of these changes make a
+subsequent change smaller and easier to read.
+
+This change isn't really needed for that subsequent change, but now
+someone viewing that future behavior change won't need to wonder why
+we're either still calling exit() here, or fixing it while we're at
+it.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/notes.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ builtin/gc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 71c59583a17..2812d1eac40 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -201,11 +201,12 @@ static void prepare_note_data(const struct object_id *object, struct note_data *
- static void write_note_data(struct note_data *d, struct object_id *oid)
- {
- 	if (write_object_file(d->buf.buf, d->buf.len, blob_type, oid)) {
--		error(_("unable to write note object"));
-+		int status = die_message(_("unable to write note object"));
+diff --git a/builtin/gc.c b/builtin/gc.c
+index bcef6a4c8da..900ccfb8d48 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -611,9 +611,10 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 		}
+ 		if (detach_auto) {
+ 			int ret = report_last_gc_error();
 +
- 		if (d->edit_path)
--			error(_("the note contents have been left in %s"),
--				d->edit_path);
--		exit(128);
-+			die_message(_("the note contents have been left in %s"),
-+				    d->edit_path);
-+		exit(status);
- 	}
- }
- 
+ 			if (ret < 0)
+ 				/* an I/O error occurred, already reported */
+-				exit(128);
++				return 128;
+ 			if (ret == 1)
+ 				/* Last gc --auto failed. Skip this one. */
+ 				return 0;
 -- 
 2.34.1.898.g5a552c2e5f0
 
