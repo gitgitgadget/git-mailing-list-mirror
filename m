@@ -2,75 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A648C433EF
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 01:59:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88D3CC433F5
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 02:19:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239151AbhLGCCc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Dec 2021 21:02:32 -0500
-Received: from zg8tmty3ljk5ljewns4xndka.icoremail.net ([167.99.105.149]:51630
-        "HELO zg8tmty3ljk5ljewns4xndka.icoremail.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with SMTP id S229958AbhLGCC2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 6 Dec 2021 21:02:28 -0500
-Received: from mailtech.cn (unknown [10.12.1.20])
-        by hzbj-icmmx-2 (Coremail) with SMTP id AQAAfwCXucnqv65hP4GzBg--.2877S2;
-        Tue, 07 Dec 2021 09:59:26 +0800 (CST)
-Received: from pwxu$coremail.cn ( [112.94.4.17] ) by
- ajax-webmail-mailtech_rd (Coremail) ; Tue, 7 Dec 2021 09:58:36 +0800 (CST)
-X-Originating-IP: [112.94.4.17]
-Date:   Tue, 7 Dec 2021 09:58:36 +0800 (CST)
-X-CM-HeaderCharset: UTF-8
-From:   =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Elijah Newren" <newren@gmail.com>,
-        "Git Mailing List" <git@vger.kernel.org>,
-        =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29?= 
-        <aleen42@vip.qq.com>,
-        "Aleen via GitGitGadget" <gitgitgadget@gmail.com>,
-        "Johannes Schindelin" <johannes.schindelin@gmx.de>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2021, #07; Mon, 29)
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20211103(a39c0bb8)
- Copyright (c) 2002-2021 www.mailtech.cn
- mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
-In-Reply-To: <xmqqa6hdb3sx.fsf@gitster.g>
-References: <xmqqzgpm2xrd.fsf@gitster.g>
- <CABPp-BE4uYBFnb-AgVJhNo6iK4da5hiEFEBhd=7Ea3Ov=4K4zw@mail.gmail.com>
- <d95f092.3f.17d73a85761.Coremail.pwxu@coremail.cn>
- <CABPp-BG9jHaJYekDnvZT+8QW_fLGM_bmz-oOqzJswaotyVDFBA@mail.gmail.com>
- <211203.861r2tsfej.gmgdl@evledraar.gmail.com>
- <CABPp-BGE5Ff=adH3nREMDm38DGLEmtRTcPwuJowHw-ckwpbmqQ@mail.gmail.com>
- <211203.86wnklqx05.gmgdl@evledraar.gmail.com>
- <30b4169a.18.17d8d589b6d.Coremail.pwxu@coremail.cn>
- <xmqqilw2i6w1.fsf@gitster.g>
- <6fa17536.18b.17d8e7c7a09.Coremail.pwxu@coremail.cn>
- <xmqqwnkhhck4.fsf@gitster.g>
- <584bbe43.e.17d926d909f.Coremail.pwxu@coremail.cn>
- <xmqqa6hdb3sx.fsf@gitster.g>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+        id S240785AbhLGCWh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Dec 2021 21:22:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44804 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240696AbhLGCWf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Dec 2021 21:22:35 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B87DC061746
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 18:19:06 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 0EC8B5CB78;
+        Tue,  7 Dec 2021 02:19:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1638843545;
+        bh=BdPTvlmUxkyuzUH57ujjhmCHLlebc4VSwkgdTB5qQnY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=vcFr/dZyrIJ/jrHXk2LsQegfL9g1jnLYNsIwavejxTuq/3r53m8zyYm1DKsPSgnv8
+         h5uvaBXhiELwc4lYu6nZb2ayeXF9NHZNKz8BwrfXeXazFCew3RjNZkQ3et6mbVg+CB
+         RRT89hxfogd7ULtU9FCj/DOPjT3FQH2lcZkhBbCoE/jUZ6HDu70dnSORuozUKf2GAo
+         zTZ+HSAJyYOpfJx48mO3A22Xqyt6ZUxX2mW6tfNifcrxAYlvtOOfSXzOyBskAZH02M
+         QreUzuwyDDfbZMu/VvRrMDYpmg2rEhuXLdk2D4QexMXaAMT+Fv4FIjMKqrE5dZYWGm
+         ld6ukQS0gY02GBOa7OfkunY+l9PF34GcCTWUNs6BjMnGRS0+e9UybQCdUyO7iSW09c
+         0jB1r8Dz2TrDTPmrb/45RKCQ/bjOapFh1mx/c4qyLr79OKOj+MxHb+moBV89kx9gWN
+         5tYS0LnQWIIsOEvUYHAubL0wP23LQCjLTPgSfJMbU78xy+pz/Nq
+Date:   Tue, 7 Dec 2021 02:19:00 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?QmrDtnJuIEzDpHNzaWc=?= <b.laessig@pengutronix.de>
+Subject: Re: Regression in 8d92fb292706 ("dir: replace exponential algorithm
+ with a linear one")
+Message-ID: <Ya7ElLg96aV2iySI@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+        git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?QmrDtnJuIEzDpHNzaWc=?= <b.laessig@pengutronix.de>
+References: <20211206121639.o4a4tdzlijnhnjqz@pengutronix.de>
 MIME-Version: 1.0
-Message-ID: <1f1d7b66.4a.17d929d357c.Coremail.pwxu@coremail.cn>
-X-Coremail-Locale: en_US
-X-CM-TRANSID: AgIMCgD3QGTMv65hoAIAAA--.125W
-X-CM-SenderInfo: psz03q5fruvzxdlohubq/1tbiAQcJCFGCdOS0KAABsZ
-Authentication-Results: hzbj-icmmx-2; spf=neutral smtp.mail=pwxu@corem
-        ail.cn;
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
-        ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
-        nUUI43ZEXa7xR_UUUUUUUUU==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="bBevHwCQpf5S85mh"
+Content-Disposition: inline
+In-Reply-To: <20211206121639.o4a4tdzlijnhnjqz@pengutronix.de>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PiBBZGRpbmcgYW4gb3B0aW9uIHRoYXQgYWJvcnRzIGFuZCB0cmFzaGVzIHRoZSBzdGF0ZSBkaXJl
-Y3RvcnkgaXMgbXVjaAo+IHdvcnNlIHRoYW4gbm90IGhhdmluZyBhIGNob2ljZSBvdGhlciB0aGFu
-IGRyb3AgYW5kIGtlZXAsIHdoaWNoIGlzIGluCj4gdHVybiBhIGJpdCB3b3JzZSB0aGFuIGhhdmlu
-ZyBhIHdheSB0byBjb3VudGVybWFuZCBhbiBvcHRpb24gdGhhdCB3YXMKPiBnaXZlbiBlYXJsaWVy
-IG9uIHRoZSBjb21tYW5kIGxpbmUuCgpBbm90aGVyIG9wdGlvbiB0byBjb3VudGVybWFuZCBhbiBv
-cHRpb24gaXMgb25seSBtZWFuaW5nZnVsIHdoZW4gaXQgY2FuIGJlCmFwcGxpZWQgYXMgYSByZXN1
-bWUgdmFsdWUgYnV0IG5vdCBpbiBzdWNoIGEgY2FzZSwgSSB0aGluay4gIi0tZW1wdHk9PG9wdGlv
-bj4iCmlzIG9ubHkga2VwdCBpbiBlYWNoIGFtIHNlc3Npb24sIGFuZCBpdCBzZWVtcyB3ZSBjYW4n
-dCBjb3VudGVybWFuZCB0aGUgb3B0aW9uCmFmdGVyIHRoZSBzZXNzaW9uLg==
 
+--bBevHwCQpf5S85mh
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2021-12-06 at 12:16:39, Uwe Kleine-K=C3=B6nig wrote:
+> Is this something that needs fixing?
+
+I don't think so.  The old behavior was to add a file that's under a
+different repository (subdir), which is bizarre and at least to me,
+unexpected.  I believe the new behavior causes us to not add the file
+because it belongs to a different repo, which seems correct.
+
+I have no clue how we could practically check out the file in the first
+situation if subdir remains a git repository.  Even if it does work, it
+is likely to lead to confusing behavior when the index for subdir is not
+in sync with the index for the main repo.
+
+If I'm missing something here, though, please do point it out.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--bBevHwCQpf5S85mh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYa7EkwAKCRB8DEliiIei
+gYgHAP9ewX995kPGbqlZZXxZpJZHrxPnlAs0zfoWcdut7TVhcQD8D7LBtbain/sR
+8nSLnLj4sNS9PKMotMCwVGBGTIdoXwg=
+=V9q7
+-----END PGP SIGNATURE-----
+
+--bBevHwCQpf5S85mh--
