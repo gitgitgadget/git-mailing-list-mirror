@@ -2,120 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7310C433EF
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 06:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AADFAC433EF
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 06:17:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236398AbhLGGEQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 01:04:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37534 "EHLO
+        id S232719AbhLGGVW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 01:21:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230094AbhLGGEQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 01:04:16 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 470EAC061746
-        for <git@vger.kernel.org>; Mon,  6 Dec 2021 22:00:46 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id e3so52602872edu.4
-        for <git@vger.kernel.org>; Mon, 06 Dec 2021 22:00:46 -0800 (PST)
+        with ESMTP id S229846AbhLGGVV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 01:21:21 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC657C061746
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 22:17:51 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id c32so31070140lfv.4
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 22:17:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=r6XtIDptuvKyGF4+VVphaaW0iivqAr3c+E+CtVXK6fI=;
-        b=maS0g9WFwpXyMdWizwKyUMWHHR4cqyS8LP0Bt9s387nDBBwCv3ln0/6XPn5E4A8Rkg
-         fYA8EeDRwtRYCLVo8BiyEKNljXEeJdYciHj46c+E8vlktG/AmQTa03/FCRMqSvWCdw/B
-         UeXCWmzEF5rX0vBHAP2pmAdeZazizcLahB+jW4wBdkoWSByAttq3OhLYRygvQ0uc01H9
-         //+vwuRfB9afhqezXp1YLP9Hl8wdwuicpWYReVUMgIlaXdH+oV0mog8HmLc3GpQT3ioB
-         Cs3goG5POALgu7gp1/3X9uZg5aCqsEpepc/Ls7ONe8vPGB5XhuRB3MhGzJSMgegTGT5G
-         ldbg==
+        bh=fVrKkXVC1xfIjPQ2RiLTajglJdpe/FlfmO1Nd1+UpuY=;
+        b=blmk2Vf0SgUD29ylKxDUCRiNhhb66yuVQwq/mfvcqM8nQakjvWj+m6rtBca5jP3sla
+         49J62sPob9zwbclNZFu8GrLhsUmMHMVLS/pn3GQhhGHECdoZoR2LT0cJzYiTlIFVbgqO
+         PiMCDFddKT9gdN6bB2Ow+30pwqm8WO3qUrIn070AltnVtlT34WFB1qAUVfia5zk/Md43
+         iAHGD6IN3s/IZVMD029sQYgv2Z6sU+ZB2FDwGHl7X+IhUF6/wjtcPbtfxstN0zwdfy/2
+         EYDGCf6cWZZ6OKYgH/GqsYAqVcqULcwwv77qiS9CQomqpMm7mOyg16emmCYTTnDzVbvK
+         M5nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=r6XtIDptuvKyGF4+VVphaaW0iivqAr3c+E+CtVXK6fI=;
-        b=NRFEjNe0ejepNEDDRIxEft/kDt3xtcR2DYNG0IMxVgG2+aRwwdIZgNHFAYQUGFmU6J
-         oyUYnKx2savHx8qZglCF2T9jgnCXuMEcGdYwHn+A5Qg1g+9i02wIm7zTPtci2sO+0mWf
-         +PfXZehld1+30VfuJkrlF+DnWptjNQlUsR24JUCxPl/fIFM1rP71Fmpdr1V0dVtq78lV
-         MUa2UXZU26aQGtXrkwHT/eOrrjlNPewMh0ON//AKHO99R+wyWXp9g++nO/iJJSaInv/0
-         ZYzSRUv5IQfQehgMwcnVGn9hNAX6uTzTWCh9+ZauIGq4VdQgpPLdkI+gUcmW09xg8DTF
-         pIlw==
-X-Gm-Message-State: AOAM533/J/Sc5/ZXInojlQnBR6DmMiyvjRDEFACxl13PjpEgvJS2zFGY
-        ftee1zCV3yaU58ss1mKjdR6umVAM+zfD0Yne8jTsvIMC+oA=
-X-Google-Smtp-Source: ABdhPJwyRTj0s1+saGAx8WNaaCprsPHHvubw89pvw066oW08StFohD89+Hl+DLAXm0cAk1PosU1BK9VW4SE6vINxEtQ=
-X-Received: by 2002:a05:6402:d73:: with SMTP id ec51mr5827542edb.175.1638856844186;
- Mon, 06 Dec 2021 22:00:44 -0800 (PST)
+        bh=fVrKkXVC1xfIjPQ2RiLTajglJdpe/FlfmO1Nd1+UpuY=;
+        b=3AlgJZelwzUXfhKiNVXKQ9FUT+7PQ07SwzkjaDZif0CzMbjLZYRlmbDmeBKruxrC+r
+         9Vcg4VNwye2YLKhcsO3+tZ1sPSoNKHbUQ8+PVLi7IpRMES73fFAHkSBz0+gpasMshSdd
+         TwKbv3OJmQ/wPzOgmfyC3TjfNqViq+ihaicHvZP88icNK/KKw6XUA7FCaIRKg3IX5MLw
+         hOswhCWr4UrvLE/R7S0qURKXhp3bcqK2XpsCVkCK9PP/ysKdkLVw3M91gEMQDBBbox55
+         L1kkMvGIgY5tbfBwMzNDMAg/azQlAGx6Km+nkdv8bytiASZi3RZ5/eSdd3mXgTg2iiKC
+         58VA==
+X-Gm-Message-State: AOAM5300TCZFghzcpdXrLnrQ5I9tsMaRMoDjY3qRtQSQD++U5YakSlEi
+        WbWmneCaqEEf0kZxif+G+liVXNY47S7xmcYeY6di9RBudRuqV/BY
+X-Google-Smtp-Source: ABdhPJwLP7DgqwhJlEB0ibx3+db5blSmvS2ql6bTSdyOImaxffc/XsVCXgGKpIzsRU18k8x47WQ08pedM4y89Bi/Dlg=
+X-Received: by 2002:a19:6454:: with SMTP id b20mr39458688lfj.469.1638857869996;
+ Mon, 06 Dec 2021 22:17:49 -0800 (PST)
 MIME-Version: 1.0
-References: <xmqqh7bpqhf0.fsf@gitster.g>
-In-Reply-To: <xmqqh7bpqhf0.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 6 Dec 2021 22:00:32 -0800
-Message-ID: <CABPp-BGdvOhy_g8vtRogqL2vPkZEtP4+N_5x0rhAWrX9x43WWA@mail.gmail.com>
-Subject: en/keep-cwd (Was: Re: What's cooking in git.git (Dec 2021, #01; Fri, 3))
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
+References: <20211122033220.32883-1-chiyutianyi@gmail.com> <20211203093530.93589-6-chiyutianyi@gmail.com>
+ <211203.86ilw5ssar.gmgdl@evledraar.gmail.com>
+In-Reply-To: <211203.86ilw5ssar.gmgdl@evledraar.gmail.com>
+From:   Han Xin <chiyutianyi@gmail.com>
+Date:   Tue, 7 Dec 2021 14:17:39 +0800
+Message-ID: <CAO0brD32=0Gc4_5-aJS5MYicV3uuuMkqpo3adVAELq21V8EvdA@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] unpack-objects: unpack_non_delta_entry() read data
+ in a stream
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>,
+        Han Xin <hanxin.hx@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 6, 2021 at 5:57 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Dec 3, 2021 at 9:59 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
 >
-> * en/keep-cwd (2021-12-01) 11 commits
->  - t2501: simplify the tests since we can now assume desired behavior
->  - dir: new flag to remove_dir_recurse() to spare the original_cwd
->  - dir: avoid incidentally removing the original_cwd in remove_path()
->  - stash: do not attempt to remove startup_info->original_cwd
->  - rebase: do not attempt to remove startup_info->original_cwd
->  - clean: do not attempt to remove startup_info->original_cwd
->  - symlinks: do not include startup_info->original_cwd in dir removal
->  - unpack-trees: add special cwd handling
->  - unpack-trees: refuse to remove startup_info->original_cwd
->  - setup: introduce startup_info->original_cwd
->  - t2501: add various tests for removing the current working directory
 >
->  Many git commands that deal with working tree files try to remove a
->  directory that becomes empty (i.e. "git switch" from a branch that
->  has the directory to another branch that does not would attempt
->  remove all files in the directory and the directory itself).  This
->  drops users into an unfamiliar situation if the command was run in
->  a subdirectory that becomes subject to removal due to the command.
->  The commands have been taught to keep an empty directory if it is
->  the directory they were started in to avoid surprising users.
+> On Fri, Dec 03 2021, Han Xin wrote:
+>
+> > diff --git a/t/t5590-unpack-non-delta-objects.sh b/t/t5590-unpack-non-d=
+elta-objects.sh
+> > new file mode 100755
+> > index 0000000000..01d950d119
+> > --- /dev/null
+> > +++ b/t/t5590-unpack-non-delta-objects.sh
+> > @@ -0,0 +1,76 @@
+> > +#!/bin/sh
+> > +#
+> > +# Copyright (c) 2021 Han Xin
+> > +#
+> > +
+> > +test_description=3D'Test unpack-objects when receive pack'
+> > +
+> > +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+> > +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> > +
+> > +. ./test-lib.sh
+> > +
+> > +test_expect_success "create commit with big blobs (1.5 MB)" '
+> > +     test-tool genrandom foo 1500000 >big-blob &&
+> > +     test_commit --append foo big-blob &&
+> > +     test-tool genrandom bar 1500000 >big-blob &&
+> > +     test_commit --append bar big-blob &&
+> > +     (
+> > +             cd .git &&
+> > +             find objects/?? -type f | sort
+>
+> ...are thse...
+>
+> > +     ) >expect &&
+> > +     PACK=3D$(echo main | git pack-objects --progress --revs test)
+>
+> Is --progress needed?
+>
 
-Very nicely written summary.
+"--progress" is not necessary.
+
+> > +'
+> > +
+> > +test_expect_success 'setup GIT_ALLOC_LIMIT to 1MB' '
+> > +     GIT_ALLOC_LIMIT=3D1m &&
+> > +     export GIT_ALLOC_LIMIT
+> > +'
+> > +
+> > +test_expect_success 'prepare dest repository' '
+> > +     git init --bare dest.git &&
+> > +     git -C dest.git config core.bigFileThreshold 2m &&
+> > +     git -C dest.git config receive.unpacklimit 100
+>
+> I think it would be better to just (could roll this into a function):
+>
+>         test_when_finished "rm -rf dest.git" &&
+>         git init dest.git &&
+>         git -C dest.git config ...
+>
+> Then you can use it with e.g. --run=3D3-4 and not have it error out
+> because of skipped setup.
+>
+> A lot of our tests fail like that, but in this case fixing it seems
+> trivial.
+>
+>
+
+OK, I will take it.
 
 >
->  Needs review.
->  There are some comments on earlier rounds; the latest one needs a
->  serious review or at least Acks from past commentors.
->  source: <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com>
+> > +'
+> > +
+> > +test_expect_success 'fail to unpack-objects: cannot allocate' '
+> > +     test_must_fail git -C dest.git unpack-objects <test-$PACK.pack 2>=
+err &&
+> > +     test_i18ngrep "fatal: attempting to allocate" err &&
+>
+> nit: just "grep", not "test_i18ngrep"
+>
+> > +     (
+> > +             cd dest.git &&
+> > +             find objects/?? -type f | sort
+>
+> ..."find" needed over just globbing?:
+>
+>     obj=3D$(echo objects/*/*)
+>
+> ?
 
-If it helps, there are two parts to the review:
-- Do we want this feature?
-- Does this patch series implement the feature correctly?
-Let me mention both:
-
-Much of the discussion from commenters was actually related to the
-first point.  While Peff suggested the idea, and Taylor and Phillip
-(Wood) spoke up in favor (and I obviously cared enough to write
-patches), =C3=86var didn't like it at first.  After a lot of back and
-forth, we eventually discovered some misunderstanding after which
-=C3=86var, while still not a proponent, dropped his strong objection ("I'm
-much more sympathetic to this approach now."[1])  I was unable to
-determine the opinion of other reviewers/commenters on this point,
-though if I had to guess I'd say Junio is at least marginally in
-favor.
-
-[1] https://lore.kernel.org/git/211129.868rx6g0e0.gmgdl@evledraar.gmail.com=
-/
-
-On the latter point, several folks provided useful suggestions.  I
-think I have addressed all their feedback so far, though no one has
-explicitly verified that.  Further review and/or acks to verify that I
-have indeed handled feedback to others' satisfaction would be welcome
-if anyone has the spare time.
+I tried to use "echo" instead of "find". It works well on my personal
+computer, but fails due to the "info/commit-graph" generated when CI on
+Github.
+So it seems that ".git/objects/??" will be more rigorous?
