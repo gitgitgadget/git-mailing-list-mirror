@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DBCFC433F5
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 15:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89C65C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 15:38:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237545AbhLGPe0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 10:34:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59862 "EHLO
+        id S234487AbhLGPlj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 10:41:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231377AbhLGPeZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 10:34:25 -0500
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13CB4C061574
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 07:30:55 -0800 (PST)
-Received: by mail-qt1-x830.google.com with SMTP id 8so14597547qtx.5
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 07:30:55 -0800 (PST)
+        with ESMTP id S233950AbhLGPli (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 10:41:38 -0500
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39DCEC061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 07:38:08 -0800 (PST)
+Received: by mail-oo1-xc30.google.com with SMTP id v30-20020a4a315e000000b002c52d555875so5506971oog.12
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 07:38:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ilSJRhB4zqQBp07Zq5KhpNGyltPHV721xkuaJp3teGw=;
-        b=XY+fviiICT8+zCF2zEAAx7sJn+D88HhXbink8NGDEW/VK+8sYI+/ef0Rhjv/W3kawW
-         YYbunpdKQ5ZcjY8rUPLP+TPUvPKT917djFeiHAlCVqGJK3spxa8zGiQ4Ceec8CGJ4lI0
-         Gz36W0qwibp3vnWYgNIqtQuoQ15/EtbdDmX+xhvABDEU3U6qnjnm385XFwQPxfJIyBGr
-         nx5wHws+eU3qx3Cv1XTKKxLO7g8A2EM8jG2VJ/nRqaIDyjitbGwtT/7EYpXZjNlsAoL7
-         2u2hKFsVG4ogx1EhTcz1ByKRUnLRXIgXUTwe0hZo3JG0v2QV8asD7Y+fpIdIJvjgPTiX
-         Mk5A==
+        bh=WtZCqizsFqBCouzvA0QYgxIAuCpfk9iZbj4I8Gc/kUc=;
+        b=F2ulL3FdBoHU4r7TXTXEgU7ZIgtm98zLpYyaX6n5YfSsNago8asRUKmmgBvCMg3WzM
+         Jku/vJYgTnYSnbALJMEpOsirJFNWglqNBZYsncQZ/KrdhIfH+QawC0fpx7X2SnNsFcAI
+         iGwqNnOq3/noPe2GqfjmPOluo+hRsX9rnAkVZGN6JFWIFigMky/nnXOpiNiEqKN6VBAY
+         mx3WBUs3pM/H8edGhO0o0xnn5RM9YPLfs8V5UcrruCbaZlGP2gluZGldRzv8v1i+8eRi
+         mlz9uyD8bgbgtflZidOBomy2AnK/cuKMZ8Cb1FKIzsyFMMap+UJwrzOuVJx04/G2cE+j
+         n0jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=ilSJRhB4zqQBp07Zq5KhpNGyltPHV721xkuaJp3teGw=;
-        b=4nYC0eakrPuGah7HzGF1qS2uMIHL1kMp4QlSxkBlhjyz023SqPjceHqxoNuePgPUio
-         BbZezdv+7e1Z2H+6cVJkc4yGQCQypeHagErLj4xnQYFDRpJp7JzknWFAMvg5bHPF27D8
-         RBWLAyYC/48nHrUvsma2ZNUZ1RV6VP1zTJAxc+Hr8LV0lykTrVzY2sbJJta5ORNLnQ8i
-         JY3YzKzbhVl9m7x8LSROdANUWLQ2gni5jOgbEWDpRqWDXx/Civ/r8G5wB4gzd1PTGFMy
-         kkA4ABJ2tffduvog7xBr74FbsuAzCZDPbJEuD91byMJO9SqfuWefCWXn+Z+rU7quLZWp
-         3EHg==
-X-Gm-Message-State: AOAM533dx/hSaV7rlLzETIerEzg3klmWW3zDRhN++kRBzy+0D8xjdMEd
-        fdMCEE8ZicbFPUg/LFTm2og=
-X-Google-Smtp-Source: ABdhPJzNUhj0CIXdBt4ey2YivdnOlJbEwtlqrPG6EsAY55lI2L42aloJFr3n836gOlFc0PZuhrp31A==
-X-Received: by 2002:a05:622a:5:: with SMTP id x5mr48892657qtw.110.1638891053852;
-        Tue, 07 Dec 2021 07:30:53 -0800 (PST)
+        bh=WtZCqizsFqBCouzvA0QYgxIAuCpfk9iZbj4I8Gc/kUc=;
+        b=K4O10HP87Qy8oQBeSjchVi8MZDnVnRtnos6rYmvjq1ZT7EK0emBR79b6a9YgeQY80c
+         s4U/IcMz426BPCH8DeqAv9k6QrypLXqskW1RdMPynD4VoJJJ2TcSU1Or7qynR3HbD30K
+         4NTARxwhg036gt7QnzUneg2na+nsuXay2a7FgJeCvi7ZcSM1eFNW6mVz2sFc6TrA8l68
+         /FArWBOV7hs2g88Ex/FmEl6Qu9PY/SsC1XuFJXKxPAb/Caqqf2R1HySW+Tx19cZKO7zn
+         xbsa3B0Vt54C+wAp2kVB623ST87q/JMUJ71r0hyaYldsKyjisIMCZa0F+1Agve2VsfjO
+         KMTw==
+X-Gm-Message-State: AOAM5336I9vH99F3235LXMj62Cpu6X0/1tr1PwSuhueoNF/peYB1SC+o
+        t9AMP6Y+2ehshhobQ+N1zuk=
+X-Google-Smtp-Source: ABdhPJyboMIwdKYvA8hZ5fy063E13OLsf3xzxeJbKa6IYd3/8ol2btwzrUXMQlHDyb75uJglpERMZA==
+X-Received: by 2002:a4a:5a43:: with SMTP id v64mr27483465ooa.26.1638891487431;
+        Tue, 07 Dec 2021 07:38:07 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:1d54:16a5:5c65:4b5? ([2600:1700:e72:80a0:1d54:16a5:5c65:4b5])
-        by smtp.gmail.com with ESMTPSA id u10sm23811qtx.3.2021.12.07.07.30.53
+        by smtp.gmail.com with ESMTPSA id g2sm3210399oic.35.2021.12.07.07.38.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Dec 2021 07:30:53 -0800 (PST)
-Message-ID: <865b99dd-0b18-9a07-49c1-3959a777c685@gmail.com>
-Date:   Tue, 7 Dec 2021 10:30:52 -0500
+        Tue, 07 Dec 2021 07:38:06 -0800 (PST)
+Message-ID: <c9437c89-9258-4034-9886-8a2aec46aa6b@gmail.com>
+Date:   Tue, 7 Dec 2021 10:38:05 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.2
-Subject: Re: [PATCH 11/17] builtin/pack-objects.c: --cruft with expiration
+Subject: Re: [PATCH 12/17] builtin/repack.c: support generating a cruft pack
 Content-Language: en-US
 To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
 Cc:     gitster@pobox.com, larsxschneider@gmail.com, peff@peff.net,
         tytso@mit.edu
 References: <cover.1638224692.git.me@ttaylorr.com>
- <37fda94785f1e689c7a7c32e69c6ff16fee7da4f.1638224692.git.me@ttaylorr.com>
+ <a05675ab834ac5e8bc3ab72847b0621a563e0e1b.1638224692.git.me@ttaylorr.com>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <37fda94785f1e689c7a7c32e69c6ff16fee7da4f.1638224692.git.me@ttaylorr.com>
+In-Reply-To: <a05675ab834ac5e8bc3ab72847b0621a563e0e1b.1638224692.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -70,52 +70,70 @@ X-Mailing-List: git@vger.kernel.org
 
 On 11/29/2021 5:25 PM, Taylor Blau wrote:
 
-> +static void enumerate_and_traverse_cruft_objects(struct string_list *fresh_packs)
+> +static int write_cruft_pack(const struct pack_objects_args *args,
+> +			    const char *pack_prefix,
+> +			    struct string_list *names,
+> +			    struct string_list *existing_packs,
+> +			    struct string_list *existing_kept_packs)
 > +{
-...
-> +	/*
-> +	 * Re-mark only the fresh packs as kept so that objects in
-> +	 * unknown packs do not halt the reachability traversal early.
-> +	 */
-> +	for (p = get_all_packs(the_repository); p; p = p->next)
-> +		p->pack_keep_in_core = 0;
-> +	mark_pack_kept_in_core(fresh_packs, 1);
-
-Are we ever going to recover this pack_keep_in_core state? Should we
-be saving it somewhere so we can return without mutating this state
-permanently?
-
-> +	if (prepare_revision_walk(&revs))
-> +		die(_("revision walk setup failed"));
-> +	if (progress)
-> +		progress_state = start_progress(_("Traversing cruft objects"), 0);
-> +	nr_seen = 0;
-> +	traverse_commit_list(&revs, show_cruft_commit, show_cruft_object, NULL);
+> +	struct child_process cmd = CHILD_PROCESS_INIT;
+> +	struct strbuf line = STRBUF_INIT;
+> +	struct string_list_item *item;
+> +	FILE *in, *out;
+> +	int ret;
 > +
-> +	stop_progress(&progress_state);
-> +}
+> +	prepare_pack_objects(&cmd, args);
 > +
->  static void read_cruft_objects(void)
->  {
->  	struct strbuf buf = STRBUF_INIT;
-> @@ -3515,7 +3597,7 @@ static void read_cruft_objects(void)
->  	mark_pack_kept_in_core(&discard_packs, 0);
+> +	strvec_push(&cmd.args, "--cruft");
+> +	if (cruft_expiration)
+> +		strvec_pushf(&cmd.args, "--cruft-expiration=%s",
+> +			     cruft_expiration);
+> +
+> +	strvec_push(&cmd.args, "--honor-pack-keep");
+> +	strvec_push(&cmd.args, "--non-empty");
+> +	strvec_push(&cmd.args, "--max-pack-size=0");
+
+This --max-pack-size is meaningless, right? The config that would change
+this is already ignored by 'git pack-objects'.
+
+> +		OPT_BIT(0, "cruft", &pack_everything,
+> +				N_("same as -a, pack unreachable cruft objects separately"),
+> +				   PACK_CRUFT | ALL_INTO_ONE),
+
+I can understand the use of OPT_BIT here. Keep in mind that --no-cruft would
+remove the '-a' option, if it already existed. Perhaps we should just use
+OPT_BOOL and update to add the ALL_INTO_ONE if PACK_CRUFT exists?
+
+> +		OPT_STRING(0, "cruft-expiration", &cruft_expiration, N_("approxidate"),
+> +				N_("with -C, expire objects older than this")),
+
+Here, --no-cruft-expiration will set cruft_expiration to NULL and not overwrite
+the --cruft option, as expected. Just pointing out that this is different than
+the option in 'git pack-objects'.
+
+> --- a/t/t5327-pack-objects-cruft.sh
+> +++ b/t/t5327-pack-objects-cruft.sh
+> @@ -358,4 +358,157 @@ test_expect_success 'expired objects are pruned' '
+>  	)
+>  '
 >  
->  	if (cruft_expiration)
-> -		die("--cruft-expiration not yet implemented");
-> +		enumerate_and_traverse_cruft_objects(&fresh_packs);
->  	else
->  		enumerate_cruft_objects();
+> +test_expect_success 'repack --cruft generates a cruft pack' '
+> +	git init repo &&
+> +	test_when_finished "rm -fr repo" &&
+> +	(
+> +		cd repo &&
+> +
+> +		test_commit reachable &&
+> +		git branch -M main &&
+> +		git checkout --orphan other &&
 
->  basic_cruft_pack_tests never
-> +basic_cruft_pack_tests 2.weeks.ago
+Here is a way to make objects unreachable!
 
-I'm surprised these tests didn't require any changes to adapt to the
-new expiration date. But I suppose none of the mtimes were older than
-two weeks ago?
-
-I continue to miss something in these tests, because I don't see how
-things are becoming unreachable.
+> +		test_commit unreachable &&
+> +
+> +		git checkout main &&
+> +		git branch -D other &&
+> +		git tag -d unreachable &&
 
 Thanks,
 -Stolee
