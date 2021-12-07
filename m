@@ -2,228 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79B96C433EF
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 19:28:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1C03C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 19:29:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231562AbhLGTbh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 14:31:37 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53211 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229953AbhLGTbg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 14:31:36 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D03D4154FAD;
-        Tue,  7 Dec 2021 14:28:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FNUDYnQM+aYl
-        8ASCqrhHR+Ij5/F4DarV9MwEMU/S/jo=; b=X2VwkpJg7kR8hQPWUqdDh9nWANhj
-        7cWdSWT8ttjZu/8f+vOVKcZqHZqckMEATXe2AKpImbdxRLVxCImE3PoqY5X7C5K+
-        E8VQymmCTrDQwo7Z+y16MJXml0fSgm8mYFPG1/RdnCDC3niRH9jQhUUf9bdUtUEi
-        vldWQyBCSocA2Q8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CA038154FAB;
-        Tue,  7 Dec 2021 14:28:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BFD8D154FA2;
-        Tue,  7 Dec 2021 14:28:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, chooglen@google.com, emilyshaffer@google.com,
-        avarab@gmail.com
-Subject: Re: [PATCH v5 1/2] branch: accept multiple upstream branches for
- tracking
-References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
-        <cover.1638859949.git.steadmon@google.com>
-        <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
-Date:   Tue, 07 Dec 2021 11:28:00 -0800
-In-Reply-To: <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
-        (Josh Steadmon's message of "Mon, 6 Dec 2021 23:12:07 -0800")
-Message-ID: <xmqqk0gg6wqn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CAED56D6-5793-11EC-A36F-98D80D944F46-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S231772AbhLGTdB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 14:33:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60832 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229489AbhLGTdB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 14:33:01 -0500
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA03CC061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 11:29:30 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id n22-20020a6563d6000000b0029261ffde9bso9326600pgv.22
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 11:29:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=DHPHAkOuMXG7JiwlSeRaGFG8aO6tQoLTpqT79IzTRtc=;
+        b=bH06DhHqx6QxG8xnM70qndP3LBcwKzKc6azU2/a00ygRb75nP1aRcK+RZEI9On93gB
+         rJYluN5rIx2QJ/rGoiwaW8uAuIi73ZzEVYhei2in5nNlqS+Vjp0+mhAEKpfw+h4z6s7l
+         lpkQ2RQ+hxYMUJvUglp7BHAy1GHNkeBxNb1LVdoR/YSNin2lolfv91Z4b4ZbGMXgelDv
+         EZHmQ2jfu+T4zdy7gnGWPFRj6uYVEBcXOfIMy0c8//o3jRBujytG+ujlz6WhLQumjtV5
+         6thwR/MxQkC2PJhJkl5N9AkmtLhL6nKhQPpFNNUWiLlz+rAMXTO753VlNrZQn4o/5rZj
+         U3Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=DHPHAkOuMXG7JiwlSeRaGFG8aO6tQoLTpqT79IzTRtc=;
+        b=B82N8bEYoFFp66YhLZGs2K771oyH57/M2i/1XZ22EhQ2M8EnaDZK+oA+pYK+H1eixx
+         +PH+wP5tskVmxZCzwSxTdQtzKwQYYjJlx0ZahUB67DLtkkYIEVmRsYJQG63cRVydGlow
+         N4O+Sg/KcSJiizuoMpArAuYDkNBKX3hf6XNzj2C++ppR+DbCgl3tMWefJWcNAi/8xnYB
+         nMuAYsH4LATtBhy/rH5wLYy2l0uXP2ZitIAofnvsP8nryH+hBCYU9nKSgaaZWsDEwPbQ
+         Csb5hVG7jgspQ/OTin40ur3xPRxVP8mG5E1/9CdZaIeTYTQtkXzSc8w0g+NyFRTYZSM/
+         RzGQ==
+X-Gm-Message-State: AOAM532lyE04WmJ6aUTLGINT3gBmN19GZIBsYCvhGbpiSa8Pp19Sw51W
+        nXSylLv1s65LohDwTlw4d2xLNTsDSshgLXxn9bohIOQDv/ZIFgGfNX5BcbtzrQtKxXl+019U+1Z
+        0mh8ChS7PM4UlqQA//vxo+exSAIReI7mtWOy2K634RATXz4QRHGZtIl1Chask3tg=
+X-Google-Smtp-Source: ABdhPJxyJqEaDUVLI1iBLWEO117OF5fl+38dLhHDL5ir/GhdhHGoU5UJ3mNJPSh6lMcmihWFO1rzhRJD9cZwsA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:244f:b0:4ab:1694:924 with SMTP
+ id d15-20020a056a00244f00b004ab16940924mr1049293pfj.74.1638905370282; Tue, 07
+ Dec 2021 11:29:30 -0800 (PST)
+Date:   Tue,  7 Dec 2021 11:29:25 -0800
+Message-Id: <20211207192925.67680-1-chooglen@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
+Subject: [PATCH] builtin/fetch: skip unnecessary tasks when using --negotiate-only
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Glen Choo <chooglen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+`git fetch --negotiate-only` does not fetch objects and thus, it should
+not perform certain auxiliary tasks like updating submodules, updating
+the commit graph, or running gc. Although send_pack() invokes `git fetch
+--negotiate-only` correctly, cmd_fetch() also reads config variables,
+leading to undesirable behavior, like updating submodules if
+`submodule.recurse=true`.
 
-> +static int install_branch_config_multiple_remotes(int flag, const char=
- *local, const char *origin,
-> +		struct string_list *remotes)
+Make cmd_fetch() return early if --negotiate-only was specified so that
+these auxiliary tasks are skipped.
 
-The line got overly long so perhaps cut the line after "*local,",
-as "origin" and "remotes" conceptually are closer together.
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+`git fetch --negotiate-only` is used during push negotiation to
+determine the reachability of commits. As its name implies, only
+negotiation is performed, not the actual fetching of objects. However,
+cmd_fetch() performs certain tasks with the assumption that objects are
+fetched:
 
-What is in the string list?  Names of refs at the remote "origin",
-instead of a single ref there?
+* Submodules are updated if enabled by recurse.submodules=true, but
+  negotiation fetch doesn't actually update the repo, so this doesn't
+  make sense (introduced in [1]).
+* Commit graphs will be written if enabled by
+  fetch.writeCommitGraph=true. But according to
+  Documentation/config/fetch.txt [2], this should only be done if a
+  pack-file is downloaded
+* gc is run, but according to [3], we only do this because we expect
+  `git fetch` to introduce objects
 
->  {
->  	const char *shortname =3D NULL;
->  	struct strbuf key =3D STRBUF_INIT;
-> -	int rebasing =3D should_setup_rebase(origin);
-> -
-> -	if (skip_prefix(remote, "refs/heads/", &shortname)
-> -	    && !strcmp(local, shortname)
-> -	    && !origin) {
-> -		warning(_("Not setting branch %s as its own upstream."),
-> -			local);
+Instead of disabling these tasks piecemeal, let's just make cmd_fetch()
+return early if --negotiate-only was given. To accommodate possible
+future options that don't fetch objects, I opted to introduce another
+`if` statement instead of putting the early return in the existing
+`if (negotiate_only)` block.
 
-When 'origin' is NULL in the original caller, it means a local
-tracking, and making sure we do not say "my 'master' branch builds
-on top of itself" makes sense.
+[1] 7dce19d374 (fetch/pull: Add the --recurse-submodules option, 2010-11-12)
+[2] 50f26bd035 (fetch: add fetch.writeCommitGraph config setting, 2019-09-02)
+[3] 131b8fcbfb (fetch: run gc --auto after fetching, 2013-01-26)
 
-> -		return 0;
-> -	}
-> +	int i, rebasing =3D should_setup_rebase(origin);
-> +
-> +	if (remotes->nr < 1)
-> +		BUG("must provide at least one remote for branch config");
-> +
-> +	if (!origin)
-> +		for (i =3D 0; i < remotes->nr; i++)
-> +			if (skip_prefix(remotes->items[i].string, "refs/heads/", &shortname=
-)
-> +			    && !strcmp(local, shortname)) {
-> +				warning(_("Not setting branch %s as its own upstream."),
-> +					local);
-> +				return 0;
+ builtin/fetch.c       | 22 +++++++++++++++++-----
+ t/t5516-fetch-push.sh | 12 ++++++++++++
+ 2 files changed, 29 insertions(+), 5 deletions(-)
 
-I am a bit surprised with this warning and early return before
-inspecting the remainder of the list.  When 'origin' is NULL,
-i.e. we are talking about the local building on top of another local
-branch, if the function is called for the local branch 'main' with
-'main' in the remotes list alone, we do want to issue the warning
-and exit without doing anything (i.e. degenerating to the original
-behaviour of taking a single string variable, when a string list
-with a single element is given).  But if the remotes list has 'main'
-and 'master', would we want to just "skip" the same one, but still
-handle the other ones as if the "same" branch were not in the list?
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f7abbc31ff..01865b5c09 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1996,6 +1996,17 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_fetch_options, builtin_fetch_usage, 0);
++
++	if (negotiate_only) {
++		/*
++		 * --negotiate-only should never recurse into
++		 * submodules, so there is no need to read .gitmodules.
++		 */
++		recurse_submodules = RECURSE_SUBMODULES_OFF;
++		if (!negotiation_tip.nr)
++			die(_("--negotiate-only needs one or more --negotiate-tip=*"));
++	}
++
+ 	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
+ 		int *sfjc = submodule_fetch_jobs_config == -1
+ 			    ? &submodule_fetch_jobs_config : NULL;
+@@ -2005,9 +2016,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		fetch_config_from_gitmodules(sfjc, rs);
+ 	}
+ 
+-	if (negotiate_only && !negotiation_tip.nr)
+-		die(_("--negotiate-only needs one or more --negotiate-tip=*"));
+-
+ 	if (deepen_relative) {
+ 		if (deepen_relative < 0)
+ 			die(_("Negative depth in --deepen is not supported"));
+@@ -2112,6 +2120,12 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		result = fetch_multiple(&list, max_children);
+ 	}
+ 
++	string_list_clear(&list, 0);
++
++	/* skip irrelevant tasks if objects were not fetched  */
++	if (negotiate_only)
++		return result;
++
+ 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
+ 		struct strvec options = STRVEC_INIT;
+ 		int max_children = max_jobs;
+@@ -2132,8 +2146,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		strvec_clear(&options);
+ 	}
+ 
+-	string_list_clear(&list, 0);
+-
+ 	prepare_repo_settings(the_repository);
+ 	if (fetch_write_commit_graph > 0 ||
+ 	    (fetch_write_commit_graph < 0 &&
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 8212ca56dc..732031085e 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -229,6 +229,18 @@ test_expect_success 'push with negotiation proceeds anyway even if negotiation f
+ 	test_i18ngrep "push negotiation failed" err
+ '
+ 
++test_expect_success 'push with negotiation does not attempt to fetch submodules' '
++	mk_empty submodule_upstream &&
++	test_commit -C submodule_upstream submodule_commit &&
++	git submodule add ./submodule_upstream submodule &&
++	mk_empty testrepo &&
++	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
++	test_commit -C testrepo unrelated_commit &&
++	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
++	git -c submodule.recurse=true -c protocol.version=2 -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main 2>err &&
++	! grep "Fetching submodule" err
++'
++
+ test_expect_success 'push without wildcard' '
+ 	mk_empty testrepo &&
+ 
+-- 
+2.33.GIT
 
-> @@ -75,8 +80,17 @@ int install_branch_config(int flag, const char *loca=
-l, const char *origin, const
-> =20
->  	strbuf_reset(&key);
->  	strbuf_addf(&key, "branch.%s.merge", local);
-> -	if (git_config_set_gently(key.buf, remote) < 0)
-> +	/*
-> +	 * We want to overwrite any existing config with all the branches in
-> +	 * "remotes". Override any existing config with the first branch, but=
- if
-> +	 * more than one is provided, use CONFIG_REGEX_NONE to preserve what
-> +	 * we've written so far.
-> +	 */
-> +	if (git_config_set_gently(key.buf, remotes->items[0].string) < 0)
->  		goto out_err;
-> +	for (i =3D 1; i < remotes->nr; i++)
-> +		if (git_config_set_multivar_gently(key.buf, remotes->items[i].string=
-, CONFIG_REGEX_NONE, 0) < 0)
-> +			goto out_err;
-> =20
->  	if (rebasing) {
->  		strbuf_reset(&key);
-> @@ -87,29 +101,62 @@ int install_branch_config(int flag, const char *lo=
-cal, const char *origin, const
->  	strbuf_release(&key);
-> =20
->  	if (flag & BRANCH_CONFIG_VERBOSE) {
-> -		if (shortname) {
-> -			if (origin)
-> -				printf_ln(rebasing ?
-> -					  _("Branch '%s' set up to track remote branch '%s' from '%s' by =
-rebasing.") :
-> -					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
-> -					  local, shortname, origin);
-> -			else
-> -				printf_ln(rebasing ?
-> -					  _("Branch '%s' set up to track local branch '%s' by rebasing.")=
- :
-> -					  _("Branch '%s' set up to track local branch '%s'."),
-> -					  local, shortname);
-> +		int plural =3D remotes->nr > 1;
-> +		int all_shortnames =3D 1;
-> +		const char *msg_fmt;
-> +		struct strbuf ref_string =3D STRBUF_INIT;
-> +
-> +		for (i =3D 0; i < remotes->nr; i++)
-> +			if (skip_prefix(remotes->items[i].string, "refs/heads/", &shortname=
-)) {
-> +				strbuf_addf(&ref_string, "'%s', ", shortname);
-> +			} else {
-> +				all_shortnames =3D 0;
-> +				strbuf_addf(&ref_string, "'%s', ", remotes->items[i].string);
-
-So, all_shortnames =3D=3D true means everything was a local branch in
-the 'origin' remote, and when it has a non-branch (like a tag),
-all_shortnames becomes false?
-
-> +			}
-> +		/* The last two characters are an extraneous ", ", so trim those. */
-> +		strbuf_setlen(&ref_string, ref_string.len - 2);
-
-As you are starting from an empty ref_string, a more idiomatic way
-to build concatenated string would be to prefix when you add a new
-item, e.g.
-
-	loop {
-		if (ref_string already has items)
-			ref_string.append(", ");
-		ref_string.append(this_item);
-	}
-
-> +		if (all_shortnames && origin) {
-> +			if (rebasing && plural)
-> +				msg_fmt =3D "Branch '%s' set up to track remote branches %s from '=
-%s' by rebasing.";
-
-What does it mean to keep my 'topic' branch up-to-date by rebasing
-on top of more than one remote sources?  By merging, I can sort-of
-understand (i.e. creating an octopus), but would it make sense to
-track more than one remote sources in general?  Is it common?
-
-When the benefit is not clear, it might make more sense not to do
-this when there are already multiple tracking sources defined for
-the original; it might be a mistake that we may not want to spread
-with the new option.
-
-Of course, it is very possible that I am missing a perfectly valid
-use case where having more than one makes good sense.  If so, please
-do not take the above comments as an objection, but adding some
-comments before the function to explain when having remote list with
-more than one items makes sense and how such a setting can be used
-to avoid future readers asking the same (stupid) question as I just
-did.
-
-
-> +			else if (rebasing && !plural)
-> +				msg_fmt =3D "Branch '%s' set up to track remote branch %s from '%s=
-' by rebasing.";
-> +			else if (!rebasing && plural)
-> +				msg_fmt =3D "Branch '%s' set up to track remote branches %s from '=
-%s'.";
-> +			else if (!rebasing && !plural)
-> +				msg_fmt =3D "Branch '%s' set up to track remote branch %s from '%s=
-'.";
-> +
-> +			printf_ln(_(msg_fmt), local, ref_string, origin);
-
-I am not sure how well the "plural" thing works with i18n.  It may
-suffice for the original in English to have only two choices between
-one or more-than-one, but not all languages are English.  Counting
-the actual number (I guess remotes->nr is it) and using Q_() to
-choose between the possible variants.  I think =C3=86var knows about this
-much better than I do.
-
-But if we are not doing this "set multiple" and instead go the
-"detect existing multiple and refrain from spreading the damage"
-route, all of that is moot.
-
-Thanks.
