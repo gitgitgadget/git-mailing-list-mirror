@@ -2,68 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FC4BC433F5
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 12:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29F68C433EF
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 13:01:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235539AbhLGMa6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 07:30:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43926 "EHLO
+        id S236805AbhLGNFS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 08:05:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230129AbhLGMa4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 07:30:56 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5755BC061574
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 04:27:26 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id z5so56729660edd.3
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 04:27:26 -0800 (PST)
+        with ESMTP id S236717AbhLGNFR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 08:05:17 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8193AC061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 05:01:46 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id o20so56681359eds.10
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 05:01:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=Lfur0wFXgMeGHY84yC5Su0KrkhBQeDk4OFbZabfJ4Xs=;
-        b=BcvgM0IC9s1FiBj3SRKSTvDH3ik6VaEe+nZN8hNebc7LigCXZtHOkFomqvhLcyWSH0
-         xITKKSwTZJFJyriqq5ZuedVW/4+kjtFy7G/OygMy41d26gPuV+AEkS90oKY4c95yavgr
-         m5jVs30Yb63dlrdsccWhMwcKZilnINCRv/Jg3EuxeDcUUwoqklLwT0ieBX2XZrc/sXR/
-         6xkqGBgk3ySyz+qg1rtlsyX5RnuF3YEd/RmXDhnIo7Z2U/oaueopTnTOVm0lMG9lU+vT
-         iR8z1/VKmMJqvnhhsSNjG9uYhsTl5FR52CKZ+JZ0vyu1OYiQmlUZVs+k0+NVTI+PAqjv
-         njQw==
+        bh=czmKAvgqHfYY8l7Nq0vEuYcd65MKRFtbnbweDRQwOGk=;
+        b=aor1pkz8qtuYPFC6JteNOimWeBIT1fvcdUyJp12RQNTN1iGnAZR+7usbQzqghkWEDC
+         6rDKZ9I41uskUxROs/4onWgij46wUQy1OCR8mZcOfz8iC6E5JrQiOi7KpuGFajzIfJV9
+         UusJ83xeu4XMeE4hGr2dEwcNbrZ5A+80zr5XknMNq02PS+XjhFpdvBa4qtEYveOVS4cz
+         Ls/NFIaOfCNczAdaIRRHGEqT3k/vKFIlzCPvIMvzGdpXdeqpVzEV1pR2A/MoMz28Vo6v
+         6IfRwXKDCuwvgS7Zux2mTdGinAVLLrsDlQfzXTTa+aqa1fbgXOo5Yolrl8fTjbtA+QcY
+         Owmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=Lfur0wFXgMeGHY84yC5Su0KrkhBQeDk4OFbZabfJ4Xs=;
-        b=muaQYLaNFPeQCY1LmC25SUFX4SYxFdIjEVHQKiS3yO+6y1gh6d/39y60yZciyBB6J1
-         9O2IYyzBcozKllp1mSO/T9A5GeluMq2zyiQ6JRf4rgvBMT/2d2V8mXG30rFCv7G2C1jG
-         iQYwcWVg+QoTDQ5l96lnacXwoIs7PcwTaFwQVz1e3yuDjvSsdwydxdiexcspzwmUz71h
-         yuD6URj6s1ZPlPCdet2v5v9PUU8ly2JjywRj0JMWiwyN4N7jiiQhWgxluBAmh2dnUtBG
-         8GYd7zrTMMU4iECmmdPbtyn0Id6/BwUaAYAqLac0mWL5j6l+SVKteiggv8cF4wEnQXtQ
-         BipA==
-X-Gm-Message-State: AOAM5311oQk+IjT/ITUN65CD7tutyjvfD0YoPBZR0aKMybAwo8/yGz+k
-        ijG+jeRm7qTOcPKHVZ/0dSIheRcwW2iTiw==
-X-Google-Smtp-Source: ABdhPJxbzIA8MJyZk9mCXLpVR3LA45M2oxXm2SDHqywKOHX0C27ItZu26W+BUsDvvVI8UfHoz7N6XA==
-X-Received: by 2002:a05:6402:1cb2:: with SMTP id cz18mr8759650edb.99.1638880044565;
-        Tue, 07 Dec 2021 04:27:24 -0800 (PST)
+        bh=czmKAvgqHfYY8l7Nq0vEuYcd65MKRFtbnbweDRQwOGk=;
+        b=HVr59RPoXiDO9pnTCFg14EIJUgYGXH3Rqedop2ZxZvT0DT5ofrWtKM+cx5sfSrYuUT
+         Jvu19rrxHifLIS+lUYmEpO2k+Q0vVzek1fvHY1Mlz/RqoKediWBrilgccDTaZb4m2Xb3
+         fLR6oMswv8IV5935O38Yf8EaoD5S6r+TJ4UOWCRNhNiEcKogUG2w6zTER/LTcXhgNWd6
+         H5N/s6OwcJvie4lxTuek5nGQ+Q2IuDiyHy59Bbqbv6+UHv3zgZHwj3pqNoWWdbIYZ/BE
+         qZ0JGykjOmbBsAD1/YtGYOIgToXJ6CdPMbnXHMYpg/67g032LRlyiLPFDpZOOS7PcBY5
+         hsTg==
+X-Gm-Message-State: AOAM5326jKaihHEqiZOt2Lja7KUV9+vGmUBejmJNNNenUFLyEwY71EHj
+        Snb5boP32T5XyOL7qYIfj+NzRk/I22avXA==
+X-Google-Smtp-Source: ABdhPJzeUhpUBbaGqlBw/4o+bBf1RDWNR6Lg+Rob5yRJ2K+LxczAtBoS2smsZ6eNI9gRtHufX8Qg0g==
+X-Received: by 2002:a17:907:e8a:: with SMTP id ho10mr52356707ejc.191.1638882101685;
+        Tue, 07 Dec 2021 05:01:41 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ar2sm8389116ejc.20.2021.12.07.04.27.23
+        by smtp.gmail.com with ESMTPSA id qk40sm8406046ejc.2.2021.12.07.05.01.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 04:27:23 -0800 (PST)
+        Tue, 07 Dec 2021 05:01:41 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1muZZ5-0018hk-64;
-        Tue, 07 Dec 2021 13:27:23 +0100
+        id 1mua6G-0019l8-Kn;
+        Tue, 07 Dec 2021 14:01:40 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, rsbecker@nexbridge.com, bagasdotme@gmail.com,
         newren@gmail.com, nksingh85@gmail.com, ps@pks.im,
         Neeraj Singh <neerajsi@microsoft.com>
-Subject: Re: [PATCH v2 1/3] core.fsyncmethod: add writeout-only mode
-Date:   Tue, 07 Dec 2021 13:18:31 +0100
+Subject: Re: [PATCH v2 2/3] core.fsync: introduce granular fsync control
+Date:   Tue, 07 Dec 2021 13:29:04 +0100
 References: <pull.1093.git.1638588503.gitgitgadget@gmail.com>
  <pull.1093.v2.git.1638845211.gitgitgadget@gmail.com>
- <e79522cbdd4feb45b062b75225475f34039d1866.1638845211.git.gitgitgadget@gmail.com>
+ <ff80a94bf9add8a6fabcd5146e5177edf5e35e49.1638845211.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <e79522cbdd4feb45b062b75225475f34039d1866.1638845211.git.gitgitgadget@gmail.com>
-Message-ID: <211207.861r2opplg.gmgdl@evledraar.gmail.com>
+In-reply-to: <ff80a94bf9add8a6fabcd5146e5177edf5e35e49.1638845211.git.gitgitgadget@gmail.com>
+Message-ID: <211207.86wnkgo9fv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -75,122 +75,233 @@ On Tue, Dec 07 2021, Neeraj Singh via GitGitGadget wrote:
 
 > From: Neeraj Singh <neerajsi@microsoft.com>
 >
-> This commit introduces the `core.fsyncmethod` configuration
+> This commit introduces the `core.fsync` configuration
+> knob which can be used to control how components of the
+> repository are made durable on disk.
+>
+> This setting allows future extensibility of the list of
+> syncable components:
+> * We issue a warning rather than an error for unrecognized
+>   components, so new configs can be used with old Git versions.
 
-Just a commit msg nit: core.fsyncMethod (I see the docs etc. are using
-it camelCased, good..
+Looks good!
 
-> diff --git a/compat/win32/flush.c b/compat/win32/flush.c
-> new file mode 100644
-> index 00000000000..75324c24ee7
-> --- /dev/null
-> +++ b/compat/win32/flush.c
-> @@ -0,0 +1,28 @@
-> +#include "../../git-compat-util.h"
+> * We support negation, so users can choose one of the default
+>   aggregate options and then remove components that they don't
+>   want. The user would then harden any new components added in
+>   a Git version update.
 
-nit: Just FWIW I think the better thing is '#include
-"git-compat-util.h"', i.e. we're compiling at the top-level and have
-added it to -I.
+I think this config schema makes sense, but just a (I think important)
+comment on the "how" not "what" of it. It's really much better to define
+config as:
 
-(I know a lot of compat/ and contrib/ and even main-tree stuff does
-that, but just FWIW it's not needed).
+    [some]
+    key = value
+    key = value2
 
-> +	if (!strcmp(var, "core.fsyncmethod")) {
-> +		if (!value)
-> +			return config_error_nonbool(var);
-> +		if (!strcmp(value, "fsync"))
-> +			fsync_method = FSYNC_METHOD_FSYNC;
-> +		else if (!strcmp(value, "writeout-only"))
-> +			fsync_method = FSYNC_METHOD_WRITEOUT_ONLY;
-> +		else
+Than:
 
-As a non-nit comment I think this config schema looks great so far.
+    [some]
+    key = value,value2
 
-> +			warning(_("unknown %s value '%s'"), var, value);
+The reason is that "git config" has good support for working with
+multi-valued stuff, so you can do e.g.:
 
-Just a suggestion maybe something slightly scarier like:
+    git config --get-all -z some.key
 
-    "unknown core.fsyncMethod value '%s'; config from future git version? ignoring requested fsync strategy"
+And you can easily (re)set such config e.g. with --replace-all etc., but
+for comma-delimited you (and users) need to do all that work themselves.
 
-Also using the nicer camelCased version instead of "var" (also helps
-translators with context...)
+Similarly instead of:
 
-> +int git_fsync(int fd, enum fsync_action action)
+    some.key = want-this
+    some.key = -not-this
+    some.key = but-want-this
+
+I think it's better to just have two lists, one inclusive another
+exclusive. E.g. see "log.decorate" and "log.excludeDecoration",
+"transfer.hideRefs"
+
+Which would mean:
+
+    core.fsync = want-this
+    core.fsyncExcludes = -not-this
+
+For some value of "fsyncExcludes", maybe "noFsync"? Anyway, just a
+suggestion on making this easier for users & the implementation.
+
+> This also supports the common request of doing absolutely no
+> fysncing with the `core.fsync=none` value, which is expected
+> to make the test suite faster.
+
+Let's just use the git_parse_maybe_bool() or git_parse_maybe_bool_text()
+so we'll accept "false", "off", "no" like most other such config?
+
+> Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+> ---
+>  Documentation/config/core.txt | 27 +++++++++----
+>  builtin/fast-import.c         |  2 +-
+>  builtin/index-pack.c          |  4 +-
+>  builtin/pack-objects.c        |  8 ++--
+>  bulk-checkin.c                |  5 ++-
+>  cache.h                       | 39 +++++++++++++++++-
+>  commit-graph.c                |  3 +-
+>  config.c                      | 76 ++++++++++++++++++++++++++++++++++-
+>  csum-file.c                   |  5 ++-
+>  csum-file.h                   |  3 +-
+>  environment.c                 |  1 +
+>  midx.c                        |  3 +-
+>  object-file.c                 |  3 +-
+>  pack-bitmap-write.c           |  3 +-
+>  pack-write.c                  | 13 +++---
+>  read-cache.c                  |  2 +-
+>  16 files changed, 164 insertions(+), 33 deletions(-)
+>
+> diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+> index dbb134f7136..4f1747ec871 100644
+> --- a/Documentation/config/core.txt
+> +++ b/Documentation/config/core.txt
+> @@ -547,6 +547,25 @@ core.whitespace::
+>    is relevant for `indent-with-non-tab` and when Git fixes `tab-in-indent`
+>    errors. The default tab width is 8. Allowed values are 1 to 63.
+>  
+> +core.fsync::
+> +	A comma-separated list of parts of the repository which should be
+> +	hardened via the core.fsyncMethod when created or modified. You can
+> +	disable hardening of any component by prefixing it with a '-'. Later
+> +	items take precedence over earlier ones in the list. For example,
+> +	`core.fsync=all,-pack-metadata` means "harden everything except pack
+> +	metadata." Items that are not hardened may be lost in the event of an
+> +	unclean system shutdown.
+> ++
+> +* `none` disables fsync completely. This must be specified alone.
+> +* `loose-object` hardens objects added to the repo in loose-object form.
+> +* `pack` hardens objects added to the repo in packfile form.
+> +* `pack-metadata` hardens packfile bitmaps and indexes.
+> +* `commit-graph` hardens the commit graph file.
+> +* `objects` is an aggregate option that includes `loose-objects`, `pack`,
+> +  `pack-metadata`, and `commit-graph`.
+> +* `default` is an aggregate option that is equivalent to `objects,-loose-object`
+> +* `all` is an aggregate option that syncs all individual components above.
+> +
+
+It's probably a *bit* more work to set up, but I wonder if this wouldn't
+be simpler if we just said (and this is partially going against what I
+noted above):
+
+== BEGIN DOC
+
+core.fsync is a multi-value config variable where each item is a
+pathspec that'll get matched the same way as 'git-ls-files' et al.
+
+When we sync pretend that a path like .git/objects/de/adbeef... is
+relative to the top-level of the git
+directory. E.g. "objects/de/adbeaf.." or "objects/pack/...".
+
+You can then supply a list of wildcards and exclusions to configure
+syncing.  or "false", "off" etc. to turn it off. These are synonymous
+with:
+
+    ; same as "false"
+    core.fsync = ":!*"
+
+Or:
+
+    ; same as "true"
+    core.fsync = "*"
+
+Or, to selectively sync some things and not others:
+
+    ;; Sync objects, but not "info"
+    core.fsync = ":!objects/info/**"
+    core.fsync = "objects/**"
+
+See gitrepository-layout(5) for details about what sort of paths you
+might be expected to match. Not all paths listed there will go through
+this mechanism (e.g. currently objects do, but nothing to do with config
+does).
+
+We can and will match this against "fake paths", e.g. when writing out
+packs we may match against just the string "objects/pack", we're not
+going to re-check if every packfile we're writing matches your globs,
+ditto for loose objects. Be reasonable!
+
+This metharism is intended as a shorthand that provides some flexibility
+when fsyncing, while not forcing git to come up with labels for all
+paths the git dir, or to support crazyness like "objects/de/adbeef*"
+
+More paths may be added or removed in the future, and we make no
+promises that we won't move things around, so if in doubt use
+e.g. "true" or a wide pattern match like "objects/**". When in doubt
+stick to the golden path of examples provided in this documentation.
+
+== END DOC
+
+
+It's a tad more complex to set up, but I wonder if that isn't worth
+it. It nicely gets around any current and future issues of deciding what
+labels such as "loose-object" etc. to pick, as well as slotting into an
+existing method of doing exclude/include lists.
+
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 857be7826f3..916c55d6ce9 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1204,11 +1204,13 @@ static void write_pack_file(void)
+>  		 * If so, rewrite it like in fast-import
+>  		 */
+>  		if (pack_to_stdout) {
+> -			finalize_hashfile(f, hash, CSUM_HASH_IN_STREAM | CSUM_CLOSE);
+> +			finalize_hashfile(f, hash, FSYNC_COMPONENT_NONE,
+> +					  CSUM_HASH_IN_STREAM | CSUM_CLOSE);
+
+Not really related to this per-se, but since you're touching the API
+everything goes through I wonder if callers should just always try to
+fsync, and we can just catch EROFS and EINVAL in the wrapper if someone
+tries to flush stdout, or catch the fd at that lower level.
+
+Or maybe there's a good reason for this...
+
+> [...]
+> +/*
+> + * These values are used to help identify parts of a repository to fsync.
+> + * FSYNC_COMPONENT_NONE identifies data that will not be a persistent part of the
+> + * repository and so shouldn't be fsynced.
+> + */
+> +enum fsync_component {
+> +	FSYNC_COMPONENT_NONE			= 0,
+
+I haven't read ahead much but in most other such cases we don't define
+the "= 0", just start at 1<<0, then check the flags elsewhere...
+
+> +static const struct fsync_component_entry {
+> +	const char *name;
+> +	enum fsync_component component_bits;
+> +} fsync_component_table[] = {
+> +	{ "loose-object", FSYNC_COMPONENT_LOOSE_OBJECT },
+> +	{ "pack", FSYNC_COMPONENT_PACK },
+> +	{ "pack-metadata", FSYNC_COMPONENT_PACK_METADATA },
+> +	{ "commit-graph", FSYNC_COMPONENT_COMMIT_GRAPH },
+> +	{ "objects", FSYNC_COMPONENTS_OBJECTS },
+> +	{ "default", FSYNC_COMPONENTS_DEFAULT },
+> +	{ "all", FSYNC_COMPONENTS_ALL },
+> +};
+> +
+> +static enum fsync_component parse_fsync_components(const char *var, const char *string)
 > +{
-> +	switch (action) {
-> +	case FSYNC_WRITEOUT_ONLY:
+> +	enum fsync_component output = 0;
 > +
-> +#ifdef __APPLE__
-> +		/*
-> +		 * on macOS, fsync just causes filesystem cache writeback but does not
-> +		 * flush hardware caches.
-> +		 */
-> +		return fsync(fd);
-> +#endif
+> +	if (!strcmp(string, "none"))
+> +		return output;
 > +
-> +#ifdef HAVE_SYNC_FILE_RANGE
-> +		/*
-> +		 * On linux 2.6.17 and above, sync_file_range is the way to issue
-> +		 * a writeback without a hardware flush. An offset of 0 and size of 0
-> +		 * indicates writeout of the entire file and the wait flags ensure that all
-> +		 * dirty data is written to the disk (potentially in a disk-side cache)
-> +		 * before we continue.
-> +		 */
+> +	while (string) {
+> +		int i;
+> +		size_t len;
+> +		const char *ep;
+> +		int negated = 0;
+> +		int found = 0;
 > +
-> +		return sync_file_range(fd, 0, 0, SYNC_FILE_RANGE_WAIT_BEFORE |
-> +						 SYNC_FILE_RANGE_WRITE |
-> +						 SYNC_FILE_RANGE_WAIT_AFTER);
-> +#endif
-> +
-> +#ifdef fsync_no_flush
-> +		return fsync_no_flush(fd);
-> +#endif
-> +
-> +		errno = ENOSYS;
-> +		return -1;
-> +
-> +	case FSYNC_HARDWARE_FLUSH:
-> +		/*
-> +		 * On some platforms fsync may return EINTR. Try again in this
-> +		 * case, since callers asking for a hardware flush may die if
-> +		 * this function returns an error.
-> +		 */
-> +		for (;;) {
-> +			int err;
-> +#ifdef __APPLE__
-> +			err = fcntl(fd, F_FULLFSYNC);
-> +#else
-> +			err = fsync(fd);
-> +#endif
-> +			if (err >= 0 || errno != EINTR)
-> +				return err;
-> +		}
-> +
-> +	default:
-> +		BUG("unexpected git_fsync(%d) call", action);
+> +		string = string + strspn(string, ", \t\n\r");
 
-Don't include such "default" cases, you have an exhaustive "enum", if
-you skip it the compiler will check this for you.
-
-> +	}
-> +}
-> +
->  static int warn_if_unremovable(const char *op, const char *file, int rc)
-
-Just a code nit: I think it's very much preferred if possible to have as
-much of code like this compile on all platforms. See the series at
-4002e87cb25 (grep: remove #ifdef NO_PTHREADS, 2018-11-03) is part of for
-a good example.
-
-Maybe not worth it in this case since they're not nested ifdef's.
-
-I'm basically thinking of something (also re Patrick's comment on the
-2nd patch) where we have a platform_fsync() whose return
-value/arguments/whatever capture this "I want to return now" or "you
-should be looping" and takes the enum_fsync_action" strategy.
-
-Then the git_fsync() would be the platform-independent looping etc., and
-another funciton would do the "one fsync at a time, maybe call me
-again".
-
-Maybe it would suck more, just food for thought... :)
+Aside from the "use a list" isn't this hardcoding some windows-specific
+assumptions with \n\r? Maybe not...
