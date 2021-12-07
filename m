@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7AA7C4332F
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 17:45:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9266FC43217
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 17:45:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240187AbhLGRtF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 12:49:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35996 "EHLO
+        id S240195AbhLGRtG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 12:49:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240176AbhLGRtC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 12:49:02 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E07A0C061756
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 09:45:31 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id o19-20020a1c7513000000b0033a93202467so36378wmc.2
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 09:45:31 -0800 (PST)
+        with ESMTP id S240175AbhLGRtD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 12:49:03 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 909CAC061748
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 09:45:32 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id u1so31049543wru.13
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 09:45:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HOTpe9FNENotMYcACPCrU+33ZDetlyOQNtsGAWihsVI=;
-        b=cYtGNmqb3bs3omc8lLO/fQe6rGR1BrzOqAdARb2HYxVXBVUXTztvbyM/QoFedjcdSI
-         9Cu/N66SQ2LnFjG9k5edRH2BFSZLAyB8gflaOmjN7Kq4U/XdTr56uR6Xv0oaK+SIVRL5
-         yWbBf6uyklnOSZBIxY+dBVbTBtZ33TU2WOvyy2AYFdOYDJdWJYZMPOhywYj/ldHU+Ulz
-         p47OVQN5roGIMR0OL5XRBvxQeNEi+KvOzpCqMCoTiU6g7fQnPrfyi5I/sif963C8E3y4
-         rmF8pP4P2Z7pHj6J64yKsdYxS1Mol1BBwlUdmjVbaIgct/SQs1e1slz27SRg8dxBcGGh
-         WhWg==
+        bh=rJ3GDWKJ0GCH/2sQjyhi9Wp9eandivSrWcGSEkqQkNE=;
+        b=lBlDuLugrAMpyMH0oRDVn82Kaz+ObDJxNnCVFH2cyAHirsGfWwjJwwBPimNPZG2B23
+         /Wp4tILzoasQ3mtzWSws0IoEgoq4qnNu3Nx/zoGWkMlifeGDRpIPsHVzkN1yoe8Q7jK1
+         yzSQo+U4mpXR+AUHlwLOSL63cF1Vx6ZkHRakOwJkPWc/rjnkEttAgja/meq5I8YwnUH+
+         TrquB2rwECiqJo2ItkCunz3pIiXyQba0+LXgY9c0KLROc333vPqlH4C5INHGhdoKWXue
+         DqtWS5eA6jJhi3kNn3jEAuPU5cBbtMvRGSNrN24EjEt1MfNoov84qmQD4DbupqzUvXpr
+         2YWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HOTpe9FNENotMYcACPCrU+33ZDetlyOQNtsGAWihsVI=;
-        b=RuKD9k5l1ec+TlnmUlnXNNB78mVkqpv3q6zAMotr56QBtwPYeHeobSxbL3msNI+Ahe
-         uHcbs4F1rWj/PVPgzEooCKtO8BgCTzvmwIhBd595Tm3TUHlM0DTlwT/AWw9MSHZZmHc1
-         wobriszRMocgAcstkded3mheIBjPvCStGmuGfubFjXj480kNd3kPWjfmbG9BS+iLiOGJ
-         MdCWFmMDBmgnqcLMvn++9vtsJwYKJNotqGj3MslVhBZaGWl1/5NbN5DAgM6Tc0As+ebW
-         v3AXmXf0AnR/WkyShPAn7FllxlxDZrWw7pZdCIPYB0PoU2OczxZFUgrvyZVbY/3xQ6ke
-         6FZg==
-X-Gm-Message-State: AOAM531VtQDzDej/eCUMm4LsCgji6o/s3yOVYBrAm0GVqU/WXNjg4+uP
-        j96OyVncbJQnHbVnfv8TxGTViH+Mh2Y=
-X-Google-Smtp-Source: ABdhPJzCEjrDOY5fd3GAOrv2a52UZWRdQS7wIjeWqygICqZ3owkHfEJfZ1olo3i/vy7x/3Hh0yIemg==
-X-Received: by 2002:a1c:4d3:: with SMTP id 202mr8750534wme.174.1638899130252;
+        bh=rJ3GDWKJ0GCH/2sQjyhi9Wp9eandivSrWcGSEkqQkNE=;
+        b=05LRqGs3WvRIRqvY9HL0DJIlIqjfNWxr+0aDnZOmSAytc4oTlxImFNuRAK+nA+H3Yg
+         x+wyv2QeJBuW8cpk4wPZug804H6KCH0Ehs+nXMCUy+K/TGDkBr4gqLwz59MmoIfXrM0u
+         /rQhpta9nH/7sdXBizw4ph6PIXAE7HK9d0AS3F1h0Z4SeEyqxlwJzIcn8r5OEEHF3b9Y
+         BSbGUsT+Cilz/CZTD7jmmmb2vqv3wXk7R+geqhiTozU7X8+9Jj6l0V+0SBRz73+qDlUj
+         S1YlsROP35AsjSVeQut7nXQgwJWzuO11BdOtMTT3M0iqc9ZhiBL7Ro+rsYd+VBYAvCrn
+         gt5Q==
+X-Gm-Message-State: AOAM533iICZOuIKKK4dKOzcXlC+nfXBsg0ikkdTtSJMS23jWp+y1VEv3
+        gLE2WUVb7Ym1N37Ilj/DLQBMeftA/VE=
+X-Google-Smtp-Source: ABdhPJwAnAzxOGrXnJJ77v/nbX7YJhYyTBaTs3AGE3LjRDO8i2P1sr5brGQrFjabhPywmDvENagJ3A==
+X-Received: by 2002:a5d:4575:: with SMTP id a21mr54398410wrc.193.1638899130996;
         Tue, 07 Dec 2021 09:45:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x13sm364720wrr.47.2021.12.07.09.45.29
+        by smtp.gmail.com with ESMTPSA id e18sm369293wrs.48.2021.12.07.09.45.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 09:45:29 -0800 (PST)
-Message-Id: <eab71ab008e690ddb06d8ec5c27257b90ef26d2a.1638899124.git.gitgitgadget@gmail.com>
+        Tue, 07 Dec 2021 09:45:30 -0800 (PST)
+Message-Id: <47fef87eb4a614fb53d703152079cdd64b623814.1638899124.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
 References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Dec 2021 17:45:20 +0000
-Subject: [PATCH 06/10] reftable: fix resource warning
+Date:   Tue, 07 Dec 2021 17:45:21 +0000
+Subject: [PATCH 07/10] reftable: fix NULL derefs in error paths
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,66 +66,41 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This would trigger in the unlikely event that we are compacting, and the next
-available file handle is 0.
+Spotted by Coverity.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/stack.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ reftable/reader.c | 3 ++-
+ reftable/stack.c  | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/reftable/reader.c b/reftable/reader.c
+index 006709a645a..8d308d858f8 100644
+--- a/reftable/reader.c
++++ b/reftable/reader.c
+@@ -796,6 +796,7 @@ int reftable_reader_print_file(const char *tablename)
+ 	reftable_table_from_reader(&tab, r);
+ 	err = reftable_table_print(&tab);
+ done:
+-	reftable_reader_free(r);
++	if (r)
++		reftable_reader_free(r);
+ 	return err;
+ }
 diff --git a/reftable/stack.c b/reftable/stack.c
-index df5021ebf08..10dfd370e8e 100644
+index 10dfd370e8e..eb03b6c74f6 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
-@@ -877,7 +877,7 @@ static int stack_compact_range(struct reftable_stack *st, int first, int last,
- 	struct strbuf new_table_path = STRBUF_INIT;
- 	int err = 0;
- 	int have_lock = 0;
--	int lock_file_fd = 0;
-+	int lock_file_fd = -1;
- 	int compact_count = last - first + 1;
- 	char **listp = NULL;
- 	char **delete_on_success =
-@@ -911,7 +911,7 @@ static int stack_compact_range(struct reftable_stack *st, int first, int last,
- 	}
- 	/* Don't want to write to the lock for now.  */
- 	close(lock_file_fd);
--	lock_file_fd = 0;
-+	lock_file_fd = -1;
+@@ -707,7 +707,8 @@ done:
+ 	strbuf_release(&temp_tab_file_name);
+ 	strbuf_release(&tab_file_name);
+ 	strbuf_release(&next_name);
+-	reftable_writer_free(wr);
++	if (wr)
++		reftable_writer_free(wr);
+ 	return err;
+ }
  
- 	have_lock = 1;
- 	err = stack_uptodate(st);
-@@ -932,7 +932,7 @@ static int stack_compact_range(struct reftable_stack *st, int first, int last,
- 
- 		sublock_file_fd = open(subtab_lock.buf,
- 				       O_EXCL | O_CREAT | O_WRONLY, 0644);
--		if (sublock_file_fd > 0) {
-+		if (sublock_file_fd >= 0) {
- 			close(sublock_file_fd);
- 		} else if (sublock_file_fd < 0) {
- 			if (errno == EEXIST) {
-@@ -1013,7 +1013,7 @@ static int stack_compact_range(struct reftable_stack *st, int first, int last,
- 		goto done;
- 	}
- 	err = close(lock_file_fd);
--	lock_file_fd = 0;
-+	lock_file_fd = -1;
- 	if (err < 0) {
- 		err = REFTABLE_IO_ERROR;
- 		unlink(new_table_path.buf);
-@@ -1050,9 +1050,9 @@ done:
- 		listp++;
- 	}
- 	free_names(subtable_locks);
--	if (lock_file_fd > 0) {
-+	if (lock_file_fd >= 0) {
- 		close(lock_file_fd);
--		lock_file_fd = 0;
-+		lock_file_fd = -1;
- 	}
- 	if (have_lock) {
- 		unlink(lock_file_name.buf);
 -- 
 gitgitgadget
 
