@@ -2,222 +2,209 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7071C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 07:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE569C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 08:24:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229669AbhLGHSW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 02:18:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54278 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbhLGHSU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 02:18:20 -0500
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1532C061746
-        for <git@vger.kernel.org>; Mon,  6 Dec 2021 23:14:50 -0800 (PST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1muUgY-0001mI-Ax; Tue, 07 Dec 2021 08:14:46 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1muUgY-003B3K-9w; Tue, 07 Dec 2021 08:14:45 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1muUgX-0001hu-3s; Tue, 07 Dec 2021 08:14:45 +0100
-Date:   Tue, 7 Dec 2021 08:14:42 +0100
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?QmrDtnJuIEzDpHNzaWc=?= <b.laessig@pengutronix.de>
-Subject: Re: Regression in 8d92fb292706 ("dir: replace exponential algorithm
- with a linear one")
-Message-ID: <20211207071442.ajkcl5hpwwbze2lx@pengutronix.de>
-References: <20211206121639.o4a4tdzlijnhnjqz@pengutronix.de>
- <CABPp-BEEpboXxs6dghCagj2oXkXKX9aNQGLmUmQRa5m3jj2--w@mail.gmail.com>
+        id S232504AbhLGI2P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 03:28:15 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44887 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232440AbhLGI2O (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 7 Dec 2021 03:28:14 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 39A0E5C0254;
+        Tue,  7 Dec 2021 03:24:44 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Tue, 07 Dec 2021 03:24:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm2; bh=ps8pFRNlkDbnXRWkCj+h2JNsHbx
+        1/XZhjp3xSFpOR60=; b=VwbtYT7ObTvhHP0kcXQ4tr/aH7eqW5RKxLexmbPKDxw
+        GQ2sRLmtGqUV5CcGihCsLWPO6TCJR09tq80DSNr5BUeyP5xKJOlB+cNY2JhtlfKz
+        zzpyKARFiZXHlHWu+8SGwMMC5K0FjJ0kekG3hZCEW9vkISaks8qlb2bK3P6yU10q
+        nEoNsMyjh0ynn79ln238boUvXMXkOwFui58Uy2Tdb7GfVPEAvHeJJ5YtW7V17G9Z
+        U7whHEmjYsG5PF4rEbr4o75R8cnuRioO0RfWxYoRm9oVs7F0UybgnJ31djzkLCvI
+        mfluoMuSCAeEpmquBVoZ6da6ExuX23hsCnOxCbPiNgw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=ps8pFR
+        NlkDbnXRWkCj+h2JNsHbx1/XZhjp3xSFpOR60=; b=DkWSKWUPx4DTZMBFy3c/Uy
+        8XSFnFUQBHO2I+IGcw06Fy+oH9wNplaH83fI4+skDC2g/RdEPQx/1JqcPAURhLD8
+        HLUWn1d9MgrkZZ9RGYrQ1LP9rHPhRhWdIpu72GSrg8Xeoc40kDLwLl/z6dVOEfOB
+        piHuXc0U6m8FfMpfXelO4OoETABHgVTDMADq4U3Zl6/aqmK4qFiD+QKgIkrXdXAZ
+        jCgVWMnBu7zYc5jz7Jg8Z0nMFzZtju7tXLvRfoVvLb5M5t/nRqKDBTl6k/Ubt7tH
+        swYHltx3HIvaBTvNLa+fjgAItFWBMIVLd6MRSTBz2rNDX1MFsk0NSIkMdv4brylg
+        ==
+X-ME-Sender: <xms:SxqvYdNBzlug80-BGGTKH_eo0WgHhxVAjL4jqyIOTK6PSGDHe8jv7A>
+    <xme:SxqvYf-0b1ZDy0enrha4BT-9OC0JYA5W8w4y5DOyJmQvU89JMUuLsy6vh0Gv4Xlxh
+    GMtkqg2QSnctZ0m9A>
+X-ME-Received: <xmr:SxqvYcSCoR42brjcv9L0_c7WfL5tWW1niXs3ZQKVR0YBnF2LqpPFAxK9uYCU8Arq0j9piaHcHR4plH94NSSEHQ3JAlCtqAqTJpUmIhq_EBu-MThT_AgDu7Ez>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrjeeggdduvddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeejjedtiefggeekgfejheevveejjeevuedvtdeikeffveelgeelhffggfejjeeffeen
+    ucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:SxqvYZsx1O_Zgy2G19KWgowWXxOi0FOa6SL3WoDgWbm37MGfBuV27Q>
+    <xmx:SxqvYVclEiOBDXWMCSSraKnv_1wrfASPvjnD_mOLgiX6qlDxwp6KJA>
+    <xmx:SxqvYV2sYJu3fI6rDNmH3ieMHuDPeRaaTQyk-Qf1vioHkZ6sPd3OTA>
+    <xmx:TBqvYWrm5fVkCOfzotIaDNh2jP58quA6qItvna8av8IbkgbIuwyLQw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Dec 2021 03:24:43 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 9f05d633 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 7 Dec 2021 09:54:23 +0000 (UTC)
+Date:   Tue, 7 Dec 2021 09:24:00 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Jeff King <peff@peff.net>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Waleed Khan <me@waleedkhan.name>, git@vger.kernel.org
+Subject: Re: Bug report: Strange behavior with `git gc` and
+ `reference-transaction` hook
+Message-ID: <Ya8aIAAOlValUL2o@ncase>
+References: <CAKjfCeBcuYC3OXRVtxxDGWRGOxC38Fb7CNuSh_dMmxpGVip_9Q@mail.gmail.com>
+ <CAGyf7-FoRyVtQHa2ETQtRA6fD7x0GDhKVPg+eAajhgPNrsw_OQ@mail.gmail.com>
+ <YZaWqTwPOyQz0/mu@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="iett5ubrmf2b7xdn"
+        protocol="application/pgp-signature"; boundary="jJs51Zi5GOLT8umN"
 Content-Disposition: inline
-In-Reply-To: <CABPp-BEEpboXxs6dghCagj2oXkXKX9aNQGLmUmQRa5m3jj2--w@mail.gmail.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+In-Reply-To: <YZaWqTwPOyQz0/mu@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---iett5ubrmf2b7xdn
-Content-Type: text/plain; charset=iso-8859-1
+--jJs51Zi5GOLT8umN
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Thu, Nov 18, 2021 at 01:08:41PM -0500, Jeff King wrote:
+> [+cc pks]
+>=20
+> On Wed, Nov 17, 2021 at 04:52:46PM -0800, Bryan Turner wrote:
+>=20
+> > > The expected behavior would be that the latest reference transaction
+> > > hook refers to the state of the references on disk. That is, either
+> > > `master` should point to 0 (be deleted), or it should have said that
+> > > `master` pointed to `e197d1`.
+> > >
+> > > But if we actually examine `master`, it's set to `e197d1`, just as you
+> > > would expect. The GC should have been a no-op overall.
+> >=20
+> > One of the subtasks of "git gc" is "git pack-refs". If you inspect in
+> > more detail, I suspect you'll find that "refs/heads/master" was loose
+> > before "git gc" ran (as in, there was a file
+> > "$GIT_DIR/refs/heads/master") and "packed-refs" either didn't have a
+> > "refs/heads/master" entry or had a different hash. (Loose refs always
+> > "win" over packed, since ref updates only write loose refs.)
+>=20
+> It seems totally broken to me that we'd trigger the
+> reference-transaction hook for ref packing. The point of the hook is to
+> track logical updates to the refs. But during ref packing that does not
+> change at all; the value remains the same. So I don't think we should be
+> triggering the hook at all, let alone with confusing values.
+>=20
+> This snippet shows a simple case that I think is wrong:
+>=20
+> -- >8 --
+> git init -q repo
+> cd repo
+>=20
+> cat >.git/hooks/reference-transaction <<\EOF
+> #!/bin/sh
+> echo >&2 "=3D=3D> reference-transaction $*"
+> sed 's/^/  /'
+> EOF
+> chmod +x .git/hooks/reference-transaction
+>=20
+> echo >&2 "running commit..."
+> git commit --allow-empty -qm foo
+> echo >&2 "running pack-refs..."
+> git pack-refs --all --prune
+> -- >8 --
+>=20
+> It produces:
+>=20
+>   running commit...
+>   =3D=3D> reference-transaction prepared
+>     0000000000000000000000000000000000000000 77bcab0d950aee3021e8aa13a15d=
+40e7a9a5f71b HEAD
+>     0000000000000000000000000000000000000000 77bcab0d950aee3021e8aa13a15d=
+40e7a9a5f71b refs/heads/main
+>   =3D=3D> reference-transaction committed
+>     0000000000000000000000000000000000000000 77bcab0d950aee3021e8aa13a15d=
+40e7a9a5f71b HEAD
+>     0000000000000000000000000000000000000000 77bcab0d950aee3021e8aa13a15d=
+40e7a9a5f71b refs/heads/main
+>   running pack-refs...
+>   =3D=3D> reference-transaction prepared
+>     0000000000000000000000000000000000000000 77bcab0d950aee3021e8aa13a15d=
+40e7a9a5f71b refs/heads/main
+>   =3D=3D> reference-transaction committed
+>     0000000000000000000000000000000000000000 77bcab0d950aee3021e8aa13a15d=
+40e7a9a5f71b refs/heads/main
+>   =3D=3D> reference-transaction prepared
+>     77bcab0d950aee3021e8aa13a15d40e7a9a5f71b 0000000000000000000000000000=
+000000000000 refs/heads/main
+>   =3D=3D> reference-transaction committed
+>     77bcab0d950aee3021e8aa13a15d40e7a9a5f71b 0000000000000000000000000000=
+000000000000 refs/heads/main
+>=20
+> I think the final four invocations should be skipped entirely. They're
+> pointless at best (nothing actually changed), and extremely misleading
+> at worst (they look like the ref ended up deleted!).
+>=20
+> -Peff
 
-first of all thanks for addressing my report, also to brian.
+Yeah, I agree that this is something that is totally misleading.
 
-On Mon, Dec 06, 2021 at 09:29:59PM -0800, Elijah Newren wrote:
-> On Mon, Dec 6, 2021 at 4:16 AM Uwe Kleine-K=F6nig
-> <u.kleine-koenig@pengutronix.de> wrote:
-> > I admit this is somewhat of a corner case, still it happens in the
-> > reality of our admin team ...
-> > Initially this was noticed after upgrading the OS from Debian buster
-> > (with git 2.20.1) to Debian bullseye (with git 2.30.2).
-> >
-> > (wgit is just a wrapper for git to call it from my ~/src/git.)
-> >
-> > This is the good ("old") case:
-> >
-> >         uwe@taurus:~/tmp/8d92fb29270$ wgit version
-> >         git version 2.25.2.7.g0bbd0e8b5233
-> >
-> >         uwe@taurus:~/tmp/8d92fb292706$ wgit init
-> >         Initialized empty Git repository in /home/uwe/tmp/8d92fb292706/=
-=2Egit/
-> >
-> >         uwe@taurus:~/tmp/8d92fb292706$ mkdir subdir
-> >         uwe@taurus:~/tmp/8d92fb292706$ cd subdir/
-> >         uwe@taurus:~/tmp/8d92fb292706/subdir$ wgit init
-> >         Initialized empty Git repository in /home/uwe/tmp/8d92fb292706/=
-subdir/.git/
-> >         uwe@taurus:~/tmp/8d92fb292706/subdir$ cd ..
-> >
-> >         uwe@taurus:~/tmp/8d92fb292706$ echo content > subdir/somefile
-> >         uwe@taurus:~/tmp/8d92fb292706$ wgit add subdir/somefile
-> >         uwe@taurus:~/tmp/8d92fb292706$ wgit status
-> >         On branch master
-> >
-> >         No commits yet
-> >
-> >         Changes to be committed:
-> >           (use "git rm --cached <file>..." to unstage)
-> >                 new file:   subdir/somefile
->=20
-> Eek, that's bad.  I think there's a number of dragons going down that rou=
-te.
+For what it's worth, we also hit a similar case in production at GitLab,
+where we use the hook to do voting on ref updates across different
+nodes. Sometimes we observed different votes on a subset of nodes, and
+it took me quite some time to figure out that this was dependent on
+whether a ref was packed or not. We're now filtering out transactions
+which consist only of force-deletions [1], which are _likely_ to be
+cleanups of such packed refs. But this is very clearly a hack, and I
+agree that calling the hook for=20
 
-Yes, as soon as you start to checkout files in one of the involved
-repositories you implicitly change the other one. In this case git is
-only used to track files in /etc and elsewhere, and there are two
-mechanisms to track them. (Don't ask for the reasons, I don't know them.
-:-) In this setup (I think) the dragons should be well fixed to their
-chains.
+In the end, these really are special cases of how the "files" backend
+works and thus are implementation details which shouldn't be exposed to
+the user at all. With these implementation details exposed, we'll start
+to see different behaviour of when the hook is executed depending on
+which ref backend you use, which is even worse compared to the current
+state where it's at least consistently misleading.
 
-> > with 8d92fb292706, the following happens:
-> >
-> >         uwe@taurus:~/tmp/8d92fb292706$ wgit version
-> >         git version 2.25.2.8.g8d92fb292706
-> >         uwe@taurus:~/tmp/8d92fb292706$ wgit init
-> >         Initialized empty Git repository in /home/uwe/tmp/8d92fb292706/=
-=2Egit/
-> >         uwe@taurus:~/tmp/8d92fb292706$ mkdir subdir
-> >         uwe@taurus:~/tmp/8d92fb292706$ cd subdir/
-> >         uwe@taurus:~/tmp/8d92fb292706/subdir$ wgit init
-> >         Initialized empty Git repository in /home/uwe/tmp/8d92fb292706/=
-subdir/.git/
-> >         uwe@taurus:~/tmp/8d92fb292706/subdir$ cd ..
-> >         uwe@taurus:~/tmp/8d92fb292706$ echo content > subdir/somefile
-> >         uwe@taurus:~/tmp/8d92fb292706$ wgit add subdir/somefile
->=20
-> Not optimal; more on this below.
->=20
-> >         uwe@taurus:~/tmp/8d92fb292706$ wgit status
-> >         On branch master
-> >
-> >         No commits yet
-> >
-> >         Untracked files:
-> >           (use "git add <file>..." to include in what will be committed)
-> >                 subdir/
-> >
-> >         nothing added to commit but untracked files present (use "git a=
-dd" to track)
->=20
-> This part looks good to me.
->=20
-> > So git after 8d92fb292706 doesn't add files from a subdirectory if
-> > said subdirectory is tracked in git, too.
-> >
-> > While I'm not sure which of the two behaviours is the bogus one, this is
-> > a change in behaviour that I guess wasn't intended in 8d92fb292706.
->=20
-> I put some effort separate from that commit into avoiding accidentally
-> recursing into nested git dirs; see e.g. commit 09487f2cba ("clean:
-> avoid removing untracked files in a nested git repository",
-> 2019-09-17).  So, I was slightly surprised that some other commit
-> hadn't fixed this.
->=20
-> However, it's not all that surprising to me that 8d92fb292706 affected
-> this.  Prior to that commit, we visited untracked paths which were n
-> directories deep a ridiculous 2^n times.  But what made it even more
-> fun was that the status returned for any given path (tracked, ignored,
-> not interesting to the traversal, etc.) was not always the same; later
-> traversals might return something different than earlier traversals.
-> That confusion made it real "fun" trying to ensure no regressions when
-> reducing the number of visits to any given path from 2^n down to 1.
-> The fact that side effects of the traversals (the population of the
-> dir.entries and dir.ignored) could have essentially functioned to
-> override a later traversal's return status certainly didn't help; it
-> was such a mess.
->=20
-> But, interestingly, the fixed behavior here also depends pretty
-> strongly on commit b9670c1f5e ("dir: fix checks on common prefix
-> directory", 2019-12-19) which came months earlier.  This is
-> particularly important in combination with the following comment from
-> dir.h:
->     /**
->      * If set, recurse into a directory that looks like a Git directory.
->      * Otherwise it is shown as a directory.
->      */
->     DIR_NO_GITLINKS =3D 1<<3,
-> which suggests that cmd_add() (which didn't set this flag) should have
-> never been recursing into a Git-tracked directory.  In other words,
-> this was a bug all along.
->=20
-> > Is this something that needs fixing?
->=20
-> I agree with brian elsewhere in this thread that not adding the file
-> is correct.  However, two points:
->=20
-> * I would prefer to see a warning/error from git add when it doesn't
-> add a path  (Any takers?  #leftoverbits maybe?)
+As Peff said, the hook should really only track logical changes and not
+expose any implementation details.
 
-Agreed, also maybe return an exit code !=3D 0?
+Patrick
 
-> * It is possible that one might want to be able to force the addition
-> of files to an outer repository despite existing within a directory
-> tracked by an inner git repository, perhaps with a double `--force`
-> being passed to git-add (much like git-clean allows).  If so, that
-> could be implemented via the addition of
->     dir.flags |=3D DIR_NO_GITLINKS;
-> to cmd_add() when the double force is detected.
+[1]: https://gitlab.com/gitlab-org/gitaly/-/blob/3ef55853e9e161204464868390=
+d97d1a1577042d/internal/gitaly/hook/referencetransaction.go#L58
 
-I think this would be good.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---iett5ubrmf2b7xdn
+--jJs51Zi5GOLT8umN
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmGvCd4ACgkQwfwUeK3K
-7AkToQgAneUodj/UByAgQ5T18AUPITsoJE0U1OOyvfSBdVmYwbaKxHnD6FQI4f7b
-d4u5etCUGSwWfjP2wdWI22V5oSu7Mt3OPK2AK6qzUH7ktwsZq/bkCyIH9Eq1VQWa
-VXty+U1+7u/+9u0vmTtbfS0kMFqRqClX1D4CogjHMkG1abWXZyutsLDQdFOBH97b
-o7z8RwgHFJ/GRMTiFeulWagP3aT/y+hgN08zXuZVXoun+35ka5ILNSAqEFDsEeuA
-3Va4yybFjb60n17+STJWIIB0tsDVUY9Fyk6/1akQ/Bo0cCZ/N2fAoHFG7SCuLao1
-gyXPipZ8vJLgjjrrUI7gJVXEu3TCMQ==
-=aaZs
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmGvGh8ACgkQVbJhu7ck
+PpTCFQ/+KitA3RK31gv+9xuds1fIqH4IwvMH1AzLt5uZmR4Wb6lMo1XZEWU1GAlW
+wHSdu6qFt9bfdUP5xGm/mB9xuSFc3rbUEmzWKIRQHGOHiDO0srsqopExByi3cKjh
+28R1t/57/XjKyCbyKaSgdST328EhK1KWfmIFBxaoIqlQTBdZkJMoahIe/i7Lflsy
+gLgEhQDXvhrnFsvtuVyL9D4bM3lorb+DOW5CfQtmAVcdcZFpXiIDxitw1Jl1AopE
+9ijXxsikds5J70lHHw7zNAWvoqB7lqT6CfvRNJNr6bPXY39Mz0ms2noV0oofySNl
+EjsYW0NoqcRM4bDCt+f+vKIh2S3XhiG2RjmxwL6zI3Dsz3rGAtF7jp/oPPYJ/mMa
+JntPEgNfjMRfXtV/cIwulE6TWjWL96TVJo+Tr9JyuM4RYPUNiMQT2nRrykFVWy+s
+/C8R1NrJyHoHNSDd9mxpv59DGG/JsEk8Iv4ZbHkb+QE3mYPf+xy8ehA087Ter0f+
+SMlLq87AmLAdU1u6WNwUIVvvqe1/VmNRJjuHuFWrwwjUI/xdWZtsf7SJgoNSbZqx
+cDZAxnLwcwTAAZC9EOghRh8neZZW9mcKB3EZu443a//18zwomBxrtY4OzGpiSm4s
+zN1s0dbxMqoe4tNGBtqXpzHlMc1XKbOj/dLXuFEKiefisVg+tcg=
+=FsWd
 -----END PGP SIGNATURE-----
 
---iett5ubrmf2b7xdn--
+--jJs51Zi5GOLT8umN--
