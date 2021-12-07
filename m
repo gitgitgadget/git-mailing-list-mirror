@@ -2,304 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 325EDC433EF
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 14:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA74CC433F5
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 14:34:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237752AbhLGO2f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 09:28:35 -0500
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:60469 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233302AbhLGO2e (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 7 Dec 2021 09:28:34 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id 26E195C025D;
-        Tue,  7 Dec 2021 09:25:04 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Tue, 07 Dec 2021 09:25:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:mime-version:content-type; s=fm2;
-         bh=lgc7q/go1lWhGWEjClXSa+hAhr/+3PHj4gA3PTEX8vQ=; b=mi+rRUUEDPt5
-        Q92n96KcvqCeVXYmjBXAKHtcAbETBLjEuVXP0V2Ih895hLEvgg9IHOlIg5ExvuEN
-        cgkbc9KR859P1ab/9ERmH0bvdnjKaDQrTg93MGKnofpXFKJJ54FYv4qOMkpFp8hQ
-        2F+E505B4MW/mI5Po47pWPnNnfAInBatTdrJkKXRp7nmOXC85TZmULqxgYaJEDbY
-        RGwfwbyfLfikV2yFwizE8DWBKH9SjKLBgSBekzJkPDZoRPYh7OTsBwxB3yI8mQgl
-        V3ErlIDijlZWFIYawYdQ2jyK+qH0W2gnljvPlD+I5e3taZKhB8yP2eNBa+s84P3L
-        y4+wy3GjyQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:message-id
-        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm1; bh=lgc7q/go1lWhGWEjClXSa+hAhr/+3
-        PHj4gA3PTEX8vQ=; b=HWsQKqBKCygMPMvldK9DXB4MmLtK6/JH8VSAiUtl1epjI
-        jOOo8HzwW9hsUqXyxssoBMWXqtLPMSWwTCAEXwNjCe1l/X+GRFUEHdWYNIxaA3SM
-        dtuscHd4IgDyDRYdtw69SFCz7y+OY9GyaiInuuKF8kynbe2ot46cCOuW5dG0OwgH
-        7trmKfleD48clt/OA2Us/koFnIQMRGvxEEGMdwCcxIT4eTpi2h/nLL4e7Gb/p2Ro
-        oiQrBnGtggdSfxb1Q/n+gv6tsOjKmpqPpX8QjXILfDYvG9RGSU2yn6IIRSh5l4Z/
-        +DzgInIMPHyrX80PlkuGd9BC5N9G2KOVEMSbwNBzA==
-X-ME-Sender: <xms:v26vYbsniFC3jE1yZdw-keX4E8ZP6RzHZ1bFu6FKQwexDCqyMwRjvw>
-    <xme:v26vYccIBbAa34teHoFBsTBmWl72EQyeMZgkPym0hZ3qJOB4b9DMDJQ8cte09G__u
-    1DMM1TSD-G83QQoTA>
-X-ME-Received: <xmr:v26vYeze2xiSy77bWdtCX1KHVO_tCD6GYn0stqiOwTHqRnfHXCAPY4OQM1jrvUwyzyi6VBsk8ewSwBTESeSp9b9XCX79BtT0gj1wRzbE2qjNj2xUO9w-liKO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrjeehgdeihecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkgggtugesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcu
-    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
-    ehudffudettefgvdffgeeileejleeftefgtddvudeuudettefgiedvheduleegnecuffho
-    mhgrihhnpehpkhhsrdhimhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:v26vYaNeWY7vSCXXSuBvmOaBn7zxg8RRlZmNRdTgYQqRiupmjeIb8Q>
-    <xmx:v26vYb-Bm7t29HTh6O32qgSxumacsTqOKExIGN4DLXcGDdS6G6Pguw>
-    <xmx:v26vYaV0wlYT8NEodOl421x0zeUoGvbJMNlwfNvNHaKO_OeYuAk5aQ>
-    <xmx:wG6vYVl7MuE30zdEgoDgpf3S8eNxfcbI-CKzi2BQ5Mm6u6RBsIiIUQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Dec 2021 09:25:03 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 6f259eba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 7 Dec 2021 15:54:37 +0000 (UTC)
-Date:   Tue, 7 Dec 2021 15:24:21 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, Jeff King <peff@peff.net>
-Subject: [RFC] fetch: update refs in a single transaction
-Message-ID: <259de62b26302c10f429d52bec42a8a954bc5ba3.1638886972.git.ps@pks.im>
+        id S237926AbhLGOiR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 09:38:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46026 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237908AbhLGOiR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 09:38:17 -0500
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8E53C061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 06:34:46 -0800 (PST)
+Received: by mail-qv1-xf2f.google.com with SMTP id p3so13213108qvj.9
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 06:34:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=n6BGPVuTvVCv0RTzl87OE90OWZuWslFcKaeQ9uL7w5Y=;
+        b=VTeQsyEI+BMaCHZghOJGYRUpjg2cecjOHDvso98m2znrbXgyXKvrlRE0452Y5ctPpI
+         WrhLaunje95MEOQKg+xhuPVDNkn8FRcOuQcYza1UtBsAb6G3wViO7AkOKDxwfanT5loZ
+         2lNfiWzHlzIQUv0FRgS+q3JZ0QuP2E3Vl4PUDDCQkTcr150yYHmNPXIjSV1Px28Vpgpe
+         MYdJbHLCy2r/7ayKrZPkm6bB5MIZpvDwJ/FmaKEllf3AYvs3Lm7Skihr56FVKJBBuRnE
+         AYWJZSgcWoi5B6ZG90FFZqrhKrg0YCjmUl0PGtseFryWBmQ5kAHewh+SQmFknCkLezwt
+         nUPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=n6BGPVuTvVCv0RTzl87OE90OWZuWslFcKaeQ9uL7w5Y=;
+        b=Wsdh1w/+2DK6akoYI91AIaEvAlW7rngooiVQUTSlGsBw0IPthgTZc/a6M/AdejRR1z
+         gvOkg6OrhIWomh/gSqDX90v1Nqnfyhg715tdmAgyIX5JX9J+Bw4L6qlLetVHlpDRtLdZ
+         E01xTFiJgkiEBrBo09hmRlWrlnE54R4sveO7yLOnE0W2wmClaGunR9wKBuJRBOPeLyag
+         YcINnSbzeJOQJnVNXtDJiuBj+hAQErJq9ZjaJD94XC8MmPm6M4xGXY1EiPXqO/aKg7zV
+         Vz9UJKr0zbL1ZvYZveMasIA6iPzs14tl+priMWGxSQP7Cxqq09mdCOXjntfFc/h1OWkb
+         FvPA==
+X-Gm-Message-State: AOAM530ngv2OKX2MtGPZDcAAvuAsr+582qMMr0quirpimWJ1/C5DHD7v
+        HTfl1T1A2gXLILdOApfSSj8R
+X-Google-Smtp-Source: ABdhPJy4L5pZ1wPnItoaxQyH8/4fHsKdHtvdI+0g94nIKdvBRbRDM6/Hx3PbT0hvpICLFo+NPZY5ZQ==
+X-Received: by 2002:a05:6214:e49:: with SMTP id o9mr46042848qvc.74.1638887685681;
+        Tue, 07 Dec 2021 06:34:45 -0800 (PST)
+Received: from [192.168.0.105] (70.15.20.152.res-cmts.sm.ptd.net. [70.15.20.152])
+        by smtp.gmail.com with ESMTPSA id c7sm9861195qtc.32.2021.12.07.06.34.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Dec 2021 06:34:45 -0800 (PST)
+Message-ID: <0e3e3a4f-f6af-d8df-8973-255ed7b1b7ef@github.com>
+Date:   Tue, 7 Dec 2021 09:34:37 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="90hYiai9DEmA+TrB"
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.2
+Subject: Re: Build race observed with git 2.34.1 - hook-list.h wasn't
+ generated yet
+Content-Language: en-US
+To:     Alexander Kanavin <alex.kanavin@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20211207113101.69686-1-alex.kanavin@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <20211207113101.69686-1-alex.kanavin@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Alexander Kanavin wrote:
+> Specifically:
+> 
+>  builtin/bugreport.c:7:10: fatal error: hook-list.h: No such file or directory
+> |     7 | #include "hook-list.h"
+> |       |          ^~~~~~~~~~~~~
+> | compilation terminated.
+> 
+> Please see here for the full log:
+> https://autobuilder.yoctoproject.org/typhoon/#/builders/59/builds/4427/steps/14/logs/stdio
+> 
+> Seems like COMPUTE_HEADER_DEPENDENCIES isn't working quite right? I meanwhile have set it to
+> 'no'.
+> 
+> Thanks,
+> Alexander
+> 
 
---90hYiai9DEmA+TrB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I've encountered this as well, and it appears to be a dependency graph
+issue. For me, compilation was fixed by a patch [1] that isn't in next or
+master yet ("Needs review" - ab/make-dependency [2]). If this an important
+fix to fast-track (I'll defer to more experienced contributors to determine
+that), it might speed up review to separate that patch from the rest of the
+series?
 
-When git-fetch(1) isn't called with the `--atomic` flag, then each
-reference will be updated in a separate transaction. As a result, even
-if we failed to update a subset of transactions, the remaining refs will
-be modified after the command has finished. While this pattern is
-reasonably efficient with the files backend where we'd lock and write
-each file separately anyway, the upcoming reftable backend could handle
-such an update a lot more efficiently if it was batched into a single
-transaction given that it could then create a single new reftable slice
-instead of creating one slice per updated ref. While this inefficiency
-can be easily mitigated by using the `--atomic` flag, this flag cannot
-be used in contexts where we want partial-update semantics.
+[1] https://lore.kernel.org/git/patch-v4-19.23-2710f8af6cd-20211117T101807Z-avarab@gmail.com/
 
-Convert git-fetch(1) to always use a single reference transaction,
-regardless of whether it is called with `--atomic` or not. The only
-remaining difference between both modes is that with `--atomic` set,
-we'd abort the transaciton in case at least one reference cannot be
-updated.
-
-Note that this slightly changes semantics of git-fetch(1): if we hit any
-unexpected errors like the reference update racing with another process,
-then we'll now fail to update any references, too.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/fetch.c | 78 ++++++++++++++++---------------------------------
- 1 file changed, 25 insertions(+), 53 deletions(-)
-
-Hi,
-
-until now, we have been quite lenient with creating lots of reference
-transactions even though they could've been bundled together into a
-single transaction. After all, it didn't have much of a downside in most
-contexts with the files backend: we'd have to lock each loose ref
-separately anyway. I'd like to get some feedback on changing our stance
-here, due to multiple reasons:
-
-    - The upcoming reftable backend will be more efficient if we use a
-      single transaction to bundle together multiple ref updates given
-      that it only needs to write one new slice instead of one per
-      update.
-
-    - Syncing refs to disk can be batched more efficiently if we bundle
-      ref updates. See my initial patch series to implement fsync-ing
-      refs [1] and Peff's benchmarks [2] demonstrating that fetches may
-      become a lot slower.
-
-    - The reference-transaction hook can be used more efficiently given
-      that it would only need to execute twice, instead of twice per
-      updated ref. It also has a more global view of what's happening.
-      While this is a concern of mine, it's a non-reason in the context
-      of the Git project given that we really ought not to change
-      semantics only to appease this hook.
-
-With these reasons in mind, I'm wondering whether we want to accept
-refactorings which convert existing code to use batched reference
-transactions. While the potential performance improvements are a rather
-obvious upside, the downside is that it would definitely change the
-failure mode in many cases.
-
-The example I have here with git-fetch(1) would mean that if we were to
-race with any other process or if any other unexpected error occurs
-which leads us to die, then we'll not commit any change to disk. This
-can be seen as an improvement in consistency, but it can also be seen as
-a change which breaks current semantics of trying to do as much work as
-possible.
-
-I'd thus love to hear about any opinions on this topic.
-
-Patrick
-
-[1]: <cover.1636544377.git.ps@pks.im>
-[2]: <YYwvVy6AWDjkWazn@coredump.intra.peff.net>
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index f7abbc31ff..c4cfd55452 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -641,9 +641,6 @@ static struct ref *get_ref_map(struct remote *remote,
- 	return ref_map;
- }
-=20
--#define STORE_REF_ERROR_OTHER 1
--#define STORE_REF_ERROR_DF_CONFLICT 2
--
- static int s_update_ref(const char *action,
- 			struct ref *ref,
- 			struct ref_transaction *transaction,
-@@ -651,7 +648,6 @@ static int s_update_ref(const char *action,
- {
- 	char *msg;
- 	char *rla =3D getenv("GIT_REFLOG_ACTION");
--	struct ref_transaction *our_transaction =3D NULL;
- 	struct strbuf err =3D STRBUF_INIT;
- 	int ret;
-=20
-@@ -661,44 +657,12 @@ static int s_update_ref(const char *action,
- 		rla =3D default_rla.buf;
- 	msg =3D xstrfmt("%s: %s", rla, action);
-=20
--	/*
--	 * If no transaction was passed to us, we manage the transaction
--	 * ourselves. Otherwise, we trust the caller to handle the transaction
--	 * lifecycle.
--	 */
--	if (!transaction) {
--		transaction =3D our_transaction =3D ref_transaction_begin(&err);
--		if (!transaction) {
--			ret =3D STORE_REF_ERROR_OTHER;
--			goto out;
--		}
--	}
--
- 	ret =3D ref_transaction_update(transaction, ref->name, &ref->new_oid,
- 				     check_old ? &ref->old_oid : NULL,
- 				     0, msg, &err);
--	if (ret) {
--		ret =3D STORE_REF_ERROR_OTHER;
--		goto out;
--	}
--
--	if (our_transaction) {
--		switch (ref_transaction_commit(our_transaction, &err)) {
--		case 0:
--			break;
--		case TRANSACTION_NAME_CONFLICT:
--			ret =3D STORE_REF_ERROR_DF_CONFLICT;
--			goto out;
--		default:
--			ret =3D STORE_REF_ERROR_OTHER;
--			goto out;
--		}
--	}
--
--out:
--	ref_transaction_free(our_transaction);
- 	if (ret)
- 		error("%s", err.buf);
-+
- 	strbuf_release(&err);
- 	free(msg);
- 	return ret;
-@@ -1107,12 +1071,10 @@ static int store_updated_refs(const char *raw_url, =
-const char *remote_name,
- 		}
- 	}
-=20
--	if (atomic_fetch) {
--		transaction =3D ref_transaction_begin(&err);
--		if (!transaction) {
--			error("%s", err.buf);
--			goto abort;
--		}
-+	transaction =3D ref_transaction_begin(&err);
-+	if (!transaction) {
-+		error("%s", err.buf);
-+		goto abort;
- 	}
-=20
- 	prepare_format_display(ref_map);
-@@ -1229,21 +1191,31 @@ static int store_updated_refs(const char *raw_url, =
-const char *remote_name,
- 		}
- 	}
-=20
--	if (!rc && transaction) {
--		rc =3D ref_transaction_commit(transaction, &err);
--		if (rc) {
--			error("%s", err.buf);
--			goto abort;
--		}
-+	if (rc && atomic_fetch) {
-+		error(_("aborting reference updates because of atomic fetch"));
-+		goto abort;
- 	}
-=20
--	if (!rc)
--		commit_fetch_head(&fetch_head);
--
--	if (rc & STORE_REF_ERROR_DF_CONFLICT)
-+	switch (ref_transaction_commit(transaction, &err)) {
-+	case 0:
-+		break;
-+	case TRANSACTION_NAME_CONFLICT:
- 		error(_("some local refs could not be updated; try running\n"
- 		      " 'git remote prune %s' to remove any old, conflicting "
- 		      "branches"), remote_name);
-+		rc =3D -1;
-+		break;
-+	default:
-+		error("%s", err.buf);
-+		rc =3D -1;
-+		break;
-+	}
-+
-+	if (rc && atomic_fetch)
-+		goto abort;
-+
-+	if (!rc)
-+		commit_fetch_head(&fetch_head);
-=20
- 	if (advice_enabled(ADVICE_FETCH_SHOW_FORCED_UPDATES)) {
- 		if (!fetch_show_forced_updates) {
---=20
-2.34.1
-
-
---90hYiai9DEmA+TrB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmGvbpQACgkQVbJhu7ck
-PpRQfw/+Opr5vAJ4IZweg/5eKPmwSfNS99aUDG6Iioa5qAOeMaJ9S81IcwZG7JAS
-xAGKiTP+cdq6StdwyIM6YTiCY1uma9qhbJhJpKREzxqNe4SM3ie8rhyNhK/kIBnP
-Cw/1fRz94oIyIPWQNHIlX+FAEM+xFCWRHdGkOahqCkmwydazh+V/ne1qV3yONpM9
-RMqxqwT8+/TNLSRdlX6rvy8bncAsgoc9gse/yZo/gHJ8v+gXFNfmZml5R1cD0ga2
-nozs6htmh6T/j7PIsIYp0AiRWZDaCb9+AMEMri6VPHrGcu8JXK7PP6GmxGZ8Bpw+
-dOCmdtLaSiMisQiZxUDmsVS9ntoEUpaCJMQbm8z8wytdTb/7iRWBa9tcz1LADTFH
-lPxLjHai7SKPNa9X1EJe5r2YbX/TzKOYDYg33ok5SsRtiF+EgwJUVbEQx3mWCTdW
-5D1lpxYiz0WzP5oSXVyot08PEp1BMUl5sptEXHewtDqlA+XpBJYAJPZ92gLUYRDm
-IrLeMqzHKXGTmYuP40UczJxIxxH5CQYVYM2Uz6KTMBz/xoRnnB2PbjjNHKAG7t0q
-HG39RTnp0nv6zsT3INOPF8R+1zQVRfaoj9XbijXnNFZUvJV7rp563N/7ZRjuPu0Q
-mhik4DhDy8WUAOvTA9F+WOgapQZsZ+WidfTy2iN0w/78/07w5j4=
-=6LkL
------END PGP SIGNATURE-----
-
---90hYiai9DEmA+TrB--
+[2] https://lore.kernel.org/git/xmqqbl1xqheu.fsf@gitster.g/
