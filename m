@@ -2,216 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE195C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 20:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D34D7C433EF
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 20:43:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241413AbhLGUpy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 15:45:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50040 "EHLO
+        id S236863AbhLGUqs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 15:46:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241412AbhLGUpx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 15:45:53 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5AA1C061574
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 12:42:22 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id bj13so896689oib.4
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 12:42:22 -0800 (PST)
+        with ESMTP id S236824AbhLGUqs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 15:46:48 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 629B0C061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 12:43:17 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id r25so780501edq.7
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 12:43:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=t9VnGiGqin/pIMSDsxq1hnzxQXrO/blvb53tTQaZdVg=;
-        b=h3IzTfKQireYL95bvv3OoPwOnfHNMZEiKvpsB5cvpfn1JDjn0VU2WleSxjhh8qbjys
-         SwZEGJKA5O1+v8VDXugiQ3M3+krlrqnw+dzSx3UKyoHc9DW0EIR3yKb0FeKy+X9Pv7sW
-         kJMxua5noZ2PQFPBXiP1+7tZO6uI1IdCf7bbizXN6QxEeuJJGPOUgqWu4AenU73usWQd
-         3DqlnibYObXHEjuNq+GfS0xgueoaGqvQluhPUzbVMIRvsV8t3zxCoYJXPaTxuMDGxOK5
-         PznlCO9aKOEkVMs3JX0mQZVJGMk4o4frDeg4Pd0a2MkLIvX8dDqoLNkXxBulIAIf6Aba
-         1WUQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PePUutyZf5obsqts0/IdNsQ9M6AXduswK+PBftikWLY=;
+        b=fR82WpZUoornYv/mOlcSK22HOjopABBuXmkulOtiDyKA6MarKivW1q8z1JO3Ri66yq
+         18rgqHqRrc80DPUd6UXg5grYJ6uhrvQrmfyEurx0Q4IlM9IWNVQPH28ZGjz+wiYIpfoz
+         JJf0urfAtkB/hp7nk3wUSCjOcF8GrLGyb1DQJ7+j7drmT+sI1bmqp42n4kI9y8/pp8Hi
+         VY24ZzfoWRWA7QKnv/OXcIHBw1PAgWX+CTAapnw/jCi9DCq/OWxlF+JJW/NWj7gw1bUZ
+         v7mOuyn9miiu+N2nhNFEcaMXNkuqjwx1zZpKNK7NgMC+hZcU+v8u6k3yGsTw42O2VD7k
+         7jmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=t9VnGiGqin/pIMSDsxq1hnzxQXrO/blvb53tTQaZdVg=;
-        b=JSeIlO3+8wYXwmIj2ig1RfPa0kpLK9ZQkPGqTrYEOOdxpBAZQQB1qgHHnUK2jRZpa1
-         rgFow7lbO6gtTVgq02rM/rhl1boKfHkOb/OphCrqSP0gUp1RvGrwQOBK+iJ/pL4E+bh+
-         muok2sZss0IxBy5FVxKpH1yiAZPy0jDJGdXkOGza83O7pO9iogCD7YLoSicP4YYRin5+
-         6WUY61tF3E0LgSeucnEtQBWwy9ezpQmLuUG6WSrsp4xo/fTLHik+cwTcgWUwVetR5qJq
-         eYcHaMeFjGkRAS4N2bRY+ISqtX4QmWOKSJDQrClNXbcFITmG4+U/JI0Mh5gmuupnEl0L
-         6C4A==
-X-Gm-Message-State: AOAM531v+MDqza/7JKqruUo8dY3t5CIKZKIlYL/ySysHKG1U13i+guuo
-        rm5Skp+ujj+jqFXh6DWZkqc=
-X-Google-Smtp-Source: ABdhPJzKgIUVFSrodNQBR1fAGjL0gWsLz/EbudeW3XITQmyfoneSle3B0+E297QKJxoClSQdCHIF7g==
-X-Received: by 2002:a05:6808:643:: with SMTP id z3mr7427601oih.110.1638909742032;
-        Tue, 07 Dec 2021 12:42:22 -0800 (PST)
-Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
-        by smtp.gmail.com with ESMTPSA id w5sm121119otk.70.2021.12.07.12.42.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Dec 2021 12:42:21 -0800 (PST)
-Message-ID: <7c2a8b0e-a387-1166-ea02-e5792537aefa@gmail.com>
-Date:   Tue, 7 Dec 2021 14:42:20 -0600
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PePUutyZf5obsqts0/IdNsQ9M6AXduswK+PBftikWLY=;
+        b=f7RmbwaXYhhlrPxCnpQ1NYydHH+/k+uicsdCHgh69uLN8LxgEeHMSE3LB3EOX6Owv3
+         6uXvj22QbAbYROUNv3MIFku5BY5DF+gxeYnntUpBLIS11ZY4Hvh1gpV6xbXtJ8Czp1RF
+         TpilBKzsXZ0OqnnKgqrMVFUQmzgX9COpYKjsfEiKVFt16nx2uOqVJC3fJsIr2ncnys9+
+         iELcGYpfK4pxmJDle4CFY8rwqhc2Og+68AdtYJbSMRKlodO839sKgmGpx9UZtn4Qc/HZ
+         6DvL+EtDSD9GrpMHPdz+8V91HI50fCQ86mZJp+PcpNmODgBrGh6jZDLsZjzjZ64QHyOE
+         IuEw==
+X-Gm-Message-State: AOAM5308xtWjU3cewhU2i1OD6Tn8i+7pDcUVxZa76LQsGgdSymHAVf0s
+        CPAwi4P46RG/aIqGgKq3wPMmc2HPZ9mEDXw6+lw=
+X-Google-Smtp-Source: ABdhPJyZUn7hI5j7J17RQjCN2Ohn13d3uoAFo8jrhOUaA6VbOnkc6Gq/QHAZrzUEar04iuyo91pgvggaRQKTf/3T79c=
+X-Received: by 2002:a05:6402:491:: with SMTP id k17mr12547752edv.333.1638909795872;
+ Tue, 07 Dec 2021 12:43:15 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.2
-Subject: Re: [PATCH 4/6] git-sparse-checkout.txt: update to document that set
- handles init
-Content-Language: en-US
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>, Victoria Dye <vdye@github.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1151.git.git.1638648020.gitgitgadget@gmail.com>
- <95d3df78b2ffe2e0d6234f326f8f7acbd2b67301.1638648020.git.gitgitgadget@gmail.com>
-From:   Lessley Dennington <lessleydennington@gmail.com>
-In-Reply-To: <95d3df78b2ffe2e0d6234f326f8f7acbd2b67301.1638648020.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com>
+ <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com> <aa85e35d-143e-93e4-f54b-146b38dd4b88@gmail.com>
+In-Reply-To: <aa85e35d-143e-93e4-f54b-146b38dd4b88@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 7 Dec 2021 12:43:03 -0800
+Message-ID: <CABPp-BHRse4BwXTjd4cRruOdymt=DJRPDL1jyPzX5HDqx4ymDw@mail.gmail.com>
+Subject: Re: [PATCH v5 00/11] Avoid removing the current working directory,
+ even if it becomes empty
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Dec 7, 2021 at 8:09 AM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 12/1/2021 1:40 AM, Elijah Newren via GitGitGadget wrote:
+> > Traditionally, if folks run git commands such as checkout or rebase from a
+> > subdirectory, that git command could remove their current working directory
+> > and result in subsequent git and non-git commands either getting confused or
+> > printing messages that confuse the user (e.g. "fatal: Unable to read current
+> > working directory: No such file or directory"). Many commands either
+> > silently avoid removing directories that are not empty (i.e. those that have
+> > untracked or modified files in them)[1], or show an error and abort,
+> > depending on which is more appropriate for the command in question. With
+> > this series, we augment the reasons to avoid removing directories to include
+> > not just has-untracked-or-modified-files, but also to avoid removing the
+> > original_cwd as well.
+>
+> I did not clearly voice my approval of the core idea here, but I do like it.
+>
+> I think this fits squarely into a category of "help the user not get stuck"
+> which Git has enough of those situations that we don't need this one. Even
+> expert users won't know for sure if a 'git checkout' will cause their current
+> directory to be removed, however unlikely.
+>
+> In the Git project, we spend a lot of time in the root of our workdir, but
+> this is not the typical case for large projects. I remember spending most of
+> my time in a previous role working four levels deep in the directory hierarchy.
+>
+>
+> I read the previous two range-diffs and took another pass at this v5 and
+> didn't see anything worth commenting on. This version is good to go.
+>
+> There is _also_ more work to do, as follow-ups. In particular, the thing
+> that I thought about was sparse-checkout and created this test which still
+> fails at the end of your series (as an addition to t1092)
 
+Interesting testcase...
 
-On 12/4/21 12:00 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> As noted in the previous commit, using separate `init` and `set` steps
-> with sparse-checkout result in a number of issues.  The previous commit
-> made `set` able to handle the work of both commands.  Update the
-> documentation to reflect this, and mark `init` as deprecated.
-> 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->   Documentation/git-sparse-checkout.txt | 92 ++++++++++++++-------------
->   1 file changed, 49 insertions(+), 43 deletions(-)
-> 
-> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-> index 42056ee9ff9..d22c925ecf8 100644
-> --- a/Documentation/git-sparse-checkout.txt
-> +++ b/Documentation/git-sparse-checkout.txt
-> @@ -30,28 +30,35 @@ COMMANDS
->   'list'::
->   	Describe the patterns in the sparse-checkout file.
->   
-> -'init'::
-> -	Enable the `core.sparseCheckout` setting. If the
-> -	sparse-checkout file does not exist, then populate it with
-> -	patterns that match every file in the root directory and
-> -	no other directories, then will remove all directories tracked
-> -	by Git. Add patterns to the sparse-checkout file to
-> -	repopulate the working directory.
-> +'set'::
-> +	Enable the necessary config settings
-> +	(extensions.worktreeConfig, core.sparseCheckout,
-> +	core.sparseCheckoutCone) if they are not already enabled, and
-> +	write a set of patterns to the sparse-checkout file from the
-> +	list of arguments following the 'set' subcommand. Update the
-> +	working directory to match the new patterns.
->   +
-> -To avoid interfering with other worktrees, it first enables the
-> -`extensions.worktreeConfig` setting and makes sure to set the
-> -`core.sparseCheckout` setting in the worktree-specific config file.
-> +When the `--stdin` option is provided, the patterns are read from
-> +standard in as a newline-delimited list instead of from the arguments.
->   +
-> -When `--cone` is provided, the `core.sparseCheckoutCone` setting is
-> -also set, allowing for better performance with a limited set of
-> -patterns (see 'CONE PATTERN SET' below).
-> +When `--cone` is passed or `core.sparseCheckoutCone` is enabled, the
-> +input list is considered a list of directories instead of
-> +sparse-checkout patterns.  This allows for better performance with a
-> +limited set of patterns (see 'CONE PATTERN SET' below).  Note that the
-> +set command will write patterns to the sparse-checkout file to include
-> +all files contained in those directories (recursively) as well as
-> +files that are siblings of ancestor directories. The input format
-> +matches the output of `git ls-tree --name-only`.  This includes
-> +interpreting pathnames that begin with a double quote (") as C-style
-> +quoted strings.
->   +
-> -Use the `--[no-]sparse-index` option to toggle the use of the sparse
-> -index format. This reduces the size of the index to be more closely
-> -aligned with your sparse-checkout definition. This can have significant
-> -performance advantages for commands such as `git status` or `git add`.
-> -This feature is still experimental. Some commands might be slower with
-> -a sparse index until they are properly integrated with the feature.
-> +Use the `--[no-]sparse-index` option to use a sparse index (the
-> +default is to not use it).  A sparse index reduces the size of the
-> +index to be more closely aligned with your sparse-checkout
-> +definition. This can have significant performance advantages for
-> +commands such as `git status` or `git add`.  This feature is still
-> +experimental. Some commands might be slower with a sparse index until
-> +they are properly integrated with the feature.
->   +
->   **WARNING:** Using a sparse index requires modifying the index in a way
->   that is not completely understood by external tools. If you have trouble
-> @@ -60,23 +67,6 @@ to rewrite your index to not be sparse. Older versions of Git will not
->   understand the sparse directory entries index extension and may fail to
->   interact with your repository until it is disabled.
->   
-> -'set'::
-> -	Write a set of patterns to the sparse-checkout file, as given as
-> -	a list of arguments following the 'set' subcommand. Update the
-> -	working directory to match the new patterns. Enable the
-> -	core.sparseCheckout config setting if it is not already enabled.
-> -+
-> -When the `--stdin` option is provided, the patterns are read from
-> -standard in as a newline-delimited list instead of from the arguments.
-> -+
-> -When `core.sparseCheckoutCone` is enabled, the input list is considered a
-> -list of directories instead of sparse-checkout patterns. The command writes
-> -patterns to the sparse-checkout file to include all files contained in those
-> -directories (recursively) as well as files that are siblings of ancestor
-> -directories. The input format matches the output of `git ls-tree --name-only`.
-> -This includes interpreting pathnames that begin with a double quote (") as
-> -C-style quoted strings.
-> -
->   'add'::
->   	Update the sparse-checkout file to include additional patterns.
->   	By default, these patterns are read from the command-line arguments,
-> @@ -96,9 +86,27 @@ C-style quoted strings.
->   
->   'disable'::
->   	Disable the `core.sparseCheckout` config setting, and restore the
-> -	working directory to include all files. Leaves the sparse-checkout
-> -	file intact so a later 'git sparse-checkout init' command may
-> -	return the working directory to the same state.
-> +	working directory to include all files.
-> +
-> +'init'::
-> +	Deprecated command that behaves like `set` with no specified paths.
-> +	May be removed in the future.
-> ++
-> +Historically, `set` did not used to handle all the necessary config
-> +settings, which meant that both `init` and `set` had to be called.
-> +Invoking both meant the `init` step would first remove nearly all
-> +tracked files (and in cone mode, ignored files too), then the `set`
-> +step would add many of the tracked files (but not ignored files) back.
-> +In addition to the lost files, the performance and UI of this
-> +combination was poor.
-> ++
-Super nit: Perhaps update '`set` did not used to handle' to '`set` did not
-handle'.
-> +Also, historically, `init` would not actually initialize the
-> +sparse-checkout file if it already existed.  This meant it was
-> +possible to return to a sparse-checkout without remembering which
-> +paths to pass to a subsequent 'set' or 'add' command.  However,
-> +`--cone` and `--sparse-index` options would not be remembered across
-> +the disable command, so the easy restore of calling a plain `init`
-> +decreased in utility.
->   
->   SPARSE CHECKOUT
->   ---------------
-> @@ -117,10 +125,8 @@ directory, it updates the skip-worktree bits in the index based
->   on this file. The files matching the patterns in the file will
->   appear in the working directory, and the rest will not.
->   
-> -To enable the sparse-checkout feature, run `git sparse-checkout init` to
-> -initialize a simple sparse-checkout file and enable the `core.sparseCheckout`
-> -config setting. Then, run `git sparse-checkout set` to modify the patterns in
-> -the sparse-checkout file.
-> +To enable the sparse-checkout feature, run `git sparse-checkout set` to
-> +set the patterns you want to use.
->   
->   To repopulate the working directory with all files, use the
->   `git sparse-checkout disable` command.
-> 
+> test_expect_success 'remove cwd' '
+>         init_repos &&
+>
+>         test_sparse_match git sparse-checkout set deep/deeper1/deepest &&
+>         for repo in sparse-checkout sparse-index
+>         do
+>                 (
+>                         cd $repo/deep/deeper1 &&
+>                         test-tool getcwd >"$TRASH_DIRECTORY/expect" &&
+>                         git sparse-checkout set &&
+>
+>                         test-tool getcwd >"$TRASH_DIRECTORY/actual" &&
+>                         test_sparse_match git status --porcelain &&
+
+However, this line is broken even if the directory weren't removed.
+Not because of the "git status --porcelain" part, but because of two
+other reasons:
+
+1) test_sparse_match presumes it is run from the directory above the
+repos while you still have it in $repo/deep/deeper1
+2) The point of test_sparse_match is to compare the results in two
+different repositories, but it'll do this twice and the first time
+without the changes having been made to the sparse-index repo.
+Perhaps this belonged outside the surrounding for loop?
+
+I think I'd either drop the "test_sparse_match" or else just drop the
+whole line; the real comparison is the expect/actual files.  Dropping
+this line makes it a good test.
+
+>                         cd "$TRASH_DIRECTORY" &&
+>                         test_cmp expect actual
+>                 )
+>         done
+> '
+>
+> Please do not let this test delay the advancement of this series. As we
+> find these kinds of issues, we can fix them one-by-one as needed.
+
+Yeah, sounds good.  Since you piqued my interest, though, the problem
+is that we're passing an absolute path to remove_dir_recursively()
+inside clean_tracked_sparse_directories() when we should be passing a
+relative path.  (We always chdir(r->worktree) in setup.c, so there's
+no need to prepend the path with r->worktree+'/'.)
+
+Still, the current series is long enough and unless there are issues
+others have spotted with it, I'd rather just let it proceed as-is and
+then send this fix and a correction of your testcase in separately.
