@@ -2,169 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44BDEC433F5
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 18:12:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7363C433EF
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 18:13:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235843AbhLGSQN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 13:16:13 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61229 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230110AbhLGSQN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 13:16:13 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BECA8154655;
-        Tue,  7 Dec 2021 13:12:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=iSeRKdbtSO6WdQMB9TRmjAxcC
-        pqOV3OoIWFyKLaCkeA=; b=WnbPipTFN2DXE999oEVICBTExB1ieQqccVvXtFf6c
-        +/y6SnNt4pwmp797VHGMgwWGM5ycCNrDFoLu9oIUl813P9wNSbYttc4ycgH1qMsv
-        TtRtjVwg312ZMYCAh1Wev5FF9CLJvbHIOiXv/06T6IFUkKj/WjSG+GoRULaM5LJ4
-        ng=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B6F12154654;
-        Tue,  7 Dec 2021 13:12:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B0E4E154652;
-        Tue,  7 Dec 2021 13:12:38 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?IiLlvpDmspvmloc=?= (Aleen) " via GitGitGadget" 
+        id S235907AbhLGSQi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 13:16:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42718 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230110AbhLGSQi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 13:16:38 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5839CC061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 10:13:07 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id y13so60207155edd.13
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 10:13:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=dmgYaRzsC5FLtHAqKbuB3/pW9TQC41mKSB4UKZM6UoI=;
+        b=WKfgxf8XrJFPzHPN+wX3F9LGg+t6KxiosI+ehc5vN2soeT9xOBtMopOiG/N641ywJ/
+         Xyht1fH3mSTZg3Jh5dAvc6yCshA1ockurLhtAf1vQunS/GcuCxE4WLImH7cESAZrMpP/
+         rhVeJwX3/8SyW2RgN7yDdrAx4XVmLX/pcWUEgvsFVCg/h2aqT0sa0MyKWXB8jAiTG+hZ
+         Iid1RHhSugYfqWLtvVqgS2cgKHjTddCouI48UZvvPYtf9kJVmAUieOd02qNcTp078w6D
+         ObC597b07hogH/beE/S75eRNutC3AUeJaNfMTXT4b9SfvtsEQNZYtjkOMnTAD2zpuwqM
+         s5bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=dmgYaRzsC5FLtHAqKbuB3/pW9TQC41mKSB4UKZM6UoI=;
+        b=5adIVnj6KNH7GoczL8rE7of+VRMTHwqiP4scstGlQCsIy/kja40ZnzlMWXh5vYCjXD
+         K9qdN8NCoztM9bHBwHUgamuPFqClkUtoYrog8XDbnFLi1/NfA7h8MGhBwmwWRct9K6EH
+         XUf0bJBsKnB0Njx39Xqb/A51vSMcbR7rLuw7yeFu5rJFQa16/ZLJMy2bkLChebTzWolH
+         LnMsqtjRfbxR4AjomBLGksbwNVYo55zl4Md8+jbnxL9SkMN7Km6cazAkIl2kOCjOk8eS
+         1IJVpahFuE3VMknKdRQIdqc6pL7gwup93LvXktewYGsquY9fqI5ykT9H6s8RgaYqzNWm
+         8Mwg==
+X-Gm-Message-State: AOAM531ZrdcozHRClAWehoYlh6QrPxKxWJEWZ/GuU4krolVINiOpHlYg
+        i/15et2/inJxvAE3wA+0hSmuhSXlCCgGoA==
+X-Google-Smtp-Source: ABdhPJzyhuGrYpCzImTeu9uiWuosXDC0PoV/bsofUqjzbHLQcNKIu3fqi0HYX7hRWdBM0Xnjn+Xzog==
+X-Received: by 2002:a17:906:c9d2:: with SMTP id hk18mr1052311ejb.523.1638900785850;
+        Tue, 07 Dec 2021 10:13:05 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id y19sm342347edq.2.2021.12.07.10.13.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Dec 2021 10:13:05 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1muexc-001FEI-WE;
+        Tue, 07 Dec 2021 19:13:05 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget 
         <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Aleen =?utf-8?B?5b6Q5rKb5paH?= <pwxu@coremail.cn>,
-        Aleen <aleen42@vip.qq.com>
-Subject: Re: [PATCH v17 2/3] am: support --empty=<option> to handle empty
- patches
-References: <pull.1076.v16.git.1638853295.gitgitgadget@gmail.com>
-        <pull.1076.v17.git.1638865913.gitgitgadget@gmail.com>
-        <b9e03f2342b3fc52515f063f28b34ad9e1dc338a.1638865913.git.gitgitgadget@gmail.com>
-Date:   Tue, 07 Dec 2021 10:12:37 -0800
-Message-ID: <xmqq4k7k9td6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Cc:     git@vger.kernel.org,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH 05/10] i18n: tag.c factorize i18n strings
+Date:   Tue, 07 Dec 2021 19:10:10 +0100
+References: <pull.1088.git.1638514909.gitgitgadget@gmail.com>
+ <b67f0e492e0d9a32f0be9ae085ea3d31135567d5.1638514910.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <b67f0e492e0d9a32f0be9ae085ea3d31135567d5.1638514910.git.gitgitgadget@gmail.com>
+Message-ID: <211207.8635n4nv0v.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 42F92656-5789-11EC-B9AE-98D80D944F46-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-""=E5=BE=90=E6=B2=9B=E6=96=87 (Aleen)" via GitGitGadget"  <gitgitgadget@g=
-mail.com>
-writes:
 
+On Fri, Dec 03 2021, Jean-No=C3=ABl Avila via GitGitGadget wrote:
 
-This step look mostly good and well done, except for just a few
-things that remain.
+> From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
+>
+> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
+> ---
+>  builtin/tag.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/tag.c b/builtin/tag.c
+> index 41941d5129f..6415d6c81a2 100644
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -543,13 +543,13 @@ int cmd_tag(int argc, const char **argv, const char=
+ *prefix)
+>  		goto cleanup;
+>  	}
+>  	if (filter.lines !=3D -1)
+> -		die(_("-n option is only allowed in list mode"));
+> +		die(_("%s option is only allowed in list mode"), "-n");
+>  	if (filter.with_commit)
+> -		die(_("--contains option is only allowed in list mode"));
+> +		die(_("%s option is only allowed in list mode"), "--contains");
+>  	if (filter.no_commit)
+> -		die(_("--no-contains option is only allowed in list mode"));
+> +		die(_("%s option is only allowed in list mode"), "--no-contains");
+>  	if (filter.points_at.nr)
+> -		die(_("--points-at option is only allowed in list mode"));
+> +		die(_("%s option is only allowed in list mode"), "--points-at");
+>  	if (filter.reachable_from || filter.unreachable_from)
+>  		die(_("--merged and --no-merged options are only allowed in list mode"=
+));
+>  	if (cmdmode =3D=3D 'd') {
 
-> +enum empty_action {
-> +	STOP_ON_EMPTY_COMMIT =3D 0,  /* output errors and stop in the middle =
-of an am session */
-> +	DROP_EMPTY_COMMIT,         /* skip with a notice message, unless "--q=
-uiet" has been passed */
-> +	KEEP_EMPTY_COMMIT          /* keep recording as empty commits */
-> +};
+Since for all of these we're asking translators to re-do some work
+(albeit with translation memory) this could use a bit of grammar
+improvement. E.g.:
 
-It is friendly to future developers to end the last item in enum
-with a comma, unless the current last item MUST stay to be the last
-one even when they add new ones.  I.e.
+    _("the '%s' option is only allowed in list mode'")
 
-	KEEP_EMPTY_COMMIT,          /* keep recording as empty commits */
+I.e. "blah option is only" without a "the" is a bit odd.
 
->  struct am_state {
->  	/* state directory path */
->  	char *dir;
-> @@ -118,6 +124,7 @@ struct am_state {
->  	int message_id;
->  	int scissors; /* enum scissors_type */
->  	int quoted_cr; /* enum quoted_cr_action */
-> +	int empty_type; /* enum empty_action */
+But also for this & various other boilerplate in this series, I think it
+would be much better as say:
 
-Mental note.  After this series graduates to 'master', at some point
-in the future, we should clean these members up to be of their
-respective enum types, not "int".
+    const char *only_in_list =3D NULL;
+    if (...)
+        only_in_list =3D "-n";
+    else if (...)
+        only_in_list =3D "--contains";
+    [...]
+    if (only_in_list)
+        die(__("the '%s' option [...]"), only_in_list);
 
-> @@ -1763,6 +1784,7 @@ static void am_run(struct am_state *state, int re=
-sume)
->  	while (state->cur <=3D state->last) {
->  		const char *mail =3D am_path(state, msgnum(state));
->  		int apply_status;
-> +		int to_keep;
-> =20
->  		reset_ident_date();
-> =20
-> @@ -1792,8 +1814,27 @@ static void am_run(struct am_state *state, int r=
-esume)
->  		if (state->interactive && do_interactive(state))
->  			goto next;
-> =20
-> +		to_keep =3D 0;
-> +		if (is_empty_or_missing_file(am_path(state, "patch"))) {
-> +			switch (state->empty_type) {
-> +			case DROP_EMPTY_COMMIT:
-> +				say(state, stdout, _("Skipping: %.*s"), linelen(state->msg), state=
-->msg);
-> +				goto next;
-> +				break;
-> +			case KEEP_EMPTY_COMMIT:
-> +				to_keep =3D 1;
-
-This causes the code that produces the "Applying" message jumped
-over, so the user will not see anything done for this step. =20
-
-I think we want to mimic the above case arm and do something like
-
-				say(state, stdout, _("Creating an empty commit: %.*s"),
-					linelen(state->msg), state->msg);
-
-to avoid being mum about what was done in this step.
-
-> +				break;
-> +			case STOP_ON_EMPTY_COMMIT:
-> +				printf_ln(_("Patch is empty."));
-> +				die_user_resolve(state);
-> +				break;
-> +			}
-> +		}
-> +
->  		if (run_applypatch_msg_hook(state))
->  			exit(1);
-> +		if (to_keep)
-> +			goto commit;
-> =20
->  		say(state, stdout, _("Applying: %.*s"), linelen(state->msg), state->=
-msg);
-> =20
-> @@ -1827,6 +1868,7 @@ static void am_run(struct am_state *state, int re=
-sume)
->  			die_user_resolve(state);
->  		}
-> =20
-> +commit:
->  		do_commit(state);
-> =20
->  next:
-
-> +test_expect_success 'record as an empty commit when meeting e-mail mes=
-sage that lacks a patch' '
-> +	git am --empty=3Dkeep empty-commit.patch &&
-> +	test_path_is_missing .git/rebase-apply &&
-> +	git show empty-commit --format=3D"%s" >expected &&
-> +	git show HEAD --format=3D"%s" >actual &&
-
-For the test data prepared by the earlier part of this patch, this
-does not make a difference, but by using %B instead of %s, I think
-you can catch a future bug that only keeps the subject intact while
-munging the body of the message.
-
-Other than these, looking quite good.
-
-Thanks.
+I.e. we're buying ourselves the chance to easily get a rid of a lot of
+this repetition, but aren't using it. I think a series like this should
+probably resist some big refactorings, but things like that would be
+pretty easy & make the code more readable.
