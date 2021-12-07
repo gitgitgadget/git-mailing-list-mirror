@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D173C433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF6E8C433F5
 	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 08:32:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232909AbhLGIf3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 03:35:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44776 "EHLO
+        id S232917AbhLGIfa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 03:35:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232891AbhLGIf1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 03:35:27 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1313C061746
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 00:31:57 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id v11so27771031wrw.10
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 00:31:57 -0800 (PST)
+        with ESMTP id S232585AbhLGIf2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 03:35:28 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4064C061748
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 00:31:58 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id a9so27747498wrr.8
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 00:31:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=2wOIUyXvK6HBA37YvvgtpeXS/BCdUCODvPh5e+IWqzE=;
-        b=qCNYkthkvw4QSiD2TTdffmnWc/SXi9w16htu3dhu9W0C5ZQ64Ij++L8Vyyd5vahGM8
-         +devWaJX/7JtV+kBcIm1xmJ07KWN5QzESAe0cRsRH0J6t2Zwoa/OFq/D7VZO0J9+JZ7t
-         XbVFmVfO7VgYlQ36Ou+yizYRA1GxTchWI78eF5OvlS/XjY5U0TMhOZ1uFaO8XAY1t+PL
-         vJhb7mLR0rWs/jGFdtplL/OfDMY07Knc2/4KsEzerD4VtJJHeo/pAdpM0BPAQ4MxFEll
-         oDDaojal3B2kWRL/Wwv4wjtY+tZYIPS0OeGdl8vsMYX87h9YXB4xguhN8I5U9dD0hIUv
-         mF7g==
+        bh=YZo0hLpe1XHitCHL2lO3PX5kJ4h4BAI4tahVKXjrVtk=;
+        b=qxKbcufE2ljxhOXFLTvddNXMcXg0NU8jK/OZ1eqpBZrmSBceFhLpxxHIK1T6IUK7jL
+         g8HejuLmC1pMiiLz59qiqdyRE+fJcaX/1WeCMrmNcVgGiNBquxrqf3gd2RyA9cZydsf1
+         gYSLJswgoZr34anPQkscVr8I8XEO9Gh0J4CFZxCkloTA058qlhBzK1GJlGWpLPhXBC3C
+         8YpaYxFZ0aS9hMn7VFW8OL9iaGzK9mxqVzBCSyjac5y4wYiXhXYfNKNxVe23IzlvIq8u
+         oexs3u102Q5LRktPwQscYn6Nwdt3ColIsG0AG3r2wAmmF1YVgMkNkLFUrNTONCA1cgo4
+         MBeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=2wOIUyXvK6HBA37YvvgtpeXS/BCdUCODvPh5e+IWqzE=;
-        b=wR/mTeZ4Qns1zGC3t2mAWe/YcpYIfMlHeLyns6MEnQ8P0DZXpMPfTdHTnJHkkiFTFs
-         KYGxO/G0jSRioOr3+cHsGCZOdVeH+VMH2+TQQF9d47upmC8EYevZ/tbb/Lkp0707Wzy7
-         eoukafI5TTPqAezNYY9G6s/30JPXIU8Cc8IudVyys4OgpS0puq9aTbnyexn3cyVd4+KJ
-         mFyANdw8sgGCsdjXQdijtX7kJPLHcmS0nQzaprhbU4eM2xhCeLeLbgVVxcvPMIcRK8eP
-         KEG+8xFUTWITaxbd8tk2CGMFvw4jG97t2DACOMsVhNa3s/5/Yip/N6XVAYy//CFImqaY
-         RxHA==
-X-Gm-Message-State: AOAM532o+i7PEwQqS32MpnWhHb2AhE+Vvzh0M/5wuz4/M7NiEozZxhwl
-        FwffLpo810b0w2N2Jz8JimFZjQc1miA=
-X-Google-Smtp-Source: ABdhPJz6X9ECZOP0GMG+7X34mMx3UrjG5MIbdBNNr1leHQaNSivNzG1TCbYwuQvlVdn7wGFXHmxDiA==
-X-Received: by 2002:a5d:668f:: with SMTP id l15mr48967549wru.182.1638865916336;
-        Tue, 07 Dec 2021 00:31:56 -0800 (PST)
+        bh=YZo0hLpe1XHitCHL2lO3PX5kJ4h4BAI4tahVKXjrVtk=;
+        b=stuHAteTuay/eGdSRlqAdwMUTDFItMBAeCIw7paF3cPduhqiKQCD10/Ny37q/dHJlj
+         ku5pM5kHxwoW5BFHeS6LOvNlK5raMKC3xpWJ2dw+WvhuUy+ZjreBMY99SSIXoy6hdPxC
+         gCzR2z+QVAWZfgo8V/28D55hXELk4bhhSca89/YkgIXxe4mg08ISlNzgsg/e5KgNyix2
+         1BVq+ecmtkyvNyS6nSLoeeNSPxlsOP5X7Kv19GOemxoirD5eaUfnhI5rZ7gV5GiK0mhz
+         ZBAfEBK6EGMY3sHN43a5Bd/DlCnruvUSy2J2tDLCqG3tY5bS0UJGZtZE9LxU1B7Ofdfj
+         dEzg==
+X-Gm-Message-State: AOAM531vUMVE+JH9wvWhGTUGmW5UPQF8KwSIWRLCe1AQHLad3SGTE33X
+        eN3nGf2fi6FOnpvT8hy7sFrX2IRtV+4=
+X-Google-Smtp-Source: ABdhPJxFuGGMgz2t9nGgCRAq3Ix+I2AkjoDdq39Iqg2NW7sj5tX2pe/is1Ua48NhMpiA7/0EsqMFxw==
+X-Received: by 2002:adf:d1e2:: with SMTP id g2mr50461839wrd.179.1638865917206;
+        Tue, 07 Dec 2021 00:31:57 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v8sm13641770wrd.84.2021.12.07.00.31.54
+        by smtp.gmail.com with ESMTPSA id t17sm1959563wmq.15.2021.12.07.00.31.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 00:31:54 -0800 (PST)
-Message-Id: <a524ca6adfa2adc02e517b7be5199b0c071134c4.1638865913.git.gitgitgadget@gmail.com>
+        Tue, 07 Dec 2021 00:31:56 -0800 (PST)
+Message-Id: <b9e03f2342b3fc52515f063f28b34ad9e1dc338a.1638865913.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1076.v17.git.1638865913.gitgitgadget@gmail.com>
 References: <pull.1076.v16.git.1638853295.gitgitgadget@gmail.com>
         <pull.1076.v17.git.1638865913.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?=E5=BE=90=E6=B2=9B=E6=96=87=20=28Aleen=29?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Tue, 07 Dec 2021 08:31:51 +0000
-Subject: [PATCH v17 1/3] doc: git-format-patch: describe the option --always
+Date:   Tue, 07 Dec 2021 08:31:52 +0000
+Subject: [PATCH v17 2/3] am: support --empty=<option> to handle empty patches
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,38 +75,228 @@ X-Mailing-List: git@vger.kernel.org
 From: =?UTF-8?q?=E5=BE=90=E6=B2=9B=E6=96=87=20=28Aleen=29?=
  <aleen42@vip.qq.com>
 
-This commit has described how to use '--always' option in the command
-'git-format-patch' to include patches for commits that emit no changes.
+Since that the command 'git-format-patch' can include patches of
+commits that emit no changes, the 'git-am' command should also
+support an option, named as '--empty', to specify how to handle
+those empty patches. In this commit, we have implemented three
+valid options ('stop', 'drop' and 'keep').
 
 Signed-off-by: 徐沛文 (Aleen) <aleen42@vip.qq.com>
 ---
- Documentation/git-format-patch.txt | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ Documentation/git-am.txt |  9 +++++++
+ builtin/am.c             | 55 ++++++++++++++++++++++++++++++++++++----
+ t/t4150-am.sh            | 49 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 108 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 113eabc107c..be797d7a28f 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -18,7 +18,7 @@ SYNOPSIS
- 		   [-n | --numbered | -N | --no-numbered]
- 		   [--start-number <n>] [--numbered-files]
- 		   [--in-reply-to=<message id>] [--suffix=.<sfx>]
--		   [--ignore-if-in-upstream]
-+		   [--ignore-if-in-upstream] [--always]
- 		   [--cover-from-description=<mode>]
- 		   [--rfc] [--subject-prefix=<subject prefix>]
- 		   [(--reroll-count|-v) <n>]
-@@ -192,6 +192,10 @@ will want to ensure that threading is disabled for `git send-email`.
- 	patches being generated, and any patch that matches is
- 	ignored.
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 0a4a984dfde..7676bd58ae7 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -16,6 +16,7 @@ SYNOPSIS
+ 	 [--exclude=<path>] [--include=<path>] [--reject] [-q | --quiet]
+ 	 [--[no-]scissors] [-S[<keyid>]] [--patch-format=<format>]
+ 	 [--quoted-cr=<action>]
++	 [--empty=(stop|drop|keep)]
+ 	 [(<mbox> | <Maildir>)...]
+ 'git am' (--continue | --skip | --abort | --quit | --show-current-patch[=(diff|raw)])
  
-+--always::
-+	Include patches for commits that do not introduce any change,
-+	which are omitted by default.
+@@ -63,6 +64,14 @@ OPTIONS
+ --quoted-cr=<action>::
+ 	This flag will be passed down to 'git mailinfo' (see linkgit:git-mailinfo[1]).
+ 
++--empty=(stop|drop|keep)::
++	By default, or when the option is set to 'stop', the command
++	errors out on an input e-mail message lacking a patch
++	and stops into the middle of the current am session. When this
++	option is set to 'drop', skip such an e-mail message instead.
++	When this option is set to 'keep', create an empty commit,
++	recording the contents of the e-mail message as its log.
 +
- --cover-from-description=<mode>::
- 	Controls which parts of the cover letter will be automatically
- 	populated using the branch's description.
+ -m::
+ --message-id::
+ 	Pass the `-m` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]),
+diff --git a/builtin/am.c b/builtin/am.c
+index 8677ea2348a..f45aa33366f 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -87,6 +87,12 @@ enum show_patch_type {
+ 	SHOW_PATCH_DIFF = 1,
+ };
+ 
++enum empty_action {
++	STOP_ON_EMPTY_COMMIT = 0,  /* output errors and stop in the middle of an am session */
++	DROP_EMPTY_COMMIT,         /* skip with a notice message, unless "--quiet" has been passed */
++	KEEP_EMPTY_COMMIT          /* keep recording as empty commits */
++};
++
+ struct am_state {
+ 	/* state directory path */
+ 	char *dir;
+@@ -118,6 +124,7 @@ struct am_state {
+ 	int message_id;
+ 	int scissors; /* enum scissors_type */
+ 	int quoted_cr; /* enum quoted_cr_action */
++	int empty_type; /* enum empty_action */
+ 	struct strvec git_apply_opts;
+ 	const char *resolvemsg;
+ 	int committer_date_is_author_date;
+@@ -178,6 +185,25 @@ static int am_option_parse_quoted_cr(const struct option *opt,
+ 	return 0;
+ }
+ 
++static int am_option_parse_empty(const struct option *opt,
++				     const char *arg, int unset)
++{
++	int *opt_value = opt->value;
++
++	BUG_ON_OPT_NEG(unset);
++
++	if (!strcmp(arg, "stop"))
++		*opt_value = STOP_ON_EMPTY_COMMIT;
++	else if (!strcmp(arg, "drop"))
++		*opt_value = DROP_EMPTY_COMMIT;
++	else if (!strcmp(arg, "keep"))
++		*opt_value = KEEP_EMPTY_COMMIT;
++	else
++		return error(_("Invalid value for --empty: %s"), arg);
++
++	return 0;
++}
++
+ /**
+  * Returns path relative to the am_state directory.
+  */
+@@ -1248,11 +1274,6 @@ static int parse_mail(struct am_state *state, const char *mail)
+ 		goto finish;
+ 	}
+ 
+-	if (is_empty_or_missing_file(am_path(state, "patch"))) {
+-		printf_ln(_("Patch is empty."));
+-		die_user_resolve(state);
+-	}
+-
+ 	strbuf_addstr(&msg, "\n\n");
+ 	strbuf_addbuf(&msg, &mi.log_message);
+ 	strbuf_stripspace(&msg, 0);
+@@ -1763,6 +1784,7 @@ static void am_run(struct am_state *state, int resume)
+ 	while (state->cur <= state->last) {
+ 		const char *mail = am_path(state, msgnum(state));
+ 		int apply_status;
++		int to_keep;
+ 
+ 		reset_ident_date();
+ 
+@@ -1792,8 +1814,27 @@ static void am_run(struct am_state *state, int resume)
+ 		if (state->interactive && do_interactive(state))
+ 			goto next;
+ 
++		to_keep = 0;
++		if (is_empty_or_missing_file(am_path(state, "patch"))) {
++			switch (state->empty_type) {
++			case DROP_EMPTY_COMMIT:
++				say(state, stdout, _("Skipping: %.*s"), linelen(state->msg), state->msg);
++				goto next;
++				break;
++			case KEEP_EMPTY_COMMIT:
++				to_keep = 1;
++				break;
++			case STOP_ON_EMPTY_COMMIT:
++				printf_ln(_("Patch is empty."));
++				die_user_resolve(state);
++				break;
++			}
++		}
++
+ 		if (run_applypatch_msg_hook(state))
+ 			exit(1);
++		if (to_keep)
++			goto commit;
+ 
+ 		say(state, stdout, _("Applying: %.*s"), linelen(state->msg), state->msg);
+ 
+@@ -1827,6 +1868,7 @@ static void am_run(struct am_state *state, int resume)
+ 			die_user_resolve(state);
+ 		}
+ 
++commit:
+ 		do_commit(state);
+ 
+ next:
+@@ -2357,6 +2399,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_STRING, 'S', "gpg-sign", &state.sign_commit, N_("key-id"),
+ 		  N_("GPG-sign commits"),
+ 		  PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
++		OPT_CALLBACK_F(STOP_ON_EMPTY_COMMIT, "empty", &state.empty_type, "{stop,drop,keep}",
++		  N_("how to handle empty patches"),
++		  PARSE_OPT_NONEG, am_option_parse_empty),
+ 		OPT_HIDDEN_BOOL(0, "rebasing", &state.rebasing,
+ 			N_("(internal use for git-rebase)")),
+ 		OPT_END()
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index 2aaaa0d7ded..ce8e8e79ace 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -196,6 +196,12 @@ test_expect_success setup '
+ 
+ 	git format-patch -M --stdout lorem^ >rename-add.patch &&
+ 
++	git checkout -b empty-commit &&
++	git commit -m "empty commit" --allow-empty &&
++
++	: >empty.patch &&
++	git format-patch --always --stdout empty-commit^ >empty-commit.patch &&
++
+ 	# reset time
+ 	sane_unset test_tick &&
+ 	test_tick
+@@ -1152,4 +1158,47 @@ test_expect_success 'apply binary blob in partial clone' '
+ 	git -C client am ../patch
+ '
+ 
++test_expect_success 'an empty input file is error regardless of --empty option' '
++	test_when_finished "git am --abort || :" &&
++	test_must_fail git am --empty=drop empty.patch 2>actual &&
++	echo "Patch format detection failed." >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'invalid when passing the --empty option alone' '
++	test_when_finished "git am --abort || :" &&
++	git checkout empty-commit^ &&
++	test_must_fail git am --empty empty-commit.patch 2>err &&
++	echo "error: Invalid value for --empty: empty-commit.patch" >expected &&
++	test_cmp expected err
++'
++
++test_expect_success 'a message without a patch is an error (default)' '
++	test_when_finished "git am --abort || :" &&
++	test_must_fail git am empty-commit.patch >err &&
++	grep "Patch is empty" err
++'
++
++test_expect_success 'a message without a patch is an error where an explicit "--empty=stop" is given' '
++	test_when_finished "git am --abort || :" &&
++	test_must_fail git am --empty=stop empty-commit.patch >err &&
++	grep "Patch is empty." err
++'
++
++test_expect_success 'a message without a patch will be skipped when "--empty=drop" is given' '
++	git am --empty=drop empty-commit.patch >output &&
++	git rev-parse empty-commit^ >expected &&
++	git rev-parse HEAD >actual &&
++	test_cmp expected actual &&
++	grep "Skipping: empty commit" output
++'
++
++test_expect_success 'record as an empty commit when meeting e-mail message that lacks a patch' '
++	git am --empty=keep empty-commit.patch &&
++	test_path_is_missing .git/rebase-apply &&
++	git show empty-commit --format="%s" >expected &&
++	git show HEAD --format="%s" >actual &&
++	test_cmp actual expected
++'
++
+ test_done
 -- 
 gitgitgadget
 
