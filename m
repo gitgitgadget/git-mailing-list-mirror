@@ -2,194 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20AA8C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 23:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A532C433FE
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 23:24:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242525AbhLGX13 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 18:27:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60298 "EHLO
+        id S242533AbhLGX1a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 18:27:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238428AbhLGX12 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 18:27:28 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A46EC061746
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 15:23:57 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id u11-20020a17090a4bcb00b001a6e77f7312so463432pjl.5
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 15:23:57 -0800 (PST)
+        with ESMTP id S238428AbhLGX1a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 18:27:30 -0500
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 222BFC061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 15:23:59 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id s8-20020a63af48000000b002e6c10ac245so241199pgo.21
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 15:23:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=yfiVTaaUTBBNbZdsJE/EjeXfB1iNx6EP012/8G9mNXE=;
-        b=pzKIgMYpl2NH1iJ2UglOfI8TN09pcOoN+oUd4EpTFPfnD0bad/8IE+7JfvFdzxVqHF
-         pmlZwkZY0YQbzKB2YlLm2QCHv+6UlTG/Rjv4vKM+MmgYnPn5omGc7/YatGfTRU/PFlPU
-         6nLC4T52GCJLHRffxqV/yWx34bX6FYstUgRwJDS0XoBPUpMZKnkpOXM7KvrtCEaV6vLH
-         18DloQMIO2NOqbnAjftwmgrsBbMloOY4vRoSJPoxvQqGqMt96romvTN7J6N5x+0fcqpC
-         JVVQ5qglEjFPZxY8bg8Cd2DDIOWNG3zd5C9fKFhGF5dkVEFrOmzxc/3LJ7FnE3HF51gs
-         s1HA==
+         :cc;
+        bh=xL0qRtG3jpFuZiCHCBtFkNp8xX0/mWNr3dGigCzW0OU=;
+        b=Tj6cxn0LiufX3E5Y3P/0X4lp4eRZFW/UNsFUe3D8Rdh58GZUIo9JP5mGpnqlEgxIlR
+         cBEttrIRTiDpP3sw8Bdx0cvKE6zQckznXVGiwFUINtAC5jzetT1xqmxzG3NQxD6bqjEg
+         QcWmDZfY3puYUBZ9BU99NRkqIU//aPzdCJrHO+3Pf4SV3+D178kdOkEVq4xou/Kx5dy1
+         TRaBJG0aTLJe6P4KdlYsarLrtArX8J/IEUyIkqmCwK8luN7BQ3AHs7Dv8FHLKxaDh2Vn
+         M8lQj3toi4ezjX9KMBeyCmzXVJEtF5rdKeQsrW0ZpvIMgh+5PsmUuF6+QkRfBo5h88wd
+         /NfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=yfiVTaaUTBBNbZdsJE/EjeXfB1iNx6EP012/8G9mNXE=;
-        b=BlWFBdJoi6/ewPyUlMe59Nd9ILYz37wMaix2HIqmhgjUh7OlmzXBEyEXBZ/7O0LKPo
-         aum3+D5mMPzey22RgraHIAyIY6bMbeMkzV2vIBAMvGfEVvUS/VXDGJZiddY+cBX4Zmuw
-         BYpcZhTQ0tnSklup1NJj6uLpepP+hRJXWSULNxiYby4e5fvbTEYJNITaXf4OnR8khYlB
-         JsXWdcIeWO65Ekoowyh+YJyI77JQKQA9aTfZWtE1B6NXTTR0QTxrrYvmtvydgMOkDHCf
-         1UB2Jw8WeKuDCfDzkaD/0pXvmTMJ3MSZQ+gIlfg2YS4cbL2KLxxVUlFAmzAnP4FsLsn3
-         1npQ==
-X-Gm-Message-State: AOAM5328BXvtX33vlF9TbEVAgdt9DGjCPxV9ZO7ozPWwEhhBayrUcBja
-        iXY/FdsOHFooucSZO6+nlOTVwU1LR4iOroAJzV27Obl9r890vntFsmmfO3w1VMOzxDgLLNGPHqL
-        E18i9y9vq8jQouCxposOBVU1t2YvlkbQ2j/73H7h4repT2Fr4oLFavHR14nj82GFMjLe3TGxTde
-        ce
-X-Google-Smtp-Source: ABdhPJzUr0KU0BNK0yoXiQqKk5pVg8IPJX1cJH0jdluANW+rAJsJtsYXmGcvwrrZH0XTaOVQi7DnH1+V+XCx93/GKUUk
+         :references:subject:from:to:cc;
+        bh=xL0qRtG3jpFuZiCHCBtFkNp8xX0/mWNr3dGigCzW0OU=;
+        b=06sEQZiFwGYqmbkZB4L+4N/6Hhs42Urn3u51R7rJM0veHeO8lo6EMHm8ObSgINTW8Z
+         h/3pDhvUv+2GYtA2FgnAW4qwLOu08iesUVM3n8AlBjiVx5bA66HqBqpPu3uMBq/wrE2B
+         HimCds1mg2YwAmm/RPSAyNTcwk5RySBlt9ryjPLGbCL1/t3PKFgrT4N3f9jPycR4Aibp
+         RvvenkRGTJvDnZy2G8YafG8Fith8FYPVNdnXxiXKdMZfVyZirZhR0W+XkuM8cpLQorEW
+         fo9QTkkZiDoDesfFsosZ3GuhXGy+3LUlpxlrPWl0TRkkm/sZmB/2kEVahGLB01yDPtiR
+         vYUw==
+X-Gm-Message-State: AOAM531blXsFNn9MOPsQRVf5ewfGF2u2wXEuei0wrkgSOTBm5C2mvUxP
+        ejKXu4yxtM9vt4O3/mCoB3R317q9E4C9gbEZCE4BDDJbBIbX4qWKaZPqaPO+Rl+McRovfjMLWHh
+        4FSmJ9VM/RPulvh5Q0CMXItzVO+tOYVhK4ezMU+2oU4j+iLyGz09ZKNbbIkAj4JsRfBCVmp39hf
+        9f
+X-Google-Smtp-Source: ABdhPJxrrCkKVn96Wah293Ddlyp3guMOIjdLTAabqM2tx8nRvM9HgCOf0qiQLtqn8pvFOsCV+6Nov/itg2iuft0l2clq
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:aa7:88d3:0:b0:49f:baac:9b51 with
- SMTP id k19-20020aa788d3000000b0049fbaac9b51mr2156240pff.44.1638919436700;
- Tue, 07 Dec 2021 15:23:56 -0800 (PST)
-Date:   Tue,  7 Dec 2021 15:23:50 -0800
-In-Reply-To: <cover.1634077795.git.jonathantanmy@google.com>
-Message-Id: <cover.1638919346.git.jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a65:5a88:: with SMTP id
+ c8mr15649976pgt.70.1638919438517; Tue, 07 Dec 2021 15:23:58 -0800 (PST)
+Date:   Tue,  7 Dec 2021 15:23:51 -0800
+In-Reply-To: <cover.1638919346.git.jonathantanmy@google.com>
+Message-Id: <b2dcae03ed3016f96a5368db925fa3736c3d7c58.1638919346.git.jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <cover.1634077795.git.jonathantanmy@google.com>
+References: <cover.1634077795.git.jonathantanmy@google.com> <cover.1638919346.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.34.1.400.ga245620fadb-goog
-Subject: [PATCH v6 0/2] Conditional config includes based on remote URL
+Subject: [PATCH v6 1/2] config: make git_config_include() static
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, chooglen@google.com,
         avarab@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here's a reroll addressing =C3=86var's comments about needless $(pwd) and
-separating out include_by_remote_url() to make things more consistent.
+It is not used from outside the file in which it is declared.
 
-Jonathan Tan (2):
-  config: make git_config_include() static
-  config: include file if remote URL matches a glob
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ config.c | 12 +++++++++++-
+ config.h | 37 ++++---------------------------------
+ 2 files changed, 15 insertions(+), 34 deletions(-)
 
- Documentation/config.txt |  16 +++++
- config.c                 | 133 ++++++++++++++++++++++++++++++++++++---
- config.h                 |  46 ++++----------
- t/t1300-config.sh        | 118 ++++++++++++++++++++++++++++++++++
- 4 files changed, 272 insertions(+), 41 deletions(-)
-
-Range-diff against v5:
-1:  b2dcae03ed =3D 1:  b2dcae03ed config: make git_config_include() static
-2:  d3b8e00717 ! 2:  de2be06818 config: include file if remote URL matches =
-a glob
-    @@ config.c: static int include_by_branch(const char *cond, size_t cond=
-_len)
-     +	return found;
-     +}
-     +
-    ++static int include_by_remote_url(struct config_include_data *inc,
-    ++		const char *cond, size_t cond_len)
-    ++{
-    ++	if (inc->opts->unconditional_remote_url)
-    ++		return 1;
-    ++	if (!inc->remote_urls)
-    ++		populate_remote_urls(inc);
-    ++	return at_least_one_url_matches_glob(cond, cond_len,
-    ++					     inc->remote_urls);
-    ++}
-    ++
-     +static int include_condition_is_true(struct config_include_data *inc,
-      				     const char *cond, size_t cond_len)
-      {
-     +	const struct config_options *opts =3D inc->opts;
-     =20
-    --	if (skip_prefix_mem(cond, cond_len, "gitdir:", &cond, &cond_len))
-    -+	if (skip_prefix_mem(cond, cond_len, "gitdir:", &cond, &cond_len)) {
-    + 	if (skip_prefix_mem(cond, cond_len, "gitdir:", &cond, &cond_len))
-      		return include_by_gitdir(opts, cond, cond_len, 0);
-    --	else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond_l=
-en))
-    -+	} else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond=
-_len)) {
-    +@@ config.c: static int include_condition_is_true(const struct config_=
-options *opts,
-      		return include_by_gitdir(opts, cond, cond_len, 1);
-    --	else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, &cond_l=
-en))
-    -+	} else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, &cond=
-_len)) {
-    + 	else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, &cond_l=
-en))
-      		return include_by_branch(cond, cond_len);
-    -+	} else if (skip_prefix_mem(cond, cond_len, "hasconfig:remote.*.url:"=
-, &cond,
-    -+				   &cond_len)) {
-    -+		if (inc->opts->unconditional_remote_url)
-    -+			return 1;
-    -+		if (!inc->remote_urls)
-    -+			populate_remote_urls(inc);
-    -+		return at_least_one_url_matches_glob(cond, cond_len,
-    -+						     inc->remote_urls);
-    -+	}
-    ++	else if (skip_prefix_mem(cond, cond_len, "hasconfig:remote.*.url:", =
-&cond,
-    ++				   &cond_len))
-    ++		return include_by_remote_url(inc, cond, cond_len);
-     =20
-      	/* unknown conditionals are always false */
-      	return 0;
-    @@ t/t1300-config.sh: test_expect_success '--get and --get-all with --f=
-ixed-value'
-     +	git init hasremoteurlTest &&
-     +	test_when_finished "rm -rf hasremoteurlTest" &&
-     +
-    -+	cat >"$(pwd)"/include-this <<-\EOF &&
-    ++	cat >include-this <<-\EOF &&
-     +	[user]
-     +		this =3D this-is-included
-     +	EOF
-    -+	cat >"$(pwd)"/dont-include-that <<-\EOF &&
-    ++	cat >dont-include-that <<-\EOF &&
-     +	[user]
-     +		that =3D that-is-not-included
-     +	EOF
-    @@ t/t1300-config.sh: test_expect_success '--get and --get-all with --f=
-ixed-value'
-     +	git init hasremoteurlTest &&
-     +	test_when_finished "rm -rf hasremoteurlTest" &&
-     +
-    -+	cat >"$(pwd)"/include-two-three <<-\EOF &&
-    ++	cat >include-two-three <<-\EOF &&
-     +	[user]
-     +		two =3D included-config
-     +		three =3D included-config
-    @@ t/t1300-config.sh: test_expect_success '--get and --get-all with --f=
-ixed-value'
-     +	git init hasremoteurlTest &&
-     +	test_when_finished "rm -rf hasremoteurlTest" &&
-     +
-    -+	printf "[user]\ndss =3D yes\n" >"$(pwd)/double-star-start" &&
-    -+	printf "[user]\ndse =3D yes\n" >"$(pwd)/double-star-end" &&
-    -+	printf "[user]\ndsm =3D yes\n" >"$(pwd)/double-star-middle" &&
-    -+	printf "[user]\nssm =3D yes\n" >"$(pwd)/single-star-middle" &&
-    -+	printf "[user]\nno =3D no\n" >"$(pwd)/no" &&
-    ++	printf "[user]\ndss =3D yes\n" >double-star-start &&
-    ++	printf "[user]\ndse =3D yes\n" >double-star-end &&
-    ++	printf "[user]\ndsm =3D yes\n" >double-star-middle &&
-    ++	printf "[user]\nssm =3D yes\n" >single-star-middle &&
-    ++	printf "[user]\nno =3D no\n" >no &&
-     +
-     +	cat >>hasremoteurlTest/.git/config <<-EOF &&
-     +	[remote "foo"]
-    @@ t/t1300-config.sh: test_expect_success '--get and --get-all with --f=
-ixed-value'
-     +	git init hasremoteurlTest &&
-     +	test_when_finished "rm -rf hasremoteurlTest" &&
-     +
-    -+	cat >"$(pwd)"/include-with-url <<-\EOF &&
-    ++	cat >include-with-url <<-\EOF &&
-     +	[remote "bar"]
-     +		url =3D bar
-     +	EOF
---=20
+diff --git a/config.c b/config.c
+index 2dcbe901b6..94ad5ce913 100644
+--- a/config.c
++++ b/config.c
+@@ -120,6 +120,16 @@ static long config_buf_ftell(struct config_source *conf)
+ 	return conf->u.buf.pos;
+ }
+ 
++struct config_include_data {
++	int depth;
++	config_fn_t fn;
++	void *data;
++	const struct config_options *opts;
++};
++#define CONFIG_INCLUDE_INIT { 0 }
++
++static int git_config_include(const char *var, const char *value, void *data);
++
+ #define MAX_INCLUDE_DEPTH 10
+ static const char include_depth_advice[] = N_(
+ "exceeded maximum include depth (%d) while including\n"
+@@ -306,7 +316,7 @@ static int include_condition_is_true(const struct config_options *opts,
+ 	return 0;
+ }
+ 
+-int git_config_include(const char *var, const char *value, void *data)
++static int git_config_include(const char *var, const char *value, void *data)
+ {
+ 	struct config_include_data *inc = data;
+ 	const char *cond, *key;
+diff --git a/config.h b/config.h
+index f119de0130..48a5e472ca 100644
+--- a/config.h
++++ b/config.h
+@@ -126,6 +126,8 @@ int git_default_config(const char *, const char *, void *);
+ /**
+  * Read a specific file in git-config format.
+  * This function takes the same callback and data parameters as `git_config`.
++ *
++ * Unlike git_config(), this function does not respect includes.
+  */
+ int git_config_from_file(config_fn_t fn, const char *, void *);
+ 
+@@ -158,6 +160,8 @@ void read_very_early_config(config_fn_t cb, void *data);
+  * will first feed the user-wide one to the callback, and then the
+  * repo-specific one; by overwriting, the higher-priority repo-specific
+  * value is left at the end).
++ *
++ * Unlike git_config_from_file(), this function respects includes.
+  */
+ void git_config(config_fn_t fn, void *);
+ 
+@@ -338,39 +342,6 @@ const char *current_config_origin_type(void);
+ const char *current_config_name(void);
+ int current_config_line(void);
+ 
+-/**
+- * Include Directives
+- * ------------------
+- *
+- * By default, the config parser does not respect include directives.
+- * However, a caller can use the special `git_config_include` wrapper
+- * callback to support them. To do so, you simply wrap your "real" callback
+- * function and data pointer in a `struct config_include_data`, and pass
+- * the wrapper to the regular config-reading functions. For example:
+- *
+- * -------------------------------------------
+- * int read_file_with_include(const char *file, config_fn_t fn, void *data)
+- * {
+- * struct config_include_data inc = CONFIG_INCLUDE_INIT;
+- * inc.fn = fn;
+- * inc.data = data;
+- * return git_config_from_file(git_config_include, file, &inc);
+- * }
+- * -------------------------------------------
+- *
+- * `git_config` respects includes automatically. The lower-level
+- * `git_config_from_file` does not.
+- *
+- */
+-struct config_include_data {
+-	int depth;
+-	config_fn_t fn;
+-	void *data;
+-	const struct config_options *opts;
+-};
+-#define CONFIG_INCLUDE_INIT { 0 }
+-int git_config_include(const char *name, const char *value, void *data);
+-
+ /*
+  * Match and parse a config key of the form:
+  *
+-- 
 2.34.1.400.ga245620fadb-goog
 
