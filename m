@@ -2,146 +2,228 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2354FC433F5
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 18:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79B96C433EF
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 19:28:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236175AbhLGS4a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 13:56:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52182 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236052AbhLGS43 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 13:56:29 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30D21C061574
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 10:52:59 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id z13-20020a627e0d000000b004a2849e589aso150079pfc.0
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 10:52:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=0VceLDr812G+zRrsVPliytnUYjopMmEkuDoa1GhQa6w=;
-        b=gfFZFhx6sli2XxMnOFWbUzrywHD4FrSGwibdbX5dSBvQzcQXwSHxrQOdc8rAm4OwzQ
-         nWOOQeA4MvjFiTde0bs2tHEVzEbSLTo4xK4dsiv89eejnYBWt/yZ5V/1OyawSRKJtcQj
-         /kyIe5arZvghOcMEsLgk6m5vRHLLJI+wOtCuVrhcu7DHjz0CQRPhHH/vQZ7mKSve+BOo
-         0uqsBAeoWMVz59V5bmFBsafypbTiMQIKMJGalrFUv56Hz/gon6gGHdXrNepRBTmrA2GO
-         Rb/xAWb/IIk6Jr0HV9bq8LiDJKRh0pT7yhZ6u2g1z1ZPOKAwu/sVL+iVdN4vv2tkwBs/
-         bFjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=0VceLDr812G+zRrsVPliytnUYjopMmEkuDoa1GhQa6w=;
-        b=u448JMyQWGl0bqrEfwWO1tRPFBYTFsMeZmloHDfRoDET+0PnlCegQqnvLE2orrfRc7
-         LqqExXHZkbd7ambG1yJUs3mzbKc12IU+idkE7k8hGzIYASfLR9NOPCQr3YBKD6eqF64Q
-         cKKciSXZJvyFSYg+mXkgGAfHUrkdmDltx7cZn8PdOwOZV53EoImgAqlPAZgl/sj3E8Gx
-         oFdiAUWAL18r8BwLOTwr8JlM9snDwuAuOHSkUX+u8+vdTmdtwd+BkBjZ1EYfaYcMVwhy
-         BWY+YlJZFPKqqkCcMytsegHD6xIvLonnOZf0DSXNggHb0ZWxVVlPUTRPIvgyIsox9EqL
-         Ep3w==
-X-Gm-Message-State: AOAM532l7VH03L3yJDk2Opdlg012bvBe4sEDNDefGQFdFtUzs0vdgic9
-        utTu0m/HfP+gzF4yLT8j4ggYwZ2EhMPmSJXiVcIn
-X-Google-Smtp-Source: ABdhPJyhvuFvhnRSo4RW8WMjBRh1Yk6b0U7BPPS4HY7/JwPIt05+A7D+sXsFfVrmts2ef2n1s89aBd+R3b8v5qRMFvDI
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:7004:: with SMTP id
- f4mr1157071pjk.156.1638903178633; Tue, 07 Dec 2021 10:52:58 -0800 (PST)
-Date:   Tue,  7 Dec 2021 10:52:56 -0800
-In-Reply-To: <211207.86k0ggnvfo.gmgdl@evledraar.gmail.com>
-Message-Id: <20211207185256.2305093-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <211207.86k0ggnvfo.gmgdl@evledraar.gmail.com>
-X-Mailer: git-send-email 2.34.1.400.ga245620fadb-goog
-Subject: Re: [PATCH v5 0/2] Conditional config includes based on remote URL
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     avarab@gmail.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, chooglen@google.com,
-        gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        id S231562AbhLGTbh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 14:31:37 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53211 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229953AbhLGTbg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 14:31:36 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D03D4154FAD;
+        Tue,  7 Dec 2021 14:28:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=FNUDYnQM+aYl
+        8ASCqrhHR+Ij5/F4DarV9MwEMU/S/jo=; b=X2VwkpJg7kR8hQPWUqdDh9nWANhj
+        7cWdSWT8ttjZu/8f+vOVKcZqHZqckMEATXe2AKpImbdxRLVxCImE3PoqY5X7C5K+
+        E8VQymmCTrDQwo7Z+y16MJXml0fSgm8mYFPG1/RdnCDC3niRH9jQhUUf9bdUtUEi
+        vldWQyBCSocA2Q8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CA038154FAB;
+        Tue,  7 Dec 2021 14:28:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BFD8D154FA2;
+        Tue,  7 Dec 2021 14:28:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, chooglen@google.com, emilyshaffer@google.com,
+        avarab@gmail.com
+Subject: Re: [PATCH v5 1/2] branch: accept multiple upstream branches for
+ tracking
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+        <cover.1638859949.git.steadmon@google.com>
+        <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
+Date:   Tue, 07 Dec 2021 11:28:00 -0800
+In-Reply-To: <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
+        (Josh Steadmon's message of "Mon, 6 Dec 2021 23:12:07 -0800")
+Message-ID: <xmqqk0gg6wqn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: CAED56D6-5793-11EC-A36F-98D80D944F46-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> >>  * Inlining the "remote_urls" in the struct makes its management easier;
-> >>    and the free/NULL checks just check .nr now, and string_list_clear() can be
-> >>    unconditional.
-> >
-> > I don't think we can do this - nr might still be 0 after a scan if we
-> > don't have remote URLs for some reason, so we still need to distinguish
-> > between not-scanned and scanned-with-zero-URLs.
-> 
-> You mean so that we don't double-free? The way string_list_clear()
-> protects against that, but maybe there's something else.
-> 
-> Whatever it is (if there's anything) it could use test coverage then :)
+Josh Steadmon <steadmon@google.com> writes:
 
-No - we only want to do one scan per config read. If we scan and there
-are no remote URLs, with your scheme, next time we encounter another
-includeIf.hasconfig, we would need to scan again (because nr is still
-0). With my scheme, we can see that the pointer is non-NULL, so we know
-that we have already scanned.
+> +static int install_branch_config_multiple_remotes(int flag, const char=
+ *local, const char *origin,
+> +		struct string_list *remotes)
 
-> >>  * It would be nice if e.g. the "includeIf.hasconfig:remote.*.url globs" test
-> >>    were split up by condition, but maybe that's a hassle (would need a small helper).
-> >> 
-> >>    Just something that would have helped while hacking on this, i.e. now most of it
-> >>    was an all-or-nothing failure & peek at the trace output
-> >
-> > What do you mean by condition? There seems to only be one condition
-> > (whether the URL is there or not), unless you were thinking of smaller
-> > subdivisions.
-> 
-> Maybe I'm just misunderstanding the intent here, but aren't you trying
-> to guard against the case of having a ~/.gitconfig that includes
-> ~/.gitconfig.d/for-this-url, and *that* file in turns changes the
-> remote's "url" in its config, followed by another "include if url
-> matches" condition therein?
-> 
-> I.e. I read (more like skimmed) the documentation & test at the end as
-> forbidding that, but maybe that's OK?
+The line got overly long so perhaps cut the line after "*local,",
+as "origin" and "remotes" conceptually are closer together.
 
-If we're including "~/.gitconfig.d/for-this-url" by includeIf.hasconfig,
-then yes, I'm guarding against that and other similar conditions.
+What is in the string list?  Names of refs at the remote "origin",
+instead of a single ref there?
 
-> > We can decide later what the future facility will be, but I envision
-> > that we will not allow included files to set config that can affect any
-> > include directives in use. So, for example, if I have a user.email-based
-> > include, none of my config-conditionally included files can set user.email.
-> 
-> I didn't look deeply at the implementation at all, but why would this be
-> a problem?
-> 
-> You parse ~/.gitconfig, it has user.name=foo, then right after in that
-> file we do:
-> 
->     [includeIf "hasconfig:user.name:*foo*"]
->     path = ~/.gitconfig.d/foo
-> 
-> Now the top of  ~/.gitconfig.d/foo we have:
-> 
->     [user]
->     name = bar
->     [includeIf "hasconfig:user.name:*bar*"]
->     path = ~/.gitconfig.d/bar
-> 
-> Why would it matter that we included on user.name=foo before?
-> 
-> Doesn't that only matter *while* we process that first "path" line? Once
-> we move past it we update our configset to user.name=bar once we hit the
-> "name" line of the included file.
-> 
-> Then when we get another "hasconfig:user.name" we just match it to our
-> current user.name=*bar*.
-> 
-> No?
-> 
-> Anyway, I think it's fine to punt on it for now or whatever, just
-> curious...
+>  {
+>  	const char *shortname =3D NULL;
+>  	struct strbuf key =3D STRBUF_INIT;
+> -	int rebasing =3D should_setup_rebase(origin);
+> -
+> -	if (skip_prefix(remote, "refs/heads/", &shortname)
+> -	    && !strcmp(local, shortname)
+> -	    && !origin) {
+> -		warning(_("Not setting branch %s as its own upstream."),
+> -			local);
 
-Well, we can't punt on it because what you describe also applies to
-remote URL :-)
+When 'origin' is NULL in the original caller, it means a local
+tracking, and making sure we do not say "my 'master' branch builds
+on top of itself" makes sense.
 
-So what you're saying is that once we have decided to include a file, we
-always include it in its entirety regardless of whether the condition
-changes during the file's include. That's reasonable, but other people
-could have differing opinions. In this case, I think it's fine just to
-prohibit it entirely. In the future, we may look into relaxing this
-condition.
+> -		return 0;
+> -	}
+> +	int i, rebasing =3D should_setup_rebase(origin);
+> +
+> +	if (remotes->nr < 1)
+> +		BUG("must provide at least one remote for branch config");
+> +
+> +	if (!origin)
+> +		for (i =3D 0; i < remotes->nr; i++)
+> +			if (skip_prefix(remotes->items[i].string, "refs/heads/", &shortname=
+)
+> +			    && !strcmp(local, shortname)) {
+> +				warning(_("Not setting branch %s as its own upstream."),
+> +					local);
+> +				return 0;
+
+I am a bit surprised with this warning and early return before
+inspecting the remainder of the list.  When 'origin' is NULL,
+i.e. we are talking about the local building on top of another local
+branch, if the function is called for the local branch 'main' with
+'main' in the remotes list alone, we do want to issue the warning
+and exit without doing anything (i.e. degenerating to the original
+behaviour of taking a single string variable, when a string list
+with a single element is given).  But if the remotes list has 'main'
+and 'master', would we want to just "skip" the same one, but still
+handle the other ones as if the "same" branch were not in the list?
+
+> @@ -75,8 +80,17 @@ int install_branch_config(int flag, const char *loca=
+l, const char *origin, const
+> =20
+>  	strbuf_reset(&key);
+>  	strbuf_addf(&key, "branch.%s.merge", local);
+> -	if (git_config_set_gently(key.buf, remote) < 0)
+> +	/*
+> +	 * We want to overwrite any existing config with all the branches in
+> +	 * "remotes". Override any existing config with the first branch, but=
+ if
+> +	 * more than one is provided, use CONFIG_REGEX_NONE to preserve what
+> +	 * we've written so far.
+> +	 */
+> +	if (git_config_set_gently(key.buf, remotes->items[0].string) < 0)
+>  		goto out_err;
+> +	for (i =3D 1; i < remotes->nr; i++)
+> +		if (git_config_set_multivar_gently(key.buf, remotes->items[i].string=
+, CONFIG_REGEX_NONE, 0) < 0)
+> +			goto out_err;
+> =20
+>  	if (rebasing) {
+>  		strbuf_reset(&key);
+> @@ -87,29 +101,62 @@ int install_branch_config(int flag, const char *lo=
+cal, const char *origin, const
+>  	strbuf_release(&key);
+> =20
+>  	if (flag & BRANCH_CONFIG_VERBOSE) {
+> -		if (shortname) {
+> -			if (origin)
+> -				printf_ln(rebasing ?
+> -					  _("Branch '%s' set up to track remote branch '%s' from '%s' by =
+rebasing.") :
+> -					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
+> -					  local, shortname, origin);
+> -			else
+> -				printf_ln(rebasing ?
+> -					  _("Branch '%s' set up to track local branch '%s' by rebasing.")=
+ :
+> -					  _("Branch '%s' set up to track local branch '%s'."),
+> -					  local, shortname);
+> +		int plural =3D remotes->nr > 1;
+> +		int all_shortnames =3D 1;
+> +		const char *msg_fmt;
+> +		struct strbuf ref_string =3D STRBUF_INIT;
+> +
+> +		for (i =3D 0; i < remotes->nr; i++)
+> +			if (skip_prefix(remotes->items[i].string, "refs/heads/", &shortname=
+)) {
+> +				strbuf_addf(&ref_string, "'%s', ", shortname);
+> +			} else {
+> +				all_shortnames =3D 0;
+> +				strbuf_addf(&ref_string, "'%s', ", remotes->items[i].string);
+
+So, all_shortnames =3D=3D true means everything was a local branch in
+the 'origin' remote, and when it has a non-branch (like a tag),
+all_shortnames becomes false?
+
+> +			}
+> +		/* The last two characters are an extraneous ", ", so trim those. */
+> +		strbuf_setlen(&ref_string, ref_string.len - 2);
+
+As you are starting from an empty ref_string, a more idiomatic way
+to build concatenated string would be to prefix when you add a new
+item, e.g.
+
+	loop {
+		if (ref_string already has items)
+			ref_string.append(", ");
+		ref_string.append(this_item);
+	}
+
+> +		if (all_shortnames && origin) {
+> +			if (rebasing && plural)
+> +				msg_fmt =3D "Branch '%s' set up to track remote branches %s from '=
+%s' by rebasing.";
+
+What does it mean to keep my 'topic' branch up-to-date by rebasing
+on top of more than one remote sources?  By merging, I can sort-of
+understand (i.e. creating an octopus), but would it make sense to
+track more than one remote sources in general?  Is it common?
+
+When the benefit is not clear, it might make more sense not to do
+this when there are already multiple tracking sources defined for
+the original; it might be a mistake that we may not want to spread
+with the new option.
+
+Of course, it is very possible that I am missing a perfectly valid
+use case where having more than one makes good sense.  If so, please
+do not take the above comments as an objection, but adding some
+comments before the function to explain when having remote list with
+more than one items makes sense and how such a setting can be used
+to avoid future readers asking the same (stupid) question as I just
+did.
+
+
+> +			else if (rebasing && !plural)
+> +				msg_fmt =3D "Branch '%s' set up to track remote branch %s from '%s=
+' by rebasing.";
+> +			else if (!rebasing && plural)
+> +				msg_fmt =3D "Branch '%s' set up to track remote branches %s from '=
+%s'.";
+> +			else if (!rebasing && !plural)
+> +				msg_fmt =3D "Branch '%s' set up to track remote branch %s from '%s=
+'.";
+> +
+> +			printf_ln(_(msg_fmt), local, ref_string, origin);
+
+I am not sure how well the "plural" thing works with i18n.  It may
+suffice for the original in English to have only two choices between
+one or more-than-one, but not all languages are English.  Counting
+the actual number (I guess remotes->nr is it) and using Q_() to
+choose between the possible variants.  I think =C3=86var knows about this
+much better than I do.
+
+But if we are not doing this "set multiple" and instead go the
+"detect existing multiple and refrain from spreading the damage"
+route, all of that is moot.
+
+Thanks.
