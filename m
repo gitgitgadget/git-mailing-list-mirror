@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26E31C433EF
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 17:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F57BC433FE
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 17:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240151AbhLGRs7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 12:48:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35972 "EHLO
+        id S240155AbhLGRtA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 12:49:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235371AbhLGRs7 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S240150AbhLGRs7 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 7 Dec 2021 12:48:59 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56BD6C061746
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 09:45:28 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id j3so31179471wrp.1
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B6F6C061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 09:45:29 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id t9so31088712wrx.7
         for <git@vger.kernel.org>; Tue, 07 Dec 2021 09:45:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4caTpC3+u83vTS7zkUHAtzr+4yoHPBYES+caC91RmF4=;
-        b=a2dxhXN6orm9sJI4kDhmpwxrEQQVoBlS1kp5gKf3u5AiPzDxzhguwj+AGwB8v9gsvL
-         zJYCl7rOAWoZYy0sLno81oG3sZ4NXLtURI4PBbOXaNWmYCQMfdAhqM9JfF+IilAVIBn8
-         5aF0blvLSyOUr2yfnhJ+0WOispKWuk7mS/sAolKggp4g9nQoENfa14ju06pFIzFDJaPv
-         J/xWyKZ/4JoKTaBE7z2AzeCJwFOoPyqst2PP9nzOOkLBRCeqUk3d6BZjsGpFCmUeaHrX
-         J/HFaEwIoYGxYmgt7wder72tKQNFWb8F5sx2wwNQcxFz3/1ylQj8J7IqVr1TxOyP5tFS
-         /2Cg==
+        bh=2mX0ewo9yheSDENuy2H8jhMj0liBRlVQnqnpNtjTveM=;
+        b=dG8yyqYk7p/QXxaPu858F0ph1tKSp14hAdLeMa/yKB2a3m2bv2ftlMOOogPxSr/NVh
+         7z43oLGmlt00DHPd59igi7OdYTMK7QM0yZ1yDF4zo8c9fiRQMpst/1XxH+vAVwAS1M4s
+         JF2mb5gWFHDNDNzSUU1Xg04l0V6H71/im2Q2sW+whWqROM5LS8Q3Wf7GZbWoifp0xpHV
+         1rbck1yWiEWOpvFlnG2DASlWklQZcBCwVTE8kUL4vsR0wxI/zotLZn1uuHjQelusP/CA
+         EHYv+c6rLG2e7VKpP/eHBIAo0oPHuekUIZbpK2so8O54RmCnEi5NpN7w7NTUtPqvlVAW
+         spoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4caTpC3+u83vTS7zkUHAtzr+4yoHPBYES+caC91RmF4=;
-        b=zjILVqXkukrNcD1CeYdJb7O+8HLV/oqfOPGDvqQcZFu1nwpL7yBxwOtTaSEgr/clkr
-         4qhw9y0U/xcF+MVklloqG/I0PWr2GljZUIax+0dTb1j6/aC9jmuKpynxtTkVMpQyKa6Y
-         UXLE6w3/N94n0JAoJS4q5Ais7JYLx71IxJhkM6gBYY2+ZPuqHpfn77FrOMAYgxRa+eUi
-         UHr609tD/PX8n7TBumzHh0MowSA/yi0vjYkU6lvBe3KH493cfXCB+wA9llXsh981RCJI
-         /IHd5Sfupoj57d1vyPdfRc4z/m4Bl8aepOy8JpeKfPrl35f4G5iOuqrhUM1mqxol8zkY
-         AAtQ==
-X-Gm-Message-State: AOAM531HqcLUfq0ADPN5Kv1rsq1CkbuavcpRIkCjrMRupSliyLXpjxqD
-        U25VwRkRFCIRm/hoQjLiTxBL9foPdTk=
-X-Google-Smtp-Source: ABdhPJxiQ4dQLG2XLno3+sxH4r9gWVNzLCEVqlRy/zDyHoHV+/5QJvMURoonioyBSoi+hbqnMEqXYQ==
-X-Received: by 2002:a05:6000:1c2:: with SMTP id t2mr51075456wrx.378.1638899126806;
-        Tue, 07 Dec 2021 09:45:26 -0800 (PST)
+        bh=2mX0ewo9yheSDENuy2H8jhMj0liBRlVQnqnpNtjTveM=;
+        b=k4L+isMCodX4JqQrLZlnujlaOYaTBrcSQqKtOZZK0BMK7EEPHnF4MDXfnqsWp/2OtC
+         xzcOl3F7Af9ONvM9O0bV7pjJVfv/oujtm1d68osDTpzC5f594Ycl5ZrOYc4X5HeXQcab
+         nQbTe3x17l6RFy2c2mjQ0SgDJLt2QpHEjnD4+yUtuEsQDV5szvQbIDv2sU7m9RQ+Zuoi
+         aZUpL9zwTMWtwxYdzmvmM2WIfo7Znk+s7LwQBwGfKsjxZjlh34N2MWnIYIc0dYDvaYnK
+         nLmo/hrBXJTkVdQM8ThTbV4xhVwTD1db4g6pfxyQENvkg9JKIqkJBRzrKbZP+i9EibWQ
+         N9jg==
+X-Gm-Message-State: AOAM530gK6WkNryocVJ5l1878XUsXvxS2/I+jfrAWmyJFpLijA8POPFO
+        HsZxKh/ZGvI2tlxxaeRVMFsAoEhP0KU=
+X-Google-Smtp-Source: ABdhPJwnYzhR07GR3Z9SkhWj85goIBQu/gI23uqbepHt5xWtl6TvrJFxffF6mpZVy0vbXGMdsCxXjA==
+X-Received: by 2002:a05:6000:2c8:: with SMTP id o8mr6027381wry.266.1638899127535;
+        Tue, 07 Dec 2021 09:45:27 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o12sm344033wmq.12.2021.12.07.09.45.26
+        by smtp.gmail.com with ESMTPSA id j8sm354651wrh.16.2021.12.07.09.45.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 09:45:26 -0800 (PST)
-Message-Id: <7c033815183cc8ad7a76bc2b9456b17041107c2c.1638899124.git.gitgitgadget@gmail.com>
+        Tue, 07 Dec 2021 09:45:27 -0800 (PST)
+Message-Id: <603bd1d4f6e4ceda02a5165eedd3ae5b92b8929e.1638899124.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
 References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Dec 2021 17:45:15 +0000
-Subject: [PATCH 01/10] reftable: fix OOB stack write in print functions
+Date:   Tue, 07 Dec 2021 17:45:16 +0000
+Subject: [PATCH 02/10] reftable: fix resource leak in error path
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,33 +66,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+This would be triggered by corrupt files, so it doesn't have test coverage. This
+was discovered by a Coverity scan.
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/record.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ reftable/block.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/reftable/record.c b/reftable/record.c
-index 6a5dac32dc6..8536bd03aa9 100644
---- a/reftable/record.c
-+++ b/reftable/record.c
-@@ -254,7 +254,7 @@ static void hex_format(char *dest, uint8_t *src, int hash_size)
- void reftable_ref_record_print(struct reftable_ref_record *ref,
- 			       uint32_t hash_id)
- {
--	char hex[2 * GIT_SHA256_RAWSZ + 1] = { 0 }; /* BUG */
-+	char hex[GIT_MAX_HEXSZ + 1] = { 0 }; /* BUG */
- 	printf("ref{%s(%" PRIu64 ") ", ref->refname, ref->update_index);
- 	switch (ref->value_type) {
- 	case REFTABLE_REF_SYMREF:
-@@ -586,7 +586,7 @@ static struct reftable_record_vtable reftable_obj_record_vtable = {
- void reftable_log_record_print(struct reftable_log_record *log,
- 			       uint32_t hash_id)
- {
--	char hex[GIT_SHA256_RAWSZ + 1] = { 0 };
-+	char hex[GIT_MAX_HEXSZ + 1] = { 0 };
+diff --git a/reftable/block.c b/reftable/block.c
+index 855e3f5c947..d7347bb3152 100644
+--- a/reftable/block.c
++++ b/reftable/block.c
+@@ -188,13 +188,16 @@ int block_reader_init(struct block_reader *br, struct reftable_block *block,
+ 	uint32_t full_block_size = table_block_size;
+ 	uint8_t typ = block->data[header_off];
+ 	uint32_t sz = get_be24(block->data + header_off + 1);
+-
++	int err = 0;
+ 	uint16_t restart_count = 0;
+ 	uint32_t restart_start = 0;
+ 	uint8_t *restart_bytes = NULL;
++	uint8_t *uncompressed = NULL;
  
- 	switch (log->value_type) {
- 	case REFTABLE_LOG_DELETION:
+-	if (!reftable_is_block_type(typ))
+-		return REFTABLE_FORMAT_ERROR;
++	if (!reftable_is_block_type(typ)) {
++		err =  REFTABLE_FORMAT_ERROR;
++		goto done;
++	}
+ 
+ 	if (typ == BLOCK_TYPE_LOG) {
+ 		int block_header_skip = 4 + header_off;
+@@ -213,15 +216,19 @@ int block_reader_init(struct block_reader *br, struct reftable_block *block,
+ 		    uncompress2(uncompressed + block_header_skip, &dst_len,
+ 				block->data + block_header_skip, &src_len)) {
+ 			reftable_free(uncompressed);
+-			return REFTABLE_ZLIB_ERROR;
++			err = REFTABLE_ZLIB_ERROR;
++			goto done;
+ 		}
+ 
+-		if (dst_len + block_header_skip != sz)
+-			return REFTABLE_FORMAT_ERROR;
++		if (dst_len + block_header_skip != sz) {
++			err = REFTABLE_FORMAT_ERROR;
++			goto done;
++		}
+ 
+ 		/* We're done with the input data. */
+ 		reftable_block_done(block);
+ 		block->data = uncompressed;
++		uncompressed = NULL;
+ 		block->len = sz;
+ 		block->source = malloc_block_source();
+ 		full_block_size = src_len + block_header_skip;
+@@ -251,7 +258,11 @@ int block_reader_init(struct block_reader *br, struct reftable_block *block,
+ 	br->restart_count = restart_count;
+ 	br->restart_bytes = restart_bytes;
+ 
+-	return 0;
++done:
++	if (uncompressed) {
++		reftable_free(uncompressed);
++	}
++	return err;
+ }
+ 
+ static uint32_t block_reader_restart_offset(struct block_reader *br, int i)
 -- 
 gitgitgadget
 
