@@ -2,193 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A20A0C433EF
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 22:14:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94DC7C433F5
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 22:22:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233312AbhLGWR6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 17:17:58 -0500
-Received: from mail-pg1-f178.google.com ([209.85.215.178]:41853 "EHLO
-        mail-pg1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229687AbhLGWR6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 17:17:58 -0500
-Received: by mail-pg1-f178.google.com with SMTP id k4so311349pgb.8
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 14:14:27 -0800 (PST)
+        id S238002AbhLGW0H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 17:26:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46316 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233310AbhLGW0H (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 17:26:07 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AA45C061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 14:22:36 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id k37so1643325lfv.3
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 14:22:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XVmDUdDSdTiHcTGBuHodPUoOSn4dM5oUTFemRBOEyZk=;
+        b=kXNt/wjddcegG8B4O5uk2Drtje14Kt1A6Q1SYzpWXXbD7DlAtAxBYaRmj1RNvHIRHy
+         i7u7DaP/1e5F3TyxQDPttBlwQrLRH5OBR4RToCz3X2cbMSA/YhWeJf6dLefOqz/g1o/5
+         PftesGuwAnSviSYXAh3mJ51eHpKWPsbpucQt9SBtbv00JxEtjevdkN6x/vfn3SALdg7j
+         3es0vjiV5PHy2gZmfUikCVW4mWYiK8dYrc6+Ajf6KYijTYW/PBtCwKTpCG778QMmrJju
+         C3SoMBlX9cv9vK6LDLHHgfNrTGXaNIZHWrZY0YtiQTubQAPqPqX248UEP8B+sx2GwUl2
+         k3hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ihu+cloOoPhJCa71MP78S8c8n0JGu2Awj0ZDwlcsXxs=;
-        b=jMV1W7rtCLyWNrwCE+bUauPCVTZKkSX2Mh1MTM8ABrdVPpXj/FUZsGIgwTH+Ev7GZY
-         1lKwf3oyfVMvADvaydis9zCUBcEdQiXsMYok6wHmaKtbtz7CQTF29rGjphGp8WZ0mppP
-         TPNnVTYjmywe7uuttAlBUkZbzmwDbYHFMBmVNFU554/af5xn44EpYWwIj+Uixh28l3eZ
-         80gDMWCslS5durG8aLX8mmuMtITNr2snNXzz6acb2pjId4D0NIqDhjiHAUG/lU+hWEHd
-         31DidJw3UCHDUU0JVbOz2YPrs06hve+6eP8OaZHv7Wj0X0XLonKdVz2O773v8sxJD0r4
-         h8aQ==
-X-Gm-Message-State: AOAM531Uu37ZIe7kSePiBF6IEsVT005pgdQt4ywNd7AXCeeaXtWCxXjK
-        hw2Rvk4Y6A0FVp1nji+VrpzuFxGqo2dN2fzI2KttVOkwaBHHSA==
-X-Google-Smtp-Source: ABdhPJzM64Sf+7cHU0zKyuyS+F3g8GdHfqGMgmPbqVjzDd/6Aw2uL/FrSm/1tMOjGJEILGVSIV1NJbmT+IDSf0/M4kc=
-X-Received: by 2002:a63:8048:: with SMTP id j69mr26136260pgd.139.1638915267019;
- Tue, 07 Dec 2021 14:14:27 -0800 (PST)
+        bh=XVmDUdDSdTiHcTGBuHodPUoOSn4dM5oUTFemRBOEyZk=;
+        b=xPkJL1WrUxM+2igmhxCnIr8wG7EcvNteJz5Z5b9kogkzRPrGkmrpnvr2W/oSE7fgCW
+         0qU4pzVcIRpQBZb6vY4E35Va8IHP/zPKOsyeg6Xy5Q0/k1TYgHCYYAn8jmjAZpgMek99
+         WLKowK1DBJQrs/8Ll65ZwgJNArcvLSxnYO/JxXrg8P4v4tloxQHxZF1l+l0KDHJLbgyS
+         F6LPQuCDwcTOJ0C3ZHs9VXDbbov8dFqicAzL9Q0IcZYRXV5DsOx6+sRgjf4qXJo3/LTz
+         OTKs7M3+MqFgepg6C/+/ExNstX98jjV0EO0VJkYqNYcEQ3BIGshESXUeyptkdT1TwNLk
+         tLLg==
+X-Gm-Message-State: AOAM5326M/ROweZS/bvwepw2piY8jaWT/6JUzyDvLWHoqwcKs09ZaUDn
+        BVBkKEz12aJDLs360AGEOMqoyRSt9BRrNo8oRJA=
+X-Google-Smtp-Source: ABdhPJz2bWd3TFChuX0ujSZ6DJ6UaZpDzBAHvDh7T/Zn1RAdEV8BD3ThnloTrqMLGaMPdsFWEh1r17iXSjPScc68cIo=
+X-Received: by 2002:a05:6512:3182:: with SMTP id i2mr41896668lfe.241.1638915754306;
+ Tue, 07 Dec 2021 14:22:34 -0800 (PST)
 MIME-Version: 1.0
-References: <20211202144354.17416-1-chakrabortyabhradeep79@gmail.com>
- <20211207182300.4361-1-chakrabortyabhradeep79@gmail.com> <20211207182300.4361-2-chakrabortyabhradeep79@gmail.com>
-In-Reply-To: <20211207182300.4361-2-chakrabortyabhradeep79@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 7 Dec 2021 17:14:15 -0500
-Message-ID: <CAPig+cRxU=pT-qCp-xpHcoae45oxz1d-eRh+QF-SJFM3B-6KyQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] push: make '-u' have default arguments
-To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
+References: <pull.1094.git.1638823724410.gitgitgadget@gmail.com>
+ <20211206222539.GA27821@neerajsi-x1.localdomain> <nycvar.QRO.7.76.6.2112072217280.90@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2112072217280.90@tvgsbejvaqbjf.bet>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Tue, 7 Dec 2021 14:22:23 -0800
+Message-ID: <CANQDOdfkRMMWpF2gaRpZW0NRzMuN-ADO++D1J4rS8WLxOPudRw@mail.gmail.com>
+Subject: Re: [PATCH] git-compat-util(msvc): C11 does not imply support for
+ zero-sized arrays
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 7, 2021 at 4:11 PM Abhradeep Chakraborty
-<chakrabortyabhradeep79@gmail.com> wrote:
-> [...]
-> Teach "git push -u" not to require repository and refspec.  When
-> the user do not give what repository to push to, or which
-> branch(es) to push, behave as if the default remote repository
-> and a refspec (depending on the "push.default" configuration)
-> are given.
-> [...]
-> Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+On Tue, Dec 7, 2021 at 1:33 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Neeraj,
+>
+> On Mon, 6 Dec 2021, Neeraj Singh wrote:
+>
+> > I'm a little confused by this issue. Looks like an empty flex array
+> > is supported here: https://godbolt.org/z/j3ndYTEfx.
+>
+> It is somewhat strange, but understandable, that the empty flex array at
+> the end of a struct isn't triggering a compile error. But having a field
+> _after_ that empty flex array _does_ trigger a compile error:
+>
+> struct MyStruct {
+>     int x;
+>     int flexA[];
+>     char string[256];
+> };
+>
+> Note the added `string` field.
+>
 
-This is not a proper review... just some superficial comments from
-scanning my eye over the patch...
+Please see https://godbolt.org/z/4Tb9PobYM.  GCC throws a morally
+equivalent error.  I don't think that's a valid usage of flex-array.
 
-> diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-> @@ -60,6 +60,75 @@ test_expect_success 'push -u :topic_2' '
-> +default_u_setup() {
-> +       git checkout main
-> +       remote=$(git config --get branch.main.remote)
-> +       if [ ! -z "$remote" ]; then
-> +               git branch --unset-upstream
-> +       fi
-> +       git config push.default $1
-> +       git config remote.pushDefault upstream
-> +}
+> See https://godbolt.org/z/TbcYhEW5d, it says:
+>
+>         <source>(5): error C2229: struct 'MyStruct' has an illegal zero-sized array
+>         Compiler returned: 2
+>
+> > (Note that I'm passing /TC to force C compilation).
+>
+> Yes, `/TC` is one of the flags we pass to MSVC. For more details, see
+> https://github.com/git-for-windows/git/runs/4389081542?check_suite_focus=true#step:9:125
+>
+> > Also, heap_fsentry doesn't appear to use a flex array in current sources.
+>
+> It does, but it is admittedly a bit convoluted and not very easy to see.
+> The definition of `heap_fsentry` is
+> [this](https://github.com/git-for-windows/git/blob/v2.34.1.windows.1/compat/win32/fscache.c#L77-L80):
+>
+>         struct heap_fsentry {
+>                 struct fsentry ent;
+>                 char dummy[MAX_LONG_PATH];
+>         };
+>
+> No flex array here, right? But wait, there is a `struct fsentry`. Let's
+> look at
+> [that](https://github.com/git-for-windows/git/blob/v2.34.1.windows.1/compat/win32/fscache.c#L43-L74):
+>
+>         struct fsentry {
+>                 struct hashmap_entry ent;
+>                 [...]
+>                 /*
+>                  * Name of the entry. For directory listings: relative path of the
+>                  * directory, without trailing '/' (empty for cwd()). For file
+>                  * entries:
+>                  * name of the file. Typically points to the end of the structure
+>                  * if
+>                  * the fsentry is allocated on the heap (see fsentry_alloc), or to
+>                  * a
+>                  * local variable if on the stack (see fsentry_init).
+>                  */
+>                 struct dirent dirent;
+>         };
+>
+> Still no flex array, right? But wait, there is a `struct dirent`. Let's
+> [see](https://github.com/git-for-windows/git/blob/v2.34.1.windows.1/compat/win32/dirent.h#L9-L12):
+>
+>         struct dirent {
+>                 unsigned char d_type; /* file type to prevent lstat after readdir */
+>                 char d_name[FLEX_ARRAY]; /* file name */
+>         };
+>
+> Finally! We see the flex array.
+>
+> Now, you may ask why is this even correct? How can you have an empty-sized
+> field in a struct that is inside another struct that is inside yet another
+> struct _and then followed by another field_?
+>
+> The reason why this is correct and intended is that `struct dirent`
+> intentionally leaves the length of the `d_name` undefined, to leave it to
+> the implementation whether a fixed-size buffer is used or a
+> specifically-allocated one of the exact correct size for a _specific_
+> directory entry.
+>
+> In FSCache, we want to allocate a large-enough buffer to fit _any_ file
+> name, and it should not only contain the metadata in `struct dirent`, but
+> additionally some FSCache-specific metadata.
+>
+> Therefore, `struct fsentry` is kind of a subclass of `struct dirent`, and
+> `struct heap_fsentry` is kind of a subclass of something that does not
+> exist, a `struct dirent` that offers enough space to fit _any_ legal
+> `d_name` (that is what that `dummy` field is for, it is not actually
+> intended to be accessed except via `d_name`).
+>
+> > If it does start using it, there issue may actually be elsewhere besides
+> > the struct definition (it could be just a badly targeted compiler error).
+> > We have code like `struct heap_fsentry key[2];`.  That declaration can't
+> > work with a flex array.
+>
+> I hope my explanation above made sense to you.
+>
+> Admittedly, it is slightly icky code, but honestly, I do not have any
+> splendid idea how to make it less complicated to understand. Do you?
 
-A few issues...
+Thanks for explaining all of this.  It was hard for me to see what was
+going on before.
 
-* since callers of this function incorporate it into their &&-chains,
-the body of the function itself should probably also have an intact
-&&-chain
+So when trying the same thing with Clang, this construct is claimed to
+be a GNU extension: https://godbolt.org/z/q3ndr57Pf
 
-* use `test` rather than `[`
+The fix I'd propose (uncomment the line defining FIXED_DEF in godbolt)
+is to use a union where the char buf has the size of the fsentry
+_plus_ the desired buffer.
 
-* `then` goes on its own line
-
-* probably want to use test_config() here rather than raw `git config`
-
-* `! -z` can be written more simply as `-n`
-
-Taking the above into account, gives:
-
-    default_u_setup() {
-        git checkout main &&
-        remote=$(git config --default '' --get branch.main.remote) &&
-        if test -n "$remote"
-        then
-            git branch --unset-upstream
-        fi &&
-        test_config push.default $1 &&
-        test_config remote.pushDefault upstream
-    }
-
-The `--default` ensures that `git config` will exit with a success
-code which is important now that it's part of the &&-chain.
-Alternatively, you could skip the dance of checking for
-`branch.main.remote` and just call `git branch --unset-upstream`
-unconditionally, but wrap it with test_might_fail() so it can be part
-of the &&-chain without worrying about whether that command succeeds
-or fails:
-
-    default_u_setup() {
-        git checkout main &&
-        test_might_fail git branch --unset-upstream &&
-        test_config push.default $1 &&
-        test_config remote.pushDefault upstream
-    }
-
-> +test_expect_success 'push -u with push.default=simple' '
-> +       default_u_setup simple &&
-> +       git push -u &&
-> +       check_config main upstream refs/heads/main &&
-> +       git push -u upstream main:other &&
-> +       git push -u &&
-> +       check_config main upstream refs/heads/main
-> +'
-> +
-> +test_expect_success 'push -u with push.default=current' '
-> +       default_u_setup current &&
-> +       git push -u &&
-> +       check_config main upstream refs/heads/main &&
-> +       git push -u upstream main:other &&
-> +       git push -u &&
-> +       check_config main upstream refs/heads/main
-> +'
-> +
-> +test_expect_success 'push -u with push.default=upstream' '
-> +       default_u_setup upstream &&
-> +       git push -u &&
-> +       check_config main upstream refs/heads/main &&
-> +       git push -u upstream main:other &&
-> +       git push -u &&
-> +       check_config main upstream refs/heads/main
-> +'
-
-When a number of tests have nearly identical bodies like this, it is
-sometimes clearer and more convenient to turn them into a for-loop
-like this:
-
-    for i in simple current upstream
-    do
-        test_expect_success "push -u with push.default=$i" '
-            default_u_setup $i &&
-            git push -u &&
-            check_config main upstream refs/heads/main &&
-            git push -u upstream main:other &&
-            git push -u &&
-            check_config main upstream refs/heads/main
-        '
-    done
-
-> +check_empty_config() {
-> +       test_expect_code 1 git config "branch.$1.remote"
-> +       test_expect_code 1 git config "branch.$1.merge"
-> +}
-
-As above, because calls to this function are part of the &&-chain in
-test bodies, it is important for the &&-chain to be intact in the
-function too. It's especially important in this case since this
-function is actually checking for specific conditions. As it's
-currently written -- with a broken &&-chain -- if the first
-test_expect_code() fails, we'll never know about it since that exit
-code gets lost; only the exit code from the second test_expect_code()
-has any bearing on the overall result of the test.
-
-> +test_expect_success 'progress messagesdo not go to non-tty (default -u)' '
-
-s/messagesdo/messages do/
-
-> +       ensure_fresh_upstream &&
-> +
-> +       # skip progress messages, since stderr is non-tty
-> +       git push -u >out 2>err &&
-> +       test_i18ngrep ! "Writing objects" err
-> +'
-
-The captured stdout in `out` doesn't seem to be used, so it's probably
-better to drop that redirection.
-
-> +test_expect_success 'progress messages go to non-tty with default -u (forced)' '
-> +       ensure_fresh_upstream &&
-> +
-> +       # force progress messages to stderr, even though it is non-tty
-> +       git push -u --progress >out 2>err &&
-> +       test_i18ngrep "Writing objects" err
-> +'
-
-Ditto. And repeat for the remaining tests.
+Thanks,
+Neeraj
