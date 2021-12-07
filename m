@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F24AC433FE
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 11:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC444C433EF
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 11:06:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235590AbhLGLKB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 06:10:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53526 "EHLO
+        id S235596AbhLGLKD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 06:10:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235584AbhLGLKA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 06:10:00 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DD0CC061748
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 03:06:30 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id u17so21343532wrt.3
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 03:06:30 -0800 (PST)
+        with ESMTP id S235586AbhLGLKB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 06:10:01 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CF21C061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 03:06:31 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id a9so28602914wrr.8
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 03:06:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=r8968T3naNuQ5j9UoZ5NsXC+Nitrdb9t+7Ha30Hni7M=;
-        b=bcGxYM/HrjB/W7sa3KVoHCuNyFTsnHDf1baiFztTfToOzO0aiX/gpbmA80qxV4kz/u
-         d4NSA42+Z0fkbMnpE4hbkUvYd32bpS1M4jZj43WNpjyzPQs+JCHlPrQV1n9wCrxejODL
-         IhTf917nyt1sATLMkhj1C8a4RxmyffTObParKfshIn2Ko1k2H8fEYwEkc+5lMgQSM7VL
-         /XfcBTrK3b14Tv1kCdxrdhYiM9QrZyyFMOFv0Vrt+H6FXbHPd7HfiOGjCiscVWA6e40O
-         hNOKXdD4bp9rQa4macooiBcRRm+S5N4/OCXaBc6aGlLIK1WApKdchOp2+XuYFtW5PLVZ
-         eW6Q==
+        bh=PQdn7VhOz6jMLXrCGDRirPwLcnlomNvBVQU64XUlWco=;
+        b=h6/qAxL0MjkyNXXJvHOhwCLlO4M8A1AqNBoAVbxBAoXAngqrd3p56ywam2DVI8dEA5
+         vvmVMiEepJp/JNEocog1r+KwqYkdtw7VAO4vDwKajwSWU7h1WPvwlCxAu1WCO3pUiH0O
+         ox/Clir4pINbttKSCSYpgDcGl2X1n9p7+e24fw/AaDiDAxiv1Zd9Yx58T/a8fcRl+Gl0
+         syqCmubmvYr2DsAtbp8Soq3F0bHMuzYVaIUB//3NUTnBAWYJek6sGs9py+5PsRBIRZ3/
+         hgWCtqW22V8DJqTxxR+YdGw6D77YK9AuUVneOZzBHgydzDExGyUMkYAfjSJuU+RoOqig
+         drsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=r8968T3naNuQ5j9UoZ5NsXC+Nitrdb9t+7Ha30Hni7M=;
-        b=6L1g4J9QTcPvHPxqVo67QOvmVGtracBfCqiOB2fYsG8U/5spmQCV+HyEX2shc+Nj9n
-         mPn3YZLpuOaKVKalN3/i1SGpVHvGTDZBM/3YFSHrBTA2F0YsJ6mRn1nB1r4K3zR/WZpw
-         GinfYmSMwj95Ax1GSDW4+QZqBmxbsdnZ+0MaKIjUIWJ3h0evCSvStKOQLlgooneZV8Y9
-         RnCqZx1OBMtNHENbxEH3CLw/YoP5/KYiP4MNdDnKQGBwE91JfQDd0VkacMx6l9h1KN2B
-         NcbR5b3Od3rIfYoVcLq7ZS7Vhj56FuUVIOOva92c6LiCLRANyJXn6AsXPv2fXgeD12X8
-         pCxw==
-X-Gm-Message-State: AOAM532ua4oG9bv78moBnx7w7RYiOP0dha3hGWH0ApxuzWQonom1wJat
-        Nn+DN03I9MI9eQhHVIPVle7cH10++y1iiQ==
-X-Google-Smtp-Source: ABdhPJy+S5CB62ITkzIL5qOP25uDAFUjbUPY3elC2IyboT2eJIfUw8n2BBBHhD4G8nC6JaSqE6EH2w==
-X-Received: by 2002:a5d:6508:: with SMTP id x8mr48631858wru.388.1638875188638;
-        Tue, 07 Dec 2021 03:06:28 -0800 (PST)
+        bh=PQdn7VhOz6jMLXrCGDRirPwLcnlomNvBVQU64XUlWco=;
+        b=h/tTolAUTRlb9RBnrYA04V7OHhCWC5ZE6F9O1C55AEXNr8qrCt5xIThdkiEdwdCA7e
+         BFXnQAaIq3MbKL13/ZzYvGEuePQWOUZTID2SMVCIuSw1EJZavQN3jmcKkyL1Im3KT8U0
+         3NiywADB72TxLlwxikSsSEF/D0qO1u/BEgv81Syo1K4RniiEmPK7ZbcaBUnxY0/oCNaR
+         vgJNCgKqh2u62SY1WGKFc2kiNegHIE9u3lwecpOs7UQ34VubB/ptAIom2UadkhaX2DF2
+         lMbBIOftaVJ8iq56b3y6qZ4lIY+t8F6gwAABp9rJ+QYDCatTpRXwdabJhkm/wN7NsLW3
+         dMOQ==
+X-Gm-Message-State: AOAM531zeRl7tDkf19wcxvkePqFsIT7JCBaRIvxXRWMAEej8YloQxLLD
+        kxK2GW7H6m27gahB211yIcYRCFrJ+GBahg==
+X-Google-Smtp-Source: ABdhPJz2TA0I1ogtPBy87eFQovMkmGQQZNgWCy2XTdU2CVomi7pYOdN6t/6MvKOUjAPaNv8vTEcMRQ==
+X-Received: by 2002:adf:a181:: with SMTP id u1mr8007334wru.69.1638875189476;
+        Tue, 07 Dec 2021 03:06:29 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r17sm2629587wmq.11.2021.12.07.03.06.27
+        by smtp.gmail.com with ESMTPSA id r17sm2629587wmq.11.2021.12.07.03.06.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 03:06:28 -0800 (PST)
+        Tue, 07 Dec 2021 03:06:29 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 2/4] strbuf.h: use BUG(...) not die("BUG: ...")
-Date:   Tue,  7 Dec 2021 12:05:52 +0100
-Message-Id: <patch-v2-2.4-6740c5d0da8-20211207T110440Z-avarab@gmail.com>
+Subject: [PATCH v2 3/4] pathspec: use BUG(...) not die("BUG:%s:%d....", <file>, <line>)
+Date:   Tue,  7 Dec 2021 12:05:53 +0100
+Message-Id: <patch-v2-3.4-81e354fa3be-20211207T110440Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.898.g5a552c2e5f0
 In-Reply-To: <cover-v2-0.4-00000000000-20211207T110440Z-avarab@gmail.com>
 References: <cover-0.2-00000000000-20211206T162442Z-avarab@gmail.com> <cover-v2-0.4-00000000000-20211207T110440Z-avarab@gmail.com>
@@ -68,30 +68,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 7141efab248 (strbuf: clarify assertion in strbuf_setlen(),
-2011-04-27) this 'die("BUG: "' invocation was added with the rationale
-that strbuf.c had existing users doing the same, but those users were
-later changed to use BUG() in 033abf97fcb (Replace all die("BUG: ...")
-calls by BUG() ones, 2018-05-02). Let's do the same here.
+Change code that was added in 8f4f8f4579f (guard against new pathspec
+magic in pathspec matching code, 2013-07-14) to use the BUG() macro
+instead of emitting a "fatal" message with the "__FILE__"-name and
+"__LINE__"-numbers.
 
+The original code predated the existence of the BUG() function, which
+was added in d8193743e08 (usage.c: add BUG() function, 2017-05-12).
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- strbuf.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pathspec.h  | 3 +--
+ tree-diff.c | 3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/strbuf.h b/strbuf.h
-index 96512f85b31..76965a17d44 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -160,7 +160,7 @@ void strbuf_grow(struct strbuf *sb, size_t amount);
- static inline void strbuf_setlen(struct strbuf *sb, size_t len)
- {
- 	if (len > (sb->alloc ? sb->alloc - 1 : 0))
--		die("BUG: strbuf_setlen() beyond buffer");
-+		BUG("strbuf_setlen() beyond buffer");
- 	sb->len = len;
- 	if (sb->buf != strbuf_slopbuf)
- 		sb->buf[len] = '\0';
+diff --git a/pathspec.h b/pathspec.h
+index 2341dc99010..402ebb80808 100644
+--- a/pathspec.h
++++ b/pathspec.h
+@@ -58,8 +58,7 @@ struct pathspec {
+ #define GUARD_PATHSPEC(ps, mask) \
+ 	do { \
+ 		if ((ps)->magic & ~(mask))	       \
+-			die("BUG:%s:%d: unsupported magic %x",	\
+-			    __FILE__, __LINE__, (ps)->magic & ~(mask)); \
++			BUG("unsupported magic %x", (ps)->magic & ~(mask)); \
+ 	} while (0)
+ 
+ /* parse_pathspec flags */
+diff --git a/tree-diff.c b/tree-diff.c
+index 437c98a70e4..69031d7cbae 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -603,8 +603,7 @@ static void try_to_follow_renames(const struct object_id *old_oid,
+ 	 * about dry-run mode and returns wildcard info.
+ 	 */
+ 	if (opt->pathspec.has_wildcard)
+-		die("BUG:%s:%d: wildcards are not supported",
+-		    __FILE__, __LINE__);
++		BUG("wildcards are not supported");
+ #endif
+ 
+ 	/* Remove the file creation entry from the diff queue, and remember it */
 -- 
 2.34.1.898.g5a552c2e5f0
 
