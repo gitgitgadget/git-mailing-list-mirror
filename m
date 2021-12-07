@@ -2,228 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A75DC433EF
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 10:13:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95786C433EF
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 10:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234871AbhLGKR1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 05:17:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41052 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229851AbhLGKR1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 05:17:27 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1C37C061574
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 02:13:56 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id i5so28417648wrb.2
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 02:13:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=iN2sizviNeo7alt8kn457w5eCpStJHqP5tvSyQeiK5g=;
-        b=MvdnVwRAJyiB+/vvhZ1os+UKdcovyyCEO9PcTg6mIFzO9+ovT7jsQnAnEOLD9NqUCC
-         okUlrxvij7HGVqNI9EcR0+r7DhK3VwsKNM423sdsGR2fGdjGSTiI9fLJUersk4xBkaxp
-         csTUJB3AXcQiVdi75Q5xm7HSYhF+2L7kreHYdYQ11BDsERYLoY+jc67ZV61lERk0pZ97
-         7L2jk4OKFjQ1+94OSlQ6x6Ob30sDFPyO+HQhk8tKSfDFrv1d99tRyIe6tL3W93UEaRFf
-         1gTZ4BQG2SqGpWvetCTKiPJsutymrESNQRPj6YrzDYLItWFRVD6AK6M7gXIAcd3fQFY2
-         lfuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=iN2sizviNeo7alt8kn457w5eCpStJHqP5tvSyQeiK5g=;
-        b=Q7hVHB/KaCX4l/Wqv/v/AEyDXN9dvUdu6xmp70SafMFjuoCDSJVP7YQSTwvpHr9TvR
-         hUSb1q0QnButjsQ5o0mGa1T6kyyrT+9rFHwnftaiVgve6rdZ8VWGpjPqSoAW4xp2r2t8
-         193wXK6hJQiH3ypbQiVOZDV/e6IQP46C0p2SFOXWgcG0o5bkhRjJXWo78P+R5UfUhv1t
-         CR4O0DFoaNS39omJsHH4YaZGGPEF+P+ULWA37RzZ9H6vPFE/oBDG8Ua7gRz+CLLOKYHO
-         kVc9Gk4n+rrVR/wyx3MsRXIvG9Xd5uLtM8hM25CUGCdnIYg3w/a3RGDCh/Axpfuy1MTw
-         5bbw==
-X-Gm-Message-State: AOAM531fYb490D1B/BebQNXBeO0+rGFqq7QCAVWi8fEo3fLKhPeVc8E2
-        HPDw5fF4zmMxM9hTz3grPgv8SBfcQNoqYw==
-X-Google-Smtp-Source: ABdhPJy32v6Sz3VMzYX36eFb0ytCpJDFZkS2ss/mEV1pNRrRbbp8H2mgmAMtDQv8K3CPuv/JdFsa0g==
-X-Received: by 2002:a5d:64e7:: with SMTP id g7mr46986884wri.350.1638872035216;
-        Tue, 07 Dec 2021 02:13:55 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g13sm19032046wrd.57.2021.12.07.02.13.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 02:13:54 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        id S235461AbhLGLAI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 06:00:08 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:43525 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229903AbhLGLAH (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 7 Dec 2021 06:00:07 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id C9D1D5C019E;
+        Tue,  7 Dec 2021 05:56:36 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Tue, 07 Dec 2021 05:56:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:mime-version:content-type; s=fm2;
+         bh=oUvv5sp9xbPSD2LomKpBp3yti5blWCb4UOFY+yDQ8Vs=; b=NrUseoj/22P0
+        2R+hAtlYXno9+ZtWWtHaAXkxwxgwRhyRfFLkY+xxk9WgjWPEevJUa7KnLV+gVJM0
+        nxS0+RYJcAlhEVeg+X3gLxsWVwZRgptBLakGmC/Se6FaJF17/aHGwJtdrvgeys4W
+        bwPfiFMTha7M2jg8hoVb66DF8JM0My/f3s16UbtQTiYJTp5sdaPcleesNBrSuszC
+        tGNHh38EgmbmLbN7gvc+Kz1NRhkBR/XqwQEySWjyn3Q+rfz3Nbcb3G0n/A58eS++
+        Dl6aNfvJNHVPEtHJyxMN6FnJ3OT7cKiyBNeXDoT17O+KKRSlmJbw5y62Zgb+Afcd
+        MGwj3hrejw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm1; bh=oUvv5sp9xbPSD2LomKpBp3yti5blW
+        Cb4UOFY+yDQ8Vs=; b=i+SjY53/ourS/DFUvP1tWzME1fp/MpniEXO1UHPrlMXrK
+        d5d01YXJxqOKqH6G2FJYdoetxOVkCVdNtidZ835wyMJ12DV6mKSIkiS6vuEpKqkQ
+        CHUTym4+rqgSSBSZX3pq783VZya/966B/A8VUVHUaAvGZW50v4jHxjRTTSXz+bb7
+        PKIg1v0EOkNFP6sjY6S272wKZqwPLXAzSOhhOjOiG0TQuRZ/dGQu7Wj+1ypjCMXd
+        tC+oZhHyeuRKwzRyn6mwH/UcUk7mn3PYZNDIp1iCRonPS4mumGCOyvW0CTYXn1yB
+        qm8G78vmBNcDT9/3wQuITgZqV3Yh807Xeb0IHHddw==
+X-ME-Sender: <xms:5D2vYTWjX-0pFgiq9-UYwQzp_KAHYWS-V8Q2g-7L6WDokLdfujO7qw>
+    <xme:5D2vYbk3LLEUP9PEpwpNLYvSfWoqTZjhH3GBkyW97Y6vy1PEXG_nYc88xNLCzT1_I
+    itMoACQW8kxlxdABQ>
+X-ME-Received: <xmr:5D2vYfZH0O1FIZCX0fejo0N4Erkag30d3kreiGDx3XfJ9yB8Lgx2Sw1XF2DmNH3lz_K5ni4vjbclzvVRl_80ojZDOoBGDnsZfwQHuCKHI6LgtBmhkAeUUhkC>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrjeehgddvfecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvuffkgggtugesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepje
+    eifedvueelfffgjeduffdvgefhiefgjefgvddvfeduvefffeevfffhgfekieffnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himh
+X-ME-Proxy: <xmx:5D2vYeUTAVLD15RDNssDRht1QPDp2WDP7tWZdHhDU8cqv-Ew5rD2zQ>
+    <xmx:5D2vYdn6tAujlkhwC2febGr5IobeeExNdvTUJyzNFGQUNmHNQ9pjHw>
+    <xmx:5D2vYbdgYIT-Nk4j4hcZFQjOfklcGlMTLD6-UZ-Yimzq2xnBhLOBsw>
+    <xmx:5D2vYSwqSa_zSsX9vVaS7sJXDtM8G4a5Meg1n7QWS1CE1ujNirdehA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Dec 2021 05:56:35 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 85ea01b0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 7 Dec 2021 12:26:10 +0000 (UTC)
+Date:   Tue, 7 Dec 2021 11:55:52 +0100
+From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2] common-main.c: call exit(), don't return
-Date:   Tue,  7 Dec 2021 11:13:51 +0100
-Message-Id: <patch-v2-1.1-4f52ecc94ba-20211207T101207Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.1.898.g5a552c2e5f0
-In-Reply-To: <patch-v1-1.1-6fedf9969b6-20211206T161001Z-avarab@gmail.com>
-References: <patch-v1-1.1-6fedf9969b6-20211206T161001Z-avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Bryan Turner <bturner@atlassian.com>,
+        Waleed Khan <me@waleedkhan.name>
+Subject: [PATCH 0/6] refs: excessive hook execution with packed refs
+Message-ID: <cover.1638874287.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="EJchvbCgFh5u+ojq"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the main() function to call "exit()" instead of ending with a
-"return" statement. The "exit()" function is our own wrapper that
-calls trace2_cmd_exit_fl() for us, from git-compat-util.h:
 
-	#define exit(code) exit(trace2_cmd_exit_fl(__FILE__, __LINE__, (code)))
+--EJchvbCgFh5u+ojq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That "exit()" wrapper has been in use ever since ee4512ed481 (trace2:
-create new combined trace facility, 2019-02-22).
+Hi,
 
-This changes nothing about how we "exit()", as we'd invoke
-"trace2_cmd_exit_fl()" in both cases due to the wrapper, this change
-makes it easier to reason about this code, as we're now always
-obviously relying on our "exit()" wrapper.
+as reported by Waleed in [1], the reference-transaction hook is being
+executed when packing refs. Given that the hook ideally ought to track
+logical updates to refs instead of leaking low-level implementation
+details of how the files backend works, this is understandably leading
+to some confusion.
 
-There is already code immediately downstream of our "main()" which has
-a hard reliance on that, e.g. the various "exit()" calls downstream of
-"cmd_main()" in "git.c".
+This patch series aims to fix that by improving how the tandom of loose
+and packed refs backends interact such that we skip executing the hook
+when the loose backend:
 
-We even had a comment in "t/helper/test-trace2.c" that seemed to be
-confused about how the "exit()" wrapper interacted with uses of
-"return", even though it was introduced in the same trace2 series in
-a15860dca3f (trace2: t/helper/test-trace2, t0210.sh, t0211.sh,
-t0212.sh, 2019-02-22), after the aforementioned ee4512ed481. Perhaps
-it pre-dated the "exit()" wrapper?
+    - repacks references.
+    - needs to delete packed refs when deleting a loose ref would
+      uncover that packed ref.
 
-This change makes the "trace2_cmd_exit()" macro orphaned, we now
-always use "trace2_cmd_exit_fl()" directly, but let's keep that
-simpler example in place. Even if we're unlikely to get another
-"main()" other than the one in our "common-main.c", there's some value
-in having the API documentation and example discuss a simpler version
-that doesn't require an "exit()" wrapper macro.
+Patrick
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+[1]: <CAKjfCeBcuYC3OXRVtxxDGWRGOxC38Fb7CNuSh_dMmxpGVip_9Q@mail.gmail.com>
 
-Junio: I think this addresses all the feedback you had on the v1 in
-[1]. Thanks for the review.
+Patrick Steinhardt (6):
+  refs: open-code deletion of packed refs
+  refs: allow passing flags when beginning transactions
+  refs: allow skipping the reference-transaction hook
+  refs: demonstrate excessive execution of the reference-transaction
+    hook
+  refs: do not execute reference-transaction hook on packing refs
+  refs: skip hooks when deleting uncovered packed refs
 
-I wasn't sure what trade-off to strike with leaving that small amount
-of dead in-tree code, but per the updated commit message I think it
-makes sense to have the API docs discuss the simpler example & keep
-the macro, as you suggest.
+ refs.c                           | 11 +++++--
+ refs.h                           |  8 ++++-
+ refs/files-backend.c             | 25 +++++++++++-----
+ refs/packed-backend.c            | 30 ++++++++++++++-----
+ refs/packed-backend.h            |  6 ++++
+ refs/refs-internal.h             |  1 +
+ sequencer.c                      |  2 +-
+ t/t1416-ref-transaction-hooks.sh | 50 ++++++++++++++++++++++++++++++++
+ 8 files changed, 113 insertions(+), 20 deletions(-)
 
-1. https://lore.kernel.org/git/xmqqzgpdfub1.fsf@gitster.g/
+--=20
+2.34.1
 
-Range-diff against v1:
-1:  6fedf9969b6 ! 1:  4f52ecc94ba common-main.c: call exit(), don't return
-    @@ Commit message
-         t0212.sh, 2019-02-22), after the aforementioned ee4512ed481. Perhaps
-         it pre-dated the "exit()" wrapper?
-     
-    -    Let's also update both the documentation and comments accordingly: The
-    -    documentation added in e544221d97a (trace2:
-    -    Documentation/technical/api-trace2.txt, 2019-02-22) already said of
-    -    the "exit" event that "[it] is emitted when git calls `exit()". But
-    -    the "main()" example then called trace2_cmd_exit(). Let's have it
-    -    invoke "exit()" instead, as the code in "common-main.c" now does.
-    +    This change makes the "trace2_cmd_exit()" macro orphaned, we now
-    +    always use "trace2_cmd_exit_fl()" directly, but let's keep that
-    +    simpler example in place. Even if we're unlikely to get another
-    +    "main()" other than the one in our "common-main.c", there's some value
-    +    in having the API documentation and example discuss a simpler version
-    +    that doesn't require an "exit()" wrapper macro.
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    - ## Documentation/technical/api-trace2.txt ##
-    -@@ Documentation/technical/api-trace2.txt: Initialization::
-    - ----------------
-    - int main(int argc, const char **argv)
-    - {
-    --	int exit_code;
-    --
-    - 	trace2_initialize();
-    - 	trace2_cmd_start(argv);
-    - 
-    --	exit_code = cmd_main(argc, argv);
-    --
-    --	trace2_cmd_exit(exit_code);
-    --
-    --	return exit_code;
-    -+	/* Our exit() will call trace2_cmd_exit_fl() */
-    -+	exit(cmd_main(argc, argv));
-    - }
-    - ----------------
-    - 
-    -
-      ## common-main.c ##
-     @@ common-main.c: int main(int argc, const char **argv)
-      
-    @@ t/helper/test-trace2.c: static int print_usage(void)
-       *
-     - * We further assume that if we return (rather than exit()), trace2_cmd_exit()
-     - * will be called by test-tool.c:cmd_main().
-    -+ * It doesn't matter if we "return" here or call "exit()", since our
-    -+ * "exit()" is a wrapper that will call trace2_cmd_exit_fl. It would
-    -+ * matter if we bypassed it and called "_exit()". Even if it doesn't
-    -+ * matter for the narrow case of trace2 testing, let's be nice to
-    -+ * test-tool.c's "cmd_main()" and common-main.c's "main()" and
-    -+ * "return" here.
-    ++ * We return from here and let test-tool.c::cmd_main() pass the exit
-    ++ * code to common-main.c::main(), which will use it to call
-    ++ * trace2_cmd_exit().
-       */
-      int cmd__trace2(int argc, const char **argv)
-      {
-    -
-    - ## trace2.h ##
-    -@@ trace2.h: void trace2_cmd_start_fl(const char *file, int line, const char **argv);
-    -  */
-    - int trace2_cmd_exit_fl(const char *file, int line, int code);
-    - 
-    --#define trace2_cmd_exit(code) (trace2_cmd_exit_fl(__FILE__, __LINE__, (code)))
-    --
-    - /*
-    -  * Emit an 'error' event.
-    -  *
 
- common-main.c          | 9 ++++++---
- t/helper/test-trace2.c | 5 +++--
- 2 files changed, 9 insertions(+), 5 deletions(-)
+--EJchvbCgFh5u+ojq
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/common-main.c b/common-main.c
-index 71e21dd20a3..eafc70718a5 100644
---- a/common-main.c
-+++ b/common-main.c
-@@ -51,7 +51,10 @@ int main(int argc, const char **argv)
- 
- 	result = cmd_main(argc, argv);
- 
--	trace2_cmd_exit(result);
--
--	return result;
-+	/*
-+	 * We define exit() to call trace2_cmd_exit_fl() in
-+	 * git-compat-util.h. Whether we reach this or exit()
-+	 * elsewhere we'll always run our trace2 exit handler.
-+	 */
-+	exit(result);
- }
-diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
-index f93633f895a..59b124bb5f1 100644
---- a/t/helper/test-trace2.c
-+++ b/t/helper/test-trace2.c
-@@ -262,8 +262,9 @@ static int print_usage(void)
-  *    [] the "cmd_name" event has been generated.
-  *    [] this writes various "def_param" events for interesting config values.
-  *
-- * We further assume that if we return (rather than exit()), trace2_cmd_exit()
-- * will be called by test-tool.c:cmd_main().
-+ * We return from here and let test-tool.c::cmd_main() pass the exit
-+ * code to common-main.c::main(), which will use it to call
-+ * trace2_cmd_exit().
-  */
- int cmd__trace2(int argc, const char **argv)
- {
--- 
-2.34.1.898.g5a552c2e5f0
+-----BEGIN PGP SIGNATURE-----
 
+iQIyBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmGvPbcACgkQVbJhu7ck
+PpSV8w/3YOHhfrIkmXPSUxx+aBoGzX7WD+7E/MMc8M+H4PB8Fx3K+wYOR2r2QOWM
+QPZX4MBwgwMMfM3tChlHksTLWsa/DcNftOt5eRHK8bQ7VOeoPkgciRYJKJ6tZZGI
+ZncG5j4E/moFNnrBfUhgbWXi9Rs9xcTtL4161eDjQP8FrB6vnr6QhSc1gjGIiq+C
+kmA9k/7ww8ZSXjgUGbsCFdk7dEeUoixRIGQ5nHjL7pX6S6/r3TGZcy1tOuEtyQO8
+B4sROQqTVQypcqCPRjiHBF1TI9I2inCuFibkeiyaTFaPi7M0jQuvAuC103bgLzBI
+60V7Hi+EWsqK0voqwvVQym3vDxBoAmJH+cVwmVa8TEBAM6pw0EVcmMglbs4TYIQ9
+Xf1KDNHETJl0fpYcBs6mb2R8m/fUr8Trax4iBWUF3zJNClRKAQrnTONsHjhU42U4
+uNULZOMcw41uSBlkXpkbiw7aBuYBf8C852pgR0CPYLaB5SpoQqImjQhtfxm5wQTU
+b6CNTuci5qdh8tu553z/HkD6EvIziFTyue+uN9aV5kGkNgPXtaHpFlVExYtG7JnH
+x3XPGZHXHtxoXkzFCvXoCOgx4Bi9W5A1iN404YUadGBHfj/hsiWRRcxGuAAauk8z
+4JMLVM4KUCjUAty4Vz8OR/ptGvtUKmPCwN9TAeUSlQzwfuILMA==
+=bCb/
+-----END PGP SIGNATURE-----
+
+--EJchvbCgFh5u+ojq--
