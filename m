@@ -2,58 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62B5EC433F5
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 17:45:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 264C9C433FE
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 17:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240156AbhLGRtD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 12:49:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35986 "EHLO
+        id S240180AbhLGRtE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 12:49:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240150AbhLGRtB (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S240170AbhLGRtB (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 7 Dec 2021 12:49:01 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60F8FC061574
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 09:45:30 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id t9so31088823wrx.7
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BBE0C061746
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 09:45:31 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id c4so31064229wrd.9
         for <git@vger.kernel.org>; Tue, 07 Dec 2021 09:45:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=6v0+JuvgL+rkV6+ZUY0aCiH0eSlBA7tjh6rJWXdXHEw=;
-        b=DP5x+9ZJT8qMmvm2TnbH+JxFgHH9ct5RJc3P7Vzz8vvuQ6vV26pIaAJXqG8RsypIOw
-         dPHBmltazakLXmHb8keCv2Cx4wgYhD7zoIcVBSv9UxacBgkzfMk1t7rGipBOReFvq9t2
-         kFOQv796gjF3xqurZYPeeK6w3eKRXFrg1ltRTO2LgevkEF8KDn/6OzKosx0UYHgCknVt
-         41vRNZgDyjlCmMmS0ShZxk1cEi3TshdiEwADuuzlGM1XxNvjQ4QSb7UgDDZ6uNPnnfoD
-         HWoLP+zEwtI6lurVm6/8QXeiYBFce5pvJ3xAr6MgXQx8xKWiazsPfj6xIJhwD1G6oOxs
-         yeZA==
+        bh=J9jVqwMPaNdDSNjujdVEAD8serufDJ5UG7qKldS2NTo=;
+        b=a7EgfAD1GeruV1R0AKwhqy5BFYsoslO+w/oz3dSC8GEvC5yjsSXUjWpGE4XxLIOLtJ
+         IY0CfPn/mxTqjYCWDIygbppwgRjCIeTW+31W+XqMJpr5JLEaPkR8b3KmQnHxLUHCcgQ/
+         cllDr/Ld2a8DO95GqnDs2pKBritrw1u9eRzJtP6wDFTZJT6j4dPtVO2Qzi9Szl2GnieR
+         L5v6UxffpbruAqvt/NYgfA+ap+yrldT/mgz24XOsbXo6OcPmstWWsRTqCTG7BEnOi6VX
+         U9/VyBrmxQ9QZ+/abYH2K3QXdg1EqpRSISMDA1LBG/7McHSZPFP8xGCFVufWYSatld/e
+         Svnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6v0+JuvgL+rkV6+ZUY0aCiH0eSlBA7tjh6rJWXdXHEw=;
-        b=GulLa/9tcng6N3PPt++xetPJCHGwsVVYs5l+xyCv1fZ2veZrTm3m/nFtYiWohW8/Px
-         lHPFOb2mwaFiLO3l+5IarbK2cgvtBl3rfmobjo2R4CKPFttOSaJj5UgBr8kwilvjPpA/
-         qoARLzCFW7gT4UEZKb9qfOudGplbbnaaQE+VU5uQz8L0ij/9yaMXl+wvz8JgkV48WjG8
-         WK9aHNIgQpKo151OGz4zofzdnbgs9TWl6yepdZPXm1pu4ps0YDUGUcXETh9LP/4mytFo
-         EQLvCRU2VRTg9qjMwUp6WLCP2fOCmjqEpskXt4Mo9QnN+Xm31K7nfFUYSOeup1XTfDWW
-         WpLA==
-X-Gm-Message-State: AOAM530Hm7Ec00jqbxmHCVSOexIJoh+HMLeoft0lxilmkjwBZ8ITqi1n
-        gfFip/cwHY/gGi939OKge3wzEGNP5P8=
-X-Google-Smtp-Source: ABdhPJz+kmtvwerSRBp2ToAABsjZIgrXja2fPflSA4qQSu/2VnP4ebkeDQIt/gSvcavjGbDon6ICTQ==
-X-Received: by 2002:adf:f486:: with SMTP id l6mr54059735wro.596.1638899128887;
-        Tue, 07 Dec 2021 09:45:28 -0800 (PST)
+        bh=J9jVqwMPaNdDSNjujdVEAD8serufDJ5UG7qKldS2NTo=;
+        b=ebrRxVqBTAKKiIpJOzSblAnIfavbycUiALcWEzC6mWN7AEV++jlf6r3iO2ZvCqK61V
+         N9hojFttJxo0PSUJABlvVvXB/wKspstswf8jfoIL0GhaPJXXvRTPNuIePHEUotL+nfSc
+         1IRMRMAo8sGd78OSAeeP1ln9hYRhF/os4GgQEbNGte4bhSc2gZTmBMZ2nr6I+TOVcxvW
+         AwcRXO487oAsKt9ztHeHCz05AokaIsjuFJdJgW+1igCgwIzDcx8oKmnU0JjuUKXG88SJ
+         Dxm/96t5tb5KuC8yUpIdnwA0mRudZgyZNwinXHUv4XPlJ4zW2i7bWBLV0tBVfhCaSh8B
+         9USg==
+X-Gm-Message-State: AOAM532PBBmVlLJf0kLUSl8kyjuJZbZ0FJVhetvLJZIN/PYZy7c8hUnn
+        uzz7gmHokQIQHBNPCh+eZLIIakkQ9lw=
+X-Google-Smtp-Source: ABdhPJwl9uVFKu/68YOXGJn4ZyZrtXwQlE+CzKbS89WKcEGD0DiJUDg7roA+uggSTz2vhImJ9OaIgg==
+X-Received: by 2002:adf:cc91:: with SMTP id p17mr53163373wrj.589.1638899129503;
+        Tue, 07 Dec 2021 09:45:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l1sm366455wrn.15.2021.12.07.09.45.28
+        by smtp.gmail.com with ESMTPSA id k37sm273699wms.21.2021.12.07.09.45.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 09:45:28 -0800 (PST)
-Message-Id: <9288289ebcb7f7db0bfeef80f3150e1205dc1d62.1638899124.git.gitgitgadget@gmail.com>
+        Tue, 07 Dec 2021 09:45:29 -0800 (PST)
+Message-Id: <9269977a1c3c2654afbc6ae18e9bb442fbc7968a.1638899124.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
 References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Dec 2021 17:45:18 +0000
-Subject: [PATCH 04/10] reftable: check reftable_stack_auto_compact() return
- value
+Date:   Tue, 07 Dec 2021 17:45:19 +0000
+Subject: [PATCH 05/10] reftable: ignore remove() return value in stack_test.c
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,25 +66,26 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-Fixes a problem detected by Coverity.
+If the cleanup fails, there is nothing we can do.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/stack_test.c | 1 +
- 1 file changed, 1 insertion(+)
+ reftable/stack_test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/reftable/stack_test.c b/reftable/stack_test.c
-index eb0b7228b0c..d628420e63a 100644
+index d628420e63a..4b7292945c3 100644
 --- a/reftable/stack_test.c
 +++ b/reftable/stack_test.c
-@@ -814,6 +814,7 @@ static void test_reftable_stack_auto_compaction(void)
- 		EXPECT_ERR(err);
- 
- 		err = reftable_stack_auto_compact(st);
-+		EXPECT_ERR(err);
- 		EXPECT(i < 3 || st->merged->stack_len < 2 * fastlog2(i));
+@@ -89,7 +89,7 @@ static void test_read_file(void)
+ 		EXPECT(0 == strcmp(want[i], names[i]));
  	}
+ 	free_names(names);
+-	remove(fn);
++	(void) remove(fn);
+ }
  
+ static void test_parse_names(void)
 -- 
 gitgitgadget
 
