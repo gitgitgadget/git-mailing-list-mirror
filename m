@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 950D2C433F5
-	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 06:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DFC2C433EF
+	for <git@archiver.kernel.org>; Tue,  7 Dec 2021 06:49:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231245AbhLGGqG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 01:46:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47004 "EHLO
+        id S232354AbhLGGwh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 01:52:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229958AbhLGGqG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 01:46:06 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D62DC061746
-        for <git@vger.kernel.org>; Mon,  6 Dec 2021 22:42:36 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id k2so25569842lji.4
-        for <git@vger.kernel.org>; Mon, 06 Dec 2021 22:42:36 -0800 (PST)
+        with ESMTP id S229483AbhLGGwe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 01:52:34 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D324C061746
+        for <git@vger.kernel.org>; Mon,  6 Dec 2021 22:49:04 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id m27so31098565lfj.12
+        for <git@vger.kernel.org>; Mon, 06 Dec 2021 22:49:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=/X9/EVVyEZcXL4AAKeeiecWtNNLNZMOlFIx0Jpex8xU=;
-        b=GQPS66cjzuYonH7z+ZsxcGHafNK7UBKYHaJawlNU0CJhwyXa8YucLpGPe3f8/O646e
-         CUDaaWeyw6rh5L3I2u7h0mq1PIhUM7cHtBSxP7ACm614ZSnezr3Sw1YzFXPcRfU/aNnP
-         B/DxtsyG2PMirDIO4zh2rnjwzaan/szH879oLwvr+j5eADHwCOmRyKxvIyIoQkOArRSD
-         8P9vO7nol4xrPhsimeXeTJeAHN6XD/kkv/E0MLUgKo68raJYsjnUUjkgJKiVm9IAnpxu
-         ugH71xjPim8kp4QgIggqi/pjJuYJDusgT29msGYI/XAmxeOEh4McEChsiYSlA1WhJlYc
-         Hd8w==
+        bh=0Ev0BrftOtGzijlRClg+V7116fyIi3TzRjj+ikc+xp4=;
+        b=ILxlqzQN2AvOrgfVjqrZDbw8fB2xFk/l6TyG9nv9GRSfHNuq57RfM/WefelK/tabC1
+         QVjhEL4t9HSyPgFfC9apTZ2m/o8HsH6E2oPB+7MFfaT7nuL+7eJy+tI8FG27oybF1naT
+         Ve3roE1hAUNWx7YAK3cFTIgtNdryVY/+f0pnnY6HOUC12kMTB8Di6Xa+bXO9T8N3isPG
+         eUSydXNX/9F5dmVe1uI0VwoQ+qmPRFgCR2XBVISTyVbmkUZ4Xt8BlKtnRd/csyBcof12
+         t9Dlp7eMsErZx4HwUkOM2/QeFlifkN5JyELTL/Ixwu90T3CAzd1MR26hOAtL9RNL1qFh
+         TdFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=/X9/EVVyEZcXL4AAKeeiecWtNNLNZMOlFIx0Jpex8xU=;
-        b=wNiiEzcfZ6mofwdC2ML16I1PrdwFZRKr/TSH2r1FNIn5VWmujaWna8CjuHCYLGNG07
-         2P6ATqDoJa71VmryDe9/2+fK3WFzHaAxENf4oIM8paobj+Kq50vks8JE6nLS05gRaF09
-         IZo2c40vYtwMwyRWMnvR822Dk2H6n5sWBGx0ZRgVrjK47Gfj7OFfRVJEy45lGYMb7XEG
-         UaKaab8VFv/X3LTbolAsjIcBrR39nYCcrRqOFwjNNqLtvnEUNWOQhdYoKOLrYh5IpOQy
-         MJ1IRSHJG8OLL0GlPikV16lkfLbiqrrgnQxSoXSo/txZEKPUeW6JOfFdWz9tUU7ZunlR
-         2oGQ==
-X-Gm-Message-State: AOAM533KhTtn1MOAQ8fjysDLt4H1gsXRjelq/xjgkVtjwJ60mUh3mat7
-        r77ibyc5PlFOph0yTMVMTqyvk0A8O8jwVHrBEQk=
-X-Google-Smtp-Source: ABdhPJzywq+W74ish+iAFUsngtJ/l8n6BsMPv4jgtHocAWDRHNNhtQT47PJLZ8qLcoDzyhZQYurqnaoBxw7r1VDT9us=
-X-Received: by 2002:a2e:9b17:: with SMTP id u23mr41116700lji.258.1638859354375;
- Mon, 06 Dec 2021 22:42:34 -0800 (PST)
+        bh=0Ev0BrftOtGzijlRClg+V7116fyIi3TzRjj+ikc+xp4=;
+        b=U1u66RGSZkHm4912BAmD4QuYxw7bl11YdMi6hfVbU+UEUb4Mo47RP7UjlMdZqJoHSq
+         rMAlHkSJncpnOy5PyR3k6di/4gl2LDpqqCkkuGIvI7yuRqNxg+bXgL3PYyZr9xxapk03
+         Chh5gW46WuGZ0ADCgPcjDFwMpdMQTrQI80LkKjnxoAPSZ5iazj1Wkc8jEBqjdtB4DB0b
+         6roZkFwRJ1OCQHuBVmoqNWT7qibfrIWjBL3uncJF64w1JXhp2928Bte6qDkpz0QkKU0w
+         +uRsfao8W+wWNiroNJRsQ20+r5n/364Gn5axMx/4BF51SoE6zlP3jcMEp4x/PUq8cJRu
+         U6NQ==
+X-Gm-Message-State: AOAM531wLzzfWTgNbZbTMZwfhoCfUc3Fbvh+CJ2Bc2XAsKDtZ38eOnZX
+        yPMJs7fvwNgdLt8RwEBrLy+TNyBOw2wSeiK0m4o=
+X-Google-Smtp-Source: ABdhPJwJsvqzl7/zgK+NyxiSbGvEpvSFZUiYAC0nMH1TdbuzzfxU4kPG3c092mJiHqe0PoJWIsp+qHl0GHhpJCRNJr4=
+X-Received: by 2002:a05:6512:130e:: with SMTP id x14mr40169280lfu.366.1638859742396;
+ Mon, 06 Dec 2021 22:49:02 -0800 (PST)
 MIME-Version: 1.0
 References: <20211122033220.32883-1-chiyutianyi@gmail.com> <20211203093530.93589-6-chiyutianyi@gmail.com>
- <211203.86zgphsu5a.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211203.86zgphsu5a.gmgdl@evledraar.gmail.com>
+ <211203.86a6hhsqwf.gmgdl@evledraar.gmail.com>
+In-Reply-To: <211203.86a6hhsqwf.gmgdl@evledraar.gmail.com>
 From:   Han Xin <chiyutianyi@gmail.com>
-Date:   Tue, 7 Dec 2021 14:42:23 +0800
-Message-ID: <CAO0brD2AYAw9KaKLdMgQURh0RkdcvuGZJTNrhF6ZnpUvhk3d=g@mail.gmail.com>
+Date:   Tue, 7 Dec 2021 14:48:51 +0800
+Message-ID: <CAO0brD1_h0qC=Qk2K1c1aZ=0u73BQnE50xZ0W6py0=m4TgB3XA@mail.gmail.com>
 Subject: Re: [PATCH v4 5/5] unpack-objects: unpack_non_delta_entry() read data
  in a stream
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
@@ -65,209 +65,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 3, 2021 at 9:19 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
+On Fri, Dec 3, 2021 at 10:29 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
 >
 > On Fri, Dec 03 2021, Han Xin wrote:
 >
 > > From: Han Xin <hanxin.hx@alibaba-inc.com>
-> >
-> > We used to call "get_data()" in "unpack_non_delta_entry()" to read the
-> > entire contents of a blob object, no matter how big it is. This
-> > implementation may consume all the memory and cause OOM.
-> >
-> > By implementing a zstream version of input_stream interface, we can use
-> > a small fixed buffer for "unpack_non_delta_entry()".
-> >
-> > However, unpack non-delta objects from a stream instead of from an entr=
-ie
-> > buffer will have 10% performance penalty. Therefore, only unpack object
-> > larger than the "big_file_threshold" in zstream. See the following
-> > benchmarks:
-> >
-> >     hyperfine \
-> >       --setup \
-> >       'if ! test -d scalar.git; then git clone --bare https://github.co=
-m/microsoft/scalar.git; cp scalar.git/objects/pack/*.pack small.pack; fi' \
-> >       --prepare 'rm -rf dest.git && git init --bare dest.git' \
-> >       -n 'old' 'git -C dest.git unpack-objects <small.pack' \
-> >       -n 'new' 'new/git -C dest.git unpack-objects <small.pack' \
-> >       -n 'new (small threshold)' \
-> >       'new/git -c core.bigfilethreshold=3D16k -C dest.git unpack-object=
-s <small.pack'
-> >     Benchmark 1: old
-> >       Time (mean =C2=B1 =CF=83):      6.075 s =C2=B1  0.069 s    [User:=
- 5.047 s, System: 0.991 s]
-> >       Range (min =E2=80=A6 max):    6.018 s =E2=80=A6  6.189 s    10 ru=
-ns
-> >
-> >     Benchmark 2: new
-> >       Time (mean =C2=B1 =CF=83):      6.090 s =C2=B1  0.033 s    [User:=
- 5.075 s, System: 0.976 s]
-> >       Range (min =E2=80=A6 max):    6.030 s =E2=80=A6  6.142 s    10 ru=
-ns
-> >
-> >     Benchmark 3: new (small threshold)
-> >       Time (mean =C2=B1 =CF=83):      6.755 s =C2=B1  0.029 s    [User:=
- 5.150 s, System: 1.560 s]
-> >       Range (min =E2=80=A6 max):    6.711 s =E2=80=A6  6.809 s    10 ru=
-ns
-> >
-> >     Summary
-> >       'old' ran
-> >         1.00 =C2=B1 0.01 times faster than 'new'
-> >         1.11 =C2=B1 0.01 times faster than 'new (small threshold)'
+> > [..]
+> > +static void write_stream_blob(unsigned nr, unsigned long size)
+> > +{
+> > +     char hdr[32];
+> > +     int hdrlen;
+> > +     git_zstream zstream;
+> > +     struct input_zstream_data data;
+> > +     struct input_stream in_stream =3D {
+> > +             .read =3D feed_input_zstream,
+> > +             .data =3D &data,
+> > +             .size =3D size,
+> > +     };
+> > +     struct object_id *oid =3D &obj_list[nr].oid;
+> > +     int ret;
+> > +
+> > +     memset(&zstream, 0, sizeof(zstream));
+> > +     memset(&data, 0, sizeof(data));
+> > +     data.zstream =3D &zstream;
+> > +     git_inflate_init(&zstream);
+> > +
+> > +     /* Generate the header */
+> > +     hdrlen =3D xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX, type_name(O=
+BJ_BLOB), (uintmax_t)size) + 1;
+> > +
+> > +     if ((ret =3D write_loose_object(oid, hdr, hdrlen, &in_stream, 0, =
+0)))
+> > +             die(_("failed to write object in stream %d"), ret);
+> > +
+> > +     if (zstream.total_out !=3D size || data.status !=3D Z_STREAM_END)
+> > +             die(_("inflate returned %d"), data.status);
+> > +     git_inflate_end(&zstream);
+> > +
+> > +     if (strict && !dry_run) {
+> > +             struct blob *blob =3D lookup_blob(the_repository, oid);
+> > +             if (blob)
+> > +                     blob->object.flags |=3D FLAG_WRITTEN;
+> > +             else
+> > +                     die("invalid blob object from stream");
+> > +     }
+> > +     obj_list[nr].obj =3D NULL;
+> > +}
 >
-> So before we wrote used core.bigfilethreshold for two things (or more?):
-> Whether we show a diff for it (we mark it "binary") and whether it's
-> split into a loose object.
+> Just a side-note, I think (but am not 100% sure) that these existing
+> occurances aren't needed due to our use of CALLOC_ARRAY():
 >
-> Now it's three things, we've added a "this is a threshold when we'll
-> stream the object" to that.
+>     diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+>     index 4a9466295ba..00b349412c5 100644
+>     --- a/builtin/unpack-objects.c
+>     +++ b/builtin/unpack-objects.c
+>     @@ -248,7 +248,6 @@ static void write_object(unsigned nr, enum object=
+_type type,
+>                             die("failed to write object");
+>                     added_object(nr, type, buf, size);
+>                     free(buf);
+>     -               obj_list[nr].obj =3D NULL;
+>             } else if (type =3D=3D OBJ_BLOB) {
+>                     struct blob *blob;
+>                     if (write_object_file(buf, size, type_name(type),
+>     @@ -262,7 +261,6 @@ static void write_object(unsigned nr, enum object=
+_type type,
+>                             blob->object.flags |=3D FLAG_WRITTEN;
+>                     else
+>                             die("invalid blob object");
+>     -               obj_list[nr].obj =3D NULL;
+>             } else {
+>                     struct object *obj;
+>                     int eaten;
 >
-> Might it make sense to squash something like this in, so we can have our
-> cake & eat it too?
+> The reason I'm noting it is that the same seems to be true of your new
+> addition here. I.e. are these assignments to NULL needed?
 >
-> With this I get, where HEAD~0 is this change:
+> Anyway, the reason I started poking at this it tha this
+> write_stream_blob() seems to duplicate much of write_object(). AFAICT
+> only the writing part is really different, the part where we
+> lookup_blob() after, set FLAG_WRITTEN etc. is all the same.
 >
->     Summary
->       './git -C dest.git -c core.bigfilethreshold=3D512m unpack-objects <=
-small.pack' in 'HEAD~0' ran
->         1.00 =C2=B1 0.01 times faster than './git -C dest.git -c core.big=
-filethreshold=3D512m unpack-objects <small.pack' in 'HEAD~1'
->         1.00 =C2=B1 0.01 times faster than './git -C dest.git -c core.big=
-filethreshold=3D512m unpack-objects <small.pack' in 'origin/master'
->         1.01 =C2=B1 0.01 times faster than './git -C dest.git -c core.big=
-filethreshold=3D16k unpack-objects <small.pack' in 'HEAD~0'
->         1.06 =C2=B1 0.14 times faster than './git -C dest.git -c core.big=
-filethreshold=3D16k unpack-objects <small.pack' in 'origin/master'
->         1.20 =C2=B1 0.01 times faster than './git -C dest.git -c core.big=
-filethreshold=3D16k unpack-objects <small.pack' in 'HEAD~1'
+> Why can't we call write_object() here?
 >
-> I.e. it's 5% slower, not 20% (haven't looked into why), but we'll not
-> stream out 16k..128MB objects (maybe the repo has even bigger ones?)
+> The obvious answer seems to be that the call to write_object_file()
+> isn't prepared to do the sort of streaming that you want, so instead
+> you're bypassing it and calling write_loose_object() directly.
 >
-> diff --git a/Documentation/config/core.txt b/Documentation/config/core.tx=
-t
-> index c04f62a54a1..601b7a2418f 100644
-> --- a/Documentation/config/core.txt
-> +++ b/Documentation/config/core.txt
-> @@ -424,6 +424,17 @@ be delta compressed, but larger binary media files w=
-on't be.
->  +
->  Common unit suffixes of 'k', 'm', or 'g' are supported.
+> I haven't tried this myself, but isn't a better and cleaner approach
+> here to not add another meaning to what is_null_oid() means, but to just
+> add a HASH_STREAM flag that'll get passed down as "unsigned flags" to
+> write_loose_object()? See FLAG_BITS in object.h.
 >
-> +core.bigFileStreamingThreshold::
-> +       Files larger than this will be streamed out to a temporary
-> +       object file while being hashed, which will when be renamed
-> +       in-place to a loose object, particularly if the
-> +       `core.bigFileThreshold' setting dictates that they're always
-> +       written out as loose objects.
-> ++
-> +Default is 128 MiB on all platforms.
-> ++
-> +Common unit suffixes of 'k', 'm', or 'g' are supported.
-> +
->  core.excludesFile::
->         Specifies the pathname to the file that contains patterns to
->         describe paths that are not meant to be tracked, in addition
-> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-> index bedc494e2db..94ce275c807 100644
-> --- a/builtin/unpack-objects.c
-> +++ b/builtin/unpack-objects.c
-> @@ -400,7 +400,7 @@ static void unpack_non_delta_entry(enum object_type t=
-ype, unsigned long size,
->         void *buf;
+> Then the "obj_list[nr].obj" here could also become
+> "obj_list[nr].obj.flags |=3D (1u<<12)" or whatever (but that wouldn't
+> strictly be needed I think.
 >
->         /* Write large blob in stream without allocating full buffer. */
-> -       if (!dry_run && type =3D=3D OBJ_BLOB && size > big_file_threshold=
-) {
-> +       if (!dry_run && type =3D=3D OBJ_BLOB && size > big_file_streaming=
-_threshold) {
->                 write_stream_blob(nr, size);
->                 return;
->         }
-> diff --git a/cache.h b/cache.h
-> index eba12487b99..4037c7fd849 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -964,6 +964,7 @@ extern size_t packed_git_window_size;
->  extern size_t packed_git_limit;
->  extern size_t delta_base_cache_limit;
->  extern unsigned long big_file_threshold;
-> +extern unsigned long big_file_streaming_threshold;
->  extern unsigned long pack_size_limit_cfg;
+> But by adding the "HASH_STREAM" flag you could I think stop duplicating
+> the "Generate the header" etc. here and call write_object_file_flags().
 >
->  /*
-> diff --git a/config.c b/config.c
-> index c5873f3a706..7b122a142a8 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1408,6 +1408,11 @@ static int git_default_core_config(const char *var=
-, const char *value, void *cb)
->                 return 0;
->         }
->
-> +       if (!strcmp(var, "core.bigfilestreamingthreshold")) {
-> +               big_file_streaming_threshold =3D git_config_ulong(var, va=
-lue);
-> +               return 0;
-> +       }
-> +
->         if (!strcmp(var, "core.packedgitlimit")) {
->                 packed_git_limit =3D git_config_ulong(var, value);
->                 return 0;
-> diff --git a/environment.c b/environment.c
-> index 9da7f3c1a19..4fcc3de7417 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -46,6 +46,7 @@ size_t packed_git_window_size =3D DEFAULT_PACKED_GIT_WI=
-NDOW_SIZE;
->  size_t packed_git_limit =3D DEFAULT_PACKED_GIT_LIMIT;
->  size_t delta_base_cache_limit =3D 96 * 1024 * 1024;
->  unsigned long big_file_threshold =3D 512 * 1024 * 1024;
-> +unsigned long big_file_streaming_threshold =3D 128 * 1024 * 1024;
->  int pager_use_color =3D 1;
->  const char *editor_program;
->  const char *askpass_program;
+> I don't so much care about how it's done within unpack-objects.c, but
+> not having another meaning to is_null_oid() in play would be really
+> nice, and it this case it seems entirely avoidable.
 
-I'm not sure if we need an additional "core.bigFileStreamingThreshold"
-here, because "core.bigFileThreshold" has been widely used in
-"index-pack", "read_object" and so on.
-
-In the test case which uses "core.bigFileStreamingThreshold" instead of
-"core.bigFileThreshold", I found the test case execution failed because
-of "fsck", who tried to allocate 15MB of memory.
-In the process of "fsck_loose()", "read_loose_object()" will be called,
-which contains the following content:
-
-  if (*oi->typep =3D=3D OBJ_BLOB && *size> big_file_threshold) {
-    if (check_stream_oid(&stream, hdr, *size, path, expected_oid) <0)
-    goto out;
-  } else {
-    /* this will allocate 15MB of memory */
-    *contents =3D unpack_loose_rest(&stream, hdr, *size, expected_oid);
-    ...
-  }
-
-The same case can be found in "unpack_entry_data()":
-
-  static char fixed_buf[8192];
-  ...
-  if (type =3D=3D OBJ_BLOB && size > big_file_threshold)
-    buf =3D fixed_buf;
-  else
-    buf =3D xmallocz(size);
- ...
-
-Although I know that setting a "core.bigfilethreshold" smaller than the
-default value on the server side does not help me prevent users from
-creating large delta objects on the client side, it can still
-effectively help me reduce the Memory allocation in "receive-pack".
-
-If this is not the correct way to use "core.bigfilethreshold", maybe
-you can share some better solutions to me, if you want.
+I did refactor it according to your suggestions in my next patch version.
+Using a HASH_STREAM tag is indeed a better way to deal with it, and it
+can also reduce my refactor to the original contents.
 
 Thanks.
 -Han Xin
