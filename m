@@ -2,103 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF51AC433EF
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 14:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61C76C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 14:48:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233240AbhLHOjL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 09:39:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42916 "EHLO
+        id S235436AbhLHOvx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 09:51:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231706AbhLHOjK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 09:39:10 -0500
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AA41C061746
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 06:35:38 -0800 (PST)
-Received: by mail-qk1-x734.google.com with SMTP id m186so2115392qkb.4
-        for <git@vger.kernel.org>; Wed, 08 Dec 2021 06:35:38 -0800 (PST)
+        with ESMTP id S235428AbhLHOvw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 09:51:52 -0500
+Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E98E0C0617A1
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 06:48:20 -0800 (PST)
+Received: by mail-ua1-x931.google.com with SMTP id 30so5044623uag.13
+        for <git@vger.kernel.org>; Wed, 08 Dec 2021 06:48:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=O/1ywfirFDaNYSw3j7+JRizEdLKjueQWUe7u/kkueV8=;
-        b=PAyklHKJWasiBK/ciB2yslCkAI9oq7QE6YH6WUrKKYMC4620Vfz17nluAHzfI3pjPh
-         ILx8L/Y8jM2SpQdbi4tXgJIR0/34VKLrFWSWde0IkXqxMe1gjHvd+cVpGV0nUJcrtva0
-         ZisC8YrA/Vm+pNnPkD9Gg77gqHqp8CgbqIfxrvmOF90uNbdHi+NHoZMsDBr5QkfWvAeL
-         LD5IdfaShPcPuvNJH+FLVwUrfQyCnLJen1JCjeanF1lgUs53Kpr5acFLiggblPqE0jMx
-         SjyCLHGKdI1CdaIA9yWky4lYG5nmKD1LoIU5p5aHLw/5VBvhO9aLWjPXeaXQulwey314
-         fM6A==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=PiDintoIF1H3h8ufbO9h+JajoRD9sAWwNW3GzgWd9I0=;
+        b=hCG6WVSFiqWvnv6hip8AiQUuwKiu0SIccjTzh6bF3jNtLd28PPYoQc8JJekl0b6XDG
+         Rlzqm/SQbnC9+ndUJRffjpwqakYb9IgzkZMz05jXilpglxOP4lNjAObd1Kqom8y5mV6i
+         WwAj4XDX2mFuOIGq2xEhDphfHYv0ijJMPk7QwmUquulsG/A2DwVfU/cQDtD0BlKFulGi
+         +NksttYxqg6H2J+Rd3WJ8NeZcCroJNd6eA1GjCSFPxepxID9MaQaxDX80TqTonxoItnM
+         JyWpy2ntu0vS/7IsQ6Es+VkwV9Ik0qBqIG8USQSS36e/QIoOX3SAh+Dy7kfKUPmK5PIo
+         ekmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=O/1ywfirFDaNYSw3j7+JRizEdLKjueQWUe7u/kkueV8=;
-        b=hbPAAeG4V8vDprlU25ApwZW4S0xx1WBXKIImPykeLi387B86haGFIjbVkwJdwjSgYH
-         5SdAaaWR2o2s4b8ZQiGYM6HvimSAnfZJb6WAVZMJgwjvzrgsxMtxv8cllds3YUJBudGc
-         AQl1gOLIW0ssowNnfRKzv1cl0t2uVHRHmf3AhrRlaxttM/KhSLPPYcivCLwqsRs6fSQZ
-         CS6AbwI7TERF4XVeS0uiOTpKcuyqJvFrTnQXXRV1Gv0DWh0fiMoBR9lDeA45WHoZUIRF
-         hJlR9I6qeP0ZPoBB0PgYghfIZCXabceGIwDoYW7GCiyuqtq2CU2HD6sLwLulBc073gu3
-         a3hA==
-X-Gm-Message-State: AOAM533BShBYFg2JrFE02yfUfvBO0nn74FJe4Dn3HPXe/k4UJlsXWT3Z
-        u15ym/m1ME7tSOoR8V41c3g/oWZEI1M=
-X-Google-Smtp-Source: ABdhPJzh079G+UIxf1HJcXpUI3vJcs8jda0OHFquu9dJOQWTZyHau1VEORZb3Fw9Fg9qnrnB0QNSuQ==
-X-Received: by 2002:ae9:e317:: with SMTP id v23mr7197847qkf.446.1638974137553;
-        Wed, 08 Dec 2021 06:35:37 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:5056:be20:f10c:bfd5? ([2600:1700:e72:80a0:5056:be20:f10c:bfd5])
-        by smtp.gmail.com with ESMTPSA id z8sm1808039qta.50.2021.12.08.06.35.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Dec 2021 06:35:36 -0800 (PST)
-Message-ID: <072ff09c-9174-e769-7ebb-4bb248199337@gmail.com>
-Date:   Wed, 8 Dec 2021 09:35:36 -0500
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=PiDintoIF1H3h8ufbO9h+JajoRD9sAWwNW3GzgWd9I0=;
+        b=zODAHIeoq6oEp3cCGupbW00ZwnA5h6IV1LPdsYhm1w9ZFhr7nBBCPbb1rC9YV6TiUk
+         pOe9RGkhbo2+VhToCYy+k0rDTodnFeYcBRWeIYHxJ3FhkQGmVD0X05g0iNZKH1cNvn16
+         TZDMnftLTEAb7ot8Nwwv54Ll0WNdqA0LPfje8OI40lAvlfQVfsqbiE1w+SvGx9sgh1pc
+         0a2/n7kGK7khTGtojmeVdLgPVz419ys7Yd+3j/A4JxuEPLC6EvZ1Xh5//QUsZXJZjVCK
+         4F5nSPlZqbtlUsU3Jjz8aWcnl8DT9GEciO1an3C5r1GfyiFgJXyz2faIfnwX3rk0liV7
+         /dPw==
+X-Gm-Message-State: AOAM5333meHht3eaydLy4ZhKNd7vJS5mi7wv01Ga2xp9FITKoqhGFE4h
+        /dWa5cD2aLiMR9DsuMbFhKiwvIYjq561RJ1h/3VU3e3xXFo=
+X-Google-Smtp-Source: ABdhPJx4kxTFmbCxC+Lc7yBkn3cIuHO4zUXSajgIT1mow4uryUCaEEkAUgWctXk8ICg97e71QlKDZXLX9dy3fsANcR0=
+X-Received: by 2002:a67:c40c:: with SMTP id c12mr54938242vsk.16.1638974899960;
+ Wed, 08 Dec 2021 06:48:19 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH 10/10] reftable: make reftable_record a tagged union
-Content-Language: en-US
-To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
 References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
  <8deccc3a1dff7e4f7d613fa63d2781fd1f11f841.1638899124.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <8deccc3a1dff7e4f7d613fa63d2781fd1f11f841.1638899124.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <072ff09c-9174-e769-7ebb-4bb248199337@gmail.com>
+In-Reply-To: <072ff09c-9174-e769-7ebb-4bb248199337@gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 8 Dec 2021 15:48:08 +0100
+Message-ID: <CAFQ2z_PmwLKC2Y39yj2Cqk=FMGC4gJTgZUEFOmgC=wE2KmdTfQ@mail.gmail.com>
+Subject: Re: [PATCH 10/10] reftable: make reftable_record a tagged union
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/7/2021 12:45 PM, Han-Wen Nienhuys via GitGitGadget wrote:
-> From: Han-Wen Nienhuys <hanwen@google.com>
-> 
-> This reduces the amount of glue code, because we don't need a void pointer or
-> vtable within the structure.
-> 
-> The only snag is that reftable_index_record contain a strbuf, so it cannot be
-> zero-initialized. To address this, introduce reftable_record_for() to create a
-> fresh instance, given a record type.
-> 
-> Thanks to Peff for the suggestion.
-> 
-> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-> ---
->  reftable/block.c       |   4 +-
->  reftable/block_test.c  |  22 +++---
->  reftable/generic.c     |  35 ++++----
->  reftable/iter.c        |   4 +-
->  reftable/merged.c      |  37 ++++-----
->  reftable/pq.c          |   3 +-
->  reftable/pq_test.c     |  31 ++++----
->  reftable/reader.c      | 105 ++++++++++++------------
->  reftable/record.c      | 176 ++++++++++++++++-------------------------
->  reftable/record.h      |  45 +++++------
->  reftable/record_test.c | 162 +++++++++++++++++++------------------
->  reftable/writer.c      |  46 ++++++-----
+On Wed, Dec 8, 2021 at 3:35 PM Derrick Stolee <stolee@gmail.com> wrote:
+> This is a HUGE diff, especially compared to the previous changes
+> in this series. I recommend splitting this out into its own series
+> and finding a way to break it down into smaller changes.
 
-This is a HUGE diff, especially compared to the previous changes
-in this series. I recommend splitting this out into its own series
-and finding a way to break it down into smaller changes.
+Would you have a suggestion how? The reftable_record type is used
+across the reftable library, so if we change its definition, that
+impacts most callsites.
 
-Thanks,
--Stolee
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
