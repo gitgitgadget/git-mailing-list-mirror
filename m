@@ -2,80 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA7C5C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 01:46:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53A3AC433F5
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 02:08:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242904AbhLHBtp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 20:49:45 -0500
-Received: from cloud.peff.net ([104.130.231.41]:46294 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230267AbhLHBtp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 20:49:45 -0500
-Received: (qmail 8820 invoked by uid 109); 8 Dec 2021 01:46:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Dec 2021 01:46:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26643 invoked by uid 111); 8 Dec 2021 01:46:14 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Dec 2021 20:46:14 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 7 Dec 2021 20:46:12 -0500
-From:   Jeff King <peff@peff.net>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Fwd: coverity problems in reftable code
-Message-ID: <YbAOZMxGDELhgfut@coredump.intra.peff.net>
-References: <YarO3nkrutmWF7nb@coredump.intra.peff.net>
- <CAFQ2z_OK5949p1WfovJ00Katk5hTv_oeLo-ZRCi1XqrtzQqL2g@mail.gmail.com>
- <CAFQ2z_OrN+RkwnMyrJHdh5xN6ueOP8KKBVQ7-U4kEkA3ApcuNg@mail.gmail.com>
+        id S233075AbhLHCMM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 21:12:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41590 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229481AbhLHCML (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 21:12:11 -0500
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0699C061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 18:08:40 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id k4so731514pgb.8
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 18:08:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=zsfUb45z2i+siFA23eNrg3O9jtpntzkwDY46GpHffek=;
+        b=QkKxvSZVZ5e5umZv1Y4WdWISLX3hwxH5YkKAzv8C167xGHlhZeb+DZ+He4i/1/4BPC
+         jnxjXuEuS86qDuA9TYIxkx9s0Ch7eSaa3jw1Wxy1959/h0LTF3l7MxlLbI/0fIyAwTYf
+         oDRg1jSpFhxuOdHUbKokrUbAyz9cn9P7kiBOHSPzL0F9U4/7lrDA7FqBDQkcNmuXjp30
+         bK4VNrsc89Z8jVMDdiBMxa/9ZRSalPWnWjwsHOTC75bDV4b+Zxio9cfiOa++UCFzufH5
+         tdLRpvDn0lA+WdjF0Dx6pYf5Qva+HWijudZoP7RBYx8uNn6pL0x6hjpt8WLmiVrov3s+
+         Ab8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zsfUb45z2i+siFA23eNrg3O9jtpntzkwDY46GpHffek=;
+        b=TdsLgCeysq0yujKS+t9p++mSszZ09sT83+X7Yaqv93LD/iCgC3ojD/9yIup4Gunq34
+         PorGdGTbga1viiE5B+BECkSPclYMkSvxhMlgYULwLOfxQAQemXC7ENLfRzRBQ7CE9Q76
+         Vx/+rAUV1A+KVwUayc2wvHlpUq6nDyWbZeZZeEgnpKJAaoO/Q4U4RZofppaWUN3ZXtFu
+         uWv8bcsLr7UG5+a00Qnbvfa83q4PYMbXpgIRg3JXeU/bzw7iBjIIVEJN0jBUoMk61VJN
+         A3elqr0/EChFR2XoLOP3Ff/ujRZrgK2wp02QAVVSZWyqPoDEpp8blN7jJ20xdcEEYm05
+         aU5g==
+X-Gm-Message-State: AOAM5319YpLLwRaizePfz+kdqglrJo6R+cqPAHaKKh88No6wGnYmWBSW
+        saDAfr9q5w1wEgkY5uHAIQC7D94groWCpEzD86M=
+X-Google-Smtp-Source: ABdhPJzR1YSGDMfjU4VISLs266xK/DW9e0k32qQTopIKjqnzeZgKgbcIRvTPdnDwT0gYMhU3SFva3A==
+X-Received: by 2002:a05:6a00:b8a:b0:49f:ed97:16be with SMTP id g10-20020a056a000b8a00b0049fed9716bemr2889403pfj.16.1638929320103;
+        Tue, 07 Dec 2021 18:08:40 -0800 (PST)
+Received: from localhost.localdomain ([205.204.117.102])
+        by smtp.gmail.com with ESMTPSA id np1sm4280214pjb.22.2021.12.07.18.08.38
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 Dec 2021 18:08:39 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, congdanhqx@gmail.com, gitster@pobox.com,
+        peff@peff.net, Teng Long <dyroneteng@gmail.com>
+Subject: [PATCH v5 0/1] support `--object-only` option for "git-ls-tree"
+Date:   Wed,  8 Dec 2021 10:08:30 +0800
+Message-Id: <cover.1638891420.git.dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.33.1.10.gd2a07a0ec5.dirty
+In-Reply-To: <cover.1637642029.git.dyroneteng@gmail.com>
+References: <cover.1637642029.git.dyroneteng@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFQ2z_OrN+RkwnMyrJHdh5xN6ueOP8KKBVQ7-U4kEkA3ApcuNg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 07, 2021 at 12:34:15PM +0100, Han-Wen Nienhuys wrote:
 
-> >   - A lot of your structs have vtables. Initializing them to NULL, as in
-> >     reftable_reader_refs_for_indexed(), leaves the risk that we'll try
-> >     to call a NULL function pointer, even if it's for something simple
-> 
-> I have the impression that coverity doesn't understand enough of the
-> control flow.  Some of the things it complains of are code paths that
-> only get executed if err==0, in which case, the struct members at hand
-> should not be null.
+Diffs from patch v4:
 
-I've definitely run into cases where it doesn't understand some
-invariant (e.g., "foo" is only nonzero if "bar" is not NULL). But the
-ones I looked at here were triggerable. It's a lot easier to see via
-their site which details there view of the control flow...
+* Change `--oid-only` to `--object-only`.
+  Word "oid" may not be easily understood for users.
 
-> > The summary of issues is below. You can get more details on their site.
-> > I _think_ I've configured it so that anybody can look at:
-> >
-> >   https://scan.coverity.com/projects/peff-git/view_defects
-> 
-> Alas, it says I have no access, even after I logged in.
+* The commit message was modified in terms of Junio's advice.
 
-...hrmph. I have it "open to all users", but maybe you have to be
-associated with the project. I'll send you an "invite" through the
-Coverity site and see if that works (of course don't feel obligated if
-you don't want to deal further with Coverity; it _does_ produce a ton of
-false positives, but it sometimes says useful things, too).
+* Use "OPT_CMDMODE()" to make `--name-only`, `--object-only` and
+  `--long` mutually exclusive with each other.
 
-> > I similarly wondered if these polymorphic types could be using a union
-> > within reftable_record, rather than pointing to a separate stack
-> > variable. Then you could initialize the whole thing without worrying
-> > about intermediate NULLs (and also there's less pointer chasing and it's
-> > a little bit more type safe than a void pointer). But again, I don't
-> > know the code well enough to know if that would cover all of your cases.
-> 
-> This is a great idea. I've made a change that does this, which I will
-> post shortly.
+* After options been parsed, translate options to bitmask, then use
+  cleaner bitwise to determine which fields will be shown.
 
-Oh good. I was worried I was going off on a tangent. I'll give your
-patches a look.
+* Add tests for mutually exclusive options.
 
--Peff
+* Documentation modifications about the change of option name.
+
+Thanks.
+
+Teng Long (1):
+  ls-tree.c: support `--object-only` option for "git-ls-tree"
+
+ Documentation/git-ls-tree.txt |   7 +-
+ builtin/ls-tree.c             | 125 ++++++++++++++++++++++++----------
+ t/t3103-ls-tree-misc.sh       |   8 +++
+ t/t3104-ls-tree-oid.sh        |  51 ++++++++++++++
+ 4 files changed, 154 insertions(+), 37 deletions(-)
+ create mode 100755 t/t3104-ls-tree-oid.sh
+
+Range-diff against v4:
+-:  ---------- > 1:  38d55a878c ls-tree.c: support `--object-only` option for "git-ls-tree"
+-- 
+2.33.1.10.gd2a07a0ec5.dirty
+
