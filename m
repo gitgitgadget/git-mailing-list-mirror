@@ -2,83 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61C76C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 14:48:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 178FFC433EF
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 14:58:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235436AbhLHOvx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 09:51:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45914 "EHLO
+        id S235567AbhLHPBi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 10:01:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235428AbhLHOvw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 09:51:52 -0500
-Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E98E0C0617A1
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 06:48:20 -0800 (PST)
-Received: by mail-ua1-x931.google.com with SMTP id 30so5044623uag.13
-        for <git@vger.kernel.org>; Wed, 08 Dec 2021 06:48:20 -0800 (PST)
+        with ESMTP id S229522AbhLHPBh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 10:01:37 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8183DC061746
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 06:58:05 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id j3so4588472wrp.1
+        for <git@vger.kernel.org>; Wed, 08 Dec 2021 06:58:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PiDintoIF1H3h8ufbO9h+JajoRD9sAWwNW3GzgWd9I0=;
-        b=hCG6WVSFiqWvnv6hip8AiQUuwKiu0SIccjTzh6bF3jNtLd28PPYoQc8JJekl0b6XDG
-         Rlzqm/SQbnC9+ndUJRffjpwqakYb9IgzkZMz05jXilpglxOP4lNjAObd1Kqom8y5mV6i
-         WwAj4XDX2mFuOIGq2xEhDphfHYv0ijJMPk7QwmUquulsG/A2DwVfU/cQDtD0BlKFulGi
-         +NksttYxqg6H2J+Rd3WJ8NeZcCroJNd6eA1GjCSFPxepxID9MaQaxDX80TqTonxoItnM
-         JyWpy2ntu0vS/7IsQ6Es+VkwV9Ik0qBqIG8USQSS36e/QIoOX3SAh+Dy7kfKUPmK5PIo
-         ekmw==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=ikYH1r6fCA0IM2JUoU9OQOizt046BswPyLilaHP+nmI=;
+        b=Gy31vjjyEnG0BIVJJGbfbhbFgD/SJ4gUsfC6F9lqz62pEnkhYxltUgZ374j96U810J
+         TxH0RztuJRHqtMwbv58Psxt4ZgGNkyhHJnd/eagKcw971HkyUVkv4e9dls+Fs7ywDSMI
+         8XdWMobNiAxJc8QkVou3d82IKDYOwo82sQGVi/4PZVRY9u4E65Ggaf1DQBFV92XQuxar
+         +AIdA5/1jEWwpsCIZLkVZC7GTD07h2om9NNFufloISQWpM4vkP9m5YYTHrfSY3wZzjfL
+         DQj3G8/SPO2WZoxgvTOPeLp0ZnWUonyhkS/EnNhPW3b2P1jyQw8JuCH0JUG1CU6L439f
+         HeZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PiDintoIF1H3h8ufbO9h+JajoRD9sAWwNW3GzgWd9I0=;
-        b=zODAHIeoq6oEp3cCGupbW00ZwnA5h6IV1LPdsYhm1w9ZFhr7nBBCPbb1rC9YV6TiUk
-         pOe9RGkhbo2+VhToCYy+k0rDTodnFeYcBRWeIYHxJ3FhkQGmVD0X05g0iNZKH1cNvn16
-         TZDMnftLTEAb7ot8Nwwv54Ll0WNdqA0LPfje8OI40lAvlfQVfsqbiE1w+SvGx9sgh1pc
-         0a2/n7kGK7khTGtojmeVdLgPVz419ys7Yd+3j/A4JxuEPLC6EvZ1Xh5//QUsZXJZjVCK
-         4F5nSPlZqbtlUsU3Jjz8aWcnl8DT9GEciO1an3C5r1GfyiFgJXyz2faIfnwX3rk0liV7
-         /dPw==
-X-Gm-Message-State: AOAM5333meHht3eaydLy4ZhKNd7vJS5mi7wv01Ga2xp9FITKoqhGFE4h
-        /dWa5cD2aLiMR9DsuMbFhKiwvIYjq561RJ1h/3VU3e3xXFo=
-X-Google-Smtp-Source: ABdhPJx4kxTFmbCxC+Lc7yBkn3cIuHO4zUXSajgIT1mow4uryUCaEEkAUgWctXk8ICg97e71QlKDZXLX9dy3fsANcR0=
-X-Received: by 2002:a67:c40c:: with SMTP id c12mr54938242vsk.16.1638974899960;
- Wed, 08 Dec 2021 06:48:19 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=ikYH1r6fCA0IM2JUoU9OQOizt046BswPyLilaHP+nmI=;
+        b=R1fqacbsHNb/rxJtGF1BwQBxrMaKpvxYJ3Wu4/Z3bakqwemXdMVlviNMKGG9uerNT8
+         Kp39wkF9db28FwsMokSAdPz2NaH9Itzn2ZhBXjiUUWGhSpSxxxOc5lWS/Xr0pgSWEMh9
+         mHSlrwlb97gvznh378WFOJZ5F/WXT+z+TDv2+dYZA3fd2iA/TDumi1vijOsSiTnZ6cFS
+         ip0Gyjb20DIzp+AKBPvcXSiJu6Fj0weiwSuWtQ8DtwnvCDyAAvb7xrjcbx9AmhtNtkG1
+         d83C+IlVhbRXp+Fge8yH96cqkLrzP/y0yHFfs+MJ1SdbtHJ4WS8EZwXzXGitTcKZL4Yh
+         ZsJg==
+X-Gm-Message-State: AOAM531/JzXBcO4XqCjYlOFjnHHb2Ls2OBJ+hYiizvm2l5VleGyn99E6
+        fVpKjIyW2Mwkb6Dm3F8m3EbKmaWc0tM=
+X-Google-Smtp-Source: ABdhPJxGhWAryX2WJH5wF7bTRH/2/DVidvjZz+f2GErPLe/Lbsuh2kKZFbLN0JtwDyO0RvKct9PZMg==
+X-Received: by 2002:adf:f602:: with SMTP id t2mr60485251wrp.539.1638975483930;
+        Wed, 08 Dec 2021 06:58:03 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z6sm3725438wmp.9.2021.12.08.06.58.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Dec 2021 06:58:03 -0800 (PST)
+Message-Id: <0e84d00572ed9a99d68ec856b779f550b2a934de.1638975482.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
+References: <pull.1049.git.1633082702.gitgitgadget@gmail.com>
+        <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 08 Dec 2021 14:57:48 +0000
+Subject: [PATCH v2 01/14] rebase: factor out checkout for up to date branch
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
- <8deccc3a1dff7e4f7d613fa63d2781fd1f11f841.1638899124.git.gitgitgadget@gmail.com>
- <072ff09c-9174-e769-7ebb-4bb248199337@gmail.com>
-In-Reply-To: <072ff09c-9174-e769-7ebb-4bb248199337@gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 8 Dec 2021 15:48:08 +0100
-Message-ID: <CAFQ2z_PmwLKC2Y39yj2Cqk=FMGC4gJTgZUEFOmgC=wE2KmdTfQ@mail.gmail.com>
-Subject: Re: [PATCH 10/10] reftable: make reftable_record a tagged union
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 8, 2021 at 3:35 PM Derrick Stolee <stolee@gmail.com> wrote:
-> This is a HUGE diff, especially compared to the previous changes
-> in this series. I recommend splitting this out into its own series
-> and finding a way to break it down into smaller changes.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Would you have a suggestion how? The reftable_record type is used
-across the reftable library, so if we change its definition, that
-impacts most callsites.
+This code is heavily indented and it will be convenient later in the
+series to have it in its own function.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ builtin/rebase.c | 33 +++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 34b4744e5f3..f5c37b7d4a5 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -812,6 +812,23 @@ static int rebase_config(const char *var, const char *value, void *data)
+ 	return git_default_config(var, value, data);
+ }
+ 
++static int checkout_up_to_date(struct rebase_options *options)
++{
++	struct strbuf buf = STRBUF_INIT;
++	int ret = 0;
++
++	strbuf_addf(&buf, "%s: checkout %s",
++		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
++		    options->switch_to);
++	if (reset_head(the_repository, &options->orig_head, "checkout",
++		       options->head_name, RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
++		       NULL, buf.buf, DEFAULT_REFLOG_ACTION) < 0)
++		ret = error(_("could not switch to %s"), options->switch_to);
++	strbuf_release(&buf);
++
++	return ret;
++}
++
+ /*
+  * Determines whether the commits in from..to are linear, i.e. contain
+  * no merge commits. This function *expects* `from` to be an ancestor of
+@@ -1673,21 +1690,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		if (!(options.flags & REBASE_FORCE)) {
+ 			/* Lazily switch to the target branch if needed... */
+ 			if (options.switch_to) {
+-				strbuf_reset(&buf);
+-				strbuf_addf(&buf, "%s: checkout %s",
+-					    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
+-					    options.switch_to);
+-				if (reset_head(the_repository,
+-					       &options.orig_head, "checkout",
+-					       options.head_name,
+-					       RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
+-					       NULL, buf.buf,
+-					       DEFAULT_REFLOG_ACTION) < 0) {
+-					ret = error(_("could not switch to "
+-							"%s"),
+-						      options.switch_to);
++				ret = checkout_up_to_date(&options);
++				if (ret)
+ 					goto cleanup;
+-				}
+ 			}
+ 
+ 			if (!(options.flags & REBASE_NO_QUIET))
+-- 
+gitgitgadget
 
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
