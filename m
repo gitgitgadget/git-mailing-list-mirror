@@ -2,82 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C8DBC433EF
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 16:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A0C8C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 16:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237125AbhLHQpG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 11:45:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44514 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237153AbhLHQpG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 11:45:06 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 705F9C061A32
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 08:41:34 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id l25so10265261eda.11
-        for <git@vger.kernel.org>; Wed, 08 Dec 2021 08:41:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FHUjyg5u6Zim6oUaOQoOpWKkZNuCxFUU85z/Myahz7Q=;
-        b=HDVkWFlADoqu04H/Co8oqb3lSTQTT02RSLll/UODJt2wl0ajSzWtUtCavm21q/AjW3
-         ODGXkcVy6C6tTHWm3PhBTtBW0oUqZes5wWpBru1lwD/RIFdau0bmUIbpq4BmTY3ch403
-         o8e6sUa7/EIq3a4kzo7rK9Qcj7ugRKM9YNpDFKcrcOhdqSCqZ1T7z2LG0tnhxmFsJ4KM
-         ZxgVQXkse4Av5gq+/lzh8VebHPu7bFnwSUz8r5hBHaihDq95D1hxhY1Hm4gkePavg504
-         zwY3bW/wVRfEBv4r1Loffy82aENa4ZzeB0FRCmiREBD+ihYuhD6hWtrysFyKBWgzviwf
-         7dfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FHUjyg5u6Zim6oUaOQoOpWKkZNuCxFUU85z/Myahz7Q=;
-        b=sNFEKjVUbty+S1J7V+6LCyxaNCw39MoRVdnUy0XAx+qrgvKroWU1ebqrbyjRjYGXjo
-         PITY6G7GDnoifrH+MGf3+CD6Gj4o0ko+74tZ1R4CEwrU5OAI+3oeYYzhpqAaaSCWuZhz
-         TOCe9/eN3yR6SDQ5zp23LF7RTLoi9g8fpST0aVRkVOyjiM9xCjjHEQ5BTKIH78fAVlWA
-         29VyuIEoOny44nsGtcWsthW6/8Fmiid+Qce5dCQN94RxGZ9XBlYD8a22hEwopCPlXAHt
-         LuEX8coZWlsxfRXr7xQQ8NdEyINzAooi5njhLxW+chsMG1K7jDR2Fx9XOTSp7fgFfgcz
-         2swQ==
-X-Gm-Message-State: AOAM533pXTY9xA8K5h8wNmegRgGNi+yhE9dbDWHqWOByiwIg1AVNu7FO
-        QbRJ4ydAHpwjseSteJ965OGb48p3fbUeXIuLEzY=
-X-Google-Smtp-Source: ABdhPJwpjtKpLQa/IkyXmzhVyp7ekN/ZT8nmGaAjmbeHyhpSbS4UDuJlEiqOcCZpl8MPm4dSbBcLvVd6RVpqV75zNCA=
-X-Received: by 2002:a05:6402:1014:: with SMTP id c20mr20791286edu.186.1638981692719;
- Wed, 08 Dec 2021 08:41:32 -0800 (PST)
+        id S237278AbhLHQuk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 11:50:40 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53037 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229636AbhLHQuj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 11:50:39 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8F91515D471;
+        Wed,  8 Dec 2021 11:47:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=B9njVQQrWWZlMACXNtvdCyWqFpYaCLzGo0sY4q
+        hQEhY=; b=xW8tSN5o/0+ffMyMVNQLgJsJlJoPRs0EOH8H/bbXo8LyHQK5PKGfVC
+        jOuJnl3NXGJ62oW2ojRdNM0/luqjptzxKludTK3vcfR4Z5nXbz/D7Q97KbTNHhiD
+        XWrBwNyqHKhHP4+2g441TwknzryVhnOewdTa90WEvQLymc92GUKEk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8912A15D470;
+        Wed,  8 Dec 2021 11:47:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8344D15D46F;
+        Wed,  8 Dec 2021 11:47:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 10/10] reftable: make reftable_record a tagged union
+References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
+        <8deccc3a1dff7e4f7d613fa63d2781fd1f11f841.1638899124.git.gitgitgadget@gmail.com>
+        <072ff09c-9174-e769-7ebb-4bb248199337@gmail.com>
+Date:   Wed, 08 Dec 2021 08:47:02 -0800
+In-Reply-To: <072ff09c-9174-e769-7ebb-4bb248199337@gmail.com> (Derrick
+        Stolee's message of "Wed, 8 Dec 2021 09:35:36 -0500")
+Message-ID: <xmqqv8zz2ge1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1091.v2.git.1638750965.gitgitgadget@gmail.com> <pull.1091.v3.git.1638828305.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1091.v3.git.1638828305.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 8 Dec 2021 08:41:21 -0800
-Message-ID: <CABPp-BEJbS=5i+d-Aa_fCH-WAjSOhX+nSZk5Q9Kb6RiizFg7ZQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] ns/tmp-objdir: add support for temporary writable databases
-To:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Neeraj Singh <nksingh85@gmail.com>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 78936BC4-5846-11EC-A72D-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 6, 2021 at 11:18 PM Neeraj K. Singh via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+Derrick Stolee <stolee@gmail.com> writes:
+
+> On 12/7/2021 12:45 PM, Han-Wen Nienhuys via GitGitGadget wrote:
+>> From: Han-Wen Nienhuys <hanwen@google.com>
+>> 
+>> This reduces the amount of glue code, because we don't need a void pointer or
+>> vtable within the structure.
+>> 
+>> The only snag is that reftable_index_record contain a strbuf, so it cannot be
+>> zero-initialized. To address this, introduce reftable_record_for() to create a
+>> fresh instance, given a record type.
+>> 
+>> Thanks to Peff for the suggestion.
+>> 
+>> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+>> ---
+>>  reftable/block.c       |   4 +-
+>>  reftable/block_test.c  |  22 +++---
+>>  reftable/generic.c     |  35 ++++----
+>>  reftable/iter.c        |   4 +-
+>>  reftable/merged.c      |  37 ++++-----
+>>  reftable/pq.c          |   3 +-
+>>  reftable/pq_test.c     |  31 ++++----
+>>  reftable/reader.c      | 105 ++++++++++++------------
+>>  reftable/record.c      | 176 ++++++++++++++++-------------------------
+>>  reftable/record.h      |  45 +++++------
+>>  reftable/record_test.c | 162 +++++++++++++++++++------------------
+>>  reftable/writer.c      |  46 ++++++-----
 >
-> V3 (hopefully final):
->
->  * Fix the commit description for patch [2/2] to reflect the fact that
->    disabling ref updates no longer depends on the_repository.
->  * Add a link to Jeff King's test case in patch [2/2]. The test relies on
->    remerge-diff, so it can't be directly included here.
->  * Adjust line spacing in update_relative_gitdir (gitster)
->  * Switch struct object_directory to use full-width integers rather than
->    flags (gitster)
->  * Fix typo s/protentially/potentially (neerajsi)
+> This is a HUGE diff, especially compared to the previous changes
+> in this series. I recommend splitting this out into its own series
+> and finding a way to break it down into smaller changes.
 
-This version looks good to me:
+As the reftable_record structure is used everywhere (and that is why
+this step has to touch everywhere), I suspect that a reviewable fix
+in small chunks would be achievable only if we redo the topic that
+introduces this hierarchy and fix the type at the source, as if the
+reftable_record structure was a struct with union in it from the
+beginning, I am afraid.
 
-Reviewed-by: Elijah Newren <newren@gmail.com>
+Perhaps reftable_record_for() can be implemented without changing
+the shape of the underlying reftable_record structure in an earlier
+step, then all the users of reftable_record instances can be
+migrated to call it, and then finally the shape of the structure and
+the implementation of reftable_record_for() can be updated?  
 
-For future reference, when splitting one of your series apart, copying
-the relevant subset of the cc lines (e.g. from the description at
-https://github.com/git/git/pull/1076 to the one at
-https://github.com/gitgitgadget/git/pull/1091) would be helpful.
+If that is doable, then the "migrate each users" part can be split
+purely by size.  But (1) I do not know if the first step is even
+doable, and (2) I am not sure if it is worth going a somewhat
+roundabout route to get to the same destination in this case.
+
+So...
+
+
