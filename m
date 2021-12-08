@@ -2,86 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2F65C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 21:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E50AC433EF
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 21:13:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237033AbhLHVQp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 16:16:45 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63049 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236037AbhLHVQo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 16:16:44 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 702DB173133;
-        Wed,  8 Dec 2021 16:13:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TWTFi7cb/3rfiFl5UYLu1oYZChewKvhBMMRkaf
-        qZMS0=; b=l4GSJlLM3ffBsq2FV4JGbyYxa5FKKSdWVaL1kmXM058IOdaL1PwHmD
-        L91j4g884exW7/MrDsidnn202SiwztJxuGdSYleBDD251q7N4IyjsbYwDgPlaiIE
-        JjcwkWVXNH63swI1KIrJTn3iP8OiyY2oGNG7QpgYVB8E3OW964FNI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 687AA173132;
-        Wed,  8 Dec 2021 16:13:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 69426173131;
-        Wed,  8 Dec 2021 16:13:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lessley Dennington <lessleydennington@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: ld/sparse-diff-blame, was What's cooking in git.git (Dec 2021,
- #02; Tue, 7)
-References: <xmqq8rwv6e0a.fsf@gitster.g>
-        <a4968ff2-17c6-faa8-e9be-0c1880e870dd@gmail.com>
-Date:   Wed, 08 Dec 2021 13:13:06 -0800
-In-Reply-To: <a4968ff2-17c6-faa8-e9be-0c1880e870dd@gmail.com> (Lessley
-        Dennington's message of "Wed, 8 Dec 2021 13:57:59 -0600")
-Message-ID: <xmqqtufiztp9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237036AbhLHVR1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 16:17:27 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47052 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232921AbhLHVR1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 16:17:27 -0500
+Received: (qmail 11310 invoked by uid 109); 8 Dec 2021 21:13:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Dec 2021 21:13:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7675 invoked by uid 111); 8 Dec 2021 21:13:50 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Dec 2021 16:13:50 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 8 Dec 2021 16:13:48 -0500
+From:   Jeff King <peff@peff.net>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Patrick Steinhardt <ps@pks.im>, git <git@vger.kernel.org>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [RFC] fetch: update refs in a single transaction
+Message-ID: <YbEgDBJPuGXQ+2t6@coredump.intra.peff.net>
+References: <259de62b26302c10f429d52bec42a8a954bc5ba3.1638886972.git.ps@pks.im>
+ <CAP8UFD0Y-2aD6ywRFi49_emxzcLqrfyNpZ29fgsJ0FKc0njYqg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A4656D68-586B-11EC-A5E0-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD0Y-2aD6ywRFi49_emxzcLqrfyNpZ29fgsJ0FKc0njYqg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lessley Dennington <lessleydennington@gmail.com> writes:
+On Wed, Dec 08, 2021 at 09:15:01AM +0100, Christian Couder wrote:
 
->> * ld/sparse-diff-blame (2021-12-06) 8 commits
->>   - blame: enable and test the sparse index
->>   - diff: enable and test the sparse index
->>   - diff: replace --staged with --cached in t1092 tests
->>   - repo-settings: prepare_repo_settings only in git repos
->>   - test-read-cache: set up repo after git directory
->>   - commit-graph: return if there is no git directory
->>   - git: ensure correct git directory setup with -h
->>   - Merge branch 'vd/sparse-reset' into ld/sparse-diff-blame
->>   (this branch is used by ds/fetch-pull-with-sparse-index; uses vd/sparse-reset.)
->>   Teach diff and blame to work well with sparse index.
->>   Will merge to 'next'?
->>   source: <pull.1050.v6.git.1638806161.gitgitgadget@gmail.com>
->
-> This series has been reviewed at different stages by:
-> ...
-> I believe all comments have been addressed (either in the form of a
-> re-roll or a patch or explanation in my reply) and that this branch is
-> ready to merge to 'next'. I have cc'd all reviewers, though, in case there
-> was something I missed.
+> > Note that this slightly changes semantics of git-fetch(1): if we hit any
+> > unexpected errors like the reference update racing with another process,
+> > then we'll now fail to update any references, too.
+> 
+> So that's one difference between the "partial-update" and the
+> "non-atomic" modes, but what you say doesn't really make me confident
+> that it's the only one.
+> 
+> Also are there people who are in cases where a lot of reference
+> updates are racing, and where it's important that in such cases at
+> least some ref updates succeed?
+> 
+> If yes, then maybe the 3 modes could be kept and options for
+> "partial-update" and "non-atomic" could be added. "partial-update"
+> could be the default in case the reftable backend is used, while
+> "non-atomic" would still be the default when the files backend is
+> used.
 
-I think the patches in this series are in good shape.  The other
-topic this series depends on is already in 'next', so we can mark
-this for 'next', too.
+I think these three modes are hard to explain to users, because the
+failures which trigger for partial-update versus atomic depend on how
+things happen to be implemented. Just coming from a user's perspective,
+we might expect a breakdown like:
 
-Note that "explanation in reply" does not count as much as an
-improved version would.  If the code or the log message puzzled a
-reviewer during the review, future readers of the code and "git log"
-will be puzzled the same way.
+  - problems like non-fast-forward are logical policy issues, and we'd
+    reject those without failing the whole transaction (in
+    partial-update mode)
 
-Thanks.
+  - a system error like write() failing should be rare, and abandons the
+    whole transaction (in either mode)
+
+But there are some confusing cases:
+
+  - if somebody else takes the lock and updates the ref at the same
+    time, then that is handled in the ref transaction code. And so even
+    though it's closer to a logical policy issue, the patch here would
+    fail the whole transaction
+
+  - likewise name conflicts (writing "refs/foo" when "refs/foo/bar"
+    exists or vice versa) are more of a logical issue, but are also
+    handled by the transaction code.
+
+So I think we really have to teach the ref transaction code the notion
+of non-atomic transactions, or we'll end up leaking out all of those
+implementation details in user-facing behavior. I.e., the ref code needs
+to learn not to immediately abort if it fails one lockfile, but to
+optionally keep going (if the caller specified a non-atomic flag, of
+course).
+
+For the files-backend code, I think system errors would naturally fall
+out in the same code. Failing to write() or rename() is not much
+different than failing to get the lock in the first place. So
+"partial-update" and "non-atomic" behavior would end up the same anyway,
+and we do not need to expose the third mode to the user.
+
+For the reftable backend, syscalls are inherently covering all the refs
+anyway (we either commit the whole reftable update or not). So likewise
+there would be no different between partial-update and non-atomic modes
+(but they would both be different from the files backend).
+
+I suspect the surgery needed for the ref-transaction code to allow
+non-atomic updates would be pretty big, though. It involves checking
+every error case to make sure it is safe to continue rather than
+aborting (and munging data structures to mark particular refs as
+"failed, don't do anything further for this one").
+
+So I dunno. All of my analysis assumes the breakdown of user
+expectations I gave above is a reasonable one. There may be others. But
+it seems like the behavior created by just this patch would be very hard
+to explain, and subject to change based on implementation details.
+
+-Peff
