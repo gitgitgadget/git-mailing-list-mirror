@@ -2,74 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59373C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 19:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41461C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 19:06:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235664AbhLHTGP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 14:06:15 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59460 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232745AbhLHTGP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 14:06:15 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AF89017235A;
-        Wed,  8 Dec 2021 14:02:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=xDRUEHA4TrmoSyWzOjxqChZ07
-        MFb42fOYBDdddnYEVc=; b=jvBVELtpLhBDZPDk/gPDlNAqKlP9EBZMwMlhto1o4
-        0WWOEeiRaQcSZcmz83eqhAvs0Us/teK07Q8nRNe3ZSput73PMKya7QQR8HUVOiyJ
-        ObvJ/zMQqW11ziAAibOrJXEnKxs2SLaHne81b7Sh92SKQsPuyBEu2nobYMVifCJx
-        OE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A897C172359;
-        Wed,  8 Dec 2021 14:02:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A4D20172358;
-        Wed,  8 Dec 2021 14:02:38 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, git <git@vger.kernel.org>
-Subject: Re: errno oversight
-References: <CAFQ2z_NHXKss4LVBAFVpE7LFXt2OeOz9P9wi-z8riwHXWDb28w@mail.gmail.com>
-        <211208.86sfv3l0op.gmgdl@evledraar.gmail.com>
-        <211208.86o85rl07m.gmgdl@evledraar.gmail.com>
-Date:   Wed, 08 Dec 2021 11:02:37 -0800
-Message-ID: <xmqqo85q2a42.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233758AbhLHTKH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 14:10:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50800 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233771AbhLHTKG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 14:10:06 -0500
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88B66C061746
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 11:06:34 -0800 (PST)
+Received: by mail-ot1-x32c.google.com with SMTP id u18-20020a9d7212000000b00560cb1dc10bso3697035otj.11
+        for <git@vger.kernel.org>; Wed, 08 Dec 2021 11:06:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=KmN/6yVIGs3yh7ULIhE75pw/Bx7h3MZyIfR/BI5R9MM=;
+        b=Mf6B/3QfVLG/+whgfa3Zlbee9+9R/AOSTICW4jb4ybAXoEwKNO1s/4umE+yVwWB+64
+         TGIFgPwn8qIGiCFggUiGXGFATdJJGS+GmIxCpVJG1sXktJb3iEzhjH9CosAXdH/uFsVM
+         PoBgTGDgQulaIewf1oTllar3dQaLVPqNqSGZEQAarDkFTMBpCni/StgN3XXpp5oafZ9W
+         m2IwyOvWRrBW7mk9e+HXjp97i1dpyLK5vd/7brkYTtiH2j4PnITCLAhqf1PT8V6DdG5X
+         vhZ18kAKoHsAsBm8e+59VOWYiYVMhBhbtg5ogpFkMH5amR450/cu6I3O+pOZFPE058Ay
+         el4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=KmN/6yVIGs3yh7ULIhE75pw/Bx7h3MZyIfR/BI5R9MM=;
+        b=iYyebJBHtwn+k/jRn5+fqq8BWeRr+6rsHZ1JwNF/bvRM+aBjCK6T1LUDXxAY+oSojT
+         3HIdGpZNDc5kjID/i5NAlmfUO6750vrWS9a5bchbSvoxmSes60gDyyQooEMxKFRn0E1O
+         JWOWyWIptiiWj16Nl+HkD9yPxnqA0KbongDKSrYt/cyOtSJ1XKlraUutNY2/vha3sgGP
+         uEIlvVZihz+i9MuPRiZABpvYOl/PQ4U/0NCsM3LFigbHwi9fBzQqCxO5RuRA1ggIIBGM
+         l6GF6wUXlV2m9+bXPbPoCl1Qk5opCuKv8lYulDXA90RbDdGp54PfwrhHBrd1fMnkx8Ax
+         1iaQ==
+X-Gm-Message-State: AOAM530d+ChKzM3X9aDFnlEDMYlv0zzwk3ABihCHVQOIBkbW0JLlHtaK
+        7Vhxl81aFbp7hlaTcO9v5S4=
+X-Google-Smtp-Source: ABdhPJwv18qcxnRw07bzkAwDIGdQcyEMCa43Jr+Aztg9QIZWkn50/e7kGYhhcGXT+Z71ceAJgjyMBg==
+X-Received: by 2002:a05:6830:4b3:: with SMTP id l19mr1254725otd.284.1638990393800;
+        Wed, 08 Dec 2021 11:06:33 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:5056:be20:f10c:bfd5? ([2600:1700:e72:80a0:5056:be20:f10c:bfd5])
+        by smtp.gmail.com with ESMTPSA id j187sm748764oih.5.2021.12.08.11.06.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Dec 2021 11:06:33 -0800 (PST)
+Message-ID: <c8e22885-1759-d3d9-3944-2d70c70960e2@gmail.com>
+Date:   Wed, 8 Dec 2021 14:06:30 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 697F1120-5859-11EC-8805-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH 2/2] ls-files: add --sparse option
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Victoria Dye <vdye@github.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1080.git.1637077083.gitgitgadget@gmail.com>
+ <e42c0feec94de0e4869cda1fc6b28bd7055774e3.1637077083.git.gitgitgadget@gmail.com>
+ <211123.86h7c3wrg2.gmgdl@evledraar.gmail.com>
+ <03a642fc-6310-1ea4-083e-9fe4530cf761@gmail.com>
+ <CABPp-BGJJM757CoOPjP=XBK-cMMGJemaeruxXSN9TEGmk+NKvg@mail.gmail.com>
+ <d1275b30-b9b0-a416-3300-9809d880eb55@gmail.com>
+ <CABPp-BEyvkRdxJoJZcNF1VoQBcJajq1CVUrNTfHnHG433Q=cNQ@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CABPp-BEyvkRdxJoJZcNF1VoQBcJajq1CVUrNTfHnHG433Q=cNQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On 12/8/2021 1:36 PM, Elijah Newren wrote:
+> On Wed, Dec 8, 2021 at 10:23 AM Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> On 12/8/2021 12:04 PM, Elijah Newren wrote:
+>>>
+>>> This actually looks quite nice, though the magic '16' is kind of
+>>> annoying.  Could we get rid of that -- perhaps using something to rip
+>>> out the diff header, or using comm instead?
+>>
+>> What I really want is "remove the first two lines of this file"
+> 
+> Is `tail -n +3` portable?  Looks like we have five uses of tail -n +N
+> in the testsuite, so it should be okay to use.
 
->>>                    if (refs_read_raw_ref(refs, refname, oid, &sb_refn=
-ame,
->>>                                       &read_flags, failure_errno)) {
->>>                         *flags |=3D read_flags;
->>>                         if (errno)
->>>                                 *failure_errno =3D errno;
-> ...
-> Urg, sorry. Yes obviously that should use the failure_errno from
-> refs_read_raw_ref().
+Ah, that's the magic incantation. Sounds good.
 
-Yeah, I was wondering about the same thing, "refs_read_raw_ref()
-takes the failure_errno pointer for stuffing errno there, doesn't
-it?  does the caller need to do anything?".
+>> but perhaps "tail -n $(wc -l expect)" would suffice to avoid a
+>> magic number?
+> 
+> That works too.
 
-> I'll submit a fix for this soon. There's some good post-cleanup to be
-> done here, it seems only one upstream caller of
-> refs_resolve_ref_unsafe() cares about the failure_errno currently (but =
-I
-> didn't look into your reftable code).
+If the "-n +X" syntax works, then I'll opt for that.
 
-Thanks.
+Thanks!
