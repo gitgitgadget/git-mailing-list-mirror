@@ -2,75 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6798EC433F5
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 17:05:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54297C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 17:06:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237522AbhLHRIv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 12:08:51 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58491 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbhLHRIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 12:08:48 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CE17B15D5F7;
-        Wed,  8 Dec 2021 12:05:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=kbrjWisAVWOx
-        T50WpLsVuTyLR1GLJa74fxTF5NjHreI=; b=KSxcKkwzTEvIqmfPWr5RvPcP7ct9
-        HfTs+oVEx/EKel2NCPDwHLKCkLg6MT8/jXV0JZZtBxA4YO5SCFCeLbBP2zA29x0B
-        ay4Zmuqfz6P1U7LsmMn31Bhj7O32tnhcObULTCxoH+dhxbFtdLzZs+/qMQUGahbL
-        7d6EhEzvMuRP3V8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C728515D5F6;
-        Wed,  8 Dec 2021 12:05:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CBCFF15D5F5;
-        Wed,  8 Dec 2021 12:05:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
-Subject: Re: Removing -Wdeclaration-after-statement
-References: <20211113122833.174330-1-gotlouemail@gmail.com>
-        <20211113130508.zziheannky6dcilj@gmail.com>
-        <2b2386b9-045d-a0b8-6dbc-8a9d0c446bea@gmail.com>
-        <xmqq7ddbme7q.fsf@gitster.g>
-        <211114.868rxqu7hr.gmgdl@evledraar.gmail.com>
-        <xmqqilwulims.fsf@gitster.g> <xmqqpmr2j5lq.fsf_-_@gitster.g>
-        <61518213-9ce8-00d2-efd9-7f2091c574c4@gmail.com>
-        <xmqq1r3eym7f.fsf@gitster.g>
-        <211208.86wnkfl1ni.gmgdl@evledraar.gmail.com>
-Date:   Wed, 08 Dec 2021 09:05:11 -0800
-In-Reply-To: <211208.86wnkfl1ni.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 08 Dec 2021 13:17:16 +0100")
-Message-ID: <xmqq35n32fjs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 01D90E28-5849-11EC-AE13-98D80D944F46-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S237537AbhLHRKJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 12:10:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50452 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231757AbhLHRKJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 12:10:09 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B87CC061746
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 09:06:37 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id e7-20020aa798c7000000b004a254db7946so1901396pfm.17
+        for <git@vger.kernel.org>; Wed, 08 Dec 2021 09:06:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=Hg4ZyqoQunDIIJBZyGoY28Nw1U21a4wcdfq1WEHHX60=;
+        b=gD/pmlZHZu6p9h7lN74LjgvKqS3oAiEXqs7tsKFyMeZv7dnAISyePFj6o2L4Hg2lDf
+         GN5CaCKtX3cVG9xXsg+A5QEeqosPPme2kAmwRfFRT+jdhfZ7CaNasszsHhqBn92xyqoW
+         TpNAjZsIbqNQQxWsZlx+OMrkgtojsqQQ+sDZouIJMf5xC2+vage0o7X1U2TSH509zts3
+         wjPE7e5U+UaSDQKRjLu01NOiyCpoC29ey0CO3HcdbCepnOYvDhdtymnJv2BsVuIowHB2
+         cGzbrCuAgE4Q2P15qyEZvSlMa7Sf1k2W8lov7ziVt3aK0gslDYUXUSAAyjc4v5lMcW9I
+         rhYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Hg4ZyqoQunDIIJBZyGoY28Nw1U21a4wcdfq1WEHHX60=;
+        b=mLqCNvAZFBI/Dhw3e0cnl58w2GoAjJhsCerj7kjZh2PnDCaJGjd+PmB4hioGN5pDW/
+         KzfcjLFoz6DTmA3piELfTov/nPLUgCtdcVp99X4ylqvPddxdRwD1IDAOzanffjFvBkco
+         B3G/7F7B/buq5H/rIeERfdCPZ618iL2RNcL+97vyNN7XYxqRf2+raYrc61i9VbbKKNXb
+         BdSdY818uqhtE7qEwDKbxM3mTESDPvlyyXxEgGjMa2JCGEOZQ5ZGUWwyb7aKUhmPZr7z
+         8REwsrY7eEDaitUDsVwesWA/sroDuBKtKT7yjbpV14K2P8ZAgdvjwhBYjAFfpNySF2Ml
+         MvQg==
+X-Gm-Message-State: AOAM5316+zunp40hbW6YkerQdZSRSZqgUVbwyNGBdLY98SsGjPv3cGIZ
+        gSq7+maKRSaSOIibYprC8AU3YeckRgUEHQ==
+X-Google-Smtp-Source: ABdhPJwdkABt8OTNQBIyfpUQHpn8SsQ3dW51QBLgWEKiJfnlZcVSfQwygFBVJZvkXqsfPboKc2yBH676tphb2w==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90b:4f86:: with SMTP id
+ qe6mr8738490pjb.224.1638983196726; Wed, 08 Dec 2021 09:06:36 -0800 (PST)
+Date:   Wed, 08 Dec 2021 09:06:36 -0800
+In-Reply-To: <xmqq4k7k8cz3.fsf@gitster.g>
+Message-Id: <kl6lbl1rauw3.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+ <cover.1638859949.git.steadmon@google.com> <xmqq4k7k8cz3.fsf@gitster.g>
+Subject: Re: [PATCH v5 0/2] branch: inherit tracking configs
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com, avarab@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Why would that be sad? The intent of -Wdeclaration-after-statement is t=
-o
-> catch C90 compatibility issues. Maybe we don't want to enable everythin=
-g
-> C99-related in this area at once, but why shouldn't we be removing
-> -Wdeclaration-after-statement once we have a hard C99 dependency?
+> Can you two work out the preferred plan, taking relative importance,
+> priority, and difficulty between the topics into account, and report
+> to us how you want to proceed and why you chose the route once you
+> are done?
+>
+> Unless the plan you two come up with is outrageously bad, such a
+> decision by stakeholders would be far more acceptable by the
+> community than going by my gut feeling.  In short, I'd prefer
+> decentralization ;-)
+>
+> Having said that, I think this one is a simpler topic that is closer
+> to become stable enough than the other one, so it could be that the
+> rebases want to go the other direction.
 
-We already heard from people that we do not want vla, and I agree
-that we do not want all C99.  decl-after-stmt is something I
-definitely do not want in our code, in order to keep the code more
-readable by declaring the things that will be used in the scope
-upfront, with documentation if needed.  It tends to encourage us to
-keep our blocks smaller.
+Josh and I have discussed this, and yes, we agree with your assessment.
+
+Rebasing my changes on top of this is also easier from a dependency
+perspective because this series has a very obvious interface that I can
+use.
+
+I'll send a re-roll soon. Thanks!
