@@ -2,91 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE2A3C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 13:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE1BAC433F5
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 13:45:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234383AbhLHNpX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 08:45:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58358 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232209AbhLHNpW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 08:45:22 -0500
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [IPv6:2a01:488:42:1000:50ed:8234::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2E67C061746;
-        Wed,  8 Dec 2021 05:41:50 -0800 (PST)
-Received: from ip4d173d4a.dynamic.kabel-deutschland.de ([77.23.61.74] helo=[192.168.66.200]); authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1muxCY-0004xd-97; Wed, 08 Dec 2021 14:41:42 +0100
-Message-ID: <af5ee2e8-cd59-fc9a-35fa-6fec1fc9aa33@leemhuis.info>
-Date:   Wed, 8 Dec 2021 14:41:41 +0100
+        id S232332AbhLHNsy convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 8 Dec 2021 08:48:54 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:22551 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234654AbhLHNso (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 08:48:44 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1B8Dj343025280
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 8 Dec 2021 08:45:04 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Fabian Stelzer'" <fs@gigacodes.de>
+Cc:     "'Robert Coup'" <robert.coup@koordinates.com>,
+        <git@vger.kernel.org>, <avarab@gmail.com>
+References: <001501d7eaf6$79d8e170$6d8aa450$@nexbridge.com> <CAFLLRp+yakYKxeGHjvg-8s-5QP8GqMeA5t+azfny=v6wtPPW2A@mail.gmail.com> <00b901d7eb79$c374f070$4a5ed150$@nexbridge.com> <20211208125149.enyd22nnhmvou6lr@fs>
+In-Reply-To: <20211208125149.enyd22nnhmvou6lr@fs>
+Subject: RE: [Question] Switching the URI from SSH to HTTPS for submodules
+Date:   Wed, 8 Dec 2021 08:44:59 -0500
+Organization: Nexbridge Inc.
+Message-ID: <012d01d7ec39$ce3e4f40$6abaedc0$@nexbridge.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Content-Language: en-BS
-To:     Geert Uytterhoeven <geert@linux-m68k.org>, Eric Wong <e@80x24.org>
-Cc:     Jani Nikula <jani.nikula@intel.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        workflows@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Kees Cook <keescook@chromium.org>
-References: <cover.1637566224.git.linux@leemhuis.info>
- <6b760115ecdd3687d4b82680b284f55a04f3ad90.1637566224.git.linux@leemhuis.info>
- <20211123185237.M476855@dcvr>
- <12cefa81-495b-3083-5f19-b319c704ebf7@leemhuis.info>
- <20211126171141.GA21826@dcvr>
- <42ff6b8d-0b7c-12e0-4648-a9232b0f577c@leemhuis.info>
- <20211127195231.GA4636@dcvr> <xmqqtufx5p19.fsf@gitster.g>
- <87mtlnjhj6.fsf@intel.com> <20211129172618.GA26651@dcvr>
- <CAMuHMdWygx9kTemsrZdru-ieYyJXm=8276Q_ZSxZGkqsu5OWVg@mail.gmail.com>
-From:   Thorsten Leemhuis <linux@leemhuis.info>
-Subject: Re: [RFC PATCH v1 1/1] docs: add the new commit-msg tags 'Reported:'
- and 'Reviewed:'
-In-Reply-To: <CAMuHMdWygx9kTemsrZdru-ieYyJXm=8276Q_ZSxZGkqsu5OWVg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;linux@leemhuis.info;1638970911;ed0faea9;
-X-HE-SMSGID: 1muxCY-0004xd-97
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQLS8uQa68NLdYMjzyL1Ti0pjcbf7gMNtF3fAvC5Zf4BNcem26n455xw
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric!
-
-On 30.11.21 09:24, Geert Uytterhoeven wrote:
-> On Mon, Nov 29, 2021 at 11:29 PM Eric Wong <e@80x24.org> wrote:
->> It's a bit much for common cases with git-send-email and
->> reasonable MUAs, I think.  I don't know if formail is commonly
->> installed, nowadays...
-
-Well, after your earlier suggestion I considered to go with this:
-
--	perl -pi -e 's|^Message-Id:\s*<?([^>]+)>?$|Link:
-https://lore.kernel.org/r/$1|g;' "$1"
-+	perl -pi -e 's|^Message-ID:\s*<?([^>]+)>?$|Link:
-https://lore.kernel.org/r/$1|i;' "$1"
-
-But...
-
-> Of course ;-) You need it to run checkpatch on patch series obtained
-> through "b4 am", before you apply them to your tree:
+On December 8, 2021 7:52 AM, Fabian Stelzer wrote:
+> On 07.12.2021 09:50, rsbecker@nexbridge.com wrote:
+> >On December 6, 2021 6:54 PM, Robert Coup wrote:
+> >> On Mon, 6 Dec 2021 at 23:10, <rsbecker@nexbridge.com> wrote:
+> >> >
+> >> > git@bitbucket.org:project/module.git
+> >> >
+> >> > When in SSH mode, clones are simple with --recurse-submodules doing
+> >> > what we want. However, we had to clone on a system where SSH was
+> >> > locked down and we could only use HTTPS. The form of the URIs
+> >> > changed
+> >> rather radically:
+> >> >
+> >> > https://user@bitbucket.org/project/repo.git
+> >> >
+> >> > I'm looking for better practices than I used - I'm sure there is at least
+> one.
+> >>
+> >> AFAIK the existing `url.<base>.insteadOf` config option[1] deals with
+> this...
+> >>
+> >> [1] https://git-scm.com/docs/git-config#Documentation/git-config.txt-
+> >> urlltbasegtinsteadOf
+> >>
+> >>     $ git config --global url."https://user@bitbucket.org/".insteadOf
+> >> "git@bitbucket.org:"
+> >>
+> >> If you don't want to set it globally (not a throwaway CI
+> >> environment?) then you can do it as a one-off:
+> >>
+> >>     $ git -c
+> url."https://user@bitbucket.org/".insteadOf="git@bitbucket.org:"
+> >> clone --recurse-submodules git@bitbucket.org:repo/project.git
+> >>
+> >> But it isn't persisted into your repo config then, so subsequent
+> >> fetches won't work. You'd need to persist it using something like:
+> >>
+> >>     $ git config url."https://user@bitbucket.org/".insteadOf
+> >> "git@bitbucket.org:"
+> >>     $ git submodule foreach --recursive 'git config
+> >> url."https://user@bitbucket.org/".insteadOf "git@bitbucket.org:" '
+> >>
+> >> Maybe there's an opportunity to make that part easier?
+> >
+> >Well, I gave this a shot. The mapping did not appear to work - I tried
+> >a few combinations. I was left with the original URIs. Note that I also
+> >had to do
+> >
+> >$ git submodule init
+> >
+> >which reported the wrong URIs
+> >
+> >$ git submodule update
+> >
+> >which obviously failed since they were still using SSH.
+> >
+> >I think there may be something not working correctly with the insteadOf
+> operator. This is easily reproduceable.
+> >
 > 
-> $ cat *mbx | formail -s scripts/checkpatch.pl
+> I ran into this as well some time ago. For submodules this only works if you
+> put it into your global config since the parent projects config is not relevant to
+> the submodule.
+> 
+> There's some discussion in the archive about this as well:
+> https://lore.kernel.org/git/404d109f-e5a7-85a3-e64c-
+> ab1b21c3045d@durchholz.org/
 
-...this made me wonder if formail would be the better solution. I came
-up with this:
+The minimal procedure that I got to work is:
 
-formail -A "Link: https://lore.kernel.org/r/`formail -c -x Message-ID <
-"${1}" | sed 's!.*<\(.*\)>!\1!'`" < "${1}" | sponge "${1}"
+$ git config --global url."https://user@bitbucket.org/".insteadOf "git@bitbucket.org:"
+$ git clone --recurse-submodules https://user@bitbucket.org/project/repo.git 
 
-Downsides: instead of perl it requires sed and sponge (part of
-moreutils, which I guess not everyone has installed; but I tried to
-avoid a big here document or moving files around).
+This leaves .gitmodules untouched and contains the original URIs, so the status is clean and there is no real risk of someone pushing an unwanted URI change back to the upstream repo. I don't see a major downside to leaving the redirect in global as this would be useful for subsequent clones. Any scripting that might depend on .gitmodules being correct would break - not in my case though - to that should probably be noted.
 
-Is that worth it? Or is there a way to realize this in a more elegant
-fashion with tools everyone has installed?
+I think I have enough to document this consideration in Documentation/gitsubmodules.txt. Thanks everyone.
+-Randall
 
-Ciao, Thorsten
