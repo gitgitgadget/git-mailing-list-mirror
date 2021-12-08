@@ -2,112 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64DF3C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 22:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37E06C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 23:20:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240876AbhLHXCU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 18:02:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47068 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240729AbhLHXCT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 18:02:19 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98E79C061746
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 14:58:46 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id h19-20020a9d3e53000000b0056547b797b2so4349962otg.4
-        for <git@vger.kernel.org>; Wed, 08 Dec 2021 14:58:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=JxI40YmGGiSMUtWXCeB+uRDhGx7E4fD75OVGdANI3Eo=;
-        b=WkVo7pIV4lHVBvo6UfvQmnrVK/N4Ysv2nenw63omadaaAgjEOvEGbVimh8MwdAbVgy
-         r2UNZwBEwA34SwqbYWbZWgab8kurvdmAGkBYXGpYPM/a5kawP645IG9ap2nFk5Dx2aLf
-         TrNuzPx0VtjEaN8FJ/WOFiCNF0OEacO3SWPJ81CkUin+NU9IygAHGxWBhEvRjovQYP/Z
-         xlz0hoHVJVsGuuUQp4KQLjjwdv+kFEQzzGHpJ1TOzYmibuKq8QxTOs8+nJhAits8hgtY
-         R5/CWvGx7GwqQXALFOg7k1kp3E6dHS4tsT1kR1PY+Q9QT/XEcA3HjM/4Vz4S+JvCYiHE
-         Z1vA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=JxI40YmGGiSMUtWXCeB+uRDhGx7E4fD75OVGdANI3Eo=;
-        b=Ht2yasawCwVJ5wCRa3Imm3xf4DqkK39VVNIrD/nDx2N8x7DRYdQedC7GxSI7s3owgs
-         kgLGFPp+jjBEJSDGjByKeBYgBPGZ3dflHtmVH+0NrId3ZbUwronf1TM+0ZrqFzk1fF9j
-         ncFhH1fsBXAySfE3B1EwvvXbAKFxY+8njeAsbQCe5uqF1Het7i3yRNNswr71hoyOomqP
-         asQ6llIliHWlc09qgej3lj45X20ik+fshiv4RTG4sONcKzVvswn2RnIKcGcpI7nkhYWc
-         zLEFJVvsFg2vwUarSR5n1T64iGvL6qzTKVzM83NWs3AjCD5KIkgxrucrJ9GhaBiRQ7Oi
-         DAwQ==
-X-Gm-Message-State: AOAM531vmiIENtre+y1TTeqgrpGTTJaY88OPefCxKJRZ9VN4Zczdsxib
-        2hov/X3hyvy1AOZc/MOGe5m+uEUnwlo=
-X-Google-Smtp-Source: ABdhPJy2skcwBWFlmLpag3PqyiJGmfKgOQcd0rccEJ6WIMmspPSlrolkj4KIrOTfVNBBYxj2cvgK9A==
-X-Received: by 2002:a05:6830:1d87:: with SMTP id y7mr2149071oti.269.1639004325951;
-        Wed, 08 Dec 2021 14:58:45 -0800 (PST)
-Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
-        by smtp.gmail.com with ESMTPSA id i29sm730902ots.49.2021.12.08.14.58.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Dec 2021 14:58:45 -0800 (PST)
-Message-ID: <3478ff65-b1ce-5b5c-2053-90b927b66779@gmail.com>
-Date:   Wed, 8 Dec 2021 16:58:44 -0600
+        id S241128AbhLHXYG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 18:24:06 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62139 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235172AbhLHXYG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 18:24:06 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3CB6BF3FAD;
+        Wed,  8 Dec 2021 18:20:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=00ljlQ4WGQhKScCA9rrXISNIdnsrFKChq/px22
+        tlgW0=; b=cks3QORJAXxlxzHAdLwwjGkn2jDNFyzds1VSwYKiUDmvFIYVWSQ7bg
+        04/eT9GuoXO29MmByrwyqaI4yi3bNyzPx39b+MUIrWLZlooEQyFmJtm2q91PJZiU
+        +lbvK9c4VGFS0u56VfERvdC4rx8W365XL0H4VxzNazamOKK8dY+VM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 23928F3FA4;
+        Wed,  8 Dec 2021 18:20:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6FCF8F3F9F;
+        Wed,  8 Dec 2021 18:20:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v5 8/8] t/fmt-merge-msg: make gpg/ssh tests more specific
+References: <20211130141112.78193-1-fs@gigacodes.de>
+        <20211208163335.1231795-1-fs@gigacodes.de>
+        <20211208163335.1231795-9-fs@gigacodes.de>
+Date:   Wed, 08 Dec 2021 15:20:30 -0800
+In-Reply-To: <20211208163335.1231795-9-fs@gigacodes.de> (Fabian Stelzer's
+        message of "Wed, 8 Dec 2021 17:33:35 +0100")
+Message-ID: <xmqqsfv2wuo1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.2
-Subject: Re: ld/sparse-diff-blame, was What's cooking in git.git (Dec 2021,
- #02; Tue, 7)
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-References: <xmqq8rwv6e0a.fsf@gitster.g>
- <a4968ff2-17c6-faa8-e9be-0c1880e870dd@gmail.com> <xmqqtufiztp9.fsf@gitster.g>
-From:   Lessley Dennington <lessleydennington@gmail.com>
-In-Reply-To: <xmqqtufiztp9.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6FFEA7E4-587D-11EC-A1D0-E10CCAD8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Fabian Stelzer <fs@gigacodes.de> writes:
 
+> All the GPG, GPGSSH and the new GPGSSH_VERIFYTIME tests are redirecing
+> stdout as well as stderr to `actual` and grep for success/failure over
+> the resulting flie. However, no output is printed on stderr and we do
+> not need to include it in the grep. The newer SSH signing based tests
+> are also missing a grep for the merged tag to make sure the merge
+> message is correct.
+>
+> - remove unneccessary 2>&1 redirects
+> - add grep for merged tag to gpgssh* tests
+>
+> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
+> ---
+>  t/t6200-fmt-merge-msg.sh | 21 +++++++++++++--------
+>  1 file changed, 13 insertions(+), 8 deletions(-)
 
-On 12/8/21 1:13 PM, Junio C Hamano wrote:
-> Lessley Dennington <lessleydennington@gmail.com> writes:
-> 
->>> * ld/sparse-diff-blame (2021-12-06) 8 commits
->>>    - blame: enable and test the sparse index
->>>    - diff: enable and test the sparse index
->>>    - diff: replace --staged with --cached in t1092 tests
->>>    - repo-settings: prepare_repo_settings only in git repos
->>>    - test-read-cache: set up repo after git directory
->>>    - commit-graph: return if there is no git directory
->>>    - git: ensure correct git directory setup with -h
->>>    - Merge branch 'vd/sparse-reset' into ld/sparse-diff-blame
->>>    (this branch is used by ds/fetch-pull-with-sparse-index; uses vd/sparse-reset.)
->>>    Teach diff and blame to work well with sparse index.
->>>    Will merge to 'next'?
->>>    source: <pull.1050.v6.git.1638806161.gitgitgadget@gmail.com>
->>
->> This series has been reviewed at different stages by:
->> ...
->> I believe all comments have been addressed (either in the form of a
->> re-roll or a patch or explanation in my reply) and that this branch is
->> ready to merge to 'next'. I have cc'd all reviewers, though, in case there
->> was something I missed.
-> 
-> I think the patches in this series are in good shape.  The other
-> topic this series depends on is already in 'next', so we can mark
-> this for 'next', too.
-> 
-> Note that "explanation in reply" does not count as much as an
-> improved version would.  If the code or the log message puzzled a
-> reviewer during the review, future readers of the code and "git log"
-> will be puzzled the same way.
-> 
-> Thanks.
-> 
-Thank you for the feedback, I will take that into account for future
-series.
+The 4 hunks at the beginning seems to be a clean-up of the existing
+issue, but aren't hunks -162,7, -170,7, -178,7, 187,7 "oops, we
+screwed up in [6/8], and we patch up after the fact"?  
 
-Lessley
+For a new topic not yet in 'next', we'd prefer to pretend to be more
+perfect humans by not deliberatly keeping mistakes made in an
+earlier step, only to be corrected in a later step.
+
+While there may not be any difference in the end-result, it would be
+cleaner and less sloppy to have the 4 hunks to fix the ones before
+the series as a preliminary clean-up step, and the other hunks
+folded into the step that introduced the problem, no?
+
+Thanks.
+
+> diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
+> index 2dd2423643..12a1e62bf0 100755
+> --- a/t/t6200-fmt-merge-msg.sh
+> +++ b/t/t6200-fmt-merge-msg.sh
+> @@ -124,7 +124,7 @@ test_expect_success 'message for merging local branch' '
+>  test_expect_success GPG 'message for merging local tag signed by good key' '
+>  	git checkout main &&
+>  	git fetch . signed-good-tag &&
+> -	git fmt-merge-msg <.git/FETCH_HEAD >actual 2>&1 &&
+> +	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+>  	grep "^Merge tag ${apos}signed-good-tag${apos}" actual &&
+>  	grep "^# gpg: Signature made" actual &&
+>  	grep "^# gpg: Good signature from" actual
+> @@ -133,7 +133,7 @@ test_expect_success GPG 'message for merging local tag signed by good key' '
+>  test_expect_success GPG 'message for merging local tag signed by unknown key' '
+>  	git checkout main &&
+>  	git fetch . signed-good-tag &&
+> -	GNUPGHOME=. git fmt-merge-msg <.git/FETCH_HEAD >actual 2>&1 &&
+> +	GNUPGHOME=. git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+>  	grep "^Merge tag ${apos}signed-good-tag${apos}" actual &&
+>  	grep "^# gpg: Signature made" actual &&
+>  	grep -E "^# gpg: Can${apos}t check signature: (public key not found|No public key)" actual
+> @@ -143,7 +143,7 @@ test_expect_success GPGSSH 'message for merging local tag signed by good ssh key
+>  	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
+>  	git checkout main &&
+>  	git fetch . signed-good-ssh-tag &&
+> -	git fmt-merge-msg <.git/FETCH_HEAD >actual 2>&1 &&
+> +	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+>  	grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual &&
+>  	! grep "${GPGSSH_BAD_SIGNATURE}" actual
+>  '
+> @@ -152,7 +152,8 @@ test_expect_success GPGSSH 'message for merging local tag signed by unknown ssh
+>  	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
+>  	git checkout main &&
+>  	git fetch . signed-untrusted-ssh-tag &&
+> -	git fmt-merge-msg <.git/FETCH_HEAD >actual 2>&1 &&
+> +	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+> +	grep "^Merge tag ${apos}signed-untrusted-ssh-tag${apos}" actual &&
+>  	grep "${GPGSSH_GOOD_SIGNATURE_UNTRUSTED}" actual &&
+>  	! grep "${GPGSSH_BAD_SIGNATURE}" actual &&
+>  	grep "${GPGSSH_KEY_NOT_TRUSTED}" actual
+> @@ -162,7 +163,8 @@ test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'message for merging local tag sign
+>  	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
+>  	git checkout main &&
+>  	git fetch . expired-signed &&
+> -	git fmt-merge-msg <.git/FETCH_HEAD >actual 2>&1 &&
+> +	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+> +	grep "^Merge tag ${apos}expired-signed${apos}" actual &&
+>  	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
+>  '
+>  
+> @@ -170,7 +172,8 @@ test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'message for merging local tag sign
+>  	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
+>  	git checkout main &&
+>  	git fetch . notyetvalid-signed &&
+> -	git fmt-merge-msg <.git/FETCH_HEAD >actual 2>&1 &&
+> +	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+> +	grep "^Merge tag ${apos}notyetvalid-signed${apos}" actual &&
+>  	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
+>  '
+>  
+> @@ -178,7 +181,8 @@ test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'message for merging local tag sign
+>  	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
+>  	git checkout main &&
+>  	git fetch . timeboxedvalid-signed &&
+> -	git fmt-merge-msg <.git/FETCH_HEAD >actual 2>&1 &&
+> +	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+> +	grep "^Merge tag ${apos}timeboxedvalid-signed${apos}" actual &&
+>  	grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual &&
+>  	! grep "${GPGSSH_BAD_SIGNATURE}" actual
+>  '
+> @@ -187,7 +191,8 @@ test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'message for merging local tag sign
+>  	test_config gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
+>  	git checkout main &&
+>  	git fetch . timeboxedinvalid-signed &&
+> -	git fmt-merge-msg <.git/FETCH_HEAD >actual 2>&1 &&
+> +	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
+> +	grep "^Merge tag ${apos}timeboxedinvalid-signed${apos}" actual &&
+>  	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
+>  '
