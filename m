@@ -2,113 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E934BC433EF
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 12:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76538C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 12:51:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233738AbhLHMud (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 07:50:33 -0500
-Received: from mout.gmx.net ([212.227.15.19]:39211 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232041AbhLHMud (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 07:50:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1638967592;
-        bh=JkHT8ovL6BNBpOurtFDONeXWRnU8nQsSyyyctjHqA3s=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=c55/pYjy5U0wLPR20IMeBHBYKTVv3LlDzb4DbizdRwQvdoGdTqNPUa4NXfNjLZ3MO
-         w19heTJcJ4PNvTGK7igpLiImwG+OcWkfhOEqDm4k7J9Z4o53z7zwgKwuQ8cyTbFxm4
-         +kQNyH3IcRfyz3Ll8USyfdpOd8ubHRgAlQTyoL4c=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.17.164.160] ([89.1.212.223]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MFsUv-1mlqSN2cRj-00HRH3; Wed, 08
- Dec 2021 13:46:32 +0100
-Date:   Wed, 8 Dec 2021 13:46:29 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Derrick Stolee <dstolee@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: en/keep-cwd (Was: Re: What's cooking in git.git (Dec 2021, #01;
- Fri, 3))
-In-Reply-To: <CABPp-BGdvOhy_g8vtRogqL2vPkZEtP4+N_5x0rhAWrX9x43WWA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2112081344290.90@tvgsbejvaqbjf.bet>
-References: <xmqqh7bpqhf0.fsf@gitster.g> <CABPp-BGdvOhy_g8vtRogqL2vPkZEtP4+N_5x0rhAWrX9x43WWA@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S233804AbhLHMyy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 07:54:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46518 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232082AbhLHMyy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 07:54:54 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40B93C061746
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 04:51:22 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id r25so7985522edq.7
+        for <git@vger.kernel.org>; Wed, 08 Dec 2021 04:51:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=5dxXYK1jqdPAz6ggl/aI0MQuuVd4zhmX6EypEmrfH9A=;
+        b=ntV76uerX/iibGNCIx4/L+dGrxu6FkrCQDCQ6m/QhCWR3gbLssKnKFftSe4R8c4Gy/
+         AqehwccR5ImwXlaoXz61CEDig0Hgp9ie0kHQXaFmVlMaaqUjhe5a1bVq6sUy2bgPE6PJ
+         Hk/lgy/YRM+0vtqLMIXFyhDea3VaPw5N76t3lmwiWUUEN7FC6OHuanWbcZQUFI9Ej/4Q
+         G/MAXJVkHJjfftpXPnzgHss8J624GRhSyoA/iJDV2cc/JIe3hDSunpoSW7DuuCx9OV75
+         xEC8DoDoxm41o67tA6sESskKuyHMaPc94vUIN+aSObotnamqkWlK3TD25yGQmXwmzYQ0
+         fWEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=5dxXYK1jqdPAz6ggl/aI0MQuuVd4zhmX6EypEmrfH9A=;
+        b=Y8QW7luasGMeoP2+kWPtofGLeoWO7PCEXAoNfvAwBW1UI50Ekk+We5uX2g0gF9l044
+         wAZ3xDbKBO5B5QLQvNUVEgqYhtpeUA80VuHNmjdPIBTPt4Pg4ttkexzAbzcfnANrTp5O
+         7t4qrdJ0ujZ3QDuPO+fFICFYPljFEG3JDJXCDD7u2cTwT/KHVVaai+q9oaRjhnVVwYWs
+         nr1p21IBIUQuDWpxmsazY3ztF5pa0AJgY6mWMVYNziPGMGd53eUnw6fOoR8aV4W3VeBp
+         xVH0QOUpWCGiKx/djJLLY/VI3FO7sgfxP+AYd9jSN7S2wi1CDACfVFX3xpQDQloALjXL
+         UgHA==
+X-Gm-Message-State: AOAM532QWmHthYy+rdev1+PC4+Ir4+AVGObGBB19cyPM8t7KSAO1HKS7
+        z6GxGBjZrPzXBHIpTtJeK+g=
+X-Google-Smtp-Source: ABdhPJxzE0B+PZnc3lLkXbsgL18SrifkfEzoS5IyqfXEkIKO8XATUGMGfK+h0MosR3tGcU7DN8afug==
+X-Received: by 2002:a17:907:3d01:: with SMTP id gm1mr7326957ejc.219.1638967879319;
+        Wed, 08 Dec 2021 04:51:19 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id j17sm2056463edj.0.2021.12.08.04.51.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Dec 2021 04:51:18 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1muwPm-001QKf-CL;
+        Wed, 08 Dec 2021 13:51:18 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: errno oversight
+Date:   Wed, 08 Dec 2021 13:47:51 +0100
+References: <CAFQ2z_NHXKss4LVBAFVpE7LFXt2OeOz9P9wi-z8riwHXWDb28w@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <CAFQ2z_NHXKss4LVBAFVpE7LFXt2OeOz9P9wi-z8riwHXWDb28w@mail.gmail.com>
+Message-ID: <211208.86sfv3l0op.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:x4dZB1P7ESLQVRQwhr3RJGJavSSS1q2GBm+hQf1jEtXPnuA+qBq
- 959PhwG9elT7o2wL5FyTMCncXsVD3g1il44iPYtG5SFalSL0k7wPXkL00WZPO1BlGAvYiil
- yyFivHP/95UxCdIvsRmmosm7ToTnJjsq/buE6m9OiUpvcOhdACrJyicf676ca42S+Mn4dUL
- 7KbVsPO1Vfsu3yYCVsfkQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xUK5S40cCnA=:HLapssCbPvaQ0H0UJcyy1c
- 5ZTky9Yq7npK7+33LIhVroxmUYzSTbHdyJS3FnMAmgmI3eNWWfbsqcnBDBtrjnINygw4YMseo
- VttKtVB4GKA8f2Fcn1TcVfXlePnyxapaUcgbeOyDatHFM1m2zQ4n7RF3u1CZRpfVHma4KJC+P
- swpgkmfasTCK4KgM7sGd+1aKkQqVwUSPrMkWhKrwIUrG6030F79fXUTTpUZdUsyMH4g7cuXij
- KZGQ7XYt5/kUGaJiO1NuBj2LbdGr/fHQz9EFSUhuIKlI4dC1LbhWqUNLv1fqyluXFk1D1Df30
- c0MMoBHGIVr3zFw6faiwrj80L8kxNTkHNDpvX9jxBEDV4yxuzgIZND5xNqpDhVWrEkZbt6AGz
- ce//1OEpy6Bleni9qWN8cnxRz6YJFZT3BKlvyvkdG7IKanchYwpY/D/bIWi4b5N2lcull+GKD
- Fr92zKWfVtnMFJiwcbwkM4UWAyZqFUt+rgHVSIxUg9ZjgKv1+diD/cio+yO6OkIkztY2UHQ5L
- 2cKSwCgJzLJE9lRfHibdQf5un40JWE7xRuevX1NuCYPLqw8mAPJir/HUsiQHDyyDvcJC+42LB
- vHm6X6hhFVi0Tj/dEoc3C8NEYVrXjYzAWYABtBiBvUgPg4IOnRfbPrEtB7OSh7TJs5O0QgR5U
- 5gkKtu7VJP5GFfXVwHqVUjJEBRj0ONwZIKaOYcqDXZoykB99hdR8BpZBaG9jnc8qKCjgPO4Mr
- 3AeByCp87zlmYsG+MMKecsOVxMGHn20pxRwf+M5CQiWQ4jMa37oWCezOJrRnstig3+KHFHSms
- MxEwCsxSCAorNmkvVhcN8qO0lmKPgsEfWvX7oPlshFB/cP6k20Qp82PdRz5SHAxXcEGY1Pb/p
- EsTCtHgPl5s8qdo9AVyX811nJHHGPdPALpyqrf/8Te2GEMd0d13/eCbPw1nAWcVn2ZOROtp/t
- C95MZONUuqEt47FnZvMz22NjrAjsTHfk4QCOX576xZ3BBdBRJHUFku0bGClWGuglBLGGNoNFk
- hcoE4eUZ1jh4HhR2fvCCRFy14ACQS3vgOnV/nb7Vmi5CEvD3oemhcqjzVJJsz9/qLNdaCHANf
- uXdSpYBeYxeKts=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
 
-On Mon, 6 Dec 2021, Elijah Newren wrote:
+On Wed, Dec 08 2021, Han-Wen Nienhuys wrote:
 
-> On Mon, Dec 6, 2021 at 5:57 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > * en/keep-cwd (2021-12-01) 11 commits
-> >  - t2501: simplify the tests since we can now assume desired behavior
-> >  - dir: new flag to remove_dir_recurse() to spare the original_cwd
-> >  - dir: avoid incidentally removing the original_cwd in remove_path()
-> >  - stash: do not attempt to remove startup_info->original_cwd
-> >  - rebase: do not attempt to remove startup_info->original_cwd
-> >  - clean: do not attempt to remove startup_info->original_cwd
-> >  - symlinks: do not include startup_info->original_cwd in dir removal
-> >  - unpack-trees: add special cwd handling
-> >  - unpack-trees: refuse to remove startup_info->original_cwd
-> >  - setup: introduce startup_info->original_cwd
-> >  - t2501: add various tests for removing the current working directory
-> >
-> >  Many git commands that deal with working tree files try to remove a
-> >  directory that becomes empty (i.e. "git switch" from a branch that
-> >  has the directory to another branch that does not would attempt
-> >  remove all files in the directory and the directory itself).  This
-> >  drops users into an unfamiliar situation if the command was run in
-> >  a subdirectory that becomes subject to removal due to the command.
-> >  The commands have been taught to keep an empty directory if it is
-> >  the directory they were started in to avoid surprising users.
+> In refs.c in origin/next and origin/seen, we have the following fragment:
+
+It's in "master".
+
+>                    if (refs_read_raw_ref(refs, refname, oid, &sb_refname,
+>                                       &read_flags, failure_errno)) {
+>                         *flags |= read_flags;
+>                         if (errno)
+>                                 *failure_errno = errno;
 >
-> Very nicely written summary.
->
-> >
-> >  Needs review.
-> >  There are some comments on earlier rounds; the latest one needs a
-> >  serious review or at least Acks from past commentors.
-> >  source: <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com>
->
-> If it helps, there are two parts to the review:
-> - Do we want this feature?
+> overwriting failure_errno looks like an oversight?
 
-Not that you need yet another "Yay" in favor of this, but... yes, I think
-we very much want this feature. (I even went so far as to adopt the idea
-into the Scalar patch series as of its fifth iteration.)
+This is from my ef18119dec8 (refs API: add a version of
+refs_resolve_ref_unsafe() with "errno", 2021-10-16).
 
-Ciao,
-Dscho
+I don't see the bug here, overwriting *failure_errno is the point of
+that variable. We're keeping the right errno value right after a
+failure, and passing it up to our caller.
