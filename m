@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E865C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 14:58:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92CFDC433FE
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 14:58:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235579AbhLHPBr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 10:01:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48306 "EHLO
+        id S235619AbhLHPBs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 10:01:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235590AbhLHPBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 10:01:41 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53D50C061746
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 06:58:09 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id t9so4543040wrx.7
+        with ESMTP id S235592AbhLHPBm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 10:01:42 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B4EC061A32
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 06:58:10 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id p18so1959807wmq.5
         for <git@vger.kernel.org>; Wed, 08 Dec 2021 06:58:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0i+OqEyIp2gUhDcYmneCi2OS4t/v4DnKLlcRCSms98Y=;
-        b=R3En04CuYau5t2Rq2bF4gJTHLso294UqJ1oFQJmYW8gjiJ2OzKy1mMdOIaphVj4Kmd
-         or5o1KMeTIJA1XScywu9S/e7+yQ4HU/Lq+qJteEUEbzmYwBeVFuKpHoysjh0ZmK2VJNj
-         Axlk3yiShgsP3QYIuWuO5f/WCde2UOgKEbLwzWSq7NoqqXXSebdQDGqVU3RBOzPVuxXm
-         o/O3s37o/IZ2wlXpksBhz44KRBEtJ5UZNkIX6xGmkAmNAfkxLs/hX78EqTLFwGP+VDaP
-         P7gBs7zQ02HDyNgG7I9gbNFFSMghoaixC0H8wQ5RwCV9N9lxATO0XdPHoZRyTo7ojF2j
-         LVKQ==
+        bh=oAz1BXO35jPyviQ4+93z2pC8F5URTOyYHE54QL5vpXg=;
+        b=G4Hdc2Y6Hst/1wmeSZlsjpRJToFcXc5jaJoQe/tKu6xdQlW5CdDzXpsAoxG2jPpe9J
+         z8i/y96DKMIXsdzEm6b4tPT5XlmtwiIwr9yel/3kyCb3YzHSifWBJTnpwEwKnf86wT7r
+         1FGJgwrz4Pn8m9VMF7O0gk0QAVET612x++H9jvVzT/FTO2S/9T6IMZRLcUzYsV8xadj3
+         esHAE86FDYeuGMpoAyQLo4p64KWzWorkSs3Cv9kCReYR3s+zMiC6iTpfPYJGCYsB3pVk
+         /zBW1TRLzjqf0AJPhAfoqWLYiRY15FXph8BqbTAEA+/a5KO5kledHh0lzpFYeyMgpg6D
+         Fhgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0i+OqEyIp2gUhDcYmneCi2OS4t/v4DnKLlcRCSms98Y=;
-        b=HACN7gsbDywVyq7glw++iiHdX7LYFDc4Ik4W28FtQgBwlYbzW72zAEFQ6BXUfjYqWT
-         5umqjQVCA4zHHQg3HO4Rgxpu1UYv5/9Wb3aSUV2qyyqLo10Uv4rZQrGYMJSi2FpN6iRF
-         A/O4QgedeC/c3gl3adLsAo9fA34T3zN9MPHHeaxgrljtvwxhXbkg4onGsg5qaT6/UvDk
-         7cmfo+h3Bk02eUEx7g7EA+1BGhJbOQ1pnjr16Jo/T4qTtzsxzk46+fJxoq4BTcUfd59a
-         UADe2p2VdWLwTJAcoCmzg7RptPSjghX2AEOUR4vmMm0WZVYdKyNHg+o5/VlDsM77hRzc
-         xAQQ==
-X-Gm-Message-State: AOAM532jmuJlhE6kn/wuUCAwdrIMbLLQ++tMA4/fdyL/3G48mVPBh+7i
-        Uz1wcsSlr+Q30QQ0NWq5tGDnHWL97RM=
-X-Google-Smtp-Source: ABdhPJzlMUH0RwmA3/785ibybdnbzuCAxzl8nprjvHufW8yeSyoajd/Rj23xFqrv3MXHGfJpMynOgA==
-X-Received: by 2002:a05:6000:47:: with SMTP id k7mr58180542wrx.485.1638975487675;
-        Wed, 08 Dec 2021 06:58:07 -0800 (PST)
+        bh=oAz1BXO35jPyviQ4+93z2pC8F5URTOyYHE54QL5vpXg=;
+        b=FNPwtIop/5/f3XHf0KhvxGcQA0CLBvEm3kaJ++4A7mQo5DWq/stGnRcJeeLsqewknA
+         yGpU2ewnDm41HwjqF0/YuXfuIMJCTFIRFluIXywPP27/jGjSQfSJNGNUA/WdT/0XF4DB
+         D/n1pmGFtt7+aovd9sciyipcKFwDw+ECNE9qzqaO4VTcxceKWNfRoVdd5rBO00YKEQeB
+         Q6iO9B7YO6/0tEyHVpe+aQqqTU3TN9q9Jm3Rp/P0m4axUt1rDsno/kj0sDM4p+D2P+W/
+         wmO1zNlS+eQ8gp7Hc60rzGVRBbnrlrL9YkC5mGM1U/6AwKZLevhIsSEWWAryI1izouh4
+         iw5Q==
+X-Gm-Message-State: AOAM530WsCdsrGW3ueNjR/Ss2mZ57kIxJ4QgY1zfFOrXPWmLDmZzWdSI
+        iLuJsL+3kzLsCu4vNetp5mpyVmk7vKw=
+X-Google-Smtp-Source: ABdhPJxjS77Ocmqnnw48udf3Vvq5Fdbc3W3W9diHF4uFh2QLC9Iyp68u89t90oa5zG3c5h7H7qI9MA==
+X-Received: by 2002:a1c:4d8:: with SMTP id 207mr16746266wme.23.1638975488465;
+        Wed, 08 Dec 2021 06:58:08 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g5sm3802615wri.45.2021.12.08.06.58.07
+        by smtp.gmail.com with ESMTPSA id b197sm2906225wmb.24.2021.12.08.06.58.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Dec 2021 06:58:07 -0800 (PST)
-Message-Id: <32ffa98c1bcc0350fbbf6ce8c1bec5827bcb2594.1638975482.git.gitgitgadget@gmail.com>
+        Wed, 08 Dec 2021 06:58:08 -0800 (PST)
+Message-Id: <341fe183c18ee28b459ba26f2c8c369d9367c328.1638975482.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
 References: <pull.1049.git.1633082702.gitgitgadget@gmail.com>
         <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 08 Dec 2021 14:57:53 +0000
-Subject: [PATCH v2 06/14] reset_head(): remove action parameter
+Date:   Wed, 08 Dec 2021 14:57:54 +0000
+Subject: [PATCH v2 07/14] create_autostash(): remove unneeded parameter
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,149 +74,99 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-The only use of the action parameter is to setup the error messages
-for unpack_trees(). All but two cases pass either "checkout" or
-"reset". The case that passes "reset --hard" would be better passing
-"reset" so that the error messages match the builtin reset command
-like all the other callers that are doing a reset. The case that
-passes "Fast-forwarded" is only updating HEAD and so the parameter is
-unused in that case as it does not call unpack_trees(). The value to
-pass to setup_unpack_trees_porcelain() can be determined by checking
-whether flags contains RESET_HEAD_HARD without the caller having to
-specify it.
+The default_reflog parameter of create_autostash() is passed to
+reset_head(). However as creating a stash does not involve updating
+any refs the parameter is not used by reset_head(). Removing the
+parameter from create_autostash() simplifies the callers.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/rebase.c | 14 +++++++-------
- reset.c          |  5 +++--
- reset.h          |  2 +-
- sequencer.c      |  3 +--
- 4 files changed, 12 insertions(+), 12 deletions(-)
+ builtin/merge.c  | 6 ++----
+ builtin/rebase.c | 8 ++++----
+ sequencer.c      | 5 ++---
+ sequencer.h      | 3 +--
+ 4 files changed, 9 insertions(+), 13 deletions(-)
 
+diff --git a/builtin/merge.c b/builtin/merge.c
+index ea3112e0c0b..cb0e4e22258 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1565,8 +1565,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 
+ 		if (autostash)
+ 			create_autostash(the_repository,
+-					 git_path_merge_autostash(the_repository),
+-					 "merge");
++					 git_path_merge_autostash(the_repository));
+ 		if (checkout_fast_forward(the_repository,
+ 					  &head_commit->object.oid,
+ 					  &commit->object.oid,
+@@ -1637,8 +1636,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 
+ 	if (autostash)
+ 		create_autostash(the_repository,
+-				 git_path_merge_autostash(the_repository),
+-				 "merge");
++				 git_path_merge_autostash(the_repository));
+ 
+ 	/* We are going to make a new commit. */
+ 	git_committer_info(IDENT_STRICT);
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index f5c37b7d4a5..2e5a535b54e 100644
+index 2e5a535b54e..832e6954827 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -583,7 +583,7 @@ static int move_to_original_branch(struct rebase_options *opts)
- 		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
- 	strbuf_addf(&head_reflog, "rebase finished: returning to %s",
- 		    opts->head_name);
--	ret = reset_head(the_repository, NULL, "", opts->head_name,
-+	ret = reset_head(the_repository, NULL, opts->head_name,
- 			 RESET_HEAD_REFS_ONLY,
- 			 orig_head_reflog.buf, head_reflog.buf,
- 			 DEFAULT_REFLOG_ACTION);
-@@ -674,7 +674,7 @@ static int run_am(struct rebase_options *opts)
- 		free(rebased_patches);
- 		strvec_clear(&am.args);
+@@ -1658,10 +1658,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	if (repo_read_index(the_repository) < 0)
+ 		die(_("could not read index"));
  
--		reset_head(the_repository, &opts->orig_head, "checkout",
-+		reset_head(the_repository, &opts->orig_head,
- 			   opts->head_name, 0,
- 			   "HEAD", NULL, DEFAULT_REFLOG_ACTION);
- 		error(_("\ngit encountered an error while preparing the "
-@@ -820,7 +820,7 @@ static int checkout_up_to_date(struct rebase_options *options)
- 	strbuf_addf(&buf, "%s: checkout %s",
- 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
- 		    options->switch_to);
--	if (reset_head(the_repository, &options->orig_head, "checkout",
-+	if (reset_head(the_repository, &options->orig_head,
- 		       options->head_name, RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
- 		       NULL, buf.buf, DEFAULT_REFLOG_ACTION) < 0)
- 		ret = error(_("could not switch to %s"), options->switch_to);
-@@ -1272,7 +1272,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		rerere_clear(the_repository, &merge_rr);
- 		string_list_clear(&merge_rr, 1);
+-	if (options.autostash) {
+-		create_autostash(the_repository, state_dir_path("autostash", &options),
+-				 DEFAULT_REFLOG_ACTION);
+-	}
++	if (options.autostash)
++		create_autostash(the_repository,
++				 state_dir_path("autostash", &options));
++
  
--		if (reset_head(the_repository, NULL, "reset", NULL, RESET_HEAD_HARD,
-+		if (reset_head(the_repository, NULL, NULL, RESET_HEAD_HARD,
- 			       NULL, NULL, DEFAULT_REFLOG_ACTION) < 0)
- 			die(_("could not discard worktree changes"));
- 		remove_branch_state(the_repository, 0);
-@@ -1290,7 +1290,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 
- 		if (read_basic_state(&options))
- 			exit(1);
--		if (reset_head(the_repository, &options.orig_head, "reset",
-+		if (reset_head(the_repository, &options.orig_head,
- 			       options.head_name, RESET_HEAD_HARD,
- 			       NULL, NULL, DEFAULT_REFLOG_ACTION) < 0)
- 			die(_("could not move back to %s"),
-@@ -1759,7 +1759,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 
- 	strbuf_addf(&msg, "%s: checkout %s",
- 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
--	if (reset_head(the_repository, &options.onto->object.oid, "checkout", NULL,
-+	if (reset_head(the_repository, &options.onto->object.oid, NULL,
- 		       RESET_HEAD_DETACH | RESET_ORIG_HEAD |
- 		       RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
- 		       NULL, msg.buf, DEFAULT_REFLOG_ACTION))
-@@ -1777,7 +1777,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		strbuf_addf(&msg, "rebase finished: %s onto %s",
- 			options.head_name ? options.head_name : "detached HEAD",
- 			oid_to_hex(&options.onto->object.oid));
--		reset_head(the_repository, NULL, "Fast-forwarded", options.head_name,
-+		reset_head(the_repository, NULL, options.head_name,
- 			   RESET_HEAD_REFS_ONLY, "HEAD", msg.buf,
- 			   DEFAULT_REFLOG_ACTION);
- 		strbuf_release(&msg);
-diff --git a/reset.c b/reset.c
-index 3537de91f65..7841b2b2a02 100644
---- a/reset.c
-+++ b/reset.c
-@@ -8,7 +8,7 @@
- #include "tree.h"
- #include "unpack-trees.h"
- 
--int reset_head(struct repository *r, struct object_id *oid, const char *action,
-+int reset_head(struct repository *r, struct object_id *oid,
- 	       const char *switch_to_branch, unsigned flags,
- 	       const char *reflog_orig_head, const char *reflog_head,
- 	       const char *default_reflog_action)
-@@ -23,7 +23,7 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
- 	struct lock_file lock = LOCK_INIT;
- 	struct unpack_trees_options unpack_tree_opts = { 0 };
- 	struct tree *tree;
--	const char *reflog_action;
-+	const char *action, *reflog_action;
- 	struct strbuf msg = STRBUF_INIT;
- 	size_t prefix_len;
- 	struct object_id *old_orig = NULL, oid_old_orig;
-@@ -50,6 +50,7 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
- 	if (refs_only)
- 		goto reset_head_refs;
- 
-+	action = reset_hard ? "reset" : "checkout";
- 	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
- 	unpack_tree_opts.head_idx = 1;
- 	unpack_tree_opts.src_index = r->index;
-diff --git a/reset.h b/reset.h
-index 12f83c78e28..2daec804259 100644
---- a/reset.h
-+++ b/reset.h
-@@ -12,7 +12,7 @@
- #define RESET_HEAD_REFS_ONLY (1<<3)
- #define RESET_ORIG_HEAD (1<<4)
- 
--int reset_head(struct repository *r, struct object_id *oid, const char *action,
-+int reset_head(struct repository *r, struct object_id *oid,
- 	       const char *switch_to_branch, unsigned flags,
- 	       const char *reflog_orig_head, const char *reflog_head,
- 	       const char *default_reflog_action);
+ 	if (require_clean_work_tree(the_repository, "rebase",
+ 				    _("Please commit or stash them."), 1, 1)) {
 diff --git a/sequencer.c b/sequencer.c
-index ea96837cde3..3d3c3fbe305 100644
+index 3d3c3fbe305..5c65f5f1ac5 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -4131,8 +4131,7 @@ void create_autostash(struct repository *r, const char *path,
- 			    path);
+@@ -4094,8 +4094,7 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
+ 	return -1;
+ }
+ 
+-void create_autostash(struct repository *r, const char *path,
+-		      const char *default_reflog_action)
++void create_autostash(struct repository *r, const char *path)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct lock_file lock_file = LOCK_INIT;
+@@ -4132,7 +4131,7 @@ void create_autostash(struct repository *r, const char *path,
  		write_file(path, "%s", oid_to_hex(&oid));
  		printf(_("Created autostash: %s\n"), buf.buf);
--		if (reset_head(r, NULL, "reset --hard",
--			       NULL, RESET_HEAD_HARD, NULL, NULL,
-+		if (reset_head(r, NULL, NULL, RESET_HEAD_HARD, NULL, NULL,
- 			       default_reflog_action) < 0)
+ 		if (reset_head(r, NULL, NULL, RESET_HEAD_HARD, NULL, NULL,
+-			       default_reflog_action) < 0)
++			       "") < 0)
  			die(_("could not reset --hard"));
  
+ 		if (discard_index(r->index) < 0 ||
+diff --git a/sequencer.h b/sequencer.h
+index 05a7d2ba6b3..da64473636b 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -197,8 +197,7 @@ void commit_post_rewrite(struct repository *r,
+ 			 const struct commit *current_head,
+ 			 const struct object_id *new_head);
+ 
+-void create_autostash(struct repository *r, const char *path,
+-		      const char *default_reflog_action);
++void create_autostash(struct repository *r, const char *path);
+ int save_autostash(const char *path);
+ int apply_autostash(const char *path);
+ int apply_autostash_oid(const char *stash_oid);
 -- 
 gitgitgadget
 
