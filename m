@@ -2,158 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8899DC433EF
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 10:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC866C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 10:30:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231633AbhLHKcB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 05:32:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41116 "EHLO
+        id S231649AbhLHKd4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 05:33:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231646AbhLHKbx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 05:31:53 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8164C061746
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 02:28:20 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id y13so6607596edd.13
-        for <git@vger.kernel.org>; Wed, 08 Dec 2021 02:28:20 -0800 (PST)
+        with ESMTP id S230142AbhLHKd4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 05:33:56 -0500
+Received: from mail-ua1-x92c.google.com (mail-ua1-x92c.google.com [IPv6:2607:f8b0:4864:20::92c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81A62C061746
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 02:30:24 -0800 (PST)
+Received: by mail-ua1-x92c.google.com with SMTP id w23so3837038uao.5
+        for <git@vger.kernel.org>; Wed, 08 Dec 2021 02:30:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=09AtdlPZdmjIyqWETusDxhHEvHucf841Bm5BI88NJso=;
-        b=pTq7iGYDVHkyZpy7x66DM0vmxw8A7jkd4s80fgOnZn/gXTI3LRD8/A4SXCb4Dy9574
-         psKOb3XYL8xeA4taSLyAds7Ze8hDioG5skUjqJvhm3LTtMh/I657TSTjpOLe+s41iOdb
-         FvtYYsnbLUEHuDJO92gNGbLpPZNDoVnZgtTihjlPYc9wpjDON5Kq5Qxxo4ETuKLsdah2
-         x/WG4BRUjOpu3KLD7nDwIBmQEYQDUG02/igJV3Zugt+1Qcdan1FrZrzhnMOTcwa1gAUy
-         bPJV3Z3ono+OhT+MJTuRt+fiTYjWUjnT9hW3SiIxudYRakkfPI+BnInPvwTnHbSRrQWt
-         uqsA==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=iGoU8bZy2KDbwX+wIqnoWCiQwut544Ps/R37a0f0FTU=;
+        b=apAe1OR7mT8u0YShatHy6UgJAjW4jQPfufHCtmJNnILrk0yuLGlncc/o7oa6F+KUe3
+         XCFsQZVcopPH9x4SAoN0qS9VfBMN5SiD1uaZ42lvfKb5z+ULa93Jstb6u371XY1OHVjj
+         DwuzSmVp3U6S0i6NPwg8iOrQxG/tmZG9M2qlLk7VPvKA0QfU0McezOO2IxJp6zCR3HKk
+         I3qy3ngNMgM4TBeVMfoUaw7OA65NvtvMpD+UKpRQB6VttSX/hzsniekYT8LREW2WaD53
+         ozuWMwZHLbyD4PrCcxn3xUKb3IUTb/x/oA/wZXS1sX4hX25/S8sU3PJB8qGl/DDdD1uQ
+         lYJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=09AtdlPZdmjIyqWETusDxhHEvHucf841Bm5BI88NJso=;
-        b=4TFW5AP1Jdx2b7v5Ej/eRPlT1T71GtEe2tvTTIWw3AwqztNyevcQpNjUG5X2emgYi4
-         V1yo0ziSXwV0nDgS+hcDciXs38P/DowSeQZ3AEU86208vOLJLmidmovUeh4+e1Brkw7+
-         cyAtX8gyCCXE1cwoS+RsqJCVTIeTgRFiDJvAJhtKMvT8LmT1n+l3JYFzSla1WKpqDzIU
-         Cdv62yjdHC0SGNm1I96xHKmlLRBPsfHoVYEYzkWHy1ngcMh2B+u/a8+XE0r0Iu7lsK3H
-         wuLwZEob8FnbjLlCOd7uHdkkC6ZEasNU2RV0nMZOy4K9IeSPRcBnl27dBufi4MOOOFkW
-         K7KA==
-X-Gm-Message-State: AOAM530iBHbaQ+mpI9VIGE1oD/E0Nb4kTjfmbUwT2ozcNZqwaxXUjyXV
-        rX+br+7wm+uVnyqKqwLyEa2kqh38P7UZ3w==
-X-Google-Smtp-Source: ABdhPJz0evvirk+D9SahhCyxFA4dxEZoJjpuGSj7M2Ihj9ogdISB7t9sxUPbJjfct/OuK3hRz0tDyQ==
-X-Received: by 2002:a05:6402:34cf:: with SMTP id w15mr17391346edc.63.1638959299114;
-        Wed, 08 Dec 2021 02:28:19 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id w22sm1887093edd.49.2021.12.08.02.28.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Dec 2021 02:28:18 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1muuBM-001Mzu-U7;
-        Wed, 08 Dec 2021 11:28:16 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Elijah Newren <newren@gmail.com>,
-        Glen Choo <chooglen@google.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 00/11] Avoid removing the current working directory,
- even if it becomes empty
-Date:   Wed, 08 Dec 2021 11:23:56 +0100
-References: <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com>
- <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com>
- <aa85e35d-143e-93e4-f54b-146b38dd4b88@gmail.com>
- <211207.86tufkmfc2.gmgdl@evledraar.gmail.com>
- <31bef4f9-2313-83a2-14e9-4ed1cc73a59c@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <31bef4f9-2313-83a2-14e9-4ed1cc73a59c@gmail.com>
-Message-ID: <211208.86a6hbmlvj.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=iGoU8bZy2KDbwX+wIqnoWCiQwut544Ps/R37a0f0FTU=;
+        b=qFC8mJvsMDddN12SG7HdeAr/hybddqss76g+WNeDHAzAki+0wI6wjZMZaDWXx02QEv
+         xwtCtcupYSw0XCBpU1x9S3S0N0nwr/ibF6zz+/JK4NRkWl2KTtMBiw/eLoz9vJsvmjrW
+         nWt0yBc/83WFKYCqFM6EuzgApw4JGJeU4KGYuiNC9ICON9H+a6INvlQUjDaCwAh7PGrQ
+         mEYvSgIAsVaKe/x66/bB0SApNRcmD0NrVf9/rcnx96+NOT7pkvDsAS9iLV6YgNzmpqNd
+         i6m6SmpIQTCPpt5DAffA4eDAk7wRkNe3A0uhDgUKehDXNr4bATUr8SKVr5yJgDzsbyPd
+         0NjA==
+X-Gm-Message-State: AOAM533GHE3XELnSj5wttT1NNBebGBlYpXoJPhAYPztnQgyGaCD5lt4Q
+        hlMXfvBqlZSAiYKwvljWE+ZSQfD6n+CrJ+mcfcK20g==
+X-Google-Smtp-Source: ABdhPJzJl5EH+rbcco1INcImI9OryAe78frvkJcxVqLTJGEqI1XEwZ8//W9kHBhiZsCU4at50uKBecfufgk59SefI1U=
+X-Received: by 2002:ab0:4465:: with SMTP id m92mr7398067uam.47.1638959423490;
+ Wed, 08 Dec 2021 02:30:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
+ <8deccc3a1dff7e4f7d613fa63d2781fd1f11f841.1638899124.git.gitgitgadget@gmail.com>
+ <xmqqlf0w5bbc.fsf@gitster.g> <YbAVOtYXA1Hf9EtJ@coredump.intra.peff.net> <xmqq4k7j68eg.fsf@gitster.g>
+In-Reply-To: <xmqq4k7j68eg.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 8 Dec 2021 11:30:11 +0100
+Message-ID: <CAFQ2z_NuOy+-pfSoNAYjJhS9jZCYOfoFue10=k=iyPVsPYrB3g@mail.gmail.com>
+Subject: Re: [PATCH 10/10] reftable: make reftable_record a tagged union
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Dec 07 2021, Derrick Stolee wrote:
-
-> On 12/7/2021 1:30 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Tue, Dec 07 2021, Derrick Stolee wrote:
->>> test_expect_success 'remove cwd' '
->>> 	init_repos &&
->>>
->>> 	test_sparse_match git sparse-checkout set deep/deeper1/deepest &&
->>> 	for repo in sparse-checkout sparse-index
->>> 	do
->>> 		(
->>> 			cd $repo/deep/deeper1 &&
->>> 			test-tool getcwd >"$TRASH_DIRECTORY/expect" &&
->>> 			git sparse-checkout set &&
->>>
->>> 			test-tool getcwd >"$TRASH_DIRECTORY/actual" &&
->>> 			test_sparse_match git status --porcelain &&
->>> 			cd "$TRASH_DIRECTORY" &&
->>> 			test_cmp expect actual
->>> 		)
->>> 	done
->>> '
->>>
->>> Please do not let this test delay the advancement of this series. As we
->>> find these kinds of issues, we can fix them one-by-one as needed.
->>=20
->> Not to pile on about "the core idea", just a question while this is
->> fresh in your mind:
->>=20
->> I think that those cases would per [1] be ones where a more isolated
->> change of reading the $PWD from the environment would make all those
->> commands work as expected. Or would the "$TRASH_DIRECTORY" also
->> otherwise go away in this examples?
+On Wed, Dec 8, 2021 at 5:13 AM Junio C Hamano <gitster@pobox.com> wrote:
+> >> error: ISO C99 doesn't support unnamed structs/unions [-Werror=3Dpedan=
+tic]
+> >
+> > Hmm. It's interesting that the regular DEVELOPER=3D1 doesn't catch this=
+.
+> > It's because we don't specify -std there, and newer gcc defaults to
+> > gnu17 (unnamed unions appeared in c11, I think). I wonder if it would b=
+e
+> > helpful to teach config.mak.dev to pass -std=3Dc99.
 >
-> I have read this message and the one you are referring two twice and
-> I cannot understand what you are trying to say here.
+> FWIW, I use -std=3Dgnu99 as our Makefile suggests.
 
-I'm asking whether the WIP patch I posted at
-https://lore.kernel.org/git/211124.86sfvld4cl.gmgdl@evledraar.gmail.com/
-would partially/entirely solve those issues you mentiened (but I see
-Elijah has a side-reply saying it might not in either approach).
+I understand that the default build should be lenient rather than
+strict for portability reasons. However, it would be good if the CI
+was strict with this.
 
->> Anyway, just per [1] and the potential future follow-ups is this (I
->> don't think so, but maybe I'm wrong) or other examples you have things
->> that specifically need the "retain the getcwd()" part of this series?
->>=20
->> Or just (as I think would be the case with that "git status") to not
->> have setup.c die quite as eagerly as it does now when getcwd() fails,
->> but it can find its way back to the .git via the environment's $PWD?
->
-> Are you implying that Git will be the only thing broken by a missing
-> directory after we leave in this state? I doubt that is true, and we
-> should be good citizens here by leaving the directory around.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-No, I'm just trying to clarify which specific thing we'd need in
-this/other cases to fix things *in git*. Because...
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
->> There *are* definitely cases where not-just-that-setup.c change but also
->> the "don't remove the CWD" is an inherently better & more complete
->> solution. But I think that's mainly to do with 3rd party shellscripts &
->> other programs outside of our control.
->
-> Exactly. We should take this change because it is valuable to not cause
-> a confusing error in other tools.
+Registergericht und -nummer: Hamburg, HRB 86891
 
-...maybe we should fix things for other tools too, but for any future
-development it helps to know what was needed to fix what issues.
+Sitz der Gesellschaft: Hamburg
 
->> I'm assuming that you were working with this on Windows, where
->> presumably there's fewer/none such shellscripts you rely on, but that's
->> now two presumes in a row, so... :)
->
-> I'm working on Ubuntu, where I do all of my Git development unless there
-> is a platform specific reason to do so.
-
-*nod*, badly assumed then :)
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
