@@ -2,152 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C92E2C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 00:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB425C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 00:35:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231921AbhLHAUs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Dec 2021 19:20:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44102 "EHLO
+        id S238515AbhLHAjQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Dec 2021 19:39:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbhLHAUr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Dec 2021 19:20:47 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9721C061574
-        for <git@vger.kernel.org>; Tue,  7 Dec 2021 16:17:16 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id u11-20020a17090a4bcb00b001a6e77f7312so529746pjl.5
-        for <git@vger.kernel.org>; Tue, 07 Dec 2021 16:17:16 -0800 (PST)
+        with ESMTP id S229503AbhLHAjP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Dec 2021 19:39:15 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF578C061574
+        for <git@vger.kernel.org>; Tue,  7 Dec 2021 16:35:44 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id p8-20020a17090a748800b001a6cceee8afso582083pjk.4
+        for <git@vger.kernel.org>; Tue, 07 Dec 2021 16:35:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc:content-transfer-encoding;
-        bh=NIVXXRzSZfk4URMf3J8uL8VXNM2nTp+YWT8VnUm2TIw=;
-        b=Pnjb0t00HvdE0x63ga485KSmrl06Zd9srmHpkYast614AeyjJosUbvT8YuqUVJt9a4
-         enUfvj4TSJcv1Pw9CPnDhokPko7yFR3NIXDi4StDPMpVxU3BAqDvDHDYnvdz09Vm55Kg
-         hnBQ8eB13mrySZpfnGoAeocrqzkeyaz3av8ajNdBiEaiVUymIuyh7ssLSrXmhOTdLSOn
-         1tfJM+s/dIQG3HmOpmowTT6Z3hKY9MqjkKcHbT1+ymqjRjThecozHVTIxwig2YNx2gEX
-         lysCReYiv1DSNs+ef7sHo9RE4R46AhWvzlN428+EF/GnAmYQnFCpMd1bs4BT3UZsXaVJ
-         GqbQ==
+        bh=5rlFNThUeLqTMKQ9bdpnlPbgVbglVR/Jbz3SyMG5lYA=;
+        b=QNTtifufmTxyZO1p05M5KPoygdP8mfc2ve/CY3mYaVhNM0hcRtyQc5EhJRmZWvtPMZ
+         Co45TcbfCXlgv+y0/V+9ndh+xaSmID2AfdNDbcBJkVt2vCwNkhnTSGmvyeq6tn29wA1T
+         nPZghSDCBBxOOOtU18pymHQ0SDwX/l/UpTyDRZhIMQmW9liJUn4+VqUWQ/Dwmqa6FHEi
+         asH3MfKDmzI54hJD12bcjppLXmEKwanH75VlA29fFWH97MM8a8bzP5xvv6/bvXCl5EgR
+         /f35LMJVZhOu1j96KcLRPfXJRUzABzKD0AWJdXPTQKm9pMzyNDMPLDftE5Tvz6FsfRB+
+         l2uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc:content-transfer-encoding;
-        bh=NIVXXRzSZfk4URMf3J8uL8VXNM2nTp+YWT8VnUm2TIw=;
-        b=ghotvavinRL39m3Q0dmQyTuLAE9CaE8nLKP2Fog5Zk2lE4SARBmYdBMlgyScghBwzy
-         ESomnZY6yN4isp/FiU+Cd32Rwe3rMv0D7ZgU0jGEz4mfQnb4PGLzpGM/VuKmpMLvYie0
-         H9KpKf7E9hrf3y+7rf6tMndH7U4CO9Wun02gLgSwfg0ZS36kL3UlsXgLvee8G8JO5VOq
-         zzgXXxtbwFFIAl1wtaFjWy64RYSBw5ZEnH01lDF0j+hnSVgOjJYjSzG/EtJ06XhMu7Mi
-         3lUFHZcEwNbvYWKjIpxqqfPf1ClBJfvfSpRy/2pTfWS5RQUdzn9yC+/CN2M8+IG1rNNl
-         fDlA==
-X-Gm-Message-State: AOAM532q4VW6dg6nz1YOZDKybcb08+ktNBIwZa8KwM0/xBtriH1ec78k
-        r1dP3I9BHXKoFSH33HHa2HEpEEBj/p+5Lw==
-X-Google-Smtp-Source: ABdhPJy6fF9fljoSYQT40ckCwSLXefNH4IU3b+gj4PSOufKCwX7LWOc+pONsM4u9ZCxGlZbR78JCqVrx5qSJEA==
+        bh=5rlFNThUeLqTMKQ9bdpnlPbgVbglVR/Jbz3SyMG5lYA=;
+        b=lUlAcTKDPyklvkgVfXKEget2dDQPUxHNgnUtMsMrp1cYNBczg3IVeJg212/OyKkYNp
+         OeYOkM7jwK5qVbiuCbMYPtc2sxnR+xoQ8frB9lYUA0+Ia9c00aTl5dqq1ZzwMGcQOEo1
+         v58/uPiclZpm4GLKE2UXwQVspoEFGoedVQkNSw3D+YGL524P8uyfDO6fRrYAUxM4RmNm
+         jftvsdyiZYD/DS4zvqIE0paJeXpkzljzcSXuBW7cTpDvz//ftKVB5+cFCab2fgw34cgL
+         /VqSQlXjYzBaTHlLKC3vlGZvkRs85fEuJ0NenPQ+wOcib2LVUBwZHJAARc+M5jeuSTfU
+         VHmA==
+X-Gm-Message-State: AOAM532dx4EeTgv750l5+t4pvCacTAYt5DPQ2ZGsX+JkgKIDGQW3AW3i
+        4lwYBglhL8J90nCCEGdv81XrIWahn60TEw==
+X-Google-Smtp-Source: ABdhPJwrHxcKT2v2uhR4BOjM4B+m7KiHnzC69j09Hk37WjTh33qYjay5et6SpB2lkcwILxLyGOXgBDXGK9esQQ==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:8645:b0:142:8c0d:3f4a with SMTP
- id y5-20020a170902864500b001428c0d3f4amr54490979plt.3.1638922636413; Tue, 07
- Dec 2021 16:17:16 -0800 (PST)
-Date:   Tue, 07 Dec 2021 16:17:14 -0800
-In-Reply-To: <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
-Message-Id: <kl6llf0war1x.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a17:90a:284f:: with SMTP id
+ p15mr318087pjf.1.1638923743862; Tue, 07 Dec 2021 16:35:43 -0800 (PST)
+Date:   Tue, 07 Dec 2021 16:35:41 -0800
+In-Reply-To: <211207.86ilw0pydg.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6lilw0aq76.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
 References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
- <cover.1638859949.git.steadmon@google.com> <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
-Subject: Re: [PATCH v5 1/2] branch: accept multiple upstream branches for tracking
+ <cover.1638859949.git.steadmon@google.com> <c7e4af9a365cc61e682c3c73045fb1ee4b79cfbf.1638859949.git.steadmon@google.com>
+ <211207.86ilw0pydg.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH v5 2/2] branch: add flags and config to inherit tracking
 From:   Glen Choo <chooglen@google.com>
-To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, emilyshaffer@google.com, avarab@gmail.com
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, emilyshaffer@google.com
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> @@ -75,8 +80,17 @@ int install_branch_config(int flag, const char *local,=
- const char *origin, const
-> =20
->  	strbuf_reset(&key);
->  	strbuf_addf(&key, "branch.%s.merge", local);
-> -	if (git_config_set_gently(key.buf, remote) < 0)
-> +	/*
-> +	 * We want to overwrite any existing config with all the branches in
-> +	 * "remotes". Override any existing config with the first branch, but i=
-f
-> +	 * more than one is provided, use CONFIG_REGEX_NONE to preserve what
-> +	 * we've written so far.
-> +	 */
-> +	if (git_config_set_gently(key.buf, remotes->items[0].string) < 0)
->  		goto out_err;
-> +	for (i =3D 1; i < remotes->nr; i++)
-> +		if (git_config_set_multivar_gently(key.buf, remotes->items[i].string, =
-CONFIG_REGEX_NONE, 0) < 0)
-> +			goto out_err;
+>> @@ -10,7 +10,8 @@ enum branch_track {
+>>  	BRANCH_TRACK_REMOTE,
+>>  	BRANCH_TRACK_ALWAYS,
+>>  	BRANCH_TRACK_EXPLICIT,
+>> -	BRANCH_TRACK_OVERRIDE
+>> +	BRANCH_TRACK_OVERRIDE,
+>> +	BRANCH_TRACK_INHERIT
+>>  };
+>
+> So we've got 5 items in this enum...
+>
+>> =20
+>>  extern enum branch_track git_branch_track;
+>> diff --git a/builtin/branch.c b/builtin/branch.c
+>> index b23b1d1752..ebde5023c3 100644
+>> --- a/builtin/branch.c
+>> +++ b/builtin/branch.c
+>> @@ -632,8 +632,10 @@ int cmd_branch(int argc, const char **argv, const c=
+har *prefix)
+>>  		OPT__VERBOSE(&filter.verbose,
+>>  			N_("show hash and subject, give twice for upstream branch")),
+>>  		OPT__QUIET(&quiet, N_("suppress informational messages")),
+>> -		OPT_SET_INT('t', "track",  &track, N_("set up tracking mode (see git-=
+pull(1))"),
+>> -			BRANCH_TRACK_EXPLICIT),
+>> +		OPT_CALLBACK_F('t', "track",  &track, "direct|inherit",
+>> +			N_("set branch tracking configuration"),
+>> +			PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP,
+>> +			parse_opt_tracking_mode),
+>>  		OPT_SET_INT_F(0, "set-upstream", &track, N_("do not use"),
+>>  			BRANCH_TRACK_OVERRIDE, PARSE_OPT_HIDDEN),
+>
+> But map --track, --track=3Ddirect --track=3Dinherit to 3/5 of them. Will =
+it
+> ever make sense to do the oher 2/5 (I really haven't checked)....
 
-I think that instead of overriding all config with the first value and
-then appending every value after that, it'll be more obvious to readers
-if we first unset all of the config, then write every value (then the
-comment wouldn't have to justify why we make two calls and iteration
-starts at 1).
+Reasonable question, but I believe the answer is no, it doesn't make
+sense to map all the values:
 
-I believe that unsetting all values for a key is supported by
-git_config_set_multivar_gently() with value =3D=3D NULL, i.e.
+* BRANCH_TRACK_REMOTE is just a default value as far as I can tell (I
+  don't think this does anything?)
+* BRANCH_TRACK_ALWAYS behaves like BRANCH_TRACK_EXPLICIT but it's only
+  meant to be set from config files, see 9ed36cfa35 (branch: optionally
+  setup branch.*.merge from upstream local branches, 2008-02-19). We're
+  more lenient with _ALWAYS than with _EXPLICIT; e.g. we don't die()
+  when the upstream doesn't exist.
 
-  /*
-   * unset with value =3D NULL, not sure how this interacts with
-   * CONFIG_REGEX_NONE
-   */
-  if (git_config_set_multivar_gently(key.buf, NULL,
-    CONFIG_REGEX_NONE, 0))
-    goto out_err;
+Even one of the other options doesn't really make that much sense...
 
-  for_each_string_list_item(item, remotes) {
-    git_config_set_multivar_gently(key.buf, item, CONFIG_REGEX_NONE, 0);
-  }
-
-> @@ -121,11 +168,18 @@ int install_branch_config(int flag, const char *loc=
-al, const char *origin, const
->  	advise(_(tracking_advice),
->  	       origin ? origin : "",
->  	       origin ? "/" : "",
-> -	       shortname ? shortname : remote);
-> +	       remotes->items[0].string);
-> =20
->  	return -1;
->  }
-
-When there is more than one item in remotes->items, this advice is
-_technically_ incorrect because --set-upstream-to only takes a single
-upstream branch. I think that supporting multiple upstreams in
---set-upstream-to is a fairly niche use case and is out of scope of this
-series, so let's not pursue that option.
-
-Another option would be to replace the mention of --set-upstream-to with
-"git config add", but that's unfriendly to the >90% of the user
-population that doesn't want multiple merge entries.
-
-If we leave the advice as-is, even though it is misleading, a user who
-is sophisticated enough to set up multiple merge entries should also
-know that --set-upstream-to won't solve their problems, and would
-probably be able to fix their problems by mucking around with
-.git/config or git config.
-
-So I think it is ok to not change the advice and to only mention the
-first merge item. However, it might be worth marking this as NEEDSWORK
-so that subsequent readers of this file understand that this advice is
-overly-simplistic and might be worth fixing.
-
-> =20
-> +int install_branch_config(int flag, const char *local, const char *origi=
-n, const char *remote) {
-> +	struct string_list remotes =3D STRING_LIST_INIT_DUP;
-> +	string_list_append(&remotes, remote);
-> +	return install_branch_config_multiple_remotes(flag, local, origin, &rem=
-otes);
-> +	string_list_clear(&remotes, 0);
-> +}
-
-string_list_clear() is being called after `return`.
-
-=C3=86var and Junio have commented on i18n, but I'm unfamiliar with that, s=
-o
-I won't comment on that :)
+* BRANCH_TRACK_OVERRIDE used to be used to implement --set-upstream, but
+  that's not necessary any more. Now it's used to make create_branch()
+  *not* create a branch sometimes, but that's going away if I get my
+  refactor of create_branch()
+  (https://lore.kernel.org/git/xmqq1r2pcnyw.fsf@gitster.g/T/#u) :)
