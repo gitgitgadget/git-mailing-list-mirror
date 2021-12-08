@@ -2,209 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A060BC433FE
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 12:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52F02C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 12:43:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233630AbhLHMiQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 07:38:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42418 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233533AbhLHMiJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 07:38:09 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC99EC0698C8
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 04:34:36 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id j140-20020a1c2392000000b003399ae48f58so4036800wmj.5
-        for <git@vger.kernel.org>; Wed, 08 Dec 2021 04:34:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8erU62gnY9z8FpXa21+qVl7ToTIe6xEOPOzmYkn0RQQ=;
-        b=gD/WO9HP2u6HoAUCRbsHKp3GUzx0SsXdRBh7oPsKxS783R7UEE73pZB5+t8VZFliMg
-         c2JhRbmRSIJZTen/q2wKwuiJAw3LfvfakChtC+CCv/rAgbnVdK63t1xFOwy696w+sY7G
-         Tqs/7m+u3ZwS6lRTSxziPO1M5JBetABAercl8BbSnQJg1WNojkPMCJLhW0T9zvNsOXiA
-         +igRTl6pjWlYX/F2LonaK+IhIldrlUd+NiqZCsKSr3lAG39U2eCugoRt7sOm6/CLQgBO
-         izyz9Wq+ENv5jzrEBF5KrzCIBwWkAu8JIXTBEB6cyKxgafZm11xbwKDenX2R+a3uQVmI
-         3rvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8erU62gnY9z8FpXa21+qVl7ToTIe6xEOPOzmYkn0RQQ=;
-        b=QjfPLRaVCEXLGlwIVn5NFeYvVu+F+LNiQtEgSOX5jJ5FONUN2cNBaK5H6Zgx1Z4oYm
-         unG0+cIoD5eFVxYl6+4WtpASn0Ng153ultTLSGNNNW9Qg3x91pYC8FO1SPlo4RUstrue
-         OE3IAziR04u1Lv6r4zGYNm6WUSqcWyRwXZG2k/95QLQQP3M33X/Eh6/2FgT5eaA9GW+0
-         0lthZuCnSjMPsIfHlXjWjhHFKKeRSsVfCHdwaxUD0mePVO60lA/OCFP4usCza337k9Jp
-         GPlnPfJsYZBBxErR30yu0y5B9PMHYXaygulVj0sM6Ca9gySyigBNkXO/6B0OlEl3Qprb
-         8HGw==
-X-Gm-Message-State: AOAM533VFtQjj/4TZtUOlJBH64QUJZ6myuJS6/L1wqkFNv1eKPiFaBsG
-        jZRilfDaZ5uarKiGTdS83d5i1PeGLd5ZNw==
-X-Google-Smtp-Source: ABdhPJyBCLCQDBwfq1Vkj7zKAu6ZYQP6ngE7DA94KlJc+a3Xf5D5yCt9/P20lGwfo87F9964IlKEzQ==
-X-Received: by 2002:a05:600c:1549:: with SMTP id f9mr15940791wmg.118.1638966875094;
-        Wed, 08 Dec 2021 04:34:35 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d8sm2540692wrm.76.2021.12.08.04.34.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Dec 2021 04:34:34 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        John Cai <johncai86@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 10/10] cat-file: use GET_OID_ONLY_TO_DIE in --(textconv|filters)
-Date:   Wed,  8 Dec 2021 13:34:23 +0100
-Message-Id: <patch-v4-10.10-a658099e3e1-20211208T123151Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.1.926.g895e15e0c0c
-In-Reply-To: <cover-v4-00.10-00000000000-20211208T123151Z-avarab@gmail.com>
-References: <cover-v3-00.10-00000000000-20211129T195357Z-avarab@gmail.com> <cover-v4-00.10-00000000000-20211208T123151Z-avarab@gmail.com>
+        id S230186AbhLHMqc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 07:46:32 -0500
+Received: from mout.gmx.net ([212.227.15.18]:49563 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229496AbhLHMqa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 07:46:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1638967371;
+        bh=OEbXAjIFgXK6jKgXra0iLGdz9eAwjrfDVjTLJ5WEcB8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ewscDP3zt3yL8m71r/dRiiZoUARnlTFpTeU1lAt9QBDvI0U0nhd7XL4OuXIO93lOg
+         D4I9T9UKRQUmWjeKZl95uUMiebS2fPLqyPwkZpGzk8saBQ1Sj4wfZ7+UubD9xm4yKs
+         TqFKGwxjYr1P5pOJGF1NZiZFZNIesoLW7vndPtRI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.17.164.160] ([89.1.212.223]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N33Il-1mY0ec1RMr-013LC3; Wed, 08
+ Dec 2021 13:42:51 +0100
+Date:   Wed, 8 Dec 2021 13:42:49 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     phillip.wood@dunelm.org.uk
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2021, #01; Fri, 3)
+In-Reply-To: <e1aadd47-533c-fd8b-4fae-f64a53c81ec9@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2112081340420.90@tvgsbejvaqbjf.bet>
+References: <xmqqh7bpqhf0.fsf@gitster.g> <e1aadd47-533c-fd8b-4fae-f64a53c81ec9@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:/AFnDBNYPBFHb2CQQLKNfh0GpXkQvQzAB5QoHb/W1UQCouR4j6O
+ 5G10uz2F2s/D6wOdi8bMlR4y3YCKIbgXkbWVhPU0CtkZGXT2niaVXuFPs1IRhvdiWXsL3Mx
+ KZocz1sw+Ia0IlCTVKA332fg7LsjudMLIL28McHSb2M83i6zPaE3vslVr2Yv7o246qzK7h5
+ WjA33ydvvF5QA1iN3kEIQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:hMaXn4dootE=:lrFhQIXlTHSbQGKsM0RgVj
+ mR+WR+I+HGxx4I2IaIti9fY2Y+foFtDtIp1/AenExcudNBbE6xEK4a8B7//q7ZrVW6BX+T5dE
+ +SlR4l8Lyd/swOohtHOjA033kRv4giQW+/j3LKGsWqsVCUko+b0KYIoWi7Fnkdk8H916umpGo
+ 5U269h5brhiGPkUUMGk6+501fxlV/wH4jGMrebpeDU2Vjvv5RQN5ha3WkkjeZYLBxMguCLInS
+ LsKM5YLpudqm5wpbHvBb40qh8P0FTUlCbLbwdl4wuKKG8dZcWdPNbiX0g007eeQrQUWW98/2y
+ HfWdKgfBtoWe26Z4ncwajmEhMOdWiupybj8aWOPF5w6ZLAkr3bcurtvRWUPc4OQm4y7cUS4l0
+ dU/7OQmAsa06GpquG9nXby7aNKQuivT3eZCFpMe7jB2xc9ByYOubiG6ec3HJQ4fmRzozvQ4Xs
+ rGw2A0huMaV8wq/l007fle0kNxqg7fgBim9cpxo4pekuEl/pJ5ibkX+gIzNhi4Brm5vtDzHb4
+ fQzqIdap9mxlZv8Qkyaf1SrkWthZ/W4IzcVFNa0sO1Vz5ViScXd9QryDpWFfm73XVwWJeuU6+
+ Q19Y4BxOFxLlqCwGtwMhwzh4YoUPH8C2FPNvNHsjGS3Htn4ZDytzpPAxA2PHP12F6FRwiN6Gg
+ pdnFmwPcpNnVfxoBjAtiWtiFXkk3pip9MxTkHFslTDl/fl9RTn0kQjJEPkvyJoGJH0wT9HI2h
+ ompYTvzzWNEE291+oT7ZPJG4XlvnmQjeuIfCnApAucRIKfhbHlAwuPWpjVsFron5eoI7H0CMw
+ bNVsz9NeKQn4vJ1dQF40UeRaDMAILX9UWdKjj846+ANcc5I5MKeixFbL8ohamChRey71Bj5Rg
+ Um/nN8OPWBXxva4iDa86B4x53TUskjUVMZmb6J1PAl5XCONw5Td7CK8mPYJHVKjC3wP8LVWcd
+ Tz9rda9UL08Gk00/75459Lrs3loQod/1WeEwoUFTo+B+8gcI+Or2vlbj6MmduYNeN6ZyOugPL
+ a9/1IIgywOFQ0zuMVeVBSCoEXtb3RTOYXoY0ipKIaWakiZ5Y93OmG2QjHDyNstVkjPc6ngqKl
+ ctUgD7pBC7EnLo=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the cat_one_file() logic that calls get_oid_with_context()
-under --textconv and --filters to use the GET_OID_ONLY_TO_DIE flag,
-thus improving the error messaging emitted when e.g. <path> is missing
-but <rev> is not.
+Hi Phillip,
 
-To service the "cat-file" use-case we need to introduce a new
-"GET_OID_REQUIRE_PATH" flag, otherwise it would exit early as soon as
-a valid "HEAD" was resolved, but in the "cat-file" case being changed
-we always need a valid revision and path.
+On Mon, 6 Dec 2021, Phillip Wood wrote:
 
-This arguably makes the "<bad rev>:<bad path>" and "<bad
-rev>:<good (in HEAD) path>" use cases worse, as we won't quote the
-<path> component at the user anymore, but let's just use the existing
-logic "git log" et al use for now. We can improve the messaging for
-those cases as a follow-up for all callers.
+> On 04/12/2021 01:37, Junio C Hamano wrote:
+>
+> > * pw/diff-color-moved-fix (2021-10-27) 15 commits
+> >   - diff --color-moved: intern strings
+> >   - diff: use designated initializers for emitted_diff_symbol
+> >   - diff --color-moved-ws=3Dallow-indentation-change: improve hash loo=
+kups
+> >   - diff --color-moved: stop clearing potential moved blocks
+> >   - diff --color-moved: shrink potential moved blocks as we go
+> >   - diff --color-moved: unify moved block growth functions
+> >   - diff --color-moved: call comparison function directly
+> >   - diff --color-moved-ws=3Dallow-indentation-change: simplify and opt=
+imize
+> >   - diff: simplify allow-indentation-change delta calculation
+> >   - diff --color-moved: avoid false short line matches and bad zerba
+> >   coloring
+> >   - diff --color-moved=3Dzebra: fix alternate coloring
+> >   - diff --color-moved: rewind when discarding pmb
+> >   - diff --color-moved: factor out function
+> >   - diff --color-moved: clear all flags on blocks that are too short
+> >   - diff --color-moved: add perf tests
+> >
+> >   Long-overdue correctness and performance update to "diff
+> >   --color-moved" feature.
+> >
+> >   Need to pick up the reroll before merging to 'next'.
+> >   cf. <pull.981.v4.git.1637056178.gitgitgadget@gmail.com>
+>
+> Dscho spotted a typo which I was going to correct with a re-roll but I'v=
+e been
+> holding off in case he has time to read the rest of the series.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/cat-file.c           | 16 ++++++----------
- cache.h                      |  1 +
- object-name.c                |  3 +++
- t/t8007-cat-file-textconv.sh |  8 ++++----
- 4 files changed, 14 insertions(+), 14 deletions(-)
+I would have loved to give this a much more in-depth review, but the days
+have become short on the North hemisphere, haven't they.
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index e71519739a4..f5437c2d045 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -73,14 +73,17 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 	struct object_info oi = OBJECT_INFO_INIT;
- 	struct strbuf sb = STRBUF_INIT;
- 	unsigned flags = OBJECT_INFO_LOOKUP_REPLACE;
-+	unsigned get_oid_flags = GET_OID_RECORD_PATH | GET_OID_ONLY_TO_DIE;
- 	const char *path = force_path;
-+	const int opt_cw = (opt == 'c' || opt == 'w');
-+	if (!path && opt_cw)
-+		get_oid_flags |= GET_OID_REQUIRE_PATH;
- 
- 	if (unknown_type)
- 		flags |= OBJECT_INFO_ALLOW_UNKNOWN_TYPE;
- 
--	if (get_oid_with_context(the_repository, obj_name,
--				 GET_OID_RECORD_PATH,
--				 &oid, &obj_context))
-+	if (get_oid_with_context(the_repository, obj_name, get_oid_flags, &oid,
-+				 &obj_context))
- 		die("Not a valid object name %s", obj_name);
- 
- 	if (!path)
-@@ -112,9 +115,6 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		return !has_object_file(&oid);
- 
- 	case 'w':
--		if (!path)
--			die("git cat-file --filters %s: <object> must be "
--			    "<sha1:path>", obj_name);
- 
- 		if (filter_object(path, obj_context.mode,
- 				  &oid, &buf, &size))
-@@ -122,10 +122,6 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		break;
- 
- 	case 'c':
--		if (!path)
--			die("git cat-file --textconv %s: <object> must be <sha1:path>",
--			    obj_name);
--
- 		if (textconv_object(the_repository, path, obj_context.mode,
- 				    &oid, 1, &buf, &size))
- 			break;
-diff --git a/cache.h b/cache.h
-index eba12487b99..788127a9869 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1366,6 +1366,7 @@ struct object_context {
- #define GET_OID_FOLLOW_SYMLINKS 0100
- #define GET_OID_RECORD_PATH     0200
- #define GET_OID_ONLY_TO_DIE    04000
-+#define GET_OID_REQUIRE_PATH  010000
- 
- #define GET_OID_DISAMBIGUATORS \
- 	(GET_OID_COMMIT | GET_OID_COMMITTISH | \
-diff --git a/object-name.c b/object-name.c
-index d44a8f3a7ca..92862eeb1ac 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -1799,6 +1799,9 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 	oc->mode = S_IFINVALID;
- 	strbuf_init(&oc->symlink_path, 0);
- 	ret = get_oid_1(repo, name, namelen, oid, flags);
-+	if (!ret && flags & GET_OID_REQUIRE_PATH)
-+		die(_("<object>:<path> required, only <object> '%s' given"),
-+		    name);
- 	if (!ret)
- 		return ret;
- 	/*
-diff --git a/t/t8007-cat-file-textconv.sh b/t/t8007-cat-file-textconv.sh
-index 71ea2ac987e..b067983ba1c 100755
---- a/t/t8007-cat-file-textconv.sh
-+++ b/t/t8007-cat-file-textconv.sh
-@@ -29,7 +29,7 @@ test_expect_success 'usage: <bad rev>' '
- 
- test_expect_success 'usage: <bad rev>:<bad path>' '
- 	cat >expect <<-\EOF &&
--	fatal: Not a valid object name HEAD2:two.bin
-+	fatal: invalid object name '\''HEAD2'\''.
- 	EOF
- 	test_must_fail git cat-file --textconv HEAD2:two.bin 2>actual &&
- 	test_cmp expect actual
-@@ -37,7 +37,7 @@ test_expect_success 'usage: <bad rev>:<bad path>' '
- 
- test_expect_success 'usage: <rev>:<bad path>' '
- 	cat >expect <<-\EOF &&
--	fatal: Not a valid object name HEAD:two.bin
-+	fatal: path '\''two.bin'\'' does not exist in '\''HEAD'\''
- 	EOF
- 	test_must_fail git cat-file --textconv HEAD:two.bin 2>actual &&
- 	test_cmp expect actual
-@@ -46,7 +46,7 @@ test_expect_success 'usage: <rev>:<bad path>' '
- 
- test_expect_success 'usage: <rev> with no <path>' '
- 	cat >expect <<-\EOF &&
--	fatal: git cat-file --textconv HEAD: <object> must be <sha1:path>
-+	fatal: <object>:<path> required, only <object> '\''HEAD'\'' given
- 	EOF
- 	test_must_fail git cat-file --textconv HEAD 2>actual &&
- 	test_cmp expect actual
-@@ -55,7 +55,7 @@ test_expect_success 'usage: <rev> with no <path>' '
- 
- test_expect_success 'usage: <bad rev>:<good (in HEAD) path>' '
- 	cat >expect <<-\EOF &&
--	fatal: Not a valid object name HEAD2:one.bin
-+	fatal: invalid object name '\''HEAD2'\''.
- 	EOF
- 	test_must_fail git cat-file --textconv HEAD2:one.bin 2>actual &&
- 	test_cmp expect actual
--- 
-2.34.1.926.g895e15e0c0c
+In any case, the patch series looks good to me (personally, I do not care
+so much about typos as long as they aren't indicator of sloppiness, which
+in this case they aren't, I find your patches really well done).
 
+Thanks,
+Dscho
