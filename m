@@ -2,76 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17FC5C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 16:35:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C8DBC433EF
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 16:41:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237126AbhLHQjX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 11:39:23 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51669 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237185AbhLHQjO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 11:39:14 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 54238171255;
-        Wed,  8 Dec 2021 11:35:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wmylMvwcWy3ZGoavwWzKFvOhYc6Hj2L0siGxuS
-        TA+Xs=; b=jKzVIicitGcOZim3EU9awuwoc6FMue7mgnM3JOruRfZVZHf1rEbA09
-        hxlrMfUP5YUdgTPDtJynTCBn+ALDxrw3mR0F3pv71utsIEChTzSrujG+R1RB7TOE
-        qMxyaGsNMsT/0ub65OukJcVQpXFde/3OzpbOlrRWRfLQDmrLh2tuQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4AEC4171254;
-        Wed,  8 Dec 2021 11:35:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3F774171252;
-        Wed,  8 Dec 2021 11:35:38 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 10/10] reftable: make reftable_record a tagged union
-References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
-        <8deccc3a1dff7e4f7d613fa63d2781fd1f11f841.1638899124.git.gitgitgadget@gmail.com>
-        <xmqqlf0w5bbc.fsf@gitster.g>
-        <YbAVOtYXA1Hf9EtJ@coredump.intra.peff.net>
-        <xmqq4k7j68eg.fsf@gitster.g>
-        <CAFQ2z_NuOy+-pfSoNAYjJhS9jZCYOfoFue10=k=iyPVsPYrB3g@mail.gmail.com>
-Date:   Wed, 08 Dec 2021 08:35:36 -0800
-In-Reply-To: <CAFQ2z_NuOy+-pfSoNAYjJhS9jZCYOfoFue10=k=iyPVsPYrB3g@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Wed, 8 Dec 2021 11:30:11 +0100")
-Message-ID: <xmqq1r2n3vhj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237125AbhLHQpG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 11:45:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44514 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237153AbhLHQpG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 11:45:06 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 705F9C061A32
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 08:41:34 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id l25so10265261eda.11
+        for <git@vger.kernel.org>; Wed, 08 Dec 2021 08:41:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FHUjyg5u6Zim6oUaOQoOpWKkZNuCxFUU85z/Myahz7Q=;
+        b=HDVkWFlADoqu04H/Co8oqb3lSTQTT02RSLll/UODJt2wl0ajSzWtUtCavm21q/AjW3
+         ODGXkcVy6C6tTHWm3PhBTtBW0oUqZes5wWpBru1lwD/RIFdau0bmUIbpq4BmTY3ch403
+         o8e6sUa7/EIq3a4kzo7rK9Qcj7ugRKM9YNpDFKcrcOhdqSCqZ1T7z2LG0tnhxmFsJ4KM
+         ZxgVQXkse4Av5gq+/lzh8VebHPu7bFnwSUz8r5hBHaihDq95D1hxhY1Hm4gkePavg504
+         zwY3bW/wVRfEBv4r1Loffy82aENa4ZzeB0FRCmiREBD+ihYuhD6hWtrysFyKBWgzviwf
+         7dfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FHUjyg5u6Zim6oUaOQoOpWKkZNuCxFUU85z/Myahz7Q=;
+        b=sNFEKjVUbty+S1J7V+6LCyxaNCw39MoRVdnUy0XAx+qrgvKroWU1ebqrbyjRjYGXjo
+         PITY6G7GDnoifrH+MGf3+CD6Gj4o0ko+74tZ1R4CEwrU5OAI+3oeYYzhpqAaaSCWuZhz
+         TOCe9/eN3yR6SDQ5zp23LF7RTLoi9g8fpST0aVRkVOyjiM9xCjjHEQ5BTKIH78fAVlWA
+         29VyuIEoOny44nsGtcWsthW6/8Fmiid+Qce5dCQN94RxGZ9XBlYD8a22hEwopCPlXAHt
+         LuEX8coZWlsxfRXr7xQQ8NdEyINzAooi5njhLxW+chsMG1K7jDR2Fx9XOTSp7fgFfgcz
+         2swQ==
+X-Gm-Message-State: AOAM533pXTY9xA8K5h8wNmegRgGNi+yhE9dbDWHqWOByiwIg1AVNu7FO
+        QbRJ4ydAHpwjseSteJ965OGb48p3fbUeXIuLEzY=
+X-Google-Smtp-Source: ABdhPJwpjtKpLQa/IkyXmzhVyp7ekN/ZT8nmGaAjmbeHyhpSbS4UDuJlEiqOcCZpl8MPm4dSbBcLvVd6RVpqV75zNCA=
+X-Received: by 2002:a05:6402:1014:: with SMTP id c20mr20791286edu.186.1638981692719;
+ Wed, 08 Dec 2021 08:41:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E01ED3C0-5844-11EC-9418-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+References: <pull.1091.v2.git.1638750965.gitgitgadget@gmail.com> <pull.1091.v3.git.1638828305.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1091.v3.git.1638828305.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 8 Dec 2021 08:41:21 -0800
+Message-ID: <CABPp-BEJbS=5i+d-Aa_fCH-WAjSOhX+nSZk5Q9Kb6RiizFg7ZQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] ns/tmp-objdir: add support for temporary writable databases
+To:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Neeraj Singh <nksingh85@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
-
-> On Wed, Dec 8, 2021 at 5:13 AM Junio C Hamano <gitster@pobox.com> wrote:
->> >> error: ISO C99 doesn't support unnamed structs/unions [-Werror=pedantic]
->> >
->> > Hmm. It's interesting that the regular DEVELOPER=1 doesn't catch this.
->> > It's because we don't specify -std there, and newer gcc defaults to
->> > gnu17 (unnamed unions appeared in c11, I think). I wonder if it would be
->> > helpful to teach config.mak.dev to pass -std=c99.
->>
->> FWIW, I use -std=gnu99 as our Makefile suggests.
+On Mon, Dec 6, 2021 at 11:18 PM Neeraj K. Singh via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> I understand that the default build should be lenient rather than
-> strict for portability reasons. However, it would be good if the CI
-> was strict with this.
+> V3 (hopefully final):
+>
+>  * Fix the commit description for patch [2/2] to reflect the fact that
+>    disabling ref updates no longer depends on the_repository.
+>  * Add a link to Jeff King's test case in patch [2/2]. The test relies on
+>    remerge-diff, so it can't be directly included here.
+>  * Adjust line spacing in update_relative_gitdir (gitster)
+>  * Switch struct object_directory to use full-width integers rather than
+>    flags (gitster)
+>  * Fix typo s/protentially/potentially (neerajsi)
 
-Yeah, I agree with the above, and was a bit surprised that I found
-the issue via my local build after it came from GGG.
+This version looks good to me:
 
+Reviewed-by: Elijah Newren <newren@gmail.com>
 
+For future reference, when splitting one of your series apart, copying
+the relevant subset of the cc lines (e.g. from the description at
+https://github.com/git/git/pull/1076 to the one at
+https://github.com/gitgitgadget/git/pull/1091) would be helpful.
