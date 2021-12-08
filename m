@@ -2,157 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF177C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 14:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7449AC433EF
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 15:14:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235728AbhLHPB4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 10:01:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48376 "EHLO
+        id S235854AbhLHPRk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 10:17:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235656AbhLHPBs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 10:01:48 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFCB6C0698CD
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 06:58:15 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id c6-20020a05600c0ac600b0033c3aedd30aso1952155wmr.5
-        for <git@vger.kernel.org>; Wed, 08 Dec 2021 06:58:15 -0800 (PST)
+        with ESMTP id S235841AbhLHPRh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 10:17:37 -0500
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1906FC061746
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 07:14:06 -0800 (PST)
+Received: by mail-oo1-xc34.google.com with SMTP id d1-20020a4a3c01000000b002c2612c8e1eso901125ooa.6
+        for <git@vger.kernel.org>; Wed, 08 Dec 2021 07:14:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=ieTmdmFrQ3TWBhksR7eaDCc6S5DicVx4i30sMnKFuC4=;
-        b=COVPc2c7d39yuu0NSZMl/XtSYmSlmcY8hMnlCpv1GlWmmR0WGJcPltNZlH/VwS7UOg
-         NDpPxG3Q1V5h7eM3FLCBcC4sB7e+h6FLVxUfrpQrL3pQ0+qSvle4xGO4athFlns4AltO
-         ymgYhsmB7LF7iM3yZOqb89GjAhYt4gvXnVFBiBeQ+KDSU+GRj5d3Oq1Rr0223+hsxGwU
-         O8xU3vVtY7kuTkuq7Pz8ChbOxs7qumGweZ6Q2oJPYc4YjN/eG6CLygyaQZlBt9EHcpMV
-         hUu3zaJJkwpmAAkL6r4SEEnV+w0SfH44Auc/3fSOTBwJwAIsBnamXneV9HFNUAUMRduy
-         yt+g==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=+Vp23cVyghUMOCTRknBikMJ8QxbeVabeGYuwPdkE5FA=;
+        b=XxYfhrdAazHbF9C8p9DTg4xCypF/OXowx+vckUN6HU4d7QA7PtA/+8ch8kOVYwvXiw
+         B/LaJ1mpNixfX8nfPFjkU8gnRb4m4PVTeh9qB38dpinT2HTpRQpN5KgjtyH9pE3E6IPc
+         P3eT41neuchP4OyMA9kdVt+8HskfsFaoQPkkKKDhbl13cAQ3rOK5sUb6Tvnt4zMp78hm
+         4Dv8PNW0Mrf2P+xdGVxY9Izw5Er3cbg9zXkdMFRu2z6AldzOvglzb2NEfWGGVYJLs9oo
+         AJgQIzzP34LB8pj7jKUx33TErZl87fO4LFvIMAQBW7EIZXKzj5+ALnO/544LKiS3Vg5U
+         zWgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ieTmdmFrQ3TWBhksR7eaDCc6S5DicVx4i30sMnKFuC4=;
-        b=mvc3p2pWVDFBkyv53S9nit58Bt3o3e2tg35ut/yKv3fOiJAQRyraTQc8R0kdGuoURu
-         6X2+swvE6rYX4v/YrLPmmTo6BLKVeEajaNIS9zFvlClH7MBeq/axdv8uK1xv626ShqkM
-         ihfXLYxG5xch0uNpwXDEY+lVsKFsKkifCBNlkqhCj4x9XtocY7nnwfsyBMUotLqRyNSQ
-         ScBPa+KXpRCoNc6KYQF7mN/YF8jsfjdz+KBtsfChrah4ZxTrNf5gsloZjlaei7UwMm3O
-         7BI7JTou06wawh2EyNY42rmhX35VG9OVhmX6+Lk2pgHLtwju3Na0TEsMbdCZBxgCU3xw
-         BpAw==
-X-Gm-Message-State: AOAM532jdnrGFDHhhWHoeZYT8EYOhN8BM1LRLoKWUuhNmcGpfYoDSceM
-        b6J/04hQbelnMUjaoXvZRwEAJ7AtuZM=
-X-Google-Smtp-Source: ABdhPJzFcctQZR6QuSWpsduYYcbs+x4xdY6lPUOAMmMNAxk3pCwmNte4aNK5R4ilXze8KlONC+8Hrg==
-X-Received: by 2002:a05:600c:3647:: with SMTP id y7mr16628632wmq.39.1638975494242;
-        Wed, 08 Dec 2021 06:58:14 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p8sm2876017wrx.25.2021.12.08.06.58.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Dec 2021 06:58:13 -0800 (PST)
-Message-Id: <3f64b9274b5580d14ea9cac916be5077b5eebdd2.1638975482.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
-References: <pull.1049.git.1633082702.gitgitgadget@gmail.com>
-        <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 08 Dec 2021 14:58:01 +0000
-Subject: [PATCH v2 14/14] rebase -m: don't fork git checkout
-Fcc:    Sent
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=+Vp23cVyghUMOCTRknBikMJ8QxbeVabeGYuwPdkE5FA=;
+        b=lJjC5fRfGYroyn659nc/Vfz8tCzyYSkYY/9wfsFAlSA5mcrNeEmtx2FM+OLpEmTDwt
+         DGvFq/AeZHeguFz2GG0ACDHdEEf0ldCm95Kq0WNR1zphG4C67aIDZA160Gof88kT+38Q
+         0C5WqXBR6PsmhdxCQty5p600WVJNf4fCbrzuKLhr/ceGl9xVjc3ElnOiQ4NYSFZH8sE0
+         7D5b5oR0nhv9e+yH0THdDBsCiVbN1o2xmSi5g3dxHmT+GjtDeK87/33E6aW9k/ss7vqG
+         TkGFEianMvjYMcvAxWouQhHanG94DIOU1Hub+f0DOVJCDtQ9pgO8CmCCJAi8PSRhAez7
+         jyVg==
+X-Gm-Message-State: AOAM531JBix4pJWaS9rN3dQIxKahX2zpinYxxzaked7OUZwsuEqgt58z
+        LgDLmr+onyL7jjoXkDW0zm0=
+X-Google-Smtp-Source: ABdhPJz+M6C+ZuSOj5MKkGeGqWVYxXpiRU65obYsdMZ28/DleGkiL046zhceCQU11wv1g+EcYygqRw==
+X-Received: by 2002:a05:6870:a70d:b0:a8:8535:5975 with SMTP id 586e51a60fabf-a88535694fmr90426fac.92.1638976445063;
+        Wed, 08 Dec 2021 07:14:05 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:5056:be20:f10c:bfd5? ([2600:1700:e72:80a0:5056:be20:f10c:bfd5])
+        by smtp.gmail.com with ESMTPSA id h26sm506003oor.17.2021.12.08.07.14.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Dec 2021 07:14:04 -0800 (PST)
+Message-ID: <03a642fc-6310-1ea4-083e-9fe4530cf761@gmail.com>
+Date:   Wed, 8 Dec 2021 10:14:02 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH 2/2] ls-files: add --sparse option
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
+        vdye@github.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1080.git.1637077083.gitgitgadget@gmail.com>
+ <e42c0feec94de0e4869cda1fc6b28bd7055774e3.1637077083.git.gitgitgadget@gmail.com>
+ <211123.86h7c3wrg2.gmgdl@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <211123.86h7c3wrg2.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 11/22/2021 9:07 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Tue, Nov 16 2021, Derrick Stolee via GitGitGadget wrote:
 
-Now that reset_head() can handle the initial checkout of onto
-correctly use it in the "merge" backend instead of forking "git
-checkout".  This opens the way for us to stop calling the
-post-checkout hook in the future. Not running "git checkout" means
-that "rebase -i/m" no longer recurse submodules when checking out
-"onto" (thanks to Philippe Blain for pointing this out). As the rest
-of rebase does not know what to do with submodules this is probably a
-good thing. When using merge-ort rebase ought be able to handle
-submodules correctly if it parsed the submodule config, such a change
-is left for a future patch series.
+Things in the dependent topics are starting to simmer down, so I'm
+back revisiting this topic.
 
-The "apply" based rebase has avoided forking git checkout
-since ac7f467fef ("builtin/rebase: support running "git rebase
-<upstream>"", 2018-08-07). The code that handles the checkout was
-moved into libgit by b309a97108 ("reset: extract reset_head() from
-rebase", 2020-04-07).
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>> [...]
+>> +test_expect_success 'ls-files' '
+>> +	init_repos &&
+>> +
+>> +	# Behavior agrees by default. Sparse index is expanded.
+>> +	test_all_match git ls-files &&
+>> +
+>> +	# With --sparse, the sparse index data changes behavior.
+>> +	git -C sparse-index ls-files --sparse >sparse-index-out &&
+>> +	grep "^folder1/\$" sparse-index-out &&
+>> +	grep "^folder2/\$" sparse-index-out &&
+>> +
+>> +	# With --sparse and no sparse index, nothing changes.
+>> +	git -C sparse-checkout ls-files --sparse >sparse-checkout-out &&
+>> +	grep "^folder1/0/0/0\$" sparse-checkout-out &&
+>> +	! grep "/\$" sparse-checkout-out &&
+> 
+> I think all of this would be much clearer both in terms of explaining
+> this change, and also for future test relability if it did away with the
+> selective grepping, and simply ran tls-files with and without --sparse,
+> and then test_cmp'd the full output (after munging away the OIDs).
+> 
+> I.e. the sort of output that's in my just-sent reply to the CL:
+> https://lore.kernel.org/git/211123.86lf1fwrq5.gmgdl@evledraar.gmail.com/
+> 
+> We really don't need to optimize for lines of tests added, and having
+> ~30 lines of plainly understood diff output is IMO preferrable to even 5
+> lines of tricky positive & negative grep invocations that take some time
+> to reason about and understand.
+> 
+> I.e. something like:
+> 
+>     cat >expected <<-\EOF &&
+>      100644 blob OID   e
+>      100644 blob OID   folder1-
+>      100644 blob OID   folder1.x
+>     -040000 tree OID   folder1/
+>     +100644 blob OID   folder1/0/0/0
+>     +100644 blob OID   folder1/0/1
+>     +100644 blob OID   folder1/a
+>      100644 blob OID   folder10
+>     -040000 tree OID   folder2/
+>     +100644 blob OID   folder2/0/0/0
+>     +100644 blob OID   folder2/0/1
+>     +100644 blob OID   folder2/a
+>      100644 blob OID   g
+>     -040000 tree OID   x/
+>     +100644 blob OID   x/a
+>      100644 blob OID   z
+>     EOF
+>     git [...] ls-files --sparse >actual.raw &&
+>     [munge away OIDs] <actual.raw >actual &&
+>     test_cmp expected actual
+> 
+> Would test everything you're trying to test here and more (would need 2x
+> of those..), and would be easier to read & understand.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- sequencer.c | 38 +++++++++++---------------------------
- 1 file changed, 11 insertions(+), 27 deletions(-)
+I don't think it is that hard to understand "I expect to see these
+lines and not these lines" but I am open to more fully verifying
+the full output and demonstrating the change that happens when the
+flag is added.
 
-diff --git a/sequencer.c b/sequencer.c
-index a62ea9d0e05..19082aa6c9b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4217,42 +4217,26 @@ int apply_autostash_oid(const char *stash_oid)
- 	return apply_save_autostash_oid(stash_oid, 1);
- }
- 
--static int run_git_checkout(struct repository *r, struct replay_opts *opts,
--			    const char *commit, const char *action)
--{
--	struct child_process cmd = CHILD_PROCESS_INIT;
--	int ret;
--
--	cmd.git_cmd = 1;
--
--	strvec_push(&cmd.args, "checkout");
--	strvec_push(&cmd.args, commit);
--	strvec_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
--
--	if (opts->verbose)
--		ret = run_command(&cmd);
--	else
--		ret = run_command_silent_on_success(&cmd);
--
--	if (!ret)
--		discard_index(r->index);
--
--	return ret;
--}
--
- static int checkout_onto(struct repository *r, struct replay_opts *opts,
- 			 const char *onto_name, const struct object_id *onto,
- 			 const struct object_id *orig_head)
- {
--	const char *action = reflog_message(opts, "start", "checkout %s", onto_name);
--
--	if (run_git_checkout(r, opts, oid_to_hex(onto), action)) {
-+	struct reset_head_opts ropts = {
-+		.oid = onto,
-+		.orig_head = orig_head,
-+		.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
-+				RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
-+		.head_msg = reflog_message(opts, "start", "checkout %s",
-+					   onto_name),
-+		.default_reflog_action = "rebase"
-+	};
-+	if (reset_head(r, &ropts)) {
- 		apply_autostash(rebase_path_autostash());
- 		sequencer_remove_state(opts);
- 		return error(_("could not detach HEAD"));
- 	}
- 
--	return update_ref(NULL, "ORIG_HEAD", orig_head, NULL, 0, UPDATE_REFS_MSG_ON_ERR);
-+	return 0;
- }
- 
- static int stopped_at_head(struct repository *r)
--- 
-gitgitgadget
+Taking your idea and applying it to 'ls-files' (without --stage to
+avoid OIDs which would change depending on the hash algorithm), the
+start of the test looks like this:
+
+test_expect_success 'ls-files' '
+	init_repos &&
+
+	# Behavior agrees by default. Sparse index is expanded.
+	test_all_match git ls-files &&
+
+	# With --sparse, the sparse index data changes behavior.
+	git -C sparse-index ls-files --stage >out &&
+	git -C sparse-index ls-files --stage --sparse >sparse &&
+
+	cat >expect <<-\EOF &&
+	 e
+	 folder1-
+	 folder1.x
+	-folder1/0/0/0
+	-folder1/0/1
+	-folder1/a
+	+folder1/
+	 folder10
+	-folder2/0/0/0
+	-folder2/0/1
+	-folder2/a
+	+folder2/
+	 g
+	-x/a
+	+x/
+	 z
+	EOF
+
+	diff -u out sparse | tail -n 16 >actual &&
+	test_cmp expect actual
+'
+
+I can make similar adjustments throughout the test to match
+this style.
+
+Thanks,
+-Stolee
