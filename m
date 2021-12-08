@@ -2,170 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35D59C433EF
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 12:30:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95A62C433EF
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 12:30:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233366AbhLHMeB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 07:34:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41420 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231327AbhLHMeA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 07:34:00 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52449C061746
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 04:30:28 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id o20so7779652eds.10
-        for <git@vger.kernel.org>; Wed, 08 Dec 2021 04:30:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=+QxpXpcQZ2qqliuvQQSjpWKnXGzlNe1d1i8tGBFWWSY=;
-        b=krZew3Oz34B2sMLhrwFShRdB7+pAUV85r1grFYqjPiL0DQKxOj5t7bx7fHCCA94D8f
-         iSWHou7GH6OMOyZR3NEBKkcwy/RhxcQlptM06yzKPj4jE+GfXpvZoOllU5RIKDAGXP+8
-         GySo0KbxqFKZL6ImpC7wBg5KWRxmehuHwaEDXR3jqqnvZnicYmrwpuup0JBSneNQkbD6
-         OOeahH78lq3iH7XVWxwodLnnZLKoGtHssXx0gHC5NXCrejM0JEQzg5X1+5Te4d3AkAmK
-         mWeggjRyn9FBZc0difJKoWFGv8CTquWRWgI7tYgi7nUq56/XVpA1xKeKfUHX5JEq0mRa
-         ZUPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=+QxpXpcQZ2qqliuvQQSjpWKnXGzlNe1d1i8tGBFWWSY=;
-        b=zouK2ax04uFBr299EIRZA4XwgS9q5nE92nQGZOrzf6ACOd6FRDwBkYlNCVCLQjaFM4
-         PJFmTJKwVhU0OpSgk/vZAZJ3wpNcbOyH0xUt21Ifu8y9gqZYt08IpQGs1uXuH1UB0ieD
-         wz78cdCXTfb/aLh8W9JcVtjZUpG2qVgpocStuK3BITpy868NvYFskawlqiIphwzNdUyX
-         PnRsIMIG0D0S6/Lu5TT8ttYCpKa8F8fsNwsLiLmuU9DnW8ZEYlSdFEhqkvtQ/OG69XeG
-         rO7OQs6pDiucHICYSPFAHiYHFhJIMJZ8qPbVRyK0H9B3N+X+rGJZtaYl//NUTjEr8f1f
-         2AbA==
-X-Gm-Message-State: AOAM533mrn9UH1TmUQSbGuTsRyd0pQe59Xt9cXEpFgYhvdnSLp3mVwhV
-        rc5Ze0JFNzWTRWL7JOVIkOo=
-X-Google-Smtp-Source: ABdhPJxZ6y9PZ/eLnR2ArjQsy2QKd0dTcCsx/sAtwV7y+gFpii4+LF9cPyb+JSG1goL81wcGpdpFZw==
-X-Received: by 2002:aa7:d052:: with SMTP id n18mr19315094edo.104.1638966626852;
-        Wed, 08 Dec 2021 04:30:26 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id sh33sm1578953ejc.56.2021.12.08.04.30.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Dec 2021 04:30:26 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1muw5Z-001PkZ-VF;
-        Wed, 08 Dec 2021 13:30:25 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
-Subject: Removing -Wdeclaration-after-statement (was: [PATCH] revision: use
- C99 declaration of variable in for() loop)
-Date:   Wed, 08 Dec 2021 13:17:16 +0100
-References: <20211113122833.174330-1-gotlouemail@gmail.com>
- <20211113130508.zziheannky6dcilj@gmail.com>
- <2b2386b9-045d-a0b8-6dbc-8a9d0c446bea@gmail.com>
- <xmqq7ddbme7q.fsf@gitster.g> <211114.868rxqu7hr.gmgdl@evledraar.gmail.com>
- <xmqqilwulims.fsf@gitster.g> <xmqqpmr2j5lq.fsf_-_@gitster.g>
- <61518213-9ce8-00d2-efd9-7f2091c574c4@gmail.com>
- <xmqq1r3eym7f.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
-In-reply-to: <xmqq1r3eym7f.fsf@gitster.g>
-Message-ID: <211208.86wnkfl1ni.gmgdl@evledraar.gmail.com>
+        id S233367AbhLHMeP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 07:34:15 -0500
+Received: from mout.gmx.net ([212.227.17.20]:36799 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233448AbhLHMeO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 07:34:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1638966635;
+        bh=tK9OEaG8W2efOvMo3NMLFDlqmpRsmIAWxIYHMwkm2Xg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=P1u/uwMQCeR5qw9jFoFLJz635FJPaLcJbEkW9Xkt14h5AseqL/P9LxUEh9w6ax2/Y
+         UJubjLm18genLLh1uwbWSwrjyAxbiV6s3Wpecnwq8hh5KGfol+laQO7xexScV+e2A3
+         mf7+ggmJL/NWzKYPj10bfw3t21s6lx5FaKa3Vs8E=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.17.164.160] ([89.1.212.223]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MGhuU-1miGu92gEs-00DrCY; Wed, 08
+ Dec 2021 13:30:35 +0100
+Date:   Wed, 8 Dec 2021 13:30:33 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 00/15] diff --color-moved[-ws] speedups
+In-Reply-To: <pull.981.v4.git.1637056178.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2112081329030.90@tvgsbejvaqbjf.bet>
+References: <pull.981.v3.git.1635336262.gitgitgadget@gmail.com> <pull.981.v4.git.1637056178.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:IJyWPaB6fl+1db0MN49gHU+9fki3FADWymdMxpJWtqF/qfM1QAK
+ FO6RzFFIc8Hv0Y4qQl6jY1SCWQDblDDgAs/MUUaLKa86C2IadCsO4IZ1UOSzqtECbnG+Axp
+ 8vC/WAUhxgQkCtfr40xwTr8f/jb0JR2R9Ff0Vjk6Z3eZFkDHyzL/8r69JJy0pSYCVfCaME8
+ vw1Ma8sIENy6VIwcMNiDA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jWH/0urKfjI=:/rsogBq2Set+wYFp0txqrs
+ 21vi5EhGPuXJZebYkZ/B2obY5o7HiRqGEJPpMNUAIjrLJIaU9zKXT7o5Ipy+WbB8kfbfqDjZj
+ UHVfZ7cKzAr+SHwFHsNfRtL8+d3h+TRgddKgtKCil4ZXE2Hb4YuwKNP/XYKvnEoSVsHAhC383
+ PwwjQLQY59YxhMz/WWxodzvb4Ld7zKdCTVQhBD2jQhvMcAT5+VWuBeDmtC8sHlnEq3ju6dyHJ
+ iZjgdXiIHnQ98oqSCNlJlCp3ltPunRzQPxvirOJydFgVf0rWr7yr+6vkXqVeYS1R5UWUzzMz2
+ ODUZtUdaMJJdd0eLVJLBUd1enRwcLNExCcavXj1pmaAujWsq2izz0FBMg7M/JvfLlYZz03a2m
+ OAiYtMDSSqOvfG2pwt1jLzDoOBnuGikCzFmyuWLjI785TyhZgsFO9XRiyYkjTaN6+fTiOcyop
+ 7Mh0PfFyHBAe6JxF8sgz7UBiP/hLwbn46guVSQYyanlZIvkk/evszt+Ycv8d5j6qqzevKOPKs
+ C3qj8V4QqDc0RXyHHALTPyZaoWc6O2lIs2qWpj0pGX94Su6kwXDzVJe2ojOGrB0trm9uKYmcG
+ 2UFTf4SiLKbTfjV9RcNoQj3nn6h+Y84xMsn3+V2lidMyTXu2/R34Yts0FvgxKwW1oOWrkdajC
+ HXZnBGkSzH1XLp8l1SUSMq++26EYkNQ6jniHbdkccsV2ElIOMLclSfMtwgLI1s0zRL5o/GH5/
+ EEiZ7yrFWsSbpbvcDMXVXNNyrY7PvBHGVoYNECmtBMFspgc0Y5n+0cTzoexjQISHEhILb7dV1
+ oQ5U1EoQbJfnDdWoAxYIPpowJwAND0vM70URiB3NTm80blHzU3WtFGYio+XH6i5LuMWYymeZc
+ YKWaBI9TEl8N0FTWC6qM0BsTFwq3DKhRJHIkRvLm2KoMgvaDTP5OU88Lb/4M6Davfe0nF5bdD
+ SyNTatoQ5iLkObnXjjl17YJKFdvlR6ezIbVf7INxAhlOHx0MS6/y3f+4IHdsyv/N+p0JYHbRI
+ NepCE3ZgFRpHDqMlmybNnJr48jHkrPLFFs137Q8igt3yqpMx7HXWS/k2qlTiHOLNo/FBDlUtd
+ gwhbBPidwyO/nc=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Phillip,
 
-On Wed, Nov 17 2021, Junio C Hamano wrote:
+On Tue, 16 Nov 2021, Phillip Wood via GitGitGadget wrote:
 
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+> Changes since V3:
 >
->> I like the idea of using a specific test balloon for the features that
->> we want to use but wont this one break the build for anyone doing
->> 'make DEVELOPER=1' because -Wdeclaration-after-statement will error
->> out.
->
-> I think you are missing '?' at the end of the sentence, but the
-> answer is "no, at least not for me".
->
->     # pardon my "make" wrapper; it is to pass DEVELOPER=1 etc. to
->     # the underlying "make" command.
->     $ Meta/Make V=1 revision.o
->     cc -o revision.o -c -MF ./.depend/revision.o.d -MQ revision.o -MMD -MP  -Werror -Wall -pedantic -Wpedantic -Wdeclaration-after-statement -Wformat-security -Wold-style-definition -Woverflow -Wpointer-arith -Wstrict-prototypes -Wunused -Wvla -fno-common -Wextra -Wmissing-prototypes -Wno-empty-body -Wno-missing-field-initializers -Wno-sign-compare -Wno-unused-parameter  -g -O2 -Wall -I. -DHAVE_SYSINFO -DGIT_HOST_CPU="\"x86_64\"" -DUSE_LIBPCRE2 -DHAVE_ALLOCA_H  -DUSE_CURL_FOR_IMAP_SEND -DSUPPORTS_SIMPLE_IPC -DSHA1_DC -DSHA1DC_NO_STANDARD_INCLUDES -DSHA1DC_INIT_SAFE_HASH_DEFAULT=0 -DSHA1DC_CUSTOM_INCLUDE_SHA1_C="\"cache.h\"" -DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="\"git-compat-util.h\"" -DSHA256_BLK  -DHAVE_PATHS_H -DHAVE_DEV_TTY -DHAVE_CLOCK_GETTIME -DHAVE_CLOCK_MONOTONIC -DHAVE_SYNC_FILE_RANGE -DHAVE_GETDELIM '-DPROCFS_EXECUTABLE_PATH="/proc/self/exe"' -DFREAD_READS_DIRECTORIES -DNO_STRLCPY -DSHELL_PATH='"/bin/sh"' -DPAGER_ENV='"LESS=FRX LV=-c"'  revision.c
->     $ cc --version
->     cc (Debian 10.3.0-11) 10.3.0
->     Copyright (C) 2020 Free Software Foundation, Inc.
->     This is free software; see the source for copying conditions.  There is NO
->     warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
->
->
-> It would be quite sad if we had to allow decl-after-stmt, only to
-> allow
->
-> 	stmt;
-> 	for (type var = init; ...; ...) {
-> 		...;
-> 	}
->
-> because it should merely be a short-hand for
->
-> 	stmt;
-> 	{
-> 	    type var;
-> 	    for (var = init; ...; ...) {
-> 		...;
-> 	    }
-> 	}
->
-> that does not need to allow decl-after-stmt.
+>  * Patch 1 now allows the user to choose different endpoints for the dif=
+f
+>    perf tests to facilitate testing with different repositories.
+>  * Fixed the alignment of the perf results column headers in a couple of
+>    patches.
 
-Why would that be sad? The intent of -Wdeclaration-after-statement is to
-catch C90 compatibility issues. Maybe we don't want to enable everything
-C99-related in this area at once, but why shouldn't we be removing
--Wdeclaration-after-statement once we have a hard C99 dependency?
+I finished reading over the patches in this iteration. Although I did not
+have the mental bandwidth to review in particular the last patch in the
+series in detail, the regression tests seem comprehensive enough for me to
+be confident in the correctness.
 
-I usually prefer declaring variables up-front just as a metter of style,
-and it usually encourages you to split up functions that are
-unnecessarily long.
+So: from my side, this patch series is good to go!
 
-But I think being able to do it in some situations also helps
-readability. E.g. I'm re-rolling my cat-file usage topic now and spotted
-this nice candidate (which we'd error on now with CC=gcc and
-DEVELOPER=1):
-	
-	diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-	index f5437c2d045..a43df23a7cd 100644
-	--- a/builtin/cat-file.c
-	+++ b/builtin/cat-file.c
-	@@ -644,8 +644,6 @@ static int batch_option_callback(const struct option *opt,
-	 int cmd_cat_file(int argc, const char **argv, const char *prefix)
-	 {
-	 	int opt = 0;
-	-	int opt_cw = 0;
-	-	int opt_epts = 0;
-	 	const char *exp_type = NULL, *obj_name = NULL;
-	 	struct batch_options batch = {0};
-	 	int unknown_type = 0;
-	@@ -708,8 +706,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
-	 	batch.buffer_output = -1;
-	 
-	 	argc = parse_options(argc, argv, prefix, options, usage, 0);
-	-	opt_cw = (opt == 'c' || opt == 'w');
-	-	opt_epts = (opt == 'e' || opt == 'p' || opt == 't' || opt == 's');
-	+	const int opt_cw = (opt == 'c' || opt == 'w');
-	+	const opt_epts = (opt == 'e' || opt == 'p' || opt == 't' || opt == 's');
-	 
-	 	/* --batch-all-objects? */
-	 	if (opt == 'b')
-
-I.e. in this case I'm declaring a variable merely as a short-hand for
-accessing "opt", and due to the need for parse_options() we can't really
-declare it in a way that's resonable before any statement in the
-function.
-
-By having -Wdeclaration-after-statement we're forced to make it
-non-const, and having it "const" helps readability, you know as soon as
-you see it that it won't be modified.
-
-That particular example is certainly open to bikeshedding, but I think
-the general point that it's not categorically bad holds, and therefore
-if we don't need it for compiler compatibility it's probably a good idea
-to allow it.
+Thank you,
+Dscho
