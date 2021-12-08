@@ -2,131 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59924C433F5
-	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 21:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25CE1C433F5
+	for <git@archiver.kernel.org>; Wed,  8 Dec 2021 21:49:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234766AbhLHVdm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Dec 2021 16:33:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55382 "EHLO
+        id S237611AbhLHVxY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Dec 2021 16:53:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234396AbhLHVdm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Dec 2021 16:33:42 -0500
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7AA0C061746
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 13:30:09 -0800 (PST)
-Received: by mail-qk1-x731.google.com with SMTP id 132so3241121qkj.11
-        for <git@vger.kernel.org>; Wed, 08 Dec 2021 13:30:09 -0800 (PST)
+        with ESMTP id S234666AbhLHVxW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Dec 2021 16:53:22 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7746FC0617A1
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 13:49:50 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id t9so6465553wrx.7
+        for <git@vger.kernel.org>; Wed, 08 Dec 2021 13:49:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=/m+JiIWSPKHyTTDtHcs/KdrMIcU8Lb+PzaQUtHYUoZE=;
-        b=nTNJEgCnakYVfGZVjn7P9YsNYuc0YdYyDX5G1wnVt0ChmNX5LYHi/ElK05OVsyD2OV
-         FU4NhKIUXscC3w7wNr7VUAKrYpzriwf4vuKy1MdLu97qRXj/LEF/GFQWEcDHgjKy2X9b
-         bCIpQwo1ufkZ+OK18ydyVVetdEeO2cD41XGRVKW4f4oKyqp4ebFD+t3FPkLzrcn1m57o
-         +5Ku1qFaKXUtB1r2QNg6r/zeBn9wEsTrjHNZy0G7S3awNrrlBfpRE/hxDqH+gQCRSbzn
-         DKz71ymRYJKWFhCWcBW5Y0oqSvnVsIxREHJzIZuqB6z+kWbhG9VuJmQsy0YjFa/4+T/e
-         LHTQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=4caTpC3+u83vTS7zkUHAtzr+4yoHPBYES+caC91RmF4=;
+        b=OB+CDOyrxKNWyetGQkSPP8KzYXqK/12B8IKMFPLDCcnHrBMdFnHj2+q97bV1VZ9Ox9
+         IXBCYDRsPwBhzArIocnn1q8nw3Zq5HFiw1Fy3Oi7nvg5Bmb7RGb/H/bxg8juY9EPJHoW
+         9tye7lKh2N3k70m+2c/O/jE0lhUWHX+yWeWsYmaygH+uDsfEBM1XOKG75NWOZZBsg7rd
+         Du1Z4lkVLqRc1ksLjal25TdmajbkCOUxQA52wP+V4Lw2BCE1yk5QuUMlCJF3+2oRW2S4
+         F2ew7VbTjdEQ/KoEjO1Guc1wBgtAi3acxILNU+yxDwDpFlklqeg9toP8F/SchNrfU5dT
+         qvdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=/m+JiIWSPKHyTTDtHcs/KdrMIcU8Lb+PzaQUtHYUoZE=;
-        b=z1A9iwpMq2NlCCNGelvt+R5F1hLyHXfXp6FSeIJS5WYXFOpeZNnZgtecm+EvWXpDUw
-         qVJ9CTrcj3UrF9ASRB1EfrerAzRhpfBfpAyBdGEzlKxdkm+1AA/GJDZhzH1cRH5hYP1y
-         1lOpwwdXoQcqwD7MtkoykTe5z2JUIDl9c6rEkv5Ds/d9krZ3UhKOZZfO9STGIgcybx1j
-         xIRp2ln/QFhmRrIsuh8LkRA4jrqlOwHlKwIfTUcekek2Wk6KYd2z1di578KySG0YFqFw
-         /8Wu17Toav5mAAgwViWlfi+INoU+Vn2XG5yQUro+NgEpP95KZrvAvUunmFRKr92HUIKz
-         cFyg==
-X-Gm-Message-State: AOAM5306mBqm/x2IFdNeFS1XnYlYaACCN4lNjWjI6lwczhM9OgnAodYx
-        7urbdwRKODVzICCDqNGdMfs=
-X-Google-Smtp-Source: ABdhPJw0gq9s0czT6CbcQqWp5iML4Y6QncE+PJbI9Ef7qqsdZHozLZ24nMsGsi+/bgl30Ss2xyoR4Q==
-X-Received: by 2002:a05:620a:24ca:: with SMTP id m10mr9202235qkn.635.1638999008977;
-        Wed, 08 Dec 2021 13:30:08 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:5056:be20:f10c:bfd5? ([2600:1700:e72:80a0:5056:be20:f10c:bfd5])
-        by smtp.gmail.com with ESMTPSA id c22sm2311658qtd.76.2021.12.08.13.30.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Dec 2021 13:30:08 -0800 (PST)
-Message-ID: <4dbca719-a1df-27e9-6e07-dea3f2e2638b@gmail.com>
-Date:   Wed, 8 Dec 2021 16:30:06 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [RFC/PATCH] Makefile: add test-all target
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
- <pull.1005.v10.git.1638538470.gitgitgadget@gmail.com>
- <CABPp-BGpe9Q5k22Yu8a=1xwu=pZYSeNQoqEgf+DN07cU4EB1ew@mail.gmail.com>
- <xmqq4k7nmksi.fsf@gitster.g> <211207.86ilw0matb.gmgdl@evledraar.gmail.com>
- <xmqqh7bi27o9.fsf@gitster.g> <xmqq8rwu278d.fsf_-_@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq8rwu278d.fsf_-_@gitster.g>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=4caTpC3+u83vTS7zkUHAtzr+4yoHPBYES+caC91RmF4=;
+        b=E5M0BOyfinGgdEXSXcL2tPMXTD53m6XAfQRnEwizcxI0fSi1aNroYeJdyFPtFcvJxl
+         26+Sl0461RSl3SiPWQdt2kv599AOSpUcqZFJ8b5P4tNM6gSHx9i+lZAMaEDN308YYuUG
+         l+q86BXN1tSRcPPsPSt4RS000ASfvkAD2ffI3DptJQ9T2BdTtvjeH4cF++eIeOYPMJyJ
+         si0x7uD0MOpqy0T/F5y98aG3x5KCrp2nBAuI5kMXi1kGqcYDIgDVkjXMJ0UCsuXLoIk5
+         H+V3tJacSsh3jtPOlenVpOTxl53VYKOru/E+UNxr6phVsywElplTXPhv775s9lR03G23
+         APzw==
+X-Gm-Message-State: AOAM533eiKRvZT965dst1v1e/X37zH/e9pHYHMROdRyL+Eo2UtV0/cmL
+        tSnOGCN2d2KtWaDrAc8oNcw/NOs4NFM=
+X-Google-Smtp-Source: ABdhPJyacIO6Y0Sg4PEG2n0F3MUs6e9SCrZUA8cv7PjYg9oBJlVW7dPNzpSwmoUKJi4VeqTTa9/zNw==
+X-Received: by 2002:adf:aa08:: with SMTP id p8mr1538238wrd.572.1639000188964;
+        Wed, 08 Dec 2021 13:49:48 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h27sm7833232wmc.43.2021.12.08.13.49.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Dec 2021 13:49:48 -0800 (PST)
+Message-Id: <7c033815183cc8ad7a76bc2b9456b17041107c2c.1639000187.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1152.v2.git.git.1639000187.gitgitgadget@gmail.com>
+References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
+        <pull.1152.v2.git.git.1639000187.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 08 Dec 2021 21:49:36 +0000
+Subject: [PATCH v2 01/11] reftable: fix OOB stack write in print functions
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Han-Wen Nienhuys <hanwen@google.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/8/2021 3:04 PM, Junio C Hamano wrote:
-> We ship contrib/ stuff within our primary source tree but except for
-> the completion scripts that are tested from our primary test suite,
-> their test suites are not run in the CI.
-> 
-> Teach the main Makefile a "test-extra" target, which goes into each
-> package in contrib/ whose Makefile has its own "test" target and
-> runs "make test" there.  Add a "test-all" target to make it easy to
-> drive both the primary tests and these contrib tests from CI and use
-> it.
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-> So, how about doing it this way?  This is based on 'master' and does
-> not cover contrib/scalar, but if we want to go this route, it should
-> be trivial to do it on top of a merge of ab/ci-updates and js/scalar
-> into 'master'.  Good idea?  Terrible idea?  Not good enough?
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ reftable/record.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> +# Additional tests from places in contrib/ that are prepared to take
-> +# "make -C $there test", but expects that the primary build is done
-> +# already.
-> +test-extra: all
-> +	$(MAKE) -C contrib/diff-highlight test
-> +	$(MAKE) -C contrib/mw-to-git test
-> +	$(MAKE) -C contrib/subtree test
+diff --git a/reftable/record.c b/reftable/record.c
+index 6a5dac32dc6..8536bd03aa9 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -254,7 +254,7 @@ static void hex_format(char *dest, uint8_t *src, int hash_size)
+ void reftable_ref_record_print(struct reftable_ref_record *ref,
+ 			       uint32_t hash_id)
+ {
+-	char hex[2 * GIT_SHA256_RAWSZ + 1] = { 0 }; /* BUG */
++	char hex[GIT_MAX_HEXSZ + 1] = { 0 }; /* BUG */
+ 	printf("ref{%s(%" PRIu64 ") ", ref->refname, ref->update_index);
+ 	switch (ref->value_type) {
+ 	case REFTABLE_REF_SYMREF:
+@@ -586,7 +586,7 @@ static struct reftable_record_vtable reftable_obj_record_vtable = {
+ void reftable_log_record_print(struct reftable_log_record *log,
+ 			       uint32_t hash_id)
+ {
+-	char hex[GIT_SHA256_RAWSZ + 1] = { 0 };
++	char hex[GIT_MAX_HEXSZ + 1] = { 0 };
+ 
+ 	switch (log->value_type) {
+ 	case REFTABLE_LOG_DELETION:
+-- 
+gitgitgadget
 
-I like how this is obviously extendible to include contrib/scalar
-in a later change, then remove it when Scalar moves.
-
-> +test-all:: test test-extra
-
-And this test-all implies that test runs before test-extra, so
-libgit.a is compiled appropriately.
-
-I think this approach looks good to me.
-
-> diff --git i/ci/run-build-and-tests.sh w/ci/run-build-and-tests.sh
-> index cc62616d80..9da0f26665 100755
-> --- i/ci/run-build-and-tests.sh
-> +++ w/ci/run-build-and-tests.sh
-> @@ -19,7 +19,7 @@ make
->  case "$jobname" in
->  linux-gcc)
->  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-> -	make test
-> +	make test-all
-
-Since we are now building and testing things that we have not been
-testing recently, it is worth checking that we don't have any work
-to do to make this pass. I assume that you've run 'make test-all'
-on your own machine. It will be good to see what the full action
-reports (probably all good).
-
-Thanks,
--Stolee
