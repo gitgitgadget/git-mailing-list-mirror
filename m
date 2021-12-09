@@ -2,56 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 574B8C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 21:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82824C433EF
+	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 21:59:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233131AbhLIWB0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 17:01:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56920 "EHLO
+        id S233101AbhLIWCu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 17:02:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233101AbhLIWBZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 17:01:25 -0500
-Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC753C0617A2
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 13:57:51 -0800 (PST)
-Received: by mail-qv1-xf49.google.com with SMTP id jo4-20020a056214500400b003a5cb094fb8so11431572qvb.22
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 13:57:51 -0800 (PST)
+        with ESMTP id S231286AbhLIWCu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 17:02:50 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34F10C061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 13:59:16 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id m17-20020a170902db1100b001421cb34857so3036882plx.15
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 13:59:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=NBh+/tuN0tOVDxSNHUCuZ5BvaWub57WlX8HEpvAB3v0=;
-        b=a1IpQtibQTBGtLj5KbZRV1QmF9EZUCRgnVYDL0AVqZkwpg6oOnEbdtm2U/C8W67AeB
-         etzubvhNF0cuFPgY7rBQ55dDcHonrmMoWbNzWwDGcRQv8u4ZlbEaI2JdD6k266CIUU+j
-         R/o8zEXedUZHiUQoxITAcybnDuSJgraONW+ireMIU37hAlOTyHkRP90dz4Op1KiKijS5
-         FLJ3WKe2xusLJbh2rEI//N6wiqHP6aR+1HglPHZgZCzrFLxcMq73LcaDn6OVeKOVsPyt
-         NzGzs+M+eG4dDf0/GfDMJQYBQ6IrSapfOuHzNEuIX/ih2y5A6old5enNBJR/448zg9vF
-         4OHw==
+        bh=yVuA/AskfchH4VZ4mn4MUTCoUSG23/Pc4TsXY/RdtKc=;
+        b=eQfEZ9rL/IHXu9RwyiOngJy8GbPM3O3YfmdBX3XUYiNvVb/JH3PjNZCDx0mJR+S3Ue
+         j3k2pbp2bONHhadu0LwZrJ9fjwFMhFTdnh1Z6+tubyjpyidtCcWf79mNL5LSpSxiK8h9
+         pmsvB8YjquhmPCQd87j2eIafSnhabdP+x1xesjReb55nPnPO3xYude4vsYWIgyEz7GfP
+         s1NKluJpTEQoC5r8DJ0MDtqLFd6J+a7Y7cXnatc08rDrp9iK9lZKJp4fS3d5Ah5UD9Jb
+         htYMJs59RVQJ9HVK2MPsLi/DQQ5C/UJCGISz3lSJiK23+nqBtjWZORjMKqaQlEi3LAIJ
+         VtFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=NBh+/tuN0tOVDxSNHUCuZ5BvaWub57WlX8HEpvAB3v0=;
-        b=k7F99TLGFSQXj/HOX01oFUbY9EeVwhvQR0JLOBPuqOTyPe9JRyuEojcQyFLOCf+c9G
-         fF1YW/+tecj3gsVLha83Qt8CG0stBsZGiUzQFifvQHI/a+84irsgy5huE1huF38xitY7
-         yuC25FsAELHN5fWs2RQvpY2h3eBTRJ4BGbwTrVysH9Q2uTPHEhLrKGwE0oc4AQuUWwbD
-         95XlD2ygSETa9+ANshbUMgDhRsbW7XBktVNJ7Uy6y3OydAW27fxzYmn3Iw72Ni5eaWLX
-         CQ2lMgMYTEKbNkGwKfmdR3v8aT5gokHQoWGe34EtQ/JMRc1r6QX8dW2TYRbspm4ded3t
-         l5eA==
-X-Gm-Message-State: AOAM533nBWG4RZgpkLe6VGj7w19/Y7RRzxKN+Bgzde8kTN+3OZryG3l+
-        lAruibSuVEj5Af0NAjvqG1KruDqE//Ea2g==
-X-Google-Smtp-Source: ABdhPJxxA6vZ+br5gpxlgpExz/+y3lRqj3QBifWw9BEFMlM0qH+bYqvl0jA0OXth+ZNT0Zw+EcNsy1ju3oyy0w==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:ac8:5841:: with SMTP id
- h1mr21470705qth.517.1639087071026; Thu, 09 Dec 2021 13:57:51 -0800 (PST)
-Date:   Thu, 09 Dec 2021 13:57:49 -0800
-In-Reply-To: <20211209212322.499217-1-jonathantanmy@google.com>
-Message-Id: <kl6lk0gda1b6.fsf@chooglen-macbookpro.roam.corp.google.com>
+        bh=yVuA/AskfchH4VZ4mn4MUTCoUSG23/Pc4TsXY/RdtKc=;
+        b=RGH+8UZwQWvFvCgLsc4mlwHRzLO/VZvkbe5yuyt8DufLtdOeb8jpCydQoy5eeoRX5L
+         qR28cleaWVLubTMFgh8uvdPm2zBXcZ5nGdHq9kQNCyFJ+dlhrHJ6UPXvK8eog2BPLQBA
+         zsfdP9nmMtYov7Jh7gB3rK5TjJCbPcQHRMuKE5xUwjPE3c52R05R900JW6oWn+9gk+oA
+         pUDbweSIKAeL5gdWgJ15ttMnmwI6E4VEuJoFdp+K9n3+V7cwagW+WUPSO7kPMuxtNEqp
+         52iaChCaDOOqcBZkRVi3va9r38XmdPDn+1Wd6HZiq3oHOmUc3kSH5NHbBrHlDFNJcu10
+         l+9g==
+X-Gm-Message-State: AOAM531MEBDTk6nRB+9NWoJcDKaxvQTdDkIISkFtxsHakReQXZm73F3d
+        lLJq56Om2ysIuvpUNM1sa6hMVqU8DwP5dCDAZnZq
+X-Google-Smtp-Source: ABdhPJwDu1CtmZZh+oIVdmtkEEfuxyiHXVZhpln1rRLYDnUZH2K4kETEb5ONANl9sYyfLYv6O/O6teHofgPpalPgdO4h
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:1919:: with SMTP id
+ 25mr19364137pjg.154.1639087155656; Thu, 09 Dec 2021 13:59:15 -0800 (PST)
+Date:   Thu,  9 Dec 2021 13:59:12 -0800
+In-Reply-To: <20211209184928.71413-1-chooglen@google.com>
+Message-Id: <20211209215912.506354-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <20211209184928.71413-4-chooglen@google.com> <20211209212322.499217-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v3 3/5] builtin/branch: clean up action-picking logic in cmd_branch()
-From:   Glen Choo <chooglen@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
+References: <20211209184928.71413-1-chooglen@google.com>
+X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
+Subject: Re: [PATCH v3 0/5] implement branch --recurse-submodules
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     chooglen@google.com
 Cc:     git@vger.kernel.org, jonathantanmy@google.com, steadmon@google.com,
         emilyshaffer@google.com, avarab@gmail.com,
         levraiphilippeblain@gmail.com, gitster@pobox.com
@@ -60,50 +61,12 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Glen Choo <chooglen@google.com> writes:
+> This version is functionally identical to v2. I've only addressed
+> feedback around code organization, i.e. the the merge conflict with
+> js/branch-track-inherit and making patch 1 easier to review. Thus, some
+> discussions on [1] are still unaddressed.
 
->> Incidentally, fix an incorrect usage string that combined the 'list'
->> usage of git branch (-l) with the 'create' usage; this string has been
->> incorrect since its inception, a8dfd5eac4 (Make builtin-branch.c use
->> parse_options., 2007-10-07).
->
-> I think that we implement such incidental fixes only when we're touching
-> the relevant lines, but this change looks correct.
-
-That's fair. This fix is such low-hanging fruit that I don't think it
-deserves its patch, but if others agree, I'll separate it.
-
->
->> -	int delete = 0, rename = 0, copy = 0, force = 0, list = 0;
->> -	int show_current = 0;
->> -	int reflog = 0, edit_description = 0;
->> -	int quiet = 0, unset_upstream = 0;
->> +	/* possible actions */
->> +	int delete = 0, rename = 0, copy = 0, force = 0, list = 0,
->> +	    unset_upstream = 0, show_current = 0, edit_description = 0;
->> +	int noncreate_actions = 0;
->> +	/* possible options */
->> +	int reflog = 0, quiet = 0, icase = 0;
->
-> [snip]
->
->> -	if (!!delete + !!rename + !!copy + !!new_upstream + !!show_current +
->> -	    list + edit_description + unset_upstream > 1)
->> +	noncreate_actions = !!delete + !!rename + !!copy + !!new_upstream +
->> +			    !!show_current + !!list + !!edit_description +
->> +			    !!unset_upstream;
->> +	if (noncreate_actions > 1)
->>  		usage_with_options(builtin_branch_usage, options);
->
-> Overall this change looks good, although if you're going to rearrange
-> the variable declarations (e.g. the positions of show_current,
-> edit_description, and unset_upstream have moved), you might as well make
-> them consistent with the noncreate_actions statement, I guess. Also
-> maybe move new_upstream closer.
-
-Yeah this is obviously inconsistent, thanks for the catch.
-
-* force isn't an action
-* new_upstream is an action
-* for QoL, all of the actions should be listed in the same order at both
-  sites
+I do notice that some of my comments on "add --recurse-submodules option
+for branch creation" are still unaddressed so I'll hold off review until
+they are.
