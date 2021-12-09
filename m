@@ -2,209 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC5E3C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 11:00:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 352F6C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 12:15:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236310AbhLILEc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 06:04:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41816 "EHLO
+        id S234162AbhLIMSn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 07:18:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235224AbhLILEb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 06:04:31 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57FACC061746
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 03:00:58 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id v11so8950402wrw.10
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 03:00:58 -0800 (PST)
+        with ESMTP id S229976AbhLIMSn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 07:18:43 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C95CFC061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 04:15:09 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id v1so19065847edx.2
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 04:15:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=8K18yxweY4gFUc5IPSjf6KUr1KTvjVNeucp6N+wAMbI=;
-        b=hkIj+jHsCKPlQC/hMQxhi/Hi8OM8m59IWnBokRAmZlaPGJjnlbDhOfZWk8aTJ1PdhB
-         pE/aJNp5Le1l6IZ+biaEHfTD2e5ob8hRigJarnalrG4C5mZFj0kXfuR4pymKFQd2hAJ/
-         5hjnhneJHoUqKn4r+48B43U1iYNFFYmO//DsLo5YWQ2qlWUelcfhhTFyWDy2yoKO2L0p
-         tjrC0gOxb8MNL4AMNbBalGvhoNsa6QAV+phWgNrMelXqHGhEuE4+sIjiwgHSUBI8p2D+
-         VGgUXzbK+PhDj6oNJbswSJlbDV5GQEhB4rGIVXzz/cOu8CqPxfnMhO0w5ubbrq/hR3xl
-         XDkQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=kGQS9icuZf5ZXD8k41ZVJdcKiAEwDKNDRXRBqBYev3I=;
+        b=d5EZm9yn3xbcCXtpRlzLGSyQqVnmLnkv/Q1stYVGI7AGIrt0c815HsUbi3dkzUjgb3
+         KxkO5jRLaL9ug6h6flM/aOw7yPC5rzUz/zYW8DwnY1DiTOkXWdfhzdSn/oQM3u6MreVQ
+         TXT3n97bopX0D4q6NoJm1W7Rbdt0za+gfidw3aBVgqfT5j3nanIYGd0zzNEbJ4WtzHH/
+         e4M3OZA52vJrW089/JFKIJe1OURny4Mb+8N/Mxl5S7uy96i8S82HekMVFjr0CTtoJf5z
+         Z4iHDNCy+EiTLFDQmypn+lR8wCHh8mwiReKk8FTejFrXPeeUiIzpd4XdPANOAZ7w4DIL
+         C4fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=8K18yxweY4gFUc5IPSjf6KUr1KTvjVNeucp6N+wAMbI=;
-        b=1p5YHIEGiWprQZudXocAK77wi2UK92EJdrifk7JdvFrLM/J3GyME07wfXnT1Bv2FjV
-         9O62YUfFVaNMwrUNRD8aiDCau95op6dp1b/rY///1HeFcBXStkjzEZa1oetSpawHc7bB
-         Ymt/CuIuO7K+a1HPuJ7jY4VLRon454v57/4jpoPNT815UgoynRPLqfFJBQsD/P7QLUiz
-         vxyX1cBKpR9TyFusRfSXeC3wvMSOdjQJJbzHjOBX1TI6acGPC9a9unF8Mem4WobTbCrJ
-         3DEBS7Ndfsh3Pgo6zCsJhpZBFrJsuSG3+R2d8P6Qpfq19DqY2bT6aZFZgF1ANkj2XUNz
-         wn/w==
-X-Gm-Message-State: AOAM532Kd75DJ9mAL8wFC2YB5/qcKFxLLVzauaqtq+S0oS8UyxJ/z5tA
-        9G5woKdndfQcfQfDRjfZVGc=
-X-Google-Smtp-Source: ABdhPJxg1rCZ/kZvloaZBCLEEM8TF15dB8gKvYh70yn7oO22d6rtmLTcGVT5aqbdM/sikFL98kB76w==
-X-Received: by 2002:adf:f8c3:: with SMTP id f3mr5528981wrq.495.1639047656876;
-        Thu, 09 Dec 2021 03:00:56 -0800 (PST)
-Received: from [192.168.1.240] ([31.185.185.186])
-        by smtp.gmail.com with ESMTPSA id w15sm5403722wrk.77.2021.12.09.03.00.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Dec 2021 03:00:56 -0800 (PST)
-Message-ID: <f245f2b7-ca00-5497-3d1d-658c4c0fbcb6@gmail.com>
-Date:   Thu, 9 Dec 2021 11:00:55 +0000
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=kGQS9icuZf5ZXD8k41ZVJdcKiAEwDKNDRXRBqBYev3I=;
+        b=SLymKNlH8dyB8+/SN1H1yF09FBpjKfZttQotx+BlT36ExLXA9g4FRXhcK64ELLr8Ds
+         mjMo0rmQcDPfYPmIh7waR04VEW4yqy+11XCQ5Wz0yW1so4rQISaklZRQzMChSU20Tft/
+         fDGvSR4N1fEr1uykJAkRx9CaiRpZXuZF1+6h7/Au828+GAheAhojYFh+iZnkCQeUoIub
+         QK18yoClOEhFa9iOQTrjTF4UwJ4kYIXqKYCYLack/3P2u8Omx+ehjncaUJS0BlYdod3M
+         fIkiTyH0QfKouNobV3ZC8tfYu0BGC52NVMV/ofbhtYfjgrR7eal6e29UYXFESAHT1abo
+         cTRw==
+X-Gm-Message-State: AOAM532ApWDqb5RPOZt8vrWgbeECceldLta9lhTGkPcxL24Yv8anDvVW
+        qPOazGPhXL8lj81QER0BC7Q=
+X-Google-Smtp-Source: ABdhPJzmsVs4kEU67q1yvPAZJ2jAiG9NEiSKvec7oiauT8A3/fovoWN6Xj4kLRJ8RBdiT1R+zy9Yaw==
+X-Received: by 2002:a05:6402:4249:: with SMTP id g9mr28335471edb.316.1639052107899;
+        Thu, 09 Dec 2021 04:15:07 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id bd12sm3519951edb.11.2021.12.09.04.15.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Dec 2021 04:15:07 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mvIKI-001ZzW-Iy;
+        Thu, 09 Dec 2021 13:15:06 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH] config.mak.dev: specify -std=gnu99 for gcc/clang
+Date:   Thu, 09 Dec 2021 13:05:44 +0100
+References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
+ <8deccc3a1dff7e4f7d613fa63d2781fd1f11f841.1638899124.git.gitgitgadget@gmail.com>
+ <xmqqlf0w5bbc.fsf@gitster.g> <YbAVOtYXA1Hf9EtJ@coredump.intra.peff.net>
+ <xmqq4k7j68eg.fsf@gitster.g> <YbEMnksMEuAz3Nt0@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.9
+In-reply-to: <YbEMnksMEuAz3Nt0@coredump.intra.peff.net>
+Message-ID: <211209.867dcekm9h.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] git-compat-util(msvc): C11 does not imply support for
- zero-sized arrays
-Content-Language: en-GB-large
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Neeraj Singh <nksingh85@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.1094.git.1638823724410.gitgitgadget@gmail.com>
- <20211206222539.GA27821@neerajsi-x1.localdomain>
- <nycvar.QRO.7.76.6.2112072217280.90@tvgsbejvaqbjf.bet>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <nycvar.QRO.7.76.6.2112072217280.90@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
 
-On 07/12/2021 21:33, Johannes Schindelin wrote:
-> Hi Neeraj,
-> 
-> On Mon, 6 Dec 2021, Neeraj Singh wrote:
-> 
->> I'm a little confused by this issue. Looks like an empty flex array
->> is supported here: https://godbolt.org/z/j3ndYTEfx.
-> 
-> It is somewhat strange, but understandable, that the empty flex array at
-> the end of a struct isn't triggering a compile error. But having a field
-> _after_ that empty flex array _does_ trigger a compile error:
-> 
-> struct MyStruct {
->      int x;
->      int flexA[];
->      char string[256];
-> };
-> 
-> Note the added `string` field.
+On Wed, Dec 08 2021, Jeff King wrote:
 
-Having a field after the flex array is a violation of the C standard. 
-Section 6.7.2.1:
-    ... the last member of a structure with more than one named member
-    may have incomplete array type, such a structure (and any union
-    containing, possibly recursively, a member that is such a structure)
-    shall not be a member of a structure or an element of an array.
+> On Tue, Dec 07, 2021 at 08:13:43PM -0800, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> >> error: ISO C99 doesn't support unnamed structs/unions [-Werror=pedantic]
+>> >
+>> > Hmm. It's interesting that the regular DEVELOPER=1 doesn't catch this.
+>> > It's because we don't specify -std there, and newer gcc defaults to
+>> > gnu17 (unnamed unions appeared in c11, I think). I wonder if it would be
+>> > helpful to teach config.mak.dev to pass -std=c99.
+>> 
+>> FWIW, I use -std=gnu99 as our Makefile suggests.
+>
+> I think the patch below would have detected this both locally for
+> Han-Wen, but also in C.
+>
+> -- >8 --
+> Subject: [PATCH] config.mak.dev: specify -std=gnu99 for gcc/clang
+>
+> The point of DEVELOPER=1 is to turn up the warnings so we can catch
+> portability or correctness mistakes at the compiler level. But since
+> modern compilers tend to default to modern standards like gnu17, we
+> might miss warnings about older standards, even though we expect Git to
+> build with compilers that use them.
+>
+> So it's helpful for developer builds to set the -std argument to our
+> lowest-common denominator. Traditionally this was c89, but since we're
+> moving to assuming c99 in 7bc341e21b (git-compat-util: add a test
+> balloon for C99 support, 2021-12-01) that seems like a good spot to
+> land. And as explained in that commit, we want "gnu99" because we still
+> want to take advantage of some extensions when they're available.
+>
+> The new argument kicks in only for clang and gcc (which we know to
+> support "-std=" and "gnu" standards). And only for compiler versions
+> which default to a newer standard. That will avoid accidentally
+> silencing any build problems that non-developers would run into on older
+> compilers that default to c89.
+>
+> My digging found that the default switched to gnu11 in gcc 5.1.0.
+> Clang's documentation is less clear, but has done so since at least
+> clang-7. So that's what I put in the conditional here. It's OK to err on
+> the side of not-enabling this for older compilers. Most developers (as
+> well as CI) are using much more recent versions, so any warnings will
+> eventually surface.
+>
+> A concrete example is anonymous unions, which became legal in c11.
+> Without this patch, "gcc -pedantic" will not complain about them, but
+> will if we add in "-std=gnu99".
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  config.mak.dev | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/config.mak.dev b/config.mak.dev
+> index 7673fed114..d4afac6b51 100644
+> --- a/config.mak.dev
+> +++ b/config.mak.dev
+> @@ -19,6 +19,11 @@ endif
+>  endif
+>  endif
+>  endif
+> +
+> +ifneq ($(or $(filter gcc6,$(COMPILER_FEATURES)),$(filter clang7,$(COMPILER_FEATURES))),)
+> +DEVELOPER_CFLAGS += -std=gnu99
+> +endif
+> +
+>  DEVELOPER_CFLAGS += -Wdeclaration-after-statement
+>  DEVELOPER_CFLAGS += -Wformat-security
+>  DEVELOPER_CFLAGS += -Wold-style-definition
 
-Note that the wording also forbids
+This approach looks good & the rationale make sense.
 
-struct A {
-	int x;
-	char flex[];
-};
+I mentioned in [1] that this might be a bad idea because:
 
-struct B {
-	struct A a; /* This is forbidden */
-};
+    And as you note it's not only that older or non-gcc non-clang compilers
+    may not understand this at all, but are we getting worse behavior on
+    modern versions of those two because they're forced into some 20 year
+    old C99 standard mode, instead of the current preferred default?
 
-There was a proposal a few years ago to relax that restriction [1] but 
-it does not seem to be in the latest draft standard.
+But from some short testing of GCC it will generate the exact same
+<file>.s regardless of -std=* option, so I think this indeed only
+impacts the warnings we'll emit. So pinning this seems to categorically
+be a good thing.
 
-None of this helps fix the problem, but it does explain why MSVC complains.
+A bad thing about this is that we'll explicitly avoid happy accidents
+where we start relying on some newer C standard, and discover N releases
+later that it was no big deal, and can thus just use that feature.
 
-Best Wishes
+On the other hand having this means less back & forth churn of adding
+such a dependency only to find it breaks on one of our platforms
+etc. Overall I think this makes sense, just say'n.
 
-Phillip
+I don't think this needs to change, but FWIW this would benefit from the
+same sort of "let's just compile it" step as [2]. I.e. I think you'll
+find that we could just check the exit code of:
 
-[1] http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2083.htm
+    $(CC) -E -std=gnu99 - </dev/null
 
-> See https://godbolt.org/z/TbcYhEW5d, it says:
-> 
-> 	<source>(5): error C2229: struct 'MyStruct' has an illegal zero-sized array
-> 	Compiler returned: 2
-> 
->> (Note that I'm passing /TC to force C compilation).
-> 
-> Yes, `/TC` is one of the flags we pass to MSVC. For more details, see
-> https://github.com/git-for-windows/git/runs/4389081542?check_suite_focus=true#step:9:125
-> 
->> Also, heap_fsentry doesn't appear to use a flex array in current sources.
-> 
-> It does, but it is admittedly a bit convoluted and not very easy to see.
-> The definition of `heap_fsentry` is
-> [this](https://github.com/git-for-windows/git/blob/v2.34.1.windows.1/compat/win32/fscache.c#L77-L80):
-> 
-> 	struct heap_fsentry {
-> 		struct fsentry ent;
-> 		char dummy[MAX_LONG_PATH];
-> 	};
-> 
-> No flex array here, right? But wait, there is a `struct fsentry`. Let's
-> look at
-> [that](https://github.com/git-for-windows/git/blob/v2.34.1.windows.1/compat/win32/fscache.c#L43-L74):
-> 
-> 	struct fsentry {
-> 		struct hashmap_entry ent;
-> 		[...]
-> 		/*
-> 		 * Name of the entry. For directory listings: relative path of the
-> 		 * directory, without trailing '/' (empty for cwd()). For file
-> 		 * entries:
-> 		 * name of the file. Typically points to the end of the structure
-> 		 * if
-> 		 * the fsentry is allocated on the heap (see fsentry_alloc), or to
-> 		 * a
-> 		 * local variable if on the stack (see fsentry_init).
-> 		 */
-> 		struct dirent dirent;
-> 	};
-> 
-> Still no flex array, right? But wait, there is a `struct dirent`. Let's
-> [see](https://github.com/git-for-windows/git/blob/v2.34.1.windows.1/compat/win32/dirent.h#L9-L12):
-> 
-> 	struct dirent {
-> 		unsigned char d_type; /* file type to prevent lstat after readdir */
-> 		char d_name[FLEX_ARRAY]; /* file name */
-> 	};
-> 
-> Finally! We see the flex array.
-> 
-> Now, you may ask why is this even correct? How can you have an empty-sized
-> field in a struct that is inside another struct that is inside yet another
-> struct _and then followed by another field_?
-> 
-> The reason why this is correct and intended is that `struct dirent`
-> intentionally leaves the length of the `d_name` undefined, to leave it to
-> the implementation whether a fixed-size buffer is used or a
-> specifically-allocated one of the exact correct size for a _specific_
-> directory entry.
-> 
-> In FSCache, we want to allocate a large-enough buffer to fit _any_ file
-> name, and it should not only contain the metadata in `struct dirent`, but
-> additionally some FSCache-specific metadata.
-> 
-> Therefore, `struct fsentry` is kind of a subclass of `struct dirent`, and
-> `struct heap_fsentry` is kind of a subclass of something that does not
-> exist, a `struct dirent` that offers enough space to fit _any_ legal
-> `d_name` (that is what that `dummy` field is for, it is not actually
-> intended to be accessed except via `d_name`).
-> 
->> If it does start using it, there issue may actually be elsewhere besides
->> the struct definition (it could be just a badly targeted compiler error).
->> We have code like `struct heap_fsentry key[2];`.  That declaration can't
->> work with a flex array.
-> 
-> I hope my explanation above made sense to you.
-> 
-> Admittedly, it is slightly icky code, but honestly, I do not have any
-> splendid idea how to make it less complicated to understand. Do you?
-> 
-> Ciao,
-> Dscho
-> 
+This works on GCC/Clang, and will die on xlc/suncc, and I assume any
+other compiler that doesn't grok this. But I think it's better to avoid
+a $(shell) here just for that, and any such change can wait until we
+have some proper "compile this once and cache it" probing for
+config.mak.dev.
+
+1. https://lore.kernel.org/git/211116.86pmr0p82k.gmgdl@evledraar.gmail.com/
+2. https://lore.kernel.org/git/211118.86lf1m5h1y.gmgdl@evledraar.gmail.com/
