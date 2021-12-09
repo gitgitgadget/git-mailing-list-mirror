@@ -2,304 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69119C433F5
-	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 10:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60FA3C433EF
+	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 10:30:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234032AbhLIKUn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 05:20:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59630 "EHLO
+        id S234448AbhLIKdq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 05:33:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233985AbhLIKUm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 05:20:42 -0500
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F8FEC061746
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 02:17:09 -0800 (PST)
-Received: by mail-pg1-x532.google.com with SMTP id r5so4671165pgi.6
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 02:17:09 -0800 (PST)
+        with ESMTP id S232317AbhLIKdq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 05:33:46 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17FAAC061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 02:30:13 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id d24so8950831wra.0
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 02:30:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DqdgORCD3UPzWUPCO+jsBmMdNwiZLwNxuJgbSPFzOEs=;
-        b=A/QtLVwEGh4nlu9x1xFK0Ql2YtTlxc4usrK7ioN9tJaMruXtHkTU7mz6906kQFDrEz
-         hdwpNK0QOuQAqdNLM+mAnUVNzLH2ONoX3no3XxQWG0AcL1LRwHnBGiUBA9hb4uTzEasa
-         i9qT97qtJUwxiz8HLAFsz3q+DToDKGa+zqbzWRmVgmGy3GiR9aHiLyIH5R3fcFp0rmrJ
-         C7zEAjA48HkDs9SGb/ptBzig7ot/sgrtGjNqhvC8xxXLyXBGUDZMNsgKbCOaQ7kBvBKJ
-         9loIVwSict65WV5Jv3dFwpeJcx/YoMXQjGZ+ODd96faB6tFWjgYliL8Rc0VaEr7JeUDR
-         g9+A==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=IN4xCsLAJXlPU569HaZTxOyjd2x1Ko14Bxrnp5etYhg=;
+        b=mjCz4rHXtMid3heTzG3OilM1Nkxln/ShN37plfwdsBM6D+SDMpZ2T0Yz11W4Od5Ddx
+         SvaHPhCaY8NESVQU0BqBXdD3A9lJAkrHAuJh3SDIPjVr+BmY842sSEx//Gwu1/mqpslz
+         mHo4h/wjH60C6nQ7kBpCB/HiOJMmOC8e/OzGCHLI5KMTqYzwsB0hL5mZMnMBtKcq7Afy
+         YCPtNAN1UxUACMORAwwT7DsIPqV3rbnVFXmZX90HGpCLeHcPNpzoLyn25jiwwkBfZJPx
+         1hWM1SkNniv9JKtTlgNEJk3BdwUqvr1uAgsnYPjOwKdbY6eSjUNolXqRpDgUA3Nq68lg
+         UW9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DqdgORCD3UPzWUPCO+jsBmMdNwiZLwNxuJgbSPFzOEs=;
-        b=lCr5yk08QraOyNqc+kOQLfACfY9F7vtjUin5bNOogo4v1nkLi1L53pSGV2+twiNXYj
-         2Vvd0vStOY2kgOn4xJea6sjOwfkSjLD00Vcs+ZnjPow2cn6hDCxuucqPg5DumakX0UIA
-         L/H2ScQHNrVsKfkFTROqipG1ktUoUjs8kR5jaRpbe642u+1T5Hegp/CBEi5v+iOKTwsZ
-         fzKLNd+5PtRQpZ/Y2+5R5jwbG/CGMWtC8Ph2ML8EnVQCX9iGpG8yRMVtqQVrJ80YE/2C
-         13vKAYOk/cxH6xw9AjkZ5mBeknUp0xaYrG5CTjg/GmBz3RK0OXlbo/NDcJJcEVpH4EHr
-         wfqQ==
-X-Gm-Message-State: AOAM532q4GUjhLZswPsrcKk6JKM5tRKVYig7Sip+b3lMNB6P++IhNW6p
-        dcSvKcmAolE0MxUyvOVgwGdaMxevJqMpyg==
-X-Google-Smtp-Source: ABdhPJwVl7mK4Dzb79+0cg1K/z9nbTBTn9DFXjD0Yvd6A+m0m3hhf23uQE8GPTPnKfDNq2+/uHFHdw==
-X-Received: by 2002:a05:6a00:2391:b0:4a2:cb64:2e43 with SMTP id f17-20020a056a00239100b004a2cb642e43mr10766544pfc.49.1639045028357;
-        Thu, 09 Dec 2021 02:17:08 -0800 (PST)
-Received: from LAPTOP-FJDAS7G4.localdomain ([157.40.157.96])
-        by smtp.gmail.com with ESMTPSA id m6sm5236859pgs.18.2021.12.09.02.16.37
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=IN4xCsLAJXlPU569HaZTxOyjd2x1Ko14Bxrnp5etYhg=;
+        b=ripXt+w9yY4/rBJFKQ5Wj9OkgmmQVFBddNPzczpG4tyH5n2nccBGOtJpEv6Tg96FwW
+         KL1A/O6pdYcVZzpV9d3Go8xm46e0rlFAG4EWIlmSU++PlBH8YbzGg/Vp/97Xe51PraX0
+         KeqcTZ5LWIiCDUWEHTNUuUbOQKi7epedjdpCUuilO6LVhthufk2osWSXFyDkgyu8/bdS
+         Qh9LjEXVN5Ah1qy6mLQUuKQxnCvTEnJ+3oGJkPwL2x4QaNphw2w0x24qkTFWAXv0dnq+
+         PcsW455RboawfTObJVTdoJ7/NaccV3kurEc+EeZxjJtcscYf2VCM+Odvvn/tYtZlpVel
+         TE3g==
+X-Gm-Message-State: AOAM531Cw3lldJE92PrM4eO1z4iKRkmlw8+bMi8sWlcMtvUeeNzWTCSO
+        Bmo5uaSzkaaey3j+p3n0wv8NKlTYnCg=
+X-Google-Smtp-Source: ABdhPJytPPkovGENaPjX4J/gOHpgaHnGLqjsVhf1oNS5gtjgjUJpnNGFe5wxH878ckeLzdKNpUK3ZA==
+X-Received: by 2002:adf:d092:: with SMTP id y18mr5493229wrh.523.1639045811293;
+        Thu, 09 Dec 2021 02:30:11 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n184sm8355317wme.2.2021.12.09.02.30.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Dec 2021 02:17:08 -0800 (PST)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: [PATCH v3 1/1] push: make '-u' have default arguments
-Date:   Thu,  9 Dec 2021 15:45:50 +0530
-Message-Id: <20211209101550.19582-2-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20211209101550.19582-1-chakrabortyabhradeep79@gmail.com>
-References: <20211207182300.4361-1-chakrabortyabhradeep79@gmail.com>
- <20211209101550.19582-1-chakrabortyabhradeep79@gmail.com>
-MIME-Version: 1.0
+        Thu, 09 Dec 2021 02:30:10 -0800 (PST)
+Message-Id: <pull.981.v5.git.1639045809.gitgitgadget@gmail.com>
+In-Reply-To: <pull.981.v4.git.1637056178.gitgitgadget@gmail.com>
+References: <pull.981.v4.git.1637056178.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 09 Dec 2021 10:29:54 +0000
+Subject: [PATCH v5 00/15] diff --color-moved[-ws] speedups
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git push -u" (set-upstream) requires where to push to and what
-to push.  Often people push only the current branch to update
-the branch of the same name at the 'origin' repository.  For
-them, it would be convenient if "git push -u" without repository
-or refspec, defaulted to push and set upstream to the branch as
-configured by the "push.default" setting, of the remote repository
-that is used by default.
+Thanks to Dscho for his comments on V3. Changes since V4:
 
-Teach "git push -u" not to require repository and refspec.  When
-the user do not give what repository to push to, or which
-branch(es) to push, behave as if the default remote repository
-and a refspec (depending on the "push.default" configuration)
-are given.
+ * Fixed a typo in the commit message to patch 6
 
-If "push.default"=matching, push all the branches matched on both
-remote and local side and set those remote branches as the upstream
-of their respective local matched branches. Otherwise, set the
-refspec to the refspec for current branch.
+Changes since V3:
 
-Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
----
- Documentation/git-push.txt | 10 +++++
- builtin/push.c             | 11 ++++-
- t/t5523-push-upstream.sh   | 87 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 106 insertions(+), 2 deletions(-)
+ * Patch 1 now allows the user to choose different endpoints for the diff
+   perf tests to facilitate testing with different repositories.
+ * Fixed the alignment of the perf results column headers in a couple of
+   patches.
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 2f25aa3a29..6fd474441f 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -375,6 +375,16 @@ Specifying `--no-force-if-includes` disables this behavior.
- 	upstream (tracking) reference, used by argument-less
- 	linkgit:git-pull[1] and other commands. For more information,
- 	see `branch.<name>.merge` in linkgit:git-config[1].
-++
-+`-u` can also work with zero arguments( i.e. no `<repository>` and
-+`<refspec>` are given). In that case, it tries to get the `<repository>`
-+value from `branch.*.remote` configuration. If not found, it defaults to
-+`origin`. If `remote.pushDefault` is set then it uses that instead. The
-+value of `<refspec>` depends on the current `push.default` configuration.
-+If `push.default` is set to `matching`, all remote branches to which
-+local branches pushed, will be set as upstream of respective local
-+branches. For all other values of `push.default`, current branch's
-+refspec will be used as the `<refspec>`.
- 
- --[no-]thin::
- 	These options are passed to linkgit:git-send-pack[1]. A thin transfer
-diff --git a/builtin/push.c b/builtin/push.c
-index 4b026ce6c6..8bc206c9d8 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -202,11 +202,12 @@ static const char *get_upstream_ref(struct branch *branch, const char *remote_na
- 	return branch->merge[0]->src;
- }
- 
--static void setup_default_push_refspecs(struct remote *remote)
-+static void setup_default_push_refspecs(struct remote *remote, int flags)
- {
- 	struct branch *branch;
- 	const char *dst;
- 	int same_remote;
-+	int is_default_u = (flags & TRANSPORT_PUSH_SET_UPSTREAM);
- 
- 	switch (push_default) {
- 	case PUSH_DEFAULT_MATCHING:
-@@ -214,6 +215,8 @@ static void setup_default_push_refspecs(struct remote *remote)
- 		return;
- 
- 	case PUSH_DEFAULT_NOTHING:
-+		if (is_default_u)
-+			break;
- 		die(_("You didn't specify any refspecs to push, and "
- 		    "push.default is \"nothing\"."));
- 		return;
-@@ -234,11 +237,15 @@ static void setup_default_push_refspecs(struct remote *remote)
- 	case PUSH_DEFAULT_SIMPLE:
- 		if (!same_remote)
- 			break;
-+		if (is_default_u)
-+			break;
- 		if (strcmp(branch->refname, get_upstream_ref(branch, remote->name)))
- 			die_push_simple(branch, remote);
- 		break;
- 
- 	case PUSH_DEFAULT_UPSTREAM:
-+		if (is_default_u)
-+			break;
- 		if (!same_remote)
- 			die(_("You are pushing to remote '%s', which is not the upstream of\n"
- 			      "your current branch '%s', without telling me what to push\n"
-@@ -401,7 +408,7 @@ static int do_push(int flags,
- 		if (remote->push.nr) {
- 			push_refspec = &remote->push;
- 		} else if (!(flags & TRANSPORT_PUSH_MIRROR))
--			setup_default_push_refspecs(remote);
-+			setup_default_push_refspecs(remote, flags);
- 	}
- 	errs = 0;
- 	url_nr = push_url_of_remote(remote, &url);
-diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-index fdb4292056..ea5d1ae914 100755
---- a/t/t5523-push-upstream.sh
-+++ b/t/t5523-push-upstream.sh
-@@ -60,6 +60,48 @@ test_expect_success 'push -u :topic_2' '
- 	check_config topic_2 upstream refs/heads/other2
- '
- 
-+default_u_setup() {
-+	git checkout main &&
-+	test_might_fail	git branch --unset-upstream &&
-+	test_config push.default $1 &&
-+	test_config remote.pushDefault upstream
-+}
-+
-+for i in simple current upstream nothing
-+do
-+	test_expect_success 'push -u with push.default=$i' '
-+		default_u_setup $i &&
-+		git push -u &&
-+		check_config main upstream refs/heads/main &&
-+		git push -u upstream main:other &&
-+		git push -u &&
-+		check_config main upstream refs/heads/main
-+	'
-+done
-+
-+check_empty_config() {
-+	test_expect_code 1 git config "branch.$1.remote" &&
-+	test_expect_code 1 git config "branch.$1.merge"
-+}
-+
-+test_expect_success 'push -u with push.default=matching' '
-+	default_u_setup matching &&
-+	git branch test_u &&
-+	git branch test_u2 &&
-+	git push upstream main:test_u2 &&
-+	git push -u &&
-+	check_config main upstream refs/heads/main &&
-+	check_config test_u2 upstream refs/heads/test_u2 &&
-+	check_empty_config test_u
-+'
-+
-+test_expect_success 'push -u --dry-run' '
-+	git checkout main &&
-+	git push -u upstream main:other &&
-+	git push -u --dry-run &&
-+	check_config main upstream refs/heads/other
-+'
-+
- test_expect_success 'push -u --all' '
- 	git branch all1 &&
- 	git branch all2 &&
-@@ -81,6 +123,13 @@ test_expect_success TTY 'progress messages go to tty' '
- 	test_i18ngrep "Writing objects" err
- '
- 
-+test_expect_success TTY 'progress messages go to tty with default -u' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git push -u 2>err &&
-+	test_i18ngrep "Writing objects" err
-+'
-+
- test_expect_success 'progress messages do not go to non-tty' '
- 	ensure_fresh_upstream &&
- 
-@@ -89,6 +138,14 @@ test_expect_success 'progress messages do not go to non-tty' '
- 	test_i18ngrep ! "Writing objects" err
- '
- 
-+test_expect_success 'progress messages do not go to non-tty (default -u)' '
-+	ensure_fresh_upstream &&
-+
-+	# skip progress messages, since stderr is non-tty
-+	git push -u 2>err &&
-+	test_i18ngrep ! "Writing objects" err
-+'
-+
- test_expect_success 'progress messages go to non-tty (forced)' '
- 	ensure_fresh_upstream &&
- 
-@@ -97,6 +154,14 @@ test_expect_success 'progress messages go to non-tty (forced)' '
- 	test_i18ngrep "Writing objects" err
- '
- 
-+test_expect_success 'progress messages go to non-tty with default -u (forced)' '
-+	ensure_fresh_upstream &&
-+
-+	# force progress messages to stderr, even though it is non-tty
-+	git push -u --progress 2>err &&
-+	test_i18ngrep "Writing objects" err
-+'
-+
- test_expect_success TTY 'push -q suppresses progress' '
- 	ensure_fresh_upstream &&
- 
-@@ -104,6 +169,13 @@ test_expect_success TTY 'push -q suppresses progress' '
- 	test_i18ngrep ! "Writing objects" err
- '
- 
-+test_expect_success TTY 'push -q suppresses progress (with default -u)' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git push -u -q 2>err &&
-+	test_i18ngrep ! "Writing objects" err
-+'
-+
- test_expect_success TTY 'push --no-progress suppresses progress' '
- 	ensure_fresh_upstream &&
- 
-@@ -112,6 +184,14 @@ test_expect_success TTY 'push --no-progress suppresses progress' '
- 	test_i18ngrep ! "Writing objects" err
- '
- 
-+test_expect_success TTY 'push --no-progress suppresses progress (default -u)' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git push -u --no-progress 2>err &&
-+	test_i18ngrep ! "Unpacking objects" err &&
-+	test_i18ngrep ! "Writing objects" err
-+'
-+
- test_expect_success TTY 'quiet push' '
- 	ensure_fresh_upstream &&
- 
-@@ -126,4 +206,11 @@ test_expect_success TTY 'quiet push -u' '
- 	test_must_be_empty output
- '
- 
-+test_expect_success TTY 'quiet push -u (default -u)' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git push --quiet -u --no-progress 2>&1 | tee output &&
-+	test_must_be_empty output
-+'
-+
- test_done
+Changes since V2:
+
+ * Patches 1-3 are new and fix an existing bug.
+ * Patch 8 includes Peff's unused parameter fix.
+ * Patch 11 has been updated to fix a bug fix in V2.
+ * Patch 13 has an expanded commit message explaining a change in behavior
+   for lines starting with a form-feed.
+ * Updated benchmark results.
+
+The bug fix in patch 3 degrades the performance, but by the end of the
+series the timings are the same as V2 - see the range diff.
+
+V2 Cover Letter: Thanks to Ævar and Elijah for their comments, I've reworded
+the commit messages, addressed the enum initialization issue in patch 2 (now
+3) and added some perf tests.
+
+There are two new patches in this round. The first patch is new and adds the
+perf tests suggested by Ævar, the penultimate patch is also new and coverts
+the existing code to use a designated initializer.
+
+I've converted the benchmark results in the commit messages to use the new
+tests, the percentage changes are broadly similar to the previous results
+though I ended up running them on a different computer this time.
+
+V1 cover letter:
+
+The current implementation of diff --color-moved-ws=allow-indentation-change
+is considerably slower that the implementation of diff --color-moved which
+is in turn slower than a regular diff. This patch series starts with a
+couple of bug fixes and then reworks the implementation of diff
+--color-moved and diff --color-moved-ws=allow-indentation-change to speed
+them up on large diffs. The time to run git diff --color-moved
+--no-color-moved-ws v2.28.0 v2.29.0 is reduced by 33% and the time to run
+git diff --color-moved --color-moved-ws=allow-indentation-change v2.28.0
+v2.29.0 is reduced by 88%. There is a small slowdown for commit sized diffs
+with --color-moved - the time to run git log -p --color-moved
+--no-color-moved-ws --no-merges -n1000 v2.29.0 is increased by 2% on recent
+processors. On older processors these patches reduce the running time in all
+cases that I've tested. In general the larger the diff the larger the speed
+up. As an extreme example the time to run diff --color-moved
+--color-moved-ws=allow-indentation-change v2.25.0 v2.30.0 goes down from 8
+minutes to 6 seconds.
+
+Phillip Wood (15):
+  diff --color-moved: add perf tests
+  diff --color-moved: clear all flags on blocks that are too short
+  diff --color-moved: factor out function
+  diff --color-moved: rewind when discarding pmb
+  diff --color-moved=zebra: fix alternate coloring
+  diff --color-moved: avoid false short line matches and bad zebra
+    coloring
+  diff: simplify allow-indentation-change delta calculation
+  diff --color-moved-ws=allow-indentation-change: simplify and optimize
+  diff --color-moved: call comparison function directly
+  diff --color-moved: unify moved block growth functions
+  diff --color-moved: shrink potential moved blocks as we go
+  diff --color-moved: stop clearing potential moved blocks
+  diff --color-moved-ws=allow-indentation-change: improve hash lookups
+  diff: use designated initializers for emitted_diff_symbol
+  diff --color-moved: intern strings
+
+ diff.c                           | 431 +++++++++++++------------------
+ t/perf/p4002-diff-color-moved.sh |  57 ++++
+ t/t4015-diff-whitespace.sh       | 205 ++++++++++++++-
+ 3 files changed, 437 insertions(+), 256 deletions(-)
+ create mode 100755 t/perf/p4002-diff-color-moved.sh
+
+
+base-commit: 211eca0895794362184da2be2a2d812d070719d3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-981%2Fphillipwood%2Fwip%2Fdiff-color-moved-tweaks-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-981/phillipwood/wip/diff-color-moved-tweaks-v5
+Pull-Request: https://github.com/gitgitgadget/git/pull/981
+
+Range-diff vs v4:
+
+  1:  48ee03cf52a =  1:  48ee03cf52a diff --color-moved: add perf tests
+  2:  47c652716e8 =  2:  47c652716e8 diff --color-moved: clear all flags on blocks that are too short
+  3:  99e38ba9de9 =  3:  99e38ba9de9 diff --color-moved: factor out function
+  4:  9ca71db61ae =  4:  9ca71db61ae diff --color-moved: rewind when discarding pmb
+  5:  56bb69af36e =  5:  56bb69af36e diff --color-moved=zebra: fix alternate coloring
+  6:  10b11526206 !  6:  ed62b980225 diff --color-moved: avoid false short line matches and bad zerba coloring
+     @@ Metadata
+      Author: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+       ## Commit message ##
+     -    diff --color-moved: avoid false short line matches and bad zerba coloring
+     +    diff --color-moved: avoid false short line matches and bad zebra coloring
+      
+          When marking moved lines it is possible for a block of potential
+          matched lines to extend past a change in sign when there is a sequence
+  7:  c2e7b347257 =  7:  b8db6a1af7d diff: simplify allow-indentation-change delta calculation
+  8:  d7bbc0041e0 =  8:  eeb633063b7 diff --color-moved-ws=allow-indentation-change: simplify and optimize
+  9:  c3e5dce1910 =  9:  fb413cab3a8 diff --color-moved: call comparison function directly
+ 10:  9eb8cecd52a = 10:  ec8764082d5 diff --color-moved: unify moved block growth functions
+ 11:  35e204e1578 = 11:  6199a014547 diff --color-moved: shrink potential moved blocks as we go
+ 12:  ec329e7946d = 12:  1db84490ee4 diff --color-moved: stop clearing potential moved blocks
+ 13:  6ec94134aaf = 13:  3e769bab78c diff --color-moved-ws=allow-indentation-change: improve hash lookups
+ 14:  d44c5d734c3 = 14:  b8869659664 diff: use designated initializers for emitted_diff_symbol
+ 15:  5177f669423 = 15:  350fa55ce5e diff --color-moved: intern strings
+
 -- 
-2.34.1
-
+gitgitgadget
