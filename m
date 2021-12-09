@@ -2,57 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78C1FC433EF
-	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 18:50:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84B72C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 18:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229693AbhLISxg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 13:53:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41282 "EHLO
+        id S229688AbhLISxh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 13:53:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbhLISxe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 13:53:34 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20FE3C061746
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 10:50:01 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id p8-20020a17090a748800b001a6cceee8afso4121237pjk.4
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 10:50:01 -0800 (PST)
+        with ESMTP id S229694AbhLISxg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 13:53:36 -0500
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA10EC061A32
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 10:50:02 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id n22-20020a6563d6000000b0029261ffde9bso3688218pgv.22
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 10:50:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=8gDIpSjgsxdkrFB+PSm70WgF5BKfUXhUrmfWPrnp41w=;
-        b=RUxW3VZZtV7CxND5V60iH87x8UWN/VJ9D0LyVOOMyo9YrZVVtve52o7LCamp6EDx6b
-         a5ewwdtETch058urRJ5mJ2scJjjkZLmWiI3FG0H8gO5tiYe4fnIfyfviC+rH23KrTTQ8
-         4BB6ifCrwO6LTRnWEmqRELef3Y/Oc+6MidQi8tIs7sOdjjHAJsP8r13Y00fv3l/ICfl7
-         +YhXNPFWq+8UfRyjbMvpPXDTOjiaFwFednxRnqS05GgHg50WCwhESZCrUBfftbswuPK/
-         RvJkccYL3D5r/eeidESYWKYNk9g1usWLXxyt0tkpFvFrg/CloLGc9Mn/9etL2AprtQKi
-         kDsA==
+        bh=s77Sk63FkyMGDOdpbDwa6E11AC4W+xYYzmEtXBSi5rU=;
+        b=DyA91FiLkiZChPUDm8iZt7zBk1VACOxij94/NdIuj95SZPcZcYlC34eFEJEMiA00QH
+         c3NcfN2U79WNQ+286WNV598BBJb0eroD4SURHMjhzXSzLusCzD04WsEsJ3AvULdzKKHP
+         7/XEwh43kcTKAcy3pCvOFLpDhZc6mmMPpaRHBFrSRfEOwRhR9w1MqanLy7qao5yoJF7F
+         LDbyDGI8UkrSLYSNLutg0Xlt0dEJxJ2vsiCIWb1NcFvw/yRqMlEt8g0Zp3Ej07wdm+Xl
+         gJ4mKfmf21z3E6ey+ZzYRO5LHiwKuXhuuH+X+gQnpSS7/2AahntoJXlEQBPPpanOTJlQ
+         pC+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=8gDIpSjgsxdkrFB+PSm70WgF5BKfUXhUrmfWPrnp41w=;
-        b=LBEveM/7cATecxhObl2dBCmqs0/Qvyuk9f0WBmBegM9C6W/8UILwNz5Jr6hCeommzA
-         Bp3+c0g/LfD40Qpwj0RduKS8nx3WbUsMclknyq91UBrP/DOU9yLCUveJtNsn+gQwHVH6
-         1t50UmLQQx/ygiyDQ7D29mNBKDrW9SkOwq6EyPgePfa1U2B244uZAq1GO0GJU1SND9bH
-         yz4PnUB8ccy7vm8XwyhfHsz5huMg1npPwLJvc/da1CK+D0TEwLPMbaF+W8xFCn1E6UL5
-         j9qyBqcng7VFhZu/s508+zprcqw8atPPoVSNlR4ucRunz4d9BZRfSI2pL8kvWq3yvHu5
-         KzfA==
-X-Gm-Message-State: AOAM530VQszj9RKMNpxj2bxYGQfI+di4njpU+Lz2kTJQjLAJ9ZqGez+X
-        9fYijJTlsEKNf4U57uGTx6MPX7NdhB8Dtjwxv4XeIiHkG4+4hF7RYF3Tn4fRaaOZFWnPxBdgkLO
-        jbSNHozUom86gf58G30phIwI3NySat2YkdZyhXxv7eYwdFsR0EoNFEKsr37m9Ypo=
-X-Google-Smtp-Source: ABdhPJyuYZ9YrJI4zKHdXTe6oLAYELUMgzxuad43d983+9GhVjakZhXprUPvaTihgIFTgphAtxqxGWSgl+qFBw==
+        bh=s77Sk63FkyMGDOdpbDwa6E11AC4W+xYYzmEtXBSi5rU=;
+        b=qILPx2jddy9Au3m1UZhe0n9hItDDnl4NSmx6KGe2aomnLuQ9MaOc3IuCvdPvxjZBe+
+         DZu77uW+S1Hx2WRZsxFBDOsHIhwokvgZFZlwS2zUD+w1A+MmnCkzeYYqkUWPAKF+X4Do
+         r4s8TkKmQbpKXSKezcX1QisPd5v9FVo7ORfhnGYdI1VdbJIk3EHoRKG6xEc4UXE7+v0r
+         nlbRBkbZ06q6oJ9MR36olCJgTr0muaylJUv4/BwKBCTM/RmS8cvtTjSpxRChKgCjzAVs
+         G/Muqzb9TIs04ZoHc/K5oabJFnNw7mrKEfhaPzl5s1EIuxiStahr/npsIy/Qjw4ZdgFK
+         JnDw==
+X-Gm-Message-State: AOAM5335nBi2gqkc+B39rPuGSKR4e1C51yjqZjkQCZ1pXz6i9jXhx2Vl
+        C6or6eZmzLHiMkBiODO1QpweqH/RoS9ix7IKvG0mFFlckEP9NrMQv3gmwYtAiwNOrXdmtZL/Ste
+        v/WibuhxH8Xnk8BrnIfoZhoYmcYVDoRsdx1ceJ3s37gk2HwMJU3SpjFFZUf9jnd0=
+X-Google-Smtp-Source: ABdhPJyPistYGjDScFqbWCUk5JNr1SAPhFcl4dMxqq8tfRZWJD7hqXv85FIP5/HUdwMH5h9+ZYYmwEcG8v6vPQ==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a62:14c7:0:b0:4a2:a6f2:2227 with SMTP id
- 190-20020a6214c7000000b004a2a6f22227mr13463490pfu.22.1639075800447; Thu, 09
- Dec 2021 10:50:00 -0800 (PST)
-Date:   Thu,  9 Dec 2021 10:49:25 -0800
+ (user=chooglen job=sendgmr) by 2002:a63:495b:: with SMTP id
+ y27mr36191664pgk.601.1639075802322; Thu, 09 Dec 2021 10:50:02 -0800 (PST)
+Date:   Thu,  9 Dec 2021 10:49:26 -0800
 In-Reply-To: <20211209184928.71413-1-chooglen@google.com>
-Message-Id: <20211209184928.71413-3-chooglen@google.com>
+Message-Id: <20211209184928.71413-4-chooglen@google.com>
 Mime-Version: 1.0
 References: <20211206215528.97050-1-chooglen@google.com> <20211209184928.71413-1-chooglen@google.com>
 X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
-Subject: [PATCH v3 2/5] branch: remove forward declaration of validate_branch_start()
+Subject: [PATCH v3 3/5] builtin/branch: clean up action-picking logic in cmd_branch()
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -67,139 +66,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the previous commit, validate_branch_start() was forward declared in
-order to preserve the function order and minimize the diff. Since the
-forward declaration is no longer needed, remove it by moving
-setup_tracking() to the appropriate position.
+Add a variable to cmd_branch() that will tell us whether or not
+cmd_branch() will default to creating a branch (instead of performing
+another action). Besides making the function more explicit, this allows
+us to validate options that can only be used when creating a branch.
+Such an option does not exist yet, but one will be introduced in a
+subsequent commit.
+
+Incidentally, fix an incorrect usage string that combined the 'list'
+usage of git branch (-l) with the 'create' usage; this string has been
+incorrect since its inception, a8dfd5eac4 (Make builtin-branch.c use
+parse_options., 2007-10-07).
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
-This patch is logically part of the previous patch because it just
-cleans up the artificial forward declaration that exists only to shrink
-the diff for reviewers.
+ builtin/branch.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-As such, if/when this series is merged, I would prefer for this patch to
-be squashed with the previous one.
-
- branch.c | 98 +++++++++++++++++++++++++++-----------------------------
- 1 file changed, 47 insertions(+), 51 deletions(-)
-
-diff --git a/branch.c b/branch.c
-index 9429936734..6b9d64cdf9 100644
---- a/branch.c
-+++ b/branch.c
-@@ -209,57 +209,6 @@ static int inherit_tracking(struct tracking *tracking, const char *orig_ref)
- 	return 0;
- }
+diff --git a/builtin/branch.c b/builtin/branch.c
+index e19aab5356..14aff33a50 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -27,7 +27,7 @@
  
--static void validate_branch_start(struct repository *r, const char *start_name,
--				  enum branch_track track,
--				  struct object_id *oid, char **real_ref);
--
--void setup_tracking(const char *new_ref, const char *orig_ref,
--			   enum branch_track track, int quiet, int expand_orig)
--{
--	struct tracking tracking;
--	struct string_list tracking_srcs = STRING_LIST_INIT_DUP;
--	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
--	char *full_orig_ref;
--	struct object_id unused_oid;
--
--	memset(&tracking, 0, sizeof(tracking));
--	if (expand_orig)
--		validate_branch_start(the_repository, orig_ref, track, &unused_oid, &full_orig_ref);
--	else
--		full_orig_ref = xstrdup(orig_ref);
--
--	tracking.spec.dst = full_orig_ref;
--	tracking.srcs = &tracking_srcs;
--	if (track != BRANCH_TRACK_INHERIT)
--		for_each_remote(find_tracked_branch, &tracking);
--	else if (inherit_tracking(&tracking, orig_ref))
--		return;
--
--	if (!tracking.matches)
--		switch (track) {
--		case BRANCH_TRACK_ALWAYS:
--		case BRANCH_TRACK_EXPLICIT:
--		case BRANCH_TRACK_OVERRIDE:
--			break;
--		default:
--			goto cleanup;
--		}
--
--	if (tracking.matches > 1)
--		die(_("Not tracking: ambiguous information for ref %s"),
--		    full_orig_ref);
--
--	if (tracking.srcs->nr < 1)
--		string_list_append(tracking.srcs, full_orig_ref);
--	if (install_branch_config_multiple_remotes(config_flags, new_ref, tracking.remote,
--			      tracking.srcs) < 0)
--		exit(-1);
--
--cleanup:
--	string_list_clear(tracking.srcs, 0);
--	free(full_orig_ref);
--}
--
- int read_branch_desc(struct strbuf *buf, const char *branch_name)
+ static const char * const builtin_branch_usage[] = {
+ 	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged]"),
+-	N_("git branch [<options>] [-l] [-f] <branch-name> [<start-point>]"),
++	N_("git branch [<options>] [-l] [<pattern>...]"),
+ 	N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
+ 	N_("git branch [<options>] (-m | -M) [<old-branch>] <new-branch>"),
+ 	N_("git branch [<options>] (-c | -C) [<old-branch>] <new-branch>"),
+@@ -616,14 +616,15 @@ static int edit_branch_description(const char *branch_name)
+ 
+ int cmd_branch(int argc, const char **argv, const char *prefix)
  {
- 	char *v = NULL;
-@@ -407,6 +356,53 @@ static void validate_branch_start(struct repository *r, const char *start_name,
- 	oidcpy(oid, &commit->object.oid);
- }
+-	int delete = 0, rename = 0, copy = 0, force = 0, list = 0;
+-	int show_current = 0;
+-	int reflog = 0, edit_description = 0;
+-	int quiet = 0, unset_upstream = 0;
++	/* possible actions */
++	int delete = 0, rename = 0, copy = 0, force = 0, list = 0,
++	    unset_upstream = 0, show_current = 0, edit_description = 0;
++	int noncreate_actions = 0;
++	/* possible options */
++	int reflog = 0, quiet = 0, icase = 0;
+ 	const char *new_upstream = NULL;
+ 	enum branch_track track;
+ 	struct ref_filter filter;
+-	int icase = 0;
+ 	static struct ref_sorting *sorting;
+ 	struct string_list sorting_options = STRING_LIST_INIT_DUP;
+ 	struct ref_format format = REF_FORMAT_INIT;
+@@ -708,8 +709,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	    filter.reachable_from || filter.unreachable_from || filter.points_at.nr)
+ 		list = 1;
  
-+void setup_tracking(const char *new_ref, const char *orig_ref,
-+			   enum branch_track track, int quiet, int expand_orig)
-+{
-+	struct tracking tracking;
-+	struct string_list tracking_srcs = STRING_LIST_INIT_DUP;
-+	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
-+	char *full_orig_ref;
-+	struct object_id unused_oid;
-+
-+	memset(&tracking, 0, sizeof(tracking));
-+	if (expand_orig)
-+		validate_branch_start(the_repository, orig_ref, track, &unused_oid, &full_orig_ref);
-+	else
-+		full_orig_ref = xstrdup(orig_ref);
-+
-+	tracking.spec.dst = full_orig_ref;
-+	tracking.srcs = &tracking_srcs;
-+	if (track != BRANCH_TRACK_INHERIT)
-+		for_each_remote(find_tracked_branch, &tracking);
-+	else if (inherit_tracking(&tracking, orig_ref))
-+		return;
-+
-+	if (!tracking.matches)
-+		switch (track) {
-+		case BRANCH_TRACK_ALWAYS:
-+		case BRANCH_TRACK_EXPLICIT:
-+		case BRANCH_TRACK_OVERRIDE:
-+			break;
-+		default:
-+			goto cleanup;
-+		}
-+
-+	if (tracking.matches > 1)
-+		die(_("Not tracking: ambiguous information for ref %s"),
-+		    full_orig_ref);
-+
-+	if (tracking.srcs->nr < 1)
-+		string_list_append(tracking.srcs, full_orig_ref);
-+	if (install_branch_config_multiple_remotes(config_flags, new_ref, tracking.remote,
-+			      tracking.srcs) < 0)
-+		exit(-1);
-+
-+cleanup:
-+	string_list_clear(tracking.srcs, 0);
-+	free(full_orig_ref);
-+}
-+
- void create_branch(struct repository *r, const char *name,
- 		   const char *start_name, int force, int clobber_head_ok,
- 		   int reflog, int quiet, enum branch_track track)
+-	if (!!delete + !!rename + !!copy + !!new_upstream + !!show_current +
+-	    list + edit_description + unset_upstream > 1)
++	noncreate_actions = !!delete + !!rename + !!copy + !!new_upstream +
++			    !!show_current + !!list + !!edit_description +
++			    !!unset_upstream;
++	if (noncreate_actions > 1)
+ 		usage_with_options(builtin_branch_usage, options);
+ 
+ 	if (filter.abbrev == -1)
+@@ -847,7 +850,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		strbuf_addf(&buf, "branch.%s.merge", branch->name);
+ 		git_config_set_multivar(buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPLACE);
+ 		strbuf_release(&buf);
+-	} else if (argc > 0 && argc <= 2) {
++	} else if (!noncreate_actions && argc > 0 && argc <= 2) {
+ 		if (filter.kind != FILTER_REFS_BRANCHES)
+ 			die(_("The -a, and -r, options to 'git branch' do not take a branch name.\n"
+ 				  "Did you mean to use: -a|-r --list <pattern>?"));
 -- 
 2.33.GIT
 
