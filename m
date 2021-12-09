@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BC85C433F5
-	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 07:26:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED712C433EF
+	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 07:26:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230021AbhLIH3c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 02:29:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47744 "EHLO
+        id S230216AbhLIH3d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 02:29:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229875AbhLIH3c (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230071AbhLIH3c (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 9 Dec 2021 02:29:32 -0500
 Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDE07C061746
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 23:25:58 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id d9so8078208wrw.4
-        for <git@vger.kernel.org>; Wed, 08 Dec 2021 23:25:58 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A19C3C061746
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 23:25:59 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id o13so8008187wrs.12
+        for <git@vger.kernel.org>; Wed, 08 Dec 2021 23:25:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=DSFLxmBFwI+3QxI6zMtwdxNKlGXZcZDyKbmjvwYFhcs=;
-        b=aRWQJ6q/S0rLmx5dCszwXHnWLxgI+ZNff49HWzq4Lcl7wGb3MZQVAkBkzbFLfnK5Kb
-         xzLjwMH5Elfq08f1kA89wRQI5zVImDZLwVZt4OSozj5YSghTfwpU5RBkJtau8b6MhZMW
-         629UgJmzDxGDLF9CrLAPlz0vf+Xj3Hg9BA0lsKD+ktuz8MzUHC/Yq3VzacyAuvjZtEb1
-         wQekcvi1Uz5XkxrPrHCwV/0m/7rHDkiKM9Trb2VJDTyEjf/Egy/BmVZRJ3zQvSuRYK3o
-         lgbjzyLFQT3nBQ5KwkzugW/VPevoXuDvA1dllpx+XvsDcbjW/8BifJy+YEf2c2Qh1SyY
-         PwtA==
+        bh=2wOIUyXvK6HBA37YvvgtpeXS/BCdUCODvPh5e+IWqzE=;
+        b=pa53swp55VjCF243fUXzmqxTO0rlQVYvm7blAEho/TFdpDefMlCHR3S+w6w3q/S/JY
+         Kb53f3svzfpXdKXxC2ICsvs8HNkT/fGuv5urbJZI4ZPag49Tt6bVN+CavLsMyZVT0l6c
+         1Od0FZznGCsVp8tqAfTWnK2+u8bluH/UWGZLWowyr9Kq/qpyKTtEnZvLNi9rnVbHaeXK
+         j1mXLRfYXJs85JwItiSlGKZn8t7GrChG0JHt92BtMbdojibKasw7sABX+ajHE+phHr+e
+         aK1wI6dzYefcd9U/m+2cLNzUkR13mcH0snQ8TDhMbt3Ew51lMIlbC9Jp3YFFY3QbM2Q2
+         gF1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=DSFLxmBFwI+3QxI6zMtwdxNKlGXZcZDyKbmjvwYFhcs=;
-        b=Gc2E6lDiLqiUWUKyFsBeFFd4sm4dUswLbAv8HWAs9DXgDWTqFH7SOrSOetl2AveRrx
-         1gwN2bK+UedTjP1pznwc5qMD8wj4d2TCSkNJ0Xr8XGhKNPKI0vQXS03tGk8viRH+QgaI
-         Akom7h5wAIF20+NzDhEALXQqePhUvmp4EBT2eAKlP9HP0rO/Oev55eYUMaRJztZPHHog
-         DNAvlEfqBB1yR3qt0HGcVhU4h/Llips/P2HmP7q79/NKyOjANP4T8DTD11VF1hUCzPvo
-         Qhi9r+lxxyQ2FfzO26txl053F8mf1lthYlfK1qcYMDYdhIm/bvd5B1Snx04WIX4xHXeq
-         uVGw==
-X-Gm-Message-State: AOAM533BMEMhIYdE/7dOYSugWJ5vyQwO1GfdPfsCPQbNTu/9TP7LvatY
-        xkjI3iJ/HHeHzHYZks1PygleVjelVko=
-X-Google-Smtp-Source: ABdhPJyc2ioUIW6Wbktvy/By8nmQ6V5sEpPa3bMR/I0PFw36XGMBZ4XWyXqxtD7EhVYLOCHh6l0Q4Q==
-X-Received: by 2002:adf:eb42:: with SMTP id u2mr4560643wrn.521.1639034757161;
-        Wed, 08 Dec 2021 23:25:57 -0800 (PST)
+        bh=2wOIUyXvK6HBA37YvvgtpeXS/BCdUCODvPh5e+IWqzE=;
+        b=Zy9YEtNYJSO+BUA68K7RmlF9ntT3CoSODtm58yY5ni0SM87Y9P2KJGqsti8vV2hQnB
+         lOiywAaaSMP6EPgXC1W73qq6RQziB7OTKXAiOST2rqBTacs74YL3DGI0CrIbNc+ZmWjS
+         J6BFYgNJ+dwgYntFqlXfy+OolJxfc/ilbMN2RagBYtps6silHQ7hK+zWBJmoljb2eX8i
+         kGKZflBZkFRQUFWyJU+mRvr1gWsezqh9zGh42stmW8YWk3EoMJywfe5tjRyXunysZaBN
+         2VfUGBvMAHVHKzIWlyZUYVIentPk7N4X8po/tGjRg10dQu/KDS+BTPrJpAyuXSn+idTB
+         fOAw==
+X-Gm-Message-State: AOAM532vq9N7EuT9LzaD8F4FRonRyVnJiIPh1BOOIAibO9cjbNZmFydT
+        EysoNHhqAy9eskHarQ/0cE672dSMDUk=
+X-Google-Smtp-Source: ABdhPJw7PV9ps39por4qgkR5uuzUVy8WZWR4TQQXqkAUpL8n5EOkjpnxfZyoGxoP7v7axITugmWXkQ==
+X-Received: by 2002:a05:6000:181:: with SMTP id p1mr4606630wrx.292.1639034758047;
+        Wed, 08 Dec 2021 23:25:58 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o12sm5319096wmq.12.2021.12.08.23.25.56
+        by smtp.gmail.com with ESMTPSA id z7sm7622743wmi.33.2021.12.08.23.25.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Dec 2021 23:25:56 -0800 (PST)
-Message-Id: <pull.1076.v19.git.1639034755.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1076.v18.git.1638939946.gitgitgadget@gmail.com>
+        Wed, 08 Dec 2021 23:25:57 -0800 (PST)
+Message-Id: <a524ca6adfa2adc02e517b7be5199b0c071134c4.1639034755.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1076.v19.git.1639034755.gitgitgadget@gmail.com>
 References: <pull.1076.v18.git.1638939946.gitgitgadget@gmail.com>
-From:   "Aleen via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 09 Dec 2021 07:25:52 +0000
-Subject: [PATCH v19 0/3] am: support --empty=(die|drop|keep) option and --allow-empty option to
- handle empty patches
+        <pull.1076.v19.git.1639034755.gitgitgadget@gmail.com>
+From:   "=?UTF-8?q?=E5=BE=90=E6=B2=9B=E6=96=87=20=28Aleen=29?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Thu, 09 Dec 2021 07:25:53 +0000
+Subject: [PATCH v19 1/3] doc: git-format-patch: describe the option --always
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,225 +65,48 @@ Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Elijah Newren <newren@gmail.com>,
         Aleen =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>,
-        Aleen <aleen42@vip.qq.com>
+        Aleen <aleen42@vip.qq.com>,
+        =?UTF-8?q?=E5=BE=90=E6=B2=9B=E6=96=87=20=28Aleen=29?= 
+        <aleen42@vip.qq.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since that git has supported the --always option for the git-format-patch
-command to create a patch with an empty commit message, git-am should
-support applying and committing with empty patches.
+From: =?UTF-8?q?=E5=BE=90=E6=B2=9B=E6=96=87=20=28Aleen=29?=
+ <aleen42@vip.qq.com>
 
-----------------------------------------------------------------------------
+This commit has described how to use '--always' option in the command
+'git-format-patch' to include patches for commits that emit no changes.
 
-Changes since v1:
+Signed-off-by: 徐沛文 (Aleen) <aleen42@vip.qq.com>
+---
+ Documentation/git-format-patch.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
- 1. add a case when not passing the --always option.
- 2. rename the --always option to --allow-empty.
-
-----------------------------------------------------------------------------
-
-Changes since v2:
-
- 1. rename the --allow-empty option to --empty-commit.
- 2. introduce three different strategies (die|skip|asis) when trying to
-    record empty patches as empty commits.
-
-----------------------------------------------------------------------------
-
-Changes since v3:
-
- 1. generate the missed file for test cases.
- 2. grep -f cannot be used under Mac OS.
-
-----------------------------------------------------------------------------
-
-Changes since v4:
-
- 1. rename the --empty-commit option to --empty.
- 2. rename three different strategies (die|skip|asis) to die, drop and keep
-    correspondingly.
-
-----------------------------------------------------------------------------
-
-Changes since v5:
-
- 1. throw an error when passing --empty option without value.
-
-----------------------------------------------------------------------------
-
-Changes since v6:
-
- 1. add i18n resources.
-
-----------------------------------------------------------------------------
-
-Changes since v7:
-
- 1. update code according to the seen branch.
- 2. fix the wrong document of git-am.
- 3. sign off commits by a real name.
-
-----------------------------------------------------------------------------
-
-Changes since v8:
-
- 1. update the committer's name with my real name to fix DCO of GGG.
-
-----------------------------------------------------------------------------
-
-Changes since v9:
-
- 1. imitate the signed name format of
-    https://lore.kernel.org/git/pull.1143.git.git.1637347813367.gitgitgadget@gmail.com
-    .
-
-----------------------------------------------------------------------------
-
-Changes since v11:
-
- 1. introduce an interactive option --allow-empty for git-am to record empty
-    patches in the middle of an am session.
-
-----------------------------------------------------------------------------
-
-Changes since v12:
-
- 1. record the empty patch as an empty commit only when there are no
-    changes.
- 2. fix indentation problems.
- 3. simplify "to keep recording" to "to record".
- 4. add a test case for skipping empty patches via the --skip option.
-
-----------------------------------------------------------------------------
-
-Changes since v13:
-
- 1. add an additional description about the 'die' value.
-
-----------------------------------------------------------------------------
-
-Changes since v14:
-
- 1. reimplement the 'die' value and stop the whole session. (Expected a
-    reroll)
- 2. the --allow-empty option is a valid resume value only when: (Expected a
-    reroll)
-    * index has not changed
-    * lacking a patch
-
-----------------------------------------------------------------------------
-
-Changes since v15:
-
- 1. rename "die" to "stop".
-
-----------------------------------------------------------------------------
-
-Changes since v16:
-
- 1. fix the typo from "had" to "has" in the comment.
-
-----------------------------------------------------------------------------
-
-Changes since v17:
-
- 1. add trailing comma, show tips of creating an empty commit, and use "%B"
-    to construct test cases.
- 2. remove the error "Invalid resume value.".
- 3. hint "--allow-empty" after "--skip".
-
-----------------------------------------------------------------------------
-
-Changes since v18:
-
- 1. remove strict checking of "--allow-empty".
-
-徐沛文 (Aleen) (3):
-  doc: git-format-patch: describe the option --always
-  am: support --empty=<option> to handle empty patches
-  am: support --allow-empty to record specific empty patches
-
- Documentation/git-am.txt           |  16 ++++-
- Documentation/git-format-patch.txt |   6 +-
- builtin/am.c                       |  89 ++++++++++++++++++++----
- t/t4150-am.sh                      | 107 +++++++++++++++++++++++++++++
- t/t7512-status-help.sh             |   1 +
- wt-status.c                        |   8 ++-
- 6 files changed, 211 insertions(+), 16 deletions(-)
-
-
-base-commit: abe6bb3905392d5eb6b01fa6e54d7e784e0522aa
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1076%2Faleen42%2Fnext-v19
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1076/aleen42/next-v19
-Pull-Request: https://github.com/gitgitgadget/git/pull/1076
-
-Range-diff vs v18:
-
- 1:  a524ca6adfa = 1:  a524ca6adfa doc: git-format-patch: describe the option --always
- 2:  56953d416d9 = 2:  56953d416d9 am: support --empty=<option> to handle empty patches
- 3:  4c3077f9384 ! 3:  37875e8d313 am: support --allow-empty to record specific empty patches
-     @@ Commit message
-          This option helps to record specific empty patches in the middle
-          of an am session, which does create empty commits only when:
-      
-     -        1. index has not changed
-     +        1. the index has not changed
-              2. lacking a branch
-      
-     +    When the index has changed, "--allow-empty" will create a non-empty
-     +    commit like passing "--continue" or "--resolved".
-     +
-          Signed-off-by: 徐沛文 (Aleen) <aleen42@vip.qq.com>
-      
-       ## Documentation/git-am.txt ##
-     @@ builtin/am.c: next:
-      -static void am_resolve(struct am_state *state)
-      +static void am_resolve(struct am_state *state, int allow_empty)
-       {
-     -+	int index_changed;
-     -+
-       	validate_resume_state(state);
-       
-       	say(state, stdout, _("Applying: %.*s"), linelen(state->msg), state->msg);
-       
-     --	if (!repo_index_has_changes(the_repository, NULL, NULL)) {
-     + 	if (!repo_index_has_changes(the_repository, NULL, NULL)) {
-      -		printf_ln(_("No changes - did you forget to use 'git add'?\n"
-      -			"If there is nothing left to stage, chances are that something else\n"
-      -			"already introduced the same changes; you might want to skip this patch."));
-     -+	index_changed = repo_index_has_changes(the_repository, NULL, NULL);
-     -+	if (allow_empty &&
-     -+	    !(!index_changed && is_empty_or_missing_file(am_path(state, "patch"))))
-     - 		die_user_resolve(state);
-     -+
-     -+	if (!index_changed) {
-     -+		if (allow_empty) {
-     +-		die_user_resolve(state);
-     ++		if (allow_empty && is_empty_or_missing_file(am_path(state, "patch"))) {
-      +			printf_ln(_("No changes - recorded it as an empty commit."));
-      +		} else {
-      +			printf_ln(_("No changes - did you forget to use 'git add'?\n"
-     @@ t/t4150-am.sh: test_expect_success 'record as an empty commit when meeting e-mai
-      +	grep -f actual expected
-      +'
-      +
-     -+test_expect_success 'cannot create empty commits when the index is changed' '
-     ++test_expect_success 'create an non-empty commit when the index IS changed though "--allow-empty" is given' '
-      +	git checkout empty-commit^ &&
-      +	test_must_fail git am empty-commit.patch >err &&
-      +	: >empty-file &&
-      +	git add empty-file &&
-     -+	test_must_fail git am --allow-empty >err &&
-     -+	! grep "To record the empty patch as an empty commit, run \"git am --allow-empty\"." err
-     ++	git am --allow-empty &&
-     ++	git show empty-commit --format="%B" >expected &&
-     ++	git show HEAD --format="%B" >actual &&
-     ++	grep -f actual expected &&
-     ++	git diff HEAD^..HEAD --name-only
-      +'
-      +
-      +test_expect_success 'cannot create empty commits when there is a clean index due to merge conflicts' '
-
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 113eabc107c..be797d7a28f 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -18,7 +18,7 @@ SYNOPSIS
+ 		   [-n | --numbered | -N | --no-numbered]
+ 		   [--start-number <n>] [--numbered-files]
+ 		   [--in-reply-to=<message id>] [--suffix=.<sfx>]
+-		   [--ignore-if-in-upstream]
++		   [--ignore-if-in-upstream] [--always]
+ 		   [--cover-from-description=<mode>]
+ 		   [--rfc] [--subject-prefix=<subject prefix>]
+ 		   [(--reroll-count|-v) <n>]
+@@ -192,6 +192,10 @@ will want to ensure that threading is disabled for `git send-email`.
+ 	patches being generated, and any patch that matches is
+ 	ignored.
+ 
++--always::
++	Include patches for commits that do not introduce any change,
++	which are omitted by default.
++
+ --cover-from-description=<mode>::
+ 	Controls which parts of the cover letter will be automatically
+ 	populated using the branch's description.
 -- 
 gitgitgadget
+
