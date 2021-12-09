@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A6B3C433EF
-	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 05:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80C22C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 05:08:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229928AbhLIFMO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 00:12:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44860 "EHLO
+        id S230244AbhLIFMT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 00:12:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbhLIFMN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 00:12:13 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E809C061746
+        with ESMTP id S229908AbhLIFMO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 00:12:14 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E26BBC061746
         for <git@vger.kernel.org>; Wed,  8 Dec 2021 21:08:40 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id q3so7673828wru.5
+Received: by mail-wr1-x42f.google.com with SMTP id o13so7608776wrs.12
         for <git@vger.kernel.org>; Wed, 08 Dec 2021 21:08:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=/br5QtSlD8zYvfjupu33pJaQGUHCqbWvWlX6nonByt0=;
-        b=JCBDpAnHH41lwIlX58fSTMAQQgStrnxtlumnd1MG18VdvZh3IjK9RN9xPU02/NvY+V
-         t8i+iptT2EGazoyG7az8g5JpupNEOii7SpbAwOzt0K/VpmlGH9FRhzwqG+gPR052qJ+x
-         nSNy0qaJHfTssUJRpL/JMth7U+GKyeyyE8uepR293Ba8nrwzMAp+n1spVepNtA/FTYA+
-         jHe6md7sT3/O1pqXnIXIParbjkmMOT47aJvAkvHVcnuSM0YEk/ggiHp8h4q6oKuYInY1
-         uOCNn5TvHWZlzQcjSG3D5/PN6IPEIrcfcSVe/D5e7zqgszW01Lkb/xq0jmqubTUJ+waS
-         42qQ==
+        bh=JWGrtdQmUz0n8syt0R7EEy38F83S6N1dSa0aH9FmPDo=;
+        b=eQ6uIxnuADykAwCnFmCXG5wMckWHTzGcakA7o4wIJ3Q52zzyeIOmJVkXGGe8swLqJb
+         ngmU2E6srh7fQt0ewMXNENAFSFUJ8tnlcwUIJ9Evjg0l5ZfbBhUuJKZ57ugtdESQ++hx
+         rtFw7SDWKokHSJaJvbv9Ih0Na0HiMKEIoW6JkbAfJgEZmfmrYY3t20XkRpPtQ4BB1dF1
+         kzIF8LcbytbMpAgbx99KwF82NDP+fdLCHJhacV5esOpnCno7xP3rbR2GfdzXFcYIhp/5
+         5X/Z3EanuyzDXU4nvHJviGvSFZo5Bd69ynDlYLZi/kKJhApDGGx6dCyiPNLckNofP2ji
+         9Rxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=/br5QtSlD8zYvfjupu33pJaQGUHCqbWvWlX6nonByt0=;
-        b=E/7QF5aEiaqzUry5J6+vScOR4Nal1Q19tmlXF1OKNkHJIdMjkWP9lCWp/Hj+92TDw8
-         Y4ZdmqDgVwiHGC/xhdRPxVN5s7PgdRwDiFglfNW8bEogWIWT7+2tMV0c2tdkaXIPs0aJ
-         bxICPVKkCBvZT1Ji4XeZXDbgeAHv1sQVN40IQXaY62IDMq1W4jXOD5AkR71FuVUTg4aZ
-         qYNwOIlS6DmV0viCmoIXC8J39ykSUj8/Il5jznQNebLbOdRASof/9lzmxN5DnRPAE052
-         tIqjtplxHusz+a02RGoJMFmU0PbYBIaiEfA/3jrkLX5TL0WxH4wonYQZnLfpSs272k/H
-         Ni/w==
-X-Gm-Message-State: AOAM530kEPI4MOlIxuF4nSZ0RwpAJ3DJZaW7O3jY/DaJjGX/Vhv2qnC9
-        5/SSXZ8hpL5K681jThn7q+EEuDC62pI=
-X-Google-Smtp-Source: ABdhPJxCBnZHbnMpRHaNb6XjHfjtL0kqvuUBIrCzHqvb0rFjKHvfP0M9Ls0BuZyLiW1I52mbHiI7Pg==
-X-Received: by 2002:adf:edc6:: with SMTP id v6mr3734581wro.461.1639026518428;
-        Wed, 08 Dec 2021 21:08:38 -0800 (PST)
+        bh=JWGrtdQmUz0n8syt0R7EEy38F83S6N1dSa0aH9FmPDo=;
+        b=I1rqqrGAtrb5TpfOHGPmpafUCLXcpHvv7spxYxqGSBlGzska4jS+fdecYQCu8+ufwX
+         bD6v6NkK8aRfywU9czuMmA+rvzciGrJTJT0OXYcLtU0JIvZbDaejxmbdZvgVdBMDGWUi
+         CoOlA+VRe5GH8KIVHk7idJevqGxwT58HxoSNh4nxI41OsDUD3IUpx3LJboNBqkyqjwyC
+         bn7rPviXLY8rfoHBLfEPUCG85Ja5Y4ViYJp2rYViIIeDW6l9+CO2mNb93prGEaJbJaCd
+         Y2mQc3QFj8Te/67WdQHeKxMzC+cPF6rJFSm1A57hR9IIeDw/eT9RhDesUB4+qxY+VqaB
+         /JTw==
+X-Gm-Message-State: AOAM531DPq8O1DrxvYJB8avIbOtu3j4SVaYF/70RKksNWeBF5LOalMKd
+        19j6nqXlqtS8e8GWWAz6xtsod0w+iUg=
+X-Google-Smtp-Source: ABdhPJy8DTm08OTTjQcSAJ8P3qlxpM7hLlOldDiMmrd2JyCnp2CGI4HTZ9CTTRGXN+aU/Z9Gvs0PkQ==
+X-Received: by 2002:adf:d1c2:: with SMTP id b2mr3824793wrd.114.1639026519318;
+        Wed, 08 Dec 2021 21:08:39 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c1sm4554708wrt.14.2021.12.08.21.08.37
+        by smtp.gmail.com with ESMTPSA id j18sm9799795wmq.44.2021.12.08.21.08.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Dec 2021 21:08:37 -0800 (PST)
-Message-Id: <1fd76d4f8a8c98d3c78c94cc8f3d36c335bd3bfb.1639026515.git.gitgitgadget@gmail.com>
+        Wed, 08 Dec 2021 21:08:38 -0800 (PST)
+Message-Id: <cd1f564c4c0df9d6546e35a475e1f95d4afd5f59.1639026515.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1140.v6.git.git.1639026515.gitgitgadget@gmail.com>
 References: <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com>
         <pull.1140.v6.git.git.1639026515.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 09 Dec 2021 05:08:25 +0000
-Subject: [PATCH v6 01/11] t2501: add various tests for removing the current
- working directory
+Date:   Thu, 09 Dec 2021 05:08:26 +0000
+Subject: [PATCH v6 02/11] setup: introduce startup_info->original_cwd
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,395 +76,169 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Numerous commands will remove directories left empty as a "convenience"
-after removing files within them.  That is normally fine, but removing
-the current working directory can be rather inconvenient since it can
-cause confusion for the user when they run subsequent commands.  For
-example, after one git process has removed the current working
-directory, git status/log/diff will all abort with the message:
+Removing the current working directory causes all subsequent git
+commands run from that directory to get confused and fail with a message
+about being unable to read the current working directory:
 
+    $ git status
     fatal: Unable to read current working directory: No such file or directory
 
-We also have code paths that, when a file needs to be placed where a
-directory is (due to e.g. checkout, merge, reset, whatever), will check
-if this is okay and error out if not.  These rules include:
-  * all tracked files under that directory are intended to be removed by
-    the operation
-  * none of the tracked files under that directory have uncommitted
-    modification
-  * there are no untracked files under that directory
-However, if we end up remove the current working directory, we can cause
-user confusion when they run subsequent commands, so we would prefer if
-there was a fourth rule added to this list: avoid removing the current
-working directory.
+Non-git commands likely have similar warnings or even errors, e.g.
 
-Since there are several code paths that can result in the current
-working directory being removed, add several tests of various different
-codepaths.  To make it clearer what the difference between the current
-behavior and the behavior at the end of the series, code both of them
-into the tests and have the appropriate behavior be selected by a flag.
-Subsequent commits will toggle the flag from current to desired
-behavior.
+    $ bash -c 'echo hello'
+    shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+    hello
 
-Also add a few tests suggested during the review of earlier rounds of
-this patch series.
+This confuses end users, particularly since the command they get the
+error from is not the one that caused the problem; the problem came from
+the side-effect of some previous command.
+
+We would like to avoid removing the current working directory of our
+parent process; towards this end, introduce a new variable,
+startup_info->original_cwd, that tracks the current working directory
+that we inherited from our parent process.  For convenience of later
+comparisons, we prefer that this new variable store a path relative to
+the toplevel working directory (thus much like 'prefix'), except without
+the trailing slash.
+
+Subsequent commits will make use of this new variable.
 
 Acked-by: Derrick Stolee <stolee@gmail.com>
 Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t2501-cwd-empty.sh | 342 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 342 insertions(+)
- create mode 100755 t/t2501-cwd-empty.sh
+ cache.h       |  2 ++
+ common-main.c |  4 ++++
+ setup.c       | 65 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 71 insertions(+)
 
-diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
-new file mode 100755
-index 00000000000..a05abd18187
---- /dev/null
-+++ b/t/t2501-cwd-empty.sh
-@@ -0,0 +1,342 @@
-+#!/bin/sh
+diff --git a/cache.h b/cache.h
+index eba12487b99..92e181ea759 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1834,8 +1834,10 @@ void overlay_tree_on_index(struct index_state *istate,
+ struct startup_info {
+ 	int have_repository;
+ 	const char *prefix;
++	const char *original_cwd;
+ };
+ extern struct startup_info *startup_info;
++extern const char *tmp_original_cwd;
+ 
+ /* merge.c */
+ struct commit_list;
+diff --git a/common-main.c b/common-main.c
+index 71e21dd20a3..aa8d5aba5bb 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -26,6 +26,7 @@ static void restore_sigpipe_to_default(void)
+ int main(int argc, const char **argv)
+ {
+ 	int result;
++	struct strbuf tmp = STRBUF_INIT;
+ 
+ 	trace2_initialize_clock();
+ 
+@@ -49,6 +50,9 @@ int main(int argc, const char **argv)
+ 	trace2_cmd_start(argv);
+ 	trace2_collect_process_info(TRACE2_PROCESS_INFO_STARTUP);
+ 
++	if (!strbuf_getcwd(&tmp))
++		tmp_original_cwd = strbuf_detach(&tmp, NULL);
 +
-+test_description='Test handling of the current working directory becoming empty'
+ 	result = cmd_main(argc, argv);
+ 
+ 	trace2_cmd_exit(result);
+diff --git a/setup.c b/setup.c
+index 347d7181ae9..af3b8c09abe 100644
+--- a/setup.c
++++ b/setup.c
+@@ -12,6 +12,7 @@ static int work_tree_config_is_bogus;
+ 
+ static struct startup_info the_startup_info;
+ struct startup_info *startup_info = &the_startup_info;
++const char *tmp_original_cwd;
+ 
+ /*
+  * The input parameter must contain an absolute path, and it must already be
+@@ -432,6 +433,69 @@ void setup_work_tree(void)
+ 	initialized = 1;
+ }
+ 
++static void setup_original_cwd(void)
++{
++	struct strbuf tmp = STRBUF_INIT;
++	const char *worktree = NULL;
++	int offset = -1;
 +
-+. ./test-lib.sh
++	if (!tmp_original_cwd)
++		return;
 +
-+test_expect_success setup '
-+	test_commit init &&
++	/*
++	 * startup_info->original_cwd points to the current working
++	 * directory we inherited from our parent process, which is a
++	 * directory we want to avoid removing.
++	 *
++	 * For convience, we would like to have the path relative to the
++	 * worktree instead of an absolute path.
++	 *
++	 * Yes, startup_info->original_cwd is usually the same as 'prefix',
++	 * but differs in two ways:
++	 *   - prefix has a trailing '/'
++	 *   - if the user passes '-C' to git, that modifies the prefix but
++	 *     not startup_info->original_cwd.
++	 */
 +
-+	git branch fd_conflict &&
++	/* Normalize the directory */
++	strbuf_realpath(&tmp, tmp_original_cwd, 1);
++	free((char*)tmp_original_cwd);
++	tmp_original_cwd = NULL;
++	startup_info->original_cwd = strbuf_detach(&tmp, NULL);
 +
-+	mkdir -p foo/bar &&
-+	test_commit foo/bar/baz &&
++	/*
++	 * Get our worktree; we only protect the current working directory
++	 * if it's in the worktree.
++	 */
++	worktree = get_git_work_tree();
++	if (!worktree)
++		goto no_prevention_needed;
 +
-+	git revert HEAD &&
-+	git tag reverted &&
++	offset = dir_inside_of(startup_info->original_cwd, worktree);
++	if (offset >= 0) {
++		/*
++		 * If startup_info->original_cwd == worktree, that is already
++		 * protected and we don't need original_cwd as a secondary
++		 * protection measure.
++		 */
++		if (!*(startup_info->original_cwd + offset))
++			goto no_prevention_needed;
 +
-+	git checkout fd_conflict &&
-+	mkdir dirORfile &&
-+	test_commit dirORfile/foo &&
++		/*
++		 * original_cwd was inside worktree; precompose it just as
++		 * we do prefix so that built up paths will match
++		 */
++		startup_info->original_cwd = \
++			precompose_string_if_needed(startup_info->original_cwd
++						    + offset);
++		return;
++	}
 +
-+	git rm -r dirORfile &&
-+	echo not-a-directory >dirORfile &&
-+	git add dirORfile &&
-+	git commit -m dirORfile &&
-+
-+	git switch -c df_conflict HEAD~1 &&
-+	test_commit random_file &&
-+
-+	git switch -c undo_fd_conflict fd_conflict &&
-+	git revert HEAD
-+'
-+
-+test_incidental_dir_removal () {
-+	works=$1 &&
-+	shift &&
-+
-+	test_when_finished "git reset --hard" &&
-+
-+	git checkout foo/bar/baz^{commit} &&
-+	test_path_is_dir foo/bar &&
-+
-+	(
-+		cd foo &&
-+		"$@" &&
-+
-+		# Although we want pwd & git status to pass, test for existing
-+		# rather than desired behavior.
-+		if test "$works" = "success"
-+		then
-+			test-tool getcwd &&
-+			git status --porcelain
-+		else
-+			! test-tool getcwd &&
-+			test_might_fail git status --porcelain
-+		fi
-+	) &&
-+	test_path_is_missing foo/bar/baz &&
-+	test_path_is_missing foo/bar &&
-+
-+	# Although we want dir to be present, test for existing rather
-+	# than desired behavior.
-+	if test "$works" = "success"
-+	then
-+		test_path_is_dir foo
-+	else
-+		test_path_is_missing foo
-+	fi
++no_prevention_needed:
++	free((char*)startup_info->original_cwd);
++	startup_info->original_cwd = NULL;
 +}
 +
-+test_required_dir_removal () {
-+	works=$1 &&
-+	shift &&
-+
-+	git checkout df_conflict^{commit} &&
-+	test_when_finished "git clean -fdx" &&
-+
-+	(
-+		cd dirORfile &&
-+
-+		# We'd like for the command to fail (much as it would if there
-+		# was an untracked file there), and for the index and worktree
-+		# to be left clean with pwd and git status working afterwards.
-+		# But test for existing rather than desired behavior.
-+		if test "$works" = "success"
-+		then
-+			test_must_fail "$@" 2>../error &&
-+			grep "Refusing to remove.*current working directory" ../error &&
-+
-+			git diff --exit-code HEAD &&
-+
-+			test-tool getcwd &&
-+			git status --porcelain
-+		else
-+			"$@" &&
-+			! test-tool getcwd &&
-+			test_might_fail git status --porcelain
-+		fi
-+	) &&
-+
-+	# Although we want dirORfile to be present, test for existing rather
-+	# than desired behavior.
-+	if test "$works" = "success"
-+	then
-+		test_path_is_dir dirORfile
-+	else
-+		test_path_is_file dirORfile
-+	fi
-+}
-+
-+test_expect_success 'checkout does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git checkout init
-+'
-+
-+test_expect_success 'checkout fails if cwd needs to be removed' '
-+	test_required_dir_removal failure git checkout fd_conflict
-+'
-+
-+test_expect_success 'reset --hard does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git reset --hard init
-+'
-+
-+test_expect_success 'reset --hard fails if cwd needs to be removed' '
-+	test_required_dir_removal failure git reset --hard fd_conflict
-+'
-+
-+test_expect_success 'merge does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git merge reverted
-+'
-+
-+# This file uses some simple merges where
-+#   Base: 'dirORfile/' exists
-+#   Side1: random other file changed
-+#   Side2: 'dirORfile/' removed, 'dirORfile' added
-+# this should resolve cleanly, but merge-recursive throws merge conflicts
-+# because it's dumb.  Add a special test for checking merge-recursive (and
-+# merge-ort), then after this just hard require ort for all remaining tests.
-+#
-+test_expect_success 'merge fails if cwd needs to be removed; recursive friendly' '
-+	git checkout foo/bar/baz &&
-+	test_when_finished "git clean -fdx" &&
-+
-+	mkdir dirORfile &&
-+	(
-+		cd dirORfile &&
-+
-+		# We would rather this failed, but we test for existing
-+		# rather than desired behavior
-+		git merge fd_conflict 2>../error
-+	) &&
-+
-+	## Here is the behavior we would rather have:
-+	#test_path_is_dir dirORfile &&
-+	#grep "Refusing to remove the current working directory" error
-+	## But instead we test for existing behavior
-+	test_path_is_file dirORfile &&
-+	test_must_be_empty error
-+'
-+
-+GIT_TEST_MERGE_ALGORITHM=ort
-+
-+test_expect_success 'merge fails if cwd needs to be removed' '
-+	test_required_dir_removal failure git merge fd_conflict
-+'
-+
-+test_expect_success 'cherry-pick does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git cherry-pick reverted
-+'
-+
-+test_expect_success 'cherry-pick fails if cwd needs to be removed' '
-+	test_required_dir_removal failure git cherry-pick fd_conflict
-+'
-+
-+test_expect_success 'rebase does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git rebase reverted
-+'
-+
-+test_expect_success 'rebase fails if cwd needs to be removed' '
-+	test_required_dir_removal failure git rebase fd_conflict
-+'
-+
-+test_expect_success 'revert does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git revert HEAD
-+'
-+
-+test_expect_success 'revert fails if cwd needs to be removed' '
-+	test_required_dir_removal failure git revert undo_fd_conflict
-+'
-+
-+test_expect_success 'rm does not clean cwd incidentally' '
-+	test_incidental_dir_removal failure git rm bar/baz.t
-+'
-+
-+test_expect_success 'apply does not remove cwd incidentally' '
-+	git diff HEAD HEAD~1 >patch &&
-+	test_incidental_dir_removal failure git apply ../patch
-+'
-+
-+test_incidental_untracked_dir_removal () {
-+	works=$1 &&
-+	shift &&
-+
-+	test_when_finished "git reset --hard" &&
-+
-+	git checkout foo/bar/baz^{commit} &&
-+	mkdir -p untracked &&
-+	mkdir empty
-+	>untracked/random &&
-+
-+	(
-+		cd untracked &&
-+		"$@" &&
-+
-+		# Although we want pwd & git status to pass, test for existing
-+		# rather than desired behavior.
-+		if test "$works" = "success"
-+		then
-+			test-tool getcwd &&
-+			git status --porcelain
-+		else
-+			! test-tool getcwd &&
-+			test_might_fail git status --porcelain
-+		fi
-+	) &&
-+	test_path_is_missing empty &&
-+	test_path_is_missing untracked/random &&
-+
-+	# Although we want dir to be present, test for existing rather
-+	# than desired behavior.
-+	if test "$works" = "success"
-+	then
-+		test_path_is_dir untracked
-+	else
-+		test_path_is_missing untracked
-+	fi
-+}
-+
-+test_expect_success 'clean does not remove cwd incidentally' '
-+	test_incidental_untracked_dir_removal failure \
-+		git -C .. clean -fd -e warnings . >warnings
-+'
-+
-+test_expect_success 'stash does not remove cwd incidentally' '
-+	test_incidental_untracked_dir_removal failure \
-+		git stash --include-untracked
-+'
-+
-+test_expect_success '`rm -rf dir` only removes a subset of dir' '
-+	test_when_finished "rm -rf a/" &&
-+
-+	mkdir -p a/b/c &&
-+	>a/b/c/untracked &&
-+	>a/b/c/tracked &&
-+	git add a/b/c/tracked &&
-+
-+	(
-+		cd a/b &&
-+		git rm -rf ../b
-+	) &&
-+
-+	test_path_is_dir a/b &&
-+	test_path_is_missing a/b/c/tracked &&
-+	test_path_is_file a/b/c/untracked
-+'
-+
-+test_expect_success '`rm -rf dir` even with only tracked files will remove something else' '
-+	test_when_finished "rm -rf a/" &&
-+
-+	mkdir -p a/b/c &&
-+	>a/b/c/tracked &&
-+	git add a/b/c/tracked &&
-+
-+	(
-+		cd a/b &&
-+		git rm -rf ../b
-+	) &&
-+
-+	test_path_is_missing a/b/c/tracked &&
-+	## We would prefer if a/b was still present, though empty, since it
-+	## was the current working directory
-+	#test_path_is_dir a/b
-+	## But the current behavior is that it not only deletes the directory
-+	## a/b as requested, but also goes and deletes a
-+	test_path_is_missing a
-+'
-+
-+test_expect_success 'git version continues working from a deleted dir' '
-+	mkdir tmp &&
-+	(
-+		cd tmp &&
-+		rm -rf ../tmp &&
-+		git version
-+	)
-+'
-+
-+test_submodule_removal () {
-+	path_status=$1 &&
-+	shift &&
-+
-+	test_status=
-+	test "$path_status" = dir && test_status=test_must_fail
-+
-+	# Actually, while path_status=dir && test_status=test_must_fail
-+	# reflect our desired behavior, current behavior is:
-+	path_status=missing
-+	test_status=
-+
-+	test_when_finished "git reset --hard HEAD~1" &&
-+	test_when_finished "rm -rf .git/modules/my_submodule" &&
-+
-+	git checkout foo/bar/baz &&
-+
-+	git init my_submodule &&
-+	touch my_submodule/file &&
-+	git -C my_submodule add file &&
-+	git -C my_submodule commit -m "initial commit" &&
-+	git submodule add ./my_submodule &&
-+	git commit -m "Add the submodule" &&
-+
-+	(
-+		cd my_submodule &&
-+		$test_status "$@"
-+	) &&
-+
-+	test_path_is_${path_status} my_submodule
-+}
-+
-+test_expect_success 'rm -r with -C leaves submodule if cwd inside' '
-+	test_submodule_removal dir git -C .. rm -r my_submodule/
-+'
-+
-+test_expect_success 'rm -r leaves submodule if cwd inside' '
-+	test_submodule_removal dir \
-+		git --git-dir=../.git --work-tree=.. rm -r ../my_submodule/
-+'
-+
-+test_expect_success 'rm -rf removes submodule even if cwd inside' '
-+	test_submodule_removal missing \
-+		git --git-dir=../.git --work-tree=.. rm -rf ../my_submodule/
-+'
-+
-+test_done
+ static int read_worktree_config(const char *var, const char *value, void *vdata)
+ {
+ 	struct repository_format *data = vdata;
+@@ -1330,6 +1394,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 		setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
+ 	}
+ 
++	setup_original_cwd();
+ 
+ 	strbuf_release(&dir);
+ 	strbuf_release(&gitdir);
 -- 
 gitgitgadget
 
