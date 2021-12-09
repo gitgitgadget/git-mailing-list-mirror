@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA137C43219
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BF03C433FE
 	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 19:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbhLITXX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 14:23:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48372 "EHLO
+        id S229748AbhLITXU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 14:23:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229539AbhLITXL (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229487AbhLITXL (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 9 Dec 2021 14:23:11 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D46FCC061746
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 11:19:37 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id n33-20020a05600c502100b0032fb900951eso7342049wmr.4
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 11:19:37 -0800 (PST)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00DD3C061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 11:19:36 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id i5so11485202wrb.2
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 11:19:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=K1KDc4Mj4BFW0dkBi3cCq9C1JfJsiOb+iCbc0do/wLY=;
-        b=gtmyFl493WI0ZXWL5l7xXrtAp8tjiMZERvso4Wf5zP/T8c1xQwpnrrUrfMdIQ0bmrs
-         NXQRm1Vkzm+Jlgdh7sejRFwNHZOlo9uaBa4xVobSuwqFcgu6+wbt8BCWtcJoA/sqURiK
-         +2wjfrSC5OIO0KhM70l6ds7+dv0/w/yaq9iEQ6y3KP5pf0lGRUT/1TZDqU2Tbt13hUAh
-         +Sd1Yw8eOTJaASNFKUoBK5S7DPvMXT7jNaTPQCMV77439C1K3NOLERgOfrqkZW5Ywzqm
-         /UdAE6yAcyexthLJN8RPb4vCqWwLFUzhRwyl9ttzDBvKqyz2V98TEm17Z1zB5CDOY//X
-         hbmw==
+        bh=oiYd6jcyHX5jW/fmuJ/Ezyf+0g77AohYCYFKYCeJ+MM=;
+        b=amHaFkezDoUxr9+Z7CP5vJDxZJmBfCxDbS22FTYHPQ+uEDuCEzCymBYnPgFq8Vxrp+
+         0kNPZdKzK9tjmocXDFCWMOevEPCpjtxN/9U8BbREYQpKJLCVaQI8RTXumlWvNWlJrW6k
+         v8RKSexSOn1wf4P4f21rfIK/b0iMvTd82nPnOxO/kGu4KDPm3YEi0/R1d+WWMHach8MK
+         hzu1tKJQgWzZNASK5MUvR1dUuNqHoEnwQFiAS1ANO6k1upDX/Oya600ZoLZEHJEFI/oD
+         ilfuX2Ur18H1FdQiAdHBPwKhpxht/MIQGhBdSNdNodurcXGk928/DcIdLao/jvOyeBJd
+         Rrag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=K1KDc4Mj4BFW0dkBi3cCq9C1JfJsiOb+iCbc0do/wLY=;
-        b=SoBHQx0y/lKCAekqt+Lb41uC1DsFGg42gMbklt9Qg+c4ygGFBPRBkHsbjHsqHn8Tnb
-         Dayrof+PocQdbG5q/5jp7C7Pfuyb8vlS4sbfmd0nQuNR8j6NWWB0lqJvqamNaaqAdOrD
-         Pxqws9HVuriTzS6sb2Lr67x9DXuvVOSwHUZzOkNfnZv2d6IZp3hWScDJ02kZZcw9hJWr
-         AqKvn98jge5Avus903CHaCOuC66M6Y5u73/cbuNnRSr4USSfBjEglEtmH07jou55QetO
-         pMMUD5fd0NjthKAbINfig5M0ArS1ZtkP/P/6y+At4M8y8I0I9SBarA4tDJ3v4ysXVeg/
-         7iWw==
-X-Gm-Message-State: AOAM533hfJYBRMXsHNhmeuZL4BUutCs3xcVRnFOMDbArBgT3dn3zUjAa
-        BFQThZUecQHIJkmbsEPpfFpIud8GCoibfA==
-X-Google-Smtp-Source: ABdhPJwZ7wjf/4gOt+tE/bkbe2Zu2qZbCT+nFYakCkRM7z55cI4bckyfo/WSQIuSqXqb6ZPWfBA+pg==
-X-Received: by 2002:a05:600c:202:: with SMTP id 2mr9503867wmi.167.1639077576190;
-        Thu, 09 Dec 2021 11:19:36 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x13sm562180wrr.47.2021.12.09.11.19.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=oiYd6jcyHX5jW/fmuJ/Ezyf+0g77AohYCYFKYCeJ+MM=;
+        b=FraD4ZqLOdZ8+8D/DZSNDDWlSMmjmITqpKI3q7QgHklac8gC8kdnEYWziWDhdai+Tf
+         iIqgsJX7RtJ9X5ZNmDIae1dRlawQz0PC+HRq/GoFIhZx7zt4xiYr66D/Ej0Lgq+U46/b
+         I/b0rpm1ZklqvQq2Mt0hSU3RP492Ma8i7LxuWJ9rwOc2glpMZMcR3maCbgjpcM/+aM1l
+         V9fvzFv8eBY3ziqJi/i4FBw2Y57uHrtstyxCiY0aXA1W3Ktlf5sZDogLXQeKDzOpIY+v
+         WX8c04s2YON09SCwV1JmPAQkqsyw3e6Bk4W/6Cj3Ov7y8U64Ursm9wklyz2p6wne/ZHF
+         qtGQ==
+X-Gm-Message-State: AOAM533peZtiMKTJBlvgvedoLviTuxGgbGzQ+7Suk4a6ppF5n9lE14IU
+        G7pbGNlnjOnJvzw9NXHHG6bWrfm31/XdSw==
+X-Google-Smtp-Source: ABdhPJyeaeC2MPF6zjP1bOBPnQgBOboV7kdIOqSy2g+nn2Zl37RT5Nq0yJR+n8FrGbBKZ3qTJFbBlQ==
+X-Received: by 2002:adf:f6cf:: with SMTP id y15mr8451284wrp.56.1639077575332;
         Thu, 09 Dec 2021 11:19:35 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id x13sm562180wrr.47.2021.12.09.11.19.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Dec 2021 11:19:34 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH 05/10] linear-assignment.c: split up compute_assignment() function
-Date:   Thu,  9 Dec 2021 20:19:22 +0100
-Message-Id: <RFC-patch-05.10-0e1e2d107cd-20211209T191653Z-avarab@gmail.com>
+Subject: [RFC PATCH 04/10] range-diff: zero out elements in "cost" first
+Date:   Thu,  9 Dec 2021 20:19:21 +0100
+Message-Id: <RFC-patch-04.10-fe9dcb2d453-20211209T191653Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.930.g0f9292b224d
 In-Reply-To: <RFC-cover-00.10-00000000000-20211209T191653Z-avarab@gmail.com>
 References: <RFC-cover-00.10-00000000000-20211209T191653Z-avarab@gmail.com>
@@ -70,195 +70,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Split up the the long compute_assignment() function to make it easier
-to reason about, particularly when it comes to what variables are used
-later, and which aren't.
+Have the get_correspondences() function use CALLOC_ARRAY instead of
+looping over the newly allocated "cost" to zero out some of its
+elements.
 
-The grouping of "int" v.s. "int *" in function signatures is there to
-make subsequent diffs smaller, if we're ever going to have a "nr"
-member with a "size_t", but allocate e.g. "int *", and in anticipation
-of the type names becoming longer than "int", which would require
-re-wrapping.
+The for-loop that zero'd out elements in "cost" wasn't the first loop
+in that function, nor did it cover all of its elements, but regardless
+of that this change doesn't affect its end-state. None of the
+for-loops touched the same items in the array, so we could have (and
+an earlier WIP version of this change did) moved the for-loop we're
+deleting to come first in get_correspondences().
+
+This can be seen from a careful reading of this code added in in
+d9c66f0b5bf (range-diff: first rudimentary implementation,
+2018-08-13) (as well as adding some printf-debugging) we'll set all
+elements in the in the "n * n" allocated array. That's "n = A+B" where
+"A" and "B" are the number of commits in our respective ranges.
+
+So let's just allocate this with CALLOC_ARRAY(), and skip these two
+for-loops. Furthermore let's remove the early exit condition from
+compute_assignment() in favor of an assert that it must be called with
+"column_count > 1", then "get_correspondences()" can skip calling it
+when no further filling of the "a2b" and "b2a" arrays is needed.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- linear-assignment.c | 103 +++++++++++++++++++++++++++++++++-----------
- linear-assignment.h |   3 +-
- 2 files changed, 79 insertions(+), 27 deletions(-)
+ linear-assignment.c |  7 +------
+ range-diff.c        | 13 +++++--------
+ 2 files changed, 6 insertions(+), 14 deletions(-)
 
 diff --git a/linear-assignment.c b/linear-assignment.c
-index 0c0786a63b6..7f85745e541 100644
+index ecffc09be6e..0c0786a63b6 100644
 --- a/linear-assignment.c
 +++ b/linear-assignment.c
-@@ -8,21 +8,12 @@
+@@ -19,12 +19,7 @@ void compute_assignment(int column_count, int row_count, int *cost,
+ 	int *free_row, free_count = 0, saved_free_count, *pred, *col;
+ 	int i, j, phase;
  
- #define COST(column, row) cost[(column) + column_count * (row)]
- 
--/*
-- * The parameter `cost` is the cost matrix: the cost to assign column j to row
-- * i is `cost[j + column_count * i].
-- */
--void compute_assignment(int column_count, int row_count, int *cost,
--			int *column2row, int *row2column)
-+static void columns_reduction(int column_count, int row_count,
-+			      int *cost,
-+			      int *column2row, int *row2column,
-+			      int *v)
- {
--	int *v, *d;
--	int *free_row, free_count = 0, saved_free_count, *pred, *col;
--	int i, j, phase;
--
--	assert(column_count > 1);
--	memset(column2row, -1, sizeof(int) * column_count);
--	memset(row2column, -1, sizeof(int) * row_count);
--	ALLOC_ARRAY(v, column_count);
-+	int i, j;
- 
- 	/* column reduction */
- 	for (j = column_count - 1; j >= 0; j--) {
-@@ -42,13 +33,21 @@ void compute_assignment(int column_count, int row_count, int *cost,
- 			column2row[j] = -1;
- 		}
- 	}
-+}
-+
-+static void reduction_transfer(int column_count, int row_count,
-+			       int *cost,
-+			       int *free_row, int *free_count,
-+			       int *column2row, int *row2column,
-+			       int *v)
-+{
-+	int i, j;
- 
- 	/* reduction transfer */
--	ALLOC_ARRAY(free_row, row_count);
- 	for (i = 0; i < row_count; i++) {
- 		int j1 = row2column[i];
- 		if (j1 == -1)
--			free_row[free_count++] = i;
-+			free_row[(*free_count)++] = i;
- 		else if (j1 < -1)
- 			row2column[i] = -2 - j1;
- 		else {
-@@ -59,21 +58,25 @@ void compute_assignment(int column_count, int row_count, int *cost,
- 			v[j1] -= min;
- 		}
- 	}
-+}
- 
--	if (free_count ==
--	    (column_count < row_count ? row_count - column_count : 0)) {
--		free(v);
--		free(free_row);
+-	if (column_count < 2) {
+-		memset(column2row, 0, sizeof(int) * column_count);
+-		memset(row2column, 0, sizeof(int) * row_count);
 -		return;
 -	}
-+static void augmenting_row_reduction(int column_count,
-+				     int *cost,
-+				     int *column2row, int *row2column,
-+				     int *free_row, int *free_count, int *saved_free_count,
-+				     int *v)
-+{
-+	int phase;
- 
- 	/* augmenting row reduction */
- 	for (phase = 0; phase < 2; phase++) {
-+		int i;
- 		int k = 0;
- 
--		saved_free_count = free_count;
--		free_count = 0;
--		while (k < saved_free_count) {
-+		*saved_free_count = *free_count;
-+		*free_count = 0;
-+		while (k < *saved_free_count) {
-+			int j;
- 			int u1, u2;
- 			int j1 = 0, j2, i0;
- 
-@@ -112,12 +115,24 @@ void compute_assignment(int column_count, int row_count, int *cost,
- 				if (u1 < u2)
- 					free_row[--k] = i0;
- 				else
--					free_row[free_count++] = i0;
-+					free_row[(*free_count)++] = i0;
- 			}
- 			row2column[i] = j1;
- 			column2row[j1] = i;
- 		}
- 	}
-+}
-+
-+static void augmentation(int column_count,
-+			 int *cost,
-+			 int *column2row, int *row2column,
-+			 int *free_row, int free_count,
-+			 int *v)
-+{
-+	int i, j;
-+	int *d;
-+	int *pred, *col;
-+	int saved_free_count;
- 
- 	/* augmentation */
- 	saved_free_count = free_count;
-@@ -197,6 +212,42 @@ void compute_assignment(int column_count, int row_count, int *cost,
- 	free(col);
- 	free(pred);
- 	free(d);
-+}
-+
-+/*
-+ * The parameter `cost` is the cost matrix: the cost to assign column j to row
-+ * i is `cost[j + column_count * i].
-+ */
-+void compute_assignment(int column_count, int row_count,
-+			int *cost,
-+			int *column2row, int *row2column)
-+{
-+	int *v;
-+	int *free_row, free_count = 0, saved_free_count;
-+
+-
 +	assert(column_count > 1);
-+	memset(column2row, -1, sizeof(int) * column_count);
-+	memset(row2column, -1, sizeof(int) * row_count);
-+	ALLOC_ARRAY(v, column_count);
-+
-+	columns_reduction(column_count, row_count, cost, column2row,
-+			  row2column, v);
-+
-+	ALLOC_ARRAY(free_row, row_count);
-+	reduction_transfer(column_count, row_count, cost, free_row,
-+			   &free_count, column2row, row2column, v);
-+	if (free_count ==
-+	    (column_count < row_count ? row_count - column_count : 0))
-+		goto cleanup;
-+
-+	augmenting_row_reduction(column_count, cost, column2row,
-+				 row2column, free_row, &free_count,
-+				 &saved_free_count,v);
-+
-+	augmentation(column_count, cost, column2row, row2column,
-+		     free_row, free_count, v);
-+
-+cleanup:
- 	free(v);
- 	free(free_row);
- }
-diff --git a/linear-assignment.h b/linear-assignment.h
-index 1dfea766290..ef9946bdbfc 100644
---- a/linear-assignment.h
-+++ b/linear-assignment.h
-@@ -13,7 +13,8 @@
-  * assignments (-1 for unassigned, which can happen only if column_count !=
-  * row_count).
-  */
--void compute_assignment(int column_count, int row_count, int *cost,
-+void compute_assignment(int column_count, int row_count,
-+			int *cost,
- 			int *column2row, int *row2column);
+ 	memset(column2row, -1, sizeof(int) * column_count);
+ 	memset(row2column, -1, sizeof(int) * row_count);
+ 	ALLOC_ARRAY(v, column_count);
+diff --git a/range-diff.c b/range-diff.c
+index 41003033752..b0ccb46ff4c 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -312,9 +312,9 @@ static void get_correspondences(struct string_list *a, struct string_list *b,
+ 	int *cost, c, *a2b, *b2a;
+ 	size_t i, j;
  
- /* The maximal cost in the cost matrix (to prevent integer overflows). */
+-	ALLOC_ARRAY(cost, st_mult(n, n));
+-	ALLOC_ARRAY(a2b, n);
+-	ALLOC_ARRAY(b2a, n);
++	CALLOC_ARRAY(cost, st_mult(n, n));
++	CALLOC_ARRAY(a2b, n);
++	CALLOC_ARRAY(b2a, n);
+ 
+ 	for (i = 0; i < a->nr; i++) {
+ 		struct patch_util *a_util = a->items[i].util;
+@@ -346,11 +346,8 @@ static void get_correspondences(struct string_list *a, struct string_list *b,
+ 			cost[i + n * j] = c;
+ 	}
+ 
+-	for (i = a->nr; i < n; i++)
+-		for (j = b->nr; j < n; j++)
+-			cost[i + n * j] = 0;
+-
+-	compute_assignment(n, n, cost, a2b, b2a);
++	if (n > 1)
++		compute_assignment(n, n, cost, a2b, b2a);
+ 
+ 	for (i = 0; i < a->nr; i++)
+ 		if (a2b[i] >= 0 && a2b[i] < b->nr) {
 -- 
 2.34.1.930.g0f9292b224d
 
