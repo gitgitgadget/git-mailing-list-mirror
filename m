@@ -2,98 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 596CBC433EF
-	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 19:31:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A47A8C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 19:37:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230190AbhLITek (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 14:34:40 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58674 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbhLITej (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 14:34:39 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9BD38F43BA;
-        Thu,  9 Dec 2021 14:31:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CTxmv4kFKnsXXZvADyey1/fQdn8W1AWtbb9Zx0
-        Ny2Cs=; b=Hb1aSLx9IVZC7biaBnqSDE7aGHf2k0vkgxpQACddNGC5h5Zlm3EU2y
-        LuY+UmyiAQcovT28yXLQ55d22bMzukhIfiOnUwmktHWfishbYowSmZPFhuM0khTq
-        P1uHNDwLQp94ph4m5rY3p5jNlW0zKHgrdZ4h6zp+g2A1GZ9m9A/nI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B388F43B9;
-        Thu,  9 Dec 2021 14:31:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D0ECF43B6;
-        Thu,  9 Dec 2021 14:31:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 11/14] reset_head(): take struct rebase_head_opts
-References: <pull.1049.git.1633082702.gitgitgadget@gmail.com>
-        <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
-        <24b0566aba5d8800d209261a14aca4d872af8027.1638975482.git.gitgitgadget@gmail.com>
-Date:   Thu, 09 Dec 2021 11:31:02 -0800
-In-Reply-To: <24b0566aba5d8800d209261a14aca4d872af8027.1638975482.git.gitgitgadget@gmail.com>
-        (Phillip Wood via GitGitGadget's message of "Wed, 08 Dec 2021 14:57:58
-        +0000")
-Message-ID: <xmqq7dcdr2x5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230199AbhLITkf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 14:40:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52568 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229487AbhLITke (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 14:40:34 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 254A1C061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 11:37:00 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id u17so11553910wrt.3
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 11:37:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=8PDdw2LaXEZSdT7Zpl4gByEcsD40q5e9LT1FqEXfmuo=;
+        b=RiS5YuSyS4UThWSVJ9LzVXgc/HPvfm1/qnPia7LiVbCOrMn7nTEeuDprTJEOgD6Sid
+         YX/t4J88goXGX4jO8KaL2WWR0uCl5FQKBB4NDR8s/t0kR452QOWp5Fq0/sk2fD/T7PCg
+         qWC5KH83Pb6Z81fJdtRHpy3W0NFmvMdtL+O8RMrHF1vKM6HVkH6HWs9a5lNBY/1juwz6
+         3PzhnhndfXfdWzAQx9GguX0ZrE0UcYmtZWsLek4LayVoFZViSckV/SNpn401L8/VfDDU
+         6gZIG9ZdO6iCVNm/4SjX0sap0fOTpeZvStqsLgW9t8yj0fg/flUnyx6wwpB2/uTxXkH7
+         SbwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=8PDdw2LaXEZSdT7Zpl4gByEcsD40q5e9LT1FqEXfmuo=;
+        b=D8FQHRFOA6iFOy+uSeOVYDN0uoGNcgTm/HSxPrZCF3CKIHpnn7HDPrpUkPqImMADdb
+         5nA5sLzeRfl+1eLqIeWQB+aA3lLY2vOLJjPFM8ilw0y4u/enT36JGYKdo1BNcuGP2owc
+         C5fRgSrf4PArdnlfOHwmVu6fspuTiFhaJ2deoM7JLf48e6h0FIvMJTkqWR1sRbuynCQZ
+         BJSKH7CuDCBkaTeZBKCp0jpX1EmM1NElPeMeJMd45gDtLGD2j7G2Xi53vAShDg+lH0XH
+         VmOg1BeziDS1ycny/h4+WNndLMN6QhM+a8PFbPgYykOOvc6p6TRz1rh2pW5xDQRQLEco
+         d9Qg==
+X-Gm-Message-State: AOAM531QlRW9p+1yz+M7vBL8TgdMsPthlyS63u/qkO8DVDX8LUkSlP+v
+        4yPztpznIiNMpZCXafw1hE4ZuhHLLSI=
+X-Google-Smtp-Source: ABdhPJyh9svAhzxX6srWRM1XM78jpGAF8nBne4cmxhIP39h1X0YndyrL8hyDtSvtgP+kATPzzTzGaw==
+X-Received: by 2002:adf:d1e2:: with SMTP id g2mr8933936wrd.179.1639078618756;
+        Thu, 09 Dec 2021 11:36:58 -0800 (PST)
+Received: from szeder.dev (94-21-58-127.pool.digikabel.hu. [94.21.58.127])
+        by smtp.gmail.com with ESMTPSA id l1sm559391wrn.15.2021.12.09.11.36.57
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Dec 2021 11:36:58 -0800 (PST)
+Date:   Thu, 9 Dec 2021 20:36:25 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Subject: builtin add interactive regression
+Message-ID: <20211209193625.GA3294@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8C0BB7E8-5926-11EC-BCE7-C48D900A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi,
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> This function takes a confusingly large number of parameters which
-> makes it difficult to remember which order to pass them in. The
-> following commits will add a couple more parameters which makes the
-> problem worse. To address this change the function to take a struct of
-> options. Using a struct means that it is no longer necessary to
-> remember which order to pass the parameters in and anyone reading the
-> code can easily see which value is passed to each parameter.
+This morning 'git add --patch' told me "Sorry, cannot split this hunk"
+even though that hunk in question was definitely splittable.  Then I
+spent my lunch break trying to reproduce the issue, and it turned out
+to be a regression in the builtin add interactive (I have
+'add.interactive.useBuiltin=true' in my config).  The following test
+demonstrates this issue:
 
-OK.  The documentation for members in the structure will serve as
-the user manual for the reset_head() function.  Good.
+  ---  >8  ---
 
-> +struct reset_head_opts {
-> +	/*
-> +	 * The commit to checkout/reset to. Defaults to HEAD.
-> +	 */
-> +	const struct object_id *oid;
-> +	/*
-> +	 * Optional branch to switch to.
-> +	 */
-> +	const char *branch;
-> +	/*
-> +	 * Flags defined above.
-> +	 */
-> +	unsigned flags;
-> +	/*
-> +	 * Optional reflog message for HEAD, if this omitted but oid or branch
-> +	 * are given then default_reflog_action must be given.
-> +	 */
+#!/bin/sh
 
-If we can enforce such a requirement in reset_head() implementation
-with "if (condition) BUG(...)", we should do so to catch mistakes.
+test_description='test'
+. ./test-lib.sh
 
-Thanks.  Looking good.
+test_expect_success 'builtin interactive add cannot split hunk?!' '
+	printf "%s\n" 1 2 >file &&
+	echo a >zzzz &&
+	git add file zzzz &&
+	git commit -m initial &&
+	cat >file <<-\EOF &&
+	1
+	add a line
+	2
+	add a line at the end (this is important!)
+	EOF
+	echo "modify one more file (this, too, is important!)" >zzzz &&
+
+	git diff file &&
+
+	git -c add.interactive.useBuiltin=false add -u -p >expect &&
+	git -c add.interactive.useBuiltin=true add -u -p >actual &&
+	# Uh-oh, "s" (for splitting the hunk) is missing!
+	test_cmp expect actual
+'
+
+test_done
+
+  ---  8<  ---
+
+This fails with:
+
+  + git -c add.interactive.useBuiltin=false add -u -p
+  + git -c add.interactive.useBuiltin=true add -u -p
+  + test_cmp expect actual
+  --- expect	2021-12-09 19:21:23.354461170 +0000
+  +++ actual	2021-12-09 19:21:23.358461215 +0000
+  @@ -7,7 +7,7 @@
+   +add a line
+    2
+   +add a line at the end (this is important!)
+  -(1/1) Stage this hunk [y,n,q,a,d,s,e,?]? 
+  +(1/1) Stage this hunk [y,n,q,a,d,e,?]? 
+   diff --git a/zzzz b/zzzz
+   index 7898192..84e1b35 100644
+   --- a/zzzz
+  error: last command exited with $?=1
+  not ok 1 - builtin interactive add cannot split hunk?!
+
+So the builtin add interactive doesn't even offer the 's - split the
+current hunk into smaller hunks' option, but my finger memory pressed
+'s' anyway, and then it told me that "Sorry..." message.  The scripted
+version can split the hunk just fine.
 
