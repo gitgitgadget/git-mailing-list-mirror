@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D367CC433EF
-	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 05:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A1E5C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 05:09:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231273AbhLIFMc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 00:12:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44918 "EHLO
+        id S231296AbhLIFMd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 00:12:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230297AbhLIFMU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 00:12:20 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CE0AC0617A2
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 21:08:47 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id m25-20020a7bcb99000000b0033aa12cdd33so4502017wmi.1
-        for <git@vger.kernel.org>; Wed, 08 Dec 2021 21:08:47 -0800 (PST)
+        with ESMTP id S230112AbhLIFMV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 00:12:21 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69BD0C061A72
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 21:08:48 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id p3-20020a05600c1d8300b003334fab53afso5657111wms.3
+        for <git@vger.kernel.org>; Wed, 08 Dec 2021 21:08:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=9XEHnnsmJWMBO+mNisk01KWXBk6Ata42T9bb1T8ml7k=;
-        b=LliyUTr+ukZSIkCADy/VQrBxrADlFWjNzNUDfV9eYekPZQwOnp9h3YRyk8h/fPkJXT
-         l8FHS2CA2tag70ZR+KSRVg1y0Bnuoh70Cf6cx8Wfh2nrw106t4oaiqgdWOkLHecIBYKt
-         7y588oGP/fjXzcE2Fy9gW0XAO4Bwh7+YHna1kPdIoH8ZX5DSFZjXhXM/LmxKIsLyfgIH
-         mCTyK4MrCCRAQfs1uVnoZ9A1kButDagCn2Q15jTT1c1k+Qj3ltqrmDuCBS6cUu1fzPdJ
-         /Uwo1q3YxrLGIkNKVNtsJHRcW7xvDBWrDb1XQFBlwHSehBkvdm2fvtEcx8k9337njdav
-         278A==
+        bh=dUqcJxoIyRNhT/d40bbWgVezeRZEeZaEZxI7e2Onbj0=;
+        b=VPqFp1r+Sl5X+56EPi3XXOmWT+fWXQRcdVcyLX6w9RpG0K14QVwXc01xSSbmGBc7G+
+         tohLIBYumMZYHu6ZzgUgcr2+jkqdhiNFS/LBbhmtT6GaGOMDiOAsr6NtycpNYGYmp/u2
+         YHmFOq5twF/l41bWrWiPQZRI1NDY4XHM1noW7pGA4WsGxJz/EFxfxfRyHrewuq0K1U+J
+         fEhl/b3GRgXnd/rufcd0EPl+xjTv14oAhazhjYR25hJ6m2dMkK/SJr2CX967As7cEUYx
+         Aj/A6jPP4niP9Fj61BHymkO44EZQ8dVIgOHjma4uw3KINxyCZ6YUh4aZ+dfF9MYm0Edv
+         4c0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=9XEHnnsmJWMBO+mNisk01KWXBk6Ata42T9bb1T8ml7k=;
-        b=zLvqu3hU2E+7x3pdQnjMuH8RkfRZLY+J2QcezHq5JyeP5FLE8Kx0ImWxomSn/pE5Ri
-         0TNd0p3ykBhWczFC3UCcIWwc54u/7jpEWzxEv0qZAebEK91NTTFdc4TXgy93W4BCdEqa
-         hsOPHgdzDxwL1J4JRD915UqaxbAYaMF0ROClvTyFWfJRo3vOwO4pP9KcREz1WxvG26/d
-         DRxCII50V24MMTWZacWV1FCYrowLeLQXPilcM1BRfH/4GJ9haatLSeuOeWoUQtM3makI
-         JZbFyMVPPGNNlxw1BFybd/KkKc4CJ1O01o7as14jrcXMYAUj5mzraJ4EY9Ooqe74tCa+
-         rHgA==
-X-Gm-Message-State: AOAM530yc/anueh2cz+XkzV5pVV6O0/FaojXdGbn2zKkW3cNsvCsMfmM
-        oHkRmSbXyv622EqK1umSI5XbdFcbcNc=
-X-Google-Smtp-Source: ABdhPJxM7ZrDMykgoDxEbw6k3YrxMnXA/kQx7r7MWAvAIzUhP2EYu/TYyl0+C6Jlux3XiwixCHCETQ==
-X-Received: by 2002:a1c:3546:: with SMTP id c67mr4064996wma.43.1639026525811;
-        Wed, 08 Dec 2021 21:08:45 -0800 (PST)
+        bh=dUqcJxoIyRNhT/d40bbWgVezeRZEeZaEZxI7e2Onbj0=;
+        b=DSrnmNSMliV0fX7DMRA1xOZUlwPEoruGRV0xPSWgVFJuznIZsfDpJ7exIulkCEQtzi
+         62IW+mInP8rxv4CfGlNWE9Nv9Qmji6XCCL3ZVof11cF/A8SBUnOWVkMaPhlKqkqRCsOi
+         8xvNJ5WpgLgJU+RueSweRzeX/MbZAQNL0yhXlOVxHLVPU13qyDKhF50CFx4QSJcl4cA1
+         5rVqgkERAVz7pczo2XEqfmgGuDEbxUQsRuROzCr9bQQk9dFUrrnCqdGMS3OnvjQCs8+x
+         BCNbxZGTlLkD4TcM090AA8kxMFwYz6Rn73J/COOXk48S8Lj9acPrZ1/Gk0MW/axEGsGN
+         h9Qw==
+X-Gm-Message-State: AOAM5317hJ4AS7tFeyo3zcP92wzhfMJzxDzS9p4sF0lv43VK1fZ1u70L
+        KzDmLtg8JjNv6+kiYKQdruykrld5pQQ=
+X-Google-Smtp-Source: ABdhPJyKh6cuzly2yoMfNsHlDFWFypICD0SoqUzdNOn5oCFgW3MbmwkWD0tvTKUcgDFjMEqAISNDIQ==
+X-Received: by 2002:a05:600c:4f8a:: with SMTP id n10mr4095809wmq.54.1639026526792;
+        Wed, 08 Dec 2021 21:08:46 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l2sm8079915wmq.42.2021.12.08.21.08.45
+        by smtp.gmail.com with ESMTPSA id d6sm4458263wrn.53.2021.12.08.21.08.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Dec 2021 21:08:45 -0800 (PST)
-Message-Id: <4a18efd51ef65ee6e4d06ac9dfed5b1645609549.1639026515.git.gitgitgadget@gmail.com>
+        Wed, 08 Dec 2021 21:08:46 -0800 (PST)
+Message-Id: <63781ed8b8e9a6bfb7326c04f3338c45a0dd5f1f.1639026515.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1140.v6.git.git.1639026515.gitgitgadget@gmail.com>
 References: <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com>
         <pull.1140.v6.git.git.1639026515.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 09 Dec 2021 05:08:34 +0000
-Subject: [PATCH v6 10/11] dir: new flag to remove_dir_recurse() to spare the
- original_cwd
+Date:   Thu, 09 Dec 2021 05:08:35 +0000
+Subject: [PATCH v6 11/11] t2501: simplify the tests since we can now assume
+ desired behavior
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,106 +77,240 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-remove_dir_recurse(), and its non-static wrapper called
-remove_dir_recursively(), both take flags for modifying its behavior.
-As with the previous commits, we would generally like to protect
-the original_cwd, but we want to forced user commands (e.g. 'git rm -rf
-...') or other special cases to remove it.  Add a flag for this purpose.
-After reading through every caller of remove_dir_recursively() in the
-current codebase, there was only one that should be adjusted and that
-one only in a very unusual circumstance.  Add a pair of new testcases to
-highlight that very specific case involving submodules && --git-dir &&
---work-tree.
+We no longer are dealing with a mixture of previous and desired
+behavior, so simplify the tests a bit.
 
 Acked-by: Derrick Stolee <stolee@gmail.com>
 Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/rm.c         |  3 ++-
- dir.c                | 12 +++++++++---
- dir.h                |  3 +++
- t/t2501-cwd-empty.sh |  5 -----
- 4 files changed, 14 insertions(+), 9 deletions(-)
+ t/t2501-cwd-empty.sh | 123 +++++++++++++------------------------------
+ 1 file changed, 36 insertions(+), 87 deletions(-)
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 3d0967cdc11..b4132e5d8ee 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -399,12 +399,13 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	if (!index_only) {
- 		int removed = 0, gitmodules_modified = 0;
- 		struct strbuf buf = STRBUF_INIT;
-+		int flag = force ? REMOVE_DIR_PURGE_ORIGINAL_CWD : 0;
- 		for (i = 0; i < list.nr; i++) {
- 			const char *path = list.entry[i].name;
- 			if (list.entry[i].is_submodule) {
- 				strbuf_reset(&buf);
- 				strbuf_addstr(&buf, path);
--				if (remove_dir_recursively(&buf, 0))
-+				if (remove_dir_recursively(&buf, flag))
- 					die(_("could not remove '%s'"), path);
- 
- 				removed = 1;
-diff --git a/dir.c b/dir.c
-index 97d6b71c872..52064345a6b 100644
---- a/dir.c
-+++ b/dir.c
-@@ -3204,6 +3204,7 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
- 	int ret = 0, original_len = path->len, len, kept_down = 0;
- 	int only_empty = (flag & REMOVE_DIR_EMPTY_ONLY);
- 	int keep_toplevel = (flag & REMOVE_DIR_KEEP_TOPLEVEL);
-+	int purge_original_cwd = (flag & REMOVE_DIR_PURGE_ORIGINAL_CWD);
- 	struct object_id submodule_head;
- 
- 	if ((flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
-@@ -3259,9 +3260,14 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
- 	closedir(dir);
- 
- 	strbuf_setlen(path, original_len);
--	if (!ret && !keep_toplevel && !kept_down)
--		ret = (!rmdir(path->buf) || errno == ENOENT) ? 0 : -1;
--	else if (kept_up)
-+	if (!ret && !keep_toplevel && !kept_down) {
-+		if (!purge_original_cwd &&
-+		    startup_info->original_cwd &&
-+		    !strcmp(startup_info->original_cwd, path->buf))
-+			ret = -1; /* Do not remove current working directory */
-+		else
-+			ret = (!rmdir(path->buf) || errno == ENOENT) ? 0 : -1;
-+	} else if (kept_up)
- 		/*
- 		 * report the uplevel that it is not an error that we
- 		 * did not rmdir() our directory.
-diff --git a/dir.h b/dir.h
-index d6a5d03bec2..8e02dfb505d 100644
---- a/dir.h
-+++ b/dir.h
-@@ -495,6 +495,9 @@ int get_sparse_checkout_patterns(struct pattern_list *pl);
- /* Remove the contents of path, but leave path itself. */
- #define REMOVE_DIR_KEEP_TOPLEVEL 04
- 
-+/* Remove the_original_cwd too */
-+#define REMOVE_DIR_PURGE_ORIGINAL_CWD 0x08
-+
- /*
-  * Remove path and its contents, recursively. flags is a combination
-  * of the above REMOVE_DIR_* constants. Return 0 on success.
 diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
-index ce2efb9d30a..bc92230f2f2 100755
+index bc92230f2f2..f6d8d7d03d7 100755
 --- a/t/t2501-cwd-empty.sh
 +++ b/t/t2501-cwd-empty.sh
-@@ -291,11 +291,6 @@ test_submodule_removal () {
- 	test_status=
- 	test "$path_status" = dir && test_status=test_must_fail
+@@ -32,9 +32,6 @@ test_expect_success setup '
+ '
  
--	# Actually, while path_status=dir && test_status=test_must_fail
--	# reflect our desired behavior, current behavior is:
--	path_status=missing
--	test_status=
+ test_incidental_dir_removal () {
+-	works=$1 &&
+-	shift &&
 -
- 	test_when_finished "git reset --hard HEAD~1" &&
- 	test_when_finished "rm -rf .git/modules/my_submodule" &&
+ 	test_when_finished "git reset --hard" &&
+ 
+ 	git checkout foo/bar/baz^{commit} &&
+@@ -44,88 +41,57 @@ test_incidental_dir_removal () {
+ 		cd foo &&
+ 		"$@" &&
+ 
+-		# Although we want pwd & git status to pass, test for existing
+-		# rather than desired behavior.
+-		if test "$works" = "success"
+-		then
+-			test-tool getcwd &&
+-			git status --porcelain
+-		else
+-			! test-tool getcwd &&
+-			test_might_fail git status --porcelain
+-		fi
++		# Make sure foo still exists, and commands needing it work
++		test-tool getcwd &&
++		git status --porcelain
+ 	) &&
+ 	test_path_is_missing foo/bar/baz &&
+ 	test_path_is_missing foo/bar &&
+ 
+-	# Although we want dir to be present, test for existing rather
+-	# than desired behavior.
+-	if test "$works" = "success"
+-	then
+-		test_path_is_dir foo
+-	else
+-		test_path_is_missing foo
+-	fi
++	test_path_is_dir foo
+ }
+ 
+ test_required_dir_removal () {
+-	works=$1 &&
+-	shift &&
+-
+ 	git checkout df_conflict^{commit} &&
+ 	test_when_finished "git clean -fdx" &&
+ 
+ 	(
+ 		cd dirORfile &&
+ 
+-		# We'd like for the command to fail (much as it would if there
+-		# was an untracked file there), and for the index and worktree
+-		# to be left clean with pwd and git status working afterwards.
+-		# But test for existing rather than desired behavior.
+-		if test "$works" = "success"
+-		then
+-			test_must_fail "$@" 2>../error &&
+-			grep "Refusing to remove.*current working directory" ../error &&
+-
+-			git diff --exit-code HEAD &&
+-
+-			test-tool getcwd &&
+-			git status --porcelain
+-		else
+-			"$@" &&
+-			! test-tool getcwd &&
+-			test_might_fail git status --porcelain
+-		fi
++		# Ensure command refuses to run
++		test_must_fail "$@" 2>../error &&
++		grep "Refusing to remove.*current working directory" ../error &&
++
++		# ...and that the index and working tree are left clean
++		git diff --exit-code HEAD &&
++
++		# Ensure that getcwd and git status do not error out (which
++		# they might if the current working directory had been removed)
++		test-tool getcwd &&
++		git status --porcelain
+ 	) &&
+ 
+-	# Although we want dirORfile to be present, test for existing rather
+-	# than desired behavior.
+-	if test "$works" = "success"
+-	then
+-		test_path_is_dir dirORfile
+-	else
+-		test_path_is_file dirORfile
+-	fi
++	test_path_is_dir dirORfile
+ }
+ 
+ test_expect_success 'checkout does not clean cwd incidentally' '
+-	test_incidental_dir_removal success git checkout init
++	test_incidental_dir_removal git checkout init
+ '
+ 
+ test_expect_success 'checkout fails if cwd needs to be removed' '
+-	test_required_dir_removal success git checkout fd_conflict
++	test_required_dir_removal git checkout fd_conflict
+ '
+ 
+ test_expect_success 'reset --hard does not clean cwd incidentally' '
+-	test_incidental_dir_removal success git reset --hard init
++	test_incidental_dir_removal git reset --hard init
+ '
+ 
+ test_expect_success 'reset --hard fails if cwd needs to be removed' '
+-	test_required_dir_removal success git reset --hard fd_conflict
++	test_required_dir_removal git reset --hard fd_conflict
+ '
+ 
+ test_expect_success 'merge does not clean cwd incidentally' '
+-	test_incidental_dir_removal success git merge reverted
++	test_incidental_dir_removal git merge reverted
+ '
+ 
+ # This file uses some simple merges where
+@@ -154,46 +120,43 @@ test_expect_success 'merge fails if cwd needs to be removed; recursive friendly'
+ GIT_TEST_MERGE_ALGORITHM=ort
+ 
+ test_expect_success 'merge fails if cwd needs to be removed' '
+-	test_required_dir_removal success git merge fd_conflict
++	test_required_dir_removal git merge fd_conflict
+ '
+ 
+ test_expect_success 'cherry-pick does not clean cwd incidentally' '
+-	test_incidental_dir_removal success git cherry-pick reverted
++	test_incidental_dir_removal git cherry-pick reverted
+ '
+ 
+ test_expect_success 'cherry-pick fails if cwd needs to be removed' '
+-	test_required_dir_removal success git cherry-pick fd_conflict
++	test_required_dir_removal git cherry-pick fd_conflict
+ '
+ 
+ test_expect_success 'rebase does not clean cwd incidentally' '
+-	test_incidental_dir_removal success git rebase reverted
++	test_incidental_dir_removal git rebase reverted
+ '
+ 
+ test_expect_success 'rebase fails if cwd needs to be removed' '
+-	test_required_dir_removal success git rebase fd_conflict
++	test_required_dir_removal git rebase fd_conflict
+ '
+ 
+ test_expect_success 'revert does not clean cwd incidentally' '
+-	test_incidental_dir_removal success git revert HEAD
++	test_incidental_dir_removal git revert HEAD
+ '
+ 
+ test_expect_success 'revert fails if cwd needs to be removed' '
+-	test_required_dir_removal success git revert undo_fd_conflict
++	test_required_dir_removal git revert undo_fd_conflict
+ '
+ 
+ test_expect_success 'rm does not clean cwd incidentally' '
+-	test_incidental_dir_removal success git rm bar/baz.t
++	test_incidental_dir_removal git rm bar/baz.t
+ '
+ 
+ test_expect_success 'apply does not remove cwd incidentally' '
+ 	git diff HEAD HEAD~1 >patch &&
+-	test_incidental_dir_removal success git apply ../patch
++	test_incidental_dir_removal git apply ../patch
+ '
+ 
+ test_incidental_untracked_dir_removal () {
+-	works=$1 &&
+-	shift &&
+-
+ 	test_when_finished "git reset --hard" &&
+ 
+ 	git checkout foo/bar/baz^{commit} &&
+@@ -205,38 +168,24 @@ test_incidental_untracked_dir_removal () {
+ 		cd untracked &&
+ 		"$@" &&
+ 
+-		# Although we want pwd & git status to pass, test for existing
+-		# rather than desired behavior.
+-		if test "$works" = "success"
+-		then
+-			test-tool getcwd &&
+-			git status --porcelain
+-		else
+-			! test-tool getcwd &&
+-			test_might_fail git status --porcelain
+-		fi
++		# Make sure untracked still exists, and commands needing it work
++		test-tool getcwd &&
++		git status --porcelain
+ 	) &&
+ 	test_path_is_missing empty &&
+ 	test_path_is_missing untracked/random &&
+ 
+-	# Although we want dir to be present, test for existing rather
+-	# than desired behavior.
+-	if test "$works" = "success"
+-	then
+-		test_path_is_dir untracked
+-	else
+-		test_path_is_missing untracked
+-	fi
++	test_path_is_dir untracked
+ }
+ 
+ test_expect_success 'clean does not remove cwd incidentally' '
+-	test_incidental_untracked_dir_removal success \
++	test_incidental_untracked_dir_removal \
+ 		git -C .. clean -fd -e warnings . >warnings &&
+ 	grep "Refusing to remove current working directory" warnings
+ '
+ 
+ test_expect_success 'stash does not remove cwd incidentally' '
+-	test_incidental_untracked_dir_removal success \
++	test_incidental_untracked_dir_removal \
+ 		git stash --include-untracked
+ '
  
 -- 
 gitgitgadget
-
