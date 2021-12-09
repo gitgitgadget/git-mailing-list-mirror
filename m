@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8EECC433F5
-	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 16:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6097BC433EF
+	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 16:53:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235573AbhLIQuO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 11:50:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38688 "EHLO
+        id S241362AbhLIQ4k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 11:56:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233270AbhLIQuL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 11:50:11 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD91AC061746
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 08:46:37 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id l25so21525245eda.11
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 08:46:37 -0800 (PST)
+        with ESMTP id S238100AbhLIQ4j (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 11:56:39 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DB23C061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 08:53:06 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id e3so21828923edu.4
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 08:53:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=8iMBeqt/kjFmmYzc7UWbxTqkLii7eRsNZy9vLgnJl9M=;
-        b=csp+fxKhIfW7+4kiSB37F2FtqyjC6cPFujvI31w3WZ63E/+8Mj33FVLlHfDEUKRwoC
-         RneA2fl+AG6xiotIEygloOXVjcsTcHmpLcJl5xOtcxM2zungv2E08u/313mpJny4MUpC
-         v5cpbXGGst8eBNt3S2qLXg2k0UxIWZbuJ0Nofimi47JtUyBQyg7Nk1v4uJw6rkvqGPmb
-         KQHi7VO/TTGqghAnu5u2n0OfYL86bmAsP2/pdfexXOaf4Gp8GrQ9+V0HsR15etJ3V9n/
-         DZP27NAVwzN0PaQtXADaaY9PecRRbMJE6xZcjTQs3v3nYPCMbjU1VfpsB/Imjzze6Mo5
-         12Ug==
+        bh=w/ww5wk11CGoI+BPqVupFrc3cftj+sfFycJN9H229gY=;
+        b=CBt6b2pdZ2EDX+HAqsHMbv2AY99U4YQcT9hsUTtIOLbYvsPlHy2UaWIpTo6K29nvR8
+         nxcxlHKR9FgM9e2LXNUyzxIVAu86r7bKLLfwo7YLgfAUdjq445wGYdJgtm7aZpkAbvxp
+         fn2J4s21QCDgpeQhIeCdDXd3bl3887cLPBZsXDbKIV2nctvAfxOPent1k1uq9FN+TWvQ
+         IET8ymH8YO18tjiLzc5YsVyVUcqVAti8DLp9i+fPlKxzLmatrxmStn06ovp76yGXWZTZ
+         JqQMz2z4uSwvcaD0kyBdPeGfBMYwpGhbsU2LJmWWrXoPGUj8/wPFIjrmT5YCVZ/WxlHO
+         uGzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=8iMBeqt/kjFmmYzc7UWbxTqkLii7eRsNZy9vLgnJl9M=;
-        b=uP52bceHhA4M7FiijxghUbzVYfITHPK1/AYv4aQKPkojwAhpR9RrG9u99WcxwoyqvH
-         BueVA/53E79lnRbXjDzV1Mo/q5lB1ftV0r+5tc8mYmevw40K9GJVyrrY+uRmBsnECP8k
-         CGbVhdq9H3eE5qWWRtFBsz5wu5f9f9Ox2Qs0p5AcZWkDZLPuNwFrYdQbTcEM/7qo6zmj
-         +rWyEGVS5+4c5kZnbl2ZMAtuijBCVRFEIB9IHU8VQV9457lxB0a7ccWUxZQ3dxFx7jO1
-         sT6ri+dJGHxfYIZ/z9oc34tEn25fmVF4M0dYN2K2TQmjMseLE1bdNnSKz4VPMZHzo/rf
-         w1Mg==
-X-Gm-Message-State: AOAM53069Xal1ACtMK6vGciZIPZ0mDATEjuj2SXj06Ewu441ZJ7hhh3d
-        IMLxAiTIKcvfLwXdBb1vevc3fypbYf6koxUEixw=
-X-Google-Smtp-Source: ABdhPJyKyBzfgxrH9YCxo6ETIr2XkkWdhlYNwK3T7d8jCOWYDtozpyiqsNjOmQY/GwUSmGSM4RLmW5ilKKwRbxFYj/Q=
-X-Received: by 2002:a17:907:1c9d:: with SMTP id nb29mr17749315ejc.74.1639068280674;
- Thu, 09 Dec 2021 08:44:40 -0800 (PST)
+        bh=w/ww5wk11CGoI+BPqVupFrc3cftj+sfFycJN9H229gY=;
+        b=ysXnFtCqfinG3o7d+qj/yVK47m7kj+3Epq84ArXi+ciuBb5h1ToZ0paiIVu+ShjTha
+         rr1AQtXutoMjNFmTkrQTt5WiqdVBnMWewvNoxMJi6tOgjVxpJB+9iBHfUcDXaPHlIC8C
+         lIA5p78XhhiNRSQyDz8F4823sWnEAYuce5jMxd0FWKeB/ZDch2THWGSJRdCmfzpbeldm
+         zovMS6cRfOwt3Y/VQqLjeosvKKdQ1uB1E1YkqvLVkTBDwMJ+Vr6FuooG5YVtA+jCUlOW
+         +2/quRoWbzT7KaK879FtQYAlon8KOUJ1tdpjqJL5Ntd/cvm6oq7GXbKcL6jEUAvbK0D6
+         cQvA==
+X-Gm-Message-State: AOAM531gi54AMMVvOFOerN41a5pqrOCoYleYpCBYku5NFjBkF7K2mVsA
+        n3llQswLIzwAhkTzLbuOSOSR/oNjsYvHKxeFfX8=
+X-Google-Smtp-Source: ABdhPJzE6VXz8VEwo0Xobx0Rqyv/NFF76OK00Cpa3z3O6PpzbNyP6/G7AZL5bri/CY8U9wpsAclbJ1KBmnSi+Rz4TFI=
+X-Received: by 2002:a17:906:7209:: with SMTP id m9mr16994912ejk.434.1639068642982;
+ Thu, 09 Dec 2021 08:50:42 -0800 (PST)
 MIME-Version: 1.0
-References: <20211209051115.52629-1-sunshine@sunshineco.com> <20211209051115.52629-12-sunshine@sunshineco.com>
-In-Reply-To: <20211209051115.52629-12-sunshine@sunshineco.com>
+References: <20211209051115.52629-1-sunshine@sunshineco.com> <20211209051115.52629-16-sunshine@sunshineco.com>
+In-Reply-To: <20211209051115.52629-16-sunshine@sunshineco.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 9 Dec 2021 08:44:29 -0800
-Message-ID: <CABPp-BGBhxbvh_Ob=bR8U9f-3muiBzWmFruKLXd=K7420i8COw@mail.gmail.com>
-Subject: Re: [PATCH 11/19] tests: fix broken &&-chains in `$(...)` command substitutions
+Date:   Thu, 9 Dec 2021 08:50:31 -0800
+Message-ID: <CABPp-BGrjPKJAp_-yOH37d84Y0LhGwTOSboOm9xFYXp+68BrWw@mail.gmail.com>
+Subject: Re: [PATCH 15/19] tests: simplify by dropping unnecessary `for` loops
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Eric Sunshine <ericsunshine@gmail.com>
@@ -60,140 +60,196 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Dec 8, 2021 at 11:39 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
-> The top-level &&-chain checker built into t/test-lib.sh causes tests to
-> magically exit with code 117 if the &&-chain is broken. However, it has
-> the shortcoming that the magic does not work within `{...}` groups,
-> `(...)` subshells, `$(...)` substitutions, or within bodies of compound
-> statements, such as `if`, `for`, `while`, `case`, etc. `chainlint.sed`
-> partly fills in the gap by catching broken &&-chains in `(...)`
-> subshells, but bugs can still lurk behind broken &&-chains in the other
-> cases.
->
-> Fix broken &&-chains in `$(...)` command substitutions in order to
-> reduce the number of possible lurking bugs.
+> Rather than manually looping over a set of items and plugging those
+> items into a template string which is printed repeatedly, achieve the
+> same effect by taking advantage of `printf` which loops over its
+> arguments automatically.
+
+I didn't know this about printf; handy.
+
+Patch looks good.
+
 >
 > Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 > ---
->  contrib/subtree/t/t7900-subtree.sh |  2 +-
->  t/t0005-signals.sh                 |  2 +-
->  t/t0060-path-utils.sh              |  4 ++--
->  t/t1006-cat-file.sh                | 10 +++++-----
->  t/t3600-rm.sh                      |  2 +-
->  t/t7010-setup.sh                   |  2 +-
->  6 files changed, 11 insertions(+), 11 deletions(-)
+>  t/t3005-ls-files-relative.sh      | 10 ++--------
+>  t/t3600-rm.sh                     |  5 +----
+>  t/t4025-hunk-header.sh            | 10 ++--------
+>  t/t4125-apply-ws-fuzz.sh          |  5 +----
+>  t/t6416-recursive-corner-cases.sh | 30 ++++++------------------------
+>  t/t7110-reset-merge.sh            |  2 +-
+>  t/t9400-git-cvsserver-server.sh   |  2 +-
+>  7 files changed, 14 insertions(+), 50 deletions(-)
 >
-> diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-> index 4153b65321..1c1f76f04a 100755
-> --- a/contrib/subtree/t/t7900-subtree.sh
-> +++ b/contrib/subtree/t/t7900-subtree.sh
-> @@ -1445,7 +1445,7 @@ test_expect_success 'subtree descendant check' '
->         ) &&
->         test_create_commit "$test_count" folder_subtree/0 &&
->         test_create_commit "$test_count" folder_subtree/b &&
-> -       cherry=$(cd "$test_count"; git rev-parse HEAD) &&
-> +       cherry=$(cd "$test_count" && git rev-parse HEAD) &&
+> diff --git a/t/t3005-ls-files-relative.sh b/t/t3005-ls-files-relative.sh
+> index 6ba8b589cd..fbfa210a50 100755
+> --- a/t/t3005-ls-files-relative.sh
+> +++ b/t/t3005-ls-files-relative.sh
+> @@ -39,10 +39,7 @@ test_expect_success 'ls-files with mixed levels' '
+>  test_expect_success 'ls-files -c' '
 >         (
->                 cd "$test_count" &&
->                 git checkout branch
-> diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
-> index a5ec6a0315..eba75a2490 100755
-> --- a/t/t0005-signals.sh
-> +++ b/t/t0005-signals.sh
-> @@ -48,7 +48,7 @@ test_expect_success !MINGW 'a constipated git dies with SIGPIPE' '
->  '
->
->  test_expect_success !MINGW 'a constipated git dies with SIGPIPE even if parent ignores it' '
-> -       OUT=$( ((trap "" PIPE; large_git; echo $? 1>&3) | :) 3>&1 ) &&
-> +       OUT=$( ((trap "" PIPE && large_git; echo $? 1>&3) | :) 3>&1 ) &&
-
-Shouldn't the second ';' be replaced with '&&' as well?
-
->         test_match_signal 13 "$OUT"
->  '
->
-> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-> index 34d1061f32..71a5d370cc 100755
-> --- a/t/t0060-path-utils.sh
-> +++ b/t/t0060-path-utils.sh
-> @@ -216,7 +216,7 @@ test_expect_success SYMLINKS 'real path works on symlinks' '
->         mkdir second &&
->         ln -s ../first second/other &&
->         mkdir third &&
-> -       dir="$(cd .git; pwd -P)" &&
-> +       dir="$(cd .git && pwd -P)" &&
->         dir2=third/../second/other/.git &&
->         test "$dir" = "$(test-tool path-utils real_path $dir2)" &&
->         file="$dir"/index &&
-> @@ -224,7 +224,7 @@ test_expect_success SYMLINKS 'real path works on symlinks' '
->         basename=blub &&
->         test "$dir/$basename" = "$(cd .git && test-tool path-utils real_path "$basename")" &&
->         ln -s ../first/file .git/syml &&
-> -       sym="$(cd first; pwd -P)"/file &&
-> +       sym="$(cd first && pwd -P)"/file &&
->         test "$sym" = "$(test-tool path-utils real_path "$dir2/syml")"
->  '
->
-> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> index 658628375c..67a3f64c2d 100755
-> --- a/t/t1006-cat-file.sh
-> +++ b/t/t1006-cat-file.sh
-> @@ -211,14 +211,14 @@ done
->  test_expect_success "--batch-check for a non-existent named object" '
->      test "foobar42 missing
->  foobar84 missing" = \
-> -    "$( ( echo foobar42; echo_without_newline foobar84; ) | git cat-file --batch-check)"
-> +    "$( ( echo foobar42 && echo_without_newline foobar84 ) | git cat-file --batch-check)"
->  '
->
->  test_expect_success "--batch-check for a non-existent hash" '
->      test "0000000000000000000000000000000000000042 missing
->  0000000000000000000000000000000000000084 missing" = \
-> -    "$( ( echo 0000000000000000000000000000000000000042;
-> -        echo_without_newline 0000000000000000000000000000000000000084; ) |
-> +    "$( ( echo 0000000000000000000000000000000000000042 &&
-> +        echo_without_newline 0000000000000000000000000000000000000084 ) |
->         git cat-file --batch-check)"
->  '
->
-> @@ -226,8 +226,8 @@ test_expect_success "--batch for an existent and a non-existent hash" '
->      test "$tag_sha1 tag $tag_size
->  $tag_content
->  0000000000000000000000000000000000000000 missing" = \
-> -    "$( ( echo $tag_sha1;
-> -        echo_without_newline 0000000000000000000000000000000000000000; ) |
-> +    "$( ( echo $tag_sha1 &&
-> +        echo_without_newline 0000000000000000000000000000000000000000 ) |
->         git cat-file --batch)"
->  '
->
+>                 cd top/sub &&
+> -               for f in ../y*
+> -               do
+> -                       echo "error: pathspec $SQ$f$SQ did not match any file(s) known to git"
+> -               done >expect.err &&
+> +               printf "error: pathspec $SQ%s$SQ did not match any file(s) known to git\n" ../y* >expect.err &&
+>                 echo "Did you forget to ${SQ}git add${SQ}?" >>expect.err &&
+>                 ls ../x* >expect.out &&
+>                 test_must_fail git ls-files -c --error-unmatch ../[xy]* >actual.out 2>actual.err &&
+> @@ -54,10 +51,7 @@ test_expect_success 'ls-files -c' '
+>  test_expect_success 'ls-files -o' '
+>         (
+>                 cd top/sub &&
+> -               for f in ../x*
+> -               do
+> -                       echo "error: pathspec $SQ$f$SQ did not match any file(s) known to git"
+> -               done >expect.err &&
+> +               printf "error: pathspec $SQ%s$SQ did not match any file(s) known to git\n" ../x* >expect.err &&
+>                 echo "Did you forget to ${SQ}git add${SQ}?" >>expect.err &&
+>                 ls ../y* >expect.out &&
+>                 test_must_fail git ls-files -o --error-unmatch ../[xy]* >actual.out 2>actual.err &&
 > diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-> index bb9ef35dac..ed3952eb98 100755
+> index ed3952eb98..e74a318ac3 100755
 > --- a/t/t3600-rm.sh
 > +++ b/t/t3600-rm.sh
-> @@ -265,7 +265,7 @@ test_expect_success 'choking "git rm" should not let it die with cruft (induce S
+> @@ -274,10 +274,7 @@ test_expect_success 'Resolving by removal is not a warning-worthy event' '
+>         git reset -q --hard &&
+>         test_when_finished "rm -f .git/index.lock msg && git reset -q --hard" &&
+>         blob=$(echo blob | git hash-object -w --stdin) &&
+> -       for stage in 1 2 3
+> -       do
+> -               echo "100644 $blob $stage       blob"
+> -       done | git update-index --index-info &&
+> +       printf "100644 $blob %d\tblob\n" 1 2 3 | git update-index --index-info &&
+>         git rm blob >msg 2>&1 &&
+>         test_i18ngrep ! "needs merge" msg &&
+>         test_must_fail git ls-files -s --error-unmatch blob
+> diff --git a/t/t4025-hunk-header.sh b/t/t4025-hunk-header.sh
+> index 6356961de4..5397cb7d42 100755
+> --- a/t/t4025-hunk-header.sh
+> +++ b/t/t4025-hunk-header.sh
+> @@ -14,15 +14,9 @@ test_expect_success setup '
 >
->  test_expect_success !MINGW 'choking "git rm" should not let it die with cruft (induce and check SIGPIPE)' '
->         choke_git_rm_setup &&
-> -       OUT=$( ((trap "" PIPE; git rm -n "some-file-*"; echo $? 1>&3) | :) 3>&1 ) &&
-> +       OUT=$( ((trap "" PIPE && git rm -n "some-file-*"; echo $? 1>&3) | :) 3>&1 ) &&
-
-Same here; shouldn't the second ';' be replaced with '&&' as well?
-
->         test_match_signal 13 "$OUT" &&
->         test_path_is_missing .git/index.lock
+>         (
+>                 echo "A $NS" &&
+> -               for c in B C D E F G H I J K
+> -               do
+> -                       echo "  $c"
+> -               done &&
+> +               printf "  %s\n" B C D E F G H I J K &&
+>                 echo "L  $NS" &&
+> -               for c in M N O P Q R S T U V
+> -               do
+> -                       echo "  $c"
+> -               done
+> +               printf "  %s\n" M N O P Q R S T U V
+>         ) >file &&
+>         git add file &&
+>
+> diff --git a/t/t4125-apply-ws-fuzz.sh b/t/t4125-apply-ws-fuzz.sh
+> index 9671de7999..090987c89b 100755
+> --- a/t/t4125-apply-ws-fuzz.sh
+> +++ b/t/t4125-apply-ws-fuzz.sh
+> @@ -10,10 +10,7 @@ test_expect_success setup '
+>         git add file &&
+>
+>         # file-0 is full of whitespace breakages
+> -       for l in a bb c d eeee f ggg h
+> -       do
+> -               echo "$l "
+> -       done >file-0 &&
+> +       printf "%s \n" a bb c d eeee f ggg h >file-0 &&
+>
+>         # patch-0 creates a whitespace broken file
+>         cat file-0 >file &&
+> diff --git a/t/t6416-recursive-corner-cases.sh b/t/t6416-recursive-corner-cases.sh
+> index 84f5082366..690c8482b1 100755
+> --- a/t/t6416-recursive-corner-cases.sh
+> +++ b/t/t6416-recursive-corner-cases.sh
+> @@ -24,14 +24,8 @@ test_expect_success 'setup basic criss-cross + rename with no modifications' '
+>                 cd basic-rename &&
+>
+>                 ten="0 1 2 3 4 5 6 7 8 9" &&
+> -               for i in $ten
+> -               do
+> -                       echo line $i in a sample file
+> -               done >one &&
+> -               for i in $ten
+> -               do
+> -                       echo line $i in another sample file
+> -               done >two &&
+> +               printf "line %d in a sample file\n" $ten >one &&
+> +               printf "line %d in another sample file\n" $ten >two &&
+>                 git add one two &&
+>                 test_tick && git commit -m initial &&
+>
+> @@ -96,14 +90,8 @@ test_expect_success 'setup criss-cross + rename merges with basic modification'
+>                 cd rename-modify &&
+>
+>                 ten="0 1 2 3 4 5 6 7 8 9" &&
+> -               for i in $ten
+> -               do
+> -                       echo line $i in a sample file
+> -               done >one &&
+> -               for i in $ten
+> -               do
+> -                       echo line $i in another sample file
+> -               done >two &&
+> +               printf "line %d in a sample file\n" $ten >one &&
+> +               printf "line %d in another sample file\n" $ten >two &&
+>                 git add one two &&
+>                 test_tick && git commit -m initial &&
+>
+> @@ -1588,10 +1576,7 @@ test_expect_success 'setup nested conflicts' '
+>                 cd nested_conflicts &&
+>
+>                 # Create some related files now
+> -               for i in $(test_seq 1 10)
+> -               do
+> -                       echo Random base content line $i
+> -               done >initial &&
+> +               printf "Random base content line %d\n" $(test_seq 1 10) >initial &&
+>
+>                 cp initial b_L1 &&
+>                 cp initial b_R1 &&
+> @@ -1777,10 +1762,7 @@ test_expect_success 'setup virtual merge base with nested conflicts' '
+>                 cd virtual_merge_base_has_nested_conflicts &&
+>
+>                 # Create some related files now
+> -               for i in $(test_seq 1 10)
+> -               do
+> -                       echo Random base content line $i
+> -               done >content &&
+> +               printf "Random base content line %d\n" $(test_seq 1 10) >content &&
+>
+>                 # Setup original commit
+>                 git add content &&
+> diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
+> index a82a07a04a..3d62e10b53 100755
+> --- a/t/t7110-reset-merge.sh
+> +++ b/t/t7110-reset-merge.sh
+> @@ -8,7 +8,7 @@ test_description='Tests for "git reset" with "--merge" and "--keep" options'
+>  . ./test-lib.sh
+>
+>  test_expect_success setup '
+> -    for i in 1 2 3; do echo line $i; done >file1 &&
+> +    printf "line %d\n" 1 2 3 >file1 &&
+>      cat file1 >file2 &&
+>      git add file1 file2 &&
+>      test_tick &&
+> diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+> index a6a73effde..a60fe2e19f 100755
+> --- a/t/t9400-git-cvsserver-server.sh
+> +++ b/t/t9400-git-cvsserver-server.sh
+> @@ -591,7 +591,7 @@ test_expect_success 'cvs annotate' '
+>      cd cvswork &&
+>      GIT_CONFIG="$git_config" cvs annotate merge >../out &&
+>      sed -e "s/ .*//" ../out >../actual &&
+> -    for i in 3 1 1 1 1 1 1 1 2 4; do echo 1.$i; done >../expect &&
+> +    printf "1.%d\n" 3 1 1 1 1 1 1 1 2 4 >../expect &&
+>      test_cmp ../expect ../actual
 >  '
-> diff --git a/t/t7010-setup.sh b/t/t7010-setup.sh
-> index 0335a9a158..520f96d09f 100755
-> --- a/t/t7010-setup.sh
-> +++ b/t/t7010-setup.sh
-> @@ -137,7 +137,7 @@ test_expect_success 'setup deeper work tree' '
->
->  test_expect_success 'add a directory outside the work tree' '(
->         cd tester &&
-> -       d1="$(cd .. ; pwd)" &&
-> +       d1="$(cd .. && pwd)" &&
->         test_must_fail git add "$d1"
->  )'
 >
 > --
 > 2.34.1.307.g9b7440fafd
