@@ -2,74 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 629DBC433EF
-	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 19:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6240C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 19:17:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229498AbhLITVR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 14:21:17 -0500
-Received: from mail-pj1-f45.google.com ([209.85.216.45]:37412 "EHLO
-        mail-pj1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbhLITVQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 14:21:16 -0500
-Received: by mail-pj1-f45.google.com with SMTP id cq22-20020a17090af99600b001a9550a17a5so7718414pjb.2
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 11:17:43 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EMAuIcAsuorDH+2fV7ksRMHLN3m7o3L04VF7FpD2c2g=;
-        b=k62md6jGhQFtlTUplErO5Pp50T03Er+VNMvZ3DsaNWjBlp8IIhxS17SdnwF7zHCPR9
-         nRTazaBDozjEYgXnVPhpr04IlXTkWWXlE+GIEm1q9893JM1mTvWJDByWN/ARxK7EqfvR
-         RHNjr9HK0T1kbhSQFOHJy9QtmiZAToYMwRP+2t8DpA/xy2SoNUBiHYK3xmPCo45GGa+e
-         7jEMTXAWv1O4D8pS5bwGDpBOlpfP9hMZ3hryl403XuwtZaJHsBS82y1EPkGkcQHrvKii
-         KC5E+hFEcAhCy+2615oVjoJ5jWNdFVN2X5wNvpirFgN3yf2GzP16xUbZQOx3POLeqQKf
-         Aexg==
-X-Gm-Message-State: AOAM533Z12Do58UGdvjkbCJvILXKUDr88n7+qNDtjnVLdLKR8/C8+qVh
-        8h9xlftve/QzY5Qi1g9vY11l57y+yLIEvyj3258=
-X-Google-Smtp-Source: ABdhPJx+A6ObsEmetYrw5U9WPo6yyYGcgG6zHpBc3Fv/e+FjRV1BZ6D2d5+Krv9fjKSWYKZgjjt/EMU+lFhEs14uj8Q=
-X-Received: by 2002:a17:90b:4d08:: with SMTP id mw8mr18300552pjb.236.1639077462934;
- Thu, 09 Dec 2021 11:17:42 -0800 (PST)
+        id S229379AbhLITV1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 14:21:27 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58783 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229726AbhLITVZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 14:21:25 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4689E1673B7;
+        Thu,  9 Dec 2021 14:17:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=kyhv7ZKh4E7A0Lq4v7wltUChQW21O8gL4W+KVl
+        WyhxY=; b=dCJroy+ZTKB3EKRIt9D9Ro4bFRaAA9f6r4Tp9UayFJpo65MTkW8hc0
+        PNKePiF8rRxfs36joD711YCQ1Zb58xdZxHZH+LzGyWq3qFqVNgn1qc3J/ztkqY3t
+        HecnLT2tCnTPqAav+/NJlpcwelC/KnKkQ5dAZD5+t/P9+Tn86d1+M=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3E9E61673B5;
+        Thu,  9 Dec 2021 14:17:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 86B2C1673B3;
+        Thu,  9 Dec 2021 14:17:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 07/14] create_autostash(): remove unneeded parameter
+References: <pull.1049.git.1633082702.gitgitgadget@gmail.com>
+        <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
+        <341fe183c18ee28b459ba26f2c8c369d9367c328.1638975482.git.gitgitgadget@gmail.com>
+Date:   Thu, 09 Dec 2021 11:17:46 -0800
+In-Reply-To: <341fe183c18ee28b459ba26f2c8c369d9367c328.1638975482.git.gitgitgadget@gmail.com>
+        (Phillip Wood via GitGitGadget's message of "Wed, 08 Dec 2021 14:57:54
+        +0000")
+Message-ID: <xmqqpmq5r3j9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20211209051115.52629-1-sunshine@sunshineco.com> <CABPp-BFM5ZbFAzVfvDE3=zm6Q4LN2fWthPP8WH5kbgVPSxomtA@mail.gmail.com>
-In-Reply-To: <CABPp-BFM5ZbFAzVfvDE3=zm6Q4LN2fWthPP8WH5kbgVPSxomtA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 9 Dec 2021 14:17:32 -0500
-Message-ID: <CAPig+cRD_DzisMo-8ZuT4NzESEe4i2vPk_1Y-_JTeV9rbdwkLg@mail.gmail.com>
-Subject: Re: [PATCH 00/19] tests: fix broken &&-chains & abort loops on error
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: B1A42C3A-5924-11EC-B4B6-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 9, 2021 at 12:03 PM Elijah Newren <newren@gmail.com> wrote:
-> On Wed, Dec 8, 2021 at 11:39 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > Although the new chainlint implementation has been complete for several
-> > months, I'm still working out how to organize its patch series. In the
-> > meantime, _this_ patch series fixes problems discovered by the new
-> > linter due to its improved coverage and extra semantic knowledge about
-> > Git tests. As much as possible, I resisted the temptation to make
-> > ancillary cleanups (including indentation fixes) to tests even when such
-> > cleanups would be obvious improvements. Avoiding such unrelated cleanups
-> > should make the long patches in this series, which touch a lot of tests,
-> > easier to review (--color-words helps a lot here).
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> I have to admit to starting to skim once I got to the last four
-> patches, since they were a bit longer and all the same type of change.
+> The default_reflog parameter of create_autostash() is passed to
+> reset_head(). However as creating a stash does not involve updating
+> any refs the parameter is not used by reset_head(). Removing the
+> parameter from create_autostash() simplifies the callers.
 
-Understandable. Those bulk-change patches tend to be mind-numbing to
-review, though `git diff --color-words` helps out somewhat (at least
-by making it easier to skim the changes).
+It does make the callers of create_autostash() easier to reason
+about, but ...
 
-> You did an excellent job of explaining the changes and presented them
-> in a logical fashion.  The few things I thought I caught, you've
-> already answered were already correct.  I do think making the second
-> commit message be a bit clearer about the importance of the ordering
-> would be helpful.  Anyway:
->
-> Reviewed-by: Elijah Newren <newren@gmail.com>
+> @@ -4132,7 +4131,7 @@ void create_autostash(struct repository *r, const char *path,
+>  		write_file(path, "%s", oid_to_hex(&oid));
+>  		printf(_("Created autostash: %s\n"), buf.buf);
+>  		if (reset_head(r, NULL, NULL, RESET_HEAD_HARD, NULL, NULL,
+> -			       default_reflog_action) < 0)
+> +			       "") < 0)
 
-Thanks. I'll wait a couple days and resend with a clarified commit
-message for the second patch unless, perhaps, Junio would accept a
-resend of just that patch so I don't have to spam the list again.
+... makes the reader wonder what the empty string is doing here.
+The fact that reset_head() does not care about the last parameter
+when not given oid or switch_to_branch parameters feels like too
+much implementation detail to expect the callers to know about.
+
+Unless it is documented in reset.[ch] before the beginning of the
+"int reset_head(...)" definition/declaration, that is.
+
+>  			die(_("could not reset --hard"));
+>  
+>  		if (discard_index(r->index) < 0 ||
+> diff --git a/sequencer.h b/sequencer.h
+> index 05a7d2ba6b3..da64473636b 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -197,8 +197,7 @@ void commit_post_rewrite(struct repository *r,
+>  			 const struct commit *current_head,
+>  			 const struct object_id *new_head);
+>  
+> -void create_autostash(struct repository *r, const char *path,
+> -		      const char *default_reflog_action);
+> +void create_autostash(struct repository *r, const char *path);
+>  int save_autostash(const char *path);
+>  int apply_autostash(const char *path);
+>  int apply_autostash_oid(const char *stash_oid);
