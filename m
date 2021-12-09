@@ -2,542 +2,307 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4092FC433EF
-	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 05:02:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DF30C433F5
+	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 05:08:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229832AbhLIFGL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 00:06:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43498 "EHLO
+        id S229897AbhLIFMN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 00:12:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbhLIFGI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 00:06:08 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90AFDC0617A1
-        for <git@vger.kernel.org>; Wed,  8 Dec 2021 21:02:35 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id d24so7761847wra.0
-        for <git@vger.kernel.org>; Wed, 08 Dec 2021 21:02:35 -0800 (PST)
+        with ESMTP id S229738AbhLIFMM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 00:12:12 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40F7DC061746
+        for <git@vger.kernel.org>; Wed,  8 Dec 2021 21:08:39 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id 133so3307923wme.0
+        for <git@vger.kernel.org>; Wed, 08 Dec 2021 21:08:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=1t6fUM9dIfjv8mULemZn5mxf9x0t/L0TWKqYPZZE0Rw=;
-        b=A3kocVSTugxjb02zcfmREPI6Zc2zMHrPvJTJHa/7OE74LLP3/+e7zqTBtDPXH6qpag
-         mNQADOcX6IMYeC4HdiL07pkeqyXGKCSMNxfJARL8NXxiXO1SsFr+XeVQtcjukZsjnIl/
-         Xzg3tRv/g+FmWXhikJNYOyGZASXv1jHbfYlvy1s0Gmfgv0DAfRaRS5+jz1uKxFeWWuIz
-         zvMha7t+kZmigeMS5hj0kW1rAPGUnykP6iqKETmYouZndAyPh1Ua3eqDWT9+oPu4AFCA
-         k24RHUG7nXbBUlE/UAVGw2hl6dnroVezrBQOETzBR+b56dAqOmMp5/fVU9bC2HWh4BAy
-         guzg==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=POdQYn+wB8P6R6dKvarUZSBNCsOxZRG7ulwQoq/6ysU=;
+        b=LaaYHxFS40XBZkief9MhLxJzxWvH9YDZF4wJdz5rt4PEzxQ7QuvlTqYxzID8IPAMNC
+         70kukf9Xz4zdTxUeKCkP95RczLazvqUsZ/YO7IhFKKWy0ketjBmDfe83GORvZo7xugD2
+         DrY+SaYYDwN5sGjpkG6kzByKH3Jg7MOtE00RAjssn26EJWBB2aO5b2SitmSuXIztTXQx
+         BLb+M/WTB/K6EQNXce4xdHm7o0Pe8Ay/Tl9W73Lh++VN03J6NXvLO1SmuSPmmQ7WMzsy
+         fZn6ah3/tG7bNkrP6n/xyGutBTRjmw6zmXvL0nmjnthN/HKwuDCaHjNHzlf459t8RAVS
+         HJbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=1t6fUM9dIfjv8mULemZn5mxf9x0t/L0TWKqYPZZE0Rw=;
-        b=q2bgXKsFdlg0SEdi8zrOCIY4mr/xj3ry4lgsg5tc7Pc0wsqdKAKSKTTBHK6cH/U7nL
-         VMut8f6SD7TpT42H11RvxDDjosrUPzE+LhUbtJiOl3yOiIQIZSn/l45Qt7e/I+VdsTbZ
-         HofnZ35O22hpNF972Uf4DdZ4XGCBSDfQRvgWA61SgHihNiCr/pFo0JrvdNkTVR6ns6F1
-         bisvlDUMFNVAJS+YeRWQ7cdZxDdEKQA1k7aszA8cdtdH1HhRJLtV7lM6Ek3buZIrhl3Y
-         S4qKNUnxGijMwKHM3DKJytCK2Y3xWklanFVErQCvUj8n4gnpXxWAV/QQNhBE2lhPt8no
-         0lfw==
-X-Gm-Message-State: AOAM530x2O3Z5jpX6GBb+aYGjwcFQ1RsBLUQxq5AVza1QpV+IdZwOH2n
-        A1fu1KoAl3tsnVWfpr1x/xEaTnXDouCgmg==
-X-Google-Smtp-Source: ABdhPJwmdH7x75tpafzzL8NOqnV67Hjpz1buvR/PgX4e1Arb426MGbJm83bCyr/XrirdICAg7ZMjRg==
-X-Received: by 2002:adf:e843:: with SMTP id d3mr3648405wrn.452.1639026153911;
-        Wed, 08 Dec 2021 21:02:33 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id w22sm4270394wmi.27.2021.12.08.21.02.32
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=POdQYn+wB8P6R6dKvarUZSBNCsOxZRG7ulwQoq/6ysU=;
+        b=cwkUv3B23Z92wr2OsPyFZEChPPQX+1Lsrnt0YwL/Zlk17L+443J+My3W7Dsp6H2zP5
+         W1dnD+PJ1j3yBtyrVys2cJNB6A6IOygSuSGTrAmmHrMhHRHii8E61uKJNt5iFT4u9/d2
+         LfMxQsoiIdMs3AKwUixHj76OMpNm+CAQbkXVOYR1OLBoTl5FHE5+wfjC+1xcQ/WjrnDA
+         fDLly8tlDcu6OgQBF36g7DF+0Q2WtuJgPK6c8QHL2+QW/YE8P4bpD1Z+9aIUpJXSyroM
+         JrGA9CnrtoJepxLJ9gjcA9fGv2oSzh8Uu950iifk12DWcGFsS0PgJwPs9PYtmklySsZA
+         ZAqA==
+X-Gm-Message-State: AOAM5306jGGYh8aRNpf99inXh1RJtDQ5ft8We9uC2AwY4+MMOm3Ndbjp
+        xVCVFpUM0HCXpMYtU+oQ+H+qPNJ2ddI=
+X-Google-Smtp-Source: ABdhPJym4zpKUYi0/mPmz+FYEAR3HKRmktL4Q3UygRhbrt1AG+scCSuHNXiVpnPUIUsqpvJG03LvxQ==
+X-Received: by 2002:a7b:cf25:: with SMTP id m5mr4198962wmg.51.1639026517485;
+        Wed, 08 Dec 2021 21:08:37 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a22sm4453763wme.19.2021.12.08.21.08.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Dec 2021 21:02:33 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 3/3] refs API: remove "failure_errno" from refs_resolve_ref_unsafe()
-Date:   Thu,  9 Dec 2021 06:02:28 +0100
-Message-Id: <patch-3.3-a42539d103c-20211209T045735Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.1.930.g218b4aae189
-In-Reply-To: <cover-0.3-00000000000-20211209T045735Z-avarab@gmail.com>
-References: <xmqqo85q2a42.fsf@gitster.g> <cover-0.3-00000000000-20211209T045735Z-avarab@gmail.com>
+        Wed, 08 Dec 2021 21:08:36 -0800 (PST)
+Message-Id: <pull.1140.v6.git.git.1639026515.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com>
+References: <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 09 Dec 2021 05:08:24 +0000
+Subject: [PATCH v6 00/11] Avoid removing the current working directory, even if it becomes empty
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the now-unused "failure_errno" parameter from the
-refs_resolve_ref_unsafe() signature. In my recent 96f6623ada0 (Merge
-branch 'ab/refs-errno-cleanup', 2021-11-29) series we made all of its
-callers explicitly request the errno via an output parameter.
+Traditionally, if folks run git commands such as checkout or rebase from a
+subdirectory, that git command could remove their current working directory
+and result in subsequent git and non-git commands either getting confused or
+printing messages that confuse the user (e.g. "fatal: Unable to read current
+working directory: No such file or directory"). Many commands either
+silently avoid removing directories that are not empty (i.e. those that have
+untracked or modified files in them)[1], or show an error and abort,
+depending on which is more appropriate for the command in question. With
+this series, we augment the reasons to avoid removing directories to include
+not just has-untracked-or-modified-files, but also to avoid removing the
+original_cwd as well.
 
-As that series shows all but one caller ended up passing in a
-boilerplate "ignore_errno", since they only cared about whether the
-return value was NULL or not, i.e. if the ref could be resolved.
+Peff and Junio provided some good pros/cons, if it helps:
 
-There was one caller left in sequencer.c that used the
-"failure_errnO', but as of the preceding commit it doesn't use that
-"failure_errno" either.
+ * Pros: Peff (original suggester of the idea)[2], and Junio[3]
+ * Cons: Peff [2, again -- see the "P.S."], and Junio[4]
 
-So let's remove this output parameter. Not only isn't it used now, but
-we'd like to slowly move the refs API to a more file-backend
-independent way of communicating error codes, having it use a
-"failure_errno" was only the first step in that direction. If this or
-any other function needs to communicate what specifically is wrong
-with the requested "refname" it'll be better to have the function set
-some output enum of well-defined error states than piggy-backend on
-"errno".
+[1] well, with a few exceptions; see
+https://lore.kernel.org/git/pull.1036.v3.git.1632760428.gitgitgadget@gmail.com/
+[2] https://lore.kernel.org/git/YS8eEtwQvF7TaLCb@coredump.intra.peff.net/
+[3] https://lore.kernel.org/git/xmqqo86elyht.fsf@gitster.g/ [4]
+https://lore.kernel.org/git/xmqqo8691gr8.fsf@gitster.g/
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- refs.c                    | 51 +++++++++++++--------------------------
- refs.h                    |  7 +-----
- refs/files-backend.c      | 31 +++++++-----------------
- sequencer.c               |  4 +--
- t/helper/test-ref-store.c |  3 +--
- worktree.c                | 11 +++------
- 6 files changed, 32 insertions(+), 75 deletions(-)
+Changes since v5:
 
-diff --git a/refs.c b/refs.c
-index 533cf5a2b2e..4b1f990213d 100644
---- a/refs.c
-+++ b/refs.c
-@@ -269,10 +269,9 @@ char *refs_resolve_refdup(struct ref_store *refs,
- 			  struct object_id *oid, int *flags)
- {
- 	const char *result;
--	int ignore_errno;
- 
- 	result = refs_resolve_ref_unsafe(refs, refname, resolve_flags,
--					 oid, flags, &ignore_errno);
-+					 oid, flags);
- 	return xstrdup_or_null(result);
- }
- 
-@@ -294,11 +293,10 @@ struct ref_filter {
- 
- int read_ref_full(const char *refname, int resolve_flags, struct object_id *oid, int *flags)
- {
--	int ignore_errno;
- 	struct ref_store *refs = get_main_ref_store(the_repository);
- 
- 	if (refs_resolve_ref_unsafe(refs, refname, resolve_flags,
--				    oid, flags, &ignore_errno))
-+				    oid, flags))
- 		return 0;
- 	return -1;
- }
-@@ -310,9 +308,8 @@ int read_ref(const char *refname, struct object_id *oid)
- 
- int refs_ref_exists(struct ref_store *refs, const char *refname)
- {
--	int ignore_errno;
- 	return !!refs_resolve_ref_unsafe(refs, refname, RESOLVE_REF_READING,
--					 NULL, NULL, &ignore_errno);
-+					 NULL, NULL);
- }
- 
- int ref_exists(const char *refname)
-@@ -656,15 +653,13 @@ int expand_ref(struct repository *repo, const char *str, int len,
- 		struct object_id *this_result;
- 		int flag;
- 		struct ref_store *refs = get_main_ref_store(repo);
--		int ignore_errno;
- 
- 		this_result = refs_found ? &oid_from_ref : oid;
- 		strbuf_reset(&fullref);
- 		strbuf_addf(&fullref, *p, len, str);
- 		r = refs_resolve_ref_unsafe(refs, fullref.buf,
- 					    RESOLVE_REF_READING,
--					    this_result, &flag,
--					    &ignore_errno);
-+					    this_result, &flag);
- 		if (r) {
- 			if (!refs_found++)
- 				*ref = xstrdup(r);
-@@ -693,14 +688,12 @@ int repo_dwim_log(struct repository *r, const char *str, int len,
- 	for (p = ref_rev_parse_rules; *p; p++) {
- 		struct object_id hash;
- 		const char *ref, *it;
--		int ignore_errno;
- 
- 		strbuf_reset(&path);
- 		strbuf_addf(&path, *p, len, str);
- 		ref = refs_resolve_ref_unsafe(refs, path.buf,
- 					      RESOLVE_REF_READING,
--					      oid ? &hash : NULL, NULL,
--					      &ignore_errno);
-+					      oid ? &hash : NULL, NULL);
- 		if (!ref)
- 			continue;
- 		if (refs_reflog_exists(refs, path.buf))
-@@ -1382,10 +1375,9 @@ int refs_head_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- {
- 	struct object_id oid;
- 	int flag;
--	int ignore_errno;
- 
- 	if (refs_resolve_ref_unsafe(refs, "HEAD", RESOLVE_REF_READING,
--				    &oid, &flag, &ignore_errno))
-+				    &oid, &flag))
- 		return fn("HEAD", &oid, flag, cb_data);
- 
- 	return 0;
-@@ -1674,15 +1666,13 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 				    const char *refname,
- 				    int resolve_flags,
- 				    struct object_id *oid,
--				    int *flags, int *failure_errno)
-+				    int *flags)
- {
- 	static struct strbuf sb_refname = STRBUF_INIT;
- 	struct object_id unused_oid;
- 	int unused_flags;
- 	int symref_count;
- 
--	assert(failure_errno);
--
- 	if (!oid)
- 		oid = &unused_oid;
- 	if (!flags)
-@@ -1692,10 +1682,8 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 
- 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
- 		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
--		    !refname_is_safe(refname)) {
--			*failure_errno = EINVAL;
-+		    !refname_is_safe(refname))
- 			return NULL;
--		}
- 
- 		/*
- 		 * dwim_ref() uses REF_ISBROKEN to distinguish between
-@@ -1710,9 +1698,10 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 
- 	for (symref_count = 0; symref_count < SYMREF_MAXDEPTH; symref_count++) {
- 		unsigned int read_flags = 0;
-+		int failure_errno;
- 
- 		if (refs_read_raw_ref(refs, refname, oid, &sb_refname,
--				      &read_flags, failure_errno)) {
-+				      &read_flags, &failure_errno)) {
- 			*flags |= read_flags;
- 
- 			/* In reading mode, refs must eventually resolve */
-@@ -1724,9 +1713,9 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 			 * may show errors besides ENOENT if there are
- 			 * similarly-named refs.
- 			 */
--			if (*failure_errno != ENOENT &&
--			    *failure_errno != EISDIR &&
--			    *failure_errno != ENOTDIR)
-+			if (failure_errno != ENOENT &&
-+			    failure_errno != EISDIR &&
-+			    failure_errno != ENOTDIR)
- 				return NULL;
- 
- 			oidclr(oid);
-@@ -1752,16 +1741,13 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 		}
- 		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
- 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
--			    !refname_is_safe(refname)) {
--				*failure_errno = EINVAL;
-+			    !refname_is_safe(refname))
- 				return NULL;
--			}
- 
- 			*flags |= REF_ISBROKEN | REF_BAD_NAME;
- 		}
- 	}
- 
--	*failure_errno = ELOOP;
- 	return NULL;
- }
- 
-@@ -1776,10 +1762,8 @@ int refs_init_db(struct strbuf *err)
- const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
- 			       struct object_id *oid, int *flags)
- {
--	int ignore_errno;
--
- 	return refs_resolve_ref_unsafe(get_main_ref_store(the_repository), refname,
--				       resolve_flags, oid, flags, &ignore_errno);
-+				       resolve_flags, oid, flags);
- }
- 
- int resolve_gitlink_ref(const char *submodule, const char *refname,
-@@ -1787,15 +1771,14 @@ int resolve_gitlink_ref(const char *submodule, const char *refname,
- {
- 	struct ref_store *refs;
- 	int flags;
--	int ignore_errno;
- 
- 	refs = get_submodule_ref_store(submodule);
- 
- 	if (!refs)
- 		return -1;
- 
--	if (!refs_resolve_ref_unsafe(refs, refname, 0, oid, &flags,
--				     &ignore_errno) || is_null_oid(oid))
-+	if (!refs_resolve_ref_unsafe(refs, refname, 0, oid, &flags) ||
-+	    is_null_oid(oid))
- 		return -1;
- 	return 0;
- }
-diff --git a/refs.h b/refs.h
-index 45c34e99e3a..859dfe946af 100644
---- a/refs.h
-+++ b/refs.h
-@@ -58,11 +58,6 @@ struct worktree;
-  * resolved. The function returns NULL for such ref names.
-  * Caps and underscores refers to the special refs, such as HEAD,
-  * FETCH_HEAD and friends, that all live outside of the refs/ directory.
-- *
-- * Callers should not inspect "errno" on failure, but rather pass in a
-- * "failure_errno" parameter, on failure the "errno" will indicate the
-- * type of failure encountered, but not necessarily one that came from
-- * a syscall. We might have faked it up.
-  */
- #define RESOLVE_REF_READING 0x01
- #define RESOLVE_REF_NO_RECURSE 0x02
-@@ -72,7 +67,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 				    const char *refname,
- 				    int resolve_flags,
- 				    struct object_id *oid,
--				    int *flags, int *failure_errno);
-+				    int *flags);
- 
- const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
- 			       struct object_id *oid, int *flags);
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 85e195a2573..0356debdaff 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -282,11 +282,10 @@ static void loose_fill_ref_dir(struct ref_store *ref_store,
- 					 create_dir_entry(dir->cache, refname.buf,
- 							  refname.len));
- 		} else {
--			int ignore_errno;
- 			if (!refs_resolve_ref_unsafe(&refs->base,
- 						     refname.buf,
- 						     RESOLVE_REF_READING,
--						     &oid, &flag, &ignore_errno)) {
-+						     &oid, &flag)) {
- 				oidclr(&oid);
- 				flag |= REF_ISBROKEN;
- 			} else if (is_null_oid(&oid)) {
-@@ -1011,7 +1010,6 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- {
- 	struct strbuf ref_file = STRBUF_INIT;
- 	struct ref_lock *lock;
--	int ignore_errno;
- 
- 	files_assert_main_repository(refs, "lock_ref_oid_basic");
- 	assert(err);
-@@ -1039,7 +1037,7 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- 	}
- 
- 	if (!refs_resolve_ref_unsafe(&refs->base, lock->ref_name, 0,
--				     &lock->old_oid, NULL, &ignore_errno))
-+				     &lock->old_oid, NULL))
- 		oidclr(&lock->old_oid);
- 	goto out;
- 
-@@ -1403,7 +1401,6 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 	struct strbuf tmp_renamed_log = STRBUF_INIT;
- 	int log, ret;
- 	struct strbuf err = STRBUF_INIT;
--	int ignore_errno;
- 
- 	files_reflog_path(refs, &sb_oldref, oldrefname);
- 	files_reflog_path(refs, &sb_newref, newrefname);
-@@ -1417,7 +1414,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 
- 	if (!refs_resolve_ref_unsafe(&refs->base, oldrefname,
- 				     RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
--				     &orig_oid, &flag, &ignore_errno)) {
-+				     &orig_oid, &flag)) {
- 		ret = error("refname %s not found", oldrefname);
- 		goto out;
- 	}
-@@ -1463,7 +1460,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 	 */
- 	if (!copy && refs_resolve_ref_unsafe(&refs->base, newrefname,
- 					     RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
--					     NULL, NULL, &ignore_errno) &&
-+					     NULL, NULL) &&
- 	    refs_delete_ref(&refs->base, NULL, newrefname,
- 			    NULL, REF_NO_DEREF)) {
- 		if (errno == EISDIR) {
-@@ -1828,12 +1825,10 @@ static int commit_ref_update(struct files_ref_store *refs,
- 		 */
- 		int head_flag;
- 		const char *head_ref;
--		int ignore_errno;
- 
- 		head_ref = refs_resolve_ref_unsafe(&refs->base, "HEAD",
- 						   RESOLVE_REF_READING,
--						   NULL, &head_flag,
--						   &ignore_errno);
-+						   NULL, &head_flag);
- 		if (head_ref && (head_flag & REF_ISSYMREF) &&
- 		    !strcmp(head_ref, lock->ref_name)) {
- 			struct strbuf log_err = STRBUF_INIT;
-@@ -1877,12 +1872,10 @@ static void update_symref_reflog(struct files_ref_store *refs,
- {
- 	struct strbuf err = STRBUF_INIT;
- 	struct object_id new_oid;
--	int ignore_errno;
- 
- 	if (logmsg &&
- 	    refs_resolve_ref_unsafe(&refs->base, target,
--				    RESOLVE_REF_READING, &new_oid, NULL,
--				    &ignore_errno) &&
-+				    RESOLVE_REF_READING, &new_oid, NULL) &&
- 	    files_log_ref_write(refs, refname, &lock->old_oid,
- 				&new_oid, logmsg, 0, &err)) {
- 		error("%s", err.buf);
-@@ -2156,7 +2149,6 @@ static int files_reflog_iterator_advance(struct ref_iterator *ref_iterator)
- 		(struct files_reflog_iterator *)ref_iterator;
- 	struct dir_iterator *diter = iter->dir_iterator;
- 	int ok;
--	int ignore_errno;
- 
- 	while ((ok = dir_iterator_advance(diter)) == ITER_OK) {
- 		int flags;
-@@ -2170,8 +2162,7 @@ static int files_reflog_iterator_advance(struct ref_iterator *ref_iterator)
- 
- 		if (!refs_resolve_ref_unsafe(iter->ref_store,
- 					     diter->relative_path, 0,
--					     &iter->oid, &flags,
--					     &ignore_errno)) {
-+					     &iter->oid, &flags)) {
- 			error("bad ref for %s", diter->path.buf);
- 			continue;
- 		}
-@@ -2515,11 +2506,9 @@ static int lock_ref_for_update(struct files_ref_store *refs,
- 			 * the transaction, so we have to read it here
- 			 * to record and possibly check old_oid:
- 			 */
--			int ignore_errno;
- 			if (!refs_resolve_ref_unsafe(&refs->base,
- 						     referent.buf, 0,
--						     &lock->old_oid, NULL,
--						     &ignore_errno)) {
-+						     &lock->old_oid, NULL)) {
- 				if (update->flags & REF_HAVE_OLD) {
- 					strbuf_addf(err, "cannot lock ref '%s': "
- 						    "error reading reference",
-@@ -3210,14 +3199,12 @@ static int files_reflog_expire(struct ref_store *ref_store,
- 
- 		if ((flags & EXPIRE_REFLOGS_UPDATE_REF) &&
- 		    !is_null_oid(&cb.last_kept_oid)) {
--			int ignore_errno;
- 			int type;
- 			const char *ref;
- 
- 			ref = refs_resolve_ref_unsafe(&refs->base, refname,
- 						      RESOLVE_REF_NO_RECURSE,
--						      NULL, &type,
--						      &ignore_errno);
-+						      NULL, &type);
- 			update = !!(ref && !(type & REF_ISSYMREF));
- 		}
- 
-diff --git a/sequencer.c b/sequencer.c
-index a649bd737ba..d2002513cbe 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1285,7 +1285,6 @@ void print_commit_summary(struct repository *r,
- 	struct strbuf author_ident = STRBUF_INIT;
- 	struct strbuf committer_ident = STRBUF_INIT;
- 	struct ref_store *refs;
--	int ignore_errno;
- 
- 	commit = lookup_commit(r, oid);
- 	if (!commit)
-@@ -1336,8 +1335,7 @@ void print_commit_summary(struct repository *r,
- 	diff_setup_done(&rev.diffopt);
- 
- 	refs = get_main_ref_store(the_repository);
--	head = refs_resolve_ref_unsafe(refs, "HEAD", 0, NULL, NULL,
--				       &ignore_errno);
-+	head = refs_resolve_ref_unsafe(refs, "HEAD", 0, NULL, NULL);
- 	if (!head)
- 		die(_("unable to resolve HEAD after creating commit"));
- 	if (!strcmp(head, "HEAD"))
-diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-index 3986665037a..b314b81a45b 100644
---- a/t/helper/test-ref-store.c
-+++ b/t/helper/test-ref-store.c
-@@ -123,10 +123,9 @@ static int cmd_resolve_ref(struct ref_store *refs, const char **argv)
- 	int resolve_flags = arg_flags(*argv++, "resolve-flags");
- 	int flags;
- 	const char *ref;
--	int ignore_errno;
- 
- 	ref = refs_resolve_ref_unsafe(refs, refname, resolve_flags,
--				      &oid, &flags, &ignore_errno);
-+				      &oid, &flags);
- 	printf("%s %s 0x%x\n", oid_to_hex(&oid), ref ? ref : "(null)", flags);
- 	return ref ? 0 : 1;
- }
-diff --git a/worktree.c b/worktree.c
-index 2c155b10150..b127eda266b 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -28,13 +28,11 @@ static void add_head_info(struct worktree *wt)
- {
- 	int flags;
- 	const char *target;
--	int ignore_errno;
- 
- 	target = refs_resolve_ref_unsafe(get_worktree_ref_store(wt),
- 					 "HEAD",
- 					 0,
--					 &wt->head_oid, &flags,
--					 &ignore_errno);
-+					 &wt->head_oid, &flags);
- 	if (!target)
- 		return;
- 
-@@ -420,7 +418,6 @@ const struct worktree *find_shared_symref(const char *symref,
- 		const char *symref_target;
- 		struct ref_store *refs;
- 		int flags;
--		int ignore_errno;
- 
- 		if (wt->is_bare)
- 			continue;
-@@ -438,8 +435,7 @@ const struct worktree *find_shared_symref(const char *symref,
- 
- 		refs = get_worktree_ref_store(wt);
- 		symref_target = refs_resolve_ref_unsafe(refs, symref, 0,
--							NULL, &flags,
--							&ignore_errno);
-+							NULL, &flags);
- 		if ((flags & REF_ISSYMREF) &&
- 		    symref_target && !strcmp(symref_target, target)) {
- 			existing = wt;
-@@ -567,7 +563,6 @@ int other_head_refs(each_ref_fn fn, void *cb_data)
- 		struct worktree *wt = *p;
- 		struct object_id oid;
- 		int flag;
--		int ignore_errno;
- 
- 		if (wt->is_current)
- 			continue;
-@@ -577,7 +572,7 @@ int other_head_refs(each_ref_fn fn, void *cb_data)
- 		if (refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
- 					    refname.buf,
- 					    RESOLVE_REF_READING,
--					    &oid, &flag, &ignore_errno))
-+					    &oid, &flag))
- 			ret = fn(refname.buf, &oid, flag, cb_data);
- 		if (ret)
- 			break;
+ * It's been about a week without changes, so including Acks that have come
+   in (let me know if I was wrong in my interpretation of these statements
+   as Acks):
+   * from Stolee ("This version is good to go",
+     https://lore.kernel.org/git/aa85e35d-143e-93e4-f54b-146b38dd4b88@gmail.com/)
+   * from Ævar ("I've got no objections to these changes going in as they
+     stand.",
+     https://lore.kernel.org/git/211207.86ee6opy0f.gmgdl@evledraar.gmail.com/)
+
+Changes since v4:
+
+ * actually fix bashism
+
+Changes since v3:
+
+ * fixed one codepath from v2 so that the series really is only about the
+   working tree
+ * used test-tool getcwd instead of pwd -P as suggested by Ævar for some
+   less common platforms
+ * fixed bashism
+ * check for clean index/worktree after verifying that expected-to-abort
+   codepaths do abort, to make it clearer that we expect an early abort
+ * remove a leftover (and confusing) is_absolute_dir() check in sequencer
+   and stash from an earlier round of the series
+
+Changes since v2:
+
+ * the series is now only about the working tree. So if the original cwd is
+   outside the worktree (or we're in a bare repo), then the new code is a
+   no-op.
+ * fixed ugly early die() possibility (uses strbuf_getcwd() instead of
+   xgetcwd())
+ * modified the initial tests to show both expected and desired behavior.
+   subsequent patches fix the tests. One new patch added at the end which
+   simplifies the tests to only check for desired behavior.
+ * NULLify startup_info->original_cwd when it matches the toplevel worktree;
+   that is already protected and we don't need secondary protection for it.
+   This simplified some other codepaths so we don't have to check for
+   startup_info->original_cwd == "".
+ * clarified some commit messages
+
+Changes since v1:
+
+ * clarified multiple commit messages
+ * renamed the_cwd to startup_info->original_cwd to make it clearer that
+   it's our parent process'es cwd that really matters, which we inherited at
+   program startup. Also pulls it out of the global namespace.
+ * Normalize the path for startup_info->original_cwd, and ensure that it's
+   actually the original cwd even if -C is passed to git.
+ * small code cleanups suggested by René and Ævar
+ * split the final patch (which got the most comments) into two -- one for
+   each function being modified. Also, add a bunch more history to the first
+   of the two resulting commit messages
+ * no longer has a content conflict with so/stash-staged
+ * add another value for the flags parameter that remove_dir_recursively()
+   takes so that it can opt into either the old or the new behavior. Use
+   that for the one special corner case I could find where it matters, and
+   add a few tests around it to highlight the utility of the flag.
+
+Elijah Newren (11):
+  t2501: add various tests for removing the current working directory
+  setup: introduce startup_info->original_cwd
+  unpack-trees: refuse to remove startup_info->original_cwd
+  unpack-trees: add special cwd handling
+  symlinks: do not include startup_info->original_cwd in dir removal
+  clean: do not attempt to remove startup_info->original_cwd
+  rebase: do not attempt to remove startup_info->original_cwd
+  stash: do not attempt to remove startup_info->original_cwd
+  dir: avoid incidentally removing the original_cwd in remove_path()
+  dir: new flag to remove_dir_recurse() to spare the original_cwd
+  t2501: simplify the tests since we can now assume desired behavior
+
+ builtin/clean.c      |  44 +++++--
+ builtin/rm.c         |   3 +-
+ builtin/stash.c      |   4 +-
+ cache.h              |   2 +
+ common-main.c        |   4 +
+ dir.c                |  15 ++-
+ dir.h                |   9 +-
+ sequencer.c          |   2 +
+ setup.c              |  65 ++++++++++
+ symlinks.c           |   8 +-
+ t/t2501-cwd-empty.sh | 277 +++++++++++++++++++++++++++++++++++++++++++
+ unpack-trees.c       |  30 ++++-
+ unpack-trees.h       |   1 +
+ 13 files changed, 442 insertions(+), 22 deletions(-)
+ create mode 100755 t/t2501-cwd-empty.sh
+
+
+base-commit: 88d915a634b449147855041d44875322de2b286d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1140%2Fnewren%2Fcwd_removal-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1140/newren/cwd_removal-v6
+Pull-Request: https://github.com/git/git/pull/1140
+
+Range-diff vs v5:
+
+  1:  7c72e888d2e !  1:  1fd76d4f8a8 t2501: add various tests for removing the current working directory
+     @@ Commit message
+          Also add a few tests suggested during the review of earlier rounds of
+          this patch series.
+      
+     +    Acked-by: Derrick Stolee <stolee@gmail.com>
+     +    Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## t/t2501-cwd-empty.sh (new) ##
+  2:  37f333b2024 !  2:  cd1f564c4c0 setup: introduce startup_info->original_cwd
+     @@ Commit message
+      
+          Subsequent commits will make use of this new variable.
+      
+     +    Acked-by: Derrick Stolee <stolee@gmail.com>
+     +    Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## cache.h ##
+  3:  b611c73bd15 !  3:  4a1f62b662c unpack-trees: refuse to remove startup_info->original_cwd
+     @@ Commit message
+          error out if the directory is the current working directory we inherited
+          from our parent process.
+      
+     +    Acked-by: Derrick Stolee <stolee@gmail.com>
+     +    Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## t/t2501-cwd-empty.sh ##
+  4:  706415a4547 !  4:  03f2b0b8fb7 unpack-trees: add special cwd handling
+     @@ Commit message
+          there is no untracked checking to be done, so we simply add a special
+          case near the top of verify_absent_1.
+      
+     +    Acked-by: Derrick Stolee <stolee@gmail.com>
+     +    Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## t/t2501-cwd-empty.sh ##
+  5:  66ef6b4d943 !  5:  e75f6c3f9ad symlinks: do not include startup_info->original_cwd in dir removal
+     @@ Commit message
+          commands) that would otherwise report confusing messages about being
+          unable to read the current working directory.
+      
+     +    Acked-by: Derrick Stolee <stolee@gmail.com>
+     +    Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## symlinks.c ##
+  6:  54d059c683e !  6:  d4f8784a6e4 clean: do not attempt to remove startup_info->original_cwd
+     @@ Metadata
+       ## Commit message ##
+          clean: do not attempt to remove startup_info->original_cwd
+      
+     +    Acked-by: Derrick Stolee <stolee@gmail.com>
+     +    Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## builtin/clean.c ##
+  7:  f8efb7446c3 !  7:  fd500cc1843 rebase: do not attempt to remove startup_info->original_cwd
+     @@ Commit message
+          the startup_info->original_cwd directory, so that the checkout process
+          knows to protect that directory.
+      
+     +    Acked-by: Derrick Stolee <stolee@gmail.com>
+     +    Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## sequencer.c ##
+  8:  2855ed45112 !  8:  6f3c4fd49b9 stash: do not attempt to remove startup_info->original_cwd
+     @@ Commit message
+          longer run from the toplevel, pass the ':/' magic pathspec to ensure we
+          still clean from the toplevel.
+      
+     +    Acked-by: Derrick Stolee <stolee@gmail.com>
+     +    Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## builtin/stash.c ##
+  9:  23dfc3e399d !  9:  1a66b1a2386 dir: avoid incidentally removing the original_cwd in remove_path()
+     @@ Commit message
+          looked through every caller of remove_path() in the current codebase to
+          make sure that all should take this change.
+      
+     +    Acked-by: Derrick Stolee <stolee@gmail.com>
+     +    Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## dir.c ##
+ 10:  fe47c0f0c17 ! 10:  4a18efd51ef dir: new flag to remove_dir_recurse() to spare the original_cwd
+     @@ Commit message
+          highlight that very specific case involving submodules && --git-dir &&
+          --work-tree.
+      
+     +    Acked-by: Derrick Stolee <stolee@gmail.com>
+     +    Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## builtin/rm.c ##
+ 11:  431dd651a7e ! 11:  63781ed8b8e t2501: simplify the tests since we can now assume desired behavior
+     @@ Commit message
+          We no longer are dealing with a mixture of previous and desired
+          behavior, so simplify the tests a bit.
+      
+     +    Acked-by: Derrick Stolee <stolee@gmail.com>
+     +    Acked-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## t/t2501-cwd-empty.sh ##
+
 -- 
-2.34.1.930.g218b4aae189
-
+gitgitgadget
