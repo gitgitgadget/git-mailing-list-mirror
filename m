@@ -2,202 +2,385 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 110A2C433F5
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 10:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43620C433F5
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 10:35:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235195AbhLJK1d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 05:27:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55460 "EHLO
+        id S237620AbhLJKif (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 05:38:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234963AbhLJK1c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 05:27:32 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B119C0617A1
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 02:23:57 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id x15so28977556edv.1
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 02:23:57 -0800 (PST)
+        with ESMTP id S234354AbhLJKie (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 05:38:34 -0500
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF4DEC061746
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 02:34:59 -0800 (PST)
+Received: by mail-pl1-x636.google.com with SMTP id y7so6037626plp.0
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 02:34:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=p7+3c7MAncaZnaNLD21trmpGATS0DBjdWzgtLWA9wXY=;
-        b=N8nIAThJHPoiJCuuCc9kxADxv/W3nkogi+5bztwggxFbQydvjhwnMclfRg0jH7eHEP
-         6DPyRat2+KUszvk5w8EEhTkyb+FpKq48LHEeXAV1yTgjyGNf0RjIv23XzrX8v7LXrr6J
-         nm/QeQnIaUP9KqYODGeyTj9t9fckjN5NiWGfz0dAD5yAzbtdlaJcYsKC8xc5kCwW5ZR4
-         m+J2030wpUldY4v2F7GcZn698nUl6waPhG585U/zdcR4SOioOLMpHGAXttCL/Dj3zZHM
-         8pxWMklfMYeFavJOeoTgc6/lgClmLQspEuCxYnVDYEtP6GS5TTNjG8HSm0xmt0Hd+LAQ
-         yLdw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9JjsBx/nfj3aqsSdqhCj7COe9H3C04uCKQ2Kzw8r7RY=;
+        b=VGwwsQE2SoxZ1P+ulYzVcSrp/zu+rbx+XfUsAZUx96k+a9/Mf+r45qqXdJrENKIXs4
+         j5LMlBXGsi2vY/MDR2rbZSzCDxHrwqKV5uMdv1hPzAke2gJ4JGOLv07qYKdOJhrQphVd
+         ReBjLvam1RGcxoevbxk0++Umc5W5+DtIjvO2VjS3Z3K3p6nvqR6LEbZrw8dj4NqKm66a
+         DxkBoaNqvdAk2hAcmytEV4A7kKW7IwZPdBC12mcr2NKiwA4zmmY07To7F0z87ETSi7zT
+         4lVoHUDJ2n6LIPioFNL8sGUoct1gOaNjqzIwiMS+jTlU0f8G1mYgovVvzjlxOBd4gjfK
+         ExlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=p7+3c7MAncaZnaNLD21trmpGATS0DBjdWzgtLWA9wXY=;
-        b=kuU7KVBD++kNjo4i/5Hsd00xEWFaJlqkUabAt+q9sOqteT1e3n3VLSsdZMjlJ0b/Sa
-         LmL6P2w8bgBv7FE6johbngFMiU8PE2HAXLmzXpO1uTU7idlxiVdDEU6JA6ucJm0xjq1L
-         ihP/o4OvpT1IDsh4lxFGI2MoKrPJKNuHRS05Px+7xnjGj6if9ijK6v8nzh6gj6znY4E3
-         QmRwHH6aiXgVG8H62vUv7n0HQREmf+rCxXufhRNtXEOG9eJG+lNmhtgDilToEnjk60K+
-         NwBybyQ5NRvQbp368TUJu7t2goiD7AtSBfgV8Iv06E4o2ruz5PkY6QfL4xpvu47gTDiI
-         odlA==
-X-Gm-Message-State: AOAM533PNRm3OkBPIZ0voV396VkODktZi5XV6lKlDYS4rf3hLDSAvTnj
-        tvkyhxSDMHZLwprbJ1Jj5MI=
-X-Google-Smtp-Source: ABdhPJxAnIdExl2h1TuuQprTgP1RAamkRw60OM83W9DJvmKYWekJWAGtR0yCyZ09AOa0JJmlaLov+w==
-X-Received: by 2002:a05:6402:3cd:: with SMTP id t13mr37261838edw.97.1639131836012;
-        Fri, 10 Dec 2021 02:23:56 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id hs8sm1254743ejc.53.2021.12.10.02.23.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Dec 2021 02:23:55 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mvd4E-000Giv-JY;
-        Fri, 10 Dec 2021 11:23:54 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Erik Faye-Lund <kusmabite@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC PATCH 02/10] range-diff.c: don't use st_mult() for signed
- "int"
-Date:   Fri, 10 Dec 2021 11:22:59 +0100
-References: <RFC-cover-00.10-00000000000-20211209T191653Z-avarab@gmail.com>
- <RFC-patch-02.10-bd7d014c531-20211209T191653Z-avarab@gmail.com>
- <YbLL/YWbjc/sPRyH@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <YbLL/YWbjc/sPRyH@coredump.intra.peff.net>
-Message-ID: <211210.86lf0sdah1.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9JjsBx/nfj3aqsSdqhCj7COe9H3C04uCKQ2Kzw8r7RY=;
+        b=ZBFUOKRXBB0Kq3GNVoMe6QvZl/bIjm/bSK12AeRhs1IrXcOZrJFd+4b1JavtkfnygX
+         zmU6RZsmBCOnO2eEvZCSDCCgHBl1dgAq7vd1MKxIoR9dW4ER7ggMUy/Bkl+P6R9vhAM5
+         aOEa/J117xZCn61OmgVtJ9cMpjivYITC0zOUBnMdLmmBBxmNDz/JUMgGipHxjGSXSMl7
+         wcJqkKvP/C+T1AuPg4OmflW5JI4AsjaY2SyItwsBm1oWAWoeITbTnH57dlbMwP0ds8t3
+         lzS0Y54EuAnlBAD6TQtU+MINqUlqhQ/xv46sYW5/cjF5GOrkDka1yB1ffR7NyE9DDQdG
+         STfQ==
+X-Gm-Message-State: AOAM531lE1b0EZugAaV71PAHExdLgIdio49j6tVU/LW8NsiMSZxJoTbP
+        OiSkoStxdFYvZwOU2Q+jyuIr99vztCMBJw==
+X-Google-Smtp-Source: ABdhPJxqvf/TKhZhx8rtmoQ1aPEsl8xEagUxfgfo+T1x9zxbGHnVJ7xVMs978DBfL1jGBGcKsGa/Fg==
+X-Received: by 2002:a17:90a:df8d:: with SMTP id p13mr22676787pjv.197.1639132499324;
+        Fri, 10 Dec 2021 02:34:59 -0800 (PST)
+Received: from localhost.localdomain ([205.204.117.96])
+        by smtp.gmail.com with ESMTPSA id 204sm2396250pgb.63.2021.12.10.02.34.56
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 10 Dec 2021 02:34:58 -0800 (PST)
+From:   Han Xin <chiyutianyi@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>
+Cc:     Han Xin <hanxin.hx@alibaba-inc.com>
+Subject: [PATCH v5 0/6] unpack large blobs in stream
+Date:   Fri, 10 Dec 2021 18:34:29 +0800
+Message-Id: <20211210103435.83656-1-chiyutianyi@gmail.com>
+X-Mailer: git-send-email 2.34.0
+In-Reply-To: <20211203093530.93589-1-chiyutianyi@gmail.com>
+References: <20211203093530.93589-1-chiyutianyi@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Han Xin <hanxin.hx@alibaba-inc.com>
 
-On Thu, Dec 09 2021, Jeff King wrote:
+Changes since v4:
+* Refactor to "struct input_stream" implementations so that we can
+  reduce the changes to "write_loose_object()" sugguest by
+  Ævar Arnfjörð Bjarmason.
 
-> On Thu, Dec 09, 2021 at 08:19:19PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> As documented in 320d0b493a2 (add helpers for detecting size_t
->> overflow, 2016-02-19) the arguments to st_mult() and st_add() "must be
->> unsigned".
->
-> This isn't correct. The comment that says "must be unsigned" is for
-> unsigned_mult_overflows(). Which indeed would not work correctly for a
-> signed type. But st_add() is a separate function (and not a macro)
-> because that means its arguments will always be promoted or converted
-> into a size_t. And so no matter what you pass it, it will always itself
-> pass a size_t into unsigned_mult_overflows().
->
->> In subsequent commits further overflows resulting in segfaults will be
->> fixed in this code, but let's start by removing this supposed guard
->> that does nothing except give us a false sense of
->> security. E.g. providing an "n" of INT_MAX here will result in "1" on
->> my system, causing us to write into memory.
->
-> This guard doesn't do nothing. Your patch here:
->
->> @@ -312,7 +312,7 @@ static void get_correspondences(struct string_list *=
-a, struct string_list *b,
->>  	int *cost, c, *a2b, *b2a;
->>  	int i, j;
->>=20=20
->> -	ALLOC_ARRAY(cost, st_mult(n, n));
->> +	ALLOC_ARRAY(cost, n * n);
->>  	ALLOC_ARRAY(a2b, n);
->>  	ALLOC_ARRAY(b2a, n);
->
-> makes things strictly worse, because that "n * n" may overflow and cause
-> us to under-allocate the array. You can see it in isolation with some
-> extra code like this:
->
-> diff --git a/git.c b/git.c
-> index 5ff21be21f..63349e4b79 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -850,11 +850,23 @@ static int run_argv(int *argcp, const char ***argv)
->  	return done_alias;
->  }
->=20=20
-> +static void foo(void)
-> +{
-> +	int n =3D 2 << 16;
-> +
-> +	printf("n =3D %d\n", n);
-> +	printf("raw mult =3D %"PRIuMAX"\n", (uintmax_t)(n * n));
-> +	printf("st_mult =3D %"PRIuMAX"\n", (uintmax_t)st_mult(n, n));
-> +	exit(0);
-> +}
-> +
->  int cmd_main(int argc, const char **argv)
->  {
->  	const char *cmd;
->  	int done_help =3D 0;
->=20=20
-> +	foo();
-> +
->  	cmd =3D argv[0];
->  	if (!cmd)
->  		cmd =3D "git-help";
->
-> With st_mult, we get the correct answer of 16GB. Without it, we end up
-> with 0!
->
-> Back to the original code, if you generate a test setup like this:
->
-> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-> index e30bc48a29..f552d3086e 100755
-> --- a/t/t3206-range-diff.sh
-> +++ b/t/t3206-range-diff.sh
-> @@ -772,4 +772,11 @@ test_expect_success '--left-only/--right-only' '
->  	test_cmp expect actual
->  '
->=20=20
-> +test_expect_success 'giant case' '
-> +	test_commit base &&
-> +	test_commit_bulk --ref=3Drefs/heads/v1 --message=3D"v1 commit %s" 32768=
- &&
-> +	test_commit_bulk --ref=3Drefs/heads/v2 --message=3D"v2 commit %s" 32768=
- &&
-> +	git range-diff base v1 v2
-> +'
-> +
->  test_done
->
-> Then we'd allocate a 0-length array for "cost" and segfault as soon as
-> we try to put anything in it. You can confirm this by applying your
-> patch, running under gdb, and stopping at the xmalloc() call inside
-> get_correspondences(). With st_mult(), then we come up with the correct
-> value of 16GB (or complain about overflow on a 32-bit system).
->
-> So st_add() is working as advertised here; it's goal is just to make
-> sure we never under-allocate. You are right, though, that the code after
-> that in get_correspondences() has trouble because of the signedness. If
-> the code used an "unsigned int", it would still be _wrong_. But when it
-> overflowed, it would always come up with a value under 4GB. So it might
-> produce a wrong answer, but it couldn't possibly point outside the
-> bounds of the array and cause a security problem.
->
-> But because it's a signed int, we overflow to a negative value and try
-> to look at memory far before the start of the array. So I can see how it
-> is tempting to argue that this st_mult() isn't really helping since we
-> segfault anyway. But I'd disagree. By correctly computing the value of
-> 16GB instead of "0", we know that the ALLOC_ARRAY() line is doing the
-> right thing. And it may choose not to continue if it can't allocate
-> 16GB. That may happen because you don't have the RAM, but also because
-> of GIT_ALLOC_LIMIT.
->
-> So if you set GIT_ALLOC_LIMIT=3D4g, for example, you are immune to the bug
-> here. We'd refuse the allocation and die there, which protects
-> downstream code from trying to fill in the array with bogus arithmetic.
->
-> Dropping the st_mult() does nothing to fix the actual problem (which is
-> that this function should use a more appropriate type), but introduces
-> new failure modes.
+* Add a new flag called "HASH_STREAM" to support this feature.
 
-Yes you're entirely right. I had some stupid blinders on while writing
-this. FWIW I think I was experimenting with some local macros and
-conflated a testing of the overflow of n*n in gdb with the caste'd
-version, which you rightly point out here won't have the overflow issue
-at all. Sorry.
+* Add a new config "core.bigFileStreamingThreshold" instread of
+  "core.bigFileThreshold" sugguest by Ævar Arnfjörð Bjarmason[1].
+
+* Roll destination repository preparement into a function in 
+  "t5590-unpack-non-delta-objects.sh", so that we can run testcases
+  with --run=setup,3,4.
+
+1. https://lore.kernel.org/git/211203.86zgphsu5a.gmgdl@evledraar.gmail.com/
+
+Han Xin (6):
+  object-file: refactor write_loose_object() to support read from stream
+  object-file.c: handle undetermined oid in write_loose_object()
+  object-file.c: read stream in a loop in write_loose_object()
+  unpack-objects.c: add dry_run mode for get_data()
+  object-file.c: make "write_object_file_flags()" to support "HASH_STREAM"
+  unpack-objects: unpack_non_delta_entry() read data in a stream
+
+ Documentation/config/core.txt       | 11 ++++
+ builtin/unpack-objects.c            | 86 +++++++++++++++++++++++++++--
+ cache.h                             |  2 +
+ config.c                            |  5 ++
+ environment.c                       |  1 +
+ object-file.c                       | 73 +++++++++++++++++++-----
+ object-store.h                      |  5 ++
+ t/t5590-unpack-non-delta-objects.sh | 70 +++++++++++++++++++++++
+ 8 files changed, 234 insertions(+), 19 deletions(-)
+ create mode 100755 t/t5590-unpack-non-delta-objects.sh
+
+Range-diff against v4:
+1:  af707ef304 < -:  ---------- object-file: refactor write_loose_object() to read buffer from stream
+2:  321ad90d8e < -:  ---------- object-file.c: handle undetermined oid in write_loose_object()
+3:  1992ac39af < -:  ---------- object-file.c: read stream in a loop in write_loose_object()
+-:  ---------- > 1:  f3595e68cc object-file: refactor write_loose_object() to support read from stream
+-:  ---------- > 2:  c25fdd1fe5 object-file.c: handle undetermined oid in write_loose_object()
+-:  ---------- > 3:  ed226f2f9f object-file.c: read stream in a loop in write_loose_object()
+4:  c41eb06533 ! 4:  2f91e540f6 unpack-objects.c: add dry_run mode for get_data()
+    @@ builtin/unpack-objects.c: static void use(int bytes)
+      {
+      	git_zstream stream;
+     -	void *buf = xmallocz(size);
+    -+	unsigned long bufsize = dry_run ? 4096 : size;
+    ++	unsigned long bufsize = dry_run ? 8192 : size;
+     +	void *buf = xmallocz(bufsize);
+      
+      	memset(&stream, 0, sizeof(stream));
+-:  ---------- > 5:  7698938eac object-file.c: make "write_object_file_flags()" to support "HASH_STREAM"
+5:  9427775bdc ! 6:  103bb1db06 unpack-objects: unpack_non_delta_entry() read data in a stream
+    @@ Commit message
+     
+         However, unpack non-delta objects from a stream instead of from an entrie
+         buffer will have 10% performance penalty. Therefore, only unpack object
+    -    larger than the "big_file_threshold" in zstream. See the following
+    +    larger than the "core.BigFileStreamingThreshold" in zstream. See the following
+         benchmarks:
+     
+             hyperfine \
+               --setup \
+               'if ! test -d scalar.git; then git clone --bare https://github.com/microsoft/scalar.git; cp scalar.git/objects/pack/*.pack small.pack; fi' \
+    -          --prepare 'rm -rf dest.git && git init --bare dest.git' \
+    -          -n 'old' 'git -C dest.git unpack-objects <small.pack' \
+    -          -n 'new' 'new/git -C dest.git unpack-objects <small.pack' \
+    -          -n 'new (small threshold)' \
+    -          'new/git -c core.bigfilethreshold=16k -C dest.git unpack-objects <small.pack'
+    -        Benchmark 1: old
+    -          Time (mean ± σ):      6.075 s ±  0.069 s    [User: 5.047 s, System: 0.991 s]
+    -          Range (min … max):    6.018 s …  6.189 s    10 runs
+    -
+    -        Benchmark 2: new
+    -          Time (mean ± σ):      6.090 s ±  0.033 s    [User: 5.075 s, System: 0.976 s]
+    -          Range (min … max):    6.030 s …  6.142 s    10 runs
+    -
+    -        Benchmark 3: new (small threshold)
+    -          Time (mean ± σ):      6.755 s ±  0.029 s    [User: 5.150 s, System: 1.560 s]
+    -          Range (min … max):    6.711 s …  6.809 s    10 runs
+    +          --prepare 'rm -rf dest.git && git init --bare dest.git'
+     
+             Summary
+    -          'old' ran
+    -            1.00 ± 0.01 times faster than 'new'
+    -            1.11 ± 0.01 times faster than 'new (small threshold)'
+    +          './git -C dest.git -c core.bigfilethreshold=512m unpack-objects <small.pack' in 'origin/master'
+    +            1.01 ± 0.04 times faster than './git -C dest.git -c core.bigfilethreshold=512m unpack-objects <small.pack' in 'HEAD~1'
+    +            1.01 ± 0.04 times faster than './git -C dest.git -c core.bigfilethreshold=512m unpack-objects <small.pack' in 'HEAD~0'
+    +            1.03 ± 0.10 times faster than './git -C dest.git -c core.bigfilethreshold=16k unpack-objects <small.pack' in 'origin/master'
+    +            1.02 ± 0.07 times faster than './git -C dest.git -c core.bigfilethreshold=16k unpack-objects <small.pack' in 'HEAD~0'
+    +            1.10 ± 0.04 times faster than './git -C dest.git -c core.bigfilethreshold=16k unpack-objects <small.pack' in 'HEAD~1'
+     
+    +    Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+         Helped-by: Derrick Stolee <stolee@gmail.com>
+         Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+         Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+     
+    + ## Documentation/config/core.txt ##
+    +@@ Documentation/config/core.txt: be delta compressed, but larger binary media files won't be.
+    + +
+    + Common unit suffixes of 'k', 'm', or 'g' are supported.
+    + 
+    ++core.bigFileStreamingThreshold::
+    ++	Files larger than this will be streamed out to a temporary
+    ++	object file while being hashed, which will when be renamed
+    ++	in-place to a loose object, particularly if the
+    ++	`core.bigFileThreshold' setting dictates that they're always
+    ++	written out as loose objects.
+    +++
+    ++Default is 128 MiB on all platforms.
+    +++
+    ++Common unit suffixes of 'k', 'm', or 'g' are supported.
+    ++
+    + core.excludesFile::
+    + 	Specifies the pathname to the file that contains patterns to
+    + 	describe paths that are not meant to be tracked, in addition
+    +
+      ## builtin/unpack-objects.c ##
+     @@ builtin/unpack-objects.c: static void added_object(unsigned nr, enum object_type type,
+      	}
+    @@ builtin/unpack-objects.c: static void added_object(unsigned nr, enum object_type
+     +
+     +static void write_stream_blob(unsigned nr, unsigned long size)
+     +{
+    -+	char hdr[32];
+    -+	int hdrlen;
+     +	git_zstream zstream;
+     +	struct input_zstream_data data;
+     +	struct input_stream in_stream = {
+     +		.read = feed_input_zstream,
+     +		.data = &data,
+    -+		.size = size,
+     +	};
+    -+	struct object_id *oid = &obj_list[nr].oid;
+     +	int ret;
+     +
+     +	memset(&zstream, 0, sizeof(zstream));
+    @@ builtin/unpack-objects.c: static void added_object(unsigned nr, enum object_type
+     +	data.zstream = &zstream;
+     +	git_inflate_init(&zstream);
+     +
+    -+	/* Generate the header */
+    -+	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX, type_name(OBJ_BLOB), (uintmax_t)size) + 1;
+    -+
+    -+	if ((ret = write_loose_object(oid, hdr, hdrlen, &in_stream, 0, 0)))
+    ++	if ((ret = write_object_file_flags(&in_stream, size, type_name(OBJ_BLOB) ,&obj_list[nr].oid, HASH_STREAM)))
+     +		die(_("failed to write object in stream %d"), ret);
+     +
+     +	if (zstream.total_out != size || data.status != Z_STREAM_END)
+    @@ builtin/unpack-objects.c: static void added_object(unsigned nr, enum object_type
+     +	git_inflate_end(&zstream);
+     +
+     +	if (strict && !dry_run) {
+    -+		struct blob *blob = lookup_blob(the_repository, oid);
+    ++		struct blob *blob = lookup_blob(the_repository, &obj_list[nr].oid);
+     +		if (blob)
+     +			blob->object.flags |= FLAG_WRITTEN;
+     +		else
+    @@ builtin/unpack-objects.c: static void added_object(unsigned nr, enum object_type
+     +	void *buf;
+     +
+     +	/* Write large blob in stream without allocating full buffer. */
+    -+	if (!dry_run && type == OBJ_BLOB && size > big_file_threshold) {
+    ++	if (!dry_run && type == OBJ_BLOB && size > big_file_streaming_threshold) {
+     +		write_stream_blob(nr, size);
+     +		return;
+     +	}
+    @@ builtin/unpack-objects.c: static void added_object(unsigned nr, enum object_type
+      		write_object(nr, type, buf, size);
+      	else
+     
+    - ## object-file.c ##
+    -@@ object-file.c: static const void *feed_simple_input_stream(struct input_stream *in_stream, unsi
+    - 	return data->buf;
+    - }
+    + ## cache.h ##
+    +@@ cache.h: extern size_t packed_git_window_size;
+    + extern size_t packed_git_limit;
+    + extern size_t delta_base_cache_limit;
+    + extern unsigned long big_file_threshold;
+    ++extern unsigned long big_file_streaming_threshold;
+    + extern unsigned long pack_size_limit_cfg;
+      
+    --static int write_loose_object(const struct object_id *oid, char *hdr,
+    --			      int hdrlen, struct input_stream *in_stream,
+    --			      time_t mtime, unsigned flags)
+    -+int write_loose_object(const struct object_id *oid, char *hdr,
+    -+		       int hdrlen, struct input_stream *in_stream,
+    -+		       time_t mtime, unsigned flags)
+    - {
+    - 	int fd, ret;
+    - 	unsigned char compressed[4096];
+    + /*
+     
+    - ## object-store.h ##
+    -@@ object-store.h: int hash_object_file(const struct git_hash_algo *algo, const void *buf,
+    - 		     unsigned long len, const char *type,
+    - 		     struct object_id *oid);
+    + ## config.c ##
+    +@@ config.c: static int git_default_core_config(const char *var, const char *value, void *cb)
+    + 		return 0;
+    + 	}
+      
+    -+int write_loose_object(const struct object_id *oid, char *hdr,
+    -+		       int hdrlen, struct input_stream *in_stream,
+    -+		       time_t mtime, unsigned flags);
+    ++	if (!strcmp(var, "core.bigfilestreamingthreshold")) {
+    ++		big_file_streaming_threshold = git_config_ulong(var, value);
+    ++		return 0;
+    ++	}
+     +
+    - int write_object_file_flags(const void *buf, unsigned long len,
+    - 			    const char *type, struct object_id *oid,
+    - 			    unsigned flags);
+    + 	if (!strcmp(var, "core.packedgitlimit")) {
+    + 		packed_git_limit = git_config_ulong(var, value);
+    + 		return 0;
+    +
+    + ## environment.c ##
+    +@@ environment.c: size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
+    + size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
+    + size_t delta_base_cache_limit = 96 * 1024 * 1024;
+    + unsigned long big_file_threshold = 512 * 1024 * 1024;
+    ++unsigned long big_file_streaming_threshold = 128 * 1024 * 1024;
+    + int pager_use_color = 1;
+    + const char *editor_program;
+    + const char *askpass_program;
+     
+      ## t/t5590-unpack-non-delta-objects.sh (new) ##
+     @@
+    @@ t/t5590-unpack-non-delta-objects.sh (new)
+     +
+     +. ./test-lib.sh
+     +
+    -+test_expect_success "create commit with big blobs (1.5 MB)" '
+    ++prepare_dest () {
+    ++	test_when_finished "rm -rf dest.git" &&
+    ++	git init --bare dest.git &&
+    ++	git -C dest.git config core.bigFileStreamingThreshold $1
+    ++	git -C dest.git config core.bigFileThreshold $1
+    ++}
+    ++
+    ++test_expect_success "setup repo with big blobs (1.5 MB)" '
+     +	test-tool genrandom foo 1500000 >big-blob &&
+     +	test_commit --append foo big-blob &&
+     +	test-tool genrandom bar 1500000 >big-blob &&
+    @@ t/t5590-unpack-non-delta-objects.sh (new)
+     +		cd .git &&
+     +		find objects/?? -type f | sort
+     +	) >expect &&
+    -+	PACK=$(echo main | git pack-objects --progress --revs test)
+    ++	PACK=$(echo main | git pack-objects --revs test)
+     +'
+     +
+    -+test_expect_success 'setup GIT_ALLOC_LIMIT to 1MB' '
+    ++test_expect_success 'setup env: GIT_ALLOC_LIMIT to 1MB' '
+     +	GIT_ALLOC_LIMIT=1m &&
+     +	export GIT_ALLOC_LIMIT
+     +'
+     +
+    -+test_expect_success 'prepare dest repository' '
+    -+	git init --bare dest.git &&
+    -+	git -C dest.git config core.bigFileThreshold 2m &&
+    -+	git -C dest.git config receive.unpacklimit 100
+    -+'
+    -+
+     +test_expect_success 'fail to unpack-objects: cannot allocate' '
+    ++	prepare_dest 2m &&
+     +	test_must_fail git -C dest.git unpack-objects <test-$PACK.pack 2>err &&
+    -+	test_i18ngrep "fatal: attempting to allocate" err &&
+    ++	grep "fatal: attempting to allocate" err &&
+     +	(
+     +		cd dest.git &&
+     +		find objects/?? -type f | sort
+     +	) >actual &&
+    ++	test_file_not_empty actual &&
+     +	! test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'set a lower bigfile threshold' '
+    -+	git -C dest.git config core.bigFileThreshold 1m
+    -+'
+    -+
+     +test_expect_success 'unpack big object in stream' '
+    ++	prepare_dest 1m &&
+     +	git -C dest.git unpack-objects <test-$PACK.pack &&
+     +	git -C dest.git fsck &&
+     +	(
+    @@ t/t5590-unpack-non-delta-objects.sh (new)
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'setup for unpack-objects dry-run test' '
+    -+	git init --bare unpack-test.git
+    -+'
+    -+
+     +test_expect_success 'unpack-objects dry-run' '
+    ++	prepare_dest 1m &&
+    ++	git -C dest.git unpack-objects -n <test-$PACK.pack &&
+     +	(
+    -+		cd unpack-test.git &&
+    -+		git unpack-objects -n <../test-$PACK.pack
+    -+	) &&
+    -+	(
+    -+		cd unpack-test.git &&
+    ++		cd dest.git &&
+     +		find objects/ -type f
+     +	) >actual &&
+     +	test_must_be_empty actual
+-- 
+2.34.0
+
