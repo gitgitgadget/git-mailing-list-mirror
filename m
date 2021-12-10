@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A547EC433EF
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 15:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAF80C433FE
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 15:13:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242635AbhLJPQz (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S242696AbhLJPQz (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 10 Dec 2021 10:16:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37920 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242628AbhLJPQy (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S242644AbhLJPQy (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 10 Dec 2021 10:16:54 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C19EEC061746
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 07:13:18 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id 137so7064340wma.1
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 07:13:18 -0800 (PST)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75D76C0617A1
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 07:13:19 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id c4so15420876wrd.9
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 07:13:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=XfoLAbru6OVVuU2WQMn25q33O/C0bEdZXzyg2YKjQQc=;
-        b=W7+fcQifMeEdb+8n9mRRFRs16iD2BkBPvwfivP19eERlv4WNTbuHBCbVE1PqHqg6z8
-         Ph2Wkomo2x6WV6QuduMLnPkcpC6wQbf1yKORQRNdEnsEx+WD8gqJ5rSEr855Dj8NbPOm
-         CjrSZKpWyEFBPg0V3M14QbxiwOxb57fBCm9aSeWXth5J7caTH1Xvg79GhYXAEvLTd5yP
-         /q4RyL2L6TufwrWnjV/KEb6vjWWhE3BJdIDbPKF3IW7OlrgTwNN71k9RWIrnC8/vjS9Z
-         uLV2s29ouy6Dvp9ldOuCprgMZUJwDTr6292RN2gsVzPgWBTMt1BOF+iYtRrBW8YgkF6I
-         coBg==
+        bh=z1lsY1IELUoUSjAMa97erruqhiY9BJgxhgMt/g/gEqo=;
+        b=i82NCnCctIu2HuTb5DtM4V1n4y3N57wfiEcj5fpX2oSTzm/gbFO01QhwLJU452Fpdi
+         4hiBxSnVwjzo0CszCwsJIpg5gEBb1QCkXF0JEnyfUVxLEdH0+/mWGbf7IhTMooMOihEi
+         FCcDtkJrZL3q5DF+s06i7RsXitAyY6KfS8PJh/+YIV9CZGOStUwsyJyKmdNmFt/IfxuV
+         gl428bLF4FgW6beEXpeYE75Y+4XocSdd6PCgOXtHxx5UcDJxSSornr33mWnPQq/Gpe9K
+         75HwO7HMd4MgJnizk8ZlCEFNhqFAObKoW0BdLvLhdXIThTs19siZa9LlMWLWyIfOSPt+
+         wtzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XfoLAbru6OVVuU2WQMn25q33O/C0bEdZXzyg2YKjQQc=;
-        b=rCY8oo36DQn+nZPxPAaTlE3F7r4KqrU4wTVS8lCzMN43fa0QXaSQHMRi2jNbG7yWC/
-         XQl1G0qDDtp2MaMFZa0cqPmTi9dEn7xxmkf2WuGpRZvfx/PkX1B4ppumk96bx5FblZ7R
-         FJdOWO3wSQvLekwlftRvhddtPVVDM6xKKpRLjfVr4/Y0D2E53A90LeDe9PM2ab5biXFj
-         2dq4Cc+SVkOYkjIS9sl0iSnLFrLQGK8lawFNWk0B1xUwYw5RO4w4e+LJ4z6F20g6M1AA
-         XprAA1Cu74yAAEGrQo6ZJzzOOnNr2FU4qH3Ze3UDU7Id7l0W6LArzuhVrHUD/r1l3Dy+
-         Zmgg==
-X-Gm-Message-State: AOAM532lTw1Oe8TxhWLuYvelsk6sCOOH+hNjwNtoENyDRV07/3Ugfowa
-        M8pnKWBr/LNi9IZmE/aGAjYRqXSUQ/I=
-X-Google-Smtp-Source: ABdhPJzhM5LV0Y09OXtG3SiAONRkFfpknqc0lrx7IG1e55z/OPpoZrszGXbxDUyqZfR2gstoIgu35A==
-X-Received: by 2002:a7b:cc95:: with SMTP id p21mr17397600wma.45.1639149196206;
-        Fri, 10 Dec 2021 07:13:16 -0800 (PST)
+        bh=z1lsY1IELUoUSjAMa97erruqhiY9BJgxhgMt/g/gEqo=;
+        b=pS4SDIavx2r/+ZX0k1gyM+r2v4+rACQQu0myJ7jQr30Z0V9pyVhKmRE2ZjWxka4tg1
+         4RpzObjlusOYjQibHaCIW8FiaHpNTC3AEtiVEyvNJqELozPNpQwgOr1P89Zs4RYqq8Yt
+         aBjmANFjmZk2NDv+/rrhZAD0r+GeAyjrwUKaTo4m1snTv4fMpUt7ztvWrtXxfk6nSSnJ
+         Khyzh949NCYsZz09KEDcT8X60TCurR2NHJE2KIGk/MShE/xuvIacX/QxXVeT75th1E8m
+         1GA4XfqWrlhOOFF6tAbudZmYfmj5gRTpv7IhgRr5Cf9oudntvbozs6qAjnMhKag7+4Nm
+         E8bw==
+X-Gm-Message-State: AOAM532zN8cXq9tHx/GYgS0mVjlWAg0uTSnYZaPmdq7qG9A1neb8HuQm
+        1V9PnQKXZNsRTJnUo28d3szpxY9du/E=
+X-Google-Smtp-Source: ABdhPJyDz62EeQCNvU1XxpMo1S7eAoQ9kbQopnDT/oDSNG3D67+wbYF1Z4tbHbyn9CGME41K9jLHSQ==
+X-Received: by 2002:adf:f001:: with SMTP id j1mr14539018wro.351.1639149197792;
+        Fri, 10 Dec 2021 07:13:17 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c4sm2721254wrr.37.2021.12.10.07.13.15
+        by smtp.gmail.com with ESMTPSA id n2sm11801525wmi.36.2021.12.10.07.13.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Dec 2021 07:13:15 -0800 (PST)
-Message-Id: <2a6a1c5a39c9f07f4714d0d9916c3e1775836372.1639149192.git.gitgitgadget@gmail.com>
+        Fri, 10 Dec 2021 07:13:17 -0800 (PST)
+Message-Id: <f014368675495812dd45291a36902cecdfa00c63.1639149192.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1080.v3.git.1639149192.gitgitgadget@gmail.com>
 References: <pull.1080.v2.git.1638992395.gitgitgadget@gmail.com>
         <pull.1080.v3.git.1639149192.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 10 Dec 2021 15:13:10 +0000
-Subject: [PATCH v3 3/5] t1092: replace 'read-cache --table' with 'ls-files
- --sparse'
+Date:   Fri, 10 Dec 2021 15:13:11 +0000
+Subject: [PATCH v3 4/5] t1091/t3705: remove 'test-tool read-cache --table'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,109 +72,82 @@ From: Derrick Stolee <dstolee@microsoft.com>
 
 Now that 'git ls-files --sparse' exists, we can use it to verify the
 state of a sparse index instead of 'test-tool read-cache table'. Replace
-these usages within t1092-sparse-checkout-compatibility.sh.
+these usages within t1091-sparse-checkout-builtin.sh and
+t3705-add-sparse-checkout.sh.
 
-The important changes are due to the different output format. We need to
-use the '--stage' output to get a file mode and OID, but it also
-includes a stage value and drops the object type. This leads to some
-differences in how we handle looking for specific entries.
+The important changes are due to the different output format. In t3705,
+we need to use the '--stage' output to get a file mode and OID, but
+it also includes a stage value and drops the object type. This leads
+to some differences in how we handle looking for specific entries.
 
-Some places where we previously looked for no 'tree' entries, we can
-instead directly compare the output across the repository with a sparse
-index and the one without.
+In t1091, the test focuses on enabling the sparse index, so we do not
+need the --stage flag to demonstrate how the index changes, and instead
+can use a diff.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 31 +++++++++++-------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ t/t1091-sparse-checkout-builtin.sh | 25 ++++++++++++++++++++-----
+ t/t3705-add-sparse-checkout.sh     |  8 ++++----
+ 2 files changed, 24 insertions(+), 9 deletions(-)
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 29b97667378..d4a0d8ce825 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -200,45 +200,42 @@ test_sparse_unstaged () {
- test_expect_success 'sparse-index contents' '
- 	init_repos &&
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 272ba1b566b..680e0043c36 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -212,12 +212,27 @@ test_expect_success 'sparse-index enabled and disabled' '
  
--	test-tool -C sparse-index read-cache --table >cache &&
-+	git -C sparse-index ls-files --sparse --stage >cache &&
- 	for dir in folder1 folder2 x
- 	do
- 		TREE=$(git -C sparse-index rev-parse HEAD:$dir) &&
--		grep "040000 tree $TREE	$dir/" cache \
-+		grep "040000 $TREE 0	$dir/" cache \
- 			|| return 1
- 	done &&
- 
- 	git -C sparse-index sparse-checkout set folder1 &&
- 
--	test-tool -C sparse-index read-cache --table >cache &&
-+	git -C sparse-index ls-files --sparse --stage >cache &&
- 	for dir in deep folder2 x
- 	do
- 		TREE=$(git -C sparse-index rev-parse HEAD:$dir) &&
--		grep "040000 tree $TREE	$dir/" cache \
-+		grep "040000 $TREE 0	$dir/" cache \
- 			|| return 1
- 	done &&
- 
- 	git -C sparse-index sparse-checkout set deep/deeper1 &&
- 
--	test-tool -C sparse-index read-cache --table >cache &&
-+	git -C sparse-index ls-files --sparse --stage >cache &&
- 	for dir in deep/deeper2 folder1 folder2 x
- 	do
- 		TREE=$(git -C sparse-index rev-parse HEAD:$dir) &&
--		grep "040000 tree $TREE	$dir/" cache \
-+		grep "040000 $TREE 0	$dir/" cache \
- 			|| return 1
- 	done &&
- 
--	# Disabling the sparse-index removes tree entries with full ones
-+	# Disabling the sparse-index replaces tree entries with full ones
- 	git -C sparse-index sparse-checkout init --no-sparse-index &&
+ 		git -C repo sparse-checkout init --cone --sparse-index &&
+ 		test_cmp_config -C repo true index.sparse &&
+-		test-tool -C repo read-cache --table >cache &&
+-		grep " tree " cache &&
 -
--	test-tool -C sparse-index read-cache --table >cache &&
--	! grep "040000 tree" cache &&
--	test_sparse_match test-tool read-cache --table
-+	test_sparse_match git ls-files --stage --sparse
- '
++		git -C repo ls-files --sparse >sparse &&
+ 		git -C repo sparse-checkout disable &&
+-		test-tool -C repo read-cache --table >cache &&
+-		! grep " tree " cache &&
++		git -C repo ls-files --sparse >full &&
++
++		cat >expect <<-\EOF &&
++		@@ -1,4 +1,7 @@
++		 a
++		-deep/
++		-folder1/
++		-folder2/
++		+deep/a
++		+deep/deeper1/a
++		+deep/deeper1/deepest/a
++		+deep/deeper2/a
++		+folder1/a
++		+folder2/a
++		EOF
++
++		diff -u sparse full | tail -n +3 >actual &&
++		test_cmp expect actual &&
++
+ 		git -C repo config --list >config &&
+ 		! grep index.sparse config
+ 	)
+diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
+index f3143c92908..81f3384eeed 100755
+--- a/t/t3705-add-sparse-checkout.sh
++++ b/t/t3705-add-sparse-checkout.sh
+@@ -181,13 +181,13 @@ test_expect_success 'git add fails outside of sparse-checkout definition' '
+ 	# Avoid munging CRLFs to avoid an error message
+ 	git -c core.autocrlf=input add --sparse sparse_entry 2>stderr &&
+ 	test_must_be_empty stderr &&
+-	test-tool read-cache --table >actual &&
+-	grep "^100644 blob.*sparse_entry\$" actual &&
++	git ls-files --stage >actual &&
++	grep "^100644 .*sparse_entry\$" actual &&
  
- test_expect_success 'expanded in-memory index matches full index' '
- 	init_repos &&
--	test_sparse_match test-tool read-cache --expand --table
-+	test_sparse_match git ls-files --stage
- '
+ 	git add --sparse --chmod=+x sparse_entry 2>stderr &&
+ 	test_must_be_empty stderr &&
+-	test-tool read-cache --table >actual &&
+-	grep "^100755 blob.*sparse_entry\$" actual &&
++	git ls-files --stage >actual &&
++	grep "^100755 .*sparse_entry\$" actual &&
  
- test_expect_success 'status with options' '
-@@ -787,9 +784,9 @@ test_expect_success 'submodule handling' '
- 
- 	# having a submodule prevents "modules" from collapse
- 	test_sparse_match git sparse-checkout set deep/deeper1 &&
--	test-tool -C sparse-index read-cache --table >cache &&
--	grep "100644 blob .*	modules/a" cache &&
--	grep "160000 commit $(git -C initial-repo rev-parse HEAD)	modules/sub" cache
-+	git -C sparse-index ls-files --sparse --stage >cache &&
-+	grep "100644 .*	modules/a" cache &&
-+	grep "160000 $(git -C initial-repo rev-parse HEAD) 0	modules/sub" cache
- '
- 
- # When working with a sparse index, some commands will need to expand the
-@@ -1085,13 +1082,13 @@ test_expect_success 'reset mixed and checkout orphan' '
- 	# the sparse checkouts skip "adding" the other side of
- 	# the conflict.
- 	test_sparse_match git reset --mixed HEAD~1 &&
--	test_sparse_match test-tool read-cache --table --expand &&
-+	test_sparse_match git ls-files --stage &&
- 	test_sparse_match git status --porcelain=v2 &&
- 
- 	# At this point, sparse-checkouts behave differently
- 	# from the full-checkout.
- 	test_sparse_match git checkout --orphan new-branch &&
--	test_sparse_match test-tool read-cache --table --expand &&
-+	test_sparse_match git ls-files --stage &&
- 	test_sparse_match git status --porcelain=v2
- '
+ 	git reset &&
  
 -- 
 gitgitgadget
