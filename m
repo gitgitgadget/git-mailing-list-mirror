@@ -2,403 +2,265 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02880C4332F
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 03:48:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC749C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 03:56:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236457AbhLJDwL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 22:52:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50738 "EHLO
+        id S236495AbhLJD7v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 22:59:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231314AbhLJDwH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 22:52:07 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E001C061746
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 19:48:33 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id r25so25393780edq.7
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 19:48:33 -0800 (PST)
+        with ESMTP id S236447AbhLJD7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 22:59:50 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D829CC061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 19:56:15 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id t9so12905820wrx.7
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 19:56:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=jmNFoBnj+fszsxYn7qKCOY+F6vSYr6rBOKtnST1izMI=;
-        b=e+7pvubO8Fb/ICWCquMl2fv9y1p8C/pQzUirYTQgnHe+Aol0blibZeHt/P6dNnPpMO
-         UVmQHP3bnMMeoofVgLx54kC5h20p8aw4QuwqP7A0cAaRPY7cddFr7DIfGvVRzBgG6qrZ
-         rRkmySmSGmdNpnk8kJ60blLnr07GmnOl4LR6uqvcjI3UpWPSYXgi/hb/Ze9HDZ1mD8nm
-         KyYw5DXu4BIUWhIZUM6wrJjjEVbieppfBLAhNAUpJnzXVUIQDBsHwU/Oxvi7llVKVtyL
-         CZKoztpxWgKxQy1qt2PpxeMJRExoyKHsWRtcA5GM6qICFtmkMxP+QabKSWH4eX1pLG5G
-         NLlg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=hp7xSSkxxTxI++Jpb0ZFiYrlZXVs65j8iPeSfE4RNbQ=;
+        b=e3uWtM6p4RFVOtmR25EXy+eFWdSGMcj3ZHZOCdCQpPkd1V/55gkbcM/NioLCH7Q22f
+         iyOXfCEpRXcHA6GdXe0PE9u8ybwc2SqlXfys93/RCXmzw6gN5oTVY/E1pkxiG6s1REdI
+         zx1ZB7vPaCkpNxAq7mIqkXWbd1acWqsn824hF07wkhGFwnb3jXDtAQK2cDCocY0TfcpO
+         N13b3xj/RzFiFsjoRobUer7cNxi3N8HDh1gknhJ1d8Mvwb9KVUANNrZVWTQxoJtHdUsu
+         BtgZ1dCH/UuOQd7CMNH89GahleuSr60LPO0zkxpZCCpZzfn0gPIt+soC6+5gNWvbO2DT
+         YZeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jmNFoBnj+fszsxYn7qKCOY+F6vSYr6rBOKtnST1izMI=;
-        b=QuP9WWjz/aFh2nbHqkNVW45X/n6JcxK+yyyBFUL3Ns1KMI65fo17MTrHfCeFkc9WDd
-         rW8jEw5uzSXCsruVcGoHg7MVNOvm0RBYALm1M1VFBlQtV5HEUo/HjchqalWbVZiQi02w
-         E7HGooALhRPIist/9I6ncXZxa07helJvj9oLPmLTVIbWwDtOB7zWtc4xNo7/isVfDcdw
-         2YpEyKZQiirhR+cedvLqCePCQwURbQlRwnJUsktnusu/K5SX+rHDInOYZjUbPmGsOUSj
-         KXMQqpH8h+FCHC8lVMnNLXT4oC7tGqisr6dYqF/etAA1Dt3nEWxTrneWL8Db9gx34rnO
-         ji1Q==
-X-Gm-Message-State: AOAM530u2estFWh8Sh6406cTxsboTGw3HJc8dWq530oEPZTwc3SreDfw
-        rDQpHtjqI1ytfQ0vPiWtkBJoL9bUz/bB14sCUTlpKDco1Y8=
-X-Google-Smtp-Source: ABdhPJzt9k6Z7GG7KIUyjeV3nn48Zu26MGxfsoToX/JUKNs+BQqjlyt6idVGGLSgh2MJAycXfLADoIbYI1o7/nk3d8o=
-X-Received: by 2002:a05:6402:1014:: with SMTP id c20mr35065824edu.186.1639108111663;
- Thu, 09 Dec 2021 19:48:31 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=hp7xSSkxxTxI++Jpb0ZFiYrlZXVs65j8iPeSfE4RNbQ=;
+        b=WEivYgdnF1poEWjwYxP7Xm3xTx842OYSEnyBX4uvoykl+oi7ipRPLLF6tPOMUQhWE7
+         G95FPoT6j/Ol90OFUGKL60ctrFl2tnK+TqYOQewBtnmfI5eXBS8wEVsunvLSW5HmbDRP
+         e1i9u8uzm7o12XKQNzUXov8oXRBLgCvQW4Lm0wDQX/DABAH2mzmS4qhRFM4awRTOk1zx
+         iS1vIWJaRRX6Il3TAiEzVyhnHv2malznwVHotajKgSvU7X6BIJvFQ6XHB2HSZwyrs30k
+         0Hb83a7zFAFks0A5aKMlqIq3NRcjQijQlfpN05Zx3RPpHDfXxiQq7STNyB/kbXgl+j/R
+         VQsw==
+X-Gm-Message-State: AOAM5308OC8oa+2bwtM8CZVtPSPSn5kJwqA917LJ992blt2C8P0rdiCC
+        57sFSnZ6TR5Wc3wy09bAhoQvMioz98Q=
+X-Google-Smtp-Source: ABdhPJw9uaXP3GNvzQmuVxsBMZOW8//LGVndhcnL2FXK/0Z7er4iXkItPKhfD852LD6ODu93Hi9pmA==
+X-Received: by 2002:a5d:69c5:: with SMTP id s5mr10959934wrw.283.1639108574139;
+        Thu, 09 Dec 2021 19:56:14 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o25sm1556005wms.17.2021.12.09.19.56.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Dec 2021 19:56:13 -0800 (PST)
+Message-Id: <pull.1151.v3.git.git.1639108573.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1151.v2.git.git.1638908410.gitgitgadget@gmail.com>
+References: <pull.1151.v2.git.git.1638908410.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 10 Dec 2021 03:56:03 +0000
+Subject: [PATCH v3 00/10] sparse-checkout: make set subsume init
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1084.git.1637666927224.gitgitgadget@gmail.com> <pull.1084.v2.git.1639037637231.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1084.v2.git.1639037637231.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 9 Dec 2021 19:48:20 -0800
-Message-ID: <CABPp-BGdCizEGcwPS+0VB_vvYLpGCWKLqx-nbZtJ16QkVxzbGQ@mail.gmail.com>
-Subject: Re: [PATCH v2] fast-export: fix surprising behavior with --first-parent
-To:     William Sprent via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        William Sprent <williams@unity3d.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
- On Thu, Dec 9, 2021 at 12:13 AM William Sprent via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: William Sprent <williams@unity3d.com>
->
-> When invoking git-fast-export with the --first-parent flag on a branch
-> with merges, fast-export would early-out on processing the first merge
-> on the branch. If combined with --reverse, fast-export would instead
-> output all single parent commits on the branch.
->
-> This commit makes fast-export output the same commits as rev-list
-> --first-parent, and makes --reverse not have an effect on which commits
-> are output.
->
-> The fix involves removing logic within fast-export which was responsible
-> for ensuring that parents are processed before their children, which was
-> what was exiting early due to missing second parents. This is replaced
-> by setting 'reverse =3D 1' before revision walking, which, in conjuction
-> with topo_order, allows for delegating the ordering of commits to
-> revision.c. The reverse flag is set after parsing rev-list arguments to
-> avoid having it disabled.
+As described at [1], the split of init and set subcommands in
+sparse-checkout causes multiple issues:
 
-This explains how you discovered the issue, but seems to focus on
-these particular flags, leaving the reader wondering whether there are
-other flags that are also mishandled that need additional care, and
-whether this fix might break things for other sets of flags.  It took
-me quite a bit of reasoning to satisfy myself on those points; it's
-actually somewhat complex.  May I suggest an alternative commit
-message based on that?  Here's what I think are the relevant points
-(and yeah, it's lengthy):
+ * Poor performance (deleting all tracked files, then later restoring many
+   and maybe even most of them)
+ * Poor UI (multiple progress bars in wrappers that hide both commands under
+   1 user-facing command)
+ * Loss of ignored files under directories the user wanted to keep
 
+This series fixes this bug by providing a single command to switch to a
+sparse-checkout: set. It does so by making set able to do the combined work
+of init and set. It keeps init as-is to give folks time to adapt, but marks
+it as deprecated. It also makes reapply able to toggle cone/non-cone mode
+and sparse-index/non-sparse-index mode.
 
-The revision traversal machinery typically processes and returns all
-children before any parent.  fast-export needs to operate in the
-reverse fashion, handling parents before any of their children in
-order to build up the history starting from the root commit(s).  This
-would be a clear case where we could just use the revision traversal
-machinery's "reverse" option to achieve this desired affect.
+Changes since v2:
 
-However, this wasn't what the code did.  It added its own array for
-queuing.  The obvious hand-rolled solution would be to just push all
-the commits into the array and then traverse afterwards, but it didn't
-quite do that either.  It instead attempted to process anything it
-could as soon as it could, and once it could, check whether it could
-process anything that had been queued.  As far as I can tell, this was
-an effort to save a little memory in the case of multiple root commits
-since it could process some commits before queueing all of them.  This
-involved some helper functions named has_unshown_parent() and
-handle_tail().  For typical invocations of fast-export, this
-alternative essentially amounted to a hand-rolled method of reversing
-the commits -- it was a bunch of work to duplicate the revision
-traversal machinery's "reverse" option.
+ * Small documentation wording improvement
+ * Added Reviewed-by's from Stolee and Victoria
 
-This hand-rolled reversing mechanism is actually somewhat difficult to
-reason about.  It takes some time to figure out how it ensures in
-normal cases that it will actually process all traversed commits
-(rather than just dropping some and not printing anything for them).
+Changes since v1:
 
-And it turns out there are some cases where the code does drop commits
-without handling them, and not even printing an error or warning for
-the user.  Due to the has_unshown_parent() checks, some commits could
-be left in the array at the end of the "while...get_revision()" loop
-which would be unprocessed.  This could be triggered for example with
-    git fast-export main -- --first-parent
-or non-sensical traversal rules such as
-    git fast-export main -- --grep=3DMerge --invert-grep
+ * Inserted new patches 3 & 4 as additional preparatory cleanups
+ * Took the new mode-toggling work code in sparse_checkout_set from the
+   previous series and moved it into a new function, as a preparatory patch,
+   and made it usable by init/set/reapply
+ * Also updated reapply to allow mode-toggling
+ * Updated the documentation as per above
+ * Various other small items from review comments
 
-While most traversals that don't include all parents should likely
-trigger errors in fast-export (or at least require being used in
-combination with --reference-excluded-parents), the --first-parent
-traversal is at least reasonable and it'd be nice if it didn't just
-drop commits.  It'd also be nice to have a simpler "reverse traversal"
-mechanism.  Use the "reverse" option of the revision traversal
-machinery to achieve both.
+A quick overview:
 
-Even for the non-sensical traversal flags like the --grep one above,
-this would be an improvement.  For example, in that case, the code
-previously would have silently truncated history to only those commits
-that do not have an ancestor containing "Merge" in their commit
-message.  After this code change, that case would would include all
-commits without "Merge" in their commit message -- but any commit that
-previously had a "Merge"-mentioning parent would lose that parent
-(likely resulting in many new root commits).  While the new behavior
-is still odd, it is at least understandable given that
---reference-excluded-parents is not the default.
+ * Patches 1-4: small preparatory refactorings
+ * Patch 5: patch adding new function for toggling {cone,sparse-checkout}
+   modes
+ * Patch 6: the crux of the series; make set able to handle both init and
+   set options
+ * Patch 7: make reapply also able to do mode toggling
+ * Patches 8-9: documentation modifications (Patch 4 is worth reviewing; it
+   marks init as deprecated -- are others okay with that?)
+ * Patch 10: trivial modification of git clone --sparse to use git
+   sparse-checkout set rather than git sparse-checkout init.
+
+[1]
+https://lore.kernel.org/git/CABPp-BE8TJ8QGAQWsSGT7S+9Xp-XmApcC9PSw3K=RQOP0rt+PQ@mail.gmail.com/
+
+Elijah Newren (10):
+  sparse-checkout: pass use_stdin as a parameter instead of as a global
+  sparse-checkout: break apart functions for sparse_checkout_(set|add)
+  sparse-checkout: add sanity-checks on initial sparsity state
+  sparse-checkout: disallow --no-stdin as an argument to set
+  sparse-checkout: split out code for tweaking settings config
+  sparse-checkout: enable `set` to initialize sparse-checkout mode
+  sparse-checkout: enable reapply to take --[no-]{cone,sparse-index}
+  git-sparse-checkout.txt: update to document init/set/reapply changes
+  Documentation: clarify/correct a few sparsity related statements
+  clone: avoid using deprecated `sparse-checkout init`
+
+ Documentation/git-clone.txt           |   8 +-
+ Documentation/git-sparse-checkout.txt | 100 +++++++------
+ builtin/clone.c                       |   2 +-
+ builtin/sparse-checkout.c             | 196 ++++++++++++++++++++------
+ t/t1091-sparse-checkout-builtin.sh    |  10 +-
+ 5 files changed, 219 insertions(+), 97 deletions(-)
 
 
->
-> Signed-off-by: William Sprent <williams@unity3d.com>
-> ---
->     fast-export: fix surprising behavior with --first-parent
->
->     Hi,
->
->     I've noticed that git fast-export exhibits some odd behavior when pas=
-sed
->     the --first-parent flag. In the repository I was working on, it would
->     only output the initial commit before exiting. Moreover, adding the
->     --reverse flag causes it to behave differently and instead output all
->     commits in the first parent line that only have one parent. My
->     expectation is more or less that git fast-export should output the sa=
-me
->     set of commits as git rev-list would output given the same arguments,
->     which matches how it acts when given revision ranges.
->
->     It seems like this behavior comes from the fact that has_unshown_pare=
-nts
->     will never be false for any merge commits encountered when fast-expor=
-t
->     is called with --first-parent. This causes the while loop to follow t=
-he
->     pattern of pushing all commits into the "commits" queue until the
->     initial commit is encountered, at which point it calls handle_tail wh=
-ich
->     falls through on the first merge commit, causing most of the commits =
-to
->     be unhandled.
->
->     My impression is that this logic only serves to ensure that parents a=
-re
->     processed before their children, so in my patch I've opted to fix the
->     issue by delegating that responsibility to revision.c by adding the
->     reverse flag before performing the revision walk. From what I can see=
-,
->     this should be equivalent to what the previous logic is trying to
->     achieve, but I can also see that there could be risk in these changes=
-.
->
->     Changes since v1:
->
->      * Moved revs.reverse assignment down to similar assignments below.
->      * Removed braces around single statement while loop.
->      * The test now only changes directory inside a sub-shell.
->      * Applied stylistic feedback on test such as: making redirections be=
- on
->        the form >FILE etc.
->
->     There were questions raised about whether it makes sense at all for
->     fast-export to simply accept all git rev-list arguments whether they
->     have an effect or not - in particular for a flag like --reverse. I th=
-ink
->     I agree that it is questionable behavior, or at least questionably
->     documented, but I also think it is out of scope for this change.
->
->     I did consider teaching fast-export to complain if given --reverse, b=
-ut
->     it seemed inconsistent to me as it will gladly accept every other
->     rev-list argument (for example, "git fast-export HEAD --show-signatur=
-e
->     --graph" works just fine).
->
->     cc: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason avarab@gmail.com
->
-...
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index 8e2caf72819..cb1d6473f12 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -107,18 +107,6 @@ static int parse_opt_reencode_mode(const struct opti=
-on *opt,
->
->  static struct decoration idnums;
->  static uint32_t last_idnum;
-> -
-> -static int has_unshown_parent(struct commit *commit)
-> -{
-> -       struct commit_list *parent;
-> -
-> -       for (parent =3D commit->parents; parent; parent =3D parent->next)
-> -               if (!(parent->item->object.flags & SHOWN) &&
-> -                   !(parent->item->object.flags & UNINTERESTING))
-> -                       return 1;
-> -       return 0;
-> -}
-> -
->  struct anonymized_entry {
->         struct hashmap_entry hash;
->         const char *anon;
-> @@ -752,20 +740,6 @@ static char *anonymize_tag(void *data)
->         return strbuf_detach(&out, NULL);
->  }
->
-> -static void handle_tail(struct object_array *commits, struct rev_info *r=
-evs,
-> -                       struct string_list *paths_of_changed_objects)
-> -{
-> -       struct commit *commit;
-> -       while (commits->nr) {
-> -               commit =3D (struct commit *)object_array_pop(commits);
-> -               if (has_unshown_parent(commit)) {
-> -                       /* Queue again, to be handled later */
-> -                       add_object_array(&commit->object, NULL, commits);
-> -                       return;
-> -               }
-> -               handle_commit(commit, revs, paths_of_changed_objects);
-> -       }
-> -}
+base-commit: abe6bb3905392d5eb6b01fa6e54d7e784e0522aa
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1151%2Fnewren%2Fsparse-checkout-no-init-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1151/newren/sparse-checkout-no-init-v3
+Pull-Request: https://github.com/git/git/pull/1151
 
-Deleted code is debugged code!  :-)
+Range-diff vs v2:
 
->
->  static void handle_tag(const char *name, struct tag *tag)
->  {
-> @@ -1185,7 +1159,6 @@ static int parse_opt_anonymize_map(const struct opt=
-ion *opt,
->  int cmd_fast_export(int argc, const char **argv, const char *prefix)
->  {
->         struct rev_info revs;
-> -       struct object_array commits =3D OBJECT_ARRAY_INIT;
->         struct commit *commit;
->         char *export_filename =3D NULL,
->              *import_filename =3D NULL,
-> @@ -1283,18 +1256,13 @@ int cmd_fast_export(int argc, const char **argv, =
-const char *prefix)
->
->         if (prepare_revision_walk(&revs))
->                 die("revision walk setup failed");
-> +
-> +       revs.reverse =3D 1;
+  1:  e41cfe3c1bb !  1:  814aed2d125 sparse-checkout: pass use_stdin as a parameter instead of as a global
+     @@ Commit message
+          incorrect.  Pass the value as function parameter instead to allow us to
+          make subsequent changes.
+      
+     +    Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+     +    Reviewed-by: Victoria Dye <vdye@github.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## builtin/sparse-checkout.c ##
+  2:  6f7de8f5412 !  2:  04cd57592e9 sparse-checkout: break apart functions for sparse_checkout_(set|add)
+     @@ Commit message
+          function.  This does not introduce any behavioral changes; that will
+          come in a subsequent patch.
+      
+     +    Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+     +    Reviewed-by: Victoria Dye <vdye@github.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## builtin/sparse-checkout.c ##
+  3:  bade5e52390 !  3:  f3af5edb25d sparse-checkout: add sanity-checks on initial sparsity state
+     @@ Commit message
+          only make sense when already in a sparse state.  Add a quick check
+          that will error out early if this is not the case.
+      
+     +    Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+     +    Reviewed-by: Victoria Dye <vdye@github.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## builtin/sparse-checkout.c ##
+  4:  0180bfc4a93 !  4:  82a13cc0197 sparse-checkout: disallow --no-stdin as an argument to set
+     @@ Commit message
+          but didn't intend for --no-stdin to be permitted as well.
+      
+          Reported-by: Victoria Dye <vdye@github.com>
+     +    Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+     +    Reviewed-by: Victoria Dye <vdye@github.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## builtin/sparse-checkout.c ##
+  5:  3f5255eeef9 !  5:  7a812e0222c sparse-checkout: split out code for tweaking settings config
+     @@ Commit message
+          and make it slightly more general so it can handle being called from
+          the new callers.
+      
+     +    Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+     +    Reviewed-by: Victoria Dye <vdye@github.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## builtin/sparse-checkout.c ##
+  6:  3c640f5bcef !  6:  7167a4b3118 sparse-checkout: enable `set` to initialize sparse-checkout mode
+     @@ Commit message
+          parameters that `init` takes and performing any necessary initialization
+          if not already in a sparse checkout.
+      
+     +    Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+     +    Reviewed-by: Victoria Dye <vdye@github.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## builtin/sparse-checkout.c ##
+  7:  acb10889a1f !  7:  3687637915f sparse-checkout: enable reapply to take --[no-]{cone,sparse-index}
+     @@ Commit message
+          sparse-index without changing their sparsity paths.  Allow them to do so
+          using the reapply command.
+      
+     +    Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+     +    Reviewed-by: Victoria Dye <vdye@github.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## builtin/sparse-checkout.c ##
+  8:  17b033caf4b !  8:  7483d1363e5 git-sparse-checkout.txt: update to document init/set/reapply changes
+     @@ Commit message
+          to tweak the {cone,sparse-index} settings.  Update the documentation to
+          reflect this, and mark `init` as deprecated.
+      
+     +    Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+     +    Reviewed-by: Victoria Dye <vdye@github.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## Documentation/git-sparse-checkout.txt ##
+     @@ Documentation/git-sparse-checkout.txt: C-style quoted strings.
+      +	Deprecated command that behaves like `set` with no specified paths.
+      +	May be removed in the future.
+      ++
+     -+Historically, `set` did not used to handle all the necessary config
+     -+settings, which meant that both `init` and `set` had to be called.
+     -+Invoking both meant the `init` step would first remove nearly all
+     -+tracked files (and in cone mode, ignored files too), then the `set`
+     -+step would add many of the tracked files (but not ignored files) back.
+     -+In addition to the lost files, the performance and UI of this
+     -+combination was poor.
+     ++Historically, `set` did not handle all the necessary config settings,
+     ++which meant that both `init` and `set` had to be called.  Invoking
+     ++both meant the `init` step would first remove nearly all tracked files
+     ++(and in cone mode, ignored files too), then the `set` step would add
+     ++many of the tracked files (but not ignored files) back.  In addition
+     ++to the lost files, the performance and UI of this combination was
+     ++poor.
+      ++
+      +Also, historically, `init` would not actually initialize the
+      +sparse-checkout file if it already existed.  This meant it was
+  9:  922a65b4019 !  9:  11a45920602 Documentation: clarify/correct a few sparsity related statements
+     @@ Metadata
+       ## Commit message ##
+          Documentation: clarify/correct a few sparsity related statements
+      
+     +    Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+     +    Reviewed-by: Victoria Dye <vdye@github.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## Documentation/git-clone.txt ##
+ 10:  d47b2c88242 ! 10:  395d9b194d3 clone: avoid using deprecated `sparse-checkout init`
+     @@ Commit message
+          The previous commits marked `sparse-checkout init` as deprecated; we
+          can just use `set` instead here and pass it no paths.
+      
+     +    Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+     +    Reviewed-by: Victoria Dye <vdye@github.com>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## builtin/clone.c ##
 
-I really wanted to see this next to the
-    rev.topo_order =3D 1
-statement elsewhere, but as you alluded to in the commit message, this
-part of revision.c makes that unsafe:
-
-"""
-} else if (!strcmp(arg, "--reverse")) {
-    revs->reverse ^=3D 1;
-"""
-
-However, given that it's unsafe to set revs.reverse=3D1 earlier, now
-that I think about it, isn't it also unsafe to set revs.topo_order
-where it is?  Someone could override it by passing --date-order to
-fast-export.  (It's okay if you want to leave fixing that to someone
-else, just thought I'd mention it while reviewing.)
-
->         revs.diffopt.format_callback =3D show_filemodify;
->         revs.diffopt.format_callback_data =3D &paths_of_changed_objects;
->         revs.diffopt.flags.recursive =3D 1;
-> -       while ((commit =3D get_revision(&revs))) {
-> -               if (has_unshown_parent(commit)) {
-> -                       add_object_array(&commit->object, NULL, &commits)=
-;
-> -               }
-> -               else {
-> -                       handle_commit(commit, &revs, &paths_of_changed_ob=
-jects);
-> -                       handle_tail(&commits, &revs, &paths_of_changed_ob=
-jects);
-> -               }
-> -       }
-> +       while ((commit =3D get_revision(&revs)))
-> +               handle_commit(commit, &revs, &paths_of_changed_objects);
-
-Looks good.  Nice work on finding this.
-
->
->         handle_tags_and_duplicates(&extra_refs);
->         handle_tags_and_duplicates(&tag_refs);
-> diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-> index 409b48e2442..df1a5b1013a 100755
-> --- a/t/t9350-fast-export.sh
-> +++ b/t/t9350-fast-export.sh
-> @@ -750,4 +750,39 @@ test_expect_success 'merge commit gets exported with=
- --import-marks' '
->         )
->  '
->
-> +
-> +test_expect_success 'fast-export --first-parent outputs all revisions ou=
-tput by revision walk' '
-> +       git init first-parent &&
-> +       (
-> +               cd first-parent &&
-> +               test_commit A &&
-> +               git checkout -b topic1 &&
-> +               test_commit B &&
-> +               git checkout main &&
-> +               git merge topic1 --no-ff &&
-> +
-> +               git checkout -b topic2 &&
-> +               test_commit C &&
-> +               git checkout main &&
-> +               git merge topic2 --no-ff &&
-
-micro nit: I'd really prefer the --no-ff before the "topic1" and "topic2".
-
-> +
-> +               test_commit D &&
-> +
-> +               git rev-list --format=3D"%ad%B" --first-parent --topo-ord=
-er --no-commit-header main >expected &&
-
-I'd much prefer this were changed to
-    git log --format=3D"%ad %s" --first-parent >expected &&
-because:
-  * --topo-order is irrelevant when you have a linear history (which
---first-parent gives you)
-  * --no-commit-header can be tossed by using log instead of rev-list
-  * %B provides the entire (multi-line) commit message body but you
-clearly care about how many commits you saw below and were assuming
-just one line per commit, so %s is better.
-  * The format looks weird when inspecting as a human; it's much nicer
-with a space between the %ad and %s.
-
-> +
-> +               git fast-export main -- --first-parent >first-parent-expo=
-rt &&
-> +               git fast-export main -- --first-parent --reverse >first-p=
-arent-reverse-export &&
-> +
-> +               git init import &&
-> +               git -C import fast-import <first-parent-export &&
-> +
-> +               git -C import rev-list --format=3D"%ad%B" --topo-order --=
-all --no-commit-header >actual &&
-
-Same simplifications as above here:
-   git -C import log --format=3D"%ad %s" --topo-order --all >actual &&
-
-However, is there a reason you're using "--all" instead of "main"?
-Although main is the only branch, which makes either output the same
-thing, it'd be easier for folks reading to catch the equivalence if it
-was clear you were now listing information about the same branch.
-
-> +               git -C import rev-list --all >tmp &&
-> +
-> +               test_line_count =3D 4 tmp &&
-
-I don't understand why you need tmp.  Why not just use actual on the
-test_line_count line?
-
-> +               test_cmp expected actual &&
-> +               test_cmp first-parent-export first-parent-reverse-export
-
-This last line would be much nicer to include right after
-first-parent-reverse-export is created.  Or else move the creation of
-first-parent-reverse-export down to just above this line.
-
-> +       )
-> +'
-> +
->  test_done
+-- 
+gitgitgadget
