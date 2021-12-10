@@ -2,114 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEA63C433EF
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 01:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0A70C433F5
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 01:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235038AbhLJBFE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 20:05:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41748 "EHLO
+        id S233326AbhLJBKO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 20:10:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233309AbhLJBFD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 20:05:03 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 995EAC061746
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 17:01:29 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id y13so24758293edd.13
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 17:01:29 -0800 (PST)
+        with ESMTP id S230526AbhLJBKO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 20:10:14 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 319DEC061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 17:06:40 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id g14so24431418edb.8
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 17:06:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=xDFfXMfKYauy2YJ3kboX2BfZY8wIXrY5hhZ6bDKptaU=;
-        b=hyfxQf9rbsujUQ8pEvdb1jddS39u1kHyS4trr/ZzyI/pYq3Emo5yj5KjfaF7FY/kD2
-         Yc61gaHCeMWuA4gHD4FNvWAFoiePapmjemQavMbjaGdQZ4xzoANtsiBmrN7BqrKVGN3i
-         l8bQHgSHEqJPy55yUZsbezDFcP5evCIRMd3RQiA15U77PCk9PrF/EFjZ+1rxhU0tchXO
-         C9lsR9gDlO+VuKfJzPxYQ1xQdzuFnDsynG616aWfE/fUUdh5645szrJAdI7IGTxj1CFi
-         ZUap1kd6IuV/I8r4fW2WvGEkf/07iln4GstDH+Aum0V97qiINAXn6pzSddy6/oHOfrpH
-         iZ3w==
+         :message-id:mime-version;
+        bh=7N2n1QUhnA2Vp7EWdZ/35G68Hg0fNw9gzlciWAksNwM=;
+        b=D6Zgd3Wbph8Dd8QrIhIdnKyOUpAxYC/VVnWHhVEI711CYKJW66QWs1TnxYTe7Bc1q1
+         pZARYpqUXcAsMhF7YmVODePWYM0ViXwXoaQs6bRHy15lMl7Kpd080XhnLcBaAErfobti
+         R20fYf87Ez63yo129lYSY0BvK9fPV6Yq93TjaENPD/bdUy0KtR2A6td+3TARvSsiM2og
+         h+xmKsPS3cntS2q+rGnu1aAR6jTAyXBNaI49ia3QnWl6IeRgqQx/7MD587eDEfmP9f+T
+         Bih0VXUHfBalA908bD5BnsMMjPvEVHfEn+/B7AvPlVbqR+k2BZCrQYTsJ48vnVupL6+Y
+         igiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=xDFfXMfKYauy2YJ3kboX2BfZY8wIXrY5hhZ6bDKptaU=;
-        b=5UQz98oTvWma1xE2ajmQnjW+eIvsoRgtTXNiBEufFa1iAM7Z5ekKVKes5ZoPfWkvud
-         Mpu98d6Q5eoT7tgYSIFknh+50nPcjlxvdHYdl/7ORbiG6oBQcBIbcvB6f0d9QNbVJ2or
-         niXHMM33xX0coEKU1EJ3wdkXguF3fRP1fmXaYN7WPXNzx/ZihS3wjQAqnc3yhAYRTBib
-         lYI+IYBhvQUYhbESDCGQ4LeixFhJNwQ7t5gkoqR15bC3i8CBzcHxUQ/N+tPKzoiEgTOI
-         YLEKLqNCK0z3qtAIzy4JA+ZYaJ9UBuKHipDYfuwx2DExNEoAuBC0EL/yi905bvOkXhVW
-         VzEw==
-X-Gm-Message-State: AOAM530GQ7HxVYevXw/T8pqG4VqwVWOV415fS4F8/p4KlKCkxpxOGhf2
-        vb4Q9VyYdwm+GmYViVGoekBOsmlGL1IEWw==
-X-Google-Smtp-Source: ABdhPJxETvMbcWzKwKB1OQouD3CKb3fk4N4WBWzKGH4UF5IYpQ3CFO8lZpv5aFLBXOt2hrcCyJ1T7Q==
-X-Received: by 2002:a17:907:7f8c:: with SMTP id qk12mr20105573ejc.169.1639098087873;
-        Thu, 09 Dec 2021 17:01:27 -0800 (PST)
+         :in-reply-to:message-id:mime-version;
+        bh=7N2n1QUhnA2Vp7EWdZ/35G68Hg0fNw9gzlciWAksNwM=;
+        b=L83ZgUznU4PcGIoDRIqPAeXO1KZ5kS9d7gmYDWwQ5QpbAnni6yNVmw4SRw7YWl8tO2
+         p+WeKYJAhfVwPm4/COwJhE6tj23zgWuf9BOWIjh7VeFUYePKg1fSHcevwt+u10oGahwv
+         i4mGANGeZG0Y/won7YP238LcbO2z0dxiB7hSag1LIKeIOC95zCSh2yQtuGKJlGKTeNN/
+         mEwwdjt4kfsM3zgVNevNXEwdeMONo/nrVsua0shHKkTHRCt8d3g5q286eYY2iCN9suQy
+         dl5Q5ld8AYIu+82bzQK26hkkYR4iDrqiyOd3APvGk2u3uzHAkp5S1bStaxamuMdmfhnW
+         sdgg==
+X-Gm-Message-State: AOAM531NHGfnRs0VYCCy1qw/FwSljhstepghy0YxBG4gZxduO0J3knp3
+        rM0z2E2YQ3r3k7FGFUUFW8A7+z66ETwEFQ==
+X-Google-Smtp-Source: ABdhPJzGrVN0apiOjm+dsF7d0VruOOdJwwF/FTUcdOe7dBPkeCMrWyBQkGck8OSTJOvhyUFqL5w6Lg==
+X-Received: by 2002:a05:6402:4396:: with SMTP id o22mr34111597edc.263.1639098398532;
+        Thu, 09 Dec 2021 17:06:38 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id h7sm680125ede.40.2021.12.09.17.01.27
+        by smtp.gmail.com with ESMTPSA id gn26sm667736ejc.14.2021.12.09.17.06.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Dec 2021 17:01:27 -0800 (PST)
+        Thu, 09 Dec 2021 17:06:38 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mvUHt-0007KY-83;
-        Fri, 10 Dec 2021 02:01:25 +0100
+        id 1mvUMt-0007Sf-Jz;
+        Fri, 10 Dec 2021 02:06:35 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, chooglen@google.com,
-        emilyshaffer@google.com
+To:     Glen Choo <chooglen@google.com>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, emilyshaffer@google.com
 Subject: Re: [PATCH v5 1/2] branch: accept multiple upstream branches for
  tracking
-Date:   Fri, 10 Dec 2021 02:00:36 +0100
+Date:   Fri, 10 Dec 2021 02:03:35 +0100
 References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
  <cover.1638859949.git.steadmon@google.com>
  <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
- <211207.86mtlcpyu4.gmgdl@evledraar.gmail.com>
- <YbKLL2cQCxXQeQ5J@google.com>
+ <kl6llf0war1x.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <YbKHBsl7w1uNhLb6@google.com>
+ <kl6l35n19w97.fsf@chooglen-macbookpro.roam.corp.google.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <YbKLL2cQCxXQeQ5J@google.com>
-Message-ID: <211210.86mtl9e0ii.gmgdl@evledraar.gmail.com>
+In-reply-to: <kl6l35n19w97.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <211210.86ilvxe09w.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Dec 09 2021, Josh Steadmon wrote:
+On Thu, Dec 09 2021, Glen Choo wrote:
 
-> On 2021.12.07 09:57, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Mon, Dec 06 2021, Josh Steadmon wrote:
->> ...in English you've got one dog, then dogs, so =3D=3D 1 and >1, but in
->> various other languages it's:
->>=20
->>     git grep Plural-Forms -- po
->>=20
->> Anyway, this is easily solved, and even with less verbosity, see:
->>=20
->>     git grep -E -W '\bQ_\('
->>=20
->> For examples of how to use the magic of libintl to do this for you.
+> Josh Steadmon <steadmon@google.com> writes:
 >
-> Thank you for the pointer. I looked specifically for dealing with plural
-> forms in our docs, but the referenced "Preparing Strings" gettext docs
-> were not helpful for this. (Although I see now I should have read
-> further in po/README.md to find the relevant advice).  I may send a
-> separate change to po/README.md to make it easier to find in the future.
-
-Thanks, that would be really helpful.
-
->> > +	string_list_append(&remotes, remote);
->> > +	return install_branch_config_multiple_remotes(flag, local, origin, &=
-remotes);
->> > +	string_list_clear(&remotes, 0);
->> > +}
->> > +
->> >  /*
->> >   * This is called when new_ref is branched off of orig_ref, and tries
->> >   * to infer the settings for branch.<new_ref>.{remote,merge} from the
->>=20
+>>> > @@ -121,11 +168,18 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+>>> >  	advise(_(tracking_advice),
+>>> >  	       origin ? origin : "",
+>>> >  	       origin ? "/" : "",
+>>> > -	       shortname ? shortname : remote);
+>>> > +	       remotes->items[0].string);
+>>> >  
+>>> >  	return -1;
+>>> >  }
+>>> 
+>>> When there is more than one item in remotes->items, this advice is
+>>> _technically_ incorrect because --set-upstream-to only takes a single
+>>> upstream branch. I think that supporting multiple upstreams in
+>>> --set-upstream-to is a fairly niche use case and is out of scope of this
+>>> series, so let's not pursue that option.
+>>> 
+>>> Another option would be to replace the mention of --set-upstream-to with
+>>> "git config add", but that's unfriendly to the >90% of the user
+>>> population that doesn't want multiple merge entries.
+>>> 
+>>> If we leave the advice as-is, even though it is misleading, a user who
+>>> is sophisticated enough to set up multiple merge entries should also
+>>> know that --set-upstream-to won't solve their problems, and would
+>>> probably be able to fix their problems by mucking around with
+>>> .git/config or git config.
+>>> 
+>>> So I think it is ok to not change the advice and to only mention the
+>>> first merge item. However, it might be worth marking this as NEEDSWORK
+>>> so that subsequent readers of this file understand that this advice is
+>>> overly-simplistic and might be worth fixing.
+>>
+>> Sounds like we should just have separate advice strings for single vs.
+>> multiple merge configs?
 >
->
-> Thanks for the review!
+> That sounds like a good idea if it's not too much work. Otherwise, a
+> NEEDSWORK is still acceptable to me (but that said, I'm not an authority
+> on this matter).
 
-Happy to help, cheers!
+We haven't used Q_() with advise() yet, but there's no reason not to:
+
+	advise(Q_("fix your branch by doing xyz",
+		  "fix your branches by doing xyz",
+                  branches_nr));
