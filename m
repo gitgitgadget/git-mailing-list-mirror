@@ -2,109 +2,214 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4854DC433FE
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 15:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B6AFC433F5
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 15:13:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239443AbhLJPQi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 10:16:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37854 "EHLO
+        id S239443AbhLJPQv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 10:16:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235073AbhLJPQh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 10:16:37 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 059C0C061746
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 07:13:02 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id e3so31542214edu.4
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 07:13:01 -0800 (PST)
+        with ESMTP id S235073AbhLJPQu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 10:16:50 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59AC7C061746
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 07:13:15 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id d9so15472593wrw.4
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 07:13:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=7zIwDu7nE+pN3DkvbDz37IczEKLhIEiipEsniHrdWi8=;
-        b=i6KD30zqwerAMLjBDCq1kEjvvxxQeu/H/r4ty60WMTXhHFpNZlp6wFuitW2kbkcn0T
-         BGBF0DUIS0Rhg7Id+h+ydx028j1+maKokHsK7clCY9vO/fTnR6wEPrki1utEegSqx5gp
-         TUIx9n92Mdb0Y2U6DBCg2yHmfTxFdzZqyF1MiXGcyg6CdHnLzbq3N4zRQy8IJ5EC0HV1
-         f0lzCnwv/CYTv08bhsOf/tYfUic5F6BxLfdKFQ3/Paskrj0ziybqgmsdCvcZGSDfLHpP
-         mEFtYWjOG+q8sWiO9sK4dPc0KaMXAFZGLmz8iw4F/xiEW0D0q+c/YMHUXh3j6kNjH3R4
-         VdjQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=bECYZ/uhDdnhpfTRjA6PeL0JZAwFZQyUvUJT4i+A2Jc=;
+        b=KA4PdN70GOzeWro15ywGfJc95NMpLeuwUMABgKQplvcN7LfG93z8Vro/i7bzTUy+7C
+         5hM1eNjSE3KAxRARONwpXod84bYoFoo3E/JMS/yvgUt0zeKUtHXGXTrOtrQyS33P5k4Z
+         1Vopb+vrvLflk88uM7EORLqoKYO+jBtNTBRPvdsG2WLZM6K6VSHKdvxfZ2dsCDctCIJY
+         0siMuSnphYgy1923lmYicLw9fvJsXNeQir6nIeN2u3r0scxuHSWYZgQsw/2IEFj7lX8h
+         tW7tF8pZ3YaFE58k3967bQJaAs/vwnILFtYxkDXmoeByhjCPv6pIEpv9TL1jQyyTh3bx
+         3Ghw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=7zIwDu7nE+pN3DkvbDz37IczEKLhIEiipEsniHrdWi8=;
-        b=QNKbgZpIBhwBLEgApgZP0DeW8mx7Pjgmen7zdUfMus87prylK6AoG/Q4Qa14l95xCn
-         phu2plA5aT1HK4QRdTG7IOt+G6/h5VV5Lp4b0BY0mwFE4GaxmmyS1HWlMuUtlTfxYRQU
-         HO6xsOUbjKlkkQEMsuSxnZXlt4bXypAKDATX8Yde1j42ZEWhxGVNaH1JagjE2+0NiAAk
-         PLpY31VgDwOUCUyfmNrKcdtAfgi03H+ZMSLhSLbZpZbJwrHBxPPZ0/p5KYfgW8edRTd8
-         c3FR02+PHab+oMS1lbUtRo8bS+vdakTrY2liYuGPdOlUM0j/Tou89h6T7mIvo44zNvDH
-         v8Rw==
-X-Gm-Message-State: AOAM532H1v3HtSj2m80DJQ+Jozpb/aCx+R+pW5SjtQ+7DaVgwTp41mUJ
-        yoB9Z4PRKNz0K2NJmLwMvvDp/Ril2c4poA==
-X-Google-Smtp-Source: ABdhPJzLdp5141WkObF3VfX9oRf4GtbmN0FRk7EyJE9IWuUOYQNHBBq4A9amCrcFjp0mNdN4wmZzzg==
-X-Received: by 2002:aa7:cf0a:: with SMTP id a10mr39748509edy.194.1639149162022;
-        Fri, 10 Dec 2021 07:12:42 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id em21sm1577730ejc.103.2021.12.10.07.12.40
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=bECYZ/uhDdnhpfTRjA6PeL0JZAwFZQyUvUJT4i+A2Jc=;
+        b=BdH0pSWe3Ntiwez8JFojLFLNws8IQUqKnozVPJ1BZGEM5JkmiM/qminKm2n/4XpLhZ
+         2qK27ViGhJfybIrc2LnfXi/Me+GE6voKhbHO3E47ayFqM+wG2BVGw+JnvA1BPx7iKNhP
+         CBLzMxVwHKRu5EiXK2riVUeSVxKJnb3MD9G9FlhGImWIibYCkA+4upqsrT0Bxt6Lt/eX
+         /j8zj3bghBvQUUMt+yskZBByqyVsmiKCqRsb15oEDpyIRy0d2zAg32GiOiC0G73L24F9
+         0WuSu2uwnc+NL1Sb3svveJV2qJhhWj7ImxnlKSGgTc9zHug3cQiWvwPnmyCtqSWc5xw/
+         tYpg==
+X-Gm-Message-State: AOAM530FXLmgET2VWvOjuKA7LmRCWcqBV4zNbwlSZRZ1ExtdOy+zrAL9
+        gmvtHp0MloI/iOzEg54tpHBrNNWAy6U=
+X-Google-Smtp-Source: ABdhPJxYUkFanOC2JeBYRy/qdoWADzGfFKsmd9w3BbB538ekpJBv7k+838m2lfUW3VsuUa1NIzyiTw==
+X-Received: by 2002:adf:c5d1:: with SMTP id v17mr14138561wrg.571.1639149193692;
+        Fri, 10 Dec 2021 07:13:13 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l3sm3276425wmq.46.2021.12.10.07.13.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Dec 2021 07:12:40 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mvhZg-000MWN-2A;
-        Fri, 10 Dec 2021 16:12:40 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Erik Faye-Lund <kusmabite@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC PATCH 00/10] range-diff: fix segfault due to integer overflow
-Date:   Fri, 10 Dec 2021 16:07:15 +0100
-References: <RFC-cover-00.10-00000000000-20211209T191653Z-avarab@gmail.com>
- <nycvar.QRO.7.76.6.2112101528200.90@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <nycvar.QRO.7.76.6.2112101528200.90@tvgsbejvaqbjf.bet>
-Message-ID: <211210.864k7gcx3r.gmgdl@evledraar.gmail.com>
+        Fri, 10 Dec 2021 07:13:13 -0800 (PST)
+Message-Id: <pull.1080.v3.git.1639149192.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1080.v2.git.1638992395.gitgitgadget@gmail.com>
+References: <pull.1080.v2.git.1638992395.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 10 Dec 2021 15:13:07 +0000
+Subject: [PATCH v3 0/5] Sparse index: fetch, pull, ls-files
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, newren@gmail.com, vdye@github.com,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is based on ld/sparse-index-blame (merged with 'master' due to an
+unrelated build issue).
 
-On Fri, Dec 10 2021, Johannes Schindelin wrote:
+Here are two relatively-simple patches that further the sparse index
+integrations.
 
-> Hi =C3=86var,
->
-> On Thu, 9 Dec 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> The difference between "master" and "git-for-windows/main" is large
->> enough that comparing the two will segfault on my system. This is
->> because the range-diff code does some expensive calculations and will
->> overflow the "int" type.
->
-> You are holding this thing wrong.
->
-> The `main` branch of Git for Windows uses merging rebases, therefore you
-> need to use a commit range like
-> `git-for-windows/main^{/^Start.the.merging}..git-for-windows/main` and
-> compare it to `git-for-windows/main..master`.
->
-> Failing that, you will receive only bogus results.
+Did you know that 'fetch' and 'pull' read the index? I didn't, or this would
+have been an integration much earlier in the cycle. They read the index to
+look for the .gitmodules file in case there are submodules that need to be
+fetched. Since looking for a file by name is already protected, we only need
+to disable 'command_requires_full_index' and we are done.
 
-Indeed. FWIW I got this segfault on an actual local range-diff that's
-useful for a very large range & started digging.
+The 'ls-files' builtin is useful when debugging the index, and some scripts
+use it, too. We are not changing the default behavior which expands a sparse
+index in order to show all of the cached blobs. Instead, we add a '--sparse'
+option that allows us to see the sparse directory entries upon request.
+Combined with --debug, we can see a lot of index details, such as:
 
-I then tried to come up with some arbitrary command someone with a
-git.git clone might be able to run that would reproduce it without
-having to tell them to clone chromium.git or <other very large repo>.
+$ git ls-files --debug --sparse
+LICENSE
+  ctime: 1634910503:287405820
+  mtime: 1634910503:287405820
+  dev: 16777220 ino: 119325319
+  uid: 501  gid: 20
+  size: 1098    flags: 200000
+README.md
+  ctime: 1634910503:288090279
+  mtime: 1634910503:288090279
+  dev: 16777220 ino: 119325320
+  uid: 501  gid: 20
+  size: 934 flags: 200000
+bin/index.js
+  ctime: 1634910767:828434033
+  mtime: 1634910767:828434033
+  dev: 16777220 ino: 119325520
+  uid: 501  gid: 20
+  size: 7292    flags: 200000
+examples/
+  ctime: 0:0
+  mtime: 0:0
+  dev: 0    ino: 0
+  uid: 0    gid: 0
+  size: 0   flags: 40004000
+package.json
+  ctime: 1634910503:288676330
+  mtime: 1634910503:288676330
+  dev: 16777220 ino: 119325321
+  uid: 501  gid: 20
+  size: 680 flags: 200000
 
-> As to the patch series, it likely does the wrong thing. Just like we error
-> out on insanely large input in libxdiff, `range-diff` should do the same.
 
-I haven't come up with an actual use-case for diffing something large
-(maybe someone storing DNA sequences as text would?), but have run into
-practical cases where range-diff would be useful on range where it
-currently segfaults. E.g. repos that get 500-1000 commits/day someone
-cherry-picks commits between branches & rewords/adjusts, and you're
-trying to range-diff it 2 months later looking for differences...
+(In this example, the 'examples/' directory is sparse.)
+
+Thanks!
+
+
+Updates in v2
+=============
+
+ * Rebased onto latest ld/sparse-index-blame without issue.
+ * Updated the test to use diff-of-diffs instead of a sequence of greps.
+ * Added patches that remove the use of 'test-tool read-cache --table' and
+   its implementation.
+
+
+Updates in v3
+=============
+
+ * Fixed typo in commit message.
+ * Added comments around doing strange things in an ls-files test.
+ * Fixed adjacent typo in a test comment.
+
+Derrick Stolee (5):
+  fetch/pull: use the sparse index
+  ls-files: add --sparse option
+  t1092: replace 'read-cache --table' with 'ls-files --sparse'
+  t1091/t3705: remove 'test-tool read-cache --table'
+  test-read-cache: remove --table, --expand options
+
+ Documentation/git-ls-files.txt           |   4 +
+ builtin/fetch.c                          |   2 +
+ builtin/ls-files.c                       |  12 +-
+ builtin/pull.c                           |   2 +
+ t/helper/test-read-cache.c               |  64 ++---------
+ t/t1091-sparse-checkout-builtin.sh       |  25 ++++-
+ t/t1092-sparse-checkout-compatibility.sh | 137 ++++++++++++++++++++---
+ t/t3705-add-sparse-checkout.sh           |   8 +-
+ 8 files changed, 172 insertions(+), 82 deletions(-)
+
+
+base-commit: 3fffe69d24e4ecc95246766f5396303a953695ff
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1080%2Fderrickstolee%2Fsparse-index%2Ffetch-pull-ls-files-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1080/derrickstolee/sparse-index/fetch-pull-ls-files-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1080
+
+Range-diff vs v2:
+
+ 1:  f72001638d1 = 1:  f72001638d1 fetch/pull: use the sparse index
+ 2:  58b5eca4835 ! 2:  b81174ba54b ls-files: add --sparse option
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse index is n
+      +	git -C sparse-checkout ls-files --sparse >sparse &&
+      +	test_cmp dense sparse &&
+      +
+     ++	# Set up a strange condition of having a file edit
+     ++	# outside of the sparse-checkout cone. This is just
+     ++	# to verify that sparse-checkout and sparse-index
+     ++	# behave the same in this case.
+      +	write_script edit-content <<-\EOF &&
+      +	mkdir folder1 &&
+      +	echo content >>folder1/a
+      +	EOF
+      +	run_on_sparse ../edit-content &&
+      +
+     -+	# ls-files does not notice modified files whose
+     -+	# cache entries are marked SKIP_WORKTREE.
+     ++	# ls-files does not currently notice modified files whose
+     ++	# cache entries are marked SKIP_WORKTREE. This may change
+     ++	# in the future, but here we test that sparse index does
+     ++	# not accidentally create a change of behavior.
+      +	test_sparse_match git ls-files --modified &&
+      +	test_must_be_empty sparse-checkout-out &&
+      +	test_must_be_empty sparse-index-out &&
+ 3:  5ffae2a03ae ! 3:  2a6a1c5a39c t1092: replace 'read-cache --table' with 'ls-files --sparse'
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_sparse_unstaged () {
+       			|| return 1
+       	done &&
+       
+     - 	# Disabling the sparse-index removes tree entries with full ones
+     +-	# Disabling the sparse-index removes tree entries with full ones
+     ++	# Disabling the sparse-index replaces tree entries with full ones
+       	git -C sparse-index sparse-checkout init --no-sparse-index &&
+      -
+      -	test-tool -C sparse-index read-cache --table >cache &&
+ 4:  b98e5e6d2bc ! 4:  f0143686754 t1091/t3705: remove 'test-tool read-cache --table'
+     @@ Commit message
+          t3705-add-sparse-checkout.sh.
+      
+          The important changes are due to the different output format. In t3705,
+     -    wWe need to use the '--stage' output to get a file mode and OID, but
+     +    we need to use the '--stage' output to get a file mode and OID, but
+          it also includes a stage value and drops the object type. This leads
+          to some differences in how we handle looking for specific entries.
+      
+ 5:  f31a24eeb9b = 5:  9227dc54165 test-read-cache: remove --table, --expand options
+
+-- 
+gitgitgadget
