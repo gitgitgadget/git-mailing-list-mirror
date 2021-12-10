@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD89BC433EF
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 10:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0909CC433EF
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 10:08:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240012AbhLJKLf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 05:11:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51678 "EHLO
+        id S240025AbhLJKLh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 05:11:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239987AbhLJKLe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 05:11:34 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14878C0617A2
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 02:08:00 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id i12so6388667wmq.4
+        with ESMTP id S239987AbhLJKLg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 05:11:36 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EF37C061746
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 02:08:01 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id c4so13997857wrd.9
         for <git@vger.kernel.org>; Fri, 10 Dec 2021 02:08:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/IHdS19Kog1vLhXxRkIWwK3fSYFu0mMTeQLqHuJxdVg=;
-        b=pfIN56RuBe7nhdSBmOIaZoWSK9gGok4nmtKkJx/0mA+vbzUKHrTLbULvrNwIRfA6iI
-         oOSt575k91zScvIOorbJveIEB+Izm5nFa5+t/YYJfxutqd/G+/UgAMjsr9izaJ/KgyQS
-         AoQTBt7mslmDRDCMypfTf3IiarGva7UCfvwBVRe4WMM1/ukRgPHW9JGmLzod/sRGZYr/
-         h/qMp+nu72EFvG9/Mmhw6SngpNfsqQTrFFWRfkuITUFnWQQHG+DSvJdXb0cId9dQLv4I
-         1EO5zOGWYn7Qcsro20FquAgH+UvkJUgCGyuxetgLP9Nk1ZlemQimH++u5/YxIfTRAXhL
-         SUaw==
+        bh=kR+YiebwEfsrR7h398+QFe0SflfICwImXIKtbntfLvY=;
+        b=df6RCW9tvpkyBKOZL/QS6cHeRZYv6CDcg1fMeCGNXp5WR94j8HB4N0B76yogZLYeF4
+         Y/XbX7UivkdxE4iVQzAsZFpVOApnv1vL2o3IGSe68t6H/n4QuSLFiDvvQ7jEI89rZseP
+         mtufgsYZv1dS7/k8+XGeH1VhPxZXvAnvNtaXxBCTx7xRt4d2KPWeBH7ghGCJs7Mhhruu
+         WOROP2KAaJlu+dAvwxLGy57GWs6k68XCx96TbAd7C9ZoenF5kI9CJC0B3iTkxEXOLEQy
+         g8vXuqfqCttW820cVJ4zFqN41TDT3fjoH9LSTFT8msMK6ImbSCcLx+cnnytuB6qFIQQz
+         SF3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/IHdS19Kog1vLhXxRkIWwK3fSYFu0mMTeQLqHuJxdVg=;
-        b=PNCU1hhw1QljNgzjAJho3TbaWH4MzJwWlvkwqQ3TJ941lPiUlxWEucDz3laWDOGSP9
-         Kv9P8OdhhcP1XgGGEc79WcZFWo+a7CQkI/bR6Vg8N6CBdvRa+IFoZYxwK6gU+5knBj1F
-         ZH7FpoW3Gyp3IDBDggQN2wMayKYEvHfxYSNVwVYgDvDoQ5Yk4ejwwezPtyx8dq5HMf4n
-         gDjrb8Ky1LCGjwzCZ8RZC5bv3tDtqv2eW5YgLjxHYtQS9b/FLBTwcrpOmnq3WBPKl505
-         w4HuEAY7uo98udkE+4Z2jjovioP2P6AUAESR96Mz0KTACbcinCaUyR7/KLm6oUYkfcRB
-         ddgw==
-X-Gm-Message-State: AOAM530ErMJmWIHS6d/osVcpbZk35T5Z17YhqyiF/7nuNScOcQezxmSY
-        pOgfDou/jXfdNdXFpGbq9+din+imnKQ8sA==
-X-Google-Smtp-Source: ABdhPJyIe6PMam4D0XBqrBrcReyHHyVRsmdNEL4GRqb+m8RYBmxRvyOks1M/JW1vRys6qq5urX6IvA==
-X-Received: by 2002:a7b:cf0f:: with SMTP id l15mr15308233wmg.92.1639130878187;
-        Fri, 10 Dec 2021 02:07:58 -0800 (PST)
+        bh=kR+YiebwEfsrR7h398+QFe0SflfICwImXIKtbntfLvY=;
+        b=bQsvuDElViyepBPLlJnQIaFEu1OBiO+39EkIf+MxVO/k58nI1rVXmexdCPJQyH7CEl
+         7Zkz1gf095HX6UGnCJOxc/HdMr14Rkp2znn4X+ypx9xFK++aqp7225MPXL28UHVexz0p
+         vrwtuhz0tsV1BREE/SJMyB456R18yjlr5iIZ6y54ULtQQtsorh8SO7RxOXWgENBIe81R
+         JUShoTlXlltOMDTmCFvYnCtTmCp42V1WOF/tsiSd5HqMe4ea7Q4XxLarUnZeEuubyWTl
+         LuRR5BVGn/2P4hsBjLRYV9c54O8KpdvSY77x1V0gAowSIZGMrhP9UpJ27lgRrLMoDhrm
+         g5fw==
+X-Gm-Message-State: AOAM531lPinagZugnO5dV6/MxLQuXKFxtggXoXajB2KiKi65AfV4YXYd
+        F0UK1wyXCDX9ZkUGNbCe1uOx34/mKtrpRA==
+X-Google-Smtp-Source: ABdhPJzqk/m86IpdelAmB9qmzJ+FfV7UdwniOVnIlQfLOEJ2m7Z3oOLnFEz6+YNU1cEdTcECnQZs2g==
+X-Received: by 2002:adf:df89:: with SMTP id z9mr12769978wrl.336.1639130879180;
+        Fri, 10 Dec 2021 02:07:59 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m3sm2055561wrv.95.2021.12.10.02.07.57
+        by smtp.gmail.com with ESMTPSA id m3sm2055561wrv.95.2021.12.10.02.07.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Dec 2021 02:07:57 -0800 (PST)
+        Fri, 10 Dec 2021 02:07:58 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,12 +56,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 0/2] test-lib.sh: have all tests pass under "-x", remove BASH_XTRACEFD
-Date:   Fri, 10 Dec 2021 11:07:53 +0100
-Message-Id: <cover-v3-0.2-00000000000-20211210T100512Z-avarab@gmail.com>
+Subject: [PATCH v3 1/2] t1510: remove need for "test_untraceable", retain coverage
+Date:   Fri, 10 Dec 2021 11:07:54 +0100
+Message-Id: <patch-v3-1.2-7876202c5b0-20211210T100512Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.932.g36842105b61
-In-Reply-To: <cover-v2-0.2-00000000000-20211201T200801Z-avarab@gmail.com>
-References: <cover-v2-0.2-00000000000-20211201T200801Z-avarab@gmail.com>
+In-Reply-To: <cover-v3-0.2-00000000000-20211210T100512Z-avarab@gmail.com>
+References: <cover-v2-0.2-00000000000-20211201T200801Z-avarab@gmail.com> <cover-v3-0.2-00000000000-20211210T100512Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,96 +69,282 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This re-roll fixes a stupid mistake of mine pointed out by SZEDER[1]
-(thanks!): I was redirecting to "stderr" across function calls, but
-some of those changed directories. Now we'll pass around an absolute
-path from the top-level function.
+Amend the tests checking whether stderr is empty added in
+4868b2ea17b (Subject: setup: officially support --work-tree without
+--git-dir, 2011-01-19) work portably on all POSIX shells, instead
+suppressing the trace output with "test_untraceable" on shells that
+aren't bash.
 
-That bug hid an issue where we'd include the trace output in that
-stderr log still due to an interpolation of $(pwd), we can just change
-that to $PWD, which won't have that issue.
+The tests that used the "try_repo" helper wanted to check whether git
+commands invoked therein would emit anything on stderr. To do this
+they invoked the function and redirected the stderr to a "message"
+file.
 
-1. https://lore.kernel.org/git/20211202192802.GC1991@szeder.dev/
+In 58275069288 (t1510-repo-setup: mark as untraceable with '-x',
+2018-02-24) these were made to use "test_untraceable" introduced in
+5fc98e79fc0 (t: add means to disable '-x' tracing for individual test
+scripts, 2018-02-24).
 
-Ævar Arnfjörð Bjarmason (2):
-  t1510: remove need for "test_untraceable", retain coverage
-  test-lib.sh: remove the now-unused "test_untraceable" facility
+It is better to have the "try_repo" function itself start with a
+"test_when_finished 'rm stderr'", and then redirect the stderr output
+from git commands it invokes via its helpers to a "stderr" file.
 
- t/README              |  3 --
+This means that if we have a failure it'll be closer to the source of
+the problem, and most importantly isn't incompatible with "-x" on
+shells that aren't "bash".
+
+We also need to split those tests that had two "try_repo" invocations
+into different tests, which'll further help to narrow down any
+potential failures. This wasn't strictly necessary (an artifact of the
+use of "test_when_finished"), but the pattern enforces better test
+hygiene.
+
+The functions it calls might change directories, so we pass an
+absolute "$stderr_log_path" around. We also need to change a "$(pwd)"
+to "$PWD" in test_repo(), on e.g. "dash" that interpolation will be
+traced and part of the "2>>" redirection.
+
+1. https://lore.kernel.org/git/YbMiK1wHzBfYvK2a@coredump.intra.peff.net/
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
  t/t1510-repo-setup.sh | 85 +++++++++++++++++++++----------------------
- t/test-lib.sh         | 66 ++++-----------------------------
- 3 files changed, 49 insertions(+), 105 deletions(-)
+ 1 file changed, 42 insertions(+), 43 deletions(-)
 
-Range-diff against v2:
-1:  91402624777 ! 1:  7876202c5b0 t1510: remove need for "test_untraceable", retain coverage
-    @@ Commit message
-         use of "test_when_finished"), but the pattern enforces better test
-         hygiene.
-     
-    +    The functions it calls might change directories, so we pass an
-    +    absolute "$stderr_log_path" around. We also need to change a "$(pwd)"
-    +    to "$PWD" in test_repo(), on e.g. "dash" that interpolation will be
-    +    traced and part of the "2>>" redirection.
-    +
-    +    1. https://lore.kernel.org/git/YbMiK1wHzBfYvK2a@coredump.intra.peff.net/
-    +
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## t/t1510-repo-setup.sh ##
-    @@ t/t1510-repo-setup.sh: test_repo () {
-      		fi &&
-      		rm -f trace &&
-     -		GIT_TRACE_SETUP="$(pwd)/trace" git symbolic-ref HEAD >/dev/null &&
-    -+		GIT_TRACE_SETUP="$(pwd)/trace" git symbolic-ref HEAD >/dev/null 2>>stderr &&
-    ++		GIT_TRACE_SETUP="$PWD/trace" git symbolic-ref HEAD >/dev/null 2>>"$stderr_log_path" &&
-      		grep '^setup: ' trace >result &&
-      		test_cmp expected result
-      	)
-    @@ t/t1510-repo-setup.sh: maybe_config () {
-      	if test "$value" != unset
-      	then
-     -		git config --file="$file" "$var" "$value"
-    -+		git config --file="$file" "$var" "$value" 2>>stderr
-    ++		git config --file="$file" "$var" "$value" 2>>"$stderr_log_path"
-      	fi
-      }
-      
-    @@ t/t1510-repo-setup.sh: setup_repo () {
-      	sane_unset GIT_DIR GIT_WORK_TREE &&
-      
-     -	git -c init.defaultBranch=initial init "$name" &&
-    -+	git -c init.defaultBranch=initial init "$name" 2>>stderr &&
-    ++	git -c init.defaultBranch=initial init "$name" 2>>"$stderr_log_path" &&
-      	maybe_config "$name/.git/config" core.worktree "$worktreecfg" &&
-      	maybe_config "$name/.git/config" core.bare "$barecfg" &&
-      	mkdir -p "$name/sub/sub" &&
-    @@ t/t1510-repo-setup.sh: run_wt_tests () {
-      #	(git dir) (work tree) (cwd) (prefix)	<-- from subdir
-      try_repo () {
-      	name=$1 worktreeenv=$2 gitdirenv=$3 &&
-    -+	test_when_finished "rm stderr" &&
-    ++	stderr_log_path="$PWD/stderr" &&
-    ++
-    ++	test_when_finished "rm \"$stderr_log_path\"" &&
-      	setup_repo "$name" "$4" "$5" "$6" &&
-      	shift 6 &&
-      	try_case "$name" "$worktreeenv" "$gitdirenv" \
-      		"$1" "$2" "$3" "$4" &&
-    -+	test_must_be_empty stderr &&
-    ++	test_must_be_empty "$stderr_log_path" &&
-      	shift 4 &&
-      	case "$gitdirenv" in
-      	/* | ?:/* | unset) ;;
-    @@ t/t1510-repo-setup.sh: try_repo () {
-      	try_case "$name/sub" "$worktreeenv" "$gitdirenv" \
-     -		"$1" "$2" "$3" "$4"
-     +		"$1" "$2" "$3" "$4" &&
-    -+	test_must_be_empty stderr
-    ++	test_must_be_empty "$stderr_log_path"
-      }
-      
-      # Bit 0 = GIT_WORK_TREE
-2:  867d18d14bd = 2:  a7fc794e20d test-lib.sh: remove the now-unused "test_untraceable" facility
+diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
+index 591505a39c0..fc94d8b49be 100755
+--- a/t/t1510-repo-setup.sh
++++ b/t/t1510-repo-setup.sh
+@@ -40,9 +40,6 @@ A few rules for repo setup:
+     prefix is NULL.
+ "
+ 
+-# This test heavily relies on the standard error of nested function calls.
+-test_untraceable=UnfortunatelyYes
+-
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+@@ -62,7 +59,7 @@ test_repo () {
+ 			export GIT_WORK_TREE
+ 		fi &&
+ 		rm -f trace &&
+-		GIT_TRACE_SETUP="$(pwd)/trace" git symbolic-ref HEAD >/dev/null &&
++		GIT_TRACE_SETUP="$PWD/trace" git symbolic-ref HEAD >/dev/null 2>>"$stderr_log_path" &&
+ 		grep '^setup: ' trace >result &&
+ 		test_cmp expected result
+ 	)
+@@ -72,7 +69,7 @@ maybe_config () {
+ 	file=$1 var=$2 value=$3 &&
+ 	if test "$value" != unset
+ 	then
+-		git config --file="$file" "$var" "$value"
++		git config --file="$file" "$var" "$value" 2>>"$stderr_log_path"
+ 	fi
+ }
+ 
+@@ -80,7 +77,7 @@ setup_repo () {
+ 	name=$1 worktreecfg=$2 gitfile=$3 barecfg=$4 &&
+ 	sane_unset GIT_DIR GIT_WORK_TREE &&
+ 
+-	git -c init.defaultBranch=initial init "$name" &&
++	git -c init.defaultBranch=initial init "$name" 2>>"$stderr_log_path" &&
+ 	maybe_config "$name/.git/config" core.worktree "$worktreecfg" &&
+ 	maybe_config "$name/.git/config" core.bare "$barecfg" &&
+ 	mkdir -p "$name/sub/sub" &&
+@@ -210,10 +207,14 @@ run_wt_tests () {
+ #	(git dir) (work tree) (cwd) (prefix)	<-- from subdir
+ try_repo () {
+ 	name=$1 worktreeenv=$2 gitdirenv=$3 &&
++	stderr_log_path="$PWD/stderr" &&
++
++	test_when_finished "rm \"$stderr_log_path\"" &&
+ 	setup_repo "$name" "$4" "$5" "$6" &&
+ 	shift 6 &&
+ 	try_case "$name" "$worktreeenv" "$gitdirenv" \
+ 		"$1" "$2" "$3" "$4" &&
++	test_must_be_empty "$stderr_log_path" &&
+ 	shift 4 &&
+ 	case "$gitdirenv" in
+ 	/* | ?:/* | unset) ;;
+@@ -221,7 +222,8 @@ try_repo () {
+ 		gitdirenv=../$gitdirenv ;;
+ 	esac &&
+ 	try_case "$name/sub" "$worktreeenv" "$gitdirenv" \
+-		"$1" "$2" "$3" "$4"
++		"$1" "$2" "$3" "$4" &&
++	test_must_be_empty "$stderr_log_path"
+ }
+ 
+ # Bit 0 = GIT_WORK_TREE
+@@ -234,15 +236,13 @@ try_repo () {
+ test_expect_success '#0: nonbare repo, no explicit configuration' '
+ 	try_repo 0 unset unset unset "" unset \
+ 		.git "$here/0" "$here/0" "(null)" \
+-		.git "$here/0" "$here/0" sub/ 2>message &&
+-	test_must_be_empty message
++		.git "$here/0" "$here/0" sub/
+ '
+ 
+ test_expect_success '#1: GIT_WORK_TREE without explicit GIT_DIR is accepted' '
+ 	try_repo 1 "$here" unset unset "" unset \
+ 		"$here/1/.git" "$here" "$here" 1/ \
+-		"$here/1/.git" "$here" "$here" 1/sub/ 2>message &&
+-	test_must_be_empty message
++		"$here/1/.git" "$here" "$here" 1/sub/
+ '
+ 
+ test_expect_success '#2: worktree defaults to cwd with explicit GIT_DIR' '
+@@ -268,19 +268,20 @@ test_expect_success '#4: core.worktree without GIT_DIR set is accepted' '
+ 	mkdir -p 4/sub sub &&
+ 	try_case 4 unset unset \
+ 		.git "$here/4/sub" "$here/4" "(null)" \
+-		"$here/4/.git" "$here/4/sub" "$here/4/sub" "(null)" 2>message &&
+-	test_must_be_empty message
++		"$here/4/.git" "$here/4/sub" "$here/4/sub" "(null)"
+ '
+ 
+-test_expect_success '#5: core.worktree + GIT_WORK_TREE is accepted' '
++test_expect_success '#5.1: core.worktree + GIT_WORK_TREE is accepted' '
+ 	# or: you cannot intimidate away the lack of GIT_DIR setting
+ 	try_repo 5 "$here" unset "$here/5" "" unset \
+ 		"$here/5/.git" "$here" "$here" 5/ \
+-		"$here/5/.git" "$here" "$here" 5/sub/ 2>message &&
++		"$here/5/.git" "$here" "$here" 5/sub/
++'
++
++test_expect_success '#5.2: core.worktree + GIT_WORK_TREE is accepted' '
+ 	try_repo 5a .. unset "$here/5a" "" unset \
+ 		"$here/5a/.git" "$here" "$here" 5a/ \
+-		"$here/5a/.git" "$here/5a" "$here/5a" sub/ &&
+-	test_must_be_empty message
++		"$here/5a/.git" "$here/5a" "$here/5a" sub/
+ '
+ 
+ test_expect_success '#6: setting GIT_DIR brings core.worktree to life' '
+@@ -376,8 +377,7 @@ test_expect_success '#9: GIT_WORK_TREE accepted with gitfile' '
+ 	mkdir -p 9/wt &&
+ 	try_repo 9 wt unset unset gitfile unset \
+ 		"$here/9.git" "$here/9/wt" "$here/9" "(null)" \
+-		"$here/9.git" "$here/9/sub/wt" "$here/9/sub" "(null)" 2>message &&
+-	test_must_be_empty message
++		"$here/9.git" "$here/9/sub/wt" "$here/9/sub" "(null)"
+ '
+ 
+ test_expect_success '#10: GIT_DIR can point to gitfile' '
+@@ -402,16 +402,14 @@ run_wt_tests 11 gitfile
+ test_expect_success '#12: core.worktree with gitfile is accepted' '
+ 	try_repo 12 unset unset "$here/12" gitfile unset \
+ 		"$here/12.git" "$here/12" "$here/12" "(null)" \
+-		"$here/12.git" "$here/12" "$here/12" sub/ 2>message &&
+-	test_must_be_empty message
++		"$here/12.git" "$here/12" "$here/12" sub/
+ '
+ 
+ test_expect_success '#13: core.worktree+GIT_WORK_TREE accepted (with gitfile)' '
+ 	# or: you cannot intimidate away the lack of GIT_DIR setting
+ 	try_repo 13 non-existent-too unset non-existent gitfile unset \
+ 		"$here/13.git" "$here/13/non-existent-too" "$here/13" "(null)" \
+-		"$here/13.git" "$here/13/sub/non-existent-too" "$here/13/sub" "(null)" 2>message &&
+-	test_must_be_empty message
++		"$here/13.git" "$here/13/sub/non-existent-too" "$here/13/sub" "(null)"
+ '
+ 
+ # case #14.
+@@ -549,8 +547,7 @@ test_expect_success '#17: GIT_WORK_TREE without explicit GIT_DIR is accepted (ba
+ 	mkdir -p 17b/.git/wt/sub &&
+ 
+ 	try_case 17a/.git "$here/17a" unset \
+-		"$here/17a/.git" "$here/17a" "$here/17a" .git/ \
+-		2>message &&
++		"$here/17a/.git" "$here/17a" "$here/17a" .git/ &&
+ 	try_case 17a/.git/wt "$here/17a" unset \
+ 		"$here/17a/.git" "$here/17a" "$here/17a" .git/wt/ &&
+ 	try_case 17a/.git/wt/sub "$here/17a" unset \
+@@ -565,14 +562,16 @@ test_expect_success '#17: GIT_WORK_TREE without explicit GIT_DIR is accepted (ba
+ 
+ 	try_repo 17c "$here/17c" unset unset "" true \
+ 		.git "$here/17c" "$here/17c" "(null)" \
+-		"$here/17c/.git" "$here/17c" "$here/17c" sub/ 2>message &&
+-	test_must_be_empty message
++		"$here/17c/.git" "$here/17c" "$here/17c" sub/
+ '
+ 
+-test_expect_success '#18: bare .git named by GIT_DIR has no worktree' '
++test_expect_success '#18.1: bare .git named by GIT_DIR has no worktree' '
+ 	try_repo 18 unset .git unset "" true \
+ 		.git "(null)" "$here/18" "(null)" \
+-		../.git "(null)" "$here/18/sub" "(null)" &&
++		../.git "(null)" "$here/18/sub" "(null)"
++'
++
++test_expect_success '#18.2: bare .git named by GIT_DIR has no worktree' '
+ 	try_repo 18b unset "$here/18b/.git" unset "" true \
+ 		"$here/18b/.git" "(null)" "$here/18b" "(null)" \
+ 		"$here/18b/.git" "(null)" "$here/18b/sub" "(null)"
+@@ -590,12 +589,11 @@ test_expect_success '#20a: core.worktree without GIT_DIR accepted (inside .git)'
+ 	setup_repo 20a "$here/20a" "" unset &&
+ 	mkdir -p 20a/.git/wt/sub &&
+ 	try_case 20a/.git unset unset \
+-		"$here/20a/.git" "$here/20a" "$here/20a" .git/ 2>message &&
++		"$here/20a/.git" "$here/20a" "$here/20a" .git/ &&
+ 	try_case 20a/.git/wt unset unset \
+ 		"$here/20a/.git" "$here/20a" "$here/20a" .git/wt/ &&
+ 	try_case 20a/.git/wt/sub unset unset \
+-		"$here/20a/.git" "$here/20a" "$here/20a" .git/wt/sub/ &&
+-	test_must_be_empty message
++		"$here/20a/.git" "$here/20a" "$here/20a" .git/wt/sub/
+ '
+ 
+ test_expect_success '#20b/c: core.worktree and core.bare conflict' '
+@@ -625,10 +623,9 @@ test_expect_success '#21: setup, core.worktree warns before overriding core.bare
+ 		cd 21/.git &&
+ 		GIT_WORK_TREE="$here/21" &&
+ 		export GIT_WORK_TREE &&
+-		git status >/dev/null
+-	) 2>message &&
+-	test_must_be_empty message
+-
++		git status 2>message &&
++		test_must_be_empty message
++	)
+ '
+ run_wt_tests 21
+ 
+@@ -742,14 +739,16 @@ test_expect_success '#24: bare repo has no worktree (gitfile case)' '
+ test_expect_success '#25: GIT_WORK_TREE accepted if GIT_DIR unset (bare gitfile case)' '
+ 	try_repo 25 "$here/25" unset unset gitfile true \
+ 		"$here/25.git" "$here/25" "$here/25" "(null)"  \
+-		"$here/25.git" "$here/25" "$here/25" "sub/" 2>message &&
+-	test_must_be_empty message
++		"$here/25.git" "$here/25" "$here/25" "sub/"
+ '
+ 
+-test_expect_success '#26: bare repo has no worktree (GIT_DIR -> gitfile case)' '
++test_expect_success '#26.1: bare repo has no worktree (GIT_DIR -> gitfile case)' '
+ 	try_repo 26 unset "$here/26/.git" unset gitfile true \
+ 		"$here/26.git" "(null)" "$here/26" "(null)" \
+-		"$here/26.git" "(null)" "$here/26/sub" "(null)" &&
++		"$here/26.git" "(null)" "$here/26/sub" "(null)"
++'
++
++test_expect_success '#26.2: bare repo has no worktree (GIT_DIR -> gitfile case)' '
+ 	try_repo 26b unset .git unset gitfile true \
+ 		"$here/26b.git" "(null)" "$here/26b" "(null)" \
+ 		"$here/26b.git" "(null)" "$here/26b/sub" "(null)"
+@@ -779,9 +778,9 @@ test_expect_success '#29: setup' '
+ 		cd 29 &&
+ 		GIT_WORK_TREE="$here/29" &&
+ 		export GIT_WORK_TREE &&
+-		git status
+-	) 2>message &&
+-	test_must_be_empty message
++		git status 2>message &&
++		test_must_be_empty message
++	)
+ '
+ run_wt_tests 29 gitfile
+ 
 -- 
 2.34.1.932.g36842105b61
 
