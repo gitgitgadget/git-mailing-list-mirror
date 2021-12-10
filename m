@@ -2,115 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2B77C433EF
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 00:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEA63C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 01:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234993AbhLJBBq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 20:01:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41028 "EHLO
+        id S235038AbhLJBFE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 20:05:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230506AbhLJBBq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 20:01:46 -0500
+        with ESMTP id S233309AbhLJBFD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 20:05:03 -0500
 Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1E61C061746
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 16:58:11 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id r25so24605925edq.7
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 16:58:11 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 995EAC061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 17:01:29 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id y13so24758293edd.13
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 17:01:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=ELqTtZOrWAHct9GB6blgHoDBTmgRCwdKaoNFA4ci5nY=;
-        b=Yv+58WlXNbrCv/SGt3e66S78oBke0JtJNDFNTqY0aLpJYFkpL2+Ysp3KPJx5C51zMm
-         sw7SRZiM5e2DOg7ZTJ8TxhTBCfv1yV3QW/VzlEKzsol5147MkQkDu2Vr+oUiwYe4f1Lp
-         qNee55R/+pAow6V41QvJLAPHbUkW3jDAxgk0lcCu5VkrVnqi3aYwqW151p8zX2EhtRsG
-         B8KaU4kqeZyzZGUBSVIyrFfFvXI83YZhhGACaJMA+tFKrrcs4QJWnPyijmjac1FMmojn
-         +K7pAEdWBF3GIuGJ371SUq1nrs5jkpTnQX69YBrusVpc9tn5CFepf5oXQCKyfsKS6sYj
-         gSVQ==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=xDFfXMfKYauy2YJ3kboX2BfZY8wIXrY5hhZ6bDKptaU=;
+        b=hyfxQf9rbsujUQ8pEvdb1jddS39u1kHyS4trr/ZzyI/pYq3Emo5yj5KjfaF7FY/kD2
+         Yc61gaHCeMWuA4gHD4FNvWAFoiePapmjemQavMbjaGdQZ4xzoANtsiBmrN7BqrKVGN3i
+         l8bQHgSHEqJPy55yUZsbezDFcP5evCIRMd3RQiA15U77PCk9PrF/EFjZ+1rxhU0tchXO
+         C9lsR9gDlO+VuKfJzPxYQ1xQdzuFnDsynG616aWfE/fUUdh5645szrJAdI7IGTxj1CFi
+         ZUap1kd6IuV/I8r4fW2WvGEkf/07iln4GstDH+Aum0V97qiINAXn6pzSddy6/oHOfrpH
+         iZ3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=ELqTtZOrWAHct9GB6blgHoDBTmgRCwdKaoNFA4ci5nY=;
-        b=XHE0iqADPVldtrwsCM6bTehP0TiATNeLlJT8UTvKxIPIgElPRv6Eu+eoHuNVUgTTNR
-         N0ZHxFcOIrbvpx0dPW/SHDv+6xtAq/pAJvBjQ1PXI13j8R0Hzn+E1SS+3WAgRzheRUiK
-         pORda8W6UT1iYTwTBmS/h0dyQu2ep6av8qLcaPINeWfKm5kFE586SSH4uSrFRTjgVDkD
-         OpDB6mkc2oNZsnspdk7eUSiLIhpuuUD8Qee7yABLDTOlVg/n/2dZurZGY8JuIQFLPSYO
-         z8PELf43d1TlEJEJZ7/fnWBeudX3N1hyHFH1w5fyGvClMFmA61YUgp4eZL613TgVvBz/
-         YEAQ==
-X-Gm-Message-State: AOAM532XOYSVjD4H+m5WSX2W9D7+zL9L2Wpja5tvrumylPjyn5R23w2Q
-        KU9W78+PuD7EuWhoNiK6VFzwkgRPHQ7ysQ==
-X-Google-Smtp-Source: ABdhPJzIB4PRc4hBblsY0gt2UsDfI5CdML8uIssCfK6GffQWKHU4xVhOmZoBRg+7P7cmvEYjBJ4CKw==
-X-Received: by 2002:a17:906:7198:: with SMTP id h24mr20102120ejk.59.1639097890485;
-        Thu, 09 Dec 2021 16:58:10 -0800 (PST)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=xDFfXMfKYauy2YJ3kboX2BfZY8wIXrY5hhZ6bDKptaU=;
+        b=5UQz98oTvWma1xE2ajmQnjW+eIvsoRgtTXNiBEufFa1iAM7Z5ekKVKes5ZoPfWkvud
+         Mpu98d6Q5eoT7tgYSIFknh+50nPcjlxvdHYdl/7ORbiG6oBQcBIbcvB6f0d9QNbVJ2or
+         niXHMM33xX0coEKU1EJ3wdkXguF3fRP1fmXaYN7WPXNzx/ZihS3wjQAqnc3yhAYRTBib
+         lYI+IYBhvQUYhbESDCGQ4LeixFhJNwQ7t5gkoqR15bC3i8CBzcHxUQ/N+tPKzoiEgTOI
+         YLEKLqNCK0z3qtAIzy4JA+ZYaJ9UBuKHipDYfuwx2DExNEoAuBC0EL/yi905bvOkXhVW
+         VzEw==
+X-Gm-Message-State: AOAM530GQ7HxVYevXw/T8pqG4VqwVWOV415fS4F8/p4KlKCkxpxOGhf2
+        vb4Q9VyYdwm+GmYViVGoekBOsmlGL1IEWw==
+X-Google-Smtp-Source: ABdhPJxETvMbcWzKwKB1OQouD3CKb3fk4N4WBWzKGH4UF5IYpQ3CFO8lZpv5aFLBXOt2hrcCyJ1T7Q==
+X-Received: by 2002:a17:907:7f8c:: with SMTP id qk12mr20105573ejc.169.1639098087873;
+        Thu, 09 Dec 2021 17:01:27 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ch28sm603604edb.72.2021.12.09.16.58.09
+        by smtp.gmail.com with ESMTPSA id h7sm680125ede.40.2021.12.09.17.01.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Dec 2021 16:58:10 -0800 (PST)
+        Thu, 09 Dec 2021 17:01:27 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mvUEh-0007FE-OV;
-        Fri, 10 Dec 2021 01:58:07 +0100
+        id 1mvUHt-0007KY-83;
+        Fri, 10 Dec 2021 02:01:25 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Joel Holdsworth <jholdsworth@nvidia.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/6] Transition git-p4.py to support Python 3 only
-Date:   Fri, 10 Dec 2021 01:48:23 +0100
-References: <20211209201029.136886-1-jholdsworth@nvidia.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, chooglen@google.com,
+        emilyshaffer@google.com
+Subject: Re: [PATCH v5 1/2] branch: accept multiple upstream branches for
+ tracking
+Date:   Fri, 10 Dec 2021 02:00:36 +0100
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+ <cover.1638859949.git.steadmon@google.com>
+ <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
+ <211207.86mtlcpyu4.gmgdl@evledraar.gmail.com>
+ <YbKLL2cQCxXQeQ5J@google.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20211209201029.136886-1-jholdsworth@nvidia.com>
-Message-ID: <211210.86r1ale0o0.gmgdl@evledraar.gmail.com>
+In-reply-to: <YbKLL2cQCxXQeQ5J@google.com>
+Message-ID: <211210.86mtl9e0ii.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Dec 09 2021, Joel Holdsworth wrote:
+On Thu, Dec 09 2021, Josh Steadmon wrote:
 
-> Python 2 was discontinued in 2020, and there is no longer any officially
-> supported interpreter. Further development of git-p4.py will require
-> would-be developers to test their changes with all supported dialects of
-> the language. However, if there is no longer any supported runtime
-> environment available, this places an unreasonable burden on the Git
-> project to maintain support for an obselete dialect of the language.
+> On 2021.12.07 09:57, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> On Mon, Dec 06 2021, Josh Steadmon wrote:
+>> ...in English you've got one dog, then dogs, so =3D=3D 1 and >1, but in
+>> various other languages it's:
+>>=20
+>>     git grep Plural-Forms -- po
+>>=20
+>> Anyway, this is easily solved, and even with less verbosity, see:
+>>=20
+>>     git grep -E -W '\bQ_\('
+>>=20
+>> For examples of how to use the magic of libintl to do this for you.
+>
+> Thank you for the pointer. I looked specifically for dealing with plural
+> forms in our docs, but the referenced "Preparing Strings" gettext docs
+> were not helpful for this. (Although I see now I should have read
+> further in po/README.md to find the relevant advice).  I may send a
+> separate change to po/README.md to make it easier to find in the future.
 
-Does it? I can still install Python 2.7 on Debian, presumably other OS's
-have similar ways to easily test it.
+Thanks, that would be really helpful.
 
-I'm not that familiar with our python integration and have never used
-git-py, but I found this series hard to read through.
+>> > +	string_list_append(&remotes, remote);
+>> > +	return install_branch_config_multiple_remotes(flag, local, origin, &=
+remotes);
+>> > +	string_list_clear(&remotes, 0);
+>> > +}
+>> > +
+>> >  /*
+>> >   * This is called when new_ref is branched off of orig_ref, and tries
+>> >   * to infer the settings for branch.<new_ref>.{remote,merge} from the
+>>=20
+>
+>
+> Thanks for the review!
 
-You've got [12]/6 which don't make it clear whether they're needed for
-python3, or are some mixture of requirenments and a matter of taste (or
-a newer API?). E.g. isn't the formatting you're changing in 2/6
-supported in Python3?
-
-Then for 1/6 "pass cmd arguments to subprocess as a python lists" if
-it's not just a matter of taste can we lead with a narrow change to the
-new API (presumably we can pass to our own function as a string, split
-on whitespace, and then pass to whatever python API executes it as a
-list first.
-
-Some of these changes also just seem to be entirely unrelated
-refactorings, e.g. 6/6 where you're changing a multi-line commented
-regexp into something that's a dense one-liner. Does Python 3 not
-support the equivalent of Perl's /x, or is something else going on here?
-
-You then change the requirenment not to python 3.0, but 3.7, which
-AFAICT was released a couple of years ago. We tend to try to capture
-some of the oldest LTS OS's in common use, e.g. the last 2-3 RHEL
-releases.
-
-We still "support" Perl 5.8, which was released in 2002 (although that
-could probably do with a version bump, but not to a release to 2018).
-
-I'm not at all opposed to this Python version bump, I truly don't know
-enough to know if it's a good change. Maybe we can/should also be more
-aggressive with a version dependency with git-p4 than with something
-more central to git like perl or curl.
-
-The commit messages could just really use some extra hand-holding and
-explanation, and a clear split-out of things related to the version bump
-v.s. things not needed for that, or unrelated refactorings.
+Happy to help, cheers!
