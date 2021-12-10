@@ -2,186 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D35EAC433EF
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 09:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0AA7C433F5
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 09:58:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239631AbhLJJ5c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 04:57:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48262 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239627AbhLJJ5c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 04:57:32 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48A5FC061746
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 01:53:57 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id o20so28458051eds.10
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 01:53:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=iETaU/yB9txot5L4NgoHBnMyBTzOyJF+dmOiogb98Cg=;
-        b=mDe8J19ihU5Z7JWuczpLqRamFx5vMP+sQik2+9sJdquuYL6yIz+jVlTx/hh/Pgjun8
-         /tUJIScaoZVccsYoMEH8jO5NgvbV6PW/VSo0t5sURDejuezofJR5tAQcZ8eK4X7Qj5Qg
-         WftYLMiBRGSo4EtpeGfrmoLwOePzrJ5AtJY5t+v4elzr4tqaxXO0Tc+zg6yUDBE20a1j
-         iQgjy0UbXtJv8912s09bomM3IraR3vX2qWMmY/lzq6/hWpJ+f+ZIhXEYytglZyvI8g19
-         7oqtc1DFpv0vI8fapWxKR3wuo0QRpeWPuqzgODz/9wMQj0FckzUYZhQumo2JDtMeqgBr
-         mZlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=iETaU/yB9txot5L4NgoHBnMyBTzOyJF+dmOiogb98Cg=;
-        b=1COamYPO4lzU5Je2Z5rdc5XEoL6dCpy+7DUzzc/L08gu3rAet5VE3juFWlim+Wl1cR
-         ajZxPVSJ76+vT+1LCI/gmhnoiZMWKOPn0MQl6zmmpFMjdM0/pdQKzrlefTTJT2oTwb9p
-         jm5buXdSiKXunDKzpN6uEl9M2BJHQvlr7k+BVrgn47k7WPFLHYfR1Xvu2KM17mQsgTwu
-         L72fhUq8VT2vSd2PWg3tLh7uuBpAPg1QFiQYTwd8dJZ8Pou0BajaISzQnKNGz37PCYLU
-         PcQiRev98IuVJHX2TZTsJ6e+zm/P2ZPlonABIWfbAIn3xJsn+6DlnoiwzwKPCnxUO+0V
-         xrjA==
-X-Gm-Message-State: AOAM531wAJXN//H0gFASndBIBljkHkWu/SpASzS+ayi1uokSfDsNClfH
-        v+2DmOQD0bvzwbRXrddWTuA=
-X-Google-Smtp-Source: ABdhPJwAypc+ahsj6M/8+R1z7XK8zH4+LqfdYlgaJNxUhU9jJ1P/lvnh7rv9Q2nO9r/CshG+f1GV5g==
-X-Received: by 2002:a05:6402:524a:: with SMTP id t10mr37589128edd.78.1639130035713;
-        Fri, 10 Dec 2021 01:53:55 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id sa3sm1136826ejc.113.2021.12.10.01.53.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Dec 2021 01:53:55 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mvcbC-000Ftd-DD;
-        Fri, 10 Dec 2021 10:53:54 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        id S239754AbhLJKBg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 05:01:36 -0500
+Received: from mail-eopbgr130044.outbound.protection.outlook.com ([40.107.13.44]:5185
+        "EHLO EUR01-HE1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S239752AbhLJKBf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 05:01:35 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=nrHmE6zQSyyqmcBL+gqAKvntbG86iuJ2wE2WPKKn6jwJohyNL0PPFA/hQOjWgZoqDDiWHoXyHE7ofIgCC/ssR1k88EJ9+TPU8IBXr6xIib4+bcoXWH9dKdUBFaH4OKDYgvsMsC7p5XXVkLtW/fX1Tp3SPgv+e/l6bQJ8dBue2KV1pt1ZyvW1bdB9GSShLWCu3+lnP18LU1c7zdARvXnhppvwqjXCatKhj2Tf+JHxeaWSJxYORA5eweZbwW4RytSsNJq0OlFtw03trQOydJihuTfr0YlsSXMQ4ZqmJQtwrVoBFwml2Vko3aIrB2XkOXpeKWr+yG7p4m59kOynpP4X9g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=faJrSz9tawfA70dAUY84PbrFqfAEJgbh2LN8kHat0Rs=;
+ b=NbhOIu+O+qA98FzD5CHINVCW6NNv1nYOHW1Mr7DmqJnugTcDugf2F16i8764dBu0f6urYd1SUKnzBtn7A9WuPuXpCfB4JoQOVlGh1I/v4hF/eWLhQ3lsraEy/wjPMSD3yb9htPmm/lUeiu9NXGoFs0tXBcWspyZiaSJuUhLxRX/bLMDexK3WIuXhkeYd0xk1eepet7lJVmfhw5PYmOrh1aHe8nqGdjGohbcGcHmPnNhItoRAyNL8kPUgKKz5szvi4ZBDw67buxxbYJjHZ0AJt+YK7qv3evsY9J/st4bdr/5FDhNbIytCRoltVR7oT+iEJdBQANxWn2ZbTcn+n0ALtA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
+ dkim=pass header.d=gigacodes.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=faJrSz9tawfA70dAUY84PbrFqfAEJgbh2LN8kHat0Rs=;
+ b=PhacUH0pP6DLDsgXMlBcGuUCW40EG3eXnbjsl3Q4i0WXJ3bqNiaJIhTOIyhlsDYlqdc1mMKqT63O+BbZ1KaRMN669GjdJ5LpwMvnGUIkI95IFS3DS1u3FKEauDDglesDmjMFPIcT4/BclJ2ZCVeoFS8caJSznYWCNpYCzgSA0j4=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=gigacodes.de;
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
+ by PR3PR10MB4192.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:af::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.16; Fri, 10 Dec
+ 2021 09:57:59 +0000
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::d9de:b41b:461d:fb5b]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::d9de:b41b:461d:fb5b%8]) with mapi id 15.20.4755.014; Fri, 10 Dec 2021
+ 09:57:59 +0000
+Date:   Fri, 10 Dec 2021 10:57:57 +0100
+From:   Fabian Stelzer <fs@gigacodes.de>
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [RFC/PATCH] Makefile: add test-all target
-Date:   Fri, 10 Dec 2021 10:30:12 +0100
-References: <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
-        <pull.1005.v10.git.1638538470.gitgitgadget@gmail.com>
-        <CABPp-BGpe9Q5k22Yu8a=1xwu=pZYSeNQoqEgf+DN07cU4EB1ew@mail.gmail.com>
-        <xmqq4k7nmksi.fsf@gitster.g>
-        <211207.86ilw0matb.gmgdl@evledraar.gmail.com>
-        <xmqqh7bi27o9.fsf@gitster.g> <xmqq8rwu278d.fsf_-_@gitster.g>
-        <211209.86fsr2l8vn.gmgdl@evledraar.gmail.com>
-        <xmqq4k7htzpk.fsf@gitster.g>
-        <211210.86a6h9duay.gmgdl@evledraar.gmail.com>
-        <YbMUw70vfxJ+hJW3@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <YbMUw70vfxJ+hJW3@coredump.intra.peff.net>
-Message-ID: <211210.86tufgdbv1.gmgdl@evledraar.gmail.com>
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 00/19] tests: fix broken &&-chains & abort loops on error
+Message-ID: <20211210095757.gu7w4n2rqulx2dvg@fs>
+References: <20211209051115.52629-1-sunshine@sunshineco.com>
+ <CABPp-BFM5ZbFAzVfvDE3=zm6Q4LN2fWthPP8WH5kbgVPSxomtA@mail.gmail.com>
+ <CAPig+cRD_DzisMo-8ZuT4NzESEe4i2vPk_1Y-_JTeV9rbdwkLg@mail.gmail.com>
+ <YbMgL6A+/12GTeuf@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+In-Reply-To: <YbMgL6A+/12GTeuf@coredump.intra.peff.net>
+X-ClientProxiedBy: AM6PR01CA0066.eurprd01.prod.exchangelabs.com
+ (2603:10a6:20b:e0::43) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:102:12e::15)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Received: from localhost (2003:ea:5820:600:3e55:2984:f78e:8b18) by AM6PR01CA0066.eurprd01.prod.exchangelabs.com (2603:10a6:20b:e0::43) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.14 via Frontend Transport; Fri, 10 Dec 2021 09:57:58 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 20b87259-2061-4a12-42b0-08d9bbc38bda
+X-MS-TrafficTypeDiagnostic: PR3PR10MB4192:EE_
+X-Microsoft-Antispam-PRVS: <PR3PR10MB4192E7B4D69FB737E3026081B6719@PR3PR10MB4192.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: q9cvmMvn5TpZ0tOSduYy/ld9zOePmdInbKnG/gmybI5hPtqwdE6gOXBcOm0ASCO7+U5m1bX6+JLlrPLgtsHr1YdVHntIICau09ZeiXL1DH9NeC2OZ0LaVtimjrdkjVeQRQZCPRdwoHhcd7NcuXLrxiO20TPY5dMzawvJfo655li+VeikZZbRGItQRDXmJw1ksCzn9kaX/RUtEqS9qIf3fZ/WhN/HUtR0wrMRv6X4q9CvkhDPjYaIGDY+t8EkiJUC7OIttowEeMxpuUbRpfI2+WVvvT7AJnkkuBg3lsbOlIlmMDXaTkp6fY6DaLZklPrQzKmVT14ix9BVx5ot8UbXO4J408bQFv8ZR25QTC132wh/GC9TqeMkZ/+QWa1IA+BbJ2eH2EVAc2GgYUqXWFXnCqldCp8X/mL0/qbZPjXj9QRokmsQjXVFuGP2GerYvvN/8P89n3QSoqpCs+Ky6jiMgyn/Pk/QHIME9Wp5+bx9+P+7jdMmnvxM6D/zyC78l7iRDfS2VEHSjXpb3HF6UmFoNDrm1fOhYFzY00ktEYjiPtnfN+te/FEL32cIKCydpKIyRfXxvqIbyjGrja9zCm+CPlgXuj5K9cL/hDFGu8CDDHkRsmFQp00hlAKPO4VzALlru4vGE3GMhYe2c5J/mQv66w==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(7916004)(376002)(346002)(396003)(39840400004)(136003)(366004)(508600001)(38100700002)(86362001)(6496006)(186003)(5660300002)(53546011)(9686003)(83380400001)(1076003)(316002)(54906003)(33716001)(6486002)(4326008)(66556008)(66476007)(6916009)(8676002)(8936002)(66946007)(2906002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MWcwN1IvQ28vTHRFY1cwQklqZzc5S1ByRUNQQkdlUFMydkNzRmZpNzZYbDFD?=
+ =?utf-8?B?VDFERVA5emJ1YXEvVjV5UFV0WThDU25JRi85V1JrdXNydDY5YS8rZnVyYWd6?=
+ =?utf-8?B?MkZlQS9XMENMZkRCNWZNOEdIM1hJdXdpRjBobkY5WGxMT0w2QXlqVlZnaTdE?=
+ =?utf-8?B?MmVmQ2NyczM1MGZNcEdDWEFvc0YyT0pjK2taS2xRV0FUNVc1eXYyMkFqbXZz?=
+ =?utf-8?B?ZlBTT0w5b2RvZXE3ZU1PU0hMdzcxMUhqVUc0NlYvZmZZUXZEVG9kcWhlT1cw?=
+ =?utf-8?B?ZDArRnYzZ1V0NkRVYlczbEVKT2puaXlyZXJxRzVDVXNOMWJ0aTU2d3dNeG9T?=
+ =?utf-8?B?L0M2YytXZEVVdWROSDBnT1ROOEt5ZDgxbFhTWFNsZzdkeEtrUVN3amtTQlZ1?=
+ =?utf-8?B?bmxDS09Lb0FmNkhJazRpWWRYbG0wd21sd0tVc3lvSDd3REQ3YU9QbmlNVHl6?=
+ =?utf-8?B?SVFQZ3VWWENPUHVKYjFZaEw4Zy9TazNWNXhoMXJ1V2N4NFljNzl5MzBIaUIr?=
+ =?utf-8?B?K2lWa3dEOEIwVzFqWGhhWi9zNzlCMG5nZkhGdjJXMlNpWU9GcVFOUXhnaEJX?=
+ =?utf-8?B?LzRSL0l6MVZ4M0p1NzJKaUJicm9RdW5PNUVFOWR3RzRVZjhSeEVhMkpCVGpk?=
+ =?utf-8?B?TUFOYkUvT2w2UVptTEZGSzg2aWFLdXdjMThFUUI2RjdvUjMyL2QvYjdhZUp4?=
+ =?utf-8?B?eFpXTjF4ZktaQVBTNGtSN2xBOVB3dit2U3grT0o0RW5MWXlqb1B5L3RwMENI?=
+ =?utf-8?B?ZjRDcU5Bcm5wenNsK2FPNzdkUUMvTng2aC9DNEpMUXFaOXkyZnMzVkl4MHlx?=
+ =?utf-8?B?L3lRVHphT2RKMWNvYmxrQ2hEWXNIcjRwUm90THBlZFF0bWMvZUFyZnpPb1or?=
+ =?utf-8?B?RlV2a21IQis3VDdhL1NDb2lyT3BKUlg4eExYSGt3dlllVzNuNFBhWWlGdVFO?=
+ =?utf-8?B?Q0dOS0g1U2ZTTVRrUUUveHkzRlV4c2gwaDA2SktYZzE5TWZ4QUVpZEEwVGhn?=
+ =?utf-8?B?ZDN3V2NteVRWT2NPK2tiOHlIYkxaMlM0UHQzOGYybTFHTVI1bXlndmxDQjRT?=
+ =?utf-8?B?UDFvZjJaczhxaE05TVFVMUxLVGNEbENFVVR2Nmc3bTZCZEwxVGNiN1hKMlB5?=
+ =?utf-8?B?SG9kZlB0S2NsL2M2SW5nLzcxQS8wSktJcmVlOEI1Nm9xS0Q2V2NIalVvblVK?=
+ =?utf-8?B?Zk43YU1pWGxhYjNiNkFPcVYzYnJmaDBYdlpQM0V6ZjVqY1lnekdpTUI3MVJm?=
+ =?utf-8?B?TWkwRkhqS29XdUV6ekNhZkZkUDFnb0xvdlVYR0tLRjdCbVlINEdxQlF2S3I4?=
+ =?utf-8?B?NGt5ZnJ2UW1UOWM3aDFSOEtDeW15cTltQmJvdU5ENGx3MGJENUJnYnBHbmpr?=
+ =?utf-8?B?bGpuT0NpSCtGVytYT3lmRHFWa2VxQzVseDRNSjJ1V25BWHN3R3B6M0FqOTZv?=
+ =?utf-8?B?VkpPbituSzI1eU5DeGMzcURzVHJBMjgwRGE2a3NVaTQwSk9tWTJOU29ydzBh?=
+ =?utf-8?B?cGZQRCtIb2s1N2VOZTZ0bE0xS0p0SE4yU2QrUzVRZVBVM2ZCMFgzK2JTQllQ?=
+ =?utf-8?B?empidVFsaVBmK0NXSzFCMnlRTDNSZWJwYkdSb1E4Zm1ZY292YURheHVsR0gz?=
+ =?utf-8?B?SHpXWUd5VjNKa1RTWlFVVkJFTU9HL1pSUnB3WkhYRk5tRWlOY1FRTGR6ZnNS?=
+ =?utf-8?B?NG9SeXFEWk9tSUtSOFVJMUJUVkR3MmpPQVlrSUpOZld1Z0x6WXl4R1c1cWw3?=
+ =?utf-8?B?QzhnNjdFb3UwWnlRdk9UYzFmRkFocm85clZCNGM5TzB6K2JHbDlGSFFwWWxk?=
+ =?utf-8?B?UjFJZk5talk4RGsvcnRBK1M2UkxhQllaalA5NmNjOW01SWRFMGVjZm5xblBU?=
+ =?utf-8?B?TDBLOUNMd21zdktlN255TjhkTllzdWFHK1h0aDFsSm9rN0Y2YkdHVmJNTml1?=
+ =?utf-8?B?RzAray96ajRyVFl3RUtjWjV6YUtidnM3bm96ZUVVWkZQd00yaC9HekJJZjV2?=
+ =?utf-8?B?em10M3ZITUJFZ3d2elpJTEJYdThvL04vR3BITndKRSs2WUhSNzJXTEQ3NXZr?=
+ =?utf-8?B?Szl4MTloZ0FyRzMycFdINEl5aHhjNU9kZU9ZL2p6RUVvUzlUNzlYeTRWdnRE?=
+ =?utf-8?B?VENlZVc0MExWb2hZZ2NDUVVFTk1LeUlwSHJwWEF6bWkyNWRDb1liN1NaY1Bm?=
+ =?utf-8?B?cXZ2Y2FKbGdsQlNWVDVxdkU4ZUU5MkxiYUdxTGlzUndQWHdmSStqL1oyQ1Ex?=
+ =?utf-8?B?TXh0SFA2eDRYcEFZTVVBS0lpdWxlMVJ1YjQ4ckxHbi80RUZaQ1AreDhEa3BN?=
+ =?utf-8?B?cGp6bjNBaXhEQWdyVDIwRktXS21LZ3JHSEthUys1M1ovL2NRVDR5N1FTZEtF?=
+ =?utf-8?Q?+tA8uty5QJJVztiI=3D?=
+X-OriginatorOrg: gigacodes.de
+X-MS-Exchange-CrossTenant-Network-Message-Id: 20b87259-2061-4a12-42b0-08d9bbc38bda
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Dec 2021 09:57:58.9816
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2UIKLCdUQMcHQqaEJckVAl29lJPkMEg5U6JoJRvI4Euo/QG2Q18eybgrRQnXJbnmKKlh8hLsPjYMivT2kcKb5LxsbnfzUB7jkaUBeimeaKM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB4192
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Dec 10 2021, Jeff King wrote:
-
-> On Fri, Dec 10, 2021 at 03:38:53AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+On 10.12.2021 04:38, Jeff King wrote:
+>On Thu, Dec 09, 2021 at 02:17:32PM -0500, Eric Sunshine wrote:
 >
->> I just don't think it makes any sense that I edit say refs.[ch], run
->> "make test" locally, but only see that something broke in scalar's
->> specific use of libgit.a later when I look at GitHub CI.
+>> > I have to admit to starting to skim once I got to the last four
+>> > patches, since they were a bit longer and all the same type of change.
+>>
+>> Understandable. Those bulk-change patches tend to be mind-numbing to
+>> review, though `git diff --color-words` helps out somewhat (at least
+>> by making it easier to skim the changes).
 >
-> I'm definitely sympathetic to this. Having been surprised by CI failure
-> on something that worked locally is annoying at best, and downright
-> frustrating when you can't easily reproduce the problem.
+>I likewise think I may have phased in and out of consciousness on those
+>last four.
 >
-> But isn't that already true for most of the value that CI provides?
-> While part of its purpose may be a back-stop for folks who don't run
-> "make test" locally, I think the biggest value is that it covers a much
-> wider variety of platforms and scenarios that you don't get out of "make
-> test" already.
+>> > You did an excellent job of explaining the changes and presented them
+>> > in a logical fashion.  The few things I thought I caught, you've
+>> > already answered were already correct.  I do think making the second
+>> > commit message be a bit clearer about the importance of the ordering
+>> > would be helpful.  Anyway:
+>> >
+>> > Reviewed-by: Elijah Newren <newren@gmail.com>
+>>
+>> Thanks. I'll wait a couple days and resend with a clarified commit
+>> message for the second patch unless, perhaps, Junio would accept a
+>> resend of just that patch so I don't have to spam the list again.
 >
-> In some of those cases you can reproduce the problem locally by tweaking
-> build or test knobs. But in others it can be quite a bit more
-> challenging (e.g., something that segfaults only on Windows). At least
-> in the proposed change here you'd only be a "make test-all" away from
-> reproducing the problem locally.
+>These looked good to me. I left a few comments, but nothing that I think
+>would trigger a re-roll.
 >
-> I dunno. I don't feel that strongly either way about whether scalar
-> tests should be part of "make test". Mostly just observing that this is
-> not exactly a new case.
 
-Yes. I'm not saying that "make test" should always run what a full CI
-run covers.
+Very nice work and good explanations. I learned a few new things :)
 
-Just that a proposed change that's really only adding one-more-test-file
-testing a thing in contrib in the sense that we test
-t/t9902-completion.sh should similarly be part of "make test".
-
->> If I'm preparing patches for submission I'll need to get CI passing, so
->> I'll need to fix those tests & behavior either way as it's
->> in-tree. Knowing about the failures later-not-sooner wastes more time,
->> not less.
->
-> I think there's probably a tradeoff here. How often you get a "late"
-> notification of a bug (and how much of your time that wastes) versus how
-> much time you spend locally running tests that you don't care about.
->
-> I do agree that CI presents a bit of a conundrum for stuff at the edge
-> of the project. It's become a de facto requirement for it to pass. In
-> general that's good. But it means that features which were introduced
-> under the notion of "the people who care about this area will tend to
-> its maintenance" slowly become _everybody's_ problem as soon as they
-> have any CI coverage. Another example here is the cmake stuff. Or the
-> recent discussion about "-x" and bash.
->
-> I wonder if there's a good way to make some CI results informational,
-> rather than "failing". I.e., run scalar tests via CI, but if you're not
-> working on scalar, you don't have to care. Folks who are interested in
-> the area would keep tabs on those results and make sure that Junio's
-> tree stays passing.
-
-I think if we're not caring about its failures in combination with
-git.git changes there wouldn't be much point in having it in-tree at
-all. That would just be like what we've got with git-cinnabar.git.
-
-I would like it in tree. I just don' think the test/CI setup needs to be
-a special snowflake.
-
-> That view disagrees with the final paragraph here, though:
->
->> The reason we do that with the completion is because some changes to
->> e.g. tweak getopts will need to have a corresponding change to the
->> completion.
->>=20
->> The reason we've not done that with contrib/{subtree,mw-to-git}/ is
->> because those are thoroughly in the category of only incidentally being
->> in-tree.
->> [...]
->> Scalar is thoroughly on the "completion" side of that divide, not
->> "subtree".
->
-> I haven't followed the discussion closely, but in my mind "scalar" was
-> still in the "it may live in-tree for convenience, but people who aren't
-> working on it don't necessarily need to care about it" camp. Maybe
-> that's not the plan, though.
-
-Since v1 of the series[1] it's been compiled unconditionally, and there
-have been tests. We just didn't run the tests.
-
-In v6 the tests started being run as part of CI, which was ejected in
-v10 due to "[an] unrelated patch series does not interact well with
-them", which as I noted upthread in [2] isn't accurate, so I think the
-stated reason for ejecting the CI from the proposed topic doesn't
-reflect reality.
-
-Since then 1d855a6b335 (Merge branch 'ab/ci-updates' into next,
-2021-12-07) landed, so I'd think that any narrow tweaks to get the CI
-working could be based on top of that topic.
-
-1. https://lore.kernel.org/git/pull.1005.git.1630359290.gitgitgadget@gmail.=
-com/
-2. https://lore.kernel.org/git/211207.86ilw0matb.gmgdl@evledraar.gmail.com/
+Thanks
