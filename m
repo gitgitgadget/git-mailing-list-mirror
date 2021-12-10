@@ -2,95 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5717BC433F5
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 18:58:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0ABAC433F5
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 19:09:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245702AbhLJTBh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 14:01:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36194 "EHLO
+        id S242195AbhLJTNK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 14:13:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241978AbhLJTBg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 14:01:36 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA982C061746
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 10:58:00 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id m27so19656152lfj.12
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 10:58:00 -0800 (PST)
+        with ESMTP id S242008AbhLJTNK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 14:13:10 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E303C061746
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 11:09:34 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id d10so19771902lfg.6
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 11:09:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VBQlb1jPnVvve04v+5OXYyCG2ihH2q5hpdP8hPlvVS8=;
-        b=HWo6iZrjV3TXI/SUexSL5pMU6ZEMFIqxX44HUB3/A3vls++1sj4WG/RJ+66Fsk6tS0
-         2co6wcScxMRL9gjypp72LDrWvGpQd6S7pLI4KmFP3UGKvjwEEQjt//QXbFRxGdm2/kea
-         Bpuz2KQ5Z7w2KYgc2ZhQJZ3+kda0ru+1keERA=
+        d=timining-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=imiX9l6rAZGH2tbVv3SQ0B8opPfxZzOyLoPN4RNhO38=;
+        b=sjE+msNTO0uImIARoVCUVcfsAn3eulZI73ZazyUJKnh0czztFHM2o1QfFUipvebJjZ
+         sLP5c5xvdZ9PzDOXK49WwEcx0o2cLlIHYxdP9gSaLhk/RVZiPW2BTnYiF7eJu5bCcmvc
+         q84mhAV942YRQPEtsTB6q6JcOsRne1FbKAKbP6ZUA9AqmI5E0sPkV4peSYkj+ptUaLcA
+         /qoYr/aLs2vM8ri3HjCpkfW/odas7Mgb2nhjBsrV5CJLK+SmcXOyKfMIaoLfLwPZVuGi
+         Dz0aXrjOEFVzuYmLr1QIGVBQf15/PVL/XHX0n3u/XkfkwpmIvtLL+rAzRhd8FNQ+mpav
+         Go5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VBQlb1jPnVvve04v+5OXYyCG2ihH2q5hpdP8hPlvVS8=;
-        b=C2qfoOfdT75dxHurwyv+YfkfGCCdA3k1GK8mV4jjkX7IOJIln4mvhM9QZG+g6ElvMr
-         3BD+nsHRFxCWYKVzktLLmHuqL7GRI5YPLHw+Wb/Pj8DxvCv/IufokkWnhALFsfBSGwhp
-         CNXOI8oIhbAsx+rVj0ejWl8ky0Hj22pCYfTVzBPsBdHSHEM6nh1xmwygychf6oZo29ix
-         VNY/Q0cDys64KQg7seLT3twAnfgB3+vJAtMPoq3c8InQSKX9EQTGJ7l5NorW9l6nfbpd
-         Z2an8BKWqVy+X5ArciasS6yi6LtzZXLr+D589FKRyd1y065TiM7jXUMApSP9AXO04pPD
-         PtNw==
-X-Gm-Message-State: AOAM530eHupeqGtJrsrLBTMYitEHw0La9YsOtYJ+fuIIm33OBkCnBsj5
-        l62qBNdIpZEB72amX7Cq+bzuBQ7xmCs4GqII/vejAg==
-X-Google-Smtp-Source: ABdhPJy2rO3C3IoiDEHP9HMCoOIGn7esGIv1iY/sIQdpJfozIIwXJW6FfFrxEjtN/KTB5lVwYGk4uelB65Oeg2N84xM=
-X-Received: by 2002:a19:e046:: with SMTP id g6mr13766291lfj.176.1639162679121;
- Fri, 10 Dec 2021 10:57:59 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=imiX9l6rAZGH2tbVv3SQ0B8opPfxZzOyLoPN4RNhO38=;
+        b=6tKs+tVMI2ZFVxW+Gw6azxK6RIBUtZr4OQZvbxdS4+6DoOT8Ge63jglSi1R/QbbinI
+         vapGF05WuMjMQFu921mOMmZWTp0HKWjlueyv9xM46pY+MNYJr+oiM69FvYUh1F3hbsbZ
+         z/6iY4QYlkSSwCg0o3HQ6Nb8/9/6bFA6ZKB6SXbeQGJLgueJnaM5TCr0jRet9X9S6Qk7
+         FhN+5M/B5Q7aSuSnW+tVm4MmAhE35zHEdU+Cv/73OFOBw4hmBBB4M7OO50sFfr2vHdGu
+         W/kh+LPfEN25PjfARsSrVU/0Nd45ym1bqtH7Xr5NqgIeP2zeUYWHUdwp1w990Uw08UF5
+         Bogw==
+X-Gm-Message-State: AOAM531WjXmAlUUzFZKgO80whXCs76ef8RT9cqQ48xC6FMMArudAfqM6
+        YTEF9S2PyagpNXrm1NC2m6ubzOMA4MTlhvJDbQMPAw==
+X-Google-Smtp-Source: ABdhPJw0qprdL0VnMTFd93ykBVt6Q3OVCS0d/Vg+VDQ9onNTqJ9JbPIscQ0nX/vQB/fYYqiEleyCBoRcxufwdI0ySAU=
+X-Received: by 2002:ac2:53ae:: with SMTP id j14mr13490345lfh.323.1639163372633;
+ Fri, 10 Dec 2021 11:09:32 -0800 (PST)
 MIME-Version: 1.0
-References: <20211210153101.35433-1-jholdsworth@nvidia.com> <20211210153101.35433-4-jholdsworth@nvidia.com>
-In-Reply-To: <20211210153101.35433-4-jholdsworth@nvidia.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Fri, 10 Dec 2021 18:57:47 +0000
-Message-ID: <CAE5ih7-nAOviVmuDbAWXONcY-FkR6xUDu_vTZhWz8_RTpDpsMg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] git-p4: add "Nvidia Corporation" to copyright header
-To:     Joel Holdsworth <jholdsworth@nvidia.com>
-Cc:     Git Users <git@vger.kernel.org>,
-        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
-        Dorgon Chang <dorgonman@hotmail.com>,
-        Joachim Kuebart <joachim.kuebart@gmail.com>,
-        Daniel Levin <dendy.ua@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Ben Keene <seraphire@gmail.com>,
-        Andrew Oakley <andrew@adoakley.name>
+Received: by 2002:a19:e346:0:0:0:0:0 with HTTP; Fri, 10 Dec 2021 11:09:32
+ -0800 (PST)
+In-Reply-To: <20211210164249.bahhe5ogjjhz4lxo@fs>
+References: <CAJrA3nLUG_m1ftdAyzFBkmL3m1vMPuv5dd3bYVVOmXV-fThwnA@mail.gmail.com>
+ <211210.86r1akbes8.gmgdl@evledraar.gmail.com> <20211210164249.bahhe5ogjjhz4lxo@fs>
+From:   Jose Wielandt <jose.wielandt@timining.com>
+Date:   Fri, 10 Dec 2021 16:09:32 -0300
+Message-ID: <CAJrA3nKbUK=_5d5KTCDehrfge4y1aB9YGsFwQYNzUDWGcfog4w@mail.gmail.com>
+Subject: Re: Please, paint new branch errors in RED (or any visible color)
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 10 Dec 2021 at 15:31, Joel Holdsworth <jholdsworth@nvidia.com> wrote:
+Yes, I git switch has the same behavior.
+I also agree that add hints could be a good idea.
+
+2021-12-10 13:42 GMT-03:00, Fabian Stelzer <fs@gigacodes.de>:
+> On 10.12.2021 17:32, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>
+>>On Fri, Dec 10 2021, Jose Wielandt wrote:
+>>
+>>> Hi community,
+>>>
+>>> At my work we've been struggling a lot with not realizing that our new
+>>> branch creation actually failed, ending up with a push directly to
+>>> develop. What are those cases?
+>>>
+>>> $ git checkout -b feature/solve p-eq-np
+>>> fatal: Cannot update paths and switch to branch 'feature/solve' at the
+>>> same time.
+>>>
+>>> What's my proposal?
+>>>
+>>> $ git checkout -b feature/solve p-eq-np
+>>> +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++++++++++++
+>>>
+>>> FATAL: CANNOT UPDATE PATHS AND SWITCH TO BRANCH 'feature/solve' AT THE
+>>> SAME TIME
+>>>
+>>>                  YOU STILL IN THE SAME BRANCH ! ! ! !
+>>>
+>>> +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++++++++++++
+>>>
+>>> ***(but in bright RED)***
+>>>
+>>>
+>>> Another case!
+>>>
+>>> $ git branch feature/solve p-eq-np
+>>> fatal: Not a valid object name: 'p-eq-np'.
+>>>
+>>> I'll let that one to your imagination but please, make it appear in
+>>> red so we can easily (visually) realize that something went wrong.
+>>>
+>>>
+>>> This has been the third time in a month we accidentally pushed changes
+>>> to develop bc we didn't realize that the command failed.
+>>
+>>I think if we'd improve the output we'd probably add some "advice"
+>>output, i.e. "hint:" lines, not ALL CAPS.
+>>
 >
-> The inclusion of the coorporate copyright is a stipulation of the
-> company code release process.
-
-This doesn't seem right to me.
-
-It seems very odd that there's a patch that just adds a copyright
-notice, with no further notice.
-
-What code does this cover and is now copyrighted? What are the license
-terms of the copyright holder? I think these things need to be made
-clear before this could be accepted.
-
-> ---
->  git-p4.py | 1 +
->  1 file changed, 1 insertion(+)
+> Adding some color for die/error/warning() in general if we detect a tty
+> might not a bad thing. I have encountered similar situations where an err=
+or
 >
-> diff --git a/git-p4.py b/git-p4.py
-> index 5568d44c72..17e18265dc 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -5,6 +5,7 @@
->  # Author: Simon Hausmann <simon@lst.de>
->  # Copyright: 2007 Simon Hausmann <simon@lst.de>
->  #            2007 Trolltech ASA
-> +#            2021 Nvidia Corporation
->  # License: MIT <http://www.opensource.org/licenses/mit-license.php>
->  #
->  # pylint: disable=invalid-name,missing-docstring,too-many-arguments,broad-except
-> --
-> 2.33.0
+> gets lost in between `git log` output.
 >
