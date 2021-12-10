@@ -2,52 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9892BC433F5
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 10:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD3E7C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 10:41:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237375AbhLJKle (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 05:41:34 -0500
-Received: from mail-bn8nam11on2041.outbound.protection.outlook.com ([40.107.236.41]:18113
+        id S236882AbhLJKp0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 05:45:26 -0500
+Received: from mail-bn8nam11on2051.outbound.protection.outlook.com ([40.107.236.51]:32768
         "EHLO NAM11-BN8-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S229619AbhLJKld (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 05:41:33 -0500
+        id S236065AbhLJKpZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 05:45:25 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=S3OrJQTKc7e4bvrObX2EMDNKZ8Wg0ev9BweGJnDfQKWL9ikdiSa9Z8fdOp9ryb5eod+ZgmrJaNyqwkVwCX21FMNFYIVyccyg24wBAXeOs880a5yycMpx9rtZMsc8wCxp9C0rL+PetEnuYWIIR1k5DQa7dBfDW+OzSQ1FDneytzE/IVqOoUM45vkQd4HZZHxxDLWpPKFMIW37UjF+XpHdXKSiBKwH6w5bspS/jiECIH7DHIa+TpkOUnJfKBWtYYrJjBJKKuAXpPwqxnzHY/umUpuIkCBMNIcnilTv4OnPOt9J/rcWjLFDLaeY+jDiB4pLzMhRJzf49L5wEEikD7lH0A==
+ b=JU0O5ZrzL/9u765zNZQtWuuqnRmXmSMGrazOaHPW8qmL8t2z0xbl406iv8098OCNlOmnx+pc0HUZoxz130qhBAyyrSHrhjwPTFKPDVbrRzrrDpCoBRIBaA63yXt7XnLS9aTGo0L9SmyqkePdbyMbtb/91Yu12fXOgBRdjENL7+TOADDXRKLQpE7yBIVDUueCaUnLvlBv7UkFC6cfjJ2VNFBhBkz9NhMdB4cZ54afb97BCZAeXzOH2LTdr6mMbs9pJmPh2zby1omwaR0uoG6YeO25DRJb0IviWp4WgYuNInaXOCV0n/ev4DH2Y0ZzK6Bq+004vwIG6I2P5j5lN0GJrA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZMyVStMwjimKY0kLkmak9h/JExZtPaY2koY2CvcxqWc=;
- b=MDIq3SaoEJ4wqrco1ubW+tSKcRjTudoXXqx2roLokZU7hp0yQWZeO8SXZ2/pkRwPLEEJ8zeIXf/AqVt707+7Kb9SErtrESQyqpmvOf60MBaVO3k/uQWVILUKObQq/7CbvS+YzRfYbnE4msIJTiLYafF991nTJQQkkDq7aPZHYL/XlvwXA3X0kO66+W+lyl60I6AMy2DNswHcQYoTRk+z60qo49td/y4LvKNWwHKQtgrzgBg9O8su6sm6u79cQN9ZI60/JO43b3gqa288StVhkhYIJ6/c/6clOv8oBq6yiwcGRJnjfnWZHiWvbhrcwTASZP+cVfb/r1ITAjVb7bhQbg==
+ bh=Hl1ozJ1kXhLEXZLu4w5rM8Q7GslNHZURS2XIHxFHfDc=;
+ b=PqPWQxZXrYvT6ANOAx+hKcen05PUZ9JS9idXQkyjDKlUq1/ApdMSkRj9KuZ3Z86yOP3I5BUST0q1uB2guonIT1mn7tSqCvrbOupOcVp3YVRdXVgqhTNuhphQQ3Gvilxt9/xX1q8AryackQ9LKwSxg0hMiVT7Xj191SbPgyWGHyn/C8Po/rzRINwb7muVXSU9BpM7719RA+zZX78QmhUn5xwM16/Xaz+k95iRjxAcc8QVeqsDIAF3lNzw4QmBnZYUDcfU30HgY8ewIzmQiL2wc53UjqN87T2SckLG4VD+R4N6foqH4zprlWOyHR7jK4iyY8svrfLy/HixMcOsisATKg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZMyVStMwjimKY0kLkmak9h/JExZtPaY2koY2CvcxqWc=;
- b=SxDPCzkXtA5VYdQ/gbOBOjOKpYnIbRaSx5ZpDydFdKw5co++kYgPA36oMQlm1kIY24OcZcIq4/sNzIZW4MlxW2YPptTpNzGdza3vm0SqB3P1GQXUN5ZMV+/k77lbo67VA07RzXeMjFDzLnT4gEqiF36OwBqNNcnZXEFHsRQUfAGnKMW6CDPRK051ewVj5uU9lonTpj9PtxoYrZtE1deB3wdYbmHqlHCGc2EFUWQSvIdlQdqKQP8rUDU7Xr5/jmoOtiFzAUOYij0JZdOh0E3XOK7SS3pWlVOcBiKAyRTRVtRLnpRZbi8hsTFX1OfpMOu3AZPG3yzJgFp3cOKRnuHc9g==
+ bh=Hl1ozJ1kXhLEXZLu4w5rM8Q7GslNHZURS2XIHxFHfDc=;
+ b=qh+/RRbrt6eFPiKWoDc/DAKD+Qo25whRxBrNOGpoRHXrLRuMsUjg66cURoAJKUC0QW+AEoG5GVhJzleRayeXeDv2cnvxvNs+R1UU5+wIHv9/q3Vo1rjOMcqHJU/F8eJh3inEPD69W44K6uVTE4geJsmw38e/bjPEoth2qTTvM0vE68sa8Ahic9PNV9Op8/SNNL73W2vZSwVKivgCrpuTpcg7bBvLVe2DQ0OL3478z2Th17lYyZDc8kEVh9lW+wzg7j0NgHEIycjpaLGN9zBXTVJdmuDUedkkFjXcVnTZdhUnU3uZw0v1UIqRsGSokL7aQLF2ofdkQF7Pc/XKuPSnEQ==
 Received: from BN8PR12MB3361.namprd12.prod.outlook.com (2603:10b6:408:67::19)
- by BN6PR12MB1315.namprd12.prod.outlook.com (2603:10b6:404:1f::8) with
+ by BN6PR12MB1699.namprd12.prod.outlook.com (2603:10b6:404:ff::20) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4778.11; Fri, 10 Dec
- 2021 10:37:57 +0000
+ 2021 10:41:49 +0000
 Received: from BN8PR12MB3361.namprd12.prod.outlook.com
  ([fe80::4063:6e26:a906:e592]) by BN8PR12MB3361.namprd12.prod.outlook.com
  ([fe80::4063:6e26:a906:e592%3]) with mapi id 15.20.4755.025; Fri, 10 Dec 2021
- 10:37:57 +0000
+ 10:41:49 +0000
 From:   Joel Holdsworth <jholdsworth@nvidia.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
-Subject: RE: [PATCH 0/6] Transition git-p4.py to support Python 3 only
-Thread-Topic: [PATCH 0/6] Transition git-p4.py to support Python 3 only
-Thread-Index: AQHX7TjcBdyuTAN1MEKv4eIoPWSSjawq5NKAgACXQiA=
-Date:   Fri, 10 Dec 2021 10:37:56 +0000
-Message-ID: <BN8PR12MB3361388476E57E097DEBF9F7C8719@BN8PR12MB3361.namprd12.prod.outlook.com>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: [PATCH 4/6] git-p4: Decode byte strings before printing
+Thread-Topic: [PATCH 4/6] git-p4: Decode byte strings before printing
+Thread-Index: AQHX7TjegWc0xX/84E+r8GjK3oN8BKwqwwUggADGyuA=
+Date:   Fri, 10 Dec 2021 10:41:49 +0000
+Message-ID: <BN8PR12MB3361A80F11E68CB4808D7423C8719@BN8PR12MB3361.namprd12.prod.outlook.com>
 References: <20211209201029.136886-1-jholdsworth@nvidia.com>
- <211210.86r1ale0o0.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211210.86r1ale0o0.gmgdl@evledraar.gmail.com>
+        <20211209201029.136886-5-jholdsworth@nvidia.com> <xmqqczm5o0pa.fsf@gitster.g>
+In-Reply-To: <xmqqczm5o0pa.fsf@gitster.g>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -55,135 +54,79 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: edf2395a-2f0a-451e-59f1-08d9bbc92148
-x-ms-traffictypediagnostic: BN6PR12MB1315:EE_
-x-microsoft-antispam-prvs: <BN6PR12MB1315272C62BFF5CBA91F4BD6C8719@BN6PR12MB1315.namprd12.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-ms-office365-filtering-correlation-id: d0bfcc7f-e141-4e2d-4b84-08d9bbc9abfa
+x-ms-traffictypediagnostic: BN6PR12MB1699:EE_
+x-microsoft-antispam-prvs: <BN6PR12MB169933D604231D601B6325C0C8719@BN6PR12MB1699.namprd12.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 6syPuwWomGFrE5XSrs3vGrN+LyeVq8ATQeGzjrV85yPCFcwPIBiBHjEO/JByoWtBj+FDD3cZ6IbD+damIazQaB+xpuEhTQratpxy64tif9Tx2lCyjTa8FfghPPbyxzvhjo0n+qCwfS0gtGoLcYZTxb8QWMP+kluUbB8sbOcoZ6GjApuH3WbkPJx85sohMy2lAwvWeQJfVNbtYnOvdFUuCXceAg4nRQ/h62qrf9cetaBbUX0dnOM04xwkhvrlGa4qP+Y4N+9gNghdjpwy0n+Lh3mrIU2MilwxNAApyMRIwpeS8XdOu2sS7JXUldCdm4z73BnXOj8kKBH7vDveSlPZ9woV10n5qcUSiGA3pkx4IHPQt1ExAMgHR/pJ2JjUqdLojmEKozqBX/o4pqSY17gXu/wg4ruuyQ2Fok3md1eDw6eA/mLhC62V+XBaNl1lfzxGrau8JkSMg3Ejz13iPqjV1IBo6Zz1Q3DwLQnUOeA9p28DbFCXQlQ2XYhwptuUVD0kn/M8wkXX5FS/jGkahnV3ezvjh28RULCpkeSwIkjgpfVEp5Ypemtw6D9gbuxKYGIJnygyaI/BINZ4irkZ2JXdPNhFoV7oExhgNqxgfP1wkptI1XaHlR5IcXg3Wwumfujvy3qfPxNZg1qmRsoxttUsiHI1i//IYYIrmDTpwewy/XXuE0bBXRsmbzOT/Vi0cTYkFe3lyVo2dmxn4V1LKK6KZ8WrWCUVKWP4JR5wtEr+8h1dwvbRvplkVWIFWmVce76W1D3UOzvsHuCby2kpb0KxLftIfxeni2aIznT0krpo9sStW4BA+0ap+okjQi1mNbd/Z8dAd3nocJ6qQjCruS4todDqPipp70RvyVNUHPes7qs=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3361.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(2906002)(86362001)(66946007)(76116006)(66556008)(66476007)(64756008)(66446008)(6916009)(52536014)(33656002)(71200400001)(122000001)(55016003)(83380400001)(38070700005)(316002)(9686003)(54906003)(7696005)(5660300002)(966005)(508600001)(186003)(38100700002)(26005)(55236004)(8936002)(4326008)(8676002)(6506007)(382644003);DIR:OUT;SFP:1101;
+x-microsoft-antispam-message-info: Vdam0lvIjLrjfSjUtIGsD+e+4TsxMoBTsMUk+4dtIN5yoL2KHsLH/myKTCJAv1DfVhEBMRqrg8cX2v0kbG1i4THKeK2sQM01opHtoBbGweb0w84LmwJn/+RfytqGHl2b/uEz+SlFHj40sHECh0Hbgoy2Qw3SAnr5XFEIsXba0OMFDSJousGoyw3LpP9dUNg5BwvocphP9FTRNgc1XwK249NfmeS5qr0X2LZOxJr0K9V4T6dZDIzHk5mEXrbW3xwFIdGVCBj66OVIL3zr+0phrlKCxt+TkHaYMo4UJfHRUnrLNEvx8O8kGlW59FwhGIUE5q0Osq8fYg4/a7OctnW6R8kP7XPH503a49EOjYJsyQdOdzgA3p76B01uahAr08IaCXPwuYI0WS+MfuBFlhzahImyV8+aMFvYoQJUN7FMX7OPt8R/3dH8hsv1Rf7F5Hv6oHdaDOPfp4wwEvJKyvBtilqlAv8Pja/dKknqjf9ap8zfnKHWIVXRiXKLXgpIAMO41/AXNq8PnGX/gZg7ejsXG1TFErgAsB8bzSQBy/y12uQUUPOoMPU7qJORl8A9f4r5YjXYZwHrjFrxSPUHciRAJcbW/oiwYcNY9cGRq4aJdMP3T2aPgjRH2U6hOm/Y1TBIXxgYtuYCxch5Mm/qke/xdVDO97N9935nhRuT7QWlnveMfirni2yCnTBOtp5tutr98f71rEKNIxkLfQtQIVfj8g==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3361.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(33656002)(83380400001)(38100700002)(122000001)(316002)(71200400001)(4326008)(186003)(8676002)(8936002)(26005)(4744005)(6916009)(7696005)(9686003)(86362001)(2906002)(66446008)(64756008)(55016003)(66476007)(66556008)(55236004)(508600001)(5660300002)(66946007)(52536014)(76116006)(6506007)(38070700005);DIR:OUT;SFP:1101;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?1v1dXjI/NqZfJhaaZ9v107c9+eFNhzOCcOuHkA0GZkgs7VsbHc2dqByW57?=
- =?iso-8859-1?Q?L5yhi/CWLQtPXLleQFPkOm50Wv0jxha1jwx1DQ31+uvCovKMJ3NJYV0fP6?=
- =?iso-8859-1?Q?Xw1UT8lqMSbtvCOiR6z7X7uyMerOqgHreLBXn4WNRyMGY/kFJLX19DCiGy?=
- =?iso-8859-1?Q?+lR3ydmr/nxwpu+GZ1ct5IT6OCth5vfkMfuW4oyTxoH0V1G6E8u4IFt+AR?=
- =?iso-8859-1?Q?N63MKEGVIuMOO9p28YARfk8PZ04Nl8g2hDSNgX3IAd/IQRiujk5mi9xiTs?=
- =?iso-8859-1?Q?AlisNRyaoKmeXgV8PIdxT4s72eV84aM+6s7IrGjBa7cIL6+soTwGTIDqto?=
- =?iso-8859-1?Q?Kbuett1eq8+ISFJgm83OzQo27dD5Tqtr7iDfHKPK9BftO5q8uSU39E6BV1?=
- =?iso-8859-1?Q?8mWB9EgGw/HgmFzxJf9sYxW1AM4Dm7ZSm/5TvKjSSGutt8bdTsa4fPOyr5?=
- =?iso-8859-1?Q?zNFkKvhAErMxqsfE6zLvDYtEUTJ0Az824Dom2sfs1ppXCJyy/XbRXh4Yqy?=
- =?iso-8859-1?Q?ZV6n24fucSoRCn0jTr6POln+oKC4Zay4qXDqNf3tB4gaKZfDeab5B4Nnsc?=
- =?iso-8859-1?Q?WZmHM44peyPTPiCJl4ND1IdH+bvdcOzG49K/G9b7CbLPIeizM4rrcmD0tw?=
- =?iso-8859-1?Q?CVnc2W7Lj9P/tvDS0Ce7td9FEWfvWXKyXFRZr1aEXKHfcWFS99f7JJIFfI?=
- =?iso-8859-1?Q?6ALMejL+vIX1pCeAAJSQNJUxXu7NL5ysbsHFdqEeeKgv8ztC2ucmKu3asP?=
- =?iso-8859-1?Q?cM4aIZU5JNsyH4naQraUp5hKNZ5iJBN1eYxS2FFJyRU3w9JOSlo+BxVHF7?=
- =?iso-8859-1?Q?wC0shum4MA+gsWpUTpPaunPS46G8mClBwdo4Ve2Z+mHhwYQF3YVT/cb6t6?=
- =?iso-8859-1?Q?vDOJXUBjZT0z5luqsAjNn9OHErYwJysNCYEvQnp2sUMaNlNZxggfqHy8Jr?=
- =?iso-8859-1?Q?ttl/t4LpmseG4QKnnEuUwIM+3vUDm/WnN1PBjdgdrvYajYnMvGKPDl27Qw?=
- =?iso-8859-1?Q?OD4BCb9q0PKkIJ9C+gEj472gVTWSkOgHLezzexg300+qrJ8T7JseUSgXne?=
- =?iso-8859-1?Q?RIzQHgQhTJ1aNw8wx3gSvDUX1ZJjdv46AJnfTlASdzuKErP2Bc4dUQXyQ2?=
- =?iso-8859-1?Q?/QQuG5If/vf6+nGHo1I8FbL3loxKEvol4vjSrkPdzkPFUW5vB9Jxdob/1p?=
- =?iso-8859-1?Q?zHk/Ff2fomq+A4L7B4CUjyQa+V6F4zBtuoO8E8UG4d6kF1NJItqC+b5Zuv?=
- =?iso-8859-1?Q?0dZoM9RoYqidth1/uJGj0vxYzl2lbGcsNlf1v6MNt7jiE/2+yVTC9W5DCS?=
- =?iso-8859-1?Q?J0uuoC6BtxA3t1mZfHRvJ0+QnqnutChmuI4dLRMYTsTKvKKfYHfLfjmUkE?=
- =?iso-8859-1?Q?1boU6D5DMcN3XJIjibxVQhlxwhbdmVkK10ZOe2D7VRANgLauuzT/zfTTqM?=
- =?iso-8859-1?Q?WLpfKPSA/NB7wfeZyyMnC+GFU7L5DJeVez3XrB+VepDul+vQpCxvBWJPJr?=
- =?iso-8859-1?Q?6rfLppvkon+3UmcKsZ61c77rijxPOFG964qETiBHIgy4kYcJb/cRVsdYJW?=
- =?iso-8859-1?Q?S0z3EwLcJFgXBc0VBQ7DG3JlWLXs420zbbAC4krdHlKQx5qaYPO2eQjR52?=
- =?iso-8859-1?Q?NJooYNbrgS6NyEGH9mnxHoV2mQVJd4bD8Hx0Vg5DQ/89pMtGMuJGsUfyPW?=
- =?iso-8859-1?Q?W6FnTqwKYHIXEjo+cxs=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Zcr/vxecgbTMW5qKaLePlzXWSHFBiokap2nHleS+yGL5n4SCLGCM27zyWyau?=
+ =?us-ascii?Q?FElCbz/ZGnblbiAqDEds9Q6ZQ/nRN4WaINrRI+LFxOj5DtJMP57niFZO93yc?=
+ =?us-ascii?Q?Yu1I9MUpjSAWpDV+wMt2EUhY7BakcC6jikGoFGb1rPwgDfZKXLe5PTi/pjJm?=
+ =?us-ascii?Q?nwRwqVwOqL1xN7s/6J52sOsC3fSBVvrxehUKMDhEMgi4Q6PqbJkqqEdP+aC4?=
+ =?us-ascii?Q?xJpMYFncECrwmPnBifjhYdmA0YvRaPmAcc8qTJFHFYf3dIrtZCJ92nKWCU9q?=
+ =?us-ascii?Q?8E9xaLFkjh4XAlmcosVbTRq1M/pk/WhiKVB9Sn0ScVyunez6ef62VAuE0r3C?=
+ =?us-ascii?Q?E81DW+HDHoDlmsd7eDS0hfp0hOLmY+ijIulF2w90G7tIH2wycL54FIdmjZFK?=
+ =?us-ascii?Q?5ZwKqnhlAPYYOErnw0HL0zoFMQ1mR5uQRZweApnffCl16R8mGssoGCO4f5KK?=
+ =?us-ascii?Q?5AHZxpc4XlNlj7NcR38uHiNMAHP9QmIMvkxWD8bHdpDI9tuw+a31up0So+v5?=
+ =?us-ascii?Q?Ve4P7/1CIN2pJdob+DRSNcAvXxwVTQTuEvCnPg5gRp40PRdxK6Yb5h0SwdMt?=
+ =?us-ascii?Q?aB5OZzGWAyImsxkorHXYyLfPISRtFji4Gmm/9u1zhWG9tzzP2laU9FKorGGv?=
+ =?us-ascii?Q?Qjbu+0fU2ARwrtwTFYF/77txNBNLkm6WVVbYwOvE56OVm6aZdfBUo/vBhjuT?=
+ =?us-ascii?Q?AftcSHknvBtd5ZNKgZJlt9iHTkezE1gPJVlHRguhRBoX/a/mr0DaHWggpKOk?=
+ =?us-ascii?Q?lYHuUecH/+ZmBdIfQ9+XVlPehlrKiR3CFIlIb/ey32y818920B5k3FEnO8BP?=
+ =?us-ascii?Q?z9TATFYWRMSxr1OO1W8eYo3xTwQ9i18Wmmp6DA+Iuwn/KWAhMbmqGZ1QkfhR?=
+ =?us-ascii?Q?8zBI/V8CCGBCWesvv3RRJKI1l3AME7Z/Fl9cZDh02KWhAjxhRs65CPUbdzKq?=
+ =?us-ascii?Q?tPf7flEaavUqr/Kz/927SidS8i0DOnsOfBBMwaHcnURVtGr1vBRWCIpAwS/i?=
+ =?us-ascii?Q?QgXaLKZGr/27T9uwtZ36f9w41bPIQDXbooBLK170VYtaulaeBltjE/3L9Dja?=
+ =?us-ascii?Q?/vOxZIlDP39/yocHZj4VZMAtVVmQBa9gJJX7AbU0ZeoK+yI+n6Cy4lB1lx7D?=
+ =?us-ascii?Q?bdpZotUhHyM2hOpqDmK1Px2DemUmbchFlLd4tZEeH8G2/pKqO3oZwVujshY0?=
+ =?us-ascii?Q?i9AAjG3d51gdADArp8vClYxIR1j6ARmQQZ5gf77m3nbg1gzoomhOgC1jau3F?=
+ =?us-ascii?Q?n980QUtgyAUyIbgxqkaipif398ISwEp2GqlUcaTDkjxEC1yIvLxRm2/S18wE?=
+ =?us-ascii?Q?CrFQCxmMtTLL9fWW+2zB5sBoBjs15a9cUnf0if2KS1o9R5oEVDtFHUP7MOt2?=
+ =?us-ascii?Q?X7s1Sb+Q1HfnBiO8/pEcVXLXyTeipSa6YgvFF4JHagL3GrJ/tzRWEplKncb2?=
+ =?us-ascii?Q?G7K74BxL17FenslkhKnoVwCw6bhFvGp0VrXOJY+GV67zAyeDzD5CsQk6Hk3n?=
+ =?us-ascii?Q?rtR0Zq/9PLFf8NvvjItAB9XqwJH8Onfma9+ftBDTbcfUCfsZZV7ZeBU42hhh?=
+ =?us-ascii?Q?yJNBg8Sg8Qd1T11O2ZB6JLOo28PtIPR77Aow8eujVyBstiZjPkvRpnJuXtK/?=
+ =?us-ascii?Q?nO6ksn8mD40R/+nBl677A7Y=3D?=
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: Nvidia.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3361.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: edf2395a-2f0a-451e-59f1-08d9bbc92148
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Dec 2021 10:37:57.0096
+X-MS-Exchange-CrossTenant-Network-Message-Id: d0bfcc7f-e141-4e2d-4b84-08d9bbc9abfa
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Dec 2021 10:41:49.7184
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Ypa4Uskk19qSC6N2CyGdWm5lQ0yBXWWn0KlUk+Tu0shVyeShExzZ9gFZ0PD+6xGuKARZKi58wvQ2o6ho7SR7Fw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR12MB1315
+X-MS-Exchange-CrossTenant-userprincipalname: JmD+7YlZTdhATBf0kHco31w75yRrEdpQRA3VqYxF73DxHUDhwTXrNXZgc3rBGQ6bzUgHDXqh2LB5O+1bW8nZ9Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR12MB1699
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The commit messages could just really use some extra hand-holding and
-> explanation, and a clear split-out of things related to the version bump =
-v.s.
-> things not needed for that, or unrelated refactorings.
+> Is the use of strings with {} placeholders and their .format() method int=
+egral
+> part of "decoding byte strings before printing", or it is just a
+> new/better/improved/subjectively-preferred/whatever style?
+>=20
+> If the latter, such a change should be separated into its own step, or at=
+ least
+> needs to be mentioned and justified in the proposed log message.
 
-Yes, I am getting this message loud and clear. I will resubmit with more de=
-tailed commit messages today.
+As I mentioned in my other message, I would like to invest some time into t=
+idying and modernising the script - as well as fixing bugs and improving be=
+haviour. If I submit patches that only make subjective style improvements, =
+are these likely to be accepted?
 
-To explain the story here: I started using git-p4 as part of my work-flow, =
-and I expect to need it for several years to come. As I began to use it, I =
-found that a series of bugs - mostly related to character encoding. In fixi=
-ng these, I found that some of the troubles were specific to Python 3 - or =
-rather Python 2's less strict approach to distinguishing between byte seque=
-nces and textual strings allowed the script to proceed Python 2 even though=
- what it was doing was in fact invalid, and was potentially corrupting data=
-.
+> Lack of explanation on "why" is shared among all these patches, it seems,=
+ so I
+> won't repeat, but the patches need to explain why to their readers.
 
-A common problem that users are encountering is that the script attempts to=
- decode incoming textual byte-streams into UTF-8 strings. On Python 3 this =
-fails with an exception if the data contains invalid UTF-8 codes. For text =
-files created in Windows, CP1252 Smart Quote characters: 0x93 and 0x94 are =
-seen fairly frequently. These codes are invalid in UTF-8, so if the script =
-encounters any file or file name containing them, it will fail with an exce=
-ption.
+Fair enough. I will resubmit.
 
-Tzadik Vanderhoof submitted a patch attempting to fix some of these issues =
-in April 2021:
-https://lore.kernel.org/git/20210429073905.837-1-tzadik.vanderhoof@gmail.co=
-m/
-
-My two comments about this patch are that 1. It doesn't fix my issue, and 2=
-. Even with the proposed fallbackEncoding option it still leaves git-p4 bro=
-ken by default.
-
-A fallbackEncoding option may still be necessary, but I found that most of =
-the issues I encountered could be side-stepped by simply avoiding decoding =
-incoming data into UTF-8 in the first place.
-
-Keeping a clean separation between encoded and decoded text is much easier =
-to do in Python 3. If Python 2 support must be maintained, this will requir=
-e careful testing of separate code-paths both platforms which I don't regar=
-d as reasonable given that Python 2 is thoroughly deprecated. Therefore, th=
-is first patch-set focusses primarily on removing Python 2 support.
-
-Furthermore, because I expect to be using git-p4 in my daily work-flow for =
-some time to come, I am interested in investing some effort into improving =
-it. There are bugs, unreliable behaviour, user-hostile behaviour, as well a=
-s code that would benefit from clean-up and modernisation. In submitting th=
-ese patches, I am trying to get a read on to what extent such efforts would=
- be accepted by the Git maintainers.=20
-
-Is it preferable that patch-sets have a tight focus on a single topic? I am=
- already dividing up my full patch collection. I can divide it further if r=
-equested. I am happy to do this, I was just worried that it just might make=
- longer to get all my patches through review.
-
-
-> Some of these changes also just seem to be entirely unrelated refactoring=
-s,
-> e.g. 6/6 where you're changing a multi-line commented regexp into
-> something that's a dense one-liner. Does Python 3 not support the
-> equivalent of Perl's /x, or is something else going on here?
-
-I will improve the commit message to explain the changes being made here.
-
-The regexp is matching RCS keywords: https://www.perforce.com/manuals/p4gui=
-de/Content/P4Guide/filetypes.rcs.html - $File$, $Author$, $Author$ etc., a =
-very simple match. We could keep it multi-line, though this seems overkill =
-to me.
-
-The main significance of this change that previously git-p4 would compile o=
-ne of these two regexes for every single file processed. This patch just pr=
-e-compiles the two regexes (now binary regexes, not utf-8 regexes) at the s=
-tart of the script.
-=20
