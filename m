@@ -2,159 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDEB6C433EF
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 19:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C0E6C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 19:24:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234148AbhLJTQf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 14:16:35 -0500
-Received: from mx0a-00128103.pphosted.com ([205.220.160.181]:13806 "EHLO
-        mx0a-00128103.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231135AbhLJTQe (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Dec 2021 14:16:34 -0500
-X-Greylist: delayed 1123 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Dec 2021 14:16:34 EST
-Received: from pps.filterd (m0207973.ppops.net [127.0.0.1])
-        by mx0b-00128103.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1BAIHB0n030412
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 10:54:16 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=firstam.com; h=from : to : subject
- : date : message-id : content-transfer-encoding : mime-version :
- content-type; s=facorp; bh=ewmwCYWTwOfZfoTcZadTbb/Yn7By9lfakuvl8U1+tfc=;
- b=lnqqLNsEVxXkgwecnBX7bQ6G3pl6a/BOPdYssxP1atBT22FUh/zd9LZL/1r4vfyOswoy
- jUy0gcmruN1BZNel4PRQTpuWy/TpsVVYmsTheDtnUlTPEBTxPg0mTbGFPTGfMHoatl7O
- Arli1MEJdY0Hx3SMqYgKRBYZxt3c+8Nk0dsyn6RLBUU904Vx1kP2EX+xHaxTUjLwtwne
- Xn/EFtF2AZ05dDX0A7/x1NfnwgklHNXGCtWilSKM9TMJgtvBJbGLwoX/q1Hk9f+onVMh
- bwnHcibcfx0dIdVHeyz7TaaW0Mn2KZ0zr4LXsnqgaRGsjK6AfyT7Jim4P/PiS72OdM6A lA== 
-Received: from nam12-dm6-obe.outbound.protection.outlook.com (mail-dm6nam12lp2174.outbound.protection.outlook.com [104.47.59.174])
-        by mx0b-00128103.pphosted.com with ESMTP id 3cvbem0skk-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 10:54:16 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GoMveb1gRy0cxim4jnaEtZWciVVS2fghApvdQVtuOXweypzDXIUD5b/5tsdQ4T1cioul9SU9ZWjPLLm5WNOl9XITuEGzRnigjgZuSFXmBCsodMvhsI20pcNztMwaQVi6Vyorm+9rDaHVR9brj7+nN91OupmrrrsgZ8czD0FrPOoZw0QeClgsYj150YAeLKLKTGw72PhS09mYqYPHqmeBI51mj0YI1aMdQR9Ju1BLGu+/yJnDBDxILNfHDLYLDPjhT6NrEazMTJCnlWkJ50cptmrr7ikND6SGlMNf1CVu/JbWiikESF6HhqVNLtgGuTuxqkaH1DXHcBn/AhckYlol+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3R7NcUPR6c3NAdlfuX2M3OiR9nOeDSdIqbWcSqCHixU=;
- b=OsqBs9mNeWrFdaRxcjFETsEGRpsPP1dTYoZWkhmd62sn0mg/ko+W1h9GLyjA4uioX9X5XRKtmvTZtJ8+5E0eFD5991XFEASj+2GrP3ictE2FCsgD7GgBKDNeIr+SMsR6kZIrNMU5yjNJoQMxJVCARr3gaaij/BgSXRFpmInXZsQYc0PFkOg+4t+l4cIVNHYwqSDjYDC0vJV8YOzBtXMmwotUlq6ThvE4p5tMN/UZmKm/c/7GjqgBrrzh8dbWg+BgR288PN1NCjsc01jc10SOQ5zojfUleBnryF3i0BwPOaiEFVLtP6PjeTrA8RIhQM9DOIj+rpM1oX/yJ1RaRTaFdw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=firstam.com; dmarc=pass action=none header.from=firstam.com;
- dkim=pass header.d=firstam.com; arc=none
-Received: from BN7PR08MB4993.namprd08.prod.outlook.com (2603:10b6:408:27::22)
- by BN7PR08MB5092.namprd08.prod.outlook.com (2603:10b6:408:21::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.16; Fri, 10 Dec
- 2021 18:54:14 +0000
-Received: from BN7PR08MB4993.namprd08.prod.outlook.com
- ([fe80::18a7:4224:8325:6300]) by BN7PR08MB4993.namprd08.prod.outlook.com
- ([fe80::18a7:4224:8325:6300%7]) with mapi id 15.20.4778.015; Fri, 10 Dec 2021
- 18:54:14 +0000
-From:   Robert Weyrauch <rweyrauch@firstam.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Question: Git and ActiveTcl
-Thread-Topic: Question: Git and ActiveTcl
-Thread-Index: Adft90W0O3L81lRGRK+gEUx2pgCRPA==
-Date:   Fri, 10 Dec 2021 18:54:14 +0000
-Message-ID: <BN7PR08MB4993D6DAF501472017175C65B7719@BN7PR08MB4993.namprd08.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: c05f8a31-cd69-41ca-7334-08d9bc0e7624
-x-ms-traffictypediagnostic: BN7PR08MB5092:EE_
-x-microsoft-antispam-prvs: <BN7PR08MB50927D55B9B0388D62E094F5B7719@BN7PR08MB5092.namprd08.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8273;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: EzOq1e9KWMxW9E9VnKQS2LsdG769xJIsUyQCweSR/uPMPQPpsCaPfifkGEnhW5XLJj4zBL8h7e+SGEcjbDx9K9bBx8ox3EJsPXpLlGzOm0L515KIcZeqGsVRbosU1iG9bSHeakjUb2X1CuVzsnPAk3s26Ooo5YbugF1ggRDMZFhB6dHi8Cbk3TQ+KKxHEceEFuJxFcZo3lhatosRwubQKo/piljrs+ZZ3Zx8a9dXUC1sV9E0+9M202gPI3znNZ7VFUo8ilGhQGaP0OaNN7sGd9spl7fZVaYOl0xRblSuSfrau/SfNIhQhTx4Z8dL17vxhkbpBRHnw+7n5nsa1mxIeKtpNLvHpMnTdFSuGg02K8UdSeHEAkdtQgN8PlQubH1zKhfxe6kQb12bD8imQ+k/NaSt1+jDBSU2gXo/AeCfSpbDJewoem6JBtGiMtmvp/NpzXq1LP6hc+1teczVNffj1xk43NhZzVW25Afr8q4gP3r4986VdDYpqHdk7EtNxKgC7bfSanA+sPGk1HLCXRDk1Qrk4grITxlDinpyZheONSQqcquz76qDB5uDhLwYS34qebkxMx40Zdp4W3shbYm4K+vMWU8o93r8cmtieBOo5EpGS7usmF07xVhOKzhYOKoqdVNccZyrqEWU+rOix058JBirqJQE0IBwb7924RXHQKK2LcOojScqlN0xceVWgIRLEOxgTrkA6Il72HJO442oBA==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN7PR08MB4993.namprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(122000001)(9686003)(38070700005)(2906002)(8936002)(6506007)(7696005)(33656002)(38100700002)(55016003)(66476007)(66556008)(76116006)(64756008)(66946007)(71200400001)(316002)(83380400001)(66446008)(186003)(4744005)(52536014)(8676002)(86362001)(6916009)(508600001)(26005)(5660300002);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?e781j0xUL51v+gWh3XS1WR1Fs/vV4KWu/rnE0xNS6GxF6/eL3rWC6ILJnS?=
- =?iso-8859-1?Q?d0Ra0DsjlhJDc4BtEY/gZk0JF4WfFc9qY3Qz7Xc3UWw92A86ddIgU4IYNj?=
- =?iso-8859-1?Q?zCs0AscKHkgZTDrfoWc3FKEnBIL6lHZ69dpHxk8wwkOrtMkevmZGiC2OGf?=
- =?iso-8859-1?Q?x0f9pggyHf94jSQiHhIwP4ne9HrPra406VWh+BLpsK4vtVcMVncgoznE4R?=
- =?iso-8859-1?Q?nFIieurZoZm8czkvpea+NIezsE7NJC7klutjjT0N8xs866GkzMgdfWD2h7?=
- =?iso-8859-1?Q?jHfg0CEqcsFcPisGEnDDyxmuBGzs+UodTbaMy8z+kQMnPwPD0SyuV9Md44?=
- =?iso-8859-1?Q?3VWAATv+WNWq7qBkOaLTR2UD6IoeJ6fgUhW1fcTwdqznn36aY3iNs2B0Q6?=
- =?iso-8859-1?Q?xFiLwbXMORmV/ESweMzsExYR31k+VkglyVeB7VJbg7gMKqnmtz+2duzGmW?=
- =?iso-8859-1?Q?mmkm7m3RpWTCdzNrxO0yPeuoNHk3p+Xp+RjVAWr24owW7s9RvuXYpcnXDV?=
- =?iso-8859-1?Q?v9j7i/eLs6HKiNUO9DUZuGHTbSSJgKliNnY8TICpJfAB0V4SgQ+mhn9XTj?=
- =?iso-8859-1?Q?utJqZOvJhc0NsBRo93sMVgETStCG4sEaZiNaLoEFfg0Piv/0BE14cMaE9b?=
- =?iso-8859-1?Q?RHLyBRp1YSJ0Ab2GOFaEKAuZQ4hOr+KR0b0hi8lZV5E0cmoHlMvxfjZD14?=
- =?iso-8859-1?Q?ISoiMBFnU1RYcl3MHYdijakW518WK7kJnfdpmWwADnDWFz1V55ZO3mEi4u?=
- =?iso-8859-1?Q?xbQAzhwm4OhHU8TD2w7/oxY3gaVhMXuM05rbo3DTmb9RqZsZ2h0Xmf4APW?=
- =?iso-8859-1?Q?1p50NuF6KczD8I6VyRR33igE83lfmYMGvKmCNm/uqAeisIPjkK3LQ2DSgV?=
- =?iso-8859-1?Q?+NCYkv/8nGAKZtqG9lAC2TVUJz2XYhSNp/9EdhWwUV/DKTsa6Xe/xW2NiK?=
- =?iso-8859-1?Q?ZzVmOIx1aM9YoP3AQ1HNWR7G/88fnad42stn6BWZAEkpIqaxxNQ+Qy131f?=
- =?iso-8859-1?Q?8STpqHr5nbqVi7m41OPYp8Ph2vyZoLzk8QLWTQXX0Ns7FywOtI06dFqgoX?=
- =?iso-8859-1?Q?eJz+UwRsBWedAV2seHFc1IWZNfPzrbJVC8TmnJG+HhCMOpu2QheDqP1Gba?=
- =?iso-8859-1?Q?2KA6V00tNLmaFKXYBMIhR5d7EPiTuRphn/PDIXhAJAj8Ozq4Rl1QuOht9l?=
- =?iso-8859-1?Q?Wrdkbruo+jDtNHLshxxiWYjiguR5AqAZz78zHl+pq9gSY7IOlP+0Nmc3sL?=
- =?iso-8859-1?Q?StwVqiu4V/qfaVqQIebVdJSvWSXinecHiuQa378f+rK8ay1TBwgtBqVNc6?=
- =?iso-8859-1?Q?HgE+ly9YQMDZKcOkLrAcqBxvq8LPRN1itCArbHivMdOlIXpM1+JqQO2G6p?=
- =?iso-8859-1?Q?3zSn3WVXj9qEgVNrDn2C2vEMMmNv9oVt+n85rdQmP80VPuuilhzBV88o6R?=
- =?iso-8859-1?Q?bwDGWDPhc3wq5uWrevCQuCJYVfdU9OXykhr/R82oNFVWxoqIiyqMwUUK6o?=
- =?iso-8859-1?Q?hGkoB4T5fJQ66LYobCacez8IIIkahdUCbJ8nAKmzRKtOdgyuqpYyra0oqx?=
- =?iso-8859-1?Q?9qBIAMQZvnr7fHUNmU44Wa6lkIyPb7OkGm8iDtmNUjm1MKBQimL3+s/abU?=
- =?iso-8859-1?Q?ZiJ+fFfMbABcZgX7Mvs2gSJSvrdYH5wN4YU+FWkgHtWKy/8OqsKLAfaKyK?=
- =?iso-8859-1?Q?ih/Kri7ek6AnTwnBix0=3D?=
-Content-Transfer-Encoding: quoted-printable
+        id S242792AbhLJT2A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 14:28:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42472 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234441AbhLJT2A (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 14:28:00 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A5BEC061746
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 11:24:24 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id k37-20020a05600c1ca500b00330cb84834fso9756885wms.2
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 11:24:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=y3juyUlnIXWXCHlEfotiUDzDFXCysDFHEnPbIR86xck=;
+        b=PpeTQhd2EeU/y6CTIoAu3F/UXUOIJiY4YgJGnM7he+in08/Qkn+dnxXL+FLss+Vd4p
+         Bh6+LdhcrpReyKElgscDH7ZXs9MNbSnkRC8cnKUef+3jCkA/UJ29K0EOHJK5TVLUKF9+
+         BX9H5AAZWu9Z3T0iuHkhesq6aPibTh6rH5+8NgMBiTAPw3ylqoufcr6C+E7d+OVNMTXE
+         SvXFjzv7XgbnpOVSiP7tiy4OC1WQcnIhoYvM0An7nB7U7nHFvHUFqhl4rtfp/enFP2QJ
+         PTOUYLOyzyWda29XfTgaoExXJVH1aUAw+6GijDuqKvFQtgkz96C4BUKCv0CS/ZFO2bmk
+         ik3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=y3juyUlnIXWXCHlEfotiUDzDFXCysDFHEnPbIR86xck=;
+        b=pFvWzb5BjSsSfZ3JjDUveDhBeJ3VHyg1QI+7VwSMPwqnv0VjDv2tljJ5H9N1dJLBpb
+         IMIot0MBttkaycC3LXXlRo0wTjxRm3ETB61NjGD3f2EwDkUte/gzy89+Bkg6GhPuwfno
+         sD4IaH8JyxIO61F/hfT0WKl3awyjuly3Gi9xv5fJyAjbsnZSugwjqGw/3cmNXs19fXHm
+         dHpaiMgSu8xneEJ3txg5a2C4FZzBWmVGqwnFGKDPa8Z5Bly+1yonhHcWHKU2GBpuYKX8
+         7Xu9r1Ayuqv0YtzmTdX0DKoYKBsNRLZxjUMt69U57Gpixtvasw6Yo2G3OtMTQpcq2Z75
+         CAyA==
+X-Gm-Message-State: AOAM533VI9LiXW2uLlKiIZzjgbZ8XA1OBxWwIoiVlDI2JcokxwERHF5z
+        ME+BA2E2YU6Spukx7ssMqDkGnxHC6hA=
+X-Google-Smtp-Source: ABdhPJzUg/n2bxGA5NaatWQiUWVsjsjq7ym9PrnZKyeM3lH7k6lj2Sc6lqXTtRv1aCfgK/YCPYT7ig==
+X-Received: by 2002:a7b:cd02:: with SMTP id f2mr18740624wmj.115.1639164263038;
+        Fri, 10 Dec 2021 11:24:23 -0800 (PST)
+Received: from [192.168.1.201] ([31.185.185.186])
+        by smtp.googlemail.com with ESMTPSA id h18sm3630992wre.46.2021.12.10.11.24.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Dec 2021 11:24:22 -0800 (PST)
+Message-ID: <e881a455-88b5-9c87-03a8-caaee68bb344@gmail.com>
+Date:   Fri, 10 Dec 2021 19:24:21 +0000
 MIME-Version: 1.0
-X-OriginatorOrg: firstam.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN7PR08MB4993.namprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c05f8a31-cd69-41ca-7334-08d9bc0e7624
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Dec 2021 18:54:14.6210
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4cc65fd6-9c76-4871-a542-eb12a5a7800c
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ahnj5RxOnMDaTrDVX1yFj2SX296NTzWwJC62YElbCXOZXrcoVEh3lqFTxe/08YSWFaV0WkFaIsmhDKs0U08JqA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR08MB5092
-X-Proofpoint-ORIG-GUID: 0ttCcq1bRfcuiHAt-s2Ek7XcZTzwmjFr
-X-Proofpoint-GUID: 0ttCcq1bRfcuiHAt-s2Ek7XcZTzwmjFr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2021-12-10_07,2021-12-10_01,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=527 clxscore=1015 suspectscore=0 lowpriorityscore=0
- bulkscore=0 adultscore=0 mlxscore=0 malwarescore=0 priorityscore=1501
- phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2110150000 definitions=main-2112100104
-Content-Type: text/plain; charset="iso-8859-1"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH 02/10] range-diff.c: don't use st_mult() for signed
+ "int"
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <RFC-cover-00.10-00000000000-20211209T191653Z-avarab@gmail.com>
+ <RFC-patch-02.10-bd7d014c531-20211209T191653Z-avarab@gmail.com>
+ <YbLL/YWbjc/sPRyH@coredump.intra.peff.net>
+ <211210.86lf0sdah1.gmgdl@evledraar.gmail.com>
+ <YbM85W3N0ySi5k+H@coredump.intra.peff.net>
+ <211210.86czm4d3zo.gmgdl@evledraar.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <211210.86czm4d3zo.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Hi Ævar
 
-In June 2021 ActiveState, a provider of curated Tcl/Tk, Perl and Python dis=
-tributions, changed their licensing for their community editions to require=
- payment. I would like to ensure I am complying with these changes.=A0=20
+On 10/12/2021 12:31, Ævar Arnfjörð Bjarmason wrote:
+> 
+> [...] 
+> I think I was just chasing butterflies making this intmax_t at all. I
+> just submitted a v2, and explained that case in a bit more detail in
+> https://lore.kernel.org/git/RFC-cover-v2-0.5-00000000000-20211210T122901Z-avarab@gmail.com
+> 
+> I *think* it fixes all the cases we plausible run into, i.e. storing the
+> "cost" in an "int" was enough, we just needed a size_t as an offset. It
+> passes the regression test you noted[3].
+> 
+> The first thing I tried when hacking on this some months ago (I picked
+> these patches up again after running into the segfault again) was this
+> s/int/ssize_t/ change.
+> 
+> I don't think using ssize_t like that is portable, and that we'd need
+> something like intmax_t if we needed this in another context.
+ >
+> Firstly it's not standard C, it's just in POSIX, intmax_t is standard C
+> as of C99, which and we have in-tree code that already depends on it
+> (and uintmax_t).
 
-I am reaching out to see if the Tcl libraries used by Git are those provide=
-d by ActiveState (ActiveTcl), or if you use the vanilla tcl/tk.
+I'm not objecting to using intmax_t particularly for code that needs to 
+store negative values other than -1 but we're already using ssize_t in a 
+lot of places so I don't think we need to worry about it not being 
+supported.
 
-Thank you so much for your help.
+> But more importantly it's not "as big as size_t, just signed" in
+> POSIX. size_t is "no greater than the width of type long"[1]
 
-Rob
+The full text is
 
-***************************************************************************=
-***************
-This message may contain confidential or proprietary information intended o=
-nly for the use of the addressee(s) named above or may contain information =
-that is legally privileged.=20
-If you are not the intended addressee, or the person responsible for delive=
-ring it to the intended addressee, you are hereby notified that reading, di=
-sseminating, distributing or copying this message is strictly prohibited.=20
-If you have received this message by mistake, please immediately notify us =
-by replying to the message and delete the original message and any copies i=
-mmediately thereafter.
+     The implementation shall support one or more programming
+     environments in which the widths of blksize_t, pid_t, size_t,
+     ssize_t, and suseconds_t are no greater than the width of type
+     long. The names of these programming environments can be obtained
+     using the confstr() function or the getconf utility.
 
-If you received this email as a commercial message and would like to opt ou=
-t of future commercial messages, please let us know and we will remove you =
-from our distribution list.
+so "no greater than the width of type long" applies to ssize_t as well 
+as size_t.
 
-Thank you.
-***************************************************************************=
-***************
-FAFLD
+> and
+> LONG_MAX is at least 2^31-1 [2].
+> 
+> Whereas ssize_t is not a "signed size_t", but a type that stores
+> -1..SSIZE_MAX, and SSIZE_MAX has a minimum value of 2^15-1. I.e. I think
+> on that basis some implemenations would make it the same as a "short
+> int" under the hood.
+
+The minimum value of SIZE_MAX is 2^16-1[1], I'm not sure you can read 
+much into the width of ssize_t from the minimum value of SSIZE_MAX. If 
+you think about where ssize_t is used as the return value of read() and 
+write() that take a size_t as the number of bytes to read/write then it 
+would be very odd if ssize_t was a different width to size_t.
+
+Best Wishes
+
+Phillip
+
+[1] https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/stdint.h.html
+
+> On my linux system it's just mapped to the longest available signed
+> integer, but that doesn't seem to be a portable assumption.
+> 
+> 1. https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/sys_types.h.html
+> 2. https://pubs.opengroup.org/onlinepubs/009696899/basedefs/limits.h.html
+> 
+> 3. B.t.w. a thing I ended up ejecting out of this was that I made a
+>     "test_commit_bulkier" which is N times faster than "test_commit_bulk",
+>     it just makes the same commit N times with the printf-repeating feature
+>     and feeds it to fast-import, but the test took so long in any case that
+>     I couldn't find a plausible way to get it in-tree).
+> 
+
