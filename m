@@ -2,147 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E407C433F5
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 22:02:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75ADEC433EF
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 22:14:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344577AbhLJWGW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 17:06:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50782 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239516AbhLJWGW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 17:06:22 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90F98C061746
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 14:02:46 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id t5so33746543edd.0
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 14:02:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=moTSyN49eoG9rYs8nNFo/b+PvZgYcqYHpYhRlicHGnc=;
-        b=aqeF/NMUb7PXGuVQK7CzSknDx8JXhgyXkuYMAAyFA+RdjQm8pRjNP9XKqHuYKZJETb
-         qL7911YMqs0/yy7F8POTbYyrNIEJt8AGo2nlDnkbwNcXFTIIkgBSkKM8B5sN2pLpMDke
-         3vvWjiMH8AkYpdTDiGijR16ln85SnTSaeO+jQ0mlky4dw7uYvXe0M/R4E+9bOVBpTCX0
-         hGoF/N8OXq5iYqNgkRWugIooPsVZHMWYL6+GkuY/BqoWAC0teW9zk4/SWVfGD4d9pcmO
-         p+cUN+T14ZUDDDkmMqcxPqLf1v0AYQZtS0KAsNPyFQbQx4VuAC8c3Prf7SbT6/2izdig
-         CGog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=moTSyN49eoG9rYs8nNFo/b+PvZgYcqYHpYhRlicHGnc=;
-        b=v8x6oDm+nX+hnCWqvYts0HXns8TBHMaGDXOp0+9MmM4l8zMgzYr7HpdZjfhBElDJaL
-         2Wb6pSvf1a9BX2lRpQWmd8uUt8Xxwg8xG8tSzZ4daOD+fLWPZCeBLpT75y4lAr2NhkL0
-         NKIWw2BZF4d6TYUyDgVWNIuGNSvX1IOYfdPFGwcZkzGsLsortBbEt10UNQW/syS00XkC
-         Ivdt0pkDIyVbH8EsF5Foh6lFfkNbzrc/F3XDJm029IgY83GHWG4jvRv13io41eco5plI
-         t8HeqSDff3ZNvWTDqOSL+JNf/XTDOsAYTK1rNlfzioBFCsl4F+HdoQCw0yNf94sEwzPL
-         sBOw==
-X-Gm-Message-State: AOAM530pPGTRwNqg/ats7liC6DAJfq7f273WTM7B4bi2O7eLHfVWPn6/
-        XxjyhF+p2I7tdXquAAwTNASkltteyLEjs7+UcD8=
-X-Google-Smtp-Source: ABdhPJwZ5mPmVOUZAJZfdGxMEl4MeVECzOFqA/0hL308XWDdtY2xMO0pLCO/RaOvtc7OEVQ+65ht2IusgWPtQ6dtFmU=
-X-Received: by 2002:a05:6402:5cb:: with SMTP id n11mr42685546edx.279.1639173765013;
- Fri, 10 Dec 2021 14:02:45 -0800 (PST)
+        id S240415AbhLJWRm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 17:17:42 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57881 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240324AbhLJWRm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 17:17:42 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B038710433D;
+        Fri, 10 Dec 2021 17:14:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Yf8Pw8NepUpylMaS0Yyaa9wDB4LtGAone85BYj
+        9CWOU=; b=hn/sDneL/IjzXBKH80Z5NZKYp9m665/ljjY3VRCUgC9unSCXhwnZ6A
+        N5MZQQz/CNtPJxIoItPi7pXbKE2IqKR4XqPZ+dxqfTVQNXgg7QpVNZHc8/SGdT0X
+        J8adNS8cds+phcU3vVMTiXNLq15nlJIDsFyQQrbWdvwWqIZUdyoA0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 549E910433C;
+        Fri, 10 Dec 2021 17:14:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 132C610433B;
+        Fri, 10 Dec 2021 17:14:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH 2/2] checkout: introduce "--to-branch" option
+References: <pull.1095.git.1639117329.gitgitgadget@gmail.com>
+        <254b352e31029d8151eb6a974fdf8c127340cf79.1639117329.git.gitgitgadget@gmail.com>
+Date:   Fri, 10 Dec 2021 14:14:01 -0800
+In-Reply-To: <254b352e31029d8151eb6a974fdf8c127340cf79.1639117329.git.gitgitgadget@gmail.com>
+        (ZheNing Hu via GitGitGadget's message of "Fri, 10 Dec 2021 06:22:09
+        +0000")
+Message-ID: <xmqq5yrwm7km.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1084.git.1637666927224.gitgitgadget@gmail.com>
- <pull.1084.v2.git.1639037637231.gitgitgadget@gmail.com> <CABPp-BGdCizEGcwPS+0VB_vvYLpGCWKLqx-nbZtJ16QkVxzbGQ@mail.gmail.com>
- <xmqqee6km8ez.fsf@gitster.g>
-In-Reply-To: <xmqqee6km8ez.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 10 Dec 2021 14:02:33 -0800
-Message-ID: <CABPp-BEU2pbfa6CSSMe9Dw7YQCaw+uU1rNMJn1YRraHKJ5D_8g@mail.gmail.com>
-Subject: Re: [PATCH v2] fast-export: fix surprising behavior with --first-parent
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     William Sprent via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        William Sprent <williams@unity3d.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7B908142-5A06-11EC-9ED0-E10CCAD8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 10, 2021 at 1:55 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > ...  Here's what I think are the relevant points
-> > (and yeah, it's lengthy):
-> >
-> >
-> > The revision traversal machinery typically processes and returns all
-> > children before any parent.  fast-export needs to operate in the
-> > reverse fashion, handling parents before any of their children in
-> > order to build up the history starting from the root commit(s).  This
-> > would be a clear case where we could just use the revision traversal
-> > machinery's "reverse" option to achieve this desired affect.
-> >
-> > However, this wasn't what the code did.  It added its own array for
-> > queuing.  The obvious hand-rolled solution would be to just push all
-> > the commits into the array and then traverse afterwards, but it didn't
-> > quite do that either.  It instead attempted to process anything it
-> > could as soon as it could, and once it could, check whether it could
-> > process anything that had been queued.  As far as I can tell, this was
-> > an effort to save a little memory in the case of multiple root commits
-> > since it could process some commits before queueing all of them.  This
-> > involved some helper functions named has_unshown_parent() and
-> > handle_tail().  For typical invocations of fast-export, this
-> > alternative essentially amounted to a hand-rolled method of reversing
-> > the commits -- it was a bunch of work to duplicate the revision
-> > traversal machinery's "reverse" option.
-> >
-> > This hand-rolled reversing mechanism is actually somewhat difficult to
-> > reason about.  It takes some time to figure out how it ensures in
-> > normal cases that it will actually process all traversed commits
-> > (rather than just dropping some and not printing anything for them).
-> >
-> > And it turns out there are some cases where the code does drop commits
-> > without handling them, and not even printing an error or warning for
-> > the user.  Due to the has_unshown_parent() checks, some commits could
-> > be left in the array at the end of the "while...get_revision()" loop
-> > which would be unprocessed.  This could be triggered for example with
-> >     git fast-export main -- --first-parent
-> > or non-sensical traversal rules such as
-> >     git fast-export main -- --grep=Merge --invert-grep
-> >
-> > While most traversals that don't include all parents should likely
-> > trigger errors in fast-export (or at least require being used in
-> > combination with --reference-excluded-parents), the --first-parent
-> > traversal is at least reasonable and it'd be nice if it didn't just
-> > drop commits.  It'd also be nice to have a simpler "reverse traversal"
-> > mechanism.  Use the "reverse" option of the revision traversal
-> > machinery to achieve both.
->
-> The above is a very helpful and understandable explanation of what
-> is going on.  I am a bit puzzled by the very last part, though. By
-> "It'd also be nice to have a simpler 'reverse traversal' mechanism",
-> do you mean that the end users have need to control the direction
-> the traversal goes (in other words, they use "git fast-export" for
-> some thing, and "git fast-export --reverse" to achieve some other
-> things)?  Or do you just mean that we need to do a reverse traversal
-> but that is already available in the revision traversal machinery,
-> and not using it and rolling our own does not make sense?
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Sorry, yeah, I meant the latter.  I do not think end users should have
-control of the direction.  Perhaps if that was reworded to "...It'd
-also be nice for future readers of the code to have a simpler..." it'd
-be clearer?
-
-> > Even for the non-sensical traversal flags like the --grep one above,
-> > this would be an improvement.  For example, in that case, the code
-> > previously would have silently truncated history to only those commits
-> > that do not have an ancestor containing "Merge" in their commit
-> > message.  After this code change, that case would would include all
+> From: ZheNing Hu <adlternative@gmail.com>
 >
-> "would would" -> "would"
-
-Good catch.
-
-> > commits without "Merge" in their commit message -- but any commit that
-> > previously had a "Merge"-mentioning parent would lose that parent
-> > (likely resulting in many new root commits).  While the new behavior
-> > is still odd, it is at least understandable given that
-> > --reference-excluded-parents is not the default.
+> When we want checkout to a branch (e.g. dev1) which reference
+> to a commit, but sometimes we only remember the tag (e.g. v1.1)
+> on it, we will use `git checkout v1.1` to find the commit first,
+> git will be in the state of deatching HEAD, so we have to search the
+> branches on the commit and checkout the branch we perfer. This will
+> be a bit cumbersome.
 >
-> Nicely written.
+> Introduce "--to-branch" option, `git checkout --to-branch <tag>`
+> and `git checkout --to-branch <commit>` will search all branches
+> and find a unique branch reference to the commit (or the commit which
+> the tag reference to) and checkout to it. If the commit have more
+> than one branches, it will report error "here are more than one
+> branch on commit".
 
-Thanks.  :-)
+Sorry, but the above explanation does not make any sense to me.  
+
+It is unclear if you mean "dev1" exactly point at the commit tagged
+as v1.1, or you want the branch "dev1" that is a descedanant of
+v1.1.  Without telling that to the reader, the above explanation is
+useless.
+
+And whether you meant the former or the latter, neither use case does
+not make much sense.
+
+First, suppose you meant "checkout --to-branch v1.1" to find a
+branch whose tip exactly points at v1.1.  You instead check out
+"dev1" branch, and work on it to advance its history.  When you are
+done, you may go to another branch and work on something else.
+
+But then what?  When you need another topic that also needs to be
+later merge-able to v1.1, "checkout --to-branch v1.1" no longer will
+be able to find "dev1", because, well, you have already used it to
+build something else.
+
+So, "--to-branch v1.1" that finds and checks out a branch whose tip
+exactly points at v1.1 would be pretty useless.
+
+So let's correct the unwritten assumption and say "--to-branch v1.1"
+finds a branch that is descendant of the tag.  It is like I have
+maint-2.33 branch to prepare for v2.33.1, v2.33.2,... maintenance
+releases and being able to find maint-2.33 by saying v2.33.2 (or
+v2.33.1) _might_ be convenient.
+
+But that would only be true if there is only one single branch per
+family of tags (in the above example, v2.33.* tags).  You cannot use
+the workflow where many topic branches run in parallel, and get
+merged to the integration branch(es) only after they are ready,
+because you need bugfix-1-for-v2.33, bugfix-2-for-v2.33,... branches
+all forked from v2.33.0 (or a commit with a later tag in the v2.33.*
+family) to cook these independent fixes that are destined for the
+maint-2.33 integration branch, so you cannot uniquely find maint-2.33
+by saying v2.33.0 or v2.33.1 or whatever.
+
+I also sense that the first paragraph of the proposed log message
+for this commit hints that the user needs a bit more studying of
+existing tools.  When we know v1.1 but do not know if we already
+have branches that are based on it, we DO NOT do "git checkout v1.1".
+Instead the first thing we would do is "git branch --contains v1.1"
+(add "--no-merged main" to exclude the branches that have already
+graduated to 'main').
+
+So, for this partcular topic, what I would recommend is *not* jump
+in and add a new feature, but to study what's available and build a
+workflow around the existing features.
+
+
+
+
