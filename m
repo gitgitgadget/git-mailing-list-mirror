@@ -2,101 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32E97C433F5
-	for <git@archiver.kernel.org>; Thu,  9 Dec 2021 23:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2B77C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 00:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234542AbhLIXuh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 18:50:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53610 "EHLO
+        id S234993AbhLJBBq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 20:01:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232760AbhLIXug (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 18:50:36 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCB48C061746
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 15:47:02 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id c131-20020a621c89000000b004a343484969so4520863pfc.3
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 15:47:02 -0800 (PST)
+        with ESMTP id S230506AbhLJBBq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 20:01:46 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1E61C061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 16:58:11 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id r25so24605925edq.7
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 16:58:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=su+jbA/OL2uWAVnEVcNNT32gQeYu+n0hPY/YcbZOHxY=;
-        b=O+Y/rP9Uq4q3EgvkFV8xwddTxXfO09SOoSEhK8pjiw4ImcHGCIihmYZvKOtFk9RdG0
-         3i2nIBsUFaEA1DpQsVAXfwi6WvORopkPKXuA+a3PMH6NnUSpIZmPFMmZ/tq8zPHGdmDZ
-         xuEZwIfcO3sOooFhQ37ndfx6EfKVy7nvX5S7HDu2GthIRySY17VRZFK1JRjtS1juUtid
-         nMxk7bqVCbfDW2M1YGNK6YvdyWNNgkt+1q+CalALD9t7wMr5aQHMret/GTqeILJNP/3q
-         52lEZ295TMfHeMilCIrAcvb7r85SllNc8UiCHRLtjrNbP9MJQ1zvxQndzKO4NgMu1x0f
-         fsmA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=ELqTtZOrWAHct9GB6blgHoDBTmgRCwdKaoNFA4ci5nY=;
+        b=Yv+58WlXNbrCv/SGt3e66S78oBke0JtJNDFNTqY0aLpJYFkpL2+Ysp3KPJx5C51zMm
+         sw7SRZiM5e2DOg7ZTJ8TxhTBCfv1yV3QW/VzlEKzsol5147MkQkDu2Vr+oUiwYe4f1Lp
+         qNee55R/+pAow6V41QvJLAPHbUkW3jDAxgk0lcCu5VkrVnqi3aYwqW151p8zX2EhtRsG
+         B8KaU4kqeZyzZGUBSVIyrFfFvXI83YZhhGACaJMA+tFKrrcs4QJWnPyijmjac1FMmojn
+         +K7pAEdWBF3GIuGJ371SUq1nrs5jkpTnQX69YBrusVpc9tn5CFepf5oXQCKyfsKS6sYj
+         gSVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=su+jbA/OL2uWAVnEVcNNT32gQeYu+n0hPY/YcbZOHxY=;
-        b=XGtqs4aSwF90/0o5e7VFvII+XZ0QkUMgA2Z2JOeWSVv+SlLqjEBXMGiQaficPWuAFI
-         js4/LmoX7mTJJLB/PRFHhBJznhzGixSO5nFmnah59K7b4trMs4hpOlqVmaJw4O+iprmp
-         KsAvJJ67YVKN41X9oTmYS7Ep5Tlp/Zw+qwly6V43G3u1DVPo0kT6t4fmSV5fJMPTa0Qx
-         0ip4FDt7yFU9Tm9Lb52BNSITdFZANBhMDUrHt8q0oe9vsobXl6JoS3fcQD5aWoHsPtiz
-         vPpvrRJtOz+qPl0Kl08rVXJ0nZ4MiPyRAZuI5YNFIJ7eKKVOOMkGLoBG5NOBQjVSVzH5
-         rtkQ==
-X-Gm-Message-State: AOAM530+2T5nEMRo4FyV5LiGZFsFEs0ova6/0hTZfAX4gUpoy8d5Kj8V
-        jRwkYY9PummJS+qlgjVjIIkjGlIOOSLPnw==
-X-Google-Smtp-Source: ABdhPJx+nL3LgWDI6ZPVY6xvnH+B/PhCzWx2kIOeZ5UmNB2x2JvYn2CLYQ8SLMPTutFav7pXZMGGk1yCLfhsBA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:7e86:: with SMTP id
- j6mr19838669pjl.25.1639093622123; Thu, 09 Dec 2021 15:47:02 -0800 (PST)
-Date:   Thu, 09 Dec 2021 15:47:00 -0800
-In-Reply-To: <YbKHBsl7w1uNhLb6@google.com>
-Message-Id: <kl6l35n19w97.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
- <cover.1638859949.git.steadmon@google.com> <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
- <kl6llf0war1x.fsf@chooglen-macbookpro.roam.corp.google.com> <YbKHBsl7w1uNhLb6@google.com>
-Subject: Re: [PATCH v5 1/2] branch: accept multiple upstream branches for tracking
-From:   Glen Choo <chooglen@google.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, emilyshaffer@google.com,
-        avarab@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=ELqTtZOrWAHct9GB6blgHoDBTmgRCwdKaoNFA4ci5nY=;
+        b=XHE0iqADPVldtrwsCM6bTehP0TiATNeLlJT8UTvKxIPIgElPRv6Eu+eoHuNVUgTTNR
+         N0ZHxFcOIrbvpx0dPW/SHDv+6xtAq/pAJvBjQ1PXI13j8R0Hzn+E1SS+3WAgRzheRUiK
+         pORda8W6UT1iYTwTBmS/h0dyQu2ep6av8qLcaPINeWfKm5kFE586SSH4uSrFRTjgVDkD
+         OpDB6mkc2oNZsnspdk7eUSiLIhpuuUD8Qee7yABLDTOlVg/n/2dZurZGY8JuIQFLPSYO
+         z8PELf43d1TlEJEJZ7/fnWBeudX3N1hyHFH1w5fyGvClMFmA61YUgp4eZL613TgVvBz/
+         YEAQ==
+X-Gm-Message-State: AOAM532XOYSVjD4H+m5WSX2W9D7+zL9L2Wpja5tvrumylPjyn5R23w2Q
+        KU9W78+PuD7EuWhoNiK6VFzwkgRPHQ7ysQ==
+X-Google-Smtp-Source: ABdhPJzIB4PRc4hBblsY0gt2UsDfI5CdML8uIssCfK6GffQWKHU4xVhOmZoBRg+7P7cmvEYjBJ4CKw==
+X-Received: by 2002:a17:906:7198:: with SMTP id h24mr20102120ejk.59.1639097890485;
+        Thu, 09 Dec 2021 16:58:10 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id ch28sm603604edb.72.2021.12.09.16.58.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Dec 2021 16:58:10 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mvUEh-0007FE-OV;
+        Fri, 10 Dec 2021 01:58:07 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Transition git-p4.py to support Python 3 only
+Date:   Fri, 10 Dec 2021 01:48:23 +0100
+References: <20211209201029.136886-1-jholdsworth@nvidia.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <20211209201029.136886-1-jholdsworth@nvidia.com>
+Message-ID: <211210.86r1ale0o0.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
 
->> > @@ -121,11 +168,18 @@ int install_branch_config(int flag, const char *local, const char *origin, const
->> >  	advise(_(tracking_advice),
->> >  	       origin ? origin : "",
->> >  	       origin ? "/" : "",
->> > -	       shortname ? shortname : remote);
->> > +	       remotes->items[0].string);
->> >  
->> >  	return -1;
->> >  }
->> 
->> When there is more than one item in remotes->items, this advice is
->> _technically_ incorrect because --set-upstream-to only takes a single
->> upstream branch. I think that supporting multiple upstreams in
->> --set-upstream-to is a fairly niche use case and is out of scope of this
->> series, so let's not pursue that option.
->> 
->> Another option would be to replace the mention of --set-upstream-to with
->> "git config add", but that's unfriendly to the >90% of the user
->> population that doesn't want multiple merge entries.
->> 
->> If we leave the advice as-is, even though it is misleading, a user who
->> is sophisticated enough to set up multiple merge entries should also
->> know that --set-upstream-to won't solve their problems, and would
->> probably be able to fix their problems by mucking around with
->> .git/config or git config.
->> 
->> So I think it is ok to not change the advice and to only mention the
->> first merge item. However, it might be worth marking this as NEEDSWORK
->> so that subsequent readers of this file understand that this advice is
->> overly-simplistic and might be worth fixing.
->
-> Sounds like we should just have separate advice strings for single vs.
-> multiple merge configs?
+On Thu, Dec 09 2021, Joel Holdsworth wrote:
 
-That sounds like a good idea if it's not too much work. Otherwise, a
-NEEDSWORK is still acceptable to me (but that said, I'm not an authority
-on this matter).
+> Python 2 was discontinued in 2020, and there is no longer any officially
+> supported interpreter. Further development of git-p4.py will require
+> would-be developers to test their changes with all supported dialects of
+> the language. However, if there is no longer any supported runtime
+> environment available, this places an unreasonable burden on the Git
+> project to maintain support for an obselete dialect of the language.
+
+Does it? I can still install Python 2.7 on Debian, presumably other OS's
+have similar ways to easily test it.
+
+I'm not that familiar with our python integration and have never used
+git-py, but I found this series hard to read through.
+
+You've got [12]/6 which don't make it clear whether they're needed for
+python3, or are some mixture of requirenments and a matter of taste (or
+a newer API?). E.g. isn't the formatting you're changing in 2/6
+supported in Python3?
+
+Then for 1/6 "pass cmd arguments to subprocess as a python lists" if
+it's not just a matter of taste can we lead with a narrow change to the
+new API (presumably we can pass to our own function as a string, split
+on whitespace, and then pass to whatever python API executes it as a
+list first.
+
+Some of these changes also just seem to be entirely unrelated
+refactorings, e.g. 6/6 where you're changing a multi-line commented
+regexp into something that's a dense one-liner. Does Python 3 not
+support the equivalent of Perl's /x, or is something else going on here?
+
+You then change the requirenment not to python 3.0, but 3.7, which
+AFAICT was released a couple of years ago. We tend to try to capture
+some of the oldest LTS OS's in common use, e.g. the last 2-3 RHEL
+releases.
+
+We still "support" Perl 5.8, which was released in 2002 (although that
+could probably do with a version bump, but not to a release to 2018).
+
+I'm not at all opposed to this Python version bump, I truly don't know
+enough to know if it's a good change. Maybe we can/should also be more
+aggressive with a version dependency with git-p4 than with something
+more central to git like perl or curl.
+
+The commit messages could just really use some extra hand-holding and
+explanation, and a clear split-out of things related to the version bump
+v.s. things not needed for that, or unrelated refactorings.
