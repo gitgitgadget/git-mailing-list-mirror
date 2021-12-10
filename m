@@ -2,296 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FED9C433EF
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 06:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C1EDC433F5
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 06:50:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236968AbhLJGZt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 01:25:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56116 "EHLO
+        id S233131AbhLJGy3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 01:54:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236960AbhLJGZs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 01:25:48 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98D4AC061746
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 22:22:13 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id q3so13231927wru.5
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 22:22:13 -0800 (PST)
+        with ESMTP id S231272AbhLJGy1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 01:54:27 -0500
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15E3CC061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 22:50:53 -0800 (PST)
+Received: by mail-pg1-x529.google.com with SMTP id r138so7223713pgr.13
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 22:50:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=AaMFAGuHyGmRJkNO/12RO83mwTwL2xBcBbb2UHD9ays=;
-        b=Ww9PMQ8ucyX4nOW1ODt6h4Y7FFO2xKrfemxtYSrVkGfGytXsPMLvgCAQ4ZniK2yzmq
-         d7QhFUFYyjqXVb/+AbPiq+zXF22RQQJwqSJuBgIFRyZWAxqmswkzXvQADvmOMoRoC60N
-         4S0mWD8LUcqZhkf7SjsZ0uv8aBBB1gOKpiK5e/TS+SZV8NV2od2bwZSK2nQZRHpPI0Gj
-         J8qvKC2S3thIwcdRZ/smHF+nHA5BXXgQqgPW2Zqc6xXzw4QIsu6jOKsIRhjWyILqWobv
-         XXGpa7oIhCTm8uxge/et9PdwmzGw1v4K/NmxQRrp59egAPe8MfX643d3D3BIzAiqqYcG
-         B7ng==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ZuvlVMPY+htduUgRbXAuiFPUSnAvW6+zyyllSFgiTMw=;
+        b=SRoXi8HR4+t9Cu9JdKHKYw9p2+HktxrbhMwLdRbfXUG9NZcgRI2wZdZadEaPT70ue6
+         gL1/xKApwEQHxXpe4zZM0IHDUph8xVWBwDKlz4RmXxEdUanj0GLnF+OEWszT/vhQIyl4
+         o1JJL5zrFvt8XFco4MTW0QJR4ZUA9iR60l50yZ3Ij43Z0kE3RuFK+9fJUG+wkC7r/gyU
+         OyQ32zdG5OWJsvXF4pRUKE2yBAyMdFbQrHfP1yRfQGh3irv3aMW+S/iQgesKxM2w8fo4
+         1XLsN9RVOuR6zjhbtPPkpfEfYuKSgFQsOEjY52w5AjTq4UHmgX7jSH96G6x1PpQjZnk/
+         NB6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AaMFAGuHyGmRJkNO/12RO83mwTwL2xBcBbb2UHD9ays=;
-        b=6IWDfQJgsMdQ3UbTrG7lm4/90QuTaszPz+M15Nzeokjo9hhwxfGUCYNbivhEBTRKua
-         BzJTU/Sf6afQKrNVbfmjsPqse7ZoZuh31dIqEUO2zBpNdodOIFIg2TdGsNztVqthDlMy
-         TfoPZ1Jrskrz4Hf2eebf40rpV5reTo8c2LADn4pu0IiD8iuU3MtpO7GCUsMH2Z2o/sG8
-         biO1V1lHDYl7V0MHkTbH6asnkz7TVwOTqJG9TAF5qli6fRDMxYbGgUtoPPuGBoPRAN5p
-         Tu3BNtNINpHyZJxpbe5sS+IEZHayOt3eU98def+0+rdwYU7/OFDth38qXkzvTHYLBGuf
-         7IaQ==
-X-Gm-Message-State: AOAM533fvLc2+v+6vDywIOARfOgTXDJbTAIKo//TlW9UI+VsCy8xyl7W
-        UXT0hubvPM+zDPUqSgeNojHhVEAPnTg=
-X-Google-Smtp-Source: ABdhPJxL6ck4Lxnyn49CijoxH+5MN2+cePzgteWYZ0ueZ2xK3xee1yzZf8sDwWXKm8Bb7YmEWm9HRA==
-X-Received: by 2002:adf:fb86:: with SMTP id a6mr11851834wrr.35.1639117332052;
-        Thu, 09 Dec 2021 22:22:12 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d1sm1476759wrz.92.2021.12.09.22.22.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Dec 2021 22:22:11 -0800 (PST)
-Message-Id: <254b352e31029d8151eb6a974fdf8c127340cf79.1639117329.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1095.git.1639117329.gitgitgadget@gmail.com>
-References: <pull.1095.git.1639117329.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 10 Dec 2021 06:22:09 +0000
-Subject: [PATCH 2/2] checkout: introduce "--to-branch" option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ZuvlVMPY+htduUgRbXAuiFPUSnAvW6+zyyllSFgiTMw=;
+        b=aZw/vb5+A+IZml1M60L+f8sLntFE0FiR8Upm0omKQd3K5ICQx2UmUrPSCc6GQLBd+f
+         LrA4JGiJ1u08XFGqmTmHvrFiyx6kHpuvmLBJE+QaNSX9T1RN7orHtcqlHGI8DySJi3Mf
+         XzFrT5Ef2vcsSLOUam4FHoP+tRUAYRkbaEhhphy5tBvMM+GZ/MBXQCisZiMU/4Q7MhvO
+         CJoCEfPN/FT0AoXfI1ro1CigP5ueMa4m+ly7EPO5ZQ7t96aIDJ6lKiqCYxw+pQdpnWhJ
+         u4896+fYUiG8eg5RN3hI4IhaYA1EGeadXelYR7QLa3vXQc4/zWVxnhKJ287U6GiMn00I
+         MVsQ==
+X-Gm-Message-State: AOAM532ycIs5yUh1W1Q5fZN1VyBCtxs0s/3vT+Pqx6fyzatQZhoD8SGg
+        b2S0Uujd/6ntbPWhlGcZyyE=
+X-Google-Smtp-Source: ABdhPJw1ZndRHrCGMEC11t6/oxvojLfsZR2qDWeZySXvGBSYelHgOMWf3z8ODap42d6GUI6YteC1Hg==
+X-Received: by 2002:aa7:9acc:0:b0:4a2:b8b5:8813 with SMTP id x12-20020aa79acc000000b004a2b8b58813mr16367048pfp.4.1639119052514;
+        Thu, 09 Dec 2021 22:50:52 -0800 (PST)
+Received: from [192.168.43.80] (subs32-116-206-28-16.three.co.id. [116.206.28.16])
+        by smtp.gmail.com with ESMTPSA id p188sm1810614pfg.102.2021.12.09.22.50.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Dec 2021 22:50:52 -0800 (PST)
+Message-ID: <0784617f-416f-a981-44e0-62bd22018d6c@gmail.com>
+Date:   Fri, 10 Dec 2021 13:50:46 +0700
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v19 1/3] doc: git-format-patch: describe the option
+ --always
+Content-Language: en-US
+To:     =?UTF-8?B?QWxlZW4g5b6Q5rKb5paH?= <pwxu@coremail.cn>
+Cc:     =?UTF-8?B?5b6Q5rKb5paHIChBbGVlbikgdmlhIEdpdEdpdEdhZGdldA==?= 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>, Aleen <aleen42@vip.qq.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.1076.v18.git.1638939946.gitgitgadget@gmail.com>
+ <pull.1076.v19.git.1639034755.gitgitgadget@gmail.com>
+ <a524ca6adfa2adc02e517b7be5199b0c071134c4.1639034755.git.gitgitgadget@gmail.com>
+ <1ad4a3ee-af05-9bb2-67fe-566d5e4c39a8@gmail.com>
+ <7bd729fd.29.17da1f2df5d.Coremail.pwxu@coremail.cn>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <7bd729fd.29.17da1f2df5d.Coremail.pwxu@coremail.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+On 10/12/21 08.26, Aleen 徐沛文 wrote:
+> Dears Sanjaya,
+> 
+>      Thanks for your suggestion. I don't see the actual difference between
+>      the two sentences, and do you want to enhance the word "always"?
+>      If you do, how about just describing the option as "Always include patches..."?
+> 
+> Aleen
+> 
 
-When we want checkout to a branch (e.g. dev1) which reference
-to a commit, but sometimes we only remember the tag (e.g. v1.1)
-on it, we will use `git checkout v1.1` to find the commit first,
-git will be in the state of deatching HEAD, so we have to search the
-branches on the commit and checkout the branch we perfer. This will
-be a bit cumbersome.
+Semantically speaking, I choose "generate" because git format-patch **generates**
+patches from the specified commits.
 
-Introduce "--to-branch" option, `git checkout --to-branch <tag>`
-and `git checkout --to-branch <commit>` will search all branches
-and find a unique branch reference to the commit (or the commit which
-the tag reference to) and checkout to it. If the commit have more
-than one branches, it will report error "here are more than one
-branch on commit".
-
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
- Documentation/git-checkout.txt |  8 +++-
- builtin/checkout.c             | 33 +++++++++++++
- t/t2018-checkout-branch.sh     | 85 ++++++++++++++++++++++++++++++++++
- t/t9902-completion.sh          |  1 +
- 4 files changed, 126 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index d473c9bf387..2a240699fd9 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- [verse]
- 'git checkout' [-q] [-f] [-m] [<branch>]
- 'git checkout' [-q] [-f] [-m] --detach [<branch>]
--'git checkout' [-q] [-f] [-m] [--detach] <commit>
-+'git checkout' [-q] [-f] [-m] [--detach] [-w|--to-branch] <commit>
- 'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
- 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...
- 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]
-@@ -210,6 +210,12 @@ variable.
- 	`<commit>` is not a branch name.  See the "DETACHED HEAD" section
- 	below for details.
- 
-+-w::
-+--to-branch::
-+	Rather than checking out a commit to work on it, checkout out
-+	to the unique branch on it. If there are multiple branches on
-+	the commit, the checkout will fail.
-+
- --orphan <new_branch>::
- 	Create a new 'orphan' branch, named `<new_branch>`, started from
- 	`<start_point>` and switch to it.  The first commit made on this
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 3eeac3147f2..696248b05c0 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -28,6 +28,7 @@
- #include "xdiff-interface.h"
- #include "entry.h"
- #include "parallel-checkout.h"
-+#include "../ref-filter.h"
- 
- static const char * const checkout_usage[] = {
- 	N_("git checkout [<options>] <branch>"),
-@@ -70,6 +71,7 @@ struct checkout_opts {
- 	int empty_pathspec_ok;
- 	int checkout_index;
- 	int checkout_worktree;
-+	int to_branch;
- 	const char *ignore_unmerged_opt;
- 	int ignore_unmerged;
- 	int pathspec_file_nul;
-@@ -1512,6 +1514,35 @@ static int checkout_branch(struct checkout_opts *opts,
- 		    (flag & REF_ISSYMREF) && is_null_oid(&rev))
- 			return switch_unborn_to_new_branch(opts);
- 	}
-+	if (opts->to_branch) {
-+		struct ref_filter filter;
-+		struct ref_array array;
-+		int i;
-+		int count = 0;
-+		const char *unused_pattern = NULL;
-+
-+		memset(&array, 0, sizeof(array));
-+		memset(&filter, 0, sizeof(filter));
-+		filter.kind = FILTER_REFS_BRANCHES;
-+		filter.name_patterns = &unused_pattern;
-+		filter_refs(&array, &filter, filter.kind);
-+		for (i = 0; i < array.nr; i++) {
-+			if (oideq(&array.items[i]->objectname, &new_branch_info->oid)) {
-+				if (count)
-+					die(_("here are more than one branch on commit %s"), oid_to_hex(&new_branch_info->oid));
-+				count++;
-+				if (new_branch_info->refname)
-+					free((char *)new_branch_info->refname);
-+				new_branch_info->refname = xstrdup(array.items[i]->refname);
-+				if (new_branch_info->path)
-+					free((char *)new_branch_info->path);
-+				new_branch_info->path = xstrdup(array.items[i]->refname);
-+				new_branch_info->name = new_branch_info->path;
-+			}
-+		}
-+		ref_array_clear(&array);
-+	}
-+
- 	return switch_branches(opts, new_branch_info);
- }
- 
-@@ -1797,6 +1828,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL('l', NULL, &opts.new_branch_log, N_("create reflog for new branch")),
- 		OPT_BOOL(0, "guess", &opts.dwim_new_local_branch,
- 			 N_("second guess 'git checkout <no-such-branch>' (default)")),
-+		OPT_BOOL('w', "to-branch", &opts.to_branch,
-+			 N_("checkout to a branch from a commit or a tag")),
- 		OPT_BOOL(0, "overlay", &opts.overlay_mode, N_("use overlay mode (default)")),
- 		OPT_END()
- 	};
-diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
-index 93be1c0eae5..53e45cfe7fd 100755
---- a/t/t2018-checkout-branch.sh
-+++ b/t/t2018-checkout-branch.sh
-@@ -270,4 +270,89 @@ test_expect_success 'checkout -b rejects an extra path argument' '
- 	test_i18ngrep "Cannot update paths and switch to branch" err
- '
- 
-+test_expect_success 'checkout -w with oid' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		git branch -M main &&
-+		test_commit initial file1 &&
-+		HEAD1=$(git rev-parse --verify HEAD) &&
-+		git switch -c dev &&
-+		test_commit step2 file2 &&
-+		HEAD2=$(git rev-parse --verify HEAD) &&
-+
-+		git checkout -w $HEAD1 &&
-+
-+		echo "refs/heads/main" >ref.expect &&
-+		git rev-parse --symbolic-full-name HEAD >ref.actual &&
-+		test_cmp ref.expect ref.actual &&
-+
-+		echo "$HEAD1" >oid.expect &&
-+		git rev-parse --verify HEAD >oid.actual &&
-+		test_cmp oid.expect oid.actual &&
-+
-+		git checkout -w $HEAD2 &&
-+
-+		echo "refs/heads/dev" >ref.expect &&
-+		git rev-parse --symbolic-full-name HEAD >ref.actual &&
-+		test_cmp ref.expect ref.actual &&
-+
-+		echo "$HEAD2" >oid.expect &&
-+		git rev-parse --verify HEAD >oid.actual &&
-+		test_cmp oid.expect oid.actual
-+	)
-+'
-+
-+test_expect_success 'checkout -w with tag' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		git branch -M main &&
-+		test_commit initial file1 &&
-+		git tag v1 &&
-+		HEAD1=$(git rev-parse --verify HEAD) &&
-+		git switch -c dev &&
-+		test_commit step2 file2 &&
-+		git tag v2 &&
-+		HEAD2=$(git rev-parse --verify HEAD) &&
-+
-+		git checkout -w v1 &&
-+
-+		echo "refs/heads/main" >ref.expect &&
-+		git rev-parse --symbolic-full-name HEAD >ref.actual &&
-+		test_cmp ref.expect ref.actual &&
-+
-+		echo "$HEAD1" >oid.expect &&
-+		git rev-parse --verify HEAD >oid.actual &&
-+		test_cmp oid.expect oid.actual &&
-+
-+		git checkout -w v2 &&
-+
-+		echo "refs/heads/dev" >ref.expect &&
-+		git rev-parse --symbolic-full-name HEAD >ref.actual &&
-+		test_cmp ref.expect ref.actual &&
-+
-+		echo "$HEAD2" >oid.expect &&
-+		git rev-parse --verify HEAD >oid.actual &&
-+		test_cmp oid.expect oid.actual
-+	)
-+'
-+
-+test_expect_success 'checkout -w with branches' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		git branch -M main &&
-+		test_commit initial file1 &&
-+		HEAD1=$(git rev-parse --verify HEAD) &&
-+		git tag v1 &&
-+		git branch dev &&
-+		test_must_fail git checkout -w $HEAD1 &&
-+		test_must_fail git checkout -w dev
-+	)
-+'
-+
- test_done
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 518203fbe07..4ec134338c2 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2021,6 +2021,7 @@ test_expect_success 'double dash "git checkout"' '
- 	--orphan=Z
- 	--ours Z
- 	--theirs Z
-+	--to-branch Z
- 	--merge Z
- 	--conflict=Z
- 	--patch Z
 -- 
-gitgitgadget
+An old man doll... just what I always wanted! - Clara
