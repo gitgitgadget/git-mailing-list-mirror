@@ -2,129 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75ADEC433EF
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 22:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9348C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 22:31:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240415AbhLJWRm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 17:17:42 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57881 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240324AbhLJWRm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 17:17:42 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B038710433D;
-        Fri, 10 Dec 2021 17:14:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Yf8Pw8NepUpylMaS0Yyaa9wDB4LtGAone85BYj
-        9CWOU=; b=hn/sDneL/IjzXBKH80Z5NZKYp9m665/ljjY3VRCUgC9unSCXhwnZ6A
-        N5MZQQz/CNtPJxIoItPi7pXbKE2IqKR4XqPZ+dxqfTVQNXgg7QpVNZHc8/SGdT0X
-        J8adNS8cds+phcU3vVMTiXNLq15nlJIDsFyQQrbWdvwWqIZUdyoA0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 549E910433C;
-        Fri, 10 Dec 2021 17:14:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 132C610433B;
-        Fri, 10 Dec 2021 17:14:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH 2/2] checkout: introduce "--to-branch" option
-References: <pull.1095.git.1639117329.gitgitgadget@gmail.com>
-        <254b352e31029d8151eb6a974fdf8c127340cf79.1639117329.git.gitgitgadget@gmail.com>
-Date:   Fri, 10 Dec 2021 14:14:01 -0800
-In-Reply-To: <254b352e31029d8151eb6a974fdf8c127340cf79.1639117329.git.gitgitgadget@gmail.com>
-        (ZheNing Hu via GitGitGadget's message of "Fri, 10 Dec 2021 06:22:09
-        +0000")
-Message-ID: <xmqq5yrwm7km.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S243621AbhLJWfH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 17:35:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57586 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240303AbhLJWfF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 17:35:05 -0500
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9051AC061746
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 14:31:29 -0800 (PST)
+Received: by mail-io1-xd2f.google.com with SMTP id p23so12027048iod.7
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 14:31:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=9DMpbkycrJODvb0whnnDK3a5Gm6o3hzWLyPxdMDKvSA=;
+        b=SPKJ70wlyFgviL2wZhrmdk+E3kqqj/vznod9QO1i7hk/c4bcFVqowGqOGuyj8DQVRB
+         uYZ1KPYgJKC3agZr4BFa4IIY6+8t9XI4PzCPTojXKiQ5UF/y/lIFDyksa9wv65nMsGkH
+         mttDOuXmyZqX8pi3dIIpSvJwE7N4iVvCNYbsS3Cfv+W7seO71m1J0MkOtgrfLoEqfXEV
+         X1jvU761jxx9TlgiZxDRa4WVSgOxtU/EO2kEolASNFuWM5lPkyMz8Cn3fT0TC25LBZ3Y
+         7owE/rVT62OxD/OQOXeOHB/lZzTXjFAQiD3yMoXM96CUDtvkuP/GQmeGNjwslg3sv5Kz
+         nUuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9DMpbkycrJODvb0whnnDK3a5Gm6o3hzWLyPxdMDKvSA=;
+        b=kloGWR866qxx21oAIdgUR1frMVjNS5Yskyvbj5/CFevUiTTh4lmScBKeNAoC+CHTke
+         Rl7oJrifirWzRWJRKfi2DNIzVAo+Mk264Qe5YVT6xcCvaV7Deyqi0qlKFI2dWAcGXuy1
+         hWclfAD0FSrEPeE+/oQoJJTkhs6Z+Qsl+/pXLeg/hYFxy2M45e7K+1T2k+s2+ySMcupb
+         IRJC1rNaShky4eU9N/zjd+SwDnhCCQCh5Kmu9VI+DfJ7uRWxwoGGfQw9yigbHrvFmFnv
+         fd7VspNtnE3b9xCvma4I7VUbi2KjdfAALa88xGHyfzJtvZA4utHQ5zgQsUa/eOMsoWyA
+         C/yQ==
+X-Gm-Message-State: AOAM533Ill6rHVtnATfIMq270DxIue5F2/1HxAVgQrjzTkda4zy8frAi
+        g5T3t8AIqSP0Atc/X2Yzt05PXA==
+X-Google-Smtp-Source: ABdhPJxBy4Ki4koNDM6AG4ilfpo8lEokZYHyiryAuxLoucRQ+H6Qo9TK9EV6XKbSZ/vCVtW9T/SWBA==
+X-Received: by 2002:a05:6602:490:: with SMTP id y16mr23699406iov.162.1639175488942;
+        Fri, 10 Dec 2021 14:31:28 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id w2sm3474349ilv.31.2021.12.10.14.31.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Dec 2021 14:31:28 -0800 (PST)
+Date:   Fri, 10 Dec 2021 17:31:27 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH 0/2] midx: prevent bitmap corruption when permuting pack
+ order
+Message-ID: <YbPVP0BvYcVsfOrf@nand.local>
+References: <cover.1638991570.git.me@ttaylorr.com>
+ <bf100d0c-66c7-d402-4790-9c5797e8baf3@gmail.com>
+ <YbENofRtY0BPMEUd@coredump.intra.peff.net>
+ <YbOeEjNic5ETGcdy@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7B908142-5A06-11EC-9ED0-E10CCAD8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YbOeEjNic5ETGcdy@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: ZheNing Hu <adlternative@gmail.com>
+On Fri, Dec 10, 2021 at 01:36:02PM -0500, Taylor Blau wrote:
+> On Wed, Dec 08, 2021 at 02:55:13PM -0500, Jeff King wrote:
+> > On Wed, Dec 08, 2021 at 02:30:17PM -0500, Derrick Stolee wrote:
+> >
+> > > > Taylor Blau (2):
+> > > >   t5326: demonstrate bitmap corruption after permutation
+> > > >   midx.c: make changing the preferred pack safe
+> > >
+> > > Just chiming in to say that I reviewed an earlier version of this series
+> > > and the version in this submission looks good to me.
+> >
+> > Ditto. ;)
 >
-> When we want checkout to a branch (e.g. dev1) which reference
-> to a commit, but sometimes we only remember the tag (e.g. v1.1)
-> on it, we will use `git checkout v1.1` to find the commit first,
-> git will be in the state of deatching HEAD, so we have to search the
-> branches on the commit and checkout the branch we perfer. This will
-> be a bit cumbersome.
+> All three of us missed that this PORD chunk actually contains the
+> psuedo-pack position for every object in the MIDX. That is OK, but it's
+> definitely adding more than 4 bytes per pack to the MIDX (in practice,
+> it's adding 4 bytes per object).
 >
-> Introduce "--to-branch" option, `git checkout --to-branch <tag>`
-> and `git checkout --to-branch <commit>` will search all branches
-> and find a unique branch reference to the commit (or the commit which
-> the tag reference to) and checkout to it. If the commit have more
-> than one branches, it will report error "here are more than one
-> branch on commit".
+> I'm semi-OK with this direction, since it's tantamount to storing the
+> .rev file's contents in the MIDX itself. And even though we're not
+> reading from it, it is doing the thing we need it to which is causing
+> the MIDX to change its checksum when the object order changes.
+>
+> But I'm curious what both of your thoughts are before moving forward.
 
-Sorry, but the above explanation does not make any sense to me.  
+To just add a little bit more detail before I mostly close my computer
+for the weekend:
 
-It is unclear if you mean "dev1" exactly point at the commit tagged
-as v1.1, or you want the branch "dev1" that is a descedanant of
-v1.1.  Without telling that to the reader, the above explanation is
-useless.
+The key part of this bug is that the MIDX checksum could remain
+unchanged even when the object order used to write the MIDX bitmap does,
+and that's what the first patch here is demonstrating.
 
-And whether you meant the former or the latter, neither use case does
-not make much sense.
+Having PORD contain the same data as the .rev file still accomplishes
+our original goal of preventing this bug, because it forces the checksum
+to change when the object order does. But it's definitely more invasive
+than I had imagined.
 
-First, suppose you meant "checkout --to-branch v1.1" to find a
-branch whose tip exactly points at v1.1.  You instead check out
-"dev1" branch, and work on it to advance its history.  When you are
-done, you may go to another branch and work on something else.
+I had originally imagined that storing the preferred pack's identity
+alone would be enough to solve this bug. But that isn't quite so,
+because we break ties among duplicate objects first by prefered-ness,
+then by their pack's mtime. So that could change too, and it would cause
+us to break in the same way.
 
-But then what?  When you need another topic that also needs to be
-later merge-able to v1.1, "checkout --to-branch v1.1" no longer will
-be able to find "dev1", because, well, you have already used it to
-build something else.
+At the bare minimum you need an ordering of all of the packs in the
+MIDX (like I had originally imagined here). At most, we could do
+something like what is unintentionally written here, which would allow
+us to get rid of MIDX .rev files entirely. I think doing the former is
+simpler, and I am not sure if there are practical advantages to the
+latter.
 
-So, "--to-branch v1.1" that finds and checks out a branch whose tip
-exactly points at v1.1 would be pretty useless.
+But I'm definitely curious as to what others think would be a good
+direction to pursue.
 
-So let's correct the unwritten assumption and say "--to-branch v1.1"
-finds a branch that is descendant of the tag.  It is like I have
-maint-2.33 branch to prepare for v2.33.1, v2.33.2,... maintenance
-releases and being able to find maint-2.33 by saying v2.33.2 (or
-v2.33.1) _might_ be convenient.
-
-But that would only be true if there is only one single branch per
-family of tags (in the above example, v2.33.* tags).  You cannot use
-the workflow where many topic branches run in parallel, and get
-merged to the integration branch(es) only after they are ready,
-because you need bugfix-1-for-v2.33, bugfix-2-for-v2.33,... branches
-all forked from v2.33.0 (or a commit with a later tag in the v2.33.*
-family) to cook these independent fixes that are destined for the
-maint-2.33 integration branch, so you cannot uniquely find maint-2.33
-by saying v2.33.0 or v2.33.1 or whatever.
-
-I also sense that the first paragraph of the proposed log message
-for this commit hints that the user needs a bit more studying of
-existing tools.  When we know v1.1 but do not know if we already
-have branches that are based on it, we DO NOT do "git checkout v1.1".
-Instead the first thing we would do is "git branch --contains v1.1"
-(add "--no-merged main" to exclude the branches that have already
-graduated to 'main').
-
-So, for this partcular topic, what I would recommend is *not* jump
-in and add a new feature, but to study what's available and build a
-workflow around the existing features.
-
-
-
-
+Thanks,
+Taylor
