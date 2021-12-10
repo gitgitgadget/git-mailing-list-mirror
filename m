@@ -2,108 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A878C433F5
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 08:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5409C433F5
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 09:04:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238786AbhLJI76 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 03:59:58 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48526 "EHLO cloud.peff.net"
+        id S236340AbhLJJHg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 04:07:36 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48530 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231728AbhLJI75 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 03:59:57 -0500
-Received: (qmail 17926 invoked by uid 109); 10 Dec 2021 08:56:22 -0000
+        id S234120AbhLJJHf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 04:07:35 -0500
+Received: (qmail 17964 invoked by uid 109); 10 Dec 2021 09:04:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 Dec 2021 08:56:22 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 Dec 2021 09:04:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28213 invoked by uid 111); 10 Dec 2021 08:56:24 -0000
+Received: (qmail 28251 invoked by uid 111); 10 Dec 2021 09:04:03 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Dec 2021 03:56:24 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Dec 2021 04:04:03 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 10 Dec 2021 03:56:21 -0500
+Date:   Fri, 10 Dec 2021 04:04:00 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH] config.mak.dev: specify -std=gnu99 for gcc/clang
-Message-ID: <YbMWNZCpy578Qu+l@coredump.intra.peff.net>
-References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
- <8deccc3a1dff7e4f7d613fa63d2781fd1f11f841.1638899124.git.gitgitgadget@gmail.com>
- <xmqqlf0w5bbc.fsf@gitster.g>
- <YbAVOtYXA1Hf9EtJ@coredump.intra.peff.net>
- <xmqq4k7j68eg.fsf@gitster.g>
- <YbEMnksMEuAz3Nt0@coredump.intra.peff.net>
- <211209.867dcekm9h.gmgdl@evledraar.gmail.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [RFC] fetch: update refs in a single transaction
+Message-ID: <YbMYAA1EuFX4Z/5x@coredump.intra.peff.net>
+References: <259de62b26302c10f429d52bec42a8a954bc5ba3.1638886972.git.ps@pks.im>
+ <CAP8UFD0Y-2aD6ywRFi49_emxzcLqrfyNpZ29fgsJ0FKc0njYqg@mail.gmail.com>
+ <YbEgDBJPuGXQ+2t6@coredump.intra.peff.net>
+ <YbGsJnTQov6byXzF@ncase>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <211209.867dcekm9h.gmgdl@evledraar.gmail.com>
+In-Reply-To: <YbGsJnTQov6byXzF@ncase>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 09, 2021 at 01:05:44PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Thu, Dec 09, 2021 at 08:11:34AM +0100, Patrick Steinhardt wrote:
 
-> > +
-> > +ifneq ($(or $(filter gcc6,$(COMPILER_FEATURES)),$(filter clang7,$(COMPILER_FEATURES))),)
-> > +DEVELOPER_CFLAGS += -std=gnu99
-> > +endif
-> [...]
+> > For the files-backend code, I think system errors would naturally fall
+> > out in the same code. Failing to write() or rename() is not much
+> > different than failing to get the lock in the first place. So
+> > "partial-update" and "non-atomic" behavior would end up the same anyway,
+> > and we do not need to expose the third mode to the user.
 > 
-> This approach looks good & the rationale make sense.
-> 
-> I mentioned in [1] that this might be a bad idea because:
-> 
->     And as you note it's not only that older or non-gcc non-clang compilers
->     may not understand this at all, but are we getting worse behavior on
->     modern versions of those two because they're forced into some 20 year
->     old C99 standard mode, instead of the current preferred default?
-> 
-> But from some short testing of GCC it will generate the exact same
-> <file>.s regardless of -std=* option, so I think this indeed only
-> impacts the warnings we'll emit. So pinning this seems to categorically
-> be a good thing.
+> I think I disagree here. Failing to write() to me is quite different
+> from failing to take a lock: the first one is an unexpected system-level
+> error and brings us into a situation where we ain't got no clue why it
+> happened. The second one is a logical error that is entirely expected
+> given that lockfiles are explicitly designed for this failure mode, so
+> we know why they happen. With this in mind, I'd argue that we should
+> only continue with the transaction in the latter case, and abort on
+> unexpected system-level errors.
 
-Thanks for looking into that. The thought crossed my mind, too, but I
-didn't have any actual data. I think some of this is due to the standard
-committee keeping backwards compatibility. I.e., it's unlikely for there
-to be a case where the N standard says "you must do X", and N+1 says
-"that's dumb, you can do Y instead". Usually it is about new features
-that were syntactically invalid or created undefined behavior in version
-N.
+Just to be clear, it's not that I necessarily think these error types
+are logically related. I only meant that once you are detecting and
+recovering from one type, it would be easy to implement it either way.
 
-> A bad thing about this is that we'll explicitly avoid happy accidents
-> where we start relying on some newer C standard, and discover N releases
-> later that it was no big deal, and can thus just use that feature.
+I'd be OK with either type of behavior. If that was the only difference
+between partial-update and non-atomic, though, I'm not sure if that
+merits exposing the complexity of a "third mode" to the user. But I
+don't feel strongly about it either way.
+
+> > I suspect the surgery needed for the ref-transaction code to allow
+> > non-atomic updates would be pretty big, though. It involves checking
+> > every error case to make sure it is safe to continue rather than
+> > aborting (and munging data structures to mark particular refs as
+> > "failed, don't do anything further for this one").
 > 
-> On the other hand having this means less back & forth churn of adding
-> such a dependency only to find it breaks on one of our platforms
-> etc. Overall I think this makes sense, just say'n.
+> I hope that it's not going to be that bad if we restrict it to the
+> "prepare" phase, but that may just be wishful thinking.
 
-Right. I think it forces us to be more deliberate, but that's probably
-OK.
+Yeah, maybe. :) I didn't look closely, so it may not be too bad. I just
+remember the refs system being very finicky about things like failure,
+races, etc. But I'm sure you'll figure it out once you start looking
+closely. :)
 
-> I don't think this needs to change, but FWIW this would benefit from the
-> same sort of "let's just compile it" step as [2]. I.e. I think you'll
-> find that we could just check the exit code of:
-> 
->     $(CC) -E -std=gnu99 - </dev/null
-> 
-> This works on GCC/Clang, and will die on xlc/suncc, and I assume any
-> other compiler that doesn't grok this. But I think it's better to avoid
-> a $(shell) here just for that, and any such change can wait until we
-> have some proper "compile this once and cache it" probing for
-> config.mak.dev.
-
-You'd lose one property that the version-check has, which is that we
-don't ever _upgrade_ to gnu99 from gnu89. I'm not sure how important
-that is, though. It would have been bad if we took something like
-brian's c99 patch, and developers and CI both failed to realize that it
-was breaking the out-of-the-box build for older compilers (because
-behind the scenes they were getting -std=gnu99 that non-developers do
-not). But now that we've decided on that direction anyway, I'm not sure
-there's anything left to be learned.
+One thing to watch out for is that in the files backend, _part_ of the
+update may be shared by multiple refs: updating the packed-refs file (if
+we are deleting refs). So if you are deleting "refs/heads/foo" and
+"refs/heads/bar", but taking the lock on "foo" fails, you'd want to make
+sure only to delete "bar" from packed-refs, not "foo".
 
 -Peff
