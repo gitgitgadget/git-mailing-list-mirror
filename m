@@ -2,77 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB7C3C433EF
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 01:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88F50C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 02:26:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235417AbhLJBaI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 20:30:08 -0500
-Received: from zg8tmtyylji0my4xnjqunzqa.icoremail.net ([162.243.164.74]:60304
-        "HELO zg8tmtyylji0my4xnjqunzqa.icoremail.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with SMTP id S235354AbhLJBaH (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Dec 2021 20:30:07 -0500
-Received: from mailtech.cn (unknown [10.12.1.20])
-        by hzbj-icmmx-1 (Coremail) with SMTP id AQAAfwDXqbaBrLJh09f6CQ--.18488S2;
-        Fri, 10 Dec 2021 09:25:21 +0800 (CST)
-Received: from pwxu$coremail.cn ( [112.94.4.17] ) by
- ajax-webmail-mailtech_rd (Coremail) ; Fri, 10 Dec 2021 09:26:28 +0800 (CST)
-X-Originating-IP: [112.94.4.17]
-Date:   Fri, 10 Dec 2021 09:26:28 +0800 (CST)
-X-CM-HeaderCharset: UTF-8
-From:   =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>
-To:     "Bagas Sanjaya" <bagasdotme@gmail.com>
-Cc:     =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        "Phillip Wood" <phillip.wood123@gmail.com>,
-        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        "Elijah Newren" <newren@gmail.com>, Aleen <aleen42@vip.qq.com>,
-        "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: [PATCH v19 1/3] doc: git-format-patch: describe the option
- --always
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20211103(a39c0bb8)
- Copyright (c) 2002-2021 www.mailtech.cn
- mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
-In-Reply-To: <1ad4a3ee-af05-9bb2-67fe-566d5e4c39a8@gmail.com>
-References: <pull.1076.v18.git.1638939946.gitgitgadget@gmail.com>
- <pull.1076.v19.git.1639034755.gitgitgadget@gmail.com>
- <a524ca6adfa2adc02e517b7be5199b0c071134c4.1639034755.git.gitgitgadget@gmail.com>
- <1ad4a3ee-af05-9bb2-67fe-566d5e4c39a8@gmail.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+        id S232742AbhLJC3q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 21:29:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60914 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231149AbhLJC3p (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Dec 2021 21:29:45 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 467E6C061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 18:26:11 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id x10so8230475edd.5
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 18:26:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=Bcw/AFWh03miGrmuxH4HH1Ni1Yo+JnYuGL5Wj2AAYyM=;
+        b=auhYF62tceM8t6NRnuVF3t2mBIV9kpxRyK/UEVEnP3YuWWDBtowjvHI4K2W8N2vXXn
+         AVZjgrhbFAFw9jTUYEFCsbbzgNtFRuEPw9x3oV3z6+g0bbOzhhy/seHYyQt+fjDxoea2
+         AMdJ+xmpVgDrxJ9md3f0c13/8YookpGwA9mW8ct7LCyyxUkC3DDe93cDNcgLEwcRoGET
+         OnGoCNEQ8Lx7vRKv5MzSpqyaEtC17ZsbxghvaBISpcYJer0Uz5BBb3Fdzboi3u36mtlo
+         HOx2ZPsy6zloIkuiVa+HAOlTvV4ykWsLLQ1kLX/57tcb2TEwtES7TBLp2hVz7bNDwYXB
+         wWeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=Bcw/AFWh03miGrmuxH4HH1Ni1Yo+JnYuGL5Wj2AAYyM=;
+        b=njqBqTg4v3gUmOZv9kf5eyHhdKFdUG2q3t0n+4bbSZ5BG0T5YFTXBgRuNei5brOcJm
+         Up508vZrjpXBj0pXJDWsY5xnKWg7ZNSWnjRUXf2vaRg4oUFtTY1tSa2g4853Kyebbtd9
+         Iemdty1ci2lAuzooWDvK03Wn9PbYWlOoZJ2pHXTbbXwIaB+LBPV4zq2Y8d33ng1Prfoe
+         IQPHy7uOqF3ql1BYYyMN1Gqfpc8rQyw2oZwU00SYKhP7UZkGeYF9gaDP6DygUrkFopgV
+         8Qej3tCqBzQFbG2/FM6YgCZPpbdDyjcmTGRKUbk2okG2+VGpycC6M4hNq1wOB/OKrQ7G
+         dk+A==
+X-Gm-Message-State: AOAM530SurzejwCabE1+EbtglvjTAXhQOp2UoyEDb15Gz8K23und/f+1
+        XhPSv8UcCYuyiPa/NtcPcRlu9AaebqzPPg==
+X-Google-Smtp-Source: ABdhPJz0HTFokaroKMM5LJCDT9uo1GSFXIuG3byXZhlZFnCq1kPjlHeptCWAHiQck6tmO9/UpDFSiw==
+X-Received: by 2002:a50:fb09:: with SMTP id d9mr33231136edq.283.1639103169429;
+        Thu, 09 Dec 2021 18:26:09 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id sb19sm707881ejc.120.2021.12.09.18.26.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Dec 2021 18:26:08 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mvVbs-0009WB-1Q;
+        Fri, 10 Dec 2021 03:26:08 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 5/5] branch.c: replace questionable exit() codes
+Date:   Fri, 10 Dec 2021 03:21:58 +0100
+References: <20211206215528.97050-1-chooglen@google.com>
+ <20211209184928.71413-1-chooglen@google.com>
+ <20211209184928.71413-6-chooglen@google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <20211209184928.71413-6-chooglen@google.com>
+Message-ID: <211210.86ee6ldwlc.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Message-ID: <7bd729fd.29.17da1f2df5d.Coremail.pwxu@coremail.cn>
-X-Coremail-Locale: en_US
-X-CM-TRANSID: AgIMCgCnrR_ErLJhNAIAAA--.73W
-X-CM-SenderInfo: psz03q5fruvzxdlohubq/1tbiAQcLCFGCdOTuCAAGsm
-Authentication-Results: hzbj-icmmx-1; spf=neutral smtp.mail=pwxu@corem
-        ail.cn;
-X-Coremail-Antispam: 1Uk129KBjvdXoWrKFW7AF4Duw48KFy3Cw4kZwb_yoWDXrXE9r
-        9rAF4qka4DJFyUZF12qFsxZrya934v934rXrn5Xr9xKasaqaykXa4kJ3yIkrWUCFsagFy3
-        uryDXw4UAFnxujkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
-        Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
-        UUUU=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PiBXaGF0IGFib3V0IHRoaXMgd29yZGluZyBiZWxvdz8KPiAKPiBkaWZmIC0tZ2l0IGEvRG9jdW1l
-bnRhdGlvbi9naXQtZm9ybWF0LXBhdGNoLnR4dCBiL0RvY3VtZW50YXRpb24vZ2l0LWZvcm1hdC1w
-YXRjaC50eHQKPiBpbmRleCBiZTc5N2Q3YTI4Li4zMDI2NTljZmQ1IDEwMDY0NAo+IC0tLSBhL0Rv
-Y3VtZW50YXRpb24vZ2l0LWZvcm1hdC1wYXRjaC50eHQKPiArKysgYi9Eb2N1bWVudGF0aW9uL2dp
-dC1mb3JtYXQtcGF0Y2gudHh0Cj4gQEAgLTE5Myw4ICsxOTMsOCBAQCB3aWxsIHdhbnQgdG8gZW5z
-dXJlIHRoYXQgdGhyZWFkaW5nIGlzIGRpc2FibGVkIGZvciBgZ2l0IHNlbmQtZW1haWxgLgo+ICAg
-CWlnbm9yZWQuCj4gICAKPiAgIC0tYWx3YXlzOjoKPiAtCUluY2x1ZGUgcGF0Y2hlcyBmb3IgY29t
-bWl0cyB0aGF0IGRvIG5vdCBpbnRyb2R1Y2UgYW55IGNoYW5nZSwKPiAtCXdoaWNoIGFyZSBvbWl0
-dGVkIGJ5IGRlZmF1bHQuCj4gKwlBbHdheXMgZ2VuZXJhdGUgcGF0Y2hlcywgZXZlbiBpZiB0aGVy
-ZSBhcmUgZW1wdHktY2hhbmdlIGNvbW1pdHMuCj4gKwlEZWZhdWx0IGlzIHRvIG9taXQgc3VjaCBj
-b21taXRzLgo+ICAgCj4gICAtLWNvdmVyLWZyb20tZGVzY3JpcHRpb249PG1vZGU+OjoKPiAgIAlD
-b250cm9scyB3aGljaCBwYXJ0cyBvZiB0aGUgY292ZXIgbGV0dGVyIHdpbGwgYmUgYXV0b21hdGlj
-YWxseQo+IAo+IAo+IC0tIAo+IEFuIG9sZCBtYW4gZG9sbC4uLiBqdXN0IHdoYXQgSSBhbHdheXMg
-d2FudGVkISAtIENsYXJhCgpEZWFycyBTYW5qYXlhLAoKICAgIFRoYW5rcyBmb3IgeW91ciBzdWdn
-ZXN0aW9uLiBJIGRvbid0IHNlZSB0aGUgYWN0dWFsIGRpZmZlcmVuY2UgYmV0d2VlbgogICAgdGhl
-IHR3byBzZW50ZW5jZXMsIGFuZCBkbyB5b3Ugd2FudCB0byBlbmhhbmNlIHRoZSB3b3JkICJhbHdh
-eXMiPwogICAgSWYgeW91IGRvLCBob3cgYWJvdXQganVzdCBkZXNjcmliaW5nIHRoZSBvcHRpb24g
-YXMgIkFsd2F5cyBpbmNsdWRlIHBhdGNoZXMuLi4iPwoKQWxlZW4=
 
+On Thu, Dec 09 2021, Glen Choo wrote:
+
+> Replace exit() calls in branch.c that have questionable exit codes:
+>
+> * in setup_tracking(), exit(-1) was introduced in 27852b2c53 (branch:
+>   report errors in tracking branch setup, 2016-02-22). This may have
+>   been a mechanical typo because the same commit changes the return type
+>   of setup_tracking() from int to void.
+>
+> * in validate_branch_start(), the exit code changes depending on whether
+>   or not advice is enabled. This behavior was not discussed
+>   upstream (see caa2036b3b (branch: give advice when tracking
+>   start-point is missing, 2013-04-02)).
+>
+> Signed-off-by: Glen Choo <chooglen@google.com>
+> ---
+> I don't know what the 'correct' exit codes should be, only that Junio
+> makes a good case that the existing exit codes are wrong. My best,
+> non-prescriptive, choice is 128, to be consistent with the surrounding
+> code and Documentation/technical/api-error-handling.txt.
+>
+>  branch.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/branch.c b/branch.c
+> index 305154de0b..ad70ddd120 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -324,7 +324,7 @@ static void validate_branch_start(struct repository *r, const char *start_name,
+>  			if (advice_enabled(ADVICE_SET_UPSTREAM_FAILURE)) {
+>  				error(_(upstream_missing), start_name);
+>  				advise(_(upstream_advice));
+> -				exit(1);
+> +				exit(128);
+>  			}
+>  			die(_(upstream_missing), start_name);
+>  		}
+> @@ -398,7 +398,7 @@ void setup_tracking(const char *new_ref, const char *orig_ref,
+>  		string_list_append(tracking.srcs, full_orig_ref);
+>  	if (install_branch_config_multiple_remotes(config_flags, new_ref, tracking.remote,
+>  			      tracking.srcs) < 0)
+> -		exit(-1);
+> +		exit(128);
+>  
+>  cleanup:
+>  	string_list_clear(tracking.srcs, 0);
+
+Junio noted in <xmqqbl1tcptq.fsf@gitster.g>:
+    
+    This is not a problem with this patch, and it should not be fixed as
+    part of this series, but since I noticed it, I'll mention it as a
+    leftover low-hanging fruit to be fixed after the dust settles.  The
+    exit(1) looks wrong.  We should exit with 128 just like die() does.
+    Issuing of an advice message should not affect the exit code.
+
+I think it's good to fix these inconsistencies, but also that we
+shouldn't be doing it as part of this series, or does it conflict in
+some way that's hard to untangle?
+
+FWIW the former hunk is a perfect candidate for the new die_message()
+function[1]. I.e. we should be doing:
+
+    int code = die_message(_(upsream_missing), start_name);
+    if (advice_enabled(ADVICE_SET_UPSTREAM_FAILURE))
+        advise(_(upstream_advice));
+    exit(code);
+
+That we print an "error" when giving the advice but "fatal" when not is
+really UX wart, and also that the exit code differs.
+
+The latter should really be "exit(1)", not 128. We should reserve that
+for die(). FWIW I had some local hacks to detect all these cases of exit
+-1 via the test suite, they're almost all cases where we want to exit
+with 1, but just conflated an error() return value with a return from
+main() (or exit).
+
+1. https://lore.kernel.org/git/cover-v2-0.6-00000000000-20211207T182419Z-avarab@gmail.com/#t
