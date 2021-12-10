@@ -2,62 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD38EC433F5
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 17:32:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2D4DC433F5
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 17:43:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241294AbhLJRgL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 12:36:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44000 "EHLO
+        id S244567AbhLJRqs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 12:46:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233408AbhLJRgK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 12:36:10 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E5A6C061746
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 09:32:35 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id lt10-20020a17090b354a00b001a649326aedso8616580pjb.5
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 09:32:35 -0800 (PST)
+        with ESMTP id S244586AbhLJRqr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 12:46:47 -0500
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E362C061746
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 09:43:12 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id k11-20020a63d84b000000b003252e72da7eso5520202pgj.23
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 09:43:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc:content-transfer-encoding;
-        bh=HSFYfb6/TwOFa1n8BjV/pTNJax+Bl0ybgg3AYktgGJc=;
-        b=UvsXuYnqmp/LuSKo4ExbKinRkhEfmRsv0KSS3jVopS5cxcpaLpV+Yprkds1uE/FzCn
-         sYdwpvsf/nVDBvcLt1MQtcvDYVm6DNCJC1gG/lYPcqfMhXRtDLzbemNI3ZR71ppiTTkD
-         zLXU/c7v9sQuws7TtCsvQcI52PqAI7mSh0leS7YhXEbpTuoa8Huzq/yeHvXB1a0WgvD5
-         HQZcyQvzuU17ZCK85s2LQENrdz7/P6rrCY4OSUkiZOu4jFbkhu8aijyWNm0cl69tCz0e
-         DQzLb8mvRrpWxToVSMzaZ8+XJjCasPYNVJZHAn4CxfkWYASpXnpDsL4mc3ENnkOo2H6F
-         7wqQ==
+        bh=ArUppslXOz+3y5h+HlpryuS+uedlBTH+lTZzlL1tvoo=;
+        b=T46JuLCD1QYoeAJJ1SsTekkxht2qWlDTw2CusGQfY4AEhZaAu9is+lQ9L4NXBDVNl4
+         2DuYEnM1m2YaqcFxnDln8KCwGaPmHJ6Xn6TnhDh0+NHRmFJQ1fgCmQrTUVcw4/xz2mFK
+         NZ1q5UprMoAUTg+LcZX4qf7xMTrojqFoAjpArLRds7TCqId7gTBMQXS64/T/Azy+Nmw5
+         Neyqi7wZ80KOMTYW1hkmZF19wdzy8YNUTMqgUsR/t+rPftKx5wKfygZ6iFNJrkex2oKh
+         C0aIR6weYL7DkdS0+6y7E65FI1pkHmFruHfxT7nalRuV8bGCGTWBSpMwXLV/c/qEYFOP
+         zxwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc:content-transfer-encoding;
-        bh=HSFYfb6/TwOFa1n8BjV/pTNJax+Bl0ybgg3AYktgGJc=;
-        b=dfI5CPv70IRWv7h0R0K208ujFPnv1qBoztoU28d+LiIaLi7Bj4sJeQCm/sIDhto/5P
-         a/dEp+aew+4l84e27iAMC92P/bXxQMKWZRhWvpl5d+esG9qBWCVGAQyh8QXyeX9GO2MH
-         KitNPl85tNM+3tSZ+WDLUJ+kYrkLp90BDTbmtEXaPaVSg+GHxrXUCWqIDSChQ1AsaJME
-         23DK4wd9VbJUTHlc8NoJ6MYd+8KiNtUaRww0btMiU12aliXusqmzzh/Wn+tmOCqRcbOR
-         2KcD6hSs/TyGGVAn+hm2uC0pC6NXODY0BeFcm43kXj7YEUFXgIQsgC/t9XEKby94xr4p
-         AGCA==
-X-Gm-Message-State: AOAM533h1Y1AgkpSzeK0QB0ICy2TbiLCX64QTjK6Lw4ksJ/H/nag360v
-        j7q6XMSYQt/c+gaz5cOxL9fqLvBBxTnwDA==
-X-Google-Smtp-Source: ABdhPJwrkSafrcN3DBuo6oHv1xLUZ0FglJrkvX9Tu9YXJjKOnV22GCZEN+ot0XtIWu86Hricjc/7we9N4OOLUw==
+        bh=ArUppslXOz+3y5h+HlpryuS+uedlBTH+lTZzlL1tvoo=;
+        b=t2nfiZR3ZYkVMhdK41d+kYDZRKJ7AgPj13B1YuP/h8KtdS8E1j/SBC3lAp69rR5M2R
+         1DtVGe3KAk8OlZ0ZdCvPFeRpLoM5GaX4c/GecILczaMZ0kgn6Lyr6fkVShp4L6B9MduG
+         A24SbDJp4AbXZkybxS2vTMACr9HHH/EA+71FcYCZt6voYf7fhzntGMCqUzfT4pK2gpg2
+         FHHUoJo2Jjn1CgAVVXfV2A6zKQnfp8JZ8Wiu51//+9SFyUzQ4nrw6cuvo0st9cFd4bjH
+         UE+Ya9phcNhq3Iii0zS8r7LEpG40ki0BzkR9j3Qpcq0srNmw/ibdsM9m3U8hNDKiSx88
+         Z3Fg==
+X-Gm-Message-State: AOAM532yqWwQpWP38gLMKUoQxPJg5l2TXHDWMimCDz0um1leTOf9pz1J
+        HfTUS4izFnl+YGjvap+naAh8nzsI9T+n3g==
+X-Google-Smtp-Source: ABdhPJwIWs9OxfPwZ1ybnvscp8zB5RPYq8IWWTtPLsrUczaBqfhoFLRdjVv3mQKnxusOfrbrc09DE+Awfn1a2A==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:1644:: with SMTP id
- il4mr25475770pjb.39.1639157554850; Fri, 10 Dec 2021 09:32:34 -0800 (PST)
-Date:   Fri, 10 Dec 2021 09:32:32 -0800
-In-Reply-To: <211210.86ilvxe09w.gmgdl@evledraar.gmail.com>
-Message-Id: <kl6lzgp88ixb.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:179d:b0:4b1:4aba:397b with SMTP
+ id s29-20020a056a00179d00b004b14aba397bmr3782623pfg.66.1639158191963; Fri, 10
+ Dec 2021 09:43:11 -0800 (PST)
+Date:   Fri, 10 Dec 2021 09:43:10 -0800
+In-Reply-To: <211210.86ee6ldwlc.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6lwnkc8ifl.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
-References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
- <cover.1638859949.git.steadmon@google.com> <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
- <kl6llf0war1x.fsf@chooglen-macbookpro.roam.corp.google.com>
- <YbKHBsl7w1uNhLb6@google.com> <kl6l35n19w97.fsf@chooglen-macbookpro.roam.corp.google.com>
- <211210.86ilvxe09w.gmgdl@evledraar.gmail.com>
-Subject: Re: [PATCH v5 1/2] branch: accept multiple upstream branches for tracking
+References: <20211206215528.97050-1-chooglen@google.com> <20211209184928.71413-1-chooglen@google.com>
+ <20211209184928.71413-6-chooglen@google.com> <211210.86ee6ldwlc.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH v3 5/5] branch.c: replace questionable exit() codes
 From:   Glen Choo <chooglen@google.com>
 To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        gitster@pobox.com, emilyshaffer@google.com
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -68,74 +69,97 @@ X-Mailing-List: git@vger.kernel.org
 
 > On Thu, Dec 09 2021, Glen Choo wrote:
 >
->> Josh Steadmon <steadmon@google.com> writes:
+>> Replace exit() calls in branch.c that have questionable exit codes:
 >>
->>>> > @@ -121,11 +168,18 @@ int install_branch_config(int flag, const char=
- *local, const char *origin, const
->>>> >  	advise(_(tracking_advice),
->>>> >  	       origin ? origin : "",
->>>> >  	       origin ? "/" : "",
->>>> > -	       shortname ? shortname : remote);
->>>> > +	       remotes->items[0].string);
->>>> > =20
->>>> >  	return -1;
->>>> >  }
->>>>=20
->>>> When there is more than one item in remotes->items, this advice is
->>>> _technically_ incorrect because --set-upstream-to only takes a single
->>>> upstream branch. I think that supporting multiple upstreams in
->>>> --set-upstream-to is a fairly niche use case and is out of scope of th=
-is
->>>> series, so let's not pursue that option.
->>>>=20
->>>> Another option would be to replace the mention of --set-upstream-to wi=
-th
->>>> "git config add", but that's unfriendly to the >90% of the user
->>>> population that doesn't want multiple merge entries.
->>>>=20
->>>> If we leave the advice as-is, even though it is misleading, a user who
->>>> is sophisticated enough to set up multiple merge entries should also
->>>> know that --set-upstream-to won't solve their problems, and would
->>>> probably be able to fix their problems by mucking around with
->>>> .git/config or git config.
->>>>=20
->>>> So I think it is ok to not change the advice and to only mention the
->>>> first merge item. However, it might be worth marking this as NEEDSWORK
->>>> so that subsequent readers of this file understand that this advice is
->>>> overly-simplistic and might be worth fixing.
->>>
->>> Sounds like we should just have separate advice strings for single vs.
->>> multiple merge configs?
+>> * in setup_tracking(), exit(-1) was introduced in 27852b2c53 (branch:
+>>   report errors in tracking branch setup, 2016-02-22). This may have
+>>   been a mechanical typo because the same commit changes the return type
+>>   of setup_tracking() from int to void.
 >>
->> That sounds like a good idea if it's not too much work. Otherwise, a
->> NEEDSWORK is still acceptable to me (but that said, I'm not an authority
->> on this matter).
+>> * in validate_branch_start(), the exit code changes depending on whether
+>>   or not advice is enabled. This behavior was not discussed
+>>   upstream (see caa2036b3b (branch: give advice when tracking
+>>   start-point is missing, 2013-04-02)).
+>>
+>> Signed-off-by: Glen Choo <chooglen@google.com>
+>> ---
+>> I don't know what the 'correct' exit codes should be, only that Junio
+>> makes a good case that the existing exit codes are wrong. My best,
+>> non-prescriptive, choice is 128, to be consistent with the surrounding
+>> code and Documentation/technical/api-error-handling.txt.
+>>
+>>  branch.c | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/branch.c b/branch.c
+>> index 305154de0b..ad70ddd120 100644
+>> --- a/branch.c
+>> +++ b/branch.c
+>> @@ -324,7 +324,7 @@ static void validate_branch_start(struct repository =
+*r, const char *start_name,
+>>  			if (advice_enabled(ADVICE_SET_UPSTREAM_FAILURE)) {
+>>  				error(_(upstream_missing), start_name);
+>>  				advise(_(upstream_advice));
+>> -				exit(1);
+>> +				exit(128);
+>>  			}
+>>  			die(_(upstream_missing), start_name);
+>>  		}
+>> @@ -398,7 +398,7 @@ void setup_tracking(const char *new_ref, const char =
+*orig_ref,
+>>  		string_list_append(tracking.srcs, full_orig_ref);
+>>  	if (install_branch_config_multiple_remotes(config_flags, new_ref, trac=
+king.remote,
+>>  			      tracking.srcs) < 0)
+>> -		exit(-1);
+>> +		exit(128);
+>> =20
+>>  cleanup:
+>>  	string_list_clear(tracking.srcs, 0);
 >
-> We haven't used Q_() with advise() yet, but there's no reason not to:
+> Junio noted in <xmqqbl1tcptq.fsf@gitster.g>:
+>    =20
+>     This is not a problem with this patch, and it should not be fixed as
+>     part of this series, but since I noticed it, I'll mention it as a
+>     leftover low-hanging fruit to be fixed after the dust settles.  The
+>     exit(1) looks wrong.  We should exit with 128 just like die() does.
+>     Issuing of an advice message should not affect the exit code.
 >
-> 	advise(Q_("fix your branch by doing xyz",
-> 		  "fix your branches by doing xyz",
->                   branches_nr));
+> I think it's good to fix these inconsistencies, but also that we
+> shouldn't be doing it as part of this series, or does it conflict in
+> some way that's hard to untangle?
 
-Neat, that should do it in most cases. I think this one is a little
-trickier because the plural advice messages requires constructing a
-list, e.g.
+There isn't any conflict. Probably a leftover habit from previous
+projects, but I thought that this would be right time to clean up. Looks
+like we think it'll be better to clean this up in a separate series, so
+I'll do that instead.
 
-Singular:=20
-  "\n"
-  "After fixing the error cause you may try to fix up\n"
-  "the remote tracking information by invoking\n"
-  "\"git branch --set-upstream-to=3D%s%s%s\"."
+> FWIW the former hunk is a perfect candidate for the new die_message()
+> function[1]. I.e. we should be doing:
+>
+>     int code =3D die_message(_(upsream_missing), start_name);
+>     if (advice_enabled(ADVICE_SET_UPSTREAM_FAILURE))
+>         advise(_(upstream_advice));
+>     exit(code);
+>
+> That we print an "error" when giving the advice but "fatal" when not is
+> really UX wart, and also that the exit code differs.
 
-Plural:
-  "\n"
-  "After fixing the error cause you may try to fix up\n"
-  "the remote tracking information by invoking\n"
-  "\"git config --add my_new_remote remote_name\"
-  "\"git config --add my_new_upstream1 upstream_name1\"
-  "\"git config --add my_new_upstream2 upstream_name2\"
+Ah, thanks!
 
-But perhaps this is not too hard since you've already included examples
-of how to format lists of strings [1]
+> The latter should really be "exit(1)", not 128. We should reserve that
+> for die().
 
-[1] https://lore.kernel.org/git/211207.86mtlcpyu4.gmgdl@evledraar.gmail.com
+Thanks, this is exactly what I was looking for guidance on.
+Documentation/technical/api-error-handling.txt is silent on what exit
+code to use when a command does 90% of what the caller wants (so it's
+not really an application error) but fails on the 10% that the user
+doesn't care so much about - in this case, creating a branch but failing
+to setup tracking.
+
+> FWIW I had some local hacks to detect all these cases of exit -1 via
+> the test suite, they're almost all cases where we want to exit with 1,
+> but just conflated an error() return value with a return from main()
+> (or exit).
+
+Yes, this sounds like what happened here.
