@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24000C433F5
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 07:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CC66C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 07:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235787AbhLJH5S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 02:57:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48324 "EHLO
+        id S237871AbhLJIBq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 03:01:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235454AbhLJH5S (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 02:57:18 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43F69C061746
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 23:53:43 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id z8so12516228ljz.9
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 23:53:43 -0800 (PST)
+        with ESMTP id S235130AbhLJIBp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 03:01:45 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5048C061746
+        for <git@vger.kernel.org>; Thu,  9 Dec 2021 23:58:10 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id l22so16518511lfg.7
+        for <git@vger.kernel.org>; Thu, 09 Dec 2021 23:58:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=diamand.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=/Jh1CqFsrI/crwP35gLPP9k2bGNY41UuhpH2pP/PfN8=;
-        b=i5k9ZfOW52aw9RNu39QK34rgrpkszOAMFcPk3mYmqgbFe7hdesTwCD6u0oSTDcFjJH
-         ao6dQy1D9W+UuorFp/cpAJ/m+FRZOIrdd59JZtkN52IWlcUO8DeP6xBe3RugSuETLvaS
-         y0JYs4ULbhqEWYc411rx9AnO/nzk25t4Z4LqY=
+        bh=XkCMF7/++toXpkfjdpVg4vPGs1SkEAk8keokIcfmfM8=;
+        b=WivOuYtcPf0U0DoSxTI2H+4FhfEv1RQ6IqAP6t6YZAOKBKScl38Ju0XW4H68uLz8Mf
+         p8x7/b6nSIWMGz2mKFn68sM5ZMS2CMwAu2ANMfNwBTpP4MvIEQGGL0BrqyY4tW+vFHJg
+         mmVIyH++D2ej4oNgOa1WOKo2sgzum8jkJlIFI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=/Jh1CqFsrI/crwP35gLPP9k2bGNY41UuhpH2pP/PfN8=;
-        b=n1PQpEzvSt15xky28+FfrR/PDzJeW88qaZ4RG5rO+SHf7XmASxj8WGArj10LpI6s/z
-         +uAyntqcOyW0JqHLz+1tgk7wybueDoK7u0zbbsxACW0t6qsKMFMmajjEY0OcIeWDR5NZ
-         Fy4rhB5z6c2HYxBVIxJnxyxz8xklr+hGQ/0i14hc4Mp4G89iF0VYkaI7vWYNPk/atEGb
-         VbZRjJH8H5hKBzGcGiihqyGUOsaMe1IrXrKN3T7/OpVvPOvt2HlapU8MF2LwYQsQfovS
-         hLcvYBbcjO4Y2wpi5SVOZW8pnm5tUhsunWHVs4gA29q9uOJ0hzwFmOm5K4PQepfs9vzy
-         aNqA==
-X-Gm-Message-State: AOAM530U1RC/u7yb5g00V9R+Z31vW69H247vhOSGwF9bpVwP3Xfu58ZB
-        7U3YTjnK45OfwglHTlG2fMigPf6n4Qk1FVewQKq5YQ==
-X-Google-Smtp-Source: ABdhPJxrkwEGYyYJ8onDYiJ7Ytd2Zt1Y1tkgJhWMus0X8qm8sOgX60aVCpI2C/aVtyAmD//1Ve4zXiJ9WYspWgkcQyk=
-X-Received: by 2002:a05:651c:1687:: with SMTP id bd7mr11624217ljb.305.1639122821513;
- Thu, 09 Dec 2021 23:53:41 -0800 (PST)
+        bh=XkCMF7/++toXpkfjdpVg4vPGs1SkEAk8keokIcfmfM8=;
+        b=GBYNxkyWWJuuQ7L4kZ9rng0qgNfCQKxpn9eRQpOX1j2ftXhcQzSxx5GMThslpiQeus
+         9FxtZFvxswzAtO/b8wsXHTM3TqbGXOJ8r0CQuTpIACCE9o4PPi+6Iwn/wb2M2tDTA0Id
+         r4eeiMqDnkT2UK/FPHR1tzt/vR5TuB7l8ajMBTjfw9HCTwQ18pPKu9B18uSh2w8gSoOo
+         sQmch6WywTbw/FD8kbCfSpOq1n3ee3gNZwDKbX5oTCBUPjMWcpM/43ZVcoIwqO9i/7QP
+         XHNTZoWygW5f88NLkP/grpZwOlqM6p6236MJ5stNFfzJxXVSINfVtH5Ep8+CCV0tJF/Y
+         +Auw==
+X-Gm-Message-State: AOAM530E8f0YcalS0/rqCDojXErMJS9i5GmJyi2aiXiV5whW8j781tao
+        9SF+fPKo9bneaO6vrOATLCyRlSpbPevVUDgnkWNITJ9NgnEnaA==
+X-Google-Smtp-Source: ABdhPJwU8sUFpssReUFGf6XGe+0W5UX14PRR0vyjF7R8Cto9ThXCEVZOK+8aHXGr+ATjsrmSSCoA7XcBZasSKkHB1YM=
+X-Received: by 2002:ac2:4c48:: with SMTP id o8mr10553921lfk.690.1639123089030;
+ Thu, 09 Dec 2021 23:58:09 -0800 (PST)
 MIME-Version: 1.0
-References: <20211209201029.136886-1-jholdsworth@nvidia.com>
-In-Reply-To: <20211209201029.136886-1-jholdsworth@nvidia.com>
+References: <20211209201029.136886-1-jholdsworth@nvidia.com> <20211209201029.136886-7-jholdsworth@nvidia.com>
+In-Reply-To: <20211209201029.136886-7-jholdsworth@nvidia.com>
 From:   Luke Diamand <luke@diamand.org>
-Date:   Fri, 10 Dec 2021 07:53:30 +0000
-Message-ID: <CAE5ih7872E8X-qRfBrBOHmKcUCX46GkXwq2WD3UUX8TuYczZDw@mail.gmail.com>
-Subject: Re: [PATCH 0/6] Transition git-p4.py to support Python 3 only
+Date:   Fri, 10 Dec 2021 07:57:58 +0000
+Message-ID: <CAE5ih7_gvbOwvoO4deqDm_8Nk9XWzrdHGHEsgdiEb7+7YxtGwg@mail.gmail.com>
+Subject: Re: [PATCH 6/6] git-p4: Resolve RCS keywords in binary
 To:     Joel Holdsworth <jholdsworth@nvidia.com>
 Cc:     Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -54,49 +54,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 9 Dec 2021 at 20:10, Joel Holdsworth <jholdsworth@nvidia.com> wrote:
+On Thu, 9 Dec 2021 at 20:11, Joel Holdsworth <jholdsworth@nvidia.com> wrote:
 >
-> The git-p4.py script currently implements code-paths for both Python 2 and
-> 3.
+> Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
+> ---
+>  git-p4.py | 31 ++++++++++---------------------
+>  1 file changed, 10 insertions(+), 21 deletions(-)
 >
-> Python 2 was discontinued in 2020, and there is no longer any officially
-> supported interpreter. Further development of git-p4.py will require
-> would-be developers to test their changes with all supported dialects of
-> the language. However, if there is no longer any supported runtime
-> environment available, this places an unreasonable burden on the Git
-> project to maintain support for an obselete dialect of the language.
+> diff --git a/git-p4.py b/git-p4.py
+> index c362a5fa38..87e6685eb6 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -46,6 +46,9 @@
 >
-> This patch-set removes all Python 2-specific code-paths, and then
-> applies some simplifications to the code which are available given
-> Python 3's improve delineation between bytes and strings.
-
-I might as well take this opportunity to say that I've stopped needing
-to worry about git-p4!
-
-Hurrah!
-
-I'm finding that the unit tests no longer pass with this change. I'm
-not exactly sure why.
-
-
-Luke
-
-
-
-
-
+>  p4_access_checked = False
 >
-> Joel Holdsworth (6):
->   git-p4: Always pass cmd arguments to subprocess as a python lists
->   git-p4: Don't print shell commands as python lists
->   git-p4: Removed support for Python 2
->   git-p4: Decode byte strings before printing
->   git-p4: Eliminate decode_stream and encode_stream
->   git-p4: Resolve RCS keywords in binary
+> +re_ko_keywords = re.compile(rb'\$(Id|Header)(:[^$\n]+)?\$')
+> +re_k_keywords = re.compile(rb'\$(Id|Header|Author|Date|DateTime|Change|File|Revision)(:[^$\n]+)?\$')
+
+I'm not sure what's going on here, but it does not look like just
+turning off support for python2.x.
+
+
+> +
+>  def p4_build_cmd(cmd):
+>      """Build a suitable p4 command line.
 >
->  git-p4.py | 319 +++++++++++++++++++++---------------------------------
->  1 file changed, 123 insertions(+), 196 deletions(-)
+> @@ -532,20 +535,12 @@ def p4_type(f):
+>  #
+>  def p4_keywords_regexp_for_type(base, type_mods):
+>      if base in ("text", "unicode", "binary"):
+> -        kwords = None
+>          if "ko" in type_mods:
+> -            kwords = 'Id|Header'
+> +            return re_ko_keywords
+>          elif "k" in type_mods:
+> -            kwords = 'Id|Header|Author|Date|DateTime|Change|File|Revision'
+> +            return re_k_keywords
+>          else:
+>              return None
+> -        pattern = r"""
+> -            \$              # Starts with a dollar, followed by...
+> -            (%s)            # one of the keywords, followed by...
+> -            (:[^$\n]+)?     # possibly an old expansion, followed by...
+> -            \$              # another dollar
+> -            """ % kwords
+> -        return pattern
+>      else:
+>          return None
 >
+> @@ -2035,11 +2030,10 @@ def applyCommit(self, id):
+>                  kwfiles = {}
+>                  for file in editedFiles | filesToDelete:
+>                      # did this file's delta contain RCS keywords?
+> -                    pattern = p4_keywords_regexp_for_file(file)
+> +                    regexp = p4_keywords_regexp_for_file(file)
+>
+> -                    if pattern:
+> +                    if regexp:
+>                          # this file is a possibility...look for RCS keywords.
+> -                        regexp = re.compile(pattern, re.VERBOSE)
+>                          for line in read_pipe_lines(["git", "diff", "%s^..%s" % (id, id), file]):
+>                              if regexp.search(line):
+>                                  if verbose:
+> @@ -2968,14 +2962,9 @@ def streamOneP4File(self, file, contents):
+>              print("\nIgnoring apple filetype file %s" % file['depotFile'])
+>              return
+>
+> -        # Note that we do not try to de-mangle keywords on utf16 files,
+> -        # even though in theory somebody may want that.
+
+This comment appears to have been stripped out, does that mean that we
+now *do* try to demangle keywords on utf16?
+
+> -        pattern = p4_keywords_regexp_for_type(type_base, type_mods)
+> -        if pattern:
+> -            regexp = re.compile(pattern, re.VERBOSE)
+> -            text = ''.join(c.decode() for c in contents)
+> -            text = regexp.sub(r'$\1$', text)
+> -            contents = [text.encode()]
+> +        regexp = p4_keywords_regexp_for_type(type_base, type_mods)
+> +        if regexp:
+> +            contents = [regexp.sub(rb'$\1$', c) for c in contents]
+>
+>          if self.largeFileSystem:
+>              (git_mode, contents) = self.largeFileSystem.processContent(git_mode, relPath, contents)
 > --
 > 2.33.0
 >
