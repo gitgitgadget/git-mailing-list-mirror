@@ -2,122 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0A70C433F5
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 01:06:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB7C3C433EF
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 01:26:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233326AbhLJBKO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Dec 2021 20:10:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42924 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230526AbhLJBKO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Dec 2021 20:10:14 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 319DEC061746
-        for <git@vger.kernel.org>; Thu,  9 Dec 2021 17:06:40 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id g14so24431418edb.8
-        for <git@vger.kernel.org>; Thu, 09 Dec 2021 17:06:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=7N2n1QUhnA2Vp7EWdZ/35G68Hg0fNw9gzlciWAksNwM=;
-        b=D6Zgd3Wbph8Dd8QrIhIdnKyOUpAxYC/VVnWHhVEI711CYKJW66QWs1TnxYTe7Bc1q1
-         pZARYpqUXcAsMhF7YmVODePWYM0ViXwXoaQs6bRHy15lMl7Kpd080XhnLcBaAErfobti
-         R20fYf87Ez63yo129lYSY0BvK9fPV6Yq93TjaENPD/bdUy0KtR2A6td+3TARvSsiM2og
-         h+xmKsPS3cntS2q+rGnu1aAR6jTAyXBNaI49ia3QnWl6IeRgqQx/7MD587eDEfmP9f+T
-         Bih0VXUHfBalA908bD5BnsMMjPvEVHfEn+/B7AvPlVbqR+k2BZCrQYTsJ48vnVupL6+Y
-         igiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=7N2n1QUhnA2Vp7EWdZ/35G68Hg0fNw9gzlciWAksNwM=;
-        b=L83ZgUznU4PcGIoDRIqPAeXO1KZ5kS9d7gmYDWwQ5QpbAnni6yNVmw4SRw7YWl8tO2
-         p+WeKYJAhfVwPm4/COwJhE6tj23zgWuf9BOWIjh7VeFUYePKg1fSHcevwt+u10oGahwv
-         i4mGANGeZG0Y/won7YP238LcbO2z0dxiB7hSag1LIKeIOC95zCSh2yQtuGKJlGKTeNN/
-         mEwwdjt4kfsM3zgVNevNXEwdeMONo/nrVsua0shHKkTHRCt8d3g5q286eYY2iCN9suQy
-         dl5Q5ld8AYIu+82bzQK26hkkYR4iDrqiyOd3APvGk2u3uzHAkp5S1bStaxamuMdmfhnW
-         sdgg==
-X-Gm-Message-State: AOAM531NHGfnRs0VYCCy1qw/FwSljhstepghy0YxBG4gZxduO0J3knp3
-        rM0z2E2YQ3r3k7FGFUUFW8A7+z66ETwEFQ==
-X-Google-Smtp-Source: ABdhPJzGrVN0apiOjm+dsF7d0VruOOdJwwF/FTUcdOe7dBPkeCMrWyBQkGck8OSTJOvhyUFqL5w6Lg==
-X-Received: by 2002:a05:6402:4396:: with SMTP id o22mr34111597edc.263.1639098398532;
-        Thu, 09 Dec 2021 17:06:38 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id gn26sm667736ejc.14.2021.12.09.17.06.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Dec 2021 17:06:38 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mvUMt-0007Sf-Jz;
-        Fri, 10 Dec 2021 02:06:35 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        gitster@pobox.com, emilyshaffer@google.com
-Subject: Re: [PATCH v5 1/2] branch: accept multiple upstream branches for
- tracking
-Date:   Fri, 10 Dec 2021 02:03:35 +0100
-References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
- <cover.1638859949.git.steadmon@google.com>
- <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
- <kl6llf0war1x.fsf@chooglen-macbookpro.roam.corp.google.com>
- <YbKHBsl7w1uNhLb6@google.com>
- <kl6l35n19w97.fsf@chooglen-macbookpro.roam.corp.google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <kl6l35n19w97.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-ID: <211210.86ilvxe09w.gmgdl@evledraar.gmail.com>
+        id S235417AbhLJBaI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Dec 2021 20:30:08 -0500
+Received: from zg8tmtyylji0my4xnjqunzqa.icoremail.net ([162.243.164.74]:60304
+        "HELO zg8tmtyylji0my4xnjqunzqa.icoremail.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with SMTP id S235354AbhLJBaH (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 9 Dec 2021 20:30:07 -0500
+Received: from mailtech.cn (unknown [10.12.1.20])
+        by hzbj-icmmx-1 (Coremail) with SMTP id AQAAfwDXqbaBrLJh09f6CQ--.18488S2;
+        Fri, 10 Dec 2021 09:25:21 +0800 (CST)
+Received: from pwxu$coremail.cn ( [112.94.4.17] ) by
+ ajax-webmail-mailtech_rd (Coremail) ; Fri, 10 Dec 2021 09:26:28 +0800 (CST)
+X-Originating-IP: [112.94.4.17]
+Date:   Fri, 10 Dec 2021 09:26:28 +0800 (CST)
+X-CM-HeaderCharset: UTF-8
+From:   =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>
+To:     "Bagas Sanjaya" <bagasdotme@gmail.com>
+Cc:     =?UTF-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        "Phillip Wood" <phillip.wood123@gmail.com>,
+        "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+        "Elijah Newren" <newren@gmail.com>, Aleen <aleen42@vip.qq.com>,
+        "Junio C Hamano" <gitster@pobox.com>
+Subject: Re: [PATCH v19 1/3] doc: git-format-patch: describe the option
+ --always
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20211103(a39c0bb8)
+ Copyright (c) 2002-2021 www.mailtech.cn
+ mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
+In-Reply-To: <1ad4a3ee-af05-9bb2-67fe-566d5e4c39a8@gmail.com>
+References: <pull.1076.v18.git.1638939946.gitgitgadget@gmail.com>
+ <pull.1076.v19.git.1639034755.gitgitgadget@gmail.com>
+ <a524ca6adfa2adc02e517b7be5199b0c071134c4.1639034755.git.gitgitgadget@gmail.com>
+ <1ad4a3ee-af05-9bb2-67fe-566d5e4c39a8@gmail.com>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
+Message-ID: <7bd729fd.29.17da1f2df5d.Coremail.pwxu@coremail.cn>
+X-Coremail-Locale: en_US
+X-CM-TRANSID: AgIMCgCnrR_ErLJhNAIAAA--.73W
+X-CM-SenderInfo: psz03q5fruvzxdlohubq/1tbiAQcLCFGCdOTuCAAGsm
+Authentication-Results: hzbj-icmmx-1; spf=neutral smtp.mail=pwxu@corem
+        ail.cn;
+X-Coremail-Antispam: 1Uk129KBjvdXoWrKFW7AF4Duw48KFy3Cw4kZwb_yoWDXrXE9r
+        9rAF4qka4DJFyUZF12qFsxZrya934v934rXrn5Xr9xKasaqaykXa4kJ3yIkrWUCFsagFy3
+        uryDXw4UAFnxujkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
+        Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
+        UUUU=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+PiBXaGF0IGFib3V0IHRoaXMgd29yZGluZyBiZWxvdz8KPiAKPiBkaWZmIC0tZ2l0IGEvRG9jdW1l
+bnRhdGlvbi9naXQtZm9ybWF0LXBhdGNoLnR4dCBiL0RvY3VtZW50YXRpb24vZ2l0LWZvcm1hdC1w
+YXRjaC50eHQKPiBpbmRleCBiZTc5N2Q3YTI4Li4zMDI2NTljZmQ1IDEwMDY0NAo+IC0tLSBhL0Rv
+Y3VtZW50YXRpb24vZ2l0LWZvcm1hdC1wYXRjaC50eHQKPiArKysgYi9Eb2N1bWVudGF0aW9uL2dp
+dC1mb3JtYXQtcGF0Y2gudHh0Cj4gQEAgLTE5Myw4ICsxOTMsOCBAQCB3aWxsIHdhbnQgdG8gZW5z
+dXJlIHRoYXQgdGhyZWFkaW5nIGlzIGRpc2FibGVkIGZvciBgZ2l0IHNlbmQtZW1haWxgLgo+ICAg
+CWlnbm9yZWQuCj4gICAKPiAgIC0tYWx3YXlzOjoKPiAtCUluY2x1ZGUgcGF0Y2hlcyBmb3IgY29t
+bWl0cyB0aGF0IGRvIG5vdCBpbnRyb2R1Y2UgYW55IGNoYW5nZSwKPiAtCXdoaWNoIGFyZSBvbWl0
+dGVkIGJ5IGRlZmF1bHQuCj4gKwlBbHdheXMgZ2VuZXJhdGUgcGF0Y2hlcywgZXZlbiBpZiB0aGVy
+ZSBhcmUgZW1wdHktY2hhbmdlIGNvbW1pdHMuCj4gKwlEZWZhdWx0IGlzIHRvIG9taXQgc3VjaCBj
+b21taXRzLgo+ICAgCj4gICAtLWNvdmVyLWZyb20tZGVzY3JpcHRpb249PG1vZGU+OjoKPiAgIAlD
+b250cm9scyB3aGljaCBwYXJ0cyBvZiB0aGUgY292ZXIgbGV0dGVyIHdpbGwgYmUgYXV0b21hdGlj
+YWxseQo+IAo+IAo+IC0tIAo+IEFuIG9sZCBtYW4gZG9sbC4uLiBqdXN0IHdoYXQgSSBhbHdheXMg
+d2FudGVkISAtIENsYXJhCgpEZWFycyBTYW5qYXlhLAoKICAgIFRoYW5rcyBmb3IgeW91ciBzdWdn
+ZXN0aW9uLiBJIGRvbid0IHNlZSB0aGUgYWN0dWFsIGRpZmZlcmVuY2UgYmV0d2VlbgogICAgdGhl
+IHR3byBzZW50ZW5jZXMsIGFuZCBkbyB5b3Ugd2FudCB0byBlbmhhbmNlIHRoZSB3b3JkICJhbHdh
+eXMiPwogICAgSWYgeW91IGRvLCBob3cgYWJvdXQganVzdCBkZXNjcmliaW5nIHRoZSBvcHRpb24g
+YXMgIkFsd2F5cyBpbmNsdWRlIHBhdGNoZXMuLi4iPwoKQWxlZW4=
 
-On Thu, Dec 09 2021, Glen Choo wrote:
-
-> Josh Steadmon <steadmon@google.com> writes:
->
->>> > @@ -121,11 +168,18 @@ int install_branch_config(int flag, const char *local, const char *origin, const
->>> >  	advise(_(tracking_advice),
->>> >  	       origin ? origin : "",
->>> >  	       origin ? "/" : "",
->>> > -	       shortname ? shortname : remote);
->>> > +	       remotes->items[0].string);
->>> >  
->>> >  	return -1;
->>> >  }
->>> 
->>> When there is more than one item in remotes->items, this advice is
->>> _technically_ incorrect because --set-upstream-to only takes a single
->>> upstream branch. I think that supporting multiple upstreams in
->>> --set-upstream-to is a fairly niche use case and is out of scope of this
->>> series, so let's not pursue that option.
->>> 
->>> Another option would be to replace the mention of --set-upstream-to with
->>> "git config add", but that's unfriendly to the >90% of the user
->>> population that doesn't want multiple merge entries.
->>> 
->>> If we leave the advice as-is, even though it is misleading, a user who
->>> is sophisticated enough to set up multiple merge entries should also
->>> know that --set-upstream-to won't solve their problems, and would
->>> probably be able to fix their problems by mucking around with
->>> .git/config or git config.
->>> 
->>> So I think it is ok to not change the advice and to only mention the
->>> first merge item. However, it might be worth marking this as NEEDSWORK
->>> so that subsequent readers of this file understand that this advice is
->>> overly-simplistic and might be worth fixing.
->>
->> Sounds like we should just have separate advice strings for single vs.
->> multiple merge configs?
->
-> That sounds like a good idea if it's not too much work. Otherwise, a
-> NEEDSWORK is still acceptable to me (but that said, I'm not an authority
-> on this matter).
-
-We haven't used Q_() with advise() yet, but there's no reason not to:
-
-	advise(Q_("fix your branch by doing xyz",
-		  "fix your branches by doing xyz",
-                  branches_nr));
