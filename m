@@ -2,138 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A31CC433EF
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 15:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 355E6C433F5
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 16:32:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242893AbhLJPfP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 10:35:15 -0500
-Received: from mail-dm6nam10on2081.outbound.protection.outlook.com ([40.107.93.81]:39137
-        "EHLO NAM10-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S242886AbhLJPfO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 10:35:14 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=iE8SLzUu22UoQznBaOdTegukCVsmGWDh7acS+S24rRPOKzKdBgmSFM4H4LWFBx4w66Td4eR6fNtRxo+Vu400ig1v0fjAOXYLvfJwB1aMbzxF8gzC91OR4CuGLsFc3R+ta04U6HkD6i0pP2EneZPiV5B1BEhxF7+ctb8FYktEfClWsSjVPz6loK02S9nn3t+QAoN366+7hxrmtzhDehWwLV2S+gVACLM2wtDKfZoTaAd0nG3Xpy0guJ0p42ge3AYOU5gWtz/SNOXhhBONVLLL73sKi6OCyfzrTyuulUEca5wGDQ+qWuqyR/Ox3LF7LivW69r7uGR6GTAaYsrshvcL7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XuUnD1wuU9VNPL2bm7azMXsvQ0s5u3n1uNRerL3iK7M=;
- b=Fp1kVQWIRK0+a2z4sVUbgobfuRHNoGgUcr+D4Fwh3hzQvvEOI7492oCjUe3OhZ6izm5sZEB4gk4syhXNHf5/+egH6DNreTUpJWh6/YlN1BVAah6iYPuBPII0Wnn87WL4E1jvQ3M/pkoaoAwo0Mozdqg/ZVl+qtG01Fxsacz35ztVAdKmiUoje1tVIeylYyYCpRtmHh+3Rf16yZ6SlR6GOdyxhZ2lgHVAUarjvz4ZZDHPmQ0AEYH0st7Oe1dPq9neoayXD+B+SkDgye/ldfyYxMxVMGiAXPV/Gp0Cu0/Z5DRpV07TSbxiVeAACaLzqjQ8squPe1PQG8btwpoTY5nP1A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XuUnD1wuU9VNPL2bm7azMXsvQ0s5u3n1uNRerL3iK7M=;
- b=qZjAjqxUr0kyl5l9j3+9CrAU7IaWV5RtDe1uJp5+xam7UQSs+qRYjEDMghiDKLDojD7/QtO9wdniEKEss2IJYcrZZcbQ5/LIHKWLYN22XodYHr1Nu1QFoFRCws3oCnEyQTpMqds4pqSGGQNuHSZhYmYAZhYo8G6tvq5ruaGUk5bCLkXUpqkb2T5m1pSTh98q8hIrvUDD/riTKL2Awd2MdaxqHBmGzXUGT+T0XbwP5fFnsB4xaYmSw+NNtGdIskc/2EIjZ07BuGbbCMmLJQQt9xi7MXeMIgYJo/MDUXktQD9neiP42yF8uigkNb5zdcNrnFxMXI77oCV2KkuSpM/Q4g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BN8PR12MB3361.namprd12.prod.outlook.com (2603:10b6:408:67::19)
- by BN6PR1201MB0019.namprd12.prod.outlook.com (2603:10b6:405:4d::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.19; Fri, 10 Dec
- 2021 15:31:38 +0000
-Received: from BN8PR12MB3361.namprd12.prod.outlook.com
- ([fe80::4063:6e26:a906:e592]) by BN8PR12MB3361.namprd12.prod.outlook.com
- ([fe80::4063:6e26:a906:e592%3]) with mapi id 15.20.4755.025; Fri, 10 Dec 2021
- 15:31:37 +0000
-From:   Joel Holdsworth <jholdsworth@nvidia.com>
-To:     git@vger.kernel.org
-Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
-        Dorgon Chang <dorgonman@hotmail.com>,
-        Joachim Kuebart <joachim.kuebart@gmail.com>,
-        Daniel Levin <dendy.ua@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Luke Diamand <luke@diamand.org>,
-        Ben Keene <seraphire@gmail.com>,
-        Andrew Oakley <andrew@adoakley.name>,
-        Joel Holdsworth <jholdsworth@nvidia.com>
-Subject: [PATCH v2 3/3] git-p4: add "Nvidia Corporation" to copyright header
-Date:   Fri, 10 Dec 2021 15:31:01 +0000
-Message-Id: <20211210153101.35433-4-jholdsworth@nvidia.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211210153101.35433-1-jholdsworth@nvidia.com>
-References: <20211210153101.35433-1-jholdsworth@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: LO4P123CA0128.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:193::7) To BN8PR12MB3361.namprd12.prod.outlook.com
- (2603:10b6:408:67::19)
+        id S237570AbhLJQfe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 11:35:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57112 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229957AbhLJQfd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 11:35:33 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03367C061746
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 08:31:58 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id y13so31227287edd.13
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 08:31:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=pIH8PE1uSSUJyRKeBYOuhJ9SKzfesmvn2j+rZm46lMA=;
+        b=an98OT7FbbFSKvPMDXaT9ZS4VikN6USmokoK/Hfl9v8paHxmyz0PF35//c3nvrCEds
+         w6zeJWwjjdX+C7hWhbFwpD88i0MI8RRyNyjZnZrzyC+rdipR3xmrlN27HKy/1nud3wys
+         DOMP64/SwVNuh9+OpK/IQGbeeRa0CnnBs1w19IDz0k73x1JFiDMiTpkH9cDBC+XJy3c4
+         hh8PY2lM36m9aXe2H3AcdVLG4dbWPwDJ/rgyHShZAsdrlnl+wXKbXJYQpBOMX5YMbkpe
+         d07TuzwMG8zGzWki5nDGVjwnG6nx5cAXiW2dBMuvNYuQ1OHAvjHuCOp+iDWSgwRzPSnw
+         UmHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=pIH8PE1uSSUJyRKeBYOuhJ9SKzfesmvn2j+rZm46lMA=;
+        b=qOt6zw385diicSV10zEZuzRaeSq8lerm+mBnR8KDqb5YPZ0KDhGyDNfKRMN/Aa+H3J
+         O466bqBeqIPtXrJ0GbujJLCs9PgUB1CoddugkkLnoKVmemCFQ/lUryyHOV8TpD8iuE8q
+         m5F0VxdEFu6CD4glPZ6TCeUaQ1Oujz743SnZrY6BqgOXcuUJCwCiNzW0Gr4gh2+CMr/E
+         STJiqMDEl5B7CIyWN5A0bhjU0i4kan8Y111qClTGRGO6FU2nnFV4ufjennyLlw0Bdk1Q
+         yuGs0qPvaUI3eg4deXVMG8Zbd6phU/bMaQwm3OVq0nerLXVfYgFwilybevWoJZCu5BdU
+         OUNA==
+X-Gm-Message-State: AOAM5335N4YzGgUPfz2b8bF4TGJ6VOG0e5RILcUYtSh2nSQoLTewOZb5
+        dFVG2q34LO6jxfy5GXiOa2CI6S/Bg0fkjA==
+X-Google-Smtp-Source: ABdhPJxXAywIKaBg482sWYV3siPk7hnlVN8ah1qcxyclu8y+WYNiE/azZMItnhTi8nODZd6dzHB2CQ==
+X-Received: by 2002:a50:f09b:: with SMTP id v27mr39367346edl.53.1639153916137;
+        Fri, 10 Dec 2021 08:31:56 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id e12sm1635744ejs.86.2021.12.10.08.31.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Dec 2021 08:31:55 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mvioM-000OXy-OX;
+        Fri, 10 Dec 2021 17:31:54 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
+        vdye@github.com, Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 0/5] Sparse index: fetch, pull, ls-files
+Date:   Fri, 10 Dec 2021 17:16:35 +0100
+References: <pull.1080.v2.git.1638992395.gitgitgadget@gmail.com>
+ <pull.1080.v3.git.1639149192.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <pull.1080.v3.git.1639149192.gitgitgadget@gmail.com>
+Message-ID: <211210.86v8zwbev9.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: from red.nvidia.com (195.110.77.193) by LO4P123CA0128.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:193::7) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.20 via Frontend Transport; Fri, 10 Dec 2021 15:31:36 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: f5003cc7-a632-4006-b393-08d9bbf227ee
-X-MS-TrafficTypeDiagnostic: BN6PR1201MB0019:EE_
-X-Microsoft-Antispam-PRVS: <BN6PR1201MB00194A0D6DC8750A4470C853C8719@BN6PR1201MB0019.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:4714;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: pb/sXI5jAPNqSVxKCk+Ensnocz29lUAtMftUFneLMlvJWEDmtTJiN5mfMelljTCK/10W72E/oGzY0sG8QGgMT+QqipPNWqSVhIbFS7J+ayIjG9nqsSh59vghgNxyNUfzJCJrd1DewAtq+nCdp8I4ZQOZq/r67OSdXs2KF3S1gTaEjBimETBNeEpnnDrqWhUa3hik7iAVI1yU5TgtJLyMG3UTTvpjqAV5OFE7CcsY38jvqD/fRSK0ga6qluZfZ6c+E3QH+K3Cvv+nm8rAD0E+FUvy1Xj9ANFTxYX8gJ0IkdYUIbrnOFXsQbU7AQ6/+JOAAoAbzALA0oKgLOKtsQZ+0mD4Jxx5MgS5tFxpjVetNPjKW5dnvJH6TDRyEzRNKL6jmMubYbAxTJzJLr8yycC+e4d0EGr3z6U9q5bqyrI4SlGiA1uOl3208fwq6S3CS1ju42IiXo+2QlrMPji5I51F3WXhrbrxga422K6j6NVzD+5urFkdZGgw6Vr8h+P2P9ku6gxZL5JMvapYHzBWhCS0f+bPo3UxlkCnBVDE3cuC38Ul4RvRKGzrpbxqR2R74Aa3fXtxNd8Tk9q6z3EY+lVpNHXB8X4xqLwqkCekdgquRp4XAA8vphA+13VPSIOFPf8Eia9j3XaOQ9N271jdgUzXZvzGaCk/wzWYXKBrR/GmBg5xSaLKf5C2GQtPPLBQEBxfhxziHqGE7mG2orTtH3OH5CPQ4IP1pvyO5y1+Bc9GP9yB0qR4pcAxIprS45SR3uDIS/dKG/Si9OE/GqQTcsGvaQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3361.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(4744005)(15188155005)(2616005)(66556008)(1076003)(956004)(86362001)(54906003)(8676002)(5660300002)(26005)(6666004)(55236004)(508600001)(6486002)(2906002)(52116002)(7696005)(6916009)(316002)(36756003)(16799955002)(4326008)(8936002)(38100700002)(38350700002)(186003)(66946007)(107886003)(66476007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?s8Q418gSHra9aLXCOsUQcwgMV3axOiK88t8DJXGxWtD9hv+0R0crMS7aCbbw?=
- =?us-ascii?Q?JRNdZWWnbqSSJQ27Oy0mudNfLjQQtlYrNX1WUrPiKN21okOFVwZ5NOEChmDZ?=
- =?us-ascii?Q?gp9lQNVvRx3bueN1Tj4cnSXY3cMw2G7Qjhn/nCTea9acRLgpmkL1dUlUv7aH?=
- =?us-ascii?Q?vv0zUHe93gn/f6vQGn0LnP11c8Rp3uIeLxujszXyJRG/hwNbbD7GNgtwOCV9?=
- =?us-ascii?Q?qWf56DL4uDHnZ7EZEL74Jd6JoYSCKg79qadoX9FvAQvLEh3WH0kMJs36a56H?=
- =?us-ascii?Q?SYC0jLV2l2oQnCeV6WB9kkFF7u6FeeFFbL+R4MxEJyNeLUuqZ0lN0fJh36mz?=
- =?us-ascii?Q?OUVfSGHj7ZtREBNMHGwkzc6dBa4tedrIAsT6pabggbXbu3HiYlwBPKm+ItXg?=
- =?us-ascii?Q?ThnW63W/y8TK1zo7ccfnAul0sPS31b5Ci9NXYH00lUlybVHrQi1qUPR10yTW?=
- =?us-ascii?Q?2zvOulKmPmv1ehTGQ7a1xiofFH6J/hsrg6469kJxWNBC2J3x2GVSvDIQVBlQ?=
- =?us-ascii?Q?5QtVzC9EBQ9jts7X8I/0OiclUuVxu5sxxRjJwE7NYaWRI2scwtVRPzoe/wSb?=
- =?us-ascii?Q?qtnGogsZmtOp7b1ymjwf9Z54JqqE06BxdWHKp0a5Vzmc+S8HgMlGF9BIGVjo?=
- =?us-ascii?Q?D1wqQ4o+yLBP605CtqaJbUPTws8jnLLeHXPK0gBYpA/OB+0SDFlFguXvN+D4?=
- =?us-ascii?Q?nTeZYJ6mkUcAW+cOPtGMZ52W+Fl9+i9b+5wQg661v/GDGdHHe/97/zSs7wme?=
- =?us-ascii?Q?mZw6JGLucfrsBrU83hgZjrAriIvVNvVGf7IT2D/l5D4gCEugQf+YlzSAV8Z4?=
- =?us-ascii?Q?BPecHppPNQrPynzHkSRFqH6AzK1TTbdGgjs2m35LhcNcGa35tqKFL5Cwajt4?=
- =?us-ascii?Q?VlL+cz8MKI4GYSXZ34BMKe89TmNeQAvBBSdrFDpnm5x48E6g7410oJV0OBv9?=
- =?us-ascii?Q?hOsPk5T+fEyWT+1HHxEkgj5May+LplvReiJzO5hSo+BtDeaClZCBUuDb88kX?=
- =?us-ascii?Q?lT3QqXPRNjLSEQRZD+Yi1k+jqJXKNiG6xU+ErBdoUQFL2zm5L+x7tk99nSUg?=
- =?us-ascii?Q?LIuEM9RSgcZxUkcjB285/jlXTzSb3VnLNoxLcE7j2bZ6OsGlo/qjJYXwRYVb?=
- =?us-ascii?Q?DOSXevOSMqWtjJDZBtKa3HrVxh7F3p04y3pGpnfJ1CTLwHHMNHvM5ZfGv7U3?=
- =?us-ascii?Q?/mSHRNwQ2o3JT93KJOo64k8f9JaGU4Lt33dwlQocGOsv7XD1eeyQO4/m4zLr?=
- =?us-ascii?Q?LVPquSeeIo1G2NVUcWzMNb7L6eQ64tk+fpi+uBHeMTOQ5n6WC9Ks+n+kbAS5?=
- =?us-ascii?Q?pexEFiIA3H+tdo+oJfTgfiX4gmt9xUoQKEVwg0C+6C8lIRlr3tEfJ4k8Az7A?=
- =?us-ascii?Q?tyz/8tGGzs1uQArJ/h+Xi2vfBp+SpRcGLrmDS3i1d5r3t0SCCjpGYQxw0que?=
- =?us-ascii?Q?f5NTnyLgHBO8TyFECyP5VfJYs+/h4fuRcbVvoUM9ezabQ4+RSQOmMmdzWS3Q?=
- =?us-ascii?Q?4bMNV/YJd0TtZOJGeysMn7uoew31bFfXXz8m6RzBhYU2B3ljR8Jxpub8MvMu?=
- =?us-ascii?Q?vscHzuNYIWjVQEbDCbLudw39Fw8huSTLyw0hoOl4pOgrHwYJW5WWLucWPg70?=
- =?us-ascii?Q?XcdO5jOIbSA5a8vG1oAqfeM=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f5003cc7-a632-4006-b393-08d9bbf227ee
-X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3361.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Dec 2021 15:31:37.8609
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: MRrVemPnWbLErvqBu61G7mFtuGL0G2ALa/perhfUsbfUPH1tKqUuMKYQgGWOToQZ9t+Q1+JRKgzNRUAgAh/4OQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR1201MB0019
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The inclusion of the coorporate copyright is a stipulation of the
-company code release process.
----
- git-p4.py | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/git-p4.py b/git-p4.py
-index 5568d44c72..17e18265dc 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -5,6 +5,7 @@
- # Author: Simon Hausmann <simon@lst.de>
- # Copyright: 2007 Simon Hausmann <simon@lst.de>
- #            2007 Trolltech ASA
-+#            2021 Nvidia Corporation
- # License: MIT <http://www.opensource.org/licenses/mit-license.php>
- #
- # pylint: disable=invalid-name,missing-docstring,too-many-arguments,broad-except
--- 
-2.33.0
+On Fri, Dec 10 2021, Derrick Stolee via GitGitGadget wrote:
 
+> Updates in v3
+> =============
+>
+>  * Fixed typo in commit message.
+>  * Added comments around doing strange things in an ls-files test.
+>  * Fixed adjacent typo in a test comment.
+
+Yay, I'm happy to see 5/5. Not because I didn't like the helper, but
+that sparse is getting mature enough that we're getting ls-files to emit
+information about it. Thanks.
+
+There's the small "diff -u" portability issue noted in my just-sent
+<211210.86zgp8bi48.gmgdl@evledraar.gmail.com>.
+
+Other than that 2/5 adds this documentation about ls-files --sparse:
+
+	If the index is sparse, show the sparse directories without expanding
+	to the contained files.
+
+Shouldn't we at least add:
+
+	Sparse directories will be shown with a trailing slash,
+	e.g. "x/" for a sparse directory "x".q
+
+In addition to that I think this may have a buggy/unexpected interaction
+with the --eol option:
+
+    040000 aaff74984cccd156a469afa7d9ab10e4777beb24 0       i/      w/      attr/                   x/
+
+I.e. should we be saying anything about the EOL state of these? OTOHO I
+tried adding a submodule and it says the same, which seems similarly
+odd, so maybe it's either correct, or this isn't updated for those
+either.
+
+Is the behavior of:
+
+    $ git -C sparse-index ls-files --stage --sparse -- 'folder2/a'
+    $ echo $?
+    0
+
+Expected? I.e. accepting /a when we'd just print "folder2/" and not
+e.g. erroring (probably, just asking)?
+
+How about:
+
+    $ ls -l sparse-index/x
+    ls: cannot access 'sparse-index/x': No such file or directory
+    $ git -C sparse-index ls-files --stage 'x/*'
+    100644 78981922613b2afb6025042ff6bd878ac1994e85 0       x/a
+    $ git -C sparse-index ls-files --stage --no-empty-directory 'x/*' 
+    100644 78981922613b2afb6025042ff6bd878ac1994e85 0       x/a
+    $ git -C sparse-index ls-files --stage --no-empty-directory --sparse 'x/*' 
+    040000 aaff74984cccd156a469afa7d9ab10e4777beb24 0       x/
+
+The answer is probably "yes that's fine" because I've got no idea how
+sparse really works, but just checking..
+
+So it's very nice to have the new diff test in 2/5, but would be much
+nicer/assuring to have that split into a trivial function followed by
+seeing how the diff looked in combination with each of the other option
+that "ls-files" accepts.
