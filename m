@@ -2,168 +2,231 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EEF5C433EF
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 14:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B631C43217
+	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 14:27:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234548AbhLJORX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 09:17:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52204 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234477AbhLJORX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 09:17:23 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47CB3C061746
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 06:13:48 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id d9so15175009wrw.4
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 06:13:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=8LkIuIsMheeqc3c9BKNh7cdHGWTnqgeRlOvGdn4GhQs=;
-        b=TSITd79D/Bx/AYqdUZd8Rw04hfuasFthaJulA6HfM5WPTffEJKNieePvXK2w50TSkk
-         oMb1dJ/RpFKmOyqWP3lKCprjkwKQ6qJpLPSyuX6nfAqhQb8Vo+xc+T7o0COOh5MEupK1
-         PKZRq9fAE56XYcNC9+i8EtFN1vRdQZQ4L5mOTwKT2tHFILMhvNtaz8WJTd3/S6Zhlbar
-         gUs/kkDruEQsYW/2tRa/4dJoYuAPyCOFowxzjnRBHWTV1WlkgxOLJ9luzc0R+TbON5Ix
-         8wQSye/7ChwuEs+XWIhcV+6pewqcT/Gdf92ofShtDJ0gVnN/u1OHpp3Aqbb6ExHX8wQQ
-         yHmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=8LkIuIsMheeqc3c9BKNh7cdHGWTnqgeRlOvGdn4GhQs=;
-        b=J0jJoKTi7kfo7ZLNVzkRZIfsPpUivKh59CbSFZxZsZJdc7MP5PCn1oGKF1/R35J5wE
-         FPiIvODP5rnBHYuuLtOEKI//zK4XnLa9q19/08QB8VrX7P23NPwV8B5HRCDKUOpS2foe
-         teVuTL7B2nIcfow3YxIx+dYy9OyK9IvHpfCAIkUXbIDcUNhT0jLm8xEA8lpbj9dDhiKF
-         z0Xv0Yq2t0nETfIAwHYuASxhsgJrAgQ0R4z33RZj37k76x9F1jCg87dvVxPueJFSBANa
-         FXrlUBriTremcLe72cAJii+669bVNeCfieQ+sxdofhZT7uGleU1QNRJIhc4J08nVP5aV
-         /Vhw==
-X-Gm-Message-State: AOAM532YFkCpTlsjG5BGnTkpNZJP8yVXeTOojL1ln5yehLkTmpK6BbNK
-        8Ufpa4x7bfcz1IlXEEichxU=
-X-Google-Smtp-Source: ABdhPJyJ+19DRFTjEK62YDahgp0GumGeJM8kZ1+UbLSmSUaK4sg5DiGN9+LfE+vLl0Jf0EX0yAtQzQ==
-X-Received: by 2002:adf:fbd0:: with SMTP id d16mr14816978wrs.107.1639145626857;
-        Fri, 10 Dec 2021 06:13:46 -0800 (PST)
-Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id f3sm2665271wrm.96.2021.12.10.06.13.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Dec 2021 06:13:46 -0800 (PST)
-Message-ID: <53fdf2c2-1e01-a105-6a20-8115f88b39f6@gmail.com>
-Date:   Fri, 10 Dec 2021 14:13:45 +0000
+        id S242165AbhLJObR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 09:31:17 -0500
+Received: from mout.gmx.net ([212.227.15.19]:40877 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S242149AbhLJObQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 09:31:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1639146446;
+        bh=HNbSP6zCsnjbQPRDYtC8Ot0W7Q88nXKOx1W5Bxj68cY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=iuciDEF/jd+HfKlYmWl+omtEXsOHHPLox4lq1JWMhWfEe47vfmj/By5PL9Nrf9RuZ
+         xQZNBSRoU2ZOwiaFHzMqq93LfW4DMzk2gmXiOZulhDvF13HPWlYO8BCRcquzwKPcAg
+         2F2iPTjVF9SBPyu/qlgymV+64gsIdwkUiULGL3ks=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.17.164.160] ([213.196.212.194]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N3se2-1mVKGM2ZYe-00zl0L; Fri, 10
+ Dec 2021 15:27:26 +0100
+Date:   Fri, 10 Dec 2021 15:27:24 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC PATCH 02/10] range-diff.c: don't use st_mult() for signed
+ "int"
+In-Reply-To: <YbM85W3N0ySi5k+H@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2112101526540.90@tvgsbejvaqbjf.bet>
+References: <RFC-cover-00.10-00000000000-20211209T191653Z-avarab@gmail.com> <RFC-patch-02.10-bd7d014c531-20211209T191653Z-avarab@gmail.com> <YbLL/YWbjc/sPRyH@coredump.intra.peff.net> <211210.86lf0sdah1.gmgdl@evledraar.gmail.com>
+ <YbM85W3N0ySi5k+H@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: builtin add interactive regression
-Content-Language: en-US
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-References: <20211209193625.GA3294@szeder.dev>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20211209193625.GA3294@szeder.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-1793197666-1639146446=:90"
+X-Provags-ID: V03:K1:uZB+cWoonbWO9LCfbIGsfkKjXVNFmhEAToznPZ5UuzMrfglxtG0
+ 2/dcsU4m99nv3CMy6W7dxR1vVrooaPjUBLpfnsdXn1tUY8XOUbCWsphUntDIpQhmEcVW+VI
+ Zq365ODrM7qpKsOs6db84VdFvf4dNK38zzYISkvyw9wMFZp+PN4fHoSYp3VvQejmlrlG/hG
+ wM54IVUHzkKdaUd8lUaBw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xfb0DyJW3/A=:L/APNLzT2yp+uNNl4dC0WQ
+ HDgCvkpViwxel/0qp8oDY78jZgccWqViYg6sSUXpEO/3QhzhOWWBqt4uSbWOYT9D3w2WFQaP2
+ Ry8jQfzvTmLsUOn7aDYiUzufPqBG4cl1ga+Tb88KND1dqjXc2XC2ohVJrhWln9RMUcDeHKJoY
+ 5xlMG0PpPnnksIWj1CoceM0zQ15QiQNJoOgnIu2bUGjKRB78NDUor3M2Of5cToJM6wkh95bmn
+ ohF1JI7BsGbXc+RPEtxJiLjn/F8PlyELBPEqy12iBBfl1lhHlRMXxZd1enLuO9vo6QdYaFqQ5
+ A6Y4HBdIWjIcbQMfHL+Jy/kVOEn2h+S8yzEGtAFrLxZagr6YVfvewu4qnDIuhO4dXizH80tBH
+ kz+wXG+XuJ2SYZinrq3noGevVmQH4Lm0J6DZpLnuj529erapFXPkwQS/4buLfb3iNaxH8bfk8
+ u5XkMlQU5TaUSK12N52ynsEWKmu8+W2j76gg58Du0RgJD7xhPD+H9DZYqK7Gs/zzCNLLSSb/7
+ OhJkUuE3siItRR714yJAy4GK0u8ODJUB4gYKOnt+/EsdbNtLv9zOBU/N90etiovCx9DAhKYL9
+ WjBeA2+IOkQL+a1CdBTxknudTaJnZBJE4XXIIby6nI3jsu1ORira8L6//5Lu7bR5kBfkvkXd9
+ Cv9jHuUBjDUK34SpUTkwLWb8ZswoQjqJP8PIsjY9npQoSKL+1qobNCCi579LtcG5Bf4ya6WvT
+ TJG/+VcFGZNhj1O8b2QOZPetNZ5Yln5lF1+fPmjxebC6mXHw+UYFzBqn9GpkLTckVSSjyhuDR
+ qfIcfohzH4sPclePihbjp+WowSiFn1L7styLyuw9aW2qd57qu6B+jXqH6jyROz8KQW6SDOS3x
+ d/6cgE77XwbOpJaaW/WA2nwTWg5rh9f7pX19jB5+ONeIjhQZPNoXFA18QGrnU7jRhhI6+iy5/
+ aZEze4rfMunlup/2dR00bUAZAsw43rnFsaBSx+KkZkvyfLxJ9aD9mK2tVPD0Fqibdx3hN5Hgx
+ TnX2a6mb1DvYl6zeNVlZFYxswkRhIg9o2rk8jSa0nrHRLkDBBCldAzE8r9cEqIKesGScccDGC
+ jKAhinKyZ6vWEs=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/12/2021 19:36, SZEDER Gábor wrote:
-> Hi,
-> 
-> This morning 'git add --patch' told me "Sorry, cannot split this hunk"
-> even though that hunk in question was definitely splittable.  Then I
-> spent my lunch break trying to reproduce the issue, and it turned out
-> to be a regression in the builtin add interactive (I have
-> 'add.interactive.useBuiltin=true' in my config).  The following test
-> demonstrates this issue:
-> 
->    ---  >8  ---
-> 
-> #!/bin/sh
-> 
-> test_description='test'
-> . ./test-lib.sh
-> 
-> test_expect_success 'builtin interactive add cannot split hunk?!' '
-> 	printf "%s\n" 1 2 >file &&
-> 	echo a >zzzz &&
-> 	git add file zzzz &&
-> 	git commit -m initial &&
-> 	cat >file <<-\EOF &&
-> 	1
-> 	add a line
-> 	2
-> 	add a line at the end (this is important!)
-> 	EOF
-> 	echo "modify one more file (this, too, is important!)" >zzzz &&
-> 
-> 	git diff file &&
-> 
-> 	git -c add.interactive.useBuiltin=false add -u -p >expect &&
-> 	git -c add.interactive.useBuiltin=true add -u -p >actual &&
-> 	# Uh-oh, "s" (for splitting the hunk) is missing!
-> 	test_cmp expect actual
-> '
-> 
-> test_done
-> 
->    ---  8<  ---
-> 
-> This fails with:
-> 
->    + git -c add.interactive.useBuiltin=false add -u -p
->    + git -c add.interactive.useBuiltin=true add -u -p
->    + test_cmp expect actual
->    --- expect	2021-12-09 19:21:23.354461170 +0000
->    +++ actual	2021-12-09 19:21:23.358461215 +0000
->    @@ -7,7 +7,7 @@
->     +add a line
->      2
->     +add a line at the end (this is important!)
->    -(1/1) Stage this hunk [y,n,q,a,d,s,e,?]?
->    +(1/1) Stage this hunk [y,n,q,a,d,e,?]?
->     diff --git a/zzzz b/zzzz
->     index 7898192..84e1b35 100644
->     --- a/zzzz
->    error: last command exited with $?=1
->    not ok 1 - builtin interactive add cannot split hunk?!
-> 
-> So the builtin add interactive doesn't even offer the 's - split the
-> current hunk into smaller hunks' option, but my finger memory pressed
-> 's' anyway, and then it told me that "Sorry..." message.  The scripted
-> version can split the hunk just fine.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Thanks for the easy reproduction recipe, the hunk below makes it
-pass. We're already checking marker at the very end of the loop
-but we need to do it after the end of each diff (I think the perl
-version only processes one diff at a time so does not have to
-worry about this). If anyone wants to take this forward please
-do, if not I'll try and find some time later next week to turn it
-into a proper patch with a commit message and test.
+--8323328-1793197666-1639146446=:90
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Best Wishes
+Hi Peff,
 
-Phillip
+On Fri, 10 Dec 2021, Jeff King wrote:
 
----- >8 -----
-diff --git a/add-patch.c b/add-patch.c
-index 8c41cdfe39..4c2db78460 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -472,6 +472,14 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
-                         eol = pend;
-  
-                 if (starts_with(p, "diff ")) {
-+                       if (marker == '-' || marker == '+')
-+                               /*
-+                                * Last hunk ended in non-context line
-+                                * (i.e. it appended lines to the
-+                                * file, so there are no trailing
-+                                * context lines).
-+                                */
-+                               hunk->splittable_into++;
-                         ALLOC_GROW_BY(s->file_diff, s->file_diff_nr, 1,
-                                    file_diff_alloc);
-                         file_diff = s->file_diff + s->file_diff_nr - 1;
+> On Fri, Dec 10, 2021 at 11:22:59AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 B=
+jarmason wrote:
+>
+> > > Dropping the st_mult() does nothing to fix the actual problem (which=
+ is
+> > > that this function should use a more appropriate type), but introduc=
+es
+> > > new failure modes.
+> >
+> > Yes you're entirely right. I had some stupid blinders on while writing
+> > this. FWIW I think I was experimenting with some local macros and
+> > conflated a testing of the overflow of n*n in gdb with the caste'd
+> > version, which you rightly point out here won't have the overflow issu=
+e
+> > at all. Sorry.
+>
+> I'm not sure if this is helpful or not, but this is the minimal fix I
+> came up with that runs the testcase I showed earlier. It's basically
+> just swapping out "int" for "ssize_t" for any variables we use to index
+> the arrays (though note a few are themselves held in arrays, and we have
+> to cross some function boundaries).
+>
+> I won't be surprised if it doesn't hit all cases, or if it even hits a
+> few it doesn't need to (e.g., should "phase" be dragged along with "i"
+> and "j" in the first hunk?). I mostly did guess-and-check on the
+> test-case, fixing whatever segfaulted and then running again until it
+> worked. I didn't even really read the code very carefully.
+>
+> I think you _did_ do more of that careful reading, and broke down the
+> refactorings into separate patches in your series. Which is good. So I
+> think what we'd want is to pick out those parts of your series that end
+> up switching the variable type. My goal in sharing this here is just to
+> show that the end result of the fix can (and IMHO should) be around this
+> same order of magnitude.
 
+I am in favor of this patch. Will you have time to submit this with a
+commit message?
+
+Thank you,
+Dscho
+
+>
+> ---
+> diff --git a/linear-assignment.c b/linear-assignment.c
+> index ecffc09be6..3efa30c50b 100644
+> --- a/linear-assignment.c
+> +++ b/linear-assignment.c
+> @@ -13,11 +13,11 @@
+>   * i is `cost[j + column_count * i].
+>   */
+>  void compute_assignment(int column_count, int row_count, int *cost,
+> -			int *column2row, int *row2column)
+> +			ssize_t *column2row, ssize_t *row2column)
+>  {
+>  	int *v, *d;
+>  	int *free_row, free_count =3D 0, saved_free_count, *pred, *col;
+> -	int i, j, phase;
+> +	ssize_t i, j, phase;
+>
+>  	if (column_count < 2) {
+>  		memset(column2row, 0, sizeof(int) * column_count);
+> @@ -31,7 +31,7 @@ void compute_assignment(int column_count, int row_coun=
+t, int *cost,
+>
+>  	/* column reduction */
+>  	for (j =3D column_count - 1; j >=3D 0; j--) {
+> -		int i1 =3D 0;
+> +		ssize_t i1 =3D 0;
+>
+>  		for (i =3D 1; i < row_count; i++)
+>  			if (COST(j, i1) > COST(j, i))
+> @@ -51,7 +51,7 @@ void compute_assignment(int column_count, int row_coun=
+t, int *cost,
+>  	/* reduction transfer */
+>  	ALLOC_ARRAY(free_row, row_count);
+>  	for (i =3D 0; i < row_count; i++) {
+> -		int j1 =3D row2column[i];
+> +		ssize_t j1 =3D row2column[i];
+>  		if (j1 =3D=3D -1)
+>  			free_row[free_count++] =3D i;
+>  		else if (j1 < -1)
+> @@ -74,13 +74,13 @@ void compute_assignment(int column_count, int row_co=
+unt, int *cost,
+>
+>  	/* augmenting row reduction */
+>  	for (phase =3D 0; phase < 2; phase++) {
+> -		int k =3D 0;
+> +		ssize_t k =3D 0;
+>
+>  		saved_free_count =3D free_count;
+>  		free_count =3D 0;
+>  		while (k < saved_free_count) {
+>  			int u1, u2;
+> -			int j1 =3D 0, j2, i0;
+> +			ssize_t j1 =3D 0, j2, i0;
+>
+>  			i =3D free_row[k++];
+>  			u1 =3D COST(j1, i) - v[j1];
+> @@ -130,7 +130,7 @@ void compute_assignment(int column_count, int row_co=
+unt, int *cost,
+>  	ALLOC_ARRAY(pred, column_count);
+>  	ALLOC_ARRAY(col, column_count);
+>  	for (free_count =3D 0; free_count < saved_free_count; free_count++) {
+> -		int i1 =3D free_row[free_count], low =3D 0, up =3D 0, last, k;
+> +		ssize_t i1 =3D free_row[free_count], low =3D 0, up =3D 0, last, k;
+>  		int min, c, u1;
+>
+>  		for (j =3D 0; j < column_count; j++) {
+> @@ -192,7 +192,7 @@ void compute_assignment(int column_count, int row_co=
+unt, int *cost,
+>  		/* augmentation */
+>  		do {
+>  			if (j < 0)
+> -				BUG("negative j: %d", j);
+> +				BUG("negative j: %"PRIdMAX, (intmax_t)j);
+>  			i =3D pred[j];
+>  			column2row[j] =3D i;
+>  			SWAP(j, row2column[i]);
+> diff --git a/linear-assignment.h b/linear-assignment.h
+> index 1dfea76629..7005521d61 100644
+> --- a/linear-assignment.h
+> +++ b/linear-assignment.h
+> @@ -14,7 +14,7 @@
+>   * row_count).
+>   */
+>  void compute_assignment(int column_count, int row_count, int *cost,
+> -			int *column2row, int *row2column);
+> +			ssize_t *column2row, ssize_t *row2column);
+>
+>  /* The maximal cost in the cost matrix (to prevent integer overflows). =
+*/
+>  #define COST_MAX (1<<16)
+> diff --git a/range-diff.c b/range-diff.c
+> index cac89a2f4f..f1e1e27bf9 100644
+> --- a/range-diff.c
+> +++ b/range-diff.c
+> @@ -308,9 +308,10 @@ static int diffsize(const char *a, const char *b)
+>  static void get_correspondences(struct string_list *a, struct string_li=
+st *b,
+>  				int creation_factor)
+>  {
+> -	int n =3D a->nr + b->nr;
+> -	int *cost, c, *a2b, *b2a;
+> -	int i, j;
+> +	size_t n =3D a->nr + b->nr;
+> +	int *cost, c;
+> +	ssize_t *a2b, *b2a;
+> +	size_t i, j;
+>
+>  	ALLOC_ARRAY(cost, st_mult(n, n));
+>  	ALLOC_ARRAY(a2b, n);
+>
+
+--8323328-1793197666-1639146446=:90--
