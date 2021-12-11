@@ -2,126 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC4A7C433EF
-	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 02:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF15AC433F5
+	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 02:08:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235331AbhLKCJk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 21:09:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49260 "EHLO
+        id S236141AbhLKCLn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 21:11:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233777AbhLKCJk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 21:09:40 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1997EC061714
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 18:06:04 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id v1so35662640edx.2
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 18:06:04 -0800 (PST)
+        with ESMTP id S229596AbhLKCLn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 21:11:43 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6891EC061714
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 18:08:07 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id w1so35059880edc.6
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 18:08:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skydio.com; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=cJ0s3X4uAnJ9siMACN/R8av9ehCvBnRcvuhcdesXAH4=;
-        b=CqP0AY89Oe3+UHBT0+dFAZ5heKkossfgyqecvO+Ihhx2xHp459q2vyysmGy8mkyzrj
-         nsqLE2DB/vy6ZucWlInH1dw4zzKhDV+6/Co0W4GrW6BemdpQBUEhteS4WjCEUBqzKBhu
-         muHGHWQ7S9zoTV7IbPQDCe3Ua4hqmQkmgFXlI5Gqfcp31gDioQBDzSfz+bXgPsvhCB9r
-         TwZTurQ0/Z/P41APffM7fDJ+k88cgUkru5PRGta1qokIpLs8fzh5w05cKFr5UimlseTt
-         ILqhbAA7/waInVikR38XDeefPZjC+TYPhuAa3M9S4j1v6mB/kIRbwhpIbcuq1cmND/SC
-         c4Tw==
+        bh=nXaclRxb1N+l8LiuxYY5NZCeYLTRHT8nSsK5lb1Wywo=;
+        b=RZmuknFYOfCjnzUkjBcrcWXTCe4wWPTNn/iKqsO7ygPuYcwkkfwXczyYnkCfX88mzP
+         hrczJY3J+idaJH2JocrjFJtGLFl6toSQviJPmews1TprgxKnm3qsGKE4ieK0I2UgyVwW
+         gqx9PlmElQiPd/rrnFZP2H8YxybsOhtMpWz5G/ZPI0DfZcDrY+cbNE31fEAJZfPEmyPi
+         cOT2eHupqoWS32zb8qiFLcZ+EeFoJ6k8GV5iegtC/6RXHjNdPPBYOwGdvldi7zfYUf+U
+         FiR7rJQzg4aLb+VT/FQSBdx+KG0IcU3BhL8k0stZ5mh1k6E07BXK4N85P7FtCV8l5CqI
+         rj8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to;
-        bh=cJ0s3X4uAnJ9siMACN/R8av9ehCvBnRcvuhcdesXAH4=;
-        b=fOseASpJnUCwB69dKLjsvQgFmVsF5VH6XycmsxivrOn4tOWHQYbSdv3GR87A60LPmE
-         e8nxLiiEzxAKhDGBPmdoGKOfk1oKzbVxbixAzgZdiOlxXVfip4bphD62gFVpszJchst7
-         aRTVpDB2DC9z34B6BxJY8IWb0MD2ovSMKicgR8LkEpL2Nmq+2rgFaAAEQzN3925KLdUw
-         JFpeY1h6lNlnc/u97RkCleGM814jzfdZYbgI15aLYBqoPkPaWzKJgiXp2vhChap+aB18
-         5Vr1sNjHhRfpUnWCbxJ1/nhmeYl+kRwDmy0FzmbaZ3A2rzZEn8ztQTKl11FX4EC2ZGXl
-         D1GA==
-X-Gm-Message-State: AOAM531EMdCOOiAMOUMEoKJ2F4EaJVKXrS1M2D4SGRComnSNb22lLccI
-        xh/3p3it59REFY3WST6cqq3dYNGsJ+pgilX2TM+l+4m7ubNmww==
-X-Google-Smtp-Source: ABdhPJy7PwJDbngHPJM7n2557eHE5UNt75cqUAqIcVf4R6bQI9RWo0mM98diNtGs5TFxSyQYWyOqYzbSpPR7YFnzWcA=
-X-Received: by 2002:a17:907:1629:: with SMTP id hb41mr29691615ejc.328.1639188362342;
- Fri, 10 Dec 2021 18:06:02 -0800 (PST)
+        bh=nXaclRxb1N+l8LiuxYY5NZCeYLTRHT8nSsK5lb1Wywo=;
+        b=w8VkCR+7+FuTkbtigfSjovZKkASDN+qOr8SBcYNDjgyJ+VwWlyeE1gS4XvJl1N0kwe
+         vvSCNRYlwY+7cV1lW9cvfASnBXrbBoHZF8rYhaiPmFyFMIYepT/QAtfCac3lEXY5Zfoy
+         EQSeTyY2MG4KNA6vW4Rl9ZW27uDbtLt6xqWOlV+jqi+vZnw38MpULIm1XFs+eVFKxcg2
+         g9m0HKfRCoSzYaPo9xqIXUSaHp0GkIWYvn2TTMAGBCQ5f01MjmZn9sStD/84hMQ6CxNm
+         24BmviIRIVZmHozxH91sAqa42EyCDXqJsSUPkhG8JoJFH4fCfBZMwaA7ydBjB5ODaD9V
+         3ZYg==
+X-Gm-Message-State: AOAM530/J1xTmosfWRWToqW8X0ZsmztCQ+ICgKb7GueB9cYAOahWVrE1
+        EdzNYnyHjF2qIOZfYoGRDJiPbgbaSKHrsDH1SGSkgXFdSKw=
+X-Google-Smtp-Source: ABdhPJyTwMEqtThaaNi9rCJtzVWhEBG4IZLk4mC0jNqWGhPh/HqdPmeXhHragO0gqILQJccX3oy4zDTMoD6GNzSqRy8=
+X-Received: by 2002:a17:906:31c2:: with SMTP id f2mr28885068ejf.341.1639188485724;
+ Fri, 10 Dec 2021 18:08:05 -0800 (PST)
 MIME-Version: 1.0
-References: <xmqqwnsvw5xi.fsf@gitster.g> <20210728031437.14257-1-jerry@skydio.com>
-In-Reply-To: <20210728031437.14257-1-jerry@skydio.com>
+References: <20210427194106.14500-1-jerry@skydio.com> <20210728032230.24611-1-jerry@skydio.com>
+In-Reply-To: <20210728032230.24611-1-jerry@skydio.com>
 From:   Jerry Zhang <jerry@skydio.com>
-Date:   Fri, 10 Dec 2021 18:05:51 -0800
-Message-ID: <CAMKO5CvETNfab9KLU0DDchvdM7JEJupifyKKPbWwz4QqiqcqPg@mail.gmail.com>
-Subject: Re: [PATCH V2] git-apply: silence errors for success cases
-To:     git@vger.kernel.org, gitster@pobox.com,
-        "Hongren (Zenithal) Zheng" <i@zenithal.me>
+Date:   Fri, 10 Dec 2021 18:07:55 -0800
+Message-ID: <CAMKO5CvR2m6nvGXfqap=9w07Mw1p2Sgvw39dfhdJVU28K+ZCbg@mail.gmail.com>
+Subject: Re: [PATCH V2] git-apply: add --quiet flag
+To:     git@vger.kernel.org, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 27, 2021 at 8:14 PM Jerry Zhang <jerry@skydio.com> wrote:
+On Tue, Jul 27, 2021 at 8:22 PM Jerry Zhang <jerry@skydio.com> wrote:
 >
-> Certain invocations of "git apply --3way"
-> will print error messages even though git
-> is able to fall back on apply_fragments and
-> apply the patch successfully with a return
-> value of 0. To fix, return early from
-> try_threeway() in the following cases:
+> Replace OPT_VERBOSE with OPT_VERBOSITY.
 >
-> When the patch is a rename and no lines have
-> changed. In this case, "git diff" doesn't
-> record the blob info, so 3way is neither
-> possible nor necessary.
->
-> When the patch is an addition and there is
-> no add/add conflict, i.e. direct_to_threeway
-> is false. In this case, threeway will fail
-> since the preimage is not in cache, but isn't
-> necessary anyway since there is no conflict.
->
-> Only error messaging is affected and other
-> behavior does not change.
+> This adds a --quiet flag to "git apply" so
+> the user can turn down the verbosity.
 >
 > Signed-off-by: Jerry Zhang <jerry@skydio.com>
 > ---
-> V1->V2: rebase onto master and rerun tests
+> V1->V2: rebase on master and rerun tests
 >
-> I think I addressed previous comments. What
-> are the next steps for this patch?
+>  Documentation/git-apply.txt | 7 ++++++-
+>  apply.c                     | 2 +-
+>  2 files changed, 7 insertions(+), 2 deletions(-)
 >
->  apply.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+> index aa1ae56a25..a32ad64718 100644
+> --- a/Documentation/git-apply.txt
+> +++ b/Documentation/git-apply.txt
+> @@ -16,7 +16,7 @@ SYNOPSIS
+>           [--ignore-space-change | --ignore-whitespace]
+>           [--whitespace=(nowarn|warn|fix|error|error-all)]
+>           [--exclude=<path>] [--include=<path>] [--directory=<root>]
+> -         [--verbose] [--unsafe-paths] [<patch>...]
+> +         [--verbose | --quiet] [--unsafe-paths] [<patch>...]
 >
+>  DESCRIPTION
+>  -----------
+> @@ -228,6 +228,11 @@ behavior:
+>         current patch being applied will be printed. This option will cause
+>         additional information to be reported.
+>
+> +-q::
+> +--quiet::
+> +       Suppress stderr output. Messages about patch status and progress
+> +       will not be printed.
+> +
+>  --recount::
+>         Do not trust the line counts in the hunk headers, but infer them
+>         by inspecting the patch (e.g. after editing the patch without
 > diff --git a/apply.c b/apply.c
-> index 44bc31d6eb..fb321c707b 100644
+> index fb321c707b..d530c3eb47 100644
 > --- a/apply.c
 > +++ b/apply.c
-> @@ -3560,7 +3560,9 @@ static int try_threeway(struct apply_state *state,
->
->         /* No point falling back to 3-way merge in these cases */
->         if (patch->is_delete ||
-> -           S_ISGITLINK(patch->old_mode) || S_ISGITLINK(patch->new_mode))
-> +           S_ISGITLINK(patch->old_mode) || S_ISGITLINK(patch->new_mode) ||
-> +           (patch->is_new && !patch->direct_to_threeway) ||
-> +           (patch->is_rename && !patch->lines_added && !patch->lines_deleted))
->                 return -1;
->
->         /* Preimage the patch was prepared for */
+> @@ -5051,7 +5051,7 @@ int apply_parse_options(int argc, const char **argv,
+>                         N_("leave the rejected hunks in corresponding *.rej files")),
+>                 OPT_BOOL(0, "allow-overlap", &state->allow_overlap,
+>                         N_("allow overlapping hunks")),
+> -               OPT__VERBOSE(&state->apply_verbosity, N_("be verbose")),
+> +               OPT__VERBOSITY(&state->apply_verbosity),
+>                 OPT_BIT(0, "inaccurate-eof", options,
+>                         N_("tolerate incorrectly detected missing new-line at the end of file"),
+>                         APPLY_OPT_INACCURATE_EOF),
 > --
 > 2.32.0.1314.g6ed4fcc4cc
 >
-Any updates on this patch? I had addressed the previous comment in this
-thread in a different patch "apply: adjust messages to account for
---3way changes"
-that was already merged in a while ago.
-
-I originally intended this to mainly fix print message behavior, but
-while testing
-I found that it also fixed a separately reported issue from this thread:
-https://www.spinics.net/lists/git/msg421481.html.
-
-I probably owe an update / refresher on why I originally submitted these
-features in the first place. I've written a tool for branchless / patch stack
-based code review and development w/github. The core of this is a mechanism
-that can cherry-pick commits without touching the cache or working tree
-by using "git apply --cached --3way" with a custom index file. We've been
-using this internally with a custom built git for a while now and gotten pretty
-good feedback. We'd like to open source this tool soon, and it'd be nice
-if our open-source users (eventually) don't need to build git themselves :).
+Any updates on this patch?
