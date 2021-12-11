@@ -2,85 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72F34C433F5
-	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 09:22:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75235C433EF
+	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 09:58:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229881AbhLKJWo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Dec 2021 04:22:44 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64839 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229839AbhLKJWo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Dec 2021 04:22:44 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 80E0E173614;
-        Sat, 11 Dec 2021 04:22:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=J2sbE+7Y9n3u8/Lkq0Agoi88i
-        8gmFRIKXf+kFzt3Puw=; b=wGBizMHYdw37BThJBQ2NtXw73fhwXl+pHTx1fFpBo
-        Tg01PKdwtzmGQE4aIFcoUgmFBPq7HF4coGJJQ9kWCOYg35xAtHiQfgZJtJkwm6C9
-        9uKbx9a+Yao6vp0anEo2i5xLY+N4vZ3g+qMYHyaO253T3wzlJQWzWzl4uAw/BtXj
-        qY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6EC53173613;
-        Sat, 11 Dec 2021 04:22:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A1FE0173612;
-        Sat, 11 Dec 2021 04:22:38 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Aleen =?utf-8?B?5b6Q5rKb5paH?= <pwxu@coremail.cn>,
-        =?utf-8?Q?=E5=BE=90=E6=B2=9B=E6=96=87_=28Aleen=29_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>, Aleen <aleen42@vip.qq.com>
-Subject: Re: [PATCH v19 1/3] doc: git-format-patch: describe the option
- --always
-References: <pull.1076.v18.git.1638939946.gitgitgadget@gmail.com>
-        <pull.1076.v19.git.1639034755.gitgitgadget@gmail.com>
-        <a524ca6adfa2adc02e517b7be5199b0c071134c4.1639034755.git.gitgitgadget@gmail.com>
-        <1ad4a3ee-af05-9bb2-67fe-566d5e4c39a8@gmail.com>
-        <7bd729fd.29.17da1f2df5d.Coremail.pwxu@coremail.cn>
-        <0784617f-416f-a981-44e0-62bd22018d6c@gmail.com>
-Date:   Sat, 11 Dec 2021 01:22:37 -0800
-Message-ID: <xmqqczm3lcma.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230255AbhLKJ6f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Dec 2021 04:58:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39004 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229841AbhLKJ6f (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Dec 2021 04:58:35 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 097A0C061714
+        for <git@vger.kernel.org>; Sat, 11 Dec 2021 01:58:34 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id m6so10439646lfu.1
+        for <git@vger.kernel.org>; Sat, 11 Dec 2021 01:58:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=N747oZX37sPy9c//yjOC4AtSs8mtF528PYGgaMMO3zs=;
+        b=d4K2HSMtdnJZZbnDlFF16xj2kvEu4gmLvoC7BAmwVYnwGHxmxMIU1qwTfbLTwT6juD
+         R2TuRBpkGWamuRtesC55n1lJrruh1hLOLEpcNeWQphzqk5Nive3CpMn2HfScvpYBnff1
+         4fLhR1I9GP475mfjomfYYcsce0+Lvmj0VEoDs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=N747oZX37sPy9c//yjOC4AtSs8mtF528PYGgaMMO3zs=;
+        b=pA7PLaL+ShsvnnPqHZtxU5BuiL1pZRnBb86xuPJJnxTkrZ45UVCiRBHzOYI+axqL5v
+         +4jiIZ1S2VwNeWhwILHURZ7MtjBpWc39SUyZPV5gCldtOpNngU/Y404An/W2ew7+llyz
+         TYb9PsnEjc82WgcNjBeBAqeCzSONlQN9NHOkmgwxMujg16FOFYns1J6zJeKdNGduVLyq
+         rivNhI5FwWhLb9e2UiVt9BQtt4c9Dezv4V7ugKK9KrWTamMs9p1rAIN/oRrXtdk/Qrtg
+         sUJ0SDWaqhgKkyRRO1okf6sKPqqne9HYbRDnNDnP85jp1EKh3yAk1vWa/xxq6/BoCwph
+         okZw==
+X-Gm-Message-State: AOAM533csgmN85YJZz8AKIHUuenIR4amB5W5Oyr0kKpAjyqFBxP2l+Hf
+        zflU62Ft0Lb99XX8uT6/IufGgP34Wb/lKUbtUNJnXp/3ZDQ=
+X-Google-Smtp-Source: ABdhPJwBzMY6wk7X4XRJwDVuoArJ5zT0jLPWR1KVGYh5BswOe91x2NYuUaO34QLVMqH7VDYUWEW5HyHcUgjJ6AfCtNY=
+X-Received: by 2002:ac2:4c48:: with SMTP id o8mr16861231lfk.690.1639216713193;
+ Sat, 11 Dec 2021 01:58:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E24FD4A2-5A63-11EC-BB82-98D80D944F46-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20211209201029.136886-1-jholdsworth@nvidia.com>
+ <CAE5ih7872E8X-qRfBrBOHmKcUCX46GkXwq2WD3UUX8TuYczZDw@mail.gmail.com> <BN8PR12MB33613E4CCDF13E6D0DE155BEC8719@BN8PR12MB3361.namprd12.prod.outlook.com>
+In-Reply-To: <BN8PR12MB33613E4CCDF13E6D0DE155BEC8719@BN8PR12MB3361.namprd12.prod.outlook.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Sat, 11 Dec 2021 09:58:22 +0000
+Message-ID: <CAE5ih7-ZoKThXefBN=znytQi=z4_notihQdSksYdMTzKDTAb=w@mail.gmail.com>
+Subject: Re: [PATCH 0/6] Transition git-p4.py to support Python 3 only
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
-
-> On 10/12/21 08.26, Aleen =E5=BE=90=E6=B2=9B=E6=96=87 wrote:
->> Dears Sanjaya,
->>      Thanks for your suggestion. I don't see the actual difference
->> between
->>      the two sentences, and do you want to enhance the word "always"?
->>      If you do, how about just describing the option as "Always includ=
-e patches..."?
->> Aleen
->>=20
+On Fri, 10 Dec 2021 at 10:54, Joel Holdsworth <jholdsworth@nvidia.com> wrote:
 >
-> Semantically speaking, I choose "generate" because git format-patch **g=
-enerates**
-> patches from the specified commits.
+> > I might as well take this opportunity to say that I've stopped needing to
+> > worry about git-p4!
+> >
+> > Hurrah!
+>
+> Lucky you. It looks like I'm going to be working with Perforce a lot in the coming years, but if I can get the bridge to git working really nicely, then I am hoping to have a happy workflow even so.
 
-But the given commit is empty and does not result in a patch at
-all, which is the whole point of having this option, no?  A typical
-format-patch output message consists of the message part and the
-patch part, and calling an output created for an empty commit a
-"patch" leads to confusion, I am afraid.
+I cannot begin to tell you how liberating it is to just have a pure
+git workflow!
 
-So, between the two sentences, I do not see much difference either
-way.
+But yes, git-p4 at least stops some of the pain.
+
+>
+> > I'm finding that the unit tests no longer pass with this change. I'm not exactly
+> > sure why.
+>
+> What unit tests are these? I am happy to test with them.
+
+    cd t
+    make T=t98* -j$(nproc)
