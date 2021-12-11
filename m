@@ -2,71 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D003C433F5
-	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 08:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6B28C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 08:17:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229577AbhLKIHC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Dec 2021 03:07:02 -0500
-Received: from mail-pf1-f176.google.com ([209.85.210.176]:46707 "EHLO
-        mail-pf1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbhLKIHC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Dec 2021 03:07:02 -0500
-Received: by mail-pf1-f176.google.com with SMTP id o4so10420249pfp.13
-        for <git@vger.kernel.org>; Sat, 11 Dec 2021 00:07:02 -0800 (PST)
+        id S230029AbhLKIRB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Dec 2021 03:17:01 -0500
+Received: from mail-pj1-f51.google.com ([209.85.216.51]:42995 "EHLO
+        mail-pj1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229531AbhLKIQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Dec 2021 03:16:59 -0500
+Received: by mail-pj1-f51.google.com with SMTP id fv9-20020a17090b0e8900b001a6a5ab1392so9393932pjb.1
+        for <git@vger.kernel.org>; Sat, 11 Dec 2021 00:16:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=kWGVUJEdA1Dg1t080HGEv+q0QCbq0jBl6gk5BaZDkCs=;
-        b=XhR9nwbCeEpkLPY92xZ5SdZu+TV54042CCLlPPvKkf5FzewdL1YvoptTZIDFraR8rL
-         7mAIUC/2fWufZn2Tg7d9YUSxwAXiy0BvvL8FgV9CvWzDYWdzDUSyk2wtCg3fAoMV/PMW
-         qdJyDv66QBQUVafmsTELL8/12jigKpke2Y3qQDQYigbpKvcP5Z549smN/Xe5eVBm5xbF
-         gU8Gunsv3eRIfNhfEiBnPQEKLnh+02Q0rSHeL0Yx7HaaDWnBDEGgTYZa2Kqs1BzsBBZx
-         UY5u8RTid8KixHYRGz8p8Cwzni81/Mid9QVE6TKeSXRJXR/FVTYQT9FDnnVO8tmqzQ1Q
-         Af7w==
-X-Gm-Message-State: AOAM530XlfGImopOUwcCmz8XKYrKhli45k4MrnkvIFN0jZN1kvT+SqjQ
-        ODkKrfJBqhFlZNHUbM5RUYcCtYP/20vn+CWF1QRYjQBPd+5pXw==
-X-Google-Smtp-Source: ABdhPJwZJgMt66YzLtXSt/dBwZ4ABeLVbdYeGrDbbCOjOwSdKqo/NPUOqZEIkTjWYReOl+FflHNHiri6kMaxlk5/pRw=
-X-Received: by 2002:a05:6a00:230b:b0:4ae:d8b2:dc0c with SMTP id
- h11-20020a056a00230b00b004aed8b2dc0cmr22680151pfh.67.1639210022030; Sat, 11
- Dec 2021 00:07:02 -0800 (PST)
+        bh=OeSX6L0OvziYFiyBTc1xwXwUQ850WBwJ1T0RRFI1Pzc=;
+        b=Rl3jtr1zGwfgZPfvC30hxgDcihZvaKIQTzOCud44olrLZRgxFI17EfwBYuXFMeVKLV
+         aOYL3LQuuwXW4eJWY+0ztsCHel7b+G/yL0N2Ev5AXLYz/hauo0lTaq79xlej3utPDjes
+         4N00Rd8GBHea+ps2OILJ8g7n5SeZhxN3bQprG0vtx8RCNp+YwSCfxGGcBnBxL+OA7izD
+         Exnh8sWiHTOlNkFYT0OzAaSr1UJ2nidgEIFeIf4PePHnYTi6YiX603mjtRQVryeacw6h
+         Fva52leGq92cUcezOiU+qEPrH8ufwlVOt5B3vwlRUUp7Z4jGtlVNo21QEhWV0Mrjigns
+         aDpw==
+X-Gm-Message-State: AOAM531MSXbZ5wzuYT8s769zY+97+2N8YSmPmxzklEOqMxFPa7stWZzS
+        AgDrwEtCwUzjcU97R54VfBYnWQQqbdgjdlOuXxA=
+X-Google-Smtp-Source: ABdhPJyDTxdHdOtQX6ROSs5QFYPOCr1L8k+PC3mV9j4qiy9nOgoqR1/uRCaNn/9CWEzvmcsT/Jne/ql2QCrhSTq8yJU=
+X-Received: by 2002:a17:90a:b107:: with SMTP id z7mr29609360pjq.104.1639210619091;
+ Sat, 11 Dec 2021 00:16:59 -0800 (PST)
 MIME-Version: 1.0
 References: <20211209051115.52629-1-sunshine@sunshineco.com>
- <20211209051115.52629-18-sunshine@sunshineco.com> <20211210095303.xx3fxxtp5ww3s24x@fs>
-In-Reply-To: <20211210095303.xx3fxxtp5ww3s24x@fs>
+ <CABPp-BFM5ZbFAzVfvDE3=zm6Q4LN2fWthPP8WH5kbgVPSxomtA@mail.gmail.com>
+ <CAPig+cRD_DzisMo-8ZuT4NzESEe4i2vPk_1Y-_JTeV9rbdwkLg@mail.gmail.com>
+ <YbMgL6A+/12GTeuf@coredump.intra.peff.net> <20211210095757.gu7w4n2rqulx2dvg@fs>
+In-Reply-To: <20211210095757.gu7w4n2rqulx2dvg@fs>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 11 Dec 2021 03:06:51 -0500
-Message-ID: <CAPig+cQ7y+DqOTbtdtPJ6=pgwE-zZnE=E+ixvNkHaTMWEXjRew@mail.gmail.com>
-Subject: Re: [PATCH 17/19] t4000-t4999: detect and signal failure within loop
+Date:   Sat, 11 Dec 2021 03:16:47 -0500
+Message-ID: <CAPig+cT4U-HSCV4kDHLEi7T+8Pi0o+eJjki+c5pmQdx2DTWcjg@mail.gmail.com>
+Subject: Re: [PATCH 00/19] tests: fix broken &&-chains & abort loops on error
 To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 10, 2021 at 4:53 AM Fabian Stelzer <fs@gigacodes.de> wrote:
-> On 09.12.2021 00:11, Eric Sunshine wrote:
-> >-      for i in 1 2 3 4 5 6 7 8 9; do echo "$i$i$i$i$i$i"; done >x &&
-> >+      for i in 1 2 3 4 5 6 7 8 9; do echo "$i$i$i$i$i$i" || return 1; done >x &&
+On Fri, Dec 10, 2021 at 4:58 AM Fabian Stelzer <fs@gigacodes.de> wrote:
+> On 10.12.2021 04:38, Jeff King wrote:
+> >On Thu, Dec 09, 2021 at 02:17:32PM -0500, Eric Sunshine wrote:
+> >> Thanks. I'll wait a couple days and resend with a clarified commit
+> >> message for the second patch unless, perhaps, Junio would accept a
+> >> resend of just that patch so I don't have to spam the list again.
+> >
+> >These looked good to me. I left a few comments, but nothing that I think
+> >would trigger a re-roll.
 >
-> I understand why the `|| return` in loops makes sense. But for these very
-> simple ones just using `echo` I'll probably be confused if a linter starts
-> to complain about them (probably depending on how specific the lint error
-> will be).
+> Very nice work and good explanations. I learned a few new things :)
 
-I understand your concern and had second thoughts about flagging this
-sort of thing since there are so many loops which obviously shouldn't
-fail, thus inserting `|| return 1` in them is just busy work to pacify
-a linter which isn't smart enough to distinguish the important cases
-from the unimportant ones. As such, I had some trouble justifying (to
-myself) that this linter complaint is really a good idea, but
-eventually convinced myself that it's worthwhile in the long run for
-the same reasons I mentioned in my response to another patch in this
-series. Namely, (1) there are good number of cases in which the loop
-body is populated with "real" commands which could fail, so we really
-do want to be told about missing `|| return 1` in general, and (2)
-it's easier to have a single simple rule which we can point test
-authors at ("end all loop bodies with `|| return 1` (or `|| exit 1` in
-a subshell)") rather than complex rules laying out cases when you must
-or need not use `|| return 1`.
+Thanks Elijah, Peff, and Fabian for reading through the series.
