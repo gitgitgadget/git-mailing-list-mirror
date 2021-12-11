@@ -2,72 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A281CC433EF
-	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 03:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AC46C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 04:45:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345712AbhLKDsb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 22:48:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42894 "EHLO
+        id S1345924AbhLKEtc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 23:49:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236273AbhLKDsb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 22:48:31 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62CCDC061714
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 19:44:55 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id gf14-20020a17090ac7ce00b001a7a2a0b5c3so10787542pjb.5
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 19:44:55 -0800 (PST)
+        with ESMTP id S236242AbhLKEtb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 23:49:31 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3894FC061714
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 20:45:55 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id l25so36247250eda.11
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 20:45:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=W85i9I3wbh+TiPw3ML6T57IxwRPzrv+xUQ+FdWt+K8g=;
-        b=GkzOSLV0rK9rSiEGPjMyIwgc1T2scpVsOZgBt+Tyo7QYZdK0JYAmjBdZgybHMJg6cf
-         XYyaFEBOgOr4dAU8E0lnvSSOX/xtWOQENc/OaIwdHIFEzwFVwape82a+385NoM+X78bp
-         ic8UhwoLOk0FCCBNcxHXm8X2mQyueDIXbeeEO/2vTDxWW7NIYixzAAmvt0LMYmCcthyK
-         H+Rn5nS8uwfHqNNLiK1sweJxiNgvpBnKmJo34iyIRQSd6BnJWFtxkGOvPPpPG5SQb5a6
-         xvhYawYayQ6N5MGY2gog/UJweinwnGHTFlgDLLnbpiT50ozn9F2jOknGiCMbr2UuGcw+
-         5lMw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Bfy0Z56EO6rJBMOBQRKlWkK5Fwv8qboeTPOl+JRqve4=;
+        b=EcNneJJsZKmeCqVK90TADLXUOBQ+j+YVhHMfWgiNZudtISLhz//gw/+WKwSjjjz+p2
+         DbZuL58d/pTnYMJ93uQOQ+yaGV32IJte+gOn5+VNpAIPA/3+LEjNLZyVrA7Fda6Ao0G9
+         JqjGwJ5hqVYVHHQDkz4aoH3SI43H75cD1LrFBgBXNSz3MxY7uebidDe3uwznCviqdMCW
+         bggsAjqt43LgngNi+dBInt2BsnaULdFZA0MofYdiX9IEf8SHjKn9eNoscABi+CgCN/di
+         sxVnXnVKLxKwFhy3w5aIrwV/NVTmglbpE/wWez0MAdG8YgQ+te9ktYAmis7EqbEDbuUX
+         WyOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=W85i9I3wbh+TiPw3ML6T57IxwRPzrv+xUQ+FdWt+K8g=;
-        b=x/qVO5CkInI3p1/ja8R+Y7joR0Gn/h+9702rtiOoUSq1LSQmw3me6LELO6PNPTDWft
-         mw8TAsjes676WaaJqAMXy9YdbJV//FI1RUJynttLbuumnGm2P6pbN6owhY87kWwe+5rA
-         zE0T4BuIFuy2VjwqJOrwp27ugL+6i/jU1BegbfMf/VaY5m4rgPYAFnKXybOTBJF5A9cH
-         7iPdiaSdqrUz2jodHfrjqQI5mzpPrEpYPR7yDZ03GpSX1qQ59j6NwEUjCLV+4WKD7T+P
-         ISCPoL8EIxpHtVy9Z8wWaoLoVObVDQuGgvJ9HuTW9/BlOOGfuFWvwT5NkXKgODr8bJtZ
-         +H9Q==
-X-Gm-Message-State: AOAM532dTU7N3RjHGhXP2Ih1TXkkIB+6x068+HNmBXuaU/jhppEmysZF
-        6ciMpPuYEO6E6AuBL7wONVnVZ0CbvL8=
-X-Google-Smtp-Source: ABdhPJzUWZB68gP5lIMQPhXb1nI6Lqdh0Xlu3ukKVYgolQyhK+PftPwC1x3gMR0raQO742mJmaKLEw==
-X-Received: by 2002:a17:90a:fe87:: with SMTP id co7mr28224597pjb.21.1639194294821;
-        Fri, 10 Dec 2021 19:44:54 -0800 (PST)
-Received: from neerajsi-x1.localdomain (c-24-56-226-231.customer.broadstripe.net. [24.56.226.231])
-        by smtp.gmail.com with ESMTPSA id t38sm4764623pfg.218.2021.12.10.19.44.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Dec 2021 19:44:54 -0800 (PST)
-Date:   Fri, 10 Dec 2021 19:44:52 -0800
-From:   Neeraj Singh <nksingh85@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: ns/batched-fsync and ns/remerge-diff
-Message-ID: <20211211034452.GA15683@neerajsi-x1.localdomain>
-References: <xmqqilvvluoa.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Bfy0Z56EO6rJBMOBQRKlWkK5Fwv8qboeTPOl+JRqve4=;
+        b=1kZ3WIiYWXjnOETM+mUu6TL8L7uq7mhMuUTm+9MWTYehGpw644feX8zpq7WKOUGYzN
+         PRTskGjgGQhmeKulG/Sl54PV4ocFDl5VlXa3I3TxpR5EBEfTGxkvNr+ED+/Ee+PtK7yF
+         qg/OxerA0vEjOQ5/KmTTE8TTjAABOB4wXTiDRqmpECRXz5M4tFuxZYAm8uK74zwEw0I0
+         whheGjKZW6GjWZ8O3Au9aQZTsJpWBcmCRFFGPIy5nsLD3NUR7fzv0akTv+ShDNLF++pI
+         tMdYfimD7vTw4lHfBnjrQxJcCSxS6VfB0CtkoPjjNUQexRnYP2mM1GCul2wRN4oPrqwk
+         xJ+A==
+X-Gm-Message-State: AOAM532QUp08C3d0jd0v5cc4gAJ0uYtDkry1r/efvG8DVolKTJv/78xh
+        qKatbcZp7t1iLXfwzuzkuM+HwwecQuh+m8LugZCDUIZ0M2c=
+X-Google-Smtp-Source: ABdhPJz7akCn13/02ynZi9RSIiuX4PMfTZRRyu78Aaaz2eFBaTy2SfuHyDo3IeKETgMYbF+vUmoljw/dRYTjG9wMr9c=
+X-Received: by 2002:a05:6402:d73:: with SMTP id ec51mr44402159edb.175.1639197953684;
+ Fri, 10 Dec 2021 20:45:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqilvvluoa.fsf@gitster.g>
+References: <pull.1080.v2.git.1638992395.gitgitgadget@gmail.com>
+ <pull.1080.v3.git.1639149192.gitgitgadget@gmail.com> <211210.86v8zwbev9.gmgdl@evledraar.gmail.com>
+ <CABPp-BHLRUQmjEoO_eEvZWTrVFK_xdMoQH5Q9DAj7y=JrKDzig@mail.gmail.com> <211211.86ee6jc1t2.gmgdl@evledraar.gmail.com>
+In-Reply-To: <211211.86ee6jc1t2.gmgdl@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 10 Dec 2021 20:45:42 -0800
+Message-ID: <CABPp-BFEayJvGytbsi76Nqe=tWj6zX5Aa+ErAxG=akC-yp1JFw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/5] Sparse index: fetch, pull, ls-files
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Victoria Dye <vdye@github.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-I'd recommend dropping ns/batched-fsync from 'seen' since it will be pretty much rewritten on top of ns/core-fsync [1]. I don't think there's value in looking for conflicts or testing the current version.
+On Fri, Dec 10, 2021 at 6:28 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Fri, Dec 10 2021, Elijah Newren wrote:
+>
+> > On Fri, Dec 10, 2021 at 8:31 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > <avarab@gmail.com> wrote:
+> > [...]
+> >> So it's very nice to have the new diff test in 2/5, but would be much
+> >> nicer/assuring to have that split into a trivial function followed by
+> >> seeing how the diff looked in combination with each of the other optio=
+n
+> >> that "ls-files" accepts.
+> >
+> > There's no point testing in combination with flags that only affect
+> > untracked files.  And I'm very dubious of adding testing for a case
+> > where we would need to add an explicit disclaimer that "We have no
+> > idea what the output should be but we are testing it anyway".  So the
+> > options you suggest at least are things I'd rather not see us trying
+> > to add to the testing here.
+>
+> This series is adding a new flag to ls-files, it doesn't error out when
+> combined with other existing flags, and observably changes their output.
 
-Also my understanding is that ns/remerge-diff will be dropped in favor of an updated series from Elijah Newren.
+Ah, I think you had a misunderstanding here.  If what you say here
+were true, then indeed we would need some testing and it'd suggest
+some kind of bug.  But the combination here does not observably change
+the output.  You were missing an important testcase for comparison.
+Let me repeat your testing and sprinkle in some commentary:
 
-Thanks and have a good weekend,
-Neeraj
+> >>     $ ls -l sparse-index/x
+> >>     ls: cannot access 'sparse-index/x': No such file or directory
 
-1. https://lore.kernel.org/git/pull.1093.v3.git.1639011433.gitgitgadget@gmail.com/
+Right, this is a sparse directory; good to double check.
+
+> >>     $ git -C sparse-index ls-files --stage 'x/*'
+> >>     100644 78981922613b2afb6025042ff6bd878ac1994e85 0       x/a
+> >>     $ git -C sparse-index ls-files --stage --no-empty-directory 'x/*'
+> >>     100644 78981922613b2afb6025042ff6bd878ac1994e85 0       x/a
+
+Right, --no-empty-directory by itself is a useless option that won't
+affect the output of ls-files; it only takes affect with --directory,
+which in turn only takes affect with other options.  Since that
+options is useless, the output is the same for both of these.
+
+> >>     $ git -C sparse-index ls-files --stage --no-empty-directory --spar=
+se 'x/*'
+> >>     040000 aaff74984cccd156a469afa7d9ab10e4777beb24 0       x/
+
+Here you added --sparse, but you neglected what it would show without
+--no-empty-directory, which is a critical comparison point.  So let me
+fill it in:
+
+     $ git -C sparse-index ls-files --stage --sparse 'x/*'
+     040000 aaff74984cccd156a469afa7d9ab10e4777beb24 0       x/
+
+Now, this case I added in comparison to the one three above it shows
+that, yes, --sparse does indeed change the output relative to --stage.
+And it does so by design.  Now if you compare my added case to the
+last one you showed, you can verify that adding --no-empty-directory
+to that mix does not change the output further; --no-empty-directory
+is a useless/ignored option unless you also include other flags that
+were not involved here.
+
+> I think erroring out would be fine, or doing whatever it's doing now,
+> but either way the gap in test coverage should be closed, shouldn't it?
+>
+> I'd think the easiest and probably most prudent fix would just be to say
+> that we don't think some of these make sense with --sparse and have them
+> error out if they're combined, no?
+
+ls-files offers several options that allow you to either slice and
+dice or tweak the output, and function on two kinds of files: tracked,
+and not tracked.  Several examples of such flags:
+   * tracked: --cached, --stage, --unmerged, --modified, --sparse (and
+I think --error-unmatch)
+   * not tracked: --others, --ignored, --exclude, --exclude-from,
+--exclude-standard, --directory, --no-empty-directory
+
+Now, in particular, specifying any of --exclude, --exclude-from,
+--exclude-standard, --directory, or --no-empty-directory is a complete
+waste of breath and will do nothing unless you also specify --others
+or --ignored.  None of these options interact in any way with any of
+the flags from the --tracked category.
+
+I don't think we want an n! permutation of all combinations tested.  I
+don't even think an n^2 pair-wise combination makes sense when we know
+that some flags have no effect on their own.  What would make sense is
+perhaps adding a warning to ls-files when specified flags will have no
+utility due to depending on other flags that have not been specified.
+But that's in no way specific to --sparse and does not make sense to
+me to make part of this topic.
