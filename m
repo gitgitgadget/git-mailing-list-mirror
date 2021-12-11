@@ -2,217 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74B78C433F5
-	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 01:53:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC4A7C433EF
+	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 02:06:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241105AbhLKB4t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 20:56:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46096 "EHLO
+        id S235331AbhLKCJk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 21:09:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbhLKB4t (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 20:56:49 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BD12C061714
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 17:53:13 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id v1so35610304edx.2
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 17:53:13 -0800 (PST)
+        with ESMTP id S233777AbhLKCJk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 21:09:40 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1997EC061714
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 18:06:04 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id v1so35662640edx.2
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 18:06:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skydio.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+e8cDcp3TwtdEw9fYWrbhuU541sUA/72es/2/ZeVbLk=;
-        b=u10yVGO59o/BlIZXra1P8RezW0PZXC3YBy/WdQPaMfZ2/5Q1KpST6AiG9lRUIvY6YJ
-         BgIsFz/2Dvx/guGHMVhs4BB3v4u1bUQWtPr6Fp5EGff8MGIDnLmABfSh9gu1vi2SdbAd
-         gOykZVrTlerUGwWelJZ2UDIyBZGmP0DDkgGT9WX7KSXrCqyTqUJNZb7zwyflhL60ZkA+
-         gi+mOe5TAKt/g3HxiDaRCNytfoPDECfY98FVOkj80mj4aWae5WLWdv2ggDXL+96Kag1G
-         8Vcxhthb+VvQ6uNO2bd9eAR3Xd4HVsv5InFDo0d9mZzWExPo4sJpldmZf/XwvpocIP2i
-         ustA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=cJ0s3X4uAnJ9siMACN/R8av9ehCvBnRcvuhcdesXAH4=;
+        b=CqP0AY89Oe3+UHBT0+dFAZ5heKkossfgyqecvO+Ihhx2xHp459q2vyysmGy8mkyzrj
+         nsqLE2DB/vy6ZucWlInH1dw4zzKhDV+6/Co0W4GrW6BemdpQBUEhteS4WjCEUBqzKBhu
+         muHGHWQ7S9zoTV7IbPQDCe3Ua4hqmQkmgFXlI5Gqfcp31gDioQBDzSfz+bXgPsvhCB9r
+         TwZTurQ0/Z/P41APffM7fDJ+k88cgUkru5PRGta1qokIpLs8fzh5w05cKFr5UimlseTt
+         ILqhbAA7/waInVikR38XDeefPZjC+TYPhuAa3M9S4j1v6mB/kIRbwhpIbcuq1cmND/SC
+         c4Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+e8cDcp3TwtdEw9fYWrbhuU541sUA/72es/2/ZeVbLk=;
-        b=ADlL7O49GE5+F9S1/xQO0Z8OPsthWEtyVLH98xn81CeoEUDu4UMR8MHGbEHzpewdK9
-         nJtOL2XV3+TcJG+c4iQinEwqz54zR2YfYJxT4nPrvXPd5rZa68Lidh81ExLmhZHksHXx
-         KBvmS8BaRpLQ5gJ5xUB5Sne8CRfYaGn4kDG/Gs2CrK6Km3V9GbdZJ1WjktNelGs1Vgjq
-         +c1cIjvn08yc+WiTVQDv9iImkz/rZsZnOKceEAlEofxZ1plY3ukssFrS93awGFAZllAq
-         L26mZ2aV1nU6OupekvLF1Frv7sID3PGAh7hUsvNKQkYNG1T+uT73Ny8ZiI96Alg6FdtB
-         oyuQ==
-X-Gm-Message-State: AOAM530udPHrXv9QQ6vigY5JuxIDZ3/GnDbU2qrhW6I8XFWcDigbSPy/
-        qI+nXQqW1yMIEKJcEo9vu2N1GmVIjM2s8HJnraXMeSVug0btmQ==
-X-Google-Smtp-Source: ABdhPJy3tJhDMANmX4BiGFzeJzan7B14jz8OswWwJ4aIuoXCxKt4AEB145D/tLQK5hPIOkgaaAIDq0BoQ3lbRjLyqMI=
-X-Received: by 2002:a17:906:2590:: with SMTP id m16mr28758956ejb.38.1639187591400;
- Fri, 10 Dec 2021 17:53:11 -0800 (PST)
+         :message-id:subject:to;
+        bh=cJ0s3X4uAnJ9siMACN/R8av9ehCvBnRcvuhcdesXAH4=;
+        b=fOseASpJnUCwB69dKLjsvQgFmVsF5VH6XycmsxivrOn4tOWHQYbSdv3GR87A60LPmE
+         e8nxLiiEzxAKhDGBPmdoGKOfk1oKzbVxbixAzgZdiOlxXVfip4bphD62gFVpszJchst7
+         aRTVpDB2DC9z34B6BxJY8IWb0MD2ovSMKicgR8LkEpL2Nmq+2rgFaAAEQzN3925KLdUw
+         JFpeY1h6lNlnc/u97RkCleGM814jzfdZYbgI15aLYBqoPkPaWzKJgiXp2vhChap+aB18
+         5Vr1sNjHhRfpUnWCbxJ1/nhmeYl+kRwDmy0FzmbaZ3A2rzZEn8ztQTKl11FX4EC2ZGXl
+         D1GA==
+X-Gm-Message-State: AOAM531EMdCOOiAMOUMEoKJ2F4EaJVKXrS1M2D4SGRComnSNb22lLccI
+        xh/3p3it59REFY3WST6cqq3dYNGsJ+pgilX2TM+l+4m7ubNmww==
+X-Google-Smtp-Source: ABdhPJy7PwJDbngHPJM7n2557eHE5UNt75cqUAqIcVf4R6bQI9RWo0mM98diNtGs5TFxSyQYWyOqYzbSpPR7YFnzWcA=
+X-Received: by 2002:a17:907:1629:: with SMTP id hb41mr29691615ejc.328.1639188362342;
+ Fri, 10 Dec 2021 18:06:02 -0800 (PST)
 MIME-Version: 1.0
-References: <YVmTKWlOFr+IwzzI@Sun> <YWsbcbASLG3QNPyZ@Sun> <xmqqv91wyyij.fsf@gitster.g>
- <CAMKO5Csj_ck+1+0JsvmF7eSkr514GBUtznKqPvkfEwHGJ34cwQ@mail.gmail.com> <YYPA9tKnsfTBOWDM@Sun>
-In-Reply-To: <YYPA9tKnsfTBOWDM@Sun>
+References: <xmqqwnsvw5xi.fsf@gitster.g> <20210728031437.14257-1-jerry@skydio.com>
+In-Reply-To: <20210728031437.14257-1-jerry@skydio.com>
 From:   Jerry Zhang <jerry@skydio.com>
-Date:   Fri, 10 Dec 2021 17:53:00 -0800
-Message-ID: <CAMKO5CtYu6mzthG3LsKS3zGQcQVvjPuKs+-2vxfJm2C723jTgw@mail.gmail.com>
-Subject: Re: [PATCH] apply: fix delete-then-new patch fail with 3way
-To:     "Hongren (Zenithal) Zheng" <i@zenithal.me>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Fri, 10 Dec 2021 18:05:51 -0800
+Message-ID: <CAMKO5CvETNfab9KLU0DDchvdM7JEJupifyKKPbWwz4QqiqcqPg@mail.gmail.com>
+Subject: Re: [PATCH V2] git-apply: silence errors for success cases
+To:     git@vger.kernel.org, gitster@pobox.com,
+        "Hongren (Zenithal) Zheng" <i@zenithal.me>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 4, 2021 at 4:16 AM Hongren (Zenithal) Zheng <i@zenithal.me> wrote:
+On Tue, Jul 27, 2021 at 8:14 PM Jerry Zhang <jerry@skydio.com> wrote:
 >
-> On Tue, Oct 19, 2021 at 11:56:11AM -0700, Jerry Zhang wrote:
-> > On Sat, Oct 16, 2021 at 11:08 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > >
-> > > "Hongren (Zenithal) Zheng" <i@zenithal.me> writes:
-> > >
-> > > > On Sun, Oct 03, 2021 at 07:25:29PM +0800, Hongren (Zenithal) Zheng wrote:
-> > > >> For one single patch FILE containing both deletion and creation
-> > > >> of the same file, applying with three way would fail, which should not.
-> > > >>  ...
-> > >
-> > > Sigh.
-> > >
-> > > Jerry, it seems that the earlier "let's be more aggressive to use
-> > > --3way, instead of using it as a fallback" is turning out to be more
-> > > and more trouble than we hoped.
-> > >
-> > > One thing to notice about the patch used for this test is that ...
-> > >
-> > > >> +test_expect_success 'apply delete then new patch with 3way' '
-> > > >> +    git reset --hard main &&
-> > > >> +    test_write_lines 1 > delnew &&
-> > > >> +    git add delnew &&
-> > > >> +    git commit -m "delnew" &&
-> > > >> +    cat >delete-then-new.patch <<-\EOF &&
-> > > >> +    --- a/delnew
-> > > >> +    +++ /dev/null
-> > > >> +    @@ -1 +0,0 @@
-> > > >> +    -1
-> > > >> +    --- /dev/null
-> > > >> +    +++ b/delnew
-> > > >> +    @@ -0,0 +1 @@
-> > > >> +    +2
-> > > >> +    EOF
-> > >
-> > > ... this is clearly not a patch that was generated by Git.  We do
-> > > not show two separate patches, to delete and then to create, the
-> > > same path to express a file modification, and that is true even when
-> > > we are showing a total-rewrite patch.
+> Certain invocations of "git apply --3way"
+> will print error messages even though git
+> is able to fall back on apply_fragments and
+> apply the patch successfully with a return
+> value of 0. To fix, return early from
+> try_threeway() in the following cases:
 >
-> I'm aware of such process. This patch is generated by manually concatenating
-> two patches together.
+> When the patch is a rename and no lines have
+> changed. In this case, "git diff" doesn't
+> record the blob info, so 3way is neither
+> possible nor necessary.
 >
-> Why should I concat patches, you may ask. Well, there are cases where
-> I have to distribute a patch series containing dozens of patches (like
-> packaging for a Linux distribution), instead of multiple files, one
-> file would be convenient. Also, since the patch series may be out-of-date as
-> the upstream repo progresses, git apply -3 would be better.
+> When the patch is an addition and there is
+> no add/add conflict, i.e. direct_to_threeway
+> is false. In this case, threeway will fail
+> since the preimage is not in cache, but isn't
+> necessary anyway since there is no conflict.
 >
-> Despite the above example. Placing patches inside one file or not should
-> not affect the result of git apply -3
+> Only error messaging is affected and other
+> behavior does not change.
 >
-> Refer to the man page of patch
+> Signed-off-by: Jerry Zhang <jerry@skydio.com>
+> ---
+> V1->V2: rebase onto master and rerun tests
 >
-> From my first post:
-> > > >> The man page of `patch` says: If the patch file contains more than
-> > > >> one patch, patch tries to apply each of them as if they came
-> > > >> from separate patch files. So I think this way is more standardized.
+> I think I addressed previous comments. What
+> are the next steps for this patch?
 >
-> > > In addition, the above set of two patches lack the "index" header
-> > > that records the old and new blob object name, because it is not a
-> > > patch generated by Git.  Whether 3-way is attempted before or after
-> > > the normal application, because the object names there are a crucial
-> > > ingredient for the 3-way merge logic, there is no way for it to work
-> > > at all.
+>  apply.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> It is my fault that for simplicity, I did not use a way to generate
-> patches with an "index" header in it. Below is the procedure to
-> reproduce this "bug" (I still call it "bug") even with index in it.
+> diff --git a/apply.c b/apply.c
+> index 44bc31d6eb..fb321c707b 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -3560,7 +3560,9 @@ static int try_threeway(struct apply_state *state,
 >
-> mkdir delete-then-new
-> pushd delete-then-new
-> git init
-> echo 1 > a
-> git add a
-> git commit -m "init"
-> git rm a
-> git commit -m "delete"
-> echo 2 > a
-> git add a
-> git commit -m "new"
-> git format-patch --full-index -o ../ HEAD~2
-> git checkout HEAD~2
-> cat ../0001-delete.patch ../0002-new.patch > ../delete-then-new.patch
-> git apply -3 ../delete-then-new.patch # it would fail
+>         /* No point falling back to 3-way merge in these cases */
+>         if (patch->is_delete ||
+> -           S_ISGITLINK(patch->old_mode) || S_ISGITLINK(patch->new_mode))
+> +           S_ISGITLINK(patch->old_mode) || S_ISGITLINK(patch->new_mode) ||
+> +           (patch->is_new && !patch->direct_to_threeway) ||
+> +           (patch->is_rename && !patch->lines_added && !patch->lines_deleted))
+>                 return -1;
 >
-> > >
-> > >
-> > > >> +    # Apply must succeed.
-> > > >> +    git apply --3way delete-then-new.patch
-> > >
-> > > So, one simple and safe answer would be "Don't do it, --3way is only
-> > > about Git patches."  IOW, the command is failing as designed.
-> > Yeah I do wonder why one would specify "--3way" when the behavior that
-> > they want is actually "direct application". Maybe the OP can elaborate on their
-> > use case?
+>         /* Preimage the patch was prepared for */
+> --
+> 2.32.0.1314.g6ed4fcc4cc
 >
-> I have mentioned the specific 3way usage in the above case.
->
-> > Part of my original assumption was that "--3way" users actually *want* 3way,
-> > and thus the behavior change wouldn't be too controversial. Of course since
-> > git has so many users, it shouldn't be that surprising that there are many use
-> > patterns out there.
->
-> I do want 3way, but there are cases where 3way would not work,
-> like when 3way patches and direct patches (e.g. delete/new, mode change)
-> are mixed together in one patch file.
->
-> I think we should enumerate all cases where threeway should be avoided
-> and we should fallback to directly applying. From my inspection of the
-> code, it seems that it is not sufficient now.
->
-> > One possible fix-all solution would just be to back out the original change and
-> > move the behavior into a new flag "--actually-3way" (name tbd) that will apply
-> > this behavior and "--3way" would keep the old behavior. The downside here
-> > would be proliferating more flags that would complicate the api and require
-> > maintenance. And of course if users depended on the *new* behavior in the
-> > meantime, then we'd be stuck.
-> >
-> > Back to the patch at hand, it does seem like it would work, however I
-> > notice that
-> > if a modification patch were added to the end of the file such that it were
-> > deleted -> add -> modify, that modify wouldn't benefit from actually
-> > doing a 3way
-> > since the file would not be in the index due to this short-cut. The
-> > more general approach
-> > of refactoring to write out results after each patch instead of at the
-> > end *would* fix
-> > both things. I guess this goes back to the larger issue of the
-> > threeway implementation
-> > not being well suited to non-git patches.
->
-> Yes, the problem comes from the short-cut, and I have mentioned that
-> we should write out results immediately instead of at the end.
->
-> From my first post:
-> > > >> Another way, which I do not adopt because it requires major refactor
-> > > >> but it is more clean and understandable, is to change the way
-> > > >> write_out_resultes() is called, namely instead of calling it
-> > > >> after all patches being applied in one patch FILE, after each patch
-> > > >> being applied, we write_out_result immediately thus deleting one file
-> > > >> would immediately delete the file from the index.
->
-> > >
-> > > To extend and automate the solution would be to see, just before
-> > > attempting to do the 3-way, if the incoming patch is a Git generated
-> > > one, and do not even bother using the 3-way logic if it is not.
-> > >
->
-> Concating two git-generated patches together would fool this mechanism, I
-> suppose. So the above "bug" still exists.
-I was testing this issue and I found that one of my other patches,
-"git-apply: silence errors for success cases", happens to fix your reported
-issue a bit more generally / cleanly by avoiding 3way for all new patches
-without an add conflict. Let me add you to that thread and ping for more
-review.
+Any updates on this patch? I had addressed the previous comment in this
+thread in a different patch "apply: adjust messages to account for
+--3way changes"
+that was already merged in a while ago.
+
+I originally intended this to mainly fix print message behavior, but
+while testing
+I found that it also fixed a separately reported issue from this thread:
+https://www.spinics.net/lists/git/msg421481.html.
+
+I probably owe an update / refresher on why I originally submitted these
+features in the first place. I've written a tool for branchless / patch stack
+based code review and development w/github. The core of this is a mechanism
+that can cherry-pick commits without touching the cache or working tree
+by using "git apply --cached --3way" with a custom index file. We've been
+using this internally with a custom built git for a while now and gotten pretty
+good feedback. We'd like to open source this tool soon, and it'd be nice
+if our open-source users (eventually) don't need to build git themselves :).
