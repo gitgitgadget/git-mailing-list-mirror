@@ -2,119 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C414C433F5
-	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 05:15:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 696D8C433EF
+	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 06:35:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229544AbhLKFTE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Dec 2021 00:19:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34054 "EHLO
+        id S229474AbhLKGfA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Dec 2021 01:35:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbhLKFTE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Dec 2021 00:19:04 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8AF1C061714
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 21:15:27 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id v1so36385720edx.2
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 21:15:27 -0800 (PST)
+        with ESMTP id S229459AbhLKGe7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Dec 2021 01:34:59 -0500
+Received: from mail-ua1-x934.google.com (mail-ua1-x934.google.com [IPv6:2607:f8b0:4864:20::934])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAB8DC061714
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 22:34:58 -0800 (PST)
+Received: by mail-ua1-x934.google.com with SMTP id r15so20539015uao.3
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 22:34:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Elyjw7aKh2WG0TVFYRdR6zZ0OZB09XyrQxObjUBQfEQ=;
-        b=KQ/ckq4HR2d9ujRzpZzb3TCrZfOivC6ZEH2l3+2dEcnm1L2YpDMEZTzhJmee6w0uS0
-         6nvuHZ8GCTh9ANYOo/155E+EHJc8v+QUDYMZSB1lK1uHON6dYC2D6vi/NJK1Nj6chuFx
-         zJE1oz87ZBnFEeWA9GR/NxynM64kt9iFaUdbBRBDO/EJt8kWquGqsqCNMEIxeZpEBGCM
-         HKpE+ee3CPe45LQV28weJVMDH3dzIMoEWHNQeIuN8/Zie5oHIaagDXF3tV79w7XF9BkU
-         1qkPlQTMRvHzdiVupMal0udJpPKHvwTtsd32Rkkn6U1xCz7/jmXACdg78S5aIaRmGsMJ
-         fBnw==
+         :cc:content-transfer-encoding;
+        bh=FbE5w+h2BSEXkPPIBskJCIIdNlKwd9UCXI4hG/L3cN4=;
+        b=ET/DarEC5i/08UB/hIawllTFBPqfecJWsOuFD+2sYRlXYF4wowXdL9sysFvMpKz1Vt
+         Wwo4XKfevSHqK7k5csOSUJDuEgCXyJEdhmz1x0pQA6ikLaaLh+Una4KypUjo34/G3Api
+         ZNL6uSDpqSl68RyCr0Y74fI2O9jkGJcqbUFVVK7e8Yk955GIF4eXjEKQTL50wMNe3fVN
+         fqPYtzLKWQbD1EOWr/Y5b8apd8WAKsyfONBHclDADV0xcD/LlWfjoH1+SxUdAjerTuh2
+         McQZaqXkRI6d6LhhCUUpn97r1mjNtaY7L25BDLnXmH754Ut+f6SCzbeZj4rMVoqNb/0P
+         dZAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Elyjw7aKh2WG0TVFYRdR6zZ0OZB09XyrQxObjUBQfEQ=;
-        b=3zRtPDeD33pf6F+Zdui1eCKsM0OPgBo8GI/aT6Dcef+B/8b/bgVQjaNcewGcvzbWRC
-         JmX5uToMyuByMIMW3ng0rJlrskQLWcReaR4hNyuDqhd4tHHNpGCG5C6cx0oswiIiyjb8
-         TKfdTlAEyMke5T4Kd3Nq83GPXxrZe7xS7o8E+kEPxC164nYtjDqehN9Moh3vmbhGbcSb
-         /GIdPlRLv0OVx+BQzQ7xUZ7UY97Sh5MMV5nyh/xzKC6FsWbhaVzcWjOy1uzZj6ZH9D2A
-         1kdYa3tuDGgFCK0eTgmnTu6KTD276/kSKSBU0ccmxryMd737zQ0hEtU8PPXkx2lAOMOU
-         UKcw==
-X-Gm-Message-State: AOAM530QiOg/fYvjWjrlt6aYY51XMCsNaA9doJY8urWFlyaUmKrcI8sj
-        X97waNolR/kgCyzGIJ7NLKyiKiK8m7SsxBohUZI=
-X-Google-Smtp-Source: ABdhPJw6OTlwyaoYdZRjOVmtGdOR09Eg8UZqGu32ukGV4iDWpdardPfjmI5h8bhnQpXnT2H0paCvJlu5z4XTZhUm1So=
-X-Received: by 2002:a05:6402:491:: with SMTP id k17mr44995874edv.333.1639199726259;
- Fri, 10 Dec 2021 21:15:26 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=FbE5w+h2BSEXkPPIBskJCIIdNlKwd9UCXI4hG/L3cN4=;
+        b=TAM3qolNlCPQ37Rm+6qQz6qgnW8rZzd8qcQyyPnKj21WnkLQSH73GnOIfRAohQLJX8
+         tcpqRnoDmXZC9ExjDWNGlAPce9mBP2GcngkrSq33RkT7zO5Y9CNMrLCHkx/comQZtogt
+         ckRLtLwlZhb13YzRW4UtbfMLG/dG8aRbd3olwIxM7hYrpTikJfpYwU/gmipeqxbH/9Mi
+         YX9j+UD2xcD2hUfHlVd6yOak83tb3YpW1XPPpN12gqKf78a7NTm4pEC6vL0VQjo0JQzn
+         dWUp2r9+Mx6QaVieLzS8fjLgjnF58uKvItgOUsXc39Ad4mmVZKj0awdVefkXZEXhieXr
+         fNaw==
+X-Gm-Message-State: AOAM530F+4DuWz5iImhzLsg/qORDYgM013mc6iBspY/sObks54J0v2pz
+        REoXqtBYK8BowOciHRd8WunHdO2cqi7tAUKn+vI=
+X-Google-Smtp-Source: ABdhPJw49ROXV7tLzyyROQPWtNQrJ+w2AF1z7VFICghGA8/nN1WWsCHL3FHdbbrO/LfHflu5XZF5Vg8iqS2K5WdWgSk=
+X-Received: by 2002:a05:6102:a4a:: with SMTP id i10mr20549769vss.47.1639204497954;
+ Fri, 10 Dec 2021 22:34:57 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
- <pull.1005.v10.git.1638538470.gitgitgadget@gmail.com> <CABPp-BGpe9Q5k22Yu8a=1xwu=pZYSeNQoqEgf+DN07cU4EB1ew@mail.gmail.com>
- <xmqq4k7nmksi.fsf@gitster.g> <nycvar.QRO.7.76.6.2112081207320.90@tvgsbejvaqbjf.bet>
- <xmqq8rwuv3i2.fsf@gitster.g> <nycvar.QRO.7.76.6.2112110044010.90@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2112110044010.90@tvgsbejvaqbjf.bet>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 10 Dec 2021 21:15:15 -0800
-Message-ID: <CABPp-BGt=AcCg-74SSpS7iPFOCKnWE7Q7+CruvALLxKnqXGRuw@mail.gmail.com>
-Subject: Re: [PATCH v10 00/15] Upstreaming the Scalar command
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
+References: <pull.1095.git.1639117329.gitgitgadget@gmail.com>
+ <254b352e31029d8151eb6a974fdf8c127340cf79.1639117329.git.gitgitgadget@gmail.com>
+ <CAP8UFD0MK++3QdMAvJ6Az0LZyXUWXRJcRQPG1THKw4CFW0yRLg@mail.gmail.com>
+In-Reply-To: <CAP8UFD0MK++3QdMAvJ6Az0LZyXUWXRJcRQPG1THKw4CFW0yRLg@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sat, 11 Dec 2021 14:34:46 +0800
+Message-ID: <CAOLTT8SLQXbH_GGF1sArVSsZ1b=poqMPhdSWOkWPS0f_SGoONw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] checkout: introduce "--to-branch" option
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        "Theodore Ts'o" <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B412=E6=
+=9C=8810=E6=97=A5=E5=91=A8=E4=BA=94 16:34=E5=86=99=E9=81=93=EF=BC=9A
 
-On Fri, Dec 10, 2021 at 4:29 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+> >  [verse]
+> >  'git checkout' [-q] [-f] [-m] [<branch>]
+> >  'git checkout' [-q] [-f] [-m] --detach [<branch>]
+> > -'git checkout' [-q] [-f] [-m] [--detach] <commit>
+> > +'git checkout' [-q] [-f] [-m] [--detach] [-w|--to-branch] <commit>
 >
-> Hi Junio,
+> It's a bit strange that --detach can be used along with the new
+> option, as the purpose of the new option is to not detach. It makes
+> one wonder what happens when both --detach and --to-branch are used.
 >
-> On Wed, 8 Dec 2021, Junio C Hamano wrote:
+
+When both --detach and --to-branch are used, --detach will work...
+Of course, it should be reasonable to prevent them from being used at the
+same time.
+
+> I wonder if all the following lines:
 >
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>       git checkout [-q] [-f] [-m] [<branch>]
+>       git checkout [-q] [-f] [-m] --detach [<branch>]
+>       git checkout [-q] [-f] [-m] [--detach] <commit>
+>
+> could be replaced with just:
+>
+>       git checkout [-q] [-f] [-m] [--detach|--to-branch] <commitish>
+>
+
+Well, it will be much more concise.
+
+> >  'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_=
+point>]
+> >  'git checkout' [-f|--ours|--theirs|-m|--conflict=3D<style>] [<tree-ish=
+>] [--] <pathspec>...
+> >  'git checkout' [-f|--ours|--theirs|-m|--conflict=3D<style>] [<tree-ish=
+>] --pathspec-from-file=3D<file> [--pathspec-file-nul]
+> > @@ -210,6 +210,12 @@ variable.
+> >         `<commit>` is not a branch name.  See the "DETACHED HEAD" secti=
+on
+> >         below for details.
 > >
-> > > The Scalar Functional Tests were designed with Azure Repos in mind, i.e.
-> > > they specifically verify that the `gvfs-helper` (emulating Partial Clone
-> > > using the predecessor of Partial Clone, the GVFS protocol) manages to
-> > > access the repositories in the intended way.
-> > > ...
-> > > I do realize, though, that clarity of intention has been missing from this
-> > > mail thread all around, so let me ask point blank: Junio, do you want me
-> > > to include upstreaming `gvfs-helper` in the overall Scalar plan?
+> > +-w::
+> > +--to-branch::
+>
+> Using a short option name like "-w" might not be a good idea at this
+> point. Maybe if many people use the long option a lot, they will want
+> a short option name, but we can add it then instead of using one of
+> the few left right now.
+>
+
+Makes sense.
+
+> > +       Rather than checking out a commit to work on it, checkout out
+>
+> "checking out a commit to work on it" might not describe well that it
+> works when we pass a tag too and that we checkout the underlying
+> commit in the detached HEAD mode by default.
+>
+> > +       to the unique branch on it. If there are multiple branches on
+> > +       the commit, the checkout will fail.
+>
+> It might be a bit better to say that a branch "points to" a commit,
+> rather than that it is "on" a commit.
+>
+
+OK.
+
+> >  static const char * const checkout_usage[] =3D {
+> >         N_("git checkout [<options>] <branch>"),
+> > @@ -70,6 +71,7 @@ struct checkout_opts {
+> >         int empty_pathspec_ok;
+> >         int checkout_index;
+> >         int checkout_worktree;
+> > +       int to_branch;
+> >         const char *ignore_unmerged_opt;
+> >         int ignore_unmerged;
+> >         int pathspec_file_nul;
+> > @@ -1512,6 +1514,35 @@ static int checkout_branch(struct checkout_opts =
+*opts,
+> >                     (flag & REF_ISSYMREF) && is_null_oid(&rev))
+> >                         return switch_unborn_to_new_branch(opts);
+> >         }
+> > +       if (opts->to_branch) {
+> > +               struct ref_filter filter;
+> > +               struct ref_array array;
+> > +               int i;
+> > +               int count =3D 0;
+> > +               const char *unused_pattern =3D NULL;
+> > +
+> > +               memset(&array, 0, sizeof(array));
+> > +               memset(&filter, 0, sizeof(filter));
+> > +               filter.kind =3D FILTER_REFS_BRANCHES;
+> > +               filter.name_patterns =3D &unused_pattern;
+> > +               filter_refs(&array, &filter, filter.kind);
+> > +               for (i =3D 0; i < array.nr; i++) {
+> > +                       if (oideq(&array.items[i]->objectname, &new_bra=
+nch_info->oid)) {
+> > +                               if (count)
+> > +                                       die(_("here are more than one b=
+ranch on commit %s"), oid_to_hex(&new_branch_info->oid));
+> > +                               count++;
+> > +                               if (new_branch_info->refname)
+> > +                                       free((char *)new_branch_info->r=
+efname);
+> > +                               new_branch_info->refname =3D xstrdup(ar=
+ray.items[i]->refname);
+> > +                               if (new_branch_info->path)
+> > +                                       free((char *)new_branch_info->p=
+ath);
+> > +                               new_branch_info->path =3D xstrdup(array=
+.items[i]->refname);
+> > +                               new_branch_info->name =3D new_branch_in=
+fo->path;
+> > +                       }
+> > +               }
+> > +               ref_array_clear(&array);
+>
+> It might be my personal taste, but I would find it cleaner and easier
+> to understand if a separate function to find the branch we are looking
+> for was called, instead of adding all the code here.
+>
+
+You are right.
+
+> > +       }
+> > +
+> >         return switch_branches(opts, new_branch_info);
+> >  }
 > >
-> > Sorry, I do not follow.
+> > @@ -1797,6 +1828,8 @@ int cmd_checkout(int argc, const char **argv, con=
+st char *prefix)
+> >                 OPT_BOOL('l', NULL, &opts.new_branch_log, N_("create re=
+flog for new branch")),
+> >                 OPT_BOOL(0, "guess", &opts.dwim_new_local_branch,
+> >                          N_("second guess 'git checkout <no-such-branch=
+>' (default)")),
+> > +               OPT_BOOL('w', "to-branch", &opts.to_branch,
+> > +                        N_("checkout to a branch from a commit or a ta=
+g")),
+> >                 OPT_BOOL(0, "overlay", &opts.overlay_mode, N_("use over=
+lay mode (default)")),
+> >                 OPT_END()
+> >         };
+> > diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
+> > index 93be1c0eae5..53e45cfe7fd 100755
+> > --- a/t/t2018-checkout-branch.sh
+> > +++ b/t/t2018-checkout-branch.sh
 >
-> In
-> https://lore.kernel.org/git/CABPp-BGpe9Q5k22Yu8a=1xwu=pZYSeNQoqEgf+DN07cU4EB1ew@mail.gmail.com/
-> (i.e. in the great great grand parent of this mail), you specifically
-> replied to my mentioning Scalar's Functional Test suite:
+> I plan to look at the tests after we decide how the new option relates
+> to --detach.
 >
->         > > One other thing is very interesting about that vfs-with-scalar
->         > > branch thicket: it contains a GitHub workflow which will run
->         > > Scalar's quite extensive Functional Tests suite. This test
->         > > suite is quite comprehensive and caught us a lot of bugs in
->         > > the past, not only in the Scalar code, but also core Git.
->         >
->         > From your wording it sounds like the plan might not include
->         > moving these tests over.  Perhaps it doesn't make sense to move
->         > them all over, but since they've caught problems in both Scalar
->         > and core Git, it would be nice to see many of those tests come
->         > to Git as well as part of a future follow on series.
+> Thanks!
 
-This is me and my email you are quoting; these aren't Junio's words.
-I'm afraid my confusion may have snowballed for others here.  Sorry
-about that.
-
-I simply misunderstood at the time -- I thought there were scalar-only
-tests (rather than scalar+gvfs tests) that were not being considered
-for upstreaming.  As I mentioned before[1], I'm sorry for the
-confusion and seemingly opening an unrelated can of worms.  I agree
-that we don't need gvfs tests, or tests that combine gvfs with other
-things like scalar, or c# tests.
-
-[1] https://lore.kernel.org/git/CABPp-BFmNiqY=NfN7Ys3XE8wYBn1EQ_War+0QLq96Tk7FO6zfg@mail.gmail.com/
+Thanks.
+--
+ZheNing Hu
