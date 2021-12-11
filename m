@@ -2,101 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1A81C433EF
-	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 07:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1061C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 07:36:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229841AbhLKHcb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Dec 2021 02:32:31 -0500
-Received: from mail-pf1-f176.google.com ([209.85.210.176]:35419 "EHLO
-        mail-pf1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbhLKHcb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Dec 2021 02:32:31 -0500
-Received: by mail-pf1-f176.google.com with SMTP id p13so10443204pfw.2
-        for <git@vger.kernel.org>; Fri, 10 Dec 2021 23:32:31 -0800 (PST)
+        id S229844AbhLKHgP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Dec 2021 02:36:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36302 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229455AbhLKHgP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Dec 2021 02:36:15 -0500
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 054D2C061714
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 23:36:14 -0800 (PST)
+Received: by mail-pl1-x62d.google.com with SMTP id p18so7710722plf.13
+        for <git@vger.kernel.org>; Fri, 10 Dec 2021 23:36:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=RQFx6re32YdSUGXnfDNIoub6fkCLVIo5GTA0dYFbh3s=;
+        b=ToGVnBq/ygVmfQTS3mKBS9dZq4L8erdnAOac5tPUKezTqCbJXyuj1AV/aZmDBfFmyu
+         tl1sE0hOwJo7wBgVHcW4zFCULR0AP+7gtwkfmGGpLpsPbvtHRm/X//ZlXiKtKMR+njh3
+         6Nlefn2XzcSBmhq3W8JQsXDlIvBVKo/AU/D5SZqBQ2h/6mO/XtRUqQ7Kwz5zRGlMfI32
+         1C31kWuAjJ0rGSn3ZThL4VGpemhD18FQ15JbulhfD7NCrp3KymZGwqVW/dQqGNwkjNEO
+         LjZueI+o6Q5y4SbZGevieHqUIF+C/8ITCIfIOtS9gIj8vXR4Sp/UwC4/WGQLDXAFTB25
+         GAZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kVVGEcb41tt50h6PhXr+0XNjhp6dyGrOvAsQWYSKeRk=;
-        b=JxbS92UP7FD71qQwmDhXzeZkjTkEfwzkRGfsSsv9nvVba0VPaSo6BuTIaAcMM0p+dN
-         nq3ir6Wp3IISp4gbVtEYXJ5q6PuBJ4p4AQmUkFFClJmCHQcs4Xpfogs6R0G2wBbxPEuH
-         Ki55+KooXQ2d/b543MRXf2LJwlNnND62ix2kivnWV/T4myhVUh9cAYliCA42wAmhBgrT
-         ZkOQMGhirCd1ui/sIGuJp2nPADrnBgxe30utI7DoSti+MEdfkemyP9Y8yeHxr1p0wS3l
-         +cH9ANi/BoULp5us6xzT3a3kpQd13OgcpxyEWLjTtNmgtOCCSBantNaamVdQAlDtpFUq
-         feqw==
-X-Gm-Message-State: AOAM532Sxl8Ccl2Zeeeix5alRQYC0W45D7HVwpAeb1HGXpIvjEFX7iz6
-        h6Prq/JflNxCwTiR/IeQxvXLFbGQv0xTzgz9bOU=
-X-Google-Smtp-Source: ABdhPJznb+0Juk3biqdV4kZlCVtBp/EWLZ6mh0d7HzYT3G1yTzMZFzNIpO1a5G3iCBnC382Bv/8MCfm/UOlR20JgVPM=
-X-Received: by 2002:a63:380e:: with SMTP id f14mr42184646pga.227.1639207950614;
- Fri, 10 Dec 2021 23:32:30 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=RQFx6re32YdSUGXnfDNIoub6fkCLVIo5GTA0dYFbh3s=;
+        b=Jg78r3bJBfpZIrF/mh8PaECqodCgcc5465SwXhx1wqlb0nKKAnhjVAv3VsSB6x0eBH
+         IP4UZe2O0Gp2Q1hcZoo/9tdK7Sb/202BlhZ68dBkPT/CiahTcCS9NUMZ+Z1MesdRVqxU
+         njLJM60KYuG7oM+E7QJ3cVHrOrVxyLhhOpyC/L10cRO3ORko8Byeulpw60fU/AwNKkrk
+         aR8YXIXt3QkOiEdpkOuQThoGyP/Ni8tjuO9Bhoq/ju9fThrzhs14gIIf+OVKugNoyvxu
+         CxOeKuFDxS0j4a4DNW287dxLn9IwJAVwaDGQEqTSjeWYIX4VK93sU8J1uCbPTFZtduyE
+         67tw==
+X-Gm-Message-State: AOAM532W29EsneWwFnXV4jmSPH/ddy2f4G26ptDN2zxICJM8C+QwG443
+        Romgel2yAFjzMVELVB7/+uM=
+X-Google-Smtp-Source: ABdhPJz5mjjfrBReSmrPn8v5LjEaOXBE2tnj39RsCflhRGqZFDmtrCxYiKZKmZQOuhMLhLe/JS1GJA==
+X-Received: by 2002:a17:90b:3a89:: with SMTP id om9mr29654899pjb.29.1639208173540;
+        Fri, 10 Dec 2021 23:36:13 -0800 (PST)
+Received: from [192.168.43.80] (subs32-116-206-28-58.three.co.id. [116.206.28.58])
+        by smtp.gmail.com with ESMTPSA id g1sm4216555pgm.23.2021.12.10.23.36.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Dec 2021 23:36:13 -0800 (PST)
+Message-ID: <d8a07706-bbcc-059a-fd1e-6f0e920279a3@gmail.com>
+Date:   Sat, 11 Dec 2021 14:36:10 +0700
 MIME-Version: 1.0
-References: <20211209051115.52629-1-sunshine@sunshineco.com>
- <20211209051115.52629-13-sunshine@sunshineco.com> <20211210093827.a5s5mby3if5f7a4u@fs>
-In-Reply-To: <20211210093827.a5s5mby3if5f7a4u@fs>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 11 Dec 2021 02:32:19 -0500
-Message-ID: <CAPig+cRDKM3E5ZEV-A8Ze7pzDnM+s=xs0ioW_qXoM3yYfu7jSw@mail.gmail.com>
-Subject: Re: [PATCH 12/19] tests: fix broken &&-chains in `{...}` groups
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH V3] git-apply: add --allow-empty flag
+Content-Language: en-US
+To:     Jerry Zhang <jerry@skydio.com>, git@vger.kernel.org,
+        gitster@pobox.com
+References: <20210427194049.14399-1-jerry@skydio.com>
+ <20211211031343.15818-1-jerry@skydio.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <20211211031343.15818-1-jerry@skydio.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 10, 2021 at 4:38 AM Fabian Stelzer <fs@gigacodes.de> wrote:
-> On 09.12.2021 00:11, Eric Sunshine wrote:
-> >Fix broken &&-chains in `{...}` groups in order to reduce the number of
-> >possible lurking bugs.
-> >       {
-> >-          echo "*.t filter=rot13"
-> >+          echo "*.t filter=rot13" &&
-> >           echo "*.i ident"
-> >       } >.gitattributes &&
-> >       {
-> >-              echo "expanded-keywords ident"
-> >+              echo "expanded-keywords ident" &&
-> >               echo "expanded-keywords-crlf ident text eol=crlf"
-> >       } >>.gitattributes &&
-> >
->
-> Wouldn't some of these be better off as heredocs as well?
-> There are a couple more below. I personally don't much mind either way but
-> since you changed quite a few in an earlier commit why not these?
+On 11/12/21 10.13, Jerry Zhang wrote:
+> +--allow-empty::
+> +	Don't return error for patches containing no diff. This includes
+> +	empty patches and patches with commit text only.
+> +
 
-It's been months since I made these changes, but I think there were at
-least a couple reasons for not converting these to here-docs. First,
-in these cases, there were only one or two missing `&&` per block. Had
-I bulk converted them to here-docs, it would have made for a much more
-noisy patch, which would have taxed reviewers more, and
-reviewer-fatigue is a real concern when crafting a lengthy patch
-series like this one. In the "here-doc conversion" patch, on the other
-hand, many of those cases involved a significant number of missing
-`&&`; often every line was missing `&&`. So, the changes in that patch
-was going to be very noisy anyhow, whether I added missing `&&` or
-converted to here-docs.
+Looks OK.
 
-Second...
+>   	if (!list && !skipped_patch) {
+> -		error(_("unrecognized input"));
+> -		res = -128;
+> +		if (!state->allow_empty) {
+> +			error(_("unrecognized input"));
+> +			res = -128;
+> +		}
+>   		goto end;
+>   	}
 
-> >       {
-> >               echoid insert 444 1 2 3 4 5 a b c d e &&
-> >-              echoid contains 44 441 440 444 4440 4444
-> >+              echoid contains 44 441 440 444 4440 4444 &&
-> >               echo clear
-> >       } | test-tool oidtree >actual &&
+When we apply empty patch but we forget --allow-empty, we got generic
+"unrecognized input". So for this case, we should disambiguate the
+former case and case when malformed patch input is provided.
 
-... there are a number of cases like this which look like they could
-easily be converted to here-doc, but in fact `echoid` is a function
-call, so a here-doc wouldn't work. Also...
-
-> >       {
-> >               echo $(git rev-parse refs/tags/A) refs/tags/A &&
-> >-              echo $(git rev-parse refs/tags/A^0) "refs/tags/A^{}"
-> >+              echo $(git rev-parse refs/tags/A^0) "refs/tags/A^{}" &&
-> >               echo $(git rev-parse refs/tags/C) refs/tags/C
-> >       } >expect &&
-
-... this sort of thing could certainly become a here-doc because
-$(...) will work in a here-doc, but when there is a preponderance of
-this sort of `{ echo && ... }` block in the test script, it would feel
-inconsistent to convert a few of them to here-docs.
+-- 
+An old man doll... just what I always wanted! - Clara
