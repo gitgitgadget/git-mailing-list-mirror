@@ -2,200 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9E86C433F5
-	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 10:00:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84752C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 10:46:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230269AbhLKKAA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Dec 2021 05:00:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39318 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229841AbhLKKAA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Dec 2021 05:00:00 -0500
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC07CC061714
-        for <git@vger.kernel.org>; Sat, 11 Dec 2021 01:59:59 -0800 (PST)
-Received: by mail-io1-xd30.google.com with SMTP id c3so13017624iob.6
-        for <git@vger.kernel.org>; Sat, 11 Dec 2021 01:59:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=XOm+k+VqV/FqZGFp00l64U0hkcGvpNG+r9Y89xxz3Iw=;
-        b=akr/AWNCTHwNTsvLieQUcij7hTOT9+2vhuKPYze5PM3pdwSZPlSj5SX9Qa7pHCnFKb
-         RU7b7N+EwAs9PA+2KIWyhrU+8esXHCBeshWJeYtZQmp+8/xB+rx+/wGtAIsDYOP6bGCB
-         qmC/t9yo7wf60GgscMxKjbwJsgbFB8gFTjIrrIrGAWcihOFc3gQXti5kN/9ht9lvDlpv
-         /CKo0Fv9xtjQchTXWJuRvdv2kt/F9fAcThIIMlxCiM6cM0x/NmKEW6ESqv7aJ8bw4ee6
-         O73GiH9CqWqzNDB2QzJwfnY0qHIeO17CATdK3ykrj3ms2O0pL4HLoi4dkI8GPJBhwEJ2
-         EWSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=XOm+k+VqV/FqZGFp00l64U0hkcGvpNG+r9Y89xxz3Iw=;
-        b=jItT9vyt8AgEQ2B5ng8KxbInzkvbqvwaQ/9Uu/KGzFkmellBC7ciRVlgdH8uwLV8CY
-         bDRp1fVV8jB5ZYSyixYKv/h246VBElPcn0YUatJ1XohzFvr/p3FKeg6LkeuwylmjL/6D
-         6FTLaFPmlarMet/av5hTHlIcOlAXvSaZyYJLUTAFGa22Gev3igqap9cJT529zFx5ybG8
-         JiPeumOckOZTWcEhbsDb4FO0mvfwWqMSGEGMkv7g6CJdTjBz+jsoUH+ITZZfo8CJJo2c
-         gBTIhlh5iFUdBFkmG3jwlDgJXLEdqLOLZi2AwaSJ+WXqaGgybM1hq8L+STbKNwhIoOej
-         aOIA==
-X-Gm-Message-State: AOAM531qAkid+o2/i7+LRupPOwHWacySlXJWcBokVd0BihGZtCglltpz
-        9XuWSH2Pj9pOhRncPeI98U33n8GbofxSWA==
-X-Google-Smtp-Source: ABdhPJzu+InAKQOiyPqG0dWDOHfzB3KiBRd5YGtSqYNlLngrKe4gTrbUBd4TBF/SncPAtPt+KUcTlQ==
-X-Received: by 2002:a05:6638:224d:: with SMTP id m13mr22677216jas.86.1639216798613;
-        Sat, 11 Dec 2021 01:59:58 -0800 (PST)
-Received: from localhost.localdomain (097-069-216-153.res.spectrum.com. [97.69.216.153])
-        by smtp.gmail.com with ESMTPSA id h1sm4370037iow.31.2021.12.11.01.59.57
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 11 Dec 2021 01:59:58 -0800 (PST)
-Sender: Eric Sunshine <ericsunshine@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v1.1 2/19] t1010: fix unnoticed failure on Windows
-Date:   Sat, 11 Dec 2021 04:58:37 -0500
-Message-Id: <20211211095837.26387-1-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.34.1.397.gfae76fe5da
-In-Reply-To: <20211209051115.52629-1-sunshine@sunshineco.com>
-References: <20211209051115.52629-1-sunshine@sunshineco.com>
+        id S230377AbhLKKq3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Dec 2021 05:46:29 -0500
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:44451 "EHLO
+        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230347AbhLKKq3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 11 Dec 2021 05:46:29 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 9914E5C00A3;
+        Sat, 11 Dec 2021 05:46:28 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Sat, 11 Dec 2021 05:46:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm1; bh=vRS0M9d1M2/6+x1HBw8I8f7bEIv
+        gGETwIWhc7TLUS8s=; b=dCX12Hugs2pAPTXFjYCMjntARMfr+9gjadsxIK3pTCw
+        X/FEjLhWujGD8w7ih/qlvBjzLQ27DunRdYy7iEGHWn8PATjfMWce/I0/H92HGnY0
+        U3jxJWMPdsA+P6mqVnd2Kg7UOSzXDO3K9bs/8f+Ku1njY5tuhBkkqNn7sNL4ciIC
+        7s4GGbdwvm/mlrvxuwhdjjrBM+WZFlaV63SFb21RdIa9EAR72vuLfnVVgO32BuCb
+        6dV+geoRKWW5kcFxxRPlbdt163OXF2V0nwHxrrPVwSRGvTHpOWjRVL+6plix+LH2
+        h1UoDBiqp1jImMx5bQEXImcY9WPJzNIkd1BARzrgBoQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=vRS0M9
+        d1M2/6+x1HBw8I8f7bEIvgGETwIWhc7TLUS8s=; b=bPysIU37X/GckwcxhYYhgm
+        bDLplXmsjKv5FJzjaihXw1dKn8gD5td9R2foa1UuQZeQIaEWelcfGxRRBbyuF3Cs
+        NZUgXSIQGxmfdeANs/Vd5/pPbagMG4isWmqZEiIAYraMY6ZHDoQfTBr0wtUsAMJC
+        32Ur1ihT+ZijScqywMhBi07b2gHXZwg/AcoGVcP6KpxWxUYINsUbE18vPlLWHpww
+        WhwCyuohgfKPsAFpmotzqC4sIhVbEQJc8BnSLh/FgNYii6ewVjcXya5cpjO2AEH9
+        xUGhqqoh0y/ZNGg0ifLaFsKtohx6+pXwOz9/xLtZZFkymt+uedBkCu1RxOpBuBvQ
+        ==
+X-ME-Sender: <xms:hIG0YUq5Y32D2RnDJnUwNt6reuCr1BCwFOdf34mQegFT5n2ZjnNz3Q>
+    <xme:hIG0Yap8HEBiGTRzzJOHVRu_TDgF7rNgMSvJMQZXcE9R6n31ONi_0NbLli_Wpvn6y
+    SEqQETxWq4oY3fhBg>
+X-ME-Received: <xmr:hIG0YZMoOjTyqkVRU9BvQPU-WTCdM89P6eu8WCO_20EltRGXwcSbnvInU6HdstwuIIcyDaSc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrkeeggdduhecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvuffkfhggtggujgesthdtredttddtjeenucfhrhhomhephfgvrhhnrghn
+    ughoucftrghmohhsuceoghhrvggvnhhfohhosehuledvrdgvuheqnecuggftrfgrthhtvg
+    hrnhepvdejieeflefhteeihffhtdfhfeekhffhuedttedvgfevgfevfeehfffgkeejfeeh
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhrvg
+    gvnhhfohhosehuledvrdgvuh
+X-ME-Proxy: <xmx:hIG0Yb7EnqMTONv9s-LAyOnAo505BoZpWb_o-zftdmAOQzqBHTNMtw>
+    <xmx:hIG0YT49yK6D2uiyat4LSCW7qi6Ov2zxeXvYS-oxIXwr4dW7mOWHcg>
+    <xmx:hIG0YbhjVgw3y8uc2CASk4dkTxWAtbuoVo15V5N4LZM8Z01SChSuUw>
+    <xmx:hIG0YQsFuv58oZfeJL7z1o0k08DVpXcmz4YgW-IZv_evTVk1NsBB-g>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 11 Dec 2021 05:46:25 -0500 (EST)
+Date:   Sat, 11 Dec 2021 11:46:23 +0100
+From:   Fernando Ramos <greenfoo@u92.eu>
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Seth House <seth@eseth.com>, levraiphilippeblain@gmail.com,
+        rogi@skylittlesystem.org
+Subject: Re: [PATCH v4 2/3] vimdiff: add tool documentation
+Message-ID: <YbSBf0eLh3AXiGnV@zacax395.localdomain>
+References: <20211204090351.42369-1-greenfoo@u92.eu>
+ <20211204090351.42369-3-greenfoo@u92.eu>
+ <CAJDDKr77YQKJj15V52Rs=LPRMZVSkbpV8MWFDWNuYf4jqqCajg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJDDKr77YQKJj15V52Rs=LPRMZVSkbpV8MWFDWNuYf4jqqCajg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Microsoft Windows, a directory name should never end with a period.
-Quoting from Microsoft documentation[1]:
+On 21/12/09 06:58PM, David Aguilar wrote:
+> On Sat, Dec 4, 2021 at 1:04 AM Fernando Ramos <greenfoo@u92.eu> wrote:
+> >
+> > Running 'git {merge,diff}tool --tool-help' now also prints usage
+> > information about the vimdiff tool (and its variantes) instead of just
+> > its name.
+> >
+> > Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
+> > ---
+> >  Documentation/git-difftool--vimdiff.txt  |  40 +++++
+> >  Documentation/git-mergetool--vimdiff.txt | 195 +++++++++++++++++++++++
+> 
+> 
+> Should these be referenced from elsewhere in the Documentation/
+> tree in order to make them more discoverable?
+> 
+> Documentation/git-{difftool,mergetool}.txt seem like they should
+> include or link to these.
 
-    Do not end a file or directory name with a space or a period.
-    Although the underlying file system may support such names, the
-    Windows shell and user interface does not.
+Those files (Documentation/git-{difftool,mergetool}.txt) contain this piece of
+text:
 
-Naming a directory with a trailing period is indeed perilous:
+    --tool-help
+        Print a list of diff tools that may be used with --tool.
 
-    % git init foo
-    % cd foo
-    % mkdir a.
-    % git status
-    warning: could not open directory 'a./': No such file or directory
+When you then run with "--tool-help", not only the list of available tools is
+listed, but also a short message explaining how to obtain more details is
+presented (for those tools that have more information):
 
-The t1010 "setup" test:
+    vimdiff 
+        Run 'man git-difftool--vimdiff' for details
 
-    for d in a a. a0
-    do
-        mkdir "$d" && echo "$d/one" >"$d/one" &&
-        git add "$d"
-    done &&
+In other words: there is one level of "indirection" that decouples the
+documentation of each tool from the generic documentation contained in
+Documentation/git-{difftool,mergetool}.txt.
 
-runs afoul of this Windows limitation, as can be observed when running
-the test verbosely:
+Thanks to this, when documentation for a new tool is created in the future, as
+long as the "diff_cmd_help()/merge_cmd_help()" functions are overwritten,
+everything will "just work" without having to edit
+Documentation/git-{difftool,mergetool}.txt each time.
 
-    error: open("a./one"): No such file or directory
-    error: unable to index file 'a./one'
-    fatal: adding files failed
+I thought this was the best option but I have not problem adding a reference to
+it if you prefer that (maybe at the end, in the "SEE ALSO" section?)
 
-The reason this problem has gone unnoticed for so long is twofold.
-First, the failed `git add` is swallowed silently because the loop is
-not terminated explicitly by `|| return 1` to signal the failure.
-Second, none of the tests in this script care about the literal
-directory names ("a", "a.", "a0") or the specific number of tree
-entries. They care instead about the order of entries in the tree, and
-that the tree synthesized in the index and created by `git write-tree`
-matches the tree created by the output of `git ls-tree` fed into `git
-mktree`, thus the absence of "a./one" has no impact on the tests.
+Let me know what you think.
 
-Skipping these tests on Windows by, for instance, checking the
-FUNNYNAMES predicate would avoid the problem, however, the funny-looking
-name is not what is being tested here. Rather, the tests are about
-checking that `git mktree` produces stable results for various input
-conditions, such as when the input order is not consistent or when an
-object is missing.
 
-Therefore, resolve the problem simply by using a directory name which is
-legal on Windows and sorts the same as "a.". While at it, add the
-missing `|| return 1` to the loop body in order to catch this sort of
-problem in the future.
+> > +merge_cmd_help() {
+> > +       echo "Run 'man git-mergetool--vimdiff' for details"
+> > +       return 0
+> > +}
+> > +
+> > +
+> 
+> My understanding is that we prefer "git help" instead of "man" when
+> providing hints.
+> 
+> That means we should suggest something like this instead:
+> 
+>         echo "Run 'git help mergetool--vimdiff' for details"
 
-[1]: https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
+I originally typed that, but then I noticed something in my system: all entries
+in "Documentation/" seem to be available as "man" pages, but only a subset of
+them are also available through "git help". Examples:
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-Reviewed-by: Elijah Newren <newren@gmail.com>
----
+  * man git-mergetool        --> works
+  * man git-mergetool--lib   --> works
 
-This is a re-roll of patch 2/19 of es/test-chain-lint[1] to improve the
-commit message in response to Elijah's review comments[2,3] since the v1
-commit message was perhaps a bit too subtle[4].
+  * git help mergetool       --> works
+  * git help mergetool--lib  --> does not work!
 
-Rather than spamming the list with a full v2 re-roll, I decided to
-re-roll just this one patch with its minor commit message rewrite since
-it was the only change requested, thus should be less of a burden on
-reviewers, though perhaps a bit more burden on Junio (but it's such a
-minor change that the original commit message is probably good enough
-should Junio not pick up this single-patch re-roll).
+That's why I ended up using "man".
 
-[1]: https://lore.kernel.org/git/20211209051115.52629-1-sunshine@sunshineco.com/
-[2]: https://lore.kernel.org/git/CABPp-BGBZ6_CqbUg3=sK2b4yELC5NHHyH68_df22n=t=hARH_g@mail.gmail.com/
-[3]: https://lore.kernel.org/git/CABPp-BFM5ZbFAzVfvDE3=zm6Q4LN2fWthPP8WH5kbgVPSxomtA@mail.gmail.com/
-[4]: https://lore.kernel.org/git/CAPig+cR0eKhz+ncWb4v9dSY0A03P+K0+WT90J2cBKvLqT8DXrA@mail.gmail.com/
+PS: Now that I have revisited the issue, it looks like the command that is
+failing is trying to run "man gitmergetool--lib" under the hood (notice there is
+a missing "-"). The problem seems to be in "builtin/help.c:cmd_to_page()":
 
-Range-diff against v1:
-1:  4e7d8e8c7e ! 1:  95d419ed90 t1010: fix unnoticed failure on Windows
-    @@ Commit message
-         The reason this problem has gone unnoticed for so long is twofold.
-         First, the failed `git add` is swallowed silently because the loop is
-         not terminated explicitly by `|| return 1` to signal the failure.
-    -    Second, none of the tests in this script care about the actual directory
-    -    names or even the number of tree entries. They care only that the tree
-    -    synthesized in the index and created by `git write-tree` matches the
-    -    tree created by the output of `git ls-tree` fed into `git mktree`, and
-    -    the failure of `git add "a./one"` doesn't change that outcome.
-    +    Second, none of the tests in this script care about the literal
-    +    directory names ("a", "a.", "a0") or the specific number of tree
-    +    entries. They care instead about the order of entries in the tree, and
-    +    that the tree synthesized in the index and created by `git write-tree`
-    +    matches the tree created by the output of `git ls-tree` fed into `git
-    +    mktree`, thus the absence of "a./one" has no impact on the tests.
-     
-         Skipping these tests on Windows by, for instance, checking the
-         FUNNYNAMES predicate would avoid the problem, however, the funny-looking
-    @@ Commit message
-         object is missing.
-     
-         Therefore, resolve the problem simply by using a directory name which is
-    -    legal on Windows (i.e. "a-" rather than "a."). While at it, add the
-    +    legal on Windows and sorts the same as "a.". While at it, add the
-         missing `|| return 1` to the loop body in order to catch this sort of
-         problem in the future.
-     
-         [1]: https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
-     
-         Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-    +    Reviewed-by: Elijah Newren <newren@gmail.com>
-     
-      ## t/t1010-mktree.sh ##
-     @@ t/t1010-mktree.sh: TEST_PASSES_SANITIZE_LEAK=true
+   if is_git_command(x) 
+       return xstrfmt("git-%s", x);
+   else
+       return xstrfmt("git%s", x);
 
- t/t1010-mktree.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Because "mergetool--lib" is not a regular git command, it removes the "-". The
+same would happen to the new "git help mergetool--vimdiff" if I add it. Is
+this the intended behavior?
 
-diff --git a/t/t1010-mktree.sh b/t/t1010-mktree.sh
-index 48bfad07ab..3c08194526 100755
---- a/t/t1010-mktree.sh
-+++ b/t/t1010-mktree.sh
-@@ -6,10 +6,10 @@ TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
--	for d in a a. a0
-+	for d in a a- a0
- 	do
- 		mkdir "$d" && echo "$d/one" >"$d/one" &&
--		git add "$d"
-+		git add "$d" || return 1
- 	done &&
- 	echo zero >one &&
- 	git update-index --add --info-only one &&
--- 
-2.34.1.397.gfae76fe5da
+There are two options:
+
+  A) This is actually an error in help.c logic that needs to be fixed and then
+     I can update the docs to "git help mergetool--vimdiff".
+
+  B) This is the intended behavior and I leave "man git-mergetool--vimdiff" in
+     the docs.
+
+I would say the right option is (A), but need your input regarding how to fix
+it.
+
+Thanks.
+
 
