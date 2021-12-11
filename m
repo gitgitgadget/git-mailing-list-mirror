@@ -2,61 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6B28C433F5
-	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 08:17:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3176C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 08:39:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230029AbhLKIRB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Dec 2021 03:17:01 -0500
-Received: from mail-pj1-f51.google.com ([209.85.216.51]:42995 "EHLO
-        mail-pj1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbhLKIQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Dec 2021 03:16:59 -0500
-Received: by mail-pj1-f51.google.com with SMTP id fv9-20020a17090b0e8900b001a6a5ab1392so9393932pjb.1
-        for <git@vger.kernel.org>; Sat, 11 Dec 2021 00:16:59 -0800 (PST)
+        id S230072AbhLKIjx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Dec 2021 03:39:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50180 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230046AbhLKIjx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Dec 2021 03:39:53 -0500
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CED1C061714
+        for <git@vger.kernel.org>; Sat, 11 Dec 2021 00:39:53 -0800 (PST)
+Received: by mail-io1-xd2e.google.com with SMTP id y16so12880142ioc.8
+        for <git@vger.kernel.org>; Sat, 11 Dec 2021 00:39:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=sender:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=my6vpCLL3hQKFgqfzyw+tZSdlciXtQU54fIdgPI7sWI=;
+        b=FaNP0lQq7iMoSRmS2vUGKn1FIK7HH73KQeUANkBtVcdziR9fcjoEG8/7ux+5ARDWxA
+         0xblbhTFwZsmubVQB6WVlZf0+mTXspm+yCZMq6sx3UP50E1WOPpiHK4RdQ1hNgU94j1H
+         pJYdl4kbztZ8zREY1JuK6SwckalzeFwkpIQDABR7I3O81YSFNaFpCLfm/t0kC/EKderB
+         vt8DA1jrrHJeC+rHKuybkatlSRTuCU7t67c95QsdyeHnKCO0A1ni9N8bqfVLF30g0aGU
+         dOgc5isxsYJkwEF9tJNLLJ0y6p5v7xfJEp3wyQvpCVmPFMZxJqoTQaEn/0rIGVmryR3J
+         SqvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OeSX6L0OvziYFiyBTc1xwXwUQ850WBwJ1T0RRFI1Pzc=;
-        b=Rl3jtr1zGwfgZPfvC30hxgDcihZvaKIQTzOCud44olrLZRgxFI17EfwBYuXFMeVKLV
-         aOYL3LQuuwXW4eJWY+0ztsCHel7b+G/yL0N2Ev5AXLYz/hauo0lTaq79xlej3utPDjes
-         4N00Rd8GBHea+ps2OILJ8g7n5SeZhxN3bQprG0vtx8RCNp+YwSCfxGGcBnBxL+OA7izD
-         Exnh8sWiHTOlNkFYT0OzAaSr1UJ2nidgEIFeIf4PePHnYTi6YiX603mjtRQVryeacw6h
-         Fva52leGq92cUcezOiU+qEPrH8ufwlVOt5B3vwlRUUp7Z4jGtlVNo21QEhWV0Mrjigns
-         aDpw==
-X-Gm-Message-State: AOAM531MSXbZ5wzuYT8s769zY+97+2N8YSmPmxzklEOqMxFPa7stWZzS
-        AgDrwEtCwUzjcU97R54VfBYnWQQqbdgjdlOuXxA=
-X-Google-Smtp-Source: ABdhPJyDTxdHdOtQX6ROSs5QFYPOCr1L8k+PC3mV9j4qiy9nOgoqR1/uRCaNn/9CWEzvmcsT/Jne/ql2QCrhSTq8yJU=
-X-Received: by 2002:a17:90a:b107:: with SMTP id z7mr29609360pjq.104.1639210619091;
- Sat, 11 Dec 2021 00:16:59 -0800 (PST)
+        h=x-gm-message-state:sender:message-id:date:mime-version:user-agent
+         :subject:content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=my6vpCLL3hQKFgqfzyw+tZSdlciXtQU54fIdgPI7sWI=;
+        b=dZ7ePXFrwahw24WOFJgD7Ps8ChsRUFbK6CabTwy+MEzM5Vz6sXJGerF1WLQ3midQVT
+         z1CtAJPDDsOTwDOxxCSJf3uo4jrZTYIGUAyj3GgKRyAD93EuEyBhimrqff7xq4qiqLJo
+         695zwIEWZFJVCsurU84WSHCPVHcUVvuyPUS2tJD1XZD19u+ByBgaFQWJx74xxTCVmpe0
+         hoE4ssBBrwdfqkpDmML2n1vpWgyJeN13gno/AKUxIkCpsyg+kJ5ZsfotzvogmxxWcW+5
+         zkh4ppEaY4XKb+3Ve8H1HTTFA4m2lvZvax0ifHWTrnzzE4pOzvc3KiZUu8qeg63+9K4/
+         QIGA==
+X-Gm-Message-State: AOAM5309Cs6hLUoFEwo4iPL+wIXAKbrNEQMZgPRNMpktF3OQ9cfQB3dO
+        2NTqLSU3AjPTozVqdKrOKYZGmru3tzckZg==
+X-Google-Smtp-Source: ABdhPJyExpTPg2JSqtTwaFLXn8pzYZKBPRjx+moVBw7BLKVRrzdJVQs5qiyXRgQ8cIuEqA3xaAtt8Q==
+X-Received: by 2002:a05:6602:2f11:: with SMTP id q17mr26066669iow.75.1639211992594;
+        Sat, 11 Dec 2021 00:39:52 -0800 (PST)
+Received: from [10.11.12.100] (097-069-216-153.res.spectrum.com. [97.69.216.153])
+        by smtp.gmail.com with ESMTPSA id d16sm3664410ila.51.2021.12.11.00.39.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 11 Dec 2021 00:39:52 -0800 (PST)
+Sender: Eric Sunshine <ericsunshine@gmail.com>
+Message-ID: <93deba56-1613-d468-8822-c0a9a1370bef@sunshineco.com>
+Date:   Sat, 11 Dec 2021 03:39:51 -0500
 MIME-Version: 1.0
-References: <20211209051115.52629-1-sunshine@sunshineco.com>
- <CABPp-BFM5ZbFAzVfvDE3=zm6Q4LN2fWthPP8WH5kbgVPSxomtA@mail.gmail.com>
- <CAPig+cRD_DzisMo-8ZuT4NzESEe4i2vPk_1Y-_JTeV9rbdwkLg@mail.gmail.com>
- <YbMgL6A+/12GTeuf@coredump.intra.peff.net> <20211210095757.gu7w4n2rqulx2dvg@fs>
-In-Reply-To: <20211210095757.gu7w4n2rqulx2dvg@fs>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.2
+Subject: Re: What's cooking in git.git (Dec 2021, #03; Fri, 10)
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqilvvluoa.fsf@gitster.g>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 11 Dec 2021 03:16:47 -0500
-Message-ID: <CAPig+cT4U-HSCV4kDHLEi7T+8Pi0o+eJjki+c5pmQdx2DTWcjg@mail.gmail.com>
-Subject: Re: [PATCH 00/19] tests: fix broken &&-chains & abort loops on error
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqilvvluoa.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 10, 2021 at 4:58 AM Fabian Stelzer <fs@gigacodes.de> wrote:
-> On 10.12.2021 04:38, Jeff King wrote:
-> >On Thu, Dec 09, 2021 at 02:17:32PM -0500, Eric Sunshine wrote:
-> >> Thanks. I'll wait a couple days and resend with a clarified commit
-> >> message for the second patch unless, perhaps, Junio would accept a
-> >> resend of just that patch so I don't have to spam the list again.
-> >
-> >These looked good to me. I left a few comments, but nothing that I think
-> >would trigger a re-roll.
->
-> Very nice work and good explanations. I learned a few new things :)
+On 12/10/21 9:52 PM, Junio C Hamano wrote:
+> * es/doc-stdout-vs-stderr (2021-12-04) 1 commit
+>    (merged to 'next' on 2021-12-07 at d6487c1256)
+>   + CodingGuidelines: document which output goes to stdout vs. stderr
+> 
+>   Coding guideline document has been updated to clarify what goes to
+>   standard error i nour system.
 
-Thanks Elijah, Peff, and Fabian for reading through the series.
+s/i nour/in our/
+
+
