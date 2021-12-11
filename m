@@ -2,68 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51F1BC433EF
-	for <git@archiver.kernel.org>; Fri, 10 Dec 2021 23:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B5C2C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 00:29:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243667AbhLJXrp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Dec 2021 18:47:45 -0500
-Received: from mout.gmx.net ([212.227.15.15]:58335 "EHLO mout.gmx.net"
+        id S1345465AbhLKAda (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Dec 2021 19:33:30 -0500
+Received: from mout.gmx.net ([212.227.17.21]:39055 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241232AbhLJXro (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Dec 2021 18:47:44 -0500
+        id S244279AbhLKAd3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Dec 2021 19:33:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1639179826;
-        bh=HwVSFaKjP57jsjOK1ONScn1S8s71jofocmsK2JzQMHY=;
+        s=badeba3b8450; t=1639182586;
+        bh=6BAnaJsucPxGodzI0Kq8INHZFuu1JbdRnI7VO4MxndY=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Oda39dXIIbiT+Ci3HjBzdjcxtCNgFLzL3N4pDyTHoFFUhpAwOei8UOvy6uGzZe/lp
-         J5T8suUN66zHrc15/Q0viXyPMy0yqsTkTEm54YCDBE5K/l9sfMU9KSCXm/+SZ1y4/8
-         cerQSnRKRBU6E8O2OvTmTOIVTZOtsM7ouYvtF3X0=
+        b=hS7yal0xWyaYKozQjHFjbUnO/cBX2ppRK4FkcQ1O3hXbjyrkJoGH0yINORTNjIvLu
+         WL6Oj9pBVrVA4n9UvNzN/HNYMJ7CrBpxbbGgEEPP1ej2MDqDzw+zMTOu59y3dbkh9M
+         J3xTtT2E0sqlun0qFQNES5h0tHVsD5CxVZ3PM5No=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.17.164.160] ([213.196.212.194]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MCsPy-1mmzqc1DnM-008tHB; Sat, 11
- Dec 2021 00:43:46 +0100
-Date:   Sat, 11 Dec 2021 00:43:43 +0100 (CET)
+Received: from [172.17.164.160] ([213.196.212.194]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MJE27-1nEl612c7H-00Kk9O; Sat, 11
+ Dec 2021 01:29:46 +0100
+Date:   Sat, 11 Dec 2021 01:29:44 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Elijah Newren <newren@gmail.com>,
         Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <stolee@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>,
         Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>
-Subject: Re: [RFC/PATCH] Makefile: add test-all target
-In-Reply-To: <YbMUw70vfxJ+hJW3@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2112110015170.90@tvgsbejvaqbjf.bet>
-References: <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com> <pull.1005.v10.git.1638538470.gitgitgadget@gmail.com> <CABPp-BGpe9Q5k22Yu8a=1xwu=pZYSeNQoqEgf+DN07cU4EB1ew@mail.gmail.com> <xmqq4k7nmksi.fsf@gitster.g> <211207.86ilw0matb.gmgdl@evledraar.gmail.com>
- <xmqqh7bi27o9.fsf@gitster.g> <xmqq8rwu278d.fsf_-_@gitster.g> <211209.86fsr2l8vn.gmgdl@evledraar.gmail.com> <xmqq4k7htzpk.fsf@gitster.g> <211210.86a6h9duay.gmgdl@evledraar.gmail.com> <YbMUw70vfxJ+hJW3@coredump.intra.peff.net>
+Subject: Re: [PATCH v10 00/15] Upstreaming the Scalar command
+In-Reply-To: <xmqq8rwuv3i2.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2112110044010.90@tvgsbejvaqbjf.bet>
+References: <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com> <pull.1005.v10.git.1638538470.gitgitgadget@gmail.com> <CABPp-BGpe9Q5k22Yu8a=1xwu=pZYSeNQoqEgf+DN07cU4EB1ew@mail.gmail.com> <xmqq4k7nmksi.fsf@gitster.g> <nycvar.QRO.7.76.6.2112081207320.90@tvgsbejvaqbjf.bet>
+ <xmqq8rwuv3i2.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1273704495-1639179826=:90"
-X-Provags-ID: V03:K1:MatJZx7UyH/mZbaZQ7sNuYfDrnWac8TfPT+v9TSDcFy0bvot46R
- 5nBJ/vakjxBby6mUqBFXLelgjvfj3rK+UNsmzQ13/pmlPQqoTTE8E4TTS+OWQAoESRb9TWc
- xVOv3tlu2jaBGuy+wIWtmL52lp0LPsIVSGyh2zJLvgSQSmze01xF8x8Gr1Q+9P2sXe51Non
- K5CaB5PeZ2GfFYu4+PycQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:qeRy9SLbdc4=:bFC/x4zEHRgL73fChDY8zt
- g+uVIj4peVw/kb0Y/39fOB82oSMsYCchd/p6w7e830OMNJS8hWg7uarIjHhmAQQeanYb0peQg
- YPVkoXk/W1J0Pv8Tm8JmotaotvwkciDamriltTIRmXVb/TjpiOv4mDJDBeZVyHuatySIBEsj6
- cZnsFZ9d6dHlSoUX7UlZU5prs8FjpaICq4rheTZsa5pS9yedxzgpSjwrBE+9uLrlaIcO1MgEu
- W7DpSq155xAXtIHVdwoQOXzN5fHuRyiY5/rdTCrItu847KUyj1kLeaPxUrriSqGBOofdZ3VHQ
- obZPLYPBdMckdE59Rrq/5+znD/UKyJkT3gLCySdf0Sbeqk5U+sJDQ8rJgyAc8WyEuwGRuNE2J
- 3WrGSTfRqTkMHK/JTLFaku8A8gjLpPnm7Ib8YQsQHEIgOFi4DjBRP6qg9YPHRz83V1jng+AZD
- tva9ontwrUgh3SAHqWT1vJ2xWaaFkgtL67hTzWJTDs7B/2XkBqUkSCdKJYZyKzfGa2a0FaieB
- 4BFT6zNmNGUPbpfHECCNYP5nuWNXspeC+TfjAsoo7WCGCSBU+LU1VnFcHEpixqqj7pnvT0Nq1
- paUyqGELKV1YtN40wwnlhvcFx04jbMjNJTCpjPmSuNCoV3ltC2V1f8ejCEsIu1I5zr4cpubXn
- R2XYXaMJm0/s4Od0uaPHPliYiiVvwYvDJYZYVKYUhwR2l77nmxNuWbfd0OLcEBh306jHDkmTK
- WE3bns4E8hLv3pMAneKvqF7CeaqhEfiCKls5z2gh5z4SauzV3LgRuZvCdDxkNKIjFAyogTfu+
- ZYJmKt8MSHTzLuqtjX9BfRxtwNC4av1J9GJwsI3lXrYhdvV0JZNmiFQ8XxsJ5h6ayiAycWlXy
- XLfBwQs+xatp0taems3iSMs88h+8Sf1RUugyr7pO8LJ2jdNdyNAio1yw6HCRpAwdVjeT4EDiZ
- U1pps2MI3iDmS+IIM7G3up6jCzjAUW+grxjDee8GTvYHZfbalwWrSZziQ/yNFLUtcNGLLTPrz
- LXkzQEMlt+Jiy1zOQA0lpwrPHsLxwCpXkLBd4btDiox5Q+ftZTcRJL21FpKtpNbOSOu7+GZMv
- Pcz49n+nQVk4XY=
+Content-Type: multipart/mixed; boundary="8323328-181199005-1639182586=:90"
+X-Provags-ID: V03:K1:mRIlMlWNhEAcEKJJVFP7Vcshc7fXVZt2PXFNQ6GV3AZUu+DrOBU
+ /0fO4uGQ4uMfs+HFQSkfit1NT07ZyDnwcEBSetFJ2BggnsslyyNm/55+5COLt0R576wDSKw
+ pMSm1vb5ozWeRhwSlsQsmoPLqKuRylOF8ReLdd6Niflzar+Yi4/YvEpg9+j/Wt0TZ9aZrkp
+ g2Pzs16/6bfkPAaB5mBGg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:br9/uBAYUgU=:aBWRpfcPGE5l5k5Wm9WFhj
+ dQYFrwdDHZy86vXV8exSAeFRqTYaT1E/c9JTM7+llnNYdxFl8P9gHQbQXL5ybsuSoGUiP9fRy
+ /mCeo0Cp/wCJse1+0TeKGI7fGzvdbTxDe7T7duxQlDFjt9mmYGWzUE1dN3hEJXyAB9kY3kdjq
+ sV3BZPdO4Bb3kK4fZHC1d80J0mSLMeOyyybsEcUMzXXfmfom4RgydBntcfoD1Dm4uCPNuPeTM
+ CJQYEu3xm2QRJwjSPP1MWDs8tFNabe5j7zY5FM16UBiqeo9y2O5RcvfaM4xX9UDoxVd8moo+v
+ /UeIEzJG9MZ3WYAuyWp2GDqrO5OPphyGfDFB07u54GmLnTcWq60ynVgYs5Q4/1qLPhGAPxg3j
+ /hBNHHgU7lhMrCNcz6jNPrLe733dUBC6RjuR0T5KiyARIS55DwKAUYPCCYT/ZqPaQ80nMkP9k
+ eXTaH7BtEIFhljAx162OviG+k7JLrcxu6eK2tJ0gaV7rjiDqCje8hO0cGVD0thZrGaMHmEv1z
+ /r35kBXB6Wfu2/A36QGJTIKOHMeUIfRKBs6J7OnWmdalRxQwtxkcuQO3Cwq0kGU6o8AWKbxOg
+ AJSquL/gahCcDdvU8b+DEu1un83cYp/RiKx2e9S9bf51Ndw1wXtc+dxdGuwHO/N9L5mGAHRFz
+ AMY/04zvTUll1ZrD1gWZGIv8BNn3r/gADmivhQV1y+21NR1Oi766QkIUpWmP/SXzdK8DQc54s
+ C+3moF65ofyH8HXn54K5P9lGNK4A1pVORNHAkDwWcZ9OmsKJw/hgQylCRou6L8law6SgqoIII
+ cck0pZVOTymW4MgJ7E4m/FKMcUBrT+5Pcs+rPbT0FNhPGI0WPasUdVz6992qMcSguI1ngykGc
+ jc4MtfA85BYnjvk9iuggffE60U/58E/L7TutjiepRkl65RNvcBYoCriLsp00QyLP78jH9U4FA
+ bNg8WIIRrlnVrF82n9/gL05Lq017W9LyUA4gjVT50E/C0Tb492E/Ir/rqNl0a+offux9nVD7l
+ OuopT17XBdZE/DnkX/iiVNL2EDlGyexSZfunBpMXaxYbuRSQh9mhAr07mgyH2CoYngASulkPx
+ u36ZC6lprUtGAE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -71,139 +70,139 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1273704495-1639179826=:90
+--8323328-181199005-1639182586=:90
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Peff,
+Hi Junio,
 
-On Fri, 10 Dec 2021, Jeff King wrote:
+On Wed, 8 Dec 2021, Junio C Hamano wrote:
 
-> On Fri, Dec 10, 2021 at 03:38:53AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 B=
-jarmason wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> > I just don't think it makes any sense that I edit say refs.[ch], run
-> > "make test" locally, but only see that something broke in scalar's
-> > specific use of libgit.a later when I look at GitHub CI.
+> > The Scalar Functional Tests were designed with Azure Repos in mind, i.=
+e.
+> > they specifically verify that the `gvfs-helper` (emulating Partial Clo=
+ne
+> > using the predecessor of Partial Clone, the GVFS protocol) manages to
+> > access the repositories in the intended way.
+> > ...
+> > I do realize, though, that clarity of intention has been missing from =
+this
+> > mail thread all around, so let me ask point blank: Junio, do you want =
+me
+> > to include upstreaming `gvfs-helper` in the overall Scalar plan?
 >
-> I'm definitely sympathetic to this. Having been surprised by CI failure
-> on something that worked locally is annoying at best, and downright
-> frustrating when you can't easily reproduce the problem.
+> Sorry, I do not follow.
 
-I feel your frustration. Same here.
+In
+https://lore.kernel.org/git/CABPp-BGpe9Q5k22Yu8a=3D1xwu=3DpZYSeNQoqEgf+DN0=
+7cU4EB1ew@mail.gmail.com/
+(i.e. in the great great grand parent of this mail), you specifically
+replied to my mentioning Scalar's Functional Test suite:
 
-> But isn't that already true for most of the value that CI provides?
-> While part of its purpose may be a back-stop for folks who don't run
-> "make test" locally, I think the biggest value is that it covers a much
-> wider variety of platforms and scenarios that you don't get out of "make
-> test" already.
->
-> In some of those cases you can reproduce the problem locally by tweaking
-> build or test knobs. But in others it can be quite a bit more
-> challenging (e.g., something that segfaults only on Windows). At least
-> in the proposed change here you'd only be a "make test-all" away from
-> reproducing the problem locally.
->
-> I dunno. I don't feel that strongly either way about whether scalar
-> tests should be part of "make test". Mostly just observing that this is
-> not exactly a new case.
+	> > One other thing is very interesting about that vfs-with-scalar
+	> > branch thicket: it contains a GitHub workflow which will run
+	> > Scalar's quite extensive Functional Tests suite. This test
+	> > suite is quite comprehensive and caught us a lot of bugs in
+	> > the past, not only in the Scalar code, but also core Git.
+	>
+	> From your wording it sounds like the plan might not include
+	> moving these tests over.  Perhaps it doesn't make sense to move
+	> them all over, but since they've caught problems in both Scalar
+	> and core Git, it would be nice to see many of those tests come
+	> to Git as well as part of a future follow on series.
 
-It isn't a new case.
+I had mentioned a couple of times that I had no intention to move Scalar's
+Function Tests into contrib/scalar/, and your wording "it would be nice to
+see many of those tests come to Git as well" made it sound as if you
+disagreed with that intention.
 
-What is new is that we are talking about CI for patches targeting contrib/
-specifically to introduce something cautiously that still has a chance of
-not ending up in Git proper (for whatever reasons), as Junio seems to
-be anxious to not give any premature "go" to integrate Scalar fully.
+But it was not a clear "please do port them over" nor a "nah, we don't
+want that test suite implemented in C# and requiring, for the most part,
+access to a dedicacted Azure Repo".
 
-In that light, I am somewhat surprised that we are still discussing
-putting a burden on contributors having to adapt contrib/scalar/ to
-their changes, when Junio still endeavors the option of not accepting
-that to-be-adapted code into core Git, after all.
+Hence I was asking for a clear answer to the question whether you want me
+to spend time on preparing a patch series to contribute Scalar's
+Functional Tests to contrib/scalar/ as well.
 
-I fully expected everybody to be on board with leaving the responsibility
-to keep contrib/scalar/ building and passing the tests to _me_, until the
-day Scalar is accepted as a full Git command (which might not happen).
+I _suspect_ your clear answer, if you are willing to give it as clearly,
+to be "no, we do not do integration tests here, and besides, C# is not a
+language we want to add to Git's tree".
 
-> > If I'm preparing patches for submission I'll need to get CI passing, s=
-o
-> > I'll need to fix those tests & behavior either way as it's
-> > in-tree. Knowing about the failures later-not-sooner wastes more time,
-> > not less.
->
-> I think there's probably a tradeoff here. How often you get a "late"
-> notification of a bug (and how much of your time that wastes) versus how
-> much time you spend locally running tests that you don't care about.
->
-> I do agree that CI presents a bit of a conundrum for stuff at the edge
-> of the project. It's become a de facto requirement for it to pass. In
-> general that's good. But it means that features which were introduced
-> under the notion of "the people who care about this area will tend to
-> its maintenance" slowly become _everybody's_ problem as soon as they
-> have any CI coverage. Another example here is the cmake stuff. Or the
-> recent discussion about "-x" and bash.
->
-> I wonder if there's a good way to make some CI results informational,
-> rather than "failing". I.e., run scalar tests via CI, but if you're not
-> working on scalar, you don't have to care. Folks who are interested in
-> the area would keep tabs on those results and make sure that Junio's
-> tree stays passing.
->
-> That view disagrees with the final paragraph here, though:
->
-> > The reason we do that with the completion is because some changes to
-> > e.g. tweak getopts will need to have a corresponding change to the
-> > completion.
-> >
-> > The reason we've not done that with contrib/{subtree,mw-to-git}/ is
-> > because those are thoroughly in the category of only incidentally bein=
-g
-> > in-tree.
-> > [...]
-> > Scalar is thoroughly on the "completion" side of that divide, not
-> > "subtree".
->
-> I haven't followed the discussion closely, but in my mind "scalar" was
-> still in the "it may live in-tree for convenience, but people who aren't
-> working on it don't necessarily need to care about it" camp. Maybe
-> that's not the plan, though.
+> What I was lamenting about was the lack of CI test coverage of stuff
+> that is already being considered to go 'next'.  Specifically, since
+> contrib/scalar/Makefile in 'seen' has a 'test' target, it would be a
+> shame not to exercise it, when we should be able to do so in the CI
+> fairly easily.
 
-I had hoped for a clearer answer from Junio where he sees Scalar in the
-long term, for now he seems to be undecided.
+We do have a very different understanding of "fairly easily" in that case.
+Three iterations, and three weeks time spent on implementing what you
+suggest, only to see broken by the merge of the `ab/ci-updates` patch
+series, suggesting a fixup for the incorrect merge, seeing that fixup
+rejected, and then more discussing, all of that does not strike me as
+"fairly easily". It strikes me as "a lot of time and effort was spent,
+mostly stepping on toes".
 
-As a consequence, I kept targeting contrib/scalar/ with this first patch
-series, to leave the door open for keeping it in contrib/ as a "not
-maintained by Junio!" part of the tree.
+Granted, if `ab/ci-updates` would not have happened, it would have been
+much easier. Or if `ab/ci-updates` had waited until `js/scalar` advanced
+to `next`. But the way it happened was (unnecessarily?) un-easy.
 
-That is independent, of course, of my intention to keep maintaining
-Scalar's code (once we get a few steps further, that is, because we're
-still quite stuck here, the Scalar patch series has not seen any concerns
-in the last half dozen iterations about its design nor about its actual
-code). I intend to keep maintainig the Scalar code no matter whether it
-lives in contrib/ or whether it will be turned into a first-class command
-whose source code lives in the top-level directory.
+> I fail to see what gvfs-helper has to do with anything in the
+> context of advancing the js/scalar topic as we have today.
 
-So yes, from my side I do not understand at all where this notion comes
-from that contrib/scalar/ should be treated any different than
-contrib/subtree/ for now. At least until contrib/scalar/ is
-feature-complete, that won't change.
+Okay, okay! I was just asking about gvfs-helper because that would be
+required to port over Scalar's Functional Tests. The same Functional Tests
+that I heard you mentioning would be "nice to see" to "come to Git as
+well".
 
-But of course, we can keep discussing back and forth the build process of
-Scalar, whether it should be tested in CI or not, whether it should be in
-contrib/ or in the top-level directory or not in Git at all, without
-getting the Scalar patches anywhere, for the next few years, in which case
-the outcome of that discussion will be completely moot because the Scalar
-patches would still be as stuck as they are right now. In which case it
-would be super annoying for any contributor who had to adapt the code in
-contrib/scalar/ to code changes in libgit.a, for no value in return
-whatsoever. So far, that contributor has been me.
+> If "The Scalar Functional Tests" that were designed with Azure Repos in
+> mind is not a good fit to come into contrib/scalar/, it is fine not to
+> have it here---lack of it would not make the test target you have in
+> contrib/scalar/Makefile any less valuable, I would think.
 
-I sincerely hope that it won't come to that, and that we can move forward
-with this here patch series, with the next ones I have lined up to make
-Scalar feature-complete, and _then_ discuss the merits of making Scalar a
-first-class Git command or not. At that point we will automatically have
-the answer whether to build Scalar and run its tests as part of Git's CI.
+The test target won't go anywhere, no worries. Just like the test target
+in contrib/subtree/ does not go anywhere.
+
+And just like `contrib/subtree/`, it does not have to be run as part of
+Git's CI build.
+
+> Unless you are saying that "make -C contrib/scalar test" is useless,
+> that is.  But I do not think that is the case.
+
+It is as useful as `make -C contrib/subtree test`. Which, as =C3=86var wil=
+l
+readily offer, is broken, because it does not ensure that top-level `make
+all` is executed and therefore in a fresh checkout will fail.
+
+Of course, I disagree that it is "broken". It works as designed. It is in
+the contrib/ part of the tree, i.e. safely in the realm of "you have to
+build Git first, and then the thing in contrib/". In other words, the idea
+to "fix" this kind of "broken"ness is a solution in search of a problem.
+
+And as I have said multiple times, I still think that having Scalar's code
+in contrib/ is a good spot to experiment with it. It sends the right
+signal of "this is not really something we promise to maintain just yet".
+It is a logical place for code that developers can build themselves, but
+that is not built and installed with Git by default.
+
+Having it in the Git tree will give interested developers a chance who
+want to clone a large repository on Linux, without having to touch
+anything with "Microsoft" in its repository name.
+
+Having it in the Git tree will give interested developers a chance to
+experiment with things like "let's try to let `scalar clone` _not_
+clone into `<enlistment>/src/`, but instead create a bare clone in
+`<enlistment>/.git` and make `<enlistment>/src/` a worktree". Things like
+that.
+
+I would find those things quite a bit more useful than to force regular
+Git contributors who want to change libgit.a (even if it is just pointless
+refactoring) to pay attention to contrib/scalar/ in CI, when there is
+still no clear answer whether Scalar will even become a first-class Git
+command eventually (which I hope it will, of course).
 
 Ciao,
 Dscho
 
---8323328-1273704495-1639179826=:90--
+--8323328-181199005-1639182586=:90--
