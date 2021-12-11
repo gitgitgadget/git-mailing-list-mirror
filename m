@@ -2,97 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8A8DC433EF
-	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 11:05:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0F56C433F5
+	for <git@archiver.kernel.org>; Sat, 11 Dec 2021 11:09:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230413AbhLKLFi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Dec 2021 06:05:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53570 "EHLO
+        id S230417AbhLKLJH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Dec 2021 06:09:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbhLKLFh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Dec 2021 06:05:37 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39785C061714
-        for <git@vger.kernel.org>; Sat, 11 Dec 2021 03:05:37 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id e3so38108932edu.4
-        for <git@vger.kernel.org>; Sat, 11 Dec 2021 03:05:37 -0800 (PST)
+        with ESMTP id S230413AbhLKLJG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Dec 2021 06:09:06 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C83EC061714
+        for <git@vger.kernel.org>; Sat, 11 Dec 2021 03:09:06 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id gx15-20020a17090b124f00b001a695f3734aso9620301pjb.0
+        for <git@vger.kernel.org>; Sat, 11 Dec 2021 03:09:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XRS75HPB28DHQFZ+RARUyZQ8FbtOjaxRTd7g8rd5uW4=;
-        b=kDzPixxWNQ4/mddqDJkjhuiDQjJKd/vrI0aQ0uEIa7hYUFE0F46J0Ko+QMpHb8VQv/
-         1FSozcqbrfuntnxeb5zPnGLkwGqn5xtU2s253ghYRT3R7TuGeGXMS41yTNhXAC34L18z
-         3BDppS+kItZKoLbrpcou0yqifdkkECtuodEckN/04qk1W/ShkMHEMdgwWHb4CGSEOT4Y
-         M+w3SWqTjv7/mFDBUcUN5v13jflzl+P+S/ErExG2IPsEUpK17GkYKC2+X3PdtIVZFRyi
-         vWhENaAUrdirWiKZJLDV8uCSNP7aAxnxuIT0WdaZM3qJfE+4Jap98oJagYiK3iUre4QI
-         sk6Q==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=PwP7sWri+mJqBEeqRhfRkQBsQKTXtacGA8j5RaHTbrw=;
+        b=f6tlrSNIvtPH4R6w2OgF13kZeDOicAtljUA4F29/e1bu+rmE8MVCthrosV+TgQpa6v
+         ZuMCNByhz9Aj3KWgbdhrYxO24XEmprUGrrkaH3IQnDWFBsqF42rRbvnEiQcqXiGK5IL5
+         xrOORMl4jz6aoz3HHSCTcqDT040q9h9vAELfuY2xzvoGqgWya9+2JEosoFmTMM/sgRiZ
+         iC5BG8ewZE99vZ5NSM20GZ8y/JhxKQuyqwv8NIp9XsDGgSUGGJ12AWUuTYQl0kbNPAL1
+         7kiDmEURccKtdkLFwj/hcltRlwKij0eC2/rBujMmgc6R5uyquNR7+qGkYHRXpJ7kUlkv
+         liRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XRS75HPB28DHQFZ+RARUyZQ8FbtOjaxRTd7g8rd5uW4=;
-        b=u5gwUHHGOP4+AcPtgWMTmvkH5OMWJ4KvSkzZ7r+vu8VE5JchYl9/U3HN3yxTOgoOi7
-         M9H9j5cP47WZ/27tYKLu5290ic7IrOJhJcMiJJSxhps/4K3NTs5RB+jY0ksaiNOXVqHd
-         3XGRWXg0E4SAuDZOoyylwWGBKRjphahJF6Ymr9ngw3bPpampqUHnH9+C+5aCeAwYkzB4
-         R/wuoJIOfy95GtDP5XBTA0lGkxEl3GPfy2FeicsZgAhSboaqcgF1J5J4IQkcoVm4REhL
-         msc3DsXsLKA9FNUwmcFp8ub5y/e3xQi3suG5GZcC0M9+Vz1hIMVUTBeBzJQhXc5ZCi1u
-         bXIw==
-X-Gm-Message-State: AOAM531WWJlLRN+zCD+dJZRs07KVnfq5A/ZJ6/vNFJdLr6KefkrfoVb7
-        XRkqkPKx+flmIXwQ4Fa96CKnXBJKdhDvSEhVMGuWcn5D
-X-Google-Smtp-Source: ABdhPJwIhx3sVMtMNVXD5inanSqyiQxFPnwZIyoKu9wlUg6wqQzZqFrXh6fjGq7y155x5Gch11Wni963RjwtH94JaXA=
-X-Received: by 2002:a17:907:3fa0:: with SMTP id hr32mr30472489ejc.443.1639220735742;
- Sat, 11 Dec 2021 03:05:35 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=PwP7sWri+mJqBEeqRhfRkQBsQKTXtacGA8j5RaHTbrw=;
+        b=zboafoqhhdfewELbiubEJGeBgHCZehNRzUmBuCztijGcymbBWvjG+5Sbq5eLXVOYEX
+         I68JR+s9jaSOwBfp2ix++MzS9mNdKQyLbjzp5puvl/wWXXG5NUG6Lr66iS8gCBUB2sa1
+         80JQzviwKkEZRX1qwY8KE9OC7PThggCqCVZbbisY/73gdwQ4L5CY9mcQWA747vgEvUmn
+         obndesw13K4YBEplBG1l8jde8i4AHVxu+woIaVPcMM2tTmX7h3QiuLvPqHQ4EBCewyJA
+         0TP0KE6MoQjihei8s2pduUouOR907wQ5SoknxD45Fsudz3topcAkf8wCDmoH27wx8GAB
+         bw3Q==
+X-Gm-Message-State: AOAM531d7IPJuQ6rDPStW+x2/AqY+E8edOcBydO4DSbFAZbt/ygK3Kuq
+        s06krD/nv+xCABRWWaPwdVM=
+X-Google-Smtp-Source: ABdhPJyHT6XJys1z2E7iunkedfD6YC9qzmeCzSwd2CtHlZ5+H7B281Ktd7RR9MHBAckFulas/Ks3ng==
+X-Received: by 2002:a17:90a:7e89:: with SMTP id j9mr6060800pjl.162.1639220945363;
+        Sat, 11 Dec 2021 03:09:05 -0800 (PST)
+Received: from [192.168.43.80] (subs32-116-206-28-4.three.co.id. [116.206.28.4])
+        by smtp.gmail.com with ESMTPSA id u22sm6704439pfk.148.2021.12.11.03.09.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 11 Dec 2021 03:09:05 -0800 (PST)
+Message-ID: <29e4f791-e543-f90c-8926-b7e7b0f9397c@gmail.com>
+Date:   Sat, 11 Dec 2021 18:08:59 +0700
 MIME-Version: 1.0
-References: <pull.1049.git.1633082702.gitgitgadget@gmail.com> <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 11 Dec 2021 03:05:24 -0800
-Message-ID: <CABPp-BFopbtU7uNmf_7Y7rR3o7iZKt2JL8hX8k9HfCLjTVAxJA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/14] rebase: reset_head() related fixes and improvements
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [RFC/PATCH] Makefile: add test-all target
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+        Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
+ <pull.1005.v10.git.1638538470.gitgitgadget@gmail.com>
+ <CABPp-BGpe9Q5k22Yu8a=1xwu=pZYSeNQoqEgf+DN07cU4EB1ew@mail.gmail.com>
+ <xmqq4k7nmksi.fsf@gitster.g> <211207.86ilw0matb.gmgdl@evledraar.gmail.com>
+ <xmqqh7bi27o9.fsf@gitster.g> <xmqq8rwu278d.fsf_-_@gitster.g>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <xmqq8rwu278d.fsf_-_@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 8, 2021 at 6:58 AM Phillip Wood via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> Thanks for the comments on V1. I have tried to improve the commit messages
-> to explain better the motivation and implications of the changes in this
-> series and I have added some more tests. I have rebased onto v2.34.0 to
-> avoid some merges conflicts.
->
-> Changes since V1:
->
->  * Patch 1 - unchanged.
->  * Patches 2, 3 - these are new and fix an bug I noticed while adding a test
->    to patch 4.
->  * Patches 4, 5 - improved commit messages and added tests.
->  * Patch 6 - reworded commit message.
->  * Patch 7 - split out some changes that used to be in patch 9.
->  * Patch 8 - in principle the same but the range-diff is noisy due to the
->    addition of patch 3.
->  * Patch 9 - reworded commit message.
->  * Patch 10 - unchanged.
->  * Patch 11 - reworded commit message and a couple of comments.
->  * Patch 12 - minor changes to comments.
->  * Patch 13 - cosmetic changes to commit message and tests.
->  * Patch 14 - cosmetic changes to commit message.
+On 09/12/21 03.04, Junio C Hamano wrote:
+> We ship contrib/ stuff within our primary source tree but except for
+> the completion scripts that are tested from our primary test suite,
+> their test suites are not run in the CI.
+> 
+> Teach the main Makefile a "test-extra" target, which goes into each
+> package in contrib/ whose Makefile has its own "test" target and
+> runs "make test" there.  Add a "test-all" target to make it easy to
+> drive both the primary tests and these contrib tests from CI and use
+> it.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-I don't know why, but I seem to have gotten interrupted a lot more
-reviewing this series than others; I've come back to it multiple
-times.  Most of the stuff I found had already been noted by Junio; the
-only new thing was some tiny grammatical comments I left on the commit
-message in Patch 13.
+No test failures found with test-all on my system.
 
-Overall, the series looks very nice; thanks for working on this.
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+-- 
+An old man doll... just what I always wanted! - Clara
