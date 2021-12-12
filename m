@@ -2,139 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE9C8C433EF
-	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 17:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF916C433EF
+	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 18:17:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231894AbhLLR44 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Dec 2021 12:56:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58720 "EHLO
+        id S231129AbhLLSRI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Dec 2021 13:17:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230468AbhLLR4u (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Dec 2021 12:56:50 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED3BFC061714
-        for <git@vger.kernel.org>; Sun, 12 Dec 2021 09:56:49 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id v1so45725278edx.2
-        for <git@vger.kernel.org>; Sun, 12 Dec 2021 09:56:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=o8NgbNqypJqI0P7wzcBs1uT6Bz/F7M/BRPsDaRulxOc=;
-        b=LzQwWEZkLQFKvuWWDXz5lPLzigEM5udG3v2BqFr7+0oTZYqpz0BmBLqmJohMox3oIb
-         ZikWtBoVib7VhKXM0FxkXXkmSG0Y6800skt1KL4Bj03zKVZGkn8piM/yvPq/ZhZWLVRr
-         lc4/alk/AX20LEx73sFW2iihajrevWS4Vm5OD5vr8L56yYEOgpFaGJjStqlECNCmTJXH
-         +ayIVxXuDEOxftll9xRJtyWfiAodNviu34dPZ3BOmvcsqREbI9Aj0AwtE2pj+ugAAAMs
-         cLhmYgN0MV2McMbb3MgwJKj+TsN6Uf7YN5JKX8xNpT/b2KgR9q/VbS64jt+hExCeSQ7R
-         nBog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=o8NgbNqypJqI0P7wzcBs1uT6Bz/F7M/BRPsDaRulxOc=;
-        b=Q+oAhbqwPQqgyHs0Qp/evAzJLbTMBzPESAtM9ifcsTxlF0ttLUoix4D8mMQ515NEY8
-         MTR0d29xY6HoXPKIKcmmX1qpeP5dUcAJBUL7ERqXLOEhKMPO5q1UFxpVIBiPOlF5rwcn
-         G0rXCFyZKuU7guBrTsl6k85eKQ+57LAWRtt2jGVO0MEi2yK5MjBRx/HzBFb8TCmy0d7N
-         XtKWw64Gam2rMHvjYJAFOxy9565YSSaAuSBLd2kJGIjNmMGgnOwIf1xYiJ9Ed38qn8W6
-         X4f1G/sBQNCGzZ5wOix4/g5p8MT/v4b3t4XjoHW6DfVtr3h020EAWMC8Yx5mGTvk7XDX
-         iPnQ==
-X-Gm-Message-State: AOAM533dQFDcRx9p6K/+y+/coLgCLwEwX5Phel0R/+0fxx0D41RgCtcO
-        03ucb0Mz1JePOremj9nBC6k=
-X-Google-Smtp-Source: ABdhPJx0EeQvKwfWF1rBcKuZSiq4rSASZ4sHC2dZsLRq1jCDYCZQjwz/pE7X3IR8ZmJmmpdtX+2eag==
-X-Received: by 2002:a17:906:fa87:: with SMTP id lt7mr39205594ejb.426.1639331808142;
-        Sun, 12 Dec 2021 09:56:48 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id z22sm5137120edd.78.2021.12.12.09.56.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Dec 2021 09:56:47 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mwT5b-000YFG-0R;
-        Sun, 12 Dec 2021 18:56:47 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Erik Faye-Lund <kusmabite@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC PATCH 02/10] range-diff.c: don't use st_mult() for signed
- "int"
-Date:   Sun, 12 Dec 2021 18:44:43 +0100
-References: <RFC-cover-00.10-00000000000-20211209T191653Z-avarab@gmail.com>
-        <RFC-patch-02.10-bd7d014c531-20211209T191653Z-avarab@gmail.com>
-        <YbLL/YWbjc/sPRyH@coredump.intra.peff.net>
-        <211210.86lf0sdah1.gmgdl@evledraar.gmail.com>
-        <YbM85W3N0ySi5k+H@coredump.intra.peff.net>
-        <nycvar.QRO.7.76.6.2112101526540.90@tvgsbejvaqbjf.bet>
-        <211210.868rwscxcw.gmgdl@evledraar.gmail.com>
-        <nycvar.QRO.7.76.6.2112111453040.90@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <nycvar.QRO.7.76.6.2112111453040.90@tvgsbejvaqbjf.bet>
-Message-ID: <211212.861r2hbtb5.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229886AbhLLSRI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Dec 2021 13:17:08 -0500
+X-Greylist: delayed 1564 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 12 Dec 2021 10:17:08 PST
+Received: from adoakley.name (adoakley.name [IPv6:2a01:4f8:c17:1310::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2465BC061714
+        for <git@vger.kernel.org>; Sun, 12 Dec 2021 10:17:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=adoakley.name; s=2018; h=Content-Transfer-Encoding:Content-Type:
+        MIME-Version:References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Sender
+        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=1ciCj7KbKMtTcyqYi9wS6fsC70I9/rDsNagpKXWRXt4=; b=hgKzHpCk/ZGzYVhVUN8Wf5TpaP
+        /QXQSfWK0xVA8ARzX1CRmg28zAOZ47b+eBD4MXSOSMH4nEP93f/WQvAry3acBi965U5r3yG9W3dGM
+        PU4FWVSLQ3Po8awYE9uV18MqLi0RVKX9152FcvwNClObu+5zyivSkNGBwIVKfYwn4auw=;
+Received: from [2001:8b0:14bb:e93a:fd4f:6f72:643:f027] (helo=ado-tr.dyn.home.arpa)
+        by adoakley.name with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+        (Exim 4.93.0.4)
+        (envelope-from <andrew@adoakley.name>)
+        id 1mwT01-0003AR-8x; Sun, 12 Dec 2021 17:51:01 +0000
+Date:   Sun, 12 Dec 2021 17:50:54 +0000
+From:   Andrew Oakley <andrew@adoakley.name>
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+Cc:     git@vger.kernel.org,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Luke Diamand <luke@diamand.org>,
+        Ben Keene <seraphire@gmail.com>
+Subject: Re: [PATCH v2 1/3] git-p4: remove support for Python 2
+Message-ID: <20211212175054.5d3c11af@ado-tr.dyn.home.arpa>
+In-Reply-To: <20211210153101.35433-2-jholdsworth@nvidia.com>
+References: <20211210153101.35433-1-jholdsworth@nvidia.com>
+        <20211210153101.35433-2-jholdsworth@nvidia.com>
+X-Mailer: Claws Mail 3.18.0 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, 10 Dec 2021 15:30:59 +0000
+Joel Holdsworth <jholdsworth@nvidia.com> wrote:
+> The motivation for this change is that there is a family of issues
+> with git-p4's handling of incoming text data when it contains bytes
+> which cannot be decoded into UTF-8 characters. For text files created
+> in Windows, CP1252 Smart Quote Characters (0x93 and 0x94) are seen
+> fairly frequently. These codes are invalid in UTF-8, so if the script
+> encounters any file or file name containing them, on Python 2 the
+> symbols will be corrupted, and on Python 3 the script will fail with
+> an exception.
 
-On Sat, Dec 11 2021, Johannes Schindelin wrote:
+As I've pointed out previously, peforce fails to store the encoding of
+text like commit messages.  With Windows perforce clients, the encoding
+used seems to be based on the current code page on the client which
+made the commit.  If you're part of a global organisation with people
+in different locales making commits then you will find that there is
+not a consistent encoding for commit messages.
 
-> Hi =C3=86var,
->
-> On Fri, 10 Dec 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> But I'll happily admit ignorance on how the actual guts of range-diff
->> work, I just wanted to fix a segfault I kept running into locally at
->> some point, and figured I'd submit this RFC.
->
-> I understand that it is super tempting to avoid spending the time to
-> understand how range-diff works and simply make changes until the
-> segmentation fault is gone, and then shoot off several iterations of the
-> patch series in the hopes that it gets merged at some point, and that
-> maybe reviewers who do spend the time to become familiar with the logic
-> help avoid introduce new bugs.
->
-> However, as a reviewer I am totally unsympathetic of this approach. I do
-> not want to review patches that even go so far as renaming functions when
-> they claim to "just fix a segfault" and the author even admits that
-> they're unfamiliar with what the code is supposed to do, without any
-> indication that they're inclined to invest the effort to change that.
+Given that you don't know the encoding of the text, what's the best
+thing to do with the data?  Options I can see are:
 
-What you're eliding here is the context where I say that I must not be
-getting something because you're apparently endorsing the WIP
-s/int/intmax_t/g patch Jeff King inlined upthread without a
-corresponding change to COST_MAX.
+- Feed the raw bytes directly into git.  The i18n.commitEncoding config
+  option can be set by the user if they want to attempt to decode the
+  commit messages in something other than UTF-8.
+- Attempt to detect the encoding somehow, feed the raw bytes directly
+  into git and set the encoding on the commit.
+- Attempt to dedect the encoding somehow and reencode everything into
+  UTF-8.
 
-Don't those two go hand-in-hand, and changing one without the other
-would lead to a subtle bug?
+Right now, if you use python2 then you get the behaviour as described
+in the first of these options.  It doesn't "corrupt" anything, it just
+transfers the bytes from perforce into git.  If you use python3 then
+git-p4 is unusable because it throws exceptions trying to decode things.
 
-> If all you want to do is to fix the segmentation fault, and want to skip
-> the due diligence of studying the business logic, then just fix that
-> segmentation fault (I strongly suspect that using `COST()` after modifying
-> it to use `st_*()` would accomplish that).
+It's not clear to me how "attempt to detect the encoding somehow" would
+work.  The first option therefore seems like the best choice.
 
-Well, this is an RFC series for a bug that I encountered & which seems
-to be fixed by these changes, but in an area which I'll happily admit
-that I'm not confident enough to say that this is *the* right fix, and I
-think both the "RFC" label and both cover letters make that clear.
+I think that this is the problem which really needs solving.  Dropping
+support for python2 doesn't make the issue go away (although it might
+make it slightly easier to write the code).  I think that the python2
+compatibility should be maintained at least until the encoding problems
+have been solved for python3.
 
-> No need to inflate that to 5
-> patches. Unless you're thinking of the commit-per-author count as some
-> sort of scoreboard where you want to win. In which case I am even less
-> interested in reviewing the patches.
+I previously wrote some patches which attempt to move in what I think is
+the right direction, but unfortunately they never got upstreamed:
 
-Can you mention specific things you'd like to have squashed? I do think
-this split-up makes thinsg easier to review.
+https://lore.kernel.org/git/20210412085251.51475-1-andrew@adoakley.name/
 
-E.g. if we're using the COST() macro in range-diff.c then splitting 4/5
-from 5/5 means you don't need to spend as much time mentally splitting
-the meaningful changes from a variable rename (which is required for
-using that macro).
-
-I agree that 1-3/5 aren't strictly necessary. I did try to do this
-without those, but found e.g. reasoning about changing the
-one-giant-function in linear-assignment.c harder when it came to the
-segfault fix, and likewise the mechanical change from "int" to "size_t"
-is (I think) easier to review & reason about.
+Your comments elsewhere that git-p4 could benifit from some clean-up
+seem accurate to me, and it would be good to see that kind of change.
