@@ -2,191 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BAA0C433EF
-	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 20:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF8C2C433F5
+	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 20:54:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231287AbhLLUPt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Dec 2021 15:15:49 -0500
-Received: from mail-ed1-f42.google.com ([209.85.208.42]:40953 "EHLO
-        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231442AbhLLUPo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Dec 2021 15:15:44 -0500
-Received: by mail-ed1-f42.google.com with SMTP id r25so45463820edq.7
-        for <git@vger.kernel.org>; Sun, 12 Dec 2021 12:15:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=MZEXgffkAJ7CxHWLDywcdl6Gg23Z4e/9RsaCbNksFb8=;
-        b=CUnrd3ZixXoN5pMuSGnryTGAEihxzKRV24x23Oa7ZZgZblLb1/HdnO2r5wbyV/DJjN
-         msM69HvhQIOax/Y3IKT6LYLHNJc4hkqQceuBNgeXVkJnNtr+g9iyWZ31DIaihetzs06q
-         UNJGDbkdfGUvNaJzU6x04Ww6UzTZDP/p74EXgP4Ty0iFHIzyY7WR42ZhHAsnzEZkKMVT
-         4xtZgWGV/D9YSO+ogScRYIl6Co/VvGxHkMsPDsf4PJYP/VZZXd7AwLqkiRIrephBVA6P
-         HWIvIcSu+sTxSbm3Rgb8dDKVYFJiBRpzdxVoJhkQfnRz+G84ZiBZTg+kImPXjIEerlct
-         O8Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=MZEXgffkAJ7CxHWLDywcdl6Gg23Z4e/9RsaCbNksFb8=;
-        b=Txm3Z08FzKComcL3HOxbognZvEjoZuQUwFcaeCVAdYnDlhjxc3KcYM50ycU5eZ3eGf
-         HHJHEQV1QaDrh44sLjB9ZswH2LqjQw1juoeyy3AL8RsMYj/x0HtZF4cxf5w8ZgJyEBs+
-         Yp68KNUe1rw++0yNjD6ua5Zt4KayU9aRZYYJHU6d6pAg3cSsqU/sd5FAuKvQuCxKnga+
-         5f7vZt0DK5uYLp173clxNy8rZEqvXk5SS5L+j60KHXwFJAcylSFTBux9VYpoNkTqSFWm
-         7P71LWwoBzLQc3p92XxTjN7qPvrxjs5+PlXCTVaMlENvm8BAkuUwjD6eyqQM/17x4J7H
-         EDdA==
-X-Gm-Message-State: AOAM531cnFoYo4XwKLNtt85ulB/Zt/vBz7tIrKK3ywLag5rFWGCnWcTT
-        ET5EWXswOldZouzmNk8PrXA=
-X-Google-Smtp-Source: ABdhPJxSfMkfYLUIgx0ewDXwPAeiPCGbMmBOcRjCDze72nes2v7OC0VcSLuloVHyJ8RDEhazOY8Urw==
-X-Received: by 2002:aa7:d748:: with SMTP id a8mr57925032eds.21.1639340083519;
-        Sun, 12 Dec 2021 12:14:43 -0800 (PST)
-Received: from szeder.dev (78-131-17-148.pool.digikabel.hu. [78.131.17.148])
-        by smtp.gmail.com with ESMTPSA id dy4sm5110897edb.92.2021.12.12.12.14.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Dec 2021 12:14:43 -0800 (PST)
-Date:   Sun, 12 Dec 2021 21:14:41 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 2/2] test-lib.sh: remove the now-unused
- "test_untraceable" facility
-Message-ID: <20211212201441.GB3400@szeder.dev>
-References: <cover-v2-0.2-00000000000-20211201T200801Z-avarab@gmail.com>
- <cover-v3-0.2-00000000000-20211210T100512Z-avarab@gmail.com>
- <patch-v3-2.2-a7fc794e20d-20211210T100512Z-avarab@gmail.com>
- <20211212163207.GA3400@szeder.dev>
- <211212.865yrtbvl1.gmgdl@evledraar.gmail.com>
+        id S229471AbhLLUyO convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 12 Dec 2021 15:54:14 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:56596 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229448AbhLLUyN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Dec 2021 15:54:13 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1BCKs0Ar071720
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 12 Dec 2021 15:54:02 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Philip Oakley'" <philipoakley@iee.email>,
+        "'Glen Choo'" <chooglen@google.com>,
+        "'Git List'" <git@vger.kernel.org>
+References: <e30ae0dd-739b-7ecd-735e-992395b31ccc@iee.email> <kl6ltufg843d.fsf@chooglen-macbookpro.roam.corp.google.com> <7ffa36ab-da93-0fe7-8d21-f489b16a3340@iee.email>
+In-Reply-To: <7ffa36ab-da93-0fe7-8d21-f489b16a3340@iee.email>
+Subject: RE: New (better?) hash map technique in limit case.
+Date:   Sun, 12 Dec 2021 15:53:54 -0500
+Organization: Nexbridge Inc.
+Message-ID: <000001d7ef9a$6493d150$2dbb73f0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <211212.865yrtbvl1.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQLA95Z8aQbjx9S5ytaZs4PeYyqWrgIV2jqmAd3MLtWqPZ9VcA==
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 12, 2021 at 06:06:31PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On December 12, 2021 12:44 PM, Philip Oakley:
+> To: Glen Choo <chooglen@google.com>; Git List <git@vger.kernel.org>
+> Subject: Re: New (better?) hash map technique in limit case.
 > 
-> On Sun, Dec 12 2021, SZEDER Gábor wrote:
-> 
-> > On Fri, Dec 10, 2021 at 11:07:55AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> >> In the preceding commit the use of "test_untraceable=UnfortunatelyYes"
-> >> was removed from "t1510-repo-setup.sh" in favor of more narrow
-> >> redirections of the output of specific commands (and not entire
-> >> sub-shells or functions).
-> >> 
-> >> This is in line with the fixes in the series that introduced the
-> >> "test_untraceable" facility. See 571e472dc43 (Merge branch
-> >> 'sg/test-x', 2018-03-14) for the series as a whole, and
-> >> e.g. 91538d0cde9 (t5570-git-daemon: don't check the stderr of a
-> >> subshell, 2018-02-24) for a commit that's in line with the changes in
-> >> the preceding commit.
-> >> 
-> >> We've thus solved the TODO item noted when "test_untraceable" was
-> >> added to "t1510-repo-setup.sh" in 58275069288 (t1510-repo-setup: mark
-> >> as untraceable with '-x', 2018-02-24).
-> >> 
-> >> So let's remove the feature entirely. Not only is it currently unused,
-> >> but it actively encourages an anti-pattern in our tests. We should be
-> >> testing the output of specific commands, not entire subshells or
-> >> functions.
-> >> 
-> >> That the "-x" output had to be disabled as a result is only one
-> >> symptom, but even under bash those tests will be harder to debug as
-> >> the subsequent check of the redirected file will be far removed from
-> >> the command that emitted the output.
-> >> 
-> >> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> >> ---
-> >>  t/README      |  3 ---
-> >>  t/test-lib.sh | 66 ++++++---------------------------------------------
-> >>  2 files changed, 7 insertions(+), 62 deletions(-)
-> >> 
-> >> diff --git a/t/README b/t/README
-> >> index 29f72354bf1..3d30bbff34a 100644
-> >> --- a/t/README
-> >> +++ b/t/README
-> >> @@ -86,9 +86,6 @@ appropriately before running "make". Short options can be bundled, i.e.
-> >>  -x::
-> >>  	Turn on shell tracing (i.e., `set -x`) during the tests
-> >>  	themselves. Implies `--verbose`.
-> >> -	Ignored in test scripts that set the variable 'test_untraceable'
-> >> -	to a non-empty value, unless it's run with a Bash version
-> >> -	supporting BASH_XTRACEFD, i.e. v4.1 or later.
-> >>  
-> >>  -d::
-> >>  --debug::
-> >> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> >> index 57efcc5e97a..b008716917b 100644
-> >> --- a/t/test-lib.sh
-> >> +++ b/t/test-lib.sh
-> >> @@ -381,29 +381,6 @@ then
-> >>  	exit
-> >>  fi
-> >>  
-> >> -if test -n "$trace" && test -n "$test_untraceable"
-> >> -then
-> >> -	# '-x' tracing requested, but this test script can't be reliably
-> >> -	# traced, unless it is run with a Bash version supporting
-> >> -	# BASH_XTRACEFD (introduced in Bash v4.1).
-> >> -	#
-> >> -	# Perform this version check _after_ the test script was
-> >> -	# potentially re-executed with $TEST_SHELL_PATH for '--tee' or
-> >> -	# '--verbose-log', so the right shell is checked and the
-> >> -	# warning is issued only once.
-> >> -	if test -n "$BASH_VERSION" && eval '
-> >> -	     test ${BASH_VERSINFO[0]} -gt 4 || {
-> >> -	       test ${BASH_VERSINFO[0]} -eq 4 &&
-> >> -	       test ${BASH_VERSINFO[1]} -ge 1
-> >> -	     }
-> >> -	   '
-> >> -	then
-> >> -		: Executed by a Bash version supporting BASH_XTRACEFD.  Good.
-> >> -	else
-> >> -		echo >&2 "warning: ignoring -x; '$0' is untraceable without BASH_XTRACEFD"
-> >> -		trace=
-> >> -	fi
-> >> -fi
-> >>  if test -n "$trace" && test -z "$verbose_log"
-> >>  then
-> >>  	verbose=t
-> >> @@ -650,19 +627,6 @@ else
-> >>  	exec 4>/dev/null 3>/dev/null
-> >>  fi
-> >>  
-> >> -# Send any "-x" output directly to stderr to avoid polluting tests
-> >> -# which capture stderr. We can do this unconditionally since it
-> >> -# has no effect if tracing isn't turned on.
-> >> -#
-> >> -# Note that this sets up the trace fd as soon as we assign the variable, so it
-> >> -# must come after the creation of descriptor 4 above. Likewise, we must never
-> >> -# unset this, as it has the side effect of closing descriptor 4, which we
-> >> -# use to show verbose tests to the user.
-> >> -#
-> >> -# Note also that we don't need or want to export it. The tracing is local to
-> >> -# this shell, and we would not want to influence any shells we exec.
-> >> -BASH_XTRACEFD=4
+> Hi Glen,
+> On 10/12/2021 22:52, Glen Choo wrote:
+> > Philip Oakley <philipoakley@iee.email> writes:
 > >
-> > Please do not remove BASH_XTRACEFD.  And especially not like this,
-> > without even mentioning it in the commit message.
+> >> Recently I saw a report [1] on a new theoretical result about how to
+> >> manage hash maps which get nearly 'full', which beats Knuth's limit
+> >> formula. The full paper is at [2]
+> >>
+> >> As I understand it, the method adds the gravestone entries early
+> >> during has collisions to avoid clumping of such collision insertions,
+> >> rather than always having to enter the collision list at the end.
+> >> This keeps the available slots relatively randomly spaced.
+> >>
+> >> It feels like the old random bus arrival problem where the average
+> >> wait for next bus is identical to the average time since the last
+> >> bust, which is the same as the average bus interval (thus 1 + 1 = 1),
+> >> and the technique maintains that advantageous perception.
+> >>
+> >> Given Git's use of hashes, it sounds like it could have uses,
+> >> assuming the theory pans out. I've not yet gone through the paper
+> >> itself [2] but hope springs eternal.
+> >>
+> >> Philip
+> >>
+> >> [1]
+> >> S. Nadis and M. I. of Technology, “Theoretical breakthrough could
+> >> boost data storage.”
+> >> https://techxplore.com/news/2021-11-theoretical-breakthrough-boost-
+> st
+> >> orage.html
+> >> (accessed Nov. 18, 2021).
+> >>
+> >> [2]
+> >> M. A. Bender, B. C. Kuszmaul, and W. Kuszmaul, “Linear Probing
+> >> Revisited: Tombstones Mark the Death of Primary Clustering,”
+> >> arXiv:2107.01250 [cs, math], Jul. 2021, Accessed: Nov. 18, 2021.
+> >> [Online]. Available: http://arxiv.org/abs/2107.01250
+> > Very interesting, thanks for sharing. I haven't read the full paper
+> > either, but this is an interesting result.
+> >
+> > It seems that this result is limited to hashmaps with a approximately
+> > equal number of insertions and deletions..
+> >
+> > From [1]
+> >
+> >   They found that for applications where the number of insertions and
+> >   deletions stays about the same—and the amount of data added is roughly
+> >   equal to that removed—linear-probing hash tables can operate at high
+> >   storage capacities without sacrificing speed.apacities without
+> >   sacrificing speed.
+> >
+> > and [2]
+> >
+> >   ...We then turn our attention to sequences of operations that contain
+> >   deletions, and show that the tombstones left behind by those deletions
+> >   have a primary-anti-clustering effect, that is, they have a tendency
+> >   to speed up future insertions
+> >
+> > Do we have any such use cases?
+> I know that we use hash maps, but haven't followed there actual usage in
+> various optimisations.
 > 
-> I can re-roll with an amended commit message that explicitly mentions
-> it
-
-It should rather be a separate patch...
-
->, but that doesn't address your "please do not remove",
+> Obviously we use hash naming of objects but that's generally a red-herring, I
+> think, unless we are over-abbreviating the hash so that it's no longer unique
+> (which could be happening somewhere).
 > 
-> Do you see reason to keep it at the end-state fo this series? E.g. a
-> counter-argument to
-> https://lore.kernel.org/git/211210.86pmq4daxm.gmgdl@evledraar.gmail.com/?
+> I suspect that some of the hosting providers may be more interested from a
+> File system perspective, as I think we just pass the object store problems to
+> the FS. Then again, all the mono-repo and partial checkout corporate users
+> are likely to be interested, especially if this unblocks some historical
+> misunderstanding about the limits and how to handle them.
 
-I don't see any argument pertinent to BASH_XTRACEFD in general in that
-email, of in favor of its removal in particular, and there are no
-valid arguments for its removal in earlier emails in this thread
-either.
+If we are going to change data structures for object hashes, it might be better to use a compressed trie data structure (trie is not a typo for tree). This can be mapped easily to the current FS structure in .git/objects - in fact, .git/objects is mappable to a two-level compressed trie with a top level of 2 characters. Extending the data structure model both in memory and on the file system to become multi-level instead of just 2 levels should not be particularly onerous and has a O(1) search speed that, at worst, is the same as a perfect closed hash and the same as an open hash with single entries in buckets. Once open hashes degenerate to have long chains, the compressed trie is substantially more time efficient. A trie is an O(1) lookup and insert in all cases and does not degenerate like hashes or trees do. Uncompressed tries are generally extremely less space efficient than hashes (making them quite bad for our purposes) but compressed tries substantially reduce wasted space with a trade-off of some time to do node-splits on insert and single-level mid-key lookups.
+
+Note: In a FS look up, the search is not O(1) unless the FS is also implemented as a trie, so the benefit on disk will not be as fully realized, although if you can get the compression to fit into a directory inode block, the search speeds up significantly because of reduced I/Os. A FS existence search is O(n,m) where n is the maximum number of partitions in the trie's key, and m is the maximum number of files within a directory IF the key partitioning compression is not known - if it IS known, then the FS existence search is O(m). This n is different (much smaller) than the total number of entries in the hash. As an example, a sample repo has 2607 entries under object, and the key partitioned length (n) is always 2, representing, as an example, 00/16212c76018d27bd1a39630c32d1027fbfbebd. Keeping the key partitioning unknown allows the searcher to adapt to any repository trie compression, including existing ones, so there's that advantage.
+
+-Randall
 
