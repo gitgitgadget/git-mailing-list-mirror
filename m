@@ -2,48 +2,48 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42BE6C433F5
-	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 20:14:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E938C433EF
+	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 20:15:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231320AbhLLUO5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Dec 2021 15:14:57 -0500
-Received: from mail-wm1-f46.google.com ([209.85.128.46]:34747 "EHLO
-        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231195AbhLLUOp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Dec 2021 15:14:45 -0500
-Received: by mail-wm1-f46.google.com with SMTP id m25-20020a7bcb99000000b0033aa12cdd33so9937967wmi.1
-        for <git@vger.kernel.org>; Sun, 12 Dec 2021 12:14:44 -0800 (PST)
+        id S231347AbhLLUO7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Dec 2021 15:14:59 -0500
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:33323 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231189AbhLLUOo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Dec 2021 15:14:44 -0500
+Received: by mail-wr1-f45.google.com with SMTP id d24so23983924wra.0
+        for <git@vger.kernel.org>; Sun, 12 Dec 2021 12:14:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/KfuewcgY2/LyaMU6RoByaIPl0rwHcXCTnmWVkFtBr4=;
-        b=DpIFCyLuFxScvMJuKLp0WinkWpgv0XkG4exQPqCfZ26GNOUwRmZywieVpLxwonAu8y
-         Ymzo1G3QAsJW0VEAsh7ShjsN57gmYdO2i7lS/rS8wHrA7b8wl8gz4O1jNwfcHh01rtzf
-         NGrpgImmKcvOX6/4ky3Q6ZrYlPzgK6c06mdOhUgnXCTlkt5pq2dS3Knc5o9QczFY5aZU
-         P6b/4hbeOFausFKIbJ4gUXyJeUZYh76lO+H8rFAGiB6Jx428hsdH6GG0XsC5Kzdc7kMG
-         JsfBgyutBw8pny9rbHCjQPxgLSyQy/AboWkxDDpxXXq8gJStRwHh1JWawu7/u17jj4BF
-         +Wzg==
+        bh=5VciY6HitHWLQ8tqHmGM8k1JHQcu0ADZwp75LTXwFys=;
+        b=nZl/Lz8q+1WKGh8u6QWMi6BmlQH3Se/a03xjft1f5UFeOTamu03w4PZGmTjGSidID6
+         TMyX4V1QJv8gru0d3ybtwwEuN9NC9a3kiLag1b8VgS7LeMcDE6UISEl6eFdsPjDobpY+
+         C1BuReXFlVNuI2Kqr7VkzsHFTDT27M7AMRZ9/tDiPsBwVPMutD/9OMrvZJaXtelivUIx
+         D4OE/D7v3lmEk16qS3JHmnXkltwmK13FYJxPYNw3EblVfPiN18W6GeXiU2F05q0uR3X4
+         HkhB+dsZZF1OdQod5DD4LCUHSquUpwXdS44Whe8v6Gop4zb9tPoJccv1pGHtLMH2N3UZ
+         fkog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/KfuewcgY2/LyaMU6RoByaIPl0rwHcXCTnmWVkFtBr4=;
-        b=WmjISMwNxgl6XWpmlaOXBW4UVFvMZhshL7dEyaFtzBW8u260pMMryHEHVToWMB1OkU
-         LioRXiT3AO4tSabl4PB/+WeacayjOa+2Ek7yfliEbxJYm3jdqUgMaNXGw7A7c5fOPRJK
-         FgK1y69fy6Lx9RRwgiwPgSb2B2K8h0k2+7oYpU384+eafrpJ+fMTdP2boGcJ/C8UMGXp
-         aB4T/nkU9WlPLNarnFOktQBQCPHE35P7TJuk/Ue0eH1AZFQWl4TRzqLevFHZDbidUgPr
-         vsgeDq0zeMcV9t5oRuhD6cmdKKoD2bxgCczWwn1JSJW+oxXcVctDn8PRxjExcWLQpWIk
-         szTw==
-X-Gm-Message-State: AOAM531wNrxeiGzl840epCf6Q8Z5eLN3G79ebSB+aY2YnFiTYwSBEgBG
-        efIOuPqOU11KpoqP9cfePSiXCA2a93PGeA==
-X-Google-Smtp-Source: ABdhPJzfgOvV/soPddrnya/eKnAOV0HK7Sc6qDT1VyzdPeqqdiI0FgAdBe1wDs8wQoPnDb4g2QDwNw==
-X-Received: by 2002:a7b:c0d5:: with SMTP id s21mr32038087wmh.115.1639340023914;
-        Sun, 12 Dec 2021 12:13:43 -0800 (PST)
+        bh=5VciY6HitHWLQ8tqHmGM8k1JHQcu0ADZwp75LTXwFys=;
+        b=f+15CYezeK/NpIIQq+glv6mF+Cy2nUE69xq+GrZPhPpaZLTBcmtRDTNeGf/yhVSGH/
+         V5kbmJfQUfu8mE/rwVJV1WwUS8Lb10ioH/+V4YrpsyH79AfUBdCziWNjZRHMYXnIRPgo
+         SREGLhEQ0cuPthH3QDdO/Snm86XSz637w7CTl9zcm8Cr5WOzu6yMcTlCWOdcNNpy495X
+         tuhDQ0ndgAWteV97emi/W7EX72Sd8uFYN7lRerR6mckIJ8NJynZhY2OlJe2Pdb833mRl
+         01sSPPn01NIWqun7n+oTJGxZKXvHOmLbuaLX5yvGScZiNwpJSXtLdo4bzEkiGUxwyJK1
+         GWOQ==
+X-Gm-Message-State: AOAM530b+24bELxgHzSD0JaSWeYPP6/i0Ve+iA3JlXxm3+qLdAZwQMTA
+        kqDJC7CcOw7g5k5mgEN1p7ETwmg40Lnl3A==
+X-Google-Smtp-Source: ABdhPJyAobZHdSG1JDUi68XFDrQqF9xNX7c0eGi2SzQo3vwIItOYBf5VsYi9VB75QTXdniobPL5DsQ==
+X-Received: by 2002:a05:6000:120d:: with SMTP id e13mr12197831wrx.657.1639340022692;
+        Sun, 12 Dec 2021 12:13:42 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id ay21sm4824336wmb.7.2021.12.12.12.13.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Dec 2021 12:13:43 -0800 (PST)
+        Sun, 12 Dec 2021 12:13:42 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -53,9 +53,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 11/13] tests: change "cat && chmod +x" to use "write_hook"
-Date:   Sun, 12 Dec 2021 21:13:21 +0100
-Message-Id: <patch-11.13-6f805f7ebac-20211212T201308Z-avarab@gmail.com>
+Subject: [PATCH 10/13] test-lib-functions: add and use a "write_hook" wrapper
+Date:   Sun, 12 Dec 2021 21:13:20 +0100
+Message-Id: <patch-10.13-ca55471d134-20211212T201308Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1020.gb1392dd1877
 In-Reply-To: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
 References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
@@ -66,304 +66,310 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor various test code to use the "write_hook()" helper. Let's
-indent this code and add it to "test_expect_success" while we're at
-it.
+Add a "write_hook" wrapper for the common case of "write_script
+.git/hooks/<NAME>". This also accepts a "-C" option like
+"test_commit". Let's convert various trivial cases of "write_script"
+over to it.
 
-As in a preceding commit some of this code drops the explicit "mkdir
--p", but as noted we'll be having the "write_hook" wrapper handle that
-soon anyway.
+For now this doesn't have much of an advantage, but in a subsequent
+commit we'll implicitly create the leading "hooks" directory. This
+will help us get rid of our --template dependency for "hooks".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t3412-rebase-root.sh       | 18 ++++-------
- t/t3413-rebase-hook.sh       | 18 ++++-------
- t/t5401-update-hooks.sh      | 62 ++++++++++++++++--------------------
- t/t5402-post-merge-hook.sh   | 16 ++++++----
- t/t5407-post-rewrite-hook.sh | 14 ++++----
- t/t5516-fetch-push.sh        | 15 +++------
- t/t5541-http-push-smart.sh   |  4 +--
- t/t5601-clone.sh             |  4 +--
- 8 files changed, 60 insertions(+), 91 deletions(-)
+ t/t1416-ref-transaction-hooks.sh    | 14 +++++++-------
+ t/t5406-remote-rejects.sh           |  2 +-
+ t/t5409-colorize-remote-messages.sh |  2 +-
+ t/t5411-proc-receive-hook.sh        |  4 ++--
+ t/t5510-fetch.sh                    |  6 +++---
+ t/t5516-fetch-push.sh               |  4 ++--
+ t/t5521-pull-options.sh             |  4 ++--
+ t/t5547-push-quarantine.sh          |  4 ++--
+ t/t5548-push-porcelain.sh           |  2 +-
+ t/t6500-gc.sh                       |  4 ++--
+ t/test-lib-functions.sh             | 26 ++++++++++++++++++++++++++
+ 11 files changed, 49 insertions(+), 23 deletions(-)
 
-diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
-index 19c6f4acbf6..c2dfb562961 100755
---- a/t/t3412-rebase-root.sh
-+++ b/t/t3412-rebase-root.sh
-@@ -31,12 +31,9 @@ test_expect_success 'rebase --root fails with too many args' '
- '
+diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
+index 6c941027a81..4532c90274b 100755
+--- a/t/t1416-ref-transaction-hooks.sh
++++ b/t/t1416-ref-transaction-hooks.sh
+@@ -18,7 +18,7 @@ test_expect_success setup '
+ test_expect_success 'hook allows updating ref if successful' '
+ 	test_when_finished "rm .git/hooks/reference-transaction" &&
+ 	git reset --hard PRE &&
+-	write_script .git/hooks/reference-transaction <<-\EOF &&
++	write_hook reference-transaction <<-\EOF &&
+ 		echo "$*" >>actual
+ 	EOF
+ 	cat >expect <<-EOF &&
+@@ -32,7 +32,7 @@ test_expect_success 'hook allows updating ref if successful' '
+ test_expect_success 'hook aborts updating ref in prepared state' '
+ 	test_when_finished "rm .git/hooks/reference-transaction" &&
+ 	git reset --hard PRE &&
+-	write_script .git/hooks/reference-transaction <<-\EOF &&
++	write_hook reference-transaction <<-\EOF &&
+ 		if test "$1" = prepared
+ 		then
+ 			exit 1
+@@ -45,7 +45,7 @@ test_expect_success 'hook aborts updating ref in prepared state' '
+ test_expect_success 'hook gets all queued updates in prepared state' '
+ 	test_when_finished "rm .git/hooks/reference-transaction actual" &&
+ 	git reset --hard PRE &&
+-	write_script .git/hooks/reference-transaction <<-\EOF &&
++	write_hook reference-transaction <<-\EOF &&
+ 		if test "$1" = prepared
+ 		then
+ 			while read -r line
+@@ -68,7 +68,7 @@ test_expect_success 'hook gets all queued updates in prepared state' '
+ test_expect_success 'hook gets all queued updates in committed state' '
+ 	test_when_finished "rm .git/hooks/reference-transaction actual" &&
+ 	git reset --hard PRE &&
+-	write_script .git/hooks/reference-transaction <<-\EOF &&
++	write_hook reference-transaction <<-\EOF &&
+ 		if test "$1" = committed
+ 		then
+ 			while read -r line
+@@ -88,7 +88,7 @@ test_expect_success 'hook gets all queued updates in committed state' '
+ test_expect_success 'hook gets all queued updates in aborted state' '
+ 	test_when_finished "rm .git/hooks/reference-transaction actual" &&
+ 	git reset --hard PRE &&
+-	write_script .git/hooks/reference-transaction <<-\EOF &&
++	write_hook reference-transaction <<-\EOF &&
+ 		if test "$1" = aborted
+ 		then
+ 			while read -r line
+@@ -115,11 +115,11 @@ test_expect_success 'interleaving hook calls succeed' '
  
- test_expect_success 'setup pre-rebase hook' '
--	mkdir -p .git/hooks &&
--	cat >.git/hooks/pre-rebase <<EOF &&
--#!$SHELL_PATH
--echo "\$1,\$2" >.git/PRE-REBASE-INPUT
--EOF
--	chmod +x .git/hooks/pre-rebase
-+	write_hook pre-rebase <<-\EOF
-+	echo "$1,$2" >.git/PRE-REBASE-INPUT
-+	EOF
- '
- cat > expect <<EOF
- 4
-@@ -141,12 +138,9 @@ commit work7~5
- EOF
+ 	git init --bare target-repo.git &&
  
- test_expect_success 'setup pre-rebase hook that fails' '
--	mkdir -p .git/hooks &&
--	cat >.git/hooks/pre-rebase <<EOF &&
--#!$SHELL_PATH
--false
--EOF
--	chmod +x .git/hooks/pre-rebase
-+	write_hook pre-rebase <<-\EOF
-+	false
-+	EOF
- '
+-	write_script target-repo.git/hooks/reference-transaction <<-\EOF &&
++	write_hook -C target-repo.git reference-transaction <<-\EOF &&
+ 		echo $0 "$@" >>actual
+ 	EOF
  
- test_expect_success 'pre-rebase hook stops rebase' '
-diff --git a/t/t3413-rebase-hook.sh b/t/t3413-rebase-hook.sh
-index b4acb3be5cf..100157aa0ab 100755
---- a/t/t3413-rebase-hook.sh
-+++ b/t/t3413-rebase-hook.sh
-@@ -41,12 +41,9 @@ test_expect_success 'rebase -i' '
- '
+-	write_script target-repo.git/hooks/update <<-\EOF &&
++	write_hook -C target-repo.git update <<-\EOF &&
+ 		echo $0 "$@" >>actual
+ 	EOF
  
- test_expect_success 'setup pre-rebase hook' '
--	mkdir -p .git/hooks &&
--	cat >.git/hooks/pre-rebase <<EOF &&
--#!$SHELL_PATH
--echo "\$1,\$2" >.git/PRE-REBASE-INPUT
--EOF
--	chmod +x .git/hooks/pre-rebase
-+	write_hook pre-rebase <<-\EOF
-+	echo "$1,$2" >.git/PRE-REBASE-INPUT
-+	EOF
- '
+diff --git a/t/t5406-remote-rejects.sh b/t/t5406-remote-rejects.sh
+index 5c509db6fc3..c49aeea272c 100755
+--- a/t/t5406-remote-rejects.sh
++++ b/t/t5406-remote-rejects.sh
+@@ -5,7 +5,7 @@ test_description='remote push rejects are reported by client'
+ . ./test-lib.sh
  
- test_expect_success 'pre-rebase hook gets correct input (1)' '
-@@ -102,12 +99,9 @@ test_expect_success 'pre-rebase hook gets correct input (6)' '
- '
- 
- test_expect_success 'setup pre-rebase hook that fails' '
--	mkdir -p .git/hooks &&
--	cat >.git/hooks/pre-rebase <<EOF &&
--#!$SHELL_PATH
--false
--EOF
--	chmod +x .git/hooks/pre-rebase
-+	write_hook pre-rebase <<-\EOF
-+	false
-+	EOF
- '
- 
- test_expect_success 'pre-rebase hook stops rebase (1)' '
-diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
-index 6012cc8172a..1bd656d35ce 100755
---- a/t/t5401-update-hooks.sh
-+++ b/t/t5401-update-hooks.sh
-@@ -20,45 +20,37 @@ test_expect_success setup '
- 	git clone --bare ./. victim.git &&
- 	GIT_DIR=victim.git git update-ref refs/heads/tofail $commit1 &&
- 	git update-ref refs/heads/main $commit1 &&
--	git update-ref refs/heads/tofail $commit0
--'
-+	git update-ref refs/heads/tofail $commit0 &&
- 
--cat >victim.git/hooks/pre-receive <<'EOF'
--#!/bin/sh
--printf %s "$@" >>$GIT_DIR/pre-receive.args
--cat - >$GIT_DIR/pre-receive.stdin
--echo STDOUT pre-receive
--echo STDERR pre-receive >&2
--EOF
--chmod u+x victim.git/hooks/pre-receive
-+	write_hook -C victim.git pre-receive <<-\EOF &&
-+	printf %s "$@" >>$GIT_DIR/pre-receive.args
-+	cat - >$GIT_DIR/pre-receive.stdin
-+	echo STDOUT pre-receive
-+	echo STDERR pre-receive >&2
-+	EOF
- 
--cat >victim.git/hooks/update <<'EOF'
--#!/bin/sh
--echo "$@" >>$GIT_DIR/update.args
--read x; printf %s "$x" >$GIT_DIR/update.stdin
--echo STDOUT update $1
--echo STDERR update $1 >&2
--test "$1" = refs/heads/main || exit
--EOF
--chmod u+x victim.git/hooks/update
-+	write_hook -C victim.git update <<-\EOF &&
-+	echo "$@" >>$GIT_DIR/update.args
-+	read x; printf %s "$x" >$GIT_DIR/update.stdin
-+	echo STDOUT update $1
-+	echo STDERR update $1 >&2
-+	test "$1" = refs/heads/main || exit
-+	EOF
- 
--cat >victim.git/hooks/post-receive <<'EOF'
--#!/bin/sh
--printf %s "$@" >>$GIT_DIR/post-receive.args
--cat - >$GIT_DIR/post-receive.stdin
--echo STDOUT post-receive
--echo STDERR post-receive >&2
--EOF
--chmod u+x victim.git/hooks/post-receive
-+	write_hook -C victim.git post-receive <<-\EOF &&
-+	printf %s "$@" >>$GIT_DIR/post-receive.args
-+	cat - >$GIT_DIR/post-receive.stdin
-+	echo STDOUT post-receive
-+	echo STDERR post-receive >&2
-+	EOF
- 
--cat >victim.git/hooks/post-update <<'EOF'
--#!/bin/sh
--echo "$@" >>$GIT_DIR/post-update.args
--read x; printf %s "$x" >$GIT_DIR/post-update.stdin
--echo STDOUT post-update
--echo STDERR post-update >&2
--EOF
--chmod u+x victim.git/hooks/post-update
-+	write_hook -C victim.git post-update <<-\EOF
-+	echo "$@" >>$GIT_DIR/post-update.args
-+	read x; printf %s "$x" >$GIT_DIR/post-update.stdin
-+	echo STDOUT post-update
-+	echo STDERR post-update >&2
-+	EOF
-+'
- 
- test_expect_success push '
- 	test_must_fail git send-pack --force ./victim.git \
-diff --git a/t/t5402-post-merge-hook.sh b/t/t5402-post-merge-hook.sh
-index 3e5e19c7191..c425a807efe 100755
---- a/t/t5402-post-merge-hook.sh
-+++ b/t/t5402-post-merge-hook.sh
-@@ -25,13 +25,15 @@ test_expect_success setup '
- 	GIT_DIR=clone2/.git git update-index --add a
- '
- 
--for clone in 1 2; do
--	cat >clone${clone}/.git/hooks/post-merge <<'EOF'
--#!/bin/sh
--echo $@ >> $GIT_DIR/post-merge.args
--EOF
--	chmod u+x clone${clone}/.git/hooks/post-merge
--done
-+test_expect_success 'setup clone hooks' '
-+	test_when_finished "rm -f hook" &&
-+	cat >hook <<-\EOF &&
-+	echo $@ >> $GIT_DIR/post-merge.args
-+	EOF
-+
-+	write_hook -C clone1 post-merge <hook &&
-+	write_hook -C clone2 post-merge <hook
-+'
- 
- test_expect_success 'post-merge does not run for up-to-date ' '
- 	GIT_DIR=clone1/.git git merge $commit0 &&
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 6da8d760e28..7a2bf55d8e2 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -17,15 +17,13 @@ test_expect_success 'setup' '
- 	git checkout A^0 &&
- 	test_commit E bar E &&
- 	test_commit F foo F &&
--	git checkout main
--'
-+	git checkout main &&
- 
--cat >.git/hooks/post-rewrite <<EOF
--#!/bin/sh
--echo \$@ > "$TRASH_DIRECTORY"/post-rewrite.args
--cat > "$TRASH_DIRECTORY"/post-rewrite.data
--EOF
--chmod u+x .git/hooks/post-rewrite
-+	write_hook post-rewrite <<-EOF
-+	echo \$@ > "$TRASH_DIRECTORY"/post-rewrite.args
-+	cat > "$TRASH_DIRECTORY"/post-rewrite.data
-+	EOF
-+'
- 
- clear_hook_input () {
- 	rm -f post-rewrite.args post-rewrite.data
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 11458052cb4..fd355ae48c6 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -62,32 +62,25 @@ mk_test_with_hooks() {
- 	(
- 		cd "$repo_name" &&
- 		mkdir .git/hooks &&
--		cd .git/hooks &&
- 
--		cat >pre-receive <<-'EOF' &&
--		#!/bin/sh
-+		write_hook pre-receive <<-'EOF' &&
- 		cat - >>pre-receive.actual
- 		EOF
- 
--		cat >update <<-'EOF' &&
--		#!/bin/sh
-+		write_hook update <<-'EOF' &&
- 		printf "%s %s %s\n" "$@" >>update.actual
- 		EOF
- 
--		cat >post-receive <<-'EOF' &&
--		#!/bin/sh
-+		write_hook post-receive <<-'EOF' &&
- 		cat - >>post-receive.actual
- 		EOF
- 
--		cat >post-update <<-'EOF' &&
--		#!/bin/sh
-+		write_hook post-update <<-'EOF'
- 		for ref in "$@"
- 		do
- 			printf "%s\n" "$ref" >>post-update.actual
- 		done
- 		EOF
--
--		chmod +x pre-receive update post-receive post-update
- 	)
- }
- 
-diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-index 8ca50f8b18c..11da2325c6d 100755
---- a/t/t5541-http-push-smart.sh
-+++ b/t/t5541-http-push-smart.sh
-@@ -96,11 +96,9 @@ test_expect_success 'create and delete remote branch' '
- 	test_must_fail git show-ref --verify refs/remotes/origin/dev
- '
- 
--cat >"$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update" <<EOF
--#!/bin/sh
-+write_hook -C "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git" update <<\EOF
- exit 1
- EOF
--chmod a+x "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update"
- 
- cat >exp <<EOF
- remote: error: hook declined to update refs/heads/dev2
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 83c24fc97a7..6fd041e7d3e 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -79,12 +79,10 @@ test_expect_success 'clone from hooks' '
- 	cd .. &&
- 	git init r1 &&
- 	cd r1 &&
--	cat >.git/hooks/pre-commit <<-\EOF &&
--	#!/bin/sh
-+	write_hook pre-commit <<-\EOF &&
- 	git clone ../r0 ../r2
+ test_expect_success 'setup' '
+-	write_script .git/hooks/update <<-\EOF &&
++	write_hook update <<-\EOF &&
  	exit 1
  	EOF
--	chmod u+x .git/hooks/pre-commit &&
- 	: >file &&
- 	git add file &&
- 	test_must_fail git commit -m invoke-hook &&
+ 	echo 1 >file &&
+diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
+index 9f1a483f426..1f7cad31442 100755
+--- a/t/t5409-colorize-remote-messages.sh
++++ b/t/t5409-colorize-remote-messages.sh
+@@ -5,7 +5,7 @@ test_description='remote messages are colorized on the client'
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+-	write_script .git/hooks/update <<-\EOF &&
++	write_hook update <<-\EOF &&
+ 	echo error: error
+ 	echo ERROR: also highlighted
+ 	echo hint: hint
+diff --git a/t/t5411-proc-receive-hook.sh b/t/t5411-proc-receive-hook.sh
+index 98b0e812082..054f4b2efb3 100755
+--- a/t/t5411-proc-receive-hook.sh
++++ b/t/t5411-proc-receive-hook.sh
+@@ -36,7 +36,7 @@ setup_upstream_and_workbench () {
+ 		TAG=$(git -C workbench rev-parse v123) &&
+ 
+ 		# setup pre-receive hook
+-		write_script upstream.git/hooks/pre-receive <<-\EOF &&
++		write_hook -C upstream.git pre-receive <<-\EOF &&
+ 		exec >&2
+ 		echo "# pre-receive hook"
+ 		while read old new ref
+@@ -46,7 +46,7 @@ setup_upstream_and_workbench () {
+ 		EOF
+ 
+ 		# setup post-receive hook
+-		write_script upstream.git/hooks/post-receive <<-\EOF &&
++		write_hook -C upstream.git post-receive <<-\EOF &&
+ 		exec >&2
+ 		echo "# post-receive hook"
+ 		while read old new ref
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index a0faf0dd949..cdce39e6c76 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -265,7 +265,7 @@ test_expect_success 'fetch --atomic executes a single reference transaction only
+ 	EOF
+ 
+ 	rm -f atomic/actual &&
+-	write_script atomic/.git/hooks/reference-transaction <<-\EOF &&
++	write_hook -C atomic reference-transaction <<-\EOF &&
+ 		( echo "$*" && cat ) >>actual
+ 	EOF
+ 
+@@ -298,7 +298,7 @@ test_expect_success 'fetch --atomic aborts all reference updates if hook aborts'
+ 	EOF
+ 
+ 	rm -f atomic/actual &&
+-	write_script atomic/.git/hooks/reference-transaction <<-\EOF &&
++	write_hook -C atomic/.git reference-transaction <<-\EOF &&
+ 		( echo "$*" && cat ) >>actual
+ 		exit 1
+ 	EOF
+@@ -326,7 +326,7 @@ test_expect_success 'fetch --atomic --append appends to FETCH_HEAD' '
+ 	test_line_count = 2 atomic/.git/FETCH_HEAD &&
+ 	cp atomic/.git/FETCH_HEAD expected &&
+ 
+-	write_script atomic/.git/hooks/reference-transaction <<-\EOF &&
++	write_hook -C atomic reference-transaction <<-\EOF &&
+ 		exit 1
+ 	EOF
+ 
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index eea191d042f..11458052cb4 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1680,7 +1680,7 @@ test_expect_success 'updateInstead with push-to-checkout hook' '
+ 		git reset --hard HEAD^^ &&
+ 		git tag initial &&
+ 		git config receive.denyCurrentBranch updateInstead &&
+-		write_script .git/hooks/push-to-checkout <<-\EOF
++		write_hook push-to-checkout <<-\EOF
+ 		echo >&2 updating from $(git rev-parse HEAD)
+ 		echo >&2 updating to "$1"
+ 
+@@ -1739,7 +1739,7 @@ test_expect_success 'updateInstead with push-to-checkout hook' '
+ 	(
+ 		cd void &&
+ 		git config receive.denyCurrentBranch updateInstead &&
+-		write_script .git/hooks/push-to-checkout <<-\EOF
++		write_hook push-to-checkout <<-\EOF
+ 		if git rev-parse --quiet --verify HEAD
+ 		then
+ 			has_head=yes
+diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
+index 66cfcb09c55..9b30e90383c 100755
+--- a/t/t5521-pull-options.sh
++++ b/t/t5521-pull-options.sh
+@@ -233,7 +233,7 @@ test_expect_success 'git pull --no-verify flag passed to merge' '
+ 	git init src &&
+ 	test_commit -C src one &&
+ 	git clone src dst &&
+-	write_script dst/.git/hooks/commit-msg <<-\EOF &&
++	write_hook -C dst commit-msg <<-\EOF &&
+ 	false
+ 	EOF
+ 	test_commit -C src two &&
+@@ -245,7 +245,7 @@ test_expect_success 'git pull --no-verify --verify passed to merge' '
+ 	git init src &&
+ 	test_commit -C src one &&
+ 	git clone src dst &&
+-	write_script dst/.git/hooks/commit-msg <<-\EOF &&
++	write_hook -C dst commit-msg <<-\EOF &&
+ 	false
+ 	EOF
+ 	test_commit -C src two &&
+diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
+index faaa51ccc56..e0bd469b110 100755
+--- a/t/t5547-push-quarantine.sh
++++ b/t/t5547-push-quarantine.sh
+@@ -5,7 +5,7 @@ test_description='check quarantine of objects during push'
+ 
+ test_expect_success 'create picky dest repo' '
+ 	git init --bare dest.git &&
+-	write_script dest.git/hooks/pre-receive <<-\EOF
++	write_hook -C dest.git pre-receive <<-\EOF
+ 	while read old new ref; do
+ 		test "$(git log -1 --format=%s $new)" = reject && exit 1
+ 	done
+@@ -60,7 +60,7 @@ test_expect_success 'push to repo path with path separator (colon)' '
+ 
+ test_expect_success 'updating a ref from quarantine is forbidden' '
+ 	git init --bare update.git &&
+-	write_script update.git/hooks/pre-receive <<-\EOF &&
++	write_hook -C update.git pre-receive <<-\EOF &&
+ 	read old new refname
+ 	git update-ref refs/heads/unrelated $new
+ 	exit 1
+diff --git a/t/t5548-push-porcelain.sh b/t/t5548-push-porcelain.sh
+index f11ff57e549..8997433a992 100755
+--- a/t/t5548-push-porcelain.sh
++++ b/t/t5548-push-porcelain.sh
+@@ -168,7 +168,7 @@ run_git_push_porcelain_output_test() {
+ 	'
+ 
+ 	test_expect_success "prepare pre-receive hook ($PROTOCOL)" '
+-		write_script "$upstream/hooks/pre-receive" <<-EOF
++		write_hook -C "$upstream" pre-receive <<-EOF
+ 		exit 1
+ 		EOF
+ 	'
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index c2021267f2c..98cf395806b 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -103,7 +103,7 @@ test_expect_success 'pre-auto-gc hook can stop auto gc' '
+ 	git init pre-auto-gc-hook &&
+ 	(
+ 		cd pre-auto-gc-hook &&
+-		write_script ".git/hooks/pre-auto-gc" <<-\EOF &&
++		write_hook pre-auto-gc <<-\EOF &&
+ 		echo >&2 no gc for you &&
+ 		exit 1
+ 		EOF
+@@ -130,7 +130,7 @@ test_expect_success 'pre-auto-gc hook can stop auto gc' '
+ 
+ 	(
+ 		cd pre-auto-gc-hook &&
+-		write_script ".git/hooks/pre-auto-gc" <<-\EOF &&
++		write_hook pre-auto-gc <<-\EOF &&
+ 		echo >&2 will gc for you &&
+ 		exit 0
+ 		EOF
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index eef2262a360..3786d39ccab 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -551,6 +551,32 @@ write_script () {
+ 	chmod +x "$1"
+ }
+ 
++## Usage: write-hook pre-receive
++## Usage: write-hook -C some-dir pre-receive
++write_hook () {
++	indir= &&
++	while test $# != 0
++	do
++		case "$1" in
++		-C)
++			indir="$2"
++			shift
++			;;
++		-*)
++			BUG "invalid write_hook: $1"
++			;;
++		*)
++			break
++			;;
++		esac &&
++		shift
++	done &&
++	git_dir=$(git -C "$indir" rev-parse --absolute-git-dir) &&
++	hook_dir="$git_dir/hooks" &&
++	hook_file="$hook_dir/$1"
++	write_script "$hook_file"
++}
++
+ # Use test_set_prereq to tell that a particular prerequisite is available.
+ # The prerequisite can later be checked for in two ways:
+ #
 -- 
 2.34.1.1020.gb1392dd1877
 
