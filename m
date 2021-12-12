@@ -2,48 +2,48 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 813B6C433EF
-	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 19:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21C20C433FE
+	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 19:54:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230073AbhLLTyX (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S230115AbhLLTyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Dec 2021 14:54:24 -0500
+Received: from mail-wr1-f44.google.com ([209.85.221.44]:43671 "EHLO
+        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230040AbhLLTyX (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 12 Dec 2021 14:54:23 -0500
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:45845 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229984AbhLLTyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Dec 2021 14:54:23 -0500
-Received: by mail-wm1-f42.google.com with SMTP id g191-20020a1c9dc8000000b0032fbf912885so10334966wme.4
-        for <git@vger.kernel.org>; Sun, 12 Dec 2021 11:54:22 -0800 (PST)
+Received: by mail-wr1-f44.google.com with SMTP id v11so23771786wrw.10
+        for <git@vger.kernel.org>; Sun, 12 Dec 2021 11:54:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RneHcJKN+nrQIJdcwC/ohRWueVrRIZuGCl/Btf3G5kI=;
-        b=G1Ps+/yhIiqIKisOIfZiVBJSUTKL7AhQrvQ018Sc3uwdjgbdCV+g419ow0tevRbtic
-         b/ztz6YSdt9B/Kore+6H8KyKQ39mQTlCAqzC4YGZO1Vsjj+XnPfjkszWIeEg/6kWmMXa
-         igf8tlUyPEreSc1z2cEIccupI0K/JXObL+YTeszVMNKQ0Xlj6vmUPBWZW7CTY59RqKWD
-         AfUhr8litKaHfgcTOI144TmrG1lOVKreYOd0X433ywbcMpgFJBV2xc+bFIZOu7yjbuO9
-         eLej8IwefcB7aeEiyn4aDvyLBQgmujkQb/bAkp9z3AuR4e7IrCoYH6DHjjAI/VtS95Gq
-         KVMA==
+        bh=qhaYRhJZTACOiihVePthHF9jvWxTZRfxx3ZJEd09pNE=;
+        b=SxW1LmC7WPza0rGmIuKdThHnftcZ6Xf/oUqQjGAm+Y534d//bCxcaLQmtDYlrgUhac
+         m88Civ4RA/d6M1axXPN0wQ+NQVpq353uDXQq4OdV3T+t0P7nMBo/0L1mQneWwN7zgvix
+         no4X+MQb9asRMd0DUPcPe8T32msMw38mIV/Fg6KM5/UAOdYd0yHDnAZZJevEyLcwWAPM
+         jeWbw3LRX/9UEquAzIIsbLxPwUBuoJOR7+IVdxC6ik6DfxYvJAtRFRW8fjGU53DfD7+W
+         yadVv2RcUDaUAa1yi0d44Qck8BAw2kX+NnQYl1ZlUV3tsKwb2nGxgb4r3sMQLEMmdUL1
+         V7PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RneHcJKN+nrQIJdcwC/ohRWueVrRIZuGCl/Btf3G5kI=;
-        b=M3V4WaLn5GNPcFsHIAbMoLSI8RJDJDBTsF/UZ82y+b7zBLIhQcimBXUuSQ3Aim+Odo
-         57fffI6la6joj365DmTFMwAHl21AncsSnHEsu0FaCx3joFB0RLwv74xPwcH4Tz4k5v+Y
-         MLieQsxpKDd+EODD8RFl03WdKL4HXC/ARmlrbaKkbgTvAQmfKr1tScuwjMEBtCwwxChg
-         MeSKhx8mI1iQl07OdwV1J4m+T/RNWS8yczGrZwXttJakaSOqHaMWG4EvVFnl2WKYBsbq
-         s/1sJsmCm7wFS+6fXJPLcYSSSa9qJ6NhlECWeYYgfcFq+IYE3tJ2ATEMro1mpcSy+hWW
-         xJ2Q==
-X-Gm-Message-State: AOAM531zx7HaMdr2U8LOkkRpa6m0krqLw9bulIMlOb2HyZyDKJmjnrMf
-        mSmc80+h30cjSRDLn4/13zNrTuPytXWZ2A==
-X-Google-Smtp-Source: ABdhPJzZQ5O95VJY7iBqwE5wtqKZziZz1JEwsPURK7MqpOkE0Bf2yx2OZHhYBLUHmadEww7HabMwKg==
-X-Received: by 2002:a05:600c:b43:: with SMTP id k3mr31891208wmr.159.1639338801806;
-        Sun, 12 Dec 2021 11:53:21 -0800 (PST)
+        bh=qhaYRhJZTACOiihVePthHF9jvWxTZRfxx3ZJEd09pNE=;
+        b=o8/veVfWyN2ghG8jOmiH8/hbUZd6OzxcDXSMuSMo0jagO5FNcx6PN5LymdJRj1llNJ
+         CLw82JJl7MeniR8JtGNGlBEvRG61pU6ANzz4gWDVb2OvJWPFIc/NFUr03e/wcnD9ldlq
+         IMTyVzlWlgLd5LpxN0DLmDMIgWMIb8JND76OfqNRCCKD46JqSDE3M6wF6aKT+/Sl5fhr
+         zhYex5++76U7MtvxOIMTBP9Cz48AvaWRmnnYlADbhSp1AuLxleLgNECKLpzCSKU/UCMf
+         z0MpZKfDsONus6Pyz0TMKrq1tjfYXq/HWSgs7dRaWj1eEhbsDvVpT8eoreHfxqA4hDAg
+         EmDg==
+X-Gm-Message-State: AOAM530gt+RIulxPUXMpf1AIkUP3TZxs0QeTlEr9UyS20a0kogKSWE5s
+        sM/brG3tGxInp7Xw9BKGKFc/nxuPa3c45A==
+X-Google-Smtp-Source: ABdhPJzVq1JZiT9zs98rq04uNAyl3EOP7dHQHy4RgdklRYt+/BARdpsIHUtWB0hSGT6HRfL2aVXwQQ==
+X-Received: by 2002:a5d:480c:: with SMTP id l12mr27883918wrq.518.1639338802522;
+        Sun, 12 Dec 2021 11:53:22 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id g198sm5494323wme.23.2021.12.12.11.53.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Dec 2021 11:53:21 -0800 (PST)
+        Sun, 12 Dec 2021 11:53:22 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -52,12 +52,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 0/3] refs: ab/refs-errno-cleanup fixup + remove "failure_errno"
-Date:   Sun, 12 Dec 2021 20:53:10 +0100
-Message-Id: <cover-v2-0.3-00000000000-20211212T195108Z-avarab@gmail.com>
+Subject: [PATCH v2 1/3] refs API: use "failure_errno", not "errno"
+Date:   Sun, 12 Dec 2021 20:53:11 +0100
+Message-Id: <patch-v2-1.3-161fcad1578-20211212T195108Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.929.ge922d848c7a
-In-Reply-To: <cover-0.3-00000000000-20211209T045735Z-avarab@gmail.com>
-References: <cover-0.3-00000000000-20211209T045735Z-avarab@gmail.com>
+In-Reply-To: <cover-v2-0.3-00000000000-20211212T195108Z-avarab@gmail.com>
+References: <cover-0.3-00000000000-20211209T045735Z-avarab@gmail.com> <cover-v2-0.3-00000000000-20211212T195108Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,52 +65,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A re-roll of a fix to my recently landed topic to remove "errno" use
-from the refs API.
+Fix a logic error in refs_resolve_ref_unsafe() introduced in a recent
+series of mine to abstract the refs API away from errno. See
+96f6623ada0 (Merge branch 'ab/refs-errno-cleanup', 2021-11-29)for that
+series.
 
-The only update is a rebasing on "master", this previouly semantically
-conflicted with an in-flight topic that's been merged to "master".
+In that series introduction of "failure_errno" to
+refs_resolve_ref_unsafe came in ef18119dec8 (refs API: add a version
+of refs_resolve_ref_unsafe() with "errno", 2021-10-16). There we'd set
+"errno = 0" immediately before refs_read_raw_ref(), and then set
+"failure_errno" to "errno" if errno was non-zero afterwards.
 
-1. https://lore.kernel.org/git/cover-0.3-00000000000-20211209T045735Z-avarab@gmail.com/
+Then in the next commit 8b72fea7e91 (refs API: make
+refs_read_raw_ref() not set errno, 2021-10-16) we started expecting
+"refs_read_raw_ref()" to set "failure_errno". It would do that if
+refs_read_raw_ref() failed, but it wouldn't be the same errno.
 
-Ævar Arnfjörð Bjarmason (3):
-  refs API: use "failure_errno", not "errno"
-  sequencer: don't use die_errno() on refs_resolve_ref_unsafe() failure
-  refs API: remove "failure_errno" from refs_resolve_ref_unsafe()
+So we might set the "errno" here to any arbitrary bad value, and end
+up e.g. returning NULL when we meant to return the refname from
+refs_resolve_ref_unsafe(), or the other way around. Instrumenting this
+code will reveal cases where refs_read_raw_ref() will fail, and
+"errno" and "failure_errno" will be set to different values.
 
- refs.c                    | 53 +++++++++++++--------------------------
- refs.h                    |  7 +-----
- refs/files-backend.c      | 34 ++++++++-----------------
- remote.c                  |  3 +--
- sequencer.c               | 10 +++-----
- t/helper/test-ref-store.c |  3 +--
- worktree.c                | 11 +++-----
- 7 files changed, 36 insertions(+), 85 deletions(-)
+In practice I haven't found a case where this scary bug changed
+anything in practice. The reason for that is that we'll not care about
+the actual value of "errno" here per-se, but only whether:
 
-Range-diff against v1:
-1:  b983d3b6033 = 1:  161fcad1578 refs API: use "failure_errno", not "errno"
-2:  a4d1dadb9c9 = 2:  12d453d3884 sequencer: don't use die_errno() on refs_resolve_ref_unsafe() failure
-3:  a42539d103c ! 3:  614590b2d10 refs API: remove "failure_errno" from refs_resolve_ref_unsafe()
-    @@ refs/files-backend.c: static int files_reflog_expire(struct ref_store *ref_store
-      		}
-      
-     
-    + ## remote.c ##
-    +@@ remote.c: static void read_config(struct repository *repo)
-    + 
-    + 	repo->remote_state->current_branch = NULL;
-    + 	if (startup_info->have_repository) {
-    +-		int ignore_errno;
-    + 		const char *head_ref = refs_resolve_ref_unsafe(
-    +-			get_main_ref_store(repo), "HEAD", 0, NULL, &flag, &ignore_errno);
-    ++			get_main_ref_store(repo), "HEAD", 0, NULL, &flag);
-    + 		if (head_ref && (flag & REF_ISSYMREF) &&
-    + 		    skip_prefix(head_ref, "refs/heads/", &head_ref)) {
-    + 			repo->remote_state->current_branch = make_branch(
-    +
-      ## sequencer.c ##
-     @@ sequencer.c: void print_commit_summary(struct repository *r,
-      	struct strbuf author_ident = STRBUF_INIT;
+ 1. We have an errno
+ 2. If it's one of ENOENT, EISDIR or ENOTDIR. See the adjacent code
+    added in a1c1d8170db (refs_resolve_ref_unsafe: handle d/f
+    conflicts for writes, 2017-10-06)
+
+I.e. if we clobber "failure_errno" with "errno", but it happened to be
+one of those three, and we'll clobber it with another one of the three
+we were OK.
+
+Perhaps there are cases where the difference ended up mattering, but I
+haven't found them. Instrumenting the test suite to fail if "errno"
+and "failure_errno" are different shows a lot of failures, checking if
+they're different *and* one is but not the other is outside that list
+of three "errno" values yields no failures.
+
+But let's fix the obvious bug. We should just stop paying attention to
+"errno" in refs_resolve_ref_unsafe(). In addition let's change the
+partial resetting of "errno" in files_read_raw_ref() to happen just
+before the "return", to ensure that any such bug will be more easily
+spotted in the future.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ refs.c               | 2 --
+ refs/files-backend.c | 3 +--
+ 2 files changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index 4338875d86b..6cc845c7ac2 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1721,8 +1721,6 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 		if (refs_read_raw_ref(refs, refname, oid, &sb_refname,
+ 				      &read_flags, failure_errno)) {
+ 			*flags |= read_flags;
+-			if (errno)
+-				*failure_errno = errno;
+ 
+ 			/* In reading mode, refs must eventually resolve */
+ 			if (resolve_flags & RESOLVE_REF_READING)
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 237a2afb5d7..fd34d344c30 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -387,7 +387,6 @@ static int files_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 	if (lstat(path, &st) < 0) {
+ 		int ignore_errno;
+ 		myerr = errno;
+-		errno = 0;
+ 		if (myerr != ENOENT)
+ 			goto out;
+ 		if (refs_read_raw_ref(refs->packed_ref_store, refname, oid,
+@@ -404,7 +403,6 @@ static int files_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 		strbuf_reset(&sb_contents);
+ 		if (strbuf_readlink(&sb_contents, path, st.st_size) < 0) {
+ 			myerr = errno;
+-			errno = 0;
+ 			if (myerr == ENOENT || myerr == EINVAL)
+ 				/* inconsistent with lstat; retry */
+ 				goto stat_ref;
+@@ -474,6 +472,7 @@ static int files_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 
+ 	strbuf_release(&sb_path);
+ 	strbuf_release(&sb_contents);
++	errno = 0;
+ 	return ret;
+ }
+ 
 -- 
 2.34.1.929.ge922d848c7a
 
