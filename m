@@ -2,123 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF8C2C433F5
-	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 20:54:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AA49C433FE
+	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 22:27:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229471AbhLLUyO convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sun, 12 Dec 2021 15:54:14 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:56596 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbhLLUyN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Dec 2021 15:54:13 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1BCKs0Ar071720
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sun, 12 Dec 2021 15:54:02 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Philip Oakley'" <philipoakley@iee.email>,
-        "'Glen Choo'" <chooglen@google.com>,
-        "'Git List'" <git@vger.kernel.org>
-References: <e30ae0dd-739b-7ecd-735e-992395b31ccc@iee.email> <kl6ltufg843d.fsf@chooglen-macbookpro.roam.corp.google.com> <7ffa36ab-da93-0fe7-8d21-f489b16a3340@iee.email>
-In-Reply-To: <7ffa36ab-da93-0fe7-8d21-f489b16a3340@iee.email>
-Subject: RE: New (better?) hash map technique in limit case.
-Date:   Sun, 12 Dec 2021 15:53:54 -0500
-Organization: Nexbridge Inc.
-Message-ID: <000001d7ef9a$6493d150$2dbb73f0$@nexbridge.com>
+        id S229810AbhLLW1g convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 12 Dec 2021 17:27:36 -0500
+Received: from mail-pj1-f45.google.com ([209.85.216.45]:46726 "EHLO
+        mail-pj1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229803AbhLLW1g (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Dec 2021 17:27:36 -0500
+Received: by mail-pj1-f45.google.com with SMTP id np6-20020a17090b4c4600b001a90b011e06so11838076pjb.5
+        for <git@vger.kernel.org>; Sun, 12 Dec 2021 14:27:36 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Xo7fZHFLLuIsnCsznBzQ5ElifLKPqTpsbG3c3zCSxRE=;
+        b=Gy67hW8Ew9ksQTyFD5eetEtdIDgd0iv8ZEBqRA7jbXXdg+8tMdBtgJI424GWTZVw4Q
+         UBM4QhUg1ncQ/qRCiTSmt+bZ+Fph9eQCugjJ7lmvUTlzXnCRvro2yJ/N3uC3RTR2JHzo
+         xcf9MSwWmKT7GWwCHX3TSsr4eVjcMI6u2Xe0Epc6AydnsTwF17lXLpSY+9xSXyM/tUIi
+         OalG0qNbHclCXzJ84C5rCTUO5F7VWIADUYxajz4vQv+kPSHoPGQ2X/MpT73W/rpw5FCJ
+         AJgnUGkd22nNs5iCEuKbcGm8qGbdazw/5UGGDDLSasKTbCiso+QsdrM0CuDmKjhYe2qf
+         e7vg==
+X-Gm-Message-State: AOAM530bVQ0CUnDd9ksYakmwKqiUexOhbT6Gpg4gaMChAmwitBZitrDY
+        x3bHHRTz8iIqHzXv8C3X6hf2ZO287RzmRmqx/qk=
+X-Google-Smtp-Source: ABdhPJwq4E/7HDeegistUr+CI0FNQIzwqK2WYCk8zUeuGcseltRP95g+QGDA26MPrtcB3PwKd72Y1rI6xThIRYZ3WNQ=
+X-Received: by 2002:a17:90b:3558:: with SMTP id lt24mr8931156pjb.150.1639348055787;
+ Sun, 12 Dec 2021 14:27:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
+References: <CAJrA3nLUG_m1ftdAyzFBkmL3m1vMPuv5dd3bYVVOmXV-fThwnA@mail.gmail.com>
+ <211210.86r1akbes8.gmgdl@evledraar.gmail.com> <20211210164249.bahhe5ogjjhz4lxo@fs>
+ <CAJrA3nKbUK=_5d5KTCDehrfge4y1aB9YGsFwQYNzUDWGcfog4w@mail.gmail.com>
+ <211211.86a6h7c1mq.gmgdl@evledraar.gmail.com> <xmqq4k7dlld3.fsf@gitster.g> <211212.86o85labj1.gmgdl@evledraar.gmail.com>
+In-Reply-To: <211212.86o85labj1.gmgdl@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 12 Dec 2021 17:27:24 -0500
+Message-ID: <CAPig+cT-9GAtadPW-=3sVFVWyKTf9Kybs3TwSW-s0BzhsfGJyQ@mail.gmail.com>
+Subject: Re: Please, paint new branch errors in RED (or any visible color)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jose Wielandt <jose.wielandt@timining.com>,
+        Fabian Stelzer <fs@gigacodes.de>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQLA95Z8aQbjx9S5ytaZs4PeYyqWrgIV2jqmAd3MLtWqPZ9VcA==
-Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 12, 2021 12:44 PM, Philip Oakley:
-> To: Glen Choo <chooglen@google.com>; Git List <git@vger.kernel.org>
-> Subject: Re: New (better?) hash map technique in limit case.
-> 
-> Hi Glen,
-> On 10/12/2021 22:52, Glen Choo wrote:
-> > Philip Oakley <philipoakley@iee.email> writes:
-> >
-> >> Recently I saw a report [1] on a new theoretical result about how to
-> >> manage hash maps which get nearly 'full', which beats Knuth's limit
-> >> formula. The full paper is at [2]
-> >>
-> >> As I understand it, the method adds the gravestone entries early
-> >> during has collisions to avoid clumping of such collision insertions,
-> >> rather than always having to enter the collision list at the end.
-> >> This keeps the available slots relatively randomly spaced.
-> >>
-> >> It feels like the old random bus arrival problem where the average
-> >> wait for next bus is identical to the average time since the last
-> >> bust, which is the same as the average bus interval (thus 1 + 1 = 1),
-> >> and the technique maintains that advantageous perception.
-> >>
-> >> Given Git's use of hashes, it sounds like it could have uses,
-> >> assuming the theory pans out. I've not yet gone through the paper
-> >> itself [2] but hope springs eternal.
-> >>
-> >> Philip
-> >>
-> >> [1]
-> >> S. Nadis and M. I. of Technology, “Theoretical breakthrough could
-> >> boost data storage.”
-> >> https://techxplore.com/news/2021-11-theoretical-breakthrough-boost-
-> st
-> >> orage.html
-> >> (accessed Nov. 18, 2021).
-> >>
-> >> [2]
-> >> M. A. Bender, B. C. Kuszmaul, and W. Kuszmaul, “Linear Probing
-> >> Revisited: Tombstones Mark the Death of Primary Clustering,”
-> >> arXiv:2107.01250 [cs, math], Jul. 2021, Accessed: Nov. 18, 2021.
-> >> [Online]. Available: http://arxiv.org/abs/2107.01250
-> > Very interesting, thanks for sharing. I haven't read the full paper
-> > either, but this is an interesting result.
-> >
-> > It seems that this result is limited to hashmaps with a approximately
-> > equal number of insertions and deletions..
-> >
-> > From [1]
-> >
-> >   They found that for applications where the number of insertions and
-> >   deletions stays about the same—and the amount of data added is roughly
-> >   equal to that removed—linear-probing hash tables can operate at high
-> >   storage capacities without sacrificing speed.apacities without
-> >   sacrificing speed.
-> >
-> > and [2]
-> >
-> >   ...We then turn our attention to sequences of operations that contain
-> >   deletions, and show that the tombstones left behind by those deletions
-> >   have a primary-anti-clustering effect, that is, they have a tendency
-> >   to speed up future insertions
-> >
-> > Do we have any such use cases?
-> I know that we use hash maps, but haven't followed there actual usage in
-> various optimisations.
-> 
-> Obviously we use hash naming of objects but that's generally a red-herring, I
-> think, unless we are over-abbreviating the hash so that it's no longer unique
-> (which could be happening somewhere).
-> 
-> I suspect that some of the hosting providers may be more interested from a
-> File system perspective, as I think we just pass the object store problems to
-> the FS. Then again, all the mono-repo and partial checkout corporate users
-> are likely to be interested, especially if this unblocks some historical
-> misunderstanding about the limits and how to handle them.
+On Sun, Dec 12, 2021 at 4:22 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> Yes, I think it's a bug if we add any such coloring that isn't
+> configurable via the usual color.* configuration. Although in this case
+> it's usage.c. So perhaps "color.usage" (as in usage.c). But that squats
+> on any future hypothetical "git usage". So maybe "color.coreUsage" (a
+> "color.core.usage" would squat on any future "color.core.usage.<slot>"
+> (i.e. there's no 4-level keys)>
+>
+> > Making it opt-in is even better, but it is my personal taste.
+>
+> *nod*. I'll see how it turns out. FWIW I think that it's probably too
+> over-colored to do:
+>
+>     <RED>fatal: the message</RED>
+>
+> And it's probably better to just do:
+>
+>     <RED>fatal</RED>: the message
+>
+> But I'll see once we have actual examples. The advice output is
+> fully-colored now. I.e. "hint: message", not just the "hint" part...
 
-If we are going to change data structures for object hashes, it might be better to use a compressed trie data structure (trie is not a typo for tree). This can be mapped easily to the current FS structure in .git/objects - in fact, .git/objects is mappable to a two-level compressed trie with a top level of 2 characters. Extending the data structure model both in memory and on the file system to become multi-level instead of just 2 levels should not be particularly onerous and has a O(1) search speed that, at worst, is the same as a perfect closed hash and the same as an open hash with single entries in buckets. Once open hashes degenerate to have long chains, the compressed trie is substantially more time efficient. A trie is an O(1) lookup and insert in all cases and does not degenerate like hashes or trees do. Uncompressed tries are generally extremely less space efficient than hashes (making them quite bad for our purposes) but compressed tries substantially reduce wasted space with a trade-off of some time to do node-splits on insert and single-level mid-key lookups.
-
-Note: In a FS look up, the search is not O(1) unless the FS is also implemented as a trie, so the benefit on disk will not be as fully realized, although if you can get the compression to fit into a directory inode block, the search speeds up significantly because of reduced I/Os. A FS existence search is O(n,m) where n is the maximum number of partitions in the trie's key, and m is the maximum number of files within a directory IF the key partitioning compression is not known - if it IS known, then the FS existence search is O(m). This n is different (much smaller) than the total number of entries in the hash. As an example, a sample repo has 2607 entries under object, and the key partitioned length (n) is always 2, representing, as an example, 00/16212c76018d27bd1a39630c32d1027fbfbebd. Keeping the key partitioning unknown allows the searcher to adapt to any repository trie compression, including existing ones, so there's that advantage.
-
--Randall
-
+As a minor bikeshedding datapoint, a script I wrote a few years ago
+highlights outdated entries in a larger output. The highlighting is
+applied only to a single word ("outdated") on one line related to the
+item, and I found that my eye would regularly glide right over the
+highlighting in the somewhat voluminous output without ever seeing the
+highlight. Very recently, I changed it to highlight the entire line,
+and that has helped me take more notice of it (though, admittedly, I
+still sometimes still overlook the highlighted item).
