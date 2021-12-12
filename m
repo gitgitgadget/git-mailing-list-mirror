@@ -2,206 +2,222 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA68FC433F5
-	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 08:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BACD7C433F5
+	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 16:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229894AbhLLIzf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Dec 2021 03:55:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53928 "EHLO
+        id S231682AbhLLQcP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Dec 2021 11:32:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229593AbhLLIze (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Dec 2021 03:55:34 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E8B7C061714
-        for <git@vger.kernel.org>; Sun, 12 Dec 2021 00:55:34 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id c32so25668831lfv.4
-        for <git@vger.kernel.org>; Sun, 12 Dec 2021 00:55:33 -0800 (PST)
+        with ESMTP id S231679AbhLLQcO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Dec 2021 11:32:14 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82927C061714
+        for <git@vger.kernel.org>; Sun, 12 Dec 2021 08:32:14 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id e3so45602416edu.4
+        for <git@vger.kernel.org>; Sun, 12 Dec 2021 08:32:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=OrGEpASIataGyCTXlOwWYdz7ATqn+O/ybkPK2SAeeq8=;
-        b=ZQKIt2+fjjD64SN6lDxVeSR5xPZWGtmcjC+Os9IfCvOtw3cAuls/jzCX+gBGzeMt5E
-         kkAzEGSo+tQpbNhqhbWXc1J3rQcVmi100KdcKJiFboAXZqZ62h5XKxewbL57HFtBencF
-         3UYnsIIW5vHyRkXlLl9EK3uYbhBx9lctyzd3I=
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=35iXjAhK1fD76ukmFlXTyI+0ct//+yqngQW8voyk9cU=;
+        b=EdNUyAFWra5uBgaEVw4cVYjYBbT4NN0KkFglzbJLlj49JsL4Shh8xlhLehRxrqzXih
+         dPyKRfY9F4cOiMKO1oA/LIp4Bz4zyYAVgu5pc93FmZDOjlFhtMRIasgxFLRMlyQm5y2y
+         wtAmmkuSnG6lokuSVHXAmqw/Y7K+Hwkl7EFpC4cRId3BF8MjJWwSbD2GCJUBsnBPbzWP
+         tbXBRBjhi8RR8VlddwPZrSsW6hs7Io0MEMz4ePI7LKWOAGJ1x0etZHpr581Uu/GXnKmP
+         bLr1xhKN+3u8LvAIL7qS0QzfuNZIQafJbLzlyX95QIgP6Li6Al2wdGTpb/LRUsL6qdoT
+         0r+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=OrGEpASIataGyCTXlOwWYdz7ATqn+O/ybkPK2SAeeq8=;
-        b=gq2xmuwHpd2weCPDhLNGJ/6aoW/wPQMXkDoxZ94gTNsGgTFYULe/8CKU9y1ct0pTCE
-         FHfZF8bIQHvwUS5Km/Yr/fgy0PicL0ySPwyb3fx146BQyff6L5L/e3oXgjdHkeDsMnxH
-         BZWfO5Vi9JJ5vPxKwpfuej8Od503HIPG7Gqmyjp1kI8HJawt665+L9XKI3UtNJJyCVY7
-         hfKb+VIv45Fp5o934K99rXre/HH4T2gQ+q6t0LR3OcaspMYg8YY7wvXkMPQElGpoHDEV
-         fjDGWmqEI1OdiVNPOZxSwqM35QvBKCYMpLvPrmNe9Rqt6JFuy/DzcnsGPS0rpFXwkrA0
-         0qdA==
-X-Gm-Message-State: AOAM530O9zZvjkSlHAHNbH/zIlA/1Xw682cD0ISulHAJ4zhgDMEE/tPb
-        MWMm09KoZXiKjgk0jo0URQXNg+Vc5bHu8EFoKyDJkA==
-X-Google-Smtp-Source: ABdhPJxiJK7e9PaMSOsbCbVSFzR5gk9r25jItECxlA+2D4FEVP3SAm4sHBXDgTQqbo8OxnEq5fQw2CAfcEgZO7aUUrc=
-X-Received: by 2002:ac2:4e15:: with SMTP id e21mr21582599lfr.113.1639299332105;
- Sun, 12 Dec 2021 00:55:32 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=35iXjAhK1fD76ukmFlXTyI+0ct//+yqngQW8voyk9cU=;
+        b=7RAvEYqAk9aogXa6CF7//uwkZ92ZT94bQeYQFdCcqZv9Az+uoJt/+l0o332Zc25fd+
+         y48hp/s0BLhDvG7i3pocVlj/aYL9jz4aWX5viOmAsWg3qaB2XDBhW77CUuXA5lIHUUVB
+         gJdQDL5P/Qisfyefb5qr4NJI6Y++A07SI60twampm2C/oBo2xLSBKL8iaafnfMrvyDV5
+         wPVUTKY96arFKuatYAs1fs1jQ004lXSjyZakdv501NGjHz2p2tYkUOIEhkQxXU+g7TfZ
+         7ExAw+eUadIQOEa5ht5GEg8hC6kaPlI12mDWa57U5D4p70BZ8ga7t3Sf9ajNjK8BVAxB
+         otww==
+X-Gm-Message-State: AOAM533EJ8uW+lwsPdqyXov7E4pfDYz3zgRMiEAMFlaMz5acNy2yLlFg
+        SGOb5TPe/B9jXeoE39EtcjzB0ByHuYI=
+X-Google-Smtp-Source: ABdhPJxWEgmFXahuWWpIO6x8Jqni6BtuKLSubYsEdVmXvWMWkFAYJAzm1JlzOZEUoqB1ibVoTGnTyw==
+X-Received: by 2002:a05:6402:1e92:: with SMTP id f18mr55644040edf.153.1639326733057;
+        Sun, 12 Dec 2021 08:32:13 -0800 (PST)
+Received: from szeder.dev (94-21-58-127.pool.digikabel.hu. [94.21.58.127])
+        by smtp.gmail.com with ESMTPSA id hv17sm4711426ejc.71.2021.12.12.08.32.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Dec 2021 08:32:12 -0800 (PST)
+Date:   Sun, 12 Dec 2021 17:32:07 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 2/2] test-lib.sh: remove the now-unused
+ "test_untraceable" facility
+Message-ID: <20211212163207.GA3400@szeder.dev>
+References: <cover-v2-0.2-00000000000-20211201T200801Z-avarab@gmail.com>
+ <cover-v3-0.2-00000000000-20211210T100512Z-avarab@gmail.com>
+ <patch-v3-2.2-a7fc794e20d-20211210T100512Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <20211209201029.136886-1-jholdsworth@nvidia.com>
- <211210.86r1ale0o0.gmgdl@evledraar.gmail.com> <xmqqsfv0m9f5.fsf@gitster.g> <CABPp-BHjc1i4o-Oe2U2fV8_TRgRPfve_mYt=kveTYMy-3BdpCA@mail.gmail.com>
-In-Reply-To: <CABPp-BHjc1i4o-Oe2U2fV8_TRgRPfve_mYt=kveTYMy-3BdpCA@mail.gmail.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Sun, 12 Dec 2021 08:55:20 +0000
-Message-ID: <CAE5ih7-7eH_ezsvZ6TWjZoHg0PZ2nh7C0rKrWSzCnNe44bR2zw@mail.gmail.com>
-Subject: Re: [PATCH 0/6] Transition git-p4.py to support Python 3 only
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Joel Holdsworth <jholdsworth@nvidia.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v3-2.2-a7fc794e20d-20211210T100512Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 11 Dec 2021 at 21:00, Elijah Newren <newren@gmail.com> wrote:
->
-> Hi,
->
-> On Fri, Dec 10, 2021 at 10:07 PM Junio C Hamano <gitster@pobox.com> wrote=
-:
-> >
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-> >
-> > > On Thu, Dec 09 2021, Joel Holdsworth wrote:
-> > >
-> > >> Python 2 was discontinued in 2020, and there is no longer any offici=
-ally
-> > >> supported interpreter. Further development of git-p4.py will require
-> > >> would-be developers to test their changes with all supported dialect=
-s of
-> > >> the language. However, if there is no longer any supported runtime
-> > >> environment available, this places an unreasonable burden on the Git
-> > >> project to maintain support for an obselete dialect of the language.
-> > >
-> > > Does it? I can still install Python 2.7 on Debian, presumably other O=
-S's
-> > > have similar ways to easily test it.
-> >
-> > Yes, that is a good point to make against "we cannot maintain the
-> > half meant to cater to Python2 of the script".  Developers should be
-> > able to keep and test Python2 support, if it is necessary.
->
-> I also disagree with the reason Joel gave in the quoted paragraph for
-> dropping Python2 support, but I think there are other good reasons to
-> drop it.
->
-> > So the more important question is if there are end-users that have
-> > no choice but sticking to Python2.  Is there distributions and
-> > systems that do not offer Python3, on which end-users have happily
-> > been using Python2?  If some users with vendor supported Python2 do
-> > not have access to Python3, cutting them off may be premature.
->
-> These are good questions, though I think there's more to it than this,
-> as I'll mention in just a minute...
->
-> > As the general direction, I do not mind deprecating support for
-> > Python2, and then eventually removing it.  I just do not know if 2
-> > years is long enough for the latter (IIRC, the sunset happened at
-> > the beginning of 2020, and we are about to end 2021).
->
-> Python2 was deprecated by the python project in 2008, with announced
-> plans to stop all support (including security fixes) in 2015.  They
-> pushed the sunset date back to Jan 1, 2020.  So it has only been
-> end-of-life for just under 2 years, but it's been deprecated for over
-> 13 years.
->
-> In regards to your good questions about Python3 availability on some
-> platforms: If such platforms exist, they have had over a decade's
-> heads up...so let's ask a few extra questions.  If these platforms
-> still haven't made python3 available, would newer versions of Git even
-> be available on these platforms?  Even if newer Git versions are
-> available, would users on such platforms have any qualms with using an
-> older Git version given the platform insistence of only providing an
-> old Python version lacking any support (even security fixes)?
->
->
-> Some of my personal python2/python3 experience, if it's useful in
-> weighing decisions:
->
-> * There are python projects for which I still continue to support
-> simultaneous python2 and python3 usage, though for projects that are
-> smaller then git-p4.py (e.g. 1/2 to 1/3 the size).  Such multi-version
-> support is painful, and it causes occasional bugs that hit users that
-> wouldn't arise if there was only one supported python version.
->
-> * I initially wanted to also do the multi-version support for
-> git-filter-repo (which is approximately the same size as git-p4.py,
-> and obviously also interfaces with git somewhat deeply).  I gave up on
-> it, and didn't consider it justified, especially with the
-> then-soon-impending End-Of-Life for python2.  I instead just switched
-> from python2 -> python3 (in 2019; yes, I'm a straggler.)  Granted, I
-> did benefit from the fact that git-filter-repo is a
-> once-in-a-blue-moon usage tool (and only by one member on the team),
-> rather than a daily usage tool, but I may have come to the same
-> decision anyway even back then.
->
-> * (Slight tangent) I tried to use unicode strings everywhere in
-> git-filter-repo a few times, but invariably found it to be buggy and
-> slow.  It was a mistake, and I eventually switched over to bytestrings
-> everywhere, only converting to unicode (when possible) when printing
-> messages for the user on the console.  bytestrings are ugly to use
-> (IMO), but they're a better data model when dealing with file
-> contents, process output, filenames, etc.  I think git-p4's decision
-> to attempt to use unicode strings everywhere is a mistake that'll
-> probably result in bugs based on that experience of mine; it's not an
-> appropriate model of the relevant data.  It'll also make things
-> slower.
+On Fri, Dec 10, 2021 at 11:07:55AM +0100, Ævar Arnfjörð Bjarmason wrote:
+> In the preceding commit the use of "test_untraceable=UnfortunatelyYes"
+> was removed from "t1510-repo-setup.sh" in favor of more narrow
+> redirections of the output of specific commands (and not entire
+> sub-shells or functions).
+> 
+> This is in line with the fixes in the series that introduced the
+> "test_untraceable" facility. See 571e472dc43 (Merge branch
+> 'sg/test-x', 2018-03-14) for the series as a whole, and
+> e.g. 91538d0cde9 (t5570-git-daemon: don't check the stderr of a
+> subshell, 2018-02-24) for a commit that's in line with the changes in
+> the preceding commit.
+> 
+> We've thus solved the TODO item noted when "test_untraceable" was
+> added to "t1510-repo-setup.sh" in 58275069288 (t1510-repo-setup: mark
+> as untraceable with '-x', 2018-02-24).
+> 
+> So let's remove the feature entirely. Not only is it currently unused,
+> but it actively encourages an anti-pattern in our tests. We should be
+> testing the output of specific commands, not entire subshells or
+> functions.
+> 
+> That the "-x" output had to be disabled as a result is only one
+> symptom, but even under bash those tests will be harder to debug as
+> the subsequent check of the redirected file will be far removed from
+> the command that emitted the output.
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  t/README      |  3 ---
+>  t/test-lib.sh | 66 ++++++---------------------------------------------
+>  2 files changed, 7 insertions(+), 62 deletions(-)
+> 
+> diff --git a/t/README b/t/README
+> index 29f72354bf1..3d30bbff34a 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -86,9 +86,6 @@ appropriately before running "make". Short options can be bundled, i.e.
+>  -x::
+>  	Turn on shell tracing (i.e., `set -x`) during the tests
+>  	themselves. Implies `--verbose`.
+> -	Ignored in test scripts that set the variable 'test_untraceable'
+> -	to a non-empty value, unless it's run with a Bash version
+> -	supporting BASH_XTRACEFD, i.e. v4.1 or later.
+>  
+>  -d::
+>  --debug::
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 57efcc5e97a..b008716917b 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -381,29 +381,6 @@ then
+>  	exit
+>  fi
+>  
+> -if test -n "$trace" && test -n "$test_untraceable"
+> -then
+> -	# '-x' tracing requested, but this test script can't be reliably
+> -	# traced, unless it is run with a Bash version supporting
+> -	# BASH_XTRACEFD (introduced in Bash v4.1).
+> -	#
+> -	# Perform this version check _after_ the test script was
+> -	# potentially re-executed with $TEST_SHELL_PATH for '--tee' or
+> -	# '--verbose-log', so the right shell is checked and the
+> -	# warning is issued only once.
+> -	if test -n "$BASH_VERSION" && eval '
+> -	     test ${BASH_VERSINFO[0]} -gt 4 || {
+> -	       test ${BASH_VERSINFO[0]} -eq 4 &&
+> -	       test ${BASH_VERSINFO[1]} -ge 1
+> -	     }
+> -	   '
+> -	then
+> -		: Executed by a Bash version supporting BASH_XTRACEFD.  Good.
+> -	else
+> -		echo >&2 "warning: ignoring -x; '$0' is untraceable without BASH_XTRACEFD"
+> -		trace=
+> -	fi
+> -fi
+>  if test -n "$trace" && test -z "$verbose_log"
+>  then
+>  	verbose=t
+> @@ -650,19 +627,6 @@ else
+>  	exec 4>/dev/null 3>/dev/null
+>  fi
+>  
+> -# Send any "-x" output directly to stderr to avoid polluting tests
+> -# which capture stderr. We can do this unconditionally since it
+> -# has no effect if tracing isn't turned on.
+> -#
+> -# Note that this sets up the trace fd as soon as we assign the variable, so it
+> -# must come after the creation of descriptor 4 above. Likewise, we must never
+> -# unset this, as it has the side effect of closing descriptor 4, which we
+> -# use to show verbose tests to the user.
+> -#
+> -# Note also that we don't need or want to export it. The tracing is local to
+> -# this shell, and we would not want to influence any shells we exec.
+> -BASH_XTRACEFD=4
 
-+1
+Please do not remove BASH_XTRACEFD.  And especially not like this,
+without even mentioning it in the commit message.
 
-When using python2, git-p4 just ignores all the encoding issues, and I
-think this is actually exactly what we want. This means that in some
-ways, the Python2 version is currently more correct than the Python3
-one.
-
-With Python3, as you say, it attempts to convert to/from unicode
-strings, and probably this is the root of the problems.
-
-Perforce has a mode where it works in unicode internally. This gets
-configured in the server, and clients then do The Right Thing.
-
-https://www.perforce.com/manuals/p4sag/Content/P4SAG/superuser.unicode.clie=
-nts.html
-
-However, many P4 shops don't bother to set this (I know we don't) so
-you end up with BIG5 and CP1252 just being dumped raw into Perforce,
-and then coming back out again. This causes problems for Perforce
-clients just as much as for git-p4 clients.
-
-When git-p4 is used with python2, provided your client has the same
-character encoding as the author of the code you are looking at, it
-will appear to work. Otherwise you get character encoding errors.
-
-To fix this with python3, we need to make a choice:
-
-- either work out the character encoding that Perforce is sending us
-which it doesn't know and can't tell us and then convert that to/from
-unicode. There was a patch series a while ago which tried to let you
-configure a default encoding.
-- or to just preserve everything that Perforce sends us and let the
-client figure it out.
-
-The current patch series is (I think) tending towards the first of
-those options. But we're trying to recreate information that just
-doesn't exist.
-
-Here's the patch that Andrew Oakley sent a while back which attempts
-to get git-p4 to just preserve what it gets:
-
-https://lore.kernel.org/git/20210412085251.51475-1-andrew@adoakley.name/
-
-Luke
-
-
->
-> [I actually think the unicode vs. bytestring thing might be more
-> important for bug fixing than limiting to python3.  Though I think
-> both are worthwhile.]
-
-+1
+>  test_failure=0
+>  test_count=0
+>  test_fixed=0
+> @@ -949,36 +913,20 @@ test_eval_ () {
+>  	# the shell from printing the "set +x" to turn it off (nor the saving
+>  	# of $? before that). But we can make sure that the output goes to
+>  	# /dev/null.
+> -	#
+> -	# There are a few subtleties here:
+> -	#
+> -	#   - we have to redirect descriptor 4 in addition to 2, to cover
+> -	#     BASH_XTRACEFD
+> -	#
+> -	#   - the actual eval has to come before the redirection block (since
+> -	#     it needs to see descriptor 4 to set up its stderr)
+> -	#
+> -	#   - likewise, any error message we print must be outside the block to
+> -	#     access descriptor 4
+> -	#
+> -	#   - checking $? has to come immediately after the eval, but it must
+> -	#     be _inside_ the block to avoid polluting the "set -x" output
+> -	#
+> -
+> -	test_eval_inner_ "$@" </dev/null >&3 2>&4
+>  	{
+> +		test_eval_inner_ "$@" </dev/null >&3 2>&4
+>  		test_eval_ret_=$?
+>  		if want_trace
+>  		then
+>  			test 1 = $trace_level_ && set +x
+>  			trace_level_=$(($trace_level_-1))
+> -		fi
+> -	} 2>/dev/null 4>&2
+>  
+> -	if test "$test_eval_ret_" != 0 && want_trace
+> -	then
+> -		say_color error >&4 "error: last command exited with \$?=$test_eval_ret_"
+> -	fi
+> +			if test "$test_eval_ret_" != 0
+> +			then
+> +				say_color error >&4 "error: last command exited with \$?=$test_eval_ret_"
+> +			fi
+> +		fi
+> +	} 2>/dev/null
+>  	return $test_eval_ret_
+>  }
+>  
+> -- 
+> 2.34.1.932.g36842105b61
+> 
