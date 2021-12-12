@@ -2,48 +2,48 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2E4EC433F5
-	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 19:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A8B2C433F5
+	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 19:50:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229887AbhLLTus (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Dec 2021 14:50:48 -0500
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:42626 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbhLLTuq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Dec 2021 14:50:46 -0500
-Received: by mail-wm1-f47.google.com with SMTP id d72-20020a1c1d4b000000b00331140f3dc8so10368656wmd.1
-        for <git@vger.kernel.org>; Sun, 12 Dec 2021 11:50:45 -0800 (PST)
+        id S229925AbhLLTut (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Dec 2021 14:50:49 -0500
+Received: from mail-wm1-f43.google.com ([209.85.128.43]:51028 "EHLO
+        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229803AbhLLTur (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Dec 2021 14:50:47 -0500
+Received: by mail-wm1-f43.google.com with SMTP id 133so10613994wme.0
+        for <git@vger.kernel.org>; Sun, 12 Dec 2021 11:50:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dCCt74cRMnda5CIeblItW5a5FFx85OaFh2cI9g7HUz0=;
-        b=B6hZFwoY42lOVQC0uUpowMVnUUcGaR0jjVJbFyu6qnULAUKuausATfyFN3yswNmEjD
-         o+ZNus3XkqtTShgturRTyvGkBdhNhtDVu7gAZGKE+wao3WXwAlNJEF6HDQBoKOQqmKRJ
-         mnjiCjarlO7xThxPAzEFZrk4JTAdkS2oK9gyDwcvKv+kIEr823obJniq3cnf9xiT+v3Q
-         xwx7JEeoc/ZpUVHT9puP+0Bw2+797IIHuNosYOLQGzIU+I+1AXt5gjT5qkbskhHLQVV1
-         8m9qhtkyDQraS7an8c0/r/z/IxtLDZs5LGyYU+2Ykx6a3DavumFcIiWkpjMZv5msh074
-         Ak/w==
+        bh=OESgZipnSfYa+Z/jgwOvYK3FH5Sp8MsKwLKyqdThQNg=;
+        b=H3EftNTWmTTQGGTKVqxJgBMnAOHKVrRQ1kbXiFalrov66O/uSE2BuOg5wHq8DhrczF
+         eIrll4DhpQljfeHUybDfzV/dv+F8jMW86IFM6E1nZaR/3S+A2NOxDpnuRthY0yks5/2G
+         y1oFRMs18P9m1tHpZvPcpaxuBDRsKLQxdNi2SlU9i7MhoiroIMzuGe6OmEsSS/TEOVj+
+         7rUuyeakSDvuTLjjDaTZKV8DZ0qMgpx2XYCpVZLaVY9QpvsR+MoN5mol7cCWXrMAVFcv
+         4bbb0tQWXCuJ7hJkGq+1YPUM9ZMArVMWJdONRpN/AbXnhIjCOVZ3DOF2Is/zFj2TI+b3
+         /aAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dCCt74cRMnda5CIeblItW5a5FFx85OaFh2cI9g7HUz0=;
-        b=cq3JAyjTAwiTby3AxRoTMl2QyfrhevyGMcPShSjHuiiYMk5CpD+ZAXCnnKhCgNdTv1
-         vf6OFlPB5pdrVCp5HT60OuAnlAyxMP19MjauxilZw8Dbtp5b79wwcBVboASHzxjTybLh
-         pwx2j/QPuKSt1YJK1H30JkT9z6ONZBKyV0flflikdek9UHRhGdpI3fsfSXWVAkGJdQBa
-         YDeqmTJ1AKrMcSqV483igXAfIj1AUVTYoyoQ0qLOCJfOkr84RG5TSEUaCoornzYXMyYy
-         iv9urcaN5pe/HZlwQrn9+ALkI1+hf4eb53QRRnij+1YO6YEOV1AmkfpDpalqhfgKWDqY
-         +vpQ==
-X-Gm-Message-State: AOAM533Orc9kjmfSgQ77ae/qDsM1kxmWFIuDwmM6zpbqUX/8GNXf1VWi
-        DC7ADDQApmEJIJJ77j9q2kYnS/XcuWVObw==
-X-Google-Smtp-Source: ABdhPJzok3uALMSxiZl38A0wMx0NMGBscaUBdHGZueYDcsv8Uq4ACWtodruxYpToZpm9H9SpPlmOww==
-X-Received: by 2002:a1c:1bd8:: with SMTP id b207mr32824553wmb.114.1639338584752;
-        Sun, 12 Dec 2021 11:49:44 -0800 (PST)
+        bh=OESgZipnSfYa+Z/jgwOvYK3FH5Sp8MsKwLKyqdThQNg=;
+        b=B6odioZ97WsFqA3NoABixEnKzCJbUBB1xFyHDRTR1E1Qu09IyF6lhf5DvGB0ohPoZO
+         c0OVF2m+EfdsXviaRJ4841sngP5CEfcx22u9+IYW/UOVz0YS6LfCyZAuZKAdRNw+Vjn7
+         gmbsh0hGDLcXAkEZjVmGf4kuL0s56NmoqSchS6wCfSkvy6ujD2Ystp0XL/4bcwnYTZAb
+         mU579w2VUacT4qFzfCqlMrHk3uB13U4czgexa27DmgkhA3A9XZydC+tbRRZsF+VKVaBv
+         k+K27jZ0XLQ5KcDckdBL83C0T3DsviENutxqDx24A8d7jQwTJNrNEpCnQR3SDrMxGg/k
+         6ltQ==
+X-Gm-Message-State: AOAM532jKXsaTdYXRx/3bHbJYaUIyxz43mECKCuu2dGH/csUJxinfiws
+        95RweWWzpS/okjSkpEhc08ng9fQeNf3KDA==
+X-Google-Smtp-Source: ABdhPJxzbXiZGsMo65zvUaLWslfzdcLk4MOlnPcITfGc8VXYUlpUn7ZbqO6THzFuInNCS0NK8K9Cjw==
+X-Received: by 2002:a05:600c:35d2:: with SMTP id r18mr32196882wmq.166.1639338585808;
+        Sun, 12 Dec 2021 11:49:45 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g4sm8293822wro.12.2021.12.12.11.49.43
+        by smtp.gmail.com with ESMTPSA id g4sm8293822wro.12.2021.12.12.11.49.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Dec 2021 11:49:44 -0800 (PST)
+        Sun, 12 Dec 2021 11:49:45 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,12 +55,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 0/5] git doc + "git help": move "format" docs from technical/*
-Date:   Sun, 12 Dec 2021 20:49:35 +0100
-Message-Id: <cover-v2-0.5-00000000000-20211212T194047Z-avarab@gmail.com>
+Subject: [PATCH v2 1/5] git docs: split "User-facing file formats" off from "Guides"
+Date:   Sun, 12 Dec 2021 20:49:36 +0100
+Message-Id: <patch-v2-1.5-960574b7f05-20211212T194047Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.929.ge922d848c7a
-In-Reply-To: <cover-0.2-00000000000-20211015T020351Z-avarab@gmail.com>
-References: <cover-0.2-00000000000-20211015T020351Z-avarab@gmail.com>
+In-Reply-To: <cover-v2-0.5-00000000000-20211212T194047Z-avarab@gmail.com>
+References: <cover-0.2-00000000000-20211015T020351Z-avarab@gmail.com> <cover-v2-0.5-00000000000-20211212T194047Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,261 +68,287 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[This is a more meaty re-roll of [1]. It previously conflicted with
-topics that have now landed. There is a trivial conflict here with
-tb/cruft-packs, but that one's easily solved (they both edit adjacent
-but otherwise unrelated lines in Documentation/Makefile)]
+Create a new "User-facing file formats" section in the main "git help
+git" manual page. The "Guides" section was added to the manual page in
+f442f28a81b (git.txt: add list of guides, 2020-08-05), it makes sense
+to list all that documentation.
 
-Most of git is documented in its manual pages, but we have various
-"technical" and "howto" docs that aren't built as manpages, only as
-HTML documentation.
+But placing e.g. "gitignore(5)" in it is stretching the meaning of
+what a "guide" is, ideally that section should list things similar to
+"giteveryday(7)" and "gitcore-tutorial(7)".
 
-In many cases that's sensible, e.g. we've got one-off mailing list
-posts in there, but in the case of documenting git's core file formats
-I think these belong in the main documentation space, especially as
-many existing manual pages refer to these, but need to do so by
-linking from "man" pages to "*.html" files the user may or may not
-have locally.
+We take a wide view of what's considered a "user format", it's not
+just a file format, but e.g. githooks(5) also belongs, since the
+layout of the ".git/hooks/" and the placement of hooks in it is
+something the user might be expected to interact with.
 
-This series starts out by creating a "userformats" category in our
-documentation. The documentation for ".gitignore", ".gitattributes",
-".mailmap" etc. is currently in the "guides" space. We now have a
-"userformats" space with file formats users are expected to interact
-with:
-    
-    $ git help --user-formats
-    
-    The user-facing file formats are:
-       gitattributes          Defining attributes per path
-       githooks               Hooks used by Git
-       gitignore              Specifies intentionally untracked files to ignore
-       gitmailmap             Map author/committer names and/or E-Mail addresses
-       gitmodules             Defining submodule properties
-       gitrepository-layout   Git Repository Layout
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/Makefile     |  1 +
+ Documentation/git-help.txt | 13 +++++++++----
+ Documentation/git.txt      |  7 +++++++
+ Makefile                   |  1 +
+ builtin/help.c             |  8 ++++++++
+ command-list.txt           | 16 ++++++++++------
+ help.c                     | 11 +++++++++++
+ help.h                     |  1 +
+ t/t0012-help.sh            | 16 +++++++++++++++-
+ 9 files changed, 63 insertions(+), 11 deletions(-)
 
-We then have (the main meat of this series) a move of relevant
-"internal" and "protocol" formats over to the main documentation
-space:
-
-    $ git help --git-formats
-    
-    Git's internal file and network formats are:
-       gitformat-bitmap                  The bitmap file format
-       gitformat-bundle                  The bundle file format
-       gitformat-chunk                   Chunk-based file formats
-       gitformat-commit-graph            Git commit graph format
-       gitformat-index                   Git index format
-       gitformat-pack-protocol           How packs are transferred over-the-wire
-       gitformat-protocol-capabilities   Protocol v0 and v1 capabilities
-       gitformat-protocol-common         Things common to various protocols
-       gitformat-protocol-v2             Git Wire Protocol, Version 2
-       gitformat-signature               Git cryptographic signature formats
-
-This isn't all of them, there's some in-flight conflicts with other
-(trivial) changes to those files, so I've skipped them for now. Taylor
-also has an in-flight series to add a new Documentation/technical/*
-series. I'm planning on an eventual follow-up series (and have most of
-the changes already) to move those over.
-
-This also doesn't move over the part of the api-trace2.txt that deals
-with the format users interact with, i.e. the JSON schema. I'm
-submitting other changes in that are currently, and will eventually
-loop around to moving that part over to this new "gitformats" space.
-
-1. https://lore.kernel.org/git/cover-0.2-00000000000-20211015T020351Z-avarab@gmail.com/
-
-Ævar Arnfjörð Bjarmason (5):
-  git docs: split "User-facing file formats" off from "Guides"
-  git docs: create a "Git file and wire formats" section
-  docs: move commit-graph format docs to man section 5
-  docs: move protocol-related docs to man section 5
-  docs: move {index,signature,bitmap,chunk}-format docs to man section 5
-
- Documentation/Makefile                        | 19 ++++---
- Documentation/config/lsrefs.txt               |  2 +-
- Documentation/config/protocol.txt             |  2 +-
- Documentation/git-bundle.txt                  | 12 +++--
- Documentation/git-commit-graph.txt            |  5 ++
- Documentation/git-help.txt                    | 13 +++--
- Documentation/git-upload-pack.txt             |  5 +-
- Documentation/git.txt                         | 15 ++++++
- ...bitmap-format.txt => gitformat-bitmap.txt} | 38 +++++++++++---
- ...bundle-format.txt => gitformat-bundle.txt} | 44 ++++++++++++++---
- .../chunk-format.txt => gitformat-chunk.txt}  | 25 ++++++++--
- ...-format.txt => gitformat-commit-graph.txt} | 49 +++++++++++++------
- .../index-format.txt => gitformat-index.txt}  | 20 +++++++-
- ...otocol.txt => gitformat-pack-protocol.txt} | 22 +++++++--
- ...xt => gitformat-protocol-capabilities.txt} | 28 ++++++++---
- ...mmon.txt => gitformat-protocol-common.txt} | 23 ++++++++-
- ...tocol-v2.txt => gitformat-protocol-v2.txt} | 24 +++++++--
- ...ure-format.txt => gitformat-signature.txt} | 21 ++++++--
- Documentation/lint-man-section-order.perl     |  3 ++
- Documentation/technical/api-simple-ipc.txt    |  2 +-
- Documentation/technical/http-protocol.txt     |  6 +--
- .../long-running-process-protocol.txt         |  2 +-
- Documentation/technical/pack-format.txt       |  2 +-
- Documentation/technical/partial-clone.txt     |  2 +-
- Makefile                                      |  1 +
- builtin/help.c                                | 16 ++++++
- command-list.txt                              | 30 +++++++++---
- help.c                                        | 22 +++++++++
- help.h                                        |  2 +
- t/t0012-help.sh                               | 16 +++++-
- t/t5551-http-fetch-smart.sh                   |  4 +-
- 31 files changed, 386 insertions(+), 89 deletions(-)
- rename Documentation/{technical/bitmap-format.txt => gitformat-bitmap.txt} (91%)
- rename Documentation/{technical/bundle-format.txt => gitformat-bundle.txt} (78%)
- rename Documentation/{technical/chunk-format.txt => gitformat-chunk.txt} (91%)
- rename Documentation/{technical/commit-graph-format.txt => gitformat-commit-graph.txt} (86%)
- rename Documentation/{technical/index-format.txt => gitformat-index.txt} (98%)
- rename Documentation/{technical/pack-protocol.txt => gitformat-pack-protocol.txt} (98%)
- rename Documentation/{technical/protocol-capabilities.txt => gitformat-protocol-capabilities.txt} (96%)
- rename Documentation/{technical/protocol-common.txt => gitformat-protocol-common.txt} (88%)
- rename Documentation/{technical/protocol-v2.txt => gitformat-protocol-v2.txt} (98%)
- rename Documentation/{technical/signature-format.txt => gitformat-signature.txt} (96%)
-
-Range-diff against v1:
-1:  19a8be1fc73 ! 1:  960574b7f05 git(1) docs: split "User-facing file formats" off from "Guides"
-    @@ Metadata
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Commit message ##
-    -    git(1) docs: split "User-facing file formats" off from "Guides"
-    +    git docs: split "User-facing file formats" off from "Guides"
-     
-    -    Create a new "User-facing file formats" section in the main "git(1)"
-    -    manual page. The "Guides" section was added to the manual page in
-    +    Create a new "User-facing file formats" section in the main "git help
-    +    git" manual page. The "Guides" section was added to the manual page in
-         f442f28a81b (git.txt: add list of guides, 2020-08-05), it makes sense
-         to list all that documentation.
-     
-    @@ Documentation/Makefile: cmds_txt = cmds-ancillaryinterrogators.txt \
-     
-      ## Documentation/git-help.txt ##
-     @@ Documentation/git-help.txt: SYNOPSIS
-    - 	   [[-i|--info] [-m|--man] [-w|--web]] [COMMAND|GUIDE]
-    + --------
-    + [verse]
-    + 'git help' [-a|--all [--[no-]verbose]]
-    +-	   [[-i|--info] [-m|--man] [-w|--web]] [<command>|<guide>]
-    ++	   [[-i|--info] [-m|--man] [-w|--web]] [<command>|<guide>|<doc>]
-      'git help' [-g|--guides]
-      'git help' [-c|--config]
-     +'git help' [--user-formats]
-    @@ Documentation/git-help.txt: SYNOPSIS
-      DESCRIPTION
-      -----------
-      
-    --With no options and no COMMAND or GUIDE given, the synopsis of the 'git'
-    -+With no options and no COMMAND or DOC given, the synopsis of the 'git'
-    +-With no options and no '<command>' or '<guide>' given, the synopsis of the 'git'
-    ++With no options and no '<command>', '<guide>' or '<doc>' given, the synopsis of the 'git'
-      command and a list of the most commonly used Git commands are printed
-      on the standard output.
-      
-    @@ command-list.txt
-     +# .mailmap etc. files lives in man section 5. These entries can only
-     +# have the "userformats" attribute and nothing else.
-     +#
-    - ### command list (do not change this line, also do not change alignment)
-    + ### command list (do not change this line)
-      # command name                          category [category] [category]
-      git-add                                 mainporcelain           worktree
-    -@@ command-list.txt: gitweb                                  ancillaryinterrogators
-    +@@ command-list.txt: git-verify-tag                          ancillaryinterrogators
-      git-whatchanged                         ancillaryinterrogators          complete
-      git-worktree                            mainporcelain
-      git-write-tree                          plumbingmanipulators
-    @@ command-list.txt: gitdiffcore                             guide
-      gitglossary                             guide
-     -githooks                                guide
-     -gitignore                               guide
-    --gitmailmap                              guide
-    --gitmodules                              guide
-     +githooks                                userformats
-     +gitignore                               userformats
-    + gitk                                    mainporcelain
-    +-gitmailmap                              guide
-    +-gitmodules                              guide
-     +gitmailmap                              userformats
-     +gitmodules                              userformats
-      gitnamespaces                           guide
-    @@ command-list.txt: gitdiffcore                             guide
-     +gitrepository-layout                    userformats
-      gitrevisions                            guide
-      gitsubmodules                           guide
-    - gittutorial-2                           guide
-    + gittutorial                             guide
-     
-      ## help.c ##
-     @@ help.c: static struct category_description main_categories[] = {
-2:  5e80ee09523 ! 2:  b2d73f8c9da git(1) docs: create a "Git file and wire formats" section
-    @@ Metadata
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Commit message ##
-    -    git(1) docs: create a "Git file and wire formats" section
-    +    git docs: create a "Git file and wire formats" section
-     
-    -    Create a new "Git file and wire formats" section in the main "git(1)"
-    -    manual page and start moving the documentation that now lives in
-    +    Create a new "Git file and wire formats" section in the main "git help
-    +    git" manual page and start moving the documentation that now lives in
-         "Documentation/technical/*.git" over to it. This compliments the newly
-         added and adjacent "User-facing file formats" section.
-     
-    @@ Commit message
-         So let's start moving those over, starting with just the
-         "bundle-format.txt" documentation added in 7378ec90e1c (doc: describe
-         Git bundle format, 2020-02-07). We'll now have a new
-    -    gitformat-bundle(5) man page.
-    +    gitformat-bundle(5) man page. Subsequent commits will move more git
-    +    internal format documentation over.
-     
-         Unfortunately the syntax of the current Documentation/technical/*.txt
-         is not the same (when it comes to section headings etc.) as our
-    @@ Documentation/Makefile: cmds_txt = cmds-ancillaryinterrogators.txt \
-      
-     
-      ## Documentation/git-bundle.txt ##
-    -@@ Documentation/git-bundle.txt: using "thin packs" bundles created using exclusions are smaller in
-    +@@ Documentation/git-bundle.txt: using "thin packs", bundles created using exclusions are smaller in
-      size. That they're "thin" under the hood is merely noted here as a
-    - curiosity, and as a reference to other documentation
-    + curiosity, and as a reference to other documentation.
-      
-     -See link:technical/bundle-format.html[the `bundle-format`
-     -documentation] for more details and the discussion of "thin pack" in
-    @@ command-list.txt
-     +# *.bundle format lives in mn section 5. These entries can only have
-     +# the "gitformats" attribute and nothing else.
-     +#
-    - ### command list (do not change this line, also do not change alignment)
-    + ### command list (do not change this line)
-      # command name                          category [category] [category]
-      git-add                                 mainporcelain           worktree
-    -@@ command-list.txt: githooks                                userformats
-    - gitignore                               userformats
-    - gitmailmap                              userformats
-    - gitmodules                              userformats
-    +@@ command-list.txt: gitcvs-migration                        guide
-    + gitdiffcore                             guide
-    + giteveryday                             guide
-    + gitfaq                                  guide
-     +gitformat-bundle                        gitformats
-    - gitnamespaces                           guide
-    - gitremote-helpers                       guide
-    - gitrepository-layout                    userformats
-    + gitglossary                             guide
-    + githooks                                userformats
-    + gitignore                               userformats
-     
-      ## help.c ##
-     @@ help.c: static struct category_description main_categories[] = {
--:  ----------- > 3:  5abd59b807f docs: move commit-graph format docs to man section 5
--:  ----------- > 4:  fb91009c18f docs: move protocol-related docs to man section 5
--:  ----------- > 5:  5cb41bb0dcb docs: move {index,signature,bitmap,chunk}-format docs to man section 5
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index ed656db2ae9..e973be97162 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -316,6 +316,7 @@ cmds_txt = cmds-ancillaryinterrogators.txt \
+ 	cmds-synchingrepositories.txt \
+ 	cmds-synchelpers.txt \
+ 	cmds-guide.txt \
++	cmds-userformats.txt \
+ 	cmds-purehelpers.txt \
+ 	cmds-foreignscminterface.txt
+ 
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index 44ea63cc6d3..32081f3030d 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -9,14 +9,15 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git help' [-a|--all [--[no-]verbose]]
+-	   [[-i|--info] [-m|--man] [-w|--web]] [<command>|<guide>]
++	   [[-i|--info] [-m|--man] [-w|--web]] [<command>|<guide>|<doc>]
+ 'git help' [-g|--guides]
+ 'git help' [-c|--config]
++'git help' [--user-formats]
+ 
+ DESCRIPTION
+ -----------
+ 
+-With no options and no '<command>' or '<guide>' given, the synopsis of the 'git'
++With no options and no '<command>', '<guide>' or '<doc>' given, the synopsis of the 'git'
+ command and a list of the most commonly used Git commands are printed
+ on the standard output.
+ 
+@@ -26,8 +27,8 @@ printed on the standard output.
+ If the option `--guides` or `-g` is given, a list of the
+ Git concept guides is also printed on the standard output.
+ 
+-If a command, or a guide, is given, a manual page for that command or
+-guide is brought up. The 'man' program is used by default for this
++If a command or other documentation is given, the relevant manual page
++will be brought up. The 'man' program is used by default for this
+ purpose, but this can be overridden by other options or configuration
+ variables.
+ 
+@@ -62,6 +63,10 @@ OPTIONS
+ --guides::
+ 	Prints a list of the Git concept guides on the standard output.
+ 
++--user-formats::
++	Prints a list of the Git user-facing format documentation on
++	the standard output.
++
+ -i::
+ --info::
+ 	Display manual page for the command in the 'info' format. The
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 13f83a2a3a1..7a8be2991df 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -337,6 +337,13 @@ The following documentation pages are guides about Git concepts.
+ 
+ include::cmds-guide.txt[]
+ 
++User-facing file formats
++------------------------
++
++This documentation discusses file formats that users are expected to
++edit. These can also be listed with 'git help --user-formats'.
++
++include::cmds-userformats.txt[]
+ 
+ Configuration Mechanism
+ -----------------------
+diff --git a/Makefile b/Makefile
+index ed75ed422b5..c59fd6c2be9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3304,6 +3304,7 @@ check-docs::
+ 		sed -e '1,/^### command list/d' \
+ 		    -e '/^#/d' \
+ 		    -e '/guide$$/d' \
++		    -e '/formats$$/d' \
+ 		    -e 's/[ 	].*//' \
+ 		    -e 's/^/listed /' command-list.txt; \
+ 		$(MAKE) -C Documentation print-man1 | \
+diff --git a/builtin/help.c b/builtin/help.c
+index 75cd2fb407f..5e842ea5a26 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -43,6 +43,7 @@ static enum help_action {
+ 	HELP_ACTION_ALL = 1,
+ 	HELP_ACTION_GUIDES,
+ 	HELP_ACTION_CONFIG,
++	HELP_ACTION_USER_FORMATS,
+ 	HELP_ACTION_CONFIG_FOR_COMPLETION,
+ 	HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION,
+ } cmd_mode;
+@@ -64,6 +65,8 @@ static struct option builtin_help_options[] = {
+ 
+ 	OPT_CMDMODE('g', "guides", &cmd_mode, N_("print list of useful guides"),
+ 		    HELP_ACTION_GUIDES),
++	OPT_CMDMODE(0, "user-formats", &cmd_mode, N_("print list of user-facing file formats"),
++		    HELP_ACTION_USER_FORMATS),
+ 	OPT_CMDMODE('c', "config", &cmd_mode, N_("print all configuration variable names"),
+ 		    HELP_ACTION_CONFIG),
+ 	OPT_CMDMODE_F(0, "config-for-completion", &cmd_mode, "",
+@@ -79,6 +82,7 @@ static const char * const builtin_help_usage[] = {
+ 	   "         [[-i|--info] [-m|--man] [-w|--web]] [<command>]"),
+ 	N_("git help [-g|--guides]"),
+ 	N_("git help [-c|--config]"),
++	N_("git help [--user-formats]"),
+ 	NULL
+ };
+ 
+@@ -613,6 +617,10 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 		no_extra_argc(argc);
+ 		list_config_help(SHOW_CONFIG_VARS);
+ 		return 0;
++	case HELP_ACTION_USER_FORMATS:
++		no_extra_argc(argc);
++		list_user_formats_help();
++		return 0;
+ 	case HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION:
+ 		no_extra_argc(argc);
+ 		list_config_help(SHOW_CONFIG_SECTIONS);
+diff --git a/command-list.txt b/command-list.txt
+index 675c28f0bd0..e4118533e93 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -43,6 +43,10 @@
+ # specified here, which can only have "guide" attribute and nothing
+ # else.
+ #
++# User-facing file formats such as documentation for the .gitmodules,
++# .mailmap etc. files lives in man section 5. These entries can only
++# have the "userformats" attribute and nothing else.
++#
+ ### command list (do not change this line)
+ # command name                          category [category] [category]
+ git-add                                 mainporcelain           worktree
+@@ -191,7 +195,7 @@ git-verify-tag                          ancillaryinterrogators
+ git-whatchanged                         ancillaryinterrogators          complete
+ git-worktree                            mainporcelain
+ git-write-tree                          plumbingmanipulators
+-gitattributes                           guide
++gitattributes                           userformats
+ gitcli                                  guide
+ gitcore-tutorial                        guide
+ gitcredentials                          guide
+@@ -200,14 +204,14 @@ gitdiffcore                             guide
+ giteveryday                             guide
+ gitfaq                                  guide
+ gitglossary                             guide
+-githooks                                guide
+-gitignore                               guide
++githooks                                userformats
++gitignore                               userformats
+ gitk                                    mainporcelain
+-gitmailmap                              guide
+-gitmodules                              guide
++gitmailmap                              userformats
++gitmodules                              userformats
+ gitnamespaces                           guide
+ gitremote-helpers                       guide
+-gitrepository-layout                    guide
++gitrepository-layout                    userformats
+ gitrevisions                            guide
+ gitsubmodules                           guide
+ gittutorial                             guide
+diff --git a/help.c b/help.c
+index 973e47cdc30..a7b5c909056 100644
+--- a/help.c
++++ b/help.c
+@@ -37,6 +37,7 @@ static struct category_description main_categories[] = {
+ 	{ CAT_plumbinginterrogators, N_("Low-level Commands / Interrogators") },
+ 	{ CAT_synchingrepositories, N_("Low-level Commands / Syncing Repositories") },
+ 	{ CAT_purehelpers, N_("Low-level Commands / Internal Helpers") },
++	{ CAT_userformats, N_("User-facing file formats") },
+ 	{ 0, NULL }
+ };
+ 
+@@ -422,6 +423,16 @@ void list_guides_help(void)
+ 	putchar('\n');
+ }
+ 
++void list_user_formats_help(void)
++{
++	struct category_description catdesc[] = {
++		{ CAT_userformats, N_("The user-facing file formats are:") },
++		{ 0, NULL }
++	};
++	print_cmd_by_category(catdesc, NULL);
++	putchar('\n');
++}
++
+ static int get_alias(const char *var, const char *value, void *data)
+ {
+ 	struct string_list *list = data;
+diff --git a/help.h b/help.h
+index 9d383f1a0b2..d01908078dc 100644
+--- a/help.h
++++ b/help.h
+@@ -22,6 +22,7 @@ static inline void mput_char(char c, unsigned int num)
+ void list_common_cmds_help(void);
+ void list_all_cmds_help(void);
+ void list_guides_help(void);
++void list_user_formats_help(void);
+ 
+ void list_all_main_cmds(struct string_list *list);
+ void list_all_other_cmds(struct string_list *list);
+diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+index 91b68c74a15..6a20a7303f8 100755
+--- a/t/t0012-help.sh
++++ b/t/t0012-help.sh
+@@ -41,6 +41,8 @@ test_expect_success 'invalid usage' '
+ 	test_expect_code 129 git help -g add &&
+ 	test_expect_code 129 git help -a -g &&
+ 
++	test_expect_code 129 git help --user-formats add &&
++
+ 	test_expect_code 129 git help -g -c &&
+ 	test_expect_code 129 git help --config-for-completion add &&
+ 	test_expect_code 129 git help --config-sections-for-completion add
+@@ -78,9 +80,15 @@ test_expect_success 'git help' '
+ 	test_i18ngrep "^   commit " help.output &&
+ 	test_i18ngrep "^   fetch  " help.output
+ '
++
++test_expect_success 'git help -a' '
++	git help -a >help.output &&
++	grep "^Main Porcelain Commands" help.output &&
++	grep "^User-facing file formats" help.output
++'
++
+ test_expect_success 'git help -g' '
+ 	git help -g >help.output &&
+-	test_i18ngrep "^   attributes " help.output &&
+ 	test_i18ngrep "^   everyday   " help.output &&
+ 	test_i18ngrep "^   tutorial   " help.output
+ '
+@@ -101,6 +109,12 @@ test_expect_success 'git help succeeds without git.html' '
+ 	test_cmp expect test-browser.log
+ '
+ 
++test_expect_success 'git help --formats' '
++	git help --user-formats >help.output &&
++	grep "^   gitattributes   " help.output &&
++	grep "^   gitmailmap   " help.output
++'
++
+ test_expect_success 'git help -c' '
+ 	git help -c >help.output &&
+ 	cat >expect <<-\EOF &&
 -- 
 2.34.1.929.ge922d848c7a
 
