@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5785C433EF
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 06:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CDAC4C433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 06:32:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232340AbhLMGcZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 01:32:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40192 "EHLO
+        id S232317AbhLMGc3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 01:32:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232297AbhLMGcQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 01:32:16 -0500
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C314EC061D60
-        for <git@vger.kernel.org>; Sun, 12 Dec 2021 22:32:09 -0800 (PST)
-Received: by mail-io1-xd30.google.com with SMTP id q72so17300028iod.12
-        for <git@vger.kernel.org>; Sun, 12 Dec 2021 22:32:09 -0800 (PST)
+        with ESMTP id S232272AbhLMGcU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 01:32:20 -0500
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39428C0698C5
+        for <git@vger.kernel.org>; Sun, 12 Dec 2021 22:32:10 -0800 (PST)
+Received: by mail-il1-x12a.google.com with SMTP id a11so14109008ilj.6
+        for <git@vger.kernel.org>; Sun, 12 Dec 2021 22:32:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mmhBWxqwjpgfEcyMowsTQ3vctc/dSWgSEKmTOODaLMQ=;
-        b=jqWC7ndI8zCB3gOm0ODFwzapPU/nqDq7JFKisEqPUwvkv18GeBeva+V6GwdVzBMaUB
-         f41fTgmcLFvCg+YXKoY7GhB0s0mJR7CDVMVUG4BcoKHrCxpz2TTpfCZ/oHW4yGNx1lQm
-         78/4FA2+fxAc2Q3CiyAz4AERp6+lP7X+HVC2CJ3r75sfFuGObbNFBCoN3jXN9YQqo1oJ
-         rGBAzk2j0OvovPL02VU6SGPH4AC7TXO73na/DL9sw1aTI/0p/37RIalnSMP/o3qjhKmF
-         Xo8wlhA1NmSMsMwn9wVIqhZvS9nIpFxipAqhEOb6uY1jc6Q3cvECAUGcb3NgEbf3vGuE
-         19JQ==
+        bh=O8Ez1BvzXJtluEwIyI2ASZiFObjiY0yXIEqHMO+W82s=;
+        b=MQX5mK1lgJZ2WsvbcVERQiFcUeNhFbWY6CFE88Ka8sf2ajy+d6DQpPQHTRS/vJTisP
+         YCAfXDP9FNJae6jOo7hUm5Q4EaBNbBFwfLuSyU4hxFAS4dTjZwj/34G8CXLk18+Ifgft
+         r7OuVKJ9rnF0+tkyka8xiHJ9pK82yuvDsj0FjnUzPVx0o77pt5rBLxU8A8BuutazLV/+
+         Cso2unRi4z4Y6DdroObyNIZcJ8NeXmpdBXR0fCPKtu87SrMi1fqJ9aTbYOsyIvdPmOqm
+         XVf19XfDqZ6o1QRsTQvqx5lwmQ5lCLnLK9JvyVglp1kY3GipwjgXxZeppFK/QM9gYk2c
+         ELEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=mmhBWxqwjpgfEcyMowsTQ3vctc/dSWgSEKmTOODaLMQ=;
-        b=kCpZwme2/XS6fygmcOsNwpdw9PzHQ24CHbcL31kYUTc+fp4M+NBF5faMGoiqEEku4k
-         vjuora5GlTAJA52xPILLtkwLfL+r3RhCaUAyOeeyQHIKJdpU49kh34dugeD59+QCgVqn
-         72ReEpoOnKTZ34ool2NgTaWEPHTg5GoKO1gzLsQHPQBfGwElEezF87gf8hh62PpzcyYL
-         bk7WQ85pEVONNeglYeMD6eNGB4QfgvAUAYB76XeZPjqBZVzPHaQ+z2/buY2losnHC4vr
-         WKItUDCvwVkfcp5WJazGGshPlFSbpNZg1/cjvdRgyNpa8WaAzaO2GEzFGgQsonBK0wxf
-         l11Q==
-X-Gm-Message-State: AOAM5334QmzrRSSP6FGup7qg5Tzfwv+pKS9JWm48ZUm7My0qaZAaPI8e
-        sityNKmV10PB9hlJFmq3TgvjBlfb4Xim5Q==
-X-Google-Smtp-Source: ABdhPJy3Pk/nzZ0WjZYRBtEE5sLf4iA9ZcbInbtFK+IaHGjg3JWqXAJdTpV+MH0qO+SBohNBFay6OQ==
-X-Received: by 2002:a05:6602:14cd:: with SMTP id b13mr32581103iow.203.1639377128648;
-        Sun, 12 Dec 2021 22:32:08 -0800 (PST)
+        bh=O8Ez1BvzXJtluEwIyI2ASZiFObjiY0yXIEqHMO+W82s=;
+        b=b8S1+2dJ8q7sUWQ9LHkRf/MFNIBEvPUflTxE2SOjwlPNQDwW8JqrFUS3NcSPEiTWpM
+         Zt3N9y3ll6ZwWvWRAUas8jCiuqKvuX0khmtmNDQdusMXO9Ie8CU6XjJMwitz2uHXEwtJ
+         xyW/iYqvYcBsO01xmJoF4/Z9hi8sdNLieifqEFh54Wu2czzM4GU+6Fv88CrRbXk+Q2Rz
+         HazZd2b+UnQfozE5VER3Fc8PTuPgwFnyO6aZcz+j0Ax829rSh7GUA+NrKG5EbyX2Hj9z
+         7W/0OY4kU8j/hCX4JVWel3iiMXGILAtDxr9LN2nGsnxx/I9Xjd8w5GlhKwlngCulWcT5
+         36yA==
+X-Gm-Message-State: AOAM5330UQNui/Z47B4lYmQrrwN16lM4M4YJycb16WiU399dUxdgUlYb
+        6fcZ1Vi3TOlOg4viJA268yOE7V8inuuWcA==
+X-Google-Smtp-Source: ABdhPJzVVFsgQj6/+fijI0MywWhdp9deXtL43+GkAFMOrJ4QGacWrMTQaj4d8IFxzOhmg14sbTrwJw==
+X-Received: by 2002:a92:1a0f:: with SMTP id a15mr5749867ila.49.1639377129284;
+        Sun, 12 Dec 2021 22:32:09 -0800 (PST)
 Received: from localhost.localdomain (097-069-216-153.res.spectrum.com. [97.69.216.153])
-        by smtp.gmail.com with ESMTPSA id f10sm7305408ils.13.2021.12.12.22.32.07
+        by smtp.gmail.com with ESMTPSA id f10sm7305408ils.13.2021.12.12.22.32.08
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 12 Dec 2021 22:32:08 -0800 (PST)
+        Sun, 12 Dec 2021 22:32:09 -0800 (PST)
 Sender: Eric Sunshine <ericsunshine@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
         Fabian Stelzer <fs@gigacodes.de>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 14/15] chainlint.sed: swallow comments consistently
-Date:   Mon, 13 Dec 2021 01:30:58 -0500
-Message-Id: <20211213063059.19424-15-sunshine@sunshineco.com>
+Subject: [PATCH 15/15] chainlint.sed: stop splitting "(..." into separate lines "(" and "..."
+Date:   Mon, 13 Dec 2021 01:30:59 -0500
+Message-Id: <20211213063059.19424-16-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.34.1.397.gfae76fe5da
 In-Reply-To: <20211213063059.19424-1-sunshine@sunshineco.com>
 References: <20211213063059.19424-1-sunshine@sunshineco.com>
@@ -65,159 +65,293 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When checking for broken a &&-chain, chainlint.sed knows that the final
-statement in a subshell should not end with `&&`, so it takes care to
-make a distinction between the final line which is an actual statement
-and any lines which may be mere comments preceding the closing ')'. As
-such, it swallows comment lines so that they do not interfere with the
-&&-chain check.
+Because `sed` is line-oriented, for ease of implementation, when
+chainlint.sed encounters an opening subshell in which the first command
+is cuddled with the "(", it splits the line into two lines: one
+containing only "(", and the other containing whatever follows "(".
+This allows chainlint.sed to get by with a single set of regular
+expressions for matching shell statements rather than having to
+duplicate each expression (one set for matching non-cuddled statements,
+and one set for matching cuddled statements).
 
-However, since `sed` does not provide any sort of real recursion,
-chainlint.sed only checks &&-chains in subshells one level deep; it
-doesn't do any checking in deeper subshells or in `{...}` blocks within
-subshells. Furthermore, on account of potential implementation
-complexity, it doesn't check &&-chains within `case` arms.
+However, although syntactically and semantically immaterial, this
+transformation has no value to test authors and might even confuse them
+into thinking that the linter is misbehaving by inserting (whitespace)
+line-noise into the shell code it is validating. Moreover, it also
+allows an implementation detail of chainlint.sed to seep into the
+chainlint self-test "expect" files, which potentially makes it difficult
+to reuse the self-tests should a more capable chainlint ever be
+developed.
 
-Due to an oversight, it also doesn't swallow comments inside deep
-subshells, `{...}` blocks, or `case` statements, which makes its output
-inconsistent (swallowing comments in some cases but not others).
-Unfortunately, this inconsistency seeps into the chainlint self-test
-"expect" files, which potentially makes it difficult to reuse the
-self-tests should a more capable chainlint ever be developed. Therefore,
-teach chainlint.sed to consistently swallow comments in all cases.
+To address these concerns, stop splitting cuddled "(..." into two lines.
+
+Note that, as an implementation artifact, due to sed's line-oriented
+nature, this change inserts a blank line at output time just before the
+"(..." line is emitted. It would be possible to suppress this blank line
+but doing so would add a fair bit of complexity to chainlint.sed.
+Therefore, rather than suppressing the extra blank line, the Makefile's
+`check-chainlint` target which runs the chainlint self-tests is instead
+modified to ignore blank lines when comparing chainlint output against
+the self-test "expect" output. This is a reasonable compromise for two
+reasons. First, the purpose of the chainlint self-tests is to verify
+that the ?!AMP?! annotations are being correctly added; precise
+whitespace is immaterial. Second, by necessity, chainlint.sed itself
+already throws away all blank lines within subshells since, when
+checking for a broken &&-chain, it needs to check the final _statement_
+in a subshell, not the final _line_ (which might be blank), thus it has
+never made any attempt to precisely reproduce blank lines in its output.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/chainlint.sed                            | 21 +++++++++++++++++++--
- t/chainlint/block-comment.expect           |  6 ++++++
- t/chainlint/block-comment.test             |  8 ++++++++
- t/chainlint/case-comment.expect            |  8 ++++++++
- t/chainlint/case-comment.test              | 11 +++++++++++
- t/chainlint/nested-subshell-comment.expect |  2 --
- 6 files changed, 52 insertions(+), 4 deletions(-)
- create mode 100644 t/chainlint/block-comment.expect
- create mode 100644 t/chainlint/block-comment.test
- create mode 100644 t/chainlint/case-comment.expect
- create mode 100644 t/chainlint/case-comment.test
+ t/Makefile                                    |  4 +-
+ t/chainlint.sed                               | 38 ++++++++++++-------
+ .../close-nested-and-parent-together.expect   |  3 +-
+ t/chainlint/complex-if-in-cuddled-loop.expect |  3 +-
+ t/chainlint/cuddled-if-then-else.expect       |  3 +-
+ t/chainlint/cuddled-loop.expect               |  3 +-
+ t/chainlint/cuddled.expect                    | 12 ++----
+ t/chainlint/inline-comment.expect             |  3 +-
+ t/chainlint/semicolon.expect                  |  3 +-
+ 9 files changed, 37 insertions(+), 35 deletions(-)
 
+diff --git a/t/Makefile b/t/Makefile
+index f4ae40be46..46cd5fc527 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -72,8 +72,8 @@ clean-chainlint:
+ check-chainlint:
+ 	@mkdir -p '$(CHAINLINTTMP_SQ)' && \
+ 	sed -e '/^# LINT: /d' $(patsubst %,chainlint/%.test,$(CHAINLINTTESTS)) >'$(CHAINLINTTMP_SQ)'/tests && \
+-	cat $(patsubst %,chainlint/%.expect,$(CHAINLINTTESTS)) >'$(CHAINLINTTMP_SQ)'/expect && \
+-	$(CHAINLINT) '$(CHAINLINTTMP_SQ)'/tests >'$(CHAINLINTTMP_SQ)'/actual && \
++	sed -e '/^[ 	]*$$/d' $(patsubst %,chainlint/%.expect,$(CHAINLINTTESTS)) >'$(CHAINLINTTMP_SQ)'/expect && \
++	$(CHAINLINT) '$(CHAINLINTTMP_SQ)'/tests | grep -v '^[	]*$$' >'$(CHAINLINTTMP_SQ)'/actual && \
+ 	diff -u '$(CHAINLINTTMP_SQ)'/expect '$(CHAINLINTTMP_SQ)'/actual
+ 
+ test-lint: test-lint-duplicates test-lint-executable test-lint-shell-syntax \
 diff --git a/t/chainlint.sed b/t/chainlint.sed
-index 0e575c0c62..b1505ef2cd 100644
+index b1505ef2cd..dc4ce37cb5 100644
 --- a/t/chainlint.sed
 +++ b/t/chainlint.sed
-@@ -294,6 +294,12 @@ bfolded
+@@ -131,11 +131,15 @@ b
+ 	h
+ 	bnextln
+ }
+-# "(..." line -- split off and stash "(", then process "..." as its own line
++# "(..." line -- "(" opening subshell cuddled with command; temporarily replace
++# "(" with sentinel "^" and process the line as if "(" had been seen solo on
++# the preceding line; this temporary replacement prevents several rules from
++# accidentally thinking "(" introduces a nested subshell; "^" is changed back
++# to "(" at output time
  x
- s/?!HERE?!/<</g
- n
-+:cascom
-+/^[ 	]*#/{
-+	N
-+	s/.*\n//
-+	bcascom
-+}
- /^[ 	]*esac/bslurp
- bcase
+-s/.*/(/
++s/.*//
+ x
+-s/(//
++s/(/^/
+ bslurp
  
-@@ -322,10 +328,15 @@ x
- :nstslrp
- s/?!HERE?!/<</g
- n
-+:nstcom
-+# comment -- not closing ")" if in comment
-+/^[ 	]*#/{
-+	N
-+	s/.*\n//
-+	bnstcom
-+}
- # closing ")" on own line -- stop nested slurp
- /^[ 	]*)/bnstcl
--# comment -- not closing ")" if in comment
--/^[ 	]*#/bnstcnt
+ :nextln
+@@ -168,12 +172,12 @@ s/.*\n//
+ 	/"[^"]*#[^"]*"/!s/[ 	]#.*$//
+ }
+ # one-liner "case ... esac"
+-/^[ 	]*case[ 	]*..*esac/bchkchn
++/^[ 	^]*case[ 	]*..*esac/bchkchn
+ # multi-line "case ... esac"
+-/^[ 	]*case[ 	]..*[ 	]in/bcase
++/^[ 	^]*case[ 	]..*[ 	]in/bcase
+ # multi-line "for ... done" or "while ... done"
+-/^[ 	]*for[ 	]..*[ 	]in/bcont
+-/^[ 	]*while[ 	]/bcont
++/^[ 	^]*for[ 	]..*[ 	]in/bcont
++/^[ 	^]*while[ 	]/bcont
+ /^[ 	]*do[ 	]/bcont
+ /^[ 	]*do[ 	]*$/bcont
+ /;[ 	]*do/bcont
+@@ -184,7 +188,7 @@ s/.*\n//
+ /||[ 	]*exit[ 	]/bcont
+ /||[ 	]*exit[ 	]*$/bcont
+ # multi-line "if...elsif...else...fi"
+-/^[ 	]*if[ 	]/bcont
++/^[ 	^]*if[ 	]/bcont
+ /^[ 	]*then[ 	]/bcont
+ /^[ 	]*then[ 	]*$/bcont
+ /;[ 	]*then/bcont
+@@ -197,15 +201,15 @@ s/.*\n//
+ /^[ 	]*fi[ 	]*[<>|]/bdone
+ /^[ 	]*fi[ 	]*)/bdone
+ # nested one-liner "(...) &&"
+-/^[ 	]*(.*)[ 	]*&&[ 	]*$/bchkchn
++/^[ 	^]*(.*)[ 	]*&&[ 	]*$/bchkchn
+ # nested one-liner "(...)"
+-/^[ 	]*(.*)[ 	]*$/bchkchn
++/^[ 	^]*(.*)[ 	]*$/bchkchn
+ # nested one-liner "(...) >x" (or "2>x" or "<x" or "|x")
+-/^[ 	]*(.*)[ 	]*[0-9]*[<>|]/bchkchn
++/^[ 	^]*(.*)[ 	]*[0-9]*[<>|]/bchkchn
+ # nested multi-line "(...\n...)"
+-/^[ 	]*(/bnest
++/^[ 	^]*(/bnest
+ # multi-line "{...\n...}"
+-/^[ 	]*{/bblock
++/^[ 	^]*{/bblock
+ # closing ")" on own line -- exit subshell
+ /^[ 	]*)/bclssolo
  # "$((...))" -- arithmetic expansion; not closing ")"
- /\$(([^)][^)]*))[^)]*$/bnstcnt
- # "$(...)" -- command substitution; not closing ")"
-@@ -345,6 +356,12 @@ bchkchn
+@@ -237,6 +241,7 @@ s/.*\n//
+ :cont
+ # retrieve and print previous line
  x
++s/^\([ 	]*\)^/\1(/
  s/?!HERE?!/<</g
  n
-+:blkcom
-+/^[ 	]*#/{
-+	N
-+	s/.*\n//
-+	bblkcom
-+}
- # closing "}" -- stop block slurp
- /}/bchkchn
- bblock
-diff --git a/t/chainlint/block-comment.expect b/t/chainlint/block-comment.expect
-new file mode 100644
-index 0000000000..d10b2eeaf2
---- /dev/null
-+++ b/t/chainlint/block-comment.expect
-@@ -0,0 +1,6 @@
-+(
-+	{
-+		echo a &&
-+		echo b
-+	}
-+)
-diff --git a/t/chainlint/block-comment.test b/t/chainlint/block-comment.test
-new file mode 100644
-index 0000000000..df2beea888
---- /dev/null
-+++ b/t/chainlint/block-comment.test
-@@ -0,0 +1,8 @@
-+(
-+	{
-+		# show a
-+		echo a &&
-+		# show b
-+		echo b
-+	}
-+)
-diff --git a/t/chainlint/case-comment.expect b/t/chainlint/case-comment.expect
-new file mode 100644
-index 0000000000..1e4b054bda
---- /dev/null
-+++ b/t/chainlint/case-comment.expect
-@@ -0,0 +1,8 @@
-+(
-+	case "$x" in
-+	x) foo ;;
-+	*)
-+		bar
-+		;;
-+	esac
-+)
-diff --git a/t/chainlint/case-comment.test b/t/chainlint/case-comment.test
-new file mode 100644
-index 0000000000..641c157b98
---- /dev/null
-+++ b/t/chainlint/case-comment.test
-@@ -0,0 +1,11 @@
-+(
-+	case "$x" in
-+	# found foo
-+	x) foo ;;
-+	# found other
-+	*)
-+		# treat it as bar
-+		bar
-+		;;
-+	esac
-+)
-diff --git a/t/chainlint/nested-subshell-comment.expect b/t/chainlint/nested-subshell-comment.expect
-index 9138cf386d..be4b27a305 100644
---- a/t/chainlint/nested-subshell-comment.expect
-+++ b/t/chainlint/nested-subshell-comment.expect
-@@ -2,8 +2,6 @@
- 	foo &&
- 	(
- 		bar &&
--		# bottles wobble while fiddles gobble
--		# minor numbers of cows (or do they?)
- 		baz &&
- 		snaff
- 	) ?!AMP?!
+ bslurp
+@@ -292,6 +297,7 @@ bfolded
+ # found "case ... in" -- pass through untouched
+ :case
+ x
++s/^\([ 	]*\)^/\1(/
+ s/?!HERE?!/<</g
+ n
+ :cascom
+@@ -326,6 +332,7 @@ bchkchn
+ :nest
+ x
+ :nstslrp
++s/^\([ 	]*\)^/\1(/
+ s/?!HERE?!/<</g
+ n
+ :nstcom
+@@ -354,6 +361,7 @@ bchkchn
+ # found multi-line "{...\n...}" block -- pass through untouched
+ :block
+ x
++s/^\([ 	]*\)^/\1(/
+ s/?!HERE?!/<</g
+ n
+ :blkcom
+@@ -371,17 +379,21 @@ bblock
+ :clssolo
+ x
+ s/\( ?!AMP?!\)* ?!AMP?!$//
++s/^\([ 	]*\)^/\1(/
+ s/?!HERE?!/<</g
+ p
+ x
++s/^\([ 	]*\)^/\1(/
+ s/?!HERE?!/<</g
+ b
+ 
+ # found closing "...)" -- exit subshell loop
+ :close
+ x
++s/^\([ 	]*\)^/\1(/
+ s/?!HERE?!/<</g
+ p
+ x
++s/^\([ 	]*\)^/\1(/
+ s/?!HERE?!/<</g
+ b
+diff --git a/t/chainlint/close-nested-and-parent-together.expect b/t/chainlint/close-nested-and-parent-together.expect
+index 5ef509eb49..72d482f76d 100644
+--- a/t/chainlint/close-nested-and-parent-together.expect
++++ b/t/chainlint/close-nested-and-parent-together.expect
+@@ -1,4 +1,3 @@
+-(
+-cd foo &&
++(cd foo &&
+ 	(bar &&
+ 		baz))
+diff --git a/t/chainlint/complex-if-in-cuddled-loop.expect b/t/chainlint/complex-if-in-cuddled-loop.expect
+index b8aa626ed0..2fca183409 100644
+--- a/t/chainlint/complex-if-in-cuddled-loop.expect
++++ b/t/chainlint/complex-if-in-cuddled-loop.expect
+@@ -1,5 +1,4 @@
+-(
+-for i in a b c; do
++(for i in a b c; do
+    if test "$(echo $(waffle bat))" = "eleventeen" &&
+      test "$x" = "$y"; then
+      :
+diff --git a/t/chainlint/cuddled-if-then-else.expect b/t/chainlint/cuddled-if-then-else.expect
+index 4e089b087a..1d8ed58c49 100644
+--- a/t/chainlint/cuddled-if-then-else.expect
++++ b/t/chainlint/cuddled-if-then-else.expect
+@@ -1,5 +1,4 @@
+-(
+-if test -z ""; then
++(if test -z ""; then
+     echo empty
+  else
+     echo bizzy
+diff --git a/t/chainlint/cuddled-loop.expect b/t/chainlint/cuddled-loop.expect
+index 7932303763..9cf260708e 100644
+--- a/t/chainlint/cuddled-loop.expect
++++ b/t/chainlint/cuddled-loop.expect
+@@ -1,5 +1,4 @@
+-(
+- while read x
++( while read x
+   do foobar bop || exit 1
+   done <file ) &&
+ outside subshell
+diff --git a/t/chainlint/cuddled.expect b/t/chainlint/cuddled.expect
+index 773476adc8..c3e0be4047 100644
+--- a/t/chainlint/cuddled.expect
++++ b/t/chainlint/cuddled.expect
+@@ -1,10 +1,8 @@
+-(
+-cd foo &&
++(cd foo &&
+ 	bar
+ ) &&
+ 
+-(
+-cd foo ?!AMP?!
++(cd foo ?!AMP?!
+ 	bar
+ ) &&
+ 
+@@ -12,10 +10,8 @@ cd foo ?!AMP?!
+ 	cd foo &&
+ 	bar) &&
+ 
+-(
+-cd foo &&
++(cd foo &&
+ 	bar) &&
+ 
+-(
+-cd foo ?!AMP?!
++(cd foo ?!AMP?!
+ 	bar)
+diff --git a/t/chainlint/inline-comment.expect b/t/chainlint/inline-comment.expect
+index f6b42757d2..dd0dace077 100644
+--- a/t/chainlint/inline-comment.expect
++++ b/t/chainlint/inline-comment.expect
+@@ -4,6 +4,5 @@
+ 	flibble "not a # comment"
+ ) &&
+ 
+-(
+-cd foo &&
++(cd foo &&
+ 	flibble "not a # comment")
+diff --git a/t/chainlint/semicolon.expect b/t/chainlint/semicolon.expect
+index 05141a96cf..ed0b3707ae 100644
+--- a/t/chainlint/semicolon.expect
++++ b/t/chainlint/semicolon.expect
+@@ -13,8 +13,7 @@
+ (
+ 	foo;
+ ) &&
+-(
+-cd foo &&
++(cd foo &&
+ 	for i in a b c; do
+ 		echo;
+ 	done)
 -- 
 2.34.1.397.gfae76fe5da
 
