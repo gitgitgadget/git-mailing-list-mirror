@@ -2,83 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49515C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 16:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC3EDC433EF
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 17:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236084AbhLMQqk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 11:46:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45190 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232517AbhLMQqk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 11:46:40 -0500
-Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 070E0C061574
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:46:40 -0800 (PST)
-Received: by mail-vk1-xa31.google.com with SMTP id 84so10775002vkc.6
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:46:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=y0iAFQYWdVGrNvRu9Ee0VfmElI/MVDzkcTOuounF1MM=;
-        b=I9z8gT4WusiSlo6vjFPAXayho9KIukMUAfBs9nEpDnPYUdNnRYRj8jPO9wIloGKVEr
-         1V8EAueyiq37CDovz3zIHGIPrVofPGwFUvxQjdmdz/2gG5lQ1aLF0dOqKWoDqCiD8fEo
-         WfyumKUAmmNCPmz8VK3s1mA806saBLrhPb4vD5+ezwN1z0iCXw92laCVseYsnMaY3TCG
-         YSCMk5+jxd+I+T7eUWlym0cSnnySv/f9X00xPqMjuYYRMmUtejptT62K8jWGfHxJ0O9N
-         6CjDucMgNWmSicRXpl0hMf5MLucq9lGHmTvhzrIPti1F2ZeQVmfOZORo75NxxWgGyQt7
-         ZBfg==
+        id S238255AbhLMRFq convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 13 Dec 2021 12:05:46 -0500
+Received: from mail-pf1-f170.google.com ([209.85.210.170]:46020 "EHLO
+        mail-pf1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234830AbhLMRFp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 12:05:45 -0500
+Received: by mail-pf1-f170.google.com with SMTP id x131so15439236pfc.12
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 09:05:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=y0iAFQYWdVGrNvRu9Ee0VfmElI/MVDzkcTOuounF1MM=;
-        b=PC08IF5LMBwRnG8JbZb9oR0YUBQOk4zDkg568cXpX8t4GeXuK4Le1CpDchh3ySF7yx
-         AP7SbBvgII5hG/PHkiE//AvyTsO/jLSKbY7AwzQuZt1wZrom9reRL31zAh2fJ3anTwMd
-         XDzKuxFnwnz6zISDWGvcIO5WPe7EtSBivpe/7d1WO/mv0r3Xc7UIIRRbQXOPjQORNrNw
-         IP2zvTd16gh0x0DpN6OW64+SgxWTsWHzB+dEDNcj2S82myf25ttF9cIt2vhVIF0yLMQj
-         IttVzN5EtQbewNLqxtD9dEZkZIq7IQ1xmqIQjtQUv/otYDzHcaMxfcPyi0vDUSXo8a4U
-         AjNg==
-X-Gm-Message-State: AOAM530r9aZBeDqu/lS3y5pMZfTxqBp4LOEBxy80egPImx/oM2dVILXW
-        lFGQ6mr444dd5CeRs3ukvs8nDuOSdWE5IrM3pjx5E5DiSg0=
-X-Google-Smtp-Source: ABdhPJxiImx2SE+k8RX5rPuS7Hm7c3xY/OG3PldyNBijCX8oNmIYgiLFJgdBqZtJusZd+py2EIdbu4lUPqutDtIZG9c=
-X-Received: by 2002:a1f:2b4a:: with SMTP id r71mr32784470vkr.37.1639413998660;
- Mon, 13 Dec 2021 08:46:38 -0800 (PST)
+        bh=d1kjEozlTIEXajLpJ/JjN8uMciw0gEXdeX6aV/OAMUg=;
+        b=R02dXY0KOBEYe4fwjgw4kzumnKwiGsedrW/d/2wN2VTLYUSNnpD37eApr0nyLoeVsZ
+         BdyLMaDNVPDwJx8fsdNtdTZMpDJ6geI60lzqUbHPOVwnXlMRQTxpc/2RLVgOfmu312OU
+         XoSLHxITrcYDOBenEjJYY6sZesz4KT6qVVJ0VlUQWITc9LFon7A9FSOKXJRZ1g3B9Klt
+         kiJA9WhYyRi6yJIptMoFQa8e4XQMTZ1gAioInU3G852QQqfXPUMwFvERsULGLqzCR/qy
+         EkEuY0Tr3iTZkqaNdB7G8SRxKABiUBWrZhQHSoQXtukeIx9BJ8/sg0tYViHVPPngAKEa
+         b+NA==
+X-Gm-Message-State: AOAM532Gw5dFZKwY5qHPeRzgvS8GNtuxe5p87lf+MKBdLrX8b/VqENXh
+        cG4pMdpuZEm28QSy6OrkkePQU7BOfQrGkfnAp4RHJ1h9v7nOrA==
+X-Google-Smtp-Source: ABdhPJwFhiYyl6MY7g7T0ec61rNmzxhMWgnvc9WulfDMwYhQ3yGWH+0Mda4Q3NCOI/jNSXPMlmQK5sPgQG5LI2O8Ep8=
+X-Received: by 2002:a05:6a00:2349:b0:4a8:d87:e8ad with SMTP id
+ j9-20020a056a00234900b004a80d87e8admr34278511pfj.15.1639415145104; Mon, 13
+ Dec 2021 09:05:45 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1152.v2.git.git.1639000187.gitgitgadget@gmail.com>
- <pull.1152.v3.git.git.1639411309.gitgitgadget@gmail.com> <6b0af68f0b94fb96c81e25f9a1911fa05dcf07fd.1639411309.git.gitgitgadget@gmail.com>
- <211213.86czm08o8k.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211213.86czm08o8k.gmgdl@evledraar.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 13 Dec 2021 17:46:27 +0100
-Message-ID: <CAFQ2z_Nr-Rf2kjujPcMtRV6VfweP68A44ZD2XPL8+CqM4F4hZg@mail.gmail.com>
-Subject: Re: [PATCH v3 09/11] reftable: drop stray printf in readwrite_test
+References: <20211213063059.19424-1-sunshine@sunshineco.com>
+ <20211213063059.19424-6-sunshine@sunshineco.com> <20211213102224.y5psbojmivlxe5px@fs>
+ <CAPig+cSKn6wdPKc=b8Xjqy5D=bVdu6FQtYKJuwN2VoV7pEEgHw@mail.gmail.com>
+ <20211213154327.pmhopjbdlkz7dgjh@fs> <CAPig+cSXHBMgOUycL0cXuVCb_PJ2=x2w4wUkc7eQQueyk=0Uzw@mail.gmail.com>
+ <211213.86tufc8oop.gmgdl@evledraar.gmail.com>
+In-Reply-To: <211213.86tufc8oop.gmgdl@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 13 Dec 2021 12:05:34 -0500
+Message-ID: <CAPig+cR5Q2q=wdXuVBeP52=pAfvh6_4z__g-0JUGWq_7uor_Hg@mail.gmail.com>
+Subject: Re: [PATCH 05/15] t/Makefile: optimize chainlint self-test
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
+Cc:     Fabian Stelzer <fs@gigacodes.de>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 5:26 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+On Mon, Dec 13, 2021 at 11:17 AM Ævar Arnfjörð Bjarmason
 <avarab@gmail.com> wrote:
-> Is this something coverity raised and I'm missing why it's bad (per the
-> CL), or just a stray unrelated cleanup?
+> On Mon, Dec 13 2021, Eric Sunshine wrote:
+> > On Mon, Dec 13, 2021 at 10:43 AM Fabian Stelzer <fs@gigacodes.de> wrote:
+> >> I have no idea what is going on here: `<$< |` ?
+> >
+> > Ya, that line-noise is an unfortunate combination of shell and
+> > Makefile gobbledygook. The `$<` is effectively the source file (the
+> > file being passed into chainlint.sed), and the rest of it is just
+> > normal shell. `<` is redirection (using the source file `$<` as
+> > stdin), and `|` is the pipe operator (sending the output of
+> > chainlint.sed to another `sed`), and capturing it all via shell `>`
+> > redirection in `$@` which is the Makefile variable for the target
+> > file.
+>
+> To add to that;
+> https://www.gnu.org/software/make/manual/html_node/Rules.html#Rules and
+> other relevant parts of the GNU make manual are very helpful here.
 
-I spotted it while working on this series. It prints something
-unexpected into the output of the unittest, so better remove it.
+And the Makefile variables $< and $@, in particular, are documented here:
+https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+> I don't really care about the details of whether it's invoked once or N
+> times, although I think the N times with proper dependencies tends to
+> give you better error messages, but maybe you'll be changing it
+> significantly enough that the current map between chainlint files and
+> approximately what sort of thing they check won't be there anymore.
+>
+> In any case, I'd think that a rule that used $< now (i.e. 1=1 file->out
+> prereq) would be better for the current state, and could just be changed
+> to use one of $^ or $+ later.
+>
+> I.e. you can declare a "check.done" that depends on {1..10}.todo, and
+> get a list of all of those {1..10}.todo files if one changes, or just
+> the ones whose mtime is newer than a "check.done".
+>
+> The reason I looked at this to begin with is that it takes it ~100-150ms
+> to run now, which adds up if you're e.g. using "make test T=<glob>" in
+> "git rebase -i --exec".
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Regarding this last point, one idea I strongly considered (and have
+not rejected) is to stop making `check-chainlin` a dependency of
+`test` and `prove`. Unlike most of the test suite, in which a change
+to any part of the Git source code could potentially cause any test to
+fail -- thus, it is important to run the full test suite for any
+source code change -- the `check-chainlint` target is completely
+isolated from everything else; it only checks whether `chainlint`
+itself functions correctly. The only time it really makes sense to run
+`check-chainlint` is when chainlint itself is changed in order to
+verify that it still functions as expected. Considering how
+infrequently (i.e. never) chainlint is modified, it seems somewhat
+silly for every `make test` or `make prove` invoked by anybody
+anywhere to repeatedly and forever validate chainlint[*]. Instead, it
+could be the responsibility of the person modifying chainlint to run
+the `check-chainlint` self-tests.
 
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+[*]: There is at least one exception. Various implementations of `sed`
+could behave differently, thus impacting the behavior of
+chainlint.sed. This is not just a theoretical concern. I did all the
+development of this series on macOS, where everything worked as
+intended. Shortly before sending the series to the list, I subjected
+it to other platforms via CI and found that it failed on Linux due to
+minor behavioral differences in `sed` on Linux (though, very oddly, it
+worked just fine on Windows). I might not have caught this problem if
+`check-chainlint` had not been run automatically by `make test`.
