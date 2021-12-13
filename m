@@ -2,134 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAE52C433EF
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 16:17:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E30F1C433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 16:22:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240506AbhLMQRP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 11:17:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37960 "EHLO
+        id S240711AbhLMQWB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 11:22:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234044AbhLMQRP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 11:17:15 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5DD6C061574
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:17:14 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id o20so54258189eds.10
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:17:14 -0800 (PST)
+        with ESMTP id S240691AbhLMQV6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 11:21:58 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98D3BC06173F
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:21:57 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id w1so53737627edc.6
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:21:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=1BdW7I+qxvETiUp0lne/9H/jggQsIMfDS+0WnT1KRQc=;
-        b=Pz/bXumh7oNTBoYF/J6tCHZffmnTScDAz2iIgyFywx/7v8b0+ZKWAQPhOXLlO7MXvn
-         3OWVMyJDG/9MQeHq3aI7X46bAA58cJBnjxnzcZPhrnaJwAhryHpzWYQ+zT4Vp4LEp/mv
-         oAknk5zL07kqyTflInAMZocopwoSorZ1PlKcQSwT7kC/wWF0x3sbFj1cLpDlMTHdfkGi
-         +ETIvDAw7wkFFfzmCJpLRfkIfcT8I2TrkqNqeg6wiBpV7dZ/3oxUDc9+QkNOqzqcws5Y
-         tLt74fuy252i4zf572vmUVVYicI5rnvF4RT7gUi3xkpjKApQyurVDa0zHKD8AxjRMeNH
-         C5mQ==
+         :message-id:mime-version;
+        bh=qYWpnicN4PZ/9KucZLWkdzBU0XlwTAGyXUekqK08OxA=;
+        b=o7pSPBFJF1mPPQ4MTrWznhcRzbwuoPOP3LxA4TQAWAxPQWJakpPX2golQyn3NmW2ng
+         /uUs0XBEIqhOSzxqkqq2PF3FvMlooazAOjpYdpZ7IHPJdJ2S9wpMlQgx7oYaATUoKyFM
+         t3YDZ+QdJrAsvHTW6/KTET2mO8Lvoi5ZFJcPaVdRvdJO7ino5osYzqoOHIZ0WJyB+2t2
+         lwNp+1/2B8vKL8ALpfsKSDwW3tacDvo/9P+lXSZWKp9pkqABADBsH70L9MiaxnZEp00r
+         P8tPGz5FVkKM1jjSPROLLeV9oTgK2cLzwrDoM18iUawZWVPXmtEhNvbD1nDQSnO1uxww
+         RWfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=1BdW7I+qxvETiUp0lne/9H/jggQsIMfDS+0WnT1KRQc=;
-        b=4UWXEdtdqLjQWVF8nn5UehQ7ziEHYiLGFRZVfWo1VeR//1yzKgHqwbb0VnszZMU4Qa
-         bhi3dqb7yE4TuuSoBxiPF4mCzoxh33dqcCU+GGYHj49je00+eYe5yfwtCtnPMJWYigIz
-         lwhuiNVBGWufq3IMzWVYTH3GMKs8eTVDyB8NAARYdYbTaN+0Y/L1V3TFQBFYTpubdLao
-         Q+3M24rMTfBWRHYbMAa2nUwjCzRGATjcYhXRly/2OeSo54YDcI8WGkhm5IS6f3OTQ/bP
-         NyAKHVGR8gfnZWev1d/TE0aN05Lx6qMeijGmWoiGy239RM1x58YF4g2mhzwtokoK7msQ
-         FXSw==
-X-Gm-Message-State: AOAM531grhs7JKBiCmqZcwTyM98/2+vK2gefhMZghaSF3z5Poui4psly
-        Gjxq+lBrWC6iilzJ0wnBmle2D+XzF42dFg==
-X-Google-Smtp-Source: ABdhPJwCrfSLn9Xtq4d/i3A/NiAbM3WMPuozJbj1tca7fWEyWXkgs7HyGoDTie70bgOKUjkuoH+5Tg==
-X-Received: by 2002:a50:fc10:: with SMTP id i16mr65051114edr.84.1639412232728;
-        Mon, 13 Dec 2021 08:17:12 -0800 (PST)
+         :in-reply-to:message-id:mime-version;
+        bh=qYWpnicN4PZ/9KucZLWkdzBU0XlwTAGyXUekqK08OxA=;
+        b=v4ioOsi5ep9CyuEAGni1jkqDn1Q7QA7cXDlTiUGZU0oYBP+VP5o49r+jqRznT5eZIT
+         BT0O83fzpUhIFP+YrmpJhZFxUx6PQXObMPY6wVupFsg+qlLxJOOjpkVFgM/Noom0nMjD
+         ukBddUZTeV36uxlElGk0DbcCUNwUqA4EEfLT4R3EzgnOLeGOp5wX8HBjo4vfgGqpDiQg
+         fPXJBalhnP5Fs3fLp8cAbK3wGzmUE4THjS2JhJm1+zOhsr3efNlIyCXSrsTEYYDY+h45
+         NqGzMrS22p5GdoaVYRnj9GBD+Le2Qtesq6Mz6eb8DpRoBdTyYb+i1NY+KtVMhw9pJUpl
+         ytMw==
+X-Gm-Message-State: AOAM532t3PxyAQ63W64crt4jkfwepDqF75WXo1V6O37bAe0PWaYb7ijo
+        2g1NamBA3nVpJLhLKDXpeKx+ImDQI2rxVw==
+X-Google-Smtp-Source: ABdhPJzfahWXAUN6KS84xPQgeOMG1az64shXhTFO/24+KrNQLp4sMwHxOcJlOw+ipELfekn91RnMpg==
+X-Received: by 2002:a05:6402:50c7:: with SMTP id h7mr66732373edb.277.1639412515864;
+        Mon, 13 Dec 2021 08:21:55 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id du16sm305215ejc.183.2021.12.13.08.17.11
+        by smtp.gmail.com with ESMTPSA id z6sm304496ejl.153.2021.12.13.08.21.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 08:17:12 -0800 (PST)
+        Mon, 13 Dec 2021 08:21:55 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mwo0k-000twl-MA;
-        Mon, 13 Dec 2021 17:17:10 +0100
+        id 1mwo5K-000u4E-5p;
+        Mon, 13 Dec 2021 17:21:54 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Fabian Stelzer <fs@gigacodes.de>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 05/15] t/Makefile: optimize chainlint self-test
-Date:   Mon, 13 Dec 2021 17:11:18 +0100
-References: <20211213063059.19424-1-sunshine@sunshineco.com>
- <20211213063059.19424-6-sunshine@sunshineco.com>
- <20211213102224.y5psbojmivlxe5px@fs>
- <CAPig+cSKn6wdPKc=b8Xjqy5D=bVdu6FQtYKJuwN2VoV7pEEgHw@mail.gmail.com>
- <20211213154327.pmhopjbdlkz7dgjh@fs>
- <CAPig+cSXHBMgOUycL0cXuVCb_PJ2=x2w4wUkc7eQQueyk=0Uzw@mail.gmail.com>
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v3 02/11] reftable: fix resource leak in error path
+Date:   Mon, 13 Dec 2021 17:19:29 +0100
+References: <pull.1152.v2.git.git.1639000187.gitgitgadget@gmail.com>
+ <pull.1152.v3.git.git.1639411309.gitgitgadget@gmail.com>
+ <975a570d388fca79546987f4683fcd33419aad98.1639411309.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <CAPig+cSXHBMgOUycL0cXuVCb_PJ2=x2w4wUkc7eQQueyk=0Uzw@mail.gmail.com>
-Message-ID: <211213.86tufc8oop.gmgdl@evledraar.gmail.com>
+In-reply-to: <975a570d388fca79546987f4683fcd33419aad98.1639411309.git.gitgitgadget@gmail.com>
+Message-ID: <211213.86pmq08ogt.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Dec 13 2021, Eric Sunshine wrote:
+On Mon, Dec 13 2021, Han-Wen Nienhuys via GitGitGadget wrote:
 
-> On Mon, Dec 13, 2021 at 10:43 AM Fabian Stelzer <fs@gigacodes.de> wrote:
->> Personally i find the initial for loop variant to be the most readable.
->> =C3=86vars makefile targets could be very nice too, but especially:
->>
->> +$(BUILT_CHAINLINTTESTS): | .build/chainlint
->> +$(BUILT_CHAINLINTTESTS): .build/%.actual: %
->> +       $(CHAINLINT) <$< | \
->> +        sed -e '/^# LINT: /d' >$@ && \
->> +       diff -u $(basename $<).expect $@
->>
->> i find very hard to grasp :/
->> I have no idea what is going on here: `<$< |` ?
->
-> Ya, that line-noise is an unfortunate combination of shell and
-> Makefile gobbledygook. The `$<` is effectively the source file (the
-> file being passed into chainlint.sed), and the rest of it is just
-> normal shell. `<` is redirection (using the source file `$<` as
-> stdin), and `|` is the pipe operator (sending the output of
-> chainlint.sed to another `sed`), and capturing it all via shell `>`
-> redirection in `$@` which is the Makefile variable for the target
-> file.
+> From: Han-Wen Nienhuys <hanwen@google.com>
+> [...]
+> -	return 0;
+> +done:
+> +	if (uncompressed) {
+> +		reftable_free(uncompressed);
+> +	}
+> +	return err;
+>  }
 
-To add to that;
-https://www.gnu.org/software/make/manual/html_node/Rules.html#Rules and
-other relevant parts of the GNU make manual are very helpful here.
+Other things in the codebase don't check for NULL before feeding things
+to reftable_free(), and our own free() has a coccicheck rule to catch
+this sort of code, we should probably add reftable_free to that list...
 
-> Anyhow, although the commit message tries to sell this change as some
-> sort of optimization, it's really in preparation for the new chainlint
-> which wants to check all tests in all files with a single invocation
-> rather than being invoked over and over and over. The self-test files
-> also require more preprocessing to work with the new chainlint, so the
-> implementation of `check-chainlint` gets rather more complex once the
-> end state is reached. I'll think about it a bit, but at the moment,
-> I'm still leaning toward this intermediate step as being beneficial to
-> reaching the end state. However, my opinion could change since the way
-> this is done here was probably influenced by an earlier iteration of
-> the new chainlint, but now that the implementation of the new
-> chainlint is concrete, it may not be especially important to do it
-> this way.
+>  
+>  static uint32_t block_reader_restart_offset(struct block_reader *br, int i)
+> diff --git a/reftable/readwrite_test.c b/reftable/readwrite_test.c
+> index 5f6bcc2f775..42caf0bde4c 100644
+> --- a/reftable/readwrite_test.c
+> +++ b/reftable/readwrite_test.c
+> @@ -254,6 +254,72 @@ static void test_log_write_read(void)
+>  	reader_close(&rd);
+>  }
+>  
+> +static void test_log_zlib_corruption(void)
+> +{
+> +	struct reftable_write_options opts = {
+> +		.block_size = 256,
+> +	};
+> +	struct reftable_iterator it = { NULL };
+> +	struct reftable_reader rd = { NULL };
+> +	struct reftable_block_source source = { NULL };
 
-I don't really care about the details of whether it's invoked once or N
-times, although I think the N times with proper dependencies tends to
-give you better error messages, but maybe you'll be changing it
-significantly enough that the current map between chainlint files and
-approximately what sort of thing they check won't be there anymore.
+Nit: It doesn't matter for semantics, but usually we use "{ 0 }", and
+your 1/11 does too. Would be better to do that here for consistency.
 
-In any case, I'd think that a rule that used $< now (i.e. 1=3D1 file->out
-prereq) would be better for the current state, and could just be changed
-to use one of $^ or $+ later.
+> +	for (i = 0; i < sizeof(message)-1; i++) {
+> +		message[i] = (uint8_t)(rand() % 64 + ' ');
+> +	}
 
-I.e. you can declare a "check.done" that depends on {1..10}.todo, and
-get a list of all of those {1..10}.todo files if one changes, or just
-the ones whose mtime is newer than a "check.done".
-
-The reason I looked at this to begin with is that it takes it ~100-150ms
-to run now, which adds up if you're e.g. using "make test T=3D<glob>" in
-"git rebase -i --exec".
+style: braces not needede.
