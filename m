@@ -2,165 +2,511 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CBD5C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 15:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBB48C433FE
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 16:01:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235781AbhLMPnb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 10:43:31 -0500
-Received: from mail-db8eur05on2049.outbound.protection.outlook.com ([40.107.20.49]:53273
-        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S232268AbhLMPnb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 10:43:31 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RuTpCT59PoePKWI3BJsO9Sj5bBefbA5dJktCjhdqUywdIlzV8DQ0ObgFXggQ38tO7s3uT/7AZGrqzB5rOPE2iOqXjfl2MDdBlT+rHeaGmsDoybhzIRGOP9oBYmDpDjDrnfsDO5MKx8qcca14j2x51+KjanlhM1dojgI16QAm3kArRwFcCRI0I/we4in7XEhB3P/Q1L5WDSuGk7dN7NG2MucvvsPhisEKOKdQlSD/inuAzh4pXMQx+rqlqJcX1b+GF0k+GmU+7hOZhpeoHQjSxha+6imyu1223ObzmHLx7Yyzq0nMKeYVVA1U/HpL2RnLBCDggd/JLVqynHScLvnVoA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PRBphluViK13+U4MkWzBPIgYv8EwLjVAsp9shXdbr3Y=;
- b=ZgoiFJz3yTfe4EuobsEjmpxsmhtiLWKHyE88RRl+ncXuPSJPcmGDZx9GuZb1QqZvHf5v2UOPR0YLPLYmHfZrJ73MCdqL1jGjSbktqGnfyy4qwW7DL0PMm0HNEgBFmwsAknRlg+M64cZhYyMHUpjLjHe97dgCtne9JQeB70airVDYZP7aFSMKWNPbetksoUBqsHK+cYQyfQGOkzrgFRjCkhKoeuCoMFIY6xEILrcVbn56qZAFLlTQt+FRkVXLjfA1tSCXEZ6vTLvpvZ3vmO+vqr835Nd+4PAxepkydc6MuOEWYtx/daGx7Fbda2c5pSOF8s29vxBJDHbKelKKlMBsGg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PRBphluViK13+U4MkWzBPIgYv8EwLjVAsp9shXdbr3Y=;
- b=fR7KlIDv70ntEeBgGgSZ/bhrDYpDzOsDktwkUax5Nlg3AU0MbrvtkJjn1uIM+zZcW5eHjg9gM/AZIC/1J+1x8c4Kk7Nh/chyL22Oor57YznYUDwFkXbJaec7/1CV/yYsn++0A/Pg5s/XIs/SEUFpQGfEUMRgDr1VrgicV8tUyMM=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PA4PR10MB4400.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:bd::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4778.17; Mon, 13 Dec
- 2021 15:43:29 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::d9de:b41b:461d:fb5b]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::d9de:b41b:461d:fb5b%8]) with mapi id 15.20.4755.028; Mon, 13 Dec 2021
- 15:43:28 +0000
-Date:   Mon, 13 Dec 2021 16:43:27 +0100
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 05/15] t/Makefile: optimize chainlint self-test
-Message-ID: <20211213154327.pmhopjbdlkz7dgjh@fs>
-References: <20211213063059.19424-1-sunshine@sunshineco.com>
- <20211213063059.19424-6-sunshine@sunshineco.com>
- <20211213102224.y5psbojmivlxe5px@fs>
- <CAPig+cSKn6wdPKc=b8Xjqy5D=bVdu6FQtYKJuwN2VoV7pEEgHw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
+        id S233834AbhLMQBy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 11:01:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34096 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232963AbhLMQBx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 11:01:53 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B01CC061574
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:01:53 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id o13so27807230wrs.12
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:01:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=YWFGutxkfqNwvlW+NJu7GvYUFf4KvfpdOnN7O/uNj8s=;
+        b=N7i6iquqAtsRNnGjgNyaGPb2p7jqSflxHm6ExNFAe0GWIaPx9nN+2VSVn7yX0eBV4O
+         YU4lhXrrpz5gCzbWuPkpe5F/YcIO6mrp++H+ZREFClIDtq1S3zFHftol4wIkoqLdBLzD
+         6vWxTvZ3cgtUnNa41qIs6qxAzQ0Gwl/sgynixbvoGKxmLkxMF3ZkjpocA2pcdW6VF/dY
+         b8emo+BOuaZD00py2hx8fKDRvrTFhWg3vE9e4x6tTq+oHpGczsJdfpbdhf3FuoQ1Wf+6
+         pQg+NE/MHeAq7IyICkBQIIkV2bbKsWuF8EUahuAT6N/IOdhohBqhHtX7UliiXzzGaMXp
+         ZOGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=YWFGutxkfqNwvlW+NJu7GvYUFf4KvfpdOnN7O/uNj8s=;
+        b=uLazGhXR2U01AuyOweZULdMmi9+iHKcqd2/YNiFqWJO4IzjSlJk73Z3rbZJYR46cjG
+         4lkvT0SUKzBXuQMylF0AAGji5SG+35D9p3FGl8EVcqMaS3zSH8WwKgJdR9XLLx3EmuLO
+         xc/uCnYqxvJ6MMunr6czCLAD38ku5Ip5UjRmQ5+HiuLXfV8pukmF8Zanj23Oth+IRPW0
+         hjyMvbUG8d1enTZwO+QFhse8iZmxewpmRLLMtzwnhILSyRkMnzAFTdkmgarRqNNdSGNU
+         1e49lrZsiOrQN+R9OC7ycjg6PrRa6dVqlj83osov2fjXQu7R2XQDPuQqlIlwHxBA8Uub
+         RMVQ==
+X-Gm-Message-State: AOAM530vp5Is3ScNldZPrGWjq9nVpx8/B0zKu3vslwR6UBPq2oIx3J8i
+        ZHl8LvLYUkHISuzsEcFupwDT8b8ZcBk=
+X-Google-Smtp-Source: ABdhPJwUFOLD/JNCpoD+SQ1DLozhrvNaaH+UDlp/aUVKj54HXTxazzMQOIItzKJvGhXzWHTAyihiHQ==
+X-Received: by 2002:adf:edc1:: with SMTP id v1mr33351724wro.170.1639411311321;
+        Mon, 13 Dec 2021 08:01:51 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o12sm14462745wrc.85.2021.12.13.08.01.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Dec 2021 08:01:50 -0800 (PST)
+Message-Id: <pull.1152.v3.git.git.1639411309.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1152.v2.git.git.1639000187.gitgitgadget@gmail.com>
+References: <pull.1152.v2.git.git.1639000187.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 13 Dec 2021 16:01:38 +0000
+Subject: [PATCH v3 00/11] Reftable coverity fixes
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cSKn6wdPKc=b8Xjqy5D=bVdu6FQtYKJuwN2VoV7pEEgHw@mail.gmail.com>
-X-ClientProxiedBy: AM5PR0701CA0006.eurprd07.prod.outlook.com
- (2603:10a6:203:51::16) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
 MIME-Version: 1.0
-Received: from localhost (2003:ea:5820:600:3e55:2984:f78e:8b18) by AM5PR0701CA0006.eurprd07.prod.outlook.com (2603:10a6:203:51::16) with Microsoft SMTP Server (version=TLS1_2, cipher=) via Frontend Transport; Mon, 13 Dec 2021 15:43:28 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 0694a999-99d8-4acd-1bfe-08d9be4f4f00
-X-MS-TrafficTypeDiagnostic: PA4PR10MB4400:EE_
-X-Microsoft-Antispam-PRVS: <PA4PR10MB4400733FA79C41E79248D3E3B6749@PA4PR10MB4400.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:3631;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: wRhi3Y4e62iATNx6jZTK+PL3WzxfZF9kbrXjs8dpBP2Af3fkvyb0GjWRe07asqi5aCLIEvq1wUUDH4CIR8vZEdDFf49K4YDBeTL9Exggzl6KctA8dJM6GBqYZulOLp/ZS4zNVEsk9DNGRFrJjy/HdyyHu5rSiR783bSRMAcZEaVQpUhRilnFqnw0NgAuQxidiNBG+XRBZj3oJ+hNsN+/JrzPD+UB2/y4UlpFOUDtEq6n6BKFhVFSqHoyR5JPd9iuHMN2h3+HQUG0XUBWLIPcJNtvnJzKp7+/K/gqi14SiWINxES6uS9oP9l95vc5jCBJ8FJyM9Al3RXsqVtr96eAUWSatNKAtO+LiXwX+Z/sS9Llf/IHXNTF2L1rM3aiThXDqPg3j4MHhYkPTzm6ZJ4zWJ0+VTmXEMX4P3Z8jLQ51MtPnyxNUUZNswx8U32kIZ0nkET6V0pPDYdd07Z3pnosznUI5jGLfe5Kr48G9s2bpCEpM/yUlQ6Ar6EvOzRTTytGPH3pwAxERsbWrY5AU7XwZlP2VzpQMKk1W6X8RiKcU/SPh4ME4AeuLEdD6IhgYjDgo5+rtNcmA7xSE1y4OH3jFf1NNHOnVY61bHRd3pKfiD9tc+T6vQsr/Vi8dsI32mOGugyAdkGjE/5P49LwF7NYDQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(7916004)(366004)(136003)(376002)(39840400004)(396003)(346002)(316002)(5660300002)(6496006)(6916009)(8676002)(2906002)(4326008)(54906003)(8936002)(1076003)(66556008)(66476007)(508600001)(66946007)(86362001)(38100700002)(33716001)(6486002)(9686003)(53546011)(186003)(83380400001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SFhXMzRVYUpGU21BMXFCS1JHQmNSa0hGQmhnSWY4SkpPQ0RCbnB3Vm9DZEtJ?=
- =?utf-8?B?Y3REa0dZMEVlUm5KeVRHcXIrTWl4NkVITExQbm1WMHg1cHEzNHYwbVJDbHBS?=
- =?utf-8?B?YUVhVC9WUEsydDhBL0grN1pNK0lRbmMxTG5qdnFvcy9TeXJrbnZ4eEhHemk3?=
- =?utf-8?B?Q1BuYi9hbklDK1RpVjZsK1JGa0VoalJyODJlenpNWEF4aVUycGxZaWRvZTNI?=
- =?utf-8?B?Um5sa3RxN21CeVo0TGtVV3VlTlhzbG53UkM1MVlKZ3JCaWxWTk9KQjFOSk9M?=
- =?utf-8?B?a20vaFR4aFdsTFV2NnI3WmNxcTZpRGNJQy93dHdpSG9CeTh6aHlJTXNGWWtm?=
- =?utf-8?B?SFVyemxKZEVuTGFORTljV0V0aC9EbnV0RWlXb281cUxoQ0g4dXBWWFVPSDJT?=
- =?utf-8?B?MlNnYTZRL2V4dEpNY0JUWXZvRWhZS0xKNSs1ZHdLK2ErMnZIU0hoWm5lMmFP?=
- =?utf-8?B?c3F0UW1ua1R1OE83VGs5WDZLbkJ4bjRxK3RuYm8zeVJJckNRUEVUWWx4MFRV?=
- =?utf-8?B?T2s1UzN4K25GNC9kb1Y0TC96emgveDBzZW55Y1JaZGtIS1dtWXBCUVpnd1l4?=
- =?utf-8?B?bnRnanF3Y1dySzFyODgvTEpvSkNnN0N5bG9rU1ZKSjhLS2dGcmE5VlgyaDFJ?=
- =?utf-8?B?UDlGTCt2cHNWSXovbHFmZHdZRHRMeW5zQVpBMVpCdDMvUWJMQldZTEszK3hq?=
- =?utf-8?B?L2FkQzkyNnFlMVJlQlpiQy9qdjkyQUNYMWE0Y1hVU1U3L2p5ZEk3R1h5NnhC?=
- =?utf-8?B?QXcxeGpKUjNiNlR4VlJROEhNVWJFY2hmcXJiQnlCZDVNTDlVTXJTUmxoSXdq?=
- =?utf-8?B?WEU0dkcvZmhEa0h6K0tnL0R5UGVHMkNXMnVKNCtBTEJhVFQ3WlUxYmY5YWta?=
- =?utf-8?B?bS9mVmVEN3RjRG1tZEgzRklyRXVSRThwTFJLNmZoTkVIbUFEQjEwNitnL0hx?=
- =?utf-8?B?b3lpY0RPSlhDTUJMc2N3NGZQRWxPWCtPcUNjZjdSTmxZZDdrbWxIbklkcThZ?=
- =?utf-8?B?NFVyaG5IWUVCWFk1MC8zN1FGZjlUNnFSdkhWUEJTWEJUdTJYZHZ2V2xzZDUr?=
- =?utf-8?B?aWpOYlNhSzQ0Wmk5OXRGRXdFcEl6ai94YkNXcUN4VXVJdUdIa2pnaUkvTmpI?=
- =?utf-8?B?RXNEMjE5TWRLM2xlQ3d4dFBwZUVBNDFXcWxWaFEvMncrWm9GYVRJN3dwS2th?=
- =?utf-8?B?eUEwTHduQVpXRlZ1QVlTK2ozT1pQOVdwMzU5cEI1a3l1YWZrU2grMnFRUEtE?=
- =?utf-8?B?SVQzc2xPWlVvOVdXS21sOW5BeGtNSlgvUWV0U2NqK1A1emRpRnlOcXdnS3N0?=
- =?utf-8?B?NFFuK2M4V1M0N2d3QWh1b2RHQ2RDcEh1ZVRlZjZVdURkSTNYMTJPMUdUUU9m?=
- =?utf-8?B?T1NPcE5LNlh2WDQ0QjdDbUZCOVBNNWs3dTM3SXhjSGFENXFtODUyK0pRUzU1?=
- =?utf-8?B?aXRrZVc0MHNNVGs2blE2dGFHZmo2a0wrU0E2OFVEVUg4RnBiNnd4bHorMTh4?=
- =?utf-8?B?QnBUL1drTUduZ1lvaWM0Yyt1UFZKNjBoWWNvWk1uMitFMTdXM3VBQXdsNGNh?=
- =?utf-8?B?SnRwcTdCNmkyd1ptaDdheXA5U3QyM3E5QWx2eUFMMVlkZWdNeEV4Nnh1cGEx?=
- =?utf-8?B?aE03VDBOdHE0d1NGRURqaFk1UGtyOXM1UTlUQVZqVnVtRXhPaElpTjE2SkMy?=
- =?utf-8?B?MGUwMytab1NXa3NXNEdSdnloL2FzRjd0YmZ1TEJMWHdHOEtYYjU2bzJpM3Y2?=
- =?utf-8?B?ZVV3d21VNnBGQWpZZk1SM1Zvb0ZnQ2VkZlVDQSswQ2I3cHY2dldqMk15VHp2?=
- =?utf-8?B?MjhDVmFjQTMzWjhmQUxjWWF0b0xtVmpzSzNrdnIzZGpTUEVabTB5NmxoOVhE?=
- =?utf-8?B?dExZZmNVYjdxZDVENVVZVjVVanNJS3BzR1JuYXZ4VXhnZDNpV3gya01lR09h?=
- =?utf-8?B?WjNXZDJyZWY5Rno4R0JHYmxwd0NMSjNGTENMYnNmdW95Y3czOFVsY2poQnZl?=
- =?utf-8?B?MTEyYjJDWVh2aHQ2ZFViRmNnbktQNzJrbFFubTIyeWZHVXBGVHdLZXBBYlg5?=
- =?utf-8?B?WlVEbVYxeXpNaUdLNytoQlBOR28vT29GNFhKR2praVl1SFVOdGxFOXdwaVpF?=
- =?utf-8?B?djlibE5YTEpTcG5CZXVzMHVnVHhUekRaWHdENGhTY1JwRG5ZNDRiMXIxTTdz?=
- =?utf-8?B?L1QrL0wyV0RLMzhLcXpsdTZhSDBTSlpXZkFYZEU0ME5MYzN1WVNIajJEQlRl?=
- =?utf-8?B?cXVPTXNoa3BQMENMOHMrUmNkTmF2NnppbStqYXNpWXd0L2hQSktMNDlyUVdh?=
- =?utf-8?B?V2hCVExYWGNXUW13enJUTDFJYzVBSlVtcGg5Y2dCa0JKTUZxeTBVdGt3NGRM?=
- =?utf-8?Q?DHP5aP2No7pshcFA=3D?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0694a999-99d8-4acd-1bfe-08d9be4f4f00
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Dec 2021 15:43:28.7891
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VXYeWcsJYM/op66JYbavuWPaTmVRxCULvgCs+7CKynRfQGlL4BDVw+tCiNOZCtslH+DkFv31tr7gkqEmsDC97J2eKv30wVbjjt932AXzr3Y=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4400
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Han-Wen Nienhuys <hanwen@google.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Han-Wen Nienhuys <hanwenn@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13.12.2021 09:27, Eric Sunshine wrote:
->On Mon, Dec 13, 2021 at 5:22 AM Fabian Stelzer <fs@gigacodes.de> wrote:
->> On 13.12.2021 01:30, Eric Sunshine wrote:
->> > check-chainlint:
->> >+      sed -e '/^# LINT: /d' $(patsubst %,chainlint/%.test,$(CHAINLINTTESTS)) >'$(CHAINLINTTMP_SQ)'/tests && \
->> >+      cat $(patsubst %,chainlint/%.expect,$(CHAINLINTTESTS)) >'$(CHAINLINTTMP_SQ)'/expect && \
->> >+      $(CHAINLINT) '$(CHAINLINTTMP_SQ)'/tests >'$(CHAINLINTTMP_SQ)'/actual && \
->> >+      diff -u '$(CHAINLINTTMP_SQ)'/expect '$(CHAINLINTTMP_SQ)'/actual
->>
->> If I read this right you are relying on the order of the .test & .expect
->> files to match. I did something similar in a test prereq which resulted in a
->> bug when setting the test_output_dir to something residing in /dev/shm,
->> since the order of files in /dev/shm is reversed (at least on some
->> platforms). Even though this should work as is I could see this leading to a
->> similar bug in the future.
->
->It's not seen in the patch context, but earlier in the file we have:
->
->    CHAINLINTTESTS = $(sort $(...,$(wildcard chainlint/*.test)))
->
->which provides stability via `sort`, thus ensures that the order of
->the ".test" and ".expect" match.
->
->I think that addresses your concern (unless I misunderstand your observation).
+This series was targeted to 'next'.
 
-Yes, thats what i meant. I didn't realize $CHAINLINTTESTS is already the 
-sorted glob. Thanks for clarifying.
+This addresses some complaints from Coverity that Peff reported.
 
-Personally i find the initial for loop variant to be the most readable.  
-Ævars makefile targets could be very nice too, but especially:
+v3:
 
-+$(BUILT_CHAINLINTTESTS): | .build/chainlint
-+$(BUILT_CHAINLINTTESTS): .build/%.actual: %
-+       $(CHAINLINT) <$< | \
-+	 sed -e '/^# LINT: /d' >$@ && \
-+       diff -u $(basename $<).expect $@
+ * revert some changes suggested by stolee
+ * add unittest for zlib corruption.
 
-i find very hard to grasp :/
-I have no idea what is going on here: `<$< |` ?
+Han-Wen Nienhuys (11):
+  reftable: fix OOB stack write in print functions
+  reftable: fix resource leak in error path
+  reftable: fix resource leak blocksource.c
+  reftable: check reftable_stack_auto_compact() return value
+  reftable: ignore remove() return value in stack_test.c
+  reftable: fix resource warning
+  reftable: fix NULL derefs in error paths
+  reftable: order unittests by complexity
+  reftable: drop stray printf in readwrite_test
+  reftable: handle null refnames in reftable_ref_record_equal
+  reftable: make reftable_record a tagged union
+
+ reftable/block.c          |  30 ++++---
+ reftable/block_test.c     |  22 ++---
+ reftable/blocksource.c    |   6 +-
+ reftable/generic.c        |  35 ++++----
+ reftable/iter.c           |   4 +-
+ reftable/merged.c         |  33 +++----
+ reftable/pq.c             |   3 +-
+ reftable/pq_test.c        |  31 +++----
+ reftable/reader.c         |  96 ++++++++++----------
+ reftable/readwrite_test.c |  68 +++++++++++++-
+ reftable/record.c         | 185 ++++++++++++++++----------------------
+ reftable/record.h         |  42 ++++-----
+ reftable/record_test.c    | 181 +++++++++++++++++++------------------
+ reftable/stack.c          |  15 ++--
+ reftable/stack_test.c     |   3 +-
+ reftable/writer.c         |  40 +++++----
+ t/helper/test-reftable.c  |   9 +-
+ 17 files changed, 431 insertions(+), 372 deletions(-)
+
+
+base-commit: fae76fe5da3df25d752f2251b7ccda3f62813aa9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1152%2Fhanwen%2Freftable-coverity-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1152/hanwen/reftable-coverity-v3
+Pull-Request: https://github.com/git/git/pull/1152
+
+Range-diff vs v2:
+
+  1:  7c033815183 =  1:  1c1a3ff92bd reftable: fix OOB stack write in print functions
+  2:  1ddcfe61ebc !  2:  975a570d388 reftable: fix resource leak in error path
+     @@ Metadata
+       ## Commit message ##
+          reftable: fix resource leak in error path
+      
+     -    This would be triggered by corrupt files, so it doesn't have test coverage. This
+     -    was discovered by a Coverity scan.
+     +    Add test coverage for corrupt zlib data.
+     +
+     +    This problem was discovered by a Coverity scan.
+      
+          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+      
+     @@ reftable/block.c: int block_reader_init(struct block_reader *br, struct reftable
+       		/* Copy over the block header verbatim. It's not compressed. */
+       		memcpy(uncompressed, block->data, block_header_skip);
+      @@ reftable/block.c: int block_reader_init(struct block_reader *br, struct reftable_block *block,
+     + 		if (Z_OK !=
+       		    uncompress2(uncompressed + block_header_skip, &dst_len,
+       				block->data + block_header_skip, &src_len)) {
+     - 			reftable_free(uncompressed);
+     +-			reftable_free(uncompressed);
+      -			return REFTABLE_ZLIB_ERROR;
+      +			err = REFTABLE_ZLIB_ERROR;
+      +			goto done;
+     @@ reftable/block.c: int block_reader_init(struct block_reader *br, struct reftable
+       }
+       
+       static uint32_t block_reader_restart_offset(struct block_reader *br, int i)
+     +
+     + ## reftable/readwrite_test.c ##
+     +@@ reftable/readwrite_test.c: static void test_log_write_read(void)
+     + 	reader_close(&rd);
+     + }
+     + 
+     ++static void test_log_zlib_corruption(void)
+     ++{
+     ++	struct reftable_write_options opts = {
+     ++		.block_size = 256,
+     ++	};
+     ++	struct reftable_iterator it = { NULL };
+     ++	struct reftable_reader rd = { NULL };
+     ++	struct reftable_block_source source = { NULL };
+     ++	struct strbuf buf = STRBUF_INIT;
+     ++	struct reftable_writer *w =
+     ++		reftable_new_writer(&strbuf_add_void, &buf, &opts);
+     ++	const struct reftable_stats *stats = NULL;
+     ++	uint8_t hash1[GIT_SHA1_RAWSZ] = { 1 };
+     ++	uint8_t hash2[GIT_SHA1_RAWSZ] = { 2 };
+     ++	char message[100] = { 0 };
+     ++	int err, i, n;
+     ++
+     ++	struct reftable_log_record log = {
+     ++		.refname = "refname",
+     ++		.value_type = REFTABLE_LOG_UPDATE,
+     ++		.value = {
+     ++			.update = {
+     ++				.new_hash = hash1,
+     ++				.old_hash = hash2,
+     ++				.name = "My Name",
+     ++				.email = "myname@invalid",
+     ++				.message = message,
+     ++			},
+     ++		},
+     ++	};
+     ++
+     ++	for (i = 0; i < sizeof(message)-1; i++) {
+     ++		message[i] = (uint8_t)(rand() % 64 + ' ');
+     ++	}
+     ++
+     ++	reftable_writer_set_limits(w, 1, 1);
+     ++
+     ++	err = reftable_writer_add_log(w, &log);
+     ++	EXPECT_ERR(err);
+     ++
+     ++	n = reftable_writer_close(w);
+     ++	EXPECT(n == 0);
+     ++
+     ++	stats = writer_stats(w);
+     ++	EXPECT(stats->log_stats.blocks > 0);
+     ++	reftable_writer_free(w);
+     ++	w = NULL;
+     ++
+     ++	/* corrupt the data. */
+     ++	buf.buf[50] ^= 0x99;
+     ++
+     ++	block_source_from_strbuf(&source, &buf);
+     ++
+     ++	err = init_reader(&rd, &source, "file.log");
+     ++	EXPECT_ERR(err);
+     ++
+     ++	err = reftable_reader_seek_log(&rd, &it, "refname");
+     ++	EXPECT(err == REFTABLE_ZLIB_ERROR);
+     ++
+     ++	reftable_iterator_destroy(&it);
+     ++
+     ++	/* cleanup. */
+     ++	strbuf_release(&buf);
+     ++	reader_close(&rd);
+     ++}
+     ++
+     + static void test_table_read_write_sequential(void)
+     + {
+     + 	char **names;
+     +@@ reftable/readwrite_test.c: static void test_corrupt_table(void)
+     + 
+     + int readwrite_test_main(int argc, const char *argv[])
+     + {
+     ++	RUN_TEST(test_log_zlib_corruption);
+     + 	RUN_TEST(test_corrupt_table);
+     + 	RUN_TEST(test_corrupt_table_empty);
+     + 	RUN_TEST(test_log_write_read);
+  3:  e052b2a61d6 =  3:  0b9c7176d71 reftable: fix resource leak blocksource.c
+  4:  9063137457b =  4:  1dda4ee717f reftable: check reftable_stack_auto_compact() return value
+  5:  5020be156ae =  5:  36858e2070b reftable: ignore remove() return value in stack_test.c
+  6:  64c18d01cad =  6:  80b1988b885 reftable: fix resource warning
+  7:  700387ac5d3 =  7:  2939286924c reftable: fix NULL derefs in error paths
+  8:  713f1d09f68 =  8:  9dce18d7349 reftable: order unittests by complexity
+  9:  cb601b51a47 =  9:  6b0af68f0b9 reftable: drop stray printf in readwrite_test
+ 10:  a0f83eff19f = 10:  bff85cb0809 reftable: handle null refnames in reftable_ref_record_equal
+ 11:  a2743033cfd ! 11:  b3e592b9c27 reftable: make reftable_record a tagged union
+     @@ Commit message
+          vtable within the structure.
+      
+          The only snag is that reftable_index_record contain a strbuf, so it cannot be
+     -    zero-initialized. To address this, introduce reftable_record_for() to create a
+     -    fresh instance, given a record type.
+     +    zero-initialized. To address this, use reftable_new_record() to return fresh
+     +    instance, given a record type. Since reftable_new_record() doesn't cause heap
+     +    allocation anymore, it should be balanced with reftable_record_release() rather
+     +    than reftable_record_destroy().
+      
+          Thanks to Peff for the suggestion.
+      
+     @@ Commit message
+          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+      
+       ## reftable/block.c ##
+     -@@ reftable/block.c: int block_reader_seek(struct block_reader *br, struct block_iter *it,
+     - 		.key = *want,
+     - 		.r = br,
+     - 	};
+     --	struct reftable_record rec = reftable_new_record(block_reader_type(br));
+     -+	struct reftable_record rec = reftable_record_for(block_reader_type(br));
+     - 	struct strbuf key = STRBUF_INIT;
+     - 	int err = 0;
+     - 	struct block_iter next = {
+      @@ reftable/block.c: int block_reader_seek(struct block_reader *br, struct block_iter *it,
+       done:
+       	strbuf_release(&key);
+     @@ reftable/iter.c: static int indexed_table_ref_iter_next_block(struct indexed_tab
+      
+       ## reftable/merged.c ##
+      @@ reftable/merged.c: static int merged_iter_init(struct merged_iter *mi)
+     - {
+     - 	int i = 0;
+     - 	for (i = 0; i < mi->stack_len; i++) {
+     --		struct reftable_record rec = reftable_new_record(mi->typ);
+     -+		struct reftable_record rec = reftable_record_for(mi->typ);
+     - 		int err = iterator_next(&mi->stack[i], &rec);
+     - 		if (err < 0) {
+     - 			return err;
+     -@@ reftable/merged.c: static int merged_iter_init(struct merged_iter *mi)
+       
+       		if (err > 0) {
+       			reftable_iterator_destroy(&mi->stack[i]);
+     @@ reftable/merged.c: static void merged_iter_close(void *p)
+      -	struct reftable_record rec = reftable_new_record(mi->typ);
+       	struct pq_entry e = {
+      -		.rec = rec,
+     -+		.rec = reftable_record_for(mi->typ),
+     ++		.rec = reftable_new_record(mi->typ),
+       		.index = idx,
+       	};
+      -	int err = iterator_next(&mi->stack[idx], &rec);
+     @@ reftable/merged.c: static int merged_iter_next_entry(struct merged_iter *mi,
+       	strbuf_release(&entry_key);
+       	return 0;
+       }
+     -@@ reftable/merged.c: static int merged_table_seek_record(struct reftable_merged_table *mt,
+     - 		sizeof(struct reftable_iterator) * mt->stack_len);
+     - 	struct merged_iter merged = {
+     - 		.stack = iters,
+     --		.typ = reftable_record_type(rec),
+     -+		.typ = rec->type,
+     - 		.hash_id = mt->hash_id,
+     - 		.suppress_deletions = mt->suppress_deletions,
+     - 	};
+      @@ reftable/merged.c: int reftable_merged_table_seek_ref(struct reftable_merged_table *mt,
+       				   struct reftable_iterator *it,
+       				   const char *name)
+     @@ reftable/pq_test.c: static void test_pq(void)
+      +		struct reftable_record *rec = &e.rec;
+       		merged_iter_pqueue_check(pq);
+       
+     -+		EXPECT(rec->type == BLOCK_TYPE_REF);
+     ++		EXPECT(reftable_record_type(rec) == BLOCK_TYPE_REF);
+       		if (last) {
+      -			EXPECT(strcmp(last, ref->refname) < 0);
+      +			EXPECT(strcmp(last, rec->u.ref.refname) < 0);
+     @@ reftable/pq_test.c: static void test_pq(void)
+      
+       ## reftable/reader.c ##
+      @@ reftable/reader.c: static int table_iter_next_in_block(struct table_iter *ti,
+     - 				    struct reftable_record *rec)
+       {
+       	int res = block_iter_next(&ti->bi, rec);
+     --	if (res == 0 && reftable_record_type(rec) == BLOCK_TYPE_REF) {
+     + 	if (res == 0 && reftable_record_type(rec) == BLOCK_TYPE_REF) {
+      -		((struct reftable_ref_record *)rec->data)->update_index +=
+      -			ti->r->min_update_index;
+     -+	if (res == 0 && rec->type == BLOCK_TYPE_REF) {
+      +		rec->u.ref.update_index += ti->r->min_update_index;
+       	}
+       
+       	return res;
+     -@@ reftable/reader.c: static int table_iter_next_block(struct table_iter *dest,
+     - 
+     - static int table_iter_next(struct table_iter *ti, struct reftable_record *rec)
+     - {
+     --	if (reftable_record_type(rec) != ti->typ)
+     -+	if (rec->type != ti->typ)
+     - 		return REFTABLE_API_ERROR;
+     - 
+     - 	while (1) {
+      @@ reftable/reader.c: static int reader_start(struct reftable_reader *r, struct table_iter *ti,
+       static int reader_seek_linear(struct reftable_reader *r, struct table_iter *ti,
+       			      struct reftable_record *want)
+       {
+      -	struct reftable_record rec =
+      -		reftable_new_record(reftable_record_type(want));
+     -+	struct reftable_record rec = reftable_record_for(want->type);
+     ++	struct reftable_record rec = reftable_new_record(reftable_record_type(want));
+       	struct strbuf want_key = STRBUF_INIT;
+       	struct strbuf got_key = STRBUF_INIT;
+       	struct table_iter next = TABLE_ITER_INIT;
+     @@ reftable/reader.c: static int reader_seek_indexed(struct reftable_reader *r,
+      -	reftable_record_from_index(&want_index_rec, &want_index);
+      -	reftable_record_from_index(&index_result_rec, &index_result);
+      -
+     --	err = reader_start(r, &index_iter, reftable_record_type(rec), 1);
+      +	reftable_record_key(rec, &want_index.u.idx.last_key);
+     -+	err = reader_start(r, &index_iter, rec->type, 1);
+     + 	err = reader_start(r, &index_iter, reftable_record_type(rec), 1);
+       	if (err < 0)
+       		goto done;
+       
+     @@ reftable/reader.c: static int reader_seek_indexed(struct reftable_reader *r,
+       		if (err < 0)
+       			goto done;
+       
+     --		if (next.typ == reftable_record_type(rec)) {
+     -+		if (next.typ == rec->type) {
+     - 			err = 0;
+     - 			break;
+     - 		}
+      @@ reftable/reader.c: static int reader_seek_indexed(struct reftable_reader *r,
+       done:
+       	block_iter_close(&next.bi);
+     @@ reftable/reader.c: static int reader_seek_internal(struct reftable_reader *r,
+       {
+      -	struct reftable_reader_offsets *offs =
+      -		reader_offsets_for(r, reftable_record_type(rec));
+     -+	struct reftable_reader_offsets *offs = reader_offsets_for(r, rec->type);
+     ++	struct reftable_reader_offsets *offs = reader_offsets_for(r, reftable_record_type(rec));
+       	uint64_t idx = offs->index_offset;
+       	struct table_iter ti = TABLE_ITER_INIT;
+       	int err = 0;
+     - 	if (idx > 0)
+     - 		return reader_seek_indexed(r, it, rec);
+     - 
+     --	err = reader_start(r, &ti, reftable_record_type(rec), 0);
+     -+	err = reader_start(r, &ti, rec->type, 0);
+     - 	if (err < 0)
+     - 		return err;
+     - 	err = reader_seek_linear(r, &ti, rec);
+     -@@ reftable/reader.c: static int reader_seek_internal(struct reftable_reader *r,
+     - static int reader_seek(struct reftable_reader *r, struct reftable_iterator *it,
+     - 		       struct reftable_record *rec)
+     - {
+     --	uint8_t typ = reftable_record_type(rec);
+     -+	uint8_t typ = rec->type;
+     - 
+     - 	struct reftable_reader_offsets *offs = reader_offsets_for(r, typ);
+     - 	if (!offs->is_present) {
+      @@ reftable/reader.c: static int reader_seek(struct reftable_reader *r, struct reftable_iterator *it,
+       int reftable_reader_seek_ref(struct reftable_reader *r,
+       			     struct reftable_iterator *it, const char *name)
+     @@ reftable/record.c: static struct reftable_record_vtable reftable_index_record_vt
+       void reftable_record_key(struct reftable_record *rec, struct strbuf *dest)
+       {
+      -	rec->ops->key(rec->data, dest);
+     --}
+     --
+     --uint8_t reftable_record_type(struct reftable_record *rec)
+     --{
+     --	return rec->ops->type;
+      +	reftable_record_vtable(rec)->key(reftable_record_data(rec), dest);
+       }
+       
+     + uint8_t reftable_record_type(struct reftable_record *rec)
+     + {
+     +-	return rec->ops->type;
+     ++	return rec->type;
+     + }
+     + 
+       int reftable_record_encode(struct reftable_record *rec, struct string_view dest,
+       			   int hash_size)
+       {
+     @@ reftable/record.c: void string_view_consume(struct string_view *s, int n)
+      +	abort();
+      +}
+      +
+     -+struct reftable_record reftable_record_for(uint8_t typ)
+     ++struct reftable_record reftable_new_record(uint8_t typ)
+      +{
+      +	struct reftable_record clean_idx = {
+      +		.type = BLOCK_TYPE_INDEX,
+     @@ reftable/record.h: struct reftable_record_vtable {
+       int reftable_is_block_type(uint8_t typ);
+       
+      -/* creates a malloced record of the given type. Dispose with record_destroy */
+     --struct reftable_record reftable_new_record(uint8_t typ);
+     --
+     ++/* return an initialized record for the given type */
+     + struct reftable_record reftable_new_record(uint8_t typ);
+     + 
+       /* Encode `key` into `dest`. Sets `is_restart` to indicate a restart. Returns
+     -  * number of bytes written. */
+     - int reftable_encode_key(int *is_restart, struct string_view dest,
+      @@ reftable/record.h: struct reftable_obj_record {
+       	int offset_len;
+       };
+     @@ reftable/record.h: struct reftable_obj_record {
+      +/* record is a generic wrapper for different types of records. It is normally
+      + * created on the stack, or embedded within another struct. If the type is
+      + * known, a fresh instance can be initialized explicitly. Otherwise, use
+     -+ * reftable_record_for() to initialize generically (as the index_record is not
+     ++ * reftable_new_record() to initialize generically (as the index_record is not
+      + * valid as 0-initialized structure)
+      + */
+      +struct reftable_record {
+     @@ reftable/record.h: struct reftable_obj_record {
+      +
+       /* see struct record_vtable */
+       
+     -+/* return an initialized record for the given type */
+     -+struct reftable_record reftable_record_for(uint8_t typ);
+       void reftable_record_key(struct reftable_record *rec, struct strbuf *dest);
+     - uint8_t reftable_record_type(struct reftable_record *rec);
+     - void reftable_record_copy_from(struct reftable_record *rec,
+      @@ reftable/record.h: int reftable_record_decode(struct reftable_record *rec, struct strbuf key,
+       			   int hash_size);
+       int reftable_record_is_deletion(struct reftable_record *rec);
+     @@ reftable/record_test.c
+       {
+      -	struct reftable_record copy =
+      -		reftable_new_record(reftable_record_type(rec));
+     -+	struct reftable_record copy = reftable_record_for(rec->type);
+     ++	struct reftable_record copy = reftable_new_record(reftable_record_type(rec));
+      +
+       	reftable_record_copy_from(&copy, rec, GIT_SHA1_RAWSZ);
+       	/* do it twice to catch memory leaks */
+     @@ reftable/record_test.c: static void test_reftable_index_record_roundtrip(void)
+       int record_test_main(int argc, const char *argv[])
+      
+       ## reftable/writer.c ##
+     -@@ reftable/writer.c: static int writer_add_record(struct reftable_writer *w,
+     - 	strbuf_reset(&w->last_key);
+     - 	strbuf_addbuf(&w->last_key, &key);
+     - 	if (w->block_writer == NULL) {
+     --		writer_reinit_block_writer(w, reftable_record_type(rec));
+     -+		writer_reinit_block_writer(w, rec->type);
+     - 	}
+     - 
+     --	assert(block_writer_type(w->block_writer) == reftable_record_type(rec));
+     -+	assert(block_writer_type(w->block_writer) == rec->type);
+     - 
+     - 	if (block_writer_add(w->block_writer, rec) == 0) {
+     - 		err = 0;
+     -@@ reftable/writer.c: static int writer_add_record(struct reftable_writer *w,
+     - 		goto done;
+     - 	}
+     - 
+     --	writer_reinit_block_writer(w, reftable_record_type(rec));
+     -+	writer_reinit_block_writer(w, rec->type);
+     - 	err = block_writer_add(w->block_writer, rec);
+     - 	if (err < 0) {
+     - 		goto done;
+      @@ reftable/writer.c: done:
+       int reftable_writer_add_ref(struct reftable_writer *w,
+       			    struct reftable_ref_record *ref)
+
+-- 
+gitgitgadget
