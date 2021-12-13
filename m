@@ -2,66 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A1C1C433EF
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 17:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CEFBC433EF
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 18:11:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237672AbhLMRZm convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 13 Dec 2021 12:25:42 -0500
-Received: from mail-pj1-f45.google.com ([209.85.216.45]:38494 "EHLO
-        mail-pj1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235682AbhLMRZl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 12:25:41 -0500
-Received: by mail-pj1-f45.google.com with SMTP id p18-20020a17090ad31200b001a78bb52876so15139741pju.3
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 09:25:41 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+T6HeVYxanec1IXA2/OWzfdtzIQ4HQCT44ucw8yzSg0=;
-        b=F7pOUN5KnWahZFYbcP5wHy2YuZEV5csEIkGek/fwmfGum8kjHZyFyL9uP8U1GjylJ9
-         HUg8SqDgEYtLjVif78uuoy41gVvR5ZSFenFOKmKwbc8NU8n3RllVL5Bm7tSDeF2JnGEF
-         VwMFQK46F8yVm8k8CeDaPjHt7B/N8r32Oq+vrq7c5JoZXVHL6IUvriB0UzIYzZqbtADY
-         yUDAIF+PwAVosNqioXWxiX6p7x+wWR5ybd1Eto5MYZ3Xrlp/CCT73DPz65i68Y9Yjuyh
-         EFZyoSuT1Wl8zcJLZ6Qht0Cjv47uHIu5mWt5J6ed/DCMoeozw5+Rnmw7Ns8Q4Fjeqcir
-         Hr7A==
-X-Gm-Message-State: AOAM532tdfMW9rtp3DL8jBT3w14rBFqONzW08LK89ZkP0kgBJk2EJdlk
-        7iAIXBAtES6Tj1+3KIZICydC1xqtQi0S8Ay9I/zVz9xOEfbDdg==
-X-Google-Smtp-Source: ABdhPJwhH1jR1R7kfmO+a3XRZdkbEJkAX2PwJM9o00MrRO7uR3VK7zxHIGARneVmSgTTInbdzM+BjrC6YLSwI6BxiYI=
-X-Received: by 2002:a17:90a:b107:: with SMTP id z7mr45643825pjq.104.1639416340850;
- Mon, 13 Dec 2021 09:25:40 -0800 (PST)
+        id S241753AbhLMSL6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 13:11:58 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57035 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241724AbhLMSL6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 13:11:58 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A4C4BFB7B9;
+        Mon, 13 Dec 2021 13:11:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4moQXe/VWLHjHkA9BOT+FQITdSsNT8GA4PE5ZN
+        oMc+8=; b=mC5j7vw9E2PJpkhOvwaQF8woifzv1Ts5hUq1no8qTYu2rPAofg25bX
+        a64YU1k9Ebb6f/4yaBD7MWorTNG2BXy+N55IJeKFaaIQqmt72hPR4tFk3omp/wNl
+        L0sWSn03pznLxayA9L6dsUZCIlDyQ+Oo/5ybjObO8z/UcR5KIsmho=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9C6EDFB7B8;
+        Mon, 13 Dec 2021 13:11:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 08B18FB7B7;
+        Mon, 13 Dec 2021 13:11:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3 03/10] sparse-checkout: add sanity-checks on initial
+ sparsity state
+References: <pull.1151.v2.git.git.1638908410.gitgitgadget@gmail.com>
+        <pull.1151.v3.git.git.1639108573.gitgitgadget@gmail.com>
+        <f3af5edb25d5bed46996a1b826ae0c8306eeb912.1639108573.git.gitgitgadget@gmail.com>
+Date:   Mon, 13 Dec 2021 10:11:55 -0800
+In-Reply-To: <f3af5edb25d5bed46996a1b826ae0c8306eeb912.1639108573.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Fri, 10 Dec 2021
+        03:56:06 +0000")
+Message-ID: <xmqq7dc8e5n8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20211213063059.19424-1-sunshine@sunshineco.com>
- <20211213063059.19424-6-sunshine@sunshineco.com> <20211213102224.y5psbojmivlxe5px@fs>
- <CAPig+cSKn6wdPKc=b8Xjqy5D=bVdu6FQtYKJuwN2VoV7pEEgHw@mail.gmail.com>
- <20211213154327.pmhopjbdlkz7dgjh@fs> <CAPig+cSXHBMgOUycL0cXuVCb_PJ2=x2w4wUkc7eQQueyk=0Uzw@mail.gmail.com>
- <211213.86tufc8oop.gmgdl@evledraar.gmail.com> <CAPig+cR5Q2q=wdXuVBeP52=pAfvh6_4z__g-0JUGWq_7uor_Hg@mail.gmail.com>
-In-Reply-To: <CAPig+cR5Q2q=wdXuVBeP52=pAfvh6_4z__g-0JUGWq_7uor_Hg@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 13 Dec 2021 12:25:30 -0500
-Message-ID: <CAPig+cRkC=-dV_i1LJg3kZVVpR778YNyhpO6maHnH5zFH9zS6w@mail.gmail.com>
-Subject: Re: [PATCH 05/15] t/Makefile: optimize chainlint self-test
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Fabian Stelzer <fs@gigacodes.de>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 289AAA26-5C40-11EC-BA27-C48D900A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 12:05 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Dec 13, 2021 at 11:17 AM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
-> > The reason I looked at this to begin with is that it takes it ~100-150ms
-> > to run now, which adds up if you're e.g. using "make test T=<glob>" in
-> > "git rebase -i --exec".
->
-> Regarding this last point, one idea I strongly considered (and have
-> not rejected) is to stop making `check-chainlin` a dependency of
-> `test` and `prove`. [...]
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Another less sledge-hammer approach would be to make t/Makefile
-respect GIT_TEST_CHAIN_LINT so that it doesn't run `check-chainlint`
-for `test` and `prove` when that variable is `0`. That would allow
-your `git rebase -i --exec` case to avoid the wasted extra overhead of
-`check-chainlint` (and chainlint in general).
+> From: Elijah Newren <newren@gmail.com>
+>
+> Most sparse-checkout subcommands (list, add, reapply, disable)
+> only make sense when already in a sparse state.  Add a quick check
+> that will error out early if this is not the case.
+>
+> Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+> Reviewed-by: Victoria Dye <vdye@github.com>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  builtin/sparse-checkout.c          | 12 ++++++++++++
+>  t/t1091-sparse-checkout-builtin.sh | 10 +++++++++-
+>  2 files changed, 21 insertions(+), 1 deletion(-)
+
+I won't complain too much but some looks a bit questionable to die
+on.  For example, when asked to "please disable" something that is
+already disabled, I do not think the user's intention includes "if
+already disabled, please die"; rather it is "I want the end result
+to be in the disabled state", isn't it?
+
+I think what is common among the ones that I find questionable to
+die is that they do not use end-user input from argv.  "Please add X
+to sparsity patterns" may not make much sense when we are not already
+sparse", unlike "Please disable", for example.
+
+    Side note. I suspect that it can be argued that we might just
+    auto-enable sparse state upon the first request to add
+    something, but I personally feel that is dwimming too much, as
+    behaviours of git in normal mode and sparse mode are so
+    different.
+
+So, for the same reason, I think "list" that shows "there is
+nothing" without an error, when sparse-checkout is not active, would
+also be perfectly defensible, and some people may find that dying a
+bit too much in such a situation.
+
+Or does the system work differently between
+
+ (A) core_apply_sparse_checkout is true and the sparsity pattern list is
+     empty, and
+ (B) sparse-checkout is not in effect at all.
+
+If that is the case, please ignore all of the above.
+
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index e252b82136e..e9f644ac362 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -56,6 +56,9 @@ static int sparse_checkout_list(int argc, const char **argv)
+>  	char *sparse_filename;
+>  	int res;
+>  
+> +	if (!core_apply_sparse_checkout)
+> +		die(_("this worktree is not sparse"));
+> +
+>  	argc = parse_options(argc, argv, NULL,
+>  			     builtin_sparse_checkout_list_options,
+>  			     builtin_sparse_checkout_list_usage, 0);
+> @@ -671,6 +674,9 @@ static int sparse_checkout_add(int argc, const char **argv, const char *prefix)
+>  		OPT_END(),
+>  	};
+>  
+> +	if (!core_apply_sparse_checkout)
+> +		die(_("no sparse-checkout to add to"));
+> +
+>  	repo_read_index(the_repository);
+>  
+>  	argc = parse_options(argc, argv, prefix,
+> @@ -719,6 +725,9 @@ static int sparse_checkout_reapply(int argc, const char **argv)
+>  		OPT_END(),
+>  	};
+>  
+> +	if (!core_apply_sparse_checkout)
+> +		die(_("must be in a sparse-checkout to reapply sparsity patterns"));
+> +
+>  	argc = parse_options(argc, argv, NULL,
+>  			     builtin_sparse_checkout_reapply_options,
+>  			     builtin_sparse_checkout_reapply_usage, 0);
+> @@ -740,6 +749,9 @@ static int sparse_checkout_disable(int argc, const char **argv)
+>  	struct pattern_list pl;
+>  	struct strbuf match_all = STRBUF_INIT;
+>  
+> +	if (!core_apply_sparse_checkout)
+> +		die(_("no active sparse-checkout to disable"));
+> +
+>  	argc = parse_options(argc, argv, NULL,
+>  			     builtin_sparse_checkout_disable_options,
+>  			     builtin_sparse_checkout_disable_usage, 0);
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> index 272ba1b566b..90a281bcf64 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -41,7 +41,15 @@ test_expect_success 'setup' '
+>  	)
+>  '
+>  
+> -test_expect_success 'git sparse-checkout list (empty)' '
+> +test_expect_success 'git sparse-checkout list (not sparse)' '
+> +	test_must_fail git -C repo sparse-checkout list >list 2>err &&
+> +	test_must_be_empty list &&
+> +	test_i18ngrep "this worktree is not sparse" err
+> +'
+> +
+> +test_expect_success 'git sparse-checkout list (not sparse)' '
+> +	git -C repo sparse-checkout set &&
+> +	rm repo/.git/info/sparse-checkout &&
+>  	git -C repo sparse-checkout list >list 2>err &&
+>  	test_must_be_empty list &&
+>  	test_i18ngrep "this worktree is not sparse (sparse-checkout file may not exist)" err
