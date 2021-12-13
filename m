@@ -2,83 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE928C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 08:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EB55C433EF
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 09:02:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233312AbhLMIx3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 03:53:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44656 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231589AbhLMIx2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 03:53:28 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63ECFC06173F
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 00:53:28 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id r11so48980775edd.9
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 00:53:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=Eu4BROIP01mm4QqCBuk5+zMps3i0OfvMh4jcs9a5r50=;
-        b=evbrWgTmJ0sr3+lU0Spdt4jRqM4DKjjR4Z5FAjAqnlf3rOtZNo/1P1PTNMPaRd5P9V
-         +H4eHaMNpN8y+AnTntzLg1NbG0PNpX+tMQsA4R35oLtBK6cxHI4dhMPkAuecxvh+s38J
-         pTlWaILlFbkqaaX9Sfont4Ny7HBgqascUQZQ4TggBWrQxwLfrvrnIQfSi+wCdIvouCAp
-         4CFCqc1Mj23m2zKGh55TdIrlYZpuEu6ByBvexELt+1VocJ96HlQTN/cQlt20HNl1O6+e
-         +UR153WnmLp67d+X0t4v0UbJGFShk2ocudMjiEXAudXqadx4KPuahIA/VOmMitBA9ckG
-         gxlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=Eu4BROIP01mm4QqCBuk5+zMps3i0OfvMh4jcs9a5r50=;
-        b=19jqaG4YYbPeZ5sx5j48m1bbZA8lm2byxYG64RRzwUn8dC0lP659ygAYO2koiHoB9O
-         R+4tqIqV+AcMOE9DyDbzfe0IjIsyLz1BLIIYAHU+yrcI4KgMfVN9nfBCrvmZNXW6JUt8
-         j763q5da+AVHjc03EztO34uPyYK66Q5DZv7zhmlMNH+f5w1YekvvK8cT1PtPnknuFSu3
-         B0a/hbI6nKA6dUDhBt3S25ICdXM8x0+L6ENknQdUvl1wDfrEvevJIHobdatFQnUK2Q6d
-         BHpfTt0p10MFK7hlTiL/YH1oxKKNuMxBhVJvKU/HbmR/+RIax3iFIlcnexQIpYSO/xqP
-         /Mgw==
-X-Gm-Message-State: AOAM5304xmeTDUw8nz3q+z9sAshNZnJL95lJB5ZbYBvqGd/uRnSCCxFq
-        HN1EooL5iasC/7paGs+hAMc=
-X-Google-Smtp-Source: ABdhPJxuBiRuXHa219br7i0TwzvwMDPaL+DAFIkL15aqtn4Ng1fG2ZhZBnNy23IwHChcCYKBXal98A==
-X-Received: by 2002:a50:c38c:: with SMTP id h12mr63976914edf.72.1639385606895;
-        Mon, 13 Dec 2021 00:53:26 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id gn26sm5444492ejc.14.2021.12.13.00.53.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 00:53:26 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mwh5J-000lzd-Oy;
-        Mon, 13 Dec 2021 09:53:25 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han Xin <chiyutianyi@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: Re: [PATCH v5 6/6] unpack-objects: unpack_non_delta_entry() read
- data in a stream
-Date:   Mon, 13 Dec 2021 09:05:55 +0100
-References: <20211203093530.93589-1-chiyutianyi@gmail.com>
- <20211210103435.83656-7-chiyutianyi@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20211210103435.83656-7-chiyutianyi@gmail.com>
-Message-ID: <211213.867dc8ansq.gmgdl@evledraar.gmail.com>
+        id S233514AbhLMJCn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 04:02:43 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61528 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231772AbhLMJCn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 04:02:43 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 59E7415D700;
+        Mon, 13 Dec 2021 04:02:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=yYijfiRaOdJbnLd7+MAA1GjYP
+        Mil2zM6P/hnIas+RZo=; b=PAog1aibqVi96ajDBY8rfiYy8q9O/CQgYT/HHqF9b
+        Lnh9TECAFgxbcknNuR36y2/4HXBTgJ1MduroIFrQplW+QObQgFFcPFZCO9jskOga
+        PAvzPIfPHZj/Ta6ifslxWMZxLAphMPPtWDgoXFPBCIQtEI+Xw4uJnPAyAIspMYTJ
+        lU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 44BD915D6FF;
+        Mon, 13 Dec 2021 04:02:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9202615D6FD;
+        Mon, 13 Dec 2021 04:02:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Maksym Sobolyev <sobomax@sippysoft.com>
+Subject: Re: ms/customizable-ident-expansion
+References: <xmqqilvvluoa.fsf@gitster.g>
+        <211212.86fsqxa19o.gmgdl@evledraar.gmail.com>
+Date:   Mon, 13 Dec 2021 01:02:37 -0800
+Message-ID: <xmqqbl1kg9n6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 6BD7F93A-5BF3-11EC-B009-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On Fri, Dec 10 2021, Han Xin wrote:
+> On Fri, Dec 10 2021, Junio C Hamano wrote:
+>
+> [CC-ing Maksym, the topic author]
+>
+>> * ms/customizable-ident-expansion (2021-09-01) 1 commit
+>>  - keyword expansion: make "$Id$" string configurable
+>>
+>>  Instead of "$Id$", user-specified string (like $FreeBSD$) can be
+>>  used as an in-blob placeholder for keyword expansion.
+>>
+>>  Will discard.
+>>  Stalled for too long.
+>>  cf. <xmqqfsuosvrh.fsf@gitster.g>
+>>  cf. <211101.86fssf3bn3.gmgdl@evledraar.gmail.com>
+>>  source: <pull.1074.v3.git.git.1630462385587.gitgitgadget@gmail.com>
+>
+> I'd like to see this go in, not because I'd personally find it useful,
+> but mainly because I didn't find anything wrong with it (per my review
+> id [1] linked above), and more importantly because the saga ending here
+> seems rather unfriendly to a first-time contributor.
+>
+> Wasn't the "stalled for too long" mainly a victim of timing? I.e. that
+> it happened to be submitted/discussed around the end of the last releas=
+e
+> cycle?
 
-> From: Han Xin <hanxin.hx@alibaba-inc.com>
-> [...]
-> +	if ((ret = write_object_file_flags(&in_stream, size, type_name(OBJ_BLOB) ,&obj_list[nr].oid, HASH_STREAM)))
+I do not think timing has much to do with it.
 
-There's some odd code formatting here, i.e.. ") ,&" not "), &". Could
-also use line-wrapping at 79 characters.
+I have been fairly clear from the very first review of the initial
+iteration that I do not want us to commit to "per-path" attribute.
+It will open can of worms [*], and paint us into a corner we cannot
+get out of easily once such an overly flexible system gets to users'
+hands.  I also was fairly clear that instead I'd expect it would be
+more sensible if it were a single "instead of $Id$, use $FooId$
+throughout the tree" configuration.
+
+I also did not want to force a first-time contributor to commit to
+deal with a fallout from such a design.  A new feature with a very
+limited scope will have better chance to allow us extend it later
+without breaking compatibility with the initial version and would be
+better suited for first-timers.
+
+
+[Footnote]
+
+* I have already mentioned that users have to figure out when adding
+  a new file which keyword applies to the path.  It also troubles me
+  that it is not part of the design what should happen when people
+  want to move files around.  Not allowing per-path settings means
+  we do not have to worry about the extra flexibility hurting the
+  users of this (not "customizable" part but the "ident replacement"
+  as a whole) misguided feature that shouldn't have been added in
+  the first place.
