@@ -2,132 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7243EC433EF
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 22:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E7D1C433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 23:09:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243901AbhLMW6s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 17:58:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47292 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235493AbhLMW6p (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 17:58:45 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C043AC061574
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 14:58:45 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id j23-20020a63e757000000b0033ab682dc51so3861345pgk.19
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 14:58:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=6y29rsrk04Wi3bfwKDAzPCzE8EsHdIdHB55+lQ4yPa0=;
-        b=qzf8BYt0kcv+HmrLByU6+kOz6e6u0QTTYUmLilpzDZ08ab9fggqXzi5YszrL+1fLDh
-         MLFZsSz0lAqCzrDbJafLtMy26V1KfuzrNJsFw6L7Bzj4offIvo1AaMboOEzseAAl+skn
-         pVQXujvrz4xkqizSVwYw84rjOsgp5imdKS3PG6rbdY5b9OmWhKl+4sLdf9jJ34r+LJeU
-         XxGgnHpOnGuKiaaRjWlcyzgxyqbzY9puo387PUCV6PuDk+K1VSTcPR7g5cxcStspBNqi
-         sK1Y9jsNcDRrzz4sC3EOnSTC5Eu7XR+JKYgJn+bpoSy2+Hd/HMPSOUj9byZV4hWSTTeA
-         Qalg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=6y29rsrk04Wi3bfwKDAzPCzE8EsHdIdHB55+lQ4yPa0=;
-        b=NhhoDd8VOhJdQCx7pNDmv+y4YsG0uAGKf5zoXNZMMn7Cf6eQjTQ9h7pzE9I+a4U4Q9
-         pVqoQkrX/LO6vWOvpxcg+342msDNyhP7fQspSMXwtZc3nUCjx5ykOGOaV1DPlHEgn1RT
-         DYgGTXFitTwv7eSlPXGClcaAEN3k6v7HEDpaP0EErZ2Hct5daXV0uaUaQrfUYZ3i3/Ju
-         8YbLMwXoUI9Mszj9jy3t7w9lojRrORjJc/Dubop5v3vmgc3zIFL5kAovlYHNkQOo2wu5
-         AR/d7C912+Xm13iVOO/S2lmGDFqNpm4z8gJ9fE8HoewEvaHiYt/vV9G9OmxTwru/MUNk
-         xvBA==
-X-Gm-Message-State: AOAM530ajHyeplzrqvIjgQrA8OgtF/k/tCFpmXZdloxQUQNmjV9Wlcer
-        Gc2Xus/W8026IVFsyiHVrBonr8J3VNf0R360Mt0i
-X-Google-Smtp-Source: ABdhPJwqtQtjVKe28Eve6psU723ooRzZcbEjKm6EmkKAl6k+xtJhiJh5BtcIoqL2q6UOLrbARR+1sD/3vYARo4gkeVIZ
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90b:1a8b:: with SMTP id
- ng11mr1285880pjb.3.1639436325245; Mon, 13 Dec 2021 14:58:45 -0800 (PST)
-Date:   Mon, 13 Dec 2021 14:58:42 -0800
-In-Reply-To: <kl6lbl1p9zjf.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-Id: <20211213225842.768852-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <kl6lbl1p9zjf.fsf@chooglen-macbookpro.roam.corp.google.com>
-X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
-Subject: Re: [PATCH] builtin/fetch: skip unnecessary tasks when using --negotiate-only
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     chooglen@google.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S242628AbhLMXJW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 18:09:22 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52571 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234834AbhLMXJV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 18:09:21 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 34551111CF7;
+        Mon, 13 Dec 2021 18:09:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Emwautj7Qr/j
+        NtrIzeecto1/ofcyftZ1BL/XXfAF86o=; b=NG1o4/xkcUhsf0OrMw1OMap28gd9
+        se/GjpDcxIYbuaYzOKp243zef3ShsBeOFo5XVckIqOGqU2CMBOM+GWKKcX4Nsevd
+        xFSjpPYFfH4TE0UenUqCQBNQRxA544NhFcFiEoG9rL8F/O4YZbUgHP0HKyP+IP2s
+        bPbSu/YFAfHQZ30=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A0BB111CF6;
+        Mon, 13 Dec 2021 18:09:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 869CD111CF4;
+        Mon, 13 Dec 2021 18:09:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Subject: Re: [PATCH v4 14/23] Makefile: re-add and use the "shellquote" macros
+References: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
+        <cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com>
+        <patch-v4-14.23-13cbb851d32-20211117T101807Z-avarab@gmail.com>
+Date:   Mon, 13 Dec 2021 15:09:19 -0800
+In-Reply-To: <patch-v4-14.23-13cbb851d32-20211117T101807Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 17 Nov
+ 2021 11:20:13
+        +0100")
+Message-ID: <xmqq4k7c9k68.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: B42AEB5E-5C69-11EC-B20A-E10CCAD8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > Glen Choo <chooglen@google.com> writes:
-> >> `git fetch --negotiate-only` does not fetch objects and thus, it should
-> >> not perform certain auxiliary tasks like updating submodules, updating
-> >> the commit graph, or running gc. Although send_pack() invokes `git fetch
-> >> --negotiate-only` correctly, cmd_fetch() also reads config variables,
-> >> leading to undesirable behavior, like updating submodules if
-> >> `submodule.recurse=true`.
-> >> 
-> >> Make cmd_fetch() return early if --negotiate-only was specified so that
-> >> these auxiliary tasks are skipped.
-> >> 
-> >> Signed-off-by: Glen Choo <chooglen@google.com>
-> >> ---
-> >> `git fetch --negotiate-only` is used during push negotiation to
-> >> determine the reachability of commits. As its name implies, only
-> >> negotiation is performed, not the actual fetching of objects. However,
-> >> cmd_fetch() performs certain tasks with the assumption that objects are
-> >> fetched:
-> >> 
-> >> * Submodules are updated if enabled by recurse.submodules=true, but
-> >>   negotiation fetch doesn't actually update the repo, so this doesn't
-> >>   make sense (introduced in [1]).
-> >> * Commit graphs will be written if enabled by
-> >>   fetch.writeCommitGraph=true. But according to
-> >>   Documentation/config/fetch.txt [2], this should only be done if a
-> >>   pack-file is downloaded
-> >> * gc is run, but according to [3], we only do this because we expect
-> >>   `git fetch` to introduce objects
-> >> 
-> >> Instead of disabling these tasks piecemeal, let's just make cmd_fetch()
-> >> return early if --negotiate-only was given. To accommodate possible
-> >> future options that don't fetch objects, I opted to introduce another
-> >> `if` statement instead of putting the early return in the existing
-> >> `if (negotiate_only)` block.
-> >
-> > Some of this probably should be in the commit message too.
-> 
-> I suppose you mean the explanation of why the tasks are irrelevant to
-> negotiation fetch? i.e. 
-> 
->    * Submodules are updated if enabled by recurse.submodules=true...
->    * Commit graphs will be written if enabled by...
->    * gc is run, but according to [3]...
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Yes - why the behavior is undesirable, and the way you're doing it (by
-adding another "if" statement).
+> Re-add and use, and expand on "shellquote" macros added in
+> 4769948afe7 (Deal with $(bindir) and friends with whitespaces.,
+> 2005-10-10).
+>
+> We avoided using them due to the "$(call)" feature of GNU make being
+> relatively new at the time, but it isn't anymore. We hard depend on
+> GNU make versions that have it.
+>
+> The use of "$(call)" was removed in 39c015c556f (Fixes for ancient
+> versions of GNU make, 2006-02-18) and 7ffe7098dca (Fix installation of
+> templates on ancient systems., 2006-07-29) due to those
+> incompatibilities with older GNU make versions, and we've used the
+> more verbose *_SQ pattern ever since.
+>
+> The "$(call)" feature was introduced in GNU make version 3.78,
+> released on the 22nd of September, 1999. That release also introduced
+> "$(error)" and "$(warning)", which we've been making use of since
+> f2fabbf76e4 (Teach Makefile to check header dependencies, 2010-01-26).
+>
+> This extends upon the macros added in 4769948afe7: We now have macros
+> for quoting a ' inside '', and a ' with no surrounding '' as before.
+>
+> Additionally provide and use a "shelldquote" macro along with
+> "shellquote" for the common case of wanting to quote a C string we
+> pass to the compiler with a -D flag.
+>
+> This doesn't get rid of all of our shell quoting. We've still got some
+> in the main Makefile, let's leave most of it to avoid in-flight
+> conflicts. I've fully converted "templates/Makefile" and "t/Makefile"
+> though.
 
-After looking at this, more concretely, it might be better to use the
-part below the "---" as your commit message. :-) Just note that we're
-not just accommodating future options that don't fetch objects - "fetch"
-already may not fetch objects (e.g. if the ref we want doesn't exist or
-if we already have all the objects).
+All of the above may very well explain why we decided not to use
+$(call shellquote) in the past, and it may also explain why it is
+safe to start using it again today, but it does not explain why we
+want to do so in the first place.
 
-> > Maybe add a check here that --recurse-submodules was not explicitly
-> > given.
-> 
-> Hm, that's not a bad idea, but it's not so easy because we don't have
-> RECURSE_SUBMODULES_EXPLICIT so it's not easy to tell whether or not
-> submodule recursion was enabled by CLI option or config.
-> 
-> This is the exact same use case I encountered with "branch
-> --recurse-submodules" [1]. I think this means that we should consider
-> standardizing the parsing of submodule.recurse + --recurse-submodules. I
-> haven't done it yet because it's a little tricky and hard to review.
-> 
-> So I'll punt on this check until we get RECURSE_SUBMODULES_EXPLICIT.
+Having to write
 
-Hmm...can we separate out the recurse_submodules variable into one
-that's given by config and one that's given by CLI argument?
+	$(call shellquote,$(VAR))
+
+in longhand is much more cumbersome to read, write and merge than
+defining a prepackaged VAR_SQ just once and refer it as
+
+	'$(VAR_SQ)'
+
+everywhere.
+
+In fact, having to resolve merge conflicts in t/Makefile today,
+which wouldn't have been necessary if we didn't have this change,
+felt like a makework to me, and my time would have been better spent
+elsewhere [*].
+
+Is there a justification other than "this uses a feature supported
+by newer GNUMake" we can give to future readers of the log message?
+Why do we want to make this change?
+
+It may be that this patch was particularly unlucky to collide with
+something else to irritate me, and the above comment may apply to
+other patches we saw recently on the list (and they are lucky that
+they did not collide with anything not yet in 'master'). =20
+
+In any case, I am wondering if we see too much churn without much
+real benefit X-<.
+
+Here is a sample of the damage.  Look how long the lines that use
+_SQ twice have become.
+
+ clean-chainlint:
+-	$(RM) -r '$(CHAINLINTTMP_SQ)'
++	$(RM) -r $(call shellquote,$(CHAINLINTTMP))
+=20
+ check-chainlint:
+-	@mkdir -p '$(CHAINLINTTMP_SQ)' && \
+-	sed -e '/^# LINT: /d' $(patsubst %,chainlint/%.test,$(CHAINLINTTESTS)) =
+>'$(CHAINLINTTMP_SQ)'/tests && \
+-	sed -e '/^[ 	]*$$/d' $(patsubst %,chainlint/%.expect,$(CHAINLINTTESTS))=
+ >'$(CHAINLINTTMP_SQ)'/expect && \
+-	$(CHAINLINT) '$(CHAINLINTTMP_SQ)'/tests | grep -v '^[	]*$$' >'$(CHAINLI=
+NTTMP_SQ)'/actual && \
+-	diff -u '$(CHAINLINTTMP_SQ)'/expect '$(CHAINLINTTMP_SQ)'/actual
++	@mkdir -p $(call shellquote,$(CHAINLINTTMP)) && \
++	sed -e '/^# LINT: /d' $(patsubst %,chainlint/%.test,$(CHAINLINTTESTS)) =
+>$(call shellquote,$(CHAINLINTTMP))/tests && \
++	sed -e '/^[ 	]*$$/d' $(patsubst %,chainlint/%.expect,$(CHAINLINTTESTS))=
+ >$(call shellquote,$(CHAINLINTTMP))/expect && \
++	$(CHAINLINT) $(call shellquote,$(CHAINLINTTMP))/tests | grep -v '^[	]*$=
+$' >$(call shellquote,$(CHAINLINTTMP))/actual && \
++	diff -u $(call shellquote,$(CHAINLINTTMP))/expect $(call shellquote,$(C=
+HAINLINTTMP))/actual
