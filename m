@@ -2,82 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FAEEC433EF
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 17:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A1C1C433EF
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 17:25:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236822AbhLMRMf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 12:12:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51390 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233165AbhLMRMf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 12:12:35 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E64DAC061574
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 09:12:34 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id k4so11625260plx.8
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 09:12:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ed7iVVk/tR9DUl1pSTor/90N0ya7JbmMl5YyrnUk9t4=;
-        b=mae3wI5gwniECFSQRGcCJLHTUf2KfETLk+EBJRM+UMi8Vb0KvvBD0cgFGvcGIheAQy
-         X2eGWz4ehECJOq/u0fsNW5ow9wATmQHRzqUhxrRcNnFFrPE9cBoNfAiq4Rx4ZejcQ4R1
-         iu9DltTdYaMkBAMUCV4gKacb1biHq54tXdTJuzxti6NJpKDXZ1eMDeTJyFw2vy/m9l9L
-         jrP2FidDBWwgLgQon3q/+Qo49VCF/vDaad6BtaerEVI3Vey8eH4i6saPUeZY6n65KKrb
-         ZSF+cyg/Uvhz0LQI8nzR4xFG4yKE3O1eg++wkGlZu7BzSULsYgyYjE7A0hRU2fbgJMCy
-         IhEw==
+        id S237672AbhLMRZm convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 13 Dec 2021 12:25:42 -0500
+Received: from mail-pj1-f45.google.com ([209.85.216.45]:38494 "EHLO
+        mail-pj1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235682AbhLMRZl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 12:25:41 -0500
+Received: by mail-pj1-f45.google.com with SMTP id p18-20020a17090ad31200b001a78bb52876so15139741pju.3
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 09:25:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ed7iVVk/tR9DUl1pSTor/90N0ya7JbmMl5YyrnUk9t4=;
-        b=LdqeNhaDigohtN8ls18kuB+R+/1Pgk6WFTlpTPOJfVfH0dD7RJ5K0wr/lk51F7kgH8
-         v6l27NX0vXnq6cdPfFL65X7PwTXrqawIDSTzw1thnztUctZ30w1TImMYU0Ga5XN5mLl6
-         ttCu69sBvNRgwToLiFd436ceEII7T8VVqyVLTGIojqTfOJkrR5Gn6Oq+MH1RILBPIDNn
-         lzPoYMmipYcrCjGdIfSQR659LcJwj+IneC8HDQfM9DXxAgwZVDO5RcMsNI8YTAtZxnLS
-         0yXmzNyHJmBIpmo40M9rWZph20bwHIsLLTpF8jSofDig6HRFzp2fd6SN3O2PU6RENKGk
-         8TUA==
-X-Gm-Message-State: AOAM53146c5pgZXDCgPz4OHQ2C9pGpzKB25OFSqXxWkxlu3o6In3zXwF
-        X5k+2h3aZgQIt34DuY+VYsYVJOZAIdvJKLCkJ25L/iqwB4i2nA==
-X-Google-Smtp-Source: ABdhPJzUrc/EmjjXawQO4qnQ/qnFwyc79300nztgrVoaS9sZXutSTITKJeG0urVNuO0adp+zdNi9D1FZsStnxwcDw9c=
-X-Received: by 2002:a17:902:f54d:b0:146:8d4f:1b68 with SMTP id
- h13-20020a170902f54d00b001468d4f1b68mr52240610plf.25.1639415554222; Mon, 13
- Dec 2021 09:12:34 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=+T6HeVYxanec1IXA2/OWzfdtzIQ4HQCT44ucw8yzSg0=;
+        b=F7pOUN5KnWahZFYbcP5wHy2YuZEV5csEIkGek/fwmfGum8kjHZyFyL9uP8U1GjylJ9
+         HUg8SqDgEYtLjVif78uuoy41gVvR5ZSFenFOKmKwbc8NU8n3RllVL5Bm7tSDeF2JnGEF
+         VwMFQK46F8yVm8k8CeDaPjHt7B/N8r32Oq+vrq7c5JoZXVHL6IUvriB0UzIYzZqbtADY
+         yUDAIF+PwAVosNqioXWxiX6p7x+wWR5ybd1Eto5MYZ3Xrlp/CCT73DPz65i68Y9Yjuyh
+         EFZyoSuT1Wl8zcJLZ6Qht0Cjv47uHIu5mWt5J6ed/DCMoeozw5+Rnmw7Ns8Q4Fjeqcir
+         Hr7A==
+X-Gm-Message-State: AOAM532tdfMW9rtp3DL8jBT3w14rBFqONzW08LK89ZkP0kgBJk2EJdlk
+        7iAIXBAtES6Tj1+3KIZICydC1xqtQi0S8Ay9I/zVz9xOEfbDdg==
+X-Google-Smtp-Source: ABdhPJwhH1jR1R7kfmO+a3XRZdkbEJkAX2PwJM9o00MrRO7uR3VK7zxHIGARneVmSgTTInbdzM+BjrC6YLSwI6BxiYI=
+X-Received: by 2002:a17:90a:b107:: with SMTP id z7mr45643825pjq.104.1639416340850;
+ Mon, 13 Dec 2021 09:25:40 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1036.v2.git.1632465429.gitgitgadget@gmail.com>
- <pull.1036.v3.git.1632760428.gitgitgadget@gmail.com> <2501a0c552ad5147f61a96b9ebe45c5199e1dbfd.1632760428.git.gitgitgadget@gmail.com>
-In-Reply-To: <2501a0c552ad5147f61a96b9ebe45c5199e1dbfd.1632760428.git.gitgitgadget@gmail.com>
-From:   "Jack O'Connor" <oconnor663@gmail.com>
-Date:   Mon, 13 Dec 2021 12:12:08 -0500
-Message-ID: <CA+6di1m91q70PfaFq0DKMsmd_Tb6XBB7H9AYPhwawX12cZgtGQ@mail.gmail.com>
-Subject: Re: [PATCH v3 03/11] read-tree, merge-recursive: overwrite ignored
- files by default
-To:     git <git@vger.kernel.org>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+References: <20211213063059.19424-1-sunshine@sunshineco.com>
+ <20211213063059.19424-6-sunshine@sunshineco.com> <20211213102224.y5psbojmivlxe5px@fs>
+ <CAPig+cSKn6wdPKc=b8Xjqy5D=bVdu6FQtYKJuwN2VoV7pEEgHw@mail.gmail.com>
+ <20211213154327.pmhopjbdlkz7dgjh@fs> <CAPig+cSXHBMgOUycL0cXuVCb_PJ2=x2w4wUkc7eQQueyk=0Uzw@mail.gmail.com>
+ <211213.86tufc8oop.gmgdl@evledraar.gmail.com> <CAPig+cR5Q2q=wdXuVBeP52=pAfvh6_4z__g-0JUGWq_7uor_Hg@mail.gmail.com>
+In-Reply-To: <CAPig+cR5Q2q=wdXuVBeP52=pAfvh6_4z__g-0JUGWq_7uor_Hg@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 13 Dec 2021 12:25:30 -0500
+Message-ID: <CAPig+cRkC=-dV_i1LJg3kZVVpR778YNyhpO6maHnH5zFH9zS6w@mail.gmail.com>
+Subject: Re: [PATCH 05/15] t/Makefile: optimize chainlint self-test
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Fabian Stelzer <fs@gigacodes.de>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> read-tree, merge-recursive: overwrite ignored files by default
+On Mon, Dec 13, 2021 at 12:05 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Dec 13, 2021 at 11:17 AM Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
+> > The reason I looked at this to begin with is that it takes it ~100-150ms
+> > to run now, which adds up if you're e.g. using "make test T=<glob>" in
+> > "git rebase -i --exec".
+>
+> Regarding this last point, one idea I strongly considered (and have
+> not rejected) is to stop making `check-chainlin` a dependency of
+> `test` and `prove`. [...]
 
-When this patch shipped in v1.34, a test broke in a project of mine
-(https://github.com/buildinspace/peru/blob/e9ba6e0024ea08105a8d027f958899cca39aeb9a/tests/test_cache.py#L111-L117)
-that was relying on git read-tree *not* to respect .gitignore files.
-(Obligatory https://xkcd.com/1172.) That peru tool is using git
-plumbing commands to manage trees of files, but it tries to keep this
-implementation detail internal, and behaving differently in the
-presence of a .gitignore file belonging to the user would leak this
-internal implementation detail. I've been trying to figure out a way
-to reproduce the Git 1.33 behavior in Git 1.34, but so far I haven't
-found any flags or configs to do that. (For example, putting !* in
-.git/info/exclude doesn't seem to help, I think because a .gitignore
-file in the working tree takes precedence.) Can anyone suggest another
-workaround?
-
-This is my first mail to this list, so please let me know if I mess up
-the etiquette.
-
-- Jack
+Another less sledge-hammer approach would be to make t/Makefile
+respect GIT_TEST_CHAIN_LINT so that it doesn't run `check-chainlint`
+for `test` and `prove` when that variable is `0`. That would allow
+your `git rebase -i --exec` case to avoid the wasted extra overhead of
+`check-chainlint` (and chainlint in general).
