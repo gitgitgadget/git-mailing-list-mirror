@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE927C433EF
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 16:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 711F4C433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 16:02:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236274AbhLMQCH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 11:02:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34144 "EHLO
+        id S240341AbhLMQCI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 11:02:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239397AbhLMQCA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 11:02:00 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B7CDC0613FE
+        with ESMTP id S234944AbhLMQCC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 11:02:02 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F070BC0617A2
         for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:02:00 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id t9so27872570wrx.7
+Received: by mail-wr1-x435.google.com with SMTP id c4so27841288wrd.9
         for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:02:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=rJ3GDWKJ0GCH/2sQjyhi9Wp9eandivSrWcGSEkqQkNE=;
-        b=BSiaEAvnMlAKs3V0ruJ9x+CtDbhpnuaz9RfcEwzy8RfASvLSbMOyS0+9bhtcYseH/5
-         XMvRUCFA5U3n7r7ZE3o3hdp79fkHpWoqoOCRUxPJ0xJ0Un8mES91PnVYHdyXQO00mU8n
-         ur6X9lIwdrqZswFGiQa+uv3hHcLeRMZkXFLN5NfP46J0NjgIYV381rsF+k4hcEheN8W1
-         aOebBSbN35DO35WckQ2MqJ0KLvuqPCMD8cliWcn+kjGjkZHXu+TEdUJFIAhn9FUAuS2G
-         9yste2PloUEafSxYhfL50c2lX6UxZfC9dIP8QkUBS8H1gpXPoEbDMlSJCeOnBCXC2QsO
-         8yZQ==
+        bh=MXMomjRC/fb24dxRgX+qEsh4KebnnV6VgDOcUfwXPBo=;
+        b=J+3bdX9KRY5e0QNx8F2P37iuTQeLHetYTYGZGCaVxOCVbAkiLf80WCezHuGFLDHw8M
+         0lDebyUC+xc02Fu8jAWR7TaSsmiOE3MdaIptBqmYUV3fF6gaN8YQ+H0010BfQn/Pwzsx
+         Ezeukiy+/6+A3Y9Uhhm+5gSk+DCpUZnj/pVgYnhWOPlyXLfXVeNhFn9E7HYeQP92pJ3M
+         5eknukJYLpAobiHYM5DQv4f+4GQe4mOYX4WsdPLpEVj0PSFpUvGDE3iwg40HXlTSOCWa
+         zXFUhCCbdDWsVbyNLjgqX334EZnJT4iHfsKmzu+dbLJ0e8xK5Jhbv8042g7J6tqVLSLO
+         WIaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=rJ3GDWKJ0GCH/2sQjyhi9Wp9eandivSrWcGSEkqQkNE=;
-        b=FzurAAWuohGQTKT0AZNdvITwWtfxUxyZL0rjuo/lJfSGM/NRSrWFuMCLob42TZ3pal
-         tpFBQ1SL60ckhLZum6/rPpqpaXn8uCe8DrkC9VUs+wpV6uX7uXWKw/1p/BdWVzLAnf8q
-         ALJWk8QNSqyE8JTC8LXk48NAhugEOUor6ozzLhTcGAyH/lfpTSXOvkjRIODMU13dw1c4
-         lUBqk6tigGdcclgE3O1j7cdj8uOMaDGB2066a5fq35tID+BDxeI4lFk69gxQuRjPC8Xu
-         7ThLoLbNrZocOFq3+lcdX0hUD24V7x6262QU6cR3o2n90ppaOOHNPcMASk+V549GMuKZ
-         gbiA==
-X-Gm-Message-State: AOAM531vawlfCDeU71xI3SjcfH85vca11YTJzwygfoexOJdzqcG71qEa
-        hEqtpHwrqVUh7zo+7VesnUCT08ylzfE=
-X-Google-Smtp-Source: ABdhPJzZ++xriT9ChT9Mmllk/SUifYO+7p5+FYwt5EIC9/q4C009+2i4wCtQkfv5IjMY/mP15g7Q9g==
-X-Received: by 2002:a5d:6da9:: with SMTP id u9mr32928145wrs.237.1639411318827;
-        Mon, 13 Dec 2021 08:01:58 -0800 (PST)
+        bh=MXMomjRC/fb24dxRgX+qEsh4KebnnV6VgDOcUfwXPBo=;
+        b=6UgluZg79LsXzkYjbb9In8Xltpn9guPj9anC1F4rodmlgG2O8v5YJm/zbGLiAMggy+
+         gpLl7pKAhIzA/SNk3Dq8kuzfYXIVTXc29JMVNMe9EGGk79ASAt+xiD6UkppTmSc8PL9E
+         zJuBuXHz2KYp7HP4Baa9zPlON8Xxd1tZl/XxVBwppwgxkXmepKgzylb98W6/aDM+34CX
+         lxBDUQe6KGy86ZFkrF++Tp3gA6aVKzOjVsklx7EWIBmxm9G2/i4F0cO1WwlMavk1buP8
+         qhEneRaKKTrIFrWvLy7+zwAAh3uCh38tfxkc5Cp8ne6KjwjmEZSdh0cfmT1mElLTEvsL
+         M1Ew==
+X-Gm-Message-State: AOAM531WFQ4IdVO9rXWWr+W8MvwO1lQW8PpqpIZ91wlckEBrJ9JdoAJ+
+        zl8ScITbdvTBSJocKrJTtuz86mITY+U=
+X-Google-Smtp-Source: ABdhPJzsF1pMY+Hr2jRNydnH+9BrJxLkjujx7XifANMapc2Aqmkf0sHVZXp47coAJMlmPNuGXsFdvA==
+X-Received: by 2002:adf:d84c:: with SMTP id k12mr33081533wrl.24.1639411319499;
+        Mon, 13 Dec 2021 08:01:59 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h2sm11103371wrz.23.2021.12.13.08.01.58
+        by smtp.gmail.com with ESMTPSA id p5sm12157697wrd.13.2021.12.13.08.01.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 08:01:58 -0800 (PST)
-Message-Id: <2939286924caa67e2cc57bf5ed4ce4287b9d571c.1639411309.git.gitgitgadget@gmail.com>
+        Mon, 13 Dec 2021 08:01:59 -0800 (PST)
+Message-Id: <9dce18d7349fe2a27859c224068fb5a386f263f1.1639411309.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1152.v3.git.git.1639411309.gitgitgadget@gmail.com>
 References: <pull.1152.v2.git.git.1639000187.gitgitgadget@gmail.com>
         <pull.1152.v3.git.git.1639411309.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 13 Dec 2021 16:01:45 +0000
-Subject: [PATCH v3 07/11] reftable: fix NULL derefs in error paths
+Date:   Mon, 13 Dec 2021 16:01:46 +0000
+Subject: [PATCH v3 08/11] reftable: order unittests by complexity
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,39 +69,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-Spotted by Coverity.
+This is a more pratical ordering when working on refactorings of the reftable
+code.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/reader.c | 3 ++-
- reftable/stack.c  | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ t/helper/test-reftable.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/reftable/reader.c b/reftable/reader.c
-index 006709a645a..8d308d858f8 100644
---- a/reftable/reader.c
-+++ b/reftable/reader.c
-@@ -796,6 +796,7 @@ int reftable_reader_print_file(const char *tablename)
- 	reftable_table_from_reader(&tab, r);
- 	err = reftable_table_print(&tab);
- done:
--	reftable_reader_free(r);
-+	if (r)
-+		reftable_reader_free(r);
- 	return err;
- }
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 10dfd370e8e..eb03b6c74f6 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -707,7 +707,8 @@ done:
- 	strbuf_release(&temp_tab_file_name);
- 	strbuf_release(&tab_file_name);
- 	strbuf_release(&next_name);
--	reftable_writer_free(wr);
-+	if (wr)
-+		reftable_writer_free(wr);
- 	return err;
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index 26b03d7b789..f08d66df949 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -3,15 +3,16 @@
+ 
+ int cmd__reftable(int argc, const char **argv)
+ {
++	// test from simple to complex.
+ 	basics_test_main(argc, argv);
++	record_test_main(argc, argv);
+ 	block_test_main(argc, argv);
+-	merged_test_main(argc, argv);
++	tree_test_main(argc, argv);
+ 	pq_test_main(argc, argv);
+-	record_test_main(argc, argv);
+-	refname_test_main(argc, argv);
+ 	readwrite_test_main(argc, argv);
++	merged_test_main(argc, argv);
+ 	stack_test_main(argc, argv);
+-	tree_test_main(argc, argv);
++	refname_test_main(argc, argv);
+ 	return 0;
  }
  
 -- 
