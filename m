@@ -2,42 +2,42 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3FC5C433EF
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 22:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C5DDC433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 22:55:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244093AbhLMWzL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 17:55:11 -0500
+        id S244041AbhLMWzR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 17:55:17 -0500
 Received: from mail-bn7nam10on2085.outbound.protection.outlook.com ([40.107.92.85]:28160
         "EHLO NAM10-BN7-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S244088AbhLMWzD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 17:55:03 -0500
+        id S244017AbhLMWzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 17:55:09 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=MwNCD5XJMqQ8+7M89MOUu/aNFmWKbSOwBdLGHeV+vTOnYEma8Vqjf8b/gd+kFKCY3KjkjZE/YEtvH+xOvfXSM1RcU1S0nMtAARHNCGCiXqOm759rPUK1MSIIscDWq/gc942un4UTMV0O1mKul2MdbpF6+H5Q9AsMz+F8MoBjgpm3veuBI7OZC1Qo/mc2/XuF6GS+2GKj/YvGvAxwRtgVB//Rb560aH64JDM5nSw7BBWGmhG47/s1+p4Uy3TG6Vxp3T51R1e6RrD/bn4qk5h+br0T4YbD5w7Gudfw+kGbTI+YGSOhulV+Dhs0JUakmsylqyflV9UM7f5yjl4Xxr1sCw==
+ b=llluau0891owRQKDXd0oW5upE1o8yzpYQNSDdfmMBPa/IPvKM9p5ET3uXzr4KE12Y7IV+WPAnHeMq0dk8df0iYyNnZ8atk3q+4UdgihX/FoLbAI8UeWpuGGWhAa2CkN7WkEvF/kA22zzISACpRkIbIWXCXekPqOUuzX+qq/aHgtRoYcuSXOHDECuwtzWaNECJ7wve1/WP3FHs6vAaTRrAFDpvE34ihr1nbhzMnfFnTC4nN7rNjcgftgfFMbsmB77Eg352XRhxjockSEJuNKVI8Rlprf8k1bwjiJ5nHTL8gq3xnKOr2CNDzkhwOXbFT3l0YWAVQcdSZaD1vS2om0bkA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SbnSzbAl7AU5GNh/c8bkQsK/TyLxnX/XmPiLnbwciN0=;
- b=oNOzcpQ14UTBz6IWX7vdwdjoLXyUNgI52URVhBc/qNekvHGjT7MGJC+A4NpNErCrPfYbffPH/OdnRSy+LbdmFCe4SjG1BHIzqQq4EuxtSXYizF/+Xu9mMKRPh0r7Ox4j+HI3l2LYyc7/YaPuTsQXldqGVnFNg2uZFaedwV9OMZoFkQtFJfaOmJx+6DpjxH8NCZeCONt5hb2+MhvO2RSyxlb6rbVglKfAoFcUf73znXxLP8HBOEB835nNkFyLnAHkV49krZ9aIqsbGz1HxqXiplo3yYPBo0KKzDCJBOeR8ZHgYiiNu+Tiyoek1BcDNUmjgQQrQ4MylF9TypCYCyWNkg==
+ bh=lHpeo7RglVVW8Q65y/TZB5lZBJAOg9LZoFd87gAJ6Wg=;
+ b=k4L25U2+b+T2M4UXJr/3ti5Y2YdRuoUapw8tltefwG7LYrEiYyjYNUA2Fmdp+M/Bg04JLBa+nwf9Do535NEV5AK6r6VVeJKmoGem+/NlHqzldB6De0H5/H/V31JwAfmsBL1LQDXv+Ldj/GnYgx1lMBJccafq0mJ/QvVPrl0oF0PAhqEa8E62YyWtDBG7OtysWt9Rtqgi64bUptZs8OjSqbSkb+fGNnskvIspeRQJu1ukhAuLfgF4TOmrGaeI4oUkSaW9dyQDmq78sigfwe+7PvttX5jYy9pX+lNb+jRViHwRNabK6tAedUGywmRe4iLVs4Z+h5uYGLgKWh60L5kEVA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SbnSzbAl7AU5GNh/c8bkQsK/TyLxnX/XmPiLnbwciN0=;
- b=RShLZyJ63X1hM9kdD2xg7S+YN7EpdhQByBu32xprG1ZmzwEKfb6Bc+Ooh+YToBA0eDJlKncIIhJ6GbHEwgGS+n/XfXyGf8/gtSp8VEXNEBiA0TTIlYG7wwsHluWTV/lz8htKGTWMkAhR395Dm9n5/IkUJkkDUtsMj/PcNNglFYLN87itzX34rV5yedqu+sdQrtP+3UirBoM8OIeZYLmy65E42Dn+cV2NRM1Vlp2V91sLnEut5x72itz+S3hu9NO23ZGi4PdD6M6vXHJy+NJz7YRtu9oNDGolBJgvbs7j6jkl9CM29+7Bb6EqeI6qzmGs07OMdqbhf60KnB5WUPc/IA==
+ bh=lHpeo7RglVVW8Q65y/TZB5lZBJAOg9LZoFd87gAJ6Wg=;
+ b=YkM23RU83MrliYGJjpl8xSzD+K1MRIdqwNv6O2A78+eIE6zT7ln3ONfPu7JPPtwNkNy9greqI4Q/1yie0dtoRA51mCxy2EfrxTLFFdQQDGSwsaLxvf3/4FmD0n1BuYCVcGczgt8MeXfhsUj2KBAgv2LY+97tzkdlwTa/41NYd8iS05zxPEYzqxaohm13cI+jkxQaBDAXuxx0y2EZLlyI/AUX52NbsfA93Qzo8Oyx5SoOchHzmHDgHeKFTfXO4ty2DmmOrGUDfgzmBoXvTj12iCJE2IdCbDaQbOsiA8KzSwxwpEMEklH3OcI4BbBLGcwcm6U98TEDXwWpPckm0U9WrQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BN8PR12MB3361.namprd12.prod.outlook.com (2603:10b6:408:67::19)
  by BN6PR12MB1377.namprd12.prod.outlook.com (2603:10b6:404:1c::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4778.11; Mon, 13 Dec
- 2021 22:55:01 +0000
+ 2021 22:55:03 +0000
 Received: from BN8PR12MB3361.namprd12.prod.outlook.com
  ([fe80::4063:6e26:a906:e592]) by BN8PR12MB3361.namprd12.prod.outlook.com
  ([fe80::4063:6e26:a906:e592%3]) with mapi id 15.20.4778.017; Mon, 13 Dec 2021
- 22:55:01 +0000
+ 22:55:03 +0000
 From:   Joel Holdsworth <jholdsworth@nvidia.com>
 To:     git@vger.kernel.org
 Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
@@ -49,10 +49,12 @@ Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
         Ben Keene <seraphire@gmail.com>,
         Andrew Oakley <andrew@adoakley.name>,
         Joel Holdsworth <jholdsworth@nvidia.com>
-Subject: [PATCH 0/4] git-p4: fix RCS keyword processing encoding errors
-Date:   Mon, 13 Dec 2021 22:54:37 +0000
-Message-Id: <20211213225441.1865782-1-jholdsworth@nvidia.com>
+Subject: [PATCH 1/4] git-p4: use with statements to close files after use in patchRCSKeywords
+Date:   Mon, 13 Dec 2021 22:54:38 +0000
+Message-Id: <20211213225441.1865782-2-jholdsworth@nvidia.com>
 X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20211213225441.1865782-1-jholdsworth@nvidia.com>
+References: <20211213225441.1865782-1-jholdsworth@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: VI1PR08CA0263.eurprd08.prod.outlook.com
@@ -60,80 +62,95 @@ X-ClientProxiedBy: VI1PR08CA0263.eurprd08.prod.outlook.com
  (2603:10b6:408:67::19)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 649b68bd-6cc3-4530-b151-08d9be8b9815
+X-MS-Office365-Filtering-Correlation-Id: 8362a441-4555-4b97-e5b0-08d9be8b998f
 X-MS-TrafficTypeDiagnostic: BN6PR12MB1377:EE_
-X-Microsoft-Antispam-PRVS: <BN6PR12MB1377493A78FC09CEC877CFE8C8749@BN6PR12MB1377.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:7691;
+X-Microsoft-Antispam-PRVS: <BN6PR12MB1377C295FDAE8EC9E60CEA10C8749@BN6PR12MB1377.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:6108;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: i2Cc9f2pGVBcD4JB757xl4NRMyDNdUn5PAsO6klp4HC4e7cM+ZL8GxsMtpVHX6gGzPTrRV8WZAIgSFYO4/Z2vXMG3C1t0olbZJeSRGFqFMDacM17rBRrxpGt+o0d0FKmUbBAohcizzY/LV8HGMHjAEAkQUQkSgLIXgh33JAJZ7ROagaEJh1DKd48ESAz4kzKxSZuLFkmiujLpfuAZlP5DC22e9jHF5IOTU4oueP0sqKNomozU2Ka21L6Sury8n/GewsesI6OTRCoZ6My268iVd0szYicMYZbyAvy2xX4sfEX2Q4KOt6F1vA/TcQUqSxWIVlv1qVEAK6Zlh5quJ6N2a22wdqQc+TSKnbVqpIaOTM81ZZXvXckC+wd+rZHkIVGaIB1TgWYaQoF6h8qVSNsevT0C61/BJhpsV/F493+WPfNI94P88St4erRI/TFRE1oVwOB+7IYCtR1oUVmC7zz/AzwXIo+QFMIKZnbHB7DoVZ8pB1/e/63wr0Jno4fV3pRW0cT3jzFKr4UUZpg1XH1tIyyFw62MRRxIRkJcHSGvo55RtPvd7aVj1JvH6ZPub2Qo4vJ9FIkztWd4KflSlwuxVk8r0UD0Y1TGf6/1fnEGbah9DTe2QqBywDPZYh3dKzITY/bqdsc2YV1oL50ik1pab4z5WlAjm0omY611Rjb8pwIl7CLupUxpZ8NI/s7C5Ap7vF/xZdjq0NeLIvNqIBZ9Q==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3361.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(5660300002)(508600001)(6486002)(2906002)(54906003)(8676002)(8936002)(6666004)(66476007)(1076003)(6512007)(316002)(66556008)(38350700002)(66946007)(107886003)(36756003)(4744005)(4326008)(38100700002)(86362001)(6916009)(52116002)(83380400001)(55236004)(6506007)(186003)(2616005)(26005);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: cBYl2r6AM3Nmgq6bC1e9BLV0dOtkl9Pc57Dtghx/WhLOLqBcbi/xWmULu8oS/nFTv/225R8fUwjzlB2zhrKdDbBiqtMjzGXVtHiMpoAlpqFHgkiUWYRpM+pw7T5blvKJFAVx0qE6BHrUhvTIeJxD4C/r4+Jr6HIA6mmVKvohIS11kxczZ+0tyAOiScLTaYJyv2MKV79XblNOhjHrMmoMHv9Q9wurRnlbiiJN7oKQtfzwMBBVL466j9ZH0cJaRSwFvevYoF1mjEbEKVmuHIUtTdml1GUOv+Atih+rC34aeKopBFVFjf4uNAx4O1OluvkZyg9cZUIFoH6oUA2HBRsM7/73HDRQ3n9+IwTNuKxpcEgMeMNVOFa4Q9f3rIey9wEtWX/X8ZY6zakKX5gUobPXkP6mbaJ7RPQTjFHpz02fFMm7Ji3oHTJRSB1KMcyEmLwaGG1pVpoeV6w1GUt/7iZ6M8P+JcqlTleRAgdoW//4PPYPqAvpiNgPvtzuw3W1EbPFQtJjSmgXxCr1EFh5kTV1By+XAgeNgsFBHQsZrAkJrkU9GxCyzFpPHVpDQ/8omzE26nxapySQTP9GqaWuNPLli1nOk6P7qpaeNqTNMVS5mMFMiPoVvzsEZe5ab2ctBF4TMeAbkWko9xEgpsl+pTGzw5GO3jK8jjAOh8tx/OsuVpBCjYP6K4cjFzQWklaI9rWrBWXn0+IbOkfGIBWKeu/1a63pruiNQGLDnoPxA75llY0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3361.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(5660300002)(508600001)(6486002)(2906002)(54906003)(8676002)(8936002)(6666004)(66476007)(1076003)(6512007)(316002)(66556008)(38350700002)(66946007)(107886003)(36756003)(4326008)(38100700002)(86362001)(6916009)(52116002)(83380400001)(55236004)(6506007)(186003)(2616005)(26005)(156123004);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?gmzyVha/vtd868Fj0ikj8Wem6TesUpimSdM4RFXvrfuX/TGPrdj+IzXNso8X?=
- =?us-ascii?Q?WeFuVkd30kP4hBEeRSWmNXLCFMMnZT/7Tw15UmZvfaSW3fEo6KskwZay7y8f?=
- =?us-ascii?Q?TRjn55SI53BB3K+AKrqODyqdAPkLJEkSEXBIBHTicgh0zIYtBJQsCgTWk2+J?=
- =?us-ascii?Q?Fsw2R6Y0DGOldyTtRcgHP6OhaGxI7H03dgHwV95vPNmBgMbGOTHz4lAxR3rC?=
- =?us-ascii?Q?GfEx267j65+t/PJjFR3Gm25tLH693dcANpf0YmUzvDwenSKx89t/BTARmOZ0?=
- =?us-ascii?Q?9uKtz8iG7/RdAdQ+Sm+j4ckrtTZcx9vyJ7GYY5KvSEzcZKwm1wEAl+ac/r+b?=
- =?us-ascii?Q?0pcQ+h9i9wxBtuUIMkKy/epbAXX2PDPTp9bBf8v3r9cK9fkP0I7s6hdy88s4?=
- =?us-ascii?Q?ApMox10vkWTiuRGxz7f4VhARZt7esk/8MuDjKG7AEvn0hqth/0J+TAg9K0Z0?=
- =?us-ascii?Q?Ej9Pe85lw+L1JOEPLpspZl1JTdQiRzgtqmNp8/CWp6FUXeDpQ/XSdKQ67Zlf?=
- =?us-ascii?Q?/ztKWzlKHWWTyhpfg8yKv3tYQ/Le0n39+XYGv13Hh6gbqqViafYHQtbIt6Nz?=
- =?us-ascii?Q?HzSBCX0vNk5NZUkqgL/ddz0+Y+nkUlPM/tT/AzrKeeAz1nDuDYU/9f4kyH7C?=
- =?us-ascii?Q?GIgZjpwZ4uATIMw6wDGarmmhC8DSX7aT2QAl5w7nrIO7s60hYMxR2U6h3/Nx?=
- =?us-ascii?Q?Q63EpFg7mktIF0G9HuQ0T0B99AiKbin520JO7j2QReeE24QJHTfgkFleyCMw?=
- =?us-ascii?Q?Yj6qKOuyuc0tVXHG0JG5caxMbZ0YultbfFnWhD/I74sdSPEJn4V/cR2nRp3I?=
- =?us-ascii?Q?6Ksvzw0c8yEvLbXtOf9Sm6i2W3xeWpL5F8ICTbERpIqqj+EO78OPvfHbxh5b?=
- =?us-ascii?Q?sOpkjQ/K31zuY+5QdQoOXsAVeegmokiZowT78Sv5ccLOrb/21SS5H6d+Edhp?=
- =?us-ascii?Q?AqyTS2q0SxfEwkCxd8FC8Pa/rfWAlKQaljpyiD46kw/UeEfYyz/w8XhMFYgb?=
- =?us-ascii?Q?I+RnNLvbpW4JharYfKmTGlQAnr5sE1coXMC4QG4COcS8S99stFVvMXHHauhC?=
- =?us-ascii?Q?Utdf2Zro3FPW2x/q071qhwz1hKqtkOHmLKzVVwRerGM0bmhqwWNl+klBTMee?=
- =?us-ascii?Q?KDEDRYHDcJbOuQhbl8g9HZHjhEA6HKEdLwzrFrpEJTx8Jk+L29aAmXsgWxCr?=
- =?us-ascii?Q?SEYIRh1FJVa3wrxh5xlnvPYRE345ysWHKYWVMxiO5M3nOYkviDbITrnS3+O2?=
- =?us-ascii?Q?/lDz+UNmtwNspMkiZ3erfa9+vhyAdKmT7vQ1tPF3Xlvlh9jLehVt4Js252EU?=
- =?us-ascii?Q?+q8vW8izYyrYviEJw4t9CXjz3LzxfZEg8SUtjraqRHSXwLvwfjGUeO2V1QHs?=
- =?us-ascii?Q?pYxetAWNPQLJ0qCpasxNg7x44zuj3/E8Kef0sxM4G9JHZ5jT8/7GqPZ/M4gH?=
- =?us-ascii?Q?tCNJjTZyt5t5luqcYohuVJt2aen0xrwTS68Pg1BySvA5l4gU5Kn9LC3Plid2?=
- =?us-ascii?Q?cwbj+RE0jH9qYAeS3GAmXvaCaVdrPQqWFsVRgrJgXRmc/UrNYn6GTfv6DPiJ?=
- =?us-ascii?Q?M4fZqGoE9sIdv0gtpDZ1Fga8ezbFekMPWM1hNIDbJxFE2Se0iA2y16h/k+Y/?=
- =?us-ascii?Q?Xc0pfX9CSC0ub4SuhWFnGws=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?k4cGuyfdHFn+4wofEzZPLSZIZrA66n4pfvY0dqCfvFBt7x1Ag/8yO1b4s9y5?=
+ =?us-ascii?Q?YVGwEdaeixZ9kj9Tqp6exvaxHsGJswah9x4iriWGS0P+ymywJyoyq9rSNaiR?=
+ =?us-ascii?Q?3ELYdl9ju8v5vBJIPKaBau6ofwON9lOWISpgiSNTwPvLvZinS6NYP9DD4jW4?=
+ =?us-ascii?Q?ZTgR7DRUEDcVJqe+fNQFyHFcOQYf1bxfaWtlN3IpY50qfVd4McpbGisp4cnB?=
+ =?us-ascii?Q?0xB6DAANxHIRE3XtLs9sGUGGABNjFBQZRW84L5wPAoHP60lrkgn86k6q0xkb?=
+ =?us-ascii?Q?1JPqfq3rR2n3riI9H/KLX/8GN5LJCDVEOdSwFPv4ZVJR1HNpjGiM/PKJ8hMi?=
+ =?us-ascii?Q?0UcNpW7mpigsKPS8naJwaukzOhbIFPqLC2mHXKuGFVRE9mlLZn0zOj5thnaK?=
+ =?us-ascii?Q?YXU7Cklw6EA9hVn94TStPsVuw2PPg/eIgXEcbGnYPfZOEVUfPiyB04/fUAtv?=
+ =?us-ascii?Q?bM+L8zHYW3DPPKGRrnf39NM0BNRlzk14HntcgvrzBzgcwdA6b790F/0XRzq+?=
+ =?us-ascii?Q?MYjlaBI7vpnlEnPqm9FiQd5a53KHWs0xqIKJ3rnlbzJ/7Sfw4iMbMkC5qDrC?=
+ =?us-ascii?Q?SmK1DTa9dhoj1xcyoBKfO4rbMZWcuJZZs2HEGDGEZsjd1pJpvqz/E1vSIxGT?=
+ =?us-ascii?Q?kldKra81NNaVQo2CBJiIKWMIt2CNZvpcXebJlvEy0ZknUQwxR9UfJ0Eo+Eka?=
+ =?us-ascii?Q?TdVp8p8J48nBmSudni34O1ow3urmJ7i0woKpeynty2pYcFwnKBKDDKISnMB3?=
+ =?us-ascii?Q?OtHTtdTYITaX9DiPv4SD7B2FpuCGOUv4kpSK9MEW8NhABkQpKS96jDi+uLZD?=
+ =?us-ascii?Q?F5cyIEe5nJDA/04ZVAhyB38//flUz6+RnMZevkRa/txTci1C9yySHwH8dSzC?=
+ =?us-ascii?Q?byw5J+3OCAFrKgVvtKb5qGOcxWx9aucMfxd5n30GGsZ5OOItKumqKlp9XuvP?=
+ =?us-ascii?Q?07wwJfxET7NiJAWqNuYiof3C5Br7t4mV8/BwDeTPU0GgyTXZ2xRoroKcJvw5?=
+ =?us-ascii?Q?a392endzJpeAPT4hVCUKancUPMQoQ3quz3wYWQkSuod1Y5WOi52zpSgLJ/Ow?=
+ =?us-ascii?Q?xpiVc7IgTcWwBzux4DH08manxaMsSD1R8z5/XEcbtZHAXOhOhXwJM94JLEHu?=
+ =?us-ascii?Q?q4PbUpJxRAGAZXNcPwCnEawkjn2BBgV6Ip2uGl9QA7mviREyJjRdBSX4qThB?=
+ =?us-ascii?Q?+wx5TV8FP8k2hf0qaxpBlvocA++1nXQtZ20haYlkgtoyzQ3xekPHxnJ4XIyu?=
+ =?us-ascii?Q?Xc9RUEmPO1cW93E8tigjGRSXYyESJbTYoi0xcnxa6lPuSMhgI+w5bJj0GdYC?=
+ =?us-ascii?Q?hTmkIQBoSjFrQeOXDtUwSDaDZAMbRGBpouj2VMAUZR6YOODV9wjXrIGmljW3?=
+ =?us-ascii?Q?dM/8tOt+icrh2jP9SCR7MfXE5W2zZtHK159/J5zyGFoNhGN0lZKRaOYGj+p6?=
+ =?us-ascii?Q?NhJqsIzmFRxxAJfLzd6DLLhNPXlNpuXXIgrkFiywaCjCpLIRuFMT/G5Rkn7R?=
+ =?us-ascii?Q?uDc3m8RNPNz3zQUuBaLOpDefdy1YWWOhPyBBEh8MDRg/j1kgrfCGlHB7ejMQ?=
+ =?us-ascii?Q?MmvIpnR16JQEEZ9LOZkQSSgdmjZAKm+cjMrxdBWOLyMylv1/Z4csJU8axFU8?=
+ =?us-ascii?Q?5Po6oMZek1Y43GqtApOZs5w=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 649b68bd-6cc3-4530-b151-08d9be8b9815
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8362a441-4555-4b97-e5b0-08d9be8b998f
 X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3361.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Dec 2021 22:55:01.3634
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Dec 2021 22:55:03.8410
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PdsCkp7+mhEeKtbVDMpmVJUckLcWOZseQTmNEG0QdYJbmO7F9Q9ZBQzTOSy0B2plpCzSJWhL8d71p4+XxLes1w==
+X-MS-Exchange-CrossTenant-UserPrincipalName: SNhMhnjT5kDDk6WOY05cC+FajgJtlNX0DtVhHhoa94ryntUVtbHDYMJepiOG5gFeog2Srj9l1DL5dY7Q46cg+Q==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR12MB1377
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch-set fixes a family of issues with git-p4's handling of
-incoming text data that contains RCS keywords, when those files contain
-bytes which are invalid UTF-8 codes.
+Python with statements are used to wrap the execution of a block of code
+so that an object can be safely released when execution leaves the
+scope.
 
-Among the patches is a fix for the issue, as well as some peripheral
-tidy-ups and improvements to the existing code.
+They are desirable for improving code tidyness, and to ensure that
+objects are properly destroyed even when exceptions are thrown.
 
-This patch-set is compatible and has been tested with both Python 2 and
-3, and includes a test.
+Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
+---
+ git-p4.py | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-Joel Holdsworth (4):
-  git-p4: use with statements to close files after use in
-    patchRCSKeywords
-  git-p4: pre-compile RCS keyword regexes
-  git-p4: add raw option to read_pipelines
-  git-p4: resolve RCS keywords in binary
-
- git-p4.py             | 66 ++++++++++++++++++-------------------------
- t/t9810-git-p4-rcs.sh | 15 ++++++++++
- 2 files changed, 42 insertions(+), 39 deletions(-)
-
+diff --git a/git-p4.py b/git-p4.py
+index 2b4500226a..226cdef424 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1757,14 +1757,11 @@ def patchRCSKeywords(self, file, pattern):
+         # Attempt to zap the RCS keywords in a p4 controlled file matching the given pattern
+         (handle, outFileName) = tempfile.mkstemp(dir='.')
+         try:
+-            outFile = os.fdopen(handle, "w+")
+-            inFile = open(file, "r")
+-            regexp = re.compile(pattern, re.VERBOSE)
+-            for line in inFile.readlines():
+-                line = regexp.sub(r'$\1$', line)
+-                outFile.write(line)
+-            inFile.close()
+-            outFile.close()
++            with os.fdopen(handle, "w+") as outFile, open(file, "r") as inFile:
++                regexp = re.compile(pattern, re.VERBOSE)
++                for line in inFile.readlines():
++                    line = regexp.sub(r'$\1$', line)
++                    outFile.write(line)
+             # Forcibly overwrite the original file
+             os.unlink(file)
+             shutil.move(outFileName, file)
 -- 
 2.33.0
 
