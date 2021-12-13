@@ -2,104 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52C2EC433EF
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 21:52:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CB58C433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 21:52:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243231AbhLMVwh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 16:52:37 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62436 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243225AbhLMVwf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 16:52:35 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EA7F91114A8;
-        Mon, 13 Dec 2021 16:52:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=dbPcbfmUO+ak
-        rIsuM2yUeAYOjb45bnQu7rGCARtYt5c=; b=yDk382XMPGrEgs1gQmkWQUUYTTW3
-        tklKsKOSDqRRJZJY+MdvNJbr9Xf/2a5heO/Hf75oErzJlGPj92tHwAYOXicYxsjp
-        QaZaG1sjAP/6I0CePBmc2AjPIG/qU1JsbYjAK5q+6mMEgNjSCohfT5UjBb6v4FjX
-        TIwEI1uYm0sTHJA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E1EE11114A7;
-        Mon, 13 Dec 2021 16:52:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4A1C71114A6;
-        Mon, 13 Dec 2021 16:52:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] checkout: introduce "--to-branch" option
-References: <pull.1095.git.1639117329.gitgitgadget@gmail.com>
-        <254b352e31029d8151eb6a974fdf8c127340cf79.1639117329.git.gitgitgadget@gmail.com>
-        <xmqq5yrwm7km.fsf@gitster.g>
-        <CAOLTT8Rx9M9=a5M8UeDrJqMayTXo=dvdanVDLi7QLdPX8W_Tzw@mail.gmail.com>
-        <xmqqy24pk6f4.fsf@gitster.g>
-        <211213.86r1ag6ztx.gmgdl@evledraar.gmail.com>
-        <xmqqr1agb313.fsf@gitster.g>
-Date:   Mon, 13 Dec 2021 13:52:33 -0800
-In-Reply-To: <xmqqr1agb313.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        13 Dec 2021 13:36:40 -0800")
-Message-ID: <xmqqh7bcb2am.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S243227AbhLMVw5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 16:52:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59602 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236921AbhLMVwz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 16:52:55 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC579C061574
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 13:52:54 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id r25so56220914edq.7
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 13:52:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=skydio.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=khQGW7nfpe40GG5LMosofqL2ZmCKg2l+qM+eVZ8bvog=;
+        b=WjrHvIF21HVI01amSB1ABeiMWlSTJJ3H03m10oZEO/WcHcnRDtOBrKZy0Ks25qAGkG
+         aW23v95wMMV8X+s7+3oNg5CTqEEx8fx1edtC4cnC9c+yoqjQJCwdJhbtPeA8W9vgqYuD
+         hEm6taTsabrgt+h5sEJHLGZzXHkhyb45ceIl2C5naSPYVw7XzVAfKETsFKqKChVZWKjm
+         pPJwZl8orDbt55cYQHB/PA0itEdhwR/0+vWbz1OJWhIkk5X7d0pxCvGFWIKetAzHA21L
+         cUTZcpfzc4Vuj5gxl3dS0zGpuAifC7qX4k6d4ue5RrNI8zT8G/61uAZhE1ucqkaOX28w
+         +0RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=khQGW7nfpe40GG5LMosofqL2ZmCKg2l+qM+eVZ8bvog=;
+        b=kKKFeFe6JyD57fQEqbKHeQaZzpImF0h/wkmxllJJGp346EajzqypbduStO5az0u/O5
+         1rdHV0LW9NFqtn2EonkiEYUnPT1eT3IISEKAhpKTpx2N4duBiDKFpZODnmyRvXV7Eq7u
+         MZH36QDIF9wHSvPUx9QXorBktc0fh+FvxcRjsmlAlINplGHCADYcpgScJMylpSFZ0uCo
+         vFbSJfq8TKTP+g+MMr0yMCdjURPFOvcLkHupefjJWVZjeKUM+fdxg944w1lcbhjd0/UV
+         dvGaHWm6Bb0aYivZVldDeIbyt6ApVZm9rwBgj2gTDCrksvss61jYcRcfDKrQarFma9de
+         bU7w==
+X-Gm-Message-State: AOAM530zLNLt/S24XXXbCkP+kxdxPIz+QxkPUd7p+wvWsomceNG+EZqx
+        P6RkW4sO87maywog7bFom8E0ILxwxK712VcS418TqMiONNGPyA==
+X-Google-Smtp-Source: ABdhPJxFCfTfHn00CmMSAN4WuP4HAE/FpNfXzfyn3dqjUqnldvFe0ZcajJMv1EmDMGms4VRW7hioEfMVs8xtnNCtCsw=
+X-Received: by 2002:a17:906:390:: with SMTP id b16mr1212469eja.522.1639432373329;
+ Mon, 13 Dec 2021 13:52:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FAA18A6C-5C5E-11EC-822B-E10CCAD8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20211211031343.15818-1-jerry@skydio.com> <20211213202826.7051-1-jerry@skydio.com>
+ <xmqqlf0ob2o0.fsf@gitster.g>
+In-Reply-To: <xmqqlf0ob2o0.fsf@gitster.g>
+From:   Jerry Zhang <jerry@skydio.com>
+Date:   Mon, 13 Dec 2021 13:52:42 -0800
+Message-ID: <CAMKO5Ctq8kzAvHAXxPVd06_Ko7-GW4CQbUmw7g7Eb7Su_Cp8RQ@mail.gmail.com>
+Subject: Re: [PATCH V4] git-apply: add --allow-empty flag
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon, Dec 13, 2021 at 1:44 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
->> I don't see how it's fundimentally different than the DWIM logic of
->> taking "<name>" and seeing that there's only one "refs/heads/<name>",
->> and giving up in other cases where we get ambiguous reference names th=
-at
->> we can't resolve.
+> Jerry Zhang <jerry@skydio.com> writes:
 >
-> In that example, once you obtained a local branch whose name is
-> <name>, it is obvious how you would work with that.  Your next "git
-> checkout <name>" would work on the local one, and only the initial
-> one does something magical.
+> > diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+> > index a32ad64718..b6d77f4206 100644
+> > --- a/Documentation/git-apply.txt
+> > +++ b/Documentation/git-apply.txt
+> > @@ -14,11 +14,11 @@ SYNOPSIS
+> >         [--allow-binary-replacement | --binary] [--reject] [-z]
+> >         [-p<n>] [-C<n>] [--inaccurate-eof] [--recount] [--cached]
+> >         [--ignore-space-change | --ignore-whitespace]
+> >         [--whitespace=(nowarn|warn|fix|error|error-all)]
+> >         [--exclude=<path>] [--include=<path>] [--directory=<root>]
+> > -       [--verbose | --quiet] [--unsafe-paths] [<patch>...]
+> > +       [--verbose | --quiet] [--unsafe-paths] [--allow-empty] [<patch>...]
+> >
+> >  DESCRIPTION
+> >  -----------
+> >  Reads the supplied diff output (i.e. "a patch") and applies it to files.
+> >  When running from a subdirectory in a repository, patched paths
 >
-> Which makes quite a lot of sense.
+> Applying: git-apply: add --allow-empty flag
+> error: patch failed: Documentation/git-apply.txt:14
+> error: Documentation/git-apply.txt: patch does not apply
+> Patch failed at 0001 git-apply: add --allow-empty flag
 >
-> There is no similarity in it with "--to-branch <tag>" that is being
-> discussed here.
+> Hmph....  Where did that "| --quiet" thing come from?
+>
+>
+Apologies, I overlooked a dependence on my other patch here:
+https://patchwork.kernel.org/project/git/patch/20210427194106.14500-1-jerry@skydio.com/
 
-Another thing you seem to be ignoring is that it requires you to
-prepare in advance and keep one (and only one) dormant branch for
-the <tag> you will use the "--to-branch <tag>" with, because it
-finds the branch whose tip exactly points at the tag.
-
-You can use the command exactly once for the <tag> and check out
-that branch, but then what?  Once you start working on that branch,
-you would by definition no longer have a suitable branch that can be
-used to with "--to-branch <tag>", because (1) it was the only one
-that pointed at <tag> or you'd have gotten an error, and (2) you
-have moved the tip of the branch so it no longer points at the tag.
-And you'd expect the user to say "git branch <next-branch> <tag>" in
-preparation for the next time you might want to use "--to-branch
-<tag>" and keep that pristine?
-
-I do not think of any similar counterpart in "teach checkout <name>
-to dwim and fork from a remote-tracking branch from a remote, if
-there is no other remote with a branch with that name" DWIMming to
-these nonsense.
-
+Let me know if you'd like a clean patch off of master. Please give the
+other patch
+a look though, as I've addressed outstanding comments.
