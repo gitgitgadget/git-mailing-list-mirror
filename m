@@ -2,97 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28865C433EF
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 23:20:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92BC6C433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 23:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244154AbhLMXUL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 18:20:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52314 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237678AbhLMXUL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 18:20:11 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 009AAC06173F
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 15:20:11 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id n19-20020a056a0007d300b004acbc929796so10885632pfu.18
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 15:20:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=cWtaMkUEvZYJzTOoZpD2tQwjx5SKbFheABjL7kFfYKM=;
-        b=FXTY7q+X/1xr1YGu3oV0EU6UGdKJgjDOtx3vXVUizKmYDUs3kclit5U5oUWlLJxN0P
-         IF46BfgFr/IKgTk8nNkWcTmJ+I460ukU5w6Cpe+4hakVfArAgkrCBPJgVkIOnVo5xZ2S
-         smk9rdnGnzzLNUyIOqwF8SOLNgvmSUeGq7PuV2Ww++WJrdptfge01QC0sDDt1jNJpcgG
-         xr4N0auu24o2K5anyzRXWok/x/1DaYV/R7ITRPqUNlp1d4oTsxFe0+iLRCAoAQy8KN5C
-         cDarHwl3Scc8YbSb4VfR5OF6RllMhXD7Vrh93E2LWdqIsKCQwWZZaUTFBvUlxfDQwGvo
-         s87g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=cWtaMkUEvZYJzTOoZpD2tQwjx5SKbFheABjL7kFfYKM=;
-        b=rURBsMLIDCprcWNTjlmo7npYXyG1lszGmLaWgE4deb9dw07Q/rPWNeIOYn9ovAfhW9
-         6a7lKmCPZ7bDNcNvvK517beziqoNktMlA/GVwi7jJRPzQQ+i/+jrQb8mVSa4G6npkcLV
-         cP6mOdC/ZJLDdJynucbzJzrIHB6r3SVmL5AHuhWTcALUvwLGjtQs94mIw4nUGdRLhAKm
-         mqdE0j+JkF3XHLn5BR+bjAlYwzKFBEcj4L7lT0VoAB2NPLJQX5CaXnQZKu0z0Be5LShy
-         15yQ8Zur+PbRnQ2v9F5EdYxv1jeTAxFWfPzR8hmPKQxkF2JhbR1e0A0nQvWW4o9J71D3
-         TS1w==
-X-Gm-Message-State: AOAM531jVVBuLrKTocf9km2znH4C2oSz0z4P7QJ+D/2JfsmvPwapNFBr
-        JJlUwDyopbyeU6+nCYAniL8EuMAn0NK0j1yWyBIE
-X-Google-Smtp-Source: ABdhPJx+ij6zjeeZm5V5xf8s/5gNxTIRieGYq/w2aGHjMljiucBoBxfFtEeHNXkDl7ESAHdy0MvRdLqKRUlVchoxsJPh
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:903:2449:b0:142:b3c:f9c6 with
- SMTP id l9-20020a170903244900b001420b3cf9c6mr1240767pls.77.1639437610336;
- Mon, 13 Dec 2021 15:20:10 -0800 (PST)
-Date:   Mon, 13 Dec 2021 15:20:08 -0800
-In-Reply-To: <kl6lee6la07a.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-Id: <20211213232008.771414-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <kl6lee6la07a.fsf@chooglen-macbookpro.roam.corp.google.com>
-X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
-Subject: Re: [PATCH v3 0/5] implement branch --recurse-submodules
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     chooglen@google.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, steadmon@google.com,
-        emilyshaffer@google.com, avarab@gmail.com,
-        levraiphilippeblain@gmail.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        id S243014AbhLMXfD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 18:35:03 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56978 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242230AbhLMXfC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 18:35:02 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 002F415F168;
+        Mon, 13 Dec 2021 18:35:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BE35RYy/dotmMWq0X2BE4EuMJcS8Khc/uf3Yd6
+        idKj4=; b=d/1RxFasIzW58eEO7jyIE5741MfgJVUN3E0WdLH3xlxXAY5qg3IKs/
+        HVj5bdTgl+DC6wXCtEedzjQN0svpwqycr72H58WY1pFbMB2rGeuhMAVCcX7sSEvy
+        /+MI1pXzbUMPvZbIt1ZWeyN3c8NyEI+DopgHyJWXw08T1as2/gbrY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E355415F167;
+        Mon, 13 Dec 2021 18:35:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3ABC415F164;
+        Mon, 13 Dec 2021 18:34:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+Cc:     git@vger.kernel.org,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Luke Diamand <luke@diamand.org>,
+        Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>
+Subject: Re: [PATCH 4/4] git-p4: resolve RCS keywords in binary
+References: <20211213225441.1865782-1-jholdsworth@nvidia.com>
+        <20211213225441.1865782-5-jholdsworth@nvidia.com>
+Date:   Mon, 13 Dec 2021 15:34:56 -0800
+In-Reply-To: <20211213225441.1865782-5-jholdsworth@nvidia.com> (Joel
+        Holdsworth's message of "Mon, 13 Dec 2021 22:54:41 +0000")
+Message-ID: <xmqqzgp484f3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 48B3B316-5C6D-11EC-8000-98D80D944F46-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > Glen Choo <chooglen@google.com> writes:
-> >> This version is functionally identical to v2. I've only addressed
-> >> feedback around code organization, i.e. the the merge conflict with
-> >> js/branch-track-inherit and making patch 1 easier to review. Thus, some
-> >> discussions on [1] are still unaddressed.
-> >
-> > I do notice that some of my comments on "add --recurse-submodules option
-> > for branch creation" are still unaddressed so I'll hold off review until
-> > they are.
-> 
-> Are you referring to your comments on v1 [1]? If so, I believe I had
-> addressed them all in v2 (and v3 is mostly a reorganization of v2).
-> 
-> Let me know what you think is unaddressed :)
-> 
-> [1] https://lore.kernel.org/git/20211124013153.3619998-1-jonathantanmy@google.com
+Joel Holdsworth <jholdsworth@nvidia.com> writes:
 
-Ah...I just saw that you are creating branches through a remote helper
-[1] and are still using tree_entry() non-recursively [2] (to be
-specific, I think we need a test where the submodule is at
-$ROOT/foo/bar, not just $ROOT/foo), and saw your cover letter that said
-that some comments were unaddressed, and jumped to a conclusion. Looking
-back, I think that these are my only unaddressed comments.
+> RCS keywords are strings that will are replaced with information from
+> Perforce. Examples include $Date$, $Author$, $File$, $Change$ etc.
+>
+> Perforce resolves these by expanding them with their expanded values
+> when files are synced, but Git's data model requires these expanded
+> values to be converted back into their unexpanded form.
+>
+> Previously, git-p4.py would implement this behaviour through the use of
+> regular expressions. However, the regular expression substitution was
+> applied using decoded strings i.e. the content of incoming commit diffs
+> was first decoded from bytes into UTF-8, processed with regular
+> expressions, then converted back to bytes.
+>
+> Not only is this behaviour inefficient, but it is also a cause of a
+> common issue caused by text files containing invalid UTF-8 data. For
+> files created in Windows, CP1252 Smart Quote Characters (0x93 and 0x94)
+> are seen fairly frequently. These codes are invalid in UTF-8, so if the
+> script encountered any file containing them, on Python 2 the symbols
+> will be corrupted, and on Python 3 the script will fail with an
+> exception.
 
-[1] I said "If you want to use setup_tracking() through
-submodule--helper, I think that needs an explanation as to why a Git
-command wouldn't work." in
-https://lore.kernel.org/git/20211129210140.937875-1-jonathantanmy@google.com/
+Makes sense, and I am with others who commented on the previous
+discussion thread that the right approach to take is to take the
+stuff coming from Perforce as byte strings, process them as such and
+write them out as byte strings, UNLESS we positively know what the
+source and destination encodings are.
 
-[2] Discussed in
-https://lore.kernel.org/git/20211123021223.3472472-1-jonathantanmy@google.com/
+And this change we see here, matching with patterns, is perfectly in
+line with that direction.  Very nice.
+
+>          try:
+> -            with os.fdopen(handle, "w+") as outFile, open(file, "r") as inFile:
+> +            with os.fdopen(handle, "wb") as outFile, open(file, "rb") as inFile:
+
+We seem to have lost "w+" and now it is "wb".  I do not see a reason
+to make outFile anything but write-only, so the end result looks
+good to me, but is it an unrelated "bug"fix that should be explained
+as such (e.g. "there is no reason to make outFile read-write, so
+instead of using 'w+' just use 'wb' while we make it unencoded
+output by adding 'b' to it")?
