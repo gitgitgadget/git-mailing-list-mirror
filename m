@@ -2,110 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B2D9C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 22:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E96A5C433EF
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 22:03:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239831AbhLMWCX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 17:02:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33902 "EHLO
+        id S239148AbhLMWDc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 17:03:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236151AbhLMWCX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 17:02:23 -0500
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 275F9C061574
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 14:02:23 -0800 (PST)
-Received: by mail-pg1-x535.google.com with SMTP id d11so7075938pgl.1
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 14:02:23 -0800 (PST)
+        with ESMTP id S231941AbhLMWDb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 17:03:31 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A1ECC061574
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 14:03:31 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id k4so12159800plx.8
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 14:03:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/NNEmJ33JNjTwX0v5yHhMFr5MC3akMgoee5ApQuszI8=;
-        b=UOx/2AoO/OHBIJL9jgNhpHXAUskExrZ8vaxg58Q6I/w1DtC25iO7nepUrkgoj88qaG
-         GyPNVqA2nqG5H2F2p1KlRew31L6OIqRgr3Cahk8/a7oXlXu2xomP3qZ763p+wMyLJWYi
-         GxP35szwyvdj5N+R0CddeqFGJVSgQmDcz7GgnlwxpQ5JuGkL+Dti9ScrRc6gtqSqTHnC
-         yWnaNdQUzzKrpc/i7Wj2PsMMYw3glN4Ny3448DPuHX2T+/Xrdj70D7ov3ViHfzWdeKFl
-         LZh51PABF8k1K9kzA4H244WCz8O8jC3JJBkctTLAzYUUOv9KK56zkH/NoWjVIxNKR8lR
-         AESQ==
+        d=skydio.com; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mBrShAYrDyWiG6zueyDaVBiODxw+Assahd5lIC7YI2Q=;
+        b=SCdiLtjqGHE4XR2HTNgH4tAUqbSYK9H+7W/lmUHOWJ7SiLTq/Kp2lJBZx5JIrwHDkU
+         1VcWwFo0PZucFk0piKJkEUggKLfalT51lFvhhexvKQp391idmPzNItYDzGWcjSdyzPaH
+         I4OPKq9tb/QIlOe1FW1RHKAjGhRiwFWkkBcmw6Y50fYjj8A8JGFHdc1k0dXYinrf2r8r
+         cIiiPaPf/jg/cbPj3xKwD89WLSiw92iKZNMxq/LFSHZuVGbo8BWi5NF70uByXaPx084w
+         uuC6oIz5VE3n3pE2j9xyKtWQJ787RjE6wSbAPzqttcjKmtG3c2XnEC+j7RbzuiNx2ZHK
+         425Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=/NNEmJ33JNjTwX0v5yHhMFr5MC3akMgoee5ApQuszI8=;
-        b=ipi838wl4rcxylq7LjWcC0N3BJiNwJpMQoQQ7SslunvOQua+8KJZFmsp42FiEDXKdK
-         8FFC16OWEol4mlDYosPpHCRlIQLdy9c+XQb6l2eRhUsC5HKyitJIg5BjXSyw1NZUL5IM
-         sHrthOb2hnW/mIG7adS7my3otPY9MI1/CkfdLvH7WsJvUrVaAe/VVlqCviq7BV6pu/wf
-         Nc0qvvaXhu4NkU72lecAytQfowwaVfLe9QDOXHah+m6TTZS0b0Q7n9P3+fS1p7+B+iSF
-         8qtd4QdPtv0nIdXWX/XCArkAhbCq/c5TsUdUOxyq14BpnTSVazCqhDRQUeRu2xbPvrdN
-         enIA==
-X-Gm-Message-State: AOAM530qTz9rlzJ2ptoOHnAfwrFhHcO/qJfFQ1RBJcuqW4YkqQ1bAsy7
-        vsMJj7PVFVxBXATrU0UsdNYsXQ==
-X-Google-Smtp-Source: ABdhPJzj+xLTJSgyF9DISGbHkyq8W1lK3BJx/JKjpGj7W5QNFv1MChe6AgAlhqIm0kLKVrHDH5cUPg==
-X-Received: by 2002:a63:cf04:: with SMTP id j4mr948548pgg.278.1639432942398;
-        Mon, 13 Dec 2021 14:02:22 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:323c:e811:1713:53ca])
-        by smtp.gmail.com with ESMTPSA id f8sm13599594pfv.135.2021.12.13.14.02.21
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mBrShAYrDyWiG6zueyDaVBiODxw+Assahd5lIC7YI2Q=;
+        b=Li9IeCexV0SbF9TrsjyR8xW4ygQV9+ffPyengK/WjhhgSWgwGDpDic7oqpBil//2OI
+         wY79SqIkKk4pqBw9zt4HJnEdAzdNRNFU0wh3/kkok2y8CA5rpAGU0NU5y24lfzVr6wKy
+         6bdsni5+cnCafKt2onESeOoc/sxhxaHAHPvu1JPmdzRJQRScQBV1U0b3xfee5eSrArWS
+         AxYlWtb0DCK8/wrNyHmNM1mkA8HEl95oWpOZ2kT8S9I7EtSB99z5n7VJqozAb3wZW98I
+         P9mopG5E6667DYBFvm2JCl325OEvyAzVdD7Vc+XiiBze1sX7JfV/dc+SIDBY4MW9MWJn
+         jxIg==
+X-Gm-Message-State: AOAM531KTZfwjEMTFXYn6GzKs1Bh4hSZKaSussFHVj3QCkB/UA4x5rso
+        cU30gHXSFXmHjaJ4/ItGbpFQSOxFIxonog==
+X-Google-Smtp-Source: ABdhPJyH2Sz6f1P0to9DARhNfksiF4irWtbs/M7IkBv9CAzbKw3Dv2T56b60M42wFsmO+MvDN3yAtw==
+X-Received: by 2002:a17:902:7c8a:b0:143:bb4a:7bb3 with SMTP id y10-20020a1709027c8a00b00143bb4a7bb3mr1604855pll.46.1639433010450;
+        Mon, 13 Dec 2021 14:03:30 -0800 (PST)
+Received: from jerry-desktop2.localdomain ([50.236.240.214])
+        by smtp.gmail.com with ESMTPSA id e14sm14691905pfv.18.2021.12.13.14.03.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 14:02:21 -0800 (PST)
-Date:   Mon, 13 Dec 2021 14:02:15 -0800
-From:   Josh Steadmon <steadmon@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        bagasdotme@gmail.com
-Subject: Re: [PATCH] l10n: README: call more attention to plural strings
-Message-ID: <YbfC5/+Q7lPp0G2i@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jiang Xin <worldhello.net@gmail.com>, bagasdotme@gmail.com
-References: <25107068cbbf8c9ce6886e66e25dff19e072583f.1639425295.git.steadmon@google.com>
- <xmqqa6h4b24o.fsf@gitster.g>
+        Mon, 13 Dec 2021 14:03:30 -0800 (PST)
+From:   Jerry Zhang <jerry@skydio.com>
+To:     git@vger.kernel.org, gitster@pobox.com
+Cc:     Jerry Zhang <jerry@skydio.com>
+Subject: [PATCH V3 1/2] git-apply: add --quiet flag
+Date:   Mon, 13 Dec 2021 14:03:26 -0800
+Message-Id: <20211213220327.16042-1-jerry@skydio.com>
+X-Mailer: git-send-email 2.34.1.186.g7a78fc126e
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa6h4b24o.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021.12.13 13:56, Junio C Hamano wrote:
-> Josh Steadmon <steadmon@google.com> writes:
-> 
-> > In po/README.md, we point core developers to gettext's "Preparing
-> > Strings" documentation for advice on marking strings for translation.
-> > However, this doc doesn't really discuss the issues around plural form
-> > translation, which can make it seem that nothing special needs to be
-> > done in this case.
-> >
-> > Add a specific callout here about marking plural-form strings so that
-> > the advice later on in the README is not overlooked.
-> >
-> > Signed-off-by: Josh Steadmon <steadmon@google.com>
-> > ---
-> >  po/README.md | 5 ++++-
-> >  1 file changed, 4 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/po/README.md b/po/README.md
-> > index dcd8436c25..fd1e024dd3 100644
-> > --- a/po/README.md
-> > +++ b/po/README.md
-> > @@ -219,7 +219,10 @@ General advice:
-> >    they're part of Git's API.
-> >  
-> >  - Adjust the strings so that they're easy to translate. Most of the
-> > -  advice in `info '(gettext)Preparing Strings'` applies here.
-> > +  advice in `info '(gettext)Preparing Strings'` applies here. Strings
-> > +  referencing numbers of items may need to be split into singular and
-> > +  plural forms; see the Q\_() wrapper in the C sub-section below for an
-> > +  example.
-> >  
-> >  - If something is unclear or ambiguous you can use a "TRANSLATORS"
-> >    comment to tell the translators what to make of it. These will be
-> 
-> Sounds good to me, but I'd want an ack by those from the l10n
-> department.
-> 
-> Thanks.
+Replace OPT_VERBOSE with OPT_VERBOSITY.
 
-Hmm, I meant to CC both Jiang and Bagas, not sure why it didn't go
-through.
+This adds a --quiet flag to "git apply" so
+the user can turn down the verbosity.
+
+Signed-off-by: Jerry Zhang <jerry@skydio.com>
+---
+V2->V3 
+- Reorganized into a patch series to capture
+dependencies between 2 git apply changes.
+
+ Documentation/git-apply.txt | 7 ++++++-
+ apply.c                     | 2 +-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index aa1ae56a25..a32ad64718 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -14,11 +14,11 @@ SYNOPSIS
+ 	  [--allow-binary-replacement | --binary] [--reject] [-z]
+ 	  [-p<n>] [-C<n>] [--inaccurate-eof] [--recount] [--cached]
+ 	  [--ignore-space-change | --ignore-whitespace]
+ 	  [--whitespace=(nowarn|warn|fix|error|error-all)]
+ 	  [--exclude=<path>] [--include=<path>] [--directory=<root>]
+-	  [--verbose] [--unsafe-paths] [<patch>...]
++	  [--verbose | --quiet] [--unsafe-paths] [<patch>...]
+ 
+ DESCRIPTION
+ -----------
+ Reads the supplied diff output (i.e. "a patch") and applies it to files.
+ When running from a subdirectory in a repository, patched paths
+@@ -226,10 +226,15 @@ behavior:
+ --verbose::
+ 	Report progress to stderr. By default, only a message about the
+ 	current patch being applied will be printed. This option will cause
+ 	additional information to be reported.
+ 
++-q::
++--quiet::
++	Suppress stderr output. Messages about patch status and progress
++	will not be printed.
++
+ --recount::
+ 	Do not trust the line counts in the hunk headers, but infer them
+ 	by inspecting the patch (e.g. after editing the patch without
+ 	adjusting the hunk headers appropriately).
+ 
+diff --git a/apply.c b/apply.c
+index 64b226acd9..9f00f882a2 100644
+--- a/apply.c
++++ b/apply.c
+@@ -5071,11 +5071,11 @@ int apply_parse_options(int argc, const char **argv,
+ 			N_("don't expect at least one line of context")),
+ 		OPT_BOOL(0, "reject", &state->apply_with_reject,
+ 			N_("leave the rejected hunks in corresponding *.rej files")),
+ 		OPT_BOOL(0, "allow-overlap", &state->allow_overlap,
+ 			N_("allow overlapping hunks")),
+-		OPT__VERBOSE(&state->apply_verbosity, N_("be verbose")),
++		OPT__VERBOSITY(&state->apply_verbosity),
+ 		OPT_BIT(0, "inaccurate-eof", options,
+ 			N_("tolerate incorrectly detected missing new-line at the end of file"),
+ 			APPLY_OPT_INACCURATE_EOF),
+ 		OPT_BIT(0, "recount", options,
+ 			N_("do not trust the line counts in the hunk headers"),
+-- 
+2.32.0.1314.g6ed4fcc4cc
+
