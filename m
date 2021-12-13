@@ -2,352 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8D68C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 08:05:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 957DDC433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 08:42:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232700AbhLMIFk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 03:05:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33132 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232681AbhLMIFj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 03:05:39 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43FC8C06173F
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 00:05:39 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id v1so49627163edx.2
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 00:05:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=meifT4sX13HfPzMQXzW/BAJ1y5v8toh0WRe0kP8Vnx4=;
-        b=KoiuJJHOc5awzVc52xRA7ApkWbIlR+EmXKKTFJx1lITj3GEMh9652kUxCHV/2eBNej
-         YoucqdnCs9O6MmQLyUsakZ3rbGbMDtHiR3qErgMl58J7EgRXBZ20xCisU4avShaqFEjg
-         K2EMI+g3j9sE/fnxvejk/tv4GKgqmhAn0n1eDnLZRTX8JrWpO7EYWzfBMYHuX+yPStNP
-         qyufRTM9KuuV/ezC7CgGPHaX1JWL9g5W6VVyfIowO5eS21G16FWgWxlH7Gft4bqcPFSk
-         90MWcgcBqxRQpdX2qqJYhCiatsREyCP1PeQsODz8xl9bGECBOptE3/TRMcVfR2KHAwLx
-         QDWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=meifT4sX13HfPzMQXzW/BAJ1y5v8toh0WRe0kP8Vnx4=;
-        b=TcRh9KNYPcJpQY4YIJFyktNTMFzFOfux97ecttn4FY2IpyG7oEOMJVdjY4oNCIhCIl
-         vz4QZP6fwQ5HdeIQf+z2hf0Oyzx5m3kfrE0E6LOm1ywlH65dRCe+wrypRusiUO6ajUx/
-         he8J1fp3+sN3j4sJlQgSSt7ApNzhfnjFEiu5DIaRpnjLQVbdbIwOg2+qIK09vjLypFZu
-         QR25G5xq8pYfTb5445S+Wrtn7KgjdPdx+WlJbjAlaGzgsf9Ndk8wH2hTvmh/miYKA4Uz
-         YX3kQWovOoHSHE4A6w876df9dAdu+VB9NME9h2+JEgDxwYXLfL53hwMtlAqTyYIdC7n6
-         d+LA==
-X-Gm-Message-State: AOAM533F6w3ZMrck82/WRzU+DRU6Ld5uj554+cv4Bl2YBxX0TjX9Bixd
-        4q7CTrT/2QCPS+3qr2HwJbU=
-X-Google-Smtp-Source: ABdhPJxe16gNwpQBZaxMgC3C+Ljz9gdsSAqCXtGdCehBq9/OUw8UoJuv9V/lUiXhl3IxV7ICGH7rJA==
-X-Received: by 2002:a17:907:7805:: with SMTP id la5mr41986518ejc.188.1639382737609;
-        Mon, 13 Dec 2021 00:05:37 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id m25sm5798806edj.80.2021.12.13.00.05.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 00:05:37 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mwgL2-000l8s-BL;
-        Mon, 13 Dec 2021 09:05:36 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han Xin <chiyutianyi@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Philip Oakley <philipoakley@iee.email>,
+        id S231644AbhLMImn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 03:42:43 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55854 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231828AbhLMImk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 03:42:40 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EB3E2F8126;
+        Mon, 13 Dec 2021 03:42:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=Io4CF9mIubzrHycIw5g6zFwgmCKyfMAbxPnnM4CqMjg=; b=Q3rx
+        HwsPqa72jwQp9Fu9B0OHirvBETMS8VASgOGvDx3uAbhv9aDQUsNMEpzLn/dQA//p
+        EgdC+3D97r/nxQh2T3OlBXvW8fZ9I93F8a9qt8lQVSZ1SuWEOUWjv6rmxq0xDHAC
+        Vcf7n+mryxxJnhuEGJJQnS+dFCQXqwDudp6O0LY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E0EBDF8125;
+        Mon, 13 Dec 2021 03:42:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 507D8F8123;
+        Mon, 13 Dec 2021 03:42:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <stolee@gmail.com>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: Re: [PATCH v5 2/6] object-file.c: handle undetermined oid in
- write_loose_object()
-Date:   Mon, 13 Dec 2021 08:32:58 +0100
-References: <20211203093530.93589-1-chiyutianyi@gmail.com>
- <20211210103435.83656-3-chiyutianyi@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20211210103435.83656-3-chiyutianyi@gmail.com>
-Message-ID: <211213.86bl1l9bfz.gmgdl@evledraar.gmail.com>
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Theodore Ts'o <tytso@mit.edu>, Matt Rogers <mattr94@gmail.com>
+Subject: Re: [RFC/PATCH] Makefile: add test-all target
+References: <pull.1005.v9.git.1638273289.gitgitgadget@gmail.com>
+        <pull.1005.v10.git.1638538470.gitgitgadget@gmail.com>
+        <CABPp-BGpe9Q5k22Yu8a=1xwu=pZYSeNQoqEgf+DN07cU4EB1ew@mail.gmail.com>
+        <xmqq4k7nmksi.fsf@gitster.g>
+        <211207.86ilw0matb.gmgdl@evledraar.gmail.com>
+        <xmqqh7bi27o9.fsf@gitster.g> <xmqq8rwu278d.fsf_-_@gitster.g>
+        <nycvar.QRO.7.76.6.2112110003530.90@tvgsbejvaqbjf.bet>
+Date:   Mon, 13 Dec 2021 00:42:37 -0800
+Message-ID: <xmqqh7bcgaki.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A06E53C2-5BF0-11EC-9124-C48D900A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, Dec 10 2021, Han Xin wrote:
-
-> From: Han Xin <hanxin.hx@alibaba-inc.com>
+>> Teach the main Makefile a "test-extra" target, which goes into each
+>> package in contrib/ whose Makefile has its own "test" target and
+>> runs "make test" there.  Add a "test-all" target to make it easy to
+>> drive both the primary tests and these contrib tests from CI and use
+>> it.
 >
-> When streaming a large blob object to "write_loose_object()", we have no
-> chance to run "write_object_file_prepare()" to calculate the oid in
-> advance. So we need to handle undetermined oid in function
-> "write_loose_object()".
->
-> In the original implementation, we know the oid and we can write the
-> temporary file in the same directory as the final object, but for an
-> object with an undetermined oid, we don't know the exact directory for
-> the object, so we have to save the temporary file in ".git/objects/"
-> directory instead.
->
-> The promise that "oid" is constant in "write_loose_object()" has been
-> removed because it will be filled after reading all stream data.
->
-> Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-> ---
->  object-file.c | 48 +++++++++++++++++++++++++++++++++++++++---------
->  1 file changed, 39 insertions(+), 9 deletions(-)
->
-> diff --git a/object-file.c b/object-file.c
-> index 06375a90d6..41099b137f 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1860,11 +1860,11 @@ static int create_tmpfile(struct strbuf *tmp, con=
-st char *filename)
->  	return fd;
->  }
->=20=20
-> -static int write_loose_object(const struct object_id *oid, char *hdr,
-> +static int write_loose_object(struct object_id *oid, char *hdr,
->  			      int hdrlen, const void *buf, unsigned long len,
->  			      time_t mtime, unsigned flags)
->  {
-> -	int fd, ret;
-> +	int fd, ret, err =3D 0;
->  	unsigned char compressed[4096];
->  	git_zstream stream;
->  	git_hash_ctx c;
-> @@ -1872,16 +1872,21 @@ static int write_loose_object(const struct object=
-_id *oid, char *hdr,
->  	static struct strbuf tmp_file =3D STRBUF_INIT;
->  	static struct strbuf filename =3D STRBUF_INIT;
->=20=20
-> -	loose_object_path(the_repository, &filename, oid);
-> +	if (flags & HASH_STREAM)
-> +		/* When oid is not determined, save tmp file to odb path. */
-> +		strbuf_addf(&filename, "%s/", get_object_directory());
-> +	else
-> +		loose_object_path(the_repository, &filename, oid);
->=20=20
->  	fd =3D create_tmpfile(&tmp_file, filename.buf);
->  	if (fd < 0) {
->  		if (flags & HASH_SILENT)
-> -			return -1;
-> +			err =3D -1;
->  		else if (errno =3D=3D EACCES)
-> -			return error(_("insufficient permission for adding an object to repos=
-itory database %s"), get_object_directory());
-> +			err =3D error(_("insufficient permission for adding an object to repo=
-sitory database %s"), get_object_directory());
->  		else
-> -			return error_errno(_("unable to create temporary file"));
-> +			err =3D error_errno(_("unable to create temporary file"));
-> +		goto cleanup;
->  	}
->=20=20
->  	/* Set it up */
-> @@ -1923,12 +1928,34 @@ static int write_loose_object(const struct object=
-_id *oid, char *hdr,
->  		die(_("deflateEnd on object %s failed (%d)"), oid_to_hex(oid),
->  		    ret);
->  	the_hash_algo->final_oid_fn(&parano_oid, &c);
-> -	if (!oideq(oid, &parano_oid))
-> +	if (!(flags & HASH_STREAM) && !oideq(oid, &parano_oid))
->  		die(_("confused by unstable object source data for %s"),
->  		    oid_to_hex(oid));
+> That sends a strong message that the stuff in contrib/ is now fully under
+> your maintenance, i.e. first-class supported.
 
-Here we don't have a meaningful "const" OID anymore, but still if we die
-we use the "oid".=20
+I do not think running tests on stuff in contrib/ sends any such
+message.  It primarily helps _us_ to catch more regressions than we
+may otherwise miss.  By the way, this is not limited to contrib/; if
+we had tests for gitk, we would have caught the recent regression in
+"diff -m" before it got inflicted on the general public, but that
+would not have been just to help "gitk", but to help keep "diff -m"
+sane and stable [*].
 
->  	close_loose_object(fd);
->=20=20
-> +	if (flags & HASH_STREAM) {
-> +		int dirlen;
-> +
-> +		oidcpy((struct object_id *)oid, &parano_oid);
+By running tests on in-tree contrib/ like scalar, at least we would
+notice when we are making breaking changes.  At least, the need for
+scalar (either for the API broken by such a change to be kept
+unchanged or done in a different way, or the code that uses the API
+on the scalar side to be updated) would be noticed earlier than
+stuff totally outside and not even in contrib/.
 
-This cast isn't needed anymore now that you stripped the "const" off,
-but more on that later...
+Of course, you have to bear the burden of (A) changing the way
+scalar uses the API, or (B) participating in the design of the
+change to the API that may break scalar's use so that everybody
+including scalar would be happy, or both.  It's not like I am
+responsible for everything that happens in the tree, and it is our
+shared responsibility to maintain the health of the codebase.  It is
+not limited to stuff inside or outside contrib/.
 
-> +		loose_object_path(the_repository, &filename, oid);
-> +
-> +		/* We finally know the object path, and create the missing dir. */
-> +		dirlen =3D directory_size(filename.buf);
-> +		if (dirlen) {
-> +			struct strbuf dir =3D STRBUF_INIT;
-> +			strbuf_add(&dir, filename.buf, dirlen - 1);
-> +			if (mkdir(dir.buf, 0777) && errno !=3D EEXIST)
-> +				err =3D -1;
-> +			else if (adjust_shared_perm(dir.buf))
-> +				err =3D -1;
-> +			else
-> +				strbuf_release(&dir);
-> +			if (err < 0)
-> +				goto cleanup;
+There are projects that want to use libgit.a by binding us as a
+submodule and without interacting with us very much.  And they are
+on their own when we change the internals.  Do you mean that you
+want to make scalar into the same status as they are?
 
-Can't we use one of the existing utility functions for this? Testing
-locally I could replace this with:
-=09
-	diff --git a/object-file.c b/object-file.c
-	index 7c93db11b2d..05e1fae893d 100644
-	--- a/object-file.c
-	+++ b/object-file.c
-	@@ -1952,14 +1952,11 @@ static int write_loose_object(struct object_id *oi=
-d, char *hdr,
-	 		if (dirlen) {
-	 			struct strbuf dir =3D STRBUF_INIT;
-	 			strbuf_add(&dir, filename.buf, dirlen - 1);
-	-			if (mkdir(dir.buf, 0777) && errno !=3D EEXIST)
-	+=09=09=09
-	+			if (mkdir_in_gitdir(dir.buf) < 0) {
-	 				err =3D -1;
-	-			else if (adjust_shared_perm(dir.buf))
-	-				err =3D -1;
-	-			else
-	-				strbuf_release(&dir);
-	-			if (err < 0)
-	 				goto cleanup;
-	+			}
-	 		}
-	 	}
+> Not that it needs more review, I don't think, as both Stolee and Elijah
+> gave their thumbs-up already, and I've not received any feedback that
+> would require further changes to `scalar.c`, at least as of _this_ patch
+> series.
 
-And your tests still pass. Maybe they have a blind spot, or maybe we can
-just use the existing function.
-=09=20
-> +		}
-> +	}
-> +
->  	if (mtime) {
->  		struct utimbuf utb;
->  		utb.actime =3D mtime;
-> @@ -1938,7 +1965,10 @@ static int write_loose_object(const struct object_=
-id *oid, char *hdr,
->  			warning_errno(_("failed utime() on %s"), tmp_file.buf);
->  	}
->=20=20
-> -	return finalize_object_file(tmp_file.buf, filename.buf);
-> +	err =3D finalize_object_file(tmp_file.buf, filename.buf);
-> +cleanup:
-> +	strbuf_release(&filename);
-> +	return err;
->  }
+So that argues even more to have a way to make sure we catch
+unintended breakages by any future mindless tree-wide "clean-ups"
+and interface changes, no?
 
-Reading this series is an odd mixture of of things that would really be
-much easier to understand if they were combined, e.g. 1/6 adding APIs
-that aren't used by anything, but then adding one codepath (also
-unused), that we then use later. Could just add it at the same time as
-the use and the patch would be easier to read....
 
-...and then this, which *is* something that could be split up into an
-earlier cleanup step, i.e. the strbuf leak here exists before this
-series, fixing it is good, but splitting that up into its own patch
-would make this diff smaller & the actual behavior changes easier to
-reason about.
+[Footnote]
 
->  static int freshen_loose_object(const struct object_id *oid)
-> @@ -2015,7 +2045,7 @@ int force_object_loose(const struct object_id *oid,=
- time_t mtime)
->  	if (!buf)
->  		return error(_("cannot read object for %s"), oid_to_hex(oid));
->  	hdrlen =3D xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type),=
- (uintmax_t)len) + 1;
-> -	ret =3D write_loose_object(oid, hdr, hdrlen, buf, len, mtime, 0);
-> +	ret =3D write_loose_object((struct object_id*) oid, hdr, hdrlen, buf, l=
-en, mtime, 0);
->  	free(buf);
->=20=20
->  	return ret;
-
- ...on the "more on that later", here we're casting the "oid" from const
- for a function that's never going to be involved in the streaming
- codepath.
-
-I know I suggested the HASH_STREAM flag, but what I was really going for
-was "let's share more of the code?", looking at this v5 (which is
-already much better than v4) I think a better approach is to split up
-write_loose_object().
-
-I.e. it already calls close_loose_object() and finalize_object_file() to
-do some of its work, but around that we have:
-
- 1. Figuring out a path for the (temp) object file
- 2. Creating the tempfile
- 3. Setting up zlib
- 4. Once zlib is set up inspect its state, die with a message
-    about oid_to_hex(oid) if we failed
- 5. Optionally, do HASH_STREAM stuff
-    Maybe force a loose object if "mtime".
-
-I think if that's split up so that each of those is its own little
-function what's now write_loose_object() can call those in sequence, and
-a new stream_loose_object() can just do #1 differentl, followed by the
-same #2 and #4, but do #4 differently etc.
-
-You'll still be able to re-use the write_object_file_prepare()
-etc. logic.
-
-As an example your 5/6 copy/pastes the xsnprintf() formatting of the
-object header. It's just one line, but it's also code that's very
-central to git, so I think instead of just copy/pasting it a prep step
-of factoring it out would make sense, and that would be a prep cleanup
-that would help later readability. E.g.:
-=09
-	diff --git a/object-file.c b/object-file.c
-	index eac67f6f5f9..a7dcbd929e9 100644
-	--- a/object-file.c
-	+++ b/object-file.c
-	@@ -1009,6 +1009,13 @@ void *xmmap(void *start, size_t length,
-	 	return ret;
-	 }
-=09=20
-	+static int generate_object_header(char *buf, int bufsz, const char *type_=
-name,
-	+				  unsigned long size)
-	+{
-	+	return xsnprintf(buf, bufsz, "%s %"PRIuMAX , type_name,
-	+			 (uintmax_t)size) + 1;
-	+}
-	+
-	 /*
-	  * With an in-core object data in "map", rehash it to make sure the
-	  * object name actually matches "oid" to detect object corruption.
-	@@ -1037,7 +1044,7 @@ int check_object_signature(struct repository *r, con=
-st struct object_id *oid,
-	 		return -1;
-=09=20
-	 	/* Generate the header */
-	-	hdrlen =3D xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(obj_typ=
-e), (uintmax_t)size) + 1;
-	+	hdrlen =3D generate_object_header(hdr, sizeof(hdr), type_name(obj_type),=
- size);
-=09=20
-	 	/* Sha1.. */
-	 	r->hash_algo->init_fn(&c);
-	@@ -1737,7 +1744,7 @@ static void write_object_file_prepare(const struct g=
-it_hash_algo *algo,
-	 	git_hash_ctx c;
-=09=20
-	 	/* Generate the header */
-	-	*hdrlen =3D xsnprintf(hdr, *hdrlen, "%s %"PRIuMAX , type, (uintmax_t)len=
-)+1;
-	+	*hdrlen =3D generate_object_header(hdr, *hdrlen, type, len);
-=09=20
-	 	/* Sha1.. */
-	 	algo->init_fn(&c);
-	@@ -2009,7 +2016,7 @@ int force_object_loose(const struct object_id *oid, =
-time_t mtime)
-	 	buf =3D read_object(the_repository, oid, &type, &len);
-	 	if (!buf)
-	 		return error(_("cannot read object for %s"), oid_to_hex(oid));
-	-	hdrlen =3D xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), =
-(uintmax_t)len) + 1;
-	+	hdrlen =3D generate_object_header(hdr, sizeof(hdr), type_name(type), len=
-);
-	 	ret =3D write_loose_object(oid, hdr, hdrlen, buf, len, mtime, 0);
-	 	free(buf);
-
-Then in your change on top you just call that generate_object_header(),
-or better yet your amended write_object_file_flags() can just call a
-similarly amended write_object_file_prepare() directly.
+* I just double checked the candidates for "test-extra" to see if
+  they are meant to run with a random Git they happen to see on the
+  $PATH, or they are designed to test with the version of Git we
+  just built, and it seems it is the latter for the ones nominated
+  in the test-extra patch.  Otherwise it would indeed reduce the
+  benefit in half---we are not helping to catch regressions in the
+  core stuff in such a case.
