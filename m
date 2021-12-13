@@ -2,84 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB4AAC433F5
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 21:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B1B5C433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 21:38:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243125AbhLMVgo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 16:36:44 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58261 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235374AbhLMVgn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 16:36:43 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D7B34FCEDA;
-        Mon, 13 Dec 2021 16:36:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=7TDCBF/7l+E7
-        sDK3ilttn8qyMT8JyyV9p2Rrc/dgrTQ=; b=TOI37MwVPS1mzJssarX+0ijIA/P/
-        w4lwPB7bFCTrGq3nCYGl50HcEQzJ2TE6SAlEEDsF4mzKCWr7zmRVZz40DLhauS8f
-        Mzku9W+PHwAYmWVvDs+JGH3zu7SOpRlYYAwoUOxirRjEEfCznvKPtOwuA5pIcuvs
-        87282jF9G/kj2X8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF3A7FCED9;
-        Mon, 13 Dec 2021 16:36:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3F49EFCED5;
-        Mon, 13 Dec 2021 16:36:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] checkout: introduce "--to-branch" option
-References: <pull.1095.git.1639117329.gitgitgadget@gmail.com>
-        <254b352e31029d8151eb6a974fdf8c127340cf79.1639117329.git.gitgitgadget@gmail.com>
-        <xmqq5yrwm7km.fsf@gitster.g>
-        <CAOLTT8Rx9M9=a5M8UeDrJqMayTXo=dvdanVDLi7QLdPX8W_Tzw@mail.gmail.com>
-        <xmqqy24pk6f4.fsf@gitster.g>
-        <211213.86r1ag6ztx.gmgdl@evledraar.gmail.com>
-Date:   Mon, 13 Dec 2021 13:36:40 -0800
-In-Reply-To: <211213.86r1ag6ztx.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 13 Dec 2021 20:55:00 +0100")
-Message-ID: <xmqqr1agb313.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S239587AbhLMViG convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 13 Dec 2021 16:38:06 -0500
+Received: from mail-pl1-f181.google.com ([209.85.214.181]:43595 "EHLO
+        mail-pl1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235374AbhLMViG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 16:38:06 -0500
+Received: by mail-pl1-f181.google.com with SMTP id m24so12102413pls.10
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 13:38:06 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=kxnAcG2p0FFKD3H1OxcTRr8ZzMc7/sa/QIzsE6LHOLA=;
+        b=M+i7nyTvyVGbll0qQspLL64vEvRWsBHyB02CPAYezJw5p46hgy7o4bi7PS9lvVq8FA
+         UnHmCWOZlrHkuaGMyxDfARCC3f4Rc9mxKHd+Nryj/691G8uF6RP3H0EwIjcF6Cue+o02
+         bVPYV3cGC7UzJi9gWZbltyteDaF47ObiWuB9Br/mWXlay2/QJODzFRUZBS72xtIMKkj5
+         vc65FYVMOqbsU0/Uq06skYPDx7YL5QoVhd5Xzz0Z2ZFdvWUNMD1gc3FnUj5yjIZHT63u
+         NQ4U4ybv8OKUXzQb7zWZ5Ii4TB8SYdLENRzAKdqab27wFTYYE23pCU+urF3vZX4G6arH
+         ISAA==
+X-Gm-Message-State: AOAM532NNdc4PbcbrM+zv6o6sEVNDSDla/9C9ZF/QmXO89cePoC1+DdZ
+        3BJRSiqH1i3z52BVpSKPgxevynugNpVdksHOeXw=
+X-Google-Smtp-Source: ABdhPJx5T7Lgeqwvj8ETcnoC6YnABF4ltljHtNuDLymQfqOw4vOpI+eM4v3SmwXGHRQn/l7aFmjL5Dq4VCm/SMS9rKU=
+X-Received: by 2002:a17:90a:b107:: with SMTP id z7mr897566pjq.104.1639431485896;
+ Mon, 13 Dec 2021 13:38:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C32B82CE-5C5C-11EC-91FF-C48D900A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20211213063059.19424-1-sunshine@sunshineco.com>
+ <20211213063059.19424-6-sunshine@sunshineco.com> <20211213102224.y5psbojmivlxe5px@fs>
+ <CAPig+cSKn6wdPKc=b8Xjqy5D=bVdu6FQtYKJuwN2VoV7pEEgHw@mail.gmail.com>
+ <20211213154327.pmhopjbdlkz7dgjh@fs> <CAPig+cSXHBMgOUycL0cXuVCb_PJ2=x2w4wUkc7eQQueyk=0Uzw@mail.gmail.com>
+ <211213.86tufc8oop.gmgdl@evledraar.gmail.com> <CAPig+cR5Q2q=wdXuVBeP52=pAfvh6_4z__g-0JUGWq_7uor_Hg@mail.gmail.com>
+ <CAPig+cRkC=-dV_i1LJg3kZVVpR778YNyhpO6maHnH5zFH9zS6w@mail.gmail.com> <211213.86zgp470wa.gmgdl@evledraar.gmail.com>
+In-Reply-To: <211213.86zgp470wa.gmgdl@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 13 Dec 2021 16:37:55 -0500
+Message-ID: <CAPig+cRrX396RRGGhjMDB6ybNa0WxcAOY-BfW4FTE84R+ucLkQ@mail.gmail.com>
+Subject: Re: [PATCH 05/15] t/Makefile: optimize chainlint self-test
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Fabian Stelzer <fs@gigacodes.de>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon, Dec 13, 2021 at 2:36 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> On Mon, Dec 13 2021, Eric Sunshine wrote:
+> > Another less sledge-hammer approach would be to make t/Makefile
+> > respect GIT_TEST_CHAIN_LINT so that it doesn't run `check-chainlint`
+> > for `test` and `prove` when that variable is `0`. That would allow
+> > your `git rebase -i --exec` case to avoid the wasted extra overhead of
+> > `check-chainlint` (and chainlint in general).
+>
+> Yes, but I just don't see why it's needed.
+>
+> We need to build e.g. t/helpers/ to run the tests, and doing that is
+> probably always going to take eons of compilation times compared to
+> these assertions.
+>
+> But it's a one-off eon because we declare the dependency DAG and don't
+> recompile them unless the sources or their dependencies change. Likewise
+> for these chainlint tests we can (and maybe should) make them optional,
+> but as long as we're not needlessly running them when no changes have
+> happened...
 
-> I don't see how it's fundimentally different than the DWIM logic of
-> taking "<name>" and seeing that there's only one "refs/heads/<name>",
-> and giving up in other cases where we get ambiguous reference names tha=
-t
-> we can't resolve.
-
-In that example, once you obtained a local branch whose name is
-<name>, it is obvious how you would work with that.  Your next "git
-checkout <name>" would work on the local one, and only the initial
-one does something magical.
-
-Which makes quite a lot of sense.
-
-There is no similarity in it with "--to-branch <tag>" that is being
-discussed here.
-
-
-
+That's a good point, and the same observation applies to
+t/check-non-portable-shell.pl which is run unconditionally, as well,
+whenever `test` and `prove` are run.
