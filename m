@@ -2,96 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 815F6C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 16:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ED4AC433EF
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 16:29:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240774AbhLMQ1B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 11:27:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40478 "EHLO
+        id S240893AbhLMQ3v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 11:29:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240777AbhLMQ0z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 11:26:55 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03E31C061574
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:26:55 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id t5so53726585edd.0
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:26:54 -0800 (PST)
+        with ESMTP id S236632AbhLMQ3s (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 11:29:48 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78C1CC061574
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:29:48 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id t5so53754963edd.0
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:29:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=NiBufAq+JepzzeDivte+4hlpVPwe6B26SUlsgkhHgj0=;
-        b=hDAV7X2Jm9S8ZufaE3wN4usGZmJqM7SEPp6aquXTh1x2vHU2BmsTOhYDaZ0svsxrRr
-         sgmY2dHh6WztEEalorzJJDnivyOOsECiA5BtNL0Bj+MnlVjW9/YpO81a9JC62cHLRRQi
-         6s7MItjNnuuSSBiEySMbrM4i2Ao2qeoPUA+nwdBrAJO+dpXrPhjTPudLPvvRvUkNRgKx
-         EaapOM3cCNq5ftFGiAhgCmu9Rck06IlQLOmOUEOjqhzFSFoSee45Bi3Q5EnK/WTzEByn
-         uegCu9fxMJ9JR0zPwakIwTAVT60C+2/dbyxG/U+Suhr29gbXgT/pYkFA7ZC7hICRYbpB
-         J/6g==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=FrJPt2hoC28htuIgeAig3dIMlMqRzcUu5KBzyiW6lBw=;
+        b=LcNFfyfjBWlJKVg/vxW39WhT+aJTxcacarYadIafc+bOPYvE9q+/GL/dxrSsPK2Y/Y
+         7rdFnpzVqOKVoJ8P/AbX53pvWb1Ci5Z527yiMTnlPfN1oqKpGyb0W4ApUQUYa76JHjqz
+         2NgoEXJio6a2thseU88J98r9lRLQw7su1FSlnqWDMNbVdD6sBONRITgzjf/tVm783WUt
+         ie9ng8Vw7I0GcVdX5ebkRgtCp68ij/B+uR6DkJq3rtQd+BPIwwBbMFGbBnufDqp7YsIf
+         JI8WuAghAOX+iX5wnh9O8qHUGbmXGnA/HYrjbRD69e58pAxzVNA8zszkFRyTIkSJHYDJ
+         pwfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=NiBufAq+JepzzeDivte+4hlpVPwe6B26SUlsgkhHgj0=;
-        b=Ulkzg7UQDBBY6OoQ/uFEYZfsqeC3c/3DRkO74YeFwvnzKmfrEGPm85pm7kL6cOoiOK
-         58wYc2mpQaC7d51+oy5cduQb/Ne7YzKZGkRwYGF/KDM9r9LvYM0G6bKmR5ZDlOAhIgCF
-         UaFcHgagPIuTsPo07EBWFzn1W4Bn0hS+TSpLEkSe8DMCRwzxx6M6nlxQgorMPzcFZLzE
-         OoVCR3dPCKuJ5nR1AgYo94Okz0otcQSUQ0WuZCzIQTCr3lDanHfWVsDF0JPsJ4/jFWqm
-         6wxtFEl2phViQsbTZUiq2TLb9ldqUIObcS55TqraWmcVMzP9BN1CF4RIFdKJEh4ZKbJz
-         WItg==
-X-Gm-Message-State: AOAM53307zCcZt2m2NVuNL/76u8tp2XKXvXOJVwaip3p64A2BGp/6ldg
-        xITuTvR4ZNi3lXXYlgidoYReJjFfD95tvg==
-X-Google-Smtp-Source: ABdhPJwi8UfNh0kvYyK/hW1skYU9n9cv+ilwlihHM6qm+UMx1yjXRWivpF42cmEO9SJ9mDTFU44RQw==
-X-Received: by 2002:a17:907:1614:: with SMTP id hb20mr44554003ejc.299.1639412813311;
-        Mon, 13 Dec 2021 08:26:53 -0800 (PST)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=FrJPt2hoC28htuIgeAig3dIMlMqRzcUu5KBzyiW6lBw=;
+        b=kok7E2Vba9mtqJY/kWc7T2f6IHRGD3vTjcdscT/ToSCGUw3DggExhBDW5GXPifvhuq
+         lb2l+lzrUu4iArue2u14VtXh8werUlcWoA38FWCFXXTRzEzMvmuzgVlLPawQC1k5OryC
+         Yk/XBzxXRODqPZSF3C16BqW8wvgBNW6ERvrPGuaMx39CO6af7biwivv0DdJ9lLMJ5CeO
+         yi+2RU4ISTLqClLgk0zK+2l4sk+lTsejltQd9qEadmgK0HXVBP+qs035jKoJzOLDyQ3m
+         O23U2tdL+0S6CfcbPm/ti4PCqgD+3L0aBVJ/1TMTtSWFk1cvUlokJe4MHvz9kAIdpJiN
+         B9rA==
+X-Gm-Message-State: AOAM533LzESCJywbOBIHTSJJJHzTQqWeH1N93ZfbJWu9EBC29cWZl9fW
+        FTDZYTxKGtO+Zggll1Fhye0=
+X-Google-Smtp-Source: ABdhPJxnqX6r0xRcFU+BAEwTRxFRcqxv0YoZprmcfk27SeFdq9cItgLKw8Lwih3XQc3CNcTJ8yJTrA==
+X-Received: by 2002:a17:906:3b18:: with SMTP id g24mr44851074ejf.27.1639412986953;
+        Mon, 13 Dec 2021 08:29:46 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id b7sm6612565edj.24.2021.12.13.08.26.52
+        by smtp.gmail.com with ESMTPSA id p26sm6463515edt.94.2021.12.13.08.29.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 08:26:52 -0800 (PST)
+        Mon, 13 Dec 2021 08:29:46 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mwoA7-000uCO-IP;
-        Mon, 13 Dec 2021 17:26:51 +0100
+        id 1mwoCv-000uHb-7R;
+        Mon, 13 Dec 2021 17:29:45 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v3 09/11] reftable: drop stray printf in readwrite_test
-Date:   Mon, 13 Dec 2021 17:26:31 +0100
-References: <pull.1152.v2.git.git.1639000187.gitgitgadget@gmail.com>
- <pull.1152.v3.git.git.1639411309.gitgitgadget@gmail.com>
- <6b0af68f0b94fb96c81e25f9a1911fa05dcf07fd.1639411309.git.gitgitgadget@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 10/13] test-lib-functions: add and use a "write_hook"
+ wrapper
+Date:   Mon, 13 Dec 2021 17:29:34 +0100
+References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
+ <patch-10.13-ca55471d134-20211212T201308Z-avarab@gmail.com>
+ <CAPig+cSkiFd27o8uACdX9ftg=N2XukqNSU_Tt+7rWT08JD7CAQ@mail.gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <6b0af68f0b94fb96c81e25f9a1911fa05dcf07fd.1639411309.git.gitgitgadget@gmail.com>
-Message-ID: <211213.86czm08o8k.gmgdl@evledraar.gmail.com>
+In-reply-to: <CAPig+cSkiFd27o8uACdX9ftg=N2XukqNSU_Tt+7rWT08JD7CAQ@mail.gmail.com>
+Message-ID: <211213.868rwo8o3q.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Dec 13 2021, Han-Wen Nienhuys via GitGitGadget wrote:
+On Mon, Dec 13 2021, Eric Sunshine wrote:
 
-> From: Han-Wen Nienhuys <hanwen@google.com>
+> On Sun, Dec 12, 2021 at 4:24 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>> Add a "write_hook" wrapper for the common case of "write_script
+>> .git/hooks/<NAME>". This also accepts a "-C" option like
+>> "test_commit". Let's convert various trivial cases of "write_script"
+>> over to it.
+>> [...]
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+>> @@ -551,6 +551,32 @@ write_script () {
+>> +## Usage: write-hook pre-receive
+>> +## Usage: write-hook -C some-dir pre-receive
+>> +write_hook () {
+>> +       indir=3D &&
+>> +       while test $# !=3D 0
+>> +       do
 >
-> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-> ---
->  reftable/readwrite_test.c | 1 -
->  1 file changed, 1 deletion(-)
+> It's not clear whether the intention is to maintain the &&-chain in
+> this function...
 >
-> diff --git a/reftable/readwrite_test.c b/reftable/readwrite_test.c
-> index 42caf0bde4c..f6546d7b8d1 100644
-> --- a/reftable/readwrite_test.c
-> +++ b/reftable/readwrite_test.c
-> @@ -663,7 +663,6 @@ static void test_write_key_order(void)
->  	err = reftable_writer_add_ref(w, &refs[0]);
->  	EXPECT_ERR(err);
->  	err = reftable_writer_add_ref(w, &refs[1]);
-> -	printf("%d\n", err);
->  	EXPECT(err == REFTABLE_API_ERROR);
->  	reftable_writer_close(w);
->  	reftable_writer_free(w);
+>> +               case "$1" in
+>> +               -C)
+>> +                       indir=3D"$2"
+>> +                       shift
+>> +                       ;;
+>
+> ... or not care about it since it's broken here before `shift`...
+>
+>> +               -*)
+>> +                       BUG "invalid write_hook: $1"
+>> +                       ;;
+>> +               *)
+>> +                       break
+>> +                       ;;
+>> +               esac &&
+>> +               shift
+>> +       done &&
+>> +       git_dir=3D$(git -C "$indir" rev-parse --absolute-git-dir) &&
+>> +       hook_dir=3D"$git_dir/hooks" &&
+>> +       hook_file=3D"$hook_dir/$1"
+>> +       write_script "$hook_file"
+>
+> ... and here before `write_script`.
 
-Is this something coverity raised and I'm missing why it's bad (per the
-CL), or just a stray unrelated cleanup?
+Thanks, those should all use &&-chaining. Will fix.
