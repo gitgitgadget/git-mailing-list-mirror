@@ -2,129 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89F7CC433EF
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 21:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB4AAC433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 21:36:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239514AbhLMVdd convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 13 Dec 2021 16:33:33 -0500
-Received: from mail-pf1-f170.google.com ([209.85.210.170]:42852 "EHLO
-        mail-pf1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233303AbhLMVdd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 16:33:33 -0500
-Received: by mail-pf1-f170.google.com with SMTP id u80so16080188pfc.9
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 13:33:32 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PAk7E1trtEOg0ttr4u3MjJOkuiPXjzDcNXOp2/3pl7w=;
-        b=GM/asz3/yoVzKdn+Yl7VuU/+3WTnTPNSLzA9n2QGRLWa9zpf5btgq6aZi78lqNl4eK
-         jOqZaYqpH41yEquTGsm+nSkjg7KJbXP7LegmRGgByToU2mG/a2SJ6ny5d2rMzqZxWf2c
-         DmBBlVqeGl2jke72sTSdvfrD48ffaAY4NqBBQQ4feM3+bl49OShiCEUrOXLk+eN5iAi0
-         MDHCclsmYU2rE7hdQ1c/dgsxvuikkRR8AUIHhdasDVQyUaTKz2t+5jvlQsQgvSQHI+bf
-         K+ovnUykR87I27ycfBa6gE6b18YVMqia8joJqqqfCFS8L230uLFE2KgnjAltQeSQs8I4
-         5wEg==
-X-Gm-Message-State: AOAM531SakoFBTRRqk7y6qNN09P8crZhxsD2JSYIXwDYPTH8qujH+guG
-        CgOROPtx2F4ENyC88niUSbAxbBTLCYCtiS8L1Rk=
-X-Google-Smtp-Source: ABdhPJxZlt3btK4nnxNN5ahn2Qhob43cvtdJjoAMcxd9OcwhrOt3n3srL3Iw3919n/kuS4X+M3vHqzH76wA7gfGorE0=
-X-Received: by 2002:a05:6a00:140d:b0:4a9:5e10:60c2 with SMTP id
- l13-20020a056a00140d00b004a95e1060c2mr763892pfu.4.1639431212439; Mon, 13 Dec
- 2021 13:33:32 -0800 (PST)
+        id S243125AbhLMVgo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 16:36:44 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58261 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235374AbhLMVgn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 16:36:43 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D7B34FCEDA;
+        Mon, 13 Dec 2021 16:36:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=7TDCBF/7l+E7
+        sDK3ilttn8qyMT8JyyV9p2Rrc/dgrTQ=; b=TOI37MwVPS1mzJssarX+0ijIA/P/
+        w4lwPB7bFCTrGq3nCYGl50HcEQzJ2TE6SAlEEDsF4mzKCWr7zmRVZz40DLhauS8f
+        Mzku9W+PHwAYmWVvDs+JGH3zu7SOpRlYYAwoUOxirRjEEfCznvKPtOwuA5pIcuvs
+        87282jF9G/kj2X8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF3A7FCED9;
+        Mon, 13 Dec 2021 16:36:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3F49EFCED5;
+        Mon, 13 Dec 2021 16:36:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/2] checkout: introduce "--to-branch" option
+References: <pull.1095.git.1639117329.gitgitgadget@gmail.com>
+        <254b352e31029d8151eb6a974fdf8c127340cf79.1639117329.git.gitgitgadget@gmail.com>
+        <xmqq5yrwm7km.fsf@gitster.g>
+        <CAOLTT8Rx9M9=a5M8UeDrJqMayTXo=dvdanVDLi7QLdPX8W_Tzw@mail.gmail.com>
+        <xmqqy24pk6f4.fsf@gitster.g>
+        <211213.86r1ag6ztx.gmgdl@evledraar.gmail.com>
+Date:   Mon, 13 Dec 2021 13:36:40 -0800
+In-Reply-To: <211213.86r1ag6ztx.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 13 Dec 2021 20:55:00 +0100")
+Message-ID: <xmqqr1agb313.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
- <patch-10.13-ca55471d134-20211212T201308Z-avarab@gmail.com>
- <CAPig+cSkiFd27o8uACdX9ftg=N2XukqNSU_Tt+7rWT08JD7CAQ@mail.gmail.com>
- <211213.868rwo8o3q.gmgdl@evledraar.gmail.com> <CAPig+cTDu+gXOTeBHALCuS9ZqvuqxQW-gXdYUsyAxTOT=gHEnA@mail.gmail.com>
- <211213.86v8zs70mo.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211213.86v8zs70mo.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 13 Dec 2021 16:33:21 -0500
-Message-ID: <CAPig+cRj09FFY5LcF0=pHT0_h-v-1Y=MGvgRUEayNZxW=oxO4w@mail.gmail.com>
-Subject: Re: [PATCH 10/13] test-lib-functions: add and use a "write_hook" wrapper
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C32B82CE-5C5C-11EC-91FF-C48D900A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 2:42 PM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> On Mon, Dec 13 2021, Eric Sunshine wrote:
-> > By the way, the new chainlint could be made to catch broken &&-chains
-> > (and missing `|| return 1`) in test script functions, as well; it
-> > doesn't have to limit its checks only to tests. The reason I haven't
-> > done so yet is that it's not clear how much we care about &&-chains in
-> > functions, especially since we have _so many_ functions which don't
-> > maintain the &&-chain. In the long run, I think it might be beneficial
-> > to extend chainlint to check shell functions too, but fixing the
-> > &&-chains in functions probably have to be done incrementally, thus
-> > would likely require some sort of whitelisting or blacklisting
-> > mechanism until all functions have been fixed. Anyhow, it's food for
-> > thought.
->
-> I think doing that & phasing it in would be very useful.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-I forgot to mention another reason that I haven't really thought yet
-about tackling the linting of shell functions, which is that some
-shell functions drive tests:
+> I don't see how it's fundimentally different than the DWIM logic of
+> taking "<name>" and seeing that there's only one "refs/heads/<name>",
+> and giving up in other cases where we get ambiguous reference names tha=
+t
+> we can't resolve.
 
-    test_it () {
-        foo=$1
-        bar=$2
-        test_expect_sucess "something $foo" '
-            do_it "$bar"
-        '
-    }
+In that example, once you obtained a local branch whose name is
+<name>, it is obvious how you would work with that.  Your next "git
+checkout <name>" would work on the local one, and only the initial
+one does something magical.
 
-in which an &&-chain within the function body isn't meaningful,
-whereas other functions are called by tests:
+Which makes quite a lot of sense.
 
-    cmp_it () {
-        a=$1 &&
-        b=$2 &&
-        test_cmp "$a" "$b"
-    }
+There is no similarity in it with "--to-branch <tag>" that is being
+discussed here.
 
-    test_expect_success 'something' '
-        echo foo >foo &&
-        echo bar >bar &&
-        cmp_it foo bar
-    '
 
-in which the &&-chain within the function body is important.
 
-It _may_ be possible to figure out automatically into which category a
-function falls, but would probably be easier to have some sort of
-annotation mechanism to distinguish one category of function from the
-other, and only validate a function which falls into the latter
-category.
-
-> We've also said we shouldn't use things like this, i.e. a pipe with git
-> on the LHS:
->
->     git <cmd> | ... &&
->
-> But I've run into a few cases where a test succeeds, even if both
-> commands here die:
->
->     test "$(git <cmd>)" = "$(git <cmd2>)"
->
-> Which, if we're adding more lints is maybe something to consider
-> too. I.e. it falls under the general umbrella of cases where we'd hide
-> failures in "git".
-
-Ya, this is a nice example, among others, of questionable code which a
-linter might be able to detect. In fact, while working on the new
-chainlint, I noted that it would be possible to replace
-t/check-non-portable-shell.pl by adding a few more rules to the new
-linter. A primary benefit of doing so is that
-check-non-portable-shell.pl takes about 2.5 seconds to run on my
-(admittedly 10+ year old) machine. However, I'm also hesitant to do so
-since there is value in having those checks reside in a standalone
-script like that; it's such a simple script that anyone can add new
-checks without having to spend a lot of time studying how to do so.
