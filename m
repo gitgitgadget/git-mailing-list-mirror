@@ -2,102 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86035C433EF
-	for <git@archiver.kernel.org>; Sun, 12 Dec 2021 22:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF5CEC433EF
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 00:11:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230084AbhLLWrv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Dec 2021 17:47:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52146 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229979AbhLLWrv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Dec 2021 17:47:51 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11F49C06173F
-        for <git@vger.kernel.org>; Sun, 12 Dec 2021 14:47:51 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id y12so45772366eda.12
-        for <git@vger.kernel.org>; Sun, 12 Dec 2021 14:47:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=1BiCrllPwJe+LOrNsLyfeB63dcXl6XXUZstVf01ezhk=;
-        b=IQJlCoGzxPYPt+zyMHETgv4IJ73Dxo7zrVSjQHT/j+vvsMAxOomk9DbRNGtt4R74i5
-         /186hJXxxQH2dNwY1ZstWpAVd/JYOhKaXrUf+qolNzqxHu8OlUuuO9XKAYfp56HIH01Z
-         3NaU/VWkxfPi/3azq+L3BEIoeZecpBCCX0lTBSa+Osg6JcWvvC92CPoESDlD6Q27+lYR
-         AfzydJfZtN5yw6RdnEijeE33rOOfzPMxVTkaobj6oz2wZtOBQVWTfltKvj838rD7vt2r
-         OTxm/AWjcAhfQdHd0RAn6psZr9KKj6oBNFaGDsZ+TnCX6gRM4QRGhzv1gfB9TK2RtujT
-         eP6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=1BiCrllPwJe+LOrNsLyfeB63dcXl6XXUZstVf01ezhk=;
-        b=FE9oU7gEbG5XX38mBoqHiJO1wFHgJSvNzm2fTOy51blfDwPLRGXbUtEHN1IhVomWx+
-         i1b2k9YiJW19xecelu0h0kNJ1H8AELDGUsNK92qFx8wp+5sGlVkh6rpoyIdEqkXtyOX4
-         47WTuG19iXWIN45lCTPNoMFnsBY7odfhiyj7FIPaNqHtThKgUJEaIRZcjMXXMRPNJRAj
-         0lihJUD8v3mDAqWQrU78jgx/ljw7G/PbepIQDew/eRwMpALXU4Nml0gEd+/dqIRaejLI
-         9n+ZMkJEo1ejhgVUtE7pzVktAXvXnWCeEXixIGiKuK9q5npPdOZaoSGlLnoOQRPGj1lC
-         I3Sw==
-X-Gm-Message-State: AOAM531C86S55yIJrp9QVKjP7ifAxYZO9bsSNDU/C3naemqMavQ+eimq
-        /Pc3MCQ5hWJwSEu/1yDcZzXl2yJ+OMJSiw==
-X-Google-Smtp-Source: ABdhPJzdM4MVmtRRve+pdxa2dpOKZoWxbz+7iuOuZo1BPTYMqXdcZzN15sovXN3FTMdBVOxIfjXuDQ==
-X-Received: by 2002:a17:907:3f19:: with SMTP id hq25mr38197402ejc.225.1639349269528;
-        Sun, 12 Dec 2021 14:47:49 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id w22sm5425423edd.49.2021.12.12.14.47.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Dec 2021 14:47:48 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mwXdD-000g03-NX;
-        Sun, 12 Dec 2021 23:47:47 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Maksym Sobolyev <sobomax@sippysoft.com>
-Subject: ms/customizable-ident-expansion (was: What's cooking in git.git
- (Dec 2021, #03; Fri, 10))
-Date:   Sun, 12 Dec 2021 23:42:00 +0100
-References: <xmqqilvvluoa.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqilvvluoa.fsf@gitster.g>
-Message-ID: <211212.86fsqxa19o.gmgdl@evledraar.gmail.com>
+        id S230364AbhLMAL7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Dec 2021 19:11:59 -0500
+Received: from ring.crustytoothpaste.net ([172.105.110.227]:51476 "EHLO
+        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229450AbhLMAL6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Dec 2021 19:11:58 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id D9A235D407;
+        Mon, 13 Dec 2021 00:11:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1639354317;
+        bh=V5hMYn+KzwZmt50ExiJAKEq2Y7NiQCqnsK6yPGM6LOY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=G3B1t6hyoMNjwBrhEbgSkErcxhz1POyFQYytSPv3iNaaXyQqmK5GhuVIyJmKYozxE
+         kL6edK+LD0tIegpF2ByS3qokhoxHsJRnA7pMFnU6sp4YDeA+/x/3bHXIHQi+QexlFB
+         IekLHuUBgZIQpBGH6uuZMknqf/BxUhU3+jUoiBgm2HnpWuxmn3rZhW+LS+WqrB8HbG
+         YFSnwF93xb07miu1u3fsqYSh0Ie1fgIy9c9cHfb0f4pSI/Igj24DlHCRbQv1ScNTH8
+         CuJe5YLOooHdOllD60MuGQU34Uo94D6lUyZ1/3othKU9Bo3Hu7d4zUinyIHYeTUJbR
+         WvGbsxvihOmuntdy821KVqchBgLChfMvhtj7jgy7qCp6mDVe9ewAl5bM4fDqL0a4To
+         I5LPl/1/eKwZ4/ln0QyOlxX38RldREqHk40Y8lBUJD2JNGG9KhwuGe3ysQwCzi8svE
+         Xb/ukZBwPiH/CbnVOHHuqkHS0Rd4h/fDte/W3wYIOSKjy54zsYP
+Date:   Mon, 13 Dec 2021 00:11:55 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Joel Holdsworth <jholdsworth@nvidia.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Luke Diamand <luke@diamand.org>,
+        Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>
+Subject: Re: [PATCH v2 3/3] git-p4: add "Nvidia Corporation" to copyright
+ header
+Message-ID: <YbaPy8UhzIwRuNYm@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Elijah Newren <newren@gmail.com>,
+        Joel Holdsworth <jholdsworth@nvidia.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Luke Diamand <luke@diamand.org>, Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>
+References: <20211210153101.35433-1-jholdsworth@nvidia.com>
+ <20211210153101.35433-4-jholdsworth@nvidia.com>
+ <CABPp-BEyBLzWY2andDXZV6AgkQpnt1sp_rSThy84=qXMt2D8nA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="MDh7u5yUj/lJK6y/"
+Content-Disposition: inline
+In-Reply-To: <CABPp-BEyBLzWY2andDXZV6AgkQpnt1sp_rSThy84=qXMt2D8nA@mail.gmail.com>
+User-Agent: Mutt/2.1.3 (2021-09-10)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Dec 10 2021, Junio C Hamano wrote:
+--MDh7u5yUj/lJK6y/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[CC-ing Maksym, the topic author]
+On 2021-12-11 at 21:19:18, Elijah Newren wrote:
+> On Fri, Dec 10, 2021 at 12:30 PM Joel Holdsworth <jholdsworth@nvidia.com>=
+ wrote:
+> >
+> > The inclusion of the coorporate copyright is a stipulation of the
+> > company code release process.
+> > ---
+> >  git-p4.py | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/git-p4.py b/git-p4.py
+> > index 5568d44c72..17e18265dc 100755
+> > --- a/git-p4.py
+> > +++ b/git-p4.py
+> > @@ -5,6 +5,7 @@
+> >  # Author: Simon Hausmann <simon@lst.de>
+> >  # Copyright: 2007 Simon Hausmann <simon@lst.de>
+> >  #            2007 Trolltech ASA
+> > +#            2021 Nvidia Corporation
+> >  # License: MIT <http://www.opensource.org/licenses/mit-license.php>
+> >  #
+> >  # pylint: disable=3Dinvalid-name,missing-docstring,too-many-arguments,=
+broad-except
+> > --
+> > 2.33.0
+>=20
+> Can we just git rid of these lines entirely?
 
-> * ms/customizable-ident-expansion (2021-09-01) 1 commit
->  - keyword expansion: make "$Id$" string configurable
->
->  Instead of "$Id$", user-specified string (like $FreeBSD$) can be
->  used as an in-blob placeholder for keyword expansion.
->
->  Will discard.
->  Stalled for too long.
->  cf. <xmqqfsuosvrh.fsf@gitster.g>
->  cf. <211101.86fssf3bn3.gmgdl@evledraar.gmail.com>
->  source: <pull.1074.v3.git.git.1630462385587.gitgitgadget@gmail.com>
+In the case of the MIT License, it is a condition of the license that
+the copyright notices be preserved, so no, we cannot remove them.
+Specifically, the first paragraph, which grants permissions states that
+they are "subject to the following conditions", one of which is as
+follows:
 
-I'd like to see this go in, not because I'd personally find it useful,
-but mainly because I didn't find anything wrong with it (per my review
-id [1] linked above), and more importantly because the saga ending here
-seems rather unfriendly to a first-time contributor.
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
 
-Wasn't the "stalled for too long" mainly a victim of timing? I.e. that
-it happened to be submitted/discussed around the end of the last release
-cycle?
+The other is the total exclusion of warranty or liability.
 
-Maksym: Are you interested in pursuing this still?
+As for the rest of the codebase, the GPL v2 states that the exercise of
+copying and distribution is permitted, "provided that you conspicuously
+and appropriately publish on each copy an appropriate copyright notice
+and disclaimer of warranty."  I am not an attorney, but I'm pretty sure
+that it would not be permissible to remove a copyright notice unless the
+code to which it referred were no longer present and that would not
+count as publishing an appropriate copyright notice.
 
-I think per Junio's[2] an updated commit message describing some of the
-use-case (and in particular how/why .gitattributes v.s. a git config
-setting is needed) might be enough to help move this forward.
+However, that doesn't mean we need to add to them, but I will state that
+as a contributor who primarily contributes on his own time, I don't
+think it's unreasonable for a contributor to request that a copyright
+notice be applied where applicable as attribution, since that's the only
+compensation one receives for one's contributions.  Such copyright
+notices could live in a central file for convenience, however.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-1. https://lore.kernel.org/git/211101.86fssf3bn3.gmgdl@evledraar.gmail.com/
-2. https://lore.kernel.org/git/xmqqwnlito0b.fsf@gitster.g/
+--MDh7u5yUj/lJK6y/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYbaPywAKCRB8DEliiIei
+gVwwAP9Z4vY35dw1NK48VQRdKKDxGF+BLxX/qFxF5iMwSqMZBQD7Bl7pS66SVhbo
+3KLb+kjAbwHGJKH+JCPg8JKcIQEk4wk=
+=Q9V0
+-----END PGP SIGNATURE-----
+
+--MDh7u5yUj/lJK6y/--
