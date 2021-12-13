@@ -2,70 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D28AEC433EF
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 16:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49515C433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 16:46:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241012AbhLMQpy convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 13 Dec 2021 11:45:54 -0500
-Received: from mail-pf1-f177.google.com ([209.85.210.177]:42781 "EHLO
-        mail-pf1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234892AbhLMQpx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 11:45:53 -0500
-Received: by mail-pf1-f177.google.com with SMTP id u80so15415389pfc.9
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:45:53 -0800 (PST)
+        id S236084AbhLMQqk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 11:46:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45190 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232517AbhLMQqk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 11:46:40 -0500
+Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 070E0C061574
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:46:40 -0800 (PST)
+Received: by mail-vk1-xa31.google.com with SMTP id 84so10775002vkc.6
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 08:46:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=y0iAFQYWdVGrNvRu9Ee0VfmElI/MVDzkcTOuounF1MM=;
+        b=I9z8gT4WusiSlo6vjFPAXayho9KIukMUAfBs9nEpDnPYUdNnRYRj8jPO9wIloGKVEr
+         1V8EAueyiq37CDovz3zIHGIPrVofPGwFUvxQjdmdz/2gG5lQ1aLF0dOqKWoDqCiD8fEo
+         WfyumKUAmmNCPmz8VK3s1mA806saBLrhPb4vD5+ezwN1z0iCXw92laCVseYsnMaY3TCG
+         YSCMk5+jxd+I+T7eUWlym0cSnnySv/f9X00xPqMjuYYRMmUtejptT62K8jWGfHxJ0O9N
+         6CjDucMgNWmSicRXpl0hMf5MLucq9lGHmTvhzrIPti1F2ZeQVmfOZORo75NxxWgGyQt7
+         ZBfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=uoG/4ku3t5dEtqjs1PZItqHbEDxRRjt8HnnfVMbtPZ0=;
-        b=FJc946ckuSCmwx5CnpyNiFa1on28f5xt1fYCEou8nxdYbYKYcb4UCwuZBnHs7fEOWw
-         hHFhJyPGDJY+AR4A4RSz3QbTMX+tKxqvC90VmD/pUuih+O/m64DK24JkOWO/NSh1JV7U
-         +LuuL3OBhrB0ANqi+GbNu5huHGXa/pgKzwmG6bJayNh/6h4CfeQr50eqWHnWjDZMHTP1
-         t9ycP2GkBcNXKZeKi4hxKSUzdo0O2e2DLFuJIW9tLwiuHCw1c8yK7feYZwovqVhIzeVZ
-         Mf3YngQI4BRXLMZ9lGP0i4czvnCgbR2kYPmJcNAltIeCKil3x/k6KW8niz3AtJGH7FYD
-         UMdA==
-X-Gm-Message-State: AOAM530SrtJE2oepqkwONl3ADSDGUt4RPMVyCX+oS4Ea6P+ah49kHWQp
-        Udzlvymd5iNMav2XVkOgvpJNyugtZoyyO5X67yU=
-X-Google-Smtp-Source: ABdhPJzPhOJlquq/ZO6fzK/g12KNmYwIamvIuHUoPAaTBhU0mKrzkFSJGYAh8ac/lfCR3wLgCu3l8i2NWUiPidLxcHk=
-X-Received: by 2002:a63:380e:: with SMTP id f14mr52346942pga.227.1639413953307;
- Mon, 13 Dec 2021 08:45:53 -0800 (PST)
+        bh=y0iAFQYWdVGrNvRu9Ee0VfmElI/MVDzkcTOuounF1MM=;
+        b=PC08IF5LMBwRnG8JbZb9oR0YUBQOk4zDkg568cXpX8t4GeXuK4Le1CpDchh3ySF7yx
+         AP7SbBvgII5hG/PHkiE//AvyTsO/jLSKbY7AwzQuZt1wZrom9reRL31zAh2fJ3anTwMd
+         XDzKuxFnwnz6zISDWGvcIO5WPe7EtSBivpe/7d1WO/mv0r3Xc7UIIRRbQXOPjQORNrNw
+         IP2zvTd16gh0x0DpN6OW64+SgxWTsWHzB+dEDNcj2S82myf25ttF9cIt2vhVIF0yLMQj
+         IttVzN5EtQbewNLqxtD9dEZkZIq7IQ1xmqIQjtQUv/otYDzHcaMxfcPyi0vDUSXo8a4U
+         AjNg==
+X-Gm-Message-State: AOAM530r9aZBeDqu/lS3y5pMZfTxqBp4LOEBxy80egPImx/oM2dVILXW
+        lFGQ6mr444dd5CeRs3ukvs8nDuOSdWE5IrM3pjx5E5DiSg0=
+X-Google-Smtp-Source: ABdhPJxiImx2SE+k8RX5rPuS7Hm7c3xY/OG3PldyNBijCX8oNmIYgiLFJgdBqZtJusZd+py2EIdbu4lUPqutDtIZG9c=
+X-Received: by 2002:a1f:2b4a:: with SMTP id r71mr32784470vkr.37.1639413998660;
+ Mon, 13 Dec 2021 08:46:38 -0800 (PST)
 MIME-Version: 1.0
-References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
- <patch-10.13-ca55471d134-20211212T201308Z-avarab@gmail.com>
- <CAPig+cSkiFd27o8uACdX9ftg=N2XukqNSU_Tt+7rWT08JD7CAQ@mail.gmail.com> <211213.868rwo8o3q.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211213.868rwo8o3q.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 13 Dec 2021 11:45:42 -0500
-Message-ID: <CAPig+cTDu+gXOTeBHALCuS9ZqvuqxQW-gXdYUsyAxTOT=gHEnA@mail.gmail.com>
-Subject: Re: [PATCH 10/13] test-lib-functions: add and use a "write_hook" wrapper
+References: <pull.1152.v2.git.git.1639000187.gitgitgadget@gmail.com>
+ <pull.1152.v3.git.git.1639411309.gitgitgadget@gmail.com> <6b0af68f0b94fb96c81e25f9a1911fa05dcf07fd.1639411309.git.gitgitgadget@gmail.com>
+ <211213.86czm08o8k.gmgdl@evledraar.gmail.com>
+In-Reply-To: <211213.86czm08o8k.gmgdl@evledraar.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 13 Dec 2021 17:46:27 +0100
+Message-ID: <CAFQ2z_Nr-Rf2kjujPcMtRV6VfweP68A44ZD2XPL8+CqM4F4hZg@mail.gmail.com>
+Subject: Re: [PATCH v3 09/11] reftable: drop stray printf in readwrite_test
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 11:29 AM Ævar Arnfjörð Bjarmason
+On Mon, Dec 13, 2021 at 5:26 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
-> On Mon, Dec 13 2021, Eric Sunshine wrote:
-> > It's not clear whether the intention is to maintain the &&-chain in
-> > this function...
-> > ... or not care about it since it's broken here before `shift`...
->
-> Thanks, those should all use &&-chaining. Will fix.
+> Is this something coverity raised and I'm missing why it's bad (per the
+> CL), or just a stray unrelated cleanup?
 
-By the way, the new chainlint could be made to catch broken &&-chains
-(and missing `|| return 1`) in test script functions, as well; it
-doesn't have to limit its checks only to tests. The reason I haven't
-done so yet is that it's not clear how much we care about &&-chains in
-functions, especially since we have _so many_ functions which don't
-maintain the &&-chain. In the long run, I think it might be beneficial
-to extend chainlint to check shell functions too, but fixing the
-&&-chains in functions probably have to be done incrementally, thus
-would likely require some sort of whitelisting or blacklisting
-mechanism until all functions have been fixed. Anyhow, it's food for
-thought.
+I spotted it while working on this series. It prints something
+unexpected into the output of the unittest, so better remove it.
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
