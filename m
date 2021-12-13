@@ -2,148 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF5CEC433EF
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 00:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 142D9C433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 00:30:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230364AbhLMAL7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Dec 2021 19:11:59 -0500
-Received: from ring.crustytoothpaste.net ([172.105.110.227]:51476 "EHLO
-        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbhLMAL6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Dec 2021 19:11:58 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id D9A235D407;
-        Mon, 13 Dec 2021 00:11:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1639354317;
-        bh=V5hMYn+KzwZmt50ExiJAKEq2Y7NiQCqnsK6yPGM6LOY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=G3B1t6hyoMNjwBrhEbgSkErcxhz1POyFQYytSPv3iNaaXyQqmK5GhuVIyJmKYozxE
-         kL6edK+LD0tIegpF2ByS3qokhoxHsJRnA7pMFnU6sp4YDeA+/x/3bHXIHQi+QexlFB
-         IekLHuUBgZIQpBGH6uuZMknqf/BxUhU3+jUoiBgm2HnpWuxmn3rZhW+LS+WqrB8HbG
-         YFSnwF93xb07miu1u3fsqYSh0Ie1fgIy9c9cHfb0f4pSI/Igj24DlHCRbQv1ScNTH8
-         CuJe5YLOooHdOllD60MuGQU34Uo94D6lUyZ1/3othKU9Bo3Hu7d4zUinyIHYeTUJbR
-         WvGbsxvihOmuntdy821KVqchBgLChfMvhtj7jgy7qCp6mDVe9ewAl5bM4fDqL0a4To
-         I5LPl/1/eKwZ4/ln0QyOlxX38RldREqHk40Y8lBUJD2JNGG9KhwuGe3ysQwCzi8svE
-         Xb/ukZBwPiH/CbnVOHHuqkHS0Rd4h/fDte/W3wYIOSKjy54zsYP
-Date:   Mon, 13 Dec 2021 00:11:55 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Joel Holdsworth <jholdsworth@nvidia.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
-        Dorgon Chang <dorgonman@hotmail.com>,
-        Joachim Kuebart <joachim.kuebart@gmail.com>,
-        Daniel Levin <dendy.ua@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Luke Diamand <luke@diamand.org>,
-        Ben Keene <seraphire@gmail.com>,
-        Andrew Oakley <andrew@adoakley.name>
-Subject: Re: [PATCH v2 3/3] git-p4: add "Nvidia Corporation" to copyright
- header
-Message-ID: <YbaPy8UhzIwRuNYm@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Elijah Newren <newren@gmail.com>,
-        Joel Holdsworth <jholdsworth@nvidia.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
-        Dorgon Chang <dorgonman@hotmail.com>,
-        Joachim Kuebart <joachim.kuebart@gmail.com>,
-        Daniel Levin <dendy.ua@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Luke Diamand <luke@diamand.org>, Ben Keene <seraphire@gmail.com>,
-        Andrew Oakley <andrew@adoakley.name>
-References: <20211210153101.35433-1-jholdsworth@nvidia.com>
- <20211210153101.35433-4-jholdsworth@nvidia.com>
- <CABPp-BEyBLzWY2andDXZV6AgkQpnt1sp_rSThy84=qXMt2D8nA@mail.gmail.com>
+        id S230368AbhLMAaY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Dec 2021 19:30:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46076 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229450AbhLMAaY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Dec 2021 19:30:24 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AED2C06173F
+        for <git@vger.kernel.org>; Sun, 12 Dec 2021 16:30:24 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id z5so47677356edd.3
+        for <git@vger.kernel.org>; Sun, 12 Dec 2021 16:30:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=bBX0ReSz1TFs/yHKuOp+fLsY3HV7tWyJ/fQGrDxV2nc=;
+        b=AZn22qs+354cwE7O1o5x2+9YjH3USN1UShGYkxF3+Vl8noZNxWNbdJWTgQyRrbAND9
+         CpokYyz9xJVFgB2Im/sNA9YJnqHp5i1sNMBusAOakauOf4RHqujoVxS00e+UWWjvLzbE
+         cAgT/awxmWE+faKidIQnyGbzBjNjZAolL7xcaxulf6surDXPinnL6QL6NqbaxVMXB/3T
+         Nf3zd0OGNjznrQqTGFyO/R4RXBALUgOLCSesV1LNmdNXKY/iw4TwnfBjlQRdnJ/IhtP8
+         TQzKVEsfJvRGsUaQ4sv5tDO6bfAdGG343vvpsiSoS/F9i++TSLKiBNzvu3sDFo7h2GA3
+         7hCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=bBX0ReSz1TFs/yHKuOp+fLsY3HV7tWyJ/fQGrDxV2nc=;
+        b=Gdg2/OUQq/j2yKsKRnzaA4JM0vcTxROXX58pRs4Fbb2VB2pUO2PBx2CFcuu+sbnrt0
+         9gi81ClHSeOM69FjRdVtCZZn4q1LojX7K5s6CtgvgTELjeGi6kFyQj0NEmYFj03o/IKd
+         vTqCDacHDFi6QWbAovNnx8nUl5HxOUHChtDPLjsnKybD18q0ucyQT9qPM+xxqENMVKUI
+         Ge+6fWUdMA4RpHylg0MufBOJIVhJcV5Onp3GcZvGnpelas4fpXI166pg92bEeGl0zx7Y
+         nKNt2AEpaQH4YsCH4IvTBO+rxmiNkdKS7wh3A9Cz31RZKFsZhWgo+sz0hpX1oO3Oo8n0
+         zqtA==
+X-Gm-Message-State: AOAM5302X3ZdtKw1XP+cQYlNq601BzGu9alWacaiIRx0YrGSXId949mz
+        eqbsyacOWylHHfdkPA+QVk9zmO5oLMxyvTRHBJN+SAeeUHk=
+X-Google-Smtp-Source: ABdhPJyWSf2pqDsdPFdvBhWJnuwPDhRVVDR5+xV9oGQHZqPAUKdhjfdyw1FF1I7LhKw+MaN+aWeTklD9L2zxuv8z9Hg=
+X-Received: by 2002:a17:907:3f96:: with SMTP id hr22mr39626061ejc.492.1639355421473;
+ Sun, 12 Dec 2021 16:30:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="MDh7u5yUj/lJK6y/"
-Content-Disposition: inline
-In-Reply-To: <CABPp-BEyBLzWY2andDXZV6AgkQpnt1sp_rSThy84=qXMt2D8nA@mail.gmail.com>
-User-Agent: Mutt/2.1.3 (2021-09-10)
+From:   Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
+Date:   Sun, 12 Dec 2021 19:30:10 -0500
+Message-ID: <CAKu1iLXJQxcjrk1Wny6ccMPPxKqJBpfxzTp+i+EZ90NvFkc-Yg@mail.gmail.com>
+Subject: [PATCH v2 1/3] git-p4: remove support for Python 2
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> On Sun, Dec 12, 2021, 5:39 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <ava=
+rab@gmail.com> wrote:
+>
+> This summary makes sense, i.e. if the original SCM doesn't have a
+> declared or consistent encoding then having no "encoding" header etc. in
+> git likewise makes sense, and we should be trying to handle it in our
+> output layer.
+>
+> [Snipped from above]:
+>
+> > It's not clear to me how "attempt to detect the encoding somehow" would
+> > work.  The first option therefore seems like the best choice.
+>
+> This really isn't possible to do in the general case, but you can get
+> pretty far with heuristics.
+>
+> I already submitted a patch several months ago to introduce a "p4.fallbac=
+kEncoding" option. It got merged to at least the lowest branch, but I think=
+ it died at that point.
 
---MDh7u5yUj/lJK6y/
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I did considerable research into the possible options at the time, and
+I'm pretty sure the best approach would be:
 
-On 2021-12-11 at 21:19:18, Elijah Newren wrote:
-> On Fri, Dec 10, 2021 at 12:30 PM Joel Holdsworth <jholdsworth@nvidia.com>=
- wrote:
-> >
-> > The inclusion of the coorporate copyright is a stipulation of the
-> > company code release process.
-> > ---
-> >  git-p4.py | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/git-p4.py b/git-p4.py
-> > index 5568d44c72..17e18265dc 100755
-> > --- a/git-p4.py
-> > +++ b/git-p4.py
-> > @@ -5,6 +5,7 @@
-> >  # Author: Simon Hausmann <simon@lst.de>
-> >  # Copyright: 2007 Simon Hausmann <simon@lst.de>
-> >  #            2007 Trolltech ASA
-> > +#            2021 Nvidia Corporation
-> >  # License: MIT <http://www.opensource.org/licenses/mit-license.php>
-> >  #
-> >  # pylint: disable=3Dinvalid-name,missing-docstring,too-many-arguments,=
-broad-except
-> > --
-> > 2.33.0
->=20
-> Can we just git rid of these lines entirely?
+Add an optional setting for the user to set the encoding.
 
-In the case of the MIT License, it is a condition of the license that
-the copyright notices be preserved, so no, we cannot remove them.
-Specifically, the first paragraph, which grants permissions states that
-they are "subject to the following conditions", one of which is as
-follows:
+When decoding, first try UTF-8. If that succeeds, then it's almost
+certain that the encoding really is UTF-8. The nature of UTF-8 is that
+non-UTF-8 text almost never just happens to be valid when decoded as
+UTF-8.
 
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
+If that fails, use the new setting if present.
 
-The other is the total exclusion of warranty or liability.
+This is what my patch does.
 
-As for the rest of the codebase, the GPL v2 states that the exercise of
-copying and distribution is permitted, "provided that you conspicuously
-and appropriately publish on each copy an appropriate copyright notice
-and disclaimer of warranty."  I am not an attorney, but I'm pretty sure
-that it would not be permissible to remove a copyright notice unless the
-code to which it referred were no longer present and that would not
-count as publishing an appropriate copyright notice.
+I think it would be better to go beyond that, and if it fails UTF-8,
+and the new setting was not specified, then use some well- accepted
+heuristic library to detect the encoding.
 
-However, that doesn't mean we need to add to them, but I will state that
-as a contributor who primarily contributes on his own time, I don't
-think it's unreasonable for a contributor to request that a copyright
-notice be applied where applicable as attribution, since that's the only
-compensation one receives for one's contributions.  Such copyright
-notices could live in a central file for convenience, however.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---MDh7u5yUj/lJK6y/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYbaPywAKCRB8DEliiIei
-gVwwAP9Z4vY35dw1NK48VQRdKKDxGF+BLxX/qFxF5iMwSqMZBQD7Bl7pS66SVhbo
-3KLb+kjAbwHGJKH+JCPg8JKcIQEk4wk=
-=Q9V0
------END PGP SIGNATURE-----
-
---MDh7u5yUj/lJK6y/--
+Frankly anything would be better than the current behavior, which is
+to completely crash on the first non UTF-8 character encountered (at
+least with Python 3).
