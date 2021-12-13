@@ -2,95 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CB58C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 21:52:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C9EBC433F5
+	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 21:56:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243227AbhLMVw5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 16:52:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59602 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236921AbhLMVwz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 16:52:55 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC579C061574
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 13:52:54 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id r25so56220914edq.7
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 13:52:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=skydio.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=khQGW7nfpe40GG5LMosofqL2ZmCKg2l+qM+eVZ8bvog=;
-        b=WjrHvIF21HVI01amSB1ABeiMWlSTJJ3H03m10oZEO/WcHcnRDtOBrKZy0Ks25qAGkG
-         aW23v95wMMV8X+s7+3oNg5CTqEEx8fx1edtC4cnC9c+yoqjQJCwdJhbtPeA8W9vgqYuD
-         hEm6taTsabrgt+h5sEJHLGZzXHkhyb45ceIl2C5naSPYVw7XzVAfKETsFKqKChVZWKjm
-         pPJwZl8orDbt55cYQHB/PA0itEdhwR/0+vWbz1OJWhIkk5X7d0pxCvGFWIKetAzHA21L
-         cUTZcpfzc4Vuj5gxl3dS0zGpuAifC7qX4k6d4ue5RrNI8zT8G/61uAZhE1ucqkaOX28w
-         +0RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=khQGW7nfpe40GG5LMosofqL2ZmCKg2l+qM+eVZ8bvog=;
-        b=kKKFeFe6JyD57fQEqbKHeQaZzpImF0h/wkmxllJJGp346EajzqypbduStO5az0u/O5
-         1rdHV0LW9NFqtn2EonkiEYUnPT1eT3IISEKAhpKTpx2N4duBiDKFpZODnmyRvXV7Eq7u
-         MZH36QDIF9wHSvPUx9QXorBktc0fh+FvxcRjsmlAlINplGHCADYcpgScJMylpSFZ0uCo
-         vFbSJfq8TKTP+g+MMr0yMCdjURPFOvcLkHupefjJWVZjeKUM+fdxg944w1lcbhjd0/UV
-         dvGaHWm6Bb0aYivZVldDeIbyt6ApVZm9rwBgj2gTDCrksvss61jYcRcfDKrQarFma9de
-         bU7w==
-X-Gm-Message-State: AOAM530zLNLt/S24XXXbCkP+kxdxPIz+QxkPUd7p+wvWsomceNG+EZqx
-        P6RkW4sO87maywog7bFom8E0ILxwxK712VcS418TqMiONNGPyA==
-X-Google-Smtp-Source: ABdhPJxFCfTfHn00CmMSAN4WuP4HAE/FpNfXzfyn3dqjUqnldvFe0ZcajJMv1EmDMGms4VRW7hioEfMVs8xtnNCtCsw=
-X-Received: by 2002:a17:906:390:: with SMTP id b16mr1212469eja.522.1639432373329;
- Mon, 13 Dec 2021 13:52:53 -0800 (PST)
+        id S241295AbhLMV4N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 16:56:13 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60530 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241187AbhLMV4N (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 16:56:13 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 91EAC16106D;
+        Mon, 13 Dec 2021 16:56:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MqFWVg9JRJNAFzSNy5bR5ZqxE1Zh+dgRoSEy9x
+        c0hNM=; b=DTKF7aZdV2YDRu17L9BQrIcnfxMS6gsoepCtBoTHtvLRqTt5Pn3cvX
+        vVVHunhOmbMV8r2H5xC+esQ/qheS9tzOz5w72eXUarYl5W+NMFjJcWeuVRd0drVj
+        jR5TDJIT9sOpxrRrWVlWB3zXarzFUk1aIkapnRfti+ebSSoyHdLOQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8B02816106C;
+        Mon, 13 Dec 2021 16:56:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E088416106A;
+        Mon, 13 Dec 2021 16:56:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] l10n: README: call more attention to plural strings
+References: <25107068cbbf8c9ce6886e66e25dff19e072583f.1639425295.git.steadmon@google.com>
+Date:   Mon, 13 Dec 2021 13:56:07 -0800
+In-Reply-To: <25107068cbbf8c9ce6886e66e25dff19e072583f.1639425295.git.steadmon@google.com>
+        (Josh Steadmon's message of "Mon, 13 Dec 2021 11:56:09 -0800")
+Message-ID: <xmqqa6h4b24o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20211211031343.15818-1-jerry@skydio.com> <20211213202826.7051-1-jerry@skydio.com>
- <xmqqlf0ob2o0.fsf@gitster.g>
-In-Reply-To: <xmqqlf0ob2o0.fsf@gitster.g>
-From:   Jerry Zhang <jerry@skydio.com>
-Date:   Mon, 13 Dec 2021 13:52:42 -0800
-Message-ID: <CAMKO5Ctq8kzAvHAXxPVd06_Ko7-GW4CQbUmw7g7Eb7Su_Cp8RQ@mail.gmail.com>
-Subject: Re: [PATCH V4] git-apply: add --allow-empty flag
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7A8D07B0-5C5F-11EC-B68A-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 1:44 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Jerry Zhang <jerry@skydio.com> writes:
->
-> > diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-> > index a32ad64718..b6d77f4206 100644
-> > --- a/Documentation/git-apply.txt
-> > +++ b/Documentation/git-apply.txt
-> > @@ -14,11 +14,11 @@ SYNOPSIS
-> >         [--allow-binary-replacement | --binary] [--reject] [-z]
-> >         [-p<n>] [-C<n>] [--inaccurate-eof] [--recount] [--cached]
-> >         [--ignore-space-change | --ignore-whitespace]
-> >         [--whitespace=(nowarn|warn|fix|error|error-all)]
-> >         [--exclude=<path>] [--include=<path>] [--directory=<root>]
-> > -       [--verbose | --quiet] [--unsafe-paths] [<patch>...]
-> > +       [--verbose | --quiet] [--unsafe-paths] [--allow-empty] [<patch>...]
-> >
-> >  DESCRIPTION
-> >  -----------
-> >  Reads the supplied diff output (i.e. "a patch") and applies it to files.
-> >  When running from a subdirectory in a repository, patched paths
->
-> Applying: git-apply: add --allow-empty flag
-> error: patch failed: Documentation/git-apply.txt:14
-> error: Documentation/git-apply.txt: patch does not apply
-> Patch failed at 0001 git-apply: add --allow-empty flag
->
-> Hmph....  Where did that "| --quiet" thing come from?
->
->
-Apologies, I overlooked a dependence on my other patch here:
-https://patchwork.kernel.org/project/git/patch/20210427194106.14500-1-jerry@skydio.com/
+Josh Steadmon <steadmon@google.com> writes:
 
-Let me know if you'd like a clean patch off of master. Please give the
-other patch
-a look though, as I've addressed outstanding comments.
+> In po/README.md, we point core developers to gettext's "Preparing
+> Strings" documentation for advice on marking strings for translation.
+> However, this doc doesn't really discuss the issues around plural form
+> translation, which can make it seem that nothing special needs to be
+> done in this case.
+>
+> Add a specific callout here about marking plural-form strings so that
+> the advice later on in the README is not overlooked.
+>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>  po/README.md | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/po/README.md b/po/README.md
+> index dcd8436c25..fd1e024dd3 100644
+> --- a/po/README.md
+> +++ b/po/README.md
+> @@ -219,7 +219,10 @@ General advice:
+>    they're part of Git's API.
+>  
+>  - Adjust the strings so that they're easy to translate. Most of the
+> -  advice in `info '(gettext)Preparing Strings'` applies here.
+> +  advice in `info '(gettext)Preparing Strings'` applies here. Strings
+> +  referencing numbers of items may need to be split into singular and
+> +  plural forms; see the Q\_() wrapper in the C sub-section below for an
+> +  example.
+>  
+>  - If something is unclear or ambiguous you can use a "TRANSLATORS"
+>    comment to tell the translators what to make of it. These will be
+
+Sounds good to me, but I'd want an ack by those from the l10n
+department.
+
+Thanks.
