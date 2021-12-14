@@ -2,114 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F4D0C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 22:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C888AC433F5
+	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 22:16:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229723AbhLNWMJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Dec 2021 17:12:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55362 "EHLO
+        id S232847AbhLNWQA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Dec 2021 17:16:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232896AbhLNWL4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Dec 2021 17:11:56 -0500
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13D1DC061574
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 14:11:56 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id u11so14698624plf.3
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 14:11:56 -0800 (PST)
+        with ESMTP id S232252AbhLNWP4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Dec 2021 17:15:56 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A82F7C061574
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 14:15:56 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id y14-20020a17090a2b4e00b001a5824f4918so18496283pjc.4
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 14:15:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=8MT3M1uhtzCMocrIpPnJuAmRjpw/EjZTdMPhQ1MTByM=;
-        b=rgYBPtaMBz10XUxMfKhqEgSn5o07I1ExwTMY7j2wQ36ADC2tDvz0UTLM098dL4HiN/
-         EYwNS+K1H5XFQ+nTI0diF53X0Vdy3JLtYGmRV4kEOTVi3huJ8ASWO/Q+q8rvOyux1NIs
-         jrJ9rasjgXxuMbSupTgJwgsdFvHGnJI4AqGyoPvgERFJ711+uLiSq4ZREDtsVYN/3gBH
-         QaZIjBu4B7Hxg0gZkDiPDZ+ibp6IyYFdfX1ypAtdxcng4BVSYriPGmKC1x8bOR77VAMl
-         kyg6AyRQ4C6YCRvHnnrPAeNx46P2VCtCN5nX/0YP3dz6CCot2Fek79cdftGiPu40+GBi
-         zgoQ==
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=BRNogODMnDfZ4/qZX+d4BbNVsRZjOPwcBrRGImyv0LA=;
+        b=o3BuPfYFNSLEJr7JLO2bIC8zOLb5M2HxB8dfM6/RabqGg8MnPfmsUZgE7idhMbE/Fu
+         J4wqcd6csv8ZNtgYtZL31wvp7WbcANduUJDFiu3B+IPLkXx/qwrbVjGd2hYKgCN8Z8SG
+         AwDlNOOdltZjhjqzdWCO4wMqKbcoI/EjxCH3nF74dqT9ZXZSU/Ghdz/lCpTN7+/5M3+V
+         Q8eCMfy+gVUOnlbMHrKSx3emKxO0UAE8Kc4Y9hIyn9A4ULaP3hnBepczNDseMr4WVRDX
+         6swwO3XW6oEt2ezB7K0rzKYw9plvEBTTMGEzXujTqg6xQ4QxHg/LMTN+qatxqpMneE+h
+         vs7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id
          :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=8MT3M1uhtzCMocrIpPnJuAmRjpw/EjZTdMPhQ1MTByM=;
-        b=W7WY4Dq6xCZqyHpK3eU8VVUEyNY7mv0abDa04ECY9Cc4/rgFMFJC/U27wS/e57edNM
-         01Brh7/V0YyLnVgeg9G2+SPH62pqz7+TLwEeQ8V4kJfDcEyHLWepdQMIfqkxp9ihS/Mz
-         QvnmkCRdxmKnpSV75gYgW/oZZkiW/ShfUtlaJSX9zWQxaFG4IH0XTXJ2L2Lt8Kz8V118
-         q0BbfOTUbXylsaRTTYy2PiXqIQ8N1u4PwsP54EEfsHHf1h0rhLTWMCUTIwHMFpXHa7ZA
-         KyuWc8NV/RF8m8tY5ZjqBZK0E++u+Yg/9munrmXxqc9sW81V48QOSzYujMvTiObA1Sa2
-         RDjA==
-X-Gm-Message-State: AOAM530P5lXfR6c6su+lB3bmKSVkcF2mWC+xKvrpXpfVOKt82aRRlJWN
-        ww7nVzi7P9hNgEMmyT4nl+2gFBCZPstB7Q==
-X-Google-Smtp-Source: ABdhPJzR7W2p1cDTjmvZavybdDAK6+U+wpo7O6eh+0O2HKSxwXpY7cW/f5omWvfWsbFCCsLRKZK2og==
-X-Received: by 2002:a17:90b:1a8b:: with SMTP id ng11mr8419478pjb.3.1639519915377;
-        Tue, 14 Dec 2021 14:11:55 -0800 (PST)
+         :content-transfer-encoding:in-reply-to;
+        bh=BRNogODMnDfZ4/qZX+d4BbNVsRZjOPwcBrRGImyv0LA=;
+        b=AKxvxBDURdHQDoLmIfvRXgAC4TSkiyzwDJY9lyCrDKiyrAMjD6C0v7Oh5Y6Wdi/fId
+         EeUiwI9Kla2hdqOQEoI5Kdo2cE1Kz7ARZYYdwcQKy5piydhqiaz1GNAbBvnGNYdNnfnn
+         hNUUNWgoO3yUiX6BUWNSIDpLDTht3SepvcsQR18+126n/ATePnIfkg8g0Pena6EzT9Nl
+         2PT8Zjb/7O/6tCewK36xbHDr5AHIdPOkvbFGfb/tj3L3Ue3C2RLnuR7DUHxOxiC95kbo
+         WWRP+Dp0oGUpQj5fekI6B1z2/t8kq15/9FgNqzrksq/ZzkT5x8C41VkS4U7MOpki2nhw
+         oeyQ==
+X-Gm-Message-State: AOAM531nChOGUjMG8wBoJQmUcbMt1Sguer31A0lDhGrts764gDaZFFId
+        XUk66yRsPFCL3bchWdi2LuJnQg==
+X-Google-Smtp-Source: ABdhPJwNSl7SP1Fpwhs6eSMfw3U9TAiG/c6K6iDd0WyDz5YqeDzVSBV9IeY4KyuX6d67ncVQ6Ej5Xw==
+X-Received: by 2002:a17:902:d2d0:b0:148:a2e8:2764 with SMTP id n16-20020a170902d2d000b00148a2e82764mr1532526plc.107.1639520155976;
+        Tue, 14 Dec 2021 14:15:55 -0800 (PST)
 Received: from google.com ([2620:15c:2ce:200:b37:fbed:ef52:5dca])
-        by smtp.gmail.com with ESMTPSA id lk18sm2238549pjb.39.2021.12.14.14.11.54
+        by smtp.gmail.com with ESMTPSA id z2sm94544pff.107.2021.12.14.14.15.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Dec 2021 14:11:54 -0800 (PST)
-Date:   Tue, 14 Dec 2021 14:11:48 -0800
+        Tue, 14 Dec 2021 14:15:55 -0800 (PST)
+Date:   Tue, 14 Dec 2021 14:15:49 -0800
 From:   Josh Steadmon <steadmon@google.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        chooglen@google.com, emilyshaffer@google.com, avarab@gmail.com
-Subject: Re: [PATCH v5 0/2] branch: inherit tracking configs
-Message-ID: <YbkWpIQSpT+7b31z@google.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, emilyshaffer@google.com
+Subject: Re: [PATCH v5 2/2] branch: add flags and config to inherit tracking
+Message-ID: <YbkXlTdGBemY5nRi@google.com>
 Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        chooglen@google.com, emilyshaffer@google.com, avarab@gmail.com
+        Glen Choo <chooglen@google.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, emilyshaffer@google.com
 References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
  <cover.1638859949.git.steadmon@google.com>
- <xmqq4k7k8cz3.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2112102344370.90@tvgsbejvaqbjf.bet>
+ <c7e4af9a365cc61e682c3c73045fb1ee4b79cfbf.1638859949.git.steadmon@google.com>
+ <211207.86ilw0pydg.gmgdl@evledraar.gmail.com>
+ <kl6lilw0aq76.fsf@chooglen-macbookpro.roam.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2112102344370.90@tvgsbejvaqbjf.bet>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <kl6lilw0aq76.fsf@chooglen-macbookpro.roam.corp.google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021.12.10 23:48, Johannes Schindelin wrote:
-> Hi,
+On 2021.12.07 16:35, Glen Choo wrote:
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 > 
-> On Tue, 7 Dec 2021, Junio C Hamano wrote:
-> 
-> > Josh Steadmon <steadmon@google.com> writes:
+> >> @@ -10,7 +10,8 @@ enum branch_track {
+> >>  	BRANCH_TRACK_REMOTE,
+> >>  	BRANCH_TRACK_ALWAYS,
+> >>  	BRANCH_TRACK_EXPLICIT,
+> >> -	BRANCH_TRACK_OVERRIDE
+> >> +	BRANCH_TRACK_OVERRIDE,
+> >> +	BRANCH_TRACK_INHERIT
+> >>  };
 > >
-> > > I've addressed feedback from V4. Since 2/3 reviewers seemed to (at least
-> > > slightly) prefer handling multiple upstream branches in the existing
-> > > tracking setup, I've gone that direction rather than repurposing the
-> > > branch copy code. None of the other issues were controversial.
-> > >
-> > > In this version, I'd appreciate feedback mainly on patch 1:
-> > > * Is the combination of `git_config_set_gently()` +
-> > >   `git_config_set_multivar_gently() the best way to write multiple
-> > >   config entries for the same key?
+> > So we've got 5 items in this enum...
 > >
-> > IIRC git_config_set_*() is Dscho's brainchild.  If he is available
-> > to comment, it may be a valuable input.
+> >>  
+> >>  extern enum branch_track git_branch_track;
+> >> diff --git a/builtin/branch.c b/builtin/branch.c
+> >> index b23b1d1752..ebde5023c3 100644
+> >> --- a/builtin/branch.c
+> >> +++ b/builtin/branch.c
+> >> @@ -632,8 +632,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+> >>  		OPT__VERBOSE(&filter.verbose,
+> >>  			N_("show hash and subject, give twice for upstream branch")),
+> >>  		OPT__QUIET(&quiet, N_("suppress informational messages")),
+> >> -		OPT_SET_INT('t', "track",  &track, N_("set up tracking mode (see git-pull(1))"),
+> >> -			BRANCH_TRACK_EXPLICIT),
+> >> +		OPT_CALLBACK_F('t', "track",  &track, "direct|inherit",
+> >> +			N_("set branch tracking configuration"),
+> >> +			PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP,
+> >> +			parse_opt_tracking_mode),
+> >>  		OPT_SET_INT_F(0, "set-upstream", &track, N_("do not use"),
+> >>  			BRANCH_TRACK_OVERRIDE, PARSE_OPT_HIDDEN),
+> >
+> > But map --track, --track=direct --track=inherit to 3/5 of them. Will it
+> > ever make sense to do the oher 2/5 (I really haven't checked)....
 > 
-> The `git_config_set_multivar_gently()` function was really only intended
-> to add one key/value pair.
+> Reasonable question, but I believe the answer is no, it doesn't make
+> sense to map all the values:
 > 
-> Currently, there is no function to add multiple key/value pairs, and while
-> it is slightly wasteful to lock the config multiple times to write a bunch
-> of key/value pairs, it is not the worst in the world for a small use case
-> like this one.
+> * BRANCH_TRACK_REMOTE is just a default value as far as I can tell (I
+>   don't think this does anything?)
+> * BRANCH_TRACK_ALWAYS behaves like BRANCH_TRACK_EXPLICIT but it's only
+>   meant to be set from config files, see 9ed36cfa35 (branch: optionally
+>   setup branch.*.merge from upstream local branches, 2008-02-19). We're
+>   more lenient with _ALWAYS than with _EXPLICIT; e.g. we don't die()
+>   when the upstream doesn't exist.
 > 
-> So yes, for the moment I would go with the suggested design.
+> Even one of the other options doesn't really make that much sense...
 > 
-> One thing you might want to do is to avoid the extra
-> `git_config_set_gently()` before the `for` loop, simply by passing `i == 0
-> ? 0 : CONFIG_FLAGS_MULTI_REPLACE` as `flags` parameter to the multivar
-> version of the function.
-> 
-> But that would optimize for code size rather than for readability, and I
-> would actually prefer the more verbose version.
+> * BRANCH_TRACK_OVERRIDE used to be used to implement --set-upstream, but
+>   that's not necessary any more. Now it's used to make create_branch()
+>   *not* create a branch sometimes, but that's going away if I get my
+>   refactor of create_branch()
+>   (https://lore.kernel.org/git/xmqq1r2pcnyw.fsf@gitster.g/T/#u) :)
 
-Sounds good, thanks for the advice!
-
-> Ciao,
-> Dscho
+Agreed, thank you for stating things better than I could have :)
