@@ -2,123 +2,187 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B317DC433F5
-	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 20:37:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85397C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 20:45:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237659AbhLNUh0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Dec 2021 15:37:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34172 "EHLO
+        id S230334AbhLNUpK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Dec 2021 15:45:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234688AbhLNUhZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Dec 2021 15:37:25 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54E67C061574
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 12:37:25 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id v16so2184400pjn.1
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 12:37:25 -0800 (PST)
+        with ESMTP id S229744AbhLNUpI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Dec 2021 15:45:08 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0AEFC061574
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 12:45:07 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id b7so8076885edd.6
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 12:45:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Q9o6G0NZHMwz7wp+yWEDk4hCPgtPjC0i5S651ngcT1c=;
-        b=l0K7W7ViZlvBI4chaP2Ylm6hI2dUMdcufK6eb+u+obkCDW0gqAWx9TEAVgqrB1UWjl
-         GZmznGEIEiJ7sTqHul7wN4uhHF0c1lNymRIadTwnAzI0PVVDjbkmNgwgtvvsY5beCx5U
-         wRowiMz13qKrvOoRTpDAQHMxHwZBSpq6Wz7rjjERLYduXniKyG4lCBamJ73MiNpZGnNF
-         z8670CfeymYXoMZvJTIkcF13mA8h3fslECp1dabfouFtG7J7Cz/Nu0quqyGp9RpWGQ/A
-         XhEVDvAgxNqJtnCdapas3UInPSbkwIcFOqNCBnweOpiPlxcKQNHItm3VkV4koiQMXusu
-         t4Gw==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=nvcFiIfK7eFq3ayhKxt3+0SDgLbkislDyMJ12p685Lk=;
+        b=N4gQ1i2yL11N9O5zi5kjpdbwq0jY9DHIqXJNI5iHMSYjEJnYWVHBKKi1Ft/mW2F1DP
+         k0+FgWyQRIIJ4wBM3fyjECuAheVp7ujSIQKLgKFOBnLPsQcuzpAdmwO0UxKsjorL2tHM
+         t58walj78FJTe04YOJBjLGCnkOh6pRaPh6V5R0bI/IpjbWBRtDM6Kc7O7E4nUl1e22eb
+         XRTsVhoTvsZOLuRQQmWMVvnFDmNWTgILBDysgtWeHcO/gGIjB9yJielMUYRqN3goJ1mB
+         ZEIsa/8zf0yrEX5WmI4sWBAViyY4QGGT7WtRcSCz59LFd6aEqyByI8B/K38dPf+V8M+F
+         lgtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=Q9o6G0NZHMwz7wp+yWEDk4hCPgtPjC0i5S651ngcT1c=;
-        b=n/a8JznYZhK1ufDm4XFsLH6SCGIc74f6bXvdRMYReSID+VAM1kPSipb1Hs4zxW8k1F
-         qhUx+OzPE5bgm8XLSykuaA9vLsvuFW0J0CS4wdZSOSbboWXc05knBOdn0kVBtcX4qnUS
-         Xg0EdF6tUCZCAn8VCZQqyzu8dp1813hE/ecORA+yQvb9ZBBD9ZlAsmQMNSWu1T1RatT2
-         0p1ui5miLjPYqR1qvLKMaeovA1oigxTGESPwBz1Ks5+y6MjZbTSIiuXdGKZvcuGdekyC
-         AIshDOc6rxNKhSP21EDjyIUyG3akU4NPwzMzVTQD2ZGIqmzcCUvE98ocAar8ZiwqMKCn
-         NDqw==
-X-Gm-Message-State: AOAM533u8GEBiZaSg5Hr98XM6Xl9/BVSTzBUTBVJy/gFX+LebgzRqCLl
-        Y7Xh2dAyy8N7ewxY8Bdl/GXFZg==
-X-Google-Smtp-Source: ABdhPJzuL1jsQ4zskQQrOKKozSNIFC9m27OVOxpmMpq/Dd03OzHHa/N/N9fdMkAJHjMqntR6dcqnqQ==
-X-Received: by 2002:a17:90a:9291:: with SMTP id n17mr8187230pjo.219.1639514244576;
-        Tue, 14 Dec 2021 12:37:24 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:b37:fbed:ef52:5dca])
-        by smtp.gmail.com with ESMTPSA id k70sm534619pgd.19.2021.12.14.12.37.23
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=nvcFiIfK7eFq3ayhKxt3+0SDgLbkislDyMJ12p685Lk=;
+        b=2bmcqD30jMQ0eJY2FySVP58mFiA3XhpaDqGRp79bTnHF6eRBhRF28uRjO7SSn7Oxwp
+         a9ZiaqjQiU+BKPUE03wfaGnAbJmj9fwDvGSMOc23fWJYaIgSgmN1G4pQZV9wjT+nDA1Z
+         uJ19idXuZ6O6riOeFhxXlFfnwYsE/w8aHzZ35NQw/Rymqj41Tl+nsC+cpatnHjc5fMxh
+         zl18Ce/7Efkl8vOpAYg95cmdBEdYlyZ76Cu2+8mvn/y8UwVL7+gwDHQLXqC6aFM4fXz7
+         ZijzsbTYcMIKwOVjprhsAeh5eIQC0OCvCfkkXKTjIYd+07XRN1P+a8qN/jkyc1maH7dl
+         gD6Q==
+X-Gm-Message-State: AOAM530Rl086mkfORI3cp3Y/9akRoVwBoegCy5pCJtikhYHk2LpWJnfG
+        J+3r5ERXOLUqBO/2s8tS5IY=
+X-Google-Smtp-Source: ABdhPJxx1tXaSjhKf5rDm/a4aMkHwan1iVGmjbOKSNtON5UdQ4pHHYHG6MMqZ+0wiW2cwz55B+yiXw==
+X-Received: by 2002:a17:906:d553:: with SMTP id cr19mr8440000ejc.140.1639514706120;
+        Tue, 14 Dec 2021 12:45:06 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id cs15sm257494ejc.31.2021.12.14.12.45.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Dec 2021 12:37:24 -0800 (PST)
-Date:   Tue, 14 Dec 2021 12:37:18 -0800
-From:   Josh Steadmon <steadmon@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, chooglen@google.com, emilyshaffer@google.com,
-        avarab@gmail.com
-Subject: Re: [PATCH v5 2/2] branch: add flags and config to inherit tracking
-Message-ID: <YbkAfk1r/ONeYyIN@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        chooglen@google.com, emilyshaffer@google.com, avarab@gmail.com
-References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
- <cover.1638859949.git.steadmon@google.com>
- <c7e4af9a365cc61e682c3c73045fb1ee4b79cfbf.1638859949.git.steadmon@google.com>
- <xmqq7dcg6w43.fsf@gitster.g>
+        Tue, 14 Dec 2021 12:45:05 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mxEfZ-000BDG-7P;
+        Tue, 14 Dec 2021 21:45:05 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jacob Vosmaer <jacob@gitlab.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v2 1/1] upload-pack.c: increase output buffer size
+Date:   Tue, 14 Dec 2021 21:41:27 +0100
+References: <YbizfdGq+RSu9BGe@coredump.intra.peff.net>
+ <20211214194626.33814-1-jacob@gitlab.com>
+ <20211214194626.33814-2-jacob@gitlab.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <20211214194626.33814-2-jacob@gitlab.com>
+Message-ID: <211214.86h7bac3vy.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq7dcg6w43.fsf@gitster.g>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021.12.07 11:41, Junio C Hamano wrote:
-> Josh Steadmon <steadmon@google.com> writes:
-> 
-> >  --no-track::
-> >  	Do not set up "upstream" configuration, even if the
-> > -	branch.autoSetupMerge configuration variable is true.
-> > +	branch.autoSetupMerge configuration variable is set.
-> 
-> I guess "inherit" is different from "true".
-> Nice to see an attention to the details.  
-> 
-> > diff --git a/branch.h b/branch.h
-> > index df0be61506..6484bda8a2 100644
-> > --- a/branch.h
-> > +++ b/branch.h
-> > @@ -10,7 +10,8 @@ enum branch_track {
-> >  	BRANCH_TRACK_REMOTE,
-> >  	BRANCH_TRACK_ALWAYS,
-> >  	BRANCH_TRACK_EXPLICIT,
-> > -	BRANCH_TRACK_OVERRIDE
-> > +	BRANCH_TRACK_OVERRIDE,
-> > +	BRANCH_TRACK_INHERIT
-> >  };
-> 
-> Unless INHERIT must stay to be at the end of the enumeration even
-> when we add more of these, let's leave a common at the end to help
-> future developers.
 
-Fixed in V6.
+On Tue, Dec 14 2021, Jacob Vosmaer wrote:
 
+> When serving a fetch, git upload-pack copies data from a git
+> pack-objects stdout pipe to its stdout. This commit increases the size
+> of the buffer used for that copying from 8192 to 65515, the maximum
+> sideband-64k packet size.
+>
+> Previously, this buffer was allocated on the stack. Because the new
+> buffer size is nearly 64KB, we switch this to a heap allocation.
+>
+> On GitLab.com we use GitLab's pack-objects cache which does writes of
+> 65515 bytes. Because of the default 8KB buffer size, propagating these
+> cache writes requires 8 pipe reads and 8 pipe writes from
+> git-upload-pack, and 8 pipe reads from Gitaly (our Git RPC service).
+> If we increase the size of the buffer to the maximum Git packet size,
+> we need only 1 pipe read and 1 pipe write in git-upload-pack, and 1
+> pipe read in Gitaly to transfer the same amount of data. In benchmarks
+> with a pure fetch and 100% cache hit rate workload we are seeing CPU
+> utilization reductions of over 30%.
+>
+> Signed-off-by: Jacob Vosmaer <jacob@gitlab.com>
+> ---
+>  upload-pack.c | 17 ++++++++++++-----
+>  1 file changed, 12 insertions(+), 5 deletions(-)
+>
+> diff --git a/upload-pack.c b/upload-pack.c
+> index c78d55bc67..3b90fb69e6 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -194,7 +194,13 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
+>  }
+>  
+>  struct output_state {
+> -	char buffer[8193];
+> +	/*
+> +	 * We do writes no bigger than LARGE_PACKET_DATA_MAX - 1, because with
+> +	 * sideband-64k the band designator takes up 1 byte of space. Because
+> +	 * relay_pack_data keeps the last byte to itself, we make the buffer 1
+> +	 * byte bigger than the intended maximum write size.
+> +	 */
+> +	char buffer[(LARGE_PACKET_DATA_MAX - 1) + 1];
 
-> > -		if (value && !strcasecmp(value, "always")) {
-> > +		if (value && !strcmp(value, "always")) {
-> 
-> This is belatedly correcting the mistake we made 5 years ago, which
-> can break existing users who used "[branch]autosetupmerge=Always" in
-> their configuration files.
-> 
-> I'm OK to fix it to accept only lowercase as written here, see if
-> anybody screams, and tell them that the all-lowercase is the only
-> documented way to spell this word.
-> 
-> >  			git_branch_track = BRANCH_TRACK_ALWAYS;
-> >  			return 0;
-> > +		} else if (value && !strcmp(value, "inherit")) {
-> > +			git_branch_track = BRANCH_TRACK_INHERIT;
-> > +			return 0;
-> >  		}
-> >  		git_branch_track = git_config_bool(var, value);
-> >  		return 0;
-> 
-> Thanks.
+Since X-1+1 = X shouldn't we just say X ? :)
+
+Maybe this fixup is better, maybe not:
+	
+	diff --git a/upload-pack.c b/upload-pack.c
+	index 3b90fb69e6d..10849110229 100644
+	--- a/upload-pack.c
+	+++ b/upload-pack.c
+	@@ -195,12 +195,12 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
+	 
+	 struct output_state {
+	 	/*
+	-	 * We do writes no bigger than LARGE_PACKET_DATA_MAX - 1, because with
+	-	 * sideband-64k the band designator takes up 1 byte of space. Because
+	-	 * relay_pack_data keeps the last byte to itself, we make the buffer 1
+	-	 * byte bigger than the intended maximum write size.
+	+	 * We do writes no bigger than LARGE_PACKET_DATA_MAX - 1,
+	+	 * because with * sideband-64k the band designator takes up 1
+	+	 * byte of space (see relay_pack_data() below). So
+	+	 * LARGE_PACKET_DATA_MAX ends up being the right size.
+	 	 */
+	-	char buffer[(LARGE_PACKET_DATA_MAX - 1) + 1];
+	+	char buffer[LARGE_PACKET_DATA_MAX];
+	 	int used;
+	 	unsigned packfile_uris_started : 1;
+	 	unsigned packfile_started : 1;
+
+>  	int used;
+>  	unsigned packfile_uris_started : 1;
+>  	unsigned packfile_started : 1;
+> @@ -269,7 +275,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+>  			     const struct string_list *uri_protocols)
+>  {
+>  	struct child_process pack_objects = CHILD_PROCESS_INIT;
+> -	struct output_state output_state = { { 0 } };
+> +	struct output_state *output_state = xcalloc(1, sizeof(struct output_state));
+
+I don't know when/if we need to worry about 8k v.s. ~65k on the stack,
+especially as recv_sideband() has:
+
+	char buf[LARGE_PACKET_MAX + 1];
+
+But maybe our stack is already quite big here, I don't know...
+
+>  	char progress[128];
+>  	char abort_msg[] = "aborting due to possible repository "
+>  		"corruption on the remote side.";
+> @@ -404,7 +410,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+>  		}
+>  		if (0 <= pu && (pfd[pu].revents & (POLLIN|POLLHUP))) {
+>  			int result = relay_pack_data(pack_objects.out,
+> -						     &output_state,
+> +						     output_state,
+>  						     pack_data->use_sideband,
+>  						     !!uri_protocols);
+>  
+> @@ -438,11 +444,12 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+>  	}
+>  
+>  	/* flush the data */
+> -	if (output_state.used > 0) {
+> -		send_client_data(1, output_state.buffer, output_state.used,
+> +	if (output_state->used > 0) {
+> +		send_client_data(1, output_state->buffer, output_state->used,
+>  				 pack_data->use_sideband);
+>  		fprintf(stderr, "flushed.\n");
+>  	}
+> +	free(output_state);
+>  	if (pack_data->use_sideband)
+>  		packet_flush(1);
+>  	return;
+
+But this looks fine either way. And yes, in reply to the question in the
+cover letter it's fine to ignore the memory leaks we have when we call
+die().
