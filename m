@@ -2,130 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF01AC433F5
-	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 14:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E62F3C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 14:34:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232600AbhLNOF0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Dec 2021 09:05:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55150 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232644AbhLNOFZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Dec 2021 09:05:25 -0500
-X-Greylist: delayed 64 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 14 Dec 2021 06:05:25 PST
-Received: from lb2-smtp-cloud8.xs4all.net (lb2-smtp-cloud8.xs4all.net [IPv6:2001:888:0:108::2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A77C061574
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 06:05:25 -0800 (PST)
-Received: from ox-appsuite2.xs4all.net ([194.109.29.135])
-        by smtp-cloud8.xs4all.net with ESMTPSA
-        id x8PimewBmhsVfx8PimBmSl; Tue, 14 Dec 2021 15:04:18 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s2;
-        t=1639490658; bh=nMhaBNNt8y1vi3e+oStwgbbfNfxCnXtjQNW1aX+DSvY=;
-        h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:From:
-         Subject;
-        b=gicoHumNhnIaQeoWFcHmar65TjQBeE0k04870F5PWHpD8dvL/bvhACMwXJdps9i3A
-         ibmLHRF/SYwnhMFoLTUdlNFPZ3RIZwn3B5j5mXimWSGIyaJDwf6K35lUgv0bViLf3E
-         d8ZszeyZHslVKYY8UA+DqlsFiqocqNfjY1359K58VvNpR7Vj9YEBeaOIOSzuUlqFq5
-         tB9icm21nMNsPLv514ADVW/GyNlV7yFdm1jUayw1rs/F5H+ygwwifC9C/gERykdKwj
-         aw6M+N5+IeQKCDxj7CxAMIbtOt0Y7JowgXPvLtTs/RqHAXgF/MOnBOy+1qwqwPQd1V
-         mSkxbXfp475qg==
-Date:   Tue, 14 Dec 2021 15:04:18 +0100 (CET)
-From:   Henk Smit <hhwsmit@xs4all.nl>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Message-ID: <1042563381.1916955.1639490658310@ox-webmail.xs4all.nl>
-In-Reply-To: <9ee85cd2-3783-d077-11c1-5a779a325a0a@gmail.com>
-References: <763856358.299504.1636971571656@ox-webmail.xs4all.nl>
- <9ee85cd2-3783-d077-11c1-5a779a325a0a@gmail.com>
-Subject: Re: A bug or issue with "git rebase --autostash" not popping the
- stash automatically
+        id S234330AbhLNOey (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Dec 2021 09:34:54 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51558 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230309AbhLNOex (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Dec 2021 09:34:53 -0500
+Received: (qmail 13898 invoked by uid 109); 14 Dec 2021 14:34:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Dec 2021 14:34:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25018 invoked by uid 111); 14 Dec 2021 14:34:53 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Dec 2021 09:34:53 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 14 Dec 2021 09:34:52 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC PATCH 02/10] range-diff.c: don't use st_mult() for signed
+ "int"
+Message-ID: <YbirjNDX2bQPqRPD@coredump.intra.peff.net>
+References: <RFC-cover-00.10-00000000000-20211209T191653Z-avarab@gmail.com>
+ <RFC-patch-02.10-bd7d014c531-20211209T191653Z-avarab@gmail.com>
+ <YbLL/YWbjc/sPRyH@coredump.intra.peff.net>
+ <211210.86lf0sdah1.gmgdl@evledraar.gmail.com>
+ <YbM85W3N0ySi5k+H@coredump.intra.peff.net>
+ <211210.86czm4d3zo.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v7.10.5-Rev27
-X-Originating-Client: open-xchange-appsuite
-X-CMAE-Envelope: MS4xfOuy8/jRH1p9LGUaGumpVfM0sc0HrvlUIpg/k488a/MVZ9u9tePfAMMAxKPWFnUBNjtbhRkVwBWGCAvv5mRJ/lgKmMw2Qo5JA4KFR29yD2Ofqr68Ondv
- c4YsXr5Ur+wVj9JfT02JQuCOoF8oREmMyaOElWyNdDR1lPgRBcGvD/YenJdRTZpsPYXqStxZo8OOzOY1Og7HHYqWbKoF8Xs/ngu5HROwfJuIRSbK53SK7YmH
- P7dOw/ZGpJ82gbYwP5GHcA==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <211210.86czm4d3zo.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philippe,
+On Fri, Dec 10, 2021 at 01:31:10PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> You may, but I might not answer, or even receive your email. It is always
-> a better idea to write to the mailing list, and CC people that you want to
-> be made aware of your message :)
-
-I was fighting inside my company to get people to realize how most of the
-programmers try to stay away from git. They still work with our old versioning
-system. And only clone a git workspace right before committing. It's a bit sad.
-But all our git-experts kept telling me I was wrong. They expect everyone
-to become a git-expert from day 1.
-
-> > 6) PROBLEM: the stash is not automatically popped.
-
-> Yes, that's the correct behaviour. If there are conflicts in the rebase, we do not apply the stash,
-> since it could make the situation even worse if the modifications in the stash also conflict with
-> the same lines as the rebase conflict. That fact, I realize, is missing from the documentation [1].
-
-Maybe when there are problems with the rebase. But not when applying the stash back to your workspace.
-I've tried 2.34, and there git works exactly like I expect! Even if there are conflicts with the stash,
-they get applied (with the <<<< and >>>>).
-
-> So, the stash does not apply automatically, there are conflicts. As noted in [2], this is
-> the correct behaviour for 'git stash drop' [2].
-
-OK. It's fine that when there are conflicts the stash is applied and then kept.
-But what happened before 2.34 was that the stash wasn't even applied. Now it is. So my problem is solved.
-
-> What you describe is working as it should,  I think.
-
-Well, it changed in 2.34 to behaviour that I expect.
-I've had some discussion with our internal git-experts. And they all told me different things.
-And when I asked very explicit things, like "what is the correct behaviour", they all admitted
-that they didn't know. :) No problem, but it drove me a bit mad. That's why I wanted to ask
-someone outside my company.
-
-But now I have the answer. I was not crazy. And what I expect (apply the stash, even when there
-are conflicts), is what should have happened.
-
-> > Is this related to the issue you point out on the git mailing-list?
-> No, I was describing a case where the stash should have been applied automatically,
-> but it was not. This bug was fixed in Git 2.33.0 [3].
-
-Understood. The behaviour was changed again in 2.34.
-
-> As I wrote above, the behaviour you are seeing is not a bug. When applying the stash would fail
-> due to conflicts, Git tells you about it:
+> I don't think using ssize_t like that is portable, and that we'd need
+> something like intmax_t if we needed this in another context.
 > 
->          Applying autostash resulted in conflicts.
->          Your changes are safe in the stash.
->          You can run "git stash pop" or "git stash drop" at any time.
+> Firstly it's not standard C, it's just in POSIX, intmax_t is standard C
+> as of C99, which and we have in-tree code that already depends on it
+> (and uintmax_t).
 > 
-> So it's up to you to remember to do it :)
+> But more importantly it's not "as big as size_t, just signed" in
+> POSIX. size_t is "no greater than the width of type long"[1] and
+> LONG_MAX is at least 2^31-1 [2].
 
-Yep. But in 2.34 that changed again. Now the stash always gets applied.
+Thanks, I didn't know that about ssize_t. I do wonder how often it is
+_not_ the case that it is of the same magnitude as size_t. Certainly I
+can see how write() could decide to just work in SSIZE_MAX chunks, since
+the caller has to be prepared to loop anyway. But it seems like the
+obvious implementation is for it to be a signed size_t; I'd be curious
+to hear of any platforms that diverge from this (i.e., is this a real
+portability concern, or like NULL pointers that aren't all-zeroes, one
+that we don't care about in practice).
 
-> If you want to have an "always-on" reminder that you have something stashed, you could use
-> 'git-prompt.sh' [4], and set GIT_PS1_SHOWSTASHSTATE in your shell environment [5].
+I do suspect we've already made that assumption elsewhere, though it's
+hard to easily see. Grepping for ssize_t turns up lots of reasonable and
+legitimate uses. Though some like the one in strbuf_realpath() are
+questionable (it's assigning from an int!).
 
-Thanks for the suggestion, I'll have a look at that.
+> 3. B.t.w. a thing I ended up ejecting out of this was that I made a
+>    "test_commit_bulkier" which is N times faster than "test_commit_bulk",
+>    it just makes the same commit N times with the printf-repeating feature
+>    and feeds it to fast-import, but the test took so long in any case that
+>    I couldn't find a plausible way to get it in-tree).
 
-> > So my question again: "is git rebase --autostash" supposed to always pop the stash or not?
-> > If it is, is the current git behaviour a bug?
-> 
-> It's not, not when the rebase has conflicts, or when applying the stash results in conflicts.
+Yes, I noticed it was rather slow. The main culprit is Git writing out
+new blobs and trees for each commit, which is what I assume your
+"bulkier" version skipped (the existing "bulk" one is careful not to
+use any sub-processes).  You can instruct test_commit_bulk to use
+identical content in each commit, which saves a lot of time.
 
-Well, in 2.34, git thinks differently. :)
+It's also highly non-linear in the number of commits when the tree
+changes. That suggests that fast-import's tree-handling could be
+improved. Here are the results of the hacky perf script below, showing
+both the non-linearity in the "full" case and how much faster the
+"quick" (commits-only) case is:
 
-Anyway, thanks very much for your reply.
-In 2.34, git behaves like I want.
-This is behaviour I can tell my colleagues about (the ones who are not git-experts, like me).
-"git fetch && git rebase --autostash" is now an easy and reliable way to update our workspaces.
-That's all we need.
-I'm happy.
+  Test                 this tree        
+  --------------------------------------
+  1234.2: full 1000    0.35(0.27+0.08)  
+  1234.3: full 2000    0.85(0.81+0.04)  
+  1234.4: full 4000    3.21(3.09+0.11)  
+  1234.5: full 8000    12.13(11.85+0.27)
+  1234.6: quick 1000   0.14(0.12+0.02)  
+  1234.7: quick 2000   0.20(0.18+0.03)  
+  1234.8: quick 4000   0.31(0.28+0.04)  
+  1234.9: quick 8000   0.58(0.55+0.03)  
 
-Have a nice day,
-henk.
+-- >8 --
+#!/bin/sh
+
+test_description='foo'
+. ./perf-lib.sh
+
+test_expect_success 'empty repo' 'git init'
+
+test_perf 'full 1000' 'test_commit_bulk --id=full 1000'
+test_perf 'full 2000' 'test_commit_bulk --id=full 2000'
+test_perf 'full 4000' 'test_commit_bulk --id=full 4000'
+test_perf 'full 8000' 'test_commit_bulk --id=full 8000'
+
+test_perf 'quick 1000' 'test_commit_bulk --id=quick --filename=foo --contents=bar 1000'
+test_perf 'quick 2000' 'test_commit_bulk --id=quick --filename=foo --contents=bar 2000'
+test_perf 'quick 4000' 'test_commit_bulk --id=quick --filename=foo --contents=bar 4000'
+test_perf 'quick 8000' 'test_commit_bulk --id=quick --filename=foo --contents=bar 8000'
+
+test_done
+-- >8 --
