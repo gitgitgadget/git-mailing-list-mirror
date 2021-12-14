@@ -2,140 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0596DC433F5
-	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 15:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B6E0C433F5
+	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 16:43:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234664AbhLNPht (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Dec 2021 10:37:49 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51690 "EHLO cloud.peff.net"
+        id S235814AbhLNQnk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Dec 2021 11:43:40 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51750 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234470AbhLNPht (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Dec 2021 10:37:49 -0500
-Received: (qmail 14198 invoked by uid 109); 14 Dec 2021 15:37:48 -0000
+        id S229942AbhLNQnj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Dec 2021 11:43:39 -0500
+Received: (qmail 14389 invoked by uid 109); 14 Dec 2021 16:43:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Dec 2021 15:37:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Dec 2021 16:43:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25728 invoked by uid 111); 14 Dec 2021 15:37:48 -0000
+Received: (qmail 26446 invoked by uid 111); 14 Dec 2021 16:43:39 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Dec 2021 10:37:48 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Dec 2021 11:43:39 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 14 Dec 2021 10:37:47 -0500
+Date:   Tue, 14 Dec 2021 11:43:38 -0500
 From:   Jeff King <peff@peff.net>
-To:     Jacob Vosmaer <jacob@gitlab.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/1] upload-pack.c: make output buffer size configurable
-Message-ID: <Ybi6SwndUHLs27bO@coredump.intra.peff.net>
-References: <20211213132345.26310-1-jacob@gitlab.com>
- <20211213132345.26310-2-jacob@gitlab.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 2/2] test-lib.sh: remove the now-unused
+ "test_untraceable" facility
+Message-ID: <YbjJuh4dVijL7jw4@coredump.intra.peff.net>
+References: <cover-v2-0.2-00000000000-20211201T200801Z-avarab@gmail.com>
+ <cover-v3-0.2-00000000000-20211210T100512Z-avarab@gmail.com>
+ <patch-v3-2.2-a7fc794e20d-20211210T100512Z-avarab@gmail.com>
+ <20211212163207.GA3400@szeder.dev>
+ <211212.865yrtbvl1.gmgdl@evledraar.gmail.com>
+ <20211212201441.GB3400@szeder.dev>
+ <xmqqo85kcp99.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20211213132345.26310-2-jacob@gitlab.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqo85kcp99.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 02:23:45PM +0100, Jacob Vosmaer wrote:
+On Mon, Dec 13, 2021 at 10:51:14AM -0800, Junio C Hamano wrote:
 
-> The current size of the buffer is 8192+1. The '+1' is a technical
-> detail orthogonal to this change. On GitLab.com we use GitLab's
-> pack-objects cache which does writes of 65515 bytes. Because of the
-> default 8KB buffer size, propagating these cache writes requires 8
-> pipe reads and 8 pipe writes from git-upload-pack, and 8 pipe reads
-> from Gitaly (our Git RPC service). If we increase the size of the
-> buffer to the maximum Git packet size, we need only 1 pipe read and 1
-> pipe write in git-upload-pack, and 1 pipe read in Gitaly to transfer
-> the same amount of data. In benchmarks with a pure fetch and 100%
-> cache hit rate workload we are seeing CPU utilization reductions of
-> over 30%.
+> > I don't see any argument pertinent to BASH_XTRACEFD in general in that
+> > email, of in favor of its removal in particular, and there are no
+> > valid arguments for its removal in earlier emails in this thread
+> > either.
+> 
+> If I am reading Ævar right, the argument is "dash would not be fixed
+> with BASH_XTRACEFD, so there needs another way that would work there,
+> and if the approach happens to work also for bash, then there is no
+> reason to use BASH_XTRACEFD", I think.
+> 
+> Now, if the way Ævar came up with to help shells with "-x" not to
+> contaminate their standard error stream that our test scripts want
+> to inspect is worse to write, understand, and maintain, compared to
+> the way we have been writing our tests that inspect their standard
+> errors, without having to worry about "-x" output thanks to the use
+> of BASH_XTRACEFD, it may make a regression to developer
+> productivity, but I am not sure if that is the case.
 
-I was curious to reproduce this locally, so I came up with:
+I think the method for handling this in the test scripts _is_ worse to
+write, understand, and maintain. The problem to me is less that it's
+ugly to workaround (which as you note in this case is not great, but not
+_too_ bad), but that it's a subtle friction point that may jump up and
+bite any test-writer who does something like:
 
-  (
-    printf "003fwant %s side-band-64k" $(git rev-parse HEAD)
-    printf 0000
-    echo '0009done'
-  ) |
-  git -c uploadpack.packobjectsHook='cat objects/pack/pack-*.pack; :' upload-pack . |
-  pv >/dev/null
+  (foo && bar) 2>stderr
 
-which hackily simulates the server side of your "cached" case. :) I ran
-it on a fully-packed clone of linux.git.
+So my view had always been that BASH_XTRACEFD is the good solution, and
+if people want to make "-x" work reliably under other shells, then I
+won't stop them. But somewhere along the way Gábor did a bunch of fixes
+to get things mostly running, and the use of dash with "-x" got added to
+CI, so now it's a de facto requirement (if you care about CI
+complaining, which we increasingly do).
 
-It gets about 2.3GB/s with the tip of 'master' and 3.2GB/s with the
-equivalent of your patch (using LARGE_PACKET_DATA_MAX). So definitely an
-improvement.
+Maybe that's OK. We've had fewer incidences of the problem popping up
+than I would have expected.
 
-Without the cached case (so actually running pack-objects, albeit a
-pretty quick one because of bitmaps and pack-reuse), the timings are
-about the same (171MB/s versus 174MB/s, but really it's just pegging a
-CPU running pack-objects). So it would be fine to just do this
-unconditionally, I think.
+My vision was that we'd leave BASH_XTRACEFD so people using it could
+remain oblivious if they chose, but if the ship has sailed via CI, then
+that might have less value.
 
-Looking at strace, the other thing I notice is that we write() the
-packet header separately in send_sideband(), which doubles the number of
-syscalls. I hackily re-wrote this to use writev() instead (patch below),
-but it doesn't seem to actually help much (maybe a curiosity to explore
-further, but definitely not something to hold up your patch).
+> I think [1/2] of this same series can serve an example of how tests
+> must be tweaked to live under the world order without BASH_XTRACEFD?
+> Having to set and use a temporary file to capture the standard error
+> output and append to it upfront looks uglier than each individual
+> test locally capturing the standard error output from a single
+> invocation of a helper function, but it does not look _too_ bad to
+> me.  Can we find another example to argue for BASH_XTRACEFD, how
+> much it makes it easier to write tests that work even under "-x"?
+
+I think the fixes from 571e472dc4 (Merge branch 'sg/test-x', 2018-03-14)
+show what had to be done to get where we are today.
 
 -Peff
-
----
-diff --git a/sideband.c b/sideband.c
-index 85bddfdcd4..d0945507a3 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -5,6 +5,11 @@
- #include "help.h"
- #include "pkt-line.h"
- 
-+/* hack; should go in git-compat-util, and should provide compat
-+ * wrapper around regular write()
-+ */
-+#include <sys/uio.h>
-+
- struct keyword_entry {
- 	/*
- 	 * We use keyword as config key so it should be a single alphanumeric word.
-@@ -257,6 +262,7 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
- 
- 	while (sz) {
- 		unsigned n;
-+		struct iovec iov[2];
- 		char hdr[5];
- 
- 		n = sz;
-@@ -265,12 +271,17 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
- 		if (0 <= band) {
- 			xsnprintf(hdr, sizeof(hdr), "%04x", n + 5);
- 			hdr[4] = band;
--			write_or_die(fd, hdr, 5);
-+			iov[0].iov_base = hdr;
-+			iov[0].iov_len = 5;
- 		} else {
- 			xsnprintf(hdr, sizeof(hdr), "%04x", n + 4);
--			write_or_die(fd, hdr, 4);
-+			iov[0].iov_base = hdr;
-+			iov[0].iov_len = 4;
- 		}
--		write_or_die(fd, p, n);
-+		iov[1].iov_base = (void *)p;
-+		iov[1].iov_len = n;
-+		/* should check for errors, but also short writes and EINTR, etc */
-+		writev(fd, iov, 2);
- 		p += n;
- 		sz -= n;
- 	}
-diff --git a/upload-pack.c b/upload-pack.c
-index c78d55bc67..111de8c60c 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -194,7 +194,7 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
- }
- 
- struct output_state {
--	char buffer[8193];
-+	char buffer[LARGE_PACKET_DATA_MAX];
- 	int used;
- 	unsigned packfile_uris_started : 1;
- 	unsigned packfile_started : 1;
