@@ -2,280 +2,259 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BC4CC433EF
-	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 20:08:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D365C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 20:35:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237583AbhLNUIx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Dec 2021 15:08:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56098 "EHLO
+        id S237648AbhLNUfR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Dec 2021 15:35:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229795AbhLNUIx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Dec 2021 15:08:53 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 273B5C061574
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 12:08:51 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id l10-20020a17090a4d4a00b001a6f817f57eso12317787pjh.3
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 12:08:51 -0800 (PST)
+        with ESMTP id S232388AbhLNUfQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Dec 2021 15:35:16 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA714C061574
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 12:35:16 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id o4so18758490pfp.13
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 12:35:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=/q2LVndDJSuNA9VHqTen3RqTDZlsWdpFojbfZEzqzbw=;
-        b=HinzExX595wCUsXYuYLS5/IIefZETiKQXOKF3JKgvhq/dSs8Tf5D6uRTBdCjqBNqPp
-         TagFxAak+ssurrz+qgSZF6UMZOt1tYJtVDYcXe+40fkp2X9Km3Iy//2ZD+YuYMBg2iBS
-         rvcv47JfrB2wCPfoIqeWqpxoJsXowIH5H5Zhgf6LxBdlDv7kc6mlBzu5BvlT4nCCesRO
-         6BQMOWVQH7CyrbL8wrKeHL/PKex1/4UCzwEIxLTtXeDLZ7I2c3l3gWuHtSk95N2xRbzw
-         Mf1T/5ZAn8zx/B7h8vYwD0mi+zwOb7ppCcmbhichzbmmkIPGfWOG79yGRinG57IMNsw/
-         htBQ==
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=nZ6C9E9850HBkWtXyZno23otU3KnCMWAAvo6qT5ZleM=;
+        b=rR7QvnInpN/tzO4fd8vxCOFmSzQmsDUSljij+2sOqWfO/9l8jgiqso/6zBu6WHmHhQ
+         u61viwD3P0TBU8w0D7hZvBSZDAIZes8fIZUIt0Tr5iIBXa+SDVJsUnkRj7teFqjVrxj9
+         //COGqV3fNzb/jhxfe5b01F1QE11uFFQOCNHBLl6tHuucuM0+AItCNE1ImaiSPtVW6M2
+         hjx+L+pVqb6JHXflHmc5jbPAMfgcVB9H61RMOGuIBlfMr89um7iPg7aXlJj6cRpFnt+L
+         4NbxJ0WiQmqizF+C9HonH5rAh9+NJBiQfyBaaAxD68Gi4MDK+nsYW448XBm26ZzFx1AQ
+         97aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=/q2LVndDJSuNA9VHqTen3RqTDZlsWdpFojbfZEzqzbw=;
-        b=ZTaHDaVPmbJ/mASlFoLeH2qNBohzfkQ1HYnwbcO2y9A7flkh1XXLSnmP7rAVPgodNU
-         sUVwFsQpxZttCAwvJ3x9bSRgj8r9+/hX9Rz2t7HtGsdCDqRHf2EQSGAGZx7pBkr/N91h
-         HnRKbv2SuImEkuzEf0pEzBmbizlb+v9RCbNaE/F8DTrCD+iDt+Mz3UC+Pd5CCi6IzCXF
-         HCih67/dWG+bU23Y8ROTARoonLPR/HBL51N6W/THrw/yztWhoqqZCfUOnoXVatqC9Bzy
-         aj0q70WK2P/OKj9eTUwjkrlDgArmlftztsa9nfOAzs3FY8LuPh2PeG/u9YxUH5NgSx9d
-         0xqg==
-X-Gm-Message-State: AOAM531DFzRuzVTP1cAPFgVXZL/12HxfxzgFQtO5lA4R0JYlUhE8UZMQ
-        WHnXx5ZkHaQRcakPXj0RCDAfUKNOJsCVww==
-X-Google-Smtp-Source: ABdhPJxMSr5fCTVVgpLnbU9jhRWru0Z6DcscDIVPnDW+z9xBSMcoTWrPedbcObqCaRsuJO2arOtoQRnH6BRHBw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:7682:b0:148:a2f7:9d7e with SMTP
- id m2-20020a170902768200b00148a2f79d7emr1050852pll.157.1639512530565; Tue, 14
- Dec 2021 12:08:50 -0800 (PST)
-Date:   Tue, 14 Dec 2021 12:08:47 -0800
-In-Reply-To: <a54c6015-6afb-b25f-d2d2-392bf77e93f0@gmail.com>
-Message-Id: <kl6l7dc7uey8.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20211206215528.97050-1-chooglen@google.com> <20211209184928.71413-1-chooglen@google.com>
- <20211209184928.71413-5-chooglen@google.com> <a54c6015-6afb-b25f-d2d2-392bf77e93f0@gmail.com>
-Subject: Re: [PATCH v3 4/5] branch: add --recurse-submodules option for branch creation
-From:   Glen Choo <chooglen@google.com>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>, git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=nZ6C9E9850HBkWtXyZno23otU3KnCMWAAvo6qT5ZleM=;
+        b=YJad8OH+F3Y7MUaRs0I/AytF7XRltRPvk83FsrhIIf+cT3s88oxhKI103ObKmmagXR
+         lJxaWJ7OYYWLOKseJdA1Eq7VHp2XauKBZBVzjXq8Cz6CgCc7g0lEnSrowdP78dnO4Bhj
+         NRxTVGM/7ul20Chi13NS5OWPaIQ74XS8y0AQOMhM/XayJUdWIlBn64CN+xodFldRF2BZ
+         bgAs230zaGuaXc29j0Z8S2aEdEuFpLA3rapdLZW7u+4K6ooGlGF2cxxg3vc/iHk2x0vx
+         bppFsAmnqGKy+ErbxRxJ+qFONMPAAqVj3PXPvOJvsn6Xlje7KvBnDdDWWscZoA/mD9i6
+         oC1A==
+X-Gm-Message-State: AOAM532ZR7/r/4FPe5CRF5WbFdW9SlwuTsrm2Ov2TzBJDuhuNRD2/ws8
+        MgBZj9MVKUNAPzFM8GLj6WVmY7X8WrZEsg==
+X-Google-Smtp-Source: ABdhPJx2kAQCd/l2bE8JTG//yw0U7/HFlhnzXygyAU77QfF3usTUGddp8PiGTO5fEUTHRLefKaDp6Q==
+X-Received: by 2002:a65:4c43:: with SMTP id l3mr5250388pgr.398.1639514115859;
+        Tue, 14 Dec 2021 12:35:15 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:b37:fbed:ef52:5dca])
+        by smtp.gmail.com with ESMTPSA id om5sm470123pjb.5.2021.12.14.12.35.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Dec 2021 12:35:15 -0800 (PST)
+Date:   Tue, 14 Dec 2021 12:35:09 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, chooglen@google.com, emilyshaffer@google.com,
+        avarab@gmail.com
+Subject: Re: [PATCH v5 1/2] branch: accept multiple upstream branches for
+ tracking
+Message-ID: <Ybj//dzRfvyuPZOv@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        chooglen@google.com, emilyshaffer@google.com, avarab@gmail.com
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+ <cover.1638859949.git.steadmon@google.com>
+ <ba7d557725e70f2ae8f10ae5992c8168eb97f2fc.1638859949.git.steadmon@google.com>
+ <xmqqk0gg6wqn.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqk0gg6wqn.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philippe Blain <levraiphilippeblain@gmail.com> writes:
+On 2021.12.07 11:28, Junio C Hamano wrote:
+> Josh Steadmon <steadmon@google.com> writes:
+> 
+> > +static int install_branch_config_multiple_remotes(int flag, const char *local, const char *origin,
+> > +		struct string_list *remotes)
+> 
+> The line got overly long so perhaps cut the line after "*local,",
+> as "origin" and "remotes" conceptually are closer together.
+> 
+> What is in the string list?  Names of refs at the remote "origin",
+> instead of a single ref there?
 
-> Hi Glen,
->
-> Le 2021-12-09 =C3=A0 13:49, Glen Choo a =C3=A9crit=C2=A0:
->>   Documentation/config/advice.txt    |   3 +
->>   Documentation/config/submodule.txt |   8 +
->
-> Same comment as I remarked in v1 [1]:
->
-> We would need to add the new flag to Documentation/git-branch.txt,
-> and also probably update the documentation of 'submodule.recurse'
-> in 'Documentation/config/submodule.txt'.
->
-> [1] https://lore.kernel.org/git/3ad3941c-de18-41bf-2e44-4238ae868d79@gmai=
-l.com/
+Added a comment explaining the purpose and arguments.
 
-Ah, I missed Documentation/git-branch.txt. Thanks.
 
-I avoided updating 'submodule.recurse' because it seemed a bit redundant
-when 'submodule.propagateBranches' is in the next paragraph. But I can
-imagine that this helps users with tunnel vision (like me...), so I'll
-do the update.
+> >  {
+> >  	const char *shortname = NULL;
+> >  	struct strbuf key = STRBUF_INIT;
+> > -	int rebasing = should_setup_rebase(origin);
+> > -
+> > -	if (skip_prefix(remote, "refs/heads/", &shortname)
+> > -	    && !strcmp(local, shortname)
+> > -	    && !origin) {
+> > -		warning(_("Not setting branch %s as its own upstream."),
+> > -			local);
+> 
+> When 'origin' is NULL in the original caller, it means a local
+> tracking, and making sure we do not say "my 'master' branch builds
+> on top of itself" makes sense.
+> 
+> > -		return 0;
+> > -	}
+> > +	int i, rebasing = should_setup_rebase(origin);
+> > +
+> > +	if (remotes->nr < 1)
+> > +		BUG("must provide at least one remote for branch config");
+> > +
+> > +	if (!origin)
+> > +		for (i = 0; i < remotes->nr; i++)
+> > +			if (skip_prefix(remotes->items[i].string, "refs/heads/", &shortname)
+> > +			    && !strcmp(local, shortname)) {
+> > +				warning(_("Not setting branch %s as its own upstream."),
+> > +					local);
+> > +				return 0;
+> 
+> I am a bit surprised with this warning and early return before
+> inspecting the remainder of the list.  When 'origin' is NULL,
+> i.e. we are talking about the local building on top of another local
+> branch, if the function is called for the local branch 'main' with
+> 'main' in the remotes list alone, we do want to issue the warning
+> and exit without doing anything (i.e. degenerating to the original
+> behaviour of taking a single string variable, when a string list
+> with a single element is given).  But if the remotes list has 'main'
+> and 'master', would we want to just "skip" the same one, but still
+> handle the other ones as if the "same" branch were not in the list?
 
->> diff --git a/Documentation/config/advice.txt b/Documentation/config/advi=
-ce.txt
->> index 063eec2511..e52262dc69 100644
->> --- a/Documentation/config/advice.txt
->> +++ b/Documentation/config/advice.txt
->> @@ -116,6 +116,9 @@ advice.*::
->>   	submoduleAlternateErrorStrategyDie::
->>   		Advice shown when a submodule.alternateErrorStrategy option
->>   		configured to "die" causes a fatal error.
->> +	submodulesNotUpdated::
->> +		Advice shown when a user runs a submodule command that fails
->> +		because `git submodule update` was not run.
->
-> I see you added '--init' in the actual message below, but maybe it would =
-be more accurate
-> to also add it here ?
+The inheritance case when creating a new branch is the only time we get
+multiple branches, and I think it is a sign of a wider misconfiguration
+if we have our own branch name listed as upstream in this case.
 
-Sounds good.
+When inheriting, `local` should always be a new branch, and `remotes`
+should contain the `branch.<name>.merge` entries of the branch we're
+inheriting from. For this check to trigger would mean that the parent
+branch has configured a local upstream branch that doesn't actually
+exist. So it seems that something has gone wrong; perhaps we can assume
+what the user wanted such as in your case above, but it seems to me that
+it's safer to warn when this happens.
 
->> +	/*
->> +	 * Before creating any branches, first check that the branch can
->> +	 * be created in every submodule.
->> +	 */
->> +	for (i =3D 0; i < submodule_entry_list.entry_nr; i++) {
->> +		if (submodule_entry_list.entries[i].repo =3D=3D NULL) {
->> +			if (advice_enabled(ADVICE_SUBMODULES_NOT_UPDATED))
->> +				advise(_("You may try updating the submodules using 'git checkout %=
-s && git submodule update --init'"),
->> +				       start_name);
->> +			die(_("submodule '%s': unable to find submodule"),
->
-> small nit, maybe write: "unable to find submodule repository" ?
+> > @@ -75,8 +80,17 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+> >  
+> >  	strbuf_reset(&key);
+> >  	strbuf_addf(&key, "branch.%s.merge", local);
+> > -	if (git_config_set_gently(key.buf, remote) < 0)
+> > +	/*
+> > +	 * We want to overwrite any existing config with all the branches in
+> > +	 * "remotes". Override any existing config with the first branch, but if
+> > +	 * more than one is provided, use CONFIG_REGEX_NONE to preserve what
+> > +	 * we've written so far.
+> > +	 */
+> > +	if (git_config_set_gently(key.buf, remotes->items[0].string) < 0)
+> >  		goto out_err;
+> > +	for (i = 1; i < remotes->nr; i++)
+> > +		if (git_config_set_multivar_gently(key.buf, remotes->items[i].string, CONFIG_REGEX_NONE, 0) < 0)
+> > +			goto out_err;
+> >  
+> >  	if (rebasing) {
+> >  		strbuf_reset(&key);
+> > @@ -87,29 +101,62 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+> >  	strbuf_release(&key);
+> >  
+> >  	if (flag & BRANCH_CONFIG_VERBOSE) {
+> > -		if (shortname) {
+> > -			if (origin)
+> > -				printf_ln(rebasing ?
+> > -					  _("Branch '%s' set up to track remote branch '%s' from '%s' by rebasing.") :
+> > -					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
+> > -					  local, shortname, origin);
+> > -			else
+> > -				printf_ln(rebasing ?
+> > -					  _("Branch '%s' set up to track local branch '%s' by rebasing.") :
+> > -					  _("Branch '%s' set up to track local branch '%s'."),
+> > -					  local, shortname);
+> > +		int plural = remotes->nr > 1;
+> > +		int all_shortnames = 1;
+> > +		const char *msg_fmt;
+> > +		struct strbuf ref_string = STRBUF_INIT;
+> > +
+> > +		for (i = 0; i < remotes->nr; i++)
+> > +			if (skip_prefix(remotes->items[i].string, "refs/heads/", &shortname)) {
+> > +				strbuf_addf(&ref_string, "'%s', ", shortname);
+> > +			} else {
+> > +				all_shortnames = 0;
+> > +				strbuf_addf(&ref_string, "'%s', ", remotes->items[i].string);
+> 
+> So, all_shortnames == true means everything was a local branch in
+> the 'origin' remote, and when it has a non-branch (like a tag),
+> all_shortnames becomes false?
+> 
+> > +			}
+> > +		/* The last two characters are an extraneous ", ", so trim those. */
+> > +		strbuf_setlen(&ref_string, ref_string.len - 2);
+> 
+> As you are starting from an empty ref_string, a more idiomatic way
+> to build concatenated string would be to prefix when you add a new
+> item, e.g.
+> 
+> 	loop {
+> 		if (ref_string already has items)
+> 			ref_string.append(", ");
+> 		ref_string.append(this_item);
+> 	}
 
-I don't think that adding the word 'repository' makes the problem
-clearer to the user. It might even be misleading e.g. a hypotethical
-user might think "Unable to find the repository? The remote repository
-is giving a 404 Not Found?".
+Ack, although changes to address other review feedback has made this
+point moot.
 
->> +			    submodule_entry_list.entries[i].submodule->name);
->> +		}
->> +
->> +		if (submodule_create_branch(
->> +			    submodule_entry_list.entries[i].repo,
->> +			    submodule_entry_list.entries[i].submodule, name,
->> +			    oid_to_hex(&submodule_entry_list.entries[i]
->> +						.name_entry->oid),
->> +			    tracking_name, force, reflog, quiet, track, 1))
->
-> Here, we do not actually use the dry_run argument, since we *always* want=
- to
-> do a dry run for the submodules...
->
->> +			die(_("submodule '%s': cannot create branch '%s'"),
->> +			    submodule_entry_list.entries[i].submodule->name,
->> +			    name);
->> +	}
->> +
->> +	create_branch(the_repository, name, start_name, force, 0, reflog, quie=
-t,
->> +		      BRANCH_TRACK_NEVER, dry_run);
->
-> ... whereas for the superproject branch, we use the given dry_run argumen=
-t...
->
->> +	if (dry_run)
->> +		return;
->> +	/*
->> +	 * NEEDSWORK If tracking was set up in the superproject but not the
->> +	 * submodule, users might expect "git branch --recurse-submodules" to
->> +	 * fail or give a warning, but this is not yet implemented because it =
-is
->> +	 * tedious to determine whether or not tracking was set up in the
->> +	 * superproject.
->> +	 */
->> +	setup_tracking(name, tracking_name, track, quiet, 0);
->> +
->> +	for (i =3D 0; i < submodule_entry_list.entry_nr; i++) {
->> +		if (submodule_create_branch(
->> +			    submodule_entry_list.entries[i].repo,
->> +			    submodule_entry_list.entries[i].submodule, name,
->> +			    oid_to_hex(&submodule_entry_list.entries[i]
->> +						.name_entry->oid),
->> +			    tracking_name, force, reflog, quiet, track, 0))
->
-> ... and if !dry_run, then we do create the branches in the submodules.
->
-> That is a little bit hard to follow if you are not careful. Maybe it's ju=
-st me,
-> but as I was first reading it I wondered why '0' and '1' were hard-coded =
-as the dry-run
-> arguments to submodule_create_branch... It would maybe be clearer to use =
-a named
-> variable ?
 
-This is valid feedback, but I'm not sure how to make this clearer
-(besides adding comments). In every case, we really do want the
-hard-coded value, i.e. we'd always want dry_run =3D 1 (validation) at the
-beginning, and always dry_run =3D 0 (actually create branches) at the end.
+> > +		if (all_shortnames && origin) {
+> > +			if (rebasing && plural)
+> > +				msg_fmt = "Branch '%s' set up to track remote branches %s from '%s' by rebasing.";
+> 
+> What does it mean to keep my 'topic' branch up-to-date by rebasing
+> on top of more than one remote sources?  By merging, I can sort-of
+> understand (i.e. creating an octopus), but would it make sense to
+> track more than one remote sources in general?  Is it common?
+> 
+> When the benefit is not clear, it might make more sense not to do
+> this when there are already multiple tracking sources defined for
+> the original; it might be a mistake that we may not want to spread
+> with the new option.
+> 
+> Of course, it is very possible that I am missing a perfectly valid
+> use case where having more than one makes good sense.  If so, please
+> do not take the above comments as an objection, but adding some
+> comments before the function to explain when having remote list with
+> more than one items makes sense and how such a setting can be used
+> to avoid future readers asking the same (stupid) question as I just
+> did.
 
-As such, a named variable like the following:
+No, that's an oversight on my part. This will now exit with an error if
+we try to rebase onto multiple branches.
 
-  int dry_run_off =3D 0;
-  setup_tracking(name, tracking_name, track, quiet, dry_run_off);
 
-seems rather artificial. Perhaps you had something like an enum in mind,
-like:
+> > +			else if (rebasing && !plural)
+> > +				msg_fmt = "Branch '%s' set up to track remote branch %s from '%s' by rebasing.";
+> > +			else if (!rebasing && plural)
+> > +				msg_fmt = "Branch '%s' set up to track remote branches %s from '%s'.";
+> > +			else if (!rebasing && !plural)
+> > +				msg_fmt = "Branch '%s' set up to track remote branch %s from '%s'.";
+> > +
+> > +			printf_ln(_(msg_fmt), local, ref_string, origin);
+> 
+> I am not sure how well the "plural" thing works with i18n.  It may
+> suffice for the original in English to have only two choices between
+> one or more-than-one, but not all languages are English.  Counting
+> the actual number (I guess remotes->nr is it) and using Q_() to
+> choose between the possible variants.  I think Ævar knows about this
+> much better than I do.
+> 
+> But if we are not doing this "set multiple" and instead go the
+> "detect existing multiple and refrain from spreading the damage"
+> route, all of that is moot.
+> 
+> Thanks.
 
-  enum dry_run {
-    DRY_RUN_OFF,
-    DRY_RUN_ON
-  };
-  setup_tracking(name, tracking_name, track, quiet, DRY_RUN_OFF);
-
-which is better, but still feels artificial for a single function with
-an boolean parameter.
-
-Passing literal 0s and 1s don't seem to contradict
-Documentation/CodingGuidelines or the style of code I have touched, e.g.
-
->> -		create_branch(the_repository,
->> -			      argv[0], (argc =3D=3D 2) ? argv[1] : head,
->> -			      force, 0, reflog, quiet, track);
-
-hard-codes 0 to clobber_head_ok.
-
-Perhaps you had something else in mind?
-
->> @@ -851,6 +874,9 @@ int cmd_branch(int argc, const char **argv, const ch=
-ar *prefix)
->>   		git_config_set_multivar(buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPL=
-ACE);
->>   		strbuf_release(&buf);
->>   	} else if (!noncreate_actions && argc > 0 && argc <=3D 2) {
->> +		const char *branch_name =3D argv[0];
->> +		const char *start_name =3D argc =3D=3D 2 ? argv[1] : head;
->> +
->>   		if (filter.kind !=3D FILTER_REFS_BRANCHES)
->>   			die(_("The -a, and -r, options to 'git branch' do not take a branch=
- name.\n"
->>   				  "Did you mean to use: -a|-r --list <pattern>?"));
->> @@ -858,10 +884,14 @@ int cmd_branch(int argc, const char **argv, const =
-char *prefix)
->>   		if (track =3D=3D BRANCH_TRACK_OVERRIDE)
->>   			die(_("the '--set-upstream' option is no longer supported. Please u=
-se '--track' or '--set-upstream-to' instead."));
->>  =20
->> -		create_branch(the_repository,
->> -			      argv[0], (argc =3D=3D 2) ? argv[1] : head,
->> -			      force, 0, reflog, quiet, track);
->> -
->> +		if (recurse_submodules) {
->> +			create_branches_recursively(the_repository, branch_name,
->> +						    start_name, NULL, force,
->> +						    reflog, quiet, track, 0);
->
-> Here again, maybe it would be clearer to use a named variable instead of =
-hard-coding '0' ?
->
->> +			return 0;
->> +		}
->> +		create_branch(the_repository, branch_name, start_name, force, 0,
->> +			      reflog, quiet, track, 0);
->
-> Same here.
-
-I agree that the previous example of create_branches_recursively() is
-hard to follow, but for cmd_branch() I think there is very little reason
-to name a variable for dry_run when cmd_branch() only uses 0.
-
->>   	} else
->>   		usage_with_options(builtin_branch_usage, options);
->>  =20
->
->> diff --git a/t/t3207-branch-submodule.sh b/t/t3207-branch-submodule.sh
->> new file mode 100755
->> index 0000000000..2dd0e2b01f
->> --- /dev/null
->> +++ b/t/t3207-branch-submodule.sh
->
-> The tests look pretty thourough.
-
-Thanks!
-
->> +
->> +test_expect_success 'should create branch when submodule is not in HEAD=
- .gitmodules' '
->
-> micro-nit: maybe write: HEAD:.gitmodules as this is revision synatx.
-
-Sounds good.
+Thanks for the feedback!
