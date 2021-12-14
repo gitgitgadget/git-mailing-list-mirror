@@ -2,57 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 828F9C433F5
-	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 02:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7B49C433F5
+	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 02:39:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241480AbhLNCZr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 21:25:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37622 "EHLO
+        id S243152AbhLNCjX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 21:39:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229616AbhLNCZr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 21:25:47 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7C4CC061574
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 18:25:46 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id g14so57382162edb.8
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 18:25:46 -0800 (PST)
+        with ESMTP id S229616AbhLNCjW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 21:39:22 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77E41C061574
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 18:39:22 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id y13so57894540edd.13
+        for <git@vger.kernel.org>; Mon, 13 Dec 2021 18:39:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=CGkO6fGHBDgkHxsTPf727NtAQAeOnn4fby3KGJXwTXw=;
-        b=Djbnz7Vvo9sFzKF3k2DhcXpSQ2zAW6JuJ7EIcKC7Zz7oxb2gGDu2Y4SBUfUiZppO00
-         3oIE/VhDKDTVVSpWxXWonIYL9PwttC7+egIUX8+P6ilI4IGrYPyf9lfE7mr/gPhNfqaO
-         YOK8YJAo/8gsMC1dmyyWwTqqCPnJM/mEJRZM0ts0Urd+V2Jlq+j4XViHtoCyR2oV9ueL
-         KoTIEVWbDAWXRD7ZtWfV90K5qaT7hXlLnnsH/q/LVSZhLYCn73KzLTHDXzql0Q2CbM8z
-         YxtT8nvbB3I1niUDhV5MwI6FUke/ZnV3dOzE+j/Rtetw6D+qg5z8iDGczOpVRYWUJROp
-         UYAw==
+        bh=GpEnsosslw6+457CuakGMchlMGVOWCQxrm0zSl0DFCg=;
+        b=SdweIAJZjckCNOAdo4RKU8r672P+uyoc+l7Nt9j/yr55EI2+RNKVn23fnlxzoS7azB
+         FkzoVPGEsHXeWgQjLcmBIMA9rTnV14FVz5AWxOwhdDHU1xKwz6xOij20jrDwZvq2JYR4
+         Tw02gEzF25RqS9ONvkLerE9SJjdbzsH/+UNfkJCM1shjtxGr3aimn3bccyBKcYI/1jpw
+         XCmb2CyQFoqrobIR6n7gfEnChpbVZ+Vxby+7ORY3Tad5OiVlQIBGmoKkYCB8rEKelfNH
+         Ga4K1Bcq86I73xuD3+WFzeafKaxbshsECMzzEf2Ufi9n9gPf3cEZsf5yk2RNbRJtOc+6
+         pPBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=CGkO6fGHBDgkHxsTPf727NtAQAeOnn4fby3KGJXwTXw=;
-        b=mKrOtHI12bJwqMHdyh3RzRr0sbI1wlwDEVtS1hNwOmk0F196Sp5a4edfxD6gm5urgJ
-         CpWhJp2NkpMOZiWk0tTCXvccx4Q4bsqPdPChrFtKkSdBzLJplYbyq4ZXiIlsllk/wghF
-         8LT0eYQDD83ZEcf0kR7QpIRdtUXV18Gk9K17iMCWnv682CyAPeT1SUKR9RXo486A6oVu
-         PPESMoJwtNw6XADMKLX9irk6blIXWjpeGZLrjrx7nIzCVOgaSpIIhS0Z8tB2Lj/+V8rl
-         oIQ/oBEWGFAiCJrh7+jORe8nz029ru7RBfoiUXhJNCHZvSG6hFZq3VO00JdE6JzTbopt
-         5sNQ==
-X-Gm-Message-State: AOAM531kVgLlSdmCNBD7Tb7Q5ggQ42usf3k5vgZNfjrjeznPLxewmGHa
-        1v69VYnTJXMNl5/dqNcdGn0lfVjFRENTnXxAbhc=
-X-Google-Smtp-Source: ABdhPJyMBS8rNrv6lqqu+SWRtYMqLqdPL6aKKrPBpNhQX2ZErXvZj5405ntag9GfqTx1JXrjepRrB0+nef33VfoxWRc=
-X-Received: by 2002:a05:6402:d73:: with SMTP id ec51mr3658604edb.175.1639448745223;
- Mon, 13 Dec 2021 18:25:45 -0800 (PST)
+        bh=GpEnsosslw6+457CuakGMchlMGVOWCQxrm0zSl0DFCg=;
+        b=jC12Hr4pWnVBhVSZ5S0hCOvfGUbjNpFQKfV/gdbWwcScTQXPJCcItgMjVqCbuT7Eln
+         VY78PO7zZnTiFDFKGPB21uytk8v518lzLTNqe2FF8GJm6EkNs4XATBNbWlzC8k3006vM
+         8VKfrP/nqW9mdRjwT4i4eTMEAdj71bXhytDnQsVxg+yPrb7RdwgqWmqcmbyZqPs6IJk3
+         A/4BvLEDE98XIo4x2aFrFKM3OaB66tE0dOYUE8TXxtZKXgsjTt28hXVQu3eAdKiJRXte
+         0QX3ibO1yJycgsUxCdN1zXK8d8ODbvt1TXBCFiXPLGI/z1u6i8l4CbMB3PJydJaOgh+t
+         T3hg==
+X-Gm-Message-State: AOAM531zo30EOp5g3D3+MzjtzG5Fz0Ytltk+YxVM8wLXVYoxL37ioYA2
+        hM11whCkvyU82hALY9FqMJhV11H1SXziOYXZTIahPZ6E
+X-Google-Smtp-Source: ABdhPJxiAcjg3yY4Nx+6LdpDWgisV1njWzG7pwbtBHnsa+GPEGy8IElgJmOsUVYefMozmPURetLURF9l3kF4wVWuiH4=
+X-Received: by 2002:a17:907:2d11:: with SMTP id gs17mr2751428ejc.100.1639449560964;
+ Mon, 13 Dec 2021 18:39:20 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1151.v2.git.git.1638908410.gitgitgadget@gmail.com>
- <pull.1151.v3.git.git.1639108573.gitgitgadget@gmail.com> <f3af5edb25d5bed46996a1b826ae0c8306eeb912.1639108573.git.gitgitgadget@gmail.com>
- <xmqq7dc8e5n8.fsf@gitster.g>
-In-Reply-To: <xmqq7dc8e5n8.fsf@gitster.g>
+ <pull.1151.v3.git.git.1639108573.gitgitgadget@gmail.com> <3687637915f4fdf62d15791f5cf41f9ea7838f4e.1639108573.git.gitgitgadget@gmail.com>
+ <xmqq1r2ge53u.fsf@gitster.g>
+In-Reply-To: <xmqq1r2ge53u.fsf@gitster.g>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 13 Dec 2021 18:25:33 -0800
-Message-ID: <CABPp-BF=bv+KoGkL_5N0Tc7cET5Dwvteg3_gOwOmB5==8P5yug@mail.gmail.com>
-Subject: Re: [PATCH v3 03/10] sparse-checkout: add sanity-checks on initial
- sparsity state
+Date:   Mon, 13 Dec 2021 18:39:09 -0800
+Message-ID: <CABPp-BGq5-_84=hXqpxg5A7syauXYK_MBzgSY989d3KmR4rn-g@mail.gmail.com>
+Subject: Re: [PATCH v3 07/10] sparse-checkout: enable reapply to take --[no-]{cone,sparse-index}
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -64,76 +63,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 10:11 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Dec 13, 2021 at 10:23 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
 > > From: Elijah Newren <newren@gmail.com>
 > >
-> > Most sparse-checkout subcommands (list, add, reapply, disable)
-> > only make sense when already in a sparse state.  Add a quick check
-> > that will error out early if this is not the case.
-> >
-> > Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
-> > Reviewed-by: Victoria Dye <vdye@github.com>
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  builtin/sparse-checkout.c          | 12 ++++++++++++
-> >  t/t1091-sparse-checkout-builtin.sh | 10 +++++++++-
-> >  2 files changed, 21 insertions(+), 1 deletion(-)
+> > Folks may want to switch to or from cone mode, or to or from a
+> > sparse-index without changing their sparsity paths.  Allow them to do so
+> > using the reapply command.
 >
-> I won't complain too much but some looks a bit questionable to die
-> on.  For example, when asked to "please disable" something that is
-> already disabled, I do not think the user's intention includes "if
-> already disabled, please die"; rather it is "I want the end result
-> to be in the disabled state", isn't it?
-
-Yeah, fair enough, I can change it to just print that it's already disabled.
-
-However, I think add, list, and reapply should all die still.
-
-> I think what is common among the ones that I find questionable to
-> die is that they do not use end-user input from argv.  "Please add X
-> to sparsity patterns" may not make much sense when we are not already
-> sparse", unlike "Please disable", for example.
+> Interesting.
 >
->     Side note. I suspect that it can be argued that we might just
->     auto-enable sparse state upon the first request to add
->     something, but I personally feel that is dwimming too much, as
->     behaviours of git in normal mode and sparse mode are so
->     different.
+> Are there certain pattern that would make sense only in one of the
+> modes but not the other?  If there isn't any such pattern, this
+> feature perfectly makes sense, I would think.
+
+Good question.
+
+Valid cone mode patterns are a strict subset of the possible sparsity
+patterns.  So, switching from cone to non-cone mode trivially makes
+sense.  Understanding why switching in the other direction is okay
+takes a bit more understanding...
+
+Stolee designed cone mode such that when it's active, and someone
+edits .git/info/sparse-checkout and adds patterns of their own (which
+users might do because that had been suggested for several years in
+the read-tree docs -- and still is), then the code will print a
+warning ("disabling cone pattern matching") and operate in non-cone
+mode.  As such, the sparsity does not "break" when they switch modes
+if they have non-cone patterns; they'll just get warnings.
+
+Further, we're making `reapply` consistent with `init` here.  Stolee
+made `init` usable for switching modes in an active sparse-checkout
+(though it wasn't well documented, and it's slightly confusing to
+users who might worry that they'll lose their sparsity patterns by
+using `init`).  We're just copying that ability from `init` over in
+`reapply`, and recommending using the latter rather than the former.
+
+> If an existing pattern changes its meaning between the old mode and
+> the new mode, that is very much fine---that is what the user wanted
+> to achieve by switching between the modes with "reapply".
 >
-> So, for the same reason, I think "list" that shows "there is
-> nothing" without an error, when sparse-checkout is not active, would
-> also be perfectly defensible, and some people may find that dying a
-> bit too much in such a situation.
->
-> Or does the system work differently between
->
->  (A) core_apply_sparse_checkout is true and the sparsity pattern list is
->      empty, and
-
-You can get empty output from
-   git sparse-checkout list
-
-after running
-   git sparse-checkout --cone
-
-(cone mode, no paths specified)
-
-In this state, only files immediately in the toplevel directory will
-be present; all subdirectories will be sparsified away.
-
-(Granted, that's because cone mode by default gives you some pattern
-lists behind the scenes.  If you actually delete all entries in
-.git/info/sparse-checkout and do a git sparse-checkout reapply, then
-you will have NO (tracked) files in your checkout; everything will be
-SKIP_WORKTREE.)
-
->  (B) sparse-checkout is not in effect at all.
-
-In this state, the tree is dense; all files are present.
-
-> If that is the case, please ignore all of the above.
-
-I think your comment about disable makes sense, though.
+> Thanks.
