@@ -2,97 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CBA0C433F5
-	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 07:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63ACEC433EF
+	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 10:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231570AbhLNHs2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Dec 2021 02:48:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53038 "EHLO
+        id S233361AbhLNK7s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Dec 2021 05:59:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231506AbhLNHs2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Dec 2021 02:48:28 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5C0AC061574
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 23:48:27 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id g14so59179088edb.8
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 23:48:27 -0800 (PST)
+        with ESMTP id S233336AbhLNK7s (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Dec 2021 05:59:48 -0500
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 169C6C061574
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 02:59:48 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id r5so17041551pgi.6
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 02:59:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MaGmZ2Yboj4Pq3UohuiRMyZPt9Z53fIJCGiBfnyjilc=;
-        b=EY69EY6IsDlOQ0fZjgna/6XbAmiJCe2hX0B3vheg1rwtHUskHTBsn/ETj17U0Dmwu3
-         g5nuaFaZ7IZH3JQAfkk/cJ/mOf77f3qF17i67Lo0IR5LnvO/m81bA0LsDd7Ff5BSJkjL
-         c40M8a3ix/nTjONNKfSi3yoGIl3w6S7Ppnd1+kcpsYdc9BGKsnr7Y9KXD9NgP4z7nnqI
-         V62x+PKavjXSx3C9zGLEmsTij9Y9xAasaT49St6RX9iapJd9EEpJB9JzHFEGNKUk/09K
-         pGULmTY1AaDLrY3d/3MYo9LzI1NRx+gF0YI2Ay7Kkuua5/y/90EjgcsIsniRsQB1tb57
-         /g1w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=R1DUBNsWKb/j65IjEU28013P1RLBAN9QI4r4VwNcziQ=;
+        b=AHWEtFI1vUHOrdv4ZIFB4m5jICW+Oa1+ML4qXlqIBDxXf2f/mxUCoiAPzUCbEsPVJR
+         oneMpY0pcpk3s0v/SSacV0RuQ2gxAnKwS7qZx+iYH7AMxaP2MG87I9q4dLRPDCkllMQC
+         gEes8tI+c/o4Jb+hN2t4Tprc+i/LjDi3onAuQbvZ5rjfyOjUuVCYWYr+TGCcP3/kBFYn
+         1Ldv2HMxvDKWzLq1DazCKR5PWn5JwrjO4zMxBK+rlKVJ+N/P13DOs7oKmsJ0yGucunz+
+         bhnSOzjWbOCNAssdEkHoEnP9nayxTG1ACJ99ZvmftpmqTGCwHimwxcVDgqjjFGuaumY5
+         FhJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MaGmZ2Yboj4Pq3UohuiRMyZPt9Z53fIJCGiBfnyjilc=;
-        b=cF1Yzuvyudk46qfEeTrGRR6mEy8D+7ajptX4Xqy9HO0Te8nsXVQ9HaFtIal9eJa9mI
-         GtpKqx4wf1XJj6nOX/S++jKFYieTMXohgxSrjgwTNfdmUxc8xT/N+8ZslFJ7dPvhmEql
-         ZU9te3p/T+1Ru+zEUM12EE3kKfQaqHUZgmst5yQjgYs6+bFAbA13MBeFdcZpMNAp9xa9
-         ryqglsn7uZh+ymXSYgeUrCrWZl8owR9VcUvRqfQO7IEfFMzHjZaptyNVLsLgNymXzWzR
-         Nm5+1UAvumC3YHOtQSRiYFIql7vJLdK4fuVz/K57UHhhC4vWFDxHZp/nxGYzZARMREVP
-         5KyQ==
-X-Gm-Message-State: AOAM533ALJbeMfhboqRK/1EYPJd4c0hw98eRglB8AAGfZ/jntIIHMlNo
-        xxYWRH6f2bB1YRApaAF7zcgaUXfcVb5QnOTkYPzjlGun
-X-Google-Smtp-Source: ABdhPJz8oU+AlVW+SAdVJ1pUwyinJ3IkV1ofn7kBMMLcR7TCKSBmje8cUQRMkyR4ehgpr/5lP3doci33Zav3jnFcad0=
-X-Received: by 2002:a17:907:2d11:: with SMTP id gs17mr4268563ejc.100.1639468104990;
- Mon, 13 Dec 2021 23:48:24 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=R1DUBNsWKb/j65IjEU28013P1RLBAN9QI4r4VwNcziQ=;
+        b=xUev/auoc3KKbwulsxnLEsCf+z52bPy4lseZkNdyySkmF6X1Sp0EnQCEexcibzNtVN
+         fPma/FOcWtg1GPNH/U/8L+C/KfbBgVUoGVWZCKIOAmbwU6SI4i2MSG2w+Xfcj39WTo1+
+         T3QL3z0SdF5Z/pyiwRoyK3nU2ylAjtECT3da+S7neB6RslhcCFNTkSUThyFxxN1Tyh1j
+         DaUjRcBRCJ5taLFVEQdIh6b/f+jbWZpEknZABAVY1IJ6w/7lClPqdd8Ycks2xhLNGeaB
+         dJ9/C0h/OBxfEKd4oSgGi6BvYtStoVdFgi7+jBv+zii1tpZU2SBAmAdcc1uGg2WGbiQJ
+         PpbQ==
+X-Gm-Message-State: AOAM532Hb9ITIu06zWxhvAr24Ya+J+mMncoqDYjBN7yoK8YJMr+ZfJDi
+        O6BDpe58skLKpzcEuvb6mLw=
+X-Google-Smtp-Source: ABdhPJxZ+C2MJgErXG2WQdULnSgjYtJfs5febCasPUd6dT4mZJzlKa0OUOcwxfZ5Q6KNVVfi6VVH6Q==
+X-Received: by 2002:a63:751a:: with SMTP id q26mr3207053pgc.529.1639479587512;
+        Tue, 14 Dec 2021 02:59:47 -0800 (PST)
+Received: from localhost.localdomain ([205.204.117.99])
+        by smtp.gmail.com with ESMTPSA id g1sm14455683pfu.73.2021.12.14.02.59.46
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 14 Dec 2021 02:59:47 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org
+Subject: 'Re: What's cooking in git.git (Dec 2021, #03; Fri, 10)'
+Date:   Tue, 14 Dec 2021 18:59:41 +0800
+Message-Id: <20211214105941.24670-1-dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <xmqqilvvluoa.fsf@gitster.g>
+References: <xmqqilvvluoa.fsf@gitster.g>
 MIME-Version: 1.0
-References: <pull.1151.v3.git.git.1639108573.gitgitgadget@gmail.com>
- <pull.1151.v4.git.git.1639454952.gitgitgadget@gmail.com> <f669829a98b590d8a53be75b88d97b1d004eb855.1639454952.git.gitgitgadget@gmail.com>
- <84ffc06d-09a7-0180-5460-6e1460b8aaac@gmail.com>
-In-Reply-To: <84ffc06d-09a7-0180-5460-6e1460b8aaac@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 13 Dec 2021 23:48:13 -0800
-Message-ID: <CABPp-BFDF2YsUQw7RE=WgupN9i6Q8pRH2M6r1YgP9c6JChTRPA@mail.gmail.com>
-Subject: Re: [PATCH v4 09/10] Documentation: clarify/correct a few sparsity
- related statements
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 11:38 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
->
-> On 14/12/21 11.09, Elijah Newren via GitGitGadget wrote:
-> >   --sparse::
-> > -     Initialize the sparse-checkout file so the working
-> > -     directory starts with only the files in the root
-> > -     of the repository. The sparse-checkout file can be
-> > -     modified to grow the working directory as needed.
-> > +     Employ a sparse-checkout, with only files in the toplevel
-> > +     directory initially being present.  The
-> > +     linkgit:git-sparse-checkout[1] command can be used to grow the
-> > +     working directory as needed.
-> >
->
-> s/toplevel/top-level/
 
-No, the only occurrence of either term in Documentation/glossary.txt
-(though used incidentally) is 'toplevel' rather than 'top-level', git
-rev-parse has a --show-toplevel flag with no hyphen between top and
-level, and the occurrences of 'toplevel' in the codebase from a quick
-grep outnumber top-level 2 to 1.  I'll keep 'toplevel'.
+On Fri, 10 Dec 2021 18:52:37 -0800, Junio C Hamano wrote:
 
-> >   It uses the skip-worktree bit (see linkgit:git-update-index[1]) to tell
-> >   Git whether a file in the working directory is worth looking at. If
-> >   the skip-worktree bit is set, then the file is ignored in the working
-> > -directory. Git will not populate the contents of those files, which
-> > +directory. Git will avoid populating the contents of those files, which
-> >   makes a sparse checkout helpful when working in a repository with many
-> >   files, but only a few are important to the current user.
-> >
+> * tl/ls-tree-oid-only (2021-11-22) 1 commit
+>  - ls-tree.c: support `--oid-only` option for "git-ls-tree"
 >
-> Looks OK.
+>  "git ls-tree" learns "--oid-only" option, similar to "--name-only".
+>
+>  Expecting a reroll.
+>  source: <6c15b4c176b7c03072fa59a4efd9f6fea7d62eae.1637567328.git.dyroneteng@gmail.com>
+
+Yes, you are right and the source is matched as Patch v3.
+
+On 8 Dec 2021 10:08:30 +0800, I sent a patch v5 in ths series: 
+
+https://public-inbox.org/git/cover.1638891420.git.dyroneteng@gmail.com/
