@@ -2,88 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EFC7C433F5
-	for <git@archiver.kernel.org>; Mon, 13 Dec 2021 23:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A31C6C433EF
+	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 00:31:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244233AbhLMXhQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Dec 2021 18:37:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56164 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241127AbhLMXhP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Dec 2021 18:37:15 -0500
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9975BC061574
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 15:37:15 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id j3-20020a634a43000000b00325af3ab5f0so9745147pgl.11
-        for <git@vger.kernel.org>; Mon, 13 Dec 2021 15:37:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=tmPuHSeJtyL7wVrkKuAX3unlns+NKCfAkaq6ZKRtA7o=;
-        b=OEV5PjZJrXydTU7h/owHgxrdB4dctkm56bQRUz0KG2jNuC7N5l96ttVOR/pSar0X/m
-         jrChTbAyOiIugbX6prRBm7826RAYY01KAZz0gHOLNqxWUCH5p9/DLIzte+SVivh0AVC+
-         aAel9teeJKS0y34GMNRcbY8jKbh2NAXnKumAtArr2OnUPb03G4jUNbvqgd4TqZNhEJ+w
-         lNI3SGtDno6Rc/gQNNPxV6yMmFcG9rMItLlRGi4jC4xKK/dPfeWR4wAWmQGUWiyHCk9N
-         U2kDICF7RAojGWXC4H+SOG2AjNoxNl2oy4JCe5w6SRIcR6749Jb/6PGh5YmV6Lsm7+bL
-         74Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=tmPuHSeJtyL7wVrkKuAX3unlns+NKCfAkaq6ZKRtA7o=;
-        b=dPop6EYTVaf0rd1SKjCJla7kOIv2VbB3Y1o1RTHdV8i7kpjyURkzaXCBOegZjAqNTl
-         G6klBDzSx2cx3tPafVE4dgnyUlGORa5AdnzyFWexHcXbl5vfzPZqLnucBHS/TGzo+z/S
-         ZOrYCGdAYmCoYyZ+8F1sHXowiuQpKkEq5cEotpydmw211y0NGdYB3HRHikjtkra62qIF
-         VvCbxOt42DDKsmxPXCBHldREWfx9R2f/7v43UROxCGDxCpJS8214C4kTvniNAlBMsvbA
-         5zQuhLEvjyVN3hT28ObaVN9F72pMbNIEx7TJFKtckRuLLUilePy5rk1sn7Okz4Ka5qbo
-         1HFw==
-X-Gm-Message-State: AOAM533b+0KAW1GcHM0S7WZwNw8iFzra2bCR02z/ah8sfsY4CXPU+PQC
-        S+AVSoxoxbge2NvcOYdO3iCqkt+Xp7DSwl8PK7Ap
-X-Google-Smtp-Source: ABdhPJyt5FFOszgMzpk5lVTq5uNq+pxbItXyQyv6dXw7lsfa2XHEbhQnSgM0wHsvBycWL5WjM7zf2P88L/EXM/QdZVdw
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:cc9:b0:49f:b439:8930 with
- SMTP id b9-20020a056a000cc900b0049fb4398930mr1202794pfv.86.1639438635074;
- Mon, 13 Dec 2021 15:37:15 -0800 (PST)
-Date:   Mon, 13 Dec 2021 15:37:12 -0800
-In-Reply-To: <xmqqmtl8m8wj.fsf@gitster.g>
-Message-Id: <20211213233712.774546-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqmtl8m8wj.fsf@gitster.g>
-X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
-Subject: Re: [PATCH v6 2/2] config: include file if remote URL matches a glob
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, chooglen@google.com, git@vger.kernel.org,
-        avarab@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S242430AbhLNAbH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Dec 2021 19:31:07 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61892 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240612AbhLNAbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Dec 2021 19:31:07 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CB62316211E;
+        Mon, 13 Dec 2021 19:31:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pbdcHJiNrSsXuAVpVYK96lu4Xg7cwr7X2HHHxz
+        f9ZT4=; b=aYDKFizljDyU8vZ6ptGGmuFEKN62F1S8PUKVu5aOuMFFrvEg1ED/Z4
+        YwIJw2NUtnHjEVS9nJizAE3VGWUADJ2U2GwpVWwvH4uEYdwVFYTSkAs56thKI21B
+        rFm6ztcwOZRK+Yn+ZT9CCnxtGhTeVw4so0k98ZoNH6a6HK4Z8hjcY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C355116211D;
+        Mon, 13 Dec 2021 19:31:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 24AC816211A;
+        Mon, 13 Dec 2021 19:31:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Subject: Re: [PATCH v4 14/23] Makefile: re-add and use the "shellquote" macros
+References: <cover-v3-00.23-00000000000-20211116T114334Z-avarab@gmail.com>
+        <cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com>
+        <patch-v4-14.23-13cbb851d32-20211117T101807Z-avarab@gmail.com>
+        <xmqq4k7c9k68.fsf@gitster.g>
+Date:   Mon, 13 Dec 2021 16:31:01 -0800
+In-Reply-To: <xmqq4k7c9k68.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        13 Dec 2021 15:09:19 -0800")
+Message-ID: <xmqqr1ag81tm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1E57F098-5C75-11EC-972E-F327CE9DA9D6-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
-> Perhaps it is easier to approach it from the viewpoint of a new
-> user who is unfamiliar with what you designed.
-> 
-> I would imagine that most users would find it natural if a single
-> pass precedure read and processed lines as it sees them.
-> 
-> That is, when the first includeif is evaluated, we have seen only
-> 'remote.a.url' whose value is 'bar', so the condition does not hold.
-> and then when the second includeif is evaluated, it gets included,
-> and we read 'bar'.  But that is wher configuration reading ends;
-> remote.b.url is not asked for after we process the second includeif
-> til the end.
-> 
-> If you explain
-> 
->  (1) why such a simplest design would not work well; and
-> 
->  (2) how the actual design is different from that simplest design to
->      overcome it.
-> 
-> it would be easier to grok?
-> 
-> Thanks.
 
-Thanks - this sounds like a good approach. I'll try this.
+> All of the above may very well explain why we decided not to use
+> $(call shellquote) in the past, and it may also explain why it is
+> safe to start using it again today, but it does not explain why we
+> want to do so in the first place.
+>
+> Having to write
+>
+> 	$(call shellquote,$(VAR))
+>
+> in longhand is much more cumbersome to read, write and merge than
+> defining a prepackaged VAR_SQ just once and refer it as
+>
+> 	'$(VAR_SQ)'
+>
+> everywhere.
+
+Having said all that, I would not have minded if this change were
+more isolated and turned things like
+
+CHAINLINTTMP_SQ = $(subst ','\'',$(CHAINLINTTMP))
+
+to use the $(call shellquote) mechanism, if all of us found it
+easier to read than repeating the same line-noise substitutions for
+many variables.
+
+What was irritating was primarily that the patch went one step
+further to eliminate the _SQ variant variables, making the resulting
+sites that use them harder to read and understand.
+
