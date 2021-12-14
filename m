@@ -2,187 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85397C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 20:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A51ADC433EF
+	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 21:31:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230334AbhLNUpK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Dec 2021 15:45:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35896 "EHLO
+        id S231301AbhLNVb5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Dec 2021 16:31:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229744AbhLNUpI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Dec 2021 15:45:08 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0AEFC061574
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 12:45:07 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id b7so8076885edd.6
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 12:45:07 -0800 (PST)
+        with ESMTP id S229805AbhLNVb4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Dec 2021 16:31:56 -0500
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 172D2C061574
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 13:31:56 -0800 (PST)
+Received: by mail-pf1-x449.google.com with SMTP id s22-20020a056a00179600b004b31f2cdb19so3706978pfg.7
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 13:31:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=nvcFiIfK7eFq3ayhKxt3+0SDgLbkislDyMJ12p685Lk=;
-        b=N4gQ1i2yL11N9O5zi5kjpdbwq0jY9DHIqXJNI5iHMSYjEJnYWVHBKKi1Ft/mW2F1DP
-         k0+FgWyQRIIJ4wBM3fyjECuAheVp7ujSIQKLgKFOBnLPsQcuzpAdmwO0UxKsjorL2tHM
-         t58walj78FJTe04YOJBjLGCnkOh6pRaPh6V5R0bI/IpjbWBRtDM6Kc7O7E4nUl1e22eb
-         XRTsVhoTvsZOLuRQQmWMVvnFDmNWTgILBDysgtWeHcO/gGIjB9yJielMUYRqN3goJ1mB
-         ZEIsa/8zf0yrEX5WmI4sWBAViyY4QGGT7WtRcSCz59LFd6aEqyByI8B/K38dPf+V8M+F
-         lgtA==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=/5V6mEv8I6Xjpf4DrMEVVK9zc0H71B81xpRwiGVkjC8=;
+        b=b5nrzpOeAtZUtOYvNgYG+m8CQhfcxA8TogLi/z9ciAq0fmS6gglDM/LJiDOr0CBvbR
+         WS0xtJNcmU0JED7vjwfoSHC+NK6QDlGfoKNLEyLHYgoGgqT3fzFVyE1wkGwLojy7mQEj
+         /beLiZH5EkMZSSuPe4RemSxDzTdN69Be7XEFF5I6aSMQCNYHH/etvOjKkqd1rLGIWYiz
+         kOxiytx5drzIpJEcsTepZWO6b3ZP9O0Qhm+UZ3eXWMKejX6dEfc6ftQHo4W6yjyNPYJx
+         hbmBOdvp1GnAIj+LqdY1uY84pE4V/CeZv5r0NrQVt5Bv9Ub3STqzXOFX/E10t7i6dhKa
+         C1uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=nvcFiIfK7eFq3ayhKxt3+0SDgLbkislDyMJ12p685Lk=;
-        b=2bmcqD30jMQ0eJY2FySVP58mFiA3XhpaDqGRp79bTnHF6eRBhRF28uRjO7SSn7Oxwp
-         a9ZiaqjQiU+BKPUE03wfaGnAbJmj9fwDvGSMOc23fWJYaIgSgmN1G4pQZV9wjT+nDA1Z
-         uJ19idXuZ6O6riOeFhxXlFfnwYsE/w8aHzZ35NQw/Rymqj41Tl+nsC+cpatnHjc5fMxh
-         zl18Ce/7Efkl8vOpAYg95cmdBEdYlyZ76Cu2+8mvn/y8UwVL7+gwDHQLXqC6aFM4fXz7
-         ZijzsbTYcMIKwOVjprhsAeh5eIQC0OCvCfkkXKTjIYd+07XRN1P+a8qN/jkyc1maH7dl
-         gD6Q==
-X-Gm-Message-State: AOAM530Rl086mkfORI3cp3Y/9akRoVwBoegCy5pCJtikhYHk2LpWJnfG
-        J+3r5ERXOLUqBO/2s8tS5IY=
-X-Google-Smtp-Source: ABdhPJxx1tXaSjhKf5rDm/a4aMkHwan1iVGmjbOKSNtON5UdQ4pHHYHG6MMqZ+0wiW2cwz55B+yiXw==
-X-Received: by 2002:a17:906:d553:: with SMTP id cr19mr8440000ejc.140.1639514706120;
-        Tue, 14 Dec 2021 12:45:06 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id cs15sm257494ejc.31.2021.12.14.12.45.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Dec 2021 12:45:05 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mxEfZ-000BDG-7P;
-        Tue, 14 Dec 2021 21:45:05 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jacob Vosmaer <jacob@gitlab.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v2 1/1] upload-pack.c: increase output buffer size
-Date:   Tue, 14 Dec 2021 21:41:27 +0100
-References: <YbizfdGq+RSu9BGe@coredump.intra.peff.net>
- <20211214194626.33814-1-jacob@gitlab.com>
- <20211214194626.33814-2-jacob@gitlab.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20211214194626.33814-2-jacob@gitlab.com>
-Message-ID: <211214.86h7bac3vy.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=/5V6mEv8I6Xjpf4DrMEVVK9zc0H71B81xpRwiGVkjC8=;
+        b=S9M1j6mQ2dJXCZYx5f/2kZCMhMZ+PvXGF4AgOoMUFNEZUlN8a3YRxVpI+t4/GmfBYE
+         UpHfLRkWd+DjiK5eBowqEJpQAzBjPzNrIiECKayK4mNHDmJDuFCnHrGHcKsL7Xxt7P8F
+         BKopWNtzwLKCt5BZNR8c+a7AgpM8JH5LqVqK6XN1L4wpE/ZN4Z6GKTT1pIhLOS2ZtVBa
+         rnUNKsCBm04bNyPgANkuCKOWp3od2tqkXzDwAl7e+ZvItOaoI+YJrfO5Db9GOLKAjkO2
+         XAddlOIOpVFvrVUxRySzvg+olutc9LHR1O7QqHAgiZ9CuLrwYw1gVmOpP1dzMEXCu1wc
+         XEfQ==
+X-Gm-Message-State: AOAM532lVGG+V2YrWbOxJC/A3xPvBvZa90UVd+qKK57yZWbXXdOwyOWS
+        32H6oWdeFx7/9HF4XzvnbJUaEijBrqmRwZsXYfEhodO/+KbIsQjjNNlb+kojub8325wZUrVB3j4
+        AL8PQGneGkx6Ci90JJTAE9PjQpmD3O7iS8YiEOOZRfqrEVspEbGTT0mNSiwdySMZj17Fmaequzl
+        i6
+X-Google-Smtp-Source: ABdhPJxqicRM4cCKJfv3pQ1lu9HvoC3RAFZRI6J0AjFjCiM+r4OCMJlHQzRzIT+zsn7MRQquLrgOTYSqNoB4mDMM8BT4
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:3d42:: with SMTP id
+ o2mr22103pjf.1.1639517514902; Tue, 14 Dec 2021 13:31:54 -0800 (PST)
+Date:   Tue, 14 Dec 2021 13:31:48 -0800
+In-Reply-To: <cover.1634077795.git.jonathantanmy@google.com>
+Message-Id: <cover.1639509048.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1634077795.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
+Subject: [PATCH v7 0/2] Conditional config includes based on remote URL
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, chooglen@google.com,
+        gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks, everyone, for your comments. I've followed Glen's code
+suggestion and Junio's documentation suggestion, as you can see in the
+range-diff.
 
-On Tue, Dec 14 2021, Jacob Vosmaer wrote:
+Jonathan Tan (2):
+  config: make git_config_include() static
+  config: include file if remote URL matches a glob
 
-> When serving a fetch, git upload-pack copies data from a git
-> pack-objects stdout pipe to its stdout. This commit increases the size
-> of the buffer used for that copying from 8192 to 65515, the maximum
-> sideband-64k packet size.
->
-> Previously, this buffer was allocated on the stack. Because the new
-> buffer size is nearly 64KB, we switch this to a heap allocation.
->
-> On GitLab.com we use GitLab's pack-objects cache which does writes of
-> 65515 bytes. Because of the default 8KB buffer size, propagating these
-> cache writes requires 8 pipe reads and 8 pipe writes from
-> git-upload-pack, and 8 pipe reads from Gitaly (our Git RPC service).
-> If we increase the size of the buffer to the maximum Git packet size,
-> we need only 1 pipe read and 1 pipe write in git-upload-pack, and 1
-> pipe read in Gitaly to transfer the same amount of data. In benchmarks
-> with a pure fetch and 100% cache hit rate workload we are seeing CPU
-> utilization reductions of over 30%.
->
-> Signed-off-by: Jacob Vosmaer <jacob@gitlab.com>
-> ---
->  upload-pack.c | 17 ++++++++++++-----
->  1 file changed, 12 insertions(+), 5 deletions(-)
->
-> diff --git a/upload-pack.c b/upload-pack.c
-> index c78d55bc67..3b90fb69e6 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -194,7 +194,13 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
->  }
->  
->  struct output_state {
-> -	char buffer[8193];
-> +	/*
-> +	 * We do writes no bigger than LARGE_PACKET_DATA_MAX - 1, because with
-> +	 * sideband-64k the band designator takes up 1 byte of space. Because
-> +	 * relay_pack_data keeps the last byte to itself, we make the buffer 1
-> +	 * byte bigger than the intended maximum write size.
-> +	 */
-> +	char buffer[(LARGE_PACKET_DATA_MAX - 1) + 1];
+ Documentation/config.txt |  27 ++++++++
+ config.c                 | 132 ++++++++++++++++++++++++++++++++++++---
+ config.h                 |  46 ++++----------
+ t/t1300-config.sh        | 118 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 282 insertions(+), 41 deletions(-)
 
-Since X-1+1 = X shouldn't we just say X ? :)
+Range-diff against v6:
+1:  b2dcae03ed = 1:  b2dcae03ed config: make git_config_include() static
+2:  de2be06818 ! 2:  7c70089074 config: include file if remote URL matches a glob
+    @@ Documentation/config.txt: all branches that begin with `foo/`. This is useful if
+     +Files included by this option (directly or indirectly) are not allowed
+     +to contain remote URLs.
+     ++
+    -+This keyword is designed to be forwards compatible with a naming
+    -+scheme that supports more variable-based include conditions, but
+    -+currently Git only supports the exact keyword described above.
+    ++Note that unlike other includeIf conditions, resolving this condition
+    ++relies on information that is not yet known at the point of reading the
+    ++condition. A typical use case is this option being present as a
+    ++system-level or global-level config, and the remote URL being in a
+    ++local-level config; hence the need to scan ahead when resolving this
+    ++condition. In order to avoid the chicken-and-egg problem in which
+    ++potentially-included files can affect whether such files are potentially
+    ++included, Git breaks the cycle by prohibiting these files from affecting
+    ++the resolution of these conditions (thus, prohibiting them from
+    ++declaring remote URLs).
+    +++
+    ++As for the naming of this keyword, it is for forwards compatibiliy with
+    ++a naming scheme that supports more variable-based include conditions,
+    ++but currently Git only supports the exact keyword described above.
+     +
+      A few more notes on matching via `gitdir` and `gitdir/i`:
+      
+    @@ config.c: static int git_config_include(const char *var, const char *value, void
+     +		if (inc->opts->unconditional_remote_url)
+     +			inc->fn = forbid_remote_url;
+      		ret = handle_path_include(value, inc);
+    -+		if (inc->opts->unconditional_remote_url)
+    -+			inc->fn = old_fn;
+    ++		inc->fn = old_fn;
+     +	}
+      
+      	return ret;
+-- 
+2.34.1.173.g76aa8bc2d0-goog
 
-Maybe this fixup is better, maybe not:
-	
-	diff --git a/upload-pack.c b/upload-pack.c
-	index 3b90fb69e6d..10849110229 100644
-	--- a/upload-pack.c
-	+++ b/upload-pack.c
-	@@ -195,12 +195,12 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
-	 
-	 struct output_state {
-	 	/*
-	-	 * We do writes no bigger than LARGE_PACKET_DATA_MAX - 1, because with
-	-	 * sideband-64k the band designator takes up 1 byte of space. Because
-	-	 * relay_pack_data keeps the last byte to itself, we make the buffer 1
-	-	 * byte bigger than the intended maximum write size.
-	+	 * We do writes no bigger than LARGE_PACKET_DATA_MAX - 1,
-	+	 * because with * sideband-64k the band designator takes up 1
-	+	 * byte of space (see relay_pack_data() below). So
-	+	 * LARGE_PACKET_DATA_MAX ends up being the right size.
-	 	 */
-	-	char buffer[(LARGE_PACKET_DATA_MAX - 1) + 1];
-	+	char buffer[LARGE_PACKET_DATA_MAX];
-	 	int used;
-	 	unsigned packfile_uris_started : 1;
-	 	unsigned packfile_started : 1;
-
->  	int used;
->  	unsigned packfile_uris_started : 1;
->  	unsigned packfile_started : 1;
-> @@ -269,7 +275,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
->  			     const struct string_list *uri_protocols)
->  {
->  	struct child_process pack_objects = CHILD_PROCESS_INIT;
-> -	struct output_state output_state = { { 0 } };
-> +	struct output_state *output_state = xcalloc(1, sizeof(struct output_state));
-
-I don't know when/if we need to worry about 8k v.s. ~65k on the stack,
-especially as recv_sideband() has:
-
-	char buf[LARGE_PACKET_MAX + 1];
-
-But maybe our stack is already quite big here, I don't know...
-
->  	char progress[128];
->  	char abort_msg[] = "aborting due to possible repository "
->  		"corruption on the remote side.";
-> @@ -404,7 +410,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
->  		}
->  		if (0 <= pu && (pfd[pu].revents & (POLLIN|POLLHUP))) {
->  			int result = relay_pack_data(pack_objects.out,
-> -						     &output_state,
-> +						     output_state,
->  						     pack_data->use_sideband,
->  						     !!uri_protocols);
->  
-> @@ -438,11 +444,12 @@ static void create_pack_file(struct upload_pack_data *pack_data,
->  	}
->  
->  	/* flush the data */
-> -	if (output_state.used > 0) {
-> -		send_client_data(1, output_state.buffer, output_state.used,
-> +	if (output_state->used > 0) {
-> +		send_client_data(1, output_state->buffer, output_state->used,
->  				 pack_data->use_sideband);
->  		fprintf(stderr, "flushed.\n");
->  	}
-> +	free(output_state);
->  	if (pack_data->use_sideband)
->  		packet_flush(1);
->  	return;
-
-But this looks fine either way. And yes, in reply to the question in the
-cover letter it's fine to ignore the memory leaks we have when we call
-die().
