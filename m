@@ -2,78 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48390C433EF
-	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 15:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0596DC433F5
+	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 15:37:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233336AbhLNPMz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Dec 2021 10:12:55 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51646 "EHLO cloud.peff.net"
+        id S234664AbhLNPht (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Dec 2021 10:37:49 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51690 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231504AbhLNPMy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Dec 2021 10:12:54 -0500
-Received: (qmail 14122 invoked by uid 109); 14 Dec 2021 15:12:54 -0000
+        id S234470AbhLNPht (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Dec 2021 10:37:49 -0500
+Received: (qmail 14198 invoked by uid 109); 14 Dec 2021 15:37:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Dec 2021 15:12:54 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Dec 2021 15:37:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25394 invoked by uid 111); 14 Dec 2021 15:12:53 -0000
+Received: (qmail 25728 invoked by uid 111); 14 Dec 2021 15:37:48 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Dec 2021 10:12:53 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Dec 2021 10:37:48 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 14 Dec 2021 10:12:53 -0500
+Date:   Tue, 14 Dec 2021 10:37:47 -0500
 From:   Jeff King <peff@peff.net>
 To:     Jacob Vosmaer <jacob@gitlab.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Make upload-pack pack write size configurable
-Message-ID: <Ybi0dSddal2DKmXQ@coredump.intra.peff.net>
+Subject: Re: [PATCH 1/1] upload-pack.c: make output buffer size configurable
+Message-ID: <Ybi6SwndUHLs27bO@coredump.intra.peff.net>
 References: <20211213132345.26310-1-jacob@gitlab.com>
+ <20211213132345.26310-2-jacob@gitlab.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20211213132345.26310-1-jacob@gitlab.com>
+In-Reply-To: <20211213132345.26310-2-jacob@gitlab.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 02:23:44PM +0100, Jacob Vosmaer wrote:
+On Mon, Dec 13, 2021 at 02:23:45PM +0100, Jacob Vosmaer wrote:
 
-> When transfering packfile data, upload-pack.c uses an 8KB buffer.
-> This is a reasonable size but when you transfer a lot of packfile
-> data, like we do on GitLab.com, we find it is beneficial to use a
-> larger buffer size.
-> 
-> Below you will find a commit where we make the size of this 8KB
-> buffer configurable at compile time. It appears pack-objects always
-> does 8KB writes so I don't think we should change the default. But
-> for GitLab, where we have a cache for the output of pack-objects,
-> it is beneficial to use a larger IO size because the cache does
-> 64KB writes.
+> The current size of the buffer is 8192+1. The '+1' is a technical
+> detail orthogonal to this change. On GitLab.com we use GitLab's
+> pack-objects cache which does writes of 65515 bytes. Because of the
+> default 8KB buffer size, propagating these cache writes requires 8
+> pipe reads and 8 pipe writes from git-upload-pack, and 8 pipe reads
+> from Gitaly (our Git RPC service). If we increase the size of the
+> buffer to the maximum Git packet size, we need only 1 pipe read and 1
+> pipe write in git-upload-pack, and 1 pipe read in Gitaly to transfer
+> the same amount of data. In benchmarks with a pure fetch and 100%
+> cache hit rate workload we are seeing CPU utilization reductions of
+> over 30%.
 
-I suspect the big reason that it matters for the cache is that for
-pack-objects, we're typically CPU bound computing the sha1 of the
-outgoing pack (for its trailer).
+I was curious to reproduce this locally, so I came up with:
 
-I do suspect we could just always move to something closer to
-LARGE_PACKET_DATA_MAX (probably minus 1 for the sideband marker). Even
-if pack-objects only writes in 8k chunks, we may be able to pull several
-in one read(), especially if the network is a bottleneck (because we'd
-block writing to the client, and pack-objects would fill up the pipe
-buffer).
+  (
+    printf "003fwant %s side-band-64k" $(git rev-parse HEAD)
+    printf 0000
+    echo '0009done'
+  ) |
+  git -c uploadpack.packobjectsHook='cat objects/pack/pack-*.pack; :' upload-pack . |
+  pv >/dev/null
 
-I.e., it doesn't seem like there's any real downside to doing so.
+which hackily simulates the server side of your "cached" case. :) I ran
+it on a fully-packed clone of linux.git.
 
-> I have also considered converting the packfile copying code to use
-> stdio when writing to stdout, but that would be a bigger change
-> because we have to be careful not to interleave stdio and stdlib
-> writes. And we would have to make the stdout output buffer size
-> configurable, because the default stdio buffer size is 4KB which
-> is no better than the status quo. A final argument against the stdio
-> approach is that it only reduces the number of writes from upload-pack,
-> while a larger buffer size reduces both the number of reads and
-> writes.
+It gets about 2.3GB/s with the tip of 'master' and 3.2GB/s with the
+equivalent of your patch (using LARGE_PACKET_DATA_MAX). So definitely an
+improvement.
 
-Yeah, I don't think that would help all that much. We really want to
-size this based on pkt-line limits. That reduces syscalls, but also
-shrinks the overall size a little (since larger packets minimizes the
-framing overhead of the pkt-line headers).
+Without the cached case (so actually running pack-objects, albeit a
+pretty quick one because of bitmaps and pack-reuse), the timings are
+about the same (171MB/s versus 174MB/s, but really it's just pegging a
+CPU running pack-objects). So it would be fine to just do this
+unconditionally, I think.
+
+Looking at strace, the other thing I notice is that we write() the
+packet header separately in send_sideband(), which doubles the number of
+syscalls. I hackily re-wrote this to use writev() instead (patch below),
+but it doesn't seem to actually help much (maybe a curiosity to explore
+further, but definitely not something to hold up your patch).
 
 -Peff
+
+---
+diff --git a/sideband.c b/sideband.c
+index 85bddfdcd4..d0945507a3 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -5,6 +5,11 @@
+ #include "help.h"
+ #include "pkt-line.h"
+ 
++/* hack; should go in git-compat-util, and should provide compat
++ * wrapper around regular write()
++ */
++#include <sys/uio.h>
++
+ struct keyword_entry {
+ 	/*
+ 	 * We use keyword as config key so it should be a single alphanumeric word.
+@@ -257,6 +262,7 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
+ 
+ 	while (sz) {
+ 		unsigned n;
++		struct iovec iov[2];
+ 		char hdr[5];
+ 
+ 		n = sz;
+@@ -265,12 +271,17 @@ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_ma
+ 		if (0 <= band) {
+ 			xsnprintf(hdr, sizeof(hdr), "%04x", n + 5);
+ 			hdr[4] = band;
+-			write_or_die(fd, hdr, 5);
++			iov[0].iov_base = hdr;
++			iov[0].iov_len = 5;
+ 		} else {
+ 			xsnprintf(hdr, sizeof(hdr), "%04x", n + 4);
+-			write_or_die(fd, hdr, 4);
++			iov[0].iov_base = hdr;
++			iov[0].iov_len = 4;
+ 		}
+-		write_or_die(fd, p, n);
++		iov[1].iov_base = (void *)p;
++		iov[1].iov_len = n;
++		/* should check for errors, but also short writes and EINTR, etc */
++		writev(fd, iov, 2);
+ 		p += n;
+ 		sz -= n;
+ 	}
+diff --git a/upload-pack.c b/upload-pack.c
+index c78d55bc67..111de8c60c 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -194,7 +194,7 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
+ }
+ 
+ struct output_state {
+-	char buffer[8193];
++	char buffer[LARGE_PACKET_DATA_MAX];
+ 	int used;
+ 	unsigned packfile_uris_started : 1;
+ 	unsigned packfile_started : 1;
