@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8D61C433F5
-	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 23:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BF1AC433EF
+	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 23:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238191AbhLNXpE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Dec 2021 18:45:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48028 "EHLO
+        id S238223AbhLNXpF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Dec 2021 18:45:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232147AbhLNXpC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Dec 2021 18:45:02 -0500
+        with ESMTP id S238186AbhLNXpE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Dec 2021 18:45:04 -0500
 Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAA07C061574
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 15:45:01 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id l75-20020a25254e000000b005f763be2fecso39770790ybl.7
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 15:45:01 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13599C061574
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 15:45:04 -0800 (PST)
+Received: by mail-yb1-xb4a.google.com with SMTP id g25-20020a25b119000000b005c5e52a0574so39722452ybj.5
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 15:45:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=viyp0FVHVFGMrj8d3m9yg23/wRlOBcuWbEnKtaiVfOM=;
-        b=DSY/vHUtUQq0awqdyvPPjq1X1s7mVUVkhyw0cQTDALx7n7rP2I3NspZrP0B/nXjjLM
-         kAMy9BCsLBCMMLRUK4eOgL/KNbMXSzt+9RTTQBNLFgrXnWxZUm6uKN3MxSDDV70MJrcO
-         L9mbMfpd1fFScN0gEquLoBIIXNsnM/f7hNMyb/ekklT4s2w3QBaO1NqgXzXPUgKZ3Zut
-         7EMbNt46P6EYIvAaBisTZFX1YkHp19Jz7pO3ZLzAeiV3koVfNuCkBTg+1x6JVCSFlWVA
-         onERK7MKLVjxhtb3UHmp3kPCv3Z8ahMfjvrQ9M3o04kfE1+EoxywrFdjaSLagkK1rbNN
-         KsGA==
+        bh=YxZJwEBoaP+OCOAnJYLSSuQFEOkA2y9j34xO6fdRjBA=;
+        b=bBDzicwQFUQGO4t3cXx4704+PJ5gpmRuWwEuPf6hD8TU9OqSwpVMaarzWs29zfHFgn
+         WcJ7AVNzI6wBh6NLXIeowUBQ4cea0tsmf5U/fun+iXRG4mbP+1y0KAb7CtKdLaT4ownL
+         BPzXG7bJjHng5rYW0V1SdikGT6QUTEa4j6IY7/hz4ur++kpoJL+AD3Zu4I2pRsweV/Pu
+         ipYFhHcShTnytypYPXypuz4VU8US0kzc0hZ0h35AKIoFAZkBst66Iw/qg8jkO62RdSwc
+         RT+Sv/GY9tZ0mNTBvO61JMF2gBVA9Ih/pg8UPL1eyBbIp5MvmdLl/DBIfX8Sfjg0TiRK
+         5vOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=viyp0FVHVFGMrj8d3m9yg23/wRlOBcuWbEnKtaiVfOM=;
-        b=p4XNUv1XQdThxNd8dpL3rxGC5sErvWxQeWaQP83ygQC0K6hi+iqa1HHEfshAQJ6c9G
-         cVmNCMvybp6Av/m2t5oXshBEjEu9zn72ZhcqwXoYI1eKCFikcz685/f+lxfgpJFPOP29
-         9ESUrsaD7ppjPMFAfhwGWkcZef9+A8AKe0cueMm3WO89uP+4DiH+qTbtTtPoeTTH61hl
-         TOUDtbC17jqSl9N2fVHfaUky+85hf+hE60C0Z+zSF69pVBSmAbi60EOWGv2T1fIGJtot
-         XUxxtmfvEGKUHMuWLBGKNGFK9plV/F5rNJ1H35ggPnjfPnWU6eHQxjkGVfw2YyUnwxbY
-         Gk2g==
-X-Gm-Message-State: AOAM533NUJ8CQuMI7rhehzx8+UCnKfm1XRlB0V0o+pN4vW5AKLrKBVSw
-        vN7/NtTfl84WsqRQrdi92ppb/gBza5YnxzUQMxnNoIVYHD3NnghzPeEL+BHqHfBXEdUqWdtBXSe
-        zW1FQa372vA8JJTgATKvJl9C/unnQWmd9smFc9cfE4Bkpcsra9jBLe/121rc20qw=
-X-Google-Smtp-Source: ABdhPJxv4+59bepuBNvcYbg5vWbugbszF4EwT5X8s7PnnAVVj73a8wei63rU2rNhzSz/o9NEm9J4cLx3y2gDQA==
+        bh=YxZJwEBoaP+OCOAnJYLSSuQFEOkA2y9j34xO6fdRjBA=;
+        b=0stOYLy5UQK1x4F/VXANxzzA/Fz8Lr6PQU52sE7Hl/w35N45jZy43v8nQXQ+IUTJRh
+         7sDr52oVEFHPuweP4wMmtUrFdfW+HsyiMEcux/dqmwOVIyAiEtoNXKO/IWaGsUR2nKns
+         OAmm76PjPOQiJKiumoDGaNrjt1ZJZmGqK1bCElg2zt0p1HFrTzhVlP7Y7qAtUEEnen3s
+         2NrVBL6WDGQxUn7KNUCL4GG9pWKPFiW0p2C9ERej3BzKtTC7c80GHBMJc6ww7Po6Jjc4
+         pojf0oCSomk60m7mHlMkZ32o2zmppplyi67qeca+YXTH3xPsz+LddBMl5sHT75/zfhoy
+         eiCg==
+X-Gm-Message-State: AOAM531SVfxDso8bap1lWnlx7ZJjG/Zcv5xIOjczInaj50bsM1Xqtbzx
+        wFUBR0QgBOw65ErW1f9fcuEPJo3/PlhzLKCTsRqPLgh6K2fQ0jYkFaTl37F9j4/JjzvWe3/hqW5
+        5BRi2ieBQPbGcZfSmx0O3RZZVeG8BPiDWt0jghc/FwHvAwQpTibqs6NLev0YNPfw=
+X-Google-Smtp-Source: ABdhPJxrFIUk++ALxepbBRJX06vUo17RNDb9IXMPeeOfSLpqM0HD2GN8d2HpalfyVH/oAXnQc3p2K70MKa1GMA==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:b37:fbed:ef52:5dca])
- (user=steadmon job=sendgmr) by 2002:a25:bbc6:: with SMTP id
- c6mr2478574ybk.222.1639525501043; Tue, 14 Dec 2021 15:45:01 -0800 (PST)
-Date:   Tue, 14 Dec 2021 15:44:54 -0800
+ (user=steadmon job=sendgmr) by 2002:a25:6641:: with SMTP id
+ z1mr2518243ybm.478.1639525503268; Tue, 14 Dec 2021 15:45:03 -0800 (PST)
+Date:   Tue, 14 Dec 2021 15:44:55 -0800
 In-Reply-To: <cover.1639524556.git.steadmon@google.com>
-Message-Id: <43d6f83fedc022c44d6a3be249e7fd8cd2a25007.1639524556.git.steadmon@google.com>
+Message-Id: <57e57e6e6a0735341a86f7b5dc52d477d8789578.1639524556.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
  <cover.1639524556.git.steadmon@google.com>
 X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
-Subject: [PATCH v6 1/3] branch: accept multiple upstream branches for tracking
+Subject: [PATCH v6 2/3] branch: add flags and config to inherit tracking
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, chooglen@google.com, avarab@gmail.com,
@@ -62,225 +62,517 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new static variant of install_branch_config() that accepts
-multiple remote branch names for tracking. This will be used in an
-upcoming commit that enables inheriting the tracking configuration from
-a parent branch.
+It can be helpful when creating a new branch to use the existing
+tracking configuration from the branch point. However, there is
+currently not a method to automatically do so.
 
-Currently, all callers of install_branch_config() pass only a single
-remote. Make install_branch_config() a small wrapper around
-install_branch_config_multiple_remotes() so that existing callers do not
-need to be changed.
+Teach git-{branch,checkout,switch} an "inherit" argument to the
+"--track" option. When this is set, creating a new branch will cause the
+tracking configuration to default to the configuration of the branch
+point, if set.
+
+For example, if branch "main" tracks "origin/main", and we run
+`git checkout --track=inherit -b feature main`, then branch "feature"
+will track "origin/main". Thus, `git status` will show us how far
+ahead/behind we are from origin, and `git pull` will pull from origin.
+
+This is particularly useful when creating branches across many
+submodules, such as with `git submodule foreach ...` (or if running with
+a patch such as [1], which we use at $job), as it avoids having to
+manually set tracking info for each submodule.
+
+Since we've added an argument to "--track", also add "--track=direct" as
+another way to explicitly get the original "--track" behavior ("--track"
+without an argument still works as well).
+
+Finally, teach branch.autoSetupMerge a new "inherit" option. When this
+is set, "--track=inherit" becomes the default behavior.
+
+[1]: https://lore.kernel.org/git/20180927221603.148025-1-sbeller@google.com/
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- branch.c          | 135 ++++++++++++++++++++++++++++++++--------------
- t/t3200-branch.sh |   6 +--
- 2 files changed, 99 insertions(+), 42 deletions(-)
+ Documentation/config/branch.txt |  3 +-
+ Documentation/git-branch.txt    | 24 +++++++++++-----
+ Documentation/git-checkout.txt  |  2 +-
+ Documentation/git-switch.txt    |  2 +-
+ branch.c                        | 49 ++++++++++++++++++++++++++++-----
+ branch.h                        |  3 +-
+ builtin/branch.c                |  6 ++--
+ builtin/checkout.c              |  6 ++--
+ config.c                        |  3 ++
+ parse-options-cb.c              | 16 +++++++++++
+ parse-options.h                 |  2 ++
+ t/t2017-checkout-orphan.sh      | 11 +++++++-
+ t/t2027-checkout-track.sh       | 23 ++++++++++++++++
+ t/t2060-switch.sh               | 28 +++++++++++++++++++
+ t/t3200-branch.sh               | 33 ++++++++++++++++++++++
+ t/t7201-co.sh                   | 17 ++++++++++++
+ 16 files changed, 205 insertions(+), 23 deletions(-)
 
+diff --git a/Documentation/config/branch.txt b/Documentation/config/branch.txt
+index cc5f3249fc..55f7522e12 100644
+--- a/Documentation/config/branch.txt
++++ b/Documentation/config/branch.txt
+@@ -7,7 +7,8 @@ branch.autoSetupMerge::
+ 	automatic setup is done; `true` -- automatic setup is done when the
+ 	starting point is a remote-tracking branch; `always` --
+ 	automatic setup is done when the starting point is either a
+-	local branch or remote-tracking
++	local branch or remote-tracking branch; `inherit` -- if the starting point
++	has a tracking configuration, it is copied to the new
+ 	branch. This option defaults to true.
+ 
+ branch.autoSetupRebase::
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 94dc9a54f2..c8b393e51c 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -16,7 +16,7 @@ SYNOPSIS
+ 	[--points-at <object>] [--format=<format>]
+ 	[(-r | --remotes) | (-a | --all)]
+ 	[--list] [<pattern>...]
+-'git branch' [--track | --no-track] [-f] <branchname> [<start-point>]
++'git branch' [--track [direct|inherit] | --no-track] [-f] <branchname> [<start-point>]
+ 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+ 'git branch' --unset-upstream [<branchname>]
+ 'git branch' (-m | -M) [<oldbranch>] <newbranch>
+@@ -205,24 +205,34 @@ This option is only applicable in non-verbose mode.
+ 	Display the full sha1s in the output listing rather than abbreviating them.
+ 
+ -t::
+---track::
++--track [inherit|direct]::
+ 	When creating a new branch, set up `branch.<name>.remote` and
+-	`branch.<name>.merge` configuration entries to mark the
+-	start-point branch as "upstream" from the new branch. This
++	`branch.<name>.merge` configuration entries to set "upstream" tracking
++	configuration for the new branch. This
+ 	configuration will tell git to show the relationship between the
+ 	two branches in `git status` and `git branch -v`. Furthermore,
+ 	it directs `git pull` without arguments to pull from the
+ 	upstream when the new branch is checked out.
+ +
+-This behavior is the default when the start point is a remote-tracking branch.
++The exact upstream branch is chosen depending on the optional argument:
++`--track` or `--track direct` means to use the start-point branch itself as the
++upstream; `--track inherit` means to copy the upstream configuration of the
++start-point branch.
+++
++`--track direct` is the default when the start point is a remote-tracking branch.
+ Set the branch.autoSetupMerge configuration variable to `false` if you
+ want `git switch`, `git checkout` and `git branch` to always behave as if `--no-track`
+ were given. Set it to `always` if you want this behavior when the
+-start-point is either a local or remote-tracking branch.
++start-point is either a local or remote-tracking branch. Set it to
++`inherit` if you want to copy the tracking configuration from the
++branch point.
+++
++See linkgit:git-pull[1] and linkgit:git-config[1] for additional discussion on
++how the `branch.<name>.remote` and `branch.<name>.merge` options are used.
+ 
+ --no-track::
+ 	Do not set up "upstream" configuration, even if the
+-	branch.autoSetupMerge configuration variable is true.
++	branch.autoSetupMerge configuration variable is set.
+ 
+ --set-upstream::
+ 	As this option had confusing syntax, it is no longer supported.
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index b1a6fe4499..a48e1ab62f 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -155,7 +155,7 @@ of it").
+ 	linkgit:git-branch[1] for details.
+ 
+ -t::
+---track::
++--track [direct|inherit]::
+ 	When creating a new branch, set up "upstream" configuration. See
+ 	"--track" in linkgit:git-branch[1] for details.
+ +
+diff --git a/Documentation/git-switch.txt b/Documentation/git-switch.txt
+index 5c438cd505..96dc036ea5 100644
+--- a/Documentation/git-switch.txt
++++ b/Documentation/git-switch.txt
+@@ -152,7 +152,7 @@ should result in deletion of the path).
+ 	attached to a terminal, regardless of `--quiet`.
+ 
+ -t::
+---track::
++--track [direct|inherit]::
+ 	When creating a new branch, set up "upstream" configuration.
+ 	`-c` is implied. See `--track` in linkgit:git-branch[1] for
+ 	details.
 diff --git a/branch.c b/branch.c
-index 7a88a4861e..fa165ebdab 100644
+index fa165ebdab..7e0c29957c 100644
 --- a/branch.c
 +++ b/branch.c
-@@ -49,25 +49,41 @@ static int should_setup_rebase(const char *origin)
- 	return 0;
- }
+@@ -11,7 +11,7 @@
  
--static const char tracking_advice[] =
--N_("\n"
--"After fixing the error cause you may try to fix up\n"
--"the remote tracking information by invoking\n"
--"\"git branch --set-upstream-to=%s%s%s\".");
--
--int install_branch_config(int flag, const char *local, const char *origin, const char *remote)
-+/**
-+ * Install upstream tracking configuration for a branch; specifically, add
-+ * `branch.<name>.remote` and `branch.<name>.merge` entries.
-+ *
-+ * `flag` contains integer flags for options; currently only
-+ * BRANCH_CONFIG_VERBOSE is checked.
-+ *
-+ * `local` is the name of the branch whose configuration we're installing.
-+ *
-+ * `origin` is the name of the remote owning the upstream branches. NULL means
-+ * the upstream branches are local to this repo.
-+ *
-+ * `remotes` is a list of refs that are upstream of local
-+ */
-+static int install_branch_config_multiple_remotes(int flag, const char *local,
-+		const char *origin, struct string_list *remotes)
- {
- 	const char *shortname = NULL;
- 	struct strbuf key = STRBUF_INIT;
-+	struct string_list_item *item;
- 	int rebasing = should_setup_rebase(origin);
+ struct tracking {
+ 	struct refspec_item spec;
+-	char *src;
++	struct string_list *srcs;
+ 	const char *remote;
+ 	int matches;
+ };
+@@ -22,11 +22,11 @@ static int find_tracked_branch(struct remote *remote, void *priv)
  
--	if (skip_prefix(remote, "refs/heads/", &shortname)
--	    && !strcmp(local, shortname)
--	    && !origin) {
--		warning(_("Not setting branch %s as its own upstream."),
--			local);
--		return 0;
--	}
-+	if (!remotes->nr)
-+		BUG("must provide at least one remote for branch config");
-+	if (rebasing && remotes->nr > 1)
-+		die(_("cannot inherit upstream tracking configuration when rebasing is requested"));
-+
-+	if (!origin)
-+		for_each_string_list_item(item, remotes)
-+			if (skip_prefix(item->string, "refs/heads/", &shortname)
-+			    && !strcmp(local, shortname)) {
-+				warning(_("not setting branch '%s' as its own upstream."),
-+					local);
-+				return 0;
-+			}
- 
- 	strbuf_addf(&key, "branch.%s.remote", local);
- 	if (git_config_set_gently(key.buf, origin ? origin : ".") < 0)
-@@ -75,8 +91,17 @@ int install_branch_config(int flag, const char *local, const char *origin, const
- 
- 	strbuf_reset(&key);
- 	strbuf_addf(&key, "branch.%s.merge", local);
--	if (git_config_set_gently(key.buf, remote) < 0)
-+	/*
-+	 * We want to overwrite any existing config with all the branches in
-+	 * "remotes". Override any existing config, then write our branches. If
-+	 * more than one is provided, use CONFIG_REGEX_NONE to preserve what
-+	 * we've written so far.
-+	 */
-+	if (git_config_set_gently(key.buf, NULL) < 0)
- 		goto out_err;
-+	for_each_string_list_item(item, remotes)
-+		if (git_config_set_multivar_gently(key.buf, item->string, CONFIG_REGEX_NONE, 0) < 0)
-+			goto out_err;
- 
- 	if (rebasing) {
- 		strbuf_reset(&key);
-@@ -87,29 +112,42 @@ int install_branch_config(int flag, const char *local, const char *origin, const
- 	strbuf_release(&key);
- 
- 	if (flag & BRANCH_CONFIG_VERBOSE) {
--		if (shortname) {
-+		const char *name;
-+		struct strbuf ref_string = STRBUF_INIT;
-+
-+		for_each_string_list_item(item, remotes) {
-+			name = item->string;
-+			skip_prefix(name, "refs/heads/", &name);
-+			strbuf_addf(&ref_string, "  %s\n", name);
-+		}
-+
-+		if (remotes->nr == 1) {
-+			struct strbuf refname = STRBUF_INIT;
-+
- 			if (origin)
--				printf_ln(rebasing ?
--					  _("Branch '%s' set up to track remote branch '%s' from '%s' by rebasing.") :
--					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
--					  local, shortname, origin);
--			else
--				printf_ln(rebasing ?
--					  _("Branch '%s' set up to track local branch '%s' by rebasing.") :
--					  _("Branch '%s' set up to track local branch '%s'."),
--					  local, shortname);
-+				strbuf_addf(&refname, "%s/", origin);
-+			strbuf_addstr(&refname, remotes->items[0].string);
-+
-+			/*
-+			 * Rebasing is only allowed in the case of a single
-+			 * upstream branch.
-+			 */
-+			printf_ln(rebasing ?
-+				_("branch '%s' set up to track '%s' by rebasing.") :
-+				_("branch '%s' set up to track '%s'."),
-+				local, refname.buf);
-+
-+			strbuf_release(&refname);
-+		} else if (origin) {
-+			printf_ln(_("branch '%s' set up to track from '%s':"),
-+				local, origin);
-+			printf("%s", ref_string.buf);
+ 	if (!remote_find_tracking(remote, &tracking->spec)) {
+ 		if (++tracking->matches == 1) {
+-			tracking->src = tracking->spec.src;
++			string_list_append(tracking->srcs, tracking->spec.src);
+ 			tracking->remote = remote->name;
  		} else {
--			if (origin)
--				printf_ln(rebasing ?
--					  _("Branch '%s' set up to track remote ref '%s' by rebasing.") :
--					  _("Branch '%s' set up to track remote ref '%s'."),
--					  local, remote);
--			else
--				printf_ln(rebasing ?
--					  _("Branch '%s' set up to track local ref '%s' by rebasing.") :
--					  _("Branch '%s' set up to track local ref '%s'."),
--					  local, remote);
-+			printf_ln(_("branch '%s' set up to track:"), local);
-+			printf("%s", ref_string.buf);
+ 			free(tracking->spec.src);
+-			FREE_AND_NULL(tracking->src);
++			string_list_clear(tracking->srcs, 0);
  		}
-+
-+		strbuf_release(&ref_string);
+ 		tracking->spec.src = NULL;
  	}
- 
- 	return 0;
-@@ -118,14 +156,33 @@ int install_branch_config(int flag, const char *local, const char *origin, const
- 	strbuf_release(&key);
- 	error(_("Unable to write upstream branch configuration"));
- 
--	advise(_(tracking_advice),
--	       origin ? origin : "",
--	       origin ? "/" : "",
--	       shortname ? shortname : remote);
-+	advise(_("\nAfter fixing the error cause you may try to fix up\n"
-+		"the remote tracking information by invoking:"));
-+	if (remotes->nr == 1)
-+		advise("  git branch --set-upstream-to=%s%s%s",
-+			origin ? origin : "",
-+			origin ? "/" : "",
-+			remotes->items[0].string);
-+	else
-+		for_each_string_list_item(item, remotes)
-+			advise("  git config --add branch.\"%s\".merge %s",
-+				local, item->string);
- 
- 	return -1;
+@@ -183,6 +183,34 @@ int install_branch_config(int flag, const char *local, const char *origin,
+ 	return ret;
  }
  
-+int install_branch_config(int flag, const char *local, const char *origin,
-+		const char *remote)
++static int inherit_tracking(struct tracking *tracking, const char *orig_ref)
 +{
-+	int ret;
-+	struct string_list remotes = STRING_LIST_INIT_DUP;
++	const char *bare_ref;
++	struct branch *branch;
++	int i;
 +
-+	string_list_append(&remotes, remote);
-+	ret = install_branch_config_multiple_remotes(flag, local, origin, &remotes);
-+	string_list_clear(&remotes, 0);
-+	return ret;
++	bare_ref = orig_ref;
++	skip_prefix(orig_ref, "refs/heads/", &bare_ref);
++
++	branch = branch_get(bare_ref);
++	if (!branch->remote_name) {
++		warning(_("asked to inherit tracking from '%s', but no remote is set"),
++			bare_ref);
++		return -1;
++	}
++
++	if (branch->merge_nr < 1 || !branch->merge_name || !branch->merge_name[0]) {
++		warning(_("asked to inherit tracking from '%s', but no merge configuration is set"),
++			bare_ref);
++		return -1;
++	}
++
++	tracking->remote = xstrdup(branch->remote_name);
++	for (i = 0; i < branch->merge_nr; i++)
++		string_list_append(tracking->srcs, branch->merge_name[i]);
++	return 0;
 +}
 +
  /*
   * This is called when new_ref is branched off of orig_ref, and tries
   * to infer the settings for branch.<new_ref>.{remote,merge} from the
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index cc4b10236e..4b0ef35913 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -950,15 +950,15 @@ test_expect_success 'disabled option --set-upstream fails' '
- 	test_must_fail git branch --set-upstream origin/main
+@@ -192,11 +220,15 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 			   enum branch_track track, int quiet)
+ {
+ 	struct tracking tracking;
++	struct string_list tracking_srcs = STRING_LIST_INIT_DUP;
+ 	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
+ 
+ 	memset(&tracking, 0, sizeof(tracking));
+ 	tracking.spec.dst = (char *)orig_ref;
+-	if (for_each_remote(find_tracked_branch, &tracking))
++	tracking.srcs = &tracking_srcs;
++	if (track != BRANCH_TRACK_INHERIT)
++		for_each_remote(find_tracked_branch, &tracking);
++	else if (inherit_tracking(&tracking, orig_ref))
+ 		return;
+ 
+ 	if (!tracking.matches)
+@@ -204,6 +236,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 		case BRANCH_TRACK_ALWAYS:
+ 		case BRANCH_TRACK_EXPLICIT:
+ 		case BRANCH_TRACK_OVERRIDE:
++		case BRANCH_TRACK_INHERIT:
+ 			break;
+ 		default:
+ 			return;
+@@ -213,11 +246,13 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 		die(_("Not tracking: ambiguous information for ref %s"),
+ 		    orig_ref);
+ 
+-	if (install_branch_config(config_flags, new_ref, tracking.remote,
+-			      tracking.src ? tracking.src : orig_ref) < 0)
++	if (tracking.srcs->nr < 1 && track != BRANCH_TRACK_INHERIT)
++		string_list_append(tracking.srcs, orig_ref);
++	if (install_branch_config_multiple_remotes(config_flags, new_ref, tracking.remote,
++			      tracking.srcs) < 0)
+ 		exit(-1);
+ 
+-	free(tracking.src);
++	string_list_clear(tracking.srcs, 0);
+ }
+ 
+ int read_branch_desc(struct strbuf *buf, const char *branch_name)
+diff --git a/branch.h b/branch.h
+index df0be61506..815dcd40c0 100644
+--- a/branch.h
++++ b/branch.h
+@@ -10,7 +10,8 @@ enum branch_track {
+ 	BRANCH_TRACK_REMOTE,
+ 	BRANCH_TRACK_ALWAYS,
+ 	BRANCH_TRACK_EXPLICIT,
+-	BRANCH_TRACK_OVERRIDE
++	BRANCH_TRACK_OVERRIDE,
++	BRANCH_TRACK_INHERIT,
+ };
+ 
+ extern enum branch_track git_branch_track;
+diff --git a/builtin/branch.c b/builtin/branch.c
+index b23b1d1752..ebde5023c3 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -632,8 +632,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT__VERBOSE(&filter.verbose,
+ 			N_("show hash and subject, give twice for upstream branch")),
+ 		OPT__QUIET(&quiet, N_("suppress informational messages")),
+-		OPT_SET_INT('t', "track",  &track, N_("set up tracking mode (see git-pull(1))"),
+-			BRANCH_TRACK_EXPLICIT),
++		OPT_CALLBACK_F('t', "track",  &track, "direct|inherit",
++			N_("set branch tracking configuration"),
++			PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP,
++			parse_opt_tracking_mode),
+ 		OPT_SET_INT_F(0, "set-upstream", &track, N_("do not use"),
+ 			BRANCH_TRACK_OVERRIDE, PARSE_OPT_HIDDEN),
+ 		OPT_STRING('u', "set-upstream-to", &new_upstream, N_("upstream"), N_("change the upstream info")),
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index b5d477919a..45dab414ea 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1532,8 +1532,10 @@ static struct option *add_common_switch_branch_options(
+ {
+ 	struct option options[] = {
+ 		OPT_BOOL('d', "detach", &opts->force_detach, N_("detach HEAD at named commit")),
+-		OPT_SET_INT('t', "track",  &opts->track, N_("set upstream info for new branch"),
+-			BRANCH_TRACK_EXPLICIT),
++		OPT_CALLBACK_F('t', "track",  &opts->track, "direct|inherit",
++			N_("set up tracking mode (see git-pull(1))"),
++			PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP,
++			parse_opt_tracking_mode),
+ 		OPT__FORCE(&opts->force, N_("force checkout (throw away local modifications)"),
+ 			   PARSE_OPT_NOCOMPLETE),
+ 		OPT_STRING(0, "orphan", &opts->new_orphan_branch, N_("new-branch"), N_("new unparented branch")),
+diff --git a/config.c b/config.c
+index cb4a8058bf..152c94f29d 100644
+--- a/config.c
++++ b/config.c
+@@ -1580,6 +1580,9 @@ static int git_default_branch_config(const char *var, const char *value)
+ 		if (value && !strcasecmp(value, "always")) {
+ 			git_branch_track = BRANCH_TRACK_ALWAYS;
+ 			return 0;
++		} else if (value && !strcmp(value, "inherit")) {
++			git_branch_track = BRANCH_TRACK_INHERIT;
++			return 0;
+ 		}
+ 		git_branch_track = git_config_bool(var, value);
+ 		return 0;
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 3c811e1e4a..d346dbe210 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -1,5 +1,6 @@
+ #include "git-compat-util.h"
+ #include "parse-options.h"
++#include "branch.h"
+ #include "cache.h"
+ #include "commit.h"
+ #include "color.h"
+@@ -293,3 +294,18 @@ int parse_opt_passthru_argv(const struct option *opt, const char *arg, int unset
+ 
+ 	return 0;
+ }
++
++int parse_opt_tracking_mode(const struct option *opt, const char *arg, int unset)
++{
++	if (unset)
++		*(enum branch_track *)opt->value = BRANCH_TRACK_NEVER;
++	else if (!arg || !strcmp(arg, "direct"))
++		*(enum branch_track *)opt->value = BRANCH_TRACK_EXPLICIT;
++	else if (!strcmp(arg, "inherit"))
++		*(enum branch_track *)opt->value = BRANCH_TRACK_INHERIT;
++	else
++		return error(_("option `%s' expects \"%s\" or \"%s\""),
++			     "--track", "direct", "inherit");
++
++	return 0;
++}
+diff --git a/parse-options.h b/parse-options.h
+index a845a9d952..f35dbfdd5a 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -303,6 +303,8 @@ enum parse_opt_result parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx,
+ 					   const char *, int);
+ int parse_opt_passthru(const struct option *, const char *, int);
+ int parse_opt_passthru_argv(const struct option *, const char *, int);
++/* value is enum branch_track* */
++int parse_opt_tracking_mode(const struct option *, const char *, int);
+ 
+ #define OPT__VERBOSE(var, h)  OPT_COUNTUP('v', "verbose", (var), (h))
+ #define OPT__QUIET(var, h)    OPT_COUNTUP('q', "quiet",   (var), (h))
+diff --git a/t/t2017-checkout-orphan.sh b/t/t2017-checkout-orphan.sh
+index 88d6992a5e..4d689bd377 100755
+--- a/t/t2017-checkout-orphan.sh
++++ b/t/t2017-checkout-orphan.sh
+@@ -62,8 +62,17 @@ test_expect_success '--orphan ignores branch.autosetupmerge' '
+ 	git checkout main &&
+ 	git config branch.autosetupmerge always &&
+ 	git checkout --orphan gamma &&
+-	test -z "$(git config branch.gamma.merge)" &&
++	test_cmp_config "" --default "" branch.gamma.merge &&
+ 	test refs/heads/gamma = "$(git symbolic-ref HEAD)" &&
++	test_must_fail git rev-parse --verify HEAD^ &&
++	git checkout main &&
++	git config branch.autosetupmerge inherit &&
++	git checkout --orphan eta &&
++	test_cmp_config "" --default "" branch.eta.merge &&
++	test_cmp_config "" --default "" branch.eta.remote &&
++	echo refs/heads/eta >expected &&
++	git symbolic-ref HEAD >actual &&
++	test_cmp expected actual &&
+ 	test_must_fail git rev-parse --verify HEAD^
  '
  
--test_expect_success '--set-upstream-to notices an error to set branch as own upstream' '
-+test_expect_success '--set-upstream-to notices an error to set branch as own upstream' "
- 	git branch --set-upstream-to refs/heads/my13 my13 2>actual &&
- 	cat >expect <<-\EOF &&
--	warning: Not setting branch my13 as its own upstream.
-+	warning: not setting branch 'my13' as its own upstream.
- 	EOF
- 	test_expect_code 1 git config branch.my13.remote &&
- 	test_expect_code 1 git config branch.my13.merge &&
- 	test_cmp expect actual
--'
-+"
+diff --git a/t/t2027-checkout-track.sh b/t/t2027-checkout-track.sh
+index 4453741b96..49c7def21c 100755
+--- a/t/t2027-checkout-track.sh
++++ b/t/t2027-checkout-track.sh
+@@ -24,4 +24,27 @@ test_expect_success 'checkout --track -b rejects an extra path argument' '
+ 	test_i18ngrep "cannot be used with updating paths" err
+ '
  
- # Keep this test last, as it changes the current branch
- cat >expect <<EOF
++test_expect_success 'checkout --track -b overrides autoSetupMerge=inherit' '
++	# Set up tracking config on main
++	test_config branch.main.remote origin &&
++	test_config branch.main.merge refs/heads/main &&
++	test_config branch.autoSetupMerge inherit &&
++	# With --track=inherit, we copy the tracking config from main
++	git checkout --track=inherit -b b1 main &&
++	test_cmp_config origin branch.b1.remote &&
++	test_cmp_config refs/heads/main branch.b1.merge &&
++	# With branch.autoSetupMerge=inherit, we do the same
++	git checkout -b b2 main &&
++	test_cmp_config origin branch.b2.remote &&
++	test_cmp_config refs/heads/main branch.b2.merge &&
++	# But --track overrides this
++	git checkout --track -b b3 main &&
++	test_cmp_config . branch.b3.remote &&
++	test_cmp_config refs/heads/main branch.b3.merge &&
++	# And --track=direct does as well
++	git checkout --track=direct -b b4 main &&
++	test_cmp_config . branch.b4.remote &&
++	test_cmp_config refs/heads/main branch.b4.merge
++'
++
+ test_done
+diff --git a/t/t2060-switch.sh b/t/t2060-switch.sh
+index 9bc6a3aa5c..ebb961be29 100755
+--- a/t/t2060-switch.sh
++++ b/t/t2060-switch.sh
+@@ -107,4 +107,32 @@ test_expect_success 'not switching when something is in progress' '
+ 	test_must_fail git switch -d @^
+ '
+ 
++test_expect_success 'tracking info copied with autoSetupMerge=inherit' '
++	# default config does not copy tracking info
++	git switch -c foo-no-inherit foo &&
++	test_cmp_config "" --default "" branch.foo-no-inherit.remote &&
++	test_cmp_config "" --default "" branch.foo-no-inherit.merge &&
++	# with --track=inherit, we copy tracking info from foo
++	git switch --track=inherit -c foo2 foo &&
++	test_cmp_config origin branch.foo2.remote &&
++	test_cmp_config refs/heads/foo branch.foo2.merge &&
++	# with autoSetupMerge=inherit, we do the same
++	test_config branch.autoSetupMerge inherit &&
++	git switch -c foo3 foo &&
++	test_cmp_config origin branch.foo3.remote &&
++	test_cmp_config refs/heads/foo branch.foo3.merge &&
++	# with --track, we override autoSetupMerge
++	git switch --track -c foo4 foo &&
++	test_cmp_config . branch.foo4.remote &&
++	test_cmp_config refs/heads/foo branch.foo4.merge &&
++	# and --track=direct does as well
++	git switch --track=direct -c foo5 foo &&
++	test_cmp_config . branch.foo5.remote &&
++	test_cmp_config refs/heads/foo branch.foo5.merge &&
++	# no tracking info to inherit from main
++	git switch -c main2 main &&
++	test_cmp_config "" --default "" branch.main2.remote &&
++	test_cmp_config "" --default "" branch.main2.merge
++'
++
+ test_done
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 4b0ef35913..a049276439 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1409,4 +1409,37 @@ test_expect_success 'invalid sort parameter in configuration' '
+ 	)
+ '
+ 
++test_expect_success 'tracking info copied with --track=inherit' '
++	git branch --track=inherit foo2 my1 &&
++	test_cmp_config local branch.foo2.remote &&
++	test_cmp_config refs/heads/main branch.foo2.merge
++'
++
++test_expect_success 'tracking info copied with autoSetupMerge=inherit' '
++	test_unconfig branch.autoSetupMerge &&
++	# default config does not copy tracking info
++	git branch foo-no-inherit my1 &&
++	test_cmp_config "" --default "" branch.foo-no-inherit.remote &&
++	test_cmp_config "" --default "" branch.foo-no-inherit.merge &&
++	# with autoSetupMerge=inherit, we copy tracking info from my1
++	test_config branch.autoSetupMerge inherit &&
++	git branch foo3 my1 &&
++	test_cmp_config local branch.foo3.remote &&
++	test_cmp_config refs/heads/main branch.foo3.merge &&
++	# no tracking info to inherit from main
++	git branch main2 main &&
++	test_cmp_config "" --default "" branch.main2.remote &&
++	test_cmp_config "" --default "" branch.main2.merge
++'
++
++test_expect_success '--track overrides branch.autoSetupMerge' '
++	test_config branch.autoSetupMerge inherit &&
++	git branch --track=direct foo4 my1 &&
++	test_cmp_config . branch.foo4.remote &&
++	test_cmp_config refs/heads/my1 branch.foo4.merge &&
++	git branch --no-track foo5 my1 &&
++	test_cmp_config "" --default "" branch.foo5.remote &&
++	test_cmp_config "" --default "" branch.foo5.merge
++'
++
+ test_done
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index 7f6e23a4bb..4fdf88ba46 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -657,4 +657,21 @@ test_expect_success 'custom merge driver with checkout -m' '
+ 	test_cmp expect arm
+ '
+ 
++test_expect_success 'tracking info copied with autoSetupMerge=inherit' '
++	git reset --hard main &&
++	# default config does not copy tracking info
++	git checkout -b foo-no-inherit koala/bear &&
++	test_cmp_config "" --default "" branch.foo-no-inherit.remote &&
++	test_cmp_config "" --default "" branch.foo-no-inherit.merge &&
++	# with autoSetupMerge=inherit, we copy tracking info from koala/bear
++	test_config branch.autoSetupMerge inherit &&
++	git checkout -b foo koala/bear &&
++	test_cmp_config origin branch.foo.remote &&
++	test_cmp_config refs/heads/koala/bear branch.foo.merge &&
++	# no tracking info to inherit from main
++	git checkout -b main2 main &&
++	test_cmp_config "" --default "" branch.main2.remote &&
++	test_cmp_config "" --default "" branch.main2.merge
++'
++
+ test_done
 -- 
 2.34.1.173.g76aa8bc2d0-goog
 
