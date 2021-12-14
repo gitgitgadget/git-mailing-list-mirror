@@ -2,149 +2,193 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7315C433F5
-	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 12:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28E5DC433F5
+	for <git@archiver.kernel.org>; Tue, 14 Dec 2021 13:11:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234048AbhLNMis (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Dec 2021 07:38:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35106 "EHLO
+        id S234259AbhLNNLw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Dec 2021 08:11:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234015AbhLNMir (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Dec 2021 07:38:47 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53BFEC061574
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 04:38:47 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id e3so63406365edu.4
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 04:38:47 -0800 (PST)
+        with ESMTP id S231987AbhLNNLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Dec 2021 08:11:51 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91052C061574
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 05:11:51 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id z7so1686685edc.11
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 05:11:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=GOx7CDzwF70LFZ0nQaS0HXio7C8v9b1I9QfC/tpsPY4=;
-        b=mB8Y2f2PVREMa8pFIEUmZmlJu+7yER/Bk3F6ZBrZDSZSlH+XpQ9s83pdm+SufjTnnU
-         ZhyWcpsSLaluQsoPIy2JcDnuSQQ2AtEZd5ixFUd3QVgQ/k3VYg2N9G/vUuIBwKTJ2hj+
-         7NVHCU/4s1RB2sNUMD9ZZwFIf5ncBobk063iqelQ67dhpB2201DjcoA4PTPaVCittJJF
-         auVcf5cP7R2HFqQFm8oYETjwSmiFi0MD94MhzA/1yT90LrjgxrdEIAfZzLKARBcUb7tk
-         t9EOAYdPByLikBzFTj7ly3xq18Avpa7fnmfLFHC21IJiLVUN3Qh/5IOjP5IWYhZZXhaT
-         j4CA==
+        d=unity3d.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=lmxDHvGP7UBxtw7H/u6njLfqak2Lc04Qvs73lYHXKAM=;
+        b=nZfdbJ4IO5RenRyykI4d7lKXMMKi6YXsoLcuVxFc3idnztYz+0BFqapwHCuc2F6CwQ
+         mRrLveT9ons2gon52INrxYFhtABYmpmQX1VrKpC7Hi/ayn8u7wB77deohcSeFy3b6u2Z
+         BqyuWNSdFshpaD+qLAWFfm1bXFXMfybO3dI/6upobr4oY+nekjyvQG5NhKG/vHatmWLb
+         3TEjprwUGZODpCTkTPjRqi/4gnsRV2oGb7enNKm7tYmq9tXgmf6ECFqfLKgITOuofi99
+         8MeSHIAQ62OV6Cs598d4+SBv3Ocics7hXykFPXstg1JdCXEvamUaVcydtc2g4TykFskr
+         ZkmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=GOx7CDzwF70LFZ0nQaS0HXio7C8v9b1I9QfC/tpsPY4=;
-        b=wrs5hkArPfHwUZYNjDpXzyn6lXqg7KlaC8HWGqg/4ni0FT9AulvfM8DQ9iwl1fhuVm
-         L/Yury9qNbVJ04lyzRiWCTrCOzizpOiLQgNph6lQjf4RpgtgdOAw/dkOomlJKz2tHju8
-         lWPB2ffRb8E7OfclWdMPSg+bPJFsr2kt09HYCf8CjZlm7YMMbWLCqQIxguXVYBZAxFue
-         MsqB34rhhyhS1C5dQXmqF4XlPvoyIV9HOrDi+ZSLvd/2WyHjzV3I1UTcIe9r/J9UJrJC
-         YeXBik1ZEH45lOfUTQ0PZ8lHrmVF+kcqTJl+61NAnv8m86dUWNDxkFQkF2pDuuAjvGRn
-         HA8A==
-X-Gm-Message-State: AOAM533uOyiBGy6snfWXC+s1c1ItYZ45GtUjdGmBqyCJ8REYhK9OQ0eR
-        Bhg3/0udD68UYzmfs/Jd2fw=
-X-Google-Smtp-Source: ABdhPJyUjxYzX/xvMVHk3hYGstWBo0sR8yvdy7wWh/nLeQbrH+/w08RwHfnGzm50gM9YcGIz8w9oRw==
-X-Received: by 2002:a17:907:972a:: with SMTP id jg42mr5607230ejc.398.1639485525684;
-        Tue, 14 Dec 2021 04:38:45 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v30sm1028131ejk.194.2021.12.14.04.38.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Dec 2021 04:38:45 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mx74u-0008iA-AK;
-        Tue, 14 Dec 2021 13:38:44 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>
-Subject: Re: [RFC PATCH] t/Makefile: use dependency graph for "check-chainlint"
-Date:   Tue, 14 Dec 2021 13:34:53 +0100
-References: <20211213063059.19424-6-sunshine@sunshineco.com>
- <RFC-patch-1.1-bb3f1577829-20211213T095456Z-avarab@gmail.com>
- <CAPig+cSFtpt6ExbVDbcx3tZodrKFuM-r2GMW4TQ2tJmLvHBFtQ@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <CAPig+cSFtpt6ExbVDbcx3tZodrKFuM-r2GMW4TQ2tJmLvHBFtQ@mail.gmail.com>
-Message-ID: <211214.86tufbbbu3.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=lmxDHvGP7UBxtw7H/u6njLfqak2Lc04Qvs73lYHXKAM=;
+        b=DzsuICeXDQg0iAS8+P57Ub/orzPdo5opRjRHYN1PwI3oMwekPKl+2FMGCitZ1SSyo5
+         WpO/z65j6UvUWuFw3ErvMpFkLtgRQkpYr+R8QhwJ5FwZBmRqr5hpjk4dX65yv5uL+H/c
+         Ug+Wbk/PxFyJdIwUdOJAXiWB/vsAn8wtGZxQ1To6L9SEziWy77bbxEwsSgYLvapVFDln
+         +PEXb7smtodEkKnawI1NAbHkT+RswVZ6XbvwKJNH/Fgjebt3ky2C1lXUsIIMiDjTuQA7
+         5ed/3zcPvmaqVBR1KI4rqD/XFscFuPWSRo4owJ3ROiiLYzscpvq8N6L8PvOd8bby7KWN
+         VIEA==
+X-Gm-Message-State: AOAM5302l7b85zPWBHECueJJuzD6m8UHlJd+u5yD3MklmtOEVoZAwXP0
+        f8RkML4xy0TZqRXCg8jOqNdIgbVPU5WB+TMZ
+X-Google-Smtp-Source: ABdhPJx5bbExGBaVlOENIyh24+MLrnsaJjZJK7oibJSGp7D3j4UUz8OYYClVMbnMoz/y2IhgO2zpRw==
+X-Received: by 2002:a05:6402:2693:: with SMTP id w19mr7740214edd.266.1639487509420;
+        Tue, 14 Dec 2021 05:11:49 -0800 (PST)
+Received: from [10.45.34.115] ([80.80.14.217])
+        by smtp.gmail.com with ESMTPSA id 26sm1381975ejk.138.2021.12.14.05.11.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Dec 2021 05:11:49 -0800 (PST)
+Message-ID: <8f1c66f7-f0d8-bd95-dbc1-f0f3e25b3dff@unity3d.com>
+Date:   Tue, 14 Dec 2021 14:11:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.2
+Subject: Re: [PATCH v2] fast-export: fix surprising behavior with
+ --first-parent
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>
+Cc:     William Sprent via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <pull.1084.git.1637666927224.gitgitgadget@gmail.com>
+ <pull.1084.v2.git.1639037637231.gitgitgadget@gmail.com>
+ <CABPp-BGdCizEGcwPS+0VB_vvYLpGCWKLqx-nbZtJ16QkVxzbGQ@mail.gmail.com>
+ <b87ec8f9-dd0d-c7b8-1c2a-edfd3d015930@unity3d.com>
+ <CABPp-BHwk25XK7qT4C8KELWXObc_W2DCXusPfLSMUuUKmeCUxw@mail.gmail.com>
+From:   William Sprent <williams@unity3d.com>
+In-Reply-To: <CABPp-BHwk25XK7qT4C8KELWXObc_W2DCXusPfLSMUuUKmeCUxw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Dec 14 2021, Eric Sunshine wrote:
-
-> On Mon, Dec 13, 2021 at 5:09 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> On Mon, Dec 13 2021, Eric Sunshine wrote:
->> > Rather than running `chainlint` and `diff` once per self-test -- which
->> > may become expensive as more tests are added -- instead run `chainlint`
->> > a single time over all tests bodies collectively and compare the result
->> > to the collective "expected" output.
+On 14/12/2021 01.31, Elijah Newren wrote:
+> On Mon, Dec 13, 2021 at 7:09 AM William Sprent <williams@unity3d.com> wrote:
 >>
->> I think that "optimizing" things like this is an anti-pattern. I.e. we
->> have N chainlint test files, and N potential outputs from that (ok or
->> not, and with/without error). If one of the chainlint tests changes
->> we'd like to re-run it, if not we can re-use an earlier run.
->
-> As mentioned in a reply elsewhere, the commit message sells this as an
-> optimization, but that's not the real reason for the change, which is
-> that the rewritten `check-chainlint` target for the upcoming new
-> chainlint really wants to have a composite file of the "test" input
-> and a composite of the "expect" output. I didn't know how to sell that
-> change in this preparatory patch series, so I weakly framed it as an
-> optimization. The reason for making this a preparatory step is that it
-> makes for a less noisy patch later on when the new chainlint is
-> actually plugged into the `check-chainlint` target. At least, it was
-> less noisy originally... in the final implementation, I think it ends
-> up being noisy anyhow. So, maybe it makes sense to drop this patch
-> altogether(?).
-
-I think you should do whatever you think makes sense here, I was just
-pointing out that alternate Makefile approach in case it was helpful.
-
->> This is something make's dependency logic is perfectly suited for, and
->> will be faster than any optimization of turning a for-loop into a
->> "sed" command we run every time, since we'll only need to "stat" a few
->> things to see that there's nothing to do.
+>>> However, given that it's unsafe to set revs.reverse=1 earlier, now
+>>> that I think about it, isn't it also unsafe to set revs.topo_order
+>>> where it is?  Someone could override it by passing --date-order to
+>>> fast-export.  (It's okay if you want to leave fixing that to someone
+>>> else, just thought I'd mention it while reviewing.)
+>>>
 >>
->> +BUILT_CHAINLINTTESTS =3D $(patsubst %,.build/%.actual,$(CHAINLINTTESTS))
->> +
->> +.build/chainlint:
->> +       mkdir -p $@
->> +
->> +$(BUILT_CHAINLINTTESTS): | .build/chainlint
->> +$(BUILT_CHAINLINTTESTS): .build/%.actual: %
->> +       $(CHAINLINT) <$< | \
->> +       sed -e '/^# LINT: /d' >$@ && \
->> +       diff -u $(basename $<).expect $@
->> +
->> +check-chainlint: $(BUILT_CHAINLINTTESTS)
->
-> This sort of optimization makes sense (I think) even with the new
-> chainlint preferring to see composite "test" and "expect" files rather
-> than the individual files. The individual files would be prerequisites
-> of the composite files, thus the composites would only be regenerated
-> if the individual files change. And the composite files would be
-> prerequisites of the `check-chainlint` target, so it would only run if
-> the composite files change (or if chainlint itself changes).
->
-> In fact, with the new chainlint checking all tests in all scripts at
-> once, this technique should apply nicely to it, as well, since the
-> names of test scripts (t????-*.sh) are fed to it as command-line
-> arguments. Thus, the t????-*.sh files could be prerequisites of the
-> chainlint rule which would use $? to check only test scripts which
-> have changed since the previous run.
+>> I couldn't tell you for sure if the topo_order placement is safe. I at
+>> least don't see any place where topo_order itself can be toggled off in
+>> revision.c.  I'm sure there exists at least one rev-list argument which
+>> will cause unexpected behaviour, though.
+>>
+>> I agree that it would be nice to have the traversal order options be
+>> assigned in the same place. I guess we have three options:
+>>
+>>
+>>      1. Put the reverse assignment to the top (together with topo_order),
+>> allowing the user to disable it with --reverse, which will cause odd
+>> behaviour.
+> 
+> I'd call it broken rather than merely odd; more on this below.
+> 
+>>      2. Put the reverse assignment to the top and throw an error if the
+>> user passes the --reverse option.
+> 
+> Might be a reasonable longer term solution if someone wants to dive
+> into all the non-sensical options and mark them as such.  But I agree
+> that it's slightly odd only picking one specific one when we know
+> there's likely a pile of them here.
+> 
+>>      3. Keep the reverse assignment at the bottom, silently ignoring any
+>> --reverse option.
+> 
+> "silently ignored" or "dismissed with prejudice"?  :-)
+> 
 
-*nod*
+Heh. :) It would definitely an "interesting" option to be able to 
+reverse the commit graph, if it worked..
 
-> Having said all that, I don't think think the changes in this series
-> or the upcoming new chainlint series make the situation any worse
-> (Makefile-wise) than its current state, and the sort of optimizations
-> discussed here can easily be made after those series land. (And, as my
-> Git time is rather limited these days, I'd really like to focus on
-> getting the core components landed.)
+>> I don't think any of the three options are particularly good. The first
+>> one for obvious reasons. The second seems inconsistent to me as we would
+>> only error on --reverse but not any of the other "nonsensical" rev-list
+>> args. However, silently ignoring certain arguments does also not make
+>> for a good user experience.
+>>
+>> I think that it might be a good idea to move up the 'reverse' assignment
+>> and then add a paragraph to the man page for git-fast-export explaining
+>> that some arguments, in particular the ones that change the ordering of
+>> commits and the ones that change how commits are displayed (such as
+>> --graph), may have no or unexpected effects.
+> 
+> I'd rather choose option #3, like builtin/add.c does with max_count.
+> In part this is because...
+> 
+>> I've tried writing a snippet in git-fast-export.txt, which I could include
+>> in the next version, if you think it seems like a reasonable approach:
+>>
+>> diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
+>> index 1978dbdc6a..34875ef01d 100644
+>> --- a/Documentation/git-fast-export.txt
+>> +++ b/Documentation/git-fast-export.txt
+>> @@ -157,16 +157,21 @@ by keeping the marks the same across runs.
+>>   [<git-rev-list-args>...]::
+>>          A list of arguments, acceptable to 'git rev-parse' and
+>>          'git rev-list', that specifies the specific objects and references
+>>          to export.  For example, `master~10..master` causes the
+>>          current master reference to be exported along with all objects
+>>          added since its 10th ancestor commit and (unless the
+>>          --reference-excluded-parents option is specified) all files
+>>          common to master{tilde}9 and master{tilde}10.
+>> ++
+>> +Arguments to `git rev-list` which change the _order_ in which commits are
+>> +traversed, such as '--reverse', as well as arguments which control how commits
+>> +are displayed, such as '--graph', may either have no effect or have an
+>> +unexpected effect on which commits are exported.
+> 
+> After your patch, --reverse won't have an unexpected effect on _which_
+> commits are exported, it would instead have an unexpected effect on
+> _how_ commits are exported (turning _every_ commit into a root
+> commit).  I'd rather just go with your option #3.
+> 
 
-Sounds good to me. We have plenty of these "doesn't have deps" targets
-(e.g. the check shell syntax one you noted), we can just fix/change them
-some other time.
+Alright. I guess another solution would have been to move topo_order 
+down, but that seems unsafe as well. According to your commit, 
+668f3aa776 (fast-export: Set revs.topo_order before calling 
+setup_revisions, 2009-06-25).
+
+I'll leave the revs.reverse assignment where it is for now.
+
+>>>> +
+>>>> +               git fast-export main -- --first-parent >first-parent-export &&
+>>>> +               git fast-export main -- --first-parent --reverse >first-parent-reverse-export &&
+>>>> +
+>>>> +               git init import &&
+>>>> +               git -C import fast-import <first-parent-export &&
+>>>> +
+>>>> +               git -C import rev-list --format="%ad%B" --topo-order --all --no-commit-header >actual &&
+>>>
+>>> Same simplifications as above here:
+>>>      git -C import log --format="%ad %s" --topo-order --all >actual &&
+>>>
+>>> However, is there a reason you're using "--all" instead of "main"?
+>>> Although main is the only branch, which makes either output the same
+>>> thing, it'd be easier for folks reading to catch the equivalence if it
+>>> was clear you were now listing information about the same branch.
+>>>
+>>
+>> I guess the intent is to be completely sure that only four commits were
+>> exported, and no other refs made it into the new repository. I don't feel
+>> too strongly about it, but I think it is a slightly stronger test than
+>> leaving out the '--all'.
+> 
+> Fair enough, '--all' works for me with that explanation.
+> 
+
+Ok. In summary I'll use the commit message you wrote and apply the rest 
+of your feedback for the test for the next version.
