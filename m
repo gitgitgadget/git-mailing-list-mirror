@@ -2,85 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 280C2C433EF
-	for <git@archiver.kernel.org>; Wed, 15 Dec 2021 00:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09EB8C433F5
+	for <git@archiver.kernel.org>; Wed, 15 Dec 2021 00:43:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233119AbhLOAAw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Dec 2021 19:00:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51614 "EHLO
+        id S235528AbhLOAn4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Dec 2021 19:43:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230099AbhLOAAw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Dec 2021 19:00:52 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 773BBC061574
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 16:00:51 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id t5so68457511edd.0
-        for <git@vger.kernel.org>; Tue, 14 Dec 2021 16:00:51 -0800 (PST)
+        with ESMTP id S235227AbhLOAny (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Dec 2021 19:43:54 -0500
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A85AFC061574
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 16:43:54 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id q17so14935860plr.11
+        for <git@vger.kernel.org>; Tue, 14 Dec 2021 16:43:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gGwRyKWqJQRxgfTeh3EBChMvWUXCUr165UJ0mG26kDs=;
-        b=i9RpzDUyvEeP+AnExJ2SW3VR4x4vrS7HdizDK+1dxkv3Nh3sM5/4Rm/5wYZSZNRAkm
-         qlhvw4QoroCs1+pYcdwUKmsyKd6EC3Lzv4KvJ11DPxTFrgSxDc4/wOWrkyHeWK1xMY60
-         vA6WpSa72/F6kR7FnH98BHb+SorGFMIn8KH7hRYRLGMcyCHDnYzh3ckioJGNC8QIXgou
-         agBC+7zErNOuMwnJwEDQoIkR0GwBAvOfa5aqoCMlhDUeuNW5/E7xq/tkM6oMZT3JWlST
-         fe4YEOyyWqWnsHnnAQDw5c7skbmJPKNNpOqOeVDr4uUp4vSKkV5J+h2xsq4spwHqY9JT
-         iReQ==
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SrhKyM+fMmFOqO2gHPyPZ9oBnK5yflZBrO0no3wTo+0=;
+        b=MrBBGnjq8dX4rPXbJjCPpdmz5qb0Ey/EFNzF3bTMZgn8znUs6C57F4IKzYvh8BkrRa
+         jE930+zZUtaCqVguk0NwvjqH0vfvhxa0gEF8BELrfjnRj1ulahWvLFrm0M+PV4MopmaL
+         OUxFkDW6b/ZoGFDH8V3fD82pqK9hAUcd8Yio6lPJLIpqn6c7qKNi87if02e9uZjKE3VB
+         7E9jqkUl4pqdm0Y2CY5OytmOU1UidzufLidVX5XKj3o44c+MJyNEAOEJ+bAHklUJu6ju
+         zioYcvQJk15mIaFZMXKHtl0Xxq0rO4ErGY3tkWRs4BfVV7Gjm5Whjy8hWoQjaeeI5hxW
+         3ctw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gGwRyKWqJQRxgfTeh3EBChMvWUXCUr165UJ0mG26kDs=;
-        b=zAhef9x5KPec5Ji/U1259UP1rzZ87vwIBziu8hlj+uGczkK13xAUtHCN14PBZQogP2
-         8UHVoXgshQQvG9WcQ3zZPhq3pF3elHRlPV6Oo9vlmDwRYd+Pg2rTPDySY0zDd6XgsBXl
-         52iN+g6UhMyE26YEwAz0mWG90u9YAaF9fPyZtoYSTusnU7n51INcEuWcUqRou+BYEf8/
-         6h3/SfPz1pdKBpFL/xGK5d4IWVjA091YKdxGPZJr3l/UJ+XaVCt3R+MpXW1fxRe+JK7E
-         NCEpmoiKJs6oiWtF/Rv+X1edT2H7muJBQZMnHOeyCZThTW3WHXBPA447xE8bi8O7xYkm
-         brog==
-X-Gm-Message-State: AOAM5308ZuxeeNxdhRFwyMdfDS3SomVeg9CZ5dtnJP1YLuy6Odu4TxIl
-        lIEzuqsNLHNEqPygfOH2Pxv4xrTX0/LzSmJLzNdWtaQhTAA=
-X-Google-Smtp-Source: ABdhPJzOhWpBcwL/NiAurhqr8Q1x2s5Rb1mVoayzfwOWI9zYaHQGqcdVDM0S6g57IbGjq53CZoCtSUvgH14FD0CaiEk=
-X-Received: by 2002:a05:6402:1014:: with SMTP id c20mr11812321edu.186.1639526449699;
- Tue, 14 Dec 2021 16:00:49 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=SrhKyM+fMmFOqO2gHPyPZ9oBnK5yflZBrO0no3wTo+0=;
+        b=ggdG15Snw4FheFQCQafRRACQaCuGk0QOmgSjENeVJEQIYrUISyaUsUq6HhdCM4Zvjn
+         i7iIidhoUxMYkmuP4/tLQSSpZrmlgIzD1drE3YTGKwsUsTx0cQGYTEBLG+nmnfDXMzJ4
+         ICnnW31atdIPUkabtgBPcAb8VCBcgc+Nbjk7XY/xMUpaYot8y/APfKhH/l+CaJDsOGhc
+         Q69zyCFBvRu4mpJDbxpL968uBUNGAwoX8m83NOZg1TfjqLPzousYCNWd4XHi2RNTLVOb
+         nfyBk/bbbix2KFU7i6WMxVI7Oddoc0WngW3O3jZbc4wyLfhGcYileUISZVBVldboxTo0
+         BvpQ==
+X-Gm-Message-State: AOAM532AkaHRYWij1o6/sc5wa5PUuzNZ/gXyko5W+FWpdLYRaG9aB6K1
+        gE/g+zhfBuxsPqEA9Lqki7cGpT5vJhkCRA==
+X-Google-Smtp-Source: ABdhPJxvIsR5lHHmE640aUlMXUof2EhFDGJHiw/ZYnjA+O+EtmmlXpGgSqZC2gDx0JyC8npvMda/VA==
+X-Received: by 2002:a17:902:ecc1:b0:142:fae:f686 with SMTP id a1-20020a170902ecc100b001420faef686mr8539877plh.24.1639529033748;
+        Tue, 14 Dec 2021 16:43:53 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:b37:fbed:ef52:5dca])
+        by smtp.gmail.com with ESMTPSA id rm1sm3534125pjb.3.2021.12.14.16.43.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Dec 2021 16:43:52 -0800 (PST)
+Date:   Tue, 14 Dec 2021 16:43:46 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, chooglen@google.com, avarab@gmail.com,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v6 0/3] branch: inherit tracking configs
+Message-ID: <Ybk6QsMdeBl6IweW@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, chooglen@google.com, avarab@gmail.com,
+        Johannes.Schindelin@gmx.de
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+ <cover.1639524556.git.steadmon@google.com>
 MIME-Version: 1.0
-References: <20211213063059.19424-1-sunshine@sunshineco.com>
-In-Reply-To: <20211213063059.19424-1-sunshine@sunshineco.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 14 Dec 2021 16:00:37 -0800
-Message-ID: <CABPp-BFNEPkEaY-MT1Ot7EzHkW=7FHGbJxU=pr226M43BvHwTw@mail.gmail.com>
-Subject: Re: [PATCH 00/15] generalize chainlint self-tests
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Fabian Stelzer <fs@gigacodes.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1639524556.git.steadmon@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 12, 2021 at 10:31 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> A while back, Peff successfully nerd-sniped[1] me into tackling a
-> long-brewing idea I had about (possibly) improving `chainlint`
-> performance by linting all tests in all scripts with a single command
-> invocation instead of running `sed` 25300+ times (once for each test).
-> A description of some of the important features of the new linter can be
-> found at [2].
->
-> Although the new chainlint implementation has been complete for several
-> months, I'm still working out how to organize its patch series. In the
-> meantime, _this_ patch series makes it possible for the new linter to
-> re-use the existing chainlint self-tests. It does so by cleansing the
-> self-test ".test" and ".expect" files of implementation details and
-> limitations specific to chainlint.sed.
+On 2021.12.14 15:44, Josh Steadmon wrote:
+> Changes since V5:
+> * Greatly simplified BRANCH_CONFIG_VERBOSE output to not require nearly
+>   so many conditionals.
 
-I read through the patches in this series, and didn't note any
-problems.  However, my knowledge of sed is just the basics.  Even in a
-few cases where regexes were all that were really involved, the
-regexes were lengthy enough that my eyes just glazed over.  So, my
-review is kind of superficial, but the preparatory patches certainly
-seem good to me, and the commit messages are well explained, and the
-non-sed changes are consistent with the described changes, and the
-easier sed stuff looked good.  It's clear you put a lot of care into
-carefully explaining and dividing up the patches in a nice and logical
-manner.
+I meant to expand on this but forgot before sending the series. I
+removed as many distinctions as possible, as most can still be inferred
+from context. For example, previously the output specifically called out
+branches vs. tags, but this is obvious in the name itself: "some-branch"
+vs. "refs/tags/some-tag" for example. Likewise, we don't need to specify
+whether refs are remote or local: "some-remote/some-branch" vs.
+"a-local-branch" should be understandable without us spelling it out.
+
+Of course, if people feel like I've over-simplified here, I'm happy to
+revert this change.
