@@ -2,99 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0288CC433EF
-	for <git@archiver.kernel.org>; Wed, 15 Dec 2021 03:52:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE6C6C433F5
+	for <git@archiver.kernel.org>; Wed, 15 Dec 2021 09:50:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239650AbhLODwo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Dec 2021 22:52:44 -0500
-Received: from mail-0301.mail-europe.com ([188.165.51.139]:44343 "EHLO
-        mail-0301.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235424AbhLODwo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Dec 2021 22:52:44 -0500
-Date:   Wed, 15 Dec 2021 03:52:38 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail2; t=1639540360;
-        bh=ZG4Nj5T9fbfWnbPFkdmgJxOnlCID3Hq2QcD44nUd5kE=;
-        h=Date:To:From:Reply-To:Subject:Message-ID:In-Reply-To:References:
-         From:To:Cc;
-        b=V3Y6fpankKYHCc8lwjn7xua2qroFDdUdknMGp7ZvGVxMYdN6vFzSfnCFGQ4TzkvLd
-         Hlr5ekuw+mzEdCPJZe23oVaMeADBm62F7EhoV1FLO6EqI2h6U46NzlsUkCpJq4wZxx
-         T7yloHePj4wqdUnsWIWNL1QittV0YVQVISj16Qwh5KSFm7GbP9839DxeTlspbFV440
-         EabL5qCrymhmML3UsxR0vorL6oUCZ4Y+oR1XSHoHNrKspqWQGnMRsxXky2ReyKF5E3
-         Hb359EL/9X2RBhmLScFlmFuV3ZS8HYthziUSAMeBMHaSzZ1oPSeYLQx3Irj03jwPdP
-         hw4ZK0QbY93JA==
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   =?utf-8?Q?Jo=C3=A3o_Victor_Bonfim?= 
-        <JoaoVictorBonfim@protonmail.com>
-Reply-To: =?utf-8?Q?Jo=C3=A3o_Victor_Bonfim?= 
-          <JoaoVictorBonfim@protonmail.com>
-Subject: Fw: Curiosity
-Message-ID: <wVwq9WVLpVt7MNLmIYOWCFKVSf8l532MD_vu4yTA8hl1fCARnW8nOUJjxYmKSzFw1SnPp5iYRD-aW4gAT2HnyQbC5aLBOvyT6npn88lxwNQ=@protonmail.com>
-In-Reply-To: <Wlh_w2gSCDQ2ieJnIY7TStWrzxbwP98SNRIFMTYpva7SRFipqk63HEYFVF7wFn1oSHOkQNsjWGOa5L49vyRlvSLbuZqpmvOaDOHmFkdt2zw=@protonmail.com>
-References: <Wlh_w2gSCDQ2ieJnIY7TStWrzxbwP98SNRIFMTYpva7SRFipqk63HEYFVF7wFn1oSHOkQNsjWGOa5L49vyRlvSLbuZqpmvOaDOHmFkdt2zw=@protonmail.com>
+        id S236449AbhLOJu7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Dec 2021 04:50:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42226 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236419AbhLOJu6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Dec 2021 04:50:58 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 302F1C061574
+        for <git@vger.kernel.org>; Wed, 15 Dec 2021 01:50:58 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id v11so37089671wrw.10
+        for <git@vger.kernel.org>; Wed, 15 Dec 2021 01:50:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=HRVvdOlfOJQ3pK4UaWgR+9kbyhUGgnJLCx0HT0XpSf4=;
+        b=F2RdNK4Paxru+YzUzxtxdaJSKUteTOU5XpLezk0VhHNe5cLSStUdACfyRtAgUGwZBr
+         aWa4m5/xhktjlLREM2DzNLP9R7vjR2hnaIWo4YfN1x9Ojn42ZkBltBBvolnqbj4Ss2WI
+         ALOBjInw4ChKIdzvvaPWTXYLC/ApqGTFc2I4q8gLlTCLPcUHOnas/q7dd3yxQUoyC7+o
+         JADuPh49aEIZ9teRCe5Vww2uxv4EcFsomW1v6nR6AVRqwatGwtUqSolR4hO1ZrMak9jY
+         qjZHz5g8rdkJBoI7V7tzpsVFQFvyFs000aNz0RNPxRrj25LbBPCnGYK+N1GvKbIOWcSi
+         DvzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=HRVvdOlfOJQ3pK4UaWgR+9kbyhUGgnJLCx0HT0XpSf4=;
+        b=7Y/rTlCJMeZmiBVOXKTCtcKhK5e7pifmRLTILI6vsWMrsUG/iPelVUQofiAlMSgbWx
+         rZMoUB9u2XTWHYOO55u+21yP8u3+paZHc1CQbbbFxzrIcQYn10Jhpv0SWkZJCYUPK01a
+         FdCiGx3jc+dnKdxVua9Ia1y4EUNYMh4z0CmaM+cHegRnxFEvww6OBPV4r2+16BzbbZbz
+         tGI/pY+uW3UHIyQ8JFv5n1PG6q69Oeh7P4yHG0gev2LhdPUaU2VJFuLS9go0Nr2tIc4t
+         ozmVb3J8/Hhzlu+rX9d1qd290rxy1Yiu16TxbpD7Q+Hz8+ZCrK41VH4y0LcfS/6VxqlT
+         a+Og==
+X-Gm-Message-State: AOAM530PUIWXfyOGqgxnXi31WeyrS7B5M0XFr9PrftLyaBWwB0BjPZll
+        aYnJcKVmWs7i/LnjCv06tt6fCyOEcnpS986ze9Eil9O3MZw=
+X-Google-Smtp-Source: ABdhPJx05Lcd7aFNa6jfQY1Cx51DHbJU1TIvjNR33cgXwry5E9BkNh+hFjmuL99qI/oZQvXlFaM1wNMCI8LetOm6LHU=
+X-Received: by 2002:a5d:4d51:: with SMTP id a17mr3538722wru.384.1639561856258;
+ Wed, 15 Dec 2021 01:50:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+From:   Dotan Cohen <dotancohen@gmail.com>
+Date:   Wed, 15 Dec 2021 11:50:44 +0200
+Message-ID: <CAKDXFkMvXJm5+5Qxz2N5NH-s+nptayG_7+yTSPxynZxkOcaVKw@mail.gmail.com>
+Subject: Git bug: Filter ignored when "--invert-grep" option is used.
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I sent this message to Junio Hamano kinda of forever ago, since then I have=
-n't been able to address it or do anything about it really (I am personally=
- making a report on Git for the conclusion of my technician course so I can=
- get my certification, yada yada yada, couldn't get to it). These days I ha=
-ve been reading Junio's responses on the git mailing list archive (https://=
-marc.info/?l=3Dgit or rather https://marc.info/?a=3D118086005800002&r=3D1&w=
-=3D4) from May to now to see if Junio said anything. Junio didn't, but I di=
-d read https://marc.info/?i=3Dxmqqpmudng5x.fsf%20()%20gitster%20!%20g and k=
-inda of felt that was targeted at me, or people like me at least...
+What did you do before the bug happened?
+$ git log -8 --author=Shachar --grep=Revert --invert-grep
 
-`:-)  - me sweating in exasperation.
+What did you expect to happen?
+I expected to see the last 8 commits from Shachar that did not have
+the string "Revert" in the commit message.
 
-Also since then, I may have improved on my confusing line of thought, so he=
-re is the past message and my current version so to speak:
+What happened instead?
+The list of commits included commits by authors other than Shachar.
 
-------- Second attempt --------
+What's different between what you expected and what actually happened?
+The "--author" filter seems to be ignored when the "--invert-grep"
+option is used.
+I also tried to change the order of the options, but the results
+remained the same.
 
-Since Git is almost used for everything at this point, is there any intent =
-on providing better support for non textual file types? Why do I say this? =
-Take this game mod which I follow as example -> https://github.com/Solarius=
-Scorch/XComFiles <- whenever I clone it Git takes a significant forever amo=
-unt of time to download 452 MB of files whose some part, from my perspectiv=
-e, isn't being delta compressed like the text files are (since, whenever re=
-ading a log of what changes were made, git creates and undoes modes for all=
- binary files, some of which only changed by a pixel from one colour to ano=
-ther).
+[System Info]
+git version:
+git version 2.34.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.11.0-41-generic #45~20.04.1-Ubuntu SMP Wed Nov 10
+10:20:10 UTC 2021 x86_64
+compiler info: gnuc: 9.3
+libc info: glibc: 2.31
+$SHELL (typically, interactive shell): /bin/bash
 
-From my perspective it would be interesting to enhance the effectiveness/pe=
-rformance of git for such files, since some projects are very heavy on mult=
-imedia that isn't hard coded and those will eventually come around to using=
- git. From a personal perspective: I pretend to create an open source game =
-and track it with git, however it concerns me whether or not it might take =
-forever for users to clone the repo once a few versions of a singular file =
-of, perhaps, some Gigabytes in size aren't stored and compressed efficientl=
-y and instead all the versions are stored in full, totalling some Terabytes=
- in storage for a few of such files.
 
-=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
-ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
-Wednesday, 27, May, 2021, 22:12, Jo=C3=A3o Victor Bonfim <JoaoVictorBonfim@=
-protonmail.com> wrote:
-
-> I am assuming you are the Git maintainer, therefore the message, otherwis=
-e, forgive me.
-> Considering the ubiquity of Git as a versioning system and my internal qu=
-eries about the future of software development, specially game development,=
- is there any intent on providing support for non textual file types? What =
-do I mean is that binary files, from my perspective as a user, are tracked =
-in full rather than partially, which I mean is that the files are discarded=
- and replaced if they are altered when, instead, they could have the differ=
-entiation between files tracked. Of course this would require several chang=
-es to Git so it can interpret images and so on, but I think that it could b=
-e good for software development that requires extensive multimedia use and,=
- therefore, may require that better tracking for such material is made avai=
-lable.
->
-> Do you understand where I want to get to?
->
-> Graciously yours, Jo=C3=A3o Victor Bonfim.
+[Enabled Hooks]
+pre-commit
+pre-push
