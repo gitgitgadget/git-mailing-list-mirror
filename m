@@ -2,94 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FA82C433F5
-	for <git@archiver.kernel.org>; Wed, 15 Dec 2021 16:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FD49C433F5
+	for <git@archiver.kernel.org>; Wed, 15 Dec 2021 17:05:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244793AbhLOQi1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Dec 2021 11:38:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52452 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231316AbhLOQi1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Dec 2021 11:38:27 -0500
-Received: (qmail 17855 invoked by uid 109); 15 Dec 2021 16:38:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Dec 2021 16:38:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6009 invoked by uid 111); 15 Dec 2021 16:38:26 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Dec 2021 11:38:26 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 15 Dec 2021 11:38:25 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        id S245129AbhLORFZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Dec 2021 12:05:25 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53689 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245123AbhLORFX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Dec 2021 12:05:23 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0BDB31700A8;
+        Wed, 15 Dec 2021 12:05:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=qPe/mSN+Nhty
+        2fulvTBrDaeK1Ah67JzKdwpm6dFWX1w=; b=aSgdz88EOAmTj02w2PHVVVLBf7Jy
+        O6z92GYH2QkTKmwFi0Wn5+PlvqShxBqSjBkV/gTUnKDVNSpe1C+1rjI/BbqxgDxR
+        /ssT+DsxW1EQf4O4ZZMVxBkT2ucgNRG7/IDVbRx9NifCesTyqI3MoU6pjaPgT5UL
+        icfh+LFooL50vHQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E21921700A7;
+        Wed, 15 Dec 2021 12:05:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 35D4F1700A6;
+        Wed, 15 Dec 2021 12:05:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Derrick Stolee <derrickstolee@github.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: taking a break from Git
-Message-ID: <YboaAe4LWySOoAe7@coredump.intra.peff.net>
+Subject: Re: [PATCH v3 2/2] test-lib.sh: remove the now-unused
+ "test_untraceable" facility
+References: <cover-v2-0.2-00000000000-20211201T200801Z-avarab@gmail.com>
+        <cover-v3-0.2-00000000000-20211210T100512Z-avarab@gmail.com>
+        <patch-v3-2.2-a7fc794e20d-20211210T100512Z-avarab@gmail.com>
+        <20211212163207.GA3400@szeder.dev>
+        <211212.865yrtbvl1.gmgdl@evledraar.gmail.com>
+        <20211212201441.GB3400@szeder.dev> <xmqqo85kcp99.fsf@gitster.g>
+        <YbjJuh4dVijL7jw4@coredump.intra.peff.net>
+Date:   Wed, 15 Dec 2021 09:05:15 -0800
+In-Reply-To: <YbjJuh4dVijL7jw4@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 14 Dec 2021 11:43:38 -0500")
+Message-ID: <xmqqh7b994tw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+X-Pobox-Relay-ID: 2D5AE640-5DC9-11EC-9481-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey all,
+Jeff King <peff@peff.net> writes:
 
-I'm going to be offline and completely absent from the mailing list for
-five months starting at the end of December. After that, things are up
-in the air, but I may not be as involved in the project as I have been.
+> I think the method for handling this in the test scripts _is_ worse to
+> write, understand, and maintain. The problem to me is less that it's
+> ugly to workaround (which as you note in this case is not great, but no=
+t
+> _too_ bad), but that it's a subtle friction point that may jump up and
+> bite any test-writer who does something like:
+>
+>   (foo && bar) 2>stderr
 
-Sorry, there's no juicy gossip or drama to share. I still like everyone,
-and think it's a cool project. ;) After 15 years, it just feels like
-it's time for a break and to perhaps apply my brain to something else
-for a while.
+Yeah, that is a simple example that clearly shows how removal of
+BASH_XTRACEFD makes developer's life horrible.
 
-There are a couple logistical things related to this:
+> So my view had always been that BASH_XTRACEFD is the good solution, and
+> if people want to make "-x" work reliably under other shells, then I
+> won't stop them. But somewhere along the way G=C3=A1bor did a bunch of =
+fixes
+> to get things mostly running, and the use of dash with "-x" got added t=
+o
+> CI, so now it's a de facto requirement (if you care about CI
+> complaining, which we increasingly do).
+> ...
+> My vision was that we'd leave BASH_XTRACEFD so people using it could
+> remain oblivious if they chose, but if the ship has sailed via CI, then
+> that might have less value.
 
-  - I'm planning to step down from Git's Project Leadership Committee
-    (the entity that represents Git within Software Freedom Conservancy,
-    and which occasionally makes decisions on things like our project
-    funds or assets like the trademark).
+Yeah, that matches my understanding.  Unfortunately we cannot easily
+remove "dash -x" from CI while keeping "dash" without "-x" X-<.
 
-    That leaves Junio, Ævar, and Christian on the PLC, and the charter
-    calls for having at least 3 members. So I don't technically need to
-    be replaced, but maybe it's an opportunity for somebody else to get
-    involved.
-
-    We don't have a formal process here. The last discussion on adding
-    new members was this thread from a few years ago:
-
-      https://lore.kernel.org/git/20180816224138.GA15490@sigill.intra.peff.net/
-
-  - I maintain the git-scm.com site (well, insofar as anybody does).
-    There are a few regulars who review and merge pull requests at
-    https://github.com/git/git-scm.com, but more help is always welcome
-    there.
-
-    The production parts of the site run on Heroku and Cloudflare. They
-    don't need touched often, though we do trigger a manual update and
-    flush the caches right after Junio releases, so that the site is
-    updated immediately.  The Git PLC has the necessary credentials for
-    those sites, though in practice I think I'm the only one there that
-    touched it. Taylor (cc'd) has been helping out with that and also
-    has access.
-
-    If you want to get involved, I'd suggest subscribing to the repo
-    linked above, and just helping out with issue/PR triage and
-    response.  And of course bug fixes, features, and content updates
-    are welcome, too. The README.md and ARCHITECTURE.md documents give
-    an overview.
-
-  - I really am going to stop reading the list. Even if you cc me. So
-    please don't get mad if I don't review your patches, or respond to
-    bug reports. :)
-
-    Likewise, I'll be around for a bit more, and am trying to wrap up
-    some personal topics and reviews. But undoubtedly I'll end up
-    dropping many on the floor. Though that probably would have happened
-    over the holidays anyway!
-
--Peff
+Still.  I wonder if keeping BASH_XTRACEFD helps developers, when
+they need to diagnose a new breakage?  If their new test fails only
+in the "dash -x" run but not "bash -x" at the CI, for example?
