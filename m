@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBD26C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 13:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFDD0C433F5
+	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 13:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237723AbhLPNp0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 08:45:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33002 "EHLO
+        id S237724AbhLPNpf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 08:45:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237703AbhLPNpZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 08:45:25 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E879C061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 05:45:25 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id e5so10879216wrc.5
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 05:45:25 -0800 (PST)
+        with ESMTP id S237703AbhLPNp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 08:45:26 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54E6CC061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 05:45:26 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id o19-20020a1c7513000000b0033a93202467so18157399wmc.2
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 05:45:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yjpRisVgNkMQzQcoNk0yxJ9ncuPF84MmsHl8nNmtVjQ=;
-        b=omKtvGba270puv1QeKnZi6qBYRKgjUakeCB3biOQ52+TTXTMfThR+QkbYMcWOJG/DD
-         nfZM7EZeKg50AABkY3A289zsY2Y8KQSR3Rx9R6wfhhd8gkH6fuA9dAvMWbwifLa8JjtB
-         EwJKu0EnAGzb0isxcG+7eyNf0tDWmD3BX2Aj7IYvqwwnJS10keFBlTSbj2F5C3MDibDw
-         KylDawEUOJ6YjTKuZuzoUv8uangRCoiYhcC8SPwFSQEXjUMhvJ5y7Zy+2UPD1JU3131c
-         1PiYUCkCTKtjbyUXYnIux0bF95aZmfFVjorT5u99yKMHrSa9P03JeAl+8ruQXUREGcXe
-         HmgA==
+        bh=nV6vhByzp5wXBI5P+BbhOIGU99FWYjceOyt0qehcwn4=;
+        b=fB7MrRdkMC1NDoiLQcU+gyX8CuitotfLyptBlH6GMBoo0SaPNdYtnz2Zxa1UZV1MdW
+         ci0P6xua7ab+RQlB/FHPDXid+aPNfYoxJ0M+T5B4PRD4Mjw8vog1kdlbm1Ca/v4hYlpN
+         uqNFjunqX51JwMMmBY/5XoTyXbO+nOle5NXLVU7ULJgK9VgqXpAZ3+u7r3o+OwUijHRq
+         qLxpZhN9KuDqnOJbc6qWHaw9TzUpZtE33AjWnVqGb588WfeMB3jv9SW6IOUVkRnJ2gnN
+         RXbJQLfvOVY4wADXYvmbAFjm/1EgIduPKkL/x8DRbIHC7iNOlhY/NO4Es/Wj6yhaWGUt
+         uU4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yjpRisVgNkMQzQcoNk0yxJ9ncuPF84MmsHl8nNmtVjQ=;
-        b=ID4Ed7AVyK/2tHiF5mhiReQ4Bw+zMJXSa+lrBN3y9oUBuE92+CAtJjoQ9m6J2KY67L
-         5kkIzwyp16duWS0c69teWYan472V+4glnO0n+5F44qqphhIKH8A3KXC2VOqGFyiKj1dQ
-         SZ0ByjqL8w3kK0ZKm8By+BQop+h+VrSzz7lvlr2eFeKVaJbbGJY9bmiW8IrXPLh48H/f
-         hTt2gzv/IOoFeiT/GETBNUp1lqMKXpci3oNjDG+rz18fB+EOLxOuW5PNZsbQMXOFTaj2
-         +qqR2RLyqBnFGt+X+iyItpV2hdNQK0YgtuuQA7uNDg0PRCk8jolz26vSYVS4QjFj9HeS
-         WKvg==
-X-Gm-Message-State: AOAM533FLercVQv2cG8rH0oXxF+MLtL/FIm26NV2YfxITAUTvXo4kBtM
-        0MeD6xZcBsdZ19+yTeNLhDGtvPx4+hQiUA==
-X-Google-Smtp-Source: ABdhPJyGSms8klVkVT8YCF2cE8a1omG0PCbf0FxSaGletZ6BgHqCKvUBgh4WPKvH5STvbmYzmvHRUA==
-X-Received: by 2002:adf:8165:: with SMTP id 92mr9229141wrm.199.1639662323820;
-        Thu, 16 Dec 2021 05:45:23 -0800 (PST)
+        bh=nV6vhByzp5wXBI5P+BbhOIGU99FWYjceOyt0qehcwn4=;
+        b=cuKYqFeLA0/3iP6O7CajtjgEPa5ia8NzN7MVXDy0Qixb+PGjrKXNwzsMc8vqVkN9xV
+         BO7bYgq9Z1JaeR4L5x8l9tpWyH0afzbaJZJYnAjaLRRBGuKePIe4YBUHlP7+MvjXNWN2
+         QY4e4AIWBGVz2VkAGUBpNSF40GhzEUN/0HZ8C+QJHDzYnsss9L+cW1ZGt7laot04hFRz
+         uhjXW3TfE2KbEt6rUV7hfx14MdkmXwUas9sdgenHsiYndd054DeL1Uogy3krE5TE5PqJ
+         w0a3L7ipAjfV4jTniNYVJYAL//tLHLJublz19rpfm3lOS5RPKfcNG5LUzJ/cD64i6YBZ
+         F8KQ==
+X-Gm-Message-State: AOAM532M+Nux7yZbPzFHwOC1B9qYkAi050CZOmxg31tt9P3o/KWosUyh
+        NDmLDedt++pNPTQytgMX+cTheNsH9rocQQ==
+X-Google-Smtp-Source: ABdhPJyaig/fVBnfRhw1n2ilPZPamY0+TeQtF8BxpKjYTpqOM+ic+ECTP62wpzIm7hnsx8q8lJK/2A==
+X-Received: by 2002:a1c:4406:: with SMTP id r6mr5112256wma.42.1639662324656;
+        Thu, 16 Dec 2021 05:45:24 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y12sm4866821wrn.73.2021.12.16.05.45.22
+        by smtp.gmail.com with ESMTPSA id y12sm4866821wrn.73.2021.12.16.05.45.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 05:45:23 -0800 (PST)
+        Thu, 16 Dec 2021 05:45:24 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/9] reflog: change one->many worktree->refnames to use a string_list
-Date:   Thu, 16 Dec 2021 14:45:12 +0100
-Message-Id: <patch-v2-3.9-c0e190e46cf-20211216T134028Z-avarab@gmail.com>
+Subject: [PATCH v2 4/9] reflog expire: don't do negative comparison on enum values
+Date:   Thu, 16 Dec 2021 14:45:13 +0100
+Message-Id: <patch-v2-4.9-e42fac1b518-20211216T134028Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1020.gc80c40b6642
 In-Reply-To: <cover-v2-0.9-00000000000-20211216T134028Z-avarab@gmail.com>
 References: <cover-00.12-00000000000-20211130T213319Z-avarab@gmail.com> <cover-v2-0.9-00000000000-20211216T134028Z-avarab@gmail.com>
@@ -68,119 +68,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the FLEX_ARRAY pattern added in bda3a31cc79 (reflog-expire:
-Avoid creating new files in a directory inside readdir(3) loop,
-2008-01-25) the string-list API instead.
+Change code added in 03cb91b18cc (reflog --expire-unreachable: special
+case entries in "HEAD" reflog, 2010-04-09) to not do positive instead
+of negative comparisons on enum values, i.e. not to assume that "x !=
+UE_ALWAYS" means "(x == UE_HEAD || x || UE_NORMAL)".
 
-This does not change any behavior, allows us to delete much of this
-code as it's replaced by things we get from the string-list API for
-free, as a result we need just one struct to keep track of this data,
-instead of two.
+That assumption is true now, but we'd introduce subtle bugs here if
+that were to change, now the compiler will notice and error out on
+such errors.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/reflog.c | 48 +++++++++++++++++++-----------------------------
- 1 file changed, 19 insertions(+), 29 deletions(-)
+ builtin/reflog.c | 57 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 33 insertions(+), 24 deletions(-)
 
 diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 6989492bf5c..0fb46ade19f 100644
+index 0fb46ade19f..f8a24f1aa26 100644
 --- a/builtin/reflog.c
 +++ b/builtin/reflog.c
-@@ -48,16 +48,9 @@ struct expire_reflog_policy_cb {
- 	struct commit_list *tips;
- };
+@@ -303,10 +303,15 @@ static int should_expire_reflog_ent(struct object_id *ooid, struct object_id *no
+ 		return 1;
  
--struct collected_reflog {
--	struct object_id oid;
--	char reflog[FLEX_ARRAY];
--};
--
--struct collect_reflog_cb {
--	struct collected_reflog **e;
--	int alloc;
--	int nr;
--	struct worktree *wt;
-+struct worktree_reflogs {
-+	struct worktree *worktree;
-+	struct string_list reflogs;
- };
+ 	if (timestamp < cb->cmd.expire_unreachable) {
+-		if (cb->unreachable_expire_kind == UE_ALWAYS)
+-			return 1;
+-		if (unreachable(cb, old_commit, ooid) || unreachable(cb, new_commit, noid))
++		switch (cb->unreachable_expire_kind) {
++		case UE_ALWAYS:
+ 			return 1;
++		case UE_NORMAL:
++		case UE_HEAD:
++			if (unreachable(cb, old_commit, ooid) || unreachable(cb, new_commit, noid))
++				return 1;
++			break;
++		}
+ 	}
  
- /* Remember to update object flag allocation in object.h */
-@@ -403,24 +396,20 @@ static void reflog_expiry_cleanup(void *cb_data)
- 
- static int collect_reflog(const char *ref, const struct object_id *oid, int unused, void *cb_data)
+ 	if (cb->cmd.recno && --(cb->cmd.recno) == 0)
+@@ -348,6 +353,7 @@ static void reflog_expiry_prepare(const char *refname,
+ 				  void *cb_data)
  {
--	struct collected_reflog *e;
--	struct collect_reflog_cb *cb = cb_data;
-+	struct worktree_reflogs *cb = cb_data;
-+	struct worktree *worktree = cb->worktree;
- 	struct strbuf newref = STRBUF_INIT;
+ 	struct expire_reflog_policy_cb *cb = cb_data;
++	struct commit_list *elem;
  
- 	/*
- 	 * Avoid collecting the same shared ref multiple times because
- 	 * they are available via all worktrees.
- 	 */
--	if (!cb->wt->is_current && ref_type(ref) == REF_TYPE_NORMAL)
-+	if (!worktree->is_current && ref_type(ref) == REF_TYPE_NORMAL)
- 		return 0;
+ 	if (!cb->cmd.expire_unreachable || is_head(refname)) {
+ 		cb->unreachable_expire_kind = UE_HEAD;
+@@ -363,34 +369,37 @@ static void reflog_expiry_prepare(const char *refname,
+ 	if (cb->cmd.expire_unreachable <= cb->cmd.expire_total)
+ 		cb->unreachable_expire_kind = UE_ALWAYS;
  
--	strbuf_worktree_ref(cb->wt, &newref, ref);
--	FLEX_ALLOC_STR(e, reflog, newref.buf);
--	strbuf_release(&newref);
-+	strbuf_worktree_ref(worktree, &newref, ref);
-+	string_list_append(&cb->reflogs, strbuf_detach(&newref, NULL));
- 
--	oidcpy(&e->oid, oid);
--	ALLOC_GROW(cb->e, cb->nr + 1, cb->alloc);
--	cb->e[cb->nr++] = e;
- 	return 0;
+-	if (cb->unreachable_expire_kind != UE_ALWAYS) {
+-		if (cb->unreachable_expire_kind == UE_HEAD) {
+-			struct commit_list *elem;
+-
+-			for_each_ref(push_tip_to_list, &cb->tips);
+-			for (elem = cb->tips; elem; elem = elem->next)
+-				commit_list_insert(elem->item, &cb->mark_list);
+-		} else {
+-			commit_list_insert(cb->tip_commit, &cb->mark_list);
+-		}
+-		cb->mark_limit = cb->cmd.expire_total;
+-		mark_reachable(cb);
++	switch (cb->unreachable_expire_kind) {
++	case UE_ALWAYS:
++		return;
++	case UE_HEAD:
++		for_each_ref(push_tip_to_list, &cb->tips);
++		for (elem = cb->tips; elem; elem = elem->next)
++			commit_list_insert(elem->item, &cb->mark_list);
++		break;
++	case UE_NORMAL:
++		commit_list_insert(cb->tip_commit, &cb->mark_list);
+ 	}
++	cb->mark_limit = cb->cmd.expire_total;
++	mark_reachable(cb);
  }
  
-@@ -609,33 +598,34 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ static void reflog_expiry_cleanup(void *cb_data)
+ {
+ 	struct expire_reflog_policy_cb *cb = cb_data;
++	struct commit_list *elem;
+ 
+-	if (cb->unreachable_expire_kind != UE_ALWAYS) {
+-		if (cb->unreachable_expire_kind == UE_HEAD) {
+-			struct commit_list *elem;
+-			for (elem = cb->tips; elem; elem = elem->next)
+-				clear_commit_marks(elem->item, REACHABLE);
+-			free_commit_list(cb->tips);
+-		} else {
+-			clear_commit_marks(cb->tip_commit, REACHABLE);
+-		}
++	switch (cb->unreachable_expire_kind) {
++	case UE_ALWAYS:
++		return;
++	case UE_HEAD:
++		for (elem = cb->tips; elem; elem = elem->next)
++			clear_commit_marks(elem->item, REACHABLE);
++		free_commit_list(cb->tips);
++		break;
++	case UE_NORMAL:
++		clear_commit_marks(cb->tip_commit, REACHABLE);
++		break;
  	}
+ }
  
- 	if (do_all) {
--		struct collect_reflog_cb collected;
-+		struct worktree_reflogs collected = {
-+			.reflogs = STRING_LIST_INIT_NODUP,
-+		};
-+		struct string_list_item *item;
- 		struct worktree **worktrees, **p;
--		int i;
- 
--		memset(&collected, 0, sizeof(collected));
- 		worktrees = get_worktrees();
- 		for (p = worktrees; *p; p++) {
- 			if (!all_worktrees && !(*p)->is_current)
- 				continue;
--			collected.wt = *p;
-+			collected.worktree = *p;
- 			refs_for_each_reflog(get_worktree_ref_store(*p),
- 					     collect_reflog, &collected);
- 		}
- 		free_worktrees(worktrees);
--		for (i = 0; i < collected.nr; i++) {
--			struct collected_reflog *e = collected.e[i];
-+
-+		for_each_string_list_item(item, &collected.reflogs) {
- 			struct expire_reflog_policy_cb cb = { .cmd = cmd };
- 
--			set_reflog_expiry_param(&cb.cmd, explicit_expiry, e->reflog);
--			status |= reflog_expire(e->reflog, flags,
-+			set_reflog_expiry_param(&cb.cmd, explicit_expiry, item->string);
-+			status |= reflog_expire(item->string, flags,
- 						reflog_expiry_prepare,
- 						should_expire_reflog_ent,
- 						reflog_expiry_cleanup,
- 						&cb);
--			free(e);
- 		}
--		free(collected.e);
-+		collected.reflogs.strdup_strings = 1;
-+		string_list_clear(&collected.reflogs, 0);
- 	}
- 
- 	for (; i < argc; i++) {
 -- 
 2.34.1.1020.gc80c40b6642
 
