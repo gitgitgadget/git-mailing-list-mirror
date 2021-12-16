@@ -2,151 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0956C433FE
-	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 14:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 659A2C433F5
+	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 14:24:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237906AbhLPOXP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 09:23:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42032 "EHLO
+        id S237920AbhLPOYk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 09:24:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234831AbhLPOXO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 09:23:14 -0500
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55834C061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 06:23:13 -0800 (PST)
-Received: by mail-oi1-x22e.google.com with SMTP id m6so36704266oim.2
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 06:23:13 -0800 (PST)
+        with ESMTP id S229533AbhLPOYk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 09:24:40 -0500
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39478C061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 06:24:40 -0800 (PST)
+Received: by mail-ot1-x330.google.com with SMTP id a23-20020a9d4717000000b0056c15d6d0caso29108771otf.12
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 06:24:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=QFeaygRXSwXJxTvq9KAoqZYkqS6v5GeJMnHlAdU1i3k=;
-        b=mO6INxxoagCxuhDgVqBClSCbOG6Kw44RWFg7+nfsszUAZ9P0T36Ej1J9YadiOxHVSc
-         kJFFgjVZ/s91pM6/3V/gwE1x6LGmOmzH/dp0K54CVN/WV4wfS/o88/48bNUyI+QZZ8YL
-         iOPKtK7jwfGm0I05eHwuumpuosEELFCgmRBor+C7SSYtsMB0+yzuV7zIfTQ+DUQznPm8
-         c/som0n1RcAc4vo4ClhzMl+PT2NDnWVdRe/BbFueWo5Q15PslXMVuTz0xjvGEpcJpD9r
-         a5wfv6uAvjU6Ps0We2ZtHXCvUid+viqRCuzLT9LgjmWTe1UW24BQ/BvSi5za5pSV3TrM
-         QLtw==
+        bh=LF03jEmiN2UJW2RbkbN67QugpGDUxCY+F2THBBlEN6A=;
+        b=DUfH4bcyuF93o/bvt0pP/i5LocKwLl0OMQvbjN3CyeSZBK6NOMN3UzF25qaAcLkd4/
+         N/KxiNagFa1rotuMOwh8iRuQm5BXkw1s0XU6dTFXrYoNGbJPt6/8w3qzTrqFwIZjef+P
+         6dZQXq4TdYlhsECAmy0QI25DjNN9VBoJ9YwUo9oUcPEl1dahy3o2+h1Kw4NEJXc/x+l2
+         O7WWfnMgsnzqMIfYutKxBaEhJv92vGcL/TpI+/LMlDRFrZWxsVtJ4r2+Q+pSgytebja3
+         XaF39jVBSsn2hA60YNcf7d8jmM1i9RMfWH93KIfaS6zpHEgFjYaOIJO05LNaIkN5aX0s
+         yffA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=QFeaygRXSwXJxTvq9KAoqZYkqS6v5GeJMnHlAdU1i3k=;
-        b=ZdxLtyGDw5CBn4I3P41JqKmUTR4t71tXCgmF9QY+wnFfugxtwCwCXTAeXupmRRMRrw
-         1YBmpNskllBJfocTLPIdS7p3AH6ba1ZNiDqK24bch8oVKhaLMirDXKazDUD4R0BRgAES
-         tN0MHncV/44amD9skpUaPgp3fGqpvMYjZB3vmZgm8pIaLvtKNwRr0Pex3ER6eU7ajGrZ
-         ZkJcHkIAOI4ACsXDVU8GwyUT/LOHgpd8oNTOoxVOTwF+cUbxC0QvWPglq2d0DdPaNCv8
-         mfmLdZCBYGBhrqup8KOCz6D6TKfRTz6V8pOzVr4uX4OkTIC31sMzjmMUd4D2X09rwqnj
-         45HQ==
-X-Gm-Message-State: AOAM531eCXggxlgNehU/Ez6ois+pkbypmhTw54wWdIg+CP5GzNsqP8W3
-        BS5fHHsjMPv9hIk2ndJe45o=
-X-Google-Smtp-Source: ABdhPJyGR1EjCZHM564zSnfidnZe5EGKJlBqG3t5ZYE8SmXbh5TMB4aoLvprPx19sn5lqbgWOhb3zA==
-X-Received: by 2002:a05:6808:2181:: with SMTP id be1mr4085529oib.147.1639664592492;
-        Thu, 16 Dec 2021 06:23:12 -0800 (PST)
+        bh=LF03jEmiN2UJW2RbkbN67QugpGDUxCY+F2THBBlEN6A=;
+        b=qfFphIwUajIn/lpIGmN8ByfSKkX8kQbHhvrCFA9D5ho8dJjqJ4qG9auTABnMd/eKRl
+         Haj3BnkbZi9/0oK9clBDUpI9WhK1XQbEgWUO1VTb6xMOTKq7R7VWIW3FVsFH+C74Gl+w
+         l4bT0oaWBmLLTbAK4E3mAWmafWZz/Au7spRrQ0w0JUaPoubip3p7sKcLxNh2cwyKYJW5
+         vu2vFlXHGUXPnlg4r8pgO6Ny76YUIJokgV/CRSnQkyLI8sYR6nyEVPlgYJ/CnVX8eGta
+         7bMA53DvQlUGD0nrYbZKJroeWld5wpUbSXyE+dU8Q13mlArijYEFLNliVeHeC69u/n7i
+         922A==
+X-Gm-Message-State: AOAM533VtlBtOBXjlJpmKIMz6FCP3Vq7NBvNfV0r2mJ1SI7yHyOVVwcs
+        HqA8JRYbHZsmDaYQQiL2HrgKA25ed4w=
+X-Google-Smtp-Source: ABdhPJwGazE8ZwUL43vA9F/naWmw6ET9STiGMtTgEkHlDHc/O4n2ffOh6t5Im0O/lzmC+3Ng58WBAw==
+X-Received: by 2002:a05:6830:2681:: with SMTP id l1mr12667731otu.378.1639664678143;
+        Thu, 16 Dec 2021 06:24:38 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:f174:15fc:4a5c:9d45? ([2600:1700:e72:80a0:f174:15fc:4a5c:9d45])
-        by smtp.gmail.com with ESMTPSA id a16sm1048338otj.79.2021.12.16.06.23.11
+        by smtp.gmail.com with ESMTPSA id ay40sm956377oib.1.2021.12.16.06.24.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Dec 2021 06:23:11 -0800 (PST)
-Message-ID: <55dee0a3-5a55-1af9-74b3-296426458f5c@gmail.com>
-Date:   Thu, 16 Dec 2021 09:23:10 -0500
+        Thu, 16 Dec 2021 06:24:37 -0800 (PST)
+Message-ID: <e0f90c01-f987-1c9c-cd93-393d0dc6e0dc@gmail.com>
+Date:   Thu, 16 Dec 2021 09:24:35 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.4.0
-Subject: Re: [PATCH v3 1/3] sparse-checkout: fix segfault on malformed
+Subject: Re: [PATCH v3 0/3] sparse-checkout: fix segfault on malformed
  patterns
 Content-Language: en-US
 To:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
-        vdye@github.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        vdye@github.com, Derrick Stolee <derrickstolee@github.com>
 References: <pull.1069.v2.git.1639149490.gitgitgadget@gmail.com>
  <pull.1069.v3.git.1639575968.gitgitgadget@gmail.com>
- <1744a26845fbe4d7dbc80f387be1d842b5f8fe94.1639575968.git.gitgitgadget@gmail.com>
- <xmqqv8zp4mfm.fsf@gitster.g>
+ <xmqq5yrp61lw.fsf@gitster.g>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqv8zp4mfm.fsf@gitster.g>
+In-Reply-To: <xmqq5yrp61lw.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/15/2021 3:56 PM, Junio C Hamano wrote:
+On 12/15/2021 3:43 PM, Junio C Hamano wrote:
 > "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
->> From: Derrick Stolee <dstolee@microsoft.com>
+>> This series fixes some issues with parsing sparse-checkout patterns when
+>> core.sparseCheckoutCone is enabled but the sparse-checkout file itself
+>> contains patterns that don't match the cone mode format.
 >>
->> Then core.sparseCheckoutCone is enabled, the sparse-checkout patterns are
->> used to populate two hashsets that accelerate pattern matching. If the user
->> modifies the sparse-checkout file outside of the 'sparse-checkout' builtin,
->> then strange patterns can happen, triggering some error checks.
->>
->> One of these error checks is possible to hit when some special characters
->> exist in a line. A warning message is correctly written to stderr, but then
->> there is additional logic that attempts to remove the line from the hashset
->> and free the data.
+>> The first patch fixes a segfault first reported in [1]. The other two
+>> patches are from an earlier submission [2] that never got picked up and I
+>> lost track of. There was another patch involving 'git sparse-checkout init
+>> --cone' that isn't necessary, especially with Elijah doing some work in that
+>> space right now.
 > 
-> Makes sense.
-> 
->> This leads to a segfault in the 'git sparse-checkout
->> list' command because it iterates over the contents of the hashset, which is
->> now invalid.
-> 
-> Understandable.
-> 
->> The fix here is to stop trying to remove from the hashset. Better to leave
->> bad data in the sparse-checkout matching logic (with a warning) than to
->> segfault.
-> 
-> True, as long as it won't make the situation worse by depending on
-> that bad data to further damage working tree data or in-repo data
-> when damaged working tree data gets committed.  And "list segfaults
-> with freed/NULLed data---so leave the bad ones in to print these bad
-> ones" feels OK-ish.  
-> 
-> As long as the user is not transporting the listed output to another
-> repository, which may fall into "making the situation worse"
-> category by spreading an existing breakage, that is.
-> 
-> In other words, this may paper over the segfault, and it may be safe
-> only for "sparse-checkout list", but is it safe for other operations
-> that actually use this bad data to further affect other things in
-> the repository?  If not, I wonder if we want to hard die to lock the
-> repository down before the issue is fixed to avoid spreading the
-> damage?
+> Thanks.  The segfault fix matters even more with Elijah's "we can
+> flip between modes" feature, right?
 
-You're right. I should do what we do elsewhere in this method and
-disable cone mode pattern matching, reverting to the old matching
-algorithms. This will clear the hashsets and avoid using them anywhere
-else.
-
->> +test_expect_success 'malformed cone-mode patterns' '
->> +	git -C repo sparse-checkout init --cone &&
->> +	mkdir -p repo/foo/bar &&
->> +	touch repo/foo/bar/x repo/foo/y &&
->> +	cat >repo/.git/info/sparse-checkout <<-\EOF &&
->> +	/*
->> +	!/*/
->> +	/foo/
->> +	!/foo/*/
->> +	/foo/\*/
->> +	EOF
->> +	cat repo/.git/info/sparse-checkout &&
-> 
-> Stray debugging output?
-
-Thanks.
-
->> +	git -C repo sparse-checkout list
-> 
-> And we are happy as long as the command does not segfault, and we do
-> not care what the output is.
-
-And I'll be able to test that the 'list' subcommand changes behavior
-when cone mode is disabled, in addition to checking stderr for the
-correct warnings.
+Generally, I think segfaults are a higher priority, but this one is hard
+to find in the wild, I think. I'll send a v4 today and hopefully it makes
+it an easy decision for you.
 
 Thanks,
 -Stolee
