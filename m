@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50C37C4332F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBD26C433EF
 	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 13:45:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237720AbhLPNpZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 08:45:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32996 "EHLO
+        id S237723AbhLPNp0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 08:45:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237703AbhLPNpY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 08:45:24 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 092FBC061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 05:45:24 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id y83-20020a1c7d56000000b003456dfe7c5cso844408wmc.1
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 05:45:23 -0800 (PST)
+        with ESMTP id S237703AbhLPNpZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 08:45:25 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E879C061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 05:45:25 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id e5so10879216wrc.5
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 05:45:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iYdGryJYvlho+9+fqSCE0zqDpcU3+XhdOMIhuQzISYs=;
-        b=ZRULjKmj08rI3swqNi61ysb7b+FyLgglOkdQCmFubDDGS8Si44LV9BkJ4mxW40hPjC
-         5Jvc5IUto2W5SoJnFTpZIz0QO9Mr1YqiZlRTPcEiNNXkuOVr72xI7bZJzkLDl1oLJb0n
-         42BkTNp8rFOhkffAvaSKKwyEn7dusuzjdo6gUa3/HG4d0vKoVE1PrJU/+mKzbaSR8les
-         6ix4L68JCKxi3bz1AqDL6CeajTTGEo7eNTPscm16LFavOeP2ny6sXlsiOHREBByvDRAa
-         da+bfPBKM6SKkNq1H10qFjzsEONEc398KlargXbVfIS6aXl+dzm/Dt8TWTCduNNMEfjY
-         IqwQ==
+        bh=yjpRisVgNkMQzQcoNk0yxJ9ncuPF84MmsHl8nNmtVjQ=;
+        b=omKtvGba270puv1QeKnZi6qBYRKgjUakeCB3biOQ52+TTXTMfThR+QkbYMcWOJG/DD
+         nfZM7EZeKg50AABkY3A289zsY2Y8KQSR3Rx9R6wfhhd8gkH6fuA9dAvMWbwifLa8JjtB
+         EwJKu0EnAGzb0isxcG+7eyNf0tDWmD3BX2Aj7IYvqwwnJS10keFBlTSbj2F5C3MDibDw
+         KylDawEUOJ6YjTKuZuzoUv8uangRCoiYhcC8SPwFSQEXjUMhvJ5y7Zy+2UPD1JU3131c
+         1PiYUCkCTKtjbyUXYnIux0bF95aZmfFVjorT5u99yKMHrSa9P03JeAl+8ruQXUREGcXe
+         HmgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iYdGryJYvlho+9+fqSCE0zqDpcU3+XhdOMIhuQzISYs=;
-        b=NCSTG5zEANv3148S2EJYBoTMTCJfSoboOvWBPpin6Vj1gY1C4pIZYEsS/P0UhxGuuP
-         H1dZ+O3yPVEnqxSVY60uywlusyJsZLtsSGy7a4gxvVuzuPft4BWvKzKL50gzRI8CQVLw
-         O13jwTyrJq93WO0lSb8+lBXmDKXEuguq8qBKWB6VeC/o5e/CF7dAgXIW6A5jcCBG/COp
-         A6pfbhKr2jBGbYQtjRazE8GMhS3xV6Ysq8ISJZENoY8L9WIfLyUniIo3efkWwzQKBnFK
-         UfZZi7JEXijWl8+PaXUrshEYEGZ15llKPBwoh4fIGe5wO458fBeplZ+bzO67jw6hQ+8S
-         USow==
-X-Gm-Message-State: AOAM530Wov/kF7OhHtKlA8pZ7fifoZpkK5qPYjqV/aG1lbUiK9ePRi98
-        lVVwwgeEn6fnGXZUZIb2JUwKLxWSXzeXUA==
-X-Google-Smtp-Source: ABdhPJza4WpHHc2ICXnI0sHvst4VTwWdZRcvlVJq75iSSV7uFNPRT2JrevU5ov6JETbOMcoVxOdkZw==
-X-Received: by 2002:a1c:4d03:: with SMTP id o3mr5105811wmh.3.1639662322360;
-        Thu, 16 Dec 2021 05:45:22 -0800 (PST)
+        bh=yjpRisVgNkMQzQcoNk0yxJ9ncuPF84MmsHl8nNmtVjQ=;
+        b=ID4Ed7AVyK/2tHiF5mhiReQ4Bw+zMJXSa+lrBN3y9oUBuE92+CAtJjoQ9m6J2KY67L
+         5kkIzwyp16duWS0c69teWYan472V+4glnO0n+5F44qqphhIKH8A3KXC2VOqGFyiKj1dQ
+         SZ0ByjqL8w3kK0ZKm8By+BQop+h+VrSzz7lvlr2eFeKVaJbbGJY9bmiW8IrXPLh48H/f
+         hTt2gzv/IOoFeiT/GETBNUp1lqMKXpci3oNjDG+rz18fB+EOLxOuW5PNZsbQMXOFTaj2
+         +qqR2RLyqBnFGt+X+iyItpV2hdNQK0YgtuuQA7uNDg0PRCk8jolz26vSYVS4QjFj9HeS
+         WKvg==
+X-Gm-Message-State: AOAM533FLercVQv2cG8rH0oXxF+MLtL/FIm26NV2YfxITAUTvXo4kBtM
+        0MeD6xZcBsdZ19+yTeNLhDGtvPx4+hQiUA==
+X-Google-Smtp-Source: ABdhPJyGSms8klVkVT8YCF2cE8a1omG0PCbf0FxSaGletZ6BgHqCKvUBgh4WPKvH5STvbmYzmvHRUA==
+X-Received: by 2002:adf:8165:: with SMTP id 92mr9229141wrm.199.1639662323820;
+        Thu, 16 Dec 2021 05:45:23 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y12sm4866821wrn.73.2021.12.16.05.45.21
+        by smtp.gmail.com with ESMTPSA id y12sm4866821wrn.73.2021.12.16.05.45.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 05:45:21 -0800 (PST)
+        Thu, 16 Dec 2021 05:45:23 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 2/9] reflog expire: narrow scope of "cb" in cmd_reflog_expire()
-Date:   Thu, 16 Dec 2021 14:45:11 +0100
-Message-Id: <patch-v2-2.9-b8e84538427-20211216T134028Z-avarab@gmail.com>
+Subject: [PATCH v2 3/9] reflog: change one->many worktree->refnames to use a string_list
+Date:   Thu, 16 Dec 2021 14:45:12 +0100
+Message-Id: <patch-v2-3.9-c0e190e46cf-20211216T134028Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1020.gc80c40b6642
 In-Reply-To: <cover-v2-0.9-00000000000-20211216T134028Z-avarab@gmail.com>
 References: <cover-00.12-00000000000-20211130T213319Z-avarab@gmail.com> <cover-v2-0.9-00000000000-20211216T134028Z-avarab@gmail.com>
@@ -68,130 +68,119 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As with the preceding change for "reflog delete", change the "cb_data"
-we pass to callbacks to be &cb.cmd itself, instead of passing &cb and
-having the callback lookup cb->cmd.
+Change the FLEX_ARRAY pattern added in bda3a31cc79 (reflog-expire:
+Avoid creating new files in a directory inside readdir(3) loop,
+2008-01-25) the string-list API instead.
 
-This makes it clear that the "cb" itself is the same memzero'd
-structure on each iteration of the for-loops that use &cb, except for
-the "cmd" member.
-
-The "struct expire_reflog_policy_cb" we pass to reflog_expire() will
-have the members that aren't "cmd" modified by the callbacks, but
-before we invoke them everything except "cmd" is zero'd out.
-
-This included the "tip_commit", "mark_list" and "tips". It might have
-looked as though we were re-using those between iterations, but the
-first thing we did in reflog_expiry_prepare() was to either NULL them,
-or clobber them with another value.
+This does not change any behavior, allows us to delete much of this
+code as it's replaced by things we get from the string-list API for
+free, as a result we need just one struct to keep track of this data,
+instead of two.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/reflog.c | 31 +++++++++++++++----------------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+ builtin/reflog.c | 48 +++++++++++++++++++-----------------------------
+ 1 file changed, 19 insertions(+), 29 deletions(-)
 
 diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 4c15d71f3e9..6989492bf5c 100644
+index 6989492bf5c..0fb46ade19f 100644
 --- a/builtin/reflog.c
 +++ b/builtin/reflog.c
-@@ -357,7 +357,6 @@ static void reflog_expiry_prepare(const char *refname,
- 	struct expire_reflog_policy_cb *cb = cb_data;
+@@ -48,16 +48,9 @@ struct expire_reflog_policy_cb {
+ 	struct commit_list *tips;
+ };
  
- 	if (!cb->cmd.expire_unreachable || is_head(refname)) {
--		cb->tip_commit = NULL;
- 		cb->unreachable_expire_kind = UE_HEAD;
- 	} else {
- 		cb->tip_commit = lookup_commit_reference_gently(the_repository,
-@@ -371,8 +370,6 @@ static void reflog_expiry_prepare(const char *refname,
- 	if (cb->cmd.expire_unreachable <= cb->cmd.expire_total)
- 		cb->unreachable_expire_kind = UE_ALWAYS;
+-struct collected_reflog {
+-	struct object_id oid;
+-	char reflog[FLEX_ARRAY];
+-};
+-
+-struct collect_reflog_cb {
+-	struct collected_reflog **e;
+-	int alloc;
+-	int nr;
+-	struct worktree *wt;
++struct worktree_reflogs {
++	struct worktree *worktree;
++	struct string_list reflogs;
+ };
  
--	cb->mark_list = NULL;
--	cb->tips = NULL;
- 	if (cb->unreachable_expire_kind != UE_ALWAYS) {
- 		if (cb->unreachable_expire_kind == UE_HEAD) {
- 			struct commit_list *elem;
-@@ -541,7 +538,7 @@ static void set_reflog_expiry_param(struct cmd_reflog_expire_cb *cb, int slot, c
+ /* Remember to update object flag allocation in object.h */
+@@ -403,24 +396,20 @@ static void reflog_expiry_cleanup(void *cb_data)
  
- static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ static int collect_reflog(const char *ref, const struct object_id *oid, int unused, void *cb_data)
  {
--	struct expire_reflog_policy_cb cb;
-+	struct cmd_reflog_expire_cb cmd = { 0 };
- 	timestamp_t now = time(NULL);
- 	int i, status, do_all, all_worktrees = 1;
- 	int explicit_expiry = 0;
-@@ -553,10 +550,9 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+-	struct collected_reflog *e;
+-	struct collect_reflog_cb *cb = cb_data;
++	struct worktree_reflogs *cb = cb_data;
++	struct worktree *worktree = cb->worktree;
+ 	struct strbuf newref = STRBUF_INIT;
  
- 	save_commit_buffer = 0;
- 	do_all = status = 0;
--	memset(&cb, 0, sizeof(cb));
- 
--	cb.cmd.expire_total = default_reflog_expire;
--	cb.cmd.expire_unreachable = default_reflog_expire_unreachable;
-+	cmd.expire_total = default_reflog_expire;
-+	cmd.expire_unreachable = default_reflog_expire_unreachable;
- 
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
-@@ -564,17 +560,17 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 		if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
- 			flags |= EXPIRE_REFLOGS_DRY_RUN;
- 		else if (skip_prefix(arg, "--expire=", &arg)) {
--			if (parse_expiry_date(arg, &cb.cmd.expire_total))
-+			if (parse_expiry_date(arg, &cmd.expire_total))
- 				die(_("'%s' is not a valid timestamp"), arg);
- 			explicit_expiry |= EXPIRE_TOTAL;
- 		}
- 		else if (skip_prefix(arg, "--expire-unreachable=", &arg)) {
--			if (parse_expiry_date(arg, &cb.cmd.expire_unreachable))
-+			if (parse_expiry_date(arg, &cmd.expire_unreachable))
- 				die(_("'%s' is not a valid timestamp"), arg);
- 			explicit_expiry |= EXPIRE_UNREACH;
- 		}
- 		else if (!strcmp(arg, "--stale-fix"))
--			cb.cmd.stalefix = 1;
-+			cmd.stalefix = 1;
- 		else if (!strcmp(arg, "--rewrite"))
- 			flags |= EXPIRE_REFLOGS_REWRITE;
- 		else if (!strcmp(arg, "--updateref"))
-@@ -600,14 +596,14 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 	 * even in older repository.  We cannot trust what's reachable
- 	 * from reflog if the repository was pruned with older git.
+ 	/*
+ 	 * Avoid collecting the same shared ref multiple times because
+ 	 * they are available via all worktrees.
  	 */
--	if (cb.cmd.stalefix) {
--		repo_init_revisions(the_repository, &cb.cmd.revs, prefix);
--		cb.cmd.revs.do_not_die_on_missing_tree = 1;
--		cb.cmd.revs.ignore_missing = 1;
--		cb.cmd.revs.ignore_missing_links = 1;
-+	if (cmd.stalefix) {
-+		repo_init_revisions(the_repository, &cmd.revs, prefix);
-+		cmd.revs.do_not_die_on_missing_tree = 1;
-+		cmd.revs.ignore_missing = 1;
-+		cmd.revs.ignore_missing_links = 1;
- 		if (flags & EXPIRE_REFLOGS_VERBOSE)
- 			printf(_("Marking reachable objects..."));
--		mark_reachable_objects(&cb.cmd.revs, 0, 0, NULL);
-+		mark_reachable_objects(&cmd.revs, 0, 0, NULL);
- 		if (flags & EXPIRE_REFLOGS_VERBOSE)
- 			putchar('\n');
- 	}
-@@ -629,6 +625,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 		free_worktrees(worktrees);
- 		for (i = 0; i < collected.nr; i++) {
- 			struct collected_reflog *e = collected.e[i];
-+			struct expire_reflog_policy_cb cb = { .cmd = cmd };
+-	if (!cb->wt->is_current && ref_type(ref) == REF_TYPE_NORMAL)
++	if (!worktree->is_current && ref_type(ref) == REF_TYPE_NORMAL)
+ 		return 0;
  
- 			set_reflog_expiry_param(&cb.cmd, explicit_expiry, e->reflog);
- 			status |= reflog_expire(e->reflog, flags,
-@@ -643,6 +640,8 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+-	strbuf_worktree_ref(cb->wt, &newref, ref);
+-	FLEX_ALLOC_STR(e, reflog, newref.buf);
+-	strbuf_release(&newref);
++	strbuf_worktree_ref(worktree, &newref, ref);
++	string_list_append(&cb->reflogs, strbuf_detach(&newref, NULL));
+ 
+-	oidcpy(&e->oid, oid);
+-	ALLOC_GROW(cb->e, cb->nr + 1, cb->alloc);
+-	cb->e[cb->nr++] = e;
+ 	return 0;
+ }
+ 
+@@ -609,33 +598,34 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (do_all) {
+-		struct collect_reflog_cb collected;
++		struct worktree_reflogs collected = {
++			.reflogs = STRING_LIST_INIT_NODUP,
++		};
++		struct string_list_item *item;
+ 		struct worktree **worktrees, **p;
+-		int i;
+ 
+-		memset(&collected, 0, sizeof(collected));
+ 		worktrees = get_worktrees();
+ 		for (p = worktrees; *p; p++) {
+ 			if (!all_worktrees && !(*p)->is_current)
+ 				continue;
+-			collected.wt = *p;
++			collected.worktree = *p;
+ 			refs_for_each_reflog(get_worktree_ref_store(*p),
+ 					     collect_reflog, &collected);
+ 		}
+ 		free_worktrees(worktrees);
+-		for (i = 0; i < collected.nr; i++) {
+-			struct collected_reflog *e = collected.e[i];
++
++		for_each_string_list_item(item, &collected.reflogs) {
+ 			struct expire_reflog_policy_cb cb = { .cmd = cmd };
+ 
+-			set_reflog_expiry_param(&cb.cmd, explicit_expiry, e->reflog);
+-			status |= reflog_expire(e->reflog, flags,
++			set_reflog_expiry_param(&cb.cmd, explicit_expiry, item->string);
++			status |= reflog_expire(item->string, flags,
+ 						reflog_expiry_prepare,
+ 						should_expire_reflog_ent,
+ 						reflog_expiry_cleanup,
+ 						&cb);
+-			free(e);
+ 		}
+-		free(collected.e);
++		collected.reflogs.strdup_strings = 1;
++		string_list_clear(&collected.reflogs, 0);
+ 	}
  
  	for (; i < argc; i++) {
- 		char *ref;
-+		struct expire_reflog_policy_cb cb = { .cmd = cmd };
-+
- 		if (!dwim_log(argv[i], strlen(argv[i]), NULL, &ref)) {
- 			status |= error(_("%s points nowhere!"), argv[i]);
- 			continue;
 -- 
 2.34.1.1020.gc80c40b6642
 
