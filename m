@@ -2,249 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A804BC433EF
-	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 12:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84F09C433F5
+	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 13:14:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237009AbhLPMy0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 07:54:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48760 "EHLO
+        id S237344AbhLPNOf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 08:14:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237001AbhLPMyZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 07:54:25 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A0E1C061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 04:54:25 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id bg2-20020a05600c3c8200b0034565c2be15so1700498wmb.0
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 04:54:25 -0800 (PST)
+        with ESMTP id S237349AbhLPNOe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 08:14:34 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BD97C061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 05:14:34 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id y12so85892975eda.12
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 05:14:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jvtDv0FSPfdJzBMdnkEpwXKhSy19C9yHOd0euOFBSGw=;
-        b=U7GcZ/NG40cHhiIJWzwFDqhVdHzlyS8cCLWYUjxiU5dRSLlVl1RcmzscYVi6pz2UIL
-         h4lr8Yo8rR40oMqq2dViVVuov/OlfhlfrfHHKrSl70ujiBM3aNeJVwkBd40iVQttSJUu
-         v1s6qWKlxrwmtjYYSNigXCEPHi9mWmLee3TAvOHmGWNIZZsxRnyPVXrY7QUS+mRHFUAg
-         IH+8gHoaSz+SvJ0K1ZLRdqDkdpGfaDKRJXXwb72D4LfJW/FVFENa3KhsIQtIAumG4WPY
-         +zK6Q16FuEUhSPn4NU14D85W/fFG4/nVRC84cqOtfTKlnmDVDZzXDuiwtek29xn2XzKj
-         7Hbg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=feoB+mSmxE0I36UG9oziI8MPqXJ7OwmerRWsd7onM68=;
+        b=WOKNNmfR6E3Hkb0RDyclDqa6nFNUAF8Vc0X3AmLWb0Bcq5xgTtLyJ0pU1I4DpNAJX5
+         YaCMT7yYW0vZwf679sBPi3Z0dmlT9VoW57BypIgN3+GLSsJEnkg3iXnFvJRy0dGotiHB
+         menluJ+CuDrJu4qg6eL7KcNPF8oY9hcp1lQWyAzNBqfOtyWLQtc7nIjE+/f5Xpdj64Vw
+         v28klsCZNrwIU0HDxD5EsQ96cp26aIVMturwN/1x34bouqE8ULk3Onzpvu3mR2ZqCIOy
+         qlDMECQMptJ+DjVuRtFrzy9xWqi15e16JOajQt+KFErF/cqzp87T1ZeclmpZMpRwYCD6
+         jY7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jvtDv0FSPfdJzBMdnkEpwXKhSy19C9yHOd0euOFBSGw=;
-        b=lKdcXv6l/oDMczY4+25DQtDgIM64YfCr8S0DEMkpktdqZZAzCNbNR1CDS8fL4+GvJn
-         AI2qfNsGATx3Ng01mknr9O0ChhlcRr0hQtM8ZWV4dqWQyjlmCNMSBTac6Kgoh5FjRJI0
-         NNHKWfI/JJQ61l5ZT3DO9o+Kq3DWEaj+blgJCqHL3SAmsfxKhgV9Xu5hXv79TnLxSPf1
-         vDyK9s+bVSVZnBgY3/66PHRUTrr89yeq6KpP+tMJqGRZDQQ6UpCKUx6KNWd1c/1YUaNW
-         rqA48NrG0UZqqLBRTxaAho+GJs88YzoEB1hNC6JiZtaiV/Z4a/ZvD6ly/mh7vyyJuxwK
-         rdbQ==
-X-Gm-Message-State: AOAM531GR5PRNEh+ulT6yICavZF9sHsyU/0XzNQPJazBHULE/mBt3lce
-        8BPaOkFRv+wSFCxQe6ShsD0vbpWUyzsSOw==
-X-Google-Smtp-Source: ABdhPJwA3XihN1DXpBQ65I7/nD3GHvdkC17LbPu2yfGsNhBCTKin65nuoGEubPsxXio22lx3B4YwfA==
-X-Received: by 2002:a05:600c:3b83:: with SMTP id n3mr4827929wms.116.1639659263357;
-        Thu, 16 Dec 2021 04:54:23 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o12sm4278625wrv.76.2021.12.16.04.54.22
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=feoB+mSmxE0I36UG9oziI8MPqXJ7OwmerRWsd7onM68=;
+        b=2Qe2pmxdNA7gZnehFCtBU1S0EHnj7yWXQj5Bak8d5GxnD3AQ4lz83V1sQKluVWKmAn
+         fAKeMTjagg1eJCMHFeEUTEld6jVFJbEiyu1hFas1NKiNEop1UXrO3/aoa2VJ+4q1czdo
+         XhPui6VCZo1wMZ3HKyTh+bzJ8RA3GA0hcOLATnePfG5EvUy8KZwCns0pM6YT9agvAD76
+         icShUx/tRH/gyCTO7/3NnhhqwLQLWFGuxEbBu4Dc8+MRS8u1BVZ3hNusbVj1OBSIgEaR
+         x4WcBNJI99ktaQFlwDePBXzQatzqXhD8IbsRu+6l8xltJnFJibyTZFe0nJ1axZ2nKOtw
+         rxoA==
+X-Gm-Message-State: AOAM5321N806OTio1SI557cZKNH77YhOGL/3jNnuJTWe+vMS6eFptIhJ
+        o3kof5jHwkY5rZNeuLgebG4tMu0l/Iu8lA==
+X-Google-Smtp-Source: ABdhPJzCG+AgAA+yoDVH+wbhP6Kvex+LTDHmaqUn9XNwBmrWSxTbqsLgV4mKJs5O4uKGmQtpDltWKw==
+X-Received: by 2002:a05:6402:1d50:: with SMTP id dz16mr20419693edb.309.1639660472754;
+        Thu, 16 Dec 2021 05:14:32 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id hb37sm563333ejc.211.2021.12.16.05.14.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 04:54:23 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Carlo Arenas <carenas@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3] stash: don't show "git stash push" usage on bad "git stash" usage
-Date:   Thu, 16 Dec 2021 13:54:21 +0100
-Message-Id: <patch-v3-1.1-6b33b104c84-20211216T125317Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.1.1020.gc80c40b6642
-In-Reply-To: <patch-v2-1.1-d1b9790904c-20210921T134436Z-avarab@gmail.com>
-References: <patch-v2-1.1-d1b9790904c-20210921T134436Z-avarab@gmail.com>
+        Thu, 16 Dec 2021 05:14:32 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mxqad-000OTj-GA;
+        Thu, 16 Dec 2021 14:14:31 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 2/2] test-lib.sh: remove the now-unused
+ "test_untraceable" facility
+Date:   Thu, 16 Dec 2021 14:04:58 +0100
+References: <cover-v2-0.2-00000000000-20211201T200801Z-avarab@gmail.com>
+ <cover-v3-0.2-00000000000-20211210T100512Z-avarab@gmail.com>
+ <patch-v3-2.2-a7fc794e20d-20211210T100512Z-avarab@gmail.com>
+ <20211212163207.GA3400@szeder.dev>
+ <211212.865yrtbvl1.gmgdl@evledraar.gmail.com>
+ <20211212201441.GB3400@szeder.dev> <xmqqo85kcp99.fsf@gitster.g>
+ <YbjJuh4dVijL7jw4@coredump.intra.peff.net> <xmqqh7b994tw.fsf@gitster.g>
+ <YbojKafkC/JcX4d1@coredump.intra.peff.net> <xmqqczlx93kg.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqqczlx93kg.fsf@gitster.g>
+Message-ID: <211216.864k78bsjs.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the usage message emitted by "git stash --invalid-option" to
-emit usage information for "git stash" in general, and not just for
-the "push" command. I.e. before:
 
-    $ git stash --invalid-option
-    error: unknown option `invalid-option'
-    usage: git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
-                     [-u|--include-untracked] [-a|--all] [-m|--message <message>]
-                     [--] [<pathspec>...]]
-    [...]
+[Replying to the thread-at-large]
 
-After:
+On Tue, Dec 14 2021, Jeff King wrote:
 
-    $ git stash --invalid-option
-    error: unknown option `invalid-option'
-    usage: git stash list [<options>]
-       or: git stash show [<options>] [<stash>]
-       or: git stash drop [-q|--quiet] [<stash>]
-       or: git stash ( pop | apply ) [--index] [-q|--quiet] [<stash>]
-       or: git stash branch <branchname> [<stash>]
-       or: git stash clear
-       or: git stash [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]
-                     [-u|--include-untracked] [-a|--all] [-m|--message <message>]
-                     [--pathspec-from-file=<file> [--pathspec-file-nul]]
-                     [--] [<pathspec>...]]
-       or: git stash save [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]
-                     [-u|--include-untracked] [-a|--all] [<message>]
-    [...]
+> On Mon, Dec 13, 2021 at 10:51:14AM -0800, Junio C Hamano wrote:
+>
+>> > I don't see any argument pertinent to BASH_XTRACEFD in general in that
+>> > email, of in favor of its removal in particular, and there are no
+>> > valid arguments for its removal in earlier emails in this thread
+>> > either.
+>>=20
+>> If I am reading =C3=86var right, the argument is "dash would not be fixed
+>> with BASH_XTRACEFD, so there needs another way that would work there,
+>> and if the approach happens to work also for bash, then there is no
+>> reason to use BASH_XTRACEFD", I think.
+>>=20
+>> Now, if the way =C3=86var came up with to help shells with "-x" not to
+>> contaminate their standard error stream that our test scripts want
+>> to inspect is worse to write, understand, and maintain, compared to
+>> the way we have been writing our tests that inspect their standard
+>> errors, without having to worry about "-x" output thanks to the use
+>> of BASH_XTRACEFD, it may make a regression to developer
+>> productivity, but I am not sure if that is the case.
+>
+> I think the method for handling this in the test scripts _is_ worse to
+> write, understand, and maintain. The problem to me is less that it's
+> ugly to workaround (which as you note in this case is not great, but not
+> _too_ bad), but that it's a subtle friction point that may jump up and
+> bite any test-writer who does something like:
+>
+>   (foo && bar) 2>stderr
+>
+> So my view had always been that BASH_XTRACEFD is the good
+> solution[...]
 
-That we emitted the usage for just "push" in the case of the
-subcommand not being explicitly specified was an unintentional
-side-effect of how it was implemented. When it was converted to C in
-d553f538b8a (stash: convert push to builtin, 2019-02-25) the pattern
-of having per-subcommand usage information was rightly continued. The
-"git-stash.sh" shellscript did not have that, and always printed the
-equivalent of "git_stash_usage".
+Yes, I agree that's much better than what you need to do when not under
+bash and when you can't benefit from BASH_XTRACEFD.
 
-But in doing so the case of push being implicit and explicit was
-conflated. A variable was added to track this in 8c3713cede7 (stash:
-eliminate crude option parsing, 2020-02-17), but it did not update the
-usage output accordingly.
+But unless we're talking about requiring bash and/or not supporting -x
+at all (which seems to be overkill, seeing as only one test scipt wasn't
+compatible with it) this discussion seems a bit like talking about how
+some code is nicer in C17 than C99 or C89.
 
-This still leaves e.g. "git stash push -h" emitting the
-"git_stash_usage" output, instead of "git_stash_push_usage". That
-should be fixed, but is a much deeper misbehavior in parse_options()
-not being aware of subcommands at all. I.e. in how
-PARSE_OPT_KEEP_UNKNOWN and PARSE_OPT_NO_INTERNAL_HELP combine in
-commands such as "git stash".
+Sure, it is. But if you're also supporting the latter two it's usually
+not worth it to maintain both with an ifdef.
 
-Perhaps PARSE_OPT_KEEP_UNKNOWN should imply
-PARSE_OPT_NO_INTERNAL_HELP, or better yet parse_options() should be
-extended to fully handle these subcommand cases that we handle
-manually in "git stash", "git commit-graph", "git multi-pack-index"
-etc. All of those musings would be a much bigger change than this
-isolated fix though, so let's leave that for some other time.
+Similarly, we can't really get any real benefits from BASH_XTRACEFD as
+long as we're going to support "-x" with other shells.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+Literally the only part of the test suite where we hard-depended on it
+is the code adjusted in my 1/2 here. I do think if we could rely on the
+pre-image it would be nicer, but not so nice that I don't want "-x"
+working under "dash".
 
-I think this was ready the first couple of times, but it wasn't picked
-up. Hopefully this relatively trivial UX fix can land this time
-around.
+And in any case carrying a "BASH_XTRACEFD" seems to be just a dead end
+for that reason.
 
-The only updates are some commit message nits, including updating the
-examples for the now-landed changes to align the parse-options output.
+On Wed, Dec 15 2021, Junio C Hamano wrote:
 
-Range-diff against v2:
-1:  d1b9790904c ! 1:  6b33b104c84 stash: print the correct usage on "git stash [push] --invalid-option"
-    @@ Metadata
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Commit message ##
-    -    stash: print the correct usage on "git stash [push] --invalid-option"
-    +    stash: don't show "git stash push" usage on bad "git stash" usage
-     
-         Change the usage message emitted by "git stash --invalid-option" to
-         emit usage information for "git stash" in general, and not just for
-         the "push" command. I.e. before:
-     
-    -        $ git stash --blah
-    -        error: unknown option `blah'
-    +        $ git stash --invalid-option
-    +        error: unknown option `invalid-option'
-             usage: git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
-    -                  [-u|--include-untracked] [-a|--all] [-m|--message <message>]
-    -                  [--] [<pathspec>...]]
-    +                         [-u|--include-untracked] [-a|--all] [-m|--message <message>]
-    +                         [--] [<pathspec>...]]
-             [...]
-     
-         After:
-     
-    -        $ git stash --blah
-    -        error: unknown option `blah'
-    +        $ git stash --invalid-option
-    +        error: unknown option `invalid-option'
-             usage: git stash list [<options>]
-                or: git stash show [<options>] [<stash>]
-                or: git stash drop [-q|--quiet] [<stash>]
-                or: git stash ( pop | apply ) [--index] [-q|--quiet] [<stash>]
-                or: git stash branch <branchname> [<stash>]
-                or: git stash clear
-    -           or: git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
-    -                  [-u|--include-untracked] [-a|--all] [-m|--message <message>]
-    -                  [--pathspec-from-file=<file> [--pathspec-file-nul]]
-    -                  [--] [<pathspec>...]]
-    -           or: git stash save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]
-    -                  [-u|--include-untracked] [-a|--all] [<message>]
-    +           or: git stash [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]
-    +                         [-u|--include-untracked] [-a|--all] [-m|--message <message>]
-    +                         [--pathspec-from-file=<file> [--pathspec-file-nul]]
-    +                         [--] [<pathspec>...]]
-    +           or: git stash save [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]
-    +                         [-u|--include-untracked] [-a|--all] [<message>]
-             [...]
-     
-    -    We'll only emit the former on the likes of "git stash push --blah"
-    -    now.
-    -
-         That we emitted the usage for just "push" in the case of the
-         subcommand not being explicitly specified was an unintentional
-         side-effect of how it was implemented. When it was converted to C in
-         d553f538b8a (stash: convert push to builtin, 2019-02-25) the pattern
-         of having per-subcommand usage information was rightly continued. The
-    -    Git-stash.sh shellscript did not have that, and always printed the
-    +    "git-stash.sh" shellscript did not have that, and always printed the
-         equivalent of "git_stash_usage".
-     
-         But in doing so the case of push being implicit and explicit was
+> Jeff King <peff@peff.net> writes:
+>
+>> On Wed, Dec 15, 2021 at 09:05:15AM -0800, Junio C Hamano wrote:
+>>
+>>> Still.  I wonder if keeping BASH_XTRACEFD helps developers, when
+>>> they need to diagnose a new breakage?  If their new test fails only
+>>> in the "dash -x" run but not "bash -x" at the CI, for example?
+>>
+>> I have done that, but usually only after realizing that "./t1234-foo.sh"
+>> passes and "./t1234-foo.sh -x" does not. So I think just tweaking use of
+>> "-x" would be the main tool.
+>
+> Ah, that's true.  You only need to compare "sh -x test.sh" with "sh
+> test.sh" with any value of "sh", especially after BASH_XTRACEFD is
+> removed, demoting "bash" to the same state as "dash" wrt "-x".
+>
+> OK, I am more OK with the removal of BASH_XTRACEFD support than
+> before ;-)
 
- builtin/stash.c  |  1 +
- t/t3903-stash.sh | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+)
+Yes, I've run into those cases and I don't think BASH_XTRACEFD really
+helps at all. Yes you'll get a test failure because trace output got
+into something we're invoking "test_cmp" on, or whatever.
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 18c812bbe03..5462840a073 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1681,6 +1681,7 @@ static int push_stash(int argc, const char **argv, const char *prefix,
- 	if (argc) {
- 		force_assume = !strcmp(argv[0], "-p");
- 		argc = parse_options(argc, argv, prefix, options,
-+				     push_assumed ? git_stash_usage :
- 				     git_stash_push_usage,
- 				     PARSE_OPT_KEEP_DASHDASH);
- 	}
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 2c66cfbc3b7..b17c52d8807 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -10,6 +10,25 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
- 
-+test_expect_success 'usage on cmd and subcommand invalid option' '
-+	test_expect_code 129 git stash --invalid-option 2>usage &&
-+	grep "or: git stash" usage &&
-+
-+	test_expect_code 129 git stash push --invalid-option 2>usage &&
-+	! grep "or: git stash" usage
-+'
-+
-+test_expect_success 'usage on main command -h emits a summary of subcommands' '
-+	test_expect_code 129 git stash -h >usage &&
-+	grep -F "usage: git stash list" usage &&
-+	grep -F "or: git stash show" usage
-+'
-+
-+test_expect_failure 'usage for subcommands should emit subcommand usage' '
-+	test_expect_code 129 git stash push -h >usage &&
-+	grep -F "usage: git stash [push" usage
-+'
-+
- diff_cmp () {
- 	for i in "$1" "$2"
- 	do
--- 
-2.34.1.1020.gc80c40b6642
+But that's never a subtle failure, and the fix for it brings us back to
+the question of whether we're going to support non-bash, or take the
+more drastic step of marking the whole test script as bash-only under
+"-x".
 
+I think the answers to those are always going to be "yes" and "no", and
+thus we're not getting any benefit from "BASH_XTRACEFD".
