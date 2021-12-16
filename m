@@ -2,61 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C4A5C433F5
-	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 14:26:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2044C433F5
+	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 14:31:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237959AbhLPO01 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 16 Dec 2021 09:26:27 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:34294 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237956AbhLPO01 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 09:26:27 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1BGEQFjw070205
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 16 Dec 2021 09:26:15 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Jeff King'" <peff@peff.net>, <git@vger.kernel.org>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Christian Couder'" <chriscool@tuxfamily.org>,
-        "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>, "'Taylor Blau'" <me@ttaylorr.com>
-References: <YboaAe4LWySOoAe7@coredump.intra.peff.net>
-In-Reply-To: <YboaAe4LWySOoAe7@coredump.intra.peff.net>
-Subject: RE: taking a break from Git
-Date:   Thu, 16 Dec 2021 09:26:09 -0500
-Organization: Nexbridge Inc.
-Message-ID: <007501d7f288$e2023af0$a606b0d0$@nexbridge.com>
+        id S238010AbhLPObB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 09:31:01 -0500
+Received: from mail-io1-f48.google.com ([209.85.166.48]:39679 "EHLO
+        mail-io1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237137AbhLPObA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 09:31:00 -0500
+Received: by mail-io1-f48.google.com with SMTP id c3so35425085iob.6
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 06:31:00 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=dMsPSSbltfvy/CFtz5BaZHwqd+pf4+C/p4iWfzykikQ=;
+        b=EfeqgskM+6wfwpj0iOi1ezbTugq9ie4U/nhf++87ul1NU2GBbwh0qYUcHiYQEvGTIU
+         M6BVy4vIUVSw9oBrjaYrUGlxITBgNOtmcPZN+xzgadxf7vnWLVzDUrGNrBdCHObCzLDM
+         CNCBLkfujXRRZIVZzAdm6Qs99S56ZO0dKWplyCLiNPJoadYXWE1g8OQML3UeIl0FopPe
+         kQjdvVxbORVktlwDHOewIDDK6HEexxUHFBw3/+kpcV7D397F9AyPwYVXkIHPl7YHzHfK
+         OwyvF3SkNXdX8LVxAVS4tfmp6v8LnWYdLm2/HrzTzFcsOgpbJ7CoMbH7fQLisGczobqS
+         3Vhg==
+X-Gm-Message-State: AOAM531j8Fv5BF/NFAPrO5xIR3oLmodqJYQxcdQvQ4hd6lH3X6B2bFOw
+        zkdI/UX/ZqttKqzFTN7w8kUgv/hDS5OvT6FAaaoBiKN/Q7k=
+X-Google-Smtp-Source: ABdhPJxMyzdc0jh3LkNfy6bZtNmUVK+icDBlZCj7NtvJSrV2tsKGaRJwIN9fM4wTY2cnLxOXAgJKLzu5KNLh1AKEEHA=
+X-Received: by 2002:a05:6638:1603:: with SMTP id x3mr9385965jas.243.1639665059550;
+ Thu, 16 Dec 2021 06:30:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQG26ASyUrZgMoWXioIyX89St7/fhqx3QOnw
-Content-Language: en-ca
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Thu, 16 Dec 2021 15:30:24 +0100
+Message-ID: <CA+JQ7M-ynq1cLN-3ZodXae=x-H5k7Ab6uPBwUFhG+kgtOvCgtA@mail.gmail.com>
+Subject: bug?: ORIG_HEAD incorrect after reset during git-rebase -i
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 15, 2021 11:38 AM, Jeff King wrote:
-> Hey all,
-> 
-> I'm going to be offline and completely absent from the mailing list for five
-> months starting at the end of December. After that, things are up in the air,
-> but I may not be as involved in the project as I have been.
-> 
-> Sorry, there's no juicy gossip or drama to share. I still like everyone, and think
-> it's a cool project. ;) After 15 years, it just feels like it's time for a break and to
-> perhaps apply my brain to something else for a while.
+Steps to reproduce:
+1. git-rebase -i
+2. edit XYZ
+3. git-reset HEAD~
+4. git-commit -C ORIG_HEAD -a
+5. git-rebase --continue
+6. git-show ORIG_HEAD
 
-I would like to chime in and thank Peff, for me and on behalf of my team, for his support in resolving and fixing issues we have found with the NonStop port - his advice has been invaluable. I will personally miss his help and advice.
+Expected behavior:
+ORIG_HEAD should point at the previous HEAD of the rebased branch
 
-Peff: my door is always open.
+Actual behavior:
+ORIG_HEAD points to XYZ
 
-Kind Regards,
-Randall
+My understanding from reading https://stackoverflow.com/a/64949884 is
+that this is incorrect behavior.
 
+Perhaps this is as intended but I would at least personally prefer
+that ORIG_HEAD would point to the previous HEAD of the rebased branch.
+
+Seen in:
+git version 2.31.1.windows.1
+
+Possibly related to
+e100bea481 - rebase -i: stop overwriting ORIG_HEAD buffer
