@@ -2,108 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88F4FC433EF
-	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 17:31:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D44DC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 18:12:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240236AbhLPRbY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 12:31:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60186 "EHLO
+        id S240564AbhLPSL7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 13:11:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234903AbhLPRbX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 12:31:23 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65A52C061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 09:31:23 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id s1so11392075wrg.1
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 09:31:23 -0800 (PST)
+        with ESMTP id S240567AbhLPSL5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 13:11:57 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9B51C061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 10:11:56 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id h17-20020aa79f51000000b0049473df362dso12194pfr.12
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 10:11:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=T3CQS4qQo5V/HRec6bFKQcsGe9Xc+vska8JM17oI1x0=;
-        b=VVBWyzY+PF7YL7J/aUkuJvzVm8mq+cmJKO5axKncZv2TNHXevCVFPM7siG/W9SFpm/
-         u7/X+Lp7GjYEf3PWd1H4+XZeLfd1CppSM25ywRHO+4ZHBFBbjKrJciz7uRurhsz2GIr4
-         gCApKwjLrVuNV6G+rcJxxIpg9tREq2wzNy/ij/u14DjBntq/OnLW2h5hyUEswMyCbXET
-         4Vr/xoZ5w6x9lyhw5ZPzVwMvyUuLkzw6iathUCSY0y5bkCKB37f8YR23UCl3PjRRQE56
-         nBsbXH2IZyrad5tulak924Fv4vNBKW+Oci+CLWm5vw1drFknwhN7Z9D4w0KaGSTPDB4F
-         TB0Q==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=SqNdWHAs8f+HcyQ8b2P23jGkhEwR5DzMSRFzGirhvvI=;
+        b=QwzC5RZ/7szh1GqTosLzfRUSOc0EYimI/YwVHYcFESgJM+jTB+ZupncFbgsphWyWld
+         3ZPQaKPn/aaYMOb6kWtYf1VLZwIaxPzFweRM1hndyHgmA4Ke33TWR5tgUFsHes9/q84n
+         WCwE8AurXU9DjSBQwfW8SrQcxnFCPJ7qop0e2ckfC1i3l2duRbpJdTQRsLjTTK4j3xu8
+         JCk22o3mpDTwVMjWRC6PcdV7FaZov49NLni5yFingoDaCuebiH2xdQOz3h0Wdwly8PWl
+         GgHPlEJU0GszKYCqUFiaJ1ZlMUc6T7QytLFp2abj6dxBPnST6mzAB1PgrkcqhI4e0VJA
+         jtXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=T3CQS4qQo5V/HRec6bFKQcsGe9Xc+vska8JM17oI1x0=;
-        b=E3PVxsic4TTuxwxGHqX1uMZg25UIXPlBOlywVcW4R2+iFoJBmBwh8jpUazovmSqXU3
-         1sCULK374oM6o4t1711fMJaCkWb9FEzWKOCyvebRHnbjhteBY7/+rKU/Otzo9AWGczKh
-         W3VWV2FqSjjB/3JyJ0Z99F/tTQ+Wwc5zaQfeRqoJ12O3izoXBhIVUCzURen/wMqri3Mw
-         VEnqNOGbX2N02JBG5q44A2xath01zXFS4rEjfqUvWj0OQVw4OOv80KbsIuT7ab05HGTi
-         OWO5QVpQkP1QMAZqEAB9I892sF8Oo94LwytptcfIzEW5n+RlAgVsRf7ZV0mcL78BOB8S
-         o8CA==
-X-Gm-Message-State: AOAM530xMe8xl+/Ouf3B3nuy2gLcrOibB+Atm7d+/+dV4F+PLSkJmdsa
-        phcbs/Xsg8v4TlIzQImb+t5VsiS7+0A=
-X-Google-Smtp-Source: ABdhPJx/YDGnpyO8ej93j08Gp563P9/T+KTTmKI+TZdW6fRfk17dEcMuhTqWhXJXt4PmDHScpO1rlg==
-X-Received: by 2002:a5d:5005:: with SMTP id e5mr9956261wrt.700.1639675881810;
-        Thu, 16 Dec 2021 09:31:21 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g16sm6204487wmq.20.2021.12.16.09.31.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 09:31:21 -0800 (PST)
-Message-Id: <pull.1097.git.1639675881065.gitgitgadget@gmail.com>
-From:   "Andriy Makukha via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Dec 2021 17:31:20 +0000
-Subject: [PATCH] strlcpy(): safer and faster version
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Andriy Makukha <andriy.makukha@gmail.com>,
-        Andrii Makukha <andriy.makukha@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=SqNdWHAs8f+HcyQ8b2P23jGkhEwR5DzMSRFzGirhvvI=;
+        b=eVokIyLFIAygbFJoLAWr1HQ+XwSL20Q+bQ5dBiDrRkHDqGKsCXAn8ukyB3tjjftdYh
+         UGrDgbAOdMgLdSYVX9AW2B6Y5KGfRAo8fMzVXTfGe3hqxP4IXpJvvGwKVqCx8E2KOeoq
+         6f5MnfBxgRl0ut/39wBU5xOaALhSG1EtjiW2MQ3lfdrIP5Av7r30uMo69xvOXKc+aUi5
+         DvqaPO+YhtPO/s1dF39pDiU9cUpCk659TAW/aHoCA3jqbLCCdkaP6lU1yCDsCrs1c9WC
+         Qnbv1zDH/tPgWCYLPpJAKciO/slwPRlUIaA2D+WnFzR+Dlb8eArGzisKxEdGn/zVj5U9
+         4I4A==
+X-Gm-Message-State: AOAM530c6V5sSz2OIHc1dVfj30TwjcVGU3LulMqPy+nrRZamf64Hf5TK
+        tG9n53sq3KVpKU2cJ+w5s7EnGAI6ic4W3Q==
+X-Google-Smtp-Source: ABdhPJx7+9sbtWFxeMpyC7eGD6ihF4x8tI4vz1YHCzbOkybZJZdGKMCWY7pA4MsdKjbtZ5oFlCO/Oi9EZOpssg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90a:c203:: with SMTP id
+ e3mr588804pjt.0.1639678316100; Thu, 16 Dec 2021 10:11:56 -0800 (PST)
+Date:   Thu, 16 Dec 2021 10:11:54 -0800
+In-Reply-To: <20211213225842.768852-1-jonathantanmy@google.com>
+Message-Id: <kl6lwnk4to5x.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <kl6lbl1p9zjf.fsf@chooglen-macbookpro.roam.corp.google.com> <20211213225842.768852-1-jonathantanmy@google.com>
+Subject: Re: [PATCH] builtin/fetch: skip unnecessary tasks when using --negotiate-only
+From:   Glen Choo <chooglen@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Andrii Makukha <andriy.makukha@gmail.com>
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Original strlcpy() has a significant disadvantage of being both unsafe
-and inefficient. It unnecessarily calculates length of `src` which may
-result in a segmentation fault if `src` is not terminated with a
-NUL-character.
+> Glen Choo <chooglen@google.com> writes:
+>> Jonathan Tan <jonathantanmy@google.com> writes:
+>> 
+>> > Glen Choo <chooglen@google.com> writes:
+>> >> `git fetch --negotiate-only` does not fetch objects and thus, it should
+>> >> not perform certain auxiliary tasks like updating submodules, updating
+>> >> the commit graph, or running gc. Although send_pack() invokes `git fetch
+>> >> --negotiate-only` correctly, cmd_fetch() also reads config variables,
+>> >> leading to undesirable behavior, like updating submodules if
+>> >> `submodule.recurse=true`.
+>> >> 
+>> >> Make cmd_fetch() return early if --negotiate-only was specified so that
+>> >> these auxiliary tasks are skipped.
+>> >> 
+>> >> Signed-off-by: Glen Choo <chooglen@google.com>
+>> >> ---
+>> >> `git fetch --negotiate-only` is used during push negotiation to
+>> >> determine the reachability of commits. As its name implies, only
+>> >> negotiation is performed, not the actual fetching of objects. However,
+>> >> cmd_fetch() performs certain tasks with the assumption that objects are
+>> >> fetched:
+>> >> 
+>> >> * Submodules are updated if enabled by recurse.submodules=true, but
+>> >>   negotiation fetch doesn't actually update the repo, so this doesn't
+>> >>   make sense (introduced in [1]).
+>> >> * Commit graphs will be written if enabled by
+>> >>   fetch.writeCommitGraph=true. But according to
+>> >>   Documentation/config/fetch.txt [2], this should only be done if a
+>> >>   pack-file is downloaded
+>> >> * gc is run, but according to [3], we only do this because we expect
+>> >>   `git fetch` to introduce objects
+>> >> 
+>> >> Instead of disabling these tasks piecemeal, let's just make cmd_fetch()
+>> >> return early if --negotiate-only was given. To accommodate possible
+>> >> future options that don't fetch objects, I opted to introduce another
+>> >> `if` statement instead of putting the early return in the existing
+>> >> `if (negotiate_only)` block.
+>> >
+>> > Some of this probably should be in the commit message too.
+>> 
+>> I suppose you mean the explanation of why the tasks are irrelevant to
+>> negotiation fetch? i.e. 
+>> 
+>>    * Submodules are updated if enabled by recurse.submodules=true...
+>>    * Commit graphs will be written if enabled by...
+>>    * gc is run, but according to [3]...
+>
+> Yes - why the behavior is undesirable, and the way you're doing it (by
+> adding another "if" statement).
+>
+> After looking at this, more concretely, it might be better to use the
+> part below the "---" as your commit message. :-) Just note that we're
+> not just accommodating future options that don't fetch objects - "fetch"
+> already may not fetch objects (e.g. if the ref we want doesn't exist or
+> if we already have all the objects).
 
-In this fix, if `src` is too long, strlcpy() returns `size`. This
-allows to still detect an error while fixing the mentioned
-vulnerabilities. It deviates from original strlcpy(), but for a good
-reason.
+Good suggestion. I'll clean it up for brevity.
 
-Signed-off-by: Andrii Makukha <andriy.makukha@gmail.com>
----
-    strlcpy(): safer and faster version
+>
+>> > Maybe add a check here that --recurse-submodules was not explicitly
+>> > given.
+>> 
+>> Hm, that's not a bad idea, but it's not so easy because we don't have
+>> RECURSE_SUBMODULES_EXPLICIT so it's not easy to tell whether or not
+>> submodule recursion was enabled by CLI option or config.
+>> 
+>> This is the exact same use case I encountered with "branch
+>> --recurse-submodules" [1]. I think this means that we should consider
+>> standardizing the parsing of submodule.recurse + --recurse-submodules. I
+>> haven't done it yet because it's a little tricky and hard to review.
+>> 
+>> So I'll punt on this check until we get RECURSE_SUBMODULES_EXPLICIT.
+>
+> Hmm...can we separate out the recurse_submodules variable into one
+> that's given by config and one that's given by CLI argument?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1097%2Famakukha%2Fmaint-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1097/amakukha/maint-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1097
+This would be similar to what I did for branch --recurse-submodules [1],
+which, as I noted in my cover letter [2], is easier to understand, but a
+little inconsistent with the rest of the --recurse-submodules parsing.
 
- compat/strlcpy.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+I'm not very enthusiastic about adding more inconsistency, and since
+this check isn't critical to this bugfix (and I think there is very
+little chance that anyone would run afoul of this check any time soon)
+I'd like to hold off on it until RECURSE_SUBMODULES_EXPLICIT.
 
-diff --git a/compat/strlcpy.c b/compat/strlcpy.c
-index 4024c360301..e7fd11015c7 100644
---- a/compat/strlcpy.c
-+++ b/compat/strlcpy.c
-@@ -2,7 +2,12 @@
- 
- size_t gitstrlcpy(char *dest, const char *src, size_t size)
- {
--	size_t ret = strlen(src);
-+	/*
-+	 * NOTE: original strlcpy returns full length of src, but this is
-+	 * unsafe. This implementation returns `size` if src is too long.
-+	 * This behaviour is faster and still allows to detect an issue.
-+	 */
-+	size_t ret = strnlen(src, size);
- 
- 	if (size) {
- 		size_t len = (ret >= size) ? size - 1 : ret;
+Unless you think I'm missing something of course :)
 
-base-commit: e9d7761bb94f20acc98824275e317fa82436c25d
--- 
-gitgitgadget
+[1] https://lore.kernel.org/git/20211216003213.99135-6-chooglen@google.com
+[2] https://lore.kernel.org/git/20211216003213.99135-1-chooglen@google.com
