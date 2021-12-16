@@ -2,95 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF2C0C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 00:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC311C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 01:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232365AbhLPAho (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Dec 2021 19:37:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51172 "EHLO
+        id S229945AbhLPBK2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Dec 2021 20:10:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232206AbhLPAho (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Dec 2021 19:37:44 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9F4DC061574
-        for <git@vger.kernel.org>; Wed, 15 Dec 2021 16:37:43 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id o13-20020a17090a4b4d00b001b11820de9eso947791pjl.3
-        for <git@vger.kernel.org>; Wed, 15 Dec 2021 16:37:43 -0800 (PST)
+        with ESMTP id S229441AbhLPBK1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Dec 2021 20:10:27 -0500
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46BE5C061574
+        for <git@vger.kernel.org>; Wed, 15 Dec 2021 17:10:27 -0800 (PST)
+Received: by mail-qt1-x831.google.com with SMTP id o17so23866195qtk.1
+        for <git@vger.kernel.org>; Wed, 15 Dec 2021 17:10:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=o+P7r7YKxxQTHnOXfH20BhZe4qqX9SAGp/5QbZlplis=;
-        b=kQQP/lGzLymif157Jnr+i98nw2EYoG6HxjceJjYMq1dBkfB70Jrz8QX3beQeStf7+w
-         tShj/7xyyEED8Pbr6KcsS33CpyuLHUoOQBxBrQ6FK73ygF8q8Y3ezlh+nsOeIWv2/BL1
-         mGcH/w1GExEltdgGWWFvvgkWX+FXn7tQo1Q0ZAj52zD9xZMznTdq5NDCxzDZPGXpKFrz
-         /8ZZoYU/ZPsVzCkXKSaGVM65VsxELHwqEWChS8sarmOiu/d/NerWTjqIlbjmyTccPmRp
-         RfRx6Xh5FRAJSSYsFAVoUV2oXWkxVy8XkRvipAbPvOaw3w0my9Xpo0/omB/JAr7AznVH
-         SxVg==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=ZGxgkTEf6fD0VL3FxZjwVj0vtrSP60SurOAzUzptb+A=;
+        b=Nh2c3P0f/4d3Fjr8uPPPfGWlalm+bihRKr00/3m471h23AbQI+MBPzOTPkfBXKJ5L6
+         DErxKWcQ9EMCtZEJqyteCODOGzUjuPXt/VQyyUP3HkM5N2DHlhLQMZ5Z/SL6fViuOjx9
+         o/hg1r9UCyc/4r6SecJEmmy2fJHvljEsjmfxWZYn95Ju0wHtqiJPwzxqcGIPyY5U67Or
+         YZ4d/oKcxdsWZlt41k1t7s647AjcbSqr8+ssUkJu2d+EYx281INIorQEhE/rrT427qbV
+         gF/PfR280Gz6cDaVFtXTGaipyqmlNpv6U8nx+ru7+GRYJpCDWP4x/MnZg/xhKy2d2DvC
+         VtbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=o+P7r7YKxxQTHnOXfH20BhZe4qqX9SAGp/5QbZlplis=;
-        b=FmlLEvkmvb3i147nMHAYiAMQpz1R4rmPFXxp/LGQYGRwQLVtivjy7xFnhmEdYbi1cm
-         /D8dfTuDx1AqEfs4FvPANbwRtDjvKFOKW6F9+abiZKiFgGBPtlePbZ48munoRWGcpDgB
-         sK4w91/M55yaijH/XPq30gtK7i3DR1x7kf3+KZgN+hI0+r3pRpg4iUau3BTqdxZlX95v
-         NG4GcaQen4mUs6nj3uwe4zai/xWCi0VYfC1kd5x/I3RPN6BWMgsAjTdzY6bjhoVp+Nd0
-         TGfoFaG8xmhkfbe84Ol/iKLA/C2IYmJV5S4MZx2vepws8W/SWEYHM9mYYg6xViwRRRPg
-         F84A==
-X-Gm-Message-State: AOAM533CTPQ4hWGBWogaBhyadKzHV5Dr+QJxRSGVc8rh5WOjBwKkj+fx
-        Urncg1lLdT3VX7IBOQRi5cJDFHRN6FWrJg==
-X-Google-Smtp-Source: ABdhPJxfeW+AQD+EC1k4t/TPZ6zJ2ZAP6R2nEIYm4FoENsb6uxe1v1IX5sjfgACDzfylOS4kXgCoFPZ2Sjrjhg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:f54f:b0:148:a2e8:276c with SMTP
- id h15-20020a170902f54f00b00148a2e8276cmr6992761plf.115.1639615063276; Wed,
- 15 Dec 2021 16:37:43 -0800 (PST)
-Date:   Wed, 15 Dec 2021 16:37:40 -0800
-In-Reply-To: <xmqqsfutzaaq.fsf@gitster.g>
-Message-Id: <kl6l35mtv0yz.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
- <cover.1639524556.git.steadmon@google.com> <xmqqsfutzaaq.fsf@gitster.g>
-Subject: Re: [PATCH v6 0/3] branch: inherit tracking configs
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, Johannes.Schindelin@gmx.de
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=ZGxgkTEf6fD0VL3FxZjwVj0vtrSP60SurOAzUzptb+A=;
+        b=vmNmHdXnStqM6Iv1+W0nku4MzPxyGXBlqOV08i0G5XK/A6HJcoNcjitbfevM/OW+XV
+         8ZdLuM1orkhkLVmaPksXH0+W7PTz8XotghuFX7wfESzr4BTLv3WZ9aJ0ypqh30zEhIcV
+         ibktiYe8aZPjyfIW2GejGBhEfrsRJICQJJAqBxwP7WBZwBhp2LiYA8UUTh03jJvUVcWb
+         c9lkV/YwDgbIeBi1NNDPw8PQmhnLvNynbpxsqVpYh2560av7yGHaI6Istuwf76q/xKTY
+         0iuzrkiyI8A3AAeL7ISt3RLlOBCghnYLeKxhTq3eEJOJQh3vYmSqcG0f/C4XFWzlX5n/
+         9TOw==
+X-Gm-Message-State: AOAM5301KQEH1ENUgI2picCNRfV1oTEJ4Se79qWOaiMlDo3GQsphcaJh
+        a2uASR4Xa25DMyw7YtWUEspkDTtoDAkZUk24t8w=
+X-Google-Smtp-Source: ABdhPJxQCIy93TaV37iUmcnHiV6g41BZ1U5bzPGB+MdyBmqbmguoJOq9GneY1TyCaTaGJXFkaxoEnxNQ9/VcNBCpQ10=
+X-Received: by 2002:ac8:588a:: with SMTP id t10mr14955733qta.151.1639617026343;
+ Wed, 15 Dec 2021 17:10:26 -0800 (PST)
+MIME-Version: 1.0
+References: <25107068cbbf8c9ce6886e66e25dff19e072583f.1639425295.git.steadmon@google.com>
+ <xmqqa6h4b24o.fsf@gitster.g> <YbfC5/+Q7lPp0G2i@google.com>
+In-Reply-To: <YbfC5/+Q7lPp0G2i@google.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Thu, 16 Dec 2021 09:10:15 +0800
+Message-ID: <CANYiYbF31o-sQYU-OjJk=pQR5RHM0k7jqmEhiKGLeO3Suu1khQ@mail.gmail.com>
+Subject: Re: [PATCH] l10n: README: call more attention to plural strings
+To:     Josh Steadmon <steadmon@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Josh Steadmon <steadmon@google.com> writes:
+On Tue, Dec 14, 2021 at 6:02 AM Josh Steadmon <steadmon@google.com> wrote:
 >
->> Changes since V5:
->> * Greatly simplified BRANCH_CONFIG_VERBOSE output to not require nearly
->>   so many conditionals.
->> * Note that rebasing is not compatible with inheriting multiple upstream
->>   branches.
->> * Moved the change to case-sensitivity for branch.autosetupmerge to its
->>   own commit.
->> * Improve advice on failed tracking setup when multiple branches are
->>   involved.
->> * Make better use of string_list API.
->> * Make better use of config API.
->> * More straight-forward use of the `struct tracking` API.
->> * Numerous style fixes.
+> On 2021.12.13 13:56, Junio C Hamano wrote:
+> > Josh Steadmon <steadmon@google.com> writes:
+> >
+> > > In po/README.md, we point core developers to gettext's "Preparing
+> > > Strings" documentation for advice on marking strings for translation.
+> > > However, this doc doesn't really discuss the issues around plural form
+> > > translation, which can make it seem that nothing special needs to be
+> > > done in this case.
+> > >
+> > > Add a specific callout here about marking plural-form strings so that
+> > > the advice later on in the README is not overlooked.
+> > >
+> > > Signed-off-by: Josh Steadmon <steadmon@google.com>
+> > > ---
+> > >  po/README.md | 5 ++++-
+> > >  1 file changed, 4 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/po/README.md b/po/README.md
+> > > index dcd8436c25..fd1e024dd3 100644
+> > > --- a/po/README.md
+> > > +++ b/po/README.md
+> > > @@ -219,7 +219,10 @@ General advice:
+> > >    they're part of Git's API.
+> > >
+> > >  - Adjust the strings so that they're easy to translate. Most of the
+> > > -  advice in `info '(gettext)Preparing Strings'` applies here.
+> > > +  advice in `info '(gettext)Preparing Strings'` applies here. Strings
+> > > +  referencing numbers of items may need to be split into singular and
+> > > +  plural forms; see the Q\_() wrapper in the C sub-section below for an
+> > > +  example.
+
+Wouldn't it be better if we add a new rule ("Strings ... an example.")
+after this one?
+
+> > >
+> > >  - If something is unclear or ambiguous you can use a "TRANSLATORS"
+> > >    comment to tell the translators what to make of it. These will be
+> >
+> > Sounds good to me, but I'd want an ack by those from the l10n
+> > department.
+> >
+> > Thanks.
 >
-> I've queued this, and rebased Glen's "branch --recurse-submodules"
-> on top, and parked both of them near the tip of 'seen'.  I do not
-> have much confidence in the conflict resolution needed during the
-> rebasing or the other branch or merges into 'seen', and I would
-> appreciate it if you two can take a look to sanity check the result.
->
-> Thanks.
+> Hmm, I meant to CC both Jiang and Bagas, not sure why it didn't go
+> through.
 
-I've just sent out a new version [1] which is rebased on top of Josh's
-v6. Please use that version instead :)
+Yesterday I was interrupted by a meeting while reading this thread.
 
-I did not rebase this on top of 'seen' though; I'll take a look and see
-if there's anything of concern.
-
-[1] https://lore.kernel.org/git/20211216003213.99135-1-chooglen@google.com/,
+--
+Jiang Xin
