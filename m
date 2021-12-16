@@ -2,60 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5248FC433F5
-	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 19:10:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A14DCC433EF
+	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 19:11:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236502AbhLPTKA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 14:10:00 -0500
-Received: from mail-io1-f41.google.com ([209.85.166.41]:35378 "EHLO
-        mail-io1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233803AbhLPTKA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 14:10:00 -0500
-Received: by mail-io1-f41.google.com with SMTP id 14so36417352ioe.2
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 11:10:00 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=xex0e40866xLB4e/U1qL+wL0h959smpAtRggJRdxTxo=;
-        b=fmJvwRclbjSHubnVgTvjGenmC13pltHVzLwJQ5wMhY707RF+/obnfQxQjt3NiE8cob
-         NZ1isL8VYKRF2krhWVv0eWrx6vrcWUDqExWe/WX8O1Gm2gBcIDCy8as3zWQBa59Fqw8z
-         IfM4+Xj9C1QvM7AH77nHrcB37ANB/ZwKozUjJG2zSQRujpGMt9n4VGD9IzZwGwT9bBsC
-         2YouVDoEpoPtTig6gRXxdsSUimm4tSSnZoW0YIJizCkecSzI8hittYRn+15BP25A2v7V
-         YEqBJ8I4tS8iCt8c1GdOibMU0/nEhm9fZpxmdU2oUuK75PfGKJP72YPmTXQ12C8teneK
-         IN4w==
-X-Gm-Message-State: AOAM533tSeCoSXmOwm+9neUYQPOCAGH5ZgLYglfk8aimphw6MfkO1RwQ
-        fEEUkBnwAVBCcmsC4cVLP267S7zUHzcy+5q8wb1FqOh4GhM=
-X-Google-Smtp-Source: ABdhPJyzo1R+USzn3X4HkN5la+hL+NgUxrLZ0hVNQvRzK+V3FxvjhFmRFl4VFeBQti4N0sm7aefZ2xjor9xdpcBzKO0=
-X-Received: by 2002:a05:6638:381b:: with SMTP id i27mr10818721jav.138.1639681799729;
- Thu, 16 Dec 2021 11:09:59 -0800 (PST)
+        id S236486AbhLPTLr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 14:11:47 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58707 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230264AbhLPTLq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 14:11:46 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9761D160CFC;
+        Thu, 16 Dec 2021 14:11:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=CfGETW23I1ND
+        Y8zoFHGTK/XiDqcK+2/aFme+0+UjAbI=; b=QS0p1Yfeoxq7PCK7vY0NbWrZb0ej
+        bH2UHYj9lZ/nWS1SpjEqg+3W8MhSvObe4y7cf01d7tAiPttqh7rHx0gijrzhYK7f
+        aegLq4Sm41zHuZZIXC0zyQYe1SAFhrTu0TZvB0bBE98smmCNaEFDQKHvR644/mwA
+        1HIIxJR5lK//Tis=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 90CC8160CFB;
+        Thu, 16 Dec 2021 14:11:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F3132160CFA;
+        Thu, 16 Dec 2021 14:11:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: ab/run-command
+References: <xmqq8rwlz3cq.fsf@gitster.g>
+        <211216.868rwkbv1b.gmgdl@evledraar.gmail.com>
+        <Ybtb6Shdj56ACdub@coredump.intra.peff.net>
+        <211216.86v8zoa761.gmgdl@evledraar.gmail.com>
+Date:   Thu, 16 Dec 2021 11:11:41 -0800
+In-Reply-To: <211216.86v8zoa761.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 16 Dec 2021 16:38:21 +0100")
+Message-ID: <xmqqsfusbc0i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Thu, 16 Dec 2021 20:09:24 +0100
-Message-ID: <CA+JQ7M_Q2bgHWt_SFWdMCHkqqJr2K2VEqDfK4en_eXhs0o5JgQ@mail.gmail.com>
-Subject: bug: git-add --patch any negative pathspec fails
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 013DE298-5EA4-11EC-81EA-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Steps to reproduce:
-git-add -p -- ':!foo'
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Expected:
-Add everything that doesn't match the pathspec.
+> I like that it's just "args", so I don't think I'd change it even if I
+> could waive the proverbial magic wand to d oit.
+>
+> We also have non-run-command.h code that uses "struct strvec args =3D
+> STRVEC_INIT" (although most of that ends up being passed into the
+> run_command.c function).
+>
+> Saying "argv.v" also seems a bit more strange than "args.v", IMO.
 
-Actual:
-fatal: empty string is not a valid pathspec. please use . instead if
-you meant to match all paths
-Cannot close git diff-index --cached --numstat --summary HEAD --
-:(exclude,prefix:0)bar  () at C:/Program
-Files/Git/mingw64/libexec/git-core\git-add--interactive line 242.
+So perhaps the renamed member will be called envs?
 
-Relevant trace:
-19:44:00.359141 run-command.c:667       trace: run_command: git
-add--interactive --patch -- ':(exclude,prefix:0)bar' ''
-Note the added empty string pathspec
-
-Affects:
-git version 2.31.1.windows.1
+;-)
