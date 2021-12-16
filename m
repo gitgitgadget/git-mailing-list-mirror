@@ -2,87 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CFA0C433F5
-	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 15:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 274BFC433F5
+	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 15:55:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238690AbhLPPsC convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 16 Dec 2021 10:48:02 -0500
-Received: from mail-pj1-f41.google.com ([209.85.216.41]:45705 "EHLO
-        mail-pj1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238681AbhLPPr6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 10:47:58 -0500
-Received: by mail-pj1-f41.google.com with SMTP id f18-20020a17090aa79200b001ad9cb23022so23029508pjq.4
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 07:47:58 -0800 (PST)
+        id S232918AbhLPPzV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 10:55:21 -0500
+Received: from mail-pj1-f54.google.com ([209.85.216.54]:46937 "EHLO
+        mail-pj1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230358AbhLPPzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 10:55:21 -0500
+Received: by mail-pj1-f54.google.com with SMTP id np6-20020a17090b4c4600b001a90b011e06so23044415pjb.5
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 07:55:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=62pEJR3TD0me6oqwHfYcVATYzqM1AaANQwpAQP2yWH8=;
-        b=6iWgH1eVXGdUykbD0e3uFjYwhH2PFzpvBiUN1IA+EnqRQITLxU7sJOCVS8DQk31fP7
-         mPgEOKtXp/78zJQRSDnHdbqL/RxmHiXnsaAqYRZNJ2QG8rzVmEc09taaqDigxqss6JJ/
-         2WW8ogfBHpt5F1pVAoPx+stNgWaIy5LZZjdoCCmJNTHyxmVNx+fJW1fa3W/v2/Uzzuq8
-         yVmr9q2bGFq8GJRfH1oYMQ5BraPHZTKhKiO4f2zaZfzn5w2PYkDyLBUv8DMdhln4Wdwi
-         gdWjPcfH6rCCJ/8Uo/wNKAseRqwa00xgppF92YgHRC1NI6P/bTcTbUJ6zK/OjgeRslsH
-         d9UQ==
-X-Gm-Message-State: AOAM530Mjn0XwfUfDhT7i3nM8MdGwAYR2mg/+Fh75LZl9/XsfQbhNd5/
-        qe06E48JpUelyiOa+0gnxK6Ag6PpLlTKy0I7v1Q=
-X-Google-Smtp-Source: ABdhPJweWdwQV8CwXh2RC4j9ICsoBdjuQlfPVLg+XvUDVi/WKizHdz5B2DFqg1pw0gavSOsuBiYzQAcL+RMOedTWxiE=
-X-Received: by 2002:a17:903:1247:b0:143:b9b9:52a2 with SMTP id
- u7-20020a170903124700b00143b9b952a2mr17135520plh.35.1639669677571; Thu, 16
- Dec 2021 07:47:57 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=rRcZ6XJVSzPhBPXzs7jV7iWLVm8atKzEP0sq1evAXFo=;
+        b=vtMr/9G2CGe9a5bt60j6Ax89aA/X/3L1XdjvgG6Cjs2I+NPQ7E/aFz256wJWTShVJ7
+         pRfHzgEtaXITZTjqfzo6BNgXBDeSAFURY5U8XmCv19xs3t6w2p8XIBKBqU2SH/sdMSRs
+         jw9ndG00Ad26s4VFDd8NmzUY1oM+QEae3QUu9pRZ2g13SUngwwpkZ4MXhI8vw5OAeEAm
+         Y4LySSKLaPFQQEkyuxGNa9w41eEdCRCjCSG48tjT9jWSKNsJ3WfAjR16Ptn1SSkRSyO6
+         Gp6goktfW5/hItfAdYOV2qAguTyNmgtBpSfcim34+p7M37aolM/GrXJChpDS6zVh+8RM
+         6lxw==
+X-Gm-Message-State: AOAM53219hscYyx+GndeQF1w/+2LpON1juJP97AtVw6S92tP+OALhaLN
+        s7pVP6Mv4HMeA9dBrR03uOKjDMcSjYTcxetco55SINgQVUG8Ag==
+X-Google-Smtp-Source: ABdhPJyW2sL0jD7tpaXGM1SkQDtmVJN3H4sZuUFUeJCBDDF23jZck5whT9QK4mvGUB/J8EDr33P29Q5HHkh60mI29bM=
+X-Received: by 2002:a17:90b:783:: with SMTP id l3mr5107691pjz.104.1639670120770;
+ Thu, 16 Dec 2021 07:55:20 -0800 (PST)
 MIME-Version: 1.0
-References: <20211213063059.19424-1-sunshine@sunshineco.com>
- <20211213063059.19424-6-sunshine@sunshineco.com> <20211213102224.y5psbojmivlxe5px@fs>
- <CAPig+cSKn6wdPKc=b8Xjqy5D=bVdu6FQtYKJuwN2VoV7pEEgHw@mail.gmail.com>
- <20211213154327.pmhopjbdlkz7dgjh@fs> <211216.86zgp0adls.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211216.86zgp0adls.gmgdl@evledraar.gmail.com>
+References: <pull.1166.git.git.1639604468498.gitgitgadget@gmail.com>
+ <xmqqh7b933ej.fsf@gitster.g> <20211216062709.b4tcagi6qcqhasrh@gmail.com>
+In-Reply-To: <20211216062709.b4tcagi6qcqhasrh@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 16 Dec 2021 10:47:46 -0500
-Message-ID: <CAPig+cT_38g51RtcMAf184jjB3Zr67gv=rO0oEY1DG7asnyUJg@mail.gmail.com>
-Subject: Re: [PATCH 05/15] t/Makefile: optimize chainlint self-test
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Fabian Stelzer <fs@gigacodes.de>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
+Date:   Thu, 16 Dec 2021 10:55:09 -0500
+Message-ID: <CAPig+cQ9zFE+83e4fwxLfL18Pf5=SOoDKD7RqhmJ3DmYUDKfow@mail.gmail.com>
+Subject: Re: [PATCH] help: add space after autocorrect prompt
+To:     Johannes Altmanninger <aclopte@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        kashav madan via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        kashav madan <kshvmdn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 16, 2021 at 8:22 AM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> > On 13.12.2021 09:27, Eric Sunshine wrote:
-> >>It's not seen in the patch context, but earlier in the file we have:
-> >>
-> >>    CHAINLINTTESTS = $(sort $(...,$(wildcard chainlint/*.test)))
-> >>
-> >>which provides stability via `sort`, thus ensures that the order of
-> >>the ".test" and ".expect" match.
-> >>
-> >>I think that addresses your concern (unless I misunderstand your observation).
+On Thu, Dec 16, 2021 at 6:18 AM Johannes Altmanninger <aclopte@gmail.com> wrote:
+> On Wed, Dec 15, 2021 at 02:32:36PM -0800, Junio C Hamano wrote:
+> > you'll notice that existing message given to git_prompt look like
+> > these:
+> >
+> >     yesno = git_prompt(_("Are you sure [Y/n]? "), PROMPT_ECHO);
+> >
+> >     yesno = git_prompt(_("Do you want me to do it for you "
+> >                          "[Y/n]? "), PROMPT_ECHO);
+> >
+> >     strbuf_addf(&msg, _("Run '%s' instead? (y/N)"), assumed);
+> >     answer = git_prompt(msg.buf, PROMPT_ECHO);
+> >
+> >  - It does not leave a SP before where the end-user input goes;
+> >  - It append (y/N) _after_ question mark;
 >
-> But just FWIW I think both of you are wrong about the potenital for a
-> ".test" and ".expect" bug here.
+> I actually prefer this one;
 >
-> I.e. yes the CHAINLINTTESTS variable is sorted:
+>         Run 'status' instead? [y/N]
 >
-> But in Eric's patch we just have this relevant to this concern of
-> (paraphrased) "would it not be sorted break it?":
+> sounds better than
 >
->         +       sed -e '/^# LINT: /d' $(patsubst %,chainlint/%.test,$(CHAINLINTTESTS)) >'$(CHAINLINTTMP_SQ)'/tests && \
->         +       cat $(patsubst %,chainlint/%.expect,$(CHAINLINTTESTS)) >'$(CHAINLINTTMP_SQ)'/expect && \
+>         Run 'status' instead [y/N]?
 >
-> So it doesn't matter if it's sorted our not.
->
-> I.e. we've got {A,B,C}.{test,expect} files in a directory, and we're
-> constructing a "A.test" and "A.expect" via "$(patsubst)".
->
-> So if it's "A B C", "C B A", "A C B" etc. won't matter. We'll always get
-> ".test" files corresponding to ".expect".
+> but that's not a strong opinion.
 
-Yes, sorry, I meant to say something along these lines in my reply, in
-addition to mentioning `sort`, but forgot. Taking a look at this
-again, though, makes me wonder if the CHAINLINTTESTS assignment should
-be done with `:=` rather than `=` (unless GNU make is smart enough to
-only invoke the `wildcard` operation only once, in which case it
-wouldn't particularly matter).
+For what it's worth, I also find "Run 'status' instead? [y/N]" more
+sensible, and (at least based upon memory) it also seems to be the
+typical way it's done in other software (including software I've
+written). That said, it's a very minor point which needn't hold up the
+patch if kashav isn't interested in redoing this as a single patch
+which normalizes all callers to use a common format.
