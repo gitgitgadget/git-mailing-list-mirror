@@ -2,100 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F944C433EF
-	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 01:40:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC649C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 02:19:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232614AbhLPBkM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Dec 2021 20:40:12 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60181 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbhLPBkM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Dec 2021 20:40:12 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BCA58171584;
-        Wed, 15 Dec 2021 20:40:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vi7xswKBRwudWBMp6bXGA9F8xgSlJ4ZPGw94y0
-        x0S/o=; b=gmV8kHe3kIyzb+e8ryi8vlWKQMB6l3NbJtbE4GPM/HAQSfErt7vOJy
-        yvaNvBC/55mhhCvuks1wSG0eLqfwuBrNEnaeAsTIb90YzG2EorbVaZvk3buQeleA
-        7ClyTuE4efaNDgrGEO7rnjmWNkLEE1skKfBhpUBjtjvGYmyaWVDcU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B5772171583;
-        Wed, 15 Dec 2021 20:40:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S232877AbhLPCTx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Dec 2021 21:19:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45592 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232842AbhLPCTw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Dec 2021 21:19:52 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEB83C061574
+        for <git@vger.kernel.org>; Wed, 15 Dec 2021 18:19:51 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 21B04171582;
-        Wed, 15 Dec 2021 20:40:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jerry Zhang <jerry@skydio.com>
-Subject: Re: [PATCH V5 2/2] git-apply: add --allow-empty flag
-References: <20211213220327.16042-1-jerry@skydio.com>
-        <20211213220327.16042-2-jerry@skydio.com>
-Date:   Wed, 15 Dec 2021 17:40:06 -0800
-In-Reply-To: <20211213220327.16042-2-jerry@skydio.com> (Jerry Zhang's message
-        of "Mon, 13 Dec 2021 14:03:27 -0800")
-Message-ID: <xmqqee6dz5s9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 079D95D49A;
+        Thu, 16 Dec 2021 02:19:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1639621191;
+        bh=U5/d0QtYengWjzr+1YLVtwfKtsacjjDssqdzgSMc4oI=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=aVOUbptalcvljxlvCaZ4180LTa9PkgvnMInt0u/AZPx8APRDbGuooSAuFBXLnxT3c
+         FY0Kcl4AYOpyJV1XaSei0OHXwnvOQU3SqT1pHk7deDDhKURRrVmxWsbMVx6JIHMb89
+         SOZ/ytVx4cDkDc+naePqJp5H8GVJPi5sRrgEq+0oBMxxRVYk40i77+NIwSJ545quKe
+         7cJksaV+YEDE+Rd6o2KFKsSCTkX8pWOcj2/jidSshxW6Yri6fhHw1erfk2/qMpdy2I
+         47dHUMH3BQlp48+Usfxbdw3YRSihRSQdas1hAz6yQLT+d2XjsxS+K2LSMphhkHzvVw
+         P8KJtb53GTfSSowmEwjMx2CMK5lLQ6Sod9TlScbP+lIK3ZL+NG4ePOPgEMYDnEmLR1
+         3BQHTO6u5Z09Dh6YHWycJ71NnHHBj1GXszf7qbBTWbq6xQFsN5u4SxxbJN9FKLCpL1
+         RU4G3zaxL3bxdtFtU3OlzIttxSWGWHo9P7YIkLLmq2Md/dq3MxY
+Date:   Thu, 16 Dec 2021 02:19:47 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?Sm/Do28=?= Victor Bonfim 
+        <JoaoVictorBonfim@protonmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Fw: Curiosity
+Message-ID: <YbqiQ1B9ezF/RPOn@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Sm/Do28=?= Victor Bonfim <JoaoVictorBonfim@protonmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <Wlh_w2gSCDQ2ieJnIY7TStWrzxbwP98SNRIFMTYpva7SRFipqk63HEYFVF7wFn1oSHOkQNsjWGOa5L49vyRlvSLbuZqpmvOaDOHmFkdt2zw=@protonmail.com>
+ <wVwq9WVLpVt7MNLmIYOWCFKVSf8l532MD_vu4yTA8hl1fCARnW8nOUJjxYmKSzFw1SnPp5iYRD-aW4gAT2HnyQbC5aLBOvyT6npn88lxwNQ=@protonmail.com>
+ <xmqq8rwl91yf.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 19C65306-5E11-11EC-8D58-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="kMv/u8zSJmQB3eST"
+Content-Disposition: inline
+In-Reply-To: <xmqq8rwl91yf.fsf@gitster.g>
+User-Agent: Mutt/2.1.3 (2021-09-10)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jerry Zhang <jerry@skydio.com> writes:
 
->  t/t4126-apply-empty.sh      | 22 ++++++++++++++++++----
->  4 files changed, 30 insertions(+), 7 deletions(-)
-> ...
-> diff --git a/t/t4126-apply-empty.sh b/t/t4126-apply-empty.sh
-> index ceb6a79fe0..949e284d14 100755
-> --- a/t/t4126-apply-empty.sh
-> +++ b/t/t4126-apply-empty.sh
-> @@ -7,10 +7,12 @@ test_description='apply empty'
->  test_expect_success setup '
->  	>empty &&
->  	git add empty &&
->  	test_tick &&
->  	git commit -m initial &&
-> +	git commit --allow-empty -m "empty commit" &&
-> +	git format-patch --always HEAD~ >empty.patch &&
->  	for i in a b c d e
+--kMv/u8zSJmQB3eST
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-When merged with anything that has ab/mark-leak-free-tests-even-more
-topic, this will start breaking the tests, as it is my understanding
-that "git log" family hasn't been audited and converted for leak
-sanitizer.
+On 2021-12-15 at 18:07:20, Junio C Hamano wrote:
+> Jo=C3=A3o Victor Bonfim  <JoaoVictorBonfim@protonmail.com> writes:
+> > Since Git is almost used for everything at this point, is there
+> > any intent on providing better support for non textual file types?
+> > Why do I say this? Take this game mod which I follow as example ->
+> > https://github.com/SolariusScorch/XComFiles <- whenever I clone it
+> > Git takes a significant forever amount of time to download 452 MB
+> > of files whose some part, from my perspective, isn't being delta
+> > compressed like the text files are (since, whenever reading a log
+> > of what changes were made, git creates and undoes modes for all
+> > binary files, some of which only changed by a pixel from one
+> > colour to another).
+>=20
+> Our delta compression does not care whether the contents are text or
+> binary, so if it is not compressed well, so it can be a sign that
+> the contents are not compressible to begin with, at least with the
+> xdelta binary-diff-patch engine we use.  Improvement designs,
+> algorithms and patches are always welcome ;-)
 
-This is sort of water under the bridge, as the other topic is
-already in 'master', but come to think of it, the strategy we used
-with TEST_PASSES_SANITIZE_LEAK variable was misguided.  
+To expand on this, if what you're storing is already compressed, like
+Ogg Vorbis files or PNGs, like are found in that repository, then
+generally they will not delta well.  This is also true of things like
+Microsoft Office or OpenOffice documents, because they're essentially
+Zip files.
 
-If the git subcommands a single test script uses were only the
-subcommands that the test script wants to test, the approach to
-default to "this subcommand has not been made leak sanitizer clean",
-and then to add TEST_PASSES mark as we sanitize the subcommand makes
-perfect sense, but most test scripts need to run git subcommands
-that are *not* the focus of the test---they run them only to prepare
-the scene in which the subcommands being tested are excersized.  In
-such a situation (which is exactly what happens here), marking that
-"right now, all the tested subcommands and also all the subcommands
-that happen to be exercised to prepare fixture are clean" would
-force us to flip-flop with "now we use a subcommand we didn't use in
-this script before to prepare the scene, and it is not yet sanitizer
-clean, so we need to unmark it", which is not quite ideal, but is
-much better than forcing the contributor who is *not* working on making
-these subcommands leak-sanitizer-clean to worry about such a breakage.
+The delta algorithm looks for similarities between files to compress
+them.  If a file is already compressed using something like Deflate,
+used in PNGs and Zip files, then even very similar files will generally
+look very different, so deltification will generally be ineffective.
 
-I am tempted to drop the "TEST_PASSES" bit from this script for now,
-but I have to say that the "mark leak-free tests" topic took us in
-an awkward place.  We probably want to do something a bit more fine
-grained about it.
+There are two main solutions to this.  One is to store your data
+uncompressed in the repository and compress it as part of a build step.
+This makes your checkouts larger, but it makes your repository smaller.
 
-Thanks.
+The other is to store them outside of the repository proper.  Some folks
+use Git LFS for this, but you could also just store a manifest with file
+names and secure hashes, plus a download location for a public server.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--kMv/u8zSJmQB3eST
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYbqiQwAKCRB8DEliiIei
+gbhkAQDxrlikG+m6Ngk4PZPy3bvg/8LFXRMOywhIkJK767nobAEAqh3Ck47Rawc3
+Y3jVVvngPMw+7ec0S68OkLxBKehQYws=
+=tzab
+-----END PGP SIGNATURE-----
+
+--kMv/u8zSJmQB3eST--
