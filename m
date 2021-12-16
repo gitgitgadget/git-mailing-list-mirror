@@ -2,150 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D44DC433EF
-	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 18:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A289EC433F5
+	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 18:14:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240564AbhLPSL7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 13:11:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41324 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240567AbhLPSL5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 13:11:57 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9B51C061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 10:11:56 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id h17-20020aa79f51000000b0049473df362dso12194pfr.12
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 10:11:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=SqNdWHAs8f+HcyQ8b2P23jGkhEwR5DzMSRFzGirhvvI=;
-        b=QwzC5RZ/7szh1GqTosLzfRUSOc0EYimI/YwVHYcFESgJM+jTB+ZupncFbgsphWyWld
-         3ZPQaKPn/aaYMOb6kWtYf1VLZwIaxPzFweRM1hndyHgmA4Ke33TWR5tgUFsHes9/q84n
-         WCwE8AurXU9DjSBQwfW8SrQcxnFCPJ7qop0e2ckfC1i3l2duRbpJdTQRsLjTTK4j3xu8
-         JCk22o3mpDTwVMjWRC6PcdV7FaZov49NLni5yFingoDaCuebiH2xdQOz3h0Wdwly8PWl
-         GgHPlEJU0GszKYCqUFiaJ1ZlMUc6T7QytLFp2abj6dxBPnST6mzAB1PgrkcqhI4e0VJA
-         jtXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=SqNdWHAs8f+HcyQ8b2P23jGkhEwR5DzMSRFzGirhvvI=;
-        b=eVokIyLFIAygbFJoLAWr1HQ+XwSL20Q+bQ5dBiDrRkHDqGKsCXAn8ukyB3tjjftdYh
-         UGrDgbAOdMgLdSYVX9AW2B6Y5KGfRAo8fMzVXTfGe3hqxP4IXpJvvGwKVqCx8E2KOeoq
-         6f5MnfBxgRl0ut/39wBU5xOaALhSG1EtjiW2MQ3lfdrIP5Av7r30uMo69xvOXKc+aUi5
-         DvqaPO+YhtPO/s1dF39pDiU9cUpCk659TAW/aHoCA3jqbLCCdkaP6lU1yCDsCrs1c9WC
-         Qnbv1zDH/tPgWCYLPpJAKciO/slwPRlUIaA2D+WnFzR+Dlb8eArGzisKxEdGn/zVj5U9
-         4I4A==
-X-Gm-Message-State: AOAM530c6V5sSz2OIHc1dVfj30TwjcVGU3LulMqPy+nrRZamf64Hf5TK
-        tG9n53sq3KVpKU2cJ+w5s7EnGAI6ic4W3Q==
-X-Google-Smtp-Source: ABdhPJx7+9sbtWFxeMpyC7eGD6ihF4x8tI4vz1YHCzbOkybZJZdGKMCWY7pA4MsdKjbtZ5oFlCO/Oi9EZOpssg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:c203:: with SMTP id
- e3mr588804pjt.0.1639678316100; Thu, 16 Dec 2021 10:11:56 -0800 (PST)
-Date:   Thu, 16 Dec 2021 10:11:54 -0800
-In-Reply-To: <20211213225842.768852-1-jonathantanmy@google.com>
-Message-Id: <kl6lwnk4to5x.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <kl6lbl1p9zjf.fsf@chooglen-macbookpro.roam.corp.google.com> <20211213225842.768852-1-jonathantanmy@google.com>
-Subject: Re: [PATCH] builtin/fetch: skip unnecessary tasks when using --negotiate-only
-From:   Glen Choo <chooglen@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S238911AbhLPSOO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 13:14:14 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53436 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231582AbhLPSON (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 13:14:13 -0500
+Received: (qmail 22087 invoked by uid 109); 16 Dec 2021 18:14:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Dec 2021 18:14:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20187 invoked by uid 111); 16 Dec 2021 18:14:12 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Dec 2021 13:14:12 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 16 Dec 2021 13:14:11 -0500
+From:   Jeff King <peff@peff.net>
+To:     Andriy Makukha via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Andriy Makukha <andriy.makukha@gmail.com>
+Subject: Re: [PATCH] strlcpy(): safer and faster version
+Message-ID: <YbuB8xeHLNSYnv/a@coredump.intra.peff.net>
+References: <pull.1097.git.1639675881065.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1097.git.1639675881065.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Thu, Dec 16, 2021 at 05:31:20PM +0000, Andriy Makukha via GitGitGadget wrote:
 
-> Glen Choo <chooglen@google.com> writes:
->> Jonathan Tan <jonathantanmy@google.com> writes:
->> 
->> > Glen Choo <chooglen@google.com> writes:
->> >> `git fetch --negotiate-only` does not fetch objects and thus, it should
->> >> not perform certain auxiliary tasks like updating submodules, updating
->> >> the commit graph, or running gc. Although send_pack() invokes `git fetch
->> >> --negotiate-only` correctly, cmd_fetch() also reads config variables,
->> >> leading to undesirable behavior, like updating submodules if
->> >> `submodule.recurse=true`.
->> >> 
->> >> Make cmd_fetch() return early if --negotiate-only was specified so that
->> >> these auxiliary tasks are skipped.
->> >> 
->> >> Signed-off-by: Glen Choo <chooglen@google.com>
->> >> ---
->> >> `git fetch --negotiate-only` is used during push negotiation to
->> >> determine the reachability of commits. As its name implies, only
->> >> negotiation is performed, not the actual fetching of objects. However,
->> >> cmd_fetch() performs certain tasks with the assumption that objects are
->> >> fetched:
->> >> 
->> >> * Submodules are updated if enabled by recurse.submodules=true, but
->> >>   negotiation fetch doesn't actually update the repo, so this doesn't
->> >>   make sense (introduced in [1]).
->> >> * Commit graphs will be written if enabled by
->> >>   fetch.writeCommitGraph=true. But according to
->> >>   Documentation/config/fetch.txt [2], this should only be done if a
->> >>   pack-file is downloaded
->> >> * gc is run, but according to [3], we only do this because we expect
->> >>   `git fetch` to introduce objects
->> >> 
->> >> Instead of disabling these tasks piecemeal, let's just make cmd_fetch()
->> >> return early if --negotiate-only was given. To accommodate possible
->> >> future options that don't fetch objects, I opted to introduce another
->> >> `if` statement instead of putting the early return in the existing
->> >> `if (negotiate_only)` block.
->> >
->> > Some of this probably should be in the commit message too.
->> 
->> I suppose you mean the explanation of why the tasks are irrelevant to
->> negotiation fetch? i.e. 
->> 
->>    * Submodules are updated if enabled by recurse.submodules=true...
->>    * Commit graphs will be written if enabled by...
->>    * gc is run, but according to [3]...
->
-> Yes - why the behavior is undesirable, and the way you're doing it (by
-> adding another "if" statement).
->
-> After looking at this, more concretely, it might be better to use the
-> part below the "---" as your commit message. :-) Just note that we're
-> not just accommodating future options that don't fetch objects - "fetch"
-> already may not fetch objects (e.g. if the ref we want doesn't exist or
-> if we already have all the objects).
+> Original strlcpy() has a significant disadvantage of being both unsafe
+> and inefficient. It unnecessarily calculates length of `src` which may
+> result in a segmentation fault if `src` is not terminated with a
+> NUL-character.
 
-Good suggestion. I'll clean it up for brevity.
+I think any code that passes such a "src" is still broken after your
+code. If the length of "src" is less than "size", then the result in
+"dest" will contain garbage we read from the memory after "src".
 
->
->> > Maybe add a check here that --recurse-submodules was not explicitly
->> > given.
->> 
->> Hm, that's not a bad idea, but it's not so easy because we don't have
->> RECURSE_SUBMODULES_EXPLICIT so it's not easy to tell whether or not
->> submodule recursion was enabled by CLI option or config.
->> 
->> This is the exact same use case I encountered with "branch
->> --recurse-submodules" [1]. I think this means that we should consider
->> standardizing the parsing of submodule.recurse + --recurse-submodules. I
->> haven't done it yet because it's a little tricky and hard to review.
->> 
->> So I'll punt on this check until we get RECURSE_SUBMODULES_EXPLICIT.
->
-> Hmm...can we separate out the recurse_submodules variable into one
-> that's given by config and one that's given by CLI argument?
+Likewise in that case using strnlen() isn't any faster, since it has to
+look at the same number of bytes either way (it may even be slower since
+its loop has two conditions to check).
 
-This would be similar to what I did for branch --recurse-submodules [1],
-which, as I noted in my cover letter [2], is easier to understand, but a
-little inconsistent with the rest of the --recurse-submodules parsing.
+> In this fix, if `src` is too long, strlcpy() returns `size`. This
+> allows to still detect an error while fixing the mentioned
+> vulnerabilities. It deviates from original strlcpy(), but for a good
+> reason.
 
-I'm not very enthusiastic about adding more inconsistency, and since
-this check isn't critical to this bugfix (and I think there is very
-little chance that anyone would run afoul of this check any time soon)
-I'd like to hold off on it until RECURSE_SUBMODULES_EXPLICIT.
+This could potentially break callers of strlcpy(), though, because it's
+changing the semantics of the return value. For example, if they use the
+return value to expand a buffer to hold the result.
 
-Unless you think I'm missing something of course :)
+I do think the proposed semantics are better (I have actually fixed a
+real overflow bug where somebody assumed strlcpy() returned the number
+of bytes written). But we probably should not call it strlcpy(), because
+that's has well-known behavior that we're not meeting.
 
-[1] https://lore.kernel.org/git/20211216003213.99135-6-chooglen@google.com
-[2] https://lore.kernel.org/git/20211216003213.99135-1-chooglen@google.com
+I don't think any of the current code would be broken by this (most does
+not even look at the return value at all). It just seems like an
+accident waiting to happen.
+
+Personally, I don't love strlcpy() in the first place. Avoiding heap
+overflows is good, but unexpected truncation can also be buggy. That's
+why try to either size buffers automatically (strbuf, xstrfmt,
+FLEX_ALLOC, etc) or assert that we didn't truncate (xsnprintf).
+
+Some cases could probably be converted away from strlcpy(). For
+instance, the color stuff in add-interactive.c should be using
+xsnprintf(), since the point of COLOR_MAXLEN is to hold the
+longest-possible color. The ones in difftool.c probably ought to be
+strbufs. There are definitely some that want the truncation semantics
+(e.g., usernames in archive-tar.c). We might be better off providing a
+function whose name makes it clear that truncation is OK.
+
+>  size_t gitstrlcpy(char *dest, const char *src, size_t size)
+>  {
+> -	size_t ret = strlen(src);
+> +	/*
+> +	 * NOTE: original strlcpy returns full length of src, but this is
+> +	 * unsafe. This implementation returns `size` if src is too long.
+> +	 * This behaviour is faster and still allows to detect an issue.
+> +	 */
+> +	size_t ret = strnlen(src, size);
+
+Also, strnlen() isn't portable, so we'd need a solution there (open
+coding or yet another compat wrapper).
+
+-Peff
