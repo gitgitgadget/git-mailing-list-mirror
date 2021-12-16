@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85FA8C4332F
-	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 18:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31D47C433EF
+	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 18:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240601AbhLPSTK (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S240605AbhLPSTK (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 16 Dec 2021 13:19:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42982 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233310AbhLPSTI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 13:19:08 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC445C061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 10:19:07 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id o29so48292wms.2
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 10:19:07 -0800 (PST)
+        with ESMTP id S240597AbhLPSTJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 13:19:09 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA895C06173F
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 10:19:08 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id u17so45769886wrt.3
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 10:19:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=01Bu6mIx6dPIc1HRX7VZqa6Gwy0lZhIlCxWEp8DiEIE=;
-        b=oA2zC0101+g1ANn1gR6VDVIY12o28teE4vZNh+hs3+rSSahplWutEE1N+W/ItzrZGf
-         j9RtvtxD9Il/mnRvvS3jobzt3kYuWuPp1stI3jvEkCZLFdWgi55ZCPhyWEEti9SHZOON
-         +YUIRLARaQXEF/Mj3TDg9KTkEUoHD13fs0h0aeMd8kHxY5uCRig4xhm4Faddsa0a/pMi
-         vHZlV5y3hEbShmfDyaBEgXaJN3GeYv0aZT2KCFwnEm1ku9rMAiPkghTX4Ywj7t7zcdD5
-         h33qjfHFX7GARJKjAzg4bUEk6d6xHwORX/P5H23byAyzaku4gocbdfbGZmX5+veyT3TU
-         rqtw==
+        bh=0vya9O40knFzZOacAZBIpormBNWO8oEVHVQ+Zul+k4w=;
+        b=ltG0NgBhdYd4FUBnaPZsR0Szi+T1sYz7SCvt1wF5e+BATCWN08JqeEVUJ+QTKFD4cW
+         fIRXYYTdLo3VW4DM+mr1eITqp1fCOvCukpvAwmcppVn+iCz4UkFipJn6AvoibZ4IGnqX
+         P75Cj7trBDuo7z4ya4NAUKz3/ypupzyfZh3i3NmJUdsL2RG7YTFYzJ7hUZN2EhLfL7rI
+         I+xCtihDiJ+cPHGI8aJRKe4Vx4+RieZJSDe4wMLZ/Y/jTg5ZRcLcuE3yjck0cVmoBN05
+         IgiJUleTDLiUySeh3H07Sma4FhbByA0A22JHoyJM73nU5PbKSrrlfvmJDBDYgqUdb7Q6
+         y3Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=01Bu6mIx6dPIc1HRX7VZqa6Gwy0lZhIlCxWEp8DiEIE=;
-        b=nYEfx3HsTtduCQ1FSyozSP0Z5vMdP1KyVoQubw5KkyxNykJFb79G+jDkcmtSGLk7dY
-         ILq1RXCOvtP7UiSR9UlrVhorLhT+hgLJOdCtfOwuDM3DULdH+IDuwgHwesiuWvp2cVNd
-         puKCDRMI3u1s4nZFnNwR+yU2CTI5lOxkn7N2HuYMTQgfQ8dVb0ruMRNkJB4jlb4ernzj
-         ivZxrcX7xctI0bMNoQHmnxQ8r9mslPmUC+amc6GNy6NwlkCfZBE8ocF2XQIj+7FsxyZU
-         Xicb9ZuD4Ipj43csmn/t0NgyD5bvsWI3FOACwptBZQDmrfp0ZCKDMcdb9df8ubNSmkDK
-         tr7A==
-X-Gm-Message-State: AOAM533dur2icnFPg7qIVsCDas+O4TANVu/jJUhMyE8StD/nl5NEfn2w
-        YhdHzUkFkJ0PRmKN3xR4z2CdxmirnWo=
-X-Google-Smtp-Source: ABdhPJy6vrW8KvSzkSCcV6DOZLPPDN4Zt1dXEiqlihHaW3LLDbm8PRoLiVvSZyJEs78ZbAvqO22obg==
-X-Received: by 2002:a7b:c2e8:: with SMTP id e8mr6039554wmk.168.1639678745641;
-        Thu, 16 Dec 2021 10:19:05 -0800 (PST)
+        bh=0vya9O40knFzZOacAZBIpormBNWO8oEVHVQ+Zul+k4w=;
+        b=NMK57gapPfgksr6MypnMOHEeZPooIl7yvcenBJK4E7YPT2qUUpEMEqTJAct1eZ/5px
+         /T6cwcnOXwP96uhTy5fjFEvehXymvQxIQiO28bqWkbjkzo2jdhcgWWM2G8e3k8xC/9bd
+         xUnirpujnP6Ew5wXfQgMH0plXzFk1bJyYFdeK0ceUPagXoncvzpeDeUOisxCRgDC7yLE
+         mW//AkrzYz+vz+reyei3VPiDdB8/RbcqOjl58Iu8EPmm43OlaqZlsfDZBQ/ALhl/gcME
+         7AXygkBPcfTBb9Z4HDfc2tD2rYdFF/XeLuDAkfu+l22zm9Hjk/Cq4lCI7+AUwCdTx7dB
+         TWQA==
+X-Gm-Message-State: AOAM531pqi5DcQnTir1s7gkPJLwVZSwbUiXEWHoonD+Xt5QI1d2qK+b3
+        FHdFwOHW9NuFxykMhAafC1UdeC0AaL0=
+X-Google-Smtp-Source: ABdhPJzFCULOrb7/poGaw/57QpA+iIyQK8ZOwYgWnFICJLQiobyG3WF5LqB2kQFdx/TvmFpr2DmdHg==
+X-Received: by 2002:a5d:58f2:: with SMTP id f18mr8292475wrd.98.1639678747064;
+        Thu, 16 Dec 2021 10:19:07 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n1sm5575278wmq.6.2021.12.16.10.19.05
+        by smtp.gmail.com with ESMTPSA id i9sm3039565wrb.84.2021.12.16.10.19.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 10:19:05 -0800 (PST)
-Message-Id: <e7672e70cc937ef3aaab9a36199470e01f6676a8.1639678735.git.gitgitgadget@gmail.com>
+        Thu, 16 Dec 2021 10:19:06 -0800 (PST)
+Message-Id: <4a70e569f8a292ef37d8e928f279d0b999b3982d.1639678739.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1166.v3.git.git.1639678734.gitgitgadget@gmail.com>
 References: <pull.1166.v2.git.git.1639609138813.gitgitgadget@gmail.com>
         <pull.1166.v3.git.git.1639678734.gitgitgadget@gmail.com>
 From:   "Kashav Madan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Dec 2021 18:18:51 +0000
-Subject: [PATCH v3 1/4] bisect--helper: normalize format string of yes/no
- prompts
+Date:   Thu, 16 Dec 2021 18:18:53 +0000
+Subject: [PATCH v3 3/4] add-patch: normalize format string of yes/no prompt
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,525 +69,343 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Kashav Madan <kshvmdn@gmail.com>
 
-Both callers of git_prompt in bisect--helper.c ask the user for yes/no
-confirmation. They both place the question mark after the choices,
-however this is inconsistent with how most UNIX-y tools do it. Update
-the format string to exclude the choices from the question.
+Move the question mark in the prompt before the choices to be more
+consistent with other similar prompts.
 
 Signed-off-by: Kashav Madan <kshvmdn@gmail.com>
 ---
- builtin/bisect--helper.c | 6 +++---
- po/bg.po                 | 6 +++---
- po/ca.po                 | 8 ++++----
- po/de.po                 | 8 ++++----
- po/el.po                 | 8 ++++----
- po/es.po                 | 8 ++++----
- po/fr.po                 | 8 ++++----
- po/git.pot               | 4 ++--
- po/id.po                 | 8 ++++----
- po/it.po                 | 6 +++---
- po/ko.po                 | 8 ++++----
- po/pl.po                 | 8 ++++----
- po/pt_PT.po              | 8 ++++----
- po/ru.po                 | 8 ++++----
- po/sv.po                 | 8 ++++----
- po/tr.po                 | 8 ++++----
- po/vi.po                 | 8 ++++----
- po/zh_CN.po              | 8 ++++----
- po/zh_TW.po              | 8 ++++----
- 19 files changed, 71 insertions(+), 71 deletions(-)
+ add-patch.c | 4 ++--
+ po/bg.po    | 2 +-
+ po/ca.po    | 4 ++--
+ po/de.po    | 4 ++--
+ po/el.po    | 4 ++--
+ po/es.po    | 6 +++---
+ po/fr.po    | 4 ++--
+ po/git.pot  | 2 +-
+ po/id.po    | 4 ++--
+ po/it.po    | 4 ++--
+ po/ko.po    | 4 ++--
+ po/pl.po    | 4 ++--
+ po/pt_PT.po | 4 ++--
+ po/ru.po    | 4 ++--
+ po/sv.po    | 6 +++---
+ po/tr.po    | 4 ++--
+ po/vi.po    | 4 ++--
+ po/zh_CN.po | 4 ++--
+ po/zh_TW.po | 4 ++--
+ 19 files changed, 38 insertions(+), 38 deletions(-)
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 28a2e6a5750..2bfbb75f08b 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -370,7 +370,7 @@ static int decide_next(const struct bisect_terms *terms,
- 		 * translation. The program will only accept English input
- 		 * at this point.
+diff --git a/add-patch.c b/add-patch.c
+index 8c41cdfe39b..9ff2d4f1749 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1245,8 +1245,8 @@ static int edit_hunk_loop(struct add_p_state *s,
+ 		 * of the word "no" does not start with n.
  		 */
--		yesno = git_prompt(_("Are you sure [Y/n]? "), PROMPT_ECHO);
-+		yesno = git_prompt(_("Are you sure? [Y/n] "), PROMPT_ECHO);
- 		if (starts_with(yesno, "N") || starts_with(yesno, "n"))
+ 		res = prompt_yesno(s, _("Your edited hunk does not apply. "
+-					"Edit again (saying \"no\" discards!) "
+-					"[y/n]? "));
++					"Edit again (saying \"no\" discards!)? "
++					"[y/n] "));
+ 		if (res < 1)
  			return -1;
- 		return 0;
-@@ -838,8 +838,8 @@ static int bisect_autostart(struct bisect_terms *terms)
- 	 * translation. The program will only accept English input
- 	 * at this point.
- 	 */
--	yesno = git_prompt(_("Do you want me to do it for you "
--			     "[Y/n]? "), PROMPT_ECHO);
-+	yesno = git_prompt(_("Do you want me to do it for you? "
-+			     "[Y/n] "), PROMPT_ECHO);
- 	res = tolower(*yesno) == 'n' ?
- 		-1 : bisect_start(terms, empty_strvec, 0);
- 
+ 	}
 diff --git a/po/bg.po b/po/bg.po
-index 51d7c7242f2..e0786caa274 100644
+index 10ba01d2817..5f768a72102 100644
 --- a/po/bg.po
 +++ b/po/bg.po
-@@ -11633,7 +11633,7 @@ msgstr "двоично търсене само по „%s“ подаване."
- #. at this point.
- #.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
-+msgid "Are you sure? [Y/n] "
- msgstr "Да се продължи ли? „Y“ —  ДА, „n“ — не"
- 
- #: builtin/bisect--helper.c:434
-@@ -11716,8 +11716,8 @@ msgstr "Започнете като изпълните командата „git
- #. at this point.
- #.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "Да се извърши ли автоматично? „Y“ —  ДА, „n“ — не"
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "Да се извърши ли автоматично? „Y“ —  ДА, „n“ — не "
- 
- #: builtin/bisect--helper.c:859
- msgid "Please call `--bisect-state` with at least one argument"
+@@ -826,7 +826,7 @@ msgstr "неуспешно изпълнение на „git apply --cached“"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
+ msgstr ""
+ "Редактираното парче не може да се приложи.  Да се продължи ли с "
+ "редактирането? (текущите редакции ще се отменят при отказ!): „y“ (да)/ "
 diff --git a/po/ca.po b/po/ca.po
-index 556b028cd8b..71673d48d01 100644
+index d9798fd530e..8419c7fe04f 100644
 --- a/po/ca.po
 +++ b/po/ca.po
-@@ -11355,8 +11355,8 @@ msgstr "bisecant amb només una comissió %s"
- #. translation. The program will only accept English input
- #. at this point.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
--msgstr "N'esteu segur [Y/n]? "
-+msgid "Are you sure? [Y/n] "
-+msgstr "N'esteu segur? [Y/n] "
+@@ -689,11 +689,11 @@ msgstr "«git apply --cached» ha fallat"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]?"
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n]"
+ " "
+ msgstr ""
+ "El tros editat no s'aplica. Editeu-lo de nou (si responeu «no» es "
+-"descartarà) [y/n]? "
++"descartarà)? [y/n] "
  
- #: builtin/bisect--helper.c:434
- msgid "no terms defined"
-@@ -11435,8 +11435,8 @@ msgstr "Cal començar per «git bisect start»\n"
- #. translation. The program will only accept English input
- #. at this point.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "Voleu que ho faci per vostè [Y/n]? "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "Voleu que ho faci per vostè? [Y/n] "
- 
- #: builtin/bisect--helper.c:859
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1290
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/de.po b/po/de.po
-index f00c21d896f..3e8ef2ed122 100644
+index 442627f3448..367cd73c5a4 100644
 --- a/po/de.po
 +++ b/po/de.po
-@@ -11429,8 +11429,8 @@ msgstr "binäre Suche nur mit einem %s Commit"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
--msgstr "Sind Sie sicher [Y/n]? "
-+msgid "Are you sure? [Y/n] "
-+msgstr "Sind Sie sicher? [Y/n] "
+@@ -654,10 +654,10 @@ msgstr "'git apply --cached' schlug fehl."
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
+ msgstr ""
+ "Ihr bearbeiteter Patch-Block kann nicht angewendet werden.\n"
+-"Erneut bearbeiten? (\"n\" verwirft Bearbeitung!) [y/n]?"
++"Erneut bearbeiten? (\"n\" verwirft Bearbeitung!)? [y/n] "
  
- #: builtin/bisect--helper.c:434
- msgid "no terms defined"
-@@ -11511,8 +11511,8 @@ msgstr "Sie müssen mit \"git bisect start\" beginnen\n"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "Wollen Sie, dass ich es für Sie mache [Y/n]? "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "Wollen Sie, dass ich es für Sie mache? [Y/n] "
- 
- #: builtin/bisect--helper.c:859
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1290
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/el.po b/po/el.po
-index 703f46d0c7c..27c8c488ea1 100644
+index b826b73d460..f5a7936b4a6 100644
 --- a/po/el.po
 +++ b/po/el.po
-@@ -8202,7 +8202,7 @@ msgstr ""
- #. at this point.
- #.
- #: builtin/bisect--helper.c:329
--msgid "Are you sure [Y/n]? "
-+msgid "Are you sure? [Y/n] "
- msgstr "Επιβεβαιώνετε [Y/n]; "
- 
- #: builtin/bisect--helper.c:376
-@@ -19779,7 +19779,7 @@ msgstr "Χρειάζεται να αρχίσετε με \"git bisect start\""
- #. translation. The program will only accept English input
- #. at this point.
- #: git-bisect.sh:60
--msgid "Do you want me to do it for you [Y/n]? "
-+msgid "Do you want me to do it for you? [Y/n] "
+@@ -20795,10 +20795,10 @@ msgstr ""
+ #. of the word "no" does not start with n.
+ #: git-add--interactive.perl:1213
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
  msgstr ""
+ "Η επεξεργασμένη αλλαγή σας δεν εφαρμόζεται. Να γίνει επεξεργασία πάλι (με \"n"
+-"\" απορρίπτεται!) [y/n];"
++"\" απορρίπτεται!); [y/n] "
  
- #: git-bisect.sh:101
-@@ -21272,8 +21272,8 @@ msgstr ""
- #. TRANSLATORS: please keep [y/N] as is.
- #: git-send-email.perl:825
- #, perl-format
--msgid "Are you sure you want to use <%s> [y/N]? "
--msgstr "Επιβεβαιώνετε πως θέλετε να χρησιμοποιήσετε <%s> [y/N]? "
-+msgid "Are you sure you want to use <%s>? [y/N] "
-+msgstr "Επιβεβαιώνετε πως θέλετε να χρησιμοποιήσετε <%s>? [y/N] "
- 
- #: git-send-email.perl:880
+ #: git-add--interactive.perl:1222
  msgid ""
 diff --git a/po/es.po b/po/es.po
-index ced2eb6d3d5..ef8ae6d471e 100644
+index 8e9143131d0..3877b1351e6 100644
 --- a/po/es.po
 +++ b/po/es.po
-@@ -11267,8 +11267,8 @@ msgstr "haciendo bisect solo con un commit %s"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
--msgstr "¿Estás seguro [Y/n]? "
-+msgid "Are you sure? [Y/n] "
-+msgstr "¿Estás seguro? [Y/n] "
+@@ -644,10 +644,10 @@ msgstr "falló 'git apply --cached'"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
+ msgstr ""
+-"Tu hunk editado no aplica. ¿Editar nuevamente (¡decir \"no\" descarta!) [y/"
+-"n]? "
++"Tu hunk editado no aplica. ¿Editar nuevamente (¡decir \"no\" descarta!)? [y/"
++"n] "
  
- #: builtin/bisect--helper.c:434
- msgid "no terms defined"
-@@ -11347,8 +11347,8 @@ msgstr "Debes iniciar con \"git bisect start\"\n"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "¿Quieres que lo haga por ti [Y/n]? "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "¿Quieres que lo haga por ti? [Y/n] "
- 
- #: builtin/bisect--helper.c:859
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1290
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/fr.po b/po/fr.po
-index e950f87add0..9812213b2fe 100644
+index ebb5b73ce3b..11b83570f71 100644
 --- a/po/fr.po
 +++ b/po/fr.po
-@@ -11445,8 +11445,8 @@ msgstr "bissection avec seulement un commit %s"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
--msgstr "Confirmez-vous [Y/n] ? "
-+msgid "Are you sure? [Y/n] "
-+msgstr "Confirmez-vous ? [Y/n] "
+@@ -714,10 +714,10 @@ msgstr "'git apply --cached' a échoué"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
+ msgstr ""
+ "Votre section éditée ne s'applique pas. L'éditer à nouveau (\"no\" "
+-"l'élimine !) [y|n] ? "
++"l'élimine !) ? [y|n] "
  
- #: builtin/bisect--helper.c:434
- msgid "no terms defined"
-@@ -11526,8 +11526,8 @@ msgstr "Vous devez démarrer avec \"git bisect start\"\n"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "Souhaitez-vous que je le fasse pour vous [Y/n] ? "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "Souhaitez-vous que je le fasse pour vous ? [Y/n] "
- 
- #: builtin/bisect--helper.c:859
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1290
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/git.pot b/po/git.pot
-index 78fea37065b..c3102deb5d2 100644
+index 4ef2f39b950..0fe5805d8ec 100644
 --- a/po/git.pot
 +++ b/po/git.pot
-@@ -10385,7 +10385,7 @@ msgstr ""
- #. at this point.
- #.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
-+msgid "Are you sure? [Y/n] "
+@@ -567,7 +567,7 @@ msgstr ""
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
  msgstr ""
  
- #: builtin/bisect--helper.c:434
-@@ -10460,7 +10460,7 @@ msgstr ""
- #. at this point.
- #.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
-+msgid "Do you want me to do it for you? [Y/n] "
- msgstr ""
- 
- #: builtin/bisect--helper.c:859
+ #: add-patch.c:1290
 diff --git a/po/id.po b/po/id.po
-index c1afc2a32f3..3b8b0c39e51 100644
+index b41e290c94a..3a9f703a106 100644
 --- a/po/id.po
 +++ b/po/id.po
-@@ -10734,8 +10734,8 @@ msgstr "membagi dua hanya dengan sebuah komit %s"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
--msgstr "Anda yakin [Y/n]?"
-+msgid "Are you sure? [Y/n] "
-+msgstr "Anda yakin? [Y/n] "
+@@ -631,10 +631,10 @@ msgstr "'git apply --cached' gagal"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
+ msgstr ""
+ "Bingkah Anda tak diterapkan. Sunting lagi (bilang \"n\" untuk \"tidak\" "
+-"buang!) [y/n]?"
++"buang!)? [y/n] "
  
- #: builtin/bisect--helper.c:434
- msgid "no terms defined"
-@@ -10813,8 +10813,8 @@ msgstr "Anda perlu memulai dengan \"git bisect start\"\n"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "Anda ingin saya melakukannya untuk Anda [Y/n]"
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "Anda ingin saya melakukannya untuk Anda [Y/n] "
- 
- #: builtin/bisect--helper.c:859
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1290
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/it.po b/po/it.po
-index c31560834d8..01c6d1f095e 100644
+index b4322699060..c077320c697 100644
 --- a/po/it.po
 +++ b/po/it.po
-@@ -10682,7 +10682,7 @@ msgstr "eseguo la bisezione solo con un commit %s"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:370
--msgid "Are you sure [Y/n]? "
-+msgid "Are you sure? [Y/n] "
- msgstr "Sei sicuro? [Y/n] "
+@@ -660,10 +660,10 @@ msgstr "'git apply --cached' non riuscito"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1241 git-add--interactive.perl:1244
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
+ msgstr ""
+ "L'hunk modificato non può essere applicato senza problemi. Modificarlo di "
+-"nuovo (se rispondi \"no\", sarà eliminato!) [y/n]? "
++"nuovo (se rispondi \"no\", sarà eliminato!)? [y/n] "
  
- #: builtin/bisect--helper.c:431
-@@ -10762,8 +10762,8 @@ msgstr "Devi iniziare con \"git bisect start\"\n"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:838
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "Vuoi che me ne occupi io [Y/n]? "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "Vuoi che me ne occupi io? [Y/n] "
- 
- #: builtin/bisect--helper.c:866
- msgid "perform 'git bisect next'"
+ #: add-patch.c:1284
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/ko.po b/po/ko.po
-index 5d190e52380..96d3a2a3be4 100644
+index 29c7a6896fd..1ae95afe670 100644
 --- a/po/ko.po
 +++ b/po/ko.po
-@@ -15994,8 +15994,8 @@ msgstr "\"git bisect start\" 명령으로 시작해야 합니다"
- #. translation. The program will only accept English input
- #. at this point.
- #: git-bisect.sh:60
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "지금 하시겠습니까 [Y/n]? "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "지금 하시겠습니까? [Y/n] "
+@@ -17274,10 +17274,10 @@ msgstr "부분 편집 파일을 읽기용으로 여는데 실패: '%s'"
+ #. of the word "no" does not start with n.
+ #: git-add--interactive.perl:1213
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
+ msgstr ""
+ "편집한 부분이 적용되지 않습니다. 다시 편집하시겠습니까 (\"no\"라고 하면 버립"
+-"니다!) [y/n]? "
++"니다!)? [y/n] "
  
- #: git-bisect.sh:121
- #, sh-format
-@@ -16061,8 +16061,8 @@ msgstr "경고: 하나의 $TERM_BAD 커밋에 대해서만 이등분."
- #. translation. The program will only accept English input
- #. at this point.
- #: git-bisect.sh:312
--msgid "Are you sure [Y/n]? "
--msgstr "확실합니까 [Y/n]? "
-+msgid "Are you sure? [Y/n] "
-+msgstr "확실합니까? [Y/n] "
- 
- #: git-bisect.sh:324
- #, sh-format
+ #: git-add--interactive.perl:1222
+ msgid ""
 diff --git a/po/pl.po b/po/pl.po
-index 0ec127e14cc..637a328a869 100644
+index 4d79160a15b..f9b6bc59dde 100644
 --- a/po/pl.po
 +++ b/po/pl.po
-@@ -11238,8 +11238,8 @@ msgstr "przeszukiwanie tylko z zapisem %s"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
--msgstr "Czy na pewno [Y/n]? "
-+msgid "Are you sure? [Y/n] "
-+msgstr "Czy na pewno? [Y/n] "
+@@ -689,10 +689,10 @@ msgstr "„git apply --cached” nie powiodło się"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
+ msgstr ""
+ "Zmieniony skrawek się nie stosuje.  Edytować ponownie (odpowiedź „nie” go "
+-"porzuci!) [y/n]? "
++"porzuci!)? [y/n] "
  
- #: builtin/bisect--helper.c:434
- msgid "no terms defined"
-@@ -11319,8 +11319,8 @@ msgstr "Musisz rozpocząć przez „git bisect start”\n"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "Chcesz, żeby to teraz zrobić [Y/n]? "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "Chcesz, żeby to teraz zrobić? [Y/n] "
- 
- #: builtin/bisect--helper.c:859
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1290
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/pt_PT.po b/po/pt_PT.po
-index 70e5c6d9c16..a9a67f15484 100644
+index 06da638e981..8cabcf9729c 100644
 --- a/po/pt_PT.po
 +++ b/po/pt_PT.po
-@@ -10900,8 +10900,8 @@ msgstr "bissetando apenas com uma memória %s"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:358
--msgid "Are you sure [Y/n]? "
--msgstr "Tem a certeza [Y/n]? "
-+msgid "Are you sure? [Y/n] "
-+msgstr "Tem a certeza? [Y/n] "
+@@ -844,10 +844,10 @@ msgstr "'git apply --cached' falhou"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
+ msgstr ""
+ "Problema na submissão de pedaço editado. Editar de novo (responder \"n\" "
+-"para \"não\" descarta!) [y/n]? "
++"para \"não\" descarta!)? [y/n] "
  
- #: builtin/bisect--helper.c:419
- msgid "no terms defined"
-@@ -10977,8 +10977,8 @@ msgstr "Deves começar com \"git bisect start\"\n"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:826
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "Quer que seja eu a fazer isso [Y/n]? "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "Quer que seja eu a fazer isso? [Y/n] "
- 
- #: builtin/bisect--helper.c:844
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1290
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/ru.po b/po/ru.po
-index 993d106f1f9..d091ea22e5a 100644
+index cc886655cfd..d8bc1acd810 100644
 --- a/po/ru.po
 +++ b/po/ru.po
-@@ -9796,8 +9796,8 @@ msgstr ""
- #. translation. The program will only accept English input
- #. at this point.
- #: builtin/bisect--helper.c:357
--msgid "Are you sure [Y/n]? "
--msgstr "Вы уверены [Y - да/n - нет]? "
-+msgid "Are you sure? [Y/n] "
-+msgstr "Вы уверены? [Y - да/n - нет] "
+@@ -577,9 +577,9 @@ msgstr ""
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1246 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]?"
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n]"
+ " "
+-msgstr "Изменённый вами блок не применяется. Редактировать снова (ответ «y» означает «нет»!) [y/n]? "
++msgstr "Изменённый вами блок не применяется. Редактировать снова (ответ «y» означает «нет»!)? [y/n] "
  
- #: builtin/bisect--helper.c:418
- msgid "no terms defined"
-@@ -9870,8 +9870,8 @@ msgstr ""
- #. translation. The program will only accept English input
- #. at this point.
- #: builtin/bisect--helper.c:825
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "Вы уверены, что хотите, чтобы я сделал это [Y] - да/[n] - нет? "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "Вы уверены, что хотите, чтобы я сделал это? [Y] - да/[n] - нет "
- 
- #: builtin/bisect--helper.c:843
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1289
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/sv.po b/po/sv.po
-index e3b17b6a0ef..6ccb7e7421c 100644
+index ea9fe33cf9e..685294c8bac 100644
 --- a/po/sv.po
 +++ b/po/sv.po
-@@ -11173,8 +11173,8 @@ msgstr "utför bisect med endast en %s incheckning"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
--msgstr "Är du säker [Y=ja/N=nej]? "
-+msgid "Are you sure? [Y/n] "
-+msgstr "Är du säker? [Y=ja/N=nej] "
+@@ -632,10 +632,10 @@ msgstr "\"git apply --cached\" misslyckades"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
+ msgstr ""
+-"Ditt redigerade stycke kan inte appliceras. Redigera igen (\"nej\" kastar!) "
+-"[y/n]? "
++"Ditt redigerade stycke kan inte appliceras. Redigera igen (\"nej\" kastar!)? "
++"[y/n] "
  
- #: builtin/bisect--helper.c:434
- msgid "no terms defined"
-@@ -11254,8 +11254,8 @@ msgstr "Du måste starta med \"git bisect start\"\n"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "Vill du att jag ska göra det åt dig [Y=ja/N=nej]? "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "Vill du att jag ska göra det åt dig? [Y=ja/N=nej] "
- 
- #: builtin/bisect--helper.c:859
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1290
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/tr.po b/po/tr.po
-index 06870900c4e..686b21459a3 100644
+index 46a1ae5a8d2..4c7cea44183 100644
 --- a/po/tr.po
 +++ b/po/tr.po
-@@ -11238,8 +11238,8 @@ msgstr "yalnızca bir %s işlemesi ile ikili arama yapılıyor"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
--msgstr "Emin misiniz [Y/n]? "
-+msgid "Are you sure? [Y/n] "
-+msgstr "Emin misiniz? [Y/n] "
+@@ -716,10 +716,10 @@ msgstr "'git apply --cached' başarısız oldu"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
+ msgstr ""
+ "Düzenlediğiniz parça uygulanamıyor. Yeniden düzenlensin mi (\"n (hayır)\" "
+-"ıskartaya çıkarır!) [y/n]? "
++"ıskartaya çıkarır!)? [y/n] "
  
- #: builtin/bisect--helper.c:434
- msgid "no terms defined"
-@@ -11317,8 +11317,8 @@ msgstr "\"git bisect start\" ile başlamalısınız\n"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "Bunu sizin yerinize benim yapmamı ister misiniz [Y/n]? "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "Bunu sizin yerinize benim yapmamı ister misiniz? [Y/n] "
- 
- #: builtin/bisect--helper.c:859
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1290
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/vi.po b/po/vi.po
-index be197ab594f..bfb84bd0049 100644
+index d9c0130af2b..0aed6d2d0a4 100644
 --- a/po/vi.po
 +++ b/po/vi.po
-@@ -11235,8 +11235,8 @@ msgstr "chỉ thực hiện việc bisect với một lần chuyển giao %s"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
--msgstr "Bạn có chắc chắn chưa [Y/n]? "
-+msgid "Are you sure? [Y/n] "
-+msgstr "Bạn có chắc chắn chưa? [Y/n] "
+@@ -641,10 +641,10 @@ msgstr "“git apply --cached” gặp lỗi"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
+ msgstr ""
+ "Hunk đã sửa của bạn không được áp dụng. Sửa lại lần nữa (nói \"n\" để loại "
+-"bỏ!) [y/n]? "
++"bỏ!)? [y/n] "
  
- #: builtin/bisect--helper.c:434
- msgid "no terms defined"
-@@ -11314,8 +11314,8 @@ msgstr "Bạn cần khởi đầu bằng \"git bisect start\"\n"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "Bạn có muốn tôi thực hiện điều này cho bạn không [Y/n]? "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "Bạn có muốn tôi thực hiện điều này cho bạn không? [Y/n] "
- 
- #: builtin/bisect--helper.c:859
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1290
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/zh_CN.po b/po/zh_CN.po
-index 60ffa45f7a0..9131b440e6f 100644
+index a51c81bfc4a..e785a8156ae 100644
 --- a/po/zh_CN.po
 +++ b/po/zh_CN.po
-@@ -11092,8 +11092,8 @@ msgstr "在只有一个 %s 提交的情况下二分查找"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
--msgstr "您确认么[Y/n]？ "
-+msgid "Are you sure? [Y/n] "
-+msgstr "您确认么? [Y/n] "
+@@ -754,8 +754,8 @@ msgstr "'git apply --cached' 失败"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
+-msgstr "您的编辑块不能被应用。重新编辑（选择 \"no\" 丢弃！） [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
++msgstr "您的编辑块不能被应用。重新编辑（选择 \"no\" 丢弃！）? [y/n] "
  
- #: builtin/bisect--helper.c:434
- msgid "no terms defined"
-@@ -11169,8 +11169,8 @@ msgstr "您需要执行 \"git bisect start\" 来开始\n"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "您想让我为您这样做么[Y/n]？ "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "您想让我为您这样做么? [Y/n] "
- 
- #: builtin/bisect--helper.c:859
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1290
+ msgid "The selected hunks do not apply to the index!"
 diff --git a/po/zh_TW.po b/po/zh_TW.po
-index f1df8b60a91..80e156c94fc 100644
+index c5b5f756f33..a1fb6b5267a 100644
 --- a/po/zh_TW.po
 +++ b/po/zh_TW.po
-@@ -10958,8 +10958,8 @@ msgstr "在只有一個 %s 提交的情況下二分搜尋"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:373
--msgid "Are you sure [Y/n]? "
--msgstr "您確認嗎[Y/n]？ "
-+msgid "Are you sure? [Y/n] "
-+msgstr "您確認嗎? [Y/n] "
+@@ -637,8 +637,8 @@ msgstr "「git apply --cached」失敗"
+ #. of the word "no" does not start with n.
+ #: add-patch.c:1247 git-add--interactive.perl:1242
+ msgid ""
+-"Your edited hunk does not apply. Edit again (saying \"no\" discards!) [y/n]? "
+-msgstr "未套用編輯區塊。是否重新編輯（輸入 “no” 捨棄！） [y/n]? "
++"Your edited hunk does not apply. Edit again (saying \"no\" discards!)? [y/n] "
++msgstr "未套用編輯區塊。是否重新編輯（輸入 “no” 捨棄！）? [y/n] "
  
- #: builtin/bisect--helper.c:434
- msgid "no terms defined"
-@@ -11036,8 +11036,8 @@ msgstr "您需要執行 \"git bisect start\" 來開始\n"
- #. at this point.
- #.
- #: builtin/bisect--helper.c:841
--msgid "Do you want me to do it for you [Y/n]? "
--msgstr "您想讓我為您這樣做嗎[Y/n]？ "
-+msgid "Do you want me to do it for you? [Y/n] "
-+msgstr "您想讓我為您這樣做嗎? [Y/n] "
- 
- #: builtin/bisect--helper.c:859
- msgid "Please call `--bisect-state` with at least one argument"
+ #: add-patch.c:1290
+ msgid "The selected hunks do not apply to the index!"
 -- 
 gitgitgadget
 
