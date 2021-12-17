@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E84AC4332F
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 00:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4C04C433F5
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 00:26:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230304AbhLQA0f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 19:26:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42290 "EHLO
+        id S230319AbhLQA0i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 19:26:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
         with ESMTP id S230300AbhLQA0f (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 16 Dec 2021 19:26:35 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E90C061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:34 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id e5so968435wrc.5
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:34 -0800 (PST)
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82E4BC061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:35 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id c4so933588wrd.9
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=jmAsePczrBgJMRHXNMKFfzSAis9Rcea40juGAJMAli0=;
-        b=jd3H+qvt+JgjizTuhc5iVx5BDFlDzHoO+d2xMfGddCEuh63Dlv6kgG+xxx6PzXZAL7
-         hRlM9qhJOwV5NmYAym+ASyocOcMvEsfZXaIoI/cLv6ibQwgilCvqrAv/t+PMjaehpSIX
-         ncgmDDLkXmbncj2ejYs/Ewea9r9xz2mAb0mL7g6/Sh+gSWzBX2EJOoB+Uj94b/cCkU+l
-         XbDvRVnt+xljfiPvKwgaVPBFC1vJdWFclucr+WmdOnh597qP1r09cPi7r2chUzg7nI0n
-         4odYCS19jJbreRSc9HIMjfimBqvVCevSKkUv/W5DfZBw/tWaJ5N3seIc8NCQM4FyFAIW
-         0Qlg==
+        bh=Ql3TtL5TZqGq4T4/ynaf1dyBXi4n/xbD4efcilH4oUQ=;
+        b=bXqHWJPq+OgB82K6kBnAOgB1Y6IWLGxCubn7fZlasDyMbRcswsMk1juaO4ixS3zXTv
+         XA91LrF0dboPJ1GxUsl0Zl14M3kuxTEL4c5vkgnp8/4odFWlOcxFY5/Lo+TwNoeOTMpj
+         5R6379HhmXg2d85QXrtJSIp2kcgOORWsQ5PDocj9k1EPQ6ucNaspE5J9U6wmBKtkWVsB
+         /aVb68toj7RL3UFMz6WuC2BWpSQDWluDiQ4QEofsYtjhGk0fXHv9BCcmCf6qpp/cvCiF
+         J/Vi0kjYs6bq23RDS9uJqRpvxrqmlXr5fI+aO1BNqWKJO3XHoMGiOOJQDVWOB5oO0XtJ
+         2+dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=jmAsePczrBgJMRHXNMKFfzSAis9Rcea40juGAJMAli0=;
-        b=TqvJ2vzjGv9RoTuG2ZPf8yW9sQ/oQBhEieP0jlw+AAzo7LKoh7OVYiMUxVdu0mK3N0
-         bqs2sTf2ZeTX99+BDylCd99OhGMJyM3kYbC33Gf8EF4+PipKu8h+FxTSKfSAlLQEm8GD
-         9ykgy32U/3e1Yy2sDP9NfV4jCKRrU2yebBSpBloXx3xTb3PtnD416Ocnhnd29m+hZ7re
-         DIlR666jkPaX0gFlG4NmVnDADKRtU4Le5hXYy4yWZpAWcq5e2zUYjKLAj6l2FvBLAReE
-         RrrhPGzfr9c1JKZKuPRCJGePUARK0MrlBFvTob2Fsq9ICez53IrTjeiTGgyvkDMhw60k
-         qMgg==
-X-Gm-Message-State: AOAM532DSYpKWyMuYTvEAHDCuiVflG/W96hCWok54iLLcnxlx/nwgwmB
-        NwiW60LdUvQvkD136Ndt9pJi+/SHfat6Rg==
-X-Google-Smtp-Source: ABdhPJxFkPLCxwfdYR95WNsLsxUN1OABlM2v1aQNd5abZYulT0/HAZcM6rfYRBTqq5ZiQLo/Dlaqgg==
-X-Received: by 2002:adf:9d4b:: with SMTP id o11mr363978wre.11.1639700792987;
-        Thu, 16 Dec 2021 16:26:32 -0800 (PST)
+        bh=Ql3TtL5TZqGq4T4/ynaf1dyBXi4n/xbD4efcilH4oUQ=;
+        b=p6P+Y5Vx2DPuPJkH6qhj+E/BygxZQOd8yMReB+Be/ME3oVbwdGEbrLGFT+EjHc+mym
+         P1Os+NVKGKEEBWOdwvd6HJT/jWz3IF051VSDoHLcRzJ5AEXh8i3J/6wioDwVn5Uv6cMO
+         9M5ednYOkYtQK56YUf7QPovKsPlRtSrc76o5pAANGEElKe+cKhA+W74p2pBdq8fCH70o
+         6zSdRZMocwgzeWhQm2nfmNIQI9qITPOIieCgWFm8RcSPHGK0ExCjws4aj4F2BW3byAyM
+         CqjMJepXEyNFHm1SMK85lKiSdiqZZ8RMgM7DhXWaQ14PZIfB+wtP8MgnMRB2/wCdgvLA
+         2QJQ==
+X-Gm-Message-State: AOAM532NLKxfanN3JqFP0KEYJWtu3tVXQj37dr7+DYYZSXfX/ZBp+QRt
+        NXceNUV/jqchGccYSDxZYNs0L1odXwETFA==
+X-Google-Smtp-Source: ABdhPJwDc/2WtXJOXH6XPNrQ6rq2n7zyHoYE43LrsseGqndrUKaA9Gkc6jj1wx7NObghz7jWhI6uWA==
+X-Received: by 2002:a5d:69ca:: with SMTP id s10mr364745wrw.218.1639700793860;
+        Thu, 16 Dec 2021 16:26:33 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j17sm8127349wmq.41.2021.12.16.16.26.32
+        by smtp.gmail.com with ESMTPSA id j17sm8127349wmq.41.2021.12.16.16.26.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 16:26:32 -0800 (PST)
+        Thu, 16 Dec 2021 16:26:33 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 02/11] Makefile: don't set up "perl/build" rules under NO_PERL=Y
-Date:   Fri, 17 Dec 2021 01:26:18 +0100
-Message-Id: <patch-02.11-37eeccc5646-20211217T002023Z-avarab@gmail.com>
+Subject: [PATCH 03/11] Makefile: use "=" not ":=" for po/* and perl/*
+Date:   Fri, 17 Dec 2021 01:26:19 +0100
+Message-Id: <patch-03.11-572a82c71a1-20211217T002023Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1119.g7a3fc8778ee
 In-Reply-To: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
 References: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
@@ -72,63 +72,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Do not define LIB_{PERL,CPAN}{,_GEN} if NO_PERL is defined. This
-changes no functionality, but makes it clear which of these rules are
-needed under NO_PERL=Y. See 20d2a30f8ff (Makefile: replace
-perl/Makefile.PL with simple make rules, 2017-12-10) for the initial
-implementation.
+Change these variable definitions from being simply-expanded to be
+recursively expanded instead. I.e. they'll be lazily expanded when
+used.
 
-We do for better or worse rely on "install-doc" calling
-"install-man-perl" regardless of whether NO_PERL=Y is defined or not,
-i.e. we'll always end up with that manual page, even if we don't have
-any of the Perl code installed. Let's add a comment about that
-adjacent to the rules that build perl/build.
+I added these in 5e9637c6297 (i18n: add infrastructure for translating
+Git with gettext, 2011-11-18) and 20d2a30f8ff (Makefile: replace
+perl/Makefile.PL with simple make rules, 2017-12-10), the reason for
+using ":=" over "=" was that I didn't know the difference in 2011 (I
+think I copied some POC code), and in 2017 I used the 2011 commit for
+reference.
+
+This doesn't make much if any of a practical difference, doing this is
+cheap either way, but as simply-expanded variables in our Makefile
+generally indicate special behavior (e.g. making a copy now, and
+modifying the RHS later) let's change these to show that nothing odd
+is going on here).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ Makefile | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index b21ffe25c2a..d4c31a2718f 100644
+index d4c31a2718f..cad9795ec0a 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2731,19 +2731,12 @@ endif
- po/build/locale/%/LC_MESSAGES/git.mo: po/%.po
+@@ -2719,11 +2719,11 @@ po/git.pot: $(GENERATED_H) FORCE
+ pot: po/git.pot
+ 
+ ifdef NO_GETTEXT
+-POFILES :=
+-MOFILES :=
++POFILES =
++MOFILES =
+ else
+-POFILES := $(wildcard po/*.po)
+-MOFILES := $(patsubst po/%.po,po/build/locale/%/LC_MESSAGES/git.mo,$(POFILES))
++POFILES = $(wildcard po/*.po)
++MOFILES = $(patsubst po/%.po,po/build/locale/%/LC_MESSAGES/git.mo,$(POFILES))
+ 
+ all:: $(MOFILES)
+ endif
+@@ -2732,10 +2732,10 @@ po/build/locale/%/LC_MESSAGES/git.mo: po/%.po
  	$(QUIET_MSGFMT)mkdir -p $(dir $@) && $(MSGFMT) -o $@ $<
  
-+ifndef NO_PERL
- LIB_PERL := $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/Git/*/*/*.pm)
- LIB_PERL_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
- LIB_CPAN := $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
- LIB_CPAN_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_CPAN))
+ ifndef NO_PERL
+-LIB_PERL := $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/Git/*/*/*.pm)
+-LIB_PERL_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
+-LIB_CPAN := $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
+-LIB_CPAN_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_CPAN))
++LIB_PERL = $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/Git/*/*/*.pm)
++LIB_PERL_GEN = $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
++LIB_CPAN = $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
++LIB_CPAN_GEN = $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_CPAN))
  
--ifndef NO_PERL
--all:: $(LIB_PERL_GEN)
--ifndef NO_PERL_CPAN_FALLBACKS
--all:: $(LIB_CPAN_GEN)
--endif
--NO_PERL_CPAN_FALLBACKS_SQ = $(subst ','\'',$(NO_PERL_CPAN_FALLBACKS))
--endif
--
  perl/build/lib/%.pm: perl/%.pm GIT-PERL-DEFINES
  	$(QUIET_GEN)mkdir -p $(dir $@) && \
- 	sed -e 's|@@LOCALEDIR@@|$(perl_localedir_SQ)|g' \
-@@ -2751,6 +2744,14 @@ perl/build/lib/%.pm: perl/%.pm GIT-PERL-DEFINES
- 	    -e 's|@@NO_PERL_CPAN_FALLBACKS@@|$(NO_PERL_CPAN_FALLBACKS_SQ)|g' \
- 	< $< > $@
- 
-+all:: $(LIB_PERL_GEN)
-+ifndef NO_PERL_CPAN_FALLBACKS
-+all:: $(LIB_CPAN_GEN)
-+endif
-+NO_PERL_CPAN_FALLBACKS_SQ = $(subst ','\'',$(NO_PERL_CPAN_FALLBACKS))
-+endif
-+
-+# install-man depends on Git.3pm even with NO_PERL=Y
- perl/build/man/man3/Git.3pm: perl/Git.pm
- 	$(QUIET_GEN)mkdir -p $(dir $@) && \
- 	pod2man $< $@
 -- 
 2.34.1.1119.g7a3fc8778ee
 
