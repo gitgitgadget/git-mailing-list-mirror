@@ -2,130 +2,224 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26F66C433EF
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 04:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D589C433EF
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 05:11:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232955AbhLQEu5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 23:50:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51734 "EHLO
+        id S232038AbhLQFLF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 00:11:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230331AbhLQEu5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 23:50:57 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C117FC061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 20:50:56 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id e3so3272102edu.4
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 20:50:56 -0800 (PST)
+        with ESMTP id S229506AbhLQFLF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 00:11:05 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C728C061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 21:11:05 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id i12so1254984pfd.6
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 21:11:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=VWUPqYzDaGyZoajOollIwlLEjDhi5TXE2fdw8zujYgo=;
-        b=GFpui0P1bo5S//yOWtcjGxEuJefqlIKLXLEd0sBZnes2aSB5QgIPZmqfyNKZWVPSps
-         U5WXVus42ZlgEK71Hj2dsx4V2wF9wlMX9YhlS7AbTdk+Onh5myUaoSWG+uB2MJjj+SyU
-         HtrXCqAQK7q9rs3ZkUEEp/MVgUhL4CxodrQYIdRtH+iHYh+chvmIFf6KyePzmQExFTlC
-         c4NxHYu8zbFqyfqibRMr5b99bzqXxQB+EUbAKb6WY0u/bZQdkMB9oYeDGSYM8/vMQO4o
-         60asWWyXvlRKd2MFp5/ZiUPLw/fHKPMQg86r5ig9LKqHyCUbCE+GyGx3OXTorWYTqIIk
-         LzGw==
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=a/r3Kb0ZwfCMBfIXx0yR37xO3D2K1tpNfHxHV4OO38s=;
+        b=KtmDwvWeRWz8mmtyRsgY4e75ACsUV5ON9ME5fqNVpFGKMpU1ED5e5F3nSnUlPt/067
+         qQzXI0VNM35hFJBevPlp6O2GSwDf+cFDpG4lpoTJeaEk3Wwbr8X1k7yK7u/DIwTpborV
+         l1Y+zoCSoJdb5MDogYjr7E+x8IYs5rZlifK2lFmy9ZH6qKjcdwHjlf3E7L323jN/gA+b
+         qj7L5OE3dr3b6tmqJnfCOTiLHSN1e/eBYj2OKm9JAmBYSQRYI8d575jygNFRzA8wBvMR
+         Rqs3DaU0zHT5WOLaRARApk9suvVPOATt+SAKx1y/nFr6rkKLlBFjFqLU/MaQYBeIbk2P
+         2sMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=VWUPqYzDaGyZoajOollIwlLEjDhi5TXE2fdw8zujYgo=;
-        b=zoxq9x2CPv7g9mvL3AJvSXlD4kQdHe8Eio55dWmDiv+5Hv48RLz/1nsXOL+RIMBW6Y
-         p9gKoUnyOzjOjOJuLEjuBDPRnUNphesji+Hk2vxvgu88rMi2HGNIA9ZrqoRlegSYMAzn
-         uLpXnJ5/FQgcIuKQaQA3/l/hYx+pl2P/xb2t7YJpytyaqIxLmMUodwIqXvRKVgD/uyhS
-         4CVVFbYSR/Fu6XGVY/WdIhkXJspoKGnAjuCKL3M/g4RTJMJFaYX8UEuSNr9avozLssK3
-         A2ZEvRVfTCyyH+cMEz3I83FDUKKdLA/RTUOIR99qkLgqqjf3LYdrMwXBE1BSisjhBzEG
-         vSGA==
-X-Gm-Message-State: AOAM530ny2DEJnC2ysaoZJ7qRim4cdLyeoIYqs9HytgCEh0zQOBaweyj
-        mf/z1USMnn7CXkBwKx+jmXdHD12nXWznSQ==
-X-Google-Smtp-Source: ABdhPJwp9q70lSwweuJX8EgAM/y3pieN3RjEebBiKkdqZVqCJJLI/lLFKxYFW39ssvyUbr+XTbsP1Q==
-X-Received: by 2002:a17:906:990c:: with SMTP id zl12mr1110330ejb.370.1639716655251;
-        Thu, 16 Dec 2021 20:50:55 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id gn8sm2406212ejc.23.2021.12.16.20.50.54
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=a/r3Kb0ZwfCMBfIXx0yR37xO3D2K1tpNfHxHV4OO38s=;
+        b=wSF4FHh4mpglTqzHk+07eSAASqrRkTc/4QZrrMS1eQGoVoYF7xwNhhlJjSBnz8cNwL
+         7EXJv1eH2Y/XyExVZDuEYt+lcqDwtJUK9T8je8s/v3X2HzbOAt2G34Pf+PvMu9PaPKAc
+         FiXNE1UZLt9wBDZZVp4kI2luX/XrtX7Md659u7+kwZuwP7jigvlVZdVbUWJsHkWZgXfM
+         xuajjTe3W5bCLCeC5dXvYr7l3zMARdxV0/HCsXnDL0ZnHVbEjVy2tLLRJ2cVdeOq61I6
+         3wIhnkus8BMA6rEuEELh/u2Q+Y0tLzEKIzWoSLbAPjG0+JN+Z7ZCov//1AXTgW1EDp4v
+         lFvA==
+X-Gm-Message-State: AOAM533S/wa5fwi35EegXNSWAnhht7Bg1ThGVKmLx4XfUEBAZdB/of34
+        S+aiYre5nprY9Di73KGZ8L/TJw==
+X-Google-Smtp-Source: ABdhPJwi2F1IQtAzYORyf5+t8KEKz+gBMYAzLDKWuK+ut0ykHKKs8FqnyAKV0m4YqRrEKMCPOOuQgg==
+X-Received: by 2002:aa7:9990:0:b0:4a1:57ff:3369 with SMTP id k16-20020aa79990000000b004a157ff3369mr1390507pfh.31.1639717864016;
+        Thu, 16 Dec 2021 21:11:04 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:a37:b5e2:96be:e5d5])
+        by smtp.gmail.com with ESMTPSA id om8sm10933619pjb.12.2021.12.16.21.11.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 20:50:54 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1my5Co-000jJB-BU;
-        Fri, 17 Dec 2021 05:50:54 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] t4204 is not sanitizer clean at all
-Date:   Fri, 17 Dec 2021 05:39:04 +0100
-References: <20211213220327.16042-1-jerry@skydio.com>
- <20211213220327.16042-2-jerry@skydio.com> <xmqqee6dz5s9.fsf@gitster.g>
- <xmqqtuf86t7z.fsf_-_@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqtuf86t7z.fsf_-_@gitster.g>
-Message-ID: <211217.861r2bal75.gmgdl@evledraar.gmail.com>
+        Thu, 16 Dec 2021 21:11:03 -0800 (PST)
+Date:   Thu, 16 Dec 2021 21:10:57 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v6 1/3] branch: accept multiple upstream branches for
+ tracking
+Message-ID: <Ybwb4UkQwAVRcJp5@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Glen Choo <chooglen@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, avarab@gmail.com, Johannes.Schindelin@gmx.de
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+ <cover.1639524556.git.steadmon@google.com>
+ <43d6f83fedc022c44d6a3be249e7fd8cd2a25007.1639524556.git.steadmon@google.com>
+ <kl6lo85g8grj.fsf@chooglen-macbookpro.roam.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <kl6lo85g8grj.fsf@chooglen-macbookpro.roam.corp.google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2021.12.16 11:57, Glen Choo wrote:
+> Josh Steadmon <steadmon@google.com> writes:
+> 
+> >  {
+> >  	const char *shortname = NULL;
+> >  	struct strbuf key = STRBUF_INIT;
+> > +	struct string_list_item *item;
+> >  	int rebasing = should_setup_rebase(origin);
+> >  
+> > -	if (skip_prefix(remote, "refs/heads/", &shortname)
+> > -	    && !strcmp(local, shortname)
+> > -	    && !origin) {
+> > -		warning(_("Not setting branch %s as its own upstream."),
+> > -			local);
+> > -		return 0;
+> > -	}
+> > +	if (!remotes->nr)
+> > +		BUG("must provide at least one remote for branch config");
+> > +	if (rebasing && remotes->nr > 1)
+> > +		die(_("cannot inherit upstream tracking configuration when rebasing is requested"));
+> 
+> Nit: if we're being pedantic, we cannot inherit upstream tracking
+> configuration when rebasing is requested with multiple upstream
+> branches.
+> 
+> But this message is already very niche and loaded with specifics, so
+> adding "...with multiple upstream branches" might just be more
+> confusing, so this is a nit.
 
-On Thu, Dec 16 2021, Junio C Hamano wrote:
+I think it's worthwhile to be precise. Thanks for pointing this out.
+Fixed in V7.
 
-> Earlier we marked that this patch-id test is leak-sanitizer clean,
-> but if we read the test script carefully, it is merely because we
-> have too many invocations of commands in the "git log" family on the
-> upstream side of the pipe, hiding breakages from them.
->
-> Split the pipeline so that breakages from these commands can be
-> caught (not limited to aborts due to leak-sanitizer) and unmark
-> the script as not passing the test with leak-sanitizer in effect.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->
->  A quick grep tells me that tests 3302, 3303, 3305, 4020 and 6236
->  all use "git log" and still are marked as passing tests with
->  leak-sanitizer in effect.  I've taken a deep look at none of them,
->  but I suspect they share the same kind of breakage.
 
-This change looks good to me.
+> > @@ -87,29 +112,42 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+> >  	strbuf_release(&key);
+> >  
+> >  	if (flag & BRANCH_CONFIG_VERBOSE) {
+> > -		if (shortname) {
+> > +		const char *name;
+> > +		struct strbuf ref_string = STRBUF_INIT;
+> > +
+> > +		for_each_string_list_item(item, remotes) {
+> > +			name = item->string;
+> > +			skip_prefix(name, "refs/heads/", &name);
+> > +			strbuf_addf(&ref_string, "  %s\n", name);
+> > +		}
+> > +
+> > +		if (remotes->nr == 1) {
+> > +			struct strbuf refname = STRBUF_INIT;
+> > +
+> >  			if (origin)
+> > -				printf_ln(rebasing ?
+> > -					  _("Branch '%s' set up to track remote branch '%s' from '%s' by rebasing.") :
+> > -					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
+> > -					  local, shortname, origin);
+> > -			else
+> > -				printf_ln(rebasing ?
+> > -					  _("Branch '%s' set up to track local branch '%s' by rebasing.") :
+> > -					  _("Branch '%s' set up to track local branch '%s'."),
+> > -					  local, shortname);
+> > +				strbuf_addf(&refname, "%s/", origin);
+> > +			strbuf_addstr(&refname, remotes->items[0].string);
+> > +
+> > +			/*
+> > +			 * Rebasing is only allowed in the case of a single
+> > +			 * upstream branch.
+> > +			 */
+> > +			printf_ln(rebasing ?
+> > +				_("branch '%s' set up to track '%s' by rebasing.") :
+> > +				_("branch '%s' set up to track '%s'."),
+> > +				local, refname.buf);
+> > +
+> > +			strbuf_release(&refname);
+> > +		} else if (origin) {
+> > +			printf_ln(_("branch '%s' set up to track from '%s':"),
+> > +				local, origin);
+> > +			printf("%s", ref_string.buf);
+> 
+> It's not clear to me why the hint contains the word 'from' when it is a
+> remote ref...
 
-FWIW this is not a mistake on my part, but something I'm perfectly aware
-of. I don't consider it to be "brekage".
+Because in the multiple-branch case, we don't prepend the origin to each
+ref, so we need to let users know which remote the refs are coming from.
 
-We have plenty of place in the test suite where we hide exit codes on
-the LHS of a pipe, or where we call a function that doesn't &&-chain its
-git invocations.
 
-In those cases we can and usually will "succeed" under LSAN, because it
-allows the program to emit its full output, and will abort() at the very
-end.
+> >  		} else {
+> > -			if (origin)
+> > -				printf_ln(rebasing ?
+> > -					  _("Branch '%s' set up to track remote ref '%s' by rebasing.") :
+> > -					  _("Branch '%s' set up to track remote ref '%s'."),
+> > -					  local, remote);
+> > -			else
+> > -				printf_ln(rebasing ?
+> > -					  _("Branch '%s' set up to track local ref '%s' by rebasing.") :
+> > -					  _("Branch '%s' set up to track local ref '%s'."),
+> > -					  local, remote);
+> > +			printf_ln(_("branch '%s' set up to track:"), local);
+> > +			printf("%s", ref_string.buf);
+> 
+> but does not have the word 'from' when it is a local ref. As far as I
+> can tell, this is the only difference between remote and local refs, and
+> adding the word 'from' does not seem like a good enough reason to add an
+> 'if' condition. Maybe I missed something here?
+> 
+> This motivates my answer to the question you asked in [1]:
+> 
+>   I removed as many distinctions as possible, as most can still be
+>   inferred from context. [...] Likewise, we don't need to specify whether
+>   refs are remote or local: "some-remote/some-branch" vs.
+>   "a-local-branch" should be understandable without us spelling it out.
+> 
+> I agree that there is adequate context, so I would be ok with the
+> simplification if there was corresponding code simplification e.g.
+> dropping "if (origin)". But in its current form, I don't think there is
+> good enough reason to simplify the message.
 
-I have an unsubmitted logging mode (using LSAN_OPTIONS=log_path=<path>)
-where I log every one of these to test-results/*, there's a lot more of
-these.
+I think the proper point of comparison is not the original code, but the
+code from V5 where we try to preserve the same level of detail in output
+as the original code. If we are committed to both having multiple
+remotes and keeping similar styles of output as the original
+implementation, then something like the massive conditional in V5 is
+unavoidable.
 
-But in the meantime I think the best way forward is to gradually mark
-the tests that pass with LSAN as passing, to ensure that we at least
-don't have regressions in the meantime. Before this we'd at least check
-the "git checkout" etc. for leaks.
+> Of course, IIUC, this is as simple as dropping 'from' in the "if
+> (origin)" case.
+> 
+> > @@ -118,14 +156,33 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+> >  	strbuf_release(&key);
+> >  	error(_("Unable to write upstream branch configuration"));
+> >  
+> > -	advise(_(tracking_advice),
+> > -	       origin ? origin : "",
+> > -	       origin ? "/" : "",
+> > -	       shortname ? shortname : remote);
+> > +	advise(_("\nAfter fixing the error cause you may try to fix up\n"
+> > +		"the remote tracking information by invoking:"));
+> > +	if (remotes->nr == 1)
+> > +		advise("  git branch --set-upstream-to=%s%s%s",
+> > +			origin ? origin : "",
+> > +			origin ? "/" : "",
+> > +			remotes->items[0].string);
+> > +	else
+> > +		for_each_string_list_item(item, remotes)
+> > +			advise("  git config --add branch.\"%s\".merge %s",
+> > +				local, item->string);
+> 
+> The advice is now correct, nice! Does the user also need to run "git
+> config --add branch.%s.remote %s" ?
+> 
+> [1] https://lore.kernel.org/git/Ybk6QsMdeBl6IweW@google.com
 
-If I made fixing all broken &&-chains or git on the LHS of a pipe a
-prerequisite for marking as passing under under LSAN I'd end up with
-something that's approximately the size of [1] and more (i.e. Eric's
-upcoming patches to do that).
-
-I don't see why we'd consider perfect the enemy of the good in these
-cases. Yes we won't catch the successful exit of every single git
-invocation, but our tests aren't doing that now, LSAN or not. But until
-that's fixed we'll at least catch some, which helps our overall memory
-leak regression coverage.
-
-More importantly it makes it a lot easier to reason about future memory
-leak patches, as we'll be able to get to a 1=1 mapping of tests that
-pass, and those that are marked being known to pass. I'm using that
-locally to fake-fail those that start passing unexpectedly that aren't
-on the list, which then helps to inform the addition of "this test now
-passes with no leaks".
-
-1. https://lore.kernel.org/git/20211213063059.19424-1-sunshine@sunshineco.com/
+Yes, thank you for the catch. Fixed in V7.
