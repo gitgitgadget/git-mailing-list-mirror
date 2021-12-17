@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4C04C433F5
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 00:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E21DFC433FE
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 00:26:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230319AbhLQA0i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 19:26:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42294 "EHLO
+        id S230333AbhLQA0j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 19:26:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230300AbhLQA0f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 19:26:35 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82E4BC061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:35 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id c4so933588wrd.9
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:35 -0800 (PST)
+        with ESMTP id S230308AbhLQA0h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 19:26:37 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD5E1C061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:36 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id j9so1059021wrc.0
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Ql3TtL5TZqGq4T4/ynaf1dyBXi4n/xbD4efcilH4oUQ=;
-        b=bXqHWJPq+OgB82K6kBnAOgB1Y6IWLGxCubn7fZlasDyMbRcswsMk1juaO4ixS3zXTv
-         XA91LrF0dboPJ1GxUsl0Zl14M3kuxTEL4c5vkgnp8/4odFWlOcxFY5/Lo+TwNoeOTMpj
-         5R6379HhmXg2d85QXrtJSIp2kcgOORWsQ5PDocj9k1EPQ6ucNaspE5J9U6wmBKtkWVsB
-         /aVb68toj7RL3UFMz6WuC2BWpSQDWluDiQ4QEofsYtjhGk0fXHv9BCcmCf6qpp/cvCiF
-         J/Vi0kjYs6bq23RDS9uJqRpvxrqmlXr5fI+aO1BNqWKJO3XHoMGiOOJQDVWOB5oO0XtJ
-         2+dw==
+        bh=RP7Bd3gweCXiNlsCOAZqw/XcH4BcUlQKC7EwcuM8BpU=;
+        b=Nb1tr1hebAkwZY2wvk1+5/LOSahwSMYEqUbSC8aptWIYgr3os6sfCKAUKLPl5M2ntH
+         ntUIDfmPYotHF9j6CyJKW1nhbv0N+498kdNuv1o/u0ZE9ZzhYmZdgpxvS6SK7vNK1tgz
+         e4E/li0JfQjBYiNMXS9sg7oyqyHtmiwpzdh6pEOYoEAvKhZicM3A0n7lJR8oemZGWa62
+         6lRULFH8+ASa6PHbcml8gn8zzSRwmGnWiSe56y3WJciLDp4q6CZzn0S7Kj4e2laDA3fa
+         l8B2Wv8K10FE1e1EEztOkEn+HUQoxJd3fR7uYjPU+3EdW+FcIIpffdbU6w1nEopXrhOS
+         VrBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Ql3TtL5TZqGq4T4/ynaf1dyBXi4n/xbD4efcilH4oUQ=;
-        b=p6P+Y5Vx2DPuPJkH6qhj+E/BygxZQOd8yMReB+Be/ME3oVbwdGEbrLGFT+EjHc+mym
-         P1Os+NVKGKEEBWOdwvd6HJT/jWz3IF051VSDoHLcRzJ5AEXh8i3J/6wioDwVn5Uv6cMO
-         9M5ednYOkYtQK56YUf7QPovKsPlRtSrc76o5pAANGEElKe+cKhA+W74p2pBdq8fCH70o
-         6zSdRZMocwgzeWhQm2nfmNIQI9qITPOIieCgWFm8RcSPHGK0ExCjws4aj4F2BW3byAyM
-         CqjMJepXEyNFHm1SMK85lKiSdiqZZ8RMgM7DhXWaQ14PZIfB+wtP8MgnMRB2/wCdgvLA
-         2QJQ==
-X-Gm-Message-State: AOAM532NLKxfanN3JqFP0KEYJWtu3tVXQj37dr7+DYYZSXfX/ZBp+QRt
-        NXceNUV/jqchGccYSDxZYNs0L1odXwETFA==
-X-Google-Smtp-Source: ABdhPJwDc/2WtXJOXH6XPNrQ6rq2n7zyHoYE43LrsseGqndrUKaA9Gkc6jj1wx7NObghz7jWhI6uWA==
-X-Received: by 2002:a5d:69ca:: with SMTP id s10mr364745wrw.218.1639700793860;
-        Thu, 16 Dec 2021 16:26:33 -0800 (PST)
+        bh=RP7Bd3gweCXiNlsCOAZqw/XcH4BcUlQKC7EwcuM8BpU=;
+        b=CnS79j3uGA9lGFca8MuwRrD34E/GiypX0+gQHTYulZtxvbr051MC0y7/gr7l56zykc
+         7SHlzaWv8dP+ubBbn06RRkiKAaiArcMVB8DsuNRmRWDN22ASCFgUHCVbKPXn9ep9hhws
+         UKdKeiFu0en5EmF0BNBDmQJPbkLPbjwONhx1VqiKHhiRRj4jxuD6GLoCzrNlYMR9Kb6A
+         PvHArrQCxfGOcEVEi5Jwno6y/Ijo0gJ9DUi129/buEREBbwJowI2ydEYaFVMVnuDokpa
+         +ni2GIbkbcEzfdXeqvXWHk44Ld145z4eAUAvm9BTxosCXyhLLdGjcIBQF5b5Kyn7P24s
+         qH8Q==
+X-Gm-Message-State: AOAM533oXvtB+/SYcyxe64oQnsv7IWz/m12xuXcqJKLNWlxKxRdy+BZp
+        JmasU7tFSeqBOkDxIb79zV/nhyKs4wDEpg==
+X-Google-Smtp-Source: ABdhPJwUr+XaIEs7UBjMNvoiKrODvGnVlVew/stLTicPLSzXy2kNUSR18yXdfZLlCsWAUj+PKI9X/Q==
+X-Received: by 2002:a5d:5984:: with SMTP id n4mr334000wri.458.1639700794853;
+        Thu, 16 Dec 2021 16:26:34 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id j17sm8127349wmq.41.2021.12.16.16.26.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 16:26:33 -0800 (PST)
+        Thu, 16 Dec 2021 16:26:34 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 03/11] Makefile: use "=" not ":=" for po/* and perl/*
-Date:   Fri, 17 Dec 2021 01:26:19 +0100
-Message-Id: <patch-03.11-572a82c71a1-20211217T002023Z-avarab@gmail.com>
+Subject: [PATCH 04/11] Makefile: remove "mv $@ $@+" dance redundant to .DELETE_ON_ERROR
+Date:   Fri, 17 Dec 2021 01:26:20 +0100
+Message-Id: <patch-04.11-5baff22f5af-20211217T002023Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1119.g7a3fc8778ee
 In-Reply-To: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
 References: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
@@ -72,63 +72,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change these variable definitions from being simply-expanded to be
-recursively expanded instead. I.e. they'll be lazily expanded when
-used.
+Since 7b76d6bf221 (Makefile: add and use the ".DELETE_ON_ERROR" flag,
+2021-06-29) we don't need to guard the clobbering of $@ with this sort
+of "mv $@+ $@" pattern in these cases where we're merely generating a
+file that'll be used as a dependency for other files, as in this case
+for GIT-PERL-HEADER.
 
-I added these in 5e9637c6297 (i18n: add infrastructure for translating
-Git with gettext, 2011-11-18) and 20d2a30f8ff (Makefile: replace
-perl/Makefile.PL with simple make rules, 2017-12-10), the reason for
-using ":=" over "=" was that I didn't know the difference in 2011 (I
-think I copied some POC code), and in 2017 I used the 2011 commit for
-reference.
-
-This doesn't make much if any of a practical difference, doing this is
-cheap either way, but as simply-expanded variables in our Makefile
-generally indicate special behavior (e.g. making a copy now, and
-modifying the RHS later) let's change these to show that nothing odd
-is going on here).
+We have had a hard dependency on .DELETE_ON_ERROR since
+7b76d6bf221 (Makefile: add and use the ".DELETE_ON_ERROR" flag,
+2021-06-29), so this is a pure cleanup as a follow-up to that
+commit. Support for the ".DELETE_ON_ERROR" target itself is much older
+than any GNU make version we support, it was added to GNU make in
+1994.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ Makefile | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index d4c31a2718f..cad9795ec0a 100644
+index cad9795ec0a..bd8cb7c463d 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2719,11 +2719,11 @@ po/git.pot: $(GENERATED_H) FORCE
- pot: po/git.pot
+@@ -2359,8 +2359,7 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
+ 	    -e 's=@@PERLLIBDIR_REL@@=$(perllibdir_relative_SQ)=g' \
+ 	    -e 's=@@GITEXECDIR_REL@@=$(gitexecdir_relative_SQ)=g' \
+ 	    -e 's=@@LOCALEDIR_REL@@=$(localedir_relative_SQ)=g' \
+-	    $< >$@+ && \
+-	mv $@+ $@
++	    $< >$@
  
- ifdef NO_GETTEXT
--POFILES :=
--MOFILES :=
-+POFILES =
-+MOFILES =
- else
--POFILES := $(wildcard po/*.po)
--MOFILES := $(patsubst po/%.po,po/build/locale/%/LC_MESSAGES/git.mo,$(POFILES))
-+POFILES = $(wildcard po/*.po)
-+MOFILES = $(patsubst po/%.po,po/build/locale/%/LC_MESSAGES/git.mo,$(POFILES))
- 
- all:: $(MOFILES)
- endif
-@@ -2732,10 +2732,10 @@ po/build/locale/%/LC_MESSAGES/git.mo: po/%.po
- 	$(QUIET_MSGFMT)mkdir -p $(dir $@) && $(MSGFMT) -o $@ $<
- 
- ifndef NO_PERL
--LIB_PERL := $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/Git/*/*/*.pm)
--LIB_PERL_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
--LIB_CPAN := $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
--LIB_CPAN_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_CPAN))
-+LIB_PERL = $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/Git/*/*/*.pm)
-+LIB_PERL_GEN = $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
-+LIB_CPAN = $(wildcard perl/FromCPAN/*.pm perl/FromCPAN/*/*.pm)
-+LIB_CPAN_GEN = $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_CPAN))
- 
- perl/build/lib/%.pm: perl/%.pm GIT-PERL-DEFINES
- 	$(QUIET_GEN)mkdir -p $(dir $@) && \
+ .PHONY: perllibdir
+ perllibdir:
 -- 
 2.34.1.1119.g7a3fc8778ee
 
