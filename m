@@ -2,124 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CAB0C433F5
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 22:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9902C433EF
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 22:32:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230189AbhLQW1s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 17:27:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41874 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229743AbhLQW1r (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 17:27:47 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46101C061574
-        for <git@vger.kernel.org>; Fri, 17 Dec 2021 14:27:47 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id z5so13258700edd.3
-        for <git@vger.kernel.org>; Fri, 17 Dec 2021 14:27:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Pl3gt5KDh5d2SB7vtMHNgiI0ILJIMJH7bAwLvzRBjEI=;
-        b=Ba8+xZTbKs2SxXidKPa7cbDsv/nFg40nMzs0C2JPQpSwUBGEnJZFx5ThLPAjmfuXBt
-         pqNJTgM25rWehs9obfsUavBVK9OnQOVAPD64gMaWn6W1DbyWsdo1NZqmG5MLsPIA3mFS
-         FydJbkS8qaDNPLIxdg/pbI3oQlDsffMC0ZkmHqD2VLAnwl07r++b1RCrQLJHOK3JvTQy
-         uta5Unl+0J6Z2eALamMIYh74diFEDRZK4KT7APewMfy07trTIfMDEq1ZiBE409B/ODBK
-         7cgsujYnxGZaWN2sZt0SaH5cNQPAimzcZBSFuvpqffUybPRcucu1o01MGc0Uz7YJV+ks
-         LPog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Pl3gt5KDh5d2SB7vtMHNgiI0ILJIMJH7bAwLvzRBjEI=;
-        b=zp4jMoHa6Mx6/RzZfT9Xg7zprNbvtGuUCfjXPYdzPfk9nlIrWDzz29Z1zN8q1SzUeu
-         nO06OuTl5n0WXkBdYIpOlNPj8Q9e1Q8qOFqKCDrtxcsC8mmfDsvWMJmMH6YKy+UFm9hl
-         DQ709tbwesVjkpdmCwYmZhfPH5lP/knSZcEaclDakbnVyUDISf9l4w1kfx3bVnVrwBCm
-         sA2O9qUl73xmsf1dPD82mltwgfvnMERy1579nViX5dkjhLtz0iLjdjhdWXrHBajRqMS1
-         ouBWJt+SZDKIQfs1siGyPCU2+IEcJUE9f/PwiUojTsMQeYkYnRlLu0h/Ui8Ei89qpCk3
-         GYgg==
-X-Gm-Message-State: AOAM530kfvwp5D6mxcKnH8gTkgA8sWf4faE0RO81mXyuAocyen42WwGJ
-        7AEe8mS5h2pStfiJUpgjgiyykwysy2n7Mg==
-X-Google-Smtp-Source: ABdhPJwqTksMtd/+/3gSI+VJRxqGbk87F0cg1dvXAYtcBF4GpUZKB7o2A5M6YezyKCVWtivYj4u1Fw==
-X-Received: by 2002:a17:906:1d58:: with SMTP id o24mr3917003ejh.121.1639780065779;
-        Fri, 17 Dec 2021 14:27:45 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id qb31sm336791ejc.76.2021.12.17.14.27.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Dec 2021 14:27:45 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1myLhY-000DG4-G5;
-        Fri, 17 Dec 2021 23:27:44 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] t4204 is not sanitizer clean at all
-Date:   Fri, 17 Dec 2021 23:23:00 +0100
+        id S230449AbhLQWcK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 17:32:10 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54440 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229808AbhLQWcJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 17:32:09 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B4B2F85F4;
+        Fri, 17 Dec 2021 17:32:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JPnsRsIqrpThQ7c2QIn4Igq5FQ2IerVI0KDm95
+        k3liE=; b=FfdInwlMikWghN873r+B04yKIz1pMwxhXljhX9YiR/VO/hA0RaJsFT
+        +QCBCcigbvDlisRYXs11mFIT7aTHbN7jsUTFeFTzyW2G3h1T9RRtAv2Y/0g5LY0f
+        aZ9zSdyn2hwlEJa1yAw4EF11398KwwRd011sX3wDwuD6Xz4miZWVA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 44059F85F3;
+        Fri, 17 Dec 2021 17:32:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9CAA2F85F2;
+        Fri, 17 Dec 2021 17:32:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH V5 2/2] git-apply: add --allow-empty flag
 References: <20211213220327.16042-1-jerry@skydio.com>
         <20211213220327.16042-2-jerry@skydio.com> <xmqqee6dz5s9.fsf@gitster.g>
-        <xmqqtuf86t7z.fsf_-_@gitster.g>
-        <211217.861r2bal75.gmgdl@evledraar.gmail.com>
-        <xmqqk0g32c06.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqk0g32c06.fsf@gitster.g>
-Message-ID: <211217.86a6gyyihr.gmgdl@evledraar.gmail.com>
+        <211217.86wnk395bz.gmgdl@evledraar.gmail.com>
+        <xmqqr1ab2c0v.fsf@gitster.g>
+Date:   Fri, 17 Dec 2021 14:32:07 -0800
+In-Reply-To: <xmqqr1ab2c0v.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        17 Dec 2021 12:48:32 -0800")
+Message-ID: <xmqqee6a3lso.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2B7FB866-5F89-11EC-A9A2-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Fri, Dec 17 2021, Junio C Hamano wrote:
+> Surely, I am sympathetic to the intent.  If you are updating "git
+> frotz" that is sanitizer-clean, and if you write a new test in a
+> test script that happens to be sanitizer-clean, if you introduced a
+> new leak to "git frotz", you would appreciate if the CI notices it
+> and blocks you.
+> ...
+> The only time we can sensibly do the "now these are leak-free, and
+> we will catch and yell at you when you add a new leak" is when we
+> know _all_ git commands are sanitize clean...
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+There is another scenario where the TEST_PASSES_SANITIZE_LEAK=true
+may make sense, actually.  If we declare that from the time we
+commit to the approach, until we can mark all the test scripts with
+the mark, we will put it the sole priority to squash any and all
+leaks, without doing anything else so that we can finish it the
+soonest possible.
+
+Then it is probably OK to start at 230 and cover all 940 as fast as
+we can.  Because we are effectively closing the tree for anything
+but plug-leak changes and adding TEST_PASSES_SANITIZE_LEAK=true line
+to more tests, we wouldn't have to worry about introducing new leaks
+to existing tests that are marked as already clean---because of the
+tree closure, they are more likely to stay clean.  t4126 wouldn't
+have gained a new use of format-patch to break it.
+
+But of course, such an approach is not feasible in this project,
+where people do not work in lock-step.  That leads to the question I
+asked at the end of my previous message.
+
+> Having said that, what would be the next step to help developers to
+> avoid introducing new leaks while yelling at them for existing leaks
+> they did not introduce and not forbidding them to use git subccommands
+> with existing leaks in their tests?
 >
->> This change looks good to me.
->>
->> FWIW this is not a mistake on my part, but something I'm perfectly aware
->> of. I don't consider it to be "brekage".
->>
->> We have plenty of place in the test suite where we hide exit codes on
->> the LHS of a pipe, or where we call a function that doesn't &&-chain its
->> git invocations.
->>
->> In those cases we can and usually will "succeed" under LSAN, because it
->> allows the program to emit its full output, and will abort() at the very
->> end.
->
-> But pipes do not hide ONLY deaths by sanitizer.  And by relying on
-> the presence of pipe hiding deaths of git tools to mark the script
-> sanitizer-clean, the TEST_PASSES_SANITIZE_LEAK=3Dtrue line adds an
-> unnecessary road-block for those who are cleaning up the "git whose
-> crash are hidden by being on the left hand side of the pipe"
-> pattern.
->
-> I do not know what to call it if not "breakage".
+> I would prefer an approach that does not force the project to make
+> it the highest priority to plug leaks over everything else.
 
-Yes it's broken as far as the test is concerned. I meant as far as
-"GIT_TEST_PASSING_SANITIZE_LEAK" goes I consider it somewhere between
-"meh" and "don't care yet".
-
-I.e. these are pretty irrelevant for finding leaks, as we've got a huge
-deluge of them elsewhere. At some point we might have a last few stray
-memory leaks in git hidden by such patterns, but we're very far away
-from that.
-
-Sometimes fixing those is trivial as in 3247919a758 (commit-graph tests:
-fix error-hiding graph_git_two_modes() helper, 2021-10-15), and
-sometimes we'll find that the test was broken all along in some other
-subtle way, as in the a046aa38ca9 (commit-graph tests: fix another
-graph_git_two_modes() helper, 2021-10-15) follow-up.
-
-But as to the "roadblock" I don't mind the
-TEST_PASSES_SANITIZE_LEAK=3Dtrue being removed from the script at the
-slightest sign of trouble. Nobody should have to shift gears and chase
-down some memory leak in "git log" just because they needed it for their
-test setup.
-
-And I'd very much prefer that to UNLEAK() just to avoid that
-TEST_PASSES_SANITIZE_LEAK=3Dtrue removal, because it makes fixing the leak
-itself harder as far as what topic to target, re-adding
-TEST_PASSES_SANITIZE_LEAK=3Dtrue once it's fixed etc. goes.
+Thanks.
