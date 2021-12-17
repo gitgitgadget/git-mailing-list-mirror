@@ -2,116 +2,207 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE48EC433F5
-	for <git@archiver.kernel.org>; Thu, 16 Dec 2021 23:48:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8E23C433EF
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 00:02:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229844AbhLPXsv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 18:48:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33478 "EHLO
+        id S230116AbhLQACn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 19:02:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbhLPXsu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 18:48:50 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B30EC061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 15:48:50 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id z9so1406355edb.5
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 15:48:50 -0800 (PST)
+        with ESMTP id S230211AbhLQACm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 19:02:42 -0500
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 969B3C061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:02:42 -0800 (PST)
+Received: by mail-qt1-x849.google.com with SMTP id v17-20020a05622a131100b002aea167e24aso926940qtk.5
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:02:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=zCTp7eKI9Ek8+rGZb5blhHhMGZMFlmlsjPvCQLAy6xg=;
-        b=Xvp6+j90LcDj/GGtarijMKIeQ9pmD1JexVeuowz0KodFNFw0FfbW0H+CectDH6yf8f
-         kqaqJT2htUmatlwc8DxAg40rAAx7DSCNPhYSNqAImzcCxHoZdBzhbJuzo1SBgrhiH0rc
-         y748udYHOcMIGU7S61e/KpMQkxikLqajBQ4ABqZeaEfwWcFyVtQLbbWmPNcJFHEpnctx
-         te6pl4FijmkLtr/IqQWzWxlS1Q585cOamsDszIA39HmbNBKg8TkTK13xaZaMSmFAbv3Q
-         oPbJI6ILDSoJwhSo574GO2p0+TaOJx3DY3cqnA2x8t/oK4vLuA4inYvlVlsQNFLvmBsT
-         OhWw==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=l1ypxq5sN1XaiTtKGJVIQJhrf9oiU9y+ngIai306ik4=;
+        b=HE5KNq4miIV8GorYC2yM0BHL/HvAswi2Niy0BSK1bL3sgkbNICQz5mH9n1MSKPH6Cs
+         Kv8zvJtjUufOQrVWc0iPha517X/FMeWb1P0wWwCajEr/RqOAs+zf99D/waw3iPLp7104
+         ws1OLonOQ2VOb3qIIgFzQM7OGRZH/QFpvKZLaNef5pu/1r7HWmCylQH/jHerMKEJXFhJ
+         vhyx5TKeEEyl9vQcnCFektOApkjJ2mIRA2sC0k33vmjbU1hal+O8pKsEGI6G4nZydTia
+         r2qtt2ix6eY0TRRoRnOi/70aP3nIreZvtniI0BhfL3UZhJy7eS7b8jqs6gken5pzTMTq
+         Z4oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=zCTp7eKI9Ek8+rGZb5blhHhMGZMFlmlsjPvCQLAy6xg=;
-        b=Dt7Bt/2D/6xEG9C1ShHdhrHRaOA19G4vHhYmmx7ASq3rDcZ3n3f549O6UrjhA0Ce34
-         42se4S+RWdEHaN+dDY2ms7qmdIcwRoWpTgAMX2Os1136IgOac3/Va8PzAc8UbRLllqqp
-         /Wtvn5AoJXzpJe5MVR69B0J978xsvjcTCuYbaBVPsfRTXIhviGoIpkT2+rFRIU4hhPDT
-         5WnMTymLJcb2oztl0F8Cma1wfhWrUQV5oqYGstfEsIfFpcWc1BO1dOoNIS28jiNi+TFX
-         lRlCN6ddjfHPVqTFouNP+2WZa+ehTMmHSGYC0xD4tXxAdPM+ZvNrK8RTe9IGkzKVLq9e
-         zOZA==
-X-Gm-Message-State: AOAM532tYff61o15Ng4/1Dn7gECHAwoZljArBpjVkVIhK6/WBa6Ga8xC
-        DGud4HGuwIjVK3u4CrMAho5l4Xh/ExurEA==
-X-Google-Smtp-Source: ABdhPJyXUd+NVNWmEWB0fbFgPekntajRIKnOajsZecsNOkivk6tfjygpqNgelBZro67pGiM441FOLw==
-X-Received: by 2002:a17:906:4781:: with SMTP id cw1mr395322ejc.116.1639698528865;
-        Thu, 16 Dec 2021 15:48:48 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id qf22sm833153ejc.85.2021.12.16.15.48.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 15:48:48 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1my0UQ-000d13-LG;
-        Fri, 17 Dec 2021 00:48:46 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: ab/make-dependency (was: What's cooking in git.git (Dec 2021, #04;
- Wed, 15))
-Date:   Fri, 17 Dec 2021 00:46:46 +0100
-References: <xmqq8rwlz3cq.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqq8rwlz3cq.fsf@gitster.g>
-Message-ID: <211217.86a6h09km9.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=l1ypxq5sN1XaiTtKGJVIQJhrf9oiU9y+ngIai306ik4=;
+        b=ZFPlPqm8hM2wf3YfLimagHAuxNk2S2KO4NdYCcQffNXQGiuVIITuPQREdDp08aj4Zl
+         U8jGcU+IbYvJqy+Y8+DbSeUEoPek2dz8kjZbsXEa4z+HGHSRxDkjxCOXcXJ3tSpPf9Hw
+         A8VhD891lW8u6WBkZEzh4AkikFohZIKstpKKzxfmXWQWRUEwtLfP9Ygrj5Y8UaDX27JU
+         IQbtaI4eWJsMhecSK7tViaVa8Kztzn5cN2F0k0q/S0/nCMpgbYATjdUl7V8u4zcs7+5o
+         IIr0ooYC2WwTRNvTijuSD04L6pwyNupWh+w6k+z1cOQBS7Y5tYLkMHrzthV4N3flH0Mm
+         b2dg==
+X-Gm-Message-State: AOAM532LQcxr56PqOE84Xm+js56S8Qxh20pDtJ/pHxTij+qPGCXKnK6L
+        2xSbrlYhQgnc8ED0Xkmy0T858Z6I1O+CJfrnkFEbd8DShtmCcwFmB02cMxWjZlx4AufI6oI3VxN
+        vceZOpCxNSteiGUbct1CmR3hvd7QxWK1i+JNcSqr97knochevyuV3uFFjN8ewOzs=
+X-Google-Smtp-Source: ABdhPJxobZ6Ir5jaGa+HOtBJbHnuCVnMRDGY5Y57Vm5Qnm1/bk1dwNPD3xOVdkHJcSet8lz8+5+XyLxF1f4Jcg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:622a:113:: with SMTP id
+ u19mr389457qtw.274.1639699361683; Thu, 16 Dec 2021 16:02:41 -0800 (PST)
+Date:   Thu, 16 Dec 2021 16:02:35 -0800
+In-Reply-To: <20211207192925.67680-1-chooglen@google.com>
+Message-Id: <20211217000235.68996-1-chooglen@google.com>
+Mime-Version: 1.0
+References: <20211207192925.67680-1-chooglen@google.com>
+X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
+Subject: [PATCH v2] builtin/fetch: skip unnecessary tasks when using --negotiate-only
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Glen Choo <chooglen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+cmd_fetch() performs certain tasks with the assumption that objects are
+fetched, but `git fetch --negotiate-only` does not fetch objects, as its
+name implies. This is results in behavior that is unnecessary at best,
+and incorrect at worst:
 
-On Wed, Dec 15 2021, Junio C Hamano wrote:
+* Submodules are updated if enabled by recurse.submodules=true, but
+  negotiation fetch doesn't actually update the repo, so this doesn't
+  make sense (introduced in [1]).
+* Commit graphs will be written if enabled by
+  fetch.writeCommitGraph=true. But according to
+  Documentation/config/fetch.txt [2], this should only be done if a
+  pack-file is downloaded.
+* gc is run, but according to [3], we only do this because we expect
+  `git fetch` to introduce objects.
 
-> * ab/make-dependency (2021-11-18) 24 commits
->  - Makefile: move ".SUFFIXES" rule to shared.mak
->  - Makefile: define $(LIB_H) in terms of $(FIND_SOURCE_FILES)
->  - Makefile: disable GNU make built-in wildcard rules
->  - Makefile: use $(file) I/O instead of "FORCE" when possible
->  - Makefile: correct the dependency graph of hook-list.h
->  - Makefiles: add and use wildcard "mkdir -p" template
->  - Makefile: use $(wspfx) for $(QUIET...) in shared.mak
->  - Makefile: add "$(QUIET)" boilerplate to shared.mak
->  - Makefile: add a "TRACK_template" for GIT-*{FLAGS,DEFINES,...}
->  - Makefile: re-add and use the "shellquote" macros
->  - Makefile: move $(comma), $(empty) and $(space) to shared.mak
->  - Makefiles: add "shared.mak", move ".DELETE_ON_ERROR" to it
->  - Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
->  - Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
->  - Makefile: correct "GIT-PERL-{DEFINES,HEADER}" dependency graph
->  - Makefile: adjust Perl-related comments & whitespace
->  - Makefile: change "ifndef NO_PERL" to "ifdef NO_PERL"
->  - Makefile: guard Perl-only variable assignments
->  - Makefile: remove "mv $@ $@+" dance redundant to .DELETE_ON_ERROR
->  - Makefile: clean perl/build/ even with NO_PERL=Y
->  - Makefile: use "=" not ":=" for po/* and perl/*
->  - Makefile: don't set up "perl/build" rules under NO_PERL=Y
->  - Makefile: don't invoke msgfmt with --statistics
->  - Merge branch 'ab/sh-retire-helper-functions' into ab/make-dependency
->
->  Dependency clean-up.
->
->  Needs review.
->  There are some comments on earlier rounds; the latest one needs a
->  serious review or at least Acks from past commentors.
->  source: <patch-v4-23.23-48a3927d972-20211117T101807Z-avarab@gmail.com>
+Instead of disabling these tasks piecemeal, make cmd_fetch() return
+early if we know for certain that objects will not be fetched. We can
+return early whenever objects are not fetched, but for now this only
+considers --negotiate-only.
 
-I think it's best to drop this rather large topic for now.
+[1] 7dce19d374 (fetch/pull: Add the --recurse-submodules option, 2010-11-12)
+[2] 50f26bd035 (fetch: add fetch.writeCommitGraph config setting, 2019-09-02)
+[3] 131b8fcbfb (fetch: run gc --auto after fetching, 2013-01-26)
 
-I started re-rolling it with improvements to address your shell escaping
-comments, and ended up with a much better end-state, but it's now at
-north of 30 commits locally.
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+Thanks for the review, Jonathan! 
 
-So I've split it up and have some incoming patches. Not for all of it,
-just starting with some of the more urgent than not fixes & more trivial
-& easy to review changes, or around 1/2 of what's quoted above.
+Changes since v1:
+* added more context to commit message
+* added a NEEDSWORK comment 
 
-I'll then submit the rest sometime after that lands.
+Interdiff against v1:
+  diff --git a/builtin/fetch.c b/builtin/fetch.c
+  index 01865b5c09..85091af99b 100644
+  --- a/builtin/fetch.c
+  +++ b/builtin/fetch.c
+  @@ -2122,7 +2122,14 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+   
+   	string_list_clear(&list, 0);
+   
+  -	/* skip irrelevant tasks if objects were not fetched  */
+  +	/*
+  +	 * Skip irrelevant tasks because we know objects were not
+  +	 * fetched.
+  +	 *
+  +	 * NEEDSWORK: as a future optimization, we can return early
+  +	 * whenever objects were not fetched e.g. if we already have all
+  +	 * of them.
+  +	 */
+   	if (negotiate_only)
+   		return result;
+   
+
+ builtin/fetch.c       | 29 ++++++++++++++++++++++++-----
+ t/t5516-fetch-push.sh | 12 ++++++++++++
+ 2 files changed, 36 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f7abbc31ff..85091af99b 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1996,6 +1996,17 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_fetch_options, builtin_fetch_usage, 0);
++
++	if (negotiate_only) {
++		/*
++		 * --negotiate-only should never recurse into
++		 * submodules, so there is no need to read .gitmodules.
++		 */
++		recurse_submodules = RECURSE_SUBMODULES_OFF;
++		if (!negotiation_tip.nr)
++			die(_("--negotiate-only needs one or more --negotiate-tip=*"));
++	}
++
+ 	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
+ 		int *sfjc = submodule_fetch_jobs_config == -1
+ 			    ? &submodule_fetch_jobs_config : NULL;
+@@ -2005,9 +2016,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		fetch_config_from_gitmodules(sfjc, rs);
+ 	}
+ 
+-	if (negotiate_only && !negotiation_tip.nr)
+-		die(_("--negotiate-only needs one or more --negotiate-tip=*"));
+-
+ 	if (deepen_relative) {
+ 		if (deepen_relative < 0)
+ 			die(_("Negative depth in --deepen is not supported"));
+@@ -2112,6 +2120,19 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		result = fetch_multiple(&list, max_children);
+ 	}
+ 
++	string_list_clear(&list, 0);
++
++	/*
++	 * Skip irrelevant tasks because we know objects were not
++	 * fetched.
++	 *
++	 * NEEDSWORK: as a future optimization, we can return early
++	 * whenever objects were not fetched e.g. if we already have all
++	 * of them.
++	 */
++	if (negotiate_only)
++		return result;
++
+ 	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
+ 		struct strvec options = STRVEC_INIT;
+ 		int max_children = max_jobs;
+@@ -2132,8 +2153,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		strvec_clear(&options);
+ 	}
+ 
+-	string_list_clear(&list, 0);
+-
+ 	prepare_repo_settings(the_repository);
+ 	if (fetch_write_commit_graph > 0 ||
+ 	    (fetch_write_commit_graph < 0 &&
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 8212ca56dc..732031085e 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -229,6 +229,18 @@ test_expect_success 'push with negotiation proceeds anyway even if negotiation f
+ 	test_i18ngrep "push negotiation failed" err
+ '
+ 
++test_expect_success 'push with negotiation does not attempt to fetch submodules' '
++	mk_empty submodule_upstream &&
++	test_commit -C submodule_upstream submodule_commit &&
++	git submodule add ./submodule_upstream submodule &&
++	mk_empty testrepo &&
++	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
++	test_commit -C testrepo unrelated_commit &&
++	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
++	git -c submodule.recurse=true -c protocol.version=2 -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main 2>err &&
++	! grep "Fetching submodule" err
++'
++
+ test_expect_success 'push without wildcard' '
+ 	mk_empty testrepo &&
+ 
+-- 
+2.33.GIT
 
