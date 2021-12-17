@@ -2,91 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32349C433F5
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 18:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F19DFC433EF
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 18:16:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239607AbhLQSKI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 13:10:08 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54138 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234093AbhLQSKI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 13:10:08 -0500
-Received: (qmail 25147 invoked by uid 109); 17 Dec 2021 18:10:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 17 Dec 2021 18:10:08 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 672 invoked by uid 111); 17 Dec 2021 18:10:08 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 17 Dec 2021 13:10:08 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 17 Dec 2021 13:10:07 -0500
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 2/2] repack: make '--quiet' disable progress
-Message-ID: <YbzSfwQixuonrK/o@coredump.intra.peff.net>
-References: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
- <3eff83d9ae14023f3527dfeb419cf8259f6d053d.1639758526.git.gitgitgadget@gmail.com>
+        id S240109AbhLQSQH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 13:16:07 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52436 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236073AbhLQSQG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 13:16:06 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4082417E50A;
+        Fri, 17 Dec 2021 13:16:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=xFMRFt1VUX4R
+        DfnumaLGf2FnQy4IBqJ+hveO3wlCyUg=; b=MHeyjRUMqW+q/Wc0sHR7gymdUO7n
+        j1LXtY9yBTsW411vDMP7JaA7IpsLnyc3HhsuSMKI6qMAWvWUtYs0e/3neLROwHHS
+        n2cEpkzKE/5ZwfGV9w2CfS56/JfH6LM58D0Bs6R0Ra/djX7xN/Ssuy2I1Xtb3nCJ
+        moA9/iYC7C42PpU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3904517E509;
+        Fri, 17 Dec 2021 13:16:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 934A917E507;
+        Fri, 17 Dec 2021 13:16:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Dotan Cohen <dotancohen@gmail.com>, git@vger.kernel.org,
+        Christoph Junghans <ottxor@gentoo.org>
+Subject: Re: Git bug: Filter ignored when "--invert-grep" option is used.
+References: <CAKDXFkMvXJm5+5Qxz2N5NH-s+nptayG_7+yTSPxynZxkOcaVKw@mail.gmail.com>
+        <xmqqzgp134i4.fsf@gitster.g>
+        <CAKDXFkOXNPTjQRvj7sy54YhH1QGFUsEXYeLKCShJP7_xueRseQ@mail.gmail.com>
+        <xmqqee6cbalb.fsf@gitster.g>
+        <e2e7759e-aa97-1117-6df2-f93a12afb094@web.de>
+Date:   Fri, 17 Dec 2021 10:16:00 -0800
+In-Reply-To: <e2e7759e-aa97-1117-6df2-f93a12afb094@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Fri, 17 Dec 2021 17:48:49 +0100")
+Message-ID: <xmqqbl1f5c7z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3eff83d9ae14023f3527dfeb419cf8259f6d053d.1639758526.git.gitgitgadget@gmail.com>
+X-Pobox-Relay-ID: 649FD55A-5F65-11EC-BE25-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 17, 2021 at 04:28:46PM +0000, Derrick Stolee via GitGitGadget wrote:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> From: Derrick Stolee <dstolee@microsoft.com>
-> 
-> While testing some ideas in 'git repack', I ran it with '--quiet' and
-> discovered that some progress output was still shown. Specifically, the
-> output for writing the multi-pack-index showed the progress.
-> 
-> The 'show_progress' variable in cmd_repack() is initialized with
-> isatty(2) and is not modified at all by the '--quiet' flag. The
-> '--quiet' flag modifies the po_args.quiet option which is translated
-> into a '--quiet' flag for the 'git pack-objects' child process. However,
-> 'show_progress' is used to directly send progress information to the
-> multi-pack-index writing logic which does not use a child process.
-> 
-> The fix here is to modify 'show_progress' to be false if po_opts.quiet
-> is true, and isatty(2) otherwise. This new expectation simplifies a
-> later condition that checks both.
+> Subject: [PATCH] log: let --invert-grep only invert --grep
+>
+> The option --invert-grep is documented to filter out commits whose
+> messages match the --grep filters.  However, it also affects the
+> header matches (--author, --committer), which is not intended.
 
-Makes sense. I wondered if you might have to decide what to do with
-"--progress --quiet", but we do not have an explicit progress option for
-git-repack in the first place.
+I re-read the log message that introduced this feature, and I agree
+with the "not intended" part.  I do not think the change itself was
+even done with awareness that the header matches may also be
+affected, and there is no test for it to see the interaction.
 
-> This is difficult to test because the isatty(2) already prevents the
-> progess indicators from appearing when we redirect stderr to a file.
+> Move the handling of that option to grep.c, as only the code there can
+> distinguish between matches in the header from those in the message
+> body.  If --invert-grep is given then enable extended expressions (not
+> the regex type, we just need git grep's --not to work), negate the body
+> patterns and check if any of them match by piggy-backing on the
+> collect_hits mechanism of grep_source_1().
 
-You'd need test_terminal. Something like this:
+Nice.  The original says that --files-without-matches being a
+negation of --files-with-matches was what triggered them to have the
+bit in the revisions, not in grep_opt, by the way.
 
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 8c4ba6500b..b673c49650 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -5,6 +5,7 @@ test_description='git repack works correctly'
- . ./test-lib.sh
- . "${TEST_DIRECTORY}/lib-bitmap.sh"
- . "${TEST_DIRECTORY}/lib-midx.sh"
-+. "${TEST_DIRECTORY}/lib-terminal.sh"
- 
- commit_and_pack () {
- 	test_commit "$@" 1>&2 &&
-@@ -387,4 +388,10 @@ test_expect_success '--write-midx -b packs non-kept objects' '
- 	)
- '
- 
-+test_expect_success TTY '--quiet disables progress' '
-+	test_terminal env GIT_PROGRESS_DELAY=0 \
-+		git -C midx repack -ad --quiet --write-midx 2>stderr &&
-+	test_must_be_empty stderr
-+'
-+
- test_done
+> Collecting the matches in struct grep_opt is a bit iffy, but with
+> "last_shown" we have a precedent for writing state information to that
+> struct.
 
--Peff
+I think this is perfectly fine.  apply_state, grep_opt,
+diff_options, and rev_info are used the same way within their
+subsystems to carry in options that affect behaviour, carry around
+the state of the machinery, and carry out the result.  The word
+"option" does make it sound it is an input-only thing, but others
+are not much better ;-).
+
+> diff --git a/grep.c b/grep.c
+> index fe847a0111..beef5fe47e 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -699,6 +699,14 @@ static struct grep_expr *compile_pattern_expr(stru=
+ct grep_pat **list)
+>  	return compile_pattern_or(list);
+>  }
+>
+> +static struct grep_expr *grep_not_expr(struct grep_expr *expr)
+> +{
+> +	struct grep_expr *z =3D xcalloc(1, sizeof(*z));
+> +	z->node =3D GREP_NODE_NOT;
+> +	z->u.unary =3D expr;
+> +	return z;
+> +}
+
+A bit surprising to see that we already had GREP_NODE_NOT without a
+helper to create a node.  Not updating compile_pattern_not() to use
+this new helper does make this patch simpler to read by allowing
+readers to focus on what matters, which is very much appreciaed.
+
+The rest of the patch looks good to me, too.
