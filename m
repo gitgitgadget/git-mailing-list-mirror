@@ -2,91 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDB8AC433EF
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 16:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44B41C433F5
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 16:28:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239114AbhLQQ2u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 11:28:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43668 "EHLO
+        id S239118AbhLQQ2v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 11:28:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238005AbhLQQ2u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 11:28:50 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77AEDC061574
-        for <git@vger.kernel.org>; Fri, 17 Dec 2021 08:28:49 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id o13so5044245wrs.12
-        for <git@vger.kernel.org>; Fri, 17 Dec 2021 08:28:49 -0800 (PST)
+        with ESMTP id S238005AbhLQQ2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 11:28:51 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2280C061574
+        for <git@vger.kernel.org>; Fri, 17 Dec 2021 08:28:50 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id c4so5070145wrd.9
+        for <git@vger.kernel.org>; Fri, 17 Dec 2021 08:28:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=XEnIPEXyL+KZObNuBWWXhPINy02YcaYDMW61rBf0Xx0=;
-        b=ToKF7AEMsR5OM24DR8nqjQvvKHKPx7bgJ/LJZXB+2tB5mCdsqZRFAkEiykh8/xGt2g
-         jNRS07DInHdsu/NBhvyR+RqYRojU3s3zOXCrIH+bL87dmyr2EkRxtx9XmscJCyw2pNeK
-         y9F5oh9YnZMks4St06j7NCp60u/aMRyRitKGcm8GLCouKDEUAULd8XIFomA3LWtqM3Pj
-         xERNZdYvYciOO5Jg+whS59/J6N3W6eYVdd3LqCUM/mwVtK7qmXCAp4CRQnT5P0uMGwp8
-         pSGxXcNEjD68SaEla1t4dFSCMt0C+DJ02kjxc+oxM70ucDz0LNLMgR8gAPibw5rQlmFg
-         U1dg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=nS8iPv1KyBW6VmUjqvmww+5ntjnBpmLLIX3wt+I5Kik=;
+        b=qfrYMfhbvzo7autGdN7mDjzBMPnqmRYvdi+Sq9TiIO0HNfLxg1HB4xGJ/Fa8FlCw22
+         /RPaYh0g7gnwFF8cDVOFK1wb+BJ1F3+ItRPddDoD14kvf3wrvSeLIUj27S+YUndILTRG
+         sxuy+iXT+bV6b1aqkegMlwQ/X7rmCdVDH7Z/QpgyV6Uf7ae7+wr23ArAuaX1X2i01baV
+         I3JQLkttOd9+i5b6fvA0QPVmlTzAeO/GIwH/HfDTP4xJt9Og1LMiZs5U3wgHyQUAwEgb
+         Z8KtL/aPwARspRdIQLNfytfuuJUmQ94V2uRQ6GrrIzi9/+/2NbqSrkbosiNWAzoUJ4fo
+         a4Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=XEnIPEXyL+KZObNuBWWXhPINy02YcaYDMW61rBf0Xx0=;
-        b=z6XxBqUiHD7pjZJu05Zx/vl28iZsMFFkh2Vdb0EIKeQxHgk5MqRfsqQuXEv3XczfvL
-         +BPWj8mrb/pF/vdlvyPQnf5U1lI8xm10rSkKgq2Dp8MpxC8f/h9OaiXHdadDNcI9z3a8
-         i7CQBEa5F1w3B9302sfDH4ho2K/OwDEtgDoh4146r1L/bOL2GEHwDtTDRkIagdVC6NNv
-         wtm/p7ncvM7Bi93NdAoT0QsQFSK+fJQg0+rWDyxl8NC0Pzkrz+r9UIqB2p+rlN64N9+r
-         NthLgcggc69jOuupCWCPWt8FUWQduzDf+vg8mxwhSE6S7gkF3iOmQ1ub1HjuUS/qKWfO
-         bENw==
-X-Gm-Message-State: AOAM532syFUDdI0893ljfDA7kAt9ZSh2CpPK6NdIakgF/ciS6cmSzdwA
-        MI8QklFATSxNXHpy735wPMaQ/KHT7/s=
-X-Google-Smtp-Source: ABdhPJx4NrZRuBIm+PPD2cPn9nnu9UcwlMgSdcE/3y29IrxSJWrbNWnagDM4dOBjf+Vzx6sBxV0hMw==
-X-Received: by 2002:a05:6000:2cd:: with SMTP id o13mr3081391wry.718.1639758527883;
-        Fri, 17 Dec 2021 08:28:47 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=nS8iPv1KyBW6VmUjqvmww+5ntjnBpmLLIX3wt+I5Kik=;
+        b=UlAMmX8cz+jn1Ennt8Ij0re1KcR9Tpqh1kYE45NeVkpB5u6rmM4MDvEXdmTm1abuyr
+         7CCLSefY3uKItfDUEazifIUTCMhP8B44Q+OCKwzzAsBHsr8grpkoZ2PRwv8dahn2FjXA
+         4iWyU8jQ+ZeYYjOpQly1V442F6cLLDUaZKRZPeRMrZ0o8WU2iC0zEzdnGiqKvHRCqu2j
+         bei/OBOMgMMK+hEDUjJd65QnWaLdSiUSnPV8xbmNO0u3SJjYPP5IngZ2Au5ANb4uPr5/
+         N73o3YP1JKD5jW8aonqB+BtQgIrsmDZ6jtLamaHuB4/jXdxm51bVWpFerDaPaCjc4wQh
+         sZAQ==
+X-Gm-Message-State: AOAM533tN7F2B7Z3fO4G3paul6HOYNcAQU/QCXqi8p6t8eKmHXZRlG0i
+        oEGRWyuIvsIi8W7ToT9ts6cuIz0HyUQ=
+X-Google-Smtp-Source: ABdhPJysk9a5Jf+SX4lHeTsy10umTl+Iw+10Hdmc0Vm6NvglNDpjJ7yHQFSNk6Y4VXHA2quRuzUnQg==
+X-Received: by 2002:adf:f452:: with SMTP id f18mr926698wrp.240.1639758528583;
+        Fri, 17 Dec 2021 08:28:48 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z22sm2537535wmi.26.2021.12.17.08.28.46
+        by smtp.gmail.com with ESMTPSA id o4sm12633873wmq.31.2021.12.17.08.28.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Dec 2021 08:28:47 -0800 (PST)
-Message-Id: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
+        Fri, 17 Dec 2021 08:28:48 -0800 (PST)
+Message-Id: <1ed91f6d255b76bdbdcccea7e1effcebbb263ced.1639758526.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
+References: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 17 Dec 2021 16:28:44 +0000
-Subject: [PATCH 0/2] Two small 'git repack' fixes
+Date:   Fri, 17 Dec 2021 16:28:45 +0000
+Subject: [PATCH 1/2] repack: respect kept objects with '--write-midx -b'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     me@ttaylorr.com, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I was experimenting with some ideas in 'git repack' and discovered these two
-bugs.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-The first is a "real" bug in that it repacks much more data than is
-necessary when repacking with '--write-midx -b' and there exists a .keep
-pack. The fix is simple, which is to change a condition that was added for
-the '-b' case before '--write-midx' existed.
+Historically, we needed a single packfile in order to have reachability
+bitmaps. This introduced logic that when 'git repack' had a '-b' option
+that we should stop sending the '--honor-pack-keep' option to the 'git
+pack-objects' child process, ensuring that we create a packfile
+containing all reachable objects.
 
-The second is a UX bug in that '--quiet' did not disable all progress, at
-least when stderr was interactive.
+In the world of multi-pack-index bitmaps, we no longer need to repack
+all objects into a single pack to have valid bitmaps. Thus, we should
+continue sending the '--honor-pack-keep' flag to 'git pack-objects'.
 
-Thanks, -Stolee
+The fix is very simple: only disable the flag when writing bitmaps but
+also _not_ writing the multi-pack-index.
 
-Derrick Stolee (2):
-  repack: respect kept objects with '--write-midx -b'
-  repack: make '--quiet' disable progress
+This opens the door to new repacking strategies that might want to keep
+some historical set of objects in a stable pack-file while only
+repacking more recent objects.
 
- builtin/repack.c  |  8 +++++---
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ builtin/repack.c  |  2 +-
  t/t7700-repack.sh | 15 +++++++++++++++
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-
-base-commit: 69a9c10c95e28df457e33b3c7400b16caf2e2962
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1098%2Fderrickstolee%2Frepack-fixes-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1098/derrickstolee/repack-fixes-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1098
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 9b0be6a6ab3..1f128b7c90b 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -693,7 +693,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		write_bitmaps = 0;
+ 	}
+ 	if (pack_kept_objects < 0)
+-		pack_kept_objects = write_bitmaps > 0;
++		pack_kept_objects = write_bitmaps > 0 && !write_midx;
+ 
+ 	if (write_bitmaps && !(pack_everything & ALL_INTO_ONE) && !write_midx)
+ 		die(_(incremental_bitmap_conflict_error));
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 0260ad6f0e0..8c4ba6500be 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -372,4 +372,19 @@ test_expect_success '--write-midx with preferred bitmap tips' '
+ 	)
+ '
+ 
++test_expect_success '--write-midx -b packs non-kept objects' '
++	git init midx-kept &&
++	test_when_finished "rm -fr midx-kept" &&
++	(
++		cd midx-kept &&
++		test_commit_bulk 100 &&
++		GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
++			git repack --write-midx -a -b &&
++		cat trace.txt | \
++			grep \"event\":\"start\" | \
++			grep pack-objects | \
++			grep \"--honor-pack-keep\"
++	)
++'
++
+ test_done
 -- 
 gitgitgadget
+
