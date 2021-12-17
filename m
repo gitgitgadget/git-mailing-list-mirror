@@ -2,154 +2,209 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 579B7C433F5
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 23:29:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9FE5C433F5
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 23:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230317AbhLQX3H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 18:29:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55382 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229911AbhLQX3H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 18:29:07 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38CB6C061574
-        for <git@vger.kernel.org>; Fri, 17 Dec 2021 15:29:07 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id y16-20020a17090a6c9000b001b13ffaa625so4554592pjj.2
-        for <git@vger.kernel.org>; Fri, 17 Dec 2021 15:29:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=skydio.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yCN19lnAT1eUQAN6qDfXWKb9eWaZevMb6bd1QYVjNOw=;
-        b=QOIOCo4ueEfr0W2kkOAURmkJXS1ABnRCEvgH+ixf5AMkSamSRGzmJComKOqlfuST1Y
-         BRRgGRlMkjjX9Wch0RhFUeJVrRUXWeGKwVXzem7JvtsFqjFaYYQNbnlDcZO2wH0eaF9P
-         n15GAtk4l101Qg6/cWv1CglSNT4ndb+Y/lUksrNXEDAHyE5HcCfrVUz2YD1j4tooeCLK
-         BFQHs+IGRD3JHlODgMjzv1grLO3SfbOVabfZcirJ/AyxBPkGfZB7JWTwP0t2t3oSI9Qa
-         E3NXkBuU1eFejpDkPWUUrGT89UuaAxjOl5LvLlLcFwlqg+WTMXEoLsLlfBBHHNEJJ/Hw
-         Dncg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yCN19lnAT1eUQAN6qDfXWKb9eWaZevMb6bd1QYVjNOw=;
-        b=dXoN6udNCTPWnYKTlIBGp/FHH69QpiONYLAHX3W9EUkzINeE1aYCI4MNf2xEpvdoo4
-         0fRNvnhDwDup455+9UYIKr34voE0TLhCo44tATzBU4uGpyvL8D8DfhZwZSHzqsRqfGNi
-         cq6/yrsC3iWNhgIvwIdlbtcjiw74Wg2D3pGLpVrMuA7f+3cLc43SwlG7u5V1CkwL9DT7
-         DcqYqwvIzy89Xu2USr4r7cvdXDHNwuHAte1+prmf2RMh4zOwOXzWq/J1E4GWpJjSiRFp
-         VF+98s9yxacZfqY2ug57C0ovWJpQ9A9q+Tch4DiAmHva2aIo8WMHa87XdhMjhUn+vnkb
-         RGJQ==
-X-Gm-Message-State: AOAM531qW/GWjIukV4p0eouDs2B8XTGnoNzIyQGzX1VNH7YfimLeNyfo
-        PmBBoLE86sR9dCtqIooVpINCfMEu6ugy5g==
-X-Google-Smtp-Source: ABdhPJxEPkg28wy5HcFRogRte7EYJ8ouAT1nC46TFOrqQ0uN8weBYkIScJgneik/aHavfZXcV9o8nQ==
-X-Received: by 2002:a17:90b:3845:: with SMTP id nl5mr6335197pjb.102.1639783746032;
-        Fri, 17 Dec 2021 15:29:06 -0800 (PST)
-Received: from jerry-desktop2.localdomain ([50.236.240.214])
-        by smtp.gmail.com with ESMTPSA id s25sm1043072pfg.208.2021.12.17.15.29.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Dec 2021 15:29:05 -0800 (PST)
-From:   Jerry Zhang <jerry@skydio.com>
-To:     git@vger.kernel.org, gitster@pobox.com
-Cc:     i@zenithal.me, Jerry Zhang <jerry@skydio.com>
-Subject: [PATCH V4] git-apply: skip threeway in add / rename cases
-Date:   Fri, 17 Dec 2021 15:29:02 -0800
-Message-Id: <20211217232902.7604-1-jerry@skydio.com>
-X-Mailer: git-send-email 2.34.1.301.gf1e4b6b18f
-In-Reply-To: <20211217224328.7646-1-jerry@skydio.com>
-References: <20211217224328.7646-1-jerry@skydio.com>
+        id S230507AbhLQXfK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 18:35:10 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57598 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229914AbhLQXfJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 18:35:09 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 81D1FF8CE7;
+        Fri, 17 Dec 2021 18:35:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0n4MDeHPKaSSB0QaGnPho4ToVqvL3v0ARz8iO2
+        vrgJc=; b=EbwRkdqFJPTOAQn40embRhxnXyISEqoiPt1zvoLFIhbd8oXAQ+r8MN
+        P+cfWO4MiJ/cq+gKy2C1vuShBYZiKtEpUQBOD4I5ibz3FxJ1bO6M+TPoI8Uq3VBi
+        iRqbANFytU4tNyVc3nMuD3yokHRNaigTYZpPGfGcncvSXWYoV6WII=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 23DC6F8CE1;
+        Fri, 17 Dec 2021 18:35:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8086BF8CDD;
+        Fri, 17 Dec 2021 18:35:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2] builtin/fetch: skip unnecessary tasks when using
+ --negotiate-only
+References: <20211207192925.67680-1-chooglen@google.com>
+        <20211217000235.68996-1-chooglen@google.com>
+Date:   Fri, 17 Dec 2021 15:35:04 -0800
+In-Reply-To: <20211217000235.68996-1-chooglen@google.com> (Glen Choo's message
+        of "Thu, 16 Dec 2021 16:02:35 -0800")
+Message-ID: <xmqqilvm24bb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: F74BE232-5F91-11EC-B122-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Certain invocations of "git apply --3way"
-will attempt threeway and fail due to
-missing objects, even though git is able
-to fall back on apply_fragments and
-apply the patch successfully with a return
-value of 0. To fix, return early from
-try_threeway() in the following cases:
+Glen Choo <chooglen@google.com> writes:
 
-When the patch is a rename and no lines have
-changed. In this case, "git diff" doesn't
-record the blob info, so 3way is neither
-possible nor necessary.
+> cmd_fetch() performs certain tasks with the assumption that objects are
+> fetched, but `git fetch --negotiate-only` does not fetch objects, as its
+> name implies. This is results in behavior that is unnecessary at best,
+> and incorrect at worst:
+>
+> * Submodules are updated if enabled by recurse.submodules=true, but
+>   negotiation fetch doesn't actually update the repo, so this doesn't
+>   make sense (introduced in [1]).
 
-When the patch is an addition and there is
-no add/add conflict, i.e. direct_to_threeway
-is false. In this case, threeway will fail
-since the preimage is not in cache, but isn't
-necessary anyway since there is no conflict.
+Hmph.
 
-This fixes a few unecessary error prints
-when applying these kinds of patches with
---3way.
+> * Commit graphs will be written if enabled by
+>   fetch.writeCommitGraph=true. But according to
+>   Documentation/config/fetch.txt [2], this should only be done if a
+>   pack-file is downloaded.
 
-It also fixes a reported issue where applying
-a concatenation of several git produced patches
-will fail when those patches involve a deletion
-followed by creation of the same file. Added a
-test for this case too.
-(test provided by <i@zenithal.me>)
+Makes sense, as we haven't changed any reachability, and we have no
+need to rewrite the graph file.
 
-Signed-off-by: Jerry Zhang <jerry@skydio.com>
----
-V3->V4:
-- Fix test bug where it wasn't actually
-exercising the correct failure mode.
+> * gc is run, but according to [3], we only do this because we expect
+>   `git fetch` to introduce objects.
 
- apply.c                   |  4 +++-
- t/t4108-apply-threeway.sh | 18 ++++++++++++++++++
- 2 files changed, 21 insertions(+), 1 deletion(-)
+Makes sense.  As we haven't added any new objects, there is nothing
+(other than the passage of time) that adds to the need to collect
+garbage.
 
-diff --git a/apply.c b/apply.c
-index fed195250b..afc1c6510e 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3580,11 +3580,13 @@ static int try_threeway(struct apply_state *state,
- 	char *img;
- 	struct image tmp_image;
- 
- 	/* No point falling back to 3-way merge in these cases */
- 	if (patch->is_delete ||
--	    S_ISGITLINK(patch->old_mode) || S_ISGITLINK(patch->new_mode))
-+	    S_ISGITLINK(patch->old_mode) || S_ISGITLINK(patch->new_mode) ||
-+	    (patch->is_new && !patch->direct_to_threeway) ||
-+	    (patch->is_rename && !patch->lines_added && !patch->lines_deleted))
- 		return -1;
- 
- 	/* Preimage the patch was prepared for */
- 	if (patch->is_new)
- 		write_object_file("", 0, blob_type, &pre_oid);
-diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
-index cc3aa3314a..c558282bc0 100755
---- a/t/t4108-apply-threeway.sh
-+++ b/t/t4108-apply-threeway.sh
-@@ -273,6 +273,24 @@ test_expect_success 'apply full-index patch with 3way' '
- 
- 	# Apply must succeed.
- 	git apply --3way --index bin.diff
- '
- 
-+test_expect_success 'apply delete then new patch with 3way' '
-+	git reset --hard main &&
-+	test_write_lines 2 > delnew &&
-+	git add delnew &&
-+	git diff --cached >> new.patch &&
-+	git reset --hard &&
-+	test_write_lines 1 > delnew &&
-+	git add delnew &&
-+	git commit -m "delnew" &&
-+	rm delnew &&
-+	git diff >> delete-then-new.patch &&
-+	cat new.patch >> delete-then-new.patch &&
-+
-+	git checkout -- . &&
-+	# Apply must succeed.
-+	git apply --3way delete-then-new.patch
-+'
-+
- test_done
--- 
-2.32.0.1314.g6ed4fcc4cc
+It makes me wonder if we need to do anything upon "fetch --dry-run".
+I know we add to the object store without making anything reachable,
+so that the user can do pre-flight checks with the real objects.  We
+do not change the reachability so there is no reason to rewrite the
+graph file, but we do add cruft to the object store.
 
+Doing something about "--dry-run" is obviously outside the scope of
+this topic, but it may make sense to think about it while we are
+thinking about "fetch".
+
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index f7abbc31ff..85091af99b 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1996,6 +1996,17 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  
+>  	argc = parse_options(argc, argv, prefix,
+>  			     builtin_fetch_options, builtin_fetch_usage, 0);
+> +
+> +	if (negotiate_only) {
+> +		/*
+> +		 * --negotiate-only should never recurse into
+> +		 * submodules, so there is no need to read .gitmodules.
+> +		 */
+> +		recurse_submodules = RECURSE_SUBMODULES_OFF;
+> +		if (!negotiation_tip.nr)
+> +			die(_("--negotiate-only needs one or more --negotiate-tip=*"));
+> +	}
+> +
+
+This means "fetch --negotiate-only --recurse-submodules" silently
+ignores an explicit wish by the user.
+
+I suspect that this part should be more like this.
+
+	if (negitiate_only &&
+	    recurse_submodules != RECURSE_SUBMODULES_OFF) {
+		if (recurse_submodules came from the parse_options)
+			die(_("'--%s' cannot be used with '--%s'",
+			      "recurse-submodules", "negotiate-only"));
+		recurse_submodules = RECURSE_SUBMODULES_OFF;
+	}
+
+That is, we complain if user gives us a combination we do not
+support, but we are OK if the configuration is set to do so and
+silently ignore (because we declare that the combination does not
+make sense).
+
+By the way, do not move the check about the number of negotiation
+tips from the original location.  That check, or its location, have
+nothing to do with what you want to do in this patch, which is "do
+not gc or update the graph file if we are not fetching".  It is
+better to leave unrelated changes out of the patch.
+
+In order to tell if recurse_submodules that is not OFF came from the
+call to parse_options(), you may need to capture the value of the
+variable before calling parse_options() and compare it with the
+current value in the above illustration code snippet I gave.
+
+Having said all that, is it true that recurse-submodules should not
+be combined with negotiate-only?  I naively think it would not be
+surprising if users expect negotiate-only fetches are done also in
+the submodules.  Whatever we decide the right behaviour should be,
+we should document it.  With your patch without any of my above
+input, I would expect at least something like
+
+    diff --git i/Documentation/fetch-options.txt w/Documentation/fetch-options.txt
+    index e967ff1874..baf2e9c50d 100644
+    --- i/Documentation/fetch-options.txt
+    +++ w/Documentation/fetch-options.txt
+    @@ -73,6 +73,9 @@ configuration variables documented in linkgit:git-config[1], and the
+     +
+     Internally this is used to implement the `push.negotiate` option, see
+     linkgit:git-config[1].
+    ++
+    +Note that this option silently makes various options that do not make
+    +sense to be used together with it (e.g. `--recurse-submodules`) ignored.
+     
+     --dry-run::
+            Show what would be done, without making any changes.
+
+to leave wiggling room for us to silently ignore more.  We may know
+about --recurse-submodules today, but I would not be surprised if we
+find more.
+
+> @@ -2112,6 +2120,19 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  		result = fetch_multiple(&list, max_children);
+>  	}
+>  
+> +	string_list_clear(&list, 0);
+> +
+> +	/*
+> +	 * Skip irrelevant tasks because we know objects were not
+> +	 * fetched.
+> +	 *
+> +	 * NEEDSWORK: as a future optimization, we can return early
+> +	 * whenever objects were not fetched e.g. if we already have all
+> +	 * of them.
+> +	 */
+> +	if (negotiate_only)
+> +		return result;
+> +
+
+I find it somewhat misleading to have the early return before the
+block for recurse_submodules, as we _are_ already forcing it to not
+to recurse.  It would be more readable if it went before the place
+where we start doing the post-action clean-ups like reachability
+graphs and garbage collection.
+
+>  	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
+>  		struct strvec options = STRVEC_INIT;
+>  		int max_children = max_jobs;
+> @@ -2132,8 +2153,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  		strvec_clear(&options);
+>  	}
+>  
+> -	string_list_clear(&list, 0);
+> -
+
+Namely, here.
+
+>  	prepare_repo_settings(the_repository);
+
+This is existing code, but I wonder why it can be done _SO_ late in
+the sequence.  We've already called the transport API for the
+negotiate-only communication at this point, but a call to this
+function is the only thing that gives fetch_negotiation_algorithm
+member in the_repository its default value, isn't it?
+
+Thanks.
