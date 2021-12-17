@@ -2,116 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27D9BC433EF
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 16:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C53FC433F5
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 17:24:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239439AbhLQQ4c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 11:56:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50212 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239432AbhLQQ4c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 11:56:32 -0500
-Received: from adoakley.name (adoakley.name [IPv6:2a01:4f8:c17:1310::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC7FDC061574
-        for <git@vger.kernel.org>; Fri, 17 Dec 2021 08:56:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=adoakley.name; s=2018; h=Content-Transfer-Encoding:Content-Type:
-        MIME-Version:References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=gAG5qxTRmef9R2AGImJQ1x2/fdJeeYQ0ASWCl26OHTs=; b=XIOLnEXz+GFg43JNalqFQhXTdf
-        cVmVduKRqnBjcx8EUAqvHCuVmvTENoqcibYW4oZGazCdtNlx1HsHr2MDvqU7whyRJdRRkSkHb1cnk
-        IcpM2SF+m4J++BFP5SPiXLQVehWEz1pOz/OSGKIm6t1HJyOuoDtLWnfi9QwyaSUsNupc=;
-Received: from [2001:8b0:14bb:e93a:fd4f:6f72:643:f027] (helo=ado-tr.dyn.home.arpa)
-        by adoakley.name with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-        (Exim 4.93.0.4)
-        (envelope-from <andrew@adoakley.name>)
-        id 1myGWz-0005VM-Jg; Fri, 17 Dec 2021 16:56:29 +0000
-Date:   Fri, 17 Dec 2021 16:56:27 +0000
-From:   Andrew Oakley <andrew@adoakley.name>
-To:     Joel Holdsworth <jholdsworth@nvidia.com>
-Cc:     git@vger.kernel.org,
-        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
-        Dorgon Chang <dorgonman@hotmail.com>,
-        Joachim Kuebart <joachim.kuebart@gmail.com>,
-        Daniel Levin <dendy.ua@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Luke Diamand <luke@diamand.org>,
-        Ben Keene <seraphire@gmail.com>
-Subject: Re: [PATCH 1/2] git-p4: print size values in appropriate units
-Message-ID: <20211217165627.49e931d6@ado-tr.dyn.home.arpa>
-In-Reply-To: <20211217145949.2229886-2-jholdsworth@nvidia.com>
-References: <20211217145949.2229886-1-jholdsworth@nvidia.com>
-        <20211217145949.2229886-2-jholdsworth@nvidia.com>
-X-Mailer: Claws Mail 3.18.0 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+        id S239862AbhLQRYR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 12:24:17 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54098 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233875AbhLQRYR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 12:24:17 -0500
+Received: (qmail 25042 invoked by uid 109); 17 Dec 2021 17:24:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 17 Dec 2021 17:24:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 311 invoked by uid 111); 17 Dec 2021 17:24:06 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 17 Dec 2021 12:24:06 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 17 Dec 2021 12:24:06 -0500
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/2] repack: respect kept objects with '--write-midx -b'
+Message-ID: <YbzHtsl045XZbJGN@coredump.intra.peff.net>
+References: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
+ <1ed91f6d255b76bdbdcccea7e1effcebbb263ced.1639758526.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1ed91f6d255b76bdbdcccea7e1effcebbb263ced.1639758526.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 17 Dec 2021 14:59:48 +0000
-Joel Holdsworth <jholdsworth@nvidia.com> wrote:
+On Fri, Dec 17, 2021 at 04:28:45PM +0000, Derrick Stolee via GitGitGadget wrote:
 
-> The git-p4 script reports file sizes in various log messages.
-> Previously, in each case the script would print them as the number of
-> bytes divided by 1048576 i.e. the size in mebibytes, rounded down to
-> an integer.  This resulted in small files being described as having a
-> size of "0 MB".
+> From: Derrick Stolee <dstolee@microsoft.com>
 > 
-> This patch replaces the existing behaviour with a new helper function:
-> format_size_human_readable, which takes a number of bytes (or any
-> other quantity), and computes the appropriate prefix to use: none,
-> Ki, Mi, Gi, Ti, Pi, Ei, Zi, Yi.
+> Historically, we needed a single packfile in order to have reachability
+> bitmaps. This introduced logic that when 'git repack' had a '-b' option
+> that we should stop sending the '--honor-pack-keep' option to the 'git
+> pack-objects' child process, ensuring that we create a packfile
+> containing all reachable objects.
 > 
-> For example, a size of 123456 will now be printed as "120.6 KiB"
-> greatly improving the readability of the log output.
+> In the world of multi-pack-index bitmaps, we no longer need to repack
+> all objects into a single pack to have valid bitmaps. Thus, we should
+> continue sending the '--honor-pack-keep' flag to 'git pack-objects'.
 > 
-> Large valued prefixes such as pebi, exbi, zebi and yobi are included
-> for completeness, though they not expected to appear in any real-world
-> Perforce repository!
+> The fix is very simple: only disable the flag when writing bitmaps but
+> also _not_ writing the multi-pack-index.
 > 
-> Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
-> ---
->  git-p4.py | 22 +++++++++++++++++-----
->  1 file changed, 17 insertions(+), 5 deletions(-)
-> 
-> diff --git a/git-p4.py b/git-p4.py
-> index 2b4500226a..8c1130cb8f 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -56,6 +56,16 @@
+> This opens the door to new repacking strategies that might want to keep
+> some historical set of objects in a stable pack-file while only
+> repacking more recent objects.
+
+That all makes sense. Another way of thinking about it: we disable
+--honor-pack-keep so we that keep packs do not interfere with writing a
+pack bitmap. But with --write-midx, we skip the pack bitmap entirely.
+
+In the end it's the same, but I wanted to emphasize that the important
+hing is not so much that we are writing a midx bitmap as that we are
+_not_ writing a pack bitmap. And that is what makes this OK to do (that
+the repack code already disables the pack bitmap when writing a midx
+one).
+
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index 9b0be6a6ab3..1f128b7c90b 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -693,7 +693,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+>  		write_bitmaps = 0;
+>  	}
+>  	if (pack_kept_objects < 0)
+> -		pack_kept_objects = write_bitmaps > 0;
+> +		pack_kept_objects = write_bitmaps > 0 && !write_midx;
+
+So the code change here looks good.
+
+> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+> index 0260ad6f0e0..8c4ba6500be 100755
+> --- a/t/t7700-repack.sh
+> +++ b/t/t7700-repack.sh
+> @@ -372,4 +372,19 @@ test_expect_success '--write-midx with preferred bitmap tips' '
+>  	)
+>  '
 >  
->  p4_access_checked = False
->  
-> +def format_size_human_readable(num, suffix="B"):
-> +    """ Returns a number of units (typically bytes) formatted as a
-> human-readable
-> +        string.
-> +    """
-> +    for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
-> +        if abs(num) < 1024.0:
-> +            return "{:3.1f} {}{}".format(num, unit, suffix)
-> +        num /= 1024.0
-> +    return "{:.1f} Yi{}".format(num, suffix)
+> +test_expect_success '--write-midx -b packs non-kept objects' '
+> +	git init midx-kept &&
+> +	test_when_finished "rm -fr midx-kept" &&
+> +	(
+> +		cd midx-kept &&
+> +		test_commit_bulk 100 &&
+> +		GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
+> +			git repack --write-midx -a -b &&
+> +		cat trace.txt | \
+> +			grep \"event\":\"start\" | \
+> +			grep pack-objects | \
+> +			grep \"--honor-pack-keep\"
+> +	)
+> +'
 
-If it's always bytes, why keep the suffix separate?
+This looks correct, though:
 
-> +
->  def p4_build_cmd(cmd):
->      """Build a suitable p4 command line.
->  
-> @@ -2966,7 +2976,8 @@ def streamOneP4File(self, file, contents):
->                  size = int(self.stream_file['fileSize'])
->              else:
->                  size = 0 # deleted files don't get a fileSize
-> apparently
-> -            sys.stdout.write('\r%s --> %s (%i MB)\n' % (file_path,
-> relPath, size/1024/1024))
-> +            sys.stdout.write('\r%s --> %s (%s MB)\n' % (
-> +                file_path, relPath,
-> format_size_human_readable(size))) sys.stdout.flush()
+  - do we really need this separate repo directory? The test before it
+    uses one, but only because it needs a very specific set of commits.
+    There is a long-running "midx" directory we could use, though I
+    think just the regular test repo would be fine, too.
 
-You've left the "MB" in.  The same thing happens elsewhere.
+  - likewise, do we need 100 commits? They are not too expensive these
+    days with test_commit_bulk, but I think we don't even care about the
+    repo contents at all.
+
+  - there is no actual .keep file in your test. That's OK, as we are
+    just checking the args passed to pack-objects.
+
+  - useless use of cat. :) Also, you could probably do it all with one
+    grep. This is bikeshedding, of course, but it's nice to keep process
+    counts low in the test suite. Also, your middle grep is looser than
+    the others (it doesn't check for surrounding quotes).
+
+So something like this would work:
+
+  test_expect_success '--write-midx -b packs non-kept objects' '
+          GIT_TRACE2_EVENT="$(pwd)/midx-keep-bitmap.trace" \
+                  git -C midx repack --write-midx -a -b &&
+          grep "\"event\":\"start\".*\"pack-objects\".*\"--honor-pack-keep\"" \
+                  midx-keep-bitmap.trace
+  '
+
+One could perhaps argue that the combined grep is less readable. If
+that's a concern, I'd suggest wrapping it in a function like:
+
+  # usage: check_trace2_arg <trace_file> <cmd> <arg>
+  check_trace2_arg () {
+	grep "\"event\":\"start\".*\"$2\".*\"$3\"" "$1"
+  }
+
+All just suggestions, of course. I'd be happy enough to see the patch go
+in as-is.
+
+-Peff
