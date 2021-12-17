@@ -2,224 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D589C433EF
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 05:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F05AAC433EF
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 05:11:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232038AbhLQFLF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 00:11:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56134 "EHLO
+        id S232071AbhLQFLU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 00:11:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbhLQFLF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 00:11:05 -0500
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C728C061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 21:11:05 -0800 (PST)
-Received: by mail-pf1-x42a.google.com with SMTP id i12so1254984pfd.6
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 21:11:05 -0800 (PST)
+        with ESMTP id S232041AbhLQFLT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 00:11:19 -0500
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8026C061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 21:11:19 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id p18so853091pld.13
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 21:11:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:from:to:cc:subject:message-id:mail-followup-to:references
          :mime-version:content-disposition:in-reply-to;
-        bh=a/r3Kb0ZwfCMBfIXx0yR37xO3D2K1tpNfHxHV4OO38s=;
-        b=KtmDwvWeRWz8mmtyRsgY4e75ACsUV5ON9ME5fqNVpFGKMpU1ED5e5F3nSnUlPt/067
-         qQzXI0VNM35hFJBevPlp6O2GSwDf+cFDpG4lpoTJeaEk3Wwbr8X1k7yK7u/DIwTpborV
-         l1Y+zoCSoJdb5MDogYjr7E+x8IYs5rZlifK2lFmy9ZH6qKjcdwHjlf3E7L323jN/gA+b
-         qj7L5OE3dr3b6tmqJnfCOTiLHSN1e/eBYj2OKm9JAmBYSQRYI8d575jygNFRzA8wBvMR
-         Rqs3DaU0zHT5WOLaRARApk9suvVPOATt+SAKx1y/nFr6rkKLlBFjFqLU/MaQYBeIbk2P
-         2sMQ==
+        bh=Pzm9Q2p4GtW/Di+/7TQ+CJToYLjHgpFD8XvdtdJetnU=;
+        b=Y0t62LSaz4kfb++KOLqlszZGB1AUEMbkRk/EfLJt0FcPbFZNxhpld8LebBZU++4Pqv
+         EvYYxwBe+tTiQpxng36nL0WfDvtQGbYqDjdgZ+XRtPVjgzEc7pfVUOxuDTCxX4aV8hF7
+         nd1OtG/dRglJdYVXlYWAPBEqXrGrLMV1IzYDgK68A6kHcKEEupWDjccxWqqAXu5BiQP4
+         ZrvoFon1wm1Lki8LPc4nl1rUC0KSGz0+SrwelxihNZBNknJI59w7PNVjwMEJy/W/a8Bq
+         C5S+roufCdqTsSuSfrHkoVCmXuSzsVwCTVxT96w/GsL95TeBf/h9nVF2mMzqYM+8DF5K
+         vBwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id
          :mail-followup-to:references:mime-version:content-disposition
          :in-reply-to;
-        bh=a/r3Kb0ZwfCMBfIXx0yR37xO3D2K1tpNfHxHV4OO38s=;
-        b=wSF4FHh4mpglTqzHk+07eSAASqrRkTc/4QZrrMS1eQGoVoYF7xwNhhlJjSBnz8cNwL
-         7EXJv1eH2Y/XyExVZDuEYt+lcqDwtJUK9T8je8s/v3X2HzbOAt2G34Pf+PvMu9PaPKAc
-         FiXNE1UZLt9wBDZZVp4kI2luX/XrtX7Md659u7+kwZuwP7jigvlVZdVbUWJsHkWZgXfM
-         xuajjTe3W5bCLCeC5dXvYr7l3zMARdxV0/HCsXnDL0ZnHVbEjVy2tLLRJ2cVdeOq61I6
-         3wIhnkus8BMA6rEuEELh/u2Q+Y0tLzEKIzWoSLbAPjG0+JN+Z7ZCov//1AXTgW1EDp4v
-         lFvA==
-X-Gm-Message-State: AOAM533S/wa5fwi35EegXNSWAnhht7Bg1ThGVKmLx4XfUEBAZdB/of34
-        S+aiYre5nprY9Di73KGZ8L/TJw==
-X-Google-Smtp-Source: ABdhPJwi2F1IQtAzYORyf5+t8KEKz+gBMYAzLDKWuK+ut0ykHKKs8FqnyAKV0m4YqRrEKMCPOOuQgg==
-X-Received: by 2002:aa7:9990:0:b0:4a1:57ff:3369 with SMTP id k16-20020aa79990000000b004a157ff3369mr1390507pfh.31.1639717864016;
-        Thu, 16 Dec 2021 21:11:04 -0800 (PST)
+        bh=Pzm9Q2p4GtW/Di+/7TQ+CJToYLjHgpFD8XvdtdJetnU=;
+        b=YT2T2aQAFVEhf4EYNCee4+ZUFjm7pYWU2X7HcRpjlh7E9X3FpKZs9w1sxzTPuuYelu
+         3bEWnXzUqjlQxRVx9rrVwDEUSshE28sa48JRyPOWI0vADx68eEb/o5+X51ylZqB7DAo4
+         ce+QvbzCGTtmY8R/xDbjyWy2nGo4n/lv0IiGBYcxb43Sx4725ZOZHirwAQj/VEg3WTKh
+         qsBNZKQHeMmQ0YxdVhD7LEVANMOLxOt6ruzr2PxEIziBRlG/C8oiMTW75J5rxAgg46ec
+         5ZmTM1D9j0OLurjPO8D2iO/WrTmMZKnrjLArcmBgh1ZpIIy2WnH2yvYXTvAi7W24U492
+         Z0Zw==
+X-Gm-Message-State: AOAM532ucpF5WRDgM20ylO6+0z4ktxmDFibSPJsPgBtSYfTaUHvvAtlf
+        SUcPiv05qLZFjzbqGWyELB7ZAw==
+X-Google-Smtp-Source: ABdhPJyquBjVVHCBciZLhaZXED02fjCUTXT4io/UiYbqpdgy5dU+obddOJqBq/hdsTMM+/htoakZuA==
+X-Received: by 2002:a17:90a:909:: with SMTP id n9mr1859109pjn.1.1639717878967;
+        Thu, 16 Dec 2021 21:11:18 -0800 (PST)
 Received: from google.com ([2620:15c:2ce:200:a37:b5e2:96be:e5d5])
-        by smtp.gmail.com with ESMTPSA id om8sm10933619pjb.12.2021.12.16.21.11.02
+        by smtp.gmail.com with ESMTPSA id mv1sm1273325pjb.23.2021.12.16.21.11.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 21:11:03 -0800 (PST)
-Date:   Thu, 16 Dec 2021 21:10:57 -0800
+        Thu, 16 Dec 2021 21:11:18 -0800 (PST)
+Date:   Thu, 16 Dec 2021 21:11:12 -0800
 From:   Josh Steadmon <steadmon@google.com>
 To:     Glen Choo <chooglen@google.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
         Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v6 1/3] branch: accept multiple upstream branches for
- tracking
-Message-ID: <Ybwb4UkQwAVRcJp5@google.com>
+Subject: Re: [PATCH v6 2/3] branch: add flags and config to inherit tracking
+Message-ID: <Ybwb8O2iLERz4Bmu@google.com>
 Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
         Glen Choo <chooglen@google.com>, git@vger.kernel.org,
         gitster@pobox.com, avarab@gmail.com, Johannes.Schindelin@gmx.de
 References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
  <cover.1639524556.git.steadmon@google.com>
- <43d6f83fedc022c44d6a3be249e7fd8cd2a25007.1639524556.git.steadmon@google.com>
- <kl6lo85g8grj.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <57e57e6e6a0735341a86f7b5dc52d477d8789578.1639524556.git.steadmon@google.com>
+ <kl6llf0k8ckj.fsf@chooglen-macbookpro.roam.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <kl6lo85g8grj.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6llf0k8ckj.fsf@chooglen-macbookpro.roam.corp.google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021.12.16 11:57, Glen Choo wrote:
+On 2021.12.16 13:27, Glen Choo wrote:
 > Josh Steadmon <steadmon@google.com> writes:
 > 
+> > @@ -192,11 +220,15 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+> >  			   enum branch_track track, int quiet)
 > >  {
-> >  	const char *shortname = NULL;
-> >  	struct strbuf key = STRBUF_INIT;
-> > +	struct string_list_item *item;
-> >  	int rebasing = should_setup_rebase(origin);
+> >  	struct tracking tracking;
+> > +	struct string_list tracking_srcs = STRING_LIST_INIT_DUP;
+> >  	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
 > >  
-> > -	if (skip_prefix(remote, "refs/heads/", &shortname)
-> > -	    && !strcmp(local, shortname)
-> > -	    && !origin) {
-> > -		warning(_("Not setting branch %s as its own upstream."),
-> > -			local);
-> > -		return 0;
-> > -	}
-> > +	if (!remotes->nr)
-> > +		BUG("must provide at least one remote for branch config");
-> > +	if (rebasing && remotes->nr > 1)
-> > +		die(_("cannot inherit upstream tracking configuration when rebasing is requested"));
+> >  	memset(&tracking, 0, sizeof(tracking));
+> >  	tracking.spec.dst = (char *)orig_ref;
+> > -	if (for_each_remote(find_tracked_branch, &tracking))
+> > +	tracking.srcs = &tracking_srcs;
+> > +	if (track != BRANCH_TRACK_INHERIT)
+> > +		for_each_remote(find_tracked_branch, &tracking);
+> > +	else if (inherit_tracking(&tracking, orig_ref))
+> >  		return;
+> >  
+> >  	if (!tracking.matches)
+> > @@ -204,6 +236,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+> >  		case BRANCH_TRACK_ALWAYS:
+> >  		case BRANCH_TRACK_EXPLICIT:
+> >  		case BRANCH_TRACK_OVERRIDE:
+> > +		case BRANCH_TRACK_INHERIT:
+> >  			break;
+> >  		default:
+> >  			return;
+> > @@ -213,11 +246,13 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+> >  		die(_("Not tracking: ambiguous information for ref %s"),
+> >  		    orig_ref);
+> >  
+> > -	if (install_branch_config(config_flags, new_ref, tracking.remote,
+> > -			      tracking.src ? tracking.src : orig_ref) < 0)
+> > +	if (tracking.srcs->nr < 1 && track != BRANCH_TRACK_INHERIT)
+> > +		string_list_append(tracking.srcs, orig_ref);
 > 
-> Nit: if we're being pedantic, we cannot inherit upstream tracking
-> configuration when rebasing is requested with multiple upstream
-> branches.
+> So, in the BRANCH_TRACK_{ALWAYS,EXPLICIT,OVERRIDE} cases, we append
+> orig_ref because we expect orig_ref to be a local ref that the caller
+> wants to track. This is not the case with BRANCH_TRACK_INHERIT, where we
+> want to inherit the configuration and we no longer care about orig_ref.
 > 
-> But this message is already very niche and loaded with specifics, so
-> adding "...with multiple upstream branches" might just be more
-> confusing, so this is a nit.
+> This is correct, though it's more unobvious than what I originally
+> envisioned when I commented on [1]. As a small nit, it might benefit
+> from a clarifying comment, but this is fine as it is :)
 
-I think it's worthwhile to be precise. Thanks for pointing this out.
+Actually, you're right, the `track != BRANCH_TRACK_INHERIT` condition is
+superfluous. The only way we could have BRANCH_TRACK_INHERIT and
+tracking.srcs->nr < 1 at the same time would be if there were no
+"branch.*.merge" entries in the config to inherit, but if that were true
+then we would have had returned from this function earlier.
+
+> > diff --git a/t/t2027-checkout-track.sh b/t/t2027-checkout-track.sh
+> > index 4453741b96..49c7def21c 100755
+> > --- a/t/t2027-checkout-track.sh
+> > +++ b/t/t2027-checkout-track.sh
+> > @@ -24,4 +24,27 @@ test_expect_success 'checkout --track -b rejects an extra path argument' '
+> >  	test_i18ngrep "cannot be used with updating paths" err
+> >  '
+> >  
+> > +test_expect_success 'checkout --track -b overrides autoSetupMerge=inherit' '
+> > +	# Set up tracking config on main
+> > +	test_config branch.main.remote origin &&
+> > +	test_config branch.main.merge refs/heads/main &&
+> > +	test_config branch.autoSetupMerge inherit &&
+> > +	# With --track=inherit, we copy the tracking config from main
+> > +	git checkout --track=inherit -b b1 main &&
+> > +	test_cmp_config origin branch.b1.remote &&
+> > +	test_cmp_config refs/heads/main branch.b1.merge &&
+> > +	# With branch.autoSetupMerge=inherit, we do the same
+> > +	git checkout -b b2 main &&
+> > +	test_cmp_config origin branch.b2.remote &&
+> > +	test_cmp_config refs/heads/main branch.b2.merge &&
+> > +	# But --track overrides this
+> > +	git checkout --track -b b3 main &&
+> > +	test_cmp_config . branch.b3.remote &&
+> > +	test_cmp_config refs/heads/main branch.b3.merge &&
+> > +	# And --track=direct does as well
+> > +	git checkout --track=direct -b b4 main &&
+> > +	test_cmp_config . branch.b4.remote &&
+> > +	test_cmp_config refs/heads/main branch.b4.merge
+> 
+> Nit: in both cases, the expected result is that branch.b*.merge is
+> "refs/heads/main". so the difference between --track=direct and
+> --track=inherit would be more obvious if main tracked something other
+> than origin/main.
+
 Fixed in V7.
 
 
-> > @@ -87,29 +112,42 @@ int install_branch_config(int flag, const char *local, const char *origin, const
-> >  	strbuf_release(&key);
-> >  
-> >  	if (flag & BRANCH_CONFIG_VERBOSE) {
-> > -		if (shortname) {
-> > +		const char *name;
-> > +		struct strbuf ref_string = STRBUF_INIT;
-> > +
-> > +		for_each_string_list_item(item, remotes) {
-> > +			name = item->string;
-> > +			skip_prefix(name, "refs/heads/", &name);
-> > +			strbuf_addf(&ref_string, "  %s\n", name);
-> > +		}
-> > +
-> > +		if (remotes->nr == 1) {
-> > +			struct strbuf refname = STRBUF_INIT;
-> > +
-> >  			if (origin)
-> > -				printf_ln(rebasing ?
-> > -					  _("Branch '%s' set up to track remote branch '%s' from '%s' by rebasing.") :
-> > -					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
-> > -					  local, shortname, origin);
-> > -			else
-> > -				printf_ln(rebasing ?
-> > -					  _("Branch '%s' set up to track local branch '%s' by rebasing.") :
-> > -					  _("Branch '%s' set up to track local branch '%s'."),
-> > -					  local, shortname);
-> > +				strbuf_addf(&refname, "%s/", origin);
-> > +			strbuf_addstr(&refname, remotes->items[0].string);
-> > +
-> > +			/*
-> > +			 * Rebasing is only allowed in the case of a single
-> > +			 * upstream branch.
-> > +			 */
-> > +			printf_ln(rebasing ?
-> > +				_("branch '%s' set up to track '%s' by rebasing.") :
-> > +				_("branch '%s' set up to track '%s'."),
-> > +				local, refname.buf);
-> > +
-> > +			strbuf_release(&refname);
-> > +		} else if (origin) {
-> > +			printf_ln(_("branch '%s' set up to track from '%s':"),
-> > +				local, origin);
-> > +			printf("%s", ref_string.buf);
+> As an side, the comments in the tests make it really readable :)
 > 
-> It's not clear to me why the hint contains the word 'from' when it is a
-> remote ref...
-
-Because in the multiple-branch case, we don't prepend the origin to each
-ref, so we need to let users know which remote the refs are coming from.
-
-
-> >  		} else {
-> > -			if (origin)
-> > -				printf_ln(rebasing ?
-> > -					  _("Branch '%s' set up to track remote ref '%s' by rebasing.") :
-> > -					  _("Branch '%s' set up to track remote ref '%s'."),
-> > -					  local, remote);
-> > -			else
-> > -				printf_ln(rebasing ?
-> > -					  _("Branch '%s' set up to track local ref '%s' by rebasing.") :
-> > -					  _("Branch '%s' set up to track local ref '%s'."),
-> > -					  local, remote);
-> > +			printf_ln(_("branch '%s' set up to track:"), local);
-> > +			printf("%s", ref_string.buf);
+> Overall this patch looks good.
 > 
-> but does not have the word 'from' when it is a local ref. As far as I
-> can tell, this is the only difference between remote and local refs, and
-> adding the word 'from' does not seem like a good enough reason to add an
-> 'if' condition. Maybe I missed something here?
-> 
-> This motivates my answer to the question you asked in [1]:
-> 
->   I removed as many distinctions as possible, as most can still be
->   inferred from context. [...] Likewise, we don't need to specify whether
->   refs are remote or local: "some-remote/some-branch" vs.
->   "a-local-branch" should be understandable without us spelling it out.
-> 
-> I agree that there is adequate context, so I would be ok with the
-> simplification if there was corresponding code simplification e.g.
-> dropping "if (origin)". But in its current form, I don't think there is
-> good enough reason to simplify the message.
-
-I think the proper point of comparison is not the original code, but the
-code from V5 where we try to preserve the same level of detail in output
-as the original code. If we are committed to both having multiple
-remotes and keeping similar styles of output as the original
-implementation, then something like the massive conditional in V5 is
-unavoidable.
-
-> Of course, IIUC, this is as simple as dropping 'from' in the "if
-> (origin)" case.
-> 
-> > @@ -118,14 +156,33 @@ int install_branch_config(int flag, const char *local, const char *origin, const
-> >  	strbuf_release(&key);
-> >  	error(_("Unable to write upstream branch configuration"));
-> >  
-> > -	advise(_(tracking_advice),
-> > -	       origin ? origin : "",
-> > -	       origin ? "/" : "",
-> > -	       shortname ? shortname : remote);
-> > +	advise(_("\nAfter fixing the error cause you may try to fix up\n"
-> > +		"the remote tracking information by invoking:"));
-> > +	if (remotes->nr == 1)
-> > +		advise("  git branch --set-upstream-to=%s%s%s",
-> > +			origin ? origin : "",
-> > +			origin ? "/" : "",
-> > +			remotes->items[0].string);
-> > +	else
-> > +		for_each_string_list_item(item, remotes)
-> > +			advise("  git config --add branch.\"%s\".merge %s",
-> > +				local, item->string);
-> 
-> The advice is now correct, nice! Does the user also need to run "git
-> config --add branch.%s.remote %s" ?
-> 
-> [1] https://lore.kernel.org/git/Ybk6QsMdeBl6IweW@google.com
-
-Yes, thank you for the catch. Fixed in V7.
+> [1] https://lore.kernel.org/git/kl6lfsr3c3j7.fsf@chooglen-macbookpro.roam.corp.google.com
