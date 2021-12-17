@@ -2,90 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A501CC433EF
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 16:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2CE4C433F5
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 16:49:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239320AbhLQQsl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 11:48:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48302 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235967AbhLQQsk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 11:48:40 -0500
-X-Greylist: delayed 425 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 17 Dec 2021 08:48:40 PST
-Received: from tsukuyomi.43-1.org (tsukuyomi.43-1.org [IPv6:2a01:4f8:c2c:1632::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E916C061574
-        for <git@vger.kernel.org>; Fri, 17 Dec 2021 08:48:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=43-1.org;
- i=@43-1.org; q=dns/txt; s=2019; t=1639759293; h=from : to : subject :
- in-reply-to : references : cc : date : message-id : mime-version :
- content-type : from; bh=LZzaKUDKrAZLoVNwfvcgNM+767fqT3tUkgwATDuV0P4=;
- b=mdm5cJpWXOrnQpcwMwcV/8HcuS6wKCDw0UovUDrtzkuhVZrbvOqYx3VnrJN6UmvttNSlZ
- BLSnI4gzIDR69rSLBggY5Kd6mFfujxAHFgAvKEF3rfkmIomIspp+Lvi6Kdza7Mm8uDrP9XK
- BdokfG8uRSZpDQ5Z43qfhU6cQ0Gk8jHBJ8c3PGNF2vfoM9m/BzTDfCmexXFwFHkmnfSo5iL
- LLaKyAm9lDGWih5WODG9o4Bo5Uk5WLPoKjS9x3p+83/kA4SYkdE2oLU0ruh/1xeyP0vkHi+
- mg3ugkVucKWRR0re1zT7DWUmE9n5EMF7IvVcF0VCxuxX+6QRubnInN4Zj1YA==
-From:   Matthias Maier <tamiko-GITVGER@43-1.org>
-To:     git@vger.kernel.org
-Subject: Re: Using principal wildcards in gpg.ssh.allowedSignersFile
-In-Reply-To: <20211217094235.i2fwildp7rcjcgtz@fs> (Fabian Stelzer's message of
-        "Fri, 17 Dec 2021 10:42:35 +0100")
-References: <87zgoziwfo.fsf@gentoo.org> <20211217094235.i2fwildp7rcjcgtz@fs>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-CC:     Fabian Stelzer <fs@gigacodes.de>
-Date:   Fri, 17 Dec 2021 10:41:31 -0600
-Message-ID: <87czlv5glg.fsf@43-1.org>
+        id S239323AbhLQQtB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 11:49:01 -0500
+Received: from mout.web.de ([212.227.17.12]:35987 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235967AbhLQQtA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 11:49:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1639759733;
+        bh=gIji6OaX1j7ExGF60pI3HsZx0wdjaVPcaAU7Nz94QkE=;
+        h=X-UI-Sender-Class:Date:To:From:Subject:Cc;
+        b=ns3Foq76Xkx2rcWrR4A0q1mRBqZv3ifXlfjpESOn/fu4MIA1M2zhgCmk3pywQxC9J
+         vk+ypIezYDCbaDdta548IBMBn4WgVyTbp7SGuXNwCPh7HAoocofrZMP9twsxrb7ac5
+         25WgmHTWBJBx3FCkXDxDF0sbM51yuJ2zuerE6meA=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N6sFx-1mQr2g2RVX-0183es; Fri, 17
+ Dec 2021 17:48:53 +0100
+Message-ID: <79dcebc0-e569-cc8a-4702-c572b062ed6d@web.de>
+Date:   Fri, 17 Dec 2021 17:48:52 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.0
+Content-Language: en-US
+To:     Git List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] t4202: fix patternType setting in --invert-grep test
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:rBdHUj0cYoCWGCwFM29E1zcLSFsobGFqsrzO6sVYGunSrTqc1bf
+ m2u/Z2GJ6t3+bmOtFGtqLWL/r/DUlGwK7LuOkiQdBchmoiXBRcCUkJiqOUDNaOjF4fpZq1o
+ S1hcEa5bB1H+pC90W8tJZ0w4qRryuFi0zw526qJENmIhLjQhKz7jyEUHDlNA28jQip0ahjf
+ 5M362Zrk/wg3l70Xx7pKQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9uAlyla8pL4=:T0qjzj7aB0SE9HvI7d0Edn
+ nqnb9LRCCsuXZxZzjfZixsWMBZY+857RpW5dbugzRnQvzCaGZqvQNUY0j43fcELVr9D5Mjrvi
+ iKhoFPHAsLqwZ14aSuj1L3NNSYzAQRuzOm1uD9KC2KJWFE/hhLgQTkjEh2mYWQzsVwb1wjN3m
+ qcidm7Cn1QEpU8DktgVjRMtMQkqXmCr7ODY6Nea/Nqh4wvant5z00StmF8JE8fhHMod7MAoyy
+ 1jfNPC0xTZka/IRemWaISek2zsta/zuF2BmHXsxyCtNAirJwU1m+vZigahmBd0nDIXUeYDCib
+ LJlWfM1BaX50wHucSED5u2E63jGcVL9mawN1XzVoqYQ9MEXvwJKqxWDCUtbuJphN4QVjDRc/I
+ oknrcV/SyQpayl3ZJzrHgY63o2NQxxmRuC4Wkw2hJKtPKZqhbt/rEJBd7TBegBLNuuVcygux9
+ 5wzcFdhxGil9cb9V56w4nbitA7PKqnMSCAtLZTtSkkrQnDybp/Yzagt24Itkr3hnOFOt6elLR
+ h0ShCxTN29wpaX1yzmwXUFiLCKyWK6KCpaZVG8H5Zq9YzGt6AQ4iEO9OZLlYRyje8MZo1+EHE
+ 7WMjAQNhzL2hk10/vo00VAJ9OYwtk+jWAps0eZWfZEIidPmBZDqTxZyGgOYs1NNyk5pGWY0Wj
+ 3IeXyr12tCzzGsYc8BjL3MUn5Pbwd0q9J6fdCC5C8l35lgtLULoqx17xJHxzO0imlq2mWVH1w
+ PHYdHhK5UHJ1NYuRxgO2FLXu6YlzIVfZkDAmj3jHiJfugoTzJE6TkK+ltZxUPBhiCB5/wq2dL
+ 5lVvd2qVlN6kaD5vLAbo4/8T/h2HSZ936U2FR/ZRtfMz1Ds0xZyzVZHbvBPnL9LkNR4MczOFn
+ a6C9oTZMefBigD6gBpikcGCnsYRKBRzg8WISovafyqBJtMXSN9cnzXIbg+rHcXe+cYrLhHpgE
+ PtUdJKFIKlh/0a6CmR1DKcyczQU+w+Cn2m7iAyHzATfhMUQjZQdWQCG2fJBTZnDS1q9ewCkJV
+ miry8TjMB5PQDSmew0QlCI6CoVFBhe/zPknwG0orn8Wazg9IggQUe/PbQTL0GlB1pw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Fabian,
+Actually use extended regexes as indicated in the comment.
 
-Thanks for doing the bug report to openssh!
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/t4202-log.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 7884e3d46b..f51b57b4a2 100755
+=2D-- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -250,7 +250,7 @@ test_expect_success 'log --invert-grep --grep' '
+ 	test_cmp expect actual &&
 
-On Fri, Dec 17, 2021, at 03:42 CST, Fabian Stelzer <fs@gigacodes.de> wrote:
+ 	# POSIX extended
+-	git -c grep.patternType=3Dbasic log --pretty=3D"tformat:%s" --invert-gre=
+p --grep=3Dt[h] --grep=3DS[e]c >actual &&
++	git -c grep.patternType=3Dextended log --pretty=3D"tformat:%s" --invert-=
+grep --grep=3Dt[h] --grep=3DS[e]c >actual &&
+ 	test_cmp expect actual &&
 
-> [...]
-
->>  $ ssh-keygen -Y find-principals -f allowed_signers -n file -s test.txt.sig
->>  tamiko@43-1.org
->
-> Are you sure the allowed_signers file was exactly what you generated
-> before for this command? If I follow your steps this will not produce
-> a principal for me with neither openssh-8.8.1, nor master. Can you run
-> this with `-vvv` which will show a bit more ssh internal output?
-> In the openssh code for find-principals wildcard principals are
-> filtered for CA certs. I'm not sure why and have asked them about it.
->
-> By the way, find-principals will not consider the namespace parameter.
-> This has another bug in the current master producing a segfault for
-> which I've already sent a patch. But this should be unrelated to your
-> issue.
-
-You're absolutely right - I did confuse myself. The find-principals call
-does not work:
-
-    % ssh-keygen -vvv -Y find-principals -f allowed_signers -n file -s test.txt.sig
-    debug3: allowed_signers:1: options cert-authority,namespaces="file,git"
-    debug1: allowed_signers:1: principal "*@43-1.org" not authorized: contains wildcards
-    allowed_signers:1: no valid principals found
-    debug1: allowed_signers:1: cert_filter_principals: invalid certificate
-    No principal matched.
-
-I agree. It is interesting that they explicitly filter wildcards for the
-find-principals call. Let's see what openssh upstream has to say.
-
-
-> [...]
->
-> Just FYI: if you add GIT_TRACE=1 to the git commands you can see the
-> executed ssh-keygen commands, which can help to see whats going on.
-
-Ah, that's neat!
-
-
-Best,
-Matthias
-
+ 	# PCRE
+=2D-
+2.34.0
