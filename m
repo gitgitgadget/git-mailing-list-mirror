@@ -2,132 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5762C433EF
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 04:25:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26F66C433EF
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 04:50:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232620AbhLQEZe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 23:25:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45910 "EHLO
+        id S232955AbhLQEu5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 23:50:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231781AbhLQEZa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 23:25:30 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27E69C061748
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 20:25:30 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id j18so1687831wrd.2
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 20:25:30 -0800 (PST)
+        with ESMTP id S230331AbhLQEu5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 23:50:57 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C117FC061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 20:50:56 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id e3so3272102edu.4
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 20:50:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=s/Rwinuv1HHYSmm9NNuYi0xzr9/xdgU4RDCSf8PMTBg=;
-        b=lQ25nmKyIRzVdclDBi2KxNkb1/7/PhVf4e8wT948KxW6+HUEtKTFSmRgDnzKgEngBd
-         4lxn3WE/1Vh20v14AElq5yDlPN/JlHFhQiJ8zmsBOs4hdOgVkxkKsxBtZgnkl00Pin5g
-         ops0dZzfA1x+0y5ENHL8VcEP1kPoz2DKPhWAEek2e0ZMlnsslT+o6mD8taSBW1FtJh0d
-         DGDAKc+QvP7OE8U+6IF5XDdnSqwKogYnfX0uheQ5cv8FbGCYlcLsPZ56WIVMyTJ/zCIH
-         dfDw9u4ep1vJbHGWgUZeK+huFNAAV7ownFP2DgPd9rKYGZO/eUOyFq9BI30dSFVn525A
-         5XTw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=VWUPqYzDaGyZoajOollIwlLEjDhi5TXE2fdw8zujYgo=;
+        b=GFpui0P1bo5S//yOWtcjGxEuJefqlIKLXLEd0sBZnes2aSB5QgIPZmqfyNKZWVPSps
+         U5WXVus42ZlgEK71Hj2dsx4V2wF9wlMX9YhlS7AbTdk+Onh5myUaoSWG+uB2MJjj+SyU
+         HtrXCqAQK7q9rs3ZkUEEp/MVgUhL4CxodrQYIdRtH+iHYh+chvmIFf6KyePzmQExFTlC
+         c4NxHYu8zbFqyfqibRMr5b99bzqXxQB+EUbAKb6WY0u/bZQdkMB9oYeDGSYM8/vMQO4o
+         60asWWyXvlRKd2MFp5/ZiUPLw/fHKPMQg86r5ig9LKqHyCUbCE+GyGx3OXTorWYTqIIk
+         LzGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=s/Rwinuv1HHYSmm9NNuYi0xzr9/xdgU4RDCSf8PMTBg=;
-        b=uEt7ju8dzy57GGpugaqo+WpovQlHfLczl74BgxauG+17koAJwXg+Wdu/EX9oiJRQ3M
-         LgidosKUybE6fgQ0hqR/5XiZVTCbPJeRVGvtAvUgA+a+vHCGaLl2e/4Oq0WK/3ux4ZnW
-         oHRh81v31hGbsNALDOZRP/9mAcEoY7O59vbA+1smvMBWBERW2fe7dGD+8J0oxLgcLsgX
-         K/5iEzsCj2p4lVsGzQZ+LbSmDC9yCc/KJZqgQbpsAPAMRF/+3r9QHddQjtF3TffRoWFj
-         AsZ7b/39fPfSiXrpkUbXuuRukf9FQ55K/ahQHLFzsJOB++ZmdTnyu7QONJB+VdlSwkLn
-         +jCg==
-X-Gm-Message-State: AOAM531VIEZzdh47pXkaecGX/GC8/Pbf4MDqYRBq2wBBo6NDmWdDNcBe
-        rP8SU0LpJFcCJ2q9eycFc7E9Nw/eWYbBxg==
-X-Google-Smtp-Source: ABdhPJx2/zxqYr1Kkucq6Nv7LKB0xa4A2PfYF07QM2N7wE81OqE2yrbCMxXiFypNmIOZ1cXInlN+NA==
-X-Received: by 2002:adf:c5d1:: with SMTP id v17mr817090wrg.571.1639715128556;
-        Thu, 16 Dec 2021 20:25:28 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o64sm6325634wme.28.2021.12.16.20.25.27
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=VWUPqYzDaGyZoajOollIwlLEjDhi5TXE2fdw8zujYgo=;
+        b=zoxq9x2CPv7g9mvL3AJvSXlD4kQdHe8Eio55dWmDiv+5Hv48RLz/1nsXOL+RIMBW6Y
+         p9gKoUnyOzjOjOJuLEjuBDPRnUNphesji+Hk2vxvgu88rMi2HGNIA9ZrqoRlegSYMAzn
+         uLpXnJ5/FQgcIuKQaQA3/l/hYx+pl2P/xb2t7YJpytyaqIxLmMUodwIqXvRKVgD/uyhS
+         4CVVFbYSR/Fu6XGVY/WdIhkXJspoKGnAjuCKL3M/g4RTJMJFaYX8UEuSNr9avozLssK3
+         A2ZEvRVfTCyyH+cMEz3I83FDUKKdLA/RTUOIR99qkLgqqjf3LYdrMwXBE1BSisjhBzEG
+         vSGA==
+X-Gm-Message-State: AOAM530ny2DEJnC2ysaoZJ7qRim4cdLyeoIYqs9HytgCEh0zQOBaweyj
+        mf/z1USMnn7CXkBwKx+jmXdHD12nXWznSQ==
+X-Google-Smtp-Source: ABdhPJwp9q70lSwweuJX8EgAM/y3pieN3RjEebBiKkdqZVqCJJLI/lLFKxYFW39ssvyUbr+XTbsP1Q==
+X-Received: by 2002:a17:906:990c:: with SMTP id zl12mr1110330ejb.370.1639716655251;
+        Thu, 16 Dec 2021 20:50:55 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id gn8sm2406212ejc.23.2021.12.16.20.50.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 20:25:28 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v7 7/7] various *.c: use isatty(0|2), not isatty(STDIN_FILENO|STDERR_FILENO)
-Date:   Fri, 17 Dec 2021 05:25:02 +0100
-Message-Id: <patch-v7-7.7-0670d1aa5f2-20211217T041945Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.1.1119.g7a3fc8778ee
-In-Reply-To: <cover-v7-0.7-00000000000-20211217T041945Z-avarab@gmail.com>
-References: <cover-v7-0.7-00000000000-20211217T041945Z-avarab@gmail.com>
+        Thu, 16 Dec 2021 20:50:54 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1my5Co-000jJB-BU;
+        Fri, 17 Dec 2021 05:50:54 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] t4204 is not sanitizer clean at all
+Date:   Fri, 17 Dec 2021 05:39:04 +0100
+References: <20211213220327.16042-1-jerry@skydio.com>
+ <20211213220327.16042-2-jerry@skydio.com> <xmqqee6dz5s9.fsf@gitster.g>
+ <xmqqtuf86t7z.fsf_-_@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqqtuf86t7z.fsf_-_@gitster.g>
+Message-ID: <211217.861r2bal75.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have over 50 uses of "isatty(1)" and "isatty(2)" in the codebase,
-and around 10 "isatty(0)", but these used the
-{STDIN_FILENO,STD{OUT,ERR}_FILENO} macros in "stdlib.h" to refer to
-them.
 
-Let's change these for consistency, and because another commit that
-would like to be based on top of this one[1] has a recipe to change
-all of these for ad-hoc testing, not needing to match these with that
-ad-hoc regex will make things easier to explain. Only one of these is
-related to the "struct progress" code which it discusses, but let's
-change all of these while we're at it.
+On Thu, Dec 16 2021, Junio C Hamano wrote:
 
-1. https://lore.kernel.org/git/patch-v6-8.8-bff919994b5-20211102T122507Z-avarab@gmail.com/
+> Earlier we marked that this patch-id test is leak-sanitizer clean,
+> but if we read the test script carefully, it is merely because we
+> have too many invocations of commands in the "git log" family on the
+> upstream side of the pipe, hiding breakages from them.
+>
+> Split the pipeline so that breakages from these commands can be
+> caught (not limited to aborts due to leak-sanitizer) and unmark
+> the script as not passing the test with leak-sanitizer in effect.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  A quick grep tells me that tests 3302, 3303, 3305, 4020 and 6236
+>  all use "git log" and still are marked as passing tests with
+>  leak-sanitizer in effect.  I've taken a deep look at none of them,
+>  but I suspect they share the same kind of breakage.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/bisect--helper.c | 2 +-
- builtin/bundle.c         | 2 +-
- compat/mingw.c           | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+This change looks good to me.
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 28a2e6a5750..21360a4e70b 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -830,7 +830,7 @@ static int bisect_autostart(struct bisect_terms *terms)
- 	fprintf_ln(stderr, _("You need to start by \"git bisect "
- 			  "start\"\n"));
- 
--	if (!isatty(STDIN_FILENO))
-+	if (!isatty(0))
- 		return -1;
- 
- 	/*
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 5a85d7cd0fe..df69c651753 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -56,7 +56,7 @@ static int parse_options_cmd_bundle(int argc,
- 
- static int cmd_bundle_create(int argc, const char **argv, const char *prefix) {
- 	int all_progress_implied = 0;
--	int progress = isatty(STDERR_FILENO);
-+	int progress = isatty(2);
- 	struct strvec pack_opts;
- 	int version = -1;
- 	int ret;
-diff --git a/compat/mingw.c b/compat/mingw.c
-index e14f2d5f77c..7c55d0f0414 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2376,7 +2376,7 @@ int mingw_raise(int sig)
- 	switch (sig) {
- 	case SIGALRM:
- 		if (timer_fn == SIG_DFL) {
--			if (isatty(STDERR_FILENO))
-+			if (isatty(2))
- 				fputs("Alarm clock\n", stderr);
- 			exit(128 + SIGALRM);
- 		} else if (timer_fn != SIG_IGN)
--- 
-2.34.1.1119.g7a3fc8778ee
+FWIW this is not a mistake on my part, but something I'm perfectly aware
+of. I don't consider it to be "brekage".
 
+We have plenty of place in the test suite where we hide exit codes on
+the LHS of a pipe, or where we call a function that doesn't &&-chain its
+git invocations.
+
+In those cases we can and usually will "succeed" under LSAN, because it
+allows the program to emit its full output, and will abort() at the very
+end.
+
+I have an unsubmitted logging mode (using LSAN_OPTIONS=log_path=<path>)
+where I log every one of these to test-results/*, there's a lot more of
+these.
+
+But in the meantime I think the best way forward is to gradually mark
+the tests that pass with LSAN as passing, to ensure that we at least
+don't have regressions in the meantime. Before this we'd at least check
+the "git checkout" etc. for leaks.
+
+If I made fixing all broken &&-chains or git on the LHS of a pipe a
+prerequisite for marking as passing under under LSAN I'd end up with
+something that's approximately the size of [1] and more (i.e. Eric's
+upcoming patches to do that).
+
+I don't see why we'd consider perfect the enemy of the good in these
+cases. Yes we won't catch the successful exit of every single git
+invocation, but our tests aren't doing that now, LSAN or not. But until
+that's fixed we'll at least catch some, which helps our overall memory
+leak regression coverage.
+
+More importantly it makes it a lot easier to reason about future memory
+leak patches, as we'll be able to get to a 1=1 mapping of tests that
+pass, and those that are marked being known to pass. I'm using that
+locally to fake-fail those that start passing unexpectedly that aren't
+on the list, which then helps to inform the addition of "this test now
+passes with no leaks".
+
+1. https://lore.kernel.org/git/20211213063059.19424-1-sunshine@sunshineco.com/
