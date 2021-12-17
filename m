@@ -2,56 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B36DBC433F5
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 05:12:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9692FC433F5
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 05:12:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232234AbhLQFMM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 00:12:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56402 "EHLO
+        id S232820AbhLQFMO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 00:12:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231765AbhLQFML (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 00:12:11 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E0ACC061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 21:12:11 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id w9-20020a25c709000000b00608a9489fc1so2532245ybe.20
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 21:12:11 -0800 (PST)
+        with ESMTP id S231765AbhLQFMN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 00:12:13 -0500
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E95BC061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 21:12:13 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id p133-20020a255b8b000000b006086e19f89fso2540041ybb.19
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 21:12:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=65S1ZwoJpzW5PCbCDKjGMB00KhR3ETQrvV6pttmRdOI=;
-        b=jUtR0ViwLr5XHG/IhXnSOjFciK7ttVlX7VnOq6jm78RPK6/JigqxpSX4mKC1TMGwcG
-         86LPZyefrwji6iMHltXeWKlg4OEFw6Glq7SfrZRuOVBIpa3dRKcVo5eXbkCl3x1k0Nm2
-         f/mcy5xSQLEMpsl//2C+h8/GHdw3pO9ug+UMSL6qCfl2uXfWA4iQPFE3IMOQYWiFJ24+
-         q1XmLqDcGs8PAeabOSrr/N50s4u9QbnRPcmJ/Xa9YGUjuU8sfZWQsa60V+tcFrIGiwen
-         +CuTLjQJQQpSd0KIHxDl4vAFWuehl+o0nhcZemqMQZGZVpfL2Z3gTtlXy5FiXJFvrMZa
-         YnJw==
+        bh=RXV6xTpRJ8KseZ403ed6Hfrh5nSbt0A7fLyMmTKSuJ8=;
+        b=K6/M8DpYDFbwUizuimt3vyrJiik6sor57yyz/tfFRUwJ5WlZOakc1RWBZG/EyqKsXF
+         PakSp9OMQq/KbsVngTnntOduDrFoV4UIpkQBregxyOUlxNZHG7OvG4ifFcnzLDYxITrM
+         Z4ev9XgHpcYKC/kJ9XSjQOBKngRywwz8EBTk2MTiSPrgA5qg6Y/ACx37vTCA0YC0qXLj
+         cmxj392WTLRiPnl7SKS72f9Plxi+3KUMoVBYGYwOJrF7xYMW0/sk0v92yza65+yM9tOq
+         PHRkDeHQQrezDvToTEngClawnETSSBtGF6bj2tOPjQNVzMRjhjqz4QsWp6U+ufStgetV
+         g1UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=65S1ZwoJpzW5PCbCDKjGMB00KhR3ETQrvV6pttmRdOI=;
-        b=lejuuj7YagOGIxOdZlA4KAgjyCNj6T3xD0aRlVNQaOsdE6MGaWX49n2cdOnRO6PZZt
-         UokbhMBWSDpwBHDspckWaQxIT/f3cAoSdkDgZAlc7Dpl8m4LNncyUZtsqzDukHfMLIG9
-         krd3acgCSKanLT9S4Tq0FoV+bKiq0vYJeBtN8tGL/FGmyBLjkxtuipO/vJ3fy/eQLhot
-         wKkct0zG/Af6BXmO34Y51UrVyXGFEnH1M2MfXh7GONIwsGT3WhgmQJvzWzICKg8JlXON
-         MSmyUwiuzOAr7jn6J41f0aDsN7gVsSYB0+FbAGSeJKTUFqbFI7NPX7lb5P4UeIuH9Me0
-         ebdA==
-X-Gm-Message-State: AOAM530oyD3y9UkuJXSmYNo1UZXhLhYsShUfpmaObM313aTdvQqmBM2C
-        f83W2x/s/5Ekc9LvIAXhQa7eE1PcpWUzBbXwAGyidGBuxzl0td7u21GKZdQ8fiI+MwwN9xSLa96
-        6ulhyoYXKK7GMC8I6ejcUgu6hlCJTs6OePTQsNIPi4vCrMfDSmXjk+IvnnPHDJ0s=
-X-Google-Smtp-Source: ABdhPJxkz7BIaBOMKYOlb90AvxETAaO+YgxI8yTmvc4uogsSWEJgLV9pIvfKhAFETnI1tKFmOdJuaPtcJcCC6w==
+        bh=RXV6xTpRJ8KseZ403ed6Hfrh5nSbt0A7fLyMmTKSuJ8=;
+        b=2u8aLsEPOJdufBEbH361RUd9zGAmN1AGnrm9FkWxBXXzwlAlf7odZMRjiDk4H1W4La
+         ZEVWCV5WJnUSPTEBFETiw/1TdBIlMkzXV8+mokWRncHVEEPcvj/d43Ve9cfb9EWuJPBu
+         cKsMd96V4VAGUa6sJC6QJG9z1hK0XCcipBXFMHOHGf/Rlrk6zabQ5k7cQhNFgde4/jo1
+         NY+1u0ZzkUPqycBSkXSJaRZa1oVlKLO6srvEiI/rvEnhnbSyBJGO7gxEFAxcuba/Kcu+
+         6v1fUC7dk5r40R77qRi6+Zyv+qk4INZoWx30YI7jj3/zUYvO5TgTWUULH1RV3Xij+dpz
+         q0UA==
+X-Gm-Message-State: AOAM533blKeUQDOIO3UfSoAAx/zM0/uzypQk+1zfCUN8tDUyLHQsIwL8
+        K9oZ9GzqRLeqFM/JtYhjU2LsSl0jw0XkFGk8cM0Ug/pliG09t6TAR8oYlLW9lrJ3MPOvtvCyRc9
+        Cubdy5ckLahcG6+vp0eyEdXyszWNUueFAsAYHtpDLkI7PhSe649wv8OyvvJPbE/Q=
+X-Google-Smtp-Source: ABdhPJy2w0/lnMy4dgVt4S40Jc9SdrOXycHirFr6mqfbj/TmEMil6yNuLwG3qNnk1qLaNNDaVuw37MuvlfYAqA==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:a37:b5e2:96be:e5d5])
- (user=steadmon job=sendgmr) by 2002:a25:acce:: with SMTP id
- x14mr2104526ybd.745.1639717930804; Thu, 16 Dec 2021 21:12:10 -0800 (PST)
-Date:   Thu, 16 Dec 2021 21:12:05 -0800
-In-Reply-To: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
-Message-Id: <cover.1639717481.git.steadmon@google.com>
+ (user=steadmon job=sendgmr) by 2002:a25:ec03:: with SMTP id
+ j3mr2059212ybh.203.1639717932727; Thu, 16 Dec 2021 21:12:12 -0800 (PST)
+Date:   Thu, 16 Dec 2021 21:12:06 -0800
+In-Reply-To: <cover.1639717481.git.steadmon@google.com>
+Message-Id: <9152367ba9e8e4285d691cd3b6ec6956b599f93c.1639717481.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+ <cover.1639717481.git.steadmon@google.com>
 X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
-Subject: [PATCH v7 0/3] branch: inherit tracking configs
+Subject: [PATCH v7 1/3] branch: accept multiple upstream branches for tracking
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, chooglen@google.com, avarab@gmail.com,
@@ -61,147 +62,230 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes since V6:
-* Strip the refs/heads/ prefix in the verbose output when we have only a
-  single upstream branch.
-* Improve the fatal error message to note that rebasing is only
-  incompatible with multiple upstream refs.
-* Also note that `branch.<name>.remote` should be set in the manual
-  recovery advice.
-* Simplify the logic in setup_tracking() when no tracking sources match.
-* Make the difference in test cases in t2027 more obvious.
+Add a new static variant of install_branch_config() that accepts
+multiple remote branch names for tracking. This will be used in an
+upcoming commit that enables inheriting the tracking configuration from
+a parent branch.
 
-Changes since V5:
-* Greatly simplified BRANCH_CONFIG_VERBOSE output to not require nearly
-  so many conditionals.
-* Note that rebasing is not compatible with inheriting multiple upstream
-  branches.
-* Moved the change to case-sensitivity for branch.autosetupmerge to its
-  own commit.
-* Improve advice on failed tracking setup when multiple branches are
-  involved.
-* Make better use of string_list API.
-* Make better use of config API.
-* More straight-forward use of the `struct tracking` API.
-* Numerous style fixes.
+Currently, all callers of install_branch_config() pass only a single
+remote. Make install_branch_config() a small wrapper around
+install_branch_config_multiple_remotes() so that existing callers do not
+need to be changed.
 
-Changes since V4:
-* Add new patch (1/2) to refactor branch.c:install_branch_config() to
-  accept multiple upstream refs
-* When multiple upstream branches are set in the parent branch, inherit
-  them all, instead of just the first
-* Break out error string arguments for easier translation
-* Don't ignore case for values of branch.autosetupmerge
-* Move reference to git-pull out of usage string for --track into
-  git-branch.txt
-* Use test_config instead of `git config` in t2027
-* Style fixes: add single-quotes around warning string arguments, remove
-  unnecessary braces
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ branch.c          | 140 +++++++++++++++++++++++++++++++++-------------
+ t/t3200-branch.sh |   6 +-
+ 2 files changed, 104 insertions(+), 42 deletions(-)
 
-Changes since V3:
-* Use branch_get() instead of git_config_get_string() to look up branch
-  configuration.
-* Remove unnecessary string formatting in new error message in
-  parse-options-cb.c.
-
-Josh Steadmon (3):
-  branch: accept multiple upstream branches for tracking
-  branch: add flags and config to inherit tracking
-  config: require lowercase for branch.*.autosetupmerge
-
- Documentation/config/branch.txt |   3 +-
- Documentation/git-branch.txt    |  24 ++--
- Documentation/git-checkout.txt  |   2 +-
- Documentation/git-switch.txt    |   2 +-
- branch.c                        | 189 ++++++++++++++++++++++++--------
- branch.h                        |   3 +-
- builtin/branch.c                |   6 +-
- builtin/checkout.c              |   6 +-
- config.c                        |   5 +-
- parse-options-cb.c              |  16 +++
- parse-options.h                 |   2 +
- t/t2017-checkout-orphan.sh      |  11 +-
- t/t2027-checkout-track.sh       |  23 ++++
- t/t2060-switch.sh               |  28 +++++
- t/t3200-branch.sh               |  39 ++++++-
- t/t7201-co.sh                   |  17 +++
- 16 files changed, 310 insertions(+), 66 deletions(-)
-
-Range-diff against v6:
-1:  43d6f83fed ! 1:  9152367ba9 branch: accept multiple upstream branches for tracking
-    @@ branch.c: static int should_setup_rebase(const char *origin)
-     +	if (!remotes->nr)
-     +		BUG("must provide at least one remote for branch config");
-     +	if (rebasing && remotes->nr > 1)
-    -+		die(_("cannot inherit upstream tracking configuration when rebasing is requested"));
-    ++		die(_("cannot inherit upstream tracking configuration of "
-    ++		      "multiple refs when rebasing is requested"));
-     +
-     +	if (!origin)
-     +		for_each_string_list_item(item, remotes)
-    @@ branch.c: int install_branch_config(int flag, const char *local, const char *ori
-     -					  _("Branch '%s' set up to track local branch '%s'."),
-     -					  local, shortname);
-     +				strbuf_addf(&refname, "%s/", origin);
-    -+			strbuf_addstr(&refname, remotes->items[0].string);
-    ++			skip_prefix(remotes->items[0].string, "refs/heads/", &name);
-    ++			strbuf_addstr(&refname, name);
-     +
-     +			/*
-     +			 * Rebasing is only allowed in the case of a single
-    @@ branch.c: int install_branch_config(int flag, const char *local, const char *ori
-     +			origin ? origin : "",
-     +			origin ? "/" : "",
-     +			remotes->items[0].string);
-    -+	else
-    ++	else {
-    ++		advise("  git config --add branch.\"%s\".remote %s",
-    ++			local, origin ? origin : ".");
-     +		for_each_string_list_item(item, remotes)
-     +			advise("  git config --add branch.\"%s\".merge %s",
-     +				local, item->string);
-    ++	}
-      
-      	return -1;
-      }
-2:  57e57e6e6a ! 2:  afeb84539e branch: add flags and config to inherit tracking
-    @@ branch.c: static void setup_tracking(const char *new_ref, const char *orig_ref,
-      
-     -	if (install_branch_config(config_flags, new_ref, tracking.remote,
-     -			      tracking.src ? tracking.src : orig_ref) < 0)
-    -+	if (tracking.srcs->nr < 1 && track != BRANCH_TRACK_INHERIT)
-    ++	if (tracking.srcs->nr < 1)
-     +		string_list_append(tracking.srcs, orig_ref);
-    -+	if (install_branch_config_multiple_remotes(config_flags, new_ref, tracking.remote,
-    -+			      tracking.srcs) < 0)
-    ++	if (install_branch_config_multiple_remotes(config_flags, new_ref,
-    ++				tracking.remote, tracking.srcs) < 0)
-      		exit(-1);
-      
-     -	free(tracking.src);
-    @@ t/t2027-checkout-track.sh: test_expect_success 'checkout --track -b rejects an e
-     +test_expect_success 'checkout --track -b overrides autoSetupMerge=inherit' '
-     +	# Set up tracking config on main
-     +	test_config branch.main.remote origin &&
-    -+	test_config branch.main.merge refs/heads/main &&
-    ++	test_config branch.main.merge refs/heads/some-branch &&
-     +	test_config branch.autoSetupMerge inherit &&
-     +	# With --track=inherit, we copy the tracking config from main
-     +	git checkout --track=inherit -b b1 main &&
-     +	test_cmp_config origin branch.b1.remote &&
-    -+	test_cmp_config refs/heads/main branch.b1.merge &&
-    ++	test_cmp_config refs/heads/some-branch branch.b1.merge &&
-     +	# With branch.autoSetupMerge=inherit, we do the same
-     +	git checkout -b b2 main &&
-     +	test_cmp_config origin branch.b2.remote &&
-    -+	test_cmp_config refs/heads/main branch.b2.merge &&
-    ++	test_cmp_config refs/heads/some-branch branch.b2.merge &&
-     +	# But --track overrides this
-     +	git checkout --track -b b3 main &&
-     +	test_cmp_config . branch.b3.remote &&
-3:  f79d27dc24 = 3:  a818a6561b config: require lowercase for branch.*.autosetupmerge
-
-base-commit: 6c40894d2466d4e7fddc047a05116aa9d14712ee
+diff --git a/branch.c b/branch.c
+index 7a88a4861e..9e57c54848 100644
+--- a/branch.c
++++ b/branch.c
+@@ -49,25 +49,42 @@ static int should_setup_rebase(const char *origin)
+ 	return 0;
+ }
+ 
+-static const char tracking_advice[] =
+-N_("\n"
+-"After fixing the error cause you may try to fix up\n"
+-"the remote tracking information by invoking\n"
+-"\"git branch --set-upstream-to=%s%s%s\".");
+-
+-int install_branch_config(int flag, const char *local, const char *origin, const char *remote)
++/**
++ * Install upstream tracking configuration for a branch; specifically, add
++ * `branch.<name>.remote` and `branch.<name>.merge` entries.
++ *
++ * `flag` contains integer flags for options; currently only
++ * BRANCH_CONFIG_VERBOSE is checked.
++ *
++ * `local` is the name of the branch whose configuration we're installing.
++ *
++ * `origin` is the name of the remote owning the upstream branches. NULL means
++ * the upstream branches are local to this repo.
++ *
++ * `remotes` is a list of refs that are upstream of local
++ */
++static int install_branch_config_multiple_remotes(int flag, const char *local,
++		const char *origin, struct string_list *remotes)
+ {
+ 	const char *shortname = NULL;
+ 	struct strbuf key = STRBUF_INIT;
++	struct string_list_item *item;
+ 	int rebasing = should_setup_rebase(origin);
+ 
+-	if (skip_prefix(remote, "refs/heads/", &shortname)
+-	    && !strcmp(local, shortname)
+-	    && !origin) {
+-		warning(_("Not setting branch %s as its own upstream."),
+-			local);
+-		return 0;
+-	}
++	if (!remotes->nr)
++		BUG("must provide at least one remote for branch config");
++	if (rebasing && remotes->nr > 1)
++		die(_("cannot inherit upstream tracking configuration of "
++		      "multiple refs when rebasing is requested"));
++
++	if (!origin)
++		for_each_string_list_item(item, remotes)
++			if (skip_prefix(item->string, "refs/heads/", &shortname)
++			    && !strcmp(local, shortname)) {
++				warning(_("not setting branch '%s' as its own upstream."),
++					local);
++				return 0;
++			}
+ 
+ 	strbuf_addf(&key, "branch.%s.remote", local);
+ 	if (git_config_set_gently(key.buf, origin ? origin : ".") < 0)
+@@ -75,8 +92,17 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+ 
+ 	strbuf_reset(&key);
+ 	strbuf_addf(&key, "branch.%s.merge", local);
+-	if (git_config_set_gently(key.buf, remote) < 0)
++	/*
++	 * We want to overwrite any existing config with all the branches in
++	 * "remotes". Override any existing config, then write our branches. If
++	 * more than one is provided, use CONFIG_REGEX_NONE to preserve what
++	 * we've written so far.
++	 */
++	if (git_config_set_gently(key.buf, NULL) < 0)
+ 		goto out_err;
++	for_each_string_list_item(item, remotes)
++		if (git_config_set_multivar_gently(key.buf, item->string, CONFIG_REGEX_NONE, 0) < 0)
++			goto out_err;
+ 
+ 	if (rebasing) {
+ 		strbuf_reset(&key);
+@@ -87,29 +113,43 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+ 	strbuf_release(&key);
+ 
+ 	if (flag & BRANCH_CONFIG_VERBOSE) {
+-		if (shortname) {
++		const char *name;
++		struct strbuf ref_string = STRBUF_INIT;
++
++		for_each_string_list_item(item, remotes) {
++			name = item->string;
++			skip_prefix(name, "refs/heads/", &name);
++			strbuf_addf(&ref_string, "  %s\n", name);
++		}
++
++		if (remotes->nr == 1) {
++			struct strbuf refname = STRBUF_INIT;
++
+ 			if (origin)
+-				printf_ln(rebasing ?
+-					  _("Branch '%s' set up to track remote branch '%s' from '%s' by rebasing.") :
+-					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
+-					  local, shortname, origin);
+-			else
+-				printf_ln(rebasing ?
+-					  _("Branch '%s' set up to track local branch '%s' by rebasing.") :
+-					  _("Branch '%s' set up to track local branch '%s'."),
+-					  local, shortname);
++				strbuf_addf(&refname, "%s/", origin);
++			skip_prefix(remotes->items[0].string, "refs/heads/", &name);
++			strbuf_addstr(&refname, name);
++
++			/*
++			 * Rebasing is only allowed in the case of a single
++			 * upstream branch.
++			 */
++			printf_ln(rebasing ?
++				_("branch '%s' set up to track '%s' by rebasing.") :
++				_("branch '%s' set up to track '%s'."),
++				local, refname.buf);
++
++			strbuf_release(&refname);
++		} else if (origin) {
++			printf_ln(_("branch '%s' set up to track from '%s':"),
++				local, origin);
++			printf("%s", ref_string.buf);
+ 		} else {
+-			if (origin)
+-				printf_ln(rebasing ?
+-					  _("Branch '%s' set up to track remote ref '%s' by rebasing.") :
+-					  _("Branch '%s' set up to track remote ref '%s'."),
+-					  local, remote);
+-			else
+-				printf_ln(rebasing ?
+-					  _("Branch '%s' set up to track local ref '%s' by rebasing.") :
+-					  _("Branch '%s' set up to track local ref '%s'."),
+-					  local, remote);
++			printf_ln(_("branch '%s' set up to track:"), local);
++			printf("%s", ref_string.buf);
+ 		}
++
++		strbuf_release(&ref_string);
+ 	}
+ 
+ 	return 0;
+@@ -118,14 +158,36 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+ 	strbuf_release(&key);
+ 	error(_("Unable to write upstream branch configuration"));
+ 
+-	advise(_(tracking_advice),
+-	       origin ? origin : "",
+-	       origin ? "/" : "",
+-	       shortname ? shortname : remote);
++	advise(_("\nAfter fixing the error cause you may try to fix up\n"
++		"the remote tracking information by invoking:"));
++	if (remotes->nr == 1)
++		advise("  git branch --set-upstream-to=%s%s%s",
++			origin ? origin : "",
++			origin ? "/" : "",
++			remotes->items[0].string);
++	else {
++		advise("  git config --add branch.\"%s\".remote %s",
++			local, origin ? origin : ".");
++		for_each_string_list_item(item, remotes)
++			advise("  git config --add branch.\"%s\".merge %s",
++				local, item->string);
++	}
+ 
+ 	return -1;
+ }
+ 
++int install_branch_config(int flag, const char *local, const char *origin,
++		const char *remote)
++{
++	int ret;
++	struct string_list remotes = STRING_LIST_INIT_DUP;
++
++	string_list_append(&remotes, remote);
++	ret = install_branch_config_multiple_remotes(flag, local, origin, &remotes);
++	string_list_clear(&remotes, 0);
++	return ret;
++}
++
+ /*
+  * This is called when new_ref is branched off of orig_ref, and tries
+  * to infer the settings for branch.<new_ref>.{remote,merge} from the
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index cc4b10236e..4b0ef35913 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -950,15 +950,15 @@ test_expect_success 'disabled option --set-upstream fails' '
+ 	test_must_fail git branch --set-upstream origin/main
+ '
+ 
+-test_expect_success '--set-upstream-to notices an error to set branch as own upstream' '
++test_expect_success '--set-upstream-to notices an error to set branch as own upstream' "
+ 	git branch --set-upstream-to refs/heads/my13 my13 2>actual &&
+ 	cat >expect <<-\EOF &&
+-	warning: Not setting branch my13 as its own upstream.
++	warning: not setting branch 'my13' as its own upstream.
+ 	EOF
+ 	test_expect_code 1 git config branch.my13.remote &&
+ 	test_expect_code 1 git config branch.my13.merge &&
+ 	test_cmp expect actual
+-'
++"
+ 
+ # Keep this test last, as it changes the current branch
+ cat >expect <<EOF
 -- 
 2.34.1.173.g76aa8bc2d0-goog
 
