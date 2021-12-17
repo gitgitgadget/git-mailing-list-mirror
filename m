@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D42AC433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91EA6C433FE
 	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 00:27:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230348AbhLQA04 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 19:26:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42346 "EHLO
+        id S230350AbhLQA1B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 19:27:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230351AbhLQA0n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 19:26:43 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0E2EC061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:42 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id b73so561925wmd.0
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:42 -0800 (PST)
+        with ESMTP id S230357AbhLQA0o (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 19:26:44 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0103C061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:43 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id b73so561953wmd.0
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Hg4v54dxA7kun56V9Ck1S+zqBse/AcXdAYygUxZlavY=;
-        b=IlK7M+ftXLlDzwJBtw+IhgH+yGLFgmKIgB/Q5pSB4GvvfZ7J8EGD6fx4HSquy1bWuU
-         bxHyMoJYH0yoTyIA8zy3QteMaHzjqqrVZsJCb8ICg2DduYSfoYDKTfBa/Yzyle3lwwgY
-         vkuWjrvl2TMryD75ekMhz7S+4hhDsnljlYhqHogdNud8qnxNRCA/VU4loe91bFIM64w2
-         baRoTeaKNEtndSuYdFbAKxzGFaeqU59Kua0/PhzqEl7fdvw4LgNk3ZYyiTC/rQNHU2xg
-         i6Z0XlbPMuq8nGgczvWeN9zxiXPiC5q8dP6wgVk3pHEliJ2W5MxeV5FAedFN6cJkEGL+
-         tDSQ==
+        bh=vJYs2SDrQRyIpTzu7QVknpbO0e0Qwn+2Z4z2dPvaVeQ=;
+        b=BwJ3yZ8GdGUjeiH0GJF6phui6Xwk8KEZvhH5+2DJbPejoFXFk+vl90NhgxvbJ3y9Mi
+         BSt9JDKaSUQxF4ItWxRHmG02EmiTT/uYVeOHtKw6NWHzFqhhjFYTGHalCQ/3KnoKL4Rs
+         lQPsQBUH18h4+ZKsWo7C0CXr1X/NrGK30I6zZKKlmuf3cYdip8iG37pCUsdZXGipLX9/
+         T1JVqQPWSfwUarih6mMvBNECt2PPTixloZP24cAOedI8X+wR8Dzz0DYKaGT/gl3yc9ux
+         7qF1mXhl9sggs+sjYJMH5j+A2shagWYhMbni0qfj3jn4k/+ASxc2yB2cjx/W+ez5P6Rw
+         LnEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Hg4v54dxA7kun56V9Ck1S+zqBse/AcXdAYygUxZlavY=;
-        b=PWVrrfVIN2oxZdEwGE3GEmSgnaAkzbpmpRKM92mpQx33BjF+O1hJOWHhBwYz9Vdb8J
-         s5RbPJOWJfSid329PEl/YSeDrZk9EIu9JwQQV2xKejNUKoyFWfj/9JcdEVkHW0OSAeQq
-         SEY1Pggvye+5Oq+QJPVqXUeLVKjKCm69y/39AFmn+vAblIr2W4gEICP+eCeup2s3JmRE
-         WghOFlsFigaVAC1Y7Vk11lo88G8V5Y3o746EK9E2WzraQr+5IpyW++zB+NgX5xsqQ6Eb
-         Sn53rjz22PIY9p/8GYgKtOmYAvPvBSXVYZU9S+mJXDQpPvrC6airrqc3sJpoAYf+1Rh6
-         rcqQ==
-X-Gm-Message-State: AOAM5332Vvc+gdivNKdqkEa6IX3CJ3uc5pyo7Wlj1hknqOt/f4zuVvdI
-        kIZ76gAyy7m59ZyEavxPasgJO+LqhrBuCA==
-X-Google-Smtp-Source: ABdhPJyO6QeKyCkYz7fgrUQvHxaeqBQ/26Ig3iSa/PU7aalsCI3PWGB95bZFBZrPuFu/uO5GTS+EMg==
-X-Received: by 2002:a05:600c:34d2:: with SMTP id d18mr286720wmq.146.1639700801169;
-        Thu, 16 Dec 2021 16:26:41 -0800 (PST)
+        bh=vJYs2SDrQRyIpTzu7QVknpbO0e0Qwn+2Z4z2dPvaVeQ=;
+        b=Sw5+0bNFGHNH6+BQM+0SSgXareFjtmuVxbzb5vDoiJPpjp5Pm2owskj3EXOJHsLZqr
+         BztdovfLgjVD/KAJd4EoR7O0NX+MPN3lsb/5dkMyRLPbpamWuwWZ644oT4BsyiPdps8y
+         Q+Oksa5RACx+7CCYa5g+3azcHTY2qS8+nqDnGBzlqraCETmdXswaJHJI0vPBaDqDoLjE
+         fk6xoL4qp6O3v71wKSMRTMXbgwhCs7qjsth2LFbt+tsfUss1KkXJMhqaahOx8OIWja+2
+         m60BN1cY0z3DFPRhlNZxOAcZ9uVReh4OYeZMNHCG4BseJKQV8TvxO86WvL3pfZiqkE+7
+         w3MQ==
+X-Gm-Message-State: AOAM5325m/ekCF/WfqWs/zLp7UKAHZDKnBMYlYJFkwsw0JUAtKRonPxX
+        yl+uDuT4z1OWx9Ijd2LRfEOwlbpEga1Ltw==
+X-Google-Smtp-Source: ABdhPJy6oImUrWR1JqWBtz0JiFoIS81m2bjvTZEIPVeQLcG26D0XrIUHigESHJ1aKeOkqhNQJ3TOOQ==
+X-Received: by 2002:a1c:4e17:: with SMTP id g23mr7502281wmh.158.1639700802208;
+        Thu, 16 Dec 2021 16:26:42 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j17sm8127349wmq.41.2021.12.16.16.26.40
+        by smtp.gmail.com with ESMTPSA id j17sm8127349wmq.41.2021.12.16.16.26.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 16:26:40 -0800 (PST)
+        Thu, 16 Dec 2021 16:26:41 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 10/11] Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
-Date:   Fri, 17 Dec 2021 01:26:26 +0100
-Message-Id: <patch-10.11-fe79797f45e-20211217T002023Z-avarab@gmail.com>
+Subject: [PATCH 11/11] Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
+Date:   Fri, 17 Dec 2021 01:26:27 +0100
+Message-Id: <patch-11.11-defbd9b6db2-20211217T002023Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1119.g7a3fc8778ee
 In-Reply-To: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
 References: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
@@ -72,126 +72,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a new "GIT-PYTHON-DEFINES" file, and untangle the dependency
-issues of the Python by copying over the patterns established for
-building the adjacent Perl code in preceding commits.
+Change the hardcoding of @@GIT_VERSION@@ in generated *.perl scripts
+to instead shell out to "git version". This means that we can stop
+re-building during development every time the HEAD changes.
 
-As with Perl, there's no real reason to depend on GIT-BUILD-OPTIONS or
-GIT-CFLAGS when building the Python code, nor did we need
-GIT-PREFIX. Let's instead add those variables we care about to a
-"GIT-PYTHON-DEFINES" and depend on that.
-
-This changes code originally added in ca3bcabf118 (auto-detect changed
-prefix and/or changed build flags, 2006-06-15), and adjusted in
-96a4647fca5 (Makefile: detect when PYTHON_PATH changes, 2012-12-18).
-
-The relevant code for the "Perl" targets was then added in
-07981dce81e (Makefile: rebuild perl scripts when perl paths change,
-2013-11-18), and has been adjusted in preceding commits.
+These codepaths are not "hot", so shelling out to get the version
+shouldn't matter to users, in the one case where it potentially would
+in send-email (the loop for each E-Mail we send) we now cache the
+value, so we'll only retrieve it once.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .gitignore |  2 +-
- Makefile   | 49 +++++++++++++++++++++++++------------------------
- 2 files changed, 26 insertions(+), 25 deletions(-)
+ Makefile            | 2 +-
+ git-cvsserver.perl  | 6 +++---
+ git-send-email.perl | 7 ++-----
+ git-svn.perl        | 2 +-
+ 4 files changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 054249b20a8..845e5d0c355 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -8,7 +8,7 @@
- /GIT-PREFIX
- /GIT-PERL-DEFINES
- /GIT-PERL-HEADER
--/GIT-PYTHON-VARS
-+/GIT-PYTHON-DEFINES
- /GIT-SCRIPT-DEFINES
- /GIT-USER-AGENT
- /GIT-VERSION-FILE
 diff --git a/Makefile b/Makefile
-index 3be3dc9621d..f2cee13ea5d 100644
+index f2cee13ea5d..9ccfb1109f5 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2388,18 +2388,15 @@ GIT-PERL-DEFINES: FORCE
- 		echo "$$FLAGS" >$@; \
- 	    fi
+@@ -2343,7 +2343,7 @@ PERL_HEADER_TEMPLATE = perl/header_templates/runtime_prefix.template.pl
+ perl_localedir_SQ =
+ endif
  
--# This makes sure we depend on the NO_PYTHON setting itself.
--$(SCRIPT_PYTHON_GEN): GIT-BUILD-OPTIONS
-+# As with NO_PERL=Y we'll still make GIT-PYTHON-DEFINES if "NO_PYTHON"
-+# is defined, for creating the "unimplemented.sh" scripts.
-+PYTHON_DEFINES =
-+$(SCRIPT_PYTHON_GEN): GIT-PYTHON-DEFINES
-+
-+ifdef NO_PYTHON
-+PYTHON_DEFINES += $(SHELL_PATH_SQ)
-+PYTHON_DEFINES += $(NO_PYTHON)
- 
--ifndef NO_PYTHON
--$(SCRIPT_PYTHON_GEN): GIT-CFLAGS GIT-PREFIX GIT-PYTHON-VARS
--$(SCRIPT_PYTHON_GEN): % : %.py
--	$(QUIET_GEN) \
--	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
--	    $< >$@+ && \
--	chmod +x $@+ && \
--	mv $@+ $@
--else # NO_PYTHON
- $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
+-$(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
++$(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER
  	$(QUIET_GEN) \
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-@@ -2407,8 +2404,24 @@ $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
- 	    unimplemented.sh >$@+ && \
- 	chmod +x $@+ && \
- 	mv $@+ $@
-+else # NO_PYTHON
-+PYTHON_DEFINES += $(PYTHON_PATH_SQ)
-+
-+$(SCRIPT_PYTHON_GEN): % : %.py GIT-PYTHON-DEFINES
-+	$(QUIET_GEN) \
-+	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
-+	    $< >$@+ && \
-+	chmod +x $@+ && \
-+	mv $@+ $@
- endif # NO_PYTHON
+ 	sed -e '1{' \
+ 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 4c8118010a8..4ec0cc1cc3c 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -26,8 +26,6 @@
+ use File::Basename;
+ use Getopt::Long qw(:config require_order no_ignore_case);
  
-+GIT-PYTHON-DEFINES: FORCE
-+	@FLAGS='$(PYTHON_DEFINES)'; \
-+	    if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
-+		echo >&2 "    * new python-specific parameters"; \
-+		echo "$$FLAGS" >$@; \
-+	    fi
-+
- CONFIGURE_RECIPE = sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
- 			configure.ac >configure.ac+ && \
- 		   autoconf -o configure configure.ac+ && \
-@@ -2895,18 +2908,6 @@ else
- endif
- 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
- 
--### Detect Python interpreter path changes
--ifndef NO_PYTHON
--TRACK_PYTHON = $(subst ','\'',-DPYTHON_PATH='$(PYTHON_PATH_SQ)')
+-my $VERSION = '@@GIT_VERSION@@';
 -
--GIT-PYTHON-VARS: FORCE
--	@VARS='$(TRACK_PYTHON)'; \
--	    if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
--		echo >&2 "    * new Python interpreter location"; \
--		echo "$$VARS" >$@; \
--            fi
--endif
--
- test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
+ my $log = GITCVS::log->new();
+ my $cfg;
  
- all:: $(TEST_PROGRAMS) $(test_bindir_programs)
-@@ -3303,7 +3304,7 @@ ifndef NO_TCLTK
- endif
- 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-BUILD-OPTIONS
- 	$(RM) GIT-USER-AGENT GIT-PREFIX
--	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-VARS
-+	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-DEFINES
- ifdef MSVC
- 	$(RM) $(patsubst %.o,%.o.pdb,$(OBJECTS))
- 	$(RM) $(patsubst %.exe,%.pdb,$(OTHER_PROGRAMS))
+@@ -126,7 +124,9 @@
+     or die $usage;
+ 
+ if ($state->{version}) {
+-    print "git-cvsserver version $VERSION\n";
++    my $version = qx[git version];
++    $version =~ s/^(git)\b/$1-cvsserver/;
++    print $version;
+     exit;
+ }
+ if ($state->{help}) {
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 04087221aa7..390e8512627 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1504,6 +1504,7 @@ sub file_name_is_absolute {
+ #
+ # If an error occurs sending the email, this just dies.
+ 
++my $gitversion;
+ sub send_message {
+ 	my @recipients = unique_email_list(@to);
+ 	@cc = (grep { my $cc = extract_valid_address_or_die($_);
+@@ -1514,11 +1515,6 @@ sub send_message {
+ 	@recipients = unique_email_list(@recipients,@cc,@initial_bcc);
+ 	@recipients = (map { extract_valid_address_or_die($_) } @recipients);
+ 	my $date = format_2822_time($time++);
+-	my $gitversion = '@@GIT_VERSION@@';
+-	if ($gitversion =~ m/..GIT_VERSION../) {
+-	    $gitversion = Git::version();
+-	}
+-
+ 	my $cc = join(",\n\t", unique_email_list(@cc));
+ 	my $ccline = "";
+ 	if ($cc ne '') {
+@@ -1533,6 +1529,7 @@ sub send_message {
+ Message-Id: $message_id
+ ";
+ 	if ($use_xmailer) {
++		$gitversion ||= Git::version();
+ 		$header .= "X-Mailer: git-send-email $gitversion\n";
+ 	}
+ 	if ($in_reply_to) {
+diff --git a/git-svn.perl b/git-svn.perl
+index be987e316f9..727431412be 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -9,7 +9,6 @@
+ 		$_revision $_repository
+ 		$_q $_authors $_authors_prog %users/;
+ $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
+-$VERSION = '@@GIT_VERSION@@';
+ 
+ use Carp qw/croak/;
+ use File::Basename qw/dirname basename/;
+@@ -47,6 +46,7 @@
+ 	command_close_bidi_pipe
+ 	get_record
+ );
++$VERSION = Git::version();
+ 
+ BEGIN {
+ 	Memoize::memoize 'Git::config';
 -- 
 2.34.1.1119.g7a3fc8778ee
 
