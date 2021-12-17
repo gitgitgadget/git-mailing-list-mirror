@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3FBAC433F5
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 00:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB808C433F5
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 00:26:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230124AbhLQATU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 19:19:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40678 "EHLO
+        id S230267AbhLQA0d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 19:26:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230110AbhLQATT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 19:19:19 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70275C06173E
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:19:19 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id s1so982158wrg.1
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:19:19 -0800 (PST)
+        with ESMTP id S229818AbhLQA0d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 19:26:33 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD66AC061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:32 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id s1so1002514wrg.1
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=y8n4uyFXNxG5+N1SkVBgQuq2lgsQ6qHajLiT48+FGN8=;
-        b=EnizcpS8SLq0BBfI2JhT0IZpvzy4zXvYv7uOOLXBZbCIuMbwCL8URMs3qeec22jIIp
-         MKMzNNgMsTNCGBNTTo4Bu8y84lYaLZ7w8TMNOPy7Scnddeb4KDF7BUAj6gANpc7Bu7Q2
-         4CgLy6SBbwfyPDcs6B2dyPrA1zswO+A6w6JY7Agv/TG5GRyQR/f7YeH7zgp79Jr6Fdck
-         tPwULBDsy5SiekbWgTYdFNQpQKomjFuSxwrRdiUTN5AxECiKmgQOAZz3eXyu4GNvquIu
-         Erd6ai4MQWpvgSnPhoDPKLEH/JugxC23/HufHq0sxUdQ/dmGh9AvtcBA+u0XZoxWIl7e
-         d+lQ==
+        bh=FaUzqlfM2pwKfN9VIhcVWFSkkYyKVhty8TVxyiisMCI=;
+        b=kggele788/2PhRW6WAKG7F5kKZoNeZXV5jAKQQxqUQhjAFuuXhFMy7ejs7wGMc+hOL
+         Wzbh9tn1v6f4K/+Tw1dhO/aE5kSI4EgPbj+hnb8ncC87gXVcvcfVeLD6DpL3nbPzIJp5
+         KDG/TgXZFC6BHS4exTBV1a0mHPI/p5qIeq3XQ8QSYH+Hgix6wxCaZWkTNQ024Yqb2ZQO
+         +3rcFQL+17i8AY4Ab5hAMEH/B5Ana2fJwkaMYGtY24BNjlnG87lik++nAiebp/RIhKn/
+         h8Kg1JnLuO5TOu0qiWixDeaCjv1HoaDL0q5WX+kBoFlk5NpBA3QhfuFaG6sjlEzBkEFC
+         V5uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=y8n4uyFXNxG5+N1SkVBgQuq2lgsQ6qHajLiT48+FGN8=;
-        b=BB4IDreezKW+sCFge+LJOJovGCfz4zMs2Npbnw+3lXFh4FL6QWQ6Mh0LKDu8clKup5
-         O9A0zAMtdyRhJdm3nSi6+eHWTQC6Hpi7q3qJ3qQjK+CIBWQwHyrlNJDjin6BpLpuXocp
-         naluk0p4kUZ9Kp2JBHWYvGY4N020338c7Np7OCJUt2bvi7lko+Kk2EtIL+fdyOIPOXyn
-         Nx1JQkoz6mGQ9/eJTYAu3qiLdlrbH3Oq7TTPMuVkdb85qAzSJbeNBjgngUl0gX0fpGU8
-         xfzdVDXNpo9gmx7AYa2Wo0sOrb7+zuX16yYfrAMFMLp9g33UfFO0DSorjjKAaa00ry97
-         RH/A==
-X-Gm-Message-State: AOAM533l+oA0gWIq+4y8WNR+XAiPnscBo0IYJbSvsbweBInig9f4oQ6y
-        qeh7rCCXK/Tn4r9jjkTQwPS3WnQPAWAv1A==
-X-Google-Smtp-Source: ABdhPJxBv3M85X28+VZKy25l/M13/J+wRixIk8npKoyTQnuUJFWQ2GcK5Y1h2CzfWEvjSXk2ye2+0A==
-X-Received: by 2002:a5d:47aa:: with SMTP id 10mr340230wrb.50.1639700357680;
-        Thu, 16 Dec 2021 16:19:17 -0800 (PST)
+        bh=FaUzqlfM2pwKfN9VIhcVWFSkkYyKVhty8TVxyiisMCI=;
+        b=LOysxDWcv0ARQSnta28iLayrgnAV6u/VMHm2daGpO04nITwitSSCR6YrZGCg2WPEWT
+         PsZyu/jdChTSlWa6ZWm6dSGROASwLOvhD0Wjts+DNCgKfi0QzNI/iUot78zpdNG/c+Xo
+         IzYynhQWMM7AGBTnt7YxtqWUlLkg2sO3m870qs012ROnXZ7y57q7xF2xlabZFSDfNGR/
+         xunfUP3oyvvwgANjgw93sttgcwIn6C8EsNqcDPTIuxDfYz+UDGYAqGsyJdS/VLKPX+ZW
+         j2zEOrkgwJoMCyKYzDC0WQGsvkG0n84sMURdsYrugML1Jw2do5GtwqahQ9CXQ896fJbl
+         8Evw==
+X-Gm-Message-State: AOAM530CK669wVycCC8CnqIpC+Hz4pOVPXLxeQ8Hy3RM9VqQuT5oGE6I
+        aE3aIdt5xF6rntku0i2A57WeU6EGpQPSmA==
+X-Google-Smtp-Source: ABdhPJxEpnuLMl7O4t7I5WKfiSymVCt9lIys3oqvG3hJEbyHQ1d7tLtxYGubHC14a93w8jtWMl9I1Q==
+X-Received: by 2002:adf:cf0a:: with SMTP id o10mr368290wrj.84.1639700791136;
+        Thu, 16 Dec 2021 16:26:31 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g11sm41892wri.73.2021.12.16.16.19.16
+        by smtp.gmail.com with ESMTPSA id j17sm8127349wmq.41.2021.12.16.16.26.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 16:19:17 -0800 (PST)
+        Thu, 16 Dec 2021 16:26:30 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH] Makefile: remove -DPAGER_ENV from BASIC_CFLAGS
-Date:   Fri, 17 Dec 2021 01:19:15 +0100
-Message-Id: <patch-1.1-90d1e77ad5e-20211217T001628Z-avarab@gmail.com>
+Subject: [PATCH 00/11] Makefile: fix "Perl" and "Python" rules, speed up re-builds
+Date:   Fri, 17 Dec 2021 01:26:16 +0100
+Message-Id: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1119.g7a3fc8778ee
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -70,40 +70,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove -DPAGER_ENV from the BASIC_CFLAGS and instead have it passed
-via the EXTRA_CPPFLAGS passed when compiling pager.c.
+This topic is split-up from v4 of ab/make-dependency[1]. Range-diff to
+it below. As noted in [2] I opted to split up that series rather than
+having it grow too large.
 
-This doesn't change anything except to make it clear that only pager.c
-needs this, as it's the only user of this define. See
-995bc22d7f8 (pager: move pager-specific setup into the build,
-2016-08-04) for the commit that originally added this.
+This is miscellanious cleanups related to the "Perl" rules, and some
+fixes for bad dependency rules in 08/11. Then in 10/11 we make the
+"Python" rules use the new template we created for "Perl",
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-A new trivial fix that wasn't in the ab/make-dependency topic.
+We are then able to speed up "make" re-builds a bit in 11/11, as we
+don't need to inject @@GIT_VERSION@@ into the Perl scripts anymore.
 
-This one doesn't really matter for now, before we over-provided
-pager_env, now we don't. We can know we this change is OK because if
-we get it wrong we'd get a compile error.
+The 09/11 is new. It's a trivial sorting of the PERL_DEFINES list,
+which'll help to maintain it in the future.
 
-But in general these -D variables are broken in various ways, either
-through bad escaping, or us not re-building things when they
-change. I've got some later fixes to address those, and having a
-starting point where variables map to they files they're needed in
-will help make those changes smaller and easier to review.
+1. https://lore.kernel.org/git/cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com/
+2. https://lore.kernel.org/git/211217.86a6h09km9.gmgdl@evledraar.gmail.com/
+
+
+Ævar Arnfjörð Bjarmason (11):
+  Makefile: clean perl/build/ even with NO_PERL=Y
+  Makefile: don't set up "perl/build" rules under NO_PERL=Y
+  Makefile: use "=" not ":=" for po/* and perl/*
+  Makefile: remove "mv $@ $@+" dance redundant to .DELETE_ON_ERROR
+  Makefile: guard Perl-only variable assignments
+  Makefile: change "ifndef NO_PERL" to "ifdef NO_PERL"
+  Makefile: adjust Perl-related comments & whitespace
+  Makefile: correct "GIT-PERL-{DEFINES,HEADER}" dependency graph
+  Makefile: sort PERL_DEFINES list
+  Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
+  Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
+
+ .gitignore          |   2 +-
+ Makefile            | 160 +++++++++++++++++++++++---------------------
+ git-cvsserver.perl  |   6 +-
+ git-send-email.perl |   7 +-
+ git-svn.perl        |   2 +-
+ 5 files changed, 90 insertions(+), 87 deletions(-)
 
 Range-diff:
  1:  1621ca72c1d <  -:  ----------- Makefile: don't invoke msgfmt with --statistics
- 2:  b7c36c9fea0 <  -:  ----------- Makefile: don't set up "perl/build" rules under NO_PERL=Y
- 3:  29b000eb0f1 <  -:  ----------- Makefile: use "=" not ":=" for po/* and perl/*
- 4:  daead5ec293 <  -:  ----------- Makefile: clean perl/build/ even with NO_PERL=Y
- 5:  3c987590740 <  -:  ----------- Makefile: remove "mv $@ $@+" dance redundant to .DELETE_ON_ERROR
- 6:  b57f582ccd3 <  -:  ----------- Makefile: guard Perl-only variable assignments
- 7:  fcdee92f64c <  -:  ----------- Makefile: change "ifndef NO_PERL" to "ifdef NO_PERL"
- 8:  1e25b532ca2 <  -:  ----------- Makefile: adjust Perl-related comments & whitespace
- 9:  77d9855bfcf <  -:  ----------- Makefile: correct "GIT-PERL-{DEFINES,HEADER}" dependency graph
-10:  6004cdcd8d9 <  -:  ----------- Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
-11:  17b30e96057 <  -:  ----------- Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
+ 4:  daead5ec293 =  1:  185f5a9a9cf Makefile: clean perl/build/ even with NO_PERL=Y
+ 2:  b7c36c9fea0 =  2:  37eeccc5646 Makefile: don't set up "perl/build" rules under NO_PERL=Y
+ 3:  29b000eb0f1 =  3:  572a82c71a1 Makefile: use "=" not ":=" for po/* and perl/*
+ 5:  3c987590740 =  4:  5baff22f5af Makefile: remove "mv $@ $@+" dance redundant to .DELETE_ON_ERROR
+ 6:  b57f582ccd3 =  5:  992e325491d Makefile: guard Perl-only variable assignments
+ 7:  fcdee92f64c =  6:  5e94ef729fe Makefile: change "ifndef NO_PERL" to "ifdef NO_PERL"
+ 8:  1e25b532ca2 =  7:  4eeef8571aa Makefile: adjust Perl-related comments & whitespace
+ 9:  77d9855bfcf =  8:  8aa35537b08 Makefile: correct "GIT-PERL-{DEFINES,HEADER}" dependency graph
+ -:  ----------- >  9:  5ff768a5cec Makefile: sort PERL_DEFINES list
+10:  6004cdcd8d9 = 10:  fe79797f45e Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
+11:  17b30e96057 = 11:  defbd9b6db2 Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
 12:  30ddf7da2c8 <  -:  ----------- Makefiles: add "shared.mak", move ".DELETE_ON_ERROR" to it
 13:  f378a7dc35e <  -:  ----------- Makefile: move $(comma), $(empty) and $(space) to shared.mak
 14:  13cbb851d32 <  -:  ----------- Makefile: re-add and use the "shellquote" macros
@@ -116,40 +133,6 @@ Range-diff:
 21:  dd569a59c74 <  -:  ----------- Makefile: disable GNU make built-in wildcard rules
 22:  4168a7e3b30 <  -:  ----------- Makefile: define $(LIB_H) in terms of $(FIND_SOURCE_FILES)
 23:  48a3927d972 <  -:  ----------- Makefile: move ".SUFFIXES" rule to shared.mak
- -:  ----------- >  1:  90d1e77ad5e Makefile: remove -DPAGER_ENV from BASIC_CFLAGS
-
- Makefile | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 9c00a793e47..af0bbfb5d2f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2111,11 +2111,6 @@ ifdef DEFAULT_HELP_FORMAT
- BASIC_CFLAGS += -DDEFAULT_HELP_FORMAT='"$(DEFAULT_HELP_FORMAT)"'
- endif
- 
--PAGER_ENV_SQ = $(subst ','\'',$(PAGER_ENV))
--PAGER_ENV_CQ = "$(subst ",\",$(subst \,\\,$(PAGER_ENV)))"
--PAGER_ENV_CQ_SQ = $(subst ','\'',$(PAGER_ENV_CQ))
--BASIC_CFLAGS += -DPAGER_ENV='$(PAGER_ENV_CQ_SQ)'
--
- ALL_CFLAGS += $(BASIC_CFLAGS)
- ALL_LDFLAGS += $(BASIC_LDFLAGS)
- 
-@@ -2230,6 +2225,12 @@ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_MAN_PATH="$(mandir_relative_SQ)"' \
- 	'-DGIT_INFO_PATH="$(infodir_relative_SQ)"'
- 
-+PAGER_ENV_SQ = $(subst ','\'',$(PAGER_ENV))
-+PAGER_ENV_CQ = "$(subst ",\",$(subst \,\\,$(PAGER_ENV)))"
-+PAGER_ENV_CQ_SQ = $(subst ','\'',$(PAGER_ENV_CQ))
-+pager.sp pager.s pager.o: EXTRA_CPPFLAGS = \
-+	-DPAGER_ENV='$(PAGER_ENV_CQ_SQ)'
-+
- version.sp version.s version.o: GIT-VERSION-FILE GIT-USER-AGENT
- version.sp version.s version.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_VERSION="$(GIT_VERSION)"' \
 -- 
 2.34.1.1119.g7a3fc8778ee
 
