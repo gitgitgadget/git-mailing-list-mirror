@@ -2,124 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70A6DC4332F
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 16:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A501CC433EF
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 16:48:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239121AbhLQQ2w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 11:28:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43678 "EHLO
+        id S239320AbhLQQsl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 11:48:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239115AbhLQQ2v (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 11:28:51 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF903C06173E
-        for <git@vger.kernel.org>; Fri, 17 Dec 2021 08:28:50 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id a203-20020a1c7fd4000000b003457874263aso2169744wmd.2
-        for <git@vger.kernel.org>; Fri, 17 Dec 2021 08:28:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=HxI7LNp9Mzvw87CrgiC/rca54WH3qXp3iObtgt57QSM=;
-        b=Q72Q3AbnYCc81OZjHN8meq/lsIQw+bo3w+fa1s3az6Co6m58B5fB5+Huoyo3Eupock
-         p9Gfvk6NmHrIKVdK2Uczh4szxFRiSg6IzSDEk9VuIVXHDW+0Zontg8XNAvh3gNbMwsiE
-         9lepedNoBGabfpfDjJDYgne3X3cNq7c4nIZDPdyeUSD484WeXr/GDhxFzItIRghuKhQR
-         x0ImRy8DxpABdOtU38sr+DeMIeAOyzSP7FjFIk4XV5dvxiGq7sC8l5M6u215wfUPlKV3
-         cqv8poiXI9Rf6nlji+HR1ZEEcvt42w2K+5vap2rAOUX4Sn3zx6J9z+hCJJ+cHf/INHba
-         xl9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HxI7LNp9Mzvw87CrgiC/rca54WH3qXp3iObtgt57QSM=;
-        b=5GNKx8O2N08u7LIjMG8G4doODUMURph1Hdo77t6qBYQa/QZSZoC6kEw3PhnsQGQRGI
-         u0VTQp0qTEt+xZJQmvNHZ5zCksGpFm3SAqh9rvTMQF8qkkBXujzr852d19a0w2HMD51r
-         mC785am5Vo6PqQyEs+DTaMh7gU0oB943Tn+9Czym3l+iV0fpSCq7P+0UDOgdsYa6gAQ4
-         8xppiNFZPs+UwLcZ848+sLVTxPTy3vEyEgmL/6BBnvRfnaF38TAzdHk5QD58g9hJ0/Qv
-         g/SLOljen6rmgiall/LKSu+Rt6QdmBCUSaCPaXC4szt0+fXx6fmPdDK5D5J1WE1lhv6X
-         gp7A==
-X-Gm-Message-State: AOAM530J30KDNisTuiyANW8aFl5HoxOt4WWn7jpO5ADKQ+8Ri0UHubW1
-        J9gJKsrExtHXSUZtssiuu0x0nyR3aBg=
-X-Google-Smtp-Source: ABdhPJz3qT21WkcTeBsyISUxK4k5HZpd3t1ER5ZWVakN3+nwR8+Hcovig+1boZKme3sx8a4e17s9oQ==
-X-Received: by 2002:a05:600c:3d1a:: with SMTP id bh26mr10018805wmb.5.1639758529273;
-        Fri, 17 Dec 2021 08:28:49 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b13sm7966913wrh.32.2021.12.17.08.28.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Dec 2021 08:28:48 -0800 (PST)
-Message-Id: <3eff83d9ae14023f3527dfeb419cf8259f6d053d.1639758526.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
-References: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 17 Dec 2021 16:28:46 +0000
-Subject: [PATCH 2/2] repack: make '--quiet' disable progress
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        with ESMTP id S235967AbhLQQsk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 11:48:40 -0500
+X-Greylist: delayed 425 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 17 Dec 2021 08:48:40 PST
+Received: from tsukuyomi.43-1.org (tsukuyomi.43-1.org [IPv6:2a01:4f8:c2c:1632::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E916C061574
+        for <git@vger.kernel.org>; Fri, 17 Dec 2021 08:48:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=43-1.org;
+ i=@43-1.org; q=dns/txt; s=2019; t=1639759293; h=from : to : subject :
+ in-reply-to : references : cc : date : message-id : mime-version :
+ content-type : from; bh=LZzaKUDKrAZLoVNwfvcgNM+767fqT3tUkgwATDuV0P4=;
+ b=mdm5cJpWXOrnQpcwMwcV/8HcuS6wKCDw0UovUDrtzkuhVZrbvOqYx3VnrJN6UmvttNSlZ
+ BLSnI4gzIDR69rSLBggY5Kd6mFfujxAHFgAvKEF3rfkmIomIspp+Lvi6Kdza7Mm8uDrP9XK
+ BdokfG8uRSZpDQ5Z43qfhU6cQ0Gk8jHBJ8c3PGNF2vfoM9m/BzTDfCmexXFwFHkmnfSo5iL
+ LLaKyAm9lDGWih5WODG9o4Bo5Uk5WLPoKjS9x3p+83/kA4SYkdE2oLU0ruh/1xeyP0vkHi+
+ mg3ugkVucKWRR0re1zT7DWUmE9n5EMF7IvVcF0VCxuxX+6QRubnInN4Zj1YA==
+From:   Matthias Maier <tamiko-GITVGER@43-1.org>
 To:     git@vger.kernel.org
-Cc:     me@ttaylorr.com, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: Using principal wildcards in gpg.ssh.allowedSignersFile
+In-Reply-To: <20211217094235.i2fwildp7rcjcgtz@fs> (Fabian Stelzer's message of
+        "Fri, 17 Dec 2021 10:42:35 +0100")
+References: <87zgoziwfo.fsf@gentoo.org> <20211217094235.i2fwildp7rcjcgtz@fs>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+CC:     Fabian Stelzer <fs@gigacodes.de>
+Date:   Fri, 17 Dec 2021 10:41:31 -0600
+Message-ID: <87czlv5glg.fsf@43-1.org>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Hi Fabian,
 
-While testing some ideas in 'git repack', I ran it with '--quiet' and
-discovered that some progress output was still shown. Specifically, the
-output for writing the multi-pack-index showed the progress.
+Thanks for doing the bug report to openssh!
 
-The 'show_progress' variable in cmd_repack() is initialized with
-isatty(2) and is not modified at all by the '--quiet' flag. The
-'--quiet' flag modifies the po_args.quiet option which is translated
-into a '--quiet' flag for the 'git pack-objects' child process. However,
-'show_progress' is used to directly send progress information to the
-multi-pack-index writing logic which does not use a child process.
 
-The fix here is to modify 'show_progress' to be false if po_opts.quiet
-is true, and isatty(2) otherwise. This new expectation simplifies a
-later condition that checks both.
+On Fri, Dec 17, 2021, at 03:42 CST, Fabian Stelzer <fs@gigacodes.de> wrote:
 
-This is difficult to test because the isatty(2) already prevents the
-progess indicators from appearing when we redirect stderr to a file.
+> [...]
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- builtin/repack.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+>>  $ ssh-keygen -Y find-principals -f allowed_signers -n file -s test.txt.sig
+>>  tamiko@43-1.org
+>
+> Are you sure the allowed_signers file was exactly what you generated
+> before for this command? If I follow your steps this will not produce
+> a principal for me with neither openssh-8.8.1, nor master. Can you run
+> this with `-vvv` which will show a bit more ssh internal output?
+> In the openssh code for find-principals wildcard principals are
+> filtered for CA certs. I'm not sure why and have asked them about it.
+>
+> By the way, find-principals will not consider the namespace parameter.
+> This has another bug in the current master producing a segfault for
+> which I've already sent a patch. But this should be unrelated to your
+> issue.
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 1f128b7c90b..c393a5db774 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -612,7 +612,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	struct tempfile *refs_snapshot = NULL;
- 	int i, ext, ret;
- 	FILE *out;
--	int show_progress = isatty(2);
-+	int show_progress;
- 
- 	/* variables to be filled by option parsing */
- 	int pack_everything = 0;
-@@ -725,6 +725,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 
- 	prepare_pack_objects(&cmd, &po_args);
- 
-+	show_progress = !po_args.quiet && isatty(2);
-+
- 	strvec_push(&cmd.args, "--keep-true-parents");
- 	if (!pack_kept_objects)
- 		strvec_push(&cmd.args, "--honor-pack-keep");
-@@ -926,7 +928,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 			}
- 			strbuf_release(&buf);
- 		}
--		if (!po_args.quiet && show_progress)
-+		if (show_progress)
- 			opts |= PRUNE_PACKED_VERBOSE;
- 		prune_packed_objects(opts);
- 
--- 
-gitgitgadget
+You're absolutely right - I did confuse myself. The find-principals call
+does not work:
+
+    % ssh-keygen -vvv -Y find-principals -f allowed_signers -n file -s test.txt.sig
+    debug3: allowed_signers:1: options cert-authority,namespaces="file,git"
+    debug1: allowed_signers:1: principal "*@43-1.org" not authorized: contains wildcards
+    allowed_signers:1: no valid principals found
+    debug1: allowed_signers:1: cert_filter_principals: invalid certificate
+    No principal matched.
+
+I agree. It is interesting that they explicitly filter wildcards for the
+find-principals call. Let's see what openssh upstream has to say.
+
+
+> [...]
+>
+> Just FYI: if you add GIT_TRACE=1 to the git commands you can see the
+> executed ssh-keygen commands, which can help to see whats going on.
+
+Ah, that's neat!
+
+
+Best,
+Matthias
+
