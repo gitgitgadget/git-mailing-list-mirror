@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0504CC433F5
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 00:26:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D42AC433EF
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 00:27:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230389AbhLQA0w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 19:26:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42326 "EHLO
+        id S230348AbhLQA04 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 19:26:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230331AbhLQA0k (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 19:26:40 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 320ABC061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:40 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id t18so911985wrg.11
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:40 -0800 (PST)
+        with ESMTP id S230351AbhLQA0n (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 19:26:43 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0E2EC061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:42 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id b73so561925wmd.0
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mkYabZUO08gmVllEEG8bS/4Tznfr1f0AQB2TY5mwQxc=;
-        b=KDOCZwipxP3xYOet0SPq1pBrNEVgqequcixXsIwkWcbJndad49hX3wKB0pVjmLoDwl
-         Waj0Z3j4ABnouU9+AHv+jaeVXB8hZFrNuAqVcaiyGoYAgjuJdh86V/qwU5hC2Hv+8+gp
-         b81zZNnduOEgOD3uv06FT/YXxHRFRvHP9Ih6B7UllSXONmf/uRT+gYJFwwxfTVk7gdga
-         5Gt+B2gzOIZKKSFtikW9EhtUbGn5Z4t61I/t8cp/fz3yhPRfVymJmRkcKChzlFnqgPE0
-         GYuaVJWqlMbvHjjauINQspXDkGTK+hOF5rALoiNM55UhDawNesywNmpljF5EJBck4Vsh
-         Jpmg==
+        bh=Hg4v54dxA7kun56V9Ck1S+zqBse/AcXdAYygUxZlavY=;
+        b=IlK7M+ftXLlDzwJBtw+IhgH+yGLFgmKIgB/Q5pSB4GvvfZ7J8EGD6fx4HSquy1bWuU
+         bxHyMoJYH0yoTyIA8zy3QteMaHzjqqrVZsJCb8ICg2DduYSfoYDKTfBa/Yzyle3lwwgY
+         vkuWjrvl2TMryD75ekMhz7S+4hhDsnljlYhqHogdNud8qnxNRCA/VU4loe91bFIM64w2
+         baRoTeaKNEtndSuYdFbAKxzGFaeqU59Kua0/PhzqEl7fdvw4LgNk3ZYyiTC/rQNHU2xg
+         i6Z0XlbPMuq8nGgczvWeN9zxiXPiC5q8dP6wgVk3pHEliJ2W5MxeV5FAedFN6cJkEGL+
+         tDSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mkYabZUO08gmVllEEG8bS/4Tznfr1f0AQB2TY5mwQxc=;
-        b=My2Zwy9rLZpquncShjIxgVVf8liVTbbDVlZtR5rp6ZztVyPk709wT1RPlpomJFir9i
-         hlQtzWGFxywN9n5AwUTViLnTYwlPWt0dQyckaAT+OHT6k+DG+IeICd3tIc1/kZUM6DP+
-         YQHkza6WgPQ+gLycVNfq6y6sQ8Bgcp2p+kToK83aJqPStaiQR1X7MYDhtD+uCwh7n9J8
-         udRvRdK1D80OsoFK8AnzcjlAjZNVRwC8Lb5GjBZCPC54WOSQS1k08TxB0S25hUuayBep
-         gp46Y/LiDAITdpDF1HtNXrG/LW0Xl/qngiEYb1O27zp0MEZRDrj6E96Rz7xI2yGKDOnG
-         b4lw==
-X-Gm-Message-State: AOAM531hQZkMa/XX/kFMzLLUpi3yaE8JAza4+yYlReywhNziAO4ZMVhG
-        BUraJ5Wu2O/bEJUUlT8hwTn9hYIr9/+l7g==
-X-Google-Smtp-Source: ABdhPJw5usOn3iFOXpGn6tEoWqLKfyuSGDICo30gC2qH+SMRxUSPwkGBPs3ruxl4aOUg8U5ViZx2oA==
-X-Received: by 2002:a05:6000:2ac:: with SMTP id l12mr324316wry.441.1639700798523;
-        Thu, 16 Dec 2021 16:26:38 -0800 (PST)
+        bh=Hg4v54dxA7kun56V9Ck1S+zqBse/AcXdAYygUxZlavY=;
+        b=PWVrrfVIN2oxZdEwGE3GEmSgnaAkzbpmpRKM92mpQx33BjF+O1hJOWHhBwYz9Vdb8J
+         s5RbPJOWJfSid329PEl/YSeDrZk9EIu9JwQQV2xKejNUKoyFWfj/9JcdEVkHW0OSAeQq
+         SEY1Pggvye+5Oq+QJPVqXUeLVKjKCm69y/39AFmn+vAblIr2W4gEICP+eCeup2s3JmRE
+         WghOFlsFigaVAC1Y7Vk11lo88G8V5Y3o746EK9E2WzraQr+5IpyW++zB+NgX5xsqQ6Eb
+         Sn53rjz22PIY9p/8GYgKtOmYAvPvBSXVYZU9S+mJXDQpPvrC6airrqc3sJpoAYf+1Rh6
+         rcqQ==
+X-Gm-Message-State: AOAM5332Vvc+gdivNKdqkEa6IX3CJ3uc5pyo7Wlj1hknqOt/f4zuVvdI
+        kIZ76gAyy7m59ZyEavxPasgJO+LqhrBuCA==
+X-Google-Smtp-Source: ABdhPJyO6QeKyCkYz7fgrUQvHxaeqBQ/26Ig3iSa/PU7aalsCI3PWGB95bZFBZrPuFu/uO5GTS+EMg==
+X-Received: by 2002:a05:600c:34d2:: with SMTP id d18mr286720wmq.146.1639700801169;
+        Thu, 16 Dec 2021 16:26:41 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j17sm8127349wmq.41.2021.12.16.16.26.37
+        by smtp.gmail.com with ESMTPSA id j17sm8127349wmq.41.2021.12.16.16.26.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 16:26:37 -0800 (PST)
+        Thu, 16 Dec 2021 16:26:40 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 08/11] Makefile: correct "GIT-PERL-{DEFINES,HEADER}" dependency graph
-Date:   Fri, 17 Dec 2021 01:26:24 +0100
-Message-Id: <patch-08.11-8aa35537b08-20211217T002023Z-avarab@gmail.com>
+Subject: [PATCH 10/11] Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
+Date:   Fri, 17 Dec 2021 01:26:26 +0100
+Message-Id: <patch-10.11-fe79797f45e-20211217T002023Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1119.g7a3fc8778ee
 In-Reply-To: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
 References: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
@@ -72,134 +72,126 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix several small issues with the dependency graph of the generated
-"GIT-PERL-DEFINES" and "GIT-PERL-HEADER" files:
+Create a new "GIT-PYTHON-DEFINES" file, and untangle the dependency
+issues of the Python by copying over the patterns established for
+building the adjacent Perl code in preceding commits.
 
-1. Don't have "GIT-PERL-HEADER" depend on the "Makefile". That was a
-   lazy way to over-declare the dependencies added in
-   f6a0ad4be71 (Makefile: generate Perl header from template file,
-   2018-04-10). Let's correct our dependency graph instead.
+As with Perl, there's no real reason to depend on GIT-BUILD-OPTIONS or
+GIT-CFLAGS when building the Python code, nor did we need
+GIT-PREFIX. Let's instead add those variables we care about to a
+"GIT-PYTHON-DEFINES" and depend on that.
 
-2. Don't have $(SCRIPT_PERL_GEN) (such as "git-send-email") depend on
-   GIT-BUILD-OPTIONS. Let's instead use GIT-PERL-DEFINES.
+This changes code originally added in ca3bcabf118 (auto-detect changed
+prefix and/or changed build flags, 2006-06-15), and adjusted in
+96a4647fca5 (Makefile: detect when PYTHON_PATH changes, 2012-12-18).
 
-   The reason for depending on "GIT-BUILD-OPTIONS" was to trigger a
-   re-build if NO_PERL=Y was defined. We can instead add that variable
-   to "PERL_DEFINES", and have "GIT-PERL-DEFINES" created and updated
-   if "NO_PERL=Y" is defined.
-
-3. Due to #2 we'll need to have GIT-PERL-DEFINES be generated even
-   under NO_PERL, since that variable will be used by the
-   "unimplemented.sh" script.
-
-4. Don't depend on $(gitexecdir), $(perllibdir) and $(localedir),
-   instead depend on the $(*_relative_SQ) versions of those.
-
-   The latter is what we'll actually use, while it's unlikely to
-   matter in practice (we'd just skip re-building these under
-   RUNTIME_PREFIX if the relative path was the same) it makes the code
-   easier to read.
-
-   That's because this brings us to a 1=1 mapping of these variables
-   and what's subsequently used in the "GIT-PERL-DEFINES",
-   "GIT-PERL-HEADER" and "perl/build/lib/%.pm" rules below.
-
-5. We don't need the substitution of " " for ":" added in
-   07d90eadb50 (Makefile: add Perl runtime prefix support,
-   2018-04-10), let's drop it. This doesn't matter for the correctness
-   of these files, because unlike GIT-BUILD-OPTIONS nothing is
-   consuming them except the Makefile itself.
+The relevant code for the "Perl" targets was then added in
+07981dce81e (Makefile: rebuild perl scripts when perl paths change,
+2013-11-18), and has been adjusted in preceding commits.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 42 +++++++++++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ .gitignore |  2 +-
+ Makefile   | 49 +++++++++++++++++++++++++------------------------
+ 2 files changed, 26 insertions(+), 25 deletions(-)
 
+diff --git a/.gitignore b/.gitignore
+index 054249b20a8..845e5d0c355 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -8,7 +8,7 @@
+ /GIT-PREFIX
+ /GIT-PERL-DEFINES
+ /GIT-PERL-HEADER
+-/GIT-PYTHON-VARS
++/GIT-PYTHON-DEFINES
+ /GIT-SCRIPT-DEFINES
+ /GIT-USER-AGENT
+ /GIT-VERSION-FILE
 diff --git a/Makefile b/Makefile
-index d488a723b79..356c98dff45 100644
+index 3be3dc9621d..f2cee13ea5d 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2298,10 +2298,14 @@ git.res: git.rc GIT-VERSION-FILE GIT-PREFIX
- 	    $(shell echo $(GIT_VERSION) 0 0 0 0 | tr '.a-zA-Z-' ' '))) \
- 	  -DGIT_VERSION="\\\"$(GIT_VERSION)\\\"" -i $< -o $@
+@@ -2388,18 +2388,15 @@ GIT-PERL-DEFINES: FORCE
+ 		echo "$$FLAGS" >$@; \
+ 	    fi
  
--# This makes sure we depend on the NO_PERL setting itself.
--$(SCRIPT_PERL_GEN): GIT-BUILD-OPTIONS
-+# Under NO_PERL=Y we'll still make GIT-PERL-DEFINES. We need to depend
-+# on NO_PERL=Y itself for creating "unimplemented.sh" scripts.
-+PERL_DEFINES =
-+$(SCRIPT_PERL_GEN): GIT-PERL-DEFINES
- 
- ifdef NO_PERL
-+PERL_DEFINES += $(NO_PERL)
+-# This makes sure we depend on the NO_PYTHON setting itself.
+-$(SCRIPT_PYTHON_GEN): GIT-BUILD-OPTIONS
++# As with NO_PERL=Y we'll still make GIT-PYTHON-DEFINES if "NO_PYTHON"
++# is defined, for creating the "unimplemented.sh" scripts.
++PYTHON_DEFINES =
++$(SCRIPT_PYTHON_GEN): GIT-PYTHON-DEFINES
 +
- $(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
++ifdef NO_PYTHON
++PYTHON_DEFINES += $(SHELL_PATH_SQ)
++PYTHON_DEFINES += $(NO_PYTHON)
+ 
+-ifndef NO_PYTHON
+-$(SCRIPT_PYTHON_GEN): GIT-CFLAGS GIT-PREFIX GIT-PYTHON-VARS
+-$(SCRIPT_PYTHON_GEN): % : %.py
+-	$(QUIET_GEN) \
+-	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
+-	    $< >$@+ && \
+-	chmod +x $@+ && \
+-	mv $@+ $@
+-else # NO_PYTHON
+ $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
  	$(QUIET_GEN) \
  	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-@@ -2310,22 +2314,26 @@ $(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
+@@ -2407,8 +2404,24 @@ $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
+ 	    unimplemented.sh >$@+ && \
  	chmod +x $@+ && \
  	mv $@+ $@
- else # NO_PERL
--# Used for substitution in Perl modules. Disabled when using RUNTIME_PREFIX
--# since the locale directory is injected.
-+# The localedir is only used in Perl modules if !NO_GETTEXT
-+ifndef NO_GETTEXT
- perl_localedir_SQ = $(localedir_SQ)
-+endif
- 
- PERL_HEADER_TEMPLATE = perl/header_templates/fixed_prefix.template.pl
--PERL_DEFINES =
++else # NO_PYTHON
++PYTHON_DEFINES += $(PYTHON_PATH_SQ)
 +
- PERL_DEFINES += $(PERL_PATH_SQ)
- PERL_DEFINES += $(PERLLIB_EXTRA_SQ)
- PERL_DEFINES += $(perllibdir_SQ)
- PERL_DEFINES += $(RUNTIME_PREFIX)
- PERL_DEFINES += $(NO_PERL_CPAN_FALLBACKS)
- PERL_DEFINES += $(NO_GETTEXT)
--PERL_DEFINES += $(gitexecdir)
--PERL_DEFINES += $(perllibdir)
--PERL_DEFINES += $(localedir)
--PERL_DEFINES := $(subst $(space),:,$(PERL_DEFINES))
-+ifdef RUNTIME_PREFIX
-+PERL_DEFINES += $(gitexecdir_relative_SQ)
-+PERL_DEFINES += $(perllibdir_relative_SQ)
-+PERL_DEFINES += $(localedir_relative_SQ)
-+else
-+PERL_DEFINES += $(perllocaledir_SQ)
-+endif
++$(SCRIPT_PYTHON_GEN): % : %.py GIT-PYTHON-DEFINES
++	$(QUIET_GEN) \
++	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
++	    $< >$@+ && \
++	chmod +x $@+ && \
++	mv $@+ $@
+ endif # NO_PYTHON
  
- ifdef RUNTIME_PREFIX
- PERL_HEADER_TEMPLATE = perl/header_templates/runtime_prefix.template.pl
-@@ -2347,14 +2355,7 @@ $(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
- 	chmod +x $@+ && \
- 	mv $@+ $@
- 
--GIT-PERL-DEFINES: FORCE
--	@FLAGS='$(PERL_DEFINES)'; \
--	    if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
--		echo >&2 "    * new perl-specific parameters"; \
--		echo "$$FLAGS" >$@; \
--	    fi
--
--GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
-+GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES
- 	$(QUIET_GEN) \
- 	INSTLIBDIR='$(perllibdir_SQ)' && \
- 	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
-@@ -2380,6 +2381,13 @@ git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
- 	mv $@+ $@
- endif # NO_PERL
- 
-+GIT-PERL-DEFINES: FORCE
-+	@FLAGS='$(PERL_DEFINES)'; \
++GIT-PYTHON-DEFINES: FORCE
++	@FLAGS='$(PYTHON_DEFINES)'; \
 +	    if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
-+		echo >&2 "    * new perl-specific parameters"; \
++		echo >&2 "    * new python-specific parameters"; \
 +		echo "$$FLAGS" >$@; \
 +	    fi
 +
- # This makes sure we depend on the NO_PYTHON setting itself.
- $(SCRIPT_PYTHON_GEN): GIT-BUILD-OPTIONS
+ CONFIGURE_RECIPE = sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 			configure.ac >configure.ac+ && \
+ 		   autoconf -o configure configure.ac+ && \
+@@ -2895,18 +2908,6 @@ else
+ endif
+ 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
  
+-### Detect Python interpreter path changes
+-ifndef NO_PYTHON
+-TRACK_PYTHON = $(subst ','\'',-DPYTHON_PATH='$(PYTHON_PATH_SQ)')
+-
+-GIT-PYTHON-VARS: FORCE
+-	@VARS='$(TRACK_PYTHON)'; \
+-	    if test x"$$VARS" != x"`cat $@ 2>/dev/null`" ; then \
+-		echo >&2 "    * new Python interpreter location"; \
+-		echo "$$VARS" >$@; \
+-            fi
+-endif
+-
+ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
+ 
+ all:: $(TEST_PROGRAMS) $(test_bindir_programs)
+@@ -3303,7 +3304,7 @@ ifndef NO_TCLTK
+ endif
+ 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-BUILD-OPTIONS
+ 	$(RM) GIT-USER-AGENT GIT-PREFIX
+-	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-VARS
++	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-DEFINES
+ ifdef MSVC
+ 	$(RM) $(patsubst %.o,%.o.pdb,$(OBJECTS))
+ 	$(RM) $(patsubst %.exe,%.pdb,$(OTHER_PROGRAMS))
 -- 
 2.34.1.1119.g7a3fc8778ee
 
