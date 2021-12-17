@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10005C433EF
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 11:28:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEE5EC433EF
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 11:28:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229565AbhLQL2m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 06:28:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56748 "EHLO
+        id S233604AbhLQL2o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 06:28:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233568AbhLQL2l (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 06:28:41 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D000FC061574
-        for <git@vger.kernel.org>; Fri, 17 Dec 2021 03:28:40 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id p13so2028749pfw.2
-        for <git@vger.kernel.org>; Fri, 17 Dec 2021 03:28:40 -0800 (PST)
+        with ESMTP id S233593AbhLQL2n (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 06:28:43 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD17AC061574
+        for <git@vger.kernel.org>; Fri, 17 Dec 2021 03:28:43 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id n15-20020a17090a160f00b001a75089daa3so5446210pja.1
+        for <git@vger.kernel.org>; Fri, 17 Dec 2021 03:28:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iJgkkNBSVRjeafKIJmXpkSQF+/WV+eDw6hCVfs3Wqps=;
-        b=VoiHwQ0HSbslKIt6nH3pzEj/djZ5Oy21SfZKk0XwTiOXbnHDeVzHBiIgmNJ/HavskC
-         FBg4C4H56oNyn820wiFk1nT7jkEzhnzLYdynLGN024lL8ejSfKJNIRk0vj70OwQC8Nl+
-         RLwIl8DehZOiuUiNnaecs0VMqKHVH0GEr7WqrfKoilTObeJDwOfrRq0CNo6Ea2FZKQWc
-         GzwRnPn1u6yXJ+lzFMUcPhmRDrA7Ya5TKbrPBIS0O5InAAcSywjTpwv/b+QAUfkZbxHh
-         Krb2Twum4IWRLoCDVXALXD79Ftox6p/sxneQIaWUTVUjAOLRz/3GQBgpHqqoKLFV/K86
-         6qWg==
+        bh=KNgYidx8vEvIkoF0u7cbJgVUsBPtfO50cr098Upx8nk=;
+        b=nDt/BsUirN11JYmJ79MLsUxshumXHzE60osLyU54TPMafJVz1W73Wrcu5KrT1FZC7A
+         kHSmXD5AtWf0FCJtx2D4myBgM9+Mj1N7vvdS2F5DXaiWgu+Smd4kYroF+kFxdHbq1Top
+         z/7FpVZ6VtRNvmeIawomAcuByNqSua7K7Lfls5fFbCMfE3LL2mia85RAt3J67/wVWa3e
+         zOP7rI0Z8JJjiAHs3UhEaXJiucB6LI4dQ2RoFY5NvuzrYm1ZMbIaIbLGiiPAZy/Wf+/x
+         IUANQOU1AfUAtX/LOP7tIsnG9cmYCSU8TZMcCyPqMcKI5f89DLp4jXLMYajnHpQmyr/P
+         meFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iJgkkNBSVRjeafKIJmXpkSQF+/WV+eDw6hCVfs3Wqps=;
-        b=jsJQcNR7sV+oICOIgXWx2QOvVHRJBFty2Qkab5CKCyMdhZtmO42cJSM9vmGLsvuVpx
-         B4vpY8lKbsXWJqHtxngkKmDsCNCOIaTKh0Nrm5M1AjeYkV+GMbwY0oqkuH/vBD66ezok
-         MVJq99jSDq8czpUg6BhTV3MCj+p/vRsJkq3oyQWWkEw8esdBHCcNaY4TKDA7HFXZByed
-         CKLTBXtjN+1tMu+c1xTJRe2UMAYMaoLOUVxvoZbdUjqDMRhkk4PMR2aWe+3Aj0JEqMp8
-         2JA89guERxFmgMJsMfRBGTeGAAK3BE7KvNVTPa1j09GJaCbHFE1sNxZ/YmqovWap/62h
-         Ezuw==
-X-Gm-Message-State: AOAM531aC4OIDoMuRoZFv4Np3y27VHEfTQFxA1XbTtiti9bpiVwoOFKP
-        wxqjmsU9eGToYIa0xYps7dUE/OWdSRirrHHF
-X-Google-Smtp-Source: ABdhPJwDpnJSCr/eAZYdXOQp8qw+DXiQ+hg8rY4mB/vs2PC8IRxQzTcLP5irtVDtjHQDhNvwLOqdYg==
-X-Received: by 2002:a62:e907:0:b0:4a0:3a71:9712 with SMTP id j7-20020a62e907000000b004a03a719712mr2804187pfh.73.1639740520412;
-        Fri, 17 Dec 2021 03:28:40 -0800 (PST)
+        bh=KNgYidx8vEvIkoF0u7cbJgVUsBPtfO50cr098Upx8nk=;
+        b=UzaWYov9sA0Wm1DOaKbCRf87Zs6JlaO8oFn1aExbOvZdF89+eW+CaJXab+a+SW38Ks
+         zAKsCZKxRTK59ulA1QSYtqav+aUhAVCmrjq0OGbbjmXY2xFVbArzzyW1GLeff4L/tSHH
+         10XzT52rEMeuFBMAvzm3C8N1RjhlADTJNR/JsWeU+O6drz89g9mT7SPUevRnf9Ggmv8O
+         R/su3K9AZk5Jny2KINF8AGyDPSflFLGEOfUmznLKY3EEH+xxM7ww0dmBkgTwdzEG3s3W
+         2Kxw4gk33Qsxt2txuA/ZcJA3+fk8CkCZKOGgnNxlAuaOULP/tt9K0mTGRUuyYFjmbndK
+         Cirw==
+X-Gm-Message-State: AOAM531qPhViH7BzuJAbUbu8fkBkSzEtHCMzy4QnJMvL69zKa29rI8YZ
+        n4W4iWTOPJx3eWO2Z8t2zIk=
+X-Google-Smtp-Source: ABdhPJx02r46pkepO96LhTb5pcp8K5jFO5Nh/0ynFZpyA3JV52Saxo+BaXfIrcf7lKdqgZJnVfY1rg==
+X-Received: by 2002:a17:902:ce92:b0:148:dbf5:1934 with SMTP id f18-20020a170902ce9200b00148dbf51934mr2409804plg.147.1639740523282;
+        Fri, 17 Dec 2021 03:28:43 -0800 (PST)
 Received: from localhost.localdomain ([205.204.117.97])
-        by smtp.gmail.com with ESMTPSA id f10sm5194673pge.33.2021.12.17.03.28.37
+        by smtp.gmail.com with ESMTPSA id f10sm5194673pge.33.2021.12.17.03.28.40
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Dec 2021 03:28:39 -0800 (PST)
+        Fri, 17 Dec 2021 03:28:42 -0800 (PST)
 From:   Han Xin <chiyutianyi@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
@@ -55,9 +55,9 @@ To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>
 Cc:     Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: [PATCH v6 1/6] object-file.c: release strbuf in write_loose_object()
-Date:   Fri, 17 Dec 2021 19:26:24 +0800
-Message-Id: <20211217112629.12334-2-chiyutianyi@gmail.com>
+Subject: [PATCH v6 2/6] object-file.c: refactor object header generation into a function
+Date:   Fri, 17 Dec 2021 19:26:25 +0800
+Message-Id: <20211217112629.12334-3-chiyutianyi@gmail.com>
 X-Mailer: git-send-email 2.34.1.52.gfcc2252aea.agit.6.5.6
 In-Reply-To: <20211210103435.83656-1-chiyutianyi@gmail.com>
 References: <20211210103435.83656-1-chiyutianyi@gmail.com>
@@ -70,50 +70,65 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han Xin <hanxin.hx@alibaba-inc.com>
 
-Fix a strbuf leak in "write_loose_object()" sugguested by
-Ævar Arnfjörð Bjarmason.
+There are 3 places where "xsnprintf" is used to generate the object
+header, and I originally planned to add a fourth in the latter patch.
+
+According to Ævar Arnfjörð Bjarmason’s suggestion, although it's just
+one line, it's also code that's very central to git, so reafactor them
+into a function which will help later readability.
 
 Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
 ---
- object-file.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ object-file.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index eb1426f98c..32acf1dad6 100644
+index 32acf1dad6..95fcd5435d 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1874,11 +1874,14 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
- 	fd = create_tmpfile(&tmp_file, filename.buf);
- 	if (fd < 0) {
- 		if (flags & HASH_SILENT)
--			return -1;
-+			ret = -1;
- 		else if (errno == EACCES)
--			return error(_("insufficient permission for adding an object to repository database %s"), get_object_directory());
-+			ret = error(_("insufficient permission for adding an "
-+				      "object to repository database %s"),
-+				    get_object_directory());
- 		else
--			return error_errno(_("unable to create temporary file"));
-+			ret = error_errno(_("unable to create temporary file"));
-+		goto cleanup;
- 	}
- 
- 	/* Set it up */
-@@ -1930,7 +1933,11 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
- 			warning_errno(_("failed utime() on %s"), tmp_file.buf);
- 	}
- 
--	return finalize_object_file(tmp_file.buf, filename.buf);
-+	ret = finalize_object_file(tmp_file.buf, filename.buf);
-+cleanup:
-+	strbuf_release(&filename);
-+	strbuf_release(&tmp_file);
-+	return ret;
+@@ -1006,6 +1006,14 @@ void *xmmap(void *start, size_t length,
+ 	return ret;
  }
  
- static int freshen_loose_object(const struct object_id *oid)
++static inline int generate_object_header(char *buf, int bufsz,
++					 const char *type_name,
++					 unsigned long size)
++{
++	return xsnprintf(buf, bufsz, "%s %"PRIuMAX, type_name,
++			 (uintmax_t)size) + 1;
++}
++
+ /*
+  * With an in-core object data in "map", rehash it to make sure the
+  * object name actually matches "oid" to detect object corruption.
+@@ -1034,7 +1042,7 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
+ 		return -1;
+ 
+ 	/* Generate the header */
+-	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(obj_type), (uintmax_t)size) + 1;
++	hdrlen = generate_object_header(hdr, sizeof(hdr), type_name(obj_type), size);
+ 
+ 	/* Sha1.. */
+ 	r->hash_algo->init_fn(&c);
+@@ -1734,7 +1742,7 @@ static void write_object_file_prepare(const struct git_hash_algo *algo,
+ 	git_hash_ctx c;
+ 
+ 	/* Generate the header */
+-	*hdrlen = xsnprintf(hdr, *hdrlen, "%s %"PRIuMAX , type, (uintmax_t)len)+1;
++	*hdrlen = generate_object_header(hdr, *hdrlen, type, len);
+ 
+ 	/* Sha1.. */
+ 	algo->init_fn(&c);
+@@ -2013,7 +2021,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
+ 	buf = read_object(the_repository, oid, &type, &len);
+ 	if (!buf)
+ 		return error(_("cannot read object for %s"), oid_to_hex(oid));
+-	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), (uintmax_t)len) + 1;
++	hdrlen = generate_object_header(hdr, sizeof(hdr), type_name(type), len);
+ 	ret = write_loose_object(oid, hdr, hdrlen, buf, len, mtime, 0);
+ 	free(buf);
+ 
 -- 
 2.34.1.52.gfcc2252aea.agit.6.5.6
 
