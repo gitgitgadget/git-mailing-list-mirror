@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB808C433F5
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 00:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C24BC433FE
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 00:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230267AbhLQA0d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Dec 2021 19:26:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42282 "EHLO
+        id S230302AbhLQA0f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Dec 2021 19:26:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229818AbhLQA0d (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Dec 2021 19:26:33 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD66AC061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:32 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id s1so1002514wrg.1
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:32 -0800 (PST)
+        with ESMTP id S230289AbhLQA0e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Dec 2021 19:26:34 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE13C061574
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:33 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id v11so916244wrw.10
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 16:26:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FaUzqlfM2pwKfN9VIhcVWFSkkYyKVhty8TVxyiisMCI=;
-        b=kggele788/2PhRW6WAKG7F5kKZoNeZXV5jAKQQxqUQhjAFuuXhFMy7ejs7wGMc+hOL
-         Wzbh9tn1v6f4K/+Tw1dhO/aE5kSI4EgPbj+hnb8ncC87gXVcvcfVeLD6DpL3nbPzIJp5
-         KDG/TgXZFC6BHS4exTBV1a0mHPI/p5qIeq3XQ8QSYH+Hgix6wxCaZWkTNQ024Yqb2ZQO
-         +3rcFQL+17i8AY4Ab5hAMEH/B5Ana2fJwkaMYGtY24BNjlnG87lik++nAiebp/RIhKn/
-         h8Kg1JnLuO5TOu0qiWixDeaCjv1HoaDL0q5WX+kBoFlk5NpBA3QhfuFaG6sjlEzBkEFC
-         V5uA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mD1ADEh8sx4q3ET0R/HJXMIivGNzFyhNomPJnoSUOE0=;
+        b=cGwwLkiX/F76zHd8ZENyhkwfmo86GsWWlnNRt59XAyFvtp0MoRLxgk94OmKuGz7lPq
+         7t5jOOAoDaa39fRsmBvl3/Fmb/AmPAMOhLGcQ7yA8Pq88511PaRJReyM3zpoOOy2K7O7
+         dKADikinkNi3Bq5yx4SOT0dP8HwKQGIgciXjOSIDLPf0tSuQv4JlWRL5tUyGid98JTQa
+         h+Q9OxXogP0Oct4++P7u6oNvsDDeAPYM3OUbQA+nlGzqntHrSFGHyTQEdjLf1IQTZuw/
+         K1xmxtnnqNadbMTHEQTGW0JwfgAS4yIgFtHB7zuYKuiTvrvv12jxdm/JQi5cSz3QZoBk
+         809Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FaUzqlfM2pwKfN9VIhcVWFSkkYyKVhty8TVxyiisMCI=;
-        b=LOysxDWcv0ARQSnta28iLayrgnAV6u/VMHm2daGpO04nITwitSSCR6YrZGCg2WPEWT
-         PsZyu/jdChTSlWa6ZWm6dSGROASwLOvhD0Wjts+DNCgKfi0QzNI/iUot78zpdNG/c+Xo
-         IzYynhQWMM7AGBTnt7YxtqWUlLkg2sO3m870qs012ROnXZ7y57q7xF2xlabZFSDfNGR/
-         xunfUP3oyvvwgANjgw93sttgcwIn6C8EsNqcDPTIuxDfYz+UDGYAqGsyJdS/VLKPX+ZW
-         j2zEOrkgwJoMCyKYzDC0WQGsvkG0n84sMURdsYrugML1Jw2do5GtwqahQ9CXQ896fJbl
-         8Evw==
-X-Gm-Message-State: AOAM530CK669wVycCC8CnqIpC+Hz4pOVPXLxeQ8Hy3RM9VqQuT5oGE6I
-        aE3aIdt5xF6rntku0i2A57WeU6EGpQPSmA==
-X-Google-Smtp-Source: ABdhPJxEpnuLMl7O4t7I5WKfiSymVCt9lIys3oqvG3hJEbyHQ1d7tLtxYGubHC14a93w8jtWMl9I1Q==
-X-Received: by 2002:adf:cf0a:: with SMTP id o10mr368290wrj.84.1639700791136;
-        Thu, 16 Dec 2021 16:26:31 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mD1ADEh8sx4q3ET0R/HJXMIivGNzFyhNomPJnoSUOE0=;
+        b=StrLYLan7TdyKUA7ehVYyHP811N8a0NKLF7btLi1uqru+AfKFLk6cc/oExmRbpdIaq
+         9zM8cdQIjPdI2Akd5Z+IuY2Q/E4cGBubac+NlS3mXkDiREPOsqrViL3/Gt+qd0VhaWJ4
+         fJmNKrAaldqpKkb+rgnRmp35eeypaJ485oFCnoZPhsCwNHHFxKx7BptL8RWR16Y8K7VH
+         46BVasJ12pNDdp0guIAS0thBUqRHYQsmWfpB1YM2S/972zjtJq+o9YPAc+e7Qmb0aO4t
+         av8X7SGV5niEh0e/r3rIxzNF5uenUIUbb7HDHwA0dJ5izgLu3G2Ja1gAOy4pHn14RXMa
+         qgTQ==
+X-Gm-Message-State: AOAM533u3y36HGafD4+bF/vyoJruhyL2CXfSId+EOcamgaal1NjazJKB
+        dQicsbsRQtcZN720YSkdGan/51kn1tQxVA==
+X-Google-Smtp-Source: ABdhPJzzZiH0eNjBQJ6o+esZHi0/hSPulhhs+8AGRDndl58MXNgR+cVqvBtu3hHpUlDzrZElTR4WJw==
+X-Received: by 2002:adf:bb4a:: with SMTP id x10mr330339wrg.269.1639700792077;
+        Thu, 16 Dec 2021 16:26:32 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j17sm8127349wmq.41.2021.12.16.16.26.30
+        by smtp.gmail.com with ESMTPSA id j17sm8127349wmq.41.2021.12.16.16.26.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 16:26:30 -0800 (PST)
+        Thu, 16 Dec 2021 16:26:31 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,10 +59,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 00/11] Makefile: fix "Perl" and "Python" rules, speed up re-builds
-Date:   Fri, 17 Dec 2021 01:26:16 +0100
-Message-Id: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
+Subject: [PATCH 01/11] Makefile: clean perl/build/ even with NO_PERL=Y
+Date:   Fri, 17 Dec 2021 01:26:17 +0100
+Message-Id: <patch-01.11-185f5a9a9cf-20211217T002023Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1119.g7a3fc8778ee
+In-Reply-To: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
+References: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,69 +72,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This topic is split-up from v4 of ab/make-dependency[1]. Range-diff to
-it below. As noted in [2] I opted to split up that series rather than
-having it grow too large.
+Fix a regression in 499c29394ce (Makefile: allow building without
+perl, 2009-04-03) where we'd stop cleaning the perl/* directory
+because NO_PERL was defined, thus leaving behind litter if the flag at
+"clean" time didn't match that of build time.
 
-This is miscellanious cleanups related to the "Perl" rules, and some
-fixes for bad dependency rules in 08/11. Then in 10/11 we make the
-"Python" rules use the new template we created for "Perl",
+In 499c29394ce this was done to avoid relying on the perl/Makefile.PL,
+but since my 20d2a30f8ff (Makefile: replace perl/Makefile.PL with
+simple make rules, 2017-12-10) we can clean things in that directory
+unconditionally.
 
-We are then able to speed up "make" re-builds a bit in 11/11, as we
-don't need to inject @@GIT_VERSION@@ into the Perl scripts anymore.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The 09/11 is new. It's a trivial sorting of the PERL_DEFINES list,
-which'll help to maintain it in the future.
-
-1. https://lore.kernel.org/git/cover-v4-00.23-00000000000-20211117T101807Z-avarab@gmail.com/
-2. https://lore.kernel.org/git/211217.86a6h09km9.gmgdl@evledraar.gmail.com/
-
-
-Ævar Arnfjörð Bjarmason (11):
-  Makefile: clean perl/build/ even with NO_PERL=Y
-  Makefile: don't set up "perl/build" rules under NO_PERL=Y
-  Makefile: use "=" not ":=" for po/* and perl/*
-  Makefile: remove "mv $@ $@+" dance redundant to .DELETE_ON_ERROR
-  Makefile: guard Perl-only variable assignments
-  Makefile: change "ifndef NO_PERL" to "ifdef NO_PERL"
-  Makefile: adjust Perl-related comments & whitespace
-  Makefile: correct "GIT-PERL-{DEFINES,HEADER}" dependency graph
-  Makefile: sort PERL_DEFINES list
-  Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
-  Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
-
- .gitignore          |   2 +-
- Makefile            | 160 +++++++++++++++++++++++---------------------
- git-cvsserver.perl  |   6 +-
- git-send-email.perl |   7 +-
- git-svn.perl        |   2 +-
- 5 files changed, 90 insertions(+), 87 deletions(-)
-
-Range-diff:
- 1:  1621ca72c1d <  -:  ----------- Makefile: don't invoke msgfmt with --statistics
- 4:  daead5ec293 =  1:  185f5a9a9cf Makefile: clean perl/build/ even with NO_PERL=Y
- 2:  b7c36c9fea0 =  2:  37eeccc5646 Makefile: don't set up "perl/build" rules under NO_PERL=Y
- 3:  29b000eb0f1 =  3:  572a82c71a1 Makefile: use "=" not ":=" for po/* and perl/*
- 5:  3c987590740 =  4:  5baff22f5af Makefile: remove "mv $@ $@+" dance redundant to .DELETE_ON_ERROR
- 6:  b57f582ccd3 =  5:  992e325491d Makefile: guard Perl-only variable assignments
- 7:  fcdee92f64c =  6:  5e94ef729fe Makefile: change "ifndef NO_PERL" to "ifdef NO_PERL"
- 8:  1e25b532ca2 =  7:  4eeef8571aa Makefile: adjust Perl-related comments & whitespace
- 9:  77d9855bfcf =  8:  8aa35537b08 Makefile: correct "GIT-PERL-{DEFINES,HEADER}" dependency graph
- -:  ----------- >  9:  5ff768a5cec Makefile: sort PERL_DEFINES list
-10:  6004cdcd8d9 = 10:  fe79797f45e Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
-11:  17b30e96057 = 11:  defbd9b6db2 Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
-12:  30ddf7da2c8 <  -:  ----------- Makefiles: add "shared.mak", move ".DELETE_ON_ERROR" to it
-13:  f378a7dc35e <  -:  ----------- Makefile: move $(comma), $(empty) and $(space) to shared.mak
-14:  13cbb851d32 <  -:  ----------- Makefile: re-add and use the "shellquote" macros
-15:  337953e4994 <  -:  ----------- Makefile: add a "TRACK_template" for GIT-*{FLAGS,DEFINES,...}
-16:  5bb597c1993 <  -:  ----------- Makefile: add "$(QUIET)" boilerplate to shared.mak
-17:  3c4d0589667 <  -:  ----------- Makefile: use $(wspfx) for $(QUIET...) in shared.mak
-18:  be5882b2c99 <  -:  ----------- Makefiles: add and use wildcard "mkdir -p" template
-19:  2710f8af6cd <  -:  ----------- Makefile: correct the dependency graph of hook-list.h
-20:  59f22a0269a <  -:  ----------- Makefile: use $(file) I/O instead of "FORCE" when possible
-21:  dd569a59c74 <  -:  ----------- Makefile: disable GNU make built-in wildcard rules
-22:  4168a7e3b30 <  -:  ----------- Makefile: define $(LIB_H) in terms of $(FIND_SOURCE_FILES)
-23:  48a3927d972 <  -:  ----------- Makefile: move ".SUFFIXES" rule to shared.mak
+diff --git a/Makefile b/Makefile
+index 9c00a793e47..b21ffe25c2a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3280,6 +3280,7 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) $(HCC)
+ 	$(RM) -r bin-wrappers $(dep_dirs) $(compdb_dir) compile_commands.json
+ 	$(RM) -r po/build/
++	$(RM) -r perl/build/
+ 	$(RM) *.pyc *.pyo */*.pyc */*.pyo $(GENERATED_H) $(ETAGS_TARGET) tags cscope*
+ 	$(RM) -r .dist-tmp-dir .doc-tmp-dir
+ 	$(RM) $(GIT_TARNAME).tar.gz
+@@ -3288,7 +3289,6 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) Documentation/GIT-EXCLUDED-PROGRAMS
+ ifndef NO_PERL
+ 	$(MAKE) -C gitweb clean
+-	$(RM) -r perl/build/
+ endif
+ 	$(MAKE) -C templates/ clean
+ 	$(MAKE) -C t/ clean
 -- 
 2.34.1.1119.g7a3fc8778ee
 
