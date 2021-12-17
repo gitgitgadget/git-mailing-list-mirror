@@ -2,89 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EC95C433F5
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 21:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20B3BC433F5
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 21:22:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239775AbhLQVO0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 16:14:26 -0500
-Received: from ring.crustytoothpaste.net ([172.105.110.227]:52964 "EHLO
-        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236219AbhLQVOZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 16:14:25 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id B66105D498;
-        Fri, 17 Dec 2021 21:14:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1639775664;
-        bh=SF/C/ZNbg1jpr2TE8UwgVj7L+FWjR6Vsobx6mSE7g3w=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=TUyGcHBm8TiHC5mSasUpQH22eFECleOxUo3mFydEJVvhmdZm9ld8SZWbWENXgqXa+
-         156bmQnwPRqM+S2//KJNWZyw2ADnu2oBX1i/yZjpT2mceSAFykB1WPxHWX6qdSgAuC
-         YGV8PZD3cRrQqmC5xQ4q/kEpp1AKsGcaGwssng7wGuw8uVxebf4kfDRz+g3WhZJHmn
-         qkIsV2PbcBO6Q70jdbfH9Pw5674mdiH9+gX8UCvTruISU6IPihPyxlkU+1b+EWYxt1
-         Asj7nigWodSjuOIGdELe3ptlrPHfNYJG3OutQ9aiX3SP0upygaufOscVJ0c+XAtRS2
-         fOMJKVGOW80qpj0P6k/p7bR2wJVwf/CGaf18KwF8J4SKjUWm0OWX7SCNvRlEj69s4/
-         m82hGNO6aRpPXUEY21OeZuko/OiDNqkt0QZCT2IGnLGGK4Zx9tLGJQg+iBjmXTvwD9
-         tpn8homAyM3JSpH8wSYtnoji/N49I23OvoIxVjB0vkTPZ6lxhG7
-Date:   Fri, 17 Dec 2021 21:14:22 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Marc Strapetz <marc.strapetz@syntevo.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Should update-index --refresh force writing the index in case of
- racy timestamps?
-Message-ID: <Ybz9ruQ/uOfFbn3W@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Marc Strapetz <marc.strapetz@syntevo.com>, git@vger.kernel.org
-References: <d3dd805c-7c1d-30a9-6574-a7bfcb7fc013@syntevo.com>
+        id S229550AbhLQVWY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 16:22:24 -0500
+Received: from mout.web.de ([212.227.17.12]:33475 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229436AbhLQVWY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 16:22:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1639776124;
+        bh=JaoGLS2eYdrFXU6q8fmf/nBoEhppuHc/oP5GD0W/q9Y=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=rPUPHvY/7niP0D5+qmWGf/JHIn2qMWykAmsYUF6F5d5/Eo9fASmPYpjs8FhIBVVUO
+         xTemQA5ylfkvTd4GbBp/0wegj8+k9/LqfyduKvJuciRv+q7a6ThY9e6psFqx00K6Mk
+         cFYO1hPcKziYnfK3eACV20DGcaAYAVbvMQ4m6F/I=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MnX1L-1mFKjx1JQL-00jO84; Fri, 17
+ Dec 2021 22:22:04 +0100
+Message-ID: <39ac2d4c-e153-3369-f93f-4d8124f35b87@web.de>
+Date:   Fri, 17 Dec 2021 22:22:01 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="zI+pq9JYRSTZKYnx"
-Content-Disposition: inline
-In-Reply-To: <d3dd805c-7c1d-30a9-6574-a7bfcb7fc013@syntevo.com>
-User-Agent: Mutt/2.1.3 (2021-09-10)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.0
+Subject: Re: [PATCH v6 5/6] unpack-objects.c: add dry_run mode for get_data()
+Content-Language: en-US
+To:     Han Xin <chiyutianyi@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Cc:     Han Xin <hanxin.hx@alibaba-inc.com>
+References: <20211210103435.83656-1-chiyutianyi@gmail.com>
+ <20211217112629.12334-6-chiyutianyi@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20211217112629.12334-6-chiyutianyi@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:aA3ofnxHHXfDDbD8iQZODnxlSghJCiby8stTxP1/f2PbpUFCTj6
+ QZLUWAp20OWn0KJeyuqmrdyHx/vOTPTcclAnONKZKegqU/rASe+brxOWCnE0MIpnIje3MG2
+ xp4fdY5FpYtI84h6kXjHSaQ/F71Y4wWc9BxtZoXP95UMKW+87dNkVhRG8dzwFI/uELMkhpm
+ X2bpKmtOEa90EEvRBJnKg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Foz4Z9QqxbI=:mK6NLObXM2x9XmcydhYGwd
+ yRHFX7uh6rVfAhUDP73qTpZaJhnlM61QAVKEZtKmGHuOM4Pvg/ycFqWAmFpHnUO7mo4/gaL1T
+ UyCMFdNxwVkxswS08J5qndR3E95wXlDMnny2Ku2bMlc0+ZaZPepLQ3YWjuNPGG7WN1VSttFtC
+ Wov6IhD1Fp1fZwss7nx8As4eysOThP/RTpYcXQuyZF+HcLjU25/4/Y/lvxUlCvZrk/UFT6Qop
+ lSi5/S5/nxWtwrItlK9bn7FOO9GkvbUr16zEtlTHwU308iPJsonSO7gY8HEzMTXh4DAKbIVNs
+ RqsaMD/KRbDfTW9VWUH4/4ewvxqxt7eoK71kT/h4eYquaAaOWiqrR8pA5AwiBDJgLoHz5epU2
+ a7GkdnZLWtKJEL/PRHw+y3ThTTIBB3eKcTJQBipPVJWkDQ0MVE5ucXCVfNGE6h3Y3PhwY/Fhh
+ ODLiafNNsm/cV53oxid2iwJupxlY3P9yBAurBFjhhNh/TvGZ1mjBIHoVk2eXuTbwbhakdUMBQ
+ KMeboyag08GTILN+5wIQutdUFYP/Gus4kJhuOMTpWbwn1kXIhbEgoYWYVWiCV5ZKa6owZk0zQ
+ oJgLTjPbtS7v8rCvMqiZmfjpPcZqxXJyohLjmJgBlLMh9V6c8jYG12W7t0x91QV4/zHJFKIUQ
+ 9p5tgpr1/GRRQwtoJ3b8sscN+cCnUn6D4vmY9FgkS6/XJE7B8bqzZAneKyRMZjVl2guu/Sr8U
+ AoanHHv7BS8M93W+ENPO+AU/BY+1ISCeyPgWAqJNbzWoOMNwbcEyUQZqe5dGIG5vqGWa6NGHV
+ 7Q1fgEgBxibhXBO++b/iMU6J8fqVW1FP8TqCPMYf6FwEu5MKOv1ZkCPxe2fFKTz/jAlDdD5YX
+ Dx2LS5OFqu4Xsmzl6KA/oqMIoN7yKal/ZN0BgbgH8vN77DOmXKQcxDg5K5cnfL/btrGj5YhmQ
+ 024VaG6YnUeRhpbYlU3sZgJhth2aagvlwumD9tI3SfjuJ10h1k7/RkQ7qXQ9hesNykq/6VdcW
+ UXKDAIADiN1D4imWiwbYG4IoLSTBBwNxua8SD0rtkkOF7uLvDYdvbxDZTmNmOEoIAJ2Q2xfAP
+ cxIr96M6XdMmco=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 17.12.21 um 12:26 schrieb Han Xin:
+> From: Han Xin <hanxin.hx@alibaba-inc.com>
+>
+> In dry_run mode, "get_data()" is used to verify the inflation of data,
+> and the returned buffer will not be used at all and will be freed
+> immediately. Even in dry_run mode, it is dangerous to allocate a
+> full-size buffer for a large blob object. Therefore, only allocate a
+> low memory footprint when calling "get_data()" in dry_run mode.
 
---zI+pq9JYRSTZKYnx
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Clever.  Looks good to me.
 
-On 2021-12-17 at 10:44:32, Marc Strapetz wrote:
-> For one of my Git-LFS test repositories, switching between branches quite
-> often results in lots of racy index timestamps. Subsequent calls to "git
-> update-index --refresh" or "git status" will invoke the "lfs" filter over
-> and over again, just to figure out that all entries are still up-to-date.
-> Hence, the index will never be rewritten and racy timestamps will remain.
->=20
-> To break out of this state, it seems favorable to write the index if any
-> racy timestamp is detected. We will be able to provide a patch if this
-> change sounds reasonable.
+For some reason I was expecting this patch to have some connection to
+one of the earlier ones (perhaps because get_data() was mentioned),
+but it is technically independent.
 
-Sure, this sounds reasonable, especially if, as you mentioned, git
-status already does this.  We might as well make the plumbing commands
-as functional as the porcelain commands.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+>
+> Suggested-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+> ---
+>  builtin/unpack-objects.c | 23 +++++++++++++++++------
+>  1 file changed, 17 insertions(+), 6 deletions(-)
+>
+> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+> index 4a9466295b..c4a17bdb44 100644
+> --- a/builtin/unpack-objects.c
+> +++ b/builtin/unpack-objects.c
+> @@ -96,15 +96,21 @@ static void use(int bytes)
+>  	display_throughput(progress, consumed_bytes);
+>  }
+>
+> -static void *get_data(unsigned long size)
+> +static void *get_data(unsigned long size, int dry_run)
+>  {
+>  	git_zstream stream;
+> -	void *buf =3D xmallocz(size);
+> +	unsigned long bufsize;
+> +	void *buf;
+>
+>  	memset(&stream, 0, sizeof(stream));
+> +	if (dry_run && size > 8192)
+> +		bufsize =3D 8192;
+> +	else
+> +		bufsize =3D size;
+> +	buf =3D xmallocz(bufsize);
+>
+>  	stream.next_out =3D buf;
+> -	stream.avail_out =3D size;
+> +	stream.avail_out =3D bufsize;
+>  	stream.next_in =3D fill(1);
+>  	stream.avail_in =3D len;
+>  	git_inflate_init(&stream);
+> @@ -124,6 +130,11 @@ static void *get_data(unsigned long size)
+>  		}
+>  		stream.next_in =3D fill(1);
+>  		stream.avail_in =3D len;
+> +		if (dry_run) {
+> +			/* reuse the buffer in dry_run mode */
+> +			stream.next_out =3D buf;
+> +			stream.avail_out =3D bufsize;
+> +		}
+>  	}
+>  	git_inflate_end(&stream);
+>  	return buf;
+> @@ -323,7 +334,7 @@ static void added_object(unsigned nr, enum object_ty=
+pe type,
+>  static void unpack_non_delta_entry(enum object_type type, unsigned long=
+ size,
+>  				   unsigned nr)
+>  {
+> -	void *buf =3D get_data(size);
+> +	void *buf =3D get_data(size, dry_run);
+>
+>  	if (!dry_run && buf)
+>  		write_object(nr, type, buf, size);
+> @@ -357,7 +368,7 @@ static void unpack_delta_entry(enum object_type type=
+, unsigned long delta_size,
+>  	if (type =3D=3D OBJ_REF_DELTA) {
+>  		oidread(&base_oid, fill(the_hash_algo->rawsz));
+>  		use(the_hash_algo->rawsz);
+> -		delta_data =3D get_data(delta_size);
+> +		delta_data =3D get_data(delta_size, dry_run);
+>  		if (dry_run || !delta_data) {
+>  			free(delta_data);
+>  			return;
+> @@ -396,7 +407,7 @@ static void unpack_delta_entry(enum object_type type=
+, unsigned long delta_size,
+>  		if (base_offset <=3D 0 || base_offset >=3D obj_list[nr].offset)
+>  			die("offset value out of bound for delta base object");
+>
+> -		delta_data =3D get_data(delta_size);
+> +		delta_data =3D get_data(delta_size, dry_run);
+>  		if (dry_run || !delta_data) {
+>  			free(delta_data);
+>  			return;
 
---zI+pq9JYRSTZKYnx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYbz9rQAKCRB8DEliiIei
-gfehAQCnaus0ymd3QklWxXCdiWPVfV6moiARMPB15jEmXqfHNwEA8WjEeT5CD+tC
-hGIUIvY5LXW2rkzy8X4U/OXzTkMh6Qc=
-=4u4Q
------END PGP SIGNATURE-----
-
---zI+pq9JYRSTZKYnx--
