@@ -2,144 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2C6EC433EF
-	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 05:26:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B46EC433F5
+	for <git@archiver.kernel.org>; Fri, 17 Dec 2021 06:09:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232983AbhLQF0K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 00:26:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59448 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231703AbhLQF0H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 00:26:07 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C3FBC061574
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 21:26:07 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id y12so3374678eda.12
-        for <git@vger.kernel.org>; Thu, 16 Dec 2021 21:26:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=0I70gggHFloensV0QeqNsyyG+lU8wN5CJYWexxwaLRk=;
-        b=VEleXltB35nedm6X6yCqPznSnFoDzQzowtLklfKdy0HOU9thsDUJ25asXKsgiB1t1y
-         G65JhrpC/Cap/gCy6cjOexb/Yl3U3fXRayiA21h0EUl/y+CefAJK4feJonALZAkgftXY
-         A45dq3X7WL/iA1ZY57sWsxk8l3VBr+676OYvYIZtmSCR7CjX+V4SWe8oYlf9cEcJkcyM
-         p5L1bocd2ECI3obje/MR20jAM8+0qk2A9Fkwq3mP/2Ntn1tYdyVsLzz/ASweQCpfVxdH
-         43vOfjOA7zMJCQtyWlmFhbsqHHd0o2k/4CAXgeK2zL8Tx2kpZldcU/caIjFiyp6deiIt
-         NTnQ==
+        id S233180AbhLQGJl convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 17 Dec 2021 01:09:41 -0500
+Received: from mail-pj1-f41.google.com ([209.85.216.41]:38509 "EHLO
+        mail-pj1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230405AbhLQGJl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 01:09:41 -0500
+Received: by mail-pj1-f41.google.com with SMTP id n15-20020a17090a394f00b001b0f6d6468eso4748704pjf.3
+        for <git@vger.kernel.org>; Thu, 16 Dec 2021 22:09:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=0I70gggHFloensV0QeqNsyyG+lU8wN5CJYWexxwaLRk=;
-        b=dQfmtOoB3BpDDNXEjmsz2V9mewEhyO2pYD37DgVeD8+F0skdkTqBfgYXIL4Dq0EoJC
-         4+iNVOqGwvVQyEFguB/yqWDeu+fvtq0eOvIarMVNnokLBESRfRr4TUoHUVwFqk5inkdF
-         wq/+IWVFGg4D/vfowE0TqH3HMJg9C7MbSNmx3Jaio6n8EOKzDuBExT0IM27h9ZNZJtxk
-         mss4TlZHf6c4AnLq6Mp6QP+d5j1o8l4qTv9fEL5gjbB10ZsZYkaKbfqJsIN5jliPSlZz
-         rPXZysTYGd3ddeasx0B2so7YilaWXsQdKocmEePReXOathXpd1fswZVNQJqccHjO39fu
-         tD0Q==
-X-Gm-Message-State: AOAM533TBT43QUTg6wJexO1ZWZ8miT7LyKCGYZiwqnkPvI3waaVO8yHM
-        bY776aI3P/mLs7ZduBNclXI=
-X-Google-Smtp-Source: ABdhPJwn8qNnN9KJVdSkLm24dgwKK/cUoRHu/1UOEtQZHOjozspIt2MrUB8eza/zcQsGsWtlAy8lDw==
-X-Received: by 2002:a17:906:314f:: with SMTP id e15mr1206591eje.658.1639718765507;
-        Thu, 16 Dec 2021 21:26:05 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id b4sm2424917ejl.206.2021.12.16.21.26.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 21:26:05 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1my5kq-000kTa-De;
-        Fri, 17 Dec 2021 06:26:04 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Andriy Makukha via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Andriy Makukha <andriy.makukha@gmail.com>
-Subject: Re: [PATCH] strlcpy(): safer and faster version
-Date:   Fri, 17 Dec 2021 06:22:30 +0100
-References: <pull.1097.git.1639675881065.gitgitgadget@gmail.com>
- <YbuB8xeHLNSYnv/a@coredump.intra.peff.net> <xmqqy24k6v1a.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqy24k6v1a.fsf@gitster.g>
-Message-ID: <211217.86sfur9503.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=UOCw6M5pRZTC4h2ZXJiNHL43WcgbKu0XbKvjHIUaFQU=;
+        b=Nl3e9LKWQFA+OaLCsYYuVds0L/nZ7+/Spqfp8YE7UAcqhvbyB3ADyF/bmR2nEfvA6j
+         K4xMeUenY9MuVjt6CtsklPAxFfYqMbS5YnfGanPBKNcfQgpMCVs7rWltLHqiL5fdUQ+7
+         Pnd2tY3XkzBlIwWSUIuVPZAGlcCbhftPiZvDWQbXndEwoJzaLdyEQlLlRF8n4ENHne/K
+         ppKIGfVEm4MOappSxt4n3s62+Ynwj05baf+7ADuwH/BGTWHL6Exy/QRlhpk45fPSqtPM
+         p/5mUfxF6yhFqHK7V4GZFYlnJz3phEO1Z3Tc9cT3s0qy35V3GI9aSb6yYp5LiEebh0j7
+         hBVQ==
+X-Gm-Message-State: AOAM531IIbLvVIaXrTGZubGhHjyh5RCfVc99JAgMXi70NdyFnKIDUwZ0
+        eL0Dpq0Q8xKp7KrSFWvI7+4cKl0hspVVVI7THz4=
+X-Google-Smtp-Source: ABdhPJyfQw8NyVCBKino9OTy1JB8zYPNcNXESKzke5gMmpPkUSLCZ8GSO8E3BdnMjfl528U3BAwyg5OV3bfgXHqS/zA=
+X-Received: by 2002:a17:903:1247:b0:143:b9b9:52a2 with SMTP id
+ u7-20020a170903124700b00143b9b952a2mr1845296plh.35.1639721380921; Thu, 16 Dec
+ 2021 22:09:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover-0.8-00000000000-20211217T012902Z-avarab@gmail.com> <patch-8.8-aca560ca410-20211217T012902Z-avarab@gmail.com>
+In-Reply-To: <patch-8.8-aca560ca410-20211217T012902Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 17 Dec 2021 01:09:30 -0500
+Message-ID: <CAPig+cQt47U9E8kUFiTBecEPcTaLhRCi5X_T=nPqZM-HJR=n0g@mail.gmail.com>
+Subject: Re: [PATCH 8/8] Makefiles: add and use wildcard "mkdir -p" template
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Dec 16, 2021 at 11:40 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> [...]
+> But as it turns out we can use this neat trick of only doing a "mkdir
+> -p" if the $(wildcard) macro tells us the path doesn't exist. A re-run
+> of a performance test similar to thatnoted downthread of [1] in [2]
+> shows that this is faster, in addition to being less verbose and more
+> reliable (this uses my "git-hyperfine" thin wrapper for "hyperfine"[3]):
 
-On Thu, Dec 16 2021, Junio C Hamano wrote:
+s/thatnoted/that noted/
 
-> Jeff King <peff@peff.net> writes:
->
->> On Thu, Dec 16, 2021 at 05:31:20PM +0000, Andriy Makukha via GitGitGadget wrote:
->>
->>> Original strlcpy() has a significant disadvantage of being both unsafe
->>> and inefficient. It unnecessarily calculates length of `src` which may
->>> result in a segmentation fault if `src` is not terminated with a
->>> NUL-character.
->>
->> I think any code that passes such a "src" is still broken after your
->> code. If the length of "src" is less than "size", then the result in
->> "dest" will contain garbage we read from the memory after "src".
->>
->> Likewise in that case using strnlen() isn't any faster, since it has to
->> look at the same number of bytes either way (it may even be slower since
->> its loop has two conditions to check).
->>
->>> In this fix, if `src` is too long, strlcpy() returns `size`. This
->>> allows to still detect an error while fixing the mentioned
->>> vulnerabilities. It deviates from original strlcpy(), but for a good
->>> reason.
->>
->> This could potentially break callers of strlcpy(), though, because it's
->> changing the semantics of the return value. For example, if they use the
->> return value to expand a buffer to hold the result.
->>
->> I do think the proposed semantics are better (I have actually fixed a
->> real overflow bug where somebody assumed strlcpy() returned the number
->> of bytes written). But we probably should not call it strlcpy(), because
->> that's has well-known behavior that we're not meeting.
->>
->> I don't think any of the current code would be broken by this (most does
->> not even look at the return value at all). It just seems like an
->> accident waiting to happen.
->>
->> Personally, I don't love strlcpy() in the first place. Avoiding heap
->> overflows is good, but unexpected truncation can also be buggy. That's
->> why try to either size buffers automatically (strbuf, xstrfmt,
->> FLEX_ALLOC, etc) or assert that we didn't truncate (xsnprintf).
->>
->> Some cases could probably be converted away from strlcpy(). For
->> instance, the color stuff in add-interactive.c should be using
->> xsnprintf(), since the point of COLOR_MAXLEN is to hold the
->> longest-possible color. The ones in difftool.c probably ought to be
->> strbufs. There are definitely some that want the truncation semantics
->> (e.g., usernames in archive-tar.c). We might be better off providing a
->> function whose name makes it clear that truncation is OK.
->>
->>>  size_t gitstrlcpy(char *dest, const char *src, size_t size)
->>>  {
->>> -	size_t ret = strlen(src);
->>> +	/*
->>> +	 * NOTE: original strlcpy returns full length of src, but this is
->>> +	 * unsafe. This implementation returns `size` if src is too long.
->>> +	 * This behaviour is faster and still allows to detect an issue.
->>> +	 */
->>> +	size_t ret = strnlen(src, size);
->>
->> Also, strnlen() isn't portable, so we'd need a solution there (open
->> coding or yet another compat wrapper).
->
-> Thanks for saying everything I wanted to say ;-)
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/shared.mak b/shared.mak
+> @@ -90,3 +92,18 @@ ifndef V
+> +## Is racy, but in a good way; we might redundantly (and safely)
+> +## "mkdir -p" when running in parallel, but won't need to exhaustively
+> +## individual rules for "a" -> "prefix" -> "dir" -> "file" if given a
+> +## "a/prefix/dir/file". This can instead be inserted at the start of
+> +## the "a/prefix/dir/file" rule.
 
-Isn't strlcpy() an OpenBSD-initiated effort? So if we're going to update
-this at all shouldn't be be aiming for picking an "upstream" here?
-E.g. [1]?
-
-But yeah, just getting rid of it in one form or another is probably
-better.
-
-1. https://github.com/libressl-portable/openbsd/blob/master/src/lib/libc/string/strlcpy.c
+Is there a word missing between "exhaustively" and "individual"?
