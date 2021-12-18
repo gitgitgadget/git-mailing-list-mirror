@@ -2,86 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AF82C433F5
-	for <git@archiver.kernel.org>; Sat, 18 Dec 2021 08:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11FFDC433F5
+	for <git@archiver.kernel.org>; Sat, 18 Dec 2021 09:47:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229804AbhLRIYW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Dec 2021 03:24:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57674 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbhLRIYV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Dec 2021 03:24:21 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 454B9C061574
-        for <git@vger.kernel.org>; Sat, 18 Dec 2021 00:24:21 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id u13so2210779lff.12
-        for <git@vger.kernel.org>; Sat, 18 Dec 2021 00:24:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=OZUYOTnyfLbTU7nc7hH/ITDVSiywqNipWdPUxBgPgnk=;
-        b=erUuO8HF58nSKNbvdoLzQlyeDO2/1IDRXHTKlneGdTQ+gpNAHq/s0dEnDSwGgEAy9z
-         x4Hh0ugVItZP5CgxfCMY8Q1uNNI9hc8hobqrGch5qs/MSYXfRya29pWXfOT1TzbsRqbP
-         w5cGQC7uRpESmMNHYuaJLingMSaA1oougTIVv104C9Pg2TSXgvlSAJztWp3mtGlw3EMx
-         XqYGvfmWRn8M77rJ4LnSz/21JB54sL4ZhC/BoHQ6E9aviNYc+WtE5f5fSEiZ88ZBQHYE
-         TOdbgyzJ4jkYCp/DtwvWtbxPi9RetNwLwNQsU3kU8UnSyYLTCvqA3H61XeFqB8M58SHJ
-         l1Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=OZUYOTnyfLbTU7nc7hH/ITDVSiywqNipWdPUxBgPgnk=;
-        b=VEWuyJghRTLK0B7sTEtWIZUo4WGyQ+KYzMQVmG+7u/AXGEfDH33t9cvCEEYILA9RV7
-         anWRYnpiMtxWhZOe3OIAUaI5LqSG7NsvFz26s3thCDSxWENKj8OsXD8BAoFWv2qj3hZW
-         hBXQdfrg1LXWGv6d3Jm2C5a2nQKGVA4MjkqObJf6vZmG8qNAHdsiXrTf1TZOsg7yWT1R
-         yf8mlPyYdQVwBjqhYiVJ40ouL5VvZOOznAP6JbTQXRvcCsrXpHUevflBtZnTZDeucot1
-         xxKcFT3IjCM+AxmErgMdceF+LuqjUCzfp+gFRkrGjft8XhIGpUjDYk8BxvGmWkgb+8+u
-         7x4g==
-X-Gm-Message-State: AOAM5306V/BdfkFF/+yLH4P/1aWyWvYGOlnjtPeWYZE7FVrSnZt6sKSr
-        FLbpK/I2RQz9hRcRDT5tJa/6YjYqC+Y=
-X-Google-Smtp-Source: ABdhPJzBXskCqApdRXQa5d8L0LInXYNEIaooZMxApAq+G1oT5Qd36W/yZGOJRJV9cRYhdISKo1R8/g==
-X-Received: by 2002:a05:6512:249:: with SMTP id b9mr6543426lfo.496.1639815859149;
-        Sat, 18 Dec 2021 00:24:19 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id u3sm1639936lfs.256.2021.12.18.00.24.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Dec 2021 00:24:18 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] merge: allow to pretend a merge into detached HEAD is
- made into a branch
-References: <xmqqbl1ezq5j.fsf@gitster.g>
-Date:   Sat, 18 Dec 2021 11:24:17 +0300
-In-Reply-To: <xmqqbl1ezq5j.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        17 Dec 2021 16:56:56 -0800")
-Message-ID: <87a6gyiamm.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S232572AbhLRJrS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Dec 2021 04:47:18 -0500
+Received: from mout.web.de ([212.227.17.12]:44495 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231405AbhLRJrR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Dec 2021 04:47:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1639820824;
+        bh=pjA7sTc23hakqzHJI0gY5sjpr/iEsirjuB5YbDFSdeM=;
+        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
+        b=Mj+e/1KIBKOJz0mQbWAC3UISMMhZanNLbqPi39wu+1TzxycRkc1OofR4qtZO05/7+
+         Uc9aa7AIZ5TtLJLaFuZAoXPpdB98twEwAdytg3XvrRSg+pgNxIj9hEgzHyd1dj4Z77
+         KtlmDI+tNFuC1IdNH2K1mkjzn6iXrFf/2a/zpgeg=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M1aDp-1mwaMV1hxT-003CNz; Sat, 18
+ Dec 2021 10:47:04 +0100
+Message-ID: <5b151dc3-d4c7-29d3-71ed-a79033693d5d@web.de>
+Date:   Sat, 18 Dec 2021 10:47:03 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.0
+Content-Language: en-US
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] daemon: plug memory leak on overlong path
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:LVr0RrRnLgX8Codyt8kmmaHPYbckX4zRwTgWDCJJtn+BMbz26Vi
+ O331/i38q4p59Wqrdu71qWA6GI9k1k0xJwxP54SW5ycQvSztt6LxXj+Ffn5IiRJd81wCU83
+ QQvxZ/R4qi1OFbrLBT7fIJQG7RP8/e14ERrz9XzH7Lm8JTK2uojwMx5E/6muB89+H8UoVqQ
+ ekOhUJBzRy7Olzo3+TadQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:QsMcjt0U2Uw=:mxNAIEeuq0Cnnq8hlYGFaj
+ FUXU11Km8nDHz9SL+R+XSRd+LsnVwHGPGRq/sxfJfpWTydmZ4REohSeND3e9yjCUyLiOecShj
+ tu5Z5AlekSeXg0WjESzcTxb52ZJJpk8JzIvJaoOZUWiHRFwoSW44225V9MArhGRX1fCA5G2T8
+ 7V2MrD1/2ruG+bUgsGbCSHF1/+GCQOaQYkejtGQjKTgyvg625MQZLh3SrpcCiDUFprxGvtQaz
+ 4p5BGGYa+EuHCehEqdaNiVEKmXAwogoy3Kr/tPdO084q4M+b+LApH4Bm55u7NSzf5zbgkMOwM
+ b/hN0jhT7j45loSWS7Y0dFM1Nk9b6iQJhMUk7JkL5Nfhgw0jpfFOMwanC6s9EXBtIxJMLw85x
+ BY8A01eOEgKw92XLkmlI0MycxJbzL7GzKyRGjeylRYKYoaN8UOtBh4EfY106oYunD/8XIGeE7
+ FpBLHwjsa7BwOTDzrOEHZQnm3cKGnEM8dO+/YtJKnx7VxLpj2oVr8nzJX021bQ8rzHK/kDN0S
+ OjHz6yIf9OkaZB5a562EaMhTiV97AFXAf9uIjqmvPIIe7S9ofiqp4vkNngspJJKeEzV37SgCT
+ eAhrWBySlVNv2HlVn9a87/0fCpnS09p0AMLZMTw5zz3Pu83O6FIBwYKrnvnLI32RN6fihTzqy
+ J12enHOjNJ81BNji/9DxW32KN0SifEUd737jmQ87sO5SV6HEFti6dr7177VJH6vD/2W2BpqhD
+ RmD1Cgt+2hKOfvjYQwUdQCVcgC1nCYNuZJfwlwDB0yuusYb0NOOEU3fHxXMWGwpBkJ1ut6IWq
+ 0/W5ddXRxWNAEU0qIGZF2Gewif+x7LHcAbzQ2n45hsDOiq75nHkSyW046JYWE4kKCmyM5MuTx
+ JExMFz/RXDq4e4LqHEZ1lzCWXhaVpI+2joM+dUieTBYS/zLPqeJSrV2wGXMat4e9HI5v+Jfoi
+ hUS4Gs20d1KUjPRtwmxNbzUoit7MShZ8/Ub673yKFkyMlWIJV9AdrJofqo+1a7CJshyrCG7+F
+ 5R7FUb4eh3BoYU5tgCSWvepyyyGC2PnYD/iKNICbi/72pq4qFrWsQuJ+mAorj9AgIQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Release the strbuf containing the interpolated path after copying it to
+a stack buffer and before erroring out if it's too long.
 
-[...]
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ daemon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Teach the "--detached-head-name=<branch>" option to "git merge" and
-> its underlying "git fmt-merge-message", to pretend as if we were
-> merging into <branch> (instead of HEAD) when they prepare the merge
-> message.  The pretend name honors the usual "into <target>"
-> suppression mechanism, which can be seen in the tests added here.
+diff --git a/daemon.c b/daemon.c
+index 4a000ee4af..94a5b8a364 100644
+=2D-- a/daemon.c
++++ b/daemon.c
+@@ -232,13 +232,13 @@ static const char *path_ok(const char *directory, st=
+ruct hostinfo *hi)
 
-I think renaming destination branch in the commit message is useful in
-general, and should not be limited to merging to detached head. Please
-consider to introduce something like "--into-name=<name>" instead, that
-will do this renaming unconditionally.
+ 		rlen =3D strlcpy(interp_path, expanded_path.buf,
+ 			       sizeof(interp_path));
++		strbuf_release(&expanded_path);
+ 		if (rlen >=3D sizeof(interp_path)) {
+ 			logerror("interpolated path too large: %s",
+ 				 interp_path);
+ 			return NULL;
+ 		}
 
-Also, being an advocate for eventual abandoning of "detached head" from
-Git terminology, I'd prefer to see more neutral name for the option
-anyway.
+-		strbuf_release(&expanded_path);
+ 		loginfo("Interpolated dir '%s'", interp_path);
 
-Thanks,
--- Sergey Organov
+ 		dir =3D interp_path;
+=2D-
+2.34.0
