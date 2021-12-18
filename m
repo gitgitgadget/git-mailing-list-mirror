@@ -2,102 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C731C433F5
-	for <git@archiver.kernel.org>; Sat, 18 Dec 2021 19:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78FB0C433F5
+	for <git@archiver.kernel.org>; Sat, 18 Dec 2021 21:55:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234067AbhLRTxb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Dec 2021 14:53:31 -0500
-Received: from mout.web.de ([212.227.17.12]:59415 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234057AbhLRTxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Dec 2021 14:53:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1639857196;
-        bh=EHEfFCfyKmxuwsNwnTYa5/cs7Xs6AwKkj4WgNFYHlYk=;
-        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=oiZyypM0Qx2uAU+5u1Xbe9/iyK94qSTA1KF01rapA6r2+7I+ixgD2T42l8DGUSyIa
-         bModl/b5MSkRRkaDzx1dg95sodBSvkjpKQJC7wh5eFyvcClQs5fxAbUS4FhsgJGpbm
-         PMXy7he31nFV3XPttejZh++DHr2EUT70KO3meOIo=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MP382-1n8bwW21E4-00PgHo; Sat, 18
- Dec 2021 20:53:16 +0100
-Message-ID: <ba503995-866d-fc80-4e38-b4dfd0e5c5bc@web.de>
-Date:   Sat, 18 Dec 2021 20:53:15 +0100
+        id S234823AbhLRVzq convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 18 Dec 2021 16:55:46 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:20563 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234670AbhLRVzp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Dec 2021 16:55:45 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 1BILtduT092395
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sat, 18 Dec 2021 16:55:42 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Sean Allred'" <allred.sean@gmail.com>
+Cc:     <git@vger.kernel.org>
+References: <CABceR4bZmtC4rCwgxZ1BBYZP69VOUca1f_moJoP989vTUZWu9Q@mail.gmail.com> <014701d7f437$5ae45110$10acf330$@nexbridge.com> <CABceR4Z+CoaUuGrJS+D1C9x+nR278S4ATWozz-ni2Y96FJc3cg@mail.gmail.com>
+In-Reply-To: <CABceR4Z+CoaUuGrJS+D1C9x+nR278S4ATWozz-ni2Y96FJc3cg@mail.gmail.com>
+Subject: RE: Bug report - Can create worktrees from bare repo / such worktrees can fool is_bare_repository()
+Date:   Sat, 18 Dec 2021 16:55:34 -0500
+Organization: Nexbridge Inc.
+Message-ID: <000401d7f45a$005abea0$01103be0$@nexbridge.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.0
-Subject: [PATCH 2/2] grep/pcre2: factor out literal variable
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git List <git@vger.kernel.org>
-Cc:     Hamza Mahfooz <someguy@effective-light.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        Andreas Schwab <schwab@linux-m68k.org>
-References: <5fa6962e-3c1c-6dbc-f6d7-589151a9baec@web.de>
-In-Reply-To: <5fa6962e-3c1c-6dbc-f6d7-589151a9baec@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:P2EBysGYGyBYlbImQLSfa2LCDXEmAPnbu71K0Ez3EV7Pk/3SR+l
- W2BaT9wOLLh7P1trpAlAxqlMPlzM1MMnitNKVlP9/GuZB41Y0ITzgiwn/P0NtYvXDl2Xik5
- dLguD1d92RWapgwIQvy/Y9y8Z0bdLm0GpMGQVdT4rEiRItxRwBGlBR/PJd2BdlYUU1WlKxD
- JmPeIzjPH7OM2liMcCtdg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TxHmAShtIeQ=:i2mz1HIQjCc6TwIgX62QbF
- Mp7+rFq0q+u1qqj35jV5a6byuaVuCnhhMwPHdZCDVwVYWJ0kZy/RAnm4DQI2wnDqTJ3ARxTlW
- AGruUePClXzRs17XlhFqGXrdAGnrH9ROXKnvFaq2WoRLiLPG9cdF8qm8WoAk1O4TEqjst3ALP
- iUl9u85tKg+J+7YKK4s3x2evEVus5Eai+x1gls0ltypQNO84Dr6xDsZjVRD4m+3fkL5WsFXC5
- 4z9uq+61OGB1nl1Je0pg/WUch4o4LaL0wnEYFqB2zJFkNl0g4CxLP6zZHbpGtgYR7wROqu18C
- vsh5ESu/IanMeiowAWt0k+ghZS/hkiP0hNAUHJgclAIy6J+PCsbl016atQijuYWHUgB+ASnpn
- vE2OHjKPS7bi3G3ndMPLM5dA8r+HlX3Xe8EtWSeaz46fCG5QNuoe/YO4ZoRBlPh9EXWKEXSLo
- R5mCntFPClIP4jsN9Cytpes6xHgDLm7U7As2ERv3OisGPZf4XU3kuR9CAHhZMTzX7Xm2OOdXC
- KyJkfnKK3HtSF77Zh0F0wB1rYj7S7HDtSDnsfH3W2VVHxEPyWurNmcCCNncLTmumZqWur8s4M
- ZKaPHTKgxzvljKoJmUJs4cKgXsEesZ3f2bj0rYqEkjmK00NCoZ8t1BOchSvwpjErYSIzubCZa
- 7RqnBXe+Ts1E3h83O8lCpj5R7n9/zGeCKDhXmTwA9PQg3TrMZEUyHnp9NuynplrT91kRdUG/T
- jeJs0lDO+4I205L81HjAPHIjwx3epdWkRnnzAboYanrB/EnH3ewO4v7ANjIjvtf+yM9p7/FQd
- JvdgXyLMHl5SYqKcgZfkv9dRLkiZbhmz+3+wAuNF0PuIauXMg5cvA/7XjuXV3F/rMB9/vr5iO
- exRs4izhkNAhOUAijKZbWJmN+FIS8xdqvdKalhTa8h0ZMYZrXKz/HRWluUceT/b0atyNcatDm
- eXDHUxz4N25SfiYSln9Wr/JxViAOh1GtMdQPJhqirXwLXozjtEEcFGsKPjxpjyw14xNZh2oFd
- 8wdDmIbHVTIk3wrWLoErB+N5QInHttCZD5+vEb9jWcCKyC1YYHdvAK7ABhF/Qn9z5HNu+bRy7
- YeYnsv1VHo43xU=
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQKeYwgHoGmGxJSEPR+fKunQIMLw7wHdi7v/AVn1BxyqkiufkA==
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patterns that contain no wildcards and don't have to be case-folded are
-literal.  Give this condition a name to increase the readability of the
-boolean expression for enabling the option PCRE2_UTF.
+On December 18, 2021 2:01 PM: Sean Allred wrote:
+> On Sat, Dec 18, 2021 at 11:47 AM <rsbecker@nexbridge.com> wrote:
+> >
+> > On December 18, 2021 11:47 AM, Sean Allred wrote:
+> > > Hi folks! See the following bug report. Let me know if anything is
+> > > unclear -- in all honesty, I neglectfully `git worktree remove
+> > > --force`'d the first one I wrote...
+> > >
+> > > Thank you for filling out a Git bug report!
+> > > Please answer the following questions to help us understand your issue.
+> > >
+> > > What did you do before the bug happened? (Steps to reproduce your
+> > > issue)
+> > >
+> > >     ~$ git clone --bare https://github.com/git/git.git
+> > >     ---clip---
+> > >
+> > >     ~/gitbare$ git config --list --show-origin
+> > >     file:config     core.repositoryformatversion=1
+> > >     file:config     core.filemode=false
+> > >     file:config     core.bare=true
+> > >     file:config     core.ignorecase=true
+> > >     file:config     remote.origin.url=https://github.com/git/git.git
+> > >
+> > >     ~/gitbare$ git worktree add --no-checkout ../next
+> > >     Preparing worktree (checking out 'next')
+> > >
+> > >     ~/gitbare$ git config --list --show-origin
+> > >     file:config     core.repositoryformatversion=1
+> > >     file:config     core.filemode=false
+> > >     file:config     core.bare=true
+> > >     file:config     core.ignorecase=true
+> > >     file:config     remote.origin.url=https://github.com/git/git.git
+> > >
+> > >     ~/gitbare$ cd ../next/
+> > >
+> > >     ~/next$ git config --list --show-origin
+> > >     file:../gitbare/config    core.repositoryformatversion=1
+> > >     file:../gitbare/config    core.filemode=false
+> > >     file:../gitbare/config    core.bare=true
+> > >     file:../gitbare/config    core.ignorecase=true
+> > >     file:../gitbare/config    remote.origin.url=https://github.com/git/git.git
+> > >
+> > >     ~/next$ git rev-parse --is-bare-repository
+> > >     false
+> > >
+> > >     ~/next$ git config extensions.worktreeconfig true
+> > >     ~/next$ git rev-parse --is-bare-repository
+> > >     true
+> > >
+> > >     ~/next$ git config --unset extensions.worktreeconfig
+> > >     ~/next$ git rev-parse --is-bare-repository
+> > >     false
+> > >
+> > > I actually found this situation (and narrowed it to the above) by
+> > > trying to perform a sparse-checkout in the worktree.  It appears
+> > > sparse-checkout by default uses a worktree-specific config (which does
+> make sense).
+> > >
+> > > What did you expect to happen? (Expected behavior)
+> > >
+> > >     I expected one of the following to happen:
+> > >
+> > >     1. I should have been blocked from creating a worktree from a bare
+> > >     repository.
+> > >
+> > >     2. is_bare_repository() shouldn't be fooled by this situation,
+> > >     assuming it's valid.
+> > >
+> > >     All things being equal, I would more expect to have been blocked
+> > >     from creating a worktree from a bare repository.  Personally, this
+> > >     bare repo + worktree setup doesn't not align with my experience so
+> > >     far with how bare repos are normally used (i.e., as a convenience
+> > >     for centralized remotes that will never be doing a checkout).
+> > >
+> > > What happened instead? (Actual behavior)
+> > >
+> > >     is_bare_repository() is fooled and I'm prevented from performing
+> > >     any operation that requires a worktree (like performing a sparse
+> > >     checkout).
+> > >
+> > > What's different between what you expected and what actually
+> happened?
+> > >
+> > >     is_bare_repository() is fooled into thinking the worktree is not a
+> > >     worktree / I'm able to create a worktree from a bare repo.
+> > >
+> > > Anything else you want to add:
+> > >
+> > > Please review the rest of the bug report below.
+> > > You can delete any lines you don't wish to share.
+> > >
+> > >
+> > > [System Info]
+> > > git version:
+> > > git version 2.34.1
+> > > cpu: x86_64
+> > > no commit associated with this build
+> > > sizeof-long: 8
+> > > sizeof-size_t: 8
+> > > shell-path: /bin/sh
+> > > uname: Linux 5.4.72-microsoft-standard-WSL2 #1 SMP Wed Oct 28
+> > > 23:40:43 UTC 2020 x86_64 compiler info: gnuc: 9.3 libc info: glibc:
+> > > 2.31 $SHELL (typically, interactive shell): /bin/bash
+> > >
+> > >
+> > > [Enabled Hooks]
+> > > not run from a git repository - no hooks to show
+> >
+> > My thoughts:
+> >
+> > 1. I think it is legitimate to create a worktree from a bare repository. The
+> worktree is using its own working directory/index and does not require
+> anything from the bare repo.
+> > 2. You ran is_bare_repository from next, which was in your worktree - not
+> a bare repo, so that answer actually makes sense.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- grep.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> I'm not sure I follow. I did run is_bare_repository from the next-worktree,
+> but the return value was evidently dependent on the value of
+> extensions.worktreeconfig. When true, is_bare_repository returned true --
+> even within the next-worktree. Unless I'm missing something fairly
+> fundamental here...
 
-diff --git a/grep.c b/grep.c
-index 5badb6d851..2b6ac3205d 100644
-=2D-- a/grep.c
-+++ b/grep.c
-@@ -362,6 +362,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, =
-const struct grep_opt *opt
- 	int jitret;
- 	int patinforet;
- 	size_t jitsizearg;
-+	int literal =3D !opt->ignore_case && (p->fixed || p->is_fixed);
+I agree that this interpretation *may* be incorrect. Worktreeconfig allows a configuration associated with worktrees but does not mean that there is one. It seems like worktreeconfig=true is causing git to check the worktree-specific configuration, finds out that you are in a worktree but there is in fact no worktree configuration specified, so the main repo is checked, which is bare, so reports true. When worktreeconfig=false, it looks like a quick decision is made that because you are in a worktree, obviously you are not bare (this may be an incorrect interpretation). I can somewhat see both sides of this. Perhaps some clarification on the interpretation is required.
 
- 	/*
- 	 * Call pcre2_general_context_create() before calling any
-@@ -382,8 +383,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, =
-const struct grep_opt *opt
- 		}
- 		options |=3D PCRE2_CASELESS;
- 	}
--	if (!opt->ignore_locale && is_utf8_locale() &&
--	    !(!opt->ignore_case && (p->fixed || p->is_fixed)))
-+	if (!opt->ignore_locale && is_utf8_locale() && !literal)
- 		options |=3D (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
+It does seem like is_bare_repository_cfg is false in is_bare_repository, which seems to be wrong in context. However, there is a strange comparison in worktree.c that bothers me - is_bare_repository_cfg == 1 around line 67 which is a numeric comparison to a boolean. I think that may be incorrect. There is a NEEDSWORK comment in the code immediately before that line.
 
- #ifdef GIT_PCRE2_VERSION_10_36_OR_HIGHER
-=2D-
-2.34.0
+Hoping someone else can chime in on this.
+
+> > I'm not sure whether this is an expected use case but it does make sense
+> > to be one. If you typically work in worktrees and write scripts under that
+> > assumption, not having to worry about being in the non-worktree part of a
+> > clone makes sense. So creating a worktree off a bare repo is not a bad thing,
+> > assuming everything else is correct.
+
+The essential part of create a worktree from a bare repo still makes sense to me.
 
