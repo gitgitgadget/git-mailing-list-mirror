@@ -2,134 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E8F1C433F5
-	for <git@archiver.kernel.org>; Sat, 18 Dec 2021 01:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0AFCC433F5
+	for <git@archiver.kernel.org>; Sat, 18 Dec 2021 07:45:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231521AbhLRBk1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 20:40:27 -0500
-Received: from mail-4324.protonmail.ch ([185.70.43.24]:38993 "EHLO
-        mail-4324.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229718AbhLRBk1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 20:40:27 -0500
-X-Greylist: delayed 101977 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Dec 2021 20:40:27 EST
-Date:   Sat, 18 Dec 2021 01:40:24 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail2; t=1639791625;
-        bh=b4cNq21bDmiAxPWRnde3JkPNK6nbeoAK28cJ3FDTx9Q=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
-         References:From:To:Cc;
-        b=gkPSKVU8p/59JTh8qmokdS81IjgjZL8pYdAnBU/H58u0xj1hknuSEb9OwV8bXIEdT
-         xcq4Hek+jIdEsthM7LNg/NBLuKyBJwrOjABq1nczcfvKwf3ImiOdtdwHtR7RyqN8NX
-         66jkT+xoNLJmx+yOGESCFgzSsEHY/aBkFCpmXxq8h7mf55ivP2J9PXKdYp+Z66Yku2
-         Cq1zc4CULbXzOIjB5cMxT0HLL/SXkDHF1cyoTs2l7gfpYeljuWKVAv4v5ZROWg7Hdb
-         fzIgsM5fm2zVJw5X3+sAeB7yVvyfsQkov/DdMxgtquYtjoIprvyFUBaJ/dpYVQ4/KQ
-         X5oiYRxyWSEnw==
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-From:   =?utf-8?Q?Jo=C3=A3o_Victor_Bonfim?= 
-        <JoaoVictorBonfim+Git-Mail-List@protonmail.com>
-Cc:     Martin Fick <mfick@codeaurora.org>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Reply-To: =?utf-8?Q?Jo=C3=A3o_Victor_Bonfim?= 
-          <JoaoVictorBonfim+Git-Mail-List@protonmail.com>
-Subject: Re: Fw: Curiosity
-Message-ID: <jwBqM0tKGX4kLwYY1KwT3FYojoznuAHTqQ2zZVw-JCyUUXHvcxPFWjBHYxUp-lxud3rpCw4huIOSIyWdL8SoNx-ETTpNrQm85t54jQLf5ZA=@protonmail.com>
-In-Reply-To: <Yb06k5ob+bl/oE68@camp.crustytoothpaste.net>
-References: <Wlh_w2gSCDQ2ieJnIY7TStWrzxbwP98SNRIFMTYpva7SRFipqk63HEYFVF7wFn1oSHOkQNsjWGOa5L49vyRlvSLbuZqpmvOaDOHmFkdt2zw=@protonmail.com> <wVwq9WVLpVt7MNLmIYOWCFKVSf8l532MD_vu4yTA8hl1fCARnW8nOUJjxYmKSzFw1SnPp5iYRD-aW4gAT2HnyQbC5aLBOvyT6npn88lxwNQ=@protonmail.com> <xmqq8rwl91yf.fsf@gitster.g> <YbqiQ1B9ezF/RPOn@camp.crustytoothpaste.net> <xndBIO9EtrXaA932eF-0YkvHCAOL1GOKQQlIigssmcwhtZWqGxhc6I_A-lXt7vMK-j1oDrQMHUIuExlpqFS4v88nWci32qx3W5Xi1_hPpUM=@protonmail.com> <54fe7ba20109f974b61a7e6c24ba8264@codeaurora.org> <1X3gQ48NK5aBDHcpYMlxESRjqubcCBKJUQu2K0dBOnTyvsXCXXoGDBg2Ff4KarK6WsZnzN3HgqHGOlCKKdF-wtZQ5tHsoAcfit2CTXMWqh4=@protonmail.com> <Yb06k5ob+bl/oE68@camp.crustytoothpaste.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        id S232306AbhLRHo7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Dec 2021 02:44:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49204 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232292AbhLRHo7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Dec 2021 02:44:59 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F413DC061574
+        for <git@vger.kernel.org>; Fri, 17 Dec 2021 23:44:58 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id y12so16358377eda.12
+        for <git@vger.kernel.org>; Fri, 17 Dec 2021 23:44:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=ea3yzO46l/eIhQN1mw95XBGGAzNgkMprhI+jFz1AICE=;
+        b=MB2B0yF0IgYfNC73Po9boC1L7afG49/ehWlhj8+GVg5Nj5nndasqGJyv9+BluvQlfl
+         KLDeB45hvg5au1FgYNf5m3bx+MeglW9ys0D96x0njbGeLg/sR7tr/jGpcqRA9+8ARQyy
+         Ok8NFMtuRVUfR3AsddDfym3PeZfYbySycssiGLGD4VU8ExcC8MLnWrjUU/3jYw35Fztm
+         UOmbnUG8qxEiT4VfpkNnsAu9K3HcTqUjYBUNR3oGDY7QtIpkNuCAIy/irNr2zwBWwpMe
+         dWJqXQ9BTZxh7earSO6LXh7vw4V0/nycaY8abJ6tNdklOPiYvhkTkcWUpSj/Q68PidLh
+         z7pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=ea3yzO46l/eIhQN1mw95XBGGAzNgkMprhI+jFz1AICE=;
+        b=F4z+KRY3ZF5zeQKpqEnYd+Ufnq1RiUsIPl7p8FA/YbK2AWCpv1M2bMdeUxMF/zEsig
+         Bd8+fyuT2UUkYUYYDUDxkQ94TKM/wtVCo+F9PbaS0bhLPqXmpCvvSvVrudIt/TjuW0J2
+         uIgVH6b+EB/QhIyRceb7PPvrHL+5B/KkcVreTSRnZZtvOEfKlQcf1kea9qlMb459YTmy
+         jgaGwwSWdGASbj7HdLPwYaqf4GFqt55zmvGDgd8QRMgUiepPWQ4e9PgCOvCM9x0B9aOi
+         Hq6SGZwcKW6l1jkQE2jdnvzEZU0tUo5tUP49RpqC5yQHasV5OsSc8AUPOOvYDfIrwLZu
+         kI/g==
+X-Gm-Message-State: AOAM530DiudllOZ4XhOeTNyGDGa/aKdYRQlxzN7iLA0tCYAfr8j43B1Z
+        pcXM1H0KW1k2EKdyAr94rLk=
+X-Google-Smtp-Source: ABdhPJzc51NSEoDFDWSfT7tw2l7D/a/mhRnBxQuBCQSRvbvxgMcj+lNIojOcl9BJ1MTJNm0uQzqsTg==
+X-Received: by 2002:a17:906:a1d0:: with SMTP id bx16mr5283812ejb.154.1639813497488;
+        Fri, 17 Dec 2021 23:44:57 -0800 (PST)
+Received: from smtpclient.apple (ip5b41ac66.dynamic.kabel-deutschland.de. [91.65.172.102])
+        by smtp.gmail.com with ESMTPSA id sb10sm1147598ejc.121.2021.12.17.23.44.56
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 17 Dec 2021 23:44:57 -0800 (PST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [PATCH v2 1/2] git-p4: print size values in appropriate units
+From:   Joachim Kuebart <joachim.kuebart@gmail.com>
+In-Reply-To: <20211217203856.2339161-2-jholdsworth@nvidia.com>
+Date:   Sat, 18 Dec 2021 08:44:53 +0100
+Cc:     git@vger.kernel.org,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Luke Diamand <luke@diamand.org>,
+        Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <39F3A9A9-AE61-4C2E-AA66-6B072634D91E@gmail.com>
+References: <20211217203856.2339161-1-jholdsworth@nvidia.com>
+ <20211217203856.2339161-2-jholdsworth@nvidia.com>
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-How does one make a release artifact?
-o-o
 
-=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
-ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
 
-Em sexta-feira, 17 de dezembro de 2021 =C3=A0s 22:34, brian m. carlson <san=
-dals@crustytoothpaste.net> escreveu:
+> On 17 Dec 2021, at 21:38, Joel Holdsworth <jholdsworth@nvidia.com> =
+wrote:
+>=20
+> git-p4.py | 22 +++++++++++++++++-----
+> 1 file changed, 17 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/git-p4.py b/git-p4.py
+> index 2b4500226a..4d8a249b85 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -56,6 +56,16 @@
+>=20
+> p4_access_checked =3D False
+>=20
+> +def format_size_human_readable(num):
+> +    """ Returns a number of units (typically bytes) formatted as a =
+human-readable
+> +        string.
+> +    """
+> +    for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
+> +        if abs(num) < 1024.0:
+> +            return "{:3.1f} {}B".format(num, unit)
+> +        num /=3D 1024.0
+> +    return "{:.1f} Yi{}B".format(num)
 
-> On 2021-12-18 at 00:15:59, Jo=C3=A3o Victor Bonfim wrote:
->
-> > > I suspect that for most algorithms and their implementations, this wo=
-uld
-> > >
-> > > not result in repeatable "recompressed" results. Thus the checked-out
-> > >
-> > > files might be different every time you checked them out. :(
-> >
-> > How or why?
-> >
-> > Sincere question.
->
-> A lossless compression algorithm has to produce an encoded value that,
->
-> when decoded, must produce the original input. Ideally, it will also
->
-> reduce the file size of the original input. Beyond that, there's a
->
-> great deal of freedom to implement that.
->
-> Just taking Deflate, which is used in zlib and gzip, as an example,
->
-> there are different compression settings that control the size of the
->
-> window to use that affect compression speed, quality of compression
->
-> (resulting size), and memory usage. One might prefer using gzip -1 to
->
-> get better performance or use less memory, or gzip -9 to reduce the file
->
-> size as much as possible.
->
-> Even when the same settings are used, the technique used can vary
->
-> between versions of the software. For example, GitHub effectively uses
->
-> git archive to generate archives, and one time when they upgraded their
->
-> servers, the compression changed in the tarballs and zip files, and
->
-> everybody who was relying on the archives being bit-for-bit identical[0]
->
-> had a problem.
->
-> So it would be nearly impossible to produce bit-for-bit repeatable
->
-> results without specifying a specific, hard-coded implementation, and
->
-> even in that case, the behavior might need to change for security
->
-> reasons, so it would end up being difficult to achieve.
->
-> [0] Neither Git nor GitHub provides this guarantee, so please do not
->
-> make this mistake. If you need a fixed bit-for-bit tarball, save it as
->
-> a release artifact.
-> -------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
--------
->
-> brian m. carlson (he/him or they/them)
->
-> Toronto, Ontario, CA
+This now has an extra pair of braces.
+
+Cheers,
+Joachim
+
+
