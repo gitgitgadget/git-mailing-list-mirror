@@ -2,57 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEFABC433EF
-	for <git@archiver.kernel.org>; Sat, 18 Dec 2021 10:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F737C433F5
+	for <git@archiver.kernel.org>; Sat, 18 Dec 2021 10:12:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231431AbhLRKJs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Dec 2021 05:09:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52356 "EHLO
+        id S231450AbhLRKMY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Dec 2021 05:12:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229831AbhLRKJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Dec 2021 05:09:48 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D5B6C061574
-        for <git@vger.kernel.org>; Sat, 18 Dec 2021 02:09:47 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id 13so7152217ljj.11
-        for <git@vger.kernel.org>; Sat, 18 Dec 2021 02:09:47 -0800 (PST)
+        with ESMTP id S229831AbhLRKMY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Dec 2021 05:12:24 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C09CBC061574
+        for <git@vger.kernel.org>; Sat, 18 Dec 2021 02:12:23 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id bt1so9775029lfb.13
+        for <git@vger.kernel.org>; Sat, 18 Dec 2021 02:12:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=diamand.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=BI7+llnAxCJGTrrUUHhKfjnvm1G6FkdO0ZTdv3eUPCc=;
-        b=QgWXRBUeYbzymEE7e5bf8WhrgIXS1OGmWhb325l5ffD4YIT23nVdLUBUc7xtCdpCNt
-         hu4PYNs8UFKGTHR8xF2tJDBAHc+evH8UVQJQVw/ZoIA7tIDeAlRkUV2Sdz1RY9sC2SnK
-         RPqmPGs759ZmoGZVzSPfk98dL5FsQnt2yPNn4=
+        bh=d+ZB7r7E6rOZFm87WlY9/9cx6W5Mqy2PpAicuixb+Bw=;
+        b=Rt+lS9Xws+upHiMlaP43NuYe1Dnvh0BzDY7NiS6zw4WFzuFvcf0v3pOlVD5X+9phUt
+         7lMHnKxtt9FhxBt4bm25+ZYKPpjpqu9JjOYAmKcvDqThjY9+z0LL1M+lQqER16oZKY2/
+         JvPtllkGbYXIpmwOIJpc7Vp0bmzpxhjJ3gPtQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=BI7+llnAxCJGTrrUUHhKfjnvm1G6FkdO0ZTdv3eUPCc=;
-        b=pS6mv1QPB3haxewrMj4tmkxtWaDT4jcznGG/R7ef6jAk7J+XCfVsg/G0xmjZCLOE2l
-         B0Q4HV+bvVMz5vVxL+7Eh7+Ot2s88lIRGxFfVjsCB81R0A824dDZMv11W+HoHt4mlN0P
-         49qHGqIoyS7/Z72Tcyo2L9wLTn2G0jVzbmN+BgoCoxf+QAQhp5d2TfF+WYaaCEFJ0gzT
-         b5ZP1Bg7hhRGysWnjPJPGPyuKGnPcz6RkWO+IEIt/+F1ZEKXmCdOmsRq2b51vqSdJdXL
-         ZgPp1BDkQCC+dK/fjlnYk1iKP1VJVwZL9Jx3/iZM50vmRtS0ULzux20bdPppA8cv9hRU
-         Z15A==
-X-Gm-Message-State: AOAM5306XYs5zGwzRPb6VgAzwP/b8FygZk5uKpURPGCteqH+zd9iZ2kS
-        gOua6yYZCHu6KB0LCksqfbjNVIhZB9W86BGVybB2gQ==
-X-Google-Smtp-Source: ABdhPJxL8IRO1s7Cs/04vK8knKU47+kKxtCktsjA8XJn1gtmLCU4ME1TAlXrYAfIgi9PYMUWo8MO9dFmy5kAHr7/NNE=
-X-Received: by 2002:a05:651c:1687:: with SMTP id bd7mr6515740ljb.305.1639822185700;
- Sat, 18 Dec 2021 02:09:45 -0800 (PST)
+        bh=d+ZB7r7E6rOZFm87WlY9/9cx6W5Mqy2PpAicuixb+Bw=;
+        b=UpQsbwpWL1UyY7i7Jfpi646tUnUwuL846svXuqi0afwleoAJ5xxwQwIAcmKTSIV6R2
+         FF9Ygn0Tet9a5zTu39icxsgCXHXMy+6bWJXKKG75peaNBMnunvYeLuI8q23eu6cz1/oH
+         RmNir4cybWeOWsJno4MNX9WL8qWWqji8GYwpzWUYilZJxuOcuOM7FVtQmj7m0QABq+pK
+         IfBVRXiBLrTT2JA1XOmrDis2D1yKrD9D76eYtE+HXzEOWjXs3ysL3M0PmbQ6Nj0n1TvA
+         7D8HHxPXkjZc5XgGfrbj+6IpCO5lPsjQ96iB3VjVgwiSqGvoUoP19VgfwfywTR+fog/G
+         /6jg==
+X-Gm-Message-State: AOAM533saeA7E5ZoUoBfFLB9NFKlh1Otvk1uTOqYT/ybhgw36cNsjoKu
+        T88gXY3uzrqA6YUPNQCiDe7roK5QF+MJuA86bqEOIQ==
+X-Google-Smtp-Source: ABdhPJzzZ4GnIKGuGU1Z2DVratsUTz1sfq7JMJ/xKuMMl6E6Eyx44fGGD+Nzx+M8VsYaEM2dd+u01955IvcRvobx4eQ=
+X-Received: by 2002:a19:e046:: with SMTP id g6mr6444495lfj.176.1639822342019;
+ Sat, 18 Dec 2021 02:12:22 -0800 (PST)
 MIME-Version: 1.0
-References: <20211217203856.2339161-1-jholdsworth@nvidia.com>
- <20211217203856.2339161-2-jholdsworth@nvidia.com> <39F3A9A9-AE61-4C2E-AA66-6B072634D91E@gmail.com>
-In-Reply-To: <39F3A9A9-AE61-4C2E-AA66-6B072634D91E@gmail.com>
+References: <20211217203856.2339161-1-jholdsworth@nvidia.com> <20211217203856.2339161-3-jholdsworth@nvidia.com>
+In-Reply-To: <20211217203856.2339161-3-jholdsworth@nvidia.com>
 From:   Luke Diamand <luke@diamand.org>
-Date:   Sat, 18 Dec 2021 10:09:34 +0000
-Message-ID: <CAE5ih7_knaVsxYBkWrJO4+jURM02E98iL9juroahW0k=ZF7Oiw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] git-p4: print size values in appropriate units
-To:     Joachim Kuebart <joachim.kuebart@gmail.com>
-Cc:     Joel Holdsworth <jholdsworth@nvidia.com>,
-        Git Users <git@vger.kernel.org>,
+Date:   Sat, 18 Dec 2021 10:12:11 +0000
+Message-ID: <CAE5ih7_uq2xos46tH_dR+gietA_5bhr3JzYNJOLmrjhuijy1Ng@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] git-p4: show progress as an integer
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+Cc:     Git Users <git@vger.kernel.org>,
         Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
         Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
         Daniel Levin <dendy.ua@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Ben Keene <seraphire@gmail.com>,
@@ -62,57 +61,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 18 Dec 2021 at 07:44, Joachim Kuebart <joachim.kuebart@gmail.com> wrote:
+On Fri, 17 Dec 2021 at 20:39, Joel Holdsworth <jholdsworth@nvidia.com> wrote:
 >
+> When importing files from Perforce, git-p4 periodically logs the
+> progress of file transfers as a percentage. However, the value is
+> printed as a float with an excessive number of decimal places.
 >
+> For example a typical update might contain the following message:
 >
-> > On 17 Dec 2021, at 21:38, Joel Holdsworth <jholdsworth@nvidia.com> wrote:
-> >
-> > git-p4.py | 22 +++++++++++++++++-----
-> > 1 file changed, 17 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/git-p4.py b/git-p4.py
-> > index 2b4500226a..4d8a249b85 100755
-> > --- a/git-p4.py
-> > +++ b/git-p4.py
-> > @@ -56,6 +56,16 @@
-> >
-> > p4_access_checked = False
-> >
-> > +def format_size_human_readable(num):
-> > +    """ Returns a number of units (typically bytes) formatted as a human-readable
-> > +        string.
-> > +    """
-> > +    for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
-> > +        if abs(num) < 1024.0:
-> > +            return "{:3.1f} {}B".format(num, unit)
-> > +        num /= 1024.0
-> > +    return "{:.1f} Yi{}B".format(num)
+> Importing revision 12345 (26.199617677553135%)
 >
-> This now has an extra pair of braces.
+> This patch simply rounds the value down to the nearest integer
+> percentage value, greatly improving readability.
 >
-> Cheers,
-> Joachim
+> Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
+> ---
+>  git-p4.py | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index 4d8a249b85..3c621a6efd 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -3635,7 +3635,8 @@ def importChanges(self, changes, origin_revision=0):
+>              self.updateOptionDict(description)
+>
+>              if not self.silent:
+> -                sys.stdout.write("\rImporting revision %s (%s%%)" % (change, cnt * 100 / len(changes)))
+> +                sys.stdout.write("\rImporting revision %s (%d%%)" % (
+> +                    change, (cnt * 100) // len(changes)))
+>                  sys.stdout.flush()
+>              cnt = cnt + 1
 
-It also seems to add some slightly spurious floating point precision.
-For example, 1<<20 comes out as "1.0 MiB" and 50 bytes comes out as
-"50.0 B".
+Thanks for fixing this - this is one of those small python2->python3
+bugs that's still left over.
 
-There's actually an older python2->python3 conversion bug going on here.
-
-The code uses:
-
-    Size / 1024 / 1024
-
-With python2 that came out as an integer, which for bytes is what you want.
-For python3 it comes out as a float - it should have been converted to
-Size // 1024 // 1024.
-
-I guess Joel was trying to preserve that original bug, but really we
-should just fix it!
-
-Overall I think this would definitely be an improvement, just needs to
-drop the spurious precision (and fix the return for values beyond ZiB
-as noted by Joachim).
+Looks good to me, ack.
 
 Luke
