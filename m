@@ -2,204 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BAFDC433EF
-	for <git@archiver.kernel.org>; Sat, 18 Dec 2021 19:00:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BB61C433F5
+	for <git@archiver.kernel.org>; Sat, 18 Dec 2021 19:50:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233931AbhLRTAz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Dec 2021 14:00:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54352 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231234AbhLRTAz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Dec 2021 14:00:55 -0500
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D626C061574
-        for <git@vger.kernel.org>; Sat, 18 Dec 2021 11:00:55 -0800 (PST)
-Received: by mail-pf1-x42a.google.com with SMTP id f11so5070683pfc.9
-        for <git@vger.kernel.org>; Sat, 18 Dec 2021 11:00:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ffkC2xJ1PLex+hqVnZ4lQ9fd+sqb/04uMHWwgBYXb5s=;
-        b=KgEbegmKVgUYouXR+PCXhnpub/2zuU9MeFmY0HDJJYmK0YsDzDzEcfNJDGPDiTvPWl
-         wMCgLZVbtBKqyjyNi3tZOuQFKft34DNKf/BQBeGSuUvxUl/Ju1INLhy9YfsSx9DBXZqD
-         Avt76IhrPtB/l7g9iG9SlIgUXKC+H0CKL6+wrLHZaqJm94nBaNWTbvOEzcqu+UbYRf+Q
-         JXlYWiVJF2yQOp6GrXwDdc5pU0r8jwZYdxUtGOI52cV4KUYQuwt9ToHcIr+pEjs3og43
-         QWwZjp9YO6i1s3SlH7fy1dIfnd1JFuTcrPq7gQ7+legf7wAUw7yDr/3cU9oNYbzVqXdk
-         DAsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ffkC2xJ1PLex+hqVnZ4lQ9fd+sqb/04uMHWwgBYXb5s=;
-        b=YcxVPjBZ4FoAIEvUPE+GxxS0cKNRgB5exxZShVijdhAVwqL5+TlGIAPTTjDbU9Clwl
-         SrYkt5t4APOV7BFEwVDGw2SjrMtg4yD2eoy+MqoVCFrqLKDCXZRLpwER7I59MnAi13CU
-         RKCV0C78mbmonJMDCPFuqddDTqQQrpey98Zcxi7Aq13MVR8DpIwVDohpC4lXR1iN9wlO
-         QkWAUbkRBTVtB4oSJc7fg6TJZ2tz+xAUBGrYjW7cuCwG9l/K9C62L1ovHamfNi2chsUp
-         eQ2oPQh5jLTPJZ5VEKeAcX+2ldwXwRGOfviW4oCHjVvxg/8oVH46TLJOh4I57aQ4jPsd
-         ql1Q==
-X-Gm-Message-State: AOAM532DPd4l+ef5reGNsziiWyFPJHahV3xC/a+vbt5vRscmhfyzBsIq
-        1TtJ+jEHyFu0H8TNzxdqci1IhdNjoAppse6qQnm+ewIjVmw=
-X-Google-Smtp-Source: ABdhPJyV9VZAWKoSDB02thiOBbWzHPjNSSO64tHMp43uDMS1lMqsyvzPWt1DnvzZujd7+BkKawJLX3WyCxgyutrCHRE=
-X-Received: by 2002:a05:6a00:2487:b0:4af:94c7:8aae with SMTP id
- c7-20020a056a00248700b004af94c78aaemr8683502pfv.31.1639854054545; Sat, 18 Dec
- 2021 11:00:54 -0800 (PST)
+        id S234044AbhLRTu1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Dec 2021 14:50:27 -0500
+Received: from mout.web.de ([212.227.17.11]:60999 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234041AbhLRTuY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Dec 2021 14:50:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1639857003;
+        bh=LH6ISoowrJUzvMggPUf8R5RqzJBXxaVWhLaCicA57y4=;
+        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
+        b=LrGao+4etb4KBZlbqA3mS7b5dJXuCo5SbdQZyh/Wh0/Q1kVujv/B1D9VE01mj8wCU
+         u2tyBU97Eo98HVU45I47KRCXiH4Vn89aEOOZVV7s5yTb+GOe2yO5EtksG1rmWZfy5F
+         TFFufVB9NeVhCv//fp21eHl9kiJ0OnwYnDTkJxQ0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mcpqq-1mP3mb3R90-00aDhu; Sat, 18
+ Dec 2021 20:50:03 +0100
+Message-ID: <5fa6962e-3c1c-6dbc-f6d7-589151a9baec@web.de>
+Date:   Sat, 18 Dec 2021 20:50:02 +0100
 MIME-Version: 1.0
-References: <CABceR4bZmtC4rCwgxZ1BBYZP69VOUca1f_moJoP989vTUZWu9Q@mail.gmail.com>
- <014701d7f437$5ae45110$10acf330$@nexbridge.com>
-In-Reply-To: <014701d7f437$5ae45110$10acf330$@nexbridge.com>
-From:   Sean Allred <allred.sean@gmail.com>
-Date:   Sat, 18 Dec 2021 13:00:43 -0600
-Message-ID: <CABceR4Z+CoaUuGrJS+D1C9x+nR278S4ATWozz-ni2Y96FJc3cg@mail.gmail.com>
-Subject: Re: Bug report - Can create worktrees from bare repo / such worktrees
- can fool is_bare_repository()
-To:     rsbecker@nexbridge.com
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.0
+Content-Language: en-US
+To:     Git List <git@vger.kernel.org>
+Cc:     Hamza Mahfooz <someguy@effective-light.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        Andreas Schwab <schwab@linux-m68k.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 1/2] grep/pcre2: use PCRE2_UTF even with ASCII patterns
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:vQIywTwTuta18nGdX4uZlcjn3f7kex7OCAGgJTOoFdp0h0KTS2+
+ Cs1FszlgKAwonT7LJscnFVTxb4s2WEeGyXP0Qcl/ZBIlruA9FmOpscddSAFfXDENBZnhG5W
+ 7EzTIKeUitD63vdTOvkRQVBGRgWE0k4s57nemkssU0Q2GNGn3/YpOMt92eHj82wyowPmAyY
+ IA6z1B5eAUO09El4+/J6A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qKj2HxsMsto=:34EcXeKF75N7PqLdSoqfrE
+ QCrinkUsrLH1e4hRWfJ4e603u/e2RwnvJb3oEZBXHVq6tEvXr119GzWP4U1TXdVr5RaIzy79u
+ YjXdm3DUN+9vnLMcgP+y4vC4KDjhZyaDv2V+3KQw18npRomrVoi1IkeT5uPgnqnvrA305OavQ
+ NgFbbZhbJ0wODyTrGpINwGTS0WKK83xNDKQ7vfF/TSC21gJnja7sA8qI/2m+81+/ccy14Ph4S
+ 9cRzXWQ6rrbkVQAQIDiz8cWDqvbgtmAobqiV6nFGrmzJU6dgiRIzpf/KHNLFrH3fubehKIN6r
+ Z280af1qTOMLk4GTRuS+tQOHbwUK1ALWOI9D9MZQGH3iwXKZVNyJKFR29/QFk6TZD+m+GWgiU
+ SCrQL+u/cOBNrYJWvJ/pXo0QkvfUL5cTsoV7K1Y3934C+R08NbF1+Sy5eNpwEDcjjA64ZgGiU
+ 4Bl5564UwAINB8C12+to6YWFQv7jWzYdzX7KDTdVLnwYaO5jPWXzWEYyAlwPJ3+6cx5NuB4Ix
+ SkXoxqEZC4aXZrm4nEijW7GL0iCHsGTt26yRvcSLJ6hrHVDh4s4/6sDIjYQF7sP/uLEveaB+u
+ c1aGM8+MdF6n/5fh9rH6m8xKCi1GOYOV7ZNwK+Id+CXYFATFTQFv4Jje+IuDE1hSBEPkbGS2I
+ v15Qm+kVWHO6jUh/58tnTqb0OqSMnDviipsA9pRMCXr8ajMdJooI2aJ/qzKd16UK1pTagSh8i
+ TaOo+5Bg0V98lVrzEVvxXYtZf42JkA6bH1sgXyiWtVn00wA6tp5vQDQwvve7NUF9hOoHmfWXq
+ N07p/2lCmoFs+ix+JcuHErZhle5AepREEaCVyH1hlAQKc0JafGnjd8t5hp7SwsRdL+Fdv5cJq
+ I7y/pSrMTapkoPvXnc6PyZa0X0y3ex6KuGfr5JzhHX38xtwUUuqhsV7CU/WU1/HCouCGub6Aj
+ nX5v8eqCTAXeWvmKkMOuQibudDdlwxj6onc7dyDy4rx7TaD4GB/RF8mJ97wkjDzmTnDUwZlFP
+ RWyOiZg8Oo2IxvpSSZe8Uwaao5vALOEnMHa8ea4rpie+zfeuvldJmncCQ6M/NIm5lg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> You ran is_bare_repository from next, which was in your worktree - not a =
-bare repo, so that answer actually makes sense.
+compile_pcre2_pattern() currently uses the option PCRE2_UTF only for
+patterns with non-ASCII characters.  Patterns with ASCII wildcards can
+match non-ASCII strings, though.  Without that option PCRE2 mishandles
+UTF-8 input, though -- it matches parts of multi-byte characters.  Fix
+that by using PCRE2_UTF even for ASCII-only patterns.
 
-I'm not sure I follow. I did run is_bare_repository from the
-next-worktree, but the return value was evidently dependent on the
-value of extensions.worktreeconfig. When true, is_bare_repository
-returned true -- even within the next-worktree. Unless I'm missing
-something fairly fundamental here...
+This is a remake of the reverted ae39ba431a (grep/pcre2: fix an edge
+case concerning ascii patterns and UTF-8 data, 2021-10-15).  The change
+to the condition and the test are simplified and more targeted.
 
-On Sat, Dec 18, 2021 at 11:47 AM <rsbecker@nexbridge.com> wrote:
->
-> On December 18, 2021 11:47 AM, Sean Allred wrote:
-> > Hi folks! See the following bug report. Let me know if anything is uncl=
-ear -- in
-> > all honesty, I neglectfully `git worktree remove --force`'d the first o=
-ne I
-> > wrote...
-> >
-> > Thank you for filling out a Git bug report!
-> > Please answer the following questions to help us understand your issue.
-> >
-> > What did you do before the bug happened? (Steps to reproduce your issue=
-)
-> >
-> >     ~$ git clone --bare https://github.com/git/git.git
-> >     ---clip---
-> >
-> >     ~/gitbare$ git config --list --show-origin
-> >     file:config     core.repositoryformatversion=3D1
-> >     file:config     core.filemode=3Dfalse
-> >     file:config     core.bare=3Dtrue
-> >     file:config     core.ignorecase=3Dtrue
-> >     file:config     remote.origin.url=3Dhttps://github.com/git/git.git
-> >
-> >     ~/gitbare$ git worktree add --no-checkout ../next
-> >     Preparing worktree (checking out 'next')
-> >
-> >     ~/gitbare$ git config --list --show-origin
-> >     file:config     core.repositoryformatversion=3D1
-> >     file:config     core.filemode=3Dfalse
-> >     file:config     core.bare=3Dtrue
-> >     file:config     core.ignorecase=3Dtrue
-> >     file:config     remote.origin.url=3Dhttps://github.com/git/git.git
-> >
-> >     ~/gitbare$ cd ../next/
-> >
-> >     ~/next$ git config --list --show-origin
-> >     file:../gitbare/config    core.repositoryformatversion=3D1
-> >     file:../gitbare/config    core.filemode=3Dfalse
-> >     file:../gitbare/config    core.bare=3Dtrue
-> >     file:../gitbare/config    core.ignorecase=3Dtrue
-> >     file:../gitbare/config    remote.origin.url=3Dhttps://github.com/gi=
-t/git.git
-> >
-> >     ~/next$ git rev-parse --is-bare-repository
-> >     false
-> >
-> >     ~/next$ git config extensions.worktreeconfig true
-> >     ~/next$ git rev-parse --is-bare-repository
-> >     true
-> >
-> >     ~/next$ git config --unset extensions.worktreeconfig
-> >     ~/next$ git rev-parse --is-bare-repository
-> >     false
-> >
-> > I actually found this situation (and narrowed it to the above) by tryin=
-g to
-> > perform a sparse-checkout in the worktree.  It appears sparse-checkout =
-by
-> > default uses a worktree-specific config (which does make sense).
-> >
-> > What did you expect to happen? (Expected behavior)
-> >
-> >     I expected one of the following to happen:
-> >
-> >     1. I should have been blocked from creating a worktree from a bare
-> >     repository.
-> >
-> >     2. is_bare_repository() shouldn't be fooled by this situation,
-> >     assuming it's valid.
-> >
-> >     All things being equal, I would more expect to have been blocked
-> >     from creating a worktree from a bare repository.  Personally, this
-> >     bare repo + worktree setup doesn't not align with my experience so
-> >     far with how bare repos are normally used (i.e., as a convenience
-> >     for centralized remotes that will never be doing a checkout).
-> >
-> > What happened instead? (Actual behavior)
-> >
-> >     is_bare_repository() is fooled and I'm prevented from performing
-> >     any operation that requires a worktree (like performing a sparse
-> >     checkout).
-> >
-> > What's different between what you expected and what actually happened?
-> >
-> >     is_bare_repository() is fooled into thinking the worktree is not a
-> >     worktree / I'm able to create a worktree from a bare repo.
-> >
-> > Anything else you want to add:
-> >
-> > Please review the rest of the bug report below.
-> > You can delete any lines you don't wish to share.
-> >
-> >
-> > [System Info]
-> > git version:
-> > git version 2.34.1
-> > cpu: x86_64
-> > no commit associated with this build
-> > sizeof-long: 8
-> > sizeof-size_t: 8
-> > shell-path: /bin/sh
-> > uname: Linux 5.4.72-microsoft-standard-WSL2 #1 SMP Wed Oct 28 23:40:43
-> > UTC 2020 x86_64 compiler info: gnuc: 9.3 libc info: glibc: 2.31 $SHELL =
-(typically,
-> > interactive shell): /bin/bash
-> >
-> >
-> > [Enabled Hooks]
-> > not run from a git repository - no hooks to show
->
-> My thoughts:
->
-> 1. I think it is legitimate to create a worktree from a bare repository. =
-The worktree is using its own working directory/index and does not require =
-anything from the bare repo.
-> 2. You ran is_bare_repository from next, which was in your worktree - not=
- a bare repo, so that answer actually makes sense.
->
-> I'm not sure whether this is an expected use case but it does make sense =
-to be one. If you typically work in worktrees and write scripts under that =
-assumption, not having to worry about being in the non-worktree part of a c=
-lone makes sense. So creating a worktree off a bare repo is not a bad thing=
-, assuming everything else is correct.
->
-> Just my $0.02,
-> -Randall
->
+Original-patch-by: Hamza Mahfooz <someguy@effective-light.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ grep.c                          | 2 +-
+ t/t7812-grep-icase-non-ascii.sh | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
+diff --git a/grep.c b/grep.c
+index fe847a0111..5badb6d851 100644
+=2D-- a/grep.c
++++ b/grep.c
+@@ -382,7 +382,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, =
+const struct grep_opt *opt
+ 		}
+ 		options |=3D PCRE2_CASELESS;
+ 	}
+-	if (!opt->ignore_locale && is_utf8_locale() && has_non_ascii(p->pattern)=
+ &&
++	if (!opt->ignore_locale && is_utf8_locale() &&
+ 	    !(!opt->ignore_case && (p->fixed || p->is_fixed)))
+ 		options |=3D (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
 
---=20
--Sean
+diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-asci=
+i.sh
+index e5d1e4ea68..ca3f24f807 100755
+=2D-- a/t/t7812-grep-icase-non-ascii.sh
++++ b/t/t7812-grep-icase-non-ascii.sh
+@@ -123,4 +123,10 @@ test_expect_success GETTEXT_LOCALE,LIBPCRE2,PCRE2_MAT=
+CH_INVALID_UTF 'PCRE v2: gr
+ 	test_cmp invalid-0xe5 actual
+ '
+
++test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: grep non-literal AS=
+CII from UTF-8' '
++	git grep --perl-regexp -h -o -e ll. file >actual &&
++	echo "ll=C3=B3" >expected &&
++	test_cmp expected actual
++'
++
+ test_done
+=2D-
+2.34.0
