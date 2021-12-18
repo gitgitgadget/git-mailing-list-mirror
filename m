@@ -2,77 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D07CC433F5
-	for <git@archiver.kernel.org>; Sat, 18 Dec 2021 01:09:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63C2AC433EF
+	for <git@archiver.kernel.org>; Sat, 18 Dec 2021 01:34:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231620AbhLRBJI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Dec 2021 20:09:08 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59431 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231605AbhLRBJF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Dec 2021 20:09:05 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7A3F8150A8C;
-        Fri, 17 Dec 2021 20:09:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+CCz5PSnqunYoexYWidD0zrJjAAnBC6Ek0Se6h
-        BLge0=; b=PpXgZoeKh9IoCq4rdH5MVTQq6RQtmML9uMeifFLLC5sZpYijWej5Of
-        xo2qKqLoGEG2jgFcmcYjM2bza6iNo25EdG2XiVUyanChUSZgK7IbsQDU2OdyYPBO
-        u9xWW5gkHkwXEhJjweIojVWJ+X3GeC99y2VUsGLlI2H0pZ3zLVRLo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 73207150A8B;
-        Fri, 17 Dec 2021 20:09:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S230429AbhLRBeS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Dec 2021 20:34:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54312 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229480AbhLRBeS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Dec 2021 20:34:18 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E657C061574
+        for <git@vger.kernel.org>; Fri, 17 Dec 2021 17:34:18 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CDE42150A89;
-        Fri, 17 Dec 2021 20:09:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Florian Mickler <florian@mickler.org>
-Cc:     git@vger.kernel.org, jqassar@gmail.com
-Subject: Re: passing CURLOPT_CERTTYPE to libcurl
-References: <20211218010621.2fdc2b3c@monster.mickler.org>
-Date:   Fri, 17 Dec 2021 17:08:59 -0800
-In-Reply-To: <20211218010621.2fdc2b3c@monster.mickler.org> (Florian Mickler's
-        message of "Sat, 18 Dec 2021 01:06:21 +0100")
-Message-ID: <xmqq7dc2zplg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id DD7975D49D;
+        Sat, 18 Dec 2021 01:34:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1639791253;
+        bh=xWyCxj6xqko9faUhX4kz186uhivOqkeWMz8Hta1Prwk=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=r3rHNYXCtLQo5kmZrEV6QzB3SYeagPcwy/B/k06BrX86Cn1GfreeE5T22TzBKGTRQ
+         qxAXPytgEDrUFZSz7xSoG7xdwRzGnDh6I5B5uJHPT08kTC3VTbs5P3RHYnofPv9xEE
+         O7DOf7LJBwyo4+G9RPKFTPhZmTZ2u43AaHIm0oRanm5G+my/KTZY+N5uKnCp5kjt2+
+         5mSlyWCEn+0M/lvcCxF4KBtyGl0Zjsr3rt+WFTH8L79v9saPG1Z2t459xWTz/ym8GL
+         g9QqyOjtMXVhwAKPpKzVi4UvvcWtBAfRmcUl3e5hKaz5SPPpn8u3mrZm7QiBtC0Bj6
+         83rECwV5IKxAnV5h2JkyIJkq65FFsLJ58CuDOPuMJfqeuBwecpvgw1URzko10pqzeZ
+         ANJHHGOB6o3W3MqI9Psde8lSHf3feLBeVi8Zte5zyPeLqZJlyo0pAslII9X1isC6JE
+         z6YpEJnaMOXT6iTyzYxqe0DpJHwkkXOyrjP2auW3oQlxlmO159I
+Date:   Sat, 18 Dec 2021 01:34:11 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?Sm/Do28=?= Victor Bonfim 
+        <JoaoVictorBonfim@protonmail.com>
+Cc:     Martin Fick <mfick@codeaurora.org>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Fw: Curiosity
+Message-ID: <Yb06k5ob+bl/oE68@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?Sm/Do28=?= Victor Bonfim <JoaoVictorBonfim@protonmail.com>,
+        Martin Fick <mfick@codeaurora.org>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <Wlh_w2gSCDQ2ieJnIY7TStWrzxbwP98SNRIFMTYpva7SRFipqk63HEYFVF7wFn1oSHOkQNsjWGOa5L49vyRlvSLbuZqpmvOaDOHmFkdt2zw=@protonmail.com>
+ <wVwq9WVLpVt7MNLmIYOWCFKVSf8l532MD_vu4yTA8hl1fCARnW8nOUJjxYmKSzFw1SnPp5iYRD-aW4gAT2HnyQbC5aLBOvyT6npn88lxwNQ=@protonmail.com>
+ <xmqq8rwl91yf.fsf@gitster.g>
+ <YbqiQ1B9ezF/RPOn@camp.crustytoothpaste.net>
+ <xndBIO9EtrXaA932eF-0YkvHCAOL1GOKQQlIigssmcwhtZWqGxhc6I_A-lXt7vMK-j1oDrQMHUIuExlpqFS4v88nWci32qx3W5Xi1_hPpUM=@protonmail.com>
+ <54fe7ba20109f974b61a7e6c24ba8264@codeaurora.org>
+ <1X3gQ48NK5aBDHcpYMlxESRjqubcCBKJUQu2K0dBOnTyvsXCXXoGDBg2Ff4KarK6WsZnzN3HgqHGOlCKKdF-wtZQ5tHsoAcfit2CTXMWqh4=@protonmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1633E6F6-5F9F-11EC-B0E9-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="t/osB+WdFh/yjU5e"
+Content-Disposition: inline
+In-Reply-To: <1X3gQ48NK5aBDHcpYMlxESRjqubcCBKJUQu2K0dBOnTyvsXCXXoGDBg2Ff4KarK6WsZnzN3HgqHGOlCKKdF-wtZQ5tHsoAcfit2CTXMWqh4=@protonmail.com>
+User-Agent: Mutt/2.1.3 (2021-09-10)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Florian Mickler <florian@mickler.org> writes:
 
-> Is there a specific reason, that patch wasn't merged? It would allow
-> for non-pem ssl certificates to be loaded also (without pkcs11 at all). 
->
-> I realize, that the underlying systems could and should set up
-> everything automagically as soon as i point them to the certificate that
-> i want to use. But not opening up these CURL Settings from git seems
-> kind of silly given that today's systems still seem kinda borked and do
-> not do that.  What harm comes from these two tuning knobs being exposed?
->
-> Best regards,
-> Flo
->
->
-> [1] https://marc.info/?l=git&m=136675822032549&w=2
+--t/osB+WdFh/yjU5e
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Almost always, when some patch aims to achieve a worthy goal, and in
-the initial discussion on the thread more experienced project
-members agree it is a worthwhile thing to do, the only reason why
-the feature proposed does not materialize in later versions of Git
-is because the developer with the original itch did not follow it
-through after getting review comments and saying something that
-makes reviewers to expect an updated version of the patch.
+On 2021-12-18 at 00:15:59, Jo=C3=A3o Victor Bonfim wrote:
+> > I suspect that for most algorithms and their implementations, this would
+> >
+> > not result in repeatable "recompressed" results. Thus the checked-out
+> >
+> > files might be different every time you checked them out. :(
+>=20
+> How or why?
+>=20
+> Sincere question.
 
-I didn't follow your marc.info URL, but I am reasonably sure, if I
-were involved in the discussion, that would be the likely reason.
+A lossless compression algorithm has to produce an encoded value that,
+when decoded, must produce the original input.  Ideally, it will also
+reduce the file size of the original input.  Beyond that, there's a
+great deal of freedom to implement that.
 
+Just taking Deflate, which is used in zlib and gzip, as an example,
+there are different compression settings that control the size of the
+window to use that affect compression speed, quality of compression
+(resulting size), and memory usage.  One might prefer using gzip -1 to
+get better performance or use less memory, or gzip -9 to reduce the file
+size as much as possible.
+
+Even when the same settings are used, the technique used can vary
+between versions of the software.  For example, GitHub effectively uses
+git archive to generate archives, and one time when they upgraded their
+servers, the compression changed in the tarballs and zip files, and
+everybody who was relying on the archives being bit-for-bit identical[0]
+had a problem.
+
+So it would be nearly impossible to produce bit-for-bit repeatable
+results without specifying a specific, hard-coded implementation, and
+even in that case, the behavior might need to change for security
+reasons, so it would end up being difficult to achieve.
+
+[0] Neither Git nor GitHub provides this guarantee, so please do not
+make this mistake.  If you need a fixed bit-for-bit tarball, save it as
+a release artifact.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--t/osB+WdFh/yjU5e
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYb06kwAKCRB8DEliiIei
+gSsiAQDCzmsARoiNmvT4nTGTORHmnUgc4o0DkJpCkV5oKn6b4AEAtAunfTl3A+1/
+lH2pYYr+vWLdZWlLldNje3kPxvkB8A0=
+=OUlo
+-----END PGP SIGNATURE-----
+
+--t/osB+WdFh/yjU5e--
