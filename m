@@ -2,80 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FFE5C433F5
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 19:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5921C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 20:02:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233148AbhLTT4k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 14:56:40 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59652 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233125AbhLTT4g (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 14:56:36 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E0EF816F7D9;
-        Mon, 20 Dec 2021 14:56:34 -0500 (EST)
+        id S233488AbhLTUCx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 15:02:53 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50807 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233368AbhLTUCn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 15:02:43 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D857717A0DA;
+        Mon, 20 Dec 2021 15:02:42 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lI6DbpFbd8+jbprF2V6qy6WdjcmNzSbJ/0/Ybf
-        2Z5c0=; b=NDGCCK9WP/dlE7UCInG/9yyXaHhm9UaI9tf5Q03aQ/6CwxvNXUhTQ9
-        sLNwZwO9AKetpovpyy5uWjWsarNU02u1dQi32SI1rr03Nu+tacgGICFZx66OWOhz
-        M7MG47/1cT7alJzM7Ye6diF27BYw/VkFNHOkTdrQfmnCxZuWuF2hI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DA71116F7D8;
-        Mon, 20 Dec 2021 14:56:34 -0500 (EST)
+        :content-type; s=sasl; bh=SUOrLrzBzT4aAQu2s5P7u9Hz8GiDxnHNznHiip
+        pku4k=; b=Fc8vmftAxU3ytGmP7aZwXUSirRkmKvxBFSRxTZwsgVViKcQfEJcykp
+        Eq7RcrOAswDVO/BDXuSer1GUnfkHDYJfNUNYVt+GpRaphNTNjHZ5hEUNpN+FIKFQ
+        eOEXVwXWBPMADW2OOfXYRWJGGe7z/Pu4zcmfNoPLpqVcmESexFURU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CFDFA17A0D9;
+        Mon, 20 Dec 2021 15:02:42 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 593B016F7D6;
-        Mon, 20 Dec 2021 14:56:31 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A113017A0D6;
+        Mon, 20 Dec 2021 15:02:38 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2] builtin/fetch: skip unnecessary tasks when using
- --negotiate-only
-References: <20211207192925.67680-1-chooglen@google.com>
-        <20211217000235.68996-1-chooglen@google.com>
-        <xmqqilvm24bb.fsf@gitster.g>
-        <kl6ltuf3ysnw.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Mon, 20 Dec 2021 11:56:30 -0800
-In-Reply-To: <kl6ltuf3ysnw.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Mon, 20 Dec 2021 11:37:07 -0800")
-Message-ID: <xmqq4k73vymp.fsf@gitster.g>
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Joel Holdsworth <jholdsworth@nvidia.com>,
+        Git Users <git@vger.kernel.org>,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>
+Subject: Re: [PATCH v2 2/2] git-p4: show progress as an integer
+References: <20211217203856.2339161-1-jholdsworth@nvidia.com>
+        <20211217203856.2339161-3-jholdsworth@nvidia.com>
+        <CAE5ih7_uq2xos46tH_dR+gietA_5bhr3JzYNJOLmrjhuijy1Ng@mail.gmail.com>
+Date:   Mon, 20 Dec 2021 12:02:37 -0800
+In-Reply-To: <CAE5ih7_uq2xos46tH_dR+gietA_5bhr3JzYNJOLmrjhuijy1Ng@mail.gmail.com>
+        (Luke Diamand's message of "Sat, 18 Dec 2021 10:12:11 +0000")
+Message-ID: <xmqqzgovujs2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: ED4981EC-61CE-11EC-9823-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: C8360FA0-61CF-11EC-9541-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+Luke Diamand <luke@diamand.org> writes:
 
->> By the way, do not move the check about the number of negotiation
->> tips from the original location.  That check, or its location, have
->> nothing to do with what you want to do in this patch, which is "do
->> not gc or update the graph file if we are not fetching".  It is
->> better to leave unrelated changes out of the patch.
+>> diff --git a/git-p4.py b/git-p4.py
+>> index 4d8a249b85..3c621a6efd 100755
+>> --- a/git-p4.py
+>> +++ b/git-p4.py
+>> @@ -3635,7 +3635,8 @@ def importChanges(self, changes, origin_revision=0):
+>>              self.updateOptionDict(description)
+>>
+>>              if not self.silent:
+>> -                sys.stdout.write("\rImporting revision %s (%s%%)" % (change, cnt * 100 / len(changes)))
+>> +                sys.stdout.write("\rImporting revision %s (%d%%)" % (
+>> +                    change, (cnt * 100) // len(changes)))
+>>                  sys.stdout.flush()
+>>              cnt = cnt + 1
 >
-> Ah, I see that it's not easy to tell whether or not the behavior is
-> correct after that line is moved. I'll avoid doing this in the future.
+> Thanks for fixing this - this is one of those small python2->python3
+> bugs that's still left over.
 >
-> I still think that it is cleaner to move the negotiation_tip.nr check.
-> Should I do this in a follow-up patch?
+> Looks good to me, ack.
 
-I am not seeing what makes it cleaner to have it early or at the
-current position, but with "It is cleaner to do tip.nr check early
-because ...", in a separate patch, it may become obvious.  But let's
-not do it in this patch.
-
-> I hope Jonathan can chime in to confirm whether or not users want/need
-> to invoke "--negotiate-only".
-
-Yeah, I knew that this was "internal implementation detail", but
-then perhaps we know that a sane developer who knows what they are
-doing will never write combination of it with recurse-submodule
-option?  If so, we'd catch a notice developer breaking the system by
-having a sanity check by detecting it as an error, no?
+Thanks.  I'll wait for an updated [1/2] but this is an independently
+good change that does not depend on it, so I'll take [2/2] alone for
+now.
