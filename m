@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A174C433FE
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 14:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0A6DC433F5
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 14:57:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239644AbhLTO4r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 09:56:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34550 "EHLO
+        id S235146AbhLTO50 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 09:57:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238890AbhLTOyo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 09:54:44 -0500
+        with ESMTP id S239395AbhLTOz2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 09:55:28 -0500
 Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1C2CC08EC11
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 06:48:14 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id y83-20020a1c7d56000000b003456dfe7c5cso8847375wmc.1
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 06:48:14 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66804C08EC6F
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 06:48:21 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id g132so4206357wmg.2
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 06:48:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qSkV5IXssLPUW8oA3/Utiud1oWpufaQ2bwLGTcc5WAg=;
-        b=HCNQ9mez0MjVXvJ9oYiMf/OUUjkx11RFdc4ucLG89bocqSuytz2ibEf2+3o8moiEqo
-         /K+58UPFa/3fHNy+w0rhr14xanhipcCGadxBLTu00FdOKjvDJ/xDRdmdceTzfr3f8RqJ
-         fln9tvaL179AomKpWTq0yjdSicJwdWinWVEeW+SRFnbJUP853IFkfgOMR7Om0R1bA0Ud
-         gGvRHzHVs+pC3YniFt9sRByf1Dluqal47+IuG1ExGZzIDpD7dcY509oOtj8lQk0rdc8G
-         hDbeUKrROwqc4UB/4edIdEtLZrvz7+hSFuf9GavW7zMU4eU4v/S1C4B7UQesqWkbibbF
-         1ljQ==
+        bh=viV05ECn3yXTQJKvdp3nVCqxOIRQk+2LXBWPBXwsFus=;
+        b=T8Ksi7sS+tFR6l2MSFht/faLe4rK7YfUF5Fx3W6vpmhS6Ja/eQogasl7XIVeeP+6ZU
+         DqoGNSkSBfPhZfvugsmzBDm7VWNlWktpMUf6XvrNB6ige7rjoi22zGNxSzIGJtiTCN/T
+         yPqNjd8g1GkRrQgA5UyWKKg1voVLsE+MiqLjGXYvEcxBcf0FgPsfpa3MXrbpQxdJaYA0
+         JxPJCtNyUZpFl9Wo0ZSCgaUKp4FUzOO2A/DKd4XOrZ4hnWdftKYzg/51XQRMKAj7b+xD
+         Ajxb9SmdhIJOs1HVmm1b2FS8qdDB8G9fSDJd8RClpYTxx6RqFw83qzGtLS6/nDMUtNZ3
+         /uIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qSkV5IXssLPUW8oA3/Utiud1oWpufaQ2bwLGTcc5WAg=;
-        b=OZGovLMqDJh73C/VnlsPLTme1vE1pZ1nm7sKqPC0389fuqIao01PBhhGk8Bl4184mU
-         QdlcIUAH0wY6mvk1dnsPu/5SIPZHxowtseHF37b/DVZ+94jVEpoyHUzBvo3B+LDxVzIj
-         5uBgONQ/NkPVHdG1tUEpM0gguvbpKdQz9w4PRHEWUns+I7hPubuVaFAyfF8wDgM1ZoTr
-         ooY/r09rTGNG93Oky6r9Z1HCgaW8pmBnE6YHp6G9G3ASjdV6zIr4jg76drpdahLXkCpw
-         O2eqULDWrQfQ/MgbdfhCkTAysdV3/QtVVBLHApK6ujv3cRcKKeeAuvT97MlS3rIlj28A
-         oFEw==
-X-Gm-Message-State: AOAM5321pm2YBjI7Cy9/uDTlr1W1hYf2v8MbdAs9M/LFtGN2ApS3/nD7
-        wNiuJ1kzkpgAvzngewi7UnQa8xReK90=
-X-Google-Smtp-Source: ABdhPJzHqmxUlnvoABA2Ng6gSkOaOvLVi134kwMLeL9IDcSLJpEE9ZjdC/udi+/LGESOf+TZ8WwteA==
-X-Received: by 2002:a7b:c407:: with SMTP id k7mr18354603wmi.105.1640011692942;
-        Mon, 20 Dec 2021 06:48:12 -0800 (PST)
+        bh=viV05ECn3yXTQJKvdp3nVCqxOIRQk+2LXBWPBXwsFus=;
+        b=xaIUePPHQAO48J4WBxoW0d0+tU2Wr/k8rvdJy7BbXywhLdneabkK2Gi1yAeH9VGGHs
+         fmim/CXKs26hOC77wtz3FsgoH++raaFYmdSJQgRNuBUYOf7SVmIvhXoy2m1vJ5I3FivE
+         4GsNYjpjEHVFPLcKnOE42IcvcJX4Qj2wb3tZyorIZvJjMfQ3wGHegQgnf9qjHquJ1NOh
+         ZONdEiEBggALOUAGB/lZyreD7ZdoU8aLqwiR1pL1txVcXuXoG2xOBa2HyKkw7xmA1fRP
+         8OeJxAuvUonZPXFKD4wfx2ZxVU8azBtjkzXa2icV2G/BS2CGYE0a83YPXCwIeK8PrnoQ
+         uGww==
+X-Gm-Message-State: AOAM530NwLDo4yiQQDK2pMc5FoPjqdLEvMEzcS8Qn/FzXEjZBdEymmQO
+        oNHCgLBvBul0RWxhZsYrGb5a8SzqUrk=
+X-Google-Smtp-Source: ABdhPJxlHXMFjas2PYW6fVoNGo0vwAuXr7eeB5QF/x9Uto5OZUhRNWZW9jokugM+KHQxoA+Ov79MOg==
+X-Received: by 2002:a05:600c:1548:: with SMTP id f8mr14607677wmg.20.1640011694505;
+        Mon, 20 Dec 2021 06:48:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t11sm15155207wrz.97.2021.12.20.06.48.12
+        by smtp.gmail.com with ESMTPSA id u9sm14403589wmm.7.2021.12.20.06.48.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 06:48:12 -0800 (PST)
-Message-Id: <pull.1098.v2.git.1640011691.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
+        Mon, 20 Dec 2021 06:48:14 -0800 (PST)
+Message-Id: <41260bf0829970eeb27bec2cb41cabeffa54dabb.1640011691.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1098.v2.git.1640011691.gitgitgadget@gmail.com>
 References: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
+        <pull.1098.v2.git.1640011691.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 20 Dec 2021 14:48:09 +0000
-Subject: [PATCH v2 0/2] Two small 'git repack' fixes
+Date:   Mon, 20 Dec 2021 14:48:11 +0000
+Subject: [PATCH v2 2/2] repack: make '--quiet' disable progress
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,189 +62,113 @@ To:     git@vger.kernel.org
 Cc:     me@ttaylorr.com, gitster@pobox.com, Jeff King <peff@peff.net>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I was experimenting with some ideas in 'git repack' and discovered these two
-bugs.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-The first is a "real" bug in that it repacks much more data than is
-necessary when repacking with '--write-midx -b' and there exists a .keep
-pack. The fix is simple, which is to change a condition that was added for
-the '-b' case before '--write-midx' existed.
+While testing some ideas in 'git repack', I ran it with '--quiet' and
+discovered that some progress output was still shown. Specifically, the
+output for writing the multi-pack-index showed the progress.
 
-The second is a UX bug in that '--quiet' did not disable all progress, at
-least when stderr was interactive.
+The 'show_progress' variable in cmd_repack() is initialized with
+isatty(2) and is not modified at all by the '--quiet' flag. The
+'--quiet' flag modifies the po_args.quiet option which is translated
+into a '--quiet' flag for the 'git pack-objects' child process. However,
+'show_progress' is used to directly send progress information to the
+multi-pack-index writing logic which does not use a child process.
 
+The fix here is to modify 'show_progress' to be false if po_opts.quiet
+is true, and isatty(2) otherwise. This new expectation simplifies a
+later condition that checks both.
 
-Updates in v2
-=============
+Update the documentation to make it clear that '-q' will disable all
+progress in addition to ensuring the 'git pack-objects' child process
+will receive the flag.
 
-Thanks for the quick review!
+Use 'test_terminal' to check that this works to get around the isatty(2)
+check.
 
- * Test for --honor-pack-keep is cleaner with a reusable helper.
- * TTY test is added.
- * Docs are updated.
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Documentation/git-repack.txt | 5 +++--
+ builtin/repack.c             | 6 ++++--
+ t/t7700-repack.sh            | 7 +++++++
+ 3 files changed, 14 insertions(+), 4 deletions(-)
 
-Thanks, -Stolee
-
-Derrick Stolee (2):
-  repack: respect kept objects with '--write-midx -b'
-  repack: make '--quiet' disable progress
-
- Documentation/git-repack.txt |  5 +++--
- builtin/repack.c             |  8 +++++---
- t/t7700-repack.sh            | 13 +++++++++++++
- t/test-lib-functions.sh      | 34 ++++++++++++++++++++++++++++++++++
- 4 files changed, 55 insertions(+), 5 deletions(-)
-
-
-base-commit: 69a9c10c95e28df457e33b3c7400b16caf2e2962
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1098%2Fderrickstolee%2Frepack-fixes-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1098/derrickstolee/repack-fixes-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1098
-
-Range-diff vs v1:
-
- 1:  1ed91f6d255 ! 1:  747328a4dd6 repack: respect kept objects with '--write-midx -b'
-     @@ Commit message
-          some historical set of objects in a stable pack-file while only
-          repacking more recent objects.
-      
-     +    To test, create a new 'test_subcommand_inexact' helper that is more
-     +    flexible than 'test_subcommand'. This allows us to look for the
-     +    --honor-pack-keep flag without over-indexing on the exact set of
-     +    arguments.
-     +
-          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-      
-       ## builtin/repack.c ##
-     @@ t/t7700-repack.sh: test_expect_success '--write-midx with preferred bitmap tips'
-       '
-       
-      +test_expect_success '--write-midx -b packs non-kept objects' '
-     -+	git init midx-kept &&
-     -+	test_when_finished "rm -fr midx-kept" &&
-     -+	(
-     -+		cd midx-kept &&
-     -+		test_commit_bulk 100 &&
-     -+		GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-     -+			git repack --write-midx -a -b &&
-     -+		cat trace.txt | \
-     -+			grep \"event\":\"start\" | \
-     -+			grep pack-objects | \
-     -+			grep \"--honor-pack-keep\"
-     -+	)
-     ++	GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-     ++		git repack --write-midx -a -b &&
-     ++	test_subcommand_inexact git pack-objects --honor-pack-keep <trace.txt
-      +'
-      +
-       test_done
-     +
-     + ## t/test-lib-functions.sh ##
-     +@@ t/test-lib-functions.sh: test_subcommand () {
-     + 	fi
-     + }
-     + 
-     ++# Check that the given command was invoked as part of the
-     ++# trace2-format trace on stdin, but without an exact set of
-     ++# arguments.
-     ++#
-     ++#	test_subcommand [!] <command> <args>... < <trace>
-     ++#
-     ++# For example, to look for an invocation of "git pack-objects"
-     ++# with the "--honor-pack-keep" argument, use
-     ++#
-     ++#	GIT_TRACE2_EVENT=event.log git repack ... &&
-     ++#	test_subcommand git pack-objects --honor-pack-keep <event.log
-     ++#
-     ++# If the first parameter passed is !, this instead checks that
-     ++# the given command was not called.
-     ++#
-     ++test_subcommand_inexact () {
-     ++	local negate=
-     ++	if test "$1" = "!"
-     ++	then
-     ++		negate=t
-     ++		shift
-     ++	fi
-     ++
-     ++	local expr=$(printf '"%s".*' "$@")
-     ++	expr="${expr%,}"
-     ++
-     ++	if test -n "$negate"
-     ++	then
-     ++		! grep "\"event\":\"child_start\".*\[$expr\]"
-     ++	else
-     ++		grep "\"event\":\"child_start\".*\[$expr\]"
-     ++	fi
-     ++}
-     ++
-     + # Check that the given command was invoked as part of the
-     + # trace2-format trace on stdin.
-     + #
- 2:  3eff83d9ae1 ! 2:  41260bf0829 repack: make '--quiet' disable progress
-     @@ Commit message
-          is true, and isatty(2) otherwise. This new expectation simplifies a
-          later condition that checks both.
-      
-     -    This is difficult to test because the isatty(2) already prevents the
-     -    progess indicators from appearing when we redirect stderr to a file.
-     +    Update the documentation to make it clear that '-q' will disable all
-     +    progress in addition to ensuring the 'git pack-objects' child process
-     +    will receive the flag.
-      
-     +    Use 'test_terminal' to check that this works to get around the isatty(2)
-     +    check.
-     +
-     +    Helped-by: Jeff King <peff@peff.net>
-          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-      
-     + ## Documentation/git-repack.txt ##
-     +@@ Documentation/git-repack.txt: to the new separate pack will be written.
-     + 	linkgit:git-pack-objects[1].
-     + 
-     + -q::
-     +-	Pass the `-q` option to 'git pack-objects'. See
-     +-	linkgit:git-pack-objects[1].
-     ++--quiet::
-     ++	Show no progress over the standard error stream and pass the `-q`
-     ++	option to 'git pack-objects'. See linkgit:git-pack-objects[1].
-     + 
-     + -n::
-     + 	Do not update the server information with
-     +
-       ## builtin/repack.c ##
-      @@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix)
-       	struct tempfile *refs_snapshot = NULL;
-     @@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix
-       			opts |= PRUNE_PACKED_VERBOSE;
-       		prune_packed_objects(opts);
-       
-     +
-     + ## t/t7700-repack.sh ##
-     +@@ t/t7700-repack.sh: test_description='git repack works correctly'
-     + . ./test-lib.sh
-     + . "${TEST_DIRECTORY}/lib-bitmap.sh"
-     + . "${TEST_DIRECTORY}/lib-midx.sh"
-     ++. "${TEST_DIRECTORY}/lib-terminal.sh"
-     + 
-     + commit_and_pack () {
-     + 	test_commit "$@" 1>&2 &&
-     +@@ t/t7700-repack.sh: test_expect_success '--write-midx -b packs non-kept objects' '
-     + 	test_subcommand_inexact git pack-objects --honor-pack-keep <trace.txt
-     + '
-     + 
-     ++test_expect_success TTY '--quiet disables progress' '
-     ++	test_terminal env GIT_PROGRESS_DELAY=0 \
-     ++		git -C midx repack -ad --quiet --write-midx 2>stderr &&
-     ++	test_must_be_empty stderr
-     ++'
-     ++
-     + test_done
-
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 7183fb498f4..ee30edc178a 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -76,8 +76,9 @@ to the new separate pack will be written.
+ 	linkgit:git-pack-objects[1].
+ 
+ -q::
+-	Pass the `-q` option to 'git pack-objects'. See
+-	linkgit:git-pack-objects[1].
++--quiet::
++	Show no progress over the standard error stream and pass the `-q`
++	option to 'git pack-objects'. See linkgit:git-pack-objects[1].
+ 
+ -n::
+ 	Do not update the server information with
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 1f128b7c90b..c393a5db774 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -612,7 +612,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	struct tempfile *refs_snapshot = NULL;
+ 	int i, ext, ret;
+ 	FILE *out;
+-	int show_progress = isatty(2);
++	int show_progress;
+ 
+ 	/* variables to be filled by option parsing */
+ 	int pack_everything = 0;
+@@ -725,6 +725,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 
+ 	prepare_pack_objects(&cmd, &po_args);
+ 
++	show_progress = !po_args.quiet && isatty(2);
++
+ 	strvec_push(&cmd.args, "--keep-true-parents");
+ 	if (!pack_kept_objects)
+ 		strvec_push(&cmd.args, "--honor-pack-keep");
+@@ -926,7 +928,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 			}
+ 			strbuf_release(&buf);
+ 		}
+-		if (!po_args.quiet && show_progress)
++		if (show_progress)
+ 			opts |= PRUNE_PACKED_VERBOSE;
+ 		prune_packed_objects(opts);
+ 
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 63c9a247f57..fe2b493d0ee 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -5,6 +5,7 @@ test_description='git repack works correctly'
+ . ./test-lib.sh
+ . "${TEST_DIRECTORY}/lib-bitmap.sh"
+ . "${TEST_DIRECTORY}/lib-midx.sh"
++. "${TEST_DIRECTORY}/lib-terminal.sh"
+ 
+ commit_and_pack () {
+ 	test_commit "$@" 1>&2 &&
+@@ -378,4 +379,10 @@ test_expect_success '--write-midx -b packs non-kept objects' '
+ 	test_subcommand_inexact git pack-objects --honor-pack-keep <trace.txt
+ '
+ 
++test_expect_success TTY '--quiet disables progress' '
++	test_terminal env GIT_PROGRESS_DELAY=0 \
++		git -C midx repack -ad --quiet --write-midx 2>stderr &&
++	test_must_be_empty stderr
++'
++
+ test_done
 -- 
 gitgitgadget
