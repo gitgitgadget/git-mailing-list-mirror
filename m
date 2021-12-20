@@ -2,223 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF164C433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 18:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5685C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 18:33:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236227AbhLTS3P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 13:29:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57104 "EHLO
+        id S237715AbhLTSdi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 13:33:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233685AbhLTS3M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 13:29:12 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E798C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:29:12 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id t29-20020a62d15d000000b004baa073f34fso2030532pfl.12
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:29:12 -0800 (PST)
+        with ESMTP id S232319AbhLTSdh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 13:33:37 -0500
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43718C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:33:37 -0800 (PST)
+Received: by mail-oi1-x22e.google.com with SMTP id bj13so17091767oib.4
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:33:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=duLNwKjnuIgeiYtk3D/W+ga2m9aNg4z222jJ1/SpyFI=;
-        b=IWkN/DqWitK6YGcPVg3K066jU+Qg3pIiMzkKHw4BmRwTBPzJ+3qs6e0TYcOPYZvjn3
-         CaFp8ZHzSBu7zHeEYsJYojjGq6yxoJ77iByltUboqBMdVvaEw9KjrchOqJ07+ZD0Yt91
-         /GDRGbDnX0hNLgiChxXSopiN3vQCrkzpRlBWWwiZNNhftcaTg1X0G9PzkmN3+hjREQg1
-         2E8AeOq8C7vOszqP5c/YzVwUqQu+9tsAj1Ivw7kld6XPKYsDjNKRfYdBy9l/Mov/lvCJ
-         o232ADAmWEnFx1e4RaA3YfhsVw9ecNFCNnQTgYc481bYSBXu69fWOfvhjV7ZuYiWvaoD
-         2U4w==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=RwptB7bMD7uCa4a2t6n0jSmy9JkiVsNdnH/KHvtRqgk=;
+        b=Ts0rQv80Tjpp8qJN6fh1EDhHbByaMEU3Gu8vD+3CfM/bUJGi4bfujf8u8nzVcBUKbw
+         Ycd/SaDC8+81lU9G7bHUEIFCgTWPnePxYYGfrJgJnTxGwCzdcXqfhXSWs98ibW6TZV3K
+         rXm/pBtWpZLPifEBB+JnJdiIHCODFRT0+9AvL7ZChM0T7NJcIEIKjguJ9dSvAanntLw7
+         wxDGy2ayqf1tEW44glEXp3kGxBEl9h5eTZFTO+AGNtNB5llDfyslgtiZ9CWD3nBY1MIp
+         7fOTMS50kGKN0DLt4NROh1AAXtkGbBALKAc+yZ8SO7m4fes4nibXSoX+NuuTmqCwvcrR
+         gQIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=duLNwKjnuIgeiYtk3D/W+ga2m9aNg4z222jJ1/SpyFI=;
-        b=FUV20jAogTZOXmcinPGl2MZ0wyWBPMajQKikZPc6B/XoL8lWLGBg59i7gr5x3ex41w
-         9MaRSYi2K1g4dEjg3qYzY2JAv7cttjUHqsJBlg3D9wFs5ipZfi276JhbbPZLe+X+LhtN
-         6WoYFqD+vNEIHPMkz3oH6t3JcDcW4uw/7kt6kliaX3ZJo//goqd+sDtFOM26yaoeSnc/
-         mNdmjWK9qoD1Ag0N9a6Dbyx4Ft/atXACIpcvqGCN4rcNvoINaa+EkH7uF5rAZgUjtQ0z
-         HRogbcHK8yuzQW7Arfv5lO9RWuw6bFXjDilf9kR3WccJ6hp+EmvaBucNtpFJ0HAbb5Hl
-         cT7A==
-X-Gm-Message-State: AOAM533kq9BOb/FV3qp7IEtDlBXEotTqc66lMrPtdYkXcv8RBVMmuBmX
-        tye4yDR0BWrWY84q6yICG38vKBjvzQxJYg==
-X-Google-Smtp-Source: ABdhPJzJtUtxW+IK8SNiT08BLaAJ8xHoEhrfFeyhBM0O/hTw1MPCuAfxTo9LalR/CsU57JGFy7XhWHdoliVPRg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:3d42:: with SMTP id
- o2mr76064pjf.1.1640024951161; Mon, 20 Dec 2021 10:29:11 -0800 (PST)
-Date:   Mon, 20 Dec 2021 10:29:08 -0800
-In-Reply-To: <Ybwb4UkQwAVRcJp5@google.com>
-Message-Id: <kl6lzgovyvt7.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
- <cover.1639524556.git.steadmon@google.com> <43d6f83fedc022c44d6a3be249e7fd8cd2a25007.1639524556.git.steadmon@google.com>
- <kl6lo85g8grj.fsf@chooglen-macbookpro.roam.corp.google.com> <Ybwb4UkQwAVRcJp5@google.com>
-Subject: Re: [PATCH v6 1/3] branch: accept multiple upstream branches for tracking
-From:   Glen Choo <chooglen@google.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
-        Johannes.Schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=RwptB7bMD7uCa4a2t6n0jSmy9JkiVsNdnH/KHvtRqgk=;
+        b=ExSlU+9gOImtx01S7kS1CgWZ4yKBqcoZedTdjI6I1jzPuRGF3ckli+vasJrpVVr9rA
+         go9mLbaKd7pGtxTAmaCQfvxlhEQcIKZOxHdoB2ePJQgcB/2OgmtTLCPBV4f7luTxdfmD
+         uP1NW91P2Mjz9ZgLk5sy3s2KRB2y27gDNkOoZEm5Z7fPP9Af+zQW8c5A3PMp6H9yAscW
+         rl30mPVxYUszrvfqlTiifemZqBM3jnFGj1y3Yr3NulrnC4GJqUDqDM1Utkc6N3l13DJx
+         mG9t5kPb2DNNbOsC9GN9Rvsg93rLTPQ0868VtHHY8FlWTxyQ2vdrwJv1Z1zcokvhOhxd
+         x8ng==
+X-Gm-Message-State: AOAM532WZ+UxX5E6iouiitONGFvp1GEKqWQSgZhmQqRvgL8yWnIe9F9f
+        Sevo1TdHVLHZaCwQKDN6qgzTRiCL4P4=
+X-Google-Smtp-Source: ABdhPJwRxao0RNtEzFWMMHKkHtSj/iaB5deRc5zDQ5T8hxghKI5nIPjR3cOawscO1nxCnCzyNk06hA==
+X-Received: by 2002:aca:a941:: with SMTP id s62mr206087oie.87.1640025216472;
+        Mon, 20 Dec 2021 10:33:36 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:1dd9:8fb3:37da:4055? ([2600:1700:e72:80a0:1dd9:8fb3:37da:4055])
+        by smtp.gmail.com with ESMTPSA id m23sm3319584otj.39.2021.12.20.10.33.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Dec 2021 10:33:36 -0800 (PST)
+Message-ID: <dbc75e29-aceb-051a-8235-e5c912172aed@gmail.com>
+Date:   Mon, 20 Dec 2021 13:33:32 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: [PATCH v2 5/8] t5326: extract `test_rev_exists`
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net
+References: <cover.1638991570.git.me@ttaylorr.com>
+ <cover.1639446906.git.me@ttaylorr.com>
+ <73faab9f429221b7be88ea88ce59bc47afb57348.1639446906.git.me@ttaylorr.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <73faab9f429221b7be88ea88ce59bc47afb57348.1639446906.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+On 12/13/2021 8:55 PM, Taylor Blau wrote:
+> To determine which source of data is used for the MIDX's reverse index
+> cache, introduce a helper which forces loading the reverse index, and
+> then looks for the special trace2 event introduced in a previous commit.
+> 
+> For now, this helper just looks for when the legacy MIDX .rev file was
+> loaded, but in a subsequent commit will become parameterized over the
+> the reverse index's source.
+> 
+> This function replaces checking for the existence of the .rev file. We
+> could write a similar helper to ensure that the .rev file is cleaned up
+> after repacking, but it will make subsequent tests more difficult to
+> write, and provides marginal value since we already check that the MIDX
+> .bitmap file is removed.
 
->> > @@ -87,29 +112,42 @@ int install_branch_config(int flag, const char *local, const char *origin, const
->> >  	strbuf_release(&key);
->> >  
->> >  	if (flag & BRANCH_CONFIG_VERBOSE) {
->> > -		if (shortname) {
->> > +		const char *name;
->> > +		struct strbuf ref_string = STRBUF_INIT;
->> > +
->> > +		for_each_string_list_item(item, remotes) {
->> > +			name = item->string;
->> > +			skip_prefix(name, "refs/heads/", &name);
->> > +			strbuf_addf(&ref_string, "  %s\n", name);
->> > +		}
->> > +
->> > +		if (remotes->nr == 1) {
->> > +			struct strbuf refname = STRBUF_INIT;
->> > +
->> >  			if (origin)
->> > -				printf_ln(rebasing ?
->> > -					  _("Branch '%s' set up to track remote branch '%s' from '%s' by rebasing.") :
->> > -					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
->> > -					  local, shortname, origin);
->> > -			else
->> > -				printf_ln(rebasing ?
->> > -					  _("Branch '%s' set up to track local branch '%s' by rebasing.") :
->> > -					  _("Branch '%s' set up to track local branch '%s'."),
->> > -					  local, shortname);
->> > +				strbuf_addf(&refname, "%s/", origin);
->> > +			strbuf_addstr(&refname, remotes->items[0].string);
->> > +
->> > +			/*
->> > +			 * Rebasing is only allowed in the case of a single
->> > +			 * upstream branch.
->> > +			 */
->> > +			printf_ln(rebasing ?
->> > +				_("branch '%s' set up to track '%s' by rebasing.") :
->> > +				_("branch '%s' set up to track '%s'."),
->> > +				local, refname.buf);
->> > +
->> > +			strbuf_release(&refname);
->> > +		} else if (origin) {
->> > +			printf_ln(_("branch '%s' set up to track from '%s':"),
->> > +				local, origin);
->> > +			printf("%s", ref_string.buf);
->> 
->> It's not clear to me why the hint contains the word 'from' when it is a
->> remote ref...
->
-> Because in the multiple-branch case, we don't prepend the origin to each
-> ref, so we need to let users know which remote the refs are coming from.
+...
 
-I see. So if I'm reading this correctly, the error message in the remote
-case would read something like:
+> +test_rev_exists () {
+> +	commit="$1"
+> +
+> +	test_expect_success 'reverse index exists' '
+> +		GIT_TRACE2_EVENT_NESTING=10 \
 
-  branch 'main' set up to track from 'origin':
-    main
-    topic1
-    topic2
+Very recently, b8de3d6 (test-lib.sh: set GIT_TRACE2_EVENT_NESTING,
+2021-11-29) made it to master and sets this to 100 across the test
+suite, so you don't need this line.
 
-Is there any reason why we couldn't append the origin to the ref to make
-it consistent? I think this could be as simple as:
+> +		GIT_TRACE2_EVENT=$(pwd)/event.trace \
+> +			git rev-list --test-bitmap "$commit" &&
 
+This use of $commit has me worried. Do the tests become too flaky
+to changes in how we choose commits for the bitmaps? Does that
+require callers to be too aware of the refstate when creating the
+bitmaps?
 
-	for_each_string_list_item(item, remotes) {
-		name = item->string;
-		skip_prefix(name, "refs/heads/", &name);
-			if (origin)
-+         strbuf_addf(&ref_string, "%s/", origin);
-		strbuf_addf(&ref_string, "  %s\n", name);
-	}
+Perhaps just `git rev-list --use-bitmap-index [--objects] HEAD`
+would suffice to generate the trace event?
 
-and the resulting list could look like:
+> +		test_path_is_file $midx-$(midx_checksum $objdir).rev &&
+> +		grep "\"category\":\"load_midx_revindex\",\"key\":\"source\",\"value\":\"rev\"" event.trace
+> +	'
+> +}
+> +
+>  setup_bitmap_history
+>  
+>  test_expect_success 'create single-pack midx with bitmaps' '
+>  	git repack -ad &&
+>  	git multi-pack-index write --bitmap &&
+>  	test_path_is_file $midx &&
+> -	test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
+> -	test_path_is_file $midx-$(midx_checksum $objdir).rev
+> +	test_path_is_file $midx-$(midx_checksum $objdir).bitmap
+>  '
+>  
+> +test_rev_exists HEAD
+> +
 
-  branch 'main' set up to track from 'origin':
-    origin/main
-    origin/topic1
-    origin/topic2
+Perhaps this helper would be more appropriate as a helper method
+within a test, rather than creating a test of its own? I think
+it looks better to include it next to the setup lines, something
+like
 
-This looks repetitive, but I suggest this because, as I understand it,
-we are omitting the "{local,remote} ref" phrase based on conventions
-around ref names, like "origin/main" is probably a remote ref and not an
-oddly named local ref. However, when we print the list like so,
+test_expect_success 'create single-pack midx with bitmaps' '
+	git repack -ad &&
+	git multi-pack-index write --bitmap &&
+	test_path_is_file $midx &&
+	test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
+	test_rev_exists HEAD
+'
 
-  branch 'main' set up to track from 'origin':
-    main
-    topic1
-    topic2
+This would lead to a failure within 'create single-pack midx
+with bitmaps' which is easier to find in the file.
 
-we now expect the user to understand that 'main', 'topic1' and 'topic2'
-to implicitly have 'origin/' prepended to them. This behavior seems
-inconsistent to me; I'd anticipate most users responding "Wait, I was
-supposed to be tracking 'origin' branches right? Why am I looking at
-local branches?". Some users would be able to recover because they can
-figure out what we mean, but others might just give up.
-
-Prepending 'origin/' would get rid of this problem altogether, and it
-would let us drop the 'from'.
-
->> >  		} else {
->> > -			if (origin)
->> > -				printf_ln(rebasing ?
->> > -					  _("Branch '%s' set up to track remote ref '%s' by rebasing.") :
->> > -					  _("Branch '%s' set up to track remote ref '%s'."),
->> > -					  local, remote);
->> > -			else
->> > -				printf_ln(rebasing ?
->> > -					  _("Branch '%s' set up to track local ref '%s' by rebasing.") :
->> > -					  _("Branch '%s' set up to track local ref '%s'."),
->> > -					  local, remote);
->> > +			printf_ln(_("branch '%s' set up to track:"), local);
->> > +			printf("%s", ref_string.buf);
->> 
->> but does not have the word 'from' when it is a local ref. As far as I
->> can tell, this is the only difference between remote and local refs, and
->> adding the word 'from' does not seem like a good enough reason to add an
->> 'if' condition. Maybe I missed something here?
->> 
->> This motivates my answer to the question you asked in [1]:
->> 
->>   I removed as many distinctions as possible, as most can still be
->>   inferred from context. [...] Likewise, we don't need to specify whether
->>   refs are remote or local: "some-remote/some-branch" vs.
->>   "a-local-branch" should be understandable without us spelling it out.
->> 
->> I agree that there is adequate context, so I would be ok with the
->> simplification if there was corresponding code simplification e.g.
->> dropping "if (origin)". But in its current form, I don't think there is
->> good enough reason to simplify the message.
->
-> I think the proper point of comparison is not the original code, but the
-> code from V5 where we try to preserve the same level of detail in output
-> as the original code. If we are committed to both having multiple
-> remotes and keeping similar styles of output as the original
-> implementation, then something like the massive conditional in V5 is
-> unavoidable.
-
-I see. So for instance, post-simplification you have:
-
-  printf_ln(rebasing ?
-    _("branch '%s' set up to track '%s' by rebasing.") :
-    _("branch '%s' set up to track '%s'."),
-    local, refname.buf);
-
-if you preserve the same amount of detail as before, you'd have to
-distinguish between local/remote, which doubles the number of cases to
-4, which is why the conditional v5 is so complicated.
-
-That said, I think that it's already much simpler than v5 because you've
-split the singular and plural cases. I wonder if you have considered
-building the final string purely from format strings, like:
-
-  char *message_format = _("branch %s set up to track %s%s%s%s");
-  char *ref_type_clause = origin ? " remote ref " : " local ref ";
-  char *rebasing_clause = rebasing ? " by rebasing." : ".";
-  char *branch_names = "<branch names>";
-  printf_ln(message_format, local, ref_type_clause, branch_names, rebasing_clause);
-
-This sounds potentially unfriendly to i18n, but it would make the
-conditional simpler. What do you think?
+Thanks,
+-Stolee
