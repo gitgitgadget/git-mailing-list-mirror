@@ -2,140 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60002C433F5
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 18:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9D6FC433F5
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 19:04:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240062AbhLTSv2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 13:51:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33974 "EHLO
+        id S240655AbhLTTEC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 14:04:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240001AbhLTSv1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 13:51:27 -0500
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AD45C06173F
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:51:27 -0800 (PST)
-Received: by mail-oi1-x22b.google.com with SMTP id bk14so17162476oib.7
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:51:27 -0800 (PST)
+        with ESMTP id S235151AbhLTTEB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 14:04:01 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C724C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 11:04:01 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id y13so42315414edd.13
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 11:04:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=1MKNRddHxDodnys0dx4LM48/hv1747V799fVvphb5H8=;
-        b=GBmGaBtfMDmK34xQD7t2An24tzCO2v86qk0UvQAw3yxmL4XT5/uDgTUYELal6pNbi8
-         RSIb+v4AO4PHOvvfIY8ftVrtwvzwUfCQWV3zWBMVO1D+i1n0h15CTtCoNfWb+c3Z6uUs
-         HwetpRKvgUC7hLxn7siWMLZEMD4spQdtyObOtJdZE5597HlJJoXS294/JvrZFJCgXICy
-         v9eo9swKJvrJL+r0jL8cd4wd6WehOCLej8qXhAA8+yB9wtUEIRS5E3DCG1x8o5I1Yw7w
-         TMLLWvnNQ+QAxPaBizFx9VhXUiXyh+dUSxt7YKYcpTCLeubD88GlbY6Z5mfOv5oFlq/8
-         b0ZQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=cK8WpKM+VG1q++d9EFH+SXtzRFl/ahw8mtTW8yarsLA=;
+        b=IcslehR1Srm2VPi80KF5TsTDDEf2q/OtU6TCbpJ5z4HO9LBO+nZPfjJBmwqFUh/eEb
+         t7Czw/WhL8pupqSKFiu2md7Oxj6T8zZM/NAT+Of9c7yujbnWPHMKw1bJjCBrskwo8D9H
+         Xt9XUgeDedO+u7wqGaqjyo9iFgoy+bgYqqXX70q/+tmID8VHLQ6R4CCFU8ntm7Ds7EK1
+         FqVziYbJwybwrWmofomqsciT2AnXtP8CiDHo2Z+FhKMhGJLGdjt4VvMl6YogqWECGD6e
+         s5zA1erwAIMHwWrAVIDMxpujpEf1iZlkNiLrrKSurWCIOxploaOnI9hRs2SaPy9iez0w
+         jHxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=1MKNRddHxDodnys0dx4LM48/hv1747V799fVvphb5H8=;
-        b=B5ZPLUOXlhM1PgGx1q805XegS65emhLguSQgc5vsP/py68a8PIMYnPDPjPVp5rB7Tp
-         vichWRM8ChNJNDHfOf4MhpyMZKgDUutIh1EaM67fYK95QX1+is9VOPz9PWSezi9kmGiL
-         lL2bz/gl52wFFhLpMGQqr75VfD7Tk5v/iQCSR6A+WMpbRJvAkw83ySQcYXqY7QvlKiXB
-         OYSPuTO/1TDZmEd7PWfjXCX7JkqLaTb8wPjDUBN8SEi3ru4Op7PS32j0fQr16YzaHY0t
-         Hkl6uNrXpOmnXGMagFutv8WKmc5Dlj+fAFHj4HCKzV6M53mfkbXll1Y8e6s8l1wuMrlb
-         wVyg==
-X-Gm-Message-State: AOAM532i8sGYaOGv7Ea8HPkw3rbST6dvyg8Fr6WTF15FWa202znz5/j0
-        tsGalbM7XTf77E/e8jDC+BUl0pN/Eko=
-X-Google-Smtp-Source: ABdhPJzeBZquXWSbGc/Rb4mOjcGipYPl+WBdjR7UjNs5iwCzN7lhanvCae5nJ91bK4o6XEC9MITOYQ==
-X-Received: by 2002:aca:1c13:: with SMTP id c19mr315860oic.20.1640026286554;
-        Mon, 20 Dec 2021 10:51:26 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:1dd9:8fb3:37da:4055? ([2600:1700:e72:80a0:1dd9:8fb3:37da:4055])
-        by smtp.gmail.com with ESMTPSA id c10sm3548207ots.73.2021.12.20.10.51.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Dec 2021 10:51:26 -0800 (PST)
-Message-ID: <886da3f3-aa6a-ac74-2aa2-26abdf832ebd@gmail.com>
-Date:   Mon, 20 Dec 2021 13:51:22 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=cK8WpKM+VG1q++d9EFH+SXtzRFl/ahw8mtTW8yarsLA=;
+        b=uxcr6gzjeoLltM2qyZT7ZioJ++0XhewxS4PtpI+Yz9JWE8rQelOed3Zzst1byB6pd9
+         oIhTcgSWJMRzjhXuvVzubBMs1kd+lOqBUl0jArSol0DjurR7KIHHDFO/1UiFBXEAE9+6
+         wnZx0jeUp8x7vl7zD1eYu+V+Cr/neeP81S2xk//JkesiLpFz3KLCxfioGuHhKsCj/9US
+         D0Q9NVa8FOReWTGqwbcpwRax/0fEy5DWRFMfEObEdoKDnx3coseKeH3y8nE6DelEOzuA
+         y7D9LNsqnvzn9b7GvVskMEEzY+8+sS7rSqHvGq3wMgTA1mFyfqirtdcdTtyEWkepGGvV
+         LTJA==
+X-Gm-Message-State: AOAM530yDeHiUcW06/AmIfUjLBQbeTBXSJIHPuwwiVpaq0i4jW+u1yB9
+        k3FEuK3BAy6W2Yb0RJ50zOdCGoX74LQJ0A==
+X-Google-Smtp-Source: ABdhPJxSqYQksxuyiqc2r4rlg0p2+MYw9E0+vt4W31LWDe+8fB2kk2IQme0JC0y7NV9LYM7CKzbxiA==
+X-Received: by 2002:aa7:d4d3:: with SMTP id t19mr15506802edr.289.1640027039522;
+        Mon, 20 Dec 2021 11:03:59 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id w3sm5571161eji.134.2021.12.20.11.03.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Dec 2021 11:03:59 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mzNx0-000XBS-EW;
+        Mon, 20 Dec 2021 20:03:58 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
+        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 0/2] Two small 'git repack' fixes
+Date:   Mon, 20 Dec 2021 20:01:20 +0100
+References: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
+ <pull.1098.v2.git.1640011691.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <pull.1098.v2.git.1640011691.gitgitgadget@gmail.com>
+Message-ID: <211220.86r1a7t7xd.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [PATCH v2 0/8] midx: prevent bitmap corruption when permuting
- pack order
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-References: <cover.1638991570.git.me@ttaylorr.com>
- <cover.1639446906.git.me@ttaylorr.com> <xmqqee6d648n.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqee6d648n.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/15/2021 2:46 PM, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
-> 
->> Here is a reroll of my series which fixes a serious problem with MIDX bitmaps by
->> which they can become corrupt when permuting their pack order.
-...
->> So I'm definitely open to suggestions there, but otherwise this series should go
->> a long ways towards fixing my design mistake of having the MIDX .rev file be
->> separate from the MIDX itself.
-> 
-> Yeah, a single file with different chunks is a good way to ensure
-> atomicity of update.
 
-I just reviewed this series for the first time. Sorry for being so
-late getting to it.
+On Mon, Dec 20 2021, Derrick Stolee via GitGitGadget wrote:
 
-I had a few minor recommendations but they are mostly nitpicks and
-don't deserve holding up the series if there are no other major
-comments.
+> I was experimenting with some ideas in 'git repack' and discovered these two
+> bugs.
 
-> A note to reviewers.
-> 
-> We need to make sure that not just we can still read .rev in
-> existing repositories (and convert it to the new chunk) correctly,
-> but also decide what to do to older versions of Git once the
-> repository is touched by this new version.  Would they be upset to
-> see no .rev files or is it just the performance thing (and it is
-> more correct to recompute the reverse index on the fly)?  Should the
-> new chunk be made mandatory to cause them notice that they should
-> not muck with the repository, or is it optional?  Things like that.
+This iteration looks good to me.
 
-1. Can we still read a .rev?
+>      + ## Documentation/git-repack.txt ##
+>      +@@ Documentation/git-repack.txt: to the new separate pack will be written.
+>      + 	linkgit:git-pack-objects[1].
+>      + 
+>      + -q::
+>      +-	Pass the `-q` option to 'git pack-objects'. See
+>      +-	linkgit:git-pack-objects[1].
+>      ++--quiet::
+>      ++	Show no progress over the standard error stream and pass the `-q`
+>      ++	option to 'git pack-objects'. See linkgit:git-pack-objects[1].
+>      + 
+>      + -n::
+>      + 	Do not update the server information with
+>      +
 
-The new test script specifically verifies that existing repositories
-will continue to read their .rev upon upgrade. Their .rev files will
-be replaced with the chunk during the next write.
+Nit: I think the addition of --quiet here is good, but also wouldn't
+mind a prep change to add it as a separate step.
 
-2. What if they downgrade after the RIDX chunk is in place?
+FWIW it appears to have been an unintended/hidden effect of a1bbc6c0176
+(repack: rewrite the shell script in C, 2013-09-15), i.e. we started
+using OPT__QUIET() which added "--quiet", but the shellscript just
+supported -q.
 
-The .rev file is missing and the repo has a performance issue because
-they can't use bitmaps. Correctness is not a problem. Anyone using
-.rev files for server use (where bitmaps are most useful) is hopefully
-already careful about downgrading Git versions.
+Here we update the docs, but the SYNOPSIS stillj just lists -q.
 
-3. Should the chunk be made mandatory?
-
-Unfortunately, the chunk format did not follow the index format's
-example of making lowercase chunk IDs required. Instead, the chunks
-that are necessary for v1 are necessary forever and all other chunks
-are deemed optional. Changing this would require something more
-drastic like updating the version number or giving some grace period
-where released versions start treating lowercase chunk IDs as required
-before creating a new "required" chunk.
-
-This does mean that if there is a version incompatibility, the RIDX
-chunk will just be ignored by the older version of Git.
-
-In terms of making this a safe format upgrade, I think Taylor has
-achieved that.
-
-The only thing I can think is that server operators might want to
-deploy this version with GIT_TEST_MIDX_WRITE_REV=1 for a while, so
-any need to downgrade would not suffer a performance penalty for a
-missing .rev file. If that is a planned way to safely deploy this
-change, then it might be worth adding a test that we safely delete
-a .rev file after writing both a .rev file and a RIDX chunk. (The
-RIDX chunk will be preferred, so maybe the previous .rev file hits
-some logic that would skip its deletion?)
-
-Thanks,
--Stolee
+I think all of that's fine & this v2 is good enough. Just braindumping
+notes/observations while reading along/checking the v1->v2 diff.
