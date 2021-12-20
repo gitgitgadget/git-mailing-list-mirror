@@ -2,163 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDF3EC433F5
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 19:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8194CC433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 19:18:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240746AbhLTTQR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 14:16:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39630 "EHLO
+        id S240764AbhLTTSu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 14:18:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234420AbhLTTQQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 14:16:16 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2479BC061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 11:16:16 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id y13so42442188edd.13
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 11:16:16 -0800 (PST)
+        with ESMTP id S234420AbhLTTSs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 14:18:48 -0500
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FC42C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 11:18:48 -0800 (PST)
+Received: by mail-pl1-x636.google.com with SMTP id z6so8844762plk.6
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 11:18:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=de2E38eS+HWdmtkMjXFEmr8Zujx2EovrvEroFxiYUYI=;
-        b=mGBDpSEmlGq5koKH0mpvFFpfcBXtDlgquyy4U6+p8f1XuMytjbYJyKL+Xo9NfCOmKy
-         siAkuT4ZG62CJupJ+221+U8/Iv+Frg4npYVbLK88stjtMHXCCYqqvQIlkygTZUAYPFJN
-         ZqqKy3sx9lUf9OaoGtkAyM4k+zUgk4i2WDVJ8GWHlGI9/yeJQ0dZjpAJupH99QcrNNcY
-         7AmfYGQsghvnKPymgspGrR2rKYGqTpowDZbso44Mmm3779dC/vaiVIFXj6ftI+maiyhn
-         N70UJs67WAw7NGCZvgjrptXhzKb/1xvL9BzZOlHw1RuIIKq763XTh0fpvNjdSJm9/qOJ
-         bNWQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tVslMDJKbf3Jy689oZkdkWN8TKuS6LaNk3RsYcK3N6U=;
+        b=jfVWvoYLvzC/4ii5A+myaRl2bOxsfKpqshQng4scaj8t7kXBfdRBc/bn2TGUX5+36D
+         oisRYkV69ENr/bi17lo5zxzPkyVSra0DWwiRSBHTDmWpI0s2lqeuQ7OKOLjify8wHIqE
+         xYTLRMCNO98qQ7jxVND3iaCDXO03pE0nrwfOdAzp50HTA2Q1hvXjnL+J76HL4pZimsLk
+         UQIvhCda5+FRO2EsTqccKoUojuLhBTetrDkKAuhzSiWKZd+epGggj5gAfjvcNvXUYugo
+         5huqp8pJ4GYa3rIbcW6oeuZiZI54NPMZGCmXvpHjV2DZybg/TQMD0VpvWnJSiPtyFCte
+         +b5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=de2E38eS+HWdmtkMjXFEmr8Zujx2EovrvEroFxiYUYI=;
-        b=meVutX3l7NnAoC3USG3t79eUYq8aih1strFVQEhzgadks/vcyIu8tDFxzpwXWSC1pd
-         PVT0VgY8D9PQhxYNh22bC1J5UCAnW1Y0YPWieNc89HdzpiPAc0LT2oi6wUnT0+ZLOMfZ
-         3L8LkNydUuwXALF/PWXeqk1s6XNn1lEDNF549QRDKp6DOKgIRyA4tDQfVqi/YmR+8BSs
-         loGf+NycAn0FM1ewJt76o89qgu1CArhF71QxgA7sLd3nWappytwLoKrFw3omuaWYxfi6
-         SpnmEeNKuqartb6ZZjUVHpajjaBY+yHl1r5ufrOebGuNfQd/LZEWyrOaOul9aDNVvtxP
-         FDsQ==
-X-Gm-Message-State: AOAM530MH5sITS9mJOFlQN9cwZ6+T9jo/XLCtQzmx09Gp6GnhJ8F5MJT
-        uM6qBYZlEnjIafp6/VLrhgkQO6ZyQjBMIA==
-X-Google-Smtp-Source: ABdhPJyJmymJPB2OV185DLJBW5RXF0LiVgjc9D1vD2UoWGWx1cWvAaELSvo9zMb375R5epV4cZ4cLg==
-X-Received: by 2002:a17:906:7e07:: with SMTP id e7mr8890715ejr.461.1640027774375;
-        Mon, 20 Dec 2021 11:16:14 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id k12sm1165584ejx.119.2021.12.20.11.16.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 11:16:13 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzO8r-000XTl-C2;
-        Mon, 20 Dec 2021 20:16:13 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 2/2] builtin add -p: fix hunk splitting
-Date:   Mon, 20 Dec 2021 20:06:00 +0100
-References: <pull.1100.git.1640010777.gitgitgadget@gmail.com>
- <5d5639c2b0474680850b7adbb7c5ec81d124eb50.1640010777.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <5d5639c2b0474680850b7adbb7c5ec81d124eb50.1640010777.git.gitgitgadget@gmail.com>
-Message-ID: <211220.86mtkvt7cy.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=tVslMDJKbf3Jy689oZkdkWN8TKuS6LaNk3RsYcK3N6U=;
+        b=oV/HdBdgAHQ0fvaNjU0hN8Roo2rIHk0LO1EGaifjqBCWgsUFok5gqoL9G5x66M/KaI
+         ZudGBrI+gJff+tyS6qNe++mK/h9S0ViX3L0DXjzLmPAgGr6D0qrhOwOcS6/t/Xtd+JFe
+         lsP7vTqetcbUlUwtBZuDQGK/tNgnwJqTVt+uoWWxmDCI18sgy6wzd0ScdVa7/XFwQYIa
+         x0pghv6lA76lfSi7kGPyg+Q92Wmie0GuYEY8WTxUETVsiZ5D32pMNcRJic6RBtbezizE
+         1hLESEeZ0VMeE0unwvnMWaox8omJlEx2Tv8b90UwCAaWvmBpnHoaKL+o6N8471m8/QUn
+         vi0A==
+X-Gm-Message-State: AOAM530RsBmCCOe2xaOR/XvJT4/cdbgY5d/w7bfVBMSUm39Nl+ZsbmAU
+        vTpmmiNwZXrIfAacKVWY9iM=
+X-Google-Smtp-Source: ABdhPJzFHd2BIoO/zAbZobPj5/iYSPClP9tdfTvJPfcRPYLmar6Pw7/XE0vCSaiGnCLJf36PA1JmYQ==
+X-Received: by 2002:a17:90b:4a0f:: with SMTP id kk15mr501549pjb.33.1640027928249;
+        Mon, 20 Dec 2021 11:18:48 -0800 (PST)
+Received: from [192.168.208.38] ([49.205.83.141])
+        by smtp.gmail.com with ESMTPSA id s16sm19409118pfu.109.2021.12.20.11.18.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Dec 2021 11:18:48 -0800 (PST)
+Subject: Re: taking a break from Git
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <YboaAe4LWySOoAe7@coredump.intra.peff.net>
+ <YbohRy22vBuDZsG4@nand.local>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <b6961967-ce5b-d5ab-d44f-69ee58641837@gmail.com>
+Date:   Tue, 21 Dec 2021 00:48:44 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <YbohRy22vBuDZsG4@nand.local>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Peff,
 
-On Mon, Dec 20 2021, Phillip Wood via GitGitGadget wrote:
-
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 15/12/21 10:39 pm, Taylor Blau wrote:
+> On Wed, Dec 15, 2021 at 11:38:25AM -0500, Jeff King wrote:
+>> Hey all,
+>>
+>> I'm going to be offline and completely absent from the mailing list for
+>> five months starting at the end of December. After that, things are up
+>> in the air, but I may not be as involved in the project as I have been.
+>>
+>> Sorry, there's no juicy gossip or drama to share. I still like everyone,
+>> and think it's a cool project. ;) After 15 years, it just feels like
+>> it's time for a break and to perhaps apply my brain to something else
+>> for a while.
+> 
+> I am going to miss seeing patches and review from you tremendously.
+> 
+> ...
 >
-> To determine whether a hunk can be split a counter is incremented each
-> time a context line follows an insertion or deletion. If at the end of
-> the hunk the value of this counter is greater than one then the hunk
-> can be split into that number of smaller hunks. If the last hunk in a
-> file ends with an insertion or deletion then there is no following
-> context line and the counter will not be incremented. This case is
-> already handled at the end of the loop where counter is incremented if
-> the last hunk ended with an insertion or deletion. Unfortunately there
-> is no similar check between files (likely because the perl version
-> only ever parses one diff at a time). Fix this by checking if the last
-> hunk ended with an insertion or deletion when we see the diff header
-> of a new file and extend the existing regression test.
->
-> Reproted-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  add-patch.c                |  7 ++++++
->  t/t3701-add-interactive.sh | 46 ++++++++++++++++++++++++++++++++++----
->  2 files changed, 49 insertions(+), 4 deletions(-)
->
-> diff --git a/add-patch.c b/add-patch.c
-> index 8c41cdfe39b..5cea70666e9 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -472,6 +472,13 @@ static int parse_diff(struct add_p_state *s, const s=
-truct pathspec *ps)
->  			eol =3D pend;
->=20=20
->  		if (starts_with(p, "diff ")) {
-> +			if (marker =3D=3D '-' || marker =3D=3D '+')
-> +				/*
-> +				 * Last hunk ended in non-context line (i.e. it
-> +				 * appended lines to the file, so there are no
-> +				 * trailing context lines).
-> +				 */
-> +				hunk->splittable_into++;
+> I am a better programmer and Git contributor directly because of Peff's
+> efforts. I am sure that anybody who has been fortunate enough to get
+> review or advice from Peff feels the same as I do.
+> 
 
-I wondered if factoring out these several "marker =3D=3D '-' || marker =3D=
-=3D
-'+'" cases in parse_diff() into a "is_plus_minus(marker)" was worth it,
-but probably not.
+I could resonate with this. I've always seen you as a prolific contributor
+who is able to provide valuable feedback to long-timers and newcomers all
+the same. Thanks for all that you've done so, Peff!
 
->  			ALLOC_GROW_BY(s->file_diff, s->file_diff_nr, 1,
->  				   file_diff_alloc);
->  			file_diff =3D s->file_diff + s->file_diff_nr - 1;
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 77de0029ba5..94537a6b40a 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -326,7 +326,9 @@ test_expect_success 'correct message when there is no=
-thing to do' '
->  test_expect_success 'setup again' '
->  	git reset --hard &&
->  	test_chmod +x file &&
-> -	echo content >>file
-> +	echo content >>file &&
-> +	test_write_lines A B C D>file2 &&
+> 
+>>    - I really am going to stop reading the list. Even if you cc me. So
+>>      please don't get mad if I don't review your patches, or respond to
+>>      bug reports. :)
+> 
+> Please do ;). Enjoy your well deserved time off, and thank you.
+> 
 
-style nit: "cmd args >file2" not "cmd args>file2"
+I hope the same too. Wishing you luck on your future endeavour, Peff!
 
-> @@ -373,8 +411,8 @@ test_expect_success 'setup expected' '
->  test_expect_success 'add first line works' '
->  	git commit -am "clear local changes" &&
->  	git apply patch &&
-> -	test_write_lines s y y | git add -p file 2>error >raw-output &&
-> -	sed -n -e "s/^([1-2]\/[1-2]) Stage this hunk[^@]*\(@@ .*\)/\1/" \
-> +	test_write_lines s y y s y n y | git add -p 2>error >raw-output &&
-> +	sed -n -e "s/^([1-9]\/[1-9]) Stage this hunk[^@]*\(@@ .*\)/\1/" \
->  	       -e "/^[-+@ \\\\]"/p raw-output >output &&
->  	test_must_be_empty error &&
->  	git diff --cached >diff &&
+-- 
+Sivaraam
 
-style/diff nit: maybe worth it to in 1/2 do some version of:
-
-    test_write_lines ... >lines &&
-    git ... <lines .. &&
-    ...
-    sed -n \
-    	-e ... \
-        -e ... \
-        >output
-
-Just to make the diff smaller, i.e. just the "test_write_lines" line
-would be modified here.
-
-The changes themselves & this series LGTM.
+PS: I've been wanting to interview you for Git Rev News for
+quite some time now. Looks like I've waited too long. Given
+the circumstance, I don't wish to bother you with one. But if
+you feel like giving an interview, feel free to let me know :-)
