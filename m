@@ -2,106 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28CE0C433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 17:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD5EDC433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 17:39:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233376AbhLTRiO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 12:38:14 -0500
-Received: from mout.gmx.net ([212.227.15.18]:39125 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230135AbhLTRiN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 12:38:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1640021887;
-        bh=oa4/xqPmcdmdsauIRVBgoXmLkZh+J8dEXY29LONvleU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=YaivNmavDRPxozIJnDvssJ8hUFjgl0TnUwAPjw2rP7K1juc8s/793fAVqF70nDhLr
-         BMYQk5hVnyiI0nwdwLxvN1GGnJ0ZWAse9bENNqSF0xqqeD0b5VMf1/Tz5gHroMpoIP
-         MaYaOX9aVAcQFwPvs5i4sjbSMz61xBdG//91b5f4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.29.215.148] ([89.1.215.174]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M42jK-1mzMbv1ioy-0007gs; Mon, 20
- Dec 2021 18:38:07 +0100
-Date:   Mon, 20 Dec 2021 18:38:04 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] CI: remove support for Azure CI
-In-Reply-To: <patch-1.1-eec0a8c3164-20211217T000418Z-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2112201834050.347@tvgsbejvaqbjf.bet>
-References: <patch-1.1-eec0a8c3164-20211217T000418Z-avarab@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S238216AbhLTRj7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 12:39:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46012 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236696AbhLTRj6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 12:39:58 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69933C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 09:39:58 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id be32so16824437oib.11
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 09:39:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=IQPJi3dfw4pq7/3KDP4kYfu7l0Pg/t5uQw0dRTa8YnY=;
+        b=fi2oORs5VRHai75FY8+O7mc6Tm6kJd6kEbCSMUMAl1C+oH+nuXR+c3K+wFuUHolwUC
+         grfRiEKwPGny1wI+HeNu8bF3bbJ+xYRFT0GGMfCGluMCnNJ5BgLVoQVBqQ+HyLjQ99eB
+         kZ0U5NqKTgxiDh4NlNbCNkuDxRgzrOtQMLznBvCkQiV8MNzb9zk7aX9H8Xnl1eXq+zr0
+         Qy8UvsK0L+XiW8SZ+mCqJOfJvaOzPtECNxs4XaOEsITBHaqEaH1t2+mBVS+XYxz43qmL
+         lRGmNfxomXBOpngsV36z6qYKhFLJwv9i0w7ouwUUq4Ef2CPJiy1iKxGFpcaTfolEpvi/
+         sppg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=IQPJi3dfw4pq7/3KDP4kYfu7l0Pg/t5uQw0dRTa8YnY=;
+        b=l9HC77VXwrgK+sjzkodp6YFM6KZA/mHSdZknQbCaEH+HEmdF4Uw53l8mH43UBXkAp2
+         mdvbIBRfYsU18twV13Ohwmce8RADyLGFiM/X0a3izRu6uEF+aG5HjaqT/KGx2izYU51a
+         q3nSaQFYQv8vHoO3mThABsX+WxELQTTLn0/FcJ0Pkf6PM1KwyY7KhfAXyDd19yhnpIaw
+         t/skrr0wFJX9hpXHbMROPgvf4iNoRvNAIqKucYOStw/XLOu4F5j/6dvARysXZsZlsuAu
+         rc/uR8wmjhwjyBmVip2Z0aNUXN3bHfLzmtFemtQI1Tl3k3bNCQRSHGGk1q0oqCFQnJWL
+         dagQ==
+X-Gm-Message-State: AOAM531URZbBiH7UENB1Dbgt6ldLij3KEAlbLuK8ITkZ8fhtwfPHY6mD
+        mpAyxck1Qf+AjNtTea82kfWSfNipnPA=
+X-Google-Smtp-Source: ABdhPJyGlHGnc3KagzzSvHWx2GFTX8GDj0gyDVauxE+lKNU/zt+cHP8DtnXJagCaW0I63xz8TBptkQ==
+X-Received: by 2002:a54:4e0c:: with SMTP id a12mr53093oiy.12.1640021997653;
+        Mon, 20 Dec 2021 09:39:57 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:1dd9:8fb3:37da:4055? ([2600:1700:e72:80a0:1dd9:8fb3:37da:4055])
+        by smtp.gmail.com with ESMTPSA id m6sm3117610ooe.24.2021.12.20.09.39.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Dec 2021 09:39:57 -0800 (PST)
+Message-ID: <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
+Date:   Mon, 20 Dec 2021 12:39:53 -0500
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1930100049-1640021887=:347"
-X-Provags-ID: V03:K1:+iJoi2W5lYX0JGYurpuXvw7wQfp43/vPKmZigawjwBoXiGIuuRH
- GXZ0ENUtUr1/wDUvd/+UVzzKwk+MNoNWcKYhZJmACbNe0nm1S8PyB5LS9f8eDFlyfnEP5VF
- rYsj9qZUmllGstbO4fdqknXel0Hd+OXxhoIaUrWxuJ57mHbmwZNW+z9ZBLPeLCkpq/9IO3k
- qQLrseWfb1w14dkft33xA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uuiYEGqH6l4=:0rY5Yt4nMUlgEEWPEspOeA
- HcOpvygPTcSwtAwP6GhGnB/OAKDUT+caKhilSen0jnS4XRjervm7zezrLPg/Wmv8nAEzDUk2l
- 4ve7dePUrlYFj6N2ChheX8lJmvlBbe3aZwWUCtCxZ8fMRdCHjS7j8P5kPQespaRekiWlw20FJ
- ibfyskequ/FkBzqfB8pDmAwejmoTr23sx4VgSa7tm0Irw2C3Wc0osV6y2hqKum1s9sxvnB+vt
- nvvanbSbG/b3VOZQyviArqpXVkG9Icxjn4iuRfgYs7QATBCq+98nt59rXzdAQXCXY+nS02YTf
- gnEviiNmkgFL+PeQacCXIAFgsp0J1tU47hDjgcQVJJV1Zz1NxjUY8eCvOMxB36mj2WdpY7Tc7
- dsLFlwUxjvDApMXsdix96fAN82BqedrYGK8A/EL0jRcJR53w6lA2cc3ksJvZOyTnk0yn9A7lF
- YrmuGApEY1lo5xyiyXy8+e4qceAAU3EGjfLTQ7MjzoZVxVZ4hrGKMNCElmezCzqxxoJ40vTvi
- 4fz5mOqF9dmXE4RvdYxNOnbng5pE/wFY0iJveaodY1Or0cJVhttiB8ZR/EVi+ZjW0e9MGu8nL
- dlxgP0T98jX6SHcGas05xEEvx2xsh91hAMuCpTuqMViXspana4KXaS26IB8KgpGydYZ3gims4
- gLvvNC5/hKdTlY96o3P1rM2mZnk/trBp4wLuXDojZamOqZrGJ9uG2TX2eVK4qMLTdC8AMb49g
- KPasqGRNjneWfi+N7nFHEg7sc+ezuHDPclWLVx66fi8kTznAX10MeRsoiizNhzCTIQHjRg10g
- lLIfKYKw/BdKDVO0Fk48KjofRe2qUuvPz5h/8liErTqCjR9lDqL/PogQovihrVclq+WN/GRH/
- dTRluq21+CuF3NDDRjye611Hm2zxkW/zwiFGTdKvvVCP2zcsdWcKsuYjBbZz8C3tcXKvQ3VBW
- 8ojdhJtA4ee3Tg04WNyHqs6d7axHii8sCudCrKDLB6WBqQTEM9fYH3X2/dA0vi+sGNUAv8CEj
- oloiJnEL+4f8G0zrORvH3F6+Kd2wsIvMC9zgy93KVeWVgcnQSKNVqpWcFXDF9U7LC3rl294Pe
- U9BjcIY7bwKMoI=
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: [PATCH 03/13] init: unconditionally create the "info" directory
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
+ <patch-03.13-784b7947512-20211212T201308Z-avarab@gmail.com>
+ <db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com>
+ <211220.86tuf3utv9.gmgdl@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <211220.86tuf3utv9.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 12/20/2021 11:13 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Dec 20 2021, Derrick Stolee wrote:
+> 
+>> On 12/12/2021 3:13 PM, Ævar Arnfjörð Bjarmason wrote:
+>>> But we've also grown a hard dependency on this directory within git
+>>> itself. Since 94c0956b609 (sparse-checkout: create builtin with 'list'
+>>> subcommand, 2019-11-21) released with v2.25.0 the "git
+>>> sparse-checkout" command has wanted to add exclusions to
+>>> "info/sparse-checkout". It didn't check or create the leading
+>>> directory, so if it's omitted the command will die.
+>>
+>>> Even if that behavior were fixed we'd be left with older versions of
+>>> "git" dying if that was attempted if they used a repository
+>>> initialized without a template.
+>>
+>> This, I don't understand. Why can't we add a
+>> safe_create_leading_directories() to any place where we try to
+>> create a sparse-checkout file?
+>>
+>> This would fix situations where older versions were init'd with a
+>> different template or if the user deleted the info dir. The change
+>> you've made here doesn't fix those cases, which is what you are
+>> claiming is the reason to not do the other fix that seems like it
+>> would.
+>>
+>> What am I misunderstanding here?
+> 
+> I'll clarify that a bit in any re-roll.
+> 
+> Pedantically nothing changes, i.e. you can create a repository with an
+> empty template now, and it'll break on both the sparse-checkout on that
+> version, and any previous version that had that un-noticed issue.
 
---8323328-1930100049-1640021887=:347
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+You continue after this with more motivations for adding 'init' 
+unconditionally, which I am not fighting.
 
-Hi =C3=86var,
+What I _am_ saying is important is that if we are trying to write
+a file to a known location and its parent directory doesn't exist,
+then we should create it. Not doing so is a bug and should be
+fixed, no matter how rare such a thing is to occur. As you've
+shown, it is not required to have an info directory until we need
+one (e.g. for sparse-checkout or an excludes file).
 
-On Fri, 17 Dec 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+If you're not planning to add that to this series, then I'll add it
+to my list. I do think it would fit well into this one, though.
 
-> Remove various code required to support Azure CI. Recently in
-> 4a6e4b96026 (CI: remove Travis CI support, 2021-11-23) we removed the
-> Travis CI support, which was last used in June 2021.
->
-> The supporting infrastructure for Azure CI was already partially
-> removed in 6081d3898fe (ci: retire the Azure Pipelines definition,
-> 2020-04-11). As that commit notes:
->
->     We have GitHub Actions now. Running the same builds and tests in Azu=
-re
->     Pipelines would be redundant, and a waste of energy.
->
-> This follow-up removes the relevant Azure Pipelines-only supporting
-> code. Most of it was added in commits merged as part of
-> 57cbc53d3e0 (Merge branch 'js/vsts-ci', 2019-02-06).
-
-It feels premature to remove the remnants of Azure Pipelines support
-already now. It would be better to hold off a little, as much fun as
-deleting and refactoring code may be for some of us.
-
-The reason is that there are still some things that Azure Pipelines can do
-that GitHub workflows cannot, for example:
-
-- present the logs of failed tests in an intuitive manner,
-
-- re-run _only_ failed jobs.
-
-At this stage, I am not convinced yet that we should bet completely on
-GitHub workflows.
-
-Ciao,
-Johannes
-
---8323328-1930100049-1640021887=:347--
+Thanks,
+-Stolee
