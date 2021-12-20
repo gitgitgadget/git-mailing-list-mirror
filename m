@@ -2,83 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3E8BC433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 21:58:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4098C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 22:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231720AbhLTV61 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 16:58:27 -0500
-Received: from mail-pj1-f50.google.com ([209.85.216.50]:35737 "EHLO
-        mail-pj1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231709AbhLTV60 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 16:58:26 -0500
-Received: by mail-pj1-f50.google.com with SMTP id j6-20020a17090a588600b001a78a5ce46aso555330pji.0
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 13:58:26 -0800 (PST)
+        id S232498AbhLTWHL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 17:07:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50246 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231142AbhLTWHK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 17:07:10 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD964C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 14:07:09 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id z29so43997095edl.7
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 14:07:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=ZpYQ8vNtSfw2nmwFdP/1baUJMPLThdPjQviWjZw6zyE=;
+        b=ODM5c7KVITeC/Rj4qiUGmnj+vVvvy4IKf87F8yQqHtXgn+eUP6D1GomfLZOIMGWfRZ
+         8lGxH2rsFgQ/WjEMnPnBCFQUHdxw7JnNqzxLfGPBFA/BBVFqc3NjhWiJXLn1474bYhMi
+         +k6DZUUEEIA6W2a2hVKt2TienNnAe+ALTwvqXhPIEFrKxVLmhS4EFQPH67enk1+jRUDV
+         GFMDSxU+R5/HTBAiSmDXSIdQdwtQUT2VbQxBencWMP2M+v2RN2ZBNHs7xKiYXuSdPSeM
+         PyFNaIJpNLLO2jVyrDDytUKfGPI8a+te+3LREMsypYRA+DGRwlgLVG0qCWfYam9fAlQ3
+         lm9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KZtknDGbNaUG5sOqm1NDrE6JxCgCVqBln3PJJZwGsJI=;
-        b=vbq030xwsrtvKpG9BTQ9ncUjPLSwZ4wD6IbdPMJbn6iG2eU8xc/AMY+eO8xoaKJxwq
-         Abspy0SZjQB91mpj+blYOFOk1737DQUWajPYuzTuj7GtJNVdmZOpkosp/JUwj72veYj8
-         ewwnZHCC2hxC064swMh0UenF/WBIsegZosSbMI7PfRGHqE76c+CHCcr3kXXOqHainmdg
-         z+kqbRBOKOfiPpwYXqgtAlpmdjoud4EGhypZt18XBlsyzpC+99dgDa6XfOnJlrh9hiWb
-         Aiy7s5Iw/M636dv1V/zxRrmEqjl0zehjNiiyWXot3JB/aRWZIH/5TnhX/OfXpiv4jZZt
-         0Oxg==
-X-Gm-Message-State: AOAM530VadvXo0f13a6CWL10T53jIpndQtMOEFkCgT35FCIMhI0vGu6M
-        fk9JlS6ucfh/ytmlF6gaiN54jgEL5BP3RI89I3VHI3vhkyG0RQ==
-X-Google-Smtp-Source: ABdhPJwEK0gmypL3692OrHkFbVAEBj3LfDYny/K6BcqKVCSDrkml5xm8W/gSfH5a3GcrcJyQ+mKcdr/fUpc8XH9FKVI=
-X-Received: by 2002:a17:903:1247:b0:143:b9b9:52a2 with SMTP id
- u7-20020a170903124700b00143b9b952a2mr19154333plh.35.1640037506108; Mon, 20
- Dec 2021 13:58:26 -0800 (PST)
-MIME-Version: 1.0
-References: <CABceR4bZmtC4rCwgxZ1BBYZP69VOUca1f_moJoP989vTUZWu9Q@mail.gmail.com>
- <e992d4b4-f9e2-a8f9-22da-e9d342c7bede@sunshineco.com> <CABceR4YVd4remACJkxwSCTSYB2v3Zn1BsjKHbzeve8uHiZv1pA@mail.gmail.com>
- <CAPig+cQ6U_yFw-X2OWrizB1rbCvc4bNxuSzKFzmoLNnm0GH8Eg@mail.gmail.com>
- <f39af047-d244-14be-4cd8-b6c3199545f3@gmail.com> <CAPig+cQPUe9REf+wgVNjyak_nk3V361h-48rTFgk6TGC7vJgOA@mail.gmail.com>
- <0f98d3e5-f2c2-526a-0476-a89778e5b2b5@gmail.com>
-In-Reply-To: <0f98d3e5-f2c2-526a-0476-a89778e5b2b5@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 20 Dec 2021 16:58:15 -0500
-Message-ID: <CAPig+cTzshfTeNDEbGTaCvZCAjnH-mmzi0i67Wu169wXG2XN2w@mail.gmail.com>
-Subject: Re: Bug report - Can create worktrees from bare repo / such worktrees
- can fool is_bare_repository()
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Sean Allred <allred.sean@gmail.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=ZpYQ8vNtSfw2nmwFdP/1baUJMPLThdPjQviWjZw6zyE=;
+        b=rVlpuEgmaqD4kX3ojgj6mzfD80Y+mKvOuH8vF1tqBZKJXbex1VRH8PfXXarKZz3U2u
+         70pRSCU4XAfc0HOUTHTboSVEPVkWOTV6+b6+sF7uModzx5JRtSGLXHfn3pmBruT1nFgR
+         DVZFVaI9TBy8Uxfms752sjsajkncbMr/TFm2qwoJ8lC4dTRnFebuPr3MXDSCS1BhHiF0
+         CKlwzsnt/Jq05TR9lLjGIHG1WwYZ32sTfAYGko9S9X8Xx7yk4jZ1U5mqEnHpZMg8RBVJ
+         FigxAHb0ZnXhispdEWCWxQ+52rdgcm36hjr6sDmZfhJOBgNVkCXLpzT4ND3v18tk/IjZ
+         1pLg==
+X-Gm-Message-State: AOAM530TpjzeoXDjEYpnrq8W36ci8sHAdiRdeU7am43qmFCnfmBVMAao
+        J39BSnu6tCIXr6CPggVhijQ=
+X-Google-Smtp-Source: ABdhPJwF3RDLJcQavfxr8hy/m3aDGo+ldvzmvK38oYsALaM9wrUrglYRleilljql3LN2YPtPzOdq1A==
+X-Received: by 2002:a50:9dc1:: with SMTP id l1mr145841edk.231.1640038028401;
+        Mon, 20 Dec 2021 14:07:08 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id 12sm5704827eja.187.2021.12.20.14.07.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Dec 2021 14:07:07 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mzQoF-000ZTC-5n;
+        Mon, 20 Dec 2021 23:07:07 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
         Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <ttaylorr@github.com>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Hamza Mahfooz <someguy@effective-light.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel?= =?utf-8?Q?=C3=B3n?= 
+        <carenas@gmail.com>, Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH 2/2] grep/pcre2: factor out literal variable
+Date:   Mon, 20 Dec 2021 23:03:55 +0100
+References: <5fa6962e-3c1c-6dbc-f6d7-589151a9baec@web.de>
+ <ba503995-866d-fc80-4e38-b4dfd0e5c5bc@web.de>
+ <211219.86o85cwfje.gmgdl@evledraar.gmail.com> <xmqqr1a7uhgk.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqqr1a7uhgk.fsf@gitster.g>
+Message-ID: <211220.865yrjszg4.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 20, 2021 at 12:29 PM Derrick Stolee <stolee@gmail.com> wrote:
-> On 12/20/2021 10:58 AM, Eric Sunshine wrote:
-> > `On Mon, Dec 20, 2021 at 9:11 AM Derrick Stolee <stolee@gmail.com> wrote:
-> >> So, we are manually specifying "put this in the config.worktree file"
-> >> and not going through some "initialize worktree config" helper. Such
-> >> a helper would be useful to avoid this issue in the future.
-> >
-> > Yes, I was planning to suggest this in a follow-up message.
-> > Specifically, I think top-level worktree.[hc] (not builtin/worktree.c)
-> > should publish a function which enables worktree-specific
-> > configuration _and_ does all the necessary bookkeeping, such as moving
-> > `core.bare` and `core.worktree` from .git/config to
-> > .git/worktree.config. That way, not only can git-sparse-checkout take
-> > advantage of it, but so can any command which needs the functionality
-> > in the future, as well as the fictitious "git worktree manage" command
-> > I mentioned earlier if it ever materializes.
->
-> Ah. I put my change in config.[hc], but let's discuss that in the
-> patch series [1].
 
-My concern and sole reason for bringing it up is that this new
-function (which should be generally useful) should not end up in
-builtin/sparse-checkout.c. I had suggested worktree.c because its
-functionality is closely related to worktrees, however, since config.c
-has intimate knowledge of the location of worktree configuration, that
-also is a reasonable home for the new function. Either location should
-be fine; I don't feel strongly either way and don't think it needs a
-lot (or any) discussion.
+On Mon, Dec 20 2021, Junio C Hamano wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> I think for this and 1/2 it would be really nice to pick up a version of
+>> Hamza's CI changes:
+>> https://lore.kernel.org/git/20211118084143.279174-2-someguy@effective-li=
+ght.com/
+>
+> Are there so many incompatible versions of pcre2 library whose usage
+> are subtly different that we need to protect ourselves with multiple
+> variants in CI from breakages?
+>
+> I doubt pcre2 library was _that_ bad.
+
+It's really not, but:
+
+ * We have an optional >=3D10.34 feature we use (albeit trivial)
+ * We have an optional >=3D10.36 feature we use (major, and directly relate=
+d)
+ * We might be targeting JIT or not, and the error handling isn't the same =
+(known PCRE caveat)
+ * We might be targeting a PCRE that knows about Unicode, or not
+ * We use it in a mode where we might feed UTF-8 invalid data into the UTF-=
+8 mode
+
+Any update to the relevant code really needs to test the combination of
+those, so it's a perfect target for CI to make that less tedious.
+
+> Adding a special task that builds with the minimum version we
+> support may not be too bad, but the library should be stable enough
+> to allow us to declare it sufficient to test the most common version
+> with the most common build options in our ordinary build job(s).
+
+That's a nice idea, but not the reality of the situation. Unless we're
+willing to bump the version requirement & insist on JIT && Unicode
+support before using it.
+
+The CI itself should be realtively cheap, and just runs the few tests
+that would spot any breakages with the above.
