@@ -2,144 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5685C433F5
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 18:33:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB085C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 18:33:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237715AbhLTSdi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 13:33:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58096 "EHLO
+        id S240303AbhLTSd5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 13:33:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232319AbhLTSdh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 13:33:37 -0500
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43718C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:33:37 -0800 (PST)
-Received: by mail-oi1-x22e.google.com with SMTP id bj13so17091767oib.4
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:33:37 -0800 (PST)
+        with ESMTP id S232319AbhLTSd4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 13:33:56 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3065EC061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:33:56 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id f5so18993336edq.6
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:33:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=RwptB7bMD7uCa4a2t6n0jSmy9JkiVsNdnH/KHvtRqgk=;
-        b=Ts0rQv80Tjpp8qJN6fh1EDhHbByaMEU3Gu8vD+3CfM/bUJGi4bfujf8u8nzVcBUKbw
-         Ycd/SaDC8+81lU9G7bHUEIFCgTWPnePxYYGfrJgJnTxGwCzdcXqfhXSWs98ibW6TZV3K
-         rXm/pBtWpZLPifEBB+JnJdiIHCODFRT0+9AvL7ZChM0T7NJcIEIKjguJ9dSvAanntLw7
-         wxDGy2ayqf1tEW44glEXp3kGxBEl9h5eTZFTO+AGNtNB5llDfyslgtiZ9CWD3nBY1MIp
-         7fOTMS50kGKN0DLt4NROh1AAXtkGbBALKAc+yZ8SO7m4fes4nibXSoX+NuuTmqCwvcrR
-         gQIA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=bnKdWeA13gQuQ2EG1n9qCIsGrPK7q1CjownNkD9hf2o=;
+        b=IAZcwBormLB25Y9xmRSiPcO/OPkya0Qjb86etll4qu1knfYaY82kCDI5b+bkQGxWqn
+         LUcJU9ZH4svqUxWWvt3YoJAfa5VpocicpAhERBMJJfTfnf9p6AmmULfFhUqUceWeS7CL
+         4zMOzdvLSm7MTJnDrvXCPuNQ0buD4kWcN44b4sHiIQIxkmUQDEaKAKYMmGOBiSwiqv1W
+         VkyBkGcxZxdB69g7pgrZpTMA509/m5KAcBQ1Jy2uzXAGS87ZMfizuLnv8avK/fSCQVfi
+         f1ILPQVVopzA5TC/I+LJNn78sasXv7OjdhEuDPhvYEjdKQ+odHAncB5G1syKfyENASc1
+         szzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=RwptB7bMD7uCa4a2t6n0jSmy9JkiVsNdnH/KHvtRqgk=;
-        b=ExSlU+9gOImtx01S7kS1CgWZ4yKBqcoZedTdjI6I1jzPuRGF3ckli+vasJrpVVr9rA
-         go9mLbaKd7pGtxTAmaCQfvxlhEQcIKZOxHdoB2ePJQgcB/2OgmtTLCPBV4f7luTxdfmD
-         uP1NW91P2Mjz9ZgLk5sy3s2KRB2y27gDNkOoZEm5Z7fPP9Af+zQW8c5A3PMp6H9yAscW
-         rl30mPVxYUszrvfqlTiifemZqBM3jnFGj1y3Yr3NulrnC4GJqUDqDM1Utkc6N3l13DJx
-         mG9t5kPb2DNNbOsC9GN9Rvsg93rLTPQ0868VtHHY8FlWTxyQ2vdrwJv1Z1zcokvhOhxd
-         x8ng==
-X-Gm-Message-State: AOAM532WZ+UxX5E6iouiitONGFvp1GEKqWQSgZhmQqRvgL8yWnIe9F9f
-        Sevo1TdHVLHZaCwQKDN6qgzTRiCL4P4=
-X-Google-Smtp-Source: ABdhPJwRxao0RNtEzFWMMHKkHtSj/iaB5deRc5zDQ5T8hxghKI5nIPjR3cOawscO1nxCnCzyNk06hA==
-X-Received: by 2002:aca:a941:: with SMTP id s62mr206087oie.87.1640025216472;
-        Mon, 20 Dec 2021 10:33:36 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:1dd9:8fb3:37da:4055? ([2600:1700:e72:80a0:1dd9:8fb3:37da:4055])
-        by smtp.gmail.com with ESMTPSA id m23sm3319584otj.39.2021.12.20.10.33.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Dec 2021 10:33:36 -0800 (PST)
-Message-ID: <dbc75e29-aceb-051a-8235-e5c912172aed@gmail.com>
-Date:   Mon, 20 Dec 2021 13:33:32 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=bnKdWeA13gQuQ2EG1n9qCIsGrPK7q1CjownNkD9hf2o=;
+        b=7YNhMKuevtNVIaRh294WuM+ptupavFTI+uuRfZMyaW5kasBIlHIdi88nqD/bw0jyBx
+         23302Pyy3fP+2Q32aT8j7dULW37JI+l+Wzy4xC2jvR5Md3Zve4S+YlSmfwzjX1opMkiP
+         8dAYOk0oSkLqGo+yU17mV6UiV6892Sgo+Rtlo04m2/lxBHtJskntlQ67PoR8PSz9XHtr
+         0BnCwaH+E7f7ArE1DoMDWY88K9tYFgGeVXdjOlGnjeQO5diTqkUR+4SsfLfp69CrMp+A
+         4KWmbAQwwtHAlotWs4xemAwJq1pHDYaBdgplDaN85pUcZ+49gLxs6+5tVe+DjGgpRBgW
+         Yj+Q==
+X-Gm-Message-State: AOAM533CBpMG+RnhQxmd3WZlQYWjtRT9jPcaK8sUz3GgvFMAgZwS3dMz
+        aN06vA+NDYQQ/38BprzESGM=
+X-Google-Smtp-Source: ABdhPJzgAVPw5gjClrwUznmlOmrDwDoiulyahSp7y3MeUDn/aKXPb03nklkWnhFmH5mpEjGu7nRGWA==
+X-Received: by 2002:a17:906:a091:: with SMTP id q17mr13817551ejy.669.1640025234643;
+        Mon, 20 Dec 2021 10:33:54 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id r17sm3717843edd.53.2021.12.20.10.33.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Dec 2021 10:33:54 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mzNTt-000WMO-IB;
+        Mon, 20 Dec 2021 19:33:53 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 03/13] init: unconditionally create the "info" directory
+Date:   Mon, 20 Dec 2021 19:16:22 +0100
+References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
+ <patch-03.13-784b7947512-20211212T201308Z-avarab@gmail.com>
+ <db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com>
+ <211220.86tuf3utv9.gmgdl@evledraar.gmail.com>
+ <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
+Message-ID: <211220.86zgovt9bi.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [PATCH v2 5/8] t5326: extract `test_rev_exists`
-Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net
-References: <cover.1638991570.git.me@ttaylorr.com>
- <cover.1639446906.git.me@ttaylorr.com>
- <73faab9f429221b7be88ea88ce59bc47afb57348.1639446906.git.me@ttaylorr.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <73faab9f429221b7be88ea88ce59bc47afb57348.1639446906.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/13/2021 8:55 PM, Taylor Blau wrote:
-> To determine which source of data is used for the MIDX's reverse index
-> cache, introduce a helper which forces loading the reverse index, and
-> then looks for the special trace2 event introduced in a previous commit.
-> 
-> For now, this helper just looks for when the legacy MIDX .rev file was
-> loaded, but in a subsequent commit will become parameterized over the
-> the reverse index's source.
-> 
-> This function replaces checking for the existence of the .rev file. We
-> could write a similar helper to ensure that the .rev file is cleaned up
-> after repacking, but it will make subsequent tests more difficult to
-> write, and provides marginal value since we already check that the MIDX
-> .bitmap file is removed.
 
-...
+On Mon, Dec 20 2021, Derrick Stolee wrote:
 
-> +test_rev_exists () {
-> +	commit="$1"
-> +
-> +	test_expect_success 'reverse index exists' '
-> +		GIT_TRACE2_EVENT_NESTING=10 \
+> On 12/20/2021 11:13 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> On Mon, Dec 20 2021, Derrick Stolee wrote:
+>>=20
+>>> On 12/12/2021 3:13 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>>> But we've also grown a hard dependency on this directory within git
+>>>> itself. Since 94c0956b609 (sparse-checkout: create builtin with 'list'
+>>>> subcommand, 2019-11-21) released with v2.25.0 the "git
+>>>> sparse-checkout" command has wanted to add exclusions to
+>>>> "info/sparse-checkout". It didn't check or create the leading
+>>>> directory, so if it's omitted the command will die.
+>>>
+>>>> Even if that behavior were fixed we'd be left with older versions of
+>>>> "git" dying if that was attempted if they used a repository
+>>>> initialized without a template.
+>>>
+>>> This, I don't understand. Why can't we add a
+>>> safe_create_leading_directories() to any place where we try to
+>>> create a sparse-checkout file?
+>>>
+>>> This would fix situations where older versions were init'd with a
+>>> different template or if the user deleted the info dir. The change
+>>> you've made here doesn't fix those cases, which is what you are
+>>> claiming is the reason to not do the other fix that seems like it
+>>> would.
+>>>
+>>> What am I misunderstanding here?
+>>=20
+>> I'll clarify that a bit in any re-roll.
+>>=20
+>> Pedantically nothing changes, i.e. you can create a repository with an
+>> empty template now, and it'll break on both the sparse-checkout on that
+>> version, and any previous version that had that un-noticed issue.
+>
+> You continue after this with more motivations for adding 'init'=20
+> unconditionally, which I am not fighting.
+>
+> What I _am_ saying is important is that if we are trying to write
+> a file to a known location and its parent directory doesn't exist,
+> then we should create it. Not doing so is a bug and should be
+> fixed, no matter how rare such a thing is to occur. As you've
+> shown, it is not required to have an info directory until we need
+> one (e.g. for sparse-checkout or an excludes file).
+>
+> If you're not planning to add that to this series, then I'll add it
+> to my list. I do think it would fit well into this one, though.
 
-Very recently, b8de3d6 (test-lib.sh: set GIT_TRACE2_EVENT_NESTING,
-2021-11-29) made it to master and sets this to 100 across the test
-suite, so you don't need this line.
+Ah, you mean for the case where "git sparse-checkout" will fail because
+.git/info/ doesn't exist now (e.g. because it's an existing repo with
+--template=3D).
 
-> +		GIT_TRACE2_EVENT=$(pwd)/event.trace \
-> +			git rev-list --test-bitmap "$commit" &&
+Yes that bug will not be fixed by this series. I'd welcome a patch to
+fix it & could even integrate it with this series.
 
-This use of $commit has me worried. Do the tests become too flaky
-to changes in how we choose commits for the bitmaps? Does that
-require callers to be too aware of the refstate when creating the
-bitmaps?
+But I just found it rather "meh" and not that worth fixing. I.e. that it
+hasn't been noticed or reported until now shows that this is a very rare
+mode of operation. It seems most people just "git init" or "git clone",
+or maybe almost nobody uses "sparse-checkout". I don't know.
 
-Perhaps just `git rev-list --use-bitmap-index [--objects] HEAD`
-would suffice to generate the trace event?
+I did try to fix it in an earlier version of this.
 
-> +		test_path_is_file $midx-$(midx_checksum $objdir).rev &&
-> +		grep "\"category\":\"load_midx_revindex\",\"key\":\"source\",\"value\":\"rev\"" event.trace
-> +	'
-> +}
-> +
->  setup_bitmap_history
->  
->  test_expect_success 'create single-pack midx with bitmaps' '
->  	git repack -ad &&
->  	git multi-pack-index write --bitmap &&
->  	test_path_is_file $midx &&
-> -	test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
-> -	test_path_is_file $midx-$(midx_checksum $objdir).rev
-> +	test_path_is_file $midx-$(midx_checksum $objdir).bitmap
->  '
->  
-> +test_rev_exists HEAD
-> +
+Maybe I went overboard with that, but I didn't just sprinkle
+safe_create_leading_directories() to every caller as you suggest, but
+rather wanted to change the API so that cases like:
 
-Perhaps this helper would be more appropriate as a helper method
-within a test, rather than creating a test of its own? I think
-it looks better to include it next to the setup lines, something
-like
+        sparse_filename =3D get_sparse_checkout_filename();
+        res =3D add_patterns_from_file_to_list(sparse_filename, "", 0, &pl,=
+ NULL, 0);
+        free(sparse_filename);
 
-test_expect_success 'create single-pack midx with bitmaps' '
-	git repack -ad &&
-	git multi-pack-index write --bitmap &&
-	test_path_is_file $midx &&
-	test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
-	test_rev_exists HEAD
-'
+Would just call some function saying "add to sparse excludes", and not
+care about the filename. Since having the API at that levels means you
+end up with a lot of accounting work of getting the filename, freeing it
+etc.
 
-This would lead to a failure within 'create single-pack midx
-with bitmaps' which is easier to find in the file.
+E.g. this as another example from add_patterns_cone_mode() (the function
+makes no other use of sparse_filename):
 
-Thanks,
--Stolee
+	char *sparse_filename =3D get_sparse_checkout_filename();
+        [...]
+        if (add_patterns_from_file_to_list(sparse_filename, "", 0,
+                                           &existing, NULL, 0))
+                die(_("unable to load existing sparse-checkout patterns"));
+        free(sparse_filename);
+
+But per the upthread rationale I figured "meh" on that and that just
+changing "git init" would fix the problem going forward in practice, so
+I didn't pursue it.
+
+Won't unconditionally adding a safe_create_leading_directories() also
+close the door to having a core.sparseCheckoutFile similar to
+core.excludesFile (but maybe it makes no sense). I.e. we'd be free to
+"mkdir -p" the .git/info, but if the user is pointing it to some other
+path then blindly creating that possibly nested path might be confusing,
+as opposed to just immediately erroring out.
+
+So...
+
+All of which is to say that if you'd like to untangle it I'll review it,
+and would be happy to include it in this series. But for the
+--no-template change I thought I'd just try to sidestep that particular
+aspect.
