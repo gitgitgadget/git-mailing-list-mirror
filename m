@@ -2,131 +2,223 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 826C7C433F5
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 18:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF164C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 18:29:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233646AbhLTSNW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 13:13:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53600 "EHLO
+        id S236227AbhLTS3P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 13:29:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232777AbhLTSNV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 13:13:21 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC365C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:13:20 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id z29so41798570edl.7
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:13:20 -0800 (PST)
+        with ESMTP id S233685AbhLTS3M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 13:29:12 -0500
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E798C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:29:12 -0800 (PST)
+Received: by mail-pf1-x449.google.com with SMTP id t29-20020a62d15d000000b004baa073f34fso2030532pfl.12
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:29:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=DJ8r8ZILI25EteII+qvc5ka02qo18dv5sG0tM2R8oco=;
-        b=J+tDHngNCUEjwP0cEEaTAf9lhDuhSY3aR52EYV0MhatFI08PcQ6au/4nF7fllUTYqL
-         zgW41z4xsN5uae2VZJcvijNCEAsiZlHa9VBNFxfuwg3yAP+4QOi+lm87BmuRpZOVrzMg
-         xkE7OJo1m6lqqlc1PIk9HvtB20t84BYxRIWTNvalj+6ZUZDVesOXJgcML00PZzsk9WFr
-         fGZJKWdPfss3Ce0Ljbr0GRgZlk7BruP0Ej8oYb7h6qCrLqYAN8w2lZEwg+TG8aQ5P1Pd
-         X/1L0bNjTbCDmtzGO6NryfyZRBgu+EDJBZOpf8RAQnz8hpycb0Om1cb18J7OavfgtajS
-         JxRg==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=duLNwKjnuIgeiYtk3D/W+ga2m9aNg4z222jJ1/SpyFI=;
+        b=IWkN/DqWitK6YGcPVg3K066jU+Qg3pIiMzkKHw4BmRwTBPzJ+3qs6e0TYcOPYZvjn3
+         CaFp8ZHzSBu7zHeEYsJYojjGq6yxoJ77iByltUboqBMdVvaEw9KjrchOqJ07+ZD0Yt91
+         /GDRGbDnX0hNLgiChxXSopiN3vQCrkzpRlBWWwiZNNhftcaTg1X0G9PzkmN3+hjREQg1
+         2E8AeOq8C7vOszqP5c/YzVwUqQu+9tsAj1Ivw7kld6XPKYsDjNKRfYdBy9l/Mov/lvCJ
+         o232ADAmWEnFx1e4RaA3YfhsVw9ecNFCNnQTgYc481bYSBXu69fWOfvhjV7ZuYiWvaoD
+         2U4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=DJ8r8ZILI25EteII+qvc5ka02qo18dv5sG0tM2R8oco=;
-        b=If51H/ah68pJUbyKNXQTCP1BNDQuO4IbH5nQdZFnH702gN95IIyfobvKz/uk+zAmU/
-         2jD+KXfIEAgvx71EAWpoXYnKtb5dKMw47Lngnbdy2fuzsFKOeexQG5qxkxE0wqAANlyx
-         Vrupu2xKunGml0e4V5PxhwZns6vrdBYQuFjiZU2RA8JwllEoQm5eap98TY3I6ElTzxh9
-         Ed+3A6EMcnrnGCk2kULgkVCDQHb5Ru5bHJDfyPo+pGO3IBgSkOXy/Yh8kOmKpLSZ9kPF
-         m4FK6JMNJgX1XtUma5O8h72jo2oa0jUiucMtbg4d8q+1H4nGweXIpCPkCG6kh/Kq/FcN
-         kygA==
-X-Gm-Message-State: AOAM530az8lYXdynrvqVuQ4yKYyMnd+0QLRO+huCM1Sqx1/E2h8POV7L
-        VqSobHTYv3Mohn8asslQUjo/JbW9nMqFTw==
-X-Google-Smtp-Source: ABdhPJyz8mPakLUymQzBeskqBy60TW28JPK/d/+B94KPN9zLmujzqqWN6J5efV2XNcSseksl+AK9dA==
-X-Received: by 2002:a17:907:72c2:: with SMTP id du2mr14599281ejc.155.1640023999015;
-        Mon, 20 Dec 2021 10:13:19 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id g22sm3868998edv.70.2021.12.20.10.13.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 10:13:18 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzN9x-000VoX-Uf;
-        Mon, 20 Dec 2021 19:13:17 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] CI: remove support for Azure CI
-Date:   Mon, 20 Dec 2021 19:05:31 +0100
-References: <patch-1.1-eec0a8c3164-20211217T000418Z-avarab@gmail.com>
- <nycvar.QRO.7.76.6.2112201834050.347@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <nycvar.QRO.7.76.6.2112201834050.347@tvgsbejvaqbjf.bet>
-Message-ID: <211220.864k73uoua.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=duLNwKjnuIgeiYtk3D/W+ga2m9aNg4z222jJ1/SpyFI=;
+        b=FUV20jAogTZOXmcinPGl2MZ0wyWBPMajQKikZPc6B/XoL8lWLGBg59i7gr5x3ex41w
+         9MaRSYi2K1g4dEjg3qYzY2JAv7cttjUHqsJBlg3D9wFs5ipZfi276JhbbPZLe+X+LhtN
+         6WoYFqD+vNEIHPMkz3oH6t3JcDcW4uw/7kt6kliaX3ZJo//goqd+sDtFOM26yaoeSnc/
+         mNdmjWK9qoD1Ag0N9a6Dbyx4Ft/atXACIpcvqGCN4rcNvoINaa+EkH7uF5rAZgUjtQ0z
+         HRogbcHK8yuzQW7Arfv5lO9RWuw6bFXjDilf9kR3WccJ6hp+EmvaBucNtpFJ0HAbb5Hl
+         cT7A==
+X-Gm-Message-State: AOAM533kq9BOb/FV3qp7IEtDlBXEotTqc66lMrPtdYkXcv8RBVMmuBmX
+        tye4yDR0BWrWY84q6yICG38vKBjvzQxJYg==
+X-Google-Smtp-Source: ABdhPJzJtUtxW+IK8SNiT08BLaAJ8xHoEhrfFeyhBM0O/hTw1MPCuAfxTo9LalR/CsU57JGFy7XhWHdoliVPRg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90a:3d42:: with SMTP id
+ o2mr76064pjf.1.1640024951161; Mon, 20 Dec 2021 10:29:11 -0800 (PST)
+Date:   Mon, 20 Dec 2021 10:29:08 -0800
+In-Reply-To: <Ybwb4UkQwAVRcJp5@google.com>
+Message-Id: <kl6lzgovyvt7.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+ <cover.1639524556.git.steadmon@google.com> <43d6f83fedc022c44d6a3be249e7fd8cd2a25007.1639524556.git.steadmon@google.com>
+ <kl6lo85g8grj.fsf@chooglen-macbookpro.roam.corp.google.com> <Ybwb4UkQwAVRcJp5@google.com>
+Subject: Re: [PATCH v6 1/3] branch: accept multiple upstream branches for tracking
+From:   Glen Choo <chooglen@google.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
+        Johannes.Schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Josh Steadmon <steadmon@google.com> writes:
 
-On Mon, Dec 20 2021, Johannes Schindelin wrote:
-
-> Hi =C3=86var,
+>> > @@ -87,29 +112,42 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+>> >  	strbuf_release(&key);
+>> >  
+>> >  	if (flag & BRANCH_CONFIG_VERBOSE) {
+>> > -		if (shortname) {
+>> > +		const char *name;
+>> > +		struct strbuf ref_string = STRBUF_INIT;
+>> > +
+>> > +		for_each_string_list_item(item, remotes) {
+>> > +			name = item->string;
+>> > +			skip_prefix(name, "refs/heads/", &name);
+>> > +			strbuf_addf(&ref_string, "  %s\n", name);
+>> > +		}
+>> > +
+>> > +		if (remotes->nr == 1) {
+>> > +			struct strbuf refname = STRBUF_INIT;
+>> > +
+>> >  			if (origin)
+>> > -				printf_ln(rebasing ?
+>> > -					  _("Branch '%s' set up to track remote branch '%s' from '%s' by rebasing.") :
+>> > -					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
+>> > -					  local, shortname, origin);
+>> > -			else
+>> > -				printf_ln(rebasing ?
+>> > -					  _("Branch '%s' set up to track local branch '%s' by rebasing.") :
+>> > -					  _("Branch '%s' set up to track local branch '%s'."),
+>> > -					  local, shortname);
+>> > +				strbuf_addf(&refname, "%s/", origin);
+>> > +			strbuf_addstr(&refname, remotes->items[0].string);
+>> > +
+>> > +			/*
+>> > +			 * Rebasing is only allowed in the case of a single
+>> > +			 * upstream branch.
+>> > +			 */
+>> > +			printf_ln(rebasing ?
+>> > +				_("branch '%s' set up to track '%s' by rebasing.") :
+>> > +				_("branch '%s' set up to track '%s'."),
+>> > +				local, refname.buf);
+>> > +
+>> > +			strbuf_release(&refname);
+>> > +		} else if (origin) {
+>> > +			printf_ln(_("branch '%s' set up to track from '%s':"),
+>> > +				local, origin);
+>> > +			printf("%s", ref_string.buf);
+>> 
+>> It's not clear to me why the hint contains the word 'from' when it is a
+>> remote ref...
 >
-> On Fri, 17 Dec 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> Remove various code required to support Azure CI. Recently in
->> 4a6e4b96026 (CI: remove Travis CI support, 2021-11-23) we removed the
->> Travis CI support, which was last used in June 2021.
->>
->> The supporting infrastructure for Azure CI was already partially
->> removed in 6081d3898fe (ci: retire the Azure Pipelines definition,
->> 2020-04-11). As that commit notes:
->>
->>     We have GitHub Actions now. Running the same builds and tests in Azu=
-re
->>     Pipelines would be redundant, and a waste of energy.
->>
->> This follow-up removes the relevant Azure Pipelines-only supporting
->> code. Most of it was added in commits merged as part of
->> 57cbc53d3e0 (Merge branch 'js/vsts-ci', 2019-02-06).
->
-> It feels premature to remove the remnants of Azure Pipelines support
-> already now. It would be better to hold off a little, as much fun as
-> deleting and refactoring code may be for some of us.
->
-> The reason is that there are still some things that Azure Pipelines can do
-> that GitHub workflows cannot, for example:
->
-> - present the logs of failed tests in an intuitive manner,
->
-> - re-run _only_ failed jobs.
->
-> At this stage, I am not convinced yet that we should bet completely on
-> GitHub workflows.
+> Because in the multiple-branch case, we don't prepend the origin to each
+> ref, so we need to let users know which remote the refs are coming from.
 
-I think these concerns should be addressed by the rest of the commit
-message that follows the paragraph you quoted.
+I see. So if I'm reading this correctly, the error message in the remote
+case would read something like:
 
-I.e. I'm not deleting this for fun, but because certain improvements to
-test-lib.sh require patching the JUnit emitter.
+  branch 'main' set up to track from 'origin':
+    main
+    topic1
+    topic2
 
-Since there is no current user of it or a way to test it against a
-working CI mode such changes are harder to make and to review.
+Is there any reason why we couldn't append the origin to the ref to make
+it consistent? I think this could be as simple as:
 
-Those changes being things I've got locally that achieve some of the
-same aims you note here. I.e. getting guaranteed machine-parsability of
-the test-lib.sh TAP output, to e.g. present failing tests intuitively.
 
-My 707d2f2fe86 (CI: use "$runs_on_pool", not "$jobname" to select
-packages & config, 2021-11-23) also shows that by removing these dead or
-unused modes it becomes easier to make the CI less GitHub-dependant.
+	for_each_string_list_item(item, remotes) {
+		name = item->string;
+		skip_prefix(name, "refs/heads/", &name);
+			if (origin)
++         strbuf_addf(&ref_string, "%s/", origin);
+		strbuf_addf(&ref_string, "  %s\n", name);
+	}
 
-I'd like to follow-up with that and e.g. make the "install *.deb
-packages" step of CI be something you can trivially invoke via a
-corresponding "make" target, and generally make the commands and checks
-we run in CI a much thinner wrapper for targets you can easily run
-locally without mocking up a bunch of fake values for ci/lib.sh
-first. The changes in ci/* here are a small step towards that,
-i.e. fewer (and in this case, not easily testable) special-cases we need
-to worry about.
+and the resulting list could look like:
+
+  branch 'main' set up to track from 'origin':
+    origin/main
+    origin/topic1
+    origin/topic2
+
+This looks repetitive, but I suggest this because, as I understand it,
+we are omitting the "{local,remote} ref" phrase based on conventions
+around ref names, like "origin/main" is probably a remote ref and not an
+oddly named local ref. However, when we print the list like so,
+
+  branch 'main' set up to track from 'origin':
+    main
+    topic1
+    topic2
+
+we now expect the user to understand that 'main', 'topic1' and 'topic2'
+to implicitly have 'origin/' prepended to them. This behavior seems
+inconsistent to me; I'd anticipate most users responding "Wait, I was
+supposed to be tracking 'origin' branches right? Why am I looking at
+local branches?". Some users would be able to recover because they can
+figure out what we mean, but others might just give up.
+
+Prepending 'origin/' would get rid of this problem altogether, and it
+would let us drop the 'from'.
+
+>> >  		} else {
+>> > -			if (origin)
+>> > -				printf_ln(rebasing ?
+>> > -					  _("Branch '%s' set up to track remote ref '%s' by rebasing.") :
+>> > -					  _("Branch '%s' set up to track remote ref '%s'."),
+>> > -					  local, remote);
+>> > -			else
+>> > -				printf_ln(rebasing ?
+>> > -					  _("Branch '%s' set up to track local ref '%s' by rebasing.") :
+>> > -					  _("Branch '%s' set up to track local ref '%s'."),
+>> > -					  local, remote);
+>> > +			printf_ln(_("branch '%s' set up to track:"), local);
+>> > +			printf("%s", ref_string.buf);
+>> 
+>> but does not have the word 'from' when it is a local ref. As far as I
+>> can tell, this is the only difference between remote and local refs, and
+>> adding the word 'from' does not seem like a good enough reason to add an
+>> 'if' condition. Maybe I missed something here?
+>> 
+>> This motivates my answer to the question you asked in [1]:
+>> 
+>>   I removed as many distinctions as possible, as most can still be
+>>   inferred from context. [...] Likewise, we don't need to specify whether
+>>   refs are remote or local: "some-remote/some-branch" vs.
+>>   "a-local-branch" should be understandable without us spelling it out.
+>> 
+>> I agree that there is adequate context, so I would be ok with the
+>> simplification if there was corresponding code simplification e.g.
+>> dropping "if (origin)". But in its current form, I don't think there is
+>> good enough reason to simplify the message.
+>
+> I think the proper point of comparison is not the original code, but the
+> code from V5 where we try to preserve the same level of detail in output
+> as the original code. If we are committed to both having multiple
+> remotes and keeping similar styles of output as the original
+> implementation, then something like the massive conditional in V5 is
+> unavoidable.
+
+I see. So for instance, post-simplification you have:
+
+  printf_ln(rebasing ?
+    _("branch '%s' set up to track '%s' by rebasing.") :
+    _("branch '%s' set up to track '%s'."),
+    local, refname.buf);
+
+if you preserve the same amount of detail as before, you'd have to
+distinguish between local/remote, which doubles the number of cases to
+4, which is why the conditional v5 is so complicated.
+
+That said, I think that it's already much simpler than v5 because you've
+split the singular and plural cases. I wonder if you have considered
+building the final string purely from format strings, like:
+
+  char *message_format = _("branch %s set up to track %s%s%s%s");
+  char *ref_type_clause = origin ? " remote ref " : " local ref ";
+  char *rebasing_clause = rebasing ? " by rebasing." : ".";
+  char *branch_names = "<branch names>";
+  printf_ln(message_format, local, ref_type_clause, branch_names, rebasing_clause);
+
+This sounds potentially unfriendly to i18n, but it would make the
+conditional simpler. What do you think?
