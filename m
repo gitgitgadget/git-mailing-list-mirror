@@ -2,170 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E9F7C433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 16:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F552C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 16:36:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237224AbhLTQYq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 11:24:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56904 "EHLO
+        id S238355AbhLTQgU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 11:36:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232694AbhLTQYp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 11:24:45 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D54D3C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 08:24:44 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id w16so12121929edc.11
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 08:24:44 -0800 (PST)
+        with ESMTP id S232898AbhLTQgT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 11:36:19 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1053EC061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 08:36:19 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id j21so36271383edt.9
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 08:36:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=iRxa0pjOY/f4MZsrgdsSQ84jUJY9/uh3nyybmmWGEZE=;
-        b=R3RpdLJHeB1c1YQAPAMPxghzSc9Ea1OX90qpCd+NgcdoA3jFDXtIUCfwykcncPzHB0
-         tgRmqzgtJrcjDXqK9HnFH60STA1lVz63dHnefbPS0NiQM284T3KRKeShc7SZvMQV7TFZ
-         iRS/95j3ryxBM7OpyR89dwNlOKf+Cxw9klCTJpFrSm8VrOnF5TJFs5mvPXvaWXcygtsu
-         Sv0Zb75YuIlQHYRAWedkyYbvABf3XTgDdxD9JmMpJc87oDCEO6mqv+tk4w2Y0fMeEHc5
-         rp/0/3mC7QfX8py88DZMrWb9ACucL/igKNpR4ts7uOed3h/cT7eB86CHB512JGRETx+K
-         vI/Q==
+         :message-id:mime-version;
+        bh=tXt0PzRZeXYTBwWyZVvuUxkykS3gTIhOByJsz48lfZ0=;
+        b=JhrQhfsU9/xIhehmoSRZWTzjMYE92fpmKYT/IH5Vk5Z4UREOEUq1e4fYuxel4tfhtU
+         Lf5RHu4odpBYigLg6JUg/rQWzS6I88178NjhkasZKv/sxUGpEyagsVTrSej76siPlFs8
+         MoqK0Rq5HENa2Y1Y9wyyrEnFW8mNh/JrF4BbzelEZMXD/58iypaiZvgRcI8XR/i6xBj/
+         Dr457vTIxojpoobfNrlr77hb26GVYmOW1/F/AO1XnObNRRlObZZcVjwh5PDhdUXCWGwm
+         HL4Ik6++5n9gLTSWaFit1kLhKgMuYelz3FPs4DVsDkVkXg2L+6otRcixGkRvX16Natsd
+         XhBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=iRxa0pjOY/f4MZsrgdsSQ84jUJY9/uh3nyybmmWGEZE=;
-        b=vInUzFegJgw9W1zbE40h0U3p7ir0bF5IWQFtf3zR7rd8TuX+XMrteJSuITuHUQXSBH
-         Jr+F/TcNhkLIUXwKiU9z2hHvzc8dRG0msWisAgIn29MfAMxK+Jzdx9+mTTwQoptT48O4
-         LPNgsrr0135BzbyRkv0tsoQW4yUC6C04fpRS2kKi1Dn82OyKAhG+mhZumCNvGZ5Aq6/E
-         X5bvT542HKlhIuKjtYPhs0p2PvHSwOu5yinCEVZmGuauc134CbB8OF9NQmTzF6s3CmYT
-         EfIkt2Lb13Z2MpjhMyX8BQejkNezW8437sNAuQEQ4HJ3db2HM3jN1d/h1FqtQrNgjjoP
-         Ot0A==
-X-Gm-Message-State: AOAM532+r1SajoBmMCIN5XekDbBMA+tfHChQrVnkb5Gkim3BIb6KRdoa
-        AtD11IHtCa+DENntimF/84GMF00eABNvyg==
-X-Google-Smtp-Source: ABdhPJy+SOe/r39kDrawghGFg/fEmhbIk6iycM/ZnILeItPmKoNk6a4I3UL2iyOlnYCifm/tJQF+Fw==
-X-Received: by 2002:a17:906:7f81:: with SMTP id f1mr13951936ejr.569.1640017483214;
-        Mon, 20 Dec 2021 08:24:43 -0800 (PST)
+         :in-reply-to:message-id:mime-version;
+        bh=tXt0PzRZeXYTBwWyZVvuUxkykS3gTIhOByJsz48lfZ0=;
+        b=AkpezxlwsL3KcI3wLCqCiWI8lKWKcLlQpERonE3fpXbvE9hp4YherMAL3EN231gWKK
+         d0RJmvYsb9hBIfwO6BXDem0xBksBaVWGEp0eE6j3fhQK2yhOgFQ8eKVok+fII76m6U+l
+         Mgvl9pbWyfYRLRMJujCkGweiCaxov5ndB2AECAnS2jshPLM7b9AluUSRDo9KtHNgbSGP
+         lmIiI5RlYF3nsqmjT3BciuMnUJPZMIyi/+bVMrTxK9cCzng2AQbvo+DM/ma9RbLx1RVK
+         blJdSdQ5wJxnoCv5CW9+Lf6i1pBKTQpLshAQsQtgTClNiP7rY6ZQVxwxqCo4IFC2qXht
+         wsyA==
+X-Gm-Message-State: AOAM531wbUEnZe1CTrT12t+6bTyAXtG3oXOLnigDEqogX/Wr4laUNX4C
+        ip0Wlz39Rl2ftQJNrk3lNDORHtmSTqw85w==
+X-Google-Smtp-Source: ABdhPJzUB6h7cESYWMHF2GTFo93IZKoBunUMEhHvSfmQzRhPgJpxIT4n12UTjpue8bH/uicRNNiF3w==
+X-Received: by 2002:a05:6402:1e93:: with SMTP id f19mr16767285edf.60.1640018177539;
+        Mon, 20 Dec 2021 08:36:17 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id y5sm3320096edm.39.2021.12.20.08.24.42
+        by smtp.gmail.com with ESMTPSA id sd5sm691506ejc.37.2021.12.20.08.36.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 08:24:42 -0800 (PST)
+        Mon, 20 Dec 2021 08:36:17 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mzLSs-000SuV-7O;
-        Mon, 20 Dec 2021 17:24:42 +0100
+        id 1mzLe4-000TDy-Ng;
+        Mon, 20 Dec 2021 17:36:16 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 03/13] init: unconditionally create the "info" directory
-Date:   Mon, 20 Dec 2021 17:13:19 +0100
-References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
- <patch-03.13-784b7947512-20211212T201308Z-avarab@gmail.com>
- <db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 2/9] trace2: convert tr2tls_thread_ctx.thread_name from
+ strbuf to char*
+Date:   Mon, 20 Dec 2021 17:31:27 +0100
+References: <pull.1099.git.1640012469.gitgitgadget@gmail.com>
+ <3a4fe07e40e967622035844ff10ded1ed71d94fc.1640012469.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com>
-Message-ID: <211220.86tuf3utv9.gmgdl@evledraar.gmail.com>
+In-reply-to: <3a4fe07e40e967622035844ff10ded1ed71d94fc.1640012469.git.gitgitgadget@gmail.com>
+Message-ID: <211220.86pmprutbz.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Dec 20 2021, Derrick Stolee wrote:
+On Mon, Dec 20 2021, Jeff Hostetler via GitGitGadget wrote:
 
-> On 12/12/2021 3:13 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> In preceding commits the test suite has been taught to run without a
->> template directory, but in doing so we needed to fix code that relied
->> on the "hooks" and "branches" directories.
->>=20
->> The "hooks" code was all specific to our own test suite. The
->> "branches" directory is intentionally created, but has been "slightly
->> deprecated" for a while, so it's not created when not using the
->> default template.
->>=20
->> However "info" is different. Trying to omit its creation would lead to
->> a lot of test suite failures. Many of these we should arguably fix,
->> the common pattern being to add an exclude to "info/excludes".
+> From: Jeff Hostetler <jeffhost@microsoft.com>
 >
-> This would be painful to add because of the impact on the test suite.
-> That I understand.
->=20=20
->> But we've also grown a hard dependency on this directory within git
->> itself. Since 94c0956b609 (sparse-checkout: create builtin with 'list'
->> subcommand, 2019-11-21) released with v2.25.0 the "git
->> sparse-checkout" command has wanted to add exclusions to
->> "info/sparse-checkout". It didn't check or create the leading
->> directory, so if it's omitted the command will die.
+> Use a 'char *' to hold the thread name rather than a 'struct strbuf'.
+> The thread name is set when the thread is created and should not be
+> be modified afterwards.  Replace the strbuf with an allocated pointer
+> to make that more clear.
 >
->> Even if that behavior were fixed we'd be left with older versions of
->> "git" dying if that was attempted if they used a repository
->> initialized without a template.
+> This was discussed in: https://lore.kernel.org/all/xmqqa6kdwo24.fsf@gitster.g/
 >
-> This, I don't understand. Why can't we add a
-> safe_create_leading_directories() to any place where we try to
-> create a sparse-checkout file?
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>  trace2/tr2_tgt_event.c |  2 +-
+>  trace2/tr2_tgt_perf.c  |  2 +-
+>  trace2/tr2_tls.c       | 16 +++++++++-------
+>  trace2/tr2_tls.h       |  2 +-
+>  4 files changed, 12 insertions(+), 10 deletions(-)
 >
-> This would fix situations where older versions were init'd with a
-> different template or if the user deleted the info dir. The change
-> you've made here doesn't fix those cases, which is what you are
-> claiming is the reason to not do the other fix that seems like it
-> would.
->
-> What am I misunderstanding here?
+> diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+> index 3a0014417cc..ca48d00aebc 100644
+> --- a/trace2/tr2_tgt_event.c
+> +++ b/trace2/tr2_tgt_event.c
+> @@ -88,7 +88,7 @@ static void event_fmt_prepare(const char *event_name, const char *file,
+>  
+>  	jw_object_string(jw, "event", event_name);
+>  	jw_object_string(jw, "sid", tr2_sid_get());
+> -	jw_object_string(jw, "thread", ctx->thread_name.buf);
+> +	jw_object_string(jw, "thread", ctx->thread_name);
+>  
+>  	/*
+>  	 * In brief mode, only emit <time> on these 2 event types.
+> diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+> index e4acca13d64..c3e57fcb3c0 100644
+> --- a/trace2/tr2_tgt_perf.c
+> +++ b/trace2/tr2_tgt_perf.c
+> @@ -106,7 +106,7 @@ static void perf_fmt_prepare(const char *event_name,
+>  
+>  	strbuf_addf(buf, "d%d | ", tr2_sid_depth());
+>  	strbuf_addf(buf, "%-*s | %-*s | ", TR2_MAX_THREAD_NAME,
+> -		    ctx->thread_name.buf, TR2FMT_PERF_MAX_EVENT_NAME,
+> +		    ctx->thread_name, TR2FMT_PERF_MAX_EVENT_NAME,
+>  		    event_name);
+>  
+>  	len = buf->len + TR2FMT_PERF_REPO_WIDTH;
+> diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
+> index 7da94aba522..cd8b9f2f0a0 100644
+> --- a/trace2/tr2_tls.c
+> +++ b/trace2/tr2_tls.c
+> @@ -35,6 +35,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
+>  					     uint64_t us_thread_start)
+>  {
+>  	struct tr2tls_thread_ctx *ctx = xcalloc(1, sizeof(*ctx));
+> +	struct strbuf buf_name = STRBUF_INIT;
+>  
+>  	/*
+>  	 * Implicitly "tr2tls_push_self()" to capture the thread's start
+> @@ -47,12 +48,13 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
+>  
+>  	ctx->thread_id = tr2tls_locked_increment(&tr2_next_thread_id);
+>  
+> -	strbuf_init(&ctx->thread_name, 0);
+>  	if (ctx->thread_id)
+> -		strbuf_addf(&ctx->thread_name, "th%02d:", ctx->thread_id);
+> -	strbuf_addstr(&ctx->thread_name, thread_name);
+> -	if (ctx->thread_name.len > TR2_MAX_THREAD_NAME)
+> -		strbuf_setlen(&ctx->thread_name, TR2_MAX_THREAD_NAME);
+> +		strbuf_addf(&buf_name, "th%02d:", ctx->thread_id);
+> +	strbuf_addstr(&buf_name, thread_name);
+> +	if (buf_name.len > TR2_MAX_THREAD_NAME)
+> +		strbuf_setlen(&buf_name, TR2_MAX_THREAD_NAME);
+> +
+> +	ctx->thread_name = strbuf_detach(&buf_name, NULL);
+>  
+>  	pthread_setspecific(tr2tls_key, ctx);
+>  
+> @@ -95,7 +97,7 @@ void tr2tls_unset_self(void)
+>  
+>  	pthread_setspecific(tr2tls_key, NULL);
+>  
+> -	strbuf_release(&ctx->thread_name);
+> +	free(ctx->thread_name);
+>  	free(ctx->array_us_start);
+>  	free(ctx);
+>  }
+> @@ -113,7 +115,7 @@ void tr2tls_pop_self(void)
+>  	struct tr2tls_thread_ctx *ctx = tr2tls_get_self();
+>  
+>  	if (!ctx->nr_open_regions)
+> -		BUG("no open regions in thread '%s'", ctx->thread_name.buf);
+> +		BUG("no open regions in thread '%s'", ctx->thread_name);
+>  
+>  	ctx->nr_open_regions--;
+>  }
+> diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
+> index a90bd639d48..d968da6a679 100644
+> --- a/trace2/tr2_tls.h
+> +++ b/trace2/tr2_tls.h
+> @@ -9,7 +9,7 @@
+>  #define TR2_MAX_THREAD_NAME (24)
+>  
+>  struct tr2tls_thread_ctx {
+> -	struct strbuf thread_name;
+> +	char *thread_name;
+>  	uint64_t *array_us_start;
+>  	size_t alloc;
+>  	size_t nr_open_regions; /* plays role of "nr" in ALLOC_GROW */
 
-I'll clarify that a bit in any re-roll.
+Junio's suggestion in the linked E-Mail was to make this a "const char *".
 
-Pedantically nothing changes, i.e. you can create a repository with an
-empty template now, and it'll break on both the sparse-checkout on that
-version, and any previous version that had that un-noticed issue.
+Narrowly, I don't see why not just add a "const" to the "struct strbuf
+*" instead.
 
-But in practice I think it wouldn't have been a big deal, because while
-you could omit or specify a custom template it was somewhat of a hassle,
-and even somewhat undocumented.
+But less narrowly if we're not going to change it why malloc a new one
+at all? Can't we just use the "const char *" passed into
+tr2tls_create_self(), and for the "th%02d:" case have the code that's
+formatting it handle that case?
 
-Whereas with this series allowing you to easily configure it with
-init.templateDir=3Dfalse it becomes trivial. That was another motivation
-of mine for adding this, I'd like to not have N copies of that template
-crud all over my systems.
-
-So I think in practice we need to be more conservative about
-cross-version interaction here. It's not just a matter of "if", but also
-of a new "how" making that "if" more common. I.e. needing to interact
-with an empty-template .git directory.
-
-We also have non-git.git code to worry about, e.g. us breaking any
-user-custom script that might do:
-
-    #!/bin/sh -e
-    git init "$1"
-    cd "$1"
-    # *Boom* under init.templateDir=3Dfalse, unless we keep ".git/info"
-    echo <my ignores> >.git/info/excludes
-
-So I just don't think it's worth it. Let's just create .git/info
-unconditionally like we create .git/objects/{info,pack} now.
-
-It's unrelated to this, but if this gets in I would eventually like to
-submit a change to make some version of init.templateDir=3Dfalse the
-default. That's a bit more untandling, but I think ultimately
-beneficial. E.g. the sample hooks are documented in "git help githooks"
-along with general hook documentation. Such a change would ideally
-involve splitting that out (maybe to a a
-"gitrepository-sample-hooks(5)"). That's another reason for why I'd like
-to make init.templateDir=3Dfalse play nicely with existing in-tree and
-out-of-tree expectations.
-
->> So let's just bite the bullet and make the "info" directory mandatory,
->> and document it as such. Let's also note that in the documentation
->> that this doesn't apply to the "hooks" and "branches" directories.
->
-> I have no objection to this approach, but we should still do the
-> other thing.
-
-All that being said I don't really mind not creating a .git/info if the
-consensus sways that way.
-
-It's a bit more painful when it comes to the tests, but not *that*
-painful. I had it mostly working before abandoning it for this approach.
+I.e. have the things that use it as a "%s" now call a function that
+formats things as a function of the "ctx->thread_id" (which may be 0)
+and limit it by TR2_MAX_THREAD_NAME?
