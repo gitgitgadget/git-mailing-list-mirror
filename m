@@ -2,72 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 922F8C433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 13:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27F84C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 13:49:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233025AbhLTNn2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 08:43:28 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55010 "EHLO cloud.peff.net"
+        id S232349AbhLTNtS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 08:49:18 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55034 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229539AbhLTNn2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 08:43:28 -0500
-Received: (qmail 10212 invoked by uid 109); 20 Dec 2021 13:43:27 -0000
+        id S233395AbhLTNtH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 08:49:07 -0500
+Received: (qmail 10254 invoked by uid 109); 20 Dec 2021 13:49:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 20 Dec 2021 13:43:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 20 Dec 2021 13:49:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2460 invoked by uid 111); 20 Dec 2021 13:43:27 -0000
+Received: (qmail 2508 invoked by uid 111); 20 Dec 2021 13:49:05 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 20 Dec 2021 08:43:27 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 20 Dec 2021 08:49:05 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 20 Dec 2021 08:43:26 -0500
+Date:   Mon, 20 Dec 2021 08:49:05 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: taking a break from Git
-Message-ID: <YcCIfrLIzCb9UFWW@coredump.intra.peff.net>
-References: <YboaAe4LWySOoAe7@coredump.intra.peff.net>
- <211220.867dbzwhln.gmgdl@evledraar.gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 2/2] repack: make '--quiet' disable progress
+Message-ID: <YcCJ0bU1y4TnS3yp@coredump.intra.peff.net>
+References: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
+ <3eff83d9ae14023f3527dfeb419cf8259f6d053d.1639758526.git.gitgitgadget@gmail.com>
+ <YbzSfwQixuonrK/o@coredump.intra.peff.net>
+ <7969c9e5-dd57-705c-b554-67681b9af62f@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <211220.867dbzwhln.gmgdl@evledraar.gmail.com>
+In-Reply-To: <7969c9e5-dd57-705c-b554-67681b9af62f@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 20, 2021 at 01:45:05PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Mon, Dec 20, 2021 at 08:37:52AM -0500, Derrick Stolee wrote:
 
-> Do you have a preference either way for being kept or omitted from CC?
-> I.e. if/when you'd come back to have that E-Mail backlog, or for us to
-> stop CC-ing you? Clearly you'd still get some traffic, but at least us
-> list regulars could take that into account.
-
-I don't care much either way. I long ago had to start filtering the cc's
-on list emails into a separate spot from my main inbox. So I can happily
-ignore that separate folder. :) As far as combing through the backlog, I
-expect I'd just have to declare bankruptcy anyway.
-
-> You have various WIP code in topics at https://github.com/peff/git. Some
-> of which has your SOB, some not. I keep it as a remote and sometimes run
-> into prior art with "log --all <path>" and the like.
+> > +test_expect_success TTY '--quiet disables progress' '
+> > +	test_terminal env GIT_PROGRESS_DELAY=0 \
+> > +		git -C midx repack -ad --quiet --write-midx 2>stderr &&
+> > +	test_must_be_empty stderr
+> > +'
+> > +
+> >  test_done
 > 
-> You noted a while ago (IIRC, haven't dug up where) that inline patches
-> of yours to the list could be assumed to have your SOB, does the same
-> apply to what's sitting in that repo?
+> Thanks. I added this test.
+> 
+> When first running the test, it failed because I didn't have the
+> IO::Pty Perl module installed. I'm not sure why I don't fail with
+> other tests that use test_terminal. If someone knows more about
+> what is going on, then maybe we need to expand the TTY prereq?
 
-Yes, there's nothing in there that I wouldn't sign-off. But just to make
-things more clear, I went through and added one to all of the commits in
-the repository.
+Weird. I uninstalled IO::Pty, and get:
 
-You or anyone else is welcome to mine it for ideas or code. There are
-dragons, of course, but a lot of it is working code that I just didn't
-get around to polishing. Any branch not marked with "-wip" is something
-that I merged into my daily-driver version of Git, and passed all tests.
-So at least it shouldn't be _too_ broken. :)
+  checking prerequisite: TTY
+  
+  [...prereq code...]
 
-Thanks for thinking about these logistical issues.
+  
+  + perl /home/peff/compile/git/t/test-terminal.perl sh -c test -t 1 && test -t 2
+  + command /usr/bin/perl /home/peff/compile/git/t/test-terminal.perl sh -c test -t 1 && test -t 2
+  Can't locate IO/Pty.pm in @INC (you may need to install the IO::Pty module) (@INC contains: [...etc...]
+  BEGIN failed--compilation aborted at /home/peff/compile/git/t/test-terminal.perl line 5.
+  prerequisite TTY not satisfied
+  ok 25 # skip --quiet disables progress (missing TTY)
+
+What does running with "-x -i" say for the prereq?
 
 -Peff
