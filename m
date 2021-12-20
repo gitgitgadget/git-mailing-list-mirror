@@ -2,105 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9D6FC433F5
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 19:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DD2CC433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 19:07:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240655AbhLTTEC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 14:04:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36788 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235151AbhLTTEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 14:04:01 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C724C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 11:04:01 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id y13so42315414edd.13
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 11:04:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=cK8WpKM+VG1q++d9EFH+SXtzRFl/ahw8mtTW8yarsLA=;
-        b=IcslehR1Srm2VPi80KF5TsTDDEf2q/OtU6TCbpJ5z4HO9LBO+nZPfjJBmwqFUh/eEb
-         t7Czw/WhL8pupqSKFiu2md7Oxj6T8zZM/NAT+Of9c7yujbnWPHMKw1bJjCBrskwo8D9H
-         Xt9XUgeDedO+u7wqGaqjyo9iFgoy+bgYqqXX70q/+tmID8VHLQ6R4CCFU8ntm7Ds7EK1
-         FqVziYbJwybwrWmofomqsciT2AnXtP8CiDHo2Z+FhKMhGJLGdjt4VvMl6YogqWECGD6e
-         s5zA1erwAIMHwWrAVIDMxpujpEf1iZlkNiLrrKSurWCIOxploaOnI9hRs2SaPy9iez0w
-         jHxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=cK8WpKM+VG1q++d9EFH+SXtzRFl/ahw8mtTW8yarsLA=;
-        b=uxcr6gzjeoLltM2qyZT7ZioJ++0XhewxS4PtpI+Yz9JWE8rQelOed3Zzst1byB6pd9
-         oIhTcgSWJMRzjhXuvVzubBMs1kd+lOqBUl0jArSol0DjurR7KIHHDFO/1UiFBXEAE9+6
-         wnZx0jeUp8x7vl7zD1eYu+V+Cr/neeP81S2xk//JkesiLpFz3KLCxfioGuHhKsCj/9US
-         D0Q9NVa8FOReWTGqwbcpwRax/0fEy5DWRFMfEObEdoKDnx3coseKeH3y8nE6DelEOzuA
-         y7D9LNsqnvzn9b7GvVskMEEzY+8+sS7rSqHvGq3wMgTA1mFyfqirtdcdTtyEWkepGGvV
-         LTJA==
-X-Gm-Message-State: AOAM530yDeHiUcW06/AmIfUjLBQbeTBXSJIHPuwwiVpaq0i4jW+u1yB9
-        k3FEuK3BAy6W2Yb0RJ50zOdCGoX74LQJ0A==
-X-Google-Smtp-Source: ABdhPJxSqYQksxuyiqc2r4rlg0p2+MYw9E0+vt4W31LWDe+8fB2kk2IQme0JC0y7NV9LYM7CKzbxiA==
-X-Received: by 2002:aa7:d4d3:: with SMTP id t19mr15506802edr.289.1640027039522;
-        Mon, 20 Dec 2021 11:03:59 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id w3sm5571161eji.134.2021.12.20.11.03.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 11:03:59 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzNx0-000XBS-EW;
-        Mon, 20 Dec 2021 20:03:58 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
-        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 0/2] Two small 'git repack' fixes
-Date:   Mon, 20 Dec 2021 20:01:20 +0100
-References: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
- <pull.1098.v2.git.1640011691.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <pull.1098.v2.git.1640011691.gitgitgadget@gmail.com>
-Message-ID: <211220.86r1a7t7xd.gmgdl@evledraar.gmail.com>
+        id S240688AbhLTTHA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 14:07:00 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55952 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240724AbhLTTGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 14:06:47 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F0AC10F108;
+        Mon, 20 Dec 2021 14:06:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pmlFux0s9sTnFwoUDWXMia/ds8t+7huHsoHp8B
+        kXMOE=; b=tTGVOzlnBDp9io4ZykIVtBoWeyh9r5o2LRGdbhDYaTdyIIPDiUMuLa
+        gGbl6K8e7oBtYavCQeoFqFzvFcx7fD+aWVHXZ3rpzAR2WNheacnydwFYwlP4DRli
+        rT95yACG57u4HZgc56bYdWCd81vONNgRiy5cadITUbrRjw5CwyiHk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 038C110F107;
+        Mon, 20 Dec 2021 14:06:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5FDC410F106;
+        Mon, 20 Dec 2021 14:06:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 03/13] init: unconditionally create the "info" directory
+References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
+        <patch-03.13-784b7947512-20211212T201308Z-avarab@gmail.com>
+        <db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com>
+        <211220.86tuf3utv9.gmgdl@evledraar.gmail.com>
+        <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
+Date:   Mon, 20 Dec 2021 11:06:43 -0800
+In-Reply-To: <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com> (Derrick
+        Stolee's message of "Mon, 20 Dec 2021 12:39:53 -0500")
+Message-ID: <xmqq1r27xfi4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: F9825FC6-61C7-11EC-BA92-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Derrick Stolee <stolee@gmail.com> writes:
 
-On Mon, Dec 20 2021, Derrick Stolee via GitGitGadget wrote:
+> What I _am_ saying is important is that if we are trying to write
+> a file to a known location and its parent directory doesn't exist,
+> then we should create it. Not doing so is a bug and should be
+> fixed, no matter how rare such a thing is to occur. As you've
+> shown, it is not required to have an info directory until we need
+> one (e.g. for sparse-checkout or an excludes file).
+>
+> If you're not planning to add that to this series, then I'll add it
+> to my list. I do think it would fit well into this one, though.
 
-> I was experimenting with some ideas in 'git repack' and discovered these two
-> bugs.
+Historically, "git init" relied on the templates to create necessary
+directories, and the subcommands in turn learned to depend on the
+presence of these directories.
 
-This iteration looks good to me.
+At the same time we allowed that the templates can be customized by
+the end users.  It was a bug, exactly for the reason you said above.
 
->      + ## Documentation/git-repack.txt ##
->      +@@ Documentation/git-repack.txt: to the new separate pack will be written.
->      + 	linkgit:git-pack-objects[1].
->      + 
->      + -q::
->      +-	Pass the `-q` option to 'git pack-objects'. See
->      +-	linkgit:git-pack-objects[1].
->      ++--quiet::
->      ++	Show no progress over the standard error stream and pass the `-q`
->      ++	option to 'git pack-objects'. See linkgit:git-pack-objects[1].
->      + 
->      + -n::
->      + 	Do not update the server information with
->      +
+Before we talk about creating 'info' directory directly in "git
+init" or anything done in this topic, we should fix the existing
+bug, and the right fix is to use safe-create-leading-directories.
 
-Nit: I think the addition of --quiet here is good, but also wouldn't
-mind a prep change to add it as a separate step.
+With that, it may become unnecessary to have this "create 'info' in
+'init'".
 
-FWIW it appears to have been an unintended/hidden effect of a1bbc6c0176
-(repack: rewrite the shell script in C, 2013-09-15), i.e. we started
-using OPT__QUIET() which added "--quiet", but the shellscript just
-supported -q.
 
-Here we update the docs, but the SYNOPSIS stillj just lists -q.
 
-I think all of that's fine & this v2 is good enough. Just braindumping
-notes/observations while reading along/checking the v1->v2 diff.
