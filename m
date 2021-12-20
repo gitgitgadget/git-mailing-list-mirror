@@ -2,139 +2,205 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E3F2C433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 17:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A6E8C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 17:29:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233007AbhLTRYN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 12:24:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42392 "EHLO
+        id S240207AbhLTR3K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 12:29:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229767AbhLTRYM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 12:24:12 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31BD9C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 09:24:12 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id j6so20515147edw.12
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 09:24:12 -0800 (PST)
+        with ESMTP id S229767AbhLTR3J (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 12:29:09 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED024C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 09:29:08 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id a11so10004317qkh.13
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 09:29:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=cXlUImO50kU7rrAZ1Ar5mQgFzYFVTF4Zrl6lt3cotw4=;
-        b=i+qGaAX9Tcm9qqhHO3WrYjDodF/cbm9yMPSqc1BtK4Vt+MPeoIKz4IuGTN/VPmHFVM
-         FRc7Hf/XfQNrNrk3JVEw/pGVUQmiy74wyd70X9JDn44abkUjujNQB/mnDh3PzkmECtN+
-         oYDcHDiM0Kxl0/8DnxW5mzy4YPZOy9e1csEf8eYTHX9EZMxIPz4JT/LaPpr+lkJq9KAG
-         j3bUKIDoyysEqkGmKtbXLuzeHN0g6bOL/zVoMJQMCNM1Q7Ho0uha5bp4wCzvAMT0bPAW
-         ye0zioe43OvP3+clXV4XaqF4fSa8vMqbe17otWAz1JwGIP5eJ2Sn1HvcTd7nC28M21Kx
-         /Qgg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=GX1cpdqIw4YErNeKygiUOu1n1ospWWyEG7wGVI+zhM8=;
+        b=SwO7hEeX/Cst930WgvYu0lTLby3p858rMwhHc7W5iwSXpkn6F769egslotSwj/2fgk
+         LDoc7BSBec/oXyYf0AtOBD620cJL1TUUtm+TJEgr44sw0u79s79xz7WfBpXo8GWo/1Az
+         X09sIMHJCrbUBHmzkqUnkvJxjD/VPp/14bicJSZ700zAjU0mix9THVKygXRRKgINsB04
+         ahlu7H5epGukuO23QgoAzeXnA+ORsTksBOu+ftiUDXpcoy4ZJJ+SOXnlMRXTCawVi+u3
+         W1Gxz66o7vs3EpwEhCB//3iBv6L2N37f0wOv/Jr/bdE8b7yQZ1CC+2XHc3ZyHAbtHeOX
+         9ddA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=cXlUImO50kU7rrAZ1Ar5mQgFzYFVTF4Zrl6lt3cotw4=;
-        b=0dsEuXgMpEJm+7l2PAguHnUSl68BBhHZntBPhIBrSQaHPMDrKnEIydnZp2nycVsdi5
-         /ue9biRDBK4YEeBLr21ASZnsLchm/klnjWgfeLYpLiRw8IFMmkdrQgUc41X+hHuC28dV
-         pLDpr2cMPkCxTwR0XNQ8FslNCQYxtXsd27AYnSiaTg0pGfm9Bz6znbprYej1YT1sgSud
-         oqzefo99QLWBQ8iAs7tazSYFfRjdNBh79C0iOaMfzkV3u8ZqUx1KVQgTnirZAu3bgfjK
-         WEpz6aJtJo0bGWgk+nky7e/r9bZfO2KFwuahwb9ka43SZp8Omk7cawjhDfQAgTOpZHWi
-         Ox4w==
-X-Gm-Message-State: AOAM532RX7AXNJasnRMJC1HCnZWUmbt9wsFPHINmPkRAJCgKzDLEbufA
-        ModljyGobk2X/e1gzP4tbJ0=
-X-Google-Smtp-Source: ABdhPJyrpE4id086x4WsMpadi7rHX7GRVd0hX1MZWb5ahP+uM/MJXhUvjFmmiiRNanRbLfTO9uhMRA==
-X-Received: by 2002:a05:6402:2315:: with SMTP id l21mr12637731eda.135.1640021050667;
-        Mon, 20 Dec 2021 09:24:10 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id jt4sm3615542ejb.105.2021.12.20.09.24.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 09:24:10 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzMOP-000UT4-EI;
-        Mon, 20 Dec 2021 18:24:09 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 9/9] trace2: add global counters
-Date:   Mon, 20 Dec 2021 18:14:28 +0100
-References: <pull.1099.git.1640012469.gitgitgadget@gmail.com>
- <596caede216c44d2a01358229bc1a47248e708b1.1640012469.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <596caede216c44d2a01358229bc1a47248e708b1.1640012469.git.gitgitgadget@gmail.com>
-Message-ID: <211220.868rwfur46.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=GX1cpdqIw4YErNeKygiUOu1n1ospWWyEG7wGVI+zhM8=;
+        b=4SeGXo0BUR1Yl995zLG10AoJqQobpVQHIu80bxxD0YBuoZZJjb7GZHJvuToPf4pGFG
+         VpZCl+nJQ93dR9A0/5Wv6UBV6sOhzSZRExlBJS75IjR+XDfbzLFGS7NUFCa70CkXH/l+
+         dLk8zJGmYtc8RfX1i6LAZwyXuBNoU+SCHfeWRI2h6DR2VrWzI22zA5huOyF2Pydi44gk
+         s/wOmJv4YKTparzEXciozdYZHdNyKlVRZtp3118kvCEKcmyyJAATt0pqd85p5HKJzWjN
+         4Iz4E68i98JLqsSAeZcrElt8V3Mb5G2uj713W38U22jNlrYIvaVbTaq4vrTH/n85IQA+
+         Atcg==
+X-Gm-Message-State: AOAM530wVuUTHRDbx+pCsFIV0GD4jSrbtfO8F21vNOhNXaxZJ9O0fEy/
+        8YszBiyE39Fl6/oyLhnuLpk=
+X-Google-Smtp-Source: ABdhPJwEfuLsIMHpkkiskZghNimRFLVog7stShlo4PSiyl8FY7fCcSrTtrkyDyDQpod/wIqC8a8U/g==
+X-Received: by 2002:a37:f60a:: with SMTP id y10mr9953264qkj.518.1640021347823;
+        Mon, 20 Dec 2021 09:29:07 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:1dd9:8fb3:37da:4055? ([2600:1700:e72:80a0:1dd9:8fb3:37da:4055])
+        by smtp.gmail.com with ESMTPSA id q7sm6509629qkl.72.2021.12.20.09.29.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Dec 2021 09:29:07 -0800 (PST)
+Message-ID: <0f98d3e5-f2c2-526a-0476-a89778e5b2b5@gmail.com>
+Date:   Mon, 20 Dec 2021 12:29:03 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: Bug report - Can create worktrees from bare repo / such worktrees
+ can fool is_bare_repository()
+Content-Language: en-US
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Sean Allred <allred.sean@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <ttaylorr@github.com>,
+        Elijah Newren <newren@gmail.com>
+References: <CABceR4bZmtC4rCwgxZ1BBYZP69VOUca1f_moJoP989vTUZWu9Q@mail.gmail.com>
+ <e992d4b4-f9e2-a8f9-22da-e9d342c7bede@sunshineco.com>
+ <CABceR4YVd4remACJkxwSCTSYB2v3Zn1BsjKHbzeve8uHiZv1pA@mail.gmail.com>
+ <CAPig+cQ6U_yFw-X2OWrizB1rbCvc4bNxuSzKFzmoLNnm0GH8Eg@mail.gmail.com>
+ <f39af047-d244-14be-4cd8-b6c3199545f3@gmail.com>
+ <CAPig+cQPUe9REf+wgVNjyak_nk3V361h-48rTFgk6TGC7vJgOA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CAPig+cQPUe9REf+wgVNjyak_nk3V361h-48rTFgk6TGC7vJgOA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 12/20/2021 10:58 AM, Eric Sunshine wrote:
+> `On Mon, Dec 20, 2021 at 9:11 AM Derrick Stolee <stolee@gmail.com> wrote:
+>> On 12/19/2021 7:58 PM, Eric Sunshine wrote:
+>>> On Sun, Dec 19, 2021 at 3:47 PM Sean Allred <allred.sean@gmail.com> wrote:
+>>>> I think either the git-sparse-checkout-set command (or the
+>>>> git-checkout I ran after) would fail complaining that I was not in a
+>>>> worktree.
+>>>
+>>> It is indeed the `git sparse-checkout set` command which fails.
+>>
+>> Right, 'init' will set the sparse-checkout information in your worktree
+>> config and initialize it as needed, here:
+>>
+>>         if (upgrade_repository_format(1) < 0)
+>>                 die(_("unable to upgrade repository format to enable worktreeConfig"));
+>>         if (git_config_set_gently("extensions.worktreeConfig", "true")) {
+>>                 error(_("failed to set extensions.worktreeConfig setting"));
+>>                 return 1;
+>>         }
+>>
+>> So, we are manually specifying "put this in the config.worktree file"
+>> and not going through some "initialize worktree config" helper. Such
+>> a helper would be useful to avoid this issue in the future.
+> 
+> Yes, I was planning to suggest this in a follow-up message.
+> Specifically, I think top-level worktree.[hc] (not builtin/worktree.c)
+> should publish a function which enables worktree-specific
+> configuration _and_ does all the necessary bookkeeping, such as moving
+> `core.bare` and `core.worktree` from .git/config to
+> .git/worktree.config. That way, not only can git-sparse-checkout take
+> advantage of it, but so can any command which needs the functionality
+> in the future, as well as the fictitious "git worktree manage" command
+> I mentioned earlier if it ever materializes.
 
-On Mon, Dec 20 2021, Jeff Hostetler via GitGitGadget wrote:
+Ah. I put my change in config.[hc], but let's discuss that in the
+patch series [1].
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
-> [...]
-> +struct ut_011_data {
-> +	int v1, v2;
-> +};
-> [...]
-> +	struct ut_011_data data = { 0, 0 };
+[1] https://lore.kernel.org/git/pull.1101.git.1640015844.gitgitgadget@gmail.com
 
-Nit: Just "{ 0 }" is OK for zero'd out initialization. No need to keep
-extending this for every field.
+>>>> I see two options for when to set `core.bare=false` in
+>>>> worktree-specific config:
+>>>>
+>>>>   1. At git-worktree-add: This is probably the earliest time which
+>>>>      makes sense, but may be over-reach.  I'm not up-to-speed on how
+>>>>      worktree-specific configs are generally considered on this list.
+>>>>      If I were implementing a workaround, though, this is probably
+>>>>      where I'd make it.
+>>>
+>>> My knee-jerk reaction is that applying a "fix" to `git worktree add`
+>>> to assign `core.bare=false` in the worktree-specific config may be
+>>> misguided, or at least feels too much like a band-aid. Although it's
+>>> true that that would address the problem for worktrees created after
+>>> `extensions.worktreeconfig=true` is set, it won't help
+>>> already-existing worktrees. This reason alone makes me hesitant to
+>>> endorse this approach.
+>>
+>> Yeah, my concern is that it requires the extension and could cause
+>> some tools to stop working immediately. If we have the extension
+>> already, it might make sense to initialize the file then.
+> 
+> I'm not following what you're saying. Initialize which file? When?
 
-For things that want to exhaustively list fields for clarity, designated
-would be preferred:
-o
-    { .v1 = 0, .v2 = 0 }
+I mean when initializing the config.worktree file.
 
-> +	int nr_threads = 0;
-> +	int k;
-> +	pthread_t *pids = NULL;
-> +
-> +	if (argc != 3)
-> +		die("%s", usage_error);
-> +	if (get_i(&data.v1, argv[0]))
-> +		die("%s", usage_error);
-> +	if (get_i(&data.v2, argv[1]))
-> +		die("%s", usage_error);
-> +	if (get_i(&nr_threads, argv[2]))
-> +		die("%s", usage_error);
+> Anyhow, this does bring up a good point and it makes me wonder if
+> git-sparse-checkout (or whatever helper function is implemented)
+> should warn the user that setting this extension could break foreign
+> tools and that the repository format is being upgraded.
 
-A partial nit on existing code, as this just extends the pattern, but
-couldn't much of this get_i() etc. just be made redundant by simply
-using the parse-options.c API here?  I.e. OPTION_INTEGER and using named
-arguments would do the validation or you.
+Yes, this was a concern when doing this change. I at least have not
+seen anyone complain about it. This is not critical to the sparse-checkout
+feature, but is currently how the sparse-checkout builtin works, so is
+part of the paved path for most users getting started.
 
-> +# Exercise the global counter in a loop and confirm that we get the
-> +# expected sum in an event record.
-> +#
-> +
-> +have_counter_event () {
-> +	thread=$1
-> +	name=$2
-> +	value=$3
-> +	file=$4
-> +
-> +	grep "\"event\":\"counter\".*\"thread\":\"${thread}\".*\"name\":\"${name}\".*\"value\":${value}" $file
-> +
-> +	return $?
-> +}
+>>>>   2. At git-sparse-checkout-init: This is where the problem begins to
+>>>>      have an effect, so this might also make sense.
+>>>
+>>> Yes, if I'm understanding everything correctly, this seems like the
+>>> best and most localized place to address the problem at this time. The
+>>> simple, but too minimal, approach would be for `git sparse-checkout
+>>> init` to simply add `core.bare=false` to the worktree-specific config,
+>>> however, this only addresses the immediate problem and still leaves
+>>> things broken in general for any non-sparse worktrees.
+>>>
+>>> So, the better and more correct approach, while still being localized
+>>> to `git sparse-checkout init` is for it to respect the documented
+>>> requirement and automatically move `core.bare` and `core.worktree`
+>>> from .git/config to .git/worktree.config if those keys exist. That
+>>> should leave everything in a nice Kosher state for all worktrees,
+>>> existing and newly-created.
+>>
+>> I agree that this is the only place that currently _writes_ to the
+>> worktree config. All other code paths that seem to care about the
+>> worktree config specifically only read from the config using a
+>> modified scope.
+>>
+>> My thought on the direction to go would be to extract some code
+>> from the set_config() in builtin/sparse-checkout.c into a config
+>> helper, say "ensure_worktree_config_exists()", that adds the
+>> extension, creates the file, and then adds core.bare=false.
+>>
+>> Even better, we could create a config helper that writes to the
+>> worktree config, and _that_ could ensure the config is set
+>> correctly before writing the requested value.
+> 
+> Please do not take the approach of setting `core.bare=false` in the
+> worktree-specific config file. As I mentioned in the quoted text just
+> above, that only resolves the problem for the worktree in question but
+> leaves all other potentially worktrees broken (both existing worktrees
+> and all new worktrees which are not being used for sparse checkout).
+> The _only_ correct thing to do, as far as I can see, is for the new
+> helper function to precisely implement the requirements as laid out by
+> git-worktree.txt: specifically, enable
+> `extensions.worktreeConfig=true` _and_ relocate `core.bare` and
+> `core.worktree` from .git/config to .git/worktree.config.
 
-It looks like there's no helper, but this is the Nth thing I see where
-wish our "test_region" helper were just a bit more generalized. I.e.:
+Sorry I either misread or missed the part about moving core.bare over
+to core.worktree.
 
-    test_trace2 --match=counter --match=thread=$thread --match=name=$name --match=value=$value <trace>
+Putting this in the helper that writes to config.worktree is the best
+location, because we don't want to force it during 'git worktree add'
+since that would cause compatibility issues for tools that don't
+understand extensions.worktreeConfig.
 
-With test_region just being a wrapper for something like:
+Thanks for diligence in communicating what I missed.
 
-    test_trace2 --match=region_enter --match=category=$category --match=label=$label <trace> &&
-    test_trace2 --match=region_leave --match=category=$category --match=label=$label <trace>
-
-> +static void tr2main_emit_summary_counters(uint64_t us_elapsed_absolute)
-> +{
-> +	struct tr2_tgt *tgt_j;
-> +	int j;
-> +	struct tr2ctr_block merged;
-> +
-> +	memset(&merged, 0, sizeof(merged));
-
-nit: more memset v.s. "{ 0 }".
+-Stolee
