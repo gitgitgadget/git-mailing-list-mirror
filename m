@@ -2,125 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EBDDC433F5
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 13:11:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9881C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 13:37:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232798AbhLTNL2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 08:11:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39442 "EHLO
+        id S232949AbhLTNh6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 08:37:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232030AbhLTNL1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 08:11:27 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B118C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 05:11:27 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id m21so10911678edc.0
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 05:11:26 -0800 (PST)
+        with ESMTP id S230176AbhLTNh5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 08:37:57 -0500
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70712C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 05:37:57 -0800 (PST)
+Received: by mail-qk1-x735.google.com with SMTP id d21so9319389qkl.3
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 05:37:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=QtBYBZ/QZrdMmVoLZfjfq7euI9xpj/WIuabdz8XDtqg=;
-        b=NUibO5RqvwAIGdiL6XLHiVipLVR3I3OG68bmF9XDmcmsm12qsttSZ8GvqMuJFxAJyi
-         eq2R78BfEPaJPCYmhKMsKenbEJFHMcvjkgRU/NBteM9mt2sPCqO8TQ2oxu2Pas9Ij8v/
-         z3HPhbk3xhpiW93QnrwL7B92KbGYzwmIEgPN7kYLRo2Q+mVFrLPW5wjAe/1OnJ5bV/D4
-         7S22s8Ca/i0T3jTqmIfXsK7utKRV5s3JUHrrYd0MTBTpQ+Le+md4H4JTQ/5JQxiinUDJ
-         TZpDHgZTrVVb1cY8fpKxjHsX73IbkJn/I0REBqc1PFmlmiYh3M0+Zof64XVAqaDT6FTz
-         rWag==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=eFsrVTqHRc7aUeiKZrsZwHNlUUaqlJhxFGudNEBzZ9I=;
+        b=TsKDlAAMWGJ9arCkxZzZ9XHoqj8OhpfMZXJ3Hdu+XckHO2wlscAiHEc9xxHOfSj4U/
+         s/gJzWNv38sxG0M6Mw3hiq4FXrlz41jR0/B6zvb2gKuPvWrbQ8JFIhV6SYkseKGjFGFU
+         ktodbmdpHE8pMi98fedZr7e+U9UQbuA9uwCeaItxfzwWJ4ucbX2nNYY/d2/+v8jvUfSa
+         N4vTJocwUJ6ONqp8EmaxMCeRPMcnORdeuRJmok/DMaVTwo+hyuYBYhcIy/9kp/a2R6uo
+         0DLtcSTND+x8oHBl4w9pjtZYDY58AofkepTPI7naMcJOqMbnaLufNgV/DizP4V3FCCWy
+         pi5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=QtBYBZ/QZrdMmVoLZfjfq7euI9xpj/WIuabdz8XDtqg=;
-        b=H7K02hhsQOtAAN7WAYAFOwgG7px7M9nknv4wjD00/1vrvyhVW6EyyvxkpzxNevCCWs
-         jm5T15thcf3OgTVKukgkO0Zlpaa0yPi+8RxM6CLrMDeCDruiAwzpKa+AgXCgoyKLx+sP
-         Y8mSnQ4TzviFpt6+ETOHVyGoX/1MFy4Se7xQd/hkaHlseCNXdHbs4XuhNkWPWdkkVRrV
-         nHG2UlD+7j8H5gfb1yZ3UUig/hJoAwZrRolNaodmkyrkgCe6Q1+6+zlHen+Wgo9RA65f
-         6CA/MJKDbQCMJyhROTmO9EAJ8VJ0MB+JVeS0N/Y1gZBGiC5tb7g+3lsQj8tlpI+KRmJE
-         rLKA==
-X-Gm-Message-State: AOAM530sMeowv5fW9HZA7BrejrjvRPXTmnuBMG83oIRR0K+iq8t3vF39
-        vBHNG2lRb5+f3j9jI74eelg=
-X-Google-Smtp-Source: ABdhPJx0PQ+8EvGihTw9su4+3ZQl4jAskak/AzF0pveU9b54iNY5t/FuG5HmdWIWsev717/3NfeJCw==
-X-Received: by 2002:a05:6402:50ca:: with SMTP id h10mr15401406edb.70.1640005885632;
-        Mon, 20 Dec 2021 05:11:25 -0800 (PST)
-Received: from gmail.com (178.115.45.32.wireless.dyn.drei.com. [178.115.45.32])
-        by smtp.gmail.com with ESMTPSA id l18sm5353064ejo.114.2021.12.20.05.11.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 05:11:25 -0800 (PST)
-Date:   Mon, 20 Dec 2021 14:11:21 +0100
-From:   Johannes Altmanninger <aclopte@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RESEND] t/perf: do not run tests in user's $SHELL
-Message-ID: <20211220131121.mdxe7o6p3y25fzbw@gmail.com>
-References: <f22f978a-26eb-8fe9-cab4-3fd60df69635@web.de>
- <211220.86bl1bwkp9.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=eFsrVTqHRc7aUeiKZrsZwHNlUUaqlJhxFGudNEBzZ9I=;
+        b=HfP5yAQRfucpXl0dhs5agvQbKza8X2MdM0kc+CFPScyKFcMtnYL9+jCTB7s3YCJX5E
+         1gPoribjUC0O0jkaFSU0DItp4EPCXXajb6KFh52u/Yn/za2NuqExx4eMzeUOWyRm5Dzk
+         ZW2DMVBgTbo8cFMXZzR+6V/3fqeR0ZLmwkLUFDpU4WhyyJc+ouxv+nc4L2Cj9XnzYztr
+         JqRMzXSfXQN7ueOj2K5hcCbGfFxLSW3jr/znFQ54hmttK4UVBiIBmIMVfhPG63fKvVq2
+         DwwM26i/qTZ3xkkPYeDvlYynWZx+ECu8/XS+/q9WQExxeyH1akr5WcK1e/W0cY2c8+Qb
+         ZGtA==
+X-Gm-Message-State: AOAM5306svB3CBImYCdcYoVZYkrwrFToXYNXnBR7xA1rpNoAFmw8Zd6P
+        C5thaT4EmwbKsu+umRRI/1g=
+X-Google-Smtp-Source: ABdhPJyKBd3whlI7WEPq5t9Laat7SvCyO/TioVSyU6VhECjSjrI0JD+m8dNrX2lVajd48Eom6zu11Q==
+X-Received: by 2002:a05:620a:208c:: with SMTP id e12mr2642763qka.445.1640007476440;
+        Mon, 20 Dec 2021 05:37:56 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:1dd9:8fb3:37da:4055? ([2600:1700:e72:80a0:1dd9:8fb3:37da:4055])
+        by smtp.gmail.com with ESMTPSA id y73sm10916045qkb.113.2021.12.20.05.37.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Dec 2021 05:37:55 -0800 (PST)
+Message-ID: <7969c9e5-dd57-705c-b554-67681b9af62f@gmail.com>
+Date:   Mon, 20 Dec 2021 08:37:52 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <211220.86bl1bwkp9.gmgdl@evledraar.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: [PATCH 2/2] repack: make '--quiet' disable progress
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1098.git.1639758526.gitgitgadget@gmail.com>
+ <3eff83d9ae14023f3527dfeb419cf8259f6d053d.1639758526.git.gitgitgadget@gmail.com>
+ <YbzSfwQixuonrK/o@coredump.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <YbzSfwQixuonrK/o@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 20, 2021 at 12:56:58PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Dec 20 2021, René Scharfe wrote:
-> 
-> > From: Johannes Altmanninger <aclopte@gmail.com>
-> >
-> > The environment variable $SHELL is usually set to the user's
-> > interactive shell. We never use that shell for build and test scripts
-> > because it might not be a POSIX shell.
-> >
-> > Perf tests are run inside $SHELL via a wrapper defined in
-> > t/perf/perf-lib.sh. Use $TEST_SHELL_PATH like elsewhere.
-> >
-> > Signed-off-by: Johannes Altmanninger <aclopte@gmail.com>
-> > Acked-by: Jeff King <peff@peff.net>
-> > ---
-> > Original submission:
-> > https://lore.kernel.org/git/20211007184716.1187677-1-aclopte@gmail.com/
-> 
-> This LGTM & I think it could be picked up as-is.
-> 
-> Just a nit in case af a re-roll. I think it would help to summarize the
-> history a bit per
-> https://lore.kernel.org/git/YV+1%2F0b5bN3o6qRG@coredump.intra.peff.net/. I.e. something
-> like:
->     
->     In 342e9ef2d9e (Introduce a performance testing framework, 2012-02-17)
->     when t/perf was introduced the TEST_SHELL_PATH was not part of
->     GIT-BUILD-OPTIONS.
+On 12/17/2021 1:10 PM, Jeff King wrote:
+> On Fri, Dec 17, 2021 at 04:28:46PM +0000, Derrick Stolee via GitGitGadget wrote:
 
-(but SHELL_PATH was, which is what we should have used back then)
-
->     That was added later in 3f824e91c84 (t/Makefile:
->     introduce TEST_SHELL_PATH, 2017-12-08). We will always have that
->     available in perf-lib.sh since test-lib.sh will load it before this code
->     is executed.
-
-yes that's a good thing to point out
-
+>> This is difficult to test because the isatty(2) already prevents the
+>> progess indicators from appearing when we redirect stderr to a file.
 > 
-> >  t/perf/perf-lib.sh | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-> > index 780a7402d5..407252bac7 100644
-> > --- a/t/perf/perf-lib.sh
-> > +++ b/t/perf/perf-lib.sh
-> > @@ -161,7 +161,7 @@ test_run_perf_ () {
-> >  	test_cleanup=:
-> >  	test_export_="test_cleanup"
-> >  	export test_cleanup test_export_
-> > -	"$GTIME" -f "%E %U %S" -o test_time.$i "$SHELL" -c '
-> > +	"$GTIME" -f "%E %U %S" -o test_time.$i "$TEST_SHELL_PATH" -c '
-> >  . '"$TEST_DIRECTORY"/test-lib-functions.sh'
-> >  test_export () {
-> >  	test_export_="$test_export_ $*"
+> You'd need test_terminal. Something like this:
 > 
+> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+> index 8c4ba6500b..b673c49650 100755
+> --- a/t/t7700-repack.sh
+> +++ b/t/t7700-repack.sh
+> @@ -5,6 +5,7 @@ test_description='git repack works correctly'
+>  . ./test-lib.sh
+>  . "${TEST_DIRECTORY}/lib-bitmap.sh"
+>  . "${TEST_DIRECTORY}/lib-midx.sh"
+> +. "${TEST_DIRECTORY}/lib-terminal.sh"
+>  
+>  commit_and_pack () {
+>  	test_commit "$@" 1>&2 &&
+> @@ -387,4 +388,10 @@ test_expect_success '--write-midx -b packs non-kept objects' '
+>  	)
+>  '
+>  
+> +test_expect_success TTY '--quiet disables progress' '
+> +	test_terminal env GIT_PROGRESS_DELAY=0 \
+> +		git -C midx repack -ad --quiet --write-midx 2>stderr &&
+> +	test_must_be_empty stderr
+> +'
+> +
+>  test_done
+
+Thanks. I added this test.
+
+When first running the test, it failed because I didn't have the
+IO::Pty Perl module installed. I'm not sure why I don't fail with
+other tests that use test_terminal. If someone knows more about
+what is going on, then maybe we need to expand the TTY prereq?
+
+Thanks,
+-Stolee
+
