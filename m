@@ -2,222 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA9C7C433F5
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 12:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDBF0C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 13:06:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231438AbhLTMs7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 07:48:59 -0500
-Received: from smtp.hosts.co.uk ([85.233.160.19]:59024 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231130AbhLTMs6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 07:48:58 -0500
-Received: from host-92-7-140-211.as13285.net ([92.7.140.211] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1mzI63-000BVT-CT; Mon, 20 Dec 2021 12:48:56 +0000
-Message-ID: <41bd6eed-0e29-3b52-cfd4-9b9f9ac99c72@iee.email>
-Date:   Mon, 20 Dec 2021 12:48:55 +0000
+        id S232624AbhLTNGv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 08:06:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38274 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230238AbhLTNGs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 08:06:48 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D87CEC061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 05:06:47 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id m21so10852713edc.0
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 05:06:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=jkhcMgNBRBIDbaqIyDEaTg0dOP8W0FM+UR7jmyEmtVk=;
+        b=VwayK/JQ0olW44J6FJim4Dobjb1YAUUszr+vQXv6YdrV1l6Te+9Nuo04ZxujJOqQxK
+         l633IBZ1ojB3+Ip8lfj97lIOLHHVnAQ5W9XbzdkDr1jxCegCrGAgTCHgLG5XBkNrqzIt
+         62QMr5XEAIfcCz8ypGZs/U+CMDaF/J3bCU4Ycx3J4qwuepG5zxpy7hKRHwJmdkRWkScs
+         0s6ulpW+U4R709QrpDqOxzCetPrNxth9YOLQFsHyzzH8lsPqF77mbLOGbVIkWqxsqPnN
+         f7o5LB1SgyT9yp604KtY9X1hiSxO8lpFPv8wxVpXY9PothvmGY5s9J6WANnXwT1GypSa
+         EqEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=jkhcMgNBRBIDbaqIyDEaTg0dOP8W0FM+UR7jmyEmtVk=;
+        b=usbDMfM0lcADhGgMZeqJHWU2QtsdjpPN9QlSZ0iBVkXXLBRfZVrzS1x75NRsF2n4EZ
+         LuWlNqA50U16OLiWMnbGIElFeFc6wOyuN7ufepyogk5XOTgAMizvoVagd2K7fnR5RK0o
+         TPn4qeACgl+/Nl68wb0nArFuvN/J4s9eJYQkZD0qCYw8V2GJ4C8tt5AfgN/m5OnM3aS2
+         cOGGuZe1DdHVvUJtNbLeQu2UqHNcZUGctqao4jaKDBWIihdoUnzjnB8E8SgmH+gO/nSz
+         juhd/DocK0mefxVHi0k95L5CMwxCq5DrcFXTxoljIEJE+/tYkiLpCIak+ElIyPXvNryR
+         A/JQ==
+X-Gm-Message-State: AOAM5309oLuW6NnegI5p9vG+FPZBEjzYpXjBevHW6RcXXZZNXgHHs31w
+        t6370Mllhdy6IPzV/Qvhwew=
+X-Google-Smtp-Source: ABdhPJxiKMGtqDu3jJ5WkQ/Gwrmms9TdKi6P+UQnuJ0ANdD/esyM2w1hsl0G/o9RFO6oqN0eP/bcqA==
+X-Received: by 2002:a17:907:86a6:: with SMTP id qa38mr4989809ejc.170.1640005606299;
+        Mon, 20 Dec 2021 05:06:46 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id gn11sm883461ejc.67.2021.12.20.05.06.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Dec 2021 05:06:45 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mzINI-000PYS-TP;
+        Mon, 20 Dec 2021 14:06:44 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: taking a break from Git
+Date:   Mon, 20 Dec 2021 13:45:05 +0100
+References: <YboaAe4LWySOoAe7@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <YboaAe4LWySOoAe7@coredump.intra.peff.net>
+Message-ID: <211220.867dbzwhln.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [RFC PATCH] object-file API: add a format_loose_header() function
-Content-Language: en-GB
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Han Xin <chiyutianyi@gmail.com>, Jeff King <peff@peff.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20211217112629.12334-3-chiyutianyi@gmail.com>
- <RFC-patch-1.1-bda62567f6b-20211220T120740Z-avarab@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <RFC-patch-1.1-bda62567f6b-20211220T120740Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar,
-(catching up after a week away, and noticed your patch today..)
 
-On 20/12/2021 12:10, Ævar Arnfjörð Bjarmason wrote:
-> Add a convenience function to wrap the xsnprintf() command that
-> generates loose object headers. This code was copy/pasted in various
-> parts of the codebase, let's define it in one place and re-use it from
-> there.
->
-> All except one caller of it had a valid "enum object_type" for us,
-> it's only write_object_file_prepare() which might need to deal with
-> "git hash-object --literally" and a potential garbage type. Let's have
-> the primary API use an "enum object_type", and define an *_extended()
-> function that can take an arbitrary "const char *" for the type.
+On Wed, Dec 15 2021, Jeff King wrote:
 
-I recently completed a PR in the Git for Windows build that is focused on
-"git hash-object --literally" as a starter for LLP64 large file (>4GB)
-compatibility.
-(https://github.com/git-for-windows/git/pull/3533), which Dscho has
-merged (cc'd).
+Thanks a lot for everything. Your contributions, advice and example have
+been invaluable.
 
-I'm not sure that the `extended` version will work as expected across
-the test suite
-as multiple fake object types are tried, though I only skimmed the patch.
+I wish you all the best. I hope this isn't goodbye as far as interaction
+with this project is concerned.
 
-I'd support the general thrust, but just wanted to synchronise any changes.
+>   - I really am going to stop reading the list. Even if you cc me. So
+>     please don't get mad if I don't review your patches, or respond to
+>     bug reports. :)
 
-Philip
->
-> See [1] for the discussion that prompted this patch, i.e. new code in
-> object-file.c that wanted to copy/paste the xsnprintf() invocation.
->
-> 1. https://lore.kernel.org/git/211213.86bl1l9bfz.gmgdl@evledraar.gmail.com/
->
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->
-> On Fri, Dec 17 2021, Han Xin wrote:
->
->> From: Han Xin <hanxin.hx@alibaba-inc.com>
->>
->> There are 3 places where "xsnprintf" is used to generate the object
->> header, and I originally planned to add a fourth in the latter patch.
->>
->> According to Ævar Arnfjörð Bjarmason’s suggestion, although it's just
->> one line, it's also code that's very central to git, so reafactor them
->> into a function which will help later readability.
->>
->> Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-> I came up with this after my comment on the earlier round suggesting
-> to factor out that header formatting. I don't know if this more
-> thorough approach is worth it or if you'd like to replace your change
-> with this one, but just posting it here as an RFC.
->
->  builtin/index-pack.c |  3 +--
->  bulk-checkin.c       |  4 ++--
->  cache.h              | 21 +++++++++++++++++++++
->  http-push.c          |  2 +-
->  object-file.c        | 14 +++++++++++---
->  5 files changed, 36 insertions(+), 8 deletions(-)
->
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index c23d01de7dc..900c6539f68 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -449,8 +449,7 @@ static void *unpack_entry_data(off_t offset, unsigned long size,
->  	int hdrlen;
->  
->  	if (!is_delta_type(type)) {
-> -		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX,
-> -				   type_name(type),(uintmax_t)size) + 1;
-> +		hdrlen = format_loose_header(hdr, sizeof(hdr), type, (uintmax_t)size);
->  		the_hash_algo->init_fn(&c);
->  		the_hash_algo->update_fn(&c, hdr, hdrlen);
->  	} else
-> diff --git a/bulk-checkin.c b/bulk-checkin.c
-> index 8785b2ac806..446dea7c516 100644
-> --- a/bulk-checkin.c
-> +++ b/bulk-checkin.c
-> @@ -220,8 +220,8 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
->  	if (seekback == (off_t) -1)
->  		return error("cannot find the current offset");
->  
-> -	header_len = xsnprintf((char *)obuf, sizeof(obuf), "%s %" PRIuMAX,
-> -			       type_name(type), (uintmax_t)size) + 1;
-> +	header_len = format_loose_header((char *)obuf, sizeof(obuf),
-> +					 type, (uintmax_t)size);
->  	the_hash_algo->init_fn(&ctx);
->  	the_hash_algo->update_fn(&ctx, obuf, header_len);
->  
-> diff --git a/cache.h b/cache.h
-> index d5cafba17d4..ccece21a4a2 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -1309,6 +1309,27 @@ enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
->  						    unsigned long bufsiz,
->  						    struct strbuf *hdrbuf);
->  
-> +/**
-> + * format_loose_header() is a thin wrapper around s xsnprintf() that
-> + * writes the initial "<type> <obj-len>" part of the loose object
-> + * header. It returns the size that snprintf() returns + 1.
-> + *
-> + * The format_loose_header_extended() function allows for writing a
-> + * type_name that's not one of the "enum object_type" types. This is
-> + * used for "git hash-object --literally". Pass in a OBJ_NONE as the
-> + * type, and a non-NULL "type_str" to do that.
-> + *
-> + * format_loose_header() is a convenience wrapper for
-> + * format_loose_header_extended().
-> + */
-> +int format_loose_header_extended(char *str, size_t size, enum object_type type,
-> +				 const char *type_str, size_t objsize);
-> +static inline int format_loose_header(char *str, size_t size,
-> +				      enum object_type type, size_t objsize)
-> +{
-> +	return format_loose_header_extended(str, size, type, NULL, objsize);
-> +}
-> +
->  /**
->   * parse_loose_header() parses the starting "<type> <len>\0" of an
->   * object. If it doesn't follow that format -1 is returned. To check
-> diff --git a/http-push.c b/http-push.c
-> index 3309aaf004a..d1a8619e0af 100644
-> --- a/http-push.c
-> +++ b/http-push.c
-> @@ -363,7 +363,7 @@ static void start_put(struct transfer_request *request)
->  	git_zstream stream;
->  
->  	unpacked = read_object_file(&request->obj->oid, &type, &len);
-> -	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), (uintmax_t)len) + 1;
-> +	hdrlen = format_loose_header(hdr, sizeof(hdr), type, (uintmax_t)len);
->  
->  	/* Set it up */
->  	git_deflate_init(&stream, zlib_compression_level);
-> diff --git a/object-file.c b/object-file.c
-> index eac67f6f5f9..d94609ee48d 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1009,6 +1009,14 @@ void *xmmap(void *start, size_t length,
->  	return ret;
->  }
->  
-> +int format_loose_header_extended(char *str, size_t size, enum object_type type,
-> +				 const char *typestr, size_t objsize)
-> +{
-> +	const char *s = type == OBJ_NONE ? typestr : type_name(type);
-> +
-> +	return xsnprintf(str, size, "%s %"PRIuMAX, s, (uintmax_t)objsize) + 1;
-> +}
-> +
->  /*
->   * With an in-core object data in "map", rehash it to make sure the
->   * object name actually matches "oid" to detect object corruption.
-> @@ -1037,7 +1045,7 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
->  		return -1;
->  
->  	/* Generate the header */
-> -	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(obj_type), (uintmax_t)size) + 1;
-> +	hdrlen = format_loose_header(hdr, sizeof(hdr), obj_type, size);
->  
->  	/* Sha1.. */
->  	r->hash_algo->init_fn(&c);
-> @@ -1737,7 +1745,7 @@ static void write_object_file_prepare(const struct git_hash_algo *algo,
->  	git_hash_ctx c;
->  
->  	/* Generate the header */
-> -	*hdrlen = xsnprintf(hdr, *hdrlen, "%s %"PRIuMAX , type, (uintmax_t)len)+1;
-> +	*hdrlen = format_loose_header_extended(hdr, *hdrlen, OBJ_NONE, type, len);
->  
->  	/* Sha1.. */
->  	algo->init_fn(&c);
-> @@ -2009,7 +2017,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
->  	buf = read_object(the_repository, oid, &type, &len);
->  	if (!buf)
->  		return error(_("cannot read object for %s"), oid_to_hex(oid));
-> -	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), (uintmax_t)len) + 1;
-> +	hdrlen = format_loose_header(hdr, sizeof(hdr), type, len);
->  	ret = write_loose_object(oid, hdr, hdrlen, buf, len, mtime, 0);
->  	free(buf);
->  
+A couple of practical questions:
+
+Do you have a preference either way for being kept or omitted from CC?
+I.e. if/when you'd come back to have that E-Mail backlog, or for us to
+stop CC-ing you? Clearly you'd still get some traffic, but at least us
+list regulars could take that into account.
+
+You have various WIP code in topics at https://github.com/peff/git. Some
+of which has your SOB, some not. I keep it as a remote and sometimes run
+into prior art with "log --all <path>" and the like.
+
+You noted a while ago (IIRC, haven't dug up where) that inline patches
+of yours to the list could be assumed to have your SOB, does the same
+apply to what's sitting in that repo?
+
+I picked up/stole some patches from it recently for the e48a623dea0
+(Merge branch 'ab/http-drop-old-curl', 2021-08-24) topic. It might be
+useful for me/others to similarly pick WIP work from there in the
+future, obviously while clearly communicating that this is based on some
+WIP patch that sat in your repo, not something you submitted on-list.
 
