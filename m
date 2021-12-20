@@ -2,277 +2,219 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9712AC433FE
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 14:09:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C03A8C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 14:11:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233462AbhLTOJo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 09:09:44 -0500
-Received: from mail-eopbgr60040.outbound.protection.outlook.com ([40.107.6.40]:26598
-        "EHLO EUR04-DB3-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S230116AbhLTOJo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 09:09:44 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ntucrapXLjohq2lDYK1UKqi+UX3yYd4q8J0ktsUNtvjOrLLBj/f78dwK1X5EPPPTZbL+5oFtnBOgMgW/0akJJhbfz2M/fYzZwnd77o3J9pq3k/6NrUWTcVqSpnbm3YXuBQY8T1VoMiQB5e4jN4Hx8aPTh8twd7nP0nQDw64gikgmpjN8wp5WvGAb/PiBYkGsNMUvzMhSfEPp0sNLs3qaZzPf6sAuDf4D2jruXpMZAQRFU4SE1Z2yPRVkqOlmU9q7wQpMbQuvqCbV3k93AocrQwN6glJgmsJmjsIdawQVq8A4fu4+2JmZF9yFqPEDvyRECFqdhodfo9RX4ODJrHxGVw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=u71xQRKecETCSvBl9btZX4Of1KTbQEVabrOqshm11Hw=;
- b=ZgyrgYVxOlGtb9aL3YvciW0oQ2RF5SnIA4CybdXyIWyiiEjUU5DyTSgW51Yuo1yqebasc91bJxLAqB1noSBy0gdoRamQTBSSultQ6GgmjwbZsU8yk0Mw2jGw4Z/wNbc60ziMFPK35WgE4xVfP2fFLQfAwJj1yB/3ZvcTZzCU1kXHPOvx4v43rl5nsmFtZwdmnWfp6rPL9rlpjqyq3NqDurrhxaKE7AoKHwUSHJb6hRb9KpUJB6ro5cxGUGvehHKyi5qzmdUU7e+IGCedKcMqJr14+i/1D+ZwuYHxuPIXEdC6Mhwo89cLzKtsuQ8JjTiV/rz/Z8ERGMiEWtuvCkUGSQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=u71xQRKecETCSvBl9btZX4Of1KTbQEVabrOqshm11Hw=;
- b=ZFjLPWRrQbn5aUpzp/meMIDLVdm1lZKccysbr8ld7q6zAiWLLZkeA8BjunMIULwTizqJIw0IleZOvsY7gLX0Qm+aTejqAOEnucN9CUckK70qBfUqghFfzoqD0osI4nkg2JskJfSsx4IChck4MUk8G3QV8JJC2D9B9J8KNXxL6Ok=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PR3PR10MB4238.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:a8::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4801.14; Mon, 20 Dec
- 2021 14:09:42 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::486c:1c10:65ef:90f9]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::486c:1c10:65ef:90f9%4]) with mapi id 15.20.4801.020; Mon, 20 Dec 2021
- 14:09:42 +0000
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Fabian Stelzer <fs@gigacodes.de>
-Subject: [RFC PATCH 2/2] crypto sign: add cryptoSign.* config
-Date:   Mon, 20 Dec 2021 15:09:28 +0100
-Message-Id: <20211220140928.1205586-3-fs@gigacodes.de>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211220140928.1205586-1-fs@gigacodes.de>
-References: <20211220140928.1205586-1-fs@gigacodes.de>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: AS9PR06CA0334.eurprd06.prod.outlook.com
- (2603:10a6:20b:466::19) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        id S233491AbhLTOLo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 09:11:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53460 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233485AbhLTOLn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 09:11:43 -0500
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63275C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 06:11:43 -0800 (PST)
+Received: by mail-qt1-x832.google.com with SMTP id l8so9813530qtk.6
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 06:11:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=T7xbQXEPH4kPFhE26WQM13kalcLlHZHASoZHu965Mi4=;
+        b=m2DpbNkI/4PaTYDQWAcvHKTUl7tC88zNIPYwibU5/O+aYfaJ5rJGxyvgQxn+H4hEZr
+         089fTLRxx/2z3MN7Duf2VSzpGdQ8Y7JPy9DZV2Fi1dDsku16s90ZoGIWlarOOiB+CMGv
+         dmokyg87EIgrGVi4EefZDTW984jgUGYVRAXOjsCFGy8AwDC5kG+TfZDsdfuWTFrBz7vh
+         cnHuHZ+L7kh0T9jmqZF51SuUx+XbbRuyOS/bx1AUMsbDiMxo56zHLqskKWQrUrlDW28J
+         u7K1tZlQ+mhKyZgBSguIf3VdUKyr0A9SwsFdTL5DdU0vifi1MTkFif79eFI7hsUnuy5j
+         Sjug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=T7xbQXEPH4kPFhE26WQM13kalcLlHZHASoZHu965Mi4=;
+        b=uX2hS3640r4Od7D4Xqil90wa5Ct3vL/Q076brEEEMl5c88+XuVvnQph7WCZ4VR4ozY
+         9wdZaD2dNWgTe8fCLedk1sASYAvrtrl0K/oE8zQlAllwbqkCdPXtTYqVSSpN25zWmSpI
+         P+6K0fF5UEFts4SY3XPDrSky8fqeSUAEuhIacqqer+nj92Qb8tCpl3fR0D8A/r4PaHeP
+         h3i+vYd/WJyLTvVD3nGC4rvAuAuOUTFfiz8sgkRIOX6/CN2GiE5pwtkil9p2Ir/XmsxM
+         jT6rmr0CEo3wYCaENEjfMyYmkyTcNMFXEd0yoBa2YSjdalrLH3aqjPBH+mzbTD3j586c
+         OKgw==
+X-Gm-Message-State: AOAM533/XKFohWGvuq6lyYoJTkqy41eQkxtWEOe6j1lWId8jGhwmxYpd
+        xCKDrFyC9JZRb+KKWykNZ5E=
+X-Google-Smtp-Source: ABdhPJwX9mUOOCOOGzYvs5etOF4Os7pS4vx58ojYlZFCu9n6yUgtBVuKi5MFlN6A1mAlczeKcuBxeQ==
+X-Received: by 2002:a05:622a:8b:: with SMTP id o11mr7131686qtw.306.1640009502367;
+        Mon, 20 Dec 2021 06:11:42 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:1dd9:8fb3:37da:4055? ([2600:1700:e72:80a0:1dd9:8fb3:37da:4055])
+        by smtp.gmail.com with ESMTPSA id k19sm11737205qko.73.2021.12.20.06.11.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Dec 2021 06:11:41 -0800 (PST)
+Message-ID: <f39af047-d244-14be-4cd8-b6c3199545f3@gmail.com>
+Date:   Mon, 20 Dec 2021 09:11:38 -0500
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: ff2d564c-c089-452d-99d0-08d9c3c25e76
-X-MS-TrafficTypeDiagnostic: PR3PR10MB4238:EE_
-X-Microsoft-Antispam-PRVS: <PR3PR10MB4238A027ABB6B4CE8F037412B67B9@PR3PR10MB4238.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 1O2cN3v1GudoNuBYOaFTpTUQYudElCnUQneITjU+Q4f2m9WDgSWv7aSjIYp3g4t2G98z9XBpKXT2hZLj13mRAPjsUFr50rRWYNbw30ame/6USLU2+4je06jUgGcP+Mf+wkw8tjLfxnFeHmKuRjmhGCTezHlDTt/SumxuDt+AQwi1bM9z009wodhwiExeOf5qTVr2BQS3FO3QPvl3ycjlGELWJSVqKvEMcPLceZtsQz8d0XycKbUORyrpOSdkNxzfZ+C1EWXzahribv2fPZm1JWKal/cvQ1PD3qiva2m/3HPwcZzQASq7UuTzyHwkcGiNiD0qlo4qAdbhOEmHrVd1KvSf7EqQnaBd8n9oEWvohpJ8AXBTuckgHiFePr7HKguW7KL0hTDYVHxYbe23xO5SSk5yHuGU5pA61GI75AmwNsVt6Dm+8l+OIgDHXLc4ZeOX4yPIHXimbeMHuTwArZoV8McCiXaDu4cDkcARMjKYvqXR7D8C3n62NJzr6r/mgDsPe/e+6Ic/4/JcJg+20k0kxOYOKhfFSI5so9SepC/ziQxwFT+HqAze5n5WOL8GtmB5rAqvf0ZuDw//q724naaEek0kq8LKGpJWA/CObDWdh95VKwFHJ2Cp5AJMaUL8P9W+OmRV1RRJoTBdvpJ4motjRQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(366004)(39840400004)(136003)(346002)(376002)(396003)(8936002)(508600001)(6666004)(83380400001)(107886003)(8676002)(2616005)(86362001)(316002)(1076003)(54906003)(186003)(6506007)(36756003)(6916009)(6512007)(38100700002)(5660300002)(66476007)(66556008)(6486002)(66946007)(2906002)(4326008);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?IYe3ou6cU02UVzbqojXuF02PpqO3FPnkd0fxizkINX11QwUo7Y5pL6SgL4wj?=
- =?us-ascii?Q?ZQwEwng3PTBYhX1rBjdRXYT01p72oeM/Y+NGlIoLVyvQtdpUJYZC1MJ/pb4P?=
- =?us-ascii?Q?lVG6qfkjelvHUCMXHfB1HiSteZNcg126FIf0V3PAflf+3X7A+rJ7K+dNxp0L?=
- =?us-ascii?Q?d4tPyNjIAiqMbuzSd4uyxpL1CNNP9GL/JxOJAuVEG1aK1v88SnOpzUom/KNi?=
- =?us-ascii?Q?pG1SyEA4S5w+u6/IYEtt14qZpcqPwpITrvyx+/rz6SfjPw9ZCDejvGz6ygzM?=
- =?us-ascii?Q?1s/QbGonmIVVUrXHl0V75SYMTlP5jMWN0UPBPagKsd11FcmKzVwGSV9vJ4go?=
- =?us-ascii?Q?qg8yPVabrZEaQFvMqPjSPgJdyFaSGSkM6FrqbletpVm8o55u3kZ5PDQiaf4C?=
- =?us-ascii?Q?FEtYLrfcRHy/iRMR0vT6TgK9WDIkWz1D6/8eg+EExrdiIqYh0yomfXijP/7b?=
- =?us-ascii?Q?JrImP7n7o5VjlLASZ4uhziTmeMFu4TfNNuUTBoGHRXpWA3m9oOM25CGs0YNT?=
- =?us-ascii?Q?iFH9xoxTfW2/YS5ejW0IRPAxQDmSCe0sH+MwU+BHNesC4lyDvHsBopUofjdY?=
- =?us-ascii?Q?KmcomEC025l7hog/P7D805peQ4NgfM7KvZ5fsOQ/ToIl3KzaxEgvu1VDMAaQ?=
- =?us-ascii?Q?UnzSWQCH/7yikj/RoTlh42BXSaPWfVSI2wXSiVle21sFfHP3/TLPjyNFGCf5?=
- =?us-ascii?Q?f+wZVQHtcZcJmcOi0vdOyAw/fr/aoWRCl1Vx7mB+Vco4rfB62q5cRBUD+Tpm?=
- =?us-ascii?Q?oMaJnFbEK+xYQfGSxIb1I/HTqiKeAo1aK9E2r/mJhl8HbyTrBoruHMuAUDPU?=
- =?us-ascii?Q?WRK9Q9YiDxbFhJDas70yOSw2ybGtZwAvEJTuaeVmsGVSfNGZlOim2zuDh8gy?=
- =?us-ascii?Q?dimNM4u+OBpKAzwJFNF2vQkLQ1gtgXPJtKJcLKpLwrLU5V9PM44rEP9jO5ZC?=
- =?us-ascii?Q?CMB6HLk8AuIzHlCoJAOBzHVfAtJ3OHh/xknZFQ+q9GcxU0EIRK8e2DR1WGa4?=
- =?us-ascii?Q?vNyv8k3WOpDClHI8XgWI5TY5uv6mrrc9yYIh+fQmSaZ9orTtnvY0m0+XVLil?=
- =?us-ascii?Q?tJbGSi1gF+ABaUnl2ZbS+8u2UC8j+lmGQVZjvhi1HusxlW2BA/xr/Zp1sIKC?=
- =?us-ascii?Q?RAeFeJvz8LXxq36iipvXhinTRVCD4CFnhq5VzLofRwrWtcYGFkcgYCnaxGKT?=
- =?us-ascii?Q?VbQRxAL17p4vWnsXYG76Nm+zQSx1lwyctsWocv8xqBJrBa17DZGkHExCNSbk?=
- =?us-ascii?Q?h4giU4DFQvpcERJzUiEc0laQnptYmSbyF8FYji9DWG9hUHVAgWxUHPE8CPlD?=
- =?us-ascii?Q?VJOGlUFJ0Fb/PtmezPyqO1BUo0ZinO9pz9PveOXFrMVqtbK95D7ab++gM+vR?=
- =?us-ascii?Q?w4eHyQ9E5QRCFcF6j7YEcI4ryEfGfGPR1dmnVm7VGctICUKejSpWIZyrjIiO?=
- =?us-ascii?Q?Muytdx4MuNWED51kORoHgJ/ydl5M1ZHXAmiloEvAFPvt+gowBIp9uBXiUnN0?=
- =?us-ascii?Q?bLvo7R97My9JNdQmeKgHKfXtz12EASIYh3/2uyIWpiKDc0AscN0xOkARfcq+?=
- =?us-ascii?Q?acAT9n6SndwjTtcIIorHTOlKqYqTffIfL7L/CPGlABcDTYUhSRkWTtouEwET?=
- =?us-ascii?Q?aq7vamcAeWC9zr5Z9e7134Irv1rUXt+dgU5FvHNmk9gg/+iTTY0GS8/8EUzE?=
- =?us-ascii?Q?9QmMQiGEZp+XutW1iuTPVr+eTRjaDBfsvNdkQOKNi5WhBzaNufqaWgU5+srX?=
- =?us-ascii?Q?wPz4AbeGGg=3D=3D?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff2d564c-c089-452d-99d0-08d9c3c25e76
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Dec 2021 14:09:42.6944
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pKGREegkpx4XJROQhQ8iv9RT3x0luqSGcSKohAPKOv+9IGqllK3SEiGrGeaymSwEPYR1yBfoABr4D6MZSenDej6QF7YhgcH/HZRe7OtEszw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB4238
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: Bug report - Can create worktrees from bare repo / such worktrees
+ can fool is_bare_repository()
+Content-Language: en-US
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Sean Allred <allred.sean@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= =?UTF-8?Q?_Duy?= 
+        <pclouds@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <ttaylorr@github.com>,
+        Elijah Newren <newren@gmail.com>
+References: <CABceR4bZmtC4rCwgxZ1BBYZP69VOUca1f_moJoP989vTUZWu9Q@mail.gmail.com>
+ <e992d4b4-f9e2-a8f9-22da-e9d342c7bede@sunshineco.com>
+ <CABceR4YVd4remACJkxwSCTSYB2v3Zn1BsjKHbzeve8uHiZv1pA@mail.gmail.com>
+ <CAPig+cQ6U_yFw-X2OWrizB1rbCvc4bNxuSzKFzmoLNnm0GH8Eg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CAPig+cQ6U_yFw-X2OWrizB1rbCvc4bNxuSzKFzmoLNnm0GH8Eg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since git now supports multiple cryptographic methods/formats to sign
-objects, the `gpg.` configuration prefix is misleading.
-Add `cryptoSign.`, but keep `gpg.` as a compatibility alias at least for
-all existing options.
-`gpg.mintrustlevel` is moved to `cryptosign.gpg.mintrustlevel` while
-also still allowing the former.
----
- Documentation/config/gpg.txt | 31 ++++++++++++++++++++-----------
- gpg-interface.c              | 30 ++++++++++++++++++++++--------
- 2 files changed, 42 insertions(+), 19 deletions(-)
+On 12/19/2021 7:58 PM, Eric Sunshine wrote:
+> On Sun, Dec 19, 2021 at 3:47 PM Sean Allred <allred.sean@gmail.com> wrote:
+>>> However, you missed the step (discussed in [1]) in which it is your
+>>> responsibility to move the `core.bare=true` setting from
+>>> git.git/config to git.git/worktree.config manually after setting
+>>> `extensions.worktreeconfig=true`.
 
-diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
-index 4f30c7dbdd..ef21eb8249 100644
---- a/Documentation/config/gpg.txt
-+++ b/Documentation/config/gpg.txt
-@@ -1,6 +1,17 @@
- gpg.program::
--	Use this custom program instead of "`gpg`" found on `$PATH` when
--	making or verifying a PGP signature. The program must support the
-+	Deprecated alias for `cryptoSign.<format>.program`.
-+
-+cryptoSign.format::
-+gpg.format::
-+	Specifies which key format to use when signing with `--crypto-sign`.
-+	Default is "openpgp". Other possible values are "x509", "ssh".
-+
-+cryptoSign.<format>.program::
-+gpg.<format>.program::
-+	Use this to customize the program used for the signing format you
-+	chose (see `cryptoSign.format`). The default value for
-+	`gpg.x509.program` is "gpgsm" and `gpg.ssh.program` is "ssh-keygen".
-+	With the format set to "opengpg" or "x509" the program must support the
- 	same command-line interface as GPG, namely, to verify a detached
- 	signature, "`gpg --verify $signature - <$file`" is run, and the
- 	program is expected to signal a good signature by exiting with
-@@ -8,17 +19,12 @@ gpg.program::
- 	standard input of "`gpg -bsau $key`" is fed with the contents to be
- 	signed, and the program is expected to send the result to its
- 	standard output.
-+	If the format is "ssh", then the configured program must implement the
-+	`ssh-keygen -Y find-principals|check-novalidate|verify|sign` commands
-+	(see ssh-keygen(1) man page).
- 
--gpg.format::
--	Specifies which key format to use when signing with `--gpg-sign`.
--	Default is "openpgp". Other possible values are "x509", "ssh".
--
--gpg.<format>.program::
--	Use this to customize the program used for the signing format you
--	chose. (see `gpg.program` and `gpg.format`) `gpg.program` can still
--	be used as a legacy synonym for `gpg.openpgp.program`. The default
--	value for `gpg.x509.program` is "gpgsm" and `gpg.ssh.program` is "ssh-keygen".
- 
-+crpytoSign.gpg.minTrustLevel::
- gpg.minTrustLevel::
- 	Specifies a minimum trust level for signature verification.  If
- 	this option is unset, then signature verification for merge
-@@ -34,12 +40,14 @@ gpg.minTrustLevel::
- * `fully`
- * `ultimate`
- 
-+cryptoSign.ssh.defaultKeyCommand::
- gpg.ssh.defaultKeyCommand:
- 	This command that will be run when user.signingkey is not set and a ssh
- 	signature is requested. On successful exit a valid ssh public key is
- 	expected in the	first line of its output. To automatically use the first
- 	available key from your ssh-agent set this to "ssh-add -L".
- 
-+cryptoSign.ssh.allowedSignersFile::
- gpg.ssh.allowedSignersFile::
- 	A file containing ssh public keys which you are willing to trust.
- 	The file consists of one or more lines of principals followed by an ssh
-@@ -67,6 +75,7 @@ This way only committers with an already valid key can add or change keys in the
- Using a SSH CA key with the cert-authority option
- (see ssh-keygen(1) "CERTIFICATES") is also valid.
- 
-+cryptoSign.ssh.revocationFile::
- gpg.ssh.revocationFile::
- 	Either a SSH KRL or a list of revoked public keys (without the principal prefix).
- 	See ssh-keygen(1) for details.
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 3e7255a2a9..eacafcd56e 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -638,6 +638,7 @@ int git_gpg_config(const char *var, const char *value, void *cb)
- 	struct gpg_format *fmt = NULL;
- 	char *fmtname = NULL;
- 	char *trust;
-+	const char *crypto_var = NULL;
- 	int ret;
- 
- 	if (!strcmp(var, "user.signingkey")) {
-@@ -647,7 +648,17 @@ int git_gpg_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
--	if (!strcmp(var, "gpg.format")) {
-+	/*
-+	 * `gpg.` is a backwards compatibility prefix alias for `cryptosign.`
-+	 * All following vars expect a prefix so we can return early if
-+	 * there is none
-+	 */
-+	if (!skip_prefix(var, "gpg.", &crypto_var) &&
-+	    !skip_prefix(var, "cryptosign.", &crypto_var))
-+		return 0;
-+
-+
-+	if (!strcmp(crypto_var, "format")) {
- 		if (!value)
- 			return config_error_nonbool(var);
- 		fmt = get_format_by_name(value);
-@@ -658,7 +669,9 @@ int git_gpg_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
--	if (!strcmp(var, "gpg.mintrustlevel")) {
-+	/* `gpg.mintrustlevel` moved to `cryptosign.gpg.mintrustlevel` */
-+	if (!strcmp(crypto_var, "mintrustlevel") ||
-+	    !strcmp(crypto_var, "gpg.mintrustlevel")) {
- 		if (!value)
- 			return config_error_nonbool(var);
- 
-@@ -672,31 +685,32 @@ int git_gpg_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
--	if (!strcmp(var, "gpg.ssh.defaultkeycommand")) {
-+	if (!strcmp(crypto_var, "ssh.defaultkeycommand")) {
- 		if (!value)
- 			return config_error_nonbool(var);
- 		return git_config_string(&ssh_default_key_command, var, value);
- 	}
- 
--	if (!strcmp(var, "gpg.ssh.allowedsignersfile")) {
-+	if (!strcmp(crypto_var, "ssh.allowedsignersfile")) {
- 		if (!value)
- 			return config_error_nonbool(var);
- 		return git_config_pathname(&ssh_allowed_signers, var, value);
- 	}
- 
--	if (!strcmp(var, "gpg.ssh.revocationfile")) {
-+	if (!strcmp(crypto_var, "ssh.revocationfile")) {
- 		if (!value)
- 			return config_error_nonbool(var);
- 		return git_config_pathname(&ssh_revocation_file, var, value);
- 	}
- 
--	if (!strcmp(var, "gpg.program") || !strcmp(var, "gpg.openpgp.program"))
-+	if (!strcmp(crypto_var, "program") ||
-+	    !strcmp(crypto_var, "openpgp.program"))
- 		fmtname = "openpgp";
- 
--	if (!strcmp(var, "gpg.x509.program"))
-+	if (!strcmp(crypto_var, "x509.program"))
- 		fmtname = "x509";
- 
--	if (!strcmp(var, "gpg.ssh.program"))
-+	if (!strcmp(crypto_var, "ssh.program"))
- 		fmtname = "ssh";
- 
- 	if (fmtname) {
--- 
-2.33.1
+Thanks for this context of added responsibility. It seems a bit strange
+to require this, since it doesn't make any sense to have a bare worktree
+(at least not to me, feel free to elaborate on the need of such a
+situation).
 
+I think the most defensive thing to do would be to always special case
+core.bare to false when in a worktree. But if there is a reason to allow
+bare worktrees, then that isn't feasible.
+
+>> Ahh, that makes sense!  I did notice the `core.bare` setting being
+>> respected in source and figured this had a part to play (which is why
+>> I included git-config output).
+>>
+>> I think then that I was overzealous in trying to MWE-ify the issue: as
+>> I noted, I found this issue when I was trying to perform a
+>> sparse-checkout within the worktree.  To memory (I don't have my work
+>> system at the moment and don't have its `history`), I think it went
+>> something like this:
+>>
+>>     git worktree add --no-checkout ../next && cd ../next
+>>     git sparse-checkout init --cone # auto-created a worktree config
+>>     git sparse-checkout set t
+> 
+> Thanks for this information. I haven't followed sparse-checkout mode
+> at all and haven't used it, so I quickly scanned the man page for the
+> worktree-relevant information, and indeed I was able to reproduce the
+> problem using the recipe (with the prerequisite that the repository is
+> bare) which you present here.
+> 
+>> I think either the git-sparse-checkout-set command (or the
+>> git-checkout I ran after) would fail complaining that I was not in a
+>> worktree.
+> 
+> It is indeed the `git sparse-checkout set` command which fails.
+
+Right, 'init' will set the sparse-checkout information in your worktree
+config and initialize it as needed, here:
+
+static int set_config(enum sparse_checkout_mode mode)
+{
+	const char *config_path;
+
+	if (upgrade_repository_format(1) < 0)
+		die(_("unable to upgrade repository format to enable worktreeConfig"));
+	if (git_config_set_gently("extensions.worktreeConfig", "true")) {
+		error(_("failed to set extensions.worktreeConfig setting"));
+		return 1;
+	}
+
+	config_path = git_path("config.worktree");
+	git_config_set_in_file_gently(config_path,
+				      "core.sparseCheckout",
+				      mode ? "true" : NULL);
+
+	git_config_set_in_file_gently(config_path,
+				      "core.sparseCheckoutCone",
+				      mode == MODE_CONE_PATTERNS ? "true" : NULL);
+
+	if (mode == MODE_NO_PATTERNS)
+		set_sparse_index_config(the_repository, 0);
+
+	return 0;
+}
+
+So, we are manually specifying "put this in the config.worktree file"
+and not going through some "initialize worktree config" helper. Such
+a helper would be useful to avoid this issue in the future.
+
+>> Based on the above, it sounds like `init` is creating the
+>> worktree-specific config, but is not overriding `core.bare` in that
+>> config.  Would a patch to take this step this automatically be
+>> well-received?
+> 
+> This looks like a legitimate oversight, so some sort of patch to
+> resolve it would likely be welcomed.
+> 
+>> I see two options for when to set `core.bare=false` in
+>> worktree-specific config:
+>>
+>>   1. At git-worktree-add: This is probably the earliest time which
+>>      makes sense, but may be over-reach.  I'm not up-to-speed on how
+>>      worktree-specific configs are generally considered on this list.
+>>      If I were implementing a workaround, though, this is probably
+>>      where I'd make it.
+> 
+> My knee-jerk reaction is that applying a "fix" to `git worktree add`
+> to assign `core.bare=false` in the worktree-specific config may be
+> misguided, or at least feels too much like a band-aid. Although it's
+> true that that would address the problem for worktrees created after
+> `extensions.worktreeconfig=true` is set, it won't help
+> already-existing worktrees. This reason alone makes me hesitant to
+> endorse this approach.
+
+Yeah, my concern is that it requires the extension and could cause
+some tools to stop working immediately. If we have the extension
+already, it might make sense to initialize the file then.
+
+(...)
+>>   2. At git-sparse-checkout-init: This is where the problem begins to
+>>      have an effect, so this might also make sense.
+> 
+> Yes, if I'm understanding everything correctly, this seems like the
+> best and most localized place to address the problem at this time. The
+> simple, but too minimal, approach would be for `git sparse-checkout
+> init` to simply add `core.bare=false` to the worktree-specific config,
+> however, this only addresses the immediate problem and still leaves
+> things broken in general for any non-sparse worktrees.
+> 
+> So, the better and more correct approach, while still being localized
+> to `git sparse-checkout init` is for it to respect the documented
+> requirement and automatically move `core.bare` and `core.worktree`
+> from .git/config to .git/worktree.config if those keys exist. That
+> should leave everything in a nice Kosher state for all worktrees,
+> existing and newly-created.
+
+I agree that this is the only place that currently _writes_ to the
+worktree config. All other code paths that seem to care about the
+worktree config specifically only read from the config using a
+modified scope.
+
+My thought on the direction to go would be to extract some code
+from the set_config() in builtin/sparse-checkout.c into a config
+helper, say "ensure_worktree_config_exists()", that adds the
+extension, creates the file, and then adds core.bare=false.
+
+Even better, we could create a config helper that writes to the
+worktree config, and _that_ could ensure the config is set
+correctly before writing the requested value.
+
+I'll take a stab at this today.
+
+> (I've cc:'d a few sparse checkout area experts, though I may have
+> forgotten some.)
+
+Thank you for CC'ing me!
+-Stolee
