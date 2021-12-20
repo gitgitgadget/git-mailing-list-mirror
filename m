@@ -2,84 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DD2CC433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 19:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D0FDC433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 19:07:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240688AbhLTTHA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 14:07:00 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55952 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240724AbhLTTGr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 14:06:47 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F0AC10F108;
-        Mon, 20 Dec 2021 14:06:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pmlFux0s9sTnFwoUDWXMia/ds8t+7huHsoHp8B
-        kXMOE=; b=tTGVOzlnBDp9io4ZykIVtBoWeyh9r5o2LRGdbhDYaTdyIIPDiUMuLa
-        gGbl6K8e7oBtYavCQeoFqFzvFcx7fD+aWVHXZ3rpzAR2WNheacnydwFYwlP4DRli
-        rT95yACG57u4HZgc56bYdWCd81vONNgRiy5cadITUbrRjw5CwyiHk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 038C110F107;
-        Mon, 20 Dec 2021 14:06:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S234420AbhLTTHE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 14:07:04 -0500
+Received: from siwi.pair.com ([209.68.5.199]:11568 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240710AbhLTTHD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 14:07:03 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 64B2D3F480B;
+        Mon, 20 Dec 2021 14:07:01 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5FDC410F106;
-        Mon, 20 Dec 2021 14:06:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 03/13] init: unconditionally create the "info" directory
-References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
-        <patch-03.13-784b7947512-20211212T201308Z-avarab@gmail.com>
-        <db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com>
-        <211220.86tuf3utv9.gmgdl@evledraar.gmail.com>
-        <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
-Date:   Mon, 20 Dec 2021 11:06:43 -0800
-In-Reply-To: <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com> (Derrick
-        Stolee's message of "Mon, 20 Dec 2021 12:39:53 -0500")
-Message-ID: <xmqq1r27xfi4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 30F723F4818;
+        Mon, 20 Dec 2021 14:07:01 -0500 (EST)
+Subject: Re: [PATCH 2/9] trace2: convert tr2tls_thread_ctx.thread_name from
+ strbuf to char*
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1099.git.1640012469.gitgitgadget@gmail.com>
+ <3a4fe07e40e967622035844ff10ded1ed71d94fc.1640012469.git.gitgitgadget@gmail.com>
+ <211220.86pmprutbz.gmgdl@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <289f525b-93b8-6f33-e0fc-3b24fa8a54ea@jeffhostetler.com>
+Date:   Mon, 20 Dec 2021 14:07:00 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F9825FC6-61C7-11EC-BA92-CB998F0A682E-77302942!pb-smtp2.pobox.com
+In-Reply-To: <211220.86pmprutbz.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
-
-> What I _am_ saying is important is that if we are trying to write
-> a file to a known location and its parent directory doesn't exist,
-> then we should create it. Not doing so is a bug and should be
-> fixed, no matter how rare such a thing is to occur. As you've
-> shown, it is not required to have an info directory until we need
-> one (e.g. for sparse-checkout or an excludes file).
->
-> If you're not planning to add that to this series, then I'll add it
-> to my list. I do think it would fit well into this one, though.
-
-Historically, "git init" relied on the templates to create necessary
-directories, and the subcommands in turn learned to depend on the
-presence of these directories.
-
-At the same time we allowed that the templates can be customized by
-the end users.  It was a bug, exactly for the reason you said above.
-
-Before we talk about creating 'info' directory directly in "git
-init" or anything done in this topic, we should fix the existing
-bug, and the right fix is to use safe-create-leading-directories.
-
-With that, it may become unnecessary to have this "create 'info' in
-'init'".
 
 
+On 12/20/21 11:31 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Dec 20 2021, Jeff Hostetler via GitGitGadget wrote:
+> 
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> Use a 'char *' to hold the thread name rather than a 'struct strbuf'.
+>> The thread name is set when the thread is created and should not be
+>> be modified afterwards.  Replace the strbuf with an allocated pointer
+>> to make that more clear.
+>>
+>> This was discussed in: https://lore.kernel.org/all/xmqqa6kdwo24.fsf@gitster.g/
+ >>...
+>> diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
+>> index 7da94aba522..cd8b9f2f0a0 100644
+>> --- a/trace2/tr2_tls.c
+>> +++ b/trace2/tr2_tls.c
+>> @@ -35,6 +35,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
+>>   					     uint64_t us_thread_start)
+>>   {
+>>   	struct tr2tls_thread_ctx *ctx = xcalloc(1, sizeof(*ctx));
+>> +	struct strbuf buf_name = STRBUF_INIT;
+>>   
+>>   	/*
+>>   	 * Implicitly "tr2tls_push_self()" to capture the thread's start
+>> @@ -47,12 +48,13 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
+>>   
+>>   	ctx->thread_id = tr2tls_locked_increment(&tr2_next_thread_id);
+>>   
+>> -	strbuf_init(&ctx->thread_name, 0);
+>>   	if (ctx->thread_id)
+>> -		strbuf_addf(&ctx->thread_name, "th%02d:", ctx->thread_id);
+>> -	strbuf_addstr(&ctx->thread_name, thread_name);
+>> -	if (ctx->thread_name.len > TR2_MAX_THREAD_NAME)
+>> -		strbuf_setlen(&ctx->thread_name, TR2_MAX_THREAD_NAME);
+>> +		strbuf_addf(&buf_name, "th%02d:", ctx->thread_id);
+>> +	strbuf_addstr(&buf_name, thread_name);
+>> +	if (buf_name.len > TR2_MAX_THREAD_NAME)
+>> +		strbuf_setlen(&buf_name, TR2_MAX_THREAD_NAME);
+>> +
+>> +	ctx->thread_name = strbuf_detach(&buf_name, NULL);
+>>   
+>>   	pthread_setspecific(tr2tls_key, ctx);
+>>   
+ >>..
+>> diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
+>> index a90bd639d48..d968da6a679 100644
+>> --- a/trace2/tr2_tls.h
+>> +++ b/trace2/tr2_tls.h
+>> @@ -9,7 +9,7 @@
+>>   #define TR2_MAX_THREAD_NAME (24)
+>>   
+>>   struct tr2tls_thread_ctx {
+>> -	struct strbuf thread_name;
+>> +	char *thread_name;
+>>   	uint64_t *array_us_start;
+>>   	size_t alloc;
+>>   	size_t nr_open_regions; /* plays role of "nr" in ALLOC_GROW */
+> 
+> Junio's suggestion in the linked E-Mail was to make this a "const char *".
 
+Yes, it was.  To me a "const char *" in a structure means that
+the structure does not own the pointer and must not free it.
+Whereas as "char *" means that the structure might own it and
+should maybe free it when the structure is freed.  My usage here
+is that the structure does own it (because it took it from the
+temporary strbuf using strbuf_detach()) and so it must free it.
+Therefore it should not be "const".  This has nothing to do with
+whether or not we allow the thread name to be changed after the
+fact.  (We don't, but that is a different issue).
+
+> 
+> Narrowly, I don't see why not just add a "const" to the "struct strbuf
+> *" instead.
+
+Adding "const" to a strbuf would be wrong in this case, since the
+structure owns the strbuf and needs to strbuf_release the contained
+buffer and (now) free the strbuf pointer, right?
+
+This also makes things confusing -- all callers of tr2tls_create_self()
+would now be responsible for allocating a strbuf to pass in -- and who
+would own those.  This would also create opportunities for mistakes if
+they pass in the address of a stack-based strbuf, right?
+
+This is being used to initialize thread-based data, so the caller
+can't just use a "function local static" or a "global static" strbuf.
+
+
+> 
+> But less narrowly if we're not going to change it why malloc a new one
+> at all? Can't we just use the "const char *" passed into
+> tr2tls_create_self(), and for the "th%02d:" case have the code that's
+> formatting it handle that case?
+> 
+> I.e. have the things that use it as a "%s" now call a function that
+> formats things as a function of the "ctx->thread_id" (which may be 0)
+> and limit it by TR2_MAX_THREAD_NAME?
+> 
+
+This would be less efficient, right?  That thread name is included in
+*EVERY* _perf and _event message emitted.  If we were to change the
+design to have basically a callback to get the formatted value based
+on the `ctx` or `cts->thread_id` and dynamically formatting the name,
+then we would have to hit that callback once (or twice) for every Trace2
+message, right?  That would be much slower than just having a fixed
+string (formatted when the thread is created) that we can just use.
+And even if we said that the callback could cache the result (like
+we do when we lookup env vars), where would it cache it?  It would have
+to cache it in the `ctx`, which is where it currently is and without
+any of the unnecessary overhead, right?
+
+I think you're assuming that callers of `tr2tls_create_self()` always
+pass a literal string such that that string value is always safe to
+reference later.  Nothing would prevent a caller from passing the
+address of a stack buffer.  It is not safe to assume that that string
+pointer will always be valid, such as after the thread exits.  It is
+better for _create_self() to copy the given string (whether we format
+it immediately or not) than to assume that the pointer will always be
+valid, right?
+
+
+So I don't think we should deviate from the patch that I submitted.
+
+Jeff
