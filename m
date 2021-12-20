@@ -2,109 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30CB4C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0494C433FE
 	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 15:57:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237701AbhLTP52 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 10:57:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50716 "EHLO
+        id S237753AbhLTP53 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 10:57:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237485AbhLTP51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 10:57:27 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BDCDC061574
+        with ESMTP id S237696AbhLTP52 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 10:57:28 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEEACC06173E
         for <git@vger.kernel.org>; Mon, 20 Dec 2021 07:57:27 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id v11so20993129wrw.10
+Received: by mail-wm1-x32f.google.com with SMTP id a203-20020a1c7fd4000000b003457874263aso7672121wmd.2
         for <git@vger.kernel.org>; Mon, 20 Dec 2021 07:57:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=cnqihFNTIOQB7NXRy4qc1hNzBMBt+YGjJ+eutSZhwmQ=;
-        b=YAqbefdvY3h/ol2pCyIQ7iLgSLKHFnW2017x5aZGHPWk/7P0eem7BlN4EgMoMuU1kr
-         x1tC3eUJPA7NonlnMM58GxKz+HqJhSpKKZraPlySjTgjdrEL+fh74UmSPInPCZJRyEWE
-         zRZOkzIuiyKMAaNzc4JQRQAPCQZOYw5H5Ehw4eKIOekdhfsLVdWtbr5/rA0MnKKgAExT
-         yK4ZI4nrW0rBRDkbNt9/kC8Ni9yeSVjqoDyByF5oK7n5d6x1f+p1vWHp6TiM7BTSeGcK
-         5knYwiBIk5oblEt7hEe694GVTUvk4rUf2sNsy/CLqflnpNFHslEM1erPkKHboJq8frPy
-         +IPQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=IsSw908ccp3lxCR+ZdyOEfSsjPWPiG+5vFYTdIKHeTI=;
+        b=I13ppJdWQkOFXs2ZAv6vCS5+RD6I3Po62pgWas67mMWGXsAjmgMRJTyhqCzf1+9xOg
+         eSaYsChJcV9WDgYPbYY91dodhbz8IVa+bs/KYF4FDJ+8u5R5wqgYOAkWae8Q+B/7HdxR
+         QqA+zM5bBKRQKXEKDeb0P8x3YgXaRU2GHOvZ91JxIYCeNIG8Fr5/gc23d7obSZptV9bp
+         OocdM1GmLoVdWab0xTzVInTyDo0cVQWoOXJGvA/E0Rf9+Lvx73qGgn02cYkoT6rtbKrG
+         NgTUuxUYgDCY5nuf6OjLR34mHjrSCpPutL71bS7kPMR3axccsySJCEomJoheSQyQAuEm
+         zC5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=cnqihFNTIOQB7NXRy4qc1hNzBMBt+YGjJ+eutSZhwmQ=;
-        b=3dREtYxowxZ82licc1eaZ3PNJdG7UEZcFVX66iLU6WwlCQ7wSZH6XypAU2gOEiANg5
-         HgmiUqD75u6rNoipV3vliRb4NtBqS/t1PS1JFDA9OEVP5zrUNoeeLOa0eJxDtwK+Ku6D
-         1KmGTMvyLZwSnf9gxYutygQktmrXjq2nQonQYerXSFQ/RgdNlRNVoF4q6xmLmlZAsKhi
-         bs5Rcy8TA7k00/Ow4oXfa+0JIv4bzsYXBY2Hjj6TiUbrqp/TiWU+Jq+V7xKezI5hd70K
-         g+v1/XT9jvZEK5Pt8xLyDhq7rNCBME8apzr103woZN6O+3Ts2xbzeQkcWXblHouerSxd
-         W+YQ==
-X-Gm-Message-State: AOAM533u8qejzpm8p93hcJmMPbGy11qyYBWYdRvHIJbL61FbylaAA69P
-        sg3QXhDK53svEY4JPyaXvKZh64i3nCE=
-X-Google-Smtp-Source: ABdhPJy8A5uJkxndEwvBpl3m+XFHbGBFC2ggxmmiyR+aenOphAJS0GIfekcfeA60EdwZxV55TOeFSg==
-X-Received: by 2002:a05:6000:144d:: with SMTP id v13mr13480234wrx.411.1640015845769;
-        Mon, 20 Dec 2021 07:57:25 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=IsSw908ccp3lxCR+ZdyOEfSsjPWPiG+5vFYTdIKHeTI=;
+        b=5KDL0WqdzQ5q7rwiZVTllAF7B1A7UkTTDJlX7hPtEBjQdr5RKucNsRRhhOW9rYMfxV
+         SD2ICCwuN/6U2g/fjgvo7AvH1BnUvTMVK8geEiB0k/Mt+Kc/NhiFWF7JV+in73zI0IuZ
+         wwQ3/V5HJik+6oH08CLyqfi+IfrwBWiUKyMQzmTNt+yV6hXU0BbMwmeCeRPvrIM4bJ5g
+         OqUx336m4PwN84kb0Ybf0TzPI0aEcA9KsUxH6J9bq8l3zjiT5TGY8pIK7Ea9LBNbLONO
+         n4WYgCZYmIMlxiT0kiUiJWTmYgU8W6OPmgUTkldWvGmVGwTXhFR6+bncWX7DqUpAOCO+
+         wyZQ==
+X-Gm-Message-State: AOAM531J+64JQ8KyBVCjMWzSuCd9fZ4xEc951MwGOQjcduf/sHyfKKYj
+        Hz7MU2ljm4XIUyOOUrxZf70rvUDSdJs=
+X-Google-Smtp-Source: ABdhPJx9jHmY7T6cIOThTOqI3x29cMm1tv/OndWrMoc4OzUSrpnLeY2GBzSbuRVD2A78ExwdeAz+gQ==
+X-Received: by 2002:a05:600c:1e12:: with SMTP id ay18mr6736741wmb.14.1640015846435;
+        Mon, 20 Dec 2021 07:57:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q206sm12075581wme.8.2021.12.20.07.57.25
+        by smtp.gmail.com with ESMTPSA id e1sm14090777wrc.74.2021.12.20.07.57.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 07:57:25 -0800 (PST)
-Message-Id: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
+        Mon, 20 Dec 2021 07:57:26 -0800 (PST)
+Message-Id: <28813703ff612cd346a49549ce11ba79a47eb223.1640015844.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
+References: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 20 Dec 2021 15:57:20 +0000
-Subject: [PATCH 0/4] Sparse checkout: fix bug with worktree of bare repo
+Date:   Mon, 20 Dec 2021 15:57:21 +0000
+Subject: [PATCH 1/4] setup: use a repository when upgrading format
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     stolee@gmail.com, sunshine@sunshineco.com, allred.sean@gmail.com,
-        gitster@pobox.com, Derrick Stolee <derrickstolee@github.com>
+        gitster@pobox.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series includes a fix to the bug reported by Sean Allred [1] and
-diagnosed by Eric Sunshine [2].
+From: Derrick Stolee <dstolee@microsoft.com>
 
-The root cause is that 'git sparse-checkout init' writes to the worktree
-config without checking that core.bare might need to be set. This only
-matters when the base repository is bare, since creating the config.worktree
-file and enabling extensions.worktreeConfig will cause Git to treat the base
-repo's core.bare=false as important for this worktree.
+The upgrade_repository_format() helper previously was not aware of the
+possibility of multiple repositories. Add a 'struct repository *'
+parameter so it is possible to call it from a specific repository.
 
-This series fixes this, but also puts in place some helpers to prevent this
-from happening in the future. While here, some of the config paths are
-modified to take a repository struct.
+The implementation already referred to the_repository in one place, so
+that is an easy replacement. The use of git_config_set() is replaced
+with a call to repo_config_set().
 
-The critical bits are in Patches 3 and 4 which introduce the helper and then
-consume it in builtin/sparse-checkout.c and sparse-index.c.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ builtin/sparse-checkout.c     | 2 +-
+ list-objects-filter-options.c | 2 +-
+ repository.h                  | 2 +-
+ setup.c                       | 6 +++---
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-[1]
-https://lore.kernel.org/git/CABceR4bZmtC4rCwgxZ1BBYZP69VOUca1f_moJoP989vTUZWu9Q@mail.gmail.com/
-[2]
-https://lore.kernel.org/git/CAPig+cQ6U_yFw-X2OWrizB1rbCvc4bNxuSzKFzmoLNnm0GH8Eg@mail.gmail.com/
-
-Thanks, -Stolee
-
-Derrick Stolee (4):
-  setup: use a repository when upgrading format
-  config: make some helpers repo-aware
-  config: add repo_config_set_worktree_gently()
-  sparse-checkout: use repo_config_set_worktree_gently()
-
- builtin/sparse-checkout.c          | 25 +++++--------
- config.c                           | 56 ++++++++++++++++++++++++++++--
- config.h                           | 13 +++++++
- list-objects-filter-options.c      |  2 +-
- repository.h                       |  2 +-
- setup.c                            |  6 ++--
- sparse-index.c                     | 10 ++----
- t/t1091-sparse-checkout-builtin.sh | 14 +++++++-
- 8 files changed, 95 insertions(+), 33 deletions(-)
-
-
-base-commit: 69a9c10c95e28df457e33b3c7400b16caf2e2962
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1101%2Fderrickstolee%2Fsparse-checkout%2Fbare-worktree-bug-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1101/derrickstolee/sparse-checkout/bare-worktree-bug-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1101
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index d0f5c4702be..34447f87cd8 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -358,7 +358,7 @@ static int set_config(enum sparse_checkout_mode mode)
+ {
+ 	const char *config_path;
+ 
+-	if (upgrade_repository_format(1) < 0)
++	if (upgrade_repository_format(the_repository, 1) < 0)
+ 		die(_("unable to upgrade repository format to enable worktreeConfig"));
+ 	if (git_config_set_gently("extensions.worktreeConfig", "true")) {
+ 		error(_("failed to set extensions.worktreeConfig setting"));
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index fd8d59f653a..6e21d12045e 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -372,7 +372,7 @@ void partial_clone_register(
+ 			 */
+ 			return;
+ 	} else {
+-		if (upgrade_repository_format(1) < 0)
++		if (upgrade_repository_format(the_repository, 1) < 0)
+ 			die(_("unable to upgrade repository format to support partial clone"));
+ 
+ 		/* Add promisor config for the remote */
+diff --git a/repository.h b/repository.h
+index 98f95834706..d3fc1f7689d 100644
+--- a/repository.h
++++ b/repository.h
+@@ -215,6 +215,6 @@ void prepare_repo_settings(struct repository *r);
+  * Return 1 if upgrade repository format to target_version succeeded,
+  * 0 if no upgrade is necessary, and -1 when upgrade is not possible.
+  */
+-int upgrade_repository_format(int target_version);
++int upgrade_repository_format(struct repository *, int target_version);
+ 
+ #endif /* REPOSITORY_H */
+diff --git a/setup.c b/setup.c
+index 347d7181ae9..90516664ce5 100644
+--- a/setup.c
++++ b/setup.c
+@@ -595,14 +595,14 @@ static int check_repository_format_gently(const char *gitdir, struct repository_
+ 	return 0;
+ }
+ 
+-int upgrade_repository_format(int target_version)
++int upgrade_repository_format(struct repository *r, int target_version)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct strbuf err = STRBUF_INIT;
+ 	struct strbuf repo_version = STRBUF_INIT;
+ 	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
+ 
+-	strbuf_git_common_path(&sb, the_repository, "config");
++	strbuf_git_common_path(&sb, r, "config");
+ 	read_repository_format(&repo_fmt, sb.buf);
+ 	strbuf_release(&sb);
+ 
+@@ -621,7 +621,7 @@ int upgrade_repository_format(int target_version)
+ 			     repo_fmt.unknown_extensions.items[0].string);
+ 
+ 	strbuf_addf(&repo_version, "%d", target_version);
+-	git_config_set("core.repositoryformatversion", repo_version.buf);
++	repo_config_set(r, "core.repositoryformatversion", repo_version.buf);
+ 	strbuf_release(&repo_version);
+ 	return 1;
+ }
 -- 
 gitgitgadget
+
