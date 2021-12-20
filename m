@@ -2,180 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB085C433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 18:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D638C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 18:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240303AbhLTSd5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 13:33:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58188 "EHLO
+        id S240493AbhLTSma (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 13:42:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232319AbhLTSd4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 13:33:56 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3065EC061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:33:56 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id f5so18993336edq.6
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:33:56 -0800 (PST)
+        with ESMTP id S240491AbhLTSm3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 13:42:29 -0500
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59A56C06173E
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:42:29 -0800 (PST)
+Received: by mail-ot1-x336.google.com with SMTP id x3-20020a05683000c300b0057a5318c517so13602217oto.13
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 10:42:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=bnKdWeA13gQuQ2EG1n9qCIsGrPK7q1CjownNkD9hf2o=;
-        b=IAZcwBormLB25Y9xmRSiPcO/OPkya0Qjb86etll4qu1knfYaY82kCDI5b+bkQGxWqn
-         LUcJU9ZH4svqUxWWvt3YoJAfa5VpocicpAhERBMJJfTfnf9p6AmmULfFhUqUceWeS7CL
-         4zMOzdvLSm7MTJnDrvXCPuNQ0buD4kWcN44b4sHiIQIxkmUQDEaKAKYMmGOBiSwiqv1W
-         VkyBkGcxZxdB69g7pgrZpTMA509/m5KAcBQ1Jy2uzXAGS87ZMfizuLnv8avK/fSCQVfi
-         f1ILPQVVopzA5TC/I+LJNn78sasXv7OjdhEuDPhvYEjdKQ+odHAncB5G1syKfyENASc1
-         szzQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=gQY/vJbuqAaHuhTQUOo9iEQ0bLwdsdUOfQ5GWY0+Pks=;
+        b=aPvd0T4chM0dUA+R6OWh+D5EmPjCS/MPzruCJg93HFzktVM7MZuk41TwOLMGv+qKPn
+         OLm8raAi4je04L7MOHzfz8qeTgfiEnO+1/w3cYZvNKSp8eZWOiGgl9RmjL2c4oIghpfX
+         Js7UIB64SJDrNTPFR8Y6CNeCapjPx+35f+ByiX9miO7NKiWumH05Ogu5eHVIrVM2Dlgn
+         t6LmqIDQdNg0fy40rmBu4LkY0ub5kE7ffmbUQO3aFTgiR7JBUOFYx/Bu9JYKLCny38ar
+         GfHqtAdrXJw35ovtVMnAnaJ6hR2eVVky8HRi461WD7PXyNlaBAQx5479k0r+7rWjb9N2
+         15Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=bnKdWeA13gQuQ2EG1n9qCIsGrPK7q1CjownNkD9hf2o=;
-        b=7YNhMKuevtNVIaRh294WuM+ptupavFTI+uuRfZMyaW5kasBIlHIdi88nqD/bw0jyBx
-         23302Pyy3fP+2Q32aT8j7dULW37JI+l+Wzy4xC2jvR5Md3Zve4S+YlSmfwzjX1opMkiP
-         8dAYOk0oSkLqGo+yU17mV6UiV6892Sgo+Rtlo04m2/lxBHtJskntlQ67PoR8PSz9XHtr
-         0BnCwaH+E7f7ArE1DoMDWY88K9tYFgGeVXdjOlGnjeQO5diTqkUR+4SsfLfp69CrMp+A
-         4KWmbAQwwtHAlotWs4xemAwJq1pHDYaBdgplDaN85pUcZ+49gLxs6+5tVe+DjGgpRBgW
-         Yj+Q==
-X-Gm-Message-State: AOAM533CBpMG+RnhQxmd3WZlQYWjtRT9jPcaK8sUz3GgvFMAgZwS3dMz
-        aN06vA+NDYQQ/38BprzESGM=
-X-Google-Smtp-Source: ABdhPJzgAVPw5gjClrwUznmlOmrDwDoiulyahSp7y3MeUDn/aKXPb03nklkWnhFmH5mpEjGu7nRGWA==
-X-Received: by 2002:a17:906:a091:: with SMTP id q17mr13817551ejy.669.1640025234643;
-        Mon, 20 Dec 2021 10:33:54 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id r17sm3717843edd.53.2021.12.20.10.33.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 10:33:54 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzNTt-000WMO-IB;
-        Mon, 20 Dec 2021 19:33:53 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 03/13] init: unconditionally create the "info" directory
-Date:   Mon, 20 Dec 2021 19:16:22 +0100
-References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
- <patch-03.13-784b7947512-20211212T201308Z-avarab@gmail.com>
- <db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com>
- <211220.86tuf3utv9.gmgdl@evledraar.gmail.com>
- <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
-Message-ID: <211220.86zgovt9bi.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=gQY/vJbuqAaHuhTQUOo9iEQ0bLwdsdUOfQ5GWY0+Pks=;
+        b=jrSkWMEFP6ZWgbjRMuJf/8iWV5reEuRHRmduEBOdjP6SH8bLkfer+2r7dHcFmp6UDg
+         x6mG/IJDrnFv1AS65V+AbUt0T1/eP3L/cFxtKW5jPr9VP+N2kG8Jiy5P5vZVJ6d2kCse
+         EKVk4ku5mwSZ14QmWoTTRXdW8QKk7TA6EfIHRwvJLoqoiDAOC95mdIw9ElHBHGxd/5Q2
+         346koz9JVnFAi2dYD7xXUgQ9FRAG+HDvIODtn5Scbouw0p163BGVfMSWKRpUGnOgg3lG
+         85/QlvXxJYZ+xT+cmqVz7W0HKlYo9vXDYcREzP5XPeXzt3swbWCnRRl3MPY1jrKAXE83
+         +F3A==
+X-Gm-Message-State: AOAM533awYqmcoX+omxYwJ3d70hiNx5jhUKQcp1oTkjRAeWut54/7UxT
+        Lg/jELYcBfifZNdwrLf91RDbqHToB6E=
+X-Google-Smtp-Source: ABdhPJz9u3Q8f2DWtqF/jWf6fkTfY9nj7QJ1FlBCrbDzPLwHvpp3kP2YPqexEa3zOcaZh3+S+tYJvw==
+X-Received: by 2002:a9d:7758:: with SMTP id t24mr12555961otl.264.1640025748624;
+        Mon, 20 Dec 2021 10:42:28 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:1dd9:8fb3:37da:4055? ([2600:1700:e72:80a0:1dd9:8fb3:37da:4055])
+        by smtp.gmail.com with ESMTPSA id o11sm3608653oiv.10.2021.12.20.10.42.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Dec 2021 10:42:28 -0800 (PST)
+Message-ID: <92d50859-ecfa-e7c5-d68b-d90a11579cd0@gmail.com>
+Date:   Mon, 20 Dec 2021 13:42:24 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: [PATCH v2 8/8] midx: read `RIDX` chunk when present
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net
+References: <cover.1638991570.git.me@ttaylorr.com>
+ <cover.1639446906.git.me@ttaylorr.com>
+ <993bfa8dd8480e74d64f657539b0c518ad155e5c.1639446906.git.me@ttaylorr.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <993bfa8dd8480e74d64f657539b0c518ad155e5c.1639446906.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 12/13/2021 8:55 PM, Taylor Blau wrote:
+...
+> Note that we have two knobs that are adjusted for the new tests:
+> GIT_TEST_MIDX_WRITE_REV and GIT_TEST_MIDX_READ_RIDX. The former controls
+> whether the MIDX .rev is written at all, and the latter controls whether
+> we read the MIDX's RIDX chunk.
 
-On Mon, Dec 20 2021, Derrick Stolee wrote:
+...
 
-> On 12/20/2021 11:13 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Mon, Dec 20 2021, Derrick Stolee wrote:
->>=20
->>> On 12/12/2021 3:13 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>>> But we've also grown a hard dependency on this directory within git
->>>> itself. Since 94c0956b609 (sparse-checkout: create builtin with 'list'
->>>> subcommand, 2019-11-21) released with v2.25.0 the "git
->>>> sparse-checkout" command has wanted to add exclusions to
->>>> "info/sparse-checkout". It didn't check or create the leading
->>>> directory, so if it's omitted the command will die.
->>>
->>>> Even if that behavior were fixed we'd be left with older versions of
->>>> "git" dying if that was attempted if they used a repository
->>>> initialized without a template.
->>>
->>> This, I don't understand. Why can't we add a
->>> safe_create_leading_directories() to any place where we try to
->>> create a sparse-checkout file?
->>>
->>> This would fix situations where older versions were init'd with a
->>> different template or if the user deleted the info dir. The change
->>> you've made here doesn't fix those cases, which is what you are
->>> claiming is the reason to not do the other fix that seems like it
->>> would.
->>>
->>> What am I misunderstanding here?
->>=20
->> I'll clarify that a bit in any re-roll.
->>=20
->> Pedantically nothing changes, i.e. you can create a repository with an
->> empty template now, and it'll break on both the sparse-checkout on that
->> version, and any previous version that had that un-noticed issue.
->
-> You continue after this with more motivations for adding 'init'=20
-> unconditionally, which I am not fighting.
->
-> What I _am_ saying is important is that if we are trying to write
-> a file to a known location and its parent directory doesn't exist,
-> then we should create it. Not doing so is a bug and should be
-> fixed, no matter how rare such a thing is to occur. As you've
-> shown, it is not required to have an info directory until we need
-> one (e.g. for sparse-checkout or an excludes file).
->
-> If you're not planning to add that to this series, then I'll add it
-> to my list. I do think it would fit well into this one, though.
+> +	if (git_env_bool("GIT_TEST_MIDX_READ_RIDX", 1))
+> +		pair_chunk(cf, MIDX_CHUNKID_REVINDEX, &m->chunk_revindex);
+> +
 
-Ah, you mean for the case where "git sparse-checkout" will fail because
-.git/info/ doesn't exist now (e.g. because it's an existing repo with
---template=3D).
+Skip reading if GIT_TEST_MIDX_READ_RIDX=0 (do read if true or unset). Good.
 
-Yes that bug will not be fixed by this series. I'd welcome a patch to
-fix it & could even integrate it with this series.
+> -	if (flags & MIDX_WRITE_REV_INDEX)
+> +	if (flags & MIDX_WRITE_REV_INDEX &&
+> +	    git_env_bool("GIT_TEST_MIDX_WRITE_REV", 0))
+>  		write_midx_reverse_index(midx_name.buf, midx_hash, &ctx);
 
-But I just found it rather "meh" and not that worth fixing. I.e. that it
-hasn't been noticed or reported until now shows that this is a very rare
-mode of operation. It seems most people just "git init" or "git clone",
-or maybe almost nobody uses "sparse-checkout". I don't know.
+Only write if GIT_TEST_MIDX_WRITE_REV=1 (skip if false or unset). Good.
 
-I did try to fix it in an earlier version of this.
+> +	if (m->chunk_revindex) {
+> +		/*
+> +		 * If the MIDX `m` has a `RIDX` chunk, then use its contents for
+> +		 * the reverse index instead of trying to load a separate `.rev`
+> +		 * file.
+> +		 *
+> +		 * Note that we do *not* set `m->revindex_map` here, since we do
+> +		 * not want to accidentally call munmap() in the middle of the
+> +		 * MIDX.
+> +		 */
+> +		trace2_data_string("load_midx_revindex", the_repository,
+> +				   "source", "midx");
+> +		m->revindex_data = (const uint32_t *)m->chunk_revindex;
+> +		return 0;
+> +	}
+> +
+>  	trace2_data_string("load_midx_revindex", the_repository,
+>  			   "source", "rev");
 
-Maybe I went overboard with that, but I didn't just sprinkle
-safe_create_leading_directories() to every caller as you suggest, but
-rather wanted to change the API so that cases like:
+A natural way to do this.
 
-        sparse_filename =3D get_sparse_checkout_filename();
-        res =3D add_patterns_from_file_to_list(sparse_filename, "", 0, &pl,=
- NULL, 0);
-        free(sparse_filename);
+>  
+> diff --git a/t/lib-bitmap.sh b/t/lib-bitmap.sh
+> index 0a35daf939..f5eaa9cf68 100644
+> --- a/t/lib-bitmap.sh
+> +++ b/t/lib-bitmap.sh
+> @@ -291,7 +291,7 @@ test_rev_exists () {
+>  }
+>  
+>  midx_bitmap_core () {
+> -	rev_kind="${1:-rev}"
+> +	rev_kind="${1:-midx}"
+>  
+>  	setup_bitmap_history
+>  
+> @@ -435,7 +435,7 @@ midx_bitmap_core () {
+>  }
+>  
+>  midx_bitmap_partial_tests () {
+> -	rev_kind="${1:-rev}"
+> +	rev_kind="${1:-midx}"
 
-Would just call some function saying "add to sparse excludes", and not
-care about the filename. Since having the API at that levels means you
-end up with a lot of accounting work of getting the filename, freeing it
-etc.
+And I'm glad we can just update the default here.
 
-E.g. this as another example from add_patterns_cone_mode() (the function
-makes no other use of sparse_filename):
+> diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
+> index 100ac90d15..8c92acb0ce 100755
+> --- a/t/t5326-multi-pack-bitmaps.sh
+> +++ b/t/t5326-multi-pack-bitmaps.sh
+> @@ -9,6 +9,11 @@ test_description='exercise basic multi-pack bitmap functionality'
+>  GIT_TEST_MULTI_PACK_INDEX=0
+>  GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
+>  
+> +GIT_TEST_MIDX_WRITE_REV=0
+> +GIT_TEST_MIDX_READ_RIDX=1
+> +export GIT_TEST_MIDX_WRITE_REV
+> +export GIT_TEST_MIDX_READ_RIDX
 
-	char *sparse_filename =3D get_sparse_checkout_filename();
-        [...]
-        if (add_patterns_from_file_to_list(sparse_filename, "", 0,
-                                           &existing, NULL, 0))
-                die(_("unable to load existing sparse-checkout patterns"));
-        free(sparse_filename);
+Technically, we could unset these variables, right? ("...=")
 
-But per the upthread rationale I figured "meh" on that and that just
-changing "git init" would fix the problem going forward in practice, so
-I didn't pursue it.
+> diff --git a/t/t5327-multi-pack-bitmaps-rev.sh b/t/t5327-multi-pack-bitmaps-rev.sh
+...
+> +# We'll be writing our own midx and bitmaps, so avoid getting confused by the
+> +# automatic ones.
+> +GIT_TEST_MULTI_PACK_INDEX=0
+> +GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
+> +
+> +# Unlike t5326, this test exercise multi-pack bitmap functionality where the
+> +# object order is stored in a separate .rev file.
+> +GIT_TEST_MIDX_WRITE_REV=1
+> +GIT_TEST_MIDX_READ_RIDX=0
+> +export GIT_TEST_MIDX_WRITE_REV
+> +export GIT_TEST_MIDX_READ_RIDX
+> +
+> +midx_bitmap_core rev
+> +midx_bitmap_partial_tests rev
+> +
+> +test_done
 
-Won't unconditionally adding a safe_create_leading_directories() also
-close the door to having a core.sparseCheckoutFile similar to
-core.excludesFile (but maybe it makes no sense). I.e. we'd be free to
-"mkdir -p" the .git/info, but if the user is pointing it to some other
-path then blindly creating that possibly nested path might be confusing,
-as opposed to just immediately erroring out.
+Nice that now we get the payoff of the test refactor. This new script exists
+only to verify that we can still read the old .rev files, which is important
+for compatibility.
 
-So...
+Forgive me for "speaking out loud" throughout this patch. I don't see any
+need for changes but it is the crux of making this series work.
 
-All of which is to say that if you'd like to untangle it I'll review it,
-and would be happy to include it in this series. But for the
---no-template change I thought I'd just try to sidestep that particular
-aspect.
+Thanks,
+-Stolee
