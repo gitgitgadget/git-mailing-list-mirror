@@ -2,120 +2,238 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BAFDC433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 11:59:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B83AC433F5
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 12:10:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231382AbhLTL7u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 06:59:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51150 "EHLO
+        id S232266AbhLTMKH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 07:10:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbhLTL7t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 06:59:49 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DCE5C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 03:59:48 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id w16so8802364edc.11
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 03:59:48 -0800 (PST)
+        with ESMTP id S231173AbhLTMKG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 07:10:06 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76698C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 04:10:06 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id v7so12322935wrv.12
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 04:10:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=6uHBtYrWpt8IpGfV5W0O1L/osA7srYNQ78u30Dl/B8s=;
-        b=nWF9sBJfGG9id8Ids93g5moq+v48dIeJbgbpdEymc4cvo/+l1PraB2DYlqUo+9RIoi
-         zCgR3yf74qBa8QtnC2CCBRielNxDYg7cL82JZl8Cxa3HMMEZnbcoHWrGPBK57A0zTadX
-         UrQT6QduIl96d5jyneRE10l6vC+X62MgoCKSoRqyppikExPhJkffCdfiuCFm3KqfcGtV
-         Pxt85H91iuefRoqQKo52iF7Q3jkxKD7G4z2oPWO0DqUSM8A7KH7fjwpf4vuVIQ6p1hJj
-         tqDMx0BWwEC39+JCciGIfrLnNoXM2aqWPZSY18mdTRboq3IfmxUnulyPs16LxrW723ZX
-         sfGQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=D8ijuKXUL24ytLKlU03bWok5hR2s9txeuN82KyugYyg=;
+        b=TVOjH+hbFCNhC2lgnFWS9TLXoDbN5dfU/qv+xkizAkbiT0aUvgIJY9SE10kOA/+nR6
+         EQXIoRG5W7/tPBIYTvxVH3LfqMjo3UlM5eDraGG7K/m96gtX8v1yLrOpIDeDaq3XK/aw
+         nH2HJL4uL9l6w1YABwdUIQv+fVmRzAMuePmbN86ef0xHXiAtdnwnO4DNPrNS+fq9cz/r
+         MgKz06OHlwgC3B+HCnUC+Frql25qJYVxstal6AaCzBchCcdn2F+VK0qOlGRXacPQrSql
+         3xLjB5Pf6zGPysHqmEO5cK0jkJg+WWdZ6WYfxGn7og11O2sa5iml0NZaEhfNK6uxNL0F
+         IOuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=6uHBtYrWpt8IpGfV5W0O1L/osA7srYNQ78u30Dl/B8s=;
-        b=cCjUtuhtqDKG2i2QgJYxRARXG25dLtkaIhFh7Dks/zJrIYJ8HbfwnlCld0fSst5CpS
-         1qG6hZPVZVfBbNBnRQkble90ZA7ric/KwoQUsBckqW+f8rImT+GXgttxNdPhGhf5LamA
-         H/HvMSlk6FfbZI5DR934ymyIVl7mVfD5Cdo6gVvGNBHsoqHjpCi8AnxBdEoy5ZEy5yi4
-         cg4ygAr3Llh4rmJTGbD64uJglGFMzHMWqcQzULANMpHTGAZLsC7H6OpWkUUijmkHr8ZV
-         ElPzatmu9xYKoX+adfJh7iaisCM1bGbG0jGRuO4sHeNkOYuvXemF/IOCrs62WLU213hi
-         dXYQ==
-X-Gm-Message-State: AOAM531bTL2j8IE7iYIGZIIHuAOs1ehXpQZObAaGhXkC94nULBffw1Ps
-        cIJn+Dqb80ceEPMJHzN1HHY=
-X-Google-Smtp-Source: ABdhPJxjhIoQcV4bxr65uY6ETESZEZGXxvkjvR/rcSTR0f27jt85oEuJ/1ADC07plV68MZ0xV5gVwQ==
-X-Received: by 2002:a05:6402:40c7:: with SMTP id z7mr15435128edb.255.1640001587488;
-        Mon, 20 Dec 2021 03:59:47 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id x7sm6902531edd.28.2021.12.20.03.59.46
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=D8ijuKXUL24ytLKlU03bWok5hR2s9txeuN82KyugYyg=;
+        b=pzFkRDoaVLSbPtCi3GPhKFQ9KdOiL8eWBlU80murCkjUQRYz+0Fa4z4NxA3yvbtLCM
+         qlUjE2CEGkpgH1PhMfAl4j8aWWxCViu+bTnc79bLmg77P/XCudcqyyNDtmXE+NLjEpeh
+         APGMFP1M4wgKzJgtCmvCdOngLLF8M1EjZ5yctt0AgIQeAZQ+TxCuRglSUkPL1+GVFaGA
+         xX7N8lVLGFRyGG33F9moSBxj6ftbiHS0yWQ+8dSqVLyThYmobN3zzYWJQDbIRO9YF5fE
+         SCH+QcaXvsCb3nrjz3Vdyr7zXu25Cs0PeARrOnXN5PM/taEKecelUA6BSfjFHc8qHBQF
+         tnIQ==
+X-Gm-Message-State: AOAM531KFzAbVGkSAG21kZjTEo+ktKiIDVc15tJB9oSwZnBHYFn/O0Ej
+        DVSo7DKEOtPBOSlJ3pp75HRjE7bSnusnDg==
+X-Google-Smtp-Source: ABdhPJyHhYIJUEVY55AVeTu1xvNCrBqw74Zp3okP8AnKVzcZ4toCa5kDqw503mJehW7lcmvUbC6zdw==
+X-Received: by 2002:a5d:47a4:: with SMTP id 4mr12235301wrb.180.1640002204758;
+        Mon, 20 Dec 2021 04:10:04 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id l16sm17463075wrx.117.2021.12.20.04.10.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 03:59:46 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzHKU-000Nlh-H0;
-        Mon, 20 Dec 2021 12:59:46 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RESEND] t/perf: do not run tests in user's $SHELL
-Date:   Mon, 20 Dec 2021 12:56:58 +0100
-References: <f22f978a-26eb-8fe9-cab4-3fd60df69635@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <f22f978a-26eb-8fe9-cab4-3fd60df69635@web.de>
-Message-ID: <211220.86bl1bwkp9.gmgdl@evledraar.gmail.com>
+        Mon, 20 Dec 2021 04:10:04 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Han Xin <chiyutianyi@gmail.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC PATCH] object-file API: add a format_loose_header() function
+Date:   Mon, 20 Dec 2021 13:10:02 +0100
+Message-Id: <RFC-patch-1.1-bda62567f6b-20211220T120740Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.34.1.1119.g606023410ba
+In-Reply-To: <20211217112629.12334-3-chiyutianyi@gmail.com>
+References: <20211217112629.12334-3-chiyutianyi@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add a convenience function to wrap the xsnprintf() command that
+generates loose object headers. This code was copy/pasted in various
+parts of the codebase, let's define it in one place and re-use it from
+there.
 
-On Mon, Dec 20 2021, Ren=C3=A9 Scharfe wrote:
+All except one caller of it had a valid "enum object_type" for us,
+it's only write_object_file_prepare() which might need to deal with
+"git hash-object --literally" and a potential garbage type. Let's have
+the primary API use an "enum object_type", and define an *_extended()
+function that can take an arbitrary "const char *" for the type.
 
-> From: Johannes Altmanninger <aclopte@gmail.com>
+See [1] for the discussion that prompted this patch, i.e. new code in
+object-file.c that wanted to copy/paste the xsnprintf() invocation.
+
+1. https://lore.kernel.org/git/211213.86bl1l9bfz.gmgdl@evledraar.gmail.com/
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+On Fri, Dec 17 2021, Han Xin wrote:
+
+> From: Han Xin <hanxin.hx@alibaba-inc.com>
 >
-> The environment variable $SHELL is usually set to the user's
-> interactive shell. We never use that shell for build and test scripts
-> because it might not be a POSIX shell.
+> There are 3 places where "xsnprintf" is used to generate the object
+> header, and I originally planned to add a fourth in the latter patch.
 >
-> Perf tests are run inside $SHELL via a wrapper defined in
-> t/perf/perf-lib.sh. Use $TEST_SHELL_PATH like elsewhere.
+> According to Ævar Arnfjörð Bjarmason’s suggestion, although it's just
+> one line, it's also code that's very central to git, so reafactor them
+> into a function which will help later readability.
 >
-> Signed-off-by: Johannes Altmanninger <aclopte@gmail.com>
-> Acked-by: Jeff King <peff@peff.net>
-> ---
-> Original submission:
-> https://lore.kernel.org/git/20211007184716.1187677-1-aclopte@gmail.com/
+> Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
 
-This LGTM & I think it could be picked up as-is.
+I came up with this after my comment on the earlier round suggesting
+to factor out that header formatting. I don't know if this more
+thorough approach is worth it or if you'd like to replace your change
+with this one, but just posting it here as an RFC.
 
-Just a nit in case af a re-roll. I think it would help to summarize the
-history a bit per
-https://lore.kernel.org/git/YV+1%2F0b5bN3o6qRG@coredump.intra.peff.net/. I.=
-e. something
-like:
-=20=20=20=20
-    In 342e9ef2d9e (Introduce a performance testing framework, 2012-02-17)
-    when t/perf was introduced the TEST_SHELL_PATH was not part of
-    GIT-BUILD-OPTIONS. That was added later in 3f824e91c84 (t/Makefile:
-    introduce TEST_SHELL_PATH, 2017-12-08). We will always have that
-    available in perf-lib.sh since test-lib.sh will load it before this code
-    is executed.
+ builtin/index-pack.c |  3 +--
+ bulk-checkin.c       |  4 ++--
+ cache.h              | 21 +++++++++++++++++++++
+ http-push.c          |  2 +-
+ object-file.c        | 14 +++++++++++---
+ 5 files changed, 36 insertions(+), 8 deletions(-)
 
->  t/perf/perf-lib.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-> index 780a7402d5..407252bac7 100644
-> --- a/t/perf/perf-lib.sh
-> +++ b/t/perf/perf-lib.sh
-> @@ -161,7 +161,7 @@ test_run_perf_ () {
->  	test_cleanup=3D:
->  	test_export_=3D"test_cleanup"
->  	export test_cleanup test_export_
-> -	"$GTIME" -f "%E %U %S" -o test_time.$i "$SHELL" -c '
-> +	"$GTIME" -f "%E %U %S" -o test_time.$i "$TEST_SHELL_PATH" -c '
->  . '"$TEST_DIRECTORY"/test-lib-functions.sh'
->  test_export () {
->  	test_export_=3D"$test_export_ $*"
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index c23d01de7dc..900c6539f68 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -449,8 +449,7 @@ static void *unpack_entry_data(off_t offset, unsigned long size,
+ 	int hdrlen;
+ 
+ 	if (!is_delta_type(type)) {
+-		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX,
+-				   type_name(type),(uintmax_t)size) + 1;
++		hdrlen = format_loose_header(hdr, sizeof(hdr), type, (uintmax_t)size);
+ 		the_hash_algo->init_fn(&c);
+ 		the_hash_algo->update_fn(&c, hdr, hdrlen);
+ 	} else
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 8785b2ac806..446dea7c516 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -220,8 +220,8 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
+ 	if (seekback == (off_t) -1)
+ 		return error("cannot find the current offset");
+ 
+-	header_len = xsnprintf((char *)obuf, sizeof(obuf), "%s %" PRIuMAX,
+-			       type_name(type), (uintmax_t)size) + 1;
++	header_len = format_loose_header((char *)obuf, sizeof(obuf),
++					 type, (uintmax_t)size);
+ 	the_hash_algo->init_fn(&ctx);
+ 	the_hash_algo->update_fn(&ctx, obuf, header_len);
+ 
+diff --git a/cache.h b/cache.h
+index d5cafba17d4..ccece21a4a2 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1309,6 +1309,27 @@ enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
+ 						    unsigned long bufsiz,
+ 						    struct strbuf *hdrbuf);
+ 
++/**
++ * format_loose_header() is a thin wrapper around s xsnprintf() that
++ * writes the initial "<type> <obj-len>" part of the loose object
++ * header. It returns the size that snprintf() returns + 1.
++ *
++ * The format_loose_header_extended() function allows for writing a
++ * type_name that's not one of the "enum object_type" types. This is
++ * used for "git hash-object --literally". Pass in a OBJ_NONE as the
++ * type, and a non-NULL "type_str" to do that.
++ *
++ * format_loose_header() is a convenience wrapper for
++ * format_loose_header_extended().
++ */
++int format_loose_header_extended(char *str, size_t size, enum object_type type,
++				 const char *type_str, size_t objsize);
++static inline int format_loose_header(char *str, size_t size,
++				      enum object_type type, size_t objsize)
++{
++	return format_loose_header_extended(str, size, type, NULL, objsize);
++}
++
+ /**
+  * parse_loose_header() parses the starting "<type> <len>\0" of an
+  * object. If it doesn't follow that format -1 is returned. To check
+diff --git a/http-push.c b/http-push.c
+index 3309aaf004a..d1a8619e0af 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -363,7 +363,7 @@ static void start_put(struct transfer_request *request)
+ 	git_zstream stream;
+ 
+ 	unpacked = read_object_file(&request->obj->oid, &type, &len);
+-	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), (uintmax_t)len) + 1;
++	hdrlen = format_loose_header(hdr, sizeof(hdr), type, (uintmax_t)len);
+ 
+ 	/* Set it up */
+ 	git_deflate_init(&stream, zlib_compression_level);
+diff --git a/object-file.c b/object-file.c
+index eac67f6f5f9..d94609ee48d 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1009,6 +1009,14 @@ void *xmmap(void *start, size_t length,
+ 	return ret;
+ }
+ 
++int format_loose_header_extended(char *str, size_t size, enum object_type type,
++				 const char *typestr, size_t objsize)
++{
++	const char *s = type == OBJ_NONE ? typestr : type_name(type);
++
++	return xsnprintf(str, size, "%s %"PRIuMAX, s, (uintmax_t)objsize) + 1;
++}
++
+ /*
+  * With an in-core object data in "map", rehash it to make sure the
+  * object name actually matches "oid" to detect object corruption.
+@@ -1037,7 +1045,7 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
+ 		return -1;
+ 
+ 	/* Generate the header */
+-	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(obj_type), (uintmax_t)size) + 1;
++	hdrlen = format_loose_header(hdr, sizeof(hdr), obj_type, size);
+ 
+ 	/* Sha1.. */
+ 	r->hash_algo->init_fn(&c);
+@@ -1737,7 +1745,7 @@ static void write_object_file_prepare(const struct git_hash_algo *algo,
+ 	git_hash_ctx c;
+ 
+ 	/* Generate the header */
+-	*hdrlen = xsnprintf(hdr, *hdrlen, "%s %"PRIuMAX , type, (uintmax_t)len)+1;
++	*hdrlen = format_loose_header_extended(hdr, *hdrlen, OBJ_NONE, type, len);
+ 
+ 	/* Sha1.. */
+ 	algo->init_fn(&c);
+@@ -2009,7 +2017,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
+ 	buf = read_object(the_repository, oid, &type, &len);
+ 	if (!buf)
+ 		return error(_("cannot read object for %s"), oid_to_hex(oid));
+-	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), (uintmax_t)len) + 1;
++	hdrlen = format_loose_header(hdr, sizeof(hdr), type, len);
+ 	ret = write_loose_object(oid, hdr, hdrlen, buf, len, mtime, 0);
+ 	free(buf);
+ 
+-- 
+2.34.1.1119.g606023410ba
 
