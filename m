@@ -2,115 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4098C433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 22:07:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A795C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 22:08:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232498AbhLTWHL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 17:07:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50246 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231142AbhLTWHK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 17:07:10 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD964C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 14:07:09 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id z29so43997095edl.7
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 14:07:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=ZpYQ8vNtSfw2nmwFdP/1baUJMPLThdPjQviWjZw6zyE=;
-        b=ODM5c7KVITeC/Rj4qiUGmnj+vVvvy4IKf87F8yQqHtXgn+eUP6D1GomfLZOIMGWfRZ
-         8lGxH2rsFgQ/WjEMnPnBCFQUHdxw7JnNqzxLfGPBFA/BBVFqc3NjhWiJXLn1474bYhMi
-         +k6DZUUEEIA6W2a2hVKt2TienNnAe+ALTwvqXhPIEFrKxVLmhS4EFQPH67enk1+jRUDV
-         GFMDSxU+R5/HTBAiSmDXSIdQdwtQUT2VbQxBencWMP2M+v2RN2ZBNHs7xKiYXuSdPSeM
-         PyFNaIJpNLLO2jVyrDDytUKfGPI8a+te+3LREMsypYRA+DGRwlgLVG0qCWfYam9fAlQ3
-         lm9Q==
+        id S232513AbhLTWIA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 17:08:00 -0500
+Received: from mail-pf1-f181.google.com ([209.85.210.181]:33561 "EHLO
+        mail-pf1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231660AbhLTWH7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 17:07:59 -0500
+Received: by mail-pf1-f181.google.com with SMTP id 205so5719361pfu.0
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 14:07:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=ZpYQ8vNtSfw2nmwFdP/1baUJMPLThdPjQviWjZw6zyE=;
-        b=rVlpuEgmaqD4kX3ojgj6mzfD80Y+mKvOuH8vF1tqBZKJXbex1VRH8PfXXarKZz3U2u
-         70pRSCU4XAfc0HOUTHTboSVEPVkWOTV6+b6+sF7uModzx5JRtSGLXHfn3pmBruT1nFgR
-         DVZFVaI9TBy8Uxfms752sjsajkncbMr/TFm2qwoJ8lC4dTRnFebuPr3MXDSCS1BhHiF0
-         CKlwzsnt/Jq05TR9lLjGIHG1WwYZ32sTfAYGko9S9X8Xx7yk4jZ1U5mqEnHpZMg8RBVJ
-         FigxAHb0ZnXhispdEWCWxQ+52rdgcm36hjr6sDmZfhJOBgNVkCXLpzT4ND3v18tk/IjZ
-         1pLg==
-X-Gm-Message-State: AOAM530TpjzeoXDjEYpnrq8W36ci8sHAdiRdeU7am43qmFCnfmBVMAao
-        J39BSnu6tCIXr6CPggVhijQ=
-X-Google-Smtp-Source: ABdhPJwF3RDLJcQavfxr8hy/m3aDGo+ldvzmvK38oYsALaM9wrUrglYRleilljql3LN2YPtPzOdq1A==
-X-Received: by 2002:a50:9dc1:: with SMTP id l1mr145841edk.231.1640038028401;
-        Mon, 20 Dec 2021 14:07:08 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id 12sm5704827eja.187.2021.12.20.14.07.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 14:07:07 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzQoF-000ZTC-5n;
-        Mon, 20 Dec 2021 23:07:07 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Hamza Mahfooz <someguy@effective-light.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel?= =?utf-8?Q?=C3=B3n?= 
-        <carenas@gmail.com>, Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH 2/2] grep/pcre2: factor out literal variable
-Date:   Mon, 20 Dec 2021 23:03:55 +0100
-References: <5fa6962e-3c1c-6dbc-f6d7-589151a9baec@web.de>
- <ba503995-866d-fc80-4e38-b4dfd0e5c5bc@web.de>
- <211219.86o85cwfje.gmgdl@evledraar.gmail.com> <xmqqr1a7uhgk.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqr1a7uhgk.fsf@gitster.g>
-Message-ID: <211220.865yrjszg4.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4Wa1vyUGwEitQPV+5nRW2q9P4zV2RAhwAS8Y85OYBIw=;
+        b=oIyASaM9kqKFj6bo3t3qOECgV2mm8Sf8e0gEtH2CT64LoDvySum/0U57apQLU01nlA
+         Gv8aOdjGtD22Um5fJsMsj1iwGDaEyqgf6cuaOosFy5dS75UnUeJTx9GrF16qiP05dE0x
+         bYKCOiAeOSIB0TyjEnUubqUtqegCN9ODg9r7eBp1O8N8Ia7EkuAoceZkp9l55CTCVw3v
+         RhunFsTxpskHsNBC/dvkitx+Ueor9ZJ5lK4aerzOQviz0dsOi8TF7zMVHFcDH4YIFMOy
+         GFxxCdes9QdTNRwqsJb6SPpbpQiawCUpkYVwkdkaVewo1RSzx1va7tp5YnfVYH7qepSf
+         v1DQ==
+X-Gm-Message-State: AOAM533oY790DPYaoDlQoG7Dy6MGicyxqqCoY/uIcG/CSVPnPTPdAL61
+        VJBID0A9KHsfY+aRRKiiGHx/d0xy/jwOzUb8DhyNPfr+P4W4tQ==
+X-Google-Smtp-Source: ABdhPJxUEh4vGE/mpsz6jy6wueMxU7Ji0ASf9S2CLxgEpyZ4oqf1YWirgEy52sZj+hdqKkwFxqDszE/vsV9mI7vWyZ4=
+X-Received: by 2002:a63:e245:: with SMTP id y5mr125259pgj.139.1640038079261;
+ Mon, 20 Dec 2021 14:07:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20211220140928.1205586-1-fs@gigacodes.de> <20211220140928.1205586-3-fs@gigacodes.de>
+In-Reply-To: <20211220140928.1205586-3-fs@gigacodes.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 20 Dec 2021 17:07:48 -0500
+Message-ID: <CAPig+cRGnMQaDj-qocpAbhQqyksCNqGub+LsspWf7-Dwy=TKzg@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/2] crypto sign: add cryptoSign.* config
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+`On Mon, Dec 20, 2021 at 9:09 AM Fabian Stelzer <fs@gigacodes.de> wrote:
+> Since git now supports multiple cryptographic methods/formats to sign
+> objects, the `gpg.` configuration prefix is misleading.
+> Add `cryptoSign.`, but keep `gpg.` as a compatibility alias at least for
+> all existing options.
+> `gpg.mintrustlevel` is moved to `cryptosign.gpg.mintrustlevel` while
+> also still allowing the former.
+> ---
+> diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
+> @@ -1,6 +1,17 @@
+> +cryptoSign.format::
+> +gpg.format::
+> +       Specifies which key format to use when signing with `--crypto-sign`.
+> +       Default is "openpgp". Other possible values are "x509", "ssh".
+> +
+> +cryptoSign.<format>.program::
+> +gpg.<format>.program::
+> +       Use this to customize the program used for the signing format you
+> +       chose (see `cryptoSign.format`). The default value for
 
-On Mon, Dec 20 2021, Junio C Hamano wrote:
+This is a somewhat minor comment, but I find that grouping these
+config keys together like this gives too much weight to the old
+`gpg.foo` ones, making it seem as if they're still first-class
+citizens which people can use freely. If you instead organize them as
+below, then it is easier to see at a glance that the old keys
+shouldn't be used:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> I think for this and 1/2 it would be really nice to pick up a version of
->> Hamza's CI changes:
->> https://lore.kernel.org/git/20211118084143.279174-2-someguy@effective-li=
-ght.com/
->
-> Are there so many incompatible versions of pcre2 library whose usage
-> are subtly different that we need to protect ourselves with multiple
-> variants in CI from breakages?
->
-> I doubt pcre2 library was _that_ bad.
+    cryptoSign.format::
+        Specifies which key format to use when signing...
 
-It's really not, but:
+    cryptoSign.<format>.program::
+        Use this to customize the program used...
 
- * We have an optional >=3D10.34 feature we use (albeit trivial)
- * We have an optional >=3D10.36 feature we use (major, and directly relate=
-d)
- * We might be targeting JIT or not, and the error handling isn't the same =
-(known PCRE caveat)
- * We might be targeting a PCRE that knows about Unicode, or not
- * We use it in a mode where we might feed UTF-8 invalid data into the UTF-=
-8 mode
+    ...
 
-Any update to the relevant code really needs to test the combination of
-those, so it's a perfect target for CI to make that less tedious.
+    gpg.format::
+        Deprecated synonym of `cryptoSign.format`.
 
-> Adding a special task that builds with the minimum version we
-> support may not be too bad, but the library should be stable enough
-> to allow us to declare it sufficient to test the most common version
-> with the most common build options in our ordinary build job(s).
+    gpg.<format>.program::
+        Deprecated synonym of `cryptoSign.<format>.program`.
 
-That's a nice idea, but not the reality of the situation. Unless we're
-willing to bump the version requirement & insist on JIT && Unicode
-support before using it.
-
-The CI itself should be realtively cheap, and just runs the few tests
-that would spot any breakages with the above.
+The same observation about grouping of config keys applies to the
+remainder of the documentation changes in this patch.
