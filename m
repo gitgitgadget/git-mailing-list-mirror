@@ -2,166 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73622C433FE
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 19:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CDF3EC433F5
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 19:16:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240738AbhLTTJL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 14:09:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38052 "EHLO
+        id S240746AbhLTTQR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 14:16:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240749AbhLTTJJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 14:09:09 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C4B2C061401
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 11:09:09 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id s16-20020a17090a881000b001b179d3fbf3so408323pjn.4
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 11:09:09 -0800 (PST)
+        with ESMTP id S234420AbhLTTQQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 14:16:16 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2479BC061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 11:16:16 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id y13so42442188edd.13
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 11:16:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=FvdR6kkvwGGatlqw5bzMyhulxGTevXAlqoR/HsgZ4rs=;
-        b=P6GN4KCjeh+DAbGSywFBF3XIhcsWxXWanKGGFLqvqi2UdJpQ51Gxh0eMcqEnq74S6f
-         9yGLG7oMokXm1EYuGtc6G001KD4pu8rTBA3zJEQysIYWNcoAjNgJ+Osx0r2J3ailnVoD
-         igQiOwJsIl5wUf9oxsCOCdAAAW0TtNc8VRLWIkMpM5+3NTo9O6qTUVTWmib454nyzdZy
-         WLW29wzs+XDkeck7LpZdGAeePidur4G+HNqknOZAco2D/EbwMmRsMiD4lwWwfbY8fSy+
-         HxlM9CUlzke8UQJXSbpLyLtUJcAPDG75x+FfuYWCge3OqITX9m5y/InDa0a1T2U3ta0l
-         62Pg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=de2E38eS+HWdmtkMjXFEmr8Zujx2EovrvEroFxiYUYI=;
+        b=mGBDpSEmlGq5koKH0mpvFFpfcBXtDlgquyy4U6+p8f1XuMytjbYJyKL+Xo9NfCOmKy
+         siAkuT4ZG62CJupJ+221+U8/Iv+Frg4npYVbLK88stjtMHXCCYqqvQIlkygTZUAYPFJN
+         ZqqKy3sx9lUf9OaoGtkAyM4k+zUgk4i2WDVJ8GWHlGI9/yeJQ0dZjpAJupH99QcrNNcY
+         7AmfYGQsghvnKPymgspGrR2rKYGqTpowDZbso44Mmm3779dC/vaiVIFXj6ftI+maiyhn
+         N70UJs67WAw7NGCZvgjrptXhzKb/1xvL9BzZOlHw1RuIIKq763XTh0fpvNjdSJm9/qOJ
+         bNWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=FvdR6kkvwGGatlqw5bzMyhulxGTevXAlqoR/HsgZ4rs=;
-        b=hqULdPoB/Q2h5FwR9AbQ3/ehKgnNm/e6gLGtvrowaAzu1Alo9d/w0aBg3O8qTSl2mP
-         gc5UgHfOD+xBx9VUvsZKYCEKSdvSKWHjXb30prWjNh+ZQVYsOjdoqkWoFcwP1jrOBaQD
-         P7a1O2UQnlSFSkZmLqgc86vOcTdfgfo4gFOMvvP8R9bWlhvLhv/gSi+TDe98e0Ta7507
-         4M8uC4YBN7vHocrRzZE7G9KA+W3lPkmHMu9rksv1JcrFgBK+PInGXAOy7dHEwfK9pf00
-         iqi3S0YXECU9ChjfzOteulj/palw0UVxwA94jMIwFj+oZR5xnXqvjMSNf4i19FzD1yJM
-         m1Eg==
-X-Gm-Message-State: AOAM530aOX8MpisUInbJu4pzlTQVy5UBnZqT370RQrYDZfEfCbLKNJf7
-        fgfhW6KBVV0hmz8FRHNa4IR3u8QDIUdy/Q==
-X-Google-Smtp-Source: ABdhPJzQTJktmIlEc9cnT04N9PosyjnzKcnNN4UDMnKbDpyZyghRVjdD25pM6hydWgWZJejUEvJPvdUzB1iUgw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:3a92:: with SMTP id
- om18mr426909pjb.159.1640027348492; Mon, 20 Dec 2021 11:09:08 -0800 (PST)
-Date:   Mon, 20 Dec 2021 11:09:06 -0800
-In-Reply-To: <xmqqwnk45aah.fsf@gitster.g>
-Message-Id: <kl6lwnjzytyl.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20211216003213.99135-1-chooglen@google.com> <20211216233324.65126-1-chooglen@google.com>
- <xmqq35ms6pd3.fsf@gitster.g> <xmqqwnk45aah.fsf@gitster.g>
-Subject: Re: [PATCH v5 0/5] implement branch --recurse-submodules
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=de2E38eS+HWdmtkMjXFEmr8Zujx2EovrvEroFxiYUYI=;
+        b=meVutX3l7NnAoC3USG3t79eUYq8aih1strFVQEhzgadks/vcyIu8tDFxzpwXWSC1pd
+         PVT0VgY8D9PQhxYNh22bC1J5UCAnW1Y0YPWieNc89HdzpiPAc0LT2oi6wUnT0+ZLOMfZ
+         3L8LkNydUuwXALF/PWXeqk1s6XNn1lEDNF549QRDKp6DOKgIRyA4tDQfVqi/YmR+8BSs
+         loGf+NycAn0FM1ewJt76o89qgu1CArhF71QxgA7sLd3nWappytwLoKrFw3omuaWYxfi6
+         SpnmEeNKuqartb6ZZjUVHpajjaBY+yHl1r5ufrOebGuNfQd/LZEWyrOaOul9aDNVvtxP
+         FDsQ==
+X-Gm-Message-State: AOAM530MH5sITS9mJOFlQN9cwZ6+T9jo/XLCtQzmx09Gp6GnhJ8F5MJT
+        uM6qBYZlEnjIafp6/VLrhgkQO6ZyQjBMIA==
+X-Google-Smtp-Source: ABdhPJyJmymJPB2OV185DLJBW5RXF0LiVgjc9D1vD2UoWGWx1cWvAaELSvo9zMb375R5epV4cZ4cLg==
+X-Received: by 2002:a17:906:7e07:: with SMTP id e7mr8890715ejr.461.1640027774375;
+        Mon, 20 Dec 2021 11:16:14 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id k12sm1165584ejx.119.2021.12.20.11.16.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Dec 2021 11:16:13 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mzO8r-000XTl-C2;
+        Mon, 20 Dec 2021 20:16:13 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 2/2] builtin add -p: fix hunk splitting
+Date:   Mon, 20 Dec 2021 20:06:00 +0100
+References: <pull.1100.git.1640010777.gitgitgadget@gmail.com>
+ <5d5639c2b0474680850b7adbb7c5ec81d124eb50.1640010777.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <5d5639c2b0474680850b7adbb7c5ec81d124eb50.1640010777.git.gitgitgadget@gmail.com>
+Message-ID: <211220.86mtkvt7cy.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Dec 20 2021, Phillip Wood via GitGitGadget wrote:
+
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
->> Glen Choo <chooglen@google.com> writes:
->>
->>> This series implements branch --recurse-submodules as laid out in the
->>> Submodule branching RFC (linked above). If there are concerns about the
->>> UX/behavior, I would appreciate feedback on the RFC thread as well :)
->>>
->>> This series is based off js/branch-track-inherit.
->>
->> Sigh.
->>
->> When a series is labelled as "based off of X", I expect that the
->> series either apply on the tip of branch X I have, or it applies on
->> top of the merge result of branch X into 'master'.  It shouldn't be
->> forked at a random point on the 'seen' or 'next' branch, as you'd
->> end up depending on not just X but all the other topics that are
->> merged before X is merged to these integration branches.
->>
->> This seems not apply on either c99fa303 (config: require lowercase
->> for branch.autosetupmerge, 2021-12-14), which is the tip of the
->> js/branch-track-inherit topic, or 47e85bee (Merge branch
->> 'js/branch-track-inherit' into gc/branch-recurse-submodules,
->> 2021-12-15), which is a merge of that topic into 'master' I prepared
->> to queue the previous round of this topic the other day.
+> To determine whether a hunk can be split a counter is incremented each
+> time a context line follows an insertion or deletion. If at the end of
+> the hunk the value of this counter is greater than one then the hunk
+> can be split into that number of smaller hunks. If the last hunk in a
+> file ends with an insertion or deletion then there is no following
+> context line and the counter will not be incremented. This case is
+> already handled at the end of the loop where counter is incremented if
+> the last hunk ended with an insertion or deletion. Unfortunately there
+> is no similar check between files (likely because the perl version
+> only ever parses one diff at a time). Fix this by checking if the last
+> hunk ended with an insertion or deletion when we see the diff header
+> of a new file and extend the existing regression test.
 >
-> Ah, I figured it out.
+> Reproted-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  add-patch.c                |  7 ++++++
+>  t/t3701-add-interactive.sh | 46 ++++++++++++++++++++++++++++++++++----
+>  2 files changed, 49 insertions(+), 4 deletions(-)
 >
-> These are based on the merge of the other branch into 'seen'.  I
-> have (deliberately) merged js/branch-track-inherit and the previous
-> round of this tipc in 'seen' next to each other.
+> diff --git a/add-patch.c b/add-patch.c
+> index 8c41cdfe39b..5cea70666e9 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -472,6 +472,13 @@ static int parse_diff(struct add_p_state *s, const s=
+truct pathspec *ps)
+>  			eol =3D pend;
+>=20=20
+>  		if (starts_with(p, "diff ")) {
+> +			if (marker =3D=3D '-' || marker =3D=3D '+')
+> +				/*
+> +				 * Last hunk ended in non-context line (i.e. it
+> +				 * appended lines to the file, so there are no
+> +				 * trailing context lines).
+> +				 */
+> +				hunk->splittable_into++;
 
-Oh my goodness.. I'm sorry, I didn't mean to complicate matters like
-this.
+I wondered if factoring out these several "marker =3D=3D '-' || marker =3D=
+=3D
+'+'" cases in parse_diff() into a "is_plus_minus(marker)" was worth it,
+but probably not.
 
-If it's alright with you, I'd like to check my understanding so that I
-can avoid this mistake in the future.
+>  			ALLOC_GROW_BY(s->file_diff, s->file_diff_nr, 1,
+>  				   file_diff_alloc);
+>  			file_diff =3D s->file_diff + s->file_diff_nr - 1;
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index 77de0029ba5..94537a6b40a 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -326,7 +326,9 @@ test_expect_success 'correct message when there is no=
+thing to do' '
+>  test_expect_success 'setup again' '
+>  	git reset --hard &&
+>  	test_chmod +x file &&
+> -	echo content >>file
+> +	echo content >>file &&
+> +	test_write_lines A B C D>file2 &&
 
-What happened was that I got confused by [1], where it reads:
+style nit: "cmd args >file2" not "cmd args>file2"
 
-  [...]
-  find the tip of js/branch-track-inherit from 'seen' [*]
-  [...]
+> @@ -373,8 +411,8 @@ test_expect_success 'setup expected' '
+>  test_expect_success 'add first line works' '
+>  	git commit -am "clear local changes" &&
+>  	git apply patch &&
+> -	test_write_lines s y y | git add -p file 2>error >raw-output &&
+> -	sed -n -e "s/^([1-2]\/[1-2]) Stage this hunk[^@]*\(@@ .*\)/\1/" \
+> +	test_write_lines s y y s y n y | git add -p 2>error >raw-output &&
+> +	sed -n -e "s/^([1-9]\/[1-9]) Stage this hunk[^@]*\(@@ .*\)/\1/" \
+>  	       -e "/^[-+@ \\\\]"/p raw-output >output &&
+>  	test_must_be_empty error &&
+>  	git diff --cached >diff &&
 
-  [Footnote]
+style/diff nit: maybe worth it to in 1/2 do some version of:
 
-  * One way to do so would be:
+    test_write_lines ... >lines &&
+    git ... <lines .. &&
+    ...
+    sed -n \
+    	-e ... \
+        -e ... \
+        >output
 
-    $ git fetch
-    $ git show 'remote/origin/seen^{/^Merge branch .js/branch-track-inherit.}'
+Just to make the diff smaller, i.e. just the "test_write_lines" line
+would be modified here.
 
-The commit that I got was the "merge of js/branch-track-inherit into
-'seen'", but what you intended was the "merge of js/branch-track-inherit
-into gc/branch-recurse-submodules"; I didn't realize that there might
-have been more than commit matching that regex.
-
-This makes much more sense in the context of your comment:
-
-  That's OK; please do not ever rebase anything on top of 'seen' or
-  'next'.
-
-> And when these five are applied on top of that merge of the other
-> topic into 'seen', we get an identical tree as the merge of the
-> previous round of this topic into 'seen'.
->
-> So unless you updated some commit log message, nothing is lost if I
-> ignore this round.
-
-I made some commit message changes. Unless you think it's a good idea, I
-won't re-roll this to fix the issue.
-
-> Just to save time for both of us the next time,
-> plesae fetch from any of the public tree, find on the first parent
-> chain leading to 'origin/seen' a commit labelled as "Merge branch
-> 'gc/branch-recurse-submodules'", and check out its second parent,
-> and what we have there.
->
->     $ git checkout "origin/seen^{/^Merge branch .gc/branch-rec}^2"
->     $ git log --first-parent --oneline origin/main..
->     35bb9f67f9 branch: add --recurse-submodules option for branch creation
->     ce3a710d42 builtin/branch: clean up action-picking logic in cmd_branch()
->     f368230ca9 branch: add a dry_run parameter to create_branch()
->     d77f8a125b branch: make create_branch() always create a branch
->     f8a88a03b9 branch: move --set-upstream-to behavior to dwim_and_setup_tracking()
->     47e85beee9 Merge branch 'js/branch-track-inherit' into gc/branch-recurse-submodules
->
-> If you "rebase -i 47e85beee9" (the exact object name might differ,
-> as that commit needs to be recreated when 'js/branch-track-inherit'
-> is updated) these five commits, and format-patch everything on the
-> topic with --base=47e85beee9, it is guaranteed that I'll be able to
-> cleanly apply what you meant to send out on top of 47e85beee9.
-
-So if my branch were not in 'seen', I should have based my changes on
-'origin/js/branch-track-inherit'. If my branch is in 'seen', I should
-base it off the merge of js/branch-track-inherit' into my my branch?
-
-I'll continue to use format-patch --base because I see how that can be
-useful for you.
-
-[1] https://lore.kernel.org/git/xmqqlf0lz6os.fsf@gitster.g/
+The changes themselves & this series LGTM.
