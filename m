@@ -2,158 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AA8AC433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 00:58:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50B45C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 03:35:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236988AbhLTA60 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Dec 2021 19:58:26 -0500
-Received: from mail-pj1-f41.google.com ([209.85.216.41]:44679 "EHLO
-        mail-pj1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235396AbhLTA60 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Dec 2021 19:58:26 -0500
-Received: by mail-pj1-f41.google.com with SMTP id k6-20020a17090a7f0600b001ad9d73b20bso8545444pjl.3
-        for <git@vger.kernel.org>; Sun, 19 Dec 2021 16:58:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mk6+8SY9gkj7aqTKBUOiiA7H2ZhxdDclCWCcPIx6vHw=;
-        b=DZi6gdSlZRreee32Ih5e4iVGtVZHFihC+0fjir0vapXmcR9FRLUbBekLfaTTeWEwuZ
-         +l7MzkcyDgBoJ8EkShonupZj4+XekBf4AKG/iJvmqsRrqy2Zq0+w0kQu2KBwd5cmz+xt
-         yo2Sfwy14IhIdzikKdCv2hBHm2znQmrEYq58c/YCfCVR1X0QHFnFMbCsD44L1eBBm/VZ
-         hpQG2eLlWWYX+ixqICH5PcykqyZGas53L9hl6cxtswedTyAWzWCGVqe0yRSTDVIVRxWg
-         ijS/LHi/1Fa4yFjOgzJHGS7j8euPybI7K+KYCFOxqYT9l+ho5zzVYyJJrmuFC7dBVNPm
-         cM1Q==
-X-Gm-Message-State: AOAM5331y9kwXZJwTlQ/+9FRk2mjMPLpcWkgmu9N1//cDAcapOeJ7UlW
-        kH3VXKlv65gigpFQBE3mwkdLM5U/3huxDxb4F4g=
-X-Google-Smtp-Source: ABdhPJz67fBRFglvhCVybWKGB1ijQH6Y78rg9btYiTT7cHb+zJU72kr4094rdZmZKxoJ/BtA2uu4nAoCdd1oAVBtbgY=
-X-Received: by 2002:a17:903:1247:b0:143:b9b9:52a2 with SMTP id
- u7-20020a170903124700b00143b9b952a2mr14751204plh.35.1639961905768; Sun, 19
- Dec 2021 16:58:25 -0800 (PST)
+        id S237357AbhLTDfW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Dec 2021 22:35:22 -0500
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:59201 "EHLO
+        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233995AbhLTDfW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Dec 2021 22:35:22 -0500
+Date:   Mon, 20 Dec 2021 03:35:17 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail2; t=1639971318;
+        bh=4SipH2Bu2EIcFeqf/HAds2pV5JG4AP6MgIbeVJVtvbY=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:From:To:Cc;
+        b=Et1JGTxxXoH1GlxxfIIN0GfL0FnD/tY2xjZqwYj6wjgDh9U/KbiWNgMmAFw1OGfQ7
+         oPzZkG8oI3XM2tOflqh5uiUuOM35NTiFY0a4PmN3FqnduQ1S8qQSxaVsDmCPhRuE2y
+         yzf6Xe2sQqK65dMuMn8Oe/tv9UCjDv8orkUuXk2w6sVWnxD88E/xzETfEIn3pQok6w
+         2W+ToYl+A29AyHyZtYp1YgIlDB2CNTNxbms7+/VeNKFkjdyMiUdzAIR/hlkzdjg1Vg
+         rUpEmEk19oglv8/Qscf/GpanWKaKxLaRAzfLRAwm1AghRuOMl9bud5Guj534x31EKN
+         2hlghNYPsPgdw==
+To:     "emilyshaffer@google.com" <emilyshaffer@google.com>
+From:   =?utf-8?Q?Jo=C3=A3o_Victor_Bonfim?= 
+        <JoaoVictorBonfim@protonmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Reply-To: =?utf-8?Q?Jo=C3=A3o_Victor_Bonfim?= 
+          <JoaoVictorBonfim@protonmail.com>
+Subject: Re: Review process improvements
+Message-ID: <l_ow6mXECNtAIpZlu0hT_Fd2RE1zbqJjCEwzqeGMdFJsu8o-Ue1QhFU5Y0OJNaXnKEFsttuHkNS9QgrQeWoCaQSJKNKlBraDWpsTUyrrw_Y=@protonmail.com>
 MIME-Version: 1.0
-References: <CABceR4bZmtC4rCwgxZ1BBYZP69VOUca1f_moJoP989vTUZWu9Q@mail.gmail.com>
- <e992d4b4-f9e2-a8f9-22da-e9d342c7bede@sunshineco.com> <CABceR4YVd4remACJkxwSCTSYB2v3Zn1BsjKHbzeve8uHiZv1pA@mail.gmail.com>
-In-Reply-To: <CABceR4YVd4remACJkxwSCTSYB2v3Zn1BsjKHbzeve8uHiZv1pA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 19 Dec 2021 19:58:14 -0500
-Message-ID: <CAPig+cQ6U_yFw-X2OWrizB1rbCvc4bNxuSzKFzmoLNnm0GH8Eg@mail.gmail.com>
-Subject: Re: Bug report - Can create worktrees from bare repo / such worktrees
- can fool is_bare_repository()
-To:     Sean Allred <allred.sean@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <ttaylorr@github.com>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 19, 2021 at 3:47 PM Sean Allred <allred.sean@gmail.com> wrote:
-> > However, you missed the step (discussed in [1]) in which it is your
-> > responsibility to move the `core.bare=true` setting from
-> > git.git/config to git.git/worktree.config manually after setting
-> > `extensions.worktreeconfig=true`.
->
-> Ahh, that makes sense!  I did notice the `core.bare` setting being
-> respected in source and figured this had a part to play (which is why
-> I included git-config output).
->
-> I think then that I was overzealous in trying to MWE-ify the issue: as
-> I noted, I found this issue when I was trying to perform a
-> sparse-checkout within the worktree.  To memory (I don't have my work
-> system at the moment and don't have its `history`), I think it went
-> something like this:
->
->     git worktree add --no-checkout ../next && cd ../next
->     git sparse-checkout init --cone # auto-created a worktree config
->     git sparse-checkout set t
+ First and foremost, there is a saying in Brazil that goes by as "an empty =
+bag never holds itself standing", so always remember to care for yourself, =
+eat a snack, drink fluids of your choice (from tea, water and coffee to sou=
+p and porridge), rest a little, stop doom scrolling social media and so on.
+ Second, want to address the giant essay by Emily Shaffer (aka: Review proc=
+ess improvements) and give my opinions on some of the points made. Third, s=
+orry for the botched response, but I wasn't on the mailing list before the =
+mail was posted, so couldn't directly respond the message.
 
-Thanks for this information. I haven't followed sparse-checkout mode
-at all and haven't used it, so I quickly scanned the man page for the
-worktree-relevant information, and indeed I was able to reproduce the
-problem using the recipe (with the prerequisite that the repository is
-bare) which you present here.
+ Addressing point #1, titled "Draft a MAINTAINERS file": seems quite reason=
+able, I would also like to address some matters about this, first is that t=
+here is no point of contact for "trusted sources" within the git project an=
+d it is quite negative for historical purposes, because maintainers and mor=
+e prolific parties will inevitably retire or move on from Git themselves an=
+d their prestige won't be recorded beyond their commit history within the p=
+roject and it might lead to their contributions being forgotten. Second is =
+that it is hard to know who is responsible to what from the get go without =
+being in the know already. Third, please make all entries on any and such f=
+ile that might auto send messages non-committal, why? Nobody wants to recei=
+ve a message from a third party that the git mailing list deems "trustwothy=
+" only for it to be some scam of sorts that only happened because a modific=
+ation to the file managed to fly under the radar, so make it a one way pass=
+ and all tags are only to people, not from. Fourth, I, personally, only wan=
+t to partake on discussions, but barely want to see patches and commits, ma=
+ybe allow for some sot of group inheritance and group message allow or deny=
+ lists? So people that don't want patches don't receive patches, but they c=
+an filter to receive only "memory allocation" topics, but they won't receiv=
+e patches that are for memory allocation, because the "patches" and "discus=
+sion" topics take higher system priority than the "memory allocation" topic=
+, be it user by user or
+system wide. Maybe also auto-filter messages, even in a dumb way or in a se=
+nder dependant way.
 
-> I think either the git-sparse-checkout-set command (or the
-> git-checkout I ran after) would fail complaining that I was not in a
-> worktree.
+ Addressing point #2, titled "Draft a ReviewingPatches doc", and point #3, =
+titled "Google Git team will review cover letters and commit messages inter=
+nally before sending series to the list": not much to say beyond, people, s=
+hare your reviewing know how, including you Google folks, if you interpret =
+the reviewing process as an algorithm, it would make sense that all mechani=
+sms of human interaction and review to be shared as part of the code base. =
+So please, Google people, share what and how you do your reviews. It is als=
+o a matter of security, if your review process isn't transparent, we can't =
+know whether we can trust everything you provide, because you might be leav=
+ing or dismissing problems and it might fly under the radar or malicious ac=
+tion could be taken and, since the group as a whole is already trusted, som=
+e malicious code could be included, even if it is not explicitly so.
 
-It is indeed the `git sparse-checkout set` command which fails.
+ Addressing point #4, titled "Documentation changes to encourage commit mes=
+sage quality": This isn't stressed enough in many Git tutorials and the lik=
+e, and it should, the commit messages are for the journaling of changes, so=
+ you or third parties can understand the thought process behind changes and=
+ not feel like headless chickens running around a barn whenever you attempt=
+ to understand what has been done, maybe addressing it on the source code o=
+f git and its documentation might help address this topic.
 
-> Based on the above, it sounds like `init` is creating the
-> worktree-specific config, but is not overriding `core.bare` in that
-> config.  Would a patch to take this step this automatically be
-> well-received?
+ Extra notes: As a person with ADHD, REAMEs can be daunting at times, speci=
+ally when they are boring word walls, and they can be incomplete or repetit=
+ive if there are other documents addressing information contained within th=
+em, maybe reference files such as "Contributing.md" instead of copying them=
+ verbatim? An example would be "To read more on how to contribute to projec=
+ts, read 'Contributing.md'." instead of what is information contained withi=
+n "Contributing.md", it would help a lot with human to human interactions.
 
-This looks like a legitimate oversight, so some sort of patch to
-resolve it would likely be welcomed.
-
-> I see two options for when to set `core.bare=false` in
-> worktree-specific config:
->
->   1. At git-worktree-add: This is probably the earliest time which
->      makes sense, but may be over-reach.  I'm not up-to-speed on how
->      worktree-specific configs are generally considered on this list.
->      If I were implementing a workaround, though, this is probably
->      where I'd make it.
-
-My knee-jerk reaction is that applying a "fix" to `git worktree add`
-to assign `core.bare=false` in the worktree-specific config may be
-misguided, or at least feels too much like a band-aid. Although it's
-true that that would address the problem for worktrees created after
-`extensions.worktreeconfig=true` is set, it won't help
-already-existing worktrees. This reason alone makes me hesitant to
-endorse this approach.
-
-What I could see, perhaps, is a new git-worktree subcommand which does
-all the necessary bookkeeping required when switching between
-worktree-specific configuration and the legacy configuration model.
-For the sake of example, calling this fictitious command "manage",
-then we might have "git worktree manage --enable-worktree-config"
-which both sets `extensions.worktreeconfig=true` _and_ moves
-`core.bare` and `core.worktree` from .git/config to
-.git/worktree.config if those config keys exist. The fictitious "git
-worktree manage --disable-worktree-config" would reverse the operation
-by moving all of .git/worktree.config into .git/config and disabling
-`extensions.worktreeconfig`. However, there's a question of what to do
-with the worktree-specific worktree.config files when disabling
-`extensions.worktreeconfig`. Should they become orphaned or should
-they somehow be incorporated into .git/config. Or, perhaps, there
-shouldn't even be a --disable-worktree-config switch since a human
-probably needs to make decisions about merging the worktree-specific
-worktree.config files; or maybe --disable-worktree-config should exist
-but error out if it can't figure out how to automatically deal with
-the worktree-specific worktree.config files. Anyhow, this is not a
-simple solution to the immediate problem and needs a lot more thought.
-
-Another possibility is coming up with a migration plan to eventually
-make worktree-specific configuration the default, and eventually drop
-support for the legacy configuration model. I don't know if Duy had
-any such migration plan in mind when he implemented worktree-specific
-configuration, but it seems a reasonable end goal. However, although
-that would solve this problem in the long run (since `core.bare` would
-be local to the repository and not bleed into worktrees), it doesn't
-help in the short term since any migration plan is likely to be
-years-long.
-
->   2. At git-sparse-checkout-init: This is where the problem begins to
->      have an effect, so this might also make sense.
-
-Yes, if I'm understanding everything correctly, this seems like the
-best and most localized place to address the problem at this time. The
-simple, but too minimal, approach would be for `git sparse-checkout
-init` to simply add `core.bare=false` to the worktree-specific config,
-however, this only addresses the immediate problem and still leaves
-things broken in general for any non-sparse worktrees.
-
-So, the better and more correct approach, while still being localized
-to `git sparse-checkout init` is for it to respect the documented
-requirement and automatically move `core.bare` and `core.worktree`
-from .git/config to .git/worktree.config if those keys exist. That
-should leave everything in a nice Kosher state for all worktrees,
-existing and newly-created.
-
-(I've cc:'d a few sparse checkout area experts, though I may have
-forgotten some.)
+Thanks for the attention, take care!
+Jo=C3=A3o Victor Bonfim (any pronouns).
