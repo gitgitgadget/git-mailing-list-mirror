@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F07BC433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 23:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BBE9C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 23:35:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233014AbhLTXfM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 18:35:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41444 "EHLO
+        id S233023AbhLTXfO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 18:35:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229690AbhLTXfM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 18:35:12 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 087C7C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 15:35:12 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id q65-20020a17090a4fc700b001b104a22194so403741pjh.7
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 15:35:12 -0800 (PST)
+        with ESMTP id S229690AbhLTXfN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 18:35:13 -0500
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2A72C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 15:35:13 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id s22-20020a63d056000000b0033b09af4d13so7758139pgi.13
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 15:35:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=KdiRIi6a3dDtZ5VR8kOP0u44BGpr6F0ULADbljeJGpg=;
-        b=Gt2aTfVAGCjYQjm69G43tS7C2NThRpnj6kruZ8wADVf7Ghl95zmguc3Z+eCUpWxbLs
-         OHFNJsRM68cu6HECJPi99MYaniT0HXd9Dg0n7BgcmqPOuA6/Ezu2mf3a6EQD0ETkTOVb
-         je6NYzEQxc0FfLPAz/IzMpTXSmfwkEXyrQSJIugIr5YiXZfyVxFNvC0xo6HnT5YfJn/V
-         YTE2hASKCCBjE4QPSqDCaCOmdtl7eMRMU2F4KD/PK9NExXwnJKdVzqZQoYa0mZsSCP73
-         f5njEAGkQis6Bpm7xWyimPTz+j7DULRVCel6KEKPOQY6DlOLz2um2h8C5oazqZM9vWLe
-         Kh7A==
+         :cc;
+        bh=wEZDsjW7G+dAlIflpqswtN1JStAgNnAwmvEWLOp+A4g=;
+        b=smsNoc9T3sogsc7gfOwfXvemCktDaYJ6cxlxRGIGTqQSN+L86cn5a64Wh7/2gMsBFz
+         ds5OZwWIffDZB58OWI4zbd0bYAJfYP1FPeurDhL0KEez47O+IRZBWtCxJ9/fwvPXC5Rn
+         LQ6lNDGKVRxEMXt7TfBwl02hmKlhploq/Tp0dlJxN1MH7J09xKRohQ480pirrycT+YYY
+         Ua+maGBSfE+Tv2xm9X7oKcollbIm9zsvsjkUv6YSkYPi+ddgJJrSnzUjTTJQ2jYAZtlT
+         rug7SyGRjALBYMi0mg6O3WB6tSvhQkt5wZDCyRIa4NMF4mAoE+7ndhR+DY8vWqcluX4E
+         B7Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=KdiRIi6a3dDtZ5VR8kOP0u44BGpr6F0ULADbljeJGpg=;
-        b=x/gxheRW0Y79m/rkn7I61fFOsyC7sg+VkM79dtPLaBIJcUkJZUK3BNMZgcvb5dwzeT
-         tJry8rInIGEa/8f0byn4l3m6c8ab5TMRMlhhVEm/TYNm/nm729kZnIKGMEBk9u8Qs1/v
-         jILE9Pi92sM3QBDR8mlVsi/SKj21yP2t+kl0WJ3hpft2/Dria1gJ+qXu/CHc1t2I1MtH
-         m8LDhhkTCXefVsFMz1Wt1uL8Svb/cMgl3i0qeAg9UriE1Auq5jlPEAdeECg7dHQ1x0aC
-         k7GqFXWwRLH1Dk9/TkApghdnInJsfi3XUomKSV/LylZejwgnQPb9tA0rIUi/32z35WNe
-         4Ljw==
-X-Gm-Message-State: AOAM532TBpujgxxZ9S2uTm60ML/fBGk4NHYsiFMjg37hPDOjxQD1q3wg
-        81/nnP3SbtczGiDN0pnENdBPrGC+L8qybZZJWlItl33jaoV+3X+2NHAagHfwoQv8lHMM9VUPcXe
-        bW7LcPwJno2UQCw9m8AqOTmqkw0lefJRVKFoXUWlFjqF7UTUYz4ymOZGxrjo4XXo=
-X-Google-Smtp-Source: ABdhPJyCRwJLovXXx5J6a7gCTDGPJEY1PpHCKJGNB/XEqOQHNVwHr3exRcsaZ7z58ZItUngfMeAL0JckXOWGHA==
+         :references:subject:from:to:cc;
+        bh=wEZDsjW7G+dAlIflpqswtN1JStAgNnAwmvEWLOp+A4g=;
+        b=KAgOEBtwaIRUYmqRaWr12XeFP25cjhm8rFqdnOsV0XeunMj43VmQ0LVWdkuOgPxAbq
+         4PyNQ95cpO1bnvc8Xjqz1nWaTk59IKXyQkH3JkGD8ooJn/OfGAKv/HvmLEySKXHj9fs1
+         IP2HrNoxyJ1IZT45q4iWgMjwFlbnQ7b0xYIkh/+LlUbOLN7+TslxbJ7N2lUGe2Rat+FG
+         21E+53CUlVs4lkyXdI1Gquh3IgWJkj57oB6O5LN94deuBYnh1RfG/h6cAyX11v2Ew+D6
+         aHjLgsqLHNXKApJuVbgHhxkvzPRN3KF0LLzhKAf4Y1TeRPxDYc+FbVlLzTo9WM6wlPG5
+         4OEQ==
+X-Gm-Message-State: AOAM53256dK5z2va1BuMUrzpJsnKuOe0p0QDy0LbA1TrI52vyVHCZok+
+        p20O5Cn11gKze6jUemOnbnTYZ9mhE5hdwp14ByaC3EIvZie3CgEsarTwOiRLx8awqCf0UVgzTS5
+        /B6rFmgktAzGyoCgNf6SRd9tUdMva53Rz/bGX5zqRuFHXglewzXK7/o1wS3wR2lc=
+X-Google-Smtp-Source: ABdhPJz+bw8DOkH+jpXV0VvjsGhm5NVkXf+cS7EeQWLMInrhs/lRV+BZblIXAKk48SaBtowZ0mirkWbrX5X9LQ==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:1a8b:: with SMTP id
- ng11mr659893pjb.13.1640043311372; Mon, 20 Dec 2021 15:35:11 -0800 (PST)
-Date:   Mon, 20 Dec 2021 15:34:54 -0800
-In-Reply-To: <20211216233324.65126-1-chooglen@google.com>
-Message-Id: <20211220233459.45739-1-chooglen@google.com>
+ (user=chooglen job=sendgmr) by 2002:a17:90b:17cc:: with SMTP id
+ me12mr466878pjb.179.1640043313188; Mon, 20 Dec 2021 15:35:13 -0800 (PST)
+Date:   Mon, 20 Dec 2021 15:34:55 -0800
+In-Reply-To: <20211220233459.45739-1-chooglen@google.com>
+Message-Id: <20211220233459.45739-2-chooglen@google.com>
 Mime-Version: 1.0
-References: <20211216233324.65126-1-chooglen@google.com>
+References: <20211216233324.65126-1-chooglen@google.com> <20211220233459.45739-1-chooglen@google.com>
 X-Mailer: git-send-email 2.34.1.307.g9b7440fafd-goog
-Subject: [PATCH v6 0/5] implement branch --recurse-submodules
+Subject: [PATCH v6 1/5] branch: move --set-upstream-to behavior to dwim_and_setup_tracking()
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -62,200 +62,233 @@ Cc:     Glen Choo <chooglen@google.com>,
         <avarab@gmail.com>, Philippe Blain <levraiphilippeblain@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Submodule branching RFC:
-https://lore.kernel.org/git/kl6lv912uvjv.fsf@chooglen-macbookpro.roam.corp.=
-google.com/
+This refactor is motivated by a desire to add a "dry_run" parameter to
+create_branch() that will validate whether or not a branch can be
+created without actually creating it - this behavior will be used in a
+subsequent commit that adds `git branch --recurse-submodules topic`.
 
-Original Submodule UX RFC/Discussion:
-https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
+Adding "dry_run" is not obvious because create_branch() is also used to
+set tracking information without creating a branch, i.e. when using
+--set-upstream-to. This appears to be a leftover from 4fc5006676 (Add
+branch --set-upstream, 2010-01-18), when --set-upstream would sometimes
+create a branch and sometimes update tracking information without
+creating a branch. However, we no longer support --set-upstream, so it
+makes more sense to set tracking information with another function and
+use create_branch() only to create branches. In a later commit, we will
+remove the now-unnecessary logic from create_branch() so that "dry_run"
+becomes trivial to implement.
 
-Contributor Summit submodules Notes:
-https://lore.kernel.org/git/nycvar.QRO.7.76.6.2110211148060.56@tvgsbejvaqbj=
-f.bet/
+Introduce dwim_and_setup_tracking(), which replaces create_branch()
+in `git branch --set-upstream-to`. Ensure correctness by moving the DWIM
+and branch validation logic from create_branch() into a helper function,
+dwim_branch_start(), so that the logic is shared by both functions.
 
-Submodule UX overhaul updates:
-https://lore.kernel.org/git/?q=3DSubmodule+UX+overhaul+update
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+ branch.c         | 87 ++++++++++++++++++++++++++++++++++++------------
+ branch.h         | 22 ++++++++++++
+ builtin/branch.c |  9 ++---
+ 3 files changed, 91 insertions(+), 27 deletions(-)
 
-This series implements branch --recurse-submodules as laid out in the
-Submodule branching RFC (linked above). If there are concerns about the
-UX/behavior, I would appreciate feedback on the RFC thread as well :)
-
-v6 fixes v5's bad rebase; it was based off a merge commit in 'seen'
-instead of js/branch-track-inherit. Since v5 is mostly a no-op, I will
-also include a range-diff against v4, which is the last version that
-anyone except Junio would care about.
-
-This version is based off Josh's js/branch-track-inherit v7. Because that
-is not yet in 'seen', I applied those patches onto abe6bb3905 (The first
-batch to start the current cycle, 2021-11-29). The base commit can be
-found at https://github.com/chooglen/git/tree/js/branch-track-inherit-v7.
-I really hope I got right this time, but if not, hopefully the paper
-trail is obvious.
-
-Future work:
-* `git branch -d --recurse-submodules` so that users can clean up
-  extraneous branches.
-* `git [checkout | switch] --recurse-submodules` +
-  submodule.propagateBranches so that users can actually checkout the
-  branches.
-* After [1], it seems clear that --recurse-submodules parsing could
-  really benefit from some standardization. It's not obvious which
-  RECURSE_SUBMODULE_* enums are applicable to which commands, and there
-  is no way to distinguish between an explicit --recurse-submodules from
-  argv vs submodule.recurse from the config.
-
-  I chose not to use them in this series because their usage is already
-  inconsistent (grep.c doesn't use them either), and it would be _more_
-  confusing to use the enum (handling RECURSE_SUBMODULES_DEFAULT =3D 1 is
-  trickier than boolean 0 and 1).
-
-  At this point, I think it would be too noisy to introduce the enum,
-  but this would be a nice cleanup to do later.
-* As documented in branch.c, we create branches using a child process
-  only because install_branch_config() does not support submodules.
-  It should be possible to remove the child process once we make the
-  appropriate changes to config.c. I attempted this in [2] but chose to
-  punt it because it was too time-consuming at the time.
-
-Changes since v5:
-* Rebase onto v7 of js/branch-track-inherit
-  (https://lore.kernel.org/git/cover.1639717481.git.steadmon@google.com)
-
-Changes since v4:
-* Rebase correctly onto 'gitster/seen^{/^Merge branch .js/branch-track-inhe=
-rit.}'
-  (see base-commit) as suggested in [3] (thanks Junio!)
-* These patches were also verified on top of 'next'.
-
-Changes since v3:
-* Split up the old patch 1. Patch 1 had a big diff because it used to
-  move lines, remove dead code and introduce repo_* functions (thanks
-  Jonathan!)
-** repo_* functions have been dropped; they added noise and are not
-   necessary for correctness.
-* Use a new, harder-to-misuse function in --set-upstream-to,
-  dwim_and_setup_tracking(). Now, setup_tracking() never does DWIM and
-  dwim_and_setup_tracking() always does DWIM.
-* Move create_branch() dry_run to its own patch.
-* Fix an oversight where submodules in subtrees were ignored. This was
-  because submodules_of_tree() and tree_entry() didn't recurse into
-  subtrees. Test this accordingly (thanks Jonathan!).
-* cmd_branch() possible actions are more consistently ordered.
-* Documentation fixes (thanks Philippe!).
-* Additional comments and explanation.
-* Drop patch 5 (optional cleanup).
-* Rebase onto js/branch-track-inherit v6.
-
-Changes since v2:
-* Rebase onto js/branch-track-inherit. This series should continue to be
-  the case going forward.
-* Patch 1 has a smaller diff because the introduction of
-  validate_branch_start() no longer changes the function order thanks to a
-  forward declaration. This artificial forward declaration is removed in a
-  patch 2 (which can just be squashed into patch 1).
-* Optional cleanup: fix questionable exit codes in patch 5.
-
-Changes since v1:
-* Move the functionality of "git branch --dry-run" into "git submodule-help=
-er create-branch --dry-run"
-* Add more fields to the submodules_of_tree() struct to reduce the
-  number of allocations made by the caller. Move this functionality
-  to patch 3 (formerly patch 4) and drop patch 1.
-* Make submodules_of_tree() ignore inactive submodules
-* Structure the output of the submodules a bit better by adding prefixes
-  to the child process' output (instead of inconsistently indenting the
-  output).
-** I wasn't able to find a good way to interleave stdout/stderr
-   correctly, so a less-than-desirable workaround was to route the child
-   process output to stdout/stderr depending on the exit code.
-** Eventually, I would like to structure the output of submodules in a
-   report, as =C3=86var suggested. But at this stage, I think that it's
-   better to spend time getting user feedback on the submodules
-   branching UX and it'll be easier to standardize the output when we've
-   implemented more of the UX :)
-
-[1] https://lore.kernel.org/git/kl6lbl1p9zjf.fsf@chooglen-macbookpro.roam.c=
-orp.google.com/
-[2] https://lore.kernel.org/git/kl6lv90ytd4v.fsf@chooglen-macbookpro.roam.c=
-orp.google.com/
-[3] https://lore.kernel.org/git/xmqqlf0lz6os.fsf@gitster.g=20
-
-Glen Choo (5):
-  branch: move --set-upstream-to behavior to dwim_and_setup_tracking()
-  branch: make create_branch() always create a branch
-  branch: add a dry_run parameter to create_branch()
-  builtin/branch: clean up action-picking logic in cmd_branch()
-  branch: add --recurse-submodules option for branch creation
-
- Documentation/config/advice.txt    |   3 +
- Documentation/config/submodule.txt |  24 ++-
- Documentation/git-branch.txt       |  11 +-
- advice.c                           |   1 +
- advice.h                           |   1 +
- branch.c                           | 257 ++++++++++++++++++++-----
- branch.h                           |  57 +++++-
- builtin/branch.c                   |  70 +++++--
- builtin/checkout.c                 |   3 +-
- builtin/submodule--helper.c        |  38 ++++
- submodule-config.c                 |  60 ++++++
- submodule-config.h                 |  34 ++++
- submodule.c                        |  11 +-
- submodule.h                        |   3 +
- t/t3200-branch.sh                  |  17 ++
- t/t3207-branch-submodule.sh        | 291 +++++++++++++++++++++++++++++
- 16 files changed, 805 insertions(+), 76 deletions(-)
- create mode 100755 t/t3207-branch-submodule.sh
-
-Range-diff against v5:
-1:  a9d1108b3e ! 1:  29669c57b4 branch: move --set-upstream-to behavior to =
-dwim_and_setup_tracking()
-    @@ branch.c: static void setup_tracking(const char *new_ref, const char=
- *orig_ref,
-     =20
-      	if (tracking.matches > 1)
-     @@ branch.c: static void setup_tracking(const char *new_ref, const cha=
-r *orig_ref,
-    - 			      tracking.srcs) < 0)
-    + 				tracking.remote, tracking.srcs) < 0)
-      		exit(-1);
-     =20
-     +cleanup:
-    @@ branch.c: N_("\n"
-     @@ branch.c: void create_branch(struct repository *r,
-     =20
-      	if ((commit =3D lookup_commit_reference(r, &oid)) =3D=3D NULL)
-    - 		die(_("not a valid branch point: '%s'"), start_name);
-    + 		die(_("Not a valid branch point: '%s'."), start_name);
-     -	oidcpy(&oid, &commit->object.oid);
-     +	if (out_real_ref)
-     +		*out_real_ref =3D real_ref ? xstrdup(real_ref) : NULL;
-2:  c543c1412a =3D 2:  ac2532a953 branch: make create_branch() always creat=
-e a branch
-3:  dddd434d7a =3D 3:  a0ed3fa438 branch: add a dry_run parameter to create=
-_branch()
-4:  41cca3bd52 =3D 4:  ebded31c96 builtin/branch: clean up action-picking l=
-ogic in cmd_branch()
-5:  540eeab183 ! 5:  0a7ec6ee75 branch: add --recurse-submodules option for=
- branch creation
-    @@ t/t3207-branch-submodule.sh (new)
-     +		test_must_fail git rev-parse branch-a &&
-     +
-     +		cat >expected <<-EOF &&
-    -+		submodule ${SQ}sub${SQ}: fatal: a branch named ${SQ}branch-a${SQ} a=
-lready exists
-    ++		submodule ${SQ}sub${SQ}: fatal: A branch named ${SQ}branch-a${SQ} a=
-lready exists.
-     +		fatal: submodule ${SQ}sub${SQ}: cannot create branch ${SQ}branch-a$=
-{SQ}
-     +		EOF
-     +		test_cmp expected actual
-
-base-commit: e1c6879cf24f90693ca108542ec1db970764e1dc
---=20
+diff --git a/branch.c b/branch.c
+index fa339b64e2..e271a4e0a7 100644
+--- a/branch.c
++++ b/branch.c
+@@ -217,9 +217,11 @@ static int inherit_tracking(struct tracking *tracking, const char *orig_ref)
+ }
+ 
+ /*
+- * This is called when new_ref is branched off of orig_ref, and tries
+- * to infer the settings for branch.<new_ref>.{remote,merge} from the
+- * config.
++ * Used internally to set the branch.<new_ref>.{remote,merge} config
++ * settings so that branch 'new_ref' tracks 'orig_ref'. Unlike
++ * dwim_and_setup_tracking(), this does not do DWIM, i.e. "origin/main"
++ * will not be expanded to "refs/remotes/origin/main", so it is not safe
++ * for 'orig_ref' to be raw user input.
+  */
+ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 			   enum branch_track track, int quiet)
+@@ -244,7 +246,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 		case BRANCH_TRACK_INHERIT:
+ 			break;
+ 		default:
+-			return;
++			goto cleanup;
+ 		}
+ 
+ 	if (tracking.matches > 1)
+@@ -257,6 +259,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 				tracking.remote, tracking.srcs) < 0)
+ 		exit(-1);
+ 
++cleanup:
+ 	string_list_clear(tracking.srcs, 0);
+ }
+ 
+@@ -340,31 +343,37 @@ N_("\n"
+ "will track its remote counterpart, you may want to use\n"
+ "\"git push -u\" to set the upstream config as you push.");
+ 
+-void create_branch(struct repository *r,
+-		   const char *name, const char *start_name,
+-		   int force, int clobber_head_ok, int reflog,
+-		   int quiet, enum branch_track track)
++/**
++ * DWIMs a user-provided ref to determine the starting point for a
++ * branch and validates it, where:
++ *
++ *   - r is the repository to validate the branch for
++ *
++ *   - start_name is the ref that we would like to test. This is
++ *     expanded with DWIM and assigned to out_real_ref.
++ *
++ *   - track is the tracking mode of the new branch. If tracking is
++ *     explicitly requested, start_name must be a branch (because
++ *     otherwise start_name cannot be tracked)
++ *
++ *   - out_oid is an out parameter containing the object_id of start_name
++ *
++ *   - out_real_ref is an out parameter containing the full, 'real' form
++ *     of start_name e.g. refs/heads/main instead of main
++ *
++ */
++static void dwim_branch_start(struct repository *r, const char *start_name,
++			   enum branch_track track, char **out_real_ref,
++			   struct object_id *out_oid)
+ {
+ 	struct commit *commit;
+ 	struct object_id oid;
+ 	char *real_ref;
+-	struct strbuf ref = STRBUF_INIT;
+-	int forcing = 0;
+-	int dont_change_ref = 0;
+ 	int explicit_tracking = 0;
+ 
+ 	if (track == BRANCH_TRACK_EXPLICIT || track == BRANCH_TRACK_OVERRIDE)
+ 		explicit_tracking = 1;
+ 
+-	if ((track == BRANCH_TRACK_OVERRIDE || clobber_head_ok)
+-	    ? validate_branchname(name, &ref)
+-	    : validate_new_branchname(name, &ref, force)) {
+-		if (!force)
+-			dont_change_ref = 1;
+-		else
+-			forcing = 1;
+-	}
+-
+ 	real_ref = NULL;
+ 	if (get_oid_mb(start_name, &oid)) {
+ 		if (explicit_tracking) {
+@@ -401,7 +410,34 @@ void create_branch(struct repository *r,
+ 
+ 	if ((commit = lookup_commit_reference(r, &oid)) == NULL)
+ 		die(_("Not a valid branch point: '%s'."), start_name);
+-	oidcpy(&oid, &commit->object.oid);
++	if (out_real_ref)
++		*out_real_ref = real_ref ? xstrdup(real_ref) : NULL;
++	if (out_oid)
++		oidcpy(out_oid, &commit->object.oid);
++
++	FREE_AND_NULL(real_ref);
++}
++
++void create_branch(struct repository *r, const char *name,
++		   const char *start_name, int force, int clobber_head_ok,
++		   int reflog, int quiet, enum branch_track track)
++{
++	struct object_id oid;
++	char *real_ref;
++	struct strbuf ref = STRBUF_INIT;
++	int forcing = 0;
++	int dont_change_ref = 0;
++
++	if ((track == BRANCH_TRACK_OVERRIDE || clobber_head_ok)
++	    ? validate_branchname(name, &ref)
++	    : validate_new_branchname(name, &ref, force)) {
++		if (!force)
++			dont_change_ref = 1;
++		else
++			forcing = 1;
++	}
++
++	dwim_branch_start(r, start_name, track, &real_ref, &oid);
+ 
+ 	if (reflog)
+ 		log_all_ref_updates = LOG_REFS_NORMAL;
+@@ -435,6 +471,15 @@ void create_branch(struct repository *r,
+ 	free(real_ref);
+ }
+ 
++void dwim_and_setup_tracking(struct repository *r, const char *new_ref,
++			     const char *orig_ref, enum branch_track track,
++			     int quiet)
++{
++	char *real_orig_ref;
++	dwim_branch_start(r, orig_ref, track, &real_orig_ref, NULL);
++	setup_tracking(new_ref, real_orig_ref, track, quiet);
++}
++
+ void remove_merge_branch_state(struct repository *r)
+ {
+ 	unlink(git_path_merge_head(r));
+diff --git a/branch.h b/branch.h
+index 815dcd40c0..ab2315c611 100644
+--- a/branch.h
++++ b/branch.h
+@@ -18,6 +18,28 @@ extern enum branch_track git_branch_track;
+ 
+ /* Functions for acting on the information about branches. */
+ 
++/**
++ * Sets branch.<new_ref>.{remote,merge} config settings such that
++ * new_ref tracks orig_ref according to the specified tracking mode.
++ *
++ *   - new_ref is the name of the branch that we are setting tracking
++ *     for.
++ *
++ *   - orig_ref is the name of the ref that is 'upstream' of new_ref.
++ *     orig_ref will be expanded with DWIM so that the config settings
++ *     are in the correct format e.g. "refs/remotes/origin/main" instead
++ *     of "origin/main".
++ *
++ *   - track is the tracking mode e.g. BRANCH_TRACK_REMOTE causes
++ *     new_ref to track orig_ref directly, whereas BRANCH_TRACK_INHERIT
++ *     causes new_ref to track whatever orig_ref tracks.
++ *
++ *   - quiet suppresses tracking information.
++ */
++void dwim_and_setup_tracking(struct repository *r, const char *new_ref,
++			     const char *orig_ref, enum branch_track track,
++			     int quiet);
++
+ /*
+  * Creates a new branch, where:
+  *
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 81a29edb4a..16a7e80df5 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -823,12 +823,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if (!ref_exists(branch->refname))
+ 			die(_("branch '%s' does not exist"), branch->name);
+ 
+-		/*
+-		 * create_branch takes care of setting up the tracking
+-		 * info and making sure new_upstream is correct
+-		 */
+-		create_branch(the_repository, branch->name, new_upstream,
+-			      0, 0, 0, quiet, BRANCH_TRACK_OVERRIDE);
++		dwim_and_setup_tracking(the_repository, branch->name,
++					new_upstream, BRANCH_TRACK_OVERRIDE,
++					quiet);
+ 	} else if (unset_upstream) {
+ 		struct branch *branch = branch_get(argv[0]);
+ 		struct strbuf buf = STRBUF_INIT;
+-- 
 2.33.GIT
 
