@@ -2,113 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CE18C433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 10:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A923C433EF
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 11:05:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231445AbhLTKsj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 05:48:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34278 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229912AbhLTKsg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 05:48:36 -0500
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4745FC061574;
-        Mon, 20 Dec 2021 02:48:36 -0800 (PST)
-Received: by mail-yb1-xb30.google.com with SMTP id v203so27396020ybe.6;
-        Mon, 20 Dec 2021 02:48:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=o7LVVEj814k0rtyDv7QSeuOPMjhiVF3OoHLrvLsuSPY=;
-        b=PG9BVO9DD2fMbN7ySXYzjeTbXUr7RwLkq25Euh48MSuAbcQhHdQMXk34br/a4bYI3Z
-         8/XyesT+FyAgciSIvN5pa357k28ehjSZ2AKNZkIo29+bxXfOCFqC/N5teF9nynZz+FA5
-         f27aYbS5bQUx1LQhaqdj/3R2+mikDMUJ5lCAMDt4XZkwuLxKbaVoLdJn15IqG5t3FM7X
-         NsZNYzhaBvMeGzYp54Muj+esifYiKZ+Aa6ojuDJS+Yl7/4BJa6FIO/Znlhqty7MXbX4U
-         ISI/H+22p3tQ6fEiU+/AgFUN7Df7bY0OzBZnZZoCMyLTjiFF1L4Xi0Y+EPfq7soc04Wr
-         GowA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=o7LVVEj814k0rtyDv7QSeuOPMjhiVF3OoHLrvLsuSPY=;
-        b=c40o10jzVrOCqq5uizHb1ZEd1E02sXkzAROjQX2q5FkPMN+9aNTHv1gK8Oz7So/53r
-         w1nxUAu6v9XISPJeYaDJsv10hbAs2WS/vvPi9VqglAFoGWolVtewfh7N0CSr5hWIA/a6
-         rA0mHa2ba2lLc4FioXd5JZ8N2YdXzH/cQ+XuUfDCkcadxNfgnUlUWjNStlRwEV04d3aH
-         lh11ZvGWRBD+Awe1zxL7EXstFxnCqvqhY6FKn0rcd3pf6XcLRjMoyS7IJNOBVQXmgZ7/
-         GVwpLMgOLq5qZy9S72tEBvwr7mUxu1+ZmYFg8I/U54VAbniJwTWIMs6Vps99L/Mg+SNd
-         bKHA==
-X-Gm-Message-State: AOAM531Jw7SS7oUNjR4rAr/5Jhl2zRXqn6CRKdO9LjsfDZSX6NxZjLb7
-        i6JujHIF7SVQG+wDbCWnuzeAN8eWe1Ohfst76Jk=
-X-Google-Smtp-Source: ABdhPJzgSrIloEcvsUyQa2iy7KIbtFVaIQ8kQ0x5ak6emKhyXCD5DQJmYY3fWg8Y/4gMHJ/7bCG6OJbR8jwcMa6Qyek=
-X-Received: by 2002:a25:4dc4:: with SMTP id a187mr21542435ybb.631.1639997315350;
- Mon, 20 Dec 2021 02:48:35 -0800 (PST)
+        id S231497AbhLTLFe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 06:05:34 -0500
+Received: from mout.web.de ([212.227.17.11]:49885 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231492AbhLTLFe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 06:05:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1639998320;
+        bh=36PtjOsrhfp1CA7LUqmmSz+cWAYo0mZUGFLKKfsDqRA=;
+        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
+        b=QhaPp0HQZzcxKqH8EhCmqhpDXS0a4s2a7tnySR/Yq8lfBxxfXfYmmI0KSbDXtmIte
+         O48irbte64HvGA6qKbRfLjimwtWW2PiKCkXcNeOcwBGkyMDI7EuwfI+PCl2e4lHzUK
+         rjR3ri9pe7Joi3LrEiJ8ciLMkewcWYX7l6v1wtCQ=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MoeY7-1mfrxJ0oC9-00otFx; Mon, 20
+ Dec 2021 12:05:20 +0100
+Message-ID: <f22f978a-26eb-8fe9-cab4-3fd60df69635@web.de>
+Date:   Mon, 20 Dec 2021 12:05:18 +0100
 MIME-Version: 1.0
-References: <YbvBvch8JcHED+A9@google.com> <20211217183942.npvkb3ajnx6p5cbp@meerkat.local>
-In-Reply-To: <20211217183942.npvkb3ajnx6p5cbp@meerkat.local>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 20 Dec 2021 11:48:24 +0100
-Message-ID: <CAP8UFD1M7LM630iHXb3EhgiRSoHgKzixTHmKYTA5OU1fEo69DA@mail.gmail.com>
-Subject: Re: Review process improvements
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Emily Shaffer <emilyshaffer@google.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Glen Choo <chooglen@google.com>, calvinwan@google.com,
-        workflows@vger.kernel.org, Eric Wong <e@80x24.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Josh Triplett <josh@joshtriplett.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.0
+Content-Language: en-US
+To:     Git List <git@vger.kernel.org>
+Cc:     Johannes Altmanninger <aclopte@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH RESEND] t/perf: do not run tests in user's $SHELL
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Iz1fWbh5XsjBVNnF5uXd4FbKASyL5R8pVSesJ0cHFGgSm3/ugIJ
+ Zzk6+qGO3yQOIhTe65f7RVP491ylrK8bC5PLH7Y3hYaeNsEEeVnx0dGUyRZaQcemjlOQTdF
+ bkaJICTOr7AGLxDms1sUKc63Yi3Btyo8kcsfzgmRNP/x5uPKnN03fjvla44JTuzSi71+j6W
+ SJLb5j2aSyPCdpY3kZUuw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:eCnjrB3IaO4=:9QVx2IOsfwkwlpc3NO7Dpm
+ VV68+31+tpF9Q3a6tqhNCavoLmw9dfIdMb3WArAeACljoOhMja39Q+Gk3XFuS6K+oKm8x/6co
+ YcWxe9qMGi6A9o8CYwtzlnUoWa8kf60YVZx+E0O/MLaomZEU7NUYOphQ+ofEYW52D5wPVtP9x
+ DgWgypvj1eZ7+hYh+3ESBXjJvyVa8ozIlze1SKTmx5LiOGQcvrCNYILIaX1QOt44vRoLa9r5e
+ LeJE+hIAgeySWEEsB4AtH3NYOOBjbNtlexZbqWV9QUlEFL2DGx06vZQNBHvk78euEPT5R/Nzb
+ 0K8dsT2J2248//1dBTzhX64eMCup+coBdJ23BTAQNk/zGLexEMO84LxXOu017f3Oy5BkkiSHY
+ TlwL2AHUYRLX755EbFdzbghSPETLEPC/AmLrEv5Tct2Zpouwx0LJWxVzT99bsxb14UgKPNO/1
+ Db83HDEsrwv4s9JpDWZV1E3Z8APHdlrNX01hERiYjGh01UsKWihuTc1yO6/H6vuWktXT8gE2a
+ 4/Bd5HgVUofVsXY6DbrQXGcaDUh077XYTngCNJYaT3IcjS5iHINAcmzWbi4ASf3UYm5vrY4xE
+ 3J7wPnN8tefGIFJn5EwkdjhhucfLJwfkfNlRFN9rtG73+pmIDpP9bmhf6gIdQZACP/kVJ9KWO
+ vnEUj+9KM4g92V297fTB/NV25WdpLjmgOAnLsEEjxM008E9+wglX73bCQQ2EfX9rBlIDKBbZ8
+ 0GxnBobWJsFhfAQY7uW41EU//crW/IxgE6AoAzmOldONg59ybqDhylYsO6/2/wTX2jmcceq9f
+ mEfPKi8BUtP9AWLKyEZwmyza3jbJoRjcQr+eY/fl7f3MJCtaeVV8pGQ4CFt0AUgPxcLDYMJC+
+ ydkR4WcyOM7J+HU/+SXoHirbKwOYau2ZgEpNvz4yC/L9o98C7LOveeGowVcMbcYMwoyUgmYOI
+ XtYxmpC9TVro9keA1P2065GrwR1Zi0ZAK3kIFGDpMoG115bB2dhtLkTNKRFn3ngmlv6oXbzjD
+ e+S3b8t5LsOriL4CD6fB4MzVpDsQYZGqbcim8P7wTg3dpHPuV3X96jE94VfriiAKjQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 17, 2021 at 11:00 PM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Thu, Dec 16, 2021 at 02:46:21PM -0800, Emily Shaffer wrote:
-> > Some of those discussions resulted in changes - for example,
-> > GitGitGadget was improved and added to git/git, and we enjoy easy,
-> > non-noisy CI runs via GitHub Actions. But some things we thought were a
-> > good idea never went into practice. In the next few months, the Google
-> > Git team is planning to implement some of the following changes,
+From: Johannes Altmanninger <aclopte@gmail.com>
 
-Thanks for trying to make it easier and more efficient to contribute!
+The environment variable $SHELL is usually set to the user's
+interactive shell. We never use that shell for build and test scripts
+because it might not be a POSIX shell.
 
-> > and
-> > we'd appreciate your thoughts ahead of time as well as your review later
-> > on:
->
-> I'd like to also mention that I'm hoping to add a few more features to b4 that
-> will hopefully improve the patch submission process for folks.
+Perf tests are run inside $SHELL via a wrapper defined in
+t/perf/perf-lib.sh. Use $TEST_SHELL_PATH like elsewhere.
 
-Thanks also for implementing and maintaining tools and sites that help
-contributing!
+Signed-off-by: Johannes Altmanninger <aclopte@gmail.com>
+Acked-by: Jeff King <peff@peff.net>
+=2D--
+Original submission:
+https://lore.kernel.org/git/20211007184716.1187677-1-aclopte@gmail.com/
 
-I have added a new "Process related tools and sites" section to
-https://git.github.io/Hacking-Git/ with links to GitGitGadget,
-lore.kernel.org/git, public-inbox, lore+lei, b4 and git-series. I am
-willing to add other tools and sites if someone knows others worth
-mentioning.
+ t/perf/perf-lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[...]
-
-> > 1. Draft a MAINTAINERS file
->
-> So, I *don't* recommend that you go this route. The biggest problem with the
-> MAINTAINERS file as used by the Linux development community is that making
-> changes to it is a very high-latency process. It will be less of a problem for
-> the much smaller git developer community, but it will still result in folks
-> operating from a stale copy of the file for weeks after it is updated
-> upstream.
-
-My opinion is that a MAINTAINERS file makes more sense when there are
-different mailing lists to send patches to, and trusted
-lieutenants/maintainers. I am not sure that we are at that point yet.
-
-About documentation, if some good documentation exists elsewhere, it
-might be good enough to just point to it from an existing doc and/or
-https://git.github.io/Hacking-Git/. Otherwise adding a new separate
-doc might be better than growing an existing doc too much, which could
-scare new comers.
+diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+index 780a7402d5..407252bac7 100644
+=2D-- a/t/perf/perf-lib.sh
++++ b/t/perf/perf-lib.sh
+@@ -161,7 +161,7 @@ test_run_perf_ () {
+ 	test_cleanup=3D:
+ 	test_export_=3D"test_cleanup"
+ 	export test_cleanup test_export_
+-	"$GTIME" -f "%E %U %S" -o test_time.$i "$SHELL" -c '
++	"$GTIME" -f "%E %U %S" -o test_time.$i "$TEST_SHELL_PATH" -c '
+ . '"$TEST_DIRECTORY"/test-lib-functions.sh'
+ test_export () {
+ 	test_export_=3D"$test_export_ $*"
+=2D-
+2.34.0
