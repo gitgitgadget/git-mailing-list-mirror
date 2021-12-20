@@ -2,171 +2,518 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27169C433F5
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 22:39:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E18DC433FE
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 22:53:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229838AbhLTWj2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 17:39:28 -0500
-Received: from mout.gmx.net ([212.227.17.22]:42733 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229663AbhLTWj1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 17:39:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1640039964;
-        bh=/ItQJtD6vOgSM3vt4ZyoIJzAH0jmN9TGdp6IMxlDycc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ik/gefXUOWmWP5PqppFOXhboUfqqUe/Il04wLG9qNDQiDdQYxunblDQ5xb+JX7QSJ
-         2iaSzApzKSDOh+WTDSJCMmE7bex+5jPCTpjmugboPE16opTWXMpRgyh9OyBv7yx+3d
-         DI7LP3UHZKLBAGERLWom5+FICzt9mj90P1jjdM+A=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.29.215.148] ([89.1.215.174]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M5QFB-1n0GG92s9F-001R7g; Mon, 20
- Dec 2021 23:39:24 +0100
-Date:   Mon, 20 Dec 2021 23:39:23 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Sean Allred <allred.sean@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: Custom subcommand help handlers
-In-Reply-To: <CABceR4ZW4rRWZnH0ZBkWty_H84Z4CmXque_LO+1edETEWrO8PQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2112202324110.347@tvgsbejvaqbjf.bet>
-References: <CABceR4ZW4rRWZnH0ZBkWty_H84Z4CmXque_LO+1edETEWrO8PQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S232509AbhLTWxx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 17:53:53 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55777 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232734AbhLTWxt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 17:53:49 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F3FDC17AF78;
+        Mon, 20 Dec 2021 17:53:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=coIi1YYV6irGagc3onyLH/bZoz7+DyWwGm4Apw
+        +o1Pk=; b=C9A3BJQ/yKbehJnmtlb7HnWkjvx+0vsYWExX4S7wpqmlolsCRYbhsQ
+        VC9ja+/PvaqVjoerc/HTVUH9cdTQOwU4LTLbUKoRr2jQIHY8EYqXZn6XRWh4kV2z
+        nMpymQnOziQFiKwCCvr7YUmg3z0iHW03VpHTrQowceyvd9uR7tftw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EC38A17AF77;
+        Mon, 20 Dec 2021 17:53:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 533D517AF74;
+        Mon, 20 Dec 2021 17:53:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Sergey Organov <sorganov@gmail.com>
+Subject: [PATCH v2] merge: allow to pretend a merge is made into a different
+ branch
+References: <xmqqbl1ezq5j.fsf@gitster.g> <87a6gyiamm.fsf@osv.gnss.ru>
+        <xmqq35mnz2x6.fsf@gitster.g>
+Date:   Mon, 20 Dec 2021 14:53:43 -0800
+In-Reply-To: <xmqq35mnz2x6.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        20 Dec 2021 07:55:33 -0800")
+Message-ID: <xmqqee66ubuw.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wWCuufKO6IzB11s5f7lbTnGZ9VdcjkAxsPkl06FfbeAaRW19/Pj
- FPXKBIpngAcDdcJKj9kVZF0wulNcUHVeKTo7+9D5VD4Y/f8W5FnE/sX/BAYgSTv0idtiOwx
- VzrOgDPHRPFh2APJoQ/TEG6Pyvc/zzXQXlVNy1l5GoYYYMgRFC6XItR1jKckaamMRYudPr6
- DjXLrwYU2/AeqcFhbalfg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6JNlBRUu2dM=:njubScoJWIF4Nnn0L+qvcI
- GN+6rHXlqRA6Mrv1cbfAHWMU7bySXvgwz0W2HLiOMiwO7tTHktlQNrFHGLPVDESXgP5OoPK1d
- E7bjjdVNNvGDyAKpC/9TPJ+wZe/P8BVX0dJLHV1KMxQzFkkhb31rneNkZc93/H0S9CZtEj/yW
- 0ZP5DynjaCVlM+K2FmrgrowVUNcSW1m5B94kQ+atHSR/K0tw3fuwskqHYdd+yzWMEz6Rij80D
- fO91eSZi5qkTdBjmWM6ymz7fiz4cVYHaNUZJOfHPmD6x97GT8HeEyCgEwIIj4/F9sTU2sMJzc
- SjNXGoHzkwQgAW4IXb3OP3/kM/ivAFi0tN8zL1d9xy92FxdzurCMbSh0asJ0aHqamUf5SAx8U
- 7XX6oV7OFiSQ2A7hFUpYGzNuWCkPQXXjEokLdVIzM7vMhNhlKzzyQipJ/yF1IUSVS42/CGkFr
- dh/kLDx67xn1CKAd3jNxRtkw0x1jpHsJoxzRE7Meh6rB7NuDy/MjUT3wTnw0c5AsmgpkN5qVn
- vAOuGQqFMo7SWokThT5djOFHclXwnXzC/ckSOGG7kq6laaF48Q1anQCFIy3youp44Kg93P8Dn
- eqiCZu5lE0yiV2HTiAeiDXq91mODNjR5Hu7znZeQb5Rrwk6/XVSGEfm1vmTkMyJw99HfmKCEO
- gflpx1aXk9N3w46Xo8j37W0PTp9Qo10M4RK/pmok0mv1Rt0KaTN36CZnnkt8xFFnft2q0wMBg
- 4J6n6bxGsQMDHJ/WAMqrm+J6AT0XhVNzNg/LfhvvQuVji42Z7Vca8M9P7FyWloQvfkNuTL1oG
- e7Edrz3SkGC49lWGCcw903y2zKAvfghd/NYIcahGcMJTGb9AL6jqnawZI6jVVfWQlWqJIzGxF
- j/q5aVtbR0D0R1VQ1qNLfYpNU4z6h3KqC2dZdvrQJz+9gQwNnd/1029Cnuv8KixczrsdrZcA9
- 134aNaWNGGBSMBiO4NbYDSv/kMxUGG/5qEPuRzqR2CBBzoBw3ZTXXGtN0OlHZJJMHQQygWXTS
- cHTyBDJdxpiYgcx6EB1F1eRK8bp37xUMfaHz9OjsbZXus0ZAWIzTIduogCuGZHm9DJc08MhBW
- aRemlYtRl4vyjI=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: AFA15C98-61E7-11EC-AE49-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sean,
+When a series of patches for a topic-B depends on having topic-A,
+the workflow to prepare the topic-B branch would look like this:
 
-On Sat, 18 Dec 2021, Sean Allred wrote:
+    $ git checkout -b topic-B main
+    $ git merge --no-ff --no-edit topic-A
+    $ git am <mbox-for-topic-B
 
-> I've got a custom subcommand I'm distributing in my company to integrate
-> with our bug-tracker. It's a pretty robust utility and has its own help
-> function, but running `git foo --help` doesn't pass --help to my git-foo
-> utility. I asked a question[1] about this scenario on the Windows fork
-> and they directed me upstream.
->
-> It sounds like `git foo --help` is internally consumed as `git help
-> foo`, which forwards requests to info/man/web handlers per config.
-> Being on Windows and knowing my peers as I do, the vast majority of my
-> users won't be familiar with info or man. The HTML documentation used
-> by the web handler is in a Git4Win-controlled installation directory
-> that I'd really rather not touch/maintain. I really just want `git foo
-> --help` to call `git-foo --help`.
->
-> What's the best way to go about this?
->
-> In the event the best next step is to start a patch, does it sound
-> reasonable to simply not perform this `git foo --help` -> `git help
-> foo` transformation for non-builtins? Or, while I don't relish the
-> idea, would some kind of config option be needed?
+When topic-A gets updated, recreating the first merge and rebasing
+the rest of the topic-B, all on detached HEAD, is a useful
+technique.  After updating topic-A with its new round of patches:
 
-I think you might need to be a bit more careful than just looking whether
-the command in question is a built-in or not. It could be delivered as a
-script or executable inside `libexec/git-core`. So maybe check that,
-something like this:
+    $ git checkout topic-B
+    $ prev=$(git rev-parse 'HEAD^{/^Merge branch .topic-A. into}')
+    $ git checkout --detach $prev^1
+    $ git merge --no-ff --no-edit topic-A
+    $ git rebase --onto HEAD $prev @{-1}^0
+    $ git checkout -B @{-1}
 
-=2D- snip --
-diff --git a/git.c b/git.c
-index c802dfe98004..d609f90cc117 100644
-=2D-- a/git.c
-+++ b/git.c
-@@ -688,6 +688,33 @@ static void strip_extension(const char **argv)
- #define strip_extension(cmd)
- #endif
+This will
 
-+static int is_in_git_exec_path(const char *command_name)
-+{
-+	struct strbuf path =3D STRBUF_INIT;
-+	int ret =3D 0;
+ (0) check out the current topic-B.
+ (1) find the previous merge of topic-A into topic-B.
+ (2) detach the HEAD to the parent of the previous merge.
+ (3) merge the updated topic-A to it.
+ (4) reapply the patches to rebuild the rest of topic-B.
+ (5) update topic-B with the result.
+
+without contaminating the reflog of topic-B too much.  topic-B@{1}
+is the "logically previous" state before topic-A got updated, for
+example.  At (4), comparison (e.g. range-diff) between HEAD and
+@{-1} is a meaningful way to sanity check the result, and the same
+can be done at (5) by comparing topic-B and topic-B@{1}.
+
+But there is one glitch.  The merge into the detached HEAD done in
+the step (3) above gives us "Merge branch 'topic-A' into HEAD", and
+does not say "into topic-B".
+
+Teach the "--into-name=<branch>" option to "git merge" and its
+underlying "git fmt-merge-message", to pretend as if we were merging
+into <branch>, no matter what branch we are actually merging into,
+when they prepare the merge message.  The pretend name honors the
+usual "into <target>" suppression mechanism, which can be seen in
+the tests added here.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ 
+Range-diff:
+1:  0ada838311 ! 1:  273df9ed2a merge: allow to pretend a merge into detached HEAD is made into a branch
+    @@ Metadata
+     Author: Junio C Hamano <gitster@pobox.com>
+     
+      ## Commit message ##
+    -    merge: allow to pretend a merge into detached HEAD is made into a branch
+    +    merge: allow to pretend a merge is made into a different branch
+     
+         When a series of patches for a topic-B depends on having topic-A,
+         the workflow to prepare the topic-B branch would look like this:
+    @@ Commit message
+         the step (3) above gives us "Merge branch 'topic-A' into HEAD", and
+         does not say "into topic-B".
+     
+    -    Teach the "--detached-head-name=<branch>" option to "git merge" and
+    -    its underlying "git fmt-merge-message", to pretend as if we were
+    -    merging into <branch> (instead of HEAD) when they prepare the merge
+    -    message.  The pretend name honors the usual "into <target>"
+    -    suppression mechanism, which can be seen in the tests added here.
+    +    Teach the "--into-name=<branch>" option to "git merge" and its
+    +    underlying "git fmt-merge-message", to pretend as if we were merging
+    +    into <branch>, no matter what branch we are actually merging into,
+    +    when they prepare the merge message.  The pretend name honors the
+    +    usual "into <target>" suppression mechanism, which can be seen in
+    +    the tests added here.
+     
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+     
+    @@ Documentation/git-fmt-merge-msg.txt: git-fmt-merge-msg - Produce a merge commit
+      --------
+      [verse]
+     -'git fmt-merge-msg' [-m <message>] [--log[=<n>] | --no-log]
+    -+'git fmt-merge-msg' [-m <message>] [--detached-head-name <branch>] [--log[=<n>] | --no-log]
+    ++'git fmt-merge-msg' [-m <message>] [--into-name <branch>] [--log[=<n>] | --no-log]
+      'git fmt-merge-msg' [-m <message>] [--log[=<n>] | --no-log] -F <file>
+      
+      DESCRIPTION
+    @@ Documentation/git-fmt-merge-msg.txt: OPTIONS
+      	Use <message> instead of the branch names for the first line
+      	of the log message.  For use with `--log`.
+      
+    -+--detached-head-name <branch>::
+    -+	When merging into a detached HEAD, prepare the merge
+    -+	message as if merging to the branch `<branch>` instead.
+    ++--into-name <branch>::
+    ++	Prepare the merge message as if merging to the branch `<branch>`,
+    ++	instead of the name of the real branch to which the merge is made.
+     +
+      -F <file>::
+      --file <file>::
+    @@ Documentation/git-merge.txt: SYNOPSIS
+      	[--[no-]allow-unrelated-histories]
+     -	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>] [<commit>...]
+     +	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>]
+    -+	[--detached-head-name <branch>] [<commit>...]
+    ++	[--into-name <branch>] [<commit>...]
+      'git merge' (--continue | --abort | --quit)
+      
+      DESCRIPTION
+    @@ Documentation/git-merge.txt: The 'git fmt-merge-msg' command can be
+      used to give a good default for automated 'git merge'
+      invocations. The automated message can include the branch description.
+      
+    -+--detached-head-name <branch>::
+    -+	When merging into a detached HEAD, prepare the default merge
+    -+	message as if merging to the branch `<branch>` instead.
+    ++--into-name <branch>::
+    ++	Prepare the default merge message as if merging to the branch
+    ++	`<branch>`, instead of the name of the real branch to which
+    ++	the merge is made.
+     +
+      -F <file>::
+      --file=<file>::
+    @@ builtin/fmt-merge-msg.c: int cmd_fmt_merge_msg(int argc, const char **argv, cons
+      {
+      	const char *inpath = NULL;
+      	const char *message = NULL;
+    -+	char *detached_head_name = NULL;
+    ++	char *into_name = NULL;
+      	int shortlog_len = -1;
+      	struct option options[] = {
+      		{ OPTION_INTEGER, 0, "log", &shortlog_len, N_("n"),
+    @@ builtin/fmt-merge-msg.c: int cmd_fmt_merge_msg(int argc, const char **argv, cons
+      		  DEFAULT_MERGE_LOG_LEN },
+      		OPT_STRING('m', "message", &message, N_("text"),
+      			N_("use <text> as start of message")),
+    -+		OPT_STRING(0, "detached", &detached_head_name, N_("name"),
+    -+			   N_("use <name> instead of detached HEAD")),
+    ++		OPT_STRING(0, "into-name", &into_name, N_("name"),
+    ++			   N_("use <name> instead of the real target branch")),
+      		OPT_FILENAME('F', "file", &inpath, N_("file to read from")),
+      		OPT_END()
+      	};
+    @@ builtin/fmt-merge-msg.c: int cmd_fmt_merge_msg(int argc, const char **argv, cons
+      	opts.add_title = !message;
+      	opts.credit_people = 1;
+      	opts.shortlog_len = shortlog_len;
+    -+	opts.detached_head_name = detached_head_name;
+    ++	opts.into_name = into_name;
+      
+      	ret = fmt_merge_msg(&input, &output, &opts);
+      	if (ret)
+    @@ builtin/merge.c: static int signoff;
+      static const char *sign_commit;
+      static int autostash;
+      static int no_verify;
+    -+static char *detached_head_name;
+    ++static char *into_name;
+      
+      static struct strategy all_strategy[] = {
+      	{ "recursive",  NO_TRIVIAL },
+    @@ builtin/merge.c: static struct option builtin_merge_options[] = {
+      	{ OPTION_LOWLEVEL_CALLBACK, 'F', "file", &merge_msg, N_("path"),
+      		N_("read message from file"), PARSE_OPT_NONEG,
+      		NULL, 0, option_read_message },
+    -+	OPT_STRING(0, "detached", &detached_head_name, N_("name"),
+    -+		   N_("use <name> instead of detached HEAD")),
+    ++	OPT_STRING(0, "into-name", &into_name, N_("name"),
+    ++		   N_("use <name> instead of the real target")),
+      	OPT__VERBOSITY(&verbosity),
+      	OPT_BOOL(0, "abort", &abort_current_merge,
+      		N_("abort the current in-progress merge")),
+    @@ builtin/merge.c: static void prepare_merge_message(struct strbuf *merge_names, s
+      	opts.add_title = !have_message;
+      	opts.shortlog_len = shortlog_len;
+      	opts.credit_people = (0 < option_edit);
+    -+	opts.detached_head_name = detached_head_name;
+    ++	opts.into_name = into_name;
+      
+      	fmt_merge_msg(merge_names, merge_msg, &opts);
+      	if (merge_msg->len)
+     
+      ## fmt-merge-msg.c ##
+     @@ fmt-merge-msg.c: int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+    + 
+    + 	memset(&merge_parents, 0, sizeof(merge_parents));
+    + 
+    +-	/* get current branch */
+    ++	/* learn the commit that we merge into and the current branch name */
+    + 	current_branch = current_branch_to_free =
+    + 		resolve_refdup("HEAD", RESOLVE_REF_READING, &head_oid, NULL);
+    + 	if (!current_branch)
+      		die("No current branch");
+    - 	if (starts_with(current_branch, "refs/heads/"))
+    +-	if (starts_with(current_branch, "refs/heads/"))
+    ++
+    ++	if (opts->into_name)
+    ++		current_branch = opts->into_name;
+    ++	else if (starts_with(current_branch, "refs/heads/"))
+      		current_branch += 11;
+    -+	else if (!strcmp(current_branch, "HEAD") && opts->detached_head_name)
+    -+		current_branch = opts->detached_head_name;
+      
+      	find_merge_parents(&merge_parents, in, &head_oid);
+    - 
+     
+      ## fmt-merge-msg.h ##
+     @@ fmt-merge-msg.h: struct fmt_merge_msg_opts {
+      	unsigned add_title:1,
+      		credit_people:1;
+      	int shortlog_len;
+    -+	const char *detached_head_name;
+    ++	const char *into_name;
+      };
+      
+      extern int merge_log_config;
+    @@ t/t6200-fmt-merge-msg.sh: test_expect_success 'merge-msg with "merging" an annot
+      	test_cmp expected .git/MERGE_MSG
+      '
+      
+    -+test_expect_success 'merge --detached=<name>' '
+    ++test_expect_success 'merge --into-name=<name>' '
+     +	test_when_finished "git checkout main" &&
+     +	git checkout -B side main &&
+     +	git commit --allow-empty -m "One step ahead" &&
+    @@ t/t6200-fmt-merge-msg.sh: test_expect_success 'merge-msg with "merging" an annot
+     +	grep -e "Merge branch .side. into HEAD$" actual &&
+     +
+     +	git reset --hard main &&
+    -+	git merge --no-ff --detached=main side &&
+    ++	git merge --no-ff --into-name=main side &&
+     +	git show -s --format="%s" >full.1 &&
+     +	head -n1 full.1 >actual &&
+     +	# expect that we pretend to be merging to main, that is suppressed
+    ++	grep -e "Merge branch .side.$" actual &&
+    ++
+    ++	git checkout -b throwaway main &&
+    ++	git merge --no-ff --into-name=main side &&
+    ++	git show -s --format="%s" >full.2 &&
+    ++	head -n1 full.2 >actual &&
+    ++	# expect that we pretend to be merging to main, that is suppressed
+     +	grep -e "Merge branch .side.$" actual
+     +'
+     +
+    @@ t/t6200-fmt-merge-msg.sh: test_expect_success 'merge.suppressDest configuration'
+     +	grep -e "Merge branch .side. into HEAD$" actual &&
+     +
+     +	git -c merge.suppressDest="main" fmt-merge-msg \
+    -+		--detached=main <.git/FETCH_HEAD >full.5 &&
+    ++		--into-name=main <.git/FETCH_HEAD >full.5 &&
+     +	head -n1 full.5 >actual &&
+     +	grep -e "Merge branch .side." actual &&
+     +	! grep -e " into main$" actual &&
+
+ Documentation/git-fmt-merge-msg.txt |  6 ++++-
+ Documentation/git-merge.txt         |  8 +++++-
+ builtin/fmt-merge-msg.c             |  4 +++
+ builtin/merge.c                     |  4 +++
+ fmt-merge-msg.c                     |  7 +++--
+ fmt-merge-msg.h                     |  1 +
+ t/t6200-fmt-merge-msg.sh            | 42 ++++++++++++++++++++++++++++-
+ 7 files changed, 67 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-fmt-merge-msg.txt b/Documentation/git-fmt-merge-msg.txt
+index 6793d8fc05..6f28812f38 100644
+--- a/Documentation/git-fmt-merge-msg.txt
++++ b/Documentation/git-fmt-merge-msg.txt
+@@ -9,7 +9,7 @@ git-fmt-merge-msg - Produce a merge commit message
+ SYNOPSIS
+ --------
+ [verse]
+-'git fmt-merge-msg' [-m <message>] [--log[=<n>] | --no-log]
++'git fmt-merge-msg' [-m <message>] [--into-name <branch>] [--log[=<n>] | --no-log]
+ 'git fmt-merge-msg' [-m <message>] [--log[=<n>] | --no-log] -F <file>
+ 
+ DESCRIPTION
+@@ -44,6 +44,10 @@ OPTIONS
+ 	Use <message> instead of the branch names for the first line
+ 	of the log message.  For use with `--log`.
+ 
++--into-name <branch>::
++	Prepare the merge message as if merging to the branch `<branch>`,
++	instead of the name of the real branch to which the merge is made.
 +
-+	if (!command_name)
-+		return 0;
+ -F <file>::
+ --file <file>::
+ 	Take the list of merged objects from <file> instead of
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index e4f3352eb5..ed0990621f 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -12,7 +12,8 @@ SYNOPSIS
+ 'git merge' [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
+ 	[--no-verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+ 	[--[no-]allow-unrelated-histories]
+-	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>] [<commit>...]
++	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>]
++	[--into-name <branch>] [<commit>...]
+ 'git merge' (--continue | --abort | --quit)
+ 
+ DESCRIPTION
+@@ -76,6 +77,11 @@ The 'git fmt-merge-msg' command can be
+ used to give a good default for automated 'git merge'
+ invocations. The automated message can include the branch description.
+ 
++--into-name <branch>::
++	Prepare the default merge message as if merging to the branch
++	`<branch>`, instead of the name of the real branch to which
++	the merge is made.
 +
-+	strbuf_addf(&path, "%s/git-%s", git_exec_path(), command_name);
-+	ret =3D !access(path.buf, X_OK);
-+
-+#ifdef STRIP_EXTENSION
-+	if (!ret) {
-+		/*
-+		 * If `command_name` ended in `.exe`, strip it, otherwise
-+		 * append it.
-+		 */
-+		if (!strbuf_strip_suffix(&path, STRIP_EXTENSION))
-+			strbuf_addstr(&path, STRIP_EXTENSION);
-+		ret =3D !access(path.buf, X_OK);
-+	}
-+#endif
-+
-+	strbuf_release(&path);
-+	return ret;
-+}
-+
- static void handle_builtin(int argc, const char **argv)
+ -F <file>::
+ --file=<file>::
+ 	Read the commit message to be used for the merge commit (in
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 48a8699de7..8d8fd393f8 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -12,6 +12,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
  {
- 	struct strvec args =3D STRVEC_INIT;
-@@ -697,8 +724,11 @@ static void handle_builtin(int argc, const char **arg=
-v)
- 	strip_extension(argv);
- 	cmd =3D argv[0];
-
-+	builtin =3D get_builtin(cmd);
+ 	const char *inpath = NULL;
+ 	const char *message = NULL;
++	char *into_name = NULL;
+ 	int shortlog_len = -1;
+ 	struct option options[] = {
+ 		{ OPTION_INTEGER, 0, "log", &shortlog_len, N_("n"),
+@@ -23,6 +24,8 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+ 		  DEFAULT_MERGE_LOG_LEN },
+ 		OPT_STRING('m', "message", &message, N_("text"),
+ 			N_("use <text> as start of message")),
++		OPT_STRING(0, "into-name", &into_name, N_("name"),
++			   N_("use <name> instead of the real target branch")),
+ 		OPT_FILENAME('F', "file", &inpath, N_("file to read from")),
+ 		OPT_END()
+ 	};
+@@ -56,6 +59,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+ 	opts.add_title = !message;
+ 	opts.credit_people = 1;
+ 	opts.shortlog_len = shortlog_len;
++	opts.into_name = into_name;
+ 
+ 	ret = fmt_merge_msg(&input, &output, &opts);
+ 	if (ret)
+diff --git a/builtin/merge.c b/builtin/merge.c
+index ea3112e0c0..1ba5951d49 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -87,6 +87,7 @@ static int signoff;
+ static const char *sign_commit;
+ static int autostash;
+ static int no_verify;
++static char *into_name;
+ 
+ static struct strategy all_strategy[] = {
+ 	{ "recursive",  NO_TRIVIAL },
+@@ -286,6 +287,8 @@ static struct option builtin_merge_options[] = {
+ 	{ OPTION_LOWLEVEL_CALLBACK, 'F', "file", &merge_msg, N_("path"),
+ 		N_("read message from file"), PARSE_OPT_NONEG,
+ 		NULL, 0, option_read_message },
++	OPT_STRING(0, "into-name", &into_name, N_("name"),
++		   N_("use <name> instead of the real target")),
+ 	OPT__VERBOSITY(&verbosity),
+ 	OPT_BOOL(0, "abort", &abort_current_merge,
+ 		N_("abort the current in-progress merge")),
+@@ -1122,6 +1125,7 @@ static void prepare_merge_message(struct strbuf *merge_names, struct strbuf *mer
+ 	opts.add_title = !have_message;
+ 	opts.shortlog_len = shortlog_len;
+ 	opts.credit_people = (0 < option_edit);
++	opts.into_name = into_name;
+ 
+ 	fmt_merge_msg(merge_names, merge_msg, &opts);
+ 	if (merge_msg->len)
+diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+index 5216191488..d25594545c 100644
+--- a/fmt-merge-msg.c
++++ b/fmt-merge-msg.c
+@@ -649,12 +649,15 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+ 
+ 	memset(&merge_parents, 0, sizeof(merge_parents));
+ 
+-	/* get current branch */
++	/* learn the commit that we merge into and the current branch name */
+ 	current_branch = current_branch_to_free =
+ 		resolve_refdup("HEAD", RESOLVE_REF_READING, &head_oid, NULL);
+ 	if (!current_branch)
+ 		die("No current branch");
+-	if (starts_with(current_branch, "refs/heads/"))
 +
- 	/* Turn "git cmd --help" into "git help --exclude-guides cmd" */
--	if (argc > 1 && !strcmp(argv[1], "--help")) {
-+	if (argc > 1 && !strcmp(argv[1], "--help") &&
-+	    (builtin || is_in_git_exec_path(argv[0]))) {
- 		int i;
++	if (opts->into_name)
++		current_branch = opts->into_name;
++	else if (starts_with(current_branch, "refs/heads/"))
+ 		current_branch += 11;
+ 
+ 	find_merge_parents(&merge_parents, in, &head_oid);
+diff --git a/fmt-merge-msg.h b/fmt-merge-msg.h
+index f2ab0e0085..99054042dc 100644
+--- a/fmt-merge-msg.h
++++ b/fmt-merge-msg.h
+@@ -9,6 +9,7 @@ struct fmt_merge_msg_opts {
+ 	unsigned add_title:1,
+ 		credit_people:1;
+ 	int shortlog_len;
++	const char *into_name;
+ };
+ 
+ extern int merge_log_config;
+diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
+index 06c5fb5615..d861d7ca28 100755
+--- a/t/t6200-fmt-merge-msg.sh
++++ b/t/t6200-fmt-merge-msg.sh
+@@ -573,7 +573,35 @@ test_expect_success 'merge-msg with "merging" an annotated tag' '
+ 	test_cmp expected .git/MERGE_MSG
+ '
+ 
++test_expect_success 'merge --into-name=<name>' '
++	test_when_finished "git checkout main" &&
++	git checkout -B side main &&
++	git commit --allow-empty -m "One step ahead" &&
++
++	git checkout --detach main &&
++	git merge --no-ff side &&
++	git show -s --format="%s" >full.0 &&
++	head -n1 full.0 >actual &&
++	# expect that HEAD is shown as-is
++	grep -e "Merge branch .side. into HEAD$" actual &&
++
++	git reset --hard main &&
++	git merge --no-ff --into-name=main side &&
++	git show -s --format="%s" >full.1 &&
++	head -n1 full.1 >actual &&
++	# expect that we pretend to be merging to main, that is suppressed
++	grep -e "Merge branch .side.$" actual &&
++
++	git checkout -b throwaway main &&
++	git merge --no-ff --into-name=main side &&
++	git show -s --format="%s" >full.2 &&
++	head -n1 full.2 >actual &&
++	# expect that we pretend to be merging to main, that is suppressed
++	grep -e "Merge branch .side.$" actual
++'
++
+ test_expect_success 'merge.suppressDest configuration' '
++	test_when_finished "git checkout main" &&
+ 	git checkout -B side main &&
+ 	git commit --allow-empty -m "One step ahead" &&
+ 	git checkout main &&
+@@ -590,7 +618,19 @@ test_expect_success 'merge.suppressDest configuration' '
+ 	git -c merge.suppressDest="ma?*[rn]" fmt-merge-msg <.git/FETCH_HEAD >full.3 &&
+ 	head -n1 full.3 >actual &&
+ 	grep -e "Merge branch .side." actual &&
+-	! grep -e " into main$" actual
++	! grep -e " into main$" actual &&
++
++	git checkout --detach HEAD &&
++	git -c merge.suppressDest="main" fmt-merge-msg <.git/FETCH_HEAD >full.4 &&
++	head -n1 full.4 >actual &&
++	grep -e "Merge branch .side. into HEAD$" actual &&
++
++	git -c merge.suppressDest="main" fmt-merge-msg \
++		--into-name=main <.git/FETCH_HEAD >full.5 &&
++	head -n1 full.5 >actual &&
++	grep -e "Merge branch .side." actual &&
++	! grep -e " into main$" actual &&
++	! grep -e " into HEAD$" actual
+ '
+ 
+ test_done
+-- 
+2.34.1-472-g213ab46be7
 
- 		argv[1] =3D argv[0];
-@@ -714,7 +744,6 @@ static void handle_builtin(int argc, const char **argv=
-)
- 		argv =3D args.v;
- 	}
-
--	builtin =3D get_builtin(cmd);
- 	if (builtin)
- 		exit(run_builtin(builtin, argc, argv));
- 	strvec_clear(&args);
-=2D- snap --
-
-Of course, this might break existing users' setups where they ship a Git
-command together with a manual page.
-
-A potential remedy against that would be, as you say, a config option.
-Maybe defaulting to the manual page if `help.format` is `man`, otherwise
-defaulting to passing `--help` to the command.
-
-Ciao,
-Dscho
-
->
-> Best,
-> Sean Allred
->
-> [1]: https://github.com/git-for-windows/git/discussions/3553
->
