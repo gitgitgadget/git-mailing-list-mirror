@@ -2,83 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0EAEC433EF
-	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 16:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C28F2C433F5
+	for <git@archiver.kernel.org>; Mon, 20 Dec 2021 16:21:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233163AbhLTQU3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 11:20:29 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63025 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232820AbhLTQU2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 11:20:28 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D449710E0AA;
-        Mon, 20 Dec 2021 11:20:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=doAPGMmMNMhW/LBssK7vQpArU8XBTFHlH1vBwX
-        S2yaM=; b=lj8ldqnShJQ+/Z08vGmXz2C1WpNgdsRNp+377wrDMOFgM52LN86SRM
-        7P4pgW0b6DHIpgYcYNOHcrHaMbfjY0x1Z7JVVlJnftn0et809JSBDWF3nem8OX07
-        rVH4ftawxlP0Z9QXVRxR/PPu1R55aJQ4pFssqwShxUFp4WgKSBYSQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CB9FD10E0A9;
-        Mon, 20 Dec 2021 11:20:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3CB3410E0A7;
-        Mon, 20 Dec 2021 11:20:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Sean Allred <allred.sean@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1?= =?utf-8?B?eeG7hW4gVGjDoWkgTmfhu41j?= Duy 
-        <pclouds@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <ttaylorr@github.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: Bug report - Can create worktrees from bare repo / such
- worktrees can fool is_bare_repository()
-References: <CABceR4bZmtC4rCwgxZ1BBYZP69VOUca1f_moJoP989vTUZWu9Q@mail.gmail.com>
-        <e992d4b4-f9e2-a8f9-22da-e9d342c7bede@sunshineco.com>
-        <CABceR4YVd4remACJkxwSCTSYB2v3Zn1BsjKHbzeve8uHiZv1pA@mail.gmail.com>
-        <CAPig+cQ6U_yFw-X2OWrizB1rbCvc4bNxuSzKFzmoLNnm0GH8Eg@mail.gmail.com>
-        <f39af047-d244-14be-4cd8-b6c3199545f3@gmail.com>
-Date:   Mon, 20 Dec 2021 08:20:26 -0800
-In-Reply-To: <f39af047-d244-14be-4cd8-b6c3199545f3@gmail.com> (Derrick
-        Stolee's message of "Mon, 20 Dec 2021 09:11:38 -0500")
-Message-ID: <xmqq5yrjxn79.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S235868AbhLTQVM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 11:21:12 -0500
+Received: from mail-pf1-f182.google.com ([209.85.210.182]:43826 "EHLO
+        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232820AbhLTQVL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 11:21:11 -0500
+Received: by mail-pf1-f182.google.com with SMTP id 196so5625131pfw.10
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 08:21:11 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lyPUY6CDA1ES95PN7GyvsFJ/xBDlQC7lUiZ2WozL78E=;
+        b=zWWMFyN5Mrb7LheRkjim+xBpc+KGoD8WBxGpsaL5pO+3zPIHHtuumKnjwSckAPJhz6
+         f3O7mA7ct6l3VgZxy/QqdBRosz9MD76gOzURA5Td+DqUZJ48hD3aDenehKRlTHMxFkZQ
+         yXwHpu1TZbqxqDe4CT/mvvAkYrXwDrqaOJnUw+aDpN9EClb1Qr4ymHY7gypUe/cHG5Lt
+         ECTDq0DrAAu5JtZQHSQMgL+XMmOctgC2jb2EWFiPxLJnrwStUq5FB1h95kokRo8mip+A
+         jkgWGvOl/u6GeiXcM9B4OiyieNPQ2l77Vq95YXwDfpsBo0GceIldlahCaSLQff8j98iU
+         yTKQ==
+X-Gm-Message-State: AOAM530Y5gVuk4pWU9hR8PW/GvKErchdj5g+3Cr49jDdaCXl3BaLCVZw
+        99Y+ejK7DGcpYzLs7PFRjKcn+wOR6934BzSf28I=
+X-Google-Smtp-Source: ABdhPJzcXSnd0mAO4ggqyDw1H3+41RFtpE1kqdYRT9njovuDPTcdx1JQM+vmiz/lmmJxcNXMc1SvhM8tBctv3RSfrik=
+X-Received: by 2002:a63:e245:: with SMTP id y5mr15578928pgj.139.1640017271190;
+ Mon, 20 Dec 2021 08:21:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BE12BDDA-61B0-11EC-AEE3-CB998F0A682E-77302942!pb-smtp2.pobox.com
+References: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 20 Dec 2021 11:21:00 -0500
+Message-ID: <CAPig+cTVzMtiHzkJq7VRg4Xa3xhrq7KKCdK5OSDY6bvwKu_ynA@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Sparse checkout: fix bug with worktree of bare repo
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
+        Sean Allred <allred.sean@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+On Mon, Dec 20, 2021 at 10:57 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> This patch series includes a fix to the bug reported by Sean Allred [1] and
+> diagnosed by Eric Sunshine [2].
+>
+> The root cause is that 'git sparse-checkout init' writes to the worktree
+> config without checking that core.bare might need to be set. This only
+> matters when the base repository is bare, since creating the config.worktree
+> file and enabling extensions.worktreeConfig will cause Git to treat the base
+> repo's core.bare=false as important for this worktree.
 
-> Thanks for this context of added responsibility. It seems a bit strange
-> to require this, since it doesn't make any sense to have a bare worktree
-> (at least not to me, feel free to elaborate on the need of such a
-> situation).
+Thanks for jumping on this so quickly. Unfortunately, however, as
+mentioned in [1] and [2], I think the approach implemented here of
+setting `core.bare=false` in the worktree-specific config is
+fundamentally flawed since it only addresses the problem for worktrees
+in which `git sparse-checkout init` has been run, but leaves all other
+worktrees potentially broken (both existing and new worktrees). As far
+as I can see, the _only_ correct solution is for the new helper
+function to enable `extensions.worktreeConfig` _and_ relocate
+`core.bare` and `core.worktree` from .git/config to
+.git/worktree.config, thus implementing the requirements documented in
+git-worktree.txt.
 
-Stepping back a bit, those who want to have two new worktrees
-attached to a single bare repository justify the wish by saying that
-neither of these two new worktrees should be the primary thing that
-they can lose to make the other inoperable, and having a dedicated
-"shared object and ref store" repository makes it more symmetric and
-safer by making it obvious which one is the precious thing to keep.
+I also raised a separate question in [2] about whether `git
+sparse-checkout init` or the new helper function should be warning the
+user that upgrading the repository format and setting
+`extensions.worktreeConfig` might break third-party tools. However,
+that question is tangential to the fix being addressed here and
+doesn't need to be addressed by this series.
 
-Wanting to create two new "bare repository lookalike" attached to a
-single bare repository might be defensible the same way.
-
-Not that the current "git worktree" has readily-available features
-to create such a layout.  If people who have worked on "worktree"
-did not see the possibility of needing such a layout, it is
-understandable that such features wouldn't have been designed yet.
-
-Also not that I think that such a layout necessarily makes sense.
+[1]: https://lore.kernel.org/git/CAPig+cQ6U_yFw-X2OWrizB1rbCvc4bNxuSzKFzmoLNnm0GH8Eg@mail.gmail.com/
+[2]: https://lore.kernel.org/git/CAPig+cQPUe9REf+wgVNjyak_nk3V361h-48rTFgk6TGC7vJgOA@mail.gmail.com/
