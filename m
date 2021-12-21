@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E4F0C433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 22:18:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B828C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 22:24:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237681AbhLUWSk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 17:18:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41798 "EHLO
+        id S237843AbhLUWY2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 17:24:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236237AbhLUWSj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 17:18:39 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24AB2C061574
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 14:18:39 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id z29so762057edl.7
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 14:18:39 -0800 (PST)
+        with ESMTP id S230085AbhLUWY1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 17:24:27 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47EE3C061574
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 14:24:27 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id bm14so837824edb.5
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 14:24:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=f1hWsr/bQmT3RIOof8mgK0tRLEuieZ9rImHzCf+EKbQ=;
-        b=hG22IyODZn/Oz6pbDqTFCf/A40VB5ET7VNcRoDjD4RYs2/wWSj48OaXenln83emr/+
-         uFoVIUmuW4qUs5qERpoKfp96d1vWX3yc1xJviV81lY7GQkn7OSgd5ENNe0Pf2BglS8VX
-         bsl7tZ1Wc4BoH85TvDJRCIU2D333DrxgSC+g9qvr92vZAnTfJMhrTOhWhKbQP7+Zs0Qc
-         Qd+zog8Pwfr5xyVRHvmAG/2vL9dQfyooLC9VrzGXX0kN6E/3mQgU/qFcfg7+6mV8Ve83
-         oGznXc/cpsKlE6BXJ3xMV3sM23E9ao+/FRVmhf0Ii/HsHC9Yc8CF4SNr2qSqHYAmEd2B
-         fQIw==
+        bh=HJBzzUd/CMygibKVCmU2nKlQKgw4EWYUuwm+BJ/hvXY=;
+        b=JKYqOqOrfgRzh4J9GSmPCd0THG2G3u+kZWNfISClUTOAKAh3qg2Rk9q2eDeDwcUyDX
+         5uSixdWJlrwrxhD68E5gI2Cj7LS/ryZ9+VOYTowCecmeCkTKG7tkiOoMhBx18NZrG8HM
+         qtK0bINyZ2+BCahn/sGzT0knh+Ie2GlUySCmbAGHsbQm6nnwhRecspZoFzoXwwO2Dx4e
+         phK3irwoGf8YZRdnz9OAYK1FCcceXprerxXIdBAzcjOqo78DtmQ35M5Lm1EVDgfYZCHU
+         hJ/SzQE/E1bGmpy2Lk+y46h9aiOOyQs6HsQAIPKUQ1ON7sGFz7Aq1wWFziadbY2+maEq
+         Zlig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=f1hWsr/bQmT3RIOof8mgK0tRLEuieZ9rImHzCf+EKbQ=;
-        b=SjB1RyDHz9mVaUpnI0ivV8LXnQ3hDPrLRT+L9FQbjHqGADa9upMHghPP8wvYhVF710
-         EGXeW1L3slkBIIQFPCjrNf2nlkh75tiLf2rYwGFAG+zJgjiyesRP3FEYmToc7u9uCclJ
-         u3kTa06XeSY36991JVY8WjM5hhwp0XXdt/qoL1fuWDfyKykxbucio8G6uy93m1FBnjsM
-         5+7CXbqEqn+6qaOvDHaLrqU7q+b5dksSRswKuZVgtRAsY8GFEEy2Fwr9XuEjYBf/ND+h
-         g2Kg9ptLviF53H7XNehDvCoHZUc7QhEmOrsogyLZ1yOe4c1vmafnVbiJxMGohIwetFro
-         9vOA==
-X-Gm-Message-State: AOAM530fnsk2DH0o74DWpvjWl/nfI1ECfGgx9PVv6rb9h/u6ZfQxqeH+
-        bqtT9q6o0UMez2Mvw2W11971EnB4RST4u2KE/uNDpy54CoM=
-X-Google-Smtp-Source: ABdhPJzjh8f80ecJo/SG3AmGIqp/SZiRwZ4ADxkQPVBxej6MyunnYk5VJfBqNJZDR5wRSsVz/HhVMOGPkFTGTlhV4sc=
-X-Received: by 2002:a17:907:60c8:: with SMTP id hv8mr292453ejc.192.1640125117601;
- Tue, 21 Dec 2021 14:18:37 -0800 (PST)
+        bh=HJBzzUd/CMygibKVCmU2nKlQKgw4EWYUuwm+BJ/hvXY=;
+        b=VaRETjVtx7JyLAVRP0wF42stZAWUwZmcQGG9r4bwlaibPrwhx3qHtnhxYgUdIjJyC0
+         T763+JJSYYYCQux5H+upTPJVLK7CobeaOgGWEbQf+C/xn72Y3mGbY5Npw/RNcJq06/a3
+         sQqwgd5V6PQ/+qUa39JsnyUIuy8CfBrj9GfyIWxPR7U4Jhuk4jiTC34QtxRx+YHlhagn
+         HTCSMqEwFXBIUWgJ2eHwwHaPBB4lFnfxwLLz8uNdE7QG5qRmH4bg2K6/HINmCLgcTRoW
+         j8uLlSRnK8Pk1QxulTAjLrxcDIc6F9lXf4ms2/+jP2j+iqE8WHFidrSkqqkJ54oMDqAr
+         ipsQ==
+X-Gm-Message-State: AOAM530dlfAner36O9WLUMlC3EmrG6PEizfiAziolruO9sM8nlFFSlyu
+        aC56CYqWxnaelhGmS44bK+pEfvOM1Lx2+sfNS8H73iu3Bds=
+X-Google-Smtp-Source: ABdhPJyUPDwpLNHgYQdpJ1tfY0fPH65Zkft5WicIgs5WEnMypRvKDm4i7wPxIn4HXUdKAhbQQ36GvZy0Y76USqQ+bUM=
+X-Received: by 2002:a05:6402:231a:: with SMTP id l26mr307731eda.175.1640125465862;
+ Tue, 21 Dec 2021 14:24:25 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
- <5d5846be0bd67b8fd850ef2583beef064481a67d.1640109948.git.gitgitgadget@gmail.com>
- <211221.864k71r6kz.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211221.864k71r6kz.gmgdl@evledraar.gmail.com>
+ <4f21969e35724ffac6938beb9e089a970f90c41a.1640109949.git.gitgitgadget@gmail.com>
+ <211221.86zgotprz3.gmgdl@evledraar.gmail.com>
+In-Reply-To: <211221.86zgotprz3.gmgdl@evledraar.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 21 Dec 2021 14:18:26 -0800
-Message-ID: <CABPp-BFuZbLKLf8VnNxLAuF0NaSg=2Nut++YxhHsCxr3n1jwJg@mail.gmail.com>
-Subject: Re: [PATCH 8/9] show, log: provide a --remerge-diff capability
+Date:   Tue, 21 Dec 2021 14:24:14 -0800
+Message-ID: <CABPp-BHDJMecupic=ybVhzZbRC5=WmY616JQdbfaqw_1A5sMHA@mail.gmail.com>
+Subject: Re: [PATCH 9/9] doc/diff-options: explain the new --remerge-diff option
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -66,59 +66,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 21, 2021 at 1:28 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+On Tue, Dec 21, 2021 at 1:29 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
 >
 >
 > On Tue, Dec 21 2021, Elijah Newren via GitGitGadget wrote:
 >
 > > From: Elijah Newren <newren@gmail.com>
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  Documentation/diff-options.txt | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> >
+> > diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
+s.txt
+> > index c89d530d3d1..b05f1c9f1c9 100644
+> > --- a/Documentation/diff-options.txt
+> > +++ b/Documentation/diff-options.txt
+> > @@ -64,6 +64,14 @@ ifdef::git-log[]
+> >       each of the parents. Separate log entry and diff is generated
+> >       for each parent.
+> >  +
+> > +--diff-merges=3Dremerge:::
+> > +--diff-merges=3Dr:::
+> > +--remerge-diff:::
+> > +     With this option, two-parent merge commits are remerged to
+> > +     create a temporary tree object -- potentially containing files
+> > +     with conflict markers and such.  A diff is then shown between
+> > +     that temporary tree and the actual merge commit.
+> > ++
+> >  --diff-merges=3Dcombined:::
+> >  --diff-merges=3Dc:::
+> >  -c:::
 >
-> > +     if (rev->remerge_diff) {
-> > +             rev->remerge_objdir =3D tmp_objdir_create("remerge-diff")=
-;
-> > +             if (!rev->remerge_objdir)
-> > +                     die(_("unable to create temporary object director=
-y"));
->
-> It looks like the tmp_objdir_create() API is rather bad about mixing
-> errors that would come with an errno with others, but shouldn't this be
-> die_errno() in the case where it would fail due to a syscall? Even
-> better would be passing a "gentle" to it and have it emit the
-> appropriate errors.
+> This & 5/9 would I think be better squashed into their respective "main"
+> patches.
 
-I can switch to die_errno().
+I presume you mean the "main" patch for this one is 8/9.  I was trying
+to find a way to break up that large patch, but this is pretty small
+so...sure I'll squash it in.
 
->
-> > +     if (rev.remerge_diff)
-> > +             die(_("--remerge_diff does not make sense"));
->
-> s/_/-/
-
-Indeed, thanks.
-
-> > +     struct merge_options o;
-> > +     struct commit_list *bases;
-> > +     struct merge_result res;
->
-> nit: could use "=3D { 0 }" instead of memset below.
-
-Sure, I can make that change.
-
-> > +     /* Re-merge the parents */
-> > +     merge_incore_recursive(&o,
-> > +                            bases, parents->item, parents->next->item,
-> > +                            &res);
->
-> style: odd not to have arguments that fit on the line on
-> the line, i.e. "&o, bases, ...".
-
-Yes, but this groups all the ancestors so nicely as opposed to the
-typical happenstance of whatever fits on a line.  ;-)
-
-> > +     /* Clean up the temporary object directory */
-> > +     if (opt->remerge_objdir !=3D NULL)
->
-> style: if (!x) not if (x !=3D NULL)
-
-Ok, will change.
+What are you referring to as the "main" patch for 5/9, though?  It
+only seems related to 6/9 and 7/9 to me, but I very deliberately split
+those patches off and don't want to confuse them with unrelated
+changes.  I disagree with combining 5/9 with either of those.
