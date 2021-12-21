@@ -2,66 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C67BAC433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 11:40:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 875B9C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 11:43:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237216AbhLULkb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 06:40:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34838 "EHLO
+        id S233728AbhLULno (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 06:43:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237206AbhLULka (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 06:40:30 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C6DC061574
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 03:40:29 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id m12so20942142ljj.6
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 03:40:29 -0800 (PST)
+        with ESMTP id S229635AbhLULno (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 06:43:44 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7854C061574
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 03:43:43 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id bu9so7146293lfb.7
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 03:43:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=nW73vSQCRoDRWh6T62PXAgsTHiF3qC53BhacKzvplJ4=;
-        b=TOaOVPBpSwvT8mRipw1FoXKoUA2mtDodyGeplsBGy/OeWMylvWUfo/DB6k8czZplUq
-         F2Gqpxs1fe/v86swFpt+siOQA5ZJcQkQSYYRZ+HYqBErE77lsf+Vp14IUuZQlgN/3xqG
-         bqJ+F/ZaouLIrR7Y6AdReLS0tAHHVmsx9dNhAWcld9E1LtnEfvymrCX1qQ8eWluCQHIo
-         1vV8YOYFSlBWGjbTxt7w+mp5OsOh797cvadCKVMHzVYTt2kwdU3OQi18DmOPIUfxA77B
-         uM9fIx0laMhM3NO+1+R3fpTZbm6bu1474kHa6yIQ3fmPQX7fYOaVyKlH2abGitexuATk
-         gMKg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=fMvwLUxIkHDxl/T0tVDt93d+RIVH5wwgPLxAhJ9Svmo=;
+        b=qOYBW++ljq7zJ/POlmJ0Rsps5WUskmogwpj2bZTJkQvuMeyxm+aCcoRWNie+p/phlG
+         Ohrt35LvzAZU0PgUQD+rcFoc1x3sL/hhD+8GGUyOLihSMu8YYVviAxWbi4ImdGD+3cz5
+         QLM0VBZqHl8vDdeov4ATH+wtZeccLudqrjbapIQ2qkTjPeLLEmbkGGIndatmUjZ/jZAs
+         ULV3puWMYXm3HOUyFl0JQfLzU1RrC/VO/q/LQc6+7YGvZSruT7d1i4BYp2Gand1iT8si
+         L0//F9ThNv9SEjINUnVdM7/qJoOoQ1//qI7gxL43lAgNLpQbcwPqfBJdsrbrQ3HS/w9j
+         yuxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=nW73vSQCRoDRWh6T62PXAgsTHiF3qC53BhacKzvplJ4=;
-        b=QevgvxQhwt0NJbkEfQUj8Hvh9BZUyFGFWKg+MeIk2xoZzTlSPdWry0kbdnpwrIYXBs
-         9n8gJEo78B9q2HENTehY2gx5sdM5v6MpsrtzzPVjNt05QvP/57feV9Xv6BAzil2dTaq3
-         0Z/rFRg6I02FfQDHtQpfpu0oFKkh/6hPV781ML8Ssy+oKplqiGyxHS/vLVZ6T4E4kWsS
-         XtxawB3BP3srY6yZ6SsqFCistIFkc1U31NKjbH3PMNsJKV2bLIF/bpHflvM3d6ywW+pt
-         DGO3OrkgNuTRpRXjuPXAXCFsEHJfjEB0Qjb1HftU+OTCLoG87B3lHr/kPzm6pjFCAQ65
-         Wt1w==
-X-Gm-Message-State: AOAM532yACMChEc4MQA0O3Ro0SeuHNfI0rB4A0V1Yv5DagDCzg1nV3ze
-        tndA9hB+fQe4augYqIHpr3yIfbgmixMYuIn1hi0=
-X-Google-Smtp-Source: ABdhPJw1pUFR9IsgkAvuQeTk1l8izdBTsNBMo8N7w9AcrRF6vvlsIgrG2vCz/gF6AiXOf5/97Dkl7K543Dpbz01Kutg=
-X-Received: by 2002:a05:651c:1548:: with SMTP id y8mr2232246ljp.481.1640086828040;
- Tue, 21 Dec 2021 03:40:28 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=fMvwLUxIkHDxl/T0tVDt93d+RIVH5wwgPLxAhJ9Svmo=;
+        b=c4fuU3H5bDzB6wZAZ8ifOOR4AEdby3sFNCqMZEXJ+9UcKn62RUgKF1pzXacPLeZDYh
+         J4KuQ9Y8ervJB+k5227P6q4by0AQq9V/bPAlYzKfpqcNeFvaKwWWoKJIwNEwnRkNlOFA
+         Xf5d6/lrh3d2+3/8sYe3oWszkzKvBzk+jZIsy2UhqeSBLzORtMv6sSDvCgnsMxz55shD
+         gY+It7sBFcRdS8bfKxXZK9VrfzjhPD1Th96MYKsrGsrsvijazPclJtx0qL+H/SxS/F84
+         fSS2OFX/Gua440P1g0d0Tm4eUoa+2L8A68qfmWlt63rHVw/3qg24Ql8tgOswVgyzWuAi
+         EKug==
+X-Gm-Message-State: AOAM5303OsHmjyZ0IhE80SJwdN35dLmGB7Up9ezsg84DGCipKNqCgIvq
+        EqY/KGCC7QPWmMtTAevSLJpDJZq2DlutcQJXXBw=
+X-Google-Smtp-Source: ABdhPJzheJwoP3ntmTpt3ngP9rBusDfnLm0EXWIXZ624ZedoQol4UAc1rv+zQJhC0JvD6DTg/GA2/1p8RMjO8eq0haA=
+X-Received: by 2002:a05:6512:130e:: with SMTP id x14mr2773042lfu.366.1640087022054;
+ Tue, 21 Dec 2021 03:43:42 -0800 (PST)
 MIME-Version: 1.0
+References: <20211217112629.12334-3-chiyutianyi@gmail.com> <RFC-patch-1.1-bda62567f6b-20211220T120740Z-avarab@gmail.com>
+In-Reply-To: <RFC-patch-1.1-bda62567f6b-20211220T120740Z-avarab@gmail.com>
 From:   Han Xin <chiyutianyi@gmail.com>
-Date:   Tue, 21 Dec 2021 19:40:17 +0800
-Message-ID: <CAO0brD1f+w_J1jVzsBb0ewc7Ndwiz5pLC2QOG11r5-H0XetOAQ@mail.gmail.com>
-Subject: Re: [PATCH v6 5/6] unpack-objects.c: add dry_run mode for get_data()
-To:     l.s.r@web.de
-Cc:     avarab@gmail.com, chiyutianyi@gmail.com, git@vger.kernel.org,
-        gitster@pobox.com, hanxin.hx@alibaba-inc.com, peff@peff.net,
-        philipoakley@iee.email, stolee@gmail.com, zhiyou.jx@alibaba-inc.com
+Date:   Tue, 21 Dec 2021 19:43:30 +0800
+Message-ID: <CAO0brD0KLM7wiZJUSLTxieov1BM347iitkMSF4_+XG5C-aBAyQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] object-file API: add a format_loose_header() function
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Clever.  Looks good to me.
+On Mon, Dec 20, 2021 at 8:10 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> I came up with this after my comment on the earlier round suggesting
+> to factor out that header formatting. I don't know if this more
+> thorough approach is worth it or if you'd like to replace your change
+> with this one, but just posting it here as an RFC.
 >
-> For some reason I was expecting this patch to have some connection to
-> one of the earlier ones (perhaps because get_data() was mentioned),
-> but it is technically independent.
 
-I think I should adjust the order of this patch to move it forward.
+I will take this patch and rename the function name from
+"format_loose_header()" to "format_object_header()".
 
 Thanks
 -Han Xin
