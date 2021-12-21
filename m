@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3A05C4332F
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 18:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90F7EC433FE
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 18:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240847AbhLUSF5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 13:05:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40534 "EHLO
+        id S240855AbhLUSF7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 13:05:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240819AbhLUSFz (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S240823AbhLUSFz (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 21 Dec 2021 13:05:55 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6F71C061401
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 10:05:54 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id i22so28530418wrb.13
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 10:05:54 -0800 (PST)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B39EC061574
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 10:05:55 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id b73so9652907wmd.0
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 10:05:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=zia31FE1XXB+wrIB/bIExMhGXsofgWrEwBEylqoR5lA=;
-        b=VtBTP6UFCE9TJVVb1nYXyc0R16SGaGobAzVcDQK2hwZlgDgi5oH0/kr+VLpyCElKe3
-         S/k1wdc0pR9cl6cxkrpObO22fZ+/qpAdb1ct1NbC1vz7PRJrwDgMXeuyybjRyVKwUyz9
-         85paAkF2CXOZtbAFyr+5YYxWbf/DimuMWOjKDcWf87ep/R9uQGwYy4i+rqBFdaJurxWb
-         YtFX7xVj72yTCpN3nxhNBg3aAQmlxXfIjK9rwHcUQjm363kIo5zTFBOZeoeqemeUb3Dl
-         CdRvi8V0vvEtnbOma1EzdOsU82tKtKwQ15D8D85U2rZkrIEFW+z249DmUn+SEKFd+W8K
-         Jhhw==
+        bh=NL9gpskVh13Do2E5ujoRMKXPeq0YO/+28ekdWUSdz6c=;
+        b=iwlk5V6CpUuUYIHnqU2h76Zh1YLhVwOAvk7dnZOEUmebWwQpP96MM1fZfMy/e7e7+/
+         8ErRPCHZdhps+0VZ11crriI/4UIHmuUogkfK6YI4D5Hcz+2KvAFqKM2Gyl10eerlLO5k
+         y5qRiGSNMTdpQrlFGNSKXIUhM8/f1JhqaNdXMQwUcxunfanu1AX7o0VJ0biGTI7SsKad
+         c7g9pxPFhWsG/liWDKl7GNv9DzXhSIn0rtwoigdYtPng1U3y9UGq2Q8zBbcRMd1QUotD
+         c4a/3L3xoA2C1TLmyyN9gbSFPdBLBLJZkV7ZtQhYFk59Bze7Fu4iGQbh0vn2ZEpPk/pu
+         qh/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zia31FE1XXB+wrIB/bIExMhGXsofgWrEwBEylqoR5lA=;
-        b=FOFJVF0TszTpyKXfgRSlkPG6fZzrhyLtA4Iqy1qxmRHHmMQval9D4NeQ20+r1vtTsq
-         5nNkRdEmlPPmWXqepXUiOy/w6NQW5Yuwk4hcMdOLxAxzN9hxwJQ5jdulgmOIKy9gsUxs
-         s5oWQa/T5dZgOPcYtw3ZThaAE56dfpZTuuOxzcXi+gLEQT9WUP8Tp+HUYfWnhAm3+SDh
-         Hp75m/ghyblJ14ZiA6FIablas8V6cfbGflRALEWd3d5xjvVVQCEFr6+YCO8TlSJOLlQu
-         UWEMAykYryk+xVHm9CW3iDx0YzK68pXz9f399aRB+Uk2XdE3F6ngASMpuzuczFE21aij
-         BOBQ==
-X-Gm-Message-State: AOAM5327zv7CyQ4FvDluw1dPJFBfBxpsdhRcNmTFmk/l9lZA+ysBBeOV
-        eZah2ZP5uyGZWYvv4lCaUyjuZnurEVw=
-X-Google-Smtp-Source: ABdhPJxQKeNtJmDBhGqwCgQ9Lp7cUgFODqQ1d7YCMU5Lghju30fUjzoo+7QQO+zad1ziSyi4/kJiCQ==
-X-Received: by 2002:adf:b1d5:: with SMTP id r21mr3627398wra.520.1640109953149;
+        bh=NL9gpskVh13Do2E5ujoRMKXPeq0YO/+28ekdWUSdz6c=;
+        b=d4H45r7JhLO+IVbYZgBXQ/KQIPEQS6G/EaPq3b7naeGH0TMtSlYPL805GaSjUvLTcz
+         ykeO+DlNb93+wV71gjh8TqU3Rgpy6CCV1RkPuR3CSbP5BRdAWUK0twPpAfOw9Rn09Ejv
+         BBSCJuyI7I5Vh5yJLwdf5nvhctdcFz6Ied9TYk5xYHJe1qrC/SLPKp9sqtzevKezmm4s
+         ZTOFsG3r10CdQ3V6GSgxvSG3e60TQXzF68pz/uuonZD32a7s9NUgZlXDVcUR+QSnEAzf
+         zwrtabIL6xwbMZCW5pXQlHQqAxJbVZ/xAqUTksddLHQBRclPBDxzMGhP3B1MBvJYFirQ
+         Hzhw==
+X-Gm-Message-State: AOAM531/S+5tQdLBN1xJCpJIHFsEQ01b437gC5BSLAsZTZDaOuyljVug
+        gciVwp5Zp0dXmaJlIoX6Ehlm0Vbqaok=
+X-Google-Smtp-Source: ABdhPJwporh0AC9Ozfb2O6mtFLLl9sddMxybK2RokzY1lIdFXhWXjF0ye7Wb9HijX7+2TV8s4acixA==
+X-Received: by 2002:a05:600c:204d:: with SMTP id p13mr3871971wmg.102.1640109953713;
         Tue, 21 Dec 2021 10:05:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 9sm1797376wrz.90.2021.12.21.10.05.52
+        by smtp.gmail.com with ESMTPSA id l8sm2933913wmc.40.2021.12.21.10.05.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 10:05:52 -0800 (PST)
-Message-Id: <1e7eef7705e2f7b4a456056e4335d82267680214.1640109948.git.gitgitgadget@gmail.com>
+        Tue, 21 Dec 2021 10:05:53 -0800 (PST)
+Message-Id: <dd5461d45de99ef50a82297142332c25a54aff82.1640109948.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
 References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 21 Dec 2021 18:05:43 +0000
-Subject: [PATCH 4/9] merge-ort: mark a few more conflict messages as omittable
+Date:   Tue, 21 Dec 2021 18:05:44 +0000
+Subject: [PATCH 5/9] merge-ort: make path_messages available to external
+ callers
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,51 +73,63 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-path_msg() has the ability to mark messages as omittable, designed for
-remerge-diff where we'll instead be showing conflict messages as diff
-headers for a subsequent diff.  While all these messages are very useful
-when trying to create a merge initially, early use with the
---remerge-diff feature (the only user of this omittable conflict message
-capability), suggests that the particular messages marked in this commit
-are just noise when trying to see what changes users made to create a
-merge commit.  Mark them as omittable.
+merge-ort is designed to be more flexible so that it could be called as
+more of a library function.  Part of that design is not writing to the
+working tree or index unless and until requested.  Part of it is
+returning tree objects (rather than creating commits and making them
+part of HEAD), and allowing callers to do their own special thing with
+that merged tree.  Along the same lines, we want to enable callers to do
+something special with output messages (conflicts and other warnings)
+besides just automatically displaying on stdout/stderr.  Do so by making
+the output path messages accessible via a new member of struct
+merge_result named path_messages.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ merge-ort.c |  1 +
+ merge-ort.h | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index a18f47e23c5..fe27870e73e 100644
+index fe27870e73e..c4d6c5c81cc 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -2420,7 +2420,7 @@ static void apply_directory_rename_modifications(struct merge_options *opt,
- 		 */
- 		ci->path_conflict = 1;
- 		if (pair->status == 'A')
--			path_msg(opt, new_path, 0,
-+			path_msg(opt, new_path, 1,
- 				 _("CONFLICT (file location): %s added in %s "
- 				   "inside a directory that was renamed in %s, "
- 				   "suggesting it should perhaps be moved to "
-@@ -2428,7 +2428,7 @@ static void apply_directory_rename_modifications(struct merge_options *opt,
- 				 old_path, branch_with_new_path,
- 				 branch_with_dir_rename, new_path);
- 		else
--			path_msg(opt, new_path, 0,
-+			path_msg(opt, new_path, 1,
- 				 _("CONFLICT (file location): %s renamed to %s "
- 				   "in %s, inside a directory that was renamed "
- 				   "in %s, suggesting it should perhaps be "
-@@ -3825,7 +3825,7 @@ static void process_entry(struct merge_options *opt,
- 				reason = _("add/add");
- 			if (S_ISGITLINK(merged_file.mode))
- 				reason = _("submodule");
--			path_msg(opt, path, 0,
-+			path_msg(opt, path, 1,
- 				 _("CONFLICT (%s): Merge conflict in %s"),
- 				 reason, path);
- 		}
+@@ -4547,6 +4547,7 @@ redo:
+ 	trace2_region_leave("merge", "process_entries", opt->repo);
+ 
+ 	/* Set return values */
++	result->path_messages = &opt->priv->output;
+ 	result->tree = parse_tree_indirect(&working_tree_oid);
+ 	/* existence of conflicted entries implies unclean */
+ 	result->clean &= strmap_empty(&opt->priv->conflicted);
+diff --git a/merge-ort.h b/merge-ort.h
+index c011864ffeb..fe599b87868 100644
+--- a/merge-ort.h
++++ b/merge-ort.h
+@@ -5,6 +5,7 @@
+ 
+ struct commit;
+ struct tree;
++struct strmap;
+ 
+ struct merge_result {
+ 	/*
+@@ -23,6 +24,15 @@ struct merge_result {
+ 	 */
+ 	struct tree *tree;
+ 
++	/*
++	 * Special messages and conflict notices for various paths
++	 *
++	 * This is a map of pathnames to strbufs.  It contains various
++	 * warning/conflict/notice messages (possibly multiple per path)
++	 * that callers may want to use.
++	 */
++	struct strmap *path_messages;
++
+ 	/*
+ 	 * Additional metadata used by merge_switch_to_result() or future calls
+ 	 * to merge_incore_*().  Includes data needed to update the index (if
 -- 
 gitgitgadget
 
