@@ -2,99 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2649C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 23:07:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 087A6C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 23:15:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235293AbhLUXHw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 18:07:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52682 "EHLO
+        id S236890AbhLUXPz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 18:15:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235079AbhLUXHv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 18:07:51 -0500
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9100DC061574
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:07:51 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id s8-20020a63af48000000b002e6c10ac245so208841pgo.21
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:07:51 -0800 (PST)
+        with ESMTP id S236827AbhLUXPy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 18:15:54 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59E46C061574
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:15:54 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id m21so2473760edc.0
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:15:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=eHcy1xH39+76xc/iJ8UCLR8aPhxvitd+UxY206+23c4=;
-        b=Gw7wmSzVeZWhlY0MdTulUKIoL063JKRh48/xujV+Cvwm3y+7xj5+WiW4goKdJBOacv
-         zZEloeIGP6/wCx1Iz5VlOBLYof2/SSVcX+T8N9YkJXt9VgFMPs+15oWFzzl2Kf7gNTbP
-         gIlCCh1Y3U/qirFZUKTQ3F3WfWWwkWTQ6HrGCeBUvU/NHRDoPscPnRoSOqu0BqacqvjK
-         Dq0dec7BKrHPLWekpifwdqYT+KF5EIBHKWNT1DVmyQJnUHa0ntXwMQXsRRfBm4t2kC2t
-         iU1ucXfII4u0ru3QyWB6R/eHgjdIYR6o6R4xGPIacPVxUMHZ5wfjpXB26qMiSZv6IDg9
-         ag/Q==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=5SxpUVwq0j52J8MMaypwb1bExztDF+7jJ4QHXuT2sNo=;
+        b=X0oeMOE7Vi9X4rgSRDjOEAj+cpZ0AO3XU1C3oAoAdjkRmhs/lrt+kIoaMGytNeWOMT
+         KvGgC7qRQBQ9B2Rqk/OZmQfDOcnPBWSob2JVhsSPShY5DHjsbDr6e5Men7H0lRNyVmD5
+         z1FrNyoCEQkoRqlBIvI5g0Au9nAs84gfAsTrc/qK3HlRE8eGklEzt1x/m4+WlJ5pHRnH
+         h3CHjqQYoKkbyfjrf3zONeuTw546NI8ms9v3+GgWUAgzxvQyCbE2kPJu2DVU0u363kyf
+         91hGLMNsKj7NwyqmGzwiQM+zXDXD1MoDF5txRLpGn3sM0Ufca2HDoevwv7RXxdv6xDeM
+         Qi/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=eHcy1xH39+76xc/iJ8UCLR8aPhxvitd+UxY206+23c4=;
-        b=5P6E/bNdZQrssVjTWdmBjLRAPDL2Sjyo3K7Od4IlY8hjogWqsmqzlhuoXNA+234Z4N
-         h9AImAYpa2L9gsvvoH9ZRRY5Qjn7S4IgzvCs9xnXAVetFQl+o3AgrFa8v4Kjn27v8pmy
-         RSUfCKk8dbbo0IirDn6TXwrPAje/LyrGHOAm1e1AWlXZj5z1PaFUkm3Ia9LkVPdiwes6
-         Rx3cvHbIdOndSqfSkP8Vkel0dD9mu0U7JVFR2/oIM+GLGEW8KXDhjIbfljQFTNq43Lcm
-         JrGgvavWjwdipPyyY3jCrdWYV82gZHf8DVHzxMwggDWBcazVdsCrjvABNQo5Vzpmiw3B
-         k2OA==
-X-Gm-Message-State: AOAM531gfKUvmXOvL+JeQ8q5dRuVFVzR99EpZ8o9GhDlft6zEjwHgHnw
-        bY1A3eFZmTsM/CBqEqJm1Zw4GenmpE4c6Q==
-X-Google-Smtp-Source: ABdhPJyVm7gpz5tfuUClzysR7FU1SgPXOEgPi3YoIcbS4xTDjbF734eQ+Hg+ujRT1BDkHPmjk885qIIhBytzZQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:1385:b0:4ad:580d:8a8 with SMTP
- id t5-20020a056a00138500b004ad580d08a8mr590990pfg.10.1640128071037; Tue, 21
- Dec 2021 15:07:51 -0800 (PST)
-Date:   Tue, 21 Dec 2021 15:07:48 -0800
-In-Reply-To: <kl6ltuf3ysnw.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-Id: <kl6lczlpzhdn.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20211207192925.67680-1-chooglen@google.com> <20211217000235.68996-1-chooglen@google.com>
- <xmqqilvm24bb.fsf@gitster.g> <kl6ltuf3ysnw.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v2] builtin/fetch: skip unnecessary tasks when using --negotiate-only
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5SxpUVwq0j52J8MMaypwb1bExztDF+7jJ4QHXuT2sNo=;
+        b=jVadxx34KcL5bOsZbFet8mB3OVfHNKCBC4YvCxtczt/AjTJvlK7nzp+EYMMoCz9Ldz
+         9BmHDKn5ahgwpifrYtsfELrq4aiYmBV02jf/YkG7CAw+A75MWk/Ui8aQZfvxBU+y2/TQ
+         bt+kHtoa8WyOprggb/CKfAB7oI3uKlwxFYj20S+Gj/0De7SOjGdtGhTQo0N/FbkKFD3f
+         lLHtlT1onv9blWledNMvsSZCM3oIRtq4CcWriTjc2u1KNBaYCWRQxmUvsGQBkqUXQFAR
+         DOfqDcMA/A2cXsv5IxDdxk2v7nH4UVvEHhVcMv+3wYYAj3fg0tvNqQPSnqn6aOSaizK2
+         24sA==
+X-Gm-Message-State: AOAM5326UC72h6yIUT2fa5gGN+iqxGpU74gM3BzcilxdJ3Sctf4JbfjW
+        mgK/wV9Uu+wTGPImUnfZzjuiZMixrHPa5TXT8VD/OW6VO0A=
+X-Google-Smtp-Source: ABdhPJz+WIBJ0eJeUapLs+6L3phAN1LgkZJOYVwc4VagqPXhBYSU4lHBNyLYSzZevL0B1FuwgwB46nkhAiQfR9zoqHM=
+X-Received: by 2002:a17:906:4791:: with SMTP id cw17mr407945ejc.493.1640128552958;
+ Tue, 21 Dec 2021 15:15:52 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
+ <d022176618d76943743940da0787291d51c9b4f0.1640109948.git.gitgitgadget@gmail.com>
+ <211221.868rwdr6wc.gmgdl@evledraar.gmail.com> <CABPp-BHZH=hdEZ=iYQK_Gg+3aXmJj4uv4SZcJB=J4_K=TTKwHQ@mail.gmail.com>
+ <211222.86v8zhpnm5.gmgdl@evledraar.gmail.com>
+In-Reply-To: <211222.86v8zhpnm5.gmgdl@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 21 Dec 2021 15:15:41 -0800
+Message-ID: <CABPp-BEh1y3X9GcEghEBNd_t+wog0ayXgD-Bftc5zA-nidPhZw@mail.gmail.com>
+Subject: Re: [PATCH 2/9] ll-merge: make callers responsible for showing warnings
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Neeraj Singh <nksingh85@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
-
->>>  	prepare_repo_settings(the_repository);
->>
->> This is existing code, but I wonder why it can be done _SO_ late in
->> the sequence.  We've already called the transport API for the
->> negotiate-only communication at this point, but a call to this
->> function is the only thing that gives fetch_negotiation_algorithm
->> member in the_repository its default value, isn't it?
+On Tue, Dec 21, 2021 at 3:03 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> That's right, this looks like it could be a bug. Maybe Jonathan knows
-> more.
+> On Tue, Dec 21 2021, Elijah Newren wrote:
+>
+> > On Tue, Dec 21, 2021 at 1:21 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > <avarab@gmail.com> wrote:
+> >>
+> >> On Tue, Dec 21 2021, Elijah Newren via GitGitGadget wrote:
+> >>
+> >> > From: Elijah Newren <newren@gmail.com>
+> >>
+> >> > +     if (status =3D=3D LL_MERGE_BINARY_CONFLICT)
+> >> > +             warning("Cannot merge binary files: %s (%s vs. %s)",
+> >> > +                     "base", "ours", "theirs");
+> >>
+> >> This & other messages in the series have warning/BUG etc. starting wit=
+h
+> >> upper-case.
+> >
+> > Yes, but I'm not introducing a new message here; I'm merely moving an
+> > existing one.  It's important to me that readers of this patch be able
+> > to verify that I have made no functional changes in this patch, so
+> > fixing the case should definitely be a different patch from this one.
+> > I kind of think that fixing the case distracts a bit from the point of
+> > the series, and the series is already kind of long, but do you feel
+> > strongly that I should fix the case with a new patch inserted into the
+> > series?
+>
+> I just missed the bit where it was moved from below in the diff. Sorry
+> about the noise.
 
-It seems that fetch negotiation always calls prepare_repo_settings().
-Fetch negotiation uses negotiate_using_fetch(), which calls
-fetch_negotiator_init(), which calls prepare_repo_settings():
-
-  void fetch_negotiator_init(struct repository *r,
-          struct fetch_negotiator *negotiator)
-  {
-    prepare_repo_settings(r);
-    switch(r->settings.fetch_negotiation_algorithm) {
-    case FETCH_NEGOTIATION_SKIPPING:
-      skipping_negotiator_init(negotiator);
-      return;
-
-    case FETCH_NEGOTIATION_NOOP:
-      noop_negotiator_init(negotiator);
-      return;
-
-    case FETCH_NEGOTIATION_DEFAULT:
-      default_negotiator_init(negotiator);
-      return;
-    }
-  }
-
-If anything, this seems safer than calling prepare_repo_settings() in
-cmd_fetch() :)
+Nah, no worries; thanks for taking a look at the patches!
