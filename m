@@ -2,61 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A684C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 17:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51F50C4332F
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 17:55:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240732AbhLURzJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S240737AbhLURzK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 12:55:10 -0500
+Received: from mout.web.de ([212.227.15.4]:60409 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240727AbhLURzJ (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 21 Dec 2021 12:55:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38044 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236858AbhLURzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 12:55:09 -0500
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 158AEC061574
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 09:55:09 -0800 (PST)
-Received: by mail-pf1-x434.google.com with SMTP id k64so12422693pfd.11
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 09:55:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XjahPoxGgWXcqzhYYPSxfVOLLEv6zyyEEve8Kt2udhI=;
-        b=LKR8BkHcKQ7gV5Tdib7yrzVvDrqeWR9rypGgDLLgHYasgRUeYA/YqeYXdfnSOtG6cx
-         PiJxDTcobe85YjPiy8kBxsS8P89B2tOt5ksETjpgr1RtN656nyY9LPzxWlwlVBwSPrij
-         8NUHv/fMsnmX4pyrx85ATcj+C8eO+Ybf1LBke4rjJwfLo5HAoST4OftbqsILSgdhaIEL
-         CP049wPDv5kw1IpFhwF+uP7w73RXvUGEdSF+jdkSUIonQ/2LNnNYYZioO6/sMIo2ROwW
-         ARbe/rc6jQT2/kOrwGuphXcqQFUqyET/nQNZ62ZIn5s8Kun0aB0y2SCVFwAycOKNkCt9
-         TQ9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XjahPoxGgWXcqzhYYPSxfVOLLEv6zyyEEve8Kt2udhI=;
-        b=7yhnPGsCzyCUk7ixe7juw/uUgumIK70SmXmvdyQ8uHwG80NUH6zAZPkRbvYd7KoLbv
-         XN7oYSNNdzDvI+nc3fHuW6qTEm04lK6USI5gTZv4t1pgWr+z8hgKLg2yGST7ZORh0jVF
-         1gzESKBc188bMK8wjdj7Vrp+WcGPs46EYbjGBPrS+xJrQuStr+HW1GkmW1OgPIBDflc0
-         lwQbmkf7fTjAhkLsMx+QXjoy3XT0+dIuqlbGVEFMaRjUrz7vJWg4Oc6fJfLQYdO9rnCh
-         WBXpzZU8jc3mJzpY3JlBytHq1RRicCgvDhxwME33yhKZfTMvH2NU6kJPIui8TXe+TmUu
-         fJrQ==
-X-Gm-Message-State: AOAM53105VQ1eqb6DU00Af0TOL8UDkjit5d/+6JVt4PvuN8OTafv344x
-        b5STyw1RqavcY8Ct6H9GrKkgV2B3ab2kPXoSHqbigX71
-X-Google-Smtp-Source: ABdhPJwwuZZL2V4v8zJCLKJKvtVpTzpKxk9r1RIHH3eSVYimGGoq68pU4Zf4uuYi2HL/k3uWNoEwU808OPi2die9SEI=
-X-Received: by 2002:a63:e657:: with SMTP id p23mr3868398pgj.337.1640109308543;
- Tue, 21 Dec 2021 09:55:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1640109308;
+        bh=y5z4SbSspCnakpn7R1wIRhPZMADqVh7JC9HClJdDzLU=;
+        h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
+        b=syh2yqy0KEbbbuPaDekn8qccqgqaZrKbiD3NjAUiKXXWGYR6V/yrdyEL9j+wUjp2f
+         RgFySs5pCgbM771bw84p85JgBWKH0pYFvABselica1owxz1KGn0srU1S5dNP31aasr
+         5I8jztOPDXs+34pCTcllIC4UvyeA3KTHdV1acc78=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MbkWQ-1mTQTF3vW2-00dQNb; Tue, 21
+ Dec 2021 18:55:07 +0100
+Message-ID: <cf17d437-61cc-6d01-fb12-af420c650e82@web.de>
+Date:   Tue, 21 Dec 2021 18:55:07 +0100
 MIME-Version: 1.0
-References: <CALRdAfcyfesNqfLhhe2GW_5V9s2hf++i6mZS1Lw5hqQYTca85w@mail.gmail.com>
- <xmqqlf0dq3t3.fsf@gitster.g> <CALRdAffjmvHao8TRfB9YJez1acwHDAq2ZqiqaCRRr5MaWzhxig@mail.gmail.com>
-In-Reply-To: <CALRdAffjmvHao8TRfB9YJez1acwHDAq2ZqiqaCRRr5MaWzhxig@mail.gmail.com>
-From:   Daniel Vicarel <shundra8820@gmail.com>
-Date:   Tue, 21 Dec 2021 12:54:57 -0500
-Message-ID: <CALRdAffUTf46aU-=_xniKm0NAWE3OTFMFPhXNn669jHcq9dPrg@mail.gmail.com>
-Subject: Re: Why does "merge --continue" expect no arguments?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.0
+Subject: Re: rebase -S config option
+Content-Language: en-US
+To:     ?????? ?????? <nekadek457@gmail.com>, git@vger.kernel.org
+References: <CAM+a_NM=xTCrNPCjpP49T8d6hPFD26d+Cu06fiSq4TiZB=DzYw@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CAM+a_NM=xTCrNPCjpP49T8d6hPFD26d+Cu06fiSq4TiZB=DzYw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:wADf7r1BUimCT2OzlKd2NOzsCsOZEqHlBKiZ6vjyAE+Ekvu1jfB
+ 4CUXGbo9pWiXUSOiXFh9aI03TWhcpymJI8ixG2Ya6a/VlXB5A+jEBmds40rcc1qnv5SdNSp
+ zujm4nh/j4Kl9nL5eeto15ZJvOjSC3x0r7ZSB4PT5/mCWTO9/UszyJpqKj+8GP0b0I/kHKc
+ agM2wVQpChElnt77KJyaA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:VNpa3Z1tHEQ=:HtvExWc2l6dlj/iBB6bsys
+ UsU6DwEkoFYpMQmUvCJT29I9BS25ohlV/ekXEf4nPemLsHuI8raB73Q6IGzzXBIIdbkAHfA21
+ WqzF923d62T8fqfORcot/Ke4stU3Gci0oO98SMAg5lPs3JmCvpfrZrF/Mfq3SZLUDRa8u/cni
+ v3g0ZT32w725N2PyUqwQcl7AXqRJHpJbRiq1ScD1fmlzgLpeQv8sh6a7bNQSveSSNfu+ldgNa
+ GVJwwV3e5d/E2I9qa2nJRGFarmtG14fVX1wqeq4u48m1LiKOG5eWMojD1DOa/b7VMp2anZ2ot
+ PhBTHqQt9hNR26/5+oFBv7Uz1Egk+7EMME8mxl1r2xzcQXORLa6MdGdGQDW/tXdqhDX6jrIuU
+ eNFU1wxzWg1YgGLArjZ/cZpdk1ZfR5oZ/FrjzssFLkhxJpZkDpATFlEmeeaGskOOYk+tz3Hut
+ 1yGKsvdwXts8464h6npQeQCjhWXZIGAvrO99eVZ/RnwGg4Mbi0mm6+a2NVTa1ckE0zRpK2vbZ
+ OTSiUwCKXZaxTur5vVymuA3AYm7ORguI7TaeVjENn7bqRBoepRfdd+0XvEmrODLArhZepOUDJ
+ QFOpBSfi6wAF82jxrL/S4VzJU60IX4+RZY5pQztIQpDhKC78Ap6Du7EWSad6hNFn/EOFy61WQ
+ pKfTwE4KQVqngk7XCCoVue6XjXNmLNI8xhvrbr7mvuY7D2ELQ6vdEQu32ygVd29/N7FupjoBz
+ s72vZUybQ9lWzTLI02q47oJAx3fdGB6tnZ0gApjePMqA+jp9m7SGLZDzKm7pP+7ozWOM8bYFO
+ z4m8aNesPHO3dY9z7fBrysnExBesJGhsVBaNaq6VwtMyISEoCv9CjqiSiUABm+gKYn3TF6fEB
+ Iep5qiEUY24B3LDTw2xtFUaEQKgwZBu5bwkq3R2n5TbDzv8KgA97VJboUexvXjlBntX0jPmrm
+ q6+TCorOdSvLxck6blGWhEZvPJmaChTfUxkNwbYwxi2jYvIGD2mvs18RPtrWz2Sw9rBMJScN6
+ zk92SViPJezOEi0r3o/i4eAd79TDYWepn6Pwy7KLpiDJvNrn+svEXHI7tx3e0ZbpBEaR3M30Y
+ haDaW7BLuHfDQ8=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eesh, I guess Gmail does top-posting using the entire conversation
-thus far... Apologies for the noise!
+Hello,
+
+emails are better with a subject; added one.
+
+Am 21.12.21 um 15:44 schrieb ?????? ??????:
+> Is it possible to always GPG-sign commits created by rebase operations
+> by default without having to specify the -S flag?
+
+Setting the config option =EF=BB=BFcommit.gpgsign to true should do the tr=
+ick.
+
+Ren=C3=A9
