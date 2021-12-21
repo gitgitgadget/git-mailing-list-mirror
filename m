@@ -2,148 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E62DC433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 15:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30309C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 16:02:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236144AbhLUP1D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 10:27:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59660 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231422AbhLUP1D (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 10:27:03 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C62F3C061574
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 07:27:02 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id y22so53598857edq.2
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 07:27:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=FOA10efqhFwotqth8hk3aSu7CFPCOzyZVpzhwFyYZk4=;
-        b=TF3Dpg2CoHP/VAGgPr7GZa060vUtgUMcHTDVN1Ui/5FdEfQjYKtfvvWULYbNOMT+Ek
-         Rf6dc6LoqJwhDqpyju2eaEj2XuxdNERFd3PJvaMdo8/3BfTxip/dipus8yqe03nZOAqM
-         /zm7hGC8SOTpn4uXTF2QCeb+ALH1/aW3A432fC1SERLkLT5ziUFWSgzS5R1uyzoIOWlh
-         cDPDr2NqPG6dqelDseNecc/YMjTdHDPbmDLwlVgpAZY5F3XhPac11JhV7iixqrxnl1Vm
-         YjamC4kRHZMXmh6HpWMoldSvUKIxowZMcDt2piHfAcF2YpCiUImSityjxE7m8Mcvgy31
-         +wug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=FOA10efqhFwotqth8hk3aSu7CFPCOzyZVpzhwFyYZk4=;
-        b=Xe4J2F9HtWLzMEMY3JrtzxztYCGC0Ksb6/aG4cAD97S9hkWGFZ16fhQ7yNnvg+K678
-         NeG29tAi2JV6cfj/Pe6XDAbtihs3ruYJqWpI2z2rzmVqjvEcjW6MRgLeYamfdiHaxAgS
-         jHP3bUTUW8jACYD01uJp4zhNG1kmiZkMzCUAGjdwUvo/7bDmqRRKBQFrurNwMqnyq0oo
-         uBMisqscHwMnq13mR7HOHyr9gtQaji/qvHrJ3whxszUycBKgfMzorDs+X6jN7/l+hxqa
-         6MFEXl1md974OY7W5wmXSaC2NbEdMrwcdkaxnw/P48AIRnMEQPn2JGmXUgY9ahm/1Kv8
-         uHNw==
-X-Gm-Message-State: AOAM533C55xbJPxY+pt/u87rt+zktHbq3+cTNeaTp5kBoKj+9AXQHFXu
-        iN5WAwjatdbFVPCKHA+bt8U=
-X-Google-Smtp-Source: ABdhPJwWTsD14e1pqmbygoWBcfnyoV0GX4w2UG68K5y1AwApKAOFZ4MxVITZvcJQqMlW8rmWZe5ciQ==
-X-Received: by 2002:a05:6402:424f:: with SMTP id g15mr3369582edb.217.1640100421320;
-        Tue, 21 Dec 2021 07:27:01 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id j5sm6692626ejo.171.2021.12.21.07.27.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 07:27:00 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzh2a-000mj1-8y;
-        Tue, 21 Dec 2021 16:27:00 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v2 0/9] reftable prep: have builtin/reflog.c handle
- "--verbose"
-Date:   Tue, 21 Dec 2021 16:21:06 +0100
-References: <cover-00.12-00000000000-20211130T213319Z-avarab@gmail.com>
- <cover-v2-0.9-00000000000-20211216T134028Z-avarab@gmail.com>
- <CAFQ2z_McOfm545Xd8hF7YDgzyOjDmcGxpWZ6pQ-yaKAEWMMbgg@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <CAFQ2z_McOfm545Xd8hF7YDgzyOjDmcGxpWZ6pQ-yaKAEWMMbgg@mail.gmail.com>
-Message-ID: <211221.86lf0eq8qj.gmgdl@evledraar.gmail.com>
+        id S236101AbhLUQCt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 11:02:49 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:41685 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229978AbhLUQCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 11:02:49 -0500
+Received: from host-92-7-140-211.as13285.net ([92.7.140.211] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1mzhbD-0004px-3t; Tue, 21 Dec 2021 16:02:47 +0000
+Message-ID: <86c2d705-377b-380b-341c-a371b04ef917@iee.email>
+Date:   Tue, 21 Dec 2021 16:02:46 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: taking a break from Git
+Content-Language: en-GB
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+References: <YboaAe4LWySOoAe7@coredump.intra.peff.net>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <YboaAe4LWySOoAe7@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Dec 21 2021, Han-Wen Nienhuys wrote:
-
-> On Thu, Dec 16, 2021 at 2:45 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->>
->> This series refactors various small bits of builtin/reflog.c
->> (e.g. using a "struct string_list" now), and finally makes it handle
->> the "--verbose" output, instead of telling the files backend to emit
->> that same verbose output.
->>
->> This means that when we start to integrate "reftable" the new backend
->> won't need to implement verbose reflog output, it will just work.
->>
->> This is a sort-of v2[1]. I ejected the changes at the end to add
->> better --progress output to "git reflog". Those fixes are worthwhile,
->> but hopefully this smaller & easier to review series can be queued up
->> first, we can do those UX improvements later.
+On 15/12/2021 16:38, Jeff King wrote:
+> Hey all,
 >
-> Thanks for sending this.
->
-> I looked over all patches separately. Overall, the series looks good to m=
-e.
->
->> int a one-line terany instead.
->
-> ternary.
->
->> "don't do negative comparison on enum values"
+> I'm going to be offline and completely absent from the mailing list for
+> five months starting at the end of December. After that, things are up
+> in the air, but I may not be as involved in the project as I have been.
 
-Will fix.
+May I wish you a very happy Christmas, a great New Year and enjoyable break.
 
-> I would describe it as "use switch over enum values", as this doesn't
-> involve negative numbers.
+Thank you for all the contributions and help over the years, and it was
+good to see you at Git Merge 2019 (seems so long ago now)
 
-*nod*
+All the best
 
->> collected.reflogs.strdup_strings =3D 1;
+Philip
+
 >
-> This puzzled me. Why isn't the init done as _DUP ? Warrants a comment
-> at the least.
-
-Will comment on it. FWWI this is a common pattern with the string_list
-API.
-
-If you declare it "dup" and push into it you'll end up double-duping,
-but if you don't declare it dup'd and free it you'll leak memory. It
-won't free() a non-duped list.
-
-The other option is to declare it "dup" and then
-"string_list_append_nodup", will try and see...
-
->>  .. goto expire
->> ..
->>    return 0;
->> expire:
+> Sorry, there's no juicy gossip or drama to share. I still like everyone,
+> and think it's a cool project. ;) After 15 years, it just feels like
+> it's time for a break and to perhaps apply my brain to something else
+> for a while.
 >
-> (personal opinion) this is going overboard with gotos and labels. Either
+> There are a couple logistical things related to this:
 >
->   if ( .. ) {
->     expire =3D 1;
->     goto done;
->   }
-> done:
->   if (expire) {  print stuff }
->   return expire
+>   - I'm planning to step down from Git's Project Leadership Committee
+>     (the entity that represents Git within Software Freedom Conservancy,
+>     and which occasionally makes decisions on things like our project
+>     funds or assets like the trademark).
 >
-> Or wrap the existing function (without changes) in a callback that
-> does the print for you.
+>     That leaves Junio, Ævar, and Christian on the PLC, and the charter
+>     calls for having at least 3 members. So I don't technically need to
+>     be replaced, but maybe it's an opportunity for somebody else to get
+>     involved.
 >
-> your call.
+>     We don't have a formal process here. The last discussion on adding
+>     new members was this thread from a few years ago:
 >
+>       https://lore.kernel.org/git/20180816224138.GA15490@sigill.intra.peff.net/
+>
+>   - I maintain the git-scm.com site (well, insofar as anybody does).
+>     There are a few regulars who review and merge pull requests at
+>     https://github.com/git/git-scm.com, but more help is always welcome
+>     there.
+>
+>     The production parts of the site run on Heroku and Cloudflare. They
+>     don't need touched often, though we do trigger a manual update and
+>     flush the caches right after Junio releases, so that the site is
+>     updated immediately.  The Git PLC has the necessary credentials for
+>     those sites, though in practice I think I'm the only one there that
+>     touched it. Taylor (cc'd) has been helping out with that and also
+>     has access.
+>
+>     If you want to get involved, I'd suggest subscribing to the repo
+>     linked above, and just helping out with issue/PR triage and
+>     response.  And of course bug fixes, features, and content updates
+>     are welcome, too. The README.md and ARCHITECTURE.md documents give
+>     an overview.
+>
+>   - I really am going to stop reading the list. Even if you cc me. So
+>     please don't get mad if I don't review your patches, or respond to
+>     bug reports. :)
+>
+>     Likewise, I'll be around for a bit more, and am trying to wrap up
+>     some personal topics and reviews. But undoubtedly I'll end up
+>     dropping many on the floor. Though that probably would have happened
+>     over the holidays anyway!
+>
+> -Peff
 
-Will experiment & see, looks like a wrapper might be easiest here.
-
-Thanks!
