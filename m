@@ -2,74 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AEFCC433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 05:59:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60B0EC433EF
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 06:10:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233143AbhLUF7y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 00:59:54 -0500
-Received: from mail-pg1-f177.google.com ([209.85.215.177]:37481 "EHLO
-        mail-pg1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233079AbhLUF7x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 00:59:53 -0500
-Received: by mail-pg1-f177.google.com with SMTP id a23so11400186pgm.4
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 21:59:53 -0800 (PST)
+        id S231582AbhLUGKv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 01:10:51 -0500
+Received: from mail-pj1-f45.google.com ([209.85.216.45]:40507 "EHLO
+        mail-pj1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229698AbhLUGKv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 01:10:51 -0500
+Received: by mail-pj1-f45.google.com with SMTP id o63-20020a17090a0a4500b001b1c2db8145so1493406pjo.5
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 22:10:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=gUi4KIkbPyh9S2UqBhxHz4InFBI9scdtN3MFeUDj1oA=;
-        b=LD6Uhm1MktdfBa3VzO9WHZ/VjeqbQh/RaQaALrqfbnXXP5k01wjRtQMhgt1HIOZG5s
-         zKnGUbzwEdeqFJHm0aCP4C0EQShFrh/Gzg/KWURt8RFF/VTvQZLseuPsWmLGEBMFh38W
-         rderdLddIM4lPKDMxtbfjrglKNkU1epYsI/MF+mzFuzYByjQLyZ7aHlGdj9/HP3bkviT
-         8Nsr9zN0g9UlmVtuCt8pahlH5EpwMe++r333a+PMqFCp+WdgwBJ2QHBB4CAEL+znaq2D
-         0liS8+ikzWs5BfwdiLqAuFwNBZRe+1xrQiotG4iazNVPbqF4nxfSDPGG0hEvK/J52+Ab
-         UDow==
-X-Gm-Message-State: AOAM531bGOWkgoTmmJ3DAknBlyyfaVolfblwPhy1Vb1p94iOu/BLNs2l
-        2/3NTBrMEyqD+H6mgwJunZBgQpxRgI2jIO45xGc=
-X-Google-Smtp-Source: ABdhPJzXKw352nWlAqMjUGE1bgvPlfaJaFNsnbd6RTV6ZhZnYc3xHiGsdn0mRdKnEdfkvL8l4G0TWuMhcKLdVRBrY0o=
-X-Received: by 2002:a63:380e:: with SMTP id f14mr1558292pga.227.1640066392881;
- Mon, 20 Dec 2021 21:59:52 -0800 (PST)
+        bh=mYFaaH/firIQDxveoZmcN9l4tsRYb+5IUhsG4sk+6r0=;
+        b=xp2UkAEGv4Fit9u4I+J0vEiDJ5VbQB2bnmm3si5dGcdxQCb24TeEtwtTVBei6rxrPt
+         gwnBrE5k/pc5Rj30WawmBgZQBM4uZtJq+qxpNc+8kkUBk+iwagRPPJ1C7DoOguQ48hNN
+         KUN68RbwzFMELEjT9HO5V+qZ9rxsE/JPsNXHiUzp9juKjrlhPJMXi3nU95nS9AZlTI/p
+         wIUZHWCv3kFG1TKTBLniYbbEtYE5BMOR9PVXr98mllr8sWIHtvMEXCmOqjFrISKEyzTL
+         qfdRNWS9wdgohIzToHImw+OTxxoyyf6wZIh9R5MKGUbvoNFpxTyYqOfiwNHZDvaNNoDL
+         gmjg==
+X-Gm-Message-State: AOAM531QyMexncNGLFpkRK/8zRH3aIlu+AbkW2MBUfHcL7JwFiaEO0O0
+        8JQX/fA4qX0A1AnnBnPf/Uf5srxazupTvn0CuRM=
+X-Google-Smtp-Source: ABdhPJwQW2kiPUiRjB5KI16yDqIRUCnJ6xrpf7SFjRL3Xrogn+IxbZk6x/TPQo9DGH4SHPr27kdjwpGmKPL4eiuR+Xo=
+X-Received: by 2002:a17:903:1247:b0:143:b9b9:52a2 with SMTP id
+ u7-20020a170903124700b00143b9b952a2mr1596991plh.35.1640067050598; Mon, 20 Dec
+ 2021 22:10:50 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
- <67993f6cff254d341ba4ad7fe7709b57eb3e74d4.1640015844.git.gitgitgadget@gmail.com>
- <6d72a020-ded7-6ef2-825c-ce6421194b26@gmail.com> <CAPig+cTuLYFc9fpAe8Uq9fvBYuSGcc9SA1O-q1BRw0DYxDF4Eg@mail.gmail.com>
-In-Reply-To: <CAPig+cTuLYFc9fpAe8Uq9fvBYuSGcc9SA1O-q1BRw0DYxDF4Eg@mail.gmail.com>
+ <CAPig+cTVzMtiHzkJq7VRg4Xa3xhrq7KKCdK5OSDY6bvwKu_ynA@mail.gmail.com> <cedea0bf-5def-86a4-5d3b-5377949c1f12@gmail.com>
+In-Reply-To: <cedea0bf-5def-86a4-5d3b-5377949c1f12@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 21 Dec 2021 00:59:42 -0500
-Message-ID: <CAPig+cT7bf7yyO-BpobSgHiXk703sPEa3n-toNMUG=ixjUqCsw@mail.gmail.com>
-Subject: Re: [PATCH 3/4] config: add repo_config_set_worktree_gently()
+Date:   Tue, 21 Dec 2021 01:10:39 -0500
+Message-ID: <CAPig+cSW5wmKS1+KG2SWFO86uX24usP4dv3qX4fhKpgeZ8+Cww@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Sparse checkout: fix bug with worktree of bare repo
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
         Sean Allred <allred.sean@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 20, 2021 at 7:01 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> Regarding the actual "fix": we want a new utility function which
-> enables per-worktree configuration and handles all the required
-> bookkeeping actions described in git-worktree.txt. Specifically, if
-> per-worktree configuration is not already enabled, the function will
-> need to:
+On Mon, Dec 20, 2021 at 12:34 PM Derrick Stolee <stolee@gmail.com> wrote:
+> On 12/20/2021 11:21 AM, Eric Sunshine wrote:
+> > Thanks for jumping on this so quickly. Unfortunately, however, as
+> > mentioned in [1] and [2], I think the approach implemented here of
+> > setting `core.bare=false` in the worktree-specific config is
+> > fundamentally flawed since it only addresses the problem for worktrees
+> > in which `git sparse-checkout init` has been run, but leaves all other
+> > worktrees potentially broken (both existing and new worktrees). As far
+> > as I can see, the _only_ correct solution is for the new helper
+> > function to enable `extensions.worktreeConfig` _and_ relocate
+> > `core.bare` and `core.worktree` from .git/config to
+> > .git/worktree.config, thus implementing the requirements documented in
+> > git-worktree.txt.
 >
-> (1) set `extensions.worktreeConfig=true` in .git/config
+> Thanks for clarifying what I had misread. I commented on Patch 3 at the
+> place that should be changed to relocate the setting. The test in patch 4
+> could have multiple worktrees to verify that it works.
+
+I sent several pages worth of response to patch [3/4] because
+(apparently) I don't know how to be laconic.
+
+> I'll plan on providing a v2 with that change tomorrow, leaving time to
+> find any other glaring errors.
+
+Let's make sure we agree on the proper approach and solution before
+firing off v2.
+
+> > I also raised a separate question in [2] about whether `git
+> > sparse-checkout init` or the new helper function should be warning the
+> > user that upgrading the repository format and setting
+> > `extensions.worktreeConfig` might break third-party tools. However,
+> > that question is tangential to the fix being addressed here and
+> > doesn't need to be addressed by this series.
 >
-> (1) relocate `core.bare` from .git/config to .git/config.worktree if
-> that key exists
->
-> (2) relocate `core.worktree` from .git/config to .git/config.worktree
-> if that key exists
+> Let's continue to simmer on this one. If there is a clear direction for
+> doing this (should it just be an advice message?) then we can do that
+> whenever.
 
-A couple additional notes:
-
-First, I can't count to three.
-
-Second, item (0) in the above list would be to upgrade the repository
-to version 1 since that's a prerequisite of using `extensions` (which
-you know already, but I want to be clear for any other readers that
-the new utility function should perform this step, as well).
+Indeed, no hurry on this one. It's entirely tangential to the present
+patch series, and requires discussion and thought; it can be tackled
+later (if at all).
