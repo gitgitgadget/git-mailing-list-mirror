@@ -2,141 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63AF8C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 23:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1356C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 23:44:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238103AbhLUXmg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 18:42:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60520 "EHLO
+        id S238121AbhLUXoE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 18:44:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237103AbhLUXmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 18:42:36 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9743C061574
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:42:35 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id j6so1295917edw.12
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:42:35 -0800 (PST)
+        with ESMTP id S237103AbhLUXoD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 18:44:03 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE92FC061574
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:44:02 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id bm14so1426465edb.5
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:44:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=QMaOCNjnUPtJJSJEZj/PDFgEVAy/bvPGylOIkIgu1M4=;
-        b=W/zExr4ZaZF6y6BpCE3Ft4mrgjfp/hFbNss3C64eBy2Dq+YPDLM9tsOFk3iIdqn8K5
-         w/iGsjzF0JSsQ6LNt8z1NytZa3AmJYh5GrfHFJkDTPS8IhoszPaENV7JCfU/3ap5aX5m
-         Y6D8mThDKppo5ImuJ5jPN8K+Zcd6t29aP56lpvAf9V142h8IcAvTDtiJfDleQCZ7Eowp
-         rQuXRSdu4MAsD1rtO17ZGHVIeBVfB0UKdM+1wk4bgBEgrlqPd7ThDW2760wGsg2b4mDa
-         FFS8vJ7zbFIT+rX5Jt+7IGsm/pEKRUh0UJYw4KInvJybMt/KrK2FkNAWyxHF1dqAC2sm
-         FWNA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WOlTTnfrRpevw6YNugH9bgryjeoTS2eQY3CezeUli4k=;
+        b=X64bP0mboTytWShpvrBvBEQZCUqTx9FhjvKBPvAyy0YjP/sCOJYU5h870yoKKGnTd4
+         vHCJPJqF9JdSdSnJNG3eQHnmoIvRDczfJrc5KAfLiZ7T/+EcSu2lkPxfErvEd7cyqkp2
+         LUHCO72qajdXdK5pFlo9gzKmVCdbWuf8bLtEbsO+KfShM8IyusT9py1Tsd4DyYnFj9Td
+         FDB0Ypy5ZhtmWIlsv3rXuE0i3ACGBN9R3Jpzpr1r3BAdUBo4u1WBix9Gzn+0PxRFS0Fs
+         b8cemZAox7klsaNOGXCZEoUDzG6Yo+FpQ5Cw5Da/DCDc2OiUzFaPVOdVapxwy51woEoZ
+         Ux6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=QMaOCNjnUPtJJSJEZj/PDFgEVAy/bvPGylOIkIgu1M4=;
-        b=xY/RofObx3k6WjlE1r8Tz0vg4s9WzPpFGPrvYnBkD0t1mHBCHVCh/8VSMAe3gqXgAe
-         OTmxjExzKY1Nee+FUtAbygsWDAELZwyZMNmx1crW7WOF9E0LHp1XGP+n7wuspKd8Sh9p
-         dAqQyyhQTpZMSUELsc+DM99JPZIqMrivZlKOk9ZvXR9Nd80sZ4em628FtJsz3o2JDt1X
-         nulKav1XmumqtIyvIH/RGlkHZ6fOd7U2Gu1KSzAhB0yHmchuBAbxQL8Me+soMeESC2h3
-         DOa/kSXUTXNu13ooyICiP0PiUkpEGBl+Dnh8ARuFtfOiUBwqpXyraeHqYdMhdHKxDAUr
-         kioQ==
-X-Gm-Message-State: AOAM53147cg/3zdA3BFYsb3RNnq2qvpLZqHrOPLAFy0XhRScYQG17BNT
-        FqLU7Tt3z1wp+zbROy7WYtE=
-X-Google-Smtp-Source: ABdhPJyC3OjKKejOj6W2rsGJ0/UFCtAGtOOKAeQ3rEnTlVNdKUwj8QtXpLanyxxa2QNVGk8tccH2UA==
-X-Received: by 2002:a50:fc91:: with SMTP id f17mr530638edq.252.1640130154416;
-        Tue, 21 Dec 2021 15:42:34 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id s16sm79253edt.30.2021.12.21.15.42.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 15:42:34 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzom9-0010O2-EV;
-        Wed, 22 Dec 2021 00:42:33 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Erik Faye-Lund <kusmabite@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC PATCH 00/10] range-diff: fix segfault due to integer overflow
-Date:   Wed, 22 Dec 2021 00:36:51 +0100
-References: <RFC-cover-00.10-00000000000-20211209T191653Z-avarab@gmail.com>
- <nycvar.QRO.7.76.6.2112101528200.90@tvgsbejvaqbjf.bet>
- <59ec39af-fdb1-a86a-d2be-37e5954e245f@iee.email>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <59ec39af-fdb1-a86a-d2be-37e5954e245f@iee.email>
-Message-ID: <211222.86r1a5plsm.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WOlTTnfrRpevw6YNugH9bgryjeoTS2eQY3CezeUli4k=;
+        b=rFiNASz1mFRsRLBcuvMOl4EDNliR3a54GEKjtBweXN5wc+r1Hsu7YrIBxPM+C/MXHS
+         4VwY0MHIT2H6ttrjWWYgOImk6CKIoXxlZsS9+hDTvbM10xg7svojxwmiN0PTD3ZdXdXW
+         YReKh5aJavBuu0elxCa0hFGTwTOJaDLJHx5TBHOAZ1CFe1riBL77UuifjFNi1PrAhhIp
+         99nzoxott4cQiV3qiayGsWL2mNtTOLZLEhgUZTg5Oe3Zh4afiXFvHLPxwp85vIUTBnQS
+         ylk1Lev7sjQddZ4G8uPhCOF2laJmzo3KSHbNAG2XDlhMEAbooToRcHeyXTgVS62R5aCz
+         or3w==
+X-Gm-Message-State: AOAM530/TTXYyUGxRSJQZUIVxJWq5RMhaWPFxhlbsfqUXfu2MQSVrzvf
+        59ZG/uoY7AP37IwIEgEO6w0EHmmXXfvgQwuc5l4=
+X-Google-Smtp-Source: ABdhPJwaTj7bwIEyCnn+++7JbkCrr5R/XUlh2T6ELzxMeLt2cp4V2/oINwNfp22Vy56y87bGc48ZEZ042+Q5MTIMNx8=
+X-Received: by 2002:a17:907:2d0c:: with SMTP id gs12mr500877ejc.100.1640130241475;
+ Tue, 21 Dec 2021 15:44:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1103.git.1640109948.gitgitgadget@gmail.com> <xmqqsfulo88n.fsf@gitster.g>
+In-Reply-To: <xmqqsfulo88n.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 21 Dec 2021 15:43:50 -0800
+Message-ID: <CABPp-BFoOzQ7Er4BUKUj0mqHkAO0ePCdaFhiv4i10oURZi=Rvg@mail.gmail.com>
+Subject: Re: [PATCH 0/9] Add a new --remerge-diff capability to show & log
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Neeraj Singh <nksingh85@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Dec 21 2021, Philip Oakley wrote:
-
-> Sorry for the late comment..
+On Tue, Dec 21, 2021 at 3:20 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On 10/12/2021 14:31, Johannes Schindelin wrote:
->> Hi =C3=86var,
->>
->> On Thu, 9 Dec 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>
->>> The difference between "master" and "git-for-windows/main" is large
->>> enough that comparing the two will segfault on my system. This is
->>> because the range-diff code does some expensive calculations and will
->>> overflow the "int" type.
->> You are holding this thing wrong.
->>
->> The `main` branch of Git for Windows uses merging rebases, therefore you
->> need to use a commit range like
->> `git-for-windows/main^{/^Start.the.merging}..git-for-windows/main` and
->> compare it to `git-for-windows/main..master`.
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> I'm not sure that a Git repo has an established way of indicating to how
-> it's branching/merging/releasing workflow is set up, especially for
-> projects with non-normative use cases, such as Git for Windows. We don't
-> have a git document for covering=C2=A0 the different workflows in common =
-use
-> for easy reference and consistent terminology.
+> > Here are some patches to add a --remerge-diff capability to show & log,
+> > which works by comparing merge commits to an automatic remerge (note that
+> > the automatic remerge tree can contain files with conflict markers).
+> >
+> > Changes since original submission[1]:
+> >
+> >  * Rebased on top of the version of ns/tmp-objdir that Neeraj submitted
+> >    (Neeraj's patches were based on v2.34, but ns/tmp-objdir got applied on
+> >    an old commit and does not even build because of that).
 >
-> The merging rebase flow, with 'fake' merge does solve a problem that
-> git.git doesn't have but could easily be a common process for 'friendly
-> forks' that follow an upstream with local patches. The choice of
-> '{/^Start.the.merging}' is currently specific to the Git-for-Windows
-> case making it harder to discover this useful maintainer method.
+> Oh, that's bad.  I wish people do not rebase their updates on top of
+> newer 'master' only for the sake of it, once an older version is
+> queued.
+>
+> >  * Modify ll-merge API to return a status, instead of printing "Cannot merge
+> >    binary files" on stdout[2] (as suggested by Peff)
+>
+> I wondered if we want to do the same for other error messages to
+> give callers greater control, but this change by itself already
+> looks quite good.
+>
+> >  * Make conflict messages and other such warnings into diff headers of the
+> >    subsequent remerge-diff rather than appearing in the diff as file content
+> >    of some funny looking filenames (as suggested by Peff[3] and Junio[4])
+>
+> OK.
+>
+> >  * Sergey ack'ed the diff-merges.c portion of the patches, but that wasn't
+> >    limited to one patch so not sure where to record that ack.
+>
+> On that single patch?
 
-Yes, but let's not get lost in the weeds here. As I noted I just picked
-GFW as a handy example of a large history & that command as a handy
-example of something that segfaults on "master".
-
-So the point really isn't to say that we should fix range-diff becase
-it'll allow us to run this practically useful command on a git.git fork.
-
-> I fully agree that the range-diff should probably have a patch limit at
-> some sensible value.
-
-Why would it? If I'm willing to spend the CPU to produce a range-diff of
-an absurdly large range and I've got the memory why shouldn't we support
-it?
-
-We don't in cases like xdiff where it's not trivial to just raise the
-limits, but here it seems relatively easy.
-
-I think limits to save users from spending CPU time they didn't expect
-are reasonable, but then we can handle them like the diff/merge rename
-detection limits, i.e. print a warning/advice, and allow the user to
-opt-out.
-
-That also doesn't really apply here since "diff/merge" will/might still
-do something useful in those scenarios, whereas range-diff would just
-have truncated output.
-
-> The 'confusion' between the types size_t, long and int, does ripple
-> through a lot of portable code, as shown in the series. Not an easy probl=
-em.
-
-Yes, although here we're not just casting and overflowing types, but
-overflowing on multiplication and addition, whereas usually we'd just
-overflow on "nr" being too big for "int" or similar.
+Yeah, the main patch near the end that changed 4 files; he acked the
+changes to just one of those files in that patch.
