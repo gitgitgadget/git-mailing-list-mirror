@@ -2,171 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15C7EC433EF
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 09:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7541C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 09:45:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236447AbhLUJjp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 04:39:45 -0500
-Received: from mail-eopbgr80043.outbound.protection.outlook.com ([40.107.8.43]:54503
-        "EHLO EUR04-VI1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S236423AbhLUJjp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 04:39:45 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fLoqkVXsmglR1LyVuLmlWBN4ELWuels/by8N21bn86zt2e7YpvaoQeiO2XpZRa27lVbG499tTNupLFbC0SwNOL27+QAqLolDK006U8dLBX9RsOWcSVuZvX5nkospmsiCj3Me5Ul42n8x2e29lZNOdlfF00tnCkh2EwCijUcdWnReX0swOQIoN9MnFsYYPrOphHKlpIaatsaFdlLjmb0FZ6LY9lbY4uLWAWkXTaWP4eOJidDv0KYuiBpV4SG/92eMwQo1e3JsmSPFe+fmyGUSp3BB8EsZIuejJbGmZ+/iJV7G0BBE/ur397ZlEHyz9HW7ge0iSDFp1kKI4FL19NBuFw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Wd4Uo8n462dhlDN83LGP1m1a8AO8yBPL/+BEPNJJJ6U=;
- b=BEnC2CRe7TS7mCme2wFQXAr7YFG5KbKFnqSs+C+mEq1nXeIlztcR24XeuGfWphRfQuJsnCvixd3EZLs0ShL/jdk5lXd1CgUZEYwsKYZkkE6cx8cJaa4Kh0uxBSxuO4fahcMghaeaDTwm76NIesxihhY7BSzsHMhF4pZy3jzSNktH4BgguvvS4pVnhHm2So2igsH+QElxC4AhmoqXCUWl+eR1YG3bvXHHDmUYHTIX00XvXKkFsdcJG2UXFxJDFzQPomTJiHoP2LZbmhA0JwxanBfnmX7EoqGrF9YPiN88LrhGStP13eKIAR6AitipaZ0ZJVAElovLesCRcn//L5TUbw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Wd4Uo8n462dhlDN83LGP1m1a8AO8yBPL/+BEPNJJJ6U=;
- b=ihvyNSnNearO4TXYN2NFP+OLPMaxCEZpAPooh5x1kGnzczjVJD/k5KXt7nMFT6zYONMPpU5CsRa56A+elmKizMkiPJ1P0kYKeRJ82FAkt8sA8UbF1V4Xe5Cg7qoOuGAnm2BjjdoTtWCtsNnWo4tbixJZtnIjQFUZsY/OpG0o0Lo=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PR3PR10MB3803.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:41::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4801.17; Tue, 21 Dec
- 2021 09:39:42 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::486c:1c10:65ef:90f9]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::486c:1c10:65ef:90f9%4]) with mapi id 15.20.4801.020; Tue, 21 Dec 2021
- 09:39:42 +0000
-Date:   Tue, 21 Dec 2021 10:39:41 +0100
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [RFC PATCH 2/2] crypto sign: add cryptoSign.* config
-Message-ID: <20211221093941.53ks5gnbkxl7vkn6@fs>
-References: <20211220140928.1205586-1-fs@gigacodes.de>
- <20211220140928.1205586-3-fs@gigacodes.de>
- <CAPig+cRGnMQaDj-qocpAbhQqyksCNqGub+LsspWf7-Dwy=TKzg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAPig+cRGnMQaDj-qocpAbhQqyksCNqGub+LsspWf7-Dwy=TKzg@mail.gmail.com>
-X-ClientProxiedBy: AS8PR04CA0067.eurprd04.prod.outlook.com
- (2603:10a6:20b:313::12) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        id S232382AbhLUJpb convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 21 Dec 2021 04:45:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36824 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236518AbhLUJpb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 04:45:31 -0500
+Received: from mx.mickler.org (mx.mickler.org [IPv6:2a01:4f8:c2c:3e1e::1a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA50FC061574
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 01:45:30 -0800 (PST)
+Received: from dynamic-2a01-0c23-c0f1-c300-99b6-808b-59c9-f3d7.c23.pool.telefonica.de ([2a01:c23:c0f1:c300:99b6:808b:59c9:f3d7])
+        by mx.mickler.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <florian@mickler.org>)
+        id 1mzbi1-000Iei-OC; Tue, 21 Dec 2021 10:45:25 +0100
+Date:   Tue, 21 Dec 2021 10:45:23 +0100
+User-Agent: K-9 Mail for Android
+In-Reply-To: <nycvar.QRO.7.76.6.2112202223300.347@tvgsbejvaqbjf.bet>
+References: <20211218010621.2fdc2b3c@monster.mickler.org> <xmqq7dc2zplg.fsf@gitster.g> <nycvar.QRO.7.76.6.2112202223300.347@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: cc7cf97d-79d3-4747-f50a-08d9c465d0df
-X-MS-TrafficTypeDiagnostic: PR3PR10MB3803:EE_
-X-Microsoft-Antispam-PRVS: <PR3PR10MB380312F3491AF8615F348A54B67C9@PR3PR10MB3803.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: r6Doq52C1camTVWswb3qPoAFyFxPznb1tXjiF78/jaAqyPZ9fcYp2Qx6t/P5BTEeIcnVNQA5Mb0vOTTCviDGfaBXg+ZVtnsp2MfuEYY6R6HJzkTj80DkhlzyF09o8fF5rLD8DYs2pJ41YS4pixgmJTnibylk0Kdc19D7yl2e+t9D17ssmMJeB6ZXcqxJJAdb7lWTIvawkz16dDTqiZdess9iHZY1itQMplmwepD5DPCoBA3XuDSvsyu3obmx9OQYaVjjzpkZnXraylWjE/urjFgsKnDQ5mqcesvLXK04cRvoxDs115EGpuoxEca7gj0HJpr/+qC3tSnAdiKvbswEqaoF82t1rl7PwBzL2U36XOniI/V2UAbfQXmpbULlAllu5utheAytqNAwcQWzfvM5pmPBoTpbsUpO5bw9mNUEjKZQl7utJFDHG7tfaXREfyXqKx1SfZlr6pr7H6YmDJUntA3wRfJmBsM9bSh52HWlEM+TyyHfoT0FbBtd8ZpiNczH7smQ1E0uiOG1UJTXTCZEyUjejtHGSw/O2VFuXFu5tZAHlk59IpGF4LJ8lKvBONh2tZ+zsF7Gw3c6AVn5c2oKmTG7omUg000QU83/WcNY8XagmfWWdxAujjCyNQ8nId7sBH/s+QDl4mmP7fl6QgeH+w==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(7916004)(396003)(346002)(366004)(39840400004)(136003)(376002)(508600001)(83380400001)(66556008)(6512007)(66946007)(186003)(8936002)(66476007)(53546011)(4326008)(9686003)(54906003)(6916009)(8676002)(6506007)(1076003)(316002)(6486002)(2906002)(38100700002)(33716001)(86362001)(5660300002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bTRSenJ3RnRISnE1aWFhMFlIWGk4d2E4UUptRDJndnlkOWh6MXkrYlBpbW1T?=
- =?utf-8?B?Z05YaWMwc3laSTh0cCt2QUpXemtTYng5bGJHUExzTEU5M2RMZlJvallrWm1w?=
- =?utf-8?B?citnK2lRZHpRc2kydzh1MHAwNGtWeVVQTzJQSG5xZTRWdEZWb0dPS0FVcFhJ?=
- =?utf-8?B?MWkxRHBkTXZMYm5FK1RGeit5QTlLeERvMWdEQkd2bnd2ZUhDcVVsUjMzSkpT?=
- =?utf-8?B?cFl2eHFROUEzY3pvU1lad2pPWWZVUnVtczUrQ1dUU21rQ3lsU3d5ZXpPdzlq?=
- =?utf-8?B?aHBEMDNEMFovQllibXl2OXpXYlZIQ3Z2ZlZiU203VHNjT3p3WW5kc1Z3cG5B?=
- =?utf-8?B?NTIrZDlKRzFqd0dSaDFOUDdkNkNBWHNLaktlL3RHbjBFNy9sZDdPN2RNaU9X?=
- =?utf-8?B?UnJEMU1KUTQ4Yi8zOGVjVU8rV2dVOUVnK2htVjV0ckFLWTBXeWFobEQ0VXk2?=
- =?utf-8?B?UDArRVJ2UDhhSzdhMG5LUlFNaG9GZm02SEFvdWZTYUpRRnZqbjBheGcyYkY1?=
- =?utf-8?B?YWdDOEtEZmxyTGJKU2ZENStlMmtSWmFwOFZDR3R6T254cGhnamMxWHJJTXJr?=
- =?utf-8?B?RzB5Q0MwUHIyazM4QTlnVVc4RDdJaDdsSUMwV2hTSGJFRDZQNlF2c0hONDh6?=
- =?utf-8?B?dGx1Sjdjb20zdTQxNDZtbWlYM2lKU2hrSUk4QTVxbXpycUVzODJUS21UanZX?=
- =?utf-8?B?WHdRWFZXdlE4VjM4WGh1WWdsYnhUbGIrRzZ3dXN3ckdvU1hBb1FVN2oxZWZ0?=
- =?utf-8?B?bG12VmhmU1J4WWJzUzRpUS9PTXlOKzd3ME9INXcvcUxRWDFTZXRHRDNqeGl5?=
- =?utf-8?B?bVkyV05Cakl4TlJBb2wwaVJRMGlNMkdGbGt5b2NBNnFmMzJsT0VlWWdQUWRE?=
- =?utf-8?B?Q29YWk1jWGJrMUNMeE4xZkwxUi9hVnhsS1hsVGYzWmxYN2lFVXVtdXR4cUVa?=
- =?utf-8?B?OEFnOURtZWZHdi8rdTlORkpQMkFSQUI2UllDT0s5MjdMcDFXd3d6OXVIaUFW?=
- =?utf-8?B?TGZvc3l3VlZWWkhzdWRUR3dWVVdJK3YvNE1ITndlZ2JzTWJrK1ZVMnhjV0Rt?=
- =?utf-8?B?UTBCVi9hMjEvWTlNK2tMVjlSbzdLNFJUNUFJUkNDYzFBL2lycnc4d1ROWGl2?=
- =?utf-8?B?OVNSNnJFcVFqL2hQS29XWTRtd2ZsV00wVHBsdGVKLzdVTDR0TytSYTd3NHcr?=
- =?utf-8?B?ZUtweExRdWMvTkRrOXJybS90dm5nd08xRFZ4RjdEVHJaTWk5bThlMmxZUUQ4?=
- =?utf-8?B?dk01Z2tVQU9NRnEvQWFpRmtib0tiVFlxWUhOMENoWmNzajhkcFlocUJxcjRj?=
- =?utf-8?B?dUtzYnI0akFQRUFqWGQ2NG9OeDZFZkdtbTFMbHRMZ0VQdTN6amo2eFRXamhv?=
- =?utf-8?B?cVZib2xmSEFuTXRMdm9uZHNrWGFCMkVxeEwwTkZyUHNnMHhaVmJObEN4R1JE?=
- =?utf-8?B?cGlhbmtzSHNLSUF0Ui9BbmVkbzRpNHdFcGJpb1NEWGRFMDJ4eldGMUF4UWk5?=
- =?utf-8?B?UkxJczNNMmhmWVNoNElQeVdWUjl1ODRGY1BPQlN3TXArcHViVmR6OGVvRU85?=
- =?utf-8?B?RTl1djZnT2xhMHQ5MkZOMkpBajBRZHFGRUcvTVFtbC96eW5QbVJwRmdBbDc3?=
- =?utf-8?B?a3pKWi9pV0hZNExnQzJkMGpDOWRETWJKS08vL2V5bnpnNW14N2VtT3Z2aHNw?=
- =?utf-8?B?Zm9lS3k2cmhrL2JrMFA3eW1PNVZJbkNiVEIzWnNHaUM3SGtlRlRqNFNMU2E3?=
- =?utf-8?B?eU1YOFdHbGswR3RhdjYraWw1NTkwV0pSdURaamgyVkUwam40Z000QWVBK2ho?=
- =?utf-8?B?b2MzQ2lDdzRiWVU2aHdqUkc0YS9ncW5jbnZUMmN4VkovcHpWeElNeCtpNzEr?=
- =?utf-8?B?ZjVPcjRDckVSdjhzdzJoUkpHeXRwdElkeEhXODBqSUt0dm5mNnVHK3ExZjNx?=
- =?utf-8?B?K2pqeFFRY1RhZ3RiUmNFUWtCcTFNODVyYXRxMkxWSGJMY29lNEVTMTVxY3hE?=
- =?utf-8?B?RytWY0dWNFd3aTJvQmRuSGpRMnlkQW1PVDVwRUZaakQrWDFrRWNSTWEya2xh?=
- =?utf-8?B?NVBjV0dmT3J1VUllVnVTbG1ZemI5NmY1eVVMMGl5V3h0TkQrWk9DNXRTRFZV?=
- =?utf-8?B?YnlUVi9EK2p5MWp6UVpiRUNNbmR3eVFPekxVQlFTcmI3MEMyL0U0SmF2Ymk0?=
- =?utf-8?B?d1AvMTVoZWVFWktlRjV5OWRjOFl0QncrcVdkY3kwMmxiMTBOcUl3WUR1UW1x?=
- =?utf-8?B?bnZ5dUNQYkR5MnZ2MW40VFBUVWRGUlBXcG04STN3SDBXMFVsemtqbkU3ZmpB?=
- =?utf-8?B?eTlCa3hlekRsOFh6VGE5azd0ak9TODVNOFAvUWtsaDNiN2xFVG9oQT09?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: cc7cf97d-79d3-4747-f50a-08d9c465d0df
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Dec 2021 09:39:42.5964
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: a3fmBZoWM+YCmq3jszZ7LTLxaWrZYrAWJs0SUGD/x/EX4830x+ij0a8ZH9ReMlmEYwj60zffnk7IFLw2DmwO8PCtJmYHfuqdtpmSF9Azs50=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB3803
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Subject: Re: passing CURLOPT_CERTTYPE to libcurl
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+CC:     git@vger.kernel.org, jqassar@gmail.com
+From:   Florian Mickler <florian@mickler.org>
+Message-ID: <4B51B2CA-3BED-4046-8544-219DA737E7CD@mickler.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20.12.2021 17:07, Eric Sunshine wrote:
->`On Mon, Dec 20, 2021 at 9:09 AM Fabian Stelzer <fs@gigacodes.de> wrote:
->> Since git now supports multiple cryptographic methods/formats to sign
->> objects, the `gpg.` configuration prefix is misleading.
->> Add `cryptoSign.`, but keep `gpg.` as a compatibility alias at least for
->> all existing options.
->> `gpg.mintrustlevel` is moved to `cryptosign.gpg.mintrustlevel` while
->> also still allowing the former.
->> ---
->> diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
->> @@ -1,6 +1,17 @@
->> +cryptoSign.format::
->> +gpg.format::
->> +       Specifies which key format to use when signing with `--crypto-sign`.
->> +       Default is "openpgp". Other possible values are "x509", "ssh".
->> +
->> +cryptoSign.<format>.program::
->> +gpg.<format>.program::
->> +       Use this to customize the program used for the signing format you
->> +       chose (see `cryptoSign.format`). The default value for
->
->This is a somewhat minor comment, but I find that grouping these
->config keys together like this gives too much weight to the old
->`gpg.foo` ones, making it seem as if they're still first-class
->citizens which people can use freely. If you instead organize them as
->below, then it is easier to see at a glance that the old keys
->shouldn't be used:
->
->    cryptoSign.format::
->        Specifies which key format to use when signing...
->
->    cryptoSign.<format>.program::
->        Use this to customize the program used...
->
->    ...
->
->    gpg.format::
->        Deprecated synonym of `cryptoSign.format`.
->
->    gpg.<format>.program::
->        Deprecated synonym of `cryptoSign.<format>.program`.
->
->The same observation about grouping of config keys applies to the
->remainder of the documentation changes in this patch.
+Thank you for the summary!
+I am currently looking into it. Got into a conversation with dwmw2 also about fixing libcurl or even openssl after i found some issues he opened about this weird interface. Which really sounds like it would be the real fix. (Although probably slower to trickle to end users and more complex)
 
-I wasn't sure how much we want to already deprecate the `gpg.` keys so I 
-tried a gentle approach :)
-But I would be in favor of your variant.
 
-Thanks
+For this patch i guess I will skip the engine variable, because it is not needed for my use case and my lib version. (Although I am still experimenting with the whole pkcs11 stuff)
+
+That makes the error handling easier (none needed, imo).
+The git libcurl min version is also raised above the introduction of those curlopts, so no libcurl-version-bracing needed.
+
+I was looking into the testing framework, it might be possible to configure the https to require client auth on a different port and then testing that with pem and der file.
+
+Adding pkcs11 infrastructure to the test harness might be a bit over the top though :-)
+
+Best regards,
+Flo
+
+
+
+Am 20. Dezember 2021 23:21:28 MEZ schrieb Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>Hi Junio & Florian,
+>
+>On Fri, 17 Dec 2021, Junio C Hamano wrote:
+>
+>> Florian Mickler <florian@mickler.org> writes:
+>>
+>> > Is there a specific reason, that patch wasn't merged? It would
+>allow
+>> > for non-pem ssl certificates to be loaded also (without pkcs11 at
+>all).
+>> >
+>> > I realize, that the underlying systems could and should set up
+>> > everything automagically as soon as i point them to the certificate
+>that
+>> > i want to use. But not opening up these CURL Settings from git
+>seems
+>> > kind of silly given that today's systems still seem kinda borked
+>and do
+>> > not do that.  What harm comes from these two tuning knobs being
+>exposed?
+>> >
+>> > Best regards,
+>> > Flo
+>> >
+>> >
+>> > [1] https://marc.info/?l=git&m=136675822032549&w=2
+>
+>This corresponds to
+>https://lore.kernel.org/git/1366758207-7724-1-git-send-email-jqassar@gmail.com/
+>(for those who prefer lore.kernel.org over marc.info, and for those who
+>want to look for the Message-ID directly).
+>
+>My summary of that thread:
+>
+>- The patch implements something Git wants to support.
+>
+>- A couple of improvements need to be made, such as:
+>
+>  * Error-checking needed to be improved
+>
+> * Adding a hint to the documentation of `http.sslKeyType` being set to
+>    `ENG` causing `http.sslKey` being interpreted differently.
+>
+>  * Adding regression tests, if possible
+>
+>  * Maybe a more complete commit message?
+>
+>- Testing the smart card support was considered hard, especially given
+>that the contributor still wanted to contribute patches to cURL without
+>  which it wouldn't work.
+>
+>  The patch seems to have been contributed via
+>  https://curl.se/mail/lib-2013-04/0340.html, been reviewed and changes
+>  were requested, but there was no other patch submission that I could
+>  find.
+>
+>However, over five years later, what looks like an equivalent fix to me
+>  was applied:
+>https://github.com/curl/curl/commit/4939f3652473c1519d2b604068efb87ef7531874
+>
+>- The contributor, Jerry Qassar, gave all the signs of working on a
+>  next iteration ("reroll", as Junio likes to call it). But that never
+>  materialized, either:
+>
+>  https://lore.kernel.org/git/?q=f%3Ajqassar
+>
+> Based on this, the lack of a cURL contribution, and a quick web search
+>  for the name "Jerry Qassar" I somehow doubt that Cc:ing them might
+>  raise their attention.
+>
+>> Almost always, when some patch aims to achieve a worthy goal, and in
+>> the initial discussion on the thread more experienced project
+>> members agree it is a worthwhile thing to do, the only reason why
+>> the feature proposed does not materialize in later versions of Git
+>> is because the developer with the original itch did not follow it
+>> through after getting review comments and saying something that
+>> makes reviewers to expect an updated version of the patch.
+>>
+>> I didn't follow your marc.info URL, but I am reasonably sure, if I
+>> were involved in the discussion, that would be the likely reason.
+>
+>Yes, you were involved in the discussion, and indeed, there was no
+>follow-up.
+>
+>After more than 8 years, I do believe that the patch is fair game to be
+>picked up by any other interested contributor who might want to
+>contribute
+>v2 (hint, hint, Florian... all it would take is to study the mail
+>thread
+>from way back when and adapt the patch accordingly, of course after
+>rebasing it to a recent Git revision).
+>
+>Ciao,
+>Dscho
+
+---
+Signature
