@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4611CC433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 14:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BAFFC433EF
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 14:20:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238377AbhLUOPt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 09:15:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42452 "EHLO
+        id S238420AbhLUOUR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 09:20:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238372AbhLUOPs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 09:15:48 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0581FC061574
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 06:15:48 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id bm14so39745767edb.5
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 06:15:47 -0800 (PST)
+        with ESMTP id S238390AbhLUOUR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 09:20:17 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCBF0C061574
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 06:20:16 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id m21so25490165edc.0
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 06:20:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=/YCKC4GDQ8FSyWMWR+ANzeS5gYXH0VU+fM9gM0T+dRM=;
-        b=AbjcrjfzSj+TnpAp6X6m2aqYTyaU16Tlgk4o6nsgDFZVL+LdbtLa3xfVxkh4v1paCn
-         mdyWo7fOJlgD8J5PwNz7of4yEb4+KdEpleN5ZAW0bGYpnV9e7EBDm1CuG2EstM5MSBrZ
-         ryEc3I9u6vw15udOK3yqEj+4Gm/mjD47FGDGtizA7xKvykRDfgutVvFmk9Ij3uUUaD2z
-         OZSBIiyqSRvtMg/v9LGABqYMHI1kwxBTdSa9D502OAI8R8vxG0kpEZGmYwWDK13hw0qg
-         8QLSmvUs7nGBs3SHPv2vr2vzBn0GYocHr/GWJG4Whj2We1DIB4IW8lNiqNQal9X/6qpM
-         7o+g==
+        bh=Shydqtf71UfJN2x1B0Vhq4u5iCgVX8xn41W8cJEKrSA=;
+        b=H2ddbuNhyE+piuVWqDrOOc81hJSeofIC32R7hj5EdZaGNC2LFBICVizhmXlNse52OJ
+         ktXXOpHWpOsBuB/EfBDZ8TkHZ4VmPd3Oj5XUvkyeMAiBLzlqF9ZMaD4NmnA74SC7Sd+m
+         JJ3R0pJ7w64qetD1vnRx+i2SclHNOhv+W+vRvvJcQtxM/YsKiuTVxyhvOwxNKI+Su4b4
+         HBAGYvd/oQBPVOt9UUqy7on/5RPdVPReq3gjMZq9rXoqnnUkXV+dgAYaIsjOrCx/0OT5
+         MoMqZwMEbKnr+VPLzyVfhyGjNlGPvYy1ic0ESqZ2L2+fPzf74pCenWBzdlMiAWQKFXzc
+         peOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=/YCKC4GDQ8FSyWMWR+ANzeS5gYXH0VU+fM9gM0T+dRM=;
-        b=OOHK3GK4bUrVYunT3M+nOtkZNqDvEPJsTomjA/B4Coe7k0CSzgtdIyonk6eXthcqYJ
-         E9YthE3OvuWrZl7jQPHRllhkVh/nXjU+dE8RifumItM4y31axhX9iLd0Sd9cnnz1dMFq
-         ngyTjBBzbDA2e143ultoR/Mhag7Mdn1noOJMxENmsZ1W10nMGiF/WCeKhxWPT7B9uz2o
-         3RfP720YmB4jw/OJsF9bwdnRn76g0R3pK18Ivf8N1Qq7tkLR4mdCNi75b390xjdDvPgu
-         0bOK3+y4/E3JximqIKFpljD81/54YxIrHHNAHQgPRH52YOAM/zlM8t/0CZPUsDkooI1M
-         oapA==
-X-Gm-Message-State: AOAM533JS44F3DjezNDSkV4daCgUsTQ3r4F2FD1W6viYERi0z75Z5ak1
-        3IEgRdauhVCP0YBDOY73Azs=
-X-Google-Smtp-Source: ABdhPJzJXGsZvOjIusP3cTEA+OJb/IfAbSTkZvnvbX5fVJmBDXHFwZ22d0ZaQsxgNP920vutw7c8Nw==
-X-Received: by 2002:a17:907:1b24:: with SMTP id mp36mr2900410ejc.487.1640096144355;
-        Tue, 21 Dec 2021 06:15:44 -0800 (PST)
+        bh=Shydqtf71UfJN2x1B0Vhq4u5iCgVX8xn41W8cJEKrSA=;
+        b=CSlrJr7eqwfwb/VZxeB1phOPVNoHj13ZkQVpd0Dzu+cwrhTEGmo1FXdZ4sBNq1cHhs
+         5xuqlDOdCaK8pRFiHNM71j+9btARjSbyd+7SfGOXpTPWRW2Q1QgCkrAOJ3rKxo2LP893
+         OGYH876ulNUI+ujiB2fFxl0SaP2nSXYyOvEb5E//A48/xWXpGYEsSTBSbUP2JUhXhSC2
+         2i+2BvR4bApEHoTZaulsdQxIwf21eVk8dzjsyPSuH4d9INO/LjdcNoUel55ho0KVmh0i
+         e4jy6aKJfZCyks7RpXA+xZiBzNcgwcOO+SrQ84urGD46QIdK5Fg5xg6I1UT6H2rw/fCm
+         4vyQ==
+X-Gm-Message-State: AOAM5304xIJwcJeqKR0MHeoZk37L90LX+Uptfc2oTwywAYvy1+Kml2+F
+        Evi8vCycI2lTJjUvH5tyTTM=
+X-Google-Smtp-Source: ABdhPJwJayNyO1MZjzcZ1ViGCLf+G8xdN5Tzvm4PbPLPyrp2dRoL2uK0whd7FMpUtzoIvqXLrkjRYA==
+X-Received: by 2002:a05:6402:35c2:: with SMTP id z2mr3526403edc.136.1640096415256;
+        Tue, 21 Dec 2021 06:20:15 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id a13sm8274891edk.29.2021.12.21.06.15.43
+        by smtp.gmail.com with ESMTPSA id y17sm8712487edd.31.2021.12.21.06.20.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 06:15:43 -0800 (PST)
+        Tue, 21 Dec 2021 06:20:14 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mzfvb-000kpf-4z;
-        Tue, 21 Dec 2021 15:15:43 +0100
+        id 1mzfzy-000kwy-7C;
+        Tue, 21 Dec 2021 15:20:14 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Han Xin <chiyutianyi@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
@@ -60,13 +60,14 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Derrick Stolee <stolee@gmail.com>,
         =?utf-8?Q?Re?= =?utf-8?Q?n=C3=A9?= Scharfe <l.s.r@web.de>,
         Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: Re: [PATCH v7 1/5] unpack-objects.c: add dry_run mode for get_data()
-Date:   Tue, 21 Dec 2021 15:09:43 +0100
+Subject: Re: [PATCH v7 3/5] object-file.c: refactor write_loose_object() to
+ reuse in stream version
+Date:   Tue, 21 Dec 2021 15:16:57 +0100
 References: <20211217112629.12334-1-chiyutianyi@gmail.com>
- <20211221115201.12120-2-chiyutianyi@gmail.com>
+ <20211221115201.12120-4-chiyutianyi@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20211221115201.12120-2-chiyutianyi@gmail.com>
-Message-ID: <211221.86bl1arqls.gmgdl@evledraar.gmail.com>
+In-reply-to: <20211221115201.12120-4-chiyutianyi@gmail.com>
+Message-ID: <211221.867dbyrqe9.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -77,223 +78,38 @@ X-Mailing-List: git@vger.kernel.org
 On Tue, Dec 21 2021, Han Xin wrote:
 
 > From: Han Xin <hanxin.hx@alibaba-inc.com>
->
-> In dry_run mode, "get_data()" is used to verify the inflation of data,
-> and the returned buffer will not be used at all and will be freed
-> immediately. Even in dry_run mode, it is dangerous to allocate a
-> full-size buffer for a large blob object. Therefore, only allocate a
-> low memory footprint when calling "get_data()" in dry_run mode.
->
-> Suggested-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-> ---
->  builtin/unpack-objects.c            | 23 +++++++++---
->  t/t5590-unpack-non-delta-objects.sh | 57 +++++++++++++++++++++++++++++
->  2 files changed, 74 insertions(+), 6 deletions(-)
->  create mode 100755 t/t5590-unpack-non-delta-objects.sh
->
-> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-> index 4a9466295b..9104eb48da 100644
-> --- a/builtin/unpack-objects.c
-> +++ b/builtin/unpack-objects.c
-> @@ -96,15 +96,21 @@ static void use(int bytes)
->  	display_throughput(progress, consumed_bytes);
->  }
+> [...]
+> @@ -1854,17 +1876,48 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
+>  		strbuf_reset(tmp);
+>  		strbuf_add(tmp, filename, dirlen - 1);
+>  		if (mkdir(tmp->buf, 0777) && errno != EEXIST)
+> -			return -1;
+> +			break;
+>  		if (adjust_shared_perm(tmp->buf))
+> -			return -1;
+> +			break;
 >  
-> -static void *get_data(unsigned long size)
-> +static void *get_data(size_t size, int dry_run)
->  {
->  	git_zstream stream;
-> -	void *buf = xmallocz(size);
-> +	size_t bufsize;
-> +	void *buf;
->  
->  	memset(&stream, 0, sizeof(stream));
-> +	if (dry_run && size > 8192)
-> +		bufsize = 8192;
-> +	else
-> +		bufsize = size;
-> +	buf = xmallocz(bufsize);
+>  		/* Try again */
+>  		strbuf_addstr(tmp, "/tmp_obj_XXXXXX");
+>  		fd = git_mkstemp_mode(tmp->buf, 0444);
+> +	} while (0);
+> +
+> +	if (fd < 0 && !(flags & HASH_SILENT)) {
+> +		if (errno == EACCES)
+> +			return error(_("insufficient permission for adding an "
+> +				       "object to repository database %s"),
+> +				     get_object_directory());
 
-Maybe I'm misunderstanding this, but the commit message says it would be
-dangerous to allocate a very larger buffer, but here we only limit the
-size under "dry_run".
+This should be an error_errno() instead, ...
 
-Removing that "&& size > 8192" makes all the tests pass still, so there
-seems to be some missing coverage here in any case.
+> +		else
+> +			return error_errno(_("unable to create temporary file"));
 
-> diff --git a/t/t5590-unpack-non-delta-objects.sh b/t/t5590-unpack-non-delta-objects.sh
-> new file mode 100755
-> index 0000000000..48c4fb1ba3
-> --- /dev/null
-> +++ b/t/t5590-unpack-non-delta-objects.sh
-> @@ -0,0 +1,57 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2021 Han Xin
-> +#
-> +
-> +test_description='Test unpack-objects with non-delta objects'
-> +
-> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> +
-> +. ./test-lib.sh
-> +
-> +prepare_dest () {
-> +	test_when_finished "rm -rf dest.git" &&
-> +	git init --bare dest.git
-> +}
-> +
-> +test_expect_success "setup repo with big blobs (1.5 MB)" '
-> +	test-tool genrandom foo 1500000 >big-blob &&
-> +	test_commit --append foo big-blob &&
-> +	test-tool genrandom bar 1500000 >big-blob &&
-> +	test_commit --append bar big-blob &&
-> +	(
-> +		cd .git &&
-> +		find objects/?? -type f | sort
-> +	) >expect &&
-> +	PACK=$(echo main | git pack-objects --revs test)
-> +'
-> +
-> +test_expect_success 'setup env: GIT_ALLOC_LIMIT to 1MB' '
-> +	GIT_ALLOC_LIMIT=1m &&
-> +	export GIT_ALLOC_LIMIT
-> +'
-> +
-> +test_expect_success 'fail to unpack-objects: cannot allocate' '
-> +	prepare_dest &&
-> +	test_must_fail git -C dest.git unpack-objects <test-$PACK.pack 2>err &&
-> +	grep "fatal: attempting to allocate" err &&
-> +	(
-> +		cd dest.git &&
-> +		find objects/?? -type f | sort
-> +	) >actual &&
-> +	test_file_not_empty actual &&
-> +	! test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'unpack-objects dry-run' '
-> +	prepare_dest &&
-> +	git -C dest.git unpack-objects -n <test-$PACK.pack &&
-> +	(
-> +		cd dest.git &&
-> +		find objects/ -type f
-> +	) >actual &&
-> +	test_must_be_empty actual
-> +'
-> +
-> +test_done
+...and we can just fold this whole if/else into one condition with a
+briefer message, e.g.:
 
-I commented on this "find" usage in an earlier round, I think there's a
-much easier way to do this. You're really just going back and forth
-between checking whether or not all the objects are loose.
+    error_errno(_("unable to add object to '%s'"), get_object_directory());
 
-I think that the below fix-up on top of this series is a better way to
-do that, and more accurate. I.e. in your test here you check "!
-test_cmp", which means that we could have some packed and some loose,
-but really what you're meaning to check is a flip-flop between "all
-loose?" and "no loose?.
-
-In addition to that there was no reason to hardcode "main", we can just
-use HEAD. All in all I think the below fix-up makes sense:
-
-diff --git a/t/t5590-unpack-non-delta-objects.sh b/t/t5590-unpack-non-delta-objects.sh
-index 8436cbf8db6..d78bb89225d 100755
---- a/t/t5590-unpack-non-delta-objects.sh
-+++ b/t/t5590-unpack-non-delta-objects.sh
-@@ -5,9 +5,6 @@
- 
- test_description='Test unpack-objects with non-delta objects'
- 
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
--export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
--
- . ./test-lib.sh
- 
- prepare_dest () {
-@@ -20,16 +17,22 @@ prepare_dest () {
- 	fi
- }
- 
-+assert_no_loose () {
-+	glob=dest.git/objects/?? &&
-+	echo "$glob" >expect &&
-+	echo $glob >actual &&
-+	test_cmp expect actual
-+}
-+
- test_expect_success "setup repo with big blobs (1.5 MB)" '
- 	test-tool genrandom foo 1500000 >big-blob &&
- 	test_commit --append foo big-blob &&
- 	test-tool genrandom bar 1500000 >big-blob &&
- 	test_commit --append bar big-blob &&
--	(
--		cd .git &&
--		find objects/?? -type f | sort
--	) >expect &&
--	PACK=$(echo main | git pack-objects --revs test)
-+
-+	# Everything is loose
-+	rmdir .git/objects/pack &&
-+	PACK=$(echo HEAD | git pack-objects --revs test)
- '
- 
- test_expect_success 'setup env: GIT_ALLOC_LIMIT to 1MB' '
-@@ -41,51 +44,27 @@ test_expect_success 'fail to unpack-objects: cannot allocate' '
- 	prepare_dest 2m &&
- 	test_must_fail git -C dest.git unpack-objects <test-$PACK.pack 2>err &&
- 	grep "fatal: attempting to allocate" err &&
--	(
--		cd dest.git &&
--		find objects/?? -type f | sort
--	) >actual &&
--	test_file_not_empty actual &&
--	! test_cmp expect actual
-+	rmdir dest.git/objects/pack
- '
- 
- test_expect_success 'unpack big object in stream' '
- 	prepare_dest 1m &&
- 	mkdir -p dest.git/objects/05 &&
- 	git -C dest.git unpack-objects <test-$PACK.pack &&
--	git -C dest.git fsck &&
--	(
--		cd dest.git &&
--		find objects/?? -type f | sort
--	) >actual &&
--	test_cmp expect actual
-+	rmdir dest.git/objects/pack
- '
- 
- test_expect_success 'unpack big object in stream with existing oids' '
- 	prepare_dest 1m &&
- 	git -C dest.git index-pack --stdin <test-$PACK.pack &&
--	(
--		cd dest.git &&
--		find objects/?? -type f | sort
--	) >actual &&
--	test_must_be_empty actual &&
- 	git -C dest.git unpack-objects <test-$PACK.pack &&
--	git -C dest.git fsck &&
--	(
--		cd dest.git &&
--		find objects/?? -type f | sort
--	) >actual &&
--	test_must_be_empty actual
-+	assert_no_loose
- '
- 
- test_expect_success 'unpack-objects dry-run' '
- 	prepare_dest &&
- 	git -C dest.git unpack-objects -n <test-$PACK.pack &&
--	(
--		cd dest.git &&
--		find objects/ -type f
--	) >actual &&
--	test_must_be_empty actual
-+	assert_no_loose
- '
- 
- test_done
+Or whatever, unless there's another bug here where you inverted these
+conditions, and the "else" really should not use "error_errno" but
+"error".... (I don't know...)
