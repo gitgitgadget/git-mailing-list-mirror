@@ -2,101 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 087A6C433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 23:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D52ACC433EF
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 23:20:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236890AbhLUXPz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 18:15:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54520 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236827AbhLUXPy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 18:15:54 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59E46C061574
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:15:54 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id m21so2473760edc.0
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:15:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5SxpUVwq0j52J8MMaypwb1bExztDF+7jJ4QHXuT2sNo=;
-        b=X0oeMOE7Vi9X4rgSRDjOEAj+cpZ0AO3XU1C3oAoAdjkRmhs/lrt+kIoaMGytNeWOMT
-         KvGgC7qRQBQ9B2Rqk/OZmQfDOcnPBWSob2JVhsSPShY5DHjsbDr6e5Men7H0lRNyVmD5
-         z1FrNyoCEQkoRqlBIvI5g0Au9nAs84gfAsTrc/qK3HlRE8eGklEzt1x/m4+WlJ5pHRnH
-         h3CHjqQYoKkbyfjrf3zONeuTw546NI8ms9v3+GgWUAgzxvQyCbE2kPJu2DVU0u363kyf
-         91hGLMNsKj7NwyqmGzwiQM+zXDXD1MoDF5txRLpGn3sM0Ufca2HDoevwv7RXxdv6xDeM
-         Qi/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5SxpUVwq0j52J8MMaypwb1bExztDF+7jJ4QHXuT2sNo=;
-        b=jVadxx34KcL5bOsZbFet8mB3OVfHNKCBC4YvCxtczt/AjTJvlK7nzp+EYMMoCz9Ldz
-         9BmHDKn5ahgwpifrYtsfELrq4aiYmBV02jf/YkG7CAw+A75MWk/Ui8aQZfvxBU+y2/TQ
-         bt+kHtoa8WyOprggb/CKfAB7oI3uKlwxFYj20S+Gj/0De7SOjGdtGhTQo0N/FbkKFD3f
-         lLHtlT1onv9blWledNMvsSZCM3oIRtq4CcWriTjc2u1KNBaYCWRQxmUvsGQBkqUXQFAR
-         DOfqDcMA/A2cXsv5IxDdxk2v7nH4UVvEHhVcMv+3wYYAj3fg0tvNqQPSnqn6aOSaizK2
-         24sA==
-X-Gm-Message-State: AOAM5326UC72h6yIUT2fa5gGN+iqxGpU74gM3BzcilxdJ3Sctf4JbfjW
-        mgK/wV9Uu+wTGPImUnfZzjuiZMixrHPa5TXT8VD/OW6VO0A=
-X-Google-Smtp-Source: ABdhPJz+WIBJ0eJeUapLs+6L3phAN1LgkZJOYVwc4VagqPXhBYSU4lHBNyLYSzZevL0B1FuwgwB46nkhAiQfR9zoqHM=
-X-Received: by 2002:a17:906:4791:: with SMTP id cw17mr407945ejc.493.1640128552958;
- Tue, 21 Dec 2021 15:15:52 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
- <d022176618d76943743940da0787291d51c9b4f0.1640109948.git.gitgitgadget@gmail.com>
- <211221.868rwdr6wc.gmgdl@evledraar.gmail.com> <CABPp-BHZH=hdEZ=iYQK_Gg+3aXmJj4uv4SZcJB=J4_K=TTKwHQ@mail.gmail.com>
- <211222.86v8zhpnm5.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211222.86v8zhpnm5.gmgdl@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 21 Dec 2021 15:15:41 -0800
-Message-ID: <CABPp-BEh1y3X9GcEghEBNd_t+wog0ayXgD-Bftc5zA-nidPhZw@mail.gmail.com>
-Subject: Re: [PATCH 2/9] ll-merge: make callers responsible for showing warnings
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
+        id S232987AbhLUXUs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 18:20:48 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54093 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232112AbhLUXUq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 18:20:46 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A789C1593AE;
+        Tue, 21 Dec 2021 18:20:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3QAe0BvbOZRLz5HSzy8dQ1wPdmhMD+S1YSe8mX
+        96C+M=; b=sza5tM2CIR29Y89OHdAir5myMo0g1nTo+j5C3DpIlV6b3UABKWlX92
+        SE7i3HYN6LtGFwT+QUlaaaG6FMww7GeVNeNT80P0BJzhFyAXQ7/6AgIVt+hdrsku
+        r0ZKzcTSWVDyvMytjvMsJbcHBIv3nyriiekGQGp9HZJg9OA2yXLJ4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A0C031593AD;
+        Tue, 21 Dec 2021 18:20:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DE5F51593AC;
+        Tue, 21 Dec 2021 18:20:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Sergey Organov <sorganov@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Neeraj Singh <nksingh85@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 0/9] Add a new --remerge-diff capability to show & log
+References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
+Date:   Tue, 21 Dec 2021 15:20:40 -0800
+In-Reply-To: <pull.1103.git.1640109948.gitgitgadget@gmail.com> (Elijah Newren
+        via GitGitGadget's message of "Tue, 21 Dec 2021 18:05:39 +0000")
+Message-ID: <xmqqsfulo88n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9D98635C-62B4-11EC-927D-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 21, 2021 at 3:03 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Tue, Dec 21 2021, Elijah Newren wrote:
->
-> > On Tue, Dec 21, 2021 at 1:21 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > <avarab@gmail.com> wrote:
-> >>
-> >> On Tue, Dec 21 2021, Elijah Newren via GitGitGadget wrote:
-> >>
-> >> > From: Elijah Newren <newren@gmail.com>
-> >>
-> >> > +     if (status =3D=3D LL_MERGE_BINARY_CONFLICT)
-> >> > +             warning("Cannot merge binary files: %s (%s vs. %s)",
-> >> > +                     "base", "ours", "theirs");
-> >>
-> >> This & other messages in the series have warning/BUG etc. starting wit=
-h
-> >> upper-case.
-> >
-> > Yes, but I'm not introducing a new message here; I'm merely moving an
-> > existing one.  It's important to me that readers of this patch be able
-> > to verify that I have made no functional changes in this patch, so
-> > fixing the case should definitely be a different patch from this one.
-> > I kind of think that fixing the case distracts a bit from the point of
-> > the series, and the series is already kind of long, but do you feel
-> > strongly that I should fix the case with a new patch inserted into the
-> > series?
->
-> I just missed the bit where it was moved from below in the diff. Sorry
-> about the noise.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Nah, no worries; thanks for taking a look at the patches!
+> Here are some patches to add a --remerge-diff capability to show & log,
+> which works by comparing merge commits to an automatic remerge (note that
+> the automatic remerge tree can contain files with conflict markers).
+>
+> Changes since original submission[1]:
+>
+>  * Rebased on top of the version of ns/tmp-objdir that Neeraj submitted
+>    (Neeraj's patches were based on v2.34, but ns/tmp-objdir got applied on
+>    an old commit and does not even build because of that).
+
+Oh, that's bad.  I wish people do not rebase their updates on top of
+newer 'master' only for the sake of it, once an older version is
+queued.
+
+>  * Modify ll-merge API to return a status, instead of printing "Cannot merge
+>    binary files" on stdout[2] (as suggested by Peff)
+
+I wondered if we want to do the same for other error messages to
+give callers greater control, but this change by itself already
+looks quite good.
+
+>  * Make conflict messages and other such warnings into diff headers of the
+>    subsequent remerge-diff rather than appearing in the diff as file content
+>    of some funny looking filenames (as suggested by Peff[3] and Junio[4])
+
+OK.
+
+>  * Sergey ack'ed the diff-merges.c portion of the patches, but that wasn't
+>    limited to one patch so not sure where to record that ack.
+
+On that single patch?
+
