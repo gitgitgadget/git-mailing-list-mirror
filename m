@@ -2,106 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22C5DC433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 23:03:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2649C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 23:07:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234467AbhLUXDS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 18:03:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51650 "EHLO
+        id S235293AbhLUXHw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 18:07:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231946AbhLUXDR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 18:03:17 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48DF5C061574
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:03:17 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id m21so2378337edc.0
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:03:17 -0800 (PST)
+        with ESMTP id S235079AbhLUXHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 18:07:51 -0500
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9100DC061574
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:07:51 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id s8-20020a63af48000000b002e6c10ac245so208841pgo.21
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:07:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=MR0qlHuV+TcvmGskfT2exZzdQyXlnbAgffwMHLoQoHQ=;
-        b=drlmpLQkfU7c0R+SKCccRaY0WBFkPiKctPU2gvjCFDVtUYOfU0DpiQbL/QClqCLAxi
-         X9PPM8GyTW9FpUOadAFHNOH+r4MOMecgZOqTciHk6OHK1CR+NhOG8yef/Ma0UhYvO3GM
-         2njfnloTDMd/zLXR0wfIQfOyKUuiZjq/s1c2PUJw1wUwSHOgaMuIB8V3l028foN0XC/T
-         O4MiH/1w5X0/PpI1MdVmgDvjcqbJvp0Ew4bpi69B1Kp8qtUmtcZ3RZcnvPCoZo2F9Wh7
-         I/FSgSbt03dwK7q0qeYiBVGxYlpX6S3caR48izd/pMpaWqphtYm/37h5G1drhVaUDrHp
-         7Nmg==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=eHcy1xH39+76xc/iJ8UCLR8aPhxvitd+UxY206+23c4=;
+        b=Gw7wmSzVeZWhlY0MdTulUKIoL063JKRh48/xujV+Cvwm3y+7xj5+WiW4goKdJBOacv
+         zZEloeIGP6/wCx1Iz5VlOBLYof2/SSVcX+T8N9YkJXt9VgFMPs+15oWFzzl2Kf7gNTbP
+         gIlCCh1Y3U/qirFZUKTQ3F3WfWWwkWTQ6HrGCeBUvU/NHRDoPscPnRoSOqu0BqacqvjK
+         Dq0dec7BKrHPLWekpifwdqYT+KF5EIBHKWNT1DVmyQJnUHa0ntXwMQXsRRfBm4t2kC2t
+         iU1ucXfII4u0ru3QyWB6R/eHgjdIYR6o6R4xGPIacPVxUMHZ5wfjpXB26qMiSZv6IDg9
+         ag/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=MR0qlHuV+TcvmGskfT2exZzdQyXlnbAgffwMHLoQoHQ=;
-        b=A9lG9V5aMjkDtqD7NrmeHprqrqN4ROz6Rgfo9UnmY84iSbuYhPvop4V2tgIgIxvagF
-         Opu73hFUzN9m1z8nxe+9QPtfsusF5D0LFrsjkSWwrrexS1EvFVeJ7/cbbOFOLND+j4e9
-         H4RUrlXM4j5VvDr7oDpk51M4OHLNefobS2AVyNuK17pr02aXnLQI+EkMrK+r1A1hq1Sa
-         gSxuTxgaCrqqKT8sCfBlbjlJp0+HmEP0LX/iHS7oB7//4gY0u76hMvc0aTgIE0qRBXRc
-         LFtsXU3XlaKw9KmO5p+JLaouaPYZAqRWe9GMZd1mr5DO5e56uHYtqSyNep6Hvw7Swzm9
-         LQCw==
-X-Gm-Message-State: AOAM533JhwugxYiqu4/VtXvhtkELwAdOT8WiAHwA1tCM9P2d0b2MHpD2
-        YldpBICBUdS6Nu2HBXBP0asqAkMda1M=
-X-Google-Smtp-Source: ABdhPJzqO8tme7/5HmwJultVzvTly45AcwUkfkQ3gm49R0wNX0CinnOPQfY3Wp8CofdfHNKAcoA0Sw==
-X-Received: by 2002:a05:6402:274e:: with SMTP id z14mr388690edd.369.1640127795613;
-        Tue, 21 Dec 2021 15:03:15 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ga12sm75926ejc.11.2021.12.21.15.03.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 15:03:15 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzoA6-000zQU-PJ;
-        Wed, 22 Dec 2021 00:03:14 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Neeraj Singh <nksingh85@gmail.com>
-Subject: Re: [PATCH 2/9] ll-merge: make callers responsible for showing
- warnings
-Date:   Wed, 22 Dec 2021 00:02:54 +0100
-References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
- <d022176618d76943743940da0787291d51c9b4f0.1640109948.git.gitgitgadget@gmail.com>
- <211221.868rwdr6wc.gmgdl@evledraar.gmail.com>
- <CABPp-BHZH=hdEZ=iYQK_Gg+3aXmJj4uv4SZcJB=J4_K=TTKwHQ@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <CABPp-BHZH=hdEZ=iYQK_Gg+3aXmJj4uv4SZcJB=J4_K=TTKwHQ@mail.gmail.com>
-Message-ID: <211222.86v8zhpnm5.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=eHcy1xH39+76xc/iJ8UCLR8aPhxvitd+UxY206+23c4=;
+        b=5P6E/bNdZQrssVjTWdmBjLRAPDL2Sjyo3K7Od4IlY8hjogWqsmqzlhuoXNA+234Z4N
+         h9AImAYpa2L9gsvvoH9ZRRY5Qjn7S4IgzvCs9xnXAVetFQl+o3AgrFa8v4Kjn27v8pmy
+         RSUfCKk8dbbo0IirDn6TXwrPAje/LyrGHOAm1e1AWlXZj5z1PaFUkm3Ia9LkVPdiwes6
+         Rx3cvHbIdOndSqfSkP8Vkel0dD9mu0U7JVFR2/oIM+GLGEW8KXDhjIbfljQFTNq43Lcm
+         JrGgvavWjwdipPyyY3jCrdWYV82gZHf8DVHzxMwggDWBcazVdsCrjvABNQo5Vzpmiw3B
+         k2OA==
+X-Gm-Message-State: AOAM531gfKUvmXOvL+JeQ8q5dRuVFVzR99EpZ8o9GhDlft6zEjwHgHnw
+        bY1A3eFZmTsM/CBqEqJm1Zw4GenmpE4c6Q==
+X-Google-Smtp-Source: ABdhPJyVm7gpz5tfuUClzysR7FU1SgPXOEgPi3YoIcbS4xTDjbF734eQ+Hg+ujRT1BDkHPmjk885qIIhBytzZQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:1385:b0:4ad:580d:8a8 with SMTP
+ id t5-20020a056a00138500b004ad580d08a8mr590990pfg.10.1640128071037; Tue, 21
+ Dec 2021 15:07:51 -0800 (PST)
+Date:   Tue, 21 Dec 2021 15:07:48 -0800
+In-Reply-To: <kl6ltuf3ysnw.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-Id: <kl6lczlpzhdn.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20211207192925.67680-1-chooglen@google.com> <20211217000235.68996-1-chooglen@google.com>
+ <xmqqilvm24bb.fsf@gitster.g> <kl6ltuf3ysnw.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2] builtin/fetch: skip unnecessary tasks when using --negotiate-only
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Glen Choo <chooglen@google.com> writes:
 
-On Tue, Dec 21 2021, Elijah Newren wrote:
-
-> On Tue, Dec 21, 2021 at 1:21 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
+>>>  	prepare_repo_settings(the_repository);
 >>
->> On Tue, Dec 21 2021, Elijah Newren via GitGitGadget wrote:
->>
->> > From: Elijah Newren <newren@gmail.com>
->>
->> > +     if (status =3D=3D LL_MERGE_BINARY_CONFLICT)
->> > +             warning("Cannot merge binary files: %s (%s vs. %s)",
->> > +                     "base", "ours", "theirs");
->>
->> This & other messages in the series have warning/BUG etc. starting with
->> upper-case.
+>> This is existing code, but I wonder why it can be done _SO_ late in
+>> the sequence.  We've already called the transport API for the
+>> negotiate-only communication at this point, but a call to this
+>> function is the only thing that gives fetch_negotiation_algorithm
+>> member in the_repository its default value, isn't it?
 >
-> Yes, but I'm not introducing a new message here; I'm merely moving an
-> existing one.  It's important to me that readers of this patch be able
-> to verify that I have made no functional changes in this patch, so
-> fixing the case should definitely be a different patch from this one.
-> I kind of think that fixing the case distracts a bit from the point of
-> the series, and the series is already kind of long, but do you feel
-> strongly that I should fix the case with a new patch inserted into the
-> series?
+> That's right, this looks like it could be a bug. Maybe Jonathan knows
+> more.
 
-I just missed the bit where it was moved from below in the diff. Sorry
-about the noise.
+It seems that fetch negotiation always calls prepare_repo_settings().
+Fetch negotiation uses negotiate_using_fetch(), which calls
+fetch_negotiator_init(), which calls prepare_repo_settings():
+
+  void fetch_negotiator_init(struct repository *r,
+          struct fetch_negotiator *negotiator)
+  {
+    prepare_repo_settings(r);
+    switch(r->settings.fetch_negotiation_algorithm) {
+    case FETCH_NEGOTIATION_SKIPPING:
+      skipping_negotiator_init(negotiator);
+      return;
+
+    case FETCH_NEGOTIATION_NOOP:
+      noop_negotiator_init(negotiator);
+      return;
+
+    case FETCH_NEGOTIATION_DEFAULT:
+      default_negotiator_init(negotiator);
+      return;
+    }
+  }
+
+If anything, this seems safer than calling prepare_repo_settings() in
+cmd_fetch() :)
