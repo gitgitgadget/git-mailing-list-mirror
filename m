@@ -2,150 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4733C433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 02:49:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E986BC433EF
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 02:57:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233764AbhLUCtu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 21:49:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56522 "EHLO
+        id S234198AbhLUC5V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 21:57:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233671AbhLUCtt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 21:49:49 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 287B9C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 18:49:49 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id m21so18940492edc.0
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 18:49:49 -0800 (PST)
+        with ESMTP id S234126AbhLUC5U (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 21:57:20 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D2B9C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 18:57:20 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id j6so25415994edw.12
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 18:57:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=P0OI2oXIRs4ouE5mJVtNs4CeIvcrMyJMl2bhwCiuySI=;
-        b=Wei0Slf7Q33GNYHYkm6IV5IB7zmdi+FGnS0R9Z8Y1lzwK/BkjRzDBGNPRJsc7cGIzP
-         ms610F9ZgtRk61T+aWSDegj0uRO3GqhLmWofnK4eVT+XzxYaZeak4ZJNKyjrlEzvAXBV
-         o9v4iXIjMCG+qOYlg6AF9UxV5xc9r2YWY2O3EkpKy/o5jJIh+CgG/pFaxEf7y+tsRzMe
-         MPhe2+BF6kXcxsLMXoyQJ6fTB9gND9JFayp6cxm/Akd435zfdCigHQt/YD9LOZRs/EEv
-         3nCKc2kzNRSo0b+nM2Hysa4MNodb9D/MM0JX4Euc1sFCPkru+IhTcAyixoY85yhvFvET
-         3H1Q==
+         :message-id:mime-version;
+        bh=s4mBWwsDqXUSE4CMGUkVpEDqY1/qiB5YwPPVDDB1RvQ=;
+        b=fnZ3QHmLxaesE0gC8i71gAc6Te+dMMrK5RxykI4y2bIZXx8Pn/6RRrvU7pd8/Lwy+z
+         6+WsyU0GJJfPLkz8dFFVBfJVUMcfh+RIYG+/60dYOk/ZkiC3Eq+g3X6i/Z2Dr4fyKayv
+         GHaqalNZcBuuJgUSjIAoMvuOl1eDdX9ASTICmUFkdoKEiVEl8nzlF6/n2GdpdhTLgBWS
+         WYjK6bcoyiPhPTuv0dvtRZbQxUj2os4FR+uio7k0fQ2i8P2pKPiRg7UmEVl242iRbknN
+         L5PxaE5Cl/j6oIg65I75Z++FUCmRa92t1HEQqYBbEvmkkugnhKpnaaOXO4ujEaLx3SOT
+         +KFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=P0OI2oXIRs4ouE5mJVtNs4CeIvcrMyJMl2bhwCiuySI=;
-        b=hiROPcAyIHL/4L9TuexexeMLDy2YnXdKNUatv9abOq0/Sr6AjsszjQBiAx1Jul8UMZ
-         JG6qoFVhqZnffGh9JnC7Mim4xr2lQWxXYm72j1alJC4IPfs5NQITdHUMqoO7ogc0UkXm
-         Wufj9FVsaHA6s+SX9g6hsVe7M8nBJ9VWyc/JrzKttdnj4/PAYBDNbZUL4UjocQXRsAsZ
-         SdINCk9E0hz0cNAhkvnp+zbh5NEDARYAsitsL71R2OxVRaKg4v3S6j3chftiIfZ/4FOG
-         mGeObYkXrpfjlAYy8tlrxpdZtEefluKW8zYSjaD2L6HIeKQSyXexd57tVuZM6SgcBrVF
-         3yfg==
-X-Gm-Message-State: AOAM531v452e1XRkt7pFPUxdacc/jHw1VwXlaunvwFsZ+fcC2czqmoiY
-        PL+XZXMUnybHkxQdiLPeJoU=
-X-Google-Smtp-Source: ABdhPJy32YQ0ifvYksnRPACepYfTfmWp6GZIfbyiAXy1ZiVq0OVTlXDe3sl1cD0VOQwj15Q0gHcbvQ==
-X-Received: by 2002:a17:906:7688:: with SMTP id o8mr922742ejm.291.1640054987663;
-        Mon, 20 Dec 2021 18:49:47 -0800 (PST)
+         :in-reply-to:message-id:mime-version;
+        bh=s4mBWwsDqXUSE4CMGUkVpEDqY1/qiB5YwPPVDDB1RvQ=;
+        b=d0w4Myx8I8G7AWIVHq2h7oMsf41dIMp97kAiO/SihTVli59itk3UJ4voulnk0SzvTV
+         D+bpo6+NlnflGd8rGYy7voMQiZkCMCL4598nZotagl64RXGeyPRWi4yppdHPBj5ZQgqi
+         vo3IYSSkUEo4L1JoYvcMb83PYOK6Ulq3Xo65z3yMk3o6TJj5TPSSvz5aS3ksm5MsINE+
+         KXFKAzW7i9EY8PQtOxMD275HLw2SauLvwMeeEnlrpBaOdmxqM0j4qa//h4SjfgcOQemh
+         gamVVmGUS81mqcArs5T0twrBiPY2Uls4WuTnlcrPYrsembyuaWNtTvCERAFRraBuzTC5
+         XzIA==
+X-Gm-Message-State: AOAM530HSd/hEZGml6YN7++bkQayraMjH3Dfttz8GDXmt888tl/v84iR
+        AQUyL8tXbXqq/lzlPyG7hcA=
+X-Google-Smtp-Source: ABdhPJxlc5DxoemJdi5HXZTk+/1tL9/OsjBGXjANAfz4SiFH+yTx9o/g+N0fdxtb4vFFc8sCy3lRkw==
+X-Received: by 2002:a17:907:7da5:: with SMTP id oz37mr884518ejc.682.1640055438746;
+        Mon, 20 Dec 2021 18:57:18 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id z26sm7077923edr.11.2021.12.20.18.49.47
+        by smtp.gmail.com with ESMTPSA id hp35sm4612662ejc.88.2021.12.20.18.57.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 18:49:47 -0800 (PST)
+        Mon, 20 Dec 2021 18:57:18 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mzVDm-000cix-J6;
-        Tue, 21 Dec 2021 03:49:46 +0100
+        id 1mzVL3-000cvJ-Ke;
+        Tue, 21 Dec 2021 03:57:17 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        Derrick Stolee <derrickstolee@github.com>,
-        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 03/13] init: unconditionally create the "info" directory
-Date:   Tue, 21 Dec 2021 03:39:36 +0100
-References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
-        <patch-03.13-784b7947512-20211212T201308Z-avarab@gmail.com>
-        <db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com>
-        <211220.86tuf3utv9.gmgdl@evledraar.gmail.com>
-        <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
-        <xmqq1r27xfi4.fsf@gitster.g>
-        <211221.861r26u4b9.gmgdl@evledraar.gmail.com>
-        <xmqqr1a6so6c.fsf@gitster.g>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Sean Allred <allred.sean@gmail.com>, git@vger.kernel.org
+Subject: Re: Custom subcommand help handlers
+Date:   Tue, 21 Dec 2021 03:51:58 +0100
+References: <CABceR4ZW4rRWZnH0ZBkWty_H84Z4CmXque_LO+1edETEWrO8PQ@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2112202324110.347@tvgsbejvaqbjf.bet>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqr1a6so6c.fsf@gitster.g>
-Message-ID: <211221.86o85asmd1.gmgdl@evledraar.gmail.com>
+In-reply-to: <nycvar.QRO.7.76.6.2112202324110.347@tvgsbejvaqbjf.bet>
+Message-ID: <211221.86k0fysm0i.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Dec 20 2021, Junio C Hamano wrote:
+On Mon, Dec 20 2021, Johannes Schindelin wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> Hi Sean,
 >
->> I don't see why we'd consider that as a worthwhile direction to go
->> in. The "git-init" documentation states:
->>=20=20=20=20=20
->>     This command creates an empty Git repository - basically a `.git`
->>     directory with subdirectories for `objects`, `refs/heads`,
->>     `refs/tags`, and template files.=20
+> On Sat, 18 Dec 2021, Sean Allred wrote:
+>
+>> I've got a custom subcommand I'm distributing in my company to integrate
+>> with our bug-tracker. It's a pretty robust utility and has its own help
+>> function, but running `git foo --help` doesn't pass --help to my git-foo
+>> utility. I asked a question[1] about this scenario on the Windows fork
+>> and they directed me upstream.
 >>
->> I.e. we promise to create "objects", but not "objects/{info,pack}", even
->> though we've done so since f49fb35d0d5 (git-init-db: create "pack"
->> subdirectory under objects, 2005-06-27) and d57306c7945 (Create
->> objects/info/ directory in init-db., 2005-08-20).
+>> It sounds like `git foo --help` is internally consumed as `git help
+>> foo`, which forwards requests to info/man/web handlers per config.
+>> Being on Windows and knowing my peers as I do, the vast majority of my
+>> users won't be familiar with info or man. The HTML documentation used
+>> by the web handler is in a Git4Win-controlled installation directory
+>> that I'd really rather not touch/maintain. I really just want `git foo
+>> --help` to call `git-foo --help`.
+>>
+>> What's the best way to go about this?
+>>
+>> In the event the best next step is to start a patch, does it sound
+>> reasonable to simply not perform this `git foo --help` -> `git help
+>> foo` transformation for non-builtins? Or, while I don't relish the
+>> idea, would some kind of config option be needed?
 >
-> I view it as a documentation bug, though.
+> I think you might need to be a bit more careful than just looking whether
+> the command in question is a built-in or not. It could be delivered as a
+> script or executable inside `libexec/git-core`. So maybe check that,
+> something like this:
 >
-> The only thing we need to promise is that (1) the directory prepared
-> by "git init" will be recognised as a repository by the current and
-> future versions of Git (and hopefully the existing ones, too), and
-> (2) versions of Git will not barf due to missing directory and stuff
-> due to end-user mischief around custom templates.  I do not think we
-> even need refs/heads/ directory and I do not see that, especially
-> with a presence with "basically" there, the sentence promises that
-> we will always create refs/tags/ directory.  For (1), only objects/,
-> refs/ and HEAD is necessary, as long as (2) is satisfied by lazy
-> creation of leading paths.
-
-Do you think that we should stop creating objects/{pack,info} then,
-provided that the few test failures that assume them are cleand up
-(which for at least one of them is much easier than the top-level
-"info")?
-
-> We would want to be able to cope with a repository that lost
-> .git/info directory due to loss of it in custom templates anyway.
-> Just like we create leading missing directories lazily for any
-> hierarchy under .git/, we should create .git/info on-demand.
+> -- snip --
+> diff --git a/git.c b/git.c
+> index c802dfe98004..d609f90cc117 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -688,6 +688,33 @@ static void strip_extension(const char **argv)
+>  #define strip_extension(cmd)
+>  #endif
 >
-> Pre-creating .git/info might be nice, but becomes much less
-> important after it happens, and that is why I view it as a much
-> lower priority than what Derrick suggested.
+> +static int is_in_git_exec_path(const char *command_name)
+> +{
+> +	struct strbuf path = STRBUF_INIT;
+> +	int ret = 0;
+> +
+> +	if (!command_name)
+> +		return 0;
+> +
+> +	strbuf_addf(&path, "%s/git-%s", git_exec_path(), command_name);
+> +	ret = !access(path.buf, X_OK);
+> +
+> +#ifdef STRIP_EXTENSION
+> +	if (!ret) {
+> +		/*
+> +		 * If `command_name` ended in `.exe`, strip it, otherwise
+> +		 * append it.
+> +		 */
+> +		if (!strbuf_strip_suffix(&path, STRIP_EXTENSION))
+> +			strbuf_addstr(&path, STRIP_EXTENSION);
+> +		ret = !access(path.buf, X_OK);
+> +	}
+> +#endif
+> +
+> +	strbuf_release(&path);
+> +	return ret;
+> +}
+> +
+>  static void handle_builtin(int argc, const char **argv)
+>  {
+>  	struct strvec args = STRVEC_INIT;
+> @@ -697,8 +724,11 @@ static void handle_builtin(int argc, const char **argv)
+>  	strip_extension(argv);
+>  	cmd = argv[0];
+>
+> +	builtin = get_builtin(cmd);
+> +
+>  	/* Turn "git cmd --help" into "git help --exclude-guides cmd" */
+> -	if (argc > 1 && !strcmp(argv[1], "--help")) {
+> +	if (argc > 1 && !strcmp(argv[1], "--help") &&
+> +	    (builtin || is_in_git_exec_path(argv[0]))) {
+>  		int i;
+>
+>  		argv[1] = argv[0];
+> @@ -714,7 +744,6 @@ static void handle_builtin(int argc, const char **argv)
+>  		argv = args.v;
+>  	}
+>
+> -	builtin = get_builtin(cmd);
+>  	if (builtin)
+>  		exit(run_builtin(builtin, argc, argv));
+>  	strvec_clear(&args);
+> -- snap --
+>
+> Of course, this might break existing users' setups where they ship a Git
+> command together with a manual page.
+>
+> A potential remedy against that would be, as you say, a config option.
+> Maybe defaulting to the manual page if `help.format` is `man`, otherwise
+> defaulting to passing `--help` to the command.
 
-Yes, we agree that we should deal with it not being created, that we
-don't is a bug in sparse-checkout.
+What are the cases that require us to inexpect our --exec-path at
+runtime, as opposed to having a list of commands we know we put there at
+"install" time?
 
-That's still a separate question from whether it's worthwhile investment
-of both our and user time to skip creating them and deal with the
-resulting churn in the tests and needlessly break code in the wild.
+The only ones I can think of are e.g. Debian's packaging which might
+compile the git with "git-send-email", but it won't be there unless you
+install "git-email" in addition to "git".
 
-It seems as though you're saying that any fixes or changes in this area
-would be incomplete without moving us towards the most pedantic and
-minimalist interpretation possible when doing a "git init", is that
-right?
-
-I.e. to end up with this .git from "git init --template=3D" (the same as
-now plus rmdir .git/{objects,refs}/*):
-=20=20=20=20
-    $ tree -a -p
-    .
-    =E2=94=94=E2=94=80=E2=94=80 [drwxr-xr-x]  .git
-        =E2=94=9C=E2=94=80=E2=94=80 [-rw-r--r--]  config
-        =E2=94=9C=E2=94=80=E2=94=80 [-rw-r--r--]  HEAD
-        =E2=94=9C=E2=94=80=E2=94=80 [drwxr-xr-x]  objects
-        =E2=94=94=E2=94=80=E2=94=80 [drwxr-xr-x]  refs
-=20=20=20=20
-    3 directories, 2 files
-
-I can work towards that with these patches, it just seems to me to be
-needlessly creating potential issues for little or no benefit.
-
+But for those cases any such logic would presumably want the hardcoded
+full list over the dynamic access() check, since e.g. "git-doc" on that
+platform orthagonally installs "git-send-email.html" and the like, and
+"git help send-email" would presumably like to error saying that we know
+about git-send-email, we just can't find its documentation, even if we
+can't find it in --exec-path.
