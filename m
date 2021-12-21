@@ -2,204 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42745C433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 16:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B099BC433F5
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 17:13:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239710AbhLUQYD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 11:24:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44934 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234799AbhLUQYD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 11:24:03 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7A94C061574
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 08:24:02 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id bm14so41306491edb.5
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 08:24:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=rqKyHXBQGscXVUNQu+tiGDKFM3+IAOr5ghwHjd8GB8w=;
-        b=WoSh8BD8liuBa+FEmkWuYJn3jppnz6oBJw87kmpcKS2cvFhbuVobTkgNsOM3S89HFa
-         ll3R9ImVStIjemk8Sw0Mz0+QRL7pgLVpdU1X1w3nmS4HnbAepzc+Gprl+eMsA1hbSzoE
-         HvpwzemGwYIdkU3Kmt/SOSvB+ICIps7EzRdteh22uzlJ88wNdlXmJAqBeap5XSQHtAxp
-         vs4+30GUlS7fG5cvoJ6S10j5HAL0P1itqIYuC5COhDwMZxM5GykLhYgUieuebkZLi+oh
-         0zP8hFNqFjvdUjilrJ4ZSlgSRlQGVPpBJNchrs4EJPQE1pcwmi+ZwTcjqUgMhzZM1QdH
-         riBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=rqKyHXBQGscXVUNQu+tiGDKFM3+IAOr5ghwHjd8GB8w=;
-        b=ql4X2xQ4mLhRhvb8fSo5+N4NpUidVcH/Cq9BoYAJ67z2VZN4IzrbdVkVmWJVl1YSqo
-         Eg0kMtgBomklwA6HEgUyJnDc/puNEEEPOioo0+GO+W0+5NKzUHhJTzS4JuxnRlqxEupk
-         CDbJ0T//m/RFeRxvsNPKjnXTZ4Zh1J/XhfeweEmjzuoLBuyxAWwW77aYU67PcWu0CyJG
-         k+QlRxKzuHgOZGtrLS2+Ml935ugtCwhMhf96Ixz90ZDq3Fx200pKXTKYHvYXGeCaP5FD
-         Ctw5DzdGJkSZg4KF6r10QUIeN9QVLAxw3CPnQg7ujj2/iayMDM5+zJ9IOrQ5jQQsLM2d
-         Cs3Q==
-X-Gm-Message-State: AOAM533gw5wWtdRsqkMvEzohSkVZHeDwf+56RJhhxjtq69wxSfoCYq0c
-        n/aOIM2PxvWxS/pKwQO+D1Y=
-X-Google-Smtp-Source: ABdhPJz+XKZslySZI/7EkxEH6IdDNojXg/l32VvJ3+oVkZnT23crSJGY9FBTAveJdsB9bMGZUn0rPQ==
-X-Received: by 2002:a05:6402:d05:: with SMTP id eb5mr4113462edb.360.1640103841323;
-        Tue, 21 Dec 2021 08:24:01 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id g2sm1023923ejt.43.2021.12.21.08.24.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 08:24:00 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzhvk-000oCc-6x;
-        Tue, 21 Dec 2021 17:24:00 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Florian Mickler <florian@mickler.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        jqassar@gmail.com
-Subject: Re: passing CURLOPT_CERTTYPE to libcurl
-Date:   Tue, 21 Dec 2021 17:20:55 +0100
-References: <20211218010621.2fdc2b3c@monster.mickler.org>
- <xmqq7dc2zplg.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2112202223300.347@tvgsbejvaqbjf.bet>
- <4B51B2CA-3BED-4046-8544-219DA737E7CD@mickler.org>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <4B51B2CA-3BED-4046-8544-219DA737E7CD@mickler.org>
-Message-ID: <211221.86h7b2q63j.gmgdl@evledraar.gmail.com>
+        id S240246AbhLURNe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 12:13:34 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54837 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240248AbhLURNd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 12:13:33 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4687518064B;
+        Tue, 21 Dec 2021 12:13:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7Izn4y7tcWymNkQk1ReBzM6/ngMDzo4pNWmnDT
+        lOvjY=; b=evBP0yALEjOwwpKhK5hwrV74jG+0ej31LcRpmshmgGNtUkEyw199G9
+        kkf0JM5FdhHd1qO+U8+gkx/XMDqO767diU2xOGPfMQzPCDATO2t1lXseLkSiCvqv
+        I41RaiJgS0MFIvvoHkH3VVxhg3JyiexndaS7AisVxjF9WXGKZwZeA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 298D418064A;
+        Tue, 21 Dec 2021 12:13:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7A5D2180649;
+        Tue, 21 Dec 2021 12:13:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Daniel Vicarel <shundra8820@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Why does "merge --continue" expect no arguments?
+References: <CALRdAfcyfesNqfLhhe2GW_5V9s2hf++i6mZS1Lw5hqQYTca85w@mail.gmail.com>
+Date:   Tue, 21 Dec 2021 09:13:28 -0800
+In-Reply-To: <CALRdAfcyfesNqfLhhe2GW_5V9s2hf++i6mZS1Lw5hqQYTca85w@mail.gmail.com>
+        (Daniel Vicarel's message of "Tue, 21 Dec 2021 09:50:56 -0500")
+Message-ID: <xmqqlf0dq3t3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 51413908-6281-11EC-838E-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Daniel Vicarel <shundra8820@gmail.com> writes:
 
-On Tue, Dec 21 2021, Florian Mickler wrote:
+> There are several git commands that take a "--continue"
+> option...`merge`, `rebase`, `cherry-pick`, etc. From looking through
+> the source though, only `merge --continue` seems to expect no other
+> arguments. Suppose that you have just resolved some merge conflicts,
+> and then want to run `git merge --continue --no-edit` to accept the
+> default merge commit message. Having to open/close the configured text
+> editor still is mildly annoying. I'm interested in submitting a patch
+> to "fix" this `merge` behavior, but I wanted to check if this was
+> really the intended behavior first, and if so why.
 
-> Thank you for the summary!
-> I am currently looking into it. Got into a conversation with dwmw2
-> also about fixing libcurl or even openssl after i found some issues he
-> opened about this weird interface. Which really sounds like it would
-> be the real fix. (Although probably slower to trickle to end users and
-> more complex)
->
->
-> For this patch i guess I will skip the engine variable, because it is not needed for my use case and my lib version. (Although I am still experimenting with the whole pkcs11 stuff)
->
-> That makes the error handling easier (none needed, imo).
-> The git libcurl min version is also raised above the introduction of those curlopts, so no libcurl-version-bracing needed.
->
-> I was looking into the testing framework, it might be possible to configure the https to require client auth on a different port and then testing that with pem and der file.
->
-> Adding pkcs11 infrastructure to the test harness might be a bit over the top though :-)
+The answer lies somewhere between "it is very much deliberate" and
+"'merge --continue' is so unimportant that nobody bothered".
 
-It would be really nice to have https tests in the test suite, but we
-don't have any currently.
+Originally, our "merge" did not open an editor to give you a chance
+to explain why you are merging a side branch when recording a
+cleanly auto-resolved result.  In fact, it didn't even have an
+"--edit" option to optionally allow you to edit.  This changed at
+f8246281 (merge: use editor by default in interactive sessions,
+2012-01-10); its log message is worth a read to understand the
+issues.
 
-There was some discussion about setting them up around some other recent
-libcurl related changes, but it hasn't been done.
+Compared to a merge that cleanly auto-resolved, in a conflicted
+merge, you have one more thing worth explaining to future readers of
+"git log"---how and why the work on the side branch conflicted with
+the work on the mainline, and how you chose to resolve it.
 
-So if you want to work on that it would be fantastic, but don't consider
-it a blocker to just get CURLOPT_SSLCERTTYPE into git.git.
+So, in that sense, we would very much want to do whatever possible
+to encourage you to write a good log message.  Opening an editor is
+one step in that direction.
 
-We basically assume that we don't need to re-test libcurl itself, and
-since these settings amount to just setting various flags in the library
-the need for them isn't all that great.
+Among the commands with "--continue", "merge --continue" came much
+later, and it did not even need to exist.  The other commands with
+"--continue", e.g. "rebase", deal with multi-step operations, and it
+is worth to have a way to say "I am finished with this step, let's
+CONTINUE WITH THE REST".  But in "merge", there is no remaining
+thing to do after you are done with the conflict you saw.
 
-> Am 20. Dezember 2021 23:21:28 MEZ schrieb Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->>Hi Junio & Florian,
->>
->>On Fri, 17 Dec 2021, Junio C Hamano wrote:
->>
->>> Florian Mickler <florian@mickler.org> writes:
->>>
->>> > Is there a specific reason, that patch wasn't merged? It would
->>allow
->>> > for non-pem ssl certificates to be loaded also (without pkcs11 at
->>all).
->>> >
->>> > I realize, that the underlying systems could and should set up
->>> > everything automagically as soon as i point them to the certificate
->>that
->>> > i want to use. But not opening up these CURL Settings from git
->>seems
->>> > kind of silly given that today's systems still seem kinda borked
->>and do
->>> > not do that.  What harm comes from these two tuning knobs being
->>exposed?
->>> >
->>> > Best regards,
->>> > Flo
->>> >
->>> >
->>> > [1] https://marc.info/?l=git&m=136675822032549&w=2
->>
->>This corresponds to
->>https://lore.kernel.org/git/1366758207-7724-1-git-send-email-jqassar@gmail.com/
->>(for those who prefer lore.kernel.org over marc.info, and for those who
->>want to look for the Message-ID directly).
->>
->>My summary of that thread:
->>
->>- The patch implements something Git wants to support.
->>
->>- A couple of improvements need to be made, such as:
->>
->>  * Error-checking needed to be improved
->>
->> * Adding a hint to the documentation of `http.sslKeyType` being set to
->>    `ENG` causing `http.sslKey` being interpreted differently.
->>
->>  * Adding regression tests, if possible
->>
->>  * Maybe a more complete commit message?
->>
->>- Testing the smart card support was considered hard, especially given
->>that the contributor still wanted to contribute patches to cURL without
->>  which it wouldn't work.
->>
->>  The patch seems to have been contributed via
->>  https://curl.se/mail/lib-2013-04/0340.html, been reviewed and changes
->>  were requested, but there was no other patch submission that I could
->>  find.
->>
->>However, over five years later, what looks like an equivalent fix to me
->>  was applied:
->>https://github.com/curl/curl/commit/4939f3652473c1519d2b604068efb87ef7531874
->>
->>- The contributor, Jerry Qassar, gave all the signs of working on a
->>  next iteration ("reroll", as Junio likes to call it). But that never
->>  materialized, either:
->>
->>  https://lore.kernel.org/git/?q=f%3Ajqassar
->>
->> Based on this, the lack of a cURL contribution, and a quick web search
->>  for the name "Jerry Qassar" I somehow doubt that Cc:ing them might
->>  raise their attention.
->>
->>> Almost always, when some patch aims to achieve a worthy goal, and in
->>> the initial discussion on the thread more experienced project
->>> members agree it is a worthwhile thing to do, the only reason why
->>> the feature proposed does not materialize in later versions of Git
->>> is because the developer with the original itch did not follow it
->>> through after getting review comments and saying something that
->>> makes reviewers to expect an updated version of the patch.
->>>
->>> I didn't follow your marc.info URL, but I am reasonably sure, if I
->>> were involved in the discussion, that would be the likely reason.
->>
->>Yes, you were involved in the discussion, and indeed, there was no
->>follow-up.
->>
->>After more than 8 years, I do believe that the patch is fair game to be
->>picked up by any other interested contributor who might want to
->>contribute
->>v2 (hint, hint, Florian... all it would take is to study the mail
->>thread
->>from way back when and adapt the patch accordingly, of course after
->>rebasing it to a recent Git revision).
->>
->>Ciao,
->>Dscho
->
-> ---
-> Signature
+In hindsight, we probably should have resisted the urge to add
+"merge --continue", just for the sake of misguided "consistency"
+perceived on non-existent similarity with other commands that truly
+need "--continue".  What is called "merge --continue" should have
+been called "merge --finish", if we needed to add something back
+then.
 
+The way to finish a conflicted merge has always been to run "git
+commit" before "merge --continue" was added, and it still is not
+just accepted but is the right way to finish a conflicted merge.
+
+So, in that sense, "merge --continue" is so unimportant that it is
+understandable that nobody bothered.
+
+So I guess that makes two discouraging factors against adding
+"--no-edit" to "merge --continue".  It encourages a wrong behaviour
+of under-explaining the result of your work, and "commit" is a much
+shorter way to say "merge --continue" anyway.
+
+In fact, "merge --continue --no-edit" is much longer to type than
+"commit --no-edit".
+
+merge --continue
+commit --no-edit
+
+Having said all that, among various things that the above discussion
+suggests as possible next steps, i.e.
+
+ * deprecate and eventually remove "merge --continue"
+ * deprecate and eventually rename "merge --continue" to "merge --finish"
+ * add "--no-edit" to "merge --continue"
+
+I think the last one might be the change with least impact and
+resistance.  Those who are unaware that "commit --no-edit" suffices
+would end up typing a lot more and wasting their keyswitches' life,
+but the damage is limited ;-)
+
+Or we could throw in another
+
+ * document more clearly that "merge --continue" is a mere synonym
+   for, and hint that there is no reason to favor it over, "git
+   commit".
+
+which happens to be my favourite so far after thinking the above
+through.
+
+Thanks.
