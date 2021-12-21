@@ -2,215 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAC7BC433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 23:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63AF8C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 23:42:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237337AbhLUX3s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 18:29:48 -0500
-Received: from mail-pg1-f170.google.com ([209.85.215.170]:33325 "EHLO
-        mail-pg1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235284AbhLUX3r (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 18:29:47 -0500
-Received: by mail-pg1-f170.google.com with SMTP id f125so557255pgc.0
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:29:47 -0800 (PST)
+        id S238103AbhLUXmg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 18:42:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60520 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237103AbhLUXmg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 18:42:36 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9743C061574
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:42:35 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id j6so1295917edw.12
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 15:42:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=QMaOCNjnUPtJJSJEZj/PDFgEVAy/bvPGylOIkIgu1M4=;
+        b=W/zExr4ZaZF6y6BpCE3Ft4mrgjfp/hFbNss3C64eBy2Dq+YPDLM9tsOFk3iIdqn8K5
+         w/iGsjzF0JSsQ6LNt8z1NytZa3AmJYh5GrfHFJkDTPS8IhoszPaENV7JCfU/3ap5aX5m
+         Y6D8mThDKppo5ImuJ5jPN8K+Zcd6t29aP56lpvAf9V142h8IcAvTDtiJfDleQCZ7Eowp
+         rQuXRSdu4MAsD1rtO17ZGHVIeBVfB0UKdM+1wk4bgBEgrlqPd7ThDW2760wGsg2b4mDa
+         FFS8vJ7zbFIT+rX5Jt+7IGsm/pEKRUh0UJYw4KInvJybMt/KrK2FkNAWyxHF1dqAC2sm
+         FWNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fqaRslyUQopSv5mpVrAF20ObMTLokjgN/Tg3QASOgBY=;
-        b=Ldw7NbZO7ST3p3GZc9fG+Xm8Pk9NRnyZ7GmOuvM+LNZG4kfqiSGiBcT+0gbY0oECgl
-         Hnvyhw2AyjlaynO4YjmxMlQb2FJhOAFT0AGAnCjvQ2/KzrceCs0tQI7jgGychWWd0CoX
-         pPlHXyXsOEbsfNNzisc/bqxYCc5odhIEfsGTvYVXeaVSLD36dAXeM9en3E1ooMY94S5Q
-         KA9LGNjldF2BwhX7e8w/MzdtILkEoDI7bU10GTHKaXAwVl/nFxxK7n1KuTIQTFP1jCri
-         LrngVgpVQUMzww2S9qpV8EkVZcTfYwZyUDVrVEP4GR2yLMp2D2Zu0ntucRurG4JCJ8ki
-         GByg==
-X-Gm-Message-State: AOAM5336JRW4exUipNoQi1/e2HUzXi6nhVb/Jw8MVdg513iHTYtlaTWf
-        fhsKxhEPRIpYT1eUVTHxrCb5qQlG79RxwFZT/f2wRpbEkGA7Mw==
-X-Google-Smtp-Source: ABdhPJwXFPDxHeGzBXQshLXH9r/Jg4IfIBFNo4mvElfFvravQ7lwdyLVQLWe0Ngecvfn+zoEsnnF+BlQkSJQBztz4k4=
-X-Received: by 2002:a63:e245:: with SMTP id y5mr531622pgj.139.1640129387122;
- Tue, 21 Dec 2021 15:29:47 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=QMaOCNjnUPtJJSJEZj/PDFgEVAy/bvPGylOIkIgu1M4=;
+        b=xY/RofObx3k6WjlE1r8Tz0vg4s9WzPpFGPrvYnBkD0t1mHBCHVCh/8VSMAe3gqXgAe
+         OTmxjExzKY1Nee+FUtAbygsWDAELZwyZMNmx1crW7WOF9E0LHp1XGP+n7wuspKd8Sh9p
+         dAqQyyhQTpZMSUELsc+DM99JPZIqMrivZlKOk9ZvXR9Nd80sZ4em628FtJsz3o2JDt1X
+         nulKav1XmumqtIyvIH/RGlkHZ6fOd7U2Gu1KSzAhB0yHmchuBAbxQL8Me+soMeESC2h3
+         DOa/kSXUTXNu13ooyICiP0PiUkpEGBl+Dnh8ARuFtfOiUBwqpXyraeHqYdMhdHKxDAUr
+         kioQ==
+X-Gm-Message-State: AOAM53147cg/3zdA3BFYsb3RNnq2qvpLZqHrOPLAFy0XhRScYQG17BNT
+        FqLU7Tt3z1wp+zbROy7WYtE=
+X-Google-Smtp-Source: ABdhPJyC3OjKKejOj6W2rsGJ0/UFCtAGtOOKAeQ3rEnTlVNdKUwj8QtXpLanyxxa2QNVGk8tccH2UA==
+X-Received: by 2002:a50:fc91:: with SMTP id f17mr530638edq.252.1640130154416;
+        Tue, 21 Dec 2021 15:42:34 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id s16sm79253edt.30.2021.12.21.15.42.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Dec 2021 15:42:34 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1mzom9-0010O2-EV;
+        Wed, 22 Dec 2021 00:42:33 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC PATCH 00/10] range-diff: fix segfault due to integer overflow
+Date:   Wed, 22 Dec 2021 00:36:51 +0100
+References: <RFC-cover-00.10-00000000000-20211209T191653Z-avarab@gmail.com>
+ <nycvar.QRO.7.76.6.2112101528200.90@tvgsbejvaqbjf.bet>
+ <59ec39af-fdb1-a86a-d2be-37e5954e245f@iee.email>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <59ec39af-fdb1-a86a-d2be-37e5954e245f@iee.email>
+Message-ID: <211222.86r1a5plsm.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
- <67993f6cff254d341ba4ad7fe7709b57eb3e74d4.1640015844.git.gitgitgadget@gmail.com>
- <CAPig+cT=evew0iePP-TZ+DTJ=oY6hrjiOiDtYqEr6KLRvkqC9Q@mail.gmail.com> <c8c995d3-c73c-6b3f-8d5c-f1411abd56e9@gmail.com>
-In-Reply-To: <c8c995d3-c73c-6b3f-8d5c-f1411abd56e9@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 21 Dec 2021 18:29:35 -0500
-Message-ID: <CAPig+cRombN-8g0t7Hs9qQypJoY41gK3+kvypH4D0G6EB4JgbQ@mail.gmail.com>
-Subject: Re: [PATCH 3/4] config: add repo_config_set_worktree_gently()
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Sean Allred <allred.sean@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 21, 2021 at 8:46 AM Derrick Stolee <stolee@gmail.com> wrote:
-> On 12/21/2021 12:53 AM, Eric Sunshine wrote:
-> > On Mon, Dec 20, 2021 at 10:57 AM Derrick Stolee via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >> +/**
-> >> + * Write a config value into the config.worktree file for the current
-> >> + * worktree. This will initialize extensions.worktreeConfig if necessary.
-> >> + */
-> >> +int repo_config_set_worktree_gently(struct repository *, const char *, const char *);
-> >
-> > I understand your desire to make this "setter" function as transparent
-> > and simple for clients as possible, however, I think it does too much
-> > by conflating two very distinct operations (one which changes the
-> > nature of the repository itself, and one which simply sets a config
-> > variable), and is far too magical. It doesn't help that the function
-> > name gives no indication of just how magical it is, and it is easy to
-> > imagine people calling this function thinking that it's just a simple
-> > "config setter" like all the other similarly-named functions, without
-> > realizing the impact it may have on the repository overall (i.e.
-> > upgrading to version 1 and changing to per-worktree config).
-> >
-> > I would feel much more comfortable for the new utility function to
-> > have a single-purpose: namely, to upgrade the repository to a
-> > per-worktree configuration mode (if not already upgraded) as outlined
-> > in [4]. That's it. It shouldn't do anything other than that. This way,
-> > callers which need per-worktree configuration must call the new
-> > function explicitly to obtain the desired behavior, rather than
-> > getting per-worktree configuration as a magical and implicit
-> > side-effect of calling what looks like a plain old "config setter".
-> > This should make it easier to reason about. Taking this approach also
-> > means that you don't need to introduce a special-purpose "config
-> > setter" just for worktrees; instead, you'd use the normal existing
-> > "config setter" functions. For instance, if the new utility function
-> > is named enable_per_worktree_config(), then `git sparse-checkout init`
-> > might do something like this:
+
+On Tue, Dec 21 2021, Philip Oakley wrote:
+
+> Sorry for the late comment..
 >
-> I understand your desire to separate these concerns, and maybe there
-> is value in having another method that _just_ does the "upgrade to
-> worktree config". However, if we don't also create this helper method
-> for setting worktree-specific config, then we are going to hit this
-> issue again.
-
-There are several good reasons for having a single-purpose function
-which upgrades to per-worktree config. Not only is it easier to
-discover such a function, but it is also easier to reason about the
-behavior when it does just this one thing. Moreover, aside from
-providing a common implementation for modules which may want or
-require the functionality (such as `git sparse-checkout init`), it
-would form a solid basis for a git-worktree command for enabling
-per-worktree configuration. And, such a command could be valuable for
-people who want to utilize per-worktree configuration for their own
-reasons (not related to `git-sparse-checkout`).
-
-With only `git sparse-checkout init` wanting to write per-worktree
-config, thus far, it does not feel like a convincing argument that an
-automagical helper function which conflates upgrading the repository
-to per-worktree config _and_ writing a per-worktree config key is a
-good idea or that it will be needed again. But more on that below...
-
-> >     enable_per_worktree_config(r);
-> >     config_path = repo_git_path(r, "config.worktree")
-> >     git_config_set_in_file_gently(config_path, "core.sparseCheckout", ...);
-> >     git_config_set_in_file_gently(config_path, "core.sparseCheckoutCone", ...);
+> On 10/12/2021 14:31, Johannes Schindelin wrote:
+>> Hi =C3=86var,
+>>
+>> On Thu, 9 Dec 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>
+>>> The difference between "master" and "git-for-windows/main" is large
+>>> enough that comparing the two will segfault on my system. This is
+>>> because the range-diff code does some expensive calculations and will
+>>> overflow the "int" type.
+>> You are holding this thing wrong.
+>>
+>> The `main` branch of Git for Windows uses merging rebases, therefore you
+>> need to use a commit range like
+>> `git-for-windows/main^{/^Start.the.merging}..git-for-windows/main` and
+>> compare it to `git-for-windows/main..master`.
 >
-> If we expect every caller that assigns config to the worktree to follow
-> this sequence of events, then we should encapsulate that in a method so
-> developers can discover it and call it instead of needing to write these
-> lines over again. Just repeating the literal "config.worktree" in
-> multiple places is enough justification for making a helper, let alone
-> these more subtle issues around bare repos and non-bare worktrees.
+> I'm not sure that a Git repo has an established way of indicating to how
+> it's branching/merging/releasing workflow is set up, especially for
+> projects with non-normative use cases, such as Git for Windows. We don't
+> have a git document for covering=C2=A0 the different workflows in common =
+use
+> for easy reference and consistent terminology.
+>
+> The merging rebase flow, with 'fake' merge does solve a problem that
+> git.git doesn't have but could easily be a common process for 'friendly
+> forks' that follow an upstream with local patches. The choice of
+> '{/^Start.the.merging}' is currently specific to the Git-for-Windows
+> case making it harder to discover this useful maintainer method.
 
-On the contrary, because it is such an unusual and potentially
-dangerous step to take (i.e. it changes the repository in a way which
-third-party tools may not understand), any module which absolutely
-_requires_ per-worktree config support should be enabling it
-explicitly rather than expecting it to happen implicitly and
-magically. By keeping these concerns separate, it is not only easier
-for people working on this code in the future to reason about the
-behavior, but it also provides a cleaner path for electively aborting
-the operation should that ever become desirable. For instance:
+Yes, but let's not get lost in the weeds here. As I noted I just picked
+GFW as a handy example of a large history & that command as a handy
+example of something that segfaults on "master".
 
-    % git sparse-checkout init
-    WARNING: This operation will upgrade the repository format to
-    WARNING: version 1 and enable per-worktree configuration, thus
-    WARNING: potentially making the repository incompatible with
-    WARNING: third-party tools.
+So the point really isn't to say that we should fix range-diff becase
+it'll allow us to run this practically useful command on a git.git fork.
 
-    Are you sure you want to continue [y/N]?
+> I fully agree that the range-diff should probably have a patch limit at
+> some sensible value.
 
-Your response is also conflating the slight pain of repeated
-`repo_git_path(r, "config.worktree")` with the need to upgrade to
-per-worktree configuration, which highlights another issue...
+Why would it? If I'm willing to spend the CPU to produce a range-diff of
+an absurdly large range and I've got the memory why shouldn't we support
+it?
 
-The big question is: why does git-sparse-checkout mandate per-worktree
-configuration? I haven't followed sparse checkout development closely,
-so I may be missing some obvious reasons. I can see why you would want
-to _recommend_ and even nudge people to use per-worktree
-configuration, which you could do both in the documentation and even
-as a "HINT" from the `git sparse-checkout init` command, but
-absolutely forcing them into per-worktree configuration seems far too
-opinionated for a general-purpose Git command and closes the door
-unnecessarily on people who may have quite valid reasons for using
-sparse checkout _without_ per-worktree configuration (i.e. perhaps
-they only ever use a single worktree -- the main one -- or perhaps
-they really do want the sparse checkout to apply to every worktree).
-This unconditional enforcement of per-worktree config seems better
-suited for `scalar` which is intentionally opinionated.
+We don't in cases like xdiff where it's not trivial to just raise the
+limits, but here it seems relatively easy.
 
-With the view that `git sparse-checkout init` is too opinionated and
-closes doors unnecessarily, then `git sparse-checkout init` should not
-be upgrading the repository to per-worktree configuration
-unconditionally. Instead, either the documentation should recommend
-this step to users; for example:
+I think limits to save users from spending CPU time they didn't expect
+are reasonable, but then we can handle them like the diff/merge rename
+detection limits, i.e. print a warning/advice, and allow the user to
+opt-out.
 
-    It is recommended that sparse checkout be used with per-worktree
-    configuration so that each worktree can have its own sparse
-    settings. Per-worktree configuration can be enabled with the
-    (fictitious) `git worktree config --enable-per-worktree` command:
+That also doesn't really apply here since "diff/merge" will/might still
+do something useful in those scenarios, whereas range-diff would just
+have truncated output.
 
-    % git worktree config --enable-per-worktree
-    % git sparse-checkout init
+> The 'confusion' between the types size_t, long and int, does ripple
+> through a lot of portable code, as shown in the series. Not an easy probl=
+em.
 
-Or, enabling per-worktree configuration could be enabled _on-demand_
-by `git sparse-checkout init`; for instance:
-
-    % git sparse-checkout init --per-worktree
-
-Although the immediate discussion is about git-sparse-checkout, this
-idea that a command adapts to the repository rather than demanding a
-specific repository arrangement, or indeed forcibly changing the
-repository arrangement, is far friendlier and leaves doors open which
-would otherwise be closed.
-
-It also makes your proposed repo_config_set_worktree_gently() which
-"does the right thing" much more palatable since "does the right
-thing" no longer means forcibly changing the repository arrangement.
-Instead, this convenience function would simply pick the correct
-configuration file on behalf of the caller; namely, if
-`extensions.worktreeConfig` is disabled, then it writes to
-.git/config, whereas if `extensions.worktreeConfig` is enabled, then
-it writes to .git/config.worktree or
-.git/worktrees/<id>/config.worktree, depending upon the worktree
-you're in. That behavior would satisfy your desire to have a
-convenience function to modify the correct config file regardless of
-whether the repository has per-worktree configuration or not, and
-leaves git-sparse-checkout flexible enough to work with or without
-per-worktree configuration. I would have no problem with a
-repo_config_set_worktree_gently() function which works as described
-here, whereas I feel plenty uncomfortable with the
-repo_config_set_worktree_gently() implemented by this series.
-
-Referring back to what you said earlier:
-
-    However, if we don't also create this helper method for setting
-    worktree-specific config, then we are going to hit this issue
-    again. (Stolee)
-
-Yes, we might hit this issue in the future if some command absolutely
-requires per-worktree config, however, as outlined above, I think we
-should strive as much as possible to make commands work without
-requiring special repository arrangement, instead allowing people to
-opt-in to repository-wide changes. By avoiding unconditionally
-requiring the repository be configured in a particular way, we're less
-likely to break third-party tools.
+Yes, although here we're not just casting and overflowing types, but
+overflowing on multiplication and addition, whereas usually we'd just
+overflow on "nr" being too big for "int" or similar.
