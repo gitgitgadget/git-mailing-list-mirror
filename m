@@ -2,108 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E740C433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 01:47:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB1A4C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 02:10:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231502AbhLUBr2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 20:47:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42148 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbhLUBr2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 20:47:28 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E91CBC061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 17:47:27 -0800 (PST)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S230356AbhLUCKj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 21:10:39 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51418 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229558AbhLUCKi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 21:10:38 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C6A46FE08A;
+        Mon, 20 Dec 2021 21:10:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=tW6YjZzpJnlB
+        3F4i6Nt7Uo1roTlV/q/zJqyrXTn5IEA=; b=wXRPhqoAy5GWRUbNAm/gB5SMycth
+        KyznsdisK1kXMiHbLD2rN75A6/vym75/Oq4Vyj5ARImerptHIzmZepcSSuuXYrse
+        zLq5ryfdKnYCHGGG44ddCjgoYdtJjQt1QHtQ4cB6tl/V3amReRIk8smZY4DbTips
+        bi7LTOOxu0S9GV0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A5FB8FE088;
+        Mon, 20 Dec 2021 21:10:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 1C35C5B21C;
-        Tue, 21 Dec 2021 01:47:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1640051247;
-        bh=hfO8K5a/W1rzovCpFOeiEOU4wAshU/f33rDsr2CY4vg=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=YmavyynzW3ZYpnfu+M6cFlIoPnxFgp6wb1m742zQB7j9/g1zo7X7aGnB77YpnQ/db
-         c6dsO+dk5Rn0IJle4zeVAU/gJkKrop/OSfqUWbtATPpByBEilZhb9H97ue/1XPkN+P
-         tPJrRzVb9bNFwIJHAXpINihMIP6bzqxPZyuR2p/ToUR3T2c7XcCmat8dkjJCAT6yTa
-         qhaXjnU4XjQQEAGfwCncRSL9P8wuaHNTZiKrxRM6D0pSBEiNJvPVGCf51/MSJmdCyq
-         xOgtTAgthZUg/rGTR43pEdcy66MgeFDVcvKAwS92y0vY4FYLy/o8JJOUWRpKDKUbVm
-         OBh+bxLIEqWlSZ6sY/J3eYFV8ixOe7C8AoWYZWYtU+JO3sVwsmg6un3LHvJ0dV/9yL
-         1n1O2XlZ2wARtqEyKHXXjUzSZJzRMHv4QP+MT9o0UvQl8/qA1TnY7HvXrs1foQu2dg
-         694C79WOIPORO/1uYgF7sXVl+j5ek5nDw4ZR42pNUx931uyChe9
-Date:   Tue, 21 Dec 2021 01:47:24 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EDE10FE087;
+        Mon, 20 Dec 2021 21:10:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        jrnieder@gmail.com, jonathantanmy@google.com, steadmon@google.com,
-        chooglen@google.com, calvinwan@google.com,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        rsbecker@nexbridge.com
-Subject: Re: Review process improvements
-Message-ID: <YcEyLMkM3fvGYCUY@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        jrnieder@gmail.com, jonathantanmy@google.com, steadmon@google.com,
-        chooglen@google.com, calvinwan@google.com,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        rsbecker@nexbridge.com
-References: <YbvBvch8JcHED+A9@google.com>
- <211220.86fsqnwkzs.gmgdl@evledraar.gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Derrick Stolee <derrickstolee@github.com>,
+        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 03/13] init: unconditionally create the "info" directory
+References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
+        <patch-03.13-784b7947512-20211212T201308Z-avarab@gmail.com>
+        <db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com>
+        <211220.86tuf3utv9.gmgdl@evledraar.gmail.com>
+        <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
+        <xmqq1r27xfi4.fsf@gitster.g>
+        <211221.861r26u4b9.gmgdl@evledraar.gmail.com>
+Date:   Mon, 20 Dec 2021 18:10:35 -0800
+In-Reply-To: <211221.861r26u4b9.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Tue, 21 Dec 2021 02:15:11 +0100")
+Message-ID: <xmqqr1a6so6c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="pniDcuco/LQ5DOc4"
-Content-Disposition: inline
-In-Reply-To: <211220.86fsqnwkzs.gmgdl@evledraar.gmail.com>
-User-Agent: Mutt/2.1.3 (2021-09-10)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2FEA14E2-6203-11EC-B492-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
---pniDcuco/LQ5DOc4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I don't see why we'd consider that as a worthwhile direction to go
+> in. The "git-init" documentation states:
+>    =20
+>     This command creates an empty Git repository - basically a `.git`
+>     directory with subdirectories for `objects`, `refs/heads`,
+>     `refs/tags`, and template files.=20
+>
+> I.e. we promise to create "objects", but not "objects/{info,pack}", eve=
+n
+> though we've done so since f49fb35d0d5 (git-init-db: create "pack"
+> subdirectory under objects, 2005-06-27) and d57306c7945 (Create
+> objects/info/ directory in init-db., 2005-08-20).
 
-On 2021-12-20 at 11:22:32, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> E.g. I've often chimed in on changes to do withn how/whether something
-> can/should be marked for translation. I added the i18n subsystem
-> initiall, so for those cases interested parties would probably find me
-> anyway, but I wouldn't mind being explicit about that. Ditto for people
-> we consider the authority on certain subsystems, such as (this may not
-> be any one person currently), refs, the index, SHA1<->SHA256 interop
-> etc.
+I view it as a documentation bug, though.
 
-I have limited time for the list, but I also tend to pop in on certain
-topics: the SHA-256 transition, commit and tag signing, authentication,
-translations, and so on.  However, outside of the signing code, a lot of
-that isn't centralized in one place.
+The only thing we need to promise is that (1) the directory prepared
+by "git init" will be recognised as a repository by the current and
+future versions of Git (and hopefully the existing ones, too), and
+(2) versions of Git will not barf due to missing directory and stuff
+due to end-user mischief around custom templates.  I do not think we
+even need refs/heads/ directory and I do not see that, especially
+with a presence with "basically" there, the sentence promises that
+we will always create refs/tags/ directory.  For (1), only objects/,
+refs/ and HEAD is necessary, as long as (2) is satisfied by lazy
+creation of leading paths.
 
-I also wouldn't be able to commit to signing up for any subsystem in a
-MAINTAINERS file, but I'm happy to be CC'd if folks think I'm
-knowledgeable about something or if it's an area they think my opinion
-would be valuable.
+We would want to be able to cope with a repository that lost
+.git/info directory due to loss of it in custom templates anyway.
+Just like we create leading missing directories lazily for any
+hierarchy under .git/, we should create .git/info on-demand.
 
-I can't speak for others, though, so I don't know if a MAINTAINERS-style
-approach would be valuable for them.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---pniDcuco/LQ5DOc4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYcEyKwAKCRB8DEliiIei
-gePlAP0b0QWiSXwue6gwRqHAD07pGPbF+VtRLQlxYzcW9vn/FAD+Oi3GhMuczH34
-KulZ0vTtmC/8HSBa54DdQGJz53ISFQI=
-=T3bz
------END PGP SIGNATURE-----
-
---pniDcuco/LQ5DOc4--
+Pre-creating .git/info might be nice, but becomes much less
+important after it happens, and that is why I view it as a much
+lower priority than what Derrick suggested.
