@@ -2,85 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 070D8C433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 01:07:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76262C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 01:34:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229460AbhLUBHO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 20:07:14 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53593 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbhLUBHO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 20:07:14 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C0F8B17BB4E;
-        Mon, 20 Dec 2021 20:07:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RPUSc3oiguSioeLY/sm5B28z4gwx9dCyhbuaxh
-        pPL/Y=; b=HUSjRGZ95j94MjElXTOzQDJxlnpTR7K0FMcntp51vESYuvUU09Uvka
-        covkOi/tGc8DzmS4hPYoh9jsyDfEk3Zpgl3gcWEme7RfSOFHPCf1smDwzrolvBJO
-        CoZb4gqYyv1Bck7hRld6ig3b4itDfRjsgXNLNgNHZN/WBOq+auMCY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BA38017BB4D;
-        Mon, 20 Dec 2021 20:07:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BAE3A17BB4C;
-        Mon, 20 Dec 2021 20:07:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v6 0/5] implement branch --recurse-submodules
-References: <20211216233324.65126-1-chooglen@google.com>
-        <20211220233459.45739-1-chooglen@google.com>
-Date:   Mon, 20 Dec 2021 17:07:08 -0800
-In-Reply-To: <20211220233459.45739-1-chooglen@google.com> (Glen Choo's message
-        of "Mon, 20 Dec 2021 15:34:54 -0800")
-Message-ID: <xmqqv8zisr43.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230287AbhLUBea (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 20:34:30 -0500
+Received: from zg8tmty3ljk5ljewns4xndka.icoremail.net ([167.99.105.149]:55071
+        "HELO zg8tmty3ljk5ljewns4xndka.icoremail.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with SMTP id S230404AbhLUBe3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Dec 2021 20:34:29 -0500
+Received: from mailtech.cn (unknown [10.12.1.20])
+        by hzbj-icmmx-2 (Coremail) with SMTP id AQAAfwCnzc0+L8Fh4syzBw--.18717S2;
+        Tue, 21 Dec 2021 09:34:54 +0800 (CST)
+Received: from pwxu$coremail.cn ( [112.94.4.17] ) by
+ ajax-webmail-mailtech_rd (Coremail) ; Tue, 21 Dec 2021 09:34:22 +0800 (CST)
+X-Originating-IP: [112.94.4.17]
+Date:   Tue, 21 Dec 2021 09:34:22 +0800 (CST)
+X-CM-HeaderCharset: UTF-8
+From:   =?UTF-8?Q?Aleen_=E5=BE=90=E6=B2=9B=E6=96=87?= <pwxu@coremail.cn>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2021, #04; Wed, 15)
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT6.0.3 build 20211103(a39c0bb8)
+ Copyright (c) 2002-2021 www.mailtech.cn
+ mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
+In-Reply-To: <xmqq8rwlz3cq.fsf@gitster.g>
+References: <xmqq8rwlz3cq.fsf@gitster.g>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 52A3DA76-61FA-11EC-9604-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Message-ID: <1e9d0913.2b.17ddaa010fb.Coremail.pwxu@coremail.cn>
+X-Coremail-Locale: en_US
+X-CM-TRANSID: AgIMCgAHaGAeL8FhPAIAAA--.81W
+X-CM-SenderInfo: psz03q5fruvzxdlohubq/1tbiAgQCCFGCc59JJwACsf
+Authentication-Results: hzbj-icmmx-2; spf=neutral smtp.mail=pwxu@corem
+        ail.cn;
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+        ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+        nUUI43ZEXa7xR_UUUUUUUUU==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+PiAqIHh3L2FtLWVtcHR5ICgyMDIxLTEyLTA3KSAzIGNvbW1pdHMKClRoZSBhbGlhcyBvZiBteSBu
+YW1lIHNob3VsZCBiZSAicHd4dSIgYnV0IG5vdCAieHciLgoKPiAgLSBhbTogc3VwcG9ydCAtLWFs
+bG93LWVtcHR5IHRvIHJlY29yZCBzcGVjaWZpYyBlbXB0eSBwYXRjaGVzCj4gIC0gYW06IHN1cHBv
+cnQgLS1lbXB0eT08b3B0aW9uPiB0byBoYW5kbGUgZW1wdHkgcGF0Y2hlcwo+ICAtIGRvYzogZ2l0
+LWZvcm1hdC1wYXRjaDogZGVzY3JpYmUgdGhlIG9wdGlvbiAtLWFsd2F5cwo+IAo+ICAiZ2l0IGFt
+IiBsZWFybnMgIi0tZW1wdHk9KGRpZXxkcm9wfGtlZXApIiBvcHRpb24gdG8gdHdlYWsgd2hhdCBp
+cwoKVGhpcyBzaG91bGQgYmUgJ2xlYXJucyAiLS1lbXB0eT0oc3RvcHxkcm9wfGtlZXApIicKCj4g
+IGRvbmUgdG8gYSBwaWVjZSBvZiBlLW1haWwgd2l0aG91dCBhIHBhdGNoIGluIGl0Lgo+IAo+ICBB
+bG1vc3QgdGhlcmUuCj4gIHNvdXJjZTogPHB1bGwuMTA3Ni52MTguZ2l0LjE2Mzg5Mzk5NDYuZ2l0
+Z2l0Z2FkZ2V0QGdtYWlsLmNvbT4KCgo=
 
-> v6 fixes v5's bad rebase; it was based off a merge commit in 'seen'
-> instead of js/branch-track-inherit. Since v5 is mostly a no-op, I will
-> also include a range-diff against v4, which is the last version that
-> anyone except Junio would care about.
->
-> This version is based off Josh's js/branch-track-inherit v7. Because that
-> is not yet in 'seen',...
-
-Thanks.  js/branch/track-inherit has been using v7 since Fri Dec 17
-15:47:47 2021 -0800, but unfortunately that was after the week's
-integration work and the 'seen' shown to the public probably did not
-have it.
-
-FYI at least since [*1*] was used to create 751363af (branch: add
-flags and config to inherit tracking, 2021-10-16), the topic
-js/branch-track-inherit has always been queued on top of f443b226
-(Thirteenth batch, 2021-10-14).  I try to keep the same base to keep
-things stable, unless there is a strong enough reason why we should
-depend on newer base commit.
-
-I've wiggled the patches to queue your v6 but haven't pushed the
-result out yet.
-
-Thanks.
-
-
-[Reference]
-
-*1* <b9356d9837479914bcf9a265f52afe170be7e2e2.1634445482.git.steadmon@google.com>
