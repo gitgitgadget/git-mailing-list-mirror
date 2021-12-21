@@ -2,74 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B5F9C433F5
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 01:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0D66C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 01:45:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230498AbhLUBgq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 20:36:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39756 "EHLO
+        id S231452AbhLUBpA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 20:45:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229732AbhLUBgq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 20:36:46 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D47A4C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 17:36:45 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id m21so18416269edc.0
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 17:36:45 -0800 (PST)
+        with ESMTP id S230326AbhLUBo7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 20:44:59 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78B17C061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 17:44:59 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id j6so24893578edw.12
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 17:44:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=2+ykGUZUH7rA8NB9u+yDGBa7ECYKnajOVAn8PTtAYfY=;
-        b=U1o6PRMqpKBRLfxx8dEb5hstPEX5Pz59yG7TECrnxAZuKaOpUS+6danh99RBqLEXjK
-         9lHQHki5p4l4a3EDUQBGOiWGKf95sypm4fLCOxInJnTEM5xJ0uH4XcCT5+FH5UcoLhFD
-         N4ilneTVE0pGVAYz3Iql0jYQk0aWss0WluaisWiyR0TfLxLIAkN7p3UILoYmonsikPm1
-         W24S/eXNQSbOSfW5bMKPF802m4to+MfYDAqvWF2tpV2bK0Rr6ZNvDRSlfGiDz92uGWtX
-         fc7pHjk9Iz76V6wqryUgfWi9Fo0K19kt7ueylA6DboXlsVrAxgeIGziRSEVTCS94UIp0
-         DZCQ==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=r0gN/J8L6QR+mH6QkUfiHhamCIs0jIZs9sLBgImbFtY=;
+        b=le4N1jtSoCWtdXa6lBgzrmD6xaYHuVUyGH/qQunhEr3Q3NpZHBDB+3tHUNzOS8Q/p9
+         dQ950JVL08En5lD/G1MiU5lxNHMFCO5u3D8a0mZHvYV3/2KI5tll0k2OIQqaH/HwlmKv
+         P9FqXUpTUXGmjYOFUOJS4dmpkPXV0O/L2rMoegfzVBbmSb4n2wi4blr3sqqIaabdgBkP
+         gffTpssitY+9GzBnmNtl5HqWUVwxPSzO5p/LLn+vZMa5Tm8Pit0QjcbDWuRJpbE5PZHL
+         7DR0UWRYFd+QY5X5b2eQFD+Cq2DavTwedccwVReAYrfLQkXPUPvbgqtERBJk0Twcjb3b
+         4fiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=2+ykGUZUH7rA8NB9u+yDGBa7ECYKnajOVAn8PTtAYfY=;
-        b=KiG/oG2d7SK9DeBO4VP0nScfkDQLbN8vtuJYwNGg3io44oU+51ICHI7AsTNcWfQUgF
-         wdHYuHA0k8+8P5Xg3n2KYMa239c/TDvC6Dehh4w6rBOJL1ctmQj3SGAMcz1S9d68LfvD
-         bE4E96XhRUHZlrviTbmrQnYkg1VicL4QQBa3luovfah1K4H5/6d9gppWiJX6uKN+vIPS
-         S7OZYof6ETTmYmzX6e4/TuJpjd7BGGojdparaRftuGyeFKwnvLO1T4Uqu8lMPFS7qd1O
-         Lo07uz+j+FTmcJWxuqfbuLfXkc5z9glHZXsl0/mqlAP9ENHDQVjM0MPSlKeV8UHdhQVY
-         P2Gw==
-X-Gm-Message-State: AOAM532RLhVRF7RDUh9mQK6kFx/+PT1cfA3DOEXEiRviPyK7kBMi65bi
-        btoONNVQ15BzYEQSf71k7w0=
-X-Google-Smtp-Source: ABdhPJySs0Xvn1Ngk/q/1+qKiu9+EGkdwPiqGeT/92WCm+FOOTCnfbZc4SSaW/bVegf05R5Ogg+j0Q==
-X-Received: by 2002:a17:906:39c8:: with SMTP id i8mr698438eje.335.1640050604326;
-        Mon, 20 Dec 2021 17:36:44 -0800 (PST)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=r0gN/J8L6QR+mH6QkUfiHhamCIs0jIZs9sLBgImbFtY=;
+        b=O3B28GBGU1ppAM4DOzVAqPRE0oOHbwWh2CdXNn5+Q4yGvVGZt3FMFMaQ3bqq4KS7AJ
+         95V9grbeeCBzZfAVthRbP50cmwqsPIarUFINXQ7MCQvaKZNcMtmoFTrBDNmaZrV1+dSD
+         jZXE4gMm5zJEB7gG4TakJ7ZyZS4tXVDBtVrBS89JvY8vnrmyeIQK1LuWryY2H7oTVrPn
+         c8lJSNcLVMdVUIymq1sHDOT8xNBiu6+/T4lf9vmWM/5nCTIYvAc1h9IYPY5QTY/Jr1f7
+         gh9nf72sNsb7MjC4cvrUzMwfhb8xJpIr+HqPDpBxzccaD/cJ14RAeS89v28or+BOIDu5
+         RW2g==
+X-Gm-Message-State: AOAM531hZNGiXFFClhlou78UAkSW7j7z1ZVyLpBQCYEjRbF1P1LTsqg2
+        2vXSXkeMzU2Zo7cpzdQtx2oXISqpEupC0A==
+X-Google-Smtp-Source: ABdhPJx4KjZGyNPCUDxx84eP/HayTzfKgwtPE2krF5Kw9CEzvaK1CRw353CzPzlt6l8T2GXBvnvBBQ==
+X-Received: by 2002:a17:907:2d10:: with SMTP id gs16mr695810ejc.489.1640051097931;
+        Mon, 20 Dec 2021 17:44:57 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id sd5sm1017486ejc.37.2021.12.20.17.36.43
+        by smtp.gmail.com with ESMTPSA id d18sm7368490edj.23.2021.12.20.17.44.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 17:36:43 -0800 (PST)
+        Mon, 20 Dec 2021 17:44:57 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1mzU55-000alF-1S;
-        Tue, 21 Dec 2021 02:36:43 +0100
+        id 1mzUD2-000ax8-Te;
+        Tue, 21 Dec 2021 02:44:56 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        Derrick Stolee <derrickstolee@github.com>,
-        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 03/13] init: unconditionally create the "info" directory
-Date:   Tue, 21 Dec 2021 02:15:11 +0100
-References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
-        <patch-03.13-784b7947512-20211212T201308Z-avarab@gmail.com>
-        <db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com>
-        <211220.86tuf3utv9.gmgdl@evledraar.gmail.com>
-        <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
-        <xmqq1r27xfi4.fsf@gitster.g>
+Cc:     git@vger.kernel.org, Han Xin <chiyutianyi@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [RFC PATCH] object-file API: add a format_loose_header() function
+Date:   Tue, 21 Dec 2021 02:42:44 +0100
+References: <20211217112629.12334-3-chiyutianyi@gmail.com>
+ <RFC-patch-1.1-bda62567f6b-20211220T120740Z-avarab@gmail.com>
+ <xmqqilviud6e.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqq1r27xfi4.fsf@gitster.g>
-Message-ID: <211221.861r26u4b9.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqilviud6e.fsf@gitster.g>
+Message-ID: <211221.86wnjyspd3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -77,64 +75,45 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Dec 20 2021, Junio C Hamano wrote:
 
-> Derrick Stolee <stolee@gmail.com> writes:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
->> What I _am_ saying is important is that if we are trying to write
->> a file to a known location and its parent directory doesn't exist,
->> then we should create it. Not doing so is a bug and should be
->> fixed, no matter how rare such a thing is to occur. As you've
->> shown, it is not required to have an info directory until we need
->> one (e.g. for sparse-checkout or an excludes file).
->>
->> If you're not planning to add that to this series, then I'll add it
->> to my list. I do think it would fit well into this one, though.
+>> Add a convenience function to wrap the xsnprintf() command that
+>> generates loose object headers. This code was copy/pasted in various
+>> parts of the codebase, let's define it in one place and re-use it from
+>> there.
+>> ...
+>> +/**
+>> + * format_loose_header() is a thin wrapper around s xsnprintf() that
 >
-> Historically, "git init" relied on the templates to create necessary
-> directories, and the subcommands in turn learned to depend on the
-> presence of these directories.
+> The name should have "object" somewhere in it.  Not all readers can
+> be expected to know that you meant "loose" to be an acceptable short
+> hand for "loose object".
+
+*nod*
+
+> That nit aside, I think it is a good idea to give people a common
+> helper function to call.  I am undecided if it is a good idea to
+> make it take enum or "const char *"; most everybody should be able
+> to say
 >
-> At the same time we allowed that the templates can be customized by
-> the end users.  It was a bug, exactly for the reason you said above.
+> 	format_object_header(type_name(OBJ_COMMIT), ...)
 >
-> Before we talk about creating 'info' directory directly in "git
-> init" or anything done in this topic, we should fix the existing
-> bug, and the right fix is to use safe-create-leading-directories.
+> just fine, so two variants might be overkill, just to allow=20
 >
-> With that, it may become unnecessary to have this "create 'info' in
-> 'init'".
+> 	format_object_header(OBJ_COMMIT, ...)
+>
+> and to forbid
+>
+> 	format_object_header("connit", ...)
+>
+> I dunno.
 
-I don't see why we'd consider that as a worthwhile direction to go
-in. The "git-init" documentation states:
-    
-    This command creates an empty Git repository - basically a `.git`
-    directory with subdirectories for `objects`, `refs/heads`,
-    `refs/tags`, and template files. 
+Ultimately only a single API caller in hash-object.c really cares about
+something else than the enum.
 
-I.e. we promise to create "objects", but not "objects/{info,pack}", even
-though we've done so since f49fb35d0d5 (git-init-db: create "pack"
-subdirectory under objects, 2005-06-27) and d57306c7945 (Create
-objects/info/ directory in init-db., 2005-08-20).
+I've got some patches locally to convert e.g. write_object_file() to use
+the enum, and it removes the need for some callers to convert enum to
+char *, only to have other things convert it back.
 
-Our test suite reveals our own assumptions, but it's also indicative of
-assumptions others have made.
-
-It's cheap to create .git/info unconditionally, and we create similar
-empty subdirectories, so why not do it for .git/info? Why would we
-needlessly break widely documented out-of-tree recipies like:
-
-    some-user-excludes >.git/info/excludes
-
-Which yes, rely on something you can't strictly rely on, but is true
-enough most of the time that people do.
-
-So I don't see what finding and fixing every instance of assuming
-.git/info in the test suite buys us.
-
-After doing that we'd be back to square one of having to decide if
-exposing a mode that effectively did the same could be overly pedantic
-in that case, or cheaply cater to out-of-tree code that made the same
-assumption.
-
-That's the question this topic is mainly trying to address. It's also
-worthwhile to fix the in-tree dependency in sparse-checkout, but I don't
-see why we'd insist that one can't be done without the other.
+So I think for any new APIs it makes sense to work towards sidelining
+the hash-object.c --literally caller.
