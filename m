@@ -2,235 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 907C7C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 09:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15C7EC433EF
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 09:39:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236421AbhLUJhV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 04:37:21 -0500
-Received: from mail-eopbgr40058.outbound.protection.outlook.com ([40.107.4.58]:10318
-        "EHLO EUR03-DB5-obe.outbound.protection.outlook.com"
+        id S236447AbhLUJjp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 04:39:45 -0500
+Received: from mail-eopbgr80043.outbound.protection.outlook.com ([40.107.8.43]:54503
+        "EHLO EUR04-VI1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S233216AbhLUJhU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 04:37:20 -0500
+        id S236423AbhLUJjp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 04:39:45 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cTjTpuucertsnNgGFdUtMsZZSg85oRyH4BWo24ESCg4cJY07VWOSCbbeweHE3oAbyB2ShTlvPNjCf4HN0omHTYTZLOPubLKFtxOm7jcxOO/BjraMdAwDyFyHacXnhBYZYOIR9F/XtxOUpqnHQcLqVdsU22U5BMZa01cGqJhnz2gQahqiEQrVyP+Ocfi1Bg28HuEx6N9Pumacb3lTveH6xUKsg9cCuzUlqpyxri1p0CKftzO75zAH+SYopJKi4fmmRTFW6PiAUG/gpCncrCo154w0hoW1q0S98UpkMnMRxD+NLMJVjH8s6ukjVqMqnhMaSniNrPbfb9875Yfo5tur8w==
+ b=fLoqkVXsmglR1LyVuLmlWBN4ELWuels/by8N21bn86zt2e7YpvaoQeiO2XpZRa27lVbG499tTNupLFbC0SwNOL27+QAqLolDK006U8dLBX9RsOWcSVuZvX5nkospmsiCj3Me5Ul42n8x2e29lZNOdlfF00tnCkh2EwCijUcdWnReX0swOQIoN9MnFsYYPrOphHKlpIaatsaFdlLjmb0FZ6LY9lbY4uLWAWkXTaWP4eOJidDv0KYuiBpV4SG/92eMwQo1e3JsmSPFe+fmyGUSp3BB8EsZIuejJbGmZ+/iJV7G0BBE/ur397ZlEHyz9HW7ge0iSDFp1kKI4FL19NBuFw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sXi7e4z/worf3/rw32BVDXlz689GR3MantEpspnKEsI=;
- b=HA6yhl4hv7e24yCRyOH9wwsITnsMVU0spJjKaHxD/HAhLPOpiLy7qtQm5qYXxuFDN3SOQ++YL3Zric1YNYZxaLV5Y8FT/QgQLjFpGU5OrZceaApsHT+yHJjyeNIjB4g3tji2cqg4Y2BdDVmnTA5fyVZH0Xm5WkUo3ffvAjrw1Pl/armWwq8P8ct2ouTpRmy2zzaCbjFFqIACCdvWPqrMhas0QiGLWVN9FWiNNVMwkC0MvgG9NW9jqhy3WxTPMi9JLARh68pAXx7ToCWg1XoYhuU6yeTzu3jS79/XSM+LbJOdlluo/+1xjHSL+qHX+ddYVEmokwR24yLcfpXtQrLx5A==
+ bh=Wd4Uo8n462dhlDN83LGP1m1a8AO8yBPL/+BEPNJJJ6U=;
+ b=BEnC2CRe7TS7mCme2wFQXAr7YFG5KbKFnqSs+C+mEq1nXeIlztcR24XeuGfWphRfQuJsnCvixd3EZLs0ShL/jdk5lXd1CgUZEYwsKYZkkE6cx8cJaa4Kh0uxBSxuO4fahcMghaeaDTwm76NIesxihhY7BSzsHMhF4pZy3jzSNktH4BgguvvS4pVnhHm2So2igsH+QElxC4AhmoqXCUWl+eR1YG3bvXHHDmUYHTIX00XvXKkFsdcJG2UXFxJDFzQPomTJiHoP2LZbmhA0JwxanBfnmX7EoqGrF9YPiN88LrhGStP13eKIAR6AitipaZ0ZJVAElovLesCRcn//L5TUbw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
  dkim=pass header.d=gigacodes.de; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sXi7e4z/worf3/rw32BVDXlz689GR3MantEpspnKEsI=;
- b=oH7JBxcCMUsvypNzpAH86Ytnfxh9SqpQerPveBmGaFEYuIQPPRv9PZh8wOuTVli6qjoXa6dkSMA+Ikm/bjBYOOyQCaCCTGrPddZ7/RSW+YpmYGV8Z8CmoHK8NwC3dlcddQDNKMGVvtRUb0rnSg0LrZ+abt8Ft0psLShOQZ3I0PI=
+ bh=Wd4Uo8n462dhlDN83LGP1m1a8AO8yBPL/+BEPNJJJ6U=;
+ b=ihvyNSnNearO4TXYN2NFP+OLPMaxCEZpAPooh5x1kGnzczjVJD/k5KXt7nMFT6zYONMPpU5CsRa56A+elmKizMkiPJ1P0kYKeRJ82FAkt8sA8UbF1V4Xe5Cg7qoOuGAnm2BjjdoTtWCtsNnWo4tbixJZtnIjQFUZsY/OpG0o0Lo=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=gigacodes.de;
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PA4PR10MB4336.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:100::20) with
+ by PR3PR10MB3803.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:41::11) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4801.15; Tue, 21 Dec
- 2021 09:37:18 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4801.17; Tue, 21 Dec
+ 2021 09:39:42 +0000
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::486c:1c10:65ef:90f9]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::486c:1c10:65ef:90f9%4]) with mapi id 15.20.4801.020; Tue, 21 Dec 2021
- 09:37:17 +0000
-Date:   Tue, 21 Dec 2021 10:37:16 +0100
+ 09:39:42 +0000
+Date:   Tue, 21 Dec 2021 10:39:41 +0100
 From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC PATCH 1/2] crypto sign: add crypto-sign alias flag
-Message-ID: <20211221093716.nalrgfsvl6ovjdqr@fs>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [RFC PATCH 2/2] crypto sign: add cryptoSign.* config
+Message-ID: <20211221093941.53ks5gnbkxl7vkn6@fs>
 References: <20211220140928.1205586-1-fs@gigacodes.de>
- <20211220140928.1205586-2-fs@gigacodes.de>
- <xmqqr1a7t00y.fsf@gitster.g>
+ <20211220140928.1205586-3-fs@gigacodes.de>
+ <CAPig+cRGnMQaDj-qocpAbhQqyksCNqGub+LsspWf7-Dwy=TKzg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <xmqqr1a7t00y.fsf@gitster.g>
-X-ClientProxiedBy: AS8PR04CA0001.eurprd04.prod.outlook.com
- (2603:10a6:20b:310::6) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+In-Reply-To: <CAPig+cRGnMQaDj-qocpAbhQqyksCNqGub+LsspWf7-Dwy=TKzg@mail.gmail.com>
+X-ClientProxiedBy: AS8PR04CA0067.eurprd04.prod.outlook.com
+ (2603:10a6:20b:313::12) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  (2603:10a6:102:12e::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: b91c6c53-5432-4e5a-4338-08d9c4657a7e
-X-MS-TrafficTypeDiagnostic: PA4PR10MB4336:EE_
-X-Microsoft-Antispam-PRVS: <PA4PR10MB433610CCD8A94D53513E9753B67C9@PA4PR10MB4336.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
+X-MS-Office365-Filtering-Correlation-Id: cc7cf97d-79d3-4747-f50a-08d9c465d0df
+X-MS-TrafficTypeDiagnostic: PR3PR10MB3803:EE_
+X-Microsoft-Antispam-PRVS: <PR3PR10MB380312F3491AF8615F348A54B67C9@PR3PR10MB3803.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: m+kagiIfsE93UotvXIz1KttSX9Y6bftOo6mGKqEMFNSRGVgE641bvTQKcTPXQVIKWwuEkJLpvCCKIyIiZLaKNNGKM2gXFB0dLV6EyDv08mLzskpj6gGMhXxHJP+PH35H1i5wS/N2w8MgkD7YInvK6oBfsJ6jH/yqjWkKLeqn0gEEawT37XYApRdFaAVtJ0njyqnoibH5X6cL+7rxOR3cL6MBYm9hlCViEqga/LgG5pJ3esVg69vhFAUnUFNDN4kV0fKZVx16bFTRSeqscknlU/SqmucSKzkmCOi15s20di3X6u/0cr/X8zO6rlMAbjDwhYVAb1RxrtjaTj6FNsXuF0Z0BSGgwcGEuCGtz7cAe3qcof/wmtNvu4f5NmiW+d3WpXEz2JI+qiZ1YYtglPXUyJpbmls0uWklu8s11i5bcVV2cE6LVfYA+OriPzipTARsslRyp5KzKxtV6rYK5I2GRP6KtATdqaVMSgxnwBgPZG5iAAhOtgCufVaCgN5Q5QJlOHdPsdz47iPnf3DKpyXoQSSORtzF2zcgamZozfu5w5cdH9yigq1uyYHdLro2VvEpGco4+Cx4nT7if47XxOr5G+xyl+hwEUfx9iivLWaARXcE27uyydyvZ3Q3yEEZUTcK19Ikdj5WNHAKRJIcumHi2Q==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(7916004)(376002)(39840400004)(346002)(396003)(366004)(136003)(8936002)(5660300002)(316002)(54906003)(66556008)(66946007)(53546011)(6916009)(186003)(8676002)(508600001)(2906002)(66476007)(33716001)(6506007)(9686003)(4326008)(1076003)(83380400001)(86362001)(6512007)(6486002)(38100700002);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: r6Doq52C1camTVWswb3qPoAFyFxPznb1tXjiF78/jaAqyPZ9fcYp2Qx6t/P5BTEeIcnVNQA5Mb0vOTTCviDGfaBXg+ZVtnsp2MfuEYY6R6HJzkTj80DkhlzyF09o8fF5rLD8DYs2pJ41YS4pixgmJTnibylk0Kdc19D7yl2e+t9D17ssmMJeB6ZXcqxJJAdb7lWTIvawkz16dDTqiZdess9iHZY1itQMplmwepD5DPCoBA3XuDSvsyu3obmx9OQYaVjjzpkZnXraylWjE/urjFgsKnDQ5mqcesvLXK04cRvoxDs115EGpuoxEca7gj0HJpr/+qC3tSnAdiKvbswEqaoF82t1rl7PwBzL2U36XOniI/V2UAbfQXmpbULlAllu5utheAytqNAwcQWzfvM5pmPBoTpbsUpO5bw9mNUEjKZQl7utJFDHG7tfaXREfyXqKx1SfZlr6pr7H6YmDJUntA3wRfJmBsM9bSh52HWlEM+TyyHfoT0FbBtd8ZpiNczH7smQ1E0uiOG1UJTXTCZEyUjejtHGSw/O2VFuXFu5tZAHlk59IpGF4LJ8lKvBONh2tZ+zsF7Gw3c6AVn5c2oKmTG7omUg000QU83/WcNY8XagmfWWdxAujjCyNQ8nId7sBH/s+QDl4mmP7fl6QgeH+w==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(7916004)(396003)(346002)(366004)(39840400004)(136003)(376002)(508600001)(83380400001)(66556008)(6512007)(66946007)(186003)(8936002)(66476007)(53546011)(4326008)(9686003)(54906003)(6916009)(8676002)(6506007)(1076003)(316002)(6486002)(2906002)(38100700002)(33716001)(86362001)(5660300002);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YTNrejY3QmdxV013OTZONmZwZUcrV2pDOUFOQmhtV2hOWTIweGJWOWg5WXhB?=
- =?utf-8?B?TlUzR1VvV2lmeFZRcSs4S2ZCT2k2Y1lUT2IzSlIrdXdRQ2MvQU5CMXBWN3lj?=
- =?utf-8?B?WG1hTzAyUkRWKzlHS2MwWGk0dUpneFVMSHdQUG5IQkgycU4xejhhd2c5T2xP?=
- =?utf-8?B?d0N2UHY2MWprTC9Ubld4SmtlbXJEZjhvYUI0RCtHMW9jS01IbnVNMjQ2MXdT?=
- =?utf-8?B?UEh6My9rYnFRSzNZRnU2UFRyWFVCcmk5V2t5UDFBeTNvUDFLRU9qeGt1b2o1?=
- =?utf-8?B?b2FMUWtGV2Q3d0FsK2NKaXc0eWVjUHh6OCtlcm5RRUtWRVJBeXU2dkV0cEJZ?=
- =?utf-8?B?L2lMWTBVOUo3dzlQbUx3U0RHeDljeHVqc25MdGVFUnVwMHdzZE5HRE5TNk8x?=
- =?utf-8?B?VVVWVkxaODNUTE0yZ29xWjl1RG1HVzVWT3ZQakJKK0UyTHJwS0tOOXFtNyt6?=
- =?utf-8?B?cUp2MkZ6NlR2dnljNm9kMTgvUTl0VnFyTGVRNVoxL1E0STdhZ1V5UDFEd1dx?=
- =?utf-8?B?VVZPa0oxenQrWWMyTXR2YlRSLzNiSm5JZG4xaG5LNEY4K2VWbnVLTUdOYmFT?=
- =?utf-8?B?eGo0ZzVLTmN0QUZjOTEvS0xidzB2aENhdVdNK0tMQ1M5UkY5SHJpaWFkd0Q3?=
- =?utf-8?B?Vll1KzBiRk13ZW50d1NYTkk3MFRoQmpxcUpzZDBzNXJTbzRma0pXUmRWU0lk?=
- =?utf-8?B?bmpQaDE3QmZhSzhWbkJ0ck9hbXVIZHExSkN4OHN1UE1OeU5tOHBlalJtN0Jh?=
- =?utf-8?B?UVdBcnpNdTVMa1hlU1B3NkRpd1hhWU4xTWlUd1ZSTjVxVW12UXZrWUFyZXJp?=
- =?utf-8?B?N1JQc0lnTnNWNFZLVFcrWkk4VjdPbzQ0eU5ZRlV6TmtONkMzNUNKcWRzdm83?=
- =?utf-8?B?WlU1KzQzRkJGclhtWEU5UFVKZFQwTkVWbDkzUStBNDJCbWtNdkMrZi9HWHAy?=
- =?utf-8?B?ZmRUTXJNNFNtL24yV29KOXlpOUVwZDdVc0srWExJWlZJZzJqbzBZYXUwaWRJ?=
- =?utf-8?B?RWhRa3Fld00waW5ETjVITVNucFNOTzVkV3d5TG5Fano3d1NpMmlzbkVMUVdm?=
- =?utf-8?B?VjhsKzhycDZXbHNDZDZnMjQ3UkJqK1dnR2ZNSVZuV0pVc2I5NjVONVZzdDgx?=
- =?utf-8?B?SFRHU241dkt2K0lCKytSem5mak1EV0lFdnJ2cDQwc3p2ZVNIcFpPa1oxOWFl?=
- =?utf-8?B?TytQUGFzSm1Vd280eld1NGdsLzRBTDc1dmUrM0JYUUhKUldCckE0bkFYb2hK?=
- =?utf-8?B?a254T1hzd1o5NDRSQ0ZEQ0Z0aXhXQXpqTEJOVjlVOUFFUmRTTUpJelN3ZXBh?=
- =?utf-8?B?MTdFb0lRWDlORENoRFJUZVhKRCtvdU5TdW1KeVJPc1AzZWMxQlkzK3VnbTV0?=
- =?utf-8?B?TkR6WG9xQ1FicmNtS1J1c3hydUZMemhzaXhaazVwbDVyMXZra09vc2s4SHps?=
- =?utf-8?B?Y0RtN0FxQUNLUHhUaHdoVEtyVU1uazk0UVFEeDVoWEdNSWtCNUtrOWxTMElr?=
- =?utf-8?B?eXorcnlFV2FSVUdjMjR3M3dLV0laN1hlcHY3WmU1bjNjMGhnTTZGNkRDakJh?=
- =?utf-8?B?OFljNW9vWTNaMmZYYTZwMVg3OGdGcmxkM2R6aFJvOFArNjAxWFZmRjlLT3Qr?=
- =?utf-8?B?NVRKNTFvcCszZnBZN1Z5djNKMCtYSWJJS2lsN1hoMThxT3N5YUVTVURNbDVS?=
- =?utf-8?B?eGNRWXR4YTl5Uy8wclI1K1FraWpGZDNKbGtQbnJVSW12a05nbmRmWEljZGdX?=
- =?utf-8?B?ZVpUL20yQjRJOVk5YkVsc1BsZVV3RGR3eVBSdjVOZ0JsRmNNckluQ3lYSGtt?=
- =?utf-8?B?REltWVBXTEtnZjgyclJVUkJNaFdMSU5rQ1hjM1cyR0sweE9TUVZhWlJEZXJm?=
- =?utf-8?B?MnZqdUFCTG9KbXpsNXhWcW40eE9QWGkzazZlUFVKQllsM0kxU2NjMlgwbS9K?=
- =?utf-8?B?dVhFTExoU0J4SGNxSy9TS1lUaG9MNi9jVlphOE11TmNCMXEyU1ZXTXlmektZ?=
- =?utf-8?B?TEpPS01rYXBFZ1czVmdOUlBmZDVjV2U4S1lySEx6ZVNoQ0hHeVIxUmRTdXZV?=
- =?utf-8?B?K0VvbnZFVmV3cERaYUZTL1NxdEhCWUE0Qmk4MUNmZUxDamI1dHFHdGp5dm9k?=
- =?utf-8?B?YkppT0VWbkp3NGdJTzV5bERiMzJEZXY4MnFhcHhtL0wwZllHZHpTaGtESktp?=
- =?utf-8?B?UUFiVEhHTmtMZkJyTTNnVHVxVytmMUlnZnhwdWN1MWNXT1Jid2k1UnNvVTZE?=
- =?utf-8?B?RnQ3YTllTDRVZ2FlRm9pYjNJcngyQ3FCUWFOeVVKeCtvOHBlODV3bzlqVUt1?=
- =?utf-8?B?dERENHlYb1kvaXE4MjB3SGpQbXFnSTI0T09IM0pXVitHSkwzMHFxZz09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bTRSenJ3RnRISnE1aWFhMFlIWGk4d2E4UUptRDJndnlkOWh6MXkrYlBpbW1T?=
+ =?utf-8?B?Z05YaWMwc3laSTh0cCt2QUpXemtTYng5bGJHUExzTEU5M2RMZlJvallrWm1w?=
+ =?utf-8?B?citnK2lRZHpRc2kydzh1MHAwNGtWeVVQTzJQSG5xZTRWdEZWb0dPS0FVcFhJ?=
+ =?utf-8?B?MWkxRHBkTXZMYm5FK1RGeit5QTlLeERvMWdEQkd2bnd2ZUhDcVVsUjMzSkpT?=
+ =?utf-8?B?cFl2eHFROUEzY3pvU1lad2pPWWZVUnVtczUrQ1dUU21rQ3lsU3d5ZXpPdzlq?=
+ =?utf-8?B?aHBEMDNEMFovQllibXl2OXpXYlZIQ3Z2ZlZiU203VHNjT3p3WW5kc1Z3cG5B?=
+ =?utf-8?B?NTIrZDlKRzFqd0dSaDFOUDdkNkNBWHNLaktlL3RHbjBFNy9sZDdPN2RNaU9X?=
+ =?utf-8?B?UnJEMU1KUTQ4Yi8zOGVjVU8rV2dVOUVnK2htVjV0ckFLWTBXeWFobEQ0VXk2?=
+ =?utf-8?B?UDArRVJ2UDhhSzdhMG5LUlFNaG9GZm02SEFvdWZTYUpRRnZqbjBheGcyYkY1?=
+ =?utf-8?B?YWdDOEtEZmxyTGJKU2ZENStlMmtSWmFwOFZDR3R6T254cGhnamMxWHJJTXJr?=
+ =?utf-8?B?RzB5Q0MwUHIyazM4QTlnVVc4RDdJaDdsSUMwV2hTSGJFRDZQNlF2c0hONDh6?=
+ =?utf-8?B?dGx1Sjdjb20zdTQxNDZtbWlYM2lKU2hrSUk4QTVxbXpycUVzODJUS21UanZX?=
+ =?utf-8?B?WHdRWFZXdlE4VjM4WGh1WWdsYnhUbGIrRzZ3dXN3ckdvU1hBb1FVN2oxZWZ0?=
+ =?utf-8?B?bG12VmhmU1J4WWJzUzRpUS9PTXlOKzd3ME9INXcvcUxRWDFTZXRHRDNqeGl5?=
+ =?utf-8?B?bVkyV05Cakl4TlJBb2wwaVJRMGlNMkdGbGt5b2NBNnFmMzJsT0VlWWdQUWRE?=
+ =?utf-8?B?Q29YWk1jWGJrMUNMeE4xZkwxUi9hVnhsS1hsVGYzWmxYN2lFVXVtdXR4cUVa?=
+ =?utf-8?B?OEFnOURtZWZHdi8rdTlORkpQMkFSQUI2UllDT0s5MjdMcDFXd3d6OXVIaUFW?=
+ =?utf-8?B?TGZvc3l3VlZWWkhzdWRUR3dWVVdJK3YvNE1ITndlZ2JzTWJrK1ZVMnhjV0Rt?=
+ =?utf-8?B?UTBCVi9hMjEvWTlNK2tMVjlSbzdLNFJUNUFJUkNDYzFBL2lycnc4d1ROWGl2?=
+ =?utf-8?B?OVNSNnJFcVFqL2hQS29XWTRtd2ZsV00wVHBsdGVKLzdVTDR0TytSYTd3NHcr?=
+ =?utf-8?B?ZUtweExRdWMvTkRrOXJybS90dm5nd08xRFZ4RjdEVHJaTWk5bThlMmxZUUQ4?=
+ =?utf-8?B?dk01Z2tVQU9NRnEvQWFpRmtib0tiVFlxWUhOMENoWmNzajhkcFlocUJxcjRj?=
+ =?utf-8?B?dUtzYnI0akFQRUFqWGQ2NG9OeDZFZkdtbTFMbHRMZ0VQdTN6amo2eFRXamhv?=
+ =?utf-8?B?cVZib2xmSEFuTXRMdm9uZHNrWGFCMkVxeEwwTkZyUHNnMHhaVmJObEN4R1JE?=
+ =?utf-8?B?cGlhbmtzSHNLSUF0Ui9BbmVkbzRpNHdFcGJpb1NEWGRFMDJ4eldGMUF4UWk5?=
+ =?utf-8?B?UkxJczNNMmhmWVNoNElQeVdWUjl1ODRGY1BPQlN3TXArcHViVmR6OGVvRU85?=
+ =?utf-8?B?RTl1djZnT2xhMHQ5MkZOMkpBajBRZHFGRUcvTVFtbC96eW5QbVJwRmdBbDc3?=
+ =?utf-8?B?a3pKWi9pV0hZNExnQzJkMGpDOWRETWJKS08vL2V5bnpnNW14N2VtT3Z2aHNw?=
+ =?utf-8?B?Zm9lS3k2cmhrL2JrMFA3eW1PNVZJbkNiVEIzWnNHaUM3SGtlRlRqNFNMU2E3?=
+ =?utf-8?B?eU1YOFdHbGswR3RhdjYraWw1NTkwV0pSdURaamgyVkUwam40Z000QWVBK2ho?=
+ =?utf-8?B?b2MzQ2lDdzRiWVU2aHdqUkc0YS9ncW5jbnZUMmN4VkovcHpWeElNeCtpNzEr?=
+ =?utf-8?B?ZjVPcjRDckVSdjhzdzJoUkpHeXRwdElkeEhXODBqSUt0dm5mNnVHK3ExZjNx?=
+ =?utf-8?B?K2pqeFFRY1RhZ3RiUmNFUWtCcTFNODVyYXRxMkxWSGJMY29lNEVTMTVxY3hE?=
+ =?utf-8?B?RytWY0dWNFd3aTJvQmRuSGpRMnlkQW1PVDVwRUZaakQrWDFrRWNSTWEya2xh?=
+ =?utf-8?B?NVBjV0dmT3J1VUllVnVTbG1ZemI5NmY1eVVMMGl5V3h0TkQrWk9DNXRTRFZV?=
+ =?utf-8?B?YnlUVi9EK2p5MWp6UVpiRUNNbmR3eVFPekxVQlFTcmI3MEMyL0U0SmF2Ymk0?=
+ =?utf-8?B?d1AvMTVoZWVFWktlRjV5OWRjOFl0QncrcVdkY3kwMmxiMTBOcUl3WUR1UW1x?=
+ =?utf-8?B?bnZ5dUNQYkR5MnZ2MW40VFBUVWRGUlBXcG04STN3SDBXMFVsemtqbkU3ZmpB?=
+ =?utf-8?B?eTlCa3hlekRsOFh6VGE5azd0ak9TODVNOFAvUWtsaDNiN2xFVG9oQT09?=
 X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: b91c6c53-5432-4e5a-4338-08d9c4657a7e
+X-MS-Exchange-CrossTenant-Network-Message-Id: cc7cf97d-79d3-4747-f50a-08d9c465d0df
 X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Dec 2021 09:37:17.7502
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Dec 2021 09:39:42.5964
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 8Hi4C4Cr7oSkbDhEe47wU1BHU0PuxaEz+zxyX5C4wVO5KxZEkR8V5DZoZzkM9A8MaN4MAUjhJWnlyf/hIL0dLFF1UueTYZcR9qMJKsntIIM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4336
+X-MS-Exchange-CrossTenant-UserPrincipalName: a3fmBZoWM+YCmq3jszZ7LTLxaWrZYrAWJs0SUGD/x/EX4830x+ij0a8ZH9ReMlmEYwj60zffnk7IFLw2DmwO8PCtJmYHfuqdtpmSF9Azs50=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB3803
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20.12.2021 13:54, Junio C Hamano wrote:
->Fabian Stelzer <fs@gigacodes.de> writes:
->
->> +--crypto-sign[=<keyid>]::
->> +--no-crypto-sign::
->>  --gpg-sign[=<keyid>]::
->>  --no-gpg-sign::
->> -	GPG-sign commits. The `keyid` argument is optional and
->> -	defaults to the committer identity; if specified, it must be
->> -	stuck to the option without a space. `--no-gpg-sign` is useful to
->> -	countermand both `commit.gpgSign` configuration variable, and
->> -	earlier `--gpg-sign`.
->> +	Cryptographically sign commits. The `keyid` argument is optional and
->> +	its default depends on the configured `cryptoSign.format`; if specified,
->> +	it must be stuck to the option without a space. `--no-crypto-sign` is
->> +	useful to countermand both `commit.gpgSign` configuration variable, and
->> +	earlier `--crypto-sign`.
->> +	`--(no-)gpg-sign` is a compatibility alias and has no effect on which
->> +	cryptographic format will be used. This is determined by the
->> +	configuration variable cryptoSign.format (see linkgit:git-config[1]).
->
->I'd make the last three lines into a separate paragraph and nudge
->users toward the new spelling if I were doing this change, e.g.
->
->	...
->	earlier `--crypto-sign`.
->+
->The option was originally called `--[no-]gpg-sign` and is still
->supported as a synonym, but it is encouraged to migrate to use
->the `--crypto-sign` option.
-
-Will do.
-
->
->Not the problem with this patch, but can the format be inferred from
-><keyid>?
->
->If so, `--crypt-sign=<keyid of format X>` can choose the format X
->and specify what exact key to use at the same time without the
->cryptosign.format configuration variable.  But if not, the interface
->leaves us in an awkward place by letting different keys easily
->specified from the command line while making it impossible to
->switch between GPG and SSH from the command line.
->
-
-I thought about doing this when we added the key:: prefix to differentiate 
-between literal keys and file paths for ssh. Something like 
-ssh-key::/ssh-file::/gpg-key::
-I decided against it since I think this could lead to different to 
-understand behaviour for the user. It is quite clear that a flag takes 
-precedence over a config var, but what if i set `format=gpg` and then 
-`user.signingkey=ssh-key::...`?
-If we would start this from a green field and did not have the format 
-setting, then just inferring from the key would be ok. But with the backward 
-compatibility I think this is too confusing.
-
->If --gpg-sign is not a mere synonym, but also implies GPG is
->preferred when cryptoSign.format is not specified, that is a
->different story, of course.  That makes it unnecessary to deprecate
->`--gpg-sign` and in addition we need to add `--ssh-sign` option that
->works similarly, which may not scale well but I do not expect we'd
->add many more next to GPG and SSH, hopefully?  I dunno.
->
-
-This is indeed a path we could take. Here the flag would have precedence 
-over the config. However it would not make sense to just specify --ssh-sign 
-when `user.signingkey` is set to a gpg key id. So the user would always have 
-to specify the key or we would need to move the signing key config into the 
-format specific blocks leading to even more compatibility code paths :/
-
-I'm going to make some bold assumptions here, so please correct me if I'm 
-wrong.
-Most users will not need to switch signing methods within repositories, if 
-at all.  Corporate users will probably adopt ssh, if anything at all. I have 
-never seen gpg consistently used in a corporate setup. Open source 
-development is heavily leaning on gpg. So the most common case will probably 
-be users having to switch between work (ssh) & oss (gpg) development which 
-can either be configured per repository or by using `includeIf "gitdir:"` in 
-your .gitconfig.
-
-So I think the extra flags or extended key prefixes to infer the format are 
-not needed and we can choose the simple option of only having the single 
-cryptosign.format config.
-
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index 883c16256c..2c789ff6f9 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -1639,8 +1639,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->>  		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
->>  		OPT_CLEANUP(&cleanup_arg),
->>  		OPT_BOOL(0, "status", &include_status, N_("include status in commit message template")),
->> -		{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
->> +		{ OPTION_STRING, 'S', "crypto-sign", &sign_commit, N_("key-id"),
->> +		  N_("cryptographically sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
->> +		{ OPTION_STRING, 0, "gpg-sign", &sign_commit, N_("key-id"),
->>  		  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
->
->Leaving this explained as "GPG sign commit" contradicts "it is a
->mere alias that does not even imply GPG is preferred when no
->preference is given by the cryptoSign.format variable".
->
-
-True, will fix.
-
+On 20.12.2021 17:07, Eric Sunshine wrote:
+>`On Mon, Dec 20, 2021 at 9:09 AM Fabian Stelzer <fs@gigacodes.de> wrote:
+>> Since git now supports multiple cryptographic methods/formats to sign
+>> objects, the `gpg.` configuration prefix is misleading.
+>> Add `cryptoSign.`, but keep `gpg.` as a compatibility alias at least for
+>> all existing options.
+>> `gpg.mintrustlevel` is moved to `cryptosign.gpg.mintrustlevel` while
+>> also still allowing the former.
+>> ---
+>> diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
+>> @@ -1,6 +1,17 @@
+>> +cryptoSign.format::
+>> +gpg.format::
+>> +       Specifies which key format to use when signing with `--crypto-sign`.
+>> +       Default is "openpgp". Other possible values are "x509", "ssh".
 >> +
+>> +cryptoSign.<format>.program::
+>> +gpg.<format>.program::
+>> +       Use this to customize the program used for the signing format you
+>> +       chose (see `cryptoSign.format`). The default value for
 >
->Unwanted blank line before the "this is the last line of these
->options" marker?
+>This is a somewhat minor comment, but I find that grouping these
+>config keys together like this gives too much weight to the old
+>`gpg.foo` ones, making it seem as if they're still first-class
+>citizens which people can use freely. If you instead organize them as
+>below, then it is easier to see at a glance that the old keys
+>shouldn't be used:
 >
->>  		/* end commit message options */
->>
->>  		OPT_GROUP(N_("Commit contents options")),
+>    cryptoSign.format::
+>        Specifies which key format to use when signing...
+>
+>    cryptoSign.<format>.program::
+>        Use this to customize the program used...
+>
+>    ...
+>
+>    gpg.format::
+>        Deprecated synonym of `cryptoSign.format`.
+>
+>    gpg.<format>.program::
+>        Deprecated synonym of `cryptoSign.<format>.program`.
+>
+>The same observation about grouping of config keys applies to the
+>remainder of the documentation changes in this patch.
+
+I wasn't sure how much we want to already deprecate the `gpg.` keys so I 
+tried a gentle approach :)
+But I would be in favor of your variant.
+
+Thanks
