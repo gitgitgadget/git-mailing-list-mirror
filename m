@@ -2,184 +2,241 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E986BC433EF
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 02:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54631C433F5
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 03:27:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234198AbhLUC5V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Dec 2021 21:57:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58280 "EHLO
+        id S230320AbhLUD1t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Dec 2021 22:27:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234126AbhLUC5U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Dec 2021 21:57:20 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D2B9C061574
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 18:57:20 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id j6so25415994edw.12
-        for <git@vger.kernel.org>; Mon, 20 Dec 2021 18:57:20 -0800 (PST)
+        with ESMTP id S229602AbhLUD1s (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Dec 2021 22:27:48 -0500
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C221FC061574
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 19:27:48 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id 196so6897362pfw.10
+        for <git@vger.kernel.org>; Mon, 20 Dec 2021 19:27:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=s4mBWwsDqXUSE4CMGUkVpEDqY1/qiB5YwPPVDDB1RvQ=;
-        b=fnZ3QHmLxaesE0gC8i71gAc6Te+dMMrK5RxykI4y2bIZXx8Pn/6RRrvU7pd8/Lwy+z
-         6+WsyU0GJJfPLkz8dFFVBfJVUMcfh+RIYG+/60dYOk/ZkiC3Eq+g3X6i/Z2Dr4fyKayv
-         GHaqalNZcBuuJgUSjIAoMvuOl1eDdX9ASTICmUFkdoKEiVEl8nzlF6/n2GdpdhTLgBWS
-         WYjK6bcoyiPhPTuv0dvtRZbQxUj2os4FR+uio7k0fQ2i8P2pKPiRg7UmEVl242iRbknN
-         L5PxaE5Cl/j6oIg65I75Z++FUCmRa92t1HEQqYBbEvmkkugnhKpnaaOXO4ujEaLx3SOT
-         +KFw==
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=J19qaElcO7F0p3f4gGzcISd/1LttAx5CriXkz5I9/N8=;
+        b=ORlzUnQHD/C+2sGMsSSsa+gqC/AjN32HwmwHQT6EOWHeh/C8eO/cHuyODJOwItulqd
+         E7e1fCwHG2qH3jNsPO+zgXhXHbv9MiaUXn3bFaHePC4iQMcZWZJ3Pwu7BW+fQUAAf9oJ
+         29OEe9x0TWjQbgbBS5xwVRmWRMFrBef7mSpnMInHOF7wsqv9BSCOvHxlnyPoU+D5PbVG
+         QGCzbtGFgVAUdMxE0LF16qzHE19fojv6DUKSaOnq8kLw36N66sd+vic8EFABSlZVeGyx
+         CW0cyUI0Tya8Z250b2XflhoDL2aVATXVkhtR+kyRLLZuz0z+Q9OBvJ31nNwH/utWjsVp
+         pkqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=s4mBWwsDqXUSE4CMGUkVpEDqY1/qiB5YwPPVDDB1RvQ=;
-        b=d0w4Myx8I8G7AWIVHq2h7oMsf41dIMp97kAiO/SihTVli59itk3UJ4voulnk0SzvTV
-         D+bpo6+NlnflGd8rGYy7voMQiZkCMCL4598nZotagl64RXGeyPRWi4yppdHPBj5ZQgqi
-         vo3IYSSkUEo4L1JoYvcMb83PYOK6Ulq3Xo65z3yMk3o6TJj5TPSSvz5aS3ksm5MsINE+
-         KXFKAzW7i9EY8PQtOxMD275HLw2SauLvwMeeEnlrpBaOdmxqM0j4qa//h4SjfgcOQemh
-         gamVVmGUS81mqcArs5T0twrBiPY2Uls4WuTnlcrPYrsembyuaWNtTvCERAFRraBuzTC5
-         XzIA==
-X-Gm-Message-State: AOAM530HSd/hEZGml6YN7++bkQayraMjH3Dfttz8GDXmt888tl/v84iR
-        AQUyL8tXbXqq/lzlPyG7hcA=
-X-Google-Smtp-Source: ABdhPJxlc5DxoemJdi5HXZTk+/1tL9/OsjBGXjANAfz4SiFH+yTx9o/g+N0fdxtb4vFFc8sCy3lRkw==
-X-Received: by 2002:a17:907:7da5:: with SMTP id oz37mr884518ejc.682.1640055438746;
-        Mon, 20 Dec 2021 18:57:18 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id hp35sm4612662ejc.88.2021.12.20.18.57.18
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=J19qaElcO7F0p3f4gGzcISd/1LttAx5CriXkz5I9/N8=;
+        b=rRvHDgoouJRCwBPw4jPvTKz38FBACA2yUunUd47CSjRvsEEpwKsIudTmAYXfIT5l4/
+         zicmcW4qPU5wqa2LMb30oVue30pqu75jbfr1WAwx+OGO0TWU3EGKyM318Q1XCDL+4hEG
+         Nbwc/3WxVzMYIKWibCMF23QYRn8G8gohFc47J1h7kVD21GK+DpkUFuVsFbF5Id3mykQu
+         4OJqBtpJWANJMVhRMWjDJ4rB20parV5XEmHPMzHOjn58cpaPPoMPOiI1JX1cTS9zcIre
+         MHrOBjAFngKS3LFuCCfnpFzxrpYHy28dBoSAMI5Bh+Y5X08sSTOaVFtI5bTbfwjgTlvf
+         cdBA==
+X-Gm-Message-State: AOAM53147vWeYEbwD1cF3LI15+nDBGEcmaluMIqO9mRybbx5C4kHhgyT
+        CngVoRo5GOtK3ytfuQaR9ZhVQg==
+X-Google-Smtp-Source: ABdhPJwDT30Jp4Hyw89Sq9UA4Wo4gZy8OJSvLCxCS5DRE44TrloMWlodo2U/g74s4027Da2b2GJPDw==
+X-Received: by 2002:a05:6a00:2402:b0:4a8:4557:e96b with SMTP id z2-20020a056a00240200b004a84557e96bmr1157883pfh.76.1640057267939;
+        Mon, 20 Dec 2021 19:27:47 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:e4d8:c4fc:fa70:c18e])
+        by smtp.gmail.com with ESMTPSA id u3sm21767010pfk.32.2021.12.20.19.27.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 18:57:18 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzVL3-000cvJ-Ke;
-        Tue, 21 Dec 2021 03:57:17 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Sean Allred <allred.sean@gmail.com>, git@vger.kernel.org
-Subject: Re: Custom subcommand help handlers
-Date:   Tue, 21 Dec 2021 03:51:58 +0100
-References: <CABceR4ZW4rRWZnH0ZBkWty_H84Z4CmXque_LO+1edETEWrO8PQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.2112202324110.347@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <nycvar.QRO.7.76.6.2112202324110.347@tvgsbejvaqbjf.bet>
-Message-ID: <211221.86k0fysm0i.gmgdl@evledraar.gmail.com>
+        Mon, 20 Dec 2021 19:27:47 -0800 (PST)
+Date:   Mon, 20 Dec 2021 19:27:40 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v6 1/3] branch: accept multiple upstream branches for
+ tracking
+Message-ID: <YcFJrCBHeCNCyTMF@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Glen Choo <chooglen@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, avarab@gmail.com, Johannes.Schindelin@gmx.de
+References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
+ <cover.1639524556.git.steadmon@google.com>
+ <43d6f83fedc022c44d6a3be249e7fd8cd2a25007.1639524556.git.steadmon@google.com>
+ <kl6lo85g8grj.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <Ybwb4UkQwAVRcJp5@google.com>
+ <kl6lzgovyvt7.fsf@chooglen-macbookpro.roam.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <kl6lzgovyvt7.fsf@chooglen-macbookpro.roam.corp.google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2021.12.20 10:29, Glen Choo wrote:
+> Josh Steadmon <steadmon@google.com> writes:
+> 
+> >> > @@ -87,29 +112,42 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+> >> >  	strbuf_release(&key);
+> >> >  
+> >> >  	if (flag & BRANCH_CONFIG_VERBOSE) {
+> >> > -		if (shortname) {
+> >> > +		const char *name;
+> >> > +		struct strbuf ref_string = STRBUF_INIT;
+> >> > +
+> >> > +		for_each_string_list_item(item, remotes) {
+> >> > +			name = item->string;
+> >> > +			skip_prefix(name, "refs/heads/", &name);
+> >> > +			strbuf_addf(&ref_string, "  %s\n", name);
+> >> > +		}
+> >> > +
+> >> > +		if (remotes->nr == 1) {
+> >> > +			struct strbuf refname = STRBUF_INIT;
+> >> > +
+> >> >  			if (origin)
+> >> > -				printf_ln(rebasing ?
+> >> > -					  _("Branch '%s' set up to track remote branch '%s' from '%s' by rebasing.") :
+> >> > -					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
+> >> > -					  local, shortname, origin);
+> >> > -			else
+> >> > -				printf_ln(rebasing ?
+> >> > -					  _("Branch '%s' set up to track local branch '%s' by rebasing.") :
+> >> > -					  _("Branch '%s' set up to track local branch '%s'."),
+> >> > -					  local, shortname);
+> >> > +				strbuf_addf(&refname, "%s/", origin);
+> >> > +			strbuf_addstr(&refname, remotes->items[0].string);
+> >> > +
+> >> > +			/*
+> >> > +			 * Rebasing is only allowed in the case of a single
+> >> > +			 * upstream branch.
+> >> > +			 */
+> >> > +			printf_ln(rebasing ?
+> >> > +				_("branch '%s' set up to track '%s' by rebasing.") :
+> >> > +				_("branch '%s' set up to track '%s'."),
+> >> > +				local, refname.buf);
+> >> > +
+> >> > +			strbuf_release(&refname);
+> >> > +		} else if (origin) {
+> >> > +			printf_ln(_("branch '%s' set up to track from '%s':"),
+> >> > +				local, origin);
+> >> > +			printf("%s", ref_string.buf);
+> >> 
+> >> It's not clear to me why the hint contains the word 'from' when it is a
+> >> remote ref...
+> >
+> > Because in the multiple-branch case, we don't prepend the origin to each
+> > ref, so we need to let users know which remote the refs are coming from.
+> 
+> I see. So if I'm reading this correctly, the error message in the remote
+> case would read something like:
+> 
+>   branch 'main' set up to track from 'origin':
+>     main
+>     topic1
+>     topic2
+> 
+> Is there any reason why we couldn't append the origin to the ref to make
+> it consistent? I think this could be as simple as:
+> 
+> 
+> 	for_each_string_list_item(item, remotes) {
+> 		name = item->string;
+> 		skip_prefix(name, "refs/heads/", &name);
+> 			if (origin)
+> +         strbuf_addf(&ref_string, "%s/", origin);
+> 		strbuf_addf(&ref_string, "  %s\n", name);
+> 	}
+> 
+> and the resulting list could look like:
+> 
+>   branch 'main' set up to track from 'origin':
+>     origin/main
+>     origin/topic1
+>     origin/topic2
+> 
+> This looks repetitive, but I suggest this because, as I understand it,
+> we are omitting the "{local,remote} ref" phrase based on conventions
+> around ref names, like "origin/main" is probably a remote ref and not an
+> oddly named local ref. However, when we print the list like so,
+> 
+>   branch 'main' set up to track from 'origin':
+>     main
+>     topic1
+>     topic2
+> 
+> we now expect the user to understand that 'main', 'topic1' and 'topic2'
+> to implicitly have 'origin/' prepended to them. This behavior seems
+> inconsistent to me; I'd anticipate most users responding "Wait, I was
+> supposed to be tracking 'origin' branches right? Why am I looking at
+> local branches?". Some users would be able to recover because they can
+> figure out what we mean, but others might just give up.
+> 
+> Prepending 'origin/' would get rid of this problem altogether, and it
+> would let us drop the 'from'.
 
-On Mon, Dec 20 2021, Johannes Schindelin wrote:
+Yeah, I think that's better. Fixed in V7, thanks.
 
-> Hi Sean,
->
-> On Sat, 18 Dec 2021, Sean Allred wrote:
->
->> I've got a custom subcommand I'm distributing in my company to integrate
->> with our bug-tracker. It's a pretty robust utility and has its own help
->> function, but running `git foo --help` doesn't pass --help to my git-foo
->> utility. I asked a question[1] about this scenario on the Windows fork
->> and they directed me upstream.
->>
->> It sounds like `git foo --help` is internally consumed as `git help
->> foo`, which forwards requests to info/man/web handlers per config.
->> Being on Windows and knowing my peers as I do, the vast majority of my
->> users won't be familiar with info or man. The HTML documentation used
->> by the web handler is in a Git4Win-controlled installation directory
->> that I'd really rather not touch/maintain. I really just want `git foo
->> --help` to call `git-foo --help`.
->>
->> What's the best way to go about this?
->>
->> In the event the best next step is to start a patch, does it sound
->> reasonable to simply not perform this `git foo --help` -> `git help
->> foo` transformation for non-builtins? Or, while I don't relish the
->> idea, would some kind of config option be needed?
->
-> I think you might need to be a bit more careful than just looking whether
-> the command in question is a built-in or not. It could be delivered as a
-> script or executable inside `libexec/git-core`. So maybe check that,
-> something like this:
->
-> -- snip --
-> diff --git a/git.c b/git.c
-> index c802dfe98004..d609f90cc117 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -688,6 +688,33 @@ static void strip_extension(const char **argv)
->  #define strip_extension(cmd)
->  #endif
->
-> +static int is_in_git_exec_path(const char *command_name)
-> +{
-> +	struct strbuf path = STRBUF_INIT;
-> +	int ret = 0;
-> +
-> +	if (!command_name)
-> +		return 0;
-> +
-> +	strbuf_addf(&path, "%s/git-%s", git_exec_path(), command_name);
-> +	ret = !access(path.buf, X_OK);
-> +
-> +#ifdef STRIP_EXTENSION
-> +	if (!ret) {
-> +		/*
-> +		 * If `command_name` ended in `.exe`, strip it, otherwise
-> +		 * append it.
-> +		 */
-> +		if (!strbuf_strip_suffix(&path, STRIP_EXTENSION))
-> +			strbuf_addstr(&path, STRIP_EXTENSION);
-> +		ret = !access(path.buf, X_OK);
-> +	}
-> +#endif
-> +
-> +	strbuf_release(&path);
-> +	return ret;
-> +}
-> +
->  static void handle_builtin(int argc, const char **argv)
->  {
->  	struct strvec args = STRVEC_INIT;
-> @@ -697,8 +724,11 @@ static void handle_builtin(int argc, const char **argv)
->  	strip_extension(argv);
->  	cmd = argv[0];
->
-> +	builtin = get_builtin(cmd);
-> +
->  	/* Turn "git cmd --help" into "git help --exclude-guides cmd" */
-> -	if (argc > 1 && !strcmp(argv[1], "--help")) {
-> +	if (argc > 1 && !strcmp(argv[1], "--help") &&
-> +	    (builtin || is_in_git_exec_path(argv[0]))) {
->  		int i;
->
->  		argv[1] = argv[0];
-> @@ -714,7 +744,6 @@ static void handle_builtin(int argc, const char **argv)
->  		argv = args.v;
->  	}
->
-> -	builtin = get_builtin(cmd);
->  	if (builtin)
->  		exit(run_builtin(builtin, argc, argv));
->  	strvec_clear(&args);
-> -- snap --
->
-> Of course, this might break existing users' setups where they ship a Git
-> command together with a manual page.
->
-> A potential remedy against that would be, as you say, a config option.
-> Maybe defaulting to the manual page if `help.format` is `man`, otherwise
-> defaulting to passing `--help` to the command.
 
-What are the cases that require us to inexpect our --exec-path at
-runtime, as opposed to having a list of commands we know we put there at
-"install" time?
+> >> >  		} else {
+> >> > -			if (origin)
+> >> > -				printf_ln(rebasing ?
+> >> > -					  _("Branch '%s' set up to track remote ref '%s' by rebasing.") :
+> >> > -					  _("Branch '%s' set up to track remote ref '%s'."),
+> >> > -					  local, remote);
+> >> > -			else
+> >> > -				printf_ln(rebasing ?
+> >> > -					  _("Branch '%s' set up to track local ref '%s' by rebasing.") :
+> >> > -					  _("Branch '%s' set up to track local ref '%s'."),
+> >> > -					  local, remote);
+> >> > +			printf_ln(_("branch '%s' set up to track:"), local);
+> >> > +			printf("%s", ref_string.buf);
+> >> 
+> >> but does not have the word 'from' when it is a local ref. As far as I
+> >> can tell, this is the only difference between remote and local refs, and
+> >> adding the word 'from' does not seem like a good enough reason to add an
+> >> 'if' condition. Maybe I missed something here?
+> >> 
+> >> This motivates my answer to the question you asked in [1]:
+> >> 
+> >>   I removed as many distinctions as possible, as most can still be
+> >>   inferred from context. [...] Likewise, we don't need to specify whether
+> >>   refs are remote or local: "some-remote/some-branch" vs.
+> >>   "a-local-branch" should be understandable without us spelling it out.
+> >> 
+> >> I agree that there is adequate context, so I would be ok with the
+> >> simplification if there was corresponding code simplification e.g.
+> >> dropping "if (origin)". But in its current form, I don't think there is
+> >> good enough reason to simplify the message.
+> >
+> > I think the proper point of comparison is not the original code, but the
+> > code from V5 where we try to preserve the same level of detail in output
+> > as the original code. If we are committed to both having multiple
+> > remotes and keeping similar styles of output as the original
+> > implementation, then something like the massive conditional in V5 is
+> > unavoidable.
+> 
+> I see. So for instance, post-simplification you have:
+> 
+>   printf_ln(rebasing ?
+>     _("branch '%s' set up to track '%s' by rebasing.") :
+>     _("branch '%s' set up to track '%s'."),
+>     local, refname.buf);
+> 
+> if you preserve the same amount of detail as before, you'd have to
+> distinguish between local/remote, which doubles the number of cases to
+> 4, which is why the conditional v5 is so complicated.
+> 
+> That said, I think that it's already much simpler than v5 because you've
+> split the singular and plural cases. I wonder if you have considered
+> building the final string purely from format strings, like:
+> 
+>   char *message_format = _("branch %s set up to track %s%s%s%s");
+>   char *ref_type_clause = origin ? " remote ref " : " local ref ";
+>   char *rebasing_clause = rebasing ? " by rebasing." : ".";
+>   char *branch_names = "<branch names>";
+>   printf_ln(message_format, local, ref_type_clause, branch_names, rebasing_clause);
+> 
+> This sounds potentially unfriendly to i18n, but it would make the
+> conditional simpler. What do you think?
 
-The only ones I can think of are e.g. Debian's packaging which might
-compile the git with "git-send-email", but it won't be there unless you
-install "git-email" in addition to "git".
-
-But for those cases any such logic would presumably want the hardcoded
-full list over the dynamic access() check, since e.g. "git-doc" on that
-platform orthagonally installs "git-send-email.html" and the like, and
-"git help send-email" would presumably like to error saying that we know
-about git-send-email, we just can't find its documentation, even if we
-can't find it in --exec-path.
+Yeah, the translation-unfriendliness is why I avoided this approach.
