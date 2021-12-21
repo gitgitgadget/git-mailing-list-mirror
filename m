@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44880C433EF
-	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 11:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59239C433EF
+	for <git@archiver.kernel.org>; Tue, 21 Dec 2021 11:54:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237306AbhLULyX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 06:54:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37974 "EHLO
+        id S237316AbhLULy0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 06:54:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230245AbhLULyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 06:54:23 -0500
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 068C8C06173F
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 03:54:23 -0800 (PST)
-Received: by mail-pg1-x535.google.com with SMTP id g2so9546580pgo.9
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 03:54:23 -0800 (PST)
+        with ESMTP id S237309AbhLULy0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 06:54:26 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5F30C061574
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 03:54:25 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id u16so4500161plg.9
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 03:54:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=n3urYzHYUkeKMa/G9nrDCMMil6jsiAeI2j0Zt4p2eys=;
-        b=JJ8Tn52SqDqKZLfEdc45oWkt0xL28NPwfpoYcuFytTx7L5+Nhol1VWs1iQ35cpOB9g
-         CIV9oyW6KHF3jazp3hEjykfKI8EEnwFxvF9R0Hna5i9Jzb0+sf6h78BigItucfs92GHO
-         sWGL5/7qZA+tteS4uW26ltw/vdRhER0ls19ZJP9vgtmDS3ZfYSKRVWDUIS9ZlZkUvhQm
-         HE8zVNMLFfItG3KVm4cxN1enfAL+KmFvarH9hxGR8qBtcwEtSiSgsUWsP2KabgUu9WHk
-         CdmM2NgRtp7Smo08mbykwlVEgr9RXJk2LDj+ltZwmyxDDmv6k/g5iki/dG3jie6UIaCO
-         Lu8A==
+        bh=7xuPCcE6FjoGRXir7GTGrFu3V5hWaWradHSRqi+FXXs=;
+        b=kLlir31wHoAu/AxBaCpwwcPk/OysfWAkp/L304IbKEbaAsyNluzWfhY+Aq9VsP1FdQ
+         YKNdRIQYNzdlSjKn3suPw1aIozhXeYkrGBY8c28Lgp/gzOvvrnhG+/EFQmCYhI5JkLZW
+         kCCPp9uSzQ29eDCksBTQM2XNLgpnQdKi3g3zGecN0bljxwPuGy3vLMXbJOGLHp6u14kj
+         6GyPa3edI19WdHsE+VNM5Ga5OOceJhxjDr4OlOa81TQHgaqoMWElLViRg3/yOcN5fPM/
+         rlebCSyqX5TbL6AE6Uf2B4lV7q0dU9BSx+0/j9lErBVD/amqCN/larekzppCJzqiqluP
+         0jxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=n3urYzHYUkeKMa/G9nrDCMMil6jsiAeI2j0Zt4p2eys=;
-        b=e4N0GGMve13o1DosMXKIFwb30AG0yhAS4t9xS6isBOCa5CpeN0x8LZo8gLbJCrWhNE
-         XdFk6qYXuKAJuSG4mkUpC8QwQqkWVCxzRoHizfEpeD/0jQW9B433ymRZk7tGtpJK5uDD
-         Zqh2ML7IaiIksz/tCH+03qHrhP08awi/wJ10j0ajuOPEein8WkvAfcx8+VQZQLwVjkkk
-         AJs77NHcEBKqvPjc+7hxBIHWPzP8ww37DratGhQkLUFLiS38QUE/gAg31Me9bGVeLHus
-         tUQMjRTZ9TNE0hwoALhruBUz3eREBTc1SEy9mNzHhJnX3b4pz4y4vFS6thj/cA0bxHeA
-         1Cpg==
-X-Gm-Message-State: AOAM530unVx+/BEO5eR8mGg1kDM4GJAWFcEIK/gjwOudWy8tUw/nF1Py
-        6+xHZQwgOuqWRbRJ486Wmd4=
-X-Google-Smtp-Source: ABdhPJwzplHRj9r3vjwNwYXrNWxTqqn+lo5UD7FOlRLCsCAwT+q4YO6O2TAIirzKU+YiQVoBQrpuVg==
-X-Received: by 2002:a63:9143:: with SMTP id l64mr360365pge.495.1640087662576;
-        Tue, 21 Dec 2021 03:54:22 -0800 (PST)
+        bh=7xuPCcE6FjoGRXir7GTGrFu3V5hWaWradHSRqi+FXXs=;
+        b=6sIx9zHvlPGcsW9ZkOV/3/Dm689v/rUzVHY1/mrzY++Abq0V1DPwyFmbooXGpgFn4g
+         Ix+AwkuXutrqkF7BNBip5GhiFjrpHImnJkT1dDsNpvOZ/b+emJpViq9tS+f8htZyrLMR
+         23HxKPmNaY9SQJJW/S09W5oIWPdm4TVF3YBqpwREzdTsiPMMMJ8zOC4PjQu4AVpLceI4
+         hUWjy6Zl8jyIDd4s7JYgtLZG0LpL7gMJAeJMViGpYfMwLKdffc6fcc0EgqAW35FVSBWw
+         0rRBVefxVBYTVl68ajxRrYHQylSWc6D4475nIdiDr9AalzLQ9tsNOSn9W4bPrZx0cjje
+         uMDA==
+X-Gm-Message-State: AOAM532joKRC6Wyp7UL3VpsuspIA7rBpqoRjgdNLy4xGOsx8wnXNUiWV
+        wOCUwEDVPOW54PL4Ua5R2aI=
+X-Google-Smtp-Source: ABdhPJyqcu33DkUixZmk5yMrxfsEyYOvd2tNkrPXbG6XhN0oxC5BxLw4NZp1aOaOCnzXZajcPD4iYg==
+X-Received: by 2002:a17:902:e541:b0:149:35bd:b260 with SMTP id n1-20020a170902e54100b0014935bdb260mr2039922plf.41.1640087665417;
+        Tue, 21 Dec 2021 03:54:25 -0800 (PST)
 Received: from localhost.localdomain ([205.204.117.103])
-        by smtp.gmail.com with ESMTPSA id s30sm20513742pfw.57.2021.12.21.03.54.19
+        by smtp.gmail.com with ESMTPSA id s30sm20513742pfw.57.2021.12.21.03.54.22
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Dec 2021 03:54:22 -0800 (PST)
+        Tue, 21 Dec 2021 03:54:24 -0800 (PST)
 From:   Han Xin <chiyutianyi@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
@@ -56,9 +56,9 @@ To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 Cc:     Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: [PATCH v7 2/5] object-file API: add a format_object_header() function
-Date:   Tue, 21 Dec 2021 19:51:58 +0800
-Message-Id: <20211221115201.12120-3-chiyutianyi@gmail.com>
+Subject: [PATCH v7 3/5] object-file.c: refactor write_loose_object() to reuse in stream version
+Date:   Tue, 21 Dec 2021 19:51:59 +0800
+Message-Id: <20211221115201.12120-4-chiyutianyi@gmail.com>
 X-Mailer: git-send-email 2.34.1.52.g80008efde6.agit.6.5.6
 In-Reply-To: <20211217112629.12334-1-chiyutianyi@gmail.com>
 References: <20211217112629.12334-1-chiyutianyi@gmail.com>
@@ -69,154 +69,187 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+From: Han Xin <hanxin.hx@alibaba-inc.com>
 
-Add a convenience function to wrap the xsnprintf() command that
-generates loose object headers. This code was copy/pasted in various
-parts of the codebase, let's define it in one place and re-use it from
-there.
+We used to call "get_data()" in "unpack_non_delta_entry()" to read the
+entire contents of a blob object, no matter how big it is. This
+implementation may consume all the memory and cause OOM.
 
-All except one caller of it had a valid "enum object_type" for us,
-it's only write_object_file_prepare() which might need to deal with
-"git hash-object --literally" and a potential garbage type. Let's have
-the primary API use an "enum object_type", and define an *_extended()
-function that can take an arbitrary "const char *" for the type.
+This can be improved by feeding data to "stream_loose_object()" in
+stream instead of read into the whole buf.
 
-See [1] for the discussion that prompted this patch, i.e. new code in
-object-file.c that wanted to copy/paste the xsnprintf() invocation.
+As this new method "stream_loose_object()" has many similarities with
+"write_loose_object()", we split up "write_loose_object()" into some
+steps:
+ 1. Figuring out a path for the (temp) object file.
+ 2. Creating the tempfile.
+ 3. Setting up zlib and write header.
+ 4. Write object data and handle errors.
+ 5. Optionally, do someting after write, maybe force a loose object if
+"mtime".
 
-1. https://lore.kernel.org/git/211213.86bl1l9bfz.gmgdl@evledraar.gmail.com/
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
 ---
- builtin/index-pack.c |  3 +--
- bulk-checkin.c       |  4 ++--
- cache.h              | 21 +++++++++++++++++++++
- http-push.c          |  2 +-
- object-file.c        | 14 +++++++++++---
- 5 files changed, 36 insertions(+), 8 deletions(-)
+ object-file.c | 100 ++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 65 insertions(+), 35 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index c23d01de7d..4a765ddae6 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -449,8 +449,7 @@ static void *unpack_entry_data(off_t offset, unsigned long size,
- 	int hdrlen;
- 
- 	if (!is_delta_type(type)) {
--		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX,
--				   type_name(type),(uintmax_t)size) + 1;
-+		hdrlen = format_object_header(hdr, sizeof(hdr), type, (uintmax_t)size);
- 		the_hash_algo->init_fn(&c);
- 		the_hash_algo->update_fn(&c, hdr, hdrlen);
- 	} else
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 8785b2ac80..1733a1de4f 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -220,8 +220,8 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
- 	if (seekback == (off_t) -1)
- 		return error("cannot find the current offset");
- 
--	header_len = xsnprintf((char *)obuf, sizeof(obuf), "%s %" PRIuMAX,
--			       type_name(type), (uintmax_t)size) + 1;
-+	header_len = format_object_header((char *)obuf, sizeof(obuf),
-+					 type, (uintmax_t)size);
- 	the_hash_algo->init_fn(&ctx);
- 	the_hash_algo->update_fn(&ctx, obuf, header_len);
- 
-diff --git a/cache.h b/cache.h
-index cfba463aa9..64071a8d80 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1310,6 +1310,27 @@ enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
- 						    unsigned long bufsiz,
- 						    struct strbuf *hdrbuf);
- 
-+/**
-+ * format_object_header() is a thin wrapper around s xsnprintf() that
-+ * writes the initial "<type> <obj-len>" part of the loose object
-+ * header. It returns the size that snprintf() returns + 1.
-+ *
-+ * The format_object_header_extended() function allows for writing a
-+ * type_name that's not one of the "enum object_type" types. This is
-+ * used for "git hash-object --literally". Pass in a OBJ_NONE as the
-+ * type, and a non-NULL "type_str" to do that.
-+ *
-+ * format_object_header() is a convenience wrapper for
-+ * format_object_header_extended().
-+ */
-+int format_object_header_extended(char *str, size_t size, enum object_type type,
-+				 const char *type_str, size_t objsize);
-+static inline int format_object_header(char *str, size_t size,
-+				      enum object_type type, size_t objsize)
-+{
-+	return format_object_header_extended(str, size, type, NULL, objsize);
-+}
-+
- /**
-  * parse_loose_header() parses the starting "<type> <len>\0" of an
-  * object. If it doesn't follow that format -1 is returned. To check
-diff --git a/http-push.c b/http-push.c
-index 3309aaf004..f55e316ff4 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -363,7 +363,7 @@ static void start_put(struct transfer_request *request)
- 	git_zstream stream;
- 
- 	unpacked = read_object_file(&request->obj->oid, &type, &len);
--	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), (uintmax_t)len) + 1;
-+	hdrlen = format_object_header(hdr, sizeof(hdr), type, (uintmax_t)len);
- 
- 	/* Set it up */
- 	git_deflate_init(&stream, zlib_compression_level);
 diff --git a/object-file.c b/object-file.c
-index eb1426f98c..6bba4766f9 100644
+index 6bba4766f9..e048f3d39e 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1006,6 +1006,14 @@ void *xmmap(void *start, size_t length,
- 	return ret;
+@@ -1751,6 +1751,25 @@ static void write_object_file_prepare(const struct git_hash_algo *algo,
+ 	algo->final_oid_fn(oid, &c);
  }
  
-+int format_object_header_extended(char *str, size_t size, enum object_type type,
-+				 const char *typestr, size_t objsize)
++/*
++ * Move the just written object with proper mtime into its final resting place.
++ */
++static int finalize_object_file_with_mtime(const char *tmpfile,
++					   const char *filename,
++					   time_t mtime,
++					   unsigned flags)
 +{
-+	const char *s = type == OBJ_NONE ? typestr : type_name(type);
++	struct utimbuf utb;
 +
-+	return xsnprintf(str, size, "%s %"PRIuMAX, s, (uintmax_t)objsize) + 1;
++	if (mtime) {
++		utb.actime = mtime;
++		utb.modtime = mtime;
++		if (utime(tmpfile, &utb) < 0 && !(flags & HASH_SILENT))
++			warning_errno(_("failed utime() on %s"), tmpfile);
++	}
++	return finalize_object_file(tmpfile, filename);
 +}
 +
  /*
-  * With an in-core object data in "map", rehash it to make sure the
-  * object name actually matches "oid" to detect object corruption.
-@@ -1034,7 +1042,7 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
- 		return -1;
+  * Move the just written object into its final resting place.
+  */
+@@ -1836,7 +1855,8 @@ static inline int directory_size(const char *filename)
+  * We want to avoid cross-directory filename renames, because those
+  * can have problems on various filesystems (FAT, NFS, Coda).
+  */
+-static int create_tmpfile(struct strbuf *tmp, const char *filename)
++static int create_tmpfile(struct strbuf *tmp, const char *filename,
++			  unsigned flags)
+ {
+ 	int fd, dirlen = directory_size(filename);
  
- 	/* Generate the header */
--	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(obj_type), (uintmax_t)size) + 1;
-+	hdrlen = format_object_header(hdr, sizeof(hdr), obj_type, size);
+@@ -1844,7 +1864,9 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
+ 	strbuf_add(tmp, filename, dirlen);
+ 	strbuf_addstr(tmp, "tmp_obj_XXXXXX");
+ 	fd = git_mkstemp_mode(tmp->buf, 0444);
+-	if (fd < 0 && dirlen && errno == ENOENT) {
++	do {
++		if (fd >= 0 || !dirlen || errno != ENOENT)
++			break;
+ 		/*
+ 		 * Make sure the directory exists; note that the contents
+ 		 * of the buffer are undefined after mkstemp returns an
+@@ -1854,17 +1876,48 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
+ 		strbuf_reset(tmp);
+ 		strbuf_add(tmp, filename, dirlen - 1);
+ 		if (mkdir(tmp->buf, 0777) && errno != EEXIST)
+-			return -1;
++			break;
+ 		if (adjust_shared_perm(tmp->buf))
+-			return -1;
++			break;
  
- 	/* Sha1.. */
- 	r->hash_algo->init_fn(&c);
-@@ -1734,7 +1742,7 @@ static void write_object_file_prepare(const struct git_hash_algo *algo,
- 	git_hash_ctx c;
+ 		/* Try again */
+ 		strbuf_addstr(tmp, "/tmp_obj_XXXXXX");
+ 		fd = git_mkstemp_mode(tmp->buf, 0444);
++	} while (0);
++
++	if (fd < 0 && !(flags & HASH_SILENT)) {
++		if (errno == EACCES)
++			return error(_("insufficient permission for adding an "
++				       "object to repository database %s"),
++				     get_object_directory());
++		else
++			return error_errno(_("unable to create temporary file"));
+ 	}
++
+ 	return fd;
+ }
  
- 	/* Generate the header */
--	*hdrlen = xsnprintf(hdr, *hdrlen, "%s %"PRIuMAX , type, (uintmax_t)len)+1;
-+	*hdrlen = format_object_header_extended(hdr, *hdrlen, OBJ_NONE, type, len);
++static void setup_stream_and_header(git_zstream *stream,
++				    unsigned char *compressed,
++				    unsigned long compressed_size,
++				    git_hash_ctx *c,
++				    char *hdr,
++				    int hdrlen)
++{
++	/* Set it up */
++	git_deflate_init(stream, zlib_compression_level);
++	stream->next_out = compressed;
++	stream->avail_out = compressed_size;
++	the_hash_algo->init_fn(c);
++
++	/* First header.. */
++	stream->next_in = (unsigned char *)hdr;
++	stream->avail_in = hdrlen;
++	while (git_deflate(stream, 0) == Z_OK)
++		; /* nothing */
++	the_hash_algo->update_fn(c, hdr, hdrlen);
++}
++
+ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 			      int hdrlen, const void *buf, unsigned long len,
+ 			      time_t mtime, unsigned flags)
+@@ -1879,28 +1932,13 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
  
- 	/* Sha1.. */
- 	algo->init_fn(&c);
-@@ -2006,7 +2014,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
- 	buf = read_object(the_repository, oid, &type, &len);
- 	if (!buf)
- 		return error(_("cannot read object for %s"), oid_to_hex(oid));
--	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), (uintmax_t)len) + 1;
-+	hdrlen = format_object_header(hdr, sizeof(hdr), type, len);
- 	ret = write_loose_object(oid, hdr, hdrlen, buf, len, mtime, 0);
- 	free(buf);
+ 	loose_object_path(the_repository, &filename, oid);
  
+-	fd = create_tmpfile(&tmp_file, filename.buf);
+-	if (fd < 0) {
+-		if (flags & HASH_SILENT)
+-			return -1;
+-		else if (errno == EACCES)
+-			return error(_("insufficient permission for adding an object to repository database %s"), get_object_directory());
+-		else
+-			return error_errno(_("unable to create temporary file"));
+-	}
+-
+-	/* Set it up */
+-	git_deflate_init(&stream, zlib_compression_level);
+-	stream.next_out = compressed;
+-	stream.avail_out = sizeof(compressed);
+-	the_hash_algo->init_fn(&c);
++	fd = create_tmpfile(&tmp_file, filename.buf, flags);
++	if (fd < 0)
++		return -1;
+ 
+-	/* First header.. */
+-	stream.next_in = (unsigned char *)hdr;
+-	stream.avail_in = hdrlen;
+-	while (git_deflate(&stream, 0) == Z_OK)
+-		; /* nothing */
+-	the_hash_algo->update_fn(&c, hdr, hdrlen);
++	/* Set it up and write header */
++	setup_stream_and_header(&stream, compressed, sizeof(compressed),
++				&c, hdr, hdrlen);
+ 
+ 	/* Then the data itself.. */
+ 	stream.next_in = (void *)buf;
+@@ -1929,16 +1967,8 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 
+ 	close_loose_object(fd);
+ 
+-	if (mtime) {
+-		struct utimbuf utb;
+-		utb.actime = mtime;
+-		utb.modtime = mtime;
+-		if (utime(tmp_file.buf, &utb) < 0 &&
+-		    !(flags & HASH_SILENT))
+-			warning_errno(_("failed utime() on %s"), tmp_file.buf);
+-	}
+-
+-	return finalize_object_file(tmp_file.buf, filename.buf);
++	return finalize_object_file_with_mtime(tmp_file.buf, filename.buf,
++					       mtime, flags);
+ }
+ 
+ static int freshen_loose_object(const struct object_id *oid)
 -- 
 2.34.1.52.g80008efde6.agit.6.5.6
 
