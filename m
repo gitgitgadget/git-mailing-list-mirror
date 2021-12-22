@@ -2,105 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A050BC433EF
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 20:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4E60C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 20:27:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345403AbhLVURK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 15:17:10 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58109 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237869AbhLVURJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 15:17:09 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C81C110DBEE;
-        Wed, 22 Dec 2021 15:17:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=x9l1NGtAMtm/b/kbczczSf7XQ6MuURctJAJcU6
-        hdpkE=; b=YkworuiAx76VNGWZoy66QY2r2d8V4k/PyROZEvW84dSI1e4qIsV1nd
-        T6ojymZTVpKcE77c6YmR+cCgAg85sGrHj+TvyCM3e5it4gmC4T2mYm6GkN7LUdiL
-        wHL+XQFokBqk7l620aGNk4AmCGk+FN9Hd5qrehQKG7fVIg5j+ZryE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BDA2310DBED;
-        Wed, 22 Dec 2021 15:17:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CEBD910DBEC;
-        Wed, 22 Dec 2021 15:17:07 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 4/4] t7004: use "test-tool ref-store" for reflog inspection
-References: <pull.1168.git.git.1640170784.gitgitgadget@gmail.com>
-        <5d693273e5852ae9b302cb79e8dd986b6ffa10da.1640170784.git.gitgitgadget@gmail.com>
-Date:   Wed, 22 Dec 2021 12:17:06 -0800
-In-Reply-To: <5d693273e5852ae9b302cb79e8dd986b6ffa10da.1640170784.git.gitgitgadget@gmail.com>
-        (Han-Wen Nienhuys via GitGitGadget's message of "Wed, 22 Dec 2021
-        10:59:44 +0000")
-Message-ID: <xmqqfsqkied9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2329C68C-6364-11EC-AEF7-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+        id S237829AbhLVU12 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 15:27:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58844 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229987AbhLVU11 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 15:27:27 -0500
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6499FC061574
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 12:27:27 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id u37-20020a632365000000b0033b4665d66cso1982253pgm.18
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 12:27:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=CYN64+Yvb5hIXPCNVTiQOVqRT+EXZ5gt0kU19jVqREY=;
+        b=Y7Dj7/zG0Ky0s5smIIWdgL730uSphyy69xHwFTojRtgUyZvAXLRgsUw0GFTOFfac56
+         prf3D8Cqv6hd982679hIeumOx9GxgZWTxbgpJlkXfCCUCEyjjdxPisarNL9IRtOibnI0
+         7mrQzJMcUnIbfPnLkQpTUJ2EV0hCw0t5qtNq1Hc6fPimixlNNST/XjIB0KOOFRSnyBtn
+         NImZNv+Qkn6a2CrJfbmYvxM49BaNKkmAYX+WisXbeLv+KiSsld7IsmtKnqVfC8diAFxI
+         HHXWIK7QAzR0dlbuDfdx1JPXsd8YUEEzs/IIy1xuwGnXe/RcibhzwgZ5ax58eRya+fu+
+         1NTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=CYN64+Yvb5hIXPCNVTiQOVqRT+EXZ5gt0kU19jVqREY=;
+        b=MsAYGB2d5U3cREToxs7pA0Q68zDwNDxi2zww/65/ydQ+gqf/mCyIi54mmHRRnog+Di
+         YnQ9xs/TJPVoRrIYHMKLzWEtNljNevIp+xthm85pY5gfKFir4CQvF+5yAy6wvcOt1rTc
+         m4IX/bJgJeWOEAFr4eiZRV/32H3DoN8cwu8PwBhwEreKsy1CcvcVP3S5VROXiYv1Etml
+         xq6I+NDgGNJ8K/1hG6+CS2ya662gLgAWl4FinXfCeJPbyVLQolfTCHhoLYRbVukHwXvu
+         y/jjASPmx2fxJXTZ2hN8D0JXZhy5frlT5uEFEDi6SVV4Ns7FmX3bLPVfQoZB96jeC9Mt
+         zo8w==
+X-Gm-Message-State: AOAM530eyYHYd9SoPGrXwrvH0dQkiARx5Uihl+0Jm7iuNBdY1Z0ZXsPI
+        LhtMfadUulE2WocwdvB57tSI+hA5P00ogQ==
+X-Google-Smtp-Source: ABdhPJyMmXyj9hU9NX1WvIPrpuLSIbdHzwNfgHjSkRrfH/Ule1RrZcOjGvqNjazkRWpXfV/zYwWaplb3tC9Uug==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:bd4b:b0:149:460a:9901 with SMTP
+ id b11-20020a170902bd4b00b00149460a9901mr2157296plx.44.1640204846890; Wed, 22
+ Dec 2021 12:27:26 -0800 (PST)
+Date:   Wed, 22 Dec 2021 12:27:15 -0800
+In-Reply-To: <xmqqpmpojv48.fsf@gitster.g>
+Message-Id: <kl6l4k70z8po.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20211217000235.68996-1-chooglen@google.com> <20211222001134.28933-1-chooglen@google.com>
+ <20211222001134.28933-3-chooglen@google.com> <xmqqa6gtkumz.fsf@gitster.g>
+ <kl6l8rwczgzy.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqqpmpojv48.fsf@gitster.g>
+Subject: Re: [PATCH v3 2/3] builtin/fetch: skip unnecessary tasks when using --negotiate-only
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Han-Wen Nienhuys <hanwen@google.com>
+> Glen Choo <chooglen@google.com> writes:
 >
-> This makes the test work with reftable.
+>> I would have come to same conclusion if I agreed that we should recurse
+>> into submodules even if no objects are fetched. When I first wrote this
+>> patch, I was convinced that "no new objects" implies "no need to update
+>> submodules" (see my response at [1]), but I'm not sure any more and I'd
+>> like to check my understanding.
 >
-> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-> ...
-> -	sed -e "s/^.*	//" .git/logs/refs/tags/tag_with_reflog2 >actual &&
-> +	test-tool ref-store main for-each-reflog-ent refs/tags/tag_with_reflog2 | sed -e "s/^.*	//" >actual &&
->  	test_cmp expected actual
->  '
+> For example, there is a "everything_local()" optimization in the
+> fetch-pack codepath where the following steps happen:
+>
+>  (1) we look at the current value of the remote refs we are fetching
+>      from their ls_refs output (let's call it "new tips");
+>
+>  (2) we notice that all of these objects happen to exist in our
+>      object store.
+>
+>  (3) we make sure that we do not see any "missing links" if we run a
+>      reachability traversal that starts from these objects and our
+>      existing refs, and stops when the traversal intersect.
+>
+> When the last step finds that all objects necessary to point at
+> these "new tips" with our refs safely, then we have no reason to
+> perform physical transfer of objects.  Yet, we'd update our refs
+> to the "new tips".
+>
+> This can happen in a number of ways.  
+>
+> Imagine that you have a clone of https://github.com/git/git/ for
+> only its 'main' branch (i.e. a single-branch clone).  If you then
+> say "git fetch origin maint:maint", we'll learn that the tip of
+> their 'maint' branch points at a commit, we look into our object
+> store, find that there is no missing object to reach from it to the
+> part of the object graph that is reachable from our refs (i.e. my
+> 'maint' is always an ancestor of my 'main'), and we find that there
+> is no reason to transfer any object.  Yet we will carete a new ref
+> and point at the commit.
+>
+> Or if you did "git branch -d" locally, making objects unreachable in
+> your object store, and then fetch from your upstream, which had fast
+> forwarded to the contents of the branch you just deleted.
+>
+> Or they rewound and rebuilt their branches since you fetched the
+> last time, and then they realized their mistake and now their refs
+> point at a commit that you have already seen but are different from
+> what your remote-tracking branches point at now.
+>
+> Or you are using Derrick's "prefetch" (in "git maintenance run") and
+> a background process already downloaded the objects needed for the
+> branch you are fetching in the past.
+>
+> Depending on what happened when these objects were pre-fetched, such
+> a real fetch that did not have to perform an object transfer may
+> likely to need to adjust things in the submodule repository.
+> "prefetch" is designed not to disrupt and to be invisible to the
+> normal operation as much as possible, so I would expect that it
+> won't do any priming of the submodules based on what it prefetched
+> for the superproject, for example.
 
-Yup, this makes perfect sense.  Purists may be bothered by having
-anything _we_ write, like "test-tool" on the upstream of a pipe to
-hide its exit code, though.
+Thanks for providing concrete examples; that's a lot more convincing
+than my hypothetical.
 
-After applying these four patches on top of 'master', I still see
-some mention of logs/refs in the t/ directory.  Some of them may
-be a low-hanging fruit other people can take a look at and convert
-to the test-helper calls to help us move the reftable topic forward
-without stepping on your toes, hopefully?
+> So in short, physical object transfer can be optimized out, even
+> when the external world view, i.e. where in the history graph the
+> refs point at, changes and makes it necessary to check in the
+> submodule repositories.
 
-Thanks.
-
-t/t0060-path-utils.sh:test_git_path GIT_COMMON_DIR=bar logs/refs/bisect/foo     .git/logs/refs/bisect/foo
-t/t0060-path-utils.sh:test_git_path GIT_COMMON_DIR=bar logs/refs                bar/logs/refs
-t/t0060-path-utils.sh:test_git_path GIT_COMMON_DIR=bar logs/refs/               bar/logs/refs/
-t/t0060-path-utils.sh:test_git_path GIT_COMMON_DIR=bar logs/refs/bisec/foo      bar/logs/refs/bisec/foo
-t/t0060-path-utils.sh:test_git_path GIT_COMMON_DIR=bar logs/refs/bisec          bar/logs/refs/bisec
-t/t0060-path-utils.sh:test_git_path GIT_COMMON_DIR=bar logs/refs/bisectfoo      bar/logs/refs/bisectfoo
-t/t0060-path-utils.sh:test_git_path GIT_COMMON_DIR=bar logs/refs/heads/main     bar/logs/refs/heads/main
-t/t1301-shared-repo.sh:	actual="$(ls -l .git/logs/refs/heads/main)" &&
-t/t1301-shared-repo.sh:		echo Ooops, .git/logs/refs/heads/main is not 066x [$actual]
-t/t1400-update-ref.sh:rm -f .git/logs/refs/heads/main
-t/t1400-update-ref.sh:	test_path_is_file .git/logs/refs/heads/d1/d2/r1 &&
-t/t1400-update-ref.sh:	test_must_fail git show-ref --verify -q logs/refs/heads/d1/d2 &&
-t/t1400-update-ref.sh:	test_path_is_file .git/logs/refs/heads/d1/r2
-t/t1400-update-ref.sh:	test_path_is_file .git/logs/refs/heads/e1/e2/r1 &&
-t/t1400-update-ref.sh:	test_must_fail git show-ref --verify -q logs/refs/heads/e1/e2 &&
-t/t1400-update-ref.sh:	test_path_is_file .git/logs/refs/heads/e1/r2 &&
-t/t1407-worktree-ref-store.sh:	mkdir -p     .git/logs/refs/bisect &&
-t/t1407-worktree-ref-store.sh:	echo $ZERO_OID > .git/logs/refs/bisect/random &&
-t/t1407-worktree-ref-store.sh:	mkdir -p     .git/worktrees/wt/logs/refs/bisect &&
-t/t1407-worktree-ref-store.sh:	echo $ZERO_OID > .git/worktrees/wt/logs/refs/bisect/wt-random &&
-t/t1410-reflog.sh:	# now logs/refs/heads/one is a stale directory, but
-t/t1410-reflog.sh:	done >.git/logs/refs/heads/reflogskip &&
-t/t3200-branch.sh:	test_path_is_file .git/logs/refs/heads/d/e/f &&
-t/t3200-branch.sh:	test_cmp expect .git/logs/refs/heads/d/e/f
-t/t3200-branch.sh:	mv .git/logs/refs/heads/u real-u &&
-t/t3200-branch.sh:	ln -s real-u .git/logs/refs/heads/u &&
-t/t3200-branch.sh:	test_path_is_file .git/logs/refs/heads/g/h/i &&
-t/t3200-branch.sh:	test_cmp expect .git/logs/refs/heads/g/h/i
+Yes, you're right. I'll move the jump accordingly :)
