@@ -2,106 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55C8BC4332F
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 19:17:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC501C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 19:30:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345154AbhLVTRk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 14:17:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345143AbhLVTRk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 14:17:40 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04953C061574
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 11:17:40 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id z29so12474670edl.7
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 11:17:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TOEZ8RubB4Czr1LJF6lHjhZavplhEyGiTWD8kwJGb1w=;
-        b=SbLAolxf0o8H1PPVwr9TU7y3Hoh1eS7NyVW/Z1JXAtI0ih73bL6zjk8IHEdsXDHmZB
-         eNFROA+thNe6Sc5hGDu5Im02E43iqK1lms/p9osF9OMK2uyOEou/JvlBw8TWQHqm+6ee
-         LYA2irFx3SEck4t51cQgyySJIFu1QfdiVPG+Y3w2Ym0GJ/HDzLXLUA8D9UPxr8swkEuf
-         NsOySS8tg6pUt/AqfR+hjxiHRvKwtvFmZITJ7+jfL5JFItLKm8eRRIxQtxpOBkX9Mpr8
-         fIrJKzRBwRwrj50Yl6qZnlWhcy6xDi1uPHMYkXIpIrmNeZqnZ4/0G8iARaWyK+VWl+yo
-         c2Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TOEZ8RubB4Czr1LJF6lHjhZavplhEyGiTWD8kwJGb1w=;
-        b=IWB96SfiD4+Xxfx4UXnDbhf+kgZ7j6HLSgnF2gJK14+ZyVlsKGFQLLAVGyFZpypjzf
-         /8DIkEDIwcKvL24iShoBZdXfegcpPweRSiE71txN+1y7/gLnS5PcoPAQlh2iBFe3haTp
-         5U0gBhB0djE9dcnOc+8xxgKsjmFIpkaMK4yiXv22AUU9BNMGkh0niPW9YlWR6942IdTp
-         K3n1ekbstnF5Hn1UNvBsuVbjzvBX9ZzhO9KxaT+Px0IOr7N2kMiHSwU6Bwoz9gy5ueC1
-         ht35YSW4BAPmGkrYhTLZ6LKomxm7fb0XJ4QUV+9IRmDh1dRor1RSceu7HjuIaZn4u/da
-         IVrA==
-X-Gm-Message-State: AOAM532bQTdEF70hFcjhRVayr0ujg8slSo8jCkMQW/b+jDixDBPQgjfz
-        X0310MzV8j5Pm9VlslhXoQT79hsFrzW78aPXBpA=
-X-Google-Smtp-Source: ABdhPJxLbrgjVRzZoTMo6bem0lB3ZQgCraDDY8KM6qbNnn1uQ2wUBLZhbAyIaHYAQhTx8MaehV2xI+DbplxrCAJ4aSs=
-X-Received: by 2002:a17:907:9808:: with SMTP id ji8mr2858651ejc.476.1640200658613;
- Wed, 22 Dec 2021 11:17:38 -0800 (PST)
+        id S1345203AbhLVTaG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 14:30:06 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50113 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237755AbhLVTaF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 14:30:05 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2C71B1610A3;
+        Wed, 22 Dec 2021 14:30:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=V4JIx6WmGDlNOdX2W+YpeDUaHNcDaK5IPfjuML
+        oORxw=; b=sB6hNlqOMJmryKaPNahjRrh3iitSShEPz/IwFpCPtVFk7zSVAujKO4
+        2ZrZ/CNuwZuH173+JiPdddfwsgDc6ousLz8w/Qb7WYaRdP4t+NUeDfugqk0mBhRR
+        25PtVcvkgGeTQbZoiT/kl6B6Lxo8QqPSC1RzT7qoE0lsBhT7w2/fU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 250C41610A2;
+        Wed, 22 Dec 2021 14:30:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7279B161097;
+        Wed, 22 Dec 2021 14:30:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v3 2/3] builtin/fetch: skip unnecessary tasks when using
+ --negotiate-only
+References: <20211217000235.68996-1-chooglen@google.com>
+        <20211222001134.28933-1-chooglen@google.com>
+        <20211222001134.28933-3-chooglen@google.com>
+        <xmqqa6gtkumz.fsf@gitster.g>
+        <kl6l8rwczgzy.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Wed, 22 Dec 2021 11:29:59 -0800
+In-Reply-To: <kl6l8rwczgzy.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Wed, 22 Dec 2021 09:28:17 -0800")
+Message-ID: <xmqqpmpojv48.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1080.v3.git.1639149192.gitgitgadget@gmail.com> <pull.1080.v4.git.1640182856.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1080.v4.git.1640182856.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 22 Dec 2021 11:17:27 -0800
-Message-ID: <CABPp-BGuoY_R8Cfoa7OfoqqFt4ZuWn9dNyN94vcJb8XJMXOvRA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/5] Sparse index: fetch, pull, ls-files
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Victoria Dye <vdye@github.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8E75B448-635D-11EC-993E-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 22, 2021 at 6:20 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> This is now based on 'master'.
->
-> Did you know that 'fetch' and 'pull' read the index? I didn't, or this would
-> have been an integration much earlier in the cycle. They read the index to
-> look for the .gitmodules file in case there are submodules that need to be
-> fetched. Since looking for a file by name is already protected, we only need
-> to disable 'command_requires_full_index' and we are done.
->
-> The 'ls-files' builtin is useful when debugging the index, and some scripts
-> use it, too. We are not changing the default behavior which expands a sparse
-> index in order to show all of the cached blobs. Instead, we add a '--sparse'
-> option that allows us to see the sparse directory entries upon request.
-...
-> Updates in v2
-> =============
->
->  * Rebased onto latest ld/sparse-index-blame without issue.
->  * Updated the test to use diff-of-diffs instead of a sequence of greps.
->  * Added patches that remove the use of 'test-tool read-cache --table' and
->    its implementation.
->
->
-> Updates in v3
-> =============
->
->  * Fixed typo in commit message.
->  * Added comments around doing strange things in an ls-files test.
->  * Fixed adjacent typo in a test comment.
->
->
-> Updates in v4
-> =============
->
->  * Rebased on to 'master' now that ld/sparse-index-blame is merged.
->  * Change testing strategy to check exact output instead of using 'diff -u'.
->  * Updated documentation to state that directories have a trailing slash.
+Glen Choo <chooglen@google.com> writes:
 
-This version looks good to me:
+> I would have come to same conclusion if I agreed that we should recurse
+> into submodules even if no objects are fetched. When I first wrote this
+> patch, I was convinced that "no new objects" implies "no need to update
+> submodules" (see my response at [1]), but I'm not sure any more and I'd
+> like to check my understanding.
 
-Reviewed-by: Elijah Newren <newren@gmail.com>
+For example, there is a "everything_local()" optimization in the
+fetch-pack codepath where the following steps happen:
+
+ (1) we look at the current value of the remote refs we are fetching
+     from their ls_refs output (let's call it "new tips");
+
+ (2) we notice that all of these objects happen to exist in our
+     object store.
+
+ (3) we make sure that we do not see any "missing links" if we run a
+     reachability traversal that starts from these objects and our
+     existing refs, and stops when the traversal intersect.
+
+When the last step finds that all objects necessary to point at
+these "new tips" with our refs safely, then we have no reason to
+perform physical transfer of objects.  Yet, we'd update our refs
+to the "new tips".
+
+This can happen in a number of ways.  
+
+Imagine that you have a clone of https://github.com/git/git/ for
+only its 'main' branch (i.e. a single-branch clone).  If you then
+say "git fetch origin maint:maint", we'll learn that the tip of
+their 'maint' branch points at a commit, we look into our object
+store, find that there is no missing object to reach from it to the
+part of the object graph that is reachable from our refs (i.e. my
+'maint' is always an ancestor of my 'main'), and we find that there
+is no reason to transfer any object.  Yet we will carete a new ref
+and point at the commit.
+
+Or if you did "git branch -d" locally, making objects unreachable in
+your object store, and then fetch from your upstream, which had fast
+forwarded to the contents of the branch you just deleted.
+
+Or they rewound and rebuilt their branches since you fetched the
+last time, and then they realized their mistake and now their refs
+point at a commit that you have already seen but are different from
+what your remote-tracking branches point at now.
+
+Or you are using Derrick's "prefetch" (in "git maintenance run") and
+a background process already downloaded the objects needed for the
+branch you are fetching in the past.
+
+Depending on what happened when these objects were pre-fetched, such
+a real fetch that did not have to perform an object transfer may
+likely to need to adjust things in the submodule repository.
+"prefetch" is designed not to disrupt and to be invisible to the
+normal operation as much as possible, so I would expect that it
+won't do any priming of the submodules based on what it prefetched
+for the superproject, for example.
+
+So in short, physical object transfer can be optimized out, even
+when the external world view, i.e. where in the history graph the
+refs point at, changes and makes it necessary to check in the
+submodule repositories.
+
