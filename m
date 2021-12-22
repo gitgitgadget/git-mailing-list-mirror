@@ -2,123 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5224C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 00:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B108C433F5
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 00:11:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229637AbhLVAGJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 19:06:09 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58158 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbhLVAGH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 19:06:07 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7F81F15995B;
-        Tue, 21 Dec 2021 19:06:07 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HBM+va+NFZkj0CP8cv38IQBLtNKbInQEn27xcZ
-        RpSF4=; b=E2k9niIiDo1N2FBpgZwOL8vmiBa9b0MJtXwMAtcJx4ptb9kfPTfbz+
-        TaqaOYN1MInRZUwL5JihWoM8CdXNWGFVzQIBi6DSNrrYQyangf34fwwk+aEZo7D3
-        6FlHCyabPMrHO3lkwt/264ig1knANJg6yQ6n9Fwi+FT1dNmi0xAAk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7947915995A;
-        Tue, 21 Dec 2021 19:06:07 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AFAC3159959;
-        Tue, 21 Dec 2021 19:06:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Neeraj Singh <nksingh85@gmail.com>
-Subject: Re: [PATCH 4/9] merge-ort: mark a few more conflict messages as
- omittable
-References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
-        <1e7eef7705e2f7b4a456056e4335d82267680214.1640109948.git.gitgitgadget@gmail.com>
-Date:   Tue, 21 Dec 2021 16:06:02 -0800
-In-Reply-To: <1e7eef7705e2f7b4a456056e4335d82267680214.1640109948.git.gitgitgadget@gmail.com>
-        (Elijah Newren via GitGitGadget's message of "Tue, 21 Dec 2021
-        18:05:43 +0000")
-Message-ID: <xmqq1r25o651.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F3EB183E-62BA-11EC-A589-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+        id S238895AbhLVALt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 19:11:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38998 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238924AbhLVALs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 19:11:48 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E204C061574
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 16:11:48 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id u13-20020a17090a450d00b001b1e6726fccso2481323pjg.0
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 16:11:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=KpzqLLmko4eH3WQKX2DVSz/0b4r3lq1GmEdvcAF2R5A=;
+        b=sV2mPGyAXQVkIsbtK+/Tqa5ipBcedsMFJq5oa/tLM8DicrC41lJI9TyBUw0qF3sdbO
+         Tyqxg4sp1lGJJ6WMJyekWaJWoft9peJ2CFzb2vL8Z3/NmZOdk0LAjALNmLz82EGYv5eQ
+         k+XAIfjB2vssGjXjjoNSkf6rvb9Te05MVYVjUlbq7cLcs88kPGEJpWty8se2iiTrZFLe
+         o6a55SqKF08COE/ul6/N5EeUmlHizHA8421SYC+gNNRRHAnAm+uivbsBtk2oZLxPbH9v
+         huEQBF/TMZoqr7Gravc+wu15wx8wGi/mN/S+eHNGhvGRd3UYKQFWaJz/LcZsXuJRefiU
+         Ab6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=KpzqLLmko4eH3WQKX2DVSz/0b4r3lq1GmEdvcAF2R5A=;
+        b=I1Qk3PM8TY2Ed0JKfDy6tQEZ0LivmnmNpKdrLiwZRmWFoIab2sC9lSIcMJsjaHxu6u
+         BxUixGFvrvt843bfaL4ZUpJen2v9qcKxPMrqMKL9reRTj6VSYepslqymLk+mUlkOomyO
+         OQOE3d4jgWMHmZlZao1oKf/VNkgzpKBV4P/unTlGipdRDO4OYfeGm1UTscqt1AxA8085
+         0c2tHRjQQ3UtpI/WKpt90Vb8NPKmY+up+n3zqlLPsLP6dnAdXMWUCoPWVM0Dfmrb1TcO
+         yN/AKEvxGsQpIzbYq4aALJfI1gr9wciYW+n1F9AZ+QkaDQug2RJGnPiyvUpC8B0V2j8a
+         eefA==
+X-Gm-Message-State: AOAM530lmv7zZm3gFh2PDMsdQ/FnA3ELZkzGECZpt3Xanrnv95AGoe5C
+        I+Go31unqkvtZKCcLVO4sqz1q04pPYH9wUpYdUWeCpAZUnIjzk7EqgB115CK1Hj0uACIIeimMWv
+        1lY8ICIUdlN0x7vPZl/qJAQClIUSY3WVbBRz21eSs6pxfJ3pqVNXXex79MIr+lVw=
+X-Google-Smtp-Source: ABdhPJw0Mh8AATAgkQE4vFH9htZUzJyYGtbUOKEhuyVyxpVy7505dM9xPQozFqqVpM7tkIt6/gYbZJIcfhFmYA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:aa7:9099:0:b0:4ba:9e72:e5d3 with SMTP id
+ i25-20020aa79099000000b004ba9e72e5d3mr442776pfa.75.1640131907839; Tue, 21 Dec
+ 2021 16:11:47 -0800 (PST)
+Date:   Tue, 21 Dec 2021 16:11:31 -0800
+In-Reply-To: <20211217000235.68996-1-chooglen@google.com>
+Message-Id: <20211222001134.28933-1-chooglen@google.com>
+Mime-Version: 1.0
+References: <20211217000235.68996-1-chooglen@google.com>
+X-Mailer: git-send-email 2.34.1.307.g9b7440fafd-goog
+Subject: [PATCH v3 0/3] builtin/fetch: skip unnecessary tasks when using --negotiate-only
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Glen Choo <chooglen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+cmd_fetch() performs certain tasks with the assumption that objects are
+fetched, but `git fetch --negotiate-only` does not fetch objects, as its
+name implies. This is results in behavior that is unnecessary at best,
+and incorrect at worst:
 
-> From: Elijah Newren <newren@gmail.com>
->
-> path_msg() has the ability to mark messages as omittable, designed for
-> remerge-diff where we'll instead be showing conflict messages as diff
-> headers for a subsequent diff.  While all these messages are very useful
-> when trying to create a merge initially, early use with the
-> --remerge-diff feature (the only user of this omittable conflict message
-> capability), suggests that the particular messages marked in this commit
-> are just noise when trying to see what changes users made to create a
-> merge commit.
+* Submodules are updated if enabled by recurse.submodules=true, but
+  negotiation fetch doesn't actually update the repo, so this doesn't
+  make sense (introduced in [1]).
+* Commit graphs will be written if enabled by
+  fetch.writeCommitGraph=true. But according to
+  Documentation/config/fetch.txt [2], this should only be done if a
+  pack-file is downloaded.
+* gc is run, but according to [3], we only do this because we expect
+  `git fetch` to introduce objects.
 
-It is likely because when somebody is looking at the output of
-remerge-diff, they are mostly concentrating on the _content_ level
-merges and they are not keenly looking for a merge whose result is
-deposited at a wrong path.  Since what is shown is something that
-has already recorded in the history, we can safely assume that it is
-no longer a relevant (or "it is way too late to matter"), I would
-say, to show these messages about "file location".
+Make `git fetch --negotiate-only` handle these tasks more rigorously by
+doing the following:
 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  merge-ort.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/merge-ort.c b/merge-ort.c
-> index a18f47e23c5..fe27870e73e 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -2420,7 +2420,7 @@ static void apply_directory_rename_modifications(struct merge_options *opt,
->  		 */
->  		ci->path_conflict = 1;
->  		if (pair->status == 'A')
-> -			path_msg(opt, new_path, 0,
-> +			path_msg(opt, new_path, 1,
->  				 _("CONFLICT (file location): %s added in %s "
->  				   "inside a directory that was renamed in %s, "
->  				   "suggesting it should perhaps be moved to "
-> @@ -2428,7 +2428,7 @@ static void apply_directory_rename_modifications(struct merge_options *opt,
->  				 old_path, branch_with_new_path,
->  				 branch_with_dir_rename, new_path);
->  		else
-> -			path_msg(opt, new_path, 0,
-> +			path_msg(opt, new_path, 1,
->  				 _("CONFLICT (file location): %s renamed to %s "
->  				   "in %s, inside a directory that was renamed "
->  				   "in %s, suggesting it should perhaps be "
-> @@ -3825,7 +3825,7 @@ static void process_entry(struct merge_options *opt,
->  				reason = _("add/add");
->  			if (S_ISGITLINK(merged_file.mode))
->  				reason = _("submodule");
-> -			path_msg(opt, path, 0,
-> +			path_msg(opt, path, 1,
->  				 _("CONFLICT (%s): Merge conflict in %s"),
->  				 reason, path);
+* Make cmd_fetch() return early if we know for certain that objects will
+  not be fetched
+* Disable submodule recursion and die() if a user explicitly asks for it
 
-I am not as sure about this one as the other two, though.  I guess
-in the context of remerge-diff, resolving the add/add conflict into
-the same file is also something that happened long time ago and
-these messages are too late to matter the same way as the other two.
+[1] 7dce19d374 (fetch/pull: Add the --recurse-submodules option, 2010-11-12)
+[2] 50f26bd035 (fetch: add fetch.writeCommitGraph config setting, 2019-09-02)
+[3] 131b8fcbfb (fetch: run gc --auto after fetching, 2013-01-26)
 
-OK.
+Changes since v2:
+* added a prepatory patch that introduces a "goto cleanup"
+* drop an unnecessary line move (as suggested by Junio)
+* check for user-given --recurse-submodules and die() (as suggested by
+  Jonathan and Junio)
+* update --negotiate-only's documentation 
 
+Changes since v1:
+* added more context to commit message
+* added a NEEDSWORK comment 
+
+Glen Choo (3):
+  builtin/fetch: use goto cleanup in cmd_fetch()
+  builtin/fetch: skip unnecessary tasks when using --negotiate-only
+  builtin/fetch: die on --negotiate-only and --recurse-submodules
+
+ Documentation/fetch-options.txt |  1 +
+ builtin/fetch.c                 | 41 +++++++++++++++++++++++++++++----
+ t/t5516-fetch-push.sh           | 12 ++++++++++
+ t/t5702-protocol-v2.sh          | 17 ++++++++++++++
+ 4 files changed, 67 insertions(+), 4 deletions(-)
+
+Range-diff against v2:
+-:  ---------- > 1:  97e2cba633 builtin/fetch: use goto cleanup in cmd_fetch()
+1:  9d18270a41 ! 2:  3a3a04b649 builtin/fetch: skip unnecessary tasks when using --negotiate-only
+    @@ Commit message
+         return early whenever objects are not fetched, but for now this only
+         considers --negotiate-only.
+     
+    +    A similar optimization would be to skip irrelevant tasks in `git fetch
+    +    --dry-run`. This optimization was not done in this commit because a dry
+    +    run will actually fetch objects; we'd presumably still want to recurse
+    +    into submodules and run gc.
+    +
+         [1] 7dce19d374 (fetch/pull: Add the --recurse-submodules option, 2010-11-12)
+         [2] 50f26bd035 (fetch: add fetch.writeCommitGraph config setting, 2019-09-02)
+         [3] 131b8fcbfb (fetch: run gc --auto after fetching, 2013-01-26)
+    @@ builtin/fetch.c: int cmd_fetch(int argc, const char **argv, const char *prefix)
+     +		 * submodules, so there is no need to read .gitmodules.
+     +		 */
+     +		recurse_submodules = RECURSE_SUBMODULES_OFF;
+    -+		if (!negotiation_tip.nr)
+    -+			die(_("--negotiate-only needs one or more --negotiate-tip=*"));
+     +	}
+     +
+      	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
+      		int *sfjc = submodule_fetch_jobs_config == -1
+      			    ? &submodule_fetch_jobs_config : NULL;
+    -@@ builtin/fetch.c: int cmd_fetch(int argc, const char **argv, const char *prefix)
+    - 		fetch_config_from_gitmodules(sfjc, rs);
+    - 	}
+    - 
+    --	if (negotiate_only && !negotiation_tip.nr)
+    --		die(_("--negotiate-only needs one or more --negotiate-tip=*"));
+    --
+    - 	if (deepen_relative) {
+    - 		if (deepen_relative < 0)
+    - 			die(_("Negative depth in --deepen is not supported"));
+     @@ builtin/fetch.c: int cmd_fetch(int argc, const char **argv, const char *prefix)
+      		result = fetch_multiple(&list, max_children);
+      	}
+      
+    -+	string_list_clear(&list, 0);
+    -+
+     +	/*
+     +	 * Skip irrelevant tasks because we know objects were not
+     +	 * fetched.
+    @@ builtin/fetch.c: int cmd_fetch(int argc, const char **argv, const char *prefix)
+     +	 * of them.
+     +	 */
+     +	if (negotiate_only)
+    -+		return result;
+    ++		goto cleanup;
+     +
+      	if (!result && (recurse_submodules != RECURSE_SUBMODULES_OFF)) {
+      		struct strvec options = STRVEC_INIT;
+      		int max_children = max_jobs;
+    -@@ builtin/fetch.c: int cmd_fetch(int argc, const char **argv, const char *prefix)
+    - 		strvec_clear(&options);
+    - 	}
+    - 
+    --	string_list_clear(&list, 0);
+    --
+    - 	prepare_repo_settings(the_repository);
+    - 	if (fetch_write_commit_graph > 0 ||
+    - 	    (fetch_write_commit_graph < 0 &&
+     
+      ## t/t5516-fetch-push.sh ##
+     @@ t/t5516-fetch-push.sh: test_expect_success 'push with negotiation proceeds anyway even if negotiation f
+-:  ---------- > 3:  97792b5214 builtin/fetch: die on --negotiate-only and --recurse-submodules
+
+base-commit: abe6bb3905392d5eb6b01fa6e54d7e784e0522aa
+-- 
+2.33.GIT
 
