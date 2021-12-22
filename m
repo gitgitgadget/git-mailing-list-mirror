@@ -2,101 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DCB0C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 18:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2921C433F5
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 18:56:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235589AbhLVSNZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 13:13:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56496 "EHLO
+        id S1344947AbhLVS4k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 13:56:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233546AbhLVSNY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 13:13:24 -0500
-Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53A78C061574
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 10:13:24 -0800 (PST)
-Received: by mail-ua1-x936.google.com with SMTP id r15so5918440uao.3
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 10:13:24 -0800 (PST)
+        with ESMTP id S1344925AbhLVS4j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 13:56:39 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 575D2C06173F
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 10:56:39 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id e5so1815949wmq.1
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 10:56:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ISBpZRK0Y9WrsGoP/6iORN5wzB3LjPjbaLYluFrhZ70=;
-        b=l9PFKkoEIlAdIKYFJG09lUZaHru4qP9/EAqhwKlK1Xh9+eKmplqdg9aDHGUFNnfCIc
-         ce1dKC7nrjmESZjIgkNeY5GT9W2XK79IGD/STe2m0gIjguu+B/xNCyGvf6TRkd66bITA
-         uUmHySxjiM5d9vo6zFR2Qrk3jPnhvXp7GWtQpCAvyN3Pd3/rR3dbZCNrgDHlPdwPG4Qu
-         ZxUN+UKXbScbzC4x0wpXLiToOme+ceovmzx1oItWM+5Zr+apFJMHBL6z/5ARInIPyfVT
-         lxSpGkdiYBY0B1Z4F6RKGgJm5aikUZUOuRvEM7/RsKEJoLYCDcYRILMOdDIW/CJ765rQ
-         LQrg==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=4caTpC3+u83vTS7zkUHAtzr+4yoHPBYES+caC91RmF4=;
+        b=lCux+Z1kzOm6YqFTPAy10jS1g4vd6/lZlHiy7y6MBc/KuNcOyrvlZ6ruqEFzCDAqT9
+         VSA+pC0sNnVD1u6JyP0NZNK5NUmoDZ4qqrhTToCkXD7xu12Ew/qghffvLsUvaCTrem0h
+         v0COfvWG7rmcn7+83Twxc4grpJQ/Qb2sbV9vpAxUGmTxcVe6mNRc0WuSR72ktPyWva7X
+         eVdN6qt9gnZ5fovz23g57hDVvw35C0yskv27PuLMYI7IKAYFyOPKduTtrMqYsCeeyc+O
+         /KwyHDAr07P2avNZxnw65Eprw0pxTp2Bh5EE3uigMazEgNnWYoyVaeLb7bvGS2fIExvZ
+         B37A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ISBpZRK0Y9WrsGoP/6iORN5wzB3LjPjbaLYluFrhZ70=;
-        b=d1VcggUauRB3qw4O6LlnBwXSXdcEKIcBM96sFw0hIKrn+zpmkzcyAXOL3sjHuv3/Ti
-         MUimNIPnNR594SLHvOvRAehvkJ6bhdsVx5nacHQsr4LQE8fE/wST4Lc9J1PWieVKgYex
-         EqziF74x/nFA5iNjpjH2VMz0gWS3qSgRcebHuXN9lQSvhmn0dCRIvO8NloTiBLiFSxNo
-         S+xG7XDOphrWysCcgEY1ha89SvBByQisrmtAR5Zm/c5/fMR0j3C4iK6zo9VAZ6t6CO25
-         QL7bJ+r5z3Ui1ZNr6ouRyF3r/P3+jSJOIZidJjER6ClDgi8Oq00UawhAUR3Hbjau/1aL
-         Ke+Q==
-X-Gm-Message-State: AOAM5323fhUWAV43+XngXcKRk7vB95pprcdv9RVm2D5W05y2j24tCRIj
-        hqRZcIjHxwg0KQ1Vr7f4YMv/4NBhtmOzM8YbZ5shPbyZr28=
-X-Google-Smtp-Source: ABdhPJyT41zQ+sJ6aZQnnHlA9N5mKzW0c0slwoUEJ2veIG3CdNF7GRb5G0E/AkxS8w4mR7rrkFdcFBPhIf4EOzSmtJw=
-X-Received: by 2002:a67:e15a:: with SMTP id o26mr1425924vsl.83.1640196803293;
- Wed, 22 Dec 2021 10:13:23 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=4caTpC3+u83vTS7zkUHAtzr+4yoHPBYES+caC91RmF4=;
+        b=Vm0kUjOMZWnT2yBLIv4uZ8UrCe0nUWTZqT4XhkaCjUQELUV+z7j9wUMQFG2fDP+gF2
+         uGMH7sbm16xghYySe+WJrXFYWn5ezPTca+eJSOUdWZ4jh5ylCu6wyuk2TMcJaEEhIusL
+         6lGr80vL6Ynq4Nl1H+WjN7bMttO+PsXKExnigMTsnBAKzf0xIsahQLZAAk7jHOZvgwCc
+         bLRJJUujHca3L3Fsiz+w2UjwN1rkywBqAzzgN0aiUvLE+FMippNK/JRTIF9V0OBvZeLI
+         VV4mTNvyxU2ybMbI+Y5fAoASpSX47kYyGQ0xFZjS3mLPbjerIjt3HyVqlc+FBxbsttX5
+         VZlA==
+X-Gm-Message-State: AOAM533QNsKo+qONgQrys5foHQlGMmS5RJ05+lu/XR1t+c7bw7vucRL8
+        Rrkmshc7va/URZry0taHGs6x1jc/WYg=
+X-Google-Smtp-Source: ABdhPJyoaBU921E/udNconIqyWPSa05rok4Y8oelZ6s7gDM+Zc+yOmqKEIsPGZBu4jmsNL2uv0G+zw==
+X-Received: by 2002:a7b:cb51:: with SMTP id v17mr1794412wmj.185.1640199397817;
+        Wed, 22 Dec 2021 10:56:37 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w25sm5804672wmk.20.2021.12.22.10.56.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Dec 2021 10:56:37 -0800 (PST)
+Message-Id: <e7f1be7bbec0427d5c10453631c3486936ed2bf0.1640199396.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
+References: <pull.1152.v4.git.git.1639482476.gitgitgadget@gmail.com>
+        <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 22 Dec 2021 18:56:21 +0000
+Subject: [PATCH v5 01/16] reftable: fix OOB stack write in print functions
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1163.git.git.1640090038.gitgitgadget@gmail.com>
- <75e5392032dbdbdedf8a2b76a7098e4dc1133d82.1640090038.git.gitgitgadget@gmail.com>
- <xmqqtuf1kwob.fsf@gitster.g>
-In-Reply-To: <xmqqtuf1kwob.fsf@gitster.g>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 22 Dec 2021 19:13:11 +0100
-Message-ID: <CAFQ2z_M7S_gC2AfuPZptYAY3E2XmUMhQONq5iv90OJZHXWrq-Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] refs: set the repo in debug_ref_store.base
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Han-Wen Nienhuys <hanwen@google.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 22, 2021 at 6:58 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Han-Wen Nienhuys <hanwen@google.com>
-> >
-> > This is for consistency with the files backend.
->
-> Hmmmm.  Could you explain what it exactly means?
->
-> I can see that files_ref_store structure has the .repo member and
-> files_ref_store_create() uses it to remember which repository the
-> ref store is for, but that is an implementation detail that is not
-> exposed outside the files backend, isn't it?
->
-> To put it differently, what is broken with the current code that
-> leaves the .repo member in refs->base uninitialized?  We are
-> presumably helping the caller that wants to know the repository the
-> ref store belongs to via this pointer with this change---what is
-> that caller?
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-It's confusing for the base ref_store to have fields that are
-sometimes set and sometimes not. I sent an alternate take on this as
-v2; hope you like that better.
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ reftable/record.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-(sorry, I forgot to update the cover letter.)
+diff --git a/reftable/record.c b/reftable/record.c
+index 6a5dac32dc6..8536bd03aa9 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -254,7 +254,7 @@ static void hex_format(char *dest, uint8_t *src, int hash_size)
+ void reftable_ref_record_print(struct reftable_ref_record *ref,
+ 			       uint32_t hash_id)
+ {
+-	char hex[2 * GIT_SHA256_RAWSZ + 1] = { 0 }; /* BUG */
++	char hex[GIT_MAX_HEXSZ + 1] = { 0 }; /* BUG */
+ 	printf("ref{%s(%" PRIu64 ") ", ref->refname, ref->update_index);
+ 	switch (ref->value_type) {
+ 	case REFTABLE_REF_SYMREF:
+@@ -586,7 +586,7 @@ static struct reftable_record_vtable reftable_obj_record_vtable = {
+ void reftable_log_record_print(struct reftable_log_record *log,
+ 			       uint32_t hash_id)
+ {
+-	char hex[GIT_SHA256_RAWSZ + 1] = { 0 };
++	char hex[GIT_MAX_HEXSZ + 1] = { 0 };
+ 
+ 	switch (log->value_type) {
+ 	case REFTABLE_LOG_DELETION:
+-- 
+gitgitgadget
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
