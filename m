@@ -2,102 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77575C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 15:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 375BDC433F5
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 15:59:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233016AbhLVPpi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 10:45:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51202 "EHLO
+        id S237522AbhLVP71 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 10:59:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237238AbhLVPph (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 10:45:37 -0500
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 892F3C06173F
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 07:45:37 -0800 (PST)
-Received: by mail-qk1-x72a.google.com with SMTP id a11so2635591qkh.13
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 07:45:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=IUrkKdtOzxSo98zMs0ovNAZ/Aovw4WSBEPDuVW3YuMI=;
-        b=Cg5EmYFElRUjPsG5yBxvWK1H5kwJoV5OA/MAkcgo6uNjHlknp4mKRsry3qCdTgPFYI
-         kHCSwz3mL5jjQ2zbCz96kdLI13mg3nlEhK/n0siq4oj0LdZojsRSQkmRWcylfiKLjwom
-         NHwa79OoH+uB+Cx9SioephvuFql2Ouc0gx0P8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=IUrkKdtOzxSo98zMs0ovNAZ/Aovw4WSBEPDuVW3YuMI=;
-        b=MRf9slK3fqaZqButAaU2T/wK0+vzAylnfUpzcdcRPtRgwteTZ7273aeylDN24Vitsl
-         h25eENfsLz86qMaagC4JvRXUozRC8sI5KBmqJUS1MzSH5QDzRcH0pXbHH7A9dhBPrRdG
-         ks84ptNTddo1oR3h6JWl48iUNcQeSKPpYXk5uV9kfeL0pGjKcjOFBpNwdgyS+jeMgRam
-         yOQ8U5GmKDlmNrAs/8NF/iUAvLpRHOusI/w9luoFq6Y+rpfg0YIwaglyUOJatTb1Veg9
-         B95pILTp3c/o1rbv4XYKapJBBB4td8k+swvXqW5wMhfKfnFpDU0/h41sQitg2gUvUlqD
-         Wkmg==
-X-Gm-Message-State: AOAM530Q1oGlDmyt2vmk1DgVxN4LP/M0Pz6aw1fxl6oNumEv41mMahkN
-        Jv4mYh+8UuoOxduA/Tlng/Q/X0SHsEr88A==
-X-Google-Smtp-Source: ABdhPJz7OMysdxDff74KwYKfTOm3xyIt+wq1gxE4fvCbad8xy2Mtmucc779MicGahaPbiC/hbF5REg==
-X-Received: by 2002:ae9:eb0a:: with SMTP id b10mr1365386qkg.291.1640187936669;
-        Wed, 22 Dec 2021 07:45:36 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
-        by smtp.gmail.com with ESMTPSA id y16sm1906680qki.41.2021.12.22.07.45.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Dec 2021 07:45:36 -0800 (PST)
-Date:   Wed, 22 Dec 2021 10:45:34 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        jrnieder@gmail.com, jonathantanmy@google.com, steadmon@google.com,
-        chooglen@google.com, calvinwan@google.com,
-        workflows@vger.kernel.org
-Subject: Re: Review process improvements
-Message-ID: <20211222154534.b2gb22ghn2mpyeur@meerkat.local>
-References: <YbvBvch8JcHED+A9@google.com>
- <20211217183942.npvkb3ajnx6p5cbp@meerkat.local>
- <211222.86ee65pb60.gmgdl@evledraar.gmail.com>
+        with ESMTP id S1344228AbhLVP66 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 10:58:58 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D586C061574
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 07:58:54 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id A22895B216;
+        Wed, 22 Dec 2021 15:58:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1640188733;
+        bh=izuHYQmjGeeAL1w+tuFB6qu2QEll7bjvnOpw20T+pAg=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Kl4RZ0FWtB3dBJb/lRBajJYfVipcrg5Jtzbd8zD+dQ6Z9gL5PYdu4SZlWcj4/KJhf
+         XqnPkG5sLD/MlUjJoQVRMRINXjeuwXru0VwselzZ4xisXgkU3caHu86sRfCSpgFg+D
+         EKVPyhicu+inGtFhevTo8Zf1GMxmi/yS8P92VrTw4W8ZFqlOOwbAqCDGCc+EO1Qiel
+         Fl0k6jvCo1e91q3U0oTeIZamxyL7HLFvl6pok7nZH549GSppqZ3heOYijMLCRsOGMU
+         XHTqVN+9lmc2w5w0oIeYtYp1aKFOgWfG+fZcpO91talx43TueoJ4SecdJuqAMxjnfh
+         9CmJmJF8P10B+mBQ4tTeJZcVFxpJple5FFSW6EzoPIkATQ7rTnvcP0pNKiSOll0diB
+         Fqe0LFa2PlqjSAM85CkWBn7ixafEYOE1PQFG5M+QbXphH8EFDhD+ZFUiuARQfoSjGd
+         6AOvRA0hMtWvRn3FB4zTk1dvMw6EhPgrYSrl/ajJhN7bpA8n9CF
+Date:   Wed, 22 Dec 2021 15:58:50 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Fabian Stelzer via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Hans Jerry Illikainen <hji@dyntopia.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Gwyneth Morgan <gwymor@tilde.club>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: t7510-signed-commit.sh hangs on old gpg, regression in
+ 1bfb57f642d (was: [PATCH v8 9/9] ssh signing: test that gpg fails for
+ unknown keys)
+Message-ID: <YcNLOsuAh85ecKw4@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Fabian Stelzer <fs@gigacodes.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Fabian Stelzer via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Hans Jerry Illikainen <hji@dyntopia.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Gwyneth Morgan <gwymor@tilde.club>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>
+References: <pull.1041.v7.git.git.1627998358.gitgitgadget@gmail.com>
+ <pull.1041.v8.git.git.1631304462.gitgitgadget@gmail.com>
+ <07afb94ed8336d4ca9de7078d7a6c02b1db8a908.1631304462.git.gitgitgadget@gmail.com>
+ <211222.86ilvhpbl0.gmgdl@evledraar.gmail.com>
+ <20211222101326.fwl3wphr3ev6c7wt@fs>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="kYlysQi8OJ63EbgD"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <211222.86ee65pb60.gmgdl@evledraar.gmail.com>
+In-Reply-To: <20211222101326.fwl3wphr3ev6c7wt@fs>
+User-Agent: Mutt/2.1.3 (2021-09-10)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 22, 2021 at 04:26:39AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> That GGG does this is one reason I haven't considered using it. It
-> breaks all sorts of E-Mail workflow assumptions from polluting the
-> address book for every person who uses it, to any "from:<addr>" search
-> needing special consideration etc.
-> 
-> Of course you'd need authentication etc, but is there a reason for why
-> such tooling can't work more like an SMTP relay and less like GGG which
-> (for some reason) insists on taking over the "From" header?
 
-This would require pretending that we're authorized to send mail from the
-domain name of the commit author, so this unfortunately won't work (and hence
-the reason why GGG does it this way). E.g. say you have:
+--kYlysQi8OJ63EbgD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-From: foo@redhat.com
-Subject: [PATCH] Fix foo
+On 2021-12-22 at 10:13:26, Fabian Stelzer wrote:
+> Hm. I have an identical centos 7.9 installation (same versions/features) =
+and
+> the key is generated without issues. Does the VM maybe have not enough
+> entropy for generating a gpg key?
+> Otherwise we could of course pre-generate the key and commit it. I'm usua=
+lly
+> not a fan of this since over time it can become unclear how it was genera=
+ted
+> or if the committed version still matches what would be generated today.
+> But of course I don't want to slow down CI with rsa key generation stuff =
+:/
+> If missing entropy is the problem, then maybe CI could benefit from
+> something like haveged in general (other tests might want more entropy to=
+o).
 
-For DMARC policies to properly work, this message would need to have a DKIM
-signature from redhat.com, so we'd need to have access to Red Hat's private
-keys. If we don't use DKIM signatures, then the recipient SMTP gateways may
-mark the message as spam (and they would be right, since we are pretending to
-be foo@redhat.com, i.e. acting just like phishers).
+GnuPG is notorious for using /dev/random for generating keys, so yes,
+this is likely to block in a variety of situations.  We don't see this
+on newer systems because they've replaced the blocking /dev/random with
+a non-blocking one except for when the CSPRNG hasn't been seeded at
+least once.
 
-The only way for this to work is to do the From / X-Original-From /
-Follow-up-to / Reply-To header dance. Git does support this very well, and
-most email clients do the right thing when encountering this situation, but
-it's not going to have the exact same visual flow as patches sent directly via
-SMTP.
+The problem isn't lack of entropy, but the fact that there's no reason
+to use /dev/random since /dev/urandom is suitable for all cryptographic
+needs once initialized.  On modern versions of Linux, one just uses
+getrandom(2), which deals with the uninitialized case and otherwise
+doesn't block.  However, CentOS 7 is old.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-However, we will also write these messages to a public-inbox repository before
-making the From: substitutions, so if someone retrieves these patches with b4
-or lei, as opposed to receiving them via their SMTP mailbox, they should be
-able to get proper From: in the headers.
+--kYlysQi8OJ63EbgD
+Content-Type: application/pgp-signature; name="signature.asc"
 
--K
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYcNLOQAKCRB8DEliiIei
+gYK+AP4vhD8AziOxs7MpvM5XjmmUKikkjmsmugfOZIUT3VLGXgEA9IezWgX1MCXm
+medAEjKF4nqOtEmgXAhiTE9AVcedPQo=
+=mNPo
+-----END PGP SIGNATURE-----
+
+--kYlysQi8OJ63EbgD--
