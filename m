@@ -2,42 +2,42 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32BC1C433F5
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 14:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B6DEC433EF
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 14:56:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343603AbhLVO4P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 09:56:15 -0500
-Received: from mail-co1nam11on2049.outbound.protection.outlook.com ([40.107.220.49]:15201
-        "EHLO NAM11-CO1-obe.outbound.protection.outlook.com"
+        id S1343607AbhLVO4T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 09:56:19 -0500
+Received: from mail-mw2nam12on2069.outbound.protection.outlook.com ([40.107.244.69]:7784
+        "EHLO NAM12-MW2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S237161AbhLVO4O (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 09:56:14 -0500
+        id S1343606AbhLVO4R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 09:56:17 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NX6UX/tLMt7Wb88pRdT+bHs0e6FKFM5lDKoZZxb3KmBe5NfQd2A3Kw2dVv+f8M9dWrSwVx1NwiFp5JunDIRpYC2mPaS/8/v2vSxA9+d4eZKHHg+ZuKX9Ob/bPTPgeRQU6craCftRmncW1KXnuZMtzODI7DjkVhLIdMgRINnIpFCKdDNoVwuzbQ56Xk/K1gHF1w0Lix1xnHtKIMZqkuD+8Wod9rozyvERUbTaJNcrU9344Pqb6JlAoxw2qvmWjzxSZYLB1xL+kYf/QUZDoe6iDCTI2ETiNbBqe+CymbPb90QbIE4IQ8apmrp3Op4WN8Ph9RIgGyG1NRDDCGEPsYrmBQ==
+ b=ZvkH0v5MJWxZvqAsWTJGqP7z75DRRRhgwNPGB4TkE8UWOWLgR98cchAJkPEtCYYwzBc8WmblfwkyXiS7Xr1AJ4D/IQOFyKzEVhg2RReSrnW94BiU70UxnFmg35GtSKtM7EOV0KYZYXG/H+2pByCYLK2f+nNaripNz2Mw9w3x1HVj6+EnDuNDwPVyJ3dO+oiouViex+eifWMaT7yDZs5OM7arxLPQh+cmPzigZvGjJoWqRAIm9RhCmZftgi45G7i9gwUUftl0FuvxYtZUk1octy3WH0KKilI5o9+jxP9eY9wtGVOQJRmP/aA9hcQwgqYLGp+UGy1/6SCSBylq9mMRDQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/gU3MF7gGQYtV4aF8/ecE33bN7jRFtySedVwflNQ9jU=;
- b=bqtn2ISVTsCZPVyaL9tMKI4KNKjjgsxUU4E5RxIcTr5Dt6+SeyXGmKitM3VhbFi10JI9jF7eLULw919Ek3dE8OgVvPvRVoXtLV2sJJIbBp0pGXVPBZEc4MagCRzN1RFMTL1l1fpNaz5XH1tX/H3UtpITM0XWqV2Xt6l5EttvCexL7+ETex9CFBB+5pFk96i7H2RhLeEeAH5Zzp2AxVJoscWB/FMBVX5D+/aAEr2b/zveefY2PjqAZgXOyEG4jPuKa6f6150J6qIk5Jb7jakpAI0k/ilWodht08vWyDwcvBOA7+MZ55/+0+RgwJSuUEzlh1ysZPh1hr8L2Q1MYlEltg==
+ bh=MMRgCVUxSYr4FxEekHbbXBu5e5eF1dO2x28eBVe479A=;
+ b=fn2lfS1fWfjKkCWCJPa8ie7KlEsNJBupK61yngmC5UHmdiKH5llD67Z8PyVpy0qgBNywZYoJTJN5rA82zll5nDK+VKUoLU+TOUZHCC+IYoIyMXuXqGhKasAGBfTxLP3jq8Rlv82sJg0/KrY+IE5J1mNFwTf+yXFno88gBVaIHzQhPmTqUXH+do7eIIUS3A+vYLLX0Zta3rWaLQhhaub5ycdRnKqnXHVcu4YVQZ1KtVTpjY80XXD8FLt+6h8SOLu+CsvxqNZ+ZWPjuiU2UcfvJ9EHbzWlQTzaNPcek4IWreppVtYEOQ8iQ7ahRyQPjcJyUF1/zDsT5OvWp2MTVUnwFw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/gU3MF7gGQYtV4aF8/ecE33bN7jRFtySedVwflNQ9jU=;
- b=TZqIH2oP0F8SOszuz9DRtzBcc14+47AqfOSRjc2LE/ahiz+UFuMuV86HX2YWGICDZil3zCoHjBocjjjH0DUnOvRk68VJB7fLhy9pAH4NwBvPKJqmUy7PiAmP3HMeWyuiAfY1xAFcPakcuH88Xto1KJAPzXygwgkXewaKFAhJsT+a4YZtyCYtAIyt1TEjeMum7lVavM7zm4qIWx9VuHUtuDAWkhwQ4hyktJzWFn8HPUIAc567tCXT986a1wiBi2Dx1gbaPsTZoLaTmX1YVMCRwwIgv/CX0pHRw6HT0P5pFDXhveDnrlx1NokvAx2n/OWP72tlaKMreehM3KdD8DBPsw==
+ bh=MMRgCVUxSYr4FxEekHbbXBu5e5eF1dO2x28eBVe479A=;
+ b=R5/NqLuYu+KLm4tP5+irgNKXN/OSmSd0Fm0wvFopYQfIxFBbUiAzc0H7/BNYm6tWPr1bmlW2bGaFo44C8MXYwziZ5LQIZeK0hS/rC6VeP8pJq1x+50kUogtOvTPrqM0d0cC/GiQMnk5fUp6Ihd4amsYOTkYpg5OURlgKQCLgRc37wlk4Yo2nxbsCXJ1uHOa6rDOonUQ0YMIgoWrIH+t1UGHFWB+SX32N/22WhPtwJ8bhf5LttvEn+q4sSxk5EoETs+9XGOnsEcSikXCULf7Zpv49iOqb8ycV0TsnY596vSwkb6ll+dCrtyx/z/IpQoqNOzNtcjxRGb/Ltzt+D0+z8Q==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM5PR1201MB0105.namprd12.prod.outlook.com (2603:10b6:4:54::23)
  by DM5PR12MB2487.namprd12.prod.outlook.com (2603:10b6:4:af::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4823.18; Wed, 22 Dec
- 2021 14:56:13 +0000
+ 2021 14:56:15 +0000
 Received: from DM5PR1201MB0105.namprd12.prod.outlook.com
  ([fe80::d57d:8569:57b9:874e]) by DM5PR1201MB0105.namprd12.prod.outlook.com
  ([fe80::d57d:8569:57b9:874e%7]) with mapi id 15.20.4801.020; Wed, 22 Dec 2021
- 14:56:13 +0000
+ 14:56:14 +0000
 From:   Joel Holdsworth <jholdsworth@nvidia.com>
 To:     git@vger.kernel.org
 Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
@@ -48,9 +48,9 @@ Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
         Ben Keene <seraphire@gmail.com>,
         Andrew Oakley <andrew@adoakley.name>,
         Joel Holdsworth <jholdsworth@nvidia.com>
-Subject: [PATCH v3 1/2] git-p4: remove "debug" verb
-Date:   Wed, 22 Dec 2021 14:55:51 +0000
-Message-Id: <20211222145552.93786-2-jholdsworth@nvidia.com>
+Subject: [PATCH v3 2/2] git-p4: remove "rollback" verb
+Date:   Wed, 22 Dec 2021 14:55:52 +0000
+Message-Id: <20211222145552.93786-3-jholdsworth@nvidia.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20211222145552.93786-1-jholdsworth@nvidia.com>
 References: <20211222145552.93786-1-jholdsworth@nvidia.com>
@@ -61,113 +61,168 @@ X-ClientProxiedBy: AS9PR06CA0001.eurprd06.prod.outlook.com
  (2603:10b6:4:54::23)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 6b83bb88-d4e0-49b7-0193-08d9c55b326c
+X-MS-Office365-Filtering-Correlation-Id: 2fb58106-1242-4b74-77c9-08d9c55b338c
 X-MS-TrafficTypeDiagnostic: DM5PR12MB2487:EE_
-X-Microsoft-Antispam-PRVS: <DM5PR12MB2487BB723BA1A6C58253B783C87D9@DM5PR12MB2487.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:2887;
+X-Microsoft-Antispam-PRVS: <DM5PR12MB248770A9D67B3C87DBBF4E0CC87D9@DM5PR12MB2487.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:1079;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: KXg7PY+vyBeEhYTJqhpQ98RWMehCHMBmPjkZOnzH24Y3L9rGNUF4XobKiJKyKlTOJ28Q6nA1Qs5yt9koQzQuLlIwGZlQ6qi2Pk8NBKMqfkLdQiXUQWu0A5dKAmqBXxaPLjbcS4HTGhuo6CrRkmzEFVbwl1CDdB5RAQNjwFKXCAqY36en+QtjfFCebAc6HrpyHq6cg4b4N2YeapJT0CUorU7uAlHn+f0Kcg1isKpHXy5BYNzdEiBrUUBObbB1vBkUXuvOYnEPCd/JUwToOeUU5MbcEhM04YplbQabNn6BwiWokHzxTQhXM9hXC7UVghWImHfIjWVQSt5aj5mnqqvPIEPOKWMehgbcksDdOT0YYrs62hXCvrs7Yf0uaka1vK02hWNtJKHWLKzZnbIlzu/eWbruZdaa8T0+AvKLecGYS9AkUvIQc7RpRCz68c8h/0LN6TnG6TNW5Liw9IPJ0K6XaGIlTeuKg5SHrN3JHt3OAPBNQ+KLTPKzOEFggHr6DTBFuB3gVC7L9MWs0EKSgWcLdHYvEu7Dmn0SBTfQHzj6+MnAyN00l1xCcGzAVd5W7Tpn3A0Vxy/bpDXqm+0wiPV9vjMkGuZ2EE/GdHNok7+ToIuaypI98mS6bfsAuzcL9lVDYPOKEY1INEnJ2o2Q1O1FAR/fFHRIT8PF2S7rffSB36+axLFKFovzH9aAoDfvXnzbXx3rxv+nQRKX3whYaIsA1w==
+X-Microsoft-Antispam-Message-Info: QUt99jVxSF4SO/l+p7jpkuibRN0jExmOXQK3uk89BvbbsliHcvLhM7eY9pPsAnUxwAV5ohenRy5Gqt/AlCaNXfuTCQBTLhxW9Y1+9u/CgexP11eLJP30TrJCvMwAoZT1XhrJAuqR87hqypRKmSwMSIX55SKGiroyC/vC9AnqaZT+QJFn33/e/FG90K8ebhVFSU2LlvyP6CYgw0k0Mo3eGZb72b8NaclixegRoPbFL/BlA/b2fa70Ehgyiw/N9V+B6jsAraKcrDNvfbu+G2kULXrd1ptwCiiPaksosmXsUzcLmYZQooe7xoDPun9ZfD7hF5ah0XdIg6kUDt0HkfYIRXcL+Bom+LdkQeyWA7ah5ouxZbzaFyE5GmgfSGCzZ+uO1z95zmBYZhDvY39y0JkdMfAme56NVxlZoCCELXR+N2E5vYJs4iS78+Mt/JzfAjBx9IvfrqtE9mt4XjRnq3nKxht6bto3r2U3X6gAklAhdt6161FrWWBaRWFpnu5ywkID7Y2EUhBfnUbHV57H3OLHEw9OCymg+MzNuui5V5jpCEC4/RhNtJVJ3aruYkGghiRTuz/NEEyARxBV8A3SzUbAKoJeg6iAA4v5XypA8teKDEKZe0S09IkH1liqNtzkMEcle1oSEcJJHwOovgKWMncRcA3+PSEo2bYqPYD/hFYI+kHXCKcTL+/7p8QnyttE6Fh8oiXMO/sNEIMZmFtlCcLvXg==
 X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM5PR1201MB0105.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(52116002)(1076003)(4326008)(8936002)(6486002)(107886003)(6512007)(36756003)(38350700002)(508600001)(38100700002)(8676002)(66946007)(66556008)(66476007)(55236004)(2616005)(5660300002)(54906003)(2906002)(6916009)(26005)(186003)(86362001)(6666004)(6506007)(83380400001)(316002);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?oaYpNoNLsERMr+ZLdlZRGCnV7W+nFFMHK3+D7tRzdPpDdWFIunrL0rez10O5?=
- =?us-ascii?Q?6JlU2Im0u+2LA+nlfWuZbe6uNowF/p14IdlGvBA4MX9ehHFi92fpeFr7b1X8?=
- =?us-ascii?Q?WjwHgePPoU7VPLBFXhWNNZNvzpOy0Sh8LgpKhQdLuWg8RS/Gt6PWmIPZSfo2?=
- =?us-ascii?Q?Wrp5t3xyeJQ0NOidtPAWGFTLIrUuQki+Opu4tNtkkv8RDduYbXmrkDbmW+Hw?=
- =?us-ascii?Q?KjPzLGoANU/qgazN1xhO7MpKV7n7lZGzF3bAcwRe1hSiMRtkyM/6MoBvlF4Q?=
- =?us-ascii?Q?WQEF+LbGnOBHaVG4xQIiucfLqfNa3LOWvW4ug7x7+gW9KZ8ANZFnXZqHRj1S?=
- =?us-ascii?Q?/Tcwh+DYmxXpr1fdB/u0d39VT7+YMZDVjDJwXKsmsjOc8+aqlycGAx7QcxOC?=
- =?us-ascii?Q?8ZA0qCeW0t1HOuWmTcv6j8EgMv1+4ekopFnlI8WuI2QFmQCg7Imiy7fbo9mA?=
- =?us-ascii?Q?3o9BENgRdkKNQjru2j32y1JL4/YdHE+k0PVBPVWTc2mSi+su11s4hRONbbry?=
- =?us-ascii?Q?a+V8YUpr7JyxRpi7R2p4VUTK9nyLqo7mILOl/+T9tfx/LMgS9W10NsyZYCmb?=
- =?us-ascii?Q?w2a+u/WnPfN7el0PELPVdAAa1e3kPu5dBA3nq3bwphSDbHI3vbu/LnKtV/Uf?=
- =?us-ascii?Q?m9qjqAbItdi3X8E5AI/Bxa37uuzMa6TcNdl4vCP8YvNYepAnCSlKFjQC4W0B?=
- =?us-ascii?Q?/ZVVhICKOskeoWEMBKaSFSwYYcfDO5gkZsL8B43x/Bm3AVVl/kh1g1yZGm7c?=
- =?us-ascii?Q?jILz47vxaRWlqVeRBsAQE8DKs5zcz4n7uQAoqXbSedLLlK2O2bld9MmDEeyZ?=
- =?us-ascii?Q?+rZJq4RiK8/h9PxNI1dJqottiSN3+8edRaNPEa2cY8ZTqQU9TxsGiEbLKSXC?=
- =?us-ascii?Q?bfGDiX62nADyuaSgveqKHZwSKG2fHdIR90BpOTlA93LR0vOWDlUKYkIQd10O?=
- =?us-ascii?Q?Ibrt3jQ0uRKI8Y6UUqzx/+89P1tCyldVNrLzyi/fa1NGNpCnt2XmxtXaLaov?=
- =?us-ascii?Q?0xnjCnZOZLc3qPcOU2BlibJ364KneCR0WgtLa8+ITsAGcOrFaVBkpflfHC9S?=
- =?us-ascii?Q?934nUudr2pGvdyPClVGOosT0B6K2uWNVZj3pxB3pQtgwYtfe0YbCadX4w54B?=
- =?us-ascii?Q?TqlRRN0V8nBax/Nd2NxMIqTU5PRYRG2/Ckh8zdo/H0SQE1ZpFEIoX3VhOAdw?=
- =?us-ascii?Q?VGl//H1KBgIsgkbdNYjuwwKvYBCS4NmDSS3Q0ZYfOa1mfoN9/FDEWRrN1Plf?=
- =?us-ascii?Q?ktYLnttfT1w36OJjG44oVQoiD3tgjtCCqz07veJUG9v3KLmuGgJMyaQ95phT?=
- =?us-ascii?Q?w7qTS5hwHCkt20pksfi/AA6RGf8a/XLHEOfSZFRHlAVpa27PEzKUOaSyeXZ/?=
- =?us-ascii?Q?8px+fMO2yDFUoJtYA5OSde0OQem9Ny8rxeuF0Lyj+UOh4cEt8YX6avFE+R9A?=
- =?us-ascii?Q?Ae2e7aOucWENwxkcdZxRAPvOvPlyLY/fGylRN9PCMP3IY8P6P8cYWt4L/Eaq?=
- =?us-ascii?Q?KUb/XzGqTcBoPZLwzgySxy4xowBAH8KSh/ja8emmi1FQJuJbtwB0tqKUgru9?=
- =?us-ascii?Q?zA+jWDrEVmMfewqG+xkgY6u4BziiY98l9To/Yzbt01vU0Z0uCaF+WC9iy9/c?=
- =?us-ascii?Q?1/8jbo0IByVYppOroKrQQy8=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?n48gw9dzK9wOAz2Jz124OskyiGVSwPvD117eQysy3y4f00aCPC5OYJxodtj0?=
+ =?us-ascii?Q?wknJBd9p5/oFSNAZiD3eFQ0h1g99f7MXhop03vQ4qNgh3/nMlWttGXMVrfkA?=
+ =?us-ascii?Q?vEETF4ZLsuNXrFy++hix8bHqZHLNrAozxlcyGxm4XHXuBZujKkL/u86468Yb?=
+ =?us-ascii?Q?27obWipcyL/X8ufM7YOzZGu+VJ7o61ryXrIazg5FAngNqeYgnUSdxSmtBdVI?=
+ =?us-ascii?Q?6K6NhmF12X6H4puyXA92cTk2kJDGxQy0u+Dftlg4aJ26vcpeL4PP0sgi6ZN4?=
+ =?us-ascii?Q?opotZnRc+QJyNlgwRFKfOBDbeglS+RZel2aMKBEN5Sb5paJe8Yz+2MuKiZdO?=
+ =?us-ascii?Q?P8Qw7wJ1H363iEkW5AGuUM9sNoOYWwfqxJi5LVYpBzOPFSQ908gfbDI1V4du?=
+ =?us-ascii?Q?vENvBjTFapGXRydZ+tU3Xc8+lGDPgJ7lf3fYpX0qFAU/GocWfdxRmP/hKVN4?=
+ =?us-ascii?Q?b4i5pEdrD3oX9y07ih6lwEJVC+IkiEFz84YAtxZ3i5YEsZVTdeRQykKxGs5g?=
+ =?us-ascii?Q?VtSXzZ1EChAMvM/5KjIdi3isT+4PiaHZQhkskiJWBCvbf8Cu4nrl1CZfd/+y?=
+ =?us-ascii?Q?iLmWbS1Xll5lQisaBdWl9ZZYfVVGlrJKsFitvEOGBF77DmA2rnp3zdA4GPkE?=
+ =?us-ascii?Q?RK3bsH4TXD1FjbfqqwRMP//V+lN7aZ7k5fNW07HDI5ZW6gypUc1NP7tKDhTK?=
+ =?us-ascii?Q?pIGyJdUkAa8QrS+9hIapondxkncvEe8km1dYo+DFbWPx8CYrn9eFYpYqoBi5?=
+ =?us-ascii?Q?gHkM0qTjqPzvrirsURPxvRoAQSrG3LMLOc6omWKKHNlsillSwyKMk1voQ7CK?=
+ =?us-ascii?Q?kRI/A95snDg5DG96eE3A6KZtsJomy3uAEK7b2F5bx4brBocdhvr/kUIb6pcu?=
+ =?us-ascii?Q?nm44RMQ4iCSRcL8AfjAjkqJy5TfMpoPQQDf/hdHwuLsKTin6NPJPjFo7U+fk?=
+ =?us-ascii?Q?lL+ctS0g1mpbZeH97p/t5SfXeM1Lxgn02ir4pMTkLp66lTf2El3MH4s9J0ww?=
+ =?us-ascii?Q?5ja5tD3vIiOmTEY6bk1vsK+eFTI3s6pA3brKpl/4KhyHc8nWSv+NI02WM0lr?=
+ =?us-ascii?Q?lV+TeZROJvdh9NruBMq7NrSH3bRZG4FxM3QveQ+qzIi6Ewhu5KDKwT3IxI7y?=
+ =?us-ascii?Q?BvkMp7pFv9wnHGMAPlkoo/mt6bN2YDLvZTgpsxQpXkLgjx+d3epg3RBryKwo?=
+ =?us-ascii?Q?oGm8rftH0Slp6dykP00VSojN6WLXLAnkwPm/LVHpblmNUvbsCkhTDDf2PyL4?=
+ =?us-ascii?Q?0OWdhubd2iiYzz6zQTLI17eBT6hGg30v7u0eY6wFMEzLvyMhgBONAwv6fYWx?=
+ =?us-ascii?Q?A3c08yzQMVPD3B+MG+5nQTxF0kIIc/g69eCG4k/3E2n1frblznyZpgTpoONI?=
+ =?us-ascii?Q?e8fETYiOY/Yc+AdBL9WjwarN/7WPSkPvVTln5/X/o7pFEc+oGPmWPKgiwUE1?=
+ =?us-ascii?Q?RMNiGjlvOa9rw3q/yHiwSRGakKY9+CVdHFiA36etzmwbHX1v8EfAP2y1pNaK?=
+ =?us-ascii?Q?zDMTR0zhNy76TNngzPAazh+3/dTpF6bXoc6cqlmEP34cvPTCZNkFbts/8fX+?=
+ =?us-ascii?Q?JHrpyTO1e0AMx66jDmhvHc6T4ZfRSxhE+YDGrgQhhqO5nD5Rx1zddDhrG09T?=
+ =?us-ascii?Q?HL0fIV2XLltiU3oQa2cNhCo=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6b83bb88-d4e0-49b7-0193-08d9c55b326c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2fb58106-1242-4b74-77c9-08d9c55b338c
 X-MS-Exchange-CrossTenant-AuthSource: DM5PR1201MB0105.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Dec 2021 14:56:12.9989
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Dec 2021 14:56:14.9518
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WQrooliGLOKqWMbt0d1J921NoyL6Aw3Cl+NUcR9zWzIndx+MRKEFiFjfJvrLXAwxqJGc/XBgegLEB8ahoCPpKQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: aw7c8dVLKMxLL69PgQ49nCH9qr8AUlfXhKLIX2hGunHQfYQhDesVdIJdjmVj3fVZKCRF4P75phzz3bi/1hM9wA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR12MB2487
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The git-p4 "debug" verb is described as "A tool to debug the output of
-p4 -G".
+The "rollback" verb implements a simple algorithm which takes the set of
+remote perforce tracker branches, or optionally, the complete collection
+of local branches in a git repository, and deletes commits from these
+branches until there are no commits left with a perforce change number
+greater than than a user-specified change number. If the base of a git
+branch has a newer change number than the user-specified maximum, then
+the branch is deleted.
 
-The verb is not documented in any detail, but implements a function
-which executes an arbitrary p4 command with the -G flag, which causes
-perforce to format all output as marshalled Python dictionary objects.
+In future, there might be an argument for the addition of some kind of
+"reset this branch back to a given perforce change number" verb for
+git-p4. However, in its current form it is unlikely to be useful to
+users for the following reasons:
 
-The verb was implemented early in the history of git-p4, and may once
-have served a useful purpose to the authors in the early stages of
-development. However, the "debug" verb is no longer being used by the
-current developers (and users) of git-p4, and whatever purpose the verb
-previously offered is easily replaced by invoking p4 directly.
+  * The verb is completely undocumented. The only description provided
+    contains the following text: "A tool to debug the multi-branch
+    import. Don't use :)".
 
-This patch therefore removes the verb from git-p4.
+  * The verb has a very narrow purpose in that it applies the rollback
+    operation to fixed sets of branches - either all remote p4 branches,
+    or all local branches. There is no way for users to specify branches
+    with more granularity, for example, allowing users to specify a
+    single branch or a set of branches. The utility of the current
+    implementation is therefore a niche within a niche.
+
+Given these shortcomings, this patch removes the verb from git-p4.
 
 Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
 ---
- git-p4.py | 16 ----------------
- 1 file changed, 16 deletions(-)
+ git-p4.py | 60 -------------------------------------------------------
+ 1 file changed, 60 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 2b4500226a..b7ed8e41ff 100755
+index b7ed8e41ff..a7cb321f75 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -1532,21 +1532,6 @@ def loadUserMapFromCache(self):
+@@ -1532,65 +1532,6 @@ def loadUserMapFromCache(self):
          except IOError:
              self.getUserMapFromPerforceServer()
  
--class P4Debug(Command):
+-class P4RollBack(Command):
 -    def __init__(self):
 -        Command.__init__(self)
--        self.options = []
--        self.description = "A tool to debug the output of p4 -G."
--        self.needsGit = False
+-        self.options = [
+-            optparse.make_option("--local", dest="rollbackLocalBranches", action="store_true")
+-        ]
+-        self.description = "A tool to debug the multi-branch import. Don't use :)"
+-        self.rollbackLocalBranches = False
 -
 -    def run(self, args):
--        j = 0
--        for output in p4CmdList(args):
--            print('Element: %d' % j)
--            j += 1
--            print(output)
+-        if len(args) != 1:
+-            return False
+-        maxChange = int(args[0])
+-
+-        if "p4ExitCode" in p4Cmd("changes -m 1"):
+-            die("Problems executing p4");
+-
+-        if self.rollbackLocalBranches:
+-            refPrefix = "refs/heads/"
+-            lines = read_pipe_lines("git rev-parse --symbolic --branches")
+-        else:
+-            refPrefix = "refs/remotes/"
+-            lines = read_pipe_lines("git rev-parse --symbolic --remotes")
+-
+-        for line in lines:
+-            if self.rollbackLocalBranches or (line.startswith("p4/") and line != "p4/HEAD\n"):
+-                line = line.strip()
+-                ref = refPrefix + line
+-                log = extractLogMessageFromGitCommit(ref)
+-                settings = extractSettingsGitLog(log)
+-
+-                depotPaths = settings['depot-paths']
+-                change = settings['change']
+-
+-                changed = False
+-
+-                if len(p4Cmd("changes -m 1 "  + ' '.join (['%s...@%s' % (p, maxChange)
+-                                                           for p in depotPaths]))) == 0:
+-                    print("Branch %s did not exist at change %s, deleting." % (ref, maxChange))
+-                    system("git update-ref -d %s `git rev-parse %s`" % (ref, ref))
+-                    continue
+-
+-                while change and int(change) > maxChange:
+-                    changed = True
+-                    if self.verbose:
+-                        print("%s is at %s ; rewinding towards %s" % (ref, change, maxChange))
+-                    system("git update-ref %s \"%s^\"" % (ref, ref))
+-                    log = extractLogMessageFromGitCommit(ref)
+-                    settings =  extractSettingsGitLog(log)
+-
+-
+-                    depotPaths = settings['depot-paths']
+-                    change = settings['change']
+-
+-                if changed:
+-                    print("%s rewound to %s" % (ref, change))
+-
 -        return True
 -
- class P4RollBack(Command):
-     def __init__(self):
-         Command.__init__(self)
-@@ -4363,7 +4348,6 @@ def printUsage(commands):
-     print("")
+ class P4Submit(Command, P4UserMap):
  
- commands = {
--    "debug" : P4Debug,
-     "submit" : P4Submit,
-     "commit" : P4Submit,
+     conflict_behavior_choices = ("ask", "skip", "quit")
+@@ -4353,7 +4294,6 @@ def printUsage(commands):
      "sync" : P4Sync,
+     "rebase" : P4Rebase,
+     "clone" : P4Clone,
+-    "rollback" : P4RollBack,
+     "branches" : P4Branches,
+     "unshelve" : P4Unshelve,
+ }
 -- 
 2.34.1
 
