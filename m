@@ -2,98 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C1C2C433F5
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 10:59:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3AB7C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 11:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244345AbhLVK7z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 05:59:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42218 "EHLO
+        id S232903AbhLVLPm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 06:15:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244340AbhLVK7u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 05:59:50 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44964C061401
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 02:59:50 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id s1so4066515wra.6
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 02:59:50 -0800 (PST)
+        with ESMTP id S232937AbhLVLPh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 06:15:37 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26B5DC061574
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 03:15:37 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id b19so3185562ljr.12
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 03:15:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=kbyye6oOYDb03kAxg8U9TW1QQ3JEa1Eciuhp/1BZTSg=;
-        b=MoiukF6q3UpI1ClQxk3mISZG7RqgAG4PJL6+bfpNOgcqrKHm0slS0iPF9ET0zjZWB1
-         FAJvp8/XF4hBp/ME5VLuMyrth5IV9SAhyoGeoXOMRpBsizSFhn2gqy/UtHVoD3vxKegq
-         iwdRS0xX1Zw40wvkVP2Q+ZUWeC7tM/VAN06rnSOXdAze2DEMTJ5Z3GCrN5CU+jFRKDsk
-         ZZr/1zTH2+Fq8RP9Jxy+fWiMdafeHEuxeh7sjW2mv9zUwBwn9byVVkyo/6GDm5cQjRnq
-         YhPxRbNoHFRjgeBbS+hfhmTrBY5eXH7N9z4BLXzgSWFJueZW8PXn5RqN1sLhkbuDYLc5
-         /7XA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=kKWh92enwARTkiERFJ6AX7xBMJy6rMSdiII5y0A0cas=;
+        b=Vrd2mRHiiQsI/6GRjawLozeOsamNAIh1ZHl9U8dy2N1UDPL0Iqtd8+HWKDAhsSpKX4
+         Npg1XinyfPwx9DuL/Divpb/NeLEiKB0tO+XlWsGrU9t5X+XbT8vyQXdM9pF+rwA3+QDM
+         aKH4wbs/nLO+TxlK1lTnpq2DXIpQEgMJh108761mN/852NuQo4urPfgPOTdinNwtDCcN
+         93qRMbKooD/r7HeWmfPGGA6BikqvdakPcBQkG6sU43Ka+G3QCR5QybzKap+pSc5w8+MD
+         Wx/HfHITyg9XpFiulHJm7Aw3Lvsfoql6gWxLXCX5pGAyS3hI2ijKDRnSQzQZXlVfeteR
+         XpEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kbyye6oOYDb03kAxg8U9TW1QQ3JEa1Eciuhp/1BZTSg=;
-        b=5ax/Z4XV+qBDUmJ248OxYKkrIcdTGR79cIBtN0qleA4Lt6L650E+XhqWLz8XK0HWHF
-         /FaDuermJYZRz2DSsOcqW7PNqy72jPvepblWsY0/9sgz8OYd2+BZEFa+8jtpBw9rdR2N
-         QaJRR4euiriS2s3cIKo3s3cCViFTbvs5LQpWjljcCYxuj9ES8v9cexFRhgKXjqshbWCH
-         iTA+USACM02LOrVLakXllKWISeW+koQJNYMja0meBXBuoJjLjXxFIUUshISgOdy1eDaS
-         N1t6eNtpoMPK6iHDi3Zy5MjEyPMvLMeo6to7dc4NJ1mrVsGj3CSB0HstELJcWgu3387E
-         Qeog==
-X-Gm-Message-State: AOAM533K7ghmLD5/Q2VA7uhU+irVts6pqdBvLbQgAsefbUkUiBc9bGe3
-        +ww4NY293XAZ48algzRzLwqAD21F5TQ=
-X-Google-Smtp-Source: ABdhPJx4SQA9Z/8okn7p2m9yVUjGBw5qBqqKsAaPxSlLhnt5j1ZR5nreeUIDIPCUhqBLd3ZIZRuCsw==
-X-Received: by 2002:adf:cd8a:: with SMTP id q10mr1736831wrj.164.1640170788736;
-        Wed, 22 Dec 2021 02:59:48 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r62sm1421008wmr.35.2021.12.22.02.59.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Dec 2021 02:59:48 -0800 (PST)
-Message-Id: <5d693273e5852ae9b302cb79e8dd986b6ffa10da.1640170784.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1168.git.git.1640170784.gitgitgadget@gmail.com>
-References: <pull.1168.git.git.1640170784.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 22 Dec 2021 10:59:44 +0000
-Subject: [PATCH 4/4] t7004: use "test-tool ref-store" for reflog inspection
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=kKWh92enwARTkiERFJ6AX7xBMJy6rMSdiII5y0A0cas=;
+        b=zcfBxMqYd8KMshtQ3GDwQHFuk10LUfbJDCVKXqnixqEBibyp4mhXw3qk+dKlT3nd1H
+         HyJoldFlu2gCgDgVn1mxF2AKqjp4VRqb4jsExUgj1A0n+wLWYdnE6ZOm8++Z0M7WV5Li
+         jhSTJvg9Sn/w0DrNY3cjZe1oA3Y+V+gQ9EG6FJ9zEaVWJADQUquNOd5GVC/w6HZwfdlQ
+         a2hoYL1eGz7rHq+fNwEx6K/YYrHQkJ+95QtWcVpoL57X4y7bx94GPBoHn3swDZDHK/VF
+         j06uMnJ6b9C3jjJP7KtkE9cDh3HcQ4luL0znmgGKv1DQTxQ8zSEUnoiNCgzqn0Lho/8C
+         jEYQ==
+X-Gm-Message-State: AOAM5301vs9hmn4S5KPt3VXSVx9PVFQELlpTrAY/nPEuG5pm6gVmSczK
+        pzcjFQXEQuZSKJCdXKhbieeTWyAEyz7ddsh2zEk=
+X-Google-Smtp-Source: ABdhPJx0bS5FcAF26CYyImSiJaNquxdOPd3+9d5iIQ7vwQ3otrXBKqDwYM4Z5obOaqRdfGDvXYOvgwcwidzdl2BfN98=
+X-Received: by 2002:a2e:a270:: with SMTP id k16mr1759684ljm.387.1640171735468;
+ Wed, 22 Dec 2021 03:15:35 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+References: <20211217112629.12334-1-chiyutianyi@gmail.com> <20211221115201.12120-2-chiyutianyi@gmail.com>
+ <211221.86bl1arqls.gmgdl@evledraar.gmail.com> <3f1e3a59-1288-ecff-88b5-53bbd510a6a0@web.de>
+In-Reply-To: <3f1e3a59-1288-ecff-88b5-53bbd510a6a0@web.de>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Wed, 22 Dec 2021 19:15:23 +0800
+Message-ID: <CANYiYbELNLg+5AZ5PYS_FJKOXBC7Sw9jxsyt0Pu7GQue8H1eDA@mail.gmail.com>
+Subject: Re: [PATCH v7 1/5] unpack-objects.c: add dry_run mode for get_data()
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Han Xin <chiyutianyi@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>,
+        Han Xin <hanxin.hx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+On Wed, Dec 22, 2021 at 9:53 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>
+> Am 21.12.21 um 15:09 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> > Maybe I'm misunderstanding this, but the commit message says it would b=
+e
+> > dangerous to allocate a very larger buffer, but here we only limit the
+> > size under "dry_run".
+>
+> This patch reduces the memory usage of dry runs, as its commit message
+> says.  The memory usage of one type of actual (non-dry) unpack is reduced
+> by patch 5.
+>
 
-This makes the test work with reftable.
+For Han Xin and me, it is very challenging to write better commit log
+in English.  Since the commit is moved to the beginning, the commit
+log should be rewritten as follows:
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
- t/t7004-tag.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+unpack-objects.c: low memory footprint for get_data() in dry_run mode
 
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 301d1190482..bc8a221b2c7 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -97,7 +97,7 @@ test_expect_success 'creating a tag with --create-reflog should create reflog' '
- 	test_when_finished "git tag -d tag_with_reflog1" &&
- 	git tag --create-reflog tag_with_reflog1 &&
- 	git reflog exists refs/tags/tag_with_reflog1 &&
--	sed -e "s/^.*	//" .git/logs/refs/tags/tag_with_reflog1 >actual &&
-+	test-tool ref-store main for-each-reflog-ent refs/tags/tag_with_reflog1 | sed -e "s/^.*	//" >actual &&
- 	test_cmp expected actual
- '
- 
-@@ -108,7 +108,7 @@ test_expect_success 'annotated tag with --create-reflog has correct message' '
- 	test_when_finished "git tag -d tag_with_reflog2" &&
- 	git tag -m "annotated tag" --create-reflog tag_with_reflog2 &&
- 	git reflog exists refs/tags/tag_with_reflog2 &&
--	sed -e "s/^.*	//" .git/logs/refs/tags/tag_with_reflog2 >actual &&
-+	test-tool ref-store main for-each-reflog-ent refs/tags/tag_with_reflog2 | sed -e "s/^.*	//" >actual &&
- 	test_cmp expected actual
- '
- 
--- 
-gitgitgadget
+As the name implies, "get_data(size)" will allocate and return a given
+size of memory. Allocating memory for a large blob object may cause the
+system to run out of memory. Before preparing to replace calling of
+"get_data()" to resolve unpack issue of large blob objects, refactor
+"get_data()" to reduce memory footprint for dry_run mode. Because
+in dry_run mode, "get_data()" is only used to check the integrity of
+data, and the returned buffer is not used at all.
+
+Therefore, add the flag "dry_run" as an additional parameter of
+"get_data()" and reuse a small buffer in dry_run mode. Because in
+dry_run mode, the return buffer is not the entire data that the user
+wants, for this reason, we will release the buffer and return NULL.
+
+Han Xin, I think you can try to free the allocated buffer for dry_run
+mode inside "get_data()".
+
+--
+Jiang Xin
