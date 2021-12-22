@@ -2,97 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 539FEC433EF
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 06:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D166C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 06:23:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242715AbhLVGUk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 01:20:40 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54015 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233176AbhLVGUk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 01:20:40 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EAAD718465A;
-        Wed, 22 Dec 2021 01:20:39 -0500 (EST)
+        id S242728AbhLVGXz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 01:23:55 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62074 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233176AbhLVGXz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 01:23:55 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 58C95109148;
+        Wed, 22 Dec 2021 01:23:54 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=i9bzNkCJ0Y8qPR/8gkB3Ns6wDsOhakk4vF/VG5
-        2mO1w=; b=d69qo31ZirR1yD15W1bJTtr/YDndK4mSCJXQ8ooHf4CEW46SdoDWeY
-        SsCCyO4yXXKkbcNAAffM7V1kNjGNcGPz4jzRCA9Cxs7+FKKkFGc0YUfbh5qRur9P
-        cR3bRqI55sz3nXYGSnKDVoIUGpcHyq5ofgQR79HilBKX15oiPbuX8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E3884184659;
-        Wed, 22 Dec 2021 01:20:39 -0500 (EST)
+        :content-type; s=sasl; bh=d+5dcnrJW77KkNai+cTlfK6sQu4QbYOgUJVHeQ
+        ucSxw=; b=RdDgK+ZebFLScdax4ca4mm/D+Qc7YlWhWRN6Nty7/ZZHqKUF8sHx+t
+        P/ufqXbEzuFP0Yuir1roH5yfPN5tgPmzdNNCeYxVy8e5dZ1nSy1QnIAtugpXV/KO
+        LTQN1jFWSNF483hrYQjbj0Ht7I+GJkDBanOVJ0pl6lquhRvuBv7H0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E3CA109147;
+        Wed, 22 Dec 2021 01:23:54 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4E9BF184658;
-        Wed, 22 Dec 2021 01:20:36 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 76DFC109146;
+        Wed, 22 Dec 2021 01:23:52 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Daniel Vicarel <shundra8820@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Why does "merge --continue" expect no arguments?
-References: <CALRdAfcyfesNqfLhhe2GW_5V9s2hf++i6mZS1Lw5hqQYTca85w@mail.gmail.com>
-        <xmqqlf0dq3t3.fsf@gitster.g>
-        <CALRdAffjmvHao8TRfB9YJez1acwHDAq2ZqiqaCRRr5MaWzhxig@mail.gmail.com>
-Date:   Tue, 21 Dec 2021 22:20:34 -0800
-In-Reply-To: <CALRdAffjmvHao8TRfB9YJez1acwHDAq2ZqiqaCRRr5MaWzhxig@mail.gmail.com>
-        (Daniel Vicarel's message of "Tue, 21 Dec 2021 12:51:19 -0500")
-Message-ID: <xmqqpmppkvnx.fsf@gitster.g>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Neeraj Singh <nksingh85@gmail.com>
+Subject: Re: [PATCH 1/9] tmp_objdir: add a helper function for discarding
+ all contained objects
+References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
+        <fab1b2c69eafbd3f211745886786c1d0ebdc05c2.1640109948.git.gitgitgadget@gmail.com>
+        <xmqqmtkto7yf.fsf@gitster.g>
+        <CABPp-BEuzorQkesgyNCvS05wsfqaH4Yv5JDFgy+AenrAC+JJNQ@mail.gmail.com>
+Date:   Tue, 21 Dec 2021 22:23:51 -0800
+In-Reply-To: <CABPp-BEuzorQkesgyNCvS05wsfqaH4Yv5JDFgy+AenrAC+JJNQ@mail.gmail.com>
+        (Elijah Newren's message of "Tue, 21 Dec 2021 15:51:35 -0800")
+Message-ID: <xmqqlf0dkvig.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 46A1FD98-62EF-11EC-8F6A-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: BB8EC6C2-62EF-11EC-B2D0-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Daniel Vicarel <shundra8820@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> Fair point. I would argue that in my own personal projects, where I am
-> the only contributor, sometimes I just want to accept the default
-> merge message and move on.  However, one could apply that reasoning to
-> _every_ commit message in a personal project, and I certainly don't
-> believe in that... so yeah, you've given me something to think about.
-
-Like everybody else, I've had my fair share of "personal projects"
-that I was the only developer who lost interest in them in 6 months
-to 2 years since their inception---after that nobody would care, and
-in such projects, of course, I can remember what I was thinking when
-I did some nonsensical change early in their history.  I can survive
-sloppy and crappy messages.
-
-But in other projects, I've learned that the author of a commit or a
-merge with my name and e-mail address 6 months ago often is a total
-stranger for me sitting in front of the display right now.
-
-> I agree that some clearer documentation around `merge --continue` is
-> worthwhile, to prevent other developers from thinking like myself.
-> Maybe a warning from the CLI after running `merge --continue`,
-> recommending `commit` usage instead? Such a warning suggests that the
-> option _should_ still be deprecated and removed in the future though.
+>> > +void tmp_objdir_discard_objects(struct tmp_objdir *t)
+>> > +{
+>> > +     remove_dir_recursively(&t->path, REMOVE_DIR_KEEP_TOPLEVEL);
+>> > +}
+>> > +
+>>
+>> OK.
+>>
+>> Without a caller, it is a bit hard to judge if a separate helper
+>> makes the caller easier to read and understand, or becomes an extra
+>> layer of abstraction that obscures the logic.  Hopefully, having a
+>> more specific function name with "tmp" and "discard" in it makes the
+>> intent at callers more clear than the function that is named after
+>> the detail of the operation.
 >
-> I am still interested in making a contribution to git, so let me know
-> which option you would like me to move forward with at this time:
-> adding the CLI warning, or going straight to a deprecation. Unless of
-> course you're already on it. :)
+> This isn't just a convenience; since tmp_objdir is defined in
+> tmp-objdir.c rather than tmp-objdir.h, t->path is not accessible
+> outside of tmp-objdir.c.  Because of this, some kind of helper
+> function is necessary.
 
-Welcome to the development community.
+But adding this function as an extra level of abstration is *not*
+the only way to expose the feature.  Instead the internal of "struct
+tmp_objdir" could be exposed to the caller that wants to discard the
+files inside the path.
 
-If you want a starter project, among those I listed, perhaps the doc
-update would be the quickest one that offers the most to learn from,
-as the first road block new developers seem to stumble on is not
-coding standard and stuff but social interaction between the patch
-submitter and reviewers.
+I think we now have enough material to fill between these two lines
+to help readers ;-)
 
-Allowing some selected command line option given to "git merge
---continue" down to underlying "git commit" would be a lot harder
-for somebody new to the codebase.  It might make sense to allow
-things like "--no-edit" and "--no-verify" to be passed, but you
-would never ever want to pass something like "--amend", or (even
-worse) a pathspec.  And coming up with a sensible list of allowed
-options and arguments would be quite hard.
+>> > From: Elijah Newren <newren@gmail.com>
+>> >
+>> > Signed-off-by: Elijah Newren <newren@gmail.com>
 
+Thanks.
