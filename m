@@ -2,225 +2,286 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BDA8C433F5
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 13:56:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4DD7C433EF
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 14:21:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245531AbhLVN4e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 08:56:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54930 "EHLO
+        id S245715AbhLVOVC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 09:21:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245526AbhLVN4e (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 08:56:34 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0C80C06173F
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 05:56:33 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id q16so5099489wrg.7
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 05:56:33 -0800 (PST)
+        with ESMTP id S245708AbhLVOVA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 09:21:00 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3192C061747
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 06:20:59 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id i22so5167743wrb.13
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 06:20:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=TztSMEWbMPU/99E6+8rI6qWEdRnxF936gB3fFF671zI=;
-        b=dPVWpTXXIfot8emQG2T6Iok+ULeVvetBnB2mpRF1W0Rxph6v6JFPOANkwaZpGf7Jv5
-         yuVpGI9id8FqpxsZBjky/1tAKVXfDA1Drn44tt0GQogm7XTjx2uyK7HWqQQzhlVKguhs
-         IMUWaVzLFm07Bdw3/czr7cHxSoKXb7RC3SI60ZI/+QYQRPZ/7jYvM13eErBvpR2j6W+l
-         nnDCgEEaHGV8zzCz2bIR72i9qJHpOxtv9HKzLxUuppcNQTKZYB0C4zHjAHn3w2aRg89Y
-         8WsPYJak4Vy5XdqNveO22EmTnBdLW4syOFUBHas4+RZcf2Ksfk9r+M/cK6iiuIBPQh2e
-         UGaQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=H2dMSdv0uvCA8FMGUwtwG4tH8yQJwYoXOuPKT2Z90c8=;
+        b=IH4SkbLNV4ON10ewiy1r4HNOI/3XVpogXvLVmqI0dhRQMRflbai5mS+JcwNWE+6XYw
+         xDaBwQc08UP/xpS7cRFtP0cOUuVJpZjKi6hEfoQnyKXit9dqmp5eACO71TDbcX3mOA2N
+         dF2LycAzDmsT4nH35H8V7m9ICdanaQsk6sKAZK37AJ+cfRiI3qibPIOo0yzr6cM2dCqH
+         Y67n/8I1NZaANzIfruWClQTQIqfNH13gL+CI0nf2zNU8IowgxkY/ulGxmBHywV0OWEBm
+         LMvBljSo4XZsWwNeAfYSwCpKmH2ZjbZVq1Gxxl/1ZWqc9aK+kzBByzrZmVtXwE0ilHme
+         rcww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=TztSMEWbMPU/99E6+8rI6qWEdRnxF936gB3fFF671zI=;
-        b=tePR9nEn1WHX9eTLmV8cwdFsGXi4n5kALSy3k8gFBu0isUUN7qax0HKUR/FlqG2Ipj
-         TbmIyLuPtGiC72ojbm3ZPrnK/XhV/3oHLEL6CCphFx+FXdAYtaniBYgsXtWPj56kZNUW
-         H2CZA36CcBxli1/WECUJrx8O9Z8XsywpAGlIa8BnsI/1HWD2zciVBDHHsWtJb1c8Z6Kf
-         nD1YQBaUn89PnCLETL8zmc2GpmW/Zn8Iy96rMhFUNR4qgVjC+hr6DcafAbkLX+dfo0DP
-         cSp8Va1yuD3w7xW/tKgxLbyNagOI4df6q2ZuyFHxD2ECPQOqGP7DzTJTbaYiZ08uX8Dp
-         1F5A==
-X-Gm-Message-State: AOAM532h3iI5sjwlDhBa9iPLMIDTxxDp6q2FxxpaxpC70KpjIWLFBiHR
-        pi6yvB2z0KcMeVklg6OSIitNhA+4A00=
-X-Google-Smtp-Source: ABdhPJxCahLcFLZo16wfRPek+TRqmNtNp12pj5BJeX9tZsxS1OBkExXJu4YPkPee5cQgijRSnqf2pg==
-X-Received: by 2002:a5d:59a9:: with SMTP id p9mr2341348wrr.251.1640181392218;
-        Wed, 22 Dec 2021 05:56:32 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=H2dMSdv0uvCA8FMGUwtwG4tH8yQJwYoXOuPKT2Z90c8=;
+        b=dzHw+gOVVZJh0Vo2LYAYq28j5j14PiNPKHuljlf1KH1wSs3SXR0Oqk1nKa/PH+M/N+
+         cfwpFXRR7LsfGQCby+ycr09OAcARdzRzgSd/qlrk/LFe3ngyG16RILn3E5krIEi44M3D
+         Dj8Uwti09i8jm8JFG46tP2eeOjV81MpOIyCaUN7hCq2q+wv9sJl2BW14fcRI7n8qYpXS
+         otQXPYdlyKtWW4TDlwNXMCiwuwXSkC3BjGZso7G5EvPp08fD2vPUOUSuRTsC63tEfzx3
+         /43albWYtzEUf+bfhOEe5K0P1YD+EcRxqOGnsqiatvxtjPbDMRXkHOPu4SCyntbiVOaN
+         B9dw==
+X-Gm-Message-State: AOAM53123O3h/2TlCGog6kiIY4yvVgoyJnlBDzAR4AQv33P3KUtH+bH2
+        OWEsMuqbKPnaXKGpe/esz/Ao1eve1k4=
+X-Google-Smtp-Source: ABdhPJxM/7qIiEcqTo2CaRqw8QVB/3hrJimoD7rc+PsytcQY9rhRVq65MrpCg6yIpLj7EOGl/QiT6A==
+X-Received: by 2002:adf:e0c8:: with SMTP id m8mr2405557wri.113.1640182857989;
+        Wed, 22 Dec 2021 06:20:57 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o3sm1743480wmr.15.2021.12.22.05.56.31
+        by smtp.gmail.com with ESMTPSA id l4sm2368575wry.85.2021.12.22.06.20.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Dec 2021 05:56:31 -0800 (PST)
-Message-Id: <pull.1105.git.1640181390841.gitgitgadget@gmail.com>
-From:   "Marc Strapetz via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 22 Dec 2021 13:56:30 +0000
-Subject: [PATCH] update-index: refresh should rewrite index in case of racy
- timestamps
+        Wed, 22 Dec 2021 06:20:57 -0800 (PST)
+Message-Id: <pull.1080.v4.git.1640182856.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1080.v3.git.1639149192.gitgitgadget@gmail.com>
+References: <pull.1080.v3.git.1639149192.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 22 Dec 2021 14:20:51 +0000
+Subject: [PATCH v4 0/5] Sparse index: fetch, pull, ls-files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Marc Strapetz <marc.strapetz@syntevo.com>
+Cc:     gitster@pobox.com, newren@gmail.com, vdye@github.com,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Marc Strapetz <marc.strapetz@syntevo.com>
+This is now based on 'master'.
 
-update-index --refresh and --really-refresh should force writing of the
-index file if racy timestamps have been encountered, as status already
-does [1].
+Did you know that 'fetch' and 'pull' read the index? I didn't, or this would
+have been an integration much earlier in the cycle. They read the index to
+look for the .gitmodules file in case there are submodules that need to be
+fetched. Since looking for a file by name is already protected, we only need
+to disable 'command_requires_full_index' and we are done.
 
-Note that calling update-index still does not guarantee that there will
-be no more racy timestamps afterwards (the same holds true for status):
+The 'ls-files' builtin is useful when debugging the index, and some scripts
+use it, too. We are not changing the default behavior which expands a sparse
+index in order to show all of the cached blobs. Instead, we add a '--sparse'
+option that allows us to see the sparse directory entries upon request.
+Combined with --debug, we can see a lot of index details, such as:
 
-- calling update-index immediately after touching and adding a file may
-  still leave racy timestamps if all three operations occur within the
-  racy-tolerance (usually 1 second unless USE_NSEC has been defined)
+$ git ls-files --debug --sparse
+LICENSE
+  ctime: 1634910503:287405820
+  mtime: 1634910503:287405820
+  dev: 16777220 ino: 119325319
+  uid: 501  gid: 20
+  size: 1098    flags: 200000
+README.md
+  ctime: 1634910503:288090279
+  mtime: 1634910503:288090279
+  dev: 16777220 ino: 119325320
+  uid: 501  gid: 20
+  size: 934 flags: 200000
+bin/index.js
+  ctime: 1634910767:828434033
+  mtime: 1634910767:828434033
+  dev: 16777220 ino: 119325520
+  uid: 501  gid: 20
+  size: 7292    flags: 200000
+examples/
+  ctime: 0:0
+  mtime: 0:0
+  dev: 0    ino: 0
+  uid: 0    gid: 0
+  size: 0   flags: 40004000
+package.json
+  ctime: 1634910503:288676330
+  mtime: 1634910503:288676330
+  dev: 16777220 ino: 119325321
+  uid: 501  gid: 20
+  size: 680 flags: 200000
 
-- calling update-index for timestamps which are set into the future
-  will leave them racy
 
-To guarantee that such racy timestamps will be resolved would require to
-wait until the system clock has passed beyond these timestamps and only
-then write the index file. Especially for future timestamps, this does
-not seem feasible because of possibly long delays/hangs.
+(In this example, the 'examples/' directory is sparse.)
 
-Both --refresh and --really-refresh may in theory be used in
-combination with --unresolve and --again which may reset the
-"active_cache_changed" flag. There is no difference of whether we
-write the index due to racy timestamps or due to other
-reasons, like if --really-refresh has detected CE_ENTRY_CHANGED in
-refresh_cache(). Hence, we will set the "active_cache_changed" flag
-immediately after calling refresh_cache().
+Thanks!
 
-[1] https://lore.kernel.org/git/d3dd805c-7c1d-30a9-6574-a7bfcb7fc013@syntevo.com/
 
-Signed-off-by: Marc Strapetz <marc.strapetz@syntevo.com>
----
-    update-index: refresh should rewrite index in case of racy timestamps
-    
-    This patch makes update-index --refresh write the index if it contains
-    racy timestamps, as discussed at [1].
-    
-    [1]
-    https://lore.kernel.org/git/d3dd805c-7c1d-30a9-6574-a7bfcb7fc013@syntevo.com/
+Updates in v2
+=============
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1105%2Fmstrap%2Ffeature%2Fupdate-index-refresh-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1105/mstrap/feature/update-index-refresh-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1105
+ * Rebased onto latest ld/sparse-index-blame without issue.
+ * Updated the test to use diff-of-diffs instead of a sequence of greps.
+ * Added patches that remove the use of 'test-tool read-cache --table' and
+   its implementation.
 
- builtin/update-index.c               |  6 +++
- cache.h                              |  1 +
- read-cache.c                         |  2 +-
- t/t2108-update-index-refresh-racy.sh | 58 ++++++++++++++++++++++++++++
- 4 files changed, 66 insertions(+), 1 deletion(-)
- create mode 100755 t/t2108-update-index-refresh-racy.sh
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 187203e8bb5..0a069281e23 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -787,6 +787,12 @@ static int refresh(struct refresh_params *o, unsigned int flag)
- 	setup_work_tree();
- 	read_cache();
- 	*o->has_errors |= refresh_cache(o->flags | flag);
-+	if (has_racy_timestamp(&the_index)) {
-+		/* For racy timestamps we should set active_cache_changed immediately:
-+		 * other callbacks may follow for which some of them may reset
-+		 * active_cache_changed. */
-+		active_cache_changed |= SOMETHING_CHANGED;
-+	}
- 	return 0;
- }
- 
-diff --git a/cache.h b/cache.h
-index cfba463aa97..dd1932e2d0e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -891,6 +891,7 @@ void *read_blob_data_from_index(struct index_state *, const char *, unsigned lon
- #define CE_MATCH_IGNORE_FSMONITOR 0X20
- int is_racy_timestamp(const struct index_state *istate,
- 		      const struct cache_entry *ce);
-+int has_racy_timestamp(struct index_state *istate);
- int ie_match_stat(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
- int ie_modified(struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
- 
-diff --git a/read-cache.c b/read-cache.c
-index cbe73f14e5e..ed297635a33 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2775,7 +2775,7 @@ static int repo_verify_index(struct repository *repo)
- 	return verify_index_from(repo->index, repo->index_file);
- }
- 
--static int has_racy_timestamp(struct index_state *istate)
-+int has_racy_timestamp(struct index_state *istate)
- {
- 	int entries = istate->cache_nr;
- 	int i;
-diff --git a/t/t2108-update-index-refresh-racy.sh b/t/t2108-update-index-refresh-racy.sh
-new file mode 100755
-index 00000000000..ece1151847c
---- /dev/null
-+++ b/t/t2108-update-index-refresh-racy.sh
-@@ -0,0 +1,58 @@
-+#!/bin/sh
-+
-+test_description='update-index refresh tests related to racy timestamps'
-+
-+. ./test-lib.sh
-+
-+reset_mtime() {
-+	test-tool chmtime =$(test-tool chmtime --get .git/fs-tstamp) $1
-+}
-+
-+update_assert_unchanged() {
-+	local ts1=$(test-tool chmtime --get .git/index) &&
-+	git update-index $1 &&
-+	local ts2=$(test-tool chmtime --get .git/index) &&
-+	[ $ts1 -eq $ts2 ]
-+}
-+
-+update_assert_changed() {
-+	local ts1=$(test-tool chmtime --get .git/index) &&
-+	test_might_fail git update-index $1 &&
-+	local ts2=$(test-tool chmtime --get .git/index) &&
-+	[ $ts1 -ne $ts2 ]
-+}
-+
-+test_expect_success 'setup' '
-+	touch .git/fs-tstamp &&
-+	test-tool chmtime -1 .git/fs-tstamp &&
-+	echo content >file &&
-+	reset_mtime file &&
-+
-+	git add file &&
-+	git commit -m "initial import"
-+'
-+
-+test_expect_success '--refresh has no racy timestamps to fix' '
-+	reset_mtime .git/index &&
-+	test-tool chmtime +1 .git/index &&
-+	update_assert_unchanged --refresh
-+'
-+
-+test_expect_success '--refresh should fix racy timestamp' '
-+	reset_mtime .git/index &&
-+	update_assert_changed --refresh
-+'
-+
-+test_expect_success '--really-refresh should fix racy timestamp' '
-+	reset_mtime .git/index &&
-+	update_assert_changed --really-refresh
-+'
-+
-+test_expect_success '--refresh should fix racy timestamp even if needs update' '
-+	echo content2 >file &&
-+	reset_mtime file &&
-+	reset_mtime .git/index &&
-+	update_assert_changed --refresh
-+'
-+
-+test_done
+Updates in v3
+=============
+
+ * Fixed typo in commit message.
+ * Added comments around doing strange things in an ls-files test.
+ * Fixed adjacent typo in a test comment.
+
+
+Updates in v4
+=============
+
+ * Rebased on to 'master' now that ld/sparse-index-blame is merged.
+ * Change testing strategy to check exact output instead of using 'diff -u'.
+ * Updated documentation to state that directories have a trailing slash.
+
+Derrick Stolee (5):
+  fetch/pull: use the sparse index
+  ls-files: add --sparse option
+  t1092: replace 'read-cache --table' with 'ls-files --sparse'
+  t1091/t3705: remove 'test-tool read-cache --table'
+  test-read-cache: remove --table, --expand options
+
+ Documentation/git-ls-files.txt           |   5 +
+ builtin/fetch.c                          |   2 +
+ builtin/ls-files.c                       |  12 ++-
+ builtin/pull.c                           |   2 +
+ t/helper/test-read-cache.c               |  64 ++---------
+ t/t1091-sparse-checkout-builtin.sh       |  25 ++++-
+ t/t1092-sparse-checkout-compatibility.sh | 132 ++++++++++++++++++++---
+ t/t3705-add-sparse-checkout.sh           |   8 +-
+ 8 files changed, 168 insertions(+), 82 deletions(-)
+
 
 base-commit: 597af311a2899bfd6640b9b107622c5795d5f998
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1080%2Fderrickstolee%2Fsparse-index%2Ffetch-pull-ls-files-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1080/derrickstolee/sparse-index/fetch-pull-ls-files-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1080
+
+Range-diff vs v3:
+
+ 1:  f72001638d1 = 1:  1043a1927d2 fetch/pull: use the sparse index
+ 2:  b81174ba54b ! 2:  e1ec52881d9 ls-files: add --sparse option
+     @@ Documentation/git-ls-files.txt: Both the <eolinfo> in the index ("i/<eolinfo>")
+       
+      +--sparse::
+      +	If the index is sparse, show the sparse directories without expanding
+     -+	to the contained files.
+     ++	to the contained files. Sparse directories will be shown with a
+     ++	trailing slash, such as "x/" for a sparse directory "x".
+      +
+       \--::
+       	Do not interpret any more arguments as options.
+     @@ builtin/ls-files.c: int cmd_ls_files(int argc, const char **argv, const char *cm
+      
+       ## t/t1092-sparse-checkout-compatibility.sh ##
+      @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse-index is expanded and converted back' '
+     - 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
+     + 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
+       		git -C sparse-index reset -- folder1/a &&
+       	test_region index convert_to_sparse trace2.txt &&
+      +	test_region index ensure_full_index trace2.txt &&
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse index is n
+      +test_expect_success 'ls-files' '
+      +	init_repos &&
+      +
+     ++	# Use a smaller sparse-checkout for reduced output
+     ++	test_sparse_match git sparse-checkout set &&
+     ++
+      +	# Behavior agrees by default. Sparse index is expanded.
+      +	test_all_match git ls-files &&
+      +
+      +	# With --sparse, the sparse index data changes behavior.
+     -+	git -C sparse-index ls-files >dense &&
+     -+	git -C sparse-index ls-files --sparse >sparse &&
+     ++	git -C sparse-index ls-files --sparse >actual &&
+      +
+      +	cat >expect <<-\EOF &&
+     -+	@@ -13,13 +13,9 @@
+     -+	 e
+     -+	 folder1-
+     -+	 folder1.x
+     -+	-folder1/0/0/0
+     -+	-folder1/0/1
+     -+	-folder1/a
+     -+	+folder1/
+     -+	 folder10
+     -+	-folder2/0/0/0
+     -+	-folder2/0/1
+     -+	-folder2/a
+     -+	+folder2/
+     -+	 g
+     -+	-x/a
+     -+	+x/
+     -+	 z
+     ++	a
+     ++	deep/
+     ++	e
+     ++	folder1-
+     ++	folder1.x
+     ++	folder1/
+     ++	folder10
+     ++	folder2/
+     ++	g
+     ++	x/
+     ++	z
+      +	EOF
+      +
+     -+	diff -u dense sparse | tail -n +3 >actual &&
+      +	test_cmp expect actual &&
+      +
+      +	# With --sparse and no sparse index, nothing changes.
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse index is n
+      +	test_sparse_match git sparse-checkout add folder1 &&
+      +	test_sparse_match git ls-files --modified &&
+      +
+     -+	git -C sparse-index ls-files >dense &&
+     -+	git -C sparse-index ls-files --sparse >sparse &&
+     ++	test_all_match git ls-files &&
+     ++	git -C sparse-index ls-files --sparse >actual &&
+      +
+      +	cat >expect <<-\EOF &&
+     -+	@@ -17,9 +17,7 @@
+     -+	 folder1/0/1
+     -+	 folder1/a
+     -+	 folder10
+     -+	-folder2/0/0/0
+     -+	-folder2/0/1
+     -+	-folder2/a
+     -+	+folder2/
+     -+	 g
+     -+	-x/a
+     -+	+x/
+     -+	 z
+     ++	a
+     ++	deep/
+     ++	e
+     ++	folder1-
+     ++	folder1.x
+     ++	folder1/0/0/0
+     ++	folder1/0/1
+     ++	folder1/a
+     ++	folder10
+     ++	folder2/
+     ++	g
+     ++	x/
+     ++	z
+      +	EOF
+      +
+     -+	diff -u dense sparse | tail -n +3 >actual &&
+      +	test_cmp expect actual &&
+      +
+      +	# Double-check index expansion is avoided
+ 3:  2a6a1c5a39c = 3:  0c53bd09ba4 t1092: replace 'read-cache --table' with 'ls-files --sparse'
+ 4:  f0143686754 = 4:  4952c9e724b t1091/t3705: remove 'test-tool read-cache --table'
+ 5:  9227dc54165 = 5:  3efffad814c test-read-cache: remove --table, --expand options
+
 -- 
 gitgitgadget
