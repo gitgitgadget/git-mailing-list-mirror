@@ -2,90 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 793E2C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 16:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C605CC433EF
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 16:28:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241679AbhLVQUO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 11:20:14 -0500
-Received: from mout.gmx.net ([212.227.15.15]:56777 "EHLO mout.gmx.net"
+        id S241837AbhLVQ21 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 11:28:27 -0500
+Received: from siwi.pair.com ([209.68.5.199]:51724 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241647AbhLVQUO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 11:20:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1640190001;
-        bh=Loaykws5d97VttjlpAC5SrHonbE4PhRYePajirndHUc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=KqsFaGqmAQO6uWckbg2iQd7ED8ED/+qYK1Vr4r237xWw9u/a7AUVNwnIQylr0sldf
-         BEA3q3hT2gUiiBL4xfd9cJCAd6IV1Ef3g05ybbQNDP0GVEhRWUlZZaS0m5nuWExUZW
-         FmJr2NeXaTLW7ow7vURViZHlKMUmr2goN60BTdQs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.29.215.148] ([89.1.215.174]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mr9Fs-1memXe3uf0-00oCan; Wed, 22
- Dec 2021 17:20:01 +0100
-Date:   Wed, 22 Dec 2021 17:19:58 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Erik Cervin Edin <erik@cervined.in>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Sean Allred <allred.sean@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Custom subcommand help handlers
-In-Reply-To: <xmqqa6guub9n.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2112221717440.347@tvgsbejvaqbjf.bet>
-References: <CABceR4ZW4rRWZnH0ZBkWty_H84Z4CmXque_LO+1edETEWrO8PQ@mail.gmail.com>        <211220.86k0fzwmq2.gmgdl@evledraar.gmail.com>        <CA+JQ7M8oxzUAkw-Nv4X+3bJt7cBhsUaqFKd67Y=LNLnv2kgM+Q@mail.gmail.com>        <YcEJtOknDjSgxK5j@camp.crustytoothpaste.net>
- <xmqqa6guub9n.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S236333AbhLVQ20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 11:28:26 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id BA6323F47F9;
+        Wed, 22 Dec 2021 11:28:24 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 88DAC3F47F6;
+        Wed, 22 Dec 2021 11:28:24 -0500 (EST)
+Subject: Re: [PATCH 2/9] trace2: convert tr2tls_thread_ctx.thread_name from
+ strbuf to char*
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1099.git.1640012469.gitgitgadget@gmail.com>
+ <3a4fe07e40e967622035844ff10ded1ed71d94fc.1640012469.git.gitgitgadget@gmail.com>
+ <xmqqsfumqv62.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <ea4eb7f2-863f-2439-d175-cd4e97ad63a6@jeffhostetler.com>
+Date:   Wed, 22 Dec 2021 11:28:23 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:gAg1CDQYqkGh911cY4oixu0gRU3ZFcSQVLP86mFC4UrRSJjRZF8
- zcAqNkUevZP2RCQ04TN81VNZnqpqq2zrYLw66Rn8w1mlULmtJuj5zNSVfEp5PXMjsW3A6Nr
- LL5n9/J4ylFxDLUVyDwPbg7PyHhkYzBvQnH1I/R6DRol8QFPsDiAZeBSlXqHCFr916ZkKg+
- GL28/kLqNd1oUGM6AriBA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:bPueS1ANz9w=:fWQVbZs53orD2vxk8NtXAK
- 8owyrdOM5T3rADiYxfXqekbcaYu3OOADGvELrXAwcv7zMxxLLsgLvSFSF13G57bPVHyxlhmuy
- CZFHJVO2Cr2W5O+ck/OjBI0G/qRTBUCkfwfLtGW5/Aw7lDSylCU1ZN6zWe2UFXFfPwWPsAGG+
- 6zdneFvUJfKC+gPLZRIxz2Cy8jzfTAEyhhcyz+jiCy7cuuHwsIulWfSAq2RuFghxEHVHAFtkv
- JuI5DSzR4WzoHij3A721w1e6bzJxDcyWQAkyU5M3K8IlciCPzAfA7XgYhB09XM8maEi8bNRgY
- t1tUpxsUGQBcM2EV11fEO0bsKyGjmlOtXmZm3JnpWJ5c3qOk1Na28gpZBxn67bLSqsxPd67hz
- vqcns8wSD7qGs0yuuLnnNMQgaVGCi3tsPOUnpmZrgzG9xtOv3PTjdaQduI80mIXOxl3naArUc
- h7Lk31+VBM3pfE8v3Hy3iZs3Ab010QHkqPrVoYCvGUl5Gc9q0VgX1Vp1tXyVQyQrA5MrqV5J7
- Jv3V7iTFN8crD0jpAvtlwqf3t20C+N0o0OLRvs05tsyEYLF2HPfJ7QGyzwXFrytrl+U7dX4sj
- vuOT/fPpVE5x6Kq4V7Kri798Uqsa6ObuJ3qO2Wk0JW7PZ0b3Fv5+uKFTeungMYoIxYt28OjLq
- 4oOs98q6z/q+ViQNbPHFZN32qsDA5+rVLKixbYYfvWkCCNDWfRDLZ49F+lkEwB1QbbkC0M05g
- mzs84vs97EbgFi6GuHh9dZ4BRFAhleW6PXssoqODiRr42QQ/jm1PMdKv0ChHuCcW4to7MHbBs
- Xyp9mB/TuV4YtG3RcHTVFyBKCQZ8Gf+JbZGPTtA8CpFTsFt+3tAOdeIGUlklnBlulJZ1RmiOB
- fJet0d9D/k/ooDURX9mLD4kgkTfCqt482o5i1yL9Wqh61VwiAabN5e1BJJeVOwWula01bDT9H
- lEFAaiH9tAs7jEs6+mVuvkjQOSNoEB9baRPLmObsP7PYnR7NgrTgE1dhm8t9dGUEO9wUsIVec
- ECws1IoL5oGRn9RBLKho0OUi0B8y/8jAvFh4FGQeoR8xXJQsSKEeZKETf5Xyf+yVGRnpUFiqJ
- mBnw+QxfbECx6E=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqsfumqv62.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Mon, 20 Dec 2021, Junio C Hamano wrote:
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
-> > I should point out that in most cases on Unix, it _is_ expected that y=
-ou
-> > install your manual pages into the same place as everyone else, so in
-> > this case, installing the HTML documentation alongside Git's may be th=
-e
-> > best solution.
->
-> Yup, that sounds like the most sensible way to do things.
+On 12/21/21 2:22 AM, Junio C Hamano wrote:
+> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> Use a 'char *' to hold the thread name rather than a 'struct strbuf'.
+>> The thread name is set when the thread is created and should not be
+>> be modified afterwards.  Replace the strbuf with an allocated pointer
+>> to make that more clear.
+> 
+> Sounds good.  Use of strbuf is perfectly fine while you compute the
+> final value of the string, but as a more permanent location to store
+> the result, it often is unsuitable (and strbuf_split_buf() is a prime
+> example of how *not* to design your API function around the type).
+> 
+>> diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
+>> index 7da94aba522..cd8b9f2f0a0 100644
+>> --- a/trace2/tr2_tls.c
+>> +++ b/trace2/tr2_tls.c
+>> @@ -35,6 +35,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
+>>   					     uint64_t us_thread_start)
+>>   {
+>>   	struct tr2tls_thread_ctx *ctx = xcalloc(1, sizeof(*ctx));
+>> +	struct strbuf buf_name = STRBUF_INIT;
+>>   
+>>   	/*
+>>   	 * Implicitly "tr2tls_push_self()" to capture the thread's start
+>> @@ -47,12 +48,13 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
+>>   
+>>   	ctx->thread_id = tr2tls_locked_increment(&tr2_next_thread_id);
+>>   
+>> -	strbuf_init(&ctx->thread_name, 0);
+>>   	if (ctx->thread_id)
+>> -		strbuf_addf(&ctx->thread_name, "th%02d:", ctx->thread_id);
+>> -	strbuf_addstr(&ctx->thread_name, thread_name);
+>> -	if (ctx->thread_name.len > TR2_MAX_THREAD_NAME)
+>> -		strbuf_setlen(&ctx->thread_name, TR2_MAX_THREAD_NAME);
+>> +		strbuf_addf(&buf_name, "th%02d:", ctx->thread_id);
+>> +	strbuf_addstr(&buf_name, thread_name);
+>> +	if (buf_name.len > TR2_MAX_THREAD_NAME)
+>> +		strbuf_setlen(&buf_name, TR2_MAX_THREAD_NAME);
+>> +
+>> +	ctx->thread_name = strbuf_detach(&buf_name, NULL);
+> 
+> This is not exactly a new problem, but if we use a mechanism to
+> allow arbitrary long string (like composing with strbuf and
+> detaching the resulting string as is), instead of having a fixed
+> name[] array embedded in the ctx structure, I wonder if applying the
+> maximum length this early makes sense.  Such a truncation would
+> allow more than one ctx structures to share the same name, which
+> somehow feels error prone, inviting a mistake to use .thread_name
+> member as an identifier, when its only intended use is to give a
+> human-readable and not necessarily unique label.  Of course, if the
+> maximum is reasonably low, like a few dozen bytes, it may even make
+> sense to embed an array of the fixed size and not worry about an
+> extra pointer.
+> 
 
-So what about `~/bin/git-my-reply-to-junio`? Do we expect people to write
-a manual page and install it into `~/man/man1` and for `man` to pick that
-up?
+I'll convert it to a flex-array at the bottom of the CTX structure
+and then defer the truncation to the _perf target (which only does
+that to keep the columns lined up).
 
-In other words: I think you're trying to make the problem sound less
-complex than it is.
+That will simplify things considerably.
 
-Ciao,
-Dscho
+Thanks
+Jeff
+
