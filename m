@@ -2,101 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2053BC433F5
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 08:38:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D05F5C433F5
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 10:06:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243380AbhLVIiU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 03:38:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38376 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243379AbhLVIiT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 03:38:19 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFF4AC061574
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 00:38:18 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id g26so3683961lfv.11
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 00:38:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=unity3d.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=cWJ7FgNi2Nhxj9gsISRjm0IBjbPdLQ/XjFiZ5N7R5EY=;
-        b=cl+Kebs1jTVAUEPFA0RmvCLY70k96Tj9q08hoifD+ug/y8InFe1z3uuLD1eRJpNQts
-         wHpJ+/YcFyl+YsQJgfJHZboczOVmFbEZZuSWld4cjm3BipPvXkTY1ztraaPT/9Liajlj
-         Doi40D44++7al54am0S9lwNCY3MQX6EkLrUa+7cFVB2xA2ngOP8xy77xRlb+1vlDDDCU
-         n0tZ2gbEnT2SXZh/CGsvr+m3EKqhcfDFVClGHNAA7Hj3N5rvxj8OwpsAx1vWekA8+fkZ
-         Nrr2clfqCdn9/rzS9FBiVPf+lAuDiWqHYqEMdSd1h0giWJ9p22UYQrlB6H/VuSFFLLOa
-         hwjg==
+        id S239891AbhLVKGW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 05:06:22 -0500
+Received: from mail-io1-f44.google.com ([209.85.166.44]:40564 "EHLO
+        mail-io1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232631AbhLVKGV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 05:06:21 -0500
+Received: by mail-io1-f44.google.com with SMTP id q5so2116220ioj.7
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 02:06:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=cWJ7FgNi2Nhxj9gsISRjm0IBjbPdLQ/XjFiZ5N7R5EY=;
-        b=znkHhgDaoVfqtRBCSAss+2QOAeD08kzjlCqUXRrHCCykrNwWRGxcFe29jP/E8r90lS
-         2dgCA2yGgK9cEeJbXu3gJjI9ggQoBcdYyEHjUo5fab5aKmd0vdc/rEz4n+aEBHGC92ih
-         SwYcqop+1/pfPYgJRu9c+sBc+5V1K+9pGTx4RIDcbKjP3N+rMf0hJhWMMIvi9eT43rJw
-         +lSXrP+tMN41Duvqaq1MSf8lATFy6qYbi//y30BHBgO1CtkN6jKfpcZD0jBjEjyBFAtS
-         OZDno36yJTDI6vfG9dfcRvUqcZYWbWQie75UWa0uS45Cu5nDRZ13R5i3zeIAtW3CMkRI
-         LTsg==
-X-Gm-Message-State: AOAM532k+JNG/gkErKN2sRbPhqq9hyOuSn1aBnfPaYxTHKE0dkRZH0le
-        8aUIB5Am9vnxTWEdctOhm1mGaQ==
-X-Google-Smtp-Source: ABdhPJyVl2fenG92354mlQjjjXeYUf5vF9BuC41b/RhXWkBBBvdF54vRgE8Qhyr7NVTCAbMDY8UoxQ==
-X-Received: by 2002:a05:6512:5c2:: with SMTP id o2mr1732563lfo.8.1640162297173;
-        Wed, 22 Dec 2021 00:38:17 -0800 (PST)
-Received: from [192.168.0.30] (80-161-135-83-cable.dk.customer.tdc.net. [80.161.135.83])
-        by smtp.gmail.com with ESMTPSA id i3sm147271lfu.156.2021.12.22.00.38.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Dec 2021 00:38:16 -0800 (PST)
-Message-ID: <26316444-9fd2-8f69-10a4-2753c5455e53@unity3d.com>
-Date:   Wed, 22 Dec 2021 09:38:15 +0100
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=WABng9ahDfOOlZJkO1I6/HIjRC/K946CpSx829EguMM=;
+        b=nVk9sWCBMVcLbfS8pdvtEX/jia2sB2NMpfC9kIQrhHQmDIA3oVkUHTtx4HAy9O4XVU
+         nS3bc+tu7emsRQMZjwMCT7AkTOYv1MSCrTODPvJ9tYMbq43ou1VQnGXS3KG2PKHE5Cj6
+         qODZPj2ldsJJfzrDoLynoTGRqT2EOHOWZPY1alRkoZJM7JhJdNzsLKLSyzxaqB15uNS8
+         bEUWA9UOyq3rpeZONBjrNa4g/ODVW63mQ0RIx9jGb0rcnW3F9uVHfrcZK2pEzHBwebVC
+         7lSvfG8cxWaeshsRv55hM4LEDKPpCc4SXNXkuztZ7hPKbnTJVHy2q2imol4Igmg6DEDa
+         /nNQ==
+X-Gm-Message-State: AOAM533k9zu2NHmqnU5wVxdjoWMrdwa/qBYtCMv6ugEwGp+5yin9g1/1
+        KjVYHW5IDOxvPyC1f/1Td9PgfJKz7CNlF6pHFEEdDhUzIXw=
+X-Google-Smtp-Source: ABdhPJx9kA+Zb+RYNvS6Y2BhMxwM9SkEImKbcs9bkM1yhE7zRvY9eu6eS8ClsAurTMacjCw0vIfaCKazlxen7rw6hWk=
+X-Received: by 2002:a05:6602:2acc:: with SMTP id m12mr925348iov.107.1640167580964;
+ Wed, 22 Dec 2021 02:06:20 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.0
-Subject: Re: [PATCH v3] fast-export: fix surprising behavior with
- --first-parent
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Cc:     William Sprent via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.1084.v2.git.1639037637231.gitgitgadget@gmail.com>
- <pull.1084.v3.git.1639671789279.gitgitgadget@gmail.com>
- <CABPp-BF7Rg3NH3UBnyzD6c1vuFh+FNrNc8eRvUffqmaLppUPkw@mail.gmail.com>
- <xmqq5yrhptqk.fsf@gitster.g>
-From:   William Sprent <williams@unity3d.com>
-In-Reply-To: <xmqq5yrhptqk.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Wed, 22 Dec 2021 11:05:45 +0100
+Message-ID: <CA+JQ7M-ORVCj6teGjVy01SF=f0=PdKKYdHNU9ruK9XUAX9F8Ag@mail.gmail.com>
+Subject: bug: git name-rev --stdin --no-undefined on detached head
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 21/12/2021 21.50, Junio C Hamano wrote:
-> Elijah Newren <newren@gmail.com> writes:
-> 
->>>       * Changed commit message to include the detailed description of the
->>>         problem area as suggested by Elijah. I went back and forth with my
->>>         self about whether the message needs some "lead in", but it ended up
->>>         getting long without adding much.
->>
->> If it feels weird quoting someone else so extensively and just using
->> their words for the commit message, we've used a "Commit-message-by:"
->> trailer in the past; that could be useful here.
-> 
-> I do not mind tweaking the copy I already have with "Helped-by"
-> myself, while ...
-> 
->> This version looks good to me:
->>
->> Reviewed-by: Elijah Newren <newren@gmail.com>
-> 
-> ... adding this one before merging the result to 'next'.
-> 
-> Thanks, both.
+Hey all!
 
-Either way works for me. I'm not too familiar with conventions around 
-trailers. Both seem very reasonable to me.
+I ran into a situation that I think may be a bug
+using git name-rev for detached heads.
 
-Thanks a bunch for the help. :)
+Steps to reproduce:
+Create a detached head
+  git checkout --detached
+  git commit --allow-empty -m foo
+
+Expected results:
+My understanding is that
+  git name-rev $(git rev-list -1 HEAD)
+  git rev-list -1 HEAD | git name-rev --stdin
+should yield the same result.
+
+As well as combining with other flags
+like --name-only / --no-undefined
+
+Actual results:
+Where this fails as expected
+  git name-rev --no-undefined $(git rev-list HEAD)
+this just prints the SHA wo failing
+  git rev-list -1 HEAD |  git name-rev --stdin --no-undefined
+
+"name-only" is also affected
+  git rev-list -1 HEAD |  git name-rev --stdin --name-only
+returns the SHA and not the name
+
+Tested on
+git version 2.34.1.windows.1
+-- 
+Erik Cervin-Edin
