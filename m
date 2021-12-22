@@ -2,115 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CA5CC433F5
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 11:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 747C6C433F5
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 11:42:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244678AbhLVL3z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 06:29:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49454 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244670AbhLVL3y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 06:29:54 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26AE3C061574
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 03:29:54 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id x21so4699063lfa.5
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 03:29:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=p/x+KLfNo0GM2Y2t2jDHp9P/Z5iJzoYC8F2Ib1NuJK0=;
-        b=Xiyhk891nw+EUAZK3LjrLuhw35aACx8Yuu8RacE7tgmtFYC3g2/hnjT1vhnA7tTd+x
-         H+4t18BX19ysWeyyPmfT2AQBGxJ88lGHWuKUHnzEMaEriIJJKl0TybzkdX2qDI5+r0Br
-         VTPLpxa3vbUUZ6oeryQYxkT9NJyWvxNOGiMtRASVKpJFakE6ndy+Sc0oez0CkN/V0+Bu
-         84qpyCQDM1ySzDjlSs6fCJPJvi6C+R+ocIGi+4z8YLtMQXMHV7vwuCxu22L8q6cjpJDH
-         xnNqrlg97Jj2QjDmXGD1DjditpLmO6HOFBgljwsVa8RnfCJ9x2ZywgobjkfodhymbZ6L
-         tEdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=p/x+KLfNo0GM2Y2t2jDHp9P/Z5iJzoYC8F2Ib1NuJK0=;
-        b=g9Ap046p2bIegCuevzsRiy1+IviTuZDDPeXUiUajaea46E+nO9WEylYK1ltAcD6xB5
-         w4jPA2O2SY67uit1TYRbeLenGJHhZPg+IPEYnmxWhhDXktX+Xdfbdlz/Vo5U98StIxvU
-         GOG+2v2JqjlQLQGftCB5MGfYYa5jCbLui9TecyqdH7R2rsgVkhAG5tqFV9aQDUQSwBxX
-         N1vhKI/tF1u6xvjezRNlgwYGM+GEiR2xuGIWo8JvqEr1GudNoMj4hiWXhE6JYl707Afp
-         jM/14y4Bc9gwSHlKlK1sZF6LTyBkY+ZzO0H/jeyXCaruK7pnc4RvIq5NMsPx7m4lV806
-         uvKw==
-X-Gm-Message-State: AOAM533s4UN1yOVje83zrcRlWmbyPvx1D9AUFVYCKOdYX5wp0N1n+SQf
-        bZ6Eid6Jo0rG75JOzEOebUXmj/1kTpvrEM96X2g=
-X-Google-Smtp-Source: ABdhPJyStoQxXDKir7HvDgGhF8LPUz5lvH7DOFeicCpkgQ11x+5FQGTMrgeb2GNwFncXgQn/LO+3w4oDIJbM2WOzZAw=
-X-Received: by 2002:a19:a417:: with SMTP id q23mr2168650lfc.596.1640172592468;
- Wed, 22 Dec 2021 03:29:52 -0800 (PST)
+        id S237647AbhLVLm5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 06:42:57 -0500
+Received: from smtprelay03.ispgateway.de ([80.67.18.15]:29108 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235547AbhLVLm4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 06:42:56 -0500
+Received: from [91.113.179.170] (helo=[192.168.92.29])
+        by smtprelay03.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <marc.strapetz@syntevo.com>)
+        id 1n001K-0007sk-W5; Wed, 22 Dec 2021 12:42:59 +0100
+Message-ID: <5a74b0bc-d713-e8bf-5952-dbaaf5d886e7@syntevo.com>
+Date:   Wed, 22 Dec 2021 12:42:52 +0100
 MIME-Version: 1.0
-References: <20211217112629.12334-1-chiyutianyi@gmail.com> <20211221115201.12120-2-chiyutianyi@gmail.com>
- <211221.86bl1arqls.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211221.86bl1arqls.gmgdl@evledraar.gmail.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Wed, 22 Dec 2021 19:29:40 +0800
-Message-ID: <CANYiYbHdMTS9CqTqKfiKjBc=6uVsUSz91Qk+gEdghq_=JXbOHQ@mail.gmail.com>
-Subject: Re: [PATCH v7 1/5] unpack-objects.c: add dry_run mode for get_data()
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Han Xin <chiyutianyi@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: Should update-index --refresh force writing the index in case of
+ racy timestamps?
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+References: <d3dd805c-7c1d-30a9-6574-a7bfcb7fc013@syntevo.com>
+ <Ybz9ruQ/uOfFbn3W@camp.crustytoothpaste.net> <xmqqee6a22rj.fsf@gitster.g>
+From:   Marc Strapetz <marc.strapetz@syntevo.com>
+In-Reply-To: <xmqqee6a22rj.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 22, 2021 at 8:37 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Tue, Dec 21 2021, Han Xin wrote:
->
-> I commented on this "find" usage in an earlier round, I think there's a
-> much easier way to do this. You're really just going back and forth
-> between checking whether or not all the objects are loose.
->
-> I think that the below fix-up on top of this series is a better way to
-> do that, and more accurate. I.e. in your test here you check "!
-> test_cmp", which means that we could have some packed and some loose,
-> but really what you're meaning to check is a flip-flop between "all
-> loose?" and "no loose?.
->
-> In addition to that there was no reason to hardcode "main", we can just
-> use HEAD. All in all I think the below fix-up makes sense:
->
-> diff --git a/t/t5590-unpack-non-delta-objects.sh b/t/t5590-unpack-non-del=
-ta-objects.sh
-> index 8436cbf8db6..d78bb89225d 100755
-> --- a/t/t5590-unpack-non-delta-objects.sh
-> +++ b/t/t5590-unpack-non-delta-objects.sh
-> @@ -5,9 +5,6 @@
->
->  test_description=3D'Test unpack-objects with non-delta objects'
->
-> -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
-> -export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> -
->  . ./test-lib.sh
->
->  prepare_dest () {
-> @@ -20,16 +17,22 @@ prepare_dest () {
->         fi
->  }
->
-> +assert_no_loose () {
-> +       glob=3Ddest.git/objects/?? &&
-> +       echo "$glob" >expect &&
-> +       echo $glob >actual &&
+On 18/12/2021 01:08, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> 
+>> On 2021-12-17 at 10:44:32, Marc Strapetz wrote:
+>>> For one of my Git-LFS test repositories, switching between branches quite
+>>> often results in lots of racy index timestamps. Subsequent calls to "git
+>>> update-index --refresh" or "git status" will invoke the "lfs" filter over
+>>> and over again, just to figure out that all entries are still up-to-date.
+>>> Hence, the index will never be rewritten and racy timestamps will remain.
+>>>
+>>> To break out of this state, it seems favorable to write the index if any
+>>> racy timestamp is detected. We will be able to provide a patch if this
+>>> change sounds reasonable.
+>>
+>> Sure, this sounds reasonable, especially if, as you mentioned, git
+>> status already does this.  We might as well make the plumbing commands
+>> as functional as the porcelain commands.
+> 
+> Given that "update-index --refresh" is a way to say "we know
+> something changed to make cached stat information dirty even for
+> otherwise clean paths and we want our 'diff-files' and other
+> plumbing command to start relying on the cached stat information
+> again, so please do as much I/O as you need", I agree that it should
+> do as thourough job as necessary.
 
-Incompatible for zsh. This may work:
+Thanks! I have now submitted a pull request via gitgitgadget.
 
-    eval "echo $glob" >actual &&
+I had some problems to understand what the correct place to set 
+active_cache_changed is and have decided to keep it as close as possible 
+to refresh_cache(): unresolve_callback() and reupdate_callback() may 
+reset active_cache_changed in case of errors. On the other hand, 
+active_cache_changed may be set again later for a preferred_index_format 
+change and for read_from_stdin (as part of update_one()), so in the end 
+the callbacks may be overruled and the index may finally be written. I'm 
+not sure whether these combinations can actually occur and whether this 
+might cause any troubles. I just wanted to point out.
 
---
-Jiang Xin
+-Marc
