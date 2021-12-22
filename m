@@ -2,173 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44039C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 00:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45EC3C433F5
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 00:24:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239007AbhLVALz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 19:11:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39040 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239036AbhLVALy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 19:11:54 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3060C061747
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 16:11:54 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id l6-20020a633e06000000b0034006440151so294818pga.23
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 16:11:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=XHSrS/kaPjwKPsSMYQe+nrPRwX9vLd5MnW4hyX7se7I=;
-        b=fGy4/siwJEyZo5dmyv0P4aVvJjE85AT7I3l6TTfwfTBjLN8JI7XsyS5QcPe8ykXfeu
-         0Ug+zeAVWjkYQ0QCzCE63FqjP4bXaMP/Bjn25uM6IhXWoFQ8MykM8xPjETkuv7yUBdxv
-         6Nwc0xsRr9es/quzB9CIbi6f+6M2RlSGIn1M10OGNzi3mvXVDzkxST7MwrASilf/lD95
-         yyguazl7I7zdlGfv4wg6iMcs3wx5+hYKCdyFBJAba6pNQ2d0I3eQQIMP4n6dwDPp80TK
-         dgCJQk2d018SBeRuKTfdjF6CvyMrSQkmfvncJ3BrpFMEo1/op8DEg7LObm+dpJiUM3Uc
-         oIkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=XHSrS/kaPjwKPsSMYQe+nrPRwX9vLd5MnW4hyX7se7I=;
-        b=31PvvvYK8SPtMNPIigIr6owjf8TcwTkKJqS3Nh9wOMQdy2hHkGU28Z/rbfBrvNvlTw
-         2/zo3TsKUGzwyKsL8ybs4c3XMYFYDouWRph7bkZHWy+pgJqd1AGwVc8JxsnYeI8ERghz
-         +CWbFUMOVLQDzGoel1IFmwiDAaHp8y+1+5CkhIpHe/BXKD8WveSkbnFYOZoj2bwRpQG6
-         GUjjSxXHXlbnyEcJ1ZPWAds7xxOgUnJZAFfxZWApxraBoYQ53joyVwH2js8iUp6ISNKB
-         wDuTO35acJH2sjV/J7Wr8LY1FJVVQROwVrvXGARLrwdG2xUxkxuK/hS/W5OdmlFrrq39
-         0cAg==
-X-Gm-Message-State: AOAM530p7e/vGGi0hAi3qltTy3o2GzKUnMk/kf2Fa8kz8VJL2sjx1v3x
-        NDJnitYvScr7k9TG6tsuNem46q7NzvCLvbzF0n0C0SKk63qQe5T+4eYuNn8cV2wIRUGhW936iAZ
-        GzUaNIPA5rj2QM+dUWN0UZqqarCNSu1mdodY4dOTFizNtCNvvqDyHMCiTSZYmUDk=
-X-Google-Smtp-Source: ABdhPJw7Tfq0R7oJ9qbn+4eqii5fXXjrG/VC4LQjsRszT/9MNVFwxU90//qVtohtNLINe6Qkn+1yrIITTeiLpA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:903:2348:b0:141:d60b:ee90 with SMTP
- id c8-20020a170903234800b00141d60bee90mr404571plh.15.1640131914028; Tue, 21
- Dec 2021 16:11:54 -0800 (PST)
-Date:   Tue, 21 Dec 2021 16:11:34 -0800
-In-Reply-To: <20211222001134.28933-1-chooglen@google.com>
-Message-Id: <20211222001134.28933-4-chooglen@google.com>
-Mime-Version: 1.0
-References: <20211217000235.68996-1-chooglen@google.com> <20211222001134.28933-1-chooglen@google.com>
-X-Mailer: git-send-email 2.34.1.307.g9b7440fafd-goog
-Subject: [PATCH v3 3/3] builtin/fetch: die on --negotiate-only and --recurse-submodules
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Glen Choo <chooglen@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S239417AbhLVAY5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 19:24:57 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63488 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229555AbhLVAY5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 19:24:57 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7BAAEFA6F6;
+        Tue, 21 Dec 2021 19:24:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=u/mz1SDZ1jO/Mv7L3iBLB2dlxE5iXlc3KzmNSO
+        OurE8=; b=mmD9ODZuZOF7wUZDnO0NsN83nvKT+EjVAuPBuS0ZS1oju1gUM+myzv
+        OiXfmHhOdkbXOIX0TDYHFIRD7tDVon0SjQgSWPqkMjZYVWaP9hv6yL/Bw7wLcC6N
+        mvcaAZ5CRWkEYsrlg4wfkorMBQQbKL1SWLM8q6cWf63JTiN5zDjOc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 725ADFA6F5;
+        Tue, 21 Dec 2021 19:24:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DCBD2FA6F4;
+        Tue, 21 Dec 2021 19:24:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Neeraj Singh <nksingh85@gmail.com>
+Subject: Re: [PATCH 6/9] diff: add ability to insert additional headers for
+ paths
+References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
+        <15600df925fb06ecf2c12afecd514f551a1bf7c2.1640109948.git.gitgitgadget@gmail.com>
+Date:   Tue, 21 Dec 2021 16:24:54 -0800
+In-Reply-To: <15600df925fb06ecf2c12afecd514f551a1bf7c2.1640109948.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Tue, 21 Dec 2021
+        18:05:45 +0000")
+Message-ID: <xmqqlf0dmqp5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 96C15012-62BD-11EC-BB10-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The previous commit ignores the value of --recurse-submodules if
---negotiate-only is given. Since non "no" values of --recurse-submodules
-are not supported with --negotiate-only, make cmd_fetch() check for
-this invalid combination and die.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-This is unlikely to affect internal usage of --negotiate-only, but it
-may be helpful for users. We may also want to discourage users from
-using --negotiate-only altogether because it was not intended for them.
+> From: Elijah Newren <newren@gmail.com>
+>
+> In support of a remerge-diff ability we will add in a few commits, we
+> want to be able to provide additional headers to show along with a diff.
+> Add the plumbing necessary to enable this.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  diff.c | 34 +++++++++++++++++++++++++++++++++-
+>  diff.h |  1 +
+>  2 files changed, 34 insertions(+), 1 deletion(-)
+>
+> diff --git a/diff.c b/diff.c
+> index 861282db1c3..a9490b9b2ba 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -27,6 +27,7 @@
+>  #include "help.h"
+>  #include "promisor-remote.h"
+>  #include "dir.h"
+> +#include "strmap.h"
+>  
+>  #ifdef NO_FAST_WORKING_DIRECTORY
+>  #define FAST_WORKING_DIRECTORY 0
+> @@ -3406,6 +3407,33 @@ struct userdiff_driver *get_textconv(struct repository *r,
+>  	return userdiff_get_textconv(r, one->driver);
+>  }
+>  
+> +static struct strbuf* additional_headers(struct diff_options *o,
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
- Documentation/fetch-options.txt |  1 +
- builtin/fetch.c                 | 24 ++++++++++++++++++------
- t/t5702-protocol-v2.sh          | 17 +++++++++++++++++
- 3 files changed, 36 insertions(+), 6 deletions(-)
+Style.
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index e967ff1874..81a100d593 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -71,6 +71,7 @@ configuration variables documented in linkgit:git-config[1], and the
- 	ancestors of the provided `--negotiation-tip=*` arguments,
- 	which we have in common with the server.
- +
-+This is incompatible with `--recurse-submodules[=yes|on-demand]`.
- Internally this is used to implement the `push.negotiate` option, see
- linkgit:git-config[1].
- 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 883bb1b10c..54f970130e 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -75,6 +75,7 @@ static struct transport *gtransport;
- static struct transport *gsecondary;
- static const char *submodule_prefix = "";
- static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
-+static int recurse_submodules_explicit = RECURSE_SUBMODULES_DEFAULT;
- static int recurse_submodules_default = RECURSE_SUBMODULES_ON_DEMAND;
- static int shown_url = 0;
- static struct refspec refmap = REFSPEC_INIT_FETCH;
-@@ -166,7 +167,7 @@ static struct option builtin_fetch_options[] = {
- 		 N_("prune remote-tracking branches no longer on remote")),
- 	OPT_BOOL('P', "prune-tags", &prune_tags,
- 		 N_("prune local tags no longer on remote and clobber changed tags")),
--	OPT_CALLBACK_F(0, "recurse-submodules", &recurse_submodules, N_("on-demand"),
-+	OPT_CALLBACK_F(0, "recurse-submodules", &recurse_submodules_explicit, N_("on-demand"),
- 		    N_("control recursive fetching of submodules"),
- 		    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
- 	OPT_BOOL(0, "dry-run", &dry_run,
-@@ -1997,12 +1998,23 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_fetch_options, builtin_fetch_usage, 0);
- 
-+	if (recurse_submodules_explicit != RECURSE_SUBMODULES_DEFAULT)
-+		recurse_submodules = recurse_submodules_explicit;
-+
- 	if (negotiate_only) {
--		/*
--		 * --negotiate-only should never recurse into
--		 * submodules, so there is no need to read .gitmodules.
--		 */
--		recurse_submodules = RECURSE_SUBMODULES_OFF;
-+		switch (recurse_submodules_explicit) {
-+		case RECURSE_SUBMODULES_OFF:
-+		case RECURSE_SUBMODULES_DEFAULT: {
-+			/*
-+			 * --negotiate-only should never recurse into
-+			 * submodules, so there is no need to read .gitmodules.
-+			 */
-+			recurse_submodules = RECURSE_SUBMODULES_OFF;
-+			break;
-+		}
-+		default:
-+			die(_("--negotiate-only and --recurse-submodules cannot be used together"));
-+		}
- 	}
- 
- 	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index d527cf6c49..d099c46499 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -628,6 +628,23 @@ test_expect_success 'usage: --negotiate-only without --negotiation-tip' '
- 	test_cmp err.expect err.actual
- '
- 
-+test_expect_success 'usage: --negotiate-only with --recurse-submodules' '
-+	SERVER="server" &&
-+	URI="file://$(pwd)/server" &&
-+
-+	setup_negotiate_only "$SERVER" "$URI" &&
-+
-+	cat >err.expect <<-\EOF &&
-+	fatal: --negotiate-only and --recurse-submodules cannot be used together
-+	EOF
-+
-+	test_must_fail git -c protocol.version=2 -C client fetch \
-+		--negotiate-only \
-+		--recurse-submodules \
-+		origin 2>err.actual &&
-+	test_cmp err.expect err.actual
-+'
-+
- test_expect_success 'file:// --negotiate-only' '
- 	SERVER="server" &&
- 	URI="file://$(pwd)/server" &&
--- 
-2.33.GIT
+> +					 const char *path)
+> +{
+> +	if (!o->additional_path_headers)
+> +		return NULL;
+> +	return strmap_get(o->additional_path_headers, path);
+> +}
+> +
+> +static void add_formatted_headers(struct strbuf *msg,
+> +				  struct strbuf *more_headers,
+> +				  const char *line_prefix,
+> +				  const char *meta,
+> +				  const char *reset)
+> +{
+> +	char *next, *newline;
+> +
+> +	next = more_headers->buf;
+> +	while ((newline = strchr(next, '\n'))) {
+> +		*newline = '\0';
+> +		strbuf_addf(msg, "%s%s%s%s\n", line_prefix, meta, next, reset);
+> +		*newline = '\n';
+> +		next = newline + 1;
+> +	}
+
+The above is not wrong per-se, but we do not need to do the
+"temporarily terminate and then recover" dance, and avoiding it
+would make the code cleaner.
+
+Once you learn the value of "newline" [*], you know the number of
+bytes between "next" and "newline" so you can use safely "%.*s"
+format specifier without temporarily terminating the subsection of
+the string.
+
+	Side note. I would actually use strchrnul() instead, so that
+        we do not have to special case the end of the buffer.  For a
+        readily available example, see advice.c::vadvise().
+
+> +	if (*next)
+> +		strbuf_addf(msg, "%s%s%s%s\n", line_prefix, meta, next, reset);
+> +}
+
+> @@ -4328,9 +4356,13 @@ static void fill_metainfo(struct strbuf *msg,
+>  	const char *set = diff_get_color(use_color, DIFF_METAINFO);
+>  	const char *reset = diff_get_color(use_color, DIFF_RESET);
+>  	const char *line_prefix = diff_line_prefix(o);
+> +	struct strbuf *more_headers = NULL;
+>  
+>  	*must_show_header = 1;
+>  	strbuf_init(msg, PATH_MAX * 2 + 300);
+> +	if ((more_headers = additional_headers(o, name)))
+> +		add_formatted_headers(msg, more_headers,
+> +				      line_prefix, set, reset);
+
+So, we stuff what came via path_msg() without anything that allows
+readers to identify them to the header part?  Just like we have
+fixed and known string taken from a bounded vocabulary such as
+"index", "copy from", "old mode", etc., don't we want to prefix the
+hints that came from the merge machinery with some identifiable
+string?
+
+> @@ -5852,7 +5884,7 @@ int diff_unmodified_pair(struct diff_filepair *p)
+>  
+>  static void diff_flush_patch(struct diff_filepair *p, struct diff_options *o)
+>  {
+> -	if (diff_unmodified_pair(p))
+> +	if (diff_unmodified_pair(p) && !additional_headers(o, p->one->path))
+>  		return;
+
+This does not feel quite right.  At least there needs a comment that
+says the _current_ callers that add additional_headers() would do so
+only for paths that the end-users cares about, even when there is no
+change in the contents.  It is quite plausible that future callers
+may want to add additional information to only paths that have some
+changes that need to be shown, no?  And at that point, they want to
+tweak this condition we place here, but without explanation they
+wouldn't know what they would be breaking if they did so.
 
