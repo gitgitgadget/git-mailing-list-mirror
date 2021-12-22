@@ -2,222 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76548C433F5
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 23:53:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D53A5C433F5
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 23:56:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343708AbhLVXxF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 18:53:05 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62323 "EHLO
+        id S1343834AbhLVX4p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 18:56:45 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50570 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232471AbhLVXxE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 18:53:04 -0500
+        with ESMTP id S232471AbhLVX4o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 18:56:44 -0500
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4A99315257E;
-        Wed, 22 Dec 2021 18:53:04 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 529EB1525AF;
+        Wed, 22 Dec 2021 18:56:44 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dJ6LoSem6MrM/a+cU46wRqOkBj+OF/19jFQE/T
-        n3esg=; b=AxBYDJ7IMtXZIShRgQiN7DSMyd+qbeGeCvNBR7QgtDzzFrHMc5m2LP
-        8f70T9IT4he/eno9Erznb0x30aYEtfxRcf63cLox0ufWhzGAn5BPPIx3fPiz+4kb
-        +b0ZOMcPF6giIELIEdM4RBUNronyJcs9Baw0egB8v9ZmPx2a8ta88=
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=krCx4lDNKrBINb8BtX9OX0B0pFmZBKReFKiZRV
+        JvRng=; b=Kwhs86C6lZLi5q0Hqz5RIWAqlmm5HBl2Lf6pgUEOdyA3mngObl7X7p
+        GehJRE3Reo791Op8aATYng4Vw2syYfcTMQ3QdKZ07k0s9OCwRpdmEZun7v9JSnpc
+        FjcTXg/2UNwg0Zk8AnpfoPB9R987t/ZXusAzjoFnAXI8U3UVG3DjM=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 439E915257D;
-        Wed, 22 Dec 2021 18:53:04 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4AB4F1525AE;
+        Wed, 22 Dec 2021 18:56:44 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 95607152576;
-        Wed, 22 Dec 2021 18:53:00 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A5D001525AD;
+        Wed, 22 Dec 2021 18:56:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Marc Strapetz via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Marc Strapetz <marc.strapetz@syntevo.com>
-Subject: Re: [PATCH] update-index: refresh should rewrite index in case of
- racy timestamps
-References: <pull.1105.git.1640181390841.gitgitgadget@gmail.com>
-Date:   Wed, 22 Dec 2021 15:52:59 -0800
-In-Reply-To: <pull.1105.git.1640181390841.gitgitgadget@gmail.com> (Marc
-        Strapetz via GitGitGadget's message of "Wed, 22 Dec 2021 13:56:30
-        +0000")
-Message-ID: <xmqqfsqkdwo4.fsf@gitster.g>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v4 0/5] Sparse index: fetch, pull, ls-files
+In-Reply-To: <CABPp-BGuoY_R8Cfoa7OfoqqFt4ZuWn9dNyN94vcJb8XJMXOvRA@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 22 Dec 2021 11:17:27 -0800")
+References: <pull.1080.v3.git.1639149192.gitgitgadget@gmail.com>
+        <pull.1080.v4.git.1640182856.gitgitgadget@gmail.com>
+        <CABPp-BGuoY_R8Cfoa7OfoqqFt4ZuWn9dNyN94vcJb8XJMXOvRA@mail.gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Date:   Wed, 22 Dec 2021 15:56:39 -0800
+Message-ID: <xmqqa6gsdwi0.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4B901C0C-6382-11EC-BBE3-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: CEBB660E-6382-11EC-8BF9-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Marc Strapetz via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
->  builtin/update-index.c               |  6 +++
->  cache.h                              |  1 +
->  read-cache.c                         |  2 +-
->  t/t2108-update-index-refresh-racy.sh | 58 ++++++++++++++++++++++++++++
->  4 files changed, 66 insertions(+), 1 deletion(-)
->  create mode 100755 t/t2108-update-index-refresh-racy.sh
+> On Wed, Dec 22, 2021 at 6:20 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> This is now based on 'master'.
+>>
+>> Did you know that 'fetch' and 'pull' read the index? I didn't, or this would
+>> have been an integration much earlier in the cycle. They read the index to
+>> look for the .gitmodules file in case there are submodules that need to be
+>> fetched. Since looking for a file by name is already protected, we only need
+>> to disable 'command_requires_full_index' and we are done.
+>>
+>> The 'ls-files' builtin is useful when debugging the index, and some scripts
+>> use it, too. We are not changing the default behavior which expands a sparse
+>> index in order to show all of the cached blobs. Instead, we add a '--sparse'
+>> option that allows us to see the sparse directory entries upon request.
+> ...
+>> Updates in v2
+>> =============
+>>
+>>  * Rebased onto latest ld/sparse-index-blame without issue.
+>>  * Updated the test to use diff-of-diffs instead of a sequence of greps.
+>>  * Added patches that remove the use of 'test-tool read-cache --table' and
+>>    its implementation.
+>>
+>>
+>> Updates in v3
+>> =============
+>>
+>>  * Fixed typo in commit message.
+>>  * Added comments around doing strange things in an ls-files test.
+>>  * Fixed adjacent typo in a test comment.
+>>
+>>
+>> Updates in v4
+>> =============
+>>
+>>  * Rebased on to 'master' now that ld/sparse-index-blame is merged.
+>>  * Change testing strategy to check exact output instead of using 'diff -u'.
+>>  * Updated documentation to state that directories have a trailing slash.
 >
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index 187203e8bb5..0a069281e23 100644
-> --- a/builtin/update-index.c
-> +++ b/builtin/update-index.c
-> @@ -787,6 +787,12 @@ static int refresh(struct refresh_params *o, unsigned int flag)
->  	setup_work_tree();
->  	read_cache();
->  	*o->has_errors |= refresh_cache(o->flags | flag);
-> +	if (has_racy_timestamp(&the_index)) {
-> +		/* For racy timestamps we should set active_cache_changed immediately:
-> +		 * other callbacks may follow for which some of them may reset
-> +		 * active_cache_changed. */
-> +		active_cache_changed |= SOMETHING_CHANGED;
-> +	}
-
-Documentation/CodingGuidelines says:
-
- - Multi-line comments include their delimiters on separate lines from
-   the text.  E.g.
-
-	/*
-	 * A very long
-	 * multi-line comment.
-	 */
-
-The last half-sentence puzzles me, partly because of the word
-"callback", which is an implementation detail of how --refresh and
-other actions are triggered by the update-index command.  Calling
-them "operation" or "action" might be easier to understand.  I dunno.
-
-But more problematic is the word "reset", which at least to me
-implies that the SOMETHING_CHANGED bit may be cleared by them, which
-sounds just wrong and broken.
-
-    ... goes and looks ...
-
-Ah, there are cases where we do clear active_cache_changed when we
-notice that an operation detected an error, to avoid spreading the
-breakage by writing the index file out, and I think that is the
-right thing to do.  Which means that the above patch is not quite
-right.  Perhaps taking all of the above together, something like
-this?
-
-	*o->has_errors |= refresh_cache(o->flags | flag);
-	if (*o->has_errors)
-		active_cache_changed = 0; 
-	else if (has_racy_timestamps(&the_index))
-        	/*
-		 * Even if nothing else has changed, updating the file
-		 * increases the chance that racy timestamps become
-		 * non-racy, helping future run-time performance.
-		 */
-		active_cache_changed |= SOMETHING_CHANGED;
-
-
-> diff --git a/t/t2108-update-index-refresh-racy.sh b/t/t2108-update-index-refresh-racy.sh
-> new file mode 100755
-> index 00000000000..ece1151847c
-> --- /dev/null
-> +++ b/t/t2108-update-index-refresh-racy.sh
-> @@ -0,0 +1,58 @@
-> +#!/bin/sh
-> +
-> +test_description='update-index refresh tests related to racy timestamps'
-> +
-> +. ./test-lib.sh
-> +
-> +reset_mtime() {
-
-Documentation/CodingGuidelines
-
- - We prefer a space between the function name and the parentheses,
-   and no space inside the parentheses. The opening "{" should also
-   be on the same line.
-
-	(incorrect)
-	my_function(){
-		...
-
-	(correct)
-	my_function () {
-		...
-
-> +	test-tool chmtime =$(test-tool chmtime --get .git/fs-tstamp) $1
-
-Even if we know all the existing callers pass a single word argument
-to this function, it would be a good discipline to put double-quotes
-around "$1" to assure the readers that we are future-proofed.
-
-> +}
-> +
-> +update_assert_unchanged() {
-> +	local ts1=$(test-tool chmtime --get .git/index) &&
-> +	git update-index $1 &&
-> +	local ts2=$(test-tool chmtime --get .git/index) &&
-> +	[ $ts1 -eq $ts2 ]
-
-Documentation/CodingGuidelines
-
- - We prefer "test" over "[ ... ]".
-
-> +}
-> +
-> +update_assert_changed() {
-> +	local ts1=$(test-tool chmtime --get .git/index) &&
-> +	test_might_fail git update-index $1 &&
-> +	local ts2=$(test-tool chmtime --get .git/index) &&
-> +	[ $ts1 -ne $ts2 ]
-> +}
-> +
-> +test_expect_success 'setup' '
-> +	touch .git/fs-tstamp &&
-
-Not that it is wrong, but do we need to create such a throw-away
-file inside the .git directory?
-
-When we care only the presence of a path, and not that the path has
-the current timestamp, we prefer not to use "touch".
-
-	>.git/fs-tstamp
-
-I am debating myself which is more appropriate in this case.  A
-mistaken implementation of "touch" could call gettimeofday() and use
-the result to call utimes(), leaving wallclock timestamp in the
-result, but redirecation to create or truncate the path is a more
-guaranteed way to make sure the timestamp comes from the filesystem,
-so it may be more suitable for our needs here.
-
-> +	test-tool chmtime -1 .git/fs-tstamp &&
-> +	echo content >file &&
-> +	reset_mtime file &&
-> +
-> +	git add file &&
-> +	git commit -m "initial import"
-> +'
-> +
-> +test_expect_success '--refresh has no racy timestamps to fix' '
-> +	reset_mtime .git/index &&
-> +	test-tool chmtime +1 .git/index &&
-> +	update_assert_unchanged --refresh
-> +'
-> +
-> +test_expect_success '--refresh should fix racy timestamp' '
-> +	reset_mtime .git/index &&
-> +	update_assert_changed --refresh
-> +'
-> +
-> +test_expect_success '--really-refresh should fix racy timestamp' '
-> +	reset_mtime .git/index &&
-> +	update_assert_changed --really-refresh
-> +'
-> +
-> +test_expect_success '--refresh should fix racy timestamp even if needs update' '
-> +	echo content2 >file &&
-> +	reset_mtime file &&
-> +	reset_mtime .git/index &&
-> +	update_assert_changed --refresh
-> +'
-> +
-> +test_done
+> This version looks good to me:
 >
-> base-commit: 597af311a2899bfd6640b9b107622c5795d5f998
+> Reviewed-by: Elijah Newren <newren@gmail.com>
+
+Yup, they looked good to me too.
+
+Thanks.
