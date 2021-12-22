@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAE0DC433EF
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 04:13:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E18CC433F5
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 04:13:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242321AbhLVEN0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 23:13:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35994 "EHLO
+        id S242304AbhLVEN1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 23:13:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242268AbhLVENR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 23:13:17 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBBA5C061756
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 20:13:14 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id b186-20020a1c1bc3000000b00345734afe78so749571wmb.0
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 20:13:14 -0800 (PST)
+        with ESMTP id S242297AbhLVENT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 23:13:19 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF3DEC06175A
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 20:13:15 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id s1so2143221wrg.1
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 20:13:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4FMi1n8tjUkOdHThgoPnhGZ2kiYwEPCRmGRqo1KLGrI=;
-        b=BWefyd3r++ZV3spk5p+jhW6F1E2USQ8vyscSFvO1OTcWtW61DDGok92vtOcyjpRMnE
-         AdnjkfqiBoe5eDnIkM4Eb/WIT9NcIOxejbyRyRbg2n5t9dy5B8Ct2nOI8aFtOEMLc/do
-         heaVen05eokXCDe1XEBVjN2DxQOwVKsBXylucr87d4xjaqVhsvZzKE1cYfcniFc3RpwU
-         9FIeMDrDlZVtyUM8rOtIsfDTk9I0I51GNKFYaBnzx3nLHSeZalFqVbO2VEOj1LmHp2rO
-         CcB8M12kJD7x6Ke2HeLl4YOx1xfAy/5GQlRfyQcKVYIvShH7n/VwAC0BceGHp/5+Byvl
-         PgDg==
+        bh=dRhNAt4xQFQap+17uvdUV28iVMg0ND3HES4QWesb+Ak=;
+        b=Fgr16ag9i0ZGQRRaA0YFcGf1doPssmiZKKjBXmDM/TdBiDKK8tQaWWlt6DvUUmSGax
+         x69d7gUKuh8bQKjQoASYrYq1DuEgP8b3DabuKAnpnFClu2SKVq8SHqOCEv+RR5lO4ves
+         s8KNr4jmReyWx+ywBEs5t+Y/bj8b0SbL1l4recrt+jyD3OwlITTOt0rl12w437nQTLZh
+         dpLwlgeb/cdKjnBG6sbq+CfBnrSbu6OeDJNpDNns8MxEOWtjehi1BB+FVln/jxpsjtmL
+         MStSM0BBMXFAb8/WrZsaz+4FTCzh0+2TVXbVz3nF7YORtoiqKppADdr5/hYGZS/N/3A/
+         Zerg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4FMi1n8tjUkOdHThgoPnhGZ2kiYwEPCRmGRqo1KLGrI=;
-        b=5K87UpOqChAnHPV3UIUN1K8lGd/Uy5aawEtjYuXVL1N2RZtDWZnU5TKGTSfBNY/+Tm
-         NKB62xd4q6yljNr9IjcRHUa9vrCNIqja5IA/XNPEg6hpcjz0Cg8JTSXqXkOq5Xwqhngi
-         0izsgQymfWt8bVl7AfZ+BXygHMFnxD0pFQc5ilBnNZnHliHevuqvpgwxL1VJG+542P41
-         zs7tquGygnLLlputoJFbF8jBRUd1Bqo0jh3/pGBZwgMthpjfnf+ptkL04hBgj+JwtPx9
-         AHwo4IX3OpiHj2JBS1ZvNraeIL9Vi+TZldLtxEgE4x8L5Acnp9EJtX4dGg9k4tqs1c/z
-         JC2A==
-X-Gm-Message-State: AOAM533TVO9VyYcHHWPHERUeCuu9qo8sptrRiUYvoiGYtkeRWABm8oxq
-        aybnOGzCoE/IowxaesfN7M8Ahf+iU3o9Bg==
-X-Google-Smtp-Source: ABdhPJxRNaWnuOtkx+i6ubWCQ/5Ia6fUy5Zto3rm8yBx3SZQFgaDxkY93Iyw8hHcT0KRXRiP7gj/Qg==
-X-Received: by 2002:a05:600c:3657:: with SMTP id y23mr799336wmq.160.1640146393339;
-        Tue, 21 Dec 2021 20:13:13 -0800 (PST)
+        bh=dRhNAt4xQFQap+17uvdUV28iVMg0ND3HES4QWesb+Ak=;
+        b=L3ADz413tNE7wUkt6BN1ltY+tlSxgH0oxoz+UvUK9+5n3Q/iz5rDcu2b4wvruKkR8X
+         n0OBLB1MdVVgnAe585mygdKc3CYgGGYpdZZm15nyrQCg2qJduSM1vnyXvu+LvEy9arPv
+         z+3z6R2eHk/YTGm5pStMFrv+RG5BCJTfugqGwkP1c+Wd6tizl0q5LI5KgJ0UvsIN6gG+
+         KWhxzaw26N9wSZSM1u3U0WMQpYsdugRCo0rxOa/dRGxTpveeHL6BPO5PlhBhKpU+gTrs
+         h/apr3WoYwx34VxHfrGHv/bqT3mjXtjHc0BDkl26elTPxzPjrYhQZw63PoS/20DaetJc
+         XLLQ==
+X-Gm-Message-State: AOAM5311eOGxCxLc0E7nQkcxF+6YvB+JEotaiDYzyQqElt7Qu6r/FW/0
+        zd9TBg6EIO4bc4mOvNorxTIfimAuIivYJQ==
+X-Google-Smtp-Source: ABdhPJxnIwi6FWmW6ygDFK+lbLX3Gn2FLisgudZYkBPuYWLAtWV2BF0vNonohfeok52OY1kKn5aWaA==
+X-Received: by 2002:adf:a352:: with SMTP id d18mr721832wrb.317.1640146394163;
+        Tue, 21 Dec 2021 20:13:14 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b1sm749650wrd.92.2021.12.21.20.13.12
+        by smtp.gmail.com with ESMTPSA id b1sm749650wrd.92.2021.12.21.20.13.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 20:13:12 -0800 (PST)
+        Tue, 21 Dec 2021 20:13:13 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jiang Xin <worldhello.net@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 08/10] cat-file: correct and improve usage information
-Date:   Wed, 22 Dec 2021 05:13:01 +0100
-Message-Id: <patch-v5-08.10-16b6bb8aaf2-20211222T041050Z-avarab@gmail.com>
+Subject: [PATCH v5 09/10] object-name.c: don't have GET_OID_ONLY_TO_DIE imply *_QUIETLY
+Date:   Wed, 22 Dec 2021 05:13:02 +0100
+Message-Id: <patch-v5-09.10-47543c57135-20211222T041050Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1146.gb52885e7c44
 In-Reply-To: <cover-v5-00.10-00000000000-20211222T041050Z-avarab@gmail.com>
 References: <cover-v4-00.10-00000000000-20211208T123151Z-avarab@gmail.com> <cover-v5-00.10-00000000000-20211222T041050Z-avarab@gmail.com>
@@ -69,134 +69,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the usage output emitted on "git cat-file -h" to group related
-options, making it clear to users which options go with which other
-ones.
+Stop having GET_OID_ONLY_TO_DIE imply GET_OID_QUIETLY in
+get_oid_with_context_1().
 
-The new output is:
+The *_DIE flag was added in 33bd598c390 (sha1_name.c: teach lookup
+context to get_sha1_with_context(), 2012-07-02), and then later
+tweaked in 7243ffdd78d (get_sha1: avoid repeating ourselves via
+ONLY_TO_DIE, 2016-09-26).
 
-    Check object existence or emit object contents
-        -e                    check if <object> exists
-        -p                    pretty-print <object> content
+Everything in that commit makes sense, but only for callers that
+expect to fail in an initial call to get_oid_with_context_1(), e.g. as
+"git show 0017" does via handle_revision_arg(), and then would like to
+call get_oid_with_context_1() again via this
+maybe_die_on_misspelt_object_name() function.
 
-    Emit [broken] object attributes
-        -t                    show object type (one of 'blob', 'tree', 'commit', 'tag', ...)
-        -s                    show object size
-        --allow-unknown-type  allow -s and -t to work with broken/corrupt objects
-
-    Batch objects requested on stdin (or --batch-all-objects)
-        --batch[=<format>]    show full <object> or <rev> contents
-        --batch-check[=<format>]
-                              like --batch, but don't emit <contents>
-        --batch-all-objects   with --batch[-check]: ignores stdin, batches all known objects
-
-    Change or optimize batch output
-        --buffer              buffer --batch output
-        --follow-symlinks     follow in-tree symlinks
-        --unordered           do not order objects before emitting them
-
-    Emit object (blob or tree) with conversion or filter (stand-alone, or with batch)
-        --textconv            run textconv on object's content
-        --filters             run filters on object's content
-        --path blob|tree      use a <path> for (--textconv | --filters ); Not with 'batch'
-
-The old usage was:
-
-    <type> can be one of: blob, tree, commit, tag
-        -t                    show object type
-        -s                    show object size
-        -e                    exit with zero when there's no error
-        -p                    pretty-print object's content
-        --textconv            for blob objects, run textconv on object's content
-        --filters             for blob objects, run filters on object's content
-        --batch-all-objects   show all objects with --batch or --batch-check
-        --path <blob>         use a specific path for --textconv/--filters
-        --allow-unknown-type  allow -s and -t to work with broken/corrupt objects
-        --buffer              buffer --batch output
-        --batch[=<format>]    show info and content of objects fed from the standard input
-        --batch-check[=<format>]
-                              show info about objects fed from the standard input
-        --follow-symlinks     follow in-tree symlinks (used with --batch or --batch-check)
-        --unordered           do not order --batch-all-objects output
-
-While shorter, I think the new one is easier to understand, as
-e.g. "--allow-unknown-type" is grouped with "-t" and "-s", as it can
-only be combined with those options. The same goes for "--buffer",
-"--unordered" etc.
+In the subsequent commit we'll add a new caller that expects to call
+this only once, but who would still like to have all the error
+messaging that GET_OID_ONLY_TO_DIE gives it, in addition to any
+regular errors.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/cat-file.c | 49 +++++++++++++++++++++++++++-------------------
- 1 file changed, 29 insertions(+), 20 deletions(-)
+ object-name.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 895292074ae..b5b130d79c1 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -666,35 +666,44 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		NULL
- 	};
- 	const struct option options[] = {
--		OPT_GROUP(N_("<type> can be one of: blob, tree, commit, tag")),
--		OPT_CMDMODE('t', NULL, &opt, N_("show object type"), 't'),
--		OPT_CMDMODE('s', NULL, &opt, N_("show object size"), 's'),
-+		/* Simple queries */
-+		OPT_GROUP(N_("Check object existence or emit object contents")),
- 		OPT_CMDMODE('e', NULL, &opt,
--			    N_("exit with zero when there's no error"), 'e'),
--		OPT_CMDMODE('p', NULL, &opt, N_("pretty-print object's content"), 'p'),
--		OPT_CMDMODE(0, "textconv", &opt,
--			    N_("for blob objects, run textconv on object's content"), 'c'),
--		OPT_CMDMODE(0, "filters", &opt,
--			    N_("for blob objects, run filters on object's content"), 'w'),
--		OPT_CMDMODE(0, "batch-all-objects", &opt,
--			    N_("show all objects with --batch or --batch-check"), 'b'),
--		OPT_STRING(0, "path", &force_path, N_("blob"),
--			   N_("use a specific path for --textconv/--filters")),
-+			    N_("check if <object> exists"), 'e'),
-+		OPT_CMDMODE('p', NULL, &opt, N_("pretty-print <object> content"), 'p'),
-+
-+		OPT_GROUP(N_("Emit [broken] object attributes")),
-+		OPT_CMDMODE('t', NULL, &opt, N_("show object type (one of 'blob', 'tree', 'commit', 'tag', ...)"), 't'),
-+		OPT_CMDMODE('s', NULL, &opt, N_("show object size"), 's'),
- 		OPT_BOOL(0, "allow-unknown-type", &unknown_type,
- 			  N_("allow -s and -t to work with broken/corrupt objects")),
--		OPT_BOOL(0, "buffer", &batch.buffer_output, N_("buffer --batch output")),
--		OPT_CALLBACK_F(0, "batch", &batch, "format",
--			N_("show info and content of objects fed from the standard input"),
-+		/* Batch mode */
-+		OPT_GROUP(N_("Batch objects requested on stdin (or --batch-all-objects)")),
-+		OPT_CALLBACK_F(0, "batch", &batch, N_("format"),
-+			N_("show full <object> or <rev> contents"),
- 			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
- 			batch_option_callback),
--		OPT_CALLBACK_F(0, "batch-check", &batch, "format",
--			N_("show info about objects fed from the standard input"),
-+		OPT_CALLBACK_F(0, "batch-check", &batch, N_("format"),
-+			N_("like --batch, but don't emit <contents>"),
- 			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
- 			batch_option_callback),
-+		OPT_CMDMODE(0, "batch-all-objects", &opt,
-+			    N_("with --batch[-check]: ignores stdin, batches all known objects"), 'b'),
-+		/* Batch-specific options */
-+		OPT_GROUP(N_("Change or optimize batch output")),
-+		OPT_BOOL(0, "buffer", &batch.buffer_output, N_("buffer --batch output")),
- 		OPT_BOOL(0, "follow-symlinks", &batch.follow_symlinks,
--			 N_("follow in-tree symlinks (used with --batch or --batch-check)")),
-+			 N_("follow in-tree symlinks")),
- 		OPT_BOOL(0, "unordered", &batch.unordered,
--			 N_("do not order --batch-all-objects output")),
-+			 N_("do not order objects before emitting them")),
-+		/* Textconv options, stand-ole*/
-+		OPT_GROUP(N_("Emit object (blob or tree) with conversion or filter (stand-alone, or with batch)")),
-+		OPT_CMDMODE(0, "textconv", &opt,
-+			    N_("run textconv on object's content"), 'c'),
-+		OPT_CMDMODE(0, "filters", &opt,
-+			    N_("run filters on object's content"), 'w'),
-+		OPT_STRING(0, "path", &force_path, N_("blob|tree"),
-+			   N_("use a <path> for (--textconv | --filters ); Not with 'batch'")),
- 		OPT_END()
- 	};
+diff --git a/object-name.c b/object-name.c
+index fdff4601b2c..d44a8f3a7ca 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -1795,9 +1795,6 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
+ 	const char *cp;
+ 	int only_to_die = flags & GET_OID_ONLY_TO_DIE;
+ 
+-	if (only_to_die)
+-		flags |= GET_OID_QUIETLY;
+-
+ 	memset(oc, 0, sizeof(*oc));
+ 	oc->mode = S_IFINVALID;
+ 	strbuf_init(&oc->symlink_path, 0);
+@@ -1932,7 +1929,7 @@ void maybe_die_on_misspelt_object_name(struct repository *r,
+ {
+ 	struct object_context oc;
+ 	struct object_id oid;
+-	get_oid_with_context_1(r, name, GET_OID_ONLY_TO_DIE,
++	get_oid_with_context_1(r, name, GET_OID_ONLY_TO_DIE | GET_OID_QUIETLY,
+ 			       prefix, &oid, &oc);
+ }
  
 -- 
 2.34.1.1146.gb52885e7c44
