@@ -2,146 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67ABEC433F5
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 01:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E3F1C433F5
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 01:11:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240081AbhLVBGC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Dec 2021 20:06:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51014 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230433AbhLVBGB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Dec 2021 20:06:01 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C7E8C061574
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 17:06:01 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id o6so2012849edc.4
-        for <git@vger.kernel.org>; Tue, 21 Dec 2021 17:06:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=KUuwaxXWMha9puqWI5MJ1/oP+E701GkklLmgF9x27z0=;
-        b=JZmS9h4i7JhtJny/5oSYl/IdQgqes7orkIuTaIkINo0OJejpZJSq77sDQZ0p7q5BjJ
-         y8LgaV0h7SHderl5ptKjlL/wZGBcrshgIBQ0xoUnqhS19gqcMPo1IQDx0T7t8m+wwNK2
-         k+b1EN25a1Cbn6Ku0jdCZ1y2u9m2No7h+Vqt0D3NboRiFSvSSDcNHdVjPZ1gApUkuJib
-         4nCR7X/x1Sj94GM+6a07t0UrVLPe9cvsXYTXxAeVX4w/AB/vZn4k+IpgEmX/e6mux+2f
-         Ax2hoU/7uJzMC7sWx9ZckqCv/XrmSQKGE77PjzNGiKNOmOPQ7Dm+KCYK7Zg7Gc6lPEBI
-         XIIg==
+        id S239729AbhLVBLw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Dec 2021 20:11:52 -0500
+Received: from mail-pl1-f172.google.com ([209.85.214.172]:37611 "EHLO
+        mail-pl1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230433AbhLVBLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Dec 2021 20:11:51 -0500
+Received: by mail-pl1-f172.google.com with SMTP id j13so612779plx.4
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 17:11:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=KUuwaxXWMha9puqWI5MJ1/oP+E701GkklLmgF9x27z0=;
-        b=pwi1e/j/iwRLS/lj4vin55Ntdxbvbpn6rUrOjUtLdghkmFml5VNbH2DZgCUnyzmus+
-         oPyikHt0NpClMNoSl6WF4Wh4UDZKSmiDiaX7zVjaXOQQ9DlB4LcuhunBRyVpIWzZC091
-         1Pf3Fgp0NcXvpfOW58d+VNeUFhQWgjoTsQNn3XrEXVIeoWKOo7XSXwawKcvtYFzkoYkR
-         FTdUj8J77+AHmXMzv3AHmZfVuYI+keoblVGi2uj48hn8wmRu31xRXLpqbYcxszjm8O5H
-         ahmWDFxFU4CM4Tp60+wYnXs8V3ChIzwR7xsTsw+wxz1pD3Y9yOIIoP43Zj4PRz/YCEvW
-         QWbQ==
-X-Gm-Message-State: AOAM530nbgGmRcQplz6QzqbvoKqXcyve1c1IbOWgb9R2TOfca/DkMcPK
-        Qf2Gj9EEgaLgueXvvNgDC6oPEHV5c4o=
-X-Google-Smtp-Source: ABdhPJw2/+JtOFnTceHTQJodJOOKzyw7FhUuoWQpLUy7/V52LVCQDISUZ1wQI7ZW1QeRN1JJPYlnSQ==
-X-Received: by 2002:a50:ed01:: with SMTP id j1mr752470eds.126.1640135159686;
-        Tue, 21 Dec 2021 17:05:59 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id k21sm120648ejv.178.2021.12.21.17.05.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 17:05:59 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1mzq4s-0011gl-J3;
-        Wed, 22 Dec 2021 02:05:58 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Neeraj Singh <nksingh85@gmail.com>
-Subject: Re: [PATCH 9/9] doc/diff-options: explain the new --remerge-diff
- option
-Date:   Wed, 22 Dec 2021 00:47:29 +0100
-References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
-        <4f21969e35724ffac6938beb9e089a970f90c41a.1640109949.git.gitgitgadget@gmail.com>
-        <211221.86zgotprz3.gmgdl@evledraar.gmail.com>
-        <CABPp-BHDJMecupic=ybVhzZbRC5=WmY616JQdbfaqw_1A5sMHA@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <CABPp-BHDJMecupic=ybVhzZbRC5=WmY616JQdbfaqw_1A5sMHA@mail.gmail.com>
-Message-ID: <211222.86mtktphxl.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=M/RwkP7dWq1Y7buTzYJbzBKtpHqgfqtvcd6fFPDgEis=;
+        b=CKNIFWw8YjkEbk+QX0kr068H7Iq3/2em3GR5jm4QYLW8nyPMfql2SauKAsaafV88Lg
+         lu8RzQnY3gCiEld0VWmVKou2GkpasjguKiT4nS925C9UliUcULfji4ETTzYrBgmCs2s4
+         NayGW1Kphqs1ic42U1CTMoVaRPf3En4LLxL5RtHgNuvfTb5kyUbt2h+v8W80A9+wgXZl
+         AsdzhAO9s9WcXRCoCitqWl+CK0BfasCryBWyW51hd7RQ7h5GnsPDDWoA1bIT+ZC6fRxg
+         TpfaC944oWAxnJSLdmrB1lURrBasvY5LX/jz7vMEq7vCcThlTeKTpNUH2HFhWe1vXK1E
+         vcrg==
+X-Gm-Message-State: AOAM530Fig+rittilRPQaeoWBuOHFt0FwfaqXYGhWXcp5q82orOZZRwO
+        YyE/hXpN1bd58NfXoHBIsW0TIaqcLkks/92AOvk=
+X-Google-Smtp-Source: ABdhPJz3/EZ4kxNq6W9DAUGLmhh2szT57O6NvONyD4hKEc+YPa5A4lqz32nijT6hW8l8YAqr9gAaVlOXUZmVNlUqxlc=
+X-Received: by 2002:a17:902:b942:b0:148:a2f7:9d72 with SMTP id
+ h2-20020a170902b94200b00148a2f79d72mr853597pls.145.1640135511114; Tue, 21 Dec
+ 2021 17:11:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
+ <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com> <22896e9bb04cdf022cc13468d60808df69a6854f.1640114048.git.gitgitgadget@gmail.com>
+In-Reply-To: <22896e9bb04cdf022cc13468d60808df69a6854f.1640114048.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 21 Dec 2021 20:11:40 -0500
+Message-ID: <CAPig+cRi2SA6+poaemY8XR5ZoMweuztfiENpcRVOCnukg3Qa7w@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] config: add repo_config_set_worktree_gently()
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
+        Sean Allred <allred.sean@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Dec 21 2021, Elijah Newren wrote:
-
-> On Tue, Dec 21, 2021 at 1:29 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->>
->>
->> On Tue, Dec 21 2021, Elijah Newren via GitGitGadget wrote:
->>
->> > From: Elijah Newren <newren@gmail.com>
->> >
->> > Signed-off-by: Elijah Newren <newren@gmail.com>
->> > ---
->> >  Documentation/diff-options.txt | 8 ++++++++
->> >  1 file changed, 8 insertions(+)
->> >
->> > diff --git a/Documentation/diff-options.txt b/Documentation/diff-optio=
-ns.txt
->> > index c89d530d3d1..b05f1c9f1c9 100644
->> > --- a/Documentation/diff-options.txt
->> > +++ b/Documentation/diff-options.txt
->> > @@ -64,6 +64,14 @@ ifdef::git-log[]
->> >       each of the parents. Separate log entry and diff is generated
->> >       for each parent.
->> >  +
->> > +--diff-merges=3Dremerge:::
->> > +--diff-merges=3Dr:::
->> > +--remerge-diff:::
->> > +     With this option, two-parent merge commits are remerged to
->> > +     create a temporary tree object -- potentially containing files
->> > +     with conflict markers and such.  A diff is then shown between
->> > +     that temporary tree and the actual merge commit.
->> > ++
->> >  --diff-merges=3Dcombined:::
->> >  --diff-merges=3Dc:::
->> >  -c:::
->>
->> This & 5/9 would I think be better squashed into their respective "main"
->> patches.
+On Tue, Dec 21, 2021 at 2:14 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> The previous change added upgrade_to_worktree_config() to assist
+> creating a worktree-specific config for the first time. However, this
+> requires every config writer to care about that upgrade before writing
+> to the worktree-specific config. In addition, callers need to know how
+> to generate the name of the config.worktree file and pass it to the
+> config API.
 >
-> I presume you mean the "main" patch for this one is 8/9.  I was trying
-> to find a way to break up that large patch, but this is pretty small
-> so...sure I'll squash it in.
+> To assist, create a new repo_config_set_worktree_gently() method in the
+> config API that handles the upgrade_to_worktree_config() method in
+> addition to assigning the value in the worktree-specific config. This
+> will be consumed by an upcoming change.
+
+I still feel very uncomfortable about this function conflating two
+very different concerns (upgrading the repository to per-worktree
+config, and the simple setting of a config variable). Since I've
+already explained my discomfort and suggested alternatives several
+times during this discussion (most recently at [1]), I don't have all
+that much more to say. However, I do have a few comments...
+
+First, I would have no problem if this function "did the right thing"
+where "the right thing" means correctly choosing between .git/config
+and .git/config.worktree depending upon whether or not
+`extensions.worktreeConfig` is set, and only that. It should not
+perform any sort of repository upgrade on its own. Doing it this way
+should satisfy your major concern of relieving callers from having to
+figure out the correct configuration file name.
+
+Second, if you absolutely must have this function, as implemented, as
+part of the public API (despite my protests), please give it a name
+which is sufficiently different from the other "config setter"
+functions so that people won't be confused into thinking it's just
+another "setter" without realizing that calling it has repository-wide
+consequences.
+
+Third, I don't have an objection if you want to make this function
+private (static) to builtin/sparse-checkout.c, thus omitting it from
+the public API. This way you can have its convenience where you want
+it, and we can delay finishing this discussion until such time that it
+becomes apparent that other modules want its convenience, as well, if
+that ever comes about.
+
+[1]: https://lore.kernel.org/git/CAPig+cRombN-8g0t7Hs9qQypJoY41gK3+kvypH4D0G6EB4JgbQ@mail.gmail.com/
+
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+> diff --git a/config.c b/config.c
+> index 9c9eef16018..81f3a689c11 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -21,6 +21,7 @@
+>  #include "dir.h"
+>  #include "color.h"
+>  #include "refs.h"
+> +#include "worktree.h"
 >
-> What are you referring to as the "main" patch for 5/9, though?  It
-> only seems related to 6/9 and 7/9 to me, but I very deliberately split
-> those patches off and don't want to confuse them with unrelated
-> changes.  I disagree with combining 5/9 with either of those.
-
-I just gave it a quick initial skim.
-
-I have sometimes found it a bit harder to review your patches due to
-over-splitting.
-
-E.g. (went back and looked) here tmp_objdir_discard_objects() is
-introduced in 1/9 but used in 8/9. "path_messages" is then introduced in
-5/9 and used in 8/9, no?
-
-Anyway, just a bit of feedback. FWIW not just bikeshedding. I do find
-myself stopping at 1/9, paging to 2/9, searching for the function, not
-there, checking 3/9 etc.
-
-I realize this is a bit of a stones & glass houses comment, but I find
-it a bit easier to review things when a patch is larger v.s. having it
-split up in a way where preceding steps don't do anything yet except
-wait for use by a subsequent patch.
-
-0.02 etc.
+>  struct config_source {
+>         struct config_source *prev;
+> @@ -2880,6 +2881,15 @@ int git_config_set_gently(const char *key, const char *value)
+>         return git_config_set_multivar_gently(key, value, NULL, 0);
+>  }
+>
+> +int repo_config_set_worktree_gently(struct repository *r,
+> +                                   const char *key, const char *value)
+> +{
+> +       return upgrade_to_worktree_config(r) ||
+> +              git_config_set_multivar_in_file_gently(
+> +                        repo_git_path(r, "config.worktree"),
+> +                        key, value, NULL, 0);
+> +}
+> +
+>  void git_config_set(const char *key, const char *value)
+>  {
+>         repo_config_set(the_repository, key, value);
+> diff --git a/config.h b/config.h
+> index 5531fc018e3..b05c51b3528 100644
+> --- a/config.h
+> +++ b/config.h
+> @@ -253,6 +253,13 @@ void git_config_set_in_file(const char *, const char *, const char *);
+>
+>  int git_config_set_gently(const char *, const char *);
+>
+> +/**
+> + * Write a config value into the config.worktree file for the current
+> + * worktree. This will initialize extensions.worktreeConfig if necessary,
+> + * which might trigger some changes to the root repository's config file.
+> + */
+> +int repo_config_set_worktree_gently(struct repository *, const char *, const char *);
+> +
+>  /**
+>   * write config values to `.git/config`, takes a key/value pair as parameter.
+>   */
+> --
