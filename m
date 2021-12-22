@@ -2,90 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D59C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 05:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E1CC433F5
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 06:05:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242632AbhLVF6r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 00:58:47 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53461 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242630AbhLVF6r (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 00:58:47 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 59B46FC8E7;
-        Wed, 22 Dec 2021 00:58:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RAq7Vmm2tbY8fFadKfj5SEnswAGNsk6kJVhvD8
-        lQ0QM=; b=GSxYAVVDHuwYu5wD7B5WuFyxZFBEr6qJXo3UWLj65pjdie2b1TUCVJ
-        2a1Q6maKTPkw+wNccojQojBVFNPBm/5SnZXs62jqDemw0vqBBUvEHueDi5mcDL/T
-        +5Hyxiaa0aNrkoH3A1mlQxV80AkJc6IWdKbGMiB6IIXtldgibF62I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 50804FC8E6;
-        Wed, 22 Dec 2021 00:58:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B2765FC8E5;
-        Wed, 22 Dec 2021 00:58:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 2/2] refs: set the repo in debug_ref_store.base
-References: <pull.1163.git.git.1640090038.gitgitgadget@gmail.com>
-        <75e5392032dbdbdedf8a2b76a7098e4dc1133d82.1640090038.git.gitgitgadget@gmail.com>
-Date:   Tue, 21 Dec 2021 21:58:44 -0800
-In-Reply-To: <75e5392032dbdbdedf8a2b76a7098e4dc1133d82.1640090038.git.gitgitgadget@gmail.com>
-        (Han-Wen Nienhuys via GitGitGadget's message of "Tue, 21 Dec 2021
-        12:33:58 +0000")
-Message-ID: <xmqqtuf1kwob.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S239137AbhLVGFM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 01:05:12 -0500
+Received: from mail-pf1-f173.google.com ([209.85.210.173]:36779 "EHLO
+        mail-pf1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239092AbhLVGFL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 01:05:11 -0500
+Received: by mail-pf1-f173.google.com with SMTP id v13so1416799pfi.3
+        for <git@vger.kernel.org>; Tue, 21 Dec 2021 22:05:11 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Vj+R1Fi/l0QZSL9aqndVfC3j3fzB6iVpjkmrbQsqZIs=;
+        b=4wRQYRDv/+MjhiqEjTPEKMZNZOOIRmhf0iBHh2MErFOWFfrjNUVSXL0Wslsba39y93
+         l4sb660eTnnBD/+P0aId6WvNRouT8WPGUpWLV+t93h1v5MS+xRROmDve8GaCvEbBwhyq
+         WSZN1v2L0hUvSCIGEdcqetyXigtODpxaed6KCSXd+zHWnF6aln7nwSnOmzuAKOA7Zdq0
+         7JHzmll8gzaKwXsZuXDIhcEd3StqQJaNfDW2X2FW5A2RCLhKc1jNJ0wrfTEAwzqYPIBm
+         g1T32AfvYxJgBfnABLxVotpIkfBaHQjOq+mMS9ywnrC6JgJcLDbCpvyjk8yoLeLW6Nmz
+         MDMg==
+X-Gm-Message-State: AOAM53078VuiB+ZHKziHGdsymCONkNhKSiefcUYbW93w18YBOREfu7ze
+        xDvn9cPsnZwWgTo0RD9NyHzfwiWGxPhfRoChm7y7MZgoW5T5Ug==
+X-Google-Smtp-Source: ABdhPJx4H0yh1W2P1aGsYn5bPPrksbmz88cmKmOK1fCte9v3Z1M+O+sNsW6M5OmsN4GYeQ4BVLTTaFC1e3rdgnWIDmM=
+X-Received: by 2002:a05:6a00:230b:b0:4ae:d8b2:dc0c with SMTP id
+ h11-20020a056a00230b00b004aed8b2dc0cmr1548110pfh.67.1640153111051; Tue, 21
+ Dec 2021 22:05:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3975CE22-62EC-11EC-967D-CB998F0A682E-77302942!pb-smtp2.pobox.com
+References: <pull.1101.git.1640015844.gitgitgadget@gmail.com> <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 22 Dec 2021 01:05:00 -0500
+Message-ID: <CAPig+cTxS54QyAjHB3JhqNndKiBdxyt_ROtOnxKt0VGswJj=8A@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] Sparse checkout: fix bug with worktree of bare repo
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
+        Sean Allred <allred.sean@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Dec 21, 2021 at 2:14 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> The root cause is that 'git sparse-checkout init' writes to the worktree
+> config without checking that core.bare might need to be set. This only
+> matters when the base repository is bare, since creating the config.worktree
+> file and enabling extensions.worktreeConfig will cause Git to treat the base
+> repo's core.bare=false as important for this worktree.
 
-> From: Han-Wen Nienhuys <hanwen@google.com>
+I'm having trouble understanding what this is trying to say. Did you
+mean "true" rather than "false" in the final sentence? Anyhow, I think
+this description is somewhat stale. A more succinct way to describe
+the issue is that `git sparse-checkout init` wasn't correctly
+upgrading the repo to per-worktree configuration, with the result that
+the `core.bare=true` setting of a bare repo bled into
+worktree-specific configuration, which caused a bit of havoc. This
+patch series fixes `init` to upgrade the repo properly.
+
+> The critical bits are in Patches 3, 4, and 5 which introduce a helper for
+> upgrading to worktree config, a helper to write to worktree config, and then
+> consume that config helper in builtin/sparse-checkout.c and sparse-index.c.
 >
-> This is for consistency with the files backend.
-
-Hmmmm.  Could you explain what it exactly means?
-
-I can see that files_ref_store structure has the .repo member and
-files_ref_store_create() uses it to remember which repository the
-ref store is for, but that is an implementation detail that is not
-exposed outside the files backend, isn't it?
-
-To put it differently, what is broken with the current code that
-leaves the .repo member in refs->base uninitialized?  We are
-presumably helping the caller that wants to know the repository the
-ref store belongs to via this pointer with this change---what is
-that caller?
-
-> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-> ---
->  refs/debug.c | 1 +
->  1 file changed, 1 insertion(+)
+> Update in v2
+> ============
 >
-> diff --git a/refs/debug.c b/refs/debug.c
-> index cf6ad36fbb0..136cfd7c700 100644
-> --- a/refs/debug.c
-> +++ b/refs/debug.c
-> @@ -26,6 +26,7 @@ struct ref_store *maybe_debug_wrap_ref_store(const char *gitdir, struct ref_stor
->  	be_copy->name = store->be->name;
->  	trace_printf_key(&trace_refs, "ref_store for %s\n", gitdir);
->  	res->refs = store;
-> +	res->base.repo = store->repo;
->  	base_ref_store_init((struct ref_store *)res, be_copy);
->  	return (struct ref_store *)res;
->  }
+>  * Eric correctly pointed out that I was writing core.bare incorrectly. It
+>    should move out of the core config and into the core repository's
+>    worktree config.
+>  * Patch 3 is new, separating the "upgrade" logic out of config.c, but it is
+>    still called by the config helper to make it painless to write worktree
+>    config.
 
-Thanks.
+It's good to see the "upgrade to per-worktree config" split out to a
+standalone single-purpose utility function. I left several review
+comments in that patch, the most important of which is that the
+implementation is incomplete (because it doesn't relocate
+`core.worktree`), thus it can leave the repo in an inconsistent and
+broken state. Several of the other review comments are actionable, as
+well.
+
+I'm still concerned about and uncomfortable with the implementation of
+the new repo_config_set_worktree_gently(), but I've left ample
+comments about that elsewhere in this discussion, so I needn't go into
+it here.
+
+Thanks for working on this.
