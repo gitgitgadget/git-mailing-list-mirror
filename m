@@ -2,132 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4E60C433EF
-	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 20:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22EEAC433EF
+	for <git@archiver.kernel.org>; Wed, 22 Dec 2021 20:51:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237829AbhLVU12 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 15:27:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58844 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229987AbhLVU11 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 15:27:27 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6499FC061574
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 12:27:27 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id u37-20020a632365000000b0033b4665d66cso1982253pgm.18
-        for <git@vger.kernel.org>; Wed, 22 Dec 2021 12:27:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=CYN64+Yvb5hIXPCNVTiQOVqRT+EXZ5gt0kU19jVqREY=;
-        b=Y7Dj7/zG0Ky0s5smIIWdgL730uSphyy69xHwFTojRtgUyZvAXLRgsUw0GFTOFfac56
-         prf3D8Cqv6hd982679hIeumOx9GxgZWTxbgpJlkXfCCUCEyjjdxPisarNL9IRtOibnI0
-         7mrQzJMcUnIbfPnLkQpTUJ2EV0hCw0t5qtNq1Hc6fPimixlNNST/XjIB0KOOFRSnyBtn
-         NImZNv+Qkn6a2CrJfbmYvxM49BaNKkmAYX+WisXbeLv+KiSsld7IsmtKnqVfC8diAFxI
-         HHXWIK7QAzR0dlbuDfdx1JPXsd8YUEEzs/IIy1xuwGnXe/RcibhzwgZ5ax58eRya+fu+
-         1NTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=CYN64+Yvb5hIXPCNVTiQOVqRT+EXZ5gt0kU19jVqREY=;
-        b=MsAYGB2d5U3cREToxs7pA0Q68zDwNDxi2zww/65/ydQ+gqf/mCyIi54mmHRRnog+Di
-         YnQ9xs/TJPVoRrIYHMKLzWEtNljNevIp+xthm85pY5gfKFir4CQvF+5yAy6wvcOt1rTc
-         m4IX/bJgJeWOEAFr4eiZRV/32H3DoN8cwu8PwBhwEreKsy1CcvcVP3S5VROXiYv1Etml
-         xq6I+NDgGNJ8K/1hG6+CS2ya662gLgAWl4FinXfCeJPbyVLQolfTCHhoLYRbVukHwXvu
-         y/jjASPmx2fxJXTZ2hN8D0JXZhy5frlT5uEFEDi6SVV4Ns7FmX3bLPVfQoZB96jeC9Mt
-         zo8w==
-X-Gm-Message-State: AOAM530eyYHYd9SoPGrXwrvH0dQkiARx5Uihl+0Jm7iuNBdY1Z0ZXsPI
-        LhtMfadUulE2WocwdvB57tSI+hA5P00ogQ==
-X-Google-Smtp-Source: ABdhPJyMmXyj9hU9NX1WvIPrpuLSIbdHzwNfgHjSkRrfH/Ule1RrZcOjGvqNjazkRWpXfV/zYwWaplb3tC9Uug==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:bd4b:b0:149:460a:9901 with SMTP
- id b11-20020a170902bd4b00b00149460a9901mr2157296plx.44.1640204846890; Wed, 22
- Dec 2021 12:27:26 -0800 (PST)
-Date:   Wed, 22 Dec 2021 12:27:15 -0800
-In-Reply-To: <xmqqpmpojv48.fsf@gitster.g>
-Message-Id: <kl6l4k70z8po.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20211217000235.68996-1-chooglen@google.com> <20211222001134.28933-1-chooglen@google.com>
- <20211222001134.28933-3-chooglen@google.com> <xmqqa6gtkumz.fsf@gitster.g>
- <kl6l8rwczgzy.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqqpmpojv48.fsf@gitster.g>
-Subject: Re: [PATCH v3 2/3] builtin/fetch: skip unnecessary tasks when using --negotiate-only
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S236299AbhLVUvI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 15:51:08 -0500
+Received: from mout.gmx.net ([212.227.17.22]:40899 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229548AbhLVUvI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 15:51:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1640206253;
+        bh=RDxL53J3yfRFtyyqOX4Qnvvva+fjr6sL0C9vYuY01mM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=QSy2QYP8TYmZvmww7SkNobr6NlP0Ac4Ui/6dD3rbzppARyOrXqSOCR1wDMEmHnVfr
+         83ySG/1Nl4obvTSlo0dfQAliX0xAAo+dBMeOZrl7ayY4yjcuOCqFJUkcTkZqlZrKhg
+         bv8jA5uoHTNTm/RKelqRL7RWJWhzFyoP1D34ReTQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.29.215.148] ([89.1.215.174]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mw9UK-1mAMpd06dw-00sAEA; Wed, 22
+ Dec 2021 21:50:53 +0100
+Date:   Wed, 22 Dec 2021 21:50:50 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Philip Oakley <philipoakley@iee.email>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC PATCH 00/10] range-diff: fix segfault due to integer
+ overflow
+In-Reply-To: <211222.86r1a5plsm.gmgdl@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2112222143080.347@tvgsbejvaqbjf.bet>
+References: <RFC-cover-00.10-00000000000-20211209T191653Z-avarab@gmail.com> <nycvar.QRO.7.76.6.2112101528200.90@tvgsbejvaqbjf.bet> <59ec39af-fdb1-a86a-d2be-37e5954e245f@iee.email> <211222.86r1a5plsm.gmgdl@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-507754297-1640206253=:347"
+X-Provags-ID: V03:K1:3JbcyJOJyTY5qFT8DzUD3he0rCkSKgxrpsol2Dwm5P7Rr01wRJ4
+ gjI30E/pf+SrtLlL1XVqEYQzeMENVXtZrDsTB2g4aqf8cQ0Mq0w9GH4PdRH8p2CK1VfRFFV
+ YxHeGLBXmBtJBwscRSHRoEHe0fCLMWJ6LXpARomj8JigQPDXFCWEb+3rHtkHREXWIpd9qrs
+ EnSXvU8L3Y3Kjy9E4e/Ng==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:h6v5ZUQoQ2c=:puHefFRRVxUZqv6UihJZ21
+ UdcGg+dBKwV8B+1SfQtdzqvlAA3sVPXuB/Ju/LeymIbQZZAGhI0RW7sGx0IKwMgb8kbNNQvX8
+ hJ7cgN5AIa75SJUDYVQcjdal66R1ql0qdqYiJ0WecZt2QtiUKKduvN6cYpIky0V5+mctQ8Ezk
+ ajvxrRUPpCeMqII2oCpBL3WXcOWfq+6t+EtoUf6Q3twkNv0W4Xnrjt4RemP6tRLnajkgKMZej
+ iLuJlpu9acypOceGo1G2DJb/3r8onZgT2GNxqSZT5OmccNs27wtnm8a9rlEDN9AYT6VDHSHIp
+ mFZniogVkU2XKgtA6ClwH7Rs+5/bc6ZxuXl95kEC4V3thLHRsQqRR4DeAsVDk1SYK7bl4nEwK
+ UaGjjED9ab2F81sv8kV9CEQmXUfBorsMAZn6PezLJSxEj4LQd/XNQZYwfjrqJS0vc2OF5IGoS
+ gBAFeZKKVUBGWRNtJa3cMarakwkZP1h3rxQH7agxNoJu3TT2Sgfvq5buk1JQo5eDwxnPAkCuk
+ ONGpg3Hicfm7tJrW3m8kf7uoFkkVwoB41zy5PERzSG5JOjwnLE0EGkW7Fmcue180+am7lyrhh
+ WOHIxZRRwYoBeGUpRz39kXsIlYDrQrK0g46/5AVkw2YSML9eOhwU0NjeLzGQtP5Rw2WtvDITm
+ Jkm0CV+946M+/hv4TwczILYnmLYiBTn4qNNMp6iq5wRhBXh1PXIS2v2TRbbMpGXeK+iq6lBur
+ jkyEspLVriHR2rm78ROeyz8TKUB69BC6zRd6SCKaI+5AIN3hkdG4jNzRLaYAVfKIRtOrgQTXw
+ qkyeBztLZLwBLdwPI/AafEGrgbM/NP6ILLdzMMM4ewSONvmD3UooNZJu3SmO3YuwdCKMFxPbX
+ tpQrYpZC5xKym92BhkhoVFUsCFbk2GAoyvm9kyZAquke7dJVbr5uJlpSp5xU3rRl04fVZrQeD
+ CVGk06PYIBsMrZgBdRRwY86LUBesR+Gn/zycOFEOJEZtz2cUpYYVOeSYRCcnRO3ctC+AkGF4Q
+ DunKOdqJMynodoOWHKymj8kPoTRTihI30AqYbAFe/wZ8siS4EEVJYDht+Dkq6KkpgmeiijMOS
+ ueMy6gOzfD1Mc0=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Glen Choo <chooglen@google.com> writes:
->
->> I would have come to same conclusion if I agreed that we should recurse
->> into submodules even if no objects are fetched. When I first wrote this
->> patch, I was convinced that "no new objects" implies "no need to update
->> submodules" (see my response at [1]), but I'm not sure any more and I'd
->> like to check my understanding.
->
-> For example, there is a "everything_local()" optimization in the
-> fetch-pack codepath where the following steps happen:
->
->  (1) we look at the current value of the remote refs we are fetching
->      from their ls_refs output (let's call it "new tips");
->
->  (2) we notice that all of these objects happen to exist in our
->      object store.
->
->  (3) we make sure that we do not see any "missing links" if we run a
->      reachability traversal that starts from these objects and our
->      existing refs, and stops when the traversal intersect.
->
-> When the last step finds that all objects necessary to point at
-> these "new tips" with our refs safely, then we have no reason to
-> perform physical transfer of objects.  Yet, we'd update our refs
-> to the "new tips".
->
-> This can happen in a number of ways.  
->
-> Imagine that you have a clone of https://github.com/git/git/ for
-> only its 'main' branch (i.e. a single-branch clone).  If you then
-> say "git fetch origin maint:maint", we'll learn that the tip of
-> their 'maint' branch points at a commit, we look into our object
-> store, find that there is no missing object to reach from it to the
-> part of the object graph that is reachable from our refs (i.e. my
-> 'maint' is always an ancestor of my 'main'), and we find that there
-> is no reason to transfer any object.  Yet we will carete a new ref
-> and point at the commit.
->
-> Or if you did "git branch -d" locally, making objects unreachable in
-> your object store, and then fetch from your upstream, which had fast
-> forwarded to the contents of the branch you just deleted.
->
-> Or they rewound and rebuilt their branches since you fetched the
-> last time, and then they realized their mistake and now their refs
-> point at a commit that you have already seen but are different from
-> what your remote-tracking branches point at now.
->
-> Or you are using Derrick's "prefetch" (in "git maintenance run") and
-> a background process already downloaded the objects needed for the
-> branch you are fetching in the past.
->
-> Depending on what happened when these objects were pre-fetched, such
-> a real fetch that did not have to perform an object transfer may
-> likely to need to adjust things in the submodule repository.
-> "prefetch" is designed not to disrupt and to be invisible to the
-> normal operation as much as possible, so I would expect that it
-> won't do any priming of the submodules based on what it prefetched
-> for the superproject, for example.
+--8323328-507754297-1640206253=:347
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for providing concrete examples; that's a lot more convincing
-than my hypothetical.
+Hi =C3=86var,
 
-> So in short, physical object transfer can be optimized out, even
-> when the external world view, i.e. where in the history graph the
-> refs point at, changes and makes it necessary to check in the
-> submodule repositories.
+On Wed, 22 Dec 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Yes, you're right. I'll move the jump accordingly :)
+> On Tue, Dec 21 2021, Philip Oakley wrote:
+>
+> > I fully agree that the range-diff should probably have a patch limit a=
+t
+> > some sensible value.
+>
+> Why would it? If I'm willing to spend the CPU to produce a range-diff of
+> an absurdly large range and I've got the memory why shouldn't we support
+> it?
+>
+> We don't in cases like xdiff where it's not trivial to just raise the
+> limits, but here it seems relatively easy.
+
+To raise the limits you would have to understand the purpose of the
+calculations so that you can understand the range their data type needs to
+handle. The weights of the Hungarian Algorithm are distinctly _not_
+pointers, therefore using `size_t` is most likely the wrong thing to do.
+
+Of course you can glance over the details and try to avoid digging into
+the algorithm to understand what it does before changing the data types
+and introducing `st_mult()`-like functions and macros, but that only makes
+it "relatively easy", at the price of "maybe incorrect". That would be in
+line with what I unfortunately have had to come to expect of your patches.
+
+The _actual_ "relatively easy" way is to imitate the limits we use in
+xdiff (for similar reasons). As I said before.
+
+Ciao,
+Johannes
+
+--8323328-507754297-1640206253=:347--
