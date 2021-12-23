@@ -2,86 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2766FC433F5
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 19:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34028C433F5
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 19:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244876AbhLWTIM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Dec 2021 14:08:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52264 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231368AbhLWTIM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Dec 2021 14:08:12 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBE28C061401
-        for <git@vger.kernel.org>; Thu, 23 Dec 2021 11:08:11 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id b4-20020a17090a6e0400b001b179d36a57so6169371pjk.6
-        for <git@vger.kernel.org>; Thu, 23 Dec 2021 11:08:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=KXDe0LTkM7ilPAOLhSTkvW/Ar1kL7lzgqbIum+UWR1E=;
-        b=PT/5UZC4iPVbRR/je3H5a0pY1p14ueuu/9w194/XbCd15A9cV3FYiiOAQN2UAqeJNy
-         3qBXg1xztDRx2HTGv9qCamgPcQwNNnbM/xuaHmHqfqUIy8TPume8euZVaOk8Gi0jMQ8U
-         7AE0G+xO2iZZ0LfjZtXJV/whH7IMSsU/pfIKl3uxsvxhAK1IYm3U054cfivpzpnmMvmL
-         K4xzpbpIMZsJW185MiTgyGdh8jisbSM8GLxik+GZRfQOj8HS2XiHGT1++nwodvDkBbWP
-         bxzDVV8PaOshpEFEFyy6JM4YJafLPzgH2I1htkDhvhUozdiK6a7qQMxsJlbbzGdiZgbx
-         U1Mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=KXDe0LTkM7ilPAOLhSTkvW/Ar1kL7lzgqbIum+UWR1E=;
-        b=wCSNmItEV6zH7e6WY+DUgDlQhxfvL1SG+RNVyQppzb6XBw4qfLZSI2tvu0Cd4oV9Ng
-         0oOm93vV3380NZv6LorBo9lE/S1u3lDzajPz5woZg/XHsvH+P/vgn4rAfEorpFpX2SIf
-         dOsLej31574dPBMkqtWQ7RYBwg/m19RbriIW04QGlzOAcXoAOnzzMkcBf5ol1x8lkzW6
-         MuUAw4M6etQ9lZvK4OnL9FRNKQC2XxDGgGQ3bSzwJDAaoAPoU9u1l7iLt6awL5pg8PLr
-         RYgjUAc4DksOYxeaLAilT1NTZirn/D6UL7E16oq3RmFcZXnwKJm5iOW5/W4+KA39820g
-         E7vQ==
-X-Gm-Message-State: AOAM53328ROd4ggUa9mHdC8qgkKp/YcoGLY5BnP1Vi2p0ITGNaNwQByk
-        38DTRZGmRz/NAJhokZ/NXwkBc9lmmw00eEZ5h8QS
-X-Google-Smtp-Source: ABdhPJzegYGE//s67/Vhqr9xvMW6Hr4hI2npKoTTU1ClvmvdqYMgMvSR8F53u0/A7GQoOua+unv5ehkLmxX2KWf44nuM
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a63:43c6:: with SMTP id
- q189mr3237244pga.424.1640286491423; Thu, 23 Dec 2021 11:08:11 -0800 (PST)
-Date:   Thu, 23 Dec 2021 11:08:08 -0800
-In-Reply-To: <20211222001134.28933-4-chooglen@google.com>
-Message-Id: <20211223190808.1285008-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20211222001134.28933-4-chooglen@google.com>
-X-Mailer: git-send-email 2.34.1.307.g9b7440fafd-goog
-Subject: Re: [PATCH v3 3/3] builtin/fetch: die on --negotiate-only and --recurse-submodules
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     chooglen@google.com
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        id S236062AbhLWTJt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Dec 2021 14:09:49 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57409 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229616AbhLWTJt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Dec 2021 14:09:49 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4ACD51095BA;
+        Thu, 23 Dec 2021 14:09:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UaefJLp0hRmkoIQ4YYV7eH43wVRZOESOEdOlI9
+        lLW9k=; b=dKCf1/lMNmfrjKvowPpvvUrxDXDhQnspWr7U4D18kpQKXElYAwGsu+
+        ygCJD0BDcn2hWlQGRWXGLYZ7fN3T2kYWbS5M1cD92AipNnDWRof+x8Fud09WdyBT
+        v+pDTaBN36nhFDgCP2zHD7RRO7d7r+Qqh5gsbvjcv6nZ9cKdbkEis=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 412171095B9;
+        Thu, 23 Dec 2021 14:09:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A75801095B8;
+        Thu, 23 Dec 2021 14:09:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v4 07/10] sparse-checkout: enable reapply to take
+ --[no-]{cone,sparse-index}
+References: <pull.1151.v3.git.git.1639108573.gitgitgadget@gmail.com>
+        <pull.1151.v4.git.git.1639454952.gitgitgadget@gmail.com>
+        <09b13280c2619e9dcbf33422c5dcfba84f0e52be.1639454952.git.gitgitgadget@gmail.com>
+        <CANYiYbE+1o-8KxY2UGaCMdZJEPtnbTWgBrcFf7E-_ra76=kWmQ@mail.gmail.com>
+        <CABPp-BED-3TzbMwm-XFqB_rVp_yOef+koeXmEbb6gTHd0LjXQQ@mail.gmail.com>
+Date:   Thu, 23 Dec 2021 11:09:46 -0800
+In-Reply-To: <CABPp-BED-3TzbMwm-XFqB_rVp_yOef+koeXmEbb6gTHd0LjXQQ@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 23 Dec 2021 09:09:08 -0800")
+Message-ID: <xmqq5yrfb0jp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: E5670C0E-6423-11EC-894E-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
-> The previous commit ignores the value of --recurse-submodules if
-> --negotiate-only is given. Since non "no" values of --recurse-submodules
-> are not supported with --negotiate-only, make cmd_fetch() check for
-> this invalid combination and die.
-> 
-> This is unlikely to affect internal usage of --negotiate-only, but it
-> may be helpful for users. We may also want to discourage users from
-> using --negotiate-only altogether because it was not intended for them.
+Elijah Newren <newren@gmail.com> writes:
 
-All 3 patches look good, and I'm happy if they were merged as-is.
+> On Wed, Dec 22, 2021 at 4:48 PM Jiang Xin <worldhello.net@gmail.com> wrote:
+>>
+>> On Tue, Dec 14, 2021 at 3:24 PM Elijah Newren via GitGitGadget
+>> <gitgitgadget@gmail.com> wrote:
+>> >
+> ...
+>> >  static char const * const builtin_sparse_checkout_reapply_usage[] = {
+>> > -       N_("git sparse-checkout reapply"),
+>> > +       N_("git sparse-checkout reapply [--[no-]cone] [--[no-]sparse-index] "),
+>>
+>> Found a trailing space in [1], which came from this commit.
+>>
+>> [1]: https://github.com/git-l10n/git-po/blob/pot/next/2021-12-22.diff#L19
+>
+> Sorry about that.  This series has already hit next, so I submitted a
+> new patch to correct this
+> (https://lore.kernel.org/git/pull.1106.git.1640279223893.gitgitgadget@gmail.com/).
 
-Having said that, I would delete the last sentence - I envision that
-other tools may want to use --negotiate-only to be able to better query
-a Git server.
-
-> @@ -75,6 +75,7 @@ static struct transport *gtransport;
->  static struct transport *gsecondary;
->  static const char *submodule_prefix = "";
->  static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
-> +static int recurse_submodules_explicit = RECURSE_SUBMODULES_DEFAULT;
-
-I would call this "recurse_submodules_cli" as a config variable could
-also be considered explicit.
-
-But again, you can consider all these suggestions as optional.
+Thanks, both.  Will take a look.
