@@ -2,55 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10FDCC433F5
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 22:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E15DC433F5
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 22:37:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234941AbhLWW0i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Dec 2021 17:26:38 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52332 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350457AbhLWWZS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Dec 2021 17:25:18 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A360F16B344;
-        Thu, 23 Dec 2021 17:25:17 -0500 (EST)
+        id S230453AbhLWWhc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Dec 2021 17:37:32 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52742 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229834AbhLWWhc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Dec 2021 17:37:32 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 678B6EF74D;
+        Thu, 23 Dec 2021 17:37:31 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=6MmEce7YenNS
-        /K1cGFyp/TdFRRPqkSQ2PdpnAR4TCa8=; b=EiP2r3Zhz3tpKyRiM3XDb4wihsiz
-        7Wfgf3uEINL+xlcL98UTnstIFgwVvgFI2rrKOcOAwO7ezVxl3j67/mad8SVAyPTr
-        Vj227nlFV/U07jdntMMsrrKzhlaXQkQHr0qnvqblsBfydIZSVAtDnxbBpY2PASFQ
-        TCz3z/1Uqy0LFwY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8D2F116B343;
-        Thu, 23 Dec 2021 17:25:17 -0500 (EST)
+        :content-type:content-transfer-encoding; s=sasl; bh=EVW3U5l9p4uN
+        FumzAhURgxuNDruDcBXph6h2KQ1UMe0=; b=gfntqE3odIQmnP6my6hmDY/d1Rge
+        nFRoVFgh2X5tJlrgmWogHjT1JK48Suqts/o+szLJBZ9T1pGOSW8gGx+T/B0yNkUn
+        ivaJaJd0lcem+QhH4JYNgD4GhF3cQsDxJ1Oi6vpRY8lYggbFm+ByjPb/Gb4lNmjt
+        m+60WH1BxnRrbOM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F8D1EF74A;
+        Thu, 23 Dec 2021 17:37:31 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7949716B342;
-        Thu, 23 Dec 2021 17:25:13 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C0ACFEF749;
+        Thu, 23 Dec 2021 17:37:30 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, J Smith <dark.panda@gmail.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v5 3/7] grep tests: add missing "grep.patternType"
- config test
+Subject: Re: [PATCH v5 7/7] grep: simplify config parsing and option parsing
 References: <cover-v4-0.7-00000000000-20211203T101348Z-avarab@gmail.com>
         <cover-v5-0.7-00000000000-20211222T025214Z-avarab@gmail.com>
-        <patch-v5-3.7-f02f246aa23-20211222T025214Z-avarab@gmail.com>
-Date:   Thu, 23 Dec 2021 14:25:11 -0800
-In-Reply-To: <patch-v5-3.7-f02f246aa23-20211222T025214Z-avarab@gmail.com>
+        <patch-v5-7.7-63de643ebc2-20211222T025214Z-avarab@gmail.com>
+Date:   Thu, 23 Dec 2021 14:37:29 -0800
+In-Reply-To: <patch-v5-7.7-63de643ebc2-20211222T025214Z-avarab@gmail.com>
         (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 22 Dec
- 2021 03:58:53
+ 2021 03:58:57
         +0100")
-Message-ID: <xmqq35mj7yd4.fsf@gitster.g>
+Message-ID: <xmqqv8zf6j86.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3287CDC8-643F-11EC-9FE8-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: E9FDF67A-6440-11EC-9F62-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,75 +57,87 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Extend the grep tests to assert that setting
-> "grep.patternType=3Dextended" followed by "grep.patternType=3Ddefault"
-> will behave as if "--basic-regexp" was provided, and not as
-> "--extended-regexp". In a subsequent commit we'll need to treat
-> "grep.patternType=3Ddefault" as a special-case, but let's make sure we
-> ignore it if it's being set to "default" following an earlier
-> non-"default" "grep.patternType" setting.
+> Simplify the parsing of "grep.patternType" and
+> "grep.extendedRegexp". This changes no behavior, but gets rid of
+> complex parsing logic that isn't needed anymore.
 >
-> Let's also test what happens when we have a sequence of "extended"
-> followed by "default" and "fixed". In that case the "fixed" should
-> prevail.
-
-The grep.patternType configuration variable has the "last one wins"
-semantics just all the usual configuration variable, but the meaning
-of the variable when it is set to "default" depends on the value set
-to grep.extendedRegexp variable.
-
-If you rewrite with the above understanding, what you wrote will
-become a lot more concise.
-
-    Extend the grep tests to assert that grep.patternType is the
-    usual "last one wins" variable, and specifically, setting it to
-    "default" has the same meaning as setting it to "basic" when
-    grep.extendedRegexp is not set (or set to false).
-
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+> When "grep.patternType" was introduced in 84befcd0a4a (grep: add a
+> grep.patternType configuration setting, 2012-08-03) we promised that:
 >
-> ---
->  t/t7810-grep.sh | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
+>  1. You can set "grep.patternType", and "[setting it to] 'default'
+>     will return to the default matching behavior".
+
+You need to call it into readers' attention that back then the
+author of that commit meant by "the default" to mean "whatever the
+configuration system specified before the patch applied, i.e. with
+grep.extendedRegexp".
+
+>  2. We'd support the existing "grep.extendedRegexp" option, but ignore
+>     it when the new "grep.patternType" option is set. We said we'd
+>     only ignore the older "grep.extendedRegexp" option "when the
+>     `grep.patternType` option is set. to a value other than
+>     'default'".
+
+Yes, in short, you can think of it this way.
+
+ - We use grep.patternType as the source of truth.  It is a usual
+   last-one-wins variable, with values like fixed, basic, pcre,
+   etc.
+
+ - There however is a special value 'default', which may mean
+   'basic' or 'extended', depending on what grep.extendedRegexp is
+   set to.
+
+> In a preceding commit we changed grep_config() to be called after
+> grep_init(), which means that much of the complexity here can go
+> away.
 >
-> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-> index 6b6423a07c3..113902c3bda 100755
-> --- a/t/t7810-grep.sh
-> +++ b/t/t7810-grep.sh
-> @@ -451,6 +451,25 @@ do
->  		test_cmp expected actual
->  	'
-> =20
-> +	test_expect_success "grep $L with grep.patternType=3Dextended and gre=
-p.patternType=3Ddefault" '
-> +		echo "${HC}ab:a+bc" >expected &&
-> +		git \
-> +			-c grep.patternType=3Dextended \
-> +			-c grep.patternType=3Ddefault \
-> +			grep "a+b*c" $H ab >actual &&
-> +		test_cmp expected actual
-> +	'
-> +
-> +	test_expect_success "grep $L with grep.patternType=3D[extended -> def=
-ault -> fixed]" '
-> +		echo "${HC}ab:a+b*c" >expected &&
-> +		git \
-> +			-c grep.patternType=3Dextended \
-> +			-c grep.patternType=3Ddefault \
-> +			-c grep.patternType=3Dfixed \
-> +			grep "a+b*c" $H ab >actual &&
+> Now as before when we only understand a "grep.extendedRegexp" setting
+> of "true", and if "grep.patterntype=3Ddefault" is set we'll interpret i=
+t
+> as "grep.patterntype=3Dbasic",
 
-And from that point of view, I think the second new test has much
-less value than a possible alternative to ensure grep.patternType
-set to fixed and then default behaves like setting it to extended
-when grep.extendedRegexp is set to true.  As written, this is just
-testing that the variable we designed and know to be "last one wins"
-behaves as one once more.
+Is that a typo?  If extendedRegexp is set to 'true', then the
+'default' would mean 'extended', so I would expect that we'd
+see it as the same as setting it 'grep.patternType=3Dextended'.
 
-> +		test_cmp expected actual
-> +	'
-> +
->  	test_expect_success "grep $L with grep.patternType=3Dextended and gre=
-p.extendedRegexp=3Dfalse" '
->  		echo "${HC}ab:abc" >expected &&
->  		git \
+> except if we previously saw a
+> "grep.extendedRegexp", then it's interpreted as
+> "grep.patterntype=3Dextended".
+
+I am not sure what this means.  grep.extendedRegexp is also a usual
+last-one-wins variable.  If you had this series:
+
+    git \
+    -c grep.extendedRegexp =3D false \
+    -c grep.extendedRegexp =3D true \
+    -c grep.patternType =3D default \
+    some-command-that-take-regexp
+
+the last grep.extendedRegexp is true, and the last grep.patternType
+is default, so the command sould work on extended.  It is also true
+if you had
+
+    git \
+    -c grep.extendedRegexp =3D false \
+    -c grep.patternType =3D default \
+    -c grep.extendedRegexp =3D true \
+    some-command-that-take-regexp
+
+That is why it is important to remember the fact that patternType
+was give as "default" before you finish reading the configuration
+and you are sure you know the last value of grep.extendedRegexp.
+Only after that, you can resolve what that "default" means between
+"basic" and "extended".  Trying to interpret "default" as soon as
+you see it in grep.patternType and trying to make it into either
+"basic" or "extended" will not work unless you know you have the
+final value of grep.extendedRegexp.
+
+> We don't need grep_commit_pattern_type() anymore,...
+
+And I think that is what this function wanted to say: "we now have
+seen all necessary, so we can commit what pattern type we are going
+to use; before this point, we couldn't tell what 'default' meant".
+
+So I am not sure how any change that says we do not need the
+"commit" phase can be correct.
