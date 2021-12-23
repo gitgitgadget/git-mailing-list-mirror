@@ -2,108 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73C81C433F5
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 13:50:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEFFFC433EF
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 15:07:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348691AbhLWNuo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Dec 2021 08:50:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:51119 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1348462AbhLWNuo (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 23 Dec 2021 08:50:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1640267443;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to; bh=HX7T6bml/0cL3Nkj6gaCBpynErPI+1FuaP6+rho9weI=;
-        b=QMtXqBErcqWpyAd1+evpyR1rNFzf1fL/WZVHhgMhxLPF9G7EoAK7tRTpuVODiyDdocWmKK
-        qYlJs8SA40i45KTNoaSn7PxtoJ/XwmtAGIHg/a9S+eTmjSVrzL18AJHqhPcUwannZYQYM7
-        K8JlKaqLhvL+FYge3SwhtOoHCd0pEdg=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-616-V4NMN0gYORKJSicW2MV99Q-1; Thu, 23 Dec 2021 08:50:40 -0500
-X-MC-Unique: V4NMN0gYORKJSicW2MV99Q-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com [10.5.11.15])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id AB28110168C3;
-        Thu, 23 Dec 2021 13:50:38 +0000 (UTC)
-Received: from localhost (unknown [10.39.194.43])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 212F75D6CF;
-        Thu, 23 Dec 2021 13:50:37 +0000 (UTC)
-Date:   Thu, 23 Dec 2021 13:50:37 +0000
-From:   Stefan Hajnoczi <stefanha@redhat.com>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        jrnieder@gmail.com, jonathantanmy@google.com, steadmon@google.com,
-        chooglen@google.com, calvinwan@google.com,
-        workflows@vger.kernel.org,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: Review process improvements
-Message-ID: <YcR+rZ7YznQlTuRf@stefanha-x1.localdomain>
+        id S244072AbhLWPHv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Dec 2021 10:07:51 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:62502 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S239868AbhLWPHu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Dec 2021 10:07:50 -0500
+Received: from host-92-7-140-211.as13285.net ([92.7.140.211] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1n0Ph6-0000xT-Ce; Thu, 23 Dec 2021 15:07:49 +0000
+Message-ID: <032aced5-4c50-76f7-9ab6-580ffa5775a5@iee.email>
+Date:   Thu, 23 Dec 2021 15:07:48 +0000
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="Iz9Er4V2afVSVa7Z"
-Content-Disposition: inline
-In-Reply-To: <20211217183942.npvkb3ajnx6p5cbp@meerkat.local>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: Custom subcommand help handlers
+Content-Language: en-GB
+To:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Erik Cervin Edin <erik@cervined.in>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Sean Allred <allred.sean@gmail.com>, git@vger.kernel.org
+References: <CABceR4ZW4rRWZnH0ZBkWty_H84Z4CmXque_LO+1edETEWrO8PQ@mail.gmail.com>
+ <211220.86k0fzwmq2.gmgdl@evledraar.gmail.com>
+ <CA+JQ7M8oxzUAkw-Nv4X+3bJt7cBhsUaqFKd67Y=LNLnv2kgM+Q@mail.gmail.com>
+ <YcEJtOknDjSgxK5j@camp.crustytoothpaste.net> <xmqqa6guub9n.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2112221717440.347@tvgsbejvaqbjf.bet>
+ <xmqqczloju0q.fsf@gitster.g>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <xmqqczloju0q.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 22/12/2021 19:53, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>> On Mon, 20 Dec 2021, Junio C Hamano wrote:
+>>
+>>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>>>
+>>>> I should point out that in most cases on Unix, it _is_ expected that you
+>>>> install your manual pages into the same place as everyone else, so in
+>>>> this case, installing the HTML documentation alongside Git's may be the
+>>>> best solution.
+>>> Yup, that sounds like the most sensible way to do things.
+>> So what about `~/bin/git-my-reply-to-junio`? Do we expect people to write
+>> a manual page and install it into `~/man/man1` and for `man` to pick that
+>> up?
+> Yes, if they write one, and then tell man that you have extra
+> manpages there via MANPATH.
+>
+> I expect people *not* to write a manual page in practice for such a
+> thing, though ;-)
 
---Iz9Er4V2afVSVa7Z
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+In the very original use case reported in the git for windows issues
+pages, I understood it that the provider of the git-foo script expected
+that they would include some detection and response to the --help being
+given as an option.
 
-> I'd like to also mention that I'm hoping to add a few more features to b4 that
-> will hopefully improve the patch submission process for folks.
+They had the issue that their windows users, using Git for Windows, do
+not have the `man` package installed. Rather the `web` help of using the
+.html version of the man page is used (needs administrator install in
+some case). So user commands would need to provide both the man page for
+Linux systems and some process to get the html equivalent into the right
+folder - this latter case was the problem step. 
 
-This looks excellent! I wanted to mention a few features that have been
-popular in the git-publish patch series management tool
-(https://github.com/stefanha/git-publish/) in case you want to include
-something similar in b4:
+The expectation from the XY-Problem was that if the html (and possibly,
+by implication, the man page) was not found by git, that the --help
+option would be passed to the command itself for it the command to
+process (or ignore)..
 
-- "Profiles" (.gitpublishprofile or stored in .git/config) with To and
-  CC addresses, --subject-prefix, cover letter templates, etc. The
-  default profile is automatically loaded when you run "git publish". If
-  the git repo you're working on includes a default profile then you
-  don't need to specify any command-line options to send a correctly
-  formatted patch series to the maintainers! A great help for one-off
-  contributors but also a time-saver for regular contributors.
+It is a bit of a rabbit hole.
 
-- An interactive mode that lets you inspect the final patch series and
-  edit the CC list. Avoids mistakes and embarassment :).
-
-- Saving the CC list between revisions (v2, v3, etc).
-
-- Sending pull requests (for sub-maintainers) because there are times
-  when pull requests also need a v2 or even a v3 ;). The workflow is
-  basically the same as sending patch series.
-
-- githooks(5) before sending patches series and pull requests. Useful
-  for coding style and patch series linters.
-
-The git-publish man page is here if you want to read more:
-https://github.com/stefanha/git-publish/blob/master/git-publish.pod#quickstart
-
-Stefan
-
---Iz9Er4V2afVSVa7Z
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmHEfqwACgkQnKSrs4Gr
-c8iCsgf/ZW3jHoB+YAnHS0KAZle7Xg/m8Ql5LKA/4RIr2CLgxeHhBhrq9AXR0t4/
-pK83huJ9nW1xuhbFjcztrIcXqyjv+YJl4nZzJc0xIQsEy3E2KlfAw+q52YB21Sih
-o8qxKb+c49PR3hRAVH/PZjPrZSewozq8VII1d8aATdpmNcp1yzGT4wGlFSdCHPVR
-y3EMUMK7NUCB1JyZeF09WxsoMbALkDLmHvK7aNLRVU1fCYPT3qHq7H2JuXoFk8q5
-IWqMeeCEL0psOZ4GtqI5Czbd+4C0U+4960X3wzyIa4wzAo3Zc8sriwxtLsP+Wukv
-DwgBxsNezhTtE/oMVyGdMsidFs8TNg==
-=Q7R5
------END PGP SIGNATURE-----
-
---Iz9Er4V2afVSVa7Z--
-
+Philip
