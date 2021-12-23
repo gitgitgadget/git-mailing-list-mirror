@@ -2,57 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8B99C433F5
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 18:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8CA6C433FE
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 18:38:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349853AbhLWShC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Dec 2021 13:37:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45292 "EHLO
+        id S1349857AbhLWSif (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Dec 2021 13:38:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240342AbhLWShB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Dec 2021 13:37:01 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15E19C061401
-        for <git@vger.kernel.org>; Thu, 23 Dec 2021 10:37:01 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id q14so17057475edi.3
-        for <git@vger.kernel.org>; Thu, 23 Dec 2021 10:37:01 -0800 (PST)
+        with ESMTP id S240342AbhLWSie (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Dec 2021 13:38:34 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 213FEC061401
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 10:38:34 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id bm14so24736697edb.5
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 10:38:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=/E4mbEizUsFRnrbDewe7z9bQE4tS88JkgLCz9rWDROY=;
-        b=OX3bxc2kqUUs192C2gss6yhrJgea1jq7a+LEJQjHZYoLTFyTl9Orypv04q/4Gaybcd
-         mY7bN9Ca3EJvQ6QHtHT4nctEc5tqOi64SLWrgof91IMuUeXdd9lEi7GR46ZqXH2O8bgo
-         +DwZs2Lg9e0YpD3tf6WjNeVn2ZcK4J0qvXepFH8FT0Gxvs7nq4+xTSRfLtAV11oz41zY
-         oi+sDwUw9UAX24K1nR5zSr5h1R4l2cQTmwZQQyvPL8xewa/q4cqJIyGr7ExYABt1m3MS
-         iod1llE5JO5H6SVEE0G/zkxjy4EX+5S0WvsDzrPlGAf4NBdUFiQO8i5AAixaPYpFJkrS
-         HStQ==
+        bh=niroAWe6e4NL8Hba6B6DHvNVFO57/vaCCxWrf8uVAPk=;
+        b=GF/6Ty65fERYCF8jPD0AhQ9505BnTw2RC3su2s7Rc8HSU8iCEnoXAgMA2gdeJ3nrMh
+         uDHtOJxA8+X+wkbI6uRJepTAM3c/uwEDu8ltd6XMxCPazOejtnlWhLF6H3F09bcswWi1
+         59oE4LBmJoCl180T3Nnt/vtkZIaWpRMpZrIiI1bdsRYQqr2HpzghTj4FTJ+V3ujm5+6A
+         H8j6Lv8ch68gFbLmVIZwXYJNYy92X7wR+xcbv1YLW5btWwEIqThEQY/f1bKEh8dMD9gK
+         MtRV65Pun7zUv87HPaci0YjANjTURfOKv+RTamngaiU5nIeBC9SO+/BhPuqLVaC8NFf2
+         mN3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=/E4mbEizUsFRnrbDewe7z9bQE4tS88JkgLCz9rWDROY=;
-        b=x15ElzafDjI9YcajnnFMCR5DsqSzj88H6e/WOHEAZJj7QHGdzTuoCyiPrCIX8dbMpb
-         gkHhdJ1K2n4oSsmaRw9WuaA/FkWZhXT9C3Q4BTl6sWSKvKs4CHcQPZNcKDF9ZDanmqDA
-         nOMv0xdOGRnTkBMCA3LwWgskIrj9/XS+banl6tqj52aPAjO0CyDGD8LR75U3zpD11dSz
-         5am810CU21nUli92LNoCf3uOl5ZLiesdd/Mxch2/4uQoukjaO8vsxaSnyjit0i3rPMit
-         7UtYQWw0H/atYVl6hDWSJuzf9LWidhV+0rTA9MLCy3/wcWslJZV70FVfOMZfrgnWMZ8K
-         RfCQ==
-X-Gm-Message-State: AOAM530g4ymNm1ArkkYxHMWOYCJ2ouaa0YyMcdLAgOHFG6Km0/bPb2am
-        eewEUGCXff9x2j4A1Hn1fJmwq55UF5tA1ecQhuA=
-X-Google-Smtp-Source: ABdhPJyf9LMz9O6JDNOvxxaYwpZyct9mwVSIFtfpWrBoSBg5BV2t333+DxQ0yHycWXh+0UXf1VZjj4YbXgcmP7xltOY=
-X-Received: by 2002:a05:6402:350b:: with SMTP id b11mr3055665edd.228.1640284619638;
- Thu, 23 Dec 2021 10:36:59 -0800 (PST)
+        bh=niroAWe6e4NL8Hba6B6DHvNVFO57/vaCCxWrf8uVAPk=;
+        b=Ki8Ws9XFC3j16a1O2+sXBG0iMLtACaMJSSKzFWiKHF1Tr8/FAyiwJzVbTq+UEaMfcC
+         ZKM9UQl66LHyl6xhwYNb+hCL8JkaEPDzwHTTLxU+gf7d5zAZL+vttkt67hs5Z/dQtbxp
+         ktHDuyiFMDuEnmZBzh1A3++Bcu6+bkixMM/myoEt4qq1Y8PUNJ8BVjls7FecStELzsuc
+         B3FyGjNF8nIrBbLDayqeYnJAyWua2ENqiJqX3/E74KKktTpPW+MnwgcifO4yJxlSv08F
+         axj9+swVLG3VhFI70cCB/G1TyQuPT7w4ojaBys8N3rbhTNyDHwQ6dOg0oMB4ZM1v/1Ta
+         YCMg==
+X-Gm-Message-State: AOAM530CA+CMPWVM9Xl/lDc7h+h9e/Vm/YLP7+b/cwV3To++tozfO8+a
+        ILcHxds2P6zJphL13X1GiNU3bSzRgimImZZmH/s=
+X-Google-Smtp-Source: ABdhPJwOYo9INmrLf5Q6CX+j2CuO9RuE14cHaY6IBpFX0z3KB7o2Gmw/OgdJU+en/ydtVUZjdk5r9ZA5t1y+qGEhw9Q=
+X-Received: by 2002:a17:907:9808:: with SMTP id ji8mr2981510ejc.476.1640284712670;
+ Thu, 23 Dec 2021 10:38:32 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
- <f36395fdee044a077a640bd3031a7a8da8a39657.1640109948.git.gitgitgadget@gmail.com>
- <xmqq5yrho6f3.fsf@gitster.g>
-In-Reply-To: <xmqq5yrho6f3.fsf@gitster.g>
+ <1e7eef7705e2f7b4a456056e4335d82267680214.1640109948.git.gitgitgadget@gmail.com>
+ <xmqq1r25o651.fsf@gitster.g>
+In-Reply-To: <xmqq1r25o651.fsf@gitster.g>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 23 Dec 2021 10:36:48 -0800
-Message-ID: <CABPp-BEqrB4cKb7QimJz9umKTcfLOrskkGBOYXnUDX36YyhROA@mail.gmail.com>
-Subject: Re: [PATCH 3/9] merge-ort: capture and print ll-merge warnings in our
- preferred fashion
+Date:   Thu, 23 Dec 2021 10:38:21 -0800
+Message-ID: <CABPp-BEWs8zch2diE2n0oKW6J8PRDDFwujzCXzemfz2-2-pjQA@mail.gmail.com>
+Subject: Re: [PATCH 4/9] merge-ort: mark a few more conflict messages as omittable
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -67,44 +66,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 21, 2021 at 4:00 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Dec 21, 2021 at 4:06 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
 > > From: Elijah Newren <newren@gmail.com>
 > >
-> > Instead of immediately printing ll-merge warnings to stderr, we save
-> > them in our output strbuf.  Besides allowing us to move these warnings
-> > to a special file for --remerge-diff, this has two other benefits for
-> > regular merges done by merge-ort:
-> >
-> >   * The deferral of messages ensures we can print all messages about
-> >     any given path together (merge-recursive was known to sometimes
-> >     intersperse messages about other paths, particularly when renames
-> >     were involved).
+> > path_msg() has the ability to mark messages as omittable, designed for
+> > remerge-diff where we'll instead be showing conflict messages as diff
+> > headers for a subsequent diff.  While all these messages are very useful
+> > when trying to create a merge initially, early use with the
+> > --remerge-diff feature (the only user of this omittable conflict message
+> > capability), suggests that the particular messages marked in this commit
+> > are just noise when trying to see what changes users made to create a
+> > merge commit.
 >
-> I would imagine that with something like this, we can show such a
-> warning message differently when it happens during an inner
-> "synthesizing a virtual common ancestor" merge (the most likely
-> value for "show differently" would be to "squelch"), which may be a
-> good thing.
-
-Yes, that is a possibility that opens up after this.  Which reminds
-me, merge-recursive nicely nested conflict/warnings messages from
-inner merges by adding 2*call_depth space characters before messages.
-I lost that in merge-ort (which becomes more problematic since
-merge-ort tries to group messages about the same path together, thus
-mixing inner merge messages with outer ones and providing no way to
-differentiate the two).  I've got a patch to fix that up, but of
-course it conflicts with this series, so I'll be submitting it after
-this one settles.
-
-> >       if (merge_status == LL_MERGE_BINARY_CONFLICT)
-> > -             warning("Cannot merge binary files: %s (%s vs. %s)",
-> > -                     path, name1, name2);
-> > +             path_msg(opt, path, 0,
-> > +                      "warning: Cannot merge binary files: %s (%s vs. %s)",
-> > +                      path, name1, name2);
-> >
+> It is likely because when somebody is looking at the output of
+> remerge-diff, they are mostly concentrating on the _content_ level
+> merges and they are not keenly looking for a merge whose result is
+> deposited at a wrong path.  Since what is shown is something that
+> has already recorded in the history, we can safely assume that it is
+> no longer a relevant (or "it is way too late to matter"), I would
+> say, to show these messages about "file location".
 >
-> Nice.
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  merge-ort.c | 6 +++---
+> >  1 file changed, 3 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/merge-ort.c b/merge-ort.c
+> > index a18f47e23c5..fe27870e73e 100644
+> > --- a/merge-ort.c
+> > +++ b/merge-ort.c
+> > @@ -2420,7 +2420,7 @@ static void apply_directory_rename_modifications(struct merge_options *opt,
+> >                */
+> >               ci->path_conflict = 1;
+> >               if (pair->status == 'A')
+> > -                     path_msg(opt, new_path, 0,
+> > +                     path_msg(opt, new_path, 1,
+> >                                _("CONFLICT (file location): %s added in %s "
+> >                                  "inside a directory that was renamed in %s, "
+> >                                  "suggesting it should perhaps be moved to "
+> > @@ -2428,7 +2428,7 @@ static void apply_directory_rename_modifications(struct merge_options *opt,
+> >                                old_path, branch_with_new_path,
+> >                                branch_with_dir_rename, new_path);
+> >               else
+> > -                     path_msg(opt, new_path, 0,
+> > +                     path_msg(opt, new_path, 1,
+> >                                _("CONFLICT (file location): %s renamed to %s "
+> >                                  "in %s, inside a directory that was renamed "
+> >                                  "in %s, suggesting it should perhaps be "
+> > @@ -3825,7 +3825,7 @@ static void process_entry(struct merge_options *opt,
+> >                               reason = _("add/add");
+> >                       if (S_ISGITLINK(merged_file.mode))
+> >                               reason = _("submodule");
+> > -                     path_msg(opt, path, 0,
+> > +                     path_msg(opt, path, 1,
+> >                                _("CONFLICT (%s): Merge conflict in %s"),
+> >                                reason, path);
+>
+> I am not as sure about this one as the other two, though.  I guess
+> in the context of remerge-diff, resolving the add/add conflict into
+> the same file is also something that happened long time ago and
+> these messages are too late to matter the same way as the other two.
+
+Yeah, I'm not so sure about it either, and my notes are long, long
+gone.  I think I'll pull this one out, and we can always tweak it
+later if needed.
