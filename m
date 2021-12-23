@@ -2,312 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5041DC433F5
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 18:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69DB1C433FE
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 18:35:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349806AbhLWS0k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Dec 2021 13:26:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42950 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232738AbhLWS0h (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Dec 2021 13:26:37 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E268C061401
-        for <git@vger.kernel.org>; Thu, 23 Dec 2021 10:26:36 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id w16so24558828edc.11
-        for <git@vger.kernel.org>; Thu, 23 Dec 2021 10:26:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bH1dOuBV+pk3Y1gs/swk7uYN7HYKxFT0DUN2atEL6fw=;
-        b=aPCEoKSH99nuzyUw8TU3cYfLMRgwVG+MJyhhKiNVcGpq38lG8tlBY4uuMFHnTe+uKD
-         DzDQcaZ82X9lCCG95ez0+PuJOg/FoYei8tfhrv3TCaBwiXS4+/UWqrspCeQJO9Kyguzk
-         5hRbmKlO8lTwqwjAxmm/xA/82ujnZZYnrPU6H3M2f2pCMkypNQ3zocmNFHIEDhNIiU/6
-         LWnCt2DlTPeogtNI2073vAyP3IRiaTh29e3xPCPPQSNnB1xVhScXIX9+3kJwNnWoQdz7
-         ccSy/keKZK5BihcnukC0AhbxtWphcmIVygCrz46yKDiqESw8he9uQC2MYhN4d2FkFqsY
-         w/eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bH1dOuBV+pk3Y1gs/swk7uYN7HYKxFT0DUN2atEL6fw=;
-        b=yo2wVCetTt/RIxC/qw6Po0lxczWlTkUE/4B0jG8JESFyiigOvp+F8eaETdu7BUFnmG
-         uK14zZ+YtHsIkEYxXa78OTB8qK8fSzpSewYEnSouUZI0bKLB26pesMn62oYgFk8i050f
-         TstMNbQzhG7pBTGo/ik2j/yIrARHQVlGIcMoH+5WOP17OlTkEk7pcJP4uG3hadaZLW11
-         qpYstvwAw7arM0SG+/iOrWT9gNYz96rEsHPrHKE4lx+3HXhqa/eWWnr77wTdsyq7CzEi
-         s9HsY9w+7ThPvLfngIxSvMOV/kgCInnrtyXW6GhX4Ev/0lhKixUHmC8acFwefx0Fz82U
-         hd3g==
-X-Gm-Message-State: AOAM533qTWVPv6HcT8OYAZNjVOBWSF50BN/NmYX3tYYPLHlZt9XC7y99
-        L0HPc2mtO3FcD1N6kK8/e7AVboCZ9+TM5avdP3T+VLVByRY=
-X-Google-Smtp-Source: ABdhPJwJdUAVb+Lcg7OP1DD1gvjQEH31rsZIy1bf/2+wb6XuvO2qrar9Xny5awrP3sQfaOTiIac4Dx+7kGcFQbqiIsw=
-X-Received: by 2002:a17:907:968a:: with SMTP id hd10mr2778939ejc.269.1640283995011;
- Thu, 23 Dec 2021 10:26:35 -0800 (PST)
+        id S1349842AbhLWSfy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Dec 2021 13:35:54 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58317 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240342AbhLWSfx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Dec 2021 13:35:53 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36089EDDB1;
+        Thu, 23 Dec 2021 13:35:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UNRvr1AUGZd9Ll9xTg1XYBdydHZGaHc2tPe5gA
+        FFo/U=; b=jgFl0B6zyfTIx3xqYNTqJ0Wy01MqcwuCWdcPuhhxS4iVOkNAJUPJ1j
+        L2UZwCO06ZcGPW5Oa9WkW0aPFBSjzxSAyz84v/T0Xik02heAO6Ta3fdLXRe4yt0Q
+        rme7RqQMQCXP+i3dH7I56UsN2RBYSauNrj/uwfvnXIsPCMvVzB4jU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E032EDDB0;
+        Thu, 23 Dec 2021 13:35:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8CD15EDDAF;
+        Thu, 23 Dec 2021 13:35:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Daniel Vicarel <shundra8820@gmail.com>
+Cc:     Chris Packham <judge.packham@gmail.com>, GIT <git@vger.kernel.org>
+Subject: Re: Why does "merge --continue" expect no arguments?
+References: <CALRdAfcyfesNqfLhhe2GW_5V9s2hf++i6mZS1Lw5hqQYTca85w@mail.gmail.com>
+        <CAFOYHZC0r35mfOVUExHsBP5=URKFAt_wDTZ51pTc=XkXyogqKQ@mail.gmail.com>
+        <CALRdAfcKSsct1gD87Pkjugttr3pFbXnh0W=kVa95G+9ZpNtLnA@mail.gmail.com>
+Date:   Thu, 23 Dec 2021 10:35:51 -0800
+In-Reply-To: <CALRdAfcKSsct1gD87Pkjugttr3pFbXnh0W=kVa95G+9ZpNtLnA@mail.gmail.com>
+        (Daniel Vicarel's message of "Thu, 23 Dec 2021 01:07:56 -0500")
+Message-ID: <xmqq1r23cgoo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
- <d022176618d76943743940da0787291d51c9b4f0.1640109948.git.gitgitgadget@gmail.com>
- <xmqqa6gto74z.fsf@gitster.g>
-In-Reply-To: <xmqqa6gto74z.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 23 Dec 2021 10:26:23 -0800
-Message-ID: <CABPp-BFN+54-poG3JAqeF7SfMdcc+8Q+23ri58FbNe=eYjNF6w@mail.gmail.com>
-Subject: Re: [PATCH 2/9] ll-merge: make callers responsible for showing warnings
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Neeraj Singh <nksingh85@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 286231DC-641F-11EC-95C1-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 21, 2021 at 3:44 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > Since some callers may want to send warning messages to somewhere other
-> > than stdout/stderr, stop printing "warning: Cannot merge binary files"
-> > from ll-merge and instead modify the return status of ll_merge() to
-> > indicate when a merge of binary files has occurred.
-> >
-> > Note that my methodology included first modifying ll_merge() to return
-> > a struct, so that the compiler would catch all the callers for me and
-> > ensure I had modified all of them.  After modifying all of them, I then
-> > changed the struct to an enum.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  apply.c            |  5 ++++-
-> >  builtin/checkout.c | 12 ++++++++----
-> >  ll-merge.c         | 40 ++++++++++++++++++++++------------------
-> >  ll-merge.h         |  9 ++++++++-
-> >  merge-blobs.c      |  5 ++++-
-> >  merge-ort.c        |  5 ++++-
-> >  merge-recursive.c  |  5 ++++-
-> >  notes-merge.c      |  5 ++++-
-> >  rerere.c           | 10 +++++++---
-> >  9 files changed, 65 insertions(+), 31 deletions(-)
-> >
-> > diff --git a/apply.c b/apply.c
-> > index 43a0aebf4ee..12ea9c72a6b 100644
-> > --- a/apply.c
-> > +++ b/apply.c
-> > @@ -3492,7 +3492,7 @@ static int three_way_merge(struct apply_state *state,
-> >  {
-> >       mmfile_t base_file, our_file, their_file;
-> >       mmbuffer_t result = { NULL };
-> > -     int status;
-> > +     enum ll_merge_result status;
-> >
-> >       /* resolve trivial cases first */
-> >       if (oideq(base, ours))
-> > @@ -3509,6 +3509,9 @@ static int three_way_merge(struct apply_state *state,
-> >                         &their_file, "theirs",
-> >                         state->repo->index,
-> >                         NULL);
-> > +     if (status == LL_MERGE_BINARY_CONFLICT)
-> > +             warning("Cannot merge binary files: %s (%s vs. %s)",
-> > +                     "base", "ours", "theirs");
->
-> This used to come from ll_merge()
->
-> > -                     warning("Cannot merge binary files: %s (%s vs. %s)",
-> > -                             path, name1, name2);
-> > -                     /* fallthru */
->
-> And our call to ll_merge() above (half of it invisible in the
-> pre-context of the hunk) gave "ours" and "theirs" to our_label and
-> their_label, which in turn are called name1 and name2, respectively,
-> in ll_merge_binary() driver.
->
-> I am not sure about the "base" string, though.  I suspect that your
-> "base" should be a reference to the parameter 'path' of three_way_merge()
-> function.
+Daniel Vicarel <shundra8820@gmail.com> writes:
 
-Ah, indeed; thanks for reading carefully.
+> Thanks for the input, all.
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>> perhaps the doc update would be the quickest one that offers the most to learn from
+>
+> Sounds good! Now by "doc update" do you mean updating docs in the
+> Documentation/ folder, or adding a warning to the CLI output of `git
+> merge --continue`?
 
-> > diff --git a/builtin/checkout.c b/builtin/checkout.c
-> > index cbf73b8c9f6..3a559d69303 100644
-> > --- a/builtin/checkout.c
-> > +++ b/builtin/checkout.c
-> > @@ -237,6 +237,7 @@ static int checkout_merged(int pos, const struct checkout *state,
-> >       struct cache_entry *ce = active_cache[pos];
-> >       const char *path = ce->name;
-> >       mmfile_t ancestor, ours, theirs;
-> > +     enum ll_merge_result merge_status;
-> >       int status;
-> >       struct object_id oid;
-> >       mmbuffer_t result_buf;
-> > @@ -267,13 +268,16 @@ static int checkout_merged(int pos, const struct checkout *state,
-> >       memset(&ll_opts, 0, sizeof(ll_opts));
-> >       git_config_get_bool("merge.renormalize", &renormalize);
-> >       ll_opts.renormalize = renormalize;
-> > -     status = ll_merge(&result_buf, path, &ancestor, "base",
-> > -                       &ours, "ours", &theirs, "theirs",
-> > -                       state->istate, &ll_opts);
-> > +     merge_status = ll_merge(&result_buf, path, &ancestor, "base",
-> > +                             &ours, "ours", &theirs, "theirs",
-> > +                             state->istate, &ll_opts);
-> >       free(ancestor.ptr);
-> >       free(ours.ptr);
-> >       free(theirs.ptr);
-> > -     if (status < 0 || !result_buf.ptr) {
-> > +     if (merge_status == LL_MERGE_BINARY_CONFLICT)
-> > +             warning("Cannot merge binary files: %s (%s vs. %s)",
-> > +                     path, "ours", "theirs");
->
-> This one looks correct.
->
-> > +     if (merge_status < 0 || !result_buf.ptr) {
-> >               free(result_buf.ptr);
-> >               return error(_("path '%s': cannot merge"), path);
-> >       }
->
-> > diff --git a/merge-blobs.c b/merge-blobs.c
-> > index ee0a0e90c94..8138090f81c 100644
-> > --- a/merge-blobs.c
-> > +++ b/merge-blobs.c
-> > @@ -36,7 +36,7 @@ static void *three_way_filemerge(struct index_state *istate,
-> >                                mmfile_t *their,
-> >                                unsigned long *size)
-> >  {
-> > -     int merge_status;
-> > +     enum ll_merge_result merge_status;
-> >       mmbuffer_t res;
-> >
-> >       /*
-> > @@ -50,6 +50,9 @@ static void *three_way_filemerge(struct index_state *istate,
-> >                               istate, NULL);
-> >       if (merge_status < 0)
-> >               return NULL;
-> > +     if (merge_status == LL_MERGE_BINARY_CONFLICT)
-> > +             warning("Cannot merge binary files: %s (%s vs. %s)",
-> > +                     path, ".our", ".their");
->
-> OK.
->
-> > diff --git a/merge-ort.c b/merge-ort.c
-> > index 0342f104836..c24da2ba3cb 100644
-> > --- a/merge-ort.c
-> > +++ b/merge-ort.c
-> > @@ -1743,7 +1743,7 @@ static int merge_3way(struct merge_options *opt,
-> >       mmfile_t orig, src1, src2;
-> >       struct ll_merge_options ll_opts = {0};
-> >       char *base, *name1, *name2;
-> > -     int merge_status;
-> > +     enum ll_merge_result merge_status;
-> >
-> >       if (!opt->priv->attr_index.initialized)
-> >               initialize_attr_index(opt);
-> > @@ -1787,6 +1787,9 @@ static int merge_3way(struct merge_options *opt,
-> >       merge_status = ll_merge(result_buf, path, &orig, base,
-> >                               &src1, name1, &src2, name2,
-> >                               &opt->priv->attr_index, &ll_opts);
-> > +     if (merge_status == LL_MERGE_BINARY_CONFLICT)
-> > +             warning("Cannot merge binary files: %s (%s vs. %s)",
-> > +                     path, name1, name2);
->
-> OK; this is your code and I do not have to read it too carefully,
-> but all we need is conveniently in the pre-context of the hunk ;-).
->
-> > diff --git a/merge-recursive.c b/merge-recursive.c
-> > index d9457797dbb..bc73c52dd84 100644
-> > --- a/merge-recursive.c
-> > +++ b/merge-recursive.c
-> > @@ -1044,7 +1044,7 @@ static int merge_3way(struct merge_options *opt,
-> >       mmfile_t orig, src1, src2;
-> >       struct ll_merge_options ll_opts = {0};
-> >       char *base, *name1, *name2;
-> > -     int merge_status;
-> > +     enum ll_merge_result merge_status;
-> >
-> >       ll_opts.renormalize = opt->renormalize;
-> >       ll_opts.extra_marker_size = extra_marker_size;
-> > @@ -1090,6 +1090,9 @@ static int merge_3way(struct merge_options *opt,
-> >       merge_status = ll_merge(result_buf, a->path, &orig, base,
-> >                               &src1, name1, &src2, name2,
-> >                               opt->repo->index, &ll_opts);
-> > +     if (merge_status == LL_MERGE_BINARY_CONFLICT)
-> > +             warning("Cannot merge binary files: %s (%s vs. %s)",
-> > +                     a->path, name1, name2);
->
-> OK.
->
-> > diff --git a/notes-merge.c b/notes-merge.c
-> > index b4a3a903e86..01d596920ea 100644
-> > --- a/notes-merge.c
-> > +++ b/notes-merge.c
-> > @@ -344,7 +344,7 @@ static int ll_merge_in_worktree(struct notes_merge_options *o,
-> >  {
-> >       mmbuffer_t result_buf;
-> >       mmfile_t base, local, remote;
-> > -     int status;
-> > +     enum ll_merge_result status;
-> >
-> >       read_mmblob(&base, &p->base);
-> >       read_mmblob(&local, &p->local);
-> > @@ -358,6 +358,9 @@ static int ll_merge_in_worktree(struct notes_merge_options *o,
-> >       free(local.ptr);
-> >       free(remote.ptr);
-> >
-> > +     if (status == LL_MERGE_BINARY_CONFLICT)
-> > +             warning("Cannot merge binary files: %s (%s vs. %s)",
-> > +                     oid_to_hex(&p->obj), o->local_ref, o->remote_ref);
->
-> This uses another slot in the rotating buffer used by oid_to_hex(),
-> but I do not think anybody grabbed a pointer to one of them and held
-> onto it before we got here, so it would be OK.
->
-> > diff --git a/rerere.c b/rerere.c
-> > index d83d58df4fb..46fd01819b8 100644
-> > --- a/rerere.c
-> > +++ b/rerere.c
-> > @@ -609,19 +609,23 @@ static int try_merge(struct index_state *istate,
-> >                    const struct rerere_id *id, const char *path,
-> >                    mmfile_t *cur, mmbuffer_t *result)
-> >  {
-> > -     int ret;
-> > +     enum ll_merge_result ret;
-> >       mmfile_t base = {NULL, 0}, other = {NULL, 0};
-> >
-> >       if (read_mmfile(&base, rerere_path(id, "preimage")) ||
-> >           read_mmfile(&other, rerere_path(id, "postimage")))
-> > -             ret = 1;
-> > -     else
-> > +             ret = LL_MERGE_CONFLICT;
-> > +     else {
->
-> Let's have {} around the if clause now the corresponding else clause
-> needs it.
+The former.  The current text says "... you can conclude the merge
+by running `git merge --continue`" without giving a clue that this
+is another way to say "git commit" that is longer to type.
 
-Will fix.
+The way it rejects extra arguments happens to work as a safety valve
+that is not very end-user friendly; as you found out, it rejects
+options and arguments (like pathspec).  So "--continue" is more than
+a mere synonym to "git commit".
 
-> >               /*
-> >                * A three-way merge. Note that this honors user-customizable
-> >                * low-level merge driver settings.
-> >                */
-> >               ret = ll_merge(result, path, &base, NULL, cur, "", &other, "",
-> >                              istate, NULL);
-> > +             if (ret == LL_MERGE_BINARY_CONFLICT)
-> > +                     warning("Cannot merge binary files: %s (%s vs. %s)",
-> > +                             path, "", "");
-> > +     }
+> Junio C Hamano <gitster@pobox.com> writes:
+>> coming up with a sensible list of allowed options and arguments [to `git merge --continue`] would be quite hard.
 >
-> This is a faithful conversion of what should not happen in practice,
-> as the rerere logic would not be able to reach here.  In a binary
-> file, we won't be able to identify <<< === >>> blocks, hash the text
-> in the conflicted block to come up with the conflict ID to find the
-> preimage and postimage files.  These files are the input to the low
-> level merge driver call we are making here.
+> Chris Packham <judge.packham@gmail.com> writes:
+>> I think it'd be a good idea to allow [--no-edit on `git merge --continue`] as long as it's the only other option allowed with --continue.
 >
-> Looking almost good except for a warning message bug I spotted
-> earlier.
->
-> Thanks.
+> Based on these two pieces of feedback, it sounds like adding _just_
+> the `--no-edit` option at this point to `git merge --continue` is
+> worthwhile, and hopefully approachable for a newb. For now I'll put a
+> pin in it though, and focus on the documentation task above.
+
+Well, I don't know about Chris, but I didn't mean to suggest that by
+saying that deciding which ones to allow and which ones to reject is
+hard.  Knowing that there are other options that deserve the same
+attention as `--no-edit` to be supported now makes a patch to only
+add support for `--no-edit` an incomplete one.  If we need to add
+support for more in the future, at least the mechanism used to add
+the first one should be something we can reuse in the future for
+these other ones.
+
+The way "git commit" is internally invoked from "git merge --continue"
+happens to work with the current "we only pass no arguments, and we
+exit once the command is done" usage, but it fundamentally is wrong.
+No cmd_foo() functions should be called from anything but the
+run_builtin() function in git.c, as they are not prepared to be
+called twice, and they are not prepared to be called in an
+environment where other things (like reading configuration files)
+have already happened.  If we were to extend what is passed when
+"git merge --continue" calls "git commit", we should first clean up
+the (ab)use of cmd_commit() call from the code path, before adding
+new features.
+
+So, no, I do not think it is a welcome change to just allow passing
+"--no-edit" in a way that is "approachable for a newb".
+
+Thanks.
+
+
