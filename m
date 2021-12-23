@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D63BC433EF
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 15:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CED4C433EF
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 15:59:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244611AbhLWP6S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Dec 2021 10:58:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38078 "EHLO
+        id S1349029AbhLWP7B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Dec 2021 10:59:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231974AbhLWP6R (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Dec 2021 10:58:17 -0500
-Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF6A5C061401
-        for <git@vger.kernel.org>; Thu, 23 Dec 2021 07:58:17 -0800 (PST)
-Received: by mail-ua1-x935.google.com with SMTP id i6so10683953uae.6
-        for <git@vger.kernel.org>; Thu, 23 Dec 2021 07:58:17 -0800 (PST)
+        with ESMTP id S231974AbhLWP7B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Dec 2021 10:59:01 -0500
+Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB09C061401
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 07:59:00 -0800 (PST)
+Received: by mail-vk1-xa31.google.com with SMTP id u1so3403607vkn.10
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 07:59:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=XAaR2TphAUjaXoalz8vShysblYyTXN9p/ztuuuL4G7A=;
-        b=I4WB3hRRVWFE9Ew6LVfU6S9ODKeEW50veXpPIUP2/SQrKI53ZiEnwDL5lNpiWOUute
-         pvZgJ9ewxp/aNRzQSZEWnaCLhBIk4SK9ArhL7KD9Uvx4k/TuD8n3Jy/MrkZpn8f8E1bS
-         rxuTdAG/h5IHv8PK3O4sxdaRI6AUNJ9Ae7ZqhTT57vcpNedlK/72OwUj5MrXXfXwUMtI
-         iLu59gBQ9QeDshs8Y3z9RUALmJ3i8rE+IfifA+AoLqifICexDjVv0pA+gk9CbmxI+DOq
-         Rl8wd3leCu/mFQtQG4yBQpCeM/heWVMnGbIbti7aNOOVoBWdpa+a3qnC8RHthYI9wsCi
-         5PQA==
+        bh=qFhtdDynuol7RFtfkuVMH93dUDdwx80KzQucBnvd+xA=;
+        b=jYRLx9ccNHYuYafc7SHk1seSYgY1CDBIJl2hz1i5Z+H4c7AGJpXTzdjk7/Ypplir8o
+         qdI8oQMZHAkKb/JiDQdJNk4bqwnQnsvlkncmorNErDfQ9Sb7rVcWswtv5y9XsGi38oiO
+         R+1QLDVHPurxXJrofJPL9u3rEkNRNdd/zDNTwMc40PdrBjtd0P6Rtrht/c4QDnUNZ1fY
+         ed7EvOeYLTGo9vG8HY2f3EmgOIeBkf1iKZe4CDVdRIloZIRM3eys5IetOHOfZ0PnGAt5
+         4MQgbk1Z06RB9DGK1PpeymN1/b4T1S7Wf/YFbidUWrHQLtoF/W9IMSUK3jw/ZsAkuFQm
+         lVKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=XAaR2TphAUjaXoalz8vShysblYyTXN9p/ztuuuL4G7A=;
-        b=BB/ed4JbjzAaEf5W7kex0tscdwlIWqCQpDNDZk7C3yniNoRhZRS5UM1CGcY4CqZjec
-         D+WCd7vJ1LVRsFJOpciyNi9N3JzQ2yGJIU+lEsd8V0hkV3ap96+gPFeU58W8nvQ3V5gt
-         L4o+fMwmFzR6uwKbaLxfXy6J56JpQhpBDLQXpBydyntZbnRFGR2arQuvpM4iDBv8z/nU
-         T92biq0UcXzIQnRtn01FtNTHLZdWbVggFB1kX/RaW9M6yBgYMx29xw05nL0T6dVtxF4V
-         3nkGYLZRkP+VSoa5PGItQnqjs4TT++xgyYERxiz8GYv/x2bszZFtK6VPjezzjKhtpCBc
-         JMlQ==
-X-Gm-Message-State: AOAM532zpyJcSFr/AQ+tsuH0gsJDUPHmeZUlFt26pzxuJTURucL+sIUf
-        ReVdR7feJaroEE8kuLq4fbG1Fx9ZM8hPI3F1lmUOAA==
-X-Google-Smtp-Source: ABdhPJzRCDdxyF1o2JpQ1U0BA8YOLosNgo/LCD6DgXmi2wlywrOP/35bHUcFv/HWP1TbDvbW5/0Exa4IvDX/19Vnm/I=
-X-Received: by 2002:a67:e15a:: with SMTP id o26mr959706vsl.83.1640275096729;
- Thu, 23 Dec 2021 07:58:16 -0800 (PST)
+        bh=qFhtdDynuol7RFtfkuVMH93dUDdwx80KzQucBnvd+xA=;
+        b=RT35eHzQkT1bK1EQVO2L5IS0Y0giTfT3A4/PxRvmdCnb/QSEBE1+m18Mvgcz6JmP6u
+         OOSbFkXga7Tb0tRLpEYquqdTAk5nGxTxYMiqdIEq9we121vVnnIR1sd87prST/Bnj1Vr
+         7oDaIC9I+Fcui1Qm6bu0vmnWbW2q5dljnD9JJ1wT/ASHF/L1MwJUxVPtTuwBWvcVzSnf
+         PHNNCD9Ogjzgw224sEXyeSvA37cPkOjxCWELuVD13fzn8oz88zki0b84Hr2wSKHmxFNF
+         yLNRaTMDww2ArqYPpP7ABIsNbsBFpZ/ZWyIo6o/g8b6NQW5D7iwzaI89cdEHDN3cUvLs
+         vIFA==
+X-Gm-Message-State: AOAM533RdDiGOrEj0RiIJkaFWs9CATzHr3BHWul3nCnSkF1XfVy7pfBe
+        NAZ2yNkWVfMd1lIULgbiZ6PoAOVjD/3ihPGfLFojbA==
+X-Google-Smtp-Source: ABdhPJz917GCdRxlIa8qaiJzbZDaFqJREEtqry/BE5f30aGzxuS0gSsZTvidvnPRHc4hoejyTVLHmXoVe9SFzo14VSI=
+X-Received: by 2002:a05:6122:1821:: with SMTP id ay33mr1012448vkb.37.1640275139965;
+ Thu, 23 Dec 2021 07:58:59 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1152.v4.git.git.1639482476.gitgitgadget@gmail.com>
- <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com> <e16bf0c5212ae85daa0d6aa2c78d551824b542bd.1640199396.git.gitgitgadget@gmail.com>
- <xmqq1r24gsph.fsf@gitster.g>
-In-Reply-To: <xmqq1r24gsph.fsf@gitster.g>
+ <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com> <e7f1be7bbec0427d5c10453631c3486936ed2bf0.1640199396.git.gitgitgadget@gmail.com>
+ <xmqq8rwcfe36.fsf@gitster.g>
+In-Reply-To: <xmqq8rwcfe36.fsf@gitster.g>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 23 Dec 2021 16:58:04 +0100
-Message-ID: <CAFQ2z_OXPw9-hLsaD+E1nGESS7eJH5o5sRrr_R_vW1Oa-vvZoA@mail.gmail.com>
-Subject: Re: [PATCH v5 16/16] reftable: be more paranoid about 0-length memcpy calls
+Date:   Thu, 23 Dec 2021 16:58:48 +0100
+Message-ID: <CAFQ2z_MsQjrucS5XiR7sDWb=sZKu0KFYVBspL_dvyq2DoDufKw@mail.gmail.com>
+Subject: Re: [PATCH v5 01/16] reftable: fix OOB stack write in print functions
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -63,30 +63,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 22, 2021 at 11:50 PM Junio C Hamano <gitster@pobox.com> wrote:
-
-> > -     memcpy(r->hash_prefix, key.buf, key.len);
-> > +     if (key.len)
-> > +             memcpy(r->hash_prefix, key.buf, key.len);
-> >       r->hash_prefix_len =3D key.len;
-> >
-> >       if (val_type =3D=3D 0) {
+On Wed, Dec 22, 2021 at 11:51 PM Junio C Hamano <gitster@pobox.com> wrote:>
+> Wow.  The first one is future-proofing in case we learn to use even
+> larger hash, but the latter is an outright bug that makes reviewers
+> feel embarrassed, isn't it?
 >
-> I am not sure why any of these are needed.
+> Thanks for noticing and fixing it.
 
-I'm not sure they are needed, but IMO it's not worth spending brain
-cycles on deciding either way. Checking the length is always a safe
-alternative.
-
-I would support having a safe_memcpy() that does this check centrally
-(note how our array_copy() array function also does this check, even
-if it's not always needed.)
+You should thank Coverity :-)
 
 --=20
 Han-Wen Nienhuys - Google Munich
 I work 80%. Don't expect answers from me on Fridays.
 --
+
 Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
 Registergericht und -nummer: Hamburg, HRB 86891
+
 Sitz der Gesellschaft: Hamburg
+
 Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
