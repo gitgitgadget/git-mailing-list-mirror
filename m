@@ -2,97 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47661C433F5
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 01:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FC90C433F5
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 02:44:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237109AbhLWBYH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 20:24:07 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50873 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229590AbhLWBYH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 20:24:07 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BCEFE10F9BC;
-        Wed, 22 Dec 2021 20:24:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=zpR+l6cJpyA1
-        UDpuKQ9fbxswLfJu9plSdAerSDgCcm8=; b=U9QLVcYznomWnDE3kpBSr0GdKJWO
-        cqOZoMpElmEzSvhtu4zRZqk321CsNBJQtNRTQo0zvVDYpMSc9qDtlHVPyXWAfzmR
-        4JnkXN6JYFWzoQiyHNQrTqctgH87RVWuk+xzidTV7jGk85UTdzLIttQCZnqYOvCr
-        iL+XbRzKyCFj8BI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E68610F9BB;
-        Wed, 22 Dec 2021 20:24:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DCC6010F9BA;
-        Wed, 22 Dec 2021 20:24:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4] fetch-pack: parameterize message containing 'ready'
- keyword
-References: <20211222075805.19027-1-bagasdotme@gmail.com>
-        <211222.86a6gtoyg2.gmgdl@evledraar.gmail.com>
-Date:   Wed, 22 Dec 2021 17:24:03 -0800
-In-Reply-To: <211222.86a6gtoyg2.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 22 Dec 2021 09:06:30 +0100")
-Message-ID: <xmqqtuf0cdvw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1345961AbhLWCol (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 21:44:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59274 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231315AbhLWCol (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 21:44:41 -0500
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35B2DC061574
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 18:44:41 -0800 (PST)
+Received: by mail-qv1-xf34.google.com with SMTP id kd9so3956567qvb.11
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 18:44:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=DXogSIaBVpBNmmkFpwpnypUtudFE9B4CUFqUw8/sRc4=;
+        b=N3GUgKHBzy7DFukPXT2HQ4pyiAV5HfILD0yvhY6OhEijbyBVVw4QJ7F0DrGhDqFaVX
+         zsbRSqdqIYduBoH8x/1434bwK1drRHuY1sJ9T94WyUwSZ0YE2mWBvUaA04B51n+YSND1
+         HgSv1ywHK8MTJ1OuUNCamKdwwdqsbYhIISKmkAU0RhV6ITmAk0pphJpOl8MIaYuEFzAa
+         yiL+lDftxjLlNRjhgCVmCcdy8mQlQCYzfzZe76nzXFlcyNbIE4LI0/S4AWZ9WUs2pk/z
+         Ws/V3w9mqvaPtkWbA2bQmOkD0iWUtS+9/mjUoddLbXp5YPLbzs2hOL3sFmc8Tr5o/u+W
+         56Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=DXogSIaBVpBNmmkFpwpnypUtudFE9B4CUFqUw8/sRc4=;
+        b=zb0gan4G1nkKH3uJCqW9V0nKhD6Fccchrr70gY/OO8RuogIshK3MJH3xFhKXCb5SQL
+         7ylmKRJsSgII5T7fTLY/h2juDKaTE6IV9Xk0yFTMpncVKvBxM+ykz6ZtzDWiENyvv8bS
+         nHjtXsj3pKtsBuDDGYvnpqfFze7LRTKWLXFWsEl1uWbVf/mGwv9NgQTMXMajjCGcdFu8
+         whRQpBEEkCeVd0CBWcHmP675Fkl6Q7Oh0jUyCueqkcAwLwc0Dl33rISISzhNqBfFJEm3
+         VRGib45XMJ9gJ6jqZ7d+k2ItU9eEI7GWXbl1sN/csQ0b8Yww/8WzuuIsWrdiDmOw2sIZ
+         ryjw==
+X-Gm-Message-State: AOAM533jrd+RgatlbQwM43IAfEMQUi17o/Y13mm+wdFfD4aRzeUcjRC+
+        B7S5Lu4mNTsiOvJBECEXEj1u3CCcDZbDoSndauo=
+X-Google-Smtp-Source: ABdhPJw6UeJTIYIxB2XpVjsRA7rGP8+S5uwoPDrBIdGlJ0N5Y238XAxSYSqpU3fafHyxRe8HsrmASZzTMomJq/f1lGw=
+X-Received: by 2002:a05:6214:2343:: with SMTP id hu3mr422135qvb.22.1640227480291;
+ Wed, 22 Dec 2021 18:44:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 048962C0-638F-11EC-AA04-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 2002:a05:6214:20ca:0:0:0:0 with HTTP; Wed, 22 Dec 2021 18:44:39
+ -0800 (PST)
+From:   =?UTF-8?B?2LHYttinINi02YXYsyDYp9mE2K/bjNmG?= <rshms3748@gmail.com>
+Date:   Thu, 23 Dec 2021 06:14:39 +0330
+Message-ID: <CANv3_vr66AjKZ4=DcNptQpo2T++OmDJeBP+WLDgWwcyusyTBbw@mail.gmail.com>
+Subject: =?UTF-8?B?2LDYrtuM2LHZhw==?=
+To:     11898207+NAQ1S@tickets.livechatinc.com,
+        =?UTF-8?B?2LHYttinINi02YXYsyDYp9mE2K/bjNmG?= <rshms3748@gmail.com>,
+        Cmail@gmail.com, freesupervpn@mail.com,
+        "GearBest.com" <newsletter@edm.gearbest.com>, git@vger.kernel.org,
+        info@bischoff-guss.com, M@gmail.com,
+        Mapbox <newsletter@mapbox.com>, maskvpn@hotmail.com,
+        media@campaign.who.int, opencovidpledge@gmail.com,
+        support@alohabrowser.com, support@zendesk.com,
+        ytandroid-support@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
->> diff --git a/fetch-pack.c b/fetch-pack.c
->> index 34987a2c30..51385cb3c9 100644
->> --- a/fetch-pack.c
->> +++ b/fetch-pack.c
->> @@ -1415,9 +1415,17 @@ static int process_ack(struct fetch_negotiator =
-*negotiator,
->>  	 * otherwise.
->>  	 */
->>  	if (*received_ready && reader->status !=3D PACKET_READ_DELIM)
->> -		die(_("expected packfile to be sent after 'ready'"));
->> +		/*
->> +		 * TRANSLATORS: The parameter will be 'ready', a protocol
->> +		 * keyword.
->> +		 */
->> +		die(_("expected packfile to be sent after '%s'"), "ready");
->>  	if (!*received_ready && reader->status !=3D PACKET_READ_FLUSH)
->> -		die(_("expected no other sections to be sent after no 'ready'"));
->> +		/*
->> +		 * TRANSLATORS: The parameter will be 'ready', a protocol
->> +		 * keyword.
->> +		 */
->> +		die(_("expected no other sections to be sent after '%s'"), "ready")=
-;
->> =20
->>  	return 0;
->>  }
->>
->> base-commit: 69a9c10c95e28df457e33b3c7400b16caf2e2962
->
-> This version (and earlier ones, really) looks good to me. Thanks!
-
-Trusting your ack wasted me one integration cycle by not looking at
-it myself X-<.
-
-There is "no" missing from the latter message.
-
-Back to finishing today's (belated) integration cycle.  Hopefully I
-can finish before dinner.
-
-Thanks.
+2K3Ys9in2KjZhSDYqNmHINin2LTYqtix2KfaqSDZiNmH2YUg2LHYs9in2YbbjCDZiNiq24zYsdmH
+INi02YjYrw0K
