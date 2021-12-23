@@ -2,77 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 279DCC433EF
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 18:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29579C433F5
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 18:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349808AbhLWSSP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Dec 2021 13:18:15 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62080 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349708AbhLWSSP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Dec 2021 13:18:15 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 46C2DEDB0D;
-        Thu, 23 Dec 2021 13:18:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0Glr7srp2e/FEY8JNDsOWa80A9n0F8+OcpHAy3
-        T9Pjg=; b=vRWa2F2xuDFF22VI/j5eFv/cYnwCct5FRj+RCsT55+UxZVF6NcG4xy
-        +IGgv6ikBLqCObrd6jh7EFZVJwYXQ3LxFAAtJGyTixJi1k4szTqHTGRW5PhFbqSw
-        JVLCa8V0Kqa9dPpU1FS2JncievydFVchOsEzJ3jqph4qRe+yiJp1k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D6DAEDB0C;
-        Thu, 23 Dec 2021 13:18:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A2D14EDB0B;
-        Thu, 23 Dec 2021 13:18:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 3/9] trace2: defer free of TLS CTX until program exit.
-References: <pull.1099.git.1640012469.gitgitgadget@gmail.com>
-        <e0c41e1fc7895ba67d7536115cd8c1598439ded1.1640012469.git.gitgitgadget@gmail.com>
-        <xmqqlf0equs3.fsf@gitster.g>
-        <a6f2a38b-926a-4b47-fd3f-b1327a7c3fcb@jeffhostetler.com>
-        <xmqqwnjwdz9j.fsf@gitster.g>
-        <84bce2d2-b6ff-547d-2d1f-a79200eb79a3@kdbg.org>
-Date:   Thu, 23 Dec 2021 10:18:12 -0800
-In-Reply-To: <84bce2d2-b6ff-547d-2d1f-a79200eb79a3@kdbg.org> (Johannes Sixt's
-        message of "Thu, 23 Dec 2021 08:38:22 +0100")
-Message-ID: <xmqqee63chi3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1349841AbhLWSYl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Dec 2021 13:24:41 -0500
+Received: from smtprelay03.ispgateway.de ([80.67.18.15]:61315 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232738AbhLWSYi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Dec 2021 13:24:38 -0500
+Received: from [91.113.179.170] (helo=[192.168.92.29])
+        by smtprelay03.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <marc.strapetz@syntevo.com>)
+        id 1n0Slc-0002cE-NC; Thu, 23 Dec 2021 19:24:40 +0100
+Message-ID: <b97672fa-837f-1e28-f7f2-aee80e52d374@syntevo.com>
+Date:   Thu, 23 Dec 2021 19:24:32 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B139A3F8-641C-11EC-8ABB-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH] update-index: refresh should rewrite index in case of
+ racy timestamps
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Marc Strapetz via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.1105.git.1640181390841.gitgitgadget@gmail.com>
+ <xmqqfsqkdwo4.fsf@gitster.g>
+From:   Marc Strapetz <marc.strapetz@syntevo.com>
+In-Reply-To: <xmqqfsqkdwo4.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On 23/12/2021 00:52, Junio C Hamano wrote:
+> Ah, there are cases where we do clear active_cache_changed when we
+> notice that an operation detected an error, to avoid spreading the
+> breakage by writing the index file out, and I think that is the
+> right thing to do.  Which means that the above patch is not quite
+> right.  Perhaps taking all of the above together, something like
+> this?
+> 
+> 	*o->has_errors |= refresh_cache(o->flags | flag);
+> 	if (*o->has_errors)
+> 		active_cache_changed = 0;
+> 	else if (has_racy_timestamps(&the_index))
+>          	/*
+> 		 * Even if nothing else has changed, updating the file
+> 		 * increases the chance that racy timestamps become
+> 		 * non-racy, helping future run-time performance.
+> 		 */
+> 		active_cache_changed |= SOMETHING_CHANGED;
 
-> Am 22.12.21 um 23:56 schrieb Junio C Hamano:
->> Jeff Hostetler <git@jeffhostetler.com> writes:
->> 
->>> I hadn't really thought about the term "TLS" in the context
->>> of crypto -- I had "thread local storage" on the brain.  I guess
->>> I've spent too much of my youth using Win32 thread APIs. :-)
->>>
->>> Let me take a look at removing those terms.
->> 
->> Nah, it may be just me.  As long as what TLS stands for is clear in
->> the context, it is fine.
->
-> No, really, my first reaction was, too: what the hack has crypto to do
-> with trace2? Are we now sending around trace output by email?
+I think it's safe to write the index even if refresh_cache() reports an 
+"error" and we should actually do that:
 
-Ok, then it is not just me ;-)
->
-> Please use "TLS" next to "CTX" only when it means "Transport Layer
-> Security".
+The underlying refresh_index() will report an "error" only for "file: 
+needs merge" and "file: needs update". In both cases, the corresponding 
+entries will not have been updated. Every entry which has been updated 
+is good on its own and writing these updates makes the index a little 
+bit better. Subsequent calls to refresh_index() won't have to do the 
+same work again (like invoking the quite expensive LFS filter).
+
+This is also how cmd_status() currently works: it does not pay attention 
+to the return value of refresh_index() and will always write the index 
+if racy timestamps are encountered.
+
+Overall, the "error" handling in update-index.c might not always do what 
+one expects. Let's consider your suggested fix. When invoking:
+
+update-index --refresh
+
+this won't fix racy timestamps, however:
+
+update-index --refresh --add untracked
+
+will do. I think this is caused by active_cache_changed being used in 
+two different ways: to indicate that the cache should be written and to 
+indicate that it must not be written. It might be a good idea to take 
+the latter "block index write" to a separate static variable in 
+update-index.c.
+
+Candidate usages of this new "block index write" variable will be in the 
+existing callbacks: errors detected in unresolve_callback() should 
+probably continue to block an index write, to ensure that either all or 
+none of the specified files will be unresolved. For the 
+reupdate_callback(), the underlying do_reupdate() seems to return 0 
+always, so there is dead code in the callback (or am I completely 
+blind?). To stay on the safe side, we may still continue to block an 
+index write here. The refresh_callback() will never block an index write.
+
+Does it make sense to clarify error handling in some preceding commit 
+and only then address the razy timestamps? It will probably make this 
+second commit clearer.
+
+>> +}
+>> +
+>> +update_assert_changed() {
+>> +	local ts1=$(test-tool chmtime --get .git/index) &&
+>> +	test_might_fail git update-index $1 &&
+>> +	local ts2=$(test-tool chmtime --get .git/index) &&
+>> +	[ $ts1 -ne $ts2 ]
+>> +}
+>> +
+>> +test_expect_success 'setup' '
+>> +	touch .git/fs-tstamp &&
+> 
+> Not that it is wrong, but do we need to create such a throw-away
+> file inside the .git directory?
+
+We actually only need a timestamp for which we know that it is before 
+the timestamp the next file system operation would create. I agree that 
+it should be easy to rewrite that using "test-tool chmtime". This should 
+also simplify reset_mtime().
+
+Regarding all other comments, thanks, I'll address them as suggested for 
+the next patch. And sorry for not checking CodingGuidelines before (I 
+had completely missed this document).
+
+-Marc
