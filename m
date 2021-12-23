@@ -2,109 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69DB1C433FE
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 18:35:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8B99C433F5
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 18:37:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349842AbhLWSfy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Dec 2021 13:35:54 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58317 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240342AbhLWSfx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Dec 2021 13:35:53 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36089EDDB1;
-        Thu, 23 Dec 2021 13:35:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UNRvr1AUGZd9Ll9xTg1XYBdydHZGaHc2tPe5gA
-        FFo/U=; b=jgFl0B6zyfTIx3xqYNTqJ0Wy01MqcwuCWdcPuhhxS4iVOkNAJUPJ1j
-        L2UZwCO06ZcGPW5Oa9WkW0aPFBSjzxSAyz84v/T0Xik02heAO6Ta3fdLXRe4yt0Q
-        rme7RqQMQCXP+i3dH7I56UsN2RBYSauNrj/uwfvnXIsPCMvVzB4jU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E032EDDB0;
-        Thu, 23 Dec 2021 13:35:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8CD15EDDAF;
-        Thu, 23 Dec 2021 13:35:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Daniel Vicarel <shundra8820@gmail.com>
-Cc:     Chris Packham <judge.packham@gmail.com>, GIT <git@vger.kernel.org>
-Subject: Re: Why does "merge --continue" expect no arguments?
-References: <CALRdAfcyfesNqfLhhe2GW_5V9s2hf++i6mZS1Lw5hqQYTca85w@mail.gmail.com>
-        <CAFOYHZC0r35mfOVUExHsBP5=URKFAt_wDTZ51pTc=XkXyogqKQ@mail.gmail.com>
-        <CALRdAfcKSsct1gD87Pkjugttr3pFbXnh0W=kVa95G+9ZpNtLnA@mail.gmail.com>
-Date:   Thu, 23 Dec 2021 10:35:51 -0800
-In-Reply-To: <CALRdAfcKSsct1gD87Pkjugttr3pFbXnh0W=kVa95G+9ZpNtLnA@mail.gmail.com>
-        (Daniel Vicarel's message of "Thu, 23 Dec 2021 01:07:56 -0500")
-Message-ID: <xmqq1r23cgoo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1349853AbhLWShC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Dec 2021 13:37:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45292 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240342AbhLWShB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Dec 2021 13:37:01 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15E19C061401
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 10:37:01 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id q14so17057475edi.3
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 10:37:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/E4mbEizUsFRnrbDewe7z9bQE4tS88JkgLCz9rWDROY=;
+        b=OX3bxc2kqUUs192C2gss6yhrJgea1jq7a+LEJQjHZYoLTFyTl9Orypv04q/4Gaybcd
+         mY7bN9Ca3EJvQ6QHtHT4nctEc5tqOi64SLWrgof91IMuUeXdd9lEi7GR46ZqXH2O8bgo
+         +DwZs2Lg9e0YpD3tf6WjNeVn2ZcK4J0qvXepFH8FT0Gxvs7nq4+xTSRfLtAV11oz41zY
+         oi+sDwUw9UAX24K1nR5zSr5h1R4l2cQTmwZQQyvPL8xewa/q4cqJIyGr7ExYABt1m3MS
+         iod1llE5JO5H6SVEE0G/zkxjy4EX+5S0WvsDzrPlGAf4NBdUFiQO8i5AAixaPYpFJkrS
+         HStQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/E4mbEizUsFRnrbDewe7z9bQE4tS88JkgLCz9rWDROY=;
+        b=x15ElzafDjI9YcajnnFMCR5DsqSzj88H6e/WOHEAZJj7QHGdzTuoCyiPrCIX8dbMpb
+         gkHhdJ1K2n4oSsmaRw9WuaA/FkWZhXT9C3Q4BTl6sWSKvKs4CHcQPZNcKDF9ZDanmqDA
+         nOMv0xdOGRnTkBMCA3LwWgskIrj9/XS+banl6tqj52aPAjO0CyDGD8LR75U3zpD11dSz
+         5am810CU21nUli92LNoCf3uOl5ZLiesdd/Mxch2/4uQoukjaO8vsxaSnyjit0i3rPMit
+         7UtYQWw0H/atYVl6hDWSJuzf9LWidhV+0rTA9MLCy3/wcWslJZV70FVfOMZfrgnWMZ8K
+         RfCQ==
+X-Gm-Message-State: AOAM530g4ymNm1ArkkYxHMWOYCJ2ouaa0YyMcdLAgOHFG6Km0/bPb2am
+        eewEUGCXff9x2j4A1Hn1fJmwq55UF5tA1ecQhuA=
+X-Google-Smtp-Source: ABdhPJyf9LMz9O6JDNOvxxaYwpZyct9mwVSIFtfpWrBoSBg5BV2t333+DxQ0yHycWXh+0UXf1VZjj4YbXgcmP7xltOY=
+X-Received: by 2002:a05:6402:350b:: with SMTP id b11mr3055665edd.228.1640284619638;
+ Thu, 23 Dec 2021 10:36:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 286231DC-641F-11EC-95C1-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
+ <f36395fdee044a077a640bd3031a7a8da8a39657.1640109948.git.gitgitgadget@gmail.com>
+ <xmqq5yrho6f3.fsf@gitster.g>
+In-Reply-To: <xmqq5yrho6f3.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 23 Dec 2021 10:36:48 -0800
+Message-ID: <CABPp-BEqrB4cKb7QimJz9umKTcfLOrskkGBOYXnUDX36YyhROA@mail.gmail.com>
+Subject: Re: [PATCH 3/9] merge-ort: capture and print ll-merge warnings in our
+ preferred fashion
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Neeraj Singh <nksingh85@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Daniel Vicarel <shundra8820@gmail.com> writes:
-
-> Thanks for the input, all.
+On Tue, Dec 21, 2021 at 4:00 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Junio C Hamano <gitster@pobox.com> writes:
->> perhaps the doc update would be the quickest one that offers the most to learn from
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Sounds good! Now by "doc update" do you mean updating docs in the
-> Documentation/ folder, or adding a warning to the CLI output of `git
-> merge --continue`?
-
-The former.  The current text says "... you can conclude the merge
-by running `git merge --continue`" without giving a clue that this
-is another way to say "git commit" that is longer to type.
-
-The way it rejects extra arguments happens to work as a safety valve
-that is not very end-user friendly; as you found out, it rejects
-options and arguments (like pathspec).  So "--continue" is more than
-a mere synonym to "git commit".
-
-> Junio C Hamano <gitster@pobox.com> writes:
->> coming up with a sensible list of allowed options and arguments [to `git merge --continue`] would be quite hard.
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > Instead of immediately printing ll-merge warnings to stderr, we save
+> > them in our output strbuf.  Besides allowing us to move these warnings
+> > to a special file for --remerge-diff, this has two other benefits for
+> > regular merges done by merge-ort:
+> >
+> >   * The deferral of messages ensures we can print all messages about
+> >     any given path together (merge-recursive was known to sometimes
+> >     intersperse messages about other paths, particularly when renames
+> >     were involved).
 >
-> Chris Packham <judge.packham@gmail.com> writes:
->> I think it'd be a good idea to allow [--no-edit on `git merge --continue`] as long as it's the only other option allowed with --continue.
+> I would imagine that with something like this, we can show such a
+> warning message differently when it happens during an inner
+> "synthesizing a virtual common ancestor" merge (the most likely
+> value for "show differently" would be to "squelch"), which may be a
+> good thing.
+
+Yes, that is a possibility that opens up after this.  Which reminds
+me, merge-recursive nicely nested conflict/warnings messages from
+inner merges by adding 2*call_depth space characters before messages.
+I lost that in merge-ort (which becomes more problematic since
+merge-ort tries to group messages about the same path together, thus
+mixing inner merge messages with outer ones and providing no way to
+differentiate the two).  I've got a patch to fix that up, but of
+course it conflicts with this series, so I'll be submitting it after
+this one settles.
+
+> >       if (merge_status == LL_MERGE_BINARY_CONFLICT)
+> > -             warning("Cannot merge binary files: %s (%s vs. %s)",
+> > -                     path, name1, name2);
+> > +             path_msg(opt, path, 0,
+> > +                      "warning: Cannot merge binary files: %s (%s vs. %s)",
+> > +                      path, name1, name2);
+> >
 >
-> Based on these two pieces of feedback, it sounds like adding _just_
-> the `--no-edit` option at this point to `git merge --continue` is
-> worthwhile, and hopefully approachable for a newb. For now I'll put a
-> pin in it though, and focus on the documentation task above.
-
-Well, I don't know about Chris, but I didn't mean to suggest that by
-saying that deciding which ones to allow and which ones to reject is
-hard.  Knowing that there are other options that deserve the same
-attention as `--no-edit` to be supported now makes a patch to only
-add support for `--no-edit` an incomplete one.  If we need to add
-support for more in the future, at least the mechanism used to add
-the first one should be something we can reuse in the future for
-these other ones.
-
-The way "git commit" is internally invoked from "git merge --continue"
-happens to work with the current "we only pass no arguments, and we
-exit once the command is done" usage, but it fundamentally is wrong.
-No cmd_foo() functions should be called from anything but the
-run_builtin() function in git.c, as they are not prepared to be
-called twice, and they are not prepared to be called in an
-environment where other things (like reading configuration files)
-have already happened.  If we were to extend what is passed when
-"git merge --continue" calls "git commit", we should first clean up
-the (ab)use of cmd_commit() call from the code path, before adding
-new features.
-
-So, no, I do not think it is a welcome change to just allow passing
-"--no-edit" in a way that is "approachable for a newb".
-
-Thanks.
-
-
+> Nice.
