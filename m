@@ -2,173 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FE5CC433EF
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 21:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29FFAC433F5
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 21:54:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350298AbhLWVwG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Dec 2021 16:52:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60034 "EHLO
+        id S231548AbhLWVy5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Dec 2021 16:54:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231576AbhLWVwG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Dec 2021 16:52:06 -0500
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 264F9C061401
-        for <git@vger.kernel.org>; Thu, 23 Dec 2021 13:52:06 -0800 (PST)
-Received: by mail-pl1-x62e.google.com with SMTP id w24so5290308ply.12
-        for <git@vger.kernel.org>; Thu, 23 Dec 2021 13:52:06 -0800 (PST)
+        with ESMTP id S230281AbhLWVy4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Dec 2021 16:54:56 -0500
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAC73C061401
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 13:54:56 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id i8-20020a639d08000000b00340a257c531so3835064pgd.16
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 13:54:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=di5x17uWCRuB02c7Zv3ANMHs62Il1mmHuMNYRiGq19E=;
-        b=kj0CgF1kh0wHWjxK5shLFTfgJzgqLa0kidj/+Kkk51Sq87QVDG+kOGeSh2emfGdp3S
-         +mozLIHvuA5P9fWboZ/ZMCI/h3I/gAjJSc72bWzp5wmUtCNJOmIaLvatrl5T6Sp0X3sT
-         NHbO6x7g0CmfjVXY5dfn6tllIpWImBnOJ5IHgeAaJqL7WayjC6SIr82yuVk0YEM2s8Xe
-         +Q9WW5SwdX25Dh0DUlHWllb7m27uUzW27p1PBBNPvb+EfZeVYVn+t32vK9tCXPjSRuan
-         hNsQuDW05UwzOs+3mkXYkIplymEbKayXBRp5kxH9IulVyAUsbWaVHTvAs+WFaqim9Ryu
-         EOnA==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=CP0oPmJctNoGIxPfI6Rss7+UwnYgPkmxO4bHfkquPJE=;
+        b=e1lnWBcIkLCG9GLAknqqcfcdHly0YKkgzvVHzcrMQhKBkmJjSRkEi5cK0p+1xxtKHk
+         OOopCGVtIk88pyOG6TPg0ntj+Ng/QKY9xmXpA+CvB3/KmttgOtQu6BBUjuo8nmTzCbDh
+         UlqQ1OhaqQkL6l3cRbdEZ2sGqwraKaABYEy1fSDC1DWqSdUQyD78xCUhM66lH1BGP6gR
+         IEySm/a2NUBtWiC2nC7IwaB9YE15HmZeamXEHW9dFFOuWU5cb6eDp+eSvjBYd+useZY6
+         2FwAOjnmhgZpDQbZGWuMDPnr24xlj5x2r8VA12F3+2m190zC8OLvRKvnlUoeaSm/HEMp
+         aXkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=di5x17uWCRuB02c7Zv3ANMHs62Il1mmHuMNYRiGq19E=;
-        b=LCJNn5JmuyTVyRSyfXTh8ltr2DXdRY6G4t9C027pnvNE70DrI8YgDNr2SypJG4tWH6
-         FQaDUWYOJE1o6znLIOVQV0/4s6YVBKYNpO/SVg1doaGsAm3J9aLGmFYI1uyivWr0SSGC
-         yfXfK32TiBo6Cq63cAo+MKrQG8KyR83CcQMUY20tpvC9Q0uPas4UvAVgHWsBV+phUrS9
-         2iMCZMH6htqGm5L5n0dMwjzV7d9GQ9VPvQTbRApHS9n/YuUGZrBN8zJVaJKIWPbqe3FX
-         Se6Hpu7Vybhb6RKdHdKg1jYqBagkkkywYW+QtpwUpv7zw+hvDMGtIiVMaLxxj1T8ctfi
-         Hy/w==
-X-Gm-Message-State: AOAM533ciKBvo5KZCEya1svYmBUKC7KsRmeoSpy793JRMPpKiRBAnYW7
-        KD7TB8cMThMyXTQilTpftMA6Ug==
-X-Google-Smtp-Source: ABdhPJyrL5Yi7lIOyJaIOTYD52btF38CzusRuzU9oymU6+cPPPjfPa1FwCw+/kIMgBwErNLzNYh96w==
-X-Received: by 2002:a17:90a:e501:: with SMTP id t1mr4638000pjy.241.1640296325506;
-        Thu, 23 Dec 2021 13:52:05 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:3d09:6204:5070:ab7a])
-        by smtp.gmail.com with ESMTPSA id y11sm6497442pfn.7.2021.12.23.13.52.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Dec 2021 13:52:04 -0800 (PST)
-Date:   Thu, 23 Dec 2021 13:51:58 -0800
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=CP0oPmJctNoGIxPfI6Rss7+UwnYgPkmxO4bHfkquPJE=;
+        b=AOjOoqwolGMDTiyaUlcErQgtCfxO9uU69/fkupZzjczdkPK2rAYqx/KHD9zM7/Jd7W
+         HmUzTEbgye6fXqVvNAnME0c67lXTzbfQHYL6MoU+AhALQFQJR7tOLSjLsPmscf1Dmf3c
+         Lew9IViK+cXntvyKs1jud5o6oxFRb7lR++QiOHdWLyO1n4cU8T0lJISbbYzCD3fNQCnB
+         h6w8TOPJF6GdLOdnaXCzfyaVkg+a/gzRrOxQqCn5IJ0+rAn1LPlMVktxARh6TfTvSu6U
+         teVjZ/Jq4HsQYbVfwrWVrk7lcLPoO4bk+1EZZ1lhE2J6wvKp2ZJNe9EuqkBYvStIPFyq
+         XxeQ==
+X-Gm-Message-State: AOAM532+UaJ/TFEiMk+K31Cq3heaxPxlPdSxsxrD6/ZmaXgSuCVFRaDt
+        myeHMJJEFSxth4h3TpNNXOBpLcIrhHzBUX7AaqkplkdX7fc5oH0ZuUYHSGl6BCZbSbjRCcFu28R
+        dJcsePQR2T3yehHPqL4lr6qZAIAFcrulmQLDPQTOReTY7pEp6/X/PIHq0DqZiKBI=
+X-Google-Smtp-Source: ABdhPJzvGSibjIiksGvDSoQKovOw7rZeTaTq5UE3zvBsFEuFkUsKjevdAbVTrYiwv70b6ntb3YQ3Ow2lruURQA==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:3d09:6204:5070:ab7a])
+ (user=steadmon job=sendgmr) by 2002:aa7:86c8:0:b0:4b1:7b0:56aa with SMTP id
+ h8-20020aa786c8000000b004b107b056aamr4055371pfo.49.1640296496105; Thu, 23 Dec
+ 2021 13:54:56 -0800 (PST)
+Date:   Thu, 23 Dec 2021 13:54:53 -0800
+In-Reply-To: <patch-v5-3.6-b79964483e8-20211125T215529Z-avarab@gmail.com>
+Message-Id: <ec6a20a3d694d1d7e3db14f6bab42aff3e82c135.1640295389.git.steadmon@google.com>
+Mime-Version: 1.0
+References: <patch-v5-3.6-b79964483e8-20211125T215529Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.34.1.448.ga2b2bfdf31-goog
+Subject: [PATCH] fixup! object-name: make ambiguous object output translatable
 From:   Josh Steadmon <steadmon@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v5 2/6] object-name: explicitly handle OBJ_BAD in
- show_ambiguous_object()
-Message-ID: <YcTvfgxYc7U7bodg@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Bagas Sanjaya <bagasdotme@gmail.com>
-References: <cover-v4-0.3-00000000000-20211122T175219Z-avarab@gmail.com>
- <cover-v5-0.6-00000000000-20211125T215529Z-avarab@gmail.com>
- <patch-v5-2.6-ee86912f1c1-20211125T215529Z-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v5-2.6-ee86912f1c1-20211125T215529Z-avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, gitster@pobox.com, peff@peff.net,
+        bagasdotme@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021.11.25 23:03, Ævar Arnfjörð Bjarmason wrote:
-> Amend the "unknown type" handling in the code that displays the
-> ambiguous object list to assert() that we're either going to get the
-> "real" object types we can pass to type_name(), or a -1 (OBJ_BAD)
-> return value from oid_object_info().
-> 
-> See [1] for the current output, and [1] for the commit that added the
-> "unknown type" handling.
-> 
-> We are never going to get an "unknown type" in the sense of custom
-> types crafted with "hash-object --literally", since we're not using
-> the OBJECT_INFO_ALLOW_UNKNOWN_TYPE flag.
-> 
-> If we manage to otherwise unpack such an object without errors we'll
-> die() in parse_loose_header_extended() called by sort_ambiguous()
-> before we get to show_ambiguous_object(), as is asserted by the test
-> added in the preceding commit.
-> 
-> So saying "unknown type" here was always misleading, we really meant
-> to say that we had a failure parsing the object at all, if the problem
-> is only that it's type is unknown we won't reach this code.
+A nitpick, but the "ad" and "s" strbuf names here are not very friendly
+for readers who don't know offhand what the format_commit_message fields
+expand to. This makes them more self-descriptive.
 
-Are there situations other than repo corruption where this could happen?
-Maybe it would be more useful to just die() at this point and give the
-user advice on how to investigate / fix the corruption, rather than
-trying to disambiguate the objects involved.
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ object-name.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
+diff --git a/object-name.c b/object-name.c
+index 1dcbba7fa7..dcf3ab9999 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -378,15 +378,15 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
+ 	       type == OBJ_BLOB || type == OBJ_TAG);
+ 
+ 	if (type == OBJ_COMMIT) {
+-		struct strbuf ad = STRBUF_INIT;
+-		struct strbuf s = STRBUF_INIT;
++		struct strbuf date = STRBUF_INIT;
++		struct strbuf msg = STRBUF_INIT;
+ 		struct commit *commit = lookup_commit(ds->repo, oid);
+ 
+ 		if (commit) {
+ 			struct pretty_print_context pp = {0};
+ 			pp.date_mode.type = DATE_SHORT;
+-			format_commit_message(commit, "%ad", &ad, &pp);
+-			format_commit_message(commit, "%s", &s, &pp);
++			format_commit_message(commit, "%ad", &date, &pp);
++			format_commit_message(commit, "%s", &msg, &pp);
+ 		}
+ 
+ 		/*
+@@ -395,10 +395,11 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
+ 		 *
+ 		 *    "deadbeef commit 2021-01-01 - Some Commit Message"
+ 		 */
+-		strbuf_addf(&desc, _("%s commit %s - %s"), hash, ad.buf, s.buf);
++		strbuf_addf(&desc, _("%s commit %s - %s"),
++			    hash, date.buf, msg.buf);
+ 
+-		strbuf_release(&ad);
+-		strbuf_release(&s);
++		strbuf_release(&date);
++		strbuf_release(&msg);
+ 	} else if (type == OBJ_TAG) {
+ 		struct tag *tag = lookup_tag(ds->repo, oid);
+ 		const char *tag_tag = "";
 
-> So let's emit a generic "[bad object]" instead. As our tests added in
-> the preceding commit show, we'll have emitted various "error" output
-> already in those cases.
-> 
-> We should do better in the truly "unknown type" cases, which we'd need
-> to handle if we were passing down the OBJECT_INFO_ALLOW_UNKNOWN_TYPE
-> flag. But let's leave that for some future improvement. In a
-> subsequent commit I'll improve the output we do show, and not having
-> to handle the "unknown type" (as in OBJECT_INFO_ALLOW_UNKNOWN_TYPE)
-> simplifies that change.
-> 
-> 1. 5cc044e0257 (get_short_oid: sort ambiguous objects by type,
->    then SHA-1, 2018-05-10)
-> 2. 1ffa26c461 (get_short_sha1: list ambiguous objects on error,
->    2016-09-26)
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  object-name.c                       | 14 ++++++++++++--
->  t/t1512-rev-parse-disambiguation.sh |  2 +-
->  2 files changed, 13 insertions(+), 3 deletions(-)
-> 
-> diff --git a/object-name.c b/object-name.c
-> index fdff4601b2c..9750634ee76 100644
-> --- a/object-name.c
-> +++ b/object-name.c
-> @@ -361,6 +361,16 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
->  		return 0;
->  
->  	type = oid_object_info(ds->repo, oid, NULL);
-> +
-> +	if (type < 0) {
-> +		strbuf_addstr(&desc, "[bad object]");
-> +		goto out;
-> +	}
-> +
-> +	assert(type == OBJ_TREE || type == OBJ_COMMIT ||
-> +	       type == OBJ_BLOB || type == OBJ_TAG);
-> +	strbuf_addstr(&desc, type_name(type));
-> +
->  	if (type == OBJ_COMMIT) {
->  		struct commit *commit = lookup_commit(ds->repo, oid);
->  		if (commit) {
-> @@ -374,9 +384,9 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
->  			strbuf_addf(&desc, " %s", tag->tag);
->  	}
->  
-> -	advise("  %s %s%s",
-> +out:
-> +	advise("  %s %s",
->  	       repo_find_unique_abbrev(ds->repo, oid, DEFAULT_ABBREV),
-> -	       type_name(type) ? type_name(type) : "unknown type",
->  	       desc.buf);
->  
->  	strbuf_release(&desc);
-> diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-> index ae1c0cf2b21..f1948980dff 100755
-> --- a/t/t1512-rev-parse-disambiguation.sh
-> +++ b/t/t1512-rev-parse-disambiguation.sh
-> @@ -100,7 +100,7 @@ test_expect_success POSIXPERM 'ambigous zlib corrupt loose blob' '
->  	error: unable to unpack cafe... header
->  	error: inflate: data stream error (incorrect header check)
->  	error: unable to unpack cafe... header
-> -	hint:   cafe... unknown type
-> +	hint:   cafe... [bad object]
->  	hint:   cafe... blob
->  	fatal: ambiguous argument '\''cafe...'\'': unknown revision or path not in the working tree.
->  	Use '\''--'\'' to separate paths from revisions, like this:
-> -- 
-> 2.34.1.838.g779e9098efb
-> 
+base-commit: ea5019ecd7a405d7d5f6527054d0aaca2d3b4bcd
+-- 
+2.34.1.448.ga2b2bfdf31-goog
+
