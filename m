@@ -2,94 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71B4CC433EF
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 20:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22678C433F5
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 21:51:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234114AbhLWU2F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Dec 2021 15:28:05 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54396 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350248AbhLWU2C (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Dec 2021 15:28:02 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6E27316A5A3;
-        Thu, 23 Dec 2021 15:28:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=n6DQC1SNuzsASZbutMS73UvOVKWpFOoDTu/oG5
-        Noyl0=; b=eaJP3Pa33Tf8GvJz5CjSSBBufy4Vi+rBTNC24gmvaL83A/HOoN8LBt
-        MS7EOsSWL7ypacybKRSfxQreWqframw5DNag9jdHTkLoXpqXzW288TtNmaiMI0uj
-        3Ib79GHKj70y2rXko7d29t5iTpbRjLYn2j8NUUKN2WBQOfN7BZ4EE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 66B3716A5A2;
-        Thu, 23 Dec 2021 15:28:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 639C516A5A0;
-        Thu, 23 Dec 2021 15:27:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 0/3] preliminary fixes for reftable support
-References: <pull.1164.git.git.1640287790.gitgitgadget@gmail.com>
-Date:   Thu, 23 Dec 2021 12:27:55 -0800
-In-Reply-To: <pull.1164.git.git.1640287790.gitgitgadget@gmail.com> (Han-Wen
-        Nienhuys via GitGitGadget's message of "Thu, 23 Dec 2021 19:29:47
-        +0000")
-Message-ID: <xmqqk0fv83sk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1350273AbhLWVvu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Dec 2021 16:51:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59956 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231576AbhLWVvt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Dec 2021 16:51:49 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40EA9C061401
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 13:51:49 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id w7so4770715plp.13
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 13:51:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=pWou4rlEc0LZEWFNYkR92hn6SmCwunxz+ALs9NIAbNw=;
+        b=n5w5VJgEF4K87yAmnvfiYkoBh0JFWU9sdlxrlLDFZQT0GgotOlyVzy82EWJZQquIAX
+         kHaEgIg8jR74Av5i/rdiYJlClfMwrJOIxQ2x+bxyE2tay1uYx3j3XC+H1uRSLgH/xFBa
+         qsnALhK6xM7jqilTq3GdtcrHxu6F3euhZ0XNtEzeeJAqL4Kgc0dcF8RwN7yvkahiJGui
+         itZW0IG44ye4GZvhi/cZI5hfr2NMpP4Dl/HQCO7YlHtmpFPZDdF12xJCd1P4WSRXE66v
+         ARz6D6BloOHNsMCY87+Aae8CxqL07QbjEVOkglnO2cbaVMa3nu2cefBXelsTctm3jDRg
+         y7nA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=pWou4rlEc0LZEWFNYkR92hn6SmCwunxz+ALs9NIAbNw=;
+        b=n+lO4PBs24fMHYvjXkQRoYzFzL/pbK9G/TR4bq6LxzHh/U2Gfkh77p2nf1LcuneXa0
+         mBUYCMrk/f5QaMwLVR/yaUoi3OyFbA7+de45S4tP1xD4+EUgf7suiev+3jTZ66sR9JJu
+         rPiD0z+EfMdnKjIaqmkMvQzsNcWa/7cDnJN1vQBsjdMuRUvxCDOywG5QTiNmSD1tL73o
+         0p7okk0LaLpn8UW0uqiFiH23+uJf0Ncfz9W+PfnW0ilAdh/MuM1vk4Nj3tB/QFQRKifZ
+         xvTicJAKtcN/WVjc1zIR75wiuokdaJRBTChd/cQJFzoT7SOcQtpH0QlkdI3uX1nITRk0
+         OsAw==
+X-Gm-Message-State: AOAM5314MTrQzZ+nW2LlyusOykP0qyA0tYmfW+aup2UAwKU+8KcuX0nY
+        RiGLSrD4trRgIjoY/y6ke0wu2O0RVbv2Aw==
+X-Google-Smtp-Source: ABdhPJw6G78MghRG2jo2ORxHrgWouRVo3/WgAWBoeuXNPjPQFkWUk2ijUt1AkwbnJJeJpzHEKK1DZg==
+X-Received: by 2002:a17:902:c214:b0:148:a798:7aa with SMTP id 20-20020a170902c21400b00148a79807aamr4101815pll.90.1640296307924;
+        Thu, 23 Dec 2021 13:51:47 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:3d09:6204:5070:ab7a])
+        by smtp.gmail.com with ESMTPSA id on7sm6891473pjb.50.2021.12.23.13.51.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Dec 2021 13:51:47 -0800 (PST)
+Date:   Thu, 23 Dec 2021 13:51:40 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH v5 1/6] object-name tests: add tests for ambiguous object
+ blind spots
+Message-ID: <YcTvbH9tjXoJYpVN@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Bagas Sanjaya <bagasdotme@gmail.com>
+References: <cover-v4-0.3-00000000000-20211122T175219Z-avarab@gmail.com>
+ <cover-v5-0.6-00000000000-20211125T215529Z-avarab@gmail.com>
+ <patch-v5-1.6-767165d096d-20211125T215529Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D0B179B0-642E-11EC-B64A-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v5-1.6-767165d096d-20211125T215529Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 2021.11.25 23:03, Ævar Arnfjörð Bjarmason wrote:
+> Extend the tests for ambiguous objects to check how we handle objects
+> where we return OBJ_BAD when trying to parse them. As noted in [1] we
+> have a blindspot when it comes to this behavior.
+> 
+> Since we need to add new test data here let's extend these tests to be
+> tested under SHA-256, in d7a2fc82491 (t1512: skip test if not using
+> SHA-1, 2018-05-13) all of the existing tests were skipped, as they
+> rely on specific SHA-1 object IDs.
+> 
+> For these tests it only matters that the first 4 characters of the OID
+> prefix are the same for both SHA-1 and SHA-256. This uses strings that
+> I mined, and have the same prefix when hashed with both.
+> 
+> 1. https://lore.kernel.org/git/YZwbphPpfGk78w2f@coredump.intra.peff.net/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  t/t1512-rev-parse-disambiguation.sh | 84 +++++++++++++++++++++++++++++
+>  1 file changed, 84 insertions(+)
+> 
+> diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
+> index 7891a6becf3..ae1c0cf2b21 100755
+> --- a/t/t1512-rev-parse-disambiguation.sh
+> +++ b/t/t1512-rev-parse-disambiguation.sh
+> @@ -25,6 +25,90 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>  
+>  . ./test-lib.sh
+>  
+> +test_cmp_failed_rev_parse () {
+> +	dir=$1
+> +	rev=$2
+> +	shift
+> +
+> +	test_must_fail git -C "$dir" rev-parse "$rev" 2>actual.raw &&
+> +	sed "s/\($rev\)[0-9a-f]*/\1.../g" <actual.raw >actual &&
+> +	test_cmp expect actual
+> +}
+> +
+> +test_expect_success 'ambiguous blob output' '
+> +	git init --bare blob.prefix &&
+> +	(
+> +		cd blob.prefix &&
+> +
+> +		# Both start with "dead..", under both SHA-1 and SHA-256
+> +		echo brocdnra | git hash-object -w --stdin &&
+> +		echo brigddsv | git hash-object -w --stdin &&
 
-> these two commits to the reftable library prepare for making 2 tests in the
-> test suite pass in my pending changes for reftable support.
+These "dead.." objects don't seem to be used later, unless I've missed
+something.
 
-Welcome again to our "we cannot count to three" club.
 
-> This series was built against 'master'. It also has a fix for a fd leak (>=
-> 0 vs > 0), which is part of my reftable-coverity fixes topic.
+> +		# Both start with "beef.."
+> +		echo 1agllotbh | git hash-object -w --stdin &&
+> +		echo 1bbfctrkc | git hash-object -w --stdin
+> +	) &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	error: short object ID beef... is ambiguous
+> +	hint: The candidates are:
+> +	hint:   beef... blob
+> +	hint:   beef... blob
+> +	fatal: ambiguous argument '\''beef...'\'': unknown revision or path not in the working tree.
+> +	Use '\''--'\'' to separate paths from revisions, like this:
+> +	'\''git <command> [<revision>...] -- [<file>...]'\''
+> +	EOF
+> +	test_cmp_failed_rev_parse blob.prefix beef
+> +'
 
-What is going on here?  We have the same fix in two series?  Are
-these two series meant to be applied, or is this a beginning of
-splitting and resubmitting the other larger series into smaller
-chunks?
+Rather than comparing the entire output (which can be brittle), can we
+just grep for the important parts of the error message and compare
+those?
 
-I am not opposed to having two identical fixes to a high priority
-problem, one in a long series that may take longer to graduate and
-the other one in a short series that is trivial to verify.  I am not
-opposed to retract a longer series and trickle a number of series'
-that replace it, either.  I just wanted to know what is happening
-here.
 
-Thanks.
-
-> Han-Wen Nienhuys (3):
->   reftable: fix typo in header
->   reftable: signal overflow
->   reftable: support preset file mode for writing
->
->  reftable/block.h           |  2 +-
->  reftable/error.c           |  2 ++
->  reftable/readwrite_test.c  | 35 +++++++++++++++++++++++++++++++++++
->  reftable/reftable-error.h  |  4 ++++
->  reftable/reftable-writer.h |  3 +++
->  reftable/stack.c           | 30 ++++++++++++++++++++++++------
->  reftable/stack_test.c      | 33 +++++++++++++++++++++++++++++----
->  reftable/writer.c          |  3 +++
->  8 files changed, 101 insertions(+), 11 deletions(-)
->
->
-> base-commit: fae76fe5da3df25d752f2251b7ccda3f62813aa9
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1164%2Fhanwen%2Freftable-features-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1164/hanwen/reftable-features-v1
-> Pull-Request: https://github.com/git/git/pull/1164
+> +test_expect_success 'ambiguous loose blob parsed as OBJ_BAD' '
+> +	git init --bare blob.bad &&
+> +	(
+> +		cd blob.bad &&
+> +
+> +		# Both have the prefix "bad0"
+> +		echo xyzfaowcoh | git hash-object -t bad -w --stdin --literally &&
+> +		echo xyzhjpyvwl | git hash-object -t bad -w --stdin --literally
+> +	) &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	error: short object ID bad0... is ambiguous
+> +	hint: The candidates are:
+> +	fatal: invalid object type
+> +	EOF
+> +	test_cmp_failed_rev_parse blob.bad bad0
+> +'
+> +
+> +test_expect_success POSIXPERM 'ambigous zlib corrupt loose blob' '
+> +	git init --bare blob.corrupt &&
+> +	(
+> +		cd blob.corrupt &&
+> +
+> +		# Both have the prefix "cafe"
+> +		echo bnkxmdwz | git hash-object -w --stdin &&
+> +		oid=$(echo bmwsjxzi | git hash-object -w --stdin) &&
+> +
+> +		oidf=objects/$(test_oid_to_path "$oid") &&
+> +		chmod 755 $oidf &&
+> +		echo broken >$oidf
+> +	) &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	error: short object ID cafe... is ambiguous
+> +	hint: The candidates are:
+> +	error: inflate: data stream error (incorrect header check)
+> +	error: unable to unpack cafe... header
+> +	error: inflate: data stream error (incorrect header check)
+> +	error: unable to unpack cafe... header
+> +	hint:   cafe... unknown type
+> +	hint:   cafe... blob
+> +	fatal: ambiguous argument '\''cafe...'\'': unknown revision or path not in the working tree.
+> +	Use '\''--'\'' to separate paths from revisions, like this:
+> +	'\''git <command> [<revision>...] -- [<file>...]'\''
+> +	EOF
+> +	test_cmp_failed_rev_parse blob.corrupt cafe
+> +'
+> +
+>  if ! test_have_prereq SHA1
+>  then
+>  	skip_all='not using SHA-1 for objects'
+> -- 
+> 2.34.1.838.g779e9098efb
+> 
