@@ -2,74 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93356C433F5
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 00:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3511C433EF
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 00:48:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232050AbhLWAaj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Dec 2021 19:30:39 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61416 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230416AbhLWAai (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Dec 2021 19:30:38 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3D34516313E;
-        Wed, 22 Dec 2021 19:30:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Ew/UZgOT/yzD
-        ET8fKRJ2+vSCDRnz6qi95Cr7aeMW8tQ=; b=o49oYcwa03IyfstmNMgNDPD2nCiU
-        4wrm0ae4OVbRERWYyXjfDpR0qZwpNyMJdL1L0YgGx0or6p3Ek7aZ0la+PAGx2GeL
-        myCp0JB2/YLFl5dlr+2IXRoKmUohfyS9QGagZ7BU+n+EjEvwzztqze6bQjvBviYL
-        xhaLXjHZlzt8wdU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3597716313D;
-        Wed, 22 Dec 2021 19:30:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9285916313B;
-        Wed, 22 Dec 2021 19:30:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, J Smith <dark.panda@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v5 0/7] grep: simplify & delete "init" & "config" code
-References: <cover-v4-0.7-00000000000-20211203T101348Z-avarab@gmail.com>
-        <cover-v5-0.7-00000000000-20211222T025214Z-avarab@gmail.com>
-Date:   Wed, 22 Dec 2021 16:30:32 -0800
-In-Reply-To: <cover-v5-0.7-00000000000-20211222T025214Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 22 Dec
- 2021 03:58:50
-        +0100")
-Message-ID: <xmqqy24ccgd3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S238574AbhLWAsO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Dec 2021 19:48:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32818 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238129AbhLWAsN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Dec 2021 19:48:13 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEDA7C061574
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 16:48:12 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id bq20so8887114lfb.4
+        for <git@vger.kernel.org>; Wed, 22 Dec 2021 16:48:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gxt5sX++e5JmWRZzNJr8ZHaZjibW9gZ/gq4mz77rgeE=;
+        b=REaYAnuqxRowGcDUog9ZPjygP6OYBp2e/CrFPGA87jRCyZkmgfQIUoJSnG2sm+hDp9
+         htKcIsRBObRgZg/47uWoZpwvne1UF70YfCvq+DDUricyd3LlI/2iY9NiZDPy8PJ2C8Ge
+         yxEFbsw7Lx9GOjHm9ifJFCJe3VmvMbLvbJEj69ngr2OIwbfPiqwoMD5ovVsqCJy/K870
+         8cxobksDZRPDIf6ctNDxYzr+gfBngLT5Zmz4yJcya3YWMROFLJH2fX/uQM0SBzk+ypiM
+         L0Qv1eVAxe4mnGo2s30/VaMhEIYTPIHaMexIyAHRhU5XJr0EGBymxP8wjZcOoEB9ttFy
+         2yFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gxt5sX++e5JmWRZzNJr8ZHaZjibW9gZ/gq4mz77rgeE=;
+        b=xvrL4qtdQZJTZ9fbMD++/BcgHgBBDiljbnBUCQlx+thjC79bzwI5cz9JJYnd0KBLrL
+         2L/ed9BYnbK2Vi61b+F4tcCGHCVzHmwQfB+mavgjbuENNN7AOaWnTKMjfBBrLGkBfMF8
+         4LzLwwjYtY37w3OE9lvjH+fRcvg9uwAfhmCKiNIaJKzdejoS3vYTGN2b3KcuovztU+h4
+         JPVXAT6L8riXJyyD44mHpisGj239qEbqkq0tcV4ZPKaGi7mY6Mgd2f8t8LrFjoEutmZi
+         X6MFmCzEnVL+CK65LRVIYndNzBsX9jJfFysFQCZZLhyAYCFkHcCchs/t1owojhsVLxsR
+         o91g==
+X-Gm-Message-State: AOAM532+N8ZFkVMAI1jkV24yltCBGExtmTuFrq90Piv1tI3XOjc11opX
+        2Y72IaOFRtSkrnB0iw3jvN6EHr6iR48mT2vwiMNWHlrsIh4=
+X-Google-Smtp-Source: ABdhPJwCR8BUQ/vkDxzmX6u4W00NnNNSQ1lM3P2XYkoUBOKCrOGcJEff3BNtRpsNbUbHdNXcXrlmwvKCq0vPH0EXVtU=
+X-Received: by 2002:a05:6512:a8d:: with SMTP id m13mr163512lfu.664.1640220491142;
+ Wed, 22 Dec 2021 16:48:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 8A7312DA-6387-11EC-8069-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1151.v3.git.git.1639108573.gitgitgadget@gmail.com>
+ <pull.1151.v4.git.git.1639454952.gitgitgadget@gmail.com> <09b13280c2619e9dcbf33422c5dcfba84f0e52be.1639454952.git.gitgitgadget@gmail.com>
+In-Reply-To: <09b13280c2619e9dcbf33422c5dcfba84f0e52be.1639454952.git.gitgitgadget@gmail.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Thu, 23 Dec 2021 08:47:59 +0800
+Message-ID: <CANYiYbE+1o-8KxY2UGaCMdZJEPtnbTWgBrcFf7E-_ra76=kWmQ@mail.gmail.com>
+Subject: Re: [PATCH v4 07/10] sparse-checkout: enable reapply to take --[no-]{cone,sparse-index}
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
-
-> A simplification and code deletion of the overly complex setup for the
-> grep API, no behavior changes. For v4 see:
-> https://lore.kernel.org/git/cover-v4-0.7-00000000000-20211203T101348Z-a=
-varab@gmail.com/
+On Tue, Dec 14, 2021 at 3:24 PM Elijah Newren via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> This re-roll is rebased on the latest push-out to "master", now-landed
-> topic had a minor conflict with it in git.c.
+> From: Elijah Newren <newren@gmail.com>
+>
+> Folks may want to switch to or from cone mode, or to or from a
+> sparse-index without changing their sparsity paths.  Allow them to do so
+> using the reapply command.
+>
+> Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+> Reviewed-by: Victoria Dye <vdye@github.com>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  builtin/sparse-checkout.c | 18 +++++++++++++++++-
+>  1 file changed, 17 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index 16daae84975..0dae44c5759 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -759,13 +759,22 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+>  }
+>
+>  static char const * const builtin_sparse_checkout_reapply_usage[] = {
+> -       N_("git sparse-checkout reapply"),
+> +       N_("git sparse-checkout reapply [--[no-]cone] [--[no-]sparse-index] "),
 
-I understand that this has no changes other than the rebase to
-adjust for the "even when we are running 'git cmd -h', make sure we
-try to find where the git repository is (gently)".  Am I correct?
+Found a trailing space in [1], which came from this commit.
 
-I am not complaining for lack of improvements or anything.  I am
-only making sure that I am applying the right version to a right
-base.
+[1]: https://github.com/git-l10n/git-po/blob/pot/next/2021-12-22.diff#L19
 
-THanks.
+--
+Jiang Xin
