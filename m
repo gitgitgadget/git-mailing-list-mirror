@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CED4C433EF
-	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 15:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B552C433F5
+	for <git@archiver.kernel.org>; Thu, 23 Dec 2021 17:04:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349029AbhLWP7B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Dec 2021 10:59:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38248 "EHLO
+        id S1349384AbhLWRE0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Dec 2021 12:04:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231974AbhLWP7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Dec 2021 10:59:01 -0500
-Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB09C061401
-        for <git@vger.kernel.org>; Thu, 23 Dec 2021 07:59:00 -0800 (PST)
-Received: by mail-vk1-xa31.google.com with SMTP id u1so3403607vkn.10
-        for <git@vger.kernel.org>; Thu, 23 Dec 2021 07:59:00 -0800 (PST)
+        with ESMTP id S244295AbhLWREZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Dec 2021 12:04:25 -0500
+Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EDBDC061401
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 09:04:25 -0800 (PST)
+Received: by mail-ua1-x92f.google.com with SMTP id p37so11008418uae.8
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 09:04:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=qFhtdDynuol7RFtfkuVMH93dUDdwx80KzQucBnvd+xA=;
-        b=jYRLx9ccNHYuYafc7SHk1seSYgY1CDBIJl2hz1i5Z+H4c7AGJpXTzdjk7/Ypplir8o
-         qdI8oQMZHAkKb/JiDQdJNk4bqwnQnsvlkncmorNErDfQ9Sb7rVcWswtv5y9XsGi38oiO
-         R+1QLDVHPurxXJrofJPL9u3rEkNRNdd/zDNTwMc40PdrBjtd0P6Rtrht/c4QDnUNZ1fY
-         ed7EvOeYLTGo9vG8HY2f3EmgOIeBkf1iKZe4CDVdRIloZIRM3eys5IetOHOfZ0PnGAt5
-         4MQgbk1Z06RB9DGK1PpeymN1/b4T1S7Wf/YFbidUWrHQLtoF/W9IMSUK3jw/ZsAkuFQm
-         lVKg==
+        bh=SvPU9t9hprLx9Y2rv/IVY4iRDcTEQKI13PO6Hi6gB14=;
+        b=HNVaxj4JPpiTKy1aiv8UEY+WOaMe9SigPUSrXIRr5mvjf2f1yg51uHyr2W+lrigPEq
+         lguix3TqXJeHRDzamP3BTFYFJIaCvGbaI3HfR97q5yFZpwCshW0XQ9IOKaxNThcXUIk4
+         VXhHu1XhYZ5y3c1Y7r7RrciNT8AI8VIZjzSUF/DvFVZp4lPKSVHKeTJjcLJ44NT5OC1A
+         8NSRM9DhcSXs/xyqF2A+3Xb8ooL7ANCvU0fYHr6190aCPpRgkRi6C1HHQpeLeBFsW7xg
+         KTYy98oCxYGzn2tmFXoDwVYWGIHMvM1RiiVllPBbEkbECUa+LSYHbwPXONndHJpHsMWZ
+         BydQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qFhtdDynuol7RFtfkuVMH93dUDdwx80KzQucBnvd+xA=;
-        b=RT35eHzQkT1bK1EQVO2L5IS0Y0giTfT3A4/PxRvmdCnb/QSEBE1+m18Mvgcz6JmP6u
-         OOSbFkXga7Tb0tRLpEYquqdTAk5nGxTxYMiqdIEq9we121vVnnIR1sd87prST/Bnj1Vr
-         7oDaIC9I+Fcui1Qm6bu0vmnWbW2q5dljnD9JJ1wT/ASHF/L1MwJUxVPtTuwBWvcVzSnf
-         PHNNCD9Ogjzgw224sEXyeSvA37cPkOjxCWELuVD13fzn8oz88zki0b84Hr2wSKHmxFNF
-         yLNRaTMDww2ArqYPpP7ABIsNbsBFpZ/ZWyIo6o/g8b6NQW5D7iwzaI89cdEHDN3cUvLs
-         vIFA==
-X-Gm-Message-State: AOAM533RdDiGOrEj0RiIJkaFWs9CATzHr3BHWul3nCnSkF1XfVy7pfBe
-        NAZ2yNkWVfMd1lIULgbiZ6PoAOVjD/3ihPGfLFojbA==
-X-Google-Smtp-Source: ABdhPJz917GCdRxlIa8qaiJzbZDaFqJREEtqry/BE5f30aGzxuS0gSsZTvidvnPRHc4hoejyTVLHmXoVe9SFzo14VSI=
-X-Received: by 2002:a05:6122:1821:: with SMTP id ay33mr1012448vkb.37.1640275139965;
- Thu, 23 Dec 2021 07:58:59 -0800 (PST)
+        bh=SvPU9t9hprLx9Y2rv/IVY4iRDcTEQKI13PO6Hi6gB14=;
+        b=XpysWl15J3Q2z+QJeyojMpJkAAPh80pWz9CRidmZeGeGf5pae/GlikfPZyqiLXLWiZ
+         HStyVUotEe5i01QarTqblV68X8OW9zp8HlFJQIctfFsiwAvGo6wwpu09ibkiqalMdVYR
+         J13dFf5FNNzA5iY5JjWNi1VoqNVV9ty5KwWBrDOpxyl4nUVg3C3LkUQ6gpSGNtqiYrEd
+         SI5HrY4unbkN3H2BOaS0L6OnIenPh1YqOpE3ssIEW5SNNWjOzNkf4OXDu8umw/kvoPKa
+         GohxxObLGXum8e9WXubq9PXFax7oZ0dAKobngh5EB/bTc3aDTbSEskjhUEXtmPWeSx8M
+         bzSA==
+X-Gm-Message-State: AOAM531fNpDDOVI3LfixvTP/bubYEpPNogvoXOBtWjWrLcnsBZnaAv5T
+        tlhS6oaP3McxyWyeMhKJ+sjPUdNAmhxVemTslFFiHQ==
+X-Google-Smtp-Source: ABdhPJz/S3JTz6+0tqMVW/BurlI3yLdPi6oeXK0rbxc7SyLVzSS172/ObEEw2Qwy+yWkxAWP5/GXewEmvNXughyp/WU=
+X-Received: by 2002:ab0:4465:: with SMTP id m92mr1103895uam.47.1640279064163;
+ Thu, 23 Dec 2021 09:04:24 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1152.v4.git.git.1639482476.gitgitgadget@gmail.com>
- <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com> <e7f1be7bbec0427d5c10453631c3486936ed2bf0.1640199396.git.gitgitgadget@gmail.com>
- <xmqq8rwcfe36.fsf@gitster.g>
-In-Reply-To: <xmqq8rwcfe36.fsf@gitster.g>
+ <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com> <9ab631a3b29addaa54415139e7f60a79a19a6edb.1640199396.git.gitgitgadget@gmail.com>
+ <xmqqtuf0fe3r.fsf@gitster.g>
+In-Reply-To: <xmqqtuf0fe3r.fsf@gitster.g>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 23 Dec 2021 16:58:48 +0100
-Message-ID: <CAFQ2z_MsQjrucS5XiR7sDWb=sZKu0KFYVBspL_dvyq2DoDufKw@mail.gmail.com>
-Subject: Re: [PATCH v5 01/16] reftable: fix OOB stack write in print functions
+Date:   Thu, 23 Dec 2021 18:04:12 +0100
+Message-ID: <CAFQ2z_OLCzOYXgXCTXyLOwwk7EBkPzwH=KASDmuJbur=q7L1Jg@mail.gmail.com>
+Subject: Re: [PATCH v5 02/16] reftable: fix resource leak in block.c error path
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -63,15 +63,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 22, 2021 at 11:51 PM Junio C Hamano <gitster@pobox.com> wrote:>
-> Wow.  The first one is future-proofing in case we learn to use even
-> larger hash, but the latter is an outright bug that makes reviewers
-> feel embarrassed, isn't it?
+On Wed, Dec 22, 2021 at 11:51 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > +     if (err)
 >
-> Thanks for noticing and fixing it.
+> Is the convention for reader_init() different from all other
+> functions?  It makes reader wonder why this is not
+>
+>         if (err < 0)
+> > +             reftable_block_done(&block);
+>
+> even though it is not wrong per-se (as long as "zero means success"
+> is a part of the return value convention).
 
-You should thank Coverity :-)
+err > 0 is returned when we reach the end of the iteration, and this
+function can generate err=3D=3D1.
 
+Normally, block_reader_init() transfers the block to the block_reader.
+If err > 0, we skip that, so we'd be leaking the block.
+
+At the same time, this means the "if (err)" is superfluous. In the
+success case, the block was transferred to the block_reader, so the
+reftable_block_done() call is a nop.
+
+>
+> > +
+> > +     return err;
+> >  }
+>
+> This one is new in this round.  All look good, other than that one
+> check for error return.
+>
+> > diff --git a/reftable/readwrite_test.c b/reftable/readwrite_test.c
+> > index 5f6bcc2f775..6e88182a83a 100644
+> > --- a/reftable/readwrite_test.c
+> > +++ b/reftable/readwrite_test.c
+> > @@ -254,6 +254,71 @@ static void test_log_write_read(void)
+> >       reader_close(&rd);
+> >  }
+> >
+> > +static void test_log_zlib_corruption(void)
+> > +{
+> > +     struct reftable_write_options opts =3D {
+> > +             .block_size =3D 256,
+> > +     };
+> > +     struct reftable_iterator it =3D { 0 };
+> > +     struct reftable_reader rd =3D { 0 };
+> > +     struct reftable_block_source source =3D { 0 };
+> > +     struct strbuf buf =3D STRBUF_INIT;
+> > +     struct reftable_writer *w =3D
+> > +             reftable_new_writer(&strbuf_add_void, &buf, &opts);
+> > +     const struct reftable_stats *stats =3D NULL;
+> > +     uint8_t hash1[GIT_SHA1_RAWSZ] =3D { 1 };
+> > +     uint8_t hash2[GIT_SHA1_RAWSZ] =3D { 2 };
+>
+> Will this code be exercised when compiling with SHA256 support?  If
+> not, this is perfectly fine, but otherwise, this needs to be MAX,
+> not SHA1, no?
+
+The code is parameterized in terms of hash_size, so we don't have to
+test both flavors exhaustively. There is a
+test_table_read_write_seek_linear_sha256() that ensures that the basic
+functionality works for SHA256.
+
+> > +     char message[100] =3D { 0 };
+>
+> You're filling this to the sizeof(message)-1, so we can afford to
+> leave it uninitialized.
+
+At the same time, we can afford to initialize it :-)
+
+I'd rather not think about this, and always initialize everything.
+
+> > +     for (i =3D 0; i < sizeof(message)-1; i++)
+>
+> Style: SP around "-" on both sides.
+
+done.
+
+(I assume I don't have to resend the whole series for these small
+tweaks? I'll wait if anyone else has comments, and send a reroll early
+January)
 --=20
 Han-Wen Nienhuys - Google Munich
 I work 80%. Don't expect answers from me on Fridays.
