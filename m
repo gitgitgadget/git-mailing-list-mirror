@@ -2,187 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD181C433EF
-	for <git@archiver.kernel.org>; Fri, 24 Dec 2021 16:49:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF685C433EF
+	for <git@archiver.kernel.org>; Fri, 24 Dec 2021 17:01:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351218AbhLXQte (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Dec 2021 11:49:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53782 "EHLO
+        id S1353261AbhLXQ7L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Dec 2021 11:59:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236414AbhLXQtc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Dec 2021 11:49:32 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 952E2C061401
-        for <git@vger.kernel.org>; Fri, 24 Dec 2021 08:49:32 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id m21so36477398edc.0
-        for <git@vger.kernel.org>; Fri, 24 Dec 2021 08:49:32 -0800 (PST)
+        with ESMTP id S236414AbhLXQ7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Dec 2021 11:59:10 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4770FC061401
+        for <git@vger.kernel.org>; Fri, 24 Dec 2021 08:59:10 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id b13so35263835edd.8
+        for <git@vger.kernel.org>; Fri, 24 Dec 2021 08:59:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=qW4hR3jolRXv9N4ssjVutMYtkfOt29rIjoeXa9hjf0U=;
-        b=bz8Mu9n4O3W7IAT4MXNEbo5AJ3SYvRCtW6VX7zUo/6p0FAzH1ipQ1kgrW/JCZ2RsBE
-         8alOQde7OjSPtw9SU3mh0ngl1qztThba6ioIjYqItViDVJdVoY6mKVmtuACMn24rsmGh
-         tUYSdyzyFAzGi9hdY/+jcZgLLcGRx1AP7IPik5CkBhuX2+uucbJU5sxhdOReHPoPCih4
-         RCTIuaf6gEI6vCdKiAk+tNv3bSNKY40jIsBD7jiHdPp+WqZbtYGxSF9Y0Xbsc14YGEJm
-         z/y7pWD9SJOLUCevknxfj43Ks+OzJMNPKJyi1AUxx4LGcAp0DnseQgJgT3Km27ugd18c
-         bDRA==
+         :message-id:mime-version;
+        bh=zUbKjhVR6fxuEMGiQCTULftiJj7VCIs12k/tZWuXxNs=;
+        b=BCdFeqB92PXm6JMJzO0kiy64WDD4eYP8INIHanMLQmHN5xS+H+DoKdkp7XVyA+3cCg
+         n4D8ES8UUjBSQGKVz2WcR07pVpMVotPRIKlpKwJhRX2cevFGWOZiA3NCizbPb/5s9PfS
+         82NWYKrEG7vA7J6zJJQgahfY24qzNRY2+iaAY5RKZCtgC7eShVjmo3PAlGLqepmA9vaR
+         ZR3ws6DhJ4QN5QbiUgvp5z6anuuRo3dJAdjgeOf6C/7ZMe7cAbdnGIKM8A3qZrwO3d58
+         NWsw91vhkahTSC8L+avbE1qTboljwMdW9721nV1ajaw8gc9XnZz+En5tT3P3xmPg68LC
+         OhVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=qW4hR3jolRXv9N4ssjVutMYtkfOt29rIjoeXa9hjf0U=;
-        b=cA7Sy4I/E6PNPCGX85OV5b86UApC8kf7pQXPJmNX9dwMORFWDbpW0N1Lxne6hfyp8B
-         0tyQLdtkZf8w2cYeUhKyp5HzmhKJ8TkBUed/ANNRH3B/UElEjLgWAEOex5IL6j76Ha6D
-         pRKq45kRcTAaMzG7YjkPg49fxv/6tP0f0abGOiDlOg5ZteIz7zPYXADWSNsuLEA1iGlw
-         4hsxNoaY9SjiEyslAx/VyWIKibfq9nvyBP3lqvfG7FoFMp6XjfYAa1dKKQL6Kip/aG7J
-         O49NPssVE/fOs4w7SiussRgjfF+ztOdVIIyV2ngywXY71VdMNoH0hIa8BY435ne2KXbZ
-         2INg==
-X-Gm-Message-State: AOAM533NNF66DhEsUbD7LYTBZv9Kggdk6i3Hkzj7alljjayb49cXK0FT
-        Fei1YYrcG8eIyoXR1fjIXwQ=
-X-Google-Smtp-Source: ABdhPJz65dObjhypLK2Ess1b7NAQurU3KbiOZTmQfTDNu9Fm9dsityX0vnI9uInSDkBv6vriOlayjQ==
-X-Received: by 2002:a05:6402:1203:: with SMTP id c3mr6436997edw.253.1640364571071;
-        Fri, 24 Dec 2021 08:49:31 -0800 (PST)
+         :in-reply-to:message-id:mime-version;
+        bh=zUbKjhVR6fxuEMGiQCTULftiJj7VCIs12k/tZWuXxNs=;
+        b=Xe5GPbpUv94FsM7olKBxvBNn1EtP2Pd8sUy3If+Mea6D1uvdts4I1G1eCO0vGg2XiH
+         SWUwxQyLBcjd+3YUP1GzOzCWfk6NoMLglMIQ9pz7y4aHBXk6v//EwZjke7muZIuGGF42
+         JhBdp+MQ6Fr3OxN9oAqzv3loqu3YbtPkCPMKZT+G93iUEq6eZ8FcpP19Gvu7Hqd5iuyh
+         37R+Vzm2IACPYKs+hkg6FLGk+BR6o22U8trKl6TFv8jCtz5IJOniBhm8X0HXlwNzzFVn
+         BcXSadbCIJIwMPA3r8GMzMEf025GsFJ3QWFw0LB/I3iz1v0nvw0CDtBx2tHL5AkGTdno
+         jRRg==
+X-Gm-Message-State: AOAM533Hzvlg4xlbaR/9YwpVE3WBxvRwUEJU4GasxvaPfZbSHyBaaR7e
+        Xp05C9gYKuNx0i9m6aQ2i8+AlHv+Znn+mg==
+X-Google-Smtp-Source: ABdhPJxfytkg9b3E4rXbmWYO2JPqDtdB5ybju9ZM7+fu4UDH/C3P2QwISxhmU2PqhpPNHhcAW1Hi6A==
+X-Received: by 2002:a17:907:97d5:: with SMTP id js21mr5915094ejc.445.1640365148265;
+        Fri, 24 Dec 2021 08:59:08 -0800 (PST)
 Received: from gmgdl (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id qa30sm2832559ejc.54.2021.12.24.08.49.30
+        by smtp.gmail.com with ESMTPSA id r24sm3184753edv.18.2021.12.24.08.59.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Dec 2021 08:49:30 -0800 (PST)
+        Fri, 24 Dec 2021 08:59:07 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1n0nl3-000260-Cq;
-        Fri, 24 Dec 2021 17:49:29 +0100
+        id 1n0nuN-0002Np-1m;
+        Fri, 24 Dec 2021 17:59:07 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Erik Faye-Lund <kusmabite@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC PATCH 00/10] range-diff: fix segfault due to integer overflow
-Date:   Fri, 24 Dec 2021 17:46:26 +0100
-References: <RFC-cover-00.10-00000000000-20211209T191653Z-avarab@gmail.com>
- <nycvar.QRO.7.76.6.2112101528200.90@tvgsbejvaqbjf.bet>
- <59ec39af-fdb1-a86a-d2be-37e5954e245f@iee.email>
- <211222.86r1a5plsm.gmgdl@evledraar.gmail.com>
- <c2bf8e3b-d758-6c60-506b-293d5be49eb6@iee.email>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v5 13/16] reftable: remove outdated file reftable.c
+Date:   Fri, 24 Dec 2021 17:53:30 +0100
+References: <pull.1152.v4.git.git.1639482476.gitgitgadget@gmail.com>
+ <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
+ <4175089ec432da921d158fec9ccb1902be710af6.1640199396.git.gitgitgadget@gmail.com>
+ <xmqqmtksfe3j.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <c2bf8e3b-d758-6c60-506b-293d5be49eb6@iee.email>
-Message-ID: <211224.86zgoqgd7q.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqmtksfe3j.fsf@gitster.g>
+Message-ID: <211224.86v8zegcro.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Dec 24 2021, Philip Oakley wrote:
+On Wed, Dec 22 2021, Junio C Hamano wrote:
 
-> On 21/12/2021 23:36, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Tue, Dec 21 2021, Philip Oakley wrote:
->>
->>> Sorry for the late comment..
->>>
->>> On 10/12/2021 14:31, Johannes Schindelin wrote:
->>>> Hi =C3=86var,
->>>>
->>>> On Thu, 9 Dec 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>>>
->>>>> The difference between "master" and "git-for-windows/main" is large
->>>>> enough that comparing the two will segfault on my system. This is
->>>>> because the range-diff code does some expensive calculations and will
->>>>> overflow the "int" type.
->>>> You are holding this thing wrong.
->>>>
->>>> The `main` branch of Git for Windows uses merging rebases, therefore y=
-ou
->>>> need to use a commit range like
->>>> `git-for-windows/main^{/^Start.the.merging}..git-for-windows/main` and
->>>> compare it to `git-for-windows/main..master`.
->>> I'm not sure that a Git repo has an established way of indicating to how
->>> it's branching/merging/releasing workflow is set up, especially for
->>> projects with non-normative use cases, such as Git for Windows. We don't
->>> have a git document for covering=C2=A0 the different workflows in commo=
-n use
->>> for easy reference and consistent terminology.
->>>
->>> The merging rebase flow, with 'fake' merge does solve a problem that
->>> git.git doesn't have but could easily be a common process for 'friendly
->>> forks' that follow an upstream with local patches. The choice of
->>> '{/^Start.the.merging}' is currently specific to the Git-for-Windows
->>> case making it harder to discover this useful maintainer method.
->> Yes, but let's not get lost in the weeds here. As I noted I just picked
->> GFW as a handy example of a large history & that command as a handy
->> example of something that segfaults on "master".
+> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Had you already experienced the segfault locally, without using the GFW
-> example? How many commits were present in that case?
-
-Yes, I ran into it "orginally" just range-diffing as part of a local
-build process.
-
-I could dig up what revision range it was exactly, but does it matter?
-
-> The GFW example seems like it's taken the discussion in the wrong directi=
-on.
->
-> For me:
-> $ git log git/master..origin/main --pretty=3Doneline | wc -l
-> 62105
->
-> That's a lot of commits to have in a range diff. It's almost as big as
-> the whole of git/master
->
-> $ git log git/master --pretty=3Doneline | wc -l
-> 65400
->
-> Personally I'd like a way of trimming 'deadheads' that's a bit easier
-> that needing to remember Dscho's magic string [1], but time will tell.
-
-There are some repos that move forward by 500-1k commits/day, and people
-do cherry-pick patches etc. So wanting to range-diff after a couple of
-months is something you might do...
-
->> So the point really isn't to say that we should fix range-diff becase
->> it'll allow us to run this practically useful command on a git.git fork.
+>> From: Han-Wen Nienhuys <hanwen@google.com>
 >>
->>> I fully agree that the range-diff should probably have a patch limit at
->>> some sensible value.
->> Why would it? If I'm willing to spend the CPU to produce a range-diff of
->> an absurdly large range and I've got the memory why shouldn't we support
->> it?
+>> This was renamed to generic.c, but the origin was never removed
+>>
+>> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+>> ---
+>>  reftable/reftable.c | 115 --------------------------------------------
+>>  1 file changed, 115 deletions(-)
+>>  delete mode 100644 reftable/reftable.c
 >
-> There will always be a limit somewhere, and if it's not commit count or
-> other easily explained & checked limit it will be hard to rationalise
-> about why Git suddenly fails with an error (or segfault) in those
-> humungous case.
+> That's embarrassing for all reviewers of past reftable patches.
 
-I think it's fairly easy to explain the "your system wouldn't let us
-malloc more, we're dying" that we get from xmalloc(), st_*() and the
-like.
+As one of those reviewers: I think it suggests something different:
 
->>
->> We don't in cases like xdiff where it's not trivial to just raise the
->> limits, but here it seems relatively easy.
->>
->> I think limits to save users from spending CPU time they didn't expect
->> are reasonable, but then we can handle them like the diff/merge rename
->> detection limits, i.e. print a warning/advice, and allow the user to
->> opt-out.
->>
->> That also doesn't really apply here since "diff/merge" will/might still
->> do something useful in those scenarios, whereas range-diff would just
->> have truncated output.
->>
->>> The 'confusion' between the types size_t, long and int, does ripple
->>> through a lot of portable code, as shown in the series. Not an easy pro=
-blem.
->> Yes, although here we're not just casting and overflowing types, but
->> overflowing on multiplication and addition, whereas usually we'd just
->> overflow on "nr" being too big for "int" or similar.
-> I've been very slowly looking at the `long` limits on GFW which have
-> very similar arithmetic issues for pointers, often with no clear answers.
+Various people looked it over, but this amount of code is just too much
+for someone to review in one sitting, so it's not unexpected that
+various things like this slipped through.
 
-Right, that's to do with the whole "long" or whatever use in the
-object.c and related code, but I don't think that's applicable here, is
-it?
+The current landing of this topic on "master" is based on a plan I
+suggested, i.e. to have the library and its own tests in "master" first,
+and not to do any of the integration yet.
+
+Exactly because we expected that we would not be getting any of this
+right the first time around.
+
+So if anything I think these current topics and recent reftable activity
+suggest that we should have been more willing to get it into "master"
+earlier, and not wait until all bugs in it were solved beforehand.
+
+I.e. there's bugs in the code, but they're well-contained, since nothing
+in-tree uses it except its own tests.
+
+And by having merged it down we're benefiting from more eyes, both in
+terms of human review, and in the review of various tooling (like
+coverity) that's being run on "master" but not on some random branch
+that's languishing in "seen" for months.
