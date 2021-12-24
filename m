@@ -2,113 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 430AEC433EF
-	for <git@archiver.kernel.org>; Fri, 24 Dec 2021 04:46:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F144C433EF
+	for <git@archiver.kernel.org>; Fri, 24 Dec 2021 05:14:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351295AbhLXEqb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Dec 2021 23:46:31 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51971 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240362AbhLXEqb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Dec 2021 23:46:31 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 38A51F21C1;
-        Thu, 23 Dec 2021 23:46:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=pKZr2DaANqvDrfSQuUNS+VEOw+/C34i4qwLYD1z3ibk=; b=qrho
-        ZvbRt7xNbz7mMH6DQc4PI1MTxfauihkj4qbLW2GFOkyfN1GW2b7S21zEZjBsCEcd
-        hyvFP1kBJYlRW7z46rsm+WaYknw7yKP3lwgriO7/CjybCE6GbTPY3JZWFyorQDkR
-        Ekl1IHHw1u0tjJV3+EdSX7BRX+AQzbECDgQQxUA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1FA82F21BE;
-        Thu, 23 Dec 2021 23:46:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 720F9F21BD;
-        Thu, 23 Dec 2021 23:46:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 3/3] reftable: support preset file mode for writing
-References: <pull.1164.git.git.1640287790.gitgitgadget@gmail.com>
-        <c01b1c335a33e5f44289c520a1634d071d882223.1640287790.git.gitgitgadget@gmail.com>
-Date:   Thu, 23 Dec 2021 20:46:28 -0800
-Message-ID: <xmqqsfui4nkr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237445AbhLXFOL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Dec 2021 00:14:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43472 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229946AbhLXFOL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Dec 2021 00:14:11 -0500
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6132C061401
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 21:14:10 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id k64so6911128pfd.11
+        for <git@vger.kernel.org>; Thu, 23 Dec 2021 21:14:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=KkPgbeJoqn2Mh9Mlnvdai0mKm5wtzWB8QSUL81FM/pw=;
+        b=Xo+Zlj91YybLk+eU5SXg9fdWfesuXn9917UAtBH6EbCIUcmru4ZIBNcwqCGhuSfuc8
+         bdZP/RrisFHiBAIFmKcmqkCscqQ8QtS062YVN7HyRa0Us1MiysE73ms4EakU/9psUcxt
+         1/f7kgWH04lspwiMb4DRrJ2e84jURbD5OourMt8Fx2BxnkBFRj5OOwj8GCbYxd4bZFYh
+         laS5HUm6ftdu2MDCzy6W8BFmhKQ9X2HM8DPUDhf8+f4RB6ISihZp47eCrdzgZ3EEKf+N
+         mwTlrOK53I1Iz5McCP3OI22u4HlGqqQtL7nIL+tKKzeouFFgD5A4JX7Tw+en6gI2QdVQ
+         859w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=KkPgbeJoqn2Mh9Mlnvdai0mKm5wtzWB8QSUL81FM/pw=;
+        b=N71Skt7SpmHBZfWKKPF4oYuwmntGSjCv98c/sLmpZhUrcpAZX/t5h0JOySktU9KJfB
+         e5qilZqHFcOSJNd2rACcz6FJqEt617/4vcDyX6W8CzpDRLEmXCBGpjmY1ppxbV6v0h7w
+         q4WKdurQCtWEn3XDha5uS0Ie8ElSFrjLOgs56WPQOV23Zo2vBF/I0xRHVVSudhWNn1WB
+         ZZyTXRzbURlCSW4GQG1Wn70cifHoWT8Ce++zmF5rGyU3FA2bGQXVSPwsIng/G8iNVIrr
+         /+KIf3BI1fDhU0JdUvC8IXxXuKcsoDxNLvz1CtR0qgKvVRxiMWgJaGL6gPXSldtdk0xn
+         kqfg==
+X-Gm-Message-State: AOAM531jq2Sl3jQvyQXc+5/dghViI8jlRX+MLFDOd3fiNaOF17tGM54U
+        PqN5paaG6xf7K99s3zDGsYj7xLF9qRQ=
+X-Google-Smtp-Source: ABdhPJzHxyF1c5rf5ONEnhYm5ciQ6dOvyQhJholPC+B8WV1VheOor7iKKZrvOyRgOzxjVPoyn/9CTg==
+X-Received: by 2002:a63:ec4f:: with SMTP id r15mr4784553pgj.190.1640322850428;
+        Thu, 23 Dec 2021 21:14:10 -0800 (PST)
+Received: from [192.168.43.80] (subs28-116-206-12-33.three.co.id. [116.206.12.33])
+        by smtp.gmail.com with ESMTPSA id j6sm7051243pff.33.2021.12.23.21.14.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Dec 2021 21:14:10 -0800 (PST)
+Message-ID: <42bde83d-65fb-d326-ec3d-4ef4121c35dc@gmail.com>
+Date:   Fri, 24 Dec 2021 12:14:05 +0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 75ACB822-6474-11EC-81DA-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: [PATCH 1/4] t5540: require REFFILES
+Content-Language: en-US
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+References: <pull.1168.git.git.1640170784.gitgitgadget@gmail.com>
+ <e0d7dbf8b552381a9b7854f2bb9eff41508aac04.1640170784.git.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <e0d7dbf8b552381a9b7854f2bb9eff41508aac04.1640170784.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Han-Wen Nienhuys <hanwen@google.com>
->
-> Create files with mode 0666, so umask works as intended. Provides an override,
-> which is useful to support shared repos (test t1301-shared-repo.sh).
-
-> +	/* Default mode for creating files. If unset, use 0666 (+umask) */
-> +	unsigned int default_permissions;
+On 22/12/21 17.59, Han-Wen Nienhuys via GitGitGadget wrote:
+> +if test_have_prereq !REFFILES
+> +then
+> +	skip_all='skipping test; dumb HTTP protocol not supported with reftable.'
+> +	test_done
+> +fi
 > +
 
-Presumably this is primed by a call to get_shared_repository(),
-possibly followed by calc_shared_perm(), but having it in the
-interface is a good idea, as it allows us to avoid making these
-git-core specific calls from reftable/ library proper?
+Did you mean reftable doesn't support dumb HTTP protocol or vice versa?
 
-> diff --git a/reftable/stack.c b/reftable/stack.c
-> index df5021ebf08..56bf5f2d84a 100644
-> --- a/reftable/stack.c
-> +++ b/reftable/stack.c
-> @@ -469,7 +469,7 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
->  	strbuf_addstr(&add->lock_file_name, ".lock");
->  
->  	add->lock_file_fd = open(add->lock_file_name.buf,
-> -				 O_EXCL | O_CREAT | O_WRONLY, 0644);
-> +				 O_EXCL | O_CREAT | O_WRONLY, 0666);
-
-This change makes sense.
-
->  	if (add->lock_file_fd < 0) {
->  		if (errno == EEXIST) {
->  			err = REFTABLE_LOCK_ERROR;
-> @@ -478,6 +478,13 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
->  		}
->  		goto done;
->  	}
-> +	if (st->config.default_permissions) {
-> +		if (chmod(add->lock_file_name.buf, st->config.default_permissions) < 0) {
-> +			err = REFTABLE_IO_ERROR;
-> +			goto done;
-
-This part does not exactly make sense, though.
-
-If this were a library code meant to link with ONLY with Git, I
-would have recommended to make a adjust_shared_perm() call from
-here, without having to have "unsigned int default_permissions" to
-reftable_write_options structure.
-
-I wonder if it is a better design to make the new member in the
-structure a pointer to a generic and opaque helper function that is
-called from here, i.e.
-
-	if (st->config.adjust_perm &&
-            st->config.adjust_perm(add->lock_file_name.buf) < 0) {
-		err = REFTABLE_IO_ERROR;
-		goto done;
-	}
-
-so that when linking with and calling from git, we can just stuff
-the pointer to adjust_shared_perm function to the member?
-
-> +		}
-> +	}
-> +
+-- 
+An old man doll... just what I always wanted! - Clara
