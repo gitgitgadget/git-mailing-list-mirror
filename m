@@ -2,134 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6063C433F5
-	for <git@archiver.kernel.org>; Sat, 25 Dec 2021 08:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E19EC433EF
+	for <git@archiver.kernel.org>; Sat, 25 Dec 2021 08:32:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231144AbhLYIW2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Dec 2021 03:22:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56544 "EHLO
+        id S231152AbhLYIcJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Dec 2021 03:32:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbhLYIW2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Dec 2021 03:22:28 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DD17C061401
-        for <git@vger.kernel.org>; Sat, 25 Dec 2021 00:22:28 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id r17so21439621wrc.3
-        for <git@vger.kernel.org>; Sat, 25 Dec 2021 00:22:27 -0800 (PST)
+        with ESMTP id S229473AbhLYIcI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Dec 2021 03:32:08 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 999DCC061401
+        for <git@vger.kernel.org>; Sat, 25 Dec 2021 00:32:08 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id iy13so9286112pjb.5
+        for <git@vger.kernel.org>; Sat, 25 Dec 2021 00:32:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Vk17lwo295tEXhynL8WnYpobLnyJkGLIbMnZwmllfi8=;
-        b=YR+i4Bx0wbjDXSxGwNuC8rv2zyeAO84NAloWeJ1okHo9sR3ITER6ticNHm24/3069K
-         kLRSGF5QZ/k2RpO9ZZ22BkvFZAAeazirmNiGeRpu2OpscW10OVnKPehaibvszrFAqb0K
-         mjDKcfDtovg6tj4TOA0BGN4hElQVqF1R5y+etS+TkgyNuYGMcspmi8NZnxuU4BdBxu6H
-         qLPhNrJovfiVaffCX8suCh+UvkmGuQRiGvZVHET+jl9OovXaUVLZvwqOxROxEmrLhTn1
-         bVHu9GdRwdO+ELEHZpFbh1xYI31z5q7dEyXci+ZHASEF01V0ybKd9qqGEjKYiic3fhGw
-         uYPg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=HHq47vxMVHcaVB998AF+/hVZUNKUTtBTWP9T1ylpM7E=;
+        b=Gvmb+5eGwQoTPl93xo8a5a5q+DMrueA4haJcoeGxXNZSa4hsilV15XdB1bU4LsIWbl
+         4IghgzpDIqYYMQmFULh1mdNWlqt8/oOjkQCfAvRUWmEqISB54okmNTiSwxJdiefvuaf5
+         J/3XSis96wi8FqcVVIqs/e9Pu4o8JyzpgF/ujt9dWve7blVqawfXRQtZ6sS6qburTCsl
+         LUgdY0/idUHv5Bxy/fRWxbBy78/yXBqXVErqYwgLSl0bxuxH4Cg4OSRtCOKRqvbL5E3/
+         roIjtzI+uJa2g+sGf961xcSFVNeqCNNdohgWohR8sPmF5aCkO0Oh3s60P/xTplD77fbt
+         +Bqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Vk17lwo295tEXhynL8WnYpobLnyJkGLIbMnZwmllfi8=;
-        b=dbeh6r+Ghgs3OJ/X4aevv9VIndV8lSly4+o4CEkMvkskcnjzWVwDEwJQl//6gzvH1X
-         Vi3MoieSzgrTuJNqgAjqtd9TezSSCgiOOlewTQJiEwR7/ZPZSCv0pOQqBxq+w3HAoUxG
-         xcLJmwYZ4bTde7mG8+P2dIv7YdN2cUi61BmH5dJemT7lCJgxNDM9VPXR3Bi6lkWCaHEA
-         Gc5Ws2LtSjTcsMlVa6h/BpxxABNRNwd0dtvsL0Io9YGdPE+j7n7/7gw1ZjMAEXHyhrhh
-         ftzBUY7DV7ZAmEFLPlt47K5xPKCUE82cIZjYHtq3FR3VZHTKjoHsRMf+Jj1HQhwO2ZI5
-         N4tw==
-X-Gm-Message-State: AOAM532AV4OmyligMJyrpJZUzRBq93qscCR6XDVl6UZnsn8A6Hvw/Bwc
-        TZGXEXl1HqLw5TqrdSOi7rc=
-X-Google-Smtp-Source: ABdhPJyp1iRdRXGjXSQYQ8aq2nHy2rqePv7OIRprbvI6E803s/RBg256y3FJyFh1SDYVx5DCOyPa/g==
-X-Received: by 2002:adf:d1e2:: with SMTP id g2mr6948218wrd.362.1640420546535;
-        Sat, 25 Dec 2021 00:22:26 -0800 (PST)
-Received: from lesale.home (62-47-14-33.adsl.highway.telekom.at. [62.47.14.33])
-        by smtp.gmail.com with ESMTPSA id n41sm12365456wms.32.2021.12.25.00.22.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Dec 2021 00:22:26 -0800 (PST)
-From:   Johannes Altmanninger <aclopte@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Johannes Altmanninger <aclopte@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v2] t/perf: do not run tests in user's $SHELL
-Date:   Sat, 25 Dec 2021 09:16:58 +0100
-Message-Id: <20211225081656.1311583-1-aclopte@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <xmqqilvjugu0.fsf@gitster.g>
-References: <xmqqilvjugu0.fsf@gitster.g>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=HHq47vxMVHcaVB998AF+/hVZUNKUTtBTWP9T1ylpM7E=;
+        b=Q5T8ryJFwz5a94qTT5ZicfBk+jLG6Dh/qRA4aDHSGYib6LSiM71LqULe/GRP57R6en
+         iQ0lggIOGH2xoK3Kw2LJTg6Z5sKwImcFARjUgWvrzkjpeAf/aTwKbjQWnGHgkylk1Vi/
+         pbCFpo4YTe8QrWbg2EF9yyaBt9LEcTni/+Gbw1q2m+y+18ii/o/qJEviHLbDD+oTt99B
+         fg9KYtwfMkQj/wuwngUiYHYTPh3HIocWczddSdK/yYTeHry3iqdZIEbZoge+0vpNynHF
+         XnhEZzR1SsJdRvH4NS+VPXAxHMlTCHSoUNYF1VGxjTTwnPY8pM/88dbFiXogyGH6n4+q
+         8Dbg==
+X-Gm-Message-State: AOAM531WLj3Kgk17inSOtj6Z8EgGYeQnHV6K7AO90WY5N9H3fhygTmyd
+        AFxYrbaiHR+QiSHrS3FOKkFt6tB1qalh2g==
+X-Google-Smtp-Source: ABdhPJwZNui9HpzMRn8oF5YrvOTSDgAlhOXc92dd+fVSD9pompXIwXKCZCmFOj1rUCx2bu1VQ24XtQ==
+X-Received: by 2002:a17:902:a409:b0:149:28e8:8e80 with SMTP id p9-20020a170902a40900b0014928e88e80mr9649029plq.56.1640421127569;
+        Sat, 25 Dec 2021 00:32:07 -0800 (PST)
+Received: from [192.168.18.18] ([103.252.33.202])
+        by smtp.gmail.com with ESMTPSA id v10sm13588089pjr.11.2021.12.25.00.32.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 25 Dec 2021 00:32:07 -0800 (PST)
+Subject: Re: Git internal command line parser
+To:     =?UTF-8?Q?Jo=c3=a3o_Victor_Bonfim?= 
+        <JoaoVictorBonfim+Git-Mail-List@protonmail.com>,
+        Philip Oakley <philipoakley@iee.email>
+Cc:     git@vger.kernel.org
+References: <0347f273-f9e9-3ce6-2a95-f1ce71285c09@gmail.com>
+ <e2726eaa-ba73-4141-bf61-89d5a7e9a9c2@iee.email>
+ <0e0f78e9-2cde-a20e-cd47-8542bc7bd314@gmail.com>
+ <cc6fa52a-d782-d4a8-eb93-936b8d83fc2f@iee.email>
+ <bZ5IKn77iTM5gCits_kl5lZ7uiOOkkt8dcHPT1UVlPWsrnqapXBtAkYB4uGGBA3Oizq4J7BN4GC6mLR8wQ7x_qqLJPbae6IMTqxW9JFJSbg=@protonmail.com>
+From:   Lemuria <nekadek457@gmail.com>
+Message-ID: <65fdfd25-736f-5105-6eba-b70cd51cc780@gmail.com>
+Date:   Sat, 25 Dec 2021 16:32:05 +0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <bZ5IKn77iTM5gCits_kl5lZ7uiOOkkt8dcHPT1UVlPWsrnqapXBtAkYB4uGGBA3Oizq4J7BN4GC6mLR8wQ7x_qqLJPbae6IMTqxW9JFJSbg=@protonmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The environment variable $SHELL is usually set to the user's
-interactive shell. Our build and test scripts never use $SHELL because
-there are no guarantees about its input language.  Instead, we use
-/bin/sh which should be a POSIX shell.
 
-For systems with a broken /bin/sh, we allow to override that path via
-SHELL_PATH.  To run tests in yet another shell we allow to override
-SHELL_PATH with TEST_SHELL_PATH.
 
-Perf tests run in $SHELL via a wrapper defined in t/perf/perf-lib.sh,
-so they break with e.g. SHELL=python.  Use TEST_SHELL_PATH like
-in other tests.  TEST_SHELL_PATH is always defined because
-t/perf/perf-lib.sh includes t/test-lib.sh, which includes
-GIT-BUILD-OPTIONS.
+On 25/12/2021 10:55 am, João Victor Bonfim wrote:
+>> If you are on Windows, it gets even more interesting because all the
+>> individual sub-commands are just hard links back to the single git.exe
+>> that then links to those sub-command's code.
+> 
+> That seems undesirable...
+> I know operating otherwise would be even more complicated and might create undue complexity or diminish performance, but I guess that, if it works, don't mess with it.
+> 
 
-Acked-by: Jeff King <peff@peff.net>
-Signed-off-by: Johannes Altmanninger <aclopte@gmail.com>
----
- t/perf/perf-lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Was this directed towards Lemuria (me)?
 
-I extended the commit message because in hindsight it was overly terse
-(judging from both re-reading it and from review comments).
+>> And I likely will consider this "front-end to many separate
+> executable apps" approach for my future large projects.
+> 
+> Lemuria, please consider those points as, sometimes, what is great at performance might not help with scalability and other matters, therefore, as the designer/engineer of a software system, a choice must be made and an evaluation of the properties of each possibility is a necessity.
+> 
+> Do with that what you will.
+> 
+>> I'm also a beginner to C, not quite an expert at it.
+> 
+> Practice programming a lot and never forget two things: [1] you are working with a man made machine, therefore its limitations and capabilities are by design, so you must consider them every step of the way when developing (like how computers send information, how computers process informations, how machine behaviour can be altered, abused or exploited through alteration of the environment or mechanism and through the use of sleight of hand). [2] Your code always has real life consequences and it is your moral responsibility to consider them and make sure that prejudice isn't codified into them.
 
-We could add more Acked-bys but one seems enough here.
+Okay, I understand. I'll do everything to keep my code bias-free.
+I'm working on a project in C and if it's okay, I'll link you to
+the GitHub repository.
 
-range-diff to the first version:
+I'm sure the git mailing list isn't the right place for me to get
+criticism on that project however.
 
-    @@ Commit message
-         t/perf: do not run tests in user's $SHELL
-     
-         The environment variable $SHELL is usually set to the user's
-    -    interactive shell. We never use that shell for build and test scripts
-    -    because it might not be a POSIX shell.
-    +    interactive shell. Our build and test scripts never use $SHELL because
-    +    there are no guarantees about its input language.  Instead, we use
-    +    /bin/sh which should be a POSIX shell.
-     
-    -    Perf tests are run inside $SHELL via a wrapper defined in
-    -    t/perf/perf-lib.sh. Use $TEST_SHELL_PATH like elsewhere.
-    +    For systems with a broken /bin/sh, we allow to override that path via
-    +    SHELL_PATH.  To run tests in yet another shell we allow to override
-    +    SHELL_PATH with TEST_SHELL_PATH.
-    +
-    +    Perf tests run in $SHELL via a wrapper defined in t/perf/perf-lib.sh,
-    +    so they break with e.g. SHELL=python.  Use TEST_SHELL_PATH like
-    +    in other tests.  TEST_SHELL_PATH is always defined because
-    +    t/perf/perf-lib.sh includes t/test-lib.sh, which includes
-    +    GIT-BUILD-OPTIONS.
-    +
-    +    Acked-by: Jeff King <peff@peff.net>
-
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index 780a7402d5..407252bac7 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -161,7 +161,7 @@ test_run_perf_ () {
- 	test_cleanup=:
- 	test_export_="test_cleanup"
- 	export test_cleanup test_export_
--	"$GTIME" -f "%E %U %S" -o test_time.$i "$SHELL" -c '
-+	"$GTIME" -f "%E %U %S" -o test_time.$i "$TEST_SHELL_PATH" -c '
- . '"$TEST_DIRECTORY"/test-lib-functions.sh'
- test_export () {
- 	test_export_="$test_export_ $*"
--- 
-2.34.1
-
+> Those are my two tid bits about being a responsible and effective programmer.
+> 
+> ‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
+> 
+> Em sexta-feira, 24 de dezembro de 2021 às 15:36, Philip Oakley <philipoakley@iee.email> escreveu:
+> 
+>> On 24/12/2021 18:30, Lemuria wrote:
+>>
+>>> On 25/12/2021 2:13 am, Philip Oakley wrote:
+>>>
+>>>> On 24/12/2021 14:38, Lemuria wrote:
+>>>>
+>>>>> #=< TLDR: Where's the code for git's internal command line parser?
+>>>>>
+>>>>>> ===#
+>>>>>
+>>>>> I'm interested in the internals of git, more specifically it's command
+>>>>>
+>>>>> line parser.
+>>>>
+>>>> One place to start is https://github.com/git/git/blob/master/git.c
+>>>
+>>> Wait, is all of Git just one big executable or are there many
+>>>
+>>> executables and `git` is just the front-end for accessing the
+>>>
+>>> separate git executables, such as say, the one for processing
+>>>
+>>> commits?
+>>
+>> Yes, `git` is a front end.
+>>
+>> If you are on Windows, it gets even more interesting because all the
+>>
+>> individual sub-commands are just hard links back to the single git.exe
+>>
+>> that then links to those sub-command's code.
+>>
+>>>>> Does Git use a library like getopt for it's command line handling, or
+>>>>>
+>>>>> does it use a custom parser?
+>>>>>
+>>>>> If possible, I would appreciate being redirected to the source code
+>>>>>
+>>>>> files that handle this.
+>>>>>
+>>>>> Sincerely,
+>>>>>
+>>>>> Lemuria
+>>>>
+>>>> Philip
