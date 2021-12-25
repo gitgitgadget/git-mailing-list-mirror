@@ -2,91 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1543C433EF
-	for <git@archiver.kernel.org>; Sat, 25 Dec 2021 02:50:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4751C433F5
+	for <git@archiver.kernel.org>; Sat, 25 Dec 2021 02:55:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229583AbhLYCuM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Dec 2021 21:50:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41740 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbhLYCuM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Dec 2021 21:50:12 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4F68C061401
-        for <git@vger.kernel.org>; Fri, 24 Dec 2021 18:50:11 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id y22so39075851edq.2
-        for <git@vger.kernel.org>; Fri, 24 Dec 2021 18:50:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1julohNZZAIraoUKx5mXVQyvHEaCO4OEc3lbFmMogCE=;
-        b=lLLUjUAjt/xSlkj12SBkml7VfhDMF+Ehf8hlq5kCW39m2WOdbZjWtX5hJCq5k2Lgzr
-         uBWQSBLob2qrxiwSvkhbrtmL6fhHgUiDd5caeHS4a/H0L4zxbS4pstxHiZYsd9Nk7Re7
-         nwmRpaQewf+nhv55V9TSDYm+f+X+yI1au+AQePUWv21urKyM5GdrYBh8nnE1aOIfmicI
-         u4Tff0dD8L7DqoTvk/NXwKRujLZ09xANkzSesnihwG2dOioLz/iaRVnJf7MO76ZSa+6Q
-         LiuhDmk6oiERj4Cp+lQ0a1Qixptl9+1N1w1X0Zp4yI92UUnGpMP386BBGelrNwKEqXYU
-         rFCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1julohNZZAIraoUKx5mXVQyvHEaCO4OEc3lbFmMogCE=;
-        b=Y4Ez2puP6ECq4B0Fqegp68ko5Vo9AP6VlxCzzrbTw7lgJhcxWsWNNvR+8YmdEGVCV+
-         D4PVDHFCkgwOxSsElfgTt0uUlrO+Z7FECGGckVFWqexSFSNudbZnSDxQSrrvr6hry3IS
-         HD6KBvjCYcIWNZ7m84JvB4fBxOyK6dji63BTe2vRXSocf+601i5ilHvC2r0JYUAcHyds
-         vYRecDOulJom6nnJCOpnuFp0G0LrpJygND4LhnfN6UKAWcxwV7jhwGtWfbbRxvdF4blM
-         +7KnpV7mCWNKmsHI41YD1RR3Fjfveu6+0PRY0qMI3AyYEkFKR/7ZdEM6zZA7/tIsgvHr
-         8XpQ==
-X-Gm-Message-State: AOAM532Xd+DrBW9C44WqLmD22pg1gjJudfnS7MWU52BJYQqxWT8AfJ8V
-        sCMtb0pg0GRkPlMauuiO1uQPNakQNMYWdoQxu6w=
-X-Google-Smtp-Source: ABdhPJyunqrg7rplJ26BkkD3Vm49ZeeX3/WJFdZbxqkna8GXLQ+uZ02pmXEqbL3gi65NcFxSho4RC7gbno8eRA9wM88=
-X-Received: by 2002:a17:907:3f1e:: with SMTP id hq30mr6829861ejc.613.1640400610340;
- Fri, 24 Dec 2021 18:50:10 -0800 (PST)
+        id S229593AbhLYCzW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Dec 2021 21:55:22 -0500
+Received: from mail-4324.protonmail.ch ([185.70.43.24]:28991 "EHLO
+        mail-4324.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229559AbhLYCzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Dec 2021 21:55:21 -0500
+Date:   Sat, 25 Dec 2021 02:55:18 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail2; t=1640400919;
+        bh=7IQa0jS8atwhZgCilrggsoBZQczIUjIBk+ZtrwBVurU=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:From:To:Cc;
+        b=pL8EJ8viviitzzvL+2vo1OaTEdN3oS+7ZFPsJQGa9+6aFcqBL6vb3PYrfKiHM3Jxk
+         FZmRVuICAIuxLwtE7yOkDRV/ZI6fcS1ufW8kYV0T4VogVxxRcfBQO76YO+pJCCMlJw
+         3pdUMXiwH0AVQjQUoElMxAErxWtvcklLOZLm1ML71EuuLEazxJIpem/4Cnh5sV+4VB
+         1MrOvib/CWw4yJhLu/3B8Wwz+DCzHUOmrBCbfjhgKjiTjUNXK/hUM2q5tKCgJXb2QX
+         O5V3ffeOENjvpYCfJ3D8ogYCZ130QgYXQJStR/pkM4/bTkyd53pi8VfUaTJ7TePjfw
+         2XbWlwbtebwpg==
+To:     Philip Oakley <philipoakley@iee.email>
+From:   =?utf-8?Q?Jo=C3=A3o_Victor_Bonfim?= 
+        <JoaoVictorBonfim+Git-Mail-List@protonmail.com>
+Cc:     Lemuria <nekadek457@gmail.com>, git@vger.kernel.org
+Reply-To: =?utf-8?Q?Jo=C3=A3o_Victor_Bonfim?= 
+          <JoaoVictorBonfim+Git-Mail-List@protonmail.com>
+Subject: Re: Git internal command line parser
+Message-ID: <bZ5IKn77iTM5gCits_kl5lZ7uiOOkkt8dcHPT1UVlPWsrnqapXBtAkYB4uGGBA3Oizq4J7BN4GC6mLR8wQ7x_qqLJPbae6IMTqxW9JFJSbg=@protonmail.com>
+In-Reply-To: <cc6fa52a-d782-d4a8-eb93-936b8d83fc2f@iee.email>
+References: <0347f273-f9e9-3ce6-2a95-f1ce71285c09@gmail.com> <e2726eaa-ba73-4141-bf61-89d5a7e9a9c2@iee.email> <0e0f78e9-2cde-a20e-cd47-8542bc7bd314@gmail.com> <cc6fa52a-d782-d4a8-eb93-936b8d83fc2f@iee.email>
 MIME-Version: 1.0
-References: <xmqqsfui6g7q.fsf@gitster.g> <xmqqsfuh5tz4.fsf@gitster.g>
-In-Reply-To: <xmqqsfuh5tz4.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 24 Dec 2021 18:49:59 -0800
-Message-ID: <CABPp-BFiMy55mCMJSHk9PmKa8EUd-6mR5z5xM7J3P2dZBjRq5g@mail.gmail.com>
-Subject: ds/sparse-checkout-requires-per-worktree-config (Was: Re: What's
- cooking in git.git (Dec 2021, #05; Thu, 23))
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 24, 2021 at 6:11 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > * ds/sparse-checkout-requires-per-worktree-config (2021-12-21) 5 commits
-> >  - sparse-checkout: use repo_config_set_worktree_gently()
-> >  - config: add repo_config_set_worktree_gently()
-> >  - worktree: add upgrade_to_worktree_config()
-> >  - config: make some helpers repo-aware
-> >  - setup: use a repository when upgrading format
-> >
-> >  "git sparse-checkout" wants to work with per-worktree configration,
-> >  but did not work well in a worktree attached to a bare repository.
-> >
-> >  Expecting a redesign?
-> >  cf. <CABPp-BG7nwsdEYrnfqhAbWU4ndJHcqGf6RS_6DzJittuNVLvoA@mail.gmail.com>
-> >  source: <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com>
->
-> FWIW, this topic by itself passes its self test, but when queued
-> near the tip of 'seen', it seems to break t1091.
->
-> For an example run that fails on win+VS test (8), see
-> https://github.com/git/git/runs/4629824103
+> If you are on Windows, it gets even more interesting because all the
+> individual sub-commands are just hard links back to the single git.exe
+> that then links to those sub-command's code.
 
-Unrelated to your comment, other than being about this same series:
+That seems undesirable...
+I know operating otherwise would be even more complicated and might create =
+undue complexity or diminish performance, but I guess that, if it works, do=
+n't mess with it.
 
-I think "redesign" is too strong a word here.  I think the patches are
-a useful start...and might even represent the majority of the code
-needed; it's just that they are focusing too narrowly.  core.worktree
-should also be handled, and I think we should include fixes at the
-`git worktree add` level, not just `git sparse-checkout {init,set}`.
+> And I likely will consider this "front-end to many separate
+executable apps" approach for my future large projects.
+
+Lemuria, please consider those points as, sometimes, what is great at perfo=
+rmance might not help with scalability and other matters, therefore, as the=
+ designer/engineer of a software system, a choice must be made and an evalu=
+ation of the properties of each possibility is a necessity.
+
+Do with that what you will.
+
+> I'm also a beginner to C, not quite an expert at it.
+
+Practice programming a lot and never forget two things: [1] you are working=
+ with a man made machine, therefore its limitations and capabilities are by=
+ design, so you must consider them every step of the way when developing (l=
+ike how computers send information, how computers process informations, how=
+ machine behaviour can be altered, abused or exploited through alteration o=
+f the environment or mechanism and through the use of sleight of hand). [2]=
+ Your code always has real life consequences and it is your moral responsib=
+ility to consider them and make sure that prejudice isn't codified into the=
+m.
+
+Those are my two tid bits about being a responsible and effective programme=
+r.
+
+=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
+ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
+
+Em sexta-feira, 24 de dezembro de 2021 =C3=A0s 15:36, Philip Oakley <philip=
+oakley@iee.email> escreveu:
+
+> On 24/12/2021 18:30, Lemuria wrote:
+>
+> > On 25/12/2021 2:13 am, Philip Oakley wrote:
+> >
+> > > On 24/12/2021 14:38, Lemuria wrote:
+> > >
+> > > > #=3D< TLDR: Where's the code for git's internal command line parser=
+?
+> > > >
+> > > > > =3D=3D=3D#
+> > > >
+> > > > I'm interested in the internals of git, more specifically it's comm=
+and
+> > > >
+> > > > line parser.
+> > >
+> > > One place to start is https://github.com/git/git/blob/master/git.c
+> >
+> > Wait, is all of Git just one big executable or are there many
+> >
+> > executables and `git` is just the front-end for accessing the
+> >
+> > separate git executables, such as say, the one for processing
+> >
+> > commits?
+>
+> Yes, `git` is a front end.
+>
+> If you are on Windows, it gets even more interesting because all the
+>
+> individual sub-commands are just hard links back to the single git.exe
+>
+> that then links to those sub-command's code.
+>
+> > > > Does Git use a library like getopt for it's command line handling, =
+or
+> > > >
+> > > > does it use a custom parser?
+> > > >
+> > > > If possible, I would appreciate being redirected to the source code
+> > > >
+> > > > files that handle this.
+> > > >
+> > > > Sincerely,
+> > > >
+> > > > Lemuria
+> > >
+> > > Philip
