@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11F2CC433F5
-	for <git@archiver.kernel.org>; Sat, 25 Dec 2021 07:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5807C433EF
+	for <git@archiver.kernel.org>; Sat, 25 Dec 2021 07:59:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231124AbhLYH7e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Dec 2021 02:59:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51564 "EHLO
+        id S230490AbhLYH72 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Dec 2021 02:59:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230462AbhLYH71 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Dec 2021 02:59:27 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A566CC061757
+        with ESMTP id S230448AbhLYH70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Dec 2021 02:59:26 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12FEFC061401
         for <git@vger.kernel.org>; Fri, 24 Dec 2021 23:59:26 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id j18so21355907wrd.2
+Received: by mail-wm1-x32e.google.com with SMTP id c66so6613707wma.5
         for <git@vger.kernel.org>; Fri, 24 Dec 2021 23:59:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=obkKWvubyxcsBWBqodq9GjqtIG2fyoJpZDBmj1ztp44=;
-        b=ndIGkA1FYHXmx096r3EiWcHU8QuzrvrMmMKA/SaDlATFqJviJACmklbxuNrR89wsCw
-         lYU9fF6tHWx2fC26Y3AIzn4U67cK4IKmvkXEAhQmzhFsyQ6P2KETgP/zbUvlyXRjpC4g
-         eWUmqX+N3IpUH9AAfVDKh8MxKHC71gZNOPqnU/R1Am052a6wb7PHDITWz+wOh3pwjYWk
-         tIRb5fusOOLpGSu1lD3DqJsXfeH+EY/f4cnzASQrYocW1w5CZtBTkRz7zreZEHCA8O7i
-         0IFrg7l6sKlexSlmyLVCzDo5hI2j0rx1NIiANH3Mt912TUd3+Ek6/KbS6mAO5mmeqibe
-         Wngg==
+        bh=Q6QORGoKMjRoCVgrUDlnfaOOUkFVjJs677Xe1LtKVeM=;
+        b=JRMhV2CbS4Far/pAAhplMLqMaK5YpBTlZyIadp2u6oKDY+pNn3dwiMyKSLHJYSvNhC
+         ctNGcOqXVEkij5quFUNyaPiFohRhbBYmGOhukLOnm8rhfljkKKx/jWOZWMTCtO41phS1
+         tF8DiNU9bHNcYOAmw1BELHmkz74L1ZoKoTNoQ7Lx0RTQvpdCx4aFAsBEd/ByFmq77Q/A
+         lTfZmnDvgsqxgufEgq5bJKur/6g2i6FLxugzWU2ePgkDhcsNmBznLZz6WfnpUpqrWUmR
+         OHEFEZjBNZ2EnqfdOfr2fVYXUv2DJPY6+zusrYggbUlVlzo/k96XnEQlGCEOj+S3g3S4
+         PHPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=obkKWvubyxcsBWBqodq9GjqtIG2fyoJpZDBmj1ztp44=;
-        b=sblWChmQRfUwZ/+3nrO68qLeE3rbk5UP9nQWjHw27BvIVlOZ4lAXMY720kNd21WyHa
-         8gPc9xveQZioj4DPvlKGmh4NHktriiiPV1ljjCEUlifvC9iCM14kRwxAq4yKJx9Vtq4M
-         WqC2FDmHCigBJO/RhKRDEA16tL9qSV4QCVjSMtlG8wYwLevpiDrDOxF/lsvA5FLVBazZ
-         BQ7dZesL22W/hp6EOSJleCWZQ7JfVW7PBa2ruqIDxlpHbMOy49LLM0/Y4/hbEkEwoATg
-         TZlx4MsggSlQuGxi6FfVxoEPSj2aKXQgjqBQP25CNmnn5rKzubZ0+OF6bFZLIoBlus1S
-         AvEQ==
-X-Gm-Message-State: AOAM532my6IqjkELw8lCUSuWC7zlyXyBGDJBHlMACzW8fGb2cN8Q1b8q
-        imiJBN7+PFW61glPh0+g3N1oo9c0V64=
-X-Google-Smtp-Source: ABdhPJwGlgjjCsbPShYTQr5Bpp8kOXJq5OKR8zh5VTIDjZ+YQM7pMJT1reWWjhxoRUOvHaNO/Uri3A==
-X-Received: by 2002:a5d:540f:: with SMTP id g15mr6756558wrv.126.1640419165137;
-        Fri, 24 Dec 2021 23:59:25 -0800 (PST)
+        bh=Q6QORGoKMjRoCVgrUDlnfaOOUkFVjJs677Xe1LtKVeM=;
+        b=OQ930exMQ834AGkmr18QZ/5xMGV9qH5ojrxqedtTby7rquP97Bzcpo10/jUilNSn5v
+         T5qi1cEOxP3gprvn7iE14DSrrYcxu/2wJA4f7eYArqpWf97y0iCupTsEB7Ks1IqQVkwq
+         3Iyi8RUbmsBoAeMVz7TqFkwjTPzT3vl8bGveTiK2qrJkmG+yvP0Yzd5Vwctlgui2rVZV
+         UwHjdyTZldTxF52vXWjyP1T4UQ1xIjvHGkTPdt90Wu5sMg7XIjrdCarzBT9CtE+9IXwH
+         Z93fuE/MKKECzNHZdD3djYeKA5iOUl6MIQfLdl6JuqjzxQHAndCpgL43zPZ7hRDgBl5/
+         p14A==
+X-Gm-Message-State: AOAM531NnaeULVeonWBqecKJ5/vVy64G283TZpsuoN08WiIz3ZsK2FZs
+        v5StC8dYkn1UozklyV1Z+YYKYA7JR0g=
+X-Google-Smtp-Source: ABdhPJzd1T+LlgzvdTGREnka0aezTuGbrRXVww4IyaNSVa49cI3hFxQZPuG/uO0XExnnwt+nvlaBDA==
+X-Received: by 2002:a05:600c:a06:: with SMTP id z6mr7051883wmp.9.1640419164396;
+        Fri, 24 Dec 2021 23:59:24 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bd8sm9419520wmb.44.2021.12.24.23.59.24
+        by smtp.gmail.com with ESMTPSA id z17sm12952286wmi.22.2021.12.24.23.59.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 24 Dec 2021 23:59:24 -0800 (PST)
-Message-Id: <a02845f12dbca3ba45973151da2504a78070898d.1640419160.git.gitgitgadget@gmail.com>
+Message-Id: <d5566f5d13605f30be6fd221fc624479cbbd0392.1640419159.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1103.v2.git.1640419159.gitgitgadget@gmail.com>
 References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
         <pull.1103.v2.git.1640419159.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 25 Dec 2021 07:59:15 +0000
-Subject: [PATCH v2 4/8] merge-ort: capture and print ll-merge warnings in our
- preferred fashion
+Date:   Sat, 25 Dec 2021 07:59:14 +0000
+Subject: [PATCH v2 3/8] ll-merge: make callers responsible for showing
+ warnings
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,88 +74,371 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Instead of immediately printing ll-merge warnings to stderr, we save
-them in our output strbuf.  Besides allowing us to move these warnings
-to a special file for --remerge-diff, this has two other benefits for
-regular merges done by merge-ort:
+Since some callers may want to send warning messages to somewhere other
+than stdout/stderr, stop printing "warning: Cannot merge binary files"
+from ll-merge and instead modify the return status of ll_merge() to
+indicate when a merge of binary files has occurred.
 
-  * The deferral of messages ensures we can print all messages about
-    any given path together (merge-recursive was known to sometimes
-    intersperse messages about other paths, particularly when renames
-    were involved).
+This commit continues printing the message as-is; future changes will
+start handling the new commit differently in the merge-ort codepath.
 
-  * The deferral of messages means we can avoid printing spurious
-    conflict messages when we just end up aborting due to local user
-    modifications in the way.  (In contrast to merge-recursive.c which
-    prematurely checks for local modifications in the way via
-    unpack_trees() and gets the check wrong both in terms of false
-    positives and false negatives relative to renames, merge-ort does
-    not perform the local modifications in the way check until the
-    checkout() step after the full merge has been computed.)
+Note that my methodology included first modifying ll_merge() to return
+a struct, so that the compiler would catch all the callers for me and
+ensure I had modified all of them.  After modifying all of them, I then
+changed the struct to an enum.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c                | 5 +++--
- t/t6404-recursive-merge.sh | 9 +++++++--
- t/t6406-merge-attr.sh      | 9 +++++++--
- 3 files changed, 17 insertions(+), 6 deletions(-)
+ apply.c            |  5 ++++-
+ builtin/checkout.c | 12 ++++++++----
+ ll-merge.c         | 40 ++++++++++++++++++++++------------------
+ ll-merge.h         |  9 ++++++++-
+ merge-blobs.c      |  5 ++++-
+ merge-ort.c        |  5 ++++-
+ merge-recursive.c  |  5 ++++-
+ notes-merge.c      |  5 ++++-
+ rerere.c           | 12 ++++++++----
+ 9 files changed, 66 insertions(+), 32 deletions(-)
 
+diff --git a/apply.c b/apply.c
+index 43a0aebf4ee..8079395755f 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3492,7 +3492,7 @@ static int three_way_merge(struct apply_state *state,
+ {
+ 	mmfile_t base_file, our_file, their_file;
+ 	mmbuffer_t result = { NULL };
+-	int status;
++	enum ll_merge_result status;
+ 
+ 	/* resolve trivial cases first */
+ 	if (oideq(base, ours))
+@@ -3509,6 +3509,9 @@ static int three_way_merge(struct apply_state *state,
+ 			  &their_file, "theirs",
+ 			  state->repo->index,
+ 			  NULL);
++	if (status == LL_MERGE_BINARY_CONFLICT)
++		warning("Cannot merge binary files: %s (%s vs. %s)",
++			path, "ours", "theirs");
+ 	free(base_file.ptr);
+ 	free(our_file.ptr);
+ 	free(their_file.ptr);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index cbf73b8c9f6..3a559d69303 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -237,6 +237,7 @@ static int checkout_merged(int pos, const struct checkout *state,
+ 	struct cache_entry *ce = active_cache[pos];
+ 	const char *path = ce->name;
+ 	mmfile_t ancestor, ours, theirs;
++	enum ll_merge_result merge_status;
+ 	int status;
+ 	struct object_id oid;
+ 	mmbuffer_t result_buf;
+@@ -267,13 +268,16 @@ static int checkout_merged(int pos, const struct checkout *state,
+ 	memset(&ll_opts, 0, sizeof(ll_opts));
+ 	git_config_get_bool("merge.renormalize", &renormalize);
+ 	ll_opts.renormalize = renormalize;
+-	status = ll_merge(&result_buf, path, &ancestor, "base",
+-			  &ours, "ours", &theirs, "theirs",
+-			  state->istate, &ll_opts);
++	merge_status = ll_merge(&result_buf, path, &ancestor, "base",
++				&ours, "ours", &theirs, "theirs",
++				state->istate, &ll_opts);
+ 	free(ancestor.ptr);
+ 	free(ours.ptr);
+ 	free(theirs.ptr);
+-	if (status < 0 || !result_buf.ptr) {
++	if (merge_status == LL_MERGE_BINARY_CONFLICT)
++		warning("Cannot merge binary files: %s (%s vs. %s)",
++			path, "ours", "theirs");
++	if (merge_status < 0 || !result_buf.ptr) {
+ 		free(result_buf.ptr);
+ 		return error(_("path '%s': cannot merge"), path);
+ 	}
+diff --git a/ll-merge.c b/ll-merge.c
+index 261657578c7..669c09eed6c 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -14,7 +14,7 @@
+ 
+ struct ll_merge_driver;
+ 
+-typedef int (*ll_merge_fn)(const struct ll_merge_driver *,
++typedef enum ll_merge_result (*ll_merge_fn)(const struct ll_merge_driver *,
+ 			   mmbuffer_t *result,
+ 			   const char *path,
+ 			   mmfile_t *orig, const char *orig_name,
+@@ -49,7 +49,7 @@ void reset_merge_attributes(void)
+ /*
+  * Built-in low-levels
+  */
+-static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
++static enum ll_merge_result ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 			   mmbuffer_t *result,
+ 			   const char *path,
+ 			   mmfile_t *orig, const char *orig_name,
+@@ -58,6 +58,7 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 			   const struct ll_merge_options *opts,
+ 			   int marker_size)
+ {
++	enum ll_merge_result ret;
+ 	mmfile_t *stolen;
+ 	assert(opts);
+ 
+@@ -68,16 +69,19 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 	 */
+ 	if (opts->virtual_ancestor) {
+ 		stolen = orig;
++		ret = LL_MERGE_OK;
+ 	} else {
+ 		switch (opts->variant) {
+ 		default:
+-			warning("Cannot merge binary files: %s (%s vs. %s)",
+-				path, name1, name2);
+-			/* fallthru */
++			ret = LL_MERGE_BINARY_CONFLICT;
++			stolen = src1;
++			break;
+ 		case XDL_MERGE_FAVOR_OURS:
++			ret = LL_MERGE_OK;
+ 			stolen = src1;
+ 			break;
+ 		case XDL_MERGE_FAVOR_THEIRS:
++			ret = LL_MERGE_OK;
+ 			stolen = src2;
+ 			break;
+ 		}
+@@ -87,16 +91,10 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 	result->size = stolen->size;
+ 	stolen->ptr = NULL;
+ 
+-	/*
+-	 * With -Xtheirs or -Xours, we have cleanly merged;
+-	 * otherwise we got a conflict.
+-	 */
+-	return opts->variant == XDL_MERGE_FAVOR_OURS ||
+-	       opts->variant == XDL_MERGE_FAVOR_THEIRS ?
+-	       0 : 1;
++	return ret;
+ }
+ 
+-static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
++static enum ll_merge_result ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 			mmbuffer_t *result,
+ 			const char *path,
+ 			mmfile_t *orig, const char *orig_name,
+@@ -105,7 +103,9 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 			const struct ll_merge_options *opts,
+ 			int marker_size)
+ {
++	enum ll_merge_result ret;
+ 	xmparam_t xmp;
++	int status;
+ 	assert(opts);
+ 
+ 	if (orig->size > MAX_XDIFF_SIZE ||
+@@ -133,10 +133,12 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 	xmp.ancestor = orig_name;
+ 	xmp.file1 = name1;
+ 	xmp.file2 = name2;
+-	return xdl_merge(orig, src1, src2, &xmp, result);
++	status = xdl_merge(orig, src1, src2, &xmp, result);
++	ret = (status > 1 ) ? LL_MERGE_CONFLICT : status;
++	return ret;
+ }
+ 
+-static int ll_union_merge(const struct ll_merge_driver *drv_unused,
++static enum ll_merge_result ll_union_merge(const struct ll_merge_driver *drv_unused,
+ 			  mmbuffer_t *result,
+ 			  const char *path,
+ 			  mmfile_t *orig, const char *orig_name,
+@@ -178,7 +180,7 @@ static void create_temp(mmfile_t *src, char *path, size_t len)
+ /*
+  * User defined low-level merge driver support.
+  */
+-static int ll_ext_merge(const struct ll_merge_driver *fn,
++static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+ 			mmbuffer_t *result,
+ 			const char *path,
+ 			mmfile_t *orig, const char *orig_name,
+@@ -194,6 +196,7 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
+ 	const char *args[] = { NULL, NULL };
+ 	int status, fd, i;
+ 	struct stat st;
++	enum ll_merge_result ret;
+ 	assert(opts);
+ 
+ 	sq_quote_buf(&path_sq, path);
+@@ -236,7 +239,8 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
+ 		unlink_or_warn(temp[i]);
+ 	strbuf_release(&cmd);
+ 	strbuf_release(&path_sq);
+-	return status;
++	ret = (status > 1) ? LL_MERGE_CONFLICT : status;
++	return ret;
+ }
+ 
+ /*
+@@ -362,7 +366,7 @@ static void normalize_file(mmfile_t *mm, const char *path, struct index_state *i
+ 	}
+ }
+ 
+-int ll_merge(mmbuffer_t *result_buf,
++enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
+ 	     const char *path,
+ 	     mmfile_t *ancestor, const char *ancestor_label,
+ 	     mmfile_t *ours, const char *our_label,
+diff --git a/ll-merge.h b/ll-merge.h
+index aceb1b24132..e4a20e81a3a 100644
+--- a/ll-merge.h
++++ b/ll-merge.h
+@@ -82,13 +82,20 @@ struct ll_merge_options {
+ 	long xdl_opts;
+ };
+ 
++enum ll_merge_result {
++	LL_MERGE_ERROR = -1,
++	LL_MERGE_OK = 0,
++	LL_MERGE_CONFLICT,
++	LL_MERGE_BINARY_CONFLICT,
++};
++
+ /**
+  * Perform a three-way single-file merge in core.  This is a thin wrapper
+  * around `xdl_merge` that takes the path and any merge backend specified in
+  * `.gitattributes` or `.git/info/attributes` into account.
+  * Returns 0 for a clean merge.
+  */
+-int ll_merge(mmbuffer_t *result_buf,
++enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
+ 	     const char *path,
+ 	     mmfile_t *ancestor, const char *ancestor_label,
+ 	     mmfile_t *ours, const char *our_label,
+diff --git a/merge-blobs.c b/merge-blobs.c
+index ee0a0e90c94..8138090f81c 100644
+--- a/merge-blobs.c
++++ b/merge-blobs.c
+@@ -36,7 +36,7 @@ static void *three_way_filemerge(struct index_state *istate,
+ 				 mmfile_t *their,
+ 				 unsigned long *size)
+ {
+-	int merge_status;
++	enum ll_merge_result merge_status;
+ 	mmbuffer_t res;
+ 
+ 	/*
+@@ -50,6 +50,9 @@ static void *three_way_filemerge(struct index_state *istate,
+ 				istate, NULL);
+ 	if (merge_status < 0)
+ 		return NULL;
++	if (merge_status == LL_MERGE_BINARY_CONFLICT)
++		warning("Cannot merge binary files: %s (%s vs. %s)",
++			path, ".our", ".their");
+ 
+ 	*size = res.size;
+ 	return res.ptr;
 diff --git a/merge-ort.c b/merge-ort.c
-index c24da2ba3cb..a18f47e23c5 100644
+index 0342f104836..c24da2ba3cb 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -1788,8 +1788,9 @@ static int merge_3way(struct merge_options *opt,
+@@ -1743,7 +1743,7 @@ static int merge_3way(struct merge_options *opt,
+ 	mmfile_t orig, src1, src2;
+ 	struct ll_merge_options ll_opts = {0};
+ 	char *base, *name1, *name2;
+-	int merge_status;
++	enum ll_merge_result merge_status;
+ 
+ 	if (!opt->priv->attr_index.initialized)
+ 		initialize_attr_index(opt);
+@@ -1787,6 +1787,9 @@ static int merge_3way(struct merge_options *opt,
+ 	merge_status = ll_merge(result_buf, path, &orig, base,
  				&src1, name1, &src2, name2,
  				&opt->priv->attr_index, &ll_opts);
- 	if (merge_status == LL_MERGE_BINARY_CONFLICT)
--		warning("Cannot merge binary files: %s (%s vs. %s)",
--			path, name1, name2);
-+		path_msg(opt, path, 0,
-+			 "warning: Cannot merge binary files: %s (%s vs. %s)",
-+			 path, name1, name2);
++	if (merge_status == LL_MERGE_BINARY_CONFLICT)
++		warning("Cannot merge binary files: %s (%s vs. %s)",
++			path, name1, name2);
  
  	free(base);
  	free(name1);
-diff --git a/t/t6404-recursive-merge.sh b/t/t6404-recursive-merge.sh
-index eaf48e941e2..b8735c6db4d 100755
---- a/t/t6404-recursive-merge.sh
-+++ b/t/t6404-recursive-merge.sh
-@@ -108,8 +108,13 @@ test_expect_success 'refuse to merge binary files' '
- 	printf "\0\0" >binary-file &&
- 	git add binary-file &&
- 	git commit -m binary2 &&
--	test_must_fail git merge F >merge.out 2>merge.err &&
--	grep "Cannot merge binary files: binary-file (HEAD vs. F)" merge.err
-+	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+	then
-+		test_must_fail git merge F >merge_output
-+	else
-+		test_must_fail git merge F 2>merge_output
-+	fi &&
-+	grep "Cannot merge binary files: binary-file (HEAD vs. F)" merge_output
- '
+diff --git a/merge-recursive.c b/merge-recursive.c
+index d9457797dbb..bc73c52dd84 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1044,7 +1044,7 @@ static int merge_3way(struct merge_options *opt,
+ 	mmfile_t orig, src1, src2;
+ 	struct ll_merge_options ll_opts = {0};
+ 	char *base, *name1, *name2;
+-	int merge_status;
++	enum ll_merge_result merge_status;
  
- test_expect_success 'mark rename/delete as unmerged' '
-diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
-index 84946458371..c41584eb33e 100755
---- a/t/t6406-merge-attr.sh
-+++ b/t/t6406-merge-attr.sh
-@@ -221,8 +221,13 @@ test_expect_success 'binary files with union attribute' '
- 	printf "two\0" >bin.txt &&
- 	git commit -am two &&
+ 	ll_opts.renormalize = opt->renormalize;
+ 	ll_opts.extra_marker_size = extra_marker_size;
+@@ -1090,6 +1090,9 @@ static int merge_3way(struct merge_options *opt,
+ 	merge_status = ll_merge(result_buf, a->path, &orig, base,
+ 				&src1, name1, &src2, name2,
+ 				opt->repo->index, &ll_opts);
++	if (merge_status == LL_MERGE_BINARY_CONFLICT)
++		warning("Cannot merge binary files: %s (%s vs. %s)",
++			a->path, name1, name2);
  
--	test_must_fail git merge bin-main 2>stderr &&
--	grep -i "warning.*cannot merge.*HEAD vs. bin-main" stderr
-+	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+	then
-+		test_must_fail git merge bin-main >output
-+	else
-+		test_must_fail git merge bin-main 2>output
-+	fi &&
-+	grep -i "warning.*cannot merge.*HEAD vs. bin-main" output
- '
+ 	free(base);
+ 	free(name1);
+diff --git a/notes-merge.c b/notes-merge.c
+index b4a3a903e86..01d596920ea 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -344,7 +344,7 @@ static int ll_merge_in_worktree(struct notes_merge_options *o,
+ {
+ 	mmbuffer_t result_buf;
+ 	mmfile_t base, local, remote;
+-	int status;
++	enum ll_merge_result status;
  
- test_done
+ 	read_mmblob(&base, &p->base);
+ 	read_mmblob(&local, &p->local);
+@@ -358,6 +358,9 @@ static int ll_merge_in_worktree(struct notes_merge_options *o,
+ 	free(local.ptr);
+ 	free(remote.ptr);
+ 
++	if (status == LL_MERGE_BINARY_CONFLICT)
++		warning("Cannot merge binary files: %s (%s vs. %s)",
++			oid_to_hex(&p->obj), o->local_ref, o->remote_ref);
+ 	if ((status < 0) || !result_buf.ptr)
+ 		die("Failed to execute internal merge");
+ 
+diff --git a/rerere.c b/rerere.c
+index d83d58df4fb..b1f8961ed9e 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -609,19 +609,23 @@ static int try_merge(struct index_state *istate,
+ 		     const struct rerere_id *id, const char *path,
+ 		     mmfile_t *cur, mmbuffer_t *result)
+ {
+-	int ret;
++	enum ll_merge_result ret;
+ 	mmfile_t base = {NULL, 0}, other = {NULL, 0};
+ 
+ 	if (read_mmfile(&base, rerere_path(id, "preimage")) ||
+-	    read_mmfile(&other, rerere_path(id, "postimage")))
+-		ret = 1;
+-	else
++	    read_mmfile(&other, rerere_path(id, "postimage"))) {
++		ret = LL_MERGE_CONFLICT;
++	} else {
+ 		/*
+ 		 * A three-way merge. Note that this honors user-customizable
+ 		 * low-level merge driver settings.
+ 		 */
+ 		ret = ll_merge(result, path, &base, NULL, cur, "", &other, "",
+ 			       istate, NULL);
++		if (ret == LL_MERGE_BINARY_CONFLICT)
++			warning("Cannot merge binary files: %s (%s vs. %s)",
++				path, "", "");
++	}
+ 
+ 	free(base.ptr);
+ 	free(other.ptr);
 -- 
 gitgitgadget
 
