@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2F49C433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E33B6C43219
 	for <git@archiver.kernel.org>; Sun, 26 Dec 2021 22:37:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234785AbhLZWhg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Dec 2021 17:37:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40400 "EHLO
+        id S234770AbhLZWhh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Dec 2021 17:37:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234756AbhLZWhc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Dec 2021 17:37:32 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD5EAC06173E
-        for <git@vger.kernel.org>; Sun, 26 Dec 2021 14:37:31 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id d9so29174936wrb.0
-        for <git@vger.kernel.org>; Sun, 26 Dec 2021 14:37:31 -0800 (PST)
+        with ESMTP id S234767AbhLZWhd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Dec 2021 17:37:33 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94C4EC06173E
+        for <git@vger.kernel.org>; Sun, 26 Dec 2021 14:37:32 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id f134-20020a1c1f8c000000b00345c05bc12dso7541857wmf.3
+        for <git@vger.kernel.org>; Sun, 26 Dec 2021 14:37:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=M6XsbgQ14+I7bRbN4CL7xzdFNPtXbmyOMWUWdpF4M1U=;
-        b=FuI65JQqCRt0/tNdXIvCX1FmwNu3LP8bPgcm45KKBriCtWJnJWTTFcFseeAYohO/ul
-         3h2sgcJLWgFsk/IguYIl8EvAzCq27XznozPDo4L2Kfap6Zk16bTsddbUOFJScb/j36jL
-         pYIalaIj5FhGlDmufZEdaJGQt1rjN4CGhBWwFbjiwXOjuxL8COeJpQFVNTgLW6BzFmaJ
-         pfVKP4do8tmlONXc47jarbDMx543j8r1m3mXHY5M9M/7R2kzYj+hh37Obw4/C2JpYuY7
-         Ef1krNwNjl4Ms2Q243sLPtq970kFw7faWjzW0tWenkKQQKKnBljHIZEYd0nfUSJAkMXw
-         FBLQ==
+        bh=K+wMw8Qxx5wh39g06x4amkOq2vdISbLAIQoKK9b5Kik=;
+        b=e0gl7qXqKMyg/jGZ3KVyMpQm4mH5yaCSA6mgSh5rVMjoqK89hgOo3bNcc5ZP5Whviz
+         fTnY/L2Dr8vw8ZS5+zkHqiQN6ZdctVVkcd9OJ1QJ7N5kgHSX8PJJC2tV2bzEgogHAqzY
+         +fiG+jgGxWCfX2vaq5CT0k4cV9NGJoJSGTBnYqxlZQCX8z9DGEcwhqHRstI3D8Dqswnu
+         3rC0qUUTkHGU2m0fb/6x7kCeULxX/dAwnRGCw3/OfoUtd/prI29he5m6oVG4TgOW8q9E
+         mbJtbi3tNFCNx+tMJXNpz/JZqQd3o+qo718cN/Ue7KCir/i9F7RBiLWirZcIB+OiE5Lb
+         nKjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=M6XsbgQ14+I7bRbN4CL7xzdFNPtXbmyOMWUWdpF4M1U=;
-        b=shwLklJp0TCPVDCFPg0oL7SaENo2qoKvFqGrnJbzoRD+BCPq/EcqwNxsus0dDNGUlc
-         xcaQcXC2YWPwjSMwHO6vqISF2NcB0P7maHKrYzkdbuv96nlFPeIChctyweXM8g8Ga0+G
-         L+808oonyGMRe6SQe22lqzusJpcdjc9b29KjXA6sj85A1IR/BIc793lz4grWfhdNdwLJ
-         BH06EnRQ2T4EZglr1O80++u+6tHPnWUOa7wLy6KeAsXY/9hDwxYVDLL7Z+nAiLdqFFCw
-         305qIld8TJhF17CQcQDEjHusHcOcqbJWyirdQS9yXAQvxKDl9M2az2PYMWpTBSzBe+7V
-         KMnw==
-X-Gm-Message-State: AOAM533N0p6chEJD5ZkVItkwO3a8OhWfOrD/KLF3k+Hs1JjOiU3+jryy
-        SKtxcVMJi4f3gMi9GWqDKq9SXB+Qo8VhIaqO
-X-Google-Smtp-Source: ABdhPJw6c+uxkSWJR5F9SEs8iFchjqlrAKKbB+hpLKjnyXGWW8FnzesG5XZDP9b4J/AuC/NFmMdqKA==
-X-Received: by 2002:adf:f252:: with SMTP id b18mr11014747wrp.341.1640558250001;
+        bh=K+wMw8Qxx5wh39g06x4amkOq2vdISbLAIQoKK9b5Kik=;
+        b=otlrxgqi3cq+5D52KaXpxZilD/agVUypLXE5+HNwIIbQxjW2M99vWqKX3tyzGRO1mU
+         /q8dYZf9s7dKy0bgfT6jAErIun5oiKGhJ6Hn994eK19WtGsJ0Is5qyIma8NTj1UByCMr
+         Le87PqOouycAn/QSDxRmKHdqeNo0cLr3Cei/HOkOOuZsP3busJBd10mj+7R+kL+LOkL6
+         OwPAK9k2CIAoXGnMV3QdS1xn+54hCagZj2BzqonqbQY0TU0BAjoUp5t/KyjQ52DcNmPV
+         wnmsOkxPldjYCiYuvPgNmf43wPAKHoF7unxsscpHn5C+SrdnvQLoV0ecMERC8FRucxCY
+         URiQ==
+X-Gm-Message-State: AOAM531m8cYFOGm5Xz1Tim/6vs1GSSIIZmTxyE/RN3aEsDq9LZliMu2j
+        OyFFdbyyBuvKRcJmsE2EJQ1hi0N8P7WztKtD
+X-Google-Smtp-Source: ABdhPJzKR7LPr2GovJafEWgnECprXm9T1WAwP0/UKJz1M+lJl2Crf1527Qttuqk4D0yTvQ4HPtRi1A==
+X-Received: by 2002:a1c:1f88:: with SMTP id f130mr11357659wmf.91.1640558250876;
         Sun, 26 Dec 2021 14:37:30 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id ay29sm16289861wmb.13.2021.12.26.14.37.29
+        by smtp.gmail.com with ESMTPSA id ay29sm16289861wmb.13.2021.12.26.14.37.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Dec 2021 14:37:29 -0800 (PST)
+        Sun, 26 Dec 2021 14:37:30 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, J Smith <dark.panda@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 6/7] grep API: call grep_config() after grep_init()
-Date:   Sun, 26 Dec 2021 23:37:18 +0100
-Message-Id: <patch-v6-6.7-e38eca56959-20211226T223035Z-avarab@gmail.com>
+Subject: [PATCH v6 7/7] grep: simplify config parsing and option parsing
+Date:   Sun, 26 Dec 2021 23:37:19 +0100
+Message-Id: <patch-v6-7.7-88dfd40bf9e-20211226T223035Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1239.g84ae229c870
 In-Reply-To: <cover-v6-0.7-00000000000-20211226T223035Z-avarab@gmail.com>
 References: <cover-v5-0.7-00000000000-20211222T025214Z-avarab@gmail.com> <cover-v6-0.7-00000000000-20211226T223035Z-avarab@gmail.com>
@@ -67,232 +67,297 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The grep_init() function used the odd pattern of initializing the
-passed-in "struct grep_opt" with a statically defined "grep_defaults"
-struct, which would be modified in-place when we invoked
-grep_config().
+Simplify the parsing of "grep.patternType" and
+"grep.extendedRegexp". This changes no behavior, but gets rid of
+complex parsing logic that isn't needed anymore.
 
-So we effectively (b) initialized config, (a) then defaults, (c)
-followed by user options. Usually those are ordered as "a", "b" and
-"c" instead.
+When "grep.patternType" was introduced in 84befcd0a4a (grep: add a
+grep.patternType configuration setting, 2012-08-03) we promised that:
 
-As the comments being removed here show the previous behavior needed
-to be carefully explained as we'd potentially share the populated
-configuration among different instances of grep_init(). In practice we
-didn't do that, but now that it can't be a concern anymore let's
-remove those comments.
+ 1. You can set "grep.patternType", and "[setting it to] 'default'
+    will return to the default matching behavior".
 
-This does not change the behavior of any of the configuration
-variables or options. That would have been the case if we didn't move
-around the grep_config() call in "builtin/log.c". But now that we call
-"grep_config" after "git_log_config" and "git_format_config" we'll
-need to pass in the already initialized "struct grep_opt *".
+    In that context "the default" meant whatever the configuration
+    system specified before that change, i.e. via grep.extendedRegexp.
 
-See 6ba9bb76e02 (grep: copy struct in one fell swoop, 2020-11-29) and
-7687a0541e0 (grep: move the configuration parsing logic to grep.[ch],
-2012-10-09) for the commits that added the comments.
+ 2. We'd support the existing "grep.extendedRegexp" option, but ignore
+    it when the new "grep.patternType" option is set. We said we'd
+    only ignore the older "grep.extendedRegexp" option "when the
+    `grep.patternType` option is set. to a value other than
+    'default'".
 
-The memcpy() pattern here will be optimized away and follows the
-convention of other *_init() functions. See 5726a6b4012 (*.c *_init():
-define in terms of corresponding *_INIT macro, 2021-07-01).
+In a preceding commit we changed grep_config() to be called after
+grep_init(), which means that much of the complexity here can go
+away.
+
+As before "grep.extendedRegexp" is a last-one-wins variable. We need
+to maintain state inside parse_pattern_type_arg() to ignore it if a
+non-"default" grep.patternType was seen, but otherwise flip between
+BRE and ERE for "grep.extendedRegexp=[false|true]".
+
+See my 07a3d411739 (grep: remove regflags from the public grep_opt
+API, 2017-06-29) for addition of the two comments being removed here,
+i.e. the complexity noted in that commit is now going away.
+
+We don't need grep_commit_pattern_type() anymore, we can instead have
+OPT_SET_INT() in "builtin/grep.c" manipulate the "pattern_type_option"
+member in "struct grep_opt" directly.
+
+We can also do away with the indirection of the "int fixed" and "int
+pcre2" members in favor of using "pattern_type_option" directly in
+"grep.c".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/grep.c |  4 ++--
- builtin/log.c  | 13 +++++++++++--
- grep.c         | 39 +++------------------------------------
- grep.h         | 21 +++++++++++++++++++++
- 4 files changed, 37 insertions(+), 40 deletions(-)
+ builtin/grep.c | 10 +++---
+ grep.c         | 83 ++++++++++++--------------------------------------
+ grep.h         |  9 ++----
+ revision.c     |  2 --
+ 4 files changed, 26 insertions(+), 78 deletions(-)
 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index 5ec4cecae45..0ea124321b6 100644
+index 0ea124321b6..942c4b25077 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -285,7 +285,7 @@ static int wait_all(void)
+@@ -845,7 +845,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	int i;
+ 	int dummy;
+ 	int use_index = 1;
+-	int pattern_type_arg = GREP_PATTERN_TYPE_UNSPECIFIED;
+ 	int allow_revs;
  
- static int grep_cmd_config(const char *var, const char *value, void *cb)
+ 	struct option options[] = {
+@@ -879,16 +878,16 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			N_("descend at most <depth> levels"), PARSE_OPT_NONEG,
+ 			NULL, 1 },
+ 		OPT_GROUP(""),
+-		OPT_SET_INT('E', "extended-regexp", &pattern_type_arg,
++		OPT_SET_INT('E', "extended-regexp", &opt.pattern_type_option,
+ 			    N_("use extended POSIX regular expressions"),
+ 			    GREP_PATTERN_TYPE_ERE),
+-		OPT_SET_INT('G', "basic-regexp", &pattern_type_arg,
++		OPT_SET_INT('G', "basic-regexp", &opt.pattern_type_option,
+ 			    N_("use basic POSIX regular expressions (default)"),
+ 			    GREP_PATTERN_TYPE_BRE),
+-		OPT_SET_INT('F', "fixed-strings", &pattern_type_arg,
++		OPT_SET_INT('F', "fixed-strings", &opt.pattern_type_option,
+ 			    N_("interpret patterns as fixed strings"),
+ 			    GREP_PATTERN_TYPE_FIXED),
+-		OPT_SET_INT('P', "perl-regexp", &pattern_type_arg,
++		OPT_SET_INT('P', "perl-regexp", &opt.pattern_type_option,
+ 			    N_("use Perl-compatible regular expressions"),
+ 			    GREP_PATTERN_TYPE_PCRE),
+ 		OPT_GROUP(""),
+@@ -982,7 +981,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, options, grep_usage,
+ 			     PARSE_OPT_KEEP_DASHDASH |
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
+-	grep_commit_pattern_type(pattern_type_arg, &opt);
+ 
+ 	if (use_index && !startup_info->have_repository) {
+ 		int fallback = 0;
+diff --git a/grep.c b/grep.c
+index 8dfa0300786..e964f402472 100644
+--- a/grep.c
++++ b/grep.c
+@@ -33,9 +33,7 @@ static const char *color_grep_slots[] = {
+ 
+ static int parse_pattern_type_arg(const char *opt, const char *arg)
  {
--	int st = grep_config(var, value, NULL);
-+	int st = grep_config(var, value, cb);
- 	if (git_color_default_config(var, value, NULL) < 0)
- 		st = -1;
+-	if (!strcmp(arg, "default"))
+-		return GREP_PATTERN_TYPE_UNSPECIFIED;
+-	else if (!strcmp(arg, "basic"))
++	if (!strcmp(arg, "basic"))
+ 		return GREP_PATTERN_TYPE_BRE;
+ 	else if (!strcmp(arg, "extended"))
+ 		return GREP_PATTERN_TYPE_ERE;
+@@ -61,11 +59,25 @@ int grep_config(const char *var, const char *value, void *cb)
+ 		return -1;
  
-@@ -966,8 +966,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	};
- 	grep_prefix = prefix;
- 
--	git_config(grep_cmd_config, NULL);
- 	grep_init(&opt, the_repository);
-+	git_config(grep_cmd_config, &opt);
- 
- 	/*
- 	 * If there is no -- then the paths must exist in the working
-diff --git a/builtin/log.c b/builtin/log.c
-index 93ace0dde7d..fdde77e4ebb 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -520,8 +520,6 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 	if (!strcmp(var, "grep.extendedregexp")) {
++		if (opt->extended_regexp_option == -1)
++			return 0;
+ 		opt->extended_regexp_option = git_config_bool(var, value);
++		if (opt->extended_regexp_option)
++			opt->pattern_type_option = GREP_PATTERN_TYPE_ERE;
++		else
++			opt->pattern_type_option = GREP_PATTERN_TYPE_BRE;
++		return 0;
++	}
++
++	if (!strcmp(var, "grep.patterntype") &&
++	    !strcmp(value, "default")) {
++		opt->pattern_type_option = opt->extended_regexp_option == 1
++			? GREP_PATTERN_TYPE_ERE : GREP_PATTERN_TYPE_BRE;
  		return 0;
  	}
  
--	if (grep_config(var, value, cb) < 0)
--		return -1;
- 	if (git_gpg_config(var, value, cb) < 0)
- 		return -1;
- 	return git_diff_ui_config(var, value, cb);
-@@ -536,6 +534,8 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
- 	git_config(git_log_config, NULL);
- 
- 	repo_init_revisions(the_repository, &rev, prefix);
-+	git_config(grep_config, &rev.grep_filter);
-+
- 	rev.diff = 1;
- 	rev.simplify_history = 0;
- 	memset(&opt, 0, sizeof(opt));
-@@ -650,6 +650,8 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 
- 	memset(&match_all, 0, sizeof(match_all));
- 	repo_init_revisions(the_repository, &rev, prefix);
-+	git_config(grep_config, &rev.grep_filter);
-+
- 	rev.diff = 1;
- 	rev.always_show_header = 1;
- 	rev.no_walk = 1;
-@@ -733,6 +735,8 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
- 
- 	repo_init_revisions(the_repository, &rev, prefix);
- 	init_reflog_walk(&rev.reflog_info);
-+	git_config(grep_config, &rev.grep_filter);
-+
- 	rev.verbose_header = 1;
- 	memset(&opt, 0, sizeof(opt));
- 	opt.def = "HEAD";
-@@ -766,6 +770,8 @@ int cmd_log(int argc, const char **argv, const char *prefix)
- 	git_config(git_log_config, NULL);
- 
- 	repo_init_revisions(the_repository, &rev, prefix);
-+	git_config(grep_config, &rev.grep_filter);
-+
- 	rev.always_show_header = 1;
- 	memset(&opt, 0, sizeof(opt));
- 	opt.def = "HEAD";
-@@ -1848,10 +1854,13 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	extra_hdr.strdup_strings = 1;
- 	extra_to.strdup_strings = 1;
- 	extra_cc.strdup_strings = 1;
-+
- 	init_log_defaults();
- 	init_display_notes(&notes_opt);
- 	git_config(git_format_config, NULL);
- 	repo_init_revisions(the_repository, &rev, prefix);
-+	git_config(grep_config, &rev.grep_filter);
-+
- 	rev.show_notes = show_notes;
- 	memcpy(&rev.notes_opt, &notes_opt, sizeof(notes_opt));
- 	rev.commit_format = CMIT_FMT_EMAIL;
-diff --git a/grep.c b/grep.c
-index 12b202598a9..8dfa0300786 100644
---- a/grep.c
-+++ b/grep.c
-@@ -19,27 +19,6 @@ static void std_output(struct grep_opt *opt, const void *buf, size_t size)
- 	fwrite(buf, size, 1, stdout);
- }
- 
--static struct grep_opt grep_defaults = {
--	.relative = 1,
--	.pathname = 1,
--	.max_depth = -1,
--	.pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED,
--	.colors = {
--		[GREP_COLOR_CONTEXT] = "",
--		[GREP_COLOR_FILENAME] = "",
--		[GREP_COLOR_FUNCTION] = "",
--		[GREP_COLOR_LINENO] = "",
--		[GREP_COLOR_COLUMNNO] = "",
--		[GREP_COLOR_MATCH_CONTEXT] = GIT_COLOR_BOLD_RED,
--		[GREP_COLOR_MATCH_SELECTED] = GIT_COLOR_BOLD_RED,
--		[GREP_COLOR_SELECTED] = "",
--		[GREP_COLOR_SEP] = GIT_COLOR_CYAN,
--	},
--	.only_matching = 0,
--	.color = -1,
--	.output = std_output,
--};
--
- static const char *color_grep_slots[] = {
- 	[GREP_COLOR_CONTEXT]	    = "context",
- 	[GREP_COLOR_FILENAME]	    = "filename",
-@@ -75,20 +54,12 @@ define_list_config_array_extra(color_grep_slots, {"match"});
-  */
- int grep_config(const char *var, const char *value, void *cb)
- {
--	struct grep_opt *opt = &grep_defaults;
-+	struct grep_opt *opt = cb;
- 	const char *slot;
- 
- 	if (userdiff_config(var, value) < 0)
- 		return -1;
- 
--	/*
--	 * The instance of grep_opt that we set up here is copied by
--	 * grep_init() to be used by each individual invocation.
--	 * When populating a new field of this structure here, be
--	 * sure to think about ownership -- e.g., you might need to
--	 * override the shallow copy in grep_init() with a deep copy.
--	 */
--
- 	if (!strcmp(var, "grep.extendedregexp")) {
- 		opt->extended_regexp_option = git_config_bool(var, value);
+ 	if (!strcmp(var, "grep.patterntype")) {
++		opt->extended_regexp_option = -1; /* ignore */
+ 		opt->pattern_type_option = parse_pattern_type_arg(var, value);
  		return 0;
-@@ -134,14 +105,10 @@ int grep_config(const char *var, const char *value, void *cb)
- 	return 0;
+ 	}
+@@ -115,62 +127,6 @@ void grep_init(struct grep_opt *opt, struct repository *repo)
+ 	opt->header_tail = &opt->header_list;
  }
  
--/*
-- * Initialize one instance of grep_opt and copy the
-- * default values from the template we read the configuration
-- * information in an earlier call to git_config(grep_config).
-- */
- void grep_init(struct grep_opt *opt, struct repository *repo)
- {
--	*opt = grep_defaults;
-+	struct grep_opt blank = GREP_OPT_INIT;
-+	memcpy(opt, &blank, sizeof(*opt));
+-static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, struct grep_opt *opt)
+-{
+-	/*
+-	 * When committing to the pattern type by setting the relevant
+-	 * fields in grep_opt it's generally not necessary to zero out
+-	 * the fields we're not choosing, since they won't have been
+-	 * set by anything. The extended_regexp_option field is the
+-	 * only exception to this.
+-	 *
+-	 * This is because in the process of parsing grep.patternType
+-	 * & grep.extendedRegexp we set opt->pattern_type_option and
+-	 * opt->extended_regexp_option, respectively. We then
+-	 * internally use opt->extended_regexp_option to see if we're
+-	 * compiling an ERE. It must be unset if that's not actually
+-	 * the case.
+-	 */
+-	if (pattern_type != GREP_PATTERN_TYPE_ERE &&
+-	    opt->extended_regexp_option)
+-		opt->extended_regexp_option = 0;
+-
+-	switch (pattern_type) {
+-	case GREP_PATTERN_TYPE_UNSPECIFIED:
+-		/* fall through */
+-
+-	case GREP_PATTERN_TYPE_BRE:
+-		break;
+-
+-	case GREP_PATTERN_TYPE_ERE:
+-		opt->extended_regexp_option = 1;
+-		break;
+-
+-	case GREP_PATTERN_TYPE_FIXED:
+-		opt->fixed = 1;
+-		break;
+-
+-	case GREP_PATTERN_TYPE_PCRE:
+-		opt->pcre2 = 1;
+-		break;
+-	}
+-}
+-
+-void grep_commit_pattern_type(enum grep_pattern_type pattern_type, struct grep_opt *opt)
+-{
+-	if (pattern_type != GREP_PATTERN_TYPE_UNSPECIFIED)
+-		grep_set_pattern_type_option(pattern_type, opt);
+-	else if (opt->pattern_type_option != GREP_PATTERN_TYPE_UNSPECIFIED)
+-		grep_set_pattern_type_option(opt->pattern_type_option, opt);
+-	else if (opt->extended_regexp_option)
+-		/*
+-		 * This branch *must* happen after setting from the
+-		 * opt->pattern_type_option above, we don't want
+-		 * grep.extendedRegexp to override grep.patternType!
+-		 */
+-		grep_set_pattern_type_option(GREP_PATTERN_TYPE_ERE, opt);
+-}
+-
+ static struct grep_pat *create_grep_pat(const char *pat, size_t patlen,
+ 					const char *origin, int no,
+ 					enum grep_pat_token t,
+@@ -490,9 +446,10 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
  
- 	opt->repo = repo;
- 	opt->pattern_tail = &opt->pattern_list;
+ 	p->word_regexp = opt->word_regexp;
+ 	p->ignore_case = opt->ignore_case;
+-	p->fixed = opt->fixed;
++	p->fixed = opt->pattern_type_option == GREP_PATTERN_TYPE_FIXED;
+ 
+-	if (memchr(p->pattern, 0, p->patternlen) && !opt->pcre2)
++	if (opt->pattern_type_option != GREP_PATTERN_TYPE_PCRE &&
++	    memchr(p->pattern, 0, p->patternlen))
+ 		die(_("given pattern contains NULL byte (via -f <file>). This is only supported with -P under PCRE v2"));
+ 
+ 	p->is_fixed = is_fixed(p->pattern, p->patternlen);
+@@ -543,14 +500,14 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ 		return;
+ 	}
+ 
+-	if (opt->pcre2) {
++	if (opt->pattern_type_option == GREP_PATTERN_TYPE_PCRE) {
+ 		compile_pcre2_pattern(p, opt);
+ 		return;
+ 	}
+ 
+ 	if (p->ignore_case)
+ 		regflags |= REG_ICASE;
+-	if (opt->extended_regexp_option)
++	if (opt->pattern_type_option == GREP_PATTERN_TYPE_ERE)
+ 		regflags |= REG_EXTENDED;
+ 	err = regcomp(&p->regexp, p->pattern, regflags);
+ 	if (err) {
 diff --git a/grep.h b/grep.h
-index 62deadb885f..b651eb291f7 100644
+index b651eb291f7..ab2ce833b40 100644
 --- a/grep.h
 +++ b/grep.h
-@@ -177,6 +177,27 @@ struct grep_opt {
- 	void *output_priv;
+@@ -94,8 +94,7 @@ enum grep_expr_node {
  };
  
-+#define GREP_OPT_INIT { \
-+	.relative = 1, \
-+	.pathname = 1, \
-+	.max_depth = -1, \
-+	.pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED, \
-+	.colors = { \
-+		[GREP_COLOR_CONTEXT] = "", \
-+		[GREP_COLOR_FILENAME] = "", \
-+		[GREP_COLOR_FUNCTION] = "", \
-+		[GREP_COLOR_LINENO] = "", \
-+		[GREP_COLOR_COLUMNNO] = "", \
-+		[GREP_COLOR_MATCH_CONTEXT] = GIT_COLOR_BOLD_RED, \
-+		[GREP_COLOR_MATCH_SELECTED] = GIT_COLOR_BOLD_RED, \
-+		[GREP_COLOR_SELECTED] = "", \
-+		[GREP_COLOR_SEP] = GIT_COLOR_CYAN, \
-+	}, \
-+	.only_matching = 0, \
-+	.color = -1, \
-+	.output = std_output, \
-+}
-+
+ enum grep_pattern_type {
+-	GREP_PATTERN_TYPE_UNSPECIFIED = 0,
+-	GREP_PATTERN_TYPE_BRE,
++	GREP_PATTERN_TYPE_BRE = 0,
+ 	GREP_PATTERN_TYPE_ERE,
+ 	GREP_PATTERN_TYPE_FIXED,
+ 	GREP_PATTERN_TYPE_PCRE
+@@ -143,7 +142,6 @@ struct grep_opt {
+ 	int unmatch_name_only;
+ 	int count;
+ 	int word_regexp;
+-	int fixed;
+ 	int all_match;
+ #define GREP_BINARY_DEFAULT	0
+ #define GREP_BINARY_NOMATCH	1
+@@ -152,7 +150,6 @@ struct grep_opt {
+ 	int allow_textconv;
+ 	int extended;
+ 	int use_reflog_filter;
+-	int pcre2;
+ 	int relative;
+ 	int pathname;
+ 	int null_following_name;
+@@ -162,7 +159,7 @@ struct grep_opt {
+ 	int funcname;
+ 	int funcbody;
+ 	int extended_regexp_option;
+-	int pattern_type_option;
++	enum grep_pattern_type pattern_type_option;
+ 	int ignore_locale;
+ 	char colors[NR_GREP_COLORS][COLOR_MAXLEN];
+ 	unsigned pre_context;
+@@ -181,7 +178,6 @@ struct grep_opt {
+ 	.relative = 1, \
+ 	.pathname = 1, \
+ 	.max_depth = -1, \
+-	.pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED, \
+ 	.colors = { \
+ 		[GREP_COLOR_CONTEXT] = "", \
+ 		[GREP_COLOR_FILENAME] = "", \
+@@ -200,7 +196,6 @@ struct grep_opt {
+ 
  int grep_config(const char *var, const char *value, void *);
  void grep_init(struct grep_opt *, struct repository *repo);
- void grep_commit_pattern_type(enum grep_pattern_type, struct grep_opt *opt);
+-void grep_commit_pattern_type(enum grep_pattern_type, struct grep_opt *opt);
+ 
+ void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen, const char *origin, int no, enum grep_pat_token t);
+ void append_grep_pattern(struct grep_opt *opt, const char *pat, const char *origin, int no, enum grep_pat_token t);
+diff --git a/revision.c b/revision.c
+index 495328e859c..298d0ea7574 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2860,8 +2860,6 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 
+ 	diff_setup_done(&revs->diffopt);
+ 
+-	grep_commit_pattern_type(GREP_PATTERN_TYPE_UNSPECIFIED,
+-				 &revs->grep_filter);
+ 	if (!is_encoding_utf8(get_log_output_encoding()))
+ 		revs->grep_filter.ignore_locale = 1;
+ 	compile_grep_patterns(&revs->grep_filter);
 -- 
 2.34.1.1239.g84ae229c870
 
