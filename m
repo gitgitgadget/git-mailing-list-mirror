@@ -2,86 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28E8CC433EF
-	for <git@archiver.kernel.org>; Sat, 25 Dec 2021 22:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 778EEC433F5
+	for <git@archiver.kernel.org>; Sun, 26 Dec 2021 00:31:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232968AbhLYWUY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Dec 2021 17:20:24 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62694 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229588AbhLYWUX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Dec 2021 17:20:23 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9ED1FE805E;
-        Sat, 25 Dec 2021 17:20:22 -0500 (EST)
+        id S233140AbhLZAbO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Dec 2021 19:31:14 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51626 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231296AbhLZAbO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Dec 2021 19:31:14 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CA56216BE0A;
+        Sat, 25 Dec 2021 19:31:13 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WH3H6wKCwKcOnqd3tgEOLfLpVtnLRgi+eM1q8x
-        iB2UE=; b=Nn0BQ2QpfL2s3lYtBnbnk7i2+XP0lLuTf+bYu6+uSTZ6FPXEUTxw8E
-        5Pgj95fV4U0PLxlWJD0WluSXZCeFzo6x54tiAA8zaOVMvxH7855YMU6DjD+ohTKf
-        M0m/NJ57011pX3PvAL4PlCB4cPO4vvNRbDPgAwBlbMNmK6wszhB7c=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 96386E805D;
-        Sat, 25 Dec 2021 17:20:22 -0500 (EST)
+        :content-type:content-transfer-encoding; s=sasl; bh=hAJGhmOYXKVC
+        wYEKi+3WcnxsYeyNNdcUzYA4Z5FPlWg=; b=Fcy/f4o+uiC7T5ay73caxVv6ine7
+        RRg9sUfVV2mf6ClHdakhLV7wOvWEjQI8wTzPwd2FXYn/QUQhOWo1EiRg4D9evXvr
+        N3wGe9SIPXrWaBfyZ675+QzqzJKa7e+Lx+nOHMqzQHrTajKn3q39JeJAAZ7KEQh+
+        mWE62NsL/zCDY0I=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C299E16BE08;
+        Sat, 25 Dec 2021 19:31:13 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 10A4FE805C;
-        Sat, 25 Dec 2021 17:20:21 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2DBC316BE07;
+        Sat, 25 Dec 2021 19:31:10 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: ds/sparse-checkout-requires-per-worktree-config
-References: <xmqqsfui6g7q.fsf@gitster.g> <xmqqsfuh5tz4.fsf@gitster.g>
-        <CABPp-BFiMy55mCMJSHk9PmKa8EUd-6mR5z5xM7J3P2dZBjRq5g@mail.gmail.com>
-Date:   Sat, 25 Dec 2021 14:20:20 -0800
-In-Reply-To: <CABPp-BFiMy55mCMJSHk9PmKa8EUd-6mR5z5xM7J3P2dZBjRq5g@mail.gmail.com>
-        (Elijah Newren's message of "Fri, 24 Dec 2021 18:49:59 -0800")
-Message-ID: <xmqq5yrc5ntn.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        John Cai <johncai86@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH v5 07/10] cat-file: fix remaining usage bugs
+References: <cover-v4-00.10-00000000000-20211208T123151Z-avarab@gmail.com>
+        <cover-v5-00.10-00000000000-20211222T041050Z-avarab@gmail.com>
+        <patch-v5-07.10-e6ea403efe0-20211222T041050Z-avarab@gmail.com>
+Date:   Sat, 25 Dec 2021 16:31:08 -0800
+In-Reply-To: <patch-v5-07.10-e6ea403efe0-20211222T041050Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 22 Dec
+ 2021 05:13:00
+        +0100")
+Message-ID: <xmqqr1a04377.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D9A7046A-65D0-11EC-9FD4-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1F7EF58A-65E3-11EC-BC03-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> On Fri, Dec 24, 2021 at 6:11 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->> > * ds/sparse-checkout-requires-per-worktree-config (2021-12-21) 5 commits
->> >  - sparse-checkout: use repo_config_set_worktree_gently()
->> >  - config: add repo_config_set_worktree_gently()
->> >  - worktree: add upgrade_to_worktree_config()
->> >  - config: make some helpers repo-aware
->> >  - setup: use a repository when upgrading format
->> >
->> >  "git sparse-checkout" wants to work with per-worktree configration,
->> >  but did not work well in a worktree attached to a bare repository.
->> >
->> >  Expecting a redesign?
->> >  cf. <CABPp-BG7nwsdEYrnfqhAbWU4ndJHcqGf6RS_6DzJittuNVLvoA@mail.gmail.com>
->> >  source: <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com>
->>
->> FWIW, this topic by itself passes its self test, but when queued
->> near the tip of 'seen', it seems to break t1091.
->>
->> For an example run that fails on win+VS test (8), see
->> https://github.com/git/git/runs/4629824103
->
-> Unrelated to your comment, other than being about this same series:
->
-> I think "redesign" is too strong a word here.  I think the patches are
-> a useful start...and might even represent the majority of the code
-> needed; it's just that they are focusing too narrowly.  core.worktree
-> should also be handled, and I think we should include fixes at the
-> `git worktree add` level, not just `git sparse-checkout {init,set}`.
+> With the migration of --batch-all-objects to OPT_CMDMODE() in the
+> preceding commit one bug with combining it and other OPT_CMDMODE()
+> options was solved, but we were still left with e.g. --buffer silently
+> being discarded when not in batch mode.
+> ...
 
-Yup, the last one part is what I meant by "redesign".
+I've read the patches again myself, as I didn't see much comments to
+the recent rounds of the series on the list.  Here are a few fix-ups
+to style violations that made my reading hiccup while doing so,
+introduced by this step.
+
+----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+Subject: [PATCH] fixup! cat-file: fix remaining usage bugs
+
+Style fix to have SP on both sides of
+
+    shell_function () {
+	... body of the function ...
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t1006-cat-file.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 123801cfe2..aa859271d6 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -34,7 +34,7 @@ do
+ 	'
+ done
+=20
+-test_missing_usage() {
++test_missing_usage () {
+ 	test_expect_code 129 "$@" 2>err &&
+ 	grep -E "^fatal:.*required" err
+ }
+@@ -66,7 +66,7 @@ do
+ 	done
+ done
+=20
+-test_too_many_arguments() {
++test_too_many_arguments () {
+ 	test_expect_code 129 "$@" 2>err &&
+ 	grep -E "^fatal: too many arguments$" err
+ }
+--=20
+2.34.1-568-g69e9fd72b5
+
+
+
