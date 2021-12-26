@@ -2,362 +2,209 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E33B6C43219
-	for <git@archiver.kernel.org>; Sun, 26 Dec 2021 22:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1CBBC433F5
+	for <git@archiver.kernel.org>; Sun, 26 Dec 2021 23:02:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234770AbhLZWhh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Dec 2021 17:37:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40406 "EHLO
+        id S234802AbhLZXCA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Dec 2021 18:02:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234767AbhLZWhd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Dec 2021 17:37:33 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94C4EC06173E
-        for <git@vger.kernel.org>; Sun, 26 Dec 2021 14:37:32 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id f134-20020a1c1f8c000000b00345c05bc12dso7541857wmf.3
-        for <git@vger.kernel.org>; Sun, 26 Dec 2021 14:37:32 -0800 (PST)
+        with ESMTP id S234793AbhLZXB7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Dec 2021 18:01:59 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CC54C06173E
+        for <git@vger.kernel.org>; Sun, 26 Dec 2021 15:01:59 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id l5so20634168edj.13
+        for <git@vger.kernel.org>; Sun, 26 Dec 2021 15:01:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=K+wMw8Qxx5wh39g06x4amkOq2vdISbLAIQoKK9b5Kik=;
-        b=e0gl7qXqKMyg/jGZ3KVyMpQm4mH5yaCSA6mgSh5rVMjoqK89hgOo3bNcc5ZP5Whviz
-         fTnY/L2Dr8vw8ZS5+zkHqiQN6ZdctVVkcd9OJ1QJ7N5kgHSX8PJJC2tV2bzEgogHAqzY
-         +fiG+jgGxWCfX2vaq5CT0k4cV9NGJoJSGTBnYqxlZQCX8z9DGEcwhqHRstI3D8Dqswnu
-         3rC0qUUTkHGU2m0fb/6x7kCeULxX/dAwnRGCw3/OfoUtd/prI29he5m6oVG4TgOW8q9E
-         mbJtbi3tNFCNx+tMJXNpz/JZqQd3o+qo718cN/Ue7KCir/i9F7RBiLWirZcIB+OiE5Lb
-         nKjw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=cgRcmWPy7dpe8OaEyqhBZ2jAtTOLhX/uBf707zNRUxk=;
+        b=ix1icUZ1saKmMGe7cPEJhr6Enx9n20PGbv6hos8dz5woUT0t8kJQX0x8bzVce6lc4Z
+         T0CifXSRu/SWD2Xqjkanj0lIT/HblKhqoLRphKMk8YwP/IZRCp6tfFdmPPUV4X+xRTn6
+         RhDq3dGwODDKm0d1bwKMmWqva1UEre45rFOdY5ZElGIa/fgdvQKwnJGzTmFu2M8OD7L5
+         JJsB1Py6ypsnWaNmf3iDpQ6x/w+Etn8OeG8GuVx5+YuOut7OeVJ8NMBPchPH5cVRa0LH
+         zJrq54PbWGYjxrfglxGRVhSYUUoW/U4om+vDp7a53+x1PyitldvdCzsfQsHfgG1DzrIo
+         1QJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=K+wMw8Qxx5wh39g06x4amkOq2vdISbLAIQoKK9b5Kik=;
-        b=otlrxgqi3cq+5D52KaXpxZilD/agVUypLXE5+HNwIIbQxjW2M99vWqKX3tyzGRO1mU
-         /q8dYZf9s7dKy0bgfT6jAErIun5oiKGhJ6Hn994eK19WtGsJ0Is5qyIma8NTj1UByCMr
-         Le87PqOouycAn/QSDxRmKHdqeNo0cLr3Cei/HOkOOuZsP3busJBd10mj+7R+kL+LOkL6
-         OwPAK9k2CIAoXGnMV3QdS1xn+54hCagZj2BzqonqbQY0TU0BAjoUp5t/KyjQ52DcNmPV
-         wnmsOkxPldjYCiYuvPgNmf43wPAKHoF7unxsscpHn5C+SrdnvQLoV0ecMERC8FRucxCY
-         URiQ==
-X-Gm-Message-State: AOAM531m8cYFOGm5Xz1Tim/6vs1GSSIIZmTxyE/RN3aEsDq9LZliMu2j
-        OyFFdbyyBuvKRcJmsE2EJQ1hi0N8P7WztKtD
-X-Google-Smtp-Source: ABdhPJzKR7LPr2GovJafEWgnECprXm9T1WAwP0/UKJz1M+lJl2Crf1527Qttuqk4D0yTvQ4HPtRi1A==
-X-Received: by 2002:a1c:1f88:: with SMTP id f130mr11357659wmf.91.1640558250876;
-        Sun, 26 Dec 2021 14:37:30 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id ay29sm16289861wmb.13.2021.12.26.14.37.30
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=cgRcmWPy7dpe8OaEyqhBZ2jAtTOLhX/uBf707zNRUxk=;
+        b=qZsAEE8OU6tx7ANhF09C54UP+VsCjb9ueIXAds7UDBlzMoC3CMU0X3XeCItB9RFJQl
+         HQy4/gU8EiaHr/RFbEaTXPOcs7ry7V7jK/NFzVCqTAosNIkoCbK/4sZXx6NC0XAaCd5j
+         0tBnw/c1OlMs3qOFbLgG+m3WVQ4KsipfpGPiuxiUzVBDbNSbdfk/ZJD8zs7AbCE3aNDt
+         IZ4bq8A4sMAqU7JiuX9UClFFMX5FwQJO0mEnj/04jpxPHDmCCq68E3CKPUAGE9geLSx2
+         wanyawRItJbT+dYgHU4nggtaVb3c1WHSIHPJ9oxCN36jrHvxXVzZenoIPS47ZnpQ19Km
+         rDwQ==
+X-Gm-Message-State: AOAM531Y6nGCGCREkFcTaEtnhxB6SBlCsaUCJ73qKZqy7WyCWrAU1UO9
+        B9tR3i6JWR1N5FVjttdIheI=
+X-Google-Smtp-Source: ABdhPJwlWhVrnhC6HQ9hpcOwS40JVPcwhEPOiSRXKKpzN60kM53LqWQ4/82i6Ev9o1eSF+//+YERuQ==
+X-Received: by 2002:a17:906:af19:: with SMTP id lx25mr11992797ejb.338.1640559717563;
+        Sun, 26 Dec 2021 15:01:57 -0800 (PST)
+Received: from gmgdl (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
+        by smtp.gmail.com with ESMTPSA id y22sm2933122eda.49.2021.12.26.15.01.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Dec 2021 14:37:30 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, J Smith <dark.panda@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v6 7/7] grep: simplify config parsing and option parsing
-Date:   Sun, 26 Dec 2021 23:37:19 +0100
-Message-Id: <patch-v6-7.7-88dfd40bf9e-20211226T223035Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.34.1.1239.g84ae229c870
-In-Reply-To: <cover-v6-0.7-00000000000-20211226T223035Z-avarab@gmail.com>
-References: <cover-v5-0.7-00000000000-20211222T025214Z-avarab@gmail.com> <cover-v6-0.7-00000000000-20211226T223035Z-avarab@gmail.com>
+        Sun, 26 Dec 2021 15:01:57 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1n1cWa-000H37-Dj;
+        Mon, 27 Dec 2021 00:01:56 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     Fabian Stelzer via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Hans Jerry Illikainen <hji@dyntopia.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Gwyneth Morgan <gwymor@tilde.club>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: t7510-signed-commit.sh hangs on old gpg, regression in
+ 1bfb57f642d (was: [PATCH v8 9/9] ssh signing: test that gpg fails for
+ unknown keys)
+Date:   Sun, 26 Dec 2021 23:53:47 +0100
+References: <pull.1041.v7.git.git.1627998358.gitgitgadget@gmail.com>
+ <pull.1041.v8.git.git.1631304462.gitgitgadget@gmail.com>
+ <07afb94ed8336d4ca9de7078d7a6c02b1db8a908.1631304462.git.gitgitgadget@gmail.com>
+ <211222.86ilvhpbl0.gmgdl@evledraar.gmail.com>
+ <20211222101326.fwl3wphr3ev6c7wt@fs>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <20211222101326.fwl3wphr3ev6c7wt@fs>
+Message-ID: <211227.86h7avezrv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Simplify the parsing of "grep.patternType" and
-"grep.extendedRegexp". This changes no behavior, but gets rid of
-complex parsing logic that isn't needed anymore.
 
-When "grep.patternType" was introduced in 84befcd0a4a (grep: add a
-grep.patternType configuration setting, 2012-08-03) we promised that:
+On Wed, Dec 22 2021, Fabian Stelzer wrote:
 
- 1. You can set "grep.patternType", and "[setting it to] 'default'
-    will return to the default matching behavior".
+> On 22.12.2021 04:18, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>
+>>On Fri, Sep 10 2021, Fabian Stelzer via GitGitGadget wrote:
+>>
+>>> From: Fabian Stelzer <fs@gigacodes.de>
+>>>
+>>> Test that verify-commit/tag will fail when a gpg key is completely
+>>> unknown. To do this we have to generate a key, use it for a signature
+>>> and delete it from our keyring aferwards completely.
+>>>
+>>> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
+>>> +
+>>> +	cat >keydetails <<-\EOF &&
+>>> +	Key-Type: RSA
+>>> +	Key-Length: 2048
+>>> +	Subkey-Type: RSA
+>>> +	Subkey-Length: 2048
+>>> +	Name-Real: Unknown User
+>>> +	Name-Email: unknown@git.com
+>>> +	Expire-Date: 0
+>>> +	%no-ask-passphrase
+>>> +	%no-protection
+>>> +	EOF
+>>> +	gpg --batch --gen-key keydetails &&
+>>>
+>>The t7510-signed-commit.sh script hangs on startup with this change, and
+>>with -vx we show:
+>>
+>>    [...]
+>>    ++ git tag twelfth-signed-alt 17f06d503ee50df92746c17f6cced6feb5940cf5
+>>    ++ cat
+>>    ++ gpg --batch --gen-key keydetails
+>>    gpg: skipping control `%no-protection' ()
+>>
+>>This is on a CentOS 7.9 box on the GCC Farm:
+>>
+>>    [avar@gcc135 t]$ uname -a ; gpg --version
+>>    Linux gcc135.osuosl.org 4.18.0-80.7.2.el7.ppc64le #1 SMP Thu Sep 12 1=
+5:45:05 UTC 2019 ppc64le ppc64le ppc64le GNU/Linux
+>>    gpg (GnuPG) 2.0.22
+>>    libgcrypt 1.5.3
+>>    Copyright (C) 2013 Free Software Foundation, Inc.
+>>    License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/g=
+pl.html>
+>>    This is free software: you are free to change and redistribute it.
+>>    There is NO WARRANTY, to the extent permitted by law.
+>>
+>>    Home: ~/.gnupg
+>>    Supported algorithms:
+>>    Pubkey: RSA, ?, ?, ELG, DSA
+>>    Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
+>>            CAMELLIA128, CAMELLIA192, CAMELLIA256
+>>    Hash: MD5, SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
+>>    Compression: Uncompressed, ZIP, ZLIB, BZIP2
+>
+> Hm. I have an identical centos 7.9 installation (same
+> versions/features) and the key is generated without issues. Does the
+> VM maybe have not enough entropy for generating a gpg key?
+> Otherwise we could of course pre-generate the key and commit it. I'm
+> usually not a fan of this since over time it can become unclear how it
+> was generated or if the committed version still matches what would be
+> generated today.
+> But of course I don't want to slow down CI with rsa key generation stuff =
+:/
+> If missing entropy is the problem, then maybe CI could benefit from
+> something like haveged in general (other tests might want more entropy
+> too).
 
-    In that context "the default" meant whatever the configuration
-    system specified before that change, i.e. via grep.extendedRegexp.
+Late reply. It's not a VM, but yes. I've confirmed that it's due to
+/dev/random hanging.
 
- 2. We'd support the existing "grep.extendedRegexp" option, but ignore
-    it when the new "grep.patternType" option is set. We said we'd
-    only ignore the older "grep.extendedRegexp" option "when the
-    `grep.patternType` option is set. to a value other than
-    'default'".
+I don't understand why we need to generate a key at all.
 
-In a preceding commit we changed grep_config() to be called after
-grep_init(), which means that much of the complexity here can go
-away.
+It looks like your 1bfb57f642d (ssh signing: test that gpg fails for
+unknown keys, 2021-09-10) is just trying to test the case where we sign
+with a key, and then don't have that key anymore.
 
-As before "grep.extendedRegexp" is a last-one-wins variable. We need
-to maintain state inside parse_pattern_type_arg() to ignore it if a
-non-"default" grep.patternType was seen, but otherwise flip between
-BRE and ERE for "grep.extendedRegexp=[false|true]".
+The below POC patch seems to work just as well, and will succeed with:
 
-See my 07a3d411739 (grep: remove regflags from the public grep_opt
-API, 2017-06-29) for addition of the two comments being removed here,
-i.e. the complexity noted in that commit is now going away.
+    ./t7510-signed-commit.sh --run=3D1,3
 
-We don't need grep_commit_pattern_type() anymore, we can instead have
-OPT_SET_INT() in "builtin/grep.c" manipulate the "pattern_type_option"
-member in "struct grep_opt" directly.
+Of course a lot of other tests now fail, because they relied on the
+discord@example.net key.
 
-We can also do away with the indirection of the "int fixed" and "int
-pcre2" members in favor of using "pattern_type_option" directly in
-"grep.c".
+But that seems easily solved by just moving this test to its own file,
+or deleting/re-importing the key for just that test or whatever. If we
+truly need yet another key why are we making it on the fly instead of
+adding it to t/lib-gpg/keyring.gpg like the others?
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/grep.c | 10 +++---
- grep.c         | 83 ++++++++++++--------------------------------------
- grep.h         |  9 ++----
- revision.c     |  2 --
- 4 files changed, 26 insertions(+), 78 deletions(-)
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 0ea124321b6..942c4b25077 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -845,7 +845,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	int i;
- 	int dummy;
- 	int use_index = 1;
--	int pattern_type_arg = GREP_PATTERN_TYPE_UNSPECIFIED;
- 	int allow_revs;
- 
- 	struct option options[] = {
-@@ -879,16 +878,16 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			N_("descend at most <depth> levels"), PARSE_OPT_NONEG,
- 			NULL, 1 },
- 		OPT_GROUP(""),
--		OPT_SET_INT('E', "extended-regexp", &pattern_type_arg,
-+		OPT_SET_INT('E', "extended-regexp", &opt.pattern_type_option,
- 			    N_("use extended POSIX regular expressions"),
- 			    GREP_PATTERN_TYPE_ERE),
--		OPT_SET_INT('G', "basic-regexp", &pattern_type_arg,
-+		OPT_SET_INT('G', "basic-regexp", &opt.pattern_type_option,
- 			    N_("use basic POSIX regular expressions (default)"),
- 			    GREP_PATTERN_TYPE_BRE),
--		OPT_SET_INT('F', "fixed-strings", &pattern_type_arg,
-+		OPT_SET_INT('F', "fixed-strings", &opt.pattern_type_option,
- 			    N_("interpret patterns as fixed strings"),
- 			    GREP_PATTERN_TYPE_FIXED),
--		OPT_SET_INT('P', "perl-regexp", &pattern_type_arg,
-+		OPT_SET_INT('P', "perl-regexp", &opt.pattern_type_option,
- 			    N_("use Perl-compatible regular expressions"),
- 			    GREP_PATTERN_TYPE_PCRE),
- 		OPT_GROUP(""),
-@@ -982,7 +981,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options, grep_usage,
- 			     PARSE_OPT_KEEP_DASHDASH |
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
--	grep_commit_pattern_type(pattern_type_arg, &opt);
- 
- 	if (use_index && !startup_info->have_repository) {
- 		int fallback = 0;
-diff --git a/grep.c b/grep.c
-index 8dfa0300786..e964f402472 100644
---- a/grep.c
-+++ b/grep.c
-@@ -33,9 +33,7 @@ static const char *color_grep_slots[] = {
- 
- static int parse_pattern_type_arg(const char *opt, const char *arg)
- {
--	if (!strcmp(arg, "default"))
--		return GREP_PATTERN_TYPE_UNSPECIFIED;
--	else if (!strcmp(arg, "basic"))
-+	if (!strcmp(arg, "basic"))
- 		return GREP_PATTERN_TYPE_BRE;
- 	else if (!strcmp(arg, "extended"))
- 		return GREP_PATTERN_TYPE_ERE;
-@@ -61,11 +59,25 @@ int grep_config(const char *var, const char *value, void *cb)
- 		return -1;
- 
- 	if (!strcmp(var, "grep.extendedregexp")) {
-+		if (opt->extended_regexp_option == -1)
-+			return 0;
- 		opt->extended_regexp_option = git_config_bool(var, value);
-+		if (opt->extended_regexp_option)
-+			opt->pattern_type_option = GREP_PATTERN_TYPE_ERE;
-+		else
-+			opt->pattern_type_option = GREP_PATTERN_TYPE_BRE;
-+		return 0;
-+	}
-+
-+	if (!strcmp(var, "grep.patterntype") &&
-+	    !strcmp(value, "default")) {
-+		opt->pattern_type_option = opt->extended_regexp_option == 1
-+			? GREP_PATTERN_TYPE_ERE : GREP_PATTERN_TYPE_BRE;
- 		return 0;
- 	}
- 
- 	if (!strcmp(var, "grep.patterntype")) {
-+		opt->extended_regexp_option = -1; /* ignore */
- 		opt->pattern_type_option = parse_pattern_type_arg(var, value);
- 		return 0;
- 	}
-@@ -115,62 +127,6 @@ void grep_init(struct grep_opt *opt, struct repository *repo)
- 	opt->header_tail = &opt->header_list;
- }
- 
--static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, struct grep_opt *opt)
--{
--	/*
--	 * When committing to the pattern type by setting the relevant
--	 * fields in grep_opt it's generally not necessary to zero out
--	 * the fields we're not choosing, since they won't have been
--	 * set by anything. The extended_regexp_option field is the
--	 * only exception to this.
--	 *
--	 * This is because in the process of parsing grep.patternType
--	 * & grep.extendedRegexp we set opt->pattern_type_option and
--	 * opt->extended_regexp_option, respectively. We then
--	 * internally use opt->extended_regexp_option to see if we're
--	 * compiling an ERE. It must be unset if that's not actually
--	 * the case.
--	 */
--	if (pattern_type != GREP_PATTERN_TYPE_ERE &&
--	    opt->extended_regexp_option)
--		opt->extended_regexp_option = 0;
--
--	switch (pattern_type) {
--	case GREP_PATTERN_TYPE_UNSPECIFIED:
--		/* fall through */
--
--	case GREP_PATTERN_TYPE_BRE:
--		break;
--
--	case GREP_PATTERN_TYPE_ERE:
--		opt->extended_regexp_option = 1;
--		break;
--
--	case GREP_PATTERN_TYPE_FIXED:
--		opt->fixed = 1;
--		break;
--
--	case GREP_PATTERN_TYPE_PCRE:
--		opt->pcre2 = 1;
--		break;
--	}
--}
--
--void grep_commit_pattern_type(enum grep_pattern_type pattern_type, struct grep_opt *opt)
--{
--	if (pattern_type != GREP_PATTERN_TYPE_UNSPECIFIED)
--		grep_set_pattern_type_option(pattern_type, opt);
--	else if (opt->pattern_type_option != GREP_PATTERN_TYPE_UNSPECIFIED)
--		grep_set_pattern_type_option(opt->pattern_type_option, opt);
--	else if (opt->extended_regexp_option)
--		/*
--		 * This branch *must* happen after setting from the
--		 * opt->pattern_type_option above, we don't want
--		 * grep.extendedRegexp to override grep.patternType!
--		 */
--		grep_set_pattern_type_option(GREP_PATTERN_TYPE_ERE, opt);
--}
--
- static struct grep_pat *create_grep_pat(const char *pat, size_t patlen,
- 					const char *origin, int no,
- 					enum grep_pat_token t,
-@@ -490,9 +446,10 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- 
- 	p->word_regexp = opt->word_regexp;
- 	p->ignore_case = opt->ignore_case;
--	p->fixed = opt->fixed;
-+	p->fixed = opt->pattern_type_option == GREP_PATTERN_TYPE_FIXED;
- 
--	if (memchr(p->pattern, 0, p->patternlen) && !opt->pcre2)
-+	if (opt->pattern_type_option != GREP_PATTERN_TYPE_PCRE &&
-+	    memchr(p->pattern, 0, p->patternlen))
- 		die(_("given pattern contains NULL byte (via -f <file>). This is only supported with -P under PCRE v2"));
- 
- 	p->is_fixed = is_fixed(p->pattern, p->patternlen);
-@@ -543,14 +500,14 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- 		return;
- 	}
- 
--	if (opt->pcre2) {
-+	if (opt->pattern_type_option == GREP_PATTERN_TYPE_PCRE) {
- 		compile_pcre2_pattern(p, opt);
- 		return;
- 	}
- 
- 	if (p->ignore_case)
- 		regflags |= REG_ICASE;
--	if (opt->extended_regexp_option)
-+	if (opt->pattern_type_option == GREP_PATTERN_TYPE_ERE)
- 		regflags |= REG_EXTENDED;
- 	err = regcomp(&p->regexp, p->pattern, regflags);
- 	if (err) {
-diff --git a/grep.h b/grep.h
-index b651eb291f7..ab2ce833b40 100644
---- a/grep.h
-+++ b/grep.h
-@@ -94,8 +94,7 @@ enum grep_expr_node {
- };
- 
- enum grep_pattern_type {
--	GREP_PATTERN_TYPE_UNSPECIFIED = 0,
--	GREP_PATTERN_TYPE_BRE,
-+	GREP_PATTERN_TYPE_BRE = 0,
- 	GREP_PATTERN_TYPE_ERE,
- 	GREP_PATTERN_TYPE_FIXED,
- 	GREP_PATTERN_TYPE_PCRE
-@@ -143,7 +142,6 @@ struct grep_opt {
- 	int unmatch_name_only;
- 	int count;
- 	int word_regexp;
--	int fixed;
- 	int all_match;
- #define GREP_BINARY_DEFAULT	0
- #define GREP_BINARY_NOMATCH	1
-@@ -152,7 +150,6 @@ struct grep_opt {
- 	int allow_textconv;
- 	int extended;
- 	int use_reflog_filter;
--	int pcre2;
- 	int relative;
- 	int pathname;
- 	int null_following_name;
-@@ -162,7 +159,7 @@ struct grep_opt {
- 	int funcname;
- 	int funcbody;
- 	int extended_regexp_option;
--	int pattern_type_option;
-+	enum grep_pattern_type pattern_type_option;
- 	int ignore_locale;
- 	char colors[NR_GREP_COLORS][COLOR_MAXLEN];
- 	unsigned pre_context;
-@@ -181,7 +178,6 @@ struct grep_opt {
- 	.relative = 1, \
- 	.pathname = 1, \
- 	.max_depth = -1, \
--	.pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED, \
- 	.colors = { \
- 		[GREP_COLOR_CONTEXT] = "", \
- 		[GREP_COLOR_FILENAME] = "", \
-@@ -200,7 +196,6 @@ struct grep_opt {
- 
- int grep_config(const char *var, const char *value, void *);
- void grep_init(struct grep_opt *, struct repository *repo);
--void grep_commit_pattern_type(enum grep_pattern_type, struct grep_opt *opt);
- 
- void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen, const char *origin, int no, enum grep_pat_token t);
- void append_grep_pattern(struct grep_opt *opt, const char *pat, const char *origin, int no, enum grep_pat_token t);
-diff --git a/revision.c b/revision.c
-index 495328e859c..298d0ea7574 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2860,8 +2860,6 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 
- 	diff_setup_done(&revs->diffopt);
- 
--	grep_commit_pattern_type(GREP_PATTERN_TYPE_UNSPECIFIED,
--				 &revs->grep_filter);
- 	if (!is_encoding_utf8(get_log_output_encoding()))
- 		revs->grep_filter.ignore_locale = 1;
- 	compile_grep_patterns(&revs->grep_filter);
--- 
-2.34.1.1239.g84ae229c870
-
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 9882b69ae29..eec2a045cbc 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -73,23 +73,11 @@ test_expect_success GPG 'create signed commits' '
+ 	test_line_count =3D 1 oid &&
+ 	git tag twelfth-signed-alt $(cat oid) &&
+=20
+-	cat >keydetails <<-\EOF &&
+-	Key-Type: RSA
+-	Key-Length: 2048
+-	Subkey-Type: RSA
+-	Subkey-Length: 2048
+-	Name-Real: Unknown User
+-	Name-Email: unknown@git.com
+-	Expire-Date: 0
+-	%no-ask-passphrase
+-	%no-protection
+-	EOF
+-	gpg --batch --gen-key keydetails &&
+-	echo 13 >file && git commit -a -S"unknown@git.com" -m thirteenth &&
++	echo 13 >file && git commit -a -S"discord@example.net" -m thirteenth &&
+ 	git tag thirteenth-signed &&
+-	DELETE_FINGERPRINT=3D$(gpg -K --with-colons --fingerprint --batch unknown=
+@git.com | grep "^fpr" | head -n 1 | awk -F ":" "{print \$10;}") &&
++	DELETE_FINGERPRINT=3D$(gpg -K --with-colons --fingerprint --batch discord=
+@example.net | grep "^fpr" | head -n 1 | awk -F ":" "{print \$10;}") &&
+ 	gpg --batch --yes --delete-secret-keys $DELETE_FINGERPRINT &&
+-	gpg --batch --yes --delete-keys unknown@git.com
++	gpg --batch --yes --delete-keys discord@example.net
+ '
+=20
+ test_expect_success GPG 'verify and show signatures' '
