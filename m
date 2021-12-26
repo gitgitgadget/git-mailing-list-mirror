@@ -2,209 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1CBBC433F5
-	for <git@archiver.kernel.org>; Sun, 26 Dec 2021 23:02:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1096C433F5
+	for <git@archiver.kernel.org>; Sun, 26 Dec 2021 23:13:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234802AbhLZXCA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Dec 2021 18:02:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45694 "EHLO
+        id S234807AbhLZXNt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Dec 2021 18:13:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234793AbhLZXB7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Dec 2021 18:01:59 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CC54C06173E
-        for <git@vger.kernel.org>; Sun, 26 Dec 2021 15:01:59 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id l5so20634168edj.13
-        for <git@vger.kernel.org>; Sun, 26 Dec 2021 15:01:59 -0800 (PST)
+        with ESMTP id S234793AbhLZXNt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Dec 2021 18:13:49 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6D5AC06173E
+        for <git@vger.kernel.org>; Sun, 26 Dec 2021 15:13:48 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id o20so55344080eds.10
+        for <git@vger.kernel.org>; Sun, 26 Dec 2021 15:13:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=cgRcmWPy7dpe8OaEyqhBZ2jAtTOLhX/uBf707zNRUxk=;
-        b=ix1icUZ1saKmMGe7cPEJhr6Enx9n20PGbv6hos8dz5woUT0t8kJQX0x8bzVce6lc4Z
-         T0CifXSRu/SWD2Xqjkanj0lIT/HblKhqoLRphKMk8YwP/IZRCp6tfFdmPPUV4X+xRTn6
-         RhDq3dGwODDKm0d1bwKMmWqva1UEre45rFOdY5ZElGIa/fgdvQKwnJGzTmFu2M8OD7L5
-         JJsB1Py6ypsnWaNmf3iDpQ6x/w+Etn8OeG8GuVx5+YuOut7OeVJ8NMBPchPH5cVRa0LH
-         zJrq54PbWGYjxrfglxGRVhSYUUoW/U4om+vDp7a53+x1PyitldvdCzsfQsHfgG1DzrIo
-         1QJA==
+         :message-id:mime-version;
+        bh=vewgKwOSV0AQObpOWZ96GAkmZnebYZVib9FSSkV9Zww=;
+        b=aVEaD9apqpQNJ2JiYwyOHTCaM99jzCePvo83Nh3xpZwUnzP8Kxilp1q6aistbI2fsp
+         9JNycXvZ3BR3PX8/lR2u/fH6RexfIMwePu3RHQV1fgQOKoKRgIuGwz7eKOTapFlY6mSF
+         3MpYRiMomTj5F7TOkoilzQLdaaBfCtNg1/2HKuOgFOW9oDKBsH1xQESsD+Dbq44musUp
+         DJkGnYvR5NpidZhAc35Wzc2BngEowrM13rVFy7N+Lff73+R4k5zxQjmwHNqEJ2mLqwlO
+         UVylndyZejChlftMjZ7mjvF7PFl9uQJiixfo0854WfwKrHyzFfcDlR6/RL+lL09LTv8g
+         rlzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=cgRcmWPy7dpe8OaEyqhBZ2jAtTOLhX/uBf707zNRUxk=;
-        b=qZsAEE8OU6tx7ANhF09C54UP+VsCjb9ueIXAds7UDBlzMoC3CMU0X3XeCItB9RFJQl
-         HQy4/gU8EiaHr/RFbEaTXPOcs7ry7V7jK/NFzVCqTAosNIkoCbK/4sZXx6NC0XAaCd5j
-         0tBnw/c1OlMs3qOFbLgG+m3WVQ4KsipfpGPiuxiUzVBDbNSbdfk/ZJD8zs7AbCE3aNDt
-         IZ4bq8A4sMAqU7JiuX9UClFFMX5FwQJO0mEnj/04jpxPHDmCCq68E3CKPUAGE9geLSx2
-         wanyawRItJbT+dYgHU4nggtaVb3c1WHSIHPJ9oxCN36jrHvxXVzZenoIPS47ZnpQ19Km
-         rDwQ==
-X-Gm-Message-State: AOAM531Y6nGCGCREkFcTaEtnhxB6SBlCsaUCJ73qKZqy7WyCWrAU1UO9
-        B9tR3i6JWR1N5FVjttdIheI=
-X-Google-Smtp-Source: ABdhPJwlWhVrnhC6HQ9hpcOwS40JVPcwhEPOiSRXKKpzN60kM53LqWQ4/82i6Ev9o1eSF+//+YERuQ==
-X-Received: by 2002:a17:906:af19:: with SMTP id lx25mr11992797ejb.338.1640559717563;
-        Sun, 26 Dec 2021 15:01:57 -0800 (PST)
+         :in-reply-to:message-id:mime-version;
+        bh=vewgKwOSV0AQObpOWZ96GAkmZnebYZVib9FSSkV9Zww=;
+        b=18HAZZjcqagGQzt8hvelmAz9wkfisMJcggagVjVMY80SDkRLfMRX9XxX/lxnMMsMQZ
+         Eo280EGtU6kMSKKBFa7hviEV9Nr44amejfwpqUCnGXTzWA8yab7qHnTExBOeoteu5V5x
+         9D8tLVE8kYg76KyfQzwJ2dOV0Mv4MUUObx4gfrrGGYvjFNN1lbu1sKGilntYWMl9uwUU
+         H4C1JVbZJU8BMeCprsjCgrY9ck7ZjgyjiazPJxeEZ0HW43yK6OAPTSSNIZ/sLhm9bZaU
+         VNkFppghT8sMByJ+Ht0XiRRYFEUMN0iiIhLqHxfXd3LhyELVaWjW0tkYwk2Wb4CdK5O1
+         BPyA==
+X-Gm-Message-State: AOAM5301wLYoVZreVIjllHFQ67/4op1NCujBsNRJ86GjOuc8aXFtQduI
+        yyhsbjKmKse6/o0GwpooB+Cwdkup1A1AjSLc
+X-Google-Smtp-Source: ABdhPJwEPsawlIno/2BgBjIytVfEILVkDZo4BuEsyJ5CM6u7tOhXo1hzYY13zfveu8fKHA3XXpBxXA==
+X-Received: by 2002:a05:6402:270a:: with SMTP id y10mr13976195edd.282.1640560427163;
+        Sun, 26 Dec 2021 15:13:47 -0800 (PST)
 Received: from gmgdl (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id y22sm2933122eda.49.2021.12.26.15.01.57
+        by smtp.gmail.com with ESMTPSA id ga37sm4556151ejc.65.2021.12.26.15.13.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Dec 2021 15:01:57 -0800 (PST)
+        Sun, 26 Dec 2021 15:13:46 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1n1cWa-000H37-Dj;
-        Mon, 27 Dec 2021 00:01:56 +0100
+        id 1n1ci1-000HSF-4l;
+        Mon, 27 Dec 2021 00:13:45 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     Fabian Stelzer via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Gwyneth Morgan <gwymor@tilde.club>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: t7510-signed-commit.sh hangs on old gpg, regression in
- 1bfb57f642d (was: [PATCH v8 9/9] ssh signing: test that gpg fails for
- unknown keys)
-Date:   Sun, 26 Dec 2021 23:53:47 +0100
-References: <pull.1041.v7.git.git.1627998358.gitgitgadget@gmail.com>
- <pull.1041.v8.git.git.1631304462.gitgitgadget@gmail.com>
- <07afb94ed8336d4ca9de7078d7a6c02b1db8a908.1631304462.git.gitgitgadget@gmail.com>
- <211222.86ilvhpbl0.gmgdl@evledraar.gmail.com>
- <20211222101326.fwl3wphr3ev6c7wt@fs>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC/PATCH] grep: allow scripts to ignore configured pattern type
+Date:   Mon, 27 Dec 2021 00:09:05 +0100
+References: <cover-v4-0.7-00000000000-20211203T101348Z-avarab@gmail.com>
+ <cover-v5-0.7-00000000000-20211222T025214Z-avarab@gmail.com>
+ <patch-v5-3.7-f02f246aa23-20211222T025214Z-avarab@gmail.com>
+ <xmqq35mj7yd4.fsf@gitster.g> <xmqqfsqh35vu.fsf_-_@gitster.g>
+ <xmqqa6gp35a6.fsf_-_@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20211222101326.fwl3wphr3ev6c7wt@fs>
-Message-ID: <211227.86h7avezrv.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqa6gp35a6.fsf_-_@gitster.g>
+Message-ID: <211227.86czljez86.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Dec 22 2021, Fabian Stelzer wrote:
+On Fri, Dec 24 2021, Junio C Hamano wrote:
 
-> On 22.12.2021 04:18, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>
->>On Fri, Sep 10 2021, Fabian Stelzer via GitGitGadget wrote:
->>
->>> From: Fabian Stelzer <fs@gigacodes.de>
->>>
->>> Test that verify-commit/tag will fail when a gpg key is completely
->>> unknown. To do this we have to generate a key, use it for a signature
->>> and delete it from our keyring aferwards completely.
->>>
->>> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
->>> +
->>> +	cat >keydetails <<-\EOF &&
->>> +	Key-Type: RSA
->>> +	Key-Length: 2048
->>> +	Subkey-Type: RSA
->>> +	Subkey-Length: 2048
->>> +	Name-Real: Unknown User
->>> +	Name-Email: unknown@git.com
->>> +	Expire-Date: 0
->>> +	%no-ask-passphrase
->>> +	%no-protection
->>> +	EOF
->>> +	gpg --batch --gen-key keydetails &&
->>>
->>The t7510-signed-commit.sh script hangs on startup with this change, and
->>with -vx we show:
->>
->>    [...]
->>    ++ git tag twelfth-signed-alt 17f06d503ee50df92746c17f6cced6feb5940cf5
->>    ++ cat
->>    ++ gpg --batch --gen-key keydetails
->>    gpg: skipping control `%no-protection' ()
->>
->>This is on a CentOS 7.9 box on the GCC Farm:
->>
->>    [avar@gcc135 t]$ uname -a ; gpg --version
->>    Linux gcc135.osuosl.org 4.18.0-80.7.2.el7.ppc64le #1 SMP Thu Sep 12 1=
-5:45:05 UTC 2019 ppc64le ppc64le ppc64le GNU/Linux
->>    gpg (GnuPG) 2.0.22
->>    libgcrypt 1.5.3
->>    Copyright (C) 2013 Free Software Foundation, Inc.
->>    License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/g=
-pl.html>
->>    This is free software: you are free to change and redistribute it.
->>    There is NO WARRANTY, to the extent permitted by law.
->>
->>    Home: ~/.gnupg
->>    Supported algorithms:
->>    Pubkey: RSA, ?, ?, ELG, DSA
->>    Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
->>            CAMELLIA128, CAMELLIA192, CAMELLIA256
->>    Hash: MD5, SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
->>    Compression: Uncompressed, ZIP, ZLIB, BZIP2
+> We made a mistake to add grep.extendedRegexp configuration variable
+> long time ago, and made things even worse by introducing an even
+> more generalized grep.patternType configuration variable.
 >
-> Hm. I have an identical centos 7.9 installation (same
-> versions/features) and the key is generated without issues. Does the
-> VM maybe have not enough entropy for generating a gpg key?
-> Otherwise we could of course pre-generate the key and commit it. I'm
-> usually not a fan of this since over time it can become unclear how it
-> was generated or if the committed version still matches what would be
-> generated today.
-> But of course I don't want to slow down CI with rsa key generation stuff =
-:/
-> If missing entropy is the problem, then maybe CI could benefit from
-> something like haveged in general (other tests might want more entropy
-> too).
+> This was mostly because interactive users were lazy and wanted a way
+> to declare "I do not live in the ancient age, and my regexps are
+> always extended" and write "git grep" without having to type three
+> more letters " -E" on the command line.
+>
+> But this in turn forces script writers to always specify what kind
+> of patterns they are writing, because without such command line
+> override, the interpretation of the patterns they write in their
+> scripts will be affected by the configuration variables of the user
+> who is running their script.
+>
+> Introduce GIT_DISABLE_GREP_PATTERN_CONFIG environment variable that
+> script writers can set to "true" and export at the very beginning of
+> their script to defeat grep.extendedRegexp and grep.patternType
+> configuration variables.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * This is merely a weather balloon without proper documentation and
+>    test.  It might be even better idea to make such an environment
+>    variable to _specify_ what kind of pattern the script uses,
+>    instead of "we defeat end-user configuration and now we are
+>    forced to write in basic or have to write -E/-P etc.", which is
+>    what this patch does.
 
-Late reply. It's not a VM, but yes. I've confirmed that it's due to
-/dev/random hanging.
+You note the lack of documentation. I do think anything in this
+direction would do well to:
 
-I don't understand why we need to generate a key at all.
+ * Specify what it is we're promising now exactly. The git-grep
+   command is in "main porcelain" now, this change sounds like we're
+   promising to make its output more plumbing-like.
 
-It looks like your 1bfb57f642d (ssh signing: test that gpg fails for
-unknown keys, 2021-09-10) is just trying to test the case where we sign
-with a key, and then don't have that key anymore.
+ * As an aside I think a good follow-up to my series would be to
+   just start warning() and eventually die()-ing on grep.extendedRegexp
+   which would make this a bit simpler.
 
-The below POC patch seems to work just as well, and will succeed with:
+ * A "GIT_DISABLE_GREP_PATTERN_CONFIG" seems overly narrow. Just a few lines
+   from the code being patched here we read the grep.lineNumber config, which is
+   similarly annoying if you're parsing the "git grep" output, so at least a
+   "GIT_DISABLE_GREP_CONFIG" would be handy.
 
-    ./t7510-signed-commit.sh --run=3D1,3
+ * But more generally we've had discussions on and off on-list about supporting
+   a generic way to disable reading the config. Supporting e.g. "git --no-config" or
+   a "GIT_NO_CONFIG" would be handy, even if all it did for now (and we could document
+   it as such) would be to change the behavior of grep.
+ 
 
-Of course a lot of other tests now fail, because they relied on the
-discord@example.net key.
+>  grep.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+>
+> diff --git a/grep.c b/grep.c
+> index fe847a0111..0cfb698b51 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -77,10 +77,15 @@ int grep_config(const char *var, const char *value, void *cb)
+>  {
+>  	struct grep_opt *opt = &grep_defaults;
+>  	const char *slot;
+> +	static int disable_pattern_type_config = -1;
+>  
+>  	if (userdiff_config(var, value) < 0)
+>  		return -1;
+>  
+> +	if (disable_pattern_type_config < 0)
+> +		disable_pattern_type_config =
+> +			git_env_bool("GIT_DISABLE_GREP_PATTERN_CONFIG", 0);
+> +
+>  	/*
+>  	 * The instance of grep_opt that we set up here is copied by
+>  	 * grep_init() to be used by each individual invocation.
+> @@ -90,12 +95,14 @@ int grep_config(const char *var, const char *value, void *cb)
+>  	 */
+>  
+>  	if (!strcmp(var, "grep.extendedregexp")) {
+> -		opt->extended_regexp_option = git_config_bool(var, value);
+> +		if (!disable_pattern_type_config)
+> +			opt->extended_regexp_option = git_config_bool(var, value);
+>  		return 0;
+>  	}
+>  
+>  	if (!strcmp(var, "grep.patterntype")) {
+> -		opt->pattern_type_option = parse_pattern_type_arg(var, value);
+> +		if (!disable_pattern_type_config)
+> +			opt->pattern_type_option = parse_pattern_type_arg(var, value);
+>  		return 0;
+>  	}
 
-But that seems easily solved by just moving this test to its own file,
-or deleting/re-importing the key for just that test or whatever. If we
-truly need yet another key why are we making it on the fly instead of
-adding it to t/lib-gpg/keyring.gpg like the others?
-
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 9882b69ae29..eec2a045cbc 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -73,23 +73,11 @@ test_expect_success GPG 'create signed commits' '
- 	test_line_count =3D 1 oid &&
- 	git tag twelfth-signed-alt $(cat oid) &&
-=20
--	cat >keydetails <<-\EOF &&
--	Key-Type: RSA
--	Key-Length: 2048
--	Subkey-Type: RSA
--	Subkey-Length: 2048
--	Name-Real: Unknown User
--	Name-Email: unknown@git.com
--	Expire-Date: 0
--	%no-ask-passphrase
--	%no-protection
--	EOF
--	gpg --batch --gen-key keydetails &&
--	echo 13 >file && git commit -a -S"unknown@git.com" -m thirteenth &&
-+	echo 13 >file && git commit -a -S"discord@example.net" -m thirteenth &&
- 	git tag thirteenth-signed &&
--	DELETE_FINGERPRINT=3D$(gpg -K --with-colons --fingerprint --batch unknown=
-@git.com | grep "^fpr" | head -n 1 | awk -F ":" "{print \$10;}") &&
-+	DELETE_FINGERPRINT=3D$(gpg -K --with-colons --fingerprint --batch discord=
-@example.net | grep "^fpr" | head -n 1 | awk -F ":" "{print \$10;}") &&
- 	gpg --batch --yes --delete-secret-keys $DELETE_FINGERPRINT &&
--	gpg --batch --yes --delete-keys unknown@git.com
-+	gpg --batch --yes --delete-keys discord@example.net
- '
-=20
- test_expect_success GPG 'verify and show signatures' '
