@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C30A6C4332F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2F49C433FE
 	for <git@archiver.kernel.org>; Sun, 26 Dec 2021 22:37:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234776AbhLZWhe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Dec 2021 17:37:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40396 "EHLO
+        id S234785AbhLZWhg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Dec 2021 17:37:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234761AbhLZWhb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Dec 2021 17:37:31 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F40C061401
+        with ESMTP id S234756AbhLZWhc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Dec 2021 17:37:32 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD5EAC06173E
         for <git@vger.kernel.org>; Sun, 26 Dec 2021 14:37:31 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id l4so8686943wmq.3
-        for <git@vger.kernel.org>; Sun, 26 Dec 2021 14:37:30 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id d9so29174936wrb.0
+        for <git@vger.kernel.org>; Sun, 26 Dec 2021 14:37:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1z1jyfEdfkOfqJ3m3MAiFxW+MrSIldwrk63Syc5uIR4=;
-        b=GZrrKHwtEvJaH2oj9u1eN8CikcjCYGNnyzzXG913RhNSAph6vak5zRxhfWf5lduiY1
-         yQtPSFL2951T0NahLs7A8AFdhdNjEV7BRcpnwSIeaF2dJ7uo7k3DKcuYpHteTH4ZAnj1
-         TnPbV90txJB2MvnzCNNWeqcxXJqdRYqe7Ku1OIFS6mICDayJBcbu1L9qhiFKYbYCkUaQ
-         jacg2taTs7dN7ut5YuaXMGohEi1sy9JPO6WDZxyxWMPgZYAp/jtVRAwkpcm8442FgBzd
-         woLPNIuxLfojZdhjPrw/RJLYSfJySAsOKqhWmwGHnId+Baxe9Q4zj3unaQfP2U90Tu2d
-         9XaA==
+        bh=M6XsbgQ14+I7bRbN4CL7xzdFNPtXbmyOMWUWdpF4M1U=;
+        b=FuI65JQqCRt0/tNdXIvCX1FmwNu3LP8bPgcm45KKBriCtWJnJWTTFcFseeAYohO/ul
+         3h2sgcJLWgFsk/IguYIl8EvAzCq27XznozPDo4L2Kfap6Zk16bTsddbUOFJScb/j36jL
+         pYIalaIj5FhGlDmufZEdaJGQt1rjN4CGhBWwFbjiwXOjuxL8COeJpQFVNTgLW6BzFmaJ
+         pfVKP4do8tmlONXc47jarbDMx543j8r1m3mXHY5M9M/7R2kzYj+hh37Obw4/C2JpYuY7
+         Ef1krNwNjl4Ms2Q243sLPtq970kFw7faWjzW0tWenkKQQKKnBljHIZEYd0nfUSJAkMXw
+         FBLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1z1jyfEdfkOfqJ3m3MAiFxW+MrSIldwrk63Syc5uIR4=;
-        b=6KLllv0gtp1IdY14k0DTtb3uehwfu8ytMku31UO/OTdCEoCS+DiWDJq70cdBLPc0+e
-         iWle86fiTo7KTSnjVEKKUXhNP4YmWRXATjGzRbrmahKQnpNPZqjU/rwmmUVR05irX5E1
-         5v4TQ00R6A7T64vSsmSPHjpkQMvgFQWn/Rf+GiUFAiWJ5yW5w6fQpc+eql1qMuFepTJQ
-         1W0wkgqMdPIvOmxRdLVKs7Uw1nzgKGZvVzTWy4arVZ2fLK4eUjU7l5Yw31qV8ub+RxeO
-         ahmwH8GROTHPk0OlDNzJSGkPgplcpA7jZ6j/c0L43K9H5ZOV3XphB/N2Vh9lJYWNcYS6
-         0/mQ==
-X-Gm-Message-State: AOAM531i+qj5vYeVzeEVy1vCcxKdZEJa7GWJhlsOqwahPU1mnaspoNJx
-        9Y9TALAqI+uhx5mV0DEFf6FenPvAsogY+UY2
-X-Google-Smtp-Source: ABdhPJzLO/X7UOd7oN6LCx5Mq6iNI8GayV2Fm8MlGovbSqXrvSIJKyc0I2na7k4aSJP17zdvwaOzzA==
-X-Received: by 2002:a7b:c0c4:: with SMTP id s4mr11210887wmh.26.1640558249283;
-        Sun, 26 Dec 2021 14:37:29 -0800 (PST)
+        bh=M6XsbgQ14+I7bRbN4CL7xzdFNPtXbmyOMWUWdpF4M1U=;
+        b=shwLklJp0TCPVDCFPg0oL7SaENo2qoKvFqGrnJbzoRD+BCPq/EcqwNxsus0dDNGUlc
+         xcaQcXC2YWPwjSMwHO6vqISF2NcB0P7maHKrYzkdbuv96nlFPeIChctyweXM8g8Ga0+G
+         L+808oonyGMRe6SQe22lqzusJpcdjc9b29KjXA6sj85A1IR/BIc793lz4grWfhdNdwLJ
+         BH06EnRQ2T4EZglr1O80++u+6tHPnWUOa7wLy6KeAsXY/9hDwxYVDLL7Z+nAiLdqFFCw
+         305qIld8TJhF17CQcQDEjHusHcOcqbJWyirdQS9yXAQvxKDl9M2az2PYMWpTBSzBe+7V
+         KMnw==
+X-Gm-Message-State: AOAM533N0p6chEJD5ZkVItkwO3a8OhWfOrD/KLF3k+Hs1JjOiU3+jryy
+        SKtxcVMJi4f3gMi9GWqDKq9SXB+Qo8VhIaqO
+X-Google-Smtp-Source: ABdhPJw6c+uxkSWJR5F9SEs8iFchjqlrAKKbB+hpLKjnyXGWW8FnzesG5XZDP9b4J/AuC/NFmMdqKA==
+X-Received: by 2002:adf:f252:: with SMTP id b18mr11014747wrp.341.1640558250001;
+        Sun, 26 Dec 2021 14:37:30 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id ay29sm16289861wmb.13.2021.12.26.14.37.28
+        by smtp.gmail.com with ESMTPSA id ay29sm16289861wmb.13.2021.12.26.14.37.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Dec 2021 14:37:28 -0800 (PST)
+        Sun, 26 Dec 2021 14:37:29 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, J Smith <dark.panda@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 5/7] grep.c: don't pass along NULL callback value
-Date:   Sun, 26 Dec 2021 23:37:17 +0100
-Message-Id: <patch-v6-5.7-069b0339146-20211226T223035Z-avarab@gmail.com>
+Subject: [PATCH v6 6/7] grep API: call grep_config() after grep_init()
+Date:   Sun, 26 Dec 2021 23:37:18 +0100
+Message-Id: <patch-v6-6.7-e38eca56959-20211226T223035Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1239.g84ae229c870
 In-Reply-To: <cover-v6-0.7-00000000000-20211226T223035Z-avarab@gmail.com>
 References: <cover-v5-0.7-00000000000-20211222T025214Z-avarab@gmail.com> <cover-v6-0.7-00000000000-20211226T223035Z-avarab@gmail.com>
@@ -67,35 +67,232 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change grep_cmd_config() to stop passing around the always-NULL "cb"
-value. When this code was added in 7e8f59d577e (grep: color patterns
-in output, 2009-03-07) it was non-NULL, but when that changed in
-15fabd1bbd4 (builtin/grep.c: make configuration callback more
-reusable, 2012-10-09) this code was left behind.
+The grep_init() function used the odd pattern of initializing the
+passed-in "struct grep_opt" with a statically defined "grep_defaults"
+struct, which would be modified in-place when we invoked
+grep_config().
 
-In a subsequent change I'll start using the "cb" value, this will make
-it clear which functions we call need it, and which don't.
+So we effectively (b) initialized config, (a) then defaults, (c)
+followed by user options. Usually those are ordered as "a", "b" and
+"c" instead.
+
+As the comments being removed here show the previous behavior needed
+to be carefully explained as we'd potentially share the populated
+configuration among different instances of grep_init(). In practice we
+didn't do that, but now that it can't be a concern anymore let's
+remove those comments.
+
+This does not change the behavior of any of the configuration
+variables or options. That would have been the case if we didn't move
+around the grep_config() call in "builtin/log.c". But now that we call
+"grep_config" after "git_log_config" and "git_format_config" we'll
+need to pass in the already initialized "struct grep_opt *".
+
+See 6ba9bb76e02 (grep: copy struct in one fell swoop, 2020-11-29) and
+7687a0541e0 (grep: move the configuration parsing logic to grep.[ch],
+2012-10-09) for the commits that added the comments.
+
+The memcpy() pattern here will be optimized away and follows the
+convention of other *_init() functions. See 5726a6b4012 (*.c *_init():
+define in terms of corresponding *_INIT macro, 2021-07-01).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/grep.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/grep.c |  4 ++--
+ builtin/log.c  | 13 +++++++++++--
+ grep.c         | 39 +++------------------------------------
+ grep.h         | 21 +++++++++++++++++++++
+ 4 files changed, 37 insertions(+), 40 deletions(-)
 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index d85cbabea67..5ec4cecae45 100644
+index 5ec4cecae45..0ea124321b6 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -285,8 +285,8 @@ static int wait_all(void)
+@@ -285,7 +285,7 @@ static int wait_all(void)
  
  static int grep_cmd_config(const char *var, const char *value, void *cb)
  {
--	int st = grep_config(var, value, cb);
--	if (git_color_default_config(var, value, cb) < 0)
-+	int st = grep_config(var, value, NULL);
-+	if (git_color_default_config(var, value, NULL) < 0)
+-	int st = grep_config(var, value, NULL);
++	int st = grep_config(var, value, cb);
+ 	if (git_color_default_config(var, value, NULL) < 0)
  		st = -1;
  
- 	if (!strcmp(var, "grep.threads")) {
+@@ -966,8 +966,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	};
+ 	grep_prefix = prefix;
+ 
+-	git_config(grep_cmd_config, NULL);
+ 	grep_init(&opt, the_repository);
++	git_config(grep_cmd_config, &opt);
+ 
+ 	/*
+ 	 * If there is no -- then the paths must exist in the working
+diff --git a/builtin/log.c b/builtin/log.c
+index 93ace0dde7d..fdde77e4ebb 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -520,8 +520,6 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
+-	if (grep_config(var, value, cb) < 0)
+-		return -1;
+ 	if (git_gpg_config(var, value, cb) < 0)
+ 		return -1;
+ 	return git_diff_ui_config(var, value, cb);
+@@ -536,6 +534,8 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
+ 	git_config(git_log_config, NULL);
+ 
+ 	repo_init_revisions(the_repository, &rev, prefix);
++	git_config(grep_config, &rev.grep_filter);
++
+ 	rev.diff = 1;
+ 	rev.simplify_history = 0;
+ 	memset(&opt, 0, sizeof(opt));
+@@ -650,6 +650,8 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 
+ 	memset(&match_all, 0, sizeof(match_all));
+ 	repo_init_revisions(the_repository, &rev, prefix);
++	git_config(grep_config, &rev.grep_filter);
++
+ 	rev.diff = 1;
+ 	rev.always_show_header = 1;
+ 	rev.no_walk = 1;
+@@ -733,6 +735,8 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
+ 
+ 	repo_init_revisions(the_repository, &rev, prefix);
+ 	init_reflog_walk(&rev.reflog_info);
++	git_config(grep_config, &rev.grep_filter);
++
+ 	rev.verbose_header = 1;
+ 	memset(&opt, 0, sizeof(opt));
+ 	opt.def = "HEAD";
+@@ -766,6 +770,8 @@ int cmd_log(int argc, const char **argv, const char *prefix)
+ 	git_config(git_log_config, NULL);
+ 
+ 	repo_init_revisions(the_repository, &rev, prefix);
++	git_config(grep_config, &rev.grep_filter);
++
+ 	rev.always_show_header = 1;
+ 	memset(&opt, 0, sizeof(opt));
+ 	opt.def = "HEAD";
+@@ -1848,10 +1854,13 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	extra_hdr.strdup_strings = 1;
+ 	extra_to.strdup_strings = 1;
+ 	extra_cc.strdup_strings = 1;
++
+ 	init_log_defaults();
+ 	init_display_notes(&notes_opt);
+ 	git_config(git_format_config, NULL);
+ 	repo_init_revisions(the_repository, &rev, prefix);
++	git_config(grep_config, &rev.grep_filter);
++
+ 	rev.show_notes = show_notes;
+ 	memcpy(&rev.notes_opt, &notes_opt, sizeof(notes_opt));
+ 	rev.commit_format = CMIT_FMT_EMAIL;
+diff --git a/grep.c b/grep.c
+index 12b202598a9..8dfa0300786 100644
+--- a/grep.c
++++ b/grep.c
+@@ -19,27 +19,6 @@ static void std_output(struct grep_opt *opt, const void *buf, size_t size)
+ 	fwrite(buf, size, 1, stdout);
+ }
+ 
+-static struct grep_opt grep_defaults = {
+-	.relative = 1,
+-	.pathname = 1,
+-	.max_depth = -1,
+-	.pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED,
+-	.colors = {
+-		[GREP_COLOR_CONTEXT] = "",
+-		[GREP_COLOR_FILENAME] = "",
+-		[GREP_COLOR_FUNCTION] = "",
+-		[GREP_COLOR_LINENO] = "",
+-		[GREP_COLOR_COLUMNNO] = "",
+-		[GREP_COLOR_MATCH_CONTEXT] = GIT_COLOR_BOLD_RED,
+-		[GREP_COLOR_MATCH_SELECTED] = GIT_COLOR_BOLD_RED,
+-		[GREP_COLOR_SELECTED] = "",
+-		[GREP_COLOR_SEP] = GIT_COLOR_CYAN,
+-	},
+-	.only_matching = 0,
+-	.color = -1,
+-	.output = std_output,
+-};
+-
+ static const char *color_grep_slots[] = {
+ 	[GREP_COLOR_CONTEXT]	    = "context",
+ 	[GREP_COLOR_FILENAME]	    = "filename",
+@@ -75,20 +54,12 @@ define_list_config_array_extra(color_grep_slots, {"match"});
+  */
+ int grep_config(const char *var, const char *value, void *cb)
+ {
+-	struct grep_opt *opt = &grep_defaults;
++	struct grep_opt *opt = cb;
+ 	const char *slot;
+ 
+ 	if (userdiff_config(var, value) < 0)
+ 		return -1;
+ 
+-	/*
+-	 * The instance of grep_opt that we set up here is copied by
+-	 * grep_init() to be used by each individual invocation.
+-	 * When populating a new field of this structure here, be
+-	 * sure to think about ownership -- e.g., you might need to
+-	 * override the shallow copy in grep_init() with a deep copy.
+-	 */
+-
+ 	if (!strcmp(var, "grep.extendedregexp")) {
+ 		opt->extended_regexp_option = git_config_bool(var, value);
+ 		return 0;
+@@ -134,14 +105,10 @@ int grep_config(const char *var, const char *value, void *cb)
+ 	return 0;
+ }
+ 
+-/*
+- * Initialize one instance of grep_opt and copy the
+- * default values from the template we read the configuration
+- * information in an earlier call to git_config(grep_config).
+- */
+ void grep_init(struct grep_opt *opt, struct repository *repo)
+ {
+-	*opt = grep_defaults;
++	struct grep_opt blank = GREP_OPT_INIT;
++	memcpy(opt, &blank, sizeof(*opt));
+ 
+ 	opt->repo = repo;
+ 	opt->pattern_tail = &opt->pattern_list;
+diff --git a/grep.h b/grep.h
+index 62deadb885f..b651eb291f7 100644
+--- a/grep.h
++++ b/grep.h
+@@ -177,6 +177,27 @@ struct grep_opt {
+ 	void *output_priv;
+ };
+ 
++#define GREP_OPT_INIT { \
++	.relative = 1, \
++	.pathname = 1, \
++	.max_depth = -1, \
++	.pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED, \
++	.colors = { \
++		[GREP_COLOR_CONTEXT] = "", \
++		[GREP_COLOR_FILENAME] = "", \
++		[GREP_COLOR_FUNCTION] = "", \
++		[GREP_COLOR_LINENO] = "", \
++		[GREP_COLOR_COLUMNNO] = "", \
++		[GREP_COLOR_MATCH_CONTEXT] = GIT_COLOR_BOLD_RED, \
++		[GREP_COLOR_MATCH_SELECTED] = GIT_COLOR_BOLD_RED, \
++		[GREP_COLOR_SELECTED] = "", \
++		[GREP_COLOR_SEP] = GIT_COLOR_CYAN, \
++	}, \
++	.only_matching = 0, \
++	.color = -1, \
++	.output = std_output, \
++}
++
+ int grep_config(const char *var, const char *value, void *);
+ void grep_init(struct grep_opt *, struct repository *repo);
+ void grep_commit_pattern_type(enum grep_pattern_type, struct grep_opt *opt);
 -- 
 2.34.1.1239.g84ae229c870
 
