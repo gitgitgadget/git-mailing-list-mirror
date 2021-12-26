@@ -2,111 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 778EEC433F5
-	for <git@archiver.kernel.org>; Sun, 26 Dec 2021 00:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A15DFC433F5
+	for <git@archiver.kernel.org>; Sun, 26 Dec 2021 00:52:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233140AbhLZAbO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Dec 2021 19:31:14 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51626 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231296AbhLZAbO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Dec 2021 19:31:14 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CA56216BE0A;
-        Sat, 25 Dec 2021 19:31:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=hAJGhmOYXKVC
-        wYEKi+3WcnxsYeyNNdcUzYA4Z5FPlWg=; b=Fcy/f4o+uiC7T5ay73caxVv6ine7
-        RRg9sUfVV2mf6ClHdakhLV7wOvWEjQI8wTzPwd2FXYn/QUQhOWo1EiRg4D9evXvr
-        N3wGe9SIPXrWaBfyZ675+QzqzJKa7e+Lx+nOHMqzQHrTajKn3q39JeJAAZ7KEQh+
-        mWE62NsL/zCDY0I=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C299E16BE08;
-        Sat, 25 Dec 2021 19:31:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2DBC316BE07;
-        Sat, 25 Dec 2021 19:31:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        John Cai <johncai86@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH v5 07/10] cat-file: fix remaining usage bugs
-References: <cover-v4-00.10-00000000000-20211208T123151Z-avarab@gmail.com>
-        <cover-v5-00.10-00000000000-20211222T041050Z-avarab@gmail.com>
-        <patch-v5-07.10-e6ea403efe0-20211222T041050Z-avarab@gmail.com>
-Date:   Sat, 25 Dec 2021 16:31:08 -0800
-In-Reply-To: <patch-v5-07.10-e6ea403efe0-20211222T041050Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 22 Dec
- 2021 05:13:00
-        +0100")
-Message-ID: <xmqqr1a04377.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233145AbhLZAsv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Dec 2021 19:48:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41774 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233054AbhLZAsu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Dec 2021 19:48:50 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94799C061401
+        for <git@vger.kernel.org>; Sat, 25 Dec 2021 16:48:50 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id z9-20020a17090a7b8900b001b13558eadaso14807994pjc.4
+        for <git@vger.kernel.org>; Sat, 25 Dec 2021 16:48:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=8Wzda9URQmwp8j1eYULIKRG3q6bv1lwgjuUtBTcIVyI=;
+        b=pAJr/D38UVY2v6wDNsWfTKTbO1wSPckHr0QHylp/UN/hEZSSp6zHwz158I4SJ3gLl0
+         VUPf5JV9r/zohJN4lgPALOPb5J7iH7osQJ7ujuyKkn6u6ZRop8MQWM7hFy1Jm5hu2F96
+         7zUh9Fh17Ynybu3vR3ARk6nNFNuHTKMh+P/v9Wv/plHEVFdVXunh32PxHluiwDzVGQN5
+         owe5rT/6ixBlvrwiDb2rjZJzzsZ5pS9HXMo4EoUmc9AdVw8tJSzZhbymR0vjWyQigK2v
+         VTGzlLy38t8hKm1t/IV7DrQleCwt5Cl38JpKfx7XVE2CL1tCJrnbnSbKTZ3OzD7Q6GZj
+         3NkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=8Wzda9URQmwp8j1eYULIKRG3q6bv1lwgjuUtBTcIVyI=;
+        b=PrkBRNyrf7ONpIoNrRRmelhCkOKk9bJuqjzzC2zZQYtQbuweXwXRBWui7sic+o0aO6
+         JpnXDvwbPhnzU6juH5eheDFsVNL2anMWoecI8zy9Ns/+UWLXiHQLn+5r0FMAqTA+6kwy
+         n6oFjGUfnzwWFaIA2SwXRqvZ/Hap96rBbiL15VMY+QMscsK/3YFaHOVqjGtnr/4+u+2H
+         DHZ9YcEfQbSA40CCouyy32qT3Za86zYVczZz+F6lwQUdpnXjbAMyQwcJ7M1TEIH2uWOg
+         DB3bQ/9Ipxf/r5rXdT0X+BFrtMGm9J1WcGzkoO9i5/J/StAmDiXdBsOHMzWjr0CGxxv9
+         STyA==
+X-Gm-Message-State: AOAM531LsF1OzJ0ot4kuz2paoUUnZHpv+t4n5pnJgQVqlLUOFXV8SZbB
+        6Z4afF2Ot4IifiZsaOgEtanvLmmnHU+gFFPU
+X-Google-Smtp-Source: ABdhPJw4cTSIw/DDkH1qxwX/7q8/U4ZIrAXKUs2h9sF0sbVx7sc2pc4d8PX+35KXhOF0QZjF/WePVA==
+X-Received: by 2002:a17:90a:a00e:: with SMTP id q14mr14372670pjp.88.1640479730002;
+        Sat, 25 Dec 2021 16:48:50 -0800 (PST)
+Received: from [192.168.18.18] ([103.252.33.202])
+        by smtp.gmail.com with ESMTPSA id u15sm13586436pfk.186.2021.12.25.16.48.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 25 Dec 2021 16:48:49 -0800 (PST)
+Subject: Re: My git repo is broken, how to fix it ?
+To:     Joseph Mitchell <josephmitchell36@icloud.com>,
+        torvalds@linux-foundation.org
+Cc:     git@vger.kernel.org, litvinov2004@gmail.com
+References: <19E9B3EE-705B-4275-8615-4C09ECA45BC7@icloud.com>
+From:   Lemuria <nekadek457@gmail.com>
+Message-ID: <b1dd7f8c-c7c0-5d80-4c85-6d7e957d9c9c@gmail.com>
+Date:   Sun, 26 Dec 2021 08:48:47 +0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1F7EF58A-65E3-11EC-BC03-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <19E9B3EE-705B-4275-8615-4C09ECA45BC7@icloud.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+I have no idea what you sent. It's just the default iOS Mail signature.
 
-> With the migration of --batch-all-objects to OPT_CMDMODE() in the
-> preceding commit one bug with combining it and other OPT_CMDMODE()
-> options was solved, but we were still left with e.g. --buffer silently
-> being discarded when not in batch mode.
-> ...
-
-I've read the patches again myself, as I didn't see much comments to
-the recent rounds of the series on the list.  Here are a few fix-ups
-to style violations that made my reading hiccup while doing so,
-introduced by this step.
-
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
-Subject: [PATCH] fixup! cat-file: fix remaining usage bugs
-
-Style fix to have SP on both sides of
-
-    shell_function () {
-	... body of the function ...
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t1006-cat-file.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 123801cfe2..aa859271d6 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -34,7 +34,7 @@ do
- 	'
- done
-=20
--test_missing_usage() {
-+test_missing_usage () {
- 	test_expect_code 129 "$@" 2>err &&
- 	grep -E "^fatal:.*required" err
- }
-@@ -66,7 +66,7 @@ do
- 	done
- done
-=20
--test_too_many_arguments() {
-+test_too_many_arguments () {
- 	test_expect_code 129 "$@" 2>err &&
- 	grep -E "^fatal: too many arguments$" err
- }
---=20
-2.34.1-568-g69e9fd72b5
+How exactly is your git repo "broken"?
 
 
-
+On 25/12/2021 4:30 pm, Joseph Mitchell wrote:
+> 
+> 
+> Sent from my iPhone
+> 
