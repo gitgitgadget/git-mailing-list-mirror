@@ -2,60 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A06BC433FE
-	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 23:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56102C433FE
+	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 23:24:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233943AbhL0XYF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Dec 2021 18:24:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56652 "EHLO
+        id S233964AbhL0XYJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Dec 2021 18:24:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233931AbhL0XYD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Dec 2021 18:24:03 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 618AAC06173E
-        for <git@vger.kernel.org>; Mon, 27 Dec 2021 15:24:02 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id e5so34903233wrc.5
-        for <git@vger.kernel.org>; Mon, 27 Dec 2021 15:24:02 -0800 (PST)
+        with ESMTP id S233936AbhL0XYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Dec 2021 18:24:04 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14855C061757
+        for <git@vger.kernel.org>; Mon, 27 Dec 2021 15:24:04 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id a203-20020a1c7fd4000000b003457874263aso11760881wmd.2
+        for <git@vger.kernel.org>; Mon, 27 Dec 2021 15:24:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=kLWVhsGbGtij1h9vvbHHwRdAjtezzVMqTh73NV1sLjk=;
-        b=K4d2v9C1HXht2NmLjgOp0Rl73a/eem92kD6S4qfJjQSbaD0Sm7/pPZF83d6SwXM6Zs
-         PHe8lpDcMgrRIFfLJYM9jYRUStp82tEdToXhF2N6YNFUYa3iKXoQ6PGAGtU7m9+kIpj0
-         m64lBkNCN+p/9B2LiyxUhMZyJ71XBNddtA0hK9R0wSn0u27Om0ZjjxAfOCWPxDWUV13c
-         F6guxkvtahGCz+JOcvxU11NVTOe9yRi/tezpaSFEuQbftVzi5UDSO+Fkyx7tsoHyQsRa
-         bo84pTOjhLm2dlFSCyBanVbS3cBDDV90UnGXnyTrf2yCOTj/NH64JXAtm9+bvH5mOyXR
-         tUWw==
+        bh=DXvU1WRND/1OxKy66Ot0PFFUbBLPRT2Ur5ESuVWIymY=;
+        b=kBmNiiLDjjUC9/fjsuuAjvaXMCxsPeKn2PjW2G0Xa5T2iD1VilGD71li96ZW6hP/jf
+         SPb2xfrDMR2yzQz6I3/7paBGrwLzBUiUAauDOcf8Y9b6pUCg0mXGI+Sv9poUfCD5PbTp
+         o3dZVdDUeeCRliyX56blFgBEecZ2DJSKfLCc97BNmlUbi1/Y5JloQ1B+g8N4IaVyhxhc
+         b3I1gffpdGuMKmDVaXbO7YqypUKB1QCkbpClHz6SxIpsCKMFnZgXCYEAOE77I1isieNj
+         7LANbJagVjJUbKZPJONjt31432nRblYy6JuyvyICbNes0wam+ayMTlnRWHr1KXqGivm8
+         5IxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=kLWVhsGbGtij1h9vvbHHwRdAjtezzVMqTh73NV1sLjk=;
-        b=czptXJrGwjUb3/r4hes5/jBO21bTdDXVNQBGAg1IXtokn05Or9jChhCan5GdqPpXhB
-         tVRZGnaw1Oeu+vS9X7b0NJLBLDyC3UEKWDlFYWi7lD1TBpFWOjH95uRQfkjQJc+b3phD
-         CgXAv11njzdnGSnOz09sA7xaXNQ3OmK65QqEkRPDy8nqcwgNO62z1dOKiqt4pz/uEy5j
-         iil23K54iBXOFYv6vVWjdP4/CNmz+9rQljVB/Oe4IAhofRQOkjIbrpcR7Bz9ewyiVEOV
-         r0Dz+PgHM0pa0pYXIGvgAReYvr0Od0tb6JQHEMT+QDyPG4Xt49VTec9dREuuCFsbpE23
-         T1FQ==
-X-Gm-Message-State: AOAM530vkpfBcvWpE47mlvR2glSm1M2XvFL0S8n9naAmv1YVtZUDQ9Aw
-        Pqqc0fWCkFLP2gGyxp077fADjk9hEr4=
-X-Google-Smtp-Source: ABdhPJwVcuZh/IGfk1uJ7DV5IJ6lgMDCFtrJTQqUu696WuNdUfeBti/4LLszpfwzNM8w/VNm6b0NsQ==
-X-Received: by 2002:adf:dd83:: with SMTP id x3mr14356993wrl.367.1640647440867;
-        Mon, 27 Dec 2021 15:24:00 -0800 (PST)
+        bh=DXvU1WRND/1OxKy66Ot0PFFUbBLPRT2Ur5ESuVWIymY=;
+        b=hpNOte4PIMfiHVBOVfCJPt8Fl9fGy48fnZEWjIrZFiUZgAUQBGR3lDw2r5fQzWDK/1
+         zo89zr8JLp9lcHkezNkwT5Z8UcVV3JP+MVMMV5lZ20VbH7ymYjV935FytuzQN99qbQdd
+         crCE64lX1qt9qzTLfsWz+o4NwXKQb0e0eOMrRpsUOrGUoT8LBANB9Imj0I4SioAssq8V
+         N/CnpWHCOhs81cc9Te8kJw3PdzK/t+cjiyszz6en2DHoXsfZ3cnxmPHjU0p3/fQaNOZp
+         eVtd+DE/KKjCKqXns53F6DrnIF5qKQ+G4+TApEWN+PFlGxVf7xAbxWd2u9CV/QbaiSfT
+         iG1g==
+X-Gm-Message-State: AOAM5330xK3GaJGCvrXMx4gTfJAqScb1DZkcmrju8hRPCXLQ3VFqy+BC
+        osRR0zeycdUOywpgHcmIAkPuYYd0Sas=
+X-Google-Smtp-Source: ABdhPJw1H87Av3a++kj56yy6hngLDHD2zIZOeNKpe2/swXLGIqRvOfrvQQREPIWMLAjcwHas+qdXog==
+X-Received: by 2002:a1c:a98f:: with SMTP id s137mr14759118wme.5.1640647442514;
+        Mon, 27 Dec 2021 15:24:02 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f16sm24912233wmg.27.2021.12.27.15.24.00
+        by smtp.gmail.com with ESMTPSA id s8sm19091559wra.9.2021.12.27.15.24.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Dec 2021 15:24:00 -0800 (PST)
-Message-Id: <be4e8757f38c9525cf70e96f746acd96ca85dcc3.1640647437.git.gitgitgadget@gmail.com>
+        Mon, 27 Dec 2021 15:24:02 -0800 (PST)
+Message-Id: <6d89c23a248d1c11db0e92c4f06392272f00c3a2.1640647438.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1088.v2.git.1640647437.gitgitgadget@gmail.com>
 References: <pull.1088.git.1638514909.gitgitgadget@gmail.com>
         <pull.1088.v2.git.1640647437.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Mon, 27 Dec 2021 23:23:48 +0000
-Subject: [PATCH v2 02/11] i18n: refactor "%s, %s and %s are mutually
- exclusive"
+Date:   Mon, 27 Dec 2021 23:23:51 +0000
+Subject: [PATCH v2 05/11] i18n: tag.c factorize i18n strings
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,69 +71,43 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Use placeholders for constant tokens. The strings are turned into
-"cannot be used together"
-
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- builtin/difftool.c | 2 +-
- builtin/log.c      | 2 +-
- builtin/worktree.c | 2 +-
- diff.c             | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ builtin/tag.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 4ee40fe3a06..c2b049aafc9 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -733,7 +733,7 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 		die(_("--dir-diff is incompatible with --no-index"));
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 6f7cd0e3ef5..a2ab2b15304 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -483,6 +483,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 	int ret = 0;
++	const char *only_in_list = NULL;
  
- 	if (use_gui_tool + !!difftool_cmd + !!extcmd > 1)
--		die(_("--gui, --tool and --extcmd are mutually exclusive"));
-+		die(_("options '%s', '%s' and '%s' cannot be used together"), "--gui", "--tool", "--extcmd");
+ 	setup_ref_filter_porcelain_msg();
  
- 	if (use_gui_tool)
- 		setenv("GIT_MERGETOOL_GUI", "true", 1);
-diff --git a/builtin/log.c b/builtin/log.c
-index fad93ad2fc1..705d58110b0 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1979,7 +1979,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		load_display_notes(&rev.notes_opt);
- 
- 	if (use_stdout + rev.diffopt.close_file + !!output_directory > 1)
--		die(_("--stdout, --output, and --output-directory are mutually exclusive"));
-+		die(_("options '%s', '%s' and '%s' cannot be used together"), "--stdout", "--output", "--output-directory");
- 
- 	if (use_stdout) {
- 		setup_pager();
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 9a520485769..b5ef19b2dda 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -503,7 +503,7 @@ static int add(int ac, const char **av, const char *prefix)
- 	opts.checkout = 1;
- 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
- 	if (!!opts.detach + !!new_branch + !!new_branch_force > 1)
--		die(_("-b, -B, and --detach are mutually exclusive"));
-+		die(_("options '%s', '%s' and '%s' cannot be used together"), "-b", "-B", "--detach");
- 	if (lock_reason && !keep_locked)
- 		die(_("--reason requires --lock"));
- 	if (lock_reason)
-diff --git a/diff.c b/diff.c
-index 41076857428..8de1c49763c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4642,7 +4642,7 @@ void diff_setup_done(struct diff_options *options)
- 		die(_("--name-only, --name-status, --check and -s are mutually exclusive"));
- 
- 	if (HAS_MULTI_BITS(options->pickaxe_opts & DIFF_PICKAXE_KINDS_MASK))
--		die(_("-G, -S and --find-object are mutually exclusive"));
-+		die(_("options '%s', '%s' and '%s' cannot be used together"), "-G", "-S", "--find-object");
- 
- 	if (HAS_MULTI_BITS(options->pickaxe_opts & DIFF_PICKAXE_KINDS_G_REGEX_MASK))
- 		die(_("-G and --pickaxe-regex are mutually exclusive, use --pickaxe-regex with -S"));
+@@ -542,13 +543,15 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		goto cleanup;
+ 	}
+ 	if (filter.lines != -1)
+-		die(_("-n option is only allowed in list mode"));
++		only_in_list = "-n";
+ 	if (filter.with_commit)
+-		die(_("--contains option is only allowed in list mode"));
++		only_in_list = "--contains";
+ 	if (filter.no_commit)
+-		die(_("--no-contains option is only allowed in list mode"));
++		only_in_list = "--no-contains";
+ 	if (filter.points_at.nr)
+-		die(_("--points-at option is only allowed in list mode"));
++		only_in_list = "--points-at";
++	if (only_in_list)
++		die("the '%s' option is only allowed in list mode", only_in_list);
+ 	if (filter.reachable_from || filter.unreachable_from)
+ 		die(_("--merged and --no-merged options are only allowed in list mode"));
+ 	if (cmdmode == 'd') {
 -- 
 gitgitgadget
 
