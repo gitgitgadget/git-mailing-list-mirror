@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9241BC43217
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6665EC433EF
 	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 23:24:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233970AbhL0XYN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Dec 2021 18:24:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56670 "EHLO
+        id S233973AbhL0XYK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Dec 2021 18:24:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233942AbhL0XYF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Dec 2021 18:24:05 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F436C06175A
-        for <git@vger.kernel.org>; Mon, 27 Dec 2021 15:24:05 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id r17so34931667wrc.3
-        for <git@vger.kernel.org>; Mon, 27 Dec 2021 15:24:05 -0800 (PST)
+        with ESMTP id S233928AbhL0XYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Dec 2021 18:24:04 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E56CC06173E
+        for <git@vger.kernel.org>; Mon, 27 Dec 2021 15:24:03 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id a83-20020a1c9856000000b00344731e044bso9086875wme.1
+        for <git@vger.kernel.org>; Mon, 27 Dec 2021 15:24:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=qiqOIkyPv8h8Pafi3sxUCLg26n7mS+IxX/AsWfZ1ak0=;
-        b=O3WaYIAaPZSpoMSUMPjVBFZeBcVBmssFd8yBhiHdxevxYFj5yW/JmBLWUgYtldYX1B
-         JaNpEsEUx+z3CiXeTZojbrAPRPgLfq07piMFMCxVcE0oT8URp9aSyF9OmZzLWdWapUa6
-         Ofy+YnRpwpBlPyVmKL8ShZpnDyDsY8WCclFn2VjS/MDt5c2oFslZjVCtpYc6Haz6Sn3m
-         wB05nJI7KCLy0vqVOxP/EiPO9dI31qy66zn4vZ0zRRuit3cmc+fy3wR0LrFfy5EtUVQf
-         c8Xj66tsy8OVSurAYVte2fGYcXAHChfBg2ErV1jPXEsQZT92VRVrJM8oOvQKNdmmE8wx
-         iaIQ==
+        bh=2i7GcNJ78FgiIt8YPh4wnGl4jPlfW6qzCRzbbzfKR7A=;
+        b=MePD0MLS5MYb7ftBl6VJLbXQ8k9bxDVSQ5ZDwEgsw2AElVWbJsUrQmR1gElo2mc/Cp
+         fbYpVcEpODj5ikIke7YtYMYbLGAKLOdNi7RuabvFr8IMjZRZ+2KdtSW53nOTetOhS5/b
+         qqUk/jR/z2KlOUo1eGRXbC/N4Nor060kVi7veaa7eNSZZ8/etzz7ONIPgOOijQnJhxom
+         hMPp7Z790n7T5z3hQadfdAci2XwF+X9TyxKHG0ylk7nGYNYIA0FK8gFdWFg8qDVmFZL4
+         OCXLS6jBcrRa0Gqowwe3RZ8WLEBXoxTz25a4208K08S2exa/2UIKy7d0YowLGVill+No
+         rggA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=qiqOIkyPv8h8Pafi3sxUCLg26n7mS+IxX/AsWfZ1ak0=;
-        b=TtrTmNR1Nei5/L63EoiVw794BxIHqGr5jdeFM5yhC8cH7jYu3Nm5a9jR4wzO2Uhz7a
-         mPBim7SKQtot8hUjC2aC2Way7fxtNQBpINWzjI6868L3C0nzwxzKta8yNSpppZ5s8M5F
-         cCG1ccDdG2uV09PVPPOzqyVP1sED4ZxH+fEfNnTl4MucEKG9sDglPslan7INwURgCNPS
-         Y534lfptQpIbhRA4/aTDR+y0+nZ1m4lC5N4h4CY7r7VVAydLYKJZgQoVyrv3+mePbszb
-         2rPcrDb7IHhhsHTbJGarA8LUYRQie51mseNuzeoIQTXQRjvNrzDEtLObt+yJQwnr8XRi
-         vq6A==
-X-Gm-Message-State: AOAM531ekfRzuRFW/Dqsva3hXJeeNYV4wJecV9hGPxXNtWqHBXsHglc3
-        Bqu3G0NA11ttmiS5mMFssvndfRKU9s4=
-X-Google-Smtp-Source: ABdhPJw5XPIPh994xkDQ7vQNXJv8uAILZxL4crclQSQSCanUoVGe3M5pSTbAem8N1DUIsyfZiaXAyg==
-X-Received: by 2002:a05:6000:188f:: with SMTP id a15mr14326951wri.153.1640647443708;
-        Mon, 27 Dec 2021 15:24:03 -0800 (PST)
+        bh=2i7GcNJ78FgiIt8YPh4wnGl4jPlfW6qzCRzbbzfKR7A=;
+        b=eY5YsBr0q6qr5tmjS6hBMs1tZ0UrucZFDJwiUBLoY/7mK30hr2mC3vbAv/I2B8gYEP
+         8m/m7euv/S1+CSgsNEU06gS5OUWMLXJ97k4iCEV9kzze0R9GHxeaiym26vNzd6iDhrMb
+         N3g0pbxzBlSC5h1HPnryoHbDrdsIQPGwKVf+VhYDmKB+1Hm3/W0QxHW0roVZBJiN3Brf
+         E0BG6gWgnJuCL337VrWJb97e8zmWpfm6XFI9eEFJly5gCM1XlCe3+rZ6S+pKusUcF8i9
+         de15SvN87GrXzitPoiGtoXsknlW04soQaw2zkAa8iU98L8TllqARUm+EiDBY0UBKX0xF
+         CKSA==
+X-Gm-Message-State: AOAM530C63OxLIhHNMdIIqtma3v1pyYVG2KkKjGgxBk7idTSetVJ0Nhd
+        eLJ3ONX83IO5nEDiZBGG7idTJHuklB4=
+X-Google-Smtp-Source: ABdhPJwvvqRRWdWc+YwnP+g9L4sENIL3OdxPx78+6/WwoNQ4iB9RlZyEp+cFHZgJDJym3Ta4TxSB/g==
+X-Received: by 2002:a7b:c306:: with SMTP id k6mr14989284wmj.15.1640647441908;
+        Mon, 27 Dec 2021 15:24:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 1sm8311350wrb.13.2021.12.27.15.24.03
+        by smtp.gmail.com with ESMTPSA id 14sm17947521wry.23.2021.12.27.15.24.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Dec 2021 15:24:03 -0800 (PST)
-Message-Id: <2b7d558f8f99f61302b8d0b27fb33656090a6715.1640647438.git.gitgitgadget@gmail.com>
+        Mon, 27 Dec 2021 15:24:01 -0800 (PST)
+Message-Id: <88dfde62eda89a9c22194b181166008830aadc77.1640647438.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1088.v2.git.1640647437.gitgitgadget@gmail.com>
 References: <pull.1088.git.1638514909.gitgitgadget@gmail.com>
         <pull.1088.v2.git.1640647437.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Mon, 27 Dec 2021 23:23:53 +0000
-Subject: [PATCH v2 07/11] i18n: factorize "no directory given for --foo"
+Date:   Mon, 27 Dec 2021 23:23:50 +0000
+Subject: [PATCH v2 04/11] i18n: standardize "cannot open" and "cannot read"
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,40 +73,54 @@ From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- git.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ archive.c       | 4 ++--
+ builtin/fetch.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/git.c b/git.c
-index 7edafd8ecff..7e361769ff6 100644
---- a/git.c
-+++ b/git.c
-@@ -185,7 +185,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--git-dir")) {
- 			if (*argc < 2) {
--				fprintf(stderr, _("no directory given for --git-dir\n" ));
-+				fprintf(stderr, _("no directory given for %s\n" ), "--git-dir");
- 				usage(git_usage_string);
- 			}
- 			setenv(GIT_DIR_ENVIRONMENT, (*argv)[1], 1);
-@@ -213,7 +213,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--work-tree")) {
- 			if (*argc < 2) {
--				fprintf(stderr, _("no directory given for --work-tree\n" ));
-+				fprintf(stderr, _("no directory given for %s\n" ), "--work-tree");
- 				usage(git_usage_string);
- 			}
- 			setenv(GIT_WORK_TREE_ENVIRONMENT, (*argv)[1], 1);
-@@ -297,7 +297,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 				*envchanged = 1;
- 		} else if (!strcmp(cmd, "-C")) {
- 			if (*argc < 2) {
--				fprintf(stderr, _("no directory given for -C\n" ));
-+				fprintf(stderr, _("no directory given for %s\n" ), "-C");
- 				usage(git_usage_string);
- 			}
- 			if ((*argv)[1][0]) {
+diff --git a/archive.c b/archive.c
+index e85ba169088..78d35467008 100644
+--- a/archive.c
++++ b/archive.c
+@@ -185,7 +185,7 @@ static int write_archive_entry(const struct object_id *oid, const char *base,
+ 
+ 	buffer = object_file_to_archive(args, path.buf, oid, mode, &type, &size);
+ 	if (!buffer)
+-		return error(_("cannot read %s"), oid_to_hex(oid));
++		return error(_("cannot read '%s'"), oid_to_hex(oid));
+ 	err = write_entry(args, oid, path.buf, path.len, mode, buffer, size);
+ 	free(buffer);
+ 	return err;
+@@ -338,7 +338,7 @@ int write_archive_entries(struct archiver_args *args,
+ 
+ 		strbuf_reset(&content);
+ 		if (strbuf_read_file(&content, path, info->stat.st_size) < 0)
+-			err = error_errno(_("could not read '%s'"), path);
++			err = error_errno(_("cannot read '%s'"), path);
+ 		else
+ 			err = write_entry(args, &fake_oid, path_in_archive.buf,
+ 					  path_in_archive.len,
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 2c584c85812..c0855c363fd 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -996,7 +996,7 @@ static int open_fetch_head(struct fetch_head *fetch_head)
+ 	if (write_fetch_head) {
+ 		fetch_head->fp = fopen(filename, "a");
+ 		if (!fetch_head->fp)
+-			return error_errno(_("cannot open %s"), filename);
++			return error_errno(_("cannot open '%s'"), filename);
+ 		strbuf_init(&fetch_head->buf, 0);
+ 	} else {
+ 		fetch_head->fp = NULL;
+@@ -1408,7 +1408,7 @@ static int truncate_fetch_head(void)
+ 	FILE *fp = fopen_for_writing(filename);
+ 
+ 	if (!fp)
+-		return error_errno(_("cannot open %s"), filename);
++		return error_errno(_("cannot open '%s'"), filename);
+ 	fclose(fp);
+ 	return 0;
+ }
 -- 
 gitgitgadget
 
