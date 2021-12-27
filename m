@@ -2,85 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6C04C433EF
-	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 07:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B7F6C433F5
+	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 12:52:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235474AbhL0He3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Dec 2021 02:34:29 -0500
-Received: from mail-pj1-f49.google.com ([209.85.216.49]:55847 "EHLO
-        mail-pj1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235468AbhL0He3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Dec 2021 02:34:29 -0500
-Received: by mail-pj1-f49.google.com with SMTP id iy13so12788809pjb.5
-        for <git@vger.kernel.org>; Sun, 26 Dec 2021 23:34:29 -0800 (PST)
+        id S236753AbhL0MwI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Dec 2021 07:52:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56332 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236752AbhL0MwI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Dec 2021 07:52:08 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9E94C06173E
+        for <git@vger.kernel.org>; Mon, 27 Dec 2021 04:52:07 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id g13so13390519ljj.10
+        for <git@vger.kernel.org>; Mon, 27 Dec 2021 04:52:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:to:content-language:from
+         :subject:content-transfer-encoding;
+        bh=oyQzG+CU+BAWxFdHR6ZuTQmmNy4j1N11t+5EAb6RluM=;
+        b=W1nmFnJZesh6MQSJiX32UbCPI04L93d5g0+2y/8JuJDP3a7lbsOD3lDwGqoy0XbbFk
+         WytU70IUY/HAQBQE1dOuAkKdMfDHzGWGqbHxL7SqKotwM+vvs0YpxH1ufOr8VI7K0yeo
+         bIlGNF7AtDTaBuh5G9apYBKxH9qgzIkodCtvPxkKk1wIftP87IklDf0KfU8+2ubYVskV
+         MZLahIft8vy/U3rPwEB8hj/AaQpyx7JXc2dBOyt9/aND3p+yN6yn0DuRFjbE1FRoLY94
+         Bx6SfEg4gqgEZI1ldYs6IPgKp8jIdL4jz9e5y75nARfjNDyRCF73inAa3Zc9h4l2yk40
+         rPLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RAvTXUZ2MMVgjxQ+JD/6xssGbkbr5MkgJOB3Oj1BG9s=;
-        b=sNHsCpY9NKgyjG90Xu/OThQK1uTvw2fg9oMliOZfjofkyE/7c4mrlqkWBnInOi+Y5S
-         nqeYi1GGCJQ9n+CEw66TnP1s6UgtF1jv+O9M8xpdyaJlS7T1yuXAIjBK+cOQn39VxWtz
-         w1yaLiBU2vYUnPhZjSKlBiFivsT5LqJt8xr4TBR5llyXXCQxZarI4Ub9tNnwCrvJf9Cx
-         /JZK/y8X8F1pQlCCSfhUIbTF8Xx7moapdoN0Lde2rphQrKGGJhRGmGeaj/UBnLfs4s9k
-         200E7FOZbp9P9ASJfBsfnN69PrA+KmwFsQx4nFJnJ2tU1ThpR7ZEqZF9LNx4Wezl29RZ
-         PJSg==
-X-Gm-Message-State: AOAM532W2Nmqa879xErWDFVWezwWKkfc7ZntXYaTFdSxWZo9ePzeEGBn
-        eaFMM8bRr5IqJMgAJab69hnnQVkCMSmWBGponK0=
-X-Google-Smtp-Source: ABdhPJzdJ7vU7qvh+4wKe2I5jNf3/c7Secd+5lfdHFbafFtcqysB2+I2d8LwcShLsBgoL3/hgE/oKjPhkYgBeoo0p48=
-X-Received: by 2002:a17:903:1247:b0:143:b9b9:52a2 with SMTP id
- u7-20020a170903124700b00143b9b952a2mr16406047plh.35.1640590468695; Sun, 26
- Dec 2021 23:34:28 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:to
+         :content-language:from:subject:content-transfer-encoding;
+        bh=oyQzG+CU+BAWxFdHR6ZuTQmmNy4j1N11t+5EAb6RluM=;
+        b=cTMznbsFMtNgR5fn3rtw/fl6qEBdEg5tfPwNduYyzapDfsiSZLpYx8nyFuUsh2NM/p
+         8MyrTZepuOsmtbge2IWbekhesgeiU3sM6lhjuKVKKpUz1nQfDXvex4k9txfL2ziZoTea
+         DoZWHEEsNXqzExNahrvM++SIpKofj2UxYfEQKCT2Qn+wXI6IXzbJUEg9w2HrDT2raO3y
+         uN5oNvS4DL4FK9HIxbJnv9RgQPDyeMYQb7r3JvStTIk9md55WU3GVFJ7xPKRmIMZ3MED
+         7EmF/jRMmQ1SZWps4TotPHLtkx4/YZfbq9pXhyzWg0fPYOePIvJ/5CuzEUZZz1O9TjSF
+         cfrw==
+X-Gm-Message-State: AOAM53032a1yvs34atJM9DGVJ4qiNhLF4Qh0kG0Z1sCnnkiKqeRwp7J9
+        C/oHDXVTAwnY9zSIPkwtmB5rfxdOCBU=
+X-Google-Smtp-Source: ABdhPJzKC6VaT5qeyRAeVclFGb8q6hQj3m25bIGMK0XgtkSEhv/X+KEUwbopXf8kv6YA5WLWkBglmg==
+X-Received: by 2002:a05:651c:d5:: with SMTP id 21mr11236591ljr.433.1640609525844;
+        Mon, 27 Dec 2021 04:52:05 -0800 (PST)
+Received: from ?IPV6:2a02:2168:8729:6c00:f40:1d1:7c9a:43d6? ([2a02:2168:8729:6c00:f40:1d1:7c9a:43d6])
+        by smtp.gmail.com with ESMTPSA id s19sm1623570lji.81.2021.12.27.04.52.04
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Dec 2021 04:52:05 -0800 (PST)
+Message-ID: <3e1548ab-5e20-9555-bd10-d6cbf2ffbce4@gmail.com>
+Date:   Mon, 27 Dec 2021 15:52:03 +0300
 MIME-Version: 1.0
-References: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
- <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com> <CABPp-BG7nwsdEYrnfqhAbWU4ndJHcqGf6RS_6DzJittuNVLvoA@mail.gmail.com>
- <CAPig+cRDDGU=9BB6kd1tMJR8DmWKSSJwpTD8JeszrY685Fc3-Q@mail.gmail.com>
-In-Reply-To: <CAPig+cRDDGU=9BB6kd1tMJR8DmWKSSJwpTD8JeszrY685Fc3-Q@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 27 Dec 2021 02:34:17 -0500
-Message-ID: <CAPig+cQjYiARBwSZTsswk442TvDC2UiyOx5wNdRwF6C7i8ENxA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] Sparse checkout: fix bug with worktree of bare repo
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Sean Allred <allred.sean@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.1
+To:     git@vger.kernel.org
+Content-Language: en-US
+From:   Andrey Butirsky <butirsky@gmail.com>
+Subject: request: allow passing -X <strategy-option> to git checkout <path> to
+ auto-solve merge conflicts
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 27, 2021 at 2:15 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Wed, Dec 22, 2021 at 5:54 PM Elijah Newren <newren@gmail.com> wrote:
-> > I think that "git
-> > worktree add" should check if either core.bare is false or
-> > core.worktree is set, and if so then set extensions.worktreeConfig and
-> > migrate the relevant config.
->
-> Similar to my response to Sean in [1] and to Stolee in [2], while this
-> may help the situation for worktrees created _after_
-> `extensions.worktreeConfig` is enabled, it does _not_ help existing
-> worktrees at all. For this reason, in my opinion, `git worktree add`
-> is simply not the correct place to be addressing this problem, and
-> it's why I suggested a separate command for enabling the feature and
-> doing all the necessary bookkeeping. It's also why I suggested[2] that
-> in the long run, we may want per-worktree config to be the default
-> (and only) behavior rather than the current (legacy) behavior of all
-> config being shared between worktrees.
+Hi, stumbling upon this again and again, so decided to write finally,
 
-Thinking upon it further, I take back what I said about it not helping
-existing worktrees.
+while in conflicting state, the only thing we can do to auto-pick one or 
+another side of conflict is passing --ours/--theirs option to git-checkout:
+git checkout --ours/--theirs <path>
 
-Your proposal is _almost_ the same as my suggestion of eventually
-making per-worktree config the default. The difference is that you're
-only making it the default if `core.bare=true` or `core.worktree` is
-set. But do we need that distinction? If people are comfortable with
-that, then are they comfortable with simply flipping the switch and
-making per-worktree config the default today regardless of `core.bare`
-and `core.worktree`?
+The problem is - it doesn't actually do a _merge_, i.e. you lose all 
+non-conflicted changes.
 
-I'm not sure that I'm comfortable with it due to the potential of
-breaking older versions of git which don't understand
-`extensions.worktreeConfig`, as well as breaking third-party tools,
-but maybe other people feel differently?
+There is no easy way to solve that currently without third-party tools.
+
+This link illustrates it:
+https://stackoverflow.com/a/68498101/1063363
+
+Proposal:
+Shell we add -X <strategy-option> to git checkout <path> to allow it do 
+a merge and _actually solve_ merge conflicts?
+That would be in-pair with other commands taking the option already: 
+git-merge, git-rebase, (etc.?)
+
