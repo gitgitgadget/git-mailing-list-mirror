@@ -2,113 +2,193 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F28A4C433F5
-	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 02:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46FAAC433F5
+	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 06:06:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234992AbhL0C2f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Dec 2021 21:28:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33420 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbhL0C2e (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Dec 2021 21:28:34 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78337C06173E
-        for <git@vger.kernel.org>; Sun, 26 Dec 2021 18:28:34 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id a11-20020a17090a854b00b001b11aae38d6so13188036pjw.2
-        for <git@vger.kernel.org>; Sun, 26 Dec 2021 18:28:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hCKZVR88N1uPXCmhhrDClXqsA3qBp3+w6FxqkYMbe9g=;
-        b=APDf0lZjy8AMZ3rLeS4pgmNDrZ7CMCt00KCfS+6JN+TiKbWCng2xAXNykRhdsQBkn2
-         HolATux7VbCMuvaeySphYn2yHuuNb8/10HJxHYTnsC+L+qzv6Xl/pikVu9TM+b2IwKBQ
-         rr5Y/ln4YZcv4N5HmcrenVpINSQSq3QzyrgReKSiOTWuyijIbgD4O9Qlo2P5q7rctOjt
-         pn6FSl8WckdbSH2REE6KlcukULKpLri8V8wjfwOXi9nsavc7sXSTOkWh19Fr5IoJneTH
-         SGSUEKBQe59c4TH1aIoz3LYk9i1KwUUNB+lhyydb3KeCTZuePoQgG4xPjYaUYTfXwvgZ
-         WDFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=hCKZVR88N1uPXCmhhrDClXqsA3qBp3+w6FxqkYMbe9g=;
-        b=j8JetrAEokxMqSsvlyyEjt/49WIhNKLxcH1YhTF7vQKBJtzaNRk29jJIlPRB4OiAEF
-         D20m+tjHNS/CGk6v3Kf/RsbW+y/alTdbHwLMgwkyWrxd67wQrlCTRg8Q3K5PfrGmB8Hc
-         +ZQfbbx+Shd7BFWXiXFrX8YbivWAWscffd6nAPDmR4wOFSaZhawHpMqhZmi/DP85Kt9G
-         19EVDnvLKoavPK6ArCtcWcq7bilWr0XlozaDsPANzsvvt4Qd3pvSFGakQPc42KsbFW4P
-         hh59veb5gJ+jWRHcVP8daMhM9dxWmYL+3P3j5w0RPZ58pJTvBXsH1OgsIv2vCGwIm9UM
-         XZ/A==
-X-Gm-Message-State: AOAM531RsUQ1woiR7bIN86Blakx4SPy3OwEpD3GMxdtXypc7cPwjL9pr
-        MJDZqoVPSbJ1WeVNl2oSo7dXGfjuy0BPWQ/x
-X-Google-Smtp-Source: ABdhPJwXgL3kkJbWcDXTo0kU0TaN0ZmRwhd3V0mrBG8g9gunbaxZ7Mo+CcvqsAZ4Lhy98+m+tV/qbg==
-X-Received: by 2002:a17:902:9682:b0:149:15d2:55ae with SMTP id n2-20020a170902968200b0014915d255aemr15312508plp.59.1640572113865;
-        Sun, 26 Dec 2021 18:28:33 -0800 (PST)
-Received: from [192.168.18.18] ([103.252.33.202])
-        by smtp.gmail.com with ESMTPSA id y14sm2347811pfi.178.2021.12.26.18.28.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Dec 2021 18:28:33 -0800 (PST)
-Subject: Re: Rebasing commits that have been pushed to remote
-To:     rsbecker@nexbridge.com, 'Erik Cervin Edin' <erik@cervined.in>
-Cc:     'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
-References: <71b51bc8-172f-48de-7c3f-cf55dc45b39a@gmail.com>
- <xmqqlf0cjuwx.fsf@gitster.g> <d51b7981-5034-b34c-42d6-ad8b80a378c1@gmail.com>
- <CA+JQ7M_GhE=vcpoCSPEnSPoLA1xZM3uVMuGw4goPe4AmQip2hg@mail.gmail.com>
- <f282b2eb-efd2-e194-d326-fe4daa07b598@gmail.com>
- <001801d7fa70$25775e20$70661a60$@nexbridge.com>
-From:   Lemuria <nekadek457@gmail.com>
-Message-ID: <27ee772b-33ec-ca81-364a-6360666e147c@gmail.com>
-Date:   Mon, 27 Dec 2021 10:28:31 +0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S235250AbhL0GGx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Dec 2021 01:06:53 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64733 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230061AbhL0GGw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Dec 2021 01:06:52 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7CB2916311D;
+        Mon, 27 Dec 2021 01:06:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=59S7tjaXviQV
+        s7XPoNATQLSiQ49glYt+c/+UwmdqA6Y=; b=NpNnbi+zxz3aZvRNETbFubXjxEwR
+        NA3bEM34vtcMp1Qn/ADHp/XZ4GtyBxjkn8roIWBUjI73Li5Hlbfi86LVdEpKMgXV
+        //2eh0J1Q5FogoCWy3yoKN8V3Zi6Gb+dOM3WSm8EYHBfFPnbKAd1mU324zNgJN5X
+        agImegh6b0WOr8o=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 759AA16311C;
+        Mon, 27 Dec 2021 01:06:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D361A16311B;
+        Mon, 27 Dec 2021 01:06:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, J Smith <dark.panda@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v6 7/7] grep: simplify config parsing and option parsing
+References: <cover-v5-0.7-00000000000-20211222T025214Z-avarab@gmail.com>
+        <cover-v6-0.7-00000000000-20211226T223035Z-avarab@gmail.com>
+        <patch-v6-7.7-88dfd40bf9e-20211226T223035Z-avarab@gmail.com>
+Date:   Sun, 26 Dec 2021 22:06:47 -0800
+In-Reply-To: <patch-v6-7.7-88dfd40bf9e-20211226T223035Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 26 Dec
+ 2021 23:37:19
+        +0100")
+Message-ID: <xmqqpmpid1jc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <001801d7fa70$25775e20$70661a60$@nexbridge.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2D7ED4FE-66DB-11EC-82B3-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
+> @@ -143,7 +142,6 @@ struct grep_opt {
+>  	int unmatch_name_only;
+>  	int count;
+>  	int word_regexp;
+> -	int fixed;
+>  	int all_match;
+>  #define GREP_BINARY_DEFAULT	0
+>  #define GREP_BINARY_NOMATCH	1
+> @@ -152,7 +150,6 @@ struct grep_opt {
+>  	int allow_textconv;
+>  	int extended;
+>  	int use_reflog_filter;
+> -	int pcre2;
+>  	int relative;
+>  	int pathname;
+>  	int null_following_name;
+> @@ -162,7 +159,7 @@ struct grep_opt {
+>  	int funcname;
+>  	int funcbody;
+>  	int extended_regexp_option;
+> -	int pattern_type_option;
+> +	enum grep_pattern_type pattern_type_option;
+>  	int ignore_locale;
+>  	char colors[NR_GREP_COLORS][COLOR_MAXLEN];
+>  	unsigned pre_context;
+> @@ -181,7 +178,6 @@ struct grep_opt {
+>  	.relative =3D 1, \
+>  	.pathname =3D 1, \
+>  	.max_depth =3D -1, \
+> -	.pattern_type_option =3D GREP_PATTERN_TYPE_UNSPECIFIED, \
+>  	.colors =3D { \
+>  		[GREP_COLOR_CONTEXT] =3D "", \
+>  		[GREP_COLOR_FILENAME] =3D "", \
 
-On 26/12/2021 11:49 pm, rsbecker@nexbridge.com wrote:
-> On December 26, 2021 4:58 AM, Lemuria wrote:
->> On 26/12/2021 4:44 pm, Erik Cervin Edin wrote:
->>>> Alright. I'll take this into account. Unfortunately, before you got
->>>> to me, I reworded the commits on my local and pushed them to the
->>>> remote, which resulted in a messy history with duplicate comments.
->>>
->>> This easily happens
->>> Usually when you merge old history back onto rewritten history It's
->>> easy to confuse what is what when rewriting history
->>>
->>> If you find yourself rewriting and force pushing a lot you might find
->>> the following script helpful
->>> https://gist.github.com/CervEdin/2e72388c3f7d9b30d961ec3b64d08761
->>> It shows:
->>> - The graphs of differences between local and upstream of a branch
->>> - The difference between local and upstream
->>> - Prompts to force push with lease
->>
->> I don't force push a lot, but regardless I'll make a note of that.
-> 
-> The process is used by some teams, like OpenSSL, for WIP pull requests. It follows a git rebase --autosquash -i. The principle is to clean up the PR down to a single final commit for approval. It is more work for the contributor, but the committers seem to prefer having everything in one commit. This requires a git push -f.
-> 
->>>
->>>> But at least my GitHub page has more green on it!
->>>
->>> If you want green you can fork
->>> https://github.com/cervEdin/vanity
->>>
->>
->> I'm surprised how GitHub hasn't taken that down yet. Well, spamming
->> commits means more green and isn't that good for the environment, right?
-> 
-> I don’t follow this. Sorry.
-> 
-> -Randall
-> 
+I very much like the lossage of redundant fixed and pcre2 members.
 
-Me too. I don't follow that either. My statement
-was sent with the purposes of ___sarcasm___.
+As I kept telling you, we still need a separate bit to keep track of
+the last value of grep.extendedRegexp, but the primary mechanism to
+determine what pattern type to use should be a single enum that is
+pattern_type.  When we see "fixed", "pcre", "-G", etc. from
+grep.patternType config or from command line, we can stuff their
+enum values in pattern_type member of this struct, and when we see
+"default", we need to leave "default" in pattern_type member until
+we see the last definition of grep.extendedRegexp, at which time
+we can turn it into either "basic" or "extended".
+
+So having only two members is absolutely the right thing to do.
+
+But this part convinces me that whatever this patch does, it will
+not possible be capable of doing the right thing.  You cannot
+implement "we have to remember that the last grep.patternType we saw
+was DEFAULT and in that case we cannot decide the real pattern type
+until we see the last definition of grep.extendedRegexp, which may
+be well after we saw the last grep.patternType definition" without a
+value in this enum to express that the last value we saw was DEFAULT.
+
+>  enum grep_pattern_type {
+> -	GREP_PATTERN_TYPE_UNSPECIFIED =3D 0,
+> -	GREP_PATTERN_TYPE_BRE,
+> +	GREP_PATTERN_TYPE_BRE =3D 0,
+>  	GREP_PATTERN_TYPE_ERE,
+>  	GREP_PATTERN_TYPE_FIXED,
+>  	GREP_PATTERN_TYPE_PCRE
+
+> @@ -982,7 +981,6 @@ int cmd_grep(int argc, const char **argv, const cha=
+r *prefix)
+>  	argc =3D parse_options(argc, argv, prefix, options, grep_usage,
+>  			     PARSE_OPT_KEEP_DASHDASH |
+>  			     PARSE_OPT_STOP_AT_NON_OPTION);
+> -	grep_commit_pattern_type(pattern_type_arg, &opt);
+
+In other words, this lossage is likely wrong.  Let's keep reading
+and see how well the config reader in this patch does.=20
+
+> @@ -61,11 +59,25 @@ int grep_config(const char *var, const char *value,=
+ void *cb)
+>  		return -1;
+> =20
+>  	if (!strcmp(var, "grep.extendedregexp")) {
+> +		if (opt->extended_regexp_option =3D=3D -1)
+> +			return 0;
+>  		opt->extended_regexp_option =3D git_config_bool(var, value);
+> +		if (opt->extended_regexp_option)
+> +			opt->pattern_type_option =3D GREP_PATTERN_TYPE_ERE;
+> +		else
+> +			opt->pattern_type_option =3D GREP_PATTERN_TYPE_BRE;
+> +		return 0;
+> +	}
+> +	if (!strcmp(var, "grep.patterntype") &&
+> +	    !strcmp(value, "default")) {
+> +		opt->pattern_type_option =3D opt->extended_regexp_option =3D=3D 1
+> +			? GREP_PATTERN_TYPE_ERE : GREP_PATTERN_TYPE_BRE;
+>  		return 0;
+>  	}
+> =20
+>  	if (!strcmp(var, "grep.patterntype")) {
+> +		opt->extended_regexp_option =3D -1; /* ignore */
+>  		opt->pattern_type_option =3D parse_pattern_type_arg(var, value);
+>  		return 0;
+>  	}
+
+The above does not look correct at all.
+
+What happens when the configuration parser sees these configuration
+variables in this sequence:
+
+ - grep.patternType set to say "pcre" (or anything not "default").
+ - grep.extendedRegexp set to "true".
+ - grep.patternType set to "default".
+
+After these three variable definitions with the usual "last one
+wins" (for each variable independently), the last value for the
+grep.patternType variable is "default", and the last value for
+the grep.extendedRegexp variable is "true".  The user wants to use
+the ERE patterns.
+
+The way the above code would work on this three variable definition
+sequence, as far as I read it, would however not give us the desired
+behaviour.  First we drop extended_regexp_option member to -1 while
+setting PCRE to attern_type_option member, and then grep.extendedRegexp
+is totally ignored, and then we see patterntype set to default and
+notice extended_regexp_option is *NOT* 1 (because you ignored it and
+left it to -1), and end up using BRE, no?
+
+I agree 100% with the direction that .fixed and .pcre2 members that
+were added over time to the struct are redundant and it is a very
+good idea to get rid of them.  But we need to keep track of two
+configuration variables separately to allow them the "last one wins"
+semantics independently, and for that, you cannot lose the "default"
+value from the enum.  It is impossible not to store the fact that
+"default" was the last value so far we saw for grep.patternType
+because you do not know, at the point of seeing "default", what the
+final value for grep.extendedRegexp will be.  If you want to correctly
+implement the interaction between two variables without regression,
+that is.
