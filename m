@@ -2,139 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0250C433EF
-	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 19:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BC42C433EF
+	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 19:32:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232363AbhL0T3S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Dec 2021 14:29:18 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60679 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232349AbhL0T3S (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Dec 2021 14:29:18 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97E45F7550;
-        Mon, 27 Dec 2021 14:29:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=8CcxtcuW16Jy
-        xNuML90If5Fk9+SOgTnHHCuaymb0PG4=; b=Bu+EmZ81otGYyRity8iLeQqAZqsP
-        pwZ9YYnyTORMRHoNXMrJUMDpFEDA3QvxXKW1UW4GKfVWbRL23Czz9/VBzlqNKcP9
-        QA6crNVAu45Xwj5oamQd0BC+GP6fjtJLymZbtdoDU2A1QxzBeGlxKDdO2AIaWw0g
-        DukMudMwvPefccc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F344F754F;
-        Mon, 27 Dec 2021 14:29:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S232395AbhL0Tco (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Dec 2021 14:32:44 -0500
+Received: from siwi.pair.com ([209.68.5.199]:36401 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232178AbhL0Tcn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Dec 2021 14:32:43 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id F02B13F4163;
+        Mon, 27 Dec 2021 14:32:42 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E73D9F754C;
-        Mon, 27 Dec 2021 14:29:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Daniel Vicarel <shundra8820@gmail.com>, git@vger.kernel.org
-Subject: Re: Why does "merge --continue" expect no arguments?
-References: <CALRdAfcyfesNqfLhhe2GW_5V9s2hf++i6mZS1Lw5hqQYTca85w@mail.gmail.com>
-        <xmqqlf0dq3t3.fsf@gitster.g>
-        <211224.86mtkqgc8e.gmgdl@evledraar.gmail.com>
-        <xmqqk0ft5toy.fsf@gitster.g>
-        <211227.868rw7exvi.gmgdl@evledraar.gmail.com>
-Date:   Mon, 27 Dec 2021 11:29:15 -0800
-In-Reply-To: <211227.868rw7exvi.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 27 Dec 2021 00:31:07 +0100")
-Message-ID: <xmqqzgolx2wk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 170AA3F4107;
+        Mon, 27 Dec 2021 14:32:42 -0500 (EST)
+Subject: Re: [RFC PATCH 19/21] usage API: use C99 macros for
+ {usage,usagef,die,error,warning,die}*()
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
+ <RFC-patch-19.21-0bbca8cca8e-20211115T220831Z-avarab@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <66b25f23-7349-1540-76b8-c9f0a64660ac@jeffhostetler.com>
+Date:   Mon, 27 Dec 2021 14:32:41 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 47FD9B74-674B-11EC-92CE-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <RFC-patch-19.21-0bbca8cca8e-20211115T220831Z-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
->>>     $ git merge --continue
->>>     fatal: There is no merge in progress (MERGE_HEAD missing).
->>>
->>> FWIW I prefer and use it for that reason, i.e. it's useful for script=
-ing
->>> to use these "stateful" commands when we're in some sort of rebase/me=
-rge
->>> "sequence" since it's an extra layer of sanity checking.
->>
->> There is no additional safety afforded by that, though.  There is no
->> reason why one would even try to say "merge --continue" without
->> doing any merge to begin with.
->>
->> The "merge --continue" not taking any pathspec is a bit of safety,
->> but even there, "commit" already has its own safety to reject
->> pathspec when it notices that it is concluding a conflicted "merge",
->> so "merge --continue" is not necessary for additional safety there,
->> either.
->
-> The reason would be that you're confused about what state you're in.
->
-> I've had that a few times, so I prefer it over "git commit", so I dares=
-y
-> someone less experienced in using git could and would benefit from it a=
-s
-> well.
-
-One can be lost and think that one is in the middle of "git merge"
-when in reality there is no merge going on.  Or one can be lost and
-confused the other way around, i.e. one thinks one is about to
-finish the work one has been doing and conclude in a single parent
-commit when in reality that one has done all that is necessary to
-whip the working tree and the index into a state good enough to
-record as a commit object.
-
-In the former case, saying "git merge --continue", instead of "git
-commit" may STOP oneself from proceeding, but then what?
-
-Step back and think the other confusion first.  Saying "git commit",
-instead of "git merge --continue", would allow one to record the
-merge commit.  It opens an editor, its first line of the log message
-would say "Merge blah into bar", the comment section tells you that
-you are committing a merge.  It even prevents one from making a
-partial commit with "git commit <pathspec>" or screw up the state
-with "git commit --amend".  It is totally safe.
-
-Now back to the former case.  You thought your working tree contents
-and the index was good enough shape to say "git merge --continue",
-but the command refuses because you were not merging.  I have a
-suspicion that the message I am responding is a straw-man not worth
-I should spend more time on, and if you are truly lost you would
-either (1) look at the command line prompt or (2) run "git status"
-to re-orient yourself before doing anything drastic like running the
-"git merge --continue" command, but hypothetically, if you are lost
-between merge and commit yet you are confident enough that your
-working tree state and the index is worth recording in a commit
-anyway, after a mistaken "git merge --continue" stops you from doing
-so, I expect that you would "git commit" to record that tree into a
-commit anyway, no?
-
-So, I do agree there would be cases where a user is lost and does
-not know what state the working tree s/he just came back to is in,
-but "git merge --continue" is a mechanism that gives great help to
-such a user.  "git status" may well be such a command, but "git
-merge --continue" is not, and training users to use the latter
-certainly is a wrong direction to go in.
-
-By the way, you are wasting your time by repeating what you already
-said and given an answer that the line of reasoning does not make
-much sense.  Unless your goal is to be the one that sends the last
-message to a discussion thread, that is.  You can respond to this
-message without anything new and I promise that I won't repeat what
-has been said already, in such a case.  So you'll be the last one to
-utter in this thread then ;-)
-
-You can share a new perspective, of course, in which case I may say
-"Light! thanks".
 
 
+On 11/15/21 5:18 PM, Ævar Arnfjörð Bjarmason wrote:
+[...]
+> 
+> It might be a good change to remove the "fmt" key from the "error"
+> events as a follow-up change. As these few examples from running the
+> test suite show it's sometimes redundant (same as the "msg"), rather
+> useless (just a "%s"), or something we could now mostly aggregate by
+> file/line instead of the normalized printf format:
+> 
+>        1 file":"builtin/gc.c","line":1391,"msg":"'bogus' is not a valid task","fmt":"'%s' is not a valid task"}
+>        1 file":"builtin/for-each-ref.c","line":89,"msg":"format: %(then) atom used more than once","fmt":"%s"}
+>        1 file":"builtin/fast-import.c","line":411,"msg":"Garbage after mark: N :202 :302x","fmt":"Garbage after mark: %s"}
+> 
+> "Mostly" here assumes that it would be OK if the aggregation changed
+> between git versions, which may be what all users of trace2 want. The
+> change that introduced the "fmt" code was ee4512ed481 (trace2: create
+> new combined trace facility, 2019-02-22), and the documentation change
+> was e544221d97a (trace2: Documentation/technical/api-trace2.txt,
+> 2019-02-22).
+> 
+> Both are rather vague on what problem "fmt" solved exactly, aside from
+> the obvious one of it being impossible to do meaningful aggregations
+> due to the "file" and "line" being the same everywhere, which isn't
+> the case now.
+> 
+> In any case, let's leave "fmt" be for now, the above summary was given
+> in case it's interesting to remove it in the future, e.g. to save
+> space in trace2 payloads.
 
+I added the "fmt" field so that we could do aggregations
+of error messages across multiple users without regard
+to what branch or filename or percentage or whatever was
+formatted into the actual "msg" written to stderr.
+
+The actual file:line wasn't useful (primarily because it
+was probably something in usage.c), but even if we fix that
+it might not be useful if we have users running 10 different
+versions of Git (because some people don't upgrade immediately).
+
+So I'd rather not kill it right now.
+
+Jeff
 
