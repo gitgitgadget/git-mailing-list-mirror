@@ -2,119 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AEA0C433EF
-	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 16:43:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94B28C433EF
+	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 18:26:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229836AbhL0QnN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Dec 2021 11:43:13 -0500
-Received: from smtp.hosts.co.uk ([85.233.160.19]:60530 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229755AbhL0QnM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Dec 2021 11:43:12 -0500
-Received: from host-92-7-140-211.as13285.net ([92.7.140.211] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1n1t5a-000Cgb-CN; Mon, 27 Dec 2021 16:43:11 +0000
-Message-ID: <456ef68c-dd01-e781-6ff1-e351c39671f1@iee.email>
-Date:   Mon, 27 Dec 2021 16:43:09 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Subject: Re: Git internal command line parser
-Content-Language: en-GB
-To:     =?UTF-8?Q?Jo=c3=a3o_Victor_Bonfim?= 
-        <JoaoVictorBonfim+Git-Mail-List@protonmail.com>
-Cc:     Lemuria <nekadek457@gmail.com>, git@vger.kernel.org
-References: <0347f273-f9e9-3ce6-2a95-f1ce71285c09@gmail.com>
- <e2726eaa-ba73-4141-bf61-89d5a7e9a9c2@iee.email>
- <0e0f78e9-2cde-a20e-cd47-8542bc7bd314@gmail.com>
- <cc6fa52a-d782-d4a8-eb93-936b8d83fc2f@iee.email>
- <bZ5IKn77iTM5gCits_kl5lZ7uiOOkkt8dcHPT1UVlPWsrnqapXBtAkYB4uGGBA3Oizq4J7BN4GC6mLR8wQ7x_qqLJPbae6IMTqxW9JFJSbg=@protonmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <bZ5IKn77iTM5gCits_kl5lZ7uiOOkkt8dcHPT1UVlPWsrnqapXBtAkYB4uGGBA3Oizq4J7BN4GC6mLR8wQ7x_qqLJPbae6IMTqxW9JFJSbg=@protonmail.com>
+        id S231602AbhL0S0m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Dec 2021 13:26:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48098 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229499AbhL0S0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Dec 2021 13:26:41 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52BD5C06173E
+        for <git@vger.kernel.org>; Mon, 27 Dec 2021 10:26:41 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id s1so33796246wra.6
+        for <git@vger.kernel.org>; Mon, 27 Dec 2021 10:26:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=8Gm1HHRZZ4+RLqp27cNkPjC4dDfgn4e7Gc6axhEdPdQ=;
+        b=Jj6GR1SN/cksSTuVZBRQGC/fSVd4eU7+8Mmv7TqVEcupUwW8JwavKRtqp0MbzEo5iH
+         8F+Pi/6eJToPca8BO+O3Xpj7qv8DErxt8FNWpZ1vnWsRs0StdyG+KquLuIFa7YVxzIHl
+         2DVscLEm+WKdl+jsVhVSPXDg5ROeDeTMjcgeiO3Wsl8o6WhE4biENcKXjkN21ae7jAA4
+         HO0BVGTovU4vsSs5eeqA7r5zzGdSzMFbDwpIpZA853AlPPe6/DLnG/2ktlKZDKI89dUr
+         RM+ThK9wWFyC93zHVRvkG3U/l3cKTG6+L+17t5nsSPwCnp6aOS99ke+PdyFdBE/am+tk
+         A5Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=8Gm1HHRZZ4+RLqp27cNkPjC4dDfgn4e7Gc6axhEdPdQ=;
+        b=v/3eHPnGzDn2pE0C5b2+53h3uoFKCjWN6VJzCcxFu3/MqtAYKIhJs2JvQwPI3FahE0
+         4iOJXM6Ct6xFi5zExHjY+coLvE8VPud+pudx3dzQgAQ09KGg0MoWj07qfiZJoynYCJ1r
+         iPkw6NWE0h5joE22qwAB+jH54nby9zC0m4xOEzWGnDSFUO3u1iYU2C1uwwhm1GijNl12
+         M3/kWnQ1i/C6GfJx1vgFvXPUdiuuGj/fRz41/xKm5vbgA3cjC6q0ulJ8zCair2Nx0q1i
+         +V2tGi1+FSqlz4V6D+99xu7TyTA8UI5z9y+CGpn+ULqiDfcaCFFjxj1yTMWTKAiqG7hx
+         zJCw==
+X-Gm-Message-State: AOAM533MJqxkxyD/k7ZMB3w5+jpgAkuQfQCILRIi1/g5Rhkjyupl1HAv
+        gTGmn7t3aDYv+W0VqJEm7SNUPyos4n0=
+X-Google-Smtp-Source: ABdhPJyvQ3MYZ+ehszl6EhzuoTkDsI+BSx8j6a5NjulEZHZWBgsKUvqIZxYk2qL/jJ7at5ChNzMoWA==
+X-Received: by 2002:adf:c606:: with SMTP id n6mr2209156wrg.481.1640629599714;
+        Mon, 27 Dec 2021 10:26:39 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o10sm18285464wrc.55.2021.12.27.10.26.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Dec 2021 10:26:39 -0800 (PST)
+Message-Id: <pull.1125.git.git.1640629598.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 27 Dec 2021 18:26:36 +0000
+Subject: [PATCH 0/2] Consolidate find_header logic into one function
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi João  & Lemuria,
+This addresses the NEEDSWORK comment in builtin/receive-pack.c:
 
-On 25/12/2021 02:55, João Victor Bonfim wrote:
->> If you are on Windows, it gets even more interesting because all the
->> individual sub-commands are just hard links back to the single git.exe
->> that then links to those sub-command's code.
-> That seems undesirable...
-> I know operating otherwise would be even more complicated and might create undue complexity or diminish performance, but I guess that, if it works, don't mess with it.
+ /**
+   * NEEDSWORK: reuse find_commit_header() from jk/commit-author-parsing
+   * after dropping "_commit" from its name and possibly moving it out
+   * of commit.c
+   **/
 
-The original question didn't say which OS was in use, and had hints that
-roughly matched a common Windows user misunderstanding about how the Git
-executables coped with the change of OS [1].
 
-My description was a hint, rather than a detailed exposition about what
-was happening there. As you note, performance is important.
+There is some duplicated logic between find_header and find_commit_header
+that can be consolidated instead of having two places in the code that do
+essentially the same thing. For the sake of simpler and more DRY code, use
+find_commit_header and rename it to find_header since it is not limited to
+finding headers for only commits.
 
->> And I likely will consider this "front-end to many separate
-> executable apps" approach for my future large projects.
->
-> Lemuria, please consider those points as, sometimes, what is great at performance might not help with scalability and other matters, therefore, as the designer/engineer of a software system, a choice must be made and an evaluation of the properties of each possibility is a necessity.
->
-> Do with that what you will.
->
->> I'm also a beginner to C, not quite an expert at it.
-> Practice programming a lot and never forget two things: [1] you are working with a man made machine, therefore its limitations and capabilities are by design, so you must consider them every step of the way when developing (like how computers send information, how computers process informations, how machine behaviour can be altered, abused or exploited through alteration of the environment or mechanism and through the use of sleight of hand). [2] Your code always has real life consequences and it is your moral responsibility to consider them and make sure that prejudice isn't codified into them.
->
-> Those are my two tid bits about being a responsible and effective programmer.
->
-> ‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
->
-> Em sexta-feira, 24 de dezembro de 2021 às 15:36, Philip Oakley <philipoakley@iee.email> escreveu:
->
->> On 24/12/2021 18:30, Lemuria wrote:
->>
->>> On 25/12/2021 2:13 am, Philip Oakley wrote:
->>>
->>>> On 24/12/2021 14:38, Lemuria wrote:
->>>>
->>>>> #=< TLDR: Where's the code for git's internal command line parser?
->>>>>
->>>>>> ===#
->>>>> I'm interested in the internals of git, more specifically it's command
->>>>>
->>>>> line parser.
->>>> One place to start is https://github.com/git/git/blob/master/git.c
->>> Wait, is all of Git just one big executable or are there many
->>>
->>> executables and `git` is just the front-end for accessing the
->>>
->>> separate git executables, such as say, the one for processing
->>>
->>> commits?
->> Yes, `git` is a front end.
->>
->> If you are on Windows, it gets even more interesting because all the
->>
->> individual sub-commands are just hard links back to the single git.exe
->>
->> that then links to those sub-command's code.
+This is my first attempt to address a NEEDSWORK issue, and I'm relatively
+new to C so any feedback would be appreciated!
 
-This (over simplified) explanation relates to the differences between
-the OS approaches to the performance issues when creating new processes
-and the like on Windows. Each OS has strengths and weaknesses.
+John Cai (2):
+  receive-pack.c: consolidate find header logic
+  commit.c: rename find_commit_header to find_header
 
->>
->>>>> Does Git use a library like getopt for it's command line handling, or
->>>>>
->>>>> does it use a custom parser?
->>>>>
->>>>> If possible, I would appreciate being redirected to the source code
->>>>>
->>>>> files that handle this.
->>>>>
->>>>> Sincerely,
->>>>>
->>>>> Lemuria
->>>> Philip
-[1]
-https://github.com/git-for-windows/build-extra/blob/main/ReleaseNotes.md?plain=1#L25
+ builtin/am.c                |  2 +-
+ builtin/commit.c            |  2 +-
+ builtin/receive-pack.c      | 48 ++++++++++++++++---------------------
+ commit.c                    |  7 +++---
+ commit.h                    |  2 +-
+ gpg-interface.c             |  2 +-
+ pretty.c                    |  2 +-
+ sequencer.c                 |  2 +-
+ t/helper/test-fast-rebase.c |  2 +-
+ 9 files changed, 32 insertions(+), 37 deletions(-)
 
+
+base-commit: 2ae0a9cb8298185a94e5998086f380a355dd8907
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1125%2Fjohn-cai%2Fjc%2Freplace-find-header-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1125/john-cai/jc/replace-find-header-v1
+Pull-Request: https://github.com/git/git/pull/1125
+-- 
+gitgitgadget
