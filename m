@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 784F2C4332F
-	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 23:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 172A0C433F5
+	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 23:24:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233981AbhL0XYL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Dec 2021 18:24:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56660 "EHLO
+        id S233985AbhL0XYQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Dec 2021 18:24:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233935AbhL0XYE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Dec 2021 18:24:04 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62330C061401
-        for <git@vger.kernel.org>; Mon, 27 Dec 2021 15:24:03 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id g191-20020a1c9dc8000000b0032fbf912885so9074953wme.4
-        for <git@vger.kernel.org>; Mon, 27 Dec 2021 15:24:03 -0800 (PST)
+        with ESMTP id S233952AbhL0XYH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Dec 2021 18:24:07 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E750EC061759
+        for <git@vger.kernel.org>; Mon, 27 Dec 2021 15:24:06 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id bg19-20020a05600c3c9300b0034565e837b6so5777228wmb.1
+        for <git@vger.kernel.org>; Mon, 27 Dec 2021 15:24:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=vbZt8+YsXMYIh5z0dbFZU5e/g6v9rtXRxVX24l8B+F8=;
-        b=U2KWp2ESsFj2Gh+5gq0Sh8m9uR0/Ds5X+T5AWIryUDHXWUqnnaVc2fVpfCDsKk9bZf
-         PBpp6k9rC7MwN6bsCF8ig3bHmxIiOkoqmRaz5mCjNH6NAA1xwk8+7ZLwwnKICpcWbnRY
-         iTqZA7/T79gmfp2dy5FtF/b4gveJY4Jl45XhDxKSPYweljOKy1ByQQF/NIHzmk7yT9Rx
-         ArLeGHc8mbhFZLAeqdMiDMbKrCERTZJQbbbL8qdag8z2btOeczlSNm5qkyFSyjqKNpS3
-         CV1prQ5xnJCEjVtNDIO5XZ8eTXFyzSDUHQD3c+CiPurhkyODSDmZKnO8qFdhjnhucFP9
-         2x/g==
+        bh=rP4kEq8FF2OINWVr/x+I8nI+cifT9FovCOINQK1WOY0=;
+        b=U6SRImApnNntTfJ4KViCZdsY5rAPbJ7ZMN0rLZUYb1cNtXcQ2jvvFmqW0yu2pz2Xx6
+         hRJmVjQafJZr/ASuM89rLkxhU58m86r93beQtp5cZdghgMkAPgruraKcSd1OA0yL/mqP
+         SsIB9wnOEiK+sFxQgoyRGiZUXj2jW5N3xn8wzJgrubAzsyXi7DjK8KgSDPw0ul4zzQZT
+         k++usNIpjhqrHVnyGEuBwBJddKU/etDc0YkPG2Kl/dllYgNQs6OCnhCnGWz3Ia4t7FuJ
+         IIFr7r1JP95y3dQZD0bccIXBiAiuoWngWFjd5Tjy9tRXwa9m0iVRAVYdrGYWqvcKjNmR
+         VCTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=vbZt8+YsXMYIh5z0dbFZU5e/g6v9rtXRxVX24l8B+F8=;
-        b=pgeKWF3PFxgn1eGkH1qgqmR6hhesiHZGWFv/mhe3VD+IPrMLMscrxgAieVkXslcvoM
-         E7U4VaFjewyzhL1FNtU2RqZAVtOJBr9e5B2Q9Dk1YN92DJ8JtquOu8O7EPaYdZLja8lg
-         l5CC3Jy9Q0QU4kiRi92uIAiSIanQ88ccOxCVkbUgfKZvGX1cHsaYTIGU51ZLeAS/TPfE
-         ssdYsMileyL0/F9ww25skpuq2X/gxyHfsaIyersX3ldpRoqdrpSt+Nx/mQC249vPT28p
-         XCGK0gOoFyGszYniIEa+YRWTxZHxFrqWv7eLtbUwOSgbioEo/tpThzO48shhEfY0lTde
-         tQ2Q==
-X-Gm-Message-State: AOAM531hXHjd5P/O3HWDB0CSaLx3vHxgcBbbUCUEDhw3dRbWyaHQseO7
-        duJ6mQFANwXsYrdcE1Gt2d+0PabSAcA=
-X-Google-Smtp-Source: ABdhPJzASfa28/3k+H8qd4G67/yn+ZMnX9vxrPh76jcXoi0F6mVOg2ZRu6n/54jYN5co9q4xBx4+Pg==
-X-Received: by 2002:a7b:ce15:: with SMTP id m21mr14660107wmc.147.1640647441437;
-        Mon, 27 Dec 2021 15:24:01 -0800 (PST)
+        bh=rP4kEq8FF2OINWVr/x+I8nI+cifT9FovCOINQK1WOY0=;
+        b=KfKSbeCDxVSM9nIO/x2ukIHJDdCSh93bgc3aDAM8DUGvXSCYxd+VOWknYPvogriTyz
+         QcbPnL7ZyKloHqjcwGzh1GLKbgxavY68bLHTwnpQkA66XtphFXzCjkice8RxMMMwR+wX
+         6gCTgDAQ7FeMWydxBHA9dnjlK6a0KII3yAz0DEziLiz2kONab4zEAsT0Q+cZEHj7pYrV
+         zHgZbx22tCEsdwceswqY01vZu9qInN2VjkJ8aZOWIEPkHRhEROwczPy65nSmhMC2Dmne
+         qClv29YjO3nVfQ2J89P3Fy7lIF7xEs+6nMAsAfl9svJVrYN8R7WmDPq5KioycNmJ5PDm
+         u29Q==
+X-Gm-Message-State: AOAM531Egsp3qCuWZLGoPZqg+f2vCMsC7C7XJlo0p4Sz9ivrBvcQfU2a
+        RWe0lGZuM9HcB/fSuzS8YhVpauvWNoA=
+X-Google-Smtp-Source: ABdhPJwYbIcHIRFB791hqda3XB3t4ufdqU3AjNWBUsYma7MkiZPBmOMf6wv9pWSF8aRTJVXJx7jZQw==
+X-Received: by 2002:a05:600c:4f8d:: with SMTP id n13mr14677050wmq.43.1640647445458;
+        Mon, 27 Dec 2021 15:24:05 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l25sm16381991wmh.18.2021.12.27.15.24.01
+        by smtp.gmail.com with ESMTPSA id m21sm15671552wrb.2.2021.12.27.15.24.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Dec 2021 15:24:01 -0800 (PST)
-Message-Id: <53bad588bfc0499b3dedf104719bf1e14da94674.1640647437.git.gitgitgadget@gmail.com>
+        Mon, 27 Dec 2021 15:24:05 -0800 (PST)
+Message-Id: <a575f566f2a7a852473516c8f705ee6e8a74fbe7.1640647438.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1088.v2.git.1640647437.gitgitgadget@gmail.com>
 References: <pull.1088.git.1638514909.gitgitgadget@gmail.com>
         <pull.1088.v2.git.1640647437.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Mon, 27 Dec 2021 23:23:49 +0000
-Subject: [PATCH v2 03/11] i18n: turn "options are incompatible" into "cannot
- be used together"
+Date:   Mon, 27 Dec 2021 23:23:56 +0000
+Subject: [PATCH v2 10/11] i18n: ref-filter: factorize "%(foo) atom used
+ without %(bar) atom"
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,599 +74,43 @@ From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- apply.c                           |  2 +-
- archive.c                         |  2 +-
- builtin/add.c                     |  8 ++++----
- builtin/branch.c                  |  2 +-
- builtin/checkout.c                |  4 ++--
- builtin/clone.c                   |  2 +-
- builtin/commit.c                  |  6 +++---
- builtin/describe.c                |  2 +-
- builtin/difftool.c                |  2 +-
- builtin/fast-export.c             |  2 +-
- builtin/index-pack.c              |  2 +-
- builtin/ls-files.c                |  2 +-
- builtin/merge.c                   |  4 ++--
- builtin/pack-objects.c            |  2 +-
- builtin/push.c                    |  8 ++++----
- builtin/rebase.c                  |  6 +++---
- builtin/repack.c                  |  4 ++--
- builtin/reset.c                   |  4 ++--
- builtin/rev-list.c                |  2 +-
- builtin/show-branch.c             |  4 ++--
- builtin/stash.c                   |  4 ++--
- builtin/tag.c                     |  2 +-
- revision.c                        | 22 +++++++++++-----------
- t/t2026-checkout-pathspec-file.sh |  4 ++--
- t/t2072-restore-pathspec-file.sh  |  2 +-
- t/t3704-add-pathspec-file.sh      |  6 +++---
- t/t3909-stash-pathspec-file.sh    |  2 +-
- t/t5606-clone-options.sh          |  2 +-
- t/t7107-reset-pathspec-file.sh    |  2 +-
- t/t7526-commit-pathspec-file.sh   |  4 ++--
- 30 files changed, 60 insertions(+), 60 deletions(-)
+ ref-filter.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index fed195250b6..000f2a9b1b3 100644
---- a/apply.c
-+++ b/apply.c
-@@ -133,7 +133,7 @@ int check_apply_state(struct apply_state *state, int force_apply)
- 	int is_not_gitdir = !startup_info->have_repository;
+diff --git a/ref-filter.c b/ref-filter.c
+index adbcc680812..f7a2f17bfd9 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -841,7 +841,7 @@ static void if_then_else_handler(struct ref_formatting_stack **stack)
+ 	struct if_then_else *if_then_else = (struct if_then_else *)cur->at_end_data;
  
- 	if (state->apply_with_reject && state->threeway)
--		return error(_("--reject and --3way cannot be used together."));
-+		return error(_("options '%s' and '%s' cannot be used together"),"--reject",  "--3way");
- 	if (state->threeway) {
- 		if (is_not_gitdir)
- 			return error(_("--3way outside a repository"));
-diff --git a/archive.c b/archive.c
-index a3bbb091256..e85ba169088 100644
---- a/archive.c
-+++ b/archive.c
-@@ -581,7 +581,7 @@ static int parse_archive_args(int argc, const char **argv,
- 	if (output)
- 		die(_("Unexpected option --output"));
- 	if (is_remote && args->extra_files.nr)
--		die(_("Options --add-file and --remote cannot be used together"));
-+		die(_("options '%s' and '%s' cannot be used together"), "--add-file", "--remote");
+ 	if (!if_then_else->then_atom_seen)
+-		die(_("format: %%(if) atom used without a %%(then) atom"));
++		die(_("format: %%(%s) atom used without a %%(%s) atom"), "if", "then");
  
- 	if (!base)
- 		base = "";
-diff --git a/builtin/add.c b/builtin/add.c
-index a010b2c325f..4b2754345ad 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -507,9 +507,9 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		add_interactive = 1;
- 	if (add_interactive) {
- 		if (show_only)
--			die(_("--dry-run is incompatible with --interactive/--patch"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--dry-run", "--interactive/--patch");
- 		if (pathspec_from_file)
--			die(_("--pathspec-from-file is incompatible with --interactive/--patch"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--interactive/--patch");
- 		exit(interactive_add(argv + 1, prefix, patch_interactive));
- 	}
- 	if (legacy_stash_p) {
-@@ -526,7 +526,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 
- 	if (edit_interactive) {
- 		if (pathspec_from_file)
--			die(_("--pathspec-from-file is incompatible with --edit"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--edit");
- 		return(edit_patch(argc, argv, prefix));
- 	}
- 	argc--;
-@@ -538,7 +538,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		addremove = 0; /* "-u" was given but not "-A" */
- 
- 	if (addremove && take_worktree_changes)
--		die(_("-A and -u are mutually incompatible"));
-+		die(_("options '%s' and '%s' cannot be used together"), "-A", "-u");
- 
- 	if (!show_only && ignore_missing)
- 		die(_("Option --ignore-missing can only be used together with --dry-run"));
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 6c8b0fcc11f..0e93865371c 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -722,7 +722,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	finalize_colopts(&colopts, -1);
- 	if (filter.verbose) {
- 		if (explicitly_enable_column(colopts))
--			die(_("--column and --verbose are incompatible"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--column", "--verbose");
- 		colopts = 0;
- 	}
- 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 79014e1cb6c..2d7bfbd0f1a 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1749,10 +1749,10 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
- 
- 		if (opts->force_detach)
--			die(_("--pathspec-from-file is incompatible with --detach"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file",  "--detach");
- 
- 		if (opts->patch_mode)
--			die(_("--pathspec-from-file is incompatible with --patch"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--patch");
- 
- 		parse_pathspec_file(&opts->pathspec, 0,
- 				    0,
-diff --git a/builtin/clone.c b/builtin/clone.c
-index fb377b27657..13bdbe14b2f 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -903,7 +903,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 			die(_("--bare and --origin %s options are incompatible."),
- 			    option_origin);
- 		if (real_git_dir)
--			die(_("--bare and --separate-git-dir are incompatible."));
-+			die(_("options '%s' and '%s' cannot be used together"), "--bare", "--separate-git-dir");
- 		option_no_checkout = 1;
- 	}
- 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 883c16256c8..5c1aaa42131 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -355,10 +355,10 @@ static const char *prepare_index(const char **argv, const char *prefix,
- 
- 	if (pathspec_from_file) {
- 		if (interactive)
--			die(_("--pathspec-from-file is incompatible with --interactive/--patch"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--interactive/--patch");
- 
- 		if (all)
--			die(_("--pathspec-from-file with -a does not make sense"));
-+			die(_("options '%s' and '%s' cannot be used together"),"--pathspec-from-file", "-a");
- 
- 		if (pathspec.nr)
- 			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
-@@ -1193,7 +1193,7 @@ static void finalize_deferred_config(struct wt_status *s)
- 		    status_format == STATUS_FORMAT_UNSPECIFIED)
- 			status_format = STATUS_FORMAT_PORCELAIN;
- 		else if (status_format == STATUS_FORMAT_LONG)
--			die(_("--long and -z are incompatible"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--long", "-z");
- 	}
- 
- 	if (use_deferred_config && status_format == STATUS_FORMAT_UNSPECIFIED)
-diff --git a/builtin/describe.c b/builtin/describe.c
-index e912ba50d7b..fd5ba1fc604 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -590,7 +590,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 	save_commit_buffer = 0;
- 
- 	if (longformat && abbrev == 0)
--		die(_("--long is incompatible with --abbrev=0"));
-+		die(_("options '%s' and '%s' cannot be used together"), "--long", "--abbrev=0");
- 
- 	if (contains) {
- 		struct string_list_item *item;
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index c2b049aafc9..f5db9bcd7b0 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -730,7 +730,7 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 		setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
- 		setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
- 	} else if (dir_diff)
--		die(_("--dir-diff is incompatible with --no-index"));
-+		die(_("options '%s' and '%s' cannot be used together"), "--dir-diff", "--no-index");
- 
- 	if (use_gui_tool + !!difftool_cmd + !!extcmd > 1)
- 		die(_("options '%s', '%s' and '%s' cannot be used together"), "--gui", "--tool", "--extcmd");
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 8e2caf72819..1f8fe7b3ac1 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -1269,7 +1269,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		printf("feature done\n");
- 
- 	if (import_filename && import_filename_if_exists)
--		die(_("Cannot pass both --import-marks and --import-marks-if-exists"));
-+		die(_("options '%s' and '%s' cannot be used together"), "--import-marks", "--import-marks-if-exists");
- 	if (import_filename)
- 		import_marks(import_filename, 0);
- 	else if (import_filename_if_exists)
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index c23d01de7dc..30ce2ac746d 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1849,7 +1849,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	if (from_stdin && !startup_info->have_repository)
- 		die(_("--stdin requires a git repository"));
- 	if (from_stdin && hash_algo)
--		die(_("--object-format cannot be used with --stdin"));
-+		die(_("options '%s' and '%s' cannot be used together"), "--object-format", "--stdin");
- 	if (!index_name && pack_name)
- 		index_name = derive_filename(pack_name, "pack", "idx", &index_name_buf);
- 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 031fef1bcaa..9c80cdae951 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -767,7 +767,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		 * would not make any sense with this option.
- 		 */
- 		if (show_stage || show_unmerged)
--			die("ls-files --with-tree is incompatible with -s or -u");
-+			die(_("options '%s' and '%s' cannot be used together"), "ls-files --with-tree", "-s/-u");
- 		overlay_tree_on_index(the_repository->index, with_tree, max_prefix);
- 	}
- 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 5f0476b0b76..6db961e9d34 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1396,9 +1396,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 
- 	if (squash) {
- 		if (fast_forward == FF_NO)
--			die(_("You cannot combine --squash with --no-ff."));
-+			die(_("options '%s' and '%s' cannot be used together"), "--squash", "--no-ff.");
- 		if (option_commit > 0)
--			die(_("You cannot combine --squash with --commit."));
-+			die(_("options '%s' and '%s' cannot be used together"), "--squash", "--commit.");
+ 	if (if_then_else->else_atom_seen) {
  		/*
- 		 * squash can now silently disable option_commit - this is not
- 		 * a problem as it is only overriding the default, not a user
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index b36ed828d8d..ba2006f2212 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -4070,7 +4070,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		die(_("--thin cannot be used to build an indexable pack"));
- 
- 	if (keep_unreachable && unpack_unreachable)
--		die(_("--keep-unreachable and --unpack-unreachable are incompatible"));
-+		die(_("options '%s' and '%s' cannot be used together"), "--keep-unreachable", "--unpack-unreachable");
- 	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
- 		unpack_unreachable_expiration = 0;
- 
-diff --git a/builtin/push.c b/builtin/push.c
-index 4b026ce6c6a..359db90321c 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -589,7 +589,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	set_push_cert_flags(&flags, push_cert);
- 
- 	if (deleterefs && (tags || (flags & (TRANSPORT_PUSH_ALL | TRANSPORT_PUSH_MIRROR))))
--		die(_("--delete is incompatible with --all, --mirror and --tags"));
-+		die(_("options '%s' and '%s' cannot be used together"), "--delete", "--all/--mirror/--tags");
- 	if (deleterefs && argc < 2)
- 		die(_("--delete doesn't make sense without any refs"));
- 
-@@ -627,18 +627,18 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 
- 	if (flags & TRANSPORT_PUSH_ALL) {
- 		if (tags)
--			die(_("--all and --tags are incompatible"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--all", "--tags");
- 		if (argc >= 2)
- 			die(_("--all can't be combined with refspecs"));
- 	}
- 	if (flags & TRANSPORT_PUSH_MIRROR) {
- 		if (tags)
--			die(_("--mirror and --tags are incompatible"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--mirror", "--tags");
- 		if (argc >= 2)
- 			die(_("--mirror can't be combined with refspecs"));
- 	}
- 	if ((flags & TRANSPORT_PUSH_ALL) && (flags & TRANSPORT_PUSH_MIRROR))
--		die(_("--all and --mirror are incompatible"));
-+		die(_("options '%s' and '%s' cannot be used together"), "--all", "--mirror");
- 
- 	if (!is_empty_cas(&cas) && (flags & TRANSPORT_PUSH_FORCE_IF_INCLUDES))
- 		cas.use_force_if_includes = 1;
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 34b4744e5f3..ed326b8aecc 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1190,13 +1190,13 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 
- 	if (keep_base) {
- 		if (options.onto_name)
--			die(_("cannot combine '--keep-base' with '--onto'"));
-+			die(_("options '%s' and '%s' cannot be used together"),"--keep-base", "--onto");
- 		if (options.root)
--			die(_("cannot combine '--keep-base' with '--root'"));
-+			die(_("options '%s' and '%s' cannot be used together"),"--keep-base", "--root");
- 	}
- 
- 	if (options.root && options.fork_point > 0)
--		die(_("cannot combine '--root' with '--fork-point'"));
-+		die(_("options '%s' and '%s' cannot be used together"), "--root", "--fork-point");
- 
- 	if (action != ACTION_NONE && !in_progress)
- 		die(_("No rebase in progress?"));
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 9b0be6a6ab3..f13bca4719e 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -681,7 +681,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 
- 	if (keep_unreachable &&
- 	    (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE)))
--		die(_("--keep-unreachable and -A are incompatible"));
-+		die(_("options '%s' and '%s' cannot be used together"), "--keep-unreachable", "-A");
- 
- 	if (write_bitmaps < 0) {
- 		if (!write_midx &&
-@@ -712,7 +712,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 
- 	if (geometric_factor) {
- 		if (pack_everything)
--			die(_("--geometric is incompatible with -A, -a"));
-+			die(_("options '%s' and '%s' cannot be used together"),"--geometric", "-A/-a");
- 		init_pack_geometry(&geometry);
- 		split_pack_geometry(geometry, geometric_factor);
- 	}
-diff --git a/builtin/reset.c b/builtin/reset.c
-index b1ff699b43a..248998fd6fa 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -423,7 +423,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 
- 	if (pathspec_from_file) {
- 		if (patch_mode)
--			die(_("--pathspec-from-file is incompatible with --patch"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--patch");
- 
- 		if (pathspec.nr)
- 			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
-@@ -459,7 +459,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 
- 	if (patch_mode) {
- 		if (reset_type != NONE)
--			die(_("--patch is incompatible with --{hard,mixed,soft}"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--patch", "--{hard,mixed,soft}");
- 		trace2_cmd_mode("patch-interactive");
- 		return run_add_interactive(rev, "--patch=reset", &pathspec);
- 	}
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 36cb909ebaa..de60cbdbc9d 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -538,7 +538,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 		const char *arg = argv[i];
- 		if (skip_prefix(arg, "--missing=", &arg)) {
- 			if (revs.exclude_promisor_objects)
--				die(_("cannot combine --exclude-promisor-objects and --missing"));
-+				die(_("options '%s' and '%s' cannot be used together"),"--exclude-promisor-objects", "--missing");
- 			if (parse_missing_action_value(arg))
- 				break;
- 		}
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index f1e8318592c..e12c5e80e3e 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -707,8 +707,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			 *
- 			 * Also --all and --remotes do not make sense either.
- 			 */
--			die(_("--reflog is incompatible with --all, --remotes, "
--			      "--independent or --merge-base"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--reflog",
-+				"--all/--remotes/--independent/--merge-base");
- 	}
- 
- 	/* If nothing is specified, show all branches by default */
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 18c812bbe03..4d793bd0b52 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1700,10 +1700,10 @@ static int push_stash(int argc, const char **argv, const char *prefix,
- 
- 	if (pathspec_from_file) {
- 		if (patch_mode)
--			die(_("--pathspec-from-file is incompatible with --patch"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--patch");
- 
- 		if (only_staged)
--			die(_("--pathspec-from-file is incompatible with --staged"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--staged");
- 
- 		if (ps.nr)
- 			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 41863c5ab77..6f7cd0e3ef5 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -522,7 +522,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	finalize_colopts(&colopts, -1);
- 	if (cmdmode == 'l' && filter.lines != -1) {
- 		if (explicitly_enable_column(colopts))
--			die(_("--column and -n are incompatible"));
-+			die(_("options '%s' and '%s' cannot be used together"), "--column", "-n");
- 		colopts = 0;
- 	}
- 	sorting = ref_sorting_options(&sorting_options);
-diff --git a/revision.c b/revision.c
-index 5390a479b30..fe445dd5d45 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2300,11 +2300,11 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->left_only = 1;
- 	} else if (!strcmp(arg, "--right-only")) {
- 		if (revs->left_only)
--			die("--right-only is incompatible with --left-only");
-+			die(_("options '%s' and '%s' cannot be used together"), "--right-only", "--left-only");
- 		revs->right_only = 1;
- 	} else if (!strcmp(arg, "--cherry")) {
- 		if (revs->left_only)
--			die("--cherry is incompatible with --left-only");
-+			die(_("options '%s' and '%s' cannot be used together"), "--cherry", "--left-only");
- 		revs->cherry_mark = 1;
- 		revs->right_only = 1;
- 		revs->max_parents = 1;
-@@ -2313,12 +2313,12 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->count = 1;
- 	} else if (!strcmp(arg, "--cherry-mark")) {
- 		if (revs->cherry_pick)
--			die("--cherry-mark is incompatible with --cherry-pick");
-+			die(_("options '%s' and '%s' cannot be used together"), "--cherry-mark", "--cherry-pick");
- 		revs->cherry_mark = 1;
- 		revs->limited = 1; /* needs limit_list() */
- 	} else if (!strcmp(arg, "--cherry-pick")) {
- 		if (revs->cherry_mark)
--			die("--cherry-pick is incompatible with --cherry-mark");
-+			die(_("options '%s' and '%s' cannot be used together"), "--cherry-pick", "--cherry-mark");
- 		revs->cherry_pick = 1;
- 		revs->limited = 1;
- 	} else if (!strcmp(arg, "--objects")) {
-@@ -2524,7 +2524,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		return opts;
- 	}
- 	if (revs->graph && revs->track_linear)
--		die("--show-linear-break and --graph are incompatible");
-+		die(_("options '%s' and '%s' cannot be used together"), "--show-linear-break", "--graph");
- 
- 	return 1;
- }
-@@ -2867,24 +2867,24 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 	compile_grep_patterns(&revs->grep_filter);
- 
- 	if (revs->reverse && revs->reflog_info)
--		die("cannot combine --reverse with --walk-reflogs");
-+		die(_("options '%s' and '%s' cannot be used together"), "--reverse", "--walk-reflogs");
- 	if (revs->reflog_info && revs->limited)
- 		die("cannot combine --walk-reflogs with history-limiting options");
- 	if (revs->rewrite_parents && revs->children.name)
--		die("cannot combine --parents and --children");
-+		die(_("options '%s' and '%s' cannot be used together"), "--parents", "--children");
- 
- 	/*
- 	 * Limitations on the graph functionality
- 	 */
- 	if (revs->reverse && revs->graph)
--		die("cannot combine --reverse with --graph");
-+		die(_("options '%s' and '%s' cannot be used together"), "--reverse", "--graph");
- 
- 	if (revs->reflog_info && revs->graph)
--		die("cannot combine --walk-reflogs with --graph");
-+		die(_("options '%s' and '%s' cannot be used together"), "--walk-reflogs", "--graph");
- 	if (revs->no_walk && revs->graph)
--		die("cannot combine --no-walk with --graph");
-+		die(_("options '%s' and '%s' cannot be used together"), "--no-walk", "--graph");
- 	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
--		die("cannot use --grep-reflog without --walk-reflogs");
-+		die(_("%s requires %s"), "--grep-reflog", "--walk-reflogs");
- 
- 	if (revs->line_level_traverse &&
- 	    (revs->diffopt.output_format & ~(DIFF_FORMAT_PATCH | DIFF_FORMAT_NO_OUTPUT)))
-diff --git a/t/t2026-checkout-pathspec-file.sh b/t/t2026-checkout-pathspec-file.sh
-index 9db11f86dd6..fbe26de2f90 100755
---- a/t/t2026-checkout-pathspec-file.sh
-+++ b/t/t2026-checkout-pathspec-file.sh
-@@ -149,10 +149,10 @@ test_expect_success 'error conditions' '
- 	echo fileA.t >list &&
- 
- 	test_must_fail git checkout --pathspec-from-file=list --detach 2>err &&
--	test_i18ngrep -e "--pathspec-from-file is incompatible with --detach" err &&
-+	test_i18ngrep -e "options .--pathspec-from-file. and .--detach. cannot be used together" err &&
- 
- 	test_must_fail git checkout --pathspec-from-file=list --patch 2>err &&
--	test_i18ngrep -e "--pathspec-from-file is incompatible with --patch" err &&
-+	test_i18ngrep -e "options .--pathspec-from-file. and .--patch. cannot be used together" err &&
- 
- 	test_must_fail git checkout --pathspec-from-file=list -- fileA.t 2>err &&
- 	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-diff --git a/t/t2072-restore-pathspec-file.sh b/t/t2072-restore-pathspec-file.sh
-index b48345bf95f..ad1fc0ed071 100755
---- a/t/t2072-restore-pathspec-file.sh
-+++ b/t/t2072-restore-pathspec-file.sh
-@@ -152,7 +152,7 @@ test_expect_success 'error conditions' '
- 	>empty_list &&
- 
- 	test_must_fail git restore --pathspec-from-file=list --patch --source=HEAD^1 2>err &&
--	test_i18ngrep -e "--pathspec-from-file is incompatible with --patch" err &&
-+	test_i18ngrep -e "options .--pathspec-from-file. and .--patch. cannot be used together" err &&
- 
- 	test_must_fail git restore --pathspec-from-file=list --source=HEAD^1 -- fileA.t 2>err &&
- 	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-diff --git a/t/t3704-add-pathspec-file.sh b/t/t3704-add-pathspec-file.sh
-index 5d5164d1fc6..7e17ae80229 100755
---- a/t/t3704-add-pathspec-file.sh
-+++ b/t/t3704-add-pathspec-file.sh
-@@ -138,13 +138,13 @@ test_expect_success 'error conditions' '
- 	>empty_list &&
- 
- 	test_must_fail git add --pathspec-from-file=list --interactive 2>err &&
--	test_i18ngrep -e "--pathspec-from-file is incompatible with --interactive/--patch" err &&
-+	test_i18ngrep -e "options .--pathspec-from-file. and .--interactive/--patch. cannot be used together" err &&
- 
- 	test_must_fail git add --pathspec-from-file=list --patch 2>err &&
--	test_i18ngrep -e "--pathspec-from-file is incompatible with --interactive/--patch" err &&
-+	test_i18ngrep -e "options .--pathspec-from-file. and .--interactive/--patch. cannot be used together" err &&
- 
- 	test_must_fail git add --pathspec-from-file=list --edit 2>err &&
--	test_i18ngrep -e "--pathspec-from-file is incompatible with --edit" err &&
-+	test_i18ngrep -e "options .--pathspec-from-file. and .--edit. cannot be used together" err &&
- 
- 	test_must_fail git add --pathspec-from-file=list -- fileA.t 2>err &&
- 	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-diff --git a/t/t3909-stash-pathspec-file.sh b/t/t3909-stash-pathspec-file.sh
-index 55e050cfd4d..aae2b25f766 100755
---- a/t/t3909-stash-pathspec-file.sh
-+++ b/t/t3909-stash-pathspec-file.sh
-@@ -88,7 +88,7 @@ test_expect_success 'error conditions' '
- 	echo fileA.t >list &&
- 
- 	test_must_fail git stash push --pathspec-from-file=list --patch 2>err &&
--	test_i18ngrep -e "--pathspec-from-file is incompatible with --patch" err &&
-+	test_i18ngrep -e "options .--pathspec-from-file. and .--patch. cannot be used together" err &&
- 
- 	test_must_fail git stash push --pathspec-from-file=list -- fileA.t 2>err &&
- 	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-index d822153e4d2..3af3577af0b 100755
---- a/t/t5606-clone-options.sh
-+++ b/t/t5606-clone-options.sh
-@@ -54,7 +54,7 @@ test_expect_success 'disallows --bare with --separate-git-dir' '
- 
- 	test_must_fail git clone --bare --separate-git-dir dot-git-destiation parent clone-bare-sgd 2>err &&
- 	test_debug "cat err" &&
--	test_i18ngrep -e "--bare and --separate-git-dir are incompatible" err
-+	test_i18ngrep -e "options .--bare. and .--separate-git-dir. cannot be used together" err
- 
- '
- 
-diff --git a/t/t7107-reset-pathspec-file.sh b/t/t7107-reset-pathspec-file.sh
-index 15ccb14f7e2..b211fbc0a52 100755
---- a/t/t7107-reset-pathspec-file.sh
-+++ b/t/t7107-reset-pathspec-file.sh
-@@ -160,7 +160,7 @@ test_expect_success 'error conditions' '
- 	git rm fileA.t &&
- 
- 	test_must_fail git reset --pathspec-from-file=list --patch 2>err &&
--	test_i18ngrep -e "--pathspec-from-file is incompatible with --patch" err &&
-+	test_i18ngrep -e "options .--pathspec-from-file. and .--patch. cannot be used together" err &&
- 
- 	test_must_fail git reset --pathspec-from-file=list -- fileA.t 2>err &&
- 	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-diff --git a/t/t7526-commit-pathspec-file.sh b/t/t7526-commit-pathspec-file.sh
-index dca62fc48e5..fb5857b2a13 100755
---- a/t/t7526-commit-pathspec-file.sh
-+++ b/t/t7526-commit-pathspec-file.sh
-@@ -141,10 +141,10 @@ test_expect_success 'error conditions' '
- 	>empty_list &&
- 
- 	test_must_fail git commit --pathspec-from-file=list --interactive -m "Commit" 2>err &&
--	test_i18ngrep -e "--pathspec-from-file is incompatible with --interactive/--patch" err &&
-+	test_i18ngrep -e "options .--pathspec-from-file. and .--interactive/--patch. cannot be used together" err &&
- 
- 	test_must_fail git commit --pathspec-from-file=list --patch -m "Commit" 2>err &&
--	test_i18ngrep -e "--pathspec-from-file is incompatible with --interactive/--patch" err &&
-+	test_i18ngrep -e "options .--pathspec-from-file. and .--interactive/--patch. cannot be used together" err &&
- 
- 	test_must_fail git commit --pathspec-from-file=list --all -m "Commit" 2>err &&
- 	test_i18ngrep -e "--pathspec-from-file with -a does not make sense" err &&
+@@ -907,7 +907,7 @@ static int then_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
+ 	if (cur->at_end == if_then_else_handler)
+ 		if_then_else = (struct if_then_else *)cur->at_end_data;
+ 	if (!if_then_else)
+-		return strbuf_addf_ret(err, -1, _("format: %%(then) atom used without an %%(if) atom"));
++		return strbuf_addf_ret(err, -1, _("format: %%(%s) atom used without a %%(%s) atom"), "then", "if");
+ 	if (if_then_else->then_atom_seen)
+ 		return strbuf_addf_ret(err, -1, _("format: %%(then) atom used more than once"));
+ 	if (if_then_else->else_atom_seen)
+@@ -943,9 +943,9 @@ static int else_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
+ 	if (prev->at_end == if_then_else_handler)
+ 		if_then_else = (struct if_then_else *)prev->at_end_data;
+ 	if (!if_then_else)
+-		return strbuf_addf_ret(err, -1, _("format: %%(else) atom used without an %%(if) atom"));
++		return strbuf_addf_ret(err, -1, _("format: %%(%s) atom used without a %%(%s) atom"), "else", "if");
+ 	if (!if_then_else->then_atom_seen)
+-		return strbuf_addf_ret(err, -1, _("format: %%(else) atom used without a %%(then) atom"));
++		return strbuf_addf_ret(err, -1, _("format: %%(%s) atom used without a %%(%s) atom"), "else", "then");
+ 	if (if_then_else->else_atom_seen)
+ 		return strbuf_addf_ret(err, -1, _("format: %%(else) atom used more than once"));
+ 	if_then_else->else_atom_seen = 1;
 -- 
 gitgitgadget
 
