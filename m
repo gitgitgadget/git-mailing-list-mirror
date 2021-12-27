@@ -2,149 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9164AC433EF
-	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 01:17:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD69AC433F5
+	for <git@archiver.kernel.org>; Mon, 27 Dec 2021 01:33:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234917AbhL0BRl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Dec 2021 20:17:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46444 "EHLO
+        id S234932AbhL0Bd0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Dec 2021 20:33:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234895AbhL0BRk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Dec 2021 20:17:40 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 248ECC06173E
-        for <git@vger.kernel.org>; Sun, 26 Dec 2021 17:17:40 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id a9so29431782wrr.8
-        for <git@vger.kernel.org>; Sun, 26 Dec 2021 17:17:40 -0800 (PST)
+        with ESMTP id S233634AbhL0Bd0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Dec 2021 20:33:26 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D56CEC06173E
+        for <git@vger.kernel.org>; Sun, 26 Dec 2021 17:33:25 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id w16so56147813edc.11
+        for <git@vger.kernel.org>; Sun, 26 Dec 2021 17:33:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=KbCO+TAgnflZIl1hIbsbC/UANRBondty+3sfg1d0ZR0=;
-        b=iZuPlE2O8I96e1hNfZqmMua3T6Y+A/jlghf0YeM6AywrYYWSPRTXONBVzQ+2rTEgN8
-         +vk8OfiqfXxiPmDunPpGoeBUH+Vx/0bjCBDm0d8TK+SJhX8PcMzz8LsptIwHeUpXYRLb
-         x8dTmu4xN/Az31lQFov8r1pFD6sOYqUIqtAjxY8lPFI/DSONE9c5a3zZCLtk/QJ2P/eX
-         ypH4VEoSkhHv1FgL5/ICili15WDnuOWR1yLduOOZU76KyE6aO0VEb7Zyg7og3FYrHTHm
-         OzPsG7LLB7EfNpmj+FHeikOholz8zAONMqncxL+DViaaUkfxDeznkkkWaLDr1FG4dXej
-         4+8A==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=fUx+utzhcwklAPGqmhvFKqo7zHqCpwb+ysW7FApM9a0=;
+        b=Muhp3HvMOElXOqlgZPNfNy5XflfsjX3mSpzPhZdObYrSi7jpUPEHDxicZA8WJpFPYM
+         V/cWo7Uv8QV4U5m+7/iqG6ebfbPlNyqbw7TiYFSVpemMun5G+TGjwOLXAzgQMUtPs8UE
+         GsaqGt+lyCGn33BqdmlOsUy5WBa7mY4tTFaoAg5GQIV9zsNtqW8E5QZ6B6FjGMCJfJju
+         ynrbdWU4sTsjISBy2Gp9ACu+WYR8auioFuYkVoIReo8SufVODXZCxDJGzus+soEacgnV
+         6oWwv8C0xRM/K3VEjR8VhO+GS6aKg8+TMAE+eSpJpbfdstmRH0f+KnshFX48nzy/Zmty
+         11yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=KbCO+TAgnflZIl1hIbsbC/UANRBondty+3sfg1d0ZR0=;
-        b=mACq8ciSShzNvXdtfg/HUkOzGabNjQnFetuKURvWIuXloK/2j848zBZu015X10R1fC
-         4HL1tHOYE6MLvIg1BRvN7V6ic05g4KVtgXd15zOkvkWn1c1atf/CN5FsL2sKfo9xsQf4
-         rGRYIJrriTe/sRSripSp7y1AvQwMQmZD8UtLdRWB8DaCWyKkjkm1pXG0U7bep6h7yJp6
-         wm3trk3XlDJdyxf0JUtXt5TpibBoA9blcms55Kjlv0p9twILsDunCHsRn+Bhn9tAJF6U
-         NyxM/0czAs6QYBjryA0r10Rly1zd6f6vvbmdRkG42l/TpRfhmoKDg8fRoyj5QrqHPN6l
-         17bw==
-X-Gm-Message-State: AOAM531UPLsB2mb9+jS/wD2ushnJDH5E3wF7PB05Q2ktka+YZnRMFnjj
-        9TXwFJSBnabPZhN1zxgcACo=
-X-Google-Smtp-Source: ABdhPJwGm50OdxKMN7zIQXDPthWBzhq8p0V8wbyYkC6a/SkliOXJ+/mdezsKd/GA3ygv2OaPJHeJEw==
-X-Received: by 2002:a05:6000:2c2:: with SMTP id o2mr11168189wry.210.1640567858692;
-        Sun, 26 Dec 2021 17:17:38 -0800 (PST)
-Received: from gmail.com (62-47-14-33.adsl.highway.telekom.at. [62.47.14.33])
-        by smtp.gmail.com with ESMTPSA id t11sm13666693wrz.97.2021.12.26.17.17.37
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=fUx+utzhcwklAPGqmhvFKqo7zHqCpwb+ysW7FApM9a0=;
+        b=dMEdONiz2wgj29WUH9mL/W/11WomJy7Em04myXjh7IzZDUeQX8vNew824U3llxRimg
+         Fnhyuuj5N90972oE2TOFhqBdf7DBMvnEA8aDYIEtM3PISzbutPfZqv6YuwV+zrIYDGqw
+         n6uk2Is7zu2qLXoD7v77VydDb5KT+OLW3MuatyXImjuftfkUGcdDXKB8G9kMLm4HeqbT
+         Sv0iawPk/pgHCx48EISZI9g/PAl/55lqE5KXq6cM3obv1xwJ6Q+WvfZZg17plIUestp5
+         23fsauwQ4Z1uzQHFKtD5K/oBHAKX+NNJr/7S1+M8NltkVw/HFgKksowPqNH50kNswubL
+         NCYA==
+X-Gm-Message-State: AOAM530kCy+ntH47S0SjPlmmq8apus6LpRkVFzVbnC8v0iU2v2o51O34
+        CoLcdidCC3j5lFZ3Ago1mapXkNAuf5YQvTXd
+X-Google-Smtp-Source: ABdhPJz5ET0KNncZUpFQkdXhjOnaXA/IQCgbHiM+MWWupHccmj9HNEa89XINSbE36iexADN1rhTslg==
+X-Received: by 2002:a05:6402:4c4:: with SMTP id n4mr14484185edw.30.1640568804158;
+        Sun, 26 Dec 2021 17:33:24 -0800 (PST)
+Received: from gmgdl (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
+        by smtp.gmail.com with ESMTPSA id qa11sm298019ejc.189.2021.12.26.17.33.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Dec 2021 17:17:38 -0800 (PST)
-Date:   Mon, 27 Dec 2021 02:17:36 +0100
-From:   Johannes Altmanninger <aclopte@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        Sun, 26 Dec 2021 17:33:23 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1n1et9-000LSi-0x;
+        Mon, 27 Dec 2021 02:33:23 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Altmanninger <aclopte@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v7 7/7] various *.c: use isatty(0|2), not
- isatty(STDIN_FILENO|STDERR_FILENO)
-Message-ID: <20211227011736.jea5qvn3mffusxnc@gmail.com>
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v7 3/7] progress.c tests: make start/stop commands on stdin
+Date:   Mon, 27 Dec 2021 02:31:59 +0100
 References: <cover-v7-0.7-00000000000-20211217T041945Z-avarab@gmail.com>
- <patch-v7-7.7-0670d1aa5f2-20211217T041945Z-avarab@gmail.com>
+ <patch-v7-3.7-d685c248686-20211217T041945Z-avarab@gmail.com>
+ <20211227011013.3ngeh57llxnknphf@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <20211227011013.3ngeh57llxnknphf@gmail.com>
+Message-ID: <211227.864k6ug7bx.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v7-7.7-0670d1aa5f2-20211217T041945Z-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-nit: I'd maybe drop the "various *.c: " subject prefix. It's already
-implied that the change is across the entire tree.
 
-On Fri, Dec 17, 2021 at 05:25:02AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> We have over 50 uses of "isatty(1)" and "isatty(2)" in the codebase,
-> and around 10 "isatty(0)", but these used the
+On Mon, Dec 27 2021, Johannes Altmanninger wrote:
 
-nit: ambiguous pronouns like "these" here can trip up the reader for a
-second. Maybe "three places" is clearer.
+[Will reply to the rest later, thanks for the review...]
 
-> {STDIN_FILENO,STD{OUT,ERR}_FILENO} macros in "stdlib.h" to refer to
-> them.
-> 
-> Let's change these for consistency, and because another commit that
-> would like to be based on top of this one[1] has a recipe to change
-> all of these for ad-hoc testing, not needing to match these with that
-> ad-hoc regex will make things easier to explain.
+> On Fri, Dec 17, 2021 at 05:24:58AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+> [...]
+>>  int cmd__progress(int argc, const char **argv)
+>>  {
+>> -	int total =3D 0;
+>> -	const char *title;
+>> +	const char *const default_title =3D "Working hard";
+>> +	struct string_list titles =3D STRING_LIST_INIT_DUP;
+>>  	struct strbuf line =3D STRBUF_INIT;
+>> -	struct progress *progress;
+>> +	struct progress *progress =3D NULL;
+>>=20=20
+>>  	const char *usage[] =3D {
+>> -		"test-tool progress [--total=3D<n>] <progress-title>",
+>> +		"test-tool progress <stdin",
+>>  		NULL
+>
+> (unrelated: I'd always add a trailing comma if I can, even though in this=
+ case it won't ever matter)
 
-this sentence is quite long, and it also doesn't help that "these" refers
-to something other than it did in the previous sentence.
-Here's my attempt:
+FWIW this bit is intentional coding style in git.git, see Junio's
+https://lore.kernel.org/git/xmqqk0g5656r.fsf@gitster.g/:
+=20=20=20=20
+    It is a good idea to leave a comma even after the last element,
+    _unless_ there is a strong reason why the element that currently is
+    at the last MUST stay to be last when new elements are added[...]
 
-	Let's change these for consistency.  This makes it easier to change all
-	calls to isatty() at a whim, which is useful to test some scenarios[1].
-
-> Only one of these is
-> related to the "struct progress" code which it discusses, but let's
-> change all of these while we're at it.
-> 
-> 1. https://lore.kernel.org/git/patch-v6-8.8-bff919994b5-20211102T122507Z-avarab@gmail.com/
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  builtin/bisect--helper.c | 2 +-
->  builtin/bundle.c         | 2 +-
->  compat/mingw.c           | 2 +-
->  3 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 28a2e6a5750..21360a4e70b 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -830,7 +830,7 @@ static int bisect_autostart(struct bisect_terms *terms)
->  	fprintf_ln(stderr, _("You need to start by \"git bisect "
->  			  "start\"\n"));
->  
-> -	if (!isatty(STDIN_FILENO))
-> +	if (!isatty(0))
->  		return -1;
->  
->  	/*
-> diff --git a/builtin/bundle.c b/builtin/bundle.c
-> index 5a85d7cd0fe..df69c651753 100644
-> --- a/builtin/bundle.c
-> +++ b/builtin/bundle.c
-> @@ -56,7 +56,7 @@ static int parse_options_cmd_bundle(int argc,
->  
->  static int cmd_bundle_create(int argc, const char **argv, const char *prefix) {
->  	int all_progress_implied = 0;
-> -	int progress = isatty(STDERR_FILENO);
-> +	int progress = isatty(2);
->  	struct strvec pack_opts;
->  	int version = -1;
->  	int ret;
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index e14f2d5f77c..7c55d0f0414 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -2376,7 +2376,7 @@ int mingw_raise(int sig)
->  	switch (sig) {
->  	case SIGALRM:
->  		if (timer_fn == SIG_DFL) {
-> -			if (isatty(STDERR_FILENO))
-> +			if (isatty(2))
->  				fputs("Alarm clock\n", stderr);
->  			exit(128 + SIGALRM);
->  		} else if (timer_fn != SIG_IGN)
-> -- 
-> 2.34.1.1119.g7a3fc8778ee
-> 
+Well, in that case he's talking about enums, but the same applies even
+more to these sorts of lists here the NULL must remain the last element.
+=20=20=20=20
