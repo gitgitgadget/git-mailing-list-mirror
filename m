@@ -2,116 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 155A2C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 23:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE36BC433F5
+	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 00:04:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231773AbhL1Xxe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 18:53:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40548 "EHLO
+        id S237874AbhL2AEP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 19:04:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231682AbhL1Xxe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 18:53:34 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D41D9C061574
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 15:53:33 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id z29so79573383edl.7
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 15:53:33 -0800 (PST)
+        with ESMTP id S230170AbhL2AEM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 19:04:12 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99A20C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 16:04:11 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id j21so79569673edt.9
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 16:04:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=QXGb0UugxQOz1yU+J1BEOqVdOWY14Z+IqOffjc4NWjQ=;
-        b=pnnlcESDfWW+T2it+l8RGXotgb9ej7hDFG/n2upNtHJy1Y30drW9v4kexPROEqrtP9
-         JHWgK4as6Rj3yNxdLv3X4WyDh6TU/FQ9/sb43CKfKJYa34Fyg0ApacqxoUVLyHId+5To
-         cZdCsA8d15IT/RLdFPfNHmJlnu0DkN3k02bqkIULlEl2ctN2Ka52/cvdHvbiI5oAbIYD
-         RXfZPGk7ilam2r+4XdZbcB3hL3MQmQ2eoWGIm15+kmW1z1vhWKfxlmPyqI7pxtfjaTDn
-         QULKEjsDJQ6xzlMqB6Ukif6+91ql6dpnmCIDUiONUXJi2PzKOrrBIGzU9JVaDv8Gbn9j
-         eX/A==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=H2e7ZlPz3ViEdeeU+KpD/nOreCDViRsOyXVoDBOA1cM=;
+        b=ayGoj3k8oHXInXBJ3ROhcjFXkpIZCvWLd+cNnXCCy73yOtoH+Dyg3z1Ukeb6gfIFXc
+         Gz4B5203EiUINW2lwJwxeuoXi8jNq0TXhh75IhKA0sIfZKNJT7es5PXEFiSG4MLUMtzY
+         I/DR2bMhdYhVTGXQsSoA6WA3g40SVlsjzrqT3bImG+kNJX+Trelp5gUObK7WePZEgB1z
+         TbCS0e0WOHnMSPQXD5oM26DVyfpbY3xrHmSFBCJ2EGfgcqusZx8EUhsQOvdnA597nH8r
+         gPTrUlF2ao7vfHzBkp1Hlz468E8qAa1J52Sw6EMloTx43nMNbLJ8OcDy5k+OKhpf76Lp
+         DF7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=QXGb0UugxQOz1yU+J1BEOqVdOWY14Z+IqOffjc4NWjQ=;
-        b=AQStZxU9YkVfybvsjmAmgD2BTjOdsYSi05VLCppSZx3gZcd9E5C+Vu8egOI6M4Nft2
-         DtV/VhfPEd4/cDPs8hxdlFCLZX4A4bkNkZGo7QsQiff6s6Ioh5mPIsNqxNt2N/r0s62h
-         8r6cikQpk2v89eenrAbMChvlUO2Ym230gmlrxNeOPFE4KYVnqesBEh7TEp9L1bF2QoVb
-         T89rL8+s0PwpY9l3PkjXHLEADvLjCw72ANHdViBT2EqSycVbgCpL5iTOzVyCiM4fc6d+
-         MK3H0EkA6VD9bMvTnTCqH1eiTYk8/4rmzqeAmq6Q3iFXOUS8ZZL8TfTJoVm/DtVYZbcS
-         Rs1w==
-X-Gm-Message-State: AOAM532Q9qEJtVKh/OTyeJ86kWi7UuD8lJj2q8EIcyHNFvM5zD7n/jaA
-        3VOqJJ84sYpAoksx83VaW1+fWshcgD5CxtYK
-X-Google-Smtp-Source: ABdhPJzEb2dZkYMUe7PyHkygROYpu6UrUkDkkXP9q9KzHW3B9eJIXJsUvX7kYdcVpQVGx84Je9yFng==
-X-Received: by 2002:a17:907:d8f:: with SMTP id go15mr20374387ejc.501.1640735612318;
-        Tue, 28 Dec 2021 15:53:32 -0800 (PST)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=H2e7ZlPz3ViEdeeU+KpD/nOreCDViRsOyXVoDBOA1cM=;
+        b=bRm2cc4Uyw+JItsan/odrk86FVweNbgSDGW2xEygOkJHoJsJnY3IXSzQ3FSKhR4pJ8
+         L/jp80jFZ0AgjUyirfqbvMGv6s5mVNt7f6d4rojbrrnI43jLHj5ZesMOv6JISCZCUwE5
+         o5GFAWXe6hGqvil6lLbvbykpne4VahpqwDtr20tnggFs76FiRopXtsH+Yc0QyQRZEaFD
+         t6k5d9XSRM7Y5yET+LpTI0uC+urqINYgQVqRdg1hJf5/RU9IZho0LnwKD5IXwXIObKvI
+         Ce7ybUDjYFu27l4s8ggSiqDj0EKK5EGj9hMnjb9gOSZMAjIFw8Z2oPVwbzH4dGZdZmxA
+         r4Zg==
+X-Gm-Message-State: AOAM533a/klKJlRvo0RuUij99cR8SIafOoFKEokoX9FHAIKOjYToc10L
+        B0C0ZAbUrl4iN5n6NrxpVpY=
+X-Google-Smtp-Source: ABdhPJyxuvZiFwyej+IDm7XIWgPvfQsLxhAljGrhSrVmwUQ3MyDqoZ0uN37ePqCGJKRGbhXPIQP5Zw==
+X-Received: by 2002:a50:d492:: with SMTP id s18mr23370391edi.145.1640736250090;
+        Tue, 28 Dec 2021 16:04:10 -0800 (PST)
 Received: from gmgdl (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id hc14sm6389633ejc.42.2021.12.28.15.53.31
+        by smtp.gmail.com with ESMTPSA id sg12sm6447690ejc.46.2021.12.28.16.04.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Dec 2021 15:53:31 -0800 (PST)
+        Tue, 28 Dec 2021 16:04:09 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1n2MHa-000G02-6h;
-        Wed, 29 Dec 2021 00:53:30 +0100
+        id 1n2MRs-000GFw-1Y;
+        Wed, 29 Dec 2021 01:04:08 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH 19/21] usage API: use C99 macros for
- {usage,usagef,die,error,warning,die}*()
-Date:   Wed, 29 Dec 2021 00:48:48 +0100
-References: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
-        <RFC-patch-19.21-0bbca8cca8e-20211115T220831Z-avarab@gmail.com>
-        <66b25f23-7349-1540-76b8-c9f0a64660ac@jeffhostetler.com>
-        <211228.861r1xk40d.gmgdl@evledraar.gmail.com>
-        <9952005b-9174-7578-7718-e9576b27b4ce@jeffhostetler.com>
-        <CABPp-BHxVTjLFZkM5MBCwymFTzBbyNaoj=hOPYJVV4hBv49eXA@mail.gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Altmanninger <aclopte@gmail.com>
+Subject: Re: [PATCH v8 7/7] *.c: use isatty(0|2), not
+ isatty(STDIN_FILENO|STDERR_FILENO)
+Date:   Wed, 29 Dec 2021 00:56:18 +0100
+References: <cover-v6-0.6-00000000000-20211228T143223Z-avarab@gmail.com>
+ <cover-v8-0.7-00000000000-20211228T150728Z-avarab@gmail.com>
+ <patch-v8-7.7-060483fb5ce-20211228T150728Z-avarab@gmail.com>
+ <d0bdc7e5-9e34-49d8-33cf-dd96a807617e@web.de>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <CABPp-BHxVTjLFZkM5MBCwymFTzBbyNaoj=hOPYJVV4hBv49eXA@mail.gmail.com>
-Message-ID: <211229.864k6si8w5.gmgdl@evledraar.gmail.com>
+In-reply-to: <d0bdc7e5-9e34-49d8-33cf-dd96a807617e@web.de>
+Message-ID: <211229.86zgokgttz.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Dec 28 2021, Elijah Newren wrote:
+On Tue, Dec 28 2021, Ren=C3=A9 Scharfe wrote:
 
-> On Tue, Dec 28, 2021 at 8:32 AM Jeff Hostetler <git@jeffhostetler.com> wrote:
->> >      If you'd like a semi-stable grouping across similar git versions the
->> >      "file/func" pair should be Good Enough for most purposes. Some functions
->> >      might emit multiple errors, but you'd probably want to group them as
->> >      similar enough anyway.
+> Am 28.12.21 um 16:19 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>> We have over 50 uses of "isatty(1)" and "isatty(2)" in the codebase,
+>> and around 10 "isatty(0)", but three callers used the
+>> {STDIN_FILENO,STD{OUT,ERR}_FILENO} macros in "stdlib.h" to refer to
+>> them.
+>>
+>> Let's change these for consistency.  This makes it easier to change
+>> all calls to isatty() at a whim, which is useful to test some
+>> scenarios[1].
 >
-> Why would we want to group different errors?  Isn't the point to
-> figure out which error is being triggered the most (or which errors)?
-> This sounds like it'd leave us with more investigation work to do.
-
-Ideally you wouldn't, i.e. the goal here is to get some approximation of
-a unique ID for an error across versions.
-
-But unless we're going to assign something like MySQL's error ID's
-manually any automatic method we pick is only going to be an
-approximation.
-
-So the question is whether we can have something that's good enough. The
-current "fmt" feature is fragmented by i18n. That's fixable (at the cost
-of quite a lot of lines changed), but would something even more succinct
-be good enough?
-
-Which is why I suggested file/function, i.e. it'll have some
-duplication, but for an error dashboard using trace2 data I'd think it's
-probably good enough.
-
-But maybe not. I just wanted to ask about it as a quick question...
-
->> > But I realize that those things don't give you exactly the same things
->> > that "fmt" does, but maybe they're good enough (or even better?), or
->> > not.
+> Hmm.  Matching e.g. "(0|STDIN_FILENO)" instead of "0" is harder, of
+> course, but not much.
 >
-> I think "fmt" is strictly better, personally.
+> Shouldn't we use these macros more to reduce the number of magic values?
+> The code is slightly easier to read before this patch because it doesn't
+> require the reader to know the meaning of these numbers.
+>
+> Reducing the constants to their numerical values is easy to automate in
+> general; the opposite direction is harder.  Coccinelle can help us take
+> such a step with a semantic patch like this:
+>
+> 	@@
+> 	@@
+> 	  isatty(
+> 	(
+> 	- 0
+> 	+ STDIN_FILENO
+> 	|
+> 	- 1
+> 	+ STDOUT_FILENO
+> 	|
+> 	- 2
+> 	+ STDERR_FILENO
+> 	)
+> 	  )
 
+We don't bother with EXIT_SUCCESS and EXIT_FAILURE, and for those (VMS)
+there is a reason to not use the constants, as EXIT_FAILURE may differ.
+
+But for these I personally think these symbolic names are rather
+useless.
+
+They never differ, and when working on POSIX systems you're going to
+need to know that 1 is stdout, 2 is stderr. You're also going to have to
+maintain shellscripts that use ">&2" or whatever. Those aren't using a
+hypothetical ">&$STDERR_FILENO".
+
+But in any case, this change isn't even trying to make the argument that
+we *should* use one over the other, just that the constants are used
+much more than *_FILENO, so changing them to make a subsequent (now
+ejected out of this series) change easier to explain is worth it.
+
+So I'd think we can just take this small change, and argue separately
+whether it's worth it to apply that coccinelle rule.
