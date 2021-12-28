@@ -2,77 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB133C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 22:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C0E8C433F5
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 22:05:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231705AbhL1WCe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 17:02:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43846 "EHLO
+        id S231817AbhL1WFs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 17:05:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231521AbhL1WCd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 17:02:33 -0500
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 172D8C061574
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 14:02:33 -0800 (PST)
-Received: by mail-yb1-xb29.google.com with SMTP id o185so30487070ybo.12
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 14:02:33 -0800 (PST)
+        with ESMTP id S230144AbhL1WFs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 17:05:48 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B24FFC061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 14:05:47 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id g132so12451987wmg.2
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 14:05:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zbBvb6Xw13mL2XSzkz4tW/KsU7zTQTrUckhVb7Os9uA=;
-        b=IrzVEP98vif+TzYyWYVOOM43ibglAoxD+QN1gUZ1tVHSvqj1WHC2K5BPWDmrjXOWwm
-         KVMBSodsrNpoWZR5joRQwV1UZbjFfW8EMNTywX6Fo/eFjS/6CyOUefH4itKKiLyrr2t5
-         CV2VpFXPrhuq2s4DmR7xjfxYQGoK0NZT/Jv4rkTcMW0RNvX6W7JBSETO9KSbSqqcn3KW
-         K2YaKlPEg/GOb/DiE1eZABru/jIKCV9DsI+MJWL01kFhVZ1fm1Q1SqjSPaltPsXNbihY
-         v+3hFjy2OjOaVpJ3V12hErx5ozmTSRkoQ95/Cr7lb59CgA5uHQkDRS7StRxoJdxiBbUg
-         p0Bg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=WGsFfa/i5nG/CIeZU3RiQ8pDsetnX3YNFxhGnDgHXkA=;
+        b=bffI3G4HljkAM/qp5GyzV9G/ltcdZ/JPggMTQHvyaA4cKO6pxScLlZ3U9Cbti2QjU0
+         ttYbz0GP+kB7BnhhbyqJWEt6m1j3Hy6TRqZ84JgfO8rc0yDXuR2Tw0iOVkNwDdhif0g5
+         9vVjPgJxHZFC8hn7dgQxlKX0ZDxGnEKIqR1dZrOegGT4RY1OO2ohUf+5WfzqhEKDOgWH
+         WI76KrJJDOeHwp6qSA9VnUI9+z5X07oNKRJX5RH3KhxGWt2Xi0qcoGsETlG28fYXBBLF
+         /LjR6gWugP4Svm6c4hlnx3aPyXcvlMzgJSLDZ07g30fS9CM+oimq5fSgcM+r7368YlBV
+         FCBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zbBvb6Xw13mL2XSzkz4tW/KsU7zTQTrUckhVb7Os9uA=;
-        b=HEzSCei6UGUWvYpYw8Iqba+lVOBlDJpVToE+9rgGuwvZ0ivlYDRkpJ3tQAxInp9uoa
-         R1BMf6SA/pFMnQ0XjnFkgfA/jxwKO9m1iCcfMWSKRIehdrl13beU10HHstRree6ZM4LM
-         ciYzOyUT3vgcHPdBGUiN056PaX5I3r80fTPsyfgOxROcbZbmm16rV63Tcv7Sc93aGoqc
-         KC+obNBsHLdDosZcD+1TGQ1v5E5nqYi+EycjMZyd1mMgXa4XJ3muoEtsYSlONfS351On
-         fApDxO/McymjYCoMCcYdS7PixURPWSeZb/q7Q8JM7pke3Bv7XiUUrqZUCkK0NQhg55qr
-         QJLg==
-X-Gm-Message-State: AOAM531fIJSYODl9B72goFy1EZzuPl0LZAjtRh2Uq2uYe+OBOrWfJlZ/
-        IfWOQ66iuW3KhyZ2yqmBEKF1F91HqFqpfZzwJAnUm2IRfUQ=
-X-Google-Smtp-Source: ABdhPJwApk9IWlyDQlsGP7/nLS/N75LngvKBiMyIs7NGQ9KW5TiK5kcHEy7lgaTOujc8Nxso2NIu3gr/n9JfwyB2rnw=
-X-Received: by 2002:a25:348d:: with SMTP id b135mr22144626yba.427.1640728952122;
- Tue, 28 Dec 2021 14:02:32 -0800 (PST)
-MIME-Version: 1.0
-References: <CAP8UFD0ffHduEjAjEVrdstWMeLTqi-+4Rqs8fbUeULMpKYJ8Gw@mail.gmail.com>
-In-Reply-To: <CAP8UFD0ffHduEjAjEVrdstWMeLTqi-+4Rqs8fbUeULMpKYJ8Gw@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 28 Dec 2021 23:02:20 +0100
-Message-ID: <CAP8UFD1W+y6SYHA_EUEwAo3cWE=DmJLGxG54McW9cNtSr3AUAQ@mail.gmail.com>
-Subject: Re: Draft of Git Rev News edition 82
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=WGsFfa/i5nG/CIeZU3RiQ8pDsetnX3YNFxhGnDgHXkA=;
+        b=Z46ibmpbB313BEDXThRqYyfEcR9+sBTZKMHpmrwBLGbPgeeO16KG5T+wrfhnIr+JIy
+         grmszPeHpyW6zUglkDh7c3WOL+NMHxgt6tm3300joQU9KeIv6nxwvAEg1eSM5Po0nDfI
+         s5v6hfiYNkb4DnPoVn37nAZwPb4YLiWaALQEJsZnli6bhowXJDqsMxrlq0b6YfQmpkLp
+         CVrxEDNjA7/JbvWUDG5vZYhZkJ5fOQNUYA2AHLtlzwBF9Y+2YW3r1Z5RhWmf597dUr+P
+         pj2JOTFzK9zXVDgiLQX83TiA6lQ0YkwiRFde0AHnFPz0L3AEwNnef0D6OzQyAnWEnMkb
+         J4/w==
+X-Gm-Message-State: AOAM533nPwJtbM90tuHvSwpU1OL4s90JfMl8WNgNSvSqbOSa8kw8yfCh
+        nwx4UQSTvEyvOszQIKzQcMg=
+X-Google-Smtp-Source: ABdhPJwdPVmOTYD/OwE8BnhE7v+IQLmQRbHZvWe35eGFmf06U8ElFTHD1ASeSDhRGNH3zmlVuiGi6g==
+X-Received: by 2002:a05:600c:4f13:: with SMTP id l19mr19353445wmq.152.1640729146278;
+        Tue, 28 Dec 2021 14:05:46 -0800 (PST)
+Received: from gmail.com (62-47-8-46.adsl.highway.telekom.at. [62.47.8.46])
+        by smtp.gmail.com with ESMTPSA id u3sm24740433wrs.0.2021.12.28.14.05.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Dec 2021 14:05:45 -0800 (PST)
+Date:   Tue, 28 Dec 2021 23:05:43 +0100
+From:   Johannes Altmanninger <aclopte@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Baruch Burstein <bmburstein@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Neeraj Singh <nksingh85@gmail.com>
+Subject: Re: [PATCH v2 3/8] ll-merge: make callers responsible for showing
+ warnings
+Message-ID: <20211228220543.wwoaitcm4luihgvu@gmail.com>
+References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
+ <pull.1103.v2.git.1640419159.gitgitgadget@gmail.com>
+ <d5566f5d13605f30be6fd221fc624479cbbd0392.1640419159.git.gitgitgadget@gmail.com>
+ <20211228105614.qzmm3hglabtlcsx4@gmail.com>
+ <CABPp-BFONtGb5TYUAe2jazuRgKWMsvSJTxSnxrEPM9OYq68Wow@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABPp-BFONtGb5TYUAe2jazuRgKWMsvSJTxSnxrEPM9OYq68Wow@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 28, 2021 at 9:21 PM Christian Couder
-<christian.couder@gmail.com> wrote:
+On Tue, Dec 28, 2021 at 11:37:01AM -0800, Elijah Newren wrote:
+> On Tue, Dec 28, 2021 at 2:56 AM Johannes Altmanninger <aclopte@gmail.com> wrote:
+> >
+> > On Sat, Dec 25, 2021 at 07:59:14AM +0000, Elijah Newren via GitGitGadget wrote:
+> >
+> > So there are 8 callers in total; but only 7 print the warning (including the
+> > one in merge-ort which will change in the next commit). I think you missed
+> > the call at rerere.c:984 because we ignore its return value.
+> 
+> Doh, I missed one!  Though, as pointed out by Junio, rerere won't
+> operate on binary files and thus can't hit that codepath.  Still, I
+> should either have it in both rerere codepaths or neither.
 
-> Jakub, Markus, Kaartic and I plan to publish this edition on Monday
-> December 30th in the evening.
+"neither" sounds good
 
-I mean Thursday December 30th in the evening.
+> > > +             if (ret == LL_MERGE_BINARY_CONFLICT)
+> > > +                     warning("Cannot merge binary files: %s (%s vs. %s)",
+> > > +                             path, "", "");
+> >
+> > With the next patch, 7/8 callers of ll_merge (almost) immediately print
+> > that warning.  Looks fine as is, but does it make sense to introduce a helper
+> > function for the common case, or add a flag to ll_merge_options?
+> 
+> I started by adding a flag, and Peff suggested not doing so (because
+> the printing doesn't belong in a "low-level" merge, as ll_merge stands
+> for[1]), but instead making the callers responsible.  We could add a
+> helper function, outside of ll-merge.[ch], but I'm not sure where to
+> put it or what to call it and I'm leaning towards just leaving things
+> as-is (well, other than fixing up the important issues you brought up
+> before this).
+
+Sure, leaving this sounds fine.  If we can formulate good reasons against
+the discarded approaches we should add them to the commit message.  I guess
+in this case the small number of call sites is a good indication that it's
+probably not worth it.
