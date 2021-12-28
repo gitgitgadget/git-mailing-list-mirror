@@ -2,225 +2,222 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4FDEC433FE
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 21:32:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 325D1C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 21:48:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230340AbhL1Vcn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 16:32:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37188 "EHLO
+        id S230449AbhL1Vsb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 16:48:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230156AbhL1Vcb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 16:32:31 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34966C061401
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 13:32:31 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id c66so12384574wma.5
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 13:32:31 -0800 (PST)
+        with ESMTP id S230246AbhL1Vsb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 16:48:31 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81B4EC061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 13:48:30 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id z9so8902279edm.10
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 13:48:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=znDrSuS0qJDmMNdY4aat1qMorpeFr3VuLb0gkrLPcZ4=;
-        b=d24Z6f87AtfrHdFYktN6LYh71AyNtkCsndwe6vGbHEFc4q0oT9aH04e6cotzaofds3
-         3KZGPQSRVu76X+plhzQnXgNpUKiXWV4ieUc79yhNtC6ftzHna35Mn8zhKxIBHJMT69rd
-         Pcj/Vqes8ZHedIJh86BOa/M4DmPDHefh4IbIOvPb13B5SU2hs6gb/gSdMfHbpiGOVvuA
-         EkNWmsoOiKOcSjKIQjZNKdBS3Ur4gjycNwBbFuPiKm9cmdp0SdG7xsM1Do/yJLtopHiK
-         DSjqmeR/Lukz9gN2/GkSsqegwJ9BtmdJuXbE68aTX9cUd7PruTmxzKWxKg3DylCpeJ/z
-         eODA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jfhoJySHcn0bPWBeWcZZd5bw04piRFXNDhagrerPjNM=;
+        b=EkuBGfxpECnB0AnLxYXMsifsnm8R9FBgFUcC5h9+9m9IeVAmZah1DNKDmA9hac6ng8
+         6Ca8oh2QaK3SuIVcmc8CR8FwBAxTnk3w56l/5Q45k8P2oyjKc4q6KhOYhpVZQiDHdkmT
+         flIZEvSC6v9OLySyW0/eiOS1osjkwXybUNOmzRaYvfFJ269sSG4m2rUbM7p6ll95t5VG
+         sAjgrEHZiSEse57VgnHEGbjc0puiyA1U6W6wrQ9C/BzPI5UcVP5mbEweedpd476w0Ulr
+         4GAbeTpUFKWEAYXIfPQaFQD7YuZ7HWoGpcEgg1dGjBwJA/n4iXUZ/hHkxzGOhow+qfie
+         HAwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=znDrSuS0qJDmMNdY4aat1qMorpeFr3VuLb0gkrLPcZ4=;
-        b=tWs6rXyTLG9wAdvhw/Sw4NcTfnPSltxS6nZv+ixbcpWCNIzOtrxFakwThEp6uBK33r
-         KxhqReZCxI/rqHTKnzFrIK9qFymcJARsUBFc6XJz/Xuxd2afnOumV/tz4/bRxsKxymlJ
-         9V758Npef9GEsol/luDVbF0pmN70u4VcotsVqJ8GOX00f5jqA8poga0B3e56AFonO8ev
-         D8wjjXhglok9RCuQY/oVcSoV+buaFRq2geL/cVItSxCrUV4sCoj2Yr5IcvhtX+xmUtjp
-         /F5dFBoZlUTEUZJQdLkt8RODeMBDykqyrBxOQE3XZWUserD8LPIQJvWYzUIAckoPqIAE
-         aOog==
-X-Gm-Message-State: AOAM5322LEGy8tyusFAzrOqjbnb32trwZcq5GOb14WRoaZkHKpUzvhlX
-        /KPf/NOGmo/hsS0vBPCrsjFgHXbDOGc=
-X-Google-Smtp-Source: ABdhPJwjefKCd55vkrmZWZ5EP7JyNXfufUGdRlOziNNitUIg1wSXFv4mKXl5cKRqaFzGG3qsSVS8eg==
-X-Received: by 2002:a7b:ca57:: with SMTP id m23mr19328331wml.0.1640727149575;
-        Tue, 28 Dec 2021 13:32:29 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k10sm34998wrz.113.2021.12.28.13.32.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Dec 2021 13:32:29 -0800 (PST)
-Message-Id: <fcece09546cbdb5f1bcd0d0c5aaa3a54e9d3b852.1640727143.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1101.v3.git.1640727143.gitgitgadget@gmail.com>
-References: <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com>
-        <pull.1101.v3.git.1640727143.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Dec 2021 21:32:23 +0000
-Subject: [PATCH v3 6/6] worktree: copy sparse-checkout patterns and config on
- add
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jfhoJySHcn0bPWBeWcZZd5bw04piRFXNDhagrerPjNM=;
+        b=d0RtfvoG6i4MwtoUBZ1I8OzFc+e6aScIzXBEY7AGvZ5uuTsjnsZe0r3UnH9x9HIuNT
+         ZEsb2l8M6uxGsBGjFopseaiX6Hvcrx3qPzQdBCbPdBcGH/UfItq4PdsnYRZxnk74yPoz
+         Ix9QuTakJg9apzOJOO8hapzJRigMnB/1ArDMYotyzEYoPZNSez87Ns3gMSV3lKHMplOS
+         QJMExbH/Ws8ko6ybudVFtRQJIZarVMunsDOekqgflKWpuo88qPExASDgurkKzbZrg0vd
+         0AM8tkH0gNDl9EXNZD7ksgF5spJc02oxvn9snm83WBYbvOBqkJFqZcHCqncWg3rqsWEy
+         MJFQ==
+X-Gm-Message-State: AOAM533/ZTSn8NeAR+eFoQ6ex0sTwBDSBOKejaGQxWVcUOevlYC0F7sv
+        M35beTcGgO4RdK/yPaGHbyXDf7HdO9GFqnaWTcBat70Vm37P5g==
+X-Google-Smtp-Source: ABdhPJwhcz3k4oPBOsZoGBYKPckIvWFABz1hvrKKtdUQcjwf+dtrR1txs1DIxeaTROHZCLJm6Tt3cDOYn2U715r75lQ=
+X-Received: by 2002:a50:da48:: with SMTP id a8mr21968348edk.146.1640728108871;
+ Tue, 28 Dec 2021 13:48:28 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, sunshine@sunshineco.com, allred.sean@gmail.com,
-        gitster@pobox.com, Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
+ <pull.1103.v2.git.1640419159.gitgitgadget@gmail.com> <887e46435c0561e86f1858682fe53e9de926b69c.1640419160.git.gitgitgadget@gmail.com>
+ <20211228105642.ajmr2kqjm5yikneu@gmail.com>
+In-Reply-To: <20211228105642.ajmr2kqjm5yikneu@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 28 Dec 2021 13:48:17 -0800
+Message-ID: <CABPp-BGbY-Kvsa_W7J0rcUBWuNOyVdkKbE-tHUOcNRnqwPnMWw@mail.gmail.com>
+Subject: Re: [PATCH v2 6/8] merge-ort: format messages slightly different for
+ use in headers
+To:     Johannes Altmanninger <aclopte@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Neeraj Singh <nksingh85@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On Tue, Dec 28, 2021 at 2:56 AM Johannes Altmanninger <aclopte@gmail.com> wrote:
+>
+> On Sat, Dec 25, 2021 at 07:59:17AM +0000, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > When users run
+> >     git show --remerge-diff $MERGE_COMMIT
+> > or
+> >     git log -p --remerge-diff ...
+> > stdout is not an appropriate location to dump conflict messages, but we
+> > do want to provide them to users.  We will include them in the diff
+> > headers instead...but for that to work, we need for any multiline
+> > messages to replace newlines with both a newline and a space.  Add a new
+> > flag to signal when we want these messages modified in such a fashion,
+> > and use it in path_msg() to modify these messages this way.
+>
+> makes sense (same for patches 4 & 5)
+>
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  merge-ort.c       | 36 ++++++++++++++++++++++++++++++++++--
+> >  merge-recursive.c |  3 +++
+> >  merge-recursive.h |  1 +
+> >  3 files changed, 38 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/merge-ort.c b/merge-ort.c
+> > index 998e92ec593..9142d56e0ad 100644
+> > --- a/merge-ort.c
+> > +++ b/merge-ort.c
+> > @@ -634,17 +634,46 @@ static void path_msg(struct merge_options *opt,
+> >                    const char *fmt, ...)
+> >  {
+> >       va_list ap;
+> > -     struct strbuf *sb = strmap_get(&opt->priv->output, path);
+> > +     struct strbuf *sb, *dest;
+> > +     struct strbuf tmp = STRBUF_INIT;
+> > +
+> > +     if (opt->record_conflict_msgs_as_headers && omittable_hint)
+> > +             return; /* Do not record mere hints in tree */
+> > +     sb = strmap_get(&opt->priv->output, path);
+> >       if (!sb) {
+> >               sb = xmalloc(sizeof(*sb));
+> >               strbuf_init(sb, 0);
+> >               strmap_put(&opt->priv->output, path, sb);
+> >       }
+> >
+> > +     dest = (opt->record_conflict_msgs_as_headers ? &tmp : sb);
+> > +
+> >       va_start(ap, fmt);
+> > -     strbuf_vaddf(sb, fmt, ap);
+> > +     strbuf_vaddf(dest, fmt, ap);
+> >       va_end(ap);
+> >
+> > +     if (opt->record_conflict_msgs_as_headers) {
+> > +             int i_sb = 0, i_tmp = 0;
+> > +
+> > +             /* Copy tmp to sb, adding spaces after newlines */
+> > +             strbuf_grow(sb, 2*tmp.len); /* more than sufficient */
+> > +             for (; i_tmp < tmp.len; i_tmp++, i_sb++) {
+> > +                     /* Copy next character from tmp to sb */
+> > +                     sb->buf[sb->len + i_sb] = tmp.buf[i_tmp];
+> > +
+> > +                     /* If we copied a newline, add a space */
+> > +                     if (tmp.buf[i_tmp] == '\n')
+> > +                             sb->buf[++i_sb] = ' ';
+> > +             }
+> > +             /* Update length and ensure it's NUL-terminated */
+>
+> I think this and the two comments inside the loop are mostly redundant. I'd
+> drop them (except maybe this one because it's a common oversight I guess).
 
-When adding a new worktree, it is reasonable to expect that we want to
-use the current set of sparse-checkout settings for that new worktree.
-This is particularly important for repositories where the worktree would
-become too large to be useful. This is even more important when using
-partial clone as well, since we want to avoid downloading the missing
-blobs for files that should not be written to the new worktree.
+I don't think redundancy is (necessarily) a reason to drop comments.
+Take for example the following from early in abspath.c:
 
-The only way to create such a worktree without this intermediate step of
-expanding the full worktree is to copy the sparse-checkout patterns and
-config settings during 'git worktree add'. Each worktree has its own
-sparse-checkout patterns, and the default behavior when the
-sparse-checkout file is missing is to include all paths at HEAD. Thus,
-we need to have patterns from somewhere, they might as well be the
-current worktree's patterns. These are then modified independently in
-the future.
+    /* Find start of the last component */
+    while (offset < len && !is_dir_sep(path->buf[len - 1]))
+        len--;
+    /* Skip sequences of multiple path-separators */
+    while (offset < len && is_dir_sep(path->buf[len - 1]))
+        len--;
 
-In addition to the sparse-checkout file, copy the worktree config file
-if worktree config is enabled and the file exists. This will copy over
-any important settings to ensure the new worktree behaves the same as
-the current one.
+The comment quickly explains what might take a bit more time to reason
+out.  Since I'm dealing with multiple different indices and various
+arithmetic, I figured a quick explanation was helpful.  And, of
+course, the reminder to make it NUL-terminated.  Granted, if the code
+is very readily obvious then comments are not helpful, and there's a
+gray area somewhere in between.  I think the code we're discussing
+here is in that gray area, where it's a matter of taste what the
+threshold is.  I don't find your taste here unreasonable, but I don't
+find mine for the above examples to be unreasonable either.  I'd
+rather leave these in.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- builtin/worktree.c                 | 41 +++++++++++++++++++++++
- t/t1091-sparse-checkout-builtin.sh | 53 ++++++++++++++++++++++++++++--
- 2 files changed, 91 insertions(+), 3 deletions(-)
+>
+> > +             sb->len += i_sb;
+> > +             sb->buf[sb->len] = '\0';
+> > +
+> > +             /* Clean up tmp */
+>
+> Also this one I guess
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 937ee6fc38b..bca49a55f13 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -336,6 +336,47 @@ static int add_worktree(const char *path, const char *refname,
- 	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
- 	write_file(sb.buf, "../..");
- 
-+	/*
-+	 * If the current worktree has sparse-checkout enabled, then copy
-+	 * the sparse-checkout patterns from the current worktree.
-+	 */
-+	if (core_apply_sparse_checkout) {
-+		char *from_file = git_pathdup("info/sparse-checkout");
-+		char *to_file = xstrfmt("%s/worktrees/%s/info/sparse-checkout",
-+					realpath.buf, name);
-+
-+		if (file_exists(from_file)) {
-+			if (safe_create_leading_directories(to_file) ||
-+			    copy_file(to_file, from_file, 0666))
-+				error(_("failed to copy '%s' to '%s'; sparse-checkout may not work correctly"),
-+				      from_file, to_file);
-+		}
-+
-+		free(from_file);
-+		free(to_file);
-+	}
-+
-+	/*
-+	 * If we are using worktree config, then copy all currenct config
-+	 * values from the current worktree into the new one, that way the
-+	 * new worktree behaves the same as this one.
-+	 */
-+	if (repository_format_worktree_config) {
-+		char *from_file = git_pathdup("config.worktree");
-+		char *to_file = xstrfmt("%s/worktrees/%s/config.worktree",
-+					realpath.buf, name);
-+
-+		if (file_exists(from_file)) {
-+			if (safe_create_leading_directories(to_file) ||
-+			    copy_file(to_file, from_file, 0666))
-+				error(_("failed to copy worktree config from '%s' to '%s'"),
-+				      from_file, to_file);
-+		}
-+
-+		free(from_file);
-+		free(to_file);
-+	}
-+
- 	strvec_pushf(&child_env, "%s=%s", GIT_DIR_ENVIRONMENT, sb_git.buf);
- 	strvec_pushf(&child_env, "%s=%s", GIT_WORK_TREE_ENVIRONMENT, path);
- 	cp.git_cmd = 1;
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 15403158c49..ce84819e1f5 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -180,6 +180,53 @@ test_expect_success 'set enables config' '
- '
- 
- test_expect_success 'set enables worktree config, if enabled' '
-+	git init worktree-patterns &&
-+	(
-+		cd worktree-patterns &&
-+		test_commit test file &&
-+		mkdir dir dir2 &&
-+		test_commit dir dir/file &&
-+		test_commit dir2 dir2/file &&
-+
-+		# By initializing the worktree config here...
-+		git worktree init-worktree-config &&
-+
-+		# This set command places config values in worktree-
-+		# specific config...
-+		git sparse-checkout set --cone dir &&
-+
-+		# Which must be copied, along with the sparse-checkout
-+		# patterns, here.
-+		git worktree add --detach ../worktree-patterns2
-+	) &&
-+	test_cmp_config -C worktree-patterns true core.sparseCheckout &&
-+	test_cmp_config -C worktree-patterns2 true core.sparseCheckout &&
-+	test_cmp_config -C worktree-patterns true core.sparseCheckoutCone &&
-+	test_cmp_config -C worktree-patterns2 true core.sparseCheckoutCone &&
-+	test_cmp worktree-patterns/.git/info/sparse-checkout \
-+		 worktree-patterns/.git/worktrees/worktree-patterns2/info/sparse-checkout &&
-+
-+	ls worktree-patterns >expect &&
-+	ls worktree-patterns2 >actual &&
-+	test_cmp expect actual &&
-+
-+	# Double check that the copy works from a non-main worktree.
-+	(
-+		cd worktree-patterns2 &&
-+		git sparse-checkout set dir2 &&
-+		git worktree add --detach ../worktree-patterns3
-+	) &&
-+	test_cmp_config -C worktree-patterns3 true core.sparseCheckout &&
-+	test_cmp_config -C worktree-patterns3 true core.sparseCheckoutCone &&
-+	test_cmp worktree-patterns/.git/worktrees/worktree-patterns2/info/sparse-checkout \
-+		 worktree-patterns/.git/worktrees/worktree-patterns3/info/sparse-checkout &&
-+
-+	ls worktree-patterns2 >expect &&
-+	ls worktree-patterns3 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'worktree add copies sparse-checkout patterns' '
- 	git init worktree-config &&
- 	(
- 		cd worktree-config &&
-@@ -547,11 +594,11 @@ test_expect_success 'interaction with submodules' '
- 
- test_expect_success 'different sparse-checkouts with worktrees' '
- 	git -C repo worktree add --detach ../worktree &&
--	check_files worktree "a deep folder1 folder2" &&
-+	check_files worktree "a folder1" &&
- 	git -C worktree sparse-checkout init --cone &&
--	git -C repo sparse-checkout set folder1 &&
-+	git -C repo sparse-checkout set folder1 folder2 &&
- 	git -C worktree sparse-checkout set deep/deeper1 &&
--	check_files repo a folder1 &&
-+	check_files repo a folder1 folder2 &&
- 	check_files worktree a deep
- '
- 
--- 
-gitgitgadget
+Yeah, I'll nuke this one.  The reason for this comment was more that
+sometimes I like having a comment apply to the code below it until the
+next comment; do thing that way avoids the need to put a
+here-ends-the-previous-comment comment, or arbitrarily avoid blank
+lines after a comment.  But that reasoning is a bit weaker here, and
+it clearly doesn't need any explanation, so I'll just drop it.
+
+> > +             strbuf_release(&tmp);
+> > +     }
+> > +
+> > +     /* Add final newline character to sb */
+> >       strbuf_addch(sb, '\n');
+> >  }
+> >
+> > @@ -4246,6 +4275,9 @@ void merge_switch_to_result(struct merge_options *opt,
+> >               struct string_list olist = STRING_LIST_INIT_NODUP;
+> >               int i;
+> >
+> > +             if (opt->record_conflict_msgs_as_headers)
+> > +                     BUG("Either display conflict messages or record them as headers, not both");
+> > +
+> >               trace2_region_enter("merge", "display messages", opt->repo);
+> >
+> >               /* Hack to pre-allocate olist to the desired size */
+> > diff --git a/merge-recursive.c b/merge-recursive.c
+> > index bc73c52dd84..c9ba7e904a6 100644
+> > --- a/merge-recursive.c
+> > +++ b/merge-recursive.c
+> > @@ -3714,6 +3714,9 @@ static int merge_start(struct merge_options *opt, struct tree *head)
+> >
+> >       assert(opt->priv == NULL);
+> >
+> > +     /* Not supported; option specific to merge-ort */
+> > +     assert(!opt->record_conflict_msgs_as_headers);
+> > +
+> >       /* Sanity check on repo state; index must match head */
+> >       if (repo_index_has_changes(opt->repo, head, &sb)) {
+> >               err(opt, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
+> > diff --git a/merge-recursive.h b/merge-recursive.h
+> > index 0795a1d3ec1..ebfdb7f994e 100644
+> > --- a/merge-recursive.h
+> > +++ b/merge-recursive.h
+> > @@ -46,6 +46,7 @@ struct merge_options {
+> >       /* miscellaneous control options */
+> >       const char *subtree_shift;
+> >       unsigned renormalize : 1;
+> > +     unsigned record_conflict_msgs_as_headers : 1;
+> >
+> >       /* internal fields used by the implementation */
+> >       struct merge_options_internal *priv;
+> > --
+> > gitgitgadget
+> >
