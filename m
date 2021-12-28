@@ -2,131 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29C48C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 16:05:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A2ACC433F5
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 16:13:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235537AbhL1QFf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 11:05:35 -0500
-Received: from mout.web.de ([212.227.17.12]:36771 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235538AbhL1QFa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 11:05:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1640707522;
-        bh=fude5wyJy88bzVKDwA3UERoKabhCIo1ORBw8C0KnP9A=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=amXrhUCXL+buzrX2kDgu416ze2JqYb0uAwZiNMKjofA6WWy04LW9JqLBKLWwlg3P/
-         P7uplE7LbifUp4F9G5LLcbN+9r/s7iw7i+u7bQUGE42LPT3zHYk7w25CWYLOu3jm+S
-         BurXSWHdUkuOrU4ww4pSI+XPfBjJ64ChzP7xvbjc=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MSIEs-1mrHg21OP2-00Sxau; Tue, 28
- Dec 2021 17:05:22 +0100
-Message-ID: <862118f6-e5dd-8e0a-139f-37b5a1682797@web.de>
-Date:   Tue, 28 Dec 2021 17:05:21 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.1
+        id S235482AbhL1QNz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 11:13:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51504 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235159AbhL1QNz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 11:13:55 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BFE2C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 08:13:54 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id o30so9400325wms.4
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 08:13:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=bNXNqpaPcY+ksjdok5JUfQ3Qmo5U79yUszGCOrkgzkw=;
+        b=HcG8+gf6IoHgfOt6UnJXF5chKNu1Xy8Kffw4LhcmO+5oMc/MITDRIehjTjtw1C7I6L
+         fqkyMwZXcwBQlMhIacxGRlHHwdTGZGwmlij3nrm6carjqs8TQF0vmcnLxBMD6A/C+VRV
+         WJ1CA92QXKzoqUz86oD3OMv26nfU0oajt31i90g9M+1tfTsqrja8SmxvIGMTbXYb1QKk
+         wpiLSgzeEyVByunnFkAVH8Yz+tL2NAHv/VGCBhOqXFlvcM/gyYpb62EBwA1Yju/YVfn1
+         ZgsKkdXteYJ1Pze2jvGJeoDqebWrUJPbPA3Ned2TqFemddWoTJsrN8u7TjOXPwALikyQ
+         heQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=bNXNqpaPcY+ksjdok5JUfQ3Qmo5U79yUszGCOrkgzkw=;
+        b=lhSgXd6WHJOT0qYDfojmdBzgrbSt9BRN2KFmj9vmyFAZVqvSOWCFK/plLMQDRlULb2
+         va5qzJgVyFGRyfJJBsu8LORw8viV98ItsAf0ZXh4B70CVROSiLKxjBCIkATKcGHw/4Js
+         G6KmZzhXN6Yfqhn0vwByI/MXGGcKc3dwtuVELcuHJswaL46C/5ZEL/7407GQcme8r8z1
+         Wtvv7+z+2h5zOSXjmY/2OUdWr+dqO0XDgzlYCtoSVVq8F+NBF163Cm5kqiZygpM5DF2B
+         qmCs66JA6QoAbHE+go7eqDRuvkrfGgJkhe3rrX5TEoxGfrS2XY4Exq6YRewkkaCVhgAO
+         Uu7Q==
+X-Gm-Message-State: AOAM533vjcVfxBJJ5q9V3EUNJKRbumw5dqYYvJoHISYijvIA0dtpSl8T
+        4sGtAelAu1M/348Ybj+Pqy4=
+X-Google-Smtp-Source: ABdhPJw1kAVj1x/PM9+7mC1JcOdEQiXQ/6dFvvLuVU0m4AwrkKSJk8kClpD8JnC0Ri4gB1bRTXX0rg==
+X-Received: by 2002:a05:600c:8a7:: with SMTP id l39mr18397424wmp.138.1640708032713;
+        Tue, 28 Dec 2021 08:13:52 -0800 (PST)
+Received: from gmail.com (62-47-14-33.adsl.highway.telekom.at. [62.47.14.33])
+        by smtp.gmail.com with ESMTPSA id q8sm18400472wrx.59.2021.12.28.08.13.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Dec 2021 08:13:52 -0800 (PST)
+Date:   Tue, 28 Dec 2021 17:13:50 +0100
+From:   Johannes Altmanninger <aclopte@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Subject: Re: [PATCH v8 5/7] progress.c: add temporary variable from progress
  struct
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Johannes Altmanninger <aclopte@gmail.com>
+Message-ID: <20211228161350.mzsubl3vensst2hu@gmail.com>
 References: <cover-v6-0.6-00000000000-20211228T143223Z-avarab@gmail.com>
  <cover-v8-0.7-00000000000-20211228T150728Z-avarab@gmail.com>
  <patch-v8-5.7-72a31bd7191-20211228T150728Z-avarab@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <patch-v8-5.7-72a31bd7191-20211228T150728Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lP6CXRdPPhAqACj/Ij9R48wWk6EyUb5JPPOME46rxNxawGk2fQf
- oN9GiD//+r6n0LFVYEG8VDFXf/6qk49d9fkS4Ik7H1ayEDuYP1FofTY4he24WK7VzT2eFEs
- XL8e6vQWPndv5vn3Jb18c6KEbP/Jc1Pri39xew5LXuAX1mzpFFVMZ2R6UUJiIJwues0wtls
- +IgRmhnI+pWWmToQiokJg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:eUbYyLcYnaI=:kWQ66b8v3nVZfnC7+4y4md
- qs3fUoF7hSUkmRD0yg2tDu6w8wzvcxegS0xuy1Z4qPwTI8/2I9R1oZeXimoqUSRBOl3qHdeoU
- BWi34f3nWir91wUc65kT0yYXHdwqVD86tZBmAOKvhToYXEaHR0CrEi6lEvuM5duxzUeFpx9fZ
- gOWLJk4EiO9S0Wp27mnRtqUi/RKV4IiOUUv2jzMVPmC/wfBTD6PdA8my4foWkmPdiNYUhdUQg
- j23RiFPS+80+aQN2XYqM3Xb7lHgfzqOBsFls5KcDaPiPghGKdygkfwkv8z6OX5QWgNzG1Qh5q
- 0CnhnZhh03Idte70K+qC67YHcTgGBqDYCMGfecWJmzej9GnuHcfMmfXgGf1ojLAj476f6Euol
- OVjWwEpv/IAq/+Bfjv7BGPNUZC7tVtP8Gx11BOUGt2McoyjIgR4OmtSOCZw98hHJHgPjInx2k
- 0UqbTVmP+FjS8/M8MUQaWztE32y3OoMJJUdKb91jQyxc7BqB01l/ZoKXni3bBeRtE+lTUUNta
- HZbtLHqX9yDMmH7tQxjhlU4x4BRAsaL7b3So3wORh1twa6ok3KLccCX+t9gleNZ+1XqzKz6vK
- Y4FSd8WbcbtxSMTUvw9HRjgOn2Unc4hEkB7nW/qjpCsiD1FcJ/m8RivZ9schR6SNuot2f9YR/
- qgK1BVm9sU5InIpfUsnJPI5tOFR/I9kNs7i7SlLKQGvnAn9srq0iWZmt+WFbTGqnwmSYAHGGz
- 5DNGa5jtX6f8xg0caO07JKpoz+60BjuyclAYhQ/KK9CpZfU4uMzDYh0/2sN6VdvbcaoKDcnJo
- wDpYFLNrIQ4Sqks3f0PnnT/SgO56MQKTVKpQhuiZuXZXkFGq5VWYcq+86GIOnIAnn0qqZOmyO
- 9EowXkAbPPdvzf3l5mTHlDv2ecYpnYu7l0ef7LMEl37E2tQkgNHHDze7SHHaYX8yWAv58bNvY
- 1y3AWk1i7o6/0PQr8udP14SBixDT1kSAZ1DTXUKPqM/BzOY/AKVpjt5Ia42uc5DZjPGlfocKV
- 7CJye0Vv5JvBPTKBAatEIO1rw9uxLZaw5Ful/h6Eodm82Twl6arls6emr9BjiKV4Lw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.12.21 um 16:19 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+On Tue, Dec 28, 2021 at 04:19:01PM +0100, Ævar Arnfjörð Bjarmason wrote:
 > Since 98a13647408 (trace2: log progress time and throughput,
 > 2020-05-12) stop_progress() dereferences a "struct progress **"
 > parameter in several places. Extract a dereferenced variable (like in
 > stop_progress_msg()) to reduce clutter and make it clearer who needs
+
+The "(like in stop_progress_msg())" can probably go because you explain the
+added consistency in the next paragraph.
+
 > to write to this parameter.
->
+> 
 > Now instead of using "*p_progress" several times in stop_progress() we
 > check it once for NULL and then use a dereferenced "progress" variable
 > thereafter. This continues the same pattern used in the above
 > stop_progress() function, see ac900fddb7f (progress: don't dereference
+
+"above stop_progress" should be "below stop_progress_msg",
+because stop_progress is the one you're modifying?
+
 > before checking for NULL, 2020-08-10).
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
 >  progress.c | 14 ++++++++------
 >  1 file changed, 8 insertions(+), 6 deletions(-)
->
+> 
 > diff --git a/progress.c b/progress.c
 > index 680c6a8bf93..688749648be 100644
 > --- a/progress.c
 > +++ b/progress.c
-> @@ -319,21 +319,23 @@ static void finish_if_sparse(struct progress *prog=
-ress)
->
+> @@ -319,21 +319,23 @@ static void finish_if_sparse(struct progress *progress)
+>  
 >  void stop_progress(struct progress **p_progress)
 >  {
 > +	struct progress *progress;
+
+nit: in stop_progress_msg we have a blank line here, the inconsistency is
+mildly surprising
+
 >  	if (!p_progress)
 >  		BUG("don't provide NULL to stop_progress");
-> +	progress =3D *p_progress;
->
+> +	progress = *p_progress;
+>  
 > -	finish_if_sparse(*p_progress);
 > +	finish_if_sparse(progress);
->
+>  
 > -	if (*p_progress) {
 > +	if (progress) {
 >  		trace2_data_intmax("progress", the_repository, "total_objects",
 > -				   (*p_progress)->total);
 > +				   progress->total);
->
+>  
 > -		if ((*p_progress)->throughput)
 > +		if (progress->throughput)
 >  			trace2_data_intmax("progress", the_repository,
 >  					   "total_bytes",
 > -					   (*p_progress)->throughput->curr_total);
 > +					   progress->throughput->curr_total);
->
-> -		trace2_region_leave("progress", (*p_progress)->title, the_repository)=
-;
+>  
+> -		trace2_region_leave("progress", (*p_progress)->title, the_repository);
 > +		trace2_region_leave("progress", progress->title, the_repository);
 >  	}
->
+>  
 >  	stop_progress_msg(p_progress, _("done"));
-
-This patch is trivially correct, but I wonder why all that code is here
-instead of in stop_progress_msg().  I would expect stop_progress() to be
-a thin wrapper that just provides a default message, but actually it
-handles sparse progress and tracing.  Isn't both necessary even with a
-custom message?
-
-In any case, moving the code there becomes easier after this patch.
-
-Ren=C3=A9
+> -- 
+> 2.34.1.1257.g2af47340c7b
+> 
