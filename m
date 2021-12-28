@@ -2,101 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92750C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 13:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2BE7C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 13:55:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231740AbhL1NzL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 08:55:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48600 "EHLO
+        id S231989AbhL1NzZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 08:55:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230477AbhL1NzK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 08:55:10 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 737EAC061574
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 05:55:10 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id b13so74087336edd.8
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 05:55:10 -0800 (PST)
+        with ESMTP id S230477AbhL1NzX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 08:55:23 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0AE6C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 05:55:23 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id b85so17196428qkc.1
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 05:55:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=ptLYXMhoZLJmo3yPGSkTgr+A6FP5zKPkG4LE6tnqxEU=;
-        b=CoqnqNvLBT5OccgpQU160GjU41PrCwO3wtrW5/NyG2jR1w7N8CTXEZ5rnN+h0sGO7F
-         Gn5FfY14y7qa1tok1BF85G+iq2nGRqAVQZ/zM4jLMyG7J0U5woQVm3PZfKnBk9EqFbEB
-         1v9kXnkZ3HnkgR/UFJFBDszfEKdaYDN9VIB3QYr/MIQXn/TLCXjlVHbnqMYNCfBYi6LY
-         VuQpCEqQ8oNAoIDVfAxBV8ZO/UgrO+ZH/LAea9elXzDfBitjltxjeu45vZESV3AkDCL7
-         c5r3hdxvDEoVyGvPeruMc5Xt6upXsRRofQYthtoWrR00kJCeICWXifhwVy5dOsECoanf
-         ZTkA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=HYPCWSbYTbzvOT3rnuFGKNz4bGdHKuEDwQg4lyzwvC8=;
+        b=coMQAu/gpeXZcXVBtHnv08h0/ISfrgphjRvc3F9VDQzix+hdH2hyO+9qsWROwxMyX+
+         51oa3RVauFjZD6RFS62FtzE8iy+TsAYR4w6UViesxRMiKef3QUaV108aMFkXTGzfGzH9
+         /H7O6PemI5DGmr5IqOIZ0ie94x+RVHAW+CG1wH8Wr31FllTMQSlxNCvamVpMxPrdoXwr
+         ZMn6gW1cPAEIaAg9bZ6VBAwhWipITYc+qA8aWbLCm18d4ncm2MecUjI+p+AViiq21avK
+         yP6brugEcv/M4JTtuIb59Kjq3NyDIYdMSnmu4XE9SUc6HsVk1d6lri1q6KePFRDQhboo
+         vqIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=ptLYXMhoZLJmo3yPGSkTgr+A6FP5zKPkG4LE6tnqxEU=;
-        b=XMcJFC+s8QtI9OHGGCZTgh+EwU0+p/6sn5SZGNm8oyl3ysItiAPMhNhs3HMQcnYeAD
-         bTQRt+yhpttEkqp7vYnodKLxLCuJCBZKBJvUePjwYGxDiMOH/+1tz8IoBg+BnmbMj8yq
-         yb5b0hHQ7w2tgQEiqrMC3IgAosg3WLbEY1IUxnE6PuKfsVkHQXpAEorZ2XZ0zxJy0ewt
-         ukeI57pq3p3WzGZscGJtfWqLMXIIDXetzBgmE/fhtEnUMUji4tIF98W75Om5+S/kOvlx
-         Esi272aiskwhU5CDjfuFoXhuEbmvkS4/ZMs/CVvlTiC3Wu5GMmhGhI44XrM68M8aUEmA
-         cGeA==
-X-Gm-Message-State: AOAM531sgBH1lKOc5NFEiEDMhpewepp7KSThdC+RFYspHJkKyPpNZJdL
-        NedeMrawkXlO0vPIVZmJBApNIuT/TkOXBMpX
-X-Google-Smtp-Source: ABdhPJzcRKO2O/pcQkQvS3oH3HxcIMxBU739kcK96B1kHhaVCHsejV24rQDMWBEtvcZmEificI3OiA==
-X-Received: by 2002:aa7:d411:: with SMTP id z17mr20389590edq.214.1640699708983;
-        Tue, 28 Dec 2021 05:55:08 -0800 (PST)
-Received: from gmgdl (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id hq9sm6056344ejc.57.2021.12.28.05.55.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Dec 2021 05:55:08 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1n2CwV-000CVB-Hj;
-        Tue, 28 Dec 2021 14:55:07 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: hn/reftable-coverity-fixes (was: What's cooking in git.git (Dec
- 2021, #06; Mon, 27))
-Date:   Tue, 28 Dec 2021 14:40:14 +0100
-References: <xmqq7dbpvb0q.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqq7dbpvb0q.fsf@gitster.g>
-Message-ID: <211228.86lf04j0lg.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=HYPCWSbYTbzvOT3rnuFGKNz4bGdHKuEDwQg4lyzwvC8=;
+        b=fOOexgs0WEzGP8ykv85jAEYRK/WIiR9flOadHHaBHcKv7Ey5LcOt3iMCZA4nXqoDFT
+         QTyBl37RGUIiW81dkZf8kZTnFapcaGYSrH8e9FkgMBJ5+6G24cDLBzHUnm9PuZJ4SqiA
+         RiuqIYFYuLSYnFsKXTrQZcsZSHsD6CRH8UrcKSjWkpRQizKBO86LqaZ/U2xwNBcEeDZj
+         2ZGeLIX6fV9ub2QzoIMUZKDVCaOjMvU6HrBZQE+2zAJXg5TBVetuHsUV9bwRQ08V4x6R
+         dOL2M25bin/CBoko0Wyo/cdVge0hZOHYqEvj/wZubbESVbc19u7P2peGl1LuYY9/A8n5
+         hjiA==
+X-Gm-Message-State: AOAM5307zVdfoWgmOWNlHHLsuLUtwFcciDHk8aBOj33ilUbatJefHEyP
+        9NbHEzzfZ/N7Ld4H1XOVTeo=
+X-Google-Smtp-Source: ABdhPJyDDKBqUMVzN5+Oih6Mx3f2K37LqG2TOM42xeWNm+pWLf2lKqEOb7VckeBYm+aBdHb2Yz09EQ==
+X-Received: by 2002:a05:620a:1786:: with SMTP id ay6mr15147240qkb.373.1640699722601;
+        Tue, 28 Dec 2021 05:55:22 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:a8af:d265:ced5:e098? ([2600:1700:e72:80a0:a8af:d265:ced5:e098])
+        by smtp.gmail.com with ESMTPSA id q12sm15595247qtx.16.2021.12.28.05.55.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Dec 2021 05:55:22 -0800 (PST)
+Message-ID: <78ba0d99-246b-d90c-b725-c084c8304f02@gmail.com>
+Date:   Tue, 28 Dec 2021 08:55:16 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH] merge-ort: fix bug with renormalization and rename/delete
+ conflicts
+Content-Language: en-US
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+References: <pull.1174.git.git.1640650846612.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.1174.git.git.1640650846612.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 12/27/2021 7:20 PM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> Ever since commit a492d5331c ("merge-ort: ensure we consult df_conflict
+> and path_conflicts", 2021-06-30), when renormalization is active AND a
+> file is involved in a rename/delete conflict BUT the file is unmodified
+> (either before or after renormalization), merge-ort was running into an
+> assertion failure. 
 
-On Mon, Dec 27 2021, Junio C Hamano wrote:
+This "the file is unmodified" is critical, as when I looked at the test,
+it seemed too simple. I asked myself, "Why does renormalization matter
+here?" Turns out it is just an artifact of the carefully organized cases.
 
-> * hn/reftable-coverity-fixes (2021-12-22) 18 commits
->  - reftable: be more paranoid about 0-length memcpy calls
->  - reftable: add print functions to the record types
->  - reftable: make reftable_record a tagged union
->  - reftable: remove outdated file reftable.c
->  - reftable: implement record equality generically
->  - reftable: make reftable-record.h function signatures const correct
->  - reftable: handle null refnames in reftable_ref_record_equal
->  - reftable: drop stray printf in readwrite_test
->  - reftable: order unittests by complexity
->  - reftable: all xxx_free() functions accept NULL arguments
->  - reftable: fix resource warning
->  - reftable: ignore remove() return value in stack_test.c
->  - reftable: check reftable_stack_auto_compact() return value
->  - reftable: fix resource leak blocksource.c
->  - reftable: fix resource leak in block.c error path
->  - reftable: fix OOB stack write in print functions
->  - Merge branch 'hn/create-reflog-simplify' into hn/reftable-coverity-fixes
->  - Merge branch 'hn/reftable' into hn/reftable-coverity-fixes
->
->  Problems identified by Coverity in the reftable code have been
->  corrected.
->
->  Will merge to 'next'?
->  source: <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
+>  		if (opt->renormalize &&
+>  		    blob_unchanged(opt, &ci->stages[0], &ci->stages[side],
+>  				   path)) {
+> -			ci->merged.is_null = 1;
+> -			ci->merged.clean = 1;
+> -			assert(!ci->df_conflict && !ci->path_conflict);
+> +			if (!ci->path_conflict) {
+> +				/*
+> +				 * Blob unchanged after renormalization, so
+> +				 * there's no modify/delete conflict after all;
+> +				 * we can just remove the file.
+> +				 */
+> +				ci->merged.is_null = 1;
+> +				ci->merged.clean = 1;
+> +				 /*
+> +				  * file goes away => even if there was a
+> +				  * directory/file conflict there isn't one now.
+> +				  */
+> +				ci->df_conflict = 0;
+> +			} else {
+> +				/* rename/delete, so conflict remains */
+> +			}
 
-It looks to me like the points you raised in
-https://lore.kernel.org/git/xmqqy24a4oyq.fsf@gitster.g/ are worth being
-addressed before a merge to 'next'. I.e. is that memcpy() paranoia
-needed / does it do anything?
+This breakdown of the cases is informative, and I like how self-contained
+the change is.
+
+> +test_expect_success 'rename/delete vs. renormalization' '
+> +	git init subrepo &&
+> +	(
+> +		cd subrepo &&
+> +		echo foo >oldfile &&
+> +		git add oldfile &&
+> +		git commit -m original &&
+> +
+> +		git branch rename &&
+> +		git branch nuke &&
+> +
+> +		git checkout rename &&
+> +		git mv oldfile newfile &&
+> +		git commit -m renamed &&
+> +
+> +		git checkout nuke &&
+> +		git rm oldfile &&
+> +		git commit -m deleted &&
+> +
+> +		git checkout rename^0 &&
+> +		test_must_fail git -c merge.renormalize=true merge nuke >out &&
+> +
+> +		grep "rename/delete" out
+> +	)
+> +'
+> +
+>  test_done
+
+I tested this on the latest 'master' and saw the following:
+
+  git: merge-ort.c:3846: process_entry: Assertion `!ci->df_conflict && !ci->path_conflict' failed
+
+so it indeed hits this case.
+
+This patch looks good to me. Thanks!
+
+Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+
