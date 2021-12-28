@@ -2,168 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EDD2C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 23:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECA03C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 23:13:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237708AbhL1XB0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 18:01:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57406 "EHLO
+        id S237740AbhL1XNU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 18:13:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229882AbhL1XBZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 18:01:25 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 867BEC061574
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 15:01:25 -0800 (PST)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 88C9A5B214;
-        Tue, 28 Dec 2021 23:01:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1640732484;
-        bh=6NS8mP7oE7jvnKrXqnUVQ8eAF1dbkeGXFaD0ryWSzVE=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=dOKms5p89AjkriucvC7voYYmbPENyu2/7ZFRChmsBVLRWHRaZzj9UR3LsGcjJcSou
-         UAX+Gw/vA/+bbEXYD658Sh8BAWfzZaoQAkyhNq6p7PJk5x7UakyUg9in+DLRBzTZQQ
-         +WxJ923tEn2R8JzM1PvAfDURHBh+j6ae2qOWWjUIyxOtSGXhkBEEBLNR935QDJ1EY+
-         Cn0K26+fV2vftoYEysiCou7t4mipWEJ+z0X3G/zp2rIkk8kAnXkLPqF4Ufe+8qqsED
-         4LvIiRmmaVj/hE1A9mZREjMWgU9UzlotyiGeT3oWI4XXqa7Ta/HGSNH2aYn7pprpm3
-         pfiulq9du+eDpyYczHZe6py/xMam1KKOxRSokdsn3lRAyL7LgDtsSGxqP2NaeXNAkJ
-         sblVFF7J2Gt1wDQiAHtzE70TxPFok5uoaKDNygx+1Bu7r+9nWQN2L8sqn0QQvlR5zt
-         W94ApwzfArKTfX/y2a4w8jMxmmjb3Va+NXmdCWX1oXE4eetRTi1
-Date:   Tue, 28 Dec 2021 23:01:21 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Johannes Altmanninger <aclopte@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Neeraj Singh <nksingh85@gmail.com>
-Subject: Re: [PATCH v2 1/8] show, log: provide a --remerge-diff capability
-Message-ID: <YcuXQQHsl8iVdK8R@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Neeraj Singh <nksingh85@gmail.com>
-References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
- <pull.1103.v2.git.1640419159.gitgitgadget@gmail.com>
- <b3ae62083e14aecdfe909735b4daf0a36fa5e48c.1640419159.git.gitgitgadget@gmail.com>
- <20211228105600.h32jl5iwot3munww@gmail.com>
- <CABPp-BEJ+RiripJSonrOcJfRWKZDeoL83PDqE6beWwFqs1HxTQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="bKtLdJa8Ozuisnx0"
-Content-Disposition: inline
-In-Reply-To: <CABPp-BEJ+RiripJSonrOcJfRWKZDeoL83PDqE6beWwFqs1HxTQ@mail.gmail.com>
-User-Agent: Mutt/2.1.4 (2021-12-11)
+        with ESMTP id S237737AbhL1XNT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 18:13:19 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA931C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 15:13:19 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id h33-20020a17090a29a400b001b20b7d48dfso12882094pjd.0
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 15:13:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=/S+BQxCVfGdUM38cCsYCOopoImO7a8TN66X1ZToM8A8=;
+        b=RvtgSa4MuOd8CkfTk+Bl6hIqepCGSJCa6cag7VVbOwGmB/a1pwywrzxv2+KS8cE76z
+         7XF4cIYPEId6PLQY/CXE/WRU2NfiE8uXczzGWD/DqLVaRDjB0eGAZ5bmbpqTQmJJq4vF
+         nrYQP7xHkOLK+enaB59xy1+xMQ4Li6mLdiW7iJpcmQbliLixin2MqnTiu1GJPAi04AO6
+         RRgInfyo1AzhIGJk6pt1EWQDYERR90LKyzJvHoDq/QzTMsE3aCvcKdDWNhuA9Y01ggO6
+         08sBJ293jr8i24N8P8beKshAnHh7m5DU3i6EEXTqcdfDPMtPuB2ptu0Aqa/8ctM/2tNK
+         6vgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=/S+BQxCVfGdUM38cCsYCOopoImO7a8TN66X1ZToM8A8=;
+        b=bM8lBI+Ogdj163zruqhFKqSsu6UoXS8IQDc/AMmc4SMXXxMt9pNCNGX7843+3aZk2I
+         X9kse8fgGo1jcA9os5zb3eGl68YuI+bQIoFMg6ZgcTUiF1T+dW3HzyFrhr8UXbB/zxJy
+         UbZZi+oYKjR0tAYZAQ8KpIPtd+5Azn6FOo9EC8FTgCI+VUBAPXd3VvZFsTNNqH2HGD9c
+         qtRunbOjBY0AhyuHk4tYP8YUJO7zG2W2LSOO6mfctIsFyNhKn0zsmdF5o4Hmmuwwd7Tb
+         AsGVdT1IYodUBMzcTSvUYSAXGE+zhe+0osuoVBjkMJPotgzzWy/KhqrbJcNoN9LtcyeG
+         Cdug==
+X-Gm-Message-State: AOAM531uCR3OzzM9NruhykeSb8M/8mdt5r314Ht/diwxkGXsYFFaEImG
+        wu2whQc5GPIRWuChKaA/50IIBG/07wsURA==
+X-Google-Smtp-Source: ABdhPJzuVg9sxXQVbjwFaG3V0sCrpQ8GFXvmVBi9KZDHpBj+H2Ck623cAaZE5GJq3LECPqUOU+eRbVA+EHr36Q==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90a:ce04:: with SMTP id
+ f4mr29111593pju.10.1640733198346; Tue, 28 Dec 2021 15:13:18 -0800 (PST)
+Date:   Tue, 28 Dec 2021 15:13:07 -0800
+In-Reply-To: <CABPp-BFLNqLuJ8o_6YZDYgd=Ft+wc9EjBPX+RRzwAdASKSW2bw@mail.gmail.com>
+Message-Id: <kl6lee5w5nng.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <cover.1634077795.git.jonathantanmy@google.com>
+ <cover.1639509048.git.jonathantanmy@google.com> <CABPp-BFLNqLuJ8o_6YZDYgd=Ft+wc9EjBPX+RRzwAdASKSW2bw@mail.gmail.com>
+Subject: Re: [PATCH v7 0/2] Conditional config includes based on remote URL
+From:   Glen Choo <chooglen@google.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Elijah Newren <newren@gmail.com> writes:
 
---bKtLdJa8Ozuisnx0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2021-12-28 at 22:34:03, Elijah Newren wrote:
-> CC'ing brian in case he has comments on the sha256 stuff and whether
-> he thinks there's a cleaner way to make my tests work with sha256.
-> (brian: See the very end of the email.)
->=20
-> On Tue, Dec 28, 2021 at 2:56 AM Johannes Altmanninger <aclopte@gmail.com>=
- wrote:
-> >
-> > On Sat, Dec 25, 2021 at 07:59:12AM +0000, Elijah Newren via GitGitGadge=
-t wrote:
-> > > +test_expect_success 'remerge-diff with both a resolved conflict and =
-an unrelated change' '
-> > > +     git log -1 --oneline ab_resolution >tmp &&
-> > > +     cat <<-EOF >>tmp &&
-> > > +     diff --git a/numbers b/numbers
-> > > +     index a1fb731..6875544 100644
-> > > +     --- a/numbers
-> > > +     +++ b/numbers
-> > > +     @@ -1,13 +1,9 @@
-> > > +      1
-> > > +      2
-> > > +     -<<<<<<< b0ed5cb (change_a)
-> > > +     -three
-> > > +     -=3D=3D=3D=3D=3D=3D=3D
-> > > +     -tres
-> > > +     ->>>>>>> 6cd3f82 (change_b)
-> > > +     +drei
-> >
-> > nice
-> >
-> > > +      4
-> > > +      5
-> > > +      6
-> > > +      7
-> > > +     -eight
-> > > +     +acht
-> > > +      9
-> > > +     EOF
-> > > +     # Hashes above are sha1; rip them out so test works with sha256
-> > > +     sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
-> >
-> > Right, sha256 could cause many noisy test changes. I wonder if there is=
- a
-> > more general way to avoid this; maybe default to SHA1 for existing test=
-s?
->=20
-> Not "could", but "does".  And this is not something to be avoided.
-> The default testsuite we run in CI involves a run of
-> GIT_TEST_DEFAULT_HASH=3Dsha256 under linux-clang.  Making these tests
-> SHA1-only just reduces our coverage and makes the transition to SHA256
-> harder; I think that's the opposite of the direction we want to go.
+> But can I back up and comment on a bigger picture item?
 >
-> These changes I've made here are sufficient to make these tests work
-> under sha256; you can see the test results here:
-> https://github.com/gitgitgadget/git/runs/4646949283?check_suite_focus=3Dt=
-rue.
-> Under "Run ci/run-build-and-tests.sh" note that there are two runs of
-> tests, and the second has "export GIT_TEST_DEFAULT_HASH=3Dsha256"
-> preceding it.
->=20
-> There might be a cleaner way to make these tests sha256-compatible,
-> but this seemed like a pretty simple way to me.
+> This mechanism requires somehow getting additional files to the user
+> separately; projects that span companies (git.git, linux.git, etc.)
+> won't likely be able to make use of this.
+>
+> Scalar also has a mechanism for providing potentially large blocks of
+> pre-vetted configuration for users.  It does so as part of a new
+> top-level command.  And it does so with a very opinionated set of
+> values that are not configurable.  Thus, while I'd like to use it,
+> they use a configuration option that would break things badly at my
+> $DAYJOB.  (Too many gradle plugins using jgit, which doesn't
+> understand index.version=4 and will blow up with a very suboptimal
+> error message when they see it.)  And, it's very specific to scalar;
+> we probably don't want to add a new toplevel command everytime someone
+> wants common configuration to be easily grabbed by some user.
+>
+> It would be nice if we could find some more generic solution.
+> Granted, I can't think of any, and I don't think this comment should
+> block this particular series (nor the scalar one), but I am worrying a
+> little bit that we're getting multiple completely different solutions
+> for the same general problem, and each brings caveats big enough to
+> preclude many (most?) potential users.  I don't know what to do about
+> that, especially since configuration that is too easy to propagate
+> comes with big security problems, but I wanted to at least raise the
+> issue and hope others have good ideas.  If nothing else, I want to
+> raise awareness to avoid proliferation of similar
+> pre-vetted-configuration-deployment mechanisms.  I'm CC'ing a couple
+> scalar folks as well for that point.
 
-The question here is, do we care very much about testing these specific
-hashes?  If so, then we should use test_oid_cache to set up some OIDs
-and make sure they're correct for both SHA-1 and SHA-256, and then
-replace them in the code with calls to test_oid.
+Yes, that's an accurate description. To reiterate what Jonathan said in
+his first cover letter [1], the primary motivation is that we want to be
+able to 'suggest' hooks to users. There was an RFC for this
+'remote-suggested hooks feature' (docs [2], RFC implementation [3]) but
+it ultimately stalled due to security concerns I believe (this was
+before I joined the team, so I'm not the most familiar with this).
 
-However, my impression is that we probably don't care very much about
-what the specific values are, and in that case, this is completely fine.
-We do similar things elsewhere in the testsuite.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+It might be worth re-reading those threads since they tread on pretty
+much the same ground of shipping pre-vetted config (this is directed at
+me too, since I haven't read through those in detail). I've also been
+told that we're (aka Google) still looking for feedback on [2], so feel
+free to share any thoughts on that thread too.
 
---bKtLdJa8Ozuisnx0
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYcuXQQAKCRB8DEliiIei
-gV3KAQCtTNdkUBjShO57dPEWTCfWvFrDFTO9SKomaqvGdjUBbAEApyJPJXufoQAe
-nQE6z05K2nzD6r6EYaVZEfSMgLbZKwE=
-=hco7
------END PGP SIGNATURE-----
-
---bKtLdJa8Ozuisnx0--
+[1] https://lore.kernel.org/git/cover.1634077795.git.jonathantanmy@google.com
+[2] https://lore.kernel.org/git/pull.908.v4.git.1620241892929.gitgitgadget@gmail.com/
+[3] https://lore.kernel.org/git/cover.1623881977.git.jonathantanmy@google.com/
