@@ -2,201 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2E51C433F5
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 19:37:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDDB6C433F5
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 20:21:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237148AbhL1ThS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 14:37:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40158 "EHLO
+        id S236212AbhL1UVo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 15:21:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232587AbhL1ThP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 14:37:15 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B166DC061574
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 11:37:14 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id o6so77576948edc.4
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 11:37:14 -0800 (PST)
+        with ESMTP id S236101AbhL1UVn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 15:21:43 -0500
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6041EC061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 12:21:43 -0800 (PST)
+Received: by mail-yb1-xb2d.google.com with SMTP id p15so6684948ybk.10
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 12:21:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Sp3/xq3s3ncTuq1vRJo+M3jxJ5lqX3/hG/yl/PdKPZc=;
-        b=cBDyMD45upWFF671t8sD2ro1FCUw7/aMrqOWlvxHWMZh299g4I3bUffI5WPqk/vvKf
-         HlZTkutSlAacJj5QfJdeU5kNww5jkSvIb0RI5985Iw/yEuEvDmddnoGaejvkFtkt+xeP
-         VeArOmsKJ+u7iFlrg3Nftl24E+cLbgGBLtOe4mk+mkkgaZYuDsr/TTZru06DxNG0Udlg
-         J8QvaNuaJpQb6crMtRohctI2C3LUAEghyudspKqK7T0raPjks3R7dMzs7mHPe9feUX2E
-         pskZds3faGKVcDzf+E4rR780JTV7e1AWZhr8q3dkDpaDAO05TA0BdesiBphHDi4KA6LA
-         uLXQ==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=UVtIM8ZvKecfh/GF7o19h6OTtK7zKVBgpcZuW7hVKnI=;
+        b=e70aGHyIBI/IcmtaVML8nlsNMeNffSSYpsa/tXj6aLzaZ9bE6LouzDU6PFkx4905AE
+         p352pWrZ/cTRaPJThJ8tLoEH5MXpGD56SMAwX7Z+o6py6cjxvJsO0fIeN20pIg8nj6w3
+         FonLvQYcd1w3FmKWBRN45FNqUYWVi3FyFjBAqkYE9fwDzWjn8nkaBzYXOj4VGlXGfmx9
+         q3pm0jxp7IGix5CtqApVQqkec9NeOjK6bXEeaBuTlT/P0HdRSF4ZpAkfpN0n70iszP1M
+         PQzQZTlfgZOXsxmHJSCZ182Eyk8cNibhjEo+IF0aF1BdS9RtJi6wwgn++rlSwy/hGQMR
+         al8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Sp3/xq3s3ncTuq1vRJo+M3jxJ5lqX3/hG/yl/PdKPZc=;
-        b=zSZQQrfVRCXnvEpjMXCeYZ4dFJchYF7oofx/3MThSQs1/SfgAa8ZFEChWo9R4VknPo
-         GUdfL3d1ijkl71AGWlYozEhjbQZvwl5+y4l26WiPHnM+DvsvfwvhH4/nvJ03Q/I9IqoW
-         d5g0FnkI4GIMbvgZwCiGhAlFTp57MxTBbrmvWWBq4eD6953lcylIwWqxXpZz/epqUpNZ
-         Npdx80W0U8kvCh0Ls6Z21+4ppbgNZNnHzp3hhm8akfLqnqey9gUsEOqjb8HCFWaWGQRd
-         PkQ2WmiFSK+G83/S2zqv0rqaICjX6GYYb2juS8NtDQAou8646WgGBocdK8FsNKVXKuL0
-         H6sw==
-X-Gm-Message-State: AOAM530hgcgqcXq4gNfo3uFQgN+uA02XSyI4fAHHnU1FfmRLLGC44GKw
-        z8/yfQcSMaksQSnnoWN7Hs8A+p+WEfDW/haUAoHpn4+hTs+eSw==
-X-Google-Smtp-Source: ABdhPJxTdfv79IBqERR16KpIImRrZkEr+nTM3rmtb8KEqOFwmYm+OBrmNxCddrr3Z3YuuVJlACuyFuC9oXCoeqItp1k=
-X-Received: by 2002:a17:907:60c8:: with SMTP id hv8mr18285000ejc.192.1640720233205;
- Tue, 28 Dec 2021 11:37:13 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=UVtIM8ZvKecfh/GF7o19h6OTtK7zKVBgpcZuW7hVKnI=;
+        b=EB/ItNQoshrpP1G2XaplY4oR6LWkiGNyccNxoKz3xn/jxNEojk+Bz4Flp3PR2L9XjQ
+         QhPQxx5oi7lubALnQkwzBxsMGvW004VrZ63UBBsvL2eKKqGtR9mO1hlAhjiBb6TdS5C2
+         z40xksP0qTwpJczmIVPJbpJDAVsBrEm0gGZ6klRUTErukWBTGv1Mod8pk9yCEAtSAc4n
+         1gtz6gv3FVT1/N2vgFPdukTNO7At1VMZOBiC5m3YQU7gJzA5UmE1038tfmEGAQDyoPpj
+         YuXC2obnTy399BTvCxTUugBEbVsnwMTTJiejzO+CnDQmW6mtCuee2f+xsqVXXqqTn6Cp
+         01zw==
+X-Gm-Message-State: AOAM531+PnOUN3AKVfKmlboKpIuVPqTen13J6NFnEk0R3P22Sj9p2rig
+        1EGELE2bxlYFPsjSahMLx6IYn0rhAYmGLep24z4/IkZhx54=
+X-Google-Smtp-Source: ABdhPJwljyj41IVnWDsPKwgZLZe3TS0x4hAfdgDU4fcV4qWWJPhrOo+J4yYJ7QzYQJEw7cjz8yGMiNeV3wn8aIhnzS8=
+X-Received: by 2002:a25:4dc4:: with SMTP id a187mr28280238ybb.631.1640722902211;
+ Tue, 28 Dec 2021 12:21:42 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
- <pull.1103.v2.git.1640419159.gitgitgadget@gmail.com> <d5566f5d13605f30be6fd221fc624479cbbd0392.1640419159.git.gitgitgadget@gmail.com>
- <20211228105614.qzmm3hglabtlcsx4@gmail.com>
-In-Reply-To: <20211228105614.qzmm3hglabtlcsx4@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 28 Dec 2021 11:37:01 -0800
-Message-ID: <CABPp-BFONtGb5TYUAe2jazuRgKWMsvSJTxSnxrEPM9OYq68Wow@mail.gmail.com>
-Subject: Re: [PATCH v2 3/8] ll-merge: make callers responsible for showing warnings
-To:     Johannes Altmanninger <aclopte@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 28 Dec 2021 21:21:31 +0100
+Message-ID: <CAP8UFD0ffHduEjAjEVrdstWMeLTqi-+4Rqs8fbUeULMpKYJ8Gw@mail.gmail.com>
+Subject: Draft of Git Rev News edition 82
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
         Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Neeraj Singh <nksingh85@gmail.com>
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Baruch Burstein <bmburstein@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Fabian Stelzer <fs@gigacodes.de>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 28, 2021 at 2:56 AM Johannes Altmanninger <aclopte@gmail.com> wrote:
->
-> On Sat, Dec 25, 2021 at 07:59:14AM +0000, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > Since some callers may want to send warning messages to somewhere other
-> > than stdout/stderr, stop printing "warning: Cannot merge binary files"
-> > from ll-merge and instead modify the return status of ll_merge() to
-> > indicate when a merge of binary files has occurred.
-> >
-> > This commit continues printing the message as-is; future changes will
-> > start handling the new commit differently in the merge-ort codepath.
->
-> "the new commit" looks like a typo, do you mean "binary conflicts"?
+Hi everyone!
 
-Good catch, yeah should be "the binary conflicts message"
+A draft of a new Git Rev News edition is available here:
 
-> >
-> > Note that my methodology included first modifying ll_merge() to return
-> > a struct, so that the compiler would catch all the callers for me and
-> > ensure I had modified all of them.  After modifying all of them, I then
-> > changed the struct to an enum.
->
-> Heh, this is a clever way to work around C's weak typing.
->
-> The language server I'm using (clangd) supports the Call Hierarchy feature,
-> which is intended to list callers or callees of the function at the editor's
-> cursor. If I ask the server for callers of ll_merge I get this response
-> (on 510f9eba9 plus this series)
->
->         ll-merge.h:98:1: ll_merge - list of callers
->           builtin/checkout.c:242:12: checkout_merged
->             builtin/checkout.c:279:17:  merge_status = ll_merge(&result_buf, path, &ancestor, "base",
->           rerere.c:943:12: handle_cache
->             rerere.c:984:2:     ll_merge(&result, path, &mmfile[0], NULL,
->           notes-merge.c:342:12: ll_merge_in_worktree
->             notes-merge.c:353:11:       status = ll_merge(&result_buf, oid_to_hex(&p->obj), &base, NULL,
->           merge-recursive.c:1035:12: merge_3way
->             merge-recursive.c:1090:17:  merge_status = ll_merge(result_buf, a->path, &orig, base,
->           merge-ort.c:1763:12: merge_3way
->             merge-ort.c:1816:17:        merge_status = ll_merge(result_buf, path, &orig, base,
->           merge-blobs.c:32:14: three_way_filemerge
->             merge-blobs.c:48:17:        merge_status = ll_merge(&res, path, base, NULL,
->           apply.c:3491:12: three_way_merge
->             apply.c:3511:11:    status = ll_merge(&result, path,
->           rerere.c:608:12: try_merge
->             rerere.c:623:9:             ret = ll_merge(result, path, &base, NULL, cur, "", &other, "",
->
-> So there are 8 callers in total; but only 7 print the warning (including the
-> one in merge-ort which will change in the next commit). I think you missed
-> the call at rerere.c:984 because we ignore its return value.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-82.md
 
-Doh, I missed one!  Though, as pointed out by Junio, rerere won't
-operate on binary files and thus can't hit that codepath.  Still, I
-should either have it in both rerere codepaths or neither.
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-> > @@ -133,10 +133,12 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
-> >       xmp.ancestor = orig_name;
-> >       xmp.file1 = name1;
-> >       xmp.file2 = name2;
-> > -     return xdl_merge(orig, src1, src2, &xmp, result);
-> > +     status = xdl_merge(orig, src1, src2, &xmp, result);
-> > +     ret = (status > 1 ) ? LL_MERGE_CONFLICT : status;
->
-> " (status > 1 )" has an extra space
->
-> I'm not sure it's wise to handle status=1 and status=2 in two different code paths.
-> Both mean the same (the only difference is the number of conflicts).
-> status=1 coincides with LL_MERGE_CONFLICT but that's purely coincidental
->
->         ret = (status > 0) ? LL_MERGE_CONFLICT : status;
+  https://github.com/git/git.github.io/issues/532
 
-Um, whoops.  Yeah, this should be > 0, not > 1.  (As per
-xdl_do_merge() comment, status >= 0 means status returns the number of
-conflicts)  No clue how I messed that up so badly; kind of
-embarrassing, honestly.
+You can also reply to this email.
 
-Thanks for the careful reading.
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
 
-> > @@ -236,7 +239,8 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
-> >               unlink_or_warn(temp[i]);
-> >       strbuf_release(&cmd);
-> >       strbuf_release(&path_sq);
-> > -     return status;
-> > +     ret = (status > 1) ? LL_MERGE_CONFLICT : status;
->
-> same here, I'd test for "status > 0" because that's the convention for
-> external programs
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
 
-Yep.
+Jakub, Markus, Kaartic and I plan to publish this edition on Monday
+December 30th in the evening.
 
-...
-> > diff --git a/rerere.c b/rerere.c
-> > index d83d58df4fb..b1f8961ed9e 100644
-> > --- a/rerere.c
-> > +++ b/rerere.c
-> > @@ -609,19 +609,23 @@ static int try_merge(struct index_state *istate,
-> >                    const struct rerere_id *id, const char *path,
-> >                    mmfile_t *cur, mmbuffer_t *result)
-> >  {
-> > -     int ret;
-> > +     enum ll_merge_result ret;
-> >       mmfile_t base = {NULL, 0}, other = {NULL, 0};
-> >
-> >       if (read_mmfile(&base, rerere_path(id, "preimage")) ||
-> > -         read_mmfile(&other, rerere_path(id, "postimage")))
-> > -             ret = 1;
-> > -     else
-> > +         read_mmfile(&other, rerere_path(id, "postimage"))) {
-> > +             ret = LL_MERGE_CONFLICT;
-> > +     } else {
-> >               /*
-> >                * A three-way merge. Note that this honors user-customizable
-> >                * low-level merge driver settings.
-> >                */
-> >               ret = ll_merge(result, path, &base, NULL, cur, "", &other, "",
-> >                              istate, NULL);
-> > +             if (ret == LL_MERGE_BINARY_CONFLICT)
-> > +                     warning("Cannot merge binary files: %s (%s vs. %s)",
-> > +                             path, "", "");
->
-> With the next patch, 7/8 callers of ll_merge (almost) immediately print
-> that warning.  Looks fine as is, but does it make sense to introduce a helper
-> function for the common case, or add a flag to ll_merge_options?
-
-I started by adding a flag, and Peff suggested not doing so (because
-the printing doesn't belong in a "low-level" merge, as ll_merge stands
-for[1]), but instead making the callers responsible.  We could add a
-helper function, outside of ll-merge.[ch], but I'm not sure where to
-put it or what to call it and I'm leaning towards just leaving things
-as-is (well, other than fixing up the important issues you brought up
-before this).
-
-[1] https://lore.kernel.org/git/YVOZRhWttzF18Xql@coredump.intra.peff.net/
+Thanks,
+Christian.
