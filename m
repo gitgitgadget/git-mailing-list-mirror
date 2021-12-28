@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05AC5C433F5
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 14:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10FA8C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 14:35:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233672AbhL1OfT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 09:35:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57434 "EHLO
+        id S233692AbhL1OfW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 09:35:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232788AbhL1OfQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 09:35:16 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E3D0C061574
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 06:35:16 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id k18so2030132wrg.11
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 06:35:15 -0800 (PST)
+        with ESMTP id S233224AbhL1OfR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 09:35:17 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D513C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 06:35:17 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id e5so38742598wrc.5
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 06:35:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LzzqLBOmd1rTFhAavOLKeBSWJBt84z+MerLYu5aTUWo=;
-        b=ikfi9xsv6HOsBCGSM+vi2rGSXScnj/YxO6Dez4g3X/kzwFkp+zSfi5+znE51lhqrWl
-         Mbl9bnUVDTGc3o4ZjTEMbIeyjXj7mW41PElJFoMsQVe1WJMNsqaGO5bykJgz1QHj3lHc
-         Qx1YJsdrANPMj2wzbMVycxacYrcEMnF2wns8BX5TgEeuu5Ap3uRhwdjmRUgDXBlwpNZy
-         1HrD95KEvXJJdg63J4tB1/kL6Fd4+8koYNRI3yeOBZLuVAMt3nhPPYsOJop4qFyVvx3A
-         lIgQS75pmLvayvDzmtDf2+xYbvZ9qBP9eB4Wux23dzn7GwUyuTQNK7Ezazihlkns5MrR
-         YcJw==
+        bh=+N8ibF8Qqra0EmOCedJOc1b0OLSrI1YjyIZ3toIsYPA=;
+        b=diOTXg/6JUyU+FQX56igOI7WwEYXCU6jGF2jQktHOVdALLfdUOuQkkA97JQ+ONsDZQ
+         B/nubDyxL/cJzOVnl4eq5I3nnIVBJyR6sHOeUTUx6r/SHHr9IkQrahgchEylF2kuOUIz
+         EIAOBgw8PctCtqqzLIwc2r6z3Qlbn+xtsMn9J4Zv6XNYjS2o4bqtVLwl9h53K5h9iSQB
+         Y598alhWg37K8fAv/OT6fM2ssNKuN+XzkPJFmxYxTkilLQl41mqrTFFGyh6cftENUr72
+         CM8froFQrUevlRZf0rqdv6YW8ZF91jARaX7f4wQE8ToPzwBMtdqFS3d0FpVEbrjyb10O
+         lSpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LzzqLBOmd1rTFhAavOLKeBSWJBt84z+MerLYu5aTUWo=;
-        b=zfJvPa6wpm5tzHHDKk0FDcPdpMU5TR23Strt2/R1wkpPNqErAKy0Up73o6jKt4KGoU
-         qHoDXdtlwg0G9GHH7UzY9iiemj8Kfn92wqSdngxobsAhNceXIMcI3B+q1Sz5tMlPaluu
-         sT5dCsdpqhOtDb/tZTiL4PtaT7QCIBaOJKFSjNQwI0I4Uo608yJKvLMKoNl4HAm4k9ra
-         cJMngA6J/SN/edMDiFrUG8xfbbeg5ub7T3a2N0RT8u1z7gojnU3yE6LbeawdIBBN58l+
-         sZKVQSvzXxy+0fjp6Z1x5OetjyTfCbLp+Xlwe4M7FdIwBESUR0QJu0de0aEUChTJgScN
-         C6JQ==
-X-Gm-Message-State: AOAM533MgqLtKrhL9RAwdkL58slgxNfIBRnYoofoAtBf4dCTd53YeGpF
-        Abuc/kizCzVzqMxWgeEgsNrpTpkq5qXN/Zrg
-X-Google-Smtp-Source: ABdhPJz26BFp60+Y+adlWnBC6SMNH1TgU1PQzI6DzGM0cE65WbZA7IiruDuIJZ18NVhLvlVnurp9xg==
-X-Received: by 2002:a5d:6702:: with SMTP id o2mr16636673wru.292.1640702114379;
-        Tue, 28 Dec 2021 06:35:14 -0800 (PST)
+        bh=+N8ibF8Qqra0EmOCedJOc1b0OLSrI1YjyIZ3toIsYPA=;
+        b=jZE9CC0YmxLJ/Lf9NSND8SRStpjcB7ka8dNWtoAsa1trlji/KWTamYm8Xvnj2kc5qL
+         kF63lgrgxxEGFhmX5I3q+B/1NY6r6I/p59kdIM0NMxLoRg7UxYo8KkxmGXx/0j1wTSob
+         4B16jq79E0sahseTZ7FYv/dm/GNS3ZuvxlVPJdRPxULlDku6FCO2G7uaMORpO7OZLGPo
+         AHmiyrYrkE+iA/osHzZInWKWSv7NQ6KBqJhkelj5UATmXOQw9FeYB5gkcB1KgeFZEm6e
+         tHVKV248m5iVa8rg9KjrPve2oaXgqWyWT3j2jPpdrEoyqFQEpOQ7jeQlVMg6oO3c+JQL
+         kLBQ==
+X-Gm-Message-State: AOAM532NMWp6WYkV0vxwie2Ty5vqP/iNhDkH1vHxRUqDBn+4twYlPqD7
+        zRxghxRsQid2SBUDXHEWBNECCNBfwOlqcqli
+X-Google-Smtp-Source: ABdhPJx16pHI4RwahO3KIyWsxCUurvp4z3+2NcawKcneGurip5hkjsAP3Zn1fklRjeGNBduNy3nCtw==
+X-Received: by 2002:a5d:6dac:: with SMTP id u12mr16302884wrs.233.1640702115977;
+        Tue, 28 Dec 2021 06:35:15 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m35sm42780660wms.1.2021.12.28.06.35.13
+        by smtp.gmail.com with ESMTPSA id m35sm42780660wms.1.2021.12.28.06.35.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Dec 2021 06:35:13 -0800 (PST)
+        Tue, 28 Dec 2021 06:35:15 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Josh Steadmon <steadmon@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 2/6] object-name: explicitly handle OBJ_BAD in show_ambiguous_object()
-Date:   Tue, 28 Dec 2021 15:34:58 +0100
-Message-Id: <patch-v6-2.6-c78243dc701-20211228T143223Z-avarab@gmail.com>
+Subject: [PATCH v6 4/6] object-name: show date for ambiguous tag objects
+Date:   Tue, 28 Dec 2021 15:35:00 +0100
+Message-Id: <patch-v6-4.6-b5aa6e266f6-20211228T143223Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1257.g2af47340c7b
 In-Reply-To: <cover-v6-0.6-00000000000-20211228T143223Z-avarab@gmail.com>
 References: <cover-v5-0.6-00000000000-20211125T215529Z-avarab@gmail.com> <cover-v6-0.6-00000000000-20211228T143223Z-avarab@gmail.com>
@@ -68,96 +68,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend the "unknown type" handling in the code that displays the
-ambiguous object list to assert() that we're either going to get the
-"real" object types we can pass to type_name(), or a -1 (OBJ_BAD)
-return value from oid_object_info().
+Make the ambiguous tag object output nicer in the case of tag objects
+such as ebf3c04b262 (Git 2.32, 2021-06-06) by including the date in
+the "tagger" header. I.e.:
 
-See [1] for the current output, and [1] for the commit that added the
-"unknown type" handling.
+    $ git rev-parse b7e68
+    error: short object ID b7e68 is ambiguous
+    hint: The candidates are:
+    hint:   b7e68c41d92 tag 2021-06-06 - v2.32.0
+    hint:   b7e68ae18e0 commit 2019-12-23 - bisect: use the standard 'if (!var)' way to check for 0
+    hint:   b7e68f6b413 tree
+    hint:   b7e68490b97 blob
+    b7e68
+    [...]
 
-We are never going to get an "unknown type" in the sense of custom
-types crafted with "hash-object --literally", since we're not using
-the OBJECT_INFO_ALLOW_UNKNOWN_TYPE flag.
+Before this we'd emit a "tag" line of:
 
-If we manage to otherwise unpack such an object without errors we'll
-die() in parse_loose_header_extended() called by sort_ambiguous()
-before we get to show_ambiguous_object(), as is asserted by the test
-added in the preceding commit.
-
-So saying "unknown type" here was always misleading, we really meant
-to say that we had a failure parsing the object at all, i.e. that we
-had repository corruption. If the problem is only that it's type is
-unknown we won't reach this code.
-
-So let's emit a generic "[bad object]" instead. As our tests added in
-the preceding commit show, we'll have emitted various "error" output
-already in those cases.
-
-We should do better in the truly "unknown type" cases, which we'd need
-to handle if we were passing down the OBJECT_INFO_ALLOW_UNKNOWN_TYPE
-flag. But let's leave that for some future improvement. In a
-subsequent commit I'll improve the output we do show, and not having
-to handle the "unknown type" (as in OBJECT_INFO_ALLOW_UNKNOWN_TYPE)
-simplifies that change.
-
-1. 5cc044e0257 (get_short_oid: sort ambiguous objects by type,
-   then SHA-1, 2018-05-10)
-2. 1ffa26c461 (get_short_sha1: list ambiguous objects on error,
-   2016-09-26)
+    hint:   b7e68c41d92 tag v2.32.0
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- object-name.c                       | 14 ++++++++++++--
- t/t1512-rev-parse-disambiguation.sh |  2 +-
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ object-name.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/object-name.c b/object-name.c
-index fdff4601b2c..9750634ee76 100644
+index dcf3ab99990..990f384129e 100644
 --- a/object-name.c
 +++ b/object-name.c
-@@ -361,6 +361,16 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 		return 0;
+@@ -403,21 +403,26 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
+ 	} else if (type == OBJ_TAG) {
+ 		struct tag *tag = lookup_tag(ds->repo, oid);
+ 		const char *tag_tag = "";
++		timestamp_t tag_date = 0;
  
- 	type = oid_object_info(ds->repo, oid, NULL);
-+
-+	if (type < 0) {
-+		strbuf_addstr(&desc, "[bad object]");
-+		goto out;
-+	}
-+
-+	assert(type == OBJ_TREE || type == OBJ_COMMIT ||
-+	       type == OBJ_BLOB || type == OBJ_TAG);
-+	strbuf_addstr(&desc, type_name(type));
-+
- 	if (type == OBJ_COMMIT) {
- 		struct commit *commit = lookup_commit(ds->repo, oid);
- 		if (commit) {
-@@ -374,9 +384,9 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 			strbuf_addf(&desc, " %s", tag->tag);
- 	}
+-		if (!parse_tag(tag) && tag->tag)
++		if (!parse_tag(tag) && tag->tag) {
+ 			tag_tag = tag->tag;
++			tag_date = tag->date;
++		}
  
--	advise("  %s %s%s",
-+out:
-+	advise("  %s %s",
- 	       repo_find_unique_abbrev(ds->repo, oid, DEFAULT_ABBREV),
--	       type_name(type) ? type_name(type) : "unknown type",
- 	       desc.buf);
- 
- 	strbuf_release(&desc);
-diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index 60d2a457067..d68c411bfc7 100755
---- a/t/t1512-rev-parse-disambiguation.sh
-+++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -101,7 +101,7 @@ test_expect_success POSIXPERM 'ambigous zlib corrupt loose blob' '
- 	error: unable to unpack cafe... header
- 	error: inflate: data stream error (incorrect header check)
- 	error: unable to unpack cafe... header
--	hint:   cafe... unknown type
-+	hint:   cafe... [bad object]
- 	hint:   cafe... blob
- 	fatal: ambiguous argument '\''cafe...'\'': unknown revision or path not in the working tree.
- 	Use '\''--'\'' to separate paths from revisions, like this:
+ 		/*
+ 		 * TRANSLATORS: This is a line of
+ 		 * ambiguous tag object output. E.g.:
+ 		 *
+-		 *    "deadbeef tag Some Tag Message"
++		 *    "deadbeef tag 2021-01-01 - Some Tag Message"
+ 		 *
+ 		 * The second argument is the "tag" string from
+ 		 * object.c, it should (hopefully) already be
+ 		 * translated.
+ 		 */
+-		strbuf_addf(&desc, _("%s tag %s"), hash, tag_tag);
++		strbuf_addf(&desc, _("%s tag %s - %s"), hash,
++			    show_date(tag_date, 0, DATE_MODE(SHORT)),
++			    tag_tag);
+ 	} else if (type == OBJ_TREE) {
+ 		/*
+ 		 * TRANSLATORS: This is a line of ambiguous <type>
 -- 
 2.34.1.1257.g2af47340c7b
 
