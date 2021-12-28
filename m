@@ -2,69 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07BC0C433EF
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 17:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 603BBC433EF
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 17:42:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236711AbhL1RQF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 12:16:05 -0500
-Received: from mail-io1-f54.google.com ([209.85.166.54]:41727 "EHLO
-        mail-io1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236065AbhL1RQD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 12:16:03 -0500
-Received: by mail-io1-f54.google.com with SMTP id y18so14988937iob.8
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 09:16:03 -0800 (PST)
+        id S236808AbhL1Rmw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 12:42:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43338 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236060AbhL1Rmv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 12:42:51 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26A45C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 09:42:51 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id q14so68863570edi.3
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 09:42:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8K+PsDvvy5SYQjh4APqoz1zyrU35aeq/B38BrgNBs1M=;
+        b=EY/oaCZaIGVaDbv2sN9Lh2Bv0xzPjR4gQa4iLVyrrxJdWuXzGP1JNyS5XeWNbguzrg
+         mqxF7qg7twUosq3ABFj6oORziKEiNAQ8mU+4YfrE89uCpEXGr73hcYV43xgdgazEu1Br
+         JEmnLDYJYMBeJaG1EgbCRbq2TzKAhYk/ekigPiGSl6dbi3GQPrii7T7T5pto7Fotjf5H
+         KOftxO1/AhGpzYcrJSVYIBROrj6/sNhTXVrS8/M5FmLSxllO21f170vjaqWtZ8qhuzl/
+         vwDuO9hdyohl/2EsOrO9ZVxKEuh9YYyWv+rtwYytuUFYzYL4iKbn+z2HVDmhttkaqITN
+         c0pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=EMzMcHj3qC0mMuEq/yTsrJT/b0B6bOT9QW/g/WGw3gw=;
-        b=xRS9JW0B5UBhJBPxM8zT7DRuM7CzYdAogIAixgzjvqM04800AznUQehU4nAED/Ec0n
-         GUuOT3VWB3ToPHWOzgQvjQS93kH+Rt3IWRDMCr32ssB7CCaock2FjUnEEKVYyQES+Dii
-         N8B4Vb8H4Dio9f2kFgDJvKxzRVDCLEKsLA0HD+qUM7k/u5psElTwJW7J0/ySelvEWXEc
-         RyWNO8Qr9A3+tq4Z9PRVluqAc9asfwDRzPj1qAqJNAVFogOiBqSoJwIpYBvQlEeaCQmX
-         pPkiU1cuVukQjs2GVkVJGo0Xf0gNvVRC5Ub16/MlgyPUQP9lWlJU8JoYLdU0oGDVzp2v
-         rsGQ==
-X-Gm-Message-State: AOAM532JyjSHxQlV0l0EKOEDOrRUGqRxlD+Zd432mLVtoy65k7eLp4wh
-        eC5AcuzOPZYsiiU7TdH4c91ohRc2KnBn1qq0x6s=
-X-Google-Smtp-Source: ABdhPJxSbwfifE7tUlbLgZq3no1+g+0ixv3nT2z+8PGPzxrX8rnFFOUcc/R2yZrOycbsBIqANAtHRGYpt1+qcknNZn4=
-X-Received: by 2002:a05:6638:142:: with SMTP id y2mr10372202jao.195.1640711763203;
- Tue, 28 Dec 2021 09:16:03 -0800 (PST)
+        bh=8K+PsDvvy5SYQjh4APqoz1zyrU35aeq/B38BrgNBs1M=;
+        b=rOoF/ND/hQdn/cOgFYdQrlBF6H3XjTIdey9T5SLBiXuaiA2nwHyQH9ygvqD1fXDDMq
+         e0ExRYum9kxgdF9X/YaFrNbJ0s/K5DsVITM0kVuak81HCwasaYMyu4TzoZgy7Bqii+HD
+         0RXGPhnTvIuFeZd9nzXafsUIbQyOtVvum7e8Hv/SpI01Eb+BgrGnatPjjBzYZMvXZ89G
+         coVH3fW4zsXnW+pR3j0UqoCf8vCAOZkQCh2L5xQ0UCK4ZfKnf1wBi7yqXlQf3b/FggWn
+         DlSajrypZ+/e4RsVjc+42bpz/+70hwH2yjSmUhq36Xa1NNppJDyYdCvQZsXLeN0kKWry
+         0r1A==
+X-Gm-Message-State: AOAM530ne7uBZoepo7ssQOxYfvtUo52JCfFCGlMISxqSYe9/43GBQI0O
+        X/6Dx4znToslQHC5a+adnhwOSNy9n1aqPVSP8DzPVc4YLrb6xA==
+X-Google-Smtp-Source: ABdhPJxKMDbkwMi/iiWedkN360LsQdYwWT0GOQJ09x6vakMmgY4r+iUHBkBQZRC6mpMVkuQI4apDt1LhitHJj8H0JmQ=
+X-Received: by 2002:a17:907:3f1e:: with SMTP id hq30mr17799112ejc.613.1640713369395;
+ Tue, 28 Dec 2021 09:42:49 -0800 (PST)
 MIME-Version: 1.0
-References: <7w7c2MDOBpV9yIlD5yZZb801w-eaz0qhErkCN-De51h892xRFL14N-LCXH0O8wvDp_51A3hC86EMXonBkjNdoTZ-iy8xzoKLVecN6D6Zpq4=@protonmail.com>
- <004601d7fb3c$c9d359c0$5d7a0d40$@nexbridge.com> <J-VncZqqtXGSpnkopiYEtOET-oeVZX1tk3jBX9c3oSaOrcH1N_ciDdzQFvk50CkibrWFCboQNDeegBNMGZ247duUXwnPFY_0HbFvEWI0hVg=@protonmail.com>
- <000001d7fb3e$7c0e8730$742b9590$@nexbridge.com> <FKMNcEoH2PMBw4wcDkxzCDdl41kpWkZyh5SkiRlDi6seiVchbCuBbMmc38SFYR8gAgDhk_vo3xJSCiPSdYRIvhOQ1cB4uoZksClDYey2LXs=@protonmail.com>
- <000801d7fb5b$12ec49f0$38c4ddd0$@nexbridge.com>
-In-Reply-To: <000801d7fb5b$12ec49f0$38c4ddd0$@nexbridge.com>
-From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Tue, 28 Dec 2021 18:15:26 +0100
-Message-ID: <CA+JQ7M94QXWbFnJfzewqecvETmJC9fVkFAb-+RHFuswj=FdnpA@mail.gmail.com>
-Subject: Re: Quick login of git
-To:     rsbecker@nexbridge.com
-Cc:     zhiyiren2009-subscription 
-        <zhiyiren2009-subscription@protonmail.com>,
-        zhiyiren2009@protonmail.com, snakamoto1975@protonmail.com,
-        git@vger.kernel.org
+References: <xmqq7dbpvb0q.fsf@gitster.g>
+In-Reply-To: <xmqq7dbpvb0q.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 28 Dec 2021 09:42:38 -0800
+Message-ID: <CABPp-BFR29S-Pwq9LZEOjaCxozTV9mkUBpd2SLGwh7jNW+On4w@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2021, #06; Mon, 27)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On December 27, 2021 11:07 AM zhiyiren2009-subscription wrote:
-> Why not add a quick login method like VSCode and CLion in git? Login
-> to
-> GitHub/ GitLab with one click, without privete key.
+On Tue, Dec 28, 2021 at 3:27 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> * ds/sparse-checkout-malformed-pattern-fix (2021-12-25) 4 commits
+>   (merged to 'next' on 2021-12-27 at c410caf527)
+>  + fixup! sparse-checkout: fix OOM error with mixed patterns
+>  + sparse-checkout: refuse to add to bad patterns
+>  + sparse-checkout: fix OOM error with mixed patterns
+>  + sparse-checkout: fix segfault on malformed patterns
+>
+>  Certain sparse-checkout patterns that are valid in non-cone mode
+>  led to segfault in cone mode, which has been corrected.
+>
+>  Will merge to 'master'.
+>  source: <pull.1069.v4.git.1639671222.gitgitgadget@gmail.com>
 
-I believe you're referring to this?
-https://code.visualstudio.com/docs/editor/github#_authenticating-with-an-existing-repository
+Eek, this was merged with the "fixup!" commit to next.  I think that
+was a mistake...but what's the plan now?  Merge to master as-is...or
+revert from next, then squash, then re-merge?
 
-This is using PATs,
-so the same authentication can be used in CLI.
+> * gc/branch-recurse-submodules (2021-12-25) 7 commits
+>  - fixup! branch: add --recurse-submodules option for branch creation
+>  - branch: add --recurse-submodules option for branch creation
+>  - builtin/branch: clean up action-picking logic in cmd_branch()
+>  - branch: add a dry_run parameter to create_branch()
+>  - branch: make create_branch() always create a branch
+>  - branch: move --set-upstream-to behavior to dwim_and_setup_tracking()
+>  - Merge branch 'js/branch-track-inherit' into gc/branch-recurse-submodules
+>  (this branch uses js/branch-track-inherit.)
+>
+>  "git branch" learned the "--recurse-submodules" option.
+>
+>  Will merge to 'next'?
+>  source: <20211220233459.45739-1-chooglen@google.com>
 
-I recall seeing a github login window when I was playing around with https
-authentication in Git for Windows.
-Not sure what happens if you login through that as I quit that window.
-I believe the default credential helper already saves username/password
-for https remotes.
+Can we squash the "fixup!" commit before merging?
 
-It should be noted that many prefer to authenticate using ssh-keys
-but ssh isn't viable for all remotes/environments :/
+> * ab/cat-file (2021-12-25) 11 commits
+>  - fixup! cat-file: fix remaining usage bugs
+>  - cat-file: use GET_OID_ONLY_TO_DIE in --(textconv|filters)
+>  - object-name.c: don't have GET_OID_ONLY_TO_DIE imply *_QUIETLY
+>  - cat-file: correct and improve usage information
+>  - cat-file: fix remaining usage bugs
+>  - cat-file: make --batch-all-objects a CMDMODE
+>  - cat-file: move "usage" variable to cmd_cat_file()
+>  - cat-file docs: fix SYNOPSIS and "-h" output
+>  - parse-options API: add a usage_msg_optf()
+>  - cat-file tests: test messaging on bad objects/paths
+>  - cat-file tests: test bad usage
+>
+>  Assorted updates to "git cat-file", especially "-h".
+>
+>  Will merge to 'next'?
+>  source: <cover-v5-00.10-00000000000-20211222T041050Z-avarab@gmail.com>
+
+Can we squash the "fixup!" commit before merging?
+
+> * jt/conditional-config-on-remote-url (2021-12-15) 2 commits
+>  - config: include file if remote URL matches a glob
+>  - config: make git_config_include() static
+>
+>  The conditional inclusion mechanism of configuration files using
+>  "[includeIf <condition>]" learns to base its decision on the
+>  URL of the remote repository the repository interacts with.
+>
+>  How does this one look these days?
+>  source: <cover.1639509048.git.jonathantanmy@google.com>
+
+I gave it my Ack, though it appears we are solving the
+make-it-easy-to-include-pre-vetted-configuration multiple different
+ways with various caveats.  While each case makes sense to me, I'm
+wondering if there's some more general solution that we should work on
+at some point (see
+https://lore.kernel.org/git/CABPp-BFLNqLuJ8o_6YZDYgd=Ft+wc9EjBPX+RRzwAdASKSW2bw@mail.gmail.com/).
+But that need not hold up this series right now.
