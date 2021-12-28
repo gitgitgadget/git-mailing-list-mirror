@@ -2,92 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDDB6C433F5
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 20:21:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 389C3C433F5
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 20:44:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236212AbhL1UVo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 15:21:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49764 "EHLO
+        id S237311AbhL1Uok (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 15:44:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236101AbhL1UVn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 15:21:43 -0500
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6041EC061574
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 12:21:43 -0800 (PST)
-Received: by mail-yb1-xb2d.google.com with SMTP id p15so6684948ybk.10
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 12:21:43 -0800 (PST)
+        with ESMTP id S237301AbhL1Uok (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 15:44:40 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 086E5C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 12:44:39 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id p13so7385868lfh.13
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 12:44:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=UVtIM8ZvKecfh/GF7o19h6OTtK7zKVBgpcZuW7hVKnI=;
-        b=e70aGHyIBI/IcmtaVML8nlsNMeNffSSYpsa/tXj6aLzaZ9bE6LouzDU6PFkx4905AE
-         p352pWrZ/cTRaPJThJ8tLoEH5MXpGD56SMAwX7Z+o6py6cjxvJsO0fIeN20pIg8nj6w3
-         FonLvQYcd1w3FmKWBRN45FNqUYWVi3FyFjBAqkYE9fwDzWjn8nkaBzYXOj4VGlXGfmx9
-         q3pm0jxp7IGix5CtqApVQqkec9NeOjK6bXEeaBuTlT/P0HdRSF4ZpAkfpN0n70iszP1M
-         PQzQZTlfgZOXsxmHJSCZ182Eyk8cNibhjEo+IF0aF1BdS9RtJi6wwgn++rlSwy/hGQMR
-         al8A==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:cc:from:in-reply-to:content-transfer-encoding;
+        bh=oEyiCDHW7LwZMHMoOkQUuYxkr4Jm0ADJcYJUOs9TAI8=;
+        b=pjwZiXjnJT5GhgOSsah2XpnnwdssTQ4UV5/Csh5uHVEMZi5zyo8CBllyvqKiMrJ5y0
+         i9TbyNkAPoCwoJ6QCO9KtdAiHbExQpFHAXQ9b8l5M8lY+VnhFjqaere8PBLZT0BB+ZjD
+         rPxf+oAEiZklPdVev3xmK2E+Yk9yyt3OjHVJMRk3fMukfIBN5UTN4/ACUeSCIUh7+nC7
+         OuCUDvhVMLxOV5Ejj8dV//7D8vw1XUdR7biwTDC2XqLOZNXj8WNQKMPJglu2y/+N6ihu
+         DsyTNVliqNHDOt5WeYN8WZDKpj4qDCX2CMC/8g6hwoOTqGhqU/2XJ0lBUU63oVL6KZWR
+         Db8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=UVtIM8ZvKecfh/GF7o19h6OTtK7zKVBgpcZuW7hVKnI=;
-        b=EB/ItNQoshrpP1G2XaplY4oR6LWkiGNyccNxoKz3xn/jxNEojk+Bz4Flp3PR2L9XjQ
-         QhPQxx5oi7lubALnQkwzBxsMGvW004VrZ63UBBsvL2eKKqGtR9mO1hlAhjiBb6TdS5C2
-         z40xksP0qTwpJczmIVPJbpJDAVsBrEm0gGZ6klRUTErukWBTGv1Mod8pk9yCEAtSAc4n
-         1gtz6gv3FVT1/N2vgFPdukTNO7At1VMZOBiC5m3YQU7gJzA5UmE1038tfmEGAQDyoPpj
-         YuXC2obnTy399BTvCxTUugBEbVsnwMTTJiejzO+CnDQmW6mtCuee2f+xsqVXXqqTn6Cp
-         01zw==
-X-Gm-Message-State: AOAM531+PnOUN3AKVfKmlboKpIuVPqTen13J6NFnEk0R3P22Sj9p2rig
-        1EGELE2bxlYFPsjSahMLx6IYn0rhAYmGLep24z4/IkZhx54=
-X-Google-Smtp-Source: ABdhPJwljyj41IVnWDsPKwgZLZe3TS0x4hAfdgDU4fcV4qWWJPhrOo+J4yYJ7QzYQJEw7cjz8yGMiNeV3wn8aIhnzS8=
-X-Received: by 2002:a25:4dc4:: with SMTP id a187mr28280238ybb.631.1640722902211;
- Tue, 28 Dec 2021 12:21:42 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:cc:from:in-reply-to
+         :content-transfer-encoding;
+        bh=oEyiCDHW7LwZMHMoOkQUuYxkr4Jm0ADJcYJUOs9TAI8=;
+        b=uzQzyYiVhKnRgzTr4Q3INptiFyuiaaNJoNF+yn5NyPjyeH1BHSP2iLrVWIfARp+xgP
+         RiIQka3nLd2ZgckAQbAwDUgBgDuIMRy/ndVvFhoD0VYy7B4jXw+eMlEchQuSMH/BVkXf
+         O2RCnfAeShA3smVYbtwI8fV3YEvreYp9VjuZOiYTWZmBsLxjwVtTXyCo/QrjQcl6Mulq
+         mnaJLFnazunbIyY7RrNJbhPIHGFEsLEqLl/rCOYCqCjaHmWkDI5pTdD5CVsECSs4CBpE
+         YVQIXCCQAWdbqssKBbL4/IYjgsAbZbq6o/BR7G5q/LxT8Xan1VK949/nRtvwYRl8CQdx
+         Kw3A==
+X-Gm-Message-State: AOAM532JoqXZ3CznxEk8Q5cXoDZN5yBnniF3t3zBlWI9mWJQsw8Nt60L
+        gjL1b//MYhDzNSqC2YN6wutsCBpVfyc=
+X-Google-Smtp-Source: ABdhPJzM6D+QlKiMFca7TOSukGYQguab80YbudS5XwEWMNyYrbsAuBM3gKIBv/PuslfL3aPHzJcZ+g==
+X-Received: by 2002:a05:6512:314d:: with SMTP id s13mr21188230lfi.397.1640724276955;
+        Tue, 28 Dec 2021 12:44:36 -0800 (PST)
+Received: from ?IPV6:2a02:2168:8729:6c00:f9e:84f5:5aba:46b8? ([2a02:2168:8729:6c00:f9e:84f5:5aba:46b8])
+        by smtp.gmail.com with ESMTPSA id d2sm707504ljj.118.2021.12.28.12.44.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Dec 2021 12:44:36 -0800 (PST)
+Message-ID: <a8f3246f-2b50-e713-16c3-1d23b80a42a1@gmail.com>
+Date:   Tue, 28 Dec 2021 23:44:35 +0300
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 28 Dec 2021 21:21:31 +0100
-Message-ID: <CAP8UFD0ffHduEjAjEVrdstWMeLTqi-+4Rqs8fbUeULMpKYJ8Gw@mail.gmail.com>
-Subject: Draft of Git Rev News edition 82
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Baruch Burstein <bmburstein@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.1
+Subject: Re: request: allow passing -X <strategy-option> to git checkout
+ <path> to auto-solve merge conflicts
+Content-Language: en-US
+To:     git@vger.kernel.org
+References: <3e1548ab-5e20-9555-bd10-d6cbf2ffbce4@gmail.com>
+ <CA+JQ7M-By65FVPnMFnwE8zx3T4O7DV3_5Kf2P6eZhP4Zcemorg@mail.gmail.com>
+Cc:     Erik Cervin Edin <erik@cervined.in>
+From:   Andrey Butirsky <butirsky@gmail.com>
+In-Reply-To: <CA+JQ7M-By65FVPnMFnwE8zx3T4O7DV3_5Kf2P6eZhP4Zcemorg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+Thanks Erik, please post your further replies to the mailing list so 
+others could see it also.
 
-A draft of a new Git Rev News edition is available here:
+On a topic,
+I'm not familiar with Git code-base so don't know if it even possible in 
+it's current architecture..
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-82.md
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
-
-  https://github.com/git/git.github.io/issues/532
-
-You can also reply to this email.
-
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
-
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Kaartic and I plan to publish this edition on Monday
-December 30th in the evening.
-
-Thanks,
-Christian.
+On 28.12.2021 20:32, Erik Cervin Edin wrote:
+> That's my answer =)
+>
+> I think adding a merge strategy option to checkout might be useful
+>
+> On Mon, Dec 27, 2021 at 4:49 PM Andrey Butirsky <butirsky@gmail.com> wrote:
+>> Hi, stumbling upon this again and again, so decided to write finally,
+>>
+>> while in conflicting state, the only thing we can do to auto-pick one or
+>> another side of conflict is passing --ours/--theirs option to git-checkout:
+>> git checkout --ours/--theirs <path>
+>>
+>> The problem is - it doesn't actually do a _merge_, i.e. you lose all
+>> non-conflicted changes.
+>>
+>> There is no easy way to solve that currently without third-party tools.
+>>
+>> This link illustrates it:
+>> https://stackoverflow.com/a/68498101/1063363
+>>
+>> Proposal:
+>> Shell we add -X <strategy-option> to git checkout <path> to allow it do
+>> a merge and _actually solve_ merge conflicts?
+>> That would be in-pair with other commands taking the option already:
+>> git-merge, git-rebase, (etc.?)
+>>
