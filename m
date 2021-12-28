@@ -2,189 +2,235 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1DBDC433EF
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 17:47:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66055C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 18:16:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236699AbhL1RrW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 12:47:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44320 "EHLO
+        id S236947AbhL1SQu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 13:16:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233463AbhL1RrV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 12:47:21 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E8A5C061574
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 09:47:21 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id z29so76582143edl.7
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 09:47:21 -0800 (PST)
+        with ESMTP id S233411AbhL1SQu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 13:16:50 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 079B2C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 10:16:50 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id m21so78093891edc.0
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 10:16:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=f2ug+EMi3igLkOf6hfp6fMpCWjwKrOmv/FZ8Ng0oO1A=;
-        b=VOrg4bIIDMLIV/C3J2tuIlLaIHRfd32s5dLc4JJaCwXocEDJtov5aR3w7hyBQ/pmNG
-         BGJqga2SmvIkV85e2ZGRzV3Yo92Vqz+JnOFJzBUEl84VYkfJIpBjDd2+u3giuxKG+XNC
-         BBgWTbXtkXmKX283kgG4ZxPCKanorcKnaKV1faBgIME5eYtNhzA8p/GZdtSTXgBEK/el
-         NQtbeTwQGEGY9/yIr+5wO9rA8e6edtx45wpm9lOFZcHsSGgoFoDdzWFK2ufSNZaxxfig
-         99CRRPxP+cQS7qdP2OHWKwyOATVKiTwixKFrxPQJz1GOOM8p9G8ts/QJP18PO1lByLgy
-         d1Jw==
+        bh=SInADg8J7e69PXuE5F5+5CB1P9AH0qVMp+vee4/4FLo=;
+        b=CnqJA7HSq4OSFBHDDAdrlwqRDcF5xNqIdfY0wXzws3gCycvnlS8SCzpvQeQ9P6VyCT
+         3JWYUQXuY9jBq1M12idUia01fTobg87yvocITpbbVQXZmkEMbR7cHXVjKnTgfwWntUI5
+         KhGMCNYwhjXgLoVhT1Nyj33Jj11X1W9U3i5as7bP7Y703jJ3ejQQB0s5uES0UtgEY4/l
+         U01dUxC4AhBK73ylzIdNgwzjn+jx/BOGnnALhEW+dEoaWlwjNRKL+FbRaIb7QIq69l4t
+         icvSPX+OSeJrYBo3oE14JVHtr7MqbDBwMijKlA2Aq0XWtQ4dqZQrKrs9m5c28IwWzDEl
+         m+MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=f2ug+EMi3igLkOf6hfp6fMpCWjwKrOmv/FZ8Ng0oO1A=;
-        b=mqSLiEsdOAsxzLC/zU4VxrOZVXtzA+M25G/R7P8wsTkGPERMzyEAd05M2PanPcjXfb
-         mbckxSLgmvx6BUGCXrqZ+XWC4GAVtmFNRM7SPqFuCXzmDlhgHp4/+vAJIxm41JY/Y22r
-         mB9xxS8tkM/yPWnACBkk60kGn8z69rkLIXnggWacMqOb7bTkS48el3/bOZRH28xLw2Rs
-         tL0kOyYH8/gB299ydNhw+XW8v+usbtpEc1zJdfXlMI6axOBi6ex7ieeLJyMoNS7tmChE
-         1+HlAML5k/Qma2LMkqMkPqpefeAlJ+LAnZpat4ajm3aiSLHq2I9MK2WkoQ1pCHY+hiAu
-         Jm3w==
-X-Gm-Message-State: AOAM533O5u8LvCVBkSSx2Y7wO4nPDFtt71cmWBSmscc81FtWDA6qjgdl
-        /SoQNrxzQm+6wC7Zkcd6dMfklBnFs3yXDUShWz8=
-X-Google-Smtp-Source: ABdhPJynRmco+gkqHJXoTxSWrZe5dZrUCZf4wQFZEJ5CycR8LYI0zvMFAEPSVIh1Msm8RKPJeX2gHHE9XjfpfWtMEPY=
-X-Received: by 2002:a17:907:60c8:: with SMTP id hv8mr17951597ejc.192.1640713639846;
- Tue, 28 Dec 2021 09:47:19 -0800 (PST)
+        bh=SInADg8J7e69PXuE5F5+5CB1P9AH0qVMp+vee4/4FLo=;
+        b=xD1EFg0MAh5qGIOJO+oMSu0XPSNCIrPxdGi1b2vc8azJUkfFUAaHIIuQAAaNj3cjc0
+         PMf/IkXJiWXbaL07OgUtaY+ICGHoXM5aDYX6eXJZo9gqn5MHN23M+CyprcLqM/zoXYFK
+         CYzBO1NdSaLg9CUDl3PNnxFtrZf6jD+kdrZrNw1hAR8leN3m87VTfMhySLvBbfda9gb8
+         FsHvx3aIJ6l18AUy4TLbfUrxI/s9LO3dKZjc7rxVsGQvZwNsjWYvNijlUFcwuCOUqA1d
+         5lewqwB7FgxxAig8j94X7MUxyOFlqQtgkM2QXVCLpSY4H1Eh0sKntAD069uy2QIdad43
+         I26w==
+X-Gm-Message-State: AOAM533YeSavzQLU9Eu/6qekMzlAHAvJxp6d+Wb2yt4gm46SVSrogHcZ
+        XgCaNI3eXVW/1IEf2U70eqerV7DUVOgdGLq7zWI=
+X-Google-Smtp-Source: ABdhPJzRcTeDzufqzNr+CZBG8goVglealJr5hFuEnolfkW+B60fN2MLgBHhAwvOQFq5a86qG81sm88OyHFA2QwEJgCk=
+X-Received: by 2002:a17:907:968a:: with SMTP id hd10mr17810204ejc.269.1640715408494;
+ Tue, 28 Dec 2021 10:16:48 -0800 (PST)
 MIME-Version: 1.0
-References: <xmqqa6izcwio.fsf_-_@gitster.g> <xmqq5yre7w5o.fsf@gitster.g>
-In-Reply-To: <xmqq5yre7w5o.fsf@gitster.g>
+References: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
+ <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com> <CABPp-BG7nwsdEYrnfqhAbWU4ndJHcqGf6RS_6DzJittuNVLvoA@mail.gmail.com>
+ <CAPig+cRDDGU=9BB6kd1tMJR8DmWKSSJwpTD8JeszrY685Fc3-Q@mail.gmail.com>
+ <CABPp-BFxz5B_wUubzaYeGEaztALqDMxxVTrcT4d1kKjpX8pRDQ@mail.gmail.com> <CAPig+cRYKKGA1af4hV0fz_nZWNG=zMgAziuAimDxWTz6L8u3Tg@mail.gmail.com>
+In-Reply-To: <CAPig+cRYKKGA1af4hV0fz_nZWNG=zMgAziuAimDxWTz6L8u3Tg@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 28 Dec 2021 09:47:08 -0800
-Message-ID: <CABPp-BFp=UnK=EEmr4GLp4m3e9pZ1yks0gt6yTk5OcNXD3LNKA@mail.gmail.com>
-Subject: Re: [PATCH v2] SubmittingPatchs: clarify choice of base and testing
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>
+Date:   Tue, 28 Dec 2021 10:16:37 -0800
+Message-ID: <CABPp-BGKyDJV9DP+igmCC_Ad0jgvb4aOAYpXWCbx9hW8ShhDQg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] Sparse checkout: fix bug with worktree of bare repo
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Sean Allred <allred.sean@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 24, 2021 at 5:25 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Dec 27, 2021 at 11:33 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
-> We encourage identifying what, among many topics on `next`, exact
-> topics a new work depends on, instead of building directly on
-> `next`.  Let's clarify this in the documentation.
+> On Mon, Dec 27, 2021 at 2:35 PM Elijah Newren <newren@gmail.com> wrote:
+> > On Sun, Dec 26, 2021 at 11:15 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > > Your example indeed leads to a broken state because it doesn't follow
+> > > the instructions given by git-worktree.txt for enabling
+> > > `extensions.worktreeConfig`, which involves additional bookkeeping
+> > > operations beyond merely setting that config variable.
+> >
+> > These are instructions which neither Stolee nor I was aware of prior
+> > to your pointing it out.  [...]
+> > I'd suspect that Stolee and I are actually _more_ likely to be aware
+> > of relevant documentation than the average Git user, so if we missed
+> > it, I suspect many of them will. [...]
 >
-> Developers should know what they are building on top of, and be
-> aware of which part of the system is currently being worked on.
-> Encouraging them to make trial merges to `next` and `seen`
-> themselves will incentivize them to read others' changes and
-> understand them, eventually helping the developers to coordinate
-> among themselves and reviewing each others' changes.
+> I wasn't originally aware of the bookkeeping instructions either. In
+> fact, for a good while, I wasn't even aware that Duy had implemented
+> per-worktree configuration or that there was such a thing. I either
+> must have been entirely off-list during the implementation or was not
+> in a position to follow changes to the project at the time. I only
+> became aware of per-worktree configuration at some point in the last
+> two or three years when someone asked some question on the list
+> related to the feature and I ended up diving into the documentation,
+> the source code, and the patches themselves in order to understand it
+> fully -- because I think I didn't understand it merely from reading
+> the documentation which is rather sparse (no pun intended). And I had
+> forgotten enough about it since then that I had to re-research it when
+> Sean raised the issue on the list a few days back in relation to
+> sparse-checkout.
 >
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/SubmittingPatches | 53 ++++++++++++++++++++++++++++++-----------
->  1 file changed, 39 insertions(+), 14 deletions(-)
+> > So, I don't think relying on folks to read this particular piece of
+> > documentation is a reliable course of action...at least not without
+> > some changes to make it much more likely to be noticed.
 >
->  * I've been trying to clear the deck, and noticed that this has
->    been untended for quite some time.  With some clarification to
->    a place I was even confused myself while responding to Fabian's
->    comments in the earlier round.
->
-> diff --git c/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
-> index e409022d93..3c4c5d9f18 100644
-> --- c/Documentation/SubmittingPatches
-> +++ w/Documentation/SubmittingPatches
-> @@ -19,8 +19,10 @@ change is relevant to.
->    base your work on the tip of the topic.
->
->  * A new feature should be based on `master` in general. If the new
-> -  feature depends on a topic that is in `seen`, but not in `master`,
-> -  base your work on the tip of that topic.
-> +  feature depends on other topics that are in `next`, but not in
-> +  `master`, fork a branch from the tip of `master`, merge these topics
-> +  to the branch, and work on that branch.  You can remind yourself of
-> +  how you prepared the base with `git log --first-parent master..`.
->
->  * Corrections and enhancements to a topic not yet in `master` should
->    be based on the tip of that topic. If the topic has not been merged
-> @@ -28,10 +30,10 @@ change is relevant to.
->    into the series.
->
->  * In the exceptional case that a new feature depends on several topics
-> -  not in `master`, start working on `next` or `seen` privately and send
-> -  out patches for discussion. Before the final merge, you may have to
-> -  wait until some of the dependent topics graduate to `master`, and
-> -  rebase your work.
-> +  not in `master`, start working on `next` or `seen` privately and
-> +  send out patches only for discussion. Once your new feature starts
-> +  to stabilize, you would have to rebase it (see the "depends on other
-> +  topics" above).
->
->  * Some parts of the system have dedicated maintainers with their own
->    repositories (see the section "Subsystems" below).  Changes to
-> @@ -71,8 +73,13 @@ Make sure that you have tests for the bug you are fixing.  See
->  [[tests]]
->  When adding a new feature, make sure that you have new tests to show
->  the feature triggers the new behavior when it should, and to show the
-> -feature does not trigger when it shouldn't.  After any code change, make
-> -sure that the entire test suite passes.
-> +feature does not trigger when it shouldn't.  After any code change,
-> +make sure that the entire test suite passes.  When fixing a bug, make
-> +sure you have new tests that breaks if somebody else breaks what you
-> +fixed by accident to avoid regression.  Also, try merging your work to
-> +'next' and 'seen' and make sure the tests still pass; topics by others
-> +that are still in flight may have unexpected interactions with what
-> +you are trying to do in your topic.
->
->  Pushing to a fork of https://github.com/git/git will use their CI
->  integration to test your changes on Linux, Mac and Windows. See the
-> @@ -144,8 +151,21 @@ without external resources. Instead of giving a URL to a mailing list
->  archive, summarize the relevant points of the discussion.
->
->  [[commit-reference]]
-> -If you want to reference a previous commit in the history of a stable
-> -branch, use the format "abbreviated hash (subject, date)", like this:
-> +
-> +There are a few reasons why you may want to refer to another commit in
-> +the "more stable" part of the history (i.e. on branches like `maint`,
-> +`master`, and `next`):
-> +
-> +. A commit that introduced the root cause of a bug you are fixing.
-> +
-> +. A commit that introduced a feature that is what you are enhancing.
-> +
-> +. A commit that conflicts with your work when you made a trial merge
-> +  of your work into `next` and `seen` for testing.
-> +
-> +When you reference a commit on a more stable branch (like `master`,
-> +`maint` and `next`), use the format "abbreviated hash (subject,
-> +date)", like this:
+> The sparsity of documentation about per-worktree configuration
+> certainly doesn't help, nor the fact that it's fairly near the end of
+> git-worktree.txt, at which point people may have given up reading. We
+> could make it a bit more prominent by mentioning it early in the
+> command description, but it still involves enough fiddly bookkeeping
+> that it likely will continue to be problematic.
 
-I was going to comment that this would be a good place to mention
---pretty=reference, but looking at the file in question, that is
-exactly what the text after this already does.
+Further, it's not clear people even looked at git-worktree.txt at the
+time they learned about extensions.worktreeConfig.  I believe I
+discovered and started using extensions.worktreeConfig from `git
+config --help`, which makes no mention of or even reference to the
+need for any extra steps.  (I didn't see the original mailing list
+discussions around that setting either.)  It never occurred to me in
+the ~3 years since to even look in `git worktree --help` for
+additional guidance around that config setting until this particular
+mailing list thread.
 
->  ....
->         Commit f86a374 (pack-bitmap.c: fix a memleak, 2015-03-30)
-> @@ -259,9 +279,11 @@ Please make sure your patch does not add commented out debugging code,
->  or include any extra files which do not relate to what your patch
->  is trying to achieve. Make sure to review
->  your patch after generating it, to ensure accuracy.  Before
-> -sending out, please make sure it cleanly applies to the `master`
-> -branch head.  If you are preparing a work based on "next" branch,
-> -that is fine, but please mark it as such.
-> +sending out, please make sure it cleanly applies to the base you
-> +have chosen in the "Decide what to base your work on" section,
-> +and unless it targets the `master` branch (which is the default),
-> +mark your patches as such.
-> +
+> Making per-worktree configuration the default does seem like the best
+> long-term solution. Doing so should make all these problems go away. I
+> don't know what Duy's plans were, nor whether he had some migration
+> strategy planned.
 >
->  [[send-patches]]
->  === Sending your patches.
-> @@ -365,7 +387,10 @@ Security mailing list{security-ml-ref}.
->  Send your patch with "To:" set to the mailing list, with "cc:" listing
->  people who are involved in the area you are touching (the `git
->  contacts` command in `contrib/contacts/` can help to
-> -identify them), to solicit comments and reviews.
-> +identify them), to solicit comments and reviews.  Also, when you made
-> +trial merges of your topic to `next` and `seen`, you may have noticed
-> +work by others conflicting with your changes.  There is a good possibility
-> +that these people may know the area you are touching well.
+> > > I vaguely recall some mention of this not long ago on the list but
+> > > didn't follow the discussion at all. Do you have pointers or a
+> > > summary?
+> >
+> > For the microsoft repositories, sparse-checkouts are needed because a
+> > full checkout is unmanageable (millions of files to check out
+> > otherwise).  For other repositories, full checkouts might technically
+> > be manageable, but are annoyingly slow and users may only want to work
+> > with sparse checkouts (and for some of these, due to various
+> > mono-repoization efforts, the repository is growing towards a size
+> > where manageability of full checkouts is decreasing).
+> >
+> > The fact that `git worktree add` does a full checkout is quite
+> > painful...possibility to the point of making worktrees useless for
+> > some users.  I think `git worktree add` should copy the sparsity of
+> > the worktree from which it was invoked.
 >
->  :current-maintainer: footnote:[The current maintainer: gitster@pobox.com]
->  :git-ml: footnote:[The mailing list: git@vger.kernel.org]
+> Okay, I do recall reading a message in which you proposed this, though
+> I didn't understand the reasoning for the suggestion since I wasn't
+> following the discussion. The explanation you provide here makes the
+> proposal understandable.
+>
+> >   * using --no-checkout as a proxy: This means no files checked out
+> > and no index file.  The lack of an index file makes it appear that
+> > everything was manually deleted (with the deletion staged).  Also, if
+> > the project is using some kind of <sparsity-wrapper-script> (e.g. for
+> > determining dependencies between directories so that appropriate
+> > 'modules' can be specified and transformed into a list of directories
+> > passed to sparse-checkout), then the sparsity-wrapper-script isn't
+> > available to them to invoke.  If users try to check out just the
+> > wrapper file, then an index will be created and have just one entry
+> > and we kind of cement the fact that all other files look like they
+> > were intended to be deleted.  Also, even if the user runs `git
+> > sparse-checkout init --cone`, you don't actually don't transform this
+> > no-checkout into a sparse checkout because sparse-checkout doesn't
+> > want to undo your staged deletions.  Despite the fact that I'm very
+> > familiar with all the implementation internals, it was not obvious to
+> > me all the necessary additional commands needed for users to get a
+> > sparse checkout while making use of --no-checkout.  Users stand little
+> > chance of figuring the necessary command invocations out without a
+> > huge amount of effort (and they've given up and come to me before
+> > asking for help, and my first response turned out to be incomplete in
+> > various cases...).
+>
+> You've clearly put much more thought into this than I have (since I
+> only just read this), so I'm not likely to have any meaningful input,
+> but I'll write down a few thoughts/questions which popped into my head
+> while reading what you wrote. Perhaps they've already been discussed
+> elsewhere, so feel free to ignore (and they may not be worth
+> responding to anyhow).
+>
+> When you say "copy the sparsity of the worktree from which it was
+> invoked", do you mean that literally, such that it special-cases it
+> and only copies sparse-checkout information? An alternative would be
+> to allow the user to specify -- via the shared configuration
+> (.git/config) -- exactly which config keys get inherited/copied over
+> by `git worktree add`. Such a solution would avoid special-casing
+> sparse-checkout and could be useful in the future for other commands
+> which might need such functionality, though this approach may be
+> overengineered.
+>
+> A more general approach might be for the new worktree to copy all the
+> per-worktree configuration from the worktree in which the command was
+> invoked, thus sparsity would be inherited "for free" along with other
+> settings. This has the benefits of not requiring sparse-checkout
+> special-cases in the code and it's easy to document ("the new worktree
+> inherits/copies configuration settings from the worktree in which `git
+> worktree add` was invoked") and easy to understand.
 
-This patch looks good to me.
+Ooh, this is a good point and I *really* like this simple solution.
+Thanks for pointing it out.
+
+Do note, though, that it's more than just config.worktree -- I also
+want the ${GITDIR}/info/sparse-checkout file copied.
+
+> I also wondered if adding some sort of `--sparse-checkout=...` option
+> to `git worktree add` would solve this particular dilemma, thus
+> allowing the user to configure custom sparse-checkout for the worktree
+> as it is being created. I also very briefly wondered if this should
+> instead be a feature of the `git sparse-checkout` command itself, such
+> as `git sparse-checkout add-worktree`, but I think that's probably a
+> dead-end in terms of user discoverability, whereas `git worktree add
+> --sparse-checkout=...` is more easily discoverable for people wanting
+> to work with worktrees.
+
+This might be a useful extra capability (we'd probably want to keep
+this flag in sync with git-clone's --sparse flag and whatever
+capabilities grow there), but I don't see it as a solution to this
+problem.  I think the default needs to be copying the existing
+sparsity.  Making users specify cone/non-cone mode and
+sparse-index/non-sparse-index and and several dozen directories by
+hand just doesn't sound reasonable to me.  (We have a case with
+several hundred directories/modules, with various dependencies between
+them.  Users can use a wrapper, `./sparsify --modules $MODULE_A
+$MODULE_B` which figures out the several dozen relevant directories
+and calls sparse-checkout set with those, but of course that wrapper
+won't yet be available in the new worktree until after the new
+worktree has been added.)
+
+An alternative that would be workable, though annoying, is giving the
+user a super-sparse checkout with only files in the toplevel directory
+present (i.e. what you'd get after `git sparse-checkout init --cone`
+or `git clone --sparse ...`), and then making them use the normal
+tools to manually specify the wanted sparsity (which probably requires
+switching back to the previous worktree to run some info commands to
+determine exactly what the sparsity was).
+
+An increasingly unworkable alternative is the current behavior of
+defaulting to a full checkout in all cases (and forcing users to
+sparsify afterwards).  A full checkout is fine if the user came from
+one (and probably preferable in such a case), but it's increasingly
+problematic for us even with our repo being nowhere near the size of
+the microsoft repos.
