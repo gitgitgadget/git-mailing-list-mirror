@@ -2,93 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FD57C433F5
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 15:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C92B2C433F5
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 15:36:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235106AbhL1PWB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 10:22:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40004 "EHLO
+        id S235168AbhL1PgW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 10:36:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232237AbhL1PWB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 10:22:01 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 122DBC061574
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 07:22:01 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id y22so75175451edq.2
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 07:22:00 -0800 (PST)
+        with ESMTP id S232237AbhL1PgV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 10:36:21 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38D44C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 07:36:21 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id s1so39145745wrg.1
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 07:36:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=j7tNuyrlGv8YVNdyQGleIqsYa99aJiSaHeocqaEvcrw=;
-        b=IrNGwYRtVEviXxG9NrzTYKKz8VMjc/PLh0IRERdUoDifNZv6wRwuYGxj+27MoiDtDn
-         p+s3v3Fl3kte0K9J1RK7Jmu3lLNHdUpCJAQ0yLibnQbJUPborymbDQUJHimlw8Ycwd+K
-         n5XbBjV8WFAkqvJafSbXEwkiKrAfwYZkBILZoq/d9mlvMWQ5NPcWZscQLL1ZocsD0SEN
-         JdT+PAp6PfCiEGBAE4fSjxVUOZ4YuasYsnwC4rOha0E36mK1WoBTODNjpOe+0Dau3hew
-         XdPIoIkulPNSl1h85R6PORW+/hVkLOBT5o5110Aqdyb+C4uS5yGdIBKLNpOT8Fu9jcAS
-         UqlQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=S+wtlMvwd7Vsck2OOkF8wvFdUHYb5iMCmAKbpBE49DI=;
+        b=c+LSV6WUp4ev7FHigPFTOnv/y95rSN7vLltvuPNhZauUVz0aPC7ShpeNX9ovIvXz8v
+         LwEcPR9K3in8iqjx0nrcejWqKoW13aJZFWLdO68XbrmVP+eqBMeeO/9GKjiN/JP4uQHL
+         vOC0WTOpJECqvkBaGsxkV8qccHcHxCoMoeq39hJ1GrL/GZY27vEuPxP2OSmVt1npLqHP
+         Ktl1N8v4dSS7V20UsuIVWBeqRKoFI2Bzg2f+/WBJXeQ716WfPRwcH+QFy7aJHCzz2SEh
+         vN+AjkwXEzKHscpOHZwwoxBG5nm7lByyL3aagA/8339taV6aFBLgqznasBmKIfMbwlT1
+         fMaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=j7tNuyrlGv8YVNdyQGleIqsYa99aJiSaHeocqaEvcrw=;
-        b=gXMMeP+GYPHXWzPTTEvKa605EJfbZHjPm2bgZbZ0xKuYDs1SqWBsCjFnbsLDPuchEh
-         djPn41PHuvwO5vlkA3g0SqIY/ISh6WWdUC8hMJeB6Hyjb2Wl4D5iG9IzUTZP2DWklM2k
-         pJ772dA3EZVf0pwCArZesF/M9BjiN/yf2p1j0FX43GlrNt9BYwDdmpWuRARGFZyWdnmE
-         cfaAYPlnUrMdji94lk9+dcA5N9WOhBb/DOaN5b3tFUXLUR4zcShYjuRHMRGL9XjVie50
-         H5VGlPWdrCaLRgOQRA9qTqQf1l6Mf9qfzfkpmVG3HEQMjY0BQptP6rZG8vdCy6tDPfsF
-         UlHQ==
-X-Gm-Message-State: AOAM530oX4Sz2t8/uZjWCPu4i3x675TBVIwKAwGj9b6BCv3n3hzBjncV
-        2B1U873+QFsBSwqAc61dy9gcyJ7+876jLoz8
-X-Google-Smtp-Source: ABdhPJy3faBCqqioieAqNaBMVudDj5qxqaZqRr92kPlCCd20tb8wK4jkmbfBwkm+13fsyjLQSvhKuA==
-X-Received: by 2002:a17:907:7b87:: with SMTP id ne7mr17121074ejc.573.1640704919535;
-        Tue, 28 Dec 2021 07:21:59 -0800 (PST)
-Received: from gmgdl (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id hr5sm6168309ejc.5.2021.12.28.07.21.59
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=S+wtlMvwd7Vsck2OOkF8wvFdUHYb5iMCmAKbpBE49DI=;
+        b=tJ8gq+LFFJ+3gAOFJt0ljifbsK4ZSDSWtzEJr1Z/YZ9qRlhPJJzg/7mnUAuKYx6EQo
+         82iKSYimazNZbmkfwkypvm7S3INhxOXtAja6Iyyyt6X9ZSf4gsjCIRe4F7q3uohnVNnZ
+         XMWXysa2MmO5A1LyuSkRpIIp+idOi6ZnWgMRxYJ+oBxm891RGwCVlpM8FWq5rbHQEKy6
+         WezZOHhgWwX0VQT04GSuhSqWXixmycg1qumgOZKoJrVg9mfuEByc2QA6O5fmhAuA83B3
+         uZ9Gc9jLlxOQ1qtQZSuwpdvNif4BmruVcwGIM2bLZnJEApNsOT7JyBA0FrP0YqYfzNBh
+         xGtQ==
+X-Gm-Message-State: AOAM532QBfZ1LtbHELGMCBNbzYm2t/gey0grFkFfyDf7nl3gHKm0/Vk3
+        w3920W3kDB8YR/3Tu6Dx/gdD9i6M5uRIJ5l4
+X-Google-Smtp-Source: ABdhPJwqaZXw2YDfIHvd62aKrDP5s/SIbos+W3gbOH3lCgli5xJCBCwuFso6C/UIG7scisZPwKwJ4g==
+X-Received: by 2002:a05:6000:18a5:: with SMTP id b5mr17089396wri.267.1640705779568;
+        Tue, 28 Dec 2021 07:36:19 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id p23sm18403137wms.3.2021.12.28.07.36.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Dec 2021 07:21:59 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1n2EIY-000EsD-Bc;
-        Tue, 28 Dec 2021 16:21:58 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Johannes Altmanninger <aclopte@gmail.com>
-Subject: ab/only-single-progress-at-once (was: What's cooking in git.git
- (Dec 2021, #06; Mon, 27))
-Date:   Tue, 28 Dec 2021 16:20:29 +0100
-References: <xmqq7dbpvb0q.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqq7dbpvb0q.fsf@gitster.g>
-Message-ID: <211228.86czlgiwkp.gmgdl@evledraar.gmail.com>
+        Tue, 28 Dec 2021 07:36:19 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/7] help: test and fix small "help -g" regression
+Date:   Tue, 28 Dec 2021 16:35:05 +0100
+Message-Id: <cover-0.7-00000000000-20211228T153456Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.34.1.1257.g2af47340c7b
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Fix a trivial regression in 17b3e515050 (Merge branch
+'nd/command-list' into nd/complete-config-vars, 2018-05-29) where we'd
+overly whitespace pad "git help -g", since the codepath moved to a
+function that assumed it needed to "\n\n"-pad multiple items being
+emitted, so we'd print an extra leading newline when printing one
+item (as opposed to "git help -a").
 
-On Mon, Dec 27 2021, Junio C Hamano wrote:
+In doing so I wanted to add regression tests, and to do that we first
+need to make the format stable ("git help -a" will change depending on
+whatever git-* you have in $PATH).
 
-> * ab/only-single-progress-at-once (2021-11-03) 8 commits
->  - progress.c: add & assert a "global_progress" variable
->  - various *.c: use isatty(0|2), not isatty(STDIN_FILENO|STDERR_FILENO)
->  - pack-bitmap-write.c: don't return without stop_progress()
->  - progress.c: add temporary variable from progress struct
->  - progress.c tests: test some invalid usage
->  - progress.c tests: make start/stop commands on stdin
->  - progress.c test helper: add missing braces
->  - leak tests: fix a memory leaks in "test-progress" helper
->
->  Further tweaks on progress API.
->
->  Needs review.
->  The last three rounds has seen little reaction, even though earlier
->  round saw a lot of responses. The latest round needs a serious
->  review or at least Acks from past commentors.
->  source: <cover-v6-0.8-00000000000-20211102T122507Z-avarab@gmail.com>
+These are things I noticed when re-rolling my no-yet-picked-up series
+to move Documentation/technical/* to manpages[1]. An unsubmitted
+re-roll of this series depends on this one. I'll hold off on a
+re-submission of it until this series has graduated.
 
-The slimmed-down v7 got a review from Johannes Altmanninger, and I've
-just submitted a v8 now to address the points brought up there:
+1. https://lore.kernel.org/git/cover-v2-0.5-00000000000-20211212T194047Z-avarab@gmail.com/
 
-https://lore.kernel.org/git/cover-v8-0.7-00000000000-20211228T150728Z-avarab@gmail.com/
+Ævar Arnfjörð Bjarmason (7):
+  help doc: add missing "]" to "[-a|--all]"
+  help.c: use puts() instead of printf{,_ln}() for consistency
+  help tests: test "git" and "git help [-a|-g] spacing
+  help.c: split up list_all_cmds_help() function
+  help: error if [-a|-g|-c] and [-i|-m|-w] are combined
+  help: add --no-[external-commands|aliases] for use with --all
+  help: don't print "\n" before single-section output
+
+ Documentation/git-help.txt | 12 ++++-
+ builtin/help.c             | 34 ++++++++++++--
+ help.c                     | 37 ++++++++++++----
+ help.h                     |  2 +-
+ t/t0012-help.sh            | 91 ++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 161 insertions(+), 15 deletions(-)
+
+-- 
+2.34.1.1257.g2af47340c7b
+
