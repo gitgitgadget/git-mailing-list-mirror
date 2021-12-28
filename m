@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE1EEC433EF
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 10:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE871C433F5
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 10:58:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236343AbhL1K5j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 05:57:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37850 "EHLO
+        id S236346AbhL1K6A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 05:58:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236342AbhL1K5h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 05:57:37 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FEA0C06173F
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 02:57:37 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id i22so37547553wrb.13
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 02:57:37 -0800 (PST)
+        with ESMTP id S232906AbhL1K6A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 05:58:00 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84F2FC061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 02:57:59 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id q16so37616655wrg.7
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 02:57:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=smC92yYp+R20LvUDUnTQIglLpv/aACW7+s3jEoe8mRc=;
-        b=AzBLpS3qq1/V9jrN3DNSI2gmbWaN7krWiz+XK+ulwNCtCbKMM4PtyHuRZvTd7DtO+P
-         WPK+W+J4STShf2AcotupDgdo12btc8lXOGCnDWcLk/oL0RA0eB7oBiM6O9aTFMAcHFd3
-         xPKsStK4jrHG1q/jR7D2m9XZ+UI9yiE7dhEg5G2VkzlPyt146HJ4rnzQ/h+3uePq+LJy
-         q9r1upr/I/QjjFCgwCIQ2Lnbh+OYwDO7AeahhQ6siR3DnB2UCsD0zYcKtuelw0+UR8yz
-         n6yy09XmAAUqBDOb36+5WoY278UE2Uq2UMF9LwxcBdCcdapZamJNwvPnb6s6AdPGcvbj
-         fD3g==
+        bh=cAQDgonTikS2L9d+hfRzbNh+Ce+SU62FX0PtZX37nHo=;
+        b=iMMxPrdkB5vzWuRQqveX4QMSZ5q+N/3hbTb6u4dsxnUgGLtVU6WHhyUUDS9JGHc7ha
+         viP510HtQ3thfrV1opy5rauJdMf+r1LYhL9gnrB0e7zwATxgtAt3ViGWgR+qvYUu1vjA
+         5wbPa82HsZzNPeN2Cs7Ywsgtkb8rkgjRVk6CtwQyVmZUDGf0JZN6EjDMY67/1pT3MQ6H
+         1ZqYIkEnfVAa3jXRAGDCCvpVhQUcAhoWeqXDeFDuZ2+m7nCCv5o0o5KRQvxRmQz4iYjW
+         f4HpO+KLokOOpyzk3M1i+Mu2fNjBaC2I1uyDiQrPQn8fE175Ai+W+jpfQ3PAfUD0SH44
+         KvHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=smC92yYp+R20LvUDUnTQIglLpv/aACW7+s3jEoe8mRc=;
-        b=qXCMN8oMMuaiHySdHRV4Zo5yygAZh+ao4m3dy5s+iAH9/VSJmPaiaVQIYzHl83ti5K
-         wm4F6tvz7dqHXPHmZqVMdi1sakwT1AlhrwlO9XqytLwjlTrzX1gTN04tpzUlj3n1QZKD
-         oDHQF+ScbmTtfLGki1bIzfz1ta8M0DrU/hbdfTOasxHM3A4hZPvGwPFYY4R69JlanGx9
-         80C6trXLPcTLn9tXt+H6EU36fd145sChiE8cB1vjyzT1KcZ6+dUJW0M7/1oz3tgMbj4M
-         ymHNqYPcHOAHPOJ+zkAZWHQj7jq0JcBBuduMFEETlvCSYkkzyMuvP6Fx0RN3n710hHKc
-         StRA==
-X-Gm-Message-State: AOAM5301W2G9XKJpxEhL2xDHAJHyJGdq+xTRiU0mLngAuzmTgmSqek1C
-        mRKK6a0OlR2vLVokJdOgACQ=
-X-Google-Smtp-Source: ABdhPJyy4MTvCtJfd+SIDAOuIiuplapxxPHOdzlTa0PdeaAPOrk+1aO9fmq4b0yMlB+lQPw3xcbxdQ==
-X-Received: by 2002:a5d:68ce:: with SMTP id p14mr16028357wrw.116.1640689055637;
-        Tue, 28 Dec 2021 02:57:35 -0800 (PST)
+        bh=cAQDgonTikS2L9d+hfRzbNh+Ce+SU62FX0PtZX37nHo=;
+        b=MsU0XIRcdEnaq/LJSyiapYSxGio0pvrcIA6pHJSvzQuJpY0aX53OOppu1tPqDMujX8
+         PMeDbbSA21gNm+UPETl96S9bJybAMyLx8j3H0o6cUgKy97YkSSFqTjC91bgwMyf7cFMT
+         Jcf8m8FAgYAyR5TAqhIXI9265lZc0xAFJjxrDnfLy2yKoUZXZgheyTKMO/qsUejDWh7b
+         F5ftZpm+85cPMJa/5zNbMw39O8PWnF9YZFoMbBmW1CmgOkiA3t4dGcOo+CkZiHrJNsLR
+         dlcsVO83FiYhFDXE/Fmo7yfTFH568LHuOgzdCZf3repdHBMOfnaaoeGK3QR14tO3dqK9
+         SYcg==
+X-Gm-Message-State: AOAM533urii1k+/eCCgiMdpPrWxQEk0O5a4sk1ckmSGgn5Hhodz0k8bi
+        r9M+ofQYewnJqWCtSTjKn+k=
+X-Google-Smtp-Source: ABdhPJzXNE2UXXfXzjKTdGzzjHQwFCF16HTE1HtqkbQacrFFGRsH2buUQoOlq7N1m7mSRqoTC+E6jw==
+X-Received: by 2002:adf:d0c1:: with SMTP id z1mr16071362wrh.215.1640689078046;
+        Tue, 28 Dec 2021 02:57:58 -0800 (PST)
 Received: from gmail.com (62-47-14-33.adsl.highway.telekom.at. [62.47.14.33])
-        by smtp.gmail.com with ESMTPSA id e13sm21360471wmq.10.2021.12.28.02.57.34
+        by smtp.gmail.com with ESMTPSA id e12sm19026616wrg.110.2021.12.28.02.57.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Dec 2021 02:57:35 -0800 (PST)
-Date:   Tue, 28 Dec 2021 11:57:33 +0100
+        Tue, 28 Dec 2021 02:57:57 -0800 (PST)
+Date:   Tue, 28 Dec 2021 11:57:55 +0100
 From:   Johannes Altmanninger <aclopte@gmail.com>
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -57,305 +57,315 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Elijah Newren <newren@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Neeraj Singh <nksingh85@gmail.com>
-Subject: Re: [PATCH v2 7/8] diff: add ability to insert additional headers
- for paths
-Message-ID: <20211228105733.lomkg23htd2kjtii@gmail.com>
+Subject: Re: [PATCH v2 8/8] show, log: include conflict/warning messages in
+ --remerge-diff headers
+Message-ID: <20211228105755.zgahkoxn6ewjpdol@gmail.com>
 References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
  <pull.1103.v2.git.1640419159.gitgitgadget@gmail.com>
- <e94706513038adc85e818e8736ad713b2e6b6be4.1640419160.git.gitgitgadget@gmail.com>
+ <4cc53c55a6ea1531342b23bc9343890a576d9f1c.1640419160.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e94706513038adc85e818e8736ad713b2e6b6be4.1640419160.git.gitgitgadget@gmail.com>
+In-Reply-To: <4cc53c55a6ea1531342b23bc9343890a576d9f1c.1640419160.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 25, 2021 at 07:59:18AM +0000, Elijah Newren via GitGitGadget wrote:
+On Sat, Dec 25, 2021 at 07:59:19AM +0000, Elijah Newren via GitGitGadget wrote:
 > From: Elijah Newren <newren@gmail.com>
 > 
-> When additional headers are provided, we need to
->   * add diff_filepairs to diff_queued_diff for each paths in the
->     additional headers map which, unless that path is part of
->     another diff_filepair already found in diff_queued_diff
->   * format the headers (colorization, line_prefix for --graph)
->   * make sure the various codepaths that attempt to return early
->     if there are "no changes" take into account the headers that
->     need to be shown.
+> Conflicts such as modify/delete, rename/rename, or file/directory are
+> not representable via content conflict markers, and the normal output
+> messages notifying users about these were dropped with --remerge-diff.
+> While we don't want these messages randomly shown before the commit
+> and diff headers, we do want them to still be shown; include them as
+> part of the diff headers instead.
 > 
 > Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
->  diff.c     | 116 +++++++++++++++++++++++++++++++++++++++++++++++++++--
->  diff.h     |   3 +-
->  log-tree.c |   2 +-
->  3 files changed, 115 insertions(+), 6 deletions(-)
+>  log-tree.c              |  3 ++
+>  merge-ort.c             |  1 +
+>  merge-ort.h             | 10 +++++
+>  t/t4069-remerge-diff.sh | 86 +++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 100 insertions(+)
 > 
-> diff --git a/diff.c b/diff.c
-> index 861282db1c3..aaa6a19f158 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -27,6 +27,7 @@
->  #include "help.h"
->  #include "promisor-remote.h"
->  #include "dir.h"
-> +#include "strmap.h"
->  
->  #ifdef NO_FAST_WORKING_DIRECTORY
->  #define FAST_WORKING_DIRECTORY 0
-> @@ -3406,6 +3407,31 @@ struct userdiff_driver *get_textconv(struct repository *r,
->  	return userdiff_get_textconv(r, one->driver);
->  }
->  
-> +static struct strbuf *additional_headers(struct diff_options *o,
-> +					 const char *path)
-> +{
-> +	if (!o->additional_path_headers)
-> +		return NULL;
-> +	return strmap_get(o->additional_path_headers, path);
-> +}
-> +
-> +static void add_formatted_headers(struct strbuf *msg,
-> +				  struct strbuf *more_headers,
-> +				  const char *line_prefix,
-> +				  const char *meta,
-> +				  const char *reset)
-> +{
-> +	char *next, *newline;
-> +
-> +	for (next = more_headers->buf; *next; next = newline) {
-> +		newline = strchrnul(next, '\n');
-> +		strbuf_addf(msg, "%s%s%.*s%s\n", line_prefix, meta,
-> +			    (int)(newline - next), next, reset);
-> +		if (*newline)
-> +			newline++;
-> +	}
-> +}
-> +
->  static void builtin_diff(const char *name_a,
->  			 const char *name_b,
->  			 struct diff_filespec *one,
-> @@ -3464,6 +3490,17 @@ static void builtin_diff(const char *name_a,
->  	b_two = quote_two(b_prefix, name_b + (*name_b == '/'));
->  	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
->  	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
-> +	if (!DIFF_FILE_VALID(one) && !DIFF_FILE_VALID(two)) {
-> +		/*
-> +		 * We should only reach this point for pairs from
-> +		 * create_filepairs_for_header_only_notifications().  For
-> +		 * these, we should avoid the "/dev/null" special casing
-> +		 * above, meaning we avoid showing such pairs as either
-> +		 * "new file" or "deleted file" below.
-> +		 */
-> +		lbl[0] = a_one;
-> +		lbl[1] = b_two;
-> +	}
-
-not so familiar with this logic, but I saw that without this change, the
-rename/rename conflict test fails. Is this because we add a file pair under
-the original name (that's been renamed on both sides). I wonder if we
-can sketch such a case in the comment.
-
->  	strbuf_addf(&header, "%s%sdiff --git %s %s%s\n", line_prefix, meta, a_one, b_two, reset);
->  	if (lbl[0][0] == '/') {
->  		/* /dev/null */
-> @@ -4328,6 +4365,7 @@ static void fill_metainfo(struct strbuf *msg,
->  	const char *set = diff_get_color(use_color, DIFF_METAINFO);
->  	const char *reset = diff_get_color(use_color, DIFF_RESET);
->  	const char *line_prefix = diff_line_prefix(o);
-> +	struct strbuf *more_headers = NULL;
->  
->  	*must_show_header = 1;
->  	strbuf_init(msg, PATH_MAX * 2 + 300);
-> @@ -4364,6 +4402,11 @@ static void fill_metainfo(struct strbuf *msg,
->  	default:
->  		*must_show_header = 0;
->  	}
-> +	if ((more_headers = additional_headers(o, name))) {
-> +		add_formatted_headers(msg, more_headers,
-> +				      line_prefix, set, reset);
-> +		*must_show_header = 1;
-> +	}
->  	if (one && two && !oideq(&one->oid, &two->oid)) {
->  		const unsigned hexsz = the_hash_algo->hexsz;
->  		int abbrev = o->abbrev ? o->abbrev : DEFAULT_ABBREV;
-> @@ -5852,12 +5895,22 @@ int diff_unmodified_pair(struct diff_filepair *p)
->  
->  static void diff_flush_patch(struct diff_filepair *p, struct diff_options *o)
->  {
-> -	if (diff_unmodified_pair(p))
-> +	/*
-> +	 * Check if we can return early without showing a diff.  Note that
-> +	 * diff_filepair only stores {oid, path, mode, is_valid}
-> +	 * information for each path, and thus diff_unmodified_pair() only
-> +	 * considers those bits of info.  However, we do not want pairs
-> +	 * created by create_filepairs_for_header_only_notifications() to
-> +	 * be ignored, so return early if both p is unmodified AND
-> +	 * p->one->path is not in additional headers.
-> +	 */
-> +	if (diff_unmodified_pair(p) && !additional_headers(o, p->one->path))
->  		return;
->  
-> +	/* Actually, we can also return early to avoid showing tree diffs */
->  	if ((DIFF_FILE_VALID(p->one) && S_ISDIR(p->one->mode)) ||
->  	    (DIFF_FILE_VALID(p->two) && S_ISDIR(p->two->mode)))
-> -		return; /* no tree diffs in patch format */
-> +		return;
->  
->  	run_diff(p, o);
->  }
-> @@ -5888,10 +5941,14 @@ static void diff_flush_checkdiff(struct diff_filepair *p,
->  	run_checkdiff(p, o);
->  }
->  
-> -int diff_queue_is_empty(void)
-> +int diff_queue_is_empty(struct diff_options *o)
->  {
->  	struct diff_queue_struct *q = &diff_queued_diff;
->  	int i;
-> +
-> +	if (o->additional_path_headers &&
-> +	    !strmap_empty(o->additional_path_headers))
-> +		return 0;
->  	for (i = 0; i < q->nr; i++)
->  		if (!diff_unmodified_pair(q->queue[i]))
->  			return 0;
-> @@ -6325,6 +6382,54 @@ void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc)
->  		warning(_(rename_limit_advice), varname, needed);
->  }
->  
-> +static void create_filepairs_for_header_only_notifications(struct diff_options *o)
-> +{
-> +	struct strset present;
-> +	struct diff_queue_struct *q = &diff_queued_diff;
-> +	struct hashmap_iter iter;
-> +	struct strmap_entry *e;
-> +	int i;
-> +
-> +	strset_init_with_options(&present, /*pool*/ NULL, /*strdup*/ 0);
-> +
-> +	/*
-> +	 * Find out which paths exist in diff_queued_diff, preferring
-> +	 * one->path for any pair that has multiple paths.
-
-Why do we prefer one->path?
-
-> +	 */
-> +	for (i = 0; i < q->nr; i++) {
-> +		struct diff_filepair *p = q->queue[i];
-> +		char *path = p->one->path ? p->one->path : p->two->path;
-> +
-> +		if (strmap_contains(o->additional_path_headers, path))
-> +			strset_add(&present, path);
-> +	}
-> +
-> +	/*
-> +	 * Loop over paths in additional_path_headers; for each NOT already
-> +	 * in diff_queued_diff, create a synthetic filepair and insert that
-> +	 * into diff_queued_diff.
-> +	 */
-> +	strmap_for_each_entry(o->additional_path_headers, &iter, e) {
-> +		if (!strset_contains(&present, e->key)) {
-> +			struct diff_filespec *one, *two;
-> +			struct diff_filepair *p;
-> +
-> +			one = alloc_filespec(e->key);
-> +			two = alloc_filespec(e->key);
-> +			fill_filespec(one, null_oid(), 0, 0);
-> +			fill_filespec(two, null_oid(), 0, 0);
-> +			p = diff_queue(q, one, two);
-> +			p->status = DIFF_STATUS_MODIFIED;
-> +		}
-> +	}
-
-All these string hash-maps are not really typical for a C program. I'm sure
-they are the best choice for an advanced merge algorithm but they are not
-really necessary for computing/printing a diff. It feels like this is an
-implementation detail from merge-ort that's leaking into other components.
-
-What we want to do is
-
-	for file_pair in additional_headers:
-		if not already_queued(file_pair):
-			queue(file_pair)
-
-to do that, you use a temporary has-set ("present") that records everything
-that's already queued (already_queued() is a lookup in that set).
-
-Let's assume both the queue and additional_headers are sorted arrays.
-Then we could efficiently merge them (like a merge-sort algorithm)
-without ever allocating a temporary hash map.
-
-I haven't checked if this is practical (better wait for feedback).
-We'd probably need to convert the strmap additional_path_headers into an
-array and sort it (I guess our hash map does not guarantee any ordering?)
-
-> +
-> +	/* Re-sort the filepairs */
-> +	diffcore_fix_diff_index();
-> +
-> +	/* Cleanup */
-> +	strset_clear(&present);
-
-Not a strong opinion, but I'd probably drop this comment
-
-> +}
-> +
->  static void diff_flush_patch_all_file_pairs(struct diff_options *o)
->  {
->  	int i;
-> @@ -6337,6 +6442,9 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
->  	if (o->color_moved)
->  		o->emitted_symbols = &esm;
->  
-> +	if (o->additional_path_headers)
-> +		create_filepairs_for_header_only_notifications(o);
-> +
->  	for (i = 0; i < q->nr; i++) {
->  		struct diff_filepair *p = q->queue[i];
->  		if (check_pair_status(p))
-> @@ -6413,7 +6521,7 @@ void diff_flush(struct diff_options *options)
->  	 * Order: raw, stat, summary, patch
->  	 * or:    name/name-status/checkdiff (other bits clear)
->  	 */
-> -	if (!q->nr)
-> +	if (!q->nr && !options->additional_path_headers)
->  		goto free_queue;
->  
->  	if (output_format & (DIFF_FORMAT_RAW |
-> diff --git a/diff.h b/diff.h
-> index 8ba85c5e605..06a0a67afda 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -395,6 +395,7 @@ struct diff_options {
->  
->  	struct repository *repo;
->  	struct option *parseopts;
-> +	struct strmap *additional_path_headers;
->  
->  	int no_free;
->  };
-> @@ -593,7 +594,7 @@ void diffcore_fix_diff_index(void);
->  "                show all files diff when -S is used and hit is found.\n" \
->  "  -a  --text    treat all files as text.\n"
->  
-> -int diff_queue_is_empty(void);
-> +int diff_queue_is_empty(struct diff_options*);
->  void diff_flush(struct diff_options*);
->  void diff_free(struct diff_options*);
->  void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc);
 > diff --git a/log-tree.c b/log-tree.c
-> index d4655b63d75..33c28f537a6 100644
+> index 33c28f537a6..97fbb756d21 100644
 > --- a/log-tree.c
 > +++ b/log-tree.c
-> @@ -850,7 +850,7 @@ int log_tree_diff_flush(struct rev_info *opt)
->  	opt->shown_dashes = 0;
->  	diffcore_std(&opt->diffopt);
+> @@ -922,6 +922,7 @@ static int do_remerge_diff(struct rev_info *opt,
+>  	/* Setup merge options */
+>  	init_merge_options(&o, the_repository);
+>  	o.show_rename_progress = 0;
+> +	o.record_conflict_msgs_as_headers = 1;
 >  
-> -	if (diff_queue_is_empty()) {
-> +	if (diff_queue_is_empty(&opt->diffopt)) {
->  		int saved_fmt = opt->diffopt.output_format;
->  		opt->diffopt.output_format = DIFF_FORMAT_NO_OUTPUT;
->  		diff_flush(&opt->diffopt);
+>  	ctx.abbrev = DEFAULT_ABBREV;
+>  	format_commit_message(parent1, "%h (%s)", &parent1_desc, &ctx);
+> @@ -938,10 +939,12 @@ static int do_remerge_diff(struct rev_info *opt,
+>  	merge_incore_recursive(&o, bases, parent1, parent2, &res);
+>  
+>  	/* Show the diff */
+> +	opt->diffopt.additional_path_headers = res.path_messages;
+>  	diff_tree_oid(&res.tree->object.oid, oid, "", &opt->diffopt);
+>  	log_tree_diff_flush(opt);
+>  
+>  	/* Cleanup */
+> +	opt->diffopt.additional_path_headers = NULL;
+>  	strbuf_release(&parent1_desc);
+>  	strbuf_release(&parent2_desc);
+>  	merge_finalize(&o, &res);
+> diff --git a/merge-ort.c b/merge-ort.c
+> index 9142d56e0ad..07e53083cbd 100644
+> --- a/merge-ort.c
+> +++ b/merge-ort.c
+> @@ -4579,6 +4579,7 @@ redo:
+>  	trace2_region_leave("merge", "process_entries", opt->repo);
+>  
+>  	/* Set return values */
+> +	result->path_messages = &opt->priv->output;
+>  	result->tree = parse_tree_indirect(&working_tree_oid);
+>  	/* existence of conflicted entries implies unclean */
+>  	result->clean &= strmap_empty(&opt->priv->conflicted);
+> diff --git a/merge-ort.h b/merge-ort.h
+> index c011864ffeb..fe599b87868 100644
+> --- a/merge-ort.h
+> +++ b/merge-ort.h
+> @@ -5,6 +5,7 @@
+>  
+>  struct commit;
+>  struct tree;
+> +struct strmap;
+>  
+>  struct merge_result {
+>  	/*
+> @@ -23,6 +24,15 @@ struct merge_result {
+>  	 */
+>  	struct tree *tree;
+>  
+> +	/*
+> +	 * Special messages and conflict notices for various paths
+> +	 *
+> +	 * This is a map of pathnames to strbufs.  It contains various
+> +	 * warning/conflict/notice messages (possibly multiple per path)
+> +	 * that callers may want to use.
+> +	 */
+> +	struct strmap *path_messages;
+> +
+>  	/*
+>  	 * Additional metadata used by merge_switch_to_result() or future calls
+>  	 * to merge_incore_*().  Includes data needed to update the index (if
+> diff --git a/t/t4069-remerge-diff.sh b/t/t4069-remerge-diff.sh
+> index 192dbce2bfe..a040d3bcd91 100755
+> --- a/t/t4069-remerge-diff.sh
+> +++ b/t/t4069-remerge-diff.sh
+> @@ -4,6 +4,15 @@ test_description='remerge-diff handling'
+>  
+>  . ./test-lib.sh
+>  
+> +# --remerge-diff uses ort under the hood regardless of setting.  However,
+> +# we set up a file/directory conflict beforehand, and the different backends
+> +# handle the conflict differently, which would require separate code paths
+> +# to resolve.  There's not much point in making the code uglier to do that,
+> +# though, when the real thing we are testing (--remerge-diff) will hardcode
+> +# calls directly into the merge-ort API anyway.  So just force the use of
+> +# ort on the setup too.
+> +GIT_TEST_MERGE_ALGORITHM=ort
+> +
+>  test_expect_success 'setup basic merges' '
+>  	test_write_lines 1 2 3 4 5 6 7 8 9 >numbers &&
+>  	git add numbers &&
+> @@ -55,6 +64,7 @@ test_expect_success 'remerge-diff with both a resolved conflict and an unrelated
+>  	git log -1 --oneline ab_resolution >tmp &&
+>  	cat <<-EOF >>tmp &&
+>  	diff --git a/numbers b/numbers
+> +	CONFLICT (content): Merge conflict in numbers
+>  	index a1fb731..6875544 100644
+>  	--- a/numbers
+>  	+++ b/numbers
+> @@ -83,4 +93,80 @@ test_expect_success 'remerge-diff with both a resolved conflict and an unrelated
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'setup non-content conflicts' '
+> +	git switch --orphan base &&
+> +
+> +	test_write_lines 1 2 3 4 5 6 7 8 9 >numbers &&
+> +	test_write_lines a b c d e f g h i >letters &&
+> +	test_write_lines in the way >content &&
+> +	git add numbers letters content &&
+> +	git commit -m base &&
+> +
+> +	git branch side1 &&
+> +	git branch side2 &&
+> +
+> +	git checkout side1 &&
+> +	test_write_lines 1 2 three 4 5 6 7 8 9 >numbers &&
+> +	git mv letters letters_side1 &&
+> +	git mv content file_or_directory &&
+> +	git add numbers &&
+> +	git commit -m side1 &&
+> +
+> +	git checkout side2 &&
+> +	git rm numbers &&
+> +	git mv letters letters_side2 &&
+> +	mkdir file_or_directory &&
+> +	echo hello >file_or_directory/world &&
+> +	git add file_or_directory/world &&
+> +	git commit -m side2 &&
+> +
+> +	git checkout -b resolution side1 &&
+> +	test_must_fail git merge side2 &&
+> +	test_write_lines 1 2 three 4 5 6 7 8 9 >numbers &&
+> +	git add numbers &&
+> +	git add letters_side1 &&
+> +	git rm letters &&
+> +	git rm letters_side2 &&
+> +	git add file_or_directory~HEAD &&
+> +	git mv file_or_directory~HEAD wanted_content &&
+> +	git commit -m resolved
+> +'
+> +
+> +test_expect_success 'remerge-diff with non-content conflicts' '
+> +	git log -1 --oneline resolution >tmp &&
+> +	cat <<-EOF >>tmp &&
+> +	diff --git a/file_or_directory~HASH (side1) b/wanted_content
+
+the "~HASH (side1)" suffix will probably mess with some programs that extract
+the filename from the diff.
+I don't know what programs are supposed to expect.  I can see arguments for
+either dropping the suffix or including only "~HASH" since that's part of
+the actual filename that's left in the worktree.
+Maybe it's not so important.
+
+The file/link typechange conflict test I'll add below exposes what looks
+like an accidental interaction with the trailing tab characters that we emit
+on --- and +++ lines if the "filename" contains a space (since 1a9eb3b9d5
+(git-diff/git-apply: make diff output a bit friendlier to GNU patch (part
+2), 2006-09-22)).
+
+	index 70885e4..0000000
+	--- a/typechange~738109f (side1)	<-- git diff adds a trailing tab!
+	+++ /dev/null
+
+I haven't formed an opinion yet, but since Tig uses the --- and +++ lines
+to extract file names, I'd drop the " (side1)" suffix from at least the ---
+and +++ lines. Maybe also the ^diff lines, I'm not sure
+
+> +	similarity index 100%
+> +	rename from file_or_directory~HASH (side1)
+> +	rename to wanted_content
+> +	CONFLICT (file/directory): directory in the way of file_or_directory from HASH (side1); moving it to file_or_directory~HASH (side1) instead.
+
+I wonder if it's better to have this line further up, before the "rename"
+resolution, to correct the temporal order.
+
+> +	diff --git a/letters b/letters
+> +	CONFLICT (rename/rename): letters renamed to letters_side1 in HASH (side1) and to letters_side2 in HASH (side2).
+> +	diff --git a/letters_side2 b/letters_side2
+> +	deleted file mode 100644
+> +	index b236ae5..0000000
+> +	--- a/letters_side2
+> +	+++ /dev/null
+> +	@@ -1,9 +0,0 @@
+> +	-a
+> +	-b
+> +	-c
+> +	-d
+> +	-e
+> +	-f
+> +	-g
+> +	-h
+> +	-i
+> +	diff --git a/numbers b/numbers
+> +	CONFLICT (modify/delete): numbers deleted in HASH (side2) and modified in HASH (side1).  Version HASH (side1) of numbers left in tree.
+> +	EOF
+
+Took me some time to grok these but the output makes sense (it's loud and
+ugly but that's okay since these are serious conflicts).
+
+> +	# We still have some sha1 hashes above; rip them out so test works
+> +	# with sha256
+> +	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
+> +
+> +	git show --oneline --remerge-diff resolution >tmp &&
+> +	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
 > -- 
 > gitgitgadget
-> 
+
+We're missing a test case for typechange.  Here's is a quick draft I've been
+playing around with. Seems ugly that the "diff --git a/typechange b/typechange"
+is doubled but okay.
+
+Maybe a rename/delete conflict is interesting as well, I'm not sure.  (Also I
+wonder if switching the order of parents will give any interesting difference,
+I guess not)
+
+test_expect_success 'remerge-diff with file/link conflict' '
+	git branch -d base side1 side2 &&
+	git switch --orphan base &&
+
+	echo base >typechange &&
+	git add typechange &&
+	git commit -m base &&
+
+	git branch side1 &&
+	git branch side2 &&
+
+	git checkout side1 &&
+	echo orig-file-contents >typechange &&
+	git commit -a -m side1 &&
+
+	git checkout side2 &&
+	ln -sf . typechange &&
+	git add typechange &&
+	git commit -m side2 &&
+
+	git checkout -b resolution2 side1 &&
+	test_must_fail git merge side2 &&
+	rm typechange &&
+	mv typechange~HEAD typechange &&
+	echo resolved >>typechange &&
+	git add typechange~HEAD typechange &&
+	git merge --continue &&
+
+	git show --oneline --remerge-diff resolution2 >tmp &&
+	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >actual &&
+
+	cat <<-EOF >tmp &&
+	7759b27 Merge branch ${SQ}side2${SQ} into resolution2
+	diff --git a/typechange b/typechange
+	deleted file mode 120000
+	CONFLICT (distinct types): typechange had different types on each side; renamed one of them so each can be recorded somewhere.
+	index 945c9b4..0000000
+	--- a/typechange
+	+++ /dev/null
+	@@ -1 +0,0 @@
+	-.
+	\ No newline at end of file
+	diff --git a/typechange b/typechange
+	new file mode 100644
+	CONFLICT (distinct types): typechange had different types on each side; renamed one of them so each can be recorded somewhere.
+	index 0000000..70885e4
+	--- /dev/null
+	+++ b/typechange
+	@@ -0,0 +1,2 @@
+	+orig-file-contents
+	+resolved
+	diff --git a/typechange~738109f (side1) b/typechange~738109f (side1)
+	deleted file mode 100644
+	index 70885e4..0000000
+	--- a/typechange~738109f (side1)	
+	+++ /dev/null
+	@@ -1 +0,0 @@
+	-orig-file-contents
+	EOF
+	# We still have some sha1 hashes above; rip them out so test works
+	# with sha256
+	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
+
+	test_cmp expect actual
+'
