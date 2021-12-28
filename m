@@ -2,145 +2,257 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A21DC433F5
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 15:13:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFE3AC433F5
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 15:19:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234985AbhL1PN2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 10:13:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37966 "EHLO
+        id S235041AbhL1PT1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 10:19:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234976AbhL1PN0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 10:13:26 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD5B5C061574
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 07:13:25 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id t204so24508663oie.7
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 07:13:25 -0800 (PST)
+        with ESMTP id S232244AbhL1PT0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 10:19:26 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB1B8C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 07:19:25 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id l4so11828141wmq.3
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 07:19:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=2kjWHpSOt5zoE/VYJccMaffHb35jXB9icjdzbzPEnf4=;
-        b=q3KE79AubqHoURxEJJvg0xBHgb8yejiQEE/0GhRFArF3qMbgj+xdJgbEaBZWCvK/JR
-         Ht/S+EN5Sk7EG03/x+OI6k1+qEPd+w9hXWbdJ8JMDFeRK7b+DweiwjCj0Ny8mnWVQ5CL
-         OFh2LXclhyKDEwxKK1wvF8bp8yEUDiuJg1Frlwsfgp14bClQkos6EgUmnpaVnEYQQEH0
-         q9Pd7dG73i+wBLe3unTWQmvNGy97BhYS+MT3hzdisa+lzoGDsmNn9oww6myWC52Ub+RU
-         /Gpkg4AgvGvCklJI0Z3hVsS3xEz1AbSIDB99a5S5H9dn1YMXnDhrzs6krs0uwQ/CC3bO
-         oIdw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=qtHS407AXq4lnzbQ4O/Tj/6g5Il7BkEAy2NhDzl1gZc=;
+        b=MggUa4KuB2G8zAtqhMc4e7SM56r9xpSwmtu/9x1tFBtE9CFDdqZ/Xqf1989KUdfvmQ
+         YRl/XeERm58WGNpQa8uJ8XoCqfF6K2gfk2/gEm5HZkkycaE81V1sqwJOZS3i7guTQG6m
+         Mx1gvkbODuHIJMM0c63ibs2XeJ27ciREGyE6N/y6q//aRFc9cDEMRqW4O2R5tESGYr6i
+         r0Da5uGGQg6GHlftxPsc3eoiE8VITrjcVYahHLz5KOB4DV79AIjSpLpmqjo5B94GJoM/
+         OcNqNQP2xwEOhrEfBkHVkbyAT2QzLYeFEuq6KSSzCePduMd/vXmpwj2NNNyMjOts5FQN
+         rbiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=2kjWHpSOt5zoE/VYJccMaffHb35jXB9icjdzbzPEnf4=;
-        b=2ehc92kQ5wh7JOwH5K2dZPwzOuue+hApbLgtwDO5C6IbD3/yI5IN8BCm93aUVwk3Og
-         xqQNTl9/SkbcKDC6XDf2mXt9dIVigsw0AD6s2kx0nD1Oh8vleRjE+GTKYcTsGOC64xlU
-         r0md8BzyO7Aj/ecBoq7L7WUwMLYnCoLMQMMtdVGT3icrwAt4Yr9sBbGyceIB4yX3k5B7
-         5stSF4eqmow2gsZJmhWriuNnhzpOS1EMdTwBljhEukTq78C8vznXB9Bs+i8WvNfld1AM
-         xPY3ACliqkvekxP/SjzhIWebBhvhVI1oRbz6KZ+z7xKzx5PN/MJQJuTDwwPG7NOFMcCz
-         1Szw==
-X-Gm-Message-State: AOAM5331KxZ0ik3mPtepEiBoUpJejRn0WssONhDTIcQMFVPv423Xddxg
-        b+7u401bcZT19PAA4lJGyRY=
-X-Google-Smtp-Source: ABdhPJwsXO/h/I/4vs+mdVcj4PWC5fi/mfrM35QwWp18YmWpBdkveFh9+KC2isBV52BlCoLo7QeuEA==
-X-Received: by 2002:a05:6808:3c6:: with SMTP id o6mr17120181oie.145.1640704404914;
-        Tue, 28 Dec 2021 07:13:24 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:a8af:d265:ced5:e098? ([2600:1700:e72:80a0:a8af:d265:ced5:e098])
-        by smtp.gmail.com with ESMTPSA id 186sm3909308oig.28.2021.12.28.07.13.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Dec 2021 07:13:24 -0800 (PST)
-Message-ID: <aa73d9bb-1d34-4991-a242-991251ec02be@gmail.com>
-Date:   Tue, 28 Dec 2021 10:13:18 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=qtHS407AXq4lnzbQ4O/Tj/6g5Il7BkEAy2NhDzl1gZc=;
+        b=7oFff7Uy+tOJKyc4w//evEkSNTgNz8aFnAcNZyqnyW5ZCcd6xI5FTzj5lLQe9tn9+x
+         eerE58mgxrhXYgGb0F4Uhbv7oVZFpRBhbd82PAcpzRS0U+2br6FlCw/qQbLQc/DYUQyg
+         zoUgKNRSNkn8a3aLVKWhPAta+YRJj0tPWQaPXb0YC/kzq0XDfhJP7zIs2zcuxkLdQrwh
+         jD52GOOc2ViBfrmOtOGDZSPSb41XPiRyQNTr1JLiZgT11lgjdj2EEcEM2HBdIRy2ppr0
+         LD+nZ3CRW4TMf+Ea7dQ+q1mQxbOfJRTiWhhT9C6s2P7FUnrVmapXHpI648wx5FHgBxeO
+         FUcA==
+X-Gm-Message-State: AOAM530YndviqjZVnSOjLLOlYuIF/E0PB4FW5Lq496Si0VMHQH/zWVpw
+        7fCrh+WRP+MEy4+dk61JinnMPLUMX/c8SZA8
+X-Google-Smtp-Source: ABdhPJykbc0t8o4g55xxfowut3URbpXbaMWzDcwAcRFY/dWea9dyAT3QSz3CbTUMq3A/fjcsfeiUIw==
+X-Received: by 2002:a05:600c:a4c:: with SMTP id c12mr17898114wmq.60.1640704763830;
+        Tue, 28 Dec 2021 07:19:23 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id p11sm20491022wru.99.2021.12.28.07.19.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Dec 2021 07:19:23 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v8 0/7] progress: test fixes / cleanup
+Date:   Tue, 28 Dec 2021 16:18:56 +0100
+Message-Id: <cover-v8-0.7-00000000000-20211228T150728Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.34.1.1257.g2af47340c7b
+In-Reply-To: <cover-v6-0.6-00000000000-20211228T143223Z-avarab@gmail.com>
+References: <cover-v6-0.6-00000000000-20211228T143223Z-avarab@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Subject: Re: [PATCH v2 3/5] worktree: add upgrade_to_worktree_config()
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com,
-        allred.sean@gmail.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
- <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com>
- <ed8e2a7b19d236642b3b8d3a49d017d29753db56.1640114048.git.gitgitgadget@gmail.com>
- <xmqq4k71mc75.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq4k71mc75.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/22/2021 12:38 AM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> +int upgrade_to_worktree_config(struct repository *r)
-> 
-> Not a suggestion to rename the function, but does it mean "we have
-> been using a single configuration for all worktrees attached to the
-> repository, but we are switching to use per-worktree configuration
-> file"?  I am wondering if the phrase "worktree_config" is clear
-> enough for our future developers.
-> 
->> +{
->> +	int res;
->> +	int bare = 0;
->> +	struct config_set cs = { 0 };
->> +	char *base_config_file = xstrfmt("%s/config", r->commondir);
->> +	char *base_worktree_file = xstrfmt("%s/config.worktree", r->commondir);
->> +
->> +	git_configset_init(&cs);
->> +	git_configset_add_file(&cs, base_config_file);
->> +
->> +	/*
->> +	 * If the base repository is bare, then we need to move core.bare=true
->> +	 * out of the base config file and into the base repository's
->> +	 * config.worktree file.
->> +	 */
->> +	if (!git_configset_get_bool(&cs, "core.bare", &bare) && bare) {
->> +		if ((res = git_config_set_in_file_gently(base_worktree_file,
->> +							"core.bare", "true"))) {
->> +			error(_("unable to set core.bare=true in '%s'"), base_worktree_file);
->> +			goto cleanup;
->> +		}
-> 
-> Hmph, I would have expected to see
-> 
-> 		if (git_config_set_in_file_gently(...)) {
-> 			res = error(_("..."));
->                         goto cleanup;
-> 		}
-> 
-> instead (obviously with "res" initialized to "0" to assume all will
-> be well at the beginning).
+Various test, leak and other fixes for the progress.c code and its
+tests. This v8 addresses feedback on v7[1] by Johannes
+Altmanninger. For that round I accidentally broke the In-Reply-To
+chain, so I'm replying to the v6 here to attach it to the original
+thread again.
 
-Deep down in the git_config_set_... stack, it returns helpful error
-codes that I thought would be good to communicate upwards. cmd_config()
-uses these error codes, too, but that's a more obvious place where the
-user is expecting the error code to be related to the config operation.
- 
-If this communication is not helpful, then I will use the pattern you
-suggest. I will assume this is the case unless told otherwise.
+1. https://lore.kernel.org/git/cover-v7-0.7-00000000000-20211217T041945Z-avarab@gmail.com/
 
-> More importantly, are we prepared to see the repository 'r' that
-> already uses per-worktree config layout and refrain from causing any
-> damage to it, or are we all perfect developers that any caller that
-> calls this on repository 'r' that does not need to be upgraded is a
-> BUG()?
+Ævar Arnfjörð Bjarmason (7):
+  leak tests: fix a memory leak in "test-progress" helper
+  progress.c test helper: add missing braces
+  progress.c tests: make start/stop commands on stdin
+  progress.c tests: test some invalid usage
+  progress.c: add temporary variable from progress struct
+  pack-bitmap-write.c: don't return without stop_progress()
+  *.c: use isatty(0|2), not isatty(STDIN_FILENO|STDERR_FILENO)
 
-I don't think we should add burden to the callers to check that the
-repo is not using worktree config. Thinking back to your rename idea
-this could be "ensure_using_worktree_config()" to make it clear that
-we will use the worktree config after the method, whether or not we
-were using it beforehand.
+ builtin/bisect--helper.c    |  2 +-
+ builtin/bundle.c            |  2 +-
+ compat/mingw.c              |  2 +-
+ pack-bitmap-write.c         |  6 +--
+ progress.c                  | 14 +++---
+ t/helper/test-progress.c    | 52 +++++++++++++++-----
+ t/t0500-progress-display.sh | 94 ++++++++++++++++++++++++++++---------
+ 7 files changed, 126 insertions(+), 46 deletions(-)
 
-I think this current implementation is non-damaging if someone calls
-it after already using worktree config. The change being that a user
-can go and add core.bare=false to the common config file and break all
-worktrees again, and the current implementation will help heal that.
-It's probably better to let the user have that ability to mess things
-up and not try to fix something so broken.
+Range-diff against v7:
+1:  5367293ee84 ! 1:  aa08dab654d leak tests: fix a memory leaks in "test-progress" helper
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    leak tests: fix a memory leaks in "test-progress" helper
+    +    leak tests: fix a memory leak in "test-progress" helper
+     
+         Fix a memory leak in the test-progress helper, and mark the
+         corresponding "t0500-progress-display.sh" test as being leak-free
+2:  81788101763 = 2:  3ecdab074b6 progress.c test helper: add missing braces
+3:  d685c248686 ! 3:  271f6d7ec3b progress.c tests: make start/stop commands on stdin
+    @@ t/helper/test-progress.c
+      #include "progress.h"
+      #include "strbuf.h"
+     +#include "string-list.h"
+    -+
+    -+/*
+    -+ * We can't use "end + 1" as an argument to start_progress() below, it
+    -+ * doesn't xstrdup() its "title" argument. We need to hold onto a
+    -+ * valid "char *" for it until the end.
+    -+ */
+    -+static char *dup_title(struct string_list *titles, const char *title)
+    -+{
+    -+	return string_list_insert(titles, title)->string;
+    -+}
+      
+      int cmd__progress(int argc, const char **argv)
+      {
+    @@ t/helper/test-progress.c
+     -		if (skip_prefix(line.buf, "progress ", (const char **) &end)) {
+     +		if (skip_prefix(line.buf, "start ", (const char **) &end)) {
+     +			uint64_t total = strtoull(end, &end, 10);
+    -+			if (*end == '\0')
+    -+				progress = start_progress(default_title, total);
+    ++			const char *title;
+    ++			const char *str;
+    ++
+    ++			/*
+    ++			 * We can't use "end + 1" as an argument to
+    ++			 * start_progress(), it doesn't xstrdup() its
+    ++			 * "title" argument. We need to hold onto a
+    ++			 * valid "char *" for it until the end.
+    ++			 */
+    ++			if (!*end)
+    ++				title = default_title;
+     +			else if (*end == ' ')
+    -+				progress = start_progress(dup_title(&titles,
+    -+								    end + 1),
+    -+							  total);
+    ++				title = string_list_insert(&titles, end + 1)->string;
+     +			else
+     +				die("invalid input: '%s'\n", line.buf);
+    ++
+    ++			str = title ? title : default_title;
+    ++			progress = start_progress(str, total);
+     +		} else if (skip_prefix(line.buf, "progress ", (const char **) &end)) {
+      			uint64_t item_count = strtoull(end, &end, 10);
+      			if (*end != '\0')
+4:  40e446da277 = 4:  7c1b8b287c5 progress.c tests: test some invalid usage
+5:  c2303bfd130 ! 5:  72a31bd7191 progress.c: add temporary variable from progress struct
+    @@ Metadata
+      ## Commit message ##
+         progress.c: add temporary variable from progress struct
+     
+    -    Add a temporary "progress" variable for the dereferenced p_progress
+    -    pointer to a "struct progress *". Before 98a13647408 (trace2: log
+    -    progress time and throughput, 2020-05-12) we didn't dereference
+    -    "p_progress" in this function, now that we do it's easier to read the
+    -    code if we work with a "progress" struct pointer like everywhere else,
+    -    instead of a pointer to a pointer.
+    +    Since 98a13647408 (trace2: log progress time and throughput,
+    +    2020-05-12) stop_progress() dereferences a "struct progress **"
+    +    parameter in several places. Extract a dereferenced variable (like in
+    +    stop_progress_msg()) to reduce clutter and make it clearer who needs
+    +    to write to this parameter.
+    +
+    +    Now instead of using "*p_progress" several times in stop_progress() we
+    +    check it once for NULL and then use a dereferenced "progress" variable
+    +    thereafter. This continues the same pattern used in the above
+    +    stop_progress() function, see ac900fddb7f (progress: don't dereference
+    +    before checking for NULL, 2020-08-10).
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## progress.c ##
+    -@@ progress.c: void stop_progress(struct progress **p_progress)
+    - 	finish_if_sparse(*p_progress);
+    +@@ progress.c: static void finish_if_sparse(struct progress *progress)
+    + 
+    + void stop_progress(struct progress **p_progress)
+    + {
+    ++	struct progress *progress;
+    + 	if (!p_progress)
+    + 		BUG("don't provide NULL to stop_progress");
+    ++	progress = *p_progress;
+    + 
+    +-	finish_if_sparse(*p_progress);
+    ++	finish_if_sparse(progress);
+      
+    - 	if (*p_progress) {
+    -+		struct progress *progress = *p_progress;
+    +-	if (*p_progress) {
+    ++	if (progress) {
+      		trace2_data_intmax("progress", the_repository, "total_objects",
+    - 				   (*p_progress)->total);
+    +-				   (*p_progress)->total);
+    ++				   progress->total);
+      
+    - 		if ((*p_progress)->throughput)
+    +-		if ((*p_progress)->throughput)
+    ++		if (progress->throughput)
+      			trace2_data_intmax("progress", the_repository,
+      					   "total_bytes",
+     -					   (*p_progress)->throughput->curr_total);
+6:  776362de897 ! 6:  0bd08e1b018 pack-bitmap-write.c: don't return without stop_progress()
+    @@ Commit message
+         reached the early exit in this function.
+     
+         We could call stop_progress() before we return, but better yet is to
+    -    defer calling start_progress() until we need it.
+    -
+    -    This will matter in a subsequent commit where we BUG(...) out if this
+    -    happens, and matters now e.g. because we don't have a corresponding
+    -    "region_end" for the progress trace2 event.
+    +    defer calling start_progress() until we need it. For now this only
+    +    matters in practice because we'd previously omit the "region_leave"
+    +    for the progress trace2 event.
+     
+         Suggested-by: SZEDER Gábor <szeder.dev@gmail.com>
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+7:  0670d1aa5f2 ! 7:  060483fb5ce various *.c: use isatty(0|2), not isatty(STDIN_FILENO|STDERR_FILENO)
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    various *.c: use isatty(0|2), not isatty(STDIN_FILENO|STDERR_FILENO)
+    +    *.c: use isatty(0|2), not isatty(STDIN_FILENO|STDERR_FILENO)
+     
+         We have over 50 uses of "isatty(1)" and "isatty(2)" in the codebase,
+    -    and around 10 "isatty(0)", but these used the
+    +    and around 10 "isatty(0)", but three callers used the
+         {STDIN_FILENO,STD{OUT,ERR}_FILENO} macros in "stdlib.h" to refer to
+         them.
+     
+    -    Let's change these for consistency, and because another commit that
+    -    would like to be based on top of this one[1] has a recipe to change
+    -    all of these for ad-hoc testing, not needing to match these with that
+    -    ad-hoc regex will make things easier to explain. Only one of these is
+    -    related to the "struct progress" code which it discusses, but let's
+    -    change all of these while we're at it.
+    +    Let's change these for consistency.  This makes it easier to change
+    +    all calls to isatty() at a whim, which is useful to test some
+    +    scenarios[1].
+     
+         1. https://lore.kernel.org/git/patch-v6-8.8-bff919994b5-20211102T122507Z-avarab@gmail.com/
+     
+-- 
+2.34.1.1257.g2af47340c7b
 
-Thanks,
--Stolee
