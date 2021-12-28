@@ -2,47 +2,47 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C82F6C433FE
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 15:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DEC5C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 15:36:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235182AbhL1PgY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 10:36:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43092 "EHLO
+        id S235196AbhL1Pg1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 10:36:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235174AbhL1PgX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 10:36:23 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53249C06173E
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 07:36:23 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id j18so39103344wrd.2
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 07:36:23 -0800 (PST)
+        with ESMTP id S235180AbhL1PgY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 10:36:24 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C1E6C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 07:36:24 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id v11so39064324wrw.10
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 07:36:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NDjEZZSOLnBWWaHBj3GfCICXj9kqQTdbqBCBzFNel0A=;
-        b=jVfojpy6Mn9QcXIr+z2taKVPkRd+rCnXiUCvO1pgLWf32GMeDf1TEIWbttpK0ZjwIU
-         bRv0sSsrS4+kf67eytZ7ijJzgjbGjQ96Sgm8i5E1X+8n2tkWJjR8becp1dKzay+k199Q
-         VSFjNp1Br8XttVLlnKPqKXMRRpBw+walHVGfXZv8rUHdyFmaQxx0McenOGIYOdqJVGtP
-         gwGgOC3V343/+GH3g83hZXczgvZoVHV4Dwc12kdSHx5hluqC/2ejsIVMEEoH1hXywI6X
-         VNEqO2JZWFRl+LgatFPXOHvZnisVdV6n1du2etiZq9EcfmTbfv2rb/I5SwFhhiJSRYKI
-         V9PQ==
+        bh=EVUhYLTMcJ4GzeOT7tBwmhHddDDY2tZ5vzaBZo9XqbI=;
+        b=i1Gjzp+lMfNCb+kD2N5VKW/0VZWW0BgvYCKynSEtUtiogIOrO+Q3fGM7UJdWM+H5CO
+         W7vJ0MPLu2UZLVbGFCV1wSOGEjxrZtxoBtz9K7uuqiuURPf8XSrqEzRgWbX8g113jVi1
+         dNTOpAKu9w0XvP9CVcuymIZofbt+ie0dvLjNQ0h9915wDFLIMowtLLpN/mN+QnyvSwyy
+         qYcdn0zHKU6O/HGdbnpKMnCPFuyLcvrtleXGKKxELGwXIcYY4fYXiT/2oUdEomnJfWeq
+         TJ/R6zzt3cDAyyM+VveAwgkgaw7obroUXGaqVUgBZXhHfRNiezTbp8bY/hSqqZiH5Zdi
+         jcnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NDjEZZSOLnBWWaHBj3GfCICXj9kqQTdbqBCBzFNel0A=;
-        b=E0zgTAOaY9FKFQxK/FbrqcxOTdJXsCHEvQHoF5JzpdVG4FmABdHfLvA4RRTQ7kwG0S
-         tOo8BIQmI6YZ1B09lDroc6uSqby6gUgFa9l3OG6MP+9GR4y4prX5p2T+xEA1MQEhT06W
-         TcvficRD/BmxoqYcWdBPFydi0MzAsSWH5viV3a6lBjiwfdQZied/Kmbqz/d2SSv+f+cu
-         4FyqIq9LRyIIYxRHoSE1j/kAp6BfGaYuGe8FUNCnNcaoWle/n3apTxN/hKwUs7KTqcqe
-         2B0SU5ulQ8kwJVAXtBBvn6pfLX0sIXojlPAze0c+a9Nuxinvuc9V7HFhJSi3u4sWmlgX
-         jKPQ==
-X-Gm-Message-State: AOAM5339MtNYauurub7dUd8PfEZo61/iir8W+kZVLqH3cv35PZTZAWCC
-        qRFH5U28K2dCIVor2cqgCwRFMg2XlKSBCgbb
-X-Google-Smtp-Source: ABdhPJwrQgukKVnRpr/VeSDvohjn+HpHIvOMVTpttF/GUM6exO01soFFmqc4nF4B0wXh9ytBs9fkGg==
-X-Received: by 2002:adf:d1ef:: with SMTP id g15mr17016046wrd.47.1640705781662;
-        Tue, 28 Dec 2021 07:36:21 -0800 (PST)
+        bh=EVUhYLTMcJ4GzeOT7tBwmhHddDDY2tZ5vzaBZo9XqbI=;
+        b=qyrcpxqIBwNzV3pKIj7iogDkfaILvB0+Gl4SNZ5Kd6OJWcjGSIQOT11pdfrXZt1+df
+         KMKtk6hw6IczKTAl3lnsvoP1RYuNes5NarwnoWkOoSQaIzj8XOHSHXKbNJPkJLtf8eBT
+         6fJRu9vIslbZ5NT1rzun5WAg/YQcdW3oLcg3Rdy5k5H7Dq6vC6Lc0b/osyKPZFw42yEq
+         BB5H6JBpGP8XhAFSQP14+03Dz0ZmvHEWBmNLl2q9U0rY6DDWxLnhDznZ7bGC+dUHu/DR
+         jOhucd+Wpb59Sln8mnS3dC420y2grGauyV0cg/hbzUcESBnSUH41GxS5y8ONlH6Hz4xp
+         ChZA==
+X-Gm-Message-State: AOAM530tOCtw5OFOsF2R2irLr1CGfnKqVtj0mV+AU/0PX7SwQoOF2R4T
+        zFcrsnkLlsn1HFe5pNWHHeJuSWjsoPj3gtle
+X-Google-Smtp-Source: ABdhPJwNX7NFFThR8p7QvgWko5i+njJbtcez6bN0onm5awDkrVF8IREy25wE/vG7wGI4V68VP30YSg==
+X-Received: by 2002:a05:6000:181b:: with SMTP id m27mr16195968wrh.43.1640705782356;
+        Tue, 28 Dec 2021 07:36:22 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id p23sm18403137wms.3.2021.12.28.07.36.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Philippe Blain <levraiphilippeblain@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 3/7] help tests: test "git" and "git help [-a|-g] spacing
-Date:   Tue, 28 Dec 2021 16:35:08 +0100
-Message-Id: <patch-3.7-3956937cf3b-20211228T153456Z-avarab@gmail.com>
+Subject: [PATCH 4/7] help.c: split up list_all_cmds_help() function
+Date:   Tue, 28 Dec 2021 16:35:09 +0100
+Message-Id: <patch-4.7-f040dd549b4-20211228T153456Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1257.g2af47340c7b
 In-Reply-To: <cover-0.7-00000000000-20211228T153456Z-avarab@gmail.com>
 References: <cover-0.7-00000000000-20211228T153456Z-avarab@gmail.com>
@@ -70,75 +70,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There's logic in "help.c"'s "print_cmd_by_category()" to emit "help"
-output with particular spacing, which doesn't make much sense when
-emitting only one section with "help -g".
-
-Let's add tests for the current spacing in preparation for a
-subsequent whitespace formatting fix, and make sure that that fix
-doesn't cause regressions for the "git" and "git help" output.
+Split up the listing of commands and aliases from
+list_all_cmds_help(). This will make a subsequent functional change
+smaller.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0012-help.sh | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ help.c | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index 91b68c74a15..6ac293c19ed 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -138,6 +138,51 @@ test_expect_success 'git help --config-sections-for-completion' '
- 	test_cmp human.munged sections
- '
+diff --git a/help.c b/help.c
+index 0ba9b866f03..ef1aa26efa6 100644
+--- a/help.c
++++ b/help.c
+@@ -433,15 +433,10 @@ static int get_alias(const char *var, const char *value, void *data)
+ 	return 0;
+ }
  
-+test_section_spacing () {
-+	cat >expect &&
-+	"$@" >out &&
-+	grep -E "(^[^ ]|^$)" out >actual
+-void list_all_cmds_help(void)
++static void list_all_cmds_help_external_commands(void)
+ {
+ 	struct string_list others = STRING_LIST_INIT_DUP;
+-	struct string_list alias_list = STRING_LIST_INIT_DUP;
+-	struct cmdname_help *aliases;
+-	int i, longest;
+-
+-	puts(_("See 'git help <command>' to read about a specific subcommand"));
+-	print_cmd_by_category(main_categories, &longest);
++	int i;
+ 
+ 	list_all_other_cmds(&others);
+ 	if (others.nr)
+@@ -449,6 +444,13 @@ void list_all_cmds_help(void)
+ 	for (i = 0; i < others.nr; i++)
+ 		printf("   %s\n", others.items[i].string);
+ 	string_list_clear(&others, 0);
 +}
 +
-+test_section_spacing_trailer () {
-+	test_section_spacing "$@" &&
-+	test_expect_code 1 git >out &&
-+	sed -n '/list available subcommands/,$p' <out >>expect
++static void list_all_cmds_help_aliases(int longest)
++{
++	struct string_list alias_list = STRING_LIST_INIT_DUP;
++	struct cmdname_help *aliases;
++	int i;
+ 
+ 	git_config(get_alias, &alias_list);
+ 	string_list_sort(&alias_list);
+@@ -474,6 +476,17 @@ void list_all_cmds_help(void)
+ 	string_list_clear(&alias_list, 1);
+ }
+ 
++void list_all_cmds_help(void)
++{
++	int longest;
++
++	puts(_("See 'git help <command>' to read about a specific subcommand"));
++	print_cmd_by_category(main_categories, &longest);
++
++	list_all_cmds_help_external_commands();
++	list_all_cmds_help_aliases(longest);
 +}
 +
-+
-+for cmd in git "git help"
-+do
-+	test_expect_success "'$cmd' section spacing" '
-+		test_section_spacing_trailer git help <<-\EOF &&
-+		usage: git [--version] [--help] [-C <path>] [-c <name>=<value>]
-+
-+		These are common Git commands used in various situations:
-+
-+		start a working area (see also: git help tutorial)
-+
-+		work on the current change (see also: git help everyday)
-+
-+		examine the history and state (see also: git help revisions)
-+
-+		grow, mark and tweak your common history
-+
-+		collaborate (see also: git help workflows)
-+
-+		EOF
-+		test_cmp expect actual
-+	'
-+done
-+
-+test_expect_success "'git help -g' section spacing" '
-+	test_section_spacing_trailer git help -g <<-\EOF &&
-+
-+	The Git concept guides are:
-+
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'generate builtin list' '
- 	git --list-cmds=builtins >builtins
- '
+ int is_in_cmdlist(struct cmdnames *c, const char *s)
+ {
+ 	int i;
 -- 
 2.34.1.1257.g2af47340c7b
 
