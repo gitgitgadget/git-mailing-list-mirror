@@ -2,59 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA0ECC433EF
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 23:42:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA0C2C433EF
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 23:45:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237828AbhL1Xm1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 18:42:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38062 "EHLO
+        id S237833AbhL1Xp7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 18:45:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237810AbhL1Xm0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 18:42:26 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ABD6C061574
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 15:42:26 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id w16so79532412edc.11
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 15:42:26 -0800 (PST)
+        with ESMTP id S231229AbhL1Xp6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 18:45:58 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B0A6C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 15:45:58 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id m21so80769521edc.0
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 15:45:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UKeLxlnlM+8VBRnNVzbFg9anjNz1ZoMQnUR5sy6m4Vs=;
-        b=OgdJDJaOrVDuYLp4ObWAC4FTfmrqhtEAketHiNhLqFMSMeDQADVuYPVhhqteYzZ6FM
-         /aW1pWoQJxDOfgLpH5gOSiqm5He4Ka3PG95XcV6RfiLFHr4lMhWqKR1XQcsYdcbTbr/u
-         yCw+ToB7e0tPTodqE6wO/WpgnjvGP9acpdUzytIATRFViuTRD0x2xHslHFLKnDa376SB
-         PZawIRDCqV/+kODyi3NIRsBaz7QrvLKi2LBptf/Yqlr4YIO82P9ttBp4YQ6q/IL4mqt2
-         B4AW62JaspGnotgtScVHRtgAIVjbxhQ8dTQSfkBb91vYmDtEEBs+Z/hnBPFh39qN5Wws
-         1mbg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=J3k8oxdlS/zILcIuGtEBLfpyBhb3JKq5n1g5nOZ6jWE=;
+        b=ixvEmotm/3LtJTrGLvtcMgnsjiUsdNEuebzfF4JT7u69RwhLi1mla/32VE1JnX9Bin
+         ItZUlzF2DImOpSHQKAdwrf3zkF2rbMc9cavXhJdvqg2kX3ujrDHOpJ1qN+mRd8xtUspO
+         tHeyQvM84JlNrv6E7F9Eo2/qPsQHJUgpB2eRMrXTjp/CQ5FS3fWZ5eAZ7KAQLVLtCIw2
+         4/OS0uw3XhnX9HgKmtjUpC8ZC2+MDFoMEV/zBx7Gh0gBvCLV08CToWPtAIZG2AW/tzwo
+         PWMjcvEJJeewg7paOFt8EJnGYiLJWmImCPaXR/oWqtSAWHviGGvE337PL0Zr6E5hKeoD
+         6pVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UKeLxlnlM+8VBRnNVzbFg9anjNz1ZoMQnUR5sy6m4Vs=;
-        b=AHBCa2JNO3Of9z5kFtOMNXfYDpu3BFDmvhR5vA7wHruk7phcTriJXODlPGBwFvXKev
-         oGuln92v4xcrgx/YY4a/4n66O5t5gQ2bxThKAd3kUVK5oe20E6LFK8pHlNqXVrFU8AkQ
-         rC3MZN1INYH4w9lpW8LNJqnVRHITGFGRT+3oidudq+Sl8KC+7BPd0laUbLhiZgVhNsQ5
-         UjfJCOuCITIkDiwakTluCOdGiXMSyrYPt5t3x2gzB5NQBLfkRGp9JUbkYT+h1d0geLlq
-         FomHTsjISNuZJ4yPgZ2EBA+YKC9YDpdRlngONjOKvyiBq28p61b/c+H1jjQzKJNG/cp1
-         dLYQ==
-X-Gm-Message-State: AOAM5336FxMj89pGR36uEMhDpTGycn0Ibf+bqJb16MULwu+SWSfrmUFe
-        Jk1o7jsYK96k6BhHeyLr3oJr5/E7RpSK0vV8hM4=
-X-Google-Smtp-Source: ABdhPJwIysgXb+86+T+TVcmfNTf0i6BcSEc6vV7w1SO8u6lR5Gd74uqIjMeJVvQnW7NigLl/vlT9U6ZSETRNfQR3WhQ=
-X-Received: by 2002:a05:6402:5202:: with SMTP id s2mr16134419edd.206.1640734944705;
- Tue, 28 Dec 2021 15:42:24 -0800 (PST)
+         :message-id:subject:to;
+        bh=J3k8oxdlS/zILcIuGtEBLfpyBhb3JKq5n1g5nOZ6jWE=;
+        b=y/o7L8D32fOReOCNc1It9zdSb9a/RtInMCZ1oWU8EXQRi2n8KNQhBJCHHsMobEIHIM
+         Bp8YkW/A7DULrZmeywduhhT7M69ACgjkDuUQr72B6sNyYX/vjV4o0ajI2uh0MTkOp0lV
+         MKYz8GaayiNSZAbNELBkh4b9wutx7vjH7PHDLTtLilNEAJikyrRwjGMSJFFOWoCedVsf
+         ppWhzY+IQlU5cVqbQop23s9w7/Drv6C8UmZ/eA3KAb6L5ZAwOTv79G6WapoJ3JZmTPwS
+         3jObNY9JPIm9gWw3gYEwnAiNmy/6yF2D3BcxLo2OCN+SMg+kBF6IoYRvszlHNd2YiSF3
+         es4Q==
+X-Gm-Message-State: AOAM532UYfD/jIf7LcaBAyqW0gpJoHm8UZk7ac6VuWutEA81+LKNqZNT
+        sXkiopIYkEdCE34u4jvAFxslT9xvyAeAhZxaV4I=
+X-Google-Smtp-Source: ABdhPJyUl1h+2DfoXGUJPjzerXLUC3/ZBnwLmWLatUfHiZzyR0IOl6WawV6R7723b3zisIXavKyTukLtUWSatS3THvs=
+X-Received: by 2002:a05:6402:350b:: with SMTP id b11mr23186090edd.228.1640735156658;
+ Tue, 28 Dec 2021 15:45:56 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
- <pull.1103.v2.git.1640419159.gitgitgadget@gmail.com> <4cc53c55a6ea1531342b23bc9343890a576d9f1c.1640419160.git.gitgitgadget@gmail.com>
- <20211228105755.zgahkoxn6ewjpdol@gmail.com>
-In-Reply-To: <20211228105755.zgahkoxn6ewjpdol@gmail.com>
+ <pull.1103.v2.git.1640419159.gitgitgadget@gmail.com> <b3ae62083e14aecdfe909735b4daf0a36fa5e48c.1640419159.git.gitgitgadget@gmail.com>
+ <20211228105600.h32jl5iwot3munww@gmail.com> <CABPp-BEJ+RiripJSonrOcJfRWKZDeoL83PDqE6beWwFqs1HxTQ@mail.gmail.com>
+ <YcuXQQHsl8iVdK8R@camp.crustytoothpaste.net>
+In-Reply-To: <YcuXQQHsl8iVdK8R@camp.crustytoothpaste.net>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 28 Dec 2021 15:42:13 -0800
-Message-ID: <CABPp-BFP5Oc3vDQVJYZ4L=4ivSYuZBNk+Y9RHioJuSZKVzW0Dg@mail.gmail.com>
-Subject: Re: [PATCH v2 8/8] show, log: include conflict/warning messages in
- --remerge-diff headers
-To:     Johannes Altmanninger <aclopte@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+Date:   Tue, 28 Dec 2021 15:45:45 -0800
+Message-ID: <CABPp-BHtnFWLpPxXF56BbMSayDOp9Qm1GhL3xCz7pQPcEJZ2Nw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/8] show, log: provide a --remerge-diff capability
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
         Jonathan Nieder <jrnieder@gmail.com>,
@@ -67,229 +68,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 28, 2021 at 2:57 AM Johannes Altmanninger <aclopte@gmail.com> wrote:
+On Tue, Dec 28, 2021 at 3:01 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
-> On Sat, Dec 25, 2021 at 07:59:19AM +0000, Elijah Newren via GitGitGadget wrote:
-...
-> > +test_expect_success 'remerge-diff with non-content conflicts' '
-> > +     git log -1 --oneline resolution >tmp &&
-> > +     cat <<-EOF >>tmp &&
-> > +     diff --git a/file_or_directory~HASH (side1) b/wanted_content
+> On 2021-12-28 at 22:34:03, Elijah Newren wrote:
+> > CC'ing brian in case he has comments on the sha256 stuff and whether
+> > he thinks there's a cleaner way to make my tests work with sha256.
+> > (brian: See the very end of the email.)
+> >
+> > On Tue, Dec 28, 2021 at 2:56 AM Johannes Altmanninger <aclopte@gmail.com> wrote:
+> > >
+> > > On Sat, Dec 25, 2021 at 07:59:12AM +0000, Elijah Newren via GitGitGadget wrote:
+> > > > +test_expect_success 'remerge-diff with both a resolved conflict and an unrelated change' '
+> > > > +     git log -1 --oneline ab_resolution >tmp &&
+> > > > +     cat <<-EOF >>tmp &&
+> > > > +     diff --git a/numbers b/numbers
+> > > > +     index a1fb731..6875544 100644
+> > > > +     --- a/numbers
+> > > > +     +++ b/numbers
+> > > > +     @@ -1,13 +1,9 @@
+> > > > +      1
+> > > > +      2
+> > > > +     -<<<<<<< b0ed5cb (change_a)
+> > > > +     -three
+> > > > +     -=======
+> > > > +     -tres
+> > > > +     ->>>>>>> 6cd3f82 (change_b)
+> > > > +     +drei
+> > >
+> > > nice
+> > >
+> > > > +      4
+> > > > +      5
+> > > > +      6
+> > > > +      7
+> > > > +     -eight
+> > > > +     +acht
+> > > > +      9
+> > > > +     EOF
+> > > > +     # Hashes above are sha1; rip them out so test works with sha256
+> > > > +     sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
+> > >
+> > > Right, sha256 could cause many noisy test changes. I wonder if there is a
+> > > more general way to avoid this; maybe default to SHA1 for existing tests?
+> >
+> > Not "could", but "does".  And this is not something to be avoided.
+> > The default testsuite we run in CI involves a run of
+> > GIT_TEST_DEFAULT_HASH=sha256 under linux-clang.  Making these tests
+> > SHA1-only just reduces our coverage and makes the transition to SHA256
+> > harder; I think that's the opposite of the direction we want to go.
+> >
+> > These changes I've made here are sufficient to make these tests work
+> > under sha256; you can see the test results here:
+> > https://github.com/gitgitgadget/git/runs/4646949283?check_suite_focus=true.
+> > Under "Run ci/run-build-and-tests.sh" note that there are two runs of
+> > tests, and the second has "export GIT_TEST_DEFAULT_HASH=sha256"
+> > preceding it.
+> >
+> > There might be a cleaner way to make these tests sha256-compatible,
+> > but this seemed like a pretty simple way to me.
 >
-> the "~HASH (side1)" suffix will probably mess with some programs that extract
-> the filename from the diff.
-
-"~HASH (side1)" is part of the filename, so this won't mess those
-programs up at all (unless those programs can't deal with filenames
-containing spaces or parentheses or something).
-
-> I don't know what programs are supposed to expect.  I can see arguments for
-> either dropping the suffix or including only "~HASH" since that's part of
-> the actual filename that's left in the worktree.
-
-When there are conflicts that prevent the file from being recorded in
-the tree, such as file/directory conflicts, we have to rename the file
-elsewhere.  We want the new name to be something that the user can
-find and reason about.  So, both merge-recursive and merge-ort use
-${filename}~${branchname}, where ${branchname} is defined in the
-struct merge_options (opt->branch1 or opt->branch2) that were passed
-in to the function.
-
-For a regular `git merge` we just use opt->branch1 = "HEAD" and
-opt->branch2 = <name of branch/commit typed on command line to merge>.
-
-Neither of those strings make sense for remerge-diff.  We could just
-use hashes, but why are users going to be familiar with the hashes of
-the parents of a merge commit when looking at --remerge-diff output?
-Parents are not part of the output by default.  So, log-tree.c uses
-this bit of logic
-
-    format_commit_message(parent1, "%h (%s)", &parent1_desc, &ctx);
-    format_commit_message(parent2, "%h (%s)", &parent2_desc, &ctx);
-    o.branch1 = parent1_desc.buf;
-    o.branch2 = parent2_desc.buf;
-
-which means that the branch name is of the form "$HASH
-($EXTRA_DESCRIPTION)", and thus that files in file/directory conflicts
-(or add/add + file/symlink conflicts or file/submodule conflicts) will
-get renamed to a file of the form "$FILENAME~$HASH
-($EXTRA_DESCRIPTION)"
-
-Note that these branch names also appear in CONFLICT messages, in
-conflict markers, etc., and in fact are used much more frequently in
-those locations.  In those places it's perhaps even more important to
-attempt to provide meaningful names, so dropping the extra description
-doesn't make sense.
-
-> The file/link typechange conflict test I'll add below exposes what looks
-> like an accidental interaction with the trailing tab characters that we emit
-> on --- and +++ lines if the "filename" contains a space (since 1a9eb3b9d5
-> (git-diff/git-apply: make diff output a bit friendlier to GNU patch (part
-> 2), 2006-09-22)).
+> The question here is, do we care very much about testing these specific
+> hashes?  If so, then we should use test_oid_cache to set up some OIDs
+> and make sure they're correct for both SHA-1 and SHA-256, and then
+> replace them in the code with calls to test_oid.
 >
->         index 70885e4..0000000
->         --- a/typechange~738109f (side1)        <-- git diff adds a trailing tab!
->         +++ /dev/null
->
-> I haven't formed an opinion yet, but since Tig uses the --- and +++ lines
-> to extract file names, I'd drop the " (side1)" suffix from at least the ---
-> and +++ lines. Maybe also the ^diff lines, I'm not sure
+> However, my impression is that we probably don't care very much about
+> what the specific values are, and in that case, this is completely fine.
+> We do similar things elsewhere in the testsuite.
 
-As above, " (side1)" is part of the filename and thus belongs here.
-
-> > +     similarity index 100%
-> > +     rename from file_or_directory~HASH (side1)
-> > +     rename to wanted_content
-> > +     CONFLICT (file/directory): directory in the way of file_or_directory from HASH (side1); moving it to file_or_directory~HASH (side1) instead.
->
-> I wonder if it's better to have this line further up, before the "rename"
-> resolution, to correct the temporal order.
-
-Yeah, I've gone back and forth about where these would best be placed.
-You make a good point, even if the code is slightly uglier to move
-earlier.  However, I do really like having the CONFLICT notices being
-close to the file text being shown, which makes me conflicted (no pun
-intended) about moving it earlier.  Hmm....
-
-> > +     diff --git a/letters b/letters
-> > +     CONFLICT (rename/rename): letters renamed to letters_side1 in HASH (side1) and to letters_side2 in HASH (side2).
-> > +     diff --git a/letters_side2 b/letters_side2
-> > +     deleted file mode 100644
-> > +     index b236ae5..0000000
-> > +     --- a/letters_side2
-> > +     +++ /dev/null
-> > +     @@ -1,9 +0,0 @@
-> > +     -a
-> > +     -b
-> > +     -c
-> > +     -d
-> > +     -e
-> > +     -f
-> > +     -g
-> > +     -h
-> > +     -i
-> > +     diff --git a/numbers b/numbers
-> > +     CONFLICT (modify/delete): numbers deleted in HASH (side2) and modified in HASH (side1).  Version HASH (side1) of numbers left in tree.
-> > +     EOF
->
-> Took me some time to grok these but the output makes sense (it's loud and
-> ugly but that's okay since these are serious conflicts).
->
-> > +     # We still have some sha1 hashes above; rip them out so test works
-> > +     # with sha256
-> > +     sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
-> > +
-> > +     git show --oneline --remerge-diff resolution >tmp &&
-> > +     sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >actual &&
-> > +     test_cmp expect actual
-> > +'
-> > +
-> >  test_done
-> > --
-> > gitgitgadget
->
-> We're missing a test case for typechange.
-
-<grin>
-...and a testcase for an add/add conflict, and a file/submodule
-conflict, and file/symlink, and symlink/submodule, and
-submodule/submodule (different submodules both added at same path),
-and binary merge conflict, and a variety of
-failure-to-merge-submodule-updates, and at least half a dozen regular
-rename-based conflict types, and several directory-rename-based
-conflict types...and that's just beginning to scratch the surface once
-you start dreaming of combinations of the different conflict types
-occurring for the same path (in particular, I'm thinking of examples
-from the testcases found in t6416, t6422, t6423 -- or at least
-sections 7, 9, & 12 of t6423).
-
-I don't think providing a comprehensive set of possible conflicts is
-useful here; we just need a representative sample.  I was curious
-whether that was best served with just two examples or three, but
-ultimately decided on 3.  I would have been more likely to pick 2 than
-4, though.
-
-However, while I fail to see how typechange stresses --remerge-diff in
-ways the other conflict types don't, or how it might help clarify the
-output for users, I might be overlooking something.  Is there a
-particular reason you wanted to see the typechange conflict included?
-
->  Here's is a quick draft I've been
-> playing around with. Seems ugly that the "diff --git a/typechange b/typechange"
-> is doubled but okay.
->
-> Maybe a rename/delete conflict is interesting as well, I'm not sure.  (Also I
-> wonder if switching the order of parents will give any interesting difference,
-> I guess not)
->
-> test_expect_success 'remerge-diff with file/link conflict' '
->         git branch -d base side1 side2 &&
->         git switch --orphan base &&
-
-I'd rather have subdirectories with git repositories (much like t6416,
-t6422, and t6423) if we're going to be adding many more tests here.
-
-
->         echo base >typechange &&
->         git add typechange &&
->         git commit -m base &&
->
->         git branch side1 &&
->         git branch side2 &&
->
->         git checkout side1 &&
->         echo orig-file-contents >typechange &&
->         git commit -a -m side1 &&
->
->         git checkout side2 &&
->         ln -sf . typechange &&
->         git add typechange &&
->         git commit -m side2 &&
->
->         git checkout -b resolution2 side1 &&
->         test_must_fail git merge side2 &&
->         rm typechange &&
->         mv typechange~HEAD typechange &&
->         echo resolved >>typechange &&
->         git add typechange~HEAD typechange &&
->         git merge --continue &&
->
->         git show --oneline --remerge-diff resolution2 >tmp &&
->         sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >actual &&
->
->         cat <<-EOF >tmp &&
->         7759b27 Merge branch ${SQ}side2${SQ} into resolution2
->         diff --git a/typechange b/typechange
->         deleted file mode 120000
->         CONFLICT (distinct types): typechange had different types on each side; renamed one of them so each can be recorded somewhere.
->         index 945c9b4..0000000
->         --- a/typechange
->         +++ /dev/null
->         @@ -1 +0,0 @@
->         -.
->         \ No newline at end of file
->         diff --git a/typechange b/typechange
->         new file mode 100644
->         CONFLICT (distinct types): typechange had different types on each side; renamed one of them so each can be recorded somewhere.
->         index 0000000..70885e4
->         --- /dev/null
->         +++ b/typechange
->         @@ -0,0 +1,2 @@
->         +orig-file-contents
->         +resolved
->         diff --git a/typechange~738109f (side1) b/typechange~738109f (side1)
->         deleted file mode 100644
->         index 70885e4..0000000
->         --- a/typechange~738109f (side1)
->         +++ /dev/null
->         @@ -1 +0,0 @@
->         -orig-file-contents
->         EOF
->         # We still have some sha1 hashes above; rip them out so test works
->         # with sha256
->         sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
->
->         test_cmp expect actual
-> '
-
-but otherwise the testcase looks good, if we want it.
+Thanks for chiming in.  Your impression is right; I don't care about
+the specific hashes, just the general form of the diff content, so
+I'll keep it as is.
