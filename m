@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4635BC433EF
-	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 13:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F79FC43217
+	for <git@archiver.kernel.org>; Tue, 28 Dec 2021 13:29:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232746AbhL1N26 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 08:28:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42770 "EHLO
+        id S232806AbhL1N27 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Dec 2021 08:28:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232679AbhL1N24 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 08:28:56 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F322C061574
+        with ESMTP id S232700AbhL1N25 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Dec 2021 08:28:57 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D2BC06173E
         for <git@vger.kernel.org>; Tue, 28 Dec 2021 05:28:56 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id o30so9100157wms.4
+Received: by mail-wr1-x431.google.com with SMTP id s1so38473768wrg.1
         for <git@vger.kernel.org>; Tue, 28 Dec 2021 05:28:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FeznOIXIBoSdXHQ9eIavrY8uZtUsYtdzb0ccd7m/Sh4=;
-        b=C8Z1xgc3Dd4k4yMxmQwFJuNix6zGA+eRF6ym93RfaDALJvEsDov5fybA5AhzHp/NuX
-         sYWJFkruxl7C33ULqQYCxO2tUMhNMagQDIcx4fykod1vhyJ88wvomZYMmcW0k/0Bw2Qb
-         xX9LulD8jQq92oKlsmWOr6OpUlb2x8g1T0/e+b3yZhB4gR9JEAOLB/Bx3NxT5v1E69o3
-         pg//7c72Ww9/gBsmShVs2V+xET4PFq+rGUaWhsi+m93vgJ/oQulo1xUppCqThyX/CuJj
-         t+39SHlZt/TY24q8FDltO+MDWnCYfm58E728B/raCrKRFhxYeHuOHTQo4j7WoBgJaSru
-         WRFA==
+        bh=LGaMDqcMu/jgfRshxKhIMOBax4KNk51FgqRzXtMmQUY=;
+        b=NgiIIWxZBVEUztNhJ9LoZlJ5IKbmz5g69MzG7PJ0Yhk6ljH0AGQF9Qi61spZzzWed0
+         ubwKz7GMuL0XHT307tR2HeMjSuj8FCZiAHpKRs91MKo7wIwjlJ1E3krrVHRIWHQE9W1K
+         ZjMlTnz3GkE5foFw6RNowne7DQwIUJG/wMhg/Seu0r7QTEe/2/r3qThCaaDRhN6sGQmo
+         2Im+U4EVWA39xNzFd/ITzO4W0U7f/oDpaTvyh7tQ7muh+Qc/ftd/fydQzfHkd2hH8NKh
+         0NtdU5kqR08ur9wiv86fKFza/9xHd1jcMChSwYLhmuS24/5JN64OBFSDDf7e+Ei4rFrs
+         xk+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FeznOIXIBoSdXHQ9eIavrY8uZtUsYtdzb0ccd7m/Sh4=;
-        b=ENuzNV3ZtoEr+s7jUwtlfd+39Iev7HbWbDdQjR4dFInQkYQlf1N5vo+uV2PPJtgHfE
-         /UCeVTqQH0pl8gnl/ylRypHxt8jP2N+DF+bm3D4He0aAayrAKUtGwOWBMHWZ1+x0TUZi
-         4vl1F3UrothQGP3eBv/qGpoX7cq5H+3Kz24FG0v5CF6PQDg4Td6hsdv3dSs3178JtRQR
-         n69bP/MdWnPVxwTtVtDVaTieZufwcEirQeKq6KKNYmWtt633iVp2VS/eze3XLaHpKbqW
-         UOWU3LiE/yZMkFIWqNjpvdtX1s7kHP39guRx1PU8iRieBN2/zNCHB/kCJuag2FiVSDCF
-         fi2w==
-X-Gm-Message-State: AOAM532tTBa4sjBNdy6nkenKizlrCgtvkI3oY1yATPmICWjlHBtMuvUH
-        2HX4qxYBh2NoCxhcxk51L+VRF3tv/ESVv7ju
-X-Google-Smtp-Source: ABdhPJxWtl9AFqXUGCVGK0Pwp0i1AdYK30Cl/ammQ2ONJzmlZNcEZl8ou5rkF5jY+GanLniW7O4nCQ==
-X-Received: by 2002:a05:600c:4ed3:: with SMTP id g19mr16660028wmq.195.1640698134503;
-        Tue, 28 Dec 2021 05:28:54 -0800 (PST)
+        bh=LGaMDqcMu/jgfRshxKhIMOBax4KNk51FgqRzXtMmQUY=;
+        b=SQzQtYEPoOGnijL38EoA4TNsG91p4oyxqkwrtPv+Ur6K3H/SXSRMo+JpSmsSsHnplz
+         9gaZPOXyRzmi6Mn2jgYM9OQ9meCyHbbvX2fYta2xu7oWqwffYH75DaoH/EUGY5evzEcA
+         abbqKOPrwtnX56TjHGry1g/hAi/ZFhUZ1B0GpXFVJTsbDygcfKpd+pXDaq/IIVyzVL9L
+         u4opn11n2A9FDESsHUMnZgTOy9wC8VOxky/TjO8/J1b6lu5JsLhJ8F/fdRq/iqhxy47i
+         B+gKgw6rQ41mgklh0GVZFJUS7w0esfrDxEp8C6HJhPE0QcOuRwJ+eOpiGqKhjeYcW29/
+         mFYw==
+X-Gm-Message-State: AOAM530CQBSN9iSyN0RWIVp1Iw/W5WdCTAxdXt2IDWmhvbmzCzcxQOfx
+        JyLgouAZsPgUlACenJII9pebnnKS7iQoy4Sz
+X-Google-Smtp-Source: ABdhPJxpuruCwThxRR14ZfOrem6OhgPyRb8gp/b9bv2mzL7jzv0hNEMsuomnOwqubI3nDZqOA92MzQ==
+X-Received: by 2002:adf:ea84:: with SMTP id s4mr2606616wrm.546.1640698135288;
+        Tue, 28 Dec 2021 05:28:55 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d11sm19695868wri.101.2021.12.28.05.28.53
+        by smtp.gmail.com with ESMTPSA id d11sm19695868wri.101.2021.12.28.05.28.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 28 Dec 2021 05:28:54 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jiang Xin <worldhello.net@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 02/10] cat-file tests: test messaging on bad objects/paths
-Date:   Tue, 28 Dec 2021 14:28:42 +0100
-Message-Id: <patch-v6-02.10-02622592803-20211228T132637Z-avarab@gmail.com>
+Subject: [PATCH v6 03/10] parse-options API: add a usage_msg_optf()
+Date:   Tue, 28 Dec 2021 14:28:43 +0100
+Message-Id: <patch-v6-03.10-ff717088a28-20211228T132637Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.34.1.1257.g2af47340c7b
 In-Reply-To: <cover-v6-00.10-00000000000-20211228T132637Z-avarab@gmail.com>
 References: <cover-v5-00.10-00000000000-20211222T041050Z-avarab@gmail.com> <cover-v6-00.10-00000000000-20211228T132637Z-avarab@gmail.com>
@@ -69,79 +69,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add tests for the output that's emitted when we disambiguate
-<obj>:<path> in cat-file. This gives us a baseline for improving these
-messages.
+Add a usage_msg_optf() as a shorthand for the sort of
+usage_msg_opt(xstrfmt(...)) used in builtin/stash.c. I'll make more
+use of this function in builtin/cat-file.c shortly.
 
-For e.g. "git blame" we'll emit:
-
-    $ git blame HEAD:foo
-    fatal: no such path 'HEAD:foo' in HEAD
-
-But cat-file doesn't disambiguate these two cases, and just gives the
-rather unhelpful:
-
-    $ git cat-file --textconv HEAD:foo
-    fatal: Not a valid object name HEAD:foo
+The disconnect between the "..." and "fmt" is a bit unusual, but it
+works just fine and this keeps it consistent with usage_msg_opt(),
+i.e. a caller of it can be moved to usage_msg_optf() and not have to
+have its arguments re-arranged.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t8007-cat-file-textconv.sh | 42 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ builtin/stash.c |  4 ++--
+ parse-options.c | 13 +++++++++++++
+ parse-options.h | 10 ++++++++++
+ 3 files changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/t/t8007-cat-file-textconv.sh b/t/t8007-cat-file-textconv.sh
-index eacd49ade63..71ea2ac987e 100755
---- a/t/t8007-cat-file-textconv.sh
-+++ b/t/t8007-cat-file-textconv.sh
-@@ -19,6 +19,48 @@ test_expect_success 'setup ' '
- 	GIT_AUTHOR_NAME=Number2 git commit -a -m Second --date="2010-01-01 20:00:00"
- '
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 18c812bbe03..c9a09047a6e 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1811,8 +1811,8 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
+ 	else if (!strcmp(argv[0], "save"))
+ 		return !!save_stash(argc, argv, prefix);
+ 	else if (*argv[0] != '-')
+-		usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
+-			      git_stash_usage, options);
++		usage_msg_optf(_("unknown subcommand: %s"),
++			       git_stash_usage, options, argv[0]);
  
-+test_expect_success 'usage: <bad rev>' '
-+	cat >expect <<-\EOF &&
-+	fatal: Not a valid object name HEAD2
-+	EOF
-+	test_must_fail git cat-file --textconv HEAD2 2>actual &&
-+	test_cmp expect actual
-+'
+ 	/* Assume 'stash push' */
+ 	strvec_push(&args, "push");
+diff --git a/parse-options.c b/parse-options.c
+index 629e7963497..c01f0040368 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -1079,3 +1079,16 @@ void NORETURN usage_msg_opt(const char *msg,
+ 	fprintf(stderr, "fatal: %s\n\n", msg);
+ 	usage_with_options(usagestr, options);
+ }
 +
-+test_expect_success 'usage: <bad rev>:<bad path>' '
-+	cat >expect <<-\EOF &&
-+	fatal: Not a valid object name HEAD2:two.bin
-+	EOF
-+	test_must_fail git cat-file --textconv HEAD2:two.bin 2>actual &&
-+	test_cmp expect actual
-+'
++void NORETURN usage_msg_optf(const char * const fmt,
++			     const char * const *usagestr,
++			     const struct option *options, ...)
++{
++	struct strbuf msg = STRBUF_INIT;
++	va_list ap;
++	va_start(ap, options);
++	strbuf_vaddf(&msg, fmt, ap);
++	va_end(ap);
 +
-+test_expect_success 'usage: <rev>:<bad path>' '
-+	cat >expect <<-\EOF &&
-+	fatal: Not a valid object name HEAD:two.bin
-+	EOF
-+	test_must_fail git cat-file --textconv HEAD:two.bin 2>actual &&
-+	test_cmp expect actual
-+'
++	usage_msg_opt(msg.buf, usagestr, options);
++}
+diff --git a/parse-options.h b/parse-options.h
+index 275fb440818..4a9fa8a84d7 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -225,6 +225,16 @@ NORETURN void usage_msg_opt(const char *msg,
+ 			    const char * const *usagestr,
+ 			    const struct option *options);
+ 
++/**
++ * usage_msg_optf() is like usage_msg_opt() except that the first
++ * argument is a format string, and optional format arguments follow
++ * after the 3rd option.
++ */
++__attribute__((format (printf,1,4)))
++void NORETURN usage_msg_optf(const char *fmt,
++			     const char * const *usagestr,
++			     const struct option *options, ...);
 +
-+
-+test_expect_success 'usage: <rev> with no <path>' '
-+	cat >expect <<-\EOF &&
-+	fatal: git cat-file --textconv HEAD: <object> must be <sha1:path>
-+	EOF
-+	test_must_fail git cat-file --textconv HEAD 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+
-+test_expect_success 'usage: <bad rev>:<good (in HEAD) path>' '
-+	cat >expect <<-\EOF &&
-+	fatal: Not a valid object name HEAD2:one.bin
-+	EOF
-+	test_must_fail git cat-file --textconv HEAD2:one.bin 2>actual &&
-+	test_cmp expect actual
-+'
-+
- cat >expected <<EOF
- bin: test version 2
- EOF
+ /*
+  * Use these assertions for callbacks that expect to be called with NONEG and
+  * NOARG respectively, and do not otherwise handle the "unset" and "arg"
 -- 
 2.34.1.1257.g2af47340c7b
 
