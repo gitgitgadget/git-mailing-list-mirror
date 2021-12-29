@@ -2,60 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52FFFC433EF
-	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 18:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FAE4C4332F
+	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 18:55:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230109AbhL2Sz2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Dec 2021 13:55:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36822 "EHLO
+        id S230181AbhL2Sz3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Dec 2021 13:55:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230006AbhL2SzS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Dec 2021 13:55:18 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69A33C061748
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 10:55:17 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id k66-20020a1ca145000000b00345fa984108so6492480wme.2
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 10:55:17 -0800 (PST)
+        with ESMTP id S229996AbhL2SzR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Dec 2021 13:55:17 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBB56C061747
+        for <git@vger.kernel.org>; Wed, 29 Dec 2021 10:55:16 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id a9so46051108wrr.8
+        for <git@vger.kernel.org>; Wed, 29 Dec 2021 10:55:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=rP4kEq8FF2OINWVr/x+I8nI+cifT9FovCOINQK1WOY0=;
-        b=KU0T6fQHjC2g/2QjI/45PQQ+Trq6waD0iuiSVGPVewHt13GJBnkf9g9WH/vu8JHqJY
-         natsNnO8wHix7LAzRA33uyxhfatwyX/LcRDhZFAcBSDK9ukIhll9T0P1Dd36F7ruECYA
-         XN71L2EiDwK0VUSVYBquZDuONeRma1sPvYxml6CfoJSdsY+FrNRIJ8XRSJtfzVOtlSih
-         DTldUPz7dor2ACpUPHp6bNETRYSvOTNYOKoh/SW6HmxV6unerivpOiOIGK4ETI+iS9Oj
-         AVVKZEzDizSG8qZqS07StICPOrGK7cT8LRLRSzOgzB45HUqas9N8gt4H/9pCSwsPKLTn
-         SOSQ==
+        bh=HJowCI4wG8/H+dbje6h72gIFs/0u9CrYeRicZUF2+Ao=;
+        b=loPkZZf6Oz/SAce7tfc0T/jgKBCZR6NN6+eB1WUmJ1hXTlLpoBvRiFpDg8gREAbbFJ
+         HmywbResZAxrQke82PdZQHq01hKUF+YTRGTJZKfrPAoMbPJfg+RfwgiJfLxatJrndE/Y
+         0ptpwhFbsidTbvbhVvWPLN9Aj+FET0gMmmcQq+BHlLwQGdc4McCLV4PP6Tfy0wtzsX8E
+         JyjCa0DpbpFEWkhmgZdiWA+zvHuPyQUm5vmuulHIdIjDOJyqBJXnMdpenUnu6+7zAlIs
+         IEtqHm2NzDx+XGDjQp2wnvMaF+DTpek+s4EQqcCjFuBJLIkNX1Mm6aMM66RDnlIvUcpJ
+         1mNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=rP4kEq8FF2OINWVr/x+I8nI+cifT9FovCOINQK1WOY0=;
-        b=Y3U7e4EZ9p2dJ4H0eD7xJ8DwfdeQSbvTfsjrNbjnQg5Ik+OcXOFMy5/GqAmXHtCudE
-         vnUd5RdRR9usYiI1box/xYMcv5eIsBSLNjTLPurMXz0MMCk45/w/gNoAg9qXvLRfsHbJ
-         5vAXnnFQhRMmekQJHOfyG/VOqNDLIHWLAVjMCqUTS11a8bVQ+XZYm6iwnX4Y5GrqpoHp
-         p3w2leGntw+TtZWYuzCot2Ec/CHjS8ss86VP4LJzPxPp5+snDdjMKwJ76kw5Mi5YUW38
-         5qRL5VixVzcci1Ah9JeffyuH1c/g+GI7zyOlrWcnnxqgmFRp4GWV3DYhQqLWmR0tKl++
-         dH4A==
-X-Gm-Message-State: AOAM532LY7b/7GNTJOjUG63xYudVnnDAV08Hy3eGUaBQAqLrw5sqPQrR
-        9/t9q6649qh3yIvPST9QxXTo5gyeTI8=
-X-Google-Smtp-Source: ABdhPJxH14JKVTMbMSLA3oe5oMgOPZW/z4h5kP6F4W3El/trHJHlPABQuzcH8lVCDuJNtMVzxy6nEQ==
-X-Received: by 2002:a7b:c087:: with SMTP id r7mr23287969wmh.17.1640804115884;
+        bh=HJowCI4wG8/H+dbje6h72gIFs/0u9CrYeRicZUF2+Ao=;
+        b=tF4IYPfyB6Uz8A4YefGDLyJHSGPvSBay/t2soKsA1ukglQR152jNScLw9hr0ctijQf
+         qs5Ykrq4hlFFnWMBTR6rJH+CJWseHOZmpc4gOMET6PWIz51OQjoOoJCTCccHZ2si+Fsr
+         Fc8mT5LZQAOHkP8syVQ5iqM+S2uakSkngoPVQ7ilgyR0X6erllG+jBVAdnTbO6NIVbqL
+         1Vfu8coK/eBp8P9f3L6FyzVFv2JsT+AgKpxEyhFF+ZL/UVciH5SghyA25bNwUp/QBKy6
+         ehSSO9JqvXyTmdC01v/xcqAM4YR0DbYHDOEiyqHqdiqCaMbX6YE8ppZk7NSMVbCEjMo6
+         bR1A==
+X-Gm-Message-State: AOAM531Epxp6eqOqm5iBXpp6YbMbi4/rrul2cc6hu/b27czk4pu1lLzT
+        APEOZwRc+Z597UrYMH+FGjndeiuA/xs=
+X-Google-Smtp-Source: ABdhPJxCo1WPokGWjYmDbBpx5sZpdav6K1x22n+mH+/TtBPfnNfsG8NXhUHE5L4fMafzPueW9470xg==
+X-Received: by 2002:adf:f24e:: with SMTP id b14mr21603261wrp.612.1640804115307;
         Wed, 29 Dec 2021 10:55:15 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o38sm20373876wms.11.2021.12.29.10.55.15
+        by smtp.gmail.com with ESMTPSA id f6sm22054806wri.115.2021.12.29.10.55.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 29 Dec 2021 10:55:15 -0800 (PST)
-Message-Id: <03a880d534b50ab1a6c2e45746c75806ff6e9f4c.1640804108.git.gitgitgadget@gmail.com>
+Message-Id: <44d715a224cce812d224d419117bc5a07bf3e614.1640804108.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1088.v3.git.1640804107.gitgitgadget@gmail.com>
 References: <pull.1088.v2.git.1640647437.gitgitgadget@gmail.com>
         <pull.1088.v3.git.1640804107.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Wed, 29 Dec 2021 18:55:06 +0000
-Subject: [PATCH v3 10/11] i18n: ref-filter: factorize "%(foo) atom used
- without %(bar) atom"
+Date:   Wed, 29 Dec 2021 18:55:05 +0000
+Subject: [PATCH v3 09/11] i18n: factorize "--foo outside a repository"
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,43 +73,35 @@ From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- ref-filter.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ apply.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index adbcc680812..f7a2f17bfd9 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -841,7 +841,7 @@ static void if_then_else_handler(struct ref_formatting_stack **stack)
- 	struct if_then_else *if_then_else = (struct if_then_else *)cur->at_end_data;
- 
- 	if (!if_then_else->then_atom_seen)
--		die(_("format: %%(if) atom used without a %%(then) atom"));
-+		die(_("format: %%(%s) atom used without a %%(%s) atom"), "if", "then");
- 
- 	if (if_then_else->else_atom_seen) {
- 		/*
-@@ -907,7 +907,7 @@ static int then_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
- 	if (cur->at_end == if_then_else_handler)
- 		if_then_else = (struct if_then_else *)cur->at_end_data;
- 	if (!if_then_else)
--		return strbuf_addf_ret(err, -1, _("format: %%(then) atom used without an %%(if) atom"));
-+		return strbuf_addf_ret(err, -1, _("format: %%(%s) atom used without a %%(%s) atom"), "then", "if");
- 	if (if_then_else->then_atom_seen)
- 		return strbuf_addf_ret(err, -1, _("format: %%(then) atom used more than once"));
- 	if (if_then_else->else_atom_seen)
-@@ -943,9 +943,9 @@ static int else_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
- 	if (prev->at_end == if_then_else_handler)
- 		if_then_else = (struct if_then_else *)prev->at_end_data;
- 	if (!if_then_else)
--		return strbuf_addf_ret(err, -1, _("format: %%(else) atom used without an %%(if) atom"));
-+		return strbuf_addf_ret(err, -1, _("format: %%(%s) atom used without a %%(%s) atom"), "else", "if");
- 	if (!if_then_else->then_atom_seen)
--		return strbuf_addf_ret(err, -1, _("format: %%(else) atom used without a %%(then) atom"));
-+		return strbuf_addf_ret(err, -1, _("format: %%(%s) atom used without a %%(%s) atom"), "else", "then");
- 	if (if_then_else->else_atom_seen)
- 		return strbuf_addf_ret(err, -1, _("format: %%(else) atom used more than once"));
- 	if_then_else->else_atom_seen = 1;
+diff --git a/apply.c b/apply.c
+index 000f2a9b1b3..8fd2ac2cfca 100644
+--- a/apply.c
++++ b/apply.c
+@@ -136,7 +136,7 @@ int check_apply_state(struct apply_state *state, int force_apply)
+ 		return error(_("options '%s' and '%s' cannot be used together"),"--reject",  "--3way");
+ 	if (state->threeway) {
+ 		if (is_not_gitdir)
+-			return error(_("--3way outside a repository"));
++			return error(_("%s outside a repository"), "--3way");
+ 		state->check_index = 1;
+ 	}
+ 	if (state->apply_with_reject) {
+@@ -147,10 +147,10 @@ int check_apply_state(struct apply_state *state, int force_apply)
+ 	if (!force_apply && (state->diffstat || state->numstat || state->summary || state->check || state->fake_ancestor))
+ 		state->apply = 0;
+ 	if (state->check_index && is_not_gitdir)
+-		return error(_("--index outside a repository"));
++		return error(_("%s outside a repository"), "--index");
+ 	if (state->cached) {
+ 		if (is_not_gitdir)
+-			return error(_("--cached outside a repository"));
++			return error(_("%s outside a repository"), "--cached");
+ 		state->check_index = 1;
+ 	}
+ 	if (state->ita_only && (state->check_index || is_not_gitdir))
 -- 
 gitgitgadget
 
