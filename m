@@ -2,189 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46E4CC433EF
-	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 22:45:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B915C433EF
+	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 23:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232374AbhL2WpS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Dec 2021 17:45:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58734 "EHLO
+        id S233126AbhL2XPt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Dec 2021 18:15:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230243AbhL2WpR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Dec 2021 17:45:17 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2575AC061574
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 14:45:17 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id f5so91262554edq.6
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 14:45:17 -0800 (PST)
+        with ESMTP id S233076AbhL2XPo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Dec 2021 18:15:44 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75E44C061574
+        for <git@vger.kernel.org>; Wed, 29 Dec 2021 15:15:44 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id j6so91351156edw.12
+        for <git@vger.kernel.org>; Wed, 29 Dec 2021 15:15:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Qe0PxJD9Wa0PVk/OoWrOl8tpbgfVByj0kBcX/YGmfXE=;
-        b=MMp4EWbJcLKf9XYYM0iuy9SIbHdm/4omIp31072PagFOhUvp6OfFWArk6hcpHEfDYY
-         VY3p5s9Ermz8DfrEr5DZnlYK83KyrE9nSUDexQTQ4O50FjOgNBB/uZ7brYhmzCvTTf6B
-         ir8xbH95pJltPfMNqBKuMI/Ko5Lae4o7Wf63Sl5hneUG1mb4/5jX8+c+TY7cnx1YzUTf
-         0K8OM1f9nVAqZSMtE0XVmTiCnDPNxOqIc1exww0UPb2JHpPnCESJwotRTUDOWw1VYxaS
-         2V491OkqIs2OI1StAJ/kV/16Xs4V1N7uWZMGO/Mxj6Xe2XrAyaXguiHgVrbIA7lXaNz+
-         g+rA==
+        bh=G6JY1pn6b//1KttX7chIx0l/TJRmyUY6ziJWfTyZ4Fk=;
+        b=XLB9YKsYygQg6LB8oi8bQL6X1968BjT6wS6mPmxSZUMnw9TfK3e6YQ6p3/xclCgWzu
+         pgpXtxYnlaovNVZ/K1HX9zqTZgQe5fyXO/4AdhWK2SnBzlkLCY93APU6xill5Nv6qJRI
+         /E0Ksb5VbB7b8OdZt+/0SzTxolns4kuQuD+e7AnHGOS9nb9CU6wdQ0KovqOCui8ZPwcM
+         yY170EGCtvcOrJ2C5D1MFwy5KgrNOROLnPsy8hQC160hI1PKejsjLHP6q2H1GpP1GhiX
+         mbQpFPERsVeIn1JAJJxeQ/ayaoCx+GjTR6kXrEofBs6Nj1CERfBA4+blfYR4yY+IYr98
+         J0Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Qe0PxJD9Wa0PVk/OoWrOl8tpbgfVByj0kBcX/YGmfXE=;
-        b=na+BjLxyVS0nJyqoHVOOYYKMxveVXcmXsyr2CJT3tk6lyZUuRqROR+zMoJ1UlNb0B3
-         lCsyzGXDdjajZoCYjgRu3nK16/5BcgSjySHjEJeYocMrKGBqaz5XGP+pgfHfbqhy0K1s
-         blFjHkjxx4T4kN6hFOVI3/2741FjVdGUupm1lK/E8oClA7mw/qfXGTfXZw+UKMaO4ngN
-         I6vUqQCxYJSrswzRfQuTX2cHESBqjofU2vbzEy6zDL0CrCfhqGt+WLkAdNZ9695IsvWL
-         4Y7zfi5t09JhmAn9BPaPirtZ0XNgxoL4iMqIvuYe2fnHMEw72gVQyxM6g1YhNq3/s3AV
-         jWdQ==
-X-Gm-Message-State: AOAM532JwFJeOx7nRYRNYYol/m6wsq/AhQd1pc0tgb281+VNLF1QkDUO
-        iqAtVX/QI2MKaCcE3x9+JKL49uM+RRx/Nj0FSUk=
-X-Google-Smtp-Source: ABdhPJwMzbwIwA5ZZ80yBmP6Yy2MoysJJ84ys+5spcCfKzxvFdIODRD5quGLr+X5cfHn6BOxlvFJN2C+C2WkSYMtuY0=
-X-Received: by 2002:a17:907:968a:: with SMTP id hd10mr22236955ejc.269.1640817915579;
- Wed, 29 Dec 2021 14:45:15 -0800 (PST)
+        bh=G6JY1pn6b//1KttX7chIx0l/TJRmyUY6ziJWfTyZ4Fk=;
+        b=Wvxz3UXMRnUDnT96MCtqi3qb1fht5OhNTq+t2bLzv46mFRgp8dUEIgrKull26Ug2M9
+         /usJ3KnM1BRR3XNtx4EbNwx66h1suiLA0+57h9wKCMWUT6lO4vLoodaX+91VDW2Tmi5B
+         6+CrJdlT1EI0q/X6g/DHpddtp5AgGXMpJWckfL1qYBU5q4COl7/uJF69kGDUkcNqSVDH
+         KOLmfNl9ZXSFqoGoSkLbuKGAeIy1unRKjBRaeWeW1pMXDPufCqilzSVcZqRK6ugg4WVT
+         3mbSf3AVYnO56o85Zgxywce1SNJEGNELmBiy0NWvJIL7HQFXAa6Y4++qunyEmg9GK8Iq
+         y9aA==
+X-Gm-Message-State: AOAM533vqWcI2V6zlT9wRPhFP7fcrjKvb1FlphbnZ5DgLq+BlPVPIQMf
+        QvDmOlMlMne9TpuKrwbAXS+sk9wuhqDqvu8UUdt/zR4z8mk=
+X-Google-Smtp-Source: ABdhPJwvjxXkpBvfHDupnIUlQ1bAaVdQxEC+6Kn+/bO/6idWYpllgXrglLDMqTcyg2fqliqQGkvGpgdCX7Bg1WARjJ0=
+X-Received: by 2002:a17:907:9808:: with SMTP id ji8mr23467505ejc.476.1640819742970;
+ Wed, 29 Dec 2021 15:15:42 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com>
- <pull.1101.v3.git.1640727143.gitgitgadget@gmail.com> <fcece09546cbdb5f1bcd0d0c5aaa3a54e9d3b852.1640727143.git.gitgitgadget@gmail.com>
- <CAPig+cSUOknNC9GMyPvAqdBU0r1MVgvSpvgpSpXUmBm67HO7PQ@mail.gmail.com>
- <e2ef25b5-9802-1dd9-b96c-ea85d2082b48@gmail.com> <CABPp-BE9umOTkjfnB0X+9nTZaBmeXd4z5DmiZ1Upzds=m1spPw@mail.gmail.com>
- <0aa32f4d-9101-16ff-58b8-29a8651a69f8@gmail.com>
-In-Reply-To: <0aa32f4d-9101-16ff-58b8-29a8651a69f8@gmail.com>
+References: <CAC4O8c-2sxHyAjtd4jZQcjzX4d9+19AUx-h13nttjwP=pd1Ukw@mail.gmail.com>
+In-Reply-To: <CAC4O8c-2sxHyAjtd4jZQcjzX4d9+19AUx-h13nttjwP=pd1Ukw@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 29 Dec 2021 14:45:04 -0800
-Message-ID: <CABPp-BFdVPRgFy8DLFEB13Trh5J4S+xma-U5FUnUvQLNMfNNjA@mail.gmail.com>
-Subject: Re: [PATCH v3 6/6] worktree: copy sparse-checkout patterns and config
- on add
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Sean Allred <allred.sean@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Date:   Wed, 29 Dec 2021 15:15:31 -0800
+Message-ID: <CABPp-BEQdpO5=j_f2MjgZjhudNZgKhDgV31M_Cy6Agx_U=KweQ@mail.gmail.com>
+Subject: Re: something like git-check-ignore but considering only patterns?
+To:     Britton Kerin <britton.kerin@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 29, 2021 at 1:39 PM Derrick Stolee <stolee@gmail.com> wrote:
+On Wed, Dec 29, 2021 at 12:54 PM Britton Kerin <britton.kerin@gmail.com> wrote:
 >
-> On 12/29/2021 2:51 PM, Elijah Newren wrote:
-> > On Wed, Dec 29, 2021 at 9:31 AM Derrick Stolee <stolee@gmail.com> wrote:
-> >>
-> >> On 12/29/2021 1:37 AM, Eric Sunshine wrote:
-> >>> On Tue, Dec 28, 2021 at 4:32 PM Derrick Stolee via GitGitGadget
-> >>> <gitgitgadget@gmail.com> wrote:
-> >
-> >>> The obvious way to work around this problem is to (again) special-case
-> >>> `core.bare` and `core.worktree` to remove them when copying the
-> >>> worktree-specific configuration. Whether or not that is the best
-> >>> solution or even desirable is a different question. (I haven't thought
-> >>> it through enough to have an opinion.)
-> >>
-> >> It makes sense to special case these two settings since we want to
-> >> allow creating a working worktree from a bare repo, even if it has
-> >> worktree config stating that it is bare.
-> >
-> > Agreed.
-> >
-> >> As far as the implementation goes, we could do the copy and then
-> >> unset those two values in the new file. That's an easy enough change.
-> >
-> >> I'll wait for more feedback on the overall ideas (and names of things
-> >> like the init-worktree-config subcommand).
-> >
-> > What value does the init-worktree-config subcommand provide; why
-> > shouldn't we just get rid of it?
-> >
-> > I know Eric was strongly suggesting it, but he was thinking in terms
-> > of always doing that full switchover step, or never doing it.  Both
-> > extremes had the potential to cause user-visible bugs, and thus he
-> > suggested providing a command to allow users to pick their poison.  I
-> > provided a suggestion avoiding both extremes that doesn't have that
-> > pick-your-poison approach, so I don't see why forcing users into this
-> > extra step makes any sense.
-> >
-> > But perhaps I missed something.  Is there a usecase for users to
-> > explicitly use this?
->
-> I think the motivation is that worktree config is something that is
-> harder to set up than to just run a 'git config' command, and we
-> should guide users into a best practice for using it. The
-> documentation becomes "run this command to enable it".
+> I'd like to query if a file e.g. symLinkToDir/foo.o would be ignored
+> if it were in a real dir instead (don't ask) but in a general way and
+> hopefully without parsing and matching all the .gitignore entries
+> myself.  Is it possible?
 
-Okay, but that's an answer to a different question -- namely, "if
-users want/need to explicitly set it up, why should we have a
-command?"  Your answer here is a very good answer to that question,
-but you've assumed the "if".  My question was on the "if": (Why) Do
-users need or want to explicitly set it up?
+How would that even work?  If there is just one gitignore pattern and it was:
 
-Secondarily, if users want to set it up explicitly, is the work here
-really sufficient to help guide them?  In particular, I discovered and
-started using extensions.worktreeConfig without ever looking at the
-relevant portions of git-worktree.txt (the references in
-git-config.txt never mentioned them).  I also pushed this usage to
-others, including even to you with `git-sparse-checkout`, and no
-reviewer on this list ever caught it or informed me of the `proper`
-additional guidelines found in git-worktree.txt until this thread
-started.  So, relying on folks to read git-worktree.txt for this
-config item feels a bit weak to me.  Granted, your new command will be
-much more likely to be read since it appears near the top of
-git-worktree.txt, but I just don't think that's enough.  The
-references to extensions.worktreeConfig in git-config.txt should
-reference any special command or extended steps if we expect users to
-manually configure it (whether via explicit new subcommand or via also
-playing with other config settings).
+    build/*
 
+And you tried to ask (making up a new `--patterns` flag):
 
-Anyway, if we think users want to set it up explicitly, and we address
-the discoverability problem above, then I'd vote for
-"independent-config" or "private-config" (or _maybe_
-"migrate-config").  Because:
-  * no sense repeating the word `worktree` in `git worktree
-init-worktree-config`.  It's redundant.
-  * The words "independent" or "private" suggest what it does and why
-users might want to use the new subcommand.
-  * It's not an "init":
-    * The documentation makes no attempt to impose a temporal order of
-using this command before `git worktree add`.  (Would we even want
-to?)
-    * As per my recommendation elsewhere, this step just isn't needed
-for the vast majority of users (i.e. those with non-bare clones who
-leave core.worktree alone).
-    * ...and it's also not needed for other (core.bare=true or
-core.worktree set) users since `git worktree add` will automatically
-run this config migration for them
+    git check-ignore --patterns '*/foo.o'
 
-And, actually, with the name "independent-config" or "private-config",
-I might be answering my own question.  It's a name that speaks to why
-users might want it, so my objection to the new command is rapidly
-diminishing.
-
-> It also provides a place to update the steps if we were to change
-> something in the future around worktree config, but I'm guessing
-> the ship has sailed and backwards compatibility will keep us from
-> introducing a new setting that would need to be added here.
-
-Yeah, the best time to force a config change is probably when we
-introduce a new command with it.  If we had forced
-core.repositoryFormatVersion=1 in order to read extensions.* at the
-time that extensions.* was introduced, that would have been fine (When
-we tried it later, we had to revert it for backward compatibility
-reasons.).  If we had forced extensions.worktreeConfig=true when
-introducing git-worktree, that would have been fine.  We did force
-extensions.worktreeConfig=true when we introduced git-sparse-checkout,
-which was good, though we localized it to sparse-checkout and avoided
-adding it to worktree usage in general at that point.
-
-The other good time to force a config change is when we have cases
-where behavior is already broken anyway.  For example, the
-(core.bare=true or core.worktree is set) case that started this
-thread.  But in such cases, we have to localize the forced-config
-change to the cases that are "broken anyway" unless we can verify it
-won't break other cases.
-
-I'm not sure that this new subcommand will ever fall into either of
-these categories, so I also agree that we'll be unlikely to ever
-change it.
+What should the command return?  True?  False?  It kinda depends on
+what that '*' actually is.  If it's "build" then it's ignored.  If
+it's not, then for this example it wouldn't be ignored.  So the best
+answer we would be able to give is "maybe", which isn't particularly
+useful.  Also, typical cases will be much more complex than that.  So
+we can only answer whether specific paths are ignored, not whether
+various globs would be.
