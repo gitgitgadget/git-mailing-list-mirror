@@ -2,84 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30E29C433EF
-	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 13:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B151FC433EF
+	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 14:02:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236652AbhL2NfM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Dec 2021 08:35:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50958 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229554AbhL2NfL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Dec 2021 08:35:11 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B93BCC061574
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 05:35:10 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id h7so3523442lfu.4
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 05:35:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=j46j6qIIuBSGr7tpCkt7FSYN5D74t935dd2Yhm58tn4=;
-        b=UdjjvwdleEXvPX5ymP6EZouTLhcgey9bI4hMaRGtHFK8pirKHt+K8lNdZ/78Lygd+7
-         ODoqwaeRo3oKD9a2hSk5lEHmExKLWpQHiVXxeqHklNl5gz3Wtnd9iIg2DnAjqFyYWiIl
-         EqNMezqHKJx2ZpHABf2+hcStKzt5ilmsN5pbWdvKLVCxPhxdKv30Ts+Ldd9uTOMgypXm
-         cyADIaxeGrt6qHVf4llMgOMv3eAsl8hkVgdjMYhOEyG32npZWQRB010+jonyc6iQQipB
-         yO5kM+KKrLYyxpAe4WEZLFG4bzFhFSUz/evRD+XoXOosxuJngZmLM9KDCOHsX1FA12Qy
-         A40g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=j46j6qIIuBSGr7tpCkt7FSYN5D74t935dd2Yhm58tn4=;
-        b=ClP9xGetP1a6YT5s0nLc0yNdfERTscZ0B9h62S+c20Ui7MhWUaCH3Q5nT+xgklRMMQ
-         7pxtQWDHHmuVasEbHNxBsuy3E82YtKmSJIKoAz2HOs5s/ZmI30PmaPC3yRxGy/ZoEgOm
-         /OpiSaN1j+5pLBrDu030/fZ/AVHusJy9vkaIFIcO+pBXPpN6Ib0PU6U6LzdQU1+1ZC2G
-         /6zPzU5kejUdwbFW3JZ2TCq7qehpzpQRa62TdpX5dehtK7XsdAvi6+B4VKOWcNuGRHiO
-         nHn0pJGOayosClEcctndIRip2eCiXdj8JWT3rTi0AsVrp8dSRfb4Uigbt0UmxQKvGMnk
-         FAOg==
-X-Gm-Message-State: AOAM5319EaM+JaN/RGETdraBPR4B3zHtPgcH8VYUCEqrmzjq3fw/ko0O
-        TlN3ffol/Wg3p4jqRGjjrOKjJLTntAg=
-X-Google-Smtp-Source: ABdhPJz/zyxqwaqWGdlA8GvRpgBCh7ReV6A9LL7uHClcJTWnK53GX4DIt9OEpniL2mAaRoy90TBGlA==
-X-Received: by 2002:a19:6f4c:: with SMTP id n12mr24678350lfk.582.1640784908921;
-        Wed, 29 Dec 2021 05:35:08 -0800 (PST)
-Received: from ?IPV6:2a02:2168:8729:6c00:311c:f36:5cf5:528e? ([2a02:2168:8729:6c00:311c:f36:5cf5:528e])
-        by smtp.gmail.com with ESMTPSA id w10sm2205230lfu.173.2021.12.29.05.35.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Dec 2021 05:35:08 -0800 (PST)
-Message-ID: <fffeed2f-c956-d34f-ea5f-73f52e2d2be4@gmail.com>
-Date:   Wed, 29 Dec 2021 16:35:07 +0300
+        id S237175AbhL2OCu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Dec 2021 09:02:50 -0500
+Received: from smtp6-g21.free.fr ([212.27.42.6]:8648 "EHLO smtp6-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233228AbhL2OCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Dec 2021 09:02:49 -0500
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:c5e0:3de3:cfd4:f8ca])
+        (Authenticated sender: jn.avila@free.fr)
+        by smtp6-g21.free.fr (Postfix) with ESMTPSA id A72BD7802C5;
+        Wed, 29 Dec 2021 15:02:38 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+        s=smtp-20201208; t=1640786568;
+        bh=BEbFzmrueg8lWFy72HncKRncOCrNUIMXqx8LNRvzwYI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=DU478JWjW35y9C9sovhNT37xNaeSB1MuiKmQt8gfz9ig5McfbiN6BtdQC0a2+s4Hd
+         QLRyTAwNh/C2fJcYMkOFQ8qWmTNsat6m44cXPVaRZIj3Tfz4SG50oSyTgua6kF3fn9
+         vvMQbFLaTdrb1aP3x3qDoA7qXrXHYtHnZR6QaKucvl8yaJuC0PyB7YzckDqOJGnkEr
+         +KMBlm1ZMoLrbW/ntE9NBglTenuVlxJDnrBNEulc5kENhJMy9cn3l2DauMjKeFs2A0
+         bdQtjtiBY5jTrWkKv2EKyUT7ZIiK44GMO6NAbXpH2kmBf150DEEWm2e58jZcJTbajJ
+         /gSNcfABLl2yg==
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget 
+        <gitgitgadget@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+Cc:     Jeff King <peff@peff.net>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 06/11] i18n: factorize "--foo requires --bar" and the like
+Date:   Wed, 29 Dec 2021 15:02:38 +0100
+Message-ID: <1840905.KUPFNGqlj7@cayenne>
+In-Reply-To: <2a540fb3-df24-3b95-1088-f2ee228d175c@kdbg.org>
+References: <pull.1088.git.1638514909.gitgitgadget@gmail.com> <f83ed5cb7995e2ce3c9aac9eb4971f45bcf94e89.1640647438.git.gitgitgadget@gmail.com> <2a540fb3-df24-3b95-1088-f2ee228d175c@kdbg.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: request: allow passing -X <strategy-option> to git checkout
- <path> to auto-solve merge conflicts
-Content-Language: en-US
-To:     Erik Cervin Edin <erik@cervined.in>
-Cc:     git@vger.kernel.org
-References: <3e1548ab-5e20-9555-bd10-d6cbf2ffbce4@gmail.com>
- <CA+JQ7M-By65FVPnMFnwE8zx3T4O7DV3_5Kf2P6eZhP4Zcemorg@mail.gmail.com>
- <a8f3246f-2b50-e713-16c3-1d23b80a42a1@gmail.com>
- <CA+JQ7M9Ht5vSfDDEuYyK7pBPBvgjzi7L6jEYX8dkP4PMFK-M2Q@mail.gmail.com>
- <CA+JQ7M-gornjkB78Dgx-bHW7Ps=C2936vDNUakQ-VG8KAyZ=YA@mail.gmail.com>
-From:   Andrey Butirsky <butirsky@gmail.com>
-In-Reply-To: <CA+JQ7M-gornjkB78Dgx-bHW7Ps=C2936vDNUakQ-VG8KAyZ=YA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is exactly what I tried to avoid, since Git already seem has all 
-the needed under the hood to prevent such disaster..
+On Tuesday, 28 December 2021 08:01:30 CET Johannes Sixt wrote:
+> Am 28.12.21 um 00:23 schrieb Jean-No=EBl Avila via GitGitGadget:
+> > From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
+> >=20
+> > Signed-off-by: Jean-No=EBl Avila <jn.avila@free.fr>
+>=20
+> Two questions:
+>=20
+> - Is "%s requires %s" already used elsewhere or is it a new translatable
+> string? The commit message should clarify the choice.
 
-On 29.12.2021 15:13, Erik Cervin Edin wrote:
-> On a tangent, you can set up your own merge tools.
->
-> So in git config you can add something like:
->
-> [mergetool "both"]
-> cmd = "sed -i -e '/^<<<<<<<$/d' -e '/^=======$/d' -e '/^>>>>>>>$/d' -- $MERGED"
->
-> and call it with git mergetool --tool=both
+%s requires %s is a new translatable string. Will update.
+
+>=20
+> - Do translators know that the two %s will be substituted with options
+> (mostly)?
+
+Indeed this is not clear. So we should apply the same transformation as for=
+ "cannot be used together"
+
+>=20
+> > --- a/fetch-pack.c
+> > +++ b/fetch-pack.c
+> > @@ -297,7 +297,7 @@ static int find_common(struct fetch_negotiator *neg=
+otiator,
+> >  	struct packet_reader reader;
+> > =20
+> >  	if (args->stateless_rpc && multi_ack =3D=3D 1)
+> > -		die(_("--stateless-rpc requires multi_ack_detailed"));
+> > +		die(_("%s requires %s"), "--stateless-rpc", "multi_ack_detailed");
+>=20
+> Here, the second %s is not an option. I hope that does not invalidate
+> any translation of the string.
+
+True. So let's use "the option '%s' requires '%s'" instead.
+
+>=20
+> -- Hannes
+>=20
+
+
+
+
