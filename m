@@ -2,155 +2,365 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51102C433EF
-	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 02:16:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB189C433F5
+	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 06:19:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238347AbhL2CQH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Dec 2021 21:16:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43546 "EHLO
+        id S238896AbhL2GTa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Dec 2021 01:19:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229620AbhL2CQH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Dec 2021 21:16:07 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7D0BC061574
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 18:16:06 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id q14so72857251edi.3
-        for <git@vger.kernel.org>; Tue, 28 Dec 2021 18:16:06 -0800 (PST)
+        with ESMTP id S238893AbhL2GT3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Dec 2021 01:19:29 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8706C061574
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 22:19:28 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id bg19-20020a05600c3c9300b0034565e837b6so6781303wmb.1
+        for <git@vger.kernel.org>; Tue, 28 Dec 2021 22:19:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=IuD4BR3pH41e7kXfxK01kCwIjpsvaQ/gzikk7w5y0aw=;
-        b=MF4kEqiWA3ENCq0kBgzsDXmtTEHqZZSaRAyDCsmbwDaWwc6rJz/YVKBoARh7XGWyK1
-         gJAIa0wP9Mp5K3HT6JjWKx56ulTAgAcNlymiZKS5CDfT2o+oY7R7fFXinvsLM78uRXN2
-         S6QUtuJgg/N8NRPreBYgp1M67B7stTnHXYpMEs6gHpLtpnae+SqmV/fayQQH0TdUU28m
-         ZHcCHP+UooTjSJroABVKd2LQ0osnirLhMn55k/Rj63A3rXg4P5ixowIN1oDBfgbLuPX2
-         Y1uBxDWkRrdtcr3WCJoALhk5WeOLUqPAl3hiexyfXiZCtJmXn/CPUGR++HH4K/34isG0
-         h9cA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=JAnrdiCCV7Yc0FGWBhr31FTw7pGBYTQXrQ1b/pkSFX0=;
+        b=blHHbSziyYkt6nQPGHfQ7cspk92y8Yj1iXqMIxSQIWLYRWW1uLKR7KVqiXb9DFnpiC
+         n6Mecu6eIminLZpjBUU6Uaim9WYgqVZ9S/0KHo0rSmtlpzComMWMcCbumb8bwLhxDdPP
+         OAIDVrGxJhGF3zcl9AzcdGzBPGE1w4YH3OHzjqhhVVzBwS9CON6Ww5UBTYgAEgzqePDj
+         AxV4xlc1Ruh1FeL8h8MtcTp57c23xhYl8XCIMdXNheS1etrVez/Abe63ca0JRppVtSfl
+         O/i6mM0gjKcBFj5USTs09y8NzXqAkiIgIdf2UnzXB1eKw6IsjSHGZN5eS7akXr9cSYNf
+         e+Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=IuD4BR3pH41e7kXfxK01kCwIjpsvaQ/gzikk7w5y0aw=;
-        b=lDoYgoCqbLXNQHLoklqGYR+AuxDjswDq2OaJYZlqWWEjoY3MZ0ILmymn3tSvTx/cR3
-         Qz8PF26bv1kRG1fiODRPhyFIyGrxcdVIE75UfGNSMdL6kEj4k7re1J0ceXF5xzS3r7hI
-         dcyrVCxHic7xNNZyqEutXowvGw5elcBQLgVzACSrs3nG0KMDYoDYcP/KO2HunVMzxPOJ
-         DKte6wfMUuhW97q2MpOFV0CrqETPUagdxsjhkG51WkfxwmU599Gi046Bc0cmXuSopUzT
-         j4uw16g33bNfsceiaZF6SXY4e0JhqXb8Z/CcpA+gt+x5l1A5DIlSZJKU9CSbWjzPJcw4
-         24Og==
-X-Gm-Message-State: AOAM5309H7yWh7AodKsRqmikkPizsIbTydigxHLeJbbxMtAmAHqXQUJy
-        Mszk0xeDQLdIS2tOnDIAp+OIMQEJuCkyxeK+OA0=
-X-Google-Smtp-Source: ABdhPJyu0UMtpNHeHn+RvWmNlYxgT58R6eX0rS128WMr68/5+b9lvndVVQ3T5dyOBGVki3ZAFkpix8D8fJmdiSF23zo=
-X-Received: by 2002:a17:907:3f1e:: with SMTP id hq30mr19146230ejc.613.1640744165253;
- Tue, 28 Dec 2021 18:16:05 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=JAnrdiCCV7Yc0FGWBhr31FTw7pGBYTQXrQ1b/pkSFX0=;
+        b=7ZdhCAg5FgnEN4CUnLtBdjBlJhsaGfw6Clo14RIZ2r9ceV6z6VZZHA9Z1G3QSeQdB8
+         yy8JHAK2vdtc8vFDbslRArcjs9IWn2clE9msYJsUci3kgfybSU6tTkhPHyJ7OzOMYX2L
+         IxzQYyogvJmDe0IFFqDzoNy0imBa3WuNVQLbjvw3gDl4Tj52RFnq8cpIyEAc8yznlRTF
+         OUg/i6O2SNp8NkxPtQ8Rx0I8exgclUr9/ndgMOMnczTffubBsXAJPbn15tZpftU1IE7g
+         OdgsT+NnGDdoHJLP1GXDPRAvfC1/yHN4tpjiVcGBRJCtZElwFDQKBtQfbuWRWJFRbR20
+         0EUQ==
+X-Gm-Message-State: AOAM532RFh0TbN5Vojg5tj0d896UbwEYZlzc1T7dBct3ipDpyujwuPOO
+        cuA8R9UvTVoVcHD4OwCS8N+TFKnO/V4=
+X-Google-Smtp-Source: ABdhPJzzBRFJxXkLuRWMuG4GpESjKmpKkIV2y/poXRb4XyeKo+Jv6RyZZxWtPLHrLHLRRzWmSEVNmA==
+X-Received: by 2002:a05:600c:35d3:: with SMTP id r19mr20387683wmq.29.1640758767115;
+        Tue, 28 Dec 2021 22:19:27 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z5sm19448094wru.87.2021.12.28.22.19.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Dec 2021 22:19:26 -0800 (PST)
+Message-Id: <pull.1125.v2.git.git.1640758765723.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1125.git.git.1640629598.gitgitgadget@gmail.com>
+References: <pull.1125.git.git.1640629598.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 29 Dec 2021 06:19:25 +0000
+Subject: [PATCH v2] receive-pack.c: consolidate find header logic
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <RFC-cover-00.21-00000000000-20211115T220831Z-avarab@gmail.com>
- <RFC-patch-19.21-0bbca8cca8e-20211115T220831Z-avarab@gmail.com>
- <66b25f23-7349-1540-76b8-c9f0a64660ac@jeffhostetler.com> <211228.861r1xk40d.gmgdl@evledraar.gmail.com>
- <9952005b-9174-7578-7718-e9576b27b4ce@jeffhostetler.com> <CABPp-BHxVTjLFZkM5MBCwymFTzBbyNaoj=hOPYJVV4hBv49eXA@mail.gmail.com>
- <211229.864k6si8w5.gmgdl@evledraar.gmail.com>
-In-Reply-To: <211229.864k6si8w5.gmgdl@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 28 Dec 2021 18:15:54 -0800
-Message-ID: <CABPp-BFt+BpJpkV9ZPcJOw5R_cUjouu1oYsMZTy0WS49i8VkBw@mail.gmail.com>
-Subject: Re: [RFC PATCH 19/21] usage API: use C99 macros for {usage,usagef,die,error,warning,die}*()
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 28, 2021 at 3:53 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Tue, Dec 28 2021, Elijah Newren wrote:
->
-> > On Tue, Dec 28, 2021 at 8:32 AM Jeff Hostetler <git@jeffhostetler.com> =
-wrote:
-> >> >      If you'd like a semi-stable grouping across similar git version=
-s the
-> >> >      "file/func" pair should be Good Enough for most purposes. Some =
-functions
-> >> >      might emit multiple errors, but you'd probably want to group th=
-em as
-> >> >      similar enough anyway.
-> >
-> > Why would we want to group different errors?  Isn't the point to
-> > figure out which error is being triggered the most (or which errors)?
-> > This sounds like it'd leave us with more investigation work to do.
->
-> Ideally you wouldn't, i.e. the goal here is to get some approximation of
-> a unique ID for an error across versions.
->
-> But unless we're going to assign something like MySQL's error ID's
-> manually any automatic method we pick is only going to be an
-> approximation.
+From: John Cai <johncai86@gmail.com>
 
-I like this way that you frame it.  I agree.
+There are two functions that have very similar logic of finding a header
+value. find_commit_header, and find_header. We can conslidate the logic
+by using find_commit_header and replacing the logic in find_header.
 
-> So the question is whether we can have something that's good enough. The
-> current "fmt" feature is fragmented by i18n. That's fixable (at the cost
-> of quite a lot of lines changed), but would something even more succinct
-> be good enough?
->
-> Which is why I suggested file/function, i.e. it'll have some
-> duplication, but for an error dashboard using trace2 data I'd think it's
-> probably good enough.
->
-> But maybe not. I just wanted to ask about it as a quick question...
+Introduce a new function find_header_max, which is equivalent to
+find_commit_header except it takes a len parameter that determines how
+many bytes to read. find_commit_header can then call find_header_max
+with 0 as the len.
 
-I think for determining the most frequently triggered errors,
-fragmentation is a minor issue, so you are right to call it out.  In
-particular, having the counts of issues separated by language might
-mean that when we pick the top N errors, some of those in the top N
-wouldn't really be in the top N if we had them correctly combined with
-the other translations (and we also might get duplicates within our
-chosen top N, since an english and a german translation of the same
-error are both in the top N of the fragmented counts).  Pretty
-unlikely to be a problem in practice, though, and rather trivial to
-work around once we have the data collected and are looking into it.
-Even in the really unlikely event that I was trying to fix a "top N"
-problem and accidentally ended up with a "top N+2" problem, I'm still
-dealing with a "real error" that users are hitting.  Any work I do to
-fix it will help people facing a real problem.
+This cleans up duplicate logic, as the logic for finding header values
+is now all in one place.
 
-In contrast, coalescing of errors to me would be a major issue.  Let's
-say I look at the top error, as reported by file/function.  But that
-one error is from a function that has four error paths.  If I take a
-guess at one of those error paths and try to fix it, I might be
-chasing ghosts and completely wasting my time.  My first step should
-be to go back to the drawing board and attempt to collect data about
-what error the user was actually hitting (a rather lengthy process,
-especially in attempting over a period of weeks/months to cajole users
-to upgrade their git versions to get the new logging) -- but that was
-exactly what this trace2 stuff was supposed to be doing in the first
-place, so the file/function approximation choice defeats the purpose
-of this error logging.  It sounds like a deal breaker to me.
+Signed-off-by: John Cai <johncai86@gmail.com>
+---
+    Consolidate find_header logic into one function
+    
+    This addresses the NEEDSWORK comment in builtin/receive-pack.c:
+    
+     /**
+       * NEEDSWORK: reuse find_commit_header() from jk/commit-author-parsing
+       * after dropping "_commit" from its name and possibly moving it out
+       * of commit.c
+       **/
+    
+    
+    There is some duplicated logic between find_header and
+    find_commit_header that can be consolidated instead of having two places
+    in the code that do essentially the same thing. For the sake of simpler
+    and more DRY code, use find_commit_header and rename it to find_header
+    since it is not limited to finding headers for only commits.
+    
+    Changes since v1:
+    
+     * got rid of renaming from find_commit_header -> find_header since the
+       renaming did not provide much value
+     * simplified logic in find_header
+     * introduce find_header_max function, which is what find_commit_header
+       was before except it adds a "len" parameter to determine how much of
+       the buffer to read.
 
-My gut instinct is that I'd take nearly any level of fragmentation
-over the possible coalescing of separate errors.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1125%2Fjohn-cai%2Fjc%2Freplace-find-header-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1125/john-cai/jc/replace-find-header-v2
+Pull-Request: https://github.com/git/git/pull/1125
 
-I think the fragmentation solutions probably fall under the "good
-enough" category.  So, for example, the file/line number might be good
-enough.  It's a lot more fragmentation than different languages,
-though, and it also suffers from the problem that it's hard to tell if
-new git versions are fixing some of the "top N" problems (because new
-git versions would have different line numbers and thus represent the
-top N problems differently, whereas the fmt-based fragmentation will
-at least be relatively consistent in its representation of errors
-across git versions).  But if the fmt solution was super problematic
-for some other reasons, I'd gladly take file/line-number over
-file/function.
+Range-diff vs v1:
 
-So, of the solutions presented so far, the "fmt" feature seems to me
-to be the best reasonable effort approximation.
+ 1:  9465c20d4bd ! 1:  5e0d90d642b receive-pack.c: consolidate find header logic
+     @@ Commit message
+          There are two functions that have very similar logic of finding a header
+          value. find_commit_header, and find_header. We can conslidate the logic
+          by using find_commit_header and replacing the logic in find_header.
+     -    This helps clean up the code, as the logic for finding header values can
+     -    stay in one place.
+     +
+     +    Introduce a new function find_header_max, which is equivalent to
+     +    find_commit_header except it takes a len parameter that determines how
+     +    many bytes to read. find_commit_header can then call find_header_max
+     +    with 0 as the len.
+     +
+     +    This cleans up duplicate logic, as the logic for finding header values
+     +    is now all in one place.
+      
+          Signed-off-by: John Cai <johncai86@gmail.com>
+      
+     @@ builtin/receive-pack.c: static char *prepare_push_cert_nonce(const char *path, t
+      - * after dropping "_commit" from its name and possibly moving it out
+      - * of commit.c
+      - */
+     --static char *find_header(const char *msg, size_t len, const char *key,
+     --			 const char **next_line)
+     -+static char *find_header_value(const char *msg, const char *key, const char **next_line)
+     + static char *find_header(const char *msg, size_t len, const char *key,
+     + 			 const char **next_line)
+       {
+      -	int key_len = strlen(key);
+      -	const char *line = msg;
+     @@ builtin/receive-pack.c: static char *prepare_push_cert_nonce(const char *path, t
+      -			return xmemdupz(line + offset, (eol - line) - offset);
+      -		}
+      -		line = *eol ? eol + 1 : NULL;
+     +-	}
+     +-	return NULL;
+      +	size_t out_len;
+     -+	const char *eol;
+     -+	char *ret;
+     ++	const char *val = find_header_max(msg, key, len, &out_len);
+      +
+     -+	const char *val = find_commit_header(msg, key, &out_len);
+      +	if (val == NULL)
+      +		return NULL;
+      +
+     -+	eol = strchrnul(val, '\n');
+     -+	if (next_line) {
+     -+		*next_line = *eol ? eol + 1: eol;
+     - 	}
+     --	return NULL;
+     -+
+     -+	ret = xmalloc(out_len+1);
+     -+	memcpy(ret, val, out_len);
+     -+	ret[out_len] = '\0';
+     ++	if (next_line)
+     ++		*next_line = val + out_len + 1;
+      +
+     -+	return ret;
+     ++	return xmemdupz(val, out_len);
+       }
+       
+       /*
+     -@@ builtin/receive-pack.c: static int constant_memequal(const char *a, const char *b, size_t n)
+     +
+     + ## commit.c ##
+     +@@ commit.c: struct commit_list **commit_list_append(struct commit *commit,
+     + 	return &new_commit->next;
+     + }
+       
+     - static const char *check_nonce(const char *buf, size_t len)
+     +-const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
+     ++const char *find_header_max(const char *msg, const char *key,
+     ++			size_t len,
+     ++			size_t *out_len)
+       {
+     --	char *nonce = find_header(buf, len, "nonce", NULL);
+     -+	char *nonce = find_header_value(buf, "nonce", NULL);
+     -+
+     - 	timestamp_t stamp, ostamp;
+     - 	char *bohmac, *expect = NULL;
+     - 	const char *retval = NONCE_BAD;
+     -@@ builtin/receive-pack.c: static int check_cert_push_options(const struct string_list *push_options)
+     - 	if (!len)
+     - 		return 1;
+     + 	int key_len = strlen(key);
+     + 	const char *line = msg;
+       
+     --	while ((option = find_header(buf, len, "push-option", &next_line))) {
+     --		len -= (next_line - buf);
+     -+	while ((option = find_header_value(buf, "push-option", &next_line))) {
+     - 		buf = next_line;
+     - 		options_seen++;
+     - 		if (options_seen > push_options->nr
+     -
+     - ## commit.c ##
+     +-	while (line) {
+     ++	while (line && (len == 0 || line < msg + len)) {
+     + 		const char *eol = strchrnul(line, '\n');
+     + 
+     + 		if (line == eol)
+      @@ commit.c: const char *find_commit_header(const char *msg, const char *key, size_t *out_len
+     - 		if (eol - line > key_len &&
+     - 		    !strncmp(line, key, key_len) &&
+     - 		    line[key_len] == ' ') {
+     --			*out_len = eol - line - key_len - 1;
+     -+			if (out_len != NULL)
+     -+				*out_len = eol - line - key_len - 1;
+     - 			return line + key_len + 1;
+     - 		}
+     - 		line = *eol ? eol + 1 : NULL;
+     + 	return NULL;
+     + }
+     + 
+     ++const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
+     ++{
+     ++	return find_header_max(msg, key, 0, out_len);
+     ++}
+     + /*
+     +  * Inspect the given string and determine the true "end" of the log message, in
+     +  * order to find where to put a new Signed-off-by trailer.  Ignored are
+     +
+     + ## commit.h ##
+     +@@ commit.h: void free_commit_extra_headers(struct commit_extra_header *extra);
+     + 
+     + /*
+     +  * Search the commit object contents given by "msg" for the header "key".
+     ++ * Reads up to "len" bytes of "msg".
+     +  * Returns a pointer to the start of the header contents, or NULL. The length
+     +  * of the header, up to the first newline, is returned via out_len.
+     +  *
+     +  * Note that some headers (like mergetag) may be multi-line. It is the caller's
+     +  * responsibility to parse further in this case!
+     +  */
+     ++const char *find_header_max(const char *msg, const char *key,
+     ++			size_t len,
+     ++			size_t *out_len);
+     ++
+     + const char *find_commit_header(const char *msg, const char *key,
+     + 			       size_t *out_len);
+     + 
+ 2:  384a635daa2 < -:  ----------- commit.c: rename find_commit_header to find_header
 
-Anyway, just my $0.02...
+
+ builtin/receive-pack.c | 33 ++++++++++-----------------------
+ commit.c               | 10 ++++++++--
+ commit.h               |  5 +++++
+ 3 files changed, 23 insertions(+), 25 deletions(-)
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 9f4a0b816cf..b69ead8dcda 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -581,32 +581,19 @@ static char *prepare_push_cert_nonce(const char *path, timestamp_t stamp)
+ 	return strbuf_detach(&buf, NULL);
+ }
+ 
+-/*
+- * NEEDSWORK: reuse find_commit_header() from jk/commit-author-parsing
+- * after dropping "_commit" from its name and possibly moving it out
+- * of commit.c
+- */
+ static char *find_header(const char *msg, size_t len, const char *key,
+ 			 const char **next_line)
+ {
+-	int key_len = strlen(key);
+-	const char *line = msg;
+-
+-	while (line && line < msg + len) {
+-		const char *eol = strchrnul(line, '\n');
+-
+-		if ((msg + len <= eol) || line == eol)
+-			return NULL;
+-		if (line + key_len < eol &&
+-		    !memcmp(line, key, key_len) && line[key_len] == ' ') {
+-			int offset = key_len + 1;
+-			if (next_line)
+-				*next_line = *eol ? eol + 1 : eol;
+-			return xmemdupz(line + offset, (eol - line) - offset);
+-		}
+-		line = *eol ? eol + 1 : NULL;
+-	}
+-	return NULL;
++	size_t out_len;
++	const char *val = find_header_max(msg, key, len, &out_len);
++
++	if (val == NULL)
++		return NULL;
++
++	if (next_line)
++		*next_line = val + out_len + 1;
++
++	return xmemdupz(val, out_len);
+ }
+ 
+ /*
+diff --git a/commit.c b/commit.c
+index a348f085b2b..2ed115e04a0 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1631,12 +1631,14 @@ struct commit_list **commit_list_append(struct commit *commit,
+ 	return &new_commit->next;
+ }
+ 
+-const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
++const char *find_header_max(const char *msg, const char *key,
++			size_t len,
++			size_t *out_len)
+ {
+ 	int key_len = strlen(key);
+ 	const char *line = msg;
+ 
+-	while (line) {
++	while (line && (len == 0 || line < msg + len)) {
+ 		const char *eol = strchrnul(line, '\n');
+ 
+ 		if (line == eol)
+@@ -1653,6 +1655,10 @@ const char *find_commit_header(const char *msg, const char *key, size_t *out_len
+ 	return NULL;
+ }
+ 
++const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
++{
++	return find_header_max(msg, key, 0, out_len);
++}
+ /*
+  * Inspect the given string and determine the true "end" of the log message, in
+  * order to find where to put a new Signed-off-by trailer.  Ignored are
+diff --git a/commit.h b/commit.h
+index 3ea32766bcb..41ec89af5b5 100644
+--- a/commit.h
++++ b/commit.h
+@@ -290,12 +290,17 @@ void free_commit_extra_headers(struct commit_extra_header *extra);
+ 
+ /*
+  * Search the commit object contents given by "msg" for the header "key".
++ * Reads up to "len" bytes of "msg".
+  * Returns a pointer to the start of the header contents, or NULL. The length
+  * of the header, up to the first newline, is returned via out_len.
+  *
+  * Note that some headers (like mergetag) may be multi-line. It is the caller's
+  * responsibility to parse further in this case!
+  */
++const char *find_header_max(const char *msg, const char *key,
++			size_t len,
++			size_t *out_len);
++
+ const char *find_commit_header(const char *msg, const char *key,
+ 			       size_t *out_len);
+ 
+
+base-commit: 55b058a8bbcc54bd93c733035c995abc7967e539
+-- 
+gitgitgadget
