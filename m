@@ -2,80 +2,47 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B915C433EF
-	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 23:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54885C433F5
+	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 23:16:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233126AbhL2XPt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Dec 2021 18:15:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37070 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233076AbhL2XPo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Dec 2021 18:15:44 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75E44C061574
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 15:15:44 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id j6so91351156edw.12
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 15:15:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=G6JY1pn6b//1KttX7chIx0l/TJRmyUY6ziJWfTyZ4Fk=;
-        b=XLB9YKsYygQg6LB8oi8bQL6X1968BjT6wS6mPmxSZUMnw9TfK3e6YQ6p3/xclCgWzu
-         pgpXtxYnlaovNVZ/K1HX9zqTZgQe5fyXO/4AdhWK2SnBzlkLCY93APU6xill5Nv6qJRI
-         /E0Ksb5VbB7b8OdZt+/0SzTxolns4kuQuD+e7AnHGOS9nb9CU6wdQ0KovqOCui8ZPwcM
-         yY170EGCtvcOrJ2C5D1MFwy5KgrNOROLnPsy8hQC160hI1PKejsjLHP6q2H1GpP1GhiX
-         mbQpFPERsVeIn1JAJJxeQ/ayaoCx+GjTR6kXrEofBs6Nj1CERfBA4+blfYR4yY+IYr98
-         J0Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=G6JY1pn6b//1KttX7chIx0l/TJRmyUY6ziJWfTyZ4Fk=;
-        b=Wvxz3UXMRnUDnT96MCtqi3qb1fht5OhNTq+t2bLzv46mFRgp8dUEIgrKull26Ug2M9
-         /usJ3KnM1BRR3XNtx4EbNwx66h1suiLA0+57h9wKCMWUT6lO4vLoodaX+91VDW2Tmi5B
-         6+CrJdlT1EI0q/X6g/DHpddtp5AgGXMpJWckfL1qYBU5q4COl7/uJF69kGDUkcNqSVDH
-         KOLmfNl9ZXSFqoGoSkLbuKGAeIy1unRKjBRaeWeW1pMXDPufCqilzSVcZqRK6ugg4WVT
-         3mbSf3AVYnO56o85Zgxywce1SNJEGNELmBiy0NWvJIL7HQFXAa6Y4++qunyEmg9GK8Iq
-         y9aA==
-X-Gm-Message-State: AOAM533vqWcI2V6zlT9wRPhFP7fcrjKvb1FlphbnZ5DgLq+BlPVPIQMf
-        QvDmOlMlMne9TpuKrwbAXS+sk9wuhqDqvu8UUdt/zR4z8mk=
-X-Google-Smtp-Source: ABdhPJwvjxXkpBvfHDupnIUlQ1bAaVdQxEC+6Kn+/bO/6idWYpllgXrglLDMqTcyg2fqliqQGkvGpgdCX7Bg1WARjJ0=
-X-Received: by 2002:a17:907:9808:: with SMTP id ji8mr23467505ejc.476.1640819742970;
- Wed, 29 Dec 2021 15:15:42 -0800 (PST)
+        id S233140AbhL2XQl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Dec 2021 18:16:41 -0500
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:51067 "EHLO
+        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231897AbhL2XQl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Dec 2021 18:16:41 -0500
+Date:   Wed, 29 Dec 2021 23:16:37 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail2; t=1640819798;
+        bh=ZiuoVP6EemIZ2Gm1YjhnsP0LMaUh77tIqjVkuGn9mSk=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:From:To:Cc;
+        b=HPJqT5x4RzCmjqx/KPDnh6Ijhs/BrgQvFMHMQIGZ9nH7lUfhOs9q7ZFAjMVI5yU6L
+         HMI1rZkK193FAweUqKqbNzPzdNt6wUTvZA77Rg8Mv3/RsMUsHlBiU/s/RSytDgRkzS
+         kvyWiPM3kw6JNsiTaNrpMvujHrflPl3XZZsbtFDdxhE1IlQKD58D49jegL7sPe2yWH
+         c0+75WP34n7lGvJzu/h/KaD993hXBbcd72gMLhwgGZEBMLeS+WK+3c8+wdYKRGtjBp
+         jdcbZX80wrABPKK0XS19sRy2sNcQGBHd3ALGV5vZAc9nKsqiayf9is74gpHcdGaUV5
+         UEKzGL0KuuqUQ==
+To:     Philip Oakley <philipoakley@iee.email>
+From:   =?utf-8?Q?Jo=C3=A3o_Victor_Bonfim?= 
+        <JoaoVictorBonfim+Git-Mail-List@protonmail.com>
+Cc:     Lemuria <nekadek457@gmail.com>, git@vger.kernel.org
+Reply-To: =?utf-8?Q?Jo=C3=A3o_Victor_Bonfim?= 
+          <JoaoVictorBonfim+Git-Mail-List@protonmail.com>
+Subject: Re: Git internal command line parser
+Message-ID: <M6HMTm0dtIrBEIowkbx-CyuDyS2IXUt1CwYei4z0pBdkWvGqK9bZr2ZVWt---Yy2PudrsoPMw7cNe3B0a4ZbV7Ruujdkqpi882Gp7jUXLUQ=@protonmail.com>
+In-Reply-To: <456ef68c-dd01-e781-6ff1-e351c39671f1@iee.email>
+References: <0347f273-f9e9-3ce6-2a95-f1ce71285c09@gmail.com> <e2726eaa-ba73-4141-bf61-89d5a7e9a9c2@iee.email> <0e0f78e9-2cde-a20e-cd47-8542bc7bd314@gmail.com> <cc6fa52a-d782-d4a8-eb93-936b8d83fc2f@iee.email> <bZ5IKn77iTM5gCits_kl5lZ7uiOOkkt8dcHPT1UVlPWsrnqapXBtAkYB4uGGBA3Oizq4J7BN4GC6mLR8wQ7x_qqLJPbae6IMTqxW9JFJSbg=@protonmail.com> <456ef68c-dd01-e781-6ff1-e351c39671f1@iee.email>
 MIME-Version: 1.0
-References: <CAC4O8c-2sxHyAjtd4jZQcjzX4d9+19AUx-h13nttjwP=pd1Ukw@mail.gmail.com>
-In-Reply-To: <CAC4O8c-2sxHyAjtd4jZQcjzX4d9+19AUx-h13nttjwP=pd1Ukw@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 29 Dec 2021 15:15:31 -0800
-Message-ID: <CABPp-BEQdpO5=j_f2MjgZjhudNZgKhDgV31M_Cy6Agx_U=KweQ@mail.gmail.com>
-Subject: Re: something like git-check-ignore but considering only patterns?
-To:     Britton Kerin <britton.kerin@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 29, 2021 at 12:54 PM Britton Kerin <britton.kerin@gmail.com> wrote:
->
-> I'd like to query if a file e.g. symLinkToDir/foo.o would be ignored
-> if it were in a real dir instead (don't ask) but in a general way and
-> hopefully without parsing and matching all the .gitignore entries
-> myself.  Is it possible?
+> This (over simplified) explanation relates to the differences between
+> the OS approaches to the performance issues when creating new processes
+> and the like on Windows. Each OS has strengths and weaknesses.
 
-How would that even work?  If there is just one gitignore pattern and it was:
-
-    build/*
-
-And you tried to ask (making up a new `--patterns` flag):
-
-    git check-ignore --patterns '*/foo.o'
-
-What should the command return?  True?  False?  It kinda depends on
-what that '*' actually is.  If it's "build" then it's ignored.  If
-it's not, then for this example it wouldn't be ignored.  So the best
-answer we would be able to give is "maybe", which isn't particularly
-useful.  Also, typical cases will be much more complex than that.  So
-we can only answer whether specific paths are ignored, not whether
-various globs would be.
+Oakley, to whom did you want to address this and what did you want to say?
+I don't get what you meant.
