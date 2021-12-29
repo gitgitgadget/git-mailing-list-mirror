@@ -2,60 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D60AC433EF
-	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 18:55:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBBDBC433F5
+	for <git@archiver.kernel.org>; Wed, 29 Dec 2021 18:55:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230104AbhL2SzY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Dec 2021 13:55:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36812 "EHLO
+        id S230138AbhL2SzZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Dec 2021 13:55:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229993AbhL2SzQ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229988AbhL2SzQ (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 29 Dec 2021 13:55:16 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D62AC061746
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 10:55:16 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id o30so11680081wms.4
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 10:55:16 -0800 (PST)
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 858D0C061401
+        for <git@vger.kernel.org>; Wed, 29 Dec 2021 10:55:15 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id n10-20020a7bc5ca000000b00345c520d38eso12150830wmk.1
+        for <git@vger.kernel.org>; Wed, 29 Dec 2021 10:55:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=lJ3JP/DgW2qFrsjmp5khrg3BgbmcWXCzjZiWjRlHLBc=;
-        b=Y+uEoq4sia+UTkxyivuaQWL4+9gtr8CjXCAFcbzlm8R/mjeN4FTceK+xAtzwwCcpO/
-         OIloNFRHPFJtlx/0QGqo/OUM4Jz4QFbXFpjFQqbIIZ/mTJdWiUPw4tZcyz5VzipsYrWK
-         DwBBJJC1mT0uOrbTm7PsSnRZ/wkbqRoA9mmkNUQ1RUM+51cUJXckHULjA2yLl8rXvUAh
-         oymMt90yXYahjJrby85GEtmg7Wj3vjGrbEfb6wGHVygIgkYnxQg3KqU3/2rlGx9rx+gM
-         GLzldrep+3pfIsYj0isTv+0IQmAdo+flyLfv8FBnQswTAMfD4gZrHKR9DFR+KIXlY5wu
-         z8iQ==
+        bh=qiqOIkyPv8h8Pafi3sxUCLg26n7mS+IxX/AsWfZ1ak0=;
+        b=LJkc6Y+wnkD+6V2y4CoMWEVRZeAxVXzLY8OTqxUCgu/x+r+jBmVLAFaHeONSJbQKSp
+         JIECyoxrK/FdrOdheKT/hjD89LowY0C+XcY/+EPQzNzWXrmb1Pp5WkEOkoDFICBt968T
+         bctwXtV98W2u7OAsyCUAyUh186Z4I+emW8ydA7rjrm3qxqepB85NDJdzpQ4TXbNJQ49X
+         IIUcNck1sgo2+yXnELOljrlEZq3oYJ0xmZ9FAtL+791kVoGLBnHD2WOMrECdy/eNqUEB
+         kKHu9Oh+kLWDfO3TGE/0OEANYCh6hDR2ffpJzQK4HHwhcbfT2Qjl8LS2IQKyect+jGBO
+         foTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=lJ3JP/DgW2qFrsjmp5khrg3BgbmcWXCzjZiWjRlHLBc=;
-        b=nP8WkDRB7O2Aeay+gpVh4mwFV39A5nApmiyTDsvJ2z++greNlmKwG/U8e10Bx7sTez
-         At+t07/O/hBcZfV0ZuvqRWoyrmsJeNrfjKVAMnbtQpUzDeS5bA5CNSS7hGHjVZDlTBgU
-         Nb9edj2rYzvBHJn9haS27mvrrLhuwUgbP4GIY6hAH86czrEeoyHikc2mMuNdjzISoBoi
-         ZHXLZrIMZc+ax+LNHklvl09xThiuDGZ78OBeWZDM/rbUMc7bMhebUmLoGg9IwZFBwFoj
-         liNGzk+s3WBciougTpzy3ohgHE0dB2YARPvcNMBU+3lDnpvz+XXxKWY1u2NhXwJfUdsL
-         ovXQ==
-X-Gm-Message-State: AOAM533uGm8gNikSxZjlImAjgFrvROd9i3OAiBNn5nk0BUFbwX7HoPra
-        c+jHSTiwPpiN+mbi4TGojCw3xtdIF64=
-X-Google-Smtp-Source: ABdhPJzm+uhGhTmoV5far8gmdHh7jOckeanQQgN7yiAJluFcjIJOa/kr4xmOw14mgaYScA0HQ+W6bA==
-X-Received: by 2002:a1c:e913:: with SMTP id q19mr23029305wmc.87.1640804114604;
-        Wed, 29 Dec 2021 10:55:14 -0800 (PST)
+        bh=qiqOIkyPv8h8Pafi3sxUCLg26n7mS+IxX/AsWfZ1ak0=;
+        b=Nwg+S2WQWD64jJ7f+46GCZqOCgXo9sIg0tJ6XaeT5/26h9YVqRxPthjSOtkcGdaDVG
+         bt/bmvjZCej4eTpdmCW1qHNpr0zl8MpOz8VY/yua/3rbYVrgRZZDs/juLAyEuDUQTGzw
+         Z1ijeq6StP8sSrGwEACu2L4GoGYNxS1VRpgVnp7I/F16Itm/MBPyTGtNi0czd3ZEEUXe
+         2F6uhwIJbb/UUfu35Iq9AqXzMJlBJmWe13pItFhhSmj+YgBAbTGdEN4Mn7sCLHFIaZ4U
+         XMDtrBqWKMSl6p/CB+SiuHQbrTIJLBMSyC40EycwsZYoyn+LWa+juH6UQ9pWzUQFHUuM
+         lZDg==
+X-Gm-Message-State: AOAM5336rPeZJexlWIC+UATogE3wIb59OkTHKaOw1cQpdaC1CGkob7aF
+        DjrrQbCYaM/WAgZgj61nZ/q/1pJYR2Y=
+X-Google-Smtp-Source: ABdhPJw/G/brkjfOrFLsP9C56/VwIKx9EA/NaEpF+l35O/bRVVNttNeTpTlm1gYy1xrc1MF96ZdeFA==
+X-Received: by 2002:a7b:cc13:: with SMTP id f19mr22866734wmh.150.1640804113971;
+        Wed, 29 Dec 2021 10:55:13 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z11sm27942108wmf.9.2021.12.29.10.55.14
+        by smtp.gmail.com with ESMTPSA id bd8sm21270028wmb.44.2021.12.29.10.55.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Dec 2021 10:55:14 -0800 (PST)
-Message-Id: <b75c5b1ce35a1d4159e5210781b5194b5e6027e2.1640804108.git.gitgitgadget@gmail.com>
+        Wed, 29 Dec 2021 10:55:13 -0800 (PST)
+Message-Id: <4c17e08b9d3a42375c7082d5d2275ea8cc4fab99.1640804108.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1088.v3.git.1640804107.gitgitgadget@gmail.com>
 References: <pull.1088.v2.git.1640647437.gitgitgadget@gmail.com>
         <pull.1088.v3.git.1640804107.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Wed, 29 Dec 2021 18:55:04 +0000
-Subject: [PATCH v3 08/11] i18n: refactor "unrecognized %(foo) argument"
- strings
+Date:   Wed, 29 Dec 2021 18:55:03 +0000
+Subject: [PATCH v3 07/11] i18n: factorize "no directory given for --foo"
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,76 +73,40 @@ From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- ref-filter.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ git.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 7260fce31d0..adbcc680812 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -341,7 +341,7 @@ static int objectsize_atom_parser(struct ref_format *format, struct used_atom *a
- 		else
- 			oi.info.disk_sizep = &oi.disk_size;
- 	} else
--		return strbuf_addf_ret(err, -1, _("unrecognized %%(objectsize) argument: %s"), arg);
-+		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), "objectsize", arg);
- 	return 0;
- }
- 
-@@ -374,7 +374,7 @@ static int subject_atom_parser(struct ref_format *format, struct used_atom *atom
- 	else if (!strcmp(arg, "sanitize"))
- 		atom->u.contents.option = C_SUB_SANITIZE;
- 	else
--		return strbuf_addf_ret(err, -1, _("unrecognized %%(subject) argument: %s"), arg);
-+		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), "subject", arg);
- 	return 0;
- }
- 
-@@ -428,7 +428,7 @@ static int contents_atom_parser(struct ref_format *format, struct used_atom *ato
- 		if (strtoul_ui(arg, 10, &atom->u.contents.nlines))
- 			return strbuf_addf_ret(err, -1, _("positive value expected contents:lines=%s"), arg);
- 	} else
--		return strbuf_addf_ret(err, -1, _("unrecognized %%(contents) argument: %s"), arg);
-+		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), "contents", arg);
- 	return 0;
- }
- 
-@@ -440,7 +440,7 @@ static int raw_atom_parser(struct ref_format *format, struct used_atom *atom,
- 	else if (!strcmp(arg, "size"))
- 		atom->u.raw_data.option = RAW_LENGTH;
- 	else
--		return strbuf_addf_ret(err, -1, _("unrecognized %%(raw) argument: %s"), arg);
-+		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), "raw", arg);
- 	return 0;
- }
- 
-@@ -459,7 +459,7 @@ static int oid_atom_parser(struct ref_format *format, struct used_atom *atom,
- 		if (atom->u.oid.length < MINIMUM_ABBREV)
- 			atom->u.oid.length = MINIMUM_ABBREV;
- 	} else
--		return strbuf_addf_ret(err, -1, _("unrecognized argument '%s' in %%(%s)"), arg, atom->name);
-+		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), atom->name, arg);
- 	return 0;
- }
- 
-@@ -531,7 +531,7 @@ static int align_atom_parser(struct ref_format *format, struct used_atom *atom,
- 		else if ((position = parse_align_position(s)) >= 0)
- 			align->position = position;
- 		else {
--			strbuf_addf(err, _("unrecognized %%(align) argument: %s"), s);
-+			strbuf_addf(err, _("unrecognized %%(%s) argument: %s"), "align", s);
- 			string_list_clear(&params, 0);
- 			return -1;
- 		}
-@@ -557,7 +557,7 @@ static int if_atom_parser(struct ref_format *format, struct used_atom *atom,
- 	} else if (skip_prefix(arg, "notequals=", &atom->u.if_then_else.str)) {
- 		atom->u.if_then_else.cmp_status = COMPARE_UNEQUAL;
- 	} else
--		return strbuf_addf_ret(err, -1, _("unrecognized %%(if) argument: %s"), arg);
-+		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), "if", arg);
- 	return 0;
- }
- 
+diff --git a/git.c b/git.c
+index 7edafd8ecff..7e361769ff6 100644
+--- a/git.c
++++ b/git.c
+@@ -185,7 +185,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 				*envchanged = 1;
+ 		} else if (!strcmp(cmd, "--git-dir")) {
+ 			if (*argc < 2) {
+-				fprintf(stderr, _("no directory given for --git-dir\n" ));
++				fprintf(stderr, _("no directory given for %s\n" ), "--git-dir");
+ 				usage(git_usage_string);
+ 			}
+ 			setenv(GIT_DIR_ENVIRONMENT, (*argv)[1], 1);
+@@ -213,7 +213,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 				*envchanged = 1;
+ 		} else if (!strcmp(cmd, "--work-tree")) {
+ 			if (*argc < 2) {
+-				fprintf(stderr, _("no directory given for --work-tree\n" ));
++				fprintf(stderr, _("no directory given for %s\n" ), "--work-tree");
+ 				usage(git_usage_string);
+ 			}
+ 			setenv(GIT_WORK_TREE_ENVIRONMENT, (*argv)[1], 1);
+@@ -297,7 +297,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 				*envchanged = 1;
+ 		} else if (!strcmp(cmd, "-C")) {
+ 			if (*argc < 2) {
+-				fprintf(stderr, _("no directory given for -C\n" ));
++				fprintf(stderr, _("no directory given for %s\n" ), "-C");
+ 				usage(git_usage_string);
+ 			}
+ 			if ((*argv)[1][0]) {
 -- 
 gitgitgadget
 
