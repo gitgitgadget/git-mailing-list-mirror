@@ -2,138 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82FC8C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 16:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B40BC433F5
+	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 16:25:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241226AbhL3QT6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Dec 2021 11:19:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35662 "EHLO
+        id S241254AbhL3QZB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Dec 2021 11:25:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240151AbhL3QT4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Dec 2021 11:19:56 -0500
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D1F8C061574
-        for <git@vger.kernel.org>; Thu, 30 Dec 2021 08:19:56 -0800 (PST)
-Received: by mail-il1-x12a.google.com with SMTP id j6so19229496ila.4
-        for <git@vger.kernel.org>; Thu, 30 Dec 2021 08:19:56 -0800 (PST)
+        with ESMTP id S239850AbhL3QZA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Dec 2021 11:25:00 -0500
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51582C061574
+        for <git@vger.kernel.org>; Thu, 30 Dec 2021 08:25:00 -0800 (PST)
+Received: by mail-io1-xd2e.google.com with SMTP id l3so27860305iol.10
+        for <git@vger.kernel.org>; Thu, 30 Dec 2021 08:25:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=j5p+8zs2BrbQfFL3JN6ZboLvkXNtiASkZPxYfXRIVnA=;
-        b=bWlv3z6lz4vvuiYZo863iMOUXfvXERudisUT5SOe/TKZ0nYQwruwIyuZYyfsDGBqiN
-         15ZAXD1ivyRqS+/NGXClbcKpH8YPNi1mX31/UZHuisSew2o++FD+nDwvfd8kS04im6/V
-         FAdJsiHKJMWLs0l1S5MM+040HEtqpufkowXZY019mJiFB4f0dOWWlaexoqNFDwlggYU/
-         UHNGDHbjwOPmsiWvOjibWtUZsG3ifO0zp0THNUNWg0tjSDVTpl8fBpnml79FadHtWATJ
-         qVHw6wFRgIHIhK2SMW70vyJRXdU2sHfKIYNmpGFkhNl5OsjBkWTh0LM3Ikl7rnEotkHq
-         qj1Q==
+        bh=cKOP4flNiZBhXSZsY2JBaxMvUGlHCVwPGnZGwTrVAO8=;
+        b=ZcpiwF2eaZvOu+desjGGZlOKfkOMzwnYmbPXvxZhf5tQTsCIPoYCGKFkbmJJbRoRsu
+         5UqdRPeZzwKvR6soTCpO6L8sRrNTTWB3hisgUJiqka6yqe0VXyqNjA2rRuCyw6CKoeFS
+         To8kc4HA9P7UN7XjCI2bII7Bs17K7H6tZfM1x8IC3OifwfbM4rt1lfZUODxQk+63ebdX
+         WRveF+9DuPiwRPlkNQ20+8vRVO86z9uzb3Q79+JgY5vGlSyYKG+K7hlPFvew4jSYw5YC
+         I3MsfKd1jyUp+CE34HWZmVIPc5CNwXF9p678vByrIdBrQjbb8egRYwJ8DHmMsildBV9P
+         9AEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=j5p+8zs2BrbQfFL3JN6ZboLvkXNtiASkZPxYfXRIVnA=;
-        b=CcLevLrtJMZgT+cFKLfcV1DS6RffkAC0d4Nla7hOKPGyqS0SnAhk+LLKw3tFhZwMOJ
-         bSntEi9pNyrBLjoh94m4aWH6lgjse3/+D1WPgWqYJzWiXIlSOE/SanK3vXIahjg0+oOx
-         uHRU101ggpCNXUxlZuD6gGWaHo4uqX+0wpjqqnsLycaySvg/C0mjiVIWtJI18wIM6FFd
-         tJbzod+vzAhNv5ZidYzTX4sBJNNqW2CMabuFI68GJ0zQgXrl1S6Of6q0pA/uqLWDmIHo
-         +7k0RzaPsUtAq5mQsLf5lVX8Mu2+hyMsiOpn7zj7Z+k5FkckGEa8O31eD9srXxFZ/dJ2
-         K0LQ==
-X-Gm-Message-State: AOAM5323kkzK1thlVd5PoTmOG5G36QotJWD/kFuxwTdUgbg8kdyVLu7q
-        ivYa6v+pnjou+76xSyEyISE=
-X-Google-Smtp-Source: ABdhPJzv2YIMS3WLL9B2WvCX+4mWSV8rxbZufaAvT2cyp5gBIiGnlIH+rFe+nK2MHrraxL6uOAXHFQ==
-X-Received: by 2002:a05:6e02:20e1:: with SMTP id q1mr13245532ilv.210.1640881195906;
-        Thu, 30 Dec 2021 08:19:55 -0800 (PST)
+        bh=cKOP4flNiZBhXSZsY2JBaxMvUGlHCVwPGnZGwTrVAO8=;
+        b=czf3cHcmmfuvpYp86TJLqdNuxlto6hVfpG6scmortJozt0VerqJx3OIc5SgIcDYOH+
+         N1prJXzpZvjaKovRo0ZzLEhvIPyvGw1ek0R8Oqr1rDguEWrI2VQ5PNQuSPfZwkZH0qH6
+         x0ogFeF49E5+3OY0wq25TnuQnhs/CkLWABicBPCMNSL0ZZ12HbUmxMHDIiIV+8HMn0me
+         yQPhUyLM7UEuwj9n1Y11dhBmphANLO4NylNtIxTnWG6XugCGB+frNIaO0c9LkX2yFECV
+         JpAm4/MM/dE0V2G5OOShQd3CnRXNtOFCqzGUpf/rYBQqtMRkOvzrJE1D1wnflKx2H19/
+         rM/g==
+X-Gm-Message-State: AOAM532v9BefvdwLfl4fChu80qIVIjuoOvpBVGCDJM7hIUAUp9oIZ+GO
+        KHFVnmrWfLW2veIE+KAZu2uwXj2f0W5UGbFn
+X-Google-Smtp-Source: ABdhPJxuAHPb4a1M6Ye6pKYlrPq3MyQvA03ChSo8p9XjHQ7KvP4W6UtnoyFHb5R0Py9FasqZeufCig==
+X-Received: by 2002:a05:6638:258a:: with SMTP id s10mr14267431jat.65.1640881499662;
+        Thu, 30 Dec 2021 08:24:59 -0800 (PST)
 Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
-        by smtp.gmail.com with ESMTPSA id o6sm11351569iou.27.2021.12.30.08.19.54
+        by smtp.gmail.com with ESMTPSA id g20sm18150716iov.35.2021.12.30.08.24.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Dec 2021 08:19:55 -0800 (PST)
-Message-ID: <e6728ed1-52c6-05eb-e816-a9d919d3e9d1@gmail.com>
-Date:   Thu, 30 Dec 2021 10:19:53 -0600
+        Thu, 30 Dec 2021 08:24:59 -0800 (PST)
+Message-ID: <8032da64-64da-56be-f9d1-2a833a7768d3@gmail.com>
+Date:   Thu, 30 Dec 2021 10:24:58 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.4.0
-Subject: Re: [PATCH 1/2] sparse-checkout: custom tab completion tests
+Subject: Re: [PATCH 2/2] sparse-checkout: custom tab completion
 Content-Language: en-US
 To:     Derrick Stolee <stolee@gmail.com>,
         Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     gitster@pobox.com, johannes.schindelin@gmail.com
 References: <pull.1108.git.1640824351.gitgitgadget@gmail.com>
- <a7f3ae5cddaed61a618a5fa2f9d9c888e0dd7d99.1640824351.git.gitgitgadget@gmail.com>
- <cd190111-1930-9538-a844-4d9aa08d98b0@gmail.com>
+ <ab51236d18ce10ada89e8cde85f678130a0ab1fd.1640824351.git.gitgitgadget@gmail.com>
+ <c79ccf4a-4da9-1c60-32eb-124d3fa94400@gmail.com>
 From:   Lessley Dennington <lessleydennington@gmail.com>
-In-Reply-To: <cd190111-1930-9538-a844-4d9aa08d98b0@gmail.com>
+In-Reply-To: <c79ccf4a-4da9-1c60-32eb-124d3fa94400@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/30/21 7:43 AM, Derrick Stolee wrote:
->> +test_expect_failure 'sparse-checkout completes subcommand options' '
->> +	test_completion "git sparse-checkout init --" <<-\EOF &&
->> +	--cone Z
->> +	--sparse-index Z
->> +	--no-sparse-index Z
->> +	EOF
+On 12/30/21 7:50 AM, Derrick Stolee wrote:
+>> +__git_sparse_checkout_init_opts="--cone --sparse-index --no-sparse-index"
 >> +
->> +	test_completion "git sparse-checkout set --" <<-\EOF &&
->> +	--stdin Z
+>>   _git_sparse_checkout ()
+>>   {
+>> -	local subcommands="list init set disable"
+>> +	local subcommands="list init set disable add reapply"
+>>   	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+>> +
+>>   	if [ -z "$subcommand" ]; then
+>> -		__gitcomp "$subcommands"
+>> -		return
+>> +		case "$cur" in
+>> +			--*)
+>> +				__gitcomp "--help"
+>> +				;;
+>> +			*)
+>> +				__gitcomp "$subcommands"
+>> +				;;
+>> +		esac
 > 
-> In en/sparse-checkout-set, the 'set' subcommand learns the options
-> for init, including --cone, --sparse-index, and --no-sparse-index.
-> I think technically, --no-cone is in there, too.
+> This part fixes the --<tab> completion. I suppose if someone
+> did "-<tab>" then nothing would show up?
 > 
-> Further, the 'reapply' subcommand learns these options in that
-> series and I see you do not include that subcommand in this test.
+It actually shows a list of files that contain -- (if any exist).
+>>   	fi
+>>   
+>> -	case "$subcommand,$cur" in
+>> -	init,--*)
+>> -		__gitcomp "--cone"
+>> -		;;
+>> -	set,--*)
+>> -		__gitcomp "--stdin"
+>> -		;;
+>> -	*)
+>> -		;;
+>> +	case "$prev" in
+>> +		init)
+>> +			__gitcomp "$__git_sparse_checkout_init_opts"
+>> +			;;
+>> +		add|set)
+>> +			__gitcomp "--stdin"
+>> +			__gitcomp "$(git ls-tree -d -r HEAD --name-only)"> +			;;
 > 
-> You might want to rebase onto en/sparse-checkout-set and adjust
-> these tests for the new options (plus change the next patch that
-> implements the completion).
+> With the thinking of rebasing onto en/sparse-checkout-set, this
+> could possibly be rearranged so the add|set) cases pass-through
+> into the init) and reapply) cases (skip the ;; between) to save
+> some duplication. Or, it is possible that doesn't work, but it
+> might be worth a try.
 > 
-Ah great point - I was going off of the sparse-checkout docs and
-forgot about Elijah's changes. I will do the rebase and make your
-suggested corrections in v2.
->> +	git -C sparse-checkout config index.sparse false &&
+Thanks, I'll give this a go!
+> Also, since you are using 'git ls-tree' and not 'git ls-files',
+> the sparse index will not have an effect on the performance.
+> There will be some corner cases where a directory exists in one
+> of HEAD or the index but not the other. That's probably still
+> the right way to go since 'git ls-files' doesn't have a way to
+> only list directories. It just means that you probably don't
+> need to explicitly disable the sparse index in your test.
 > 
-> I'm guessing that the implementation actually requires this, but
-> I'll take a look in the next patch. It might just be slow to expand
-> the full list of directories in the sparse index case.
-> 
-I'll plan to remove in v2 per your comments in [1].>> +	# test tab completion
->> +	(
->> +		cd sparse-checkout &&
->> +		test_completion "git sparse-checkout set f" <<-\EOF
->> +		folder1 Z
->> +		folder1/0 Z
->> +		folder1/0/1 Z
->> +		folder2 Z
->> +		folder2/0 Z
->> +		folder3 Z
-> 
-> This tab-completion doing a full directory walk seems like it could
-> be expensive for a large repository, but I suppose it is the only way
-> to allow the following sequence:
-> 
-> 	fol<tab> -> folder
-> 	folder1/<tab> -> folder1/0
-> 	folder1/0/<tab> -> folder1/0/1
-> 
-> (Hopefully that makes sense.)
-> 
-Yes, it does.
-> It would be more efficient to only go one level deep at a time, but
-> that might not be possible with the tab completion mechanisms.
-> 
-When you say one level deep, do you mean that from the sparse-checkout
-directory, tab completion would only show the following?
-	
-	folder1
-	folder2
-	folder3
+Will correct in v2.
 
 -Lessley
-
-[1]: 
-https://lore.kernel.org/git/c79ccf4a-4da9-1c60-32eb-124d3fa94400@gmail.com/
