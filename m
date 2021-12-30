@@ -2,181 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5566DC433FE
-	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 15:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82FC8C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 16:19:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240245AbhL3P4Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Dec 2021 10:56:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58696 "EHLO
+        id S241226AbhL3QT6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Dec 2021 11:19:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236262AbhL3P4Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Dec 2021 10:56:24 -0500
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D4B7C061574
-        for <git@vger.kernel.org>; Thu, 30 Dec 2021 07:56:24 -0800 (PST)
-Received: by mail-il1-x132.google.com with SMTP id x15so19170177ilc.5
-        for <git@vger.kernel.org>; Thu, 30 Dec 2021 07:56:24 -0800 (PST)
+        with ESMTP id S240151AbhL3QT4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Dec 2021 11:19:56 -0500
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D1F8C061574
+        for <git@vger.kernel.org>; Thu, 30 Dec 2021 08:19:56 -0800 (PST)
+Received: by mail-il1-x12a.google.com with SMTP id j6so19229496ila.4
+        for <git@vger.kernel.org>; Thu, 30 Dec 2021 08:19:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=w6/sZjZsWOuEZNfafkEZ1zVda6o/khyYYhjFnOt7BDw=;
-        b=Oh9UHFWls4KtiR/WkWJvZbhjomiPHn4QbvqRZS0Jo04NASjRkP864I+2ErVSwGN1mG
-         rSlGowAkWMaSkunn85Ve0Jp38SiJUFsrSjjgiqG1CdcNPB6HZ0dfxqN4qcR7bTHe8hEv
-         GyUTKZkvMJkxbgQvd/q2b94oYmo+Ex1PI13//DSHuGp42hIuZPFMSYsXIVfdUbsKnBv2
-         PW3REeNEIqOPg96TaWH6fBZvoFeBW+blbGM9nhubXQMYrSPxIo0DEkEr00Y6qTfvGXvF
-         Nw9ahZw3/T6aVi89bNzP9DxaqQSqvsTlfDthqUN0YXzk+DYQQKQDoqZdWPyBagSNkI7J
-         aouA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=j5p+8zs2BrbQfFL3JN6ZboLvkXNtiASkZPxYfXRIVnA=;
+        b=bWlv3z6lz4vvuiYZo863iMOUXfvXERudisUT5SOe/TKZ0nYQwruwIyuZYyfsDGBqiN
+         15ZAXD1ivyRqS+/NGXClbcKpH8YPNi1mX31/UZHuisSew2o++FD+nDwvfd8kS04im6/V
+         FAdJsiHKJMWLs0l1S5MM+040HEtqpufkowXZY019mJiFB4f0dOWWlaexoqNFDwlggYU/
+         UHNGDHbjwOPmsiWvOjibWtUZsG3ifO0zp0THNUNWg0tjSDVTpl8fBpnml79FadHtWATJ
+         qVHw6wFRgIHIhK2SMW70vyJRXdU2sHfKIYNmpGFkhNl5OsjBkWTh0LM3Ikl7rnEotkHq
+         qj1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=w6/sZjZsWOuEZNfafkEZ1zVda6o/khyYYhjFnOt7BDw=;
-        b=4DOtzMPzejadJ9Vz9bFn+Js2PwO3eZX9huz4t+LOSsXKTZyVlvl5ESxjpXamvMhkxp
-         YCQSCRT/gXR9AXFnuEo3qEm1Ki/jlaqK+opI3Esxe0VVfC9lhBxAlfIPHUHekPZh9uJd
-         GF12uF4wKQ5QIxWwX3Oqm+3I/OYTkFhm86k1Is1pOsEi1MQW6xl1gccSuRH8suedCeoX
-         Ufq9O+LwQKSCRD40zL4OSapm2zmBeWCjivgUp4+hoWQdGgAGSGH3UBH4xW4Hty03dh9i
-         KGi6e/XiiONoTlOkF/MSWAyZW3y8m3IdzHK2ZRXWU+f37kk5geNJH/plE+SzA2BsmPFV
-         adOg==
-X-Gm-Message-State: AOAM530032pr5Upu06wM7JeU543fSLVbFXSt7qlQzXZAarMmrUY4GOxl
-        gDRQMzWic0pMWz9PV9akHYxF1atm/n29tKXHorNNmC1pdnQ=
-X-Google-Smtp-Source: ABdhPJwMNfC1A2LNFg8UKH82tJ+CyxJJyZpXkAg0Dr3dfqiMkDT3AbMp2bcr4pI8I6evktkpnjdw4Kplpmr086T15y8=
-X-Received: by 2002:a05:6e02:178f:: with SMTP id y15mr14217292ilu.235.1640879782912;
- Thu, 30 Dec 2021 07:56:22 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=j5p+8zs2BrbQfFL3JN6ZboLvkXNtiASkZPxYfXRIVnA=;
+        b=CcLevLrtJMZgT+cFKLfcV1DS6RffkAC0d4Nla7hOKPGyqS0SnAhk+LLKw3tFhZwMOJ
+         bSntEi9pNyrBLjoh94m4aWH6lgjse3/+D1WPgWqYJzWiXIlSOE/SanK3vXIahjg0+oOx
+         uHRU101ggpCNXUxlZuD6gGWaHo4uqX+0wpjqqnsLycaySvg/C0mjiVIWtJI18wIM6FFd
+         tJbzod+vzAhNv5ZidYzTX4sBJNNqW2CMabuFI68GJ0zQgXrl1S6Of6q0pA/uqLWDmIHo
+         +7k0RzaPsUtAq5mQsLf5lVX8Mu2+hyMsiOpn7zj7Z+k5FkckGEa8O31eD9srXxFZ/dJ2
+         K0LQ==
+X-Gm-Message-State: AOAM5323kkzK1thlVd5PoTmOG5G36QotJWD/kFuxwTdUgbg8kdyVLu7q
+        ivYa6v+pnjou+76xSyEyISE=
+X-Google-Smtp-Source: ABdhPJzv2YIMS3WLL9B2WvCX+4mWSV8rxbZufaAvT2cyp5gBIiGnlIH+rFe+nK2MHrraxL6uOAXHFQ==
+X-Received: by 2002:a05:6e02:20e1:: with SMTP id q1mr13245532ilv.210.1640881195906;
+        Thu, 30 Dec 2021 08:19:55 -0800 (PST)
+Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
+        by smtp.gmail.com with ESMTPSA id o6sm11351569iou.27.2021.12.30.08.19.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Dec 2021 08:19:55 -0800 (PST)
+Message-ID: <e6728ed1-52c6-05eb-e816-a9d919d3e9d1@gmail.com>
+Date:   Thu, 30 Dec 2021 10:19:53 -0600
 MIME-Version: 1.0
-From:   Jean-Louis FLOQUET <jese.jlf@gmail.com>
-Date:   Thu, 30 Dec 2021 16:56:12 +0100
-Message-ID: <CAHo1AWxzPsnLuT8JRWovtaRrGvRS8+0NyucU5K8VEnaL1xxW3Q@mail.gmail.com>
-Subject: [Question] : git 2.33.1 asks every time password
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.0
+Subject: Re: [PATCH 1/2] sparse-checkout: custom tab completion tests
+Content-Language: en-US
+To:     Derrick Stolee <stolee@gmail.com>,
+        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, johannes.schindelin@gmail.com
+References: <pull.1108.git.1640824351.gitgitgadget@gmail.com>
+ <a7f3ae5cddaed61a618a5fa2f9d9c888e0dd7d99.1640824351.git.gitgitgadget@gmail.com>
+ <cd190111-1930-9538-a844-4d9aa08d98b0@gmail.com>
+From:   Lessley Dennington <lessleydennington@gmail.com>
+In-Reply-To: <cd190111-1930-9538-a844-4d9aa08d98b0@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 12/30/21 7:43 AM, Derrick Stolee wrote:
+>> +test_expect_failure 'sparse-checkout completes subcommand options' '
+>> +	test_completion "git sparse-checkout init --" <<-\EOF &&
+>> +	--cone Z
+>> +	--sparse-index Z
+>> +	--no-sparse-index Z
+>> +	EOF
+>> +
+>> +	test_completion "git sparse-checkout set --" <<-\EOF &&
+>> +	--stdin Z
+> 
+> In en/sparse-checkout-set, the 'set' subcommand learns the options
+> for init, including --cone, --sparse-index, and --no-sparse-index.
+> I think technically, --no-cone is in there, too.
+> 
+> Further, the 'reapply' subcommand learns these options in that
+> series and I see you do not include that subcommand in this test.
+> 
+> You might want to rebase onto en/sparse-checkout-set and adjust
+> these tests for the new options (plus change the next patch that
+> implements the completion).
+> 
+Ah great point - I was going off of the sparse-checkout docs and
+forgot about Elijah's changes. I will do the rebase and make your
+suggested corrections in v2.
+>> +	git -C sparse-checkout config index.sparse false &&
+> 
+> I'm guessing that the implementation actually requires this, but
+> I'll take a look in the next patch. It might just be slow to expand
+> the full list of directories in the sparse index case.
+> 
+I'll plan to remove in v2 per your comments in [1].>> +	# test tab completion
+>> +	(
+>> +		cd sparse-checkout &&
+>> +		test_completion "git sparse-checkout set f" <<-\EOF
+>> +		folder1 Z
+>> +		folder1/0 Z
+>> +		folder1/0/1 Z
+>> +		folder2 Z
+>> +		folder2/0 Z
+>> +		folder3 Z
+> 
+> This tab-completion doing a full directory walk seems like it could
+> be expensive for a large repository, but I suppose it is the only way
+> to allow the following sequence:
+> 
+> 	fol<tab> -> folder
+> 	folder1/<tab> -> folder1/0
+> 	folder1/0/<tab> -> folder1/0/1
+> 
+> (Hopefully that makes sense.)
+> 
+Yes, it does.
+> It would be more efficient to only go one level deep at a time, but
+> that might not be possible with the tab completion mechanisms.
+> 
+When you say one level deep, do you mean that from the sparse-checkout
+directory, tab completion would only show the following?
+	
+	folder1
+	folder2
+	folder3
 
-I use some scripts to do some batch operations (pull / push), using
-rsa key and ssh-agent / ssh-add. I'm under Windows 10 (with all
-updates).
-When launching my script (see below, truncated : more than 100 repo),
-I have to enter rsa passphrase (OK) then all push/pull are done
-without any user interaction (no passphrase, no password, nothing)
-All Git versions up to 2.33.0.2 are working fine, but since 2.33.1,
-git asks every time the password.
-I had to create a 'config' file within '.ssh' directory to support my
-rsa key (too old format ?). Instructions according to
-https://stackoverflow.com/questions/35233777/git-error-unable-to-negotiate-with-xx-xx-xxx-xxx-no-matching-host-key-type-fo
-I also have seen that some people have to add 'ssh-add -K', but it
-seems to be only for MacOS.
-According to release notes for 2.33.1, Git Credential Manager for
-Windows has been replaced by Git Credential Manager Core, but I don't
-know if it is the "root" problem, and if yes, how to fix my issue.
-I would greatly appreciate any help / solution. Thanks in advance.
+-Lessley
 
-Best Regards,
-JL
-
-===========================================================================================
-transcript
-user@computer MINGW64 /my_path1 (master)
-$ ./pull_all.sh
-Loading agent...
-Adding key
-Agent pid 1968
-Enter passphrase for /path_to_rsa_key:
-Identity added: /path_to_rsa_key (/path_to_rsa_key)
-key : finish
-
-Repository = /my_path1
-git pull --quiet my_server master
-Password authentication
-(user@server) Password:
-
-Repository = /my_path2
-git pull --quiet my_server master
-Password authentication
-(user@server) Password:
-
-Repository = /my_path3
-git pull --quiet my_server master
-Password authentication
-(user@server) Password:
-
-Appuyer sur touche pour continuer
-user@computer MINGW64 /my_path1 (master)
-===========================================================================================
-rsa_key
------BEGIN RSA PRIVATE KEY-----
-Proc-Type: 4,ENCRYPTED
-DEK-Info: DES-EDE3-CBC,xxxxxxxxxxxxxxxx
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
------END RSA PRIVATE KEY-----
-===========================================================================================
-create_env.sh :
-!/bin/sh
-
-# Note: ~/.ssh/environment should not be used, as it
-#       already has a different purpose in SSH.
-
-#Create directory if not exist
-mkdir -p ~/.ssh/
-
-#Create variable
-env=~/.ssh/agent.env
-
-#Create file if not exist
-touch $env
-
-# Note: Don't bother checking SSH_AGENT_PID. It's not used
-#       by SSH itself, and it might even be incorrect
-#       (for example, when using agent-forwarding over SSH).
-
-agent_is_running() {
-if [ "$SSH_AUTH_SOCK" ]; then
-# ssh-add returns:
-#   0 = agent running, has keys
-#   1 = agent running, no keys
-#   2 = agent not running
-ssh-add -l >/dev/null 2>&1 || [ $? -eq 1 ]
-else
-false
-fi
-}
-
-agent_has_keys() {
-ssh-add -l >/dev/null 2>&1
-}
-
-agent_load_env() {
-echo "Loading agent..."
-. "$env" >/dev/null
-}
-
-agent_start() {
-(umask 077; ssh-agent >"$env")
-. "$env" >/dev/null
-}
-
-add_key() {
-echo "Adding key"
-eval `ssh-agent -s`
-ssh-add /path_to_rsa_key
-echo "key : finish"
-}
-
-if ! agent_is_running; then
-agent_load_env
-fi
-===========================================================================================
+[1]: 
+https://lore.kernel.org/git/c79ccf4a-4da9-1c60-32eb-124d3fa94400@gmail.com/
