@@ -2,44 +2,42 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E57FCC433EF
-	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 06:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2825CC433EF
+	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 07:40:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236698AbhL3GlF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Dec 2021 01:41:05 -0500
-Received: from mail-pl1-f175.google.com ([209.85.214.175]:39679 "EHLO
-        mail-pl1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236627AbhL3GlC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Dec 2021 01:41:02 -0500
-Received: by mail-pl1-f175.google.com with SMTP id h6so13754442plf.6
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 22:41:02 -0800 (PST)
+        id S236949AbhL3HkU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Dec 2021 02:40:20 -0500
+Received: from mail-pl1-f179.google.com ([209.85.214.179]:35650 "EHLO
+        mail-pl1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231688AbhL3HkT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Dec 2021 02:40:19 -0500
+Received: by mail-pl1-f179.google.com with SMTP id n16so17724853plc.2
+        for <git@vger.kernel.org>; Wed, 29 Dec 2021 23:40:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4JkYjENVWhK2O/eb+tDilLfEfNOq6YA6rDJIRbaWsVM=;
-        b=X/yGPNK3oNfMHAD0Zx4tXESVDtPCLre3LINHZKp50ezyzBLtCSs0+ipCJCpFm4+1ON
-         mp92ZxEVt54OFnQfZIb+ec42okt3I9MvYWgi9I7NbeVntHGG5LP8llDx3L2zrLYj2/It
-         SGYTq1Z6biRr8PpPI0oiYe9gK4wZ7f8Z5NCtlO8N8021VqEh+4oq/ZSljZO4CG8BgOxV
-         LWm09oSOcIIR+qC/k2KL/MhmzyC9JurRm3hE0ymbqh2ZEWOq+HVrz4sjwuCpKMBtKqgb
-         /swwfymrTPZra5ItJH1BMvsd1BQ73T8jg3RLIISOayiNcmY7XQAxWPeH8QM4FRTO6WEM
-         9J8Q==
-X-Gm-Message-State: AOAM5305ZYPSFotrc9otU8+hd94tWMsJY6VJnSlNgNKT+43w+RET73md
-        1KhEQd7Rjp+RTPv5rxcBCFXAaPGG+djYoIerM+Y=
-X-Google-Smtp-Source: ABdhPJxV/XQotn65ULqvs4ZtegUXVznZUBMrpecfoW0JfQWSMZtjWjjkleSk/JDadOXf+5felRKUSynYC4AEfQV8naw=
-X-Received: by 2002:a17:90b:783:: with SMTP id l3mr36230452pjz.104.1640846461621;
- Wed, 29 Dec 2021 22:41:01 -0800 (PST)
+        bh=eO/zr7DrcTZeCdkH79j0uEEag3ZPunX672olcQwpt3c=;
+        b=rEU9PpWpKhjH4goyqCPJmyNc1JNNp4T8i4z1WzG2EAoK8RaJWsdH7ToY4AlnInflLZ
+         89LCya/x8/ypbNKIPIBfB/BGqu2UMV3Sw3qnrtA+9pAZg/uBPm5srTpo0ZwqJsDPZvMR
+         fLv2yOZR4u/AKOe6VRh3zg3LhAuKVJp6A1iTgsJ+PSUsHHf789bY3JW8MzWP8sXwub/W
+         3MlLQAg7W59N8nLf6mGyxrUnBRrYMo1qpb6Q79GAeGdm+vmPXYjosJGOuqGYsXX65RTx
+         tkF8ijJNSjLI6sWw7EA26/1RtRRpBPl4pheZn1sgJerTwLOcFs4/WC13Xcp9GavgeNgR
+         qr0A==
+X-Gm-Message-State: AOAM532JtfYF96cdcrWL5MEHVccYXbndK3QHfoJFMTdJ5NpNzGasZuDK
+        TepnCVq1PwbCY0fYLKTWYi2PKtW1QriCc7HWVKQ=
+X-Google-Smtp-Source: ABdhPJxLdKJnUZw2lXAihrbeTpcFCP4mgAZWhY7sfFy7QLnkOHziYPplmi0ymxHhOzY/tia83lAMzJhv/j+GFHvRKEc=
+X-Received: by 2002:a17:902:b688:b0:149:a1d6:c731 with SMTP id
+ c8-20020a170902b68800b00149a1d6c731mr4417412pls.145.1640850019135; Wed, 29
+ Dec 2021 23:40:19 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
- <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com> <CABPp-BG7nwsdEYrnfqhAbWU4ndJHcqGf6RS_6DzJittuNVLvoA@mail.gmail.com>
- <CAPig+cRDDGU=9BB6kd1tMJR8DmWKSSJwpTD8JeszrY685Fc3-Q@mail.gmail.com>
- <CABPp-BFxz5B_wUubzaYeGEaztALqDMxxVTrcT4d1kKjpX8pRDQ@mail.gmail.com>
- <CAPig+cRYKKGA1af4hV0fz_nZWNG=zMgAziuAimDxWTz6L8u3Tg@mail.gmail.com> <CABPp-BGKyDJV9DP+igmCC_Ad0jgvb4aOAYpXWCbx9hW8ShhDQg@mail.gmail.com>
-In-Reply-To: <CABPp-BGKyDJV9DP+igmCC_Ad0jgvb4aOAYpXWCbx9hW8ShhDQg@mail.gmail.com>
+References: <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com>
+ <pull.1101.v3.git.1640727143.gitgitgadget@gmail.com> <CABPp-BHuO3B366uJuODMQo-y449p8cAMVn0g2MTcO5di3Xa7Zg@mail.gmail.com>
+In-Reply-To: <CABPp-BHuO3B366uJuODMQo-y449p8cAMVn0g2MTcO5di3Xa7Zg@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 30 Dec 2021 01:40:50 -0500
-Message-ID: <CAPig+cRJj4Aa9Nm_yWD0=WGdn9tRmT2PpTwo5yeGZHg2Qz2rgA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] Sparse checkout: fix bug with worktree of bare repo
+Date:   Thu, 30 Dec 2021 02:40:07 -0500
+Message-ID: <CAPig+cQ8Y2FC8=d7DaZ46YwPCrzM6RzutiZ3ghhrHsg6y8KWoQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/6] Sparse checkout: fix bug with worktree of bare repo
 To:     Elijah Newren <newren@gmail.com>
 Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -52,103 +50,121 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 28, 2021 at 1:16 PM Elijah Newren <newren@gmail.com> wrote:
-> On Mon, Dec 27, 2021 at 11:33 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > The sparsity of documentation about per-worktree configuration
-> > certainly doesn't help, nor the fact that it's fairly near the end of
-> > git-worktree.txt, at which point people may have given up reading. We
-> > could make it a bit more prominent by mentioning it early in the
-> > command description, but it still involves enough fiddly bookkeeping
-> > that it likely will continue to be problematic.
+On Wed, Dec 29, 2021 at 4:40 AM Elijah Newren <newren@gmail.com> wrote:>
+> On Tue, Dec 28, 2021 at 1:32 PM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >      ++init-worktree-config::
+> >      ++
+> >      ++Initialize config settings to enable worktree-specific config settings.
+> >      ++This will set `core.repositoryFormatversion=1` and enable
+> >      ++`extensions.worktreeConfig`, which might cause some third-party tools from
+> >      ++being able to operate on your repository. See CONFIGURATION FILE for more
+> >      ++details.
 >
-> Further, it's not clear people even looked at git-worktree.txt at the
-> time they learned about extensions.worktreeConfig.  I believe I
-> discovered and started using extensions.worktreeConfig from `git
-> config --help`, which makes no mention of or even reference to the
-> need for any extra steps.  (I didn't see the original mailing list
-> discussions around that setting either.)  It never occurred to me in
-> the ~3 years since to even look in `git worktree --help` for
-> additional guidance around that config setting until this particular
-> mailing list thread.
+> So, if users attempt to use `git worktree add` or `git sparse-checkout
+> {init,set}` without first running this, they can break other
+> worktrees.  And if they do run this new command, they potentially
+> break third-party tools or older git versions.
 
-That's an interesting datapoint. At the very least, we probably should
-update Documentation/git-config.txt to mention the extra bookkeeping
-required when setting `extensions.worktreeConfig=true`.
+When you say "can break other worktrees", you don't necessarily mean
+that in general but rather in regard to sparse-checkout -- in
+particular, the sparse-checkout config settings and the
+`info/sparse-checkout file` -- correct? (Genuine question; I want to
+make sure that I'm actually understanding the issues under
+discussion.)
 
-> > A more general approach might be for the new worktree to copy all the
-> > per-worktree configuration from the worktree in which the command was
-> > invoked, thus sparsity would be inherited "for free" along with other
-> > settings. This has the benefits of not requiring sparse-checkout
-> > special-cases in the code and it's easy to document ("the new worktree
-> > inherits/copies configuration settings from the worktree in which `git
-> > worktree add` was invoked") and easy to understand.
+> >      +    After these steps, the first worktree will have sparse-checkout enabled
+> >      +    with whatever patterns exist. The worktree does not immediately have
+> >      +    those patterns applied, but a variety of Git commands would apply the
+> >      +    sparse-checkout patterns and update the worktree state to reflect those
+> >      +    patterns. This situation is likely very rare and the workaround is to
 >
-> Ooh, this is a good point and I *really* like this simple solution.
-> Thanks for pointing it out.
+> No, it's not even rare, let alone very rare.  I'd actually call it
+> common.  Since 'sparse-checkout disable' does not delete the
+> sparse-checkout file, and we've encouraged folks to use the
+> sparse-checkout command (or a wrapper thereof) instead of direct
+> editing of the sparse-checkout file (and indeed, the sparse-checkout
+> command will overwrite the sparse-checkout file which further
+> discourages users from feeling they own it), having the file left
+> around after disabling is the common case.  So, the only question is,
+> how often do users disable and re-enable sparse-checkout, and
+> potentially only do so in some of their worktrees?  At my $DAYJOB,
+> that's actually quite common.  I got multiple reports quite soon after
+> introducing our `sparsify` tool about users doing something like this;
+> this is what led me to learn of the extensions.worktreeConfig, and why
+> I pointed it out to you on your first submission of
+> git-sparse-checkout[1]
+> (https://lore.kernel.org/git/CABPp-BFcH5hQqujjmc88L3qGx3QAYZ_chH6PXQXyp13ipfV6hQ@mail.gmail.com/)
 
-I do wonder, though, if there are traps waiting for us with this
-all-inclusive approach. I don't know what sort of worktree-specific
-configuration people use, so I do worry a bit that this could be
-casting a too-wide net, and that it might in fact be better to only
-copy the sparse-checkout settings (as ugly as it is to special-case
-that -- but we need to special-case `core.bare` and `core.worktree`
-anyhow[1]).
+I think the link you provide here answers the genuine question I had
+asked in [1] where I didn't understand why git-sparse-checkout is
+forcing the repository to use per-worktree configuration. I also just
+(re)discovered [2] which makes it clear that per-worktree
+sparse-checkout was considered important very early on in the
+development of "multiple checkouts".
 
-[1]: https://lore.kernel.org/git/CAPig+cSUOknNC9GMyPvAqdBU0r1MVgvSpvgpSpXUmBm67HO7PQ@mail.gmail.com/
+[1]: https://lore.kernel.org/git/CAPig+cRombN-8g0t7Hs9qQypJoY41gK3+kvypH4D0G6EB4JgbQ@mail.gmail.com/
+[2]: https://lore.kernel.org/git/1404891197-18067-32-git-send-email-pclouds@gmail.com/
 
-> Do note, though, that it's more than just config.worktree -- I also
-> want the ${GITDIR}/info/sparse-checkout file copied.
+> So, here's the experience I expect from these patches at $DAYJOB:
+>   (1) Several users per week hit the case of one worktree being
+> sparsified when it wasn't supposed to be.
+>   (2) These users have no idea how to figure out what they need to do
+> to fix it.  The init-worktree-config is no more discoverable than the
+> documentation on the official steps for enabling
+> extensions.worktreeConfig (See
+> https://lore.kernel.org/git/CABPp-BGKyDJV9DP+igmCC_Ad0jgvb4aOAYpXWCbx9hW8ShhDQg@mail.gmail.com/
+> up through the paragraph, "Further, it's not even clear people would
+> look at git-worktree.txt.)
+>   (3) Even if they do discover it, and run it, it's an extra step they
+> never needed to take before.  Why are we adding a "unbreak these other
+> commands we want to run" step?
+>   (4) Also, even if they do discover it, and run it, suddenly we are
+> setting core.repositoryFormatVersion=1.  That scares me.  I have years
+> of experience at $DAYJOB saying that the tooling we have works fine
+> with extensions.worktreeConfig=true.  I have none with setting
+> core.repositoryFormatVersion=1, but now we're effectively requiring it
+> by your documentation.  I have no idea how
+> jgit/egit/other-random-stuff interacts with that.  I'd be willing to
+> do some tests with targetted users to try to learn more, but suddenly
+> turning it on for everyone in cases that we know worked fine without
+> it previously feels unsafe to me.  Maybe I'm over-worrying here, but
+> see also commit 11664196ac ("Revert "check_repository_format_gently():
+> refuse
+> extensions for old repositories"", 2020-07-15) -- it just feels a bit
+> late to recommend for users, especially when they'll see it as "oh, if
+> you don't want this other bug we recently introduced you need to run
+> this....".
 
-Thanks for pointing that out. I'm reasonably (or completely) ignorant
-of sparse-checkout since I've never used it nor read the
-documentation, and I didn't follow the earlier discussions.
+Point #4 is pretty compelling, and the "ship" of enforcing
+`core.repositoryFormatVersion=1` when using `extension` configs has
+"already sailed" anyhow, as 11664196ac ("Revert
+"check_repository_format_gently(): refuse extensions for old
+repositories"", 2020-07-15) clearly indicates.
 
-> > I also wondered if adding some sort of `--sparse-checkout=...` option
-> > to `git worktree add` would solve this particular dilemma, thus
-> > allowing the user to configure custom sparse-checkout for the worktree
-> > as it is being created. I also very briefly wondered if this should
-> > instead be a feature of the `git sparse-checkout` command itself, such
-> > as `git sparse-checkout add-worktree`, but I think that's probably a
-> > dead-end in terms of user discoverability, whereas `git worktree add
-> > --sparse-checkout=...` is more easily discoverable for people wanting
-> > to work with worktrees.
->
-> This might be a useful extra capability (we'd probably want to keep
-> this flag in sync with git-clone's --sparse flag and whatever
-> capabilities grow there), but I don't see it as a solution to this
-> problem.  I think the default needs to be copying the existing
-> sparsity.  Making users specify cone/non-cone mode and
-> sparse-index/non-sparse-index and and several dozen directories by
-> hand just doesn't sound reasonable to me.  (We have a case with
-> several hundred directories/modules, with various dependencies between
-> them.  Users can use a wrapper, `./sparsify --modules $MODULE_A
-> $MODULE_B` which figures out the several dozen relevant directories
-> and calls sparse-checkout set with those, but of course that wrapper
-> won't yet be available in the new worktree until after the new
-> worktree has been added.)
+> So, I'd like to reiterate my earlier suggestion which would avoid
+> these regressions while also fixing the reported bug:
+>   * If core.bare=true or core.worktree is set, then at `git worktree
+> add` time, automatically run the logic you have here for
+> init-worktree-config.  Having either of those config settings with
+> multiple worktrees is currently broken in all git versions and likely
+> in most all external tools.  As such, being aggressive in the new
+> config settings to allow new versions of git to work seems totally
+> safe to me -- we can't be any more broken than we already were.
+>   * If core.bare=false and core.worktree is not set, then:
+>     * `git sparse-checkout {init,set}` should set
+> extensions.worktreeConfig if not already set, and always set the
+> core.sparse* and index.sparse settings in worktree-specific files.
+>     * `git worktree add`, if extensions.worktreeConfig is already set,
+> will copy both the info/sparse-checkout file and the config.worktree
+> settings (module core.bare and core.worktree, if present) to the new
+> worktree
 
-Okay.
-
-> An alternative that would be workable, though annoying, is giving the
-> user a super-sparse checkout with only files in the toplevel directory
-> present (i.e. what you'd get after `git sparse-checkout init --cone`
-> or `git clone --sparse ...`), and then making them use the normal
-> tools to manually specify the wanted sparsity (which probably requires
-> switching back to the previous worktree to run some info commands to
-> determine exactly what the sparsity was).
-
-Sounds somewhat painful.
-
-> An increasingly unworkable alternative is the current behavior of
-> defaulting to a full checkout in all cases (and forcing users to
-> sparsify afterwards).  A full checkout is fine if the user came from
-> one (and probably preferable in such a case), but it's increasingly
-> problematic for us even with our repo being nowhere near the size of
-> the microsoft repos.
-
-It feels unfortunate and a bit dirty to spread around this
-special-case knowledge about sparse-checkout to various parts of the
-system, but based upon the pain-points you describe, having a new
-worktree inherit the sparsity from the originating worktree does sound
-(given my limited knowledge of the topic) like it would ease the pain
-for users.
+Thanks for the clearly written enumeration of how you expect this to
+work. This summary pretty well (or entirely) captures the conclusions
+I arrived at, as well, after devoting a chunk of time today thinking
+through the cases. If I'm understanding everything correctly, the
+approach outlined here solves the bare-worktree problem in the least
+invasive and least dangerous way (for older Git versions and foreign
+tools). And we don't even need the `git worktree init-worktree-config`
+subcommand (though we need the underlying functionality).
