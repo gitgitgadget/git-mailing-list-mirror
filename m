@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE4B2C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 13:43:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0D14C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 13:50:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239626AbhL3Nn0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Dec 2021 08:43:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57376 "EHLO
+        id S239735AbhL3Nue (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Dec 2021 08:50:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235159AbhL3NnY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Dec 2021 08:43:24 -0500
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 706FAC061574
-        for <git@vger.kernel.org>; Thu, 30 Dec 2021 05:43:24 -0800 (PST)
-Received: by mail-ot1-x32c.google.com with SMTP id j3-20020a056830014300b0058f4f1ef3c2so28423981otp.13
-        for <git@vger.kernel.org>; Thu, 30 Dec 2021 05:43:24 -0800 (PST)
+        with ESMTP id S235821AbhL3Nud (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Dec 2021 08:50:33 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A00EC061574
+        for <git@vger.kernel.org>; Thu, 30 Dec 2021 05:50:33 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id 45-20020a9d0a30000000b0058f1a6df088so32420728otg.4
+        for <git@vger.kernel.org>; Thu, 30 Dec 2021 05:50:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=PQYLZA5mkAL5y8ZRU+c5YiSVGgUcw2c1tgHkO5hYQEo=;
-        b=OtFADLrgP/rIOswF2/2sFhBywZ39bJx4J31yF/NpVn9JNhQOw7TQ+P/CGWzOdTkvtJ
-         hHR3k21XnhVJBAfZtTvYHhQ3PQtIUivK463gXAOvmG7vdq1dbj224t9oMq19o/GVk9R8
-         KS0KaKYuP9INOIgYu3Ea43cW+C+4Ppe7sX52pT+5BMHKLl5zcM0kR4/Zm61FN3jzEhJr
-         8CRzW4ykSgDIEnlMnsmTkThtB8Ku47ITw8As+wnuqK5zAy/ia/YVCWCdjKNz/s1nkSHq
-         L8BGLy9A4ZcEZ4aXHGNnRogaXx+ylquzUC2T9IvLRgzw4qtancrMAPv9Gdh2eURUlHL9
-         ltzQ==
+        bh=NNgLhbjiZEwMVZJbD7GZMq/JV8gejnl+sNnJ5Oifr7I=;
+        b=ct8paUVA7m4+u8PL+7Jx4OxI2e2/AFyYTtGCK3I+41xnsESDRe1wmnIOVBxUHMKuD5
+         XI/i4QH5EPEkheZe5nvQYQP5du9sz2iVQzZDXH3DQjtNJ4zEpU5CeyvW5n1m0SMALi09
+         sm5IH50IApoXQQFbRMW3r8wK9WUtgKBoB2/IQveP1E6wz++lJT5xqyYN18yVX05YBaCG
+         L6aM2G7vi+js7pXTMCiakPOQa92s75anWyGWhpqvurg7ve0robIY2g5TYaXbflIbdNeu
+         qKAqpMEQgOUT/hasFmgaBhR4AJTB/nJDPiacmAxGCw3b8JzpbxLO/pcy1y9YkyWRpf0r
+         QxeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=PQYLZA5mkAL5y8ZRU+c5YiSVGgUcw2c1tgHkO5hYQEo=;
-        b=uVL0jJOb3au1MVfRYoanTkCPCL2tGiZ6q9ZYHv0Dz7EIDA1z+7orBgU/jKAGGlN6Xa
-         ffb99v2cnVN2JGLmYzOFI71enY0Jxl73YJ9dEmTlvWZ/ipTZzGJy1I/2SFTofVhDOpI6
-         yPskhq2WyD3hoLvCmhX23sJYwjRUQX/j6+j0OZBwOYMzmYDCB87pTQDI2oHA9t1a8EsH
-         t5X0LDLz8C4Jb9lP6uquPxT6oHMbOHbWx6yr9dwWusFG5koiWekkDgwuew5GfAlhjeuD
-         /jniqdxvCG/lPTZZJ1FiKrGmYLU7QgW8TnzWVCv+uSn7f4Vtb6CBv5zVeK2jFqJffnsI
-         r0ww==
-X-Gm-Message-State: AOAM533TYT0KTwBLYWrVGpd6v5u/lOlF1uVOGwzZXMkhJLqkpBpy60yP
-        X5uVIEYSvNxjCA0d/6n1JsVpWzb0OP4=
-X-Google-Smtp-Source: ABdhPJzyPTIfXEU7ydpG2sI7dQqlqNY4w7gAt/8diEUqtk/P2SsPtSEHmcSHoI0WYKOIGzAEQrr5Ag==
-X-Received: by 2002:a9d:6b1a:: with SMTP id g26mr19984358otp.271.1640871803677;
-        Thu, 30 Dec 2021 05:43:23 -0800 (PST)
+        bh=NNgLhbjiZEwMVZJbD7GZMq/JV8gejnl+sNnJ5Oifr7I=;
+        b=MysCzxB1sBaGrOE8bNSJE431Yx/D9+fr9HnS+VNRKrutJU+jcC7V9j68TcUqejpvoV
+         UVWYZ8upQtHZn5s5/aizOlqVo15i4/emzZT1aIA7jd7YUzFy2EzmrerYSqvz1oUaA9JR
+         lRqa6qgfZVYBwEZ4jrxOsjvfQTlT9LIEb0DkRnheiCEXyOCutr4L4AXTsoRY4E++HaKa
+         zY2M/LwF5XnKemEDm62c4xf6LCXXp+ap8HDvcs0VkzOBc3h9MBD/XdT3slTbZSPSeYhP
+         8b6TNtthLQmYZCfcB4qRJGNOCEVQB89vStQME+A+IfaAMS/3HnE71XMXzPqn3vH/7oO7
+         tklA==
+X-Gm-Message-State: AOAM533jKpGc4qpbF3svyOxn9tJRV8gkTmIl4/tyd/B6PJzWpXGHiDR5
+        pMBt6aQznbAWb8Glsda6mXxmMhvrShY=
+X-Google-Smtp-Source: ABdhPJzQ80MxCjMpJH7f9NwdOW1pdyj6QmuurBHBcHtWOXEfUEraKfqTpQJyPab+DPCQEPAevcFcIw==
+X-Received: by 2002:a9d:350:: with SMTP id 74mr21706311otv.238.1640872232674;
+        Thu, 30 Dec 2021 05:50:32 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:cd5c:4260:de91:c496? ([2600:1700:e72:80a0:cd5c:4260:de91:c496])
-        by smtp.gmail.com with ESMTPSA id p19sm4069277otp.5.2021.12.30.05.43.22
+        by smtp.gmail.com with ESMTPSA id k10sm5621030oil.36.2021.12.30.05.50.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Dec 2021 05:43:23 -0800 (PST)
-Message-ID: <cd190111-1930-9538-a844-4d9aa08d98b0@gmail.com>
-Date:   Thu, 30 Dec 2021 08:43:21 -0500
+        Thu, 30 Dec 2021 05:50:32 -0800 (PST)
+Message-ID: <c79ccf4a-4da9-1c60-32eb-124d3fa94400@gmail.com>
+Date:   Thu, 30 Dec 2021 08:50:31 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.4.1
-Subject: Re: [PATCH 1/2] sparse-checkout: custom tab completion tests
+Subject: Re: [PATCH 2/2] sparse-checkout: custom tab completion
 Content-Language: en-US
 To:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     gitster@pobox.com, johannes.schindelin@gmail.com,
         Lessley Dennington <lessleydennington@gmail.com>
 References: <pull.1108.git.1640824351.gitgitgadget@gmail.com>
- <a7f3ae5cddaed61a618a5fa2f9d9c888e0dd7d99.1640824351.git.gitgitgadget@gmail.com>
+ <ab51236d18ce10ada89e8cde85f678130a0ab1fd.1640824351.git.gitgitgadget@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <a7f3ae5cddaed61a618a5fa2f9d9c888e0dd7d99.1640824351.git.gitgitgadget@gmail.com>
+In-Reply-To: <ab51236d18ce10ada89e8cde85f678130a0ab1fd.1640824351.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -72,108 +72,87 @@ X-Mailing-List: git@vger.kernel.org
 On 12/29/2021 7:32 PM, Lessley Dennington via GitGitGadget wrote:
 > From: Lessley Dennington <lessleydennington@gmail.com>
 > 
-> Add tests for missing/incorrect components of custom tab completion for the
-> sparse-checkout command. These tests specifically highlight the following:
+> Fix custom tab completion for sparse-checkout command. This will ensure:
 > 
-> 1. git sparse-checkout <TAB> results in an incomplete list of subcommands
-> (it is missing reapply and add).
-> 2. git sparse-checkout --<TAB> does not complete the help option.
-> 3. Options for subcommands are not tab-completable.
-> 4. git sparse-checkout set <TAB> and git sparse-checkout add <TAB> show
-> both file names and directory names.
-
-Thanks for these. I've never looked at this test script before, but
-I can surmise how it works from your tests.
- 
-> Although these tests currently fail, they will succeed with the
-> sparse-checkout modifications in git-completion.bash in the next commit in
-> this series.
-
-> +test_expect_failure 'sparse-checkout completes subcommand options' '
-> +	test_completion "git sparse-checkout init --" <<-\EOF &&
-> +	--cone Z
-> +	--sparse-index Z
-> +	--no-sparse-index Z
-> +	EOF
+> 1. The full list of subcommands is provided when users enter git
+> sparse-checkout <TAB>.
+> 2. The --help option is tab-completable.
+> 3. Subcommand options are tab-completable.
+> 4. A list of directories (but not files) is provided when users enter git
+> sparse-checkout add <TAB> or git sparse-checkout set <TAB>.
+> 
+> Failing tests that were added in the previous commit to verify these
+> scenarios are now passing with these updates.
+> 
+> Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash | 34 +++++++++++++++++---------
+>  t/t9902-completion.sh                  |  8 +++---
+>  2 files changed, 26 insertions(+), 16 deletions(-)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 377d6c5494a..b8f1caece83 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -2986,24 +2986,34 @@ _git_show_branch ()
+>  	__git_complete_revlist
+>  }
+>  
+> +__git_sparse_checkout_init_opts="--cone --sparse-index --no-sparse-index"
 > +
-> +	test_completion "git sparse-checkout set --" <<-\EOF &&
-> +	--stdin Z
-
-In en/sparse-checkout-set, the 'set' subcommand learns the options
-for init, including --cone, --sparse-index, and --no-sparse-index.
-I think technically, --no-cone is in there, too.
-
-Further, the 'reapply' subcommand learns these options in that
-series and I see you do not include that subcommand in this test.
-
-You might want to rebase onto en/sparse-checkout-set and adjust
-these tests for the new options (plus change the next patch that
-implements the completion).
-
-> +	EOF
+>  _git_sparse_checkout ()
+>  {
+> -	local subcommands="list init set disable"
+> +	local subcommands="list init set disable add reapply"
+>  	local subcommand="$(__git_find_on_cmdline "$subcommands")"
 > +
-> +	test_completion "git sparse-checkout add --" <<-\EOF
-> +	--stdin Z
-> +	EOF
-> +'
+>  	if [ -z "$subcommand" ]; then
+> -		__gitcomp "$subcommands"
+> -		return
+> +		case "$cur" in
+> +			--*)
+> +				__gitcomp "--help"
+> +				;;
+> +			*)
+> +				__gitcomp "$subcommands"
+> +				;;
+> +		esac
 
-> +test_expect_failure 'sparse-checkout completes directory names' '
-> +	# set up sparse-checkout repo
-> +	git init sparse-checkout &&
-> +	(
-> +		cd sparse-checkout &&
-> +		mkdir -p folder1/0/1 folder2/0 folder3 &&
-> +		touch folder1/0/1/t.txt &&
-> +		touch folder2/0/t.txt &&
-> +		touch folder3/t.txt &&
-> +		git add . &&
-> +		git commit -am "Initial commit"
-> +	) &&
-> +
-> +	# initialize sparse-checkout definitions
-> +	git -C sparse-checkout config index.sparse false &&
+This part fixes the --<tab> completion. I suppose if someone
+did "-<tab>" then nothing would show up?
 
-I'm guessing that the implementation actually requires this, but
-I'll take a look in the next patch. It might just be slow to expand
-the full list of directories in the sparse index case.
+>  	fi
+>  
+> -	case "$subcommand,$cur" in
+> -	init,--*)
+> -		__gitcomp "--cone"
+> -		;;
+> -	set,--*)
+> -		__gitcomp "--stdin"
+> -		;;
+> -	*)
+> -		;;
+> +	case "$prev" in
+> +		init)
+> +			__gitcomp "$__git_sparse_checkout_init_opts"
+> +			;;
+> +		add|set)
+> +			__gitcomp "--stdin"
+> +			__gitcomp "$(git ls-tree -d -r HEAD --name-only)"> +			;;
 
-> +	git -C sparse-checkout sparse-checkout init --cone &&
-> +	git -C sparse-checkout sparse-checkout set folder1/0 folder3 &&
-> +
-> +	# test tab completion
-> +	(
-> +		cd sparse-checkout &&
-> +		test_completion "git sparse-checkout set f" <<-\EOF
-> +		folder1 Z
-> +		folder1/0 Z
-> +		folder1/0/1 Z
-> +		folder2 Z
-> +		folder2/0 Z
-> +		folder3 Z
+With the thinking of rebasing onto en/sparse-checkout-set, this
+could possibly be rearranged so the add|set) cases pass-through
+into the init) and reapply) cases (skip the ;; between) to save
+some duplication. Or, it is possible that doesn't work, but it
+might be worth a try.
 
-This tab-completion doing a full directory walk seems like it could
-be expensive for a large repository, but I suppose it is the only way
-to allow the following sequence:
+Also, since you are using 'git ls-tree' and not 'git ls-files',
+the sparse index will not have an effect on the performance.
+There will be some corner cases where a directory exists in one
+of HEAD or the index but not the other. That's probably still
+the right way to go since 'git ls-files' doesn't have a way to
+only list directories. It just means that you probably don't
+need to explicitly disable the sparse index in your test.
 
-	fol<tab> -> folder
-	folder1/<tab> -> folder1/0
-	folder1/0/<tab> -> folder1/0/1
-
-(Hopefully that makes sense.)
-
-It would be more efficient to only go one level deep at a time, but
-that might not be possible with the tab completion mechanisms.
-
-> +		EOF
-> +	) &&
-> +
-> +	(
-> +		cd sparse-checkout/folder1 &&
-> +		test_completion "git sparse-checkout add " <<-\EOF
-> +		./ Z
-> +		0 Z
-> +		0/1 Z
-> +		EOF
-I do like seeing this test within a directory. Thanks!
-
+Thanks,
 -Stolee
