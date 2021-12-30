@@ -2,175 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31DFEC4332F
-	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 00:32:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D362CC433EF
+	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 06:22:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233716AbhL3Ach (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Dec 2021 19:32:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53662 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233693AbhL3Acg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Dec 2021 19:32:36 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39B2BC061574
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 16:32:35 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id b73so14632621wmd.0
-        for <git@vger.kernel.org>; Wed, 29 Dec 2021 16:32:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=tl/2v4010Nv23zr4hoIwG8ZM+d+bjnLqiey99XsHXpQ=;
-        b=UlBJvAXd2UutiqpTiNVJgXCa64IwtTLhUkjjwAjkQ1kgAkgBJCBwsbCgZQ1Gj5XXvg
-         esWmOcdh/tn7AR0s5lzdqZEGCrFzon4Yc4a7JK/1Re8tbn15dbOu1LrvrZVai4xm0DHd
-         /5VX5iuISEz12wSNPayAsXuEhVoM7qDrBm2gcYj0qahugaLmSI8kUldfY62igk3suQfY
-         hnpr4jv4eCPkUKYiy0OYlAbjcK8Uldon7kir052Vu9Aa8tvsU2iu05VV2To259a6tIo0
-         4RAzxJL1leICkRWtvDVSXrwBbDOf0eYp5ii7IvchZ+FPnNGb+sRIMEr3VJd7NOmxjYHV
-         hzGg==
+        id S236340AbhL3GWG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Dec 2021 01:22:06 -0500
+Received: from mail-pl1-f174.google.com ([209.85.214.174]:41784 "EHLO
+        mail-pl1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229446AbhL3GWG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Dec 2021 01:22:06 -0500
+Received: by mail-pl1-f174.google.com with SMTP id z3so17565414plg.8
+        for <git@vger.kernel.org>; Wed, 29 Dec 2021 22:22:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tl/2v4010Nv23zr4hoIwG8ZM+d+bjnLqiey99XsHXpQ=;
-        b=SFzOuaTFpR2hecEvCfLsWyVl0lVxFoqXISTAdtmq6R9Xt8ZRJmL5KOMntEOgO6OsgJ
-         99humDfP3E4XSLqS5LrWaVa5ej96m7/pNjO7ICTGg+6tRY/Djv6/A95YZSgp/yu/AG0b
-         GFDWaMfkTAnt+Xe46DpgfukN0KVo24CLEyMzUhJ+b4q2xKuYABOAmLbMdAlxuKBuhNNs
-         XBdO7n0BAijBUuquYibWmjEWwsW3QrKGHP7YZWAY59wb6a8wGOZOAZmmdVy1z74TGwg9
-         pHytgCpuJ3izDYQ/81TgsWhoPH++jRD17OTeMqBWs4w6Insoito3iJWb+aN0sDY6hIzt
-         SgNg==
-X-Gm-Message-State: AOAM530fwr85PIA6ZcER28sKbXxLWlcSTVxXRju1TVAdm6J+4jjjmqsL
-        4Hx6rAJMb9wgOjJ6yl3t4l8wUc7HIYU=
-X-Google-Smtp-Source: ABdhPJyGzJa2/8AVviOr+PwwOz/qyAKqZ4j8TrgcmalahfUjRyck8lpDixiNjcVi8sv8O/Uk12VVtg==
-X-Received: by 2002:a1c:a98f:: with SMTP id s137mr23639422wme.5.1640824353602;
-        Wed, 29 Dec 2021 16:32:33 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l14sm16905798wrr.53.2021.12.29.16.32.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Dec 2021 16:32:33 -0800 (PST)
-Message-Id: <a7f3ae5cddaed61a618a5fa2f9d9c888e0dd7d99.1640824351.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1108.git.1640824351.gitgitgadget@gmail.com>
-References: <pull.1108.git.1640824351.gitgitgadget@gmail.com>
-From:   "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 30 Dec 2021 00:32:30 +0000
-Subject: [PATCH 1/2] sparse-checkout: custom tab completion tests
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XGwmke0yB7convIdVE43Q2xcLMwLgscIgv1nfTwM5Mc=;
+        b=P+5gYXbeVrE8P5eNyiyT/izPwS+Kthesxul/CgqFr23UPIbPT52Iil3oiAoOESZYDZ
+         PLNlCOcV4Co2XZE9s6XcWrYm2pmFCyJYpnPem537ViUiWCEgykyUElKO62jB4xyUDpTo
+         NS5O+hFDqWX2/NuZsgGQ7Az9dOpmmfXvo7XXpRRQllj2EPQ1R0x35+06IDA0zFf1VHvH
+         +mpooyvR0AoRDlaSE7g08YeyRXcqzcJ+cnalOjrJ/hK0zivOmczFymtYxIYEVknCPk4L
+         caozPvmu1/0qT+bY65ain7pFkO6xPfORNbFrZgGGfLAsFr0ZdlhtVK53GMubhdKXXOsS
+         JAFw==
+X-Gm-Message-State: AOAM530SPJWYJLzR80NhrKvfVrGOxytquBm3WUOzHY+0XJOxdI3B9xGO
+        ofuYWDk5596cw+9n7Uf/WODV6j7JQDXXzo+Z7PQ=
+X-Google-Smtp-Source: ABdhPJyHvibKSXYjq7ibJKZOXuFum8biBxP0+VoozRycg38KEFhU2wDtO95X1VTNq1oYcKt2PRaeQ58+dzqLzlBQWvA=
+X-Received: by 2002:a17:902:e211:b0:149:8bd6:583b with SMTP id
+ u17-20020a170902e21100b001498bd6583bmr13569892plb.35.1640845325841; Wed, 29
+ Dec 2021 22:22:05 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, gitster@pobox.com, johannes.schindelin@gmail.com,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
+References: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
+ <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com> <CABPp-BG7nwsdEYrnfqhAbWU4ndJHcqGf6RS_6DzJittuNVLvoA@mail.gmail.com>
+ <CAPig+cRDDGU=9BB6kd1tMJR8DmWKSSJwpTD8JeszrY685Fc3-Q@mail.gmail.com>
+ <CAPig+cQjYiARBwSZTsswk442TvDC2UiyOx5wNdRwF6C7i8ENxA@mail.gmail.com> <CABPp-BHMr32MuisNzt-R3O4=HPY63HQT0=ykrbtiASyS1K_JjQ@mail.gmail.com>
+In-Reply-To: <CABPp-BHMr32MuisNzt-R3O4=HPY63HQT0=ykrbtiASyS1K_JjQ@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 30 Dec 2021 01:21:54 -0500
+Message-ID: <CAPig+cRs4Vvp4rQ_EhMxB_qe4YAh3+NnqETTpYyMnAjsRhAUbg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] Sparse checkout: fix bug with worktree of bare repo
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Sean Allred <allred.sean@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lessley Dennington <lessleydennington@gmail.com>
+On Mon, Dec 27, 2021 at 3:16 PM Elijah Newren <newren@gmail.com> wrote:
+> On Sun, Dec 26, 2021 at 11:34 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > Your proposal is _almost_ the same as my suggestion of eventually
+> > making per-worktree config the default. The difference is that you're
+> > only making it the default if `core.bare=true` or `core.worktree` is
+> > set.
+>
+> Indeed.  :-)
 
-Add tests for missing/incorrect components of custom tab completion for the
-sparse-checkout command. These tests specifically highlight the following:
+I mentioned previously[1] that I needed to find a block of time to
+really think through the topic before I'd be able to respond to this
+email. So, today I spent some time trying to reason through the
+various cases under discussion, and I came back and re-read this email
+with the intention of trying to summarize my understanding of the
+situation and my understanding of the points you were making. However,
+you did such a good job of summarizing the various cases at the very
+end of [2] that it probably makes more sense for me to respond to that
+email instead.
 
-1. git sparse-checkout <TAB> results in an incomplete list of subcommands
-(it is missing reapply and add).
-2. git sparse-checkout --<TAB> does not complete the help option.
-3. Options for subcommands are not tab-completable.
-4. git sparse-checkout set <TAB> and git sparse-checkout add <TAB> show
-both file names and directory names.
+[1]: https://lore.kernel.org/git/CAPig+cTFSDw-9Aq+=+r4sHSzTmG7s2T93Z0uqWTxHbKwGFaiYQ@mail.gmail.com/
+[2]: https://lore.kernel.org/git/CABPp-BHuO3B366uJuODMQo-y449p8cAMVn0g2MTcO5di3Xa7Zg@mail.gmail.com/
 
-Although these tests currently fail, they will succeed with the
-sparse-checkout modifications in git-completion.bash in the next commit in
-this series.
+> > But do we need that distinction? If people are comfortable with
+> > that, then are they comfortable with simply flipping the switch and
+> > making per-worktree config the default today regardless of `core.bare`
+> > and `core.worktree`?
+>
+> This is tempting, at least if we leave core.repositoryFormatVersion as
+> 0 (see 11664196ac ("Revert "check_repository_format_gently(): refuse
+> extensions for old repositories"", 2020-07-15)) when core.bare is
+> false and core.worktree was unset.  However, for that case:
 
-Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
----
- t/t9902-completion.sh | 74 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 74 insertions(+)
+I had seen 11664196ac when researching one of my earlier responses,
+though it took more than one read to (hopefully) fully understand what
+it is saying (i.e. due to an oversight, it's too late to enforce the
+`core.repositoryFormatVersion=1` requirement when extensions are used,
+as originally intended).
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 0f28c4ad940..22271ac2f3b 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1444,6 +1444,80 @@ test_expect_success 'git checkout - with --detach, complete only references' '
- 	EOF
- '
- 
-+test_expect_failure 'sparse-checkout completes subcommands' '
-+	test_completion "git sparse-checkout " <<-\EOF
-+	list Z
-+	init Z
-+	set Z
-+	add Z
-+	reapply Z
-+	disable Z
-+	EOF
-+'
-+
-+test_expect_failure 'sparse-checkout completes options' '
-+	test_completion "git sparse-checkout --" <<-\EOF
-+	--help Z
-+	EOF
-+'
-+
-+test_expect_failure 'sparse-checkout completes subcommand options' '
-+	test_completion "git sparse-checkout init --" <<-\EOF &&
-+	--cone Z
-+	--sparse-index Z
-+	--no-sparse-index Z
-+	EOF
-+
-+	test_completion "git sparse-checkout set --" <<-\EOF &&
-+	--stdin Z
-+	EOF
-+
-+	test_completion "git sparse-checkout add --" <<-\EOF
-+	--stdin Z
-+	EOF
-+'
-+
-+test_expect_failure 'sparse-checkout completes directory names' '
-+	# set up sparse-checkout repo
-+	git init sparse-checkout &&
-+	(
-+		cd sparse-checkout &&
-+		mkdir -p folder1/0/1 folder2/0 folder3 &&
-+		touch folder1/0/1/t.txt &&
-+		touch folder2/0/t.txt &&
-+		touch folder3/t.txt &&
-+		git add . &&
-+		git commit -am "Initial commit"
-+	) &&
-+
-+	# initialize sparse-checkout definitions
-+	git -C sparse-checkout config index.sparse false &&
-+	git -C sparse-checkout sparse-checkout init --cone &&
-+	git -C sparse-checkout sparse-checkout set folder1/0 folder3 &&
-+
-+	# test tab completion
-+	(
-+		cd sparse-checkout &&
-+		test_completion "git sparse-checkout set f" <<-\EOF
-+		folder1 Z
-+		folder1/0 Z
-+		folder1/0/1 Z
-+		folder2 Z
-+		folder2/0 Z
-+		folder3 Z
-+		EOF
-+	) &&
-+
-+	(
-+		cd sparse-checkout/folder1 &&
-+		test_completion "git sparse-checkout add " <<-\EOF
-+		./ Z
-+		0 Z
-+		0/1 Z
-+		EOF
-+	)
-+'
-+
- test_expect_success 'git switch - with -d, complete all references' '
- 	test_completion "git switch -d " <<-\EOF
- 	HEAD Z
--- 
-gitgitgadget
+> * This is a case where operating on the primary worktree was not
+> previously problematic for older git versions or third party tools.
+> * Interestingly, git <= 2.6.2 can continue to operate on the primary
+> worktree (because it didn't know to error out on unknown extensions)
+> * git >= 2.19.0 could continue to operate on the primary worktree
+> (because it understands the extension)
+> * git versions between that range would suddenly break, erroring out
+> on the unknown extension (though those versions would start working
+> again if we migrated core.bare and core.worktree but just didn't set
+> extensions.worktreeConfig).
 
+The significance of versions 2.6.2 and 2.19.0 is unclear to me. What
+context or criteria are you using to identify those versions as
+meaningful here?
