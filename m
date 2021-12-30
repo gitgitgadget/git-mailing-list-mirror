@@ -2,173 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48B08C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 16:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 461ABC433EF
+	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 16:52:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240431AbhL3QmQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Dec 2021 11:42:16 -0500
-Received: from siwi.pair.com ([209.68.5.199]:31267 "EHLO siwi.pair.com"
+        id S241392AbhL3Qwm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Dec 2021 11:52:42 -0500
+Received: from smtp4-g21.free.fr ([212.27.42.4]:43336 "EHLO smtp4-g21.free.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240031AbhL3QmQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Dec 2021 11:42:16 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 474D13F40E4;
-        Thu, 30 Dec 2021 11:42:15 -0500 (EST)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id C843F3F40B7;
-        Thu, 30 Dec 2021 11:42:14 -0500 (EST)
-Subject: Re: [PATCH v2 0/9] Trace2 stopwatch timers and global counters
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1099.git.1640012469.gitgitgadget@gmail.com>
- <pull.1099.v2.git.1640720202.gitgitgadget@gmail.com>
- <211229.86ee5wgnug.gmgdl@evledraar.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <a316a9e0-14dc-6277-b7d7-f6f115cc81da@jeffhostetler.com>
-Date:   Thu, 30 Dec 2021 11:42:13 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S235870AbhL3Qwm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Dec 2021 11:52:42 -0500
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:9225:6fd8:b89b:1501])
+        (Authenticated sender: jn.avila@free.fr)
+        by smtp4-g21.free.fr (Postfix) with ESMTPSA id 58A4A19F5A6;
+        Thu, 30 Dec 2021 17:52:31 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+        s=smtp-20201208; t=1640883160;
+        bh=C8GTyNXk3Wpx4kRbt3JVD1lhqV1qVQv1UqvY5bVtBcw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=iNjruOwsLpEyBWGk9Igin/K+29MtI/UTqiF/7IHq9YJofZwtxiDW24CoG+F4q5OQd
+         pCYhp/Z8GfaVTcWRbeqf+Acr+nHEQJWrTLH6OmRuJqcCxk5Q0CBPYeQt0ibOQJescA
+         83Md30HlieMNe4hwZEdXQaXgITjgffsYr2BMihx6A7GAUruUu706Wr5/hpMq04lPw6
+         B4kFNRvOpUzY4XB+dILPVV92MMM7G6VC1iuNhbo88vvSXhigW2Yh86lgrHz4O+ZjTt
+         oGJvCjoQdDWuoRCkl9gqV0zDGgAX/RdQle9Asxjv2vc9JTUdqdFn5ejwhFaGShEssX
+         673/Q4xskw6Cw==
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget 
+        <gitgitgadget@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+Cc:     Jeff King <peff@peff.net>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v3 03/11] i18n: turn "options are incompatible" into "cannot be used together"
+Date:   Thu, 30 Dec 2021 17:52:30 +0100
+Message-ID: <48262743.WQR3eRXon5@cayenne>
+In-Reply-To: <233ae6c6-294f-f68c-51ca-ec83d25f05dd@kdbg.org>
+References: <pull.1088.v2.git.1640647437.gitgitgadget@gmail.com> <486cc6c89e2612761bc8835700c9c85c0b50ab55.1640804108.git.gitgitgadget@gmail.com> <233ae6c6-294f-f68c-51ca-ec83d25f05dd@kdbg.org>
 MIME-Version: 1.0
-In-Reply-To: <211229.86ee5wgnug.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wednesday, 29 December 2021 20:36:59 CET Johannes Sixt wrote:
+> Am 29.12.21 um 19:54 schrieb Jean-No=EBl Avila via GitGitGadget:
+> > @@ -2867,24 +2867,24 @@ int setup_revisions(int argc, const char **argv=
+, struct rev_info *revs, struct s
+> >  	compile_grep_patterns(&revs->grep_filter);
+> > =20
+> >  	if (revs->reverse && revs->reflog_info)
+> > -		die("cannot combine --reverse with --walk-reflogs");
+> > +		die(_("options '%s' and '%s' cannot be used together"), "--reverse",=
+ "--walk-reflogs");
+> >  	if (revs->reflog_info && revs->limited)
+> >  		die("cannot combine --walk-reflogs with history-limiting options");
+> >  	if (revs->rewrite_parents && revs->children.name)
+> > -		die("cannot combine --parents and --children");
+> > +		die(_("options '%s' and '%s' cannot be used together"), "--parents",=
+ "--children");
+> > =20
+> >  	/*
+> >  	 * Limitations on the graph functionality
+> >  	 */
+> >  	if (revs->reverse && revs->graph)
+> > -		die("cannot combine --reverse with --graph");
+> > +		die(_("options '%s' and '%s' cannot be used together"), "--reverse",=
+ "--graph");
+> > =20
+> >  	if (revs->reflog_info && revs->graph)
+> > -		die("cannot combine --walk-reflogs with --graph");
+> > +		die(_("options '%s' and '%s' cannot be used together"), "--walk-refl=
+ogs", "--graph");
+> >  	if (revs->no_walk && revs->graph)
+> > -		die("cannot combine --no-walk with --graph");
+> > +		die(_("options '%s' and '%s' cannot be used together"), "--no-walk",=
+ "--graph");
+> >  	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
+> > -		die("cannot use --grep-reflog without --walk-reflogs");
+> > +		die(_("%s requires %s"), "--grep-reflog", "--walk-reflogs");
+>=20
+> This last transformation does not fit the topic of this patch. It should
+> go into patch 6/11, I think.
+>=20
+
+True! Will reroll after checking again.
+
+JN
 
 
-On 12/28/21 8:54 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Tue, Dec 28 2021, Jeff Hostetler via GitGitGadget wrote:
-> 
-> I left some other comments on the series inline, just on the notes in
-> the CL:
-> 
->>   * Ævar proposed a large refactor of the "_perf" target to have a "fmt()"
->>     varargs function to reduce the amount of copy-n-pasted code in many of
->>     the "fn" event handlers. This looks like a good change based on the
->>     mockup but is a large refactor.
-> 
-> FWIW what I meant with [1] was not that this series needed to take the
-> detour of refactoring trace2/tr2_tgt_perf.c to use such a helper, but
-> that for the function additions in this series it might make sense to
-> introduce one and use it for the new functions.
-> 
-> For this series I think it's probably not worth it, so I'm fine with
-> leaving this for some other time. Just pointing out that rather than
-> your reading of:
-> 
->   1. We have some refactorable verbosity
->   2. Refactor all callers
->   3. Change existing code to use that refactoring
->   4. Add new code to use the refactoring
-> 
-> It's also perfectly fine to do just:
-> 
->   1. We have some refactorable verbosity
->   2. Introduce a less verbose
->   3. Add new code to use the helper
-> 
-> And leave the "refactor all callers" for some other time.
-> 
-> Anyway, I think for the two callers just leaving it entirely for this
-> series is the right thing to do. It was more of a "hrm, that's some odd
-> and avoidable verbosity..." comment on me read-through of v1.
-> 
-> 1. https://lore.kernel.org/git/211220.86czlrurm6.gmgdl@evledraar.gmail.com/
 
-Sorry, but I'm going to call BS on this.  You sent a ~200 line diff
-showing how we could refactor and reduce some of the duplicated code.
-You have a history of introducing unnecessary refactorings in the middle
-of other topics, and this looks like another example of that.  Another
-example of distracting everyone from reviewing the actual new code.
-
-And when I say that it should be an independent topic in its own
-series, you fall back to the your "oh, it was just a drive-by comment."
-and/or "i didn't mean for you to actually do it." and/or "you just
-read my email incorrectly."
-
-Drive-by comments don't usually have ~200 line diffs attached....
-
-A drive-by comment would just say that "there is an opportunity to
-create a varargs version of the existing io function and reduce
-some duplication in the bodies of the existing callers" and be done.
-I don't need a 200 line diff to see how you spell that.
-
-Again, sorry to rant, but I'm tired looking like the stupid half
-in these conversations.
-
-> 
->>   * Ævar proposed a new rationale for when/why we change the "_event" version
->>     number. That text can be added to the design document independently.
-> 
-> Hrm, no. In [1] I linked to some earlier musings of mine about what we
-> should do about the TR2_EVENT_VERSION (mainly as an FYI since you added
-> it, but hadn't commented on that post).
-> 
-> But my main comment there was that the series wasn't progressing as
-> atomic changes. I.e. we promise to change the TR2_EVENT_VERSION version
-> every time we change the event format, but v1 first changed the format
-> and bumped the version, then made some more changes.
-
-Did you really expect me to change it twice within a single 9 commit
-patch series?
-
-This series creates both "timers" and "counters" and will both appear
-together if/when they are merged.  From an external point of view,
-users would see version 4 added two new event types.  So I either
-increment it for "timers" or I increment it for "counters" or I squash
-the two commits together and increment it then.
-
-I didn't want to squash them, so I chose the former.
-
-> 
-> I think that's probably fine per-se within a git release cycle, but it
-> might be a symtom of commits that could be split up to be more atomic (I
-> don't know, didn't look in detail).
-> 
-> However, in this v2 of the series the TR2_EVENT_VERSION bump is entirely
-> gone.
-
-You complained when/how I bumped it in V1.  So I removed it.
-
-And I suggested that you commit your "earlier musings".  With
-that in place, there would be no need for me to change the
-version number (which is what you wanted all along, right?)
-
-
-> 
-> Maybe that means that you so vehemently agree with my proposal in [1] it
-> that you'd like to start taking that view for trace2 changes right away
-> :-)
-
-s/so vehemently agree with/are tired of debating/
-
-> 
-> For me it's fine either way, I think TR2_EVENT_VERSION probably isn't
-> that important.
-> 
-> But if that's the case it should probably be called out more explictly
-> in the CL/commit. I.e. even if our "policy" (such as it is) about
-> TR2_EVENT_VERSION currently says X we're going to start doing Y here
-> intentionally.
-> 
-> And in that case I should probably turn that suggestion in [1] into a an
-> actual PATCH sooner than later...
-> 
-> 1. https://lore.kernel.org/git/211220.86czlrurm6.gmgdl@evledraar.gmail.com/
-> 
-
-Right, I'll add a note to V3 stating that I did not update
-the version number.
-
-Jeff
