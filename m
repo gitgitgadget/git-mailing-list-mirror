@@ -2,133 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B40BC433F5
-	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 16:25:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48B08C433EF
+	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 16:42:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241254AbhL3QZB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Dec 2021 11:25:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36768 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239850AbhL3QZA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Dec 2021 11:25:00 -0500
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51582C061574
-        for <git@vger.kernel.org>; Thu, 30 Dec 2021 08:25:00 -0800 (PST)
-Received: by mail-io1-xd2e.google.com with SMTP id l3so27860305iol.10
-        for <git@vger.kernel.org>; Thu, 30 Dec 2021 08:25:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=cKOP4flNiZBhXSZsY2JBaxMvUGlHCVwPGnZGwTrVAO8=;
-        b=ZcpiwF2eaZvOu+desjGGZlOKfkOMzwnYmbPXvxZhf5tQTsCIPoYCGKFkbmJJbRoRsu
-         5UqdRPeZzwKvR6soTCpO6L8sRrNTTWB3hisgUJiqka6yqe0VXyqNjA2rRuCyw6CKoeFS
-         To8kc4HA9P7UN7XjCI2bII7Bs17K7H6tZfM1x8IC3OifwfbM4rt1lfZUODxQk+63ebdX
-         WRveF+9DuPiwRPlkNQ20+8vRVO86z9uzb3Q79+JgY5vGlSyYKG+K7hlPFvew4jSYw5YC
-         I3MsfKd1jyUp+CE34HWZmVIPc5CNwXF9p678vByrIdBrQjbb8egRYwJ8DHmMsildBV9P
-         9AEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=cKOP4flNiZBhXSZsY2JBaxMvUGlHCVwPGnZGwTrVAO8=;
-        b=czf3cHcmmfuvpYp86TJLqdNuxlto6hVfpG6scmortJozt0VerqJx3OIc5SgIcDYOH+
-         N1prJXzpZvjaKovRo0ZzLEhvIPyvGw1ek0R8Oqr1rDguEWrI2VQ5PNQuSPfZwkZH0qH6
-         x0ogFeF49E5+3OY0wq25TnuQnhs/CkLWABicBPCMNSL0ZZ12HbUmxMHDIiIV+8HMn0me
-         yQPhUyLM7UEuwj9n1Y11dhBmphANLO4NylNtIxTnWG6XugCGB+frNIaO0c9LkX2yFECV
-         JpAm4/MM/dE0V2G5OOShQd3CnRXNtOFCqzGUpf/rYBQqtMRkOvzrJE1D1wnflKx2H19/
-         rM/g==
-X-Gm-Message-State: AOAM532v9BefvdwLfl4fChu80qIVIjuoOvpBVGCDJM7hIUAUp9oIZ+GO
-        KHFVnmrWfLW2veIE+KAZu2uwXj2f0W5UGbFn
-X-Google-Smtp-Source: ABdhPJxuAHPb4a1M6Ye6pKYlrPq3MyQvA03ChSo8p9XjHQ7KvP4W6UtnoyFHb5R0Py9FasqZeufCig==
-X-Received: by 2002:a05:6638:258a:: with SMTP id s10mr14267431jat.65.1640881499662;
-        Thu, 30 Dec 2021 08:24:59 -0800 (PST)
-Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
-        by smtp.gmail.com with ESMTPSA id g20sm18150716iov.35.2021.12.30.08.24.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Dec 2021 08:24:59 -0800 (PST)
-Message-ID: <8032da64-64da-56be-f9d1-2a833a7768d3@gmail.com>
-Date:   Thu, 30 Dec 2021 10:24:58 -0600
+        id S240431AbhL3QmQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Dec 2021 11:42:16 -0500
+Received: from siwi.pair.com ([209.68.5.199]:31267 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240031AbhL3QmQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Dec 2021 11:42:16 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 474D13F40E4;
+        Thu, 30 Dec 2021 11:42:15 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id C843F3F40B7;
+        Thu, 30 Dec 2021 11:42:14 -0500 (EST)
+Subject: Re: [PATCH v2 0/9] Trace2 stopwatch timers and global counters
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1099.git.1640012469.gitgitgadget@gmail.com>
+ <pull.1099.v2.git.1640720202.gitgitgadget@gmail.com>
+ <211229.86ee5wgnug.gmgdl@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <a316a9e0-14dc-6277-b7d7-f6f115cc81da@jeffhostetler.com>
+Date:   Thu, 30 Dec 2021 11:42:13 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.0
-Subject: Re: [PATCH 2/2] sparse-checkout: custom tab completion
+In-Reply-To: <211229.86ee5wgnug.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To:     Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, johannes.schindelin@gmail.com
-References: <pull.1108.git.1640824351.gitgitgadget@gmail.com>
- <ab51236d18ce10ada89e8cde85f678130a0ab1fd.1640824351.git.gitgitgadget@gmail.com>
- <c79ccf4a-4da9-1c60-32eb-124d3fa94400@gmail.com>
-From:   Lessley Dennington <lessleydennington@gmail.com>
-In-Reply-To: <c79ccf4a-4da9-1c60-32eb-124d3fa94400@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/30/21 7:50 AM, Derrick Stolee wrote:
->> +__git_sparse_checkout_init_opts="--cone --sparse-index --no-sparse-index"
->> +
->>   _git_sparse_checkout ()
->>   {
->> -	local subcommands="list init set disable"
->> +	local subcommands="list init set disable add reapply"
->>   	local subcommand="$(__git_find_on_cmdline "$subcommands")"
->> +
->>   	if [ -z "$subcommand" ]; then
->> -		__gitcomp "$subcommands"
->> -		return
->> +		case "$cur" in
->> +			--*)
->> +				__gitcomp "--help"
->> +				;;
->> +			*)
->> +				__gitcomp "$subcommands"
->> +				;;
->> +		esac
-> 
-> This part fixes the --<tab> completion. I suppose if someone
-> did "-<tab>" then nothing would show up?
-> 
-It actually shows a list of files that contain -- (if any exist).
->>   	fi
->>   
->> -	case "$subcommand,$cur" in
->> -	init,--*)
->> -		__gitcomp "--cone"
->> -		;;
->> -	set,--*)
->> -		__gitcomp "--stdin"
->> -		;;
->> -	*)
->> -		;;
->> +	case "$prev" in
->> +		init)
->> +			__gitcomp "$__git_sparse_checkout_init_opts"
->> +			;;
->> +		add|set)
->> +			__gitcomp "--stdin"
->> +			__gitcomp "$(git ls-tree -d -r HEAD --name-only)"> +			;;
-> 
-> With the thinking of rebasing onto en/sparse-checkout-set, this
-> could possibly be rearranged so the add|set) cases pass-through
-> into the init) and reapply) cases (skip the ;; between) to save
-> some duplication. Or, it is possible that doesn't work, but it
-> might be worth a try.
-> 
-Thanks, I'll give this a go!
-> Also, since you are using 'git ls-tree' and not 'git ls-files',
-> the sparse index will not have an effect on the performance.
-> There will be some corner cases where a directory exists in one
-> of HEAD or the index but not the other. That's probably still
-> the right way to go since 'git ls-files' doesn't have a way to
-> only list directories. It just means that you probably don't
-> need to explicitly disable the sparse index in your test.
-> 
-Will correct in v2.
 
--Lessley
+
+On 12/28/21 8:54 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Tue, Dec 28 2021, Jeff Hostetler via GitGitGadget wrote:
+> 
+> I left some other comments on the series inline, just on the notes in
+> the CL:
+> 
+>>   * Ævar proposed a large refactor of the "_perf" target to have a "fmt()"
+>>     varargs function to reduce the amount of copy-n-pasted code in many of
+>>     the "fn" event handlers. This looks like a good change based on the
+>>     mockup but is a large refactor.
+> 
+> FWIW what I meant with [1] was not that this series needed to take the
+> detour of refactoring trace2/tr2_tgt_perf.c to use such a helper, but
+> that for the function additions in this series it might make sense to
+> introduce one and use it for the new functions.
+> 
+> For this series I think it's probably not worth it, so I'm fine with
+> leaving this for some other time. Just pointing out that rather than
+> your reading of:
+> 
+>   1. We have some refactorable verbosity
+>   2. Refactor all callers
+>   3. Change existing code to use that refactoring
+>   4. Add new code to use the refactoring
+> 
+> It's also perfectly fine to do just:
+> 
+>   1. We have some refactorable verbosity
+>   2. Introduce a less verbose
+>   3. Add new code to use the helper
+> 
+> And leave the "refactor all callers" for some other time.
+> 
+> Anyway, I think for the two callers just leaving it entirely for this
+> series is the right thing to do. It was more of a "hrm, that's some odd
+> and avoidable verbosity..." comment on me read-through of v1.
+> 
+> 1. https://lore.kernel.org/git/211220.86czlrurm6.gmgdl@evledraar.gmail.com/
+
+Sorry, but I'm going to call BS on this.  You sent a ~200 line diff
+showing how we could refactor and reduce some of the duplicated code.
+You have a history of introducing unnecessary refactorings in the middle
+of other topics, and this looks like another example of that.  Another
+example of distracting everyone from reviewing the actual new code.
+
+And when I say that it should be an independent topic in its own
+series, you fall back to the your "oh, it was just a drive-by comment."
+and/or "i didn't mean for you to actually do it." and/or "you just
+read my email incorrectly."
+
+Drive-by comments don't usually have ~200 line diffs attached....
+
+A drive-by comment would just say that "there is an opportunity to
+create a varargs version of the existing io function and reduce
+some duplication in the bodies of the existing callers" and be done.
+I don't need a 200 line diff to see how you spell that.
+
+Again, sorry to rant, but I'm tired looking like the stupid half
+in these conversations.
+
+> 
+>>   * Ævar proposed a new rationale for when/why we change the "_event" version
+>>     number. That text can be added to the design document independently.
+> 
+> Hrm, no. In [1] I linked to some earlier musings of mine about what we
+> should do about the TR2_EVENT_VERSION (mainly as an FYI since you added
+> it, but hadn't commented on that post).
+> 
+> But my main comment there was that the series wasn't progressing as
+> atomic changes. I.e. we promise to change the TR2_EVENT_VERSION version
+> every time we change the event format, but v1 first changed the format
+> and bumped the version, then made some more changes.
+
+Did you really expect me to change it twice within a single 9 commit
+patch series?
+
+This series creates both "timers" and "counters" and will both appear
+together if/when they are merged.  From an external point of view,
+users would see version 4 added two new event types.  So I either
+increment it for "timers" or I increment it for "counters" or I squash
+the two commits together and increment it then.
+
+I didn't want to squash them, so I chose the former.
+
+> 
+> I think that's probably fine per-se within a git release cycle, but it
+> might be a symtom of commits that could be split up to be more atomic (I
+> don't know, didn't look in detail).
+> 
+> However, in this v2 of the series the TR2_EVENT_VERSION bump is entirely
+> gone.
+
+You complained when/how I bumped it in V1.  So I removed it.
+
+And I suggested that you commit your "earlier musings".  With
+that in place, there would be no need for me to change the
+version number (which is what you wanted all along, right?)
+
+
+> 
+> Maybe that means that you so vehemently agree with my proposal in [1] it
+> that you'd like to start taking that view for trace2 changes right away
+> :-)
+
+s/so vehemently agree with/are tired of debating/
+
+> 
+> For me it's fine either way, I think TR2_EVENT_VERSION probably isn't
+> that important.
+> 
+> But if that's the case it should probably be called out more explictly
+> in the CL/commit. I.e. even if our "policy" (such as it is) about
+> TR2_EVENT_VERSION currently says X we're going to start doing Y here
+> intentionally.
+> 
+> And in that case I should probably turn that suggestion in [1] into a an
+> actual PATCH sooner than later...
+> 
+> 1. https://lore.kernel.org/git/211220.86czlrurm6.gmgdl@evledraar.gmail.com/
+> 
+
+Right, I'll add a note to V3 stating that I did not update
+the version number.
+
+Jeff
