@@ -2,109 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7C66C433EF
-	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 20:35:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8834CC433EF
+	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 21:43:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242102AbhL3Uf4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Dec 2021 15:35:56 -0500
-Received: from ring.crustytoothpaste.net ([172.105.110.227]:57898 "EHLO
-        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242088AbhL3Ufz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Dec 2021 15:35:55 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S242190AbhL3Vno (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Dec 2021 16:43:44 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54821 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237603AbhL3Vnn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Dec 2021 16:43:43 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0680D10EAAC;
+        Thu, 30 Dec 2021 16:43:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=lBCpXmDe5LA0
+        Jop5CDzFNHQsFlSOOAgI4w4AApHUIQs=; b=HqUyycocB7jWT1pU2XR+POa60Osk
+        2MU53YkOtHSWDgtkRtLs6KQrI4ivNTYRB87u9whY0cTWPdOYbYS8tSIN61FU3/bh
+        5clUBVH4Dex/Dcvc0oWfZvvv4mVsVNUvShu7FlbFQWPSPJ6UZIWa1gIfgPjEmO70
+        yBVrs0pb+wnf6/Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F0CCE10EAAB;
+        Thu, 30 Dec 2021 16:43:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 6D99D5B21B;
-        Thu, 30 Dec 2021 20:35:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1640896554;
-        bh=6Qluf7S6Ck+pN0DhiomXyaoCdmA17tYj+huAgXiVCg4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=mH6mWB0gqkCFQrKUpASNIz7isLUSBT70KGu/V8XjR2P+5i/38OIY2YNjT4oa8NVxS
-         lAAoDb5Eh/PP9hygz7m2tHeECXqaISpCP3wfaH1UfDnWynZF+bWohV49CZMG4oPSrk
-         xLlhVg7kcKNVEgycXK+mxY1nVPOsikUmKBUDZQAFxS2Da3r4R9NZ35Ec7JqYAaaJ+0
-         bpkt+cfriW3hBQJmjeO3uxMDF728PsVR5p/DJtlHNQttwXM8bvWpVUEuZM4LWKRJlv
-         OOpTmpaiOFkk5mZsR5C5nSiYUMR6hOdd2LzHZ7s3QFq7WTc4k63avEesOid8w84oSg
-         GgmKj5z+09ZgB6aRsHjfZF6Q0I5BYuoceNTM5XKJgBcfAF4ZuhkZmPaW/DVM7APP/d
-         V1oaBqLn4WdFS2VHjNGe5OBrEYRRECRXo5jaUGe5LeVn5940ehC5YTlsAQTXYL05a2
-         f407/iLauVQTsO7iP6XAt55QhfYPVNy+gjDdzXWVZtr3AmfFl0q
-Date:   Thu, 30 Dec 2021 20:35:52 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jean-Louis FLOQUET <jese.jlf@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [Question] : git 2.33.1 asks every time password
-Message-ID: <Yc4YKG+taXOuf6Kx@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jean-Louis FLOQUET <jese.jlf@gmail.com>, git@vger.kernel.org
-References: <CAHo1AWxzPsnLuT8JRWovtaRrGvRS8+0NyucU5K8VEnaL1xxW3Q@mail.gmail.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5CA3210EAA6;
+        Thu, 30 Dec 2021 16:43:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH v6 4/6] object-name: show date for ambiguous tag objects
+References: <cover-v5-0.6-00000000000-20211125T215529Z-avarab@gmail.com>
+        <cover-v6-0.6-00000000000-20211228T143223Z-avarab@gmail.com>
+        <patch-v6-4.6-b5aa6e266f6-20211228T143223Z-avarab@gmail.com>
+Date:   Thu, 30 Dec 2021 13:43:41 -0800
+In-Reply-To: <patch-v6-4.6-b5aa6e266f6-20211228T143223Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 28 Dec
+ 2021 15:35:00
+        +0100")
+Message-ID: <xmqqv8z5py42.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="EqkWWqk/yALoxga5"
-Content-Disposition: inline
-In-Reply-To: <CAHo1AWxzPsnLuT8JRWovtaRrGvRS8+0NyucU5K8VEnaL1xxW3Q@mail.gmail.com>
-User-Agent: Mutt/2.1.4 (2021-12-11)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8E99C498-69B9-11EC-99BE-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
---EqkWWqk/yALoxga5
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> diff --git a/object-name.c b/object-name.c
+> index dcf3ab99990..990f384129e 100644
+> --- a/object-name.c
+> +++ b/object-name.c
+> @@ -403,21 +403,26 @@ static int show_ambiguous_object(const struct obj=
+ect_id *oid, void *data)
+>  	} else if (type =3D=3D OBJ_TAG) {
+>  		struct tag *tag =3D lookup_tag(ds->repo, oid);
+>  		const char *tag_tag =3D "";
+> +		timestamp_t tag_date =3D 0;
+> =20
+> -		if (!parse_tag(tag) && tag->tag)
+> +		if (!parse_tag(tag) && tag->tag) {
+>  			tag_tag =3D tag->tag;
+> +			tag_date =3D tag->date;
+> +		}
+> =20
+>  		/*
+>  		 * TRANSLATORS: This is a line of
+>  		 * ambiguous tag object output. E.g.:
+>  		 *
+> -		 *    "deadbeef tag Some Tag Message"
+> +		 *    "deadbeef tag 2021-01-01 - Some Tag Message"
+>  		 *
+>  		 * The second argument is the "tag" string from
+>  		 * object.c, it should (hopefully) already be
+>  		 * translated.
+>  		 */
+> -		strbuf_addf(&desc, _("%s tag %s"), hash, tag_tag);
+> +		strbuf_addf(&desc, _("%s tag %s - %s"), hash,
+> +			    show_date(tag_date, 0, DATE_MODE(SHORT)),
+> +			    tag_tag);
 
-On 2021-12-30 at 15:56:12, Jean-Louis FLOQUET wrote:
-> Hi,
->=20
-> I use some scripts to do some batch operations (pull / push), using
-> rsa key and ssh-agent / ssh-add. I'm under Windows 10 (with all
-> updates).
-> When launching my script (see below, truncated : more than 100 repo),
-> I have to enter rsa passphrase (OK) then all push/pull are done
-> without any user interaction (no passphrase, no password, nothing)
-> All Git versions up to 2.33.0.2 are working fine, but since 2.33.1,
-> git asks every time the password.
-> I had to create a 'config' file within '.ssh' directory to support my
-> rsa key (too old format ?). Instructions according to
-> https://stackoverflow.com/questions/35233777/git-error-unable-to-negotiat=
-e-with-xx-xx-xxx-xxx-no-matching-host-key-type-fo
+So, when parse_tag() errors out, we show "" and epoch?  We should be
+able to do a better error reporting than that; tag_tag and tag_date
+are both local and they do not have to be used to store sentinel values
+like that.  Instead perhaps remember that we failed to parse_tag(),
+and _omit_ unavailable piece of information from the output?  I dunno.
 
-If you're seeing this problem, then the system to which you're
-connecting is insecurely configured and using obsolete cryptography.
-You should inform the maintainers of that system of that fact and ask
-them to fix it.
-
-> I also have seen that some people have to add 'ssh-add -K', but it
-> seems to be only for MacOS.
-> According to release notes for 2.33.1, Git Credential Manager for
-> Windows has been replaced by Git Credential Manager Core, but I don't
-> know if it is the "root" problem, and if yes, how to fix my issue.
-> I would greatly appreciate any help / solution. Thanks in advance.
-
-You should run "ssh -vvv SERVER", where SERVER is the server to which
-you're connecting (e.g., git@github.com or whatever) and see what the
-output prints.  That should tell you why it's falling back to a
-password-based configuration.
-
-Note that credential managers are only used for HTTP and HTTPS
-credentials and not for SSH, which is separate.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---EqkWWqk/yALoxga5
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYc4YJwAKCRB8DEliiIei
-gR4eAPwMXVKeVjYDZSIeHiwHJRTLDNzXj+Vo/PypXDV6UyimawEApYOB8iTvuTy2
-+pejUMYHGm4WLAvBsGY4P1XPBltOMAA=
-=OWgq
------END PGP SIGNATURE-----
-
---EqkWWqk/yALoxga5--
+>  	} else if (type =3D=3D OBJ_TREE) {
+>  		/*
+>  		 * TRANSLATORS: This is a line of ambiguous <type>
