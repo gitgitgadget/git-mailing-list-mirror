@@ -2,152 +2,237 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DA2EC433F5
-	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 19:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50832C433F5
+	for <git@archiver.kernel.org>; Thu, 30 Dec 2021 20:18:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242010AbhL3T3q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Dec 2021 14:29:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49766 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241813AbhL3T3m (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Dec 2021 14:29:42 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52932C061574
-        for <git@vger.kernel.org>; Thu, 30 Dec 2021 11:29:42 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id o6so101597194edc.4
-        for <git@vger.kernel.org>; Thu, 30 Dec 2021 11:29:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qeh/7m3ksYOYzRyVusvGdt01SF6uB93ycqeakc0lZXE=;
-        b=YpVth00fgzDV5mbfteYHOlC9NbiZExyzSQ3ZeHg8+yC8nvpfmDp5LXy4+q1mM2GRbx
-         cB5xWnFm2hrS5xitgUvtSZqoLwlJgVNe+mjJ2yhVfx1G4IHbaov4VJntPaW7+4BetW/W
-         CQjPyDV7o6OXv59jM85wbfcBD/CGnISICuBylDel/lSKxFabUfxWnLEFGcGA42xuUg89
-         noI92MNi0f4mSHPPMPtOmhOurLQWq/DR1GBTGCvHKQCDG2rRzaZ0Dw94bHbwk7/mSzNJ
-         j1Q3UV+gwO4FmxyL8UDjFAkwBE9ErObtDwklP5UuUhfX8zQnjG1HVbSp19N4W/uaF7wy
-         zm0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qeh/7m3ksYOYzRyVusvGdt01SF6uB93ycqeakc0lZXE=;
-        b=RSQKo5KddXUyxVIFT41ZbAzvkqFoZp4wFB3lUFA+Yu8PiKIdFJqEkoTi3YYnmjP4sp
-         njJN9Pl2hOjS6fi0WXIq2VtjRi7M0zSirTEpYzuan4bUc36Wa+n6NOV9NiMXq/iqYnFR
-         Equho2bFsM+XZx46KOpPe1b9gr91U6zaJDDWIJbCc1kNave+apfHgYlIAJMGIM4o4VBn
-         QQ5DZGx9wy2VuKU+HAgrbRvMf0j4J3uXDsl3klq0uN2G3giuaqxGKx+nh/6sUuVWr2x3
-         r598t43NyDo9X4az3TvZeMX6gvrk1jZhx6ydiTAKPBqzEc55dKsk89J41bSFQLbKbApE
-         CNcw==
-X-Gm-Message-State: AOAM531NayL/gJ/z4VeKrICRdPDQh3u7OhKD/i0i390pgxf0pCdemNDf
-        36yI7j541DfKW9XrXXCnglxN65cAF3VnoPZ2DeeYh73PN2g=
-X-Google-Smtp-Source: ABdhPJz0TG67oawyo39GXAUFnL6cA5cA6jtMQNhvZN51oD2u7xPQg6y8fA/O5Ws+otMquAHwSOIwd0AtSpv1QhpFm1A=
-X-Received: by 2002:a17:907:968a:: with SMTP id hd10mr25479382ejc.269.1640892580775;
- Thu, 30 Dec 2021 11:29:40 -0800 (PST)
+        id S242028AbhL3USl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Dec 2021 15:18:41 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58989 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240824AbhL3USl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Dec 2021 15:18:41 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9677B1801C5;
+        Thu, 30 Dec 2021 15:18:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1mNDjKsxJ278c7ORX+MXcDddWu2FFfrqaXn2ZE
+        0X0x4=; b=F88EScFtJ02c9JJIQCKULkCkO3v8/suMiuj29Cwo5LD1yu1tzJ91gj
+        2Z8VfCcZO7ouKCAwMLj2tWvek6YRECKD0vhGoTfEQZdshuNJbAOz3oh4n1on+znn
+        S31geC47mkp+31ejPiggx4ajqNl3ENr2iVtKoJpDyh//sKUwdBO88=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8EBAC1801C4;
+        Thu, 30 Dec 2021 15:18:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A02531801C3;
+        Thu, 30 Dec 2021 15:18:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re* [PATCH v2] SubmittingPatchs: clarify choice of base and testing
+References: <xmqqa6izcwio.fsf_-_@gitster.g> <xmqq5yre7w5o.fsf@gitster.g>
+        <20211230102050.oe2t5pavijaow5lx@fs>
+Date:   Thu, 30 Dec 2021 12:18:35 -0800
+In-Reply-To: <20211230102050.oe2t5pavijaow5lx@fs> (Fabian Stelzer's message of
+        "Thu, 30 Dec 2021 11:20:50 +0100")
+Message-ID: <xmqqh7apsv6s.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com>
- <pull.1101.v3.git.1640727143.gitgitgadget@gmail.com> <CABPp-BHuO3B366uJuODMQo-y449p8cAMVn0g2MTcO5di3Xa7Zg@mail.gmail.com>
- <CAPig+cQ8Y2FC8=d7DaZ46YwPCrzM6RzutiZ3ghhrHsg6y8KWoQ@mail.gmail.com> <f62709d5-a0d4-dc0c-461a-c4c75c810340@gmail.com>
-In-Reply-To: <f62709d5-a0d4-dc0c-461a-c4c75c810340@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 30 Dec 2021 11:29:29 -0800
-Message-ID: <CABPp-BG2Ueb9rBRNZz3Z_8V7hin5SamzOJLNpjrg0k-QGUV4zA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] Sparse checkout: fix bug with worktree of bare repo
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Sean Allred <allred.sean@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: AB5A53BA-69AD-11EC-88E7-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 30, 2021 at 9:41 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 12/30/2021 2:40 AM, Eric Sunshine wrote:
-> > On Wed, Dec 29, 2021 at 4:40 AM Elijah Newren <newren@gmail.com> wrote:>
->
-> Taking time to focus only on this outline here:
->
-> >> So, I'd like to reiterate my earlier suggestion which would avoid
-> >> these regressions while also fixing the reported bug:
->
-> >>   * If core.bare=true or core.worktree is set, then at `git worktree
-> >> add` time, automatically run the logic you have here for
-> >> init-worktree-config.  Having either of those config settings with
-> >> multiple worktrees is currently broken in all git versions and likely
-> >> in most all external tools.  As such, being aggressive in the new
-> >> config settings to allow new versions of git to work seems totally
-> >> safe to me -- we can't be any more broken than we already were.
->
-> I'm not sure I agree with the "currently broken in all git versions"
-> because when extensions.worktreeConfig is not enabled, the core.bare
-> and core.worktree settings are ignored by the worktrees. This upgrade
-> during 'add' is the only thing I am not so sure about.
+Fabian Stelzer <fs@gigacodes.de> writes:
 
-Oh, you're right; I mis-spoke.  If someone has core.bare=true and has
-multiple worktrees, AND never attempts to use sparse-checkouts OR
-otherwise set extensions.worktreeConfig, then git still works due to
-git's special-case logic that will override core.bare in this
-configuration.  It's just setting them up for a ticking time bomb,
-waiting for them to either use an external tool that doesn't share
-that special case override-core.bare logic, or for the user to decide
-to set extensions.worktreeConfig directly or use sparse-checkouts.
-
-> >>   * If core.bare=false and core.worktree is not set, then:
+> On 23.12.2021 15:12, Junio C Hamano wrote:
+> ...
+>>+feature does not trigger when it shouldn't.  After any code change,
+>>+make sure that the entire test suite passes.  When fixing a bug, make
+>>+sure you have new tests that breaks if somebody else breaks what you
 >
-> >>     * `git sparse-checkout {init,set}` should set
-> >> extensions.worktreeConfig if not already set, and always set the
-> >> core.sparse* and index.sparse settings in worktree-specific files.
+> s/breaks/break
+
+Correct---we are adding multiple tests here.
+
+>>+. A commit that introduced the root cause of a bug you are fixing.
+>>+
+>>+. A commit that introduced a feature that is what you are enhancing.
 >
-> This should happen no matter the case of core.bare and core.worktree
-> existing, right?
+> I'm not a native speaker, but `that is what` sounds wrong to me.
+> `feature which you are enhancing` or `feature that you are enhancing` maybe?
 
-Hmm.  I think that's safe for people who cloned and used `git worktree
-add` with newer git versions, since `git worktree add` will have moved
-core.bare and core.worktree to the config.worktree file when those
-have non-default values.
+I am not either, but it indeed does sound strange.  "A commit that
+introduced a feature that you are enhancing" sounds good.
 
-But, we might want to help out the folks who have existing repos with
-which they have used older git versions.  So, we could have `git
-sparse-checkout {init,set}` check for non-default values of
-core.bare/core.worktree in the shared config file, and, if found, exit
-with an error which point users at some relevant documentation (which
-may just suggest 'git worktree add temporary && git worktree remove
-temporary' as a workaround for those caught in such a state.)
-
-> >>     * `git worktree add`, if extensions.worktreeConfig is already set,
-> >> will copy both the info/sparse-checkout file and the config.worktree
-> >> settings (module core.bare and core.worktree, if present) to the new
-> >> worktree
+>>@@ -259,9 +279,11 @@ Please make sure your patch does not add commented out debugging code,
+>> or include any extra files which do not relate to what your patch
+>> is trying to achieve. Make sure to review
+>> your patch after generating it, to ensure accuracy.  Before
+>>-sending out, please make sure it cleanly applies to the `master`
+>>-branch head.  If you are preparing a work based on "next" branch,
+>>-that is fine, but please mark it as such.
+>>+sending out, please make sure it cleanly applies to the base you
+>>+have chosen in the "Decide what to base your work on" section,
+>>+and unless it targets the `master` branch (which is the default),
+>>+mark your patches as such.
+>>+
 >
-> and here, 'git worktree add' should always copy the info/sparse-checkout
-> file (if core.sparseCheckout is enabled) and copy the config.worktree
-> settings if extensions.worktreeConfig is enabled (and filter out
-> core.bare and core.worktree in the process).
+> Maybe add a hint to `--base=` for format-patch?
 
-Right.
+I do not think it belongs to this step.  There is a separate section
+about sending patches that mentions the use of format-patch, where it
+might be more appropriate.
 
-> > Thanks for the clearly written enumeration of how you expect this to
-> > work. This summary pretty well (or entirely) captures the conclusions
-> > I arrived at, as well, after devoting a chunk of time today thinking
-> > through the cases. If I'm understanding everything correctly, the
-> > approach outlined here solves the bare-worktree problem in the least
-> > invasive and least dangerous way (for older Git versions and foreign
-> > tools). And we don't even need the `git worktree init-worktree-config`
-> > subcommand (though we need the underlying functionality).
->
-> I'm happy to drop the subcommand in favor of some documentation in
-> git-config.txt (Documentation/config/extensions.txt to be exact).
+Thanks.
 
-You may also want to make the two existing references to
-extensions.worktreeConfig within Documentation/git-config.txt point
-users at the extended documentation you add to
-Documentation/config/extensions.txt.  (Remember, I found a reference
-to extensions.worktreeConfig, tried it, and started using and
-recommending it without it ever occurring to me that there was a more
-detailed explanation elsewhere, so only adding to
-Documentation/config/extensions.txt might run into the same
-discoverability issues.)
+----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+Subject: [PATCH v3] SubmittingPatchs: clarify choice of base and testing
+
+We encourage identifying what, among many topics on `next`, exact
+topics a new work depends on, instead of building directly on
+`next`.  Let's clarify this in the documentation.
+
+Developers should know what they are building on top of, and be
+aware of which part of the system is currently being worked on.
+Encouraging them to make trial merges to `next` and `seen`
+themselves will incentivize them to read others' changes and
+understand them, eventually helping the developers to coordinate
+among themselves and reviewing each others' changes.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+Range-diff:
+1:  2a277ef302 ! 1:  f387f92719 SubmittingPatchs: clarify choice of base and testing
+    @@ Documentation/SubmittingPatches: Make sure that you have tests for the bug you a
+     -sure that the entire test suite passes.
+     +feature does not trigger when it shouldn't.  After any code change,
+     +make sure that the entire test suite passes.  When fixing a bug, make
+    -+sure you have new tests that breaks if somebody else breaks what you
+    ++sure you have new tests that break if somebody else breaks what you
+     +fixed by accident to avoid regression.  Also, try merging your work to
+     +'next' and 'seen' and make sure the tests still pass; topics by others
+     +that are still in flight may have unexpected interactions with what
+    @@ Documentation/SubmittingPatches: without external resources. Instead of giving a
+     +
+     +. A commit that introduced the root cause of a bug you are fixing.
+     +
+    -+. A commit that introduced a feature that is what you are enhancing.
+    ++. A commit that introduced a feature that you are enhancing.
+     +
+     +. A commit that conflicts with your work when you made a trial merge
+     +  of your work into `next` and `seen` for testing.
+
+ Documentation/SubmittingPatches | 53 ++++++++++++++++++++++++---------
+ 1 file changed, 39 insertions(+), 14 deletions(-)
+
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index e409022d93..ad3041da1a 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -19,8 +19,10 @@ change is relevant to.
+   base your work on the tip of the topic.
+ 
+ * A new feature should be based on `master` in general. If the new
+-  feature depends on a topic that is in `seen`, but not in `master`,
+-  base your work on the tip of that topic.
++  feature depends on other topics that are in `next`, but not in
++  `master`, fork a branch from the tip of `master`, merge these topics
++  to the branch, and work on that branch.  You can remind yourself of
++  how you prepared the base with `git log --first-parent master..`.
+ 
+ * Corrections and enhancements to a topic not yet in `master` should
+   be based on the tip of that topic. If the topic has not been merged
+@@ -28,10 +30,10 @@ change is relevant to.
+   into the series.
+ 
+ * In the exceptional case that a new feature depends on several topics
+-  not in `master`, start working on `next` or `seen` privately and send
+-  out patches for discussion. Before the final merge, you may have to
+-  wait until some of the dependent topics graduate to `master`, and
+-  rebase your work.
++  not in `master`, start working on `next` or `seen` privately and
++  send out patches only for discussion. Once your new feature starts
++  to stabilize, you would have to rebase it (see the "depends on other
++  topics" above).
+ 
+ * Some parts of the system have dedicated maintainers with their own
+   repositories (see the section "Subsystems" below).  Changes to
+@@ -71,8 +73,13 @@ Make sure that you have tests for the bug you are fixing.  See
+ [[tests]]
+ When adding a new feature, make sure that you have new tests to show
+ the feature triggers the new behavior when it should, and to show the
+-feature does not trigger when it shouldn't.  After any code change, make
+-sure that the entire test suite passes.
++feature does not trigger when it shouldn't.  After any code change,
++make sure that the entire test suite passes.  When fixing a bug, make
++sure you have new tests that break if somebody else breaks what you
++fixed by accident to avoid regression.  Also, try merging your work to
++'next' and 'seen' and make sure the tests still pass; topics by others
++that are still in flight may have unexpected interactions with what
++you are trying to do in your topic.
+ 
+ Pushing to a fork of https://github.com/git/git will use their CI
+ integration to test your changes on Linux, Mac and Windows. See the
+@@ -144,8 +151,21 @@ without external resources. Instead of giving a URL to a mailing list
+ archive, summarize the relevant points of the discussion.
+ 
+ [[commit-reference]]
+-If you want to reference a previous commit in the history of a stable
+-branch, use the format "abbreviated hash (subject, date)", like this:
++
++There are a few reasons why you may want to refer to another commit in
++the "more stable" part of the history (i.e. on branches like `maint`,
++`master`, and `next`):
++
++. A commit that introduced the root cause of a bug you are fixing.
++
++. A commit that introduced a feature that you are enhancing.
++
++. A commit that conflicts with your work when you made a trial merge
++  of your work into `next` and `seen` for testing.
++
++When you reference a commit on a more stable branch (like `master`,
++`maint` and `next`), use the format "abbreviated hash (subject,
++date)", like this:
+ 
+ ....
+ 	Commit f86a374 (pack-bitmap.c: fix a memleak, 2015-03-30)
+@@ -259,9 +279,11 @@ Please make sure your patch does not add commented out debugging code,
+ or include any extra files which do not relate to what your patch
+ is trying to achieve. Make sure to review
+ your patch after generating it, to ensure accuracy.  Before
+-sending out, please make sure it cleanly applies to the `master`
+-branch head.  If you are preparing a work based on "next" branch,
+-that is fine, but please mark it as such.
++sending out, please make sure it cleanly applies to the base you
++have chosen in the "Decide what to base your work on" section,
++and unless it targets the `master` branch (which is the default),
++mark your patches as such.
++
+ 
+ [[send-patches]]
+ === Sending your patches.
+@@ -365,7 +387,10 @@ Security mailing list{security-ml-ref}.
+ Send your patch with "To:" set to the mailing list, with "cc:" listing
+ people who are involved in the area you are touching (the `git
+ contacts` command in `contrib/contacts/` can help to
+-identify them), to solicit comments and reviews.
++identify them), to solicit comments and reviews.  Also, when you made
++trial merges of your topic to `next` and `seen`, you may have noticed
++work by others conflicting with your changes.  There is a good possibility
++that these people may know the area you are touching well.
+ 
+ :current-maintainer: footnote:[The current maintainer: gitster@pobox.com]
+ :git-ml: footnote:[The mailing list: git@vger.kernel.org]
+-- 
+2.34.1-616-gbc337a5f45
+
