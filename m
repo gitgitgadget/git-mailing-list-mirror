@@ -2,54 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05D15C433F5
-	for <git@archiver.kernel.org>; Fri, 31 Dec 2021 03:12:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF812C433EF
+	for <git@archiver.kernel.org>; Fri, 31 Dec 2021 03:20:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242562AbhLaDMY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Dec 2021 22:12:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37314 "EHLO
+        id S241043AbhLaDUK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Dec 2021 22:20:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237453AbhLaDMY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Dec 2021 22:12:24 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86198C061574
-        for <git@vger.kernel.org>; Thu, 30 Dec 2021 19:12:23 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id k21so58090134lfu.0
-        for <git@vger.kernel.org>; Thu, 30 Dec 2021 19:12:23 -0800 (PST)
+        with ESMTP id S229590AbhLaDUK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Dec 2021 22:20:10 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99392C061574
+        for <git@vger.kernel.org>; Thu, 30 Dec 2021 19:20:09 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id h15so29985406ljh.12
+        for <git@vger.kernel.org>; Thu, 30 Dec 2021 19:20:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=RSnH6Fl02ElUz0gghlx7pYJCrfLdurC/A3j6WvDOysU=;
-        b=YcKiolGXzWav8haxW25WL9mo54N1EAka0j3NOH6pe6v21l50/UxupG1KrGhU38uTmi
-         jfRZCX1wkys7+A8PxYXoLI5UTZn6CRvT+AVJEDZP5zUaNOGEtPY05Hl58VzLrSmcxNie
-         CFy8rerLeqdky0zbpoiC0M/FhrR/hrPJJHEAn6+7BC1/3KCFjpiIF4z2V5/wJr9JQ3Ii
-         rRlv5Cco7mdt2mS7TLySR4IrVhBb4/TE6cIVCDWyNSrXVK+Faa+tskRx0GN0kJeju3iB
-         mgn4BglA8vApMn0WDbX47Zb1/qJZT2cyNRe8cAQ8UUHW5D1elPRW5DBKi44zpnC7vbvI
-         RCeQ==
+        bh=e7h3VUWMZnbAD05/BiaRrTSd2c5pcWnwwjXpQgfOJyc=;
+        b=DNrIkBRnvZmlnqf/R8PI6XUIt5E09/ZrO+QiTRFb9VqrEm2x4iRKis5JXhIfQuxQGZ
+         dyYWFXxeU20PCR6vL2E5y1/c7L7boc1hoOffrB1w7vgnGZrmLQ6nMHUXpJSKiZ4/fkbK
+         vvfNUE2OO2E/Dx8IVOuREm/vPGY6W6KLAGfJDWHE/5GqnI8JcOubW0/C/yOvoI/d811h
+         /GkCld0A0UEHD7PWsWpgj01QYqkFWvXrNt9B26CZWHUE4KptJ0XKD3VHPRtRiP+/wX8x
+         tMuefF+lX4W+byZRzj/uCL8y/Ggi9y9pu3V2jtIE1dZrZuF/+P5h5SS2bIp6m18CtfyK
+         Pnyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RSnH6Fl02ElUz0gghlx7pYJCrfLdurC/A3j6WvDOysU=;
-        b=BLANZJe/uzOZGUHxBigBhJrOQzp9+C30tlFtn6aD7pWiIsfg+7hI4M3av4BMvwwubF
-         BIBoTG4DgBrtwYtcpEfxahg86oWrs4l7HnJTmT8a1ZzhSOaeNZEGdTQNweBhaqXm0gZ6
-         1jqnhque6KIhLcA7TfPBb47FcQN8NrJ62VcFkifA2IxmkXbXKRV7F1Zgj5e/JGLIZiOZ
-         4H3/P/b67Nt+GXIXpgXMObUosPSt3v4LsP/Y8dNQlbag1YWHwvVcGrP+6+BXJfUG+8hG
-         hN6sHM0i/xpGL7gIfwv+3zW3L6IYnrPavlhOxy42lC6EomRAFgNdovlWk8h6k5W7JbV2
-         MTTQ==
-X-Gm-Message-State: AOAM530QYxryTWf6mf+S1VH/4zKE9HmdhRjnpnGIMeqWoT5S+iRFCZOe
-        uXGzLCutzGNQECX/ggA6Ov9cgjJywaulfuWYqvk=
-X-Google-Smtp-Source: ABdhPJzBsMzN+jeUtICJIBmBaSjVADiPkxcX/XT40Qc8uh5j8BDX699wE4Aj7USeJt32jnvWGIXGneRRYcxAzrthpHM=
-X-Received: by 2002:ac2:4651:: with SMTP id s17mr31187404lfo.66.1640920341789;
- Thu, 30 Dec 2021 19:12:21 -0800 (PST)
+        bh=e7h3VUWMZnbAD05/BiaRrTSd2c5pcWnwwjXpQgfOJyc=;
+        b=Ky1a2G08w0L+BDL+IbneAWWNTKUNqi8Es731QquG3AQftE7U4A0hg7uzNwYn30CL7q
+         rMyCnD3UUo2CPdSDoRbd8LEbv6e5iaXzE+MKo++8XV7MwtnbgwDItl1SRZUG7M8ZPyBU
+         aForrHup+HB5KdysgdqrrVEvLxdCx3tFMOuf2ubZjKeVbgQvXVicdk4oTdLbw91OWp3c
+         qxoetjGf+ymVdQF+PUG879KffdQ7PGqZclpJnC0TBYQV83t2l8QIdqxC0Ny22SnQ8hyk
+         sjxNi6gH2RWt27fCdp4OXrIIToY2lrFqKthdWGSdbUrJW/CiSmaLFb00u3iSeHVKFRZ6
+         U4Cg==
+X-Gm-Message-State: AOAM531PFscUMfSgXdqCENlr1RglLRq7uwfjfQX+yDmsieTpCS0L27iX
+        52nmioNT+eHua6unQ7jVb3zo+qtOljaj3NsEHAM=
+X-Google-Smtp-Source: ABdhPJwahYnSUjwLifiZTTUxMV4vg1KXqjXlile16VtjIbyoNiYU8MfRumLXJCAd/QfzNaRY+NtseOltPiWiekJGkV8=
+X-Received: by 2002:a05:651c:1204:: with SMTP id i4mr26013712lja.195.1640920807761;
+ Thu, 30 Dec 2021 19:20:07 -0800 (PST)
 MIME-Version: 1.0
-References: <20211217112629.12334-1-chiyutianyi@gmail.com> <20211221115201.12120-3-chiyutianyi@gmail.com>
-In-Reply-To: <20211221115201.12120-3-chiyutianyi@gmail.com>
+References: <20211217112629.12334-1-chiyutianyi@gmail.com> <20211221115201.12120-6-chiyutianyi@gmail.com>
+In-Reply-To: <20211221115201.12120-6-chiyutianyi@gmail.com>
 From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Fri, 31 Dec 2021 11:12:10 +0800
-Message-ID: <CANYiYbFbhYtrbXtu12p8z0X0id4FSbd68T-5XLBD-b0c8s=zzQ@mail.gmail.com>
-Subject: Re: [PATCH v7 2/5] object-file API: add a format_object_header() function
+Date:   Fri, 31 Dec 2021 11:19:56 +0800
+Message-ID: <CANYiYbGKiSH6WA2HbTtxV6S3-aURAkKh2VCrV9wp-5us-uzoXA@mail.gmail.com>
+Subject: Re: [PATCH v7 5/5] unpack-objects: unpack_non_delta_entry() read data
+ in a stream
 To:     Han Xin <chiyutianyi@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
@@ -67,38 +68,78 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Dec 22, 2021 at 2:56 AM Han Xin <chiyutianyi@gmail.com> wrote:
 >
-> From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> From: Han Xin <hanxin.hx@alibaba-inc.com>
 >
-> Add a convenience function to wrap the xsnprintf() command that
-> generates loose object headers. This code was copy/pasted in various
-> parts of the codebase, let's define it in one place and re-use it from
-> there.
+> We used to call "get_data()" in "unpack_non_delta_entry()" to read the
+> entire contents of a blob object, no matter how big it is. This
+> implementation may consume all the memory and cause OOM.
 >
-> All except one caller of it had a valid "enum object_type" for us,
-> it's only write_object_file_prepare() which might need to deal with
-> "git hash-object --literally" and a potential garbage type. Let's have
-> the primary API use an "enum object_type", and define an *_extended()
-> function that can take an arbitrary "const char *" for the type.
+> By implementing a zstream version of input_stream interface, we can use
+> a small fixed buffer for "unpack_non_delta_entry()".
 >
-> See [1] for the discussion that prompted this patch, i.e. new code in
-> object-file.c that wanted to copy/paste the xsnprintf() invocation.
+> However, unpack non-delta objects from a stream instead of from an
+> entrie buffer will have 10% performance penalty. Therefore, only unpack
+> object larger than the "core.BigFileStreamingThreshold" in zstream. See
+> the following benchmarks:
 >
-> 1. https://lore.kernel.org/git/211213.86bl1l9bfz.gmgdl@evledraar.gmail.co=
-m/
+>     hyperfine \
+>       --setup \
+>       'if ! test -d scalar.git; then git clone --bare https://github.com/=
+microsoft/scalar.git; cp scalar.git/objects/pack/*.pack small.pack; fi' \
+>       --prepare 'rm -rf dest.git && git init --bare dest.git'
 >
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>     Summary
+>       './git -C dest.git -c core.bigfilethreshold=3D512m unpack-objects <=
+small.pack' in 'origin/master'
+>         1.01 =C2=B1 0.04 times faster than './git -C dest.git -c core.big=
+filethreshold=3D512m unpack-objects <small.pack' in 'HEAD~1'
+>         1.01 =C2=B1 0.04 times faster than './git -C dest.git -c core.big=
+filethreshold=3D512m unpack-objects <small.pack' in 'HEAD~0'
+>         1.03 =C2=B1 0.10 times faster than './git -C dest.git -c core.big=
+filethreshold=3D16k unpack-objects <small.pack' in 'origin/master'
+>         1.02 =C2=B1 0.07 times faster than './git -C dest.git -c core.big=
+filethreshold=3D16k unpack-objects <small.pack' in 'HEAD~0'
+>         1.10 =C2=B1 0.04 times faster than './git -C dest.git -c core.big=
+filethreshold=3D16k unpack-objects <small.pack' in 'HEAD~1'
+>
+> Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Helped-by: Derrick Stolee <stolee@gmail.com>
+> Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 > Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
 > ---
->  builtin/index-pack.c |  3 +--
->  bulk-checkin.c       |  4 ++--
->  cache.h              | 21 +++++++++++++++++++++
->  http-push.c          |  2 +-
->  object-file.c        | 14 +++++++++++---
->  5 files changed, 36 insertions(+), 8 deletions(-)
+>  Documentation/config/core.txt       | 11 +++++
+>  builtin/unpack-objects.c            | 73 ++++++++++++++++++++++++++++-
+>  cache.h                             |  1 +
+>  config.c                            |  5 ++
+>  environment.c                       |  1 +
+>  t/t5590-unpack-non-delta-objects.sh | 36 +++++++++++++-
+>  6 files changed, 125 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/config/core.txt b/Documentation/config/core.tx=
+t
+> index c04f62a54a..601b7a2418 100644
+> --- a/Documentation/config/core.txt
+> +++ b/Documentation/config/core.txt
+> @@ -424,6 +424,17 @@ be delta compressed, but larger binary media files w=
+on't be.
+>  +
+>  Common unit suffixes of 'k', 'm', or 'g' are supported.
+>
+> +core.bigFileStreamingThreshold::
+> +       Files larger than this will be streamed out to a temporary
+> +       object file while being hashed, which will when be renamed
+> +       in-place to a loose object, particularly if the
+> +       `core.bigFileThreshold' setting dictates that they're always
+> +       written out as loose objects.
 
-After a offline review with Han Xin, we feel it's better to move this
-fixup commit to the end of this series, and this commit will also fix
-an additional "xsnprintf()" we introduced in this series.
+Han Xin told me the reason to introduce another git config variable,
+but I feel it not good to introduce an application specific config
+variable as "core.XXX" and parsing it in "config.c".
+
+So in patch v8, will still reuse the config variable
+"core.bigFileThreshold", and will introduce an application specific
+config variable, such as unpack.bigFileThreshold and parse the new
+config in "builtin/unpack-objects.c".
 
 --
 Jiang Xin
