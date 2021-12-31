@@ -2,258 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC4F1C433EF
-	for <git@archiver.kernel.org>; Fri, 31 Dec 2021 12:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10A6EC433FE
+	for <git@archiver.kernel.org>; Fri, 31 Dec 2021 13:04:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230195AbhLaMzj convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 31 Dec 2021 07:55:39 -0500
-Received: from mail-io1-f44.google.com ([209.85.166.44]:40569 "EHLO
-        mail-io1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbhLaMzi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Dec 2021 07:55:38 -0500
-Received: by mail-io1-f44.google.com with SMTP id q5so32696365ioj.7
-        for <git@vger.kernel.org>; Fri, 31 Dec 2021 04:55:38 -0800 (PST)
+        id S230216AbhLaNEk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Dec 2021 08:04:40 -0500
+Received: from mail-il1-f172.google.com ([209.85.166.172]:40484 "EHLO
+        mail-il1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230191AbhLaNEk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Dec 2021 08:04:40 -0500
+Received: by mail-il1-f172.google.com with SMTP id c4so14567408iln.7
+        for <git@vger.kernel.org>; Fri, 31 Dec 2021 05:04:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=S3nSrxZN8kbLc7/s1MT7iGpYlgZsMmbK+KkbRD7cbas=;
-        b=vTLCEzy/qrUIbCTGoWuMMrUIQd20sL3rfiRzVtUO4bv7epxjSpCG0UtoXghgjNOU2Z
-         JXygpAvwVghHqTW0amJOKtMQCztKfH7N/sigkdsiAvy7tGePItV/WGbFyLa+sVwvqL06
-         68xF2EB1k12pZnH0Whc2NoZBT3W8YzZR2KcMSd/4go5Ix1Hj3d1hbO8nugNQ6/1WJgJA
-         +t2wUA8gNSZxcRfD3R9tEsuLNi4P+Tx7qGQQE/cr/yo5dPgv44ALcjEnCTF+o3OIKD12
-         wmimv+5yBwXWKP99n+XVOFN4MfxnGrK8Bge4EFUfHsCIxeZEiE8JcG2aZi9QrFlPd8xP
-         zIjw==
-X-Gm-Message-State: AOAM532+5wz2zgjWMTanvmw544F3ezIrtTGCHp93FtCSQLs6Gl0LDzv5
-        mFn7VE+iO4BmjfCvUkiz7fnFAIIevNBvwWxIgXy9+G+V
-X-Google-Smtp-Source: ABdhPJy8EA7WSurFPeIDHWiSUq5RlavuzuZvKtzbfHYewP+hmjaefx83wkyiYnKbpmosce48Ug8ehiuoHWUtCSOrsE0=
-X-Received: by 2002:a05:6602:2dd0:: with SMTP id l16mr16209011iow.198.1640955337598;
- Fri, 31 Dec 2021 04:55:37 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=/Ub+/RYGJioAG/aZflF/QLyFsbtuE/89F7rymR/hEb0=;
+        b=cu//oTqfMEIPWJG68CK4l3b8BuNqSpABOpK39UyN/B26Cu1Hh29UDqxxiFNZh2rikB
+         JQa/r2CPajsaomHFUIaL6tV3f3Rw9mf6j77oIV6kyvtQvv0+h4iev7aPCcWqA0rPTvss
+         ZSIsVtZAUYRYhUHiAN5MG99NuBbA5eu+3TED72cBrrveNzIcSUhSKG+aTWQol4lWd1Ob
+         4h8N/vTqnmIjOR7MrubLJBlAgNLQdARRNS2ly2nMCW7psRpo4mNzLeHqG6Q+9n819HPt
+         869rhBXsZ/2o2zX8AqJs0H5kD5nkCX52iweBVT8rY6BpjgonH9SPCSTTp2Dmm+excmnz
+         yyfw==
+X-Gm-Message-State: AOAM5308ZvlottzvurD5wBpmific7xRTIz0toN/yfgGd9z57z2/Wk4BP
+        zAZLy3VPRyJ2dHETpJjJPTMVKzYS3tY+F6laDc0=
+X-Google-Smtp-Source: ABdhPJzg5CW3iiLIyDOscl1VCi8cqXKEwUNh5rWbdeVFtiPmR7rcjZ9oB8/urNz6Weqt4eqh+J4Sr9j10yjuchXFYSE=
+X-Received: by 2002:a92:c685:: with SMTP id o5mr15618304ilg.152.1640955879930;
+ Fri, 31 Dec 2021 05:04:39 -0800 (PST)
 MIME-Version: 1.0
 References: <CAHo1AWxzPsnLuT8JRWovtaRrGvRS8+0NyucU5K8VEnaL1xxW3Q@mail.gmail.com>
  <Yc4YKG+taXOuf6Kx@camp.crustytoothpaste.net> <CAHo1AWwC325etDTgwWvKLojrCnETjr_xPHTSVBi5RD_XH1uCsg@mail.gmail.com>
-In-Reply-To: <CAHo1AWwC325etDTgwWvKLojrCnETjr_xPHTSVBi5RD_XH1uCsg@mail.gmail.com>
+ <CA+JQ7M8iqaeG-FOFfunz1trR=Z6seFEjYLjrmBcCXHDTqNx42Q@mail.gmail.com>
+In-Reply-To: <CA+JQ7M8iqaeG-FOFfunz1trR=Z6seFEjYLjrmBcCXHDTqNx42Q@mail.gmail.com>
 From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Fri, 31 Dec 2021 13:55:01 +0100
-Message-ID: <CA+JQ7M8iqaeG-FOFfunz1trR=Z6seFEjYLjrmBcCXHDTqNx42Q@mail.gmail.com>
+Date:   Fri, 31 Dec 2021 14:04:03 +0100
+Message-ID: <CA+JQ7M8U7Ocsk0JO=GmMyf5S6CnodTYjG=zAHGL4Bco8cfVBHw@mail.gmail.com>
 Subject: Re: [Question] : git 2.33.1 asks every time password
 To:     Jean-Louis FLOQUET <jese.jlf@gmail.com>
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Check which OpenSSL client you're using.
+> > > > I had to create a 'config' file within '.ssh' directory to support my
+> > > > rsa key (too old format ?). Instructions according to
+> > > > https://stackoverflow.com/questions/35233777/git-error-unable-to-negotiate-with-xx-xx-xxx-xxx-no-matching-host-key-type-fo
 
-Recently, Git for Windows included an option to use the Windows OpenSSL client.
-I tried it and found it to only be a source of pain and bad documentation.
+But perhaps I misunderstood.
 
-Personally, I've had better experience with the OpenSSL bundled with mingw
+If your question is why authentication is falling back to username/password
+See my answer at SO
+https://stackoverflow.com/a/70434510
+for a similar issue with Git/AzureDevOps server.
 
-On Fri, Dec 31, 2021 at 11:37 AM Jean-Louis FLOQUET <jese.jlf@gmail.com> wrote:
->
-> Hi Brian,
->
-> Thanks for your answer.
-> I'm the maintainer of the server (I'm definitely NOT an expert with
-> crypto/keys/etc); I use GitBlit 1.9.1. (latest available version).
-> I have generated the keys (private & public) some years ago, but I
-> don't know how to create new keys with more recent algorithm.
-> Please find the output from "ssh -vvv <ip> - p <port>". Please also
-> note that the "known_hosts2" file doesn't exist (the one without the
-> "2" exists)
->
-> Best regards,
-> JL
->
-> ======================================================================================
-> $ ssh -vvv <ip> -p <port>
-> OpenSSH_8.8p1, OpenSSL 1.1.1l  24 Aug 2021
-> debug1: Reading configuration data
-> /c/Users/user/AppData/Roaming/SPB_Data/.ssh/config
-> debug1: /c/Users/user/AppData/Roaming/SPB_Data/.ssh/config line 3:
-> Applying options for *
-> debug1: Reading configuration data /etc/ssh/ssh_config
-> debug2: resolve_canonicalize: hostname <ip> is address
-> debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts' ->
-> '/c/Users/user/AppData/Roaming/SPB_Data/.ssh/known_hosts'
-> debug3: expanded UserKnownHostsFile '~/.ssh/known_hosts2' ->
-> '/c/Users/user/AppData/Roaming/SPB_Data/.ssh/known_hosts2'
-> debug3: ssh_connect_direct: entering
-> debug1: Connecting to <ip> [<ip>] port <port>.
-> debug3: set_sock_tos: set socket 4 IP_TOS 0x48
-> debug1: Connection established.
-> debug1: identity file /path_to_rsa_key type 0
-> debug1: identity file /path_to_rsa_key-cert type -1
-> debug1: Local version string SSH-2.0-OpenSSH_8.8
-> debug1: Remote protocol version 2.0, remote software version
-> Gitblit_v1.9.1 (SSHD-CORE-1.2.0-NIO2)
-> debug1: compat_banner: no match: Gitblit_v1.9.1 (SSHD-CORE-1.2.0-NIO2)
-> debug2: fd 4 setting O_NONBLOCK
-> debug1: Authenticating to <ip>:<port> as 'user'
-> debug3: put_host_port: [<ip>]:<port>
-> debug3: record_hostkey: found key type DSA in file
-> /c/Users/user/AppData/Roaming/SPB_Data/.ssh/known_hosts:1
-> debug3: load_hostkeys_file: loaded 1 keys from [<ip>]:<port>
-> debug1: load_hostkeys: fopen
-> /c/Users/user/AppData/Roaming/SPB_Data/.ssh/known_hosts2: No such file
-> or directory
-> debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
-> debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file
-> or directory
-> debug3: order_hostkeyalgs: prefer hostkeyalgs: ssh-dss
-> debug3: send packet: type 20
-> debug1: SSH2_MSG_KEXINIT sent
-> debug3: receive packet: type 20
-> debug1: SSH2_MSG_KEXINIT received
-> debug2: local client KEXINIT proposal
-> debug2: KEX algorithms:
-> curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,ext-info-c
-> debug2: host key algorithms:
-> ssh-dss,ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,rsa-sha2-512,rsa-sha2-256
-> debug2: ciphers ctos:
-> chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,3des-cbc,aes256-cbc,aes192-cbc
-> debug2: ciphers stoc:
-> chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,3des-cbc,aes256-cbc,aes192-cbc
-> debug2: MACs ctos:
-> umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
-> debug2: MACs stoc:
-> umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
-> debug2: compression ctos: none,zlib@openssh.com,zlib
-> debug2: compression stoc: none,zlib@openssh.com,zlib
-> debug2: languages ctos:
-> debug2: languages stoc:
-> debug2: first_kex_follows 0
-> debug2: reserved 0
-> debug2: peer server KEXINIT proposal
-> debug2: KEX algorithms:
-> ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
-> debug2: host key algorithms: ssh-rsa,ssh-dss
-> debug2: ciphers ctos:
-> aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-cbc,3des-cbc,blowfish-cbc,aes192-cbc,aes256-cbc
-> debug2: ciphers stoc:
-> aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-cbc,3des-cbc,blowfish-cbc,aes192-cbc,aes256-cbc
-> debug2: MACs ctos:
-> hmac-md5,hmac-sha1,hmac-sha2-256,hmac-sha2-512,hmac-sha1-96,hmac-md5-96
-> debug2: MACs stoc:
-> hmac-md5,hmac-sha1,hmac-sha2-256,hmac-sha2-512,hmac-sha1-96,hmac-md5-96
-> debug2: compression ctos: none,zlib,zlib@openssh.com
-> debug2: compression stoc: none,zlib,zlib@openssh.com
-> debug2: languages ctos:
-> debug2: languages stoc:
-> debug2: first_kex_follows 0
-> debug2: reserved 0
-> debug1: kex: algorithm: ecdh-sha2-nistp256
-> debug1: kex: host key algorithm: ssh-dss
-> debug1: kex: server->client cipher: aes128-ctr MAC: hmac-sha2-256
-> compression: none
-> debug1: kex: client->server cipher: aes128-ctr MAC: hmac-sha2-256
-> compression: none
-> debug3: send packet: type 30
-> debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
-> debug3: receive packet: type 31
-> debug1: SSH2_MSG_KEX_ECDH_REPLY received
-> debug1: Server host key: ssh-dss
-> SHA256:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-> debug3: put_host_port: [<ip>]:<port>
-> debug3: put_host_port: [<ip>]:<port>
-> debug3: record_hostkey: found key type DSA in file
-> /c/Users/user/AppData/Roaming/SPB_Data/.ssh/known_hosts:1
-> debug3: load_hostkeys_file: loaded 1 keys from [<ip>]:<port>
-> debug1: load_hostkeys: fopen
-> /c/Users/user/AppData/Roaming/SPB_Data/.ssh/known_hosts2: No such file
-> or directory
-> debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts: No such file or directory
-> debug1: load_hostkeys: fopen /etc/ssh/ssh_known_hosts2: No such file
-> or directory
-> debug1: Host '[<ip>]:<port>' is known and matches the DSA host key.
-> debug1: Found key in /c/Users/user/AppData/Roaming/SPB_Data/.ssh/known_hosts:1
-> debug3: send packet: type 21
-> debug2: set_newkeys: mode 1
-> debug1: rekey out after 4294967296 blocks
-> debug1: SSH2_MSG_NEWKEYS sent
-> debug1: expecting SSH2_MSG_NEWKEYS
-> debug3: receive packet: type 21
-> debug1: SSH2_MSG_NEWKEYS received
-> debug2: set_newkeys: mode 0
-> debug1: rekey in after 4294967296 blocks
-> debug1: Will attempt key: /path_to_rsa_key RSA
-> SHA256:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx explicit
-> debug2: pubkey_prepare: done
-> debug3: send packet: type 5
-> debug3: receive packet: type 6
-> debug2: service_accept: ssh-userauth
-> debug1: SSH2_MSG_SERVICE_ACCEPT received
-> debug3: send packet: type 50
-> debug3: receive packet: type 51
-> debug1: Authentications that can continue:
-> password,keyboard-interactive,publickey
-> debug3: start over, passed a different list
-> password,keyboard-interactive,publickey
-> debug3: preferred publickey,keyboard-interactive,password
-> debug3: authmethod_lookup publickey
-> debug3: remaining preferred: keyboard-interactive,password
-> debug3: authmethod_is_enabled publickey
-> debug1: Next authentication method: publickey
-> debug1: Offering public key: /path_to_rsa_key RSA
-> SHA256:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx explicit
-> debug1: send_pubkey_test: no mutual signature algorithm
-> debug2: we did not send a packet, disable method
-> debug3: authmethod_lookup keyboard-interactive
-> debug3: remaining preferred: password
-> debug3: authmethod_is_enabled keyboard-interactive
-> debug1: Next authentication method: keyboard-interactive
-> debug2: userauth_kbdint
-> debug3: send packet: type 50
-> debug2: we sent a keyboard-interactive packet, wait for reply
-> debug3: receive packet: type 60
-> debug2: input_userauth_info_req: entering
-> Password authentication
-> debug2: input_userauth_info_req: num_prompts 1
-> (user@<ip>) Password:
-> debug3: send packet: type 61
-> Connection reset by <ip> port <port>
->
-> Le jeu. 30 déc. 2021 à 21:35, brian m. carlson
-> <sandals@crustytoothpaste.net> a écrit :
-> >
-> > On 2021-12-30 at 15:56:12, Jean-Louis FLOQUET wrote:
-> > > Hi,
-> > >
-> > > I use some scripts to do some batch operations (pull / push), using
-> > > rsa key and ssh-agent / ssh-add. I'm under Windows 10 (with all
-> > > updates).
-> > > When launching my script (see below, truncated : more than 100 repo),
-> > > I have to enter rsa passphrase (OK) then all push/pull are done
-> > > without any user interaction (no passphrase, no password, nothing)
-> > > All Git versions up to 2.33.0.2 are working fine, but since 2.33.1,
-> > > git asks every time the password.
-> > > I had to create a 'config' file within '.ssh' directory to support my
-> > > rsa key (too old format ?). Instructions according to
-> > > https://stackoverflow.com/questions/35233777/git-error-unable-to-negotiate-with-xx-xx-xxx-xxx-no-matching-host-key-type-fo
-> >
-> > If you're seeing this problem, then the system to which you're
-> > connecting is insecurely configured and using obsolete cryptography.
-> > You should inform the maintainers of that system of that fact and ask
-> > them to fix it.
-> >
-> > > I also have seen that some people have to add 'ssh-add -K', but it
-> > > seems to be only for MacOS.
-> > > According to release notes for 2.33.1, Git Credential Manager for
-> > > Windows has been replaced by Git Credential Manager Core, but I don't
-> > > know if it is the "root" problem, and if yes, how to fix my issue.
-> > > I would greatly appreciate any help / solution. Thanks in advance.
-> >
-> > You should run "ssh -vvv SERVER", where SERVER is the server to which
-> > you're connecting (e.g., git@github.com or whatever) and see what the
-> > output prints.  That should tell you why it's falling back to a
-> > password-based configuration.
-> >
-> > Note that credential managers are only used for HTTP and HTTPS
-> > credentials and not for SSH, which is separate.
-> > --
-> > brian m. carlson (he/him or they/them)
-> > Toronto, Ontario, CA
+TLDR:
+Git for Windows 2.3something updated OpenSSH to 8.something
+This changed default behavior of which SSH encryption algorithms
+deemed cryptographically safe.
+Not all services allow more sophisticated keys,
+in which case you may override to OpenSSH defaults
