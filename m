@@ -2,64 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10A6EC433FE
-	for <git@archiver.kernel.org>; Fri, 31 Dec 2021 13:04:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACCDAC433F5
+	for <git@archiver.kernel.org>; Fri, 31 Dec 2021 17:05:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230216AbhLaNEk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Dec 2021 08:04:40 -0500
-Received: from mail-il1-f172.google.com ([209.85.166.172]:40484 "EHLO
-        mail-il1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230191AbhLaNEk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Dec 2021 08:04:40 -0500
-Received: by mail-il1-f172.google.com with SMTP id c4so14567408iln.7
-        for <git@vger.kernel.org>; Fri, 31 Dec 2021 05:04:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/Ub+/RYGJioAG/aZflF/QLyFsbtuE/89F7rymR/hEb0=;
-        b=cu//oTqfMEIPWJG68CK4l3b8BuNqSpABOpK39UyN/B26Cu1Hh29UDqxxiFNZh2rikB
-         JQa/r2CPajsaomHFUIaL6tV3f3Rw9mf6j77oIV6kyvtQvv0+h4iev7aPCcWqA0rPTvss
-         ZSIsVtZAUYRYhUHiAN5MG99NuBbA5eu+3TED72cBrrveNzIcSUhSKG+aTWQol4lWd1Ob
-         4h8N/vTqnmIjOR7MrubLJBlAgNLQdARRNS2ly2nMCW7psRpo4mNzLeHqG6Q+9n819HPt
-         869rhBXsZ/2o2zX8AqJs0H5kD5nkCX52iweBVT8rY6BpjgonH9SPCSTTp2Dmm+excmnz
-         yyfw==
-X-Gm-Message-State: AOAM5308ZvlottzvurD5wBpmific7xRTIz0toN/yfgGd9z57z2/Wk4BP
-        zAZLy3VPRyJ2dHETpJjJPTMVKzYS3tY+F6laDc0=
-X-Google-Smtp-Source: ABdhPJzg5CW3iiLIyDOscl1VCi8cqXKEwUNh5rWbdeVFtiPmR7rcjZ9oB8/urNz6Weqt4eqh+J4Sr9j10yjuchXFYSE=
-X-Received: by 2002:a92:c685:: with SMTP id o5mr15618304ilg.152.1640955879930;
- Fri, 31 Dec 2021 05:04:39 -0800 (PST)
+        id S230224AbhLaRF4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Dec 2021 12:05:56 -0500
+Received: from smtp4-g21.free.fr ([212.27.42.4]:30060 "EHLO smtp4-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229699AbhLaRF4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Dec 2021 12:05:56 -0500
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:9225:6fd8:b89b:1501])
+        (Authenticated sender: jn.avila@free.fr)
+        by smtp4-g21.free.fr (Postfix) with ESMTPSA id F10F019F59C;
+        Fri, 31 Dec 2021 18:05:42 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+        s=smtp-20201208; t=1640970354;
+        bh=aVe/9hFHR/P12VJC84JziTNAu8PAtOKaMYDHhkcy4I4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=CEiGayx3m8U1ZHAn3mssFtJzUqDX5FuHR2ySFkpf3E7WbvoIfiuasA5tHp4mlekHh
+         n/C9auXD+OzULeD0MX/65AdDVIzF0NBusbsCcdCBrY2uPjSuyVkM+CLeXGR2ckRM6/
+         Eydfelycb2x33/InXsHgWnKx9FqxHwtnnH4+Iqk/S2g3u3OwPI6VHRQnqWOQjMfBFc
+         SBdMWkVSa/6p96Ol2WiZeQ31S8LTh2LMfy8i5rtAXzYunNSPHJZisLidLeRvc5NKs6
+         U0HmsFzharjGpwN4mi3zTl21Wvv5XUc2E1Q91V3sifhp6xBlT3QJS9u7xBzSI73NxZ
+         OYuoCooA7qTEw==
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget 
+        <gitgitgadget@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3 02/11] i18n: refactor "%s, %s and %s are mutually exclusive"
+Date:   Fri, 31 Dec 2021 18:05:42 +0100
+Message-ID: <3844495.otZVHuhvFT@cayenne>
+In-Reply-To: <xmqqfsq9pw4d.fsf@gitster.g>
+References: <pull.1088.v2.git.1640647437.gitgitgadget@gmail.com> <4accf1629e55ae621053f27994ebc4eb59d6f0ff.1640804107.git.gitgitgadget@gmail.com> <xmqqfsq9pw4d.fsf@gitster.g>
 MIME-Version: 1.0
-References: <CAHo1AWxzPsnLuT8JRWovtaRrGvRS8+0NyucU5K8VEnaL1xxW3Q@mail.gmail.com>
- <Yc4YKG+taXOuf6Kx@camp.crustytoothpaste.net> <CAHo1AWwC325etDTgwWvKLojrCnETjr_xPHTSVBi5RD_XH1uCsg@mail.gmail.com>
- <CA+JQ7M8iqaeG-FOFfunz1trR=Z6seFEjYLjrmBcCXHDTqNx42Q@mail.gmail.com>
-In-Reply-To: <CA+JQ7M8iqaeG-FOFfunz1trR=Z6seFEjYLjrmBcCXHDTqNx42Q@mail.gmail.com>
-From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Fri, 31 Dec 2021 14:04:03 +0100
-Message-ID: <CA+JQ7M8U7Ocsk0JO=GmMyf5S6CnodTYjG=zAHGL4Bco8cfVBHw@mail.gmail.com>
-Subject: Re: [Question] : git 2.33.1 asks every time password
-To:     Jean-Louis FLOQUET <jese.jlf@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > > > I had to create a 'config' file within '.ssh' directory to support my
-> > > > rsa key (too old format ?). Instructions according to
-> > > > https://stackoverflow.com/questions/35233777/git-error-unable-to-negotiate-with-xx-xx-xxx-xxx-no-matching-host-key-type-fo
+On Thursday, 30 December 2021 23:26:42 CET Junio C Hamano wrote:
+> "Jean-No=EBl Avila via GitGitGadget"  <gitgitgadget@gmail.com> writes:
+>=20
+> >  	if (use_stdout + rev.diffopt.close_file + !!output_directory > 1)
+> > -		die(_("--stdout, --output, and --output-directory are mutually exclu=
+sive"));
+> > +		die(_("options '%s', '%s' and '%s' cannot be used together"), "--std=
+out", "--output", "--output-directory");
+>=20
+> We probably want to preserve the Oxford comma here, and unify the
+> ones that didn't use Oxford comma to use it.
+>=20
 
-But perhaps I misunderstood.
+Oh. I wasn't even aware of this holy war (https://en.wikipedia.org/wiki/Ser=
+ial_comma). It would be good to add this style specification
+for writing our messages and documents.
 
-If your question is why authentication is falling back to username/password
-See my answer at SO
-https://stackoverflow.com/a/70434510
-for a similar issue with Git/AzureDevOps server.
+Will make another pass.
 
-TLDR:
-Git for Windows 2.3something updated OpenSSH to 8.something
-This changed default behavior of which SSH encryption algorithms
-deemed cryptographically safe.
-Not all services allow more sophisticated keys,
-in which case you may override to OpenSSH defaults
+Thanks
+
+
