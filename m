@@ -2,131 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A11ABC433F5
-	for <git@archiver.kernel.org>; Sat,  1 Jan 2022 21:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C43FC433EF
+	for <git@archiver.kernel.org>; Sat,  1 Jan 2022 22:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231552AbiAAVLW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Jan 2022 16:11:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41004 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229961AbiAAVLV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jan 2022 16:11:21 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97C5FC061574
-        for <git@vger.kernel.org>; Sat,  1 Jan 2022 13:11:20 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id x15so120934664edv.1
-        for <git@vger.kernel.org>; Sat, 01 Jan 2022 13:11:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=x+lqEnedWahtWcBi9Ih9gVueIT0iSxO8csNnW6xKPQQ=;
-        b=eBsaAduAyTMKpeYJfa+Lz4Mu6RqgbvedG3Z4uH3RKfmrfo6OQJLVmB3mtkLGArUlUI
-         05wLv2heW0uJXBA6SpiffrfIscFXK5Rjm7zviBtX9rHZtbFsAbC1PWK4ThHIWx7po95j
-         L8WXSslsdXWQ2VagO3s9uK3uTP6rumvlwpARhQ/pGaoTTHghfTuo7Pc/LBW+DoCKwbO1
-         CfIbISCvfb5cxR02BV9q+4H+8bvgG8VAKbx8i4PF7TSCAkpAEgQ0gdN4xXJZBFh8C9se
-         OIf83nRsM++L+xH23JeGr+DXuqj7HQrMrSkJX/7QGjj4OVhKM/MCrR6uTv029p+VBSBw
-         KofQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=x+lqEnedWahtWcBi9Ih9gVueIT0iSxO8csNnW6xKPQQ=;
-        b=tVqzHps/+xb0bKvW4J6DSU7eGQHvSWxs+8zu+kQfjD3CG9Lz9jrP3n8WwwhegqufmN
-         7RuF/+ikDS/7iqqAs+wMmQPtOzYgE+6653Jtwh1gaP6AOrppZJZXwPQHCR7lDWaMvfhH
-         2z1DqvaNlkUqhzH3OF05i3K4S7yuhv2p4EXaVb7TBBx9TpvWl3JaJApIagZQ6eYzODib
-         6mOA8YXBXUlz+iO4SMkL1m4VRtOOGXGh+02cUK1+7GcQNFJlWGV4cVAGeYh/T7Q70LpK
-         tvppWmmrn1JQ1BYcGCg/bC6839VQigL5RQbGrvwS/k1ROpCHlTXPQIaqGLwFzPsWhQjO
-         ewaQ==
-X-Gm-Message-State: AOAM533jjszYhhiArlOdjoI4Q8r03dR8mNtX1aDFI6XrSWtVqt/oDJVW
-        m3A97NMr24ig7vJ23JqZ6gm3EAIRVrfBmgI+meg=
-X-Google-Smtp-Source: ABdhPJygOqnCw33w/NAzrPQIbhHpS3wuUdta6Cp4iXT/iyy3tUaFxUOxcNOtJnm2dr3Cs62p3k/wGICAS2/WSzifkDY=
-X-Received: by 2002:a05:6402:2891:: with SMTP id eg17mr39502475edb.33.1641071479032;
- Sat, 01 Jan 2022 13:11:19 -0800 (PST)
+        id S232731AbiAAW7S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Jan 2022 17:59:18 -0500
+Received: from mout.gmx.net ([212.227.15.15]:59835 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231582AbiAAW7S (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jan 2022 17:59:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1641077948;
+        bh=TmO5zCyP3yBiUoJZXGVQglAen1V8GXJsH/p8jb0xHK0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Rpr2xOEpgRwstq/HekpLh6C/a11g5TKDSW6ZeGGSoS/vvgAuHoB5/rrk14Clwvdfh
+         cEvggHC8dVklAap6c3xEJiDO+KHyj3f4ArMGa2ZpkQkjxpkhytnlHgcjGkPL0sW97v
+         lDhtYM62b6td3RcuPSzDjcy/KbJ7HA3UZ1DZCJvA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.29.215.148] ([89.1.212.167]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M3UZ6-1n4LZW1PNK-000acB; Sat, 01
+ Jan 2022 23:59:08 +0100
+Date:   Sat, 1 Jan 2022 23:59:04 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH] name-rev: deprecate --stdin in favor of
+ --annotate-text
+In-Reply-To: <xmqqpmphx1yh.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2201012357040.7076@tvgsbejvaqbjf.bet>
+References: <pull.1171.git.git.1640492910432.gitgitgadget@gmail.com> <xmqqpmphx1yh.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <pull.1114.git.git.1640927044.gitgitgadget@gmail.com>
- <9fc71f4511b163bec53616d82e8fe5214facf060.1640927044.git.gitgitgadget@gmail.com>
- <20220101200824.isvinnb2zmobhfqq@gmail.com>
-In-Reply-To: <20220101200824.isvinnb2zmobhfqq@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 1 Jan 2022 13:11:07 -0800
-Message-ID: <CABPp-BHpK8hPsiuHoYsf5D_rjcGLSW-_faL3ODoh56pG_2Luwg@mail.gmail.com>
-Subject: Re: [PATCH 4/8] merge-tree: implement real merges
-To:     Johannes Altmanninger <aclopte@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:s5I6Kv2D+P0c6cBGQMavuSLuD/DsDCXOgRcBuQtWonKarVC0PI6
+ v0x49q05lssWlqq45GUKk/f1SUQDuH7u3f3WuMY72PNtzvw0zWe/erlxtDJEKSakGIl8AW3
+ 9FWOo9d5W37P7vuvcIMRLe6/1GNhsvB5FGKNhZh6xFe6T2cKehC+9yZnjSNstKb+aJ4RmC6
+ WG/QIVw7EQXIl9Ec+BEbQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6rcvadUOpFM=:BXNTj+Z6n/g2WstNA6xr9e
+ 83g8oOvhsSZFIO+JYjoGEnaBWIBlg6CutjzxurYlt+vLnP+HGrqYhsWWPYEcEGPVDbQaXBwCM
+ IFMD7uc06o89Ay0cO44t0Da5gxP6RDsx28ykoyrkVMQNqkxFzHvK9eotAfGr+IszOvldrJURv
+ NAU/z0gFsODI2K/mO844/CCBvXvAORSAHKz6ZQRW0qVak8vmESqKgu/LqylT/IcPud6QzvS5W
+ nORKoa1YeqFfQWAXODOeE15JRZI7Mg/B+w5MxF0VYXi8K3jpq6qP1G+GU7MWjuEiBCbBc+WOo
+ zCwRX7YOVnWvUFv0Ykl8anD/oFur4VqO3rpvQbYlEPyKjjVzvDW9lWZgUuYbdWwhbrW25OPai
+ zouJYeZ2TbPkaJzs2EsYrcifmToTK86i7SMK5QW+Lr9KTSdj2Ple/6p3WtFMKtQ1+8FZkUk8e
+ mUcbzngKRc0GYe/jyeJrAizcIRfPPD7wWaetsIQP17JKXXwWD5jtdxfqYIX0f3YLEJOgpbXOM
+ O2C4Ox5x76yeYyfxJ+T0ONRSbaR4BcXGZv6hE8+e/dqolsPdFmrIjLTl8b73x+ZcZ/tQmEzQZ
+ dFVo345mYYiRHScDPXd/jUFrnztYzyFTmGUDZEG+tn0LGlJjfcVPFYdPqxe6quZjl+VZvKOTq
+ xr8HPkKhyQK69x4GoRrjX6maUiY6bMRGY8+T+qCOXG7u/sfVu0vi5yqjFsIuQUeOvwgK44b5r
+ kKA5w9FH1CxNNPJ2Ji7cT/KkH3bML4HsfYluz79QU1ZlClEX+VhQ5xOmKAe1Br5C+nV+gcSGP
+ MAEQN0MYimT3TFWtarozKngLYXtbLVoZK5WYLMZvRl6p+CfMoGV6x2XlNAkdM3uTVoVObWrfb
+ ssJIJd4hlySor/HvtgQbBiA2mltJ0wcizBwll8CJmAwBlMuaLFe8UwnYZIyoE9qID5Tknwd6u
+ VTEuskgC8bGC/xoBa6PfR90NTHSnOyi6qPeLB7oHs0eUtIEK+R7ETP4e4cZHzMnX6Lv03HXAr
+ EnEFFYLMcSbczd2lzjM6LBehv1oPWIWeKBYdgcRSps+eo9/ZJhrvkmbajEGYb/98oKNeJaptL
+ 0JNalhExrh4Dh8=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 1, 2022 at 12:08 PM Johannes Altmanninger <aclopte@gmail.com> wrote:
+Hi Junio,
+
+On Mon, 27 Dec 2021, Junio C Hamano wrote:
+
+> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> On Fri, Dec 31, 2021 at 05:04:00AM +0000, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
+> As name-rev is Dscho's brainchild, I think it is benefitial to ask input
+> from him, so I added an address to the CC: list.
+
+Thank you!
+
+> > From: John Cai <johncai86@gmail.com>
 > >
-> > This adds the ability to perform real merges rather than just trivial
-> > merges (meaning handling three way content merges, recursive ancestor
-> > consolidation, renames, proper directory/file conflict handling, and so
-> > forth).  However, unlike `git merge`, the working tree and index are
-> > left alone and no branch is updated.
+> > Introduce a --annotate-text that is functionally equivalent of --stdin=
+.
+> > --stdin does not behave as --stdin in other subcommands, such as
+> > pack-objects whereby it takes one argument per line. Since --stdin can
+> > be a confusing and misleading name, rename it to --annotate-text.
 > >
-> > The only output is:
-> >   - the toplevel resulting tree printed on stdout
-> >   - exit status of 0 (clean) or 1 (conflicts present)
-> >
-> > This output is mean to be used by some higher level script, perhaps in a
-> > sequence of steps like this:
-> >
-> >    NEWTREE=$(git merge-tree --real $BRANCH1 $BRANCH2)
-> >    test $? -eq 0 || die "There were conflicts..."
-> >    NEWCOMMIT=$(git commit-tree $NEWTREE -p $BRANCH1 $BRANCH2)
-> >    git update-ref $BRANCH1 $NEWCOMMIT
-> >
-> > Note that higher level scripts may also want to access the
-> > conflict/warning messages normally output during a merge, or have quick
-> > access to a list of files with conflicts.  That is not available in this
-> > preliminary implementation, but subsequent commits will add that
-> > ability.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  Documentation/git-merge-tree.txt | 28 +++++++----
-> >  builtin/merge-tree.c             | 55 +++++++++++++++++++++-
-> >  t/t4301-merge-tree-real.sh       | 81 ++++++++++++++++++++++++++++++++
-> >  3 files changed, 153 insertions(+), 11 deletions(-)
-> >  create mode 100755 t/t4301-merge-tree-real.sh
-> >
-> > diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-> > index 58731c19422..5823938937f 100644
-> > --- a/Documentation/git-merge-tree.txt
-> > +++ b/Documentation/git-merge-tree.txt
-> > @@ -3,26 +3,34 @@ git-merge-tree(1)
-> >
-> >  NAME
-> >  ----
-> > -git-merge-tree - Show three-way merge without touching index
-> > +git-merge-tree - Perform merge without touching index or working tree
-> >
-> >
-> >  SYNOPSIS
-> >  --------
-> >  [verse]
-> > +'git merge-tree' --real <branch1> <branch2>
-> >  'git merge-tree' <base-tree> <branch1> <branch2>
+> > This change adds a warning to --stdin warning that it will be removed =
+in
+> > the future.
 >
-> This is really exciting. It could replace the merge-machinery of git-revise
-> (which is a "fast rebase" tool).
-> I think for cherry-pick/rebase we need to specify a custom merge base,
-> would that suit the new form?
+> I know I've suggested the name, but 'text' in --annotate-text is a
+> low value word in an option name where every byte is precious.
+> "Annotate" is very good to convey what is done to the object of the
+> verb, but "text" stresses the wrong thing (we do not annotate
+> binary,o we annotate text) without saying where the text comes from
+> (i.e.  standard input).  Perhaps "--annotate-stdin" would be a much
+> better name.
 
-I'm glad you're excited about it.  :-)
+I agree that `--annotate-stdin` is better, especially since people who
+might look for a replacement for `--stdin` in the documentation are much
+more likely to find what they're looking for.
 
-I think having a server side tool for replaying commits (which can
-double as a fast rebase/cherry-pick tool on the client side) is also
-important, but I think it should be part of a proper builtin, not some
-script that calls out to `merge-tree --real`.
+In addition to this, I also agree with Junio on the deprecation needing to
+be done carefully.
 
-`merge-tree --real` is simpler, though, so I implemented and submitted it first.
+Ciao,
+Dscho
