@@ -2,342 +2,294 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8001C433F5
-	for <git@archiver.kernel.org>; Sat,  1 Jan 2022 14:39:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69223C433F5
+	for <git@archiver.kernel.org>; Sat,  1 Jan 2022 19:09:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232447AbiAAOjZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Jan 2022 09:39:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42220 "EHLO
+        id S232498AbiAATJr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Jan 2022 14:09:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232148AbiAAOjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jan 2022 09:39:25 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14BE2C061574
-        for <git@vger.kernel.org>; Sat,  1 Jan 2022 06:39:25 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id l10-20020a17090a384a00b001b22190e075so27916708pjf.3
-        for <git@vger.kernel.org>; Sat, 01 Jan 2022 06:39:25 -0800 (PST)
+        with ESMTP id S230464AbiAATJq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jan 2022 14:09:46 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABDF7C061574
+        for <git@vger.kernel.org>; Sat,  1 Jan 2022 11:09:46 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id z3so22183654plg.8
+        for <git@vger.kernel.org>; Sat, 01 Jan 2022 11:09:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=M2vEz+u/+98vQzj9yI14R6RBolqRVXupEPDbv8ZMCyo=;
-        b=Ftp54LsTOS3LevxGX4ull2DmRQjDKKf2bgBXLdJTiyWFC9ZUBvoykWqBAw6oEwG8S9
-         vVhAvri2zO/CJKglagmPPXHt3ZLeBG2DGj3wlEwaP7IAswxO3M4p5BNOgQFNseLKUX0Q
-         z5KP6ZA6HlLfBPEsVICzQZs9Mg54MS8jwZNPpxR5tLnWADbnV8HlZJey5ukQjvaNwqz7
-         vuY540e0xKe+0n7qJZccgEsJjzVqet8hirm+3vfGuVCDWhRMSQ5MPd2SFtm62JFJpuiY
-         GfEH3OBEXgv5jDsiugO03J1YMQuINv0RDNINEJu4HZDelTP84Ls2hGCm5hEfBcleyx6F
-         mf1Q==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=GIjbnY9fGgjeyihM9rXXNkVaaW0jkyOw9q7j+DIX2IQ=;
+        b=AXuX8MdFDzSO/KzK9FUARAgFGsSEpRGPkpdxhWMPDUtPGkRxzwvUW5NVBtgeGRlYBA
+         +hLKU7qkErnkcEidJ9JvdY+oxxLAJMeVeCsyTCma4j5/62ctYOcoeyXtROBM5vaWbQEK
+         deEPc620C3DwoScZ9ciHlHgeQQqKsab8tY3WX3XD6i1cmJXIKNz8phflHIexiH+R+6jv
+         wUiBL5x+Zv4qBmwday5geZ8k6uvrdLvx4diSCGKfFBY96nZgo8Thj2MoyD/RwxnVaAOM
+         GKybgmEBMeotK+U3jGvzatEY/5o46AwV27te24nKToVgzW1XUbAIBZv7uKYYoO9UdUKk
+         HOIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=M2vEz+u/+98vQzj9yI14R6RBolqRVXupEPDbv8ZMCyo=;
-        b=UhoIIYIlUMm1gOC3yXKyKYT5vQ4DNQdVo18xtO10t+RhCGpB1aM08jI1QWO0ag4XCC
-         4e9vuuKwwkw43ulwop+OfrkASQZPk7KJUBXnYhO0fv/QuAVfvnwHMiT6ehfc9SluIGrF
-         P3wIK1nEnX7eTOtUe1LW3QgYr0wD6iqqWy4+MPDGCFOlAtQtNYWiB00BXwwA/gP/xeYT
-         WiMA1YzXrQqKUvpPtY/FI/nI1TbGp2aHpSY/xhEIuGlKI/+HOvHmQl0JsJOeHijGqaB2
-         IPRuEUOHBruF//PuANVjyDLkUI46S/0ML3+P2Bo0PUYPdL+ZZv/ht6rdM+zX6DcUP3dx
-         mmyg==
-X-Gm-Message-State: AOAM5332dvNX1PIebdKh6sd2zrSSmyOYWzidaZEx86KJWMoLVSXRf+bC
-        703EM+VJ3734u8ggWl8+n0/mEPg8kRw=
-X-Google-Smtp-Source: ABdhPJxAuhuX1J3tgmJ4X0/whder7A5XiZx2bYAH/6KmxEZ91n4K4YyOCAIkoTyhOV2kMqMUyhG4Qw==
-X-Received: by 2002:a17:90b:38c9:: with SMTP id nn9mr47832277pjb.153.1641047964295;
-        Sat, 01 Jan 2022 06:39:24 -0800 (PST)
-Received: from LAPTOP-FJDAS7G4.localdomain ([157.40.153.25])
-        by smtp.gmail.com with ESMTPSA id kb1sm38220053pjb.56.2022.01.01.06.39.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Jan 2022 06:39:24 -0800 (PST)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: [PATCH v4 1/1] push: make 'set-upstream' have dafault arguments
-Date:   Sat,  1 Jan 2022 20:07:48 +0530
-Message-Id: <20220101143748.2582-2-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220101143748.2582-1-chakrabortyabhradeep79@gmail.com>
-References: <20211209101550.19582-1-chakrabortyabhradeep79@gmail.com>
- <20220101143748.2582-1-chakrabortyabhradeep79@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=GIjbnY9fGgjeyihM9rXXNkVaaW0jkyOw9q7j+DIX2IQ=;
+        b=dHE32oRgpc2mg9qap9b8Nq0HfbwIsJDdvLLHrUQSrijWNG8o+IOHp3WVYxUqMCkIkW
+         oX95kXAQSgvrVngVXFyHGohNu9yYBQ1rJI3Qntk4Z1C76WwwAjkd7qDiEpyN7SrJmSZN
+         vkHUG09OfAxzhfYWkHhKzP5Mo4+pCuf43r49DtoaQELDWHm+16yBrylgATLcCaDdBzGv
+         OYBx2fdAFqKuq3XrT3jqoHkB3hjn+xvdUjBl5z/4iY/7vFAAVj4lXyVokgniQE898E2C
+         JBEOX2NBl5R+2i9A3VXZ6OverI68rv0w3Ot/aY6W/Si/QmzjhmSkj/hqw6QrSmqBdehi
+         6lvQ==
+X-Gm-Message-State: AOAM531zz0hibXDUMMu5fhvI+hoKRGiUnPh/VuattkRogV+1Bidhg6u3
+        a3lZpvCcFw720VYoTQ9SKo1QSgvMs4s=
+X-Google-Smtp-Source: ABdhPJw1rsEBbXJyJzVPC+EKGUI33J7+6SKm1wxqrT6khJSwK6JZxOQ/YeP3322omZ6Z5r1RHfBEHw==
+X-Received: by 2002:a17:90a:e7cc:: with SMTP id kb12mr48246571pjb.189.1641064186013;
+        Sat, 01 Jan 2022 11:09:46 -0800 (PST)
+Received: from smtpclient.apple ([2600:1012:b144:c416:68d6:5692:a3d4:e3b])
+        by smtp.gmail.com with ESMTPSA id b11sm35919485pfv.39.2022.01.01.11.09.45
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 01 Jan 2022 11:09:45 -0800 (PST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
+Subject: Re: [PATCH 1/2] builtin/reflog.c: use parse-options for expire
+ subcommand
+From:   John Cai <johncai86@gmail.com>
+In-Reply-To: <a3db4c74-1c60-5ef5-4865-e0fa9639bc5b@web.de>
+Date:   Sat, 1 Jan 2022 11:09:43 -0800
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9D4E4253-6EBE-4AA7-86A5-413A732C6E38@gmail.com>
+References: <pull.1175.git.git.1640932151.gitgitgadget@gmail.com>
+ <9bd3c6672c4232e0a5c0905b834146ca02af8a4b.1640932151.git.gitgitgadget@gmail.com>
+ <6C9B7D67-D21C-44EA-B3FB-9605968AD0FF@gmail.com>
+ <a3db4c74-1c60-5ef5-4865-e0fa9639bc5b@web.de>
+To:     =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+X-Mailer: Apple Mail (2.3693.40.0.1.81)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git push -u" (set-upstream) requires where to push to and what
-to push.  Often people push only the current branch to update
-the branch of the same name at the 'origin' repository.  For
-them, it would be convenient if "git push -u" without repository
-or refspec, defaulted to push and set upstream to the branch as
-configured by the "push.default" setting, of the remote repository
-that is used by default.
 
-Teach "git push -u" not to require repository and refspec.  When
-the user do not give what repository to push to, or which
-branch(es) to push, behave as if the default remote repository
-and a refspec (depending on the "push.default" configuration)
-are given.
 
-If "push.default"=matching, push all the branches matched on both
-remote and local side and set those remote branches as the upstream
-of their respective local matched branches. Otherwise, set the
-refspec to the refspec for current branch.
+> On Jan 1, 2022, at 3:16 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>=20
+> Am 01.01.22 um 03:06 schrieb John Cai:
+>>=20
+>>=20
+>>> On Dec 30, 2021, at 10:29 PM, John Cai via GitGitGadget =
+<gitgitgadget@gmail.com> wrote:
+>>>=20
+>>> From: John Cai <johncai86@gmail.com>
+>>>=20
+>>> Switch out manual argv parsing for the reflog expire subcommand to =
+use
+>>> the parse-options API.
+>>>=20
+>>> Signed-off-by: "John Cai" <johncai86@gmail.com>
+>>> ---
+>>> builtin/reflog.c | 72 =
+++++++++++++++++++++++++------------------------
+>>> 1 file changed, 36 insertions(+), 36 deletions(-)
+>>>=20
+>>> diff --git a/builtin/reflog.c b/builtin/reflog.c
+>>> index 175c83e7cc2..afaf5ba67e2 100644
+>>> --- a/builtin/reflog.c
+>>> +++ b/builtin/reflog.c
+>>> @@ -11,13 +11,8 @@
+>>> #include "revision.h"
+>>> #include "reachable.h"
+>>> #include "worktree.h"
+>>> +#include "parse-options.h"
+>>>=20
+>>> -/* NEEDSWORK: switch to using parse_options */
+>>> -static const char reflog_expire_usage[] =3D
+>>> -N_("git reflog expire [--expire=3D<time>] "
+>>> -   "[--expire-unreachable=3D<time>] "
+>>> -   "[--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] "
+>>> -   "[--verbose] [--all] <refs>...");
+>>> static const char reflog_delete_usage[] =3D
+>>> N_("git reflog delete [--rewrite] [--updateref] "
+>>>   "[--dry-run | -n] [--verbose] <refs>...");
+>>> @@ -539,6 +534,14 @@ static void set_reflog_expiry_param(struct =
+cmd_reflog_expire_cb *cb, int slot, c
+>>> 		cb->expire_unreachable =3D =
+default_reflog_expire_unreachable;
+>>> }
+>>>=20
+>>> +static const char * reflog_expire_usage[] =3D {
+>>> +	N_("git reflog expire [--expire=3D<time>] "
+>>> +   "[--expire-unreachable=3D<time>] "
+>>> +   "[--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] "
+>>> +   "[--verbose] [--all] <refs>..."),
+>>> +	NULL
+>>> +};
+>>> +
+>>> static int cmd_reflog_expire(int argc, const char **argv, const char =
+*prefix)
+>>> {
+>>> 	struct expire_reflog_policy_cb cb;
+>>> @@ -547,6 +550,29 @@ static int cmd_reflog_expire(int argc, const =
+char **argv, const char *prefix)
+>>> 	int explicit_expiry =3D 0;
+>>> 	unsigned int flags =3D 0;
+>>>=20
+>>> +	const struct option options[] =3D {
+>>> +		OPT_BIT(0, "dry-run", &flags, N_("do not actually prune =
+any entries"),
+>>> +				EXPIRE_REFLOGS_DRY_RUN),
+>>> +		OPT_BIT(0, "rewrite", &flags,
+>>> +				N_("rewrite the old SHA1 with the new =
+SHA1 of the entry that now precedes it"),
+>>> +				EXPIRE_REFLOGS_REWRITE),
+>>> +		OPT_BIT(0, "updateref", &flags,
+>>> +				N_("update the reference to the value of =
+the top reflog entry"),
+>>> +				EXPIRE_REFLOGS_UPDATE_REF),
+>>> +		OPT_BIT(0, "verbose", &flags, N_("print extra =
+information on screen."),
+>>> +				EXPIRE_REFLOGS_VERBOSE),
+>>> +		OPT_EXPIRY_DATE(0, "expire", &cb.cmd.expire_total,
+>>> +				N_("prune entries older than the =
+specified time")),
+>>> +		OPT_EXPIRY_DATE(0, "expire-unreachable", =
+&cb.cmd.expire_unreachable,
+>>> +			N_("prune entries older than <time> that are not =
+reachable from the current tip of the branch")),
+>>> +		OPT_BOOL(0, "stale-fix", &cb.cmd.stalefix,
+>>> +				N_("prune any reflog entries that point =
+to broken commits")),
+>>> +		OPT_BOOL(0, "all", &do_all, N_("process the reflogs of =
+all references")),
+>>> +		OPT_BOOL(1, "single-worktree", &all_worktrees,
+>>> +				N_("limits processing to reflogs from =
+the current worktree only.")),
+>>> +		OPT_END()
+>>> +	};
+>>> +
+>>> 	default_reflog_expire_unreachable =3D now - 30 * 24 * 3600;
+>>> 	default_reflog_expire =3D now - 90 * 24 * 3600;
+>>> 	git_config(reflog_expire_config, NULL);
+>>> @@ -560,41 +586,15 @@ static int cmd_reflog_expire(int argc, const =
+char **argv, const char *prefix)
+>>>=20
+>>> 	for (i =3D 1; i < argc; i++) {
+>>=20
+>> I was hoping we could get rid of this for loop altogether, but I
+>> couldn=E2=80=99t figure out a clean way since --expire and
+>> expire-unreachable take a value __and__ set a flag bit. So I kept
+>> this for loop for the sole purpose of setting the explicit_expiry bit
+>> flag. Any suggestions?
+>=20
+> The problem is that the default value can vary between reflogs and we
+> only know which ones are to be expired after option parsing, right?
 
-Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
----
- Documentation/git-push.txt |  10 +++
- builtin/push.c             |  11 +++-
- t/t5523-push-upstream.sh   | 125 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 144 insertions(+), 2 deletions(-)
+That=E2=80=99s a good point. Does it matter that the default value =
+varies between reflogs?
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 2f25aa3a29..6fd474441f 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -375,6 +375,16 @@ Specifying `--no-force-if-includes` disables this behavior.
- 	upstream (tracking) reference, used by argument-less
- 	linkgit:git-pull[1] and other commands. For more information,
- 	see `branch.<name>.merge` in linkgit:git-config[1].
-++
-+`-u` can also work with zero arguments( i.e. no `<repository>` and
-+`<refspec>` are given). In that case, it tries to get the `<repository>`
-+value from `branch.*.remote` configuration. If not found, it defaults to
-+`origin`. If `remote.pushDefault` is set then it uses that instead. The
-+value of `<refspec>` depends on the current `push.default` configuration.
-+If `push.default` is set to `matching`, all remote branches to which
-+local branches pushed, will be set as upstream of respective local
-+branches. For all other values of `push.default`, current branch's
-+refspec will be used as the `<refspec>`.
- 
- --[no-]thin::
- 	These options are passed to linkgit:git-send-pack[1]. A thin transfer
-diff --git a/builtin/push.c b/builtin/push.c
-index 4b026ce6c6..8bc206c9d8 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -202,11 +202,12 @@ static const char *get_upstream_ref(struct branch *branch, const char *remote_na
- 	return branch->merge[0]->src;
- }
- 
--static void setup_default_push_refspecs(struct remote *remote)
-+static void setup_default_push_refspecs(struct remote *remote, int flags)
- {
- 	struct branch *branch;
- 	const char *dst;
- 	int same_remote;
-+	int is_default_u = (flags & TRANSPORT_PUSH_SET_UPSTREAM);
- 
- 	switch (push_default) {
- 	case PUSH_DEFAULT_MATCHING:
-@@ -214,6 +215,8 @@ static void setup_default_push_refspecs(struct remote *remote)
- 		return;
- 
- 	case PUSH_DEFAULT_NOTHING:
-+		if (is_default_u)
-+			break;
- 		die(_("You didn't specify any refspecs to push, and "
- 		    "push.default is \"nothing\"."));
- 		return;
-@@ -234,11 +237,15 @@ static void setup_default_push_refspecs(struct remote *remote)
- 	case PUSH_DEFAULT_SIMPLE:
- 		if (!same_remote)
- 			break;
-+		if (is_default_u)
-+			break;
- 		if (strcmp(branch->refname, get_upstream_ref(branch, remote->name)))
- 			die_push_simple(branch, remote);
- 		break;
- 
- 	case PUSH_DEFAULT_UPSTREAM:
-+		if (is_default_u)
-+			break;
- 		if (!same_remote)
- 			die(_("You are pushing to remote '%s', which is not the upstream of\n"
- 			      "your current branch '%s', without telling me what to push\n"
-@@ -401,7 +408,7 @@ static int do_push(int flags,
- 		if (remote->push.nr) {
- 			push_refspec = &remote->push;
- 		} else if (!(flags & TRANSPORT_PUSH_MIRROR))
--			setup_default_push_refspecs(remote);
-+			setup_default_push_refspecs(remote, flags);
- 	}
- 	errs = 0;
- 	url_nr = push_url_of_remote(remote, &url);
-diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-index fdb4292056..c2d11c3f2a 100755
---- a/t/t5523-push-upstream.sh
-+++ b/t/t5523-push-upstream.sh
-@@ -60,6 +60,86 @@ test_expect_success 'push -u :topic_2' '
- 	check_config topic_2 upstream refs/heads/other2
- '
- 
-+default_u_setup() {
-+	git checkout main &&
-+	test_might_fail	git branch --unset-upstream &&
-+	test_config push.default $1 &&
-+	test_config remote.pushDefault upstream
-+}
-+
-+check_empty_config() {
-+	test_expect_code 1 git config "branch.$1.remote" &&
-+	test_expect_code 1 git config "branch.$1.merge"
-+}
-+
-+for i in simple current upstream nothing
-+do
-+	test_expect_success 'push -u with push.default=$i' '
-+		default_u_setup $i &&
-+		git push -u &&
-+		check_config main upstream refs/heads/main &&
-+		git push -u upstream main:other &&
-+		git push -u &&
-+		check_config main upstream refs/heads/main
-+	'
-+
-+	test_expect_success 'push -u -f with push.default=$i' '
-+		default_u_setup $i &&
-+		git push -u -f &&
-+		check_config main upstream refs/heads/main
-+	'
-+done
-+
-+for i in simple current upstream nothing matching
-+do
-+	test_expect_success 'push -u --prune with push.default=$i' '
-+		default_u_setup $i &&
-+		git push upstream main:test_u215 &&
-+		git push -u --prune >out &&
-+		check_config main upstream refs/heads/main &&
-+		test_i18ngrep "[deleted]" out &&
-+		test_i18ngrep ! "Branch '"'"'test_u215'"'"' set up to track" out
-+	'
-+
-+	test_expect_success 'push -u --mirror with push.default=$i' '
-+		default_u_setup $i &&
-+		test_might_fail git branch mirror1 &&
-+		test_might_fail git branch mirror2 &&
-+		git push -u --mirror &&
-+		check_config main upstream  refs/heads/main &&
-+		check_config mirror1 upstream refs/heads/mirror1 &&
-+		check_config mirror2 upstream refs/heads/mirror2
-+	'
-+done
-+
-+for i in '' '-f'
-+do
-+
-+	test_expect_success 'push -u $i with push.default=matching' '
-+		default_u_setup matching &&
-+		test_might_fail git branch test_u &&
-+		test_might_fail git branch test_u2 &&
-+		git push upstream main:test_u2 &&
-+		git push -u $i &&
-+		check_config main upstream refs/heads/main &&
-+		check_config test_u2 upstream refs/heads/test_u2 &&
-+		check_empty_config test_u
-+	'
-+done
-+
-+test_expect_success 'push -u -d will fail' '
-+	git checkout main &&
-+	test_might_fail git branch --unset-upstream &&
-+	test_must_fail git push -u -d
-+'
-+
-+test_expect_success 'push -u --dry-run' '
-+	git checkout main &&
-+	git push -u upstream main:other &&
-+	git push -u --dry-run &&
-+	check_config main upstream refs/heads/other
-+'
-+
- test_expect_success 'push -u --all' '
- 	git branch all1 &&
- 	git branch all2 &&
-@@ -81,6 +161,13 @@ test_expect_success TTY 'progress messages go to tty' '
- 	test_i18ngrep "Writing objects" err
- '
- 
-+test_expect_success TTY 'progress messages go to tty with default -u' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git push -u 2>err &&
-+	test_i18ngrep "Writing objects" err
-+'
-+
- test_expect_success 'progress messages do not go to non-tty' '
- 	ensure_fresh_upstream &&
- 
-@@ -89,6 +176,14 @@ test_expect_success 'progress messages do not go to non-tty' '
- 	test_i18ngrep ! "Writing objects" err
- '
- 
-+test_expect_success 'progress messages do not go to non-tty (default -u)' '
-+	ensure_fresh_upstream &&
-+
-+	# skip progress messages, since stderr is non-tty
-+	git push -u 2>err &&
-+	test_i18ngrep ! "Writing objects" err
-+'
-+
- test_expect_success 'progress messages go to non-tty (forced)' '
- 	ensure_fresh_upstream &&
- 
-@@ -97,6 +192,14 @@ test_expect_success 'progress messages go to non-tty (forced)' '
- 	test_i18ngrep "Writing objects" err
- '
- 
-+test_expect_success 'progress messages go to non-tty with default -u (forced)' '
-+	ensure_fresh_upstream &&
-+
-+	# force progress messages to stderr, even though it is non-tty
-+	git push -u --progress 2>err &&
-+	test_i18ngrep "Writing objects" err
-+'
-+
- test_expect_success TTY 'push -q suppresses progress' '
- 	ensure_fresh_upstream &&
- 
-@@ -104,6 +207,13 @@ test_expect_success TTY 'push -q suppresses progress' '
- 	test_i18ngrep ! "Writing objects" err
- '
- 
-+test_expect_success TTY 'push -q suppresses progress (with default -u)' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git push -u -q 2>err &&
-+	test_i18ngrep ! "Writing objects" err
-+'
-+
- test_expect_success TTY 'push --no-progress suppresses progress' '
- 	ensure_fresh_upstream &&
- 
-@@ -112,6 +222,14 @@ test_expect_success TTY 'push --no-progress suppresses progress' '
- 	test_i18ngrep ! "Writing objects" err
- '
- 
-+test_expect_success TTY 'push --no-progress suppresses progress (default -u)' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git push -u --no-progress 2>err &&
-+	test_i18ngrep ! "Unpacking objects" err &&
-+	test_i18ngrep ! "Writing objects" err
-+'
-+
- test_expect_success TTY 'quiet push' '
- 	ensure_fresh_upstream &&
- 
-@@ -126,4 +244,11 @@ test_expect_success TTY 'quiet push -u' '
- 	test_must_be_empty output
- '
- 
-+test_expect_success TTY 'quiet push -u (default -u)' '
-+	ensure_fresh_upstream &&
-+
-+	test_terminal git push --quiet -u --no-progress 2>&1 | tee output &&
-+	test_must_be_empty output
-+'
-+
- test_done
--- 
-2.34.1
+Would something like this suffice?
+
+-       for (i =3D 1; i < argc; i++) {
+-               const char *arg =3D argv[i];
+-               if (starts_with(arg, "--expire=3D")) {
+-                       explicit_expiry |=3D EXPIRE_TOTAL;
+-               } else if (starts_with(arg, "--expire-unreachable=3D")) =
+{
+-                       explicit_expiry |=3D EXPIRE_UNREACH;
+-               }
+-       }
+-
+        argc =3D parse_options(argc, argv, prefix, options, =
+reflog_expire_usage, 0);
+
++       if (cb.cmd.expire_total !=3D default_reflog_expire)
++               explicit_expiry |=3D EXPIRE_TOTAL;
++       if (cb.cmd.expire_unreachable !=3D =
+default_reflog_expire_unreachable)
++               explicit_expiry |=3D EXPIRE_UNREACH;
+
+
+>=20
+> The easiest way is probably to initialize the date variables to a
+> magic value that is unlikely to be specified explicitly.
+> parse_expiry_date() already uses two such magic values: 0 for "never"
+> and TIME_MAX for "now".  Perhaps 1 for "default"?
+>=20
+> 	cb.cmd.expire_total =3D cb.cmd.expire_unreachable =3D 1;
+>=20
+> 	argc =3D parse_options(...);
+>=20
+> 	if (cb.cmd.expire_total =3D=3D 1)
+> 		cb.cmd.expire_total =3D default_reflog_expire;
+> 	else
+> 		explicit_expiry |=3D EXPIRE_TOTAL;
+> 	if (cb.cmd.expire_unreachable =3D=3D 1)
+> 		cb.cmd.expire_unreachable =3D =
+default_reflog_expire_unreachable;
+> 	else
+> 		explicit_expiry |=3D EXPIRE_UNREACH;
+>=20
+> A somewhat cleaner approach would be to store that bit separately:
+>=20
+> 	struct expire_date {
+> 		unsigned is_explicitly_set:1;
+> 		timestamp_t at;
+> 	};
+>=20
+> ... and add a callback function that wraps parse_opt_expiry_date_cb(),
+> expects the new struct (instead of timestamp_t directlly) and sets
+> that bit.
+>=20
+>>=20
+>>> 		const char *arg =3D argv[i];
+>>> -
+>>> -		if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
+>>> -			flags |=3D EXPIRE_REFLOGS_DRY_RUN;
+>>> -		else if (skip_prefix(arg, "--expire=3D", &arg)) {
+>>> -			if (parse_expiry_date(arg, =
+&cb.cmd.expire_total))
+>>> -				die(_("'%s' is not a valid timestamp"), =
+arg);
+>>> +		if (starts_with(arg, "--expire=3D")) {
+>>> 			explicit_expiry |=3D EXPIRE_TOTAL;
+>>> -		}
+>>> -		else if (skip_prefix(arg, "--expire-unreachable=3D", =
+&arg)) {
+>>> -			if (parse_expiry_date(arg, =
+&cb.cmd.expire_unreachable))
+>>> -				die(_("'%s' is not a valid timestamp"), =
+arg);
+>>> +		} else if (starts_with(arg, "--expire-unreachable=3D")) =
+{
+>>> 			explicit_expiry |=3D EXPIRE_UNREACH;
+>>> 		}
+>>> -		else if (!strcmp(arg, "--stale-fix"))
+>>> -			cb.cmd.stalefix =3D 1;
+>>> -		else if (!strcmp(arg, "--rewrite"))
+>>> -			flags |=3D EXPIRE_REFLOGS_REWRITE;
+>>> -		else if (!strcmp(arg, "--updateref"))
+>>> -			flags |=3D EXPIRE_REFLOGS_UPDATE_REF;
+>>> -		else if (!strcmp(arg, "--all"))
+>>> -			do_all =3D 1;
+>>> -		else if (!strcmp(arg, "--single-worktree"))
+>>> -			all_worktrees =3D 0;
+>>> -		else if (!strcmp(arg, "--verbose"))
+>>> -			flags |=3D EXPIRE_REFLOGS_VERBOSE;
+>>> -		else if (!strcmp(arg, "--")) {
+>>> -			i++;
+>>> -			break;
+>>> -		}
+>>> -		else if (arg[0] =3D=3D '-')
+>>> -			usage(_(reflog_expire_usage));
+>>> -		else
+>>> -			break;
+>>> 	}
+>>>=20
+>>> +	argc =3D parse_options(argc, argv, prefix, options, =
+reflog_expire_usage, 0);
+>>> +
+>>> 	/*
+>>> 	 * We can trust the commits and objects reachable from refs
+>>> 	 * even in older repository.  We cannot trust what's reachable
+>>> --
+>>> gitgitgadget
 
