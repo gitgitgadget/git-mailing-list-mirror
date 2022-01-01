@@ -2,116 +2,217 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6399C433EF
-	for <git@archiver.kernel.org>; Sat,  1 Jan 2022 14:19:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 168C7C433EF
+	for <git@archiver.kernel.org>; Sat,  1 Jan 2022 14:39:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232269AbiAAOPH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Jan 2022 09:15:07 -0500
-Received: from mout.web.de ([212.227.15.3]:50163 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232171AbiAAOPG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jan 2022 09:15:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1641046480;
-        bh=/vJdcwcQDUYCmMDuNr5MnMgDbVWmqFoOjSTm2izlHp4=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=Ejm16j+Yt1FXgwXeK3x1eOlbcNpF5WUJyALksnrNoc1P3ftkqV19UHdpUAHKmdHpx
-         /0cZ5GsdPqWSxHM1piE5Juj/tGGCLRrtwGn/9s0zDwD36zHh4IwNZBJ3jkYjBidas2
-         HhCTbOm8BzxoDkIZl8XNfi8W16Gp1seX4clqCprA=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M4sXj-1n5apb1cEJ-001sWw; Sat, 01
- Jan 2022 15:14:40 +0100
-Message-ID: <68377030-f15c-d2f9-faec-c802529c5f46@web.de>
-Date:   Sat, 1 Jan 2022 15:14:39 +0100
+        id S232444AbiAAOjT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Jan 2022 09:39:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42186 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232148AbiAAOjS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jan 2022 09:39:18 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B973C061574
+        for <git@vger.kernel.org>; Sat,  1 Jan 2022 06:39:18 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id b1-20020a17090a990100b001b14bd47532so28046901pjp.0
+        for <git@vger.kernel.org>; Sat, 01 Jan 2022 06:39:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=a5ID8IDbuI9hbVHEHy4+09JJbRpaMHvoNzWzxAYDqIs=;
+        b=i7ZDTIK/c0/I9hYtwFGCCFCxushVzwyH7YYjkLDCXb8SpU1GqFwDHlKu1UzR8E1H4k
+         DAuHklKM6JuiHH1N2ow0LK/b2NDswmI6vJZD9//vhBQsFQvBCRN1e5ZUuueWbUGbx65r
+         1Ko0uRoSsxoRm94uO8l/KxJ3hVfrZ/fy2sVwkb7sbULKvmH77KIZzvYzQcyUIpf7tO8L
+         l9ub86k2NCUxO3ykcpj3eUuiyqB+QRJ8oumo8N09ZpEiWKIsnkd+OuuG9QyjLUmz4Xnt
+         KHog58l2+xyTM+7mXPK5ix41z2uYagP1569haBzedMkpPmp+HtW11ATa0noiy64IWgVr
+         dMZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=a5ID8IDbuI9hbVHEHy4+09JJbRpaMHvoNzWzxAYDqIs=;
+        b=DgFZ18MnZlEYADA1UkSjjDvHCxzpAl8Ou80sxp9dVl8jdsh0EQttOl5l/M0xhxMaj+
+         uXwa7MWYORUrLBJ4M3XGUNpJDuOga+8U82zRUbNWd+8heI/1aLQfcmzPck7LYeyjPkIY
+         oNTmv994niXC/K13QrPod/5HCLrjkCF7knF3OZZ2p2udkavgtVg344ffhHXHoYjyrUPE
+         0uNfPkvDBhe01UpzgjAmNstlKsw3IwUfVZSm/kFBS9iGrs8pKFfrjrYVyqCEvz7WU+b8
+         eriXEOHKxhk4lJH9PapskQ+r5me4MxOopqzLgzXbmNKrK4pzhHBtYlginRu1xbuZHoJV
+         SjmA==
+X-Gm-Message-State: AOAM533VGS6v5zClMX3J5vefvwTCLyFD1mXWpnqomgXngpshezmMTBjU
+        cNufRfFWuG9vza1735H2hAcKqQ5FpSc=
+X-Google-Smtp-Source: ABdhPJyEU3Zb8NPQ9/ovJff4bUuVVN6zJMNZPD28lQHgRnT32HFnagQG/bgD5H18Bdj/NxQcHC5/iA==
+X-Received: by 2002:a17:903:2350:b0:149:2efe:393a with SMTP id c16-20020a170903235000b001492efe393amr39408518plh.113.1641047957484;
+        Sat, 01 Jan 2022 06:39:17 -0800 (PST)
+Received: from LAPTOP-FJDAS7G4.localdomain ([157.40.153.25])
+        by smtp.gmail.com with ESMTPSA id kb1sm38220053pjb.56.2022.01.01.06.39.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Jan 2022 06:39:17 -0800 (PST)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v4 0/1] making --set-upstream have default arguments
+Date:   Sat,  1 Jan 2022 20:07:47 +0530
+Message-Id: <20220101143748.2582-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20211209101550.19582-1-chakrabortyabhradeep79@gmail.com>
+References: <20211209101550.19582-1-chakrabortyabhradeep79@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.1
-Subject: Re: [PATCH v3 05/11] i18n: tag.c factorize i18n strings
-Content-Language: en-US
-To:     =?UTF-8?Q?Jean-No=c3=abl_Avila_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>
-References: <pull.1088.v2.git.1640647437.gitgitgadget@gmail.com>
- <pull.1088.v3.git.1640804107.gitgitgadget@gmail.com>
- <2d83654c48a75cd50573f472d643851d950ebafc.1640804108.git.gitgitgadget@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <2d83654c48a75cd50573f472d643851d950ebafc.1640804108.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:nttgYo4F3qAPUXxuXGtqSNO2OA9VvkmmdjQTZLq/YNHRZWiHmhN
- 1rnr25VJLiXJ+JKnPk+2rmiL8JLrj/RGdZ+U9HplDGvnjaF8zIeunrqNf8dSDF4JGPsBUgG
- lTIcSKQA7MbZLEFeRtXMYsZ/g8JO3sHJAQXC1dC+1f3Bb48r6Kw7TZGbfbp33I9D/Jd0vI+
- Wy1Sz6GngDgOvrSHLPM9Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:l/HbfHoAca8=:LGbLhq538plhSlFzeBwW9r
- HVxQesGG77mheZQitedc/4pY+R6PO3jV/Nic0c4q2zMXSRTVqw1yFj7i+qUtdYJaaqbK0jd6F
- gEqod8gdBo3MsOy6//DS1fewaBbYOBvT+n/pC/j/PQM7SZ0HLuwYelJ1CjP6umUEToFfo9uxq
- GRqhXe3E0L0kduPITSoQNmxoqaQgUccOxzM9KjI1WS2cvWxa/ooV1Of2hT3E1zKNndkU11d6N
- Vu5erfjC5L3393MU/OLNX+jCTNH3pnw87sqd5xk5mpA9L+zt41pu2xSIJQFCBmVHKF8Wfjgw9
- 6HXkapOIw2ZhJbGy+OxjBTpA4jLiBVOJj9qNeVVqymPerQnKBpvMz2d0s626Pxis+rJDJiAC9
- xbSMB930dVxUPHCv8OtNXVcFmTnLDV6m19Z/6EtkZnP5012pPbuV2NQa4Ml7tBQNBmrAZdCpU
- 2hwqucupFXUfsHr+Lp1tP2dXRZBa2AYh0Xc3EKa1XhcnEijqTgSegavlkxgJmb2Oa9O7UEFnO
- d9tgYVyRs6igdcrh4dNneFkmXRXq3XKZZ32nQX+UBilab9Qqs5HEW22RdBxiUVTRlu5nSCDtG
- 3VSLruPUNmsPPGjdVcFJk6S1SjwdQsZTTaiG6cJPfcjvd/+1g/4WoSP7NbLOo2QWTveeijTy0
- UZ6cnAeabvxKOUuUi5YF1EBY95bOzZUVKQ8SUpdlm0zxVwHbFXcCsf8qIygqmcspk3LvU7Ch4
- lbSOba6llqpCDVKuCplg5mtnLOVJwUX3ZQDuiXy6hn1NaZG2IUZrk4emiHOZoUf4R0cq1ngUs
- 2jbPBgjrUL6QbQIonmS8mEdp4zRDvGOxrAJHcx52XXyt3Gro0jEEyMinYYkq1sbqhq1TsZsHY
- EloTi6x1iVbGESc3q/BnoelkfD8J/TKmYYXEKoJPemiHlrli9/sNlywN2iwjM3IAjMmjzcvJV
- ecMmrih/yhFeUOy83rpr5ljJroipjwF28g3ySrz9oKKa8T34s0cv1M+NCpPIwIxq6JoySlqL1
- 0rHLwf0BXI0oJyVxUTI5IakuMkkaBpYHHRA3peHdD4fja7BdJbRgrGt+Aobpv011Pg==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 29.12.21 um 19:55 schrieb Jean-No=C3=ABl Avila via GitGitGadget:
-> From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
->
-> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
-> ---
->  builtin/tag.c | 17 ++++++++++-------
->  1 file changed, 10 insertions(+), 7 deletions(-)
->
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index 6f7cd0e3ef5..c8fcb552ef1 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -483,6 +483,7 @@ int cmd_tag(int argc, const char **argv, const char =
-*prefix)
->  		OPT_END()
->  	};
->  	int ret =3D 0;
-> +	const char *only_in_list =3D NULL;
->
->  	setup_ref_filter_porcelain_msg();
->
-> @@ -542,13 +543,15 @@ int cmd_tag(int argc, const char **argv, const cha=
-r *prefix)
->  		goto cleanup;
->  	}
->  	if (filter.lines !=3D -1)
-> -		die(_("-n option is only allowed in list mode"));
-> -	if (filter.with_commit)
-> -		die(_("--contains option is only allowed in list mode"));
-> -	if (filter.no_commit)
-> -		die(_("--no-contains option is only allowed in list mode"));
-> -	if (filter.points_at.nr)
-> -		die(_("--points-at option is only allowed in list mode"));
-> +		only_in_list =3D "-n";
-> +	else if (filter.with_commit)
-> +		only_in_list =3D "--contains";
-> +	else if (filter.no_commit)
-> +		only_in_list =3D "--no-contains";
-> +	else if (filter.points_at.nr)
-> +		only_in_list =3D "--points-at";
-> +	if (only_in_list)
-> +		die(_("the '%s' option is only allowed in list mode"), only_in_list);
->  	if (filter.reachable_from || filter.unreachable_from)
->  		die(_("--merged and --no-merged options are only allowed in list mode=
-"));
+Often developers want to set a remote branch (i.e. upstream branch)
+for the local branch according to their `push.default` settings. For
+example, beginners often (may be most of the beginners) run
 
-Shouldn't these two be changed as well?
+	git push -u origin <current_branch_name>
 
->  	if (cmdmode =3D=3D 'd') {
+If the `push.default` configuration is set, people may want to set
+the upstream to that branch that satisfies the `push.default`
+configuration. For example, if the `push.default` is set to
+'current', developer may want to do like this -
+
+	git push -u <default_repo> <current_branch>
+
+So, it would be great if 'git push -u' (i.e. without <repo> and
+<refspec>) by default do this. If `push.default` is not set or has
+a value other than 'matching', it would do this - 
+
+	git push -u <default_repo> <current_branch>
+
+And for `push.default`= 'matching', it would set all the remote
+maching branch as upstream of their respective matching local
+branches. E.g. if 'branch1' and 'branch2' branches both exist in
+the local as well as remote repo, 'git push -u' would set the remote
+'branch1' as the upstream of local 'branch1' branch and remote
+'branch2' branch would be set as the upstream of local 'branch2'
+branch.
+
+Note, 'git push -u' for push.default=matching, already works. 
+
+This patch series addresses this.
+
+In v0: argumentless 'git push -u' was blindly passing default remote
+name and current branch's name as argv[0] and argv[1] respectively.
+This was affecting `push.default` setting.
+
+From v1: The default remote is still used for the <repository> value.
+But <refspec> depends on the current push configurations. If
+`push.default`='matching', it pushes to the upstream as it should and
+sets upstream respectively. For other values of 'push.default', it
+pushes to the remote branch with the same name as the current
+branch and sets that branch as the upstream.
+
+In v2 and v3: various test cases were added and improved
+
+In current version: tests for 'git push -u' with other options are
+added. This includes '-f', '--prune', '-d', '--mirror'.
+
+
+Abhradeep Chakraborty (1):
+  push: make 'set-upstream' have dafault arguments
+
+ Documentation/git-push.txt |  10 +++
+ builtin/push.c             |  11 +++-
+ t/t5523-push-upstream.sh   | 125 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 144 insertions(+), 2 deletions(-)
+
+Range-diff against v3:
+1:  64655de6ca ! 1:  d154c7d1f6 push: make '-u' have default arguments
+    @@ Metadata
+     Author: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+     
+      ## Commit message ##
+    -    push: make '-u' have default arguments
+    +    push: make 'set-upstream' have dafault arguments
+     
+         "git push -u" (set-upstream) requires where to push to and what
+         to push.  Often people push only the current branch to update
+    @@ t/t5523-push-upstream.sh: test_expect_success 'push -u :topic_2' '
+     +	test_config remote.pushDefault upstream
+     +}
+     +
+    ++check_empty_config() {
+    ++	test_expect_code 1 git config "branch.$1.remote" &&
+    ++	test_expect_code 1 git config "branch.$1.merge"
+    ++}
+    ++
+     +for i in simple current upstream nothing
+     +do
+     +	test_expect_success 'push -u with push.default=$i' '
+    @@ t/t5523-push-upstream.sh: test_expect_success 'push -u :topic_2' '
+     +		git push -u &&
+     +		check_config main upstream refs/heads/main
+     +	'
+    ++
+    ++	test_expect_success 'push -u -f with push.default=$i' '
+    ++		default_u_setup $i &&
+    ++		git push -u -f &&
+    ++		check_config main upstream refs/heads/main
+    ++	'
+     +done
+     +
+    -+check_empty_config() {
+    -+	test_expect_code 1 git config "branch.$1.remote" &&
+    -+	test_expect_code 1 git config "branch.$1.merge"
+    -+}
+    ++for i in simple current upstream nothing matching
+    ++do
+    ++	test_expect_success 'push -u --prune with push.default=$i' '
+    ++		default_u_setup $i &&
+    ++		git push upstream main:test_u215 &&
+    ++		git push -u --prune >out &&
+    ++		check_config main upstream refs/heads/main &&
+    ++		test_i18ngrep "[deleted]" out &&
+    ++		test_i18ngrep ! "Branch '"'"'test_u215'"'"' set up to track" out
+    ++	'
+    ++
+    ++	test_expect_success 'push -u --mirror with push.default=$i' '
+    ++		default_u_setup $i &&
+    ++		test_might_fail git branch mirror1 &&
+    ++		test_might_fail git branch mirror2 &&
+    ++		git push -u --mirror &&
+    ++		check_config main upstream  refs/heads/main &&
+    ++		check_config mirror1 upstream refs/heads/mirror1 &&
+    ++		check_config mirror2 upstream refs/heads/mirror2
+    ++	'
+    ++done
+     +
+    -+test_expect_success 'push -u with push.default=matching' '
+    -+	default_u_setup matching &&
+    -+	git branch test_u &&
+    -+	git branch test_u2 &&
+    -+	git push upstream main:test_u2 &&
+    -+	git push -u &&
+    -+	check_config main upstream refs/heads/main &&
+    -+	check_config test_u2 upstream refs/heads/test_u2 &&
+    -+	check_empty_config test_u
+    ++for i in '' '-f'
+    ++do
+    ++
+    ++	test_expect_success 'push -u $i with push.default=matching' '
+    ++		default_u_setup matching &&
+    ++		test_might_fail git branch test_u &&
+    ++		test_might_fail git branch test_u2 &&
+    ++		git push upstream main:test_u2 &&
+    ++		git push -u $i &&
+    ++		check_config main upstream refs/heads/main &&
+    ++		check_config test_u2 upstream refs/heads/test_u2 &&
+    ++		check_empty_config test_u
+    ++	'
+    ++done
+    ++
+    ++test_expect_success 'push -u -d will fail' '
+    ++	git checkout main &&
+    ++	test_might_fail git branch --unset-upstream &&
+    ++	test_must_fail git push -u -d
+     +'
+     +
+     +test_expect_success 'push -u --dry-run' '
+-- 
+2.34.1
 
