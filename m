@@ -2,103 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C43FC433EF
-	for <git@archiver.kernel.org>; Sat,  1 Jan 2022 22:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C166BC433FE
+	for <git@archiver.kernel.org>; Sat,  1 Jan 2022 23:17:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232731AbiAAW7S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Jan 2022 17:59:18 -0500
-Received: from mout.gmx.net ([212.227.15.15]:59835 "EHLO mout.gmx.net"
+        id S232768AbiAAXRo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Jan 2022 18:17:44 -0500
+Received: from mout.gmx.net ([212.227.15.18]:56459 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231582AbiAAW7S (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jan 2022 17:59:18 -0500
+        id S231582AbiAAXRo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jan 2022 18:17:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1641077948;
-        bh=TmO5zCyP3yBiUoJZXGVQglAen1V8GXJsH/p8jb0xHK0=;
+        s=badeba3b8450; t=1641079062;
+        bh=yAivFu6UYZHDzPK6nc+WEB8SrB5ly1IeRalrV9Hi67k=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Rpr2xOEpgRwstq/HekpLh6C/a11g5TKDSW6ZeGGSoS/vvgAuHoB5/rrk14Clwvdfh
-         cEvggHC8dVklAap6c3xEJiDO+KHyj3f4ArMGa2ZpkQkjxpkhytnlHgcjGkPL0sW97v
-         lDhtYM62b6td3RcuPSzDjcy/KbJ7HA3UZ1DZCJvA=
+        b=HYYRw6JVrCl8cvO5VWFKRN+BGi8xz0MqqmruqFEWVJXcEqoPxepcyKstrnN0czEy5
+         r09z7qE1oiHs8gCNqpD17hIB1eAoXNDLuuJZg16iKPslofYN517PZuc8I1CAFJozG3
+         hJANSVJ58cjhnH4mM233NHTDyvCMJJW9ZMmG0I68=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.29.215.148] ([89.1.212.167]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M3UZ6-1n4LZW1PNK-000acB; Sat, 01
- Jan 2022 23:59:08 +0100
-Date:   Sat, 1 Jan 2022 23:59:04 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MKsjH-1mpicl0x1Z-00LHQO; Sun, 02
+ Jan 2022 00:17:42 +0100
+Date:   Sun, 2 Jan 2022 00:17:40 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH] name-rev: deprecate --stdin in favor of
- --annotate-text
-In-Reply-To: <xmqqpmphx1yh.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2201012357040.7076@tvgsbejvaqbjf.bet>
-References: <pull.1171.git.git.1640492910432.gitgitgadget@gmail.com> <xmqqpmphx1yh.fsf@gitster.g>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] t4126: this test does not pass SANITIZE_LEAK; quit
+ claiming it does
+In-Reply-To: <pull.1177.git.git.1640927702745.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201020012010.7076@tvgsbejvaqbjf.bet>
+References: <pull.1177.git.git.1640927702745.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:s5I6Kv2D+P0c6cBGQMavuSLuD/DsDCXOgRcBuQtWonKarVC0PI6
- v0x49q05lssWlqq45GUKk/f1SUQDuH7u3f3WuMY72PNtzvw0zWe/erlxtDJEKSakGIl8AW3
- 9FWOo9d5W37P7vuvcIMRLe6/1GNhsvB5FGKNhZh6xFe6T2cKehC+9yZnjSNstKb+aJ4RmC6
- WG/QIVw7EQXIl9Ec+BEbQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6rcvadUOpFM=:BXNTj+Z6n/g2WstNA6xr9e
- 83g8oOvhsSZFIO+JYjoGEnaBWIBlg6CutjzxurYlt+vLnP+HGrqYhsWWPYEcEGPVDbQaXBwCM
- IFMD7uc06o89Ay0cO44t0Da5gxP6RDsx28ykoyrkVMQNqkxFzHvK9eotAfGr+IszOvldrJURv
- NAU/z0gFsODI2K/mO844/CCBvXvAORSAHKz6ZQRW0qVak8vmESqKgu/LqylT/IcPud6QzvS5W
- nORKoa1YeqFfQWAXODOeE15JRZI7Mg/B+w5MxF0VYXi8K3jpq6qP1G+GU7MWjuEiBCbBc+WOo
- zCwRX7YOVnWvUFv0Ykl8anD/oFur4VqO3rpvQbYlEPyKjjVzvDW9lWZgUuYbdWwhbrW25OPai
- zouJYeZ2TbPkaJzs2EsYrcifmToTK86i7SMK5QW+Lr9KTSdj2Ple/6p3WtFMKtQ1+8FZkUk8e
- mUcbzngKRc0GYe/jyeJrAizcIRfPPD7wWaetsIQP17JKXXwWD5jtdxfqYIX0f3YLEJOgpbXOM
- O2C4Ox5x76yeYyfxJ+T0ONRSbaR4BcXGZv6hE8+e/dqolsPdFmrIjLTl8b73x+ZcZ/tQmEzQZ
- dFVo345mYYiRHScDPXd/jUFrnztYzyFTmGUDZEG+tn0LGlJjfcVPFYdPqxe6quZjl+VZvKOTq
- xr8HPkKhyQK69x4GoRrjX6maUiY6bMRGY8+T+qCOXG7u/sfVu0vi5yqjFsIuQUeOvwgK44b5r
- kKA5w9FH1CxNNPJ2Ji7cT/KkH3bML4HsfYluz79QU1ZlClEX+VhQ5xOmKAe1Br5C+nV+gcSGP
- MAEQN0MYimT3TFWtarozKngLYXtbLVoZK5WYLMZvRl6p+CfMoGV6x2XlNAkdM3uTVoVObWrfb
- ssJIJd4hlySor/HvtgQbBiA2mltJ0wcizBwll8CJmAwBlMuaLFe8UwnYZIyoE9qID5Tknwd6u
- VTEuskgC8bGC/xoBa6PfR90NTHSnOyi6qPeLB7oHs0eUtIEK+R7ETP4e4cZHzMnX6Lv03HXAr
- EnEFFYLMcSbczd2lzjM6LBehv1oPWIWeKBYdgcRSps+eo9/ZJhrvkmbajEGYb/98oKNeJaptL
- 0JNalhExrh4Dh8=
+X-Provags-ID: V03:K1:eCt96r8KKfKJPIG/583YH5HUhj93GMTnDLRGEo7CnFU88rTS3QB
+ c5/uFhgqhqUM9AF/33zmrXbf7W2jvqwRRu4hRNeZBm+/zXIlXUfIEDjUnZvi9P6/ey1ymPG
+ HblMZvVWGsaEvUCRJJYrwCmgubBudUa+WpzZCnOMouKPGpoNEpr5O7eEd2dnpFcqk76HbBY
+ HELsoDtwebsNwk4KtcIlA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Un54623InVk=:SIYZkMF52y8nVgaMBXDlyx
+ sYuYSiC1oOvDj0C/qjFmRMBYYIWWFsGJiYdAjfq/e8Ie7wGDHyM3PNGcAbuPKQN/rNy28ylpf
+ VB1ixTjy7OMan8swMCOjGPGHBJxvM2Nbqq17P3tajxR26VwRcZ1w7MX+BWG8BtpG82Y+ARUBk
+ N8p3BLrLyMftOB9RtkcGo7ApmY/CtdKtlxuNM92oLLm/tmnS43N4iTgQIkn7QZnqWn5mRz3gs
+ eagNK1pEa8xdIClFUGfayrMpnReNtiMza4jKt1pbeJ0NG9S7n73FUfSIImFp67xItiCsVfbtn
+ UfHD646x1oSqWUt0QoFA2DWoAOvyGa5IsyVQ/j+Qzp+RVCHCjBxZelOXPAD06FB6SWixvFy4N
+ FTzLOOYglSVcQ90ZDRH3AtVxxYKODClTJVE/4oLhvbjz56hmiwKceRkSgZcjcOhnxYS7dASdb
+ 46N/g7VNkOB+BiAqbBPWMzhj++OXFFk159BoBxpUEaO+4Q/O9d7ONqnIV2qj0vLBC0h17xmDu
+ Yvfj8/Y3EXhD8FsSDp5aCL/gXn9pmDvNziphrrCvWUZfRV/IGx9a9DNrnUSizeQZhSqKueOUo
+ JAu0oEigavjIpEhstndCh/Zkv4vZgsOmf1yrL/sAdwVCyzgMo/iRBlEWUewPkA1FN6NBtMj9h
+ prglzGIHlIKFlyH2SbwoMvF5eSwM2fM9lUyn/eKxSSLJH3DCTB2XaHIqfePmcTpdS7fpCrj8f
+ /PMMkcOGo4HXLgG+eOwcMk4BdjARGFxl3EUzHWmexZp3Yuwteu9XO5yqyxAs00YX1K8BpGQa/
+ 4I+7YiLl5YTsJabkharRoBiGY2e0srJSYjjy9Sho3CcBKhR3Nf0ZZHLkgdX4vyqjF7jJWeB8I
+ wnjUWLzB0IYDB13rNg+zFIm5uuZZey5xXumbQ4Db1EcR8Qy6g3hQ8xEIkN3T094x2BNDqqvU5
+ 7LlDJ/357tqkPxZHaXHFlajybP8LNtFBbBXPkXgybVZcwEkrhdCqW4cDDDvDCKXlVTw1UlQU7
+ ZgSC5Q4E2PecqWr0KhMPuqRFhyXu2htwOrBKa/dh/wca7ZXbobLHIBP96+dqBmfuw4NNDSUUk
+ luUx+05EGmg64U=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Elijah,
 
-On Mon, 27 Dec 2021, Junio C Hamano wrote:
+On Fri, 31 Dec 2021, Elijah Newren via GitGitGadget wrote:
 
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> From: Elijah Newren <newren@gmail.com>
 >
-> As name-rev is Dscho's brainchild, I think it is benefitial to ask input
-> from him, so I added an address to the CC: list.
-
-Thank you!
-
-> > From: John Cai <johncai86@gmail.com>
-> >
-> > Introduce a --annotate-text that is functionally equivalent of --stdin=
-.
-> > --stdin does not behave as --stdin in other subcommands, such as
-> > pack-objects whereby it takes one argument per line. Since --stdin can
-> > be a confusing and misleading name, rename it to --annotate-text.
-> >
-> > This change adds a warning to --stdin warning that it will be removed =
-in
-> > the future.
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>     t4126: this test does not pass SANITIZE_LEAK; quit claiming it does
 >
-> I know I've suggested the name, but 'text' in --annotate-text is a
-> low value word in an option name where every byte is precious.
-> "Annotate" is very good to convey what is done to the object of the
-> verb, but "text" stresses the wrong thing (we do not annotate
-> binary,o we annotate text) without saying where the text comes from
-> (i.e.  standard input).  Perhaps "--annotate-stdin" would be a much
-> better name.
+>     My builds in several different topics keep running into this, and I'=
+m
+>     sure it's a false positive -- I didn't change anything affecting thi=
+s
+>     test. I've just been ignoring it and submitting anyway, and I suspec=
+t
+>     others are too.
 
-I agree that `--annotate-stdin` is better, especially since people who
-might look for a replacement for `--stdin` in the documentation are much
-more likely to find what they're looking for.
+So that's what is causing this. Thank you for chasing it down, it has been
+on my TO-DO list e.g. due to
+https://github.com/git-for-windows/git/runs/4622790431?check_suite_focus=
+=3Dtrue#step:5:146
 
-In addition to this, I also agree with Junio on the deprecation needing to
-be done carefully.
+Given that it points to a leak in `cmd_format_patch()` (oh no, we're
+_LEAKING_ some _MEMORY_ in a built-in, how did that ever happen, we must
+free it before... *checks notes* ... wait, we're quitting immediately
+after this function anyway? </sarcasm>) I wonder whether the disruption
+caused by `linux-leaks` should really be considered worth the benefit.
+
+Anyway. Thank you for the patch!
 
 Ciao,
 Dscho
