@@ -2,57 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AED3CC433F5
-	for <git@archiver.kernel.org>; Sat,  1 Jan 2022 20:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A11ABC433F5
+	for <git@archiver.kernel.org>; Sat,  1 Jan 2022 21:11:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232664AbiAAUT1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Jan 2022 15:19:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58192 "EHLO
+        id S231552AbiAAVLW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Jan 2022 16:11:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231513AbiAAUT0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jan 2022 15:19:26 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF191C061574
-        for <git@vger.kernel.org>; Sat,  1 Jan 2022 12:19:25 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id z29so120422024edl.7
-        for <git@vger.kernel.org>; Sat, 01 Jan 2022 12:19:25 -0800 (PST)
+        with ESMTP id S229961AbiAAVLV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jan 2022 16:11:21 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97C5FC061574
+        for <git@vger.kernel.org>; Sat,  1 Jan 2022 13:11:20 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id x15so120934664edv.1
+        for <git@vger.kernel.org>; Sat, 01 Jan 2022 13:11:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=QxnnVgD8D1GbFczFv5SPwNRzcGls2U20fEkHyrh7WCs=;
-        b=ki2H+lm/SPtDyIcKYeixCdcFCxtzq73xDKEI2PP0DOFVDcdA0ZwPHqxnqTWbMhVBtG
-         8F/yyMqnAYgrP8Y5SrpjZDlCSfzMhgk/dPxjQIGd54pwDKxRcA8i6Wq82f9HzWYojw0+
-         6kkO6SP/9LiWMT1L/8tahiPzvAhHRRBWIk4w57ERwmEiVtnk8G1YlWglAoXUXHHEjcVb
-         297Hh4Hq+jxCKG4zKulz4DLVH0j8TAkLPeMTrgLaQ4+pLxkvCVc60AJiXgTjJseEtrs9
-         WNTbapzwIixcGTBIjw+xbBMQtCZZCCWGbkcgxjTdEa5usy02P7G/zExREiWmAH8oMTs6
-         xtFA==
+        bh=x+lqEnedWahtWcBi9Ih9gVueIT0iSxO8csNnW6xKPQQ=;
+        b=eBsaAduAyTMKpeYJfa+Lz4Mu6RqgbvedG3Z4uH3RKfmrfo6OQJLVmB3mtkLGArUlUI
+         05wLv2heW0uJXBA6SpiffrfIscFXK5Rjm7zviBtX9rHZtbFsAbC1PWK4ThHIWx7po95j
+         L8WXSslsdXWQ2VagO3s9uK3uTP6rumvlwpARhQ/pGaoTTHghfTuo7Pc/LBW+DoCKwbO1
+         CfIbISCvfb5cxR02BV9q+4H+8bvgG8VAKbx8i4PF7TSCAkpAEgQ0gdN4xXJZBFh8C9se
+         OIf83nRsM++L+xH23JeGr+DXuqj7HQrMrSkJX/7QGjj4OVhKM/MCrR6uTv029p+VBSBw
+         KofQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=QxnnVgD8D1GbFczFv5SPwNRzcGls2U20fEkHyrh7WCs=;
-        b=IjKkDfT5ewF4Av1GGGELjtWxDxQ5oDT2Phg/+EkVd6xwmIdcCXlAJtj4NZ9Ifbq2E2
-         0HEpE6rmfALpuXqGwaQt2b8Tk6zdVn8jzKyUZ1D9SSL0+n4lnfvN5pEHhagbEss+8FAf
-         NnScAw6S8Ypp42zHQuBFz7BPHAREe5uHCFb8ec55FEK+lcMgZY+ZGZhest2/61d00Jj6
-         SDSEqRiAE9uW9a5h7nFp9q1mtOkWAyR0eA6m6Ey8SdPn5QvEwyQnxNRu58SeNeT4p4Xp
-         Gyjzc136i/XA/mDgTeT8N0y5d7o4gwm6n54KvheBiC5s8WJoNVi5d3bcJNaDst5m8R+u
-         KBqg==
-X-Gm-Message-State: AOAM531jH20saW+c6UAdYPm9rvlbaZpq1gK+B26BDJ+v9hDCZwrq6lJK
-        KkE/SAkkKxhNo3fX1xQ5lUf48yXZmUaDWTwR7dPLikXXEtQ=
-X-Google-Smtp-Source: ABdhPJzIN3T9K0GoWBiNO6EYJLeZzzzOcS/MffWmdNg0XrK7mJqZ4ZcAI4rTWBDEPG7947wbNEfobaCbV6FtnbGH9LE=
-X-Received: by 2002:a17:907:160e:: with SMTP id hb14mr31753814ejc.328.1641068364495;
- Sat, 01 Jan 2022 12:19:24 -0800 (PST)
+        bh=x+lqEnedWahtWcBi9Ih9gVueIT0iSxO8csNnW6xKPQQ=;
+        b=tVqzHps/+xb0bKvW4J6DSU7eGQHvSWxs+8zu+kQfjD3CG9Lz9jrP3n8WwwhegqufmN
+         7RuF/+ikDS/7iqqAs+wMmQPtOzYgE+6653Jtwh1gaP6AOrppZJZXwPQHCR7lDWaMvfhH
+         2z1DqvaNlkUqhzH3OF05i3K4S7yuhv2p4EXaVb7TBBx9TpvWl3JaJApIagZQ6eYzODib
+         6mOA8YXBXUlz+iO4SMkL1m4VRtOOGXGh+02cUK1+7GcQNFJlWGV4cVAGeYh/T7Q70LpK
+         tvppWmmrn1JQ1BYcGCg/bC6839VQigL5RQbGrvwS/k1ROpCHlTXPQIaqGLwFzPsWhQjO
+         ewaQ==
+X-Gm-Message-State: AOAM533jjszYhhiArlOdjoI4Q8r03dR8mNtX1aDFI6XrSWtVqt/oDJVW
+        m3A97NMr24ig7vJ23JqZ6gm3EAIRVrfBmgI+meg=
+X-Google-Smtp-Source: ABdhPJygOqnCw33w/NAzrPQIbhHpS3wuUdta6Cp4iXT/iyy3tUaFxUOxcNOtJnm2dr3Cs62p3k/wGICAS2/WSzifkDY=
+X-Received: by 2002:a05:6402:2891:: with SMTP id eg17mr39502475edb.33.1641071479032;
+ Sat, 01 Jan 2022 13:11:19 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1114.git.git.1640927044.gitgitgadget@gmail.com>
- <32ad5b5c10da7204dc4a2d3ca74f8d73745925a7.1640927044.git.gitgitgadget@gmail.com>
- <20220101200836.msaewswefs5uvkyq@gmail.com>
-In-Reply-To: <20220101200836.msaewswefs5uvkyq@gmail.com>
+ <9fc71f4511b163bec53616d82e8fe5214facf060.1640927044.git.gitgitgadget@gmail.com>
+ <20220101200824.isvinnb2zmobhfqq@gmail.com>
+In-Reply-To: <20220101200824.isvinnb2zmobhfqq@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 1 Jan 2022 12:19:13 -0800
-Message-ID: <CABPp-BE8+kRLtEG2OVULGJ7UWX6FFKdoAU_=sMAbmiXPMuafAA@mail.gmail.com>
-Subject: Re: [PATCH 6/8] merge-ort: allow update messages to be written to
- different file stream
+Date:   Sat, 1 Jan 2022 13:11:07 -0800
+Message-ID: <CABPp-BHpK8hPsiuHoYsf5D_rjcGLSW-_faL3ODoh56pG_2Luwg@mail.gmail.com>
+Subject: Re: [PATCH 4/8] merge-tree: implement real merges
 To:     Johannes Altmanninger <aclopte@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -65,31 +64,69 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sat, Jan 1, 2022 at 12:08 PM Johannes Altmanninger <aclopte@gmail.com> wrote:
 >
-> On Fri, Dec 31, 2021 at 05:04:02AM +0000, Elijah Newren via GitGitGadget wrote:
+> On Fri, Dec 31, 2021 at 05:04:00AM +0000, Elijah Newren via GitGitGadget wrote:
 > > From: Elijah Newren <newren@gmail.com>
 > >
-> > This modifies the new display_update_messages() function to allow
-> > printing to somewhere other than stdout.
+> > This adds the ability to perform real merges rather than just trivial
+> > merges (meaning handling three way content merges, recursive ancestor
+> > consolidation, renames, proper directory/file conflict handling, and so
+> > forth).  However, unlike `git merge`, the working tree and index are
+> > left alone and no branch is updated.
+> >
+> > The only output is:
+> >   - the toplevel resulting tree printed on stdout
+> >   - exit status of 0 (clean) or 1 (conflicts present)
+> >
+> > This output is mean to be used by some higher level script, perhaps in a
+> > sequence of steps like this:
+> >
+> >    NEWTREE=$(git merge-tree --real $BRANCH1 $BRANCH2)
+> >    test $? -eq 0 || die "There were conflicts..."
+> >    NEWCOMMIT=$(git commit-tree $NEWTREE -p $BRANCH1 $BRANCH2)
+> >    git update-ref $BRANCH1 $NEWCOMMIT
+> >
+> > Note that higher level scripts may also want to access the
+> > conflict/warning messages normally output during a merge, or have quick
+> > access to a list of files with conflicts.  That is not available in this
+> > preliminary implementation, but subsequent commits will add that
+> > ability.
 > >
 > > Signed-off-by: Elijah Newren <newren@gmail.com>
 > > ---
-> >  merge-ort.c | 7 +++++--
-> >  merge-ort.h | 3 ++-
-> >  2 files changed, 7 insertions(+), 3 deletions(-)
+> >  Documentation/git-merge-tree.txt | 28 +++++++----
+> >  builtin/merge-tree.c             | 55 +++++++++++++++++++++-
+> >  t/t4301-merge-tree-real.sh       | 81 ++++++++++++++++++++++++++++++++
+> >  3 files changed, 153 insertions(+), 11 deletions(-)
+> >  create mode 100755 t/t4301-merge-tree-real.sh
 > >
-> > diff --git a/merge-ort.c b/merge-ort.c
-> > index 6237e2fb7fe..86eebf39166 100644
-> > --- a/merge-ort.c
-> > +++ b/merge-ort.c
-> > [...]
-> > @@ -4271,6 +4272,8 @@ void merge_switch_to_result(struct merge_options *opt,
-> >               trace2_region_leave("merge", "write_auto_merge", opt->repo);
-> >       }
+> > diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
+> > index 58731c19422..5823938937f 100644
+> > --- a/Documentation/git-merge-tree.txt
+> > +++ b/Documentation/git-merge-tree.txt
+> > @@ -3,26 +3,34 @@ git-merge-tree(1)
 > >
-> > +     if (display_update_msgs)
-> > +             merge_display_update_messages(opt, result, stdout);
+> >  NAME
+> >  ----
+> > -git-merge-tree - Show three-way merge without touching index
+> > +git-merge-tree - Perform merge without touching index or working tree
+> >
+> >
+> >  SYNOPSIS
+> >  --------
+> >  [verse]
+> > +'git merge-tree' --real <branch1> <branch2>
+> >  'git merge-tree' <base-tree> <branch1> <branch2>
 >
-> is it intentional that the previous patch doesn't have this call?
+> This is really exciting. It could replace the merge-machinery of git-revise
+> (which is a "fast rebase" tool).
+> I think for cherry-pick/rebase we need to specify a custom merge base,
+> would that suit the new form?
 
-Ugh, oops.  Yeah, bad split of the patches; this should have been part
-of the previous one.
+I'm glad you're excited about it.  :-)
+
+I think having a server side tool for replaying commits (which can
+double as a fast rebase/cherry-pick tool on the client side) is also
+important, but I think it should be part of a proper builtin, not some
+script that calls out to `merge-tree --real`.
+
+`merge-tree --real` is simpler, though, so I implemented and submitted it first.
