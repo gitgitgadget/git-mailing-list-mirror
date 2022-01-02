@@ -2,59 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1755FC4332F
-	for <git@archiver.kernel.org>; Sun,  2 Jan 2022 17:16:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14291C433EF
+	for <git@archiver.kernel.org>; Sun,  2 Jan 2022 17:16:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229955AbiABRQA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Jan 2022 12:16:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45586 "EHLO
+        id S229962AbiABRQB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Jan 2022 12:16:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229831AbiABRPy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Jan 2022 12:15:54 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FE09C061785
-        for <git@vger.kernel.org>; Sun,  2 Jan 2022 09:15:54 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id b186-20020a1c1bc3000000b00345734afe78so17267205wmb.0
-        for <git@vger.kernel.org>; Sun, 02 Jan 2022 09:15:54 -0800 (PST)
+        with ESMTP id S229872AbiABRP5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Jan 2022 12:15:57 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5EEEC061792
+        for <git@vger.kernel.org>; Sun,  2 Jan 2022 09:15:56 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id n10-20020a7bc5ca000000b00345c520d38eso17280389wmk.1
+        for <git@vger.kernel.org>; Sun, 02 Jan 2022 09:15:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=dIrCKVVzRiAOKMSwfvZ+IUNVZURkizaVoO9uiaN5RHQ=;
-        b=iMJ6tn5hYLWHIRyKF6N7GppYpJMogTHYeCi3f7EaB1Y+JHpYl6CuZykVYPCRVErv/F
-         Luuodkloql6AT6f8GJbb605UufBv6LidVts+bGd59JLiPXFEGSyFnq3WpTTvPG7F47HR
-         qSczvYNbTLsMo34JEm8bqdSRwaxgVxEgYYA13nItRhAyZrZKy/Bsq9rTftXqjKE2L9Or
-         1Bgms5X8rgkBOou0d8cUIzDQGo+djuBw3FBxzBCJJNhhQjjjJQwl3DYdTSN+dMyDwbdM
-         MxuiXy+wXhvcQvfjNMvsQ7IkpezYIhW+/ropAF0shUD9W4JSLf3YnNd8YVS8ndUZmAHg
-         Lq9w==
+        bh=lJ3JP/DgW2qFrsjmp5khrg3BgbmcWXCzjZiWjRlHLBc=;
+        b=lGGntqG3bklmGFJkBFUmChcz6BtB7wSX+atZitXduYaX1ySTW8dJ56Du10Z1iYGW3R
+         rhKhR3SEV+kfoIKNNO9Wu8Jcz2Wa3Crt2B62K8fEd67XcpL9m9WZdXAf45+wIOsQe+fN
+         M2jkCmiCW9VnJ+1yyHX8Kq7bwbMVJTnvVdxM0u8eGz/jSZFUIRHmLcbZpzKQhplIvF+H
+         ACwKhNnTHrZmr09uQYYw6J3mTB2wvGtAO4h+BRW6RJfwkd2VKfEXwT6jKP6Vj6z+PpmI
+         JY8WERVZDMCBGnzUvNoIdRKqxavC8qSzNdBEywpR5XzPmGMpK+WEfIRkBhmAmz1gbG/F
+         ooFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=dIrCKVVzRiAOKMSwfvZ+IUNVZURkizaVoO9uiaN5RHQ=;
-        b=s8HTY/8xk7fR/+m2R8085WCLAQkee+Pms9jlSlufvl/dAtdGPkOlOwhYF3tTHpVCab
-         GM5gsVxmFStxKCc9Q2rQFgoXg52RAHQe9VXFi28+83IhzwqSaxYixlKDCInu0m8az+Sl
-         nDAJK54+HqOBpR9xN9zb/d1LH+2tfYVTU1Hm0AhQG8l4WC4/4OQXs6B8bXpH2VJcaUL1
-         B2FNdTr2paO1KcdyNhhbrfYKuLvvlgiFpN0SG2LWk83ygjhR1UjXveGiIspDjOi1ZvZS
-         FBdv53WwsSJ4cDILsIXJ5Y8Ttn2eJGvr6DEqH1LGJizYe8IRXKsHFZofJonipkxpZpD4
-         d7Nw==
-X-Gm-Message-State: AOAM531uFEDOMQry0RpHvC64HdKrwiKHGQJ00gtuEnra3gLBwpi9DfJ4
-        II/kj2QxQ3TQQjFSGEOf5W3B2WxNUDQ=
-X-Google-Smtp-Source: ABdhPJzfpfApcQV1TZrkej3XmHlg25nHeboaeOeiICtc+9gaNsPpfVtHjVmhzQTBpRN6w94ryNU4Hg==
-X-Received: by 2002:a05:600c:24e:: with SMTP id 14mr35470081wmj.67.1641143752573;
-        Sun, 02 Jan 2022 09:15:52 -0800 (PST)
+        bh=lJ3JP/DgW2qFrsjmp5khrg3BgbmcWXCzjZiWjRlHLBc=;
+        b=czyAvvheb/ICXR1LO9ODMGbdIN9UU0JLgsOn1fqdeV0G55466kNtGtq5C9S+k+3I8Q
+         hANHSXFn5djNQjujPrpJM/6DaEO2gGTBvtLQM2PgV5zp3GcD0Ui1nZaw22qMLwBqPcMT
+         amtxfW3/9COCF45TaGoR8FEHZRKoj/U+i94IGqIc3st1RdDkRJfxSJhFjAmcgDm/0rTD
+         NV3jWMEt4JSouiom8ozEEKADahVsbQjTeTuWvJ7JB4+K4XOUukLmOCqsJuUj4D0GeBOh
+         gXfORPu9QFtPbqryxuMwfIdBZmjRUAAH7It0p/Bet3sA40E/YKjb775iwPUUgKkQi1KD
+         pBwg==
+X-Gm-Message-State: AOAM530ZRX87cyz5PAuGOGNNwhW5UVAanmb0O0VGOZCk6NI4gdRAHWot
+        Fw22oY+WbcDLrlz98ZyP+S/gEZgqqeQ=
+X-Google-Smtp-Source: ABdhPJwXds9AxNj0WMaL4MPqOU53A5U8G+GI4uM9dNXF0GkLA6X3r6h/kPbk54jPjf3WYzQU5IURTg==
+X-Received: by 2002:a7b:c243:: with SMTP id b3mr36208456wmj.61.1641143755217;
+        Sun, 02 Jan 2022 09:15:55 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w21sm27664680wmi.19.2022.01.02.09.15.51
+        by smtp.gmail.com with ESMTPSA id v1sm37745165wru.45.2022.01.02.09.15.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Jan 2022 09:15:52 -0800 (PST)
-Message-Id: <a9d8a50d66676ea10292e8319e3eacbf7bcd83f5.1641143746.git.gitgitgadget@gmail.com>
+        Sun, 02 Jan 2022 09:15:54 -0800 (PST)
+Message-Id: <59e1e8aa1b47765f7e914e68a875e62df43f99ef.1641143746.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1088.v4.git.1641143745.gitgitgadget@gmail.com>
 References: <pull.1088.v3.git.1640804107.gitgitgadget@gmail.com>
         <pull.1088.v4.git.1641143745.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Sun, 02 Jan 2022 17:15:39 +0000
-Subject: [PATCH v4 05/11] i18n: tag.c factorize i18n strings
+Date:   Sun, 02 Jan 2022 17:15:42 +0000
+Subject: [PATCH v4 08/11] i18n: refactor "unrecognized %(foo) argument"
+ strings
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,47 +74,76 @@ From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- builtin/tag.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ ref-filter.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index dfdcfd37956..82e09c1b83d 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -483,6 +483,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 	int ret = 0;
-+	const char *only_in_list = NULL;
+diff --git a/ref-filter.c b/ref-filter.c
+index 7260fce31d0..adbcc680812 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -341,7 +341,7 @@ static int objectsize_atom_parser(struct ref_format *format, struct used_atom *a
+ 		else
+ 			oi.info.disk_sizep = &oi.disk_size;
+ 	} else
+-		return strbuf_addf_ret(err, -1, _("unrecognized %%(objectsize) argument: %s"), arg);
++		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), "objectsize", arg);
+ 	return 0;
+ }
  
- 	setup_ref_filter_porcelain_msg();
+@@ -374,7 +374,7 @@ static int subject_atom_parser(struct ref_format *format, struct used_atom *atom
+ 	else if (!strcmp(arg, "sanitize"))
+ 		atom->u.contents.option = C_SUB_SANITIZE;
+ 	else
+-		return strbuf_addf_ret(err, -1, _("unrecognized %%(subject) argument: %s"), arg);
++		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), "subject", arg);
+ 	return 0;
+ }
  
-@@ -542,15 +543,17 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		goto cleanup;
- 	}
- 	if (filter.lines != -1)
--		die(_("-n option is only allowed in list mode"));
--	if (filter.with_commit)
--		die(_("--contains option is only allowed in list mode"));
--	if (filter.no_commit)
--		die(_("--no-contains option is only allowed in list mode"));
--	if (filter.points_at.nr)
--		die(_("--points-at option is only allowed in list mode"));
-+		only_in_list = "-n";
-+	else if (filter.with_commit)
-+		only_in_list = "--contains";
-+	else if (filter.no_commit)
-+		only_in_list = "--no-contains";
-+	else if (filter.points_at.nr)
-+		only_in_list = "--points-at";
-+	if (only_in_list)
-+		die(_("the '%s' option is only allowed in list mode"), only_in_list);
- 	if (filter.reachable_from || filter.unreachable_from)
--		die(_("--merged and --no-merged options are only allowed in list mode"));
-+		die(_("'--merged' and '--no-merged' options are only allowed in list mode"));
- 	if (cmdmode == 'd') {
- 		ret = delete_tags(argv);
- 		goto cleanup;
+@@ -428,7 +428,7 @@ static int contents_atom_parser(struct ref_format *format, struct used_atom *ato
+ 		if (strtoul_ui(arg, 10, &atom->u.contents.nlines))
+ 			return strbuf_addf_ret(err, -1, _("positive value expected contents:lines=%s"), arg);
+ 	} else
+-		return strbuf_addf_ret(err, -1, _("unrecognized %%(contents) argument: %s"), arg);
++		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), "contents", arg);
+ 	return 0;
+ }
+ 
+@@ -440,7 +440,7 @@ static int raw_atom_parser(struct ref_format *format, struct used_atom *atom,
+ 	else if (!strcmp(arg, "size"))
+ 		atom->u.raw_data.option = RAW_LENGTH;
+ 	else
+-		return strbuf_addf_ret(err, -1, _("unrecognized %%(raw) argument: %s"), arg);
++		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), "raw", arg);
+ 	return 0;
+ }
+ 
+@@ -459,7 +459,7 @@ static int oid_atom_parser(struct ref_format *format, struct used_atom *atom,
+ 		if (atom->u.oid.length < MINIMUM_ABBREV)
+ 			atom->u.oid.length = MINIMUM_ABBREV;
+ 	} else
+-		return strbuf_addf_ret(err, -1, _("unrecognized argument '%s' in %%(%s)"), arg, atom->name);
++		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), atom->name, arg);
+ 	return 0;
+ }
+ 
+@@ -531,7 +531,7 @@ static int align_atom_parser(struct ref_format *format, struct used_atom *atom,
+ 		else if ((position = parse_align_position(s)) >= 0)
+ 			align->position = position;
+ 		else {
+-			strbuf_addf(err, _("unrecognized %%(align) argument: %s"), s);
++			strbuf_addf(err, _("unrecognized %%(%s) argument: %s"), "align", s);
+ 			string_list_clear(&params, 0);
+ 			return -1;
+ 		}
+@@ -557,7 +557,7 @@ static int if_atom_parser(struct ref_format *format, struct used_atom *atom,
+ 	} else if (skip_prefix(arg, "notequals=", &atom->u.if_then_else.str)) {
+ 		atom->u.if_then_else.cmp_status = COMPARE_UNEQUAL;
+ 	} else
+-		return strbuf_addf_ret(err, -1, _("unrecognized %%(if) argument: %s"), arg);
++		return strbuf_addf_ret(err, -1, _("unrecognized %%(%s) argument: %s"), "if", arg);
+ 	return 0;
+ }
+ 
 -- 
 gitgitgadget
 
