@@ -2,98 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67814C433EF
-	for <git@archiver.kernel.org>; Mon,  3 Jan 2022 22:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FCC4C433FE
+	for <git@archiver.kernel.org>; Mon,  3 Jan 2022 23:21:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230252AbiACWkw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jan 2022 17:40:52 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53470 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229876AbiACWkv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jan 2022 17:40:51 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B92E6170BE2;
-        Mon,  3 Jan 2022 17:40:51 -0500 (EST)
+        id S230457AbiACXVi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Jan 2022 18:21:38 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53027 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230361AbiACXVi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jan 2022 18:21:38 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9580016F6C1;
+        Mon,  3 Jan 2022 18:21:37 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=mUCR8bU/xAqnxFOXR7mxSIy9Y
-        1iKaJySNsq0MxAAQBc=; b=pob0esZs/Wva8BTkcUGnpmdNrIg5MbUlpVArnHzkM
-        ABx1wo0MjhA76vU92s5A6+u16l4EnVN0qzazejJaLV/XjmwdcCtQagqTUEh676HE
-        Yjzet7cT9xP1+K3rRy5RwSpWlCUlq1VCkW74YovtjQdKPSnT4xo9gEsGkGuWqnsr
-        18=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B1B3C170BE1;
-        Mon,  3 Jan 2022 17:40:51 -0500 (EST)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fD1VNGSILlxSG5eSK28C9nUv5qBXSC3gTdXtVB
+        B4bS0=; b=AavuADu9XfygZCGDqqsNcjJNI9iHwS2iEmn4cE3yXaQDIC1SPOA6FI
+        PcYmMgj3r46R8aOfVj8hiHSEPjuuJ1C8gQ7NFLnFE6jdOvKr1pKGmHfdMaeQi+Wz
+        nKlyZUYVlukfJEfOUhwhFd0aG+Y4jw6hFnb+SdXOee24anRONH9FA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7C3BD16F6BF;
+        Mon,  3 Jan 2022 18:21:37 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DE177170BE0;
-        Mon,  3 Jan 2022 17:40:47 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 904F716F6BB;
+        Mon,  3 Jan 2022 18:21:33 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH 0/1] grep: align default colors with GNU grep ones
-References: <20211216115622.85506-1-lenaic@lhuard.fr>
-        <xmqqh7b88b3o.fsf@gitster.g>
-Date:   Mon, 03 Jan 2022 14:40:46 -0800
-Message-ID: <xmqq4k6kjvdd.fsf@gitster.g>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     avarab@gmail.com, congdanhqx@gmail.com, git@vger.kernel.org,
+        peff@peff.net, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v8 7/8] ls-tree.c: introduce struct "shown_data"
+References: <cover.1641043500.git.dyroneteng@gmail.com>
+        <296ebacafe4d40ffc5282aebb9fee972866c4ccc.1641043500.git.dyroneteng@gmail.com>
+Date:   Mon, 03 Jan 2022 15:21:32 -0800
+In-Reply-To: <296ebacafe4d40ffc5282aebb9fee972866c4ccc.1641043500.git.dyroneteng@gmail.com>
+        (Teng Long's message of "Sat, 1 Jan 2022 21:50:30 +0800")
+Message-ID: <xmqqilv0iewz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 32072C68-6CE6-11EC-8252-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E3C4B272-6CEB-11EC-B379-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Teng Long <dyroneteng@gmail.com> writes:
 
-> L=C3=A9na=C3=AFc Huard <lenaic@lhuard.fr> writes:
+> "show_data" is a struct that packages the necessary fields for
+
+Is that shown_data?
+
+> reusing. This commit is a front-loaded commit for support
+> "--format" argument and does not affect any existing functionality.
+
+What's a front-loaded commit?  Is that some joke around a washing
+machine that I do not quite get, or something?
+
+> Signed-off-by: Teng Long <dyroneteng@gmail.com>
+> ---
+>  builtin/ls-tree.c | 47 +++++++++++++++++++++++++++++------------------
+>  1 file changed, 29 insertions(+), 18 deletions(-)
 >
->> git-grep shares a lot of options with the standard grep tool.
->> Like GNU grep, it has coloring options to highlight the matching text.
->> And like it, it has options to customize the various colored parts.
->>
->> This patch updates the default git-grep colors to make them match the
->> GNU grep default ones [1].
->>
->> It was possible to get the same result by setting the various `color.g=
-rep.<slot>`
->> options, but this patch makes `git grep --color` share the same color =
-scheme as
->> `grep --color` by default without any user configuration.
->
-> I am not a huge fan of adjusting our defaults to other people's
-> default, since it will lead do an inevitable "Why don't they adjust
-> to match ours?" question, plus "We've been happily using the default
-> coloring, and you suddenly changed it to something ugly. We want our
-> color back and we do not care that now you match what GNU does".
->
-> The UI color choice is so personal, which does not help us either.
->
-> Having said that, I'll keep an eye on what others say on this
-> thread.
-
-It's been a bit more than a week and it seems nobody else is
-interested in supporting this change [*1*].
-
-Whether we want this change or not, I just noticed that the real
-patch [1/1] has no commit log message, and most of what is in the
-above "cover letter" would would make a good material for the log
-message.  Perhaps we'd want to redo the log message if it turns out
-that we want to take this change.
-
-Thanks.
-
-
-[Footnote]
-
-*1* "Nobody is against" is not even an argument, by the way.  If we
-    took changes only because they see no objection, we will force
-    reviewers to shoot down all nonsense changes and wear them down.
-    The default for any new change is "not to apply" until it turns
-    out that it is beneficial.
+> diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+> index 85ca7358ba..009ffeb15d 100644
+> --- a/builtin/ls-tree.c
+> +++ b/builtin/ls-tree.c
+> @@ -34,6 +34,14 @@ static unsigned int shown_bits;
+>  #define SHOW_MODE (1 << 4)
+>  #define SHOW_DEFAULT 29 /* 11101 size is not shown to output by default */
+>  
+> +struct shown_data {
+> +	unsigned mode;
+> +	enum object_type type;
+> +	const struct object_id *oid;
+> +	const char *pathname;
+> +	struct strbuf *base;
+> +};
+> +
+>  static const  char * const ls_tree_usage[] = {
+>  	N_("git ls-tree [<options>] <tree-ish> [<path>...]"),
+>  	NULL
+> @@ -98,17 +106,15 @@ static int show_recursive(const char *base, size_t baselen,
+>  	return 0;
+>  }
+>  
+> -static int show_default(const struct object_id *oid, enum object_type type,
+> -			const char *pathname, unsigned mode,
+> -			struct strbuf *base)
+> +static int show_default(struct shown_data *data)
+>  {
+> -	size_t baselen = base->len;
+> +	size_t baselen = data->base->len;
+>  
+>  	if (shown_bits & SHOW_SIZE) {
+>  		char size_text[24];
+> -		if (type == OBJ_BLOB) {
+> +		if (data->type == OBJ_BLOB) {
+>  			unsigned long size;
+> -			if (oid_object_info(the_repository, oid, &size) == OBJ_BAD)
+> +			if (oid_object_info(the_repository, data->oid, &size) == OBJ_BAD)
+>  				xsnprintf(size_text, sizeof(size_text), "BAD");
+>  			else
+>  				xsnprintf(size_text, sizeof(size_text),
+> @@ -116,18 +122,18 @@ static int show_default(const struct object_id *oid, enum object_type type,
+>  		} else {
+>  			xsnprintf(size_text, sizeof(size_text), "-");
+>  		}
+> -		printf("%06o %s %s %7s\t", mode, type_name(type),
+> -		find_unique_abbrev(oid, abbrev), size_text);
+> +		printf("%06o %s %s %7s\t", data->mode, type_name(data->type),
+> +		find_unique_abbrev(data->oid, abbrev), size_text);
+>  	} else {
+> -		printf("%06o %s %s\t", mode, type_name(type),
+> -		find_unique_abbrev(oid, abbrev));
+> +		printf("%06o %s %s\t", data->mode, type_name(data->type),
+> +		find_unique_abbrev(data->oid, abbrev));
+>  	}
+> -	baselen = base->len;
+> -	strbuf_addstr(base, pathname);
+> -	write_name_quoted_relative(base->buf,
+> +	baselen = data->base->len;
+> +	strbuf_addstr(data->base, data->pathname);
+> +	write_name_quoted_relative(data->base->buf,
+>  				   chomp_prefix ? ls_tree_prefix : NULL, stdout,
+>  				   line_termination);
+> -	strbuf_setlen(base, baselen);
+> +	strbuf_setlen(data->base, baselen);
+>  	return 1;
+>  }
+>  
+> @@ -154,11 +160,16 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
+>  {
+>  	int retval = 0;
+>  	size_t baselen;
+> -	enum object_type type = OBJ_BLOB;
+> +	struct shown_data data = {
+> +		.mode = mode,
+> +		.type = OBJ_BLOB,
+> +		.oid = oid,
+> +		.pathname = pathname,
+> +		.base = base,
+> +	};
+>  
+> -	if (show_tree_init(&type, base, pathname, mode, &retval))
+> +	if (show_tree_init(&data.type, base, pathname, mode, &retval))
+>  		return retval;
+> -
+>  	if (!(shown_bits ^ SHOW_OBJECT_NAME)) {
+>  		printf("%s%c", find_unique_abbrev(oid, abbrev), line_termination);
+>  		return retval;
+> @@ -175,7 +186,7 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
+>  
+>  	if (!(shown_bits ^ SHOW_DEFAULT) ||
+>  	    !(shown_bits ^ (SHOW_DEFAULT | SHOW_SIZE)))
+> -		show_default(oid, type, pathname, mode, base);
+> +		show_default(&data);
+>  
+>  	return retval;
+>  }
