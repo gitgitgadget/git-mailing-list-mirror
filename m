@@ -2,58 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A916C433EF
-	for <git@archiver.kernel.org>; Mon,  3 Jan 2022 15:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9D1BC433F5
+	for <git@archiver.kernel.org>; Mon,  3 Jan 2022 16:37:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232917AbiACPom (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jan 2022 10:44:42 -0500
-Received: from bsmtp3.bon.at ([213.33.87.17]:3963 "EHLO bsmtp3.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230160AbiACPom (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jan 2022 10:44:42 -0500
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4JSKn40mfnz5tlD;
-        Mon,  3 Jan 2022 16:44:40 +0100 (CET)
-Message-ID: <0f7e3f12-9869-db9f-db27-0d13862a4233@kdbg.org>
-Date:   Mon, 3 Jan 2022 16:44:39 +0100
+        id S233060AbiACQho (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Jan 2022 11:37:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41140 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229920AbiACQhm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jan 2022 11:37:42 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63CDCC061761
+        for <git@vger.kernel.org>; Mon,  3 Jan 2022 08:37:42 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id j6so137864889edw.12
+        for <git@vger.kernel.org>; Mon, 03 Jan 2022 08:37:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=g5lLSqVbwg4hc2ZiyN1I9P5T7qGtVc9zdBK/VG7QCdM=;
+        b=MAqGjmb8Kp6cP3MIkXdqrnzfAk/xi/bWmayp5pa3ijQbtWxp1oF22PE01td+CoPL5a
+         4FT5lvVzDPuxLJTqCU+BFqrTdnLs0m8PLJ/rhzhZrI/x8dKp4EfcazKLDc8S45C51hU9
+         UepAXZO5c4vkQ4masM25T6RCAj7I1fqQHt6daKnNIQ0eBVAM+jgXcKyXJGyu8ZxEACgp
+         tQjEXStZVkND7vKUg+Jtg3U3W/vxsvwG+sw8+XyUm72G/XFW1hySwJR7799br9R3JJsX
+         szhnvmf4pUbQxuplOmSLQ1clhSO1kzTeAQceTSJlsQu/PDKHrGS6MwLst7+AQeFKWzxI
+         ZA5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=g5lLSqVbwg4hc2ZiyN1I9P5T7qGtVc9zdBK/VG7QCdM=;
+        b=eSnED+GtDRoXjvcI06tl4kWxDqwJRV8jLuzhycf8HwleJyDYQAUe6G2CDkjpuahfEp
+         tZJh9nfwwfxhDtSpyoF/7fM1UT8H6XcrZdrR8utsu/+b4hgcMzWgxPzP0Q7lI6iIuOsc
+         mY2GDQpamTK+z/VKrPDLlJq4h6GYXQgs7UTCZg2WH+dm6mbPqjr/t3JvbpxGT0OlyuXN
+         m+qpgq6ErwmX5nsKPR6DEBU+eo3jhQktI/KALa3RJaveoreLuJqnDFN48pjZ8D64wMlc
+         iYUlKlfMnoR+JRUYhVsRtTkP1NfK95kI4fRXO1E4huMng7c/MhAqWded5KVesHMpon2+
+         P53A==
+X-Gm-Message-State: AOAM531OKqPfqWL98M5L6Qm/mqq43A9PXPV0Qjme77S6NZHa+zWG8ELB
+        tNq9tuzIPw+qH2MOb7Qa374bm/yo9ZCzRWAGAHQ/TI6tujw=
+X-Google-Smtp-Source: ABdhPJwCK4v3kkJyHIPjvpFeuE0k/f1RivkDcKKGa0iNMlSjkyBzvwgxN6/5AHJdyQGrvVkOOTcIgzEr52+uMDa8Fpk=
+X-Received: by 2002:a17:907:60c8:: with SMTP id hv8mr36245189ejc.192.1641227860939;
+ Mon, 03 Jan 2022 08:37:40 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [PATCH v4 02/11] i18n: refactor "%s, %s and %s are mutually
- exclusive"
-Content-Language: en-US
-To:     =?UTF-8?Q?Jean-No=c3=abl_Avila_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>, =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>,
-        git@vger.kernel.org
-References: <pull.1088.v3.git.1640804107.gitgitgadget@gmail.com>
- <pull.1088.v4.git.1641143745.gitgitgadget@gmail.com>
- <e307ea9b998f77d9b2e3c3ce37a510a9e5686949.1641143746.git.gitgitgadget@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <e307ea9b998f77d9b2e3c3ce37a510a9e5686949.1641143746.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1114.git.git.1640927044.gitgitgadget@gmail.com>
+ <9fc71f4511b163bec53616d82e8fe5214facf060.1640927044.git.gitgitgadget@gmail.com>
+ <20220103122347.uba66kusy3ft7g2h@fs>
+In-Reply-To: <20220103122347.uba66kusy3ft7g2h@fs>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 3 Jan 2022 08:37:29 -0800
+Message-ID: <CABPp-BHWAfeqPyhBehf=37kfMmfi2LtV2tOrqRwTztcQr4fsDw@mail.gmail.com>
+Subject: Re: [PATCH 4/8] merge-tree: implement real merges
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 02.01.22 um 18:15 schrieb Jean-Noël Avila via GitGitGadget:
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 9a520485769..27b60732a22 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -503,7 +503,7 @@ static int add(int ac, const char **av, const char *prefix)
->  	opts.checkout = 1;
->  	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
->  	if (!!opts.detach + !!new_branch + !!new_branch_force > 1)
-> -		die(_("-b, -B, and --detach are mutually exclusive"));
-> +		die(_("options '%s', '%s', and '%s' cannot be used together"),"-b", "-B", "--detach");
+On Mon, Jan 3, 2022 at 4:23 AM Fabian Stelzer <fs@gigacodes.de> wrote:
+>
+> On 31.12.2021 05:04, Elijah Newren via GitGitGadget wrote:
+> >From: Elijah Newren <newren@gmail.com>
+> >
+> >This adds the ability to perform real merges rather than just trivial
+> >merges (meaning handling three way content merges, recursive ancestor
+> >consolidation, renames, proper directory/file conflict handling, and so
+> >forth).  However, unlike `git merge`, the working tree and index are
+> >left alone and no branch is updated.
+> >
+...
+> >+test_expect_success setup '
+> >+      test_write_lines 1 2 3 4 5 >numbers &&
+> >+      echo hello >greeting &&
+> >+      echo foo >whatever &&
+> >+      git add numbers greeting whatever &&
+> >+      git commit -m initial &&
+> >+
+> >+      git branch side1 &&
+> >+      git branch side2 &&
+> >+
+> >+      git checkout side1 &&
+> >+      test_write_lines 1 2 3 4 5 6 >numbers &&
+> >+      echo hi >greeting &&
+> >+      echo bar >whatever &&
+> >+      git add numbers greeting whatever &&
+> >+      git commit -m rename-and-modify &&
+>
+> The commit implies a rename as well which I think is missing.
 
-As the range-diff in the coverletter shows, you fixed the missing blank
-after the comma in a lot of cases. This one slipped through. Not worth a
-re-roll on its own, IMO.
+Sorry, I revised the testcase (multiple times) and forgot to update
+this commit message string.
 
--- Hannes
+> >+
+> >+      git checkout side2 &&
+> >+      test_write_lines 0 1 2 3 4 5 >numbers &&
+> >+      echo yo >greeting &&
+> >+      git rm whatever &&
+> >+      mkdir whatever &&
+> >+      >whatever/empty &&
+> >+      git add numbers greeting whatever/empty &&
+> >+      git commit -m remove-and-rename
+>
+> And this looks more like a remove-and-modify.
+
+Likewise.
+
+
+I'll fix these up; thanks for pointing them out.
