@@ -2,51 +2,48 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 873C5C433F5
-	for <git@archiver.kernel.org>; Mon,  3 Jan 2022 06:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25E8AC433F5
+	for <git@archiver.kernel.org>; Mon,  3 Jan 2022 07:11:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231944AbiACGwA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jan 2022 01:52:00 -0500
-Received: from mail-pj1-f47.google.com ([209.85.216.47]:38731 "EHLO
-        mail-pj1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230070AbiACGv7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jan 2022 01:51:59 -0500
-Received: by mail-pj1-f47.google.com with SMTP id l10-20020a17090a384a00b001b22190e075so31531493pjf.3
-        for <git@vger.kernel.org>; Sun, 02 Jan 2022 22:51:59 -0800 (PST)
+        id S230211AbiACHLo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Jan 2022 02:11:44 -0500
+Received: from mail-pj1-f43.google.com ([209.85.216.43]:55073 "EHLO
+        mail-pj1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230162AbiACHLn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jan 2022 02:11:43 -0500
+Received: by mail-pj1-f43.google.com with SMTP id jw3so28145399pjb.4
+        for <git@vger.kernel.org>; Sun, 02 Jan 2022 23:11:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=xvOgWdR6LemSIn2AEtqcAt6pH6aihDrORQ6SDKR18Pc=;
-        b=4Vv1AMVUFNlf1aGj4krmwCfFDm8jNJa8rs9M0ISEZSqPlbHRwkIPIlE9a/7VToYtjd
-         LkhxhWrKvjihT8PcWAhLzpYyv4I184ddTC/Oi6lvPix8aHjer/YLBEFAOkzXyeN8De76
-         irkcZrsOPPWbHIEBS9vc1W8xz69BunBF3NukwhnJrJrYBvvvt5+aB+f65oRMq4/6Kx1c
-         Df90DWD52iUMDem1UHIYHxCSfxRU43Ee6kdroDdNSq1406qhbluaJeVzA33EaXyPP1yZ
-         LRA/MbWoYiDW1ZGi3FiJh2TrIOIkPlnWIrjgizAJNQ2v+PaYfkPbXKdq/268iG7UtiUi
-         CHhQ==
-X-Gm-Message-State: AOAM531aIuAzYV/uUTGs2Nl/FmrliUPBh/01bFMP01GSt2k2kvqA+49k
-        upPWmOK7Aw1ERJVgU4KB/unodoe1mAmLBpL1YXKcnMPGxYI=
-X-Google-Smtp-Source: ABdhPJzOjIczUkm+GzmsoNjpOtfqU0HiASfIOGLkc3/+TlhfZeeKtVnDLBrRlU7Lq/jzVpObG4OiZPuusrkp8p/lljU=
-X-Received: by 2002:a17:902:b688:b0:149:a1d6:c731 with SMTP id
- c8-20020a170902b68800b00149a1d6c731mr18468856pls.145.1641192718899; Sun, 02
- Jan 2022 22:51:58 -0800 (PST)
+        bh=r0yHX11hTCFUM9BxwUK4oV5ndqWKqhcIWivZHgYOEls=;
+        b=Wza7hmohjsGWQx7DkeNDR+7Qod6nLLmWF4kdA9j+nWDgjE6gEXO2YN278OtiMh67rm
+         UjNl25qgXG+rJ2S6O4Q3GxRll+ryo9+DvbUVJz8UDSbVmLGPwFNdpXMvp0kKOCxboUJ8
+         ndKyayuCQ5sfOmmkeiFqu0hFPd/zmUwoSXF5WYxr6TsfK5GibdM4Rog4hvNh+FF2wkb6
+         YbpyPvmUCdlGTo+Lw1MLJk5v+R3yvB9mdiLPemtFsD9Lax4F942kN1AIq4+eYnooWHxi
+         TCeGO/ngHRO3jAJyDoSxdWZJ02961I9+5LRmIZYNKVUsQHosK6jJNWzUuO3XBl/CR87U
+         3jAA==
+X-Gm-Message-State: AOAM531UHzHGxmS3NFW6k03A+8VPYrQ7fI9ZgRV0Aywjg/hVL9l4X3KD
+        /ptgDvp8HRs8mU/YadOcmoKzEpxA8E73z56J4/I=
+X-Google-Smtp-Source: ABdhPJyk5ahkeyMP+RHTD+iJS4O3xQnqQUJyJR/ck0x0QWNlW+GJeWqhJpElLzUJWwyJx438f1xmxUHE4BBjFwnA7uk=
+X-Received: by 2002:a17:902:e211:b0:149:8bd6:583b with SMTP id
+ u17-20020a170902e21100b001498bd6583bmr28005086plb.35.1641193903167; Sun, 02
+ Jan 2022 23:11:43 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1101.git.1640015844.gitgitgadget@gmail.com>
- <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com> <CABPp-BG7nwsdEYrnfqhAbWU4ndJHcqGf6RS_6DzJittuNVLvoA@mail.gmail.com>
- <CAPig+cRDDGU=9BB6kd1tMJR8DmWKSSJwpTD8JeszrY685Fc3-Q@mail.gmail.com>
- <CABPp-BFxz5B_wUubzaYeGEaztALqDMxxVTrcT4d1kKjpX8pRDQ@mail.gmail.com>
- <CAPig+cRYKKGA1af4hV0fz_nZWNG=zMgAziuAimDxWTz6L8u3Tg@mail.gmail.com>
- <CABPp-BGKyDJV9DP+igmCC_Ad0jgvb4aOAYpXWCbx9hW8ShhDQg@mail.gmail.com>
- <CAPig+cRJj4Aa9Nm_yWD0=WGdn9tRmT2PpTwo5yeGZHg2Qz2rgA@mail.gmail.com> <CABPp-BH-oOUhTzcXMFWRfG=zjUw6C5h-oHSU=-juPTjpW92_vA@mail.gmail.com>
-In-Reply-To: <CABPp-BH-oOUhTzcXMFWRfG=zjUw6C5h-oHSU=-juPTjpW92_vA@mail.gmail.com>
+References: <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com>
+ <pull.1101.v3.git.1640727143.gitgitgadget@gmail.com> <CABPp-BHuO3B366uJuODMQo-y449p8cAMVn0g2MTcO5di3Xa7Zg@mail.gmail.com>
+ <CAPig+cQ8Y2FC8=d7DaZ46YwPCrzM6RzutiZ3ghhrHsg6y8KWoQ@mail.gmail.com>
+ <f62709d5-a0d4-dc0c-461a-c4c75c810340@gmail.com> <CABPp-BG2Ueb9rBRNZz3Z_8V7hin5SamzOJLNpjrg0k-QGUV4zA@mail.gmail.com>
+In-Reply-To: <CABPp-BG2Ueb9rBRNZz3Z_8V7hin5SamzOJLNpjrg0k-QGUV4zA@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 3 Jan 2022 01:51:47 -0500
-Message-ID: <CAPig+cSayH9za9d4T6YdgjJRnS5jOoV7viWyZGw6qtA72cFEig@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] Sparse checkout: fix bug with worktree of bare repo
+Date:   Mon, 3 Jan 2022 02:11:32 -0500
+Message-ID: <CAPig+cS+-L-5feyjNS5QJm-NO5Ou0EDDks_cVPGrW9_BorCv=g@mail.gmail.com>
+Subject: Re: [PATCH v3 0/6] Sparse checkout: fix bug with worktree of bare repo
 To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
         Sean Allred <allred.sean@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>
@@ -55,51 +52,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 30, 2021 at 1:38 PM Elijah Newren <newren@gmail.com> wrote:
-> On Wed, Dec 29, 2021 at 10:41 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Tue, Dec 28, 2021 at 1:16 PM Elijah Newren <newren@gmail.com> wrote:
-> > > On Mon, Dec 27, 2021 at 11:33 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > > > A more general approach might be for the new worktree to copy all the
-> > > > per-worktree configuration from the worktree in which the command was
-> > > > invoked, thus sparsity would be inherited "for free" along with other
-> > > > settings. This has the benefits of not requiring sparse-checkout
-> > > > special-cases in the code and it's easy to document ("the new worktree
-> > > > inherits/copies configuration settings from the worktree in which `git
-> > > > worktree add` was invoked") and easy to understand.
-> > >
-> > > Ooh, this is a good point and I *really* like this simple solution.
-> > > Thanks for pointing it out.
+On Thu, Dec 30, 2021 at 2:29 PM Elijah Newren <newren@gmail.com> wrote:
+> On Thu, Dec 30, 2021 at 9:41 AM Derrick Stolee <stolee@gmail.com> wrote:
+> > On 12/30/2021 2:40 AM, Eric Sunshine wrote:
+> > > On Wed, Dec 29, 2021 at 4:40 AM Elijah Newren <newren@gmail.com> wrote:>
+> > >>   * If core.bare=true or core.worktree is set, then at `git worktree
+> > >> add` time, automatically run the logic you have here for
+> > >> init-worktree-config.  Having either of those config settings with
+> > >> multiple worktrees is currently broken in all git versions and likely
+> > >> in most all external tools.  As such, being aggressive in the new
+> > >> config settings to allow new versions of git to work seems totally
+> > >> safe to me -- we can't be any more broken than we already were.
 > >
-> > I do wonder, though, if there are traps waiting for us with this
-> > all-inclusive approach. I don't know what sort of worktree-specific
-> > configuration people use, so I do worry a bit that this could be
-> > casting a too-wide net, and that it might in fact be better to only
-> > copy the sparse-checkout settings (as ugly as it is to special-case
-> > that -- but we need to special-case `core.bare` and `core.worktree`
-> > anyhow[1]).
+> > I'm not sure I agree with the "currently broken in all git versions"
+> > because when extensions.worktreeConfig is not enabled, the core.bare
+> > and core.worktree settings are ignored by the worktrees. This upgrade
+> > during 'add' is the only thing I am not so sure about.
 >
-> I could probably be persuaded either way (do users want to copy
-> something and tweak it, or start with a clean slate?), and it might
-> even make sense to have a flag for users to specify.
+> Oh, you're right; I mis-spoke.  If someone has core.bare=true and has
+> multiple worktrees, AND never attempts to use sparse-checkouts OR
+> otherwise set extensions.worktreeConfig, then git still works due to
+> git's special-case logic that will override core.bare in this
+> configuration.  It's just setting them up for a ticking time bomb,
+> waiting for them to either use an external tool that doesn't share
+> that special case override-core.bare logic, or for the user to decide
+> to set extensions.worktreeConfig directly or use sparse-checkouts.
 
-I also could probably be persuaded either way, and yes a flag is a
-possibility, though it would be nice if we could get along without it.
+So, how does this alter the proposed logic? Or does it? Does the above
+condition get revised to:
 
-> My hunch, at least with the developers I work with, is that they're
-> more likely to think in terms of "I want another worktree like this
-> one, except that I'm going to change..."
+    if extensions.worktreeConfig=true and
+        (.git/config contains core.bare=true or core.worktree):
+            relocate core.bare/core.worktree to .git/config.worktree
+
+That is, we need to relocate core.bare and core.worktree from
+.git/config to .git/config.worktree if and only if
+extensions.worktreeConfig=true (because, due to the special-case
+handling, those two keys don't interfere with anything when
+extensions.worktreeConfig is not true).
+
+This, of course, doesn't help the case if someone has existing
+worktrees and decides to flip extensions.worktreeConfig to true
+without doing the manual bookkeeping, but that case has always been
+broken (and is documented, though not necessarily where people will
+look). The new `git worktree add` logic, however, will fix that
+brokenness automatically when a new worktree is added.
+
+> > >>   * If core.bare=false and core.worktree is not set, then:
+> >
+> > >>     * `git sparse-checkout {init,set}` should set
+> > >> extensions.worktreeConfig if not already set, and always set the
+> > >> core.sparse* and index.sparse settings in worktree-specific files.
+> >
+> > This should happen no matter the case of core.bare and core.worktree
+> > existing, right?
 >
-> Also, another reason to prefer copying all of core.worktree (minus the
-> always worktree-specific value of core.worktree, and core.bare), is
-> because it's easy to explain in the documentation, and I think we'd be
-> much less likely to obsolete user's knowledge over time.  (I think
-> additional sparse-checkout things, or new other features that also
-> want to be copied over, are much more likely than the addition of keys
-> that are always worktree-specific like core.worktree).
+> Hmm.  I think that's safe for people who cloned and used `git worktree
+> add` with newer git versions, since `git worktree add` will have moved
+> core.bare and core.worktree to the config.worktree file when those
+> have non-default values.
+>
+> But, we might want to help out the folks who have existing repos with
+> which they have used older git versions.  So, we could have `git
+> sparse-checkout {init,set}` check for non-default values of
+> core.bare/core.worktree in the shared config file, and, if found, exit
+> with an error which point users at some relevant documentation (which
+> may just suggest 'git worktree add temporary && git worktree remove
+> temporary' as a workaround for those caught in such a state.)
 
-Another possible point in favor of copying all worktree-specific
-config to the new worktree is that if the user really does want to do
-some configuration specific to the new worktree, then that is going to
-require a certain amount of manual setup after creating the new
-worktree regardless of whether we copy all worktree-specific config or
-only a select subset (such as the sparse-checkout settings).
+I'm probably missing something obvious, but rather than error out,
+can't we just automatically relocate core.bare and core.worktree from
+.git/config to .git/config.worktree in this case?
