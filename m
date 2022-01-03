@@ -2,119 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47A3FC433EF
-	for <git@archiver.kernel.org>; Mon,  3 Jan 2022 12:31:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC442C433F5
+	for <git@archiver.kernel.org>; Mon,  3 Jan 2022 12:35:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231794AbiACMbS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jan 2022 07:31:18 -0500
-Received: from mail-db8eur05on2060.outbound.protection.outlook.com ([40.107.20.60]:45921
-        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
+        id S231825AbiACMfn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Jan 2022 07:35:43 -0500
+Received: from mail-eopbgr80078.outbound.protection.outlook.com ([40.107.8.78]:45376
+        "EHLO EUR04-VI1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S231774AbiACMbR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jan 2022 07:31:17 -0500
+        id S229566AbiACMfm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jan 2022 07:35:42 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ewJDsnx0JfV0WDLgdfDfJ3d+darWIELfwtZYONjziWIOr5f+m+0bMqazVquRWYGIcnVDdZjl5cVN1FimFPUZUnVNcx0pxm2GEreOuHQ0IGjt0KpWRZ6XLa4mhEyDkGLnQVMigSQnJcvvEypNiGjNWOd8Z5W2brR8pl1tDCFf3eFYEKJbsURbHGvPkxtzKRVrI1Me4rges013RBG/Lp/SxYF1rcpWU6KOwclmxQ64rdfmNbq/KyVXwuNqj1DahUVawlhsmEh99nNu9+nGyeqZutt/wnmtzpcZKd22P7bSBLuHP/xUCiW/Yp3w5/HHzT2jqdWYcEqVrdwSmqEO+YDLrA==
+ b=fXZ3rgFIz/Q4xLLmZihS77V7Wb6JN/s3R46Sa2zLyNUG26bK9CAQea7E0xJ5doOERk2/Iua8tnK3jQKPuFBd/hjF8s13uY5F0XIi0b4gk2mg4AiqIrAf155hJIXqK7o2AXspqVZHoJQVhmJ93wZS423wJ5ZexAwC9rjl50VXRr4yBjBTNMFpf6YH1DY6OLiLpV60ljJByp7O8xbMcr+1GxAke14IiGlxb+ZVAjArP2ASwP1J8vjq2Y3O3g9WnNNkPjOPqPaRu/ZbGMnuyiTtW4FrD9O75GWzy+M7SVvGmaj6jfUerYqiUIdexlewrV7Sd8Od3kBCJuHoDSH1OIDG8g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=C5OxGy7vBsH1OEZI0qQmjEjca1ABh5lqb9EEDSfLLEk=;
- b=N4fU8IbscBroZI0DhKUUt0Y8qsyRryOiFIktf8iP4Hf2W8Zi9eKn/dkKAY8FdqwO2wQGG8g/MK32IpYpNgt5g4dL6iGPdm2ozV32ThgB3l6JRizyJkrEog/YQnHyCHPvVnDbcfAxGcZ/zHRwqBulUcCy3bkzDcsfJqP+Pb038fHX8mvj+hlNsa6jBR5bas0uOqVtgUCJoTQ/aVxzKcjeYlq7emIkEHbmatABqdMKtoTfcg6Ryw+kKzQ/P2GkQ1ve3DfABqHFKpAGk3tW6mgtrM9sg1HPQAqK+9yHbMIzJ+zHTC5tRtIgVJBZh5u1ae/Pb8jW5tDTu0v0geogp37nVg==
+ bh=BySr4IzQIw+YELeaLuEMdiQZbHibJRXowbTCiNSXTTY=;
+ b=LqDFUXSVpwxXBcyHPXcph6PylfnsUcJ23c8mf5i9V4W07e1WWI5hlhDB5A5nFLBPpV+ohSpDLQo6pzNxc1VvuvYPa+Dry0mXJI9G1v/vmnb03eCiJnxnF30dBsJ+txP+P3IM1ZcyOEoUSDODLDXg39huPUu7HfM3V9FoBBsoYYbLBjDtEev3JEN9YNY4URSks2ow+tXqdT9SFOR2nRDYJ7zzzZ+LzEwhn0NMqmM0DU+uXOBve0s5AXEAFLnBeIPAIxUroUCeUYN2DC4wKPCU+2JPZosQ0IfRoD/4nG5kN4e1Nrwu6XgStcY5d9ghQ2KVggBSBLlw13E5gWSsw5pL4Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
  dkim=pass header.d=gigacodes.de; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=C5OxGy7vBsH1OEZI0qQmjEjca1ABh5lqb9EEDSfLLEk=;
- b=eIPOwJXBNZX0pm3q/lIlxcYXaxNcceOd2Rga6GsgBPYVw6xDIwl0bX/r6/+WFq0xWqMPuo3hEYmg9jW1QWVuBGtl9dOa7ihl/d5RkLRX9FBZSLlY3YOKe+UwyEx4XN/irn6YhppUpblc1iQdom53ICbXxgbny6G3+IRmllZz+go=
+ bh=BySr4IzQIw+YELeaLuEMdiQZbHibJRXowbTCiNSXTTY=;
+ b=WyJs1hN56Sg75UZNPKur2D6l/PR9QjvbCmuLN5QMh7amdI8ZOf9TocnHyN0XXa2FrXSed3kg+sQdo0aAW3CnK/vccS494XkZAHRP4/bexo99tFk1qzP9CddoWg3FE5+Q8NCGTdMT9iqaNsWzPyuXQ44gUMdtdYg96UuUTl53GCo=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=gigacodes.de;
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PR3PR10MB4254.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:ab::7) with
+ by PAXPR10MB4890.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:202::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4844.15; Mon, 3 Jan
- 2022 12:31:15 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4844.14; Mon, 3 Jan
+ 2022 12:35:40 +0000
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::486c:1c10:65ef:90f9]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::486c:1c10:65ef:90f9%6]) with mapi id 15.20.4844.016; Mon, 3 Jan 2022
- 12:31:15 +0000
-Date:   Mon, 3 Jan 2022 13:31:14 +0100
+ 12:35:40 +0000
+Date:   Mon, 3 Jan 2022 13:35:39 +0100
 From:   Fabian Stelzer <fs@gigacodes.de>
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
         Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
 Subject: Re: [PATCH 7/8] merge-tree: support saving merge messages to a
  separate file
-Message-ID: <20220103123114.uuvpk4nley22gfkg@fs>
+Message-ID: <20220103123539.kldjq3hrcagqjzwc@fs>
 References: <pull.1114.git.git.1640927044.gitgitgadget@gmail.com>
  <777de92d9f166793cddbb383f497518a5dedb9f4.1640927044.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
 In-Reply-To: <777de92d9f166793cddbb383f497518a5dedb9f4.1640927044.git.gitgitgadget@gmail.com>
-X-ClientProxiedBy: AM6P193CA0073.EURP193.PROD.OUTLOOK.COM
- (2603:10a6:209:88::14) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-ClientProxiedBy: AS9PR06CA0272.eurprd06.prod.outlook.com
+ (2603:10a6:20b:45a::10) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  (2603:10a6:102:12e::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: bdcd66a4-4dc5-4680-cbbb-08d9ceb4ef0e
-X-MS-TrafficTypeDiagnostic: PR3PR10MB4254:EE_
-X-Microsoft-Antispam-PRVS: <PR3PR10MB4254728FFCFAE6B52758A264B6499@PR3PR10MB4254.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
+X-MS-Office365-Filtering-Correlation-Id: 15d78bd6-367e-43d1-186c-08d9ceb58cf7
+X-MS-TrafficTypeDiagnostic: PAXPR10MB4890:EE_
+X-Microsoft-Antispam-PRVS: <PAXPR10MB4890357824303BE84FF9FA0CB6499@PAXPR10MB4890.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: t3SXj7ikH8B0cOCAZNBjXx/1RWCXAhz3tM0Eo6OsvwIo0/42Q9bgxZXit7MN2p6tI9RpiifvkA0/oDCFDHOA2wgflMUpchVf7A/pLd/GTsj7aKNlTXF7EBFozku0yxhoIx4ivw/KUZFHMEd/t7FW9Uf33DLaRO5dETzBjjIiQuFW/bqkowsBrtLcbFUGC+FGP3u8iUm8J44SYd5SFGUx6rSCwhVhc9aUvt4gg54c9WqcAaZnR9/u0f4pbeSOt8rJ1a9FlecdO6rgS8D/hynIuZFnzYGqS9+Pu/89+k6oYU/0XGmMKPr0Zm/VR0Ak95sc2c6U9zlar2eUuHpxTd4EZ7zeKvct9KZcCPEuneGuK9QWdopYuCoKA/9NRo8lSETPNAV3Piod3zzLrlIKulBcsPOcy7292h6+aX/mPgpn/8OlAPXtDYTHxR+HRQ/5dysp006RTD6upM62jzhIU60kEaP577kYy2x8aKTblDig7C0QMUSA42Y0sOe54r/khN0e86q6JR7EMEy7eqzUhKLpqNCq+FHIouyL+syaFDOzOuhwRuYQUzOgy48Syr/k0izYymnsCDbFelKIKDV8Sl/63k8ttFMntBp7/PvYRXa1ZUXSGf5Lt6PZWcQ0wm8cc+g38eq+28bIyUgCVjbiBBCdXg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(7916004)(136003)(366004)(346002)(39830400003)(376002)(396003)(26005)(66476007)(6506007)(83380400001)(66946007)(53546011)(15650500001)(6512007)(2906002)(66556008)(9686003)(6916009)(186003)(6486002)(54906003)(38100700002)(5660300002)(86362001)(33716001)(4326008)(8936002)(1076003)(316002)(508600001)(8676002);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: D0GcxciosIVqab+Du0t9MrpS10jnxEsDId/AXlFw5xgRnTIKF/9LMlU1JZo+ZR7T5XXefH1Y2D1RwGIDqIOgEdAhyksdU0X1kZlmuuI5vlIUY3GtE3ZqqZjWnN3D7wm8A8dWkKyuFDDQhLmyGLmrFKuMnkQpwNXvvse9B9TYMDeFGLQLC1BZXW5g06smR6XP6cC6C4+OCEsfbb9Rhabv3rA6rqj1DKLsnjuYkAzdFsEr7sS1PThxfOpCvlT7u4IxrIUZnk66vR9bughkfWtJ0IekY2SHaf2eDl6AewkEcO7Poh3moakWfZEMKPUwpMWFn5j1emMBkr9CZy0w4+a3eW/2Xs3hooE8+aP97rrBoCfap8vu3AwECeSrula292nb+Uws8Uha7fOqlEK49ZYhE+NWX69ypLpZQ2r429Au4p1sQGc6KQd+MABrZttDm0po+QbbV+KuhMDSTELXTlIXhKcnEvf9FyLnqAutTntAM2z6qpc0FPj1V2ieVky1GPUMNHYAfcDeSUgktyOjalSP7XCA7lxjj9/rSGv5ipwx/psPcNlga0wLUuRHfSzpjS8R++UGCUgYcnntYKjvatKMWY1w9dxFnRP9/P9NQvkkM8ON/gA0JgOw48xecVvKDbAc0P88fRPJ95ZDlRliKjbTMA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(7916004)(346002)(39840400004)(376002)(136003)(396003)(366004)(508600001)(38100700002)(1076003)(15650500001)(6506007)(53546011)(8676002)(8936002)(316002)(66946007)(66556008)(26005)(83380400001)(86362001)(186003)(5660300002)(6512007)(9686003)(2906002)(6486002)(66476007)(6916009)(54906003)(33716001)(4326008);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cFhyVHJmYUNNeGpIS3lIa1JwSTlTK0FxS1c0SXBxbm44YUN2bDhaeFZpNGZh?=
- =?utf-8?B?VVYyL3prejdnRC83aWZLbFc1R0oxc2VVTm13ckh1QWdXVlZiRmdQT3I4T1Zv?=
- =?utf-8?B?RUE1eHNRUGpLWkFnc21pTkxuVEpUaFRtbUgwSGR5WGJXL1NkNmRFT0dHRDFq?=
- =?utf-8?B?MGlCL0EyWkZUMUs2bUZBVGxMSFprTzE0NlBmbHBVcVRubVBZTk5oNDJsMWM3?=
- =?utf-8?B?NkozRk9QVFZnb29pZTBaQmNIc01tWk5ZdUI1ZzJ1Z0dJb0dJd3g2MVpwa3Zm?=
- =?utf-8?B?YVU4MmQ1S09rb1gzVlZ6aS9JRDJYc2wrU25uRGJWV3pDd2oxVWtQYUFjZEhV?=
- =?utf-8?B?ekZzbXFPZlJXWVJLSklCa09PVmNMU0pqOXZkTm8xb3VTbVROMlYrSjE1STFJ?=
- =?utf-8?B?ZVpibmRkVVNLRThEVDR4Y215RHZYRW5kVFJSOFNhTWc5cURwNXg2Ymo0Q1c4?=
- =?utf-8?B?S2NKblFYanYvMDN0QWJSQlhxMDZYR0pnRCt6blM4M2RDTzE3STFydDB4b2Vz?=
- =?utf-8?B?Q1ErZzBpOVlxbTZ6VkxsVXRwMmlmVDFMSDBNVmtYdUcwS3cxKy90cnV0Y1VY?=
- =?utf-8?B?YW1McThpMnRqVGRNR1JwT3ZtTWVxOCs5dmhsVUl0VUhERlAxT1NJb3BoTlJp?=
- =?utf-8?B?L2l4dk52Sjg0UmpaS2JaUVZHQk9sdDloWU1mUVluRHcrMk1NRC9HVEJNMEc4?=
- =?utf-8?B?OVBTaVp2dXNUSGtGUVpwRnhwZ1ZkcHh6UFFXMnFabkxzZUwrdXAySTc1WjM4?=
- =?utf-8?B?c09HeVE2Y3JJVmt6MU9JQlR5WXlFV05rS1puaDNYYzRRL0E4SEdSNUV5dk8x?=
- =?utf-8?B?YTU4RzhacjZhU2lXQTNpVmpIY0NQRjBHQjBTdnJnUU1jL29xUThQNUxhdzVn?=
- =?utf-8?B?aktaTWNJcDR3NmVNNWFjWkQxS1FLWWFrelpFT3hnZFlpWjR3cUk4ckhTWGhm?=
- =?utf-8?B?SkZHRWpkN045dUNlS1djRVoweXByZFhpNWhUTHk1Y3RMM1hjWFl2TzRhNVRP?=
- =?utf-8?B?UVp1UTRlRnVNaWNqSk54SEdXcmduNS9TemFIam0zUE1FZTNwMUFCbXBDOW4r?=
- =?utf-8?B?a3U0S3hTL0JaUDlNT2JDNjdyYVdYRitXcmFvTmpCZXpZUXM0UldBTjNJckFE?=
- =?utf-8?B?RVlhOERuT0Y5NlRhU2tvQVJxSWR0SnA1NmtjRW1JVUNPNnJWbEI3Nkg3MXhI?=
- =?utf-8?B?bE5veHNhM0RWWlJTcWN2WE0xTWFaTEtsZTN6UEJweFpJbldYQlE1TGJCQnBW?=
- =?utf-8?B?UEp6OHR5eUIwOUMwUFR3c0FDUVQ2aTdHREpNTDBEdnkvMW1MWG44STJJM2Ev?=
- =?utf-8?B?dlkrbmF1YlhaSTZKUFBzc0lTRVpKTVEvSkh1c0hVVjNDOHprN3N1UmJOZFl2?=
- =?utf-8?B?VnkwOTZUTWdBMXNlWEtDc01tWmtlNjIzbW5hRTlCU2FROWc2ZERyU0tRVXVS?=
- =?utf-8?B?dmdmMkVZUjFlM3FONE82c05IN0t3OVlOeXhWOEFBQjMxWnYzOEZsQ25SdFBL?=
- =?utf-8?B?MXlRbEE5aG1LVmpRQk9DYzhyU2dXb2dHSkM3U1B6VC9ZMjJjVVVLNEdsSTRp?=
- =?utf-8?B?RHZSWHdOVU95NGhWL2lKZVhvYWdiMEkzOGZxdW1vVFZ0cHVqYVIzWTFXemNh?=
- =?utf-8?B?bWJRR2NhVmFoNjR3YldzbFE2S0xyWWhtNFplaDFrS0UwY3dYS0wxNVl1RWU5?=
- =?utf-8?B?WkxxKzgvMVg3S0k0RENLelJTVWxUR2RPZ3c2THdOQmttREQ3L2dUUklaU1Zt?=
- =?utf-8?B?V3hkRi9jTnpUcTYxNVQ1dzZmZVpkZ2gzUU9zRkhJb3hQRHM1b0FJL2NYOTcz?=
- =?utf-8?B?cEtEQmV3SlQ0N0RwMkcvblgxbEhjY2djMmR1ODR5TExuV1hoOUpjVDY0U2dJ?=
- =?utf-8?B?aEVkem9RMnpUT1ZvQS9OdmdMOExrQjRzZFJ4YithdjdLYnRNK2JTOGdIdk02?=
- =?utf-8?B?VEJJVVB2cWVmeW5NMFBHSlFWMWxNTS9vMXNEb2lwTTJJSm56ZUFDL2Y3YXhh?=
- =?utf-8?B?WmRqdHVRZXlyRjNqLy9oSTVuRXFwc1oxbFoyOTZYUGk5RVVaS0tiUERFZEd4?=
- =?utf-8?B?b1pTbjM1MXF6ZkhQb0pmK0FNK08vZmEvTWdXamhGcnN4RlZBM0VacXlxYllS?=
- =?utf-8?B?cm9hL2VqZkhDOXZrL1VLejJWMTAvcThXQmlYNFB3MUhzK0ErbXZSVUpvd3hR?=
- =?utf-8?B?ZlpFWTRMd1U1WUs0WHRPc2xKTm56U05FNmh4VHhuL2ZkV1h5U1NqT3lIc1o5?=
- =?utf-8?Q?esoeQsKe/18KU1do9t6z6CJvXl/Rl+vwpTCCk8E2jY=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VCtkOGc2Q2pUdFk5djB2S0pJYmdLTHdTd2ZjRUVKOUoyNCtPekwvNytTUkJB?=
+ =?utf-8?B?UkFkTjZPQ1piV1o0SUlRSm5QNHlVSlhWQzZSTTAxTGhXNEpVSzcvbUl0cisx?=
+ =?utf-8?B?QVhMY05EM2VoUFd2cDdlNTNQREtvcFBuVkhxSGtjUHIvSGpwbTVKaDJxTnJn?=
+ =?utf-8?B?eDdzQlBBV3BGWmRrZUtTZmxLME5xZXdoZmRqMXM0dGZJOHpoU1U1d29DZ3hj?=
+ =?utf-8?B?OHByRDZucDQvTUVuZzNybWkwdjhVdmE2b3M4OTg0bnNJQUNBTUxCaVN0cUFQ?=
+ =?utf-8?B?S245WVRXMlpGciszeUlGelVaQWpWeWtlZGplakxiaUhCZVpkeUE0Qm1uemlE?=
+ =?utf-8?B?OGNxWFY3NzdIeDFaRk94OGVGc1JWbzJJbzR5OWE3WFdGMng5YVE1QVdCWGdO?=
+ =?utf-8?B?M2lPcndwQVM4ZXJMYmFWRmVreXNvMGNzSnJ2dGVRcjJxZjFNMElLbGRURjN3?=
+ =?utf-8?B?Z2JuUWZUNEtRS2RrOXVGTVErOUZOM2Fpcm9iZWhRU21mN2htVEpBOEhoWjhR?=
+ =?utf-8?B?cGt6ZUNtSFRNaElDQ0QwQVp5RjdZRGl3SXZIcy9DT1ZPODZ2VkNoOEx4MmU0?=
+ =?utf-8?B?YXVLTUwzeE9peUJrQzhrai9XdXltR3UrZFNJZEh1RkkxV1NyaXVOd25NNkoy?=
+ =?utf-8?B?Z1IxWkp6eWhyVitCa1FlZkVYanJ2djNzUVFqVnVvUVVscXY0RU5ZL1UraFNL?=
+ =?utf-8?B?VTRaRktKZHJPbE9hMnhqa2QxQXNtVDNJT3gzNlBQQmZyYVZSU1JnTjNVN01X?=
+ =?utf-8?B?RkhLTXpZb01LVm9JeUo2eUtjZmJZaFBZL3RQSWVXYk05M3NQNUFvYmZ1eVVR?=
+ =?utf-8?B?REJ3Q002YmdqVy9NYTF3UmM4NTJuZHhWaTE1cmY4Y0lNN0JybmdRSldBc3dk?=
+ =?utf-8?B?amU3WEduSThVNkYvUFQzU0hxL2ZVS2wyQnpBdWpNbkxxUUE0WmZ0M3RIN1Jp?=
+ =?utf-8?B?NVYzOHViR2lTTFlxc2crMXEvWHAwZXBTTTdCem1FMGFCaGJvdWtCM05jSzJx?=
+ =?utf-8?B?dTFObnBhU3dOcUJLM3hORHJLMi9KSGQzWVFVbmk4eDM3QVloUitOSGx6YkI1?=
+ =?utf-8?B?VHI2c0hsbmlHbk00cEhibUtoc1hFVjFwdjJic0s3YXBWcHQwN3l0bXU4SnlT?=
+ =?utf-8?B?c1JvRjNvV0w5M09YMXAzaXFvclVPelVLeGRMS0FYYmU4U3AzdjNMejRrMWUr?=
+ =?utf-8?B?VndQYTk4M2RuODRVcnR2RWtwQVF5RDN4WmVjdG1Ta2d1VEtxWVZUR0RSV011?=
+ =?utf-8?B?VjhvU2tibHJjN2xscTd1Y1JpS0llOEY2MTYzNyt5amc5enp6Rk03L2tITW16?=
+ =?utf-8?B?L2YyZktNSGxkS0FHMmlNdmZ0eWlkUVlOUUozYThvZTlIbG5UZnVDaS9pME92?=
+ =?utf-8?B?Y3ZjZ0NaVmtlcXRFeDBwdFVKQkpySTNvYmM5SERHODBNNmxKSTRxVVBVQXpl?=
+ =?utf-8?B?UldwcERpM0FxMjFaQkpqR0VSSWdoNTZINTdrOU5pcFk4eXVaVWhCOTIyQzFH?=
+ =?utf-8?B?V3RnK1dTSEpscEgxRDVoSWFFNEtXQkZ2U0dWdWdCOUtvRE02eVVpMkxjOGEx?=
+ =?utf-8?B?VEEyS1pBTWdvR0RHdFkxMTdCY2UyR3Q5RGw1cUExazB3QXJYRktXdHZTQUZU?=
+ =?utf-8?B?TUZrOEU3a3ZmQWxLRjlnSGpIK1NYNVRIYnFtc3BkZEMvSW5lVXk0R2hPTW1X?=
+ =?utf-8?B?MjBNeE1SVzNtenUrV2ZvQ0RXdXczVEQ3MXp2UDJhSEVkaTBiMmFidjhlVDFO?=
+ =?utf-8?B?RklEWWN4cVl6UkVySDVteUM0cjAyTTdtbHhJMnVnaXBPcGtpN3p1dUpwWVU5?=
+ =?utf-8?B?YUk0Z1gwYU51L21CR3dxUjAydUpwQWE1UTM5R0h5OVpJZis5WFZ1K0tRTnRN?=
+ =?utf-8?B?T1Uwd0w2YVp1MmZjOHJBYmVQZURiQTBGVTliblpYUHhYa1duSG1BQlRJR25v?=
+ =?utf-8?B?MlhpWXJEVVpsVjc3dXZZNUM2cTdoZjdid29heFI5bU00TFIyZlpzNHdwQWU4?=
+ =?utf-8?B?WXBJN3hpdElTYkhvekRVMnFJaTl4S2laTG9wMDRyaUM1MVlQZGxQQ3c4Mm9k?=
+ =?utf-8?B?cS9DNjBTNkNEekNWZERiMng2RlN1dE4ybWdKSjRvRGtFdG9OUmh6Wk5jMGhY?=
+ =?utf-8?B?c3VQTDRtSVVkcWdaVkZSQytJUENWMGI4VTVOdEVTOWhucFkwV2NPTUtrUlpC?=
+ =?utf-8?B?dytVd3dTenFOWHorMGF4VFpVK3NON0RHaWZaV0daK1RNV0thVGNvTUVrMlZR?=
+ =?utf-8?Q?+xEzqjH5O9lld4Yop5ke+zvw2fk3YBPkJstZ1ss/eI=3D?=
 X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: bdcd66a4-4dc5-4680-cbbb-08d9ceb4ef0e
+X-MS-Exchange-CrossTenant-Network-Message-Id: 15d78bd6-367e-43d1-186c-08d9ceb58cf7
 X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jan 2022 12:31:15.0732
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jan 2022 12:35:39.9979
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: kDfml2g6XrsUrILCE+nluITVmA7OmUZIEG9eEHT8JijsFtYiVQ3Ovvx4pDhKbwGxEw5h7wqO+GpihiyoEIrUAulWfVtEfHWX7yNc/ekCqX8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB4254
+X-MS-Exchange-CrossTenant-UserPrincipalName: R9JyLMAKOejP5IFToQjEfAtYwQ571CWUnBv9lxP281qWfIhlr7d42aYjekB3meTnQTHmg7zYhec4OzfJf1mzHIbBm9h21fcPzV7h5jWxVaI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR10MB4890
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -187,13 +187,12 @@ On 31.12.2021 05:04, Elijah Newren via GitGitGadget wrote:
 >+		FILE *fp = xfopen(o->messages_file, "w");
 >+		merge_display_update_messages(&opt, &result, fp);
 >+		fclose(fp);
-
-I don't know enough about how merge-ort works internally, but it looks to me
-like at this point the merge already happened and we just didn't clean up 
-(finalize) yet. It feels wrong to die() at this point just because we can't 
-open messages_file.
-
 >+	}
+
+Something else I just wondered. Can the user differentiate between the die()
+in xfopen() and a failed/unclean merge?
+Both just exit(1) don't they?
+
 > 	printf("%s\n", oid_to_hex(&result.tree->object.oid));
 >-	merge_switch_to_result(&opt, NULL, &result, 0, 0);
 >+
