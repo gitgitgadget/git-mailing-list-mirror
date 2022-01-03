@@ -2,85 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 886C9C433F5
-	for <git@archiver.kernel.org>; Mon,  3 Jan 2022 23:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99CDEC433F5
+	for <git@archiver.kernel.org>; Mon,  3 Jan 2022 23:48:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231178AbiACXer (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jan 2022 18:34:47 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64920 "EHLO
+        id S229731AbiACXsF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Jan 2022 18:48:05 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61837 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229705AbiACXeq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jan 2022 18:34:46 -0500
+        with ESMTP id S229487AbiACXsD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jan 2022 18:48:03 -0500
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6DD3C10EF9F;
-        Mon,  3 Jan 2022 18:34:43 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D42610F15C;
+        Mon,  3 Jan 2022 18:48:03 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Sspxd65y0maZIiHcEfur9SXdffQSFY/s1IfsSt
-        e594g=; b=ErjZLvxpQvNeubwR+LGmOzVpmVUK/jFOaZfHapSToG0uPrQmPsl1k/
-        PMRVdMwdM9rWS6v9HvbhP621oq31Zt526PG90hSARHTmZT7myLXeX1yDFcHeUtMz
-        2wfSfc8o6BxKZchnuQlMsBDOAU9GDwFRB3OZVtaKxPuvUjnA10sSk=
+        :content-type; s=sasl; bh=Wut+Gu8dcHyd10LRCz5lgY0fo/dcLueYFl25DP
+        pVawA=; b=dpzFobveiiz95OaFQnZQHPxXJfIn7NIQYS2G/Lj8/m9RngVRdsvTM8
+        wj5xoMGgDXro9UUJTw1XvQZndib/hZLcZ+QSQRgKbjlicaTCWCszc0W0LSOoutV9
+        qa52NBq8wP1FUY7FOYJGW3NpfPZoqau1PmhLD4nZPD8bwsWhIJmbc=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 647A010EF9E;
-        Mon,  3 Jan 2022 18:34:43 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3288610F15B;
+        Mon,  3 Jan 2022 18:48:03 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C4F6710EF9D;
-        Mon,  3 Jan 2022 18:34:42 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 819D210F15A;
+        Mon,  3 Jan 2022 18:48:02 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Fabian Stelzer <fs@gigacodes.de>, Git List <git@vger.kernel.org>,
-        Pedro Martelletto <pedro@yubico.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] gpg-interface: trim CR from ssh-keygen
-References: <pull.1090.git.1638538276608.gitgitgadget@gmail.com>
-        <20220103095337.600536-1-fs@gigacodes.de>
-        <CAPig+cS6h6o2_dJAZC1M1Ace29bN2mhPgaEtTWtj3oXfcHq9cA@mail.gmail.com>
-Date:   Mon, 03 Jan 2022 15:34:41 -0800
-In-Reply-To: <CAPig+cS6h6o2_dJAZC1M1Ace29bN2mhPgaEtTWtj3oXfcHq9cA@mail.gmail.com>
-        (Eric Sunshine's message of "Mon, 3 Jan 2022 12:17:06 -0500")
-Message-ID: <xmqqee5oieb2.fsf@gitster.g>
+To:     Johannes Altmanninger <aclopte@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?Q?Ren?= =?utf-8?Q?=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v7 4/7] progress.c tests: test some invalid usage
+References: <cover-v7-0.7-00000000000-20211217T041945Z-avarab@gmail.com>
+        <patch-v7-4.7-40e446da277-20211217T041945Z-avarab@gmail.com>
+        <20211227011100.g3pwc67onlc7qs7t@gmail.com>
+Date:   Mon, 03 Jan 2022 15:48:00 -0800
+In-Reply-To: <20211227011100.g3pwc67onlc7qs7t@gmail.com> (Johannes
+        Altmanninger's message of "Mon, 27 Dec 2021 02:11:00 +0100")
+Message-ID: <xmqqy23wgz4f.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BA2DA4DA-6CED-11EC-85AB-CB998F0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 96DA33F2-6CEF-11EC-9D80-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Johannes Altmanninger <aclopte@gmail.com> writes:
 
-> On Mon, Jan 3, 2022 at 9:24 AM Fabian Stelzer <fs@gigacodes.de> wrote:
->> We need to trim \r from the output of 'ssh-keygen -Y find-principals' on
->> Windows, or we end up calling 'ssh-keygen -Y verify' with a bogus signer
->> identity. ssh-keygen.c:2841 contains a call to puts(3), which confirms
->> this hypothesis. Signature verification passes with the fix.
->>
->> Helped-by: Pedro Martelletto <pedro@yubico.com>
->> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
->> ---
->> diff --git a/gpg-interface.c b/gpg-interface.c
->> @@ -509,7 +509,10 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
->> -                       trust_size = strcspn(line, "\n");
->> +                       trust_size = strcspn(line, "\n"); /* truncate at LF */
->> +                       if (trust_size && trust_size != strlen(line) &&
->> +                           line[trust_size - 1] == '\r')
->> +                               trust_size--; /* the LF was part of CRLF at the end */
+>> +	grep region_enter.*progress trace-start.event &&
+>> +	! grep region_leave.*progress trace-start.event
 >
-> I may be misunderstanding, but isn't the strlen() unnecessary?
->
->     if (trust_size && line[trust_size] &&
->         line[trust_size - 1] == '\r')
->             trust_size--;
+> should "!" be "test_must_fail"? Same below.
 
-That changes behaviour when "line" has more than one lines in it.
-strcspn() finds the first LF, and the posted patch ignores CRLF not
-at the end of line[].  Your variant feels more correct if the
-objective is to find the end of the first line (regardless of the
-choice of the end-of-line convention, either LF or CRLF) and omit
-the line terminator.
+The answer is no.  The main difference between test_must_fail and
+"!" is that the former is designed to catch ungraceful death (e.g.
+by segfault) and to be used to expect controlled failure from OUR
+programs (i.e. "git" and "test-tool" invocations).  We are not in
+the business of catching segfaulting bug in system's "grep", so it
+is perfectly fine to use "!" here.
