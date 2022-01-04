@@ -2,96 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79948C433F5
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 19:26:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C4AFC433EF
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 19:33:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233704AbiADT0B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 14:26:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38582 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230166AbiADT0B (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 14:26:01 -0500
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21B4DC061761
-        for <git@vger.kernel.org>; Tue,  4 Jan 2022 11:26:01 -0800 (PST)
-Received: by mail-il1-x135.google.com with SMTP id j6so29104889ila.4
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 11:26:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=qwnoDVsL+4J7S34Wm4wo/EC7CLySjB/iz5TBE2ZbNMs=;
-        b=ZJGhQfvNt/71n/AmAfgcXt+ZnhqiFH+Wf24DAgsD8S9mriqTM352fqkYSF0N6a888S
-         ChTBN988hHiArv/JdgS+ZyaA/t+xY1Mz1rNjXsNbm3CUzpPPQ6rVpJ55fKITGg8RgdGS
-         vXbAVmoa3tbP1ZzQktm++OrEiTgxU1jfeLszwrwX/Lm8Evl52MrQNnbkGqebYzNF9GsZ
-         QNG1MqTfNbHnq4HVSLs34MC83tbOF39mfBjsVJjIZLbIuHERUAIgzJnr5cno2JgpM++3
-         iw2VWGTGerCbzUKIqukZWNtpYf1bdh3Oytp7X3rdzZG4mdMG3LftfyE7u642ZHWBcdn5
-         yyoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=qwnoDVsL+4J7S34Wm4wo/EC7CLySjB/iz5TBE2ZbNMs=;
-        b=D0532nIfrTnNpBkrP/xFbmotnEFo5KXZl3h2yJPNSvIXMRvecH/mGtaYVgzRGkL0Jo
-         PfAp11iSgpMKwDde5KEd0/KT1a4E83GuAUOCKta45MWDw/zjFCuIaPfaSqLc8RD+I2eP
-         vri6273UJQ5oRcBGYXJTTMfwhsRdGf5LoCRgk2YdytaxwQR6ALvBOGzyqtyicRWQZp+x
-         931uPx3dJzI6g1hpq21CLe8ssRLacxZn/F+K3PD1dpAsUvbmOgckYpImHA5pFjH20kyO
-         k9hffHJfv6RigIrWYIQ9Ef5uORZGYV6ABwNUuEkSTsx/kE1fXmJCs8+57HkVo1JSBlaN
-         RhDg==
-X-Gm-Message-State: AOAM533IWPrZ7AFsHR5mpEJ+vMGPZmKx9yx7om1S9DrEX5lX4UMq9N8J
-        P9aeYJSyQyfJrWeeXZaukAA=
-X-Google-Smtp-Source: ABdhPJwR6bjCJueDD84LgliRAWKZisn5zEiB4lDpvDSne5TPemVlRA9PdGPZJK/TPwF1zPAscD4Qvg==
-X-Received: by 2002:a05:6e02:605:: with SMTP id t5mr24060095ils.231.1641324360563;
-        Tue, 04 Jan 2022 11:26:00 -0800 (PST)
-Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
-        by smtp.gmail.com with ESMTPSA id y15sm18900437ill.15.2022.01.04.11.25.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jan 2022 11:25:53 -0800 (PST)
-Message-ID: <d65bf6bf-8f60-31c2-7d01-e57ea6f4a5e3@gmail.com>
-Date:   Tue, 4 Jan 2022 13:25:47 -0600
+        id S230101AbiADTdk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 14:33:40 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62424 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230005AbiADTdj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 14:33:39 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A37D3F93F4;
+        Tue,  4 Jan 2022 14:33:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=w+DJ/g9v/STS7n52oVHHLC6nScJg2prgQWZr2Q
+        keBt0=; b=VcYi4gLVnkN3sN3jFiS3/AQ/9m76fGxlafO3r3jwJf9ZFEADRcr6Lz
+        AtC0i+miLzgoJoFzgG/O62YpPP0xOlbamxxAOw88bOnMF16Q8FkNOxURaciwAp14
+        PXDp/9X7feFYHkEq3URhAghdj1pLnsLLna1HRF3wo/oPv5rdKmleo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 951F6F93F3;
+        Tue,  4 Jan 2022 14:33:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D6DF5F93F2;
+        Tue,  4 Jan 2022 14:33:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Pedro Martelletto <pedro@yubico.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] gpg-interface: trim CR from ssh-keygen
+References: <pull.1090.git.1638538276608.gitgitgadget@gmail.com>
+        <20220103095337.600536-1-fs@gigacodes.de>
+        <CAPig+cS6h6o2_dJAZC1M1Ace29bN2mhPgaEtTWtj3oXfcHq9cA@mail.gmail.com>
+        <xmqqee5oieb2.fsf@gitster.g>
+        <CAPig+cTM3wZz4NXjxYeBuFv0CVNS-T+pBFeVkfMQ-25pL1kBzw@mail.gmail.com>
+        <xmqqmtkcguvm.fsf@gitster.g>
+        <CAPig+cR93GyN53JoZbaiROrNtzGjiet7eTPQOk-26G+mB0KaCA@mail.gmail.com>
+        <20220104125534.wznwbkyxfcmyfqhb@fs>
+Date:   Tue, 04 Jan 2022 11:33:36 -0800
+In-Reply-To: <20220104125534.wznwbkyxfcmyfqhb@fs> (Fabian Stelzer's message of
+        "Tue, 4 Jan 2022 13:55:34 +0100")
+Message-ID: <xmqqo84rcn3j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.0
-Subject: Re: [PATCH v2 1/2] sparse-checkout: custom tab completion tests
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        johannes.schindelin@gmail.com
-References: <pull.1108.git.1640824351.gitgitgadget@gmail.com>
- <pull.1108.v2.git.1640892413.gitgitgadget@gmail.com>
- <955fcab00528464b5450bd22b45c89ffc2283e39.1640892413.git.gitgitgadget@gmail.com>
- <CABPp-BGdr54XgCXw8k1xRCgkwBtDonyODS3O+_nS_QY3SOEFGQ@mail.gmail.com>
- <xmqqy240l8l1.fsf@gitster.g>
-From:   Lessley Dennington <lessleydennington@gmail.com>
-In-Reply-To: <xmqqy240l8l1.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 36D2AEA2-6D95-11EC-A989-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Fabian Stelzer <fs@gigacodes.de> writes:
 
+> I guess we need a bit more context for this patch to make sense:
+>
+> for (line = ssh_principals_out.buf; *line;
+>      line = strchrnul(line + 1, '\n')) {
+> 	while (*line == '\n')
+> 		line++;
+> 	if (!*line)
+> 		break;
+>
+> 	trust_size = strcspn(line, "\n"); /* truncate at LF */
+> 	if (trust_size && trust_size != strlen(line) &&
+> 	    line[trust_size - 1] == '\r')
+> 		trust_size--; /* the LF was part of CRLF at the end */
+> 	principal = xmemdupz(line, trust_size);
+>
+> ssh_principals_out contains the result of the find-principals call
+> which contains one found principal per line (normally LF, CRLF in some
+> cygwin setup).
 
-On 12/31/21 4:20 PM, Junio C Hamano wrote:
-> Elijah Newren <newren@gmail.com> writes:
-> 
->> Second, and this item is unrelated to your series but your comment
->> made me realize it....sparse-checkout unfortunately ignores prefix and
->> creates a bad .git/info/sparse-checkout file.  For example:
->> ...
->> I think the loss of the current working directory will be fixed by the
->> en/keep-cwd directory (currently in next and marked for merging to
->> master), but the fact that the wrong paths end up in the
->> sparse-checkout file is unfortunate.  It basically means that the
->> `set` and `add` subcommands of `sparse-checkout` can only be safely
->> run from the toplevel directory.
-> 
-> You made it sound as if this is a fundamental limitation, but it
-> sounds more like a bug that needs to be fixed (outside the
-> completion series, of course) to me.
-> 
-I can file a bug report if that's the correct way to proceed.
+Ahh, OK.  Sorry for being ultra lazy for not visiting the actual
+source but just responding after reading only somebody else's
+comments.
+
+So, the code skips over one or more LFs (but users of platforms that
+use CRLF line termination are screwed here already) to find the
+beginning of a non-empty line.  Then it wants to find the end of
+that non-empty line (if there is still LF there in the buffer).
+Since strcspn() may not find any LF (i.e. it is an incomplete line),
+strlen(line) is used to see if we found a LF or if we hit the
+terminating NUL.  If the line ended with CR, we do not want to strip
+it.
+
+OK, so I was completely missing the idea.  And I agree that it may
+be a good idea to check how strcspn() returned to deal with an
+incomplete line, although as you hint later in the message I am
+responding to, checking line[trust_size] would be a more obvious
+implementation.
+
+In any case, I think the earlier part of the loop is more confusing,
+and I think fixing that would naturally fix the trust_size
+computation.  For example, wouldn't this easier to grok?
+
+	const char *next;
+
+	for (line = ssh_principals_out.buf;
+	     *line;
+	     line = next) {
+		const char *end_of_text;
+
+                /* Find the terminating LF */
+               	next = end_of_text = strchrnul(line, '\n');
+
+		/* Did we find a LF, and did we have CR before it? */
+		if (*end_of_text &&
+                    line < end_of_text &&
+		    end_of_text[-1] == '\r')
+			end_of_text--;
+
+		/* Unless we hit NUL, skip over the LF we found */
+		if (*next)
+			next++;
+
+		/* Not all lines are data.  Skip empty ones */
+		if (line == end_of_text)
+			/* 
+                         * You may want to allow skipping more than just
+			 * lines with 0-byte on them (e.g. comments?)
+			 * depending on the format you are reading.
+			 */
+			continue;
+
+		/* We now know we have an non-empty line. Process it */
+		principal = xmemdupz(line, end_of_text - line);
+		...
+	}
+		
+The idea is to make sure that the place where the line ending
+convention is taken care of is very isolated at the beginning of the
+loop.
+
+Hmm?
