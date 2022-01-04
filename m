@@ -2,104 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEB29C433EF
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 21:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACCDBC433EF
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 21:45:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234308AbiADVjo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 16:39:44 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52252 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234299AbiADVjn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 16:39:43 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2E7B6175F7F;
-        Tue,  4 Jan 2022 16:39:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YYE+JR1uqP8fF/g93SBDCFWFmhb5+8WfH25SuZ
-        ZGoWo=; b=IZ+/K/5i02SXsxA/K+b1VCuT9S53+PfIDsxtV0Gh9Ff/yiWPx6tEAd
-        dR+nWMrn0lbQDC9KnH84sG7PPNUvOOVUMqIy0mYgt+dULar/DC3fvF0bc5RYjN3z
-        x21oRUy/e96ywh+TfQBEPKDHF/MCtnmHtjKIaGXMmGcQkCe3uKj1c=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 26B7F175F7E;
-        Tue,  4 Jan 2022 16:39:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7A924175F7D;
-        Tue,  4 Jan 2022 16:39:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>, rsbecker@nexbridge.com,
-        Taylor Blau <me@ttaylorr.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: Re: [PATCH v2 1/2] wrapper: add a helper to generate numbers from a
- CSPRNG
-References: <20220104015555.3387101-1-sandals@crustytoothpaste.net>
-        <20220104015555.3387101-2-sandals@crustytoothpaste.net>
-        <xmqqsfu3b4gw.fsf@gitster.g>
-Date:   Tue, 04 Jan 2022 13:39:37 -0800
-In-Reply-To: <xmqqsfu3b4gw.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        04 Jan 2022 13:01:19 -0800")
-Message-ID: <xmqqlezvb2p2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233976AbiADVpe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 16:45:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42512 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230369AbiADVpd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 16:45:33 -0500
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F058C061761
+        for <git@vger.kernel.org>; Tue,  4 Jan 2022 13:45:33 -0800 (PST)
+Received: by mail-qv1-xf2c.google.com with SMTP id kj16so35653885qvb.2
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 13:45:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N/y+qZfnzMOVYB3v7ITlImnkJZ0BlsbHWH7N9LweFfQ=;
+        b=eOWq3ZIOdJUBhTfUR8KTi/0md8Bx237rfPOxrmk9o2tOiSuRLCdQvnsVymXNzbvwlr
+         r50/KLyYZErtvaigrlnnJN1Fhjc/89WVtZV8PgyBPobEVgj8hJPedzSGsCjkDPSIbseH
+         MFK39qL2o0a0igx66/UvWaYh4RNpKJ154ijZ6gatT7BL956AMzq/9U0BUdoi02LBGkJh
+         ZkxwynPkuGo7D4TomFrG9J+1P1shDGuEpZ/nW9xgQrbW6vAPZtlyRoq2N563JQCHt1qu
+         dOW6APPS8CJtrWVkYQHhAXKws9p0vPfgtlD/eyfswZ3mAqlFqlvoV+UL8mIrP4AAO/E2
+         a05w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N/y+qZfnzMOVYB3v7ITlImnkJZ0BlsbHWH7N9LweFfQ=;
+        b=6wcINgwDn0+Yd4MV00//Crc1hvdD+IAUHNCneGMKA3/q/Ey8m5bIakBiKzrQVqvPR9
+         gyg32gyxqvQ2tCO5ob1PnA9YwwhlHg47O6MOtsYHJlhw+OaMWkVVojcOBrqO7qhaLr8S
+         ST40mcZk9K2dD2w9EhzYpfEVTb9pLaPGkFsqJkFaJkPFKIbgKaG4cne9TmRL8waJrT37
+         u9277cxNzW+rkxBKyQUQsLg/wGNCPh0wuYsdLX4y/P236vA4D2KOo82zrwJwpneH32ru
+         tWq9hJe7sawLD95aKfb7X2iNckaYx0EzLXYD4BYXkfEnGTFzSKCj+BNHCEoJ0RiFlsGc
+         7MKA==
+X-Gm-Message-State: AOAM532ailKsncNLCoe/pmO7RgqJRKup+88aNMmKDsJubzPdXVG1MArz
+        sUcp09V7M1sz444kQctTyhMLc/wJdsKZmA==
+X-Google-Smtp-Source: ABdhPJylVBP1JqwZv4z7P9f9x8RvZ/TfPgJuv7+Un43x80/OP8CRpjhI8XYAoV8vqfhl3QoG1n2YaQ==
+X-Received: by 2002:ad4:5d62:: with SMTP id fn2mr47914459qvb.44.1641332732152;
+        Tue, 04 Jan 2022 13:45:32 -0800 (PST)
+Received: from Johns-MBP.myfiosgateway.com (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
+        by smtp.gmail.com with ESMTPSA id i14sm34352164qko.9.2022.01.04.13.45.31
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 04 Jan 2022 13:45:31 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
+To:     git@vger.kernel.org
+Cc:     John Cai <johncai86@gmail.com>
+Subject: [PATCH 0/1] Fix bug in pull --rebase not recognizing rebase.autostash
+Date:   Tue,  4 Jan 2022 16:45:21 -0500
+Message-Id: <20220104214522.10692-1-johncai86@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D1E60E78-6DA6-11EC-B3FF-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+NOTE: this is my first patch I'm submitting through git send-email. Please let
+me know if there is some convention that I'm missing. thank you in advance :)
 
->> +ifeq ($(strip $(CSPRNG_METHOD)),arc4random)
->> +	BASIC_CFLAGS += -DHAVE_ARC4RANDOM
->> +endif
->> +
->> +ifeq ($(strip $(CSPRNG_METHOD)),arc4random-libbsd)
->> +	BASIC_CFLAGS += -DHAVE_ARC4RANDOM_LIBBSD
->> +	EXTLIBS += -lbsd
->> +endif
->> +
->> +ifeq ($(strip $(CSPRNG_METHOD)),getrandom)
->> +	BASIC_CFLAGS += -DHAVE_GETRANDOM
->> +endif
->> +
->> +ifeq ($(strip $(CSPRNG_METHOD)),getentropy)
->> +	BASIC_CFLAGS += -DHAVE_GETENTROPY
->> +endif
->> +
->> +ifeq ($(strip $(CSPRNG_METHOD)),rtlgenrandom)
->> +	BASIC_CFLAGS += -DHAVE_RTLGENRANDOM
->> +endif
->> +
->> +ifeq ($(strip $(CSPRNG_METHOD)),openssl)
->> +	BASIC_CFLAGS += -DHAVE_OPENSSL_CSPRNG
->> +endif
->
-> Use of $(strip ($VAR)) looks a bit different from what everybody
-> else does with ifeq in this Makefile.  Was there a particular reason
-> to use it that I am missing?
+A bug in pull.c causes merge and rebase functions to ignore
+rebase.autostash if it is only set in the config.
 
-Another thought.  As far as I can see on the C code side in the
-later part of the patch, we are prepared to see multiple HAVE_* for
-CSPRNG defined by the builders, and let us choose the best one for
-them.  I wonder if it makes sense to allow
+There are a couple of different scenarios that we need to be mindful of:
 
-    make CSPRNG_METHOD='arc4random getentropy'
+--autostash passed in through command line
+$ git pull --autostash
 
-as a way to tell us that they have these two and want us to pick the
-best one for them.  
+merge/rebase should get --autostashed passed through
 
-It does not add much value for human builders, but I suspect that it
-would make it simpler when we need to add autoconf support.  
+--rebase passed in, rebase.autostash set in config
+$ git config rebase.autostash true
+$ git pull --rebase
 
-If we do not allow multiple methods listed on the CSPRNG_METHOD
-variable, the configure script will be forced to pick one in some
-way when multiple methods are possible on the platform, either by
-detecting all and picking one, or detecting serially from most
-preferred and stopping at the first hit.
+merge/rebase should get --autostash from config
+
+--no-autostash passed in
+$ git pull --no-autostash
+
+--no-autostash should be passed into merge/rebase
+
+rebase.autostash set but --rebase not used
+$ git config rebase.autostash true
+$ git pull
+
+--autostash should not be passed into merge but not rebase
+
+This change adjusts variable names to make it more clear which autostash
+setting it is modifying, and ensures --autostash is passed into the
+merge/rebase where appropriate.
+
+John Cai (1):
+  builtin/pull.c: use config value of autostash
+
+ builtin/pull.c          | 15 ++++++------
+ t/t5521-pull-options.sh | 51 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 7 deletions(-)
+
+-- 
+2.34.1
+
