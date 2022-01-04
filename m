@@ -2,183 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12F96C433EF
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 20:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD7E5C433EF
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 20:42:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233103AbiADUi6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 15:38:58 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:35361 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231175AbiADUi5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 4 Jan 2022 15:38:57 -0500
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id E24CB5C02E7;
-        Tue,  4 Jan 2022 15:38:56 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Tue, 04 Jan 2022 15:38:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=y8gLVTfnV9pG84u35RJJLaxcoZw
-        F5fT1wPl/7TgMeGg=; b=ZZKY7uLugabXLDcAy3RGVR6GrQSgl9el/G5gbEjXhnw
-        diEW6T5z2HJgrUgpB4lbULgida8WBgYSnGuBufUlYnUmbQtm5EaM5HJmToJOdBPQ
-        Ahf2pilunQmycFBZTyNCALdwvpXxRqgKT7K4Do/cRmcx526kzKEOhSEI/xD49QaI
-        DTYxeg3fXsIqs3ERDzac+R8XDVfUP4H0aMjyKRyrmMaDytOhA10eU/0F63PGreJi
-        GASDh5fMiCFGNWNOjky2w5nFuzaLdiT512aB9bCR/kLI/dP/5/2dbjZbyLr8WX3P
-        PviUA7wpJthhEHR7+2cupYfW49PNJon2hC47Cp2XRTQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=y8gLVT
-        fnV9pG84u35RJJLaxcoZwF5fT1wPl/7TgMeGg=; b=ZJD/lPS/55jnypmXnpTVgv
-        lz2f0hNkXNVKq8yPwqLxS29M0YDGaCVVzWU/gGswM2ODyeSUCCMCwrNEavitjj9b
-        /N2zoAlEb1rXhr/XiOPkp4/8SqYNUdqtqKw8o5GtM96mxoBlIZJQp7gjlTNbMcvY
-        k78A+23WoOWUhYx+LyHFC9w4aVKvjFBDj7TNveHZzFWcjOiSCZD6BPrlFv7Kumbu
-        39yFRDgyDUd/9S9De3YyCfHqERu+Quk2fHk3vsz4sho8aGjUhU7QhDsQepjeyAZR
-        QLRStNmlel2ntRr1WPvNk8QQhCuNexV75j3trsxsTVkvWQU5Z30FaxWsnglHiYdA
-        ==
-X-ME-Sender: <xms:YLDUYTGHsC_OnNUb0FT-BBI10PKEhnAF49NWSbYU98pIO5hb47vK4A>
-    <xme:YLDUYQWywU6JNiXTq0fBRAVRHGusM7gXTrLJmXrv1xB6Q4TtHxT5XzubHWr__y6Y6
-    xUMdTxrUBo4VvXZBw>
-X-ME-Received: <xmr:YLDUYVKiZfjk__47TqDbCfpJnDPZWkxmI3Sk4sIKKlUit3DIfDLkHz83LHQ_Ocd3UmxbeT5R>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudeffedgudeflecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvuffkfhggtggujgesthdtredttddtjeenucfhrhhomhephfgvrhhn
-    rghnughoucftrghmohhsuceoghhrvggvnhhfohhosehuledvrdgvuheqnecuggftrfgrth
-    htvghrnhepvdejieeflefhteeihffhtdfhfeekhffhuedttedvgfevgfevfeehfffgkeej
-    feehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hrvggvnhhfohhosehuledvrdgvuh
-X-ME-Proxy: <xmx:YLDUYRE1lxfPVufk6Azt9eW8FFE1nEf0YOBdCzS2oErRAjk8i6VjiQ>
-    <xmx:YLDUYZWi_srekRKWzeM8ZI8KYCZaNofhjh4tQ6LwtR8Yv0NoyFspSQ>
-    <xmx:YLDUYcOzv8znonJeWAB9crqUFeM6MFVBid_n0EyPtCJfmzMS5oAYyw>
-    <xmx:YLDUYbIagspD2OynSRcS6idajdPZfI9eyHhxChfupB3YQeknuRKGyQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Jan 2022 15:38:54 -0500 (EST)
-Date:   Tue, 4 Jan 2022 21:38:52 +0100
-From:   Fernando Ramos <greenfoo@u92.eu>
-To:     David Aguilar <davvid@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Seth House <seth@eseth.com>, levraiphilippeblain@gmail.com,
-        rogi@skylittlesystem.org
-Subject: Re: [PATCH v4 2/3] vimdiff: add tool documentation
-Message-ID: <YdSwXJzwuVM/MCAZ@zacax395.localdomain>
-References: <20211204090351.42369-1-greenfoo@u92.eu>
- <20211204090351.42369-3-greenfoo@u92.eu>
- <CAJDDKr77YQKJj15V52Rs=LPRMZVSkbpV8MWFDWNuYf4jqqCajg@mail.gmail.com>
- <YbSBf0eLh3AXiGnV@zacax395.localdomain>
+        id S232994AbiADUms (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 15:42:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56378 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231175AbiADUmr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 15:42:47 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B99AC061761
+        for <git@vger.kernel.org>; Tue,  4 Jan 2022 12:42:47 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id f5so153231966edq.6
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 12:42:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FM0w7Oaz4hJeY3W9us7WTWxJeDUZ5tNWUhEg4vuxzWA=;
+        b=BnU1AtmkYNFXlkhOIY9sG+s7e6wqXS0kmKkEqbNkX0vsrg/rtwVfJxuTr2cNk9RtgS
+         nA7hIhrpHhkkPrWoUFQ4S5AANJrYzCTwnw4YoEqAM2OzDEGVstxOSVw0letLQxjrcnl2
+         VcmDDHG6jHeS7GKALk61JmJk4FZtZPTGNGpib/IrXpkoUaNii6nFHt79O0fZvn9nWAjF
+         rStcABDzwYCuvlHJcjsOe6wP8I9ZAKJVxu+q2Cj4l2yQkCbeoy1YbJg6pQP1gBzRJwN4
+         Tf7k0PGZBfIpmJVE+FU8gvyndLqDeSzjcKf3AqomBnhkRyKWWeKG9lvlX/aKSagzYiQn
+         LGCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FM0w7Oaz4hJeY3W9us7WTWxJeDUZ5tNWUhEg4vuxzWA=;
+        b=kWIF2acUqEYOkgTikOC3XWQrT1a0o+SKKV9X6EUO3jwVRv43czkXW6jL4nbhdGd2OL
+         7qfseLdhhkv6i5ENewIwU70Vw61O5HjDzGn0++ywj1GFt+XEWobBL8KuhqQAXHV5fRET
+         PafkRHuyoA+rzQVXuI+n+0MhZYjLYxtgteKPVJYpKv2BJo3xrp80+508dTTjTLr9v9e6
+         DfyutQQtmfwoGmpYc7Kc0GqLtSBtbgJl0oiTam3oDk1bR0qE+ahJX8P6otKXu70SdFeJ
+         2y1ElA+U7RyiBrHWGSYjBWMxku13rPz7NccgOtCd1ZQ+mon3H5We6c4BQAaaJqXB3qgb
+         QLEw==
+X-Gm-Message-State: AOAM532Z/eJ4AA/If3/jUX0ohDY0z95hG65qpMXL/Ncr5uy/SVTSh6B5
+        16LX4ocp9tU12z85EPLi4za0ud0MOwifX6ABLpg=
+X-Google-Smtp-Source: ABdhPJwkS51bzsWha7XQevTrNWhPf5sLBrO7Tk4a7jgvAUAuuZkwdNovJYa0zfk4gh0u9ZbEUDai26evdWxOa/gXiGo=
+X-Received: by 2002:a17:907:9808:: with SMTP id ji8mr41567452ejc.476.1641328965721;
+ Tue, 04 Jan 2022 12:42:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YbSBf0eLh3AXiGnV@zacax395.localdomain>
+References: <pull.1108.git.1640824351.gitgitgadget@gmail.com>
+ <pull.1108.v2.git.1640892413.gitgitgadget@gmail.com> <cecf501e07645b7408dc75f276d477b9b712ab17.1640892413.git.gitgitgadget@gmail.com>
+ <CABPp-BG_Jgyr89z_D355Ytzz31J40nBGX=2cr+aXtcf3U1y6Dg@mail.gmail.com> <676e8408-5ac3-4293-22ee-c43e9bd6916b@gmail.com>
+In-Reply-To: <676e8408-5ac3-4293-22ee-c43e9bd6916b@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 4 Jan 2022 12:42:34 -0800
+Message-ID: <CABPp-BFJF7hyr5onMFQNC7r_x+XfJVn9wXhxyMV6Lu+pxbfyPA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] sparse-checkout: custom tab completion
+To:     Lessley Dennington <lessleydennington@gmail.com>
+Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        johannes.schindelin@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 21/12/11 11:46AM, Fernando Ramos wrote:
-> On 21/12/09 06:58PM, David Aguilar wrote:
-> > On Sat, Dec 4, 2021 at 1:04 AM Fernando Ramos <greenfoo@u92.eu> wrote:
-> > >
-> > > Running 'git {merge,diff}tool --tool-help' now also prints usage
-> > > information about the vimdiff tool (and its variantes) instead of just
-> > > its name.
-> > >
-> > > Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
-> > > ---
-> > >  Documentation/git-difftool--vimdiff.txt  |  40 +++++
-> > >  Documentation/git-mergetool--vimdiff.txt | 195 +++++++++++++++++++++++
-> > 
-> > 
-> > Should these be referenced from elsewhere in the Documentation/
-> > tree in order to make them more discoverable?
-> > 
-> > Documentation/git-{difftool,mergetool}.txt seem like they should
-> > include or link to these.
-> 
-> Those files (Documentation/git-{difftool,mergetool}.txt) contain this piece of
-> text:
-> 
->     --tool-help
->         Print a list of diff tools that may be used with --tool.
-> 
-> When you then run with "--tool-help", not only the list of available tools is
-> listed, but also a short message explaining how to obtain more details is
-> presented (for those tools that have more information):
-> 
->     vimdiff 
->         Run 'man git-difftool--vimdiff' for details
-> 
-> In other words: there is one level of "indirection" that decouples the
-> documentation of each tool from the generic documentation contained in
-> Documentation/git-{difftool,mergetool}.txt.
-> 
-> Thanks to this, when documentation for a new tool is created in the future, as
-> long as the "diff_cmd_help()/merge_cmd_help()" functions are overwritten,
-> everything will "just work" without having to edit
-> Documentation/git-{difftool,mergetool}.txt each time.
-> 
-> I thought this was the best option but I have not problem adding a reference to
-> it if you prefer that (maybe at the end, in the "SEE ALSO" section?)
-> 
-> Let me know what you think.
-> 
-> 
-> > > +merge_cmd_help() {
-> > > +       echo "Run 'man git-mergetool--vimdiff' for details"
-> > > +       return 0
-> > > +}
-> > > +
-> > > +
-> > 
-> > My understanding is that we prefer "git help" instead of "man" when
-> > providing hints.
-> > 
-> > That means we should suggest something like this instead:
-> > 
-> >         echo "Run 'git help mergetool--vimdiff' for details"
-> 
-> I originally typed that, but then I noticed something in my system: all entries
-> in "Documentation/" seem to be available as "man" pages, but only a subset of
-> them are also available through "git help". Examples:
-> 
->   * man git-mergetool        --> works
->   * man git-mergetool--lib   --> works
-> 
->   * git help mergetool       --> works
->   * git help mergetool--lib  --> does not work!
-> 
-> That's why I ended up using "man".
-> 
-> PS: Now that I have revisited the issue, it looks like the command that is
-> failing is trying to run "man gitmergetool--lib" under the hood (notice there is
-> a missing "-"). The problem seems to be in "builtin/help.c:cmd_to_page()":
-> 
->    if is_git_command(x) 
->        return xstrfmt("git-%s", x);
->    else
->        return xstrfmt("git%s", x);
-> 
-> Because "mergetool--lib" is not a regular git command, it removes the "-". The
-> same would happen to the new "git help mergetool--vimdiff" if I add it. Is
-> this the intended behavior?
-> 
-> There are two options:
-> 
->   A) This is actually an error in help.c logic that needs to be fixed and then
->      I can update the docs to "git help mergetool--vimdiff".
-> 
->   B) This is the intended behavior and I leave "man git-mergetool--vimdiff" in
->      the docs.
-> 
-> I would say the right option is (A), but need your input regarding how to fix
-> it.
-> 
-> Thanks.
-> 
+On Tue, Jan 4, 2022 at 11:41 AM Lessley Dennington
+<lessleydennington@gmail.com> wrote:
+>
+>
+>
+> On 12/31/21 4:52 PM, Elijah Newren wrote:
+> > On Fri, Dec 31, 2021 at 2:33 AM Lessley Dennington via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> >>
+> >> From: Lessley Dennington <lessleydennington@gmail.com>
+> >>
+> >> Fix custom tab completion for sparse-checkout command. This will ensure:
+> >>
+> >> 1. The full list of subcommands is provided when users enter git
+> >> sparse-checkout <TAB>.
+> >> 2. The --help option is tab-completable.
+> >> 3. Subcommand options are tab-completable.
+> >> 4. A list of directories (but not files) is provided when users enter git
+> >> sparse-checkout add <TAB> or git sparse-checkout set <TAB>.
+> >>
+> >> Failing tests that were added in the previous commit to verify these
+> >> scenarios are now passing with these updates.
+> >>
+> >> Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
+> >> ---
+> >>   contrib/completion/git-completion.bash | 38 ++++++++++++++++++--------
+> >>   t/t9902-completion.sh                  |  8 +++---
+> >>   2 files changed, 30 insertions(+), 16 deletions(-)
+> >>
+> >> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> >> index c82ccaebcc7..7de997ee64e 100644
+> >> --- a/contrib/completion/git-completion.bash
+> >> +++ b/contrib/completion/git-completion.bash
+> >> @@ -2986,24 +2986,38 @@ _git_show_branch ()
+> >>          __git_complete_revlist
+> >>   }
+> >>
+> >> +__git_sparse_checkout_subcommand_opts="--cone --no-cone --sparse-index --no-sparse-index"
+> >> +
+> >>   _git_sparse_checkout ()
+> >>   {
+> >> -       local subcommands="list init set disable"
+> >> +       local subcommands="list init set disable add reapply"
+> >>          local subcommand="$(__git_find_on_cmdline "$subcommands")"
+> >> +
+> >>          if [ -z "$subcommand" ]; then
+> >> -               __gitcomp "$subcommands"
+> >> -               return
+> >> +               case "$cur" in
+> >> +                       --*)
+> >> +                               __gitcomp "--help"
+> >> +                               ;;
+> >> +                       *)
+> >> +                               __gitcomp "$subcommands"
+> >> +                               ;;
+> >> +               esac
+> >>          fi
+> >>
+> >> -       case "$subcommand,$cur" in
+> >> -       init,--*)
+> >> -               __gitcomp "--cone"
+> >> -               ;;
+> >> -       set,--*)
+> >> -               __gitcomp "--stdin"
+> >> -               ;;
+> >> -       *)
+> >> -               ;;
+> >> +       case "$prev" in
+> >
+> > Shouldn't this be "$subcommand" rather than "$prev"?  I think with
+> > prev, it will only correctly complete the first path after "set",
+> > "add", etc.
+> >
+> Good catch, thank you! Fixing in v3.
+> >> +               set)
+> >> +                       __gitcomp "$__git_sparse_checkout_subcommand_opts --stdin"
+> >> +                       __gitcomp "$(git ls-tree -d -r HEAD --name-only)"
+> >> +                       ;;
+> >> +               add)
+> >> +                       __gitcomp "--stdin"
+> >> +                       __gitcomp "$(git ls-tree -d -r HEAD --name-only)"
+> >
+> > I was going to make a simple suggestion for making it just complete
+> > one additional level at a time and leaving out the -r, and then tried
+> > it out and found out it wasn't simple.  I got something working,
+> > eventually, but it's slightly ugly...so it probably belongs in a
+> > separate patch anyway.  If you're curious, it's basically replacing
+> > the second __gitcomp... call for each of set and add with
+> > `__gitcomp_directories`, after first defining:
+> >
+> > __gitcomp_directories ()
+> > {
+> >      local _tmp_dir _tmp_completions
+> >
+> >      # Get the directory of the current token; this differs from dirname
+> >      # in that it keeps up to the final trailing slash.  If no slash found
+> >      # that's fine too.
+> >      [[ "$cur" =~ .*/ ]]
+> >      _tmp_dir=$BASH_REMATCH
+> >
+> >      # Find possible directory completions, adding trailing '/' characters
+> >      _tmp_completions="$(git ls-tree -d --name-only HEAD $_tmp_dir |
+> >          sed -e s%$%/%)"
+> >
+> >      if [[ -n "$_tmp_completions" ]]; then
+> >          # There were some directory completions, so find ones that
+> >          # start with "$cur", the current token, and put those in COMPREPLY
+> >          local i=0 c IFS=$' \t\n'
+> >          for c in $_tmp_completions; do
+> >              if [[ $c == "$cur"* ]]; then
+> >                  COMPREPLY+=("$c")
+> >              fi
+> >          done
+> >      elif [[ "$cur" =~ /$ ]]; then
+> >          # No possible further completions any deeper, so assume we're at
+> >          # a leaf directory and just consider it complete
+> >          __gitcomp_direct_append "$cur "
+> >      fi
+> > }
+> >
+> > But I don't think that needs to be part of this series; I can submit
+> > it later and hopefully get a completion expert to point out
+> > better/cleaner ways of what I've done above.
+> >
+> I'm admittedly curious about what made this so difficult. I removed the
+> '-r' and updated my tests to expect only directories at one level, and
+> they passed. But I imagine I'm being too simplistic.
 
-Any extra thoughts on these considerations?
+I've forgotten some details since last Saturday, but I think the
+problem was that doing that would only ever complete toplevel
+directories; after completing those you could keep tabbing to get a
+deeper directory.  First, let's get a comparison point; ignoring
+sparse-checkout, I can do:
 
-Thanks!
+    cd $GIT_CLONE
+    cd cont<TAB>b<TAB><TAB>
 
+and the ls line will replace those <TAB>s so that I see
+
+    ls contrib/buildsystems/Generators
+
+Now, if we just removed the '-r' from your git-completion.bash
+changes, and then typed
+
+    git sparse-checkout set cont<TAB>b<TAB><TAB>
+
+Then you'd see
+
+    git sparse-checkout set contrib
+
+and see 'bin-wrappers', 'block-sha1', and 'builtin' as potential
+completions, but not as subdirs of contrib but instead sibling dirs to
+contrib.  That completion rule wouldn't let you look within contrib/.
+My more complicated rule had to avoid calling __gitcomp to avoid
+adding spaces so that completions could continue (but should add them
+if we have tabbed all the way down and there are no more
+subdirectories), had to add trailing '/' characters so that we know
+when we have the full directory name to pass along to ls-tree, and
+then had to manually do the work that __gitcomp would manually do with
+making sure to only provide completions relevant to what has been
+typed so far.
