@@ -2,152 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BDC5C433F5
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 09:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABE31C433EF
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 12:21:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229740AbiADJtv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 04:49:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46028 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbiADJtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 04:49:50 -0500
-Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7DC1C061761
-        for <git@vger.kernel.org>; Tue,  4 Jan 2022 01:49:50 -0800 (PST)
-Received: by mail-ua1-x930.google.com with SMTP id i5so47161025uaq.10
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 01:49:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=AUWAYrGIOKW7HVBmvM7CxDq6aDYJwnUza9E+yinLHsA=;
-        b=dK+TdTZO3NKD/3EOtnIF71GWtpR8g95Y2/N0oqiRhalpbqRnfe2FlIU9S8VG/hiNFe
-         0/PIAQ3t5OGuBRc0sIZ5SCdK4Hi60nOPH5IK+bJ8eJuNR7OrtWanSYPVLMd/XsM7CH31
-         sPLqNwgq/F/WlPEoT5r7WNCFkHYV9O28TsR62j19Kh5aB8Kmzw07J8COIoxcjpy3IPeD
-         MS5fWYTQX/OddMZPcjgDcLjFxhO2GilEbaCTDyoRq58WJ3g8rL6Vo+ojbYTUaJdUR3nH
-         AKDvayKQplVMq8/PymOUF/7utczQ8ROrAqPcvofn0fYYhyhMf8X3VIJJmhEy9O3NAcXy
-         SHLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=AUWAYrGIOKW7HVBmvM7CxDq6aDYJwnUza9E+yinLHsA=;
-        b=ZmTXqN1Me3gGZojt77t+F+/A4AVlRbosgnOO0laWN7Rb1vqoaX9fsf4jMsMaA8Ags9
-         bouZU5S8GawV55bfraTEiTQd5LV/AW8es3Y41Ln15jqd0VCFTikZ3DsXqgVk1m7aGCW1
-         LfhfqMr8HwrUiVK6SeqQZSo+sCrspLIOBMa2RpTAdyEC4YiwDp/5Dih/NiHREA9FMcFm
-         CORaTe0q+XG/2c68X9gE7DVIPVVIYO2QVDeyD76VRk2MrzD4sCE26o9B+C178rMeYH+r
-         DXt8V4n77t84vfDpOXISRqep1z36OdAif3BzsvmMtxzXUoev0nFFSb8uPB12j2a6pXNQ
-         Vx2g==
-X-Gm-Message-State: AOAM531Qh28MWxe6YyvuFuTjDuato4k0LJhmaudI6Qze/SgbWLYUp/7T
-        r06gjDDY9kY+jAfNnVJHy1D5SFQVcHIr7e7O8vg=
-X-Google-Smtp-Source: ABdhPJzyUnETl3PgPDhyusRaAqih6NUC/Zo+FhbQ6Q5OEOQ9rR/z3NBcVpvAERheEDNosu2smpF4hUuOgcuG8tv+wGs=
-X-Received: by 2002:a67:6505:: with SMTP id z5mr14738903vsb.16.1641289789806;
- Tue, 04 Jan 2022 01:49:49 -0800 (PST)
+        id S232527AbiADMVp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 07:21:45 -0500
+Received: from mout.gmx.net ([212.227.15.15]:53419 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231753AbiADMVn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 07:21:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1641298894;
+        bh=lNZ8BAtslZEV+OrzU6oKRIdrO0i9mZueldlAKtFo1Kw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=bxselfyuiHCyP3fEsuQ50drdjisPYjWuBl6U8dYrVt4+hV4spZNKN2cp+jlwSQ8dl
+         ehRw6JbWf2UtT7+rUf3XNkG4AE5la5nng+eqLK82o3mgpY6dmTDys5JRuAWgaRPl5j
+         dP9211J232u3FMeebMMEJUk2wqllcD8z3MqLTXlE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.29.215.148] ([89.1.212.167]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2f9h-1n6dgw3qQB-004G7F; Tue, 04
+ Jan 2022 13:21:34 +0100
+Date:   Tue, 4 Jan 2022 13:21:31 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     James Limbouris via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, James Limbouris <james@digitalmatter.com>,
+        James Limbouris <james@digitalmatter.com>
+Subject: Re: [PATCH v4] subtree: fix argument handling in check_parents
+In-Reply-To: <pull.1086.v4.git.1638929518657.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201041319300.7076@tvgsbejvaqbjf.bet>
+References: <pull.1086.v3.git.1638758742741.gitgitgadget@gmail.com> <pull.1086.v4.git.1638929518657.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <cover.1641043500.git.dyroneteng@gmail.com> <d77c895a4b9d5cb86443279c0156196254895ef4.1641043500.git.dyroneteng@gmail.com>
- <xmqqwnjgfe4t.fsf@gitster.g>
-In-Reply-To: <xmqqwnjgfe4t.fsf@gitster.g>
-From:   Teng Long <dyroneteng@gmail.com>
-Date:   Tue, 4 Jan 2022 17:49:38 +0800
-Message-ID: <CADMgQSRXJ0F0=egA_PcEz0NzXZMVo1nLv1N8dGyoRhdDsZPc9w@mail.gmail.com>
-Subject: Re: [PATCH v8 5/8] ls-tree: split up the "init" part of show_tree()
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     avarab@gmail.com, congdanhqx@gmail.com, git@vger.kernel.org,
-        peff@peff.net, tenglong.tl@alibaba-inc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HuRhHT1rChjQFFkzrxkd53ivZREM9fSf1nvhIlwVN3Z4SA+g992
+ OkG210KFOlZLYlPCaDxaUzXCZXlMDbF79Zh4LDKbHpp4l4KLa4/89aUsHSp2fgTcVenolhP
+ i6wXYtTxAbdzW5PxMM2vTjvykInBJJU4IfebRbQxQtcVP0CUqzamIEg8OEyTmHR7rhUgUpg
+ PTYEnMBMCtVCmfYbtedZw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:omJH83F1njQ=:zgN2mEw28H2C2ZKm3ylO0e
+ qhwwmNbJgrbriv62GMKNohGGrZUaGiTfRlFTLRyhqDoHVujbfcRgWRUlsZACA3aqDtaZz+qqn
+ xAmicBhf15ZHsPt36GfSRfXEva2Nca8H9TQY7FJBWVzS+RyHnQLxn9kxT6aApQrko1CRNKnQ3
+ k32/TDsEsbYFVRHyw2WPv868SNUm56EQ2hsnx+ioc/ncTIge6e53gRMTFz7F92LTaHQmK4dH7
+ 1UxM8BxoJO39CQyoxwUQ1quaBqJJFp3RD1VN/uTranmDl5Kr0E6kZOcpnPvYp5BeZZ495X++x
+ 30216LSHUv5IOe8sOaZR8HEB0Fy8RJCuNfVuxIEV0oAEyPOPpuza0pQ099tAAuSauzLsf+QMY
+ NoKEYB7HQdW2nCXJaXA8nfIt54UePUK7B/5gnhQwoeyBHn4kDexKSKPrDY2j3t803tHK90Xgm
+ 5IHjBHodrduH7dlWeBkK6tG/qEbrcF7WFZStBQ11G2nLw9Djn2+zyxRVzYFYhBrPjaufQypIc
+ HrcVlwsX4v1WhT82zjNMrahEV2BU6hb16PQ8oHK7Yu+ynVmSExNikinnWkRV8sHIJmBc9Hxz7
+ aTWuPx1TcJQOrL57LCql4l9J0u2G2tGII2ymQEXbYSaNtsnXE9gQrlflSSOSrNhxmTfHle5Xj
+ KZqxeTKW1ci88hFaBX0LO4FxioAnMt1ssr83jpJEi9Ngi2iDPgRWOOmmxrVj7ek+I0lU7fTBh
+ nOyJei7uz1Fyx7s9GNHO/05P3QWOrUTfg8JLbPNHyeWSrIrASlH9qnQyib+qn1dN9E1xW01yy
+ 0lnD9m78gQMtq7I3aAC7dgpACr3VwLhzl2U1DbC3+bJOcBatKsuigDk0aB3WHUZEhejiyCPgc
+ iXQoVMBU5NJAjWWs9y5+BqCnRU9iJWp5jMBwEpcTSUysi6k8mXyRZAY120PzdOZsisJSCO51w
+ Oj5rvTnd7bsTd6ofWAegM0pbVrIyffqhRX2GA9XlHEbphuKFkaxkeRqradf9IWd5y00FORwiS
+ 6DTiysC2j5o98e4PGOypMGJw6oxf5RlJvNRZrs+s5Gab1okrlTVhLX+SQA1QsccTizIAjfNy2
+ CdZ/YiFwkKWTQo=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano writes:
+Hi James,
 
-> Don't we need some comment that explains what the function does,
-> what its return value means, etc.?
->
-> It seems that even from its returned value, the caller cannot tell
-> if *retval was set by the function or not.  Perhaps it makes a much
-> cleaner API to assign 0 to *retval at the beginning of this function,
-> just like the original did so anyway? ...
+On Wed, 8 Dec 2021, James Limbouris via GitGitGadget wrote:
 
-Oh, sorry for that, I did not notice the "retval" before because the
-naming is unimpressive and the tests were passed, though...
+> From: James Limbouris <james@digitalmatter.com>
+>
+> 315a84f9aa0 (subtree: use commits before rejoins for splits, 2018-09-28)
+> changed the signature of check_parents from 'check_parents [REV...]'
+> to 'check_parents PARENTS_EXPR INDENT'. In other words the variable list
+> of parent revisions became a list embedded in a string. However it
+> neglected to unpack the list again before sending it to cache_miss,
+> leading to incorrect calls whenever more than one parent was present.
+> This is the case whenever a merge commit is processed, with the end
+> result being a loss of performance from unecessary rechecks.
+>
+> The indent parameter was subsequently removed in e9525a8a029 (subtree:
+> have $indent actually affect indentation, 2021-04-27), but the argument
+> handling bug remained.
+>
+> For consistency, take multiple arguments in check_parents,
+> and pass all of them to cache_miss separately.
+>
+> Signed-off-by: James Limbouris <james@digitalmatter.com>
+> ---
+>     subtree: fix argument handling in check_parents
+>
+>     > I saw that you sent a v3, but did not see any of this information
+>     > (which took a good while to assemble, as you might have guessed) i=
+n
+>     > the commit message. However, I think that message would make for t=
+he
+>     > best home for this information.
+>
+>     Sorry Dscho - it wasn't 100% clear to me which details were required=
+.
+>     I've rerolled and tried again. Also sorry if I'm not replying to the
+>     mail correctly - I'm not actually subscribed to the list, and this s=
+eems
+>     like the only easy way to get text onto it through gitgitgadget with=
+out
+>     fighting Outlook.
 
-I just looked at it, actually, it's important, not as what it is named, it
-affects the result. The "retval" actually determine whether  to
-CONTINUE reading the current "tree" or BREAK into the next
-one [1] .
+It is not Outlook you're fighting. It is the decision by the majordomo of
+the Git mailing list to drop @outlook.com and @hotmail.com mails. Because
+who would use those email addresses, amirite?
 
-So, I think this commit should be modified despite the tests are passed,
-firstly, I want to rename "retval" to another name that makes sense,
-then just make the relevant "if" and "return" logic more clearly with the
-newname, finally, it'll be consistent with the definitions in "read_tree_at=
-()"
-at "tree.c" [1].
+In any case, thank you so much for sending the fixed commit, and sorry for
+not reviewing it earlier. It looks good to me! With this commit message, I
+think it is good to go.
 
-
-[1] https://github.com/dyrone/git/blob/master/tree.c#L40
-
-Thanks.
-
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2022=E5=B9=B41=E6=9C=884=E6=97=
-=A5=E5=91=A8=E4=BA=8C 10:06=E5=86=99=E9=81=93=EF=BC=9A
->
-> Teng Long <dyroneteng@gmail.com> writes:
->
->
-> > -static int show_tree(const struct object_id *oid, struct strbuf *base,
-> > -             const char *pathname, unsigned mode, void *context)
-> > +static int show_tree_init(enum object_type *type, struct strbuf *base,
-> > +                       const char *pathname, unsigned mode, int *retva=
-l)
->
-> Don't we need some comment that explains what the function does,
-> what its return value means, etc.?
->
-> >  {
-> > -     int retval =3D 0;
-> > -     size_t baselen;
-> > -     enum object_type type =3D OBJ_BLOB;
-> > -
-> >       if (S_ISGITLINK(mode)) {
-> > -             type =3D OBJ_COMMIT;
-> > +             *type =3D OBJ_COMMIT;
-> >       } else if (S_ISDIR(mode)) {
-> >               if (show_recursive(base->buf, base->len, pathname)) {
-> > -                     retval =3D READ_TREE_RECURSIVE;
-> > +                     *retval =3D READ_TREE_RECURSIVE;
-> >                       if (!(ls_options & LS_SHOW_TREES))
-> > -                             return retval;
-> > +                             return 1;
-> >               }
-> > -             type =3D OBJ_TREE;
-> > +             *type =3D OBJ_TREE;
-> >       }
-> >       else if (ls_options & LS_TREE_ONLY)
-> > -             return 0;
-> > +             return 1;
-> > +     return 0;
-> > +}
->
-> It seems that even from its returned value, the caller cannot tell
-> if *retval was set by the function or not.  Perhaps it makes a much
-> cleaner API to assign 0 to *retval at the beginning of this function,
-> just like the original did so anyway? ...
->
-> > +static int show_tree(const struct object_id *oid, struct strbuf *base,
-> > +             const char *pathname, unsigned mode, void *context)
-> > +{
-> > +     int retval =3D 0;
->
-> ... It would mean we can lose this initialization.
->
-> > +     size_t baselen;
-> > +     enum object_type type =3D OBJ_BLOB;
-> > +
-> > +     if (show_tree_init(&type, base, pathname, mode, &retval))
-> > +             return retval;
->
-> >
-> >       if (!(ls_options & LS_NAME_ONLY)) {
-> >               if (ls_options & LS_SHOW_SIZE) {
+Thanks,
+Dscho
