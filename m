@@ -2,87 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E545CC433EF
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 19:00:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5726C433EF
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 19:02:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236421AbiADTAq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 14:00:46 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54931 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234390AbiADTAp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 14:00:45 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EA6FB1755D1;
-        Tue,  4 Jan 2022 14:00:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sL6Zkex6ORmkAVkRcZprZeC64gyQ81t5dK1fpZ
-        SLxes=; b=tRl2WJn+EpQV9zJRRd2JMMWsPxhgVRkG0CxqEeFI6Y0NnaC/tCxaUh
-        vnOwJf+UodaI+WZHd1oLK/lTI8Q7TYy/6LM57FqBMaYqsoAn0u2F1hoTEWRE+HtR
-        AoPu31TmwDtD3OnKneTeTiYWRB60YZU0sl/brXNnUxs57CEQFk8gY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E1F811755D0;
-        Tue,  4 Jan 2022 14:00:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 086281755CE;
-        Tue,  4 Jan 2022 14:00:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v3 1/2] name-rev: deprecate --stdin in favor of
- --annotate-text
-References: <pull.1171.v2.git.git.1640759021.gitgitgadget@gmail.com>
-        <pull.1171.v3.git.git.1641221261.gitgitgadget@gmail.com>
-        <55ec2a5fa3e748b7e5f9ef871214563ba2b28adf.1641221261.git.gitgitgadget@gmail.com>
-        <77e18a78-ddfe-0337-deaf-bb9dfb63a495@iee.email>
-Date:   Tue, 04 Jan 2022 11:00:39 -0800
-In-Reply-To: <77e18a78-ddfe-0337-deaf-bb9dfb63a495@iee.email> (Philip Oakley's
-        message of "Tue, 4 Jan 2022 13:25:12 +0000")
-Message-ID: <xmqqo84re36w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S236436AbiADTCL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 14:02:11 -0500
+Received: from us-smtp-delivery-195.mimecast.com ([170.10.133.195]:45209 "EHLO
+        us-smtp-delivery-195.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234390AbiADTCK (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 4 Jan 2022 14:02:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=datto.com;
+        s=mimecast20190208; t=1641322929;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=r/2HcCL8V6fO7IckjnHW0BKSZNvYA6rs2xDqdTvpS9k=;
+        b=b3emMmaxnFVn0Oc8XOlqlGPWDt6cc355OjDyAkqjjHRem+IB2vkFzsU7WSdbHQQVqEukq8
+        8+ry4JSFsLayS2ZEevBWoSAghUXgA8RStXe/b15onpHPL5PMMAZ5eaRCeQkZhdtAqqxuBS
+        WgtQaR8LNUJmuOBP0XJQ+wHxbTos5ic=
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
+ [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-31-CHERq96-PzeG-kAG9ddlXg-1; Tue, 04 Jan 2022 14:00:38 -0500
+X-MC-Unique: CHERq96-PzeG-kAG9ddlXg-1
+Received: by mail-ot1-f71.google.com with SMTP id q24-20020a9d7c98000000b0056ea09fce20so9836770otn.17
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 11:00:38 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=r/2HcCL8V6fO7IckjnHW0BKSZNvYA6rs2xDqdTvpS9k=;
+        b=ixyGGT4OEKrzYiXaaDd7wd6x39zktUVjHlQJTotohc3XR9kOpRmNbK3CJZLOy2cbO/
+         omJKbsBlCvY6Om1AMgphHM0j5sgsJle2tF6MozcmBZg9zdPDdwB/iscq81IT7nBTsUC7
+         DwT4+6q8HVBJLrEgXLcxwDXU1OSjG9bRM4PAW4vb6yYYAeF3g817GQQFogP75mQVrltG
+         pAdqQjjMMJFq/5cGfrXvHOYJdAFXJAc/0e7RIbTrQWJ6ax+RHOFL+f1698GK0TP+H9Ly
+         Exkl/mMOK1NRil8208EzZdl3KG1o6Gd7cVpsyBlkMSK+O/9Br0rBoWJRh5K7wEgNgrSW
+         PHkA==
+X-Gm-Message-State: AOAM533phn/JGifbPowvkDlPlBOQBbPhjWcBlU8xBaoRTLHREHtbw3OA
+        dCfXRfj5rGYPPXwapWGGakdvdy5iYXWGsjwPySYjIMMoXcBvXUhrgPH/+f6PUUFJ/+PQbVFt2Az
+        gy2JYuXbkwcWyX8jQCtRzS4DLrKwC
+X-Received: by 2002:a9d:d68:: with SMTP id 95mr35439420oti.188.1641322837425;
+        Tue, 04 Jan 2022 11:00:37 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJz0hiOGWmpsEajxE0pOPMsoX6B9F5fgZC6BzQMI0waZOQpdQvtys+qBlLkndBmciNQj/eboblE8LQg74AAjlPg=
+X-Received: by 2002:a9d:d68:: with SMTP id 95mr35439409oti.188.1641322837162;
+ Tue, 04 Jan 2022 11:00:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9C8789C0-6D90-11EC-B80F-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+From:   AJ Henderson <ahenderson@datto.com>
+Date:   Tue, 4 Jan 2022 14:00:26 -0500
+Message-ID: <CACEm96jjWALB=iPiBNr0P5HrX9Oo3bXm_k1PpxsHm4Ns9M-vOQ@mail.gmail.com>
+Subject: Stash Apply/Pop not restoring added files when conflict occurs on restore
+To:     git@vger.kernel.org
+Authentication-Results: relay.mimecast.com;
+        auth=pass smtp.auth=CUSA95A467 smtp.mailfrom=ahenderson@datto.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: datto.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+I have had two developers have this problem 3 times.  When they are
+doing a stash push with newly created files and old files, when they
+go to do a stash pop, if there is no conflict, the files show up as
+expected, but when there is a conflict, the modified files are
+restored (and placed in a conflict state as expected), however, the
+new files are not restored.
 
->>  --stdin::
->> +	This option is deprecated in favor of 'git name-rev --annotate-stdin'.
->> +	They are functionally equivalent.
->> +
->> +--annotate-stdin::
->>  	Transform stdin by substituting all the 40-character SHA-1
->>  	hexes (say $hex) with "$hex ($rev_name)".  When used with
->>  	--name-only, substitute with "$rev_name", omitting $hex
->> -	altogether.  Intended for the scripter's use.
->> +	altogether.
->
-> Is there a preferred order for the old/new variant documentation?
+We are able to work around this issue by grabbing the files directly
+out of the log for the stash head, but are unsure why this behavior
+isn't working as expected.  It seems to be a new change in behavior as
+we had never previously seen this issue, but have seen it 3 times now
+in the last few weeks.
 
-If the surrounding list has a natural order of its own, e.g.  the
-list is sorted alphabetically to help people locate an item by name,
-it is OK to have old and new in that order and older one may appear
-before the newer one.
-
-But otherwise it may make sense to show the newer one first with the
-mention of the older one as if it were a side note, especially when
-they can appear next to each other like the one we are looking at, I
-would think.
-
-I do not think we have written preference.  It probably would help
-to have a short paragraph in the coding guidelines document.
-
-Thanks.
-
+We are running 64 bit Windows with Git For Windows version 2.34.1.windows.1
 
