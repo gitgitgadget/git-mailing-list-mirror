@@ -2,142 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3467C433EF
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 21:03:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13E83C433F5
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 21:06:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233437AbiADVDv convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 4 Jan 2022 16:03:51 -0500
-Received: from mail-ed1-f42.google.com ([209.85.208.42]:34798 "EHLO
-        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231972AbiADVDv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 16:03:51 -0500
-Received: by mail-ed1-f42.google.com with SMTP id u25so32029142edf.1
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 13:03:50 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:cc:content-transfer-encoding;
-        bh=tk960x4lPcUphLkRXpBavtT2DNi+4OCkqxrLsc0N1QQ=;
-        b=HLnEuslryYmwINyxJg0sf8PpGsGQJcEEVIpUK8FSrd6LIv7jkSmcs1nSBKq9VtLKok
-         l2JMeYsBAq9MyWVWlWs3rwWrPNaurvsdYCnmQbpRWyu6yPZdiGyYzEri3VudYVxYnmsm
-         5KxepBE9783zhuDZPYOaVN4clJvEDXxWhKZK48Nj9pYY4Xsbf7EcbEJgX8IfQphrU6XZ
-         CKXa/R4gqEIBLsU7fRHeQtPpe5/b7g5xAh/4QT4M7eh8wl0Ew0B86o/cjDxSJ4Qo0quH
-         5iIlh8+KYp4s1oLUaJj+TaGPfEaqQJRd5TgvILb7bBlRcaKISrh6oiGz9kHzqmktaEcG
-         0BLQ==
-X-Gm-Message-State: AOAM530bp0hTytgT9rAKkcvuNvpc62uTtXUxW2S46NsjT5CUBPh/xhSb
-        6UjLk9GgAdELz8Q1NtrBTHqqrApRCVyLQjixeX3UMgnq4x0=
-X-Google-Smtp-Source: ABdhPJyFCTzLDZCAZ/WXPtaXN+2uIXD3B43cJWf9YmmeGI30pGI+cLPE8t/xybLYduWy2KY/UHq6s+A/nO4ogvqVItY=
-X-Received: by 2002:a17:907:3ac1:: with SMTP id fi1mr39624412ejc.668.1641330229736;
- Tue, 04 Jan 2022 13:03:49 -0800 (PST)
+        id S233848AbiADVGI convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 4 Jan 2022 16:06:08 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:20489 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233708AbiADVGH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 16:06:07 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 204L62D1079583
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 4 Jan 2022 16:06:03 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'AJ Henderson'" <ahenderson@datto.com>, <git@vger.kernel.org>
+References: <CACEm96jjWALB=iPiBNr0P5HrX9Oo3bXm_k1PpxsHm4Ns9M-vOQ@mail.gmail.com>
+In-Reply-To: <CACEm96jjWALB=iPiBNr0P5HrX9Oo3bXm_k1PpxsHm4Ns9M-vOQ@mail.gmail.com>
+Subject: RE: Stash Apply/Pop not restoring added files when conflict occurs on restore
+Date:   Tue, 4 Jan 2022 16:05:57 -0500
+Organization: Nexbridge Inc.
+Message-ID: <004201d801ae$e238f330$a6aad990$@nexbridge.com>
 MIME-Version: 1.0
-References: <9749fa2c-b08d-c08b-ce43-041d13852d02@web.de> <1240d0cd-230d-8a80-2250-37336b834834@iee.email>
- <cb8d6e8a-aaca-c2eb-6cc8-5c4ad33adfdb@gmail.com>
-In-Reply-To: <cb8d6e8a-aaca-c2eb-6cc8-5c4ad33adfdb@gmail.com>
-From:   Tilman Vogel <tilman.vogel@web.de>
-Date:   Tue, 4 Jan 2022 22:03:38 +0100
-Message-ID: <CAAbQbbCtFnbfTHnMdY_xi1CN4NyppShZdVhgO73YMubgDjwB-A@mail.gmail.com>
-Subject: Re: [BUG] git pull --rebase ignores rebase.autostash config when fast-forwarding
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
 Content-Transfer-Encoding: 8BIT
-To:     unlisted-recipients:; (no To-header on input)
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHvSvxZvxpetdcVU8RqYmGwJWQKLKwku+vg
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oh, please excuse my lack of providing the version info: I discovered
-the behaviour on 2.34.1 as shipped by current openSUSE Tumbleweed.
-Then, I worked on-top of current git master (2ae0a9cb).
+On January 4, 2022 2:00 PM, AJ Henderson wrote:
+> I have had two developers have this problem 3 times.  When they are doing a
+> stash push with newly created files and old files, when they go to do a stash
+> pop, if there is no conflict, the files show up as expected, but when there is a
+> conflict, the modified files are restored (and placed in a conflict state as
+> expected), however, the new files are not restored.
+> 
+> We are able to work around this issue by grabbing the files directly out of the
+> log for the stash head, but are unsure why this behavior isn't working as
+> expected.  It seems to be a new change in behavior as we had never
+> previously seen this issue, but have seen it 3 times now in the last few
+> weeks.
+> 
+> We are running 64 bit Windows with Git For Windows version
+> 2.34.1.windows.1
 
-Regards and thanks for investigating and fixing this so quickly!
+This looks like a regression from 2.33.0 to 2.34.1 in git. I can recreate the problem in 2.34.1, as follows:
 
-Tilman
+$ mkdir test
+$ cd test
+$ git init
+$ cat >a <<-EOF
+Hi
+EOF
+$ cat >b <<-EOF
+There
+EOF
+$ git add .
+$ git commit -m "First"
+$ cat >a <<-EOF
+Hello
+EOF
+$ cat >c <<-EOF
+Something
+EOF
+$ git stash push --include-untracked
+$ cat >a <<-EOF
+Conflict
+EOF
+$ git add a
+$ git commit -m "Second"
+$ git stash pop
+Auto-merging a
+CONFLICT (content): Merge conflict in a
+The stash entry is kept in case you need it again.
+
+* d8411cf (HEAD -> master) Second
+| *   0bf6efc (refs/stash) WIP on master: c9bfeb9 First
+|/|\
+| | * 002560a untracked files on master: c9bfeb9 First
+| * 6ad65b4 index on master: c9bfeb9 First
+|/
+* c9bfeb9 First
+
+The stash contains c but has not been restored. In 2.33.0, c was restored and the conflict for a identified. In both versions, the stash is retained.
+--Randall
 
 
-Am Di., 4. Jan. 2022 um 19:03 Uhr schrieb Philippe Blain
-<levraiphilippeblain@gmail.com>:
->
-> Hi Tilman,
->
-> Le 2022-01-04 à 07:59, Philip Oakley a écrit :
-> > On 03/01/2022 18:08, Tilman Vogel wrote:
-> >> Hi git-people,
-> >>
-> >> I ran into strange behavior when having rebase.autostash enabled and
-> >> doing a git pull --rebase:
-> >>
-> >>> git config rebase.autostash true
-> >>> git pull --rebase
-> >> Updating cd9ff8a..f3c9840
-> >> error: Your local changes to the following files would be overwritten by
-> >> merge:
-> >>          content
-> >> Please commit your changes or stash them before you merge.
-> >> Aborting
-> >>
-> >> Confusingly, this fixes the issue:
-> >>
-> >>> git config merge.autostash true
-> >>> git pull --rebase
-> >> Updating cd9ff8a..f3c9840
-> >> Created autostash: c615fda
-> >> Fast-forward
-> >>   content | 1 +
-> >>   1 file changed, 1 insertion(+)
-> >> Applied autostash.
-> >>
-> >> Leaving me wonder why merge config options fix rebase behavior.
-> >>
-> >> So, in order to make it easier to check the problem, I added some
-> >> test-cases to the git test-suite. Please see the attached patch.
->
-> Thanks, this really makes it easier to bisect the issue.
->
-> >>
-> >> Or here:
-> >> https://github.com/tvogel/git/commit/bc941f9357518a34cfa11788dfb8e7fa7f711705
-> >>
-> >> I did not try to find the root-cause as I am not experienced with the
-> >> code-base but if there are questions, let me know.
-> >
-> > Which version are you running?
-> >
->
-> That's a good info to include indeed. I'm guessing you are using v2.34.1 as that's the version
-> indicated at the bottom of your attached patch. I can replicate the behaviour on my side on 2.34.1.
-> I did not bisect manually but I'm pretty sure it's a regression caused by 340062243a (pull: cleanup autostash
-> check, 2021-06-17) (author CC'ed). I checked that the parent of that commit passes all 4 of your added tests, provided
-> this is squashed in:
->
-> diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-> index 4046a74cad..5ad19b1028 100755
-> --- a/t/t5521-pull-options.sh
-> +++ b/t/t5521-pull-options.sh
-> @@ -260,7 +260,6 @@ test_expect_success 'git pull --rebase --autostash succeeds on ff' '
->         test_commit -C src --printf "more_content" file "more content\ncontent\n" &&
->         echo "dirty" >>dst/file &&
->         git -C dst pull --rebase --autostash >actual 2>&1 &&
-> -       grep -q "Fast-forward" actual &&
->         grep -q "Applied autostash." actual
->   '
->
-> @@ -273,7 +272,6 @@ test_expect_success 'git pull --rebase with rebase.autostash succeeds on ff' '
->         echo "dirty" >>dst/file &&
->         test_config -C dst rebase.autostash true &&
->         git -C dst pull --rebase  >actual 2>&1 &&
-> -       grep -q "Fast-forward" actual &&
->         grep -q "Applied autostash." actual
->   '
->
-> After that commit, in case of fast-forward, 'git pull --rebase --autostash' delegates the fast-forward
-> operation to 'git merge' under the hood, which was not the case before. The '--autostash' flag seems
-> to be forwarded correctly to that 'git merge' invocation, but the config 'rebase.autostash' seems to not
-> be passed along.
->
-> I did not yet look into why in the code itself. That does explain however why 'merge.autostash' makes it
-> work - the 'git merge' invocation does check its own config, and if merge.autostash is there the autostash
-> behaviour is activated.
->
-> Philippe.
->
->
