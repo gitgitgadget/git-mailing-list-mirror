@@ -2,159 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FA1FC433F5
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 07:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BDC5C433F5
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 09:49:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233450AbiADHaK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 02:30:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42050 "EHLO
+        id S229740AbiADJtv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 04:49:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233462AbiADHaA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 02:30:00 -0500
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCEA1C061792
-        for <git@vger.kernel.org>; Mon,  3 Jan 2022 23:29:59 -0800 (PST)
-Received: by mail-pg1-x52d.google.com with SMTP id y9so3502278pgr.11
-        for <git@vger.kernel.org>; Mon, 03 Jan 2022 23:29:59 -0800 (PST)
+        with ESMTP id S229501AbiADJtu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 04:49:50 -0500
+Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7DC1C061761
+        for <git@vger.kernel.org>; Tue,  4 Jan 2022 01:49:50 -0800 (PST)
+Received: by mail-ua1-x930.google.com with SMTP id i5so47161025uaq.10
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 01:49:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mkHNWQPcfV+bAZuwf57gjA7t3YAn88WW75XZeWmGVsU=;
-        b=OTTbrKstFEuiqfcrxHI9A2GjGVBV4LDORtPTrnrbktJ2auS11H1F/vssGwFzqiyZGR
-         TKnkgXHxCLk38T3Qnm+HFqdZmLne/jyAGt2ZIIOZs3bLektdxtAh5VuycREiSsrjlk0O
-         v1H8k2bwrXIbzoAyjs5sshi0UeJoCgHp73SMyiB3v2Sa2/EoE5q3SE86Mf6LjkBgbxBd
-         eV/1f4zLdKECSLY+4Gaq8+u71AMkMmU6OPEyT4NkGGkcLRkbaWSll72G2PyHPmRYH5EJ
-         6CRZouxYJY/tbN9rom2Z3fFrrYgxUmSAxNQSj0Y3SpV8knkAANMPZPL0IKGYZ8swEeQ/
-         suAQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=AUWAYrGIOKW7HVBmvM7CxDq6aDYJwnUza9E+yinLHsA=;
+        b=dK+TdTZO3NKD/3EOtnIF71GWtpR8g95Y2/N0oqiRhalpbqRnfe2FlIU9S8VG/hiNFe
+         0/PIAQ3t5OGuBRc0sIZ5SCdK4Hi60nOPH5IK+bJ8eJuNR7OrtWanSYPVLMd/XsM7CH31
+         sPLqNwgq/F/WlPEoT5r7WNCFkHYV9O28TsR62j19Kh5aB8Kmzw07J8COIoxcjpy3IPeD
+         MS5fWYTQX/OddMZPcjgDcLjFxhO2GilEbaCTDyoRq58WJ3g8rL6Vo+ojbYTUaJdUR3nH
+         AKDvayKQplVMq8/PymOUF/7utczQ8ROrAqPcvofn0fYYhyhMf8X3VIJJmhEy9O3NAcXy
+         SHLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mkHNWQPcfV+bAZuwf57gjA7t3YAn88WW75XZeWmGVsU=;
-        b=wTxa76jwnEW4QTC9dhGuM51zTNNCIhLMsNVjbMNprf42xmn/8hKtt4ecOA+TZSoHw0
-         SUpvuVrm2QdfTGz4tyzuov0Ib1BNa4SPrA/fr2OlNT5A2qTf9jx9/0qO6D11k3996SAj
-         iOxARBFqLV1r9/c+xQyLP9pIvdg5tfDGbODAByd7pfHvkPFAvxoQoypuNQWV3XIAs7Sy
-         o5VH4VGmtx3pwlRXfvAdi/jVNxw9INbLFahYJwQIiv1Gdkq7r6TlHe+hQdGQ81jQ5UHk
-         Dg3h/tLpkq60ijDMiQxQw8EaktMQbzgX2G4Tmtx4+0/1rfi7CW4OVtHwNZZwR3h6/9eu
-         suGw==
-X-Gm-Message-State: AOAM532oaSF5A0h4SdtyokfQWXExrtua0z/lZfmOlXakQHPRmaQqaiM2
-        Fe7LEXbJdBz8s2TGJ9SCYkA=
-X-Google-Smtp-Source: ABdhPJzWv1wCccEuVsZm1aoEMRHgilFx2+vI2xbQ64lV68l/3FdXVLmiJPs22GyvKyDAT3yfUU+CzQ==
-X-Received: by 2002:a05:6a00:88f:b0:4bc:3b4e:255a with SMTP id q15-20020a056a00088f00b004bc3b4e255amr25593224pfj.79.1641281399227;
-        Mon, 03 Jan 2022 23:29:59 -0800 (PST)
-Received: from localhost.localdomain ([205.204.117.99])
-        by smtp.gmail.com with ESMTPSA id ls6sm44472292pjb.33.2022.01.03.23.29.56
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Jan 2022 23:29:57 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     gitster@pobox.com
-Cc:     avarab@gmail.com, congdanhqx@gmail.com, dyroneteng@gmail.com,
-        git@vger.kernel.org, peff@peff.net, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v8 6/8] ls-tree.c: support --object-only option for "git-ls-tree"
-Date:   Tue,  4 Jan 2022 15:29:51 +0800
-Message-Id: <20220104072951.10153-1-dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.34.1.398.gc70192232f.dirty
-In-Reply-To: <xmqqh7akgutd.fsf@gitster.g>
-References: <xmqqh7akgutd.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=AUWAYrGIOKW7HVBmvM7CxDq6aDYJwnUza9E+yinLHsA=;
+        b=ZmTXqN1Me3gGZojt77t+F+/A4AVlRbosgnOO0laWN7Rb1vqoaX9fsf4jMsMaA8Ags9
+         bouZU5S8GawV55bfraTEiTQd5LV/AW8es3Y41Ln15jqd0VCFTikZ3DsXqgVk1m7aGCW1
+         LfhfqMr8HwrUiVK6SeqQZSo+sCrspLIOBMa2RpTAdyEC4YiwDp/5Dih/NiHREA9FMcFm
+         CORaTe0q+XG/2c68X9gE7DVIPVVIYO2QVDeyD76VRk2MrzD4sCE26o9B+C178rMeYH+r
+         DXt8V4n77t84vfDpOXISRqep1z36OdAif3BzsvmMtxzXUoev0nFFSb8uPB12j2a6pXNQ
+         Vx2g==
+X-Gm-Message-State: AOAM531Qh28MWxe6YyvuFuTjDuato4k0LJhmaudI6Qze/SgbWLYUp/7T
+        r06gjDDY9kY+jAfNnVJHy1D5SFQVcHIr7e7O8vg=
+X-Google-Smtp-Source: ABdhPJzyUnETl3PgPDhyusRaAqih6NUC/Zo+FhbQ6Q5OEOQ9rR/z3NBcVpvAERheEDNosu2smpF4hUuOgcuG8tv+wGs=
+X-Received: by 2002:a67:6505:: with SMTP id z5mr14738903vsb.16.1641289789806;
+ Tue, 04 Jan 2022 01:49:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <cover.1641043500.git.dyroneteng@gmail.com> <d77c895a4b9d5cb86443279c0156196254895ef4.1641043500.git.dyroneteng@gmail.com>
+ <xmqqwnjgfe4t.fsf@gitster.g>
+In-Reply-To: <xmqqwnjgfe4t.fsf@gitster.g>
+From:   Teng Long <dyroneteng@gmail.com>
+Date:   Tue, 4 Jan 2022 17:49:38 +0800
+Message-ID: <CADMgQSRXJ0F0=egA_PcEz0NzXZMVo1nLv1N8dGyoRhdDsZPc9w@mail.gmail.com>
+Subject: Re: [PATCH v8 5/8] ls-tree: split up the "init" part of show_tree()
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     avarab@gmail.com, congdanhqx@gmail.com, git@vger.kernel.org,
+        peff@peff.net, tenglong.tl@alibaba-inc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano writes:
 
-> The resulting code looks unnecessarily complex and brittle; some
-> SHOW_FOO mean SHOW_FOO_ONLY_AND_NOTHING_ELSE while other SHOW_BAR
-> means SHOW_BAR_BUT_WE_MAY_SHOW_OTHER_THINGS_IN_LATER_PART, and the
-> distinction is not clear from their names (which means it is hard
-> to later extend and enhance the behaviour of the code).
+> Don't we need some comment that explains what the function does,
+> what its return value means, etc.?
+>
+> It seems that even from its returned value, the caller cannot tell
+> if *retval was set by the function or not.  Perhaps it makes a much
+> cleaner API to assign 0 to *retval at the beginning of this function,
+> just like the original did so anyway? ...
 
-I agree with you that the relevant code is not very clear, So I
-think I will take these steps:
+Oh, sorry for that, I did not notice the "retval" before because the
+naming is unimpressive and the tests were passed, though...
 
-1. Rename "shown_bits" -> "shown_fields"
+I just looked at it, actually, it's important, not as what it is named, it
+affects the result. The "retval" actually determine whether  to
+CONTINUE reading the current "tree" or BREAK into the next
+one [1] .
 
-   essentially we want to show the fields but not bits to user that
-   may firstly solve the unclear nameing problem for "shown_bits"
-   itself.
-
-2. Rename related macro definitions of "shown_fields by :
-
-
-	   SHOW_FILE_NAME -> FILE_NAME_FIELD
-    	   SHOW_SIZE -> SIZE_FIELD
-    	   SHOW_OBJECT_NAME -> OBJECT_NAME_FIELD
-    	   SHOW_TYPE -> TYPE_FIELD
-    	   SHOW_DEFAULT -> DEFAULT_FIELDS
-
-    I think the confusion comes from " SHOW_FOO_ONLY_AND_NOTHING_ELSE"
-    and " SHOW_BAR_BUT_WE_MAY_SHOW_OTHER_THINGS_IN_LATER_PART" is
-    because some macros's is named by mixed the "flags" and "the
-    operation of flags" together. 
-
-    So with renamings, we try to unify these definitions meaning,
-    they are just used for defining a "field" with a specified
-    non-repetitive bits.
-    
-    After that, you can show many "fields" by combining any of "fields",
-    such as what the builtin "DEFAULT_FIELDS" does, it shows all the
-    fields but except the "size" field.
-
-    By far, the "field(s)" only means the definition themselfs, and
-    no business with "which one/ones" or  "how" to shown.
-
-3. Decide "which" fields need to show
-
-   The definition of "WHICH_FIELDS_TO_SHOWN" is by "shown_fields",
-   it's used for parse from the options and compute it's value
-   by function "parse_shown_fields()".
-
-   Actually, the function already represent what work it do,
-   but the problem is I didn't notice to rename "show_bits"
-   to "show_fields" before. This may bring some confusion,
-   because we are not going to show the bits but the field(s).
-   So, I will do the <STEP.1>.
-
-4. Decide "How" fields to be shown
-
-    Now we have already know the field(s) we care about, next
-    step is to show the fields.
-
-> > +	if (!(shown_bits ^ SHOW_FILE_NAME)) {
-
-> Is the use of XOR operator significant here?
-> 
-> I.e. "if (shown_bits & SHOW_FILE_NAME)" would have been a much more
-> natural way to guard "this is a block that shows the file name",
-> than "the result MUST BE all bits off if we flip SHOW_FILE_NAME bit
-> off".  If various SHOW_FOO bits are meant to be mutually exclusive,
-> then "if ((shown_bits & SHOW_FILE_NAME) == SHOW_FILE_NAME)" would
-> also make sense, but as I said upfront, it is unclear to me if
-> shown_bits are meant to be a collection of "this bit means this
-> field is shown (and it implies nothing else)", so I dunno.
-
-    Not significant. Both work and It's all right for me. Your
-    readability is better, and now I know how to handle this
-    situation better.
-
-    E.g, if we only want to show a "filename" field
-    (with `--name-only`), we will use a way like
-    "if ((shown_fields & FILE_NAME_FIELD) == FILE_NAME_FIELD)"
-    to judge this situation.
-
-    And if we want to show fields in a builtin way
-    (as described in 'git-ls-tree.txt', default output format
-    is compatible with what `--index-info --stdin` of
-    'git update-index' expects.), we will use "DEFAULT_FIELDS"
-    instead.
+So, I think this commit should be modified despite the tests are passed,
+firstly, I want to rename "retval" to another name that makes sense,
+then just make the relevant "if" and "return" logic more clearly with the
+newname, finally, it'll be consistent with the definitions in "read_tree_at=
+()"
+at "tree.c" [1].
 
 
-I am not sure if this solves the problem you are considering as I
-may misunderstand, I can quickly finish this new patch and we can
-look at it then。
+[1] https://github.com/dyrone/git/blob/master/tree.c#L40
 
 Thanks.
 
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2022=E5=B9=B41=E6=9C=884=E6=97=
+=A5=E5=91=A8=E4=BA=8C 10:06=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Teng Long <dyroneteng@gmail.com> writes:
+>
+>
+> > -static int show_tree(const struct object_id *oid, struct strbuf *base,
+> > -             const char *pathname, unsigned mode, void *context)
+> > +static int show_tree_init(enum object_type *type, struct strbuf *base,
+> > +                       const char *pathname, unsigned mode, int *retva=
+l)
+>
+> Don't we need some comment that explains what the function does,
+> what its return value means, etc.?
+>
+> >  {
+> > -     int retval =3D 0;
+> > -     size_t baselen;
+> > -     enum object_type type =3D OBJ_BLOB;
+> > -
+> >       if (S_ISGITLINK(mode)) {
+> > -             type =3D OBJ_COMMIT;
+> > +             *type =3D OBJ_COMMIT;
+> >       } else if (S_ISDIR(mode)) {
+> >               if (show_recursive(base->buf, base->len, pathname)) {
+> > -                     retval =3D READ_TREE_RECURSIVE;
+> > +                     *retval =3D READ_TREE_RECURSIVE;
+> >                       if (!(ls_options & LS_SHOW_TREES))
+> > -                             return retval;
+> > +                             return 1;
+> >               }
+> > -             type =3D OBJ_TREE;
+> > +             *type =3D OBJ_TREE;
+> >       }
+> >       else if (ls_options & LS_TREE_ONLY)
+> > -             return 0;
+> > +             return 1;
+> > +     return 0;
+> > +}
+>
+> It seems that even from its returned value, the caller cannot tell
+> if *retval was set by the function or not.  Perhaps it makes a much
+> cleaner API to assign 0 to *retval at the beginning of this function,
+> just like the original did so anyway? ...
+>
+> > +static int show_tree(const struct object_id *oid, struct strbuf *base,
+> > +             const char *pathname, unsigned mode, void *context)
+> > +{
+> > +     int retval =3D 0;
+>
+> ... It would mean we can lose this initialization.
+>
+> > +     size_t baselen;
+> > +     enum object_type type =3D OBJ_BLOB;
+> > +
+> > +     if (show_tree_init(&type, base, pathname, mode, &retval))
+> > +             return retval;
+>
+> >
+> >       if (!(ls_options & LS_NAME_ONLY)) {
+> >               if (ls_options & LS_SHOW_SIZE) {
