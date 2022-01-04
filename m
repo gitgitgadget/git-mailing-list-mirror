@@ -2,115 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD49AC433EF
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 13:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70F01C433F5
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 13:40:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232468AbiADNaE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 08:30:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40262 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233647AbiADNaD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 08:30:03 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1F1CC061784
-        for <git@vger.kernel.org>; Tue,  4 Jan 2022 05:30:02 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id n30-20020a17090a5aa100b001b2b6509685so3135351pji.3
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 05:30:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qGKExv8xI+YwIPghSFpDjv1fko6i6xoDezRKE6CrG+0=;
-        b=CHLMz4cCe61hsx4v4Aeqe0EmIInm1W6E7xmurAvGGRSDmAr4ze2I/UahG1Kx+ZSxW4
-         P3Gk4d4kmJbyXQ1oEbgnsGMCrKWE7ulZDBcpflp01hkZX+xzdj8jIrpruwwxa4WRvjba
-         gtIZQ5KDh3T8dj2E54f2eEz1CqAph0EEto2mZvw3qPK/KXyOBh3Wzv6sy9jhAGBJWX5T
-         69j2krp7a9R8f9CXNWInrNAyu9lwNHvhCEoNTUsuvMYp78gqpLeisujCvhuwPaM9YAXk
-         v1U5ngxj30CL++g0UexkxnE9uA6E1xgqpwMYXuWZqwxdue0U4yp5z5CK0UV85b5urqtv
-         IaQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qGKExv8xI+YwIPghSFpDjv1fko6i6xoDezRKE6CrG+0=;
-        b=RC+8NytpqaLnCaEr1iPeHuM196kB37eg7BIrDmnMX1U+OxeGmdYyIFpU3SQe1nTChM
-         ba+pq2Ww7eplqxhXaUl73w2Ca3MAcY9DMrVsUL9ueYR2+aKJTWXpTpRKhV3cjlf9/U7i
-         7vN1OOiHNEoW487yPIgn51nQbHOdGBmIBgSIQSJonpOPph5BjN0ZI6N5RjX8Z6i/VL8w
-         vn8rSmbo4Wa/KPfo4l//SjXccvnHS4jmhJ4CP2BBfkvyUlN/PMtwqL69ZdcmzPFXseED
-         QNIb6/iVGbFR/9yNw0UbAtUUhiMqUbuRuIVEE+ocK3PwDMMWfga790gotFhn/OFLXhJk
-         roww==
-X-Gm-Message-State: AOAM532WDiOm2lxYNPujHs/7OwiOneCvZLdBu9myAaJZ5lK42OXEnJZy
-        pDL2zW5QmJ8VdmCF5IstYdBEQild7j8=
-X-Google-Smtp-Source: ABdhPJwUGNT/IAIP8rCek/3a0fHPW7LTGEZSe0lMG1IiY3lg0trsq/Xh3aNCQN7DtRXLO36P0Mkw7w==
-X-Received: by 2002:a17:902:6906:b0:149:7087:355c with SMTP id j6-20020a170902690600b001497087355cmr41434530plk.153.1641303002036;
-        Tue, 04 Jan 2022 05:30:02 -0800 (PST)
-Received: from LAPTOP-FJDAS7G4.localdomain ([157.40.90.253])
-        by smtp.gmail.com with ESMTPSA id q4sm14313568pfj.84.2022.01.04.05.29.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jan 2022 05:30:01 -0800 (PST)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v4 1/1] push: make 'set-upstream' have dafault arguments
-Date:   Tue,  4 Jan 2022 18:58:39 +0530
-Message-Id: <20220104132839.1209-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <xmqqy23wduxp.fsf@gitster.g>
-References: <xmqqy23wduxp.fsf@gitster.g>
+        id S232459AbiADNkk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 08:40:40 -0500
+Received: from mout.gmx.net ([212.227.17.22]:46051 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230389AbiADNkk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 08:40:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1641303619;
+        bh=KrVrfMyL7xmqGmFJ4tFHLHc5c+tOvLIgiIBWu/ZPcCM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=RC4o5Nx5W/yPqSv+YkGF8bhFXQKaoBgAIMyQ+9DCzedHKLkWqTOi2MTqm40D7XkXa
+         TU84xxsO0yNMqE2uxuuUlQr590yyiGoMR0uGe8ii5fQUxATFDWy56pn4wJ8yo5wJNE
+         Fr/oEoV1rb9c9nkvBTzP5AG/ofiDwhy39Ej1LjKo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.29.215.148] ([89.1.212.167]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N3siG-1mMqdn20nI-00zpff; Tue, 04
+ Jan 2022 14:40:19 +0100
+Date:   Tue, 4 Jan 2022 14:40:16 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 1/3] gitfaq: add documentation on proxies
+In-Reply-To: <20211107225525.431138-2-sandals@crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.2201041427550.7076@tvgsbejvaqbjf.bet>
+References: <20211107225525.431138-1-sandals@crustytoothpaste.net> <20211107225525.431138-2-sandals@crustytoothpaste.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Y+u1i55dXT7v4iv7JExeDYLRCFP6/5Ucvabliuz2T9y2QilN1Zv
+ 5E9DOb/igq2dukqa8oXLHGk0ymgZiQPUxnMSZgIf73btn1vjRLPHvdCh2x4ZvNJx07UI2Ak
+ Veu0+oC8wZyhzoPF3Xa+vd1O/lf2huIIpvO9xyxxoewD5FG1EdFiCwosmwU4yb9BfNxjs9K
+ w8AsMY0lWBmFS53wTgLDQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3Zqsg7dEnSM=:UOhQVvxq0gIVnSZn9e4Xxj
+ 2DraUaYcZPxbOOEWCJrBWL7UDFZeZM3icYvEnpxNALoaSPUi94WOu6KiIqz3GtZF25zEMPFzn
+ 7Qe9x/e2QobIz4t6e4lp7BGh/8kGgoo/mL4JIvPLIbMLFoZK9qBE3IZ67T6P4UfjncVVnP+hA
+ EY+Q/bYaFrUo6wExbcUQrP+mYjOQAovbx/nj/BlaIxM83gZqHXmfi/5SyQs7nq++RZ7SSnwpJ
+ dvItW2S/QHhmaJWDm+fkxlzeiTYfIMmcsCJZrYN+oEN2+yt7yl96Ek2t9YrcvAt8VdILsZXoh
+ kgN5Lsx1hJasFQU2MJBLChEta8ZANhDPHPHwV0CKQFF4KPsGVWCPfOk/2ddVtKo1Yi2MBSVRy
+ yFnm0fdcCuwLgXbJq4fXIqD1QpgEqeS0VxSN5JYENzW/TJOYzApMm5wgd9VMJboQJ7t+vuKhH
+ 1RQsBH5DS96iIGDSYtTqZzxqiingIoWnkDMUGsr1ZggYQDHLN8bOsQLPMz9+8DAW8f34/4T28
+ x0DBLuhJl9rKgI94Zqx6PaGeBu49KLgyivM9ccBTncuNfIjcG4nwBqHA0gUANWHqkDuEj9YJe
+ im2qekolZHN/5MnGz7RlFXOyJ9/v4p0QLtP7lDM/ptFOXEivTf8QyDdCasofs2yggd7+5OIFM
+ vY1T+VnONHIgMAvi0aZw8BBLdWMH33y89DTjqMEfb6NgP4t9jCSZDKLTh02rEfRyYJn30JI4h
+ PbWZ6NpHNe+yoU/fvjpu07ADMq5s/Ht0C5lIy1/qURSQ0Xx6pivp5kJKkXnKk5TXGvMXMUV6F
+ nlaDUBSzrwvh+HrblG7/quJsVYibSQXug4gdKiV3A7AGqc4xJmxz7+GOAgl8x7wDJg4dREr6V
+ DenGjye9LLGL54YRWX3g5DyCfCMkMTrg+cZZuPo2zVXUJLUDLE/rYrDfmGVvLCbwqz4aowJAe
+ le0DIejjpnb2QeDDQBIXx1iVJRiO5oJTUwk6GiIdC5A1FfMsY6xEJJjNUdbsodePv5FEWrvDN
+ RNhZ6hHHTESX+KYVsxi5VJ9hD4DSGJDYaOT4+c59KuPy9sBzOcY5tMVu3FxBHdeCuCAhqE9nr
+ qJWKz/dAI/1x0Q=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> wrote:
+Hi brian,
 
-> That means if the user says push.default==nothing, we should error
-> out "git push -u" as before, but that is not what the change to
-> setup_default_push_refspecs() function does, is it?
+On Sun, 7 Nov 2021, brian m. carlson wrote:
 
-Yeah. You're right. The current change does not throw error for
-push.default=nothing. Because I thought that for all values of
-`push.default` (except matching), 'git push -u' should create a
-new branch with the same name as the current local branch. Now, It
-seems that I was wrong.
+> Many corporate environments and local systems have proxies in use.  Note
+> the situations in which proxies can be used and how to configure them.
+> At the same time, note what standards a proxy must follow to work with
+> Git.  Explicitly call out certain classes that are known to routinely
+> have problems reported various places online, including in the Git for
 
-> So, I am not sure if many of the above changes are sensible.  The
-> first one certainly does not sound like sensible.
+Not a big issue, but I think there is an "at" or "to" missing before
+"various places online".
 
-Actually, I didn't think deeply while commiting the changes. Today,
-I think about it deeply and I realized the following points.
+> Windows issue tracker and on Stack Overflow, and recommend against the
+> use of such software.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  Documentation/gitfaq.txt | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
+>
+> diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
+> index 946691c153..5c21951f7b 100644
+> --- a/Documentation/gitfaq.txt
+> +++ b/Documentation/gitfaq.txt
+> @@ -241,6 +241,29 @@ How do I know if I want to do a fetch or a pull?::
+>  	ignore the upstream changes.  A pull consists of a fetch followed
+>  	immediately by either a merge or rebase.  See linkgit:git-pull[1].
+>
+> +[[proxy]]
+> +Can I use a proxy with Git?::
+> +	Yes, Git supports the use of proxies.  Git honors the standard `http_p=
+roxy`,
+> +	`https_proxy`, and `no_proxy` environment variables commonly used on U=
+nix, and
+> +	it also can be configured with `http.proxy` and similar options for HT=
+TPS (see
+> +	linkgit:git-config[1]).  The `http.proxy` and related options can be
+> +	customized on a per-URL pattern basis.  In addition, Git can in theory
+> +	function normally with transparent proxies that exist on the network.
+> ++
+> +For SSH, Git can support a proxy using `core.gitproxy`. Commonly used t=
+ools
+> +include `netcat` and `socat`.
 
-* if push.default='simple' or unspecified then it should not create
-  a new branch on the remote. So, my proposed change of 'git push -u'
-  for push.default='simple' is badly affecting the reason why
-  push.default='simple' was built for.
+The first idea I had after reading this is: where are these examples
+documented? Certainly not where I expected them, namely at
+https://git-scm.com/docs/git-config#Documentation/git-config.txt-coregitPr=
+oxy
 
-* if push.default='nothing', It should throw error if no <refspec> is
-  provided. Again, my proposed change is hurting it.
+And then I got puzzled. Why would `gitproxy` be used for the _SSH_
+protocol? And I don't think it is used. I think it is only used for
+connections using the `git://` protocol. I might very easily be wrong, of
+course.
 
-* For push.default=upstream, If an upstream is already defined then
-  'git push -u' should only set that branch as the upstream of the
-  local branch. This already works in git. But if an upstream is not
-  provied, it should throw error. So, I am not sure whether 'git push
-  -u' (with no upstream information) should create a new branch with
-  the same name or not. What do you think about that?
+> However, they must be configured not to exit when +seeing EOF on
+> standard input, which usually means that `netcat` will require +`-q` and
+> `socat` will require a timeout with something like `-t 10`.
 
-* For push.default=matching, 'git push -u' should set all the existing
-  matching branches as upstream of their respective matching local
-  branches. It also already works. Same for 'push.default'=current also.
+IMHO it would make sense to add a concrete example, or maybe even two
+concrete examples, one for `netcat` and one for `socat`.
 
-So, to put all in a nutshell, I think that the current behaviour of
-'git push -u' is okay. It also seems that he/she who built the
-setup_default_push_refspecs() was aware of this.
+> ++
+> +Note that in all cases, for Git to work properly, the proxy must be com=
+pletely
+> +transparent.  The proxy cannot modify, tamper with, change, or buffer t=
+he
+> +connection in any way, or Git will almost certainly fail to work.  Note=
+ that
+> +many proxies, including many TLS middleboxes, Windows antivirus and fir=
+ewall
+> +programs other than Windows Defender and Windows Firewall, and filterin=
+g proxies
+> +fail to meet this standard, and as a result end up breaking Git.  Becau=
+se of the
+> +many reports of problems, we recommend against the use of these classes=
+ of
+> +software and devices.
+> +
 
-Sorry for the patch request and thanks for reviewing.
+This is good advice.
 
-> Doesn't $i show in the output as-is here?  Quote the test title in
-> double-quotes, while using single-qoutes around the test body.
-
-Yeah. I observed this while testing. But had no idea why this happend
-( as I am very beginner in shell scripting). I was waiting for the review
-comment for it.
-
-Thanks again for reviewing my patch request.
+Ciao,
+Dscho
