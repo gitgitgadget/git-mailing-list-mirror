@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5674EC433F5
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 17:37:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12453C433EF
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 17:37:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235799AbiADRhH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 12:37:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41816 "EHLO
+        id S235809AbiADRhI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 12:37:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235767AbiADRhE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 12:37:04 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 692B8C061761
-        for <git@vger.kernel.org>; Tue,  4 Jan 2022 09:37:04 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id l4so23745931wmq.3
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 09:37:04 -0800 (PST)
+        with ESMTP id S235660AbiADRhF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 12:37:05 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17A79C061761
+        for <git@vger.kernel.org>; Tue,  4 Jan 2022 09:37:05 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id k66-20020a1ca145000000b00345fa984108so1838135wme.2
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 09:37:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=6m2WCFlbDEH3Qi6Apwp4WNApLrFFTqGiR5cvu5IYYvw=;
-        b=Oex9vZkahlmHqldm3LzqORKW5JZe3TtDVEQolrzO0MMqfnFScRbpomIyrLeyDDctrw
-         1DAFBc2wYmkljcQwDEGN38rkxgeOe78xxFwAUFA0scHTES2rLjGNsR79hdxywA6SogXP
-         AvNwns4sLMzy/MGihRVhPq6z04q/ca6IETsHcHka5kQObYyLnTd2iLwBLgL8iC5o7ePz
-         4z8HknwX3GKr2GeAL0seXSfqGvNxY7dMliW5tmmleShAZ+VirIoh/1wBQvAm+qZoNffd
-         LI7lvVyeeRZq1/QtGBM795RRVE6ozo4YNYOaKBiTzbvhiyzVK8+EW1KfuZU+X4hPpauN
-         w0Yw==
+        bh=7Y1eVqZYE9BacgGrfH4O//tMC0Ck7M/KSJNB61BWioo=;
+        b=PDjnaXRL4DyTNOilngmCcvGg58xaPM+u5JldREuWXnVq+3sUMsunw79E0JbRKY6a7T
+         3TftDp+zej05B5c0onGCvfR+pQn3EbtkJ1NRji4supcILpg3eUDrYya/kDvbU8t0gHqk
+         H4A4cmoK/LJdzOIjaxMgJfxIXU71ywSoRVyVyFNRh8QmAnSBbT1aigoFr5Pw7OcyIXxc
+         E1o77ooKwUVXsJ2/ow/2t+sLsxD+gxWfPDAaFBIALIdMEju+zcgGhxD7awaMwKDMRB0Z
+         BjDkZAiLnf2KGfRrHbIKyZVehDYf0x5GzTM+XqwA8XbyuTVTsBwCA757D7aXt6ypuNkc
+         4haQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6m2WCFlbDEH3Qi6Apwp4WNApLrFFTqGiR5cvu5IYYvw=;
-        b=4K4rDZbvh5S0fw24znpDt+vpLUjmf0QQytu+CIHrNA0X9Dp/xy70h9tOHZ0Cmtdfy2
-         cBm+YTWuD3YDBupPE0sAYoBkls69qrxxMsYGom8rYXGklgZG/GUqb2+rAhB0W2HbvR0V
-         YR4R8DxdhBMlZ1jSg0kdQeR9gAWAiQz6dj0zvu/D7e8AmnH7SSeyddkvri0f/E4+YGde
-         hyUPXk7ea7RgDiivacSaxQ1W1MPuMh3rsWVLfYELspROy6orahsNDCQrbk+ApUpZAxoz
-         Lafp8MV/eQq2052ZklBbWSrBvnLoeqdsgXTfWntYHN0h8DbG+9twDAv3mGheJQXiABos
-         Aezg==
-X-Gm-Message-State: AOAM530gSPc2zmXwX7r8x/FnF+PTNsUqQ7Km6e3xEUeMiT09s2nPFvQM
-        7MM0gCJqi0fPvEvPaXEUIgQVcR1f+fA=
-X-Google-Smtp-Source: ABdhPJy0OPGpqXTBaxmKrDki+lIbYRT636CU3JTrQ8tg05yz5hxHl/wMNu1LiS7UoUYMTsUfA4phpQ==
-X-Received: by 2002:a05:600c:3844:: with SMTP id s4mr42700143wmr.124.1641317822717;
-        Tue, 04 Jan 2022 09:37:02 -0800 (PST)
+        bh=7Y1eVqZYE9BacgGrfH4O//tMC0Ck7M/KSJNB61BWioo=;
+        b=FNMk4DgFUKF5vB9l7r+Bq0Ma45DInbg5mmHZFAoNtDRlsvkD+4kysXxIfRq6DFDKvS
+         2UNWEVLg6mm7m9CFAM4spbTpFpJII5rL/SImhcGbdDZLVf/RCPpU8sFwM49118L3NVCJ
+         kFhZE1yceZA1uFP0H5/vq/9sqcKqo4rtMgFQ4s87prR/OaYMw4bFYe+QtXPU/saarXmh
+         USqqsbkLOFQuhZ/C68Pe76hkeKGm2ZisvhTDWRzxRTg1FPn6PS1tNyEXDeNqn3LgRSHO
+         1dSXspTUKLe08OD3f1wFzv0AJCgaThutBy9FRmveqM9ThHHqbx8kP4315Xi/h0t0atnX
+         LoTw==
+X-Gm-Message-State: AOAM5325iPZg8tg5ET+GzKub5LlVRn1+VDqZm/8PK2kNsJRpp5OueVa1
+        FQPcqvz4OxkSmay4eGGnbJcXGS+fjyM=
+X-Google-Smtp-Source: ABdhPJxdZLzM7loakHtXUwd+dCbH8nlhvDr0Bi0GX4iIY6WIph86+WgBU/gWOWCVeRosdMWJzUWYCA==
+X-Received: by 2002:a05:600c:34ca:: with SMTP id d10mr43963766wmq.133.1641317823426;
+        Tue, 04 Jan 2022 09:37:03 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r20sm5567wmd.37.2022.01.04.09.37.02
+        by smtp.gmail.com with ESMTPSA id z5sm37599015wru.87.2022.01.04.09.37.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jan 2022 09:37:02 -0800 (PST)
-Message-Id: <eefb6ab4c61460d21dca3877b83a0e6c2852c43c.1641317820.git.gitgitgadget@gmail.com>
+        Tue, 04 Jan 2022 09:37:03 -0800 (PST)
+Message-Id: <0194d894c2f9c5ae4bbaac4cd6fca89933a04789.1641317820.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1109.git.1641317820.gitgitgadget@gmail.com>
 References: <pull.1109.git.1641317820.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 04 Jan 2022 17:36:52 +0000
-Subject: [PATCH 1/9] reset: fix validation in sparse index test
+Date:   Tue, 04 Jan 2022 17:36:53 +0000
+Subject: [PATCH 2/9] reset: reorder wildcard pathspec conditions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,40 +66,41 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Update t1092 test 'reset with pathspecs outside sparse definition' to verify
-index contents. The use of `rev-parse` verifies the contents of HEAD, not
-the index, providing no real validation of the reset results. Conversely,
-`ls-files` reports the contents of the index (OIDs, flags, filenames), which
-are then compared across checkouts to ensure compatible index states.
+Rearrange conditions in method determining whether index expansion is
+necessary when a pathspec is specified for `git reset`, placing less
+expensive condition first. Additionally, add details & examples to related
+code comments to help with readability.
 
-Fixes 741a2c9ffa (reset: expand test coverage for sparse checkouts,
-2021-09-27).
-
+Helped-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ builtin/reset.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 49f70a65692..d5167e7ed69 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -596,13 +596,11 @@ test_expect_success 'reset with pathspecs outside sparse definition' '
+diff --git a/builtin/reset.c b/builtin/reset.c
+index b1ff699b43a..79b40385b99 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -204,10 +204,16 @@ static int pathspec_needs_expanded_index(const struct pathspec *pathspec)
+ 			/*
+ 			 * Special case: if the pattern is a path inside the cone
+ 			 * followed by only wildcards, the pattern cannot match
+-			 * partial sparse directories, so we don't expand the index.
++			 * partial sparse directories, so we know we don't need to
++			 * expand the index.
++			 *
++			 * Examples:
++			 * - in-cone/foo***: doesn't need expanded index
++			 * - not-in-cone/bar*: may need expanded index
++			 * - **.c: may need expanded index
+ 			 */
+-			if (path_in_cone_mode_sparse_checkout(item.original, &the_index) &&
+-			    strspn(item.original + item.nowildcard_len, "*") == item.len - item.nowildcard_len)
++			if (strspn(item.original + item.nowildcard_len, "*") == item.len - item.nowildcard_len &&
++			    path_in_cone_mode_sparse_checkout(item.original, &the_index))
+ 				continue;
  
- 	test_sparse_match git reset update-folder1 -- folder1 &&
- 	git -C full-checkout reset update-folder1 -- folder1 &&
--	test_sparse_match git status --porcelain=v2 &&
--	test_all_match git rev-parse HEAD:folder1 &&
-+	test_all_match git ls-files -s -- folder1 &&
- 
- 	test_sparse_match git reset update-folder2 -- folder2/a &&
- 	git -C full-checkout reset update-folder2 -- folder2/a &&
--	test_sparse_match git status --porcelain=v2 &&
--	test_all_match git rev-parse HEAD:folder2/a
-+	test_all_match git ls-files -s -- folder2/a
- '
- 
- test_expect_success 'reset with wildcard pathspec' '
+ 			for (pos = 0; pos < active_nr; pos++) {
 -- 
 gitgitgadget
 
