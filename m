@@ -2,122 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAF4EC433EF
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 21:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3467C433EF
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 21:03:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233811AbiADVBX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 16:01:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60666 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233740AbiADVBW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 16:01:22 -0500
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EEAEC061761
-        for <git@vger.kernel.org>; Tue,  4 Jan 2022 13:01:22 -0800 (PST)
-Received: by mail-yb1-xb30.google.com with SMTP id m19so94183565ybf.9
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 13:01:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YrKvZjhHUYjrK3qi8ljq0eIY7+p2pOOloQ6xXjYdvsE=;
-        b=nOB8fwMVZ7uuHRNz/fn4BHywPCFMGt7qL7i1ZuzCeuoOXFxlPYh9xyRenubp5T5v0R
-         AmPp05O54d+BvzIFrJ9OpwYclmHdxpqaS+39qhqLhxZPTXT9WkI+yJX+Dy5GycCXwBEm
-         HY4ugpdkXISbJAyfiwm/PdbCuxVhBUVy8QtG4=
+        id S233437AbiADVDv convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 4 Jan 2022 16:03:51 -0500
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:34798 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231972AbiADVDv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 16:03:51 -0500
+Received: by mail-ed1-f42.google.com with SMTP id u25so32029142edf.1
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 13:03:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YrKvZjhHUYjrK3qi8ljq0eIY7+p2pOOloQ6xXjYdvsE=;
-        b=a801JOmt8LQ5v21CVNb/vhhCPD+p8DZ+x15J7C1i59VCXQkV1zGZ8LC+xxzratGlha
-         nItRw9Xtv0i2xus5VdyGnP1QW29SIvcfKrIM4hU0RS4mYvaSNd+aV3deyL0Gnh7lUO9y
-         bVYXpd7D3ZeXl9Si91PXZuGQc9zn6NGFKofEu2MRVdApoXwtYiSYlovV/mbbyM24PdMf
-         wb8iVbjatWyHL/d+E0opNeqc71CpvpxDcxo0ZZm3rw/7qgQG/AspDBdux+05cTkIeNRY
-         FUJ85PKNAfmFl37f0w4lTDLBLI2BTNBBSY/Nm3w2EzKkcTUMW9SnPKtiTu10mYzpavz1
-         PgyQ==
-X-Gm-Message-State: AOAM533KJgiEKrEif9plCpVsKPPeXOuslgAlbHDV2Z3XvD/m0RZKluS4
-        rFe2fzuyIfC4lDyXvH1dJQhMrPpP5aAOxBQbi17rdA==
-X-Google-Smtp-Source: ABdhPJxPRbtt0D+nOEaHNO18O57fRTNWDsjtKAsoIXF2AVKEePy9yL9DG6R9mYvzUA4ZfrzuVXPY5CaZoMNOcvg+ulk=
-X-Received: by 2002:a25:a321:: with SMTP id d30mr21826273ybi.373.1641330079451;
- Tue, 04 Jan 2022 13:01:19 -0800 (PST)
+         :message-id:subject:cc:content-transfer-encoding;
+        bh=tk960x4lPcUphLkRXpBavtT2DNi+4OCkqxrLsc0N1QQ=;
+        b=HLnEuslryYmwINyxJg0sf8PpGsGQJcEEVIpUK8FSrd6LIv7jkSmcs1nSBKq9VtLKok
+         l2JMeYsBAq9MyWVWlWs3rwWrPNaurvsdYCnmQbpRWyu6yPZdiGyYzEri3VudYVxYnmsm
+         5KxepBE9783zhuDZPYOaVN4clJvEDXxWhKZK48Nj9pYY4Xsbf7EcbEJgX8IfQphrU6XZ
+         CKXa/R4gqEIBLsU7fRHeQtPpe5/b7g5xAh/4QT4M7eh8wl0Ew0B86o/cjDxSJ4Qo0quH
+         5iIlh8+KYp4s1oLUaJj+TaGPfEaqQJRd5TgvILb7bBlRcaKISrh6oiGz9kHzqmktaEcG
+         0BLQ==
+X-Gm-Message-State: AOAM530bp0hTytgT9rAKkcvuNvpc62uTtXUxW2S46NsjT5CUBPh/xhSb
+        6UjLk9GgAdELz8Q1NtrBTHqqrApRCVyLQjixeX3UMgnq4x0=
+X-Google-Smtp-Source: ABdhPJyFCTzLDZCAZ/WXPtaXN+2uIXD3B43cJWf9YmmeGI30pGI+cLPE8t/xybLYduWy2KY/UHq6s+A/nO4ogvqVItY=
+X-Received: by 2002:a17:907:3ac1:: with SMTP id fi1mr39624412ejc.668.1641330229736;
+ Tue, 04 Jan 2022 13:03:49 -0800 (PST)
 MIME-Version: 1.0
-References: <CA+kUOak9_RLpdr9d4pQiwU=K42taCwhMdg5WkLP4GreQd4yWig@mail.gmail.com>
- <CAGyf7-HSia4pRs4FZ107v0jmP4k4Zfw5zJ-3Oz8UvF9oobczEw@mail.gmail.com>
-In-Reply-To: <CAGyf7-HSia4pRs4FZ107v0jmP4k4Zfw5zJ-3Oz8UvF9oobczEw@mail.gmail.com>
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-Date:   Tue, 4 Jan 2022 21:00:45 +0000
-Message-ID: <CA+kUOam-Dd-XUk0XaOfw4_rUTg=Ws7w5H=vZ=ZZeEo4XJfsVOg@mail.gmail.com>
-Subject: Re: Bug using `fetch` with blank `-c` arguments to git
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Patrick Steinhardt <ps@pks.im>
+References: <9749fa2c-b08d-c08b-ce43-041d13852d02@web.de> <1240d0cd-230d-8a80-2250-37336b834834@iee.email>
+ <cb8d6e8a-aaca-c2eb-6cc8-5c4ad33adfdb@gmail.com>
+In-Reply-To: <cb8d6e8a-aaca-c2eb-6cc8-5c4ad33adfdb@gmail.com>
+From:   Tilman Vogel <tilman.vogel@web.de>
+Date:   Tue, 4 Jan 2022 22:03:38 +0100
+Message-ID: <CAAbQbbCtFnbfTHnMdY_xi1CN4NyppShZdVhgO73YMubgDjwB-A@mail.gmail.com>
+Subject: Re: [BUG] git pull --rebase ignores rebase.autostash config when fast-forwarding
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 4 Jan 2022 at 20:04, Bryan Turner <bturner@atlassian.com> wrote:
+Oh, please excuse my lack of providing the version info: I discovered
+the behaviour on 2.34.1 as shipped by current openSUSE Tumbleweed.
+Then, I worked on-top of current git master (2ae0a9cb).
+
+Regards and thanks for investigating and fixing this so quickly!
+
+Tilman
+
+
+Am Di., 4. Jan. 2022 um 19:03 Uhr schrieb Philippe Blain
+<levraiphilippeblain@gmail.com>:
 >
-> On Tue, Jan 4, 2022 at 4:37 AM Adam Dinwoodie <adam@dinwoodie.org> wrote:
+> Hi Tilman,
+>
+> Le 2022-01-04 à 07:59, Philip Oakley a écrit :
+> > On 03/01/2022 18:08, Tilman Vogel wrote:
+> >> Hi git-people,
+> >>
+> >> I ran into strange behavior when having rebase.autostash enabled and
+> >> doing a git pull --rebase:
+> >>
+> >>> git config rebase.autostash true
+> >>> git pull --rebase
+> >> Updating cd9ff8a..f3c9840
+> >> error: Your local changes to the following files would be overwritten by
+> >> merge:
+> >>          content
+> >> Please commit your changes or stash them before you merge.
+> >> Aborting
+> >>
+> >> Confusingly, this fixes the issue:
+> >>
+> >>> git config merge.autostash true
+> >>> git pull --rebase
+> >> Updating cd9ff8a..f3c9840
+> >> Created autostash: c615fda
+> >> Fast-forward
+> >>   content | 1 +
+> >>   1 file changed, 1 insertion(+)
+> >> Applied autostash.
+> >>
+> >> Leaving me wonder why merge config options fix rebase behavior.
+> >>
+> >> So, in order to make it easier to check the problem, I added some
+> >> test-cases to the git test-suite. Please see the attached patch.
+>
+> Thanks, this really makes it easier to bisect the issue.
+>
+> >>
+> >> Or here:
+> >> https://github.com/tvogel/git/commit/bc941f9357518a34cfa11788dfb8e7fa7f711705
+> >>
+> >> I did not try to find the root-cause as I am not experienced with the
+> >> code-base but if there are questions, let me know.
 > >
-> > While investigating some issues with a different project, I discovered
-> > the command `git -c config.helper= fetch` was working with the Debian
-> > stable version of Git (v2.30.2) but not with my local build
-> > (v2.34.1.428.gdcc0cd074f).
+> > Which version are you running?
+> >
 >
-> Since you're working with a locally-built Git, have you, by chance,
-> actually _installed_ that build, or is it simply in the Git repository
-> itself after running make?
+> That's a good info to include indeed. I'm guessing you are using v2.34.1 as that's the version
+> indicated at the bottom of your attached patch. I can replicate the behaviour on my side on 2.34.1.
+> I did not bisect manually but I'm pretty sure it's a regression caused by 340062243a (pull: cleanup autostash
+> check, 2021-06-17) (author CC'ed). I checked that the parent of that commit passes all 4 of your added tests, provided
+> this is squashed in:
 >
-> If you haven't _installed_ your build, my guess is you might be
-> getting a mismatch wherein your _built_ Git, when it forks out
-> subprocesses, is triggering your _installed_ Git (which I assume you
-> have, and which I assume is not 2.34.1). Git compiles paths into
-> itself to know where to find certain binaries, and if you run a
-> compiled-but-not-installed Git then those paths are "wrong". (I see
-> administrators do this fairly often when building Git from source to
-> set up Bitbucket Server.)
+> diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
+> index 4046a74cad..5ad19b1028 100755
+> --- a/t/t5521-pull-options.sh
+> +++ b/t/t5521-pull-options.sh
+> @@ -260,7 +260,6 @@ test_expect_success 'git pull --rebase --autostash succeeds on ff' '
+>         test_commit -C src --printf "more_content" file "more content\ncontent\n" &&
+>         echo "dirty" >>dst/file &&
+>         git -C dst pull --rebase --autostash >actual 2>&1 &&
+> -       grep -q "Fast-forward" actual &&
+>         grep -q "Applied autostash." actual
+>   '
 >
-> What does `./git --exec-path` print, when you run your 2.34.1 binary?
-> And is that where, for example, the compiled 2.34.1 versions of things
-> like `git-remote-https` are?
-
-Good thoughts, but I initially hit this problem after having installed
-it; I reproduced it running Git from the working copy for ease of
-bisecting, but the problem definitely occurs using the compiled
-version after installation. The below was collected after running
-`make install` (plus all the previously noted build commands,
-including running the configure script to specify the installation
-path) with the commit I identified as introducing the problem:
-
-```
-$ type git
-git is hashed (/home/adam/.local/bin/git)
-
-$ which git
-/home/adam/.local/bin/git
-
-$ git --version
-git version 2.29.2.372.g1ff21c05ba
-
-$ git --exec-path
-/home/adam/.local/libexec/git-core
-
-$ ls $(git --exec-path)/git $(git --exec-path)/git-remote-https
-/home/adam/.local/libexec/git-core/git
-/home/adam/.local/libexec/git-core/git-remote-https
-
-$ $(git --exec-path)/git --version
-git version 2.29.2.372.g1ff21c05ba
-
-$ rm -rf tmp && git -c core.autocrlf=true clone git://github.com/git/git tmp
-Cloning into 'tmp'...
-error: bogus format in GIT_CONFIG_PARAMETERS
-fatal: unable to parse command-line config
-```
-
-For the sake of double-checking, though, I just uninstalled the
-version of Git in /usr/bin (after spending some time working out how
-to do that with apt, without also uninstalling dependencies I wanted
-to leave alone) and repeated the above commands, and got exactly the
-same output.
+> @@ -273,7 +272,6 @@ test_expect_success 'git pull --rebase with rebase.autostash succeeds on ff' '
+>         echo "dirty" >>dst/file &&
+>         test_config -C dst rebase.autostash true &&
+>         git -C dst pull --rebase  >actual 2>&1 &&
+> -       grep -q "Fast-forward" actual &&
+>         grep -q "Applied autostash." actual
+>   '
+>
+> After that commit, in case of fast-forward, 'git pull --rebase --autostash' delegates the fast-forward
+> operation to 'git merge' under the hood, which was not the case before. The '--autostash' flag seems
+> to be forwarded correctly to that 'git merge' invocation, but the config 'rebase.autostash' seems to not
+> be passed along.
+>
+> I did not yet look into why in the code itself. That does explain however why 'merge.autostash' makes it
+> work - the 'git merge' invocation does check its own config, and if merge.autostash is there the autostash
+> behaviour is activated.
+>
+> Philippe.
+>
+>
