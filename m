@@ -2,104 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84CDAC433F5
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 12:45:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25C1CC433EF
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 12:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233046AbiADMpW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 07:45:22 -0500
-Received: from mout.gmx.net ([212.227.17.22]:60303 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231926AbiADMpW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 07:45:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1641300296;
-        bh=S/V90fFdBY8tcD3I5/GE+jrLUNXOkOmh9hxyRwKK0P4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gr0dCnrwDhnC/y44Wn9h4gqlnpCgiRAS+j5Ne4d1rUS8JG2v7Z16cLJSrnZQna2n6
-         IdEYyWfgeCHpFbliJievakukriFCdQR5tRViB+Svu1TK+qBAu8o+4m7rlekJSBuKCV
-         Rm1cFVkghAJwFOz7xuI3ixEBangP5G2NabkiNDfs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.29.215.148] ([89.1.212.167]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N4z6q-1mLjqe143Y-010t7S; Tue, 04
- Jan 2022 13:44:56 +0100
-Date:   Tue, 4 Jan 2022 13:44:53 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        rsbecker@nexbridge.com, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Subject: Re: [PATCH v2 0/2] Generate temporary files using a CSPRNG
-In-Reply-To: <20220104015555.3387101-1-sandals@crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.2201041334430.7076@tvgsbejvaqbjf.bet>
-References: <20220104015555.3387101-1-sandals@crustytoothpaste.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S231863AbiADMtf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 07:49:35 -0500
+Received: from mail-bn8nam12on2054.outbound.protection.outlook.com ([40.107.237.54]:26048
+        "EHLO NAM12-BN8-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S233156AbiADMte (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 07:49:34 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CTuOR4cexc+9OpDmu7XGqTrT2/nfrLe1Jf7YlXquVzHDQuUBu0BQAWXfv60t0e3nss6Z9Py8p5hXvZ+Tghvu3AT9OMQkze+5W478eqU0SNt/gJytcOL7qAsntYoLM3MMm5/XHaTKSd10FW1BuS2A1NiMTpypizze4bREXcE/oZNQnLjkcZP55S1fVZD2aEDSh1sNHSSSIm9+W8w2Dc8CtQ160xpY7f4vbzgwNKukUez7ZKOng+UqIwBTT44/6TEB9Od6pKh6epWnYKrOPwlHuHT7lLpq30Xu0W7409b3ggs2FFOxoNdUW1qIA8L3F1plBWw/gjkz/Tlf8E+199SjTw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dCZSFVL/iEwwhUAbfeX0lfiW2N1XjCZXlIE3OhLttZA=;
+ b=CUl/Ec/QitUuOrH4pI6IZFrlcDUMv9wyMbhinZ5iAPAgyvn4FOOUc+ZAVouvYN9cd0e+PjJLdW17BBQaW0NQTy/UIMLsDjzE6GLoPyFWEFL3bql8q88+q3MkrbjeHEMxbUgnGQF45FIxSSEAHFtEAYlp5i7ODrKBOU6eCGkHTo8LxHJP8Sd5t+6KiAjmWl6sFG6EJm+LRQJo0UN5OSn9Ek++uJXB0tNlnVBa3hy3d0AMtNJCfqkAnI4ZitaEWHfA+MFUD81pEUZ1ulenrGHK1WcM/Y2l4zpbtnBNW+9d9t6+fsA1VzKPAblKYAwHIOwCL+blVdqwMrSqPZodmv+gRw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dCZSFVL/iEwwhUAbfeX0lfiW2N1XjCZXlIE3OhLttZA=;
+ b=hn1bnFI4UpvzjjG1tnVze4vSLsX7zbyL0Mvc+1Di4ZOGYDgpzSrJ6SYQjUTRHD89j7NmI88yr0H6EyAauahgqI6s8rEDZ0UM3G1PgXCnMwoJCgJgq2AHDcAEjQHLtUfBLdpkniaGpXr/cAjhKo7dU7XrFkQQ0awmlqZuB6e6mIE3tq/lZpkAsiDr09+FwkGFdRUgC+7i6kNpJLNIRtIM2PC98dLrJoV5oYI1I6QSh8AUHfumV/xwInEy13b9IlQcvnHsA/hmYPoNQdwTBcQ/1olsET1or4ul+fCcYSbSLnxtK/OPsIqCMydbZWTDelyl6OEb9qwqp/8O/C0qjFSA9g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
+ by BL0PR12MB2500.namprd12.prod.outlook.com (2603:10b6:207:4e::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4844.15; Tue, 4 Jan
+ 2022 12:49:33 +0000
+Received: from BL0PR12MB4849.namprd12.prod.outlook.com
+ ([fe80::516f:3a1f:4951:ebd6]) by BL0PR12MB4849.namprd12.prod.outlook.com
+ ([fe80::516f:3a1f:4951:ebd6%5]) with mapi id 15.20.4844.016; Tue, 4 Jan 2022
+ 12:49:33 +0000
+From:   Joel Holdsworth <jholdsworth@nvidia.com>
+To:     git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>,
+        Joel Holdsworth <jholdsworth@nvidia.com>
+Subject: [PATCH v2 RESEND 1/5] git-p4: use with statements to close files after use in patchRCSKeywords
+Date:   Tue,  4 Jan 2022 12:49:09 +0000
+Message-Id: <20220104124913.2894-2-jholdsworth@nvidia.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220104124913.2894-1-jholdsworth@nvidia.com>
+References: <20220104124913.2894-1-jholdsworth@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: AM9P192CA0014.EURP192.PROD.OUTLOOK.COM
+ (2603:10a6:20b:21d::19) To BL0PR12MB4849.namprd12.prod.outlook.com
+ (2603:10b6:208:1c2::17)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:KlfNkK2hIcgI/BTAxIg5Q9tTAzPnz62AppE+AoPAGS1+YQNxw1J
- HmmnZYUUGVm6/zZM7ftu8wlPrJ/dP2CN4I3x894LXzJzvH7B6HLDwq2gBovlxE+AyExSDRX
- eguAEb/reKMEjIsn0vOYWzuvvJjB1Tgho1/8APvM4ef7dkcWnCk6hwavH78ZZkHv20twd49
- TaQEcWqXAUYrmx11kgcHA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6JIH1vkwo1U=:ifmZqNu9uE0P+Rweq+jIzV
- +jg6WueYCL561Cs4k8z71di5GUvH5TvhiCXauR2DGTaTnl4IFI2yBAqStY/x5FG1XXAoYSq5a
- V7fuuovf3ChU/g9HRb181xUy7VyfmUG2ZBGVI/uMcQaVNns8ngpE1j7mZ0XIud6M193c2D0Ax
- sNaiG6zMv3t6F+S6oIJJKsWnxVtOy6RNwGebJcB4XG7VUGKLwDefzM1ZEqFO89LAcoZM+GS/l
- SXjt2vizkKAxuWfaGThfFTptkVx+20Z/K5TBIM5wd2bkmlhOQO71yObBrDkui32TE+8lftE5o
- DROz7k7KhZfHcgLcGj39F5n2HBKY28VFGNhUuFCEOO1bohLvh6Gat9q0lTCtCnbaHonfzmdIw
- l88oYYqvFQRhW1KCRLcOiUBpHbLdi/hM4L7sQZa3+wF9DUacWexVomZmK1Lbp9DhGFlu+EW2G
- sJPU7p1dBZ7L04XXKn0h1n1CzxoyFsep0gzC2qQc3xDUSS6x5umtboBjWGeSd+jG/1herkbuH
- WgNeH7BIvndGo0944ZQKHOx4WNOHK48/mW1M+BVJjBjEeOSqeYngc7sL754bRODCZQgllbtwP
- RQpRSOOr3B31aWErylFMe4oNBx8A/mjuhprRukKPeWk1PS/Q/pjJJGXp60J+cp7NUXtzx0Rqg
- vfnCy6TpRTei/LBEEtu1ZzxKQ7T8KjTIeyz/GPHLFt7KIHeq14txEHmY18t3noWTMwpFp2SML
- PUrD6onUmOKFwhsTt4mLBSXsTl9ko4t6az9dac0eChAQ/HGCHlfaIWnZ5xaBIVuYqqk5G77T8
- iG3qq/5tltP8Ew+LH7x1hJ/bwh+eU7vFU4bLgq2pvNPAu0GpqW6OZO6WXr88T2W/1gCL+V+sf
- hIc0lgdjVaiVnHs9sehsgLDrfcvHO/dX63j4DQ1FxAJs64l+C2r5jyoOAY0x15eoBcfbz4xDy
- t0XWx7//YA775LQx946h/gZCloVOJP7+E51PvKLfbThhLs2MYc4lF3FHlbRnSdgifEaAWhKVj
- 7henHMbAa2fWjJFCw9yyEj/V5pZJ4tyN9u9gS8lyWuotIUg989i48yyePmTenzPO1sRIEyDJE
- KrD6x1EPb+Ameg=
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 4e07dd91-b874-4e6e-4a23-08d9cf80a7d7
+X-MS-TrafficTypeDiagnostic: BL0PR12MB2500:EE_
+X-Microsoft-Antispam-PRVS: <BL0PR12MB2500C8D2FB4EC0A3EB580B74C84A9@BL0PR12MB2500.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:6108;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: SHmJf/+Zz2cvlRq6iph0xCpskvq6kFHqNMTDhhLKMFnhdrnmMzDbjWlbbKf/Gf7arytd2eABm0pikhhOkjx4cGZ2W6GbVAURuXxwviOYI9L3R13Hg++cSVSGBzeTFHyDeIkEW04rjMv5oufwZnRIVAA5I4w/yx6i7L34iulEj2OztzIeRhAuzJZ2DtW4t72RRPAALS1Z92B9wCUV9C18oJh7OsRx6fVOUXVbfSDZWygJilFXW8T16DRnjnoH5nbkuMLy1hPYqft9d6cyjlRHNKmPaGockTnesPLcLUP3XQeXGTA25BY3ayIeNnpKeIsWLnSvFuVCmcAsx+hRiZ3YiYaF3jY4RMCBGQ+qfdY81yQLVN4/UU4AOuvpJKBiXkqwMyMPq71DCKXHTxbjG7OKQEbF0llRBPfri16E+J1/LtLLU2VDC01YgmeGZ4xCPVzMvfB+BMq0FJNAzCI0MmXNKSuiqxiVpeJz1Z8/GhipVM7OAMfwcnOvajmewSKqtX2/mG1+0FFKfk8IivJS1Zwa+T/OnN/UC6HXbhuwYWPleres7I5znHr31D+YJBS5XdYiZxPK5gniC40rMWM8aJNe/gU6H90lz6ns87U4z7XskHQdH4YAEqBkSz1ANEjNKr5qSS/2siRIOyq3zvVfe547D24oNaG8IxQj+03yTd4BVr+wkqVHzVkY3rbvP5bmCl9+4Jt+Fff4D9dwvtU7Uva/VnUJse3b8qeyF/87VvJE0gY=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(2616005)(66946007)(38100700002)(6486002)(110136005)(2906002)(26005)(66556008)(54906003)(66476007)(83380400001)(4326008)(86362001)(1076003)(36756003)(8676002)(6512007)(186003)(5660300002)(508600001)(6666004)(6506007)(8936002)(107886003)(38350700002)(52116002)(316002)(55236004)(7416002)(156123004);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?fGw1dRSmI/j/R8IU/SC1Fd6pcWupeoRnVxLLDB6YersbIWfKyme1wX/n0NpT?=
+ =?us-ascii?Q?n+7ikCrIJWKfe0fbwdXIYmIlUyQo9faRObgBZsubc7v+kmNcHjv5iftQH85l?=
+ =?us-ascii?Q?VCHKu/kFo6orZSV130XIPNR5SG+rI15pmbwTm+mYxH8+WK6E6sILIjZh6fmR?=
+ =?us-ascii?Q?EMHCQhasHS4p9FAeWoNVG+YbbqKMgOe1gc1EQ4cSsliDnMMZ0b/DoV+oIpJl?=
+ =?us-ascii?Q?NlUparBl3xDfSlDVSo7pedZ5Jk+p9hdh9sGLcZb9RZroKkLOzyEuItmqt4y1?=
+ =?us-ascii?Q?YrQ/Jv/aS7TpCFyAfvJXHeMuCFZtYv7PJsMbvZQH0fjf6/DjewyEKiJeMfq0?=
+ =?us-ascii?Q?H2kJz/YS6paViWg5tXlZiVdT3grGlxQSrEswnID3l7vFZdMWIjkdyoPjlviG?=
+ =?us-ascii?Q?Rl0GXTS3rzWQnpY6YvxXS3rjA8ucDUxrBCvNpxbW2naoX6tXv0Q6fGguz6MG?=
+ =?us-ascii?Q?aJe+WDlPJmCua1Sd4yfIxTsjvd4rpPNX5/51a0jje6lMV5eZ/Nk1HS40l9tn?=
+ =?us-ascii?Q?qL1U9/JBN+tiinrTza2oc4qQyW46Kb1ropJV3FB0wqg8a+0f/7vMxS8T4OHf?=
+ =?us-ascii?Q?ksXmQOR2aBkGGV9hJexaeNj7GBouOqLpAw8+X42luubhmb+RXAqUU7Qjbv6V?=
+ =?us-ascii?Q?9JNnKq/OL9ld03Bo+R1Te0JysFZpy+H+TaGXODEvMH1hhJhxdn/FonL5W8Cd?=
+ =?us-ascii?Q?EcUWOU+WogD9SgznSutWjg/hbY+TVfh2Idn7GALLceX6F9aRq7RhAHZlpa0B?=
+ =?us-ascii?Q?p8frs1wdfJI9/NKthRyTO2dpZr2W6HJjFSYQ1joYDbPTo/fBehGUD2+LPSbk?=
+ =?us-ascii?Q?76Ht1tNOBu01h8Djc3sSXOak1wNGa0hTh1Mj8n8qTU6HvoabgO95Q+eimhSY?=
+ =?us-ascii?Q?LuP1d0eOio0tPLAYB70SSpB1K9fdKIf07lceaLLwnT4Vk7z2PABrxSI+ehPH?=
+ =?us-ascii?Q?t4SB9lsSzL4Wsft1a9hku+YqMUjxweD4lNKVno3hBa5URtxt/glp3Z5QmVA4?=
+ =?us-ascii?Q?uF4ihy5vfOuGtHmYe7vw2U0gxMuy9Vo7UmPG4+f9GVzFbX1ZMqSKUG0r7P6d?=
+ =?us-ascii?Q?Zun4M18afqekAmuN5oIuM9nVxgXTETr+D4/v1tr/+LoaF8VPwK7A/5lnPAvZ?=
+ =?us-ascii?Q?hxmsnC30Qb0S5Muh5hx8umf8AUKFU29i6/dy8JghJD43trMfYDvTWY/nTKP4?=
+ =?us-ascii?Q?ek4KZzt90gJdWN3wa4ANaJ2edQbTBfibqntXBGrTQHSmTEuppVzm91/AONAZ?=
+ =?us-ascii?Q?keBKxGT3h0MDrD6fdky80ODf/4zBnum//+IBu05pih+p+bDGO5IQHZso8zku?=
+ =?us-ascii?Q?rogKchXsMDr9tb7GpqjmzE0hhacGHUJIZWGQgolhXRKVXYnG5LF5Po51I0NJ?=
+ =?us-ascii?Q?LOIMFtKxLd+vXrZcmDQB6FmVh53SPm2Hv/2y9FKerqQj7XBhiojyevVHWcvr?=
+ =?us-ascii?Q?tT3p5VjTeUDzG9N+tMrcrLN5mje+O9w7R1VdWqC6YaqazSrKGyJ1KshZnHY1?=
+ =?us-ascii?Q?WAxBep3tZy9nmQRqutHTQ7/clgIrHsM8COuxlGjWae7XNuIzDE4WHqHcHatU?=
+ =?us-ascii?Q?pvfn+/Y461IxpMz5MCwERlG86i8/BE07YDD/th/WaCNQvSAoGBmUFnls8ODZ?=
+ =?us-ascii?Q?YnpgHO9vhMlzaeDNnbYe0RE=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4e07dd91-b874-4e6e-4a23-08d9cf80a7d7
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB4849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jan 2022 12:49:32.9553
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ojk8sBxtWrmTJxiYGmHjqn9h7jQReyYg28aTmHK7bMSkYm8ONlTnCgpu5d1P/+7ALuBqmDxPxX2x3t1ibwaNvQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR12MB2500
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+Python with statements are used to wrap the execution of a block of code
+so that an object can be safely released when execution leaves the
+scope.
 
-On Tue, 4 Jan 2022, brian m. carlson wrote:
+They are desirable for improving code tidyness, and to ensure that
+objects are properly destroyed even when exceptions are thrown.
 
-> Currently, when we generate a temporary file name, we use the seconds,
-> microseconds, and the PID to generate a unique value.  The resulting
-> value, while changing frequently, is actually predictable and on some
-> systems, it may be possible to cause a DoS by creating all potential
-> temporary files when the temporary file is being created in TMPDIR.
->
-> The solution to this is to use the system CSPRNG to generate the
-> temporary file name.  This is the approach taken by FreeBSD, NetBSD, and
-> OpenBSD, and glibc also recently switched to this approach from an
-> approach that resembled ours in many ways.
->
-> [...]
+Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
+---
+ git-p4.py | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-This gets my happy Reviewed-By:, and I very much liked the thoroughness
-and diligence of your work. It does an excellent job of motivating the
-change, and documents the consideration and diligence that has gone into
-the patches. Thank you for this refreshing patch series, which provided me
-with a nice start into the new year.
+diff --git a/git-p4.py b/git-p4.py
+index 2b4500226a..226cdef424 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1757,14 +1757,11 @@ def patchRCSKeywords(self, file, pattern):
+         # Attempt to zap the RCS keywords in a p4 controlled file matching the given pattern
+         (handle, outFileName) = tempfile.mkstemp(dir='.')
+         try:
+-            outFile = os.fdopen(handle, "w+")
+-            inFile = open(file, "r")
+-            regexp = re.compile(pattern, re.VERBOSE)
+-            for line in inFile.readlines():
+-                line = regexp.sub(r'$\1$', line)
+-                outFile.write(line)
+-            inFile.close()
+-            outFile.close()
++            with os.fdopen(handle, "w+") as outFile, open(file, "r") as inFile:
++                regexp = re.compile(pattern, re.VERBOSE)
++                for line in inFile.readlines():
++                    line = regexp.sub(r'$\1$', line)
++                    outFile.write(line)
+             # Forcibly overwrite the original file
+             os.unlink(file)
+             shutil.move(outFileName, file)
+-- 
+2.34.1
 
-To show that I did not just glance over this for five minutes and then
-moved on to the next email in order to throw as many emails at the Git
-mailing list as possible, I'd like to state that I mulled for a while over
-the change in `compat/winansi.c`. It first got me concerned that the
-changes to `git-compat-util.h` might be done at the wrong layer: if
-something as unrelated to the winansi emulation as temporary files
-creation requires fiddling, so that it can continue to include the headers
-it requires, wouldn't it make more sense to create a new file called
-`csprng.c` and add the new conditional `#include`s _there? Alas, it _is_
-Git's custom to hide platform-dependent parts in `git-compat-util.h` as
-much as possible. And personal opinions should always stand back in favor
-of consistency of the code base. In short: I agree with your choice to add
-the conditional `#include`s to `git-compat-util.h` even if it requires a
-somewhat stray (but of course well-documented, thank you for that!)
-`#undef` in `compat/winansi.c`.
-
-Thanks!
-Dscho
