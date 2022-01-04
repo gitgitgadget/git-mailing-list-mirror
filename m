@@ -2,81 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E81EC433F5
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 23:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D254C433F5
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 23:46:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236477AbiADXcR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 18:32:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38458 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234152AbiADXcQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 18:32:16 -0500
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 103FDC061761
-        for <git@vger.kernel.org>; Tue,  4 Jan 2022 15:32:16 -0800 (PST)
-Received: by mail-qk1-x734.google.com with SMTP id w27so30410463qkj.7
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 15:32:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=ui1HS3oPWS+gn63oyrRXawV4xIXhZc5fTjeYXNjjW44=;
-        b=qzQfVXbsR2Oy//IjYvihozo30eq1erbsUpRKIDF0Xx/0KU1hkRhSWUf40sg9NeQdQM
-         1je/wRpXxsHPbqr69KKCLSmmjlpHDBDgffA+QnGWHfpOt8BTKz34SBZQ70RxnDDIiANu
-         cVpaOPx/+46ql84+DKrCN3hOotmzm2MimlOFaQ8Z30Th+pzQVGo97nsNhszC9V2R8eBI
-         HLuRY8NRiwA0pXVD9LL0qeYxfjxXKuEETyOjzIfO6tCcdyyfyjNbzTmNAIz4VE8uxa1/
-         LPkFSO3l8mSCbeAW8c6BFpkjmgAqKBYxlD4hFXg1Na97bTpG8aBZQCoSWa0uF5CvE3ft
-         Sxww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ui1HS3oPWS+gn63oyrRXawV4xIXhZc5fTjeYXNjjW44=;
-        b=6+TcPbh5iDolRHTfmIQkxNbq941XIkmJFEd6uVCFRQRl1Jj5BU3eGGhmSh2tVXIb4r
-         VEvwrGjTBT80wo/iLQ0EuPr1xqgolx5bTmDdm9k5Ef/mGlz3mMstGe98kP1AaVw/WlIM
-         EEgMFGy1LmpGi47z+ukcC08xoEp+2gW6joFtysq7ap/3lnLeWLk/gHNiqtTdEJd1v55Z
-         mHUZqk74rXYxQtEU3YG4hD8QZAOO8cDJnCPIybwJVqU/T0az1/hevsjKeXXr46vVX0z9
-         99wUEfDJyuaQnjg9a7dsjoaC10psU/Sv0RzM0EpAS754cVzVvDVfIZuoCxiDHG9PfU55
-         S+wA==
-X-Gm-Message-State: AOAM533gbNbnUinkA59vicxrXIsa6YlqFqtcuiVoVkegVWQD2VlDmSpH
-        AsT9LTq05+xsaqOgxQvmvkKMey0Ljws=
-X-Google-Smtp-Source: ABdhPJy+iiDJidArDQqB/IPYQJPgsbnqmh18uuRhNkecK6eCXxMfP/yvc9FjYN3TiqAgKK7Votu8xA==
-X-Received: by 2002:a05:620a:21cc:: with SMTP id h12mr36566574qka.319.1641339134864;
-        Tue, 04 Jan 2022 15:32:14 -0800 (PST)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id h4sm155775qkp.54.2022.01.04.15.32.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jan 2022 15:32:14 -0800 (PST)
-Subject: Re: [PATCH 0/1] Fix bug in pull --rebase not recognizing
- rebase.autostash
-To:     John Cai <johncai86@gmail.com>, git@vger.kernel.org
-References: <20220104214522.10692-1-johncai86@gmail.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <19ce4f49-1b68-0cac-1936-12d451244ab1@gmail.com>
-Date:   Tue, 4 Jan 2022 18:32:13 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S234383AbiADXqb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 18:46:31 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58830 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231753AbiADXqa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 18:46:30 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DDA2CFA47B;
+        Tue,  4 Jan 2022 18:46:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jHMDr+9dgGeykme/MkuYVS1X7qZvBNFlHdcdiY
+        olz0w=; b=CFAvFO5Ij8jauLuxIfynlDLPeEHX6QC13zt8C7S1X7xk2jBobn9hZ1
+        RvVsujvtIiUx7jueXfOHsecOvUdTL0N4YDK1XFPPD9LadXzEtW5i4ZnFSITenI/9
+        HCJhInRacCNQ60IC4DKRpEoxP2ZDE0Xs6gb28m3Kgb5PE3QPfcB30=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D4862FA47A;
+        Tue,  4 Jan 2022 18:46:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 33BFBFA479;
+        Tue,  4 Jan 2022 18:46:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] stash: do not return before restoring untracked files
+References: <pull.1180.git.git.1641337498996.gitgitgadget@gmail.com>
+Date:   Tue, 04 Jan 2022 15:46:27 -0800
+In-Reply-To: <pull.1180.git.git.1641337498996.gitgitgadget@gmail.com> (Elijah
+        Newren via GitGitGadget's message of "Tue, 04 Jan 2022 23:04:58
+        +0000")
+Message-ID: <xmqqy23v83os.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20220104214522.10692-1-johncai86@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 89A3DCFA-6DB8-11EC-9B1C-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi John,
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Le 2022-01-04 à 16:45, John Cai a écrit :
-> NOTE: this is my first patch I'm submitting through git send-email. Please let
-> me know if there is some convention that I'm missing. thank you in advance :)
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index 18c812bbe03..397210168da 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -561,18 +561,19 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+>  		if (index)
+>  			fprintf_ln(stderr, _("Index was not unstashed."));
+>  
+> -		return ret;
+> +		goto restore_untracked;
+>  	}
+>  
+>  	if (has_index) {
+>  		if (reset_tree(&index_tree, 0, 0))
+> -			return -1;
+> +			ret = -1;
+>  	} else {
+>  		unstage_changes_unless_new(&c_tree);
+>  	}
+>  
+> +restore_untracked:
+>  	if (info->has_u && restore_untracked(&info->u_tree))
+> -		return error(_("could not restore untracked files from stash"));
+> +		ret = error(_("could not restore untracked files from stash"));
 
-Usually, for one-patch series as this one, it's preferred in this project to not
-send a separate cover letter, but instead to include the cover letter material below
-the three dash line. You can do that manually when using 'git send-email --annotate',
-or you can use the 'git notes' command along with git format-patch's '--notes'
-arguments to include it automatically.
+In other words, instead of doing an early return, we try to
+resurrect untracked ones and always show the "git status" before
+returning.
 
-Cheers,
-Philippe.
+I think that takes us in the right direction.  I looked at other
+early returns in this function, and while there may be a room for
+improvements when the --index stash does not apply well, I think it
+can be left outside the topic of this patch.
+
+Will queue.
+
+Thanks.
+
+>  	if (!quiet) {
+>  		struct child_process cp = CHILD_PROCESS_INIT;
+> @@ -592,7 +593,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+>  		run_command(&cp);
+>  	}
+>  
+> -	return 0;
+> +	return ret;
+>  }
+>  
+>  static int apply_stash(int argc, const char **argv, const char *prefix)
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index 2c66cfbc3b7..2a7d8e511db 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -1376,4 +1376,28 @@ test_expect_success 'git stash can pop directory -> file saved changes' '
+>  	)
+>  '
+>  
+> +test_expect_success 'restore untracked files even when we hit conflicts' '
+> +	git init restore_untracked_after_conflict &&
+> +	(
+> +		cd restore_untracked_after_conflict &&
+> +
+> +		echo hi >a &&
+> +		echo there >b &&
+> +		git add . &&
+> +		git commit -m first &&
+> +		echo hello >a &&
+> +		echo something >c &&
+> +
+> +		git stash push --include-untracked &&
+> +
+> +		echo conflict >a &&
+> +		git add a &&
+> +		git commit -m second &&
+> +
+> +		test_must_fail git stash pop &&
+> +
+> +		test_path_is_file c
+> +	)
+> +'
+> +
+>  test_done
+>
+> base-commit: 2ae0a9cb8298185a94e5998086f380a355dd8907
