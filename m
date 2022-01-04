@@ -2,103 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8C0FC433EF
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 01:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B733C433F5
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 02:02:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231921AbiADB4s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Jan 2022 20:56:48 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55874 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229746AbiADB4r (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jan 2022 20:56:47 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 848BF17058E;
-        Mon,  3 Jan 2022 20:56:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=kogCGnXN40ypsjacQkfVlcs92QO2AhgegbTCtLQCNeQ=; b=Cw/X
-        rLN0iENGk611LzFhxicPqKFnw61ltwDBmfCOVkLYW2w8emYIQsUa/DE82t3KscRN
-        X1GJWi8K2+nwIkSDe+yPG+C3ffNblWJ62bYs+jShIVnO5mZ01rsbC9QU3Is945yi
-        NIHnyJhXQStqWdpfp+RNHyG9dT2scklkyMfYzW4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7CC0F17058D;
-        Mon,  3 Jan 2022 20:56:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D533917058B;
-        Mon,  3 Jan 2022 20:56:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v3] receive-pack.c: consolidate find header logic
-References: <pull.1125.v2.git.git.1640758765723.gitgitgadget@gmail.com>
-        <pull.1125.v3.git.git.1640931460758.gitgitgadget@gmail.com>
-Date:   Mon, 03 Jan 2022 17:56:42 -0800
-Message-ID: <xmqq35m4gt5x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231585AbiADCCh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Jan 2022 21:02:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54852 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230200AbiADCCg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jan 2022 21:02:36 -0500
+Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DADFC061761
+        for <git@vger.kernel.org>; Mon,  3 Jan 2022 18:02:36 -0800 (PST)
+Received: by mail-ua1-x936.google.com with SMTP id o63so60695532uao.5
+        for <git@vger.kernel.org>; Mon, 03 Jan 2022 18:02:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=73vYcxqyHFoDtr6LFrtqgiiZAIS3v0o0B26gmCjepdU=;
+        b=loPJeyCulgW4FOniMFl0P5R54OHHHvxVy+nQBUKM13Jla2IG6lHwgOXVvG3il1GU63
+         XcMixYPvTC/+nerdKm5es9eRxKpXON2o33yU/4yq8sF7Syo/Q6wm+EEjy77NCnuoXT2E
+         gJIUBgKyiw24Xw98UDm+lbMqtPA3qOa2Z7tg+uz+v2SGHco4FnHXZKVYzFXhrwnmsfPe
+         AAb1tHqZNsofUWPqK5noX+EYgi8YYxu199nZdJSdO+vfC6mvalhwVUGibFwX0rGLIevD
+         /Ve7Zt+SDt+pO9q2iwBGiwvHmmm8SPUqEe3PDtkSvx/EO8gVKHFCqG/YRLfABOEAULhE
+         2G+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=73vYcxqyHFoDtr6LFrtqgiiZAIS3v0o0B26gmCjepdU=;
+        b=uYCFrK7hYGsBPYwp6x42bEviHbQPb6UBfDbBHBmlyikItjt2P2Ug5GcXhMXnoiUH4p
+         WFz2pvAtEi75cyJiUaRDTltqBF8HrysFLdPAyh7toRWBli0Q/s6UYroyaqEdkmthFc7o
+         HHN2RKQsSpU8sdlpPsKeR9VhcxRSoGGVAHztYh0QjOA2/nVjodVnaG7yTHhLULPEPY/I
+         3m0ostt18KbI1y94PX0r1dO8e8m20Mfb5NIbVmFIFJluCO9Whlre4jrNZH2iqzeRASqv
+         O0o1TRaw5fhxKBxPFAQ4JfzINC2sDjdioy8i/W+2JFazL9/NxSQ5gWIrNT0FkBtCHrU8
+         F/Xw==
+X-Gm-Message-State: AOAM533Y+2NdpYAn53ZZSZ96ZgU3u9oYh9MbfSMai/C5RnTMC0gOqVli
+        HoG39mNvklNCEbSyF8AhyqRl5E7uzjgxVt+IeLE=
+X-Google-Smtp-Source: ABdhPJyfvZoxWFcZkOlbuBRlQ+5kWnVNvXVQznLh7qbRzSh1xJvSX7Ld0cIVTVX8U1IJyx1c0PyD/4lr9Owmz4IPCWw=
+X-Received: by 2002:ab0:6956:: with SMTP id c22mr7484500uas.51.1641261755755;
+ Mon, 03 Jan 2022 18:02:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9120AB8C-6D01-11EC-BB28-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <cover.1641043500.git.dyroneteng@gmail.com> <296ebacafe4d40ffc5282aebb9fee972866c4ccc.1641043500.git.dyroneteng@gmail.com>
+ <xmqqilv0iewz.fsf@gitster.g>
+In-Reply-To: <xmqqilv0iewz.fsf@gitster.g>
+From:   Teng Long <dyroneteng@gmail.com>
+Date:   Tue, 4 Jan 2022 10:02:24 +0800
+Message-ID: <CADMgQSTBp9ykxtPUHgA1LCQQ1zCmfsUMLGa=ccyqjci9VXVsRg@mail.gmail.com>
+Subject: Re: [PATCH v8 7/8] ls-tree.c: introduce struct "shown_data"
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     avarab@gmail.com, congdanhqx@gmail.com, git@vger.kernel.org,
+        peff@peff.net, tenglong.tl@alibaba-inc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> "show_data" is a struct that packages the necessary fields for
 
-> +	size_t out_len;
-> +	const char *val = find_header_mem(msg, len, key, &out_len);
-> +
-> +	if (val == NULL)
+>Is that shown_data?
 
-Style:
+Yes, sorry for that mislead.
 
-	if (!val)
+>> reusing. This commit is a front-loaded commit for support
+>> "--format" argument and does not affect any existing functionality.
 
-> +		return NULL;
-> +
-> +	if (next_line)
-> +		*next_line = val + out_len + 1;
-> +
-> +	return xmemdupz(val, out_len);
->  }
->  
->  /*
-> diff --git a/commit.c b/commit.c
-> index a348f085b2b..8ac32a4d7b5 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -1631,12 +1631,13 @@ struct commit_list **commit_list_append(struct commit *commit,
->  	return &new_commit->next;
->  }
->  
-> -const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
-> +const char *find_header_mem(const char *msg, size_t len,
-> +			const char *key, size_t *out_len)
->  {
->  	int key_len = strlen(key);
->  	const char *line = msg;
->  
-> +	while (line && line < msg + len) {
->  		const char *eol = strchrnul(line, '\n');
+> What's a front-loaded commit?  Is that some joke around a washing
+> machine that I do not quite get, or something?
 
-Between line[0] and msg[len], there may not be a LF nor NUL at all,
-and strchrnul() will scan beyond the range we were given (which is
-msg[0]..msg[len]).
+I know this word recently (from an English training institute), feel
+sorry if it confuses you, I think it means pre-prepared.
 
-But that is something we share with the find_header() if I am not
-mistaken, so I am OK to leave the code as posted and leave it
-outside the scope of this series to clean it up to make it safer.
+I found two demo sentences from:
+https://dictionary.cambridge.org/us/dictionary/english/front-load
 
-The reason why it is probably safe for the current set of callers
-(and presumably any reasonable new callers we may add later) is that
-they computed "len" by scanning the block of memory starting at (or
-before) "msg" before calling us, and we know that the block of
-memory is properly NUL-terminated.  find_header() is called by
-check_nonce() and check_cert_push_options(), both of which tell
-us to scan in a strbuf, which is designed to be scannable for NUL
-safely by having an extra NUL at the end beyond the end.
+I'm not sure that I used it right or wrong, if it's the wrong way or
+just make others feel like in haze, I will use =E2=80=9Cpre-prepared=E2=80=
+=9D
+preferentially
+next time.
 
+Thanks.
+
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2022=E5=B9=B41=E6=9C=884=E6=97=
+=A5=E5=91=A8=E4=BA=8C 07:21=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Teng Long <dyroneteng@gmail.com> writes:
+>
+> > "show_data" is a struct that packages the necessary fields for
+>
+> Is that shown_data?
+>
+> > reusing. This commit is a front-loaded commit for support
+> > "--format" argument and does not affect any existing functionality.
+>
+> What's a front-loaded commit?  Is that some joke around a washing
+> machine that I do not quite get, or something?
+>
+> > Signed-off-by: Teng Long <dyroneteng@gmail.com>
+> > ---
+> >  builtin/ls-tree.c | 47 +++++++++++++++++++++++++++++------------------
+> >  1 file changed, 29 insertions(+), 18 deletions(-)
+> >
+> > diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+> > index 85ca7358ba..009ffeb15d 100644
+> > --- a/builtin/ls-tree.c
+> > +++ b/builtin/ls-tree.c
+> > @@ -34,6 +34,14 @@ static unsigned int shown_bits;
+> >  #define SHOW_MODE (1 << 4)
+> >  #define SHOW_DEFAULT 29 /* 11101 size is not shown to output by defaul=
+t */
+> >
+> > +struct shown_data {
+> > +     unsigned mode;
+> > +     enum object_type type;
+> > +     const struct object_id *oid;
+> > +     const char *pathname;
+> > +     struct strbuf *base;
+> > +};
+> > +
+> >  static const  char * const ls_tree_usage[] =3D {
+> >       N_("git ls-tree [<options>] <tree-ish> [<path>...]"),
+> >       NULL
+> > @@ -98,17 +106,15 @@ static int show_recursive(const char *base, size_t=
+ baselen,
+> >       return 0;
+> >  }
+> >
+> > -static int show_default(const struct object_id *oid, enum object_type =
+type,
+> > -                     const char *pathname, unsigned mode,
+> > -                     struct strbuf *base)
+> > +static int show_default(struct shown_data *data)
+> >  {
+> > -     size_t baselen =3D base->len;
+> > +     size_t baselen =3D data->base->len;
+> >
+> >       if (shown_bits & SHOW_SIZE) {
+> >               char size_text[24];
+> > -             if (type =3D=3D OBJ_BLOB) {
+> > +             if (data->type =3D=3D OBJ_BLOB) {
+> >                       unsigned long size;
+> > -                     if (oid_object_info(the_repository, oid, &size) =
+=3D=3D OBJ_BAD)
+> > +                     if (oid_object_info(the_repository, data->oid, &s=
+ize) =3D=3D OBJ_BAD)
+> >                               xsnprintf(size_text, sizeof(size_text), "=
+BAD");
+> >                       else
+> >                               xsnprintf(size_text, sizeof(size_text),
+> > @@ -116,18 +122,18 @@ static int show_default(const struct object_id *o=
+id, enum object_type type,
+> >               } else {
+> >                       xsnprintf(size_text, sizeof(size_text), "-");
+> >               }
+> > -             printf("%06o %s %s %7s\t", mode, type_name(type),
+> > -             find_unique_abbrev(oid, abbrev), size_text);
+> > +             printf("%06o %s %s %7s\t", data->mode, type_name(data->ty=
+pe),
+> > +             find_unique_abbrev(data->oid, abbrev), size_text);
+> >       } else {
+> > -             printf("%06o %s %s\t", mode, type_name(type),
+> > -             find_unique_abbrev(oid, abbrev));
+> > +             printf("%06o %s %s\t", data->mode, type_name(data->type),
+> > +             find_unique_abbrev(data->oid, abbrev));
+> >       }
+> > -     baselen =3D base->len;
+> > -     strbuf_addstr(base, pathname);
+> > -     write_name_quoted_relative(base->buf,
+> > +     baselen =3D data->base->len;
+> > +     strbuf_addstr(data->base, data->pathname);
+> > +     write_name_quoted_relative(data->base->buf,
+> >                                  chomp_prefix ? ls_tree_prefix : NULL, =
+stdout,
+> >                                  line_termination);
+> > -     strbuf_setlen(base, baselen);
+> > +     strbuf_setlen(data->base, baselen);
+> >       return 1;
+> >  }
+> >
+> > @@ -154,11 +160,16 @@ static int show_tree(const struct object_id *oid,=
+ struct strbuf *base,
+> >  {
+> >       int retval =3D 0;
+> >       size_t baselen;
+> > -     enum object_type type =3D OBJ_BLOB;
+> > +     struct shown_data data =3D {
+> > +             .mode =3D mode,
+> > +             .type =3D OBJ_BLOB,
+> > +             .oid =3D oid,
+> > +             .pathname =3D pathname,
+> > +             .base =3D base,
+> > +     };
+> >
+> > -     if (show_tree_init(&type, base, pathname, mode, &retval))
+> > +     if (show_tree_init(&data.type, base, pathname, mode, &retval))
+> >               return retval;
+> > -
+> >       if (!(shown_bits ^ SHOW_OBJECT_NAME)) {
+> >               printf("%s%c", find_unique_abbrev(oid, abbrev), line_term=
+ination);
+> >               return retval;
+> > @@ -175,7 +186,7 @@ static int show_tree(const struct object_id *oid, s=
+truct strbuf *base,
+> >
+> >       if (!(shown_bits ^ SHOW_DEFAULT) ||
+> >           !(shown_bits ^ (SHOW_DEFAULT | SHOW_SIZE)))
+> > -             show_default(oid, type, pathname, mode, base);
+> > +             show_default(&data);
+> >
+> >       return retval;
+> >  }
