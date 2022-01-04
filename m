@@ -2,127 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 922B8C433F5
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 17:37:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5674EC433F5
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 17:37:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235779AbiADRhE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 12:37:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41812 "EHLO
+        id S235799AbiADRhH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 12:37:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235660AbiADRhE (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235767AbiADRhE (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 4 Jan 2022 12:37:04 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4AE0C061761
-        for <git@vger.kernel.org>; Tue,  4 Jan 2022 09:37:03 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id j140-20020a1c2392000000b003399ae48f58so69511wmj.5
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 09:37:03 -0800 (PST)
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 692B8C061761
+        for <git@vger.kernel.org>; Tue,  4 Jan 2022 09:37:04 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id l4so23745931wmq.3
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 09:37:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=9v6s1d2pjhB4bs4H17gI8bFTqJLmqOT092bN03K0inw=;
-        b=mq5IN49so23T4dbZVMN36qPHOwFZuPobYunyLhrdDFqYHIx0DxcKsU+tcbKeC5kod8
-         06uzm/NmeVBoxMppmcxdHSfXjdmW8vdlGP5tlnib7tfUQoAnOh+rGgjKBkyA0R3sr/t3
-         0Gw36S7EdUTAcFviT/kqwzc3dZUVTpnqck0AciIFMVmwuTDk68ftkhXSaxmd1KhUqrnc
-         fxm4KiqJEqtEeFWoQmBn57bzyZMaGf8Hnpg+8R0YON+b62PBrzDyaqtO6uxxaW/geril
-         JUd+Lz2XXoR8LlkgPMel+X+49YiugHbdc0RhZRjZ4BRbH2iR15ScLo/RE9rWsyXmab7X
-         geUg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=6m2WCFlbDEH3Qi6Apwp4WNApLrFFTqGiR5cvu5IYYvw=;
+        b=Oex9vZkahlmHqldm3LzqORKW5JZe3TtDVEQolrzO0MMqfnFScRbpomIyrLeyDDctrw
+         1DAFBc2wYmkljcQwDEGN38rkxgeOe78xxFwAUFA0scHTES2rLjGNsR79hdxywA6SogXP
+         AvNwns4sLMzy/MGihRVhPq6z04q/ca6IETsHcHka5kQObYyLnTd2iLwBLgL8iC5o7ePz
+         4z8HknwX3GKr2GeAL0seXSfqGvNxY7dMliW5tmmleShAZ+VirIoh/1wBQvAm+qZoNffd
+         LI7lvVyeeRZq1/QtGBM795RRVE6ozo4YNYOaKBiTzbvhiyzVK8+EW1KfuZU+X4hPpauN
+         w0Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=9v6s1d2pjhB4bs4H17gI8bFTqJLmqOT092bN03K0inw=;
-        b=0HgPFEI1Qnq6zGwMrZ1yQvjv9DXWIsm5XpmPn7GMEVBrwg8I5t/ZPNViHohQPUmq51
-         s61N3D+MfZ3rfD79HDjaEmz8JmsDomG0+ibaLdWyFKTlYJZtfa3cd9DUjCKUJhRMyX9Q
-         rUwYdFoFszsPOAbuZfwLAUFlRZY/orSncj5gtEYUwr+yDgnNePuAM0Pyi4MzzcVEXi0n
-         pbU+T2YUozjqMB2w5N5J25XPfaZPqPF3cJqFW/kwB4AiTXBRpdsyJ+gv8zqfBQgx5pr5
-         5qV9EHMOHLk26xhhLIYQHLAyAJOnMN0r8pJ6kemklwLtwfrOoIsotpmVF17vkbarNYxt
-         kpEA==
-X-Gm-Message-State: AOAM533Didy1ATFl5cT0nYvwbrOqrSK1oYcAMZVy8K8dtW62lvwdyLBg
-        nZaAjCJQ4nNNuNizYTZzOb+hqAwDW6w=
-X-Google-Smtp-Source: ABdhPJyNUUlcoD7QZvR6wWmnfD49PTa+yaZPdMwIVVqXKMCDoOQ5plTtxBseykF7eCOxucUzAopnbw==
-X-Received: by 2002:a05:600c:19c9:: with SMTP id u9mr8686028wmq.92.1641317822058;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=6m2WCFlbDEH3Qi6Apwp4WNApLrFFTqGiR5cvu5IYYvw=;
+        b=4K4rDZbvh5S0fw24znpDt+vpLUjmf0QQytu+CIHrNA0X9Dp/xy70h9tOHZ0Cmtdfy2
+         cBm+YTWuD3YDBupPE0sAYoBkls69qrxxMsYGom8rYXGklgZG/GUqb2+rAhB0W2HbvR0V
+         YR4R8DxdhBMlZ1jSg0kdQeR9gAWAiQz6dj0zvu/D7e8AmnH7SSeyddkvri0f/E4+YGde
+         hyUPXk7ea7RgDiivacSaxQ1W1MPuMh3rsWVLfYELspROy6orahsNDCQrbk+ApUpZAxoz
+         Lafp8MV/eQq2052ZklBbWSrBvnLoeqdsgXTfWntYHN0h8DbG+9twDAv3mGheJQXiABos
+         Aezg==
+X-Gm-Message-State: AOAM530gSPc2zmXwX7r8x/FnF+PTNsUqQ7Km6e3xEUeMiT09s2nPFvQM
+        7MM0gCJqi0fPvEvPaXEUIgQVcR1f+fA=
+X-Google-Smtp-Source: ABdhPJy0OPGpqXTBaxmKrDki+lIbYRT636CU3JTrQ8tg05yz5hxHl/wMNu1LiS7UoUYMTsUfA4phpQ==
+X-Received: by 2002:a05:600c:3844:: with SMTP id s4mr42700143wmr.124.1641317822717;
         Tue, 04 Jan 2022 09:37:02 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v1sm44902544wru.45.2022.01.04.09.37.01
+        by smtp.gmail.com with ESMTPSA id r20sm5567wmd.37.2022.01.04.09.37.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jan 2022 09:37:01 -0800 (PST)
-Message-Id: <pull.1109.git.1641317820.gitgitgadget@gmail.com>
+        Tue, 04 Jan 2022 09:37:02 -0800 (PST)
+Message-Id: <eefb6ab4c61460d21dca3877b83a0e6c2852c43c.1641317820.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1109.git.1641317820.gitgitgadget@gmail.com>
+References: <pull.1109.git.1641317820.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 04 Jan 2022 17:36:51 +0000
-Subject: [PATCH 0/9] Sparse index: integrate with 'clean', 'checkout-index', 'update-index'
+Date:   Tue, 04 Jan 2022 17:36:52 +0000
+Subject: [PATCH 1/9] reset: fix validation in sparse index test
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     stolee@gmail.com, newren@gmail.com, gitster@pobox.com,
-        Victoria Dye <vdye@github.com>
+        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series continues the work to integrate commands with the sparse index,
-adding integrations with 'git clean', 'git checkout-index', and 'git
-update-index'. These three commands, while useful in their own right, are
-updated mainly because they're used in 'git stash'. A future series will
-integrate sparse index with 'stash' directly, but its subcommands must be
-integrated to avoid the performance cost of each one expanding and
-collapsing the index.
+From: Victoria Dye <vdye@github.com>
 
-The series is broken up into 4 parts:
+Update t1092 test 'reset with pathspecs outside sparse definition' to verify
+index contents. The use of `rev-parse` verifies the contents of HEAD, not
+the index, providing no real validation of the reset results. Conversely,
+`ls-files` reports the contents of the index (OIDs, flags, filenames), which
+are then compared across checkouts to ensure compatible index states.
 
- * Patches 1-2 are minor fixups to the 'git reset' sparse index integration
-   in response to discussion [1] that came after the series was ready for
-   merge to 'next'.
- * Patch 3 integrates 'git clean' with the sparse index.
- * Patches 4-6 integrate 'git checkout-index' with the sparse index and
-   introduce a new '--ignore-skip-worktree-bits' option for use with 'git
-   checkout-index --all'.
-   * This involves changing the behavior of '--all' to respect
-     'skip-worktree' by default (i.e., it won't check out 'skip-worktree'
-     files). The '--ignore-skip-worktree-bits' option can be specified to
-     force checkout of 'skip-worktree' files, if desired.
- * Patches 7-9 integrate 'git update-index' with the sparse index.
-   * Note that, although this integrates the sparse index with
-     '--cacheinfo', sparse directories still cannot be updated using that
-     option (see the prior discussion [2] for more details on why)
+Fixes 741a2c9ffa (reset: expand test coverage for sparse checkouts,
+2021-09-27).
 
-Thanks!
+Signed-off-by: Victoria Dye <vdye@github.com>
+---
+ t/t1092-sparse-checkout-compatibility.sh | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
- * Victoria
-
-[1]
-https://lore.kernel.org/git/CABPp-BG0iDHf268UAnRyA=0y0T69YTc+bLMdxCmSbrL8s=9ziA@mail.gmail.com/
-
-[2]
-https://lore.kernel.org/git/a075091c-d0d4-db5d-fa21-c9d6c90c343e@gmail.com/
-
-Victoria Dye (9):
-  reset: fix validation in sparse index test
-  reset: reorder wildcard pathspec conditions
-  clean: integrate with sparse index
-  checkout-index: expand sparse checkout compatibility tests
-  checkout-index: add --ignore-skip-worktree-bits option
-  checkout-index: integrate with sparse index
-  update-index: add tests for sparse-checkout compatibility
-  update-index: integrate with sparse index
-  update-index: reduce scope of index expansion in do_reupdate
-
- Documentation/git-checkout-index.txt     |  11 +-
- builtin/checkout-index.c                 |  40 +++-
- builtin/clean.c                          |   3 +
- builtin/reset.c                          |  12 +-
- builtin/update-index.c                   |  17 +-
- read-cache.c                             |  10 +-
- t/perf/p2000-sparse-operations.sh        |   2 +
- t/t1092-sparse-checkout-compatibility.sh | 230 ++++++++++++++++++++++-
- 8 files changed, 306 insertions(+), 19 deletions(-)
-
-
-base-commit: dcc0cd074f0c639a0df20461a301af6d45bd582e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1109%2Fvdye%2Fsparse%2Fupdate-index_checkout-index_clean-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1109/vdye/sparse/update-index_checkout-index_clean-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1109
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 49f70a65692..d5167e7ed69 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -596,13 +596,11 @@ test_expect_success 'reset with pathspecs outside sparse definition' '
+ 
+ 	test_sparse_match git reset update-folder1 -- folder1 &&
+ 	git -C full-checkout reset update-folder1 -- folder1 &&
+-	test_sparse_match git status --porcelain=v2 &&
+-	test_all_match git rev-parse HEAD:folder1 &&
++	test_all_match git ls-files -s -- folder1 &&
+ 
+ 	test_sparse_match git reset update-folder2 -- folder2/a &&
+ 	git -C full-checkout reset update-folder2 -- folder2/a &&
+-	test_sparse_match git status --porcelain=v2 &&
+-	test_all_match git rev-parse HEAD:folder2/a
++	test_all_match git ls-files -s -- folder2/a
+ '
+ 
+ test_expect_success 'reset with wildcard pathspec' '
 -- 
 gitgitgadget
+
