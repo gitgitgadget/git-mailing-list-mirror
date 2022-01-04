@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A8D4C433F5
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 17:37:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B369C433EF
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 17:37:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235844AbiADRhQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 12:37:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41848 "EHLO
+        id S235881AbiADRhS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 12:37:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235816AbiADRhI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 12:37:08 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69161C061799
-        for <git@vger.kernel.org>; Tue,  4 Jan 2022 09:37:08 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id t26so77637068wrb.4
+        with ESMTP id S235820AbiADRhK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 12:37:10 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B53BC06179B
+        for <git@vger.kernel.org>; Tue,  4 Jan 2022 09:37:09 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id o3so19458078wrh.10
         for <git@vger.kernel.org>; Tue, 04 Jan 2022 09:37:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=PAqOT23epdiguINfFEHggxfPg7Qga4S5NUH6UrpRNnM=;
-        b=i6zZxRTQHhBw0QmE7hiol7XbUdUonnX3xbl2Qpukm3kyTJr2H01wPySGLWR2DbuvJs
-         PsBU0VgWObSPEPTypoo9tcogFQ7I6+pHMKCpdiUXmOd1R5rmkhHLXQuqebdotaCVkk7g
-         HWKvqqoTDoSv8BDBj+g2Wzy7wp+0wHCqZb5d4p9GEfTe1kguAv61PJY1L6M8fenr7kok
-         sMw7BRdk9OllfHwYts5OIU0w0MERhGqJLSKBa3sgA1uNHeJpC7GWdWnCh3ZX/RrQdNWB
-         p8fd6YCv2jlnTyAMqA3Mp8qUHJxQT/sOadPEPTy6Mnjg8sTzrK3dcThjU9mwjgHtCt4E
-         CrNw==
+        bh=bQGAMdsnsZf9gd+pRoCKK4mgwMk5BiSZ1vBBtyZvhEI=;
+        b=UzuMHhaueEc4/jJunBTgDtEZvYSP2sBEUz+HQKwAg5UMGUtE9sknhLoJ2KC2QQhgZN
+         yXZ1iYvniZdZRGAEyO1bb69tj1vqThv1Sr1++DXWUUsfQwfKSMftmNcKaUcFZiV9py6A
+         C/nNv9aU/DhAyhEvw0rF+mquRorEXoKcqPP+cDhrhtJB0sl54o9KAwwV6itfk3CLSNrg
+         vGoag5h/NvtA6Jpz+lYUOFINAeBQeMDm4v/buq2YE4NzkbAMyX1o+RxqVTo/H4r8C4ht
+         HEV+f3bpOEmPBwDFQHx6Nx86No6Cko+hEQ7b7cE0szrLz1siSLxfO7R613sbuXY6WIWw
+         sUIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=PAqOT23epdiguINfFEHggxfPg7Qga4S5NUH6UrpRNnM=;
-        b=cuDaUPvwlH0ghkotVGLoNqb5K0W8joxRCWinc4izN7X6CT3ltbVyYdsT1C5Ubl5snA
-         i4GLiGavog37h9M3JD4hph22aig2jw+RLTgUyRxiDiGkVk82MI+8thlNOFs4mUwtoGc5
-         j3dhbP/nmIdorsbZtW8b9vbcd1sP0i7gV5o9QSGKKSgfy/Sk4R5miaMobaiAXTo4Y+wN
-         jZVVXAcdvXXe+J8wqXXpMI3/3jqqiGWsnpxR3PvMakxKfFHnSXBtFZcyvabmWKAhTmQr
-         C615l+BW74JaJuNm8kQVnjmv5RYjI6gDdiR3ZnyAKX89dqAzHUDwP2Eo0370jFly0abr
-         djBw==
-X-Gm-Message-State: AOAM530u1eswKNvDJHpJuFDYnrjPJI69V8DyT+jAIK7ILPb/SDgxJDcd
-        YfBysztNowJIUdG6NABrvGxOnHstQZE=
-X-Google-Smtp-Source: ABdhPJw9SYO/Oyp1KeXfFxp7RTu9gyF0GM2lHt/ixc02EBGTKpFp3BuWBzb5p8GAsWq+ya+2ggkcxQ==
-X-Received: by 2002:a5d:47c2:: with SMTP id o2mr43119852wrc.416.1641317826847;
-        Tue, 04 Jan 2022 09:37:06 -0800 (PST)
+        bh=bQGAMdsnsZf9gd+pRoCKK4mgwMk5BiSZ1vBBtyZvhEI=;
+        b=J+bibXZjEJcEyO8Oxc6uL4iydwG+yTMgsR8z7XKqjbQCX3nHAtJdwVqMoqdO4s8aos
+         SyHU5Ktr7Dkoj3X8cjKWAKs+AIO8UgmAVrZp7/M/42nsA8ShHck2/EYhz6PxR/9L54t+
+         8Hzu97z105w0/Ww4KqzK6T4t3IlLm3P6nDKgrwc+Cg3mC8DWtINzjR1iZk/HJz8LgLyQ
+         APST0YByfv8PY4l8p3D63x3f4d1KYqOYy74nAJYdnBDJQV1lOMElVZtzs7OUtBzAmd1U
+         GPHI0MM6HhiXKq53t2IUunC+3+zFxNnkPqrFJQngC6ta4HFoKW4JsuSqIhoBk31DPWdC
+         gGfQ==
+X-Gm-Message-State: AOAM530T5603i34vV2FXx4z6YipYwlNTIU6IEORVumOaeTL5ZanZY5s0
+        DsTl4W/90hnvtrz3vc1LQnZJ7y/lWP4=
+X-Google-Smtp-Source: ABdhPJynlZ902mw5hPnTOaC0xSfnDU1+qlD4MviqRwV+2CucBOw5wUGrm5i6AGk9Pg+Yr0RrmttR6A==
+X-Received: by 2002:a5d:51c9:: with SMTP id n9mr43466710wrv.694.1641317827513;
+        Tue, 04 Jan 2022 09:37:07 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f16sm15395wmg.27.2022.01.04.09.37.06
+        by smtp.gmail.com with ESMTPSA id p18sm23741wms.16.2022.01.04.09.37.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jan 2022 09:37:06 -0800 (PST)
-Message-Id: <3b734f89c0f2f473d71a5d3c85faec6d48a0e350.1641317820.git.gitgitgadget@gmail.com>
+        Tue, 04 Jan 2022 09:37:07 -0800 (PST)
+Message-Id: <c5b98e36516b8f832576816c202be7581f261909.1641317820.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1109.git.1641317820.gitgitgadget@gmail.com>
 References: <pull.1109.git.1641317820.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 04 Jan 2022 17:36:58 +0000
-Subject: [PATCH 7/9] update-index: add tests for sparse-checkout compatibility
+Date:   Tue, 04 Jan 2022 17:36:59 +0000
+Subject: [PATCH 8/9] update-index: integrate with sparse index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,165 +66,90 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Introduce tests for a variety of `git update-index` use cases, including
-performance scenarios. Tests for `update-index add/remove` are specifically
-focused on how `git stash` uses `git update-index` as a subcommand to
-prepare for sparse index integration with `stash` in a future series.
+Enable usage of the sparse index with `update-index`. Most variations of
+`update-index` work without explicitly expanding the index or making any
+other updates in or outside of `update-index.c`.
 
-Co-authored-by: Derrick Stolee <dstolee@microsoft.com>
+The one usage requiring additional changes is `--cacheinfo`; if a file
+inside a sparse directory was specified, the index would not be expanded
+until after the cache tree is invalidated, leading to a mismatch between the
+index and cache tree. This scenario is handled by rearranging
+`add_index_entry_with_check`, allowing `index_name_stage_pos` to expand the
+index *before* attempting to invalidate the relevant cache tree path,
+avoiding cache tree/index corruption.
+
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- t/perf/p2000-sparse-operations.sh        |   1 +
- t/t1092-sparse-checkout-compatibility.sh | 125 +++++++++++++++++++++++
- 2 files changed, 126 insertions(+)
+ builtin/update-index.c                   |  3 +++
+ read-cache.c                             | 10 +++++++---
+ t/t1092-sparse-checkout-compatibility.sh | 12 ++++++++++++
+ 3 files changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-index 54f8602f3c1..7dbed330160 100755
---- a/t/perf/p2000-sparse-operations.sh
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -118,5 +118,6 @@ test_perf_on_all git diff --cached
- test_perf_on_all git blame $SPARSE_CONE/a
- test_perf_on_all git blame $SPARSE_CONE/f3/a
- test_perf_on_all git checkout-index -f --all
-+test_perf_on_all git update-index --add --remove
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 187203e8bb5..605cc693bbd 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1077,6 +1077,9 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
  
- test_done
+ 	git_config(git_default_config, NULL);
+ 
++	prepare_repo_settings(r);
++	the_repository->settings.command_requires_full_index = 0;
++
+ 	/* we will diagnose later if it turns out that we need to update it */
+ 	newfd = hold_locked_index(&lock_file, 0);
+ 	if (newfd < 0)
+diff --git a/read-cache.c b/read-cache.c
+index cbe73f14e5e..b4600e954b6 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1339,9 +1339,6 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
+ 	int skip_df_check = option & ADD_CACHE_SKIP_DFCHECK;
+ 	int new_only = option & ADD_CACHE_NEW_ONLY;
+ 
+-	if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
+-		cache_tree_invalidate_path(istate, ce->name);
+-
+ 	/*
+ 	 * If this entry's path sorts after the last entry in the index,
+ 	 * we can avoid searching for it.
+@@ -1352,6 +1349,13 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
+ 	else
+ 		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce), EXPAND_SPARSE);
+ 
++	/*
++	 * Cache tree path should be invalidated only after index_name_stage_pos,
++	 * in case it expands a sparse index.
++	 */
++	if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
++		cache_tree_invalidate_path(istate, ce->name);
++
+ 	/* existing match? Just replace it. */
+ 	if (pos >= 0) {
+ 		if (!new_only)
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 6ecf1f2bf8e..6804ab23a27 100755
+index 6804ab23a27..bc0741c970d 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -630,6 +630,131 @@ test_expect_success 'reset with wildcard pathspec' '
- 	test_all_match git ls-files -s -- folder1
+@@ -1216,6 +1216,18 @@ test_expect_success 'sparse index is not expanded: blame' '
+ 	done
  '
  
-+test_expect_success 'update-index modify outside sparse definition' '
++test_expect_success 'sparse index is not expanded: update-index' '
 +	init_repos &&
 +
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
++	echo "test" >sparse-index/README.md &&
++	echo "test2" >sparse-index/a &&
++	rm -f sparse-index/deep/a &&
 +
-+	# Create & modify folder1/a
-+	run_on_sparse mkdir -p folder1 &&
-+	run_on_sparse cp ../initial-repo/folder1/a folder1/a &&
-+	run_on_all ../edit-contents folder1/a &&
-+
-+	# If file has skip-worktree enabled, update-index does not modify the
-+	# index entry
-+	test_sparse_match git update-index folder1/a &&
-+	test_sparse_match git status --porcelain=v2 &&
-+	test_must_be_empty sparse-checkout-out &&
-+
-+	# When skip-worktree is disabled (even on files outside sparse cone), file
-+	# is updated in the index
-+	test_sparse_match git update-index --no-skip-worktree folder1/a &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git update-index folder1/a &&
-+	test_all_match git status --porcelain=v2
++	ensure_not_expanded update-index --add README.md &&
++	ensure_not_expanded update-index a &&
++	ensure_not_expanded update-index --remove deep/a
 +'
 +
-+test_expect_success 'update-index --add outside sparse definition' '
-+	init_repos &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+
-+	# Create folder1, add new file
-+	run_on_sparse mkdir -p folder1 &&
-+	run_on_all ../edit-contents folder1/b &&
-+
-+	# Similar to `git add`, the untracked out-of-cone file is added to the index
-+	# identically across sparse and non-sparse checkouts
-+	test_all_match git update-index --add folder1/b &&
-+	test_all_match git status --porcelain=v2
-+'
-+
-+test_expect_success 'update-index --remove outside sparse definition' '
-+	init_repos &&
-+
-+	# When `--ignore-skip-worktree-entries` is specified, out-of-cone files are
-+	# not removed from the index if they do not exist on disk
-+	test_sparse_match git update-index --remove --ignore-skip-worktree-entries folder1/a &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	# When the flag is _not_ specified, out-of-cone, not-on-disk files are
-+	# removed from the index
-+	rm full-checkout/folder1/a &&
-+	test_all_match git update-index --remove folder1/a &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	# NOTE: --force-remove supercedes --ignore-skip-worktree-entries, removing
-+	# a skip-worktree file from the index (and disk) when both are specified
-+	test_all_match git update-index --force-remove --ignore-skip-worktree-entries folder1/a &&
-+	test_all_match git status --porcelain=v2
-+'
-+
-+test_expect_success 'update-index with directories' '
-+	init_repos &&
-+
-+	# update-index will exit silently when provided with a directory name
-+	# containing a trailing slash
-+	test_all_match git update-index deep/ folder1/ &&
-+	grep "Ignoring path deep/" sparse-checkout-err &&
-+	grep "Ignoring path folder1/" sparse-checkout-err &&
-+
-+	# When update-index is given a directory name WITHOUT a trailing slash, it will
-+	# behave in different ways depending on the status of the directory on disk:
-+	# * if it exists, the command exits with an error ("add individual files instead")
-+	# * if it does NOT exist (e.g., in a sparse-checkout), it is assumed to be a
-+	#   file and either triggers an error ("does not exist  and --remove not passed")
-+	#   or is ignored completely (when using --remove)
-+	test_all_match test_must_fail git update-index deep &&
-+	run_on_all test_must_fail git update-indexe folder1 &&
-+	test_must_fail git -C full-checkout update-index --remove folder1 &&
-+	test_sparse_match git update-index --remove folder1 &&
-+	test_all_match git status --porcelain=v2
-+'
-+
-+test_expect_success 'update-index --again file outside sparse definition' '
-+	init_repos &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+
-+	test_all_match git checkout -b test-reupdate &&
-+
-+	# Update HEAD without modifying the index to introduce a difference in
-+	# folder1/a
-+	test_sparse_match git reset --soft update-folder1 &&
-+
-+	# Because folder1/a differs in the index vs HEAD,
-+	# `git update-index --remove --again` will effectively perform
-+	# `git update-index --remove folder1/a` and remove the folder1/a
-+	test_sparse_match git update-index --remove --again &&
-+	test_sparse_match git status --porcelain=v2
-+'
-+
-+test_expect_success 'update-index --cacheinfo' '
-+	init_repos &&
-+
-+	deep_a_oid=$(git -C full-checkout rev-parse update-deep:deep/a) &&
-+	folder2_oid=$(git -C full-checkout rev-parse update-folder2:folder2) &&
-+	folder1_a_oid=$(git -C full-checkout rev-parse update-folder1:folder1/a) &&
-+
-+	test_all_match git update-index --cacheinfo 100644 $deep_a_oid deep/a &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	# Cannot add sparse directory, even in sparse index case
-+	test_all_match test_must_fail git update-index --add --cacheinfo 040000 $folder2_oid folder2/ &&
-+
-+	# Sparse match only - because folder1/a is outside the sparse checkout
-+	# definition (and thus not on-disk), it will appear "deleted" in
-+	# unstaged changes.
-+	test_all_match git update-index --add --cacheinfo 100644 $folder1_a_oid folder1/a &&
-+	test_sparse_match git status --porcelain=v2
-+'
-+
- test_expect_success 'merge, cherry-pick, and rebase' '
- 	init_repos &&
- 
+ # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
+ # in this scenario, but it shouldn't.
+ test_expect_success 'reset mixed and checkout orphan' '
 -- 
 gitgitgadget
 
