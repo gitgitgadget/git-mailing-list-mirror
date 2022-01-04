@@ -2,248 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA93AC433F5
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 21:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAF4EC433EF
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 21:01:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233797AbiADVBW (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S233811AbiADVBX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 16:01:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60666 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233740AbiADVBW (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 4 Jan 2022 16:01:22 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58268 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233740AbiADVBV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 16:01:21 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 59977115550;
-        Tue,  4 Jan 2022 16:01:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kAfwmcYnkOvpfLtD6C9vacGnxD5tPcoBaFJSor
-        JBQMs=; b=tId/Z/1qd6CEn2PEyKA2Zof/6bQouEVN6BYEaKADMbRDZuKOpofpit
-        lmMAHMmQAHooc4PMSXsrNXND1VZsAzMrWDgMfbSQHg0vAnWJmldXbT+gaGngkxxP
-        B1d5sGxUFRTdYCELRGej/bhV1IFBfLtCF2Z5kXylE+gSsR6c8ITKw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 506F111554F;
-        Tue,  4 Jan 2022 16:01:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A333E11554E;
-        Tue,  4 Jan 2022 16:01:20 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>, rsbecker@nexbridge.com,
-        Taylor Blau <me@ttaylorr.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: Re: [PATCH v2 1/2] wrapper: add a helper to generate numbers from a
- CSPRNG
-References: <20220104015555.3387101-1-sandals@crustytoothpaste.net>
-        <20220104015555.3387101-2-sandals@crustytoothpaste.net>
-Date:   Tue, 04 Jan 2022 13:01:19 -0800
-In-Reply-To: <20220104015555.3387101-2-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Tue, 4 Jan 2022 01:55:54 +0000")
-Message-ID: <xmqqsfu3b4gw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EEAEC061761
+        for <git@vger.kernel.org>; Tue,  4 Jan 2022 13:01:22 -0800 (PST)
+Received: by mail-yb1-xb30.google.com with SMTP id m19so94183565ybf.9
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 13:01:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YrKvZjhHUYjrK3qi8ljq0eIY7+p2pOOloQ6xXjYdvsE=;
+        b=nOB8fwMVZ7uuHRNz/fn4BHywPCFMGt7qL7i1ZuzCeuoOXFxlPYh9xyRenubp5T5v0R
+         AmPp05O54d+BvzIFrJ9OpwYclmHdxpqaS+39qhqLhxZPTXT9WkI+yJX+Dy5GycCXwBEm
+         HY4ugpdkXISbJAyfiwm/PdbCuxVhBUVy8QtG4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YrKvZjhHUYjrK3qi8ljq0eIY7+p2pOOloQ6xXjYdvsE=;
+        b=a801JOmt8LQ5v21CVNb/vhhCPD+p8DZ+x15J7C1i59VCXQkV1zGZ8LC+xxzratGlha
+         nItRw9Xtv0i2xus5VdyGnP1QW29SIvcfKrIM4hU0RS4mYvaSNd+aV3deyL0Gnh7lUO9y
+         bVYXpd7D3ZeXl9Si91PXZuGQc9zn6NGFKofEu2MRVdApoXwtYiSYlovV/mbbyM24PdMf
+         wb8iVbjatWyHL/d+E0opNeqc71CpvpxDcxo0ZZm3rw/7qgQG/AspDBdux+05cTkIeNRY
+         FUJ85PKNAfmFl37f0w4lTDLBLI2BTNBBSY/Nm3w2EzKkcTUMW9SnPKtiTu10mYzpavz1
+         PgyQ==
+X-Gm-Message-State: AOAM533KJgiEKrEif9plCpVsKPPeXOuslgAlbHDV2Z3XvD/m0RZKluS4
+        rFe2fzuyIfC4lDyXvH1dJQhMrPpP5aAOxBQbi17rdA==
+X-Google-Smtp-Source: ABdhPJxPRbtt0D+nOEaHNO18O57fRTNWDsjtKAsoIXF2AVKEePy9yL9DG6R9mYvzUA4ZfrzuVXPY5CaZoMNOcvg+ulk=
+X-Received: by 2002:a25:a321:: with SMTP id d30mr21826273ybi.373.1641330079451;
+ Tue, 04 Jan 2022 13:01:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 77B0B778-6DA1-11EC-9BE9-CB998F0A682E-77302942!pb-smtp2.pobox.com
+References: <CA+kUOak9_RLpdr9d4pQiwU=K42taCwhMdg5WkLP4GreQd4yWig@mail.gmail.com>
+ <CAGyf7-HSia4pRs4FZ107v0jmP4k4Zfw5zJ-3Oz8UvF9oobczEw@mail.gmail.com>
+In-Reply-To: <CAGyf7-HSia4pRs4FZ107v0jmP4k4Zfw5zJ-3Oz8UvF9oobczEw@mail.gmail.com>
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+Date:   Tue, 4 Jan 2022 21:00:45 +0000
+Message-ID: <CA+kUOam-Dd-XUk0XaOfw4_rUTg=Ws7w5H=vZ=ZZeEo4XJfsVOg@mail.gmail.com>
+Subject: Re: Bug using `fetch` with blank `-c` arguments to git
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Tue, 4 Jan 2022 at 20:04, Bryan Turner <bturner@atlassian.com> wrote:
+>
+> On Tue, Jan 4, 2022 at 4:37 AM Adam Dinwoodie <adam@dinwoodie.org> wrote:
+> >
+> > While investigating some issues with a different project, I discovered
+> > the command `git -c config.helper= fetch` was working with the Debian
+> > stable version of Git (v2.30.2) but not with my local build
+> > (v2.34.1.428.gdcc0cd074f).
+>
+> Since you're working with a locally-built Git, have you, by chance,
+> actually _installed_ that build, or is it simply in the Git repository
+> itself after running make?
+>
+> If you haven't _installed_ your build, my guess is you might be
+> getting a mismatch wherein your _built_ Git, when it forks out
+> subprocesses, is triggering your _installed_ Git (which I assume you
+> have, and which I assume is not 2.34.1). Git compiles paths into
+> itself to know where to find certain binaries, and if you run a
+> compiled-but-not-installed Git then those paths are "wrong". (I see
+> administrators do this fairly often when building Git from source to
+> set up Bitbucket Server.)
+>
+> What does `./git --exec-path` print, when you run your 2.34.1 binary?
+> And is that where, for example, the compiled 2.34.1 versions of things
+> like `git-remote-https` are?
 
-> +# Define CSPRNG_METHOD to "arc4random" if your system has arc4random and
-> +# arc4random_buf, "arc4random-libbsd" if your system has those functions from
-> +# libbsd, "getrandom" if your system has getrandom, "getentropy" if your
-> +# system has getentropy, "rtlgenrandom" for RtlGenRandom (Windows only), or
-> +# "openssl" if you'd want to use the OpenSSL CSPRNG.  If unset or set to
-> +# anything else, defaults to using "/dev/urandom".
-> +#
+Good thoughts, but I initially hit this problem after having installed
+it; I reproduced it running Git from the working copy for ease of
+bisecting, but the problem definitely occurs using the compiled
+version after installation. The below was collected after running
+`make install` (plus all the previously noted build commands,
+including running the configure script to specify the installation
+path) with the commit I identified as introducing the problem:
 
-OK.
+```
+$ type git
+git is hashed (/home/adam/.local/bin/git)
 
-> +ifeq ($(strip $(CSPRNG_METHOD)),arc4random)
-> +	BASIC_CFLAGS += -DHAVE_ARC4RANDOM
-> +endif
-> +
-> +ifeq ($(strip $(CSPRNG_METHOD)),arc4random-libbsd)
-> +	BASIC_CFLAGS += -DHAVE_ARC4RANDOM_LIBBSD
-> +	EXTLIBS += -lbsd
-> +endif
-> +
-> +ifeq ($(strip $(CSPRNG_METHOD)),getrandom)
-> +	BASIC_CFLAGS += -DHAVE_GETRANDOM
-> +endif
-> +
-> +ifeq ($(strip $(CSPRNG_METHOD)),getentropy)
-> +	BASIC_CFLAGS += -DHAVE_GETENTROPY
-> +endif
-> +
-> +ifeq ($(strip $(CSPRNG_METHOD)),rtlgenrandom)
-> +	BASIC_CFLAGS += -DHAVE_RTLGENRANDOM
-> +endif
-> +
-> +ifeq ($(strip $(CSPRNG_METHOD)),openssl)
-> +	BASIC_CFLAGS += -DHAVE_OPENSSL_CSPRNG
-> +endif
+$ which git
+/home/adam/.local/bin/git
 
-Use of $(strip ($VAR)) looks a bit different from what everybody
-else does with ifeq in this Makefile.  Was there a particular reason
-to use it that I am missing?
+$ git --version
+git version 2.29.2.372.g1ff21c05ba
 
-When we see something unrecognized in CSPRNG_METHOD, we do not touch
-BASIC_CFLAGS (or EXTLIBS) here.  I wonder how easy a clue we would
-have to decide that we need to fall back to urandom.  IOW, I would
-have expected a if/else if/... cascade that has "no we do not have
-anything else and need to fall back to urandom" at the end.
+$ git --exec-path
+/home/adam/.local/libexec/git-core
 
-But that's OK, as long as the fallback logic is cleanly done.  Let's
-keep reading...
+$ ls $(git --exec-path)/git $(git --exec-path)/git-remote-https
+/home/adam/.local/libexec/git-core/git
+/home/adam/.local/libexec/git-core/git-remote-https
 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 5fa54a7afe..50597c76be 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -1421,4 +1433,11 @@ static inline void *container_of_or_null_offset(void *ptr, size_t offset)
->  
->  void sleep_millisec(int millisec);
->  
-> +/*
-> + * Generate len bytes from the system cryptographically secure PRNG.
-> + * Returns 0 on success and -1 on error, setting errno.  The inability to
-> + * satisfy the full request is an error.
-> + */
-> +int csprng_bytes(void *buf, size_t len);
-> +
->  #endif
-> diff --git a/t/helper/test-csprng.c b/t/helper/test-csprng.c
-> new file mode 100644
-> index 0000000000..65d14973c5
-> --- /dev/null
-> +++ b/t/helper/test-csprng.c
-> @@ -0,0 +1,29 @@
-> +#include "test-tool.h"
-> +#include "git-compat-util.h"
-> +
-> +
-> +int cmd__csprng(int argc, const char **argv)
-> +{
-> +	unsigned long count;
-> +	unsigned char buf[1024];
-> +
-> +	if (argc > 2) {
-> +		fprintf(stderr, "usage: %s [<size>]\n", argv[0]);
-> +		return 2;
-> +	}
-> +
-> +	count = (argc == 2) ? strtoul(argv[1], NULL, 0) : -1L;
-> +
-> +	while (count) {
-> +		unsigned long chunk = count < sizeof(buf) ? count : sizeof(buf);
+$ $(git --exec-path)/git --version
+git version 2.29.2.372.g1ff21c05ba
 
-"chunk" should be of type "size_t", no?
+$ rm -rf tmp && git -c core.autocrlf=true clone git://github.com/git/git tmp
+Cloning into 'tmp'...
+error: bogus format in GIT_CONFIG_PARAMETERS
+fatal: unable to parse command-line config
+```
 
-> diff --git a/wrapper.c b/wrapper.c
-> index 36e12119d7..1052356703 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -702,3 +702,69 @@ int open_nofollow(const char *path, int flags)
->  	return open(path, flags);
->  #endif
->  }
-> +
-> +int csprng_bytes(void *buf, size_t len)
-> +{
-> +#if defined(HAVE_ARC4RANDOM) || defined(HAVE_ARC4RANDOM_LIBBSD)
-
-Shouldn't HAVE_ARC4RANDOM mean "we have arc4random_buf() function
-available; please use that.", i.e. wouldn't this give us cleaner
-result in the change to the Makefile?
-
- ifeq ($(strip $(CSPRNG_METHOD)),arc4random)
- 	BASIC_CFLAGS += -DHAVE_ARC4RANDOM
- endif
- 
- ifeq ($(strip $(CSPRNG_METHOD)),arc4random-libbsd)
--	BASIC_CFLAGS += -DHAVE_ARC4RANDOM_LIBBSD
-+	BASIC_CFLAGS += -DHAVE_ARC4RANDOM
- 	EXTLIBS += -lbsd
- endif
-
-To put it differently, C source, via BASIC_CFLAGS, would not have to
-care where the function definition comes from.  It is linker's job
-to care and we are already telling it via EXTLIBS, so I am not sure
-the value of having HAVE_ARC4RANDOM_LIBBSD as a separate symbol.
-
-> +	/* This function never returns an error. */
-> +	arc4random_buf(buf, len);
-> +	return 0;
-> +#elif defined(HAVE_GETRANDOM)
-> +	ssize_t res;
-> +	char *p = buf;
-> +	while (len) {
-> +		res = getrandom(p, len, 0);
-> +		if (res < 0)
-> +			return -1;
-> +		len -= res;
-> +		p += res;
-> +	}
-> +	return 0;
-> +#elif defined(HAVE_GETENTROPY)
-> +	int res;
-> +	char *p = buf;
-> +	while (len) {
-> +		/* getentropy has a maximum size of 256 bytes. */
-> +		size_t chunk = len < 256 ? len : 256;
-> +		res = getentropy(p, chunk);
-> +		if (res < 0)
-> +			return -1;
-> +		len -= chunk;
-> +		p += chunk;
-> +	}
-> +	return 0;
-> +#elif defined(HAVE_RTLGENRANDOM)
-> +	if (!RtlGenRandom(buf, len))
-> +		return -1;
-> +	return 0;
-> +#elif defined(HAVE_OPENSSL_CSPRNG)
-> +	int res = RAND_bytes(buf, len);
-> +	if (res == 1)
-> +		return 0;
-> +	if (res == -1)
-> +		errno = ENOTSUP;
-> +	else
-> +		errno = EIO;
-> +	return -1;
-> +#else
-> +	ssize_t res;
-> +	char *p = buf;
-> +	int fd, err;
-> +	fd = open("/dev/urandom", O_RDONLY);
-> +	if (fd < 0)
-> +		return -1;
-> +	while (len) {
-> +		res = xread(fd, p, len);
-> +		if (res < 0) {
-> +			err = errno;
-> +			close(fd);
-> +			errno = err;
-> +			return -1;
-> +		}
-> +		len -= res;
-> +		p += res;
-> +	}
-> +	close(fd);
-> +	return 0;
-> +#endif
-> +}
-
-OK, I earlier worried about the lack of explicit "we are using
-urandom" at the Makefile level, but as long as this will remain the
-only place that needs to care about the fallback, the above is
-perfectly fine.
-
-Thanks.
+For the sake of double-checking, though, I just uninstalled the
+version of Git in /usr/bin (after spending some time working out how
+to do that with apt, without also uninstalling dependencies I wanted
+to leave alone) and repeated the above commands, and got exactly the
+same output.
