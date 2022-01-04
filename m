@@ -2,372 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ABB8C433EF
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 13:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD49AC433EF
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 13:30:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233452AbiADNZQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 08:25:16 -0500
-Received: from smtp.hosts.co.uk ([85.233.160.19]:44147 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232029AbiADNZP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 08:25:15 -0500
-Received: from host-92-7-140-211.as13285.net ([92.7.140.211] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1n4joP-0009XT-5u; Tue, 04 Jan 2022 13:25:14 +0000
-Message-ID: <77e18a78-ddfe-0337-deaf-bb9dfb63a495@iee.email>
-Date:   Tue, 4 Jan 2022 13:25:12 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Subject: Re: [PATCH v3 1/2] name-rev: deprecate --stdin in favor of
- --annotate-text
-Content-Language: en-GB
-To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        id S232468AbiADNaE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 08:30:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40262 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233647AbiADNaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 08:30:03 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1F1CC061784
+        for <git@vger.kernel.org>; Tue,  4 Jan 2022 05:30:02 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id n30-20020a17090a5aa100b001b2b6509685so3135351pji.3
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 05:30:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=qGKExv8xI+YwIPghSFpDjv1fko6i6xoDezRKE6CrG+0=;
+        b=CHLMz4cCe61hsx4v4Aeqe0EmIInm1W6E7xmurAvGGRSDmAr4ze2I/UahG1Kx+ZSxW4
+         P3Gk4d4kmJbyXQ1oEbgnsGMCrKWE7ulZDBcpflp01hkZX+xzdj8jIrpruwwxa4WRvjba
+         gtIZQ5KDh3T8dj2E54f2eEz1CqAph0EEto2mZvw3qPK/KXyOBh3Wzv6sy9jhAGBJWX5T
+         69j2krp7a9R8f9CXNWInrNAyu9lwNHvhCEoNTUsuvMYp78gqpLeisujCvhuwPaM9YAXk
+         v1U5ngxj30CL++g0UexkxnE9uA6E1xgqpwMYXuWZqwxdue0U4yp5z5CK0UV85b5urqtv
+         IaQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=qGKExv8xI+YwIPghSFpDjv1fko6i6xoDezRKE6CrG+0=;
+        b=RC+8NytpqaLnCaEr1iPeHuM196kB37eg7BIrDmnMX1U+OxeGmdYyIFpU3SQe1nTChM
+         ba+pq2Ww7eplqxhXaUl73w2Ca3MAcY9DMrVsUL9ueYR2+aKJTWXpTpRKhV3cjlf9/U7i
+         7vN1OOiHNEoW487yPIgn51nQbHOdGBmIBgSIQSJonpOPph5BjN0ZI6N5RjX8Z6i/VL8w
+         vn8rSmbo4Wa/KPfo4l//SjXccvnHS4jmhJ4CP2BBfkvyUlN/PMtwqL69ZdcmzPFXseED
+         QNIb6/iVGbFR/9yNw0UbAtUUhiMqUbuRuIVEE+ocK3PwDMMWfga790gotFhn/OFLXhJk
+         roww==
+X-Gm-Message-State: AOAM532WDiOm2lxYNPujHs/7OwiOneCvZLdBu9myAaJZ5lK42OXEnJZy
+        pDL2zW5QmJ8VdmCF5IstYdBEQild7j8=
+X-Google-Smtp-Source: ABdhPJwUGNT/IAIP8rCek/3a0fHPW7LTGEZSe0lMG1IiY3lg0trsq/Xh3aNCQN7DtRXLO36P0Mkw7w==
+X-Received: by 2002:a17:902:6906:b0:149:7087:355c with SMTP id j6-20020a170902690600b001497087355cmr41434530plk.153.1641303002036;
+        Tue, 04 Jan 2022 05:30:02 -0800 (PST)
+Received: from LAPTOP-FJDAS7G4.localdomain ([157.40.90.253])
+        by smtp.gmail.com with ESMTPSA id q4sm14313568pfj.84.2022.01.04.05.29.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Jan 2022 05:30:01 -0800 (PST)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
         git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        John Cai <johncai86@gmail.com>
-References: <pull.1171.v2.git.git.1640759021.gitgitgadget@gmail.com>
- <pull.1171.v3.git.git.1641221261.gitgitgadget@gmail.com>
- <55ec2a5fa3e748b7e5f9ef871214563ba2b28adf.1641221261.git.gitgitgadget@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <55ec2a5fa3e748b7e5f9ef871214563ba2b28adf.1641221261.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v4 1/1] push: make 'set-upstream' have dafault arguments
+Date:   Tue,  4 Jan 2022 18:58:39 +0530
+Message-Id: <20220104132839.1209-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <xmqqy23wduxp.fsf@gitster.g>
+References: <xmqqy23wduxp.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/01/2022 14:47, John Cai via GitGitGadget wrote:
-> From: John Cai <johncai86@gmail.com>
->
-> Introduce a --annotate-text that is functionally equivalent of --stdin.
-> --stdin does not behave as --stdin in other subcommands, such as
-> pack-objects whereby it takes one argument per line. Since --stdin can
-> be a confusing and misleading name, rename it to --annotate-text.
->
-> This change adds a warning to --stdin warning that it will be removed in
-> the future.
->
-> Signed-off-by: "John Cai" <johncai86@gmail.com>
-> ---
->  Documentation/git-name-rev.txt       | 29 +++++++++++++++++++++++++++-
->  builtin/name-rev.c                   | 19 +++++++++++++-----
->  t/t3412-rebase-root.sh               |  2 +-
->  t/t4202-log.sh                       |  2 +-
->  t/t6007-rev-list-cherry-pick-file.sh | 26 ++++++++++++-------------
->  t/t6012-rev-list-simplify.sh         |  2 +-
->  t/t6111-rev-list-treesame.sh         |  3 ++-
->  t/t6120-describe.sh                  |  9 +++++++--
->  8 files changed, 67 insertions(+), 25 deletions(-)
->
-> diff --git a/Documentation/git-name-rev.txt b/Documentation/git-name-rev.txt
-> index 5cb0eb0855f..ee11b2ca9e7 100644
-> --- a/Documentation/git-name-rev.txt
-> +++ b/Documentation/git-name-rev.txt
-> @@ -43,10 +43,37 @@ OPTIONS
->  	List all commits reachable from all refs
->  
->  --stdin::
-> +	This option is deprecated in favor of 'git name-rev --annotate-stdin'.
-> +	They are functionally equivalent.
-> +
-> +--annotate-stdin::
->  	Transform stdin by substituting all the 40-character SHA-1
->  	hexes (say $hex) with "$hex ($rev_name)".  When used with
->  	--name-only, substitute with "$rev_name", omitting $hex
-> -	altogether.  Intended for the scripter's use.
-> +	altogether.
+Junio C Hamano <gitster@pobox.com> wrote:
 
-Is there a preferred order for the old/new variant documentation?
+> That means if the user says push.default==nothing, we should error
+> out "git push -u" as before, but that is not what the change to
+> setup_default_push_refspecs() function does, is it?
 
-It struck me that the docs should offer the new (now 'correct') variant
-first.
+Yeah. You're right. The current change does not throw error for
+push.default=nothing. Because I thought that for all values of
+`push.default` (except matching), 'git push -u' should create a
+new branch with the same name as the current local branch. Now, It
+seems that I was wrong.
 
-I didn't see anything about deprecation in the CodingGuidlines or
-SubmittingPatches (only a quick search though)
+> So, I am not sure if many of the above changes are sensible.  The
+> first one certainly does not sound like sensible.
 
---
-Philip
-> +
-> +	For example:
-> ++
-> +----------
-> +$ cat sample.txt
-> +
-> +An abbreviated revision 2ae0a9cb82 will not be substituted.
-> +The full name after substitution is 2ae0a9cb8298185a94e5998086f380a355dd8907,
-> +while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
-> +
-> +$ git name-rev --annotate-stdin <sample.txt
-> +
-> +An abbreviated revision 2ae0a9cb82 will not be substituted.
-> +The full name after substitution is 2ae0a9cb8298185a94e5998086f380a355dd8907
-> +(master),
-> +while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
-> +
-> +$ git name-rev --name-only --annotate-stdin <sample.txt
-> +
-> +An abbreviated revision 2ae0a9cb82 will not be substituted.
-> +The full name is master,
-> +while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
-> +----------
->  
->  --name-only::
->  	Instead of printing both the SHA-1 and the name, print only
-> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> index 27f60153a6c..21370afdaf9 100644
-> --- a/builtin/name-rev.c
-> +++ b/builtin/name-rev.c
-> @@ -527,7 +527,7 @@ static void name_rev_line(char *p, struct name_ref_data *data)
->  int cmd_name_rev(int argc, const char **argv, const char *prefix)
->  {
->  	struct object_array revs = OBJECT_ARRAY_INIT;
-> -	int all = 0, transform_stdin = 0, allow_undefined = 1, always = 0, peel_tag = 0;
-> +	int all = 0, annotate_stdin = 0, transform_stdin = 0, allow_undefined = 1, always = 0, peel_tag = 0;
->  	struct name_ref_data data = { 0, 0, STRING_LIST_INIT_NODUP, STRING_LIST_INIT_NODUP };
->  	struct option opts[] = {
->  		OPT_BOOL(0, "name-only", &data.name_only, N_("print only ref-based names (no object names)")),
-> @@ -539,6 +539,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
->  		OPT_GROUP(""),
->  		OPT_BOOL(0, "all", &all, N_("list all commits reachable from all refs")),
->  		OPT_BOOL(0, "stdin", &transform_stdin, N_("read from stdin")),
-> +		OPT_BOOL(0, "annotate-stdin", &annotate_stdin, N_("annotate text from stdin")),
->  		OPT_BOOL(0, "undefined", &allow_undefined, N_("allow to print `undefined` names (default)")),
->  		OPT_BOOL(0, "always",     &always,
->  			   N_("show abbreviated commit object as fallback")),
-> @@ -554,11 +555,19 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
->  	init_commit_rev_name(&rev_names);
->  	git_config(git_default_config, NULL);
->  	argc = parse_options(argc, argv, prefix, opts, name_rev_usage, 0);
-> -	if (all + transform_stdin + !!argc > 1) {
-> +
-> +	if (transform_stdin) {
-> +		warning("--stdin is deprecated. Please use --annotate-stdin instead, "
-> +					"which is functionally equivalent.\n"
-> +					"This option will be removed in a future release.");
-> +		annotate_stdin = 1;
-> +	}
-> +
-> +	if (all + annotate_stdin + !!argc > 1) {
->  		error("Specify either a list, or --all, not both!");
->  		usage_with_options(name_rev_usage, opts);
->  	}
-> -	if (all || transform_stdin)
-> +	if (all || annotate_stdin)
->  		cutoff = 0;
->  
->  	for (; argc; argc--, argv++) {
-> @@ -613,8 +622,8 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
->  	for_each_ref(name_ref, &data);
->  	name_tips();
->  
-> -	if (transform_stdin) {
-> -		char buffer[2048];
-> +	if (annotate_stdin) {
-> +		struct strbuf sb = STRBUF_INIT;
->  
->  		while (!feof(stdin)) {
->  			char *p = fgets(buffer, sizeof(buffer), stdin);
-> diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
-> index 19c6f4acbf6..1e9f7833dd6 100755
-> --- a/t/t3412-rebase-root.sh
-> +++ b/t/t3412-rebase-root.sh
-> @@ -11,7 +11,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->  
->  log_with_names () {
->  	git rev-list --topo-order --parents --pretty="tformat:%s" HEAD |
-> -	git name-rev --stdin --name-only --refs=refs/heads/$1
-> +	git name-rev --annotate-stdin --name-only --refs=refs/heads/$1
->  }
->  
->  
-> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> index 50495598619..dc884107de4 100755
-> --- a/t/t4202-log.sh
-> +++ b/t/t4202-log.sh
-> @@ -659,7 +659,7 @@ EOF
->  
->  test_expect_success 'log --graph with full output' '
->  	git log --graph --date-order --pretty=short |
-> -		git name-rev --name-only --stdin |
-> +		git name-rev --name-only --annotate-stdin |
->  		sed "s/Merge:.*/Merge: A B/;s/ *\$//" >actual &&
->  	test_cmp expect actual
->  '
-> diff --git a/t/t6007-rev-list-cherry-pick-file.sh b/t/t6007-rev-list-cherry-pick-file.sh
-> index aebe4b69e13..6f3e5439771 100755
-> --- a/t/t6007-rev-list-cherry-pick-file.sh
-> +++ b/t/t6007-rev-list-cherry-pick-file.sh
-> @@ -58,7 +58,7 @@ EOF
->  
->  test_expect_success '--left-right' '
->  	git rev-list --left-right B...C > actual &&
-> -	git name-rev --stdin --name-only --refs="*tags/*" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
->  		< actual > actual.named &&
->  	test_cmp expect actual.named
->  '
-> @@ -78,14 +78,14 @@ EOF
->  
->  test_expect_success '--cherry-pick bar does not come up empty' '
->  	git rev-list --left-right --cherry-pick B...C -- bar > actual &&
-> -	git name-rev --stdin --name-only --refs="*tags/*" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
->  		< actual > actual.named &&
->  	test_cmp expect actual.named
->  '
->  
->  test_expect_success 'bar does not come up empty' '
->  	git rev-list --left-right B...C -- bar > actual &&
-> -	git name-rev --stdin --name-only --refs="*tags/*" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
->  		< actual > actual.named &&
->  	test_cmp expect actual.named
->  '
-> @@ -97,14 +97,14 @@ EOF
->  
->  test_expect_success '--cherry-pick bar does not come up empty (II)' '
->  	git rev-list --left-right --cherry-pick F...E -- bar > actual &&
-> -	git name-rev --stdin --name-only --refs="*tags/*" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
->  		< actual > actual.named &&
->  	test_cmp expect actual.named
->  '
->  
->  test_expect_success 'name-rev multiple --refs combine inclusive' '
->  	git rev-list --left-right --cherry-pick F...E -- bar >actual &&
-> -	git name-rev --stdin --name-only --refs="*tags/F" --refs="*tags/E" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/F" --refs="*tags/E" \
->  		<actual >actual.named &&
->  	test_cmp expect actual.named
->  '
-> @@ -116,7 +116,7 @@ EOF
->  test_expect_success 'name-rev --refs excludes non-matched patterns' '
->  	git rev-list --left-right --right-only --cherry-pick F...E -- bar >>expect &&
->  	git rev-list --left-right --cherry-pick F...E -- bar >actual &&
-> -	git name-rev --stdin --name-only --refs="*tags/F" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/F" \
->  		<actual >actual.named &&
->  	test_cmp expect actual.named
->  '
-> @@ -128,14 +128,14 @@ EOF
->  test_expect_success 'name-rev --exclude excludes matched patterns' '
->  	git rev-list --left-right --right-only --cherry-pick F...E -- bar >>expect &&
->  	git rev-list --left-right --cherry-pick F...E -- bar >actual &&
-> -	git name-rev --stdin --name-only --refs="*tags/*" --exclude="*E" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" --exclude="*E" \
->  		<actual >actual.named &&
->  	test_cmp expect actual.named
->  '
->  
->  test_expect_success 'name-rev --no-refs clears the refs list' '
->  	git rev-list --left-right --cherry-pick F...E -- bar >expect &&
-> -	git name-rev --stdin --name-only --refs="*tags/F" --refs="*tags/E" --no-refs --refs="*tags/G" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/F" --refs="*tags/E" --no-refs --refs="*tags/G" \
->  		<expect >actual &&
->  	test_cmp expect actual
->  '
-> @@ -149,7 +149,7 @@ EOF
->  
->  test_expect_success '--cherry-mark' '
->  	git rev-list --cherry-mark F...E -- bar > actual &&
-> -	git name-rev --stdin --name-only --refs="*tags/*" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
->  		< actual > actual.named &&
->  	test_cmp expect actual.named
->  '
-> @@ -163,7 +163,7 @@ EOF
->  
->  test_expect_success '--cherry-mark --left-right' '
->  	git rev-list --cherry-mark --left-right F...E -- bar > actual &&
-> -	git name-rev --stdin --name-only --refs="*tags/*" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
->  		< actual > actual.named &&
->  	test_cmp expect actual.named
->  '
-> @@ -174,14 +174,14 @@ EOF
->  
->  test_expect_success '--cherry-pick --right-only' '
->  	git rev-list --cherry-pick --right-only F...E -- bar > actual &&
-> -	git name-rev --stdin --name-only --refs="*tags/*" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
->  		< actual > actual.named &&
->  	test_cmp expect actual.named
->  '
->  
->  test_expect_success '--cherry-pick --left-only' '
->  	git rev-list --cherry-pick --left-only E...F -- bar > actual &&
-> -	git name-rev --stdin --name-only --refs="*tags/*" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
->  		< actual > actual.named &&
->  	test_cmp expect actual.named
->  '
-> @@ -193,7 +193,7 @@ EOF
->  
->  test_expect_success '--cherry' '
->  	git rev-list --cherry F...E -- bar > actual &&
-> -	git name-rev --stdin --name-only --refs="*tags/*" \
-> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
->  		< actual > actual.named &&
->  	test_cmp expect actual.named
->  '
-> diff --git a/t/t6012-rev-list-simplify.sh b/t/t6012-rev-list-simplify.sh
-> index 4f7fa8b6c03..4fedc614fa6 100755
-> --- a/t/t6012-rev-list-simplify.sh
-> +++ b/t/t6012-rev-list-simplify.sh
-> @@ -12,7 +12,7 @@ note () {
->  }
->  
->  unnote () {
-> -	git name-rev --tags --stdin | sed -e "s|$OID_REGEX (tags/\([^)]*\)) |\1 |g"
-> +	git name-rev --tags --annotate-stdin | sed -e "s|$OID_REGEX (tags/\([^)]*\)) |\1 |g"
->  }
->  
->  #
-> diff --git a/t/t6111-rev-list-treesame.sh b/t/t6111-rev-list-treesame.sh
-> index e07b6070e0e..90ff1416400 100755
-> --- a/t/t6111-rev-list-treesame.sh
-> +++ b/t/t6111-rev-list-treesame.sh
-> @@ -23,7 +23,8 @@ note () {
->  }
->  
->  unnote () {
-> -	git name-rev --tags --stdin | sed -e "s|$OID_REGEX (tags/\([^)]*\))\([ 	]\)|\1\2|g"
-> +	git name-rev --tags --annotate-stdin | \
-> +	sed -e "s|$OID_REGEX (tags/\([^)]*\))\([ 	]\)|\1\2|g"
->  }
->  
->  test_expect_success setup '
-> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-> index d8af2bb9d2b..9781b92aedd 100755
-> --- a/t/t6120-describe.sh
-> +++ b/t/t6120-describe.sh
-> @@ -270,7 +270,7 @@ test_expect_success 'name-rev --all' '
->  	test_cmp expect actual
->  '
->  
-> -test_expect_success 'name-rev --stdin' '
-> +test_expect_success 'name-rev --annotate-stdin' '
->  	>expect.unsorted &&
->  	for rev in $(git rev-list --all)
->  	do
-> @@ -278,11 +278,16 @@ test_expect_success 'name-rev --stdin' '
->  		echo "$rev ($name)" >>expect.unsorted || return 1
->  	done &&
->  	sort <expect.unsorted >expect &&
-> -	git rev-list --all | git name-rev --stdin >actual.unsorted &&
-> +	git rev-list --all | git name-rev --annotate-stdin >actual.unsorted &&
->  	sort <actual.unsorted >actual &&
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'name-rev --stdin deprecated' "
-> +	git rev-list --all | git name-rev --stdin 2>actual &&
-> +	grep -E 'warning: --stdin is deprecated' actual
-> +"
-> +
->  test_expect_success 'describe --contains with the exact tags' '
->  	echo "A^0" >expect &&
->  	tag_object=$(git rev-parse refs/tags/A) &&
+Actually, I didn't think deeply while commiting the changes. Today,
+I think about it deeply and I realized the following points.
 
+* if push.default='simple' or unspecified then it should not create
+  a new branch on the remote. So, my proposed change of 'git push -u'
+  for push.default='simple' is badly affecting the reason why
+  push.default='simple' was built for.
+
+* if push.default='nothing', It should throw error if no <refspec> is
+  provided. Again, my proposed change is hurting it.
+
+* For push.default=upstream, If an upstream is already defined then
+  'git push -u' should only set that branch as the upstream of the
+  local branch. This already works in git. But if an upstream is not
+  provied, it should throw error. So, I am not sure whether 'git push
+  -u' (with no upstream information) should create a new branch with
+  the same name or not. What do you think about that?
+
+* For push.default=matching, 'git push -u' should set all the existing
+  matching branches as upstream of their respective matching local
+  branches. It also already works. Same for 'push.default'=current also.
+
+So, to put all in a nutshell, I think that the current behaviour of
+'git push -u' is okay. It also seems that he/she who built the
+setup_default_push_refspecs() was aware of this.
+
+Sorry for the patch request and thanks for reviewing.
+
+> Doesn't $i show in the output as-is here?  Quote the test title in
+> double-quotes, while using single-qoutes around the test body.
+
+Yeah. I observed this while testing. But had no idea why this happend
+( as I am very beginner in shell scripting). I was waiting for the review
+comment for it.
+
+Thanks again for reviewing my patch request.
