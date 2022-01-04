@@ -2,225 +2,248 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD7E5C433EF
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 20:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA93AC433F5
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 21:01:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232994AbiADUms (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 15:42:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56378 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231175AbiADUmr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 15:42:47 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B99AC061761
-        for <git@vger.kernel.org>; Tue,  4 Jan 2022 12:42:47 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id f5so153231966edq.6
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 12:42:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FM0w7Oaz4hJeY3W9us7WTWxJeDUZ5tNWUhEg4vuxzWA=;
-        b=BnU1AtmkYNFXlkhOIY9sG+s7e6wqXS0kmKkEqbNkX0vsrg/rtwVfJxuTr2cNk9RtgS
-         nA7hIhrpHhkkPrWoUFQ4S5AANJrYzCTwnw4YoEqAM2OzDEGVstxOSVw0letLQxjrcnl2
-         VcmDDHG6jHeS7GKALk61JmJk4FZtZPTGNGpib/IrXpkoUaNii6nFHt79O0fZvn9nWAjF
-         rStcABDzwYCuvlHJcjsOe6wP8I9ZAKJVxu+q2Cj4l2yQkCbeoy1YbJg6pQP1gBzRJwN4
-         Tf7k0PGZBfIpmJVE+FU8gvyndLqDeSzjcKf3AqomBnhkRyKWWeKG9lvlX/aKSagzYiQn
-         LGCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FM0w7Oaz4hJeY3W9us7WTWxJeDUZ5tNWUhEg4vuxzWA=;
-        b=kWIF2acUqEYOkgTikOC3XWQrT1a0o+SKKV9X6EUO3jwVRv43czkXW6jL4nbhdGd2OL
-         7qfseLdhhkv6i5ENewIwU70Vw61O5HjDzGn0++ywj1GFt+XEWobBL8KuhqQAXHV5fRET
-         PafkRHuyoA+rzQVXuI+n+0MhZYjLYxtgteKPVJYpKv2BJo3xrp80+508dTTjTLr9v9e6
-         DfyutQQtmfwoGmpYc7Kc0GqLtSBtbgJl0oiTam3oDk1bR0qE+ahJX8P6otKXu70SdFeJ
-         2y1ElA+U7RyiBrHWGSYjBWMxku13rPz7NccgOtCd1ZQ+mon3H5We6c4BQAaaJqXB3qgb
-         QLEw==
-X-Gm-Message-State: AOAM532Z/eJ4AA/If3/jUX0ohDY0z95hG65qpMXL/Ncr5uy/SVTSh6B5
-        16LX4ocp9tU12z85EPLi4za0ud0MOwifX6ABLpg=
-X-Google-Smtp-Source: ABdhPJwkS51bzsWha7XQevTrNWhPf5sLBrO7Tk4a7jgvAUAuuZkwdNovJYa0zfk4gh0u9ZbEUDai26evdWxOa/gXiGo=
-X-Received: by 2002:a17:907:9808:: with SMTP id ji8mr41567452ejc.476.1641328965721;
- Tue, 04 Jan 2022 12:42:45 -0800 (PST)
+        id S233797AbiADVBW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 16:01:22 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58268 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233740AbiADVBV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 16:01:21 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 59977115550;
+        Tue,  4 Jan 2022 16:01:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=kAfwmcYnkOvpfLtD6C9vacGnxD5tPcoBaFJSor
+        JBQMs=; b=tId/Z/1qd6CEn2PEyKA2Zof/6bQouEVN6BYEaKADMbRDZuKOpofpit
+        lmMAHMmQAHooc4PMSXsrNXND1VZsAzMrWDgMfbSQHg0vAnWJmldXbT+gaGngkxxP
+        B1d5sGxUFRTdYCELRGej/bhV1IFBfLtCF2Z5kXylE+gSsR6c8ITKw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 506F111554F;
+        Tue,  4 Jan 2022 16:01:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A333E11554E;
+        Tue,  4 Jan 2022 16:01:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>, rsbecker@nexbridge.com,
+        Taylor Blau <me@ttaylorr.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: Re: [PATCH v2 1/2] wrapper: add a helper to generate numbers from a
+ CSPRNG
+References: <20220104015555.3387101-1-sandals@crustytoothpaste.net>
+        <20220104015555.3387101-2-sandals@crustytoothpaste.net>
+Date:   Tue, 04 Jan 2022 13:01:19 -0800
+In-Reply-To: <20220104015555.3387101-2-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Tue, 4 Jan 2022 01:55:54 +0000")
+Message-ID: <xmqqsfu3b4gw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1108.git.1640824351.gitgitgadget@gmail.com>
- <pull.1108.v2.git.1640892413.gitgitgadget@gmail.com> <cecf501e07645b7408dc75f276d477b9b712ab17.1640892413.git.gitgitgadget@gmail.com>
- <CABPp-BG_Jgyr89z_D355Ytzz31J40nBGX=2cr+aXtcf3U1y6Dg@mail.gmail.com> <676e8408-5ac3-4293-22ee-c43e9bd6916b@gmail.com>
-In-Reply-To: <676e8408-5ac3-4293-22ee-c43e9bd6916b@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 4 Jan 2022 12:42:34 -0800
-Message-ID: <CABPp-BFJF7hyr5onMFQNC7r_x+XfJVn9wXhxyMV6Lu+pxbfyPA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] sparse-checkout: custom tab completion
-To:     Lessley Dennington <lessleydennington@gmail.com>
-Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        johannes.schindelin@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 77B0B778-6DA1-11EC-9BE9-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 4, 2022 at 11:41 AM Lessley Dennington
-<lessleydennington@gmail.com> wrote:
->
->
->
-> On 12/31/21 4:52 PM, Elijah Newren wrote:
-> > On Fri, Dec 31, 2021 at 2:33 AM Lessley Dennington via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >>
-> >> From: Lessley Dennington <lessleydennington@gmail.com>
-> >>
-> >> Fix custom tab completion for sparse-checkout command. This will ensure:
-> >>
-> >> 1. The full list of subcommands is provided when users enter git
-> >> sparse-checkout <TAB>.
-> >> 2. The --help option is tab-completable.
-> >> 3. Subcommand options are tab-completable.
-> >> 4. A list of directories (but not files) is provided when users enter git
-> >> sparse-checkout add <TAB> or git sparse-checkout set <TAB>.
-> >>
-> >> Failing tests that were added in the previous commit to verify these
-> >> scenarios are now passing with these updates.
-> >>
-> >> Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
-> >> ---
-> >>   contrib/completion/git-completion.bash | 38 ++++++++++++++++++--------
-> >>   t/t9902-completion.sh                  |  8 +++---
-> >>   2 files changed, 30 insertions(+), 16 deletions(-)
-> >>
-> >> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> >> index c82ccaebcc7..7de997ee64e 100644
-> >> --- a/contrib/completion/git-completion.bash
-> >> +++ b/contrib/completion/git-completion.bash
-> >> @@ -2986,24 +2986,38 @@ _git_show_branch ()
-> >>          __git_complete_revlist
-> >>   }
-> >>
-> >> +__git_sparse_checkout_subcommand_opts="--cone --no-cone --sparse-index --no-sparse-index"
-> >> +
-> >>   _git_sparse_checkout ()
-> >>   {
-> >> -       local subcommands="list init set disable"
-> >> +       local subcommands="list init set disable add reapply"
-> >>          local subcommand="$(__git_find_on_cmdline "$subcommands")"
-> >> +
-> >>          if [ -z "$subcommand" ]; then
-> >> -               __gitcomp "$subcommands"
-> >> -               return
-> >> +               case "$cur" in
-> >> +                       --*)
-> >> +                               __gitcomp "--help"
-> >> +                               ;;
-> >> +                       *)
-> >> +                               __gitcomp "$subcommands"
-> >> +                               ;;
-> >> +               esac
-> >>          fi
-> >>
-> >> -       case "$subcommand,$cur" in
-> >> -       init,--*)
-> >> -               __gitcomp "--cone"
-> >> -               ;;
-> >> -       set,--*)
-> >> -               __gitcomp "--stdin"
-> >> -               ;;
-> >> -       *)
-> >> -               ;;
-> >> +       case "$prev" in
-> >
-> > Shouldn't this be "$subcommand" rather than "$prev"?  I think with
-> > prev, it will only correctly complete the first path after "set",
-> > "add", etc.
-> >
-> Good catch, thank you! Fixing in v3.
-> >> +               set)
-> >> +                       __gitcomp "$__git_sparse_checkout_subcommand_opts --stdin"
-> >> +                       __gitcomp "$(git ls-tree -d -r HEAD --name-only)"
-> >> +                       ;;
-> >> +               add)
-> >> +                       __gitcomp "--stdin"
-> >> +                       __gitcomp "$(git ls-tree -d -r HEAD --name-only)"
-> >
-> > I was going to make a simple suggestion for making it just complete
-> > one additional level at a time and leaving out the -r, and then tried
-> > it out and found out it wasn't simple.  I got something working,
-> > eventually, but it's slightly ugly...so it probably belongs in a
-> > separate patch anyway.  If you're curious, it's basically replacing
-> > the second __gitcomp... call for each of set and add with
-> > `__gitcomp_directories`, after first defining:
-> >
-> > __gitcomp_directories ()
-> > {
-> >      local _tmp_dir _tmp_completions
-> >
-> >      # Get the directory of the current token; this differs from dirname
-> >      # in that it keeps up to the final trailing slash.  If no slash found
-> >      # that's fine too.
-> >      [[ "$cur" =~ .*/ ]]
-> >      _tmp_dir=$BASH_REMATCH
-> >
-> >      # Find possible directory completions, adding trailing '/' characters
-> >      _tmp_completions="$(git ls-tree -d --name-only HEAD $_tmp_dir |
-> >          sed -e s%$%/%)"
-> >
-> >      if [[ -n "$_tmp_completions" ]]; then
-> >          # There were some directory completions, so find ones that
-> >          # start with "$cur", the current token, and put those in COMPREPLY
-> >          local i=0 c IFS=$' \t\n'
-> >          for c in $_tmp_completions; do
-> >              if [[ $c == "$cur"* ]]; then
-> >                  COMPREPLY+=("$c")
-> >              fi
-> >          done
-> >      elif [[ "$cur" =~ /$ ]]; then
-> >          # No possible further completions any deeper, so assume we're at
-> >          # a leaf directory and just consider it complete
-> >          __gitcomp_direct_append "$cur "
-> >      fi
-> > }
-> >
-> > But I don't think that needs to be part of this series; I can submit
-> > it later and hopefully get a completion expert to point out
-> > better/cleaner ways of what I've done above.
-> >
-> I'm admittedly curious about what made this so difficult. I removed the
-> '-r' and updated my tests to expect only directories at one level, and
-> they passed. But I imagine I'm being too simplistic.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-I've forgotten some details since last Saturday, but I think the
-problem was that doing that would only ever complete toplevel
-directories; after completing those you could keep tabbing to get a
-deeper directory.  First, let's get a comparison point; ignoring
-sparse-checkout, I can do:
+> +# Define CSPRNG_METHOD to "arc4random" if your system has arc4random and
+> +# arc4random_buf, "arc4random-libbsd" if your system has those functions from
+> +# libbsd, "getrandom" if your system has getrandom, "getentropy" if your
+> +# system has getentropy, "rtlgenrandom" for RtlGenRandom (Windows only), or
+> +# "openssl" if you'd want to use the OpenSSL CSPRNG.  If unset or set to
+> +# anything else, defaults to using "/dev/urandom".
+> +#
 
-    cd $GIT_CLONE
-    cd cont<TAB>b<TAB><TAB>
+OK.
 
-and the ls line will replace those <TAB>s so that I see
+> +ifeq ($(strip $(CSPRNG_METHOD)),arc4random)
+> +	BASIC_CFLAGS += -DHAVE_ARC4RANDOM
+> +endif
+> +
+> +ifeq ($(strip $(CSPRNG_METHOD)),arc4random-libbsd)
+> +	BASIC_CFLAGS += -DHAVE_ARC4RANDOM_LIBBSD
+> +	EXTLIBS += -lbsd
+> +endif
+> +
+> +ifeq ($(strip $(CSPRNG_METHOD)),getrandom)
+> +	BASIC_CFLAGS += -DHAVE_GETRANDOM
+> +endif
+> +
+> +ifeq ($(strip $(CSPRNG_METHOD)),getentropy)
+> +	BASIC_CFLAGS += -DHAVE_GETENTROPY
+> +endif
+> +
+> +ifeq ($(strip $(CSPRNG_METHOD)),rtlgenrandom)
+> +	BASIC_CFLAGS += -DHAVE_RTLGENRANDOM
+> +endif
+> +
+> +ifeq ($(strip $(CSPRNG_METHOD)),openssl)
+> +	BASIC_CFLAGS += -DHAVE_OPENSSL_CSPRNG
+> +endif
 
-    ls contrib/buildsystems/Generators
+Use of $(strip ($VAR)) looks a bit different from what everybody
+else does with ifeq in this Makefile.  Was there a particular reason
+to use it that I am missing?
 
-Now, if we just removed the '-r' from your git-completion.bash
-changes, and then typed
+When we see something unrecognized in CSPRNG_METHOD, we do not touch
+BASIC_CFLAGS (or EXTLIBS) here.  I wonder how easy a clue we would
+have to decide that we need to fall back to urandom.  IOW, I would
+have expected a if/else if/... cascade that has "no we do not have
+anything else and need to fall back to urandom" at the end.
 
-    git sparse-checkout set cont<TAB>b<TAB><TAB>
+But that's OK, as long as the fallback logic is cleanly done.  Let's
+keep reading...
 
-Then you'd see
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 5fa54a7afe..50597c76be 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -1421,4 +1433,11 @@ static inline void *container_of_or_null_offset(void *ptr, size_t offset)
+>  
+>  void sleep_millisec(int millisec);
+>  
+> +/*
+> + * Generate len bytes from the system cryptographically secure PRNG.
+> + * Returns 0 on success and -1 on error, setting errno.  The inability to
+> + * satisfy the full request is an error.
+> + */
+> +int csprng_bytes(void *buf, size_t len);
+> +
+>  #endif
+> diff --git a/t/helper/test-csprng.c b/t/helper/test-csprng.c
+> new file mode 100644
+> index 0000000000..65d14973c5
+> --- /dev/null
+> +++ b/t/helper/test-csprng.c
+> @@ -0,0 +1,29 @@
+> +#include "test-tool.h"
+> +#include "git-compat-util.h"
+> +
+> +
+> +int cmd__csprng(int argc, const char **argv)
+> +{
+> +	unsigned long count;
+> +	unsigned char buf[1024];
+> +
+> +	if (argc > 2) {
+> +		fprintf(stderr, "usage: %s [<size>]\n", argv[0]);
+> +		return 2;
+> +	}
+> +
+> +	count = (argc == 2) ? strtoul(argv[1], NULL, 0) : -1L;
+> +
+> +	while (count) {
+> +		unsigned long chunk = count < sizeof(buf) ? count : sizeof(buf);
 
-    git sparse-checkout set contrib
+"chunk" should be of type "size_t", no?
 
-and see 'bin-wrappers', 'block-sha1', and 'builtin' as potential
-completions, but not as subdirs of contrib but instead sibling dirs to
-contrib.  That completion rule wouldn't let you look within contrib/.
-My more complicated rule had to avoid calling __gitcomp to avoid
-adding spaces so that completions could continue (but should add them
-if we have tabbed all the way down and there are no more
-subdirectories), had to add trailing '/' characters so that we know
-when we have the full directory name to pass along to ls-tree, and
-then had to manually do the work that __gitcomp would manually do with
-making sure to only provide completions relevant to what has been
-typed so far.
+> diff --git a/wrapper.c b/wrapper.c
+> index 36e12119d7..1052356703 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -702,3 +702,69 @@ int open_nofollow(const char *path, int flags)
+>  	return open(path, flags);
+>  #endif
+>  }
+> +
+> +int csprng_bytes(void *buf, size_t len)
+> +{
+> +#if defined(HAVE_ARC4RANDOM) || defined(HAVE_ARC4RANDOM_LIBBSD)
+
+Shouldn't HAVE_ARC4RANDOM mean "we have arc4random_buf() function
+available; please use that.", i.e. wouldn't this give us cleaner
+result in the change to the Makefile?
+
+ ifeq ($(strip $(CSPRNG_METHOD)),arc4random)
+ 	BASIC_CFLAGS += -DHAVE_ARC4RANDOM
+ endif
+ 
+ ifeq ($(strip $(CSPRNG_METHOD)),arc4random-libbsd)
+-	BASIC_CFLAGS += -DHAVE_ARC4RANDOM_LIBBSD
++	BASIC_CFLAGS += -DHAVE_ARC4RANDOM
+ 	EXTLIBS += -lbsd
+ endif
+
+To put it differently, C source, via BASIC_CFLAGS, would not have to
+care where the function definition comes from.  It is linker's job
+to care and we are already telling it via EXTLIBS, so I am not sure
+the value of having HAVE_ARC4RANDOM_LIBBSD as a separate symbol.
+
+> +	/* This function never returns an error. */
+> +	arc4random_buf(buf, len);
+> +	return 0;
+> +#elif defined(HAVE_GETRANDOM)
+> +	ssize_t res;
+> +	char *p = buf;
+> +	while (len) {
+> +		res = getrandom(p, len, 0);
+> +		if (res < 0)
+> +			return -1;
+> +		len -= res;
+> +		p += res;
+> +	}
+> +	return 0;
+> +#elif defined(HAVE_GETENTROPY)
+> +	int res;
+> +	char *p = buf;
+> +	while (len) {
+> +		/* getentropy has a maximum size of 256 bytes. */
+> +		size_t chunk = len < 256 ? len : 256;
+> +		res = getentropy(p, chunk);
+> +		if (res < 0)
+> +			return -1;
+> +		len -= chunk;
+> +		p += chunk;
+> +	}
+> +	return 0;
+> +#elif defined(HAVE_RTLGENRANDOM)
+> +	if (!RtlGenRandom(buf, len))
+> +		return -1;
+> +	return 0;
+> +#elif defined(HAVE_OPENSSL_CSPRNG)
+> +	int res = RAND_bytes(buf, len);
+> +	if (res == 1)
+> +		return 0;
+> +	if (res == -1)
+> +		errno = ENOTSUP;
+> +	else
+> +		errno = EIO;
+> +	return -1;
+> +#else
+> +	ssize_t res;
+> +	char *p = buf;
+> +	int fd, err;
+> +	fd = open("/dev/urandom", O_RDONLY);
+> +	if (fd < 0)
+> +		return -1;
+> +	while (len) {
+> +		res = xread(fd, p, len);
+> +		if (res < 0) {
+> +			err = errno;
+> +			close(fd);
+> +			errno = err;
+> +			return -1;
+> +		}
+> +		len -= res;
+> +		p += res;
+> +	}
+> +	close(fd);
+> +	return 0;
+> +#endif
+> +}
+
+OK, I earlier worried about the lack of explicit "we are using
+urandom" at the Makefile level, but as long as this will remain the
+only place that needs to care about the fallback, the above is
+perfectly fine.
+
+Thanks.
