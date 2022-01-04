@@ -2,53 +2,42 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B23EC433F5
-	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 16:16:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 868B3C433EF
+	for <git@archiver.kernel.org>; Tue,  4 Jan 2022 16:31:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234923AbiADQQD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 11:16:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51458 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229956AbiADQQC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 11:16:02 -0500
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F2EC061761
-        for <git@vger.kernel.org>; Tue,  4 Jan 2022 08:16:02 -0800 (PST)
-Received: by mail-yb1-xb34.google.com with SMTP id i3so95031108ybh.11
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 08:16:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NPXi3TpGjmR+3mD7o01GZCX7dMi42u9h/sMK3Lt5UUs=;
-        b=FfZPScsNTOzPwEzQRxiIpTvSaahpTI6jzfwxVG37orgkgRnZo9/JDfEIZvjSwSgXux
-         elXGL9EXHuspFGxnzYQuh/xtBNoj9UAmewSLJwUocI8QEAEOBIkMpf5Llf1afiEtS9SL
-         UZkaBy00FLZn3nZUfjNbLjpL3Vq6bS09xBfg8=
+        id S235304AbiADQb0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 11:31:26 -0500
+Received: from mail-il1-f171.google.com ([209.85.166.171]:45912 "EHLO
+        mail-il1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229984AbiADQbZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 11:31:25 -0500
+Received: by mail-il1-f171.google.com with SMTP id g5so28682334ilj.12
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 08:31:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=NPXi3TpGjmR+3mD7o01GZCX7dMi42u9h/sMK3Lt5UUs=;
-        b=fc5NW/YU3AhD/Nk3wTMEAW/DoSN2VKGBuWtzlgFr40+ybHGNaGxdy19UKG1D45mXuz
-         zpqz2Bkky74J1yFx7lALqQADRS7IvP6TnyT9O40Kixkev0S2C0SH92LTworkyzyfxi1A
-         jliOtAHFbOPq9lJc5nlycdj4zqmnDNyqO6vuV9YzNPO2QQWuxX5uaya4kEZ0dUlcDUPD
-         FbWKHtBZOTDQAN2C51MlApRGoPjvJeZJyLMqNBK7FFUGbDt3BVJs+fhk6hDxgFyvr+PG
-         yGncDklQA6xofWmmLcS2t8SowECb0LZkkLiEbvDI2rPlY6JzERoGnppRNaDm5UU3UQaz
-         AAdQ==
-X-Gm-Message-State: AOAM531ePKYbpQBs7rMCpXfMHjoJEJhQuYpo7EV3/+B6AAhzsnInabxP
-        ZbpkzBO5jlGx41XpM6i3lMioneNiVzIiwvJLQrBckftrZsZj9g==
-X-Google-Smtp-Source: ABdhPJz9hRMb4Dztwn5WR7vqQcjrhuBhkjgB1Oc7zt4tkFYC/2jHsseLNWX2gcvyqhBKIzIwwQDniozlF6ybBMUqw88=
-X-Received: by 2002:a25:d690:: with SMTP id n138mr49783728ybg.326.1641312961470;
- Tue, 04 Jan 2022 08:16:01 -0800 (PST)
+        bh=W9529Ic9zLgcpTAFtr128rtBasI1W1op5X1AM8efQDw=;
+        b=B/VRIzSV/aOoSpmhj79p1ELq81sEOVJF16lXoSqvubvxj1iRUjMI5/vM39yveIFyHs
+         kdGANw2pO6jCxbAilRnl3COQrTiN4CPKqq/n5hF1f+lJimLuOrYzqE3sSj3OzvjYU4mh
+         horwYXqpawnKcsRwqHRIAGA5SrmNDv/FfUDRYsUM50Mor47PeC+D3flF5bcFFIKRk5hp
+         /oMxB1RRSL7GdRpW/VJbYLRrqS+cxvj7hblrU0R9s0jeWia6qCMacOsDOVhIxcBybelt
+         nSIsAQwnaHrGUXSBj0UWvs9spgp+tpsohxsXSlN0fokUJqey+R9yhzkMn84RYyUNTgim
+         SYTw==
+X-Gm-Message-State: AOAM533ezUn4gRT1bpjFU+GURydaNNymH8MtCUTU5j2U5BLX97SSr+bN
+        oADlzySADwHLKta25qhxjblJy9jYqMbjlv7DNQo=
+X-Google-Smtp-Source: ABdhPJwtGnfoT0FzFeYO8My762Jcql11bbrAdeblfxZhoMOAtNIczl9ccSw12utEX+FF3TKPSpae7Fol4U25H5eABko=
+X-Received: by 2002:a05:6e02:156c:: with SMTP id k12mr21994798ilu.94.1641313884426;
+ Tue, 04 Jan 2022 08:31:24 -0800 (PST)
 MIME-Version: 1.0
 References: <CA+kUOak9_RLpdr9d4pQiwU=K42taCwhMdg5WkLP4GreQd4yWig@mail.gmail.com>
- <CA+JQ7M_tOu5ahQSPZk5Be10rY_NDOmqLWj9b1On=KW8Rq2mk2w@mail.gmail.com>
-In-Reply-To: <CA+JQ7M_tOu5ahQSPZk5Be10rY_NDOmqLWj9b1On=KW8Rq2mk2w@mail.gmail.com>
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-Date:   Tue, 4 Jan 2022 16:15:25 +0000
-Message-ID: <CA+kUOakd0HaPk7PGh+4L6753KnsVaykczy31=5vrG91iJkcOfw@mail.gmail.com>
+ <CA+JQ7M_tOu5ahQSPZk5Be10rY_NDOmqLWj9b1On=KW8Rq2mk2w@mail.gmail.com> <CA+kUOakd0HaPk7PGh+4L6753KnsVaykczy31=5vrG91iJkcOfw@mail.gmail.com>
+In-Reply-To: <CA+kUOakd0HaPk7PGh+4L6753KnsVaykczy31=5vrG91iJkcOfw@mail.gmail.com>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Tue, 4 Jan 2022 17:30:48 +0100
+Message-ID: <CA+JQ7M-1_sGSX31Fij4XwFcrBVFPrLFJCC-GdeDrEeGoPYEP_w@mail.gmail.com>
 Subject: Re: Bug using `fetch` with blank `-c` arguments to git
-To:     Erik Cervin Edin <erik@cervined.in>
+To:     Adam Dinwoodie <adam@dinwoodie.org>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Patrick Steinhardt <ps@pks.im>
 Content-Type: text/plain; charset="UTF-8"
@@ -56,31 +45,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 4 Jan 2022 at 15:35, Erik Cervin Edin <erik@cervined.in> wrote:
->
-> Minor clarifications
->
-> On Tue, Jan 4, 2022 at 3:48 PM Adam Dinwoodie <adam@dinwoodie.org> wrote:
-> >
-> > While investigating some issues with a different project, I discovered
-> > the command `git -c config.helper= fetch` was working with the Debian
-> > ...
-> > I see the same behaviour with `-c config.helper=`, `-c
-> typos for "credential.helper" ?
+On Tue, Jan 4, 2022 at 3:48 PM Adam Dinwoodie <adam@dinwoodie.org> wrote:
+> Investigating with `git bisect`, the change in behaviour seems to have
+> been introduced in 1ff21c05ba ("config: store "git -c" variables using
+> more robust format", 2021-01-12).
+If that's the case it should be present since v2.31.0
 
-"credential.helper" was certainly what I'd intended, but I see the
-same behaviour with both options.
+I can't replicate in git version 2.34.1.windows.1
+But that's MinGW based so if you don't see it in cygwin it's not a big surprise
 
-(I'd initially thought this was specifically due to the blank
-argument, hence the email subject which I clearly failed to update,
-but it looks like the issue occurs when using `-c` to set a config
-option regardless of the option being set.)
-
-> > Notably the behaviour does not affect all other git commands; `git -c
-> > core.autocrlf= log -1` works as expected.
-> You've only seen this with "git fetch"?
-
-I've not tried to do any exhaustive testing, but I see this behaviour
-with "git fetch", "git pull", "git bisect" and "git submodule"; I see
-things apparently working as expected "git blame", "git commit", "git
-push", "git reset", "git switch" and "git log".
+On Tue, Jan 4, 2022 at 5:16 PM Adam Dinwoodie <adam@dinwoodie.org> wrote:
+> but it looks like the issue occurs when using `-c` to set a config
+> option regardless of the option being set.)
+:(
