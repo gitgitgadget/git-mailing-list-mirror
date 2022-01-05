@@ -2,413 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 093A6C433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 04:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64665C433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 04:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236571AbiAEEGF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 23:06:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42420 "EHLO
+        id S237325AbiAEEUo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 23:20:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230332AbiAEEGE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 23:06:04 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71B11C061761
-        for <git@vger.kernel.org>; Tue,  4 Jan 2022 20:06:04 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id t26so80199092wrb.4
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 20:06:04 -0800 (PST)
+        with ESMTP id S230332AbiAEEUm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 23:20:42 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE152C061761
+        for <git@vger.kernel.org>; Tue,  4 Jan 2022 20:20:41 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id v123so273249wme.2
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 20:20:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=eTfkk4HOotRUKsCSudw2gHUvXl2UtqgFfmupeYhtB8w=;
-        b=dmQi+Q7JNDeZ3TVroNScK+z3aLOICyHKTs8RuaFsdFJ4iWi8t3jqwGgEUtV4JK7LIh
-         u5Er8KO6N8Lrg9t731uutUiwEEBzRs8iunNhqD/rYw+W7ve/+P8+IGgCcBvPdGE43cR2
-         HpQAhvhpP39qe3RnVOHTpRA07Q1BF8LjoFT0YS2v8ItbSn4o0L6Er+2XbLx9BAfSawQY
-         /9dgowAoaaO5iQ7DQjPHbpfA7zzzRFgb32h36/fhY+4DzJG1dkBGqMFRoufkNc3UpnAJ
-         AT52w1vYRj9d41Nvyo70qKHjF9uPaO9b3u+IL72u77AE2p4P9Ql6RXNxoYy7JgF3fg41
-         QaKQ==
+        bh=ItlgSiNRT9pt1qx+ki579buxJHtAoR7ipQ3AjAgdRp8=;
+        b=DytEAcsVg8td7f24j8m7ky7SMdUM4EqvH8KMbT87Nq/rmPeGy6fyAQrA9fZubjjzYo
+         EKMv/hbxzTIJOEnqbRAX2EX8QQoBJWkax+C2GynK7mI3l7wsr6GC6451RAb4VAoc170G
+         Jp+1H1BgnKdhSgHfTcs5EUiQI8bZ9+ToGYFZ2kdzoKAtyq7hh39E7UxMczXeBGAd83vm
+         a6CDuFBIXzDVbGPoIORQX6JfVSrK63Rrecf/BkCoJ78EQtDnEtYewc42M9VyrQti2KLQ
+         5stw7bWG76bjebhsbHrrS0BO4+VMkvwmvtHoDzp4zr+aizRXjfIfF01NRGA6q6L8pCE0
+         p0zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eTfkk4HOotRUKsCSudw2gHUvXl2UtqgFfmupeYhtB8w=;
-        b=8LekEkwuhVSg4u/lDP0SYp2eQtcjgxg6bfUCeZS/U2RxLeHCKdZMNCefzS37L1k9uC
-         iNpahplyrz7wdBnJvDpHFoaQE/t/yhOLavKwT1AfhyQJ2jzL/vKXCGcOcndI6F9tJ//j
-         CfJ1FfbYHPOuLHH8Vgp0zfEMxo12aGHMmh8d3tfetgaaReJiG/HIRusac1mTT1AG84/q
-         hGPLwbkNL6OL8S46rGAxuXhXsAE2AAIEnKY11RCf+aUvzFp6069kj2Q+Xwk3o4xZ/03y
-         K5yhXlN3xO1nWwpgZXlcXVxBwDMtcFdFrtbhFDghKTwU4NZCogrFbL1AoiHDrOZJmSDn
-         MchQ==
-X-Gm-Message-State: AOAM533MmOdEiZbEYOqRP/8mwDbshXP7xt2XENvS0Kpv/P6nv7jJI6rt
-        TftyN6OuLZnWwktBGzIldbRq1P8UhBw=
-X-Google-Smtp-Source: ABdhPJx62oQOMi0A+HuPKwLhUrh+p74NZSYwJyr3cP5mslMNZx7Gl5feEfK6SDhJDgIpjKdbuJGaog==
-X-Received: by 2002:a5d:6d84:: with SMTP id l4mr45789149wrs.61.1641355562820;
-        Tue, 04 Jan 2022 20:06:02 -0800 (PST)
+        bh=ItlgSiNRT9pt1qx+ki579buxJHtAoR7ipQ3AjAgdRp8=;
+        b=M9NiFF+gpcZSZtIZG7N0C1LlgIortyCf0paHLUaYq2Apzss0Atz7MUbW5gHAhYlmFI
+         J2qSbfxV+kM3OhW+VO/SDQxdkHP0i80L+/1hucjsTncTVdaKB2QwTujKJeIJD2m3gHHt
+         F9Y0W3s/eyGain+rCdHEYN0c0+uRrAe0Z+HvovuB/pfotqx4ZmsEmNnVOjUfAIo1ZlX5
+         6gnPZ1/fTheg0E4+H0H1Ot7od2zYqu/7OwjYEdmYulipXKTTjrLTEYI5TyvGDtBIZTxL
+         GB2WxsU39Qs/tERLksappQ79MOkoiZO8/rH9WKoHymREaAZ06JZLbhH7is7V4sShIw7b
+         Ne4g==
+X-Gm-Message-State: AOAM532qrxLCpf8abw6Qv3lc2Jrt8a/GqrgqBLTF+s4C5g21BA/VJQ1P
+        jinTPm1KRni/cdqA4V3McjFxjASr7ow=
+X-Google-Smtp-Source: ABdhPJw94krKLbdj4Ek9izGlQT/6hROOw48/VPeNtymD3rUPkyiT4/g6Bm7uAJDPByVY6q44t1ekWQ==
+X-Received: by 2002:a05:600c:3514:: with SMTP id h20mr1163564wmq.62.1641356440372;
+        Tue, 04 Jan 2022 20:20:40 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z6sm1646729wmp.9.2022.01.04.20.06.02
+        by smtp.gmail.com with ESMTPSA id a2sm44961888wri.17.2022.01.04.20.20.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jan 2022 20:06:02 -0800 (PST)
-Message-Id: <pull.1175.v4.git.git.1641355561700.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1175.v3.git.git.1641318061821.gitgitgadget@gmail.com>
-References: <pull.1175.v3.git.git.1641318061821.gitgitgadget@gmail.com>
+        Tue, 04 Jan 2022 20:20:40 -0800 (PST)
+Message-Id: <pull.1171.v5.git.git.1641356439.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1171.v4.git.git.1641307776.gitgitgadget@gmail.com>
+References: <pull.1171.v4.git.git.1641307776.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 05 Jan 2022 04:06:01 +0000
-Subject: [PATCH v4] builtin/reflog.c: use parse-options api for expire, delete
- subcommands
+Date:   Wed, 05 Jan 2022 04:20:37 +0000
+Subject: [PATCH v5 0/2] name-rev: deprecate --stdin in favor of --annotate-stdin
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: John Cai <johncai86@gmail.com>
+Introduce a --annotate-stdin that is functionally equivalent of --stdin.
+--stdin does not behave as --stdin in other subcommands, such as
+pack-objects whereby it takes one argument per line. Since --stdin can be a
+confusing and misleading name, the goal is to rename it to --annotate-stdin.
 
-Switching out manual arg parsing for the parse-options API for the
-expire and delete subcommands.
+This is the first step in a process of eventually fully deprecating --stdin.
+This change also adds a warning to --stdin warning that it will be removed
+in the future.
 
-Move explicit_expiry flag into cmd_reflog_expire_cb struct so callbacks
-can set both the value of the timestamp as well as the explicit_expiry
-flag.
+See https://lore.kernel.org/git/xmqqsfuh1pxz.fsf@gitster.g/ for discussion.
 
-Signed-off-by: "John Cai" <johncai86@gmail.com>
----
-    reflog.c: switch to use parse-options API
-    
-    Switch out manual argv parsing for the reflog expire subcommand to use
-    the parse-options API. This reduces code redundancy by consolidating
-    option parsing logic.
-    
-    NOTE: this patch was based off of next. I know now that I should base it
-    off of master. But practically, nothing in master touched reflog.c
-    except for ab/reflog-prep
-    
-    changes since v3:
-    
-     * fixed indentation
-    
-    changes since v2:
-    
-     * got rid of parse_opt_expiry_date helper based on feedback from Junio.
-       Just call parse_expiry_date directly in the callbacks, and don't
-       worry about unset, as we can just set the PARSE_OPT_NONEG flag for
-       --expire and --expire-unreachable since the original code didn't
-       support a negated version of those flags anyway. The documentation
-       also explicitly states to use "never" as the argument.
-     * fix places where we set int i inside a for loop construct.
+changes since v4:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1175%2Fjohn-cai%2Fjc%2Freflog-switch-to-option-parse-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1175/john-cai/jc/reflog-switch-to-option-parse-v4
-Pull-Request: https://github.com/git/git/pull/1175
+ * fixed documentation example indentation
 
-Range-diff vs v3:
+changes since v3:
 
- 1:  99a97e6ee52 ! 1:  0efdf3d2cb1 builtin/reflog.c: use parse-options api for expire, delete subcommands
-     @@ builtin/reflog.c: static void set_reflog_expiry_param(struct cmd_reflog_expire_c
-       
-      +static const char * reflog_expire_usage[] = {
-      +	N_("git reflog expire [--expire=<time>] "
-     -+   "[--expire-unreachable=<time>] "
-     -+   "[--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] "
-     -+   "[--verbose] [--all] <refs>..."),
-     ++	   "[--expire-unreachable=<time>] "
-     ++	   "[--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] "
-     ++	   "[--verbose] [--all] <refs>..."),
-      +	NULL
-      +};
+ * use strbuf_getline instead of strbuf_getwholeline (based on Junio's
+   feedback)
+ * fixed commit message s/annotate-text/annotate-stdin (based on Junio's
+   feedback)
+ * since strbuf_getline does not keep the trailing terminator, add back '\n'
+   with strbuf_addchr
+ * reordered documentation blocks based on (Philip Oakley's feedback)
+ * fixed doc typos in example block
+
+John Cai (2):
+  name-rev: deprecate --stdin in favor of --annotate-stdin
+  name-rev.c: use strbuf_getline instead of limited size buffer
+
+ Documentation/git-name-rev.txt       | 30 ++++++++++++++++++++++++++--
+ builtin/name-rev.c                   | 28 ++++++++++++++++----------
+ t/t3412-rebase-root.sh               |  2 +-
+ t/t4202-log.sh                       |  2 +-
+ t/t6007-rev-list-cherry-pick-file.sh | 26 ++++++++++++------------
+ t/t6012-rev-list-simplify.sh         |  2 +-
+ t/t6111-rev-list-treesame.sh         |  3 ++-
+ t/t6120-describe.sh                  |  9 +++++++--
+ 8 files changed, 71 insertions(+), 31 deletions(-)
+
+
+base-commit: c8b2ade48c204690119936ada89cd938c476c5c2
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1171%2Fjohn-cai%2Fjc%2Fdeprecate-name-rev-stdin-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1171/john-cai/jc/deprecate-name-rev-stdin-v5
+Pull-Request: https://github.com/git/git/pull/1171
+
+Range-diff vs v4:
+
+ 1:  4e9200922a4 ! 1:  7c5fb10d87c name-rev: deprecate --stdin in favor of --annotate-stdin
+     @@ Documentation/git-name-rev.txt: OPTIONS
+       	--name-only, substitute with "$rev_name", omitting $hex
+      -	altogether.  Intended for the scripter's use.
+      +	altogether.
+     -+
+     +++
+      +For example:
+     +++
+     ++--
+     ++	$ cat sample.txt
       +
+     -+----------
+     -+$ cat sample.txt
+     -+
+     -+An abbreviated revision 2ae0a9cb82 will not be substituted.
+     -+The full name after substitution is 2ae0a9cb8298185a94e5998086f380a355dd8907,
+     -+while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
+     ++	An abbreviated revision 2ae0a9cb82 will not be substituted.
+     ++	The full name after substitution is 2ae0a9cb8298185a94e5998086f380a355dd8907,
+     ++	while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
+      +
+     -+$ git name-rev --annotate-stdin <sample.txt
+     ++	$ git name-rev --annotate-stdin <sample.txt
+      +
+     -+An abbreviated revision 2ae0a9cb82 will not be substituted.
+     -+The full name after substitution is 2ae0a9cb8298185a94e5998086f380a355dd8907 (master),
+     -+while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
+     ++	An abbreviated revision 2ae0a9cb82 will not be substituted.
+     ++	The full name after substitution is 2ae0a9cb8298185a94e5998086f380a355dd8907 (master),
+     ++	while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
+      +
+     -+$ git name-rev --name-only --annotate-stdin <sample.txt
+     ++	$ git name-rev --name-only --annotate-stdin <sample.txt
+      +
+     -+An abbreviated revision 2ae0a9cb82 will not be substituted.
+     -+The full name after substitution is master,
+     -+while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
+     -+----------
+     ++	An abbreviated revision 2ae0a9cb82 will not be substituted.
+     ++	The full name after substitution is master,
+     ++	while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
+     ++--
+      +
+      +--stdin::
+      +	This option is deprecated in favor of 'git name-rev --annotate-stdin'.
+ 2:  18f77ab9dde = 2:  2acd70f36e7 name-rev.c: use strbuf_getline instead of limited size buffer
 
-
- builtin/reflog.c | 174 ++++++++++++++++++++++++++---------------------
- 1 file changed, 95 insertions(+), 79 deletions(-)
-
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index a4b1dd27e13..1b3b298eec4 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -12,15 +12,6 @@
- #include "reachable.h"
- #include "worktree.h"
- 
--/* NEEDSWORK: switch to using parse_options */
--static const char reflog_expire_usage[] =
--N_("git reflog expire [--expire=<time>] "
--   "[--expire-unreachable=<time>] "
--   "[--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] "
--   "[--verbose] [--all] <refs>...");
--static const char reflog_delete_usage[] =
--N_("git reflog delete [--rewrite] [--updateref] "
--   "[--dry-run | -n] [--verbose] <refs>...");
- static const char reflog_exists_usage[] =
- N_("git reflog exists <ref>");
- 
-@@ -29,6 +20,7 @@ static timestamp_t default_reflog_expire_unreachable;
- 
- struct cmd_reflog_expire_cb {
- 	int stalefix;
-+	int explicit_expiry;
- 	timestamp_t expire_total;
- 	timestamp_t expire_unreachable;
- 	int recno;
-@@ -520,18 +512,18 @@ static int reflog_expire_config(const char *var, const char *value, void *cb)
- 	return 0;
- }
- 
--static void set_reflog_expiry_param(struct cmd_reflog_expire_cb *cb, int slot, const char *ref)
-+static void set_reflog_expiry_param(struct cmd_reflog_expire_cb *cb, const char *ref)
- {
- 	struct reflog_expire_cfg *ent;
- 
--	if (slot == (EXPIRE_TOTAL|EXPIRE_UNREACH))
-+	if (cb->explicit_expiry == (EXPIRE_TOTAL|EXPIRE_UNREACH))
- 		return; /* both given explicitly -- nothing to tweak */
- 
- 	for (ent = reflog_expire_cfg; ent; ent = ent->next) {
- 		if (!wildmatch(ent->pattern, ref, 0)) {
--			if (!(slot & EXPIRE_TOTAL))
-+			if (!(cb->explicit_expiry & EXPIRE_TOTAL))
- 				cb->expire_total = ent->expire_total;
--			if (!(slot & EXPIRE_UNREACH))
-+			if (!(cb->explicit_expiry & EXPIRE_UNREACH))
- 				cb->expire_unreachable = ent->expire_unreachable;
- 			return;
- 		}
-@@ -541,29 +533,87 @@ static void set_reflog_expiry_param(struct cmd_reflog_expire_cb *cb, int slot, c
- 	 * If unconfigured, make stash never expire
- 	 */
- 	if (!strcmp(ref, "refs/stash")) {
--		if (!(slot & EXPIRE_TOTAL))
-+		if (!(cb->explicit_expiry & EXPIRE_TOTAL))
- 			cb->expire_total = 0;
--		if (!(slot & EXPIRE_UNREACH))
-+		if (!(cb->explicit_expiry & EXPIRE_UNREACH))
- 			cb->expire_unreachable = 0;
- 		return;
- 	}
- 
- 	/* Nothing matched -- use the default value */
--	if (!(slot & EXPIRE_TOTAL))
-+	if (!(cb->explicit_expiry & EXPIRE_TOTAL))
- 		cb->expire_total = default_reflog_expire;
--	if (!(slot & EXPIRE_UNREACH))
-+	if (!(cb->explicit_expiry & EXPIRE_UNREACH))
- 		cb->expire_unreachable = default_reflog_expire_unreachable;
- }
- 
-+static const char * reflog_expire_usage[] = {
-+	N_("git reflog expire [--expire=<time>] "
-+	   "[--expire-unreachable=<time>] "
-+	   "[--rewrite] [--updateref] [--stale-fix] [--dry-run | -n] "
-+	   "[--verbose] [--all] <refs>..."),
-+	NULL
-+};
-+
-+static int expire_unreachable_callback(const struct option *opt,
-+				 const char *arg,
-+				 int unset)
-+{
-+	struct cmd_reflog_expire_cb *cmd = opt->value;
-+
-+	if (parse_expiry_date(arg, &cmd->expire_unreachable))
-+			die(_("malformed expiration date '%s'"), arg);
-+
-+	cmd->explicit_expiry |= EXPIRE_UNREACH;
-+	return 0;
-+}
-+
-+static int expire_total_callback(const struct option *opt,
-+				 const char *arg,
-+				 int unset)
-+{
-+	struct cmd_reflog_expire_cb *cmd = opt->value;
-+
-+	if (parse_expiry_date(arg, &cmd->expire_total))
-+			die(_("malformed expiration date '%s'"), arg);
-+
-+	cmd->explicit_expiry |= EXPIRE_TOTAL;
-+	return 0;
-+}
-+
- static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- {
- 	struct cmd_reflog_expire_cb cmd = { 0 };
- 	timestamp_t now = time(NULL);
- 	int i, status, do_all, all_worktrees = 1;
--	int explicit_expiry = 0;
- 	unsigned int flags = 0;
- 	int verbose = 0;
- 	reflog_expiry_should_prune_fn *should_prune_fn = should_expire_reflog_ent;
-+	const struct option options[] = {
-+		OPT_BIT(0, "dry-run", &flags, N_("do not actually prune any entries"),
-+			EXPIRE_REFLOGS_DRY_RUN),
-+		OPT_BIT(0, "rewrite", &flags,
-+			N_("rewrite the old SHA1 with the new SHA1 of the entry that now precedes it"),
-+			EXPIRE_REFLOGS_REWRITE),
-+		OPT_BIT(0, "updateref", &flags,
-+			N_("update the reference to the value of the top reflog entry"),
-+			EXPIRE_REFLOGS_UPDATE_REF),
-+		OPT_BOOL(0, "verbose", &verbose, N_("print extra information on screen.")),
-+		OPT_CALLBACK_F(0, "expire", &cmd, N_("timestamp"),
-+			N_("prune entries older than the specified time"),
-+			PARSE_OPT_NONEG,
-+			expire_total_callback),
-+		OPT_CALLBACK_F(0, "expire-unreachable", &cmd, N_("timestamp"),
-+			N_("prune entries older than <time> that are not reachable from the current tip of the branch"),
-+			PARSE_OPT_NONEG,
-+			expire_unreachable_callback),
-+		OPT_BOOL(0, "stale-fix", &cmd.stalefix,
-+			N_("prune any reflog entries that point to broken commits")),
-+		OPT_BOOL(0, "all", &do_all, N_("process the reflogs of all references")),
-+		OPT_BOOL(1, "single-worktree", &all_worktrees,
-+			N_("limits processing to reflogs from the current worktree only.")),
-+		OPT_END()
-+	};
- 
- 	default_reflog_expire_unreachable = now - 30 * 24 * 3600;
- 	default_reflog_expire = now - 90 * 24 * 3600;
-@@ -572,45 +622,11 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 	save_commit_buffer = 0;
- 	do_all = status = 0;
- 
-+	cmd.explicit_expiry = 0;
- 	cmd.expire_total = default_reflog_expire;
- 	cmd.expire_unreachable = default_reflog_expire_unreachable;
- 
--	for (i = 1; i < argc; i++) {
--		const char *arg = argv[i];
--
--		if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
--			flags |= EXPIRE_REFLOGS_DRY_RUN;
--		else if (skip_prefix(arg, "--expire=", &arg)) {
--			if (parse_expiry_date(arg, &cmd.expire_total))
--				die(_("'%s' is not a valid timestamp"), arg);
--			explicit_expiry |= EXPIRE_TOTAL;
--		}
--		else if (skip_prefix(arg, "--expire-unreachable=", &arg)) {
--			if (parse_expiry_date(arg, &cmd.expire_unreachable))
--				die(_("'%s' is not a valid timestamp"), arg);
--			explicit_expiry |= EXPIRE_UNREACH;
--		}
--		else if (!strcmp(arg, "--stale-fix"))
--			cmd.stalefix = 1;
--		else if (!strcmp(arg, "--rewrite"))
--			flags |= EXPIRE_REFLOGS_REWRITE;
--		else if (!strcmp(arg, "--updateref"))
--			flags |= EXPIRE_REFLOGS_UPDATE_REF;
--		else if (!strcmp(arg, "--all"))
--			do_all = 1;
--		else if (!strcmp(arg, "--single-worktree"))
--			all_worktrees = 0;
--		else if (!strcmp(arg, "--verbose"))
--			verbose = 1;
--		else if (!strcmp(arg, "--")) {
--			i++;
--			break;
--		}
--		else if (arg[0] == '-')
--			usage(_(reflog_expire_usage));
--		else
--			break;
--	}
-+	argc = parse_options(argc, argv, prefix, options, reflog_expire_usage, 0);
- 
- 	if (verbose)
- 		should_prune_fn = should_expire_reflog_ent_verbose;
-@@ -657,7 +673,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 				.dry_run = !!(flags & EXPIRE_REFLOGS_DRY_RUN),
- 			};
- 
--			set_reflog_expiry_param(&cb.cmd, explicit_expiry, item->string);
-+			set_reflog_expiry_param(&cb.cmd,  item->string);
- 			status |= reflog_expire(item->string, flags,
- 						reflog_expiry_prepare,
- 						should_prune_fn,
-@@ -667,7 +683,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 		string_list_clear(&collected.reflogs, 0);
- 	}
- 
--	for (; i < argc; i++) {
-+	for (i = 0; i < argc; i++) {
- 		char *ref;
- 		struct expire_reflog_policy_cb cb = { .cmd = cmd };
- 
-@@ -675,7 +691,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 			status |= error(_("%s points nowhere!"), argv[i]);
- 			continue;
- 		}
--		set_reflog_expiry_param(&cb.cmd, explicit_expiry, ref);
-+		set_reflog_expiry_param(&cb.cmd, ref);
- 		status |= reflog_expire(ref, flags,
- 					reflog_expiry_prepare,
- 					should_prune_fn,
-@@ -696,6 +712,12 @@ static int count_reflog_ent(struct object_id *ooid, struct object_id *noid,
- 	return 0;
- }
- 
-+static const char * reflog_delete_usage[] = {
-+	N_("git reflog delete [--rewrite] [--updateref] "
-+   "[--dry-run | -n] [--verbose] <refs>..."),
-+	NULL
-+};
-+
- static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- {
- 	struct cmd_reflog_expire_cb cmd = { 0 };
-@@ -703,34 +725,28 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- 	unsigned int flags = 0;
- 	int verbose = 0;
- 	reflog_expiry_should_prune_fn *should_prune_fn = should_expire_reflog_ent;
--
--	for (i = 1; i < argc; i++) {
--		const char *arg = argv[i];
--		if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
--			flags |= EXPIRE_REFLOGS_DRY_RUN;
--		else if (!strcmp(arg, "--rewrite"))
--			flags |= EXPIRE_REFLOGS_REWRITE;
--		else if (!strcmp(arg, "--updateref"))
--			flags |= EXPIRE_REFLOGS_UPDATE_REF;
--		else if (!strcmp(arg, "--verbose"))
--			verbose = 1;
--		else if (!strcmp(arg, "--")) {
--			i++;
--			break;
--		}
--		else if (arg[0] == '-')
--			usage(_(reflog_delete_usage));
--		else
--			break;
--	}
-+	const struct option options[] = {
-+		OPT_BIT(0, "dry-run", &flags, N_("do not actually prune any entries"),
-+				EXPIRE_REFLOGS_DRY_RUN),
-+		OPT_BIT(0, "rewrite", &flags,
-+				N_("rewrite the old SHA1 with the new SHA1 of the entry that now precedes it"),
-+				EXPIRE_REFLOGS_REWRITE),
-+		OPT_BIT(0, "updateref", &flags,
-+				N_("update the reference to the value of the top reflog entry"),
-+				EXPIRE_REFLOGS_UPDATE_REF),
-+		OPT_BOOL(0, "verbose", &verbose, N_("print extra information on screen.")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options, reflog_delete_usage, 0);
- 
- 	if (verbose)
- 		should_prune_fn = should_expire_reflog_ent_verbose;
- 
--	if (argc - i < 1)
-+	if (argc < 1)
- 		return error(_("no reflog specified to delete"));
- 
--	for ( ; i < argc; i++) {
-+	for (i = 0; i < argc; i++) {
- 		const char *spec = strstr(argv[i], "@{");
- 		char *ep, *ref;
- 		int recno;
-
-base-commit: 194610f4cf2df839ebfd040c5da187c8c0162620
 -- 
 gitgitgadget
