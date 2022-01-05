@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49387C433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 16:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF785C433EF
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 16:34:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbiAEQd6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 11:33:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42510 "EHLO
+        id S231383AbiAEQd7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 11:33:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241938AbiAEQdt (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S241912AbiAEQdt (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 5 Jan 2022 11:33:49 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A857C061201
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 08:33:49 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id n19-20020a7bc5d3000000b003466ef16375so2268231wmk.1
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 08:33:49 -0800 (PST)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5328AC061245
+        for <git@vger.kernel.org>; Wed,  5 Jan 2022 08:33:48 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id r17so84171878wrc.3
+        for <git@vger.kernel.org>; Wed, 05 Jan 2022 08:33:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BK/oS73SUetZOI2Q/Wjfe2+okRB/7aUZYCJyoh5Pk9Y=;
-        b=iZVEWTxBHTutGTItEkz88dhxSq7hxkXZ0jQFHm+C66CDR1bUMRCE3rcj/H6y6FdTXs
-         9LVTrkANhKTyfVNBckZvXjQ/+9EPtjwxYp8CsD6wzJPJL1XWSgNsxLIigem3kn/3HDrT
-         GgZHaCKQ7d3abWBtnZijYavsI4KDdAc8e804EraRNuf9HP+GPHyYDi7CgWPlAC603CEJ
-         RkC/jTzCIbGfhVsrKXnerKJpTZEDQTxCJZETgg6jzinxqZIPfJJ74TYH/8PPcZOUy/nH
-         rJYcWxqC0E1w9xkOG1P6r/+IY8t6mjI2BEBla0UDuHg4/hmiFvhv5fD7NG98wVGa7BWj
-         Prhw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iHHzHecnqyxwtHUBkUYNGbnb9p+0kYYjvjuKakFAD6U=;
+        b=nI1cYpBGSmQRshjCmrzGFna26PpPgFWQ7X8f0S18tr8GyAl/8JjBNJ+vunUw5ZMDCI
+         NZFMoIRRAWwAJXtLXdY2wLU/HcC0SpxugcmohqUlTHJ41bvg8rq+m2twIUXhEGjL+z6t
+         fBO6llN3NqqpgdEZmXeNxlzkn3M1UpdAaBWpJzhiIJIMKHIJBPtU/uRjSDj50pm3G+HI
+         m1WUmzFyvbnESYPWe2bruUeSaoHopg3w/wqq9nrhaGijexc9Jn1T2eSVJZ8dHEqXt8qX
+         SwTekwmf6duDrvZRJSBLv1dTps91siVZoprwFAFfwJSMxTRwvpX5lA1oYLLIC+AjOvZg
+         M81g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BK/oS73SUetZOI2Q/Wjfe2+okRB/7aUZYCJyoh5Pk9Y=;
-        b=khlTKsyxV1+fBgMdAtM4LfEztnEm/7wKEqPjELttbMbXeHXyHeSZ6ehVqTZ0apYmty
-         2mx4MpS2GS28ZrS1wIC9065EzObpHxN7wjtV0zHbha4O6ZmcSElFxSpfj+Ote10Ci7wJ
-         RmNLtqKBGwptOKF8ffTssOtosuJKQ+ED+n4qK7jvYt0mswZ8SSlTupBVvMWFnXPSYnPq
-         MeMns7oNCRFP3G4i2sVvmqrsUf+fD8eh0hGfZCF1wpKY2y/GP3br+CoT7qpwIYSHO/pR
-         zeBD4FcTsWU5Zz9RKxA1fhdHqWU8RRpQ9bQtafU1mPdbaozzMknrS0TBs1gPFCgjsSEA
-         +nmg==
-X-Gm-Message-State: AOAM532rJyZSO9b+NcX6A3KDUlCKjV5xR8lBZty/ch1zdXC9ceTSJRhm
-        mX77E9jax7crzK2hcD7acZTbWY08y9A=
-X-Google-Smtp-Source: ABdhPJxQ+PV+2RDoOzI2YvP3+hIoNHGuoAYYVb12X+FNvSOVTEpN0F6vyotKpXxKuXk+rcHziDSLSQ==
-X-Received: by 2002:a05:600c:3caa:: with SMTP id bg42mr3581492wmb.106.1641400427426;
-        Wed, 05 Jan 2022 08:33:47 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iHHzHecnqyxwtHUBkUYNGbnb9p+0kYYjvjuKakFAD6U=;
+        b=oQ04oi8tZBZ258g/ohGDdzXrpH6NE15HBoNC4EuibA7UGuImCBbpT9GZoBs27FxhJ3
+         kG5qF6CP3zVq9JoTxrw3suZU5CM+XOBM2PgrqiZ42O+H740fMl+shUWOZx67Amiy5Hr4
+         ZKhLODci+IcUCgNWrqt3DeHMGnFJhatZnHz28IB+sk/2t6B9W16xwhU9ty7kWEYE5BBI
+         waYovO3/zQFjvHVjn11t/HPKU59P6+7t7EjE5bWYpeQfoKnerENNyOGndoTXJbSgv8eJ
+         n9DSQ+ovB4pl2pb7uulcpT3LDIc5LEHCdH0Vu5n4yp1HXatW++kkRQRpLOB+8FYnPWer
+         657Q==
+X-Gm-Message-State: AOAM533Uun2Ae9SMSiMG1RuuhmRUrSNxOeKBtVbhXy2+CLQrv9HkI6a0
+        kCKkULswnyo6mBzmE2PI6diS/RWkyH8=
+X-Google-Smtp-Source: ABdhPJzcAWQ2JEZTkoL5qqPO05tLjchJ3sLEMUBCVV0+vwKiwUYzCpDo8yQFcbzxFF9Z6hkXBMDvzw==
+X-Received: by 2002:adf:d1e2:: with SMTP id g2mr48582453wrd.179.1641400426475;
+        Wed, 05 Jan 2022 08:33:46 -0800 (PST)
 Received: from localhost.localdomain ([185.228.230.189])
-        by smtp.gmail.com with ESMTPSA id u20sm3417515wml.45.2022.01.05.08.33.46
+        by smtp.gmail.com with ESMTPSA id u20sm3417515wml.45.2022.01.05.08.33.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jan 2022 08:33:47 -0800 (PST)
+        Wed, 05 Jan 2022 08:33:46 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -56,190 +56,105 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Taylor Blau <me@ttaylorr.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH 1/2] merge-ort: add new merge-tree-ort command
-Date:   Wed,  5 Jan 2022 17:33:23 +0100
-Message-Id: <20220105163324.73369-2-chriscool@tuxfamily.org>
+Subject: [RFC PATCH 0/2] Introduce new merge-tree-ort command
+Date:   Wed,  5 Jan 2022 17:33:22 +0100
+Message-Id: <20220105163324.73369-1-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.34.1.433.g7bc349372a.dirty
-In-Reply-To: <20220105163324.73369-1-chriscool@tuxfamily.org>
-References: <20220105163324.73369-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This new command is similar as merge-tree, but uses
-merge-ort code and features, especially
-merge_incore_nonrecursive(), instead of those from
-resursive merge, to perform the merge.
+During the 2nd Virtual Git Contributors’ Summit last October, and even
+before, the subject of performing server side merges and rebases came
+up, as platforms like GitHub and GitLab would like to support many
+features and data formats that libgit2 doesn't support, like for
+example SHA256 hashes and partial clone.
 
-The output from this new command is very different from
-merge-tree's custom output, as we are only using code and
-features from diff.{h,c}, especially diff_tree_oid(). This
-should make it easy to customize and standardize the output
-using regular diff options in the future.
+It's hard for them to get rid of libgit2 though, because Git itself
+doesn't have a good way to support server side merges and rebases,
+while libgit2 has ways to perform them. Without server side merges and
+rebases, those platforms would have to launch some kind of checkout,
+which can be very expensive, before any merge or rebase.
 
-This command will be extended to support new features
-with the long-term goal of enabling merges and rebases
-without a worktree.
+The latest discussions on this topic following the 2nd Virtual
+Summit[1] ended with some proposals around a `git merge-tree` on
+steroids that could be a good solution to this issue.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- .gitignore               |  1 +
- Makefile                 |  1 +
- builtin.h                |  1 +
- builtin/merge-tree-ort.c | 93 ++++++++++++++++++++++++++++++++++++++++
- git.c                    |  1 +
- 5 files changed, 97 insertions(+)
+The current `git merge-tree` command though seems to have a number of
+issues, especially:
+
+  - it's too much related to the old merge recursive strategy which is
+    not the default anymore since v2.34.0 and is likely to be
+    deprecated over time,
+
+  - it seems to output things in its own special format, which is not
+    easy to customize, and which needs special code and logic to parse
+
+To move forward on this, this small RFC patch series introduces a new
+`git merge-tree-ort` command with the following design:
+
+  - it uses merge-ort's API as is to perform the merge
+  
+  - it gets back a tree oid and a cleanliness status from merge-ort's
+    API and prints them out first
+
+  - it uses diff's API as is to output changed paths and code
+
+  - the diff API, actually diff_tree_oid() is called 3 times: once for
+    the diff versus branch1 ("ours"), once for the diff versus branch2
+    ("theirs"), and once for the diff versus the base.
+
+Therefore:
+
+  - its code is very simple and very easy to extend and customize, for
+    example by passing diff or merge-ort options that the code would
+    just pass on to the merge-ort and diff APIs respectively
+
+  - its output can easily be parsed using simple code and existing
+    diff parsers
+
+This of course means that merge-tree-ort's output is not backward
+compatible with merge-tree's output, but it doesn't seem that there is
+much value in keeping the same output anyway. On the contrary
+merge-tree's output is likely to hold us back already.
+
+The first patch in the series adds the new command without any test
+and documentation.
+
+The second patch in the series adds a few tests that let us see how
+the command's output looks like in different very simple cases.
+
+Of course if this approach is considered valuable, I plan to add some
+documentation, more tests and very likely a number of options before
+submitting the next iteration.
+
+I am not sure that it's worth showing the 3 diffs (versus branch1,
+branch2 and base) by default. Maybe by default no diff at all should
+be shown and the command should have --branch1 (or --ours), --branch2
+(or --theirs) and --base options to ask for such output, but for an
+RFC patch I thought it would be better to output the 3 diffs so that
+people get a better idea of the approach this patch series is taking.
+
+[1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.2110211147490.56@tvgsbejvaqbjf.bet/
+
+
+Christian Couder (2):
+  merge-ort: add new merge-tree-ort command
+  merge-ort: add t/t4310-merge-tree-ort.sh
+
+ .gitignore                |   1 +
+ Makefile                  |   1 +
+ builtin.h                 |   1 +
+ builtin/merge-tree-ort.c  |  93 ++++++++++++++++++++++
+ git.c                     |   1 +
+ t/t4310-merge-tree-ort.sh | 162 ++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 259 insertions(+)
  create mode 100644 builtin/merge-tree-ort.c
+ create mode 100755 t/t4310-merge-tree-ort.sh
 
-diff --git a/.gitignore b/.gitignore
-index 054249b20a..2dfcb1a589 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -98,6 +98,7 @@
- /git-merge-index
- /git-merge-file
- /git-merge-tree
-+/git-merge-tree-ort
- /git-merge-octopus
- /git-merge-one-file
- /git-merge-ours
-diff --git a/Makefile b/Makefile
-index 75ed168adb..915e500b06 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1124,6 +1124,7 @@ BUILTIN_OBJS += builtin/merge-index.o
- BUILTIN_OBJS += builtin/merge-ours.o
- BUILTIN_OBJS += builtin/merge-recursive.o
- BUILTIN_OBJS += builtin/merge-tree.o
-+BUILTIN_OBJS += builtin/merge-tree-ort.o
- BUILTIN_OBJS += builtin/merge.o
- BUILTIN_OBJS += builtin/mktag.o
- BUILTIN_OBJS += builtin/mktree.o
-diff --git a/builtin.h b/builtin.h
-index 8a58743ed6..c68f46b118 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -182,6 +182,7 @@ int cmd_merge_ours(int argc, const char **argv, const char *prefix);
- int cmd_merge_file(int argc, const char **argv, const char *prefix);
- int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
- int cmd_merge_tree(int argc, const char **argv, const char *prefix);
-+int cmd_merge_tree_ort(int argc, const char **argv, const char *prefix);
- int cmd_mktag(int argc, const char **argv, const char *prefix);
- int cmd_mktree(int argc, const char **argv, const char *prefix);
- int cmd_multi_pack_index(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/merge-tree-ort.c b/builtin/merge-tree-ort.c
-new file mode 100644
-index 0000000000..1c8ecd16ec
---- /dev/null
-+++ b/builtin/merge-tree-ort.c
-@@ -0,0 +1,93 @@
-+#include "builtin.h"
-+#include "merge-ort.h"
-+#include "diff.h"
-+
-+static const char merge_tree_ort_usage[] = "git merge-tree-ort <base-tree> <branch1> <branch2>";
-+
-+static void show_result(struct tree *base_tree,
-+			struct tree *head_tree,
-+			struct tree *merge_tree,
-+			struct merge_result *result)
-+{
-+	const struct object_id *base_oid = &(base_tree->object.oid);
-+	const struct object_id *head_oid = &(head_tree->object.oid);
-+	const struct object_id *merge_oid = &(merge_tree->object.oid);
-+	const struct object_id *result_oid = &(result->tree->object.oid);
-+	struct diff_options opts;
-+
-+	repo_diff_setup(the_repository, &opts);
-+	opts.stat_width = -1; /* use full terminal width */
-+	opts.output_format |= DIFF_FORMAT_RAW | DIFF_FORMAT_PATCH;
-+	opts.detect_rename = DIFF_DETECT_RENAME;
-+	diff_setup_done(&opts);
-+
-+	printf("result tree: %s\n", oid_to_hex(result_oid));
-+	printf("clean: %d\n", result->clean);
-+
-+	printf("diff with branch1:\n");
-+	diff_tree_oid(head_oid, result_oid, "", &opts);
-+	diffcore_std(&opts);
-+	diff_flush(&opts);
-+
-+	printf("diff with branch2:\n");
-+	diff_tree_oid(merge_oid, result_oid, "", &opts);
-+	diffcore_std(&opts);
-+	diff_flush(&opts);
-+
-+	printf("diff with base:\n");
-+	diff_tree_oid(base_oid, result_oid, "", &opts);
-+	diffcore_std(&opts);
-+	diff_flush(&opts);
-+}
-+
-+static struct commit *get_commit_by_name_or_die(const char *name)
-+{
-+	struct commit *c = lookup_commit_reference_by_name(name);
-+	if (!c)
-+		die(_("not a valid commit name '%s'"), name);
-+	return c;
-+}
-+
-+static void merge_trees_ort(const char *base_name,
-+			    const char *branch1,
-+			    const char *branch2)
-+{
-+	struct merge_result result;
-+	struct merge_options merge_opt;
-+
-+	struct commit *base = get_commit_by_name_or_die(base_name);
-+	struct commit *head = get_commit_by_name_or_die(branch1);
-+	struct commit *merge = get_commit_by_name_or_die(branch2);
-+
-+	struct tree *base_tree = get_commit_tree(base);
-+	struct tree *head_tree = get_commit_tree(head);
-+	struct tree *merge_tree = get_commit_tree(merge);
-+
-+	memset(&result, 0, sizeof(result));
-+	init_merge_options(&merge_opt, the_repository);
-+
-+	merge_opt.show_rename_progress = 1;
-+	merge_opt.branch1 = branch1;
-+	merge_opt.branch2 = branch2;
-+	merge_opt.ancestor = base_name;
-+
-+	result.tree = head_tree;
-+
-+	merge_incore_nonrecursive(&merge_opt,
-+				  base_tree,
-+				  result.tree,
-+				  merge_tree,
-+				  &result);
-+
-+	show_result(base_tree, head_tree, merge_tree, &result);
-+}
-+
-+int cmd_merge_tree_ort(int argc, const char **argv, const char *prefix)
-+{
-+	if (argc != 4)
-+		usage(merge_tree_ort_usage);
-+
-+	merge_trees_ort(argv[1], argv[2], argv[3]);
-+
-+	return 0;
-+}
-diff --git a/git.c b/git.c
-index 7edafd8ecf..90b8a4984c 100644
---- a/git.c
-+++ b/git.c
-@@ -562,6 +562,7 @@ static struct cmd_struct commands[] = {
- 	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "merge-tree", cmd_merge_tree, RUN_SETUP | NO_PARSEOPT },
-+	{ "merge-tree-ort", cmd_merge_tree_ort, RUN_SETUP | NO_PARSEOPT },
- 	{ "mktag", cmd_mktag, RUN_SETUP | NO_PARSEOPT },
- 	{ "mktree", cmd_mktree, RUN_SETUP },
- 	{ "multi-pack-index", cmd_multi_pack_index, RUN_SETUP },
 -- 
 2.34.1.433.g7bc349372a.dirty
 
