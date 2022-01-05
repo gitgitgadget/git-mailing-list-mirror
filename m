@@ -2,85 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE1CFC433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 16:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3D3CC433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 16:45:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241979AbiAEQlC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 11:41:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44252 "EHLO
+        id S241993AbiAEQpO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 11:45:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241974AbiAEQlB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 11:41:01 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D405C061245
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 08:41:01 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id f134-20020a1c1f8c000000b00345c05bc12dso3639616wmf.3
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 08:41:01 -0800 (PST)
+        with ESMTP id S235747AbiAEQpJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 11:45:09 -0500
+Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39B19C061245
+        for <git@vger.kernel.org>; Wed,  5 Jan 2022 08:45:09 -0800 (PST)
+Received: by mail-ua1-x92e.google.com with SMTP id o63so70135074uao.5
+        for <git@vger.kernel.org>; Wed, 05 Jan 2022 08:45:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jrtc27.com; s=gmail.jrtc27.user;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=OvOlo0G6nzyt1FB+oPmZEwGd/0YuvJlwBrqtQkwyDTg=;
-        b=OfEFf3q+o4OfyQVEg8leyruzmLijyuQdl7RJtBFRgERPYaJnfDJjDdFSYxRaeol1px
-         sA4/SXF6oszaabiPTSBM5a9dMLRPCTlpFSrxiA4PfMMUe8oBegsf9pKG9zs/AlWGfCMM
-         7fZlg/ZfJBgkOJjcF/giM2mr8odBPKlO3TCz9IXM0KTlRsQ7zdFfNo+NgWGFDemYbUFc
-         B1UF8DQ5rBit/fxbe0BDqGEUuX5+76GzepMwBhkAJw/SSoKHPv2ujuOckn0UNQ8ImXXD
-         RL/w5lFzQczU/iCzcl8uWHtqAdiKu8KsJvXa7CUM4sU1BsYW2xbss60PMoFKs+1FJJX+
-         ZLQA==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Ez8+O9mjGAXYlCrHYqlr9SHZkJUeUvB2lFkGwvEBSQw=;
+        b=XcVpYiFOcQU1xpOGzIaq74mF7N+WMNhx5O9npcBo2bTydKAVCRDYJq2mQ8k81WUzME
+         yvdNRnVZzuIt/EO7BgfvoLU1FyuVPivGJYj1bh6rWbQpnYbqNykoM9ez9eTlx6aolU7H
+         F/dsMb5LsDr6Eww/V1NQ3OtPFHqKrh5xsMgeprisCsGwkAGv5YLINQGCUq5+PJWZSdc7
+         LFzEUfVSAHB4jTLdCmgPcZYcnWiqwKGNHlMaIqgmxH2RKMiDTssHUUShIbkElwV98C+o
+         VF07apwAo+iTm7XIQLSv0RdvChkk7sTLze9p4iLceXrL41yxyVT1bQH8ZmxZQ86FA/G8
+         U8IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=OvOlo0G6nzyt1FB+oPmZEwGd/0YuvJlwBrqtQkwyDTg=;
-        b=MpWPW2bqfpw58BHf25g27VetfxkewktGrNXif99L8dsemSMwtVEuU2TeIMl7mPgP9M
-         reNBFAOYqUp5906j/bpkPMTULPhaVGB0T4ftX3+7qSyhR1pBLBcq6bXwX1vEpETjkRjh
-         JAYuTZb9yEr5yjBP3qZ2B2sDVRPvQYE1htIDPmnem9YqSqCfiuQ0Nx7lLsVIPVI7VXVJ
-         uzEnXHig2HU2yubV6+CKLsTczMZ4xsUV1JaltS0e9zJ8XG0n/wEQ5g8q/b0VWAvihV4d
-         csRP4Tzh9uhh0ren90qa3RHmLkiULMfGb8Fr0HqhpJPZB0/sQkotEa7+F58zKt8wfizg
-         4O+w==
-X-Gm-Message-State: AOAM533kd6LYQN+uRMcpO+QLe1S+bOCysdvo8r+0J0EpGbdlPj54kq0I
-        +xzLb5EcS5uAvbJQvs1b/J8qPlCHva28qA==
-X-Google-Smtp-Source: ABdhPJwyKJNfwOf7z3kqL95/e9vSNrfUV0pLLeewiJmTI9PmMkrGthfbiVmtwArqh2Vc6AO5RrKmaQ==
-X-Received: by 2002:a05:600c:190c:: with SMTP id j12mr3576549wmq.166.1641400859863;
-        Wed, 05 Jan 2022 08:40:59 -0800 (PST)
-Received: from smtpclient.apple (global-5-141.nat-2.net.cam.ac.uk. [131.111.5.141])
-        by smtp.gmail.com with ESMTPSA id q14sm40615006wro.58.2022.01.05.08.40.59
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 05 Jan 2022 08:40:59 -0800 (PST)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Re: [PATCH] apply: Avoid ambiguous pointer provenance for CHERI/Arm's
- Morello
-From:   Jessica Clarke <jrtc27@jrtc27.com>
-In-Reply-To: <20220105163935.eqfdqbeifcgj2wna@carbon>
-Date:   Wed, 5 Jan 2022 16:40:59 +0000
-Cc:     git@vger.kernel.org
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Ez8+O9mjGAXYlCrHYqlr9SHZkJUeUvB2lFkGwvEBSQw=;
+        b=GrtFW0Et5SqXk/PXlYt+peqKm7UeyidFJDiZq2wI17oze4cWZWJS3WJXKEYwE9oHCW
+         AXNAimpvbtvmJE3GRGufxo6TrcFJepo5ubtpJSPrLFrLXlaqjyLSu8gB2ThptzrqO9Vy
+         TQ/Wc0uCAR0pvy9+3yad7tQSjKvFACW39yhCWs6fHJbZ2k47anzj6okBxEnLsoB+nJmr
+         qn8ALNX5bhPBDwuKCiuHG5ueojqlsEFr4HpjpShDCJ2U7v36/gS6nVteSKV9k0ulJ/JJ
+         5Ltnd//B9onq1oRAFk/EozKQRtVTTiOpJgffQMIWohsD8nPH6mlUynUlqAJKArj36+IZ
+         jk6g==
+X-Gm-Message-State: AOAM5320fwYgbLHjgJckYXzBayraZrFzIy33oslLGe1a2anv0s3LmIDD
+        1FRJkLuZGiOFwigCqzeifMKwYPi0B90/o46bdoM=
+X-Google-Smtp-Source: ABdhPJy0k0UGuzr6Wuj4wHTsPNo3fYgUO/sQ/vzUvDpsMrYawRgdC5u591sGgahROeMZKtbuNct67V+b0qZyM/oSY7s=
+X-Received: by 2002:a05:6102:6d1:: with SMTP id m17mr15660114vsg.8.1641401108280;
+ Wed, 05 Jan 2022 08:45:08 -0800 (PST)
+MIME-Version: 1.0
+References: <cover.1641043500.git.dyroneteng@gmail.com> <e0add802fbbabde7e7b3743127b2d4047f1ce760.1641043500.git.dyroneteng@gmail.com>
+ <nycvar.QRO.7.76.6.2201041533540.7076@tvgsbejvaqbjf.bet> <CADMgQSSjoxqzBDyGXiNC4wHqYGK7z4O0SG0zai85D-DtDHem=w@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2201051348050.7076@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2201051348050.7076@tvgsbejvaqbjf.bet>
+From:   Teng Long <dyroneteng@gmail.com>
+Date:   Thu, 6 Jan 2022 00:44:56 +0800
+Message-ID: <CADMgQSRxko6nC0zfDiVVfL2ZkdQVbBq0s59Er+6Nmg9vz4uJKQ@mail.gmail.com>
+Subject: Re: [PATCH v8 8/8] ls-tree.c: introduce "--format" option
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     avarab@gmail.com, congdanhqx@gmail.com, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>, peff@peff.net,
+        tenglong.tl@alibaba-inc.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <85A71121-BD74-416B-BDC5-3818C6892F7C@jrtc27.com>
-References: <20220105132310.6600-1-jrtc27@jrtc27.com>
- <20220105163935.eqfdqbeifcgj2wna@carbon>
-To:     Konstantin Khomoutov <kostix@bswap.ru>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5 Jan 2022, at 16:39, Konstantin Khomoutov <kostix@bswap.ru> wrote:
->=20
-> On Wed, Jan 05, 2022 at 01:23:10PM +0000, Jessica Clarke wrote:
->=20
-> [...]
->> This means that, currently, the code when run on a CHERI architecture
->> will preserve the metadata from the integer, i.e. an invalid =
-capability
->> that will trap on deference, and not the pointer.
->=20
-> ^ You have probably meant to use "dereference" here.
+On Wed, Jan 5, 2022 at 9:09 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 
-Indeed I did; spellcheck doesn=E2=80=99t help for wrong words...
+> Ah. I misremembered and thought that `"% 7s"` would do that, but you're
+> correct. See below for more on this.
+>
+> But first, I wonder why the test suite passes with the `strbuf_addstr()`
+> call... Is this line not covered by any test case?
 
-Should I send a v2, or can that be fixed on git-am?
+Definitely, me too.
 
-Jess
+> About the `%7s` thing: The most obvious resolution is to use `"      -"`
+> with `strbuf_addstr()`. And I would argue that this is the best
+> resolution.
 
+I agree that's a quick fix in that way.
+Can you feed me more info about why you think it's the best
+resolution?
+
+> If you disagree (and want to spin up a full `sprintf()` every time, just
+> to add those six space characters), feel free to integrate the following
+> into your patch series:
+>
+> -- snip --
+> From a390fcf7eec261c7f0e341bda79f2b1f326d151e Mon Sep 17 00:00:00 2001
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Date: Wed, 5 Jan 2022 14:02:19 +0100
+> Subject: [PATCH] cocci: allow padding with `strbuf_addf()`
+>
+> A convenient way to pad strings is to use something like
+> `strbuf_addf(&buf, "%20s", "Hello, world!")`.
+>
+> However, the Coccinelle rule that forbids a format `"%s"` with a
+> constant string argument cast too wide a net, and also forbade such
+> padding.
+>
+> Let's be a bit stricter in that Coccinelle rule.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  contrib/coccinelle/strbuf.cocci | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf.=
+cocci
+> index d9ada69b432..2d6e0f58fc8 100644
+> --- a/contrib/coccinelle/strbuf.cocci
+> +++ b/contrib/coccinelle/strbuf.cocci
+> @@ -44,7 +44,7 @@ struct strbuf *SBP;
+>
+>  @@
+>  expression E1, E2;
+> -format F =3D~ "s";
+> +format F =3D~ "^s$";
+>  @@
+>  - strbuf_addf(E1, "%@F@", E2);
+>  + strbuf_addstr(E1, E2);
+> --
+> 2.33.0.windows.2
+> -- snap --
+
+I appreciate the input of 'coccinelle' and the commit.
+
+The current relevant rules of 'strbuf' was added in commit [1], the
+purpose of it
+seems like to forbid some inefficient use cases and chase the performance
+profit as much as possible.
+
+I think "<SP*6>-" and "%7s", they both with the same result, the former
+benefits in performance, the later benefits in readability. So let's do a s=
+imple
+performance test under "linux", then think about which is better for this c=
+ase:
+
+    Benchmark 1: /opt/git/ls-tree-oid-only-addf/bin/git ls-tree -r
+--format=3D'> %(mode) %(type) %(object) %(size:padded)%x09%(file)'  HEAD
+    Time (mean =C2=B1 =CF=83):     387.7 ms =C2=B1   8.8 ms    [User: 357.6=
+ ms,
+System: 30.0 ms]
+    Range (min =E2=80=A6 max):   377.5 ms =E2=80=A6 399.5 ms    10 runs
+
+    Benchmark 1: /opt/git/ls-tree-oid-only-addstr/bin/git ls-tree -r
+--format=3D'> %(mode) %(type) %(object) %(size:padded)%x09%(file)'  HEAD
+    Time (mean =C2=B1 =CF=83):     388.9 ms =C2=B1   9.0 ms    [User: 362.7=
+ ms,
+System: 26.1 ms]
+    Range (min =E2=80=A6 max):   373.4 ms =E2=80=A6 399.8 ms    10 runs
+
+It's with a slight performance difference between the two.
+
+So, I decided to integrate your patch as a new commit in the current
+patchset and
+is it ok for me to mention it's from your guidance in the commit message or
+a "helped-by" something like this?
+
+Thanks.
+
+[1] https://github.com/git/git/commit/28c23cd4c3902449aff72cb9a4a703220be0d=
+6ac
