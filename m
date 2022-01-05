@@ -2,482 +2,264 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57096C433EF
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 09:59:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BE50C433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 10:36:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239142AbiAEJ7C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 04:59:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36832 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239141AbiAEJ6y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 04:58:54 -0500
-Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D55B1C061785
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 01:58:53 -0800 (PST)
-Received: by mail-vk1-xa2e.google.com with SMTP id l68so6397685vkh.4
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 01:58:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=rIFpFVrZDJP4I9nzuWdldBCoaWHhceeuaIoJxWAzySg=;
-        b=ITQiXD4fBnPOyYg26FNk3QPnEfqK9uXjVKwHOvMs97BrT6M4CQpnexvJ7cR9wFhsUT
-         PY94C+Mc8qZnk2eT2N1pkv+MgaG2R/gDDHm0MPXgg7IH3gX32iEf8Y6lMEorEdy+mZnu
-         NIZqkPu1QVDTZ7mSaBv1axvAeXkne//0oY47tEaZCv9q9e8KYLRXGXxLgfxTDOXgw38L
-         kvV355yXObPivzjkv7FsoCX++N5D3YXwWPCznP419nnZ6aQC4bQqWz/QLQn4/3/qqkL+
-         vLhpuNzBOxH2D75TzQs/sU6nc7uzGenrmbe6Jze2kGj8Ra4O0uC2D4EZYbD/mHdvW7r4
-         Escw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rIFpFVrZDJP4I9nzuWdldBCoaWHhceeuaIoJxWAzySg=;
-        b=0whJ2F3EUWcf58NQQQYukv4eQ9uqErlJO04urDYPTh97PeEd9uaF34Z157OrOojV2V
-         Qdqx79vPHKcFjW4JnkiljfPudoW3AtcQI5sHfZ2w7zcFvxTTNB3xd2vdFEPvNsTs3bnw
-         FO0yMTJJrnKsSRRKyHZfetJ2OR2zuI7H1kivZ8Cuh0J6nkCf2BXATGUBpEMlAfM3BoMu
-         XbIMGVVqmF1s0aro2fxO55Pvr7tO3ntwq83+gq2D0iU9XV1bcyCaLaOQpnnY9g6Hj7rs
-         X8KLJXeJwixiT07HuPsSXlpK8raCBZllV3cGJHbM6gHy4tF+5BkdMbOkEIdfUo3n866n
-         7vcg==
-X-Gm-Message-State: AOAM530S+G1y/KnQTfQ/HFTkElLJqxDluOa6VLShhZ4/HdsNOwU3hFVk
-        VlKciZZPAQuioxWNx/AgQFLlPtLFLgr3dvmxnTLp2rur60TLfwxlGNXQpQ==
-X-Google-Smtp-Source: ABdhPJxAhOUJUcIzDQRNhsNLQEh8BHFKsf6R8hRoWWiEdmR/5aS5VhQEBMkicvyFgvx9g/McfM1hApul28WThnVorMc=
-X-Received: by 2002:a05:6122:181b:: with SMTP id ay27mr18540437vkb.36.1641376732884;
- Wed, 05 Jan 2022 01:58:52 -0800 (PST)
+        id S234687AbiAEKgS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 05:36:18 -0500
+Received: from mail-vi1eur05on2085.outbound.protection.outlook.com ([40.107.21.85]:30624
+        "EHLO EUR05-VI1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S230353AbiAEKgP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 05:36:15 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ZNDv6lGFzvFjC8XOtXcle2hSwloikb7CHBKbmZgH+qT+HpuN8gWh4sLZbbjBipV8bTsxsSiJL9rfYNWCVZa/LrOoUi9Zbrlibuql2G+uJnlsLV4w4Bei4BMQsKZNrYqGXLOzxT/BnXYlekx8mba6D6lKnsqXAoFJ1rt049KinIMNACrYoIunWnKxLtfxswXiic6AGGYKNsCKQhdC+HAOlchEAzmlnWQHF+PEKRLDQcjm/Vm3jNR7HQmhcev++28oYOb3qZOmp2mR1zmT18V9npfWImMUd3emd7yxSDkv9zKHRhI80oVPG3xtljN6rKxUASZFWFI6W+wkGObylm07rA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2SjPPRBxVXNjGHaYaAiv1hm5ApcUTjGGLenkDo8fFhs=;
+ b=X5Hvl3YuiqwcUb1z8VCIIHIMTzzbnxtKEz6i0KlHppaLRYfz6KKBU4jcVRfvmKMbStrINAdJSfdQ7R8i4evzgPl1yUqI1QX6/AxE+x/QHD/Svk6GQhAPAMlqFqEiuOwI7x9Pt/wZx2/SvOHoKpYX4y+YuWFTdDJBQ8+qGNqISrEWFs9kpkL7JQpEwtUtuKgVoIUMokL4ZOJL/R7T+U81YP1nx+zLU090/YUqSxCg8M14UX5N4YA1B0V5r9xUZGKpkwqRbc1ixJPv5v9hwmmOStQFn4YE+T7dh/vG+QQX0ziIS2LquJc9xlckzHvIG4p2oVV2P/ZgSby/f/TRNt9bew==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
+ dkim=pass header.d=gigacodes.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2SjPPRBxVXNjGHaYaAiv1hm5ApcUTjGGLenkDo8fFhs=;
+ b=X2KelT9hVN95jl91tOuH/KlMp8KE34SZEZQkFZRQXUbrLaqXhgUbrtFByGwqCtux+Uc+EoZ8Nup5s/v6OmI/QmFSGV2lFgTt0Y+HBuvGys+SR34fs2AhmXgZEU02E3I3fMb6yU/E4QJV7okozLcYm4w2FihKHRVSAbmrHltZOSE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=gigacodes.de;
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
+ by PA4PR10MB4464.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:106::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4844.15; Wed, 5 Jan
+ 2022 10:36:13 +0000
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::486c:1c10:65ef:90f9]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::486c:1c10:65ef:90f9%6]) with mapi id 15.20.4867.007; Wed, 5 Jan 2022
+ 10:36:13 +0000
+Date:   Wed, 5 Jan 2022 11:36:11 +0100
+From:   Fabian Stelzer <fs@gigacodes.de>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Pedro Martelletto <pedro@yubico.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] gpg-interface: trim CR from ssh-keygen
+Message-ID: <20220105103611.upfmcrudw6n3ymx6@fs>
+References: <pull.1090.git.1638538276608.gitgitgadget@gmail.com>
+ <20220103095337.600536-1-fs@gigacodes.de>
+ <CAPig+cS6h6o2_dJAZC1M1Ace29bN2mhPgaEtTWtj3oXfcHq9cA@mail.gmail.com>
+ <xmqqee5oieb2.fsf@gitster.g>
+ <CAPig+cTM3wZz4NXjxYeBuFv0CVNS-T+pBFeVkfMQ-25pL1kBzw@mail.gmail.com>
+ <xmqqmtkcguvm.fsf@gitster.g>
+ <CAPig+cR93GyN53JoZbaiROrNtzGjiet7eTPQOk-26G+mB0KaCA@mail.gmail.com>
+ <20220104125534.wznwbkyxfcmyfqhb@fs>
+ <xmqqo84rcn3j.fsf@gitster.g>
+ <CAPig+cQinNZp_2=eo7nokMCZ9gc-tAKO1V_jejL2Ei9J63tSDQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQinNZp_2=eo7nokMCZ9gc-tAKO1V_jejL2Ei9J63tSDQ@mail.gmail.com>
+X-ClientProxiedBy: AS8PR07CA0022.eurprd07.prod.outlook.com
+ (2603:10a6:20b:451::17) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:102:12e::15)
 MIME-Version: 1.0
-References: <cover.1641043500.git.dyroneteng@gmail.com> <e0add802fbbabde7e7b3743127b2d4047f1ce760.1641043500.git.dyroneteng@gmail.com>
- <nycvar.QRO.7.76.6.2201041533540.7076@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2201041533540.7076@tvgsbejvaqbjf.bet>
-From:   Teng Long <dyroneteng@gmail.com>
-Date:   Wed, 5 Jan 2022 17:58:41 +0800
-Message-ID: <CADMgQSSjoxqzBDyGXiNC4wHqYGK7z4O0SG0zai85D-DtDHem=w@mail.gmail.com>
-Subject: Re: [PATCH v8 8/8] ls-tree.c: introduce "--format" option
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     avarab@gmail.com, congdanhqx@gmail.com, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>, peff@peff.net,
-        tenglong.tl@alibaba-inc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 96aa7479-ac6f-41da-e191-08d9d03731ad
+X-MS-TrafficTypeDiagnostic: PA4PR10MB4464:EE_
+X-Microsoft-Antispam-PRVS: <PA4PR10MB4464EE56DADA68E5E917FD29B64B9@PA4PR10MB4464.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: Nu39VIN37P9QfEy+8/YDAH0//gO6nfATI0xyoAX+Bfay4gWA7RodwEElSiyt9s3LSmk1L0PUUH3Q4lbnw1OrfHQ22JiQeqa7H/JmnKpPPz4jt+3bTLKfb8Z5BzAIkK75e7ChPi1G6zKVNW7mmxA/nNaqIa8EetLh2mP/BIg5td3qz+XY3fMChwzPPuge/Svho7PESQeOLdOB/dYs3Bfx4by8a8PrYSHe+2HkPAWQi0tZYECFKBY/iBcqJQV1ciNfTwNRgGD5x8UNacPWErAwnj6xuMRDZQNE+S6S892wkVqBnQxwB3UuKbmBaO35rz0S1NLz9xRUT8WL0LyoysRDqZZU2AP2pvzRd6UanRrNpYR5kM86ltOPfV9PjxFGw3R/O+dBftYRuNXY/723KRJ5pGy3QUNWyQeOWa9u7DgE6I4H+t35gdd6do0EjK8OuBmesZxro72gwUaeKVZzvYLch7Xe2DW328/4X39WqHuqa0sKsV3J49gjKOLFoVzl5EhHybnr8vVEwjH0glUTNLmaCHvqb6LwIBDvpq0N4LNtfXaLbjg0ELZ+hZ3qW094wSPQSBZyPLCrrSJ/T+LFiYRSVYdkhget+YtgSJ3IYuAnZNrAjT2A1Kfi2PxfB0Y0qmYTJP+Z0siwi1X+b7vi1V3TVw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(7916004)(4636009)(136003)(39830400003)(396003)(376002)(346002)(366004)(53546011)(66556008)(6506007)(26005)(5660300002)(66946007)(33716001)(38100700002)(8936002)(66476007)(508600001)(54906003)(316002)(6916009)(6486002)(2906002)(8676002)(1076003)(6512007)(83380400001)(9686003)(186003)(86362001)(4326008);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?b0t0cFFMUnl3NGoydE9IV3V0UlBWT1VMZ0MvSlg3WUVXYWpDaTRJYUhjdmpV?=
+ =?utf-8?B?YWMwR2U1SEdFbzRCdTRCcWN4WS9udDNkdk9BQ292bm5DelpJTHFweUFJZjR6?=
+ =?utf-8?B?S1phQ1hXMlYvWmVXdThLRUJMVnFOb3lyY2tjdE5xajgzRlIzRUduaU9YeFlR?=
+ =?utf-8?B?TGdZd3M1OW9IUkZYbFJlZWp0U3VIS1lJbjZVWlRtZkRWbDFxbnFIZ1IxeGhM?=
+ =?utf-8?B?UG0vbU50VmxNbGRDd3FNVkkvb0doTkJnamg3blFDdDBJQlFWMTVZYmloeTdB?=
+ =?utf-8?B?TUdNTE9NaWVtUmgrTXFiRGFkQVl6b3VWUU9YU3ZMTWpnTVgxNkVtRU5ReTZn?=
+ =?utf-8?B?NXNvQjVCTjNORmltUjJ3NExuWWNtWjJRRFhkbTFsbXhFVEtkanVBVVQwQ28y?=
+ =?utf-8?B?SjZkQ1UyY3RXdGZCUi9qN0hMY1RTajNmVXN2aURBckVUeGt2UU5seDFrbHdU?=
+ =?utf-8?B?NjRCZ3dkQXN3RTVHZW8vOEdSa0dDN2NxQ3JVRXRLZXZiRzEwMVhGVnZBRUpF?=
+ =?utf-8?B?VGdJSU1vU0ZYbkM5Q1pLYTNMeFlaL0xFbkxVTjFuVEZZbjBybi93UUR1TTJw?=
+ =?utf-8?B?Q1FlalRSOUFjRm4zU1pQSExQNE5SK1Z2YlhlKzJpQkhmKzFzOXFzdnBnRDJV?=
+ =?utf-8?B?UVgzZ1Rhcm4vd1RZRk5pL00rVUlEaDVIMjh6bHRwb2hPMzBJazhIYTl0K2hj?=
+ =?utf-8?B?blk0R2lDdE9FSForc2o3UWNieDYyMWwrakhvTkRUMzI0Ukt3cjZ4Rmg4dkZB?=
+ =?utf-8?B?UnQrR2VVUkhxampCaU9FUldGYVlPa2xBanBoclhqc21EU2tGdUorNjQ5aHdv?=
+ =?utf-8?B?cUdjNWd3UDI1UmhaV0w1d0EzbS9wZkY5N1IzSTRzenNQRVo1N29qWGJ6Vmhz?=
+ =?utf-8?B?eTlONGlhT3F1K1lxd0RhY1VhYkd6WjROcHN5TTc2V0lqWndDa2M2OWErWnBz?=
+ =?utf-8?B?NzVpV091RkZEUnpBUGdBTUE5NFVLQVVaN0dXYmVLdXlxd1J1NnBKOUxqcEFG?=
+ =?utf-8?B?T3EzMnpxRmZMUEdTNFAwc0JVQXBvcVc5Sk5oMDk0TWhNU2JBMDBIMDQ0UzBv?=
+ =?utf-8?B?R3QrdVU4WWlrLzk2NTBrNlBNeTRaa2FzU1ZHbnoxMVJ5RGtMSzJBZmtjNmxB?=
+ =?utf-8?B?anJtdGs3YWVtbUFRWWtuZ05QSzFmRWdvMjRIVTczOXVVUGVsM082WmNQY1l0?=
+ =?utf-8?B?bDRkcWVVQ3pHamtNQjluWDN2Z1JtSTIyTzF4TUtsOElEUHoyd3Zma0RDM1dV?=
+ =?utf-8?B?OXJHellEVnFGZno1MnJGbG1LRGpXVDR6YW9xdk0vWVpjZU4zejNEWjlDVG9Z?=
+ =?utf-8?B?ZCs4UjVpSnQ3cmMrRTlNMkF6ellRUUt2V2pQaTM2ZDJuSUhadklXRklPS2Jl?=
+ =?utf-8?B?V2RQOUhBU0NVU1ZsUHhDOFVkTFc2Vkd4SndqM1EwSzlOQXFWOEVPaEFvRHNq?=
+ =?utf-8?B?OWhsbU5xaTFBb1RJc2kwYWVwaHFsbDRHaGlmaS8wMWFlR1NCanpvemUxK1I3?=
+ =?utf-8?B?U1IzNzFkbEdvREhkTkpOeUNSdUpKNHozK2hvT1FLMXIwRml3WHRjeEhqaXl2?=
+ =?utf-8?B?dVZJRS94U1Y2S04rSzlpMG5tQUIxVWJWYjVNNnBRd2xnYnFFQUNYZmxtR0lY?=
+ =?utf-8?B?WXA3QUVIQXFFcjlrTFFCUDdvNUx2QUVLeXRFMGdkR1NFQjh5MHY1RUVkMkpI?=
+ =?utf-8?B?ZXUxdlhsTC9GbjlUOHQ3MzdSUW45cFVLK29aTjZsSGdZaUJQWDFXRlBKakhR?=
+ =?utf-8?B?MHVGQ1QxOFdsekVFMnZiV3d6NitEZ2c4THNyY1QrZ1JRbXFNODBYWXFOYnpY?=
+ =?utf-8?B?YzRZLzFTYmpnWEZHV3o1TFpXaVdGNjNoYldaT1NHL3BKREk5bFM1Mzd4em1o?=
+ =?utf-8?B?WWR4cG1UMUJCNUhNOTM4RDRkUGFrUnlZdEpRKzBmR1h6aFFGcTBqVCt3ZkVY?=
+ =?utf-8?B?aUZucVV1dmZJZjRxeDk2dUh5bUw1Q0gyUDVoQmJaMEtWZ09GeFBVSnhlR3Nj?=
+ =?utf-8?B?RVNBMHljVnY5MnhndjlkMmY2a0JGckxmcmNHT29tV2orakN3TUVoUExYRW9v?=
+ =?utf-8?B?a3cxaE42Ui90NmRkek1GZUlHTnpUd3dPWU12TXNEclJxSjd5T08vazk2dE9x?=
+ =?utf-8?B?cExvSzlzRGhSSlM2dEx3Ukowcmo4cHZ6TWlYdmdtczllaWVUb0l5eVZhdEpn?=
+ =?utf-8?B?ajMwaXk5ckpwbHpIcHNaeVB5TnJxNk56ZzBWbUtBelR4NERsNnhPU25lc3A3?=
+ =?utf-8?Q?LS337vPrtp/0QzEdSryjDcMQ/SOtSHRzpYa/wHKwA0=3D?=
+X-OriginatorOrg: gigacodes.de
+X-MS-Exchange-CrossTenant-Network-Message-Id: 96aa7479-ac6f-41da-e191-08d9d03731ad
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jan 2022 10:36:13.0673
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8073ddygJ6RSDqC6WxMzToYplzrN73JLG5EsCvHQziDL+jCYtI6KnGg9Vjx9uc6/eXvdu3aGDierqcUttk84QPHUVjZ++VB8Bld46ZvA4EU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4464
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> This, along with two other similar instances, triggers the
-> `static-analysis` job in the CI failure of `seen`. The suggested diff is:
-
-The second and third I will optimize in the next patch.
-
-The first one. Actually I am a little puzzled from this :
-
-> -               strbuf_addf(line, "%7s", "-");
-> +               strbuf_addstr(line, "-");
-
-> But I think that the first hunk indicates a deeper issue, as `%7s`
-> probably meant to pad the dash to seven dashes (which that format won't
-> accomplish, but `strbuf_addchars()` would)?
-
-"strbuf_addf(line, "%7s", "-");" here is used to align the columns
-with a width of
-seven chars, not repeat one DASH to seven.
-
-A little weird about the fix recommendation of  "strbuf_addstr(line, "-");"=
- ,
-because it will only add a single DASH here.
-
-It's the identical result which compares to the "master"[1]  I think with t=
-he
-current codes and I tested the "strbuf_addf()" simply and it seems to work
-fine.
-
-[1] https://github.com/git/git/blob/master/builtin/ls-tree.c#L106
-
-Thanks.
-
-Johannes Schindelin <Johannes.Schindelin@gmx.de> =E4=BA=8E2022=E5=B9=B41=E6=
-=9C=884=E6=97=A5=E5=91=A8=E4=BA=8C 22:38=E5=86=99=E9=81=93=EF=BC=9A
+On 05.01.2022 02:09, Eric Sunshine wrote:
+>On Tue, Jan 4, 2022 at 2:33 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> Fabian Stelzer <fs@gigacodes.de> writes:
+>> > I guess we need a bit more context for this patch to make sense:
+>> >
+>> > for (line = ssh_principals_out.buf; *line;
+>> >      line = strchrnul(line + 1, '\n')) {
+>> >       while (*line == '\n')
+>> >               line++;
+>> >       if (!*line)
+>> >               break;
+>> >
+>> >       trust_size = strcspn(line, "\n"); /* truncate at LF */
+>> >       if (trust_size && trust_size != strlen(line) &&
+>> >           line[trust_size - 1] == '\r')
+>> >               trust_size--; /* the LF was part of CRLF at the end */
+>> >       principal = xmemdupz(line, trust_size);
+>>
+>> Ahh, OK.  Sorry for being ultra lazy for not visiting the actual
+>> source but just responding after reading only somebody else's
+>> comments.
 >
-> Hi Teng,
+>I'm also guilty of being lazy and not consulting the actual source. Sorry.
 >
-> On Sat, 1 Jan 2022, Teng Long wrote:
+>Fabian, thanks for all the extra context information.
 >
-> > diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-> > index 009ffeb15d..6e3e5a4d06 100644
-> > --- a/builtin/ls-tree.c
-> > +++ b/builtin/ls-tree.c
-> > @@ -56,23 +56,75 @@ enum {
-> >
-> >  static int cmdmode =3D MODE_UNSPECIFIED;
-> >
-> > -static int parse_shown_fields(void)
-> > +static const char *format;
-> > +static const char *default_format =3D "%(mode) %(type) %(object)%x09%(=
-file)";
-> > +static const char *long_format =3D "%(mode) %(type) %(object) %(size:p=
-added)%x09%(file)";
-> > +static const char *name_only_format =3D "%(file)";
-> > +static const char *object_only_format =3D "%(object)";
-> > +
-> > +static void expand_objectsize(struct strbuf *line, const struct object=
-_id *oid,
-> > +                           const enum object_type type, unsigned int p=
-added)
-> >  {
-> > -     if (cmdmode =3D=3D MODE_NAME_ONLY) {
-> > -             shown_bits =3D SHOW_FILE_NAME;
-> > -             return 0;
-> > +     if (type =3D=3D OBJ_BLOB) {
-> > +             unsigned long size;
-> > +             if (oid_object_info(the_repository, oid, &size) < 0)
-> > +                     die(_("could not get object info about '%s'"),
-> > +                         oid_to_hex(oid));
-> > +             if (padded)
-> > +                     strbuf_addf(line, "%7" PRIuMAX, (uintmax_t)size);
-> > +             else
-> > +                     strbuf_addf(line, "%" PRIuMAX, (uintmax_t)size);
-> > +     } else if (padded) {
-> > +             strbuf_addf(line, "%7s", "-");
+>> OK, so I was completely missing the idea.  And I agree that it may
+>> be a good idea to check how strcspn() returned to deal with an
+>> incomplete line, although as you hint later in the message I am
+>> responding to, checking line[trust_size] would be a more obvious
+>> implementation.
+>>
+>> In any case, I think the earlier part of the loop is more confusing,
+>> and I think fixing that would naturally fix the trust_size
+>> computation.  For example, wouldn't this easier to grok?
 >
-> This, along with two other similar instances, triggers the
-> `static-analysis` job in the CI failure of `seen`. The suggested diff is:
+>Indeed, the existing code is confusing me. I've been staring at it for
+>several minutes and I think I'm still failing to understand the
+>purpose of the +1 in the strchrnul() call. Perhaps I'm missing
+>something obvious(?).
+
+This whole loop was basically copied from parse_gpg_output() above. Without 
+the +1 this would always find the same line in the buffer. The +1 skips over 
+the previously found LF.
+
 >
+>>         const char *next;
+>>
+>>         for (line = ssh_principals_out.buf;
+>>              *line;
+>>              line = next) {
+>>                 const char *end_of_text;
+>>
+>>                 /* Find the terminating LF */
+>>                 next = end_of_text = strchrnul(line, '\n');
+>>
+>>                 /* Did we find a LF, and did we have CR before it? */
+>>                 if (*end_of_text &&
+>>                     line < end_of_text &&
+>>                     end_of_text[-1] == '\r')
+>>                         end_of_text--;
 >
-> -- snip --
-> diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-> index 6e3e5a4d0634..8301d1a15f9a 100644
-> --- a/builtin/ls-tree.c
-> +++ b/builtin/ls-tree.c
-> @@ -75,7 +75,7 @@ static void expand_objectsize(struct strbuf *line, cons=
-t struct object_id *oid,
->                 else
->                         strbuf_addf(line, "%" PRIuMAX, (uintmax_t)size);
->         } else if (padded) {
-> -               strbuf_addf(line, "%7s", "-");
-> +               strbuf_addstr(line, "-");
->         } else {
->                 strbuf_addstr(line, "-");
->         }
-> @@ -110,7 +110,7 @@ static size_t expand_show_tree(struct strbuf *line, c=
-onst char *start,
->         } else if (skip_prefix(start, "(size)", &p)) {
->                 expand_objectsize(line, data->oid, data->type, 0);
->         } else if (skip_prefix(start, "(object)", &p)) {
-> -               strbuf_addstr(line, find_unique_abbrev(data->oid, abbrev)=
-);
-> +               strbuf_add_unique_abbrev(line, data->oid, abbrev);
->         } else if (skip_prefix(start, "(file)", &p)) {
->                 const char *name =3D data->base->buf;
->                 const char *prefix =3D chomp_prefix ? ls_tree_prefix : NU=
-LL;
-> @@ -119,7 +119,7 @@ static size_t expand_show_tree(struct strbuf *line, c=
-onst char *start,
->                 strbuf_addstr(data->base, data->pathname);
->                 name =3D relative_path(data->base->buf, prefix, &sb);
->                 quote_c_style(name, &quoted, NULL, 0);
-> -               strbuf_addstr(line, quoted.buf);
-> +               strbuf_addbuf(line, &quoted);
->         } else {
->                 errlen =3D (unsigned long)len;
->                 die(_("bad ls-tree format: %%%.*s"), errlen, start);
-> -- snap --
+>It took several seconds for me to convince myself that the -1 array
+>index was safe. Had the `line < end_of_text` condition been written
+>`end_of_text > line`, I think it would have been immediately obvious,
+>but it's subjective, of course.
 >
-> But I think that the first hunk indicates a deeper issue, as `%7s`
-> probably meant to pad the dash to seven dashes (which that format won't
-> accomplish, but `strbuf_addchars()` would)?
+>>                 /* Unless we hit NUL, skip over the LF we found */
+>>                 if (*next)
+>>                         next++;
+>>
+>>                 /* Not all lines are data.  Skip empty ones */
+>>                 if (line == end_of_text)
+>>                         /*
+>>                          * You may want to allow skipping more than just
+>>                          * lines with 0-byte on them (e.g. comments?)
+>>                          * depending on the format you are reading.
+>>                          */
+>>                         continue;
+>>
+>>                 /* We now know we have an non-empty line. Process it */
+>>                 principal = xmemdupz(line, end_of_text - line);
+>>                 ...
+>>         }
+>>
+>> The idea is to make sure that the place where the line ending
+>> convention is taken care of is very isolated at the beginning of the
+>> loop.
 >
-> Ciao,
-> Dscho
->
-> > +     } else {
-> > +             strbuf_addstr(line, "-");
-> >       }
-> > -     if (cmdmode =3D=3D MODE_OBJECT_ONLY) {
-> > -             shown_bits =3D SHOW_OBJECT_NAME;
-> > -             return 0;
-> > +}
-> > +
-> > +static size_t expand_show_tree(struct strbuf *line, const char *start,
-> > +                            void *context)
-> > +{
-> > +     struct shown_data *data =3D context;
-> > +     const char *end;
-> > +     const char *p;
-> > +     unsigned int errlen;
-> > +     size_t len;
-> > +     len =3D strbuf_expand_literal_cb(line, start, NULL);
-> > +     if (len)
-> > +             return len;
-> > +
-> > +     if (*start !=3D '(')
-> > +             die(_("bad ls-tree format: as '%s'"), start);
-> > +
-> > +     end =3D strchr(start + 1, ')');
-> > +     if (!end)
-> > +             die(_("bad ls-tree format: element '%s' does not end in '=
-)'"), start);
-> > +
-> > +     len =3D end - start + 1;
-> > +     if (skip_prefix(start, "(mode)", &p)) {
-> > +             strbuf_addf(line, "%06o", data->mode);
-> > +     } else if (skip_prefix(start, "(type)", &p)) {
-> > +             strbuf_addstr(line, type_name(data->type));
-> > +     } else if (skip_prefix(start, "(size:padded)", &p)) {
-> > +             expand_objectsize(line, data->oid, data->type, 1);
-> > +     } else if (skip_prefix(start, "(size)", &p)) {
-> > +             expand_objectsize(line, data->oid, data->type, 0);
-> > +     } else if (skip_prefix(start, "(object)", &p)) {
-> > +             strbuf_addstr(line, find_unique_abbrev(data->oid, abbrev)=
-);
-> > +     } else if (skip_prefix(start, "(file)", &p)) {
-> > +             const char *name =3D data->base->buf;
-> > +             const char *prefix =3D chomp_prefix ? ls_tree_prefix : NU=
-LL;
-> > +             struct strbuf quoted =3D STRBUF_INIT;
-> > +             struct strbuf sb =3D STRBUF_INIT;
-> > +             strbuf_addstr(data->base, data->pathname);
-> > +             name =3D relative_path(data->base->buf, prefix, &sb);
-> > +             quote_c_style(name, &quoted, NULL, 0);
-> > +             strbuf_addstr(line, quoted.buf);
-> > +     } else {
-> > +             errlen =3D (unsigned long)len;
-> > +             die(_("bad ls-tree format: %%%.*s"), errlen, start);
-> >       }
-> > -     if (!ls_options || (ls_options & LS_RECURSIVE)
-> > -         || (ls_options & LS_SHOW_TREES)
-> > -         || (ls_options & LS_TREE_ONLY))
-> > -             shown_bits =3D SHOW_DEFAULT;
-> > -     if (cmdmode =3D=3D MODE_LONG)
-> > -             shown_bits =3D SHOW_DEFAULT | SHOW_SIZE;
-> > -     return 1;
-> > +     return len;
-> >  }
-> >
-> >  static int show_recursive(const char *base, size_t baselen,
-> > @@ -106,6 +158,75 @@ static int show_recursive(const char *base, size_t=
- baselen,
-> >       return 0;
-> >  }
-> >
-> > +static int show_tree_init(enum object_type *type, struct strbuf *base,
-> > +                       const char *pathname, unsigned mode, int *retva=
-l)
-> > +{
-> > +     if (S_ISGITLINK(mode)) {
-> > +             *type =3D OBJ_COMMIT;
-> > +     } else if (S_ISDIR(mode)) {
-> > +             if (show_recursive(base->buf, base->len, pathname)) {
-> > +                     *retval =3D READ_TREE_RECURSIVE;
-> > +                     if (!(ls_options & LS_SHOW_TREES))
-> > +                             return 1;
-> > +             }
-> > +             *type =3D OBJ_TREE;
-> > +     }
-> > +     else if (ls_options & LS_TREE_ONLY)
-> > +             return 1;
-> > +     return 0;
-> > +}
-> > +
-> > +static int show_tree_fmt(const struct object_id *oid, struct strbuf *b=
-ase,
-> > +                      const char *pathname, unsigned mode, void *conte=
-xt)
-> > +{
-> > +     size_t baselen;
-> > +     int retval =3D 0;
-> > +     struct strbuf line =3D STRBUF_INIT;
-> > +     struct shown_data data =3D {
-> > +             .mode =3D mode,
-> > +             .type =3D OBJ_BLOB,
-> > +             .oid =3D oid,
-> > +             .pathname =3D pathname,
-> > +             .base =3D base,
-> > +     };
-> > +
-> > +     if (show_tree_init(&data.type, base, pathname, mode, &retval))
-> > +             return retval;
-> > +
-> > +     baselen =3D base->len;
-> > +     strbuf_expand(&line, format, expand_show_tree, &data);
-> > +     strbuf_addch(&line, line_termination);
-> > +     fwrite(line.buf, line.len, 1, stdout);
-> > +     strbuf_setlen(base, baselen);
-> > +     return retval;
-> > +}
-> > +
-> > +static int parse_shown_fields(void)
-> > +{
-> > +     if (cmdmode =3D=3D MODE_NAME_ONLY ||
-> > +         (format && !strcmp(format, name_only_format))) {
-> > +             shown_bits =3D SHOW_FILE_NAME;
-> > +             return 1;
-> > +     }
-> > +
-> > +     if (cmdmode =3D=3D MODE_OBJECT_ONLY ||
-> > +         (format && !strcmp(format, object_only_format))) {
-> > +             shown_bits =3D SHOW_OBJECT_NAME;
-> > +             return 1;
-> > +     }
-> > +
-> > +     if (!ls_options || (ls_options & LS_RECURSIVE)
-> > +         || (ls_options & LS_SHOW_TREES)
-> > +         || (ls_options & LS_TREE_ONLY)
-> > +             || (format && !strcmp(format, default_format)))
-> > +             shown_bits =3D SHOW_DEFAULT;
-> > +
-> > +     if (cmdmode =3D=3D MODE_LONG ||
-> > +             (format && !strcmp(format, long_format)))
-> > +             shown_bits =3D SHOW_DEFAULT | SHOW_SIZE;
-> > +     return 1;
-> > +}
-> > +
-> >  static int show_default(struct shown_data *data)
-> >  {
-> >       size_t baselen =3D data->base->len;
-> > @@ -137,24 +258,6 @@ static int show_default(struct shown_data *data)
-> >       return 1;
-> >  }
-> >
-> > -static int show_tree_init(enum object_type *type, struct strbuf *base,
-> > -                       const char *pathname, unsigned mode, int *retva=
-l)
-> > -{
-> > -     if (S_ISGITLINK(mode)) {
-> > -             *type =3D OBJ_COMMIT;
-> > -     } else if (S_ISDIR(mode)) {
-> > -             if (show_recursive(base->buf, base->len, pathname)) {
-> > -                     *retval =3D READ_TREE_RECURSIVE;
-> > -                     if (!(ls_options & LS_SHOW_TREES))
-> > -                             return 1;
-> > -             }
-> > -             *type =3D OBJ_TREE;
-> > -     }
-> > -     else if (ls_options & LS_TREE_ONLY)
-> > -             return 1;
-> > -     return 0;
-> > -}
-> > -
-> >  static int show_tree(const struct object_id *oid, struct strbuf *base,
-> >               const char *pathname, unsigned mode, void *context)
-> >  {
-> > @@ -196,6 +299,7 @@ int cmd_ls_tree(int argc, const char **argv, const =
-char *prefix)
-> >       struct object_id oid;
-> >       struct tree *tree;
-> >       int i, full_tree =3D 0;
-> > +     read_tree_fn_t fn =3D show_tree;
-> >       const struct option ls_tree_options[] =3D {
-> >               OPT_BIT('d', NULL, &ls_options, N_("only show trees"),
-> >                       LS_TREE_ONLY),
-> > @@ -218,6 +322,9 @@ int cmd_ls_tree(int argc, const char **argv, const =
-char *prefix)
-> >               OPT_BOOL(0, "full-tree", &full_tree,
-> >                        N_("list entire tree; not just current directory=
- "
-> >                           "(implies --full-name)")),
-> > +             OPT_STRING_F(0, "format", &format, N_("format"),
-> > +                          N_("format to use for the output"),
-> > +                          PARSE_OPT_NONEG),
-> >               OPT__ABBREV(&abbrev),
-> >               OPT_END()
-> >       };
-> > @@ -238,6 +345,10 @@ int cmd_ls_tree(int argc, const char **argv, const=
- char *prefix)
-> >           ((LS_TREE_ONLY|LS_RECURSIVE) & ls_options))
-> >               ls_options |=3D LS_SHOW_TREES;
-> >
-> > +     if (format && cmdmode)
-> > +             usage_msg_opt(
-> > +                     _("--format can't be combined with other format-a=
-ltering options"),
-> > +                     ls_tree_usage, ls_tree_options);
-> >       if (argc < 1)
-> >               usage_with_options(ls_tree_usage, ls_tree_options);
-> >       if (get_oid(argv[0], &oid))
-> > @@ -261,6 +372,18 @@ int cmd_ls_tree(int argc, const char **argv, const=
- char *prefix)
-> >       tree =3D parse_tree_indirect(&oid);
-> >       if (!tree)
-> >               die("not a tree object");
-> > -     return !!read_tree(the_repository, tree,
-> > -                        &pathspec, show_tree, NULL);
-> > +
-> > +     /*
-> > +      * The generic show_tree_fmt() is slower than show_tree(), so
-> > +      * take the fast path if possible.
-> > +      */
-> > +     if (format && (!strcmp(format, default_format) ||
-> > +                                !strcmp(format, long_format) ||
-> > +                                !strcmp(format, name_only_format) ||
-> > +                                !strcmp(format, object_only_format)))
-> > +             fn =3D show_tree;
-> > +     else if (format)
-> > +             fn =3D show_tree_fmt;
-> > +
-> > +     return !!read_tree(the_repository, tree, &pathspec, fn, NULL);
-> >  }
-> > diff --git a/t/t3105-ls-tree-format.sh b/t/t3105-ls-tree-format.sh
-> > new file mode 100755
-> > index 0000000000..92b4d240e8
-> > --- /dev/null
-> > +++ b/t/t3105-ls-tree-format.sh
-> > @@ -0,0 +1,55 @@
-> > +#!/bin/sh
-> > +
-> > +test_description=3D'ls-tree --format'
-> > +
-> > +TEST_PASSES_SANITIZE_LEAK=3Dtrue
-> > +. ./test-lib.sh
-> > +
-> > +test_expect_success 'ls-tree --format usage' '
-> > +     test_expect_code 129 git ls-tree --format=3Dfmt -l &&
-> > +     test_expect_code 129 git ls-tree --format=3Dfmt --name-only &&
-> > +     test_expect_code 129 git ls-tree --format=3Dfmt --name-status &&
-> > +     test_expect_code 129 git ls-tree --format=3Dfmt --object-only
-> > +'
-> > +
-> > +test_expect_success 'setup' '
-> > +     mkdir dir &&
-> > +     test_commit dir/sub-file &&
-> > +     test_commit top-file
-> > +'
-> > +
-> > +test_ls_tree_format () {
-> > +     format=3D$1 &&
-> > +     opts=3D$2 &&
-> > +     shift 2 &&
-> > +     git ls-tree $opts -r HEAD >expect.raw &&
-> > +     sed "s/^/> /" >expect <expect.raw &&
-> > +     git ls-tree --format=3D"> $format" -r HEAD >actual &&
-> > +     test_cmp expect actual
-> > +}
-> > +
-> > +test_expect_success 'ls-tree --format=3D<default-like>' '
-> > +     test_ls_tree_format \
-> > +             "%(mode) %(type) %(object)%x09%(file)" \
-> > +             ""
-> > +'
-> > +
-> > +test_expect_success 'ls-tree --format=3D<long-like>' '
-> > +     test_ls_tree_format \
-> > +             "%(mode) %(type) %(object) %(size:padded)%x09%(file)" \
-> > +             "--long"
-> > +'
-> > +
-> > +test_expect_success 'ls-tree --format=3D<name-only-like>' '
-> > +     test_ls_tree_format \
-> > +             "%(file)" \
-> > +             "--name-only"
-> > +'
-> > +
-> > +test_expect_success 'ls-tree --format=3D<object-only-like>' '
-> > +     test_ls_tree_format \
-> > +             "%(object)" \
-> > +             "--object-only"
-> > +'
-> > +
-> > +test_done
-> > --
-> > 2.33.0.rc1.1802.gbb1c3936fb.dirty
-> >
-> >
-> >
+>Yes, this may be an improvement, though the cognitive load is still
+>somewhat high. Using one of the `split` functions from strbuf.h or
+>string-list.h might reduce the cognitive load significantly, even if
+>this code still needs to handle CR removal manually since none of the
+>`split` functions are LF/CRLF agnostic. (Adding such a function might
+>be useful but could be outside the scope of this bug fix patch.)
+
+How about something like this:
+
+int string_find_line(char **line, size_t *len) {
+	const char *eol = NULL;
+
+	if (*len > 0) {
+		*line = *line + *len;
+		if (**line && **line == '\r')
+			(*line)++;
+		if (**line && **line == '\n')
+			(*line)++;
+	}
+
+	if (!**line)
+		return 0;
+
+	eol = strchrnul(*line, '\n');
+
+	/* Trim trailing CR from length */
+	if (eol > *line && eol[-1] == '\r')
+		eol--;
+
+	*len = eol - *line;
+	return 1;
+}
+
+Its use would then simply be:
+
+char *line = strbuf.buf;
+size_t len = 0;
+while(string_find_line(&line,&len)) {
+	if (!len)
+		continue; /* Skip over empty lines */
+	principal = xmemdupz(line, len);
+}
+
+Not sure about the name though.
+Maybe string_find_line() / _iterate_line / foreach_line ?
+
