@@ -2,288 +2,251 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 387B9C433EF
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 17:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D781C433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 17:27:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242156AbiAERIk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 12:08:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50474 "EHLO
+        id S242209AbiAER1m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 12:27:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242142AbiAERIe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 12:08:34 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A9C2C061245
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 09:08:34 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id y22so164751831edq.2
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 09:08:34 -0800 (PST)
+        with ESMTP id S230323AbiAER1i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 12:27:38 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A879C061245
+        for <git@vger.kernel.org>; Wed,  5 Jan 2022 09:27:38 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id o3so26308852wrh.10
+        for <git@vger.kernel.org>; Wed, 05 Jan 2022 09:27:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=G5EC5ZKS2eu8snLpeEF8BZqYriO7rDoDyJC/RDOHA+k=;
-        b=mychYn4ihAU3oEaONy2uh/2smKVjc3HqQNjIV+fSxSpcFQeFMh2mD07krtXOPUH4Xv
-         b2BNgQ1Zow4r37YCNsYAbLe60Slpc515x/UsLYqIWpVRVPMuC7gT8EBWPEQUPL+dpTND
-         heiao/vzkOQESX+qJMgRIHIlN3YyZzYzQw2/Lvk9nEq0qwZ/B273QiISfyRSQMIUPZHQ
-         /hYFxOpjEF2jkvSTjP5jDVwwUKGFyh2PDg/SrJIa0I3qr3ljDM7hTd6NWQJaPx+fwv1K
-         hAWp1/SoUYnlqq++3EwzujEPHSQcYEW2E5Q+N8PRtp/GKTRo1Uj1ecT6dSq8RMsQTLua
-         UBVg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=tJtUhCESPzvYeQZspPigwSonsYE4EL+q5IkDGNAUvI0=;
+        b=SefpTg31BNyRH1kXD6CmOwpMmE3RdXSNw2EMZOsHhk+VOBJ4TiO2HLKB1EkJiiRbMm
+         0zssAXRbncgX3cloX/VH24Xm6TIkLAa4xxZRu/dQskVWv3/9IXU93KESQz2SRpi3J7Vs
+         vOog0Uqzhsjkp7bL8GWyDOojavSo6vozT7r/VYf3IeDPhSgC7SZApdYZcEdnbcGohUXV
+         ZHkjwat4jbhunaz75KzT95fMRBGUZtH6103o2lRqp69tCxgum/wP7oOa+StTPUyPhnyw
+         I7yg5ALhYJgJJn2Q0PXpgui3r9IARuzbS4Om3N1+rCSZXUKHFhkFy9Dcz3Aj2z3tvDEE
+         JXgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=G5EC5ZKS2eu8snLpeEF8BZqYriO7rDoDyJC/RDOHA+k=;
-        b=cPIpdaA1M9gBQ0NrfJ1rupLLxAO2ViPaEZHjux60hLIvh7/EpEjGWVilZoImDlIGx1
-         tZeenmz02wqooMoGFoaf0HhagooFOwf8zYGFNWx+2oah7zemAV1uJPRZVYptaGK/hywR
-         vr5b3NW6e7bOe3t6DDao6lFnTSMRmOKmlk+ZtG7z7NXZBNTnETvp5R+aWKDkiRzQpJka
-         FX076BUCfEXn5eB2ZUldLQ3r7UcXkZTh0UJo0B0a2MOBqkCSVsCkV+fYWEC96blZwQtC
-         wdOBSHl8twBLe4Xucd+yxUcind1TPShWM0XQjeNOu7FZD6dRPNZ0FTQXpzi7xegxJKw7
-         +xDQ==
-X-Gm-Message-State: AOAM533puT7ICDrF6g5oOpkBSTzrTSk5grByZeShIyygxLw90aGqxa3u
-        6ayIxycwkqVJ+UD77bQCnLxKfqZ/rmcB61ckjU7K5b43dK0=
-X-Google-Smtp-Source: ABdhPJxOAyGv5SAUxFgEe0I3e9dX8P8YFJYctiVgV0tEiu1SHUFB6S12BfitXkeBvRaOD9XmJNru5HgxaiEWS7AkcrI=
-X-Received: by 2002:a17:907:968a:: with SMTP id hd10mr42570114ejc.269.1641402512563;
- Wed, 05 Jan 2022 09:08:32 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=tJtUhCESPzvYeQZspPigwSonsYE4EL+q5IkDGNAUvI0=;
+        b=aCV0bF0kODfU2nnehhAyJCcZ8WzIBeHOFNToX0P3MU8K5mUWgrfW25/biQw6S8VETJ
+         amN711xxElNiNwQCcXj9tV08ikGfpCSOUQ7ayu521jR1ulL1lJyLPbU2TpgfSKGm6BTm
+         ftTHGIjYp34GWnrUm7x2clkXtfgH+Zk3C4oa7kli25TWbdbQChfy6glcXhr1OMgHQ4Sf
+         lKrIBXRLRcAKBHBz02i8HKTNQK5ZbaJ7vBsTK11FCm1Dp9hJ7cw1k4yNBzw1yn5vbhTd
+         GCvHNWCTrbysA1cpR7xbe62IJ+e4TKl0TUxYNcmd5PPI1IxqCGFpbQKALS6Z+WScvDtu
+         CxQw==
+X-Gm-Message-State: AOAM5337v14+E/+gvjn6iH0BE3+m2g/l9wSwa2C906BHSNh+flet68bY
+        mZB746jz77r5kHmT4SSzn3QexvNN7qA=
+X-Google-Smtp-Source: ABdhPJwATURzXTnYxA2XljP9j+Z+WnfILAu5m1fuqj4XITPKj5sIE54udHtqKdp8MPm5ejCNL3kMiQ==
+X-Received: by 2002:a5d:58d8:: with SMTP id o24mr26506187wrf.467.1641403656672;
+        Wed, 05 Jan 2022 09:27:36 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b5sm11564816wrr.19.2022.01.05.09.27.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Jan 2022 09:27:36 -0800 (PST)
+Message-Id: <pull.1114.v2.git.git.1641403655.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1114.git.git.1640927044.gitgitgadget@gmail.com>
+References: <pull.1114.git.git.1640927044.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 05 Jan 2022 17:27:27 +0000
+Subject: [PATCH v2 0/8] RFC: Server side merges (no ref updating, no commit creating, no touching
+ worktree or index)
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20220105163324.73369-1-chriscool@tuxfamily.org> <20220105163324.73369-2-chriscool@tuxfamily.org>
-In-Reply-To: <20220105163324.73369-2-chriscool@tuxfamily.org>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 5 Jan 2022 09:08:21 -0800
-Message-ID: <CABPp-BFQv+mrWj8iH0Vo5Pr5L922v=ZsVthFjofy5pm1Sx8x5Q@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/2] merge-ort: add new merge-tree-ort command
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+To:     git@vger.kernel.org
+Cc:     Christian Couder <chriscool@tuxfamily.org>,
         Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 5, 2022 at 8:33 AM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> This new command is similar as merge-tree, but uses
-> merge-ort code and features, especially
-> merge_incore_nonrecursive(), instead of those from
-> resursive merge, to perform the merge.
+(NOTE for Junio: This series has a minor conflict with en/remerge-diff --
+this series moves a code block into a new function, but en/remerge-diff adds
+a BUG() message to that code block. But this series is just RFC, so you may
+want to wait to pick it up.)
 
-s/resursive/recursive/
+Updates since v1:
 
-> The output from this new command is very different from
-> merge-tree's custom output, as we are only using code and
-> features from diff.{h,c}, especially diff_tree_oid(). This
-> should make it easy to customize and standardize the output
-> using regular diff options in the future.
->
-> This command will be extended to support new features
-> with the long-term goal of enabling merges and rebases
-> without a worktree.
+ * Fixed a bad patch splitting, and a style issue pointed out by Johannes
+   Altimanninger
+ * Fixed misleading commit messages in new test cases
+ * Fixed my comments about how commit-tree could be used to correctly use
+   two -p flags
 
-And cherry-picks?  And reverts?
+NOTE2: A preliminary version of this series was discussed here:
+https://lore.kernel.org/git/nycvar.QRO.7.76.6.2110211147490.56@tvgsbejvaqbjf.bet/
 
-I think the cherry-pick/rebase replacement actually deserves a
-separate command from what merges should use.  Replaying a sequence of
-commits just has a number of UI differences and abilities that I think
-pull it in a different direction.  And I don't want replaying of a
-sequence of commits via a script like the old days (even if one that
-calls something that doesn't update the working tree and index would
-be better than the old rebases built on top of `git merge-recursive`
-and `git cherry-pick`).  I'm working on such a thing, though it's
-still kind of early.
+NOTE3: An alternative has been implemented by Christian, over here:
+https://lore.kernel.org/git/20220105163324.73369-1-chriscool@tuxfamily.org/
 
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  .gitignore               |  1 +
->  Makefile                 |  1 +
->  builtin.h                |  1 +
->  builtin/merge-tree-ort.c | 93 ++++++++++++++++++++++++++++++++++++++++
->  git.c                    |  1 +
->  5 files changed, 97 insertions(+)
->  create mode 100644 builtin/merge-tree-ort.c
->
-> diff --git a/.gitignore b/.gitignore
-> index 054249b20a..2dfcb1a589 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -98,6 +98,7 @@
->  /git-merge-index
->  /git-merge-file
->  /git-merge-tree
-> +/git-merge-tree-ort
->  /git-merge-octopus
->  /git-merge-one-file
->  /git-merge-ours
-> diff --git a/Makefile b/Makefile
-> index 75ed168adb..915e500b06 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1124,6 +1124,7 @@ BUILTIN_OBJS += builtin/merge-index.o
->  BUILTIN_OBJS += builtin/merge-ours.o
->  BUILTIN_OBJS += builtin/merge-recursive.o
->  BUILTIN_OBJS += builtin/merge-tree.o
-> +BUILTIN_OBJS += builtin/merge-tree-ort.o
->  BUILTIN_OBJS += builtin/merge.o
->  BUILTIN_OBJS += builtin/mktag.o
->  BUILTIN_OBJS += builtin/mktree.o
-> diff --git a/builtin.h b/builtin.h
-> index 8a58743ed6..c68f46b118 100644
-> --- a/builtin.h
-> +++ b/builtin.h
-> @@ -182,6 +182,7 @@ int cmd_merge_ours(int argc, const char **argv, const char *prefix);
->  int cmd_merge_file(int argc, const char **argv, const char *prefix);
->  int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
->  int cmd_merge_tree(int argc, const char **argv, const char *prefix);
-> +int cmd_merge_tree_ort(int argc, const char **argv, const char *prefix);
->  int cmd_mktag(int argc, const char **argv, const char *prefix);
->  int cmd_mktree(int argc, const char **argv, const char *prefix);
->  int cmd_multi_pack_index(int argc, const char **argv, const char *prefix);
-> diff --git a/builtin/merge-tree-ort.c b/builtin/merge-tree-ort.c
-> new file mode 100644
-> index 0000000000..1c8ecd16ec
-> --- /dev/null
-> +++ b/builtin/merge-tree-ort.c
-> @@ -0,0 +1,93 @@
-> +#include "builtin.h"
-> +#include "merge-ort.h"
-> +#include "diff.h"
-> +
-> +static const char merge_tree_ort_usage[] = "git merge-tree-ort <base-tree> <branch1> <branch2>";
+This series introduces a new option to git-merge-tree: --real (best name I
+could come up with). This new option is designed to allow a server-side
+"real" merge (or allow folks client-side to do merges with branches they
+don't even have checked out). Real merges differ from trivial merges in that
+they handle:
 
-I think this is somewhat limiting to use for merges in general; it'll
-generate trees that do not match what users get from `git merge ...`
-at the command line, because specifying a single base-tree is
-different than having the algorithm determine the merge base,
-particularly when it needs to construct a virtual merge base.
+ * three way content merges
+ * recursive ancestor consolidation
+ * renames
+ * proper directory/file conflict handling
+ * etc.
 
-> +
-> +static void show_result(struct tree *base_tree,
-> +                       struct tree *head_tree,
-> +                       struct tree *merge_tree,
-> +                       struct merge_result *result)
-> +{
-> +       const struct object_id *base_oid = &(base_tree->object.oid);
-> +       const struct object_id *head_oid = &(head_tree->object.oid);
-> +       const struct object_id *merge_oid = &(merge_tree->object.oid);
-> +       const struct object_id *result_oid = &(result->tree->object.oid);
-> +       struct diff_options opts;
-> +
-> +       repo_diff_setup(the_repository, &opts);
-> +       opts.stat_width = -1; /* use full terminal width */
-> +       opts.output_format |= DIFF_FORMAT_RAW | DIFF_FORMAT_PATCH;
-> +       opts.detect_rename = DIFF_DETECT_RENAME;
-> +       diff_setup_done(&opts);
-> +
-> +       printf("result tree: %s\n", oid_to_hex(result_oid));
-> +       printf("clean: %d\n", result->clean);
-> +
-> +       printf("diff with branch1:\n");
-> +       diff_tree_oid(head_oid, result_oid, "", &opts);
-> +       diffcore_std(&opts);
-> +       diff_flush(&opts);
-> +
-> +       printf("diff with branch2:\n");
-> +       diff_tree_oid(merge_oid, result_oid, "", &opts);
-> +       diffcore_std(&opts);
-> +       diff_flush(&opts);
-> +
-> +       printf("diff with base:\n");
-> +       diff_tree_oid(base_oid, result_oid, "", &opts);
-> +       diffcore_std(&opts);
-> +       diff_flush(&opts);
+The reason this is different from merge is that merge-tree does NOT:
 
-I commented on the diffs in my response on the cover letter.
+ * Read/write/update any working tree (and assumes there probably isn't one)
+ * Read/write/update any index (and assumes there probably isn't one)
+ * Create a commit object
+ * Update any refs
 
-> +}
-> +
-> +static struct commit *get_commit_by_name_or_die(const char *name)
-> +{
-> +       struct commit *c = lookup_commit_reference_by_name(name);
-> +       if (!c)
-> +               die(_("not a valid commit name '%s'"), name);
-> +       return c;
-> +}
-> +
-> +static void merge_trees_ort(const char *base_name,
-> +                           const char *branch1,
-> +                           const char *branch2)
-> +{
-> +       struct merge_result result;
-> +       struct merge_options merge_opt;
-> +
-> +       struct commit *base = get_commit_by_name_or_die(base_name);
-> +       struct commit *head = get_commit_by_name_or_die(branch1);
-> +       struct commit *merge = get_commit_by_name_or_die(branch2);
-> +
-> +       struct tree *base_tree = get_commit_tree(base);
-> +       struct tree *head_tree = get_commit_tree(head);
-> +       struct tree *merge_tree = get_commit_tree(merge);
-> +
-> +       memset(&result, 0, sizeof(result));
-> +       init_merge_options(&merge_opt, the_repository);
-> +
-> +       merge_opt.show_rename_progress = 1;
-> +       merge_opt.branch1 = branch1;
-> +       merge_opt.branch2 = branch2;
-> +       merge_opt.ancestor = base_name;
-> +
-> +       result.tree = head_tree;
-> +
-> +       merge_incore_nonrecursive(&merge_opt,
-> +                                 base_tree,
-> +                                 result.tree,
-> +                                 merge_tree,
-> +                                 &result);
+This series attempts to guess what kind of output would be wanted, basically
+choosing:
 
-I think for server side merges, merge_incore_recursive() should be
-used, so that they match what a `git merge ...` would provide.  I
-think merge_incore_nonrecursive() is better used for replaying a
-sequence of commits.
+ * clean merge or conflict signalled via exit status
+ * stdout consists solely of printing the hash of the resulting tree (though
+   that tree may include files that have conflict markers)
+ * new optional --messages flag for specifying a file where informational
+   messages (e.g. conflict notices and files involved in three-way-content
+   merges) can be written; by default, this output is simply discarded
+ * new optional --conflicted-list flag for specifying a file where the names
+   of conflicted-files can be written in a NUL-character-separated list
 
-So, I view this as more suitable for usage with the server side
-rebase, except that it seems to be serving as a building block and
-expecting the rebase to be some script on top.  I think server-side
-rebase/cherry-pick should be a builtin of some form.
+This design means it's basically just a low-level tool that other scripts
+would use and do additional work with. Perhaps something like this:
 
-> +
-> +       show_result(base_tree, head_tree, merge_tree, &result);
+   NEWTREE=$(git merge-tree --real $BRANCH1 $BRANCH2)
+   test $? -eq 0 || die "There were conflicts..."
+   NEWCOMMIT=$(git commit-tree $NEWTREE -p $BRANCH1 -p $BRANCH2)
+   git update-ref $BRANCH1 $NEWCOMMIT
 
-As noted in the cover letter, this current form doesn't provide 2
-things that users can't get some other way: (1) a list of conflicted
-paths, and (2) the various conflict and warning messages generated
-during the merge.  I agree that many usecases might not want those,
-but since they can't be obtained another way I think it'd be prudent
-to provide them.
 
-And this show_result provides 3 things that users could generate on
-their own with the information already provided -- namely the three
-diffs that you do.  I'm curious what the usecase is for those diffs.
+Elijah Newren (8):
+  merge-tree: rename merge_trees() to trivial_merge_trees()
+  merge-tree: move logic for existing merge into new function
+  merge-tree: add option parsing and initial shell for real merge
+    function
+  merge-tree: implement real merges
+  merge-ort: split out a separate display_update_messages() function
+  merge-ort: allow update messages to be written to different file
+    stream
+  merge-tree: support saving merge messages to a separate file
+  merge-tree: provide an easy way to access which files have conflicts
 
-> +}
-> +
-> +int cmd_merge_tree_ort(int argc, const char **argv, const char *prefix)
-> +{
-> +       if (argc != 4)
-> +               usage(merge_tree_ort_usage);
-> +
-> +       merge_trees_ort(argv[1], argv[2], argv[3]);
-> +
-> +       return 0;
-> +}
-> diff --git a/git.c b/git.c
-> index 7edafd8ecf..90b8a4984c 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -562,6 +562,7 @@ static struct cmd_struct commands[] = {
->         { "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
->         { "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
->         { "merge-tree", cmd_merge_tree, RUN_SETUP | NO_PARSEOPT },
-> +       { "merge-tree-ort", cmd_merge_tree_ort, RUN_SETUP | NO_PARSEOPT },
->         { "mktag", cmd_mktag, RUN_SETUP | NO_PARSEOPT },
->         { "mktree", cmd_mktree, RUN_SETUP },
->         { "multi-pack-index", cmd_multi_pack_index, RUN_SETUP },
-> --
-> 2.34.1.433.g7bc349372a.dirty
+ Documentation/git-merge-tree.txt |  32 +++++--
+ builtin/merge-tree.c             | 151 ++++++++++++++++++++++++++++---
+ git.c                            |   2 +-
+ merge-ort.c                      |  85 ++++++++++-------
+ merge-ort.h                      |  12 +++
+ t/t4301-merge-tree-real.sh       | 108 ++++++++++++++++++++++
+ 6 files changed, 333 insertions(+), 57 deletions(-)
+ create mode 100755 t/t4301-merge-tree-real.sh
+
+
+base-commit: 2ae0a9cb8298185a94e5998086f380a355dd8907
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1114%2Fnewren%2Fmerge-into-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1114/newren/merge-into-v2
+Pull-Request: https://github.com/git/git/pull/1114
+
+Range-diff vs v1:
+
+ 1:  a7c7910d834 = 1:  a7c7910d834 merge-tree: rename merge_trees() to trivial_merge_trees()
+ 2:  9da8e77c1d7 ! 2:  aafe67d7c69 merge-tree: move logic for existing merge into new function
+     @@ builtin/merge-tree.c: static void *get_tree_descriptor(struct repository *r,
+       }
+       
+      -int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+     --{
+     -+static int trivial_merge(int argc, const char **argv) {
+     ++static int trivial_merge(int argc, const char **argv)
+     + {
+       	struct repository *r = the_repository;
+       	struct tree_desc t[3];
+       	void *buf1, *buf2, *buf3;
+ 3:  9d03d3f56ab ! 3:  ee21aed0115 merge-tree: add option parsing and initial shell for real merge function
+     @@ builtin/merge-tree.c: static void *get_tree_descriptor(struct repository *r,
+       	return buf;
+       }
+       
+     --static int trivial_merge(int argc, const char **argv) {
+     +-static int trivial_merge(int argc, const char **argv)
+      +static int trivial_merge(const char *base,
+      +			 const char *branch1,
+     -+			 const char *branch2) {
+     ++			 const char *branch2)
+     + {
+       	struct repository *r = the_repository;
+       	struct tree_desc t[3];
+       	void *buf1, *buf2, *buf3;
+     @@ builtin/merge-tree.c: static void *get_tree_descriptor(struct repository *r,
+       	trivial_merge_trees(t, "");
+       	free(buf1);
+       	free(buf2);
+     -@@ builtin/merge-tree.c: static int trivial_merge(int argc, const char **argv) {
+     +@@ builtin/merge-tree.c: static int trivial_merge(int argc, const char **argv)
+       	return 0;
+       }
+       
+ 4:  9fc71f4511b ! 4:  1710ba4a9e4 merge-tree: implement real merges
+     @@ Commit message
+      
+             NEWTREE=$(git merge-tree --real $BRANCH1 $BRANCH2)
+             test $? -eq 0 || die "There were conflicts..."
+     -       NEWCOMMIT=$(git commit-tree $NEWTREE -p $BRANCH1 $BRANCH2)
+     +       NEWCOMMIT=$(git commit-tree $NEWTREE -p $BRANCH1 -p $BRANCH2)
+             git update-ref $BRANCH1 $NEWCOMMIT
+      
+          Note that higher level scripts may also want to access the
+     @@ t/t4301-merge-tree-real.sh (new)
+      +	echo hi >greeting &&
+      +	echo bar >whatever &&
+      +	git add numbers greeting whatever &&
+     -+	git commit -m rename-and-modify &&
+     ++	git commit -m modify-stuff &&
+      +
+      +	git checkout side2 &&
+      +	test_write_lines 0 1 2 3 4 5 >numbers &&
+     @@ t/t4301-merge-tree-real.sh (new)
+      +	mkdir whatever &&
+      +	>whatever/empty &&
+      +	git add numbers greeting whatever/empty &&
+     -+	git commit -m remove-and-rename
+     ++	git commit -m other-modifications
+      +'
+      +
+      +test_expect_success 'Content merge and a few conflicts' '
+ 5:  aa816e766e9 ! 5:  bc6d01f1a0e merge-ort: split out a separate display_update_messages() function
+     @@ merge-ort.c: void merge_switch_to_result(struct merge_options *opt,
+      -
+      -		trace2_region_leave("merge", "display messages", opt->repo);
+      -	}
+     ++	if (display_update_msgs)
+     ++		merge_display_update_messages(opt, result);
+       
+       	merge_finalize(opt, result);
+       }
+ 6:  32ad5b5c10d ! 6:  c9e95a70d19 merge-ort: allow update messages to be written to different file stream
+     @@ merge-ort.c: void merge_display_update_messages(struct merge_options *opt,
+       	string_list_clear(&olist, 0);
+       
+      @@ merge-ort.c: void merge_switch_to_result(struct merge_options *opt,
+     - 		trace2_region_leave("merge", "write_auto_merge", opt->repo);
+       	}
+       
+     -+	if (display_update_msgs)
+     + 	if (display_update_msgs)
+     +-		merge_display_update_messages(opt, result);
+      +		merge_display_update_messages(opt, result, stdout);
+       
+       	merge_finalize(opt, result);
+ 7:  777de92d9f1 = 7:  4b513a6d696 merge-tree: support saving merge messages to a separate file
+ 8:  1d24a4f4070 = 8:  01364bb020e merge-tree: provide an easy way to access which files have conflicts
+
+-- 
+gitgitgadget
