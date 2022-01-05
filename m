@@ -2,264 +2,358 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BE50C433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 10:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E09CC433EF
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 11:16:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234687AbiAEKgS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 05:36:18 -0500
-Received: from mail-vi1eur05on2085.outbound.protection.outlook.com ([40.107.21.85]:30624
-        "EHLO EUR05-VI1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S230353AbiAEKgP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 05:36:15 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZNDv6lGFzvFjC8XOtXcle2hSwloikb7CHBKbmZgH+qT+HpuN8gWh4sLZbbjBipV8bTsxsSiJL9rfYNWCVZa/LrOoUi9Zbrlibuql2G+uJnlsLV4w4Bei4BMQsKZNrYqGXLOzxT/BnXYlekx8mba6D6lKnsqXAoFJ1rt049KinIMNACrYoIunWnKxLtfxswXiic6AGGYKNsCKQhdC+HAOlchEAzmlnWQHF+PEKRLDQcjm/Vm3jNR7HQmhcev++28oYOb3qZOmp2mR1zmT18V9npfWImMUd3emd7yxSDkv9zKHRhI80oVPG3xtljN6rKxUASZFWFI6W+wkGObylm07rA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2SjPPRBxVXNjGHaYaAiv1hm5ApcUTjGGLenkDo8fFhs=;
- b=X5Hvl3YuiqwcUb1z8VCIIHIMTzzbnxtKEz6i0KlHppaLRYfz6KKBU4jcVRfvmKMbStrINAdJSfdQ7R8i4evzgPl1yUqI1QX6/AxE+x/QHD/Svk6GQhAPAMlqFqEiuOwI7x9Pt/wZx2/SvOHoKpYX4y+YuWFTdDJBQ8+qGNqISrEWFs9kpkL7JQpEwtUtuKgVoIUMokL4ZOJL/R7T+U81YP1nx+zLU090/YUqSxCg8M14UX5N4YA1B0V5r9xUZGKpkwqRbc1ixJPv5v9hwmmOStQFn4YE+T7dh/vG+QQX0ziIS2LquJc9xlckzHvIG4p2oVV2P/ZgSby/f/TRNt9bew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2SjPPRBxVXNjGHaYaAiv1hm5ApcUTjGGLenkDo8fFhs=;
- b=X2KelT9hVN95jl91tOuH/KlMp8KE34SZEZQkFZRQXUbrLaqXhgUbrtFByGwqCtux+Uc+EoZ8Nup5s/v6OmI/QmFSGV2lFgTt0Y+HBuvGys+SR34fs2AhmXgZEU02E3I3fMb6yU/E4QJV7okozLcYm4w2FihKHRVSAbmrHltZOSE=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PA4PR10MB4464.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:106::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4844.15; Wed, 5 Jan
- 2022 10:36:13 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::486c:1c10:65ef:90f9]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::486c:1c10:65ef:90f9%6]) with mapi id 15.20.4867.007; Wed, 5 Jan 2022
- 10:36:13 +0000
-Date:   Wed, 5 Jan 2022 11:36:11 +0100
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Pedro Martelletto <pedro@yubico.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] gpg-interface: trim CR from ssh-keygen
-Message-ID: <20220105103611.upfmcrudw6n3ymx6@fs>
-References: <pull.1090.git.1638538276608.gitgitgadget@gmail.com>
- <20220103095337.600536-1-fs@gigacodes.de>
- <CAPig+cS6h6o2_dJAZC1M1Ace29bN2mhPgaEtTWtj3oXfcHq9cA@mail.gmail.com>
- <xmqqee5oieb2.fsf@gitster.g>
- <CAPig+cTM3wZz4NXjxYeBuFv0CVNS-T+pBFeVkfMQ-25pL1kBzw@mail.gmail.com>
- <xmqqmtkcguvm.fsf@gitster.g>
- <CAPig+cR93GyN53JoZbaiROrNtzGjiet7eTPQOk-26G+mB0KaCA@mail.gmail.com>
- <20220104125534.wznwbkyxfcmyfqhb@fs>
- <xmqqo84rcn3j.fsf@gitster.g>
- <CAPig+cQinNZp_2=eo7nokMCZ9gc-tAKO1V_jejL2Ei9J63tSDQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQinNZp_2=eo7nokMCZ9gc-tAKO1V_jejL2Ei9J63tSDQ@mail.gmail.com>
-X-ClientProxiedBy: AS8PR07CA0022.eurprd07.prod.outlook.com
- (2603:10a6:20b:451::17) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        id S239621AbiAELQB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 06:16:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54322 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239618AbiAELQB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 06:16:01 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B61E3C061761
+        for <git@vger.kernel.org>; Wed,  5 Jan 2022 03:16:00 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id e5so24833126wmq.1
+        for <git@vger.kernel.org>; Wed, 05 Jan 2022 03:16:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=KeRWsn/HrKvTvZwpwRh/Y2yl3WtQzU3arfo4PUWWQK4=;
+        b=SLQyAXmmDmzcw3hMEc1K1ODyU61VnKos4jEmAhwgs4dnOAPr2Fa4QJSq2A8sXwozb/
+         V9VCqkzBcJsOIYYcWMyPRVzucZuk7sZiPEQ8BkBvytPe6j8hCAfAXZWeAIPkMO9RKgmU
+         Y8mF/E9Myypjv3m1dTSDMslUEo0q8dRM0xHjh+0i1An4lA8sbmhPUGMqLjkJmo2TUZAg
+         8ZaSgS/ZTDbL+F4rckh4zYwfWkpWpmqkonIdqihXwudSPAbyQhj0VR1BBAjdVa2607JO
+         pExhFk1a72k2XQp2kGOAsanbO7XB5wWIjjPffaf55+f2a7osEHpaqvCAl48ITL+uOZAm
+         J/xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=KeRWsn/HrKvTvZwpwRh/Y2yl3WtQzU3arfo4PUWWQK4=;
+        b=BkG51tFldgBvLikEFDGHykHbKAZBrquaSFsGMcE0tvBIuRFbeg17coihtsfBURUTM1
+         ydO8E4lE2TTmLWXSm5+e6xUG8ji5gGeUEpMALjNsTDm/ESSUm9/+MGhz3vTNztNOHTJA
+         p8lnbNndoRtrhOYZWE0UBFI++s+kPlh0HB3vkAyO2RjnSjwGZ2/DJKxl89KybFEOaI1l
+         /+ZCEAKWXMCPlTtnE0Qjx1Ceg5gckSDinsVxRUZJK9eR8j54y19d06mjBdozqrCTzlIK
+         PpRs3DIRv0Z3Hd+ZvR1tjHo1SJAs0e6NRvIzEKXCb/y8GnbVGjJOncQY1FRPnOmvuG6y
+         84gQ==
+X-Gm-Message-State: AOAM531ZcuLrOxAeyRfXjVaWZMOuY3gfrl+1rMDWQr+ajlEkFleolDcj
+        Lc/UkmOqJ5AxrVnRAe91+Qw=
+X-Google-Smtp-Source: ABdhPJyjjm+Njuz8udVuyU52mIJiaYSONcczmBgYs960AL5uBMs7movbeZ+Uzr77xIHNqw1QB89PkA==
+X-Received: by 2002:a1c:5403:: with SMTP id i3mr745814wmb.66.1641381359068;
+        Wed, 05 Jan 2022 03:15:59 -0800 (PST)
+Received: from [192.168.1.201] ([31.185.185.186])
+        by smtp.googlemail.com with ESMTPSA id h3sm41221104wrt.94.2022.01.05.03.15.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jan 2022 03:15:58 -0800 (PST)
+Message-ID: <16666d32-833a-f3d7-351a-eeef7f25b002@gmail.com>
+Date:   Wed, 5 Jan 2022 11:15:57 +0000
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 96aa7479-ac6f-41da-e191-08d9d03731ad
-X-MS-TrafficTypeDiagnostic: PA4PR10MB4464:EE_
-X-Microsoft-Antispam-PRVS: <PA4PR10MB4464EE56DADA68E5E917FD29B64B9@PA4PR10MB4464.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Nu39VIN37P9QfEy+8/YDAH0//gO6nfATI0xyoAX+Bfay4gWA7RodwEElSiyt9s3LSmk1L0PUUH3Q4lbnw1OrfHQ22JiQeqa7H/JmnKpPPz4jt+3bTLKfb8Z5BzAIkK75e7ChPi1G6zKVNW7mmxA/nNaqIa8EetLh2mP/BIg5td3qz+XY3fMChwzPPuge/Svho7PESQeOLdOB/dYs3Bfx4by8a8PrYSHe+2HkPAWQi0tZYECFKBY/iBcqJQV1ciNfTwNRgGD5x8UNacPWErAwnj6xuMRDZQNE+S6S892wkVqBnQxwB3UuKbmBaO35rz0S1NLz9xRUT8WL0LyoysRDqZZU2AP2pvzRd6UanRrNpYR5kM86ltOPfV9PjxFGw3R/O+dBftYRuNXY/723KRJ5pGy3QUNWyQeOWa9u7DgE6I4H+t35gdd6do0EjK8OuBmesZxro72gwUaeKVZzvYLch7Xe2DW328/4X39WqHuqa0sKsV3J49gjKOLFoVzl5EhHybnr8vVEwjH0glUTNLmaCHvqb6LwIBDvpq0N4LNtfXaLbjg0ELZ+hZ3qW094wSPQSBZyPLCrrSJ/T+LFiYRSVYdkhget+YtgSJ3IYuAnZNrAjT2A1Kfi2PxfB0Y0qmYTJP+Z0siwi1X+b7vi1V3TVw==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(7916004)(4636009)(136003)(39830400003)(396003)(376002)(346002)(366004)(53546011)(66556008)(6506007)(26005)(5660300002)(66946007)(33716001)(38100700002)(8936002)(66476007)(508600001)(54906003)(316002)(6916009)(6486002)(2906002)(8676002)(1076003)(6512007)(83380400001)(9686003)(186003)(86362001)(4326008);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?b0t0cFFMUnl3NGoydE9IV3V0UlBWT1VMZ0MvSlg3WUVXYWpDaTRJYUhjdmpV?=
- =?utf-8?B?YWMwR2U1SEdFbzRCdTRCcWN4WS9udDNkdk9BQ292bm5DelpJTHFweUFJZjR6?=
- =?utf-8?B?S1phQ1hXMlYvWmVXdThLRUJMVnFOb3lyY2tjdE5xajgzRlIzRUduaU9YeFlR?=
- =?utf-8?B?TGdZd3M1OW9IUkZYbFJlZWp0U3VIS1lJbjZVWlRtZkRWbDFxbnFIZ1IxeGhM?=
- =?utf-8?B?UG0vbU50VmxNbGRDd3FNVkkvb0doTkJnamg3blFDdDBJQlFWMTVZYmloeTdB?=
- =?utf-8?B?TUdNTE9NaWVtUmgrTXFiRGFkQVl6b3VWUU9YU3ZMTWpnTVgxNkVtRU5ReTZn?=
- =?utf-8?B?NXNvQjVCTjNORmltUjJ3NExuWWNtWjJRRFhkbTFsbXhFVEtkanVBVVQwQ28y?=
- =?utf-8?B?SjZkQ1UyY3RXdGZCUi9qN0hMY1RTajNmVXN2aURBckVUeGt2UU5seDFrbHdU?=
- =?utf-8?B?NjRCZ3dkQXN3RTVHZW8vOEdSa0dDN2NxQ3JVRXRLZXZiRzEwMVhGVnZBRUpF?=
- =?utf-8?B?VGdJSU1vU0ZYbkM5Q1pLYTNMeFlaL0xFbkxVTjFuVEZZbjBybi93UUR1TTJw?=
- =?utf-8?B?Q1FlalRSOUFjRm4zU1pQSExQNE5SK1Z2YlhlKzJpQkhmKzFzOXFzdnBnRDJV?=
- =?utf-8?B?UVgzZ1Rhcm4vd1RZRk5pL00rVUlEaDVIMjh6bHRwb2hPMzBJazhIYTl0K2hj?=
- =?utf-8?B?blk0R2lDdE9FSForc2o3UWNieDYyMWwrakhvTkRUMzI0Ukt3cjZ4Rmg4dkZB?=
- =?utf-8?B?UnQrR2VVUkhxampCaU9FUldGYVlPa2xBanBoclhqc21EU2tGdUorNjQ5aHdv?=
- =?utf-8?B?cUdjNWd3UDI1UmhaV0w1d0EzbS9wZkY5N1IzSTRzenNQRVo1N29qWGJ6Vmhz?=
- =?utf-8?B?eTlONGlhT3F1K1lxd0RhY1VhYkd6WjROcHN5TTc2V0lqWndDa2M2OWErWnBz?=
- =?utf-8?B?NzVpV091RkZEUnpBUGdBTUE5NFVLQVVaN0dXYmVLdXlxd1J1NnBKOUxqcEFG?=
- =?utf-8?B?T3EzMnpxRmZMUEdTNFAwc0JVQXBvcVc5Sk5oMDk0TWhNU2JBMDBIMDQ0UzBv?=
- =?utf-8?B?R3QrdVU4WWlrLzk2NTBrNlBNeTRaa2FzU1ZHbnoxMVJ5RGtMSzJBZmtjNmxB?=
- =?utf-8?B?anJtdGs3YWVtbUFRWWtuZ05QSzFmRWdvMjRIVTczOXVVUGVsM082WmNQY1l0?=
- =?utf-8?B?bDRkcWVVQ3pHamtNQjluWDN2Z1JtSTIyTzF4TUtsOElEUHoyd3Zma0RDM1dV?=
- =?utf-8?B?OXJHellEVnFGZno1MnJGbG1LRGpXVDR6YW9xdk0vWVpjZU4zejNEWjlDVG9Z?=
- =?utf-8?B?ZCs4UjVpSnQ3cmMrRTlNMkF6ellRUUt2V2pQaTM2ZDJuSUhadklXRklPS2Jl?=
- =?utf-8?B?V2RQOUhBU0NVU1ZsUHhDOFVkTFc2Vkd4SndqM1EwSzlOQXFWOEVPaEFvRHNq?=
- =?utf-8?B?OWhsbU5xaTFBb1RJc2kwYWVwaHFsbDRHaGlmaS8wMWFlR1NCanpvemUxK1I3?=
- =?utf-8?B?U1IzNzFkbEdvREhkTkpOeUNSdUpKNHozK2hvT1FLMXIwRml3WHRjeEhqaXl2?=
- =?utf-8?B?dVZJRS94U1Y2S04rSzlpMG5tQUIxVWJWYjVNNnBRd2xnYnFFQUNYZmxtR0lY?=
- =?utf-8?B?WXA3QUVIQXFFcjlrTFFCUDdvNUx2QUVLeXRFMGdkR1NFQjh5MHY1RUVkMkpI?=
- =?utf-8?B?ZXUxdlhsTC9GbjlUOHQ3MzdSUW45cFVLK29aTjZsSGdZaUJQWDFXRlBKakhR?=
- =?utf-8?B?MHVGQ1QxOFdsekVFMnZiV3d6NitEZ2c4THNyY1QrZ1JRbXFNODBYWXFOYnpY?=
- =?utf-8?B?YzRZLzFTYmpnWEZHV3o1TFpXaVdGNjNoYldaT1NHL3BKREk5bFM1Mzd4em1o?=
- =?utf-8?B?WWR4cG1UMUJCNUhNOTM4RDRkUGFrUnlZdEpRKzBmR1h6aFFGcTBqVCt3ZkVY?=
- =?utf-8?B?aUZucVV1dmZJZjRxeDk2dUh5bUw1Q0gyUDVoQmJaMEtWZ09GeFBVSnhlR3Nj?=
- =?utf-8?B?RVNBMHljVnY5MnhndjlkMmY2a0JGckxmcmNHT29tV2orakN3TUVoUExYRW9v?=
- =?utf-8?B?a3cxaE42Ui90NmRkek1GZUlHTnpUd3dPWU12TXNEclJxSjd5T08vazk2dE9x?=
- =?utf-8?B?cExvSzlzRGhSSlM2dEx3Ukowcmo4cHZ6TWlYdmdtczllaWVUb0l5eVZhdEpn?=
- =?utf-8?B?ajMwaXk5ckpwbHpIcHNaeVB5TnJxNk56ZzBWbUtBelR4NERsNnhPU25lc3A3?=
- =?utf-8?Q?LS337vPrtp/0QzEdSryjDcMQ/SOtSHRzpYa/wHKwA0=3D?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 96aa7479-ac6f-41da-e191-08d9d03731ad
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jan 2022 10:36:13.0673
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 8073ddygJ6RSDqC6WxMzToYplzrN73JLG5EsCvHQziDL+jCYtI6KnGg9Vjx9uc6/eXvdu3aGDierqcUttk84QPHUVjZ++VB8Bld46ZvA4EU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4464
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 1/2] name-rev: deprecate --stdin in favor of
+ --annotate-stdin
+Content-Language: en-US
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        John Cai <johncai86@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.1171.v3.git.git.1641221261.gitgitgadget@gmail.com>
+ <pull.1171.v4.git.git.1641307776.gitgitgadget@gmail.com>
+ <4e9200922a4c2c91e69e3b497fbf4c8702046a27.1641307776.git.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <4e9200922a4c2c91e69e3b497fbf4c8702046a27.1641307776.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05.01.2022 02:09, Eric Sunshine wrote:
->On Tue, Jan 4, 2022 at 2:33 PM Junio C Hamano <gitster@pobox.com> wrote:
->> Fabian Stelzer <fs@gigacodes.de> writes:
->> > I guess we need a bit more context for this patch to make sense:
->> >
->> > for (line = ssh_principals_out.buf; *line;
->> >      line = strchrnul(line + 1, '\n')) {
->> >       while (*line == '\n')
->> >               line++;
->> >       if (!*line)
->> >               break;
->> >
->> >       trust_size = strcspn(line, "\n"); /* truncate at LF */
->> >       if (trust_size && trust_size != strlen(line) &&
->> >           line[trust_size - 1] == '\r')
->> >               trust_size--; /* the LF was part of CRLF at the end */
->> >       principal = xmemdupz(line, trust_size);
->>
->> Ahh, OK.  Sorry for being ultra lazy for not visiting the actual
->> source but just responding after reading only somebody else's
->> comments.
->
->I'm also guilty of being lazy and not consulting the actual source. Sorry.
->
->Fabian, thanks for all the extra context information.
->
->> OK, so I was completely missing the idea.  And I agree that it may
->> be a good idea to check how strcspn() returned to deal with an
->> incomplete line, although as you hint later in the message I am
->> responding to, checking line[trust_size] would be a more obvious
->> implementation.
->>
->> In any case, I think the earlier part of the loop is more confusing,
->> and I think fixing that would naturally fix the trust_size
->> computation.  For example, wouldn't this easier to grok?
->
->Indeed, the existing code is confusing me. I've been staring at it for
->several minutes and I think I'm still failing to understand the
->purpose of the +1 in the strchrnul() call. Perhaps I'm missing
->something obvious(?).
+Hi John
 
-This whole loop was basically copied from parse_gpg_output() above. Without 
-the +1 this would always find the same line in the buffer. The +1 skips over 
-the previously found LF.
+On 04/01/2022 14:49, John Cai via GitGitGadget wrote:
+> From: John Cai <johncai86@gmail.com>
+> [...]
+> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+> index 27f60153a6c..21370afdaf9 100644
+> --- a/builtin/name-rev.c
+> +++ b/builtin/name-rev.c
+> @@ -527,7 +527,7 @@ static void name_rev_line(char *p, struct name_ref_data *data)
+>   int cmd_name_rev(int argc, const char **argv, const char *prefix)
+>   {
+>   	struct object_array revs = OBJECT_ARRAY_INIT;
+> -	int all = 0, transform_stdin = 0, allow_undefined = 1, always = 0, peel_tag = 0;
+> +	int all = 0, annotate_stdin = 0, transform_stdin = 0, allow_undefined = 1, always = 0, peel_tag = 0;
+>   	struct name_ref_data data = { 0, 0, STRING_LIST_INIT_NODUP, STRING_LIST_INIT_NODUP };
+>   	struct option opts[] = {
+>   		OPT_BOOL(0, "name-only", &data.name_only, N_("print only ref-based names (no object names)")),
+> @@ -539,6 +539,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+>   		OPT_GROUP(""),
+>   		OPT_BOOL(0, "all", &all, N_("list all commits reachable from all refs")),
+>   		OPT_BOOL(0, "stdin", &transform_stdin, N_("read from stdin")),
 
->
->>         const char *next;
->>
->>         for (line = ssh_principals_out.buf;
->>              *line;
->>              line = next) {
->>                 const char *end_of_text;
->>
->>                 /* Find the terminating LF */
->>                 next = end_of_text = strchrnul(line, '\n');
->>
->>                 /* Did we find a LF, and did we have CR before it? */
->>                 if (*end_of_text &&
->>                     line < end_of_text &&
->>                     end_of_text[-1] == '\r')
->>                         end_of_text--;
->
->It took several seconds for me to convince myself that the -1 array
->index was safe. Had the `line < end_of_text` condition been written
->`end_of_text > line`, I think it would have been immediately obvious,
->but it's subjective, of course.
->
->>                 /* Unless we hit NUL, skip over the LF we found */
->>                 if (*next)
->>                         next++;
->>
->>                 /* Not all lines are data.  Skip empty ones */
->>                 if (line == end_of_text)
->>                         /*
->>                          * You may want to allow skipping more than just
->>                          * lines with 0-byte on them (e.g. comments?)
->>                          * depending on the format you are reading.
->>                          */
->>                         continue;
->>
->>                 /* We now know we have an non-empty line. Process it */
->>                 principal = xmemdupz(line, end_of_text - line);
->>                 ...
->>         }
->>
->> The idea is to make sure that the place where the line ending
->> convention is taken care of is very isolated at the beginning of the
->> loop.
->
->Yes, this may be an improvement, though the cognitive load is still
->somewhat high. Using one of the `split` functions from strbuf.h or
->string-list.h might reduce the cognitive load significantly, even if
->this code still needs to handle CR removal manually since none of the
->`split` functions are LF/CRLF agnostic. (Adding such a function might
->be useful but could be outside the scope of this bug fix patch.)
+If the intention is to deprecate this option then it might be worth 
+marking it as PARSE_OPT_HIDDEN so that it is not shown by 'git name-rev 
+-h'. (You need to change OPT_BOOL to OPT_BOOL_F to pass the flag)
 
-How about something like this:
+> +		OPT_BOOL(0, "annotate-stdin", &annotate_stdin, N_("annotate text from stdin")),
+>   		OPT_BOOL(0, "undefined", &allow_undefined, N_("allow to print `undefined` names (default)")),
+>   		OPT_BOOL(0, "always",     &always,
+>   			   N_("show abbreviated commit object as fallback")),
+> @@ -554,11 +555,19 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+>   	init_commit_rev_name(&rev_names);
+>   	git_config(git_default_config, NULL);
+>   	argc = parse_options(argc, argv, prefix, opts, name_rev_usage, 0);
+> -	if (all + transform_stdin + !!argc > 1) {
+> +
+> +	if (transform_stdin) {
+> +		warning("--stdin is deprecated. Please use --annotate-stdin instead, "
+> +					"which is functionally equivalent.\n"
+> +					"This option will be removed in a future release.");
+> +		annotate_stdin = 1;
+> +	}
+> +
+> +	if (all + annotate_stdin + !!argc > 1) {
+>   		error("Specify either a list, or --all, not both!");
+>   		usage_with_options(name_rev_usage, opts);
+>   	}
+> -	if (all || transform_stdin)
+> +	if (all || annotate_stdin)
+>   		cutoff = 0;
+>   
+>   	for (; argc; argc--, argv++) {
+> @@ -613,8 +622,8 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+>   	for_each_ref(name_ref, &data);
+>   	name_tips();
+>   
+> -	if (transform_stdin) {
+> -		char buffer[2048];
+> +	if (annotate_stdin) {
+> +		struct strbuf sb = STRBUF_INIT;
 
-int string_find_line(char **line, size_t *len) {
-	const char *eol = NULL;
+I think this hunk belongs in the next patch. Before posting a patch 
+series I find it helpful to run
 
-	if (*len > 0) {
-		*line = *line + *len;
-		if (**line && **line == '\r')
-			(*line)++;
-		if (**line && **line == '\n')
-			(*line)++;
-	}
+     git rebase --keep-base -x'make -j4 git && cd t && prove -j4 <tests 
+I think might fail> :: --root=/dev/shm'
 
-	if (!**line)
-		return 0;
+to check that the individual patches compile and pass the relevant 
+tests. I've never got round to trying it but git-test[1] also lets you 
+test all the commits in a series
 
-	eol = strchrnul(*line, '\n');
+Best Wishes
 
-	/* Trim trailing CR from length */
-	if (eol > *line && eol[-1] == '\r')
-		eol--;
+Phillip
 
-	*len = eol - *line;
-	return 1;
-}
+[1] https://github.com/mhagger/git-test
 
-Its use would then simply be:
-
-char *line = strbuf.buf;
-size_t len = 0;
-while(string_find_line(&line,&len)) {
-	if (!len)
-		continue; /* Skip over empty lines */
-	principal = xmemdupz(line, len);
-}
-
-Not sure about the name though.
-Maybe string_find_line() / _iterate_line / foreach_line ?
+>   		while (!feof(stdin)) {
+>   			char *p = fgets(buffer, sizeof(buffer), stdin);
+> diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
+> index 19c6f4acbf6..1e9f7833dd6 100755
+> --- a/t/t3412-rebase-root.sh
+> +++ b/t/t3412-rebase-root.sh
+> @@ -11,7 +11,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>   
+>   log_with_names () {
+>   	git rev-list --topo-order --parents --pretty="tformat:%s" HEAD |
+> -	git name-rev --stdin --name-only --refs=refs/heads/$1
+> +	git name-rev --annotate-stdin --name-only --refs=refs/heads/$1
+>   }
+>   
+>   
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index 50495598619..dc884107de4 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -659,7 +659,7 @@ EOF
+>   
+>   test_expect_success 'log --graph with full output' '
+>   	git log --graph --date-order --pretty=short |
+> -		git name-rev --name-only --stdin |
+> +		git name-rev --name-only --annotate-stdin |
+>   		sed "s/Merge:.*/Merge: A B/;s/ *\$//" >actual &&
+>   	test_cmp expect actual
+>   '
+> diff --git a/t/t6007-rev-list-cherry-pick-file.sh b/t/t6007-rev-list-cherry-pick-file.sh
+> index aebe4b69e13..6f3e5439771 100755
+> --- a/t/t6007-rev-list-cherry-pick-file.sh
+> +++ b/t/t6007-rev-list-cherry-pick-file.sh
+> @@ -58,7 +58,7 @@ EOF
+>   
+>   test_expect_success '--left-right' '
+>   	git rev-list --left-right B...C > actual &&
+> -	git name-rev --stdin --name-only --refs="*tags/*" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
+>   		< actual > actual.named &&
+>   	test_cmp expect actual.named
+>   '
+> @@ -78,14 +78,14 @@ EOF
+>   
+>   test_expect_success '--cherry-pick bar does not come up empty' '
+>   	git rev-list --left-right --cherry-pick B...C -- bar > actual &&
+> -	git name-rev --stdin --name-only --refs="*tags/*" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
+>   		< actual > actual.named &&
+>   	test_cmp expect actual.named
+>   '
+>   
+>   test_expect_success 'bar does not come up empty' '
+>   	git rev-list --left-right B...C -- bar > actual &&
+> -	git name-rev --stdin --name-only --refs="*tags/*" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
+>   		< actual > actual.named &&
+>   	test_cmp expect actual.named
+>   '
+> @@ -97,14 +97,14 @@ EOF
+>   
+>   test_expect_success '--cherry-pick bar does not come up empty (II)' '
+>   	git rev-list --left-right --cherry-pick F...E -- bar > actual &&
+> -	git name-rev --stdin --name-only --refs="*tags/*" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
+>   		< actual > actual.named &&
+>   	test_cmp expect actual.named
+>   '
+>   
+>   test_expect_success 'name-rev multiple --refs combine inclusive' '
+>   	git rev-list --left-right --cherry-pick F...E -- bar >actual &&
+> -	git name-rev --stdin --name-only --refs="*tags/F" --refs="*tags/E" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/F" --refs="*tags/E" \
+>   		<actual >actual.named &&
+>   	test_cmp expect actual.named
+>   '
+> @@ -116,7 +116,7 @@ EOF
+>   test_expect_success 'name-rev --refs excludes non-matched patterns' '
+>   	git rev-list --left-right --right-only --cherry-pick F...E -- bar >>expect &&
+>   	git rev-list --left-right --cherry-pick F...E -- bar >actual &&
+> -	git name-rev --stdin --name-only --refs="*tags/F" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/F" \
+>   		<actual >actual.named &&
+>   	test_cmp expect actual.named
+>   '
+> @@ -128,14 +128,14 @@ EOF
+>   test_expect_success 'name-rev --exclude excludes matched patterns' '
+>   	git rev-list --left-right --right-only --cherry-pick F...E -- bar >>expect &&
+>   	git rev-list --left-right --cherry-pick F...E -- bar >actual &&
+> -	git name-rev --stdin --name-only --refs="*tags/*" --exclude="*E" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" --exclude="*E" \
+>   		<actual >actual.named &&
+>   	test_cmp expect actual.named
+>   '
+>   
+>   test_expect_success 'name-rev --no-refs clears the refs list' '
+>   	git rev-list --left-right --cherry-pick F...E -- bar >expect &&
+> -	git name-rev --stdin --name-only --refs="*tags/F" --refs="*tags/E" --no-refs --refs="*tags/G" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/F" --refs="*tags/E" --no-refs --refs="*tags/G" \
+>   		<expect >actual &&
+>   	test_cmp expect actual
+>   '
+> @@ -149,7 +149,7 @@ EOF
+>   
+>   test_expect_success '--cherry-mark' '
+>   	git rev-list --cherry-mark F...E -- bar > actual &&
+> -	git name-rev --stdin --name-only --refs="*tags/*" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
+>   		< actual > actual.named &&
+>   	test_cmp expect actual.named
+>   '
+> @@ -163,7 +163,7 @@ EOF
+>   
+>   test_expect_success '--cherry-mark --left-right' '
+>   	git rev-list --cherry-mark --left-right F...E -- bar > actual &&
+> -	git name-rev --stdin --name-only --refs="*tags/*" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
+>   		< actual > actual.named &&
+>   	test_cmp expect actual.named
+>   '
+> @@ -174,14 +174,14 @@ EOF
+>   
+>   test_expect_success '--cherry-pick --right-only' '
+>   	git rev-list --cherry-pick --right-only F...E -- bar > actual &&
+> -	git name-rev --stdin --name-only --refs="*tags/*" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
+>   		< actual > actual.named &&
+>   	test_cmp expect actual.named
+>   '
+>   
+>   test_expect_success '--cherry-pick --left-only' '
+>   	git rev-list --cherry-pick --left-only E...F -- bar > actual &&
+> -	git name-rev --stdin --name-only --refs="*tags/*" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
+>   		< actual > actual.named &&
+>   	test_cmp expect actual.named
+>   '
+> @@ -193,7 +193,7 @@ EOF
+>   
+>   test_expect_success '--cherry' '
+>   	git rev-list --cherry F...E -- bar > actual &&
+> -	git name-rev --stdin --name-only --refs="*tags/*" \
+> +	git name-rev --annotate-stdin --name-only --refs="*tags/*" \
+>   		< actual > actual.named &&
+>   	test_cmp expect actual.named
+>   '
+> diff --git a/t/t6012-rev-list-simplify.sh b/t/t6012-rev-list-simplify.sh
+> index 4f7fa8b6c03..4fedc614fa6 100755
+> --- a/t/t6012-rev-list-simplify.sh
+> +++ b/t/t6012-rev-list-simplify.sh
+> @@ -12,7 +12,7 @@ note () {
+>   }
+>   
+>   unnote () {
+> -	git name-rev --tags --stdin | sed -e "s|$OID_REGEX (tags/\([^)]*\)) |\1 |g"
+> +	git name-rev --tags --annotate-stdin | sed -e "s|$OID_REGEX (tags/\([^)]*\)) |\1 |g"
+>   }
+>   
+>   #
+> diff --git a/t/t6111-rev-list-treesame.sh b/t/t6111-rev-list-treesame.sh
+> index e07b6070e0e..90ff1416400 100755
+> --- a/t/t6111-rev-list-treesame.sh
+> +++ b/t/t6111-rev-list-treesame.sh
+> @@ -23,7 +23,8 @@ note () {
+>   }
+>   
+>   unnote () {
+> -	git name-rev --tags --stdin | sed -e "s|$OID_REGEX (tags/\([^)]*\))\([ 	]\)|\1\2|g"
+> +	git name-rev --tags --annotate-stdin | \
+> +	sed -e "s|$OID_REGEX (tags/\([^)]*\))\([ 	]\)|\1\2|g"
+>   }
+>   
+>   test_expect_success setup '
+> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+> index d8af2bb9d2b..9781b92aedd 100755
+> --- a/t/t6120-describe.sh
+> +++ b/t/t6120-describe.sh
+> @@ -270,7 +270,7 @@ test_expect_success 'name-rev --all' '
+>   	test_cmp expect actual
+>   '
+>   
+> -test_expect_success 'name-rev --stdin' '
+> +test_expect_success 'name-rev --annotate-stdin' '
+>   	>expect.unsorted &&
+>   	for rev in $(git rev-list --all)
+>   	do
+> @@ -278,11 +278,16 @@ test_expect_success 'name-rev --stdin' '
+>   		echo "$rev ($name)" >>expect.unsorted || return 1
+>   	done &&
+>   	sort <expect.unsorted >expect &&
+> -	git rev-list --all | git name-rev --stdin >actual.unsorted &&
+> +	git rev-list --all | git name-rev --annotate-stdin >actual.unsorted &&
+>   	sort <actual.unsorted >actual &&
+>   	test_cmp expect actual
+>   '
+>   
+> +test_expect_success 'name-rev --stdin deprecated' "
+> +	git rev-list --all | git name-rev --stdin 2>actual &&
+> +	grep -E 'warning: --stdin is deprecated' actual
+> +"
+> +
+>   test_expect_success 'describe --contains with the exact tags' '
+>   	echo "A^0" >expect &&
+>   	tag_object=$(git rev-parse refs/tags/A) &&
+> 
 
