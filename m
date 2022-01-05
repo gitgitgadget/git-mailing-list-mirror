@@ -2,250 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A6E3C433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 16:34:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B58CC433EF
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 16:39:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241948AbiAEQeC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 11:34:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42512 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241940AbiAEQdu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 11:33:50 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3683DC061212
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 08:33:50 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id e5so84190246wrc.5
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 08:33:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3hFI7GNwtK74mMMIKlDZxg+ZBbwvKKlDrtBkx4EK2vs=;
-        b=FRBxYotsCzTFwLJ22LPimodGdVBRDeVbB0/HfhAq/yiYSgdKlcN6g0moLBxRVRuyhk
-         UIpdSfLVasESvHFFJC4p1hPg/BTaa35vBIWAei4hQ5tnGtSIFzBVt2SHDUCgONVAxboS
-         kgIxhD4CCdiTtbo2stMQ0NDnESz2p4+QWO9sJUHZbHcHf9vWcOddorCBeI9Wd63sLVPE
-         eeCOGdfwRNcWdhOZHQWfWsUqoHdL0Lv7QdNgT/bl+nkJsuVOYVOzf4jmgFgAOvBgc1na
-         JWfK8H9nuK0qTEzNGceSxJAI2EV8UQNhZ81yzlD8E2S3zeq4WqDQhQXRoBESbiVOiJkF
-         5PRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3hFI7GNwtK74mMMIKlDZxg+ZBbwvKKlDrtBkx4EK2vs=;
-        b=UlizzKm45MWgoo8k8vC3G9aL1qvDRTb+4vDDcYks4x7r7l5UYdb8ZhirR9iUt5xGiE
-         OQbC9/EIl6AmBA6v00hthTDjAYhdCETxMORdIxkWZ9xG7n3G/riDtVevq+Bzy0rkV05+
-         HvDcpzwchMZpv6H9q5QLhwqbB/jfqRWjB75Y92olY+pBfnUuuK7H5U9BDoD2h/tDCZnP
-         uXxT6R1cpQ+UW8kIaR5cnX1/ieAL+4i338mm2+eUauuQ76Zi4gGY1tz/FBxyOMdXp5rY
-         f6jpcZ2VgrpSPHsLqY0G78C2k3pjAnGaS1/igpjorEKRUJkD6iMAwe7dE61gg5EizORl
-         c9fQ==
-X-Gm-Message-State: AOAM533XkIJz6UPcZufzzJyEzyikZmCXTwKreGbK3Y2WTfa5LVPFRoNg
-        aDCgS2WlsgsDILZJkyJLi5uAXNZurls=
-X-Google-Smtp-Source: ABdhPJx7sSrq0z2C+ka10cOk4gVHu/AKVIHi/1wPtrg9EkasVnY0TyxTIoXNhf/Be+rAZ21LC6exjw==
-X-Received: by 2002:adf:fa87:: with SMTP id h7mr45767127wrr.561.1641400428542;
-        Wed, 05 Jan 2022 08:33:48 -0800 (PST)
-Received: from localhost.localdomain ([185.228.230.189])
-        by smtp.gmail.com with ESMTPSA id u20sm3417515wml.45.2022.01.05.08.33.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jan 2022 08:33:48 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH 2/2] merge-ort: add t/t4310-merge-tree-ort.sh
-Date:   Wed,  5 Jan 2022 17:33:24 +0100
-Message-Id: <20220105163324.73369-3-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.34.1.433.g7bc349372a.dirty
-In-Reply-To: <20220105163324.73369-1-chriscool@tuxfamily.org>
-References: <20220105163324.73369-1-chriscool@tuxfamily.org>
+        id S241971AbiAEQjo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 11:39:44 -0500
+Received: from smtp41.i.mail.ru ([94.100.177.101]:52220 "EHLO smtp41.i.mail.ru"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S242015AbiAEQjl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 11:39:41 -0500
+X-Greylist: delayed 86733 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Jan 2022 11:39:41 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=751zkQTpBrAu9HgQDUH7TgVh/Y+ma8eWwo1JFFt3BZg=;
+        t=1641400781;x=1642006181; 
+        b=Mze+U2xw9uZLn4HTenYypxj2WhvT6zVCwhKqW6y9+7b2AN0q8ookj7a1MyUVM46h8+3zlb8CS/MkxkaE7kIOQMhwDal9l7wGVuTL+IhVU/zIhZvREBjVJ3Fj1mV3j/VP8ISCCbJjDwqFHh0+CZJMWcBw1a6ftLs5v0WPcKGJfW0=;
+Received: by smtp41.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+        id 1n59K4-0008A3-6n; Wed, 05 Jan 2022 19:39:36 +0300
+Date:   Wed, 5 Jan 2022 19:39:35 +0300
+From:   Konstantin Khomoutov <kostix@bswap.ru>
+To:     Jessica Clarke <jrtc27@jrtc27.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] apply: Avoid ambiguous pointer provenance for
+ CHERI/Arm's Morello
+Message-ID: <20220105163935.eqfdqbeifcgj2wna@carbon>
+References: <20220105132310.6600-1-jrtc27@jrtc27.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220105132310.6600-1-jrtc27@jrtc27.com>
+Authentication-Results: smtp41.i.mail.ru; auth=pass smtp.auth=kostix@bswap.ru smtp.mailfrom=kostix@bswap.ru
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD94D5EF110843E6A67CFD1AE5BAEA5D6B2A1F98ABF68DFDC63182A05F53808504031B75141979E61091BC0D89E711D4F9B3A33633FF3A2F3F3163054C7E6B4E01B
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7A8325FA649D0A450EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063781BF90BB6B3E56078638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D85588D2F1E51028ED21A8B07A2310FE90117882F4460429724CE54428C33FAD305F5C1EE8F4F765FCF1175FABE1C0F9B6A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352033AC447995A7AD18F04B652EEC242312D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE902A1BE408319B296E0066C2D8992A164AD6D5ED66289B52698AB9A7B718F8C46E0066C2D8992A16725E5C173C3A84C3776FEBA3834A766EBA3038C0950A5D36B5C8C57E37DE458B0BC6067A898B09E46D1867E19FE14079C09775C1D3CA48CF3D321E7403792E342EB15956EA79C166A417C69337E82CC275ECD9A6C639B01B78DA827A17800CE7994FE22CF3C16DE0731C566533BA786AA5CC5B56E945C8DA
+X-C1DE0DAB: 0D63561A33F958A5131BAEAA6BB40E0DD2EA38FD4FB2CE551A4C58CCC0C38251D59269BC5F550898D99A6476B3ADF6B47008B74DF8BB9EF7333BD3B22AA88B938A852937E12ACA7586EBD5816AEE4918410CA545F18667F91A7EA1CDA0B5A7A0
+X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D3483E1FCD56FEA62E6CE882DA31D521806F0B8713E3FEC43965CB6E3714657F6EE09BA9B9D9EAEA6F81D7E09C32AA3244C6E5C2D6BC42B2A6A4957E6A327A4CA194DBEAD0ED6C55A80729B2BEF169E0186
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojH8WdiQSTb1EWe/PnK65GTg==
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD13882E2B9F3ADD85E8D648CCE6E884AE3AD57417E0ED27172DE13BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC5FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds a few tests for the new merge-tree-ort command. They have
-been copy-pasted from t4300-merge-tree.sh, and then the expected
-output has been adjusted.
+On Wed, Jan 05, 2022 at 01:23:10PM +0000, Jessica Clarke wrote:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/t4310-merge-tree-ort.sh | 162 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 162 insertions(+)
- create mode 100755 t/t4310-merge-tree-ort.sh
+[...]
+> This means that, currently, the code when run on a CHERI architecture
+> will preserve the metadata from the integer, i.e. an invalid capability
+> that will trap on deference, and not the pointer.
 
-diff --git a/t/t4310-merge-tree-ort.sh b/t/t4310-merge-tree-ort.sh
-new file mode 100755
-index 0000000000..9a54508e82
---- /dev/null
-+++ b/t/t4310-merge-tree-ort.sh
-@@ -0,0 +1,162 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Will Palmer
-+# Copyright (c) 2021 Christian Couder
-+#
-+
-+test_description='git merge-tree-ort'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	test_commit "initial" "initial-file" "initial"
-+'
-+
-+test_expect_success 'file add A, !B' '
-+	git reset --hard initial &&
-+	test_commit "add-a-not-b" "ONE" "AAA" &&
-+	git merge-tree-ort initial initial add-a-not-b >actual &&
-+	cat >expected <<EXPECTED &&
-+result tree: ee38e20a5c0e1698539ac99d55616079a04fce26
-+clean: 1
-+diff with branch1:
-+:000000 100644 0000000 43d5a8e A	ONE
-+
-+diff --git a/ONE b/ONE
-+new file mode 100644
-+index 0000000..43d5a8e
-+--- /dev/null
-++++ b/ONE
-+@@ -0,0 +1 @@
-++AAA
-+diff with branch2:
-+diff with base:
-+:000000 100644 0000000 43d5a8e A	ONE
-+
-+diff --git a/ONE b/ONE
-+new file mode 100644
-+index 0000000..43d5a8e
-+--- /dev/null
-++++ b/ONE
-+@@ -0,0 +1 @@
-++AAA
-+EXPECTED
-+
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'file add !A, B' '
-+	git reset --hard initial &&
-+	test_commit "add-not-a-b" "ONE" "AAA" &&
-+	git merge-tree-ort initial add-not-a-b initial >actual &&
-+	cat >expected <<EXPECTED &&
-+result tree: ee38e20a5c0e1698539ac99d55616079a04fce26
-+clean: 1
-+diff with branch1:
-+diff with branch2:
-+:000000 100644 0000000 43d5a8e A	ONE
-+
-+diff --git a/ONE b/ONE
-+new file mode 100644
-+index 0000000..43d5a8e
-+--- /dev/null
-++++ b/ONE
-+@@ -0,0 +1 @@
-++AAA
-+diff with base:
-+:000000 100644 0000000 43d5a8e A	ONE
-+
-+diff --git a/ONE b/ONE
-+new file mode 100644
-+index 0000000..43d5a8e
-+--- /dev/null
-++++ b/ONE
-+@@ -0,0 +1 @@
-++AAA
-+EXPECTED
-+
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'file add A, B (same)' '
-+	git reset --hard initial &&
-+	test_commit "add-a-b-same-A" "ONE" "AAA" &&
-+	git reset --hard initial &&
-+	test_commit "add-a-b-same-B" "ONE" "AAA" &&
-+	git merge-tree-ort initial add-a-b-same-A add-a-b-same-B >actual &&
-+	cat >expected <<EXPECTED &&
-+result tree: ee38e20a5c0e1698539ac99d55616079a04fce26
-+clean: 1
-+diff with branch1:
-+diff with branch2:
-+diff with base:
-+:000000 100644 0000000 43d5a8e A	ONE
-+
-+diff --git a/ONE b/ONE
-+new file mode 100644
-+index 0000000..43d5a8e
-+--- /dev/null
-++++ b/ONE
-+@@ -0,0 +1 @@
-++AAA
-+EXPECTED
-+
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'file add A, B (different)' '
-+	git reset --hard initial &&
-+	test_commit "add-a-b-diff-A" "ONE" "AAA" &&
-+	git reset --hard initial &&
-+	test_commit "add-a-b-diff-B" "ONE" "BBB" &&
-+	git merge-tree-ort initial add-a-b-diff-A add-a-b-diff-B >actual &&
-+	cat >expected <<EXPECTED &&
-+result tree: 3aa938e8cc8be73c81cbaf629ea55a16e7c39319
-+clean: 0
-+diff with branch1:
-+:100644 100644 43d5a8e 1e462bc M	ONE
-+
-+diff --git a/ONE b/ONE
-+index 43d5a8e..1e462bc 100644
-+--- a/ONE
-++++ b/ONE
-+@@ -1 +1,5 @@
-++<<<<<<< add-a-b-diff-A
-+ AAA
-++=======
-++BBB
-++>>>>>>> add-a-b-diff-B
-+diff with branch2:
-+:100644 100644 ba62923 1e462bc M	ONE
-+
-+diff --git a/ONE b/ONE
-+index ba62923..1e462bc 100644
-+--- a/ONE
-++++ b/ONE
-+@@ -1 +1,5 @@
-++<<<<<<< add-a-b-diff-A
-++AAA
-++=======
-+ BBB
-++>>>>>>> add-a-b-diff-B
-+diff with base:
-+:000000 100644 0000000 1e462bc A	ONE
-+
-+diff --git a/ONE b/ONE
-+new file mode 100644
-+index 0000000..1e462bc
-+--- /dev/null
-++++ b/ONE
-+@@ -0,0 +1,5 @@
-++<<<<<<< add-a-b-diff-A
-++AAA
-++=======
-++BBB
-++>>>>>>> add-a-b-diff-B
-+EXPECTED
-+
-+	test_cmp expected actual
-+'
-+
-+test_done
--- 
-2.34.1.433.g7bc349372a.dirty
+^ You have probably meant to use "dereference" here.
 
