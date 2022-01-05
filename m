@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 478BEC433EF
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 17:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E39FEC433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 17:27:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242220AbiAER1p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 12:27:45 -0500
+        id S242204AbiAER1q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 12:27:46 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242204AbiAER1k (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 12:27:40 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34BD3C0611FD
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 09:27:40 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id r17so84481780wrc.3
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 09:27:40 -0800 (PST)
+        with ESMTP id S242207AbiAER1m (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 12:27:42 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B07F7C061201
+        for <git@vger.kernel.org>; Wed,  5 Jan 2022 09:27:41 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id l10so3134899wrh.7
+        for <git@vger.kernel.org>; Wed, 05 Jan 2022 09:27:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=V8S8SjfTWGNwbuwmn14qUCAsI9OJQyegvG/CX1wq7fI=;
-        b=kB1hYcbjIxJUECAZv/49cByIrysgITvCTzuGXfXEwcudZZlUINgQMmurrAaYI6sHor
-         EzKAKkR5AEe7pY18jU2F4yXHQF5QImOXJd8I+BKFt1ZNkbVdzfPgZliy4eKLAFulssoZ
-         NgOrmXwuWJMApDAWggx4+umVRaqz+JNfqBiBqyU7r4pr5cGDWQMBCpC+1IspUhGU0grI
-         e4U4pvpgUlsO/VRlwsuR221tP42BwAbP/N/M4zEyvyvpjWHZ1fNHITwJ+5q7yGk3xG9R
-         QwEwuE3+uqTbNCYBOclGl9xn3oaFke/ekBQY05FkQ1x4ADEZ1jpO/c4GfvCBkh8ADGcs
-         iSKQ==
+        bh=DqeyVr+nI1KAiXNxyyhFxkZcB/WDtjcchYITzz1UKpY=;
+        b=l6FfncQjex7bB2ZWtw6DWiPcQb4PP1bjqHl/Ft75+8tLeMmYGSGR+g9el+GAvmGQf1
+         uuRayV2aasxuLn9KIa+OzCF++lnFDcttPLEA/SrXmj58fdIVIO8b46kn65x2jVOmRuae
+         uRM7+3WQpTHMUe6SWRp3sJzxZZacUgAsAHGQlJgNUBISvWsVDDU8ncIpwB/tlRYL7An9
+         1tc6YSUCGJmINz7UeaibZSmxOfWP2G5tp+4lImTSDQzNM/IyFo3trmm2OdHWL2+ThsC3
+         cvP+xEgUMWCwI0Bm5mJTDqG1yW8W/AlvWLo1d9z5WuCcGgPfVO0jn3xcF8fud2uOVUBd
+         IWKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=V8S8SjfTWGNwbuwmn14qUCAsI9OJQyegvG/CX1wq7fI=;
-        b=ZWfQwDFWLWg+YSZeD9Ry5h7UJ0f3u2/HcBwemwEu/iMVPBUYAgclZnMZx37faCSKkb
-         yalmeC6+RXw4QEyDUdF/XbTk4uZyG58gFp4swSubVJzedwbpVdKrLVD92MZT/gXAcgmP
-         WTOLYjqi2iBlE5o3tx52KNm9GpQ/hAaHf0ecrIfgwsHO1DIJ391wFybGILgj89EnMNMB
-         tuqadtuw5IllFiorrId1qBveRfHvcBX4Txj6mZf18jtmZvAT5yG8moittphb2Jm1ge/g
-         KOWQ5OA8iK34WEI6LslDWsoA2wFqMcN0j6T7KAM7IKrDXfbU9XCx9+fQwNg6aFkQABM2
-         Zn7g==
-X-Gm-Message-State: AOAM530mEfNRgxqSQ3LdTeVqpfd7j+mFiZFBplnJ1bQ5opo13/NDg4BZ
-        p2thFDIlfVauoubqDYcGQkI5GY5sI2s=
-X-Google-Smtp-Source: ABdhPJwuBaaVW6SMEkCMfqLKvEvYrSHyAKuZhPZhwDd1nCm0J+dCkYRmfQG/0ePoQug/LWeBwAZdWw==
-X-Received: by 2002:a05:6000:d0:: with SMTP id q16mr1546881wrx.600.1641403658696;
-        Wed, 05 Jan 2022 09:27:38 -0800 (PST)
+        bh=DqeyVr+nI1KAiXNxyyhFxkZcB/WDtjcchYITzz1UKpY=;
+        b=L7n8fB8eV9rMwUnWSfcXb7MqXJcs6UfyxUiZ1spmVD4G2lWP72wXugpyFqS0pS4nce
+         qsfzqIA1nKMuIQ26oyXqeT04O8esvElt/5llY3Jq42Xsf3/Y4/IJLQ6VnDEJPhMPgWP3
+         /rP3ZBsZYlPyMtC/BMeAdLWT4EOp0CUarktWpqOoXkSTgPOrShHvCBe046NNhkHhX0+z
+         +PvoK5CRvFNLizKGOaRNI5OngKsd7VpMKf0Zozf3+erMRCG0n1SriXrrjgJj+csFOnBQ
+         uZCmOherzuSnfZRR+GOcRePUnDSw+40HnaZetO/9MNRgyhDUsIBnPGsr4UAb7KmriHp5
+         f+TQ==
+X-Gm-Message-State: AOAM530xs6WWSxMuxH9lZZ3fQF5f6eY+81sUcLG3OPuoF4/FjESYdLjI
+        4bGT728tyNg3AD5pH5fjPIVHzGgHcRw=
+X-Google-Smtp-Source: ABdhPJxg1Okj2a4FjJhfEgXKlVgAsNx41niBnPAWhocNNoTOqCk4FCBi69JtjUbhLXonswEns8UP3A==
+X-Received: by 2002:a05:6000:1843:: with SMTP id c3mr48335423wri.316.1641403660176;
+        Wed, 05 Jan 2022 09:27:40 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a24sm1569325wmj.42.2022.01.05.09.27.38
+        by smtp.gmail.com with ESMTPSA id z22sm3601294wmp.40.2022.01.05.09.27.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jan 2022 09:27:38 -0800 (PST)
-Message-Id: <ee21aed01153aff39eef2398d32722c3e8cc426d.1641403655.git.gitgitgadget@gmail.com>
+        Wed, 05 Jan 2022 09:27:39 -0800 (PST)
+Message-Id: <bc6d01f1a0e735dcf23e7ca3ed0672bd3c4d7993.1641403655.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1114.v2.git.git.1641403655.gitgitgadget@gmail.com>
 References: <pull.1114.git.git.1640927044.gitgitgadget@gmail.com>
         <pull.1114.v2.git.git.1641403655.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 05 Jan 2022 17:27:30 +0000
-Subject: [PATCH v2 3/8] merge-tree: add option parsing and initial shell for
- real merge function
+Date:   Wed, 05 Jan 2022 17:27:32 +0000
+Subject: [PATCH v2 5/8] merge-ort: split out a separate
+ display_update_messages() function
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,129 +72,124 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Let merge-tree accept a `--real` parameter for choosing real merges
-instead of trivial merges.  Note that real merges differ from trivial
-merges in that they handle:
-  - three way content merges
-  - recursive ancestor consolidation
-  - renames
-  - proper directory/file conflict handling
-  - etc.
-Basically all the stuff you'd expect from `git merge`, just without
-updating the index and working tree.  The initial shell added here does
-nothing more than die with "real merges are not yet implemented", but
-that will be fixed in subsequent commits.
+No functional changes included in this patch; it's just a preparatory
+step in anticipation of wanting to handle the printed messages
+differently in `git merge-tree --real`.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/merge-tree.c | 56 +++++++++++++++++++++++++++++++++++++-------
- git.c                |  2 +-
- 2 files changed, 48 insertions(+), 10 deletions(-)
+ merge-ort.c | 71 ++++++++++++++++++++++++++++-------------------------
+ merge-ort.h |  8 ++++++
+ 2 files changed, 46 insertions(+), 33 deletions(-)
 
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 914ec960b7e..e1d2832c809 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -3,13 +3,12 @@
- #include "tree-walk.h"
- #include "xdiff-interface.h"
- #include "object-store.h"
-+#include "parse-options.h"
- #include "repository.h"
- #include "blob.h"
- #include "exec-cmd.h"
- #include "merge-blobs.h"
- 
--static const char merge_tree_usage[] = "git merge-tree <base-tree> <branch1> <branch2>";
--
- struct merge_list {
- 	struct merge_list *next;
- 	struct merge_list *link;	/* other stages for this object */
-@@ -366,15 +365,17 @@ static void *get_tree_descriptor(struct repository *r,
- 	return buf;
+diff --git a/merge-ort.c b/merge-ort.c
+index 0342f104836..3cdef173cd7 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -4197,6 +4197,42 @@ static int record_conflicted_index_entries(struct merge_options *opt)
+ 	return errs;
  }
  
--static int trivial_merge(int argc, const char **argv)
-+static int trivial_merge(const char *base,
-+			 const char *branch1,
-+			 const char *branch2)
- {
- 	struct repository *r = the_repository;
- 	struct tree_desc t[3];
- 	void *buf1, *buf2, *buf3;
- 
--	buf1 = get_tree_descriptor(r, t+0, argv[1]);
--	buf2 = get_tree_descriptor(r, t+1, argv[2]);
--	buf3 = get_tree_descriptor(r, t+2, argv[3]);
-+	buf1 = get_tree_descriptor(r, t+0, base);
-+	buf2 = get_tree_descriptor(r, t+1, branch1);
-+	buf3 = get_tree_descriptor(r, t+2, branch2);
- 	trivial_merge_trees(t, "");
- 	free(buf1);
- 	free(buf2);
-@@ -384,9 +385,46 @@ static int trivial_merge(int argc, const char **argv)
- 	return 0;
- }
- 
-+struct merge_tree_options {
-+	int real;
-+};
-+
-+static int real_merge(struct merge_tree_options *o,
-+		      const char *branch1, const char *branch2)
++void merge_display_update_messages(struct merge_options *opt,
++				   struct merge_result *result)
 +{
-+	die(_("real merges are not yet implemented"));
++	struct merge_options_internal *opti = result->priv;
++	struct hashmap_iter iter;
++	struct strmap_entry *e;
++	struct string_list olist = STRING_LIST_INIT_NODUP;
++	int i;
++
++	trace2_region_enter("merge", "display messages", opt->repo);
++
++	/* Hack to pre-allocate olist to the desired size */
++	ALLOC_GROW(olist.items, strmap_get_size(&opti->output),
++		   olist.alloc);
++
++	/* Put every entry from output into olist, then sort */
++	strmap_for_each_entry(&opti->output, &iter, e) {
++		string_list_append(&olist, e->key)->util = e->value;
++	}
++	string_list_sort(&olist);
++
++	/* Iterate over the items, printing them */
++	for (i = 0; i < olist.nr; ++i) {
++		struct strbuf *sb = olist.items[i].util;
++
++		printf("%s", sb->buf);
++	}
++	string_list_clear(&olist, 0);
++
++	/* Also include needed rename limit adjustment now */
++	diff_warn_rename_limit("merge.renamelimit",
++			       opti->renames.needed_limit, 0);
++
++	trace2_region_leave("merge", "display messages", opt->repo);
 +}
 +
- int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- {
--	if (argc != 4)
--		usage(merge_tree_usage);
--	return trivial_merge(argc, argv);
-+	struct merge_tree_options o = { 0 };
-+	int expected_remaining_argc;
-+
-+	const char * const merge_tree_usage[] = {
-+		N_("git merge-tree --real <branch1> <branch2>"),
-+		N_("git merge-tree <base-tree> <branch1> <branch2>"),
-+		NULL
-+	};
-+	struct option mt_options[] = {
-+		OPT_BOOL(0, "real", &o.real,
-+			 N_("do a real merge instead of a trivial merge")),
-+		OPT_END()
-+	};
-+
-+	/* Check for a request for basic help */
-+	if (argc == 2 && !strcmp(argv[1], "-h"))
-+		usage_with_options(merge_tree_usage, mt_options);
-+
-+	/* Parse arguments */
-+	argc = parse_options(argc, argv, prefix, mt_options,
-+			     merge_tree_usage, 0);
-+	expected_remaining_argc = (o.real ? 2 : 3);
-+	if (argc != expected_remaining_argc)
-+		usage_with_options(merge_tree_usage, mt_options);
-+
-+	/* Do the relevant type of merge */
-+	if (o.real)
-+		return real_merge(&o, argv[0], argv[1]);
-+	else
-+		return trivial_merge(argv[0], argv[1], argv[2]);
+ void merge_switch_to_result(struct merge_options *opt,
+ 			    struct tree *head,
+ 			    struct merge_result *result,
+@@ -4235,39 +4271,8 @@ void merge_switch_to_result(struct merge_options *opt,
+ 		trace2_region_leave("merge", "write_auto_merge", opt->repo);
+ 	}
+ 
+-	if (display_update_msgs) {
+-		struct merge_options_internal *opti = result->priv;
+-		struct hashmap_iter iter;
+-		struct strmap_entry *e;
+-		struct string_list olist = STRING_LIST_INIT_NODUP;
+-		int i;
+-
+-		trace2_region_enter("merge", "display messages", opt->repo);
+-
+-		/* Hack to pre-allocate olist to the desired size */
+-		ALLOC_GROW(olist.items, strmap_get_size(&opti->output),
+-			   olist.alloc);
+-
+-		/* Put every entry from output into olist, then sort */
+-		strmap_for_each_entry(&opti->output, &iter, e) {
+-			string_list_append(&olist, e->key)->util = e->value;
+-		}
+-		string_list_sort(&olist);
+-
+-		/* Iterate over the items, printing them */
+-		for (i = 0; i < olist.nr; ++i) {
+-			struct strbuf *sb = olist.items[i].util;
+-
+-			printf("%s", sb->buf);
+-		}
+-		string_list_clear(&olist, 0);
+-
+-		/* Also include needed rename limit adjustment now */
+-		diff_warn_rename_limit("merge.renamelimit",
+-				       opti->renames.needed_limit, 0);
+-
+-		trace2_region_leave("merge", "display messages", opt->repo);
+-	}
++	if (display_update_msgs)
++		merge_display_update_messages(opt, result);
+ 
+ 	merge_finalize(opt, result);
  }
-diff --git a/git.c b/git.c
-index 7edafd8ecff..0124c053878 100644
---- a/git.c
-+++ b/git.c
-@@ -561,7 +561,7 @@ static struct cmd_struct commands[] = {
- 	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
--	{ "merge-tree", cmd_merge_tree, RUN_SETUP | NO_PARSEOPT },
-+	{ "merge-tree", cmd_merge_tree, RUN_SETUP },
- 	{ "mktag", cmd_mktag, RUN_SETUP | NO_PARSEOPT },
- 	{ "mktree", cmd_mktree, RUN_SETUP },
- 	{ "multi-pack-index", cmd_multi_pack_index, RUN_SETUP },
+diff --git a/merge-ort.h b/merge-ort.h
+index c011864ffeb..1b93555a60b 100644
+--- a/merge-ort.h
++++ b/merge-ort.h
+@@ -70,6 +70,14 @@ void merge_switch_to_result(struct merge_options *opt,
+ 			    int update_worktree_and_index,
+ 			    int display_update_msgs);
+ 
++/*
++ * Display messages about conflicts and which files were 3-way merged.
++ * Automatically called by merge_switch_to_result() with stream == stdout,
++ * so only call this when bypassing merge_switch_to_result().
++ */
++void merge_display_update_messages(struct merge_options *opt,
++				   struct merge_result *result);
++
+ /* Do needed cleanup when not calling merge_switch_to_result() */
+ void merge_finalize(struct merge_options *opt,
+ 		    struct merge_result *result);
 -- 
 gitgitgadget
 
