@@ -2,53 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B58CC433EF
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 16:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE1CFC433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 16:41:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241971AbiAEQjo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 11:39:44 -0500
-Received: from smtp41.i.mail.ru ([94.100.177.101]:52220 "EHLO smtp41.i.mail.ru"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242015AbiAEQjl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 11:39:41 -0500
-X-Greylist: delayed 86733 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Jan 2022 11:39:41 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=751zkQTpBrAu9HgQDUH7TgVh/Y+ma8eWwo1JFFt3BZg=;
-        t=1641400781;x=1642006181; 
-        b=Mze+U2xw9uZLn4HTenYypxj2WhvT6zVCwhKqW6y9+7b2AN0q8ookj7a1MyUVM46h8+3zlb8CS/MkxkaE7kIOQMhwDal9l7wGVuTL+IhVU/zIhZvREBjVJ3Fj1mV3j/VP8ISCCbJjDwqFHh0+CZJMWcBw1a6ftLs5v0WPcKGJfW0=;
-Received: by smtp41.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-        id 1n59K4-0008A3-6n; Wed, 05 Jan 2022 19:39:36 +0300
-Date:   Wed, 5 Jan 2022 19:39:35 +0300
-From:   Konstantin Khomoutov <kostix@bswap.ru>
-To:     Jessica Clarke <jrtc27@jrtc27.com>
+        id S241979AbiAEQlC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 11:41:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44252 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241974AbiAEQlB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 11:41:01 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D405C061245
+        for <git@vger.kernel.org>; Wed,  5 Jan 2022 08:41:01 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id f134-20020a1c1f8c000000b00345c05bc12dso3639616wmf.3
+        for <git@vger.kernel.org>; Wed, 05 Jan 2022 08:41:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jrtc27.com; s=gmail.jrtc27.user;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=OvOlo0G6nzyt1FB+oPmZEwGd/0YuvJlwBrqtQkwyDTg=;
+        b=OfEFf3q+o4OfyQVEg8leyruzmLijyuQdl7RJtBFRgERPYaJnfDJjDdFSYxRaeol1px
+         sA4/SXF6oszaabiPTSBM5a9dMLRPCTlpFSrxiA4PfMMUe8oBegsf9pKG9zs/AlWGfCMM
+         7fZlg/ZfJBgkOJjcF/giM2mr8odBPKlO3TCz9IXM0KTlRsQ7zdFfNo+NgWGFDemYbUFc
+         B1UF8DQ5rBit/fxbe0BDqGEUuX5+76GzepMwBhkAJw/SSoKHPv2ujuOckn0UNQ8ImXXD
+         RL/w5lFzQczU/iCzcl8uWHtqAdiKu8KsJvXa7CUM4sU1BsYW2xbss60PMoFKs+1FJJX+
+         ZLQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=OvOlo0G6nzyt1FB+oPmZEwGd/0YuvJlwBrqtQkwyDTg=;
+        b=MpWPW2bqfpw58BHf25g27VetfxkewktGrNXif99L8dsemSMwtVEuU2TeIMl7mPgP9M
+         reNBFAOYqUp5906j/bpkPMTULPhaVGB0T4ftX3+7qSyhR1pBLBcq6bXwX1vEpETjkRjh
+         JAYuTZb9yEr5yjBP3qZ2B2sDVRPvQYE1htIDPmnem9YqSqCfiuQ0Nx7lLsVIPVI7VXVJ
+         uzEnXHig2HU2yubV6+CKLsTczMZ4xsUV1JaltS0e9zJ8XG0n/wEQ5g8q/b0VWAvihV4d
+         csRP4Tzh9uhh0ren90qa3RHmLkiULMfGb8Fr0HqhpJPZB0/sQkotEa7+F58zKt8wfizg
+         4O+w==
+X-Gm-Message-State: AOAM533kd6LYQN+uRMcpO+QLe1S+bOCysdvo8r+0J0EpGbdlPj54kq0I
+        +xzLb5EcS5uAvbJQvs1b/J8qPlCHva28qA==
+X-Google-Smtp-Source: ABdhPJwyKJNfwOf7z3kqL95/e9vSNrfUV0pLLeewiJmTI9PmMkrGthfbiVmtwArqh2Vc6AO5RrKmaQ==
+X-Received: by 2002:a05:600c:190c:: with SMTP id j12mr3576549wmq.166.1641400859863;
+        Wed, 05 Jan 2022 08:40:59 -0800 (PST)
+Received: from smtpclient.apple (global-5-141.nat-2.net.cam.ac.uk. [131.111.5.141])
+        by smtp.gmail.com with ESMTPSA id q14sm40615006wro.58.2022.01.05.08.40.59
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Jan 2022 08:40:59 -0800 (PST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [PATCH] apply: Avoid ambiguous pointer provenance for CHERI/Arm's
+ Morello
+From:   Jessica Clarke <jrtc27@jrtc27.com>
+In-Reply-To: <20220105163935.eqfdqbeifcgj2wna@carbon>
+Date:   Wed, 5 Jan 2022 16:40:59 +0000
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] apply: Avoid ambiguous pointer provenance for
- CHERI/Arm's Morello
-Message-ID: <20220105163935.eqfdqbeifcgj2wna@carbon>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <85A71121-BD74-416B-BDC5-3818C6892F7C@jrtc27.com>
 References: <20220105132310.6600-1-jrtc27@jrtc27.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220105132310.6600-1-jrtc27@jrtc27.com>
-Authentication-Results: smtp41.i.mail.ru; auth=pass smtp.auth=kostix@bswap.ru smtp.mailfrom=kostix@bswap.ru
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD94D5EF110843E6A67CFD1AE5BAEA5D6B2A1F98ABF68DFDC63182A05F53808504031B75141979E61091BC0D89E711D4F9B3A33633FF3A2F3F3163054C7E6B4E01B
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7A8325FA649D0A450EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063781BF90BB6B3E56078638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D85588D2F1E51028ED21A8B07A2310FE90117882F4460429724CE54428C33FAD305F5C1EE8F4F765FCF1175FABE1C0F9B6A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352033AC447995A7AD18F04B652EEC242312D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE902A1BE408319B296E0066C2D8992A164AD6D5ED66289B52698AB9A7B718F8C46E0066C2D8992A16725E5C173C3A84C3776FEBA3834A766EBA3038C0950A5D36B5C8C57E37DE458B0BC6067A898B09E46D1867E19FE14079C09775C1D3CA48CF3D321E7403792E342EB15956EA79C166A417C69337E82CC275ECD9A6C639B01B78DA827A17800CE7994FE22CF3C16DE0731C566533BA786AA5CC5B56E945C8DA
-X-C1DE0DAB: 0D63561A33F958A5131BAEAA6BB40E0DD2EA38FD4FB2CE551A4C58CCC0C38251D59269BC5F550898D99A6476B3ADF6B47008B74DF8BB9EF7333BD3B22AA88B938A852937E12ACA7586EBD5816AEE4918410CA545F18667F91A7EA1CDA0B5A7A0
-X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D3483E1FCD56FEA62E6CE882DA31D521806F0B8713E3FEC43965CB6E3714657F6EE09BA9B9D9EAEA6F81D7E09C32AA3244C6E5C2D6BC42B2A6A4957E6A327A4CA194DBEAD0ED6C55A80729B2BEF169E0186
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojH8WdiQSTb1EWe/PnK65GTg==
-X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD13882E2B9F3ADD85E8D648CCE6E884AE3AD57417E0ED27172DE13BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC5FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
+ <20220105163935.eqfdqbeifcgj2wna@carbon>
+To:     Konstantin Khomoutov <kostix@bswap.ru>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 05, 2022 at 01:23:10PM +0000, Jessica Clarke wrote:
+On 5 Jan 2022, at 16:39, Konstantin Khomoutov <kostix@bswap.ru> wrote:
+>=20
+> On Wed, Jan 05, 2022 at 01:23:10PM +0000, Jessica Clarke wrote:
+>=20
+> [...]
+>> This means that, currently, the code when run on a CHERI architecture
+>> will preserve the metadata from the integer, i.e. an invalid =
+capability
+>> that will trap on deference, and not the pointer.
+>=20
+> ^ You have probably meant to use "dereference" here.
 
-[...]
-> This means that, currently, the code when run on a CHERI architecture
-> will preserve the metadata from the integer, i.e. an invalid capability
-> that will trap on deference, and not the pointer.
+Indeed I did; spellcheck doesn=E2=80=99t help for wrong words...
 
-^ You have probably meant to use "dereference" here.
+Should I send a v2, or can that be fixed on git-am?
+
+Jess
 
