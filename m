@@ -2,115 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43ADAC433EF
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 20:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 955A8C433FE
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 20:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243885AbiAEUDF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 15:03:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33898 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243815AbiAEUCf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 15:02:35 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E80F3C061201
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 12:02:34 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id k18so413346wrg.11
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 12:02:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=rP4kEq8FF2OINWVr/x+I8nI+cifT9FovCOINQK1WOY0=;
-        b=fe6zN4tyHnmhQTycg3R+CPF07juxxhw1mNdBOEhgCb1lfYbSszpuomYqFbpBYavnXx
-         fe5AdTAkTLpGSK3ptqU75Hjeda8biuIc9clbPd4Oc/3ChpZ7d8YHc7jF7kbUVWrKV4Yi
-         L90OlfEKt3G19049cgnsIqPpnDUL1at5VVqNsj/R6c+vAYryr8BCz1hXxykQcMktBrGp
-         sUfJMFcouPOVcIeQJSF5yfPjSnVUWtyRCeMdyQ1ujz4ZQ9oUQIiyCV2WsQIqL+ao1hFx
-         d1MHXi6G/S4ehzrAlCW8A2iqnz2ZojngKq9hhGzRXgVo7gHVdKyBUKPGWzyCqa5Rvp24
-         BT2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=rP4kEq8FF2OINWVr/x+I8nI+cifT9FovCOINQK1WOY0=;
-        b=qOjI/PQBhs3ukI1GSIEcUbKjolPndpOYYm6yXpIlL9NKpNU1Qz1BOVQYSBceZYgpAO
-         1wsOcrw7088aoJCUkVRvMyfA+rHaaUHPYPFJO3lUPDrrhD5M0ipN6B5hKjHMKwQpkpiP
-         vT73+pyuGP6t/QhhUrKT3Sda4PFAZQuCiU2biTk+mXTVTC4RE6toK6dCFNfcq4okxqKe
-         Zlc/SVJDugw3YIUIZY9kY7FxgUm/ZBUXEPiP1O9WonGIe2pq7XhXp78j1BqfR9DpiwqK
-         Vd1rQFoTzDIgqyMCuFdnRoKAjva7AZ+7hhVUkoBVsVNWs4A+J+Ty5Cm0oxAKGQpAmURW
-         ENDw==
-X-Gm-Message-State: AOAM5334yRhTXtWqXsfhuV/swRMx1rAvE/QP5R8XnVkb8K93i1uOnJda
-        cw7vYw9uPkDKzjqJ1ML4AM577j7L/qQ=
-X-Google-Smtp-Source: ABdhPJwCLy6mEAxT01C8rmAM+FOlcA7B+4LEI8upTOpaT0Rt2FqDJAXpE/t8my34JxzCQ2EAMWxVdA==
-X-Received: by 2002:a5d:6da2:: with SMTP id u2mr46674011wrs.633.1641412953444;
-        Wed, 05 Jan 2022 12:02:33 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u10sm44107712wrs.28.2022.01.05.12.02.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jan 2022 12:02:33 -0800 (PST)
-Message-Id: <226c105559ce5f524131212076aa00b595be2492.1641412945.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1088.v5.git.1641412944.gitgitgadget@gmail.com>
-References: <pull.1088.v4.git.1641143745.gitgitgadget@gmail.com>
-        <pull.1088.v5.git.1641412944.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Wed, 05 Jan 2022 20:02:23 +0000
-Subject: [PATCH v5 10/11] i18n: ref-filter: factorize "%(foo) atom used
- without %(bar) atom"
+        id S243848AbiAEUHQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 15:07:16 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55429 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243847AbiAEUHM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 15:07:12 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E6DAA17AD88;
+        Wed,  5 Jan 2022 15:07:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=DpBB1Cykt4Fh+oGZMqhHTqhHKMaakm4ewt2c5a
+        MGpdw=; b=XKjkd28hOpGUkT3CBU6yJEdcErDf5bQ4dw8bQB/qJZqiaMnaCNnW8D
+        UUs/XN+4OCPhMgJYmRF4C38uqszGQUUeygE3c+TVUCDba2bhPKlb1ZinkEPKBxCz
+        +h7bNXcMDHBSYpCjOa3LRNcFmyMYFe3HI4iuSBod0ilROZ65jeDBs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E022D17AD87;
+        Wed,  5 Jan 2022 15:07:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5177A17AD86;
+        Wed,  5 Jan 2022 15:07:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v5 1/2] name-rev: deprecate --stdin in favor of
+ --annotate-stdin
+References: <pull.1171.v4.git.git.1641307776.gitgitgadget@gmail.com>
+        <pull.1171.v5.git.git.1641356439.gitgitgadget@gmail.com>
+        <7c5fb10d87c4b807567db0ed83f987487532c7c1.1641356439.git.gitgitgadget@gmail.com>
+Date:   Wed, 05 Jan 2022 12:07:06 -0800
+In-Reply-To: <7c5fb10d87c4b807567db0ed83f987487532c7c1.1641356439.git.gitgitgadget@gmail.com>
+        (John Cai via GitGitGadget's message of "Wed, 05 Jan 2022 04:20:38
+        +0000")
+Message-ID: <xmqqh7aihrpx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0F8EA00C-6E63-11EC-B140-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
----
- ref-filter.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+> +	altogether.
+> ++
+> +For example:
+> ++
+> +--
+> +	$ cat sample.txt
+> +
+> +	An abbreviated revision 2ae0a9cb82 will not be substituted.
+> +	The full name after substitution is 2ae0a9cb8298185a94e5998086f380a355dd8907,
+> +	while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
+> +
+> +	$ git name-rev --annotate-stdin <sample.txt
+> +
+> +	An abbreviated revision 2ae0a9cb82 will not be substituted.
+> +	The full name after substitution is 2ae0a9cb8298185a94e5998086f380a355dd8907 (master),
+> +	while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
+> +
+> +	$ git name-rev --name-only --annotate-stdin <sample.txt
+> +
+> +	An abbreviated revision 2ae0a9cb82 will not be substituted.
+> +	The full name after substitution is master,
+> +	while its tree object is 70d105cc79e63b81cfdcb08a15297c23e60b07ad
+> +--
 
-diff --git a/ref-filter.c b/ref-filter.c
-index adbcc680812..f7a2f17bfd9 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -841,7 +841,7 @@ static void if_then_else_handler(struct ref_formatting_stack **stack)
- 	struct if_then_else *if_then_else = (struct if_then_else *)cur->at_end_data;
- 
- 	if (!if_then_else->then_atom_seen)
--		die(_("format: %%(if) atom used without a %%(then) atom"));
-+		die(_("format: %%(%s) atom used without a %%(%s) atom"), "if", "then");
- 
- 	if (if_then_else->else_atom_seen) {
- 		/*
-@@ -907,7 +907,7 @@ static int then_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
- 	if (cur->at_end == if_then_else_handler)
- 		if_then_else = (struct if_then_else *)cur->at_end_data;
- 	if (!if_then_else)
--		return strbuf_addf_ret(err, -1, _("format: %%(then) atom used without an %%(if) atom"));
-+		return strbuf_addf_ret(err, -1, _("format: %%(%s) atom used without a %%(%s) atom"), "then", "if");
- 	if (if_then_else->then_atom_seen)
- 		return strbuf_addf_ret(err, -1, _("format: %%(then) atom used more than once"));
- 	if (if_then_else->else_atom_seen)
-@@ -943,9 +943,9 @@ static int else_atom_handler(struct atom_value *atomv, struct ref_formatting_sta
- 	if (prev->at_end == if_then_else_handler)
- 		if_then_else = (struct if_then_else *)prev->at_end_data;
- 	if (!if_then_else)
--		return strbuf_addf_ret(err, -1, _("format: %%(else) atom used without an %%(if) atom"));
-+		return strbuf_addf_ret(err, -1, _("format: %%(%s) atom used without a %%(%s) atom"), "else", "if");
- 	if (!if_then_else->then_atom_seen)
--		return strbuf_addf_ret(err, -1, _("format: %%(else) atom used without a %%(then) atom"));
-+		return strbuf_addf_ret(err, -1, _("format: %%(%s) atom used without a %%(%s) atom"), "else", "then");
- 	if (if_then_else->else_atom_seen)
- 		return strbuf_addf_ret(err, -1, _("format: %%(else) atom used more than once"));
- 	if_then_else->else_atom_seen = 1;
--- 
-gitgitgadget
+I compared the output from the earlier ones with this one; the way
+the displayed sample was shown in the previous rounds looked better,
+at least in HTML pages.  The earlier ones used "listingblock" in
+which the sample is contained in a <pre>formatted <code> block, but
+this one ends up in a series of one-<div>-per-paragraph.
 
+> -	if (transform_stdin) {
+> -		char buffer[2048];
+> +	if (annotate_stdin) {
+> +		struct strbuf sb = STRBUF_INIT;
+
+This will break the compilation at this step.
